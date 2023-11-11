@@ -1,0 +1,43 @@
+//===== rAthena Script =======================================
+//= Gold PC Bonus NPC
+//===== Description: =========================================
+//= NPC that can be spawned via the Gold PC Timer Button.
+//===== Changelog: ===========================================
+//= 1.0 Initial release [Lemongrass]
+//= 1.1 Replay version [eppc0330]
+//= 1.2 Translation of the replay version [Lemongrass]
+//= 1.3 Cleanup of NPC logic [Lemongrass]
+//= 1.4 Added replay version of buff NPC [eppc0330]
+//============================================================
+
+
+//==============================================================
+//      Files : feature.conf For Set feature.goldpc_script: yes
+//==============================================================
+-	script	GOLDPCCAFE	-,{
+	if( Goldpc_Points == 0 ){
+		dispbottom "[ BonusOnline ] : แต้ม Online ของคุณ เหลือ 0 ไม่สามารถรับ Cash ได้";
+	}else{
+		.@amount = Goldpc_Points;
+		Goldpc_Points -= .@amount;
+		#CASHPOINTS += .@amount;
+		dispbottom "[ BonusOnline ] : คุณได้รับจำนวน Cash : "+.@amount+" Cash";
+	}
+	end;
+}
+
+//==============================================================
+//      Files : feature.conf For Set feature.goldpc_script: no
+//==============================================================
+//prontera,0,0,0	script	BonusOnline::GOLDPCCAFE	4_F_02,{
+//	if( Goldpc_Points == 0 ){
+//		dispbottom "[ BonusOnline ] : แต้ม Online ของคุณ เหลือ 0 ไม่สามารถรับ Cash ได้";
+//	}else{
+//		.@amount = Goldpc_Points;
+//		Goldpc_Points -= .@amount;
+//		#CASHPOINTS += .@amount;
+//		dispbottom "[ BonusOnline ] : คุณได้รับจำนวน Cash : "+.@amount+" Cash";
+//	}
+//	end;
+//}
+

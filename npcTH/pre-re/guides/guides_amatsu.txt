@@ -1,0 +1,119 @@
+//===== rAthena Script =======================================
+//= Amatsu Guides
+//===== By: ==================================================
+//= MasterOfMuppets; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Amatsu
+//===== Additional Comments: =================================
+//= 1.0 First version [MasterOfMuppets]
+//= 1.1 Removed Duplicates [Silent]
+//= 1.3 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+amatsu,207,89,3	script	Amatsu Guide#ama	758,{
+	mes "[Amachang]";
+	mes "Welcome to Amatsu,";
+	mes "the town of kind towners";
+	mes "and beautiful cherry blossoms.";
+	next;
+	mes "[Amachang]";
+	mes "I'm Amachang,";
+	mes "the 13th Miss Amatsu.";
+	mes "I will guide you about town";
+	mes "as Miss Amatsu.";
+	mes "Please tell me";
+	mes "if you want to know something.";
+	next;
+	switch(select("Palace:Tool Shop:Weapon Shop:Bar")) {
+	case 1:
+		viewpoint 1,85,235,0,0xFF3355;
+		mes "[Amachang]";
+		mes "On the mini-map,";
+		mes "go to ^FF3355+^000000";
+		mes "to find the Palace.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	case 2:
+		viewpoint 1,96,118,1,0xCE6300;
+		mes "[Amachang]";
+		mes "On the mini-map,";
+		mes "go to ^CE6300+^000000";
+		mes "to find the Tool Shop.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	case 3:
+		viewpoint 1,132,117,2,0x55FF33;
+		mes "[Amachang]";
+		mes "On the mini-map,";
+		mes "go to ^55FF33+^000000";
+		mes "to find the Weapon Shop.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	case 4:
+		viewpoint 1,217,116,3,0x3355FF;
+		mes "[Amachang]";
+		mes "On the mini-map,";
+		mes "go to ^3355FF+^000000";
+		mes "to find the Bar.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	}
+}
+	
+amatsu,251,283,4	script	Guide Man#2ama	767,{
+	mes "[Guide Man]";
+	mes "Welcome, tourist from Midgard.";
+	mes "I'm the guide of";
+	mes "our beautiful town, Amatsu.";
+	next;
+	mes "[Guide Man]";
+	mes "What are you looking for?";
+	next;
+	switch(select("Palace:Tool Shop:Weapon Shop:Bar")) {
+	case 1:
+		viewpoint 1,85,235,0,0xFF3355;
+		mes "[Guide Man]";
+		mes "On the mini-map,";
+		mes "go to ^FF3355+^000000";
+		mes "to find the Palace.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	case 2:
+		viewpoint 1,96,118,1,0xCE6300;
+		mes "[Guide Man]";
+		mes "On the mini-map,";
+		mes "go to ^CE6300+^000000";
+		mes "to find the Tool Shop.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	case 3:
+		viewpoint 1,132,117,2,0x55FF33;
+		mes "[Guide Man]";
+		mes "On the mini-map,";
+		mes "go to ^55FF33+^000000";
+		mes "to find the Weapon Shop.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	case 4:
+		viewpoint 1,217,116,3,0x3355FF;
+		mes "[Guide Man]";
+		mes "On the mini-map,";
+		mes "go to ^3355FF+^000000";
+		mes "to find the Bar.";
+		mes "Have a good time";
+		mes "in Amatsu.";
+		close;
+	}
+}

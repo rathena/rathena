@@ -1,0 +1,13 @@
+//===== rAthena Script ======================================= 
+//= Rock Ridge warps script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+harboro1,241,218,0	warp2	harboro1#har_in01	1,1,har_in01,18,18
+har_in01,18,15,0	warp2	har_in01#harboro1	1,1,harboro1,241,215
+har_in01,99,30,0	warp2	har_in01_2#harboro1	1,1,har_in01,34,31
+
+// Tool dealer
+harboro1,312,193,0	warp2	harboro1_2#har_in01	1,1,har_in01,26,87
+har_in01,26,90,0	warp2	har_in01#harboro1_2	1,1,harboro1,312,196

@@ -1,0 +1,242 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Porcupine Quills)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+mjolnir_01,296,29,6	script	Yullo#Caramel_Hunt	95,{
+	if (checkquest(60116) != -1) {
+		if (checkquest(60116,HUNTING) != 2 ) {
+			mes "[Yullo]";
+			mes "Have you finished hunting the 50 Caramels?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Yullo]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Yullo]";
+				mes "Remember, I need help hunting Caramels so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Yullo]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Yullo]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60116;
+					close;
+				case 2:
+					mes "[Yullo]";
+					mes "Please kill 50 Caramels.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Yullo]";
+			mes "Amazing, you did that with speed.";
+			getexp 10425,6272;
+			erasequest 60116;
+			close;
+		}
+	}
+	if (checkquest(60117) != -1) {
+		if (checkquest(60117,HUNTING) != 2 ) {
+			mes "[Yullo]";
+			mes "Have you finished hunting the 50 Caramels?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Yullo]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Yullo]";
+				mes "Remember, I need help hunting Caramels so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Yullo]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Yullo]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60117;
+					close;
+				case 2:
+					mes "[Yullo]";
+					mes "Please kill 100 Caramels.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Yullo]";
+			mes "Amazing, you did that with speed.";
+			getexp 10425,6272;
+			getexp 10425,6272;
+			erasequest 60117;
+			close;
+		}
+	}
+	if (checkquest(60118) != -1) {
+		if (checkquest(60118,HUNTING) != 2 ) {
+			mes "[Yullo]";
+			mes "Have you finished hunting the 150 Caramels?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Yullo]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Yullo]";
+				mes "Remember, I need help hunting Caramels so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Yullo]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Yullo]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60118;
+					close;
+				case 2:
+					mes "[Yullo]";
+					mes "Please kill 150 Caramels.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Yullo]";
+			mes "Amazing, you did that with speed.";
+			getexp 10425,6272;
+			getexp 10425,6272;
+			getexp 10425,6272;
+			erasequest 60118;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 23) {
+		//for maximum level
+		if (BaseLevel < 61) {
+			mes "[Yullo]";
+			mes "I can't, no more and I mean it.";
+			mes "Look at me I am serious I can't kill any more of these things.";
+			next;
+			switch(select("What things?:Ignore.")) {
+			case 1:
+				mes "[Yullo]";
+				mes "You know what, here is an idea.";
+				mes "You can gather them and I can give you a reward for your efforts!";
+				next;
+				switch(select("Gather Items:Hunt Caramels:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Yullo]";
+					mes "Ok, so I need 25 Porcupine";
+					mes "Quill's.";
+					mes "Please tell me you have some or can";
+					mes "help me";
+					next;
+					switch(select("I have Porcupine Quills:Well I don't think I can help.")) {
+					case 1:
+						/*
+						if (checkweight(501,10) == 0) {
+							mes "[Yullo]";
+							mes "Hey, it looks like that the weight on";
+							mes "your back will crush you. Come back";
+							mes "after you have lost some weight.";
+							close;
+						}
+						*/
+						if (countitem(1027) > 24) {
+							mes "[Yullo]";
+							mes "Great, you have enough!";
+							mes "Just like I promised a little reward.";
+							delitem 1027,25; //Porcupine_Spike
+							getexp 10425,6272;
+							//getitem 501,10; //Red_Potion
+							close;
+						}
+						else {
+							mes "[Yullo]";
+							mes "Where are the Porcupine Quills?";
+							mes "You think I wouldn't notice?";
+							close;
+						}
+					case 2:
+						mes "[Yullo]";
+						mes "I need ^00CE0025 Porcupine Quills^000000.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Yullo]";
+					mes "Ah, ok I think you can help me out by hunting some Caramels.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Caramels:100 Caramels:150 Caramels")) {
+					case 1:
+						mes "[Yullo]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60116;
+						close;
+					case 2:
+						mes "[Yullo]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60117;
+						close;
+					case 3:
+						mes "[Yullo]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60118;
+						close;
+					}
+				case 3:
+					mes "[Yullo]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Yullo]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Yullo]";
+			mes "Hello, my name is Yullo.";
+			mes "Now wait a minute, are you not a little too high of level for this?";
+			close;
+		}
+	}
+	else {
+		mes "[Yullo]";
+		mes "Hmm, this maybe a little much of a request for you.";
+		mes "Come back when you are taller and stronger.";
+		close;
+	}
+}

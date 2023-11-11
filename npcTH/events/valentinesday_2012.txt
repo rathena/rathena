@@ -1,0 +1,158 @@
+//===== rAthena Script =======================================
+//= Valentine's Day Event (2012)
+//===== By: ==================================================
+//= Rikimaru
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= The full Valentine's Day NPCs of the Valentine's Day
+//= Event 2012 (account-based).
+//===== Additional Comments: =================================
+//= 1.0 First version. [Rikimaru]
+//= 1.1 Standardized and fixed. [Euphy]
+//============================================================
+
+mosk_in,21,246,5	script	Pinkamenia	71,{
+	set .@n$,"^0000FF[Pinkamenia]^000000";
+	if (#V_QUE12==3) {
+		set .@LFlowerID,7864;
+		setarray .@SweetsID[0],538,558,539,573,559,560,12062,596,597,12414,12319;
+		setarray .@SweetsCost[0],1,2,5,10,10,10,15,15,15,20,20;
+		mes .@n$;
+		mes "Hello "+strcharinfo(0)+", do";
+		mes "you want to buy some items?";
+		mes "You'll have to give me Love";
+		mes "Flowers for them, of course!";
+		next;
+		if(select("Yes, sure!","No, never mind.") == 2) close;
+		next;
+		mes .@n$;
+		mes "Select an item.";
+		mes "The amount of Love Flowers you'll need is in brackets.";
+		for(set .@i,0; .@i < getarraysize(.@SweetsID); set .@i,.@i+1)
+			set .@menu$, .@menu$+"^00AA00["+.@SweetsCost[.@i]+"]^000000 "+getitemname(.@SweetsID[.@i])+":";
+		next;
+		set .@choice, select(.@menu$)-1;
+		mes .@n$;
+		if (countitem(.@LFlowerID) < .@SweetsCost[.@choice]) {
+			mes "You'll need more Love Flowers if you want that!";
+			close;
+		}
+		mes "Are you sure you want to trade ^00aa00"+.@SweetsCost[.@choice]+"x Love Flower ^000000 for ^0055FF"+getitemname(.@SweetsID[.@choice])+"^000000?";
+		if(select("No, I've changed my mind.:Yes, trade!") == 1) close;
+		set .@new, .@LFlowerID - .@SweetsCost[.@choice];
+		if (.@new < 0) set .@new, 0;
+		delitem .@LFlowerID, .@SweetsCost[.@choice];
+		getitem .@SweetsID[.@choice],1;
+		mes "Have fun with your item!";
+		close;
+	} else if (#V_QUE12==2) {
+		mes .@n$;
+		if (countitem(7864) < 15) {
+			mes "You have to bring me 15 Love Flowers!";
+			close;
+		}
+		mes "Thank you so much for";
+		mes "getting our Flowers back!";
+		delitem 7864,15;
+		next;
+		mes .@n$;
+		mes "Take this as a little";
+		mes "'thank you'.";
+		getexp 500000,400000;
+		getitem 617,1;
+		getitem 12319,2;
+		next;
+		mes .@n$;
+		mes "If you get more Love";
+		mes "Flowers, you can exchange";
+		mes "them for some sweets here.";
+		mes "See you soon!";
+		set #V_QUE12,3;
+		close;
+	} else if (#V_QUE12==1) {
+		mes .@n$;
+		mes "Please bring a +8 Cake Hat";
+		mes "to the Baker Extraordinaire";
+		mes "standing next to me!";
+		close;
+	} else if (BaseLevel >= 45) {
+		mes .@n$;
+		mes "Hello "+strcharinfo(0)+", it's";
+		mes "Valentine's Day and we";
+		mes "love to deliver sweet";
+		mes "chocolates.";
+		next;
+		mes .@n$;
+		mes "Our problem is that we";
+		mes "need a strong person";
+		mes "like you who could help";
+		mes "us, but first you'll have";
+		mes "to bring a +8 Cake Hat";
+		mes "to the Baker Extraordinaire, who";
+		mes "is standing right next to me!";
+		set #V_QUE12,1;
+		close;
+	}
+	mes .@n$;
+	mes "Hello "+strcharinfo(0)+"!";
+	close;
+
+OnInit:
+	// Unknown item drop rate (currently set at 5%)
+	setitemscript 5105,"{ bonus bDex,1; bonus bMaxSP,80; bonus3 bAddMonsterDropItem,7864,RC_DemiHuman,500; }",0;
+	end;
+}
+
+mosk_in,21,244,3	script	Baker Extraordinaire	410,{
+	set .@n$,"^0000FF[Baker Extraordinaire]^000000";
+	if(#V_QUE12==3) {
+		mes .@n$;
+		mes "Exchange your Love Flowers with Pinkamenia!";
+		close;
+	} else if(#V_QUE12==2) {
+		mes .@n$;
+		mes "Bring 15 Love Flowers to Pinkamenia!";
+		close;
+	} else if(#V_QUE12==1) { 
+		mes .@n$;
+		if (getequipid(EQI_HEAD_TOP) == 5024 && getequiprefinerycnt(EQI_HEAD_TOP) >= 8) {
+			mes "Ah, so Pinkamenia told you";
+			mes "to bring me the +8 Cake";
+			mes "Hat. Now I'm going";
+			mes "to exchange your +8 Cake";
+			mes "Hat for another Cake Hat.";
+			next;
+			mes .@n$;
+			delitem 5024,1;
+			getitem 5105,1;
+			equip 5105;
+			mes "Now, if you wear the";
+			mes "new Cake Hat, there";
+			mes "is a chance that";
+			mes "Demi-Human Monsters will";
+			mes "drop a Love Flower!";
+			next;
+			mes .@n$;
+			mes "The mobs stole our Flowers,";
+			mes "which we need to create ";
+			mes "our chocolates. Now get";
+			mes "15 Love Flowers and bring";
+			mes "them to Pinkamenia!";
+			set #V_QUE12,2;
+			close;
+		} else {
+			mes "Sorry, but where is your";
+			mes "+8 Cake Hat? Bring";
+			mes "it to me, and remember";
+			mes "to have it equipped!";
+			close;
+		}
+	} else {
+		mes .@n$;
+		mes "Hello, "+strcharinfo(0)+"!";
+		close;
+	}
+}

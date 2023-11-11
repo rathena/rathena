@@ -1,0 +1,100 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable auto-save.
+//===== Description: =========================================
+//= Characters logging out on the specified map will be warped
+//= to the map specified in the last field, or "SavePoint".
+//===== Changelogs: ==========================================
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added GVG TE Guild Dungeons. [Capuche]
+//= 1.2 Removed instances. [Lemongrass]
+//============================================================
+
+//============================================================
+// Job Quests
+//============================================================
+// 3-1 Classes
+job3_arch01	mapflag	nosave	SavePoint
+job3_arch02	mapflag	nosave	SavePoint
+job3_arch03	mapflag	nosave	SavePoint
+job3_guil01	mapflag	nosave	SavePoint
+job3_guil02	mapflag	nosave	SavePoint
+job3_guil03	mapflag	nosave	SavePoint
+job3_rang01	mapflag	nosave	SavePoint
+job3_rang02	mapflag	nosave	SavePoint
+job3_rune01	mapflag	nosave	SavePoint
+job3_rune02	mapflag	nosave	SavePoint
+job3_rune03	mapflag	nosave	SavePoint
+job3_war01	mapflag	nosave	SavePoint
+job3_war02	mapflag	nosave	SavePoint
+// 3-2 Classes
+job3_gen01	mapflag	nosave	SavePoint
+// Expanded Classes
+job3_sha01	mapflag	nosave	SavePoint
+job_ko	mapflag	nosave	SavePoint
+job_gun	mapflag	nosave	SavePoint
+
+//============================================================
+// Guild Dungeons
+//============================================================
+gld_dun01_2	mapflag	nosave	SavePoint
+gld_dun02_2	mapflag	nosave	SavePoint
+gld_dun03_2	mapflag	nosave	SavePoint
+gld_dun04_2	mapflag	nosave	SavePoint
+gld2_ald	mapflag	nosave	SavePoint
+gld2_gef	mapflag	nosave	SavePoint
+gld2_pay	mapflag	nosave	SavePoint
+gld2_prt	mapflag	nosave	SavePoint
+teg_dun01	mapflag	nosave	SavePoint
+teg_dun02	mapflag	nosave	SavePoint
+
+//============================================================
+// WoE:TE Castles
+//============================================================
+te_prtcas01	mapflag	nosave	SavePoint
+te_prtcas02	mapflag	nosave	SavePoint
+te_prtcas03	mapflag	nosave	SavePoint
+te_prtcas04	mapflag	nosave	SavePoint
+te_prtcas05	mapflag	nosave	SavePoint
+te_aldecas1	mapflag	nosave	SavePoint
+te_aldecas2	mapflag	nosave	SavePoint
+te_aldecas3	mapflag	nosave	SavePoint
+te_aldecas4	mapflag	nosave	SavePoint
+te_aldecas5	mapflag	nosave	SavePoint
+
+//============================================================
+// Somatology Laboratory
+//============================================================
+que_lhz	mapflag	nosave	SavePoint
+
+//============================================================
+// Port Malaya
+//============================================================
+ma_zif01	mapflag	nosave	SavePoint
+ma_zif02	mapflag	nosave	SavePoint
+ma_zif03	mapflag	nosave	SavePoint
+ma_zif04	mapflag	nosave	SavePoint
+ma_zif05	mapflag	nosave	SavePoint
+ma_zif06	mapflag	nosave	SavePoint
+ma_zif07	mapflag	nosave	SavePoint
+ma_zif08	mapflag	nosave	SavePoint
+ma_zif09	mapflag	nosave	SavePoint
+
+//============================================================
+// Inside Eclage
+//============================================================
+que_avan01	mapflag	nosave	SavePoint
+
+//============================================================
+// Episode 15 - Phantasmagorica
+//============================================================
+un_myst	mapflag	nosave	SavePoint
+
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
+que_swat	mapflag	nosave	SavePoint
+
+//============================================================
+// Rockridge
+//============================================================
+rockmi2	mapflag	nosave	SavePoint

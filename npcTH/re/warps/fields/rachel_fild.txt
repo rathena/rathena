@@ -1,0 +1,48 @@
+//===== rAthena Script =======================================
+//= Rachel Field Warp Script
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Rachel Field
+//===== Additional Comments: =================================
+//= 1.0 Initial version [Playtester]
+//= 1.1 Official warps [Playtester]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.3 Renewal warp adjustments.
+//============================================================
+
+ra_fild01,233,333,0	warp	ra000	1,1,ice_dun01,157,15
+ra_fild01,306,38,0	warp	ra001	1,1,ra_fild04,322,371
+ra_fild04,322,378,0	warp	ra002	1,1,ra_fild01,306,43
+ra_fild04,362,351,0	warp	ra003	1,1,ra_fild05,39,353
+ra_fild05,33,353,0	warp	ra004	1,1,ra_fild04,356,351
+//ra_fild05,27,13,0	warp	ra005	1,1,ra_fild09,30,337
+//ra_fild09,29,343,0	warp	ra006	1,1,ra_fild05,31,17
+ra_fild04,263,54,0	warp	ra007	1,1,ra_fild08,287,365
+ra_fild08,287,370,0	warp	ra008	1,1,ra_fild04,263,60
+//ra_fild09,27,238,0	warp	ra009	1,1,ra_fild08,360,234
+//ra_fild08,368,234,0	warp	ra010	1,1,ra_fild09,35,238
+ra_fild04,23,176,0	warp	ra011	1,1,ra_fild03,370,172
+ra_fild03,374,168,0	warp	ra012	1,1,ra_fild04,29,176
+ra_fild05,348,274,0	warp	ra013	1,1,ra_fild06,24,277
+ra_fild06,19,277,0	warp	ra014	1,1,ra_fild05,341,273
+ra_fild06,294,21,0	warp	ra015	1,1,lhz_fild01,296,376
+lhz_fild01,296,382,0	warp	ra016	1,1,ra_fild06,298,25
+ra_fild12,36,225,0	warp	ra017	1,1,rachel,270,125
+ra_fild08,165,29,0	warp	ra018	1,1,ra_fild12,149,369
+ra_fild12,149,374,0	warp	ra019	1,1,ra_fild08,165,36
+//ra_fild12,303,27,0	warp	ra020	1,1,ra_fild13,295,341
+//ra_fild13,295,346,0	warp	ra021	1,1,ra_fild12,303,33
+//ra_fild11,360,226,0	warp	ra022	1,1,rachel,30,125
+//ra_fild11,21,290,0	warp	ra023	1,1,ra_fild10,379,283
+//ra_fild10,384,287,0	warp	ra024	1,1,ra_fild11,28,290
+//ra_fild11,202,335,0	warp	ra025a	1,1,ra_fild07,215,32
+//ra_fild07,215,27,0	warp	ra025b	1,1,ra_fild11,201,329
+//ra_fild07,168,353,0	warp	ra026	1,1,ra_fild02,171,45
+//ra_fild02,168,36,0	warp	ra027	1,1,ra_fild07,168,349
+//ra_fild02,373,275,0	warp	ra028	1,1,ra_fild03,28,294
+//ra_fild03,23,294,0	warp	ra029	1,1,ra_fild02,367,270

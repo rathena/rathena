@@ -1,0 +1,1136 @@
+//===== rAthena Script =======================================
+//= Official iRO Halloween Event 2013
+//===== By: ==================================================
+//= Akkarin
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= This event ran on iRO from 16th Oct to 6th Nov (3 weeks)
+//===== Additional Comments: =================================
+//= 1.0 Conversion from official script -> rAthena. [Akkarin]
+//= 1.1 Some cleanup. [Euphy]
+//= 1.2 Added monster spawns [Akkarin]
+//============================================================
+
+// Main Quest :: 2013e_hallow_en_1015
+//============================================================
+prontera,154,136,5	script	Suspicious Coffin#2013HE	801,{
+	if (eve_bs < 1) {
+		mes "- The coffin seems very suspicious. -";
+		next;
+		switch(select("Leave it:Knock-knock.")) {
+		case 1:
+			mes "- You left though with doubt. -";
+			close;
+		case 2:
+			mes "- tap tap tap -";
+			next;
+			mes "[???]";
+			mes "Awwww!!!";
+			mes "W......Who are you!!!";
+			next;
+			mes "- chunk -";
+			mes "- thump -";
+			next;
+			mes "[???]";
+			mes "Ouch, my head!!!";
+			next;
+			mes "[???]";
+			mes "Are you okay? Trick?";
+			next;
+			mes "[Trick]";
+			mes "I'm fine!";
+			mes "This is not a big deal!";
+			mes "Treat.";
+			next;
+			mes "[Treat]";
+			mes "Your head is pumping out strawberry jam!";
+			mes "Trick.";
+			next;
+			mes "[Trick]";
+			mes "Awwww!";
+			mes "Ugh!!!!";
+			mes "I'm gonna die!!!";
+			mes "Oh, no...!!!";
+			next;
+			mes "[Trick]";
+			mes "koff, koff...";
+			mes "I was happy with you.....though it was short time...";
+			mes "Treat....";
+			next;
+			mes "[Trick]";
+			mes "I die.......";
+			next;
+			mes "[Treat]";
+			mes "...";
+			next;
+			mes "[Treat]";
+			mes "Trick.";
+			next;
+			mes "[Treat]";
+			mes "we never die...";
+			mes "we'd died before.";
+			next;
+			mes "[Trick]";
+			mes "Yipee, yeah, that's true!";
+			next;
+			mes "[Trick]";
+			mes "I forget everytime as I died for a long time ago.";
+			next;
+			mes "[Trick]";
+			mes "Yow!!!";
+			mes "By the way!!!!";
+			mes "We are not supposed to waste time like this!";
+			mes "Treat.";
+			next;
+			mes "[Trick]";
+			mes "We will die if we dont get back to master with ^ff9000'that'^000000...";
+			next;
+			mes "[Treat]";
+			mes "We are dead already...";
+			mes "Trick.";
+			next;
+			mes "[Treat]";
+			mes "We will be bothered by him until we lose his temper at the most.";
+			next;
+			mes "[Trick]";
+			mes "Ah... no...";
+			mes "Hurry!";
+			mes "Let's go find 'that' !";
+			mes "Treat.";
+			next;
+			mes "[Treat]";
+			mes "Now...";
+			next;
+			mes "[Trick]";
+			mes "^ff9000Ugh, awww, hik, heck!!!!!!!!^000000";
+			next;
+			mes "[Treat]";
+			mes "We gonna die with sun burn if we leave now.";
+			mes "Trick.";
+			next;
+			mes "[Trick]";
+			mes "You MUST say that much important thing in advance!!!!!!!!!";
+			next;
+			mes "[Treat]";
+			mes "This world was good only we were alive.";
+			next;
+			mes "[Trick]";
+			mes "Hey!";
+			mes "You!";
+			next;
+			mes "[Trick]";
+			mes "You are the first man made my head pump out strawberry jam.";
+			mes "Would you love... me...?";
+			next;
+			mes "- Crash! -";
+			next;
+			mes "- There is more jam coming out under the coffin. -";
+			next;
+			mes "[Treat]";
+			mes "He is little bit strange as for the jam he bleeded.";
+			mes "Trick..";
+			next;
+			mes "[Trick]";
+			mes "No, treat.";
+			mes "Now I feel very refreshed, would you put down that club??";
+			next;
+			mes "[Trick]";
+			mes "Hey you!";
+			mes "I don't blame you for making my head like this but would you help us?";
+			next;
+			mes "[Trick]";
+			mes "Don't feel pressured.";
+			mes "The strawberry thing will be recovered after few days of illness.";
+			next;
+			switch(select("Help them.:Leave it.")) {
+			case 1:
+				mes "[Trick]";
+				mes "Haha!";
+				mes "Thanks!";
+				next;
+				select("listen their story.");
+				mes "[Trick]";
+				mes "It is secret...";
+				mes "Well, we are dead.";
+				next;
+				mes "- kaboom! -";
+				next;
+				mes "[Trick]";
+				mes "It hurts.";
+				mes "Treat.";
+				next;
+				mes "[Trick]";
+				mes "I will explain properly, just put that down.";
+				next;
+				callsub L_Explanation;
+				set eve_bs,1;
+				setquest 11378;
+				close;
+			case 2:
+				mes "[Trick]";
+				mes "Ooops!";
+				mes "Well, then we have to go out Treat!";
+				next;
+				mes "[Treat]";
+				mes "Don't worry treat.";
+				mes "We just will be sent back to Niflheim in the worst case.";
+				close;
+			}
+		}
+	} else if (eve_bs == 1) {
+		callsub L_Explanation;
+		close;
+	} else if (eve_bs == 2) {
+		if (isbegin_quest(11378)) {
+			mes "[Trick]";
+			mes "^ff9000Pumpkins are any of field. Please collect organic or non-organic pumpkins for 30 people and bring them to Chef Candycon at Niflheim.^000000";
+			next;
+			mes "[Trick]";
+			mes "Organic pumpkin has more value.";
+			mes "It is three times as useful!";
+			close;
+		} else {
+			mes "[Trick]";
+			mes "Thanks! We won't die from sun burn!";
+			next;
+			mes "[Treat]";
+			mes "Thanks.";
+			next;
+			mes "[Trick]";
+			mes "And if you don't mind, would you please help more?";
+			mes "Pumpkin cake is still deficient.";
+			next;
+			mes "[Trick]";
+			mes "Last time when I visited there, I saw piled up pumpkin cake which was taller than castle... how much should we make more?";
+			next;
+			switch(select("Help them:Leave it.")) {
+			case 1:
+				mes "[Trick]";
+				mes "^ff9000Pumpkins are any of field. Please collect organic or non-organic pumpkins for 30 people and bring them to Chef Candycon at Niflheim.^000000";
+				next;
+				mes "[Trick]";
+				mes "Organic pumpkin has more value.";
+				mes "It is three times as useful!";
+				setquest 11378;
+				close;
+			case 2:
+				mes "[Trick]";
+				mes "Ooops!";
+				mes "Well, then we have to go out Treat!";
+				next;
+				mes "[Treat]";
+				mes "Don't worry treat.";
+				mes "We just will be sent back to Niflheim in the worst case.";
+				close;
+			}
+		}
+	}
+	end;
+
+L_Explanation:
+	mes "[Trick]";
+	mes "We are from ^ff9000'town of the dead' Niflheim^000000.";
+	next;
+	mes "[Trick]";
+	mes "^ff9000The pumpkins for Halloween event on Niflheim^000000 were all disappeared.";
+	next;
+	mes "[Trick]";
+	mes "First we are preparing another cake but Sir, Hell loves pumpkin cake....... Halloween without pumpkin cake is like vampire without fang...";
+	next;
+	mes "[Trick]";
+	mes "We came to search pumpkin as our chef is too busy to do with other things,";
+	next;
+	mes "[Trick]";
+	mes "Far from searching them, we are at risk for leaving this coffin...";
+	next;
+	mes "[Trick]";
+	mes "^ff9000Pumpkins are any of field. Please collect organic or non-organic pumpkins for 30 people and bring them to Chef Candycon at Niflheim.^000000";
+	next;
+	mes "[Trick]";
+	mes "Organic pumpkin has more value.";
+	mes "It is three times as useful!";
+	return;
+}
+
+niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
+	set .@pumpum, countitem(6805) + (countitem(6804)*3);
+	if (eve_bs == 1) {
+		if (.@pumpum > 29) {
+			mes "[Chef Candycon]";
+			mes "clang~clang~!";
+			next;
+			mes "[Chef Candycon]";
+			mes "Phew... when is the end of making this cake? ...feel like eternal...";
+			next;
+			mes "[Chef Candycon]";
+			mes "Holy mother! I will hang anyone who suggest to make pumpkin cake on tree from next time.";
+			next;
+			mes "[Chef Candycon]";
+			mes "Though Sir, Hell like this but he doesn't care what pumpkin used. He said he is good with normal but...";
+			next;
+			mes "[Chef Candycon]";
+			mes "ALWAYS saying this pumpkin is not good....only the organic is good...what the heck, are you a cook!? If you know cooking that much why don't you do it by yourself!!";
+			next;
+			mes "[Chef Candycon]";
+			mes "And never helped me for escaping pumpkins and pretend busy? UGH! tut~";
+			next;
+			mes "[Chef Candycon]";
+			mes "My lord!!!";
+			mes "Hu....Human!!";
+			mes "hub~ (deep breath)..";
+			next;
+			mes "[Chef Candycon]";
+			mes "li.....ving....h....u.... m....a....n....";
+			next;
+			mes "[Chef Candycon]";
+			mes "how...........do....you......come......";
+			mes "to.....town.......... of......... the dead.......";
+			mes "Ni....fle.......he...im........";
+			next;
+			mes "[Chef Candycon]";
+			mes "he....re....";
+			mes "is.........not........";
+			mes "for..................";
+			mes "li..ving....crea...ture.......";
+			next;
+			select("Tell him about pumpkins.");
+			mes "[Chef Candycon]";
+			mes ".....Pu...........m............ki....n.....";
+			next;
+			mes "[Chef Candycon]";
+			mes "It...has...been....";
+			mes "O.....ver....but....";
+			mes "ca...me......a...gain....";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Why don't you speak normally.";
+			next;
+			mes "[Chef Candycon]";
+			mes "......";
+			next;
+			mes "[Chef Candycon]";
+			mes "May....may I??";
+			next;
+			mes "[Chef Candycon]";
+			mes "Ah... I'm not supposed to speak like this... we also have image making issue....";
+			next;
+			mes "[Chef Candycon]";
+			mes "Speaking like this is way better to scare people...heww..however, I can't bare it as it is too stuffy.";
+			next;
+			mes "[Chef Candycon]";
+			mes "Anyway! It won't be delayed if those pumpkins didn't escape to Midgard.";
+			next;
+			mes "[Chef Candycon]";
+			mes "Obviously, we are dead so we are pretty weak to the sun. We would be a pile of ash if we searched during daytime.";
+			next;
+			mes "[Trick]";
+			mes "Did you know?! How could you send us to search for pumpkins?!";
+			next;
+			mes "[Chef Candycon]";
+			mes "What? You can walk around after sunset. And you got wings and night vision... and what? Ultra sonic...?!!!!";
+			next;
+			mes "[Treat]";
+			mes "So I didn't leave the coffin.";
+			next;
+			mes "[Trick]";
+			mes "Ah...?!";
+			next;
+			mes "[Chef Candycon]";
+			mes "Gosh. How fortune we are for your effort, considering the process after bringing pumpkins.";
+			next;
+			select("Give pumpkins.");
+			mes "[Chef Candycon]";
+			mes "Let me see! Correct? Yeah that's it! Hold on a sec.";
+			next;
+			callsub L_GivePumpkins;
+			end;
+		} else {
+			mes "[Chef Candycon]";
+			mes "li.....ving....h....u.... m....a....n....";
+			next;
+			mes "[Chef Candycon]";
+			mes "how...........do....you......come......";
+			mes "to.....town.......... of......... the dead.......";
+			mes "Ni....ffle.......he...im........";
+			next;
+			mes "[Chef Candycon]";
+			mes "he....re....";
+			mes "is.........not........";
+			mes "for..................";
+			mes "li..ving....crea...ture.......";
+			close;
+		}
+	} else if (eve_bs == 2) {
+		if (isbegin_quest(11378)) {
+			mes "[Chef Candycon]";
+			mes "Eh! More pumpkins??";
+			mes "Heck... seriously... How many more left?";
+			next;
+			mes "[Chef Candycon]";
+			mes "Well, ^ff9000I need all the pumpkins^000000!";
+			mes "If we don't work fast, we will late for the festival.";
+			next;
+			mes "^ff9000*****WARNING*****^000000";
+			mes "^ff9000You will give all of pumpkin, [ALL]!^000000";
+			mes "^ff9000Will you proceed?^000000";
+			callsub L_GivePumpkins;
+			end;
+		} else {
+			mes "[Chef Candycon]";
+			mes "Yo! Thanks to your delivery, baking cake day and night.";
+			mes "Laying on the tomb will not guarantee eternal sleeping. T.T ";
+			close;
+		}
+	} else {
+		mes "[Chef Candycon]";
+		mes "li.....ving....h....u.... m....a....n....";
+		next;
+		mes "[Chef Candycon]";
+		mes "how...........do....you......come......";
+		mes "to.....town.......... of......... the dead.......";
+		mes "Ni....fle.......he...im........";
+		next;
+		mes "[Chef Candycon]";
+		mes "he....re....";
+		mes "is.........not........";
+		mes "for..................";
+		mes "li..ving....crea...ture.......";
+		close;
+	}
+	end;
+
+L_GivePumpkins:
+	mes "[Chef Candycon]";
+	mes "Well, ^ff9000I need all the pumpkins^000000!";
+	mes "If we don't work fast, we will be late for the festival.";
+	next;
+	mes "^ff9000*****WARNING*****^000000";
+	mes "^ff9000You will give all of pumpkin, [ALL]!^000000";
+	mes "^ff9000Will you proceed?^000000";
+	switch(select("Give all pumpkins.:Cancel.")) {
+	case 1:
+		set .@pumpum, countitem(6805) + (countitem(6804)*3);
+		if (.@pumpum > 29){
+			if (countitem(6805)) delitem 6805,countitem(6805); //INORGANIC_PUMPKIN
+			if (countitem(6804)) delitem 6804,countitem(6804); //ORGANIC_PUMPKIN
+			set eve_bs,2;
+			getitem 22669,1; //HALLOWEEN_G_BOX
+			erasequest 11378;
+			mes "[Chef Candycon]";
+			mes "Okay! Dig out the inside of pumpkin and like this~ and that~!";
+			next;
+			mes "[Chef Candycon]";
+			mes "Cool! Pumpkin has been carved just in shape? This is it for Halloween! Halloween without Jack'o lantern can't be real Halloween!";
+			next;
+			mes "[Chef Candycon]";
+			mes "Take this, it's a reward for bringing pumpkins! Open it, there might be some fun stuff...";
+			close;
+		} else {
+			mes "[Chef Candycon]";
+			mes "Ooops where is pumpkin? Escaped again?";
+			mes "Oh, boy...no... you should go to get them again...";
+			close;
+		}
+	case 2:
+		mes "[Chef Candycon]";
+		mes "eeh~~ You have no use of those pumpkins~~";
+		close;
+	}
+}
+
+niflheim,182,177,3	script	Trick#2013HE	799,{
+	if (eve_bs == 1) {
+		mes "[Trick]";
+		mes "It's really fresh, outside of coffin?";
+		mes "Have you got 30 pumpkins?";
+		next;
+		mes "[Trick]";
+		mes "If you brought them all, deliver them to the chef there.";
+		close;
+	} else if (eve_bs > 1) {
+		mes "[Trick]";
+		mes "What would happen without your help?~";
+		next;
+		mes "[Treat]";
+		mes "Maybe, Sir, Hell would have grilled bat, instead of pumpkin cake.";
+		next;
+		mes "[Trick]";
+		mes "Gosh....";
+		close;
+	} else {
+		mes "[Trick]";
+		mes "I don't need sweets!!";
+		mes "As I will just mess up everything! Wahahahaa!";
+		close;
+	}
+	end;
+}
+
+niflheim,183,176,3	script	Treat#2013HE	799,{
+	if (eve_bs == 1) {
+		mes "[Treat]";
+		mes "......";
+		close;
+	} else if (eve_bs > 1) {
+		mes "[Treat]";
+		mes "Doing good...?";
+		close;
+	} else {
+		mes "[Treat]";
+		mes "-giggle-";
+		close;
+	}
+}
+
+niflheim,179,168,5	script	Kentucky#2013HE	800,{
+	mes "[Kentucky]";
+	mes "Ho.. these seeds have really deep taste.";
+	mes "I will be able to have this kind of seeds no matter how much.";
+	close;
+}
+
+niflheim,177,166,8	script	Chicken#2013HE	800,{
+	mes "[Chicken]";
+	mes "Hey Kentucky!!";
+	mes "You are eating alone too much!";
+	close;
+}
+
+niflheim,198,175,5	script	Wandering soul#2013HE	802,{
+	mes "[Wandering soul]";
+	mes "-giggle-";
+	mes "The festival is about to begin...";
+	close;
+}
+
+niflheim,191,180,3	script	Wandering soul#2013HE2	802,{
+	mes "[Wandering soul]";
+	mes "Living creatures can't participate in the festival of Niflheim. -giggle-";
+	close;
+}
+
+niflheim,181,181,5	script	Wandering soul#2013HE3	802,{
+	mes "[Wandering soul]";
+	mes "The festival brought vitality to 'city of the dead'....";
+	mes "Doesn't it seem like something is wrong??";
+	close;
+}
+
+niflheim,183,162,5	script	Wandering soul#2013HE4	802,{
+	mes "[Wandering soul]";
+	mes "Soon, the festival of souls will be here!";
+	close;
+}
+
+// Monster Spawns :: EventMonster-131022
+//============================================================
+gld_dun01_2,0,0	monster	Organic Pumpkin	3202,1,5000
+gld_dun02_2,0,0	monster	Organic Pumpkin	3202,1,5000
+gld_dun03_2,0,0	monster	Organic Pumpkin	3202,1,5000
+gld_dun04_2,0,0	monster	Organic Pumpkin	3202,1,5000
+gld2_ald,0,0	monster	Organic Pumpkin	3202,1,5000
+gld2_gef,0,0	monster	Organic Pumpkin	3202,1,5000
+gld2_pay,0,0	monster	Organic Pumpkin	3202,1,5000
+gld2_prt,0,0	monster	Organic Pumpkin	3202,1,5000
+lhz_dun04,0,0	monster	Organic Pumpkin	3202,1,5000
+iz_dun05,0,0	monster	Organic Pumpkin	3202,1,5000
+mal_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+dic_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+dew_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+dew_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+dew_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+mal_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+iz_dun05,0,0	monster	Organic Pumpkin	3202,1,5000
+man_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+man_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+spl_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+spl_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+man_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+spl_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+nyd_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+bra_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+bra_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+bra_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+dic_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+dic_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+dic_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+dic_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+bif_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+bif_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+abbey01,0,0	monster	Organic Pumpkin	3202,1,5000
+abbey02,0,0	monster	Organic Pumpkin	3202,1,5000
+abbey03,0,0	monster	Organic Pumpkin	3202,1,5000
+abyss_01,0,0	monster	Organic Pumpkin	3202,1,5000
+abyss_02,0,0	monster	Organic Pumpkin	3202,1,5000
+abyss_03,0,0	monster	Organic Pumpkin	3202,1,5000
+alde_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+alde_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+alde_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+alde_dun04,0,0	monster	Organic Pumpkin	3202,1,5000
+ama_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+ama_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+ama_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+ama_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+anthell01,0,0	monster	Organic Pumpkin	3202,1,5000
+anthell02,0,0	monster	Organic Pumpkin	3202,1,5000
+ayo_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+ayo_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+ayo_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+ayo_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+beach_dun,0,0	monster	Organic Pumpkin	3202,1,5000
+beach_dun2,0,0	monster	Organic Pumpkin	3202,1,5000
+beach_dun3,0,0	monster	Organic Pumpkin	3202,1,5000
+c_tower1,0,0	monster	Organic Pumpkin	3202,1,5000
+c_tower2,0,0	monster	Organic Pumpkin	3202,1,5000
+c_tower3,0,0	monster	Organic Pumpkin	3202,1,5000
+c_tower4,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+cmd_fild09,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_fild05,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+ein_fild09,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_dun00,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild00,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild05,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild09,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild10,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild11,0,0	monster	Organic Pumpkin	3202,1,5000
+gef_fild13,0,0	monster	Organic Pumpkin	3202,1,5000
+gefenia01,0,0	monster	Organic Pumpkin	3202,1,5000
+gefenia02,0,0	monster	Organic Pumpkin	3202,1,5000
+gefenia03,0,0	monster	Organic Pumpkin	3202,1,5000
+gefenia04,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_cas01,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_cas02,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_church,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_chyard,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_in01,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_knt01,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_knt02,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_prison,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_prison1,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_sew01,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_sew02,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_sew03,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_sew04,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_step,0,0	monster	Organic Pumpkin	3202,1,5000
+glast_01,0,0	monster	Organic Pumpkin	3202,1,5000
+gon_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+gon_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+gon_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+gon_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+hu_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+hu_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+hu_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+hu_fild05,0,0	monster	Organic Pumpkin	3202,1,5000
+hu_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+ice_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+ice_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+ice_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+in_sphinx1,0,0	monster	Organic Pumpkin	3202,1,5000
+in_sphinx2,0,0	monster	Organic Pumpkin	3202,1,5000
+in_sphinx3,0,0	monster	Organic Pumpkin	3202,1,5000
+in_sphinx4,0,0	monster	Organic Pumpkin	3202,1,5000
+in_sphinx5,0,0	monster	Organic Pumpkin	3202,1,5000
+iz_dun00,0,0	monster	Organic Pumpkin	3202,1,5000
+iz_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+iz_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+iz_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+iz_dun04,0,0	monster	Organic Pumpkin	3202,1,5000
+jupe_core,0,0	monster	Organic Pumpkin	3202,1,5000
+juperos_01,0,0	monster	Organic Pumpkin	3202,1,5000
+juperos_02,0,0	monster	Organic Pumpkin	3202,1,5000
+kh_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+kh_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+lhz_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+lhz_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+lhz_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+lhz_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+lhz_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+lhz_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+lou_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+lou_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+lou_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+lou_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+mag_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+mag_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+man_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+mjo_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+mjo_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+mjo_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_01,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_02,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_03,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_04,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_05,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_06,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_07,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_08,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_09,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_10,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_11,0,0	monster	Organic Pumpkin	3202,1,5000
+mjolnir_12,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild05,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild09,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild10,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild11,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild12,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild13,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild14,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild15,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild16,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild17,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_fild18,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_pryd01,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_pryd02,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_pryd03,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_pryd04,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_pryd05,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_pryd06,0,0	monster	Organic Pumpkin	3202,1,5000
+nameless_n,0,0	monster	Organic Pumpkin	3202,1,5000
+nif_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+nif_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+nyd_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+odin_tem01,0,0	monster	Organic Pumpkin	3202,1,5000
+odin_tem02,0,0	monster	Organic Pumpkin	3202,1,5000
+odin_tem03,0,0	monster	Organic Pumpkin	3202,1,5000
+orcsdun01,0,0	monster	Organic Pumpkin	3202,1,5000
+orcsdun02,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_dun00,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_dun04,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild09,0,0	monster	Organic Pumpkin	3202,1,5000
+pay_fild10,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild00,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild05,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild09,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild10,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild11,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_maze01,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_maze02,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_maze03,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_sewb1,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_sewb2,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_sewb3,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_fild05,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_fild12,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_san01,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_san02,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_san03,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_san04,0,0	monster	Organic Pumpkin	3202,1,5000
+ra_san05,0,0	monster	Organic Pumpkin	3202,1,5000
+spl_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t01,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t02,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t03,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t04,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t05,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t06,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t07,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t08,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t09,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t10,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t11,0,0	monster	Organic Pumpkin	3202,1,5000
+tha_t12,0,0	monster	Organic Pumpkin	3202,1,5000
+thor_v01,0,0	monster	Organic Pumpkin	3202,1,5000
+thor_v02,0,0	monster	Organic Pumpkin	3202,1,5000
+thor_v03,0,0	monster	Organic Pumpkin	3202,1,5000
+treasure01,0,0	monster	Organic Pumpkin	3202,1,5000
+treasure02,0,0	monster	Organic Pumpkin	3202,1,5000
+tur_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+tur_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+tur_dun03,0,0	monster	Organic Pumpkin	3202,1,5000
+tur_dun04,0,0	monster	Organic Pumpkin	3202,1,5000
+um_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+um_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+um_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+um_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+ve_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+ve_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+ve_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+ve_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+ve_fild05,0,0	monster	Organic Pumpkin	3202,1,5000
+ve_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+xmas_dun01,0,0	monster	Organic Pumpkin	3202,1,5000
+xmas_dun02,0,0	monster	Organic Pumpkin	3202,1,5000
+xmas_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild02,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild03,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild04,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild06,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild07,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild08,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild09,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild10,0,0	monster	Organic Pumpkin	3202,1,5000
+yuno_fild12,0,0	monster	Organic Pumpkin	3202,1,5000
+ecl_fild01,0,0	monster	Organic Pumpkin	3202,1,5000
+ecl_tdun01,0,0	monster	Organic Pumpkin	3202,1,5000
+ecl_tdun02,0,0	monster	Organic Pumpkin	3202,1,5000
+ecl_tdun03,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_prydn1,0,0	monster	Organic Pumpkin	3202,1,5000
+moc_prydn2,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild08a,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild08b,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild08c,0,0	monster	Organic Pumpkin	3202,1,5000
+prt_fild08d,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_chyard_,0,0	monster	Organic Pumpkin	3202,1,5000
+gl_cas02_,0,0	monster	Organic Pumpkin	3202,1,5000
+gld_dun01_2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gld_dun02_2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gld_dun03_2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gld_dun04_2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gld2_ald,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gld2_gef,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gld2_pay,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gld2_prt,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lhz_dun04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+iz_dun05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mal_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dic_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dew_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dew_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dew_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mal_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+iz_dun05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+man_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+man_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+spl_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+spl_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+man_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+spl_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+nyd_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+bra_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+bra_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+bra_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dic_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dic_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dic_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+dic_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+bif_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+bif_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+abbey01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+abbey02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+abbey03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+abyss_01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+abyss_02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+abyss_03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+alde_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+alde_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+alde_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+alde_dun04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ama_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ama_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ama_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ama_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+anthell01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+anthell02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ayo_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ayo_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ayo_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ayo_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+beach_dun,0,0	monster	Inorganic Pumpkin	3203,4,5000
+beach_dun2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+beach_dun3,0,0	monster	Inorganic Pumpkin	3203,4,5000
+c_tower1,0,0	monster	Inorganic Pumpkin	3203,4,5000
+c_tower2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+c_tower3,0,0	monster	Inorganic Pumpkin	3203,4,5000
+c_tower4,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+cmd_fild09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_fild05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ein_fild09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_dun00,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild00,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild10,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild11,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gef_fild13,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gefenia01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gefenia02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gefenia03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gefenia04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_cas01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_cas02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_church,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_chyard,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_in01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_knt01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_knt02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_prison,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_prison1,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_sew01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_sew02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_sew03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_sew04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_step,0,0	monster	Inorganic Pumpkin	3203,4,5000
+glast_01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gon_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gon_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gon_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gon_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+hu_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+hu_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+hu_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+hu_fild05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+hu_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ice_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ice_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ice_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+in_sphinx1,0,0	monster	Inorganic Pumpkin	3203,4,5000
+in_sphinx2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+in_sphinx3,0,0	monster	Inorganic Pumpkin	3203,4,5000
+in_sphinx4,0,0	monster	Inorganic Pumpkin	3203,4,5000
+in_sphinx5,0,0	monster	Inorganic Pumpkin	3203,4,5000
+iz_dun00,0,0	monster	Inorganic Pumpkin	3203,4,5000
+iz_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+iz_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+iz_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+iz_dun04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+jupe_core,0,0	monster	Inorganic Pumpkin	3203,4,5000
+juperos_01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+juperos_02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+kh_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+kh_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lhz_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lhz_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lhz_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lhz_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lhz_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lhz_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lou_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lou_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lou_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+lou_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mag_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mag_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+man_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjo_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjo_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjo_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_10,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_11,0,0	monster	Inorganic Pumpkin	3203,4,5000
+mjolnir_12,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild10,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild11,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild12,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild13,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild14,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild15,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild16,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild17,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_fild18,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_pryd01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_pryd02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_pryd03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_pryd04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_pryd05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_pryd06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+nameless_n,0,0	monster	Inorganic Pumpkin	3203,4,5000
+nif_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+nif_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+nyd_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+odin_tem01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+odin_tem02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+odin_tem03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+orcsdun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+orcsdun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_dun00,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_dun04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+pay_fild10,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild00,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild10,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild11,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_maze01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_maze02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_maze03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_sewb1,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_sewb2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_sewb3,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_fild05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_fild12,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_san01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_san02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_san03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_san04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ra_san05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+spl_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t10,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0	
+tha_t11,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tha_t12,0,0	monster	Inorganic Pumpkin	3203,4,5000
+thor_v01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+thor_v02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+thor_v03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+treasure01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+treasure02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tur_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tur_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tur_dun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+tur_dun04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+um_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+um_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+um_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+um_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ve_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ve_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ve_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ve_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ve_fild05,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ve_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+xmas_dun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+xmas_dun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+xmas_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild04,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild06,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild07,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild08,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild09,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild10,0,0	monster	Inorganic Pumpkin	3203,4,5000
+yuno_fild12,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ecl_fild01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ecl_tdun01,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ecl_tdun02,0,0	monster	Inorganic Pumpkin	3203,4,5000
+ecl_tdun03,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_prydn1,0,0	monster	Inorganic Pumpkin	3203,4,5000
+moc_prydn2,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild08a,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild08b,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild08c,0,0	monster	Inorganic Pumpkin	3203,4,5000
+prt_fild08d,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_chyard_,0,0	monster	Inorganic Pumpkin	3203,4,5000
+gl_cas02_,0,0	monster	Inorganic Pumpkin	3203,4,5000

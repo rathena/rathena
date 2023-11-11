@@ -1,0 +1,199 @@
+//===== rAthena Script ======================================= 
+//= Card Trader
+//===== By: ================================================== 
+//= Elias (og2)
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project; SVN r15340+
+//===== Description: ========================================= 
+//= Card and Points Trader
+//===== Additional Comments: ================================= 
+//= 1.0 Translated from the Official [Elias]
+//= 1.1 Fixed variables and optimized script [Elias]
+//= 1.2 Fixed char being stuck with breaks [Elias] (bugreport:5374)
+//= 1.3 Optimized: reduced from 123kb to 7kb! [Euphy]
+//= 1.4 Variables don't need to load OnInit. [Euphy]
+//= 1.4a Misc. [Capuche]
+//============================================================ 
+
+prontera,115,90,0	script	Putty	4_F_01,{
+	disable_items;
+	setarray .@card1[0], 4001,4006,4009,4019,4075,4033,4012,4016,4026,4022,
+				4027,4028,4038,4025,4021,4050,4079,4081,4090,4094,
+				4101,4104,4110,4114,4119,4108,4095,4231,4280,4008,
+				4011,4013,4014,4015,4020,4032,4037,4039,4041,4045,
+				4046,4010,4023,4029,4052,4048,4056,4071,4093,4031,
+				4036,4034,4042,4055,4061,4087,4096,4116,4122,4170,
+				4215,4220,4228,4226,4212,4227,4267,4257,4278,4286,
+				4287,4292,4311,4315,4319,4322,4084,4078,4113,4149,
+				4153,4196,4240,4247,4256,4057,4066,4067,4112,4150,
+				4152,4186,4187,4181,4173,4167,4162,4176,4195,4193,
+				4200,4223,4194,4190,4189,4192,4224,4244,4248,4261,
+				4260,4259,4274,4275,4313,4299,4304,4294,4076,4127,
+				4154,4157,4156,4213,4214,4225,4235;
+	setarray .@card2[0], 4293,4297,4288,4283,4295,4307,4308,4309,4132,4326,
+				4341,4335,4337,4345,4344,4331,4333,4332,4089,4161,
+				4177,4178,4180,4184,4191,4206,4199,4273,4282,4268,
+				4289,4321,4316,4343,4339,4369,4377,4385,4383,4382,
+				4380,4381,4378,4379,4390,4389,4388,4391,4405,4400,
+				4401,4402,4404,4002,4003,4004,4005,4007,4017,4024,
+				4030,4035,4040,4043,4044,4049,4051,4053,4058,4060,
+				4062,4063,4064,4065,4068,4069,4070,4072,4073,4074,
+				4077,4080,4082,4083,4085,4086,4088,4091,4092,4097,
+				4098,4099,4100,4102,4103,4106,4107,4109,4111,4115,
+				4117,4118,4120,4124,4125,4126,4138,4139,4141,4151,
+				4158,4164,4165,4182,4185,4159,4160,4166,4172,4175,
+				4188,4201,4202,4204,4205,4208,4209;
+	setarray .@card3[0], 4120,4216,4217,4219,4221,4222,4230,4234,4233,4232,
+				4237,4238,4242,4243,4245,4246,4249,4252,4255,4258,
+				4262,4264,4276,4270,4271,4218,4239,4251,4253,4269,
+				4334,4105,4133,4136,4229,4272,4277,4279,4281,4284,
+				4285,4290,4296,4298,4301,4310,4314,4317,4325,4327,
+				4328,4329,4338,4340,4346,4347,4348,4349,4350,4351,
+				4353,4354,4355,4356,4358,4360,4362,4364,4366,4368,
+				4370,4371,4373,4375,4387,4406,4129,4155,4291,4392,
+				4393,4394,4409,4410,4411,4412,4413,4414,4415,4416,
+				4417,4418,4420,4421,4422,4423,4424,4427,4427,4428,
+				4429,4431,4432,4433,4434,4435,4436,4437,4438,4439,
+				4440,4442,4443,4444,4445,4447,4448,4449,4450,4452,
+				4453;
+	setarray .@size_card[1],  getarraysize(.@card1), getarraysize(.@card2), getarraysize(.@card3);
+	.@points = oversea_event9;
+	if (!.@points) {
+		mes "[Putty]";
+		mes "Hi there.";
+		mes "I don't know if I can be";
+		mes "of any assistance, but I";
+		mes "am trying to help older veterans";
+		mes "by exchaning the cards that";
+		mes "they are no longer using.";
+		next;
+		switch(select("Ask for more information!","I don't have any cards right now.")) {
+		case 1:
+			mes "[Putty]";
+			mes "I am giving 1 point for each card that you bring me.";
+			mes "The points can be used to exchange for items that I have.";
+			next;
+			mes "[Putty]";
+			mes "For ^CC0000100 points^000000: ^0000CC1 Old Card Album^000000.";
+			mes "For ^CC000050 points^000000: ^0000CC20 Yggdrasil Berry^000000.";
+			mes "For ^CC000020 points^000000: ^0000CC10 Blue Potion^000000.";
+			mes "For ^CC00001 point^000000: ^0000CC4 Honey^000000.";
+			next;
+			break;
+		case 2:
+			mes "[Putty]";
+			mes "Well, remember this offer!";
+			close;
+		}
+	} else {
+		mes "[Putty]";
+		mes "Welcome back!";
+		mes "I see you already have some";
+		mes "trading points. Actually, you currently have ^00cc00" + .@points + "^000000.";
+		next;
+		mes "[Putty]";
+		mes "Would you like to exchange these";
+		mes "points now, or you would like to exchange more cards?";
+		next;
+	}
+	switch(select("I would like to exchange cards.","Can I exchange the points?")) {
+	case 1:
+		mes "[Putty]";
+		mes "Please tell me what card you want to exchange.";
+		next;
+		input .@i$;
+		.@input$ = "_"+.@i$;
+		freeloop(1);
+		for(.@j = 1; .@j<4; .@j++) {
+			for(.@i = 0; .@i<.@size_card[.@j]; .@i++)
+				if (compare(.@input$,"_"+getitemname(getd(".@card"+.@j+"["+.@i+"]")))) {
+					.@card = getd(".@card"+.@j+"["+.@i+"]");
+					break;
+				}
+			sleep2 10; // For good measure
+			if (.@card) break;
+		}
+		freeloop(0);
+		mes "[Putty]";
+		if (!.@card) mes "Please, come back here if you want to exchange a monster card.";
+		else {
+			.@count = countitem(.@card);
+			if (!.@count) {
+				mes "You don't have any ^0055FF"+callfunc("F_GetPlural",getitemname(.@card))+"^000000 with you!";
+				close;
+			}
+			mes "You've got ^0055FF"+callfunc("F_InsertPlural",.@count,getitemname(.@card))+"^000000.";
+			mes " ";
+			mes "Would you like to exchange 1 point for each of them?";
+			next;
+			switch(select("Yes, please!","No, thank you.")) {
+				case 1:
+					delitem .@card,.@count;
+					oversea_event9 = (.@points+.@count);
+					mes "[Putty]";
+					mes "Alright, you have received ^CC0000"+.@count+"^000000 points.";
+					break;
+				case 2:
+					mes "[Putty]";
+					mes "Okay, let me know if I can help you with something else.";
+					break;
+			}
+		}
+		close;
+	case 2:
+		if (.@points) {
+			mes "[Putty]";
+			mes "These are the items that I have.";
+			next;
+			switch(select("1 Old Card Album - 50 Points","20 Yggdrasil Berry - 50 Points","10 Blue Potion - 20 Points","4 Honey - 1 Point","^777777Nerver mind.^000000")) {
+				case 1:
+					if (.@points < 100) break;
+					mes "[Putty]";
+					mes "Great, I wish you the best";
+					mes "of luck with this album. I have a";
+					mes "very good feeling about this one!";
+					oversea_event9 = .@points - 100;
+					getitem 616,1;
+					close;
+				case 2:
+					if (.@points < 50) break;
+					mes "[Putty]";
+					mes "Oh, you must like adventures.";
+					mes "Here you go, just what you need!";
+					oversea_event9 = .@points - 50;
+					getitem 607,20;
+					close;
+				case 3:
+					if (.@points < 20) break;
+					mes "[Putty]";
+					mes "Blue Potions? Are you sure?";
+					mes "If that's what you want, here they are!";
+					oversea_event9 = .@points - 20;
+					getitem 505,10;
+					close;
+				case 4:
+					if (.@points < 1) break;
+					mes "[Putty]";
+					mes "It took many bees";
+					mes "to make all of this.";
+					mes "Make good use of it.";
+					oversea_event9 = .@points - 1;
+					getitem 518,4;
+					close;
+				case 5:
+					mes "[Putty]";
+					mes "Alright, come back when you have more points.";
+					close;
+				}
+			mes "[Putty]";
+			mes "Sorry, but you don't have enough points.";
+			close;
+		} else {
+			mes "[Putty]";
+			mes "You have 0 points. You need at least 1 point to exchange.";
+			close;
+		}
+	}
+}

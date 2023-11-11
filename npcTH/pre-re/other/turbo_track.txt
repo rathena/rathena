@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Turbo Track
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Pre-Renewal duplicates.
+//===== Additional Comments: =================================
+//= 1.0 Split Peco Peco Manager NPC.
+//============================================================
+
+alde_gld,181,199,5	duplicate(MountManager_turbo)	Peco Peco Manager	845

@@ -1,0 +1,17 @@
+//===== rAthena Script =======================================
+//= Mercenary related NPCs
+//===== By: ==================================================
+//= Daegaladh
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Sells Lancer, Sword, and Archer mercenaries,
+//= along with related mercenary items.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Daegaladh]
+//============================================================
+
+izlude,47,139,5	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword	734
+izlude,56,139,4	duplicate(MercMerchant)	Mercenary Merchant#Sword	892

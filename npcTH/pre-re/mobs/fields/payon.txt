@@ -1,0 +1,147 @@
+//===== rAthena Script =======================================
+//= Payon Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Some 11.1 spawn changes [Playtester]
+//= 1.3 More accurate spawns [Playtester]
+//= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// pay_fild01 - Payon Forest
+//==================================================
+pay_fild01,0,0	monster	Willow	1010,10
+pay_fild01,0,0	monster	Poporing	1031,10
+pay_fild01,0,0	monster	Poring	1002,10
+pay_fild01,0,0	monster	Spore	1014,100
+pay_fild01,340,89	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,336,116	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,231,258	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,215,323	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,340,89	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,225,310	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,129,288	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,75,269	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,80,226	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,89,177	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,95,85	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,57,85	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,64,113	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,64,190	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,70,246	monster	Black Mushroom	1084,1,180000,90000
+pay_fild01,0,0	monster	Green Plant	1080,5,180000,90000
+
+//==================================================
+// pay_fild02 - Payon Forest
+//==================================================
+pay_fild02,0,0	monster	Boa	1025,30
+pay_fild02,0,0	monster	Wolf	1013,70
+pay_fild02,0,0	monster	Spore	1014,10
+pay_fild02,0,0	monster	Poporing	1031,20
+pay_fild02,105,256,10,10	monster	Green Plant	1080,4,360000,180000
+pay_fild02,105,256,10,10	monster	Red Mushroom	1085,4,360000,180000
+
+//==================================================
+// pay_fild03 - Payon Forest
+//==================================================
+pay_fild03,0,0	monster	Poring	1002,30
+pay_fild03,0,0	monster	Willow	1010,30
+pay_fild03,0,0	monster	Pupa	1008,50
+pay_fild03,0,0	monster	Lunatic	1063,50
+pay_fild03,153,216,10,10	monster	Red Mushroom	1085,6,900000,450000
+pay_fild03,372,64,15,15	monster	Green Plant	1080,4,180000,90000
+
+//==================================================
+// pay_fild04 - Sograt Desert
+//==================================================
+pay_fild04,0,0	monster	Poring	1002,40
+pay_fild04,0,0	monster	Drops	1113,40
+pay_fild04,0,0	monster	Poporing	1031,40
+pay_fild04,0,0	monster	Marin	1242,10
+pay_fild04,0,0	monster	Ghostring	1120,1,3600000,1800000
+pay_fild04,0,0	monster	Mastering	1090,1,3600000,1800000
+pay_fild04,0,0	monster	Angeling	1096,1,3600000,1800000
+pay_fild04,0,0	monster	Deviling	1582,1,7200000,3600000
+pay_fild04,346,335,5,5	monster	Shining Plant	1083,1,1800000,900000
+pay_fild04,254,193,10,10	monster	Green Plant	1080,5,360000,180000
+
+//==================================================
+// pay_fild05 - Payon Forest
+//==================================================
+pay_fild05,0,0	monster	Dragon Tail	1321,5
+pay_fild05,0,0	monster	Poporing	1031,20
+pay_fild05,0,0	monster	Poison Spore	1077,65
+pay_fild05,95,147,5,5	monster	Green Plant	1080,4,900000,450000
+pay_fild05,86,90,5,5	monster	Green Plant	1080,4,900000,450000
+
+//==================================================
+// pay_fild06 - Payon Forest
+//==================================================
+pay_fild06,0,0	monster	Wormtail	1024,90
+pay_fild06,0,0	monster	Spore	1014,20
+pay_fild06,0,0	monster	Poporing	1031,20
+pay_fild06,0,0	monster	Thief Bug Female	1053,40
+pay_fild06,211,191,2,10	monster	Red Mushroom	1085,8,180000,90000
+pay_fild06,268,155,20,20	monster	Green Plant	1080,10,360000,180000
+pay_fild06,268,155,20,20	monster	Shining Plant	1083,1,1800000,900000
+
+//==================================================
+// pay_fild07 - Payon Forest
+//==================================================
+pay_fild07,0,0	monster	Elder Willow	1033,70
+pay_fild07,0,0	monster	Eggyra	1116,40
+pay_fild07,0,0	monster	Poporing	1031,20
+pay_fild07,0,0	monster	Willow	1010,20
+pay_fild07,0,0	monster	Bigfoot	1060,30
+pay_fild07,171,331,20,20	monster	Green Plant	1080,8,900000,450000
+
+//==================================================
+// pay_fild08 - Payon Forest
+//==================================================
+pay_fild08,0,0	monster	Poring	1002,30
+pay_fild08,0,0	monster	Willow	1010,50
+pay_fild08,0,0	monster	Pupa	1008,20
+pay_fild08,0,0	monster	Spore	1014,70
+pay_fild08,0,0	monster	Green Plant	1080,10,60000,30000
+pay_fild08,143,156,40,40	monster	Shining Plant	1083,1,3600000,1800000
+
+//==================================================
+// pay_fild09 - Payon Forest
+//==================================================
+pay_fild09,0,0	monster	Poporing	1031,20
+pay_fild09,0,0	monster	Smokie	1056,80
+pay_fild09,0,0	monster	Bigfoot	1060,70
+pay_fild09,198,217,30,30	monster	Green Plant	1080,10,360000,180000
+pay_fild09,198,217,30,30	monster	Shining Plant	1083,1,1800000,900000
+
+//==================================================
+// pay_fild10 - Payon Forest
+//==================================================
+pay_fild10,0,0	monster	Greatest General	1277,65
+pay_fild10,0,0	monster	Dokebi	1110,70
+pay_fild10,0,0	monster	Poison Spore	1077,20
+pay_fild10,0,0	monster	Nine Tail	1180,2
+pay_fild10,0,0	monster	Nine Tail	1180,1,1800000,900000
+pay_fild10,0,0	monster	Nine Tail	1180,1,900000,450000
+pay_fild10,213,157,10,10	monster	Green Plant	1080,5,360000,180000
+pay_fild10,281,307,10,10	monster	Green Plant	1080,5,360000,180000
+pay_fild10,66,332,10,10	monster	Green Plant	1080,5,360000,180000
+pay_fild10,213,157,10,10	monster	Blue Plant	1079,1,360000,180000
+pay_fild10,281,307,10,10	monster	Blue Plant	1079,1,360000,180000
+pay_fild10,66,332,10,10	monster	Blue Plant	1079,1,360000,180000
+
+//==================================================
+// pay_fild11 - Payon Forest
+//==================================================
+pay_fild11,0,0	monster	Greatest General	1277,30
+pay_fild11,0,0	monster	Nine Tail	1180,60,180000
+pay_fild11,0,0	monster	Dragon Tail	1321,50,180000
+pay_fild11,0,0,0,0	boss_monster	Eddga	1115,1,7200000,600000,1
+pay_fild11,241,162,5,5	monster	Red Mushroom	1085,3,360000,180000
+pay_fild11,66,293,5,5	monster	Red Mushroom	1085,3,360000,180000

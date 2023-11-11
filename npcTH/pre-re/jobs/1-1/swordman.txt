@@ -1,0 +1,642 @@
+//===== rAthena Script ======================================= 
+//= Swordsman Job Quest
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 2.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Job quest for Swordman classes
+//= Uses Job_sword1 as opposed to sword_1-1 -> sword_3-1.
+//= EXPLOITABLE in a sense because while the sword_x-1 maps
+//= are marked as "inside" by the client, job_sword1 is not.
+//= giving players FREE camera rotation while doing the job quest.
+//===== Additional Comments: ================================= 
+//= 1.0 Fully working.
+//= 1.1 Added instant job change for High Novice [Lupus]
+//= 1.3 Added Baby Class support [Lupus]
+//= 1.4 Changed the timing system to initnpctimer, now you do get warnings about time
+//=     and are limited to 7min to complete the quest [Fredzilla]
+//= 1.5 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.5.1 Fixed possible EXP abuse [Lupus]
+//= 1.5.2 Now saves/restores all quest skills [Lupus]
+//= 1.5.3 Removed Duplicates [Silent]
+//= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
+//= 1.7 changed location from its clone to the original [Lupus]
+//= 1.7.1 Fixed warp on timeout [KarLaeda]
+//= 1.8 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=     Removed "green" traps, quest is no longer timed.
+//=     No longer uses function "F_ToHigh"
+//= 1.9 Dialog is official, but the Script is now custom as far as maps go. [L0ne_W0lf]
+//= 1.9b Fixed usage of wrong jobchange func messing up baby classes [ultramage]
+//= 2.0 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
+//= 2.1 Fixed mistake in condition check. [L0ne_W0lf]
+//= 2.2 Warp portals dont end with ; [Yommy]
+//= 2.3 Added Quest Log commands. [L0ne_W0lf]
+//============================================================ 
+
+izlude_in,74,172,4	script	Swordman#swd_1	119,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin)) {
+			mes "[Swordman]";
+			mes "It...";
+			mes "Can't be...";
+			mes "You've been reborn, haven't you?";
+			next;
+			mes "[Swordman]";
+			mes "I see you're retreading the path of the Swordman! Once you've gotten used to brandishing a sword, you can never go back!!";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[Swordman]";
+				mes "Hmm? Ah, you must first master the Basic Skills before you are ready to become a Swordman.";
+				next;
+				mes "[Swordman]";
+				mes "Come back to me when you have finished learning the Basic Novice Skills.";
+				close;
+			}
+			mes "[Swordman]";
+			mes "Excellent! Let me promote you to a Swordman right away!";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Swordman_High;
+			skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+			skill "SM_FATALBLOW",1,SKILL_PERM;
+			skill "SM_AUTOBERSERK",1,SKILL_PERM;
+			mes "[Swordman]";
+			mes "Hmm... You look like a well-experienced Swordman. Still, I'm sure that you must train to improve your skills and gain strength!";
+			close;
+		}
+		else {
+			mes "[Swordman]";
+			mes "Hm...?";
+			mes "You're a reborn";
+			mes "warrior, aren't you?";
+			next;
+			mes "[Swordman]";
+			mes "Hmmm...";
+			mes "It seems that being";
+			mes "a Swordman is not part";
+			mes "of your destiny. I'm sorry,";
+			mes "but it seems there is nothing";
+			mes "I can do for you.";
+			close;
+		}
+	}
+	mes "[Swordman]";
+	mes "Welcome to the";
+	mes "Swordman Association!";
+	next;
+	mes "[Swordman]";
+	mes "So...";
+	mes "What business";
+	mes "brings you to us?";
+	next;
+	switch(select("Job Change:About Swordman.:About the Job requirements.:Cancel.")) {
+	case 1:
+		if (BaseJob == Job_Swordman) {
+			mes "[Swordman]";
+			mes "Job change? Muhahaha! But you're already a Swordman! Be proud and be strong!";
+			close;
+		}
+		else if (BaseJob != Job_Novice) {
+			mes "[Swordman]";
+			mes "Haha! Oh boy. I'm flattered, but you already have another job! Still, I can't blame you...";
+			close;
+		}
+		if (job_sword_q == 0) {
+			mes "[Swordman]";
+			mes "So you wish to become a proud Swordman? By all means, please sign up!";
+			next;
+			if (select("Sign up.:Cancel.") == 1) {
+				savepoint "izlude_in",65,165,1,1;
+				set job_sword_q,1;
+				setquest 1014;
+				mes "[Swordman]";
+				mes "Ah, yes. Your application will be reviewed as soon as possible.";
+				next;
+				mes "[Swordman]";
+				mes "If you have already met the requirements, you can take an interview right now. Would you like to?";
+				next;
+				if (select("Yes.:No.") == 1) {
+					mes "[Swordman]";
+					mes "Good, good.";
+					mes "Now, let's see...";
+					next;
+				}
+				else {
+					mes "[Swordman]";
+					mes "Alright then. Feel free to come back whenever you are ready. All you have to do now is meet our requirements. Good luck to you.";
+					close;
+				}
+			}
+			else {
+				mes "[Swordman]";
+				mes "Hm? Alright, come back whenever you change your mind. The world can always use another Swordman!";
+				close;
+			}
+		}
+		mes "[Swordman]";
+		if (!callfunc("F_CanChangeJob")) {
+			mes "Hm, you still haven't learned all of the Basic Skills. You need to do that before you can become a Swordman.";
+			next;
+			mes "[Swordman]";
+			mes "Check the requirements for job change again, and come back when you are ready.";
+			close;
+		}
+		else if (job_sword_q <= 3) {
+			mes "Hm, you've learned all of the Basic Skills but didn't take the test yet. You must first pass the exam before you can change your job to Swordman.";
+			next;
+			mes "[Swordman]";
+			mes "Enter the room to my right so that you can take the test. You'll need to speak to my right so you can enter the examination area.";
+			close;
+		}
+		else if (job_sword_q == 4) {
+			mes "Hahaha! Congratulations! Now you are fully qualified to be a real Swordman! I will transform you right away!";
+			next;
+			callfunc "Job_Change",Job_Swordman;
+			set job_sword_q,0;
+			completequest 1014;
+			mes "[Swordman]";
+			mes "Once again, congratulations. I expect that you will be a good representative of the Swordman Association.";
+			close;
+		}
+	case 2:
+		mes "[Swordman]";
+		mes "So you wish to know more about the mighty Swordman job? Well, then...";
+		next;
+		mes "[Swordman]";
+		mes "Amongst the First Class jobs, the Swordman is the best melee fighter for three reasons.";
+		mes "There are 3 reasons why Swordy is the best to approch a fight!";
+		next;
+		mes "[Swordman]";
+		mes "First, Swordman has the benefit of additional HP. Second, Swordman generally have access to a wider selection fo weapons than the other First Class jobs.";
+		next;
+		mes "[Swordman]";
+		mes "And third, most of the Swordman skills are crushing physical attacks! In my opinion, being a Swordman is the best job ever!";
+		close;
+	case 3:
+		mes "[Swordman]";
+		mes "Hmmm...";
+		if (BaseJob != Job_Novice) {
+			if (BaseJob == Job_Swordman)
+				mes "But there's no need to tell you the requirements. You've met them and already became a Swordman! Well, anyway...";
+			else
+				mes "It's too late for you to become a Swordman. You already have another job. Still, there's no harm in telling you...";
+		}
+		next;
+		mes "[Swordman]";
+		mes "First, you must learn all 9 of the Basic Skills. If you can't complete this requirement, you won't be able to change to any job.";
+		next;
+		mes "[Swordman]";
+		mes "Second, you must pass the Swordman Test. Inquire the Test Manager located in the waiting room of the Swordman Test.";
+		next;
+		mes "[Swordman]";
+		mes "If you can complete these 2 requirements, you can change to a Swordman anytime you want.";
+		close;
+	case 4:
+		mes "[Swordman]";
+		mes "Ha ha ha!";
+		mes "Ah, youth!";
+		close;
+	}
+}
+
+izlude_in,62,170,6	script	Swordman#swd_2	85,{
+	mes "[Swordman]";
+	if (BaseJob == Job_Swordman) {
+		mes "Sorry guy, but I can only allow Novices to enter the Test Hall.";
+		close;
+	}
+	else if (BaseJob != Job_Novice) {
+		mes "Who the hell are you?! Nobody, other than Novices, is permitted to come in here!";
+		close;
+	}
+	else if (!callfunc("F_CanChangeJob")) {
+		mes "Stop! I can't let you in until you learn all of the Basic Skills. The Test Hall isn't for goofing off!";
+		close;
+	}
+	else if (job_sword_q == 4) {
+		mes "Hey. You need to talk to the Swordman in the center of the room, not me.";
+		close;
+	}
+	else if (job_sword_q == 0) {
+		mes "Stop! If you want to take the Swordman Test, you'll need to fill out an application first.";
+		next;
+		mes "[Swordman]";
+		mes "The Swordman in the center of the room can help you with that, got it?";
+		close;
+	}
+	else {
+		savepoint "izlude_in",65,165,1,1;
+		warp "izlude_in",39,170;
+		end;
+	}
+}
+
+izlude_in,30,175,4	script	Swordman#swd_3	92,{
+	mes "[Swordman]";
+	mes "I will tell you about the Test! Listen carefully, I won't repeat myself.";
+	next;
+	mes "[Swordman]";
+	mes "The purpose of this test is to confirm whether or not you are qualified to be a Swordman. As you know, a Swordman needs physical strength and spirit!";
+	next;
+	mes "[Swordman]";
+	mes "Without those, you won't be able to become a Swordman. Now, the conditions for completing this test are very simple.";
+	next;
+	mes "[Swordman]";
+	mes "You will travel through three courses and must reach the final checkpoint within ^FF000010 minutes^000000.";
+	next;
+	mes "[Swordman]";
+	mes "If you choose to 'Surrender,' or if you run out of time, you will not pass the test.";
+	next;
+	mes "[Swordman]";
+	mes "If you find that you are not strong enough to pass the test, head to the entrance of the course and talk to the checkpoint manager.";
+	next;
+	mes "[Swordman]";
+	mes "As you travel through the three courses, you may fall to a random, underground area. The course is designed so that you can still find your way back.";
+	next;
+	mes "[Swordman]";
+	mes "However, be careful, as this will waste your time! Godspeed to you.";
+	close;
+}
+
+izlude_in,30,163,0	script	Test Hall Staff#swd_1	105,{
+	mes "[Test Hall Staff]";
+	if (BaseJob == Job_Swordman) {
+		mes "Hm? How did you get inside? You're not supposed to be in here, so please leave now.";
+		close2;
+		warp "izlude_in",66,170;
+		end;
+	}
+	else if (BaseJob != Job_Novice) {
+		mes "Who are you?! This place is for the Swordman Test! You're not allowed to be in here! Leave now!";
+		close2;
+		warp "izlude_in",66,170;
+		end;
+	}
+	if (job_sword_q == 1) {
+		mes "So are you the one who wants to be a Swordman? Alright! You look reliable!";
+		next;
+		mes "[Test Hall Staff]";
+		mes "Try to relax and do your best. This course isn't so difficult.";
+		set job_sword_q,2;
+	}
+	else if (job_sword_q == 2) {
+		mes "Retesting? Try not to worry about it. It's good that you don't back down from a challenge! Here, take these and cheer up!";
+		getitem 512,5; //Apple
+		set job_sword_q,3;
+	}
+	else if (job_sword_q == 3)
+		mes "Don't ever give up! Now retesting!";
+	close2;
+	warp "job_sword1",10,245;
+	end;
+}
+
+// Examination Courses NPCs
+//============================================================ 
+// 1-1
+job_sword1,230,245,2	script	Medic#swd_1	105,{
+	callfunc "F_JobSwdMedic","1st";
+}
+job_sword1,230,242,2	script	Test Hall Staff#swd_2	105,{
+	callfunc "F_JobSwdStaff",1;
+}
+job_sword1,230,207,2	script	Medic#2swd_2	105,{
+	callfunc "F_JobSwdMedic","2nd";
+}
+job_sword1,230,204,2	script	Test Hall Staff#2swd_3	105,{
+	callfunc "F_JobSwdStaff",1;
+}
+job_sword1,223,167,2	script	Mae#swd_1_success	92,{
+	mapannounce "job_sword1","Applicant " + strcharinfo(0) + ". You successfully passed the test.",bc_map;
+	set job_sword_q,4;
+	mes "[Mae]";
+	mes "I sencerely congratulate you for passing the test!";
+	mes "I already sent your test result to the Job Department. Please inquire at the Officer in Centre.Thank you.";
+	close2;
+	warp "izlude_in",66,173;
+	end;
+}
+
+// Examination Course Functions
+//============================================================ 
+function	script	F_JobSwdMedic	{
+	percentheal 100,0;
+	mes "[Medic]";
+	mes "This is the "+getarg(0)+" check point! Cheer up!";
+	close;
+}
+
+function	script	F_JobSwdStaff	{
+	mes "[Test Hall Staff]";
+	mes "Do you surrender?";
+	next;
+	if (select("Yes.:No.") == 1) {
+		mapannounce "job_sword1","Applicant " + strcharinfo(0) + " quit the test.",bc_map;
+		warp "izlude_in",65,165;
+		end;
+	}
+	mes "[Test Hall Staff]";
+	mes "Bravo! Go for it again!";
+	close;
+}
+
+function	script	F_JobSwdTestStaff	{
+OnTouch:
+	mes "[Test Hall Staff]";
+	mes "Applicant " + strcharinfo(0) + ". Do you surrender??";
+	next;
+	if (select("Yes.:No.") == 1) {
+		mapannounce "job_sword1","Applicant " + strcharinfo(0) + " quit the test..",bc_map;
+		warp "izlude_in",65,165;
+		end;
+	}
+	warp "job_sword1",getarg(0),getarg(1);
+	end;
+}
+
+function	script	F_JobSwdTestStaff2	{
+OnTouch:
+	mapannounce "job_sword1","Applicant " + strcharinfo(0) + ". Pass the "+getarg(0)+" course.",bc_map;
+	warp "job_sword1",getarg(1),getarg(2);
+	end;
+}
+
+// Examination Course 1
+//============================================================ 
+job_sword1,223,243,0	warp	checkp1-2#swd_1	1,1,job_sword1,11,206
+job_sword1,223,205,0	warp	checkp2-3#swd_1	1,1,job_sword1,11,168
+
+job_sword1,7,245,0	script	Test Hall Staff#swd_4	45,1,3,{
+	callfunc "F_JobSwdTestStaff",10,245;
+}
+
+job_sword1,8,207,0	script	Test Hall Staff#swd_5	45,1,6,{
+	callfunc "F_JobSwdTestStaff",11,207;
+}
+
+job_sword1,8,169,0	script	Test Hall Staff#swd_6	45,1,6,{
+	callfunc "F_JobSwdTestStaff",11,169;
+}
+
+job_sword1,192,244,0	script	Test Hall Staff#swd_7	45,1,3,{
+	callfunc "F_JobSwdTestStaff2","1st",215,244;
+}
+
+job_sword1,193,207,0	script	Test Hall Staff#swd_8	45,1,3,{
+	callfunc "F_JobSwdTestStaff2","2nd",215,205;
+	warp "job_sword1",215,205;
+}
+
+job_sword1,193,168,0	script	Test Hall Staff#swd_9	45,1,3,{
+	callfunc "F_JobSwdTestStaff2","3rd",215,167;
+}
+
+// Pitfalls (Set 1)
+//============================================================ 
+job_sword1,65,117,0	warp	pitfall01-01	1,1,job_sword1,10,245
+job_sword1,98,27,0	warp	pitfall02-01	1,1,job_sword1,11,207
+job_sword1,161,27,0	warp	pitfall02-02	1,1,job_sword1,11,207
+job_sword1,239,117,0	warp	pitfall03-01	1,1,job_sword1,11,169
+
+job_sword1,16,251,0	script	1_blank_1_a::SwdTrap1	-1,0,1,{
+OnTouch:
+	switch(rand(1,5)) {
+	case 1: warp "job_sword1",65,56; end;
+	case 2: warp "job_sword1",29,26; end;
+	case 3: warp "job_sword1",43,16; end;
+	case 4: warp "job_sword1",23,112; end;
+	case 5: warp "job_sword1",58,83; end;
+	}
+}
+job_sword1,19,251,0	duplicate(SwdTrap1)	1_blank_1_b	-1,0,1
+job_sword1,17,250,0	duplicate(SwdTrap1)	1_blank_1_c	-1,1,0
+job_sword1,16,238,0	duplicate(SwdTrap1)	1_blank_2_a	-1,0,1
+job_sword1,19,238,0	duplicate(SwdTrap1)	1_blank_2_b	-1,0,1
+job_sword1,17,239,0	duplicate(SwdTrap1)	1_blank_2_c	-1,0,1
+job_sword1,28,247,0	duplicate(SwdTrap1)	1_blank_3_a	-1,4,0
+job_sword1,33,245,0	duplicate(SwdTrap1)	1_blank_3_b	-1,0,2
+job_sword1,29,242,0	duplicate(SwdTrap1)	1_blank_3_c	-1,4,0
+job_sword1,24,244,0	duplicate(SwdTrap1)	1_blank_3_d	-1,0,2
+job_sword1,38,251,0	duplicate(SwdTrap1)	1_blank_4_a	-1,0,1
+job_sword1,41,251,0	duplicate(SwdTrap1)	1_blank_4_b	-1,0,1
+job_sword1,39,250,0	duplicate(SwdTrap1)	1_blank_4_c	-1,1,0
+job_sword1,38,238,0	duplicate(SwdTrap1)	1_blank_5_a	-1,0,1
+job_sword1,41,238,0	duplicate(SwdTrap1)	1_blank_5_b	-1,0,1
+job_sword1,39,239,0	duplicate(SwdTrap1)	1_blank_5_c	-1,1,0
+job_sword1,54,251,0	duplicate(SwdTrap1)	1_blank_6_a	-1,0,1
+job_sword1,71,251,0	duplicate(SwdTrap1)	1_blank_6_b	-1,0,1
+job_sword1,62,250,0	duplicate(SwdTrap1)	1_blank_6_c	-1,9,0
+job_sword1,62,247,0	duplicate(SwdTrap1)	1_blank_7_a	-1,8,0
+job_sword1,71,244,0	duplicate(SwdTrap1)	1_blank_7_b	-1,0,2
+job_sword1,63,242,0	duplicate(SwdTrap1)	1_blank_7_c	-1,8,0
+job_sword1,54,244,0	duplicate(SwdTrap1)	1_blank_7_d	-1,0,2
+job_sword1,54,238,0	duplicate(SwdTrap1)	1_blank_8_a	-1,0,1
+job_sword1,71,238,0	duplicate(SwdTrap1)	1_blank_8_b	-1,0,1
+job_sword1,62,239,0	duplicate(SwdTrap1)	1_blank_8_c	-1,9,0
+job_sword1,102,247,0	duplicate(SwdTrap1)	1_blank_9_a	-1,2,0
+job_sword1,105,245,0	duplicate(SwdTrap1)	1_blank_9_b	-1,0,2
+job_sword1,103,242,0	duplicate(SwdTrap1)	1_blank_9_c	-1,2,0
+job_sword1,100,244,0	duplicate(SwdTrap1)	1_blank_9_d	-1,0,2
+job_sword1,156,249,0	duplicate(SwdTrap1)	1_blank_10_a	-1,14,0
+job_sword1,156,248,0	duplicate(SwdTrap1)	1_blank_10_b	-1,14,0
+job_sword1,170,249,0	duplicate(SwdTrap1)	1_blank_10_c	-1,1,0
+job_sword1,170,248,0	duplicate(SwdTrap1)	1_blank_10_d	-1,1,0
+job_sword1,156,245,0	duplicate(SwdTrap1)	1_blank_11_a	-1,14,0
+job_sword1,156,244,0	duplicate(SwdTrap1)	1_blank_11_b	-1,14,0
+job_sword1,170,245,0	duplicate(SwdTrap1)	1_blank_11_c	-1,1,0
+job_sword1,170,244,0	duplicate(SwdTrap1)	1_blank_11_d	-1,1,0
+job_sword1,156,241,0	duplicate(SwdTrap1)	1_blank_12_a	-1,14,0
+job_sword1,156,240,0	duplicate(SwdTrap1)	1_blank_12_b	-1,14,0
+job_sword1,170,241,0	duplicate(SwdTrap1)	1_blank_12_c	-1,1,0
+job_sword1,170,240,0	duplicate(SwdTrap1)	1_blank_12_d	-1,1,0
+job_sword1,180,251,0	duplicate(SwdTrap1)	1_blank_13_a	-1,0,1
+job_sword1,183,251,0	duplicate(SwdTrap1)	1_blank_13_b	-1,0,1
+job_sword1,181,250,0	duplicate(SwdTrap1)	1_blank_13_c	-1,1,0
+job_sword1,180,238,0	duplicate(SwdTrap1)	1_blank_14_a	-1,0,1
+job_sword1,183,238,0	duplicate(SwdTrap1)	1_blank_14_b	-1,0,1
+job_sword1,181,239,0	duplicate(SwdTrap1)	1_blank_14_c	-1,1,0
+
+//job_sword1,193,245,0	warp	1_rest	1,3,job_sword1,215,244
+
+// Pitfalls (Set 2)
+//============================================================ 
+job_sword1,56,212,0	script	2_blank_1_a::SwdTrap2	-1,40,0,{
+OnTouch:
+	switch(rand(1,5)) {
+	case 1: warp "job_sword1",162,120; end;
+	case 2: warp "job_sword1",94,120; end;
+	case 3: warp "job_sword1",94,85; end;
+	case 4: warp "job_sword1",162,85; end;
+	case 5: warp "job_sword1",130,47; end;
+	}
+}
+
+job_sword1,95,212,0	duplicate(SwdTrap2)	2_blank_1_b	-1,2,0
+job_sword1,56,210,0	duplicate(SwdTrap2)	2_blank_2_a	-1,40,0
+job_sword1,95,210,0	duplicate(SwdTrap2)	2_blank_2_b	-1,2,0
+job_sword1,16,206,0	duplicate(SwdTrap2)	2_blank_2_c	-1,0,3
+job_sword1,97,206,0	duplicate(SwdTrap2)	2_blank_2_d	-1,0,3
+job_sword1,56,203,0	duplicate(SwdTrap2)	2_blank_2_e	-1,40,0
+job_sword1,95,203,0	duplicate(SwdTrap2)	2_blank_2_f	-1,2,0
+job_sword1,56,201,0	duplicate(SwdTrap2)	2_blank_3_a	-1,40,0
+job_sword1,95,201,0	duplicate(SwdTrap2)	2_blank_3_b	-1,2,0
+
+job_sword1,113,212,0	duplicate(SwdTrap2)	2_blank_4_a	-1,14,0
+job_sword1,125,212,0	duplicate(SwdTrap2)	2_blank_4_b	-1,2,0
+job_sword1,113,210,0	duplicate(SwdTrap2)	2_blank_5_a	-1,14,0
+job_sword1,125,210,0	duplicate(SwdTrap2)	2_blank_5_b	-1,2,0
+job_sword1,100,206,0	duplicate(SwdTrap2)	2_blank_5_c	-1,0,3
+job_sword1,127,206,0	duplicate(SwdTrap2)	2_blank_5_d	-1,0,3
+job_sword1,113,203,0	duplicate(SwdTrap2)	2_blank_5_e	-1,14,0
+job_sword1,125,210,0	duplicate(SwdTrap2)	2_blank_5_f	-1,2,0
+job_sword1,113,201,0	duplicate(SwdTrap2)	2_blank_6_a	-1,14,0
+job_sword1,113,201,0	duplicate(SwdTrap2)	2_blank_6_b	-1,2,0
+
+job_sword1,155,212,0	duplicate(SwdTrap2)	2_blank_7_a	-1,21,0
+job_sword1,181,212,0	duplicate(SwdTrap2)	2_blank_7_b	-1,2,0
+job_sword1,155,210,0	duplicate(SwdTrap2)	2_blank_8_a	-1,21,0
+job_sword1,181,210,0	duplicate(SwdTrap2)	2_blank_8_b	-1,2,0
+job_sword1,130,206,0	duplicate(SwdTrap2)	2_blank_8_c	-1,0,3
+job_sword1,183,206,0	duplicate(SwdTrap2)	2_blank_8_d	-1,0,3
+job_sword1,155,203,0	duplicate(SwdTrap2)	2_blank_8_e	-1,21,0
+job_sword1,181,203,0	duplicate(SwdTrap2)	2_blank_8_f	-1,2,0
+job_sword1,155,201,0	duplicate(SwdTrap2)	2_blank_9_a	-1,40,0
+job_sword1,181,201,0	duplicate(SwdTrap2)	2_blank_9_b	-1,2,0
+
+// Pitfalls (Set 3)
+//============================================================ 
+job_sword1,17,174,0	script	3_blank_1_a::SwdTrap3	-1,2,0,{
+OnTouch:
+	switch(rand(1,5)) {
+	case 1: warp "job_sword1",195,15; end;
+	case 2: warp "job_sword1",195,38; end;
+	case 3: warp "job_sword1",231,30; end;
+	case 4: warp "job_sword1",198,65; end;
+	case 5: warp "job_sword1",196,116; end;
+	}
+}
+
+job_sword1,17,163,0	duplicate(SwdTrap3)	3_blank_2_a	-1,2,0
+job_sword1,29,171,0	duplicate(SwdTrap3)	3_blank_3_a	-1,2,0
+job_sword1,31,168,0	duplicate(SwdTrap3)	3_blank_3_b	-1,0,2
+job_sword1,28,166,0	duplicate(SwdTrap3)	3_blank_3_c	-1,2,0
+job_sword1,26,168,0	duplicate(SwdTrap3)	3_blank_3_d	-1,0,2
+job_sword1,36,169,0	duplicate(SwdTrap3)	3_blank_4_a	-1,0,0
+job_sword1,37,169,0	duplicate(SwdTrap3)	3_blank_4_b	-1,0,0
+job_sword1,37,168,0	duplicate(SwdTrap3)	3_blank_4_c	-1,0,0
+job_sword1,36,168,0	duplicate(SwdTrap3)	3_blank_4_c2	-1,0,0
+job_sword1,40,175,0	duplicate(SwdTrap3)	3_blank_5_a	-1,0,1
+job_sword1,41,175,0	duplicate(SwdTrap3)	3_blank_5_b	-1,0,1
+job_sword1,41,171,0	duplicate(SwdTrap3)	3_blank_6_a	-1,1,0
+job_sword1,41,170,0	duplicate(SwdTrap3)	3_blank_6_b	-1,1,0
+job_sword1,41,167,0	duplicate(SwdTrap3)	3_blank_6_c	-1,1,0
+job_sword1,41,166,0	duplicate(SwdTrap3)	3_blank_6_d	-1,1,0
+job_sword1,42,169,0	duplicate(SwdTrap3)	3_blank_6_e	-1,0,1
+job_sword1,43,170,0	duplicate(SwdTrap3)	3_blank_6_f	-1,0,1
+job_sword1,43,167,0	duplicate(SwdTrap3)	3_blank_6_g	-1,0,1
+job_sword1,40,162,0	duplicate(SwdTrap3)	3_blank_7_a	-1,0,1
+job_sword1,41,162,0	duplicate(SwdTrap3)	3_blank_7_b	-1,0,1
+job_sword1,46,175,0	duplicate(SwdTrap3)	3_blank_8_a	-1,0,1
+job_sword1,51,175,0	duplicate(SwdTrap3)	3_blank_8_b	-1,0,1
+job_sword1,47,174,0	duplicate(SwdTrap3)	3_blank_8_c	-1,1,0
+job_sword1,50,174,0	duplicate(SwdTrap3)	3_blank_8_d	-1,1,0
+job_sword1,48,173,0	duplicate(SwdTrap3)	3_blank_8_e	-1,0,1
+job_sword1,49,173,0	duplicate(SwdTrap3)	3_blank_8_f	-1,0,1
+job_sword1,46,162,0	duplicate(SwdTrap3)	3_blank_9_a	-1,0,1
+job_sword1,51,162,0	duplicate(SwdTrap3)	3_blank_9_b	-1,0,1
+job_sword1,47,163,0	duplicate(SwdTrap3)	3_blank_9_c	-1,1,0
+job_sword1,50,163,0	duplicate(SwdTrap3)	3_blank_9_d	-1,1,0
+job_sword1,48,164,0	duplicate(SwdTrap3)	3_blank_9_e	-1,0,1
+job_sword1,49,164,0	duplicate(SwdTrap3)	3_blank_9_f	-1,0,1
+job_sword1,54,170,0	duplicate(SwdTrap3)	3_blank_10_a	-1,0,1
+job_sword1,55,170,0	duplicate(SwdTrap3)	3_blank_10_b	-1,0,1
+job_sword1,54,167,0	duplicate(SwdTrap3)	3_blank_10_c	-1,0,1
+job_sword1,55,167,0	duplicate(SwdTrap3)	3_blank_10_d	-1,0,1
+job_sword1,53,169,0	duplicate(SwdTrap3)	3_blank_10_e	-1,1,0
+job_sword1,53,168,0	duplicate(SwdTrap3)	3_blank_10_f	-1,1,0
+job_sword1,56,169,0	duplicate(SwdTrap3)	3_blank_10_g	-1,1,0
+job_sword1,56,168,0	duplicate(SwdTrap3)	3_blank_10_h	-1,1,0
+job_sword1,58,175,0	duplicate(SwdTrap3)	3_blank_11_a	-1,0,1
+job_sword1,59,174,0	duplicate(SwdTrap3)	3_blank_11_b	-1,1,0
+job_sword1,60,173,0	duplicate(SwdTrap3)	3_blank_11_c	-1,0,1
+job_sword1,61,172,0	duplicate(SwdTrap3)	3_blank_11_d	-1,1,0
+job_sword1,58,162,0	duplicate(SwdTrap3)	3_blank_12_a	-1,0,1
+job_sword1,59,163,0	duplicate(SwdTrap3)	3_blank_12_b	-1,1,0
+job_sword1,60,164,0	duplicate(SwdTrap3)	3_blank_12_c	-1,0,1
+job_sword1,61,165,0	duplicate(SwdTrap3)	3_blank_12_d	-1,1,0
+job_sword1,76,172,0	duplicate(SwdTrap3)	3_blank_13_a	-1,1,0
+job_sword1,77,173,0	duplicate(SwdTrap3)	3_blank_13_b	-1,0,1
+job_sword1,78,174,0	duplicate(SwdTrap3)	3_blank_13_c	-1,1,0
+job_sword1,79,175,0	duplicate(SwdTrap3)	3_blank_13_d	-1,0,1
+job_sword1,76,165,0	duplicate(SwdTrap3)	3_blank_14_a	-1,1,0
+job_sword1,77,164,0	duplicate(SwdTrap3)	3_blank_14_b	-1,0,1
+job_sword1,78,163,0	duplicate(SwdTrap3)	3_blank_14_c	-1,1,0
+job_sword1,79,162,0	duplicate(SwdTrap3)	3_blank_14_d	-1,0,1
+job_sword1,94,175,0	duplicate(SwdTrap3)	3_blank_15_a	-1,0,1
+job_sword1,95,174,0	duplicate(SwdTrap3)	3_blank_15_b	-1,1,0
+job_sword1,98,174,0	duplicate(SwdTrap3)	3_blank_15_c	-1,1,0
+job_sword1,99,175,0	duplicate(SwdTrap3)	3_blank_16_d	-1,0,1
+job_sword1,96,169,0	duplicate(SwdTrap3)	3_blank_17_a	-1,0,0
+job_sword1,97,169,0	duplicate(SwdTrap3)	3_blank_17_b	-1,0,0
+job_sword1,97,168,0	duplicate(SwdTrap3)	3_blank_17_c	-1,0,0
+job_sword1,96,168,0	duplicate(SwdTrap3)	3_blank_17_d	-1,0,0
+job_sword1,94,162,0	duplicate(SwdTrap3)	3_blank_18_a	-1,0,1
+job_sword1,95,163,0	duplicate(SwdTrap3)	3_blank_18_b	-1,1,0
+job_sword1,98,163,0	duplicate(SwdTrap3)	3_blank_18_c	-1,1,0
+job_sword1,99,162,0	duplicate(SwdTrap3)	3_blank_18_d	-1,0,1
+job_sword1,114,175,0	duplicate(SwdTrap3)	3_blank_19_a	-1,0,1
+job_sword1,115,175,0	duplicate(SwdTrap3)	3_blank_19_b	-1,0,1
+job_sword1,114,162,0	duplicate(SwdTrap3)	3_blank_20_a	-1,0,1
+job_sword1,115,162,0	duplicate(SwdTrap3)	3_blank_20_b	-1,0,1
+job_sword1,126,175,0	duplicate(SwdTrap3)	3_blank_21_a	-1,0,1
+job_sword1,127,175,0	duplicate(SwdTrap3)	3_blank_21_b	-1,0,1
+job_sword1,126,162,0	duplicate(SwdTrap3)	3_blank_23_a	-1,0,1
+job_sword1,127,162,0	duplicate(SwdTrap3)	3_blank_23_b	-1,0,1
+job_sword1,160,174,0	duplicate(SwdTrap3)	3_blank_24_a	-1,0,2
+job_sword1,161,174,0	duplicate(SwdTrap3)	3_blank_24_b	-1,0,2
+job_sword1,160,163,0	duplicate(SwdTrap3)	3_blank_25_a	-1,0,2
+job_sword1,161,163,0	duplicate(SwdTrap3)	3_blank_25_b	-1,0,2
+job_sword1,168,175,0	duplicate(SwdTrap3)	3_blank_26_a	-1,0,2
+job_sword1,169,175,0	duplicate(SwdTrap3)	3_blank_26_b	-1,0,2
+job_sword1,168,162,0	duplicate(SwdTrap3)	3_blank_27_a	-1,0,2
+job_sword1,169,162,0	duplicate(SwdTrap3)	3_blank_27_b	-1,0,2
+job_sword1,176,174,0	duplicate(SwdTrap3)	3_blank_28_a	-1,0,2
+job_sword1,177,174,0	duplicate(SwdTrap3)	3_blank_28_b	-1,0,2
+job_sword1,178,173,0	duplicate(SwdTrap3)	3_blank_28_c	-1,1,0
+job_sword1,178,172,0	duplicate(SwdTrap3)	3_blank_28_d	-1,1,0
+job_sword1,181,174,0	duplicate(SwdTrap3)	3_blank_28_e	-1,2,0
+job_sword1,179,169,0	duplicate(SwdTrap3)	3_blank_29_a	-1,3,0
+job_sword1,179,168,0	duplicate(SwdTrap3)	3_blank_29_b	-1,3,0
+job_sword1,182,169,0	duplicate(SwdTrap3)	3_blank_29_c	-1,0,2
+job_sword1,183,169,0	duplicate(SwdTrap3)	3_blank_29_d	-1,0,2
+job_sword1,181,167,0	duplicate(SwdTrap3)	3_blank_29_e	-1,1,0
+job_sword1,181,166,0	duplicate(SwdTrap3)	3_blank_29_f	-1,1,0
+job_sword1,183,167,0	duplicate(SwdTrap3)	3_blank_29_g	-1,0,1
+job_sword1,176,163,0	duplicate(SwdTrap3)	3_blank_30_a	-1,0,2
+job_sword1,177,163,0	duplicate(SwdTrap3)	3_blank_30_b	-1,0,2
+job_sword1,181,163,0	duplicate(SwdTrap3)	3_blank_30_c	-1,2,0
+
+// Monsters (all three courses)
+//============================================================ 
+job_sword1,0,0	monster	Chonchon	1183,20
+job_sword1,35,79	monster	Fabre	1184,3,60000,30000
+job_sword1,50,108	monster	Fabre	1184,3,60000,30000
+job_sword1,61,28	monster	Fabre	1184,3,60000,30000
+job_sword1,61,92	monster	Fabre	1184,3,60000,30000
+job_sword1,110,112	monster	Fabre	1184,2,60000,30000
+job_sword1,161,94	monster	Fabre	1184,2,60000,30000
+job_sword1,130,76	monster	Fabre	1184,2,60000,30000
+job_sword1,103,58	monster	Fabre	1184,2,60000,30000
+job_sword1,130,24	monster	Fabre	1184,5,60000,30000
+job_sword1,201,36	monster	Fabre	1184,2,60000,30000
+job_sword1,201,16	monster	Fabre	1184,2,60000,30000
+job_sword1,239,44	monster	Fabre	1184,3,60000,30000
+job_sword1,239,76	monster	Fabre	1184,2,60000,30000
+job_sword1,231,101	monster	Fabre	1184,2,60000,30000
+job_sword1,234,117	monster	Fabre	1184,2,60000,30000
+job_sword1,198,91	monster	Fabre	1184,2,60000,30000
+job_sword1,200,63	monster	Fabre	1184,2,60000,30000

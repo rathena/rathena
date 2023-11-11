@@ -1,0 +1,39 @@
+//• (*) อธิบายคำสั่งใหม่
+//•
+//• OnInit: << จะทำการอ่านบรรทัดต่อไปของ Script ดังกล่าวทันทีเมื่อเปิด Server โดยไม่ต้องมีผู้เล่นมาใช้งาน NPC เลย
+//•
+//•
+//• (**) อธิบายคำสั่งใหม่
+//•
+//• strnpcinfo(3) << ใช้เรียกข้อมูล NPC ( โปรดศึกษาเพิ่มเติม )
+//•
+//•
+//• (***) อธิบายคำสั่งใหม่
+//•
+//• atcommand ""; << ใช้เพื่อใช้คำสั่ง GM กับผู้ที่ใช้งาน NPC ดังกล่าวอยู่
+
+
+//• แบบที่ 1 - แบบทั่วไป เมื่อเปิด Server จะทำการฝังคำสั่งให้ Server รู้จักคำสั่งใหม่
+//• 
+//• ในตัวอย่างผมจะทำคำสั่ง @prayuth เพื่อใช้เรียก Poring ออกมา โดยสามารถใช้ได้ทุกคน
+//• @gmprayuth เพื่อใช้เรียก Baphomet และ Poring ออกมา โดยสามารถใช้ได้เฉพาะผู้เล่นที่มีระดับ 99 (GM)
+//• #gmprayuth Pravit เพื่อใช้เรียก Baphomet ออกมาที่ตัวละครที่ชื่อ Pravit โดยสามารถใช้ได้เฉพาะผู้เล่นที่มีระดับ 99 (GM)
+-	script	NewCommands	-1,{
+OnInit: //(*)
+	bindatcmd "prayuth","NewCommands::OnPrayuth";
+	bindatcmd "gmprayuth",strnpcinfo(3) + "::OnGMPrayuth",99,99; //(**)
+	end;
+	
+OnGMPrayuth:
+	atcommand "@monster BAPHOMET"; //(***)
+OnPrayuth:
+	atcommand "@monster PORING"; //(***)
+	end;
+}
+
+//• แบบที่ 2 - คิดเองแล้วใส่เองเลยครับ อยากเอา bindatcmd ไปใส่ตอนไหนก็ใส่ เช่นเมื่อทำภารกิจสำเร็จ ฯลฯ
+
+
+//• ศึกษาเพิ่มเติม \doc\script_commands.txt บรรทัด 2352
+//• ศึกษาเพิ่มเติม \doc\script_commands.txt บรรทัด 7718
+//• ศึกษาเพิ่มเติม \doc\script_commands.txt บรรทัด 7747

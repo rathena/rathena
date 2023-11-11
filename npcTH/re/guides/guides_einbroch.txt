@@ -1,0 +1,294 @@
+//===== rAthena Script ======================================= 
+//= Einbroch and Einbech Guides
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guides for the cities of Einbroch and Einbech.
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Renewal guides.
+//= 1.1 Navigation system update. [Euphy]
+//============================================================ 
+
+einbroch,72,202,4	script	Einbroch Guide#ein01::GuideEinbroch	852,{
+	cutin "ein_soldier",2;
+	mes "[Einbroch Guide]";
+	mes "Welcome";
+	mes "to ^8B4513Einbroch^000000,";
+	mes "the City of Steel.";
+	mes "Please ask me if you";
+	mes "have any questions.";
+	F_Navi("[Einbroch Guide]");
+	next;
+	while (1) {
+		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Airport ]:[ Factory ]:[ Plaza ]:[ Hotel ]:[ Train Station ]:[ Weapon Shop ]:[ Laboratory ]:[ Monument ]:[ Blacksmith Guild ]:[ Gunslinger Guild ]:Previous Menu")) {
+				case 1:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Airport","einbroch,64,204","^FF0000")+" is located";
+					mes "in the northwestern part";
+					mes "of the city. There you can";
+					mes "see our city's pride and joy, the Airship. Remember that you must pay admission to board the Airship.";
+					viewpoint 1,64,204,0,0xFF0000;
+					next;
+					break;
+				case 2:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Factory","einbroch,129,79")+", perhaps the";
+					mes "most important facility in";
+					mes "Einbroch, is located in the";
+					mes "southern part of the city.";
+					viewpoint 1,129,79,1,0xFF4500;
+					next;
+					break;
+				case 3:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Plaza","einbroch,129,79")+", our biggest";
+					mes "shopping district, can be";
+					mes "found just east from the";
+					mes "center of Einbroch.";
+					viewpoint 1,254,199,2,0xDAA520;
+					next;
+					break;
+				case 4:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Hotel","einbroch,254,199")+" is east of";
+					mes "the Plaza and offers top";
+					mes "caliber accomodations.";
+					mes "There, you can enjoy your";
+					mes "stay in Einbroch in comfort~";
+					viewpoint 1,254,199,3,0x008000;
+					next;
+					break;
+				case 5:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Train Station","einbroch,232,272")+" is";
+					mes "located in the northeast";
+					mes "part of Einbroch. Trains";
+					mes "running between here";
+					mes "and Einbech run all day";
+					mes "long, everyday.";
+					viewpoint 1,232,272,4,0x0000FF;
+					next;
+					break;
+				case 6:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Weapon Shop","einbroch,216,211")+" is";
+					mes "located north from the";
+					mes "Plaza. There you can";
+					mes "purchase weapons for";
+					mes "your personal use.";
+					viewpoint 1,216,211,5,0x000080;
+					next;
+					break;
+				case 7:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Laboratory","einbroch,55,52")+" is an";
+					mes "annex of the Factory and";
+					mes "is located in the southwest";
+					mes "sector of Einbroch.";
+					viewpoint 1,55,52,6,0x800080;
+					next;
+					break;
+				case 8:
+					mes "[Einbroch Guide]";
+					mes "I will mark the location";
+					mes "of the "+F_Navi("Monument","einbroch,178,173","^808080");
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,178,173,7,0x808080;
+					next;
+					break;
+				case 9:
+					mes "[Einbroch Guide]";
+					mes "The "+F_Navi("Blacksmith Guild","einbroch,255,110")+" is";
+					mes "located in the southeast";
+					mes "part of Einbroch. You can";
+					mes "upgrade your equipment";
+					mes "by using their services.";
+					viewpoint 1,255,110,8,0x556B2F;
+					next;
+					break;
+				case 10:
+					mes "[Einbroch Guide]";
+					mes "I will mark the location";
+					mes "of the "+F_Navi("Gunslinger Guild","einbroch,130,197","^008080");
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,130,197,9,0x008080;
+					next;
+					break;
+				case 11:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Armsmith ]:[ Kafra Employees ]:[ Eden Teleport Officer ]:Previous Menu")) {
+				case 1:
+					mes "[Einbroch Guide]";
+					mes "You may go to ^FF1493Manthasman^000000,";
+					mes "the ^FF1493Armsmith^000000";
+					mes "on the 1st basement floor in the Blacksmith Guild.";
+					viewpoint 1,255,110,10,0xFF1493;
+					next;
+					mes "[Einbroch Guide]";
+					mes "I will mark the location";
+					mes "of the "+F_Navi("Armsmith","einbroch,255,110","^FF1493");
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					next;
+					break;
+				case 2:
+					mes "[Einbroch Guide]";
+					mes "I will mark the locations";
+					mes "of the ^DA70D6Kafra Employees^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,242,205,11,0xDA70D6;
+					viewpoint 1,59,203,12,0xDA70D6;
+					next;
+					break;
+				case 3:
+					mes "[Einbroch Guide]";
+					mes "You can find";
+					mes "the ^CD1039Eden Teleport Officer^000000";
+					mes "on the 1st floor of the Gunslinger Guild.";
+					viewpoint 1,130,197,13,0xCD1039;
+					next;
+					mes "[Einbroch Guide]";
+					mes "I will mark the location";
+					mes "of the "+F_Navi("Eden Teleport Officer","einbroch,130,197","^CD1039");
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					next;
+					break;
+				case 4:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			mes "[Einbroch Guide]";
+			mes "I'll remove the marks from your mini-map.";
+			mes "Do you need any other help?";
+			viewpoint 2,64,204,0,0xFFFFFF;
+			viewpoint 2,129,79,1,0xFFFFFF;
+			viewpoint 2,254,199,2,0xFFFFFF;
+			viewpoint 2,254,199,3,0xFFFFFF;
+			viewpoint 2,232,272,4,0xFFFFFF;
+			viewpoint 2,216,211,5,0xFFFFFF;
+			viewpoint 2,55,52,6,0xFFFFFF;
+			viewpoint 2,178,173,7,0xFFFFFF;
+			viewpoint 2,255,110,8,0xFFFFFF;
+			viewpoint 2,130,197,9,0xFFFFFF;
+			viewpoint 2,255,110,10,0xFFFFFF;
+			viewpoint 2,242,205,11,0xFFFFFF;
+			viewpoint 2,59,203,12,0xFFFFFF;
+			viewpoint 2,130,197,13,0xDA70D6;
+			next;
+			break;
+		case 4:
+			mes "[Einbroch Guide]";
+			mes "Have a safe journey!";
+			close2;
+			cutin "ein_soldier",255;
+			end;
+		}
+	}
+}
+einbroch,155,43,4	duplicate(GuideEinbroch)	Einbroch Guide#ein02	852
+einbroch,162,317,4	duplicate(GuideEinbroch)	Einbroch Guide#ein03	852
+einbroch,252,320,3	duplicate(GuideEinbroch)	Einbroch Guide#ein04	852
+
+einbech,67,37,4	script	Einbech Guide#einbech01::GuideEinbech	852,{
+	cutin "ein_soldier",2;
+	mes "[Einbech Guide]";
+	mes "Welcome to ^8B4513Einbech^000000,";
+	mes "the Mining Town. We're";
+	mes "here to assist tourists,";
+	mes "so if you have any questions,";
+	mes "please feel free to ask us.";
+	F_Navi("[Einbech Guide]");
+	next;
+	while (1) {
+		switch(select("[ Tavern ]:[ Tool Shop ]:[ Train Station ]:[ Mine ]:[ Kafra Employee ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			mes "[Einbech Guide]";
+			mes "The "+F_Navi("Tavern","einbech,157,106")+" is located";
+			mes "in the southern part of";
+			mes "Einbech. It's a nice place";
+			mes "to relax after a long day.";
+			viewpoint 1,157,106,0,0x497649;
+			next;
+			break;
+		case 2:
+			mes "[Einbech Guide]";
+			mes "You can find the "+F_Navi("Tool Shop","einbech,177,133")+" in the center of";
+			mes "Einbech. There, you can";
+			mes "purchase any tools you";
+			mes "might need for your travels.";
+			viewpoint 1,177,133,1,0xFA8072;
+			next;
+			break;
+		case 3:
+			mes "[Einbech Guide]";
+			mes "The "+F_Navi("Train Stations","einbech,39,215")+" are";
+			mes "located in the northwest";
+			mes "and northeast parts of";
+			mes "Einbech. There, you can";
+			mes "take a train to Einbroch.";
+			viewpoint 1,39,215,2,0xCD1039;
+			next;
+			break;
+		case 4:
+			mes "[Einbech Guide]";
+			mes "The "+F_Navi("Mine","einbech,137,248")+", which is";
+			mes "Einbech's major industry,";
+			mes "is located in the northern";
+			mes "part of this town. It's where";
+			mes "we get all our ores, although monsters get in the miners' way.";
+			viewpoint 1,137,248,3,0xDA70D6;
+			next;
+			break;
+		case 5:
+			mes "[Einbech Guide]";
+			mes "I will mark the location";
+			mes "of the ^FF1493Kafra Employee^000000";
+			mes "on your mini-map.";
+			mes "Would you like to check any other locations?";
+			viewpoint 1,181,132,4,0xFF1493;
+			next;
+			break;
+		case 6:
+			mes "[Einbech Guide]";
+			mes "I'll remove the marks from your mini-map.";
+			mes "Do you need any other help?";
+			viewpoint 2,157,106,0,0xFFFFFF;
+			viewpoint 2,177,133,1,0xFFFFFF;
+			viewpoint 2,39,215,2,0xFFFFFF;
+			viewpoint 2,137,248,3,0xFFFFFF;
+			viewpoint 2,181,132,4,0xFFFFFF;
+			next;
+			break;
+		case 7:
+			mes "[Einbech Guide]";
+			mes "Have a safe journey!";
+			close2;
+			cutin "ein_soldier",255;
+			end;
+		}
+	}
+}
+einbech,48,214,4	duplicate(GuideEinbech)	Einbech Guide#einbech02	852

@@ -1,0 +1,150 @@
+//===== rAthena Script =======================================
+//= Hugel City
+//===== By: ==================================================
+//= vicious_pucca, Poki#3, erKURITA, Munin, and everybody in the
+//= comments
+//===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= NPC's for the City of Hugel.
+//===== Additional Comments: =================================
+//= Cords and Sprites are 100% Correct, but the names are not.
+//= Plus no one knows what the NPCs are talking right now :/ [Poki#3]
+//= Note: Not all the sprites were correct :P [erKURITA]
+//= 1.0 Added the first shop, firecrackers. Thanks RockmanEXE for the info [erKURITA]
+//=     Added more missing npc, but again, only locations and temp names =/ [erKURITA]
+//=     Started the basis of Poring Track. [erKURITA]
+//=     Moved the old lady to npc\guides\guides_hu.txt, since it's Hugel's guard [erKURITA]
+//=     Special thanks to RockmanEXE who provided all necesary info =3
+//=     Abducted/Moved Yan and Yalmire(temp names) to npc\events\custom\p_track. [erKURITA]
+//= 1.1 Commented out the whole list of dummy npcs. They're there for nothing anyway,
+//=     just using up memory. [erKURITA]
+//= 1.2 Added a few NPCs scripted by Munin and fixed up format a little [Playtester]
+//= 1.3 Moved some quests-related NPCs to proper file. [SinSloth]
+//= 1.4 Optimized the Party Supplies Shop [DZeroX]
+//= 1.5 Fixed Party Supplies Shop. [L0ne_W0lf]
+//= 1.6 Removed duplicate "Mudie". [L0ne_W0lf]
+//= 1.7 Removed whitespace and junk. [Kisuka]
+//============================================================
+
+// Hugel
+//============================================================
+hugel,189,143,5	script	Young Man	898,{
+	mes "[Young Man]";
+	mes "หึ..ซองอากาศขนาดยักษ์นั่นทำให้คนลอยไปกลางอากาศได้เหรอ?";
+	mes "เติมลมให้เต็มหน้าท้องเหมือนเดิมไหม";
+	close;
+}
+
+hugel,126,151,3	script	Emily	90,{
+	mes "[Emily]";
+	mes "ฉันรู้สึกมีความสุขมากที่ได้ใช้ชีวิตในเมืองเล็ก ๆ แห่งนี้";
+	mes "สวยมากทุกคนที่นี่น่ารักมาก~";
+	next;
+	mes "[Emily]";
+	mes "ด้วยเหตุผลบางอย่างพี่สาวของฉันต้องการย้ายออกจาก Hugel โดยเร็วที่สุด";
+	mes "เธอบอกว่าเธอถูกคนที่อาศัยอยู่ที่นี่";
+	mes "คุณไม่คิดว่ามันฟังดูแปลกๆ เหรอ?";
+	close;
+}
+
+hugel,86,165,5	script	Kayplas	896,{
+	mes "[Kayplas]";
+	mes "โอฉันอยากได้ขวดสีแดงนั่นจริงๆ";
+	mes "ขอแม่ซื้อให้หน่อย";
+	mes "มันดูไม่แพงเกินไปใช่ไหม";
+	close;
+}
+
+hugel,71,197,3	script	Lisa	90,{
+	mes "[Lisa]";
+	mes "Hugel เป็นหมู่บ้านเล็ก ๆ ที่อบอุ่นเหมือนอยู่บ้าน";
+	mes "ทุกคนรู้ทุกคนทุกคนรู้ว่าคนอื่นกำลังทำอะไร";
+	mes "มันหายใจไม่ออก!";
+	next;
+	mes "[Lisa]";
+	mes "ในเมืองเล็ก ๆ ไม่มีความเป็นส่วนตัวสักวันฉันอยากออกไปใช้ชีวิตในเมืองใหญ่ ~";
+	close;
+}
+
+hugel,169,112,5	script	Old Nikki	892,{
+	mes "[Old Nikki]";
+	mes "คุณต้องไม่มาจากแถว ๆ นี้อ่าคุณเป็นนักผจญภัยใช่ไหมคุณรู้ไหมว่าฉันจะบอกได้อย่างไร";
+	next;
+	mes "[Old Nikki]";
+	mes "เป็นเพราะทุกคนที่อาศัยอยู่ที่นี่เริ่มมีหน้าตาเหมือนกัน";
+	mes "และคุณดูไม่แก่เหมือนพวกเราอย่างแน่นอนขอให้มีความสุขในวันนี้นะนักผจญภัย ~";
+	close;
+}
+
+hugel,175,115,5	script	Marius	897,{
+	mes "[Marius]";
+	mes "ใช่ฉันแก่แล้ว แต่ฉันสามารถเลียนกแสกอย่างคุณได้ทุกวัน!";
+	mes "คุณรู้ไหมว่า Hugel มีอายุขัยยืนยาวกว่าเมืองอื่น ๆ ทั้งหมดคุณอยากรู้ไหมว่าทำไม";
+	next;
+	mes "[Marius]";
+	mes "เป็นเพราะเจ้าตูบตัวเก่าในเมืองนี้ไม่ยอมนอนตาย!";
+	mes "ตอนนี้ c'mon! Lemme แสดงให้คุณเห็นว่าฉันแข็งแกร่งแค่ไหนมาดิ้นหรืออะไรเด็ก ~";
+	close;
+}
+
+// Inside Hugel
+//============================================================
+hu_in01,111,386,4	script	Chris	86,{
+	mes "[Chris]";
+	mes "คุณรู้ไหมว่าผู้คนไม่ได้ต่อสู้กับสัตว์ประหลาดที่เป็นอันตรายพวกเขาแค่ปกป้องตัวเองด้วยการสวมชุดเกราะ";
+	mes "นั่นคือวิธีที่พวกเขาเป็น";
+	next;
+	mes "[Chris]";
+	mes "ถ้าคุณต้องการซื้อชุดเกราะที่ดีกว่านี้ฉันขอแนะนำให้ซื้อในเมืองที่ใหญ่กว่า";
+	close;
+}
+
+hu_in01,23,311,4	script	Party Supplies Shop	898,{
+	mes "[Shopkeeper]";
+	mes "ยินดีต้อนรับสู่ร้านขายอุปกรณ์จัดงานเลี้ยง";
+	mes "ทำไมคุณไม่สนุกกับดอกไม้ไฟกับเพื่อนๆ ดูล่ะ";
+	mes "เราสามารถให้คุณได้ 5 ตัวในราคา 500 zeny";
+	next;
+	switch (select("ซื้อ:ยกเลิก")) {
+		case 1:
+			if (Zeny < 500) {
+				mes "[Shopkeeper]";
+				mes "ฉันขอโทษ แต่คุณมีเงินไม่พอ ~";
+				close;
+			}
+			set Zeny,Zeny-500;
+			getitem 12018,5;	// Fire_Cracker
+			mes "[Shopkeeper]";
+			mes "จัดไป!";
+			mes "สนุกไปกับมัน!";
+			close;
+		case 2:
+			mes "[Shopkeeper]";
+			mes "ขอบคุณครับมาใหม่";
+			close;
+	}
+}
+
+hu_in01,18,94,0	script	A Part-Timer#1	49,{
+	mes "[Luda]";
+	mes "ยินดีต้อนรับสู่สำนักงานสำรวจศาลเจ้า";
+	mes "ฉันชื่อลูดาเป็นผู้ช่วยนอกเวลา";
+	mes "งานของฉันคือดูแลสำนักงานนี้ให้เรียบร้อยและสะอาด แต่ดูที่นี่สิ!";
+	next;
+	mes "[Luda]";
+	mes "ยังฉันคิดว่าฉันสามารถรับมือกับงานที่ยากนี้ได้ ~";
+	mes "ห้องนี้เป็นห้องทำงานของทีม Schwarzwald Republic ส่วนอีกห้องเป็นของทีม Rune-Midgarts Kingdom";
+	next;
+	mes "[Luda]";
+	mes "ฉันต้องทำความสะอาดทั้งสองห้องดังนั้นพวกเขาจึงค่อนข้างยุ่ง";
+	mes "ทำไมคุณไม่เป็นอาสาสมัครในการเดินทางของพวกเขาฉันรู้ว่าพวกเขาไม่สามารถจ่ายเงินให้คุณได้จริงๆ แต่มันเป็นโอกาสที่ดีในการสำรวจ~";
+	close;
+}
+
+hu_in01,26,77,4	script	A Part-Timer#2	50,{
+	mes "^3355FFพาร์ทไทม์เมอร์นี้มีส่วนร่วมอย่างสมบูรณ์ในงานของเขาในการจัดระเบียบไฟล์และหนังสือ^000000";
+	close;
+}

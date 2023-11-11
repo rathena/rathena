@@ -1,0 +1,3427 @@
+//===== rAthena Script ======================================= 
+//= God Item Quest - Megingjard Seal
+//===== By: ================================================== 
+//= SinSloth
+//===== Current Version: ===================================== 
+//= 2.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Quest for breaking the seal of Megingjard.
+//===== Additional Comments: =================================
+//= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+//= 1.1 fixed exploit [Lupus]
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.3 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.4 Minor Touchups to quest. [L0ne_W0lf]
+//= 1.5 Fixed missing close2 in Rebarev Doug. [L0ne_w0lf]
+//= 1.6 Corrected mismatched variables. [L0ne_W0lf]
+//= 1.7 Replaced effect numerics with constants. [Samuray22]
+//= 1.8 Corrected how exp reward is applied. [L0ne_W0lf]
+//= 1.9 Fixed some input checks and variable types. [brianluau]
+//= 2.0 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.1 Fixed minor bug with the Librarian Jekan
+//= 2.2 Renewal script update. [Euphy]
+//= 2.3 Renewal script update for ep16.1 [Capuche]
+//============================================================
+
+-	script	Rebarev Doug_	-1,{
+	if (checkweight(1301,3) == 0) {
+		mes "- You are carrying too many items! -";
+		close;
+	}
+	cutin "god_rebeireb",2;
+	if ((countitem(7080) > 3) && (countitem(7081) > 4) && (countitem(7082) > 3) && (countitem(7084) > 2) && (countitem(7085) > 2)) {
+		mes "[Rebarev Doug]";
+		mes "What's this?";
+		mes "You...! You have";
+		mes "everything I need to";
+		mes "create Gleipnir!";
+		next;
+		switch(select("Make Gleipnir.:Cancel.")) {
+		case 1:
+			mes "[Rebarev Doug]";
+			mes "I'm the only human on earth";
+			mes "blessed with the ability to create Gleipnir. Aside from the Dwarves, I'm the only person that can make this item!";
+			next;
+			delitem 7080,4;  //Foot_Step_Of_Cat
+			delitem 7081,5;  //Beard_Of_Women
+			delitem 7082,4;  //Root_Of_Stone
+			delitem 7084,3;  //Saliva_Of_Bird
+			delitem 7085,3;  //Tendon_Of_Bear
+			getitem 7058,1; // Gullraifnir
+			mes "[Rebarev Doug]";
+			mes "There you go!";
+			next;
+			mes "[Rebarev Doug]";
+			mes "Gleipnir is said to be so strong that not even the Fenrir Wolf could break it! I take great pride in being able to create this!";
+			break;
+		case 2:
+			break;
+		}
+	}
+	if ($God1 < $@god_check1) {
+		mes "[Rebarev Doug]";
+		mes "We are Crusaders that have";
+		mes "been training in preparation";
+		mes "for the Holy War that is to come.";
+		next;
+		mes "[Rebarev Doug]";
+		mes "As our forefathers have";
+		mes "done a thousand years ago, we shall vanquish the hordes of Demons when the day comes.";
+		next;
+		mes "[Rebarev Doug]";
+		mes "If you have any questions about Crusaders, feel free to ask me.";
+		mes "I may be too old and weak for fighting, but I will spread our message as much as I can.";
+		next;
+		switch(select("What is Holy Cross?:What is Grand Cross?:What is Sacrifice?:What is Gleipnir?")) {
+		case 1:
+			mes "[Rebarev Doug]";
+			mes "Holy Cross is the first manifestation of a Crusader's faith. By making the sign of the cross, Crusader's can inflict a holy attack on their enemies.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "Monsters that are weak against holiness, particularly the Undead, will be blinded by the light of the Holy Cross. All they can do is wait for holy judgment.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "Based on our latest research,";
+			mes "the Holy Cross can inflict 4.5 times more damage than a normal attack once it is mastered.";
+			break;
+		case 2:
+			mes "[Rebarev Doug]";
+			mes "Grand Cross...!";
+			mes "The righteous fury of God is";
+			mes "given form in this destructive skill.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "God grants us his power so that";
+			mes "we may punish the forces of evil, and one's rage is embodied in a giant crucifix of power.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "The power of the crucifix of light can damage the enemy three times. Each strike will have five times the strength of your normal attacks.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "However, when Crusaders use Grand Cross, they must exercise extreme caution. The human body is too weak to fully embrace the will of God.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "Therefore, using this skill, will cause the Crusader to suffer from damage. However, this damage can";
+			mes "be reduced to half with Faith.";
+			break;
+		case 3:
+			mes "[Rebarev Doug]";
+			mes "In practicing what we preach, Crusaders choose to protect";
+			mes "others by bearing the suffering of their fellow man.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "The Sacrifice skill allows Crusaders to keep their comrades safe from harm by receiving the damage that was intended for them.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "It is the greatest demonstration of faith,";
+			mes "as well as of love for your comrades. Such an attitude is essential for a servant of God!";
+			next;
+			mes "[Rebarev Doug]";
+			mes "However, if the people you want to protect stray away from you, you cannot use the Sacrifice skill for them unless they are close to you again.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "As you visualize the suffering of those you want to protect, you'll never hesitate to sacrifice yourself.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "Thank you, God, for granting me with the power to protect my people.";
+			break;
+		case 4:
+			mes "[Rebarev Doug]";
+			mes "Gleipnir is the essence of Megingjard which I have been researching.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "It's the only binding strong enough that will allow a human to wear Megingjard around his waist.";
+			next;
+			mes "[Rebarev Doug]";
+			mes "Although I can no longer fight, I've been studying how to create Gleipnir for years. I will be more than willing to create it for you if you can bring me...";
+			next;
+			mes "[Rebarev Doug]";
+			mes "^0000FF4 Cat Tread^000000,";
+			mes "^0000FF5 Woman's Moustache^000000,";
+			mes "^0000FF4 Root of Stone^000000,";
+			mes "^0000FF3 Sputum of Bird^000000 and";
+			mes "^0000FF3 Sinew of Bear^000000.";
+			break;
+		}
+	}
+	else if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (BaseLevel > 59) {
+			if (god_eremes == 0) {
+				mes "[Rebarev Doug]";
+				mes "...";
+				next;
+				mes "[Rebarev Doug]";
+				mes "Why are you wandering";
+				mes "around this sacred place?";
+				mes "Do you not understand that";
+				mes "we must prepare for";
+				mes "the Holy War?";
+				next;
+				mes "[Rebarev Doug]";
+				mes "No matter how much I explain, the ignorant never fully understand the importance of our task. The balance of power will shift when we least expect it!";
+				next;
+				mes "[Rebarev Doug]";
+				mes "I wish I could go back";
+				mes "to those times when I would";
+				mes "train Crusaders, rather than";
+				mes "preach to the ignorant.";
+				next;
+				mes "[Rebarev Doug]";
+				mes "I miss my Crusaders who";
+				mes "were enthusiastic to listen to what I had to say, and carried out their orders with loyalty.";
+				next;
+				mes "[Rebarev Doug]";
+				mes "I am wonder";
+				mes "where they have";
+				mes "all gone now...";
+				next;
+				mes "[Rebarev Doug]";
+				mes "...";
+				mes "......";
+				mes ".........";
+				next;
+				mes "[Rebarev Doug]";
+				mes "Adventurer, if you have the time to listen to me speak to myself, why don't you perform a task for me?";
+				next;
+				mes "[Rebarev Doug]";
+				mes "It may be an enriching";
+				mes "experience for you. It's possible that you'll even have a greater appreciation for Crusaders.";
+				next;
+				switch(select("What is it?:I'm sick and tired of doin' favors.")) {
+				case 1:
+					mes "[Rebarev Doug]";
+					mes "I want you to find the members of the 1st Squad in the 3rd Platoon of the 3rd Company. If you happen to encounter them in your travels, please ask them how they are doing.";
+					next;
+					mes "[Rebarev Doug]";
+					mes "It shouldn't be that difficult to do and won't be a waste of your time if you are already planning";
+					mes "to explore the world.";
+					next;
+					switch(select("Sure, why not.:I'm sorry, but no.")) {
+					case 1:
+						mes "[Rebarev Doug]";
+						mes "Excellent!";
+						mes "All I want you to do is find my old comrades, and inform me of how";
+						mes "they are doing.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "However...";
+						mes "There is one problem.";
+						mes "I don't where they are.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "You could try to find a record of residency changes by citizens of the Rune-Midgarts Kingdom in";
+						mes "the Prontera Library...";
+						next;
+						mes "[Rebarev Doug]";
+						mes "However, the records of";
+						mes "Crusader personnel is considered confidential, so I am not sure of whether or not you can view them.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "You must understand, my position requires me to remain in this area 24 hours, 7 days a week. I cannot leave without the consent of the upper hierarchy.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "However, I know you have the freedom and the time to go wherever you please. I'd appreciate if you would do this for me.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "My old comrades in arms.";
+						mes "You have no idea how much";
+						mes "I miss them...";
+						set god_eremes,1;
+						break;
+					case 2:
+						mes "[Rebarev Doug]";
+						mes "^333333*Sigh...*^000000";
+						mes "Please understand that";
+						mes "I would not be asking this";
+						mes "of you if it were not for";
+						mes "the restraints of";
+						mes "my position.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "I have an obligation to this Kingdom to keep my post and";
+						mes "inform adventurers about the";
+						mes "Crusader class. Because of this";
+						mes "awesome responsibility, I must";
+						mes "remain here, ever vigilant.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "If you can't understand, then you must be taking your freedom for granted...";
+						break;
+					}
+					break;
+				case 2:
+					mes "[Rebarev Doug]";
+					mes "As far as I remember, this is the first time I have asked you to do me a favor.";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Unlike you, I know the meaning";
+					mes "of responsibility. I remain here, helping inquisitive adventurers for the sake of King and country.";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Still...";
+					mes "Know this.";
+					mes "Although the results may not be immediate, you will always be rewarded when you help others.";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Please reconsider";
+					mes "when you get the chance.";
+					break;
+				}
+			}
+			else if (god_eremes > 0 && god_eremes < 4) {
+				if (rand(1,10) > 6 && god_eremes == 2) {
+					mes "[Rebarev Doug]";
+					mes "I wonder how my old";
+					mes "comrades are doing now.";
+					mes "I can't even remember";
+					mes "the last time I saw them...";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Hmm...?";
+					mes "Haven't you left";
+					mes "to search for them yet?";
+					next;
+					switch(select("Where should I go?:I am about to leave.:What do you mean by final mission?")) {
+					case 1:
+						mes "[Rebarev Doug]";
+						mes "Well...";
+						mes "You should be able";
+						mes "find some clue as to";
+						mes "where to find them through";
+						mes "^0000FFThe Platoon Records^000000 in";
+						mes "the Prontera Library.";
+						break;
+					case 2:
+						mes "[Rebarev Doug]";
+						mes "Oh, you are...";
+						mes "I wonder what they";
+						mes "have been doing since";
+						mes "our ^0000FFfinal mission^000000...";
+						break;
+					case 3:
+						mes "[Rebarev Doug]";
+						mes "Final mission...?";
+						mes "Well, I can't recall";
+						mes "everything at the moment,";
+						mes "but it was the reason why";
+						mes "our squad broke up.";
+						next;
+						mes "[Rebarev Doug]";
+						mes "We were a great team.";
+						mes "But in the military system,";
+						mes "you need to follow the orders";
+						mes "of your superiors...";
+						next;
+						mes "[Rebarev Doug]";
+						mes "If only...";
+						mes "^660000He^000000 hadn't interfered...";
+						next;
+						mes "[Rebarev Doug]";
+						mes "...";
+						next;
+						mes "[Rebarev Doug]";
+						mes "...";
+						mes "......";
+						next;
+						mes "[Rebarev Doug]";
+						mes "Let's not talk about that. What's important that our squad was disbanded because of we failed our final mission. Now, will you please go find ^0000FFThe 3rd Platoon Records^000000 in the Prontera Library for me?";
+						set god_eremes,3;
+						next;
+						mes "[Rebarev Doug]";
+						mes "Remember, it might be helpful to ask the librarian for the file with a record on ^660000the 1st squad's final mission^000000.";
+						break;
+					}
+				}
+				else {
+					mes "[Rebarev Doug]";
+					mes "I wonder how my old";
+					mes "comrades are doing now.";
+					mes "I can't even remember";
+					mes "the last time I saw them...";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Hmm...?";
+					mes "Haven't you left";
+					mes "to search for them yet?";
+					next;
+					switch(select("Where should I go?:I am about to leave.")) {
+					case 1:
+						mes "[Rebarev Doug]";
+						mes "Well...";
+						mes "You should be able";
+						mes "find some clue as to";
+						mes "where to find them through";
+						mes "^0000FFThe 3rd Platoon Records^000000 in";
+						mes "the Prontera Library.";
+						break;
+					case 2:
+						mes "[Rebarev Doug]";
+						mes "Oh, you are...";
+						mes "I wonder what they";
+						mes "have been doing since";
+						mes "our ^0000FFfinal mission^000000...";
+						set god_eremes,2;
+						break;
+					}
+				}
+			}
+			else if (god_eremes > 3 && god_eremes < 18) {
+				mes "[Rebarev Doug]";
+				mes "Huh...?";
+				mes "The librarian";
+				mes "didn't let you";
+				mes "read the records?";
+				next;
+				mes "[Rebarev Doug]";
+				mes "He may have responsibility,";
+				mes "but at the end of the day, he's just like you and me. You can find some way to convince him to help you, I'm sure.";
+				next;
+				mes "[Rebarev Doug]";
+				mes "Please, I beg you,";
+				mes "would you find out";
+				mes "what happened to the";
+				mes "rest of the 1st Squad?";
+				next;
+				mes "[Rebarev Doug]";
+				mes "Oh...";
+				mes "It might be helpful to know that we were the ^660000Crusader Third Company, Third Platoon, First Squad^000000.";
+			}
+			else if (god_eremes > 17 && god_eremes < 20) {
+				if (god_megin_1 > 0 || god_megin_2 > 0 || god_megin_3 > 0 || god_megin_4 > 0 || god_megin_5 > 0 || god_megin_6 > 0) {
+					mes "[Rebarev Doug]";
+					mes "Oh...";
+					mes "So did you meet them?";
+					mes "Are they all okay?";
+					next;
+					mes "^3355FFYou tell Rebarev Doug";
+					mes "that although they are";
+					mes "suffering from migraines";
+					mes "and memory loss, the rest";
+					mes "of the 1st Squad is fine.";
+				}
+				else {
+					mes "^3355FFYou tell Rebarev Doug";
+					mes "that you have read the";
+					mes "3rd Platoon records and";
+					mes "explain what you have";
+					mes "managed to learn.^000000";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Oh, I'm glad to hear that";
+					mes "you were able to read the";
+					mes "records! But I don't trust";
+					mes "what's written on paper.";
+					mes "After all, it may be";
+					mes "out of date...";
+					next;
+					mes "[Rebarev Doug]";
+					mes "If it's possible, I hope you can meet the rest of the 1st Squad face to face, so I can know for sure that they're all alright.";
+					next;
+					mes "[Rebarev Doug]";
+					mes "A man's life is too";
+					mes "short and his friends";
+					mes "are too few. Please find";
+					mes "out how my old comrades";
+					mes "are doing for me.";
+				}
+			}
+			else if (god_eremes > 19 && god_eremes < 23) {
+				mes "[Rebarev Doug]";
+				mes "Welcome back~";
+				mes "It's been a while since I've last seen you. Have you met the rest";
+				mes "of the 1st Squad?";
+				next;
+				mes "[Rebarev Doug]";
+				mes "Hm...?";
+				mes "What's that";
+				mes "strange look for?";
+				next;
+				switch(select("Confront Rebarev Doug.:Act unsuspicious.")) {
+				case 1:
+					mes "^3355FFYou confront Rebarev Doug about the memory problems and migraines of the 1st Squad...^000000";
+					next;
+					mes "^3355FFThinking about Royal Myst's story and the mentions of Egnigem begin to jumble your thoughts...^000000";
+					next;
+					mes "[Rebarev Doug]";
+					mes "What are you talking about? I don't understand, you're talking about lots of different things at once!";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Don't look at me like that. If you're done speaking, please";
+					mes "excuse me and tell me your news some other time.";
+					next;
+					mes "[Rebarev Doug]";
+					mes "I appreciate that you've delivered news of my old comrades to me.";
+					mes "Now, I need to continue my research under the command of his Majesty.";
+					set god_eremes,21;
+					break;
+				case 2:
+					mes "^3355FFYou keep your suspicions to yourself and tell Rebarev Doug about the members of";
+					mes "the 1st Squad.^000000";
+					next;
+					mes "^3355FFOf course, you withhold some details and only tell him what he seems to want to hear.^000000.";
+					next;
+					mes "[Rebarev Doug]";
+					mes "Great!";
+					mes "I'm glad to hear";
+					mes "they're doing so well!";
+					mes "Ha ha! Hahahahahahaahah!";
+					next;
+					mes "[Rebarev Doug]";
+					mes "I appreciate that you've delivered news of my old comrades to me.";
+					mes "Now, I need to continue my research under the command of his Majesty. Once again, thank you for your help.";
+					set god_eremes,22;
+					break;
+				}
+			}
+			else if (god_eremes > 22 && god_eremes < 25) {
+				mes "^3355FFYou confront";
+				mes "Rebarev Doug with the";
+				mes "information you learned";
+				mes "from Egnigem.^000000";
+				next;
+				mes "^3355FFHowever, he didn't";
+				mes "seem the least bit agitated. In fact, he exuded a calmness that makes you feel nervous.^000000";
+				next;
+				mes "[Rebarev Doug]";
+				mes "It's far too late to talk about that, though I feel sorry for you for knowing too much. At this point, there's nothing you can prove.";
+				next;
+				mes "[Rebarev Doug]";
+				mes "Don't you get it?";
+				mes "The elite and powerful rule this world. I am untouchable! And the weak and the lowly can rot in hell! Heh heh!";
+				next;
+				mes "[Rebarev Doug]";
+				mes "Do you hate me?";
+				mes "Do you really hate me?";
+				mes "Take a look at this face.";
+				next;
+				mes "[Rebarev Doug]";
+				mes "This is the";
+				mes "face of authority!";
+				mes "Go ahead and report me to the judge in charge of all military crimes! He's right behind me!";
+				next;
+				mes "[Rebarev Doug]";
+				mes "If at least 100 people report the same crime, then maybe he'll hold";
+				mes "a trial. But do you really want to reveal this to the public?";
+			}
+			else if (god_eremes > 23 && god_eremes < 26) {
+				mes "[Rebarev Doug]";
+				mes "I didn't think";
+				mes "you'd actually do it.";
+				mes "But you'll be sorry later...";
+			}
+			else {
+				mes "[Rebarev Doug]";
+				mes "Don't you get it?";
+				mes "The elite and powerful rule this world. I am untouchable! And the weak and the lowly can rot in hell! Heh heh!";
+			}
+		}
+		else {
+			mes "[Rebarev Doug]";
+			mes "You're not fit";
+			mes "to even speak to me.";
+			mes "Even if you are an adventurer...";
+		}
+	}
+	else {
+		mes "[Rebarev Doug]";
+		mes "We are Crusaders that have";
+		mes "been training in preparation";
+		mes "for the Holy War that is to come.";
+		next;
+		mes "[Rebarev Doug]";
+		mes "As our forefathers have";
+		mes "done a thousand years ago, we shall vanquish the hordes of Demons when the day comes.";
+	}
+	close2;
+	cutin "god_rebeireb",255;
+	end;
+}
+
+-	script	Crusader#God_	-1,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes > 22 && god_eremes < 25) {
+			mes "[Max Von Shedough]";
+			mes "Welcome, friend!";
+			mes "Here in the Prontera Castle, we Crusaders are busily preparing for the Holy War that is to come.";
+			next;
+			mes "[Max Von Shedough]";
+			mes "Let me introduce myself.";
+			mes "My name is Max Von Shedough, the military judge! Do you have any business with me?";
+			next;
+			mes "^3355FFYou handed";
+			mes "Max Von Shedough";
+			mes "your petition against";
+			mes "Rebarev Doug based on";
+			mes "your investigation";
+			mes "with Egnigem.^000000";
+			next;
+			mes "[Max Von Shedough]";
+			mes "Hm? This is serious.";
+			mes "Alright, I will investigate your claim to the best of my ability.";
+			next;
+			mes "[Max Von Shedough]";
+			mes "However, as of now, the petition you've just given me is considered classified information. Please keep this a military secret.";
+			set $God2,$God2+1;
+			if ($God2 == $@god_check1) {
+				announce "The 2nd seal of [Megingjard] has appeared.",bc_all;
+			}
+			else if ($God2 == $@god_check2) {
+				if ($God1 == $@god_check2 && $God2 == $@god_check2 && $God3 == $@god_check2 && $God4 == $@god_check2)
+					announce "Four seals have been released at the same time with the seal of [Megingjard].",bc_all;
+				else
+					announce "The 2nd seal of [Megingjard] has been released.",bc_all;
+			}
+			if (god_eremes == 23) {
+				set god_eremes,25;
+			}
+			else if (god_eremes == 24) {
+				set god_eremes,26;
+			}
+			close;
+		}
+		else if (god_eremes > 26) {
+			mes "[Max Von Shedough]";
+			mes "Unfortunately, I'm not sure if it's possible to hold a trial against Rebarev Doug.";
+			next;
+			mes "[Max Von Shedough]";
+			mes "Regrettably, it seems that he still has too much influence. Still, let me assure you that I'll do everything I can...";
+			next;
+			mes "[Max Von Shedough]";
+			mes "But count on me,";
+			mes "I'll be doing my";
+			mes "best to get him indicted.";
+			close;
+		}
+		else {
+			mes "[Max Von Shedough]";
+			mes "Welcome, friend!";
+			mes "Here in the Prontera Castle, we Crusaders are busily preparing for the Holy War that is to come.";
+			next;
+			mes "[Max Von Shedough]";
+			mes "Let me introduce myself.";
+			mes "My name is Max Von Shedough, the military judge! Sadly, even we Crusaders are not immune to corruption...";
+			close;
+		}
+	}
+	else {
+		mes "[Max Von Shedough]";
+		mes "Welcome, friend!";
+		mes "Here in the Prontera Castle, we Crusaders are busily preparing for the Holy War that is to come.";
+		next;
+		mes "[Max Von Shedough]";
+		mes "Let me introduce myself.";
+		mes "My name is Max Von Shedough,";
+		mes "the military judge! Sadly, even we Crusaders are not immune to corruption...";
+		close;
+	}
+}
+
+prt_in,172,109,0	script	A File#megin1	111,{
+	if (god_eremes == 12) {
+		mes "^3355FFYou have found";
+		mes "^660000The 3rd Platoon Records^3355FF!^000000";
+		close;
+	}
+	else if (god_eremes > 6 && god_eremes < 12) {
+		if (rand(1,10) > 6 && god_eremes > 6) {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			set god_eremes,god_eremes+1;
+			close;
+		}
+		else {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			close2;
+		}
+	}
+	else if (god_eremes < 7) {
+		mes "[Librarian Jekan]";
+		mes "I'm sorry "+((Sex == SEX_MALE)?"sir":"ma'am")+",";
+		mes "but special authorization is required to browse that section. Otherwise, it's off limits.";
+		close;
+	}
+	else {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+}
+
+prt_in,170,109,0	script	A File#megin2	111,{
+	if (god_eremes == 12) {
+		mes "You have found ^0000FFThe 3rd Platoon Records^000000!";
+		close;
+	}
+	else if (god_eremes > 6 && god_eremes < 12) {
+		if (rand(1,10) > 6 && god_eremes > 6) {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			set god_eremes,god_eremes+1;
+			close;
+		}
+		else {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			close;
+		}
+	}
+	else if (god_eremes < 7) {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+	else {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+}
+
+prt_in,168,109,0	script	A File#megin3	111,{
+	if (god_eremes == 12) {
+		mes "You have found";
+		mes "^0000FFThe 3rd Platoon Records^000000!";
+		close;
+	}
+	else if (god_eremes > 6 && god_eremes < 12) {
+		if (rand(1,10) > 6 && god_eremes > 6) {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			set god_eremes,god_eremes+1;
+			close;
+		}
+		else {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			close;
+		}
+	}
+	else if (god_eremes < 7) {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+	else {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+}
+
+prt_in,169,109,0	script	A File#megin4	111,{
+	if (god_eremes == 12) {
+		mes "You have found ^0000FFThe 3rd Platoon Records^000000!";
+		close;
+	}
+	else if (god_eremes > 6 && god_eremes < 12) {
+		if (rand(1,10) > 6 && god_eremes > 6) {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			set god_eremes,god_eremes+1;
+			close;
+		}
+		else {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			close;
+		}
+	}
+	else if (god_eremes < 7) {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+	else {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+}
+
+prt_in,166,109,0	script	A File#megin5	111,{
+	if (god_eremes == 12) {
+		mes "You have found";
+		mes "^0000FFThe 3rd Platoon Records^000000!";
+		close;
+	}
+	else if (god_eremes > 6 && god_eremes < 12) {
+		if (rand(1,10) > 6 && god_eremes > 6) {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			set god_eremes,god_eremes+1;
+			close;
+		}
+		else {
+			mes "^3355FFYou see a shelf filled with many files. You begin searching through them, one by one.^000000";
+			close;
+		}
+	}
+	else if (god_eremes < 7) {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+	else {
+		mes "[Librarian Jekan]";
+		mes "W-wait...!";
+		mes "That section";
+		mes "is off limits!";
+		close;
+	}
+}
+
+prt_in,172,106,0	script	Librarian#megin	833,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes > 2 && god_eremes < 7) {
+			mes "[Librarian Jekan]";
+			mes "Ah, please do";
+			mes "not touch the files";
+			mes "in this section.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Some of the information";
+			mes "here is classified, and it is therefore prohibited by the Prontera Military to browse";
+			mes "through them.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "I'm currently in the process of searching for the classified files in that section, so that I can separate it from the information that is public domain.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "I'd highly";
+			mes "appreciate it";
+			mes "if you ^660000didn't^000000";
+			mes "interfere with my work.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Darn it...!";
+			mes "I can't read anything when the light is this dim! It's bad enough my eyes have gone bad...";
+			while(1) {
+				next;
+				switch(select("You have bad eyes?:I want to read some documents.:Let me help you find those files...:What kind of files are you looking for?")) {
+				case 1:
+					mes "[Librarian Jekan]";
+					mes "I've worked";
+					mes "under dim light";
+					mes "for so long, my eyes have";
+					mes "gone bad. They should get me ^0000FFa new light^000000, otherwise I'll go blind sooner or later...";
+					if (god_eremes == 5 && (countitem(2203) > 0 || countitem(1041) > 0)) {
+						next;
+						mes "[Librarian Jekan]";
+						mes "Hey, that's some pretty useful stuff that you've got with you. Do you mind letting me borrow it for a while? It'll help me in finding those files...";
+						next;
+						switch(select("Yes, I mind!:No, I don't mind.")) {
+						case 1:
+							mes "[Librarian Jekan]";
+							mes "^333333*Sniff*^000000";
+							mes "N-never mind...";
+							close;
+						case 2:
+							mes "[Librarian Jekan]";
+							mes "Oh, you are so kind!";
+							mes "Y-you really do want";
+							mes "to help me, don't you?";
+							if (countitem(2203) && countitem(1041)) {
+								delitem 1041,countitem(1041); //Lantern
+								delitem 2203,1; //Spectacles
+							}
+							else if (countitem(2203)) {
+								delitem 2203,1;
+							}
+							else if (countitem(1041)) {
+								delitem 1041,countitem(1041);
+							}
+							set god_eremes,6;
+							next;
+							mes "[Librarian Jekan]";
+							mes "Thank you...";
+							mes "Now I won't have to";
+							mes "worry so much about";
+							mes "finding that file.";
+							next;
+							mes "[Librarian Jekan]";
+							mes "If it's alright,";
+							mes "would you help me";
+							mes "look for it...?";
+							close;
+						}
+					}
+					else if (god_eremes > 5) {
+						next;
+						mes "[Librarian Jekan]";
+						mes "Thank you...";
+						mes "The stuff you let";
+						mes "me borrow will really";
+						mes "help me in looking for";
+						mes "all of those files...";
+					}
+					break;
+				case 2:
+					if (god_eremes == 6) {
+						mes "[Librarian Jekan]";
+						mes "Read some documents?";
+						mes "Well, you've come here";
+						mes "to the Library. That's";
+						mes "a good start.";
+						next;
+						mes "[Librarian Jekan]";
+						mes "Well, as long as";
+						mes "you know what kind";
+						mes "of document you're";
+						mes "looking for, you might";
+						mes "be able to find it.";
+						next;
+						mes "[Librarian Jekin]";
+						mes "I've got to find that";
+						mes "classified file as soon";
+						mes "as I can!";
+						close2;
+						set god_eremes,7;
+						end;
+					}
+					else {
+						mes "[Librarian Jekan]";
+						mes "Hmm...?";
+						mes "Hey, haven't";
+						mes "I told you already?";
+						next;
+						mes "[Librarian Jekan]";
+						mes "The public is prohibited from browsing the files in this section! How many times do I need to repeat myself?";
+						close;
+					}
+				case 3:
+					if (god_eremes == 4) {
+						mes "[Librarian Jekan]";
+						mes "I'd gladly accept your";
+						mes "help if it weren't for the fact that I cannot allow classified information to be released to the public.";
+						next;
+						mes "[Librarian Jekan]";
+						mes "I have no idea how something so important was shuffled into the files here in Prontera Library, but we can't allow the public to access it.";
+						next;
+						mes "[Librarian Jekan]";
+						mes "Still, that file doesn't seem to be that important, but I still have to waste my time on finding it...";
+						next;
+						mes "[Librarian Jekan]";
+						mes "Damn, my eyes are sore.";
+						mes "Working as a government official is easy except for the times when the beaucrats make you do stuff like this.";
+						set god_eremes,5;
+					}
+					else if (god_eremes > 4) {
+						mes "[Librarian Jekan]";
+						mes "I think I'm going to go";
+						mes "insane looking for this file...!";
+						next;
+						mes "[Librarian Jekan]";
+						mes "Huh...?";
+						mes "Did you just say";
+						mes "that you wanted to";
+						mes "help me? I-I'd appreciate it.";
+					}
+					else {
+						mes "[Librarian Jekan]";
+						mes "Um, you're not even";
+						mes "supposed to know what";
+						mes "kind of file I'm looking for. Even if you did, I'm not allowed to show you what's inside!";
+						close;
+					}
+					break;
+				case 4:
+					mes "[Librarian Jekan]";
+					mes "Hmm. I'm not really allowed to disclose any information related to that file. I'm sorry about that.";
+					next;
+					mes "[" + strcharinfo(0) + "]";
+					mes "But isn't";
+					mes "the file about...";
+					input @str$;
+					mes "^0000FF" + @str$ + "?";
+					next;
+					if (@str$ == "the 1st squad's final mission") {
+						mes "[Librarian Jekan]";
+						mes "Hmm...?";
+						mes "How did you";
+						mes "know about that?";
+						set god_eremes,4;
+					}
+					else {
+						mes "[Librarian Jekan]";
+						mes "Errmmm...";
+						mes "I don't think so....?";
+					}
+				}
+			}
+		}
+		else if (god_eremes == 2) {
+			mes "[Librarian Jekan]";
+			mes "Ah, please do not touch the files in this section. Usually, it's public domain but it seems that a classified file managed to get misplaced there.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "For now, I cannot let anyone without special authorization to look through that section. I must find that file and send it to the Prontera military as soon as I can.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Ergh! This light isn't bright enough for my eyes. They're starting to get sore again...";
+			next;
+			mes "[Librarian Jekan]";
+			mes "So what brings you here? If you're looking for something in particular, you should try another section.";
+			next;
+			switch(select("I want to read some documents.:Do you have bad eyes?:Let me help you to find the files.:What kind of files are you looking for?")) {
+			case 1:
+				mes "[Librarian Jekan]";
+				mes "I told you already! The files in this section aren't open to the public right now! Don't make me repeat myself!";
+				close;
+			case 2:
+				mes "[Librarian Jekan]";
+				mes "Since I have worked under a dim light for a long time, my eyes have gone bad.";
+				mes "They should get me a new light, otherwise I will be gone blind sooner or later...";
+				close;
+			case 3:
+				mes "[Librarian Jekan]";
+				mes "Um? How do you know what file I am looking for?";
+				mes "You don't even know what is written inside?";
+				mes "Stop interrupting me, leave!";
+				close;
+			case 4:
+				mes "[Librarian Jekan]";
+				mes "Hmm... I am not supposed to reveal anything related to the file.";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Isn't the file...";
+				input @str$;
+				mes "[" + strcharinfo(0) + "]";
+				mes "^0000FF" + @str$ + "?";
+				next;
+				mes "[Librarian Jekan]";
+				mes "Maybe...";
+				mes "Maybe not~";
+				close;
+			}
+		}
+		else if (god_eremes > 6 && god_eremes < 12) {
+			if (rand(1,10) > 4) {
+				mes "[Librarian Jekan]";
+				mes "Hmm? So did you find it? I've been searching for that file for a long time, but I haven't been able to find it.";
+				next;
+				mes "[Librarian Jekan]";
+				mes "I'll go ahead and search the right side, so do you think you could search the left?";
+			}
+			else {
+				mes "[Librarian Jekan]";
+				mes "Did you find it yet? All this time, and I still haven't been able to dig up that file.";
+				next;
+				mes "[Librarian Jekan]";
+				mes "I'll go ahead and check the left side, so would you look for it in the middle or the right side?";
+			}
+		}
+		else if (god_eremes == 12) {
+			mes "[Librarian Jekan]";
+			mes "Ah! There it is!";
+			mes "Thank you so much!";
+			mes "I'm glad to see that there are still kind and thoughtful people like you in the world.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "I really want to give you something to show you my gratitude, but I've got to send this back to the Prontera Military right away.";
+			next;
+			select("I want to read the document.");
+			mes "[Librarian Jekan]";
+			mes "Oh, right, you mentioned that, didn't you? It doesn't seem seem";
+			mes "so important, but I'm not really quite sure...";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Well, it couldn't hurt if I made a copy of this first for you to read, but I'll need some materials.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "I'll even cast the";
+			mes "Search Magic on it, so that it'll be just like the original. All right, I need the following things to make a copy...";
+			next;
+			mes "[Librarian Jekan]";
+			mes "2 Slick Paper,";
+			mes "1 Oil Paper,";
+			mes "3 Squid Ink,";
+			mes "3 Feather of Birds and";
+			mes "20 Blue Gemstones.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Please get those as soon as possible, and I'll be here making the other preparations to make a copy.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Also, I'll keep this copy in the Library for you to read, and to prevent it from being leaked to the public. So you'll have to come visit each time you wish to read it, okay?";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Okay, now...";
+			mes "Come back here";
+			mes "as soon as you can.";
+			set god_eremes,13;
+			close;
+		}
+		else if (god_eremes == 13) {
+			if (countitem(7111) > 1 && countitem(7151) && countitem(1024) > 2 && countitem(916) > 2 && countitem(717) > 19) {
+				mes "[Librarian Jekan]";
+				mes "Oh, you came back.";
+				mes "I didn't expect you to return here so quickly. Whatever's inside must be really important for you to know.";
+				next;
+				mes "[Librarian Jekan]";
+				mes "Anyway, please";
+				mes "give me a moment";
+				mes "while I make that";
+				mes "copy for you.";
+				delitem 7111,2;  //Smooth_Paper
+				delitem 7151,1;  //Oil_Paper
+				delitem 1024,3;  //Chinese_Ink
+				delitem 916,3;  //Feather_Of_Birds
+				delitem 717,20;  //Blue_Gemstone
+				set god_eremes,14;
+				next;
+				mes "[Librarian Jekan]";
+				mes "Alright then...";
+				mes "I'll see you in a bit.";
+				close;
+			}
+			else {
+				mes "[Librarian Jekan]";
+				mes "Have you forgotten";
+				mes "what you need to make";
+				mes "a copy? Alright, let me";
+				mes "tell you again...";
+				next;
+				mes "[Librarian Jekan]";
+				mes "2 Slick Paper,";
+				mes "1 Oil Paper,";
+				mes "3 Squid Ink,";
+				mes "3 Feather of Birds and";
+				mes "20 Blue Gemstones.";
+				next;
+				mes "[Librarian Jekan]";
+				mes "Please come";
+				mes "back with those items";
+				mes "as soon as you can.";
+				close;
+			}
+		}
+		else if (god_eremes > 13 && god_eremes < 16) {
+			if (rand(1,10) > 4) {
+				mes "[Librarian Jekan]";
+				mes "Let me go over and review the document before I make a copy...";
+			}
+			else {
+				mes "[Librarian Jekan]";
+				mes "Let me go over and review the document before I make a copy...";
+				set god_eremes,god_eremes+1;
+			}
+			close;
+		}
+		else if (god_eremes == 16) {
+			mes "[Librarian Jekan]";
+			mes "There you go. As I thought, the document didn't seem to contain any crucially important data.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "Just remember, this copy needs to stay in the Prontera Library. That means you have to come back if you need to read the document again.";
+			set god_eremes,17;
+			close;
+		}
+		else if (god_eremes > 16) {
+			mes "[Librarian Jekan]";
+			mes "Welcome, my friend!";
+			mes "So, what do you need today?";
+			next;
+			while(1) {
+				switch(select("Record Search.:Quit searching.:Search Help:Converse.")) {
+				case 1:
+					mes "^663300- Search Magic Initiated -";
+					mes "- Please enter a keyword. -";
+					mes " ";
+					mes "*Search Magic is";
+					mes " case sensitive.";
+					mes "Please do not use";
+					mes "capital letters.^000000";
+					next;
+					input .@input$;
+					if (compare(.@input$,"crusader") == 1) {
+						mes "^663300[Keyword: ^996633Crusader^663300]";
+						mes "Crusaders are warriors preparing for the upcoming Holy War against Evil. Experienced swordsmen, usually with remarkable spiritual prowess.^000000";
+						close2;
+						if (compare(.@input$,"3rd_company") == 1) {
+							mes "^663300[Keyword: ^9966333rd Company^663300]";
+							mes "Only the best Crusaders are selected to form the ranks of all squads in the 3rd Company. Most transfer records for 3rd Company Squads are unavailable.^000000";
+							next;
+							mes "^663300[Keyword: ^9966333rd Company^663300]";
+							mes "The 1st Squad of the 3rd Platoon is an exception, as all members retired or were transferred to other forces. More specific information can be found by searching ^9966333rd Platoon^663300.";
+							close2;
+							if (compare(.@input$,"3rd_platoon") == 1) {
+								mes "^663300[Keyword: ^9966333rd Platoon^663300]";
+								mes "The 3rd Platoon is considered the elite force in the 3rd Company. Only records for the 1st Squad in the 3rd Platoon currently exist due to special circumstances.^000000";
+								next;
+								mes "^663300[Keyword: ^9966333rd Platoon^663300]";
+								mes "More specific information can be found by searching ^9966331st Squad^663300.";
+								close2;
+								if (compare(.@input$,"1st_squad") == 1) {
+									mes "^663300[Keyword: ^9966331st Squad^663300]";
+									mes "1st Squad.";
+									mes "Complete";
+									mes "Member Roster";
+									mes "...^000000";
+									next;
+									mes "^663300[Keyword: ^9966331st Squad^663300]";
+									mes "^0000FF : Rebarev Doug";
+									mes " : Jack O";
+									mes " : Zan.Huadoku";
+									mes " : Cuaque Donon";
+									mes " : Emma Searth";
+									mes " : Royal Myst";
+									mes " : The Nineball^000000";
+									if (god_eremes == 17) {
+										set god_eremes,18;
+									}
+									close2;
+									if (compare(.@input$,"record") == 1) {
+										mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+										mes "The 1st Squad was famous as the most skilled search party within the Crusaders. However, it was disbanded as a result of its final mission.^000000";
+										next;
+										mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+										mes "The 1st Squad was secretly";
+										mes "assigned by the royal court to find and acquire ^996633godly artifacts^663300.";
+										mes "However, the mission failed due to a factional dispute caused by one member's act of insubordination.^000000";
+										next;
+										mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+										mes "The member guilty of insubordination was dropped from the squad during this mission. However, his actions were enough to result in the failure of the 1st Squad's final mission.^000000";
+										next;
+										mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+										mes "Due to this disgraceful incident, the 1st Squad was disbanded and";
+										mes "its members have been sent to disciplinary retraining for 3 months.";
+										next;
+										mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+										mes "Most of the members of the 1st Squad were transferred to other squads or retired. Their former leader, Rebarev Doug, is currently in charge of researching godly artifacts under royal edict.^000000";
+										close2;
+										if (god_eremes == 18) {
+											set god_eremes,19;
+										}
+									}
+								}
+								else {
+									mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+									mes "- No result has been found.-";
+									close2;
+								}
+							}
+						}
+						else if (compare(.@input$,"3rd_platoon") == 1) {
+							mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+							mes "Each Company consists";
+							mes "of 4 Platoons. Please";
+							mes "specify Company.^000000";
+							next;
+							close2;
+						}
+						else if (compare(.@input$,"1st_squad") == 1) {
+							mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+							mes "The 1st Squad : Crusaders.";
+							mes "Each platoon consists of 4 squads. Please specify Company and Platoon for information on a specific squad.^000000";
+							close2;
+						}
+						else if (compare(.@input$,"record") == 1) {
+							mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+							mes "- No result has been found.-";
+							close2;
+						}
+						else {
+							mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+							mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+							mes "-search with a keyword : "+.@input$+" -";
+							mes "- No result has been found.-";
+							close2;
+						}
+					}
+					else if (compare(.@input$,"3rd_company") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "^663300[Keyword: ^9966333rd Company^663300]";
+						mes "Only the best Crusaders are selected to form the ranks of all squads in the 3rd Company. Most transfer records for 3rd Company Squads are unavailable.^000000";
+						next;
+						mes "^663300[Keyword: ^9966333rd Company^663300]";
+						mes "The 1st Squad of the 3rd Platoon is an exception, as all members retired or were transferred to other forces. More specific information can be found by searching ^9966333rd Platoon^663300.";
+						close2;
+						if (compare(.@input$,"3rd_platoon") == 1) {
+							mes "^663300[Keyword: ^9966333rd Platoon^663300]";
+							mes "The 3rd Platoon is considered the elite force in the 3rd Company. Only records for the 1st Squad in the 3rd Platoon currently exist due to special circumstances.^000000";
+							next;
+							mes "^663300[Keyword: ^9966333rd Platoon^663300]";
+							mes "More specific information can be found by searching ^9966331st Squad^663300.";
+							close2;
+							if (compare(.@input$,"1st_squad") == 1) {
+								mes "^663300[Keyword: ^9966331st Squad^663300]";
+								mes "1st Squad.";
+								mes "Complete";
+								mes "Member Roster";
+								mes "...^000000";
+								next;
+								mes "^663300[Keyword: ^9966331st Squad^663300]";
+								mes "^0000FF : Rebarev Doug";
+								mes " : Jack O";
+								mes " : Zan.Huadoku";
+								mes " : Cuaque Donon";
+								mes " : Emma Searth";
+								mes " : Royal Myst";
+								mes " : The Nineball^000000";
+								close2;
+								if (god_eremes == 17) {
+									set god_eremes,18;
+								}
+								if (compare(.@input$,"record") == 1) {
+									mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+									mes "The 1st Squad was famous as the most skilled search party within the Crusaders. However, it was disbanded as a result of its final mission.^000000";
+									next;
+									mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+									mes "The 1st Squad was secretly";
+									mes "assigned by the royal court to find and acquire ^996633godly artifacts^663300.";
+									mes "However, the mission failed due to a factional dispute caused by one member's act of insubordination.^000000";
+									next;
+									mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+									mes "The member guilty of insubordination was dropped from the squad during this mission. However, his actions were enough to result in the failure of the 1st Squad's final mission.^000000";
+									next;
+									mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+									mes "Due to this disgraceful incident, the 1st Squad was disbanded and";
+									mes "its members have been sent to disciplinary retraining for 3 months.";
+									next;
+									mes "^663300[Keyword: ^9966331st Squad Record^663300]";
+									mes "Most of the members of the 1st Squad were transferred to other squads or retired. Their former leader, Rebarev Doug, is currently in charge of researching godly artifacts under royal edict.^000000";
+									close2;
+									if (god_eremes == 18) {
+										set god_eremes,19;
+									}
+								}
+							}
+							else {
+								mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+								mes "- No result has been found.-";
+								close2;
+							}
+						}
+					}
+					else if (compare(.@input$,"3rd_platoon") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "The 3rd Platoon : ";
+						mes "- No result has been found.-";
+						mes "- Suggested to enter a more specific keyword.-";
+						close2;
+					}
+					else if (compare(.@input$,"1st_squad") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "The 3rd Company : ";
+						mes "- No result has been found.-";
+						mes "- Suggested to enter a more specific keyword.-";
+						close2;
+					}
+					else if ((compare(.@input$,"record") == 1) && (god_eremes > 17)) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "- No result has been found.-";
+						mes "- Suggested to enter a specific name of the force for a better research.-";
+						next;
+						close2;
+					}
+					else if (compare(.@input$,"rebarev_doug") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Former leader of";
+						mes "3rd Company, 3rd Platoon,";
+						mes "1st Squad. Serves as instructor of Crusader Boot Camp and is currently";
+						mes "conducting research by royal edict.^000000";
+						next;
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Current location:";
+						mes "^996633Prontera Castle, Prontera^663300.^000000";
+						close2;
+					}
+					else if (compare(.@input$,"egnigem") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "^FF0000Prohibited Search Term!^000000";
+						close2;
+					}
+					else if (compare(.@input$,"zan.huadoku") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Former member of";
+						mes "3rd Company, 3rd Platoon";
+						mes "1st Squad. Serving as weapon quartermaster since disbanding";
+						mes "of 1st Squad.";
+						next;
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Current location:";
+						mes "^996633Blacksmith Guild, Geffen^663300.^000000";
+						close2;
+					}
+					else if (compare(.@input$,"cuaque_donon") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Former member of";
+						mes "3rd Company, 3rd Platoon";
+						mes "1st Squad. Retired from service";
+						mes "and now works at an Inn.";
+						next;
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Current location:";
+						mes "^996633Inn, Morocc^663300.^000000";
+						close2;
+					}
+					else if (compare(.@input$,"jack_o") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Former member of";
+						mes "3rd Company, 3rd Platoon";
+						mes "1st Squad. Serving as recruiting officer since disbanding of 1st Squad.";
+						next;
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Current location:";
+						mes "^996633Alberta Port^663300.^000000";
+						close2;
+					}
+					else if (compare(.@input$,"emma_searth") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Former member of";
+						mes "3rd Company, 3rd Platoon";
+						mes "1st Squad. Retired since";
+						mes "disbanding of 1st Squad.";
+						next;
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Current location:";
+						mes "^996633Al De Baran^663300.^000000";
+						close2;
+					}
+					else if (compare(.@input$,"royal_myst") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Former member of";
+						mes "3rd Company, 3rd Platoon";
+						mes "1st Squad. Current duty is unknown.";
+						next;
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Current location:";
+						mes "^996633Casino, Comodo^663300.^000000";
+						close2;
+					}
+					else if (compare(.@input$,"the_nineball") == 1) {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Former member of";
+						mes "3rd Company, 3rd Platoon";
+						mes "1st Squad. Serves as security officer since disbanding of 1st Squad.";
+						next;
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "Current location:";
+						mes "^996633Tavern, Jawaii^663300.^000000";
+						close2;
+					}
+					else {
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
+						mes "No result has been found.";
+						close2;
+					}
+					break;
+				case 2:
+					mes "^663300- Search Magic -";
+					mes "- is being shut down. -^000000";
+					next;
+					mes "^663300- ... -^000000";
+					next;
+					mes "^663300- ... -^000000";
+					mes "^663300- ... -^000000";
+					next;
+					mes "^663300- Search Magic -";
+					mes "- Deactivated. -^000000";
+					close;
+				case 3:
+					mes "[Librarian Jekan]";
+					mes "Well...";
+					mes "This is a pretty";
+					mes "obsolete version";
+					mes "of Search Magic,";
+					mes "so I understand if";
+					mes "it's giving you trouble.";
+					next;
+					mes "[Librarian Jekan]";
+					mes "Now...";
+					mes "First, if you're going to enter a single search term, like someone's name, you would enter '^660000lee_hester^000000' if you were looking up 'Lee Hester.'";
+					next;
+					mes "[Librarian Jekan]";
+					mes "Don't use any";
+					mes "capital letters!";
+					mes "And use underscores to";
+					mes "indicate spaces between first and last names and within military unit names.";
+					next;
+					mes "[Librarian Jekan]";
+					mes "For example, the Fourth Company would be entered as ^6600004th_company^000000. Now... bear with me.";
+					next;
+					mes "[Librarian Jekan]";
+					mes "If you're looking for information on a specific squad, you need to know the Platoon and Company it falls under.";
+					next;
+					mes "[Librarian Jekan]";
+					mes "For example, if you wanted to look up the Crusader 4th Squad of the 4th Platoon of the 4th Company, you would input...";
+					next;
+					mes "[Librarian Jekan]";
+					mes "'^660000crusader 4th_company 4th_platoon 4th_squad record^000000' all in one line exactly like that. I hope this helps you in your search...";
+					next;
+					break;
+				case 4:
+					mes "[Librarian Jekan]";
+					mes "You can tell our";
+					mes "government doesn't";
+					mes "really know how to";
+					mes "allocate its funds";
+					mes "and resources.";
+					next;
+					mes "[Librarian Jekan]";
+					mes "First, there's Jawaii.";
+					mes "Do newlyweds really need";
+					mes "an entire island for themselves? Then again, I am single so I'm probably biased.";
+					next;
+					mes "[Librarian Jekan]";
+					mes "And look at me.";
+					mes "Geniuses aren't supposed to waste their precious time doing useless things for libraries!";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Librarian Jekan]";
+			mes "Ah, please do not touch any books in that section. ...I'm sure there's nothing there that could be useful to you.";
+			next;
+			switch(select("Ignore him and check books.:Step back.")) {
+			case 1:
+				mes "[Librarian Jekan]";
+				mes "Hey...!";
+				mes "I thought I said";
+				mes "not to touch those!";
+				close2;
+				warp "prontera",120,264;
+				end;
+			case 2:
+				mes "[Librarian Jekan]";
+				mes "Thank you. Feel";
+				mes "free to browse through";
+				mes "the other sections.";
+				next;
+				mes "[Librarian Jekan]";
+				mes "It's really nice to have visitors in the Library, especially when so many people don't read books nowadays.";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Librarian Jekan]";
+		mes "Ah, please do not";
+		mes "touch any books in";
+		mes "that section. There's";
+		mes "nothing useful over in";
+		mes "that section anyway.";
+		next;
+		switch(select("Ignore him and check books.:Step back.")) {
+		case 1:
+			mes "[Librarian Jekan]";
+			mes "I told you...!";
+			mes "Don't touch";
+			mes "the books here!";
+			close2;
+			warp "prontera",120,264;
+			end;
+		case 2:
+			mes "[Librarian Jekan]";
+			mes "Thank you. Feel";
+			mes "free to browse through";
+			mes "the other sections.";
+			next;
+			mes "[Librarian Jekan]";
+			mes "It's really nice to have visitors in the Library, especially when so many people don't read books nowadays.";
+			close;
+		}
+	}
+	close;
+}
+
+geffen_in,109,161,3	script	Crusader#God1	751,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes > 17 && god_megin_1 < 2) {
+			mes "[Zan.Huadoku]";
+			mes "^333333*Phew...*^000000";
+			mes "This work is really getting to me. Going on a mission with my war buddies sounds a lot better than this.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "At least in those days, I felt like I was actually doing something useful!";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Hey...";
+			mes "Can I help you";
+			mes "with anything?";
+			next;
+			switch(select("Ask him about the 1st Squad.:Ask him how he's been doing.:Ask him about the 1st Squad's last mission.")) {
+			case 1:
+				if (god_eremes == 18) {
+					mes "[Zan.Huadoku]";
+					mes "Yeah, I was a member of the 1st Squad in the 3rd Platoon a long time ago. How did you know that?";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "I miss the guys back in the squad. I wonder how our leader's been doing recently...";
+					next;
+					mes "^3355FFYou tell Zan about Rebarev Doug, and about how he is now an instructor for Crusader Boot Camp. He seems to be absorbed in his thoughts of the past.^000000";
+					close;
+				}
+				else if (god_eremes > 18) {
+					mes "[Zan.Huadoku]";
+					mes "Yeah, I was a member of the 1st Squad in the 3rd Platoon a long time ago. How did you know that?";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "I miss the guys back in the squad. I wonder how our leader's been doing recently...";
+					next;
+					mes "^3355FFYou tell Zan about Rebarev Doug, and about how he is now an instructor for Crusader Boot Camp. He seems to be absorbed in his thoughts of the past.^000000";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "...";
+					mes "......";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "Before we went out on our last mission, the seven of us were like brothers and sisters. If ^FF0000he^000000 didn't disobey the order, we'd still be together today.";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "Wait...";
+					mes "What was his name...?";
+					mes "There's no way I could forget something like that...";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "H-how can I not";
+					mes "remember his name!";
+					mes "He's the reason";
+					mes "my life is...!";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "^333333*Groan...*^000000";
+					mes "I.... My head...";
+					mes "My head hurts...";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "^3355FFZan looks very confused and his eyes begin to glaze with a dazed look. You try speaking to him again, but he doesn't respond at all.^000000";
+					if (!god_megin_1) {
+						set god_megin_1,1;
+					}
+					close;
+				}
+			case 2:
+				mes "[Zan.Huadoku]";
+				mes "How am I been doing?";
+				mes "Well, I work for the Blacksmith Guild, picking out good weapons";
+				mes "to supply the Crusaders.";
+				next;
+				mes "[Zan.Huadoku]";
+				mes "Sometimes, I get really";
+				mes "bored with what I'm doing. I keep trying to convince myself that my job's important to future Crusaders, but...";
+				next;
+				mes "[Zan.Huadoku]";
+				mes "You know what?";
+				mes "A lot of people have been asking me weird questions about me recently. I feel like I'm getting spied on, but maybe I'm just getting paranoid.";
+				close;
+			case 3:
+				if (god_eremes == 18) {
+					mes "[Zan.Huadoku]";
+					mes "Yeah, on our";
+					mes "final mission...";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "Final...? What the? I know it happened, but for some reason, all I can envision is a complete blank when I try to think about it.";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "I...";
+					mes "I guess I need something to remind me? I know it happened, but... I'm so confused.";
+					next;
+					mes "^3355FFZan seems to be having a very difficult time recalling that specific memory of his past.^000000";
+					close;
+				}
+				else if (god_eremes > 18 && god_megin_1 > 0) {
+					mes "[Zan.Huadoku]";
+					mes "The last mission...";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "Umm...";
+					mes "Huh. I don't";
+					mes "remember anything.";
+					mes "That's weird. Maybe";
+					mes "I need a bit of a clue?";
+					next;
+					mes "^3355FFZan.Huadoku seemed to";
+					mes "have a hard time remembering what had happened in the past. You begin to share with him what you had read in the library about the 1st Squad...^000000";
+					next;
+					mes "...";
+					next;
+					mes "...";
+					mes "......";
+					next;
+					mes ".....";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "Y-yeah that's right! And then three days after we started the mission, we found some kind of...";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "Well, I'm not sure what it was. But we found an ^0000FFunknown fragment^000000 that was a sign from God! And then...!";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "And then...";
+					mes "Oh. Oh God.";
+					mes "I can't remember...";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "I can't think about anything further than that. I can't even remember what we found. But I'm sure it was damned important.";
+					next;
+					mes "^3355FFZan stood still in silence, with a pained look on his face.^000000";
+					if (god_megin_1 == 1) {
+						set god_megin_1,2;
+					}
+					close;
+				}
+				else {
+					mes "[Zan.Huadoku]";
+					mes "The last mission...";
+					next;
+					mes "[Zan.Huadoku]";
+					mes "Umm...";
+					mes "Huh. I don't";
+					mes "remember anything.";
+					mes "That's weird. Maybe";
+					mes "I need a bit of a clue?";
+					close;
+				}
+			}
+		}
+		else if (god_megin_1 > 1 && god_megin_1 < 3) {
+			mes "...";
+			next;
+			mes "...";
+			mes ".....";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Y-yeah that's right! And then three days after we started the mission, we found some kind of...";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Well, I'm not sure what it was. But we found an ^0000FFunknown fragment^000000 that was a sign from God! And then...!";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "And then...";
+			mes "Oh. Oh God.";
+			mes "I can't remember...";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "I can't think about anything further than that. I can't even remember what we found. Three months after that all happened, I've had these head problems...";
+			next;
+			mes "^3355FFZan stood still in silence, with a pained look on his face.^000000";
+			set god_megin_1,3;
+			close;
+		}
+		else if (god_megin_1 > 2) {
+			mes "^3355FFGrabbing his head,";
+			mes "tearing his hair and writhing in Agony, Zan kept repeating the same words over and over again...^000000";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "3 days later!";
+			mes "We f-found some ^0000FFfragment^000000!";
+			mes "It was G-God's sign! But why";
+			mes "can't I remember?! Why?!";
+			close;
+		}
+		else {
+			mes "[Zan.Huadoku]";
+			mes "Hey yo.";
+			mes "Can I help you?";
+			close;
+		}
+	}
+	else {
+		mes "[Zan.Huadoku]";
+		mes "Good day!";
+		mes "Do you know the";
+		mes "importance of supply?";
+		next;
+		switch(select("No.:Yes!")) {
+		case 1:
+			mes "[Zan.Huadoku]";
+			mes "Any military force or party needs their supplies to be replenished if they are to continue battling for a prolonged period of time.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "For instance, let's say your group go on hunting without a healer. In this case, everyone would consume health restoration items, like potions.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Since you can only carry so many items at once, you'll eventually run out of potions.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "But if one of your party members traveled between town and the hunting area, he could supply your party with new healing items.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Supplying your party in this way would let you hunt with less worry. For that duty, the Merchant class would be the best by using their Carts.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "I suppose that's why I'm working here in the Blacksmith Guild. As weapon quartermaster, I'm obligated to provide supplies for the Crusader forces.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "The Blacksmiths in this guild also help me provide high quality weapons for the Crusades as well.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "If you happen to run out of health items while hunting, why don't you ask a Merchant for help?";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Most likely, they will have some spare items and would be willing to share with you if you ask nicely enough.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "I hope to see you later again! May Odin protect you on your journeys.";
+			close;
+		case 2:
+			mes "[Zan.Huadoku]";
+			mes "Oh...";
+			mes "Well then.";
+			mes "In that case.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Let me tell you about some useful knowledge I learned while working with the Blacksmiths.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "A Blacksmith character's forging skills are affected by the DEX and LUK stats. DEX and LUK also affect the item creation skills for Alchemists.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Since I've been staying here in the Blacksmith guild, I'm trying to better understand Blacksmiths and develop a deeper appreciation of their work.";
+			next;
+			mes "[Zan.Huadoku]";
+			mes "Alright then...";
+			mes "Take it easy.";
+			close;
+		}
+	}
+}
+
+morocc_in,146,179,0	script	Employee#megin1	66,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes > 17 && god_megin_2 < 1) {
+			mes "^3355FFThe Inn Employee";
+			mes "eyes you suspiciously.^000000";
+			next;
+			mes "[Inn Employee]";
+			mes "Excuse me.";
+			mes "How can I help you?";
+			mes "Are you looking for";
+			mes "someone...?";
+			next;
+			input @str$;
+			if (@str$ == "Cuaque Donon" || @str$ == "Cuaque" || @str$ == "Donon") {
+				mes "[" + strcharinfo(0) + "]";
+				mes "Do you happen to know a person named " + @str$ + " ...?";
+				if (god_eremes == 18) {
+					mes "[Inn Employee]";
+					mes "I don't think";
+					mes "I know that person.";
+					mes "I guess that guy left";
+					mes "before I started working";
+					mes "here, maybe?";
+					close;
+				}
+				else if (god_eremes > 18) {
+					next;
+					mes "^3355FFOnce you said that name, she immediately drew closer to you";
+					mes "and began speaking in a low, threatening tone.^000000";
+					next;
+					mes "[Scary Inn Employee]";
+					mes "Who the hell are you?";
+					mes "If you try anything funny,";
+					mes "I'll rip your heart out!";
+					mes "Why are you so curious?!";
+					mes "Are you one of them?!";
+					next;
+					switch(select("Rebarev Doug sent me!:Wait, is he in hiding?:Just... curious.")) {
+					case 1:
+						if (rand(1,10) > 3) {
+							mes "[Ms. Scary Inn Employee]";
+							mes "Rebarev Doug...?!";
+							mes "That old coot must be afraid";
+							mes "of the rumors we're spreading around. Is already deperate enough to send his men?!";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "But...";
+							mes "I'm not in the mood";
+							mes "to guide you over to";
+							mes "Cuaque Donon...";
+							next;
+							mes "^3355FFThe Inn Employee";
+							mes "knocks you out~^000000";
+							close2;
+							percentheal -100,0;
+							end;
+						}
+						else {
+							mes "[Ms. Scary Inn Employee]";
+							mes "Rebarev Doug...?!";
+							mes "That old coot must be afraid";
+							mes "of the rumors we're spreading around. Is already deperate enough to send his men?!";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "Hmm...";
+							mes "It might not be a bad idea to let someone like you talk to Cuaque Donon. You don't seem like the bad sort...";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "But you only get a hint,";
+							mes "and I'm saying it just once...";
+							mes "^0000FFAragham never hoarded";
+							mes "upgrade items.^000000";
+							set god_megin_2,1;
+							close;
+						}
+					case 2:
+						if (rand(1,10) > 4) {
+							mes "[Ms. Scary Inn Employee]";
+							mes "Right.";
+							mes "If you're here";
+							mes "looking for him,";
+							mes "you definitely know";
+							mes "why he's hiding.";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "How dare you...";
+							mes "How dare you play";
+							mes "dumb with me?!";
+							next;
+							mes "^3355FFThe Inn Employee";
+							mes "knocks you out~^000000";
+							close2;
+							percentheal -100,0;
+						}
+						else {
+							mes "[Ms. Scary Inn Employee]";
+							mes "Right.";
+							mes "If you're here";
+							mes "looking for him,";
+							mes "you definitely know";
+							mes "why he's hiding.";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "Well, maybe not.";
+							mes "Who knows what kind";
+							mes "of friends Cuaque made";
+							mes "when he was a Crusader.";
+							mes "Alright, but listen...";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "I'm only giving";
+							mes "you this hint once...";
+							mes "^0000FFAragham never hoarded";
+							mes "upgrade items.^000000";
+							set god_megin_2,1;
+							close;
+						}
+					case 3:
+						if (rand(1,10) > 3) {
+							mes "[Ms. Scary Inn Employee]";
+							mes "Just curious?";
+							mes "Huh. You've got a lot of nerve, don't you? I'm sorry to tell you this but...";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "I'm not in the mood";
+							mes "to guide you over to";
+							mes "Cuaque Donon...";
+							mes "Heh heh heh...";
+							next;
+							mes "^3355FFThe Inn Employee";
+							mes "knocks you out~^000000";
+							close2;
+							percentheal -100,0;
+							end;
+						}
+						else {
+							mes "[Ms. Scary Inn Employee]";
+							mes "Just curious?";
+							mes "Huh. You've got a lot of nerve, don't you? I'm sorry to tell you this but...";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "I can't really tell";
+							mes "you exactly where he";
+							mes "is. The most I can do";
+							mes "is give you a small hint.";
+							mes "Listen carefully now...";
+							mes "I'll only say it once.";
+							next;
+							mes "[Ms. Scary Inn Employee]";
+							mes "^0000FFAragham never";
+							mes "hoarded upgrade items.^000000";
+							mes "Now, don't forget!";
+							set god_megin_2,1;
+							close;
+						}
+					}
+				}
+			}
+			else {
+				mes "[Inn Employee]";
+				mes "What...?";
+				mes "I don't know";
+				mes "anyone named that.";
+				mes "If that's even a name...";
+				close2;
+			}
+		}
+		else if (god_megin_2 > 0) {
+			mes "[Inn Employee]";
+			mes "Welcome to the Inn.";
+			mes "When you move to the entrance, you can also enter a PvP zone though a PvP doorman.";
+			next;
+			mes "[Inn Employee]";
+			mes "Usually, you can visit inns in big towns. If you want to take a rest or compete with others, an Inn is the place to go.";
+			next;
+			mes "^3355FFShe welcomed you";
+			mes "very professionally,";
+			mes "as if nothing";
+			mes "had happened.^000000";
+			close;
+		}
+		else {
+			mes "[Inn Employee]";
+			mes "Welcome to the Inn.";
+			mes "When you move to the entrance, you can also enter a PvP zone though a PvP doorman.";
+			next;
+			mes "[Inn Employee]";
+			mes "Usually, you can visit inns in big towns. If you want to take a rest or compete with others, an Inn is the place to go.";
+			close2;
+		}
+	}
+	else {
+		mes "[Inn Employee]";
+		mes "Welcome to the Inn.";
+		mes "When you move to the entrance, you can also enter a PvP zone though a PvP doorman.";
+		next;
+		mes "[Inn Employee]";
+		mes "Usually, you can visit inns in big towns. If you want to take a rest or compete with others, an Inn is the place to go.";
+		next;
+		mes "[Inn Employee]";
+		mes "Oh, and I have a bit of a secret...! I hear the Inn's owner is planning some kind of shady business. It's some sort of major project, but don't let anyone know I told you!";
+		close;
+	}
+}
+
+in_rogue,243,61,0	script	Suspicious Man#megin	748,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes == 18) {
+			mes "[Cuaque Donon]";
+			mes "Wh-who are you?!";
+			mes "How the hell did";
+			mes "you get in here?!";
+			mes "Get away from me!";
+			mes "Geeeet awwwway!";
+			close;
+		}
+		else if (god_eremes > 18) {
+			if (god_megin_2 > 0 && god_megin_2 < 4) {
+				mes "[Cuaque Donon]";
+				mes "Wh-who are you?!";
+				mes "How the hell did";
+				mes "you get in here?!";
+				mes "Get away from me!";
+				mes "Geeeet awwwway!";
+				next;
+				mes "^3355FFYou try your best to calm him down and to tell him what you've found in the document.^000000";
+				next;
+				if ((countitem(740) > 0) || (countitem(741) > 0) || (countitem(742) > 0) || (countitem(743) > 0) || (countitem(750) > 0) || (countitem(751) > 0) || (countitem(752) > 0) || (countitem(753) > 0) || (countitem(754) > 0) || (countitem(7206) > 0) || (countitem(7212) > 0)){
+					if (countitem(740) > 0) {
+						set .@toy$,"Puppet";
+					}
+					else if (countitem(741) > 0) {
+						set .@toy$,"Poring Doll";
+					}
+					else if (countitem(742) > 0) {
+						set .@toy$,"Chonchon Doll";
+					}
+					else if (countitem(743) > 0) {
+						set .@toy$,"Spore Doll";
+					}
+					else if (countitem(750) > 0) {
+						set .@toy$,"Baphomet Doll";
+					}
+					else if (countitem(751) > 0) {
+						set .@toy$,"Osiris Doll";
+					}
+					else if (countitem(752) > 0) {
+						set .@toy$,"Rocker Doll";
+					}
+					else if (countitem(753) > 0) {
+						set .@toy$,"Yoyo Doll";
+					}
+					else if (countitem(754) > 0) {
+						set .@toy$,"Racoon Doll";
+					}
+					else if (countitem(7206) > 0) {
+						set .@toy$,"Black Cat Doll";
+					}
+					else {
+						set .@toy$,"Hung Doll";
+					}
+					mes "^3355FFYou pulled out a "+ .@toy$ +"";
+					mes "to cover your face, and wiggled its arms as if it were talking.^000000";
+				}
+				else {
+					mes "^3355FFYou must find something";
+					mes "that can calm Cuaque Donon.^000000";
+					next;
+					mes "^3355FFSadly, Chaque Donon seems";
+					mes "to have regressed to a very childish mentality. Perhaps if you brought something that children like. Something that would offer them comfort...^000000";
+					close;
+				}
+				next;
+				mes "^3355FFChaque Donon nodded his head";
+				mes "and happily sucked his thumb. It saddens you to see a former Crusader reduced to this state.^000000";
+				next;
+				switch(select("Ask him about the Inn Maid.:Ask him how he's been doing.:Ask about 1st Squad's Final Mission.")) {
+				case 1:
+					mes "[Cuaque Donon]";
+					mes "S-she's my sister.";
+					mes "And she's also a Rogue.";
+					mes "When I was retired from service....";
+					next;
+					mes "[Cuaque Donon]";
+					mes "...";
+					mes "......";
+					next;
+					mes "[Cuaque Donon]";
+					mes "My family always expected";
+					mes "too much of me. That's why I used to be a Crusader. I mean, they're paid well and respected.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "When I retired, my sister was so mad. She's the only one I can depend upon, but now that I've messed up my life like this...";
+					next;
+					mes "[Cuaque Donon]";
+					mes "But even after yelling at me, and saying I was worthless, she got ";
+					mes "me a job at her Inn anyway.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "I've been working there,";
+					mes "living a quiet life. But now, for some reason, a lot of people want to talk to me about something important.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "I don't know what I said or did, but I think when I gave them the right answer, after I could finally remember something, they tried to hurt me.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "So now my sister's been hiding";
+					mes "me here. It's boring and lonely, and the guy downstairs is always yelling at me to leave.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "Even the Rogue Guild that";
+					mes "my sister's a part of comes in sometimes to yell at me. They all want me to tell them something I'm supposed to know!";
+					next;
+					mes "[Cuaque Donon]";
+					mes "But I can't remember anything!";
+					mes "This place is safe from dangerous people, but I don't know for how long.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "Even my sister says I have to tell the Rogue Guild what I should know, or they won't protect us anymore.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "She looked really sad when she";
+					mes "said that. I don't want to let her down or make her upset. She's";
+					mes "all I have left...";
+					if (god_megin_2 == 2) {
+						next;
+						mes "[Cuaque Donon]";
+						mes "Oh, I do remember something!";
+						mes "My sister told me not to tell anyone, but I'm gonna tell you...";
+						next;
+						mes "^3355FFCuaque Donon";
+						mes "whispers into your ears.^000000";
+						next;
+						mes "[Cuaque Donon]";
+						mes "^666666She said the Rogue Guild wants something from me. So she's gonna send to me to good people that we can trust and can help me.^000000";
+						next;
+						mes "[Cuaque Donon]";
+						mes "^666666Still, this is the safest place for me for a while. But I'm always ready to run away if I have to.^000000";
+						set god_megin_2,3;
+					}
+					close;
+				case 2:
+					mes "[Cuaque Donon]";
+					mes "How have I been doing?";
+					mes "Lots of people have been coming";
+					mes "to see me. They all want me to tell them something I don't even know!";
+					next;
+					mes "[Cuaque Donon]";
+					mes "The Rogue Guild promised to";
+					mes "protect me, but they scare the hell out of me sometimes by coming out of the floor all of a sudden.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "Oh, and my sister said she's";
+					mes "gonna complain to my old boss about something. She said I used to be fine, but now that I've retired, I'm not the same anymore.";
+					next;
+					mes "[Cuaque Donon]";
+					mes "But my old boss from when I was a Crusader doesn't wanna meet my sister. So she's gonna ask help from other Rogues to spread some rumors...";
+					next;
+					mes "[Cuaque Donon]";
+					mes "Like anyone who works as a Crusader under my old boss will end up like me. You know... broken.";
+					if (god_megin_2 == 1) {
+						set god_megin_2,2;
+					}
+					close;
+				case 3:
+					mes "[Cuaque Donon]";
+					mes "I don't know...";
+					mes "I can't even remember.";
+					if (god_megin_2 == 3) {
+						next;
+						mes "[Cuaque Donon]";
+						mes "Wait, that's right!";
+						mes "^0000FFMegingjard^000000! Right.";
+						mes "We found it, and";
+						mes "we knew what it was";
+						mes "just by looking at it!";
+						next;
+						if (rand(1,10) > 4) {
+							switch(select("^FF0000Megingjard^000000!:^FFFFFFListen to him quietly^000000.")) {
+							case 1:
+								mes "[Cuaque Donon]";
+								mes "Waaaaaaaah~!";
+								mes "You're the same";
+								mes "as all the others!";
+								mes "Go away from me!";
+								set god_megin_2,0;
+								close;
+							case 2:
+								mes "[Cuaque Donon]";
+								mes "I remember after we found it. One of us in the squad had a argument with our old leader. I was keeping night watch and happened to hear it. I think our leader was out of line...";
+								next;
+								mes "[Cuaque Donon]";
+								mes "Ergh...";
+								mes "I can't remember";
+								mes "more than that...";
+								set god_megin_2,4;
+								close;
+							}
+						}
+						else {
+							switch( select( "^FF0000Megingjard^000000!", "^FFFFFFMegingjard!^000000.", "^FFFFFFListen to him quitely^000000" ) ) {
+							case 1:
+								mes "[Cuaque Donon]";
+								mes "Waaaaaaaah~!";
+								mes "You're the same";
+								mes "as all the others!";
+								mes "Go away from me!";
+								set god_megin_2,0;
+								close;
+							case 2:
+								mes "[Cuaque Donon]";
+								mes "Waaaaaaaah~!";
+								mes "You're the same";
+								mes "as all the others!";
+								mes "Go away from me!";
+								set god_megin_2,0;
+								close;
+							case 3:
+								mes "[Cuaque Donon]";
+								mes "I remember after we found it. One of us in the squad had a argument with our old leader. I was keeping night watch and happened to hear it. I think our leader was out of line...";
+								next;
+								mes "[Cuaque Donon]";
+								mes "Ergh...";
+								mes "I can't remember";
+								mes "more than that...";
+								set god_megin_2,4;
+								close;
+							}
+						}
+					}
+					close2;
+				}
+			}
+			else if (god_megin_2 == 4) {
+				mes "[Cuaque Donon]";
+				mes "I remember after we found Megingjard. One of us in the squad had a argument with our old leader. I was keeping night watch and happened to hear it. I think our leader was out of line...";
+				next;
+				mes "[Cuaque Donon]";
+				mes "Ergh...";
+				mes "I can't remember";
+				mes "more than that...";
+				next;
+				mes "[Cuaque Donon]";
+				mes "I'm getting sleepy";
+				mes "and my head hurts.";
+				mes "Let me rest now...";
+				close2;
+			}
+			else {
+				mes "[Cuaque Donon]";
+				mes "Wh-who are you?!";
+				mes "How the hell did";
+				mes "you get in here?!";
+				mes "Get away from me!";
+				mes "Geeeet awwwway!";
+				close2;
+			}
+		}
+	}
+	else {
+		mes "[Cuaque Donon]";
+		mes "Wh-who are you?!";
+		mes "How the hell did";
+		mes "you get in here?!";
+		next;
+		mes "[Cuaque Donon]";
+		mes "Wahhhhh...!";
+		mes "My head!";
+		mes "It's hurting so bad!";
+		mes "I'm so s-scared!";
+		close;
+	}
+}
+
+alberta,196,146,0	script	Crusader#megin2	751,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes == 18) {
+			mes "[Jack O]";
+			mes "^333333*Yawn...*^000000";
+			mes "It's quiet and boring, as per usual. Let's see if there's any Swordmen I can recruit today.";
+			next;
+			mes "[Jack O]";
+			mes "Eh...?";
+			next;
+			switch(select("Ask him about Rebarev Doug.:Ask him how he's been doing.:Ask him about the last mission of the 1st Squad.")) {
+			case 1:
+				mes "[Jack O]";
+				mes "Ah! Yeah, our old leader back in the 1st Squad. Heh. I haven't seen him since we were disbanded.";
+				close;
+			case 2:
+				mes "[Jack O]";
+				mes "Me? Yeah, I'm always busy recruiting future Crusaders.";
+				mes "We always welcome Swordmen";
+				mes "of great ability!";
+				next;
+				mes "[Jack O]";
+				mes "How does it sound? Why don't you volunteer to become a Crusader?";
+				close;
+			case 3:
+				mes "[Jack O]";
+				mes "Last mission?";
+				mes "Eh, I don't really remember it.";
+				close;
+			}
+		}
+		else if (god_eremes > 18) {
+			if (god_megin_3 == 0 || god_megin_3 == 1) {
+				mes "[Jack O]";
+				mes "^333333*Yawn...*^000000";
+				mes "It's quiet and boring, as per usual. Let's see if there's any Swordmen I can recruit today.";
+				next;
+				mes "[Jack O]";
+				mes "Eh...?";
+				next;
+				switch(select("Ask him about Rebarev Doug.:Ask him how he's been doing.:Ask about 1st Squad's final mission.")) {
+				case 1:
+					if (god_megin_3 == 1) {
+						mes "[Jack O]";
+						mes "Ah right. Our old leader.";
+						mes "Now I remember: He was";
+						mes "a pretty self righteous jerk";
+						mes "now that I think about it!";
+						next;
+						mes "[Jack O]";
+						mes "Can you believe he used to say that ^0000FFno one is more religious than him in this world^000000?! That's egoism right there. And maybe insanity.";
+						next;
+						mes "[Jack O]";
+						mes "Anyway, everyone in the squad";
+						mes "took pride in their faith. When";
+						mes "you're having a rough time in the";
+						mes "real world, you depend on religion, you know?";
+						next;
+						mes "[Jack O]";
+						mes "Anyways, in the records about";
+						mes "our squad, it says that one of us was punished for insubordination, rebelling or something. That's";
+						mes "a complete lie.";
+						next;
+						mes "[Jack O]";
+						mes "During our final mission,";
+						mes "our old leader had a huge argument with one us over something we found. I remember it being some kind of godly artifact, but I can't clearly remember what it was.";
+						next;
+						mes "[Jack O]";
+						mes "Although there was an obvious dispute, I think it was our squad leader who was out of line.";
+						mes "I... I can't really say...";
+						next;
+						mes "[Jack O]";
+						mes "I can't for the life of me";
+						mes "remember how the guy who";
+						mes "argued with the squad leader";
+						mes "looked like. The higher-ups";
+						mes "musta did something to me...";
+						next;
+						mes "[Jack O]";
+						mes "Anyway, I know for sure that whatever that guy did, it wasn't insubordination. In fact, I think he might've been right!";
+						next;
+						mes "[Jack O]";
+						mes "That's all I can remember.";
+						mes "I better take some Green Herbs now. My head throbs like crazy whenever I think about that time.";
+						set god_megin_3,2;
+						close;
+					}
+					else {
+						mes "[Jack O]";
+						mes "Ah! Yeah, our old leader back in the 1st Squad. Heh. I haven't seen him since we were disbanded.";
+						close;
+					}
+				case 2:
+					mes "[Jack O]";
+					mes "Me? Yeah, I'm not doing so bad. Keeping busy recruiting future Crusaders. We welcome all";
+					mes "Swordmen if they show potential~";
+					close;
+				case 3:
+					mes "[Jack O]";
+					mes "Huh...?";
+					mes "Why would";
+					mes "you want to know?";
+					next;
+					mes "^3355FFYou tell him what you've read in the records for the 1st Squad. Afterwards, Jack O looks a little confused.^000000";
+					next;
+					mes "[Jack O]";
+					mes "Huh...?";
+					mes "I might not be able to remember";
+					mes "a whole lot from back then, but the part about ^0000FFinsubordination^000000 can't be right. I'm sure of that.";
+					if (god_megin_3 == 0) {
+						set god_megin_3,1;
+					}
+					close;
+				}
+			}
+			else if (god_megin_3 == 2) {
+				mes "[Jack O]";
+				mes "Our old leader was";
+				mes "so arrogant to the point";
+				mes "of being a little off his rocker.";
+				next;
+				mes "[Jack O]";
+				mes "I mean, normal people";
+				mes "don't say things like '^0000FFI am the most religious man in the universe! Kneel before me!^000000' Yeah. Not a normal thing to say.";
+				next;
+				mes "[Jack O]";
+				mes "Anyway, if the squad";
+				mes "leader punished anyone for insubordination, I'm sure that it was unwarranted. I don't remember too much, but I'm sure of that.";
+				next;
+				mes "[Jack O]";
+				mes "Excuse me, I need to take some Green Herbs. Taking these seems";
+				mes "to be the only thing that works for my headache.";
+				next;
+				mes "^3355FFJack O busily chewed";
+				mes "on some Green Herbs.";
+				mes "It seemed to greatly relieve him from the pain of his headaches.^000000";
+				close;
+			}
+			else {
+				mes "[Jack O]";
+				mes "^333333*Yawn...*^000000";
+				mes "It's quiet and boring, as per usual. Let's see if there's any Swordmen I can recruit today.";
+				close;
+			}
+		}
+		else {
+			mes "[Jack O]";
+			mes "Hey kid!";
+			mes "Ever think about";
+			mes "bein' a Crusader?";
+			close2;
+		}
+	}
+	else {
+		if (BaseClass == Job_Swordman){
+			mes "[Jack O]";
+			mes "Hey kid!";
+			mes "Ever think about";
+			mes "bein' a Crusader?";
+			next;
+			mes "[Jack O]";
+			mes "Basically, you'd be volunteering to be part of our military, as well as train for the Holy War.";
+			next;
+			mes "[Jack O]";
+			mes "If you have some faith and know how to wield a sword, you'll be more than welcome here.";
+			next;
+			mes "[Jack O]";
+			mes "Just think about my suggestion";
+			mes "and come back if you're interested. Alright then, see you later~";
+			close;
+		}
+		else {
+			mes "[Jack O]";
+			mes "^333333*Yawn...*^000000";
+			mes "It's quiet and boring, as per usual. Let's see if there's any Swordmen I can recruit today.";
+			next;
+			mes "[Jack O]";
+			mes "Huh...?";
+			mes "Are you interested in knowing more about Crusaders? Hahaha, I guess that must be the case.";
+			next;
+			mes "[Jack O]";
+			mes "By the way, bring a doll to";
+			mes "the kid in front of me. If you're lucky, she'll give you something neat in return. What it is, I don't know. I've got no dolls.";
+			next;
+			mes "[Jack O]";
+			mes "In accordance with the Crusader code, I'm not supposed to lie. So yeah, you can trust me!";
+			close2;
+		}
+	}
+}
+
+aldebaran,66,213,0	script	Lady#megin	69,{
+	if (checkweight(1301,3) == 0) {
+		mes "- You are carrying too many items!";
+		close;
+	}
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes == 18) {
+			mes "[Emma Searth]";
+			mes "^333333*Sigh...*^000000 I haven't gotten any response from them. I don't know";
+			mes "if I can wait much longer to join the Kafra Corporation.";
+			close;
+		}
+		else if (god_eremes > 18 && god_eremes < 26) {
+			if (god_megin_4 < 2) {
+				mes "[Emma Searth]";
+				mes "^333333*Sigh...*^000000 I haven't gotten any response from them. I don't know";
+				mes "if I can wait much longer to join the Kafra Corporation.";
+				next;
+				mes "[Emma Searth]";
+				mes "Oh, an adventurer! I actually used to work in the same field that you do. More specifically, I used to be a Crusader.";
+				next;
+				mes "[Emma Searth]";
+				mes "My name is Emma Searth. Right now, I'm following my dream and applying to be a Kafra Lady. So my days of wielding a sword are over.";
+				next;
+				mes "[Emma Searth]";
+				mes "Sadly, I haven't succeeded yet because I was diagnosed with";
+				mes "some weird ^0000FFamnesia^000000.";
+				next;
+				mes "[Emma Searth]";
+				mes "Of course, I understand that";
+				mes "Kafra Corporation is a large, professional company, but";
+				mes "if I can work for them even if it's just part-time...";
+				next;
+				mes "[Emma Searth]";
+				mes "Is it that big of a problem?";
+				mes "I suppose they're worried";
+				mes "that I'd forget important customer information once I'm hired.";
+				next;
+				mes "[Emma Searth]";
+				mes "It's strange. When I was";
+				mes "a Crusader, I remembered";
+				mes "everything lucidly, and I never had any problems recalling the past.";
+				next;
+				mes "[Emma Searth]";
+				mes "But now I get these migraines whenever I try to focus on my memories from those times";
+				mes "when I used to fight in the Prontera Military.";
+				next;
+				mes "[Emma Searth]";
+				mes "^333333*Sigh...*^000000";
+				next;
+				switch(select("About her past.:Why be a Kafra Lady?:About memories she can remember.")) {
+				case 1:
+					if (countitem(7015) > 0) {
+						mes "^3355FFThe scent of your";
+						mes "Memory Bookmark";
+						mes "seems to bring clarity";
+						mes "to her thoughts.^000000";
+						next;
+						mes "[Emma Searth]";
+						mes "I was born in a wealthy family where I was raised to learn etiquette, fencing, Peco riding, and music lessons since I was";
+						mes "born. I suppose you can say I'm pretty well educated.";
+						next;
+						mes "[Emma Searth]";
+						mes "However, my parents weren't";
+						mes "pleased when they learned that I wanted to become a Kafra Lady.";
+						next;
+						mes "[Emma Searth]";
+						mes "My parents insisted that";
+						mes "I become a Sage or a Scholar.";
+						mes "In the end, I ended up running";
+						mes "away from them by joining the Crusaders.";
+						next;
+						mes "[Emma Searth]";
+						mes "Luckily, the Crusaders were advertising their recruitment at the time, so I took that chance. Plus, having military experience might even help me join Kafra!";
+						next;
+						mes "[Emma Searth]";
+						mes "Since I did so well in Boot Camp,";
+						mes "I got the chance to join an elite squad. My squad was often assigned difficult missions, and we never failed to complete those.";
+						next;
+						mes "[Emma Searth]";
+						mes "Eventually, my reputation as a female Crusader, and being in a respectable military position, was enough to satisfy my family.";
+						next;
+						mes "[Emma Searth]";
+						mes "But after that day,";
+						mes "everything went wrong.";
+						mes "I only remember that it";
+						mes "was very sad and depressing.";
+						mes "Somehow, I feel like we were";
+						mes "even betrayed...";
+						next;
+						mes "[Emma Searth]";
+						mes "I think I can";
+						mes "try to remember";
+						mes "my comrades...";
+						set god_megin_4,1;
+						close;
+					}
+					else {
+						mes "[Emma Searth]";
+						mes "Ah, let's not talk about it. It's too depressing. Maybe if you had some sort of ^0000FFmemory^000000 aid, I might be able to recall my forgotten past. Anything, like a reminder, a scheduler, a bookmark, a string...";
+						close;
+					}
+				case 2:
+					mes "[Emma Searth]";
+					mes "One day, I happened to see Ms. Leilah at work here in Al De Baran. She was shining with confidence and commanded respect, even from her customers!";
+					next;
+					mes "[Emma Searth]";
+					mes "She carried herself like a professional, no matter what the situation. Even though I knew she was tired from working in the summer heat, she made everything look effortless!";
+					next;
+					mes "[Emma Searth]";
+					mes "When the male customers try to flirt with her, she never loses her poise. She just adjusts her glasses and does what she needs to do.";
+					next;
+					mes "[Emma Searth]";
+					mes "To me, she's like a lone, guardian angel. At that moment, it seemed the world existed just to be mocked by Ms. Leila.";
+					next;
+					mes "[Emma Searth]";
+					mes "I've also heard that Kafra Ladies are always traveling around the world, which is something I've always dreamed of doing.";
+					next;
+					mes "[Emma Searth]";
+					mes "Ms. Leilah is my idol,";
+					mes "and she's the reason why";
+					mes "I want to become a Kafra Lady.";
+					close;
+				case 3:
+					if (countitem(511) > 0 && god_megin_3 > 1) {
+						mes "^3355FFEmma Searth clutches her head and winces as she suffers from another migraine.^000000";
+						next;
+						mes "^3355FFRemembering that a Green Herb was able to relieve Jack O, you gave a Green Herb to Emma. She takes it, and looks a little more relaxed.^000000";
+						next;
+						mes "[Emma Searth]";
+						mes "I'm not even sure";
+						mes "how much I can remember";
+						mes "and how much I've actually";
+						mes "forgotten.";
+						next;
+						mes "[Emma Searth]";
+						mes "Let me...";
+						mes "Try to remember every one in our squad. Let's see, there was Jack O, The Nineball. Z-Zan. Zan.H-Huadoku. C-Cuaque Donon. Myself. Um, E... Eni... Egni... Um...";
+						next;
+						mes "[Emma Searth]";
+						mes "Egni...";
+						mes "Egnigem?^000000";
+						mes "Who was that?";
+						mes "Oh no. I'm sure he might";
+						mes "have, no, was there someone";
+						mes "named that with us?";
+						close2;
+						set god_megin_4,2;
+						end;
+					}
+					else {
+						mes "^3355FFEmma Searth clutches her head and winces as she suffers from another migraine.^000000";
+						next;
+						mes "[Emma Searth]";
+						mes "I'm not even sure";
+						mes "how much I can remember";
+						mes "and how much I've actually";
+						mes "forgotten.";
+						close;
+					}
+				}
+			}
+			else if (god_megin_4 > 1) {
+				mes "[Emma Searth]";
+				mes "^0000FFJack O, The Nineball, Zan.Huadoku, Cuaque Donon, Egnigem.^000000 Oh, I really miss those guys...";
+				close;
+			}
+			else {
+				mes "[Emma Searth]";
+				mes "^333333*Sigh...*^000000 I haven't gotten any response from them. I don't know";
+				mes "if I can wait much longer to join the Kafra Corporation.";
+				close;
+			}
+		}
+		else if (god_eremes == 25) {
+			mes "[Emma Searth]";
+			mes "Egnigem...";
+			mes "That name makes";
+			mes "me so sad. I'm not";
+			mes "quite sure why, but...";
+			close;
+		}
+		else if (god_eremes == 26 || god_eremes == 27) {
+			mes "[Emma Searth]";
+			mes "Egnigem...";
+			mes "That name makes";
+			mes "me so sad. I'm not";
+			mes "quite sure why, but...";
+			next;
+			mes "^3355FFEmma turns away before you can see her cry. Still, her shoulders heave with each sob as you imagine the hardship she's had to endure.^000000";
+			next;
+			mes "[Emma Searth]";
+			mes "I wish I knew what that name really means. I'm sure it's linked to an important memory from my past.";
+			next;
+			mes "[Emma Searth]";
+			mes "I really appreciate you coming here to talk to me about the old days. I, I want you to have this.";
+			set god_eremes,28;
+			getitem 603,1; // Old_Blue_Box
+			if (checkre(3)) {
+				if (BaseLevel < 56) getexp 2700,0;
+				else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 3000,0;
+				else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 5605,0;
+				else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 8223,0;
+				else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 21227,0;
+				else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 39073,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 45102,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 54615,0;
+				else getexp 122035,0;
+			} else {
+				if (BaseLevel < 56) getexp 27000,0;
+				else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 30000,0;
+				else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 56052,0;
+				else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 82233,0;
+				else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 212271,0;
+				else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 390738,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 451020,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 546156,0;
+				else getexp 1220358,0;
+			}
+			close;
+		}
+		else if (god_eremes == 28) {
+			mes "[Emma Searth]";
+			mes "Egnigem...";
+			mes "That name makes";
+			mes "me so sad. I'm not";
+			mes "quite sure why, but...";
+			next;
+			mes "^3355FFEmma turns away before you can see her cry. Still, her shoulders heave with each sob as you imagine the hardship she's had to endure.^000000";
+			close;
+		}
+		else {
+			mes "[Emma Searth]";
+			mes "^333333*Sigh...*^000000 I haven't gotten any response from them. I don't know";
+			mes "if I can wait much longer to join the Kafra Corporation.";
+			close;
+		}
+	}
+	else {
+		mes "[Emma Searth]";
+		mes "I hear the Kafra Ladies always travel around the world, something I've always dreamed of doing! Hopefully, one of these days, I'll be able to work for the Kafra Corporation too.";
+		next;
+		mes "[Emma Searth]";
+		mes "^333333*Sigh...*^000000";
+		mes "Still, it's discouraging. I haven't heard anything from them...";
+		close;
+	}
+}
+
+cmd_in02,190,94,3	script	Man#megin	828,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes == 18) {
+			mes "[Royal Myst]";
+			mes "Wha...?";
+			mes "You wanna talk?";
+			next;
+			mes "[Royal Myst]";
+			mes "What am I, your personal psychiatrist?! Lemme alone,";
+			mes "I'm busy here! Awright, now";
+			mes "which one do I bet on...?";
+			next;
+			switch(select("Speak of Rebarev Doug.:Speak of the 1st Squad.:Talk about gambling.:Discuss hobbies.")) {
+			case 1:
+				mes "[Royal Myst]";
+				mes "Wha--? Him again?! Tell him I'm fine! Dandy, even! Why's he gotta send all these people just to ask";
+				mes "a silly question?";
+				close;
+			case 2:
+				mes "[Royal Myst]";
+				mes "1st Squad? Yeah, I used to be in that. All of us in the squad used to be real good buddies too.";
+				next;
+				mes "[Royal Myst]";
+				mes "Zan.Huadoku, Cuaque Donon,";
+				mes "Jack O, Emma Searth and The Nineball. Yeah... I wonder what they're all up to?";
+				close;
+			case 3:
+				mes "[Royal Myst]";
+				mes "Gambling? I love it, you";
+				mes "know? Eh, I don't win all the time, but I love it the most when I leave with more Zeny than I came in with! Hahaha!";
+				close;
+			case 4:
+				mes "[Royal Myst]";
+				mes "Hobbies?";
+				mes "What, you comin'";
+				mes "on to me?";
+				next;
+				mes "[Royal Myst]";
+				mes "A man's hobby is drinking, or didn't you know that? I happen to be real good at it too! Mwahahaha!";
+				close;
+			}
+		}
+		else if (god_eremes > 18 && god_eremes < 21) {
+			if (god_megin_6 == 0 && god_megin_5 > 4 && god_megin_4 > 1 && god_megin_3 > 1 && god_megin_2 > 3 && god_megin_1 > 2) {
+				mes "[Royal Myst]";
+				mes "Wha...?";
+				mes "You wanna talk?";
+				next;
+				mes "[Royal Myst]";
+				mes "What am I, your personal psychiatrist?! Lemme alone,";
+				mes "I'm busy here! Awright, now";
+				mes "which one do I bet on...?";
+				next;
+			}
+			else if (god_megin_6 > 0) {
+				mes "[Royal Myst]";
+				mes "Hmm?";
+				mes "What's up?";
+				next;
+			}
+			else {
+				mes "[Royal Myst]";
+				mes "Wha...?";
+				mes "You wanna talk?";
+				next;
+				mes "[Royal Myst]";
+				mes "What am I, your personal psychiatrist?! Lemme alone,";
+				mes "I'm busy here! Awright, now";
+				mes "which one do I bet on...?";
+				close;
+			}
+			if (god_megin_6 < 16) {
+				switch( select("Speak of Rebarev Doug.", "Speak of the 3rd squad.", "Talk about gambling.", "Discuss hobbies.") ) {
+				case 1:
+					if (god_megin_6 == 0) {
+						mes "[Royal Myst]";
+						mes "Huh? What's that old geezer want this time? Tell 'em I'm fine, dandy even! Why the hell does he keep sending people...";
+						set god_megin_6,1;
+						close;
+					}
+					else if (god_megin_6 > 0 && god_megin_6 < 15) {
+						mes "[Royal Myst]";
+						mes "What the hell!? Stop talking about him! I never wanna see his face again! Tell him to leave me the hell alone!";
+						close;
+					}
+					else if (god_megin_6 > 14) {
+						mes "[Royal Myst]";
+						mes "Damn geezer...";
+						mes "How much is he being paid for studying what we all found?! Eh, somehow, I don't care as long as";
+						mes "he pays me...";
+						next;
+						mes "[Royal Myst]";
+						mes "Yeah...";
+						mes "I just don't";
+						mes "care anymore.";
+						close;
+					}
+				case 2:
+					if (god_megin_6 < 15) {
+						mes "[Royal Myst]";
+						mes "1st Squad? Yeah, I used to be in that. All of us in the squad used to be real good buddies too.";
+						next;
+						mes "[Royal Myst]";
+						mes "Zan.Huadoku, Cuaque Donon,";
+						mes "Jack O, Emma Searth and The Nineball. Yeah... I wonder what they're all up to?";
+					}
+					else if (god_megin_6 > 14) {
+						mes "[Royal Myst]";
+						mes "1st Squad?";
+						mes "Don't know, don't care~";
+						mes "Do I look like a stupid Crusader?";
+					}
+					close;
+				case 3:
+					if (god_megin_6 < 15) {
+						mes "[Royal Myst]";
+						mes "Gambling? ! Oh man...";
+						mes "I love gambling, you know!";
+						mes "Heh, but I haven't been lucky enough to win yet. Hahaha~!";
+						close;
+					}
+					else if (god_megin_6 > 14) {
+						mes "[Royal Myst]";
+						mes "Gambling...!";
+						mes "Heh heh! Some risks you take,";
+						mes "and others you really shouldn't.";
+						mes "I can't help but feel sorry for that guy, E--";
+						next;
+						mes "[Royal Myst]";
+						mes "Ergh...?";
+						mes "Damn, I can never remember his name. You'd think I wouldn't forget the guy whose rap I'm taking but... Eh, I'll remember once I sober up.";
+						next;
+						mes "[Royal Myst]";
+						mes "Hey, what do you think happens to Crusaders when they're framed and killed, huh? Where exactly do they go? Niflheim, Vahalla...?";
+						set god_eremes,20;
+						close;
+					}
+				case 4:
+					if (god_megin_6 == 0) {
+						mes "Hobbies?";
+						mes "What, you comin'";
+						mes "on to me?";
+						next;
+						mes "[Royal Myst]";
+						mes "A man's hobby is drinking, or didn't you know that? I happen to be real good at it too! Mwahahaha!";
+						close;
+					}
+					else if (god_megin_6 > 0 && god_megin_6 < 15) {
+						if (countitem(970) > 0) {
+							mes "[Royal Myst]";
+							mes "Speaking of which,";
+							mes "I haven't had a drink";
+							mes "for a looong time. Almost";
+							mes "a couple hours now.";
+							next;
+							mes "[Royal Myst]";
+							mes "Oooh, looks like you've got a tasty beverage I can enjoy. Bwahahaha! Gimmie~!";
+							next;
+							mes "^3355FFBefore you can even think,";
+							mes "Royal Myst dips his hand into your inventory and helps himself to an Alcohol.^000000";
+							delitem 970,1;
+							set god_megin_6,god_megin_6 +2;
+							close;
+						}
+						else {
+							mes "[Royal Myst]";
+							mes "Why mention it? You gonna bring me something I'll like? Cuz I'm more than willing to take it! Bwahahaha!";
+							close;
+						}
+					}
+					else if (god_megin_6 > 14) {
+						mes "[Royal Myst]";
+						mes "^333333*Hiccup*^000000 Oh yeah, this is the stuff. Not like that imitation junk they've been serving at the Bars nowadays...";
+						next;
+						mes "[Royal Myst]";
+						mes "Hey! There anything you wanna";
+						mes "know about me? You did me a favor, so I'll tell you anything! Eeeeeverythiiing~~!!";
+						close;
+					}
+				}
+			}
+		}
+		else {
+			mes "[Royal Myst]";
+			mes "Eh heh heh~";
+			mes "I just know";
+			mes "I'm gonna win";
+			mes "this time!";
+			close;
+		}
+	}
+	else {
+		mes "[Royal Myst]";
+		mes "Wha...?";
+		mes "You wanna talk?";
+		next;
+		mes "[Royal Myst]";
+		mes "What am I, your personal psychiatrist?! Lemme alone,";
+		mes "I'm busy here! Awright, now";
+		mes "which one do I bet on...?";
+		close;
+	}
+}
+
+jawaii_in,44,110,0	script	Security Officer#megin	734,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes == 18) {
+			mes "[The Nineball]";
+			mes "Welcome to Jawaii,";
+			mes "the paradise resort!";
+			next;
+			mes "[The Nineball]";
+			mes "I'm the 'The Nineball', the security officer of Jawaii! If you encounter any trouble, or find any Singles, please don't hesitate to report to me as soon as you can~";
+			next;
+			mes "[The Nineball]";
+			mes "I've been told that there have";
+			mes "been many unruly drunkards here";
+			mes "lately, but it is in our best interest to make your experience here as enjoyable as possible.";
+			close;
+		}
+		else if (god_eremes > 18) {
+			if (god_megin_5 < 5) {
+				mes "[The Nineball]";
+				mes "Welcome to Jawaii,";
+				mes "the paradise resort!";
+				next;
+				mes "[The Nineball]";
+				mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please don't hesitate to report to me as soon as you can~";
+				next;
+				mes "[The Nineball]";
+				mes "I've been told that there have";
+				mes "been many unruly drunkards here lately, but it is in our best interest to make your experience here as enjoyable as possible.";
+				set god_megin_5,god_megin_5 +1;
+				close;
+			}
+			else if (god_megin_5 == 5) {
+				mes "^3355FFHe acted very bright and friendly, but for a fleeting moment, you were able to glimpse a hint of sadness in his eyes.^000000";
+				next;
+				mes "^3355FFIt doesn't seem that";
+				mes "you'll be able to get him";
+				mes "to talk about what exactly";
+				mes "happened in the 1st Squad...^000000";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[The Nineball]";
+		mes "Welcome to Jawaii,";
+		mes "the paradise resort!";
+		next;
+		mes "[The Nineball]";
+		mes "I'm the 'The Nineball, the security officer of Jawaii! If you encounter any trouble, or find any Singles, please don't hesitate to report to me as soon as you can~";
+		next;
+		mes "[The Nineball]";
+		mes "I've been told that there have";
+		mes "been many unruly drunkards here lately, but it is in our best interest to make your experience here as enjoyable as possible.";
+		close;
+	}
+
+}
+
+niflheim,109,254,0	script	Egnigem	796,{
+	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
+		if (god_eremes > 19 && god_eremes < 25) {
+			if (god_eremes > 22) {
+				mes "[Egnigem]";
+				mes "Why have you returned to";
+				mes "this lonely place of darkness?";
+				next;
+				mes "[Egnigem]";
+				mes "Please go back to the world";
+				mes "of the living. To be here is to suffer, such is the nature of Niflheim.";
+				close;
+			}
+			else {
+				mes "[Egnigem]";
+				mes "Greetings...";
+				mes ""+ strcharinfo(0) +".";
+				mes "I've been watching you in the";
+				mes "world of the living. I see you've been busy looking for the truth about the 1st Squad, haven't you?";
+				next;
+				mes "[Egnigem]";
+				mes "I can provide you with the answers. After all, I'm the only member of the 1st Squad to retain all of my memories...";
+				next;
+				mes "[Egnigem]";
+				mes "Heh heh...";
+				mes "Let me tell you everything";
+				mes "about the 1st Squad that's";
+				mes "been forgotten...";
+				while(1) {
+					next;
+					switch(select("The Mission:Fate of the 1st Squad:Why are you in Niflheim?:Thanks, I've heard enough.")) {
+					case 1:
+						mes "[Egnigem]";
+						mes "First of all, the official record of our mission is misleading.";
+						mes "It contains some truth, based";
+						mes "on verbal evidence, but the most important details have been left out or changed.";
+						next;
+						mes "[Egnigem]";
+						mes "Now, we were secretly assigned";
+						mes "to find ^0000FFgodly artifacts^000000 by royal decree. In only three days, we succeeded and found Megingjard!";
+						next;
+						mes "[Egnigem]";
+						mes "Now, the records say the mission was unsatisfactory, correct? That would be because of me.";
+						next;
+						mes "[Egnigem]";
+						mes "Are you aware that Megingjard";
+						mes "was a belt worn by gods? It was actually one of the keys to Thor's great strength. Another name for it is the 'Girdle of Might.'";
+						next;
+						mes "[Egnigem]";
+						mes "Now, if a human were to wear";
+						mes "that, there's a possibility that Megingjard would give him strength comparable to a god. Naturally, you'd be afraid of such a thing falling into the wrong hands.";
+						next;
+						mes "[Egnigem]";
+						mes "In Rebarev Doug's mind, he";
+						mes "was the only person worthy of the belt since he considered himself the most religious person alive, and thus, closest to the gods.";
+						next;
+						mes "[Egnigem]";
+						mes "He made it clear to us that only he would wear Megingjard. Although he was our leader, some of us felt uneasy about him wearing the belt and not giving it to his superiors, our mission objective.";
+						next;
+						mes "[Egnigem]";
+						mes "Naturally, I opposed him. He was clearly unbalanced, and it would be dangerous to give him control of such power. It led to something of a fist fight between us.";
+						next;
+						mes "[Egnigem]";
+						mes "The rest of the squad couldn't";
+						mes "agree on whether or not we should simply obey our leader and let him have the belt. Some just wanted to complete the mission, while others were afraid of what might happen.";
+						next;
+						mes "[Egnigem]";
+						mes "But Rebarev didn't wait for us to decide. He destroyed Megingjard into pieces, intending to keep most of it and somehow reconstruct it later, and only bring one piece to the Prontera Military.";
+						next;
+						mes "[Egnigem]";
+						mes "He knew that he couldn't get";
+						mes "away with keeping all of Megingjard to himself, as the entire squad could easily discredit him.";
+						next;
+						mes "[Egnigem]";
+						mes "But Rebarev knew";
+						mes "that he could deceive his";
+						mes "superiors by giving them just a fragment of the artifact, and say that the rest of it was destroyed.";
+						next;
+						mes "[Egnigem]";
+						mes "I discovered his intention when";
+						mes "I found him taking Megingjard apart. Before I could stop him,";
+						mes "I was killed. That bastard had";
+						mes "a trap ready for me...";
+						next;
+						mes "[Egnigem]";
+						mes "After the mission, Rebarev Doug only gave a piece of the belt back to the higher-ups, and gave them";
+						mes "a different account than what had actually happened...";
+						break;
+					case 2:
+						mes "[Egnigem]";
+						mes "Once the mission was completed, Rebarev Doug reported back to the Prontera Military with the intent of keeping most of Megingjard for himself.";
+						next;
+						mes "[Egnigem]";
+						mes "For some reason, he has a very strong influence in the military hierarchy. Now, by this time, I'm sure the squad pretty much figured out that he killed me.";
+						next;
+						mes "[Egnigem]";
+						mes "But Rebarev Doug expected this, and explained to his superiors that the squad was tempted by Megingjard's power and that I led some of us in a mutiny against him.";
+						next;
+						mes "[Egnigem]";
+						mes "He told his superiors that Megingjard was damaged as we";
+						mes "fought amongst each other, and that the fragment he gave them was all that remained.";
+						next;
+						mes "[Egnigem]";
+						mes "Because of the confidential nature of our mission, the 1st Squad was disbanded and we weren't given the story Rebarev fed the beaureaucrats until it was too late.";
+						next;
+						mes "[Egnigem]";
+						mes "The squad was punished and";
+						mes "sent for disciplinary retraining for three months. During this time, specific memories were unnaturally erased from the squad members.";
+						next;
+						mes "[Egnigem]";
+						mes "In the end, everyone was transferred to other squads and positions. My name had to be removed from all the records since hearing or reading my name might undo the brain washing.";
+						next;
+						mes "[Egnigem]";
+						mes "However, they still needed an official scapegoat, so they used Royal Myst's name in the records. That's probably why he's been going through hard times right now.";
+						next;
+						mes "[Egnigem]";
+						mes "And now Rebarev Doug has been studying godly artifacts based on the pieces of Megingjard that we found on that mission using kingdom research funds. Someday, he might be able to reconstruct the belt.";
+						next;
+						mes "[Egnigem]";
+						mes "There are also";
+						mes "a few questions that";
+						mes "I've never been able";
+						mes "to answer.";
+						next;
+						mes "[Egnigem]";
+						mes "I've never known why the King Tristram III ordered the research of godly artifacts. It also bothers me that Rebarev Doug is in charge of Megingjard's research. There must be some reason.";
+						next;
+						mes "[Egnigem]";
+						mes "In any case, for the sake of Midgard, it will be your responsibility to find the answers.";
+						next;
+						mes "[Egnigem]";
+						mes "There's not much a dead man";
+						mes "can do. But what's worse is that no one remembers me any more. I died alone and I'm still lonely in this place for the dead.";
+						break;
+					case 3:
+						mes "[Egnigem]";
+						mes "The worst part of the squad";
+						mes "having their memories erased is";
+						mes "that Emma Searth has absolutely";
+						mes "no recollection of me.";
+						next;
+						mes "[Egnigem]";
+						mes "Do you mind listening";
+						mes "to me for a while? You're";
+						mes "the only person with whom";
+						mes "I can talk about this...";
+						next;
+						mes "[Egnigem]";
+						mes "From here, I've seen that Emma";
+						mes "is chasing her dream again, and";
+						mes "I'm happy for her. But it's still";
+						mes "not easy, knowing the woman you";
+						mes "love has totally forgotten you.";
+						next;
+						mes "[Egnigem]";
+						mes "I remember the first time I met her. I guess it was love at first sight. But I was too cowardly to confess my love, so I despaired when she joined the Crusaders.";
+						next;
+						mes "[Egnigem]";
+						mes "It took me a while, but I made up my mind to enlist as a Crusader";
+						mes "as well. I wanted to be closer to her so much.";
+						next;
+						mes "[Egnigem]";
+						mes "Now, after all our adventures and good times together, I'm in the worst possible scenario.";
+						next;
+						mes "[Egnigem]";
+						mes "I'm dead...";
+						mes "But I don't even have the consolation that she is";
+						mes "mourning my loss.";
+						next;
+						mes "[Egnigem]";
+						mes "I suppose that's why I'm here";
+						mes "in Niflheim. I can't quite move on to heaven, Valhalla or anywhere else without her.";
+						next;
+						mes "[Egnigem]";
+						mes "Anyway, go and visit the Crusader Headquarters. You might be able to learn more about Rebarev Doug and stop any new shadiness he might be plotting. Good luck, my friend.";
+						break;
+					case 4:
+						mes "[Egnigem]";
+						mes "Thank you for";
+						mes "listening to me...";
+						if (god_eremes == 21) {
+							set god_eremes,23;
+						}
+						else if (god_eremes == 22) {
+							set god_eremes,24;
+						}
+						close;
+					}
+				}
+			}
+		}
+		else if (god_eremes == 25) {
+			mes "[Egnigem]";
+			mes "As a Crusader...";
+			mes "This is the best thing";
+			mes "I can do in return for";
+			mes "what you have done for me.";
+			next;
+			mes "[Egnigem]";
+			mes "Listen...";
+			mes "I'm going to";
+			mes "imbue you with the";
+			mes "^666666last vestiges of my strength^000000...";
+			specialeffect EF_BEGINSPELL5;
+			specialeffect2 EF_HOLYHIT;
+			next;
+			mes "[Egnigem]";
+			mes "May the heavens";
+			mes "answer me as I call upon the";
+			mes "light of justice that empowers the defenders of truth, and threaten the enemies of peace.";
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
+			next;
+			mes "[Egnigem]";
+			mes "May you always shine with";
+			mes "the light of truth. Let the light within you eradicate the shadows";
+			mes "of deception, fear and malice.";
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
+			next;
+			mes "[Egnigem]";
+			mes "By the holy power";
+			mes "invested in me, I humbly bestow upon you my remaining strength. Fight honorably, and do not lose sight of righteousness.";
+			specialeffect EF_LOCKON;
+			specialeffect2 EF_HOLYCROSS;
+			set god_eremes,27;
+			if (checkre(3)) {
+				if (BaseLevel < 56) getexp 2700,0;
+				else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 3000,0;
+				else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 5605,0;
+				else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 8223,0;
+				else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 21227,0;
+				else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 39073,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 45102,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 54615,0;
+				else getexp 122035,0;
+			} else {
+				if (BaseLevel < 56) getexp 27000,0;
+				else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 30000,0;
+				else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 56052,0;
+				else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 82233,0;
+				else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 212271,0;
+				else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 390738,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 451020,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 546156,0;
+				else getexp 1220358,0;
+			}
+			close;
+		}
+		else if (god_eremes == 26) {
+			mes "[Egnigem]";
+			mes "As a Crusader...";
+			mes "This is the best thing";
+			mes "I can do in return for";
+			mes "what you have done for me.";
+			next;
+			mes "[Egnigem]";
+			mes "Listen...";
+			mes "I'm going to";
+			mes "imbue you with the";
+			mes "^666666last vestiges of my strength^000000...";
+			specialeffect EF_BEGINSPELL5;
+			specialeffect2 EF_HOLYHIT;
+			next;
+			mes "[Egnigem]";
+			mes "May the heavens";
+			mes "answer me as I call upon the";
+			mes "light of justice that empowers the defenders of truth, and threaten the enemies of peace.";
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
+			next;
+			mes "[Egnigem]";
+			mes "May you always shine with";
+			mes "the light of truth. Let the light within you eradicate the shadows";
+			mes "of deception, fear and malice.";
+			specialeffect EF_BEGINSPELL6;
+			specialeffect2 EF_HOLYHIT;
+			next;
+			mes "[Egnigem]";
+			mes "By the holy power";
+			mes "invested in me, I humbly bestow upon you my remaining strength. Fight honorably, and do not lose sight of righteousness.";
+			specialeffect EF_LOCKON;
+			specialeffect2 EF_HOLYCROSS;
+			set god_eremes,27;
+			if (checkre(3)) {
+				if (BaseLevel < 56) getexp 2700,0;
+				else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 3000,0;
+				else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 5605,0;
+				else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 8223,0;
+				else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 21227,0;
+				else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 39073,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 45102,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 54615,0;
+				else getexp 122035,0;
+			} else {
+				if (BaseLevel < 56) getexp 27000,0;
+				else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 30000,0;
+				else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 56052,0;
+				else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 82233,0;
+				else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 212271,0;
+				else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 390738,0;
+				else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 451020,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 546156,0;
+				else getexp 1220358,0;
+			}
+			close;
+		}
+		else if (god_eremes < 20) {
+			mes "[Egnigem]";
+			mes "Were you betrayed by fate as well, or are you simply a wanderer that's stumbled into this land of darkness?";
+			next;
+			mes "[Egnigem]";
+			mes "Hmm, the living don't deserve";
+			mes "to be in this realm of cold and suffering. But I can only help you escape by telling you what little";
+			mes "I know.";
+			next;
+			switch(select("Ask him about buildings.:Remove marks on mini-map.:Cancel.")) {
+			case 1:
+				mes "[Egnigem]";
+				mes "I see. If you better understand Niflheim's layout, you have a greater chance of surviving and escaping.";
+				next;
+				switch(select("Witch's Castle:Tool Shop:Weapon Shop:Tavern:Cancel")) {
+				case 1:
+					mes "[Egnigem]";
+					mes "The witch of Niflheim...";
+					mes "You can find her castle at the ^FF3355+^000000 mark I've made on your mini-map.";
+					next;
+					mes "[Egnigem]";
+					mes "Hrrrm...";
+					mes "It seems that the living who wind up in Niflheim are seeking out the witch. But I don't quite understand what's so important about her.";
+					viewpoint 1,253,191,2,0xFFFF33;
+					break;
+				case 2:
+					mes "[Egnigem]";
+					mes "The Tool shop? Here in Niflheim, they sell some unique items that";
+					mes "you can't buy anywhere else.";
+					next;
+					mes "[Egnigem]";
+					mes "You might want to see their";
+					mes "wares for yourself. I've drawn";
+					mes "a ^CE6300+^000000 on your mini-map to mark";
+					mes "its location.";
+					viewpoint 1,217,196,3,0xFFCE63;
+					break;
+				case 3:
+					mes "[Egnigem]";
+					mes "I've marked the location of the Weapon Shop at ^55FF33+^000000. There's nothing too special over there, though.";
+					viewpoint 1,216,171,4,0xFF55FF;
+					break;
+				case 4:
+					mes "[Egnigem]";
+					mes "Tavern is at ^3355FF+^000000. They only sell drinks to the dead, though...";
+					viewpoint 1,189,207,5,0xFF3355;
+					break;
+				case 5:
+					mes "[Egnigem]";
+					mes "Choose 'Remove marks on mini-map' from the menu to remove all the building location marks I've made.";
+					close;
+				}
+				close;
+			case 2:
+				viewpoint 2,253,191,2,0xFF00FF;
+				viewpoint 2,217,196,3,0xFF00FF;
+				viewpoint 2,216,171,4,0xFF00FF;
+				viewpoint 2,189,207,5,0xFF00FF;
+				mes "[Egnigem]";
+				mes "Alright, all the marks I've made have been removed from your mini-map. If you want to check the locations in Niflheim again, go ahead and ask me.";
+				close;
+			case 3:
+				mes "[Egnigem]";
+				mes "You're gonna explore this place on your own? Pretty brave, aren't you? Just be careful: here in Niflheim, darkness reigns supreme.";
+				close;
+			}
+		}
+		else {
+			mes "[Egnigem]";
+			mes "I really wish that";
+			mes "Emma Searth could";
+			mes "remember me...";
+			next;
+			mes "^3355FFHis eyes seemed";
+			mes "to moisten with sadness.";
+			mes "Is it really possible for the";
+			mes "dead to shed tears?^000000";
+			close;
+		}
+	}
+	else {
+		mes "[Egnigem]";
+		mes "Were you betrayed by fate as well, or are you simply a wanderer that's stumbled into this land of darkness?";
+		next;
+		mes "[Egnigem]";
+		mes "Hmm, the living don't deserve";
+		mes "to be in this realm of cold and suffering. But I can only help you escape by telling you what little";
+		mes "I know.";
+		next;
+		switch(select("Ask him about buildings.:Remove marks on mini-map.:Cancel.")) {
+		case 1:
+			mes "[Egnigem]";
+			mes "...I see. Now, let me introduce you all buildings in Niflheim!";
+			next;
+			switch(select("Witch's Castle:Tool Shop:Weapon Shop:Tavern:Cancel")) {
+			case 1:
+				mes "[Egnigem]";
+				mes "The witch of Niflheim...";
+				mes "You can find her castle at the ^FF3355+^000000 mark I've made on your mini-map.";
+				next;
+				mes "[Egnigem]";
+				mes "Hrrrm...";
+				mes "It seems that the living who wind up in Niflheim are seeking out the witch. But I don't quite understand what's so important about her.";
+				viewpoint 1,253,191,6,0xFFFF33;
+				break;
+			case 2:
+				mes "[Egnigem]";
+				mes "The Tool shop? Here in Niflheim, they sell some unique items that";
+				mes "you can't buy anywhere else.";
+				next;
+				mes "[Egnigem]";
+				mes "You might want to see their";
+				mes "wares for yourself. I've drawn";
+				mes "a ^CE6300+^000000 on your mini-map to mark";
+				mes "its location.";
+				viewpoint 1,217,196,7,0xFFCE63;
+				break;
+			case 3:
+				mes "[Egnigem]";
+				mes "I've marked the location of the Weapon Shop at ^55FF33+^000000. There's nothing too special over there, though.";
+				viewpoint 1,216,171,8,0xFF55FF;
+				break;
+			case 4:
+				mes "[Egnigem]";
+				mes "Tavern is at ^3355FF+^000000. They only sell drinks to the dead, though...";
+				viewpoint 1,189,207,9,0xFF3355;
+				break;
+			case 5:
+				mes "[Egnigem]";
+				mes "Choose 'Remove marks on mini-map' from the menu to remove all the building location marks I've made.";
+				close;
+				break;
+			}
+			close;
+		case 2:
+			viewpoint 2,253,191,6,0xFF00FF;
+			viewpoint 2,217,196,7,0xFF00FF;
+			viewpoint 2,216,171,8,0xFF00FF;
+			viewpoint 2,189,207,9,0xFF00FF;
+			mes "[Egnigem]";
+			mes "Alright, all the marks I've made have been removed from your mini-map. If you want to check the locations in Niflheim again, go ahead and ask me.";
+			close;
+		case 3:
+			mes "[Egnigem]";
+			mes "You're gonna explore this place on your own? Pretty brave, aren't you? Just be careful: here in Niflheim, darkness reigns supreme.";
+			close;
+		}
+		close2;
+	}
+}

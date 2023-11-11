@@ -1,0 +1,103 @@
+//===== rAthena Script ======================================= 
+//= Gemstone Trader
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Trade various colors of gemstones for other color gemstones.
+//===== Additional Comments: ================================= 
+//= 1.0 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//=     Any notes pertaining to the prior trader may be found
+//=     in the cities/payon.txt
+//= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.2 Updated input with min/max values. [L0ne_W0lf]
+//=     Added a checkweight. 
+//= 1.3 Fixed checks. [Euphy]
+//============================================================ 
+
+payon,173,238,5	script	Jade#pay	754,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFรอสักครู่! ตอนนี้คุณกำลังพกสิ่งของติดตัวมากเกินไป โปรดกลับมาอีกหลังจากใส่ของบางอย่างใน Kafra Storage^000000";
+		close;
+	}
+	mes "[Jade]";
+	mes "เอาอัญมณีสองสีที่มีสีเดียวกันมาให้ข้าแล้วฉันจะเปลี่ยนเป็นอัญมณีที่มีสีต่างกัน";
+	next;
+	switch(select("อัญมณีสีฟ้าเป็นสีแดง!:อัญมณีสีแดงเป็นสีเหลือง!:อัญมณีสีเหลืองเป็นสีแดง!")) {
+	case 1: callsub S_TradeGems,717,716;
+	case 2: callsub S_TradeGems,716,715;
+	case 3: callsub S_TradeGems,715,717;
+	}
+
+S_TradeGems:
+	.@item_req = getarg(0);
+	.@item_id = getarg(1);
+
+	if (countitem(.@item_req) < 2) {
+		mes "[Jade]";
+		mes "ฮะ ... !";
+		mes "เจ้าล้อเล่นมาใช่มั้ย";
+		mes "ฉันไม่สามารถให้บริการนี้แก่คุณได้ถ้าคุณไม่ให้ฉันอย่างน้อย";
+		mes "2 "+ getitemname(.@item_req) +"!";
+		close;
+	}
+	else {
+		.@gems = countitem(.@item_req) /2;
+		mes "[Jade]";
+		mes "ฉันเชื่อว่าฉันสามารถสร้างผลรวม" + .@gems + " " + getitemname(.@item_id) + " โดยใช้ " + getitemname(.@item_req) + " ที่คุณมีอยู่ในขณะนี้";
+		mes "เจ้าต้องการจะทำอะไร";
+		next;
+		switch(select("ให้ฉันให้มากที่สุดเท่าที่จะทำได้:ฉันต้องการกำหนดจำนวน:ฉันเลิกแล้ว")) {
+		case 1:
+			delitem .@item_req,.@gems * 2;
+			getitem .@item_id,.@gems;
+			break;
+		case 2:
+			mes "[Jade]";
+			mes "คุณต้องการเท่าไหร่";
+			mes "จำนวนสูงสุดที่คุณสามารถป้อนได้คือ 100";
+			next;
+			while(1) {
+				input .@input,0,101;
+				if (.@input == 0) {
+					mes "[Jade]";
+					mes "ไม่มีเลยเหรอ?";
+					mes "ฉันคิดว่าคุณเปลี่ยนใจ ... ";
+					close;
+				}
+				else if (.@input > 100) {
+					mes "[Jade]";
+					mes "ผิดพลาด ... ";
+					mes "ฉันขอให้คุณป้อนจำนวนไม่เกิน 100 จำได้ไหม ... ?";
+					next;
+				}
+				else if (.@gems < .@input) {
+					// Custom dialogue
+					mes "[Jade]";
+					mes "ผิดพลาด ... ";
+					mes "เจ้าไม่มีอัญมณีมากมายที่จะแลกเปลี่ยน ... ";
+					next;
+				}
+				else break;
+			}
+			delitem .@item_req,.@input * 2;
+			getitem .@item_id,.@input;
+			break;
+		case 3:
+			mes "[Jade]";
+			mes "แน่นอนไม่มีปัญหา";
+			mes "กลับมาได้ตลอดเวลา";
+			close;
+		}
+		mes "[Jade]";
+		mes "เจ้าไปแล้ว";
+		mes "กลับมาได้ตลอดเวลา";
+		mes "หืมมันหาอะไรเหรอ?";
+		mes "มีบางอย่างบนใบหน้าของฉันเหรอ";
+		close;
+	}
+}

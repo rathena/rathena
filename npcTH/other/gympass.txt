@@ -1,0 +1,150 @@
+//===== rAthena Script ======================================= 
+//= Gym Pass Cash Item NPC
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Exchange Gym Passes to learn "Enlarge Weight Limit"
+//= iRO NPC situated in Payon beside Kafra Shop.
+//===== Additional Comments: ================================= 
+//= 1.0 First version [L0ne_W0lf]
+//= 1.1 Fixed the NPC saying you "00" [L0ne_W0lf]
+//= 1.2 Replaced effect numerics with constants. [Samuray22]
+//= 1.3 Updated script, and fixed potential errors. [L0ne_W0lf]
+//============================================================ 
+
+payon,173,141,4	script	Ripped Cabus#GymPass	899,{
+	mes "[Ripped]";
+	mes "ว่าไง ร่างกายของคนเรา";
+	mes "ไม่แข็งแรงเหมือนแต่ก่อนว่าไหม";
+	mes "แม้ว่าเจ้าจะต่อสู้เพื่อ";
+	mes "ความอยู่รอด ร่างกายเจ้าก็จะ";
+	mes "อ่อนแอและหมดแรงลงได้";
+	mes "เจ้ารู้ใช่ไหมว่าข้าหมายถึงอะไร?";
+	next;
+	mes "[Ripped]";
+	mes "นี่ ถ้าเจ้ามาฝึกกับข้านะ";
+	mes "ข้ารับรองได้ว่าเจ้าจะสามารถ";
+	mes "ถือของได้มากขึ้นกว่าเดิม";
+	mes "เพียงแค่เจ้าเอา";
+	mes "^FF0000Gym Pass^000000 มาด้วยทุกครั้ง";
+	mes "และทุกอย่างจะเรียบร้อย";
+	next;
+	mes "[Ripped]";
+	mes "แต่ไม่ต้องตื่นเต้นนะ:";
+	mes "ไม่ว่าข้าจะฝึกเจ้าหนัก";
+	mes "แค่ไหน เจ้าก็ผ่านไปได้";
+	mes "เจ้าเคยได้ยินพวกที่";
+	mes "อึดมากๆ มั่งไหม?";
+	mes "รู้ไหมว่าพวกนั้นตายไปหมดแล้ว?";
+	next;
+	mes "[Ripped]";
+	mes "ข้าเพียงจะบอกว่าเจ้าว่า";
+	mes "การฝึกกับข้าเจ้าจะปลอดภัย";
+	mes "และเพิ่มความสามารถ";
+	mes "ในการแบงของเพิ่มขึ้น ^FF000010 เท่า^000000";
+	mes "เอาล่ะ...พร้อมที่จะเหนื่อยหรือยัง?";
+	next;
+	switch(select("พร้อมแล้ว:ยัง:เอ่อ พลังของข้าสูญหายไป")) {
+	case 1:
+		if (gympassmemory < 10) {
+			set .@add_carry,gympassmemory + 1;
+			set .@remain_carry,10 - .@add_carry;
+			if (countitem(7776) > 0) {
+				mes "[Ripped]";
+				mes "โอ้เยี่ยมมากฉันเห็นคุณ";
+				mes "นำ Gym Pass ของคุณมา";
+				mes "เอาล่ะแค่ทำในสิ่งที่ข้าทำ";
+				mes "แล้วลองรู้สึกถึงไฟไหม้";
+				mes "พร้อมหรือยังเรามาทำสิ่งนี้";
+				next;
+				specialeffect2 EF_EARTHSPIKE;
+				next;
+				specialeffect2 EF_DEVIL;
+				next;
+				specialeffect2 EF_COIN;
+				next;
+				specialeffect2 EF_SIGHTRASHER;
+				next;
+				mes "[Ripped]";
+				mes "เจ้าเจ้าน่าจะทำได้";
+				mes "เพื่อพกของอื่นๆ ไปกับคุณ";
+				mes "มาดูกันเราสามารถเพิ่ม";
+				mes "ความสามารถในการบรรทุกของคุณ";
+				mes "^FF00000" + .@remain_carry + "^000000 ครั้งมากขึ้นถ้าเราดำเนินการต่อ";
+				mes "ฝึกร่วมกันเช่นนี้";
+				delitem 7776,1; //Max_Weight_Up_Scroll
+				set gympassmemory,.@add_carry;
+				skill "ALL_INCCARRY",.@add_carry,SKILL_PERM_GRANT;
+				close;
+			}
+			else {
+				mes "[Ripped]";
+				mes "เพื่อนรัก ข้าบอกเจ้าไปแล้วนี่?";
+				mes "เจ้าจะต้องเอา";
+				mes "^FF0000Gym Pass^000000 มาให้ข้าด้วย";
+				mes "หากเจ้าต้องการที่จะ";
+				mes "เพิ่มความแข็งแกร่งของกล้ามเนื้อเจ้า";
+				close;
+			}
+		}
+		else {
+			mes "[Ripped]";
+			mes "เพื่อนฉันไม่คิดว่าเราจะทำได้";
+			mes "สร้างรายการของคุณด้วย";
+			mes "กล้ามเนื้ออีกต่อไป";
+			mes "มันอันตรายเกินไปสำหรับเจ้า";
+			mes "ร่างกายถ้าเราลองด้วย! C'mon,";
+			mes "ฉันบอกคุณเกี่ยวกับขีด จำกัด ";
+			close;
+		}
+	case 2:
+		mes "[Ripped]";
+		mes "อ่า แย่จัง";
+		mes "งั้นถ้าเจ้าเปลี่ยนใจ";
+		mes "ก็กลับมาได้นะ";
+		mes "บอกเพื่อนๆ เจ้าด้วย";
+		mes "ถ้าพวกเขาไม่มีเรี่ยวแรง";
+		mes "ข้าช่วยพวกเขาได้";
+		close;
+	case 3:
+		if (gympassmemory > 0) {
+			mes "[Ripped]";
+			mes "เกิดอะไรขึ้น";
+			mes "คุณปล่อยให้ไอเท็มของคุณถืออยู่";
+			mes "กล้ามเนื้อลีบแค่โชคดี";
+			mes "สำหรับคุณมีเรื่องแบบนี้";
+			mes "เป็นความทรงจำของกล้ามเนื้อมันจะไม่นำ";
+			mes "ตราบเท่าที่จะสร้างพวกมันสำรอง... ";
+			next;
+			specialeffect2 EF_EARTHSPIKE;
+			next;
+			specialeffect2 EF_DEVIL;
+			next;
+			specialeffect2 EF_COIN;
+			next;
+			specialeffect2 EF_SIGHTRASHER;
+			next;
+			mes "[Ripped]";
+			mes "แล้วอันนั้นละ?";
+			mes "ไอเท็มของคุณกำลังถืออยู่";
+			mes "กล้ามเนื้อหลัง";
+			mes "แบบนั้นลองไม่ทำ";
+			mes "เจ้าเล่ห์อีกแล้วโอเค";
+			skill "ALL_INCCARRY",gympassmemory,SKILL_PERM_GRANT;
+			close;
+		}
+		else {
+			mes "[Ripped]";
+			mes "อ่า...";
+			mes "พวกเราไม่เคยได้ฝึกฝน";
+			mes "ด้วยกันมาก่อนนี่น่า";
+			mes "ข้ามั่นใจ";
+			close;
+		}
+	}
+}

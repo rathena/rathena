@@ -1,0 +1,240 @@
+//===== rAthena Script =======================================
+//= Quest NPCs related to episode 14.3
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//- Others NPCs related to ep14.3
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//= 1.1 Move the Dimensional Travel Quest npcs in another
+//		file. [Capuche]
+//============================================================
+
+moro_vol,91,105,1	script	Eclage Teleporter#143_1	PORTAL,{
+	mes "[Dophe]";
+	mes "This teleporter is connected to Eclage.";
+	mes "It'll be destroyed once our operation is over, but for now it's something we cannot live without.";
+	next;
+	mes "Use the teleporter to move to Eclage.";
+	next;
+	if (select( "Move to Eclage.", "Cancel." ) == 2) {
+		mes "Do not use the teleporter.";
+		close;
+	}
+	mes "Move to Eclage.";
+	close2;
+	warp "ecl_in01",38,96;
+	end;
+}
+
+ecl_in01,38,98,1	script	Interdimensional Device#ecl	PORTAL,{
+	if (ep14_3_newerabs < 10) {
+		mes "[Eclage Guard]";
+		mes "This teleporter is connected to the recently discovered hideout of the Demon God.";
+		mes "Only those allowed to enter the hideout can use this teleporter.";
+		close;
+	}
+	mes "This teleporter is connected to the recently discovered hideout of the Demon God.";
+	mes "Do you want to use it?";
+	next;
+	if (select( "Move to the Demon God's hideout.", "Quit." ) == 2) {
+		mes "Do not use the teleporter.";
+		close;
+	}
+	mes "Use the teleporter to move to the Demon God's hideout.";
+	close2;
+	warp "moro_vol",91,102;
+	end;
+}
+
+ecl_in01,40,96,3	script	Eclage Guard#143_6	4_M_FAIRYSOLDIER,{
+	mes "[Eclage Guard]";
+	mes "How may I help you?";
+	next;
+	switch( select( "What's that teleporter?", "Why is it so crowded in here?", "Demon God's hideout?", "Goodbye." ) ) {
+	case 1:
+		mes "[Eclage Guard]";
+		mes "It's connected to the recently discovered hideout the of Demon God.";
+		mes "It's scientifically designed to send its user directly to the Dimensional Crack where his hideout is.";
+		next;
+		mes "[Eclage Guard]";
+		mes "Many a warrior already left to the hideout.";
+		mes "So long as Morocc exists, Yggdrasil is not safe. I'm going to join the Expedition.";
+		close;
+	case 2:
+		mes "[Eclage Guard]";
+		mes "It turns out Demon God ran from Morocc to hide out in our dimension.";
+		mes "He has to be dealt with, either banished back to his realm or destroyed.";
+		next;
+		mes "[Eclage Guard]";
+		mes "If you want to join the Expedition to defeat the Demon God, then use this teleporter.";
+		mes "It'll send you directly to the Expedition Camp.";
+		close;
+	case 3:
+		mes "[Eclage Guard]";
+		mes "You know the Dimensional Crack, don't you? Recently it's been revealed that the Crack is made up of dimensional passageways.";
+		mes "We can now use those passageways to explore inside the Crack.";
+		next;
+		mes "[Eclage Guard]";
+		mes "Originally the Crack was created by the Demon God to aid in his escape,";
+		mes "so it'd been thought investigating the Crack could locate him.";
+		next;
+		mes "[Eclage Guard]";
+		mes "And it was; finally his hideout has been discovered.";
+		mes "His traces and his demon soldiers are sighted mainly around the giant hill in the center.";
+		next;
+		mes "[Eclage Guard]";
+		mes "If you want more details, then you should visit the actual site.";
+		mes "Just use the teleporter over there.";
+		close;
+	case 4:
+		mes "[Eclage Guard]";
+		mes "May Yggdrasil bless you.";
+		close;
+	}
+}
+
+// Others
+ecl_in01,44,99,1	script	Combat Laphine#143_4	4_M_FAIRYSOLDIER2,{
+	mes "[Combat Laphine]";
+	mes "I'm nervous.";
+	close;
+}
+
+ecl_in01,46,99,1	script	Combat Laphine#143_5	4_M_FAIRYSOLDIER2,{
+	mes "[Combat Laphine]";
+	mes "I hope I can return in one piece.";
+	close;
+}
+
+ecl_in01,48,99,1	script	Combat Laphine#143_6	4_M_FAIRYSOLDIER2,{
+	mes "[Combat Laphine]";
+	mes "Hmm...";
+	close;
+}
+ecl_in01,44,97,1	script	Combat Laphine#143_7	4_F_FAIRYSOLDIER,{
+	mes "[Combat Laphine]";
+	mes "Shush.";
+	close;
+}
+
+ecl_in01,46,97,1	script	Combat Laphine#143_8	4_F_FAIRYSOLDIER,{
+	mes "[Combat Laphine]";
+	mes "Mwa hah hah, it's time for me to shine!";
+	close;
+}
+
+ecl_in01,48,97,1	script	Combat Laphine#143_9	4_F_FAIRYSOLDIER,{
+	mes "[Combat Laphine]";
+	mes "I must have been out of my mind when I decided to join the army. Sigh, why does the Door to Verities have to be so high up there?";
+	close;
+}
+
+ecl_in01,46,102,3	script	Commander Laphine#143_1	4_M_FAIRYSOLDIER,5,5,{
+	mes "[Commander Laphine]";
+	mes "Evil must be nipped in the butt.";
+	mes "You're unexpected visitors from the Midgard Continent.";
+	next;
+	mes "[Commander Laphine]";
+	mes "If you  are the cause doom to ourselves OR Yggdrasil, then we won't hesitate to fight you.";
+	close;
+
+OnTouch_:
+	if (.talk == 0) {
+		.talk = 1;
+		npctalk "Commander: Soldiers, finally it's time to put your training to use!";
+		sleep 2000;
+		npctalk "Argh!", "Combat Laphine#143_4";
+		npctalk "Argh!", "Combat Laphine#143_5";
+		npctalk "Argh!", "Combat Laphine#143_6";
+		npctalk "Ah!", "Combat Laphine#143_7";
+		npctalk "Argh!", "Combat Laphine#143_8";
+		npctalk "Argh!", "Combat Laphine#143_9";
+		sleep 2000;
+		npctalk "Commander: Did someone just whimper?";
+		sleep 3000;
+		npctalk "Commander: Don't disappoint your comrades at the Splendide advance base!";
+		sleep 3000;
+		npctalk "Commander: Stay focused! We're going to finish off the Demon God!";
+		sleep 2000;
+		npctalk "Yeah, yeah.", "Combat Laphine#143_7";
+		sleep 2000;
+		npctalk "...", "Combat Laphine#143_4";
+		npctalk "Ah...", "Combat Laphine#143_5";
+		npctalk "...", "Combat Laphine#143_6";
+		npctalk "...", "Combat Laphine#143_8";
+		sleep 3000;
+		npctalk "Commander: Ah, suddenly I can't see...";
+		.talk = 0;
+	}
+	end;
+}
+
+ecl_in01,37,90,3	script	Magic Scholar Lemony#14	4_F_FAIRY2,{
+	mes "[Lemony]";
+	mes "Did you read the latest issue of the Door to Verities magazine?";
+	mes "Was Avant's new teleporter really featured in it?";
+	next;
+	mes "[Armandi]";
+	mes "Yes, just the basic principles and the information relevant to the Humans.";
+	mes "I didn't quite understand it all.";
+	next;
+	mes "[Lemony]";
+	mes "I wonder if this means Avant has finally decided to pursue his interest in research activities.";
+	next;
+	mes "[Lemony]";
+	mes "Hey, Human.";
+	mes "Were you eavesdropping on us? Well, though it wasn't like we're discussing secrets.";
+	next;
+	mes "[Lemony]";
+	mes "Oh, right. Are you too going there?";
+	mes "You know, the hideout of the Demon God who created some of the Space Time Dimensional Cracks has recently been discovered.";
+	next;
+	mes "[Lemony]";
+	mes "If you're curious, then use that teleporter to the hideout over there.";
+	mes "There will be quite a spectacle to watch.";
+	mes "Oh, just so you know, you might be throwing away your life. *Giggle*";
+	next;
+	mes "[Armandi]";
+	mes "Lemony, you really need to work on improving your personality.";
+	mes "Tsk, tsk.";
+	close;
+}
+
+ecl_in01,35,89,6	script	Magic Scholar Armandi#1	4_M_FAIRYKID6,{
+	mes "[Armandi]";
+	mes "I hope the Interdimensional Device won't take a heavy toll on the world.";
+	mes "By the way, Avant never fails to amaze me.";
+	next;
+	mes "[Lemony]";
+	mes "Ack, I hate that guy.";
+	next;
+	mes "[Armandi]";
+	mes "Avant may be repulsive,";
+	mes "but he's the best at what he does.";
+	next;
+	mes "[Lemony]";
+	mes "That, I agree.";
+	mes "Only he could pull off this kind of teleporter.";
+	mes "Why is he helping the Mayor, anyway?";
+	next;
+	mes "[Armandi]";
+	mes "When I asked him, he mumbled something about repentance.";
+	mes "I can only guess it has something to do with the Mayor's birth.";
+	next;
+	mes "[Armandi]";
+	mes "I wanted to ask more, but he looked down his nose at me.";
+	mes "Sigh, it's unfair such a jerk is considered the best in magical science.";
+	next;
+	mes "[Lemony]";
+	mes "You can always study hard to beat him.";
+	close;
+}
+
+// Placeholder (unknown scripts)
+// ecl_in01,47,92,0	script	#ecl_buff_N	HIDDEN_WARP_NPC
+// ecl_in01,48,44,0	script	#ecl_buff_S	HIDDEN_WARP_NPC
+// ecl_in01,23,68,0	script	#ecl_buff_W	HIDDEN_WARP_NPC
+// ecl_in01,48,67,0	script	#ecl_orb_buff	HIDDEN_WARP_NPC
+// ecl_in01,71,67,0	script	#ecl_buff_E	HIDDEN_WARP_NPC
+// ecl_in01,47,27,0	script	#mgate03	HIDDEN_WARP_NPC
+

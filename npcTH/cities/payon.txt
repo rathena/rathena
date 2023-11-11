@@ -1,0 +1,1078 @@
+//===== rAthena Script =======================================
+//= Payon City
+//===== By: ==================================================
+//= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
+//= Darkchild (1.3) DracoRPG (1.5) L0ne_W0lf (2.1)
+//===== Current Version: =====================================
+//= 2.1c
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Payon City Npcs
+//===== Additional Comments: =================================
+//= Most Credits To Muad Dib, Some Stuff By Me
+//= 1.4 Corrected a few typos
+//= 1.5 Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
+//= 1.5b Used Dino9021's script for the Gemstone exchanger [DracoRPG]
+//= 1.5b1 fixed Gemstone Exchanger NPC [Lupus]
+//= 1.5b2 added adv.classes/baby classes support [Lupus]
+//= 1.6 Fixed typos [Nexon]
+//= 1.7 Fixed bugs and exploits V__V [Lupus]
+//= 1.8 Removed Duplicates [Silent]
+//= 1.9 Fixed missing next;'s [Evera]
+//= 2.0 fixed some bugs, optimized script, added missing msg [Lupus]
+//= 2.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//=     Moved Gemstone Trader "Jade" to /merchants/gemstone.txt
+//=     Moved Fortune Teller to /other/fortune.txt
+//= 2.1b Added a missing close in the Monster Scholar. [L0ne_W0lf]
+//= 2.1c Minor bug fixes. [Euphy]
+//============================================================
+
+// Payon
+//============================================================
+payon,246,154,0	script	Lady#payon	90,{
+	mes "[Lady]";
+	mes "A long time ago,";
+	mes "when Payon was still";
+	mes "developing, many of the";
+	mes "villagers lived in poverty.";
+	next;
+	mes "[Lady]";
+	mes "Many families had to struggle to survive, and often could not even afford to properly bury their dead. Some people threw their dead into the cave near the village.";
+	next;
+	mes "[Lady]";
+	mes "So in that cave, it is said that there are many walking Zombies,";
+	mes "the dead who cannot rest in peace and are unable to pass on to the next world.";
+	next;
+	mes "[Lady]";
+	mes "The Zombies, upon sensing the warmth of a human, begin to assault them, but that doesn't mean these Undead hold a grudge against";
+	mes "the living.";
+	next;
+	mes "[Lady]";
+	mes "Their rotten bodies can't leave the cold, dark and damp cave, so it's instinctual for them to attack warmth which would speed up the decomposition of their bodies.";
+	next;
+	mes "[Lady]";
+	mes "The Zombies in the Payon Cave";
+	mes "may be spooky, but their story";
+	mes "is also kind of tragic.";
+	close;
+}
+
+payon,134,211,4	script	Young Man#payon	59,{
+	mes "[Young Man]";
+	mes "From your attire,";
+	mes "I can see that you";
+	mes "are a stranger here.";
+	mes "Welcome to Payon.";
+	next;
+	mes "[Young Man]";
+	mes "You must be a well-experienced fighter, otherwise you'd never be able to arrive here after passing the steep, mountainous areas and dangerous creatures surrounding this city.";
+	next;
+	mes "[Young Man]";
+	mes "I'm no expert at fighting, but someone once told me that sheer strength alone won't be able to win some battles.";
+	next;
+	mes "[Young Man]";
+	mes "Sometimes, you may encounter creatures protected by a hard-shell that don't be damaged by physical attacks. Only psychic power, like Magic, can easily defeat such creatures.";
+	next;
+	mes "[Young Man]";
+	mes "Of course, not everyone can study magic. The point is that you should keep different kinds of friends and comrades close to you, as you can't possibly handle every situation by yourself.";
+	close;
+}
+
+payon,173,82,0	script	Young Man#2payon	88,{
+	mes "[Young Man]";
+	mes "I remember the story my dearly departed grandfather has told me.";
+	next;
+	mes "[Young Man]";
+	mes "It's about this Amulet that possesses an Evil Power.";
+	mes "With it, you could awaken";
+	mes "the Dead from the Grave.";
+	next;
+	mes "[Young Man]";
+	mes "Well, I'm not sure if it's true or not. But, I wonder, what would happen if I used it to summon";
+	mes "my grandfather from the other realm....";
+	next;
+	mes "[?]";
+	mes "^3299CCNever think";
+	mes "of such a thing...";
+	mes "My son.^000000";
+	next;
+	mes "[Young Man]";
+	mes "EEEEEEK-!";
+	mes "What was that?!";
+	mes "G-grandpa...?";
+	next;
+	mes "...";
+	next;
+	mes "...";
+	mes "......";
+	mes "[Young Man]";
+	mes "...";
+	mes "G-God...?";
+	close;
+}
+
+payon,158,246,3	script	Guardsman#payon	708,3,3,{
+	end;
+
+OnTouch_:
+	mes "[Guardsman]";
+	mes "This is the Central Palace of Payon. This place is open to the public, but in accordance with our laws, you must behave in an orderly fashion once inside.";
+	next;
+	mes "[Guardsman]";
+	mes "In the interest of protecting the peace, we will disarm your equipment once you enter.";
+	mes "Your cooperation is";
+	mes "much appreciated.";
+	nude;
+	close;
+}
+
+payon,249,156,1	script	Woman#payon	66,{
+	mes "[Woman]";
+	mes "Welcome to Payon.";
+	mes "You must have had";
+	mes "a hard time getting";
+	mes "through the Payon Forest.";
+	mes "How was your trip?";
+	next;
+	mes "[Woman]";
+	mes "We've been receiving less tourists because of the increasing numbers of monsters outside, so it's quieter nowadays.";
+	next;
+	mes "[Woman]";
+	mes " To be honest, things are getting tough because of all those monsters. ^666666*Sigh...*^000000";
+	next;
+	mes "[Woman]";
+	if (Sex == SEX_MALE)
+		mes "Whoa~! I just noticed those arms of yours look pretty solid. You look pretty strong, guy. Just how many monsters have you killed?!";
+	else
+		mes "Oooh! I didn't notice before, but you look pretty strong beneath all of that feminine charm.";
+	next;
+	mes "[Woman]";
+	mes "Hey, I know of a good place for you to hunt. It just so happens that there's a cave in the middle of Payon.";
+	next;
+	mes "[Woman]";
+	mes "If you're interested, just head North, pass the forest, and go towards the Northwest. You'll know you've arrived when you're in the place filled with the smell of stinky monsters.";
+	next;
+	switch(select("It sounds dangerous!:I better prepare myself...!:That's a nice dress you're wearing~")) {
+	case 1:
+		mes "[Woman]";
+		mes "Oh come on, don't be a coward.";
+		mes "It's just a simple cave filled with normal monsters. It's quite safe. We've even established an Archer Village near that cave to prevent misfortune incidents. Hohoohoho~ ";
+		break;
+	case 2:
+		mes "[Woman]";
+		mes "Oh don't worry about any preparations. There's a Tool Dealer right in front of the cave, so you can purchase anything you need from my husband, er, that guy~";
+		break;
+	case 3:
+		mes "[Woman]";
+		mes "Oh hohohoho!";
+		mes "So you've noticed?";
+		mes "I hear this is the";
+		mes "latest trend in Prontera";
+		mes "these days.";
+		next;
+		mes "[Woman]";
+		mes "Most of the women in this town don't know anything about fashion! My husband bought this for me as";
+		mes "a present. He makes quite a lot of money, you know. Hohohoho~";
+		break;
+	}
+	close;
+}
+
+payon,246,158,5	script	Woman#2payon	66,0,0,{
+	mes "[Jim's Mother]";
+	mes "Oh boy~";
+	mes "There she goes again.";
+	mes "Without a doubt, that";
+	mes "woman is the town gossip.";
+	next;
+	mes "[Jim's Mother]";
+	mes "Please don't judge the rest";
+	mes "of the people living in Payon by her behavior. She's the only loudmouth. I guess she's just too excited about what the fortune teller told her.";
+	next;
+	mes "[Jim's Mother]";
+	if (Sex == SEX_MALE) {
+		mes "Ooh...!";
+		mes "You've got";
+		mes "such broad shoulders!";
+		mes "Will you go out with me?";
+		mes "I'll treat you to";
+		mes "a nice dinner~";
+	}
+	else {
+		mes "My, you're a pretty girl!";
+		mes "I'm sure you're always busy";
+		mes "beating the boys away with a stick...";
+		mes "Or a well timed insult joke.";
+	}
+	next;
+	if (select("Fortune Teller...? :Well, see you later~") == 1) {
+		mes "[Jim's Mother]";
+		mes "Oh yes...";
+		mes "There's an extraordinary fortune teller in the Central Palace of Payon. The more Zeny you pay her, the better fortune you'll get!";
+		next;
+		mes "[Jim's Mother]";
+		mes "She told me";
+		mes "I would meet";
+		mes "a nice guy this month.";
+		mes "Hohohoho~ ";
+		close;
+	}
+	mes "[Jim's Mother]";
+	mes "Mmmm...?";
+	mes "You don't have";
+	mes "any time to stay";
+	mes "and chit-chat with me?";
+	close;
+}
+
+payon,210,110,1	script	Drunkard#payon	120,{
+	if (Class != Job_Archer) {
+		mes "[Drunkard]";
+		mes "Hey...";
+		mes "H-Hey...!";
+		next;
+		mes "[Drunkard]";
+		mes "I wonder why those";
+		mes "stupid Archers even";
+		mes "bother trying to aim!";
+		mes "You're all weak!";
+		mes "Weeeeak!";
+		next;
+		mes "[Drunkard]";
+		mes "Bwahahahaha!";
+		mes "Buy me a drink?!";
+	} else {
+		mes "[Drunkard]";
+		mes "An Archer!";
+		mes "Oh man, you guys!";
+		mes "You guys are the best!";
+		next;
+		mes "[Drunkard]";
+		mes "Bwahahahaha!";
+		mes "Buy me a drink?!";
+	}
+	next;
+	switch(select("Alright, but only one drink.:No thanks, pal.:Oh my God! Hell no!")) {
+	case 1:
+		set Zeny, (Zeny < 100)?0:(Zeny - 100);
+		mes "[Drunkard]";
+		mes "Thanks...!";
+		mes "..Brother!";
+		next;
+		mes "[Drunkard]";
+		mes "Most people don't even wanna";
+		mes "buy me drinks! Maybe cuz I used to fool around too much with the ladies back in my day!";
+		next;
+		mes "[Drunkard]";
+		mes "Though, the women I used to play with are grannies now! Hahahaha! One of them still primps herself with makeup and stuff! Can you believe that?!";
+		next;
+		mes "[Drunkard]";
+		mes "I'm like...";
+		mes "Come on...!";
+		mes "Some faces are";
+		mes "beyond fixing!";
+		mes "Oh? I made a funny!";
+		mes "Bwahahahahahah!";
+		next;
+		mes "[Drunkard]";
+		mes "^666666*Gulp~ Gulp~*^000000";
+		mes "Man, this is great!";
+		mes "You the maaaaaaan~!";
+		mes "Muhahahahaha!";
+		break;
+	case 2:
+		mes "[Drunkard]";
+		mes "Bah!";
+		mes "Kids nowadays!";
+		mes "Now respect for";
+		mes "their elders! Fine!";
+		mes "I'm not gonna beg you!";
+		break;
+	case 3:
+		mes "[Drunkard]";
+		mes "Fine...!";
+		mes "Fine by me!";
+		break;
+	}
+	close;
+}
+
+payon,132,235,3	script	Monster Scholar#02	98,{
+	mes "[Monster Scholar Vuicokk]";
+	mes "Nice to meet you.";
+	mes "I am called Vuicokk.";
+	mes "I am a scholar in the Monster Research organization of the Rune-Midgarts Kingdom. Do you have any questions about monsters?";
+	next;
+	switch(select("Any news?:Undead Monsters?:Monster Research Organization?")) {
+	case 1:
+		mes "[Monster Scholar Vuicokk]";
+		mes "Payon is located deep inside the forest where it can easily be attacked by hordes of monsters. Monsters also come from the dangerous cave located near town.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "Since Undead monsters roam the Payon Cave, it has attracted the attention of the monster academic world. My job here is to analyze their characteristics.";
+		break;
+	case 2:
+		mes "[Monster Scholar Vuicokk]";
+		mes "What is most remarkable of the Undead monsters in Payon is their origin Most of them used to be citizens of Payon!";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "However, these souls are";
+		mes "unable to rest in peace and still wander about as Undead bound";
+		mes "to this world.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "These monsters cannot be classified with other monsters that have mutated from living creatures, so our wise and benevolent ruler, King Tristram III, has taken a great interest in Payon's Undead.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "After all, some of these";
+		mes "Undead used to belong to";
+		mes "the Rune-Midgarts Kingdom.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "As his subjects,";
+		mes "King Tristram III";
+		mes "feels some responsibility";
+		mes "to release their souls.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "His Majesty has been supporting";
+		mes "us in our search to discover how to eliminate all of the Undead in this world. We will try to accomplish this goal as soon as we";
+		mes "possibly can.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "For the safety of our people,";
+		mes "for the sake of their bereaved families, and in accordance with King Tristram III's order, we must succeed!";
+		break;
+	case 3:
+		mes "[Monster Scholar Vuicokk]";
+		mes "As you may well know,";
+		mes "monsters have been endlessly spawning in this world, and the threat of their attacks is grows greater every day.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "In response to this,";
+		mes " the Monster Research";
+		mes "Organization has been formed.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "Talented people around the world have joined forces in an effort to deduce the origin of monsters, and a way to eliminate them once and for all.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "Of course, it's not";
+		mes "as easy as you would may believe. Many have sacrificed their lives in the pursuit of this knowledge.";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "In our missions, the number of victims of monster attacks have been countless. Still, nothing can stop us. If our suffering can save humanity, so be it!";
+		next;
+		mes "[Monster Scholar Vuicokk]";
+		mes "^666666*Ahem*^000000 My apologies, I get too excited sometimes. But if you happen to meet other scholars such as myself, please treat them well. Our jobs are very difficult!";
+		break;
+	}
+	close;
+}
+
+// Inside Payon
+//============================================================
+payon_in01,180,7,2	script	Waitress#payon	90,{
+	mes "[Pub Lady]";
+	mes "This place is always bustling with busy people. Little Novices come and go to become Archers, and everyone else is buying arrows while I have to stay here in this small shop.";
+	next;
+	mes "[Pub Lady]";
+	mes "And I'm sick and tired of making this noodle soup. I have to shower all the time so I can get rid of the smell. And it's not so easy";
+	mes "to get rid of.";
+	next;
+	mes "[Pub Lady]";
+	mes "I feel so...";
+	mes "Bored.";
+	mes "And lonely...";
+	next;
+	mes "[Pub Lady]";
+	if (Sex == SEX_MALE)
+		mes "Where I can find the right person, a hot and Sexy hunk who can take me away from here? Um, hey mister, are you listening?";
+	else {
+		mes "Where I can find the right person, a cute, yet hard-bodied hunk who can take me away from here?";
+		mes "Um, hey lady, are";
+		mes "you listening?";
+	}
+	next;
+	mes "[Pub Lady]";
+	mes "The old fortune teller told me that I'd have great luck in the near future! But what's wrong with me? I'm just living day to day. Maybe I'm just dumb and wishy-washy.";
+	next;
+	mes "[Pub Lady]";
+	mes "I'm so sorry,";
+	mes "I've said too much.";
+	mes "Now I'm just acting stupid.";
+	mes "I'm sorry you had to listen";
+	mes "to all that.";
+	next;
+	mes "[Pub Lady]";
+	mes "So...";
+	mes "How may I help you? ";
+	next;
+	switch(select("Have you ever heard of Zombies?:Fortune Teller...?:I needs some booze.")) {
+	case 1:
+		mes "[Pub Lady]";
+		mes "Of course I've";
+		mes "heard of Zombies!";
+		mes "This is Payon, after all.";
+		mes "Zombies are the walking";
+		mes "Undead, and you can easily";
+		mes "find them around here.";
+		next;
+		mes "[Pub Lady]";
+		mes "I hear that they fear holiness, so Archers prefer to use arrow made out of silver, a holy metal, against them.";
+		next;
+		mes "[Pub Lady]";
+		mes "Legend says that the chief of this town used silver arrows against Zombies that used to be his brethren in order to release their souls so that they may rest in peace.";
+		next;
+		mes "[Pub Lady]";
+		mes "We believe that exorcising";
+		mes "Zombies in this way will lead them peacefully to the afterlife. Their souls no longer need to anguish.";
+		next;
+		mes "[Pub Lady]";
+		mes "You might not share our beliefs, but my grandfather was one of the Undead. I appreciate that the chief was able to free him from being bound to the world of the living.";
+		break;
+	case 2:
+		mes "[Pub Lady]";
+		mes "Oh! Our fortune teller is a really extraordinary person. Well, she doesn't hang around here as";
+		mes "much as she used to do. ";
+		next;
+		mes "[Pub Lady]";
+		mes "She used to stay here to tell fortunes for our patrons, but ever since the chief recognized her talents, she now stays in the Central Palace. So you'd better go there if you want to see her.";
+		break;
+	case 3:
+		mes "[Pub Lady]";
+		mes "You...";
+		mes "needs some";
+		mes "booze, eh?";
+		mes "Don't we all?";
+		next;
+		mes "[Pub Lady]";
+		mes "But I'm so sorry, we sold out.";
+		mes "And we can't afford to prepare alcohol anymore because of the hostile creatures out there. But please come again later. I'm sorry for the inconvenience.";
+		break;
+	}
+	next;
+	mes "[Pub Lady]";
+	mes "Have a nice";
+	mes "day, dearie.";
+	next;
+	mes "[Pub Lady]";
+	mes "^666666*Sob*^000000";
+	mes "When will I be romanced";
+	mes "by my perfectly formed,";
+	mes "yet well read man?";
+	close;
+}
+
+payon_in03,96,116,3	script	Chief Guardsman#payon	708,3,3,{
+	end;
+
+OnTouch_:
+	mes "[Chief Guardsman]";
+	mes "What brings";
+	mes "you here? ";
+	next;
+	mes "[Chief Guardsman]";
+	mes "I can see that you are not one of the Payon locals. I would just like to remind you to conduct yourself in an orderly manner. Remember,";
+	mes "you are a guest here.";
+	next;
+	mes "[Chief Guardsman]";
+	mes "In the interest of protecting the public peace, I will disarm your equipment. Thank you for your cooperation.";
+	nude;
+	close;
+}
+
+payon_in01,66,64,5	script	Archer Zakk#payon	88,{
+	mes "[Archer Zakk]";
+	mes "I'm kind of worried";
+	mes "about one of my pals.";
+	next;
+	mes "[Archer Zakk]";
+	mes "Even though he's an expert at archery, no one likes his motor mouth. Even our chief is getting fed up with him!";
+	next;
+	switch(select("Your friend?:Payon has a chief?: Motor... Mouth?")) {
+	case 1:
+		mes "[Archer Zakk]";
+		mes "Ah, right. This buddy of mine is the number one archer in Payon.";
+		mes "He teaches newbie Archers around the Archer Village. It might be a good idea to talk to him at least once.";
+		break;
+	case 2:
+		mes "[Archer Zakk]";
+		mes "Our chief lives in the Central Palace. I guess you can say that he's the spiritual guide of Payon.";
+		next;
+		mes "[Archer Zakk]";
+		mes "He used to menace the monsters in Payon Forest, carrying his Gakkung. I remember watching him fight when I was just a little kid.";
+		next;
+		mes "[Archer Zakk]";
+		mes "But now he";
+		mes "seems old and weak.";
+		mes "Still, his eyes are as sharp as they used to be during his days";
+		mes "of battle, where he'd never miss";
+		mes "a target.";
+		next;
+		mes "[Archer Zakk]";
+		mes "I admire our chief";
+		mes "from the bottom";
+		mes "of my heart. ";
+		break;
+	case 3:
+		mes "[Archer Zakk]";
+		mes "You don't know";
+		mes "what a motormouth is...?";
+		next;
+		mes "[Archer Zakk]";
+		mes "Motormouth";
+		mes "Noun. Some fool who chatters";
+		mes "way too much about stuff that doesn't really matter and doesn't know when to stop.";
+		next;
+		mes "[Archer Zakk]";
+		mes "But yeah, my pal is not only";
+		mes "a legend at archery, he's also well known for how long he's let that mouth of his run.";
+		next;
+		mes "[Archer Zakk]";
+		mes "Anyway, my pal Wolt doesn't have";
+		mes "a place of his own, so he stays at the Inn. Why don't you go and meet him? He's actually an okay guy if you can stand all the chatter.";
+		break;
+	}
+	close;
+}
+
+payon_in01,47,59,2	script	Archer Wolt#payon	88,{
+	mes "[Archer Wolt]";
+	mes "Archers should";
+	mes "practice as much";
+	mes "as they can. Otherwise,";
+	mes "they'll never become experts.";
+	next;
+	mes "[Archer Wolt]";
+	mes "Oh, hey there!";
+	mes "I'm Wolt the Archer,";
+	mes "but, erm, you can";
+	mes "just call me 'Wolt.'";
+	next;
+	mes "[Archer Wolt]";
+	mes "I know this is a bit of an unexpected question, but do";
+	mes "you tend to spend a lot of your";
+	mes "time in idleness?";
+	next;
+	switch(select("Oh, hell no.:Yeah. I guess...")) {
+	case 1:
+		mes "[Archer Wolt]";
+		mes "Ooh. That's good. In fact, that's great! If only all of us Archers had that kind of attitude. If you have time to just sit around, then you have the time to go out and practice!";
+		next;
+		mes "[Archer Wolt]";
+		mes "Yeah...";
+		mes "As Archers, we kind of look";
+		mes "down on people who slack off";
+		mes "on the training.";
+		next;
+		mes "[Archer Wolt]";
+		mes "If you don't work hard, then you'll end up being a horrible Archer. No one can depend on your aim!";
+		mes "I mean, nobody!";
+		next;
+		mes "[Archer Wolt]";
+		mes "Did you ask how we go about";
+		mes "our training? Well, the Archers of Payon don't have much time to just play around with their Bows.";
+		mes "I guess we go out and";
+		mes "engage in actual fighting.";
+		next;
+		mes "[Archer Wolt]";
+		mes "So we just carry out Bows wherever we go, and spend all day looking for monsters to kill. Oh, and after we find some monsters, we";
+		mes "kill them of course. That almost goes without saying.";
+		next;
+		if (select("I guess you'd need a good Bow. :You call that 'practice?!'") == 1) {
+			mes "[Archer Wolt]";
+			mes "That's right!";
+			mes "An Archer depends";
+			mes "on the strength";
+			mes "of his Bow!";
+			next;
+			mes "[Archer Wolt]";
+			mes "Bows constructed in Payon";
+			mes "are the greatest on this continent! They are light and stout, made out of high quality tree Trunks from Payon Forest!";
+			next;
+			mes "[Archer Wolt]";
+			mes "The quality of the wood often determines the quality of the Bow. My lil' sweety was made out of a walnut tree, and is strong enough to bear thousands of pounds";
+			mes "of force.";
+			next;
+			mes "[Arche Wolt]";
+			mes "Oh, oh! And my Bow's stylish as well. It comes in a sophisticated ebony color, and I just look so cool and heroic while I'm killing monsters~!";
+			next;
+			mes "[Archer Wolt]";
+			mes "Oh, and the trees in Payon Forest are famous for the quality of their wood. But then, more and more of them have been turning into monsters. Is this the work of evil forces?!";
+			next;
+			mes "[Archer Wolt]";
+			mes "It's a pity because the tree monsters used to be beautiful, majestic trees. But then it's okay if we kill them, so that we can make Bows out of their wood.";
+			next;
+			mes "[Archer Wolt]";
+			mes "And then we use these Bows to kill even more tree monsters... And then make more wood! Mwahahahaha! It's an endless cycle!";
+			next;
+			select("^666666*Ahem!*^000000 Speaking of endless...");
+			mes "[Archer Wolt]";
+			mes "Yeah...";
+			mes "You're right.";
+			mes "Monsters are everywhere,";
+			mes "can you believe it?";
+			next;
+			mes "[Archer Wolt]";
+			mes "Do you understand";
+			mes "why the Archer Village";
+			mes "was built where it is?";
+			next;
+			mes "[Archer Wolt]";
+			mes "To the West, near Archer Village, you'll see Payon Cave. Inside the cave, an enormous amount of monster endlessly spawn without showing any sign of slowing down.";
+			next;
+			mes "[Archer Wolt]";
+			mes "We Archers are here to protect our territory against them, as ordered by our honorable chief!";
+			next;
+			switch(select("Cave, you say?:Chief...? :Oh man, I hate this town!")) {
+			case 1:
+				mes "[Archer Wolt]";
+				mes "If you head North";
+				mes "of town, you'll find";
+				mes "Payon Cave.";
+				next;
+				mes "[Archer Wolt]";
+				mes "Once inside, you'll encounter all sorts lots of ugly monsters. Like those nasty looking Bats, and";
+				mes "those Zombies...";
+				next;
+				mes "[Archer Wolt]";
+				mes "If we let them out of that place, they'd run all over Payon! So, we gotta get in there and clean that place up of monsters.";
+				next;
+				mes "[Archer Wolt]";
+				mes "But since these monsters endlessly respawn, sometimes I feel like we're wasting our time and energy for nothing...";
+				next;
+				mes "[Archer Wolt]";
+				mes "Whoa...";
+				mes "Alright, I think yet my mouth run";
+				mes "a marathon again. I better let you go. There's lots of training to do, and plenty of monsters to kill!";
+				break;
+			case 2:
+				mes "[Archer Wolt]";
+				mes "Our chief? Ah, he's such a swell guy. Then again, he's always scolds me for talking too much.";
+				next;
+				mes "[Archer Wolt]";
+				mes "He always working to make sure";
+				mes "that Payon is safe from harm. Lately, I've been worried since he hasn't been coming out the Palace lately. That might be a bad sign.";
+				next;
+				mes "[Archer Wolt]";
+				mes "A bad sign of what, I'm not really sure. There could be problems with Payon, or maybe he's got something he needs to handle on his own. Anyway, there's always guards in his room for some reason.";
+				next;
+				mes "[Archer Wolt]";
+				mes "Heh heh heh~";
+				mes "I'll get in trouble if he knows";
+				mes "I told an outsider know too much about his affairs. Oh well! It's too late. I already told you! There's no use regretting it!";
+				next;
+				mes "[Archer Wolt]";
+				mes "But...";
+				mes "It's not too late for me to just shut my mouth. Keep it closed. Shutting up now. Quiet as a mouse. Seeya later~!";
+				break;
+			}
+			close;
+		}
+		mes "[Archer Wolt]";
+		mes "Hmm...?";
+		mes "And you don't?";
+		mes "What better practice";
+		mes "than the real, honest";
+		mes "to goodness thing?";
+		next;
+		mes "[Archer Wolt]";
+		mes "Though, you may have a point";
+		mes "there. I mean, you should be able to practice without having to suffer serious consequences.";
+		mes "You know, like death.";
+		next;
+		mes "[Archer Wolt]";
+		mes "But we've gotta make do";
+		mes "with what we've got!";
+		mes "An Archer's life is";
+		mes "endless training!";
+		mes "Endless practice!";
+		next;
+		mes "[Archer Wolt]";
+		mes "Hm...?";
+		mes "Are you tired of me repeating the same thing over and over again?";
+		mes "Oh, just bear with me. Think of it as practicing your patience~";
+		break;
+	case 2:
+		mes "[Archer Wolt]";
+		mes "Eh...";
+		mes "I guess it's important";
+		mes "to set aside time to rest.";
+		next;
+		mes "[Archer Wolt]";
+		mes "But it's also a good idea to set aside time for practicing and training, and practicing and training!";
+		next;
+		mes "[Archer Wolt]";
+		mes "And it's a very bad idea to rest when you should be alert, or well, when you're supposed to be doing something else.";
+		next;
+		mes "[Archer Wolt]";
+		mes "That reminds me of the time";
+		mes "I set fire to my house during the holidays. It was an accident, of course, but boy, were my folks angry!";
+		next;
+		mes "[Archer Wolt]";
+		mes "Hahahaha~";
+		mes "It all started when I decided to take a bath. Here, in Payon, we use the old style baths, so we need to make a fire to heat the water. Cold baths are just so uncomfortable.";
+		next;
+		mes "[Archer Wolt]";
+		mes "But nice, warm baths are veeeery comfortable. That was probably the best bath I had in my life! It was so comfortable, I fell asleep.";
+		next;
+		mes "[Archer Wolt]";
+		mes "But while I was sleeping,";
+		mes "I guess I didn't notice the fire reach the floor, walls and ceiling! Luckily, I was in a tub full of water, so I was okay.";
+		next;
+		mes "[Archer Wolt]";
+		mes "I would've gotten help if it weren't for the fact that the fire had burned my clothes while I was napping. So, of course, I couldn't just run around town in the nude.";
+		next;
+		mes "[Archer Wolt]";
+		mes "So...";
+		mes "I just sat in the water for about an hour, completely naked, and yelling 'Help me,' until someone could hear me.";
+		next;
+		mes "[Archer Wolt]";
+		mes "But, it turned out that no one could hear me. Luckily, our roof caved in and totally demolished our walls so that my screams could finally reach passerby. And it was in that way that I survived.";
+		next;
+		switch(select("Um, what's the point of that story?:I guess I better not get lazy then. :Blah blah blah. See ya. ")) {
+		case 1:
+			mes "[Archer Wolt]";
+			mes "Oh...";
+			mes "Umm...";
+			mes "You mean, like,";
+			mes "the moral of the story?";
+			next;
+			mes "[Archer Wolt]";
+			mes "Resting during the right times is perfectly fine. Just don't go and take a break when you shouldn't. That kind of behavior would make anyone in our town angry!";
+			next;
+			mes "[Archer Wolt]";
+			mes "Our chief is especially annoyed by that kind of irresponsible attitude. I guess, around here, only the town drunkard subscribes to that kind of policy.";
+			next;
+			switch(select("Chief?:Town Drunkard? :Man, you talk too much!")) {
+			case 1:
+				mes "[Archer Wolt]";
+				mes "Our chief? Ah, he's such a swell guy. Then again, he's always scolds me for talking too much.";
+				next;
+				mes "[Archer Wolt]";
+				mes "He always working to make sure";
+				mes "that Payon is safe from harm. Lately, I've been worried since he hasn't been coming out the Palace lately. That might be a bad sign...";
+				next;
+				mes "[Archer Wolt]";
+				mes "A bad sign of what, I'm not really sure. There could be problems with Payon, or maybe he's got something he needs to handle on his own. Anyway, there's always guards in his room for some reason.";
+				next;
+				mes "[Archer Wolt]";
+				mes "Heh heh heh~";
+				mes "I'll get in trouble if he knows";
+				mes "I told an outsider know too much about his affairs. Oh well! It's too late. I already told you! There's no use regretting it!";
+				next;
+				mes "[Archer Wolt]";
+				mes "But...";
+				mes "It's not too late for me to just shut my mouth. Complete silence. I'm not even opening my mouth. Starting right about... Now!";
+				mes "Seeya later~!";
+				break;
+			case 2:
+				mes "[Archer Wolt]";
+				mes "You know...";
+				mes "The guy in the pub.";
+				mes "Loud, and obnoxious";
+				mes "and annoying to liste--";
+				next;
+				mes "[Archer Wolt]";
+				mes "Hmm...?";
+				mes "What's that look for?";
+				mes "Anyway, when I have";
+				mes "some spare cash, I try";
+				mes "to buy him a drink.";
+				next;
+				mes "[Archer Wolt]";
+				mes "Still...";
+				mes "It's not a good";
+				mes "idea to drink so much.";
+				mes "Or as much as he does...";
+				break;
+			case 3:
+				mes "[Archer Wolt]";
+				mes "...!";
+				next;
+				mes "[Archer Wolt]";
+				mes "...";
+				mes "I...";
+				mes "B-but...!";
+				break;
+			}
+			break;
+		case 2:
+			mes "[Archer Wolt]";
+			mes "Oh good~!";
+			mes "I guess you got";
+			mes "the point of my story!";
+			next;
+			mes "[Archer Wolt]";
+			mes "We, as Archers, put a lot of importance on training and practice, so we kind of look";
+			mes "down on people who aren't";
+			mes "diligent at all.";
+			next;
+			mes "[Archer Wolt]";
+			mes "Still...";
+			mes "I have to admit that, at heart,";
+			mes "I'm a pretty lazy guy. I guess it's pretty amazing that someone like";
+			mes "me can even be an Archer!";
+			next;
+			mes "[Archer Wolt]";
+			mes "In any case,";
+			mes "whatever you do";
+			mes "in life, do it";
+			mes "with passion!";
+			break;
+		case 3:
+			break;
+		}
+	}
+	close;
+}
+
+payon_in03,99,190,4	script	Chief#payon	107,2,2,{
+	end;
+
+OnTouch_:
+	if (BaseLevel < 30) {
+		mes "[Guard]";
+		mes "Hey...";
+		mes "Hey...!";
+		mes "Show your respect";
+		mes "to our chief!";
+		close;
+	}
+	if (BaseLevel > 30) {
+		set .@oldman_random,rand(1,2);
+		if (.@oldman_random == 1) {
+			mes "[Guard]";
+			mes "Hey...";
+			mes "Hey...!";
+			mes "Show your respect";
+			mes "to our chief!";
+			next;
+			mes "[Guard]";
+			mes "Heeeey!";
+			mes "I said... ";
+			next;
+			mes "[Chief]";
+			mes "It's fine, it's fine.";
+			mes "It's been a long time";
+			mes "since I've spoken to";
+			mes "such young people.";
+			next;
+		}
+		switch(select("Please tell me about Payon.:Where are the guards from?:Please tell me about the cave. :What does an Archer do?:What does a Hunter do?")) {
+		case 1:
+			mes "[Chief]";
+			mes "Payon is the city of highlanders. As long as our history can relate, our city has been self-sufficient.";
+			next;
+			mes "[Chief]";
+			mes "Although our ancestors did not enjoy the benefits of cultural exchange with the Rune-Midgarts Kingdom as we do today, they knew how to make a living without";
+			mes "any help.";
+			next;
+			mes "[Chief]";
+			mes "Payon has developed its own cultures and ways. We've invented our own means to protect ourselves against the elements, and Payon men and women train as Archers and Hunters to defend themselves.";
+			next;
+			mes "[Chief]";
+			mes "I've heard of weak, cowardly";
+			mes "young people who fear the fields or dungeons filled with monsters. But to us, battle is a way of life.";
+			next;
+			mes "[Chief]";
+			mes "That is why his Majesty, King Tristram III wishes for us to train young people how to effectively fight against evil creatures.";
+			break;
+		case 2:
+			mes "[Chief]";
+			mes "Even since I was young,";
+			mes "Prontera has sent civil";
+			mes "servants and envoys to Payon.";
+			next;
+			mes "[Chief]";
+			mes "Royal troops, Kafra Ladies, Guards... At first, there was conflict brought about by differences in our customs";
+			mes "and cultures.";
+			next;
+			mes "[Chief]";
+			mes "However, as time passed,";
+			mes "we've been able to resolve such petty differences. I cannot deny that they've helped us speedily develop our trade with foreign nations.";
+			next;
+			mes "[Chief]";
+			mes "Now, people who used to be outsiders are now bonifide Payon citizens. When I was young, I would never imagined such a thing possible. Hahahaha~!";
+			next;
+			mes "[Chief]";
+			mes "It pleases me to see and meet with them. Even though have come from other places, they have a love for Payon that is as sincere as my own.";
+			break;
+		case 3:
+			mes "[Chief]";
+			mes "Ah...";
+			mes "I used to go to the cave";
+			mes "to the North sometimes. But it";
+			mes "is harder now than it was then.";
+			next;
+			mes "[Chief]";
+			mes "Evil creatures that I've never seen before endlessly respawn in that place. The monsters in Payon Cave today are different than the ones we used to fight with.";
+			next;
+			mes "[Chief]";
+			mes "Have you ever happened to see";
+			mes "the Zombies...? Some of them are warriors who entered the cave to protect this village, but never came back.";
+			next;
+			mes "[Chief]";
+			mes "Although they are a threat, some of those Undead are also victims of that cave. I'm too old to endure that kind of pain...";
+			next;
+			mes "[Chief]";
+			mes "I must do anything I can to stop the Undead, and release their souls from eternal anguish.";
+			break;
+		case 4:
+			mes "[Chief]";
+			mes "Ah, it is fortunate that archery is a specialty here in Payon. Because of the surrounding forest, we have an abundant supply of wood to create Bows.";
+			next;
+			mes "[Chief]";
+			mes "The forest also is a good training place for Archers to learn how to use their environment to impede the advance of their enemies while attacking from a safe distance.";
+			next;
+			mes "[Chief]";
+			mes "The forest can also be convenient in unexpected ways. When I was young, I ran out of arrows while fighting against monsters in the woods, but arrows dropped by other monsters saved my life! Mwahah!";
+			break;
+		case 5:
+			mes "[Chief]";
+			mes "As foreign cultures were introduced to Payon, changes have been brought about to our battle style.";
+			next;
+			mes "[Chief]";
+			mes "Technology, especially that of explosives, enabled new methods";
+			mes "of battle. We were no longer limited to the use of just bows and arrows.";
+			next;
+			mes "[Chief]";
+			mes "Trapping skills, which make";
+			mes "hunting monsters much easier, were developed enable here in Payon. Experts in the new skills were dubbed 'Hunters' by our previous Chief.";
+			next;
+			mes "[Chief]";
+			mes "Although highly effective, trapping is a really dangerous skill if not used properly. That's why we do not approve of the inexperienced becoming Hunters.";
+			next;
+			mes "[Chief]";
+			mes "However, we welcome people";
+			mes "who have proven to be capable to take the challenge of the Hunter class.";
+			break;
+		}
+		next;
+		mes "[Chief]";
+		mes "So tired...";
+		mes "I'd better rest.";
+		mes "Please, take care";
+		mes "of yourself.";
+		close;
+
+		//This actually never happens on iRO
+		//if (.@oldman_random == 2) {
+		//	mes "[Guard]";
+		//	mes "The Chief is";
+		//	mes "taking a rest.";
+		//	mes "Would you mind";
+		//	mes "coming back later?";
+		//}
+	}
+	end;
+}
+
+payon_in03,102,185,5	script	Guard#payon	708,{
+	if (BaseLevel < 30) {
+		mes "[Guard]";
+		mes "Hey...!";
+		mes "You're not";
+		mes "allowed here!";
+		mes "Go back outside!";
+		close;
+	}
+	if (BaseLevel > 30) {
+		mes "[Guard]";
+		mes "I'm sorry,";
+		mes "but you're";
+		mes "not allowed here.";
+		mes "Please leave.";
+		close;
+	}
+	end;
+}
+
+// Payon Archer Village
+//============================================================
+pay_arche,77,131,2	script	Archer Joe#payon	88,{
+	mes "[Archer Joe]";
+	mes "Payon!";
+	mes "Such a wonderful";
+	mes "place! Superb Bows";
+	mes "and skillful Archers!";
+	next;
+	mes "[Archer Joe]";
+	mes "Hey you~!";
+	mes "Have you heard";
+	mes "of famous Payon?";
+	next;
+	switch(select("Yeah, of course~! :Pay...on?:...")) {
+	case 1:
+		mes "[Archer Joe]";
+		mes "Oh! You the man!";
+		mes "You know the Archers of Payon!";
+		mes "We never miss our target! Even from a distance, the hearts of our foes are unsafe!";
+		next;
+		if (select("So, you like this place, huh? :Hahahaha~") == 1) {
+			mes "[Archer Joe]";
+			mes "Yes! I love this place!";
+			mes "I love this city so much,";
+			mes "I've even been doing research on it! If there's anything you wanna know about Payon, please ask me!";
+			next;
+			switch(select("The people wear unique clothing here.:What's the building in the middle of town?:Who's that guy drinking over there? :Talk to you later.")) {
+			case 1:
+				mes "[Archer Joe]";
+				mes "Yes, I agree.";
+				mes "You must know this place used to be isolated because of the thick forests and the mountainous area.";
+				next;
+				mes "[Archer Joe]";
+				mes "Because of that, the Payon developed a culture of its own, which is quite different than that of the rest of Rune-Midgarts.";
+				next;
+				mes "[Archer Joe]";
+				mes "This garment is traditional Payon clothing! Why don't you try wearing one? It's very comfortable~";
+				break;
+			case 2:
+				mes "[Archer Joe]";
+				mes "You mean the Central Palace? Strangers aren't allowed to enter that place. People say the royal family and their friends from outside gather there.";
+				next;
+				mes "[Archer Joe]";
+				mes "I'd like to go there sometime, and see what it's like on the inside!";
+				break;
+			case 3:
+				mes "[Archer Joe]";
+				mes "Oh! That guy's notorious!";
+				mes "Whatever you do, don't treat";
+				mes "him to any drinks!";
+				mes "You'll regret it!";
+				break;
+			case 4:
+				mes "[Archer Joe]";
+				mes "Okay!";
+				mes "See ya!";
+				mes "Catch you later!";
+				break;
+			}
+		}
+		close;
+
+	case 2:
+		mes "[Archer Joe]";
+		mes "What a shame...";
+		mes "How have you not";
+		mes "heard of the Payon Archers?";
+		next;
+		mes "[Archer Joe]";
+		mes "Well, when you ";
+		mes "learn more about us,";
+		mes "let's talk again and I can tell you why the Payon Archers are";
+		mes "so great!";
+		break;
+	case 3:
+		mes "[Archer Joe]";
+		mes "Why are";
+		mes "you so quiet?";
+		mes "You're not shy, are you?";
+		mes "Come on, there's no reason";
+		mes "to be bashful around me~";
+		break;
+	}
+	close;
+}

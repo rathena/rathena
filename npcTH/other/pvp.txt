@@ -1,0 +1,391 @@
+//===== rAthena Script ======================================= 
+//= PvP NPCs
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf, Elias (og2)
+//===== Current Version: =====================================
+//= 2.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= PvP NPCs that are found in the Inns in major cities.
+//= Includes Yoyo Mode, Nightmare Mode, and Event Mode.
+//===== Additional Comments: ================================= 
+//= 2.0 Narrators/GateKeepers,etc. Translated from the Official 2011 [Elias]
+//= 2.1 Changed PVP Narrator and GateKeeper to Floating NPC [Elias]
+//= 2.2 Some cleaning. [Euphy]
+//= 2.3 Fixed grammatical errors. [Joseph]
+//= 2.4 Fixed incorrect use of 'close' and some cleaning. [Joseph]
+//= 2.5 Renewal/Pre-Renewal split. [Euphy]
+//============================================================
+
+// Information
+//============================================================ 
+-	script	PVP Narrator::pvpe	-1,{
+	mes "[PVP Narrator]";
+	mes "สวัสดีและยินดีต้อนรับ!";
+	mes "ฉันรับผิดชอบในการอธิบายโหมด PVP";
+	mes "ฉันคือผู้บรรยาย PVP!";
+	next;
+	switch(select("PVP คืออะไร:โหมด PVP คืออะไร:กฎสำหรับ PVP คืออะไร:บันทึกตำแหน่ง:สิ้นสุดโต้ตอบ")) {
+	case 1:
+		mes "[PVP Narrator]";
+		mes "ในระยะสั้น PVP หมายถึง 'โหมด Player VS Player'";
+		mes "มันเป็นสถานที่พิเศษสำหรับผู้คนที่จะดวลกันเอง";
+		next;
+		mes "[PVP Narrator]";
+		mes "แค่บอก";
+		mes "^3355FFGate Keeper^000000";
+		mes "ที่คุณอยากลองเขาจะ";
+		mes "ให้คุณเข้าไปในช่อง PVP";
+		next;
+		mes "[PVP Narrator]";
+		mes "แต่คุณต้องอยู่ที่";
+		mes "น้อยที่สุด Level 31 และคุณ";
+		mes "ต้องจ่ายค่าเข้า 500 zeny ในการ";
+		mes "เพื่อเข้าสู่การต่อสู้ PVP";
+		break;
+	case 2:
+		mes "[PVP Narrator]";
+		mes "เมื่อคุณมีคุณสมบัติคุณสามารถเลือกโหมดใดโหมดหนึ่งจากสองโหมด";
+		mes "Yoyo Mode หรือ Nightmare Mode.";
+		next;
+		mes "[PVP Narrator]";
+		mes "Yoyo Mode ไร้ความเสี่ยง";
+		mes "คุณสามารถเล่น PVP ได้โดยไม่มีข้อ จำกัด หรือการลงโทษใดๆ";
+		mes "ขอแนะนำให้คุณฝึกฝนทักษะของคุณที่นี่ก่อนที่จะก้าวต่อไป";
+		next;
+		mes "[PVP Narrator]";
+		mes "Nightmare Mode อันตรายมาก!";
+		mes "โปรดระวังคุณจะสูญเสีย EXP บางส่วนของคุณเมื่อคุณพ่ายแพ้";
+		mes "และมีโอกาสเล็กน้อยที่คุณจะทำอุปกรณ์บางอย่างหล่น";
+		next;
+		mes "[PVP Narrator]";
+		mes "อย่างไรก็ตามถ้าคุณชนะรางวัลจะยิ่งใหญ่มาก!";
+		mes "เพื่อหลีกเลี่ยงความเข้าใจผิดคุณควรคิดให้ดีก่อนไปที่นั่น... ";
+		mes "ขอให้โชคดี!";
+		break;
+	case 3:
+		mes "[PVP Narrator]";
+		mes "แต่ละช่องต่อสู้จะมีผู้บรรยายหลายแถวและเลือกตามคุณสมบัติของคุณ";
+		next;
+		mes "[PVP Narrator]";
+		mes "ผู้บรรยายแต่ละคนจะถามว่าคุณต้องการไปแผนที่ PVP ใดจากห้าแผนที่";
+		mes "เลือกแล้วเข้าไปเลย!";
+		next;
+		mes "[PVP Narrator]";
+		mes "แต่ละแผนที่มีข้อ จำกัด เกี่ยวกับจำนวนคนที่สามารถเข้าร่วมได้";
+		mes "คุณจะเห็นตัวเลขที่มุมแสดง";
+		mes "'ผู้เข้าร่วม / รวม'.";
+		next;
+		mes "[PVP Narrator]";
+		mes "นอกจากนี้ยังมีค่า EXP ซ่อนอยู่ในโหมด PVP";
+		mes "คะแนน EXP นี้จะใช้เฉพาะในโซน PVP เท่านั้นไม่ต้องกังวล";
+		next;
+		mes "[PVP Narrator]";
+		mes "ค่า EXP ของผู้เล่นทุกคนในตอนเริ่มต้นมักจะมี 5 แต้ม";
+		mes "ถ้าคุณชนะมันจะเพิ่มขึ้น 1 แต้ม";
+		next;
+		mes "[PVP Narrator]";
+		mes "ในทำนองเดียวกันเมื่อคุณแพ้... ";
+		mes "EXP ของคุณจะลดลง 5 แต้ม";
+		mes "ระวัง!";
+		next;
+		mes "[PVP Narrator]";
+		mes "เมื่อคุณพ่ายแพ้";
+		mes "และ EXP ของคุณเท่ากับหรือน้อยกว่า 0";
+		mes "คุณจะถูกลบออกจาก PVP และการต่อสู้ของคุณเสร็จสิ้นแล้ว!";
+		next;
+		mes "[PVP Narrator]";
+		mes "อย่างไรก็ตามหาก EXP ของคุณมากกว่า 0";
+		mes "คุณยังสามารถขอความช่วยเหลือได้จากการรักษาผู้เล่นคนอื่น ...";
+		mes "เข้าใจไหม";
+		next;
+		mes "[PVP Narrator]";
+		mes "คำสั่งการต่อสู้ใน PVP จะเหมือนกับคำสั่งปกติ";
+		mes "การควบคุมพื้นฐานเหมือนกันหมด";
+		next;
+		mes "[PVP Narrator]";
+		mes "อย่างไรก็ตามมีสิ่งหนึ่ง ... ";
+		mes "ในพื้นที่ต่อสู้ PVP และโซนต่อสู้ PVP คุณไม่สามารถบันทึกตำแหน่งของคุณได้";
+		mes "จำไว้ให้ดี... ";
+		mes "กฎเหล่านี้สามารถช่วยให้คุณได้รับชัยชนะ";
+		break;
+	case 4:
+		mes "[PVP Narrator]";
+		mes "บันทึกตำแหน่งเรียบร้อยแล้ว... ";
+		mes "ขอบคุณมาก!";
+		mes "แล้วพบกันใหม่เร็วๆ นี้";
+		if(strnpcinfo(4) == "morocc_in") { savepoint "morocc_in",141,139,1,1; }
+		if(strnpcinfo(4) == "alberta_in") { savepoint "alberta_in",22,148,1,1; }
+		if(strnpcinfo(4) == "prt_in") { savepoint "prt_in",54,137,1,1; }
+		if(strnpcinfo(4) == "geffen_in") { savepoint "geffen_in",70,59,1,1; }
+		if(strnpcinfo(4) == "payon_in01") { savepoint "payon_in01",142,46,1,1; }
+		break;
+	case 5:
+		mes "[PVP Narrator]";
+		mes "ด้วยสงครามที่ดุเดือดระหว่างสัตว์ประหลาดและมนุษย์การแข่งขันระหว่างผู้คน - PVP - กระตุ้นให้เราทุกคนแข็งแกร่งขึ้น";
+		mes "มาอีกแล้วเรายินดีรับความท้าทายของคุณ!";
+		break;
+	}
+	close;
+}
+morocc_in,144,138,4	duplicate(pvpe)	PVP Narrator#pe1	84
+alberta_in,22,146,4	duplicate(pvpe)	PVP Narrator#pe2	84
+prt_in,56,140,4	duplicate(pvpe)	PVP Narrator#pe3	84
+geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe4	84
+payon_in01,142,50,4	duplicate(pvpe)	PVP Narrator#pe5	84
+geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe6	84
+
+// Mode Select
+//============================================================ 
+-	script	Gate Keeper::gkut	-1,{
+	mes "[Gate Keeper]";
+	mes "ยินดีให้บริการครับ";
+	mes "ฉันจะเปิดตารางต่อสู้ PVP ให้คุณ! หากคุณมีคำถามใด ๆ เกี่ยวกับโหมดหรือกฎ PVP โปรดถามผู้บรรยาย ... ";
+	next;
+	switch(select("^FF5533' PvP Nightmare Mode'^000000:^3355FF' PvP Yoyo Mode'^000000:^3355FF' PvP Event Mode'^000000:ออก")) {
+		case 1:
+			mes "[Gate Keeper]";
+			mes "ฉันขอโทษ แต่ขณะนี้บริการโหมด Nightmare ไม่สามารถใช้งานได้";
+			mes "กรุณาใช้ Yoyo Mode แทนขออภัยในความไม่สะดวก";
+			break;
+		case 2:
+			mes "[Gate Keeper]";
+			mes "ค่าเข้าชม 500 Zeny";
+			mes "คุณต้องการย้ายไปที่ต่อสู้ Yoyo Mode หรือไม่";
+			next;
+			switch(select("ย้าน:ยกเลิก")) {
+			case 1:
+				if ((Zeny > 499) && (BaseLevel > 30)) {
+					set Zeny, Zeny - 500;
+					callsub L_Warp,"pvp_y_room";
+				}
+				else {
+					mes "[Gate Keeper]";
+					mes "ขอโทษนะ แต่คุณไม่ได้เตรียมตัวมา?";
+					mes "ตรวจสอบอีกครั้งว่าคุณมีค่าธรรมเนียมแรกเข้า 500 Zeny และคุณอยู่ในระดับ Level 31 เป็นอย่างน้อย!";
+				}
+				close;
+			case 2:
+				mes "[Gate Keeper]";
+				mes "ด้วยสงครามที่ดุเดือดระหว่างสัตว์ประหลาดและมนุษย์การแข่งขันระหว่างผู้คน - PVP - กระตุ้นให้เราทุกคนแข็งแกร่งขึ้น";
+				mes "มาอีกแล้วเรายินดีรับความท้าทายของคุณ!";
+				close;
+			}
+		case 3:
+			mes "[Gate Keeper]";
+			mes "ยินดีต้อนรับ!";
+			mes "โปรดตรวจสอบอีกครั้งว่าคุณมีบัตรเข้าชมหรือตั๋วเข้าชม";
+			next;
+			if ((countitem(7028) == 0) && (countitem(7029) == 0)) {
+				mes "[Gate Keeper]";
+				mes "เอ๊ะไม่มีเหรอ?";
+				mes "ถ้าอย่างนั้นฉันขอโทษนะจัตุรัสต่อสู้นี้มีไว้สำหรับผู้ที่มีบัตรเข้าชมหรือดูตั๋วเท่านั้น";
+				mes "ถ้าขาดมันไม่ได้";
+				close;
+			}
+			mes "[Gate Keeper]";
+			mes "ใช่ขอบคุณที่เข้าร่วมสนุก!";
+			if (Zeny >= 500) set Zeny, Zeny - 500;
+			callsub L_Warp,"pvp_room";
+			break;
+		case 4:
+			mes "[Gate Keeper]";
+			mes "ด้วยสงครามที่ดุเดือดระหว่างสัตว์ประหลาดและมนุษย์การแข่งขันระหว่างผู้คน - PVP - กระตุ้นให้เราทุกคนแข็งแกร่งขึ้น";
+			mes "มาอีกแล้วเรายินดีรับความท้าทายของคุณ!";
+			break;
+	}
+	close;
+
+L_Warp:
+	set .@map$,getarg(0);
+	if (checkre(0)) {
+		switch(rand(1,10)) {
+			case 1: warp .@map$,34,38; break;
+			case 2: warp .@map$,46,38; break;
+			case 3: warp .@map$,58,38; break;
+			case 4: warp .@map$,70,38; break;
+			case 5: warp .@map$,82,38; break;
+			case 6: warp .@map$,82,58; break;
+			case 7: warp .@map$,65,58; break;
+			case 8: warp .@map$,49,58; break;
+			case 9: warp .@map$,33,58; break;
+			case 10: warp .@map$,52,24; break;
+		}
+	} else
+		warp .@map$,51,23;
+	return;
+}
+morocc_in,144,142,4	duplicate(gkut)	Gate Keeper#gke1	83
+alberta_in,26,146,4	duplicate(gkut)	Gate Keeper#gke2	83
+prt_in,52,140,4	duplicate(gkut)	Gate Keeper#gke3	83
+geffen_in,63,63,4	duplicate(gkut)	Gate Keeper#gke4	83
+payon_in01,140,53,4	duplicate(gkut)	Gate Keeper#gke5	83
+
+// PVP Warper Function
+//============================================================ 
+// Note: The warper NPCs are in the pre-re/re paths.
+
+//callfunc "F_PVP_FSRS"{,<min_lvl>,<max_lvl>};
+function	script	F_PVP_FSRS	{
+	if (getargcount()) {
+		setarray .@lvl[0], getarg(0), getarg(1);
+		if (BaseLevel < .@lvl[0] || BaseLevel > .@lvl[1]) {
+			mes "[PVP Fight Square Reception Staff]";
+			mes "ขออภัย base level ของคุณต้องอยู่ระหว่าง LV "+ .@lvl[0] +" และ LV "+ .@lvl[1] +".";
+			close;
+		}
+	}
+	if (strnpcinfo(4) == "pvp_y_room") {
+		set .@base$, "pvp_y_"+strnpcinfo(2);
+		setarray .@Maps$[0],	.@base$+"-1",	.@base$+"-2",	.@base$+"-3",	.@base$+"-4",	.@base$+"-5";
+		setarray .@Name$[0],	"Prontera",		"Izlude",		"Payon",		"Alberta",		"Morocc";
+		setarray .@Limit[0],	128,			128,			128,			128,			128;
+	} else {
+		setarray .@Maps$[0],	"pvp_n_8-1",	"pvp_n_8-2",	"pvp_n_8-3",	"pvp_n_8-4",	"pvp_n_8-5";
+		setarray .@Name$[0],	"Sandwich",		"Lock on",		"Four Room",	"Under cross",	"Compass Room";
+		setarray .@Limit[0],	64,				32,				32,				32,				32;
+	}
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		set .@menu$, .@menu$+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]:";
+	set .@menu$, .@menu$+"ยกเลิก";
+	set .@i, select(.@menu$)-1;
+	if (.@i == 5) close;
+	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
+		mes "[PVP Fight Square Reception Staff]";
+		mes "แผนที่นี้เต็มแล้ว";
+		close;
+	}
+	warp .@Maps$[.@i],0,0;
+	end;
+}
+
+
+
+// Event Contestant Entrance
+//============================================================ 
+pvp_room,54,85,4	script	Registration Staff#1	105,{
+	if (countitem(7028) == 0) {
+		mes "[PVP Combat Square Register Staff]";
+		mes "เอ๊ะคุณเข้ามาได้ยังไง";
+		mes "นี่คือทางเข้าสำหรับผู้เล่นเท่านั้น";
+		mes "สำหรับรายละเอียดเกี่ยวกับผู้ชมโปรดไปที่ Register Staff ทางด้านขวาของคุณ";
+		close;
+	}
+	set .@size, getarraysize(.warp_x);
+	if (.@size == 0) {
+		setarray .warp_x,40,59,20,40;
+		setarray .warp_y,59,40,40,20;
+	}
+	if (select("Combat Square one:ยกเลิก") == 1) {
+		mes "[PVP Combat Square Register Staff]";
+		mes "'"+ strcharinfo(0) +"'";
+		mes "พร้อมรึยัง!";
+		next;
+		if (select("พร้อม!:ไม่!") == 1) {
+			mes "[PVP Combat Square Register Staff]";
+			mes "ตกลงฉันจะส่งคุณเข้าไปข้างใน";
+			mes "ขอให้โชคดี!";
+			close2;
+			delitem 7028,1; //Invite_For_Duel
+			set .@rand, rand(.@size);
+			warp "pvp_2vs2", .warp_x[.@rand], .warp_y[.@rand];
+			deletearray .warp_x[.@rand],1;
+			deletearray .warp_y[.@rand],1;
+			end;
+		}
+		mes "[PVP Combat Square Register Staff]";
+		mes "กลับมาได้ทุกเมื่อที่พร้อม";
+		close;
+	}
+	close;
+
+OnInit:
+	waitingroom "ทางเข้าของผู้เล่น Combat Square เท่านั้น",0;
+	end;
+}
+
+// Spectator Entrance
+//============================================================ 
+-	script	Spectator's Entrance#dum::PVPSpectator	-1,{
+	if (countitem(7029) == 0) {
+		mes "[PVP Compete Square Register Staff]";
+		mes "นี่คือทางเข้าสำหรับผู้ชม";
+		mes "สำหรับรายละเอียดเกี่ยวกับทางเข้าของผู้เล่นโปรดไปที่ Register Staff ทางด้านซ้ายของคุณ";
+		close;
+	}
+	if (select("Compete Square one:ยกเลิก") == 1) {
+		mes "[PVP Combat Square Register Staff]";
+		mes "เข้าใจแล้วขอบคุณที่เข้าร่วมสนุก!";
+		close2;
+		delitem 7029,1; //Admission_For_Duel
+		switch(rand(1,4)) {
+			case 1: warp "pvp_2vs2",39,7; end;
+			case 2: warp "pvp_2vs2",39,73; end;
+			case 3: warp "pvp_2vs2",7,39; end;
+			case 4: warp "pvp_2vs2",73,39; end;
+		}
+	}
+	close;
+
+OnInit:
+	waitingroom "แข่งขันทางเข้าของผู้ชม Square",0;
+	end;
+}
+pvp_room,62,85,4	duplicate(PVPSpectator)	Spectator's Entrance#1	105
+pvp_room,70,85,4	duplicate(PVPSpectator)	Spectator's Entrance#2	105
+pvp_room,78,85,4	duplicate(PVPSpectator)	Spectator's Entrance#3	105
+pvp_room,86,85,4	duplicate(PVPSpectator)	Spectator's Entrance#4	105
+
+// Spectator Warps
+//============================================================ 
+-	script	Combat Square Staff#dum::PVPSpecWarp	-1,{
+OnTouch_:
+	mes "[Combat Square Staff]";
+	mes "ให้ฉันช่วยไหม";
+	if (select("ไปที่ที่นั่งตรงกลางของผู้ชม:ออกจาก Combat Square") == 1) {
+		warp "pvp_2vs2",38,38;
+		end;
+	}
+	warp "pvp_room",84,39;
+	end;
+}
+pvp_2vs2,5,4,0	duplicate(PVPSpecWarp)	Combat Square Staff#1	45,1,1
+pvp_2vs2,5,74,0	duplicate(PVPSpecWarp)	Combat Square Staff#2	45,1,1
+pvp_2vs2,74,74,0	duplicate(PVPSpecWarp)	Combat Square Staff#3	45,1,1
+pvp_2vs2,74,5,0	duplicate(PVPSpecWarp)	Combat Square Staff#4	45,1,1
+
+pvp_2vs2,40,40,0	script	Combat Square Staff#5	45,1,1,{
+	mes "[Combat Square Staff]";
+	mes "ให้ฉันช่วยไหม";
+	switch(select("ไปที่ที่นั่งตรงกลางของผู้ชม:ออกจาก Combat Square")) {
+	case 1:
+		switch(rand(1,4)) {
+			case 1: warp "pvp_2vs2",39,7; end;
+			case 2: warp "pvp_2vs2",39,73; end;
+			case 3: warp "pvp_2vs2",7,39; end;
+			case 4: warp "pvp_2vs2",73,39; end;
+		}
+	case 2:
+		warp "pvp_c_room",84,39;
+		end;
+	}
+}
+
+// PVP Area Exit warp
+//============================================================ 
+pvp_room,51,19,0	script	out#eventpvp	45,4,2,{
+OnTouch_:
+	mes "[Combat Square Staff]";
+	mes "คุณสนุกไหมใน Combat Square";
+	mes "ขอถามว่าอยากไปไหน";
+	next;
+	switch(select("Prontera.:Morocc.:Geffen.:Payon.:Alberta.:ยกเลิก")) {
+		case 1: warp "prontera",107,60; end;
+		case 2: warp "morocc",157,96; end;
+		case 3: warp "geffen",120,36; end;
+		case 4: warp "payon",96,100; end;
+		case 5: warp "alberta",41,243; end;
+		case 6: close;
+	}
+}

@@ -1,0 +1,153 @@
+//===== rAthena Script ======================================= 
+//= Alchemist Shop
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.8
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Merchants for Alchemist Materials and Manuals.
+//===== Additional Comments: ================================= 
+//= 1.1 fixed Medicine Bowl issue, thanx 2 MasterOfMuppets
+//= 1.2 Reddozen's fixes of typos. added optional Elemental
+//=     Potion Guide. [Lupus]
+//= 1.3 Deleted Elemental Potions Guide due to original quest [Lupus]
+//= 1.4 Alchemists can now purchase 2000 Medicine Bowls at once. [SinSloth]
+//= 1.5 Updated to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.6 Corrected canceling purchase. [L0ne_W0lf]
+//= 1.7 Updated to match AEGIS script. [Masao]
+//= 1.8 Moved Craft Book Merchant to Renewal path. [Euphy]
+//============================================================ 
+
+alde_alche,24,188,3	script	Guild Dealer	740,{
+	if (checkweight(1201,1) == 0) {
+		mes "- เดี๋ยวก่อน! -";
+		mes "- ขณะนี้คุณกำลังถือ -";
+		mes "- มีของกับคุณมากเกินไป -";
+		mes "- โปรดกลับมาอีกครั้ง -";
+		mes "- หลังจากที่คุณเก็บสิ่งของบางอย่างลงในที่เก็บของ kafra แล้ว -";
+		close;
+	}
+	mes "[Gever Al Sharp]";
+	mes "ยินดีต้อนรับสู่ Alchemist Union";
+	mes "วันนี้มีอะไรให้ช่วยไหม";
+	next;
+	switch(select("ซื้อวัสดุ:ซื้อคู่มือการผลิต:ออก")) {
+	case 1:
+		mes "[Gever Al Sharp]";
+		mes "อยากได้อะไร";
+		next;
+		if (select("Medicine Bowl - 8 Zeny:ยกเลิก.") == 1) {
+			mes "[Gever Al Sharp]";
+			mes "อยากได้กี่อัน";
+			mes "ป้อน '0' หากคุณต้องการออก";
+			next;
+			while(1) {
+				input .@input,0,2001;
+				if (.@input == 0) {
+					mes "[Gever Al Sharp]";
+					mes "ข้อตกลงถูกยกเลิก";
+					mes "คราวหน้าค่อยมาใหม่นะ";
+					close;
+				}
+				else if (.@input < 1 || .@input > 2000) {
+					mes "[Gever Al Sharp]";
+					mes "จำนวนต้องน้อยกว่า 2000";
+					next;
+				}
+				else {
+					break;
+				}
+			}
+			set .@sell,.@input * 8;
+			set .@item_weight,.@input * 10;
+			if (Zeny < .@sell) {
+				mes "[Gever Al Sharp]";
+				mes "คุณมี zeny ไม่พอ";
+				mes "ตรวจสอบว่าคุณมี zeny เท่าไหร่ก่อน";
+				close;
+			}
+			if ((MaxWeight - Weight) < .@item_weight) {
+				mes "[Gever Al Sharp]";
+				mes "ดูเหมือนว่าคุณจะแบกทุกอย่างไม่ได้เลย";
+				mes "กรุณาตรวจสอบพื้นที่ในคลังของคุณ";
+				close;
+			}
+			set Zeny, Zeny-.@sell;
+			getitem 7134,.@input; //Medicine_Bowl
+			mes "[Gever Al Sharp]";
+			mes "ขอบคุณ";
+			mes "มาอีกแล้ว";
+			close;
+		}
+		mes "[Gever Al Sharp]";
+		mes "ถ้าอย่างนั้นกลับมาอีกครั้งเมื่อคุณต้องการซื้อวัสดุที่เกี่ยวข้องกับการเล่นแร่แปรธาตุเอาล่ะ?";
+		close;
+	case 2:
+		mes "[Gever Al Sharp]";
+		mes "คุณต้องการอะไร";
+		mes "คู่มือโดยทั่วไปจะมีราคา 100,000 zeny แต่มีคู่มือพิเศษสองสามอย่างที่จะมีค่าใช้จ่ายมากกว่า";
+		next;
+		switch(select("Potion Creation Guide:Alcohol Creation Guide:Bottle Grenade Creation Guide:Acid Bottle Creation Guide:Plant Bottle Creation Guide:Marine Sphere Bottle Creation Guide:Glistening Coat Creation Guide:Condensed Potion Creation Guide:ยกเลิก")) {
+		case 1:
+			callsub S_SellManual,7144,100000; //Normal_Potion_Book
+			break;
+		case 2:
+			callsub S_SellManual,7127,100000; //Alcol_Create_Book
+			break;
+		case 3:
+			callsub S_SellManual,7128,100000; //FireBottle_Create_Book
+			break;
+		case 4:
+			callsub S_SellManual,7129,100000; //Acid_Create_Book
+			break;
+		case 5:
+			callsub S_SellManual,7130,100000; //Plant_Create_Book
+			break;
+		case 6:
+			callsub S_SellManual,7131,100000; //Mine_Create_Book
+			break;
+		case 7:
+			callsub S_SellManual,7132,100000; //Coating_Create_Book
+			break;
+		case 8:
+			callsub S_SellManual,7133,240000; //Slim_Potion_Create_Book
+			break;
+		case 9:
+			mes "[Gever Al Sharp]";
+			mes "ถ้าอย่างนั้น...";
+			mes "กลับมาถ้าคุณจำเป็นต้องซื้อคู่มือการผลิต";
+			close;
+		}
+	case 3:
+		mes "[Gever Al Sharp]";
+		mes "เอาล่ะขอให้เป็นวันที่ดี";
+		close;
+	}
+
+S_SellManual:
+	.@item_id = getarg(0);
+	.@zeny_req = getarg(1);
+
+	if (Zeny < .@zeny_req) {
+		mes "[Gever Al Sharp]";
+		mes "คุณมี zeny ไม่พอ";
+		mes "ตรวจสอบว่าคุณมี zeny เท่าไหร่ก่อน";
+		close;
+	}
+	mes "[Gever Al Sharp]";
+	mes getitemname(.@item_id) +"?";
+	mes "นั่นจะเป็น "+ .@zeny_req +" zeny.";
+	next;
+	if (select("ซื้อ.:ออก.") == 1) {
+		Zeny = Zeny - .@zeny_req;
+		getitem .@item_id,1;
+		mes "[Gever Al Sharp]";
+		mes "ขอบคุณที่อุดหนุนครับ";
+		close;
+	}
+	mes "[Gever Al Sharp]";
+	mes "คราวหน้าค่อยมาใหม่นะ";
+	close;
+}

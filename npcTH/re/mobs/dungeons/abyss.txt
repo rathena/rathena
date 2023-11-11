@@ -1,0 +1,51 @@
+//===== rAthena Script =======================================
+//= Abyss Lake Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Real spawns by Poki#3 [Nexon]
+//= 1.1 More official spawns [Playtester]
+//= 1.2 Official X.3 spawns [Playtester]
+//= 1.3 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// abyss_01 - Abyss Lake Underground Cave
+//==================================================
+abyss_01,0,0	monster	Ferus	1717,55,5000
+abyss_01,0,0	monster	Penomena	1216,30,5000
+abyss_01,0,0	monster	Ferus	1714,30,5000
+abyss_01,0,0	monster	Mimic	1191,10,5000
+abyss_01,0,0	monster	Ancient Mimic	1699,10,5000
+abyss_01,0,0	monster	Novus	1715,9,5000
+abyss_01,0,0	monster	Novus	1718,9,5000
+abyss_01,0,0	monster	Dragon Egg	1721,8,5000
+
+//==================================================
+// abyss_02 - Abyss Lake Underground Cave
+//==================================================
+abyss_02,0,0	monster	Acidus	1716,60,5000
+abyss_02,0,0	monster	Ferus	1714,50,5000
+abyss_02,0,0	monster	Dragon Egg	1721,10,5000
+abyss_02,0,0	monster	Mimic	1191,10,5000
+abyss_02,0,0	monster	Acidus	1713,10,5000
+abyss_02,0,0	monster	Ancient Mimic	1699,10,5000
+abyss_02,0,0	monster	Novus	1715,5,5000
+abyss_02,0,0	monster	Novus	1718,5,5000
+
+//==================================================
+// abyss_03 - Abyss Lake Underground Cave
+//==================================================
+abyss_03,0,0	monster	Acidus	1713,60,5000
+abyss_03,0,0	monster	Dragon Egg	1721,10,5000
+abyss_03,0,0	monster	Mimic	1191,10,5000
+abyss_03,0,0	monster	Acidus	1716,10,5000
+abyss_03,0,0	monster	Ancient Mimic	1699,10,5000
+abyss_03,0,0	monster	Ferus	1714,10,5000
+abyss_03,0,0	monster	Ferus	1717,10,5000
+abyss_03,0,0	monster	Hydrolancer	1720,3,5000
+abyss_03,0,0,0,0	boss_monster	Detardeurus	1719,1,10800000,600000,0

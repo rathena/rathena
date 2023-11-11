@@ -1,0 +1,25 @@
+//===== rAthena Script =======================================
+//= Scaraba Hole Warp Script
+//===== By: ==================================================
+//= Chilly, Muad_Dib
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Scaraba Hole
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Updated to match official script. [Joseph]
+//============================================================
+
+dic_dun01,87,212,0	warp	scarabahole0001	1,1,dic_dun01,169,227
+dic_dun01,165,227,0	warp	scarabahole0002	1,1,dic_dun01,83,212
+dic_dun01,371,228,0	warp	scarabahole0003	1,1,dic_dun01,32,156
+dic_dun01,28,156,0	warp	scarabahole0004	1,1,dic_dun01,367,228
+dic_dun01,371,172,0	warp	scarabahole0005	1,1,dic_dun01,32,100
+dic_dun01,28,100,0	warp	scarabahole0006	1,1,dic_dun01,367,172
+dic_dun02,102,148,0	warp	scarabahole0007	1,1,dic_dun01,290,99
+dic_dun01,371,100,0	warp	scarabahole0008	1,1,dic_dun01,33,43
+dic_dun01,29,43,0	warp	scarabahole0009	1,1,dic_dun01,367,100
+dic_dun03,101,148,0	warp	scarabahole0010	1,1,dic_dun01,286,102

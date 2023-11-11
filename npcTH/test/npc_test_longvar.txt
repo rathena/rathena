@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Sample: Character variable lengths Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20171125
+//===== Description: ========================================= 
+//= An validation test about long character variable stored on char-serv
+//= from https://github.com/rathena/rathena/issues/2425
+//============================================================
+
+prontera,155,176,3	script	Pront Test	77,{
+	mes "Testing to store long variable on char-serv";
+//test1 long value
+	test$ = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345";
+//test2 normal length
+	test2$ = "anything really, doesn't matter at this point";
+//test3 long key (41)
+        thisisareallylongkeyImeanReallyReallyLong$ = "gotcha";
+//test4 long key 2 (with int)
+	ReallyReallyReallyReallyReallyReallyLong = 42;
+	end;
+}

@@ -1,0 +1,93 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,53,58,3	script	Stalker#Valkyrie	747,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[Stalker]";
+			mes "Congratulations.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		mes "[Stalker]";
+		mes "Heh...";
+		mes "It's tough";
+		mes "being a hero";
+		mes "and being shady,";
+		mes "untrustworthy,";
+		mes "sneaky...";
+		next;
+		mes "[Stalker]";
+		mes "But when the";
+		mes "going gets rough";
+		mes "my pals know they";
+		mes "can count on me.";
+		mes "I need them and";
+		mes "they need me.";
+		close;
+	}
+	else if (ADVJOB == Job_Stalker && Class == Job_Thief_High && JobLevel > 39) {
+		mes "[Stalker]";
+		mes "This world needs";
+		mes "more heroes who are";
+		mes "willing to walk the line";
+		mes "between order and lawlessness.";
+		next;
+		mes "[Stalker]";
+		mes "Are you ready";
+		mes "to join the ranks";
+		mes "of the sneakiest of";
+		mes "warriors? Are you ready";
+		mes "to become a Stalker?";
+		next;
+		if (select("No.:Yes.") == 1) {
+			mes "[Stalker]";
+			mes "When you're ready,";
+			mes "feel free to come back.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[Stalker]";
+			mes "It is still possible for you to learn more skills. Please use";
+			mes "all of your remaining Skill Points before returning to me.";
+			close;
+		}
+		jobchange Job_Stalker;
+		set ADVJOB,0;
+		mes "[Stalker]";
+		mes "Congratulations!";
+		mes "As a Stalker, I hope";
+		mes "you stab the right people";
+		mes "in the back. Banish the";
+		mes "wicked using their own";
+		mes "dastardly methods!";
+		close;
+	}
+	mes "[Stalker]";
+	mes "Welcome";
+	mes "to Valhalla,";
+	mes "the Hall of Honor.";
+	next;
+	mes "[Stalker]";
+	mes "Please make";
+	mes "yourself comfortable";
+	mes "while you are here.";
+	mes "Honor to the warriors!";
+	close;
+}

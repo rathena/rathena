@@ -1,0 +1,96 @@
+//===== rAthena Script =======================================
+//= Novice's Guild Castles War of Emperium Usher NPC
+//===== By: ==================================================
+//= Lupus
+//===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 4+
+//===== Description: =========================================
+//=
+//===== Additional Comments: =================================
+//= Now you have access to 4 N Guild castles. They don't have
+//= dungeons. And 2nd Classes can't seize these Castles.
+//= These new castles need a new strategy. It would bring some
+//= fun and live to your game.
+//= NOTE: If your Guild Master is 2nd class, then he could 
+//=       rule the Castles and gather Treasure Boxes after WoE
+//= 1.1 Now 2nd classes can't enter NC place at all
+//= 1.2 Restricted access of SG/SL. On warp clear some 
+//=     unallowed buffs [Lupus]
+//= 1.3 Restricted TK,High classes >=90 BaseLevel,
+//=     updated list of unallowed buffs [Lupus]
+//= 1.4 Restricted it to 80 Base Level [Lupus]
+//= 1.5 According to official info: 1 Treasure Chest per Castle
+//= 1.6 Only 1st Class < 60 BaseLevel Players can participate
+//= 1.7 Guilds with Emergency Call or with 9+ skill points
+//=     can't take part in NWoE. [Lupus]
+//= TODO: The official entrance is in Izlude.
+//============================================================
+
+prontera,146,163,6	script	Novice Castles	729,{
+	mes "[Cita]";
+	if (!getcharid(2)) {
+		mes "^FF0000You have to enter a guild to be able to hit Emperium!^000000";
+	} else if (getgdskilllv(getcharid(2),10013) || 
+	         (getgdskilllv(getcharid(2),10000) +
+	          getgdskilllv(getcharid(2),10001) +
+	          getgdskilllv(getcharid(2),10002) +
+	          getgdskilllv(getcharid(2),10003) +
+	          getgdskilllv(getcharid(2),10004) +
+	          getgdskilllv(getcharid(2),10005) +
+	          getgdskilllv(getcharid(2),10006) +
+	          getgdskilllv(getcharid(2),10007) +
+	          getgdskilllv(getcharid(2),10008) +
+	          getgdskilllv(getcharid(2),10009) +
+	          getgdskilllv(getcharid(2),10010) +
+	          getgdskilllv(getcharid(2),10011) +
+	          getgdskilllv(getcharid(2),10012) +
+	          getgdskilllv(getcharid(2),10013) +
+	          getgdskilllv(getcharid(2),10014) > 9)
+	          ) {
+		mes "I see... your guild has Emergency Call mastered.";
+		mes "You cannot enter the Novice Castle area.";
+		emotion ET_SCRATCH;
+		emotion ET_KEK, playerattached();
+	} else {
+		mes "I'm a new usher of Novice Castles.";
+		next;
+		mes "[Cita]";
+		if ((eaclass()&(EAJL_2|EAJL_UPPER)) || BaseLevel>=60) {
+			mes "I'm sorry, you can't enter the sacred Novice Castles place.";
+			emotion ET_SORRY;
+		} else if (select("Warp me to Novice Castles","Cancel") == 1) {
+			// remove several unallowed buffs
+			sc_end SC_ASSUMPTIO;
+			sc_end SC_IMPOSITIO;
+			sc_end SC_SUFFRAGIUM;
+			sc_end SC_MAGNIFICAT;
+			sc_end SC_WEAPONPERFECTION;
+			sc_end SC_GOSPEL;
+			sc_end SC_BASILICA;
+			sc_end SC_MAGICPOWER;
+			sc_end SC_MARIONETTE;
+			sc_end SC_MARIONETTE2;
+			sc_end SC_DEVOTION;
+			sc_end SC_SACRIFICE;
+			sc_end SC_MAXOVERTHRUST;
+			sc_end SC_SPIRIT;
+			warp "n_castle",102,93+rand(14);
+		}
+	}
+	close;
+}
+
+n_castle,102,107,5	script	Cita	729,{
+	mes "[Cita]";
+	mes "Hello, "+ strcharinfo(0) +". Can I help you?";
+	next;
+	if (select("Warp me to Prontera!","Cancel") == 1) {
+		warp "prontera",155,177+rand(5);
+	} else {
+		mes "[Cita]";
+		mes "Ok.";
+	}
+	close;
+}

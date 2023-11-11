@@ -1,0 +1,831 @@
+//===== rAthena Script =======================================
+//= Splendide Town
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Town-specific NPCs for Splendide.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Added more town NPCs
+//= 1.2 Added more town NPCs
+//============================================================
+
+// cat_enhance
+splendide,218,193,3	script	Fairy#ep13_1	441,{
+	if (isequipped(2782) == 1) {
+		mes "[Exhausted Fairy]";
+		mes "Wait, don't come any closer. I can't stand your smell, it makes me feel dizzy.";
+		close;
+	}
+	else {
+		mes "[Exhausted Fairy]";
+		mes "OdesKoUor Ko NuffSharUden Ko CyaVenah An NudNuffser An KoRivehAdor Mu LarseorAnu O DorNe";
+		close;
+	}
+}
+
+splendide,180,223,3	script	Fairy#ep13_2	440,{
+	if (isequipped(2782) == 1) {
+		mes "[Kalua]";
+		mes "You don't look sophisticated, but I think you are better than those uncivilized guys who are around the snowfield.";
+		close;
+	}
+	else {
+		mes "[Kalua]";
+		mes "AlahCyamah U MeKoser Ir TimaurRiveh Di LarsRasTi Di AgolKones Or AlahUdenAndu Ee FusRe";
+		close;
+	}
+}
+
+splendide,125,227,3	script	Fairy#ep13_3	444,{
+	if (isequipped(2782) == 1) {
+		mes "[Flowa]";
+		mes "No offense, I was not looking at you with sympathy.";
+		mes "I just wondered how you could walk with that heavy body...";
+		close;
+	}
+	else {
+		mes "[Flowa]";
+		mes "AnuFuloUor Ko CyaWosnes Ha WosAnuAsh O WosDuAno O ";
+		mes "FuloAndueo Ie WosGothLars Ee Tinarmaur Or AlahnahVa Or narAnuFulo So KoCya";
+		close;
+	}
+}
+
+// ep13_2_hiki
+splendide,159,164,3	script	Fairy#13_2_1	461,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "It is shame that I have to";
+		mes "cope with those fat beasts.";
+		mes "I am just too delicate to fight with them.";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "RiniHirDieb Ie nahImanMe Di Mush";
+		mes "mahnarAsh So HirAnMod O Ras";
+		mes "neaLoDath Ha KoRivehWha So Thusnea";
+		close;
+	}
+}
+
+splendide,229,54,3	script	Fairy#13_2_2	439,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Huh? You are a human.";
+		mes "You are better than those fat Saphas, but still you are not a beautiful thing also.";
+		next;
+		mes "[Fairy]";
+		mes "How did you find this wonderful place?";
+		mes "This is a sophisticated place.";
+		mes "I don't think you can be here with us.";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "ImanAnuUor Yee NeUorVer Ir RivehAshOsa";
+		mes "AdorserHir er OsaAlahAno Mu RivehDath";
+		next;
+		mes "[Fairy]";
+		mes "LarsFuloSar Yu VilGotheor Yu nes";
+		mes "Anuneseor Ie remuSeDieb er ";
+		mes "WosLoNud Ko NuffDuIman Ir ";
+		close;
+	}
+}
+
+splendide,89,235,5	script	Fairy#13_2_3	446,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Lalalalal~Lala~Lalala~";
+		mes "Let's sing a song~!";
+		mes "My voice is so fantastic!";
+		next;
+		mes "[Fairy]";
+		mes "Don't even think about getting close to me!";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "WehVeldHir Or ThusNorAnu";
+		mes "ReImanWos Yu marFuloNor Yee ";
+		mes "SharneaVrum Ir Ruff";
+		next;
+		mes "[Fairy]";
+		mes "BurKoWeh Ie nesThusLu Ee ";
+		close;
+	}
+}
+
+splendide,245,243,3	script	Fairy#13_2_4	462,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "This land was such a waste land.";
+		mes "It was extremely cold and";
+		mes "nothing could live here.";
+		mes "but, once we inhabited this place, it has been changing day by day.";
+		next;
+		mes "[Fairy]";
+		mes "Now, all the problems are gone.";
+		mes "Except those ugly fat Saphas.";
+		mes "How can we be rid of those things?";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "DiebVohlWeh Ko RasVeldFar Ie AshVohl";
+		mes "neaAmanIman Ie DorDuMe No Hireo";
+		mes "tassermaur Yee DorAdorNud Ee ";
+		mes "NohThorVe O FusImanAman";
+		next;
+		mes "[Fairy]";
+		mes "OsaVeldWeh U GothIyazVer Or ";
+		mes "LarsAnDor Yee TurVeldVil";
+		mes "LarsDanaFus An DiebImanmar er Dim";
+		mes "tasLoRini Ir WehAndu";
+		close;
+	}
+}
+
+splendide,230,142,3	script	Fairy#13_2_5	439,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Ah-Ha, I am so stunning.";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "AgolWhaNe O LoRini";
+		close;
+	}
+}
+
+splendide,274,203,3	script	Fairy#13_2_6	444,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Hey, you~! Human! How did you find us?";
+		mes "What does your human world look like?";
+		mes "Is it fun to be there?";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "AnnarNor So marFarAno Di NudThusNei Ir Ir ";
+		mes "narVaTi Mu SharDimmaur Or Ano";
+		mes "WhaModKo Or eoNeiNor Di ImanDunah O O ";
+		close;
+	}
+}
+
+splendide,275,141,3	script	Fairy#13_2_7	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Don't talk to me. What do you want?";
+		mes "I know you will blame something on me right?";
+		next;
+		mes "[Fairy]";
+		mes "I don't want to listen to other people...";
+		mes "I am perfect as I am!";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "narnahNoh Di WehRiniLars Yee ModAnu";
+		mes "LuAlahNe Or FarAnduOsa No AgolKo";
+		next;
+		mes "[Fairy]";
+		mes "LarsVilDim No WhaVilFus Ha Ash";
+		mes "ReLarsShar Mu AnduLoLon Ie Nufftas";
+		close;
+	}
+}
+
+splendide,224,230,3	script	Fairy#13_2_8	440,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Listen carefully and learn more!";
+		mes "Let's sing and dance!";
+		mes "You can be part of us!";
+		mes "Shake your hips!";
+		mes "Wow~Woo~Wow~";
+		mes "Dance~!";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "NuffMushLars Ra WehVilnah Ra DielWeh";
+		mes "RivehnarWos Ra YurSharRe";
+		mes "TalVaThor O VerWhatas";
+		mes "FuloDimIyaz Mu WhaNoreo U ";
+		mes "AlahNeLo Ra UorOsa";
+		mes "SeAnduMush Ur ";
+		close;
+	}
+}
+
+splendide,223,36,3	script	Fairy#13_2_9	462,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "I don't want to touch them at all.";
+		mes "But they are ruining my Yggdrasilberries.";
+		mes "I can't stand it anymore!";
+		next;
+		mes "[Fairy]";
+		mes "Fighting is not my thing...";
+		mes "But for our glory, I will fight!";
+		mes "They should feel honored to be battling with us!";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "AshAmanNei Ir LonVeldremu O ";
+		mes "AnduSarHir No NudAnumaur Ha Veld";
+		mes "Semarmah U VeTingDieb Yu ";
+		mes "mahsertas Ra marAmanAdor Ir ";
+		next;
+		mes "[Fairy]";
+		mes "TingAgolLu So MushAndumah U neseor";
+		mes "WhaDuFulo er ImanThusNe Di Tur";
+		mes "DathUornah Ir MemaurDeh Yu Fulo";
+		mes "CyaMeDor Ko VeLarsAgol";
+		close;
+	}
+}
+
+splendide,305,129,3	script	Fairy#13_2_10	436,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Hu...feel sleepy.";
+		mes "I am so bored. I have nothing to do.";
+		mes "Even my friends are fighting with those giants, but it is not really my job to help them.";
+		next;
+		mes "[Fairy]";
+		mes "I better check my make-up";
+		mes "in the dressing room.";
+		mes "Or should I get more beauty sleep?";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "AnduNothUor O eomaurShar Mu AnduVeld";
+		mes "AdorFulotas Ko NorAlahAsh Ie Ala";
+		mes "KoOsaLon Ha AnuNeiNoh Di Ting";
+		mes "tasKoDiel O IyazGoth";
+		next;
+		mes "[Fairy]";
+		mes "OdesmahHir Or mahneaLars So ";
+		mes "HirNudAman O AdorWosDu";
+		mes "DimYurVa So DanaRuYur";
+		close;
+	}
+}
+
+splendide,142,315,3	script	Fairy#13_2_11	462,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Flying in the sky is not easy.";
+		mes "But it is better than a walk on the ground.";
+		next;
+		mes "[Fairy]";
+		mes "Are you a human? Poor thing...";
+		mes "You can't have these beautiful wings?";
+		mes "Pathetic lives.";
+		mes "It is obvious that we are the only ones who are blessed.";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "WharemuLars Ur SharUdenWha Yu Agol";
+		mes "LontasSar Ra DathVeAlah Ee Noh";
+		mes "LarsLonnah Ko TalnesIman Ie Diel";
+		next;
+		mes "[Fairy]";
+		mes "tasSarNuff Or WehFarDieb Ir FarRu";
+		mes "FusYurnah So MeAshnar O Noth";
+		mes "YurBurDu Yu VeldVaMush So Thor";
+		mes "AgolDiebUor No TurnahAla O ";
+		close;
+	}
+}
+
+splendide,181,107,5	script	Fairy#13_2_12	462,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Fairy]";
+		mes "Neatness, tidiness and cleanness!";
+		mes "Those are the words.";
+		mes "that can describe us!";
+		mes "Others are so dirty and messy!";
+		close;
+	}
+	else {
+		mes "[Fairy]";
+		mes "FusYurnah So M ";
+		mes "WehFarDieb Ir FarRu ";
+		mes "FusYurnah ";
+		mes "AgolDiebUor No Tur";
+		close;
+	}
+}
+
+// ep13_2_tre
+splendide,188,76,5	script	Splendide Soldier#tre1	461,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Splendide Soldier]";
+		mes "This is Splendide, the garrison base of the Laphine.";
+		close;
+	}
+	else {
+		mes "[Splendide Soldier]";
+		mes "SeAshLu Di YurDiebTing Ee VeModTur No NuffLarsVa No ";
+		close;
+	}
+}
+
+splendide,201,76,3	script	Splendide Soldier#tre2	461,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Splendide Soldier]";
+		mes "This is Splendide, the garrison base of the Laphine.";
+		close;
+	}
+	else {
+		mes "[Splendide Soldier]";
+		mes "SeAshLu Di YurDiebTing Ee VeModTur No NuffLarsVa No ";
+		close;
+	}
+}
+
+splendide,207,97,5	script	Middle-Ranked Laphine#1	443,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Middle-Ranked Laphine]";
+		mes "Haap-!";
+		mes "See? Same as a streetlight, right?";
+		specialeffect EF_LEVEL99_4;
+		close;
+	}
+	else {
+		mes "[Middle-Ranked Laphine]";
+		mes "sehrVa";
+		mes "IyazAnman Di TurHirCya";
+		specialeffect EF_LEVEL99_4;
+		close;
+	}
+}
+
+splendide,210,95,3	script	Middle-Ranked Laphine#2	442,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Middle-Ranked Laphine]";
+		mes "Wow~ Great!!";
+		emotion ET_BEST;
+		close;
+	}
+	else {
+		mes "[Middle-Ranked Laphine]";
+		mes "MushIyazTur Ee YurDana";
+		emotion ET_BEST;
+		close;
+	}
+}
+
+spl_in01,190,314,5	script	Security Officer#tre	461,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Security Officer]";
+		mes "This is the underground prison of Splendide.";
+		mes "Those who are guilty and prisoners are detained here.";
+		next;
+		mes "[Security Officer]";
+		mes "If you do something suspicious, you must be detained here too, so you'd better to be careful!";
+		close;
+	}
+	else {
+		mes "[Security Officer]";
+		mes "GothremuAman Ha DimDielNuff";
+		mes "GothAnAsh er NohVaAgol Yee CyaOsaDor U Aman U ";
+		mes "TurOdesVrum Ir TalDathOsa Ie WosAgolVrum Ha neaNudHir Ha SeAnVil Di narAlahLars Yu";
+		close;
+	}
+}
+
+spl_in01,281,329,3	script	Splendide Guard#tre	447,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Splendide Guard]";
+		mes "If you make too much noise, the prisoners will cause trouble. So try to keep quiet at all times.";
+		close;
+	}
+	else {
+		mes "[Splendide Guard]";
+		mes "AnduVeldRe Ko VeldReFulo So LomaurDu So	So ";
+		close;
+	}
+}
+
+spl_in01,287,306,3	script	#spl_prs	111,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Manuk Prisoner]";
+		mes "My, my body...!!";
+		mes "Injection! Please!! Help me!";
+		close;
+	}
+	else {
+		mes "[Manuk Prisoner]";
+		mes "Gi ha sd I das ";
+		mes "Yda sod ja si dsa";
+		close;
+	}
+}
+
+spl_in01,265,315,0	script	#spl_prs1	-1,5,5,{
+OnTouch:
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Voice from another side]";
+		mes "Sir, Please!!!";
+		mes "How can I communicate secretly with Manuk!!";
+		mes "I'm innocent. Please.";
+		close;
+	}
+	else {
+		mes "[Voice from another side]";
+		mes "RuffUdeneo Mu VilAsh";
+		mes "YurReDur Ha DielTalNe Ko Lars";
+		mes "HirVerWeh Yu AnuNud";
+		close;
+	}
+}
+
+// ep13_spl_extra
+spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
+	cutin "god_nelluad02",2;
+	mes "[Poet Nell]";
+	mes "Hi~~ do you hear the beautiful music coming from afar~?";
+	next;
+	select("Who are you?");
+	cutin "god_nelluad01",2;
+	mes "[Poet Nell]";
+	mes "Who, me...?";
+	mes "I am just a poet enjoying the ambience...";
+	next;
+	mes "[Poet Nell]";
+	mes "I cam here the other day, requesting to take notes of this new world and they allow me to follow the adventurers here.";
+	next;
+	mes "[Poet Nell]";
+	mes "I became familiar with the Lapine.";
+	mes "It was quite awkward at first... Since I didn't knew their language.";
+	mes "But, one I started to play my instruments... they loved it.";
+	next;
+	mes "[Poet Nell]";
+	mes "They're fairies that know how to enjoy their lives..";
+	mes "How happy they are...";
+	mes "They are quite curious... I am honored to have met them...";
+	next;
+	mes "[Poet Nell]";
+	mes "So do you want to listen to my playing?";
+	next;
+	switch(select("Sure.:Not really.")) {
+	case 1:
+		mes "[Poet Nell]";
+		mes "What song do you want??";
+		next;
+		switch(select("Poet of Bragie:Chaos in Eternity:Sunset Assassin:Ring of Nibelungen")) {
+		case 1:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Poet of Bragie!";
+			mes "You must have a keen ear.";
+			soundeffect "bragis_poem.wav",0;
+			break;
+		case 2:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Chaos in Eternity...";
+			mes "This is a great piece but I wouldn't recommend it while dining...";
+			soundeffect "chaos_of_eternity.wav",0;
+			break;
+		case 3:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Sunset Assassin!";
+			mes "Do you like Assassins?";
+			mes "This song tells of a legendary Assassin Cross that lived in the desert.";
+			soundeffect "assassin_of_sunset.wav",0;
+			break;
+		case 4:
+			cutin "god_nelluad02",2;
+			mes "[Poet Nell]";
+			mes "Ring of Nibelungen...";
+			mes "This song has quite an interesting story~";
+			next;
+			soundeffect "ring_of_nibelungen.wav",0;
+			mes "^4d4dff There was a river named Rhein that";
+			mes "that would shine as if made of gold.";
+			mes "It's secret hidden from all since";
+			mes "before this story was told...^000000";
+			next;
+			mes "^4d4dff Valhalla was born from the goddess Freya.";
+			mes "The envious Rocky destroyed the goddess of beauty.^000000";
+			mes "^4d4dff Out of it's depths was born a ring made of fire.";
+			mes "A ring so strong it held the god's desires~^000000";
+			next;
+			mes "^4d4dff Alberich's treasure now holds that power.";
+			mes "The power of the ring that held all the god's desires.^000000";
+			next;
+			mes "^4d4dff The treasure was used to buy the world's soul.";
+			mes "A soul purchased with the weight of gold.^000000";
+			next;
+			mes "^4d4dff Rocky afraid of losing control. transforms poor Alberich to the shape of a toad.";
+			next;
+			mes "^4d4dff Alberich swears with the last of his breath, that his treasured ring will curse it's wearer till death.";
+			next;
+			mes "^4d4dff Forever will the bearer be, cursed with Rocky's jealousy.";
+			break;
+		}
+		break;
+	case 2:
+		cutin "god_nelluad03",2;
+		mes "[Poet Nell]";
+		mes "Why not?";
+		mes "Why would you stare at me like that if you didn't want to listen to my playing";
+		next;
+		select("You look like someone I know.");
+		cutin "god_nelluad04",2;
+		mes "[Poet Nell]";
+		mes "Eh?";
+		mes "No way!";
+		mes "Maybe you're confused..!";
+		next;
+		mes "[Poet Nell]";
+		mes "Yes, I look quite common...";
+		mes "But I doubt we've ever met before.";
+		next;
+		cutin "god_nelluad01",255;
+		mes "- Nell seems embarrassed, then starts playing very complicated music -";
+		break;
+	}
+	close2;
+	cutin "god_nelluad01",255;
+	end;
+}
+
+spl_in01,182,213,1	script	Resting Laphine#ep13_1	438,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Resting Laphine]";
+		mes "The poet on the stage is mysterious.";
+		mes "The moment you came here...";
+		mes "He arrived and started playing music.";
+		next;
+		mes "[Resting Laphine]";
+		mes "This is music from your country yes?";
+		mes "I think it sounds great.";
+		close;
+	}
+	else {
+		mes "[Resting Laphine]";
+		mes "IyazLarsSe Or An.";
+		mes "marLoOsa Yee NeiBur";
+		mes "Rinisehrnea Mu...? ";
+		close;
+	}
+}
+
+spl_in01,181,218,5	script	Resting Laphine#ep13_2	446,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "- He is nodding his head to the sound of the music -";
+		next;
+		mes "[Resting Laphine]";
+		mes "Do you know how to play a similar sound?";
+		mes "This tone is unbelievable.";
+		close;
+	}
+	else {
+		mes "- He is nodding his head to the sound of the music -";
+		next;
+		mes "[Resting Laphine]";
+		mes "GothTingNoth Di~ nar..";
+		mes "DiebIyazNud Yu FarAn";
+		mes "nesFarDor U ~";
+		close;
+	}
+}
+
+spl_in01,161,213,7	script	Dining Laphine#ep13	447,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Dining Laphine]";
+		mes "I got bored eating home cooked food.";
+		mes "The only thing that keeps me coming here is fruit soup...";
+		next;
+		mes "[Dining Laphine]";
+		mes "Hey you!";
+		mes "Why are you staring at me eating dinner?";
+		close;
+	}
+	else {
+		mes "[Dining Laphine]";
+		mes "NothFarLu Ra...? ";
+		mes "RuffYur..!";
+		next;
+		mes "- He is giving me a odd stare as he eats his dinner -";
+		close;
+	}
+}
+
+spl_in01,162,202,5	script	Laphine taking notes#1	436,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine taking notes]";
+		mes "We are quite impressed by the poet.";
+		mes "We Laphine love music as well.";
+		mes "I never imagined that I would ever hear such exotic music.";
+		next;
+		mes "[Laphine taking notes]";
+		mes "I want to study music someday.";
+		mes "I plan to write much about the study of instruments and music";
+		next;
+		mes "[Laphine taking notes]";
+		mes "Someday you should listen to mu people's music.";
+		close;
+	}
+	else {
+		mes "[Laphine taking notes]";
+		mes "TiTalLars Ur tasThorNoth O AnImanWha.";
+		mes "FusLuRuff..... Mu TingLuAla Yee AnmanAndu";
+		next;
+		mes "- He seems frustrated that you don't understand him -";
+		close;
+	}
+}
+
+spl_in01,167,207,7	script	Silent Laphine#ep13	445,{
+	mes "- He is almost sleeping but he is still managing to hold a cup with a drink in it. He must be really tired-";
+	close;
+}
+
+spl_in01,180,201,3	script	Laphine Soldier#ep13_1	461,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Soldier]";
+		mes "You are a stranger here, aren't you?";
+		mes "I am watching him to prevent anything bad from happening.";
+		next;
+		mes "[Laphine Soldier]";
+		mes "Definitely you are involved.";
+		mes "The upper side people allow you to pass here...";
+		mes "But nobody knows what's going to happen in this battlefield.";
+		next;
+		mes "[Laphine Soldier]";
+		mes "Anyway, what's that instrument over there?";
+		mes "We have a similar one...";
+		mes "But it sounds totally different.";
+		close;
+	}
+	else {
+		mes "[Laphine Soldier]";
+		mes "FusVohlAnu Ur Lon.";
+		mes "LoUdenFar Ha Dormaur?";
+		mes "...marAmanYur Mu.";
+		next;
+		mes "-The Laphine Soldier wants to tell you something, but just stops talking as you give him a blank stare -";
+		close;
+	}
+}
+
+spl_in01,189,207,3	script	Laphine Staff#ep13_1	439,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Staff]";
+		mes "Hm, what's up?";
+		mes "I'm sorry, but we don't sell food to strangers.";
+		next;
+		mes "[Laphine Staff]";
+		mes "You guys also need to be careful of food here.";
+		mes "Food is scarce here.";
+		next;
+		mes "[Laphine Staff]";
+		mes "You're going to have to find food somewhere else.";
+		close;
+	}
+	else {
+		mes "[Laphine Staff]";
+		mes "VeldAnoWeh Or ";
+		mes "TurWos";
+		mes "......ah...";
+		next;
+		mes "- You just grin and smile. It's frustrating not to be able to understand their language. -";
+		close;
+	}
+}
+
+spl_in01,154,207,5	script	Laphine Staff#ep13_2	440,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Staff]";
+		mes "his camp serves a military purpose. But we also have a need for bars.";
+		next;
+		mes "[Laphine Staff]";
+		mes "How else can a soldier release stress if not through drinking...";
+		next;
+		mes "[Laphine Staff]";
+		mes "We are here to support the laphine soldier by giving good drinks and entertainment.";
+		close;
+	}
+	else {
+		mes "[Laphine Staff]";
+		mes "NorVerNuff Ee Re!";
+		mes "remuDurOdes Mu AshFus~!";
+		mes "OdesTalWeh Ur??? ";
+		close;
+	}
+}
+
+spl_in01,122,314,5	script	High-Ranked Soldier#ep13	461,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[High-Ranked Soldier]";
+		mes "Are there any new supplies?";
+		next;
+		mes "[Laphine Soldier]";
+		mes "This sword just arrived...";
+		mes "This is inspired by stars, and we tested it by cutting the thread floating over the water.";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "Hmm, we rarely used swords. But it looks great as a decoration.";
+		next;
+		mes "- Seems their busy talking about weapons -";
+		close;
+	}
+	else {
+		mes "[High-Ranked Soldier]";
+		mes "NorVerNuff Ee Re....";
+		next;
+		mes "[Laphine Soldier]";
+		mes "FusVerAlah Di ";
+		mes "ModNorNor U DimVohlWeh O DimAmannea An WosAnoNoh An AnduMeOdes So TalAdor.";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "DurNohHir Ha UorVaThus Di AshNuffLon U mahNuffThus U RuAmanAgol Ir NohHir...?";
+		close;
+	}
+}
+
+spl_in01,122,311,1	script	Laphine Soldier#ep13_2	447,{
+	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
+		mes "[Laphine Soldier]";
+		mes "Are you a stranger?";
+		mes "Have you come here to see the Laphine's military storage?";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "Nevermind. These are useless to them...";
+		mes "How can this delicate sword be used by those brutes...?";
+		next;
+		mes "[Laphine Soldier]";
+		mes "O";
+		close;
+	}
+	else {
+		mes "[High-Ranked Soldier]";
+		mes "NorVerNuff Ee Re....";
+		next;
+		mes "[Laphine Soldier]";
+		mes "FusVerAlah Di ";
+		mes "ModNorNor U DimVohlWeh O DimAmannea An WosAnoNoh An AnduMeOdes So TalAdor.";
+		next;
+		mes "[High-Ranked Soldier]";
+		mes "DurNohHir Ha UorVaThus Di AshNuffLon U mahNuffThus U RuAmanAgol Ir NohHir...?";
+		close;
+	}
+}
+
+// ep33_2_dailybs
+splendide,121,259,3	script	Fairy#ep13bs1	436,{
+	if (isequipped(2782) == 1) {
+		mes "[Fairy]";
+		mes "Have you ever gone to the East side?";
+		mes "Theres lots of ice~";
+		mes "How cold...";
+		close;
+	}
+	else {
+		mes "[nes]";
+		mes "VaFuloDor An ";
+		mes "WosNuffremu Ha TurAshTi";
+		mes "VilTiRini O ";
+		close;
+	}
+}
+
+splendide,163,264,3	script	Fairy#ep13bs2	438,{
+	if (isequipped(2782) == 1) {
+		mes "[Fairy]";
+		mes "What are you looking at!";
+		next;
+		mes "[Fairy]";
+		mes "Oh me! You know beauty when you see it don't you~?!";
+		close;
+	}
+	else {
+		mes "[nes]";
+		mes "UorVeLars No Ador";
+		next;
+		mes "[nes]";
+		mes "SeGothShar An AshDur";
+		close;
+	}
+}

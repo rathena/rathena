@@ -1,0 +1,68 @@
+//===== rAthena Script =======================================
+//= Daily Job Quest For Elven Ears
+//===== By: ==================================================
+//= someone
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Elven Ears (require 75+ Base Level)
+//===== Additional Comments: =================================
+//= Optimized [Lupus], 1.1 misc fix
+//= 1.2 Fixed exploit [Lupus]
+//============================================================
+
+geffen,127,49,5	script	Elven Ears Quest	84,{
+	mes "[Elven Ears Quest]"; 
+	mes "Hi, today's quest is...."; 
+	mes "Ah, the ^61B031Elven Ears ^000000Quest!"; 
+	next; 
+	menu "Requirements",L_Bl, "Make Item",-,"Cancel",L_Cancel;
+
+	mes "[Elven Ears quest]";
+	mes "Good good, let me just check"; 
+	next;
+	if(countitem(2213)<1 || countitem(1040)<20 || countitem(919)<20) goto L_NoMake; 
+	delitem 2213,1;
+	delitem 1040,20;
+	delitem 919,20;
+	mes "[Elven Ears quest]";
+	mes "Give me a second.....";
+	next;
+	getitem 2286,1;
+	mes "[Elven Ears Quest]";
+	mes "Ok done!";
+	close;
+
+L_NoMake:
+	mes "[Elven Ears Quest]";
+	mes "You don't have the requirements.";
+	mes "Please come back another time...";
+	close;
+
+L_Bl: 
+	mes "[Elven Ears Quest]";
+	mes "Ok all you have to do is collect:"; 
+	mes "^362ED61 Kitty Band^000000"; 
+	mes "^362ED620 Elder Pixie Mustaches^000000"; 
+	mes "and ^362ED620 Animal Skin^000000";
+	next;
+	menu "Accept",-, "Leave",L_Leave;
+
+	mes "[Elven Ears Quest]";
+	mes "When you are done, bring the items to me.  Ok good luck finding those items.";
+	close;
+
+L_Leave:
+	mes "[Elven Ears quest]";
+	mes "Maybe another time?";
+	close;
+
+L_Cancel:
+	mes "[Elven Ears quest]";
+	mes "Aw, what a shame";
+	mes "Giving up already?";
+	mes "Oh well maybe you will participate in tomorrow's quest.";
+	close;
+}

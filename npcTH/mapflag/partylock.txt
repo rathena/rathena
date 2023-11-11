@@ -1,0 +1,38 @@
+//===== rAthena Script =======================================
+//= Mapflag: Party lock.
+//===== Description: ========================================= 
+//= Blocks all party modifications on a map:
+//=   /organize, /leave, /invite, @changeleader
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//= 1.1 Updated. [L0ne_W0lf]
+//= 1.2 Renewal split. [Euphy]
+//============================================================
+
+//============================================================
+// Sealed Shrine
+//============================================================
+1@cata	mapflag	partylock
+2@cata	mapflag	partylock
+
+//============================================================
+// Endless Tower
+//============================================================
+1@tower	mapflag	partylock
+2@tower	mapflag	partylock
+3@tower	mapflag	partylock
+4@tower	mapflag	partylock
+5@tower	mapflag	partylock
+6@tower	mapflag	partylock
+
+//============================================================
+// Orc's Memory
+//============================================================
+1@orcs	mapflag	partylock
+2@orcs	mapflag	partylock
+
+//============================================================
+// Nidhoggr's Instance
+//============================================================
+1@nyd	mapflag	partylock
+2@nyd	mapflag	partylock

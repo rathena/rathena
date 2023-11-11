@@ -1,0 +1,21 @@
+//===== rAthena Script =======================================
+//= Amatsu Field Warp's
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Warp Points for Amatsu Field
+//===== Additional Comments: =================================
+//= 1.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+amatsu,248,292,0	warp	ama_fild1-1	1,1,ama_fild01,75,33
+ama_fild01,75,30,0	warp	ama_fild1-2	1,1,amatsu,248,289
+ama_fild01,174,331,0	warp	ama_shrine1-1	1,1,ama_in01,175,174
+ama_in01,175,171,0	warp	ama_shrine1.2	1,1,ama_fild01,174,328
+ama_fild01,330,141,0	warp	ama_craftsman1-1	1,1,ama_in01,174,124
+ama_in01,174,121,0	warp	ama_craftsman1.2	1,1,ama_fild01,330,138

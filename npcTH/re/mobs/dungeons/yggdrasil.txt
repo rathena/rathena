@@ -1,0 +1,35 @@
+//===== rAthena Script =======================================
+//= Yggdrasil Tree Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Splitted from Niflheim fields [DracoRPG]
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// yggdrasil01 - Hvergelmir's Fountain (Trunk of Yggdrasil)
+//==================================================
+yggdrasil01,234,256,10,10	monster	Blue Plant	1079,5,1800000,600000
+yggdrasil01,273,234,3,3	monster	Shining Plant	1083,1,1800000,600000
+yggdrasil01,143,257,20,10	monster	Shining Plant	1083,5,1200000,600000
+yggdrasil01,98,238,20,15	monster	Yellow Plant	1081,5,1200000,600000
+yggdrasil01,98,238,20,15	monster	White Plant	1082,5,1200000,600000
+yggdrasil01,47,207,20,20	monster	Blue Plant	1079,5,1200000,600000
+yggdrasil01,61,258,3,3	monster	Shining Plant	1083,1,1800000,600000
+yggdrasil01,132,199,20,5	monster	Blue Plant	1079,5,1200000,600000
+yggdrasil01,209,218,2,2	monster	Shining Plant	1083,1,1200000,600000
+yggdrasil01,192,186,2,2	monster	Shining Plant	1083,1,1800000,1200000
+yggdrasil01,169,176,3,3	monster	Shining Plant	1083,1,1200000,600000
+yggdrasil01,169,176,3,3	monster	Green Plant	1080,1,60000,30000
+yggdrasil01,94,111,5,2	monster	Shining Plant	1083,1,1200000,600000
+yggdrasil01,51,118,10,3	monster	Shining Plant	1083,1,1200000,600000
+yggdrasil01,133,54,3,3	monster	Shining Plant	1083,1,1200000,600000
+yggdrasil01,257,63,10,10	monster	Shining Plant	1083,3,1800000,1200000
+yggdrasil01,0,0	monster	Shining Plant	1083,10,3600000,2300000
+yggdrasil01,0,0	monster	Green Plant	1080,25,60000,30000
+yggdrasil01,0,0	monster	Red Plant	1078,15,60000,30000

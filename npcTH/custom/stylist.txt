@@ -1,0 +1,51 @@
+//===== rAthena Script =======================================
+//= Stylist
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Changes your hair style, hair color, and cloth color.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
+//============================================================
+
+prontera,170,180,1	script	Stylist#custom_stylist	122,{
+	setarray .@Styles[1],
+		getbattleflag("max_cloth_color"),
+		getbattleflag("max_hair_style"),
+		getbattleflag("max_hair_color");
+	setarray .@Look[1],
+		LOOK_CLOTHES_COLOR,
+		LOOK_HAIR,
+		LOOK_HAIR_COLOR;
+	set .@s, select(" ~ สีเสื้อ: ~ ทรงผม: ~ สีผม");
+	set .@Revert, getlook(.@Look[.@s]);
+	set .@Style,1;
+	while(1) {
+		setlook .@Look[.@s], .@Style;
+		message strcharinfo(0),"สไตล์ที่ #"+.@Style+".";
+		set .@menu$, " ~ ต่อไป (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ ก่อนหน้า (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ ข้ามไปที่...: ~ กลับสู่แบบเดิม (^0055FF"+.@Revert+"^000000)";
+		switch(select(.@menu$)) {
+		case 1:
+			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
+			break;
+		case 2:
+			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			break;
+		case 3:
+			message strcharinfo(0),"เลือกสไตล์ระหว่าง 1 - "+.@Styles[.@s]+".";
+			input .@Style,0,.@Styles[.@s];
+			if (!.@Style)
+				set .@Style, rand(1,.@Styles[.@s]);
+			break;
+		case 4:
+			set .@Style, .@Revert;
+			setlook .@Look[.@s], .@Revert;
+			break;
+		}
+	}
+}

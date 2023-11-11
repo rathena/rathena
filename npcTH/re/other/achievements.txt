@@ -1,0 +1,543 @@
+//===== rAthena Script =======================================
+//= Adventure Achievements
+//===== Description: =========================================
+//= Spawns Adventure group type treasure chests.
+//===== Changelogs: ==========================================
+//= 1.0 Initial release. [Aleos]
+//= 1.1 Corrected the position using official script. [Atemo]
+//============================================================
+
+// Triggers NPCs
+-	script	ach_treasure#touch	-1,{
+	end;
+OnTouch:
+	sscanf( strnpcinfo(0), "#wp%d", .@num );
+	if (.@num == 0)
+		end;
+	if (!achievementexists(.@num)) // Don't trigger if the player has already completed.
+		cloakoffnpcself( ("#tr" + .@num) );
+	end;
+}
+
+//-----------------
+// --- Dungeons ---
+//-----------------
+
+// Abbey Underground
+abbey03,27,72,4	duplicate(ach_treasure#touch)	#wp120110	HIDDEN_WARP_NPC,5,5
+
+// Abyss Lake
+abyss_03,86,55,4	duplicate(ach_treasure#touch)	#wp120111	HIDDEN_WARP_NPC,5,5
+
+// Amatsu Dungeon
+ama_dun03,60,163,4	duplicate(ach_treasure#touch)	#wp120113	HIDDEN_WARP_NPC,5,5
+
+// Ant Hell
+anthell02,253,41,4	duplicate(ach_treasure#touch)	#wp120114	HIDDEN_WARP_NPC,5,5
+
+// Ayothaya Dungeon
+ayo_dun02,150,256,4	duplicate(ach_treasure#touch)	#wp120115	HIDDEN_WARP_NPC,5,5
+
+// Bifrost
+ecl_tdun04,37,37,4	duplicate(ach_treasure#touch)	#wp120121	HIDDEN_WARP_NPC,5,5
+
+// Brasilis Dungeon
+bra_dun02,171,121,4	duplicate(ach_treasure#touch)	#wp120117	HIDDEN_WARP_NPC,5,5
+
+// Byalan Dungeon
+iz_dun05,64,223,4	duplicate(ach_treasure#touch)	#wp120141	HIDDEN_WARP_NPC,5,5
+
+// Clock Tower
+c_tower4,37,158,4	duplicate(ach_treasure#touch)	#wp120112	HIDDEN_WARP_NPC,5,5
+alde_dun04,90,107,4	duplicate(ach_treasure#touch)	#wp120118	HIDDEN_WARP_NPC,5,5
+
+// Coal Mine
+mjo_dun03,76,220,4	duplicate(ach_treasure#touch)	#wp120136	HIDDEN_WARP_NPC,5,5
+
+// Comodo Dungeon
+beach_dun3,102,71,4	duplicate(ach_treasure#touch)	#wp120116	HIDDEN_WARP_NPC,5,5
+
+// Einbech
+ein_dun02,31,255,4	duplicate(ach_treasure#touch)	#wp120122	HIDDEN_WARP_NPC,5,5
+
+// Geffen Dungeon
+gef_dun02,222,163,4	duplicate(ach_treasure#touch)	#wp120123	HIDDEN_WARP_NPC,5,5
+
+// Glastheim
+gl_cas02,53,151,4	duplicate(ach_treasure#touch)	#wp120124	HIDDEN_WARP_NPC,5,5
+gl_sew04,288,6,4	duplicate(ach_treasure#touch)	#wp120125	HIDDEN_WARP_NPC,5,5
+gl_knt02,126,235,4	duplicate(ach_treasure#touch)	#wp120126	HIDDEN_WARP_NPC,5,5
+gl_prison1,126,158,4	duplicate(ach_treasure#touch)	#wp120127	HIDDEN_WARP_NPC,5,5
+
+// Kunlun Dungeon
+gon_dun03,166,231,4	duplicate(ach_treasure#touch)	#wp120128	HIDDEN_WARP_NPC,5,5
+
+// Istana
+dew_dun02,87,272,4	duplicate(ach_treasure#touch)	#wp120119	HIDDEN_WARP_NPC,5,5
+
+// Labyrinth
+prt_maze03,11,14,4	duplicate(ach_treasure#touch)	#wp120140	HIDDEN_WARP_NPC,5,5
+
+// Luoyang Dungeon
+lou_dun03,29,228,4	duplicate(ach_treasure#touch)	#wp120134	HIDDEN_WARP_NPC,5,5
+
+// Nogg Road
+mag_dun02,197,77,4	duplicate(ach_treasure#touch)	#wp120135	HIDDEN_WARP_NPC,5,5
+
+// Orc Dungeon
+orcsdun02,31,72,4	duplicate(ach_treasure#touch)	#wp120138	HIDDEN_WARP_NPC,5,5
+
+// Payon Dungeon
+pay_dun04,120,124,4	duplicate(ach_treasure#touch)	#wp120139	HIDDEN_WARP_NPC,5,5
+
+// Prontera Culvert
+prt_sewb4,19,183,4	duplicate(ach_treasure#touch)	#wp120131	HIDDEN_WARP_NPC,5,5
+
+// Pyramid
+moc_pryd06,102,121,4	duplicate(ach_treasure#touch)	#wp120137	HIDDEN_WARP_NPC,5,5
+
+// Rachel Dungeon
+ice_dun03,45,261,4	duplicate(ach_treasure#touch)	#wp120129	HIDDEN_WARP_NPC,5,5
+
+// Robot Factory
+kh_dun02,70,107,4	duplicate(ach_treasure#touch)	#wp120132	HIDDEN_WARP_NPC,5,5
+
+// Scaraba Hall
+dic_dun03,216,211,4	duplicate(ach_treasure#touch)	#wp120120	HIDDEN_WARP_NPC,5,5
+
+// Somatology Lab
+lhz_dun03,240,221,4	duplicate(ach_treasure#touch)	#wp120133	HIDDEN_WARP_NPC,5,5
+
+// Sphinx
+in_sphinx5,154,107,4	duplicate(ach_treasure#touch)	#wp120130	HIDDEN_WARP_NPC,5,5
+
+// Sunken Ship
+treasure02,19,142,4	duplicate(ach_treasure#touch)	#wp120144	HIDDEN_WARP_NPC,5,5
+
+// Thanatos Tower
+tha_t06,150,176,4	duplicate(ach_treasure#touch)	#wp120142	HIDDEN_WARP_NPC,5,5
+
+// Thors Volcano
+thor_v03,220,221,4	duplicate(ach_treasure#touch)	#wp120143	HIDDEN_WARP_NPC,5,5
+
+// Toy Factory
+xmas_dun02,120,224,4	duplicate(ach_treasure#touch)	#wp120146	HIDDEN_WARP_NPC,5,5
+
+// Turtle Island Dungeon
+tur_dun04,134,130,4	duplicate(ach_treasure#touch)	#wp120145	HIDDEN_WARP_NPC,5,5
+
+//---------------
+// --- Fields ---
+//---------------
+
+// Comodo
+cmd_fild01,112,200,4	duplicate(ach_treasure#touch)	#wp120044	HIDDEN_WARP_NPC,5,5
+cmd_fild02,86,94,4	duplicate(ach_treasure#touch)	#wp120045	HIDDEN_WARP_NPC,5,5
+cmd_fild03,144,190,4	duplicate(ach_treasure#touch)	#wp120046	HIDDEN_WARP_NPC,5,5
+cmd_fild04,151,191,4	duplicate(ach_treasure#touch)	#wp120047	HIDDEN_WARP_NPC,5,5
+cmd_fild06,221,108,4	duplicate(ach_treasure#touch)	#wp120048	HIDDEN_WARP_NPC,5,5
+cmd_fild07,269,322,4	duplicate(ach_treasure#touch)	#wp120049	HIDDEN_WARP_NPC,5,5
+cmd_fild08,181,136,4	duplicate(ach_treasure#touch)	#wp120050	HIDDEN_WARP_NPC,5,5
+cmd_fild09,211,266,4	duplicate(ach_treasure#touch)	#wp120051	HIDDEN_WARP_NPC,5,5
+
+// Einbroch
+ein_fild01,266,277,4	duplicate(ach_treasure#touch)	#wp120067	HIDDEN_WARP_NPC,5,5
+ein_fild03,99,332,4	duplicate(ach_treasure#touch)	#wp120068	HIDDEN_WARP_NPC,5,5
+ein_fild04,334,305,4	duplicate(ach_treasure#touch)	#wp120069	HIDDEN_WARP_NPC,5,5
+ein_fild05,337,233,4	duplicate(ach_treasure#touch)	#wp120070	HIDDEN_WARP_NPC,5,5
+ein_fild06,174,245,4	duplicate(ach_treasure#touch)	#wp120071	HIDDEN_WARP_NPC,5,5
+ein_fild07,188,50,4	duplicate(ach_treasure#touch)	#wp120072	HIDDEN_WARP_NPC,5,5
+ein_fild08,258,78,4	duplicate(ach_treasure#touch)	#wp120073	HIDDEN_WARP_NPC,5,5
+ein_fild09,330,76,4	duplicate(ach_treasure#touch)	#wp120074	HIDDEN_WARP_NPC,5,5
+
+// Geffen
+gef_fild00,73,119,4	duplicate(ach_treasure#touch)	#wp120011	HIDDEN_WARP_NPC,5,5
+gef_fild01,222,224,4	duplicate(ach_treasure#touch)	#wp120012	HIDDEN_WARP_NPC,5,5
+gef_fild05,202,292,4	duplicate(ach_treasure#touch)	#wp120013	HIDDEN_WARP_NPC,5,5
+gef_fild06,279,105,4	duplicate(ach_treasure#touch)	#wp120014	HIDDEN_WARP_NPC,5,5
+gef_fild07,184,249,4	duplicate(ach_treasure#touch)	#wp120015	HIDDEN_WARP_NPC,5,5
+gef_fild09,170,73,4	duplicate(ach_treasure#touch)	#wp120016	HIDDEN_WARP_NPC,5,5
+gef_fild11,239,248,4	duplicate(ach_treasure#touch)	#wp120017	HIDDEN_WARP_NPC,5,5
+
+// Hugel
+hu_fild01,347,312,4	duplicate(ach_treasure#touch)	#wp120062	HIDDEN_WARP_NPC,5,5
+hu_fild02,80,152,4	duplicate(ach_treasure#touch)	#wp120063	HIDDEN_WARP_NPC,5,5
+hu_fild04,322,313,4	duplicate(ach_treasure#touch)	#wp120064	HIDDEN_WARP_NPC,5,5
+hu_fild06,204,228,4	duplicate(ach_treasure#touch)	#wp120065	HIDDEN_WARP_NPC,5,5
+hu_fild05,197,210,4	duplicate(ach_treasure#touch)	#wp120066	HIDDEN_WARP_NPC,5,5
+
+// Laphine
+ecl_fild01,234,217,4	duplicate(ach_treasure#touch)	#wp120090	HIDDEN_WARP_NPC,5,5
+bif_fild01,147,64,4	duplicate(ach_treasure#touch)	#wp120091	HIDDEN_WARP_NPC,5,5
+bif_fild02,155,322,4	duplicate(ach_treasure#touch)	#wp120092	HIDDEN_WARP_NPC,5,5
+spl_fild01,335,315,4	duplicate(ach_treasure#touch)	#wp120093	HIDDEN_WARP_NPC,5,5
+spl_fild02,153,358,4	duplicate(ach_treasure#touch)	#wp120094	HIDDEN_WARP_NPC,5,5
+spl_fild03,61,286,4	duplicate(ach_treasure#touch)	#wp120095	HIDDEN_WARP_NPC,5,5
+
+// Lighthalzen
+lhz_fild01,118,73,4	duplicate(ach_treasure#touch)	#wp120075	HIDDEN_WARP_NPC,5,5
+lhz_fild02,239,243,4	duplicate(ach_treasure#touch)	#wp120076	HIDDEN_WARP_NPC,5,5
+lhz_fild03,313,132,4	duplicate(ach_treasure#touch)	#wp120077	HIDDEN_WARP_NPC,5,5
+
+// Manuk
+man_fild01,41,172,4	duplicate(ach_treasure#touch)	#wp120096	HIDDEN_WARP_NPC,5,5
+man_fild02,268,355,4	duplicate(ach_treasure#touch)	#wp120097	HIDDEN_WARP_NPC,5,5
+man_fild03,198,91,4	duplicate(ach_treasure#touch)	#wp120098	HIDDEN_WARP_NPC,5,5
+dic_fild01,227,82,4	duplicate(ach_treasure#touch)	#wp120099	HIDDEN_WARP_NPC,5,5
+dic_fild02,147,196,4	duplicate(ach_treasure#touch)	#wp120100	HIDDEN_WARP_NPC,5,5
+
+// Misc
+ama_fild01,187,337,4	duplicate(ach_treasure#touch)	#wp120101	HIDDEN_WARP_NPC,5,5
+gon_fild01,171,332,4	duplicate(ach_treasure#touch)	#wp120102	HIDDEN_WARP_NPC,5,5
+lou_fild01,104,232,4	duplicate(ach_treasure#touch)	#wp120103	HIDDEN_WARP_NPC,5,5
+ayo_fild01,289,70,4	duplicate(ach_treasure#touch)	#wp120104	HIDDEN_WARP_NPC,5,5
+mosk_fild02,176,77,4	duplicate(ach_treasure#touch)	#wp120105	HIDDEN_WARP_NPC,5,5
+bra_fild01,99,193,4	duplicate(ach_treasure#touch)	#wp120106	HIDDEN_WARP_NPC,5,5
+dew_fild01,175,287,4	duplicate(ach_treasure#touch)	#wp120107	HIDDEN_WARP_NPC,5,5
+ma_fild01,308,206,4	duplicate(ach_treasure#touch)	#wp120108	HIDDEN_WARP_NPC,5,5
+ma_fild02,246,323,4	duplicate(ach_treasure#touch)	#wp120109	HIDDEN_WARP_NPC,5,5
+
+// Mjolnir
+mjolnir_01,47,60,4	duplicate(ach_treasure#touch)	#wp120032	HIDDEN_WARP_NPC,5,5
+mjolnir_02,77,49,4	duplicate(ach_treasure#touch)	#wp120033	HIDDEN_WARP_NPC,5,5
+mjolnir_03,190,200,4	duplicate(ach_treasure#touch)	#wp120034	HIDDEN_WARP_NPC,5,5
+mjolnir_04,201,146,4	duplicate(ach_treasure#touch)	#wp120035	HIDDEN_WARP_NPC,5,5
+mjolnir_05,43,327,4	duplicate(ach_treasure#touch)	#wp120036	HIDDEN_WARP_NPC,5,5
+mjolnir_06,162,290,4	duplicate(ach_treasure#touch)	#wp120037	HIDDEN_WARP_NPC,5,5
+mjolnir_07,321,127,4	duplicate(ach_treasure#touch)	#wp120038	HIDDEN_WARP_NPC,5,5
+mjolnir_08,175,225,4	duplicate(ach_treasure#touch)	#wp120039	HIDDEN_WARP_NPC,5,5
+mjolnir_09,299,123,4	duplicate(ach_treasure#touch)	#wp120040	HIDDEN_WARP_NPC,5,5
+mjolnir_10,353,371,4	duplicate(ach_treasure#touch)	#wp120041	HIDDEN_WARP_NPC,5,5
+mjolnir_11,325,178,4	duplicate(ach_treasure#touch)	#wp120042	HIDDEN_WARP_NPC,5,5
+mjolnir_12,110,298,4	duplicate(ach_treasure#touch)	#wp120043	HIDDEN_WARP_NPC,5,5
+
+// Morocc
+moc_fild11,188,218,4	duplicate(ach_treasure#touch)	#wp120018	HIDDEN_WARP_NPC,5,5
+moc_fild12,234,96,4	duplicate(ach_treasure#touch)	#wp120019	HIDDEN_WARP_NPC,5,5
+moc_fild13,290,207,4	duplicate(ach_treasure#touch)	#wp120020	HIDDEN_WARP_NPC,5,5
+moc_fild16,196,108,4	duplicate(ach_treasure#touch)	#wp120021	HIDDEN_WARP_NPC,5,5
+moc_fild17,269,105,4	duplicate(ach_treasure#touch)	#wp120022	HIDDEN_WARP_NPC,5,5
+moc_fild18,54,284,4	duplicate(ach_treasure#touch)	#wp120023	HIDDEN_WARP_NPC,5,5
+
+// Payon
+pay_fild01,167,243,4	duplicate(ach_treasure#touch)	#wp120024	HIDDEN_WARP_NPC,5,5
+pay_fild02,105,240,4	duplicate(ach_treasure#touch)	#wp120025	HIDDEN_WARP_NPC,5,5
+pay_fild03,144,97,4	duplicate(ach_treasure#touch)	#wp120026	HIDDEN_WARP_NPC,5,5
+pay_fild04,257,95,4	duplicate(ach_treasure#touch)	#wp120027	HIDDEN_WARP_NPC,5,5
+pay_fild07,365,37,4	duplicate(ach_treasure#touch)	#wp120028	HIDDEN_WARP_NPC,5,5
+pay_fild08,237,345,4	duplicate(ach_treasure#touch)	#wp120029	HIDDEN_WARP_NPC,5,5
+pay_fild09,251,42,4	duplicate(ach_treasure#touch)	#wp120030	HIDDEN_WARP_NPC,5,5
+pay_fild10,196,38,4	duplicate(ach_treasure#touch)	#wp120031	HIDDEN_WARP_NPC,5,5
+
+// Prontera
+prt_fild01,146,126,4	duplicate(ach_treasure#touch)	#wp120001	HIDDEN_WARP_NPC,5,5
+prt_fild02,142,221,4	duplicate(ach_treasure#touch)	#wp120002	HIDDEN_WARP_NPC,5,5
+prt_fild03,172,139,4	duplicate(ach_treasure#touch)	#wp120003	HIDDEN_WARP_NPC,5,5
+prt_fild04,118,57,4	duplicate(ach_treasure#touch)	#wp120004	HIDDEN_WARP_NPC,5,5
+prt_fild05,189,291,4	duplicate(ach_treasure#touch)	#wp120005	HIDDEN_WARP_NPC,5,5
+prt_fild06,298,304,4	duplicate(ach_treasure#touch)	#wp120006	HIDDEN_WARP_NPC,5,5
+prt_fild07,44,104,4	duplicate(ach_treasure#touch)	#wp120007	HIDDEN_WARP_NPC,5,5
+prt_fild08,203,222,4	duplicate(ach_treasure#touch)	#wp120008	HIDDEN_WARP_NPC,5,5
+prt_fild09,37,354,4	duplicate(ach_treasure#touch)	#wp120009	HIDDEN_WARP_NPC,5,5
+prt_fild10,177,206,4	duplicate(ach_treasure#touch)	#wp120010	HIDDEN_WARP_NPC,5,5
+
+// Rachel
+ra_fild01,138,166,4	duplicate(ach_treasure#touch)	#wp120078	HIDDEN_WARP_NPC,5,5
+ra_fild03,224,275,4	duplicate(ach_treasure#touch)	#wp120079	HIDDEN_WARP_NPC,5,5
+ra_fild08,326,45,4	duplicate(ach_treasure#touch)	#wp120080	HIDDEN_WARP_NPC,5,5
+ra_fild12,352,165,4	duplicate(ach_treasure#touch)	#wp120081	HIDDEN_WARP_NPC,5,5
+ra_fild04,92,302,4	duplicate(ach_treasure#touch)	#wp120082	HIDDEN_WARP_NPC,5,5
+ra_fild05,59,59,4	duplicate(ach_treasure#touch)	#wp120083	HIDDEN_WARP_NPC,5,5
+ra_fild06,362,230,4	duplicate(ach_treasure#touch)	#wp120084	HIDDEN_WARP_NPC,5,5
+
+// Veins
+ve_fild01,180,234,4	duplicate(ach_treasure#touch)	#wp120085	HIDDEN_WARP_NPC,5,5
+ve_fild02,65,194,4	duplicate(ach_treasure#touch)	#wp120086	HIDDEN_WARP_NPC,5,5
+ve_fild03,197,242,4	duplicate(ach_treasure#touch)	#wp120087	HIDDEN_WARP_NPC,5,5
+ve_fild04,288,279,4	duplicate(ach_treasure#touch)	#wp120088	HIDDEN_WARP_NPC,5,5
+ve_fild07,33,113,4	duplicate(ach_treasure#touch)	#wp120089	HIDDEN_WARP_NPC,5,5
+
+// Juno
+yuno_fild01,284,138,4	duplicate(ach_treasure#touch)	#wp120052	HIDDEN_WARP_NPC,5,5
+yuno_fild12,76,268,4	duplicate(ach_treasure#touch)	#wp120053	HIDDEN_WARP_NPC,5,5
+yuno_fild02,142,191,4	duplicate(ach_treasure#touch)	#wp120054	HIDDEN_WARP_NPC,5,5
+yuno_fild03,135,329,4	duplicate(ach_treasure#touch)	#wp120055	HIDDEN_WARP_NPC,5,5
+yuno_fild04,35,369,4	duplicate(ach_treasure#touch)	#wp120056	HIDDEN_WARP_NPC,5,5
+yuno_fild06,262,220,4	duplicate(ach_treasure#touch)	#wp120057	HIDDEN_WARP_NPC,5,5
+yuno_fild07,113,339,4	duplicate(ach_treasure#touch)	#wp120058	HIDDEN_WARP_NPC,5,5
+yuno_fild08,179,209,4	duplicate(ach_treasure#touch)	#wp120059	HIDDEN_WARP_NPC,5,5
+yuno_fild09,166,228,4	duplicate(ach_treasure#touch)	#wp120060	HIDDEN_WARP_NPC,5,5
+yuno_fild11,141,357,4	duplicate(ach_treasure#touch)	#wp120061	HIDDEN_WARP_NPC,5,5
+
+
+// Treasures
+-	script	ach_treasure#click	-1,{
+	sscanf( strnpcinfo(0), "#tr%d", .@num );
+	if (.@num == 0)
+		end;
+	if (!achievementexists(.@num))
+		achievementcomplete(.@num);
+	cloakonnpcself();
+	end;
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+// Abbey Underground
+abbey03,27,72,4	duplicate(ach_treasure#click)	#tr120110	4_TREASURE_BOX
+
+// Abyss Lake
+abyss_03,86,55,4	duplicate(ach_treasure#click)	#tr120111	4_TREASURE_BOX
+
+// Amatsu Dungeon
+ama_dun03,60,163,4	duplicate(ach_treasure#click)	#tr120113	4_TREASURE_BOX
+
+// Ant Hell
+anthell02,253,41,4	duplicate(ach_treasure#click)	#tr120114	4_TREASURE_BOX
+
+// Ayothaya Dungeon
+ayo_dun02,150,256,4	duplicate(ach_treasure#click)	#tr120115	4_TREASURE_BOX
+
+// Bifrost
+ecl_tdun04,37,37,4	duplicate(ach_treasure#click)	#tr120121	4_TREASURE_BOX
+
+// Brasilis Dungeon
+bra_dun02,171,121,4	duplicate(ach_treasure#click)	#tr120117	4_TREASURE_BOX
+
+// Byalan Dungeon
+iz_dun05,64,223,4	duplicate(ach_treasure#click)	#tr120141	4_TREASURE_BOX
+
+// Clock Tower
+c_tower4,37,158,4	duplicate(ach_treasure#click)	#tr120112	4_TREASURE_BOX
+alde_dun04,90,107,4	duplicate(ach_treasure#click)	#tr120118	4_TREASURE_BOX
+
+// Coal Mine
+mjo_dun03,76,220,4	duplicate(ach_treasure#click)	#tr120136	4_TREASURE_BOX
+
+// Comodo Dungeon
+beach_dun3,102,71,4	duplicate(ach_treasure#click)	#tr120116	4_TREASURE_BOX
+
+// Einbech
+ein_dun02,31,255,4	duplicate(ach_treasure#click)	#tr120122	4_TREASURE_BOX
+
+// Geffen Dungeon
+gef_dun02,222,163,4	duplicate(ach_treasure#click)	#tr120123	4_TREASURE_BOX
+
+// Glastheim
+gl_cas02,53,151,4	duplicate(ach_treasure#click)	#tr120124	4_TREASURE_BOX
+gl_sew04,288,6,4	duplicate(ach_treasure#click)	#tr120125	4_TREASURE_BOX
+gl_knt02,126,235,4	duplicate(ach_treasure#click)	#tr120126	4_TREASURE_BOX
+gl_prison1,126,158,4	duplicate(ach_treasure#click)	#tr120127	4_TREASURE_BOX
+
+// Kunlun Dungeon
+gon_dun03,166,231,4	duplicate(ach_treasure#click)	#tr120128	4_TREASURE_BOX
+
+// Istana
+dew_dun02,87,272,4	duplicate(ach_treasure#click)	#tr120119	4_TREASURE_BOX
+
+// Labyrinth
+prt_maze03,11,14,4	duplicate(ach_treasure#click)	#tr120140	4_TREASURE_BOX
+
+// Luoyang Dungeon
+lou_dun03,29,228,4	duplicate(ach_treasure#click)	#tr120134	4_TREASURE_BOX
+
+// Nogg Road
+mag_dun02,197,77,4	duplicate(ach_treasure#click)	#tr120135	4_TREASURE_BOX
+
+// Orc Dungeon
+orcsdun02,31,72,4	duplicate(ach_treasure#click)	#tr120138	4_TREASURE_BOX
+
+// Payon Dungeon
+pay_dun04,120,124,4	duplicate(ach_treasure#click)	#tr120139	4_TREASURE_BOX
+
+// Prontera Culvert
+prt_sewb4,19,183,4	duplicate(ach_treasure#click)	#tr120131	4_TREASURE_BOX
+
+// Pyramid
+moc_pryd06,102,121,4	duplicate(ach_treasure#click)	#tr120137	4_TREASURE_BOX
+
+// Rachel Dungeon
+ice_dun03,45,261,4	duplicate(ach_treasure#click)	#tr120129	4_TREASURE_BOX
+
+// Robot Factory
+kh_dun02,70,107,4	duplicate(ach_treasure#click)	#tr120132	4_TREASURE_BOX
+
+// Scaraba Hall
+dic_dun03,216,211,4	duplicate(ach_treasure#click)	#tr120120	4_TREASURE_BOX
+
+// Somatology Lab
+lhz_dun03,240,221,4	duplicate(ach_treasure#click)	#tr120133	4_TREASURE_BOX
+
+// Sphinx
+in_sphinx5,154,107,4	duplicate(ach_treasure#click)	#tr120130	4_TREASURE_BOX
+
+// Sunken Ship
+treasure02,19,142,4	duplicate(ach_treasure#click)	#tr120144	4_TREASURE_BOX
+
+// Thanatos Tower
+tha_t06,150,176,4	duplicate(ach_treasure#click)	#tr120142	4_TREASURE_BOX
+
+// Thors Volcano
+thor_v03,220,221,4	duplicate(ach_treasure#click)	#tr120143	4_TREASURE_BOX
+
+// Toy Factory
+xmas_dun02,120,224,4	duplicate(ach_treasure#click)	#tr120146	4_TREASURE_BOX
+
+// Turtle Island Dungeon
+tur_dun04,134,130,4	duplicate(ach_treasure#click)	#tr120145	4_TREASURE_BOX
+
+//---------------
+// --- Fields ---
+//---------------
+
+// Comodo
+cmd_fild01,112,200,4	duplicate(ach_treasure#click)	#tr120044	4_TREASURE_BOX
+cmd_fild02,86,94,4	duplicate(ach_treasure#click)	#tr120045	4_TREASURE_BOX
+cmd_fild03,144,190,4	duplicate(ach_treasure#click)	#tr120046	4_TREASURE_BOX
+cmd_fild04,151,191,4	duplicate(ach_treasure#click)	#tr120047	4_TREASURE_BOX
+cmd_fild06,221,108,4	duplicate(ach_treasure#click)	#tr120048	4_TREASURE_BOX
+cmd_fild07,269,322,4	duplicate(ach_treasure#click)	#tr120049	4_TREASURE_BOX
+cmd_fild08,181,136,4	duplicate(ach_treasure#click)	#tr120050	4_TREASURE_BOX
+cmd_fild09,211,266,4	duplicate(ach_treasure#click)	#tr120051	4_TREASURE_BOX
+
+// Einbroch
+ein_fild01,266,277,4	duplicate(ach_treasure#click)	#tr120067	4_TREASURE_BOX
+ein_fild03,99,332,4	duplicate(ach_treasure#click)	#tr120068	4_TREASURE_BOX
+ein_fild04,334,305,4	duplicate(ach_treasure#click)	#tr120069	4_TREASURE_BOX
+ein_fild05,337,233,4	duplicate(ach_treasure#click)	#tr120070	4_TREASURE_BOX
+ein_fild06,174,245,4	duplicate(ach_treasure#click)	#tr120071	4_TREASURE_BOX
+ein_fild07,188,50,4	duplicate(ach_treasure#click)	#tr120072	4_TREASURE_BOX
+ein_fild08,258,78,4	duplicate(ach_treasure#click)	#tr120073	4_TREASURE_BOX
+ein_fild09,330,76,4	duplicate(ach_treasure#click)	#tr120074	4_TREASURE_BOX
+
+// Geffen
+gef_fild00,73,119,4	duplicate(ach_treasure#click)	#tr120011	4_TREASURE_BOX
+gef_fild01,222,224,4	duplicate(ach_treasure#click)	#tr120012	4_TREASURE_BOX
+gef_fild05,202,292,4	duplicate(ach_treasure#click)	#tr120013	4_TREASURE_BOX
+gef_fild06,279,105,4	duplicate(ach_treasure#click)	#tr120014	4_TREASURE_BOX
+gef_fild07,184,249,4	duplicate(ach_treasure#click)	#tr120015	4_TREASURE_BOX
+gef_fild09,170,73,4	duplicate(ach_treasure#click)	#tr120016	4_TREASURE_BOX
+gef_fild11,239,248,4	duplicate(ach_treasure#click)	#tr120017	4_TREASURE_BOX
+
+// Hugel
+hu_fild01,347,312,4	duplicate(ach_treasure#click)	#tr120062	4_TREASURE_BOX
+hu_fild02,80,152,4	duplicate(ach_treasure#click)	#tr120063	4_TREASURE_BOX
+hu_fild04,322,313,4	duplicate(ach_treasure#click)	#tr120064	4_TREASURE_BOX
+hu_fild06,204,228,4	duplicate(ach_treasure#click)	#tr120065	4_TREASURE_BOX
+hu_fild05,197,210,4	duplicate(ach_treasure#click)	#tr120066	4_TREASURE_BOX
+
+// Laphine
+ecl_fild01,234,217,4	duplicate(ach_treasure#click)	#tr120090	4_TREASURE_BOX
+bif_fild01,147,64,4	duplicate(ach_treasure#click)	#tr120091	4_TREASURE_BOX
+bif_fild02,155,322,4	duplicate(ach_treasure#click)	#tr120092	4_TREASURE_BOX
+spl_fild01,335,315,4	duplicate(ach_treasure#click)	#tr120093	4_TREASURE_BOX
+spl_fild02,153,358,4	duplicate(ach_treasure#click)	#tr120094	4_TREASURE_BOX
+spl_fild03,61,286,4	duplicate(ach_treasure#click)	#tr120095	4_TREASURE_BOX
+
+// Lighthalzen
+lhz_fild01,118,73,4	duplicate(ach_treasure#click)	#tr120075	4_TREASURE_BOX
+lhz_fild02,239,243,4	duplicate(ach_treasure#click)	#tr120076	4_TREASURE_BOX
+lhz_fild03,313,132,4	duplicate(ach_treasure#click)	#tr120077	4_TREASURE_BOX
+
+// Manuk
+man_fild01,41,172,4	duplicate(ach_treasure#click)	#tr120096	4_TREASURE_BOX
+man_fild02,268,355,4	duplicate(ach_treasure#click)	#tr120097	4_TREASURE_BOX
+man_fild03,198,91,4	duplicate(ach_treasure#click)	#tr120098	4_TREASURE_BOX
+dic_fild01,227,82,4	duplicate(ach_treasure#click)	#tr120099	4_TREASURE_BOX
+dic_fild02,147,196,4	duplicate(ach_treasure#click)	#tr120100	4_TREASURE_BOX
+
+// Misc
+ama_fild01,187,337,4	duplicate(ach_treasure#click)	#tr120101	4_TREASURE_BOX
+gon_fild01,171,332,4	duplicate(ach_treasure#click)	#tr120102	4_TREASURE_BOX
+lou_fild01,104,232,4	duplicate(ach_treasure#click)	#tr120103	4_TREASURE_BOX
+ayo_fild01,289,70,4	duplicate(ach_treasure#click)	#tr120104	4_TREASURE_BOX
+mosk_fild02,176,77,4	duplicate(ach_treasure#click)	#tr120105	4_TREASURE_BOX
+bra_fild01,99,193,4	duplicate(ach_treasure#click)	#tr120106	4_TREASURE_BOX
+dew_fild01,175,287,4	duplicate(ach_treasure#click)	#tr120107	4_TREASURE_BOX
+ma_fild01,308,206,4	duplicate(ach_treasure#click)	#tr120108	4_TREASURE_BOX
+ma_fild02,246,323,4	duplicate(ach_treasure#click)	#tr120109	4_TREASURE_BOX
+
+// Mjolnir
+mjolnir_01,47,60,4	duplicate(ach_treasure#click)	#tr120032	4_TREASURE_BOX
+mjolnir_02,77,49,4	duplicate(ach_treasure#click)	#tr120033	4_TREASURE_BOX
+mjolnir_03,190,200,4	duplicate(ach_treasure#click)	#tr120034	4_TREASURE_BOX
+mjolnir_04,201,146,4	duplicate(ach_treasure#click)	#tr120035	4_TREASURE_BOX
+mjolnir_05,43,327,4	duplicate(ach_treasure#click)	#tr120036	4_TREASURE_BOX
+mjolnir_06,162,290,4	duplicate(ach_treasure#click)	#tr120037	4_TREASURE_BOX
+mjolnir_07,321,127,4	duplicate(ach_treasure#click)	#tr120038	4_TREASURE_BOX
+mjolnir_08,175,225,4	duplicate(ach_treasure#click)	#tr120039	4_TREASURE_BOX
+mjolnir_09,299,123,4	duplicate(ach_treasure#click)	#tr120040	4_TREASURE_BOX
+mjolnir_10,353,371,4	duplicate(ach_treasure#click)	#tr120041	4_TREASURE_BOX
+mjolnir_11,325,178,4	duplicate(ach_treasure#click)	#tr120042	4_TREASURE_BOX
+mjolnir_12,110,298,4	duplicate(ach_treasure#click)	#tr120043	4_TREASURE_BOX
+
+// Morocc
+moc_fild11,188,218,4	duplicate(ach_treasure#click)	#tr120018	4_TREASURE_BOX
+moc_fild12,234,96,4	duplicate(ach_treasure#click)	#tr120019	4_TREASURE_BOX
+moc_fild13,290,207,4	duplicate(ach_treasure#click)	#tr120020	4_TREASURE_BOX
+moc_fild16,196,108,4	duplicate(ach_treasure#click)	#tr120021	4_TREASURE_BOX
+moc_fild17,269,105,4	duplicate(ach_treasure#click)	#tr120022	4_TREASURE_BOX
+moc_fild18,54,284,4	duplicate(ach_treasure#click)	#tr120023	4_TREASURE_BOX
+
+// Payon
+pay_fild01,167,243,4	duplicate(ach_treasure#click)	#tr120024	4_TREASURE_BOX
+pay_fild02,105,240,4	duplicate(ach_treasure#click)	#tr120025	4_TREASURE_BOX
+pay_fild03,144,97,4	duplicate(ach_treasure#click)	#tr120026	4_TREASURE_BOX
+pay_fild04,257,95,4	duplicate(ach_treasure#click)	#tr120027	4_TREASURE_BOX
+pay_fild07,365,37,4	duplicate(ach_treasure#click)	#tr120028	4_TREASURE_BOX
+pay_fild08,237,345,4	duplicate(ach_treasure#click)	#tr120029	4_TREASURE_BOX
+pay_fild09,251,42,4	duplicate(ach_treasure#click)	#tr120030	4_TREASURE_BOX
+pay_fild10,196,38,4	duplicate(ach_treasure#click)	#tr120031	4_TREASURE_BOX
+
+// Prontera
+prt_fild01,146,126,4	duplicate(ach_treasure#click)	#tr120001	4_TREASURE_BOX
+prt_fild02,142,221,4	duplicate(ach_treasure#click)	#tr120002	4_TREASURE_BOX
+prt_fild03,172,139,4	duplicate(ach_treasure#click)	#tr120003	4_TREASURE_BOX
+prt_fild04,118,57,4	duplicate(ach_treasure#click)	#tr120004	4_TREASURE_BOX
+prt_fild05,189,291,4	duplicate(ach_treasure#click)	#tr120005	4_TREASURE_BOX
+prt_fild06,298,304,4	duplicate(ach_treasure#click)	#tr120006	4_TREASURE_BOX
+prt_fild07,44,104,4	duplicate(ach_treasure#click)	#tr120007	4_TREASURE_BOX
+prt_fild08,203,222,4	duplicate(ach_treasure#click)	#tr120008	4_TREASURE_BOX
+prt_fild09,37,354,4	duplicate(ach_treasure#click)	#tr120009	4_TREASURE_BOX
+prt_fild10,177,206,4	duplicate(ach_treasure#click)	#tr120010	4_TREASURE_BOX
+
+// Rachel
+ra_fild01,138,166,4	duplicate(ach_treasure#click)	#tr120078	4_TREASURE_BOX
+ra_fild03,224,275,4	duplicate(ach_treasure#click)	#tr120079	4_TREASURE_BOX
+ra_fild08,326,45,4	duplicate(ach_treasure#click)	#tr120080	4_TREASURE_BOX
+ra_fild12,352,165,4	duplicate(ach_treasure#click)	#tr120081	4_TREASURE_BOX
+ra_fild04,92,302,4	duplicate(ach_treasure#click)	#tr120082	4_TREASURE_BOX
+ra_fild05,59,59,4	duplicate(ach_treasure#click)	#tr120083	4_TREASURE_BOX
+ra_fild06,362,230,4	duplicate(ach_treasure#click)	#tr120084	4_TREASURE_BOX
+
+// Veins
+ve_fild01,180,234,4	duplicate(ach_treasure#click)	#tr120085	4_TREASURE_BOX
+ve_fild02,65,194,4	duplicate(ach_treasure#click)	#tr120086	4_TREASURE_BOX
+ve_fild03,197,242,4	duplicate(ach_treasure#click)	#tr120087	4_TREASURE_BOX
+ve_fild04,288,279,4	duplicate(ach_treasure#click)	#tr120088	4_TREASURE_BOX
+ve_fild07,33,113,4	duplicate(ach_treasure#click)	#tr120089	4_TREASURE_BOX
+
+// Juno
+yuno_fild01,284,138,4	duplicate(ach_treasure#click)	#tr120052	4_TREASURE_BOX
+yuno_fild12,76,268,4	duplicate(ach_treasure#click)	#tr120053	4_TREASURE_BOX
+yuno_fild02,142,191,4	duplicate(ach_treasure#click)	#tr120054	4_TREASURE_BOX
+yuno_fild03,135,329,4	duplicate(ach_treasure#click)	#tr120055	4_TREASURE_BOX
+yuno_fild04,35,369,4	duplicate(ach_treasure#click)	#tr120056	4_TREASURE_BOX
+yuno_fild06,262,220,4	duplicate(ach_treasure#click)	#tr120057	4_TREASURE_BOX
+yuno_fild07,113,339,4	duplicate(ach_treasure#click)	#tr120058	4_TREASURE_BOX
+yuno_fild08,179,209,4	duplicate(ach_treasure#click)	#tr120059	4_TREASURE_BOX
+yuno_fild09,166,228,4	duplicate(ach_treasure#click)	#tr120060	4_TREASURE_BOX
+yuno_fild11,141,357,4	duplicate(ach_treasure#click)	#tr120061	4_TREASURE_BOX
+
+// If the feature is turned off these NPCs are useless
+-	script	AchievementInit	-1,{
+	end;
+
+OnInit:
+	if( !getbattleflag( "feature.achievement" ) ){
+		unloadnpc "ach_treasure#touch";
+		unloadnpc "ach_treasure#click";
+	}
+	end;
+}

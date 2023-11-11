@@ -1,0 +1,450 @@
+//===== rAthena Script ======================================= 
+//= Monk Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen, Samuray22
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Spiritual Bestowment, Excruciating Palm
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
+	if (BaseJob == Job_Monk) {
+		if (MONK_SK == 7) {
+			mes "[Monk]";
+			mes "To take the time to";
+			mes "comtemplate on your most";
+			mes "important goal, your highest";
+			mes "priority, is never a waste.";
+			mes "Never confuse your means";
+			mes "to the end you wish to achieve.";
+			close;
+		}
+		if (MONK_SK == 6 && getskilllv("MO_KITRANSLATION") == 0) {
+			mes "[Monk]";
+			mes "You've forgotten the";
+			mes "basics behind performing";
+			mes "Spiritual Bestowment?";
+			mes "How can this be...?";
+			next;
+			mes "[Monk]";
+			mes "Ah, now I understand.";
+			mes "You've transcended the";
+			mes "limitations that used to";
+			mes "hold you back, and have";
+			mes "become a Champion. I'm";
+			mes "sorry for underestimating you.";
+			next;
+			mes "[Monk]";
+			mes "Very well. It will be an honor";
+			mes "for me to help you relearn the";
+			mes "Spiritual Bestowment skill. As";
+			mes "a side effect, you will probably relearn Excruciating Palm as well.";
+			next;
+			mes "[Monk]";
+			mes "Now be still and relax";
+			mes "as I perform my special";
+			mes "accupressure treatment that";
+			mes "will commit these skills to";
+			mes "your nervous system and ";
+			mes "motor memory...";
+			next;
+			mes "^3355FF*Tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
+			mes "tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
+			mes "tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
+			mes "tap-tap-tap-tap-tap-tap* *POKE*^000000";
+			set MONK_SK,7;
+			skill "MO_KITRANSLATION",1,SKILL_PERM;
+			skill "MO_BALKYOUNG",1,SKILL_PERM;
+			next;
+			mes "[Monk]";
+			mes "It is done. Please";
+			mes "continue to use these";
+			mes "special skills to promote";
+			mes "peace and harmony in this";
+			mes "world. Farewell, my friend.";
+			close;
+		}
+		if (MONK_SK > 2) {
+			mes "[Monk]";
+			mes "To take the time to";
+			mes "comtemplate on your most";
+			mes "important goal, your highest";
+			mes "priority, is never a waste.";
+			mes "Never confuse your means";
+			mes "to the end you wish to achieve.";
+			next;
+			mes "[Monk]";
+			mes "Ah, I have a favor to ask.";
+			mes "Please do not tell others that";
+			mes "I have taught you Spiritual";
+			mes "Bestowment. I don't wish to";
+			mes "spend my time teaching too";
+			mes "many people this skill...";
+			close;
+		}
+		if (MONK_SK == 2) {
+			if (Weight == 0) {
+				mes "[Monk]";
+				mes "Ah. Well done. I see";
+				mes "that you managed to learn";
+				mes "the most important thing,";
+				mes "selflessness, on your own.";
+				mes "Now I trust that you won't";
+				mes "abuse what I have to teach you.";
+				next;
+				mes "[Monk]";
+				mes "My test may seem too strict,";
+				mes "but it is impossible to learn";
+				mes "Spiritual Bestowment without the right discipline. As with all";
+				mes "things, readiness and preparation precede all forms of realization.";
+				next;
+				mes "[Monk]";
+				mes "Now just relax for a moment.";
+				mes "I will use accupressure to";
+				mes "train your nervous system to";
+				mes "physically memorize the energy";
+				mes "flow and movements required";
+				mes "for Spiritual Bestowment.";
+				next;
+				mes "^3355FF*Tap... tap*";
+				mes "*Tap... Tap*";
+				mes "*Tap tap tap*^000000";
+				next;
+				mes "^3355FF*Tap tap tap*";
+				mes "*Tap tap tap*";
+				mes "*Tap... Tap tap*^000000";
+				next;
+				mes "^3355FF*Tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
+				mes "tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
+				mes "tap-tap-tap-tap-tap-tap-tap-tap- tap-tap-tap-tap-tap-tap-tap-tap-";
+				mes "tap-tap-tap-tap-tap-tap* *POKE*^000000";
+				next;
+				mes "[Monk]";
+				mes "It is done. You are now";
+				mes "capable of using Spiritual";
+				mes "Bestowment. Ah, yes. I've never";
+				mes "really named this skill, but that is what it is usually called by";
+				mes "other Monks who have seen it.";
+				next;
+				mes "[Monk]";
+				mes "Remember that this skill has a";
+				mes "long Cast Time and Skill Delay,";
+				mes "so use it very carefully. This";
+				mes "skill will let you give a Spirit Sphere to one of your Party";
+				mes "Members by consuming 40 SP.";
+				next;
+				mes "[Monk]";
+				mes "You will better understand";
+				mes "the use of this skill if you";
+				mes "practice. Keep in mind that";
+				mes "fighting may be necessary at";
+				mes "times, but it is a means to an";
+				mes "end, and not an end in itself.";
+				set MONK_SK,3;
+				skill "MO_KITRANSLATION",1,SKILL_PERM;
+				next;
+				mes "[Monk]";
+				mes "Our skills should not be";
+				mes "used to shed blood. If you";
+				mes "can transcend conflict, you";
+				mes "will know that fighting has";
+				mes "no worth, no value. Peace";
+				mes "be with you, my friend.";
+				close;
+			}
+			else {
+				mes "[Monk]";
+				mes "Have you learned the";
+				mes "meaning of selflessness?";
+				mes "When you abandon greed";
+				mes "and the desires of the world,";
+				mes "you will be ready for my teaching.";
+				close;
+			}
+		}
+		if (MONK_SK == 1) {
+			mes "[Monk]";
+			mes "Fighting is meaningless.";
+			mes "Transcend conflict and";
+			mes "difference through the";
+			mes "realization that all are";
+			mes "one. Discipline your mind";
+			mes "and the truth will be revealed.";
+			next;
+			mes "[Monk]";
+			mes "Hm? To what purpose have";
+			mes "you come to visit me? Ah, so";
+			mes "you wish to learn the skill that I have developed. My colleague";
+			mes "was right: more and more people have been wanting to learn this.";
+			next;
+			mes "[Monk]";
+			mes "Do not misunderstand me.";
+			mes "It is true that power and";
+			mes "justice, wisdom and action";
+			mes "must be balanced. However,";
+			mes "I have been visited by too many power hungry, bloodthirsty people.";
+			next;
+			mes "[Monk]";
+			mes "In all fairness, I shall";
+			mes "give you a chance. Prove";
+			mes "to me that you would use";
+			mes "the skills I teach you for";
+			mes "peace and justice. Prove that";
+			mes "you are free from selfishness.";
+			set MONK_SK,2;
+			close;
+		}
+	}
+	mes "[Monk]";
+	mes "Fighting is meaningless.";
+	mes "Transcend conflict and";
+	mes "difference through the";
+	mes "realization that all are";
+	mes "one. Discipline your mind";
+	mes "and the truth will be revealed.";
+	close;
+}
+
+monk_test,316,69,5	script	Monk#qsk_mo	823,{
+	if (BaseJob == Job_Monk) {
+		if (MONK_SK == 6) {
+			mes "[Monk]";
+			mes "How did you convince";
+			mes "that monk to teach you";
+			mes "Spiritual Bestowment? It'd";
+			mes "be nice to popularize both";
+			mes "of our specialty skills, but the world may not be ready yet.";
+			close;
+		}
+		if (MONK_SK == 5) {
+			mes "[Monk]";
+			mes "To begin, Excruciating Palm";
+			mes "is performed by taking your";
+			mes "inner strength and making it";
+			mes "into outer strength. Then, you";
+			mes "focus all of that into your palm. You'll explode if you do it wrong.";
+			next;
+			mes "[Monk]";
+			mes "This skill truly causes";
+			mes "excruciating pain, consuming";
+			mes "20 SP and even 10 HP. It will";
+			mes "knock back monsters with the";
+			mes "chance of stunning them, but only the targeted monster is damaged.";
+			next;
+			mes "[Monk]";
+			mes "If you use this skill on";
+			mes "other players, it will cause";
+			mes "a certain amount of damage,";
+			mes "but it won't knock back other";
+			mes "players near the original target. Does that make sense?";
+			next;
+			mes "[Monk]";
+			mes "Anyway, keep practicing";
+			mes "these principles and you'll";
+			mes "master Excruciating Palm.";
+			mes "You should definitely be able";
+			mes "to do it since you've learned";
+			mes "Spiritual Endowment.";
+			set MONK_SK,6;
+			skill "MO_BALKYOUNG",1,SKILL_PERM;
+			next;
+			mes "[Monk]";
+			mes "Well, we've completed";
+			mes "the lesson. I hope you";
+			mes "use your new skills to";
+			mes "fight for justice and";
+			mes "combat evil. Goodbye";
+			mes "for now, my friend.";
+			close;
+		}
+		if (MONK_SK == 4 && countitem(905) > 19 && countitem(711) > 2) {
+			mes "[Monk]";
+			mes "What's that...?";
+			mes "You've learned the";
+			mes "Spiritual Bestowment";
+			mes "skill? I assume that you";
+			mes "wish to learn Excruciating";
+			mes "Palm next. Am I correct?";
+			next;
+			mes "[Monk]";
+			mes "Hm. Well, you are strong";
+			mes "enough to handily defeat a";
+			mes "good number of Mandragoras.";
+			mes "All right. You seem to be ready. Come back in a little while so";
+			mes "that I can finish preparations.";
+			delitem 905,20; //Stem
+			delitem 711,3; //Shoot
+			set MONK_SK,5;
+			close;
+		}
+		if (MONK_SK == 4) {
+			mes "[Monk]";
+			mes "What's that...?";
+			mes "You've learned the";
+			mes "Spiritual Bestowment";
+			mes "skill? I assume that you";
+			mes "wish to learn Excruciating";
+			mes "Palm next. Am I correct?";
+			next;
+			mes "[Monk]";
+			mes "As I mentioned to you";
+			mes "before, you must subjugate";
+			mes "Mandragoras to prove that";
+			mes "you are qualified, in terms";
+			mes "of strength and compassion,";
+			mes "to learn Excruciating Palm.";
+			next;
+			mes "[Monk]";
+			mes "Fight to protect those";
+			mes "innocents terrorized by";
+			mes "the aggressive Mandragoras.";
+			mes "If you bring me ^FF000020 Stems^000000 and";
+			mes "^FF00003 Shoots^000000, I will be satisfied with this proof of your ability.";
+			next;
+			mes "[Monk]";
+			mes "Do you understand now?";
+			close;
+		}
+		if (MONK_SK == 3) {
+			mes "[Monk]";
+			mes "Have you come to learn";
+			mes "Excruciating Palm? If only";
+			mes "that were possible. There";
+			mes "are two obstacles we face";
+			mes "in fulfilling your request.";
+			next;
+			mes "[Monk]";
+			mes "Firstly, you must learn";
+			mes "the Spiritual Bestowment";
+			mes "skill beforehand. It will be";
+			mes "difficult to get that monk";
+			mes "to teach it to you, if not";
+			mes "outright impossible.";
+			next;
+			mes "[Monk]";
+			mes "Secondly, you will need";
+			mes "to pass my little test of";
+			mes "strength, so that I can be";
+			mes "use that your body can endure";
+			mes "the awesome power involved";
+			mes "in using Excruciating Palm.";
+			next;
+			mes "[Monk]";
+			mes "Mm. I know that Mandragoras";
+			mes "have been menacing travelers,";
+			mes "so if you can prove to me that";
+			mes "you've been hunting them, you";
+			mes "will prove worthy of learning";
+			mes "Excruciating Palm.";
+			next;
+			mes "[Monk]";
+			mes "If you can somehow convince";
+			mes "that monk to teach you how to";
+			mes "perform Spiritual Bestowment,";
+			mes "I shall then ask you to bring";
+			mes "^FF000020 Stems^000000 and ^FF00003 Shoots^000000 from";
+			mes "hunting Mandragoras.";
+			next;
+			mes "[Monk]";
+			mes "Of course, completing";
+			mes "my test is meaningless";
+			mes "if you do not first learn the";
+			mes "Spiritual Bestowment skill.";
+			mes "I wish you luck with that...";
+			set MONK_SK,4;
+			close;
+		}
+		if (MONK_SK == 1) {
+			mes "[Monk]";
+			mes "There is a pacifist monk";
+			mes "living in seclusion that";
+			mes "can teach the Spiritual";
+			mes "Bestowment skill. However,";
+			mes "he is stubborn, and has refused many who wish to learn from him.";
+			next;
+			mes "[Monk]";
+			mes "It would be good if";
+			mes "you can convince him";
+			mes "to teach it to you, as it is";
+			mes "impossible to learn how";
+			mes "to perform this skill alone.";
+			mes "It's really quite a pity...";
+			close;
+		}
+		if (MONK_SK == 0) {
+			mes "[Monk]";
+			mes "Power without justice will";
+			mes "not last. Justice without";
+			mes "power cannot be upheld.";
+			mes "Power does not equate to";
+			mes "justice, but true justice can";
+			mes "be the means to power.";
+			next;
+			mes "[Monk]";
+			mes "Always remember this truth.";
+			mes "Justice and power, compassion";
+			mes "and strength, wisdom and action. These are all complements that";
+			mes "go hand in hand and must always";
+			mes "be harmoniousy balanced.";
+			next;
+			mes "[Monk]";
+			mes "So it is with some skills.";
+			mes "I have developed a skill";
+			mes "that is the pure manifestation";
+			mes "of power, Excruciating Palm!";
+			mes "However, it is useless without";
+			mes "its complement to balance it.";
+			next;
+			mes "[Monk]";
+			mes "The complement to my skill";
+			mes "is a skill known as Spiritual";
+			mes "Bestowment, which can only";
+			mes "be taught by one Monk. However,";
+			mes "he refuses to teach it to others, believing they are unworthy.";
+			next;
+			mes "[Monk]";
+			mes "Although I've let him know";
+			mes "that he should popularize his";
+			mes "teaching of that skill, I must respect his decision. Still, you";
+			mes "may try talking to him if you wish to try to learn some new skills.";
+			set MONK_SK,1;
+			next;
+			mes "[Monk]";
+			mes "To find him, simply seek";
+			mes "out the monk who always";
+			mes "preaches the empty meaning";
+			mes "of fighting. That will be him.";
+			close;
+		}
+	}
+	mes "[Monk]";
+	mes "Power without justice will";
+	mes "not last. Justice without";
+	mes "power cannot be upheld.";
+	mes "Power does not equate to";
+	mes "justice, but true justice can";
+	mes "be the means to power.";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.4 Updated to the official one. [Samuray22]
+//= 1.4a replaced item "names" with item id. [Lupus]
+//============================================================

@@ -1,0 +1,117 @@
+//===== rAthena Script =======================================
+//= Rachel Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Created this [Sepheus]
+//= 1.1 Updated [Playtester]
+//= 1.2 More accurate spawns [Playtester]
+//= 1.3 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// ra_fild01 - Rachel Field
+//==================================================
+ra_fild01,0,0	monster	Muscipular	1780,60
+ra_fild01,173,170,106,80	monster	Geographer	1368,30,300000,120000
+ra_fild01,0,0	monster	Drosera	1781,20
+ra_fild01,0,0	monster	Galion	1783,5
+ra_fild01,0,0	monster	Gryphon	1259,3,3600000
+
+//==================================================
+// ra_fild02 - Rachel Field
+//==================================================
+ra_fild02,0,0	monster	Muscipular	1780,60
+ra_fild02,0,0	monster	Drosera	1781,20
+ra_fild02,0,0	monster	Galion	1783,15
+ra_fild02,0,0,0,0	boss_monster	Atroce	1785,1,14400000,600000,1
+
+//==================================================
+// ra_fild03 - Rachel Field
+//==================================================
+ra_fild03,0,0	monster	Galion	1783,35
+ra_fild03,0,0	monster	Drosera	1781,10
+ra_fild03,0,0	monster	Roween	1782,10
+ra_fild03,0,0	monster	Stapo	1784,10
+ra_fild03,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,1
+
+//==================================================
+// ra_fild04 - Rachel Field
+//==================================================
+ra_fild04,0,0	monster	Roween	1782,60
+ra_fild04,0,0	monster	Stapo	1784,20
+ra_fild04,0,0	monster	Wild Rose	1261,10
+ra_fild04,0,0	monster	Galion	1783,3
+ra_fild04,0,0,0,0	boss_monster	Atroce	1785,1,18000000,600000,1
+
+//==================================================
+// ra_fild05 - Rachel Field
+//==================================================
+ra_fild05,0,0	monster	Hill Wind	1680,70
+ra_fild05,0,0	monster	Drosera	1781,20
+ra_fild05,170,200,106,115	monster	Geographer	1368,10
+
+//==================================================
+// ra_fild06 - Rachel Field
+//==================================================
+ra_fild06,0,0	monster	Hill Wind	1680,50
+ra_fild06,0,0	monster	Anopheles	1627,20
+ra_fild06,0,0	monster	Drosera	1781,10
+
+//==================================================
+// ra_fild07 - Rachel Field
+//==================================================
+ra_fild07,0,0	monster	Roween	1782,50
+ra_fild07,0,0	monster	Galion	1783,20
+ra_fild07,0,0	monster	Stapo	1784,10
+
+//==================================================
+// ra_fild08 - Rachel Field
+//==================================================
+ra_fild08,0,0	monster	Stapo	1784,100
+ra_fild08,0,0	monster	Drops	1113,40
+ra_fild08,0,0	monster	Drosera	1781,20
+
+//==================================================
+// ra_fild09 - Rachel Field
+//==================================================
+ra_fild09,0,0	monster	Drosera	1781,60
+ra_fild09,0,0	monster	Metaling	1613,20
+ra_fild09,0,0	monster	Hill Wind	1680,10
+ra_fild09,0,0	monster	Harpy	1376,1,3600000
+
+//==================================================
+// ra_fild10 - Rachel Field
+//==================================================
+ra_fild10,0,0	monster	Stapo	1784,30
+ra_fild10,0,0	monster	Galion	1783,20
+ra_fild10,0,0	monster	Roween	1782,10
+
+//==================================================
+// ra_fild11 - Rachel Field
+//==================================================
+ra_fild11,0,0	monster	Drops	1113,100
+ra_fild11,0,0	monster	Stapo	1784,40
+ra_fild11,0,0	monster	Roween	1782,2
+ra_fild11,0,0	monster	Yellow Plant	1081,15
+ra_fild11,0,0	monster	Red Plant	1078,5
+
+//==================================================
+// ra_fild12 - Rachel Field
+//==================================================
+ra_fild12,0,0	monster	Drops	1113,100
+ra_fild12,0,0	monster	Stapo	1784,40
+ra_fild12,0,0	monster	Poporing	1031,5
+ra_fild12,0,0	monster	Yellow Plant	1081,15
+ra_fild12,0,0	monster	Red Plant	1078,5
+
+//==================================================
+// ra_fild13 - Rachel Field
+//==================================================
+ra_fild13,0,0	monster	Stapo	1784,60
+ra_fild13,0,0	monster	Drops	1113,40
+ra_fild13,0,0	monster	Roween	1782,5

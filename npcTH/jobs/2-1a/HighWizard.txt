@@ -1,0 +1,86 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,44,47,5	script	High Wizard#Valkyrie	735,{
+	if (ADVJOB == 0 ||  Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[High Wizard]";
+			mes "Congratulations.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		mes "[High Wizard]";
+		mes "We High Wizards have";
+		mes "the responsibility of";
+		mes "using our destructive magic";
+		mes "for the right purposes.";
+		next;
+		mes "[High Wizard]";
+		mes "A lifetime of training";
+		mes "is required before becoming";
+		mes "a High Wizard. Can you imagine";
+		mes "what would happen if our power";
+		mes "was placed in the wrong hands?!";
+		close;
+	}
+	else if (ADVJOB == Job_High_Wizard && Class == Job_Mage_High && JobLevel > 39) {
+		mes "[High Wizard]";
+		mes "It is time.";
+		mes "And Midgard has";
+		mes "need of those who can";
+		mes "wield the strongest of magic...";
+		next;
+		mes "[High Wizard]";
+		mes "Would you like to";
+		mes "become a High Wizard?";
+		next;
+		if (select("No.:Yes.") == 1) {
+			mes "[High Wizard]";
+			mes "When you're ready,";
+			mes "feel free to come back.";
+			mes "Honors to the warriors!";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[High Wizard]";
+			mes "It is still possible for you to learn more skills. Please use";
+			mes "all of your remaining Skill Points before returning to me.";
+			close;
+		}
+		jobchange Job_high_Wizard;
+		set ADVJOB,0;
+		mes "[High Wizard]";
+		mes "Congratulations.";
+		mes "As a High Wizard,";
+		mes "I hope use you use";
+		mes "your powers to bring";
+		mes "peace to the oppressed.";
+		close;
+	}
+	mes "[High Wizard]";
+	mes "Welcome";
+	mes "to Valhalla,";
+	mes "the Hall of Honor.";
+	next;
+	mes "[High Wizard]";
+	mes "Please make";
+	mes "yourself comfortable";
+	mes "while you are here.";
+	mes "Honor to the warriors!";
+	close;
+}

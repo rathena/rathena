@@ -1,0 +1,22 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disables Ice Wall.
+//===== Description: =========================================
+//= Blocks usage of WZ_ICEWALL.
+//===== Changelogs: ==========================================
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added WOE:TE maps [Cydh]
+//============================================================
+
+//============================================================
+// WoE:TE Castles
+//============================================================
+te_prtcas01	mapflag	noicewall
+te_prtcas02	mapflag	noicewall
+te_prtcas03	mapflag	noicewall
+te_prtcas04	mapflag	noicewall
+te_prtcas05	mapflag	noicewall
+te_aldecas1	mapflag	noicewall
+te_aldecas2	mapflag	noicewall
+te_aldecas3	mapflag	noicewall
+te_aldecas4	mapflag	noicewall
+te_aldecas5	mapflag	noicewall

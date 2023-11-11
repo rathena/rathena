@@ -1,0 +1,74 @@
+//===== rAthena Script =======================================
+//= El Dicastes Warp Script
+//===== By: ==================================================
+//= Chilly, Muad_Dib
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for El Dicastes
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Added Elevators.
+//= 1.2 Removed a warp. [Joseph] 
+//= 1.3 Updated to match official script. [Joseph]
+//============================================================
+
+// Town Warps
+dicastes01,283,285,0	warp	eldicastes0001	1,1,dic_in01,45,30
+dic_in01,45,28,0	warp	eldicastes0002	1,1,dicastes01,281,284
+dicastes01,163,297,0	warp	eldicastes0003	1,1,dic_in01,371,101
+dic_in01,372,99,0	warp	eldicastes0004	1,1,dicastes01,163,295
+dicastes01,94,259,0	warp	eldicastes0005	1,1,dic_in01,390,53
+dic_in01,390,55,0	warp	eldicastes0006	1,1,dicastes01,95,257
+dicastes01,136,103,0	warp	eldicastes0007	1,1,dic_in01,26,98
+dic_in01,26,96,0	warp	eldicastes0008	1,1,dicastes01,137,106
+dicastes01,255,175,0	warp	eldicastes0009	1,1,dic_in01,344,272
+dic_in01,342,271,0	warp	eldicastes0010	1,1,dicastes01,255,173
+dicastes01,198,353,0	warp	eldicastes0011	1,1,dicastes02,120,80
+dicastes02,120,77,0	warp	eldicastes0012	1,1,dicastes01,197,351
+dicastes02,120,237,0	warp	eldicastes0013	1,1,dic_in01,45,246
+dic_in01,45,244,0	warp	eldicastes0014	1,1,dicastes02,119,235
+dic_in01,299,248,0	warp	eldicastes0015	1,1,dic_in01,262,191
+
+dic_in01,242,182,0	script	#eldicastes0016	844,{
+	if (isequipped(2782)) select("Administrative Office");
+	else select("¡÷¡ú¡ð");
+	warp "dic_in01",138,221;
+	end;
+}
+
+// Elevators
+-	script	Elevator#main	-1,{
+	set .@n, atoi(strnpcinfo(2));
+	set .@eq, (isequipped(2782))?1:0;
+	if (.@n <= 4) {
+		set .@m$, (.@eq)?"Civil Services:Archive Room:Situation Room:Administrative Office":"¢³¡ð¡Ð:¡ñ¡ñ¡ò:¡ø¡ø¡ð:¡÷¡ú¡ð";
+		setarray .@xy, 45,286,36,212,122,282,121,201;
+	}
+	else if (.@n <= 11) {
+		set .@m$, (.@eq)?"Residential Zone 1:Residential Zone 2:Residential Zone 3:Pub Burman Flone":"¡ô¡õ¡ñ ¡þ :¢³¡ü¡Ð ¡ú :¡ï¢³¢¤ ¢² :¢±¡Ð¡ñ";
+		setarray .@xy, 42,115,110,108,178,108,260,115;
+	}
+	else if (.@n <= 13) {
+		set .@m$, (.@eq)?"Battle Station:Galten Quarters":"¡ø¡ô¡ï ¡ò :¡ü¡÷¡ó ¡÷ ";
+		setarray .@xy, 385,272,385,208;
+	}
+	set .@m, select(.@m$) - 1;
+	warp "dic_in01",.@xy[.@m*2],.@xy[.@m*2+1];
+	end;
+}
+dic_in01,46,288,0	duplicate(Elevator#main)	Elevator#1	844
+dic_in01,122,284,0	duplicate(Elevator#main)	Elevator#2	844
+dic_in01,121,203,0	duplicate(Elevator#main)	Elevator#3	844
+dic_in01,35,214,0	duplicate(Elevator#main)	Elevator#4	844
+dic_in01,44,116,0	duplicate(Elevator#main)	Elevator#5	844
+dic_in01,112,108,0	duplicate(Elevator#main)	Elevator#6	844
+dic_in01,180,108,0	duplicate(Elevator#main)	Elevator#7	844
+dic_in01,261,115,0	duplicate(Elevator#main)	Elevator#8	844
+dic_in01,57,48,0	duplicate(Elevator#main)	Elevator#9	844
+dic_in01,137,46,0	duplicate(Elevator#main)	Elevator#10	844
+dic_in01,222,46,0	duplicate(Elevator#main)	Elevator#11	844
+dic_in01,388,272,0	duplicate(Elevator#main)	Elevator#12	844
+dic_in01,389,208,0	duplicate(Elevator#main)	Elevator#13	844

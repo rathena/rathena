@@ -1,0 +1,66 @@
+//===== rAthena Script =======================================
+//= War of Emperium SE - Andlangr
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Merged to template file.
+//============================================================
+
+-	duplicate(Manager#template)	Manager#schg_cas02	-1
+-	duplicate(gard#template)	gard1#schg_cas02	-1
+-	duplicate(gard#template)	gard2#schg_cas02	-1
+-	duplicate(df#template)	df1#schg_cas02	-1
+-	duplicate(df#template)	df2#schg_cas02	-1
+-	duplicate(RL#template)	RL0#schg_cas02	-1
+-	duplicate(RL#template)	RL1#schg_cas02	-1
+-	duplicate(RL#template)	RL2#schg_cas02	-1
+-	duplicate(RL#template)	RL3#schg_cas02	-1
+
+schg_cas02,105,378,3	duplicate(Steward#template)	Steward#sc02	55
+schg_cas02,140,184,3	duplicate(Guardian#template)	Endeef#sc02	868
+schg_cas02,131,365,3	duplicate(Kafra#template)	Kafra Employee#sc02	117
+schg_cas02,231,57,0	duplicate(Guardian Stone#template)	1st Guardian Stone#sc02	844
+schg_cas02,335,231,0	duplicate(Guardian Stone#template)	2nd Guardian Stone#sc02	844
+schg_cas02,288,97,0	duplicate(Control#template)	Control Device01#sc02	111
+schg_cas02,230,209,0	duplicate(Control#template)	Control Device02#sc02	111
+schg_cas02,159,143,0	duplicate(Control#template)	Control Device03#sc02	111
+schg_cas02,257,369,0	duplicate(Switch#template)	#sc02_switch 	111
+schg_cas02,174,328,3	duplicate(Sunflower#template)	Mysterious Sunflower#02	976
+
+schg_cas02,143,198,0	script	LF-01#schg_cas02	111,{ callfunc "LinkFlag","First Gate House",235,44,"Second Gate House",302,233; }
+schg_cas02,143,202,0	script	LF-02#schg_cas02	111,{ callfunc "LinkFlag","Defense Area 1-1",317,83,"Defense Area 1-2",359,83; }
+schg_cas02,143,206,0	script	LF-03#schg_cas02	111,{ callfunc "LinkFlag","Defense Area 2-1",283,79,"Defense Area 2-2",280,122; }
+schg_cas02,145,208,0	script	LF-04#schg_cas02	111,{ callfunc "LinkFlag","Defense Area 3-1",215,110,"Defense Area 3-2",255,215; }
+schg_cas02,180,208,0	script	LF-05#schg_cas02	111,{ callfunc "LinkFlag","Center 1 Area",338,153,"Center 2 Area",213,226; }
+schg_cas02,182,206,0	script	LF-06#schg_cas02	111,{ callfunc "LinkFlag","Defense Area 1-1",317,83,"Defense Area 2-1",283,79,"Defense Area 3-1",215,110; }
+schg_cas02,182,202,0	script	LF-07#schg_cas02	111,{ callfunc "LinkFlag","Area 1-2",359,83,"Area 2-2",280,122,"Area 3-2",255,215; }
+schg_cas02,182,198,0	script	LF-08#schg_cas02	111,{ callfunc "LinkFlag","Convenience Facility",101,306; }
+schg_cas02,235,222,0	script	Andlangr#LF_sc02_1::LF_sc02_1	111,{ callfunc "LinkFlag","Emperium Center",136,188; }
+schg_cas02,157,136,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_2	111
+schg_cas02,168,136,4	duplicate(LF_sc02_1)	Andlangr#LF_sc02_3	111
+schg_cas02,320,232,4	duplicate(LF_sc02_1)	Andlangr#LF_sc02_4	111
+schg_cas02,295,109,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_5	111
+schg_cas02,295,92,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_6	111
+schg_cas02,285,90,4	duplicate(LF_sc02_1)	Andlangr#LF_sc02_7	111
+schg_cas02,285,190,4	duplicate(LF_sc02_1)	Andlangr#LF_sc02_8	111
+schg_cas02,238,66,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_9	111
+schg_cas02,230,45,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_10	111
+schg_cas02,233,120,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_11	111
+schg_cas02,247,120,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_12	111
+schg_cas02,261,162,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_13	111
+schg_cas02,244,162,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_14	111
+schg_cas02,235,207,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_15	111
+
+sch_gld,296,247,4	script	Andlangr#flag_sc02_1::Sc02_Flag	722,{
+	callfunc "ReturnFlag","schg_cas02",1;
+	end;
+OnAgitInit2:
+OnRecvCastlesc02:
+	FlagEmblem GetCastleData("schg_cas02",1);
+	end;
+}
+sch_gld,280,247,4	duplicate(Sc02_Flag)	Andlangr#flag_sc02_2	722

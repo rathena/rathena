@@ -1,0 +1,251 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Bill of Birds)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+moc_fild02,74,329,3	script	Gregor#PecoPeco_Hunt	97,{
+	if (checkquest(60101) != -1) {
+		if (checkquest(60101,HUNTING) != 2 ) {
+			mes "[Gregor]";
+			mes "Have you finished hunting the 50 Peco Pecos?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Gregor]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Gregor]";
+				mes "Please hurry and kill 50 of those tasty err pesky Peco Pecos.";
+				close;
+			case 3:
+				mes "[Gregor]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Gregor]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60101;
+					close;
+				case 2:
+					mes "[Gregor]";
+					mes "Please hurry and kill 50 of those tasty err pesky Peco Pecos.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Gregor]";
+			mes "Oh thank you so much!";
+			mes "I think that I can rest easily now.";
+			getexp 4000,2000;
+			erasequest 60101;
+			close;
+		}
+	}
+	if (checkquest(60102) != -1) {
+		if (checkquest(60102,HUNTING) != 2 ) {
+			mes "[Gregor]";
+			mes "Have you finished hunting the 50 Peco Pecos?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Gregor]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Gregor]";
+				mes "Please hurry and kill 100 of those tasty err pesky Peco Pecos.";
+				close;
+			case 3:
+				mes "[Gregor]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Gregor]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60102;
+					close;
+				case 2:
+					mes "[Gregor]";
+					mes "Please hurry and kill 100 of those tasty err pesky Peco Pecos.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Gregor]";
+			mes "Oh thank you so much!";
+			mes "I think that I can rest easily now.";
+			getexp 4000,2000;
+			getexp 4000,2000;
+			erasequest 60102;
+			close;
+		}
+	}
+	if (checkquest(60103) != -1) {
+		if (checkquest(60103,HUNTING) != 2 ) {
+			mes "[Gregor]";
+			mes "Have you finished hunting the 150 Peco Pecos?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Gregor]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Gregor]";
+				mes "Please hurry and kill 150 of those tasty err pesky Peco Pecos.";
+				close;
+			case 3:
+				mes "[Gregor]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Gregor]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60103;
+					close;
+				case 2:
+					mes "[Gregor]";
+					mes "Please hurry and kill 150 of those tasty err pesky Peco Pecos.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Gregor]";
+			mes "Oh thank you so much!";
+			mes "I think that I can rest easily now.";
+			getexp 4000,2000;
+			getexp 4000,2000;
+			getexp 4000,2000;
+			erasequest 60103;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 9) {
+		//for maximum level
+		if (BaseLevel < 31) {
+			mes "[Gregor]";
+			mes "Peco Pecos are fascinating.";
+			mes "I am still doing my, uh, research...";
+			mes "But now it is of a different nature.";
+			next;
+			mes "[Gregor]";
+			mes "You see I've been uh, ''researching''";
+			mes "these animals by collecting their";
+			mes "Bill of Birds but lately they seem";
+			mes "to have become hostile towards me.";
+			next;
+			mes "[Gregor]";
+			mes "Can you do me a favor please?";
+			next;
+			switch(select("What kind of favor?:No")) {
+			case 1:
+				mes "[Gregor]";
+				mes "I am so afraid that these Peco Pecos will hurt me for my, uh, researching activities.";
+				next;
+				mes "[Gregor]";
+				mes "Can you help protect me by killing them?";
+				mes "I think I'll feel safer...";
+				mes "Please...";
+				next;
+				switch(select("Gather Items:Hunt Peco Pecos:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Gregor]";
+					mes "I need some ^FF0000Bill of Birds^000000 for my, uh, research...";
+					next;
+					switch(select("I have some Bill of Birds:What did you need?")) {
+					case 1:
+						if (countitem(925) > 24) {
+							mes "[Gregor]";
+							mes "Thank you so much.";
+							delitem 925,25; //Bill_Of_Birds
+							getexp 4000,2000;
+							next;
+							mes "[Gregor]";
+							mes "This is gonna be delicious!";
+							close;
+						}
+						else {
+							mes "[Gregor]";
+							mes "It doesn't look like you have enough.";
+							next;
+							mes "[Gregor]";
+							mes "Can you help me out and bring me ^FF000025 Bill of Birds^000000?";
+							close;
+						}
+					case 2:
+						mes "[Gregor]";
+						mes "Can you help me out and bring me ^FF000025 Bill of Birds^000000?";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Gregor]";
+					mes "Ah, ok I think you can help me out by hunting some Peco Pecos.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Peco Pecos:100 Peco Pecos:150 Peco Pecos")) {
+					case 1:
+						mes "[Gregor]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60101;
+						close;
+					case 2:
+						mes "[Gregor]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60102;
+						close;
+					case 3:
+						mes "[Gregor]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60103;
+						close;
+					}
+				case 3:
+					mes "[Gregor]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Gregor]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Gregor]";
+			mes "Hmmm... you seem to be too strong to be fighting over here.";
+			close;
+		}
+	}
+	else {
+		mes "[Gregor]";
+		mes "Hi there.";
+		next;
+		mes "[Gregor]";
+		mes "Those picky's over there seem to be about your speed.";
+		close;
+	}
+}

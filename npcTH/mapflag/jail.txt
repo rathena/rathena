@@ -1,0 +1,48 @@
+//===== rAthena Script =======================================
+//= Mapflag: Jail.
+//===== Description: ========================================= 
+//= Jail specific restrictions, only for map sec_pri
+//= pvp: Turns on PvP mode
+//= pvp_noparty: Can't attack player in same party
+//= nomemo: No Warp Portal Memory Point allowed.
+//= nowarp: Disables warping from the map.
+//= noreturn: Disables specific warp consumables.
+//= pvp_nightmaredrop: Players drop items/equipment on death.
+//= nosave: No respawn point saving allowed.
+//= noteleport: No Teleporting allowed.  No fly wings or butterfly wings.
+//= hidemobhpbar: No HP bar will be displayed for monsters.
+//= restricted: Disables items configured in item_noequip.txt
+//=				and skills configured in skill_nocast_db.txt.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//============================================================
+
+// No Memory
+sec_pri	mapflag	nomemo
+
+// No Save
+sec_pri	mapflag	nosave	SavePoint
+
+// No Teleport
+sec_pri	mapflag	noteleport
+
+// No Warp
+sec_pri	mapflag	nowarp
+
+// No Return
+sec_pri	mapflag	noreturn
+
+// PvP
+sec_pri	mapflag	pvp
+
+// No Party
+sec_pri	mapflag	pvp_noparty
+
+// Nightmare Equipment Drops
+sec_pri	mapflag	pvp_nightmaredrop	random,equip,300
+
+// Hide Monster HP bar
+sec_pri	mapflag	hidemobhpbar
+
+// Item and Skill restrictions
+sec_pri	mapflag	restricted	2

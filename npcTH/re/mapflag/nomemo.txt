@@ -1,0 +1,499 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Warp Portal memory.
+//===== Description: ========================================= 
+//= Prevents players from using /memo on a map.
+//= Also disables marriage warp skills.
+//===== Changelogs: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Nightmare Clock Tower [Secret]
+//= 1.2 Added dali, dali02 [Nova]
+//= 1.3 Added Nightmare Glastheim [Ridley8819]
+//= 1.4 Added GVG TE Maps. [Cydh]
+//= 1.5 Added Para Market maps [mazvi]
+//============================================================
+
+//============================================================
+// Paradise Market
+//============================================================
+paramk	mapflag	nomemo
+
+//============================================================
+// Episode 13
+//============================================================
+job3_arch01	mapflag	nomemo
+job3_arch02	mapflag	nomemo
+job3_arch03	mapflag	nomemo
+job3_guil01	mapflag	nomemo
+job3_guil02	mapflag	nomemo
+job3_guil03	mapflag	nomemo
+job3_rang01	mapflag	nomemo
+job3_rang02	mapflag	nomemo
+job3_rune01	mapflag	nomemo
+job3_rune02	mapflag	nomemo
+job3_rune03	mapflag	nomemo
+job3_war01	mapflag	nomemo
+job3_war02	mapflag	nomemo
+job3_gen01	mapflag	nomemo
+job3_sha01	mapflag	nomemo
+jupe_core2	mapflag	nomemo
+s_atelier	mapflag	nomemo
+bra_in01	mapflag	nomemo
+bra_dun01	mapflag	nomemo
+bra_dun02	mapflag	nomemo
+dicastes01	mapflag	nomemo
+dicastes02	mapflag	nomemo
+dic_in01	mapflag	nomemo
+dic_fild01	mapflag	nomemo
+dic_fild02	mapflag	nomemo
+dic_dun01	mapflag	nomemo
+dic_dun02	mapflag	nomemo
+
+//============================================================
+// Episode 14
+//============================================================
+bif_fild01	mapflag	nomemo
+bif_fild02	mapflag	nomemo
+1@mist	mapflag	nomemo
+mora	mapflag	nomemo
+dew_dun01	mapflag	nomemo
+dew_dun02	mapflag	nomemo
+dew_in01	mapflag	nomemo
+dic_dun03	mapflag	nomemo
+mal_in01	mapflag	nomemo
+mal_in02	mapflag	nomemo
+mal_dun01	mapflag	nomemo
+1@cash	mapflag	nomemo
+1@pump	mapflag	nomemo
+2@pump	mapflag	nomemo
+iz_dun05	mapflag	nomemo
+lhz_dun04	mapflag	nomemo
+que_lhz	mapflag	nomemo
+1@lhz	mapflag	nomemo
+gld_dun01_2	mapflag	nomemo
+gld_dun02_2	mapflag	nomemo
+gld_dun03_2	mapflag	nomemo
+gld_dun04_2	mapflag	nomemo
+gld2_ald	mapflag	nomemo
+gld2_gef	mapflag	nomemo
+gld2_pay	mapflag	nomemo
+gld2_prt	mapflag	nomemo
+job_ko	mapflag	nomemo
+job_gun	mapflag	nomemo
+ma_scene01	mapflag	nomemo
+ma_in01	mapflag	nomemo
+ma_dun01	mapflag	nomemo
+1@ma_h	mapflag	nomemo
+1@ma_c	mapflag	nomemo
+1@ma_b	mapflag	nomemo
+ma_zif01	mapflag	nomemo
+ma_zif02	mapflag	nomemo
+ma_zif03	mapflag	nomemo
+ma_zif04	mapflag	nomemo
+ma_zif05	mapflag	nomemo
+ma_zif06	mapflag	nomemo
+ma_zif07	mapflag	nomemo
+ma_zif08	mapflag	nomemo
+ma_zif09	mapflag	nomemo
+eclage	mapflag	nomemo
+ecl_fild01	mapflag	nomemo
+ecl_in01	mapflag	nomemo
+ecl_in02	mapflag	nomemo
+ecl_in03	mapflag	nomemo
+ecl_in04	mapflag	nomemo
+1@ecl	mapflag	nomemo
+ecl_tdun01	mapflag	nomemo
+ecl_tdun02	mapflag	nomemo
+ecl_tdun03	mapflag	nomemo
+ecl_tdun04	mapflag	nomemo
+ecl_hub01	mapflag	nomemo
+moc_prydn1	mapflag	nomemo
+moc_prydn2	mapflag	nomemo
+c_tower2_	mapflag	nomemo
+c_tower3_	mapflag	nomemo
+gl_chyard_	mapflag	nomemo
+gl_cas02_	mapflag	nomemo
+
+//============================================================
+// Orc's Memory
+//============================================================
+1@orcs	mapflag	nomemo
+2@orcs	mapflag	nomemo
+
+//============================================================
+// Nidhoggr's Instance
+//============================================================
+1@nyd	mapflag	nomemo
+2@nyd	mapflag	nomemo
+
+//============================================================
+// Horror Toy Factory Memorial Dungeon
+//============================================================
+1@xm_d	mapflag	nomemo
+
+//============================================================
+// Glastheim Memorial Dungeon
+//============================================================
+1@gl_k	mapflag	nomemo
+2@gl_k	mapflag	nomemo
+
+//============================================================
+// Wave Mode Memorial Dungeon
+//============================================================
+1@def01	mapflag	nomemo
+1@def02	mapflag	nomemo
+1@def03	mapflag	nomemo
+
+//============================================================
+// Heroes' Trail - Part 1
+//============================================================
+1@face	mapflag	nomemo
+1@sara	mapflag	nomemo
+dali	mapflag	nomemo
+dali02	mapflag	nomemo
+
+//============================================================
+// Heroes' Trail - Part 2
+//============================================================
+1@ge_st	mapflag	nomemo
+1@gef	mapflag	nomemo
+1@gef_in	mapflag	nomemo
+1@spa	mapflag	nomemo
+1@tnm1	mapflag	nomemo
+1@tnm2	mapflag	nomemo
+1@tnm3	mapflag	nomemo
+
+//============================================================
+// Heroes' Trail - Part 3
+//============================================================
+1@glast	mapflag	nomemo
+1@air1	mapflag	nomemo
+1@air2	mapflag	nomemo
+
+//============================================================
+// Decisive Battle - Part 1
+//============================================================
+moro_cav	mapflag	nomemo
+1@dth1	mapflag	nomemo
+1@dth2	mapflag	nomemo
+1@dth3	mapflag	nomemo
+1@rev	mapflag	nomemo
+
+//============================================================
+// Decisive Battle - Part 2
+//============================================================
+1@eom	mapflag	nomemo
+1@jtb	mapflag	nomemo
+
+//============================================================
+// Episode 15 - Phantasmagorica
+//============================================================
+1@lab	mapflag	nomemo
+1@uns	mapflag	nomemo
+1@mcd	mapflag	nomemo
+un_myst	mapflag	nomemo
+
+//============================================================
+// Nightmare Biolab
+//============================================================
+lhz_dun_n	mapflag	nomemo
+lhz_d_n2	mapflag	nomemo
+
+//============================================================
+// Infinite Space
+//============================================================
+1@infi	mapflag	nomemo
+
+//============================================================
+// WoE:TE Castles
+//============================================================
+te_prtcas01	mapflag	nomemo
+te_prtcas02	mapflag	nomemo
+te_prtcas03	mapflag	nomemo
+te_prtcas04	mapflag	nomemo
+te_prtcas05	mapflag	nomemo
+te_aldecas1	mapflag	nomemo
+te_aldecas2	mapflag	nomemo
+te_aldecas3	mapflag	nomemo
+te_aldecas4	mapflag	nomemo
+te_aldecas5	mapflag	nomemo
+teg_dun01	mapflag	nomemo
+teg_dun02	mapflag	nomemo
+
+//============================================================
+// Novice Training
+//============================================================
+int_land	mapflag	nomemo
+int_land01	mapflag	nomemo
+int_land02	mapflag	nomemo
+int_land03	mapflag	nomemo
+int_land04	mapflag	nomemo
+
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
+prt_cas	mapflag	nomemo
+prt_cas_q	mapflag	nomemo
+prt_pri00	mapflag	nomemo
+prt_lib	mapflag	nomemo
+prt_lib_q	mapflag	nomemo
+prt_q	mapflag	nomemo
+prt_prison	mapflag	nomemo
+rebel_in	mapflag	nomemo
+slabw01	mapflag	nomemo
+que_swat	mapflag	nomemo
+1@mir	mapflag	nomemo
+2@mir	mapflag	nomemo
+1@sthb	mapflag	nomemo
+1@sthc	mapflag	nomemo
+1@sthd	mapflag	nomemo
+1@slw	mapflag	nomemo
+1@swat	mapflag	nomemo
+
+//============================================================
+// Rockridge
+//============================================================
+har_in01	mapflag	nomemo
+rockmi1	mapflag	nomemo
+rockmi2	mapflag	nomemo
+
+//============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	nomemo
+1@md_pay	mapflag	nomemo
+
+//============================================================
+// Lasagna
+//============================================================
+lasa_in01	mapflag	nomemo
+conch_in	mapflag	nomemo
+lasa_dun01	mapflag	nomemo
+lasa_dun02	mapflag	nomemo
+lasa_dun03	mapflag	nomemo
+lasa_dun_q	mapflag	nomemo
+
+//============================================================
+// Chicken Mode - Nightmare Glastheim
+//============================================================
+1@gl_k2	mapflag	nomemo
+2@gl_k2	mapflag	nomemo
+
+//============================================================
+// Chicken Mode - Horror Toy Factory
+//============================================================
+1@xm_d2	mapflag	nomemo
+
+//============================================================
+// Illusion of Moonlight
+//============================================================
+pay_d03_i	mapflag	nomemo
+
+//============================================================
+// Illusion of Vampire
+//============================================================
+gef_d01_i	mapflag	nomemo
+
+//============================================================
+// Illusion of Frozen
+//============================================================
+ice_d03_i	mapflag	nomemo
+
+//============================================================
+// Suspicious Shipwreck
+//============================================================
+1@tre	mapflag	nomemo
+
+//============================================================
+// Poring Village
+//============================================================
+1@begi	mapflag	nomemo
+
+//============================================================
+// Illusion of old Archery
+//============================================================
+tur_d03_i	mapflag	nomemo
+tur_d04_i	mapflag	nomemo
+
+//============================================================
+// Volcanic Island Korodo
+//============================================================
+1@crd	mapflag	nomemo
+
+//============================================================
+// Noodles Festival July
+//============================================================
+1@drdo	mapflag	nomemo
+
+//============================================================
+// Illusion of Teddy Bear
+//============================================================
+ein_d02_i	mapflag	nomemo
+
+//============================================================
+// Illusion of Luanda
+//============================================================
+com_d02_i	mapflag	nomemo
+
+//============================================================
+// Soul Reaper Job Change
+//============================================================
+1@soul	mapflag	nomemo
+
+//============================================================
+// Star Emperor Job Change
+//============================================================
+star_frst	mapflag	nomemo
+star_in	mapflag	nomemo
+
+//============================================================
+// Episode 17.1
+//============================================================
+1@cor	mapflag	nomemo
+1@os_a	mapflag	nomemo
+1@os_b	mapflag	nomemo
+1@rgsr	mapflag	nomemo
+mag_dun03	mapflag	nomemo
+pub_cat	mapflag	nomemo
+rgsr_in	mapflag	nomemo
+
+//============================================================
+// Episode 17.2
+//============================================================
+1@bamn	mapflag	nomemo
+1@bamq	mapflag	nomemo
+1@ghg	mapflag	nomemo
+1@herbs	mapflag	nomemo
+1@lost	mapflag	nomemo
+ba_in01	mapflag	nomemo
+1@odin	mapflag	nomemo
+
+//============================================================
+// Illusion of Labyrinth
+//============================================================
+prt_mz03_i	mapflag	nomemo
+
+//============================================================
+// Illusion of Underwater
+//============================================================
+iz_d04_i	mapflag	nomemo
+iz_d05_i	mapflag	nomemo
+
+//============================================================
+// 4th Jobs Change
+//============================================================
+1@4win	mapflag	nomemo
+1@4mag	mapflag	nomemo
+1@4mst	mapflag	nomemo
+1@4sac	mapflag	nomemo
+1@4tro	mapflag	nomemo
+1@4inq	mapflag	nomemo
+1@4cdn	mapflag	nomemo
+1@4igd	mapflag	nomemo
+1@4drk	mapflag	nomemo
+job4_bio	mapflag	nomemo
+job4_mag	mapflag	nomemo
+job4_tro	mapflag	nomemo
+
+//============================================================
+// Geffen Night Arena
+//============================================================
+1@ge_sn	mapflag	nomemo
+
+//============================================================
+// Traces of Heroes
+//============================================================
+1@mjo1	mapflag	nomemo
+1@mjo2	mapflag	nomemo
+1@spa2	mapflag	nomemo
+
+//============================================================
+// Thanatos Tower Memorial Dungeon
+//============================================================
+1@thts	mapflag	nomemo
+2@thts	mapflag	nomemo
+3@thts	mapflag	nomemo
+4@thts	mapflag	nomemo
+5@thts	mapflag	nomemo
+6@thts	mapflag	nomemo
+7@thts	mapflag	nomemo
+8@thts	mapflag	nomemo
+
+//============================================================
+// Glastheim Challenge Mode
+//============================================================
+1@gl_he	mapflag	nomemo
+1@gl_he2	mapflag	nomemo
+
+//============================================================
+// EDDA
+//============================================================
+1@gl_prq	mapflag	nomemo
+1@gol1	mapflag	nomemo
+1@gol2	mapflag	nomemo
+
+//============================================================
+// 2018 Halloween
+//============================================================
+1@halo	mapflag	nomemo
+
+//============================================================
+// Constellation Tower
+//============================================================
+1@ch_t	mapflag	nomemo
+2@ch_t	mapflag	nomemo
+3@ch_t	mapflag	nomemo
+
+//============================================================
+// Level 200 Expansion
+//============================================================
+ein_dun03	mapflag	nomemo
+
+//============================================================
+// Grade Enhancer
+//============================================================
+grademk	mapflag	nomemo
+
+//============================================================
+// Level 250 Expansion
+//============================================================
+nif_dun01	mapflag	nomemo
+nif_dun02	mapflag	nomemo
+
+//============================================================
+// Monster Invasion event
+//============================================================
+e_hugel	mapflag	nomemo
+
+//============================================================
+// Training Ground outside Prontera
+//============================================================
+tra_fild	mapflag	nomemo
+
+//============================================================
+// Episode 18 - Direction of Prayer
+//============================================================
+1@adv	mapflag	nomemo
+1@advs	mapflag	nomemo
+1@nyr	mapflag	nomemo
+1@oz	mapflag	nomemo
+1@tcamp	mapflag	nomemo
+2@nyr	mapflag	nomemo
+oz_dun01	mapflag	nomemo
+oz_dun02	mapflag	nomemo
+que_thr	mapflag	nomemo
+wolfvill	mapflag	nomemo
+
+//============================================================
+// Sunken Tower
+//============================================================
+1@ch_u	mapflag	nomemo
+
+//============================================================
+// Illusion of Twins
+//============================================================
+ant_d02_i	mapflag	nomemo
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	nomemo

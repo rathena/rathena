@@ -1,0 +1,454 @@
+//===== rAthena Script =======================================
+//= Lottery
+//===== By: ==================================================
+//= acky
+//===== Current Version: =====================================
+//= 1.2.1a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Daily lottery draw
+//===== Additional Comments: =================================
+//= Numbers drawn daily (Time is configured line 29)
+//= *Added GM-Riggability
+//= *Ability to renew ticket
+//= *Improved interface
+//= *Fixed minor bug where first load didn't work.
+//= 1.2.1a fix due to new script engine
+//============================================================
+
+-	script	lotterygenerator	-1,{
+OnInit:
+	set $L_TicketPrice,4750; // TICKET COST
+	set $L_Prize_Money,5000000; // JACKPOT AMOUNT
+	set $L_Prize_Money_Small,1000000; // SECONDARY PRIZE
+	if ($LID == 0) goto L_GenID;
+	end;
+
+	//Modify for own time
+OnClock2045:
+	// CHECKS IF LOTTERY IS RIGGED
+	if ($L_Rigged == 1) goto L_Rigged_Draw;
+	// GENERATES RANDOM NUMBERS 1-40
+Pick1:
+	set $LW1,rand (1,40);
+
+Pick2:
+	set $LW2,rand (1,40);
+	if ($LW2 == $LW1) goto Pick2;
+
+Pick3:
+	set $LW3,rand (1,40);
+	if ($LW3 == $LW2) goto Pick3;
+	if ($LW3 == $LW1) goto Pick3;
+
+Pick4:
+	set $LW4,rand (1,40);
+	if ($LW4 == $LW2) goto Pick4;
+	if ($LW4 == $LW1) goto Pick4;
+	if ($LW4 == $LW3) goto Pick4;
+
+Pick5:
+	set $LW5,rand (1,40);
+	if ($LW5 == $LW1) goto Pick5;
+	if ($LW5 == $LW2) goto Pick5;
+	if ($LW5 == $LW3) goto Pick5;
+	if ($LW5 == $LW4) goto Pick5;
+
+Pick6:
+	set $LW6,rand (1,40);
+	if ($LW6 == $LW1) goto Pick6;
+	if ($LW6 == $LW2) goto Pick6;
+	if ($LW6 == $LW3) goto Pick6;
+	if ($LW6 == $LW4) goto Pick6;
+	if ($LW6 == $LW5) goto Pick6;
+
+	// BROADCASTS DRAW
+L_Broadcast:
+	Announce "Lottery: Welcome to tonight's lotto draw!",8;
+	Announce "The numbers are as follows: [" + $LW1 + "] [" + $LW2 + "] [" + $LW3 + "] [" + $LW4 + "] [" + $LW5 + "] [" + $LW6 + "]",8;
+	Announce "Congratulations to the winners of tonight!",8;
+
+	// GENERATES DRAW ID CODE
+L_GenID:
+	set $LID2,$LID;
+	// SETS TOMORROW'S ID NUMBER
+	set $LID,rand (100000,999999);
+	end;
+
+	// SETS DRAW TO RIGGED NUMBERS
+L_Rigged_Draw:
+	set $LW1,$LR1;
+	set $LW2,$LR2;
+	set $LW3,$LR3;
+	set $LW4,$LR4;
+	set $LW5,$LR5;
+	set $LW6,$LR6;
+	set $L_Rigged,0;
+	goto L_Broadcast;
+}
+
+prontera,141,182,5	script	Lottery	76,{
+L_Begin:
+	mes "[Lottery]";
+	mes "Winning Lotto Numbers ("+$LID2+"):";
+	mes "^0000FF[" + $LW1 + "] [" + $LW2 + "] [" + $LW3 + "] [" + $LW4 + "] [" + $LW5 + "] [" + $LW6 + "]^000000";
+	if ($LID > 99999) mes "Your Ticket ("+#LID+"):";
+	if ($LID > 99999) mes "^FF0000[" + #LW1 + "] [" + #LW2 + "] [" + #LW3 + "] [" + #LW4 + "] [" + #LW5 + "] [" + #LW6 + "]^000000";
+	mes "Next Draw-ID: ^FF0000" + $LID + "^000000.";
+	next;
+	if (getgmlevel() > 90) goto L_GM;
+	menu "Claim Prize",L_Claim,"Buy New Ticket",L_Buy,"Cancel",L_Cancel;
+
+// PURCHASE TICKET
+L_Buy:
+	if (#LID == $LID && #L1 != 0) goto L_DoubleTicket;
+	mes "[Lottery]";
+	mes "Tickets cost ^0000FF" + $L_TicketPrice + "z^000000.";
+	mes "The Jackpot is ^FF0000" + $L_Prize_Money + "z^000000.";
+	next;
+	menu "Buy Ticket",-,"Cancel",L_Cancel;
+	if (Zeny < $L_TicketPrice) goto L_NoZeny;
+	set Zeny, Zeny-$L_TicketPrice;
+	mes "[Lottery]";
+	mes "Would you like your numbers hand picked or computer generated?";
+	next;
+	menu "Computer Generated",L_ComputerGen,"Hand Picked",L_HandPick,"Renew Ticket",L_Renew;
+
+// RENEW LAST TICKET
+L_Renew:
+	if ($LID < 99999) goto L_Invalid;
+	set #LID,$LID;
+	goto L_Confirm2;
+
+L_ComputerGen:
+// SELECTS RANDOM NUMBERS
+	set @L1,0;
+	set @L2,0;
+	set @L3,0;
+	set @L4,0;
+	set @L5,0;
+	set @L6,0;
+Pick1:
+	set @L1,rand (1,40);
+Pick2:
+	set @L2,rand (1,40);
+	if (@L2 == @L1) goto Pick2;
+Pick3:
+	set @L3,rand (1,40);
+	if (@L3 == @L2) goto Pick3;
+	if (@L3 == @L1) goto Pick3;
+Pick4:
+	set @L4,rand (1,40);
+	if (@L4 == @L2) goto Pick4;
+	if (@L4 == @L1) goto Pick4;
+	if (@L4 == @L3) goto Pick4;
+Pick5:
+	set @L5,rand (1,40);
+	if (@L5 == @L1) goto Pick5;
+	if (@L5 == @L2) goto Pick5;
+	if (@L5 == @L3) goto Pick5;
+	if (@L5 == @L4) goto Pick5;
+Pick6:
+	set @L6,rand (1,40);
+	if (@L6 == @L1) goto Pick6;
+	if (@L6 == @L2) goto Pick6;
+	if (@L6 == @L3) goto Pick6;
+	if (@L6 == @L4) goto Pick6;
+	if (@L6 == @L5) goto Pick6;
+	mes "[Lottery]";
+	mes "The computer has selected the following numbers:";
+	mes "^0000FF" + @L1 + " " + @L2 + " " + @L3 + " " + @L4 + " " + @L5 + " " + @L6 + "^000000";
+	next;
+	menu "Confirm",L_Confirm,"Re-Generate",L_ComputerGen;
+
+// HAND PICK LOTTERY NUMBERS
+L_HandPick:
+	mes "[Lottery]";
+	mes "Please pick your numbers (1-40):";
+	set @L1,0;
+	set @L2,0;
+	set @L3,0;
+	set @L4,0;
+	set @L5,0;
+	set @L6,0;
+Input1:
+	input @L1;
+	if (@L1 < 1 || @L1 > 40) goto Input1;
+	mes @L1;
+Input2:
+	input @L2;
+	if (@L2 < 1 || @L2 > 40) goto Input2;
+	if (@L2 == @L1) goto Input2;
+	mes @L2;
+Input3:
+	input @L3;
+	if (@L3 < 1 || @L3 > 40) goto Input3;
+	if (@L3 == @L1) goto Input3;
+	if (@L3 == @L2) goto Input3;
+	mes @L3;
+Input4:
+	input @L4;
+	if (@L4 < 1 || @L4 > 40) goto Input4;
+	if (@L4 == @L1) goto Input4;
+	if (@L4 == @L2) goto Input4;
+	if (@L4 == @L3) goto Input4;
+	mes @L4;
+Input5:
+	input @L5;
+	if (@L5 < 1 || @L5 > 40) goto Input5;
+	if (@L5 == @L1) goto Input5;
+	if (@L5 == @L2) goto Input5;
+	if (@L5 == @L3) goto Input5;
+	if (@L5 == @L4) goto Input5;
+	mes @L5;
+Input6:
+	input @L6;
+	if (@L6 < 1 || @L6 > 40) goto Input6;
+	if (@L6 == @L1) goto Input6;
+	if (@L6 == @L2) goto Input6;
+	if (@L6 == @L3) goto Input6;
+	if (@L6 == @L4) goto Input6;
+	if (@L6 == @L5) goto Input6;
+	mes @L6;
+	next;
+	mes "[Lottery]";
+	mes "Your numbers are:";
+	mes "^0000FF" + @L1 + " " + @L2 + " " + @L3 + " " + @L4 + " " + @L5 + " " + @L6 + "^000000";
+	next;
+	menu "Confirm",L_Confirm,"Re-Pick",L_HandPick;
+
+L_Confirm:
+	set #LW1,@L1;
+	set #LW2,@L2;
+	set #LW3,@L3;
+	set #LW4,@L4;
+	set #LW5,@L5;
+	set #LW6,@L6;
+	set #LID,$LID;
+L_Confirm2:
+	mes "[Lottery]";
+	mes "The live broadcasted draw is at 9pm.";
+	mes "You can claim your ticket between then and the next draw.";
+	next;
+	mes "[Lottery]";
+	mes "Good luck!";
+	close;
+
+L_Claim:
+	// CHECKS TICKET VALIDILITY
+	if (#LID != $LID2) goto L_Invalid;
+	// CHECKS HOW MANY NUMBERS MATCHED
+	set @LPrize,0;
+	if (#LW1 == $LW1) set @LPrize,@LPrize+1;
+	if (#LW1 == $LW2) set @LPrize,@LPrize+1;
+	if (#LW1 == $LW3) set @LPrize,@LPrize+1;
+	if (#LW1 == $LW4) set @LPrize,@LPrize+1;
+	if (#LW1 == $LW5) set @LPrize,@LPrize+1;
+	if (#LW1 == $LW6) set @LPrize,@LPrize+1;
+	if (#LW2 == $LW1) set @LPrize,@LPrize+1;
+	if (#LW2 == $LW2) set @LPrize,@LPrize+1;
+	if (#LW2 == $LW3) set @LPrize,@LPrize+1;
+	if (#LW2 == $LW4) set @LPrize,@LPrize+1;
+	if (#LW2 == $LW5) set @LPrize,@LPrize+1;
+	if (#LW2 == $LW6) set @LPrize,@LPrize+1;
+	if (#LW3 == $LW1) set @LPrize,@LPrize+1;
+	if (#LW3 == $LW2) set @LPrize,@LPrize+1;
+	if (#LW3 == $LW3) set @LPrize,@LPrize+1;
+	if (#LW3 == $LW4) set @LPrize,@LPrize+1;
+	if (#LW3 == $LW5) set @LPrize,@LPrize+1;
+	if (#LW3 == $LW6) set @LPrize,@LPrize+1;
+	if (#LW4 == $LW1) set @LPrize,@LPrize+1;
+	if (#LW4 == $LW2) set @LPrize,@LPrize+1;
+	if (#LW4 == $LW3) set @LPrize,@LPrize+1;
+	if (#LW4 == $LW4) set @LPrize,@LPrize+1;
+	if (#LW4 == $LW5) set @LPrize,@LPrize+1;
+	if (#LW4 == $LW6) set @LPrize,@LPrize+1;
+	if (#LW5 == $LW1) set @LPrize,@LPrize+1;
+	if (#LW5 == $LW2) set @LPrize,@LPrize+1;
+	if (#LW5 == $LW3) set @LPrize,@LPrize+1;
+	if (#LW5 == $LW4) set @LPrize,@LPrize+1;
+	if (#LW5 == $LW5) set @LPrize,@LPrize+1;
+	if (#LW5 == $LW6) set @LPrize,@LPrize+1;
+	if (#LW6 == $LW1) set @LPrize,@LPrize+1;
+	if (#LW6 == $LW2) set @LPrize,@LPrize+1;
+	if (#LW6 == $LW3) set @LPrize,@LPrize+1;
+	if (#LW6 == $LW4) set @LPrize,@LPrize+1;
+	if (#LW6 == $LW5) set @LPrize,@LPrize+1;
+	if (#LW6 == $LW6) set @LPrize,@LPrize+1;
+
+	if (@LPrize == 6) goto LWinBig;
+	if (@LPrize > 3 && @LPrize < 6) goto LWinSmall;
+
+// NO WINNER
+	mes "[Lottery]";
+	mes "Bad luck, it appears you do not hold a winning ticket.";
+	next;
+	mes "[Lottery]";
+	mes "Better luck next time!.";
+	close;
+
+// MATCHED ALL SIX
+LWinBig:
+	mes "[Lottery]";
+	mes "You have matched all six numbers!";
+	mes "Jackpot!";
+	mes "You've won ^0000FF" + $L_Prize_Money + "z^000000.";
+	set Zeny, Zeny+$L_Prize_Money;
+	Announce "Lottery: " + strcharinfo(0) + " has won the JACKPOT of " + $L_Prize_Money + "z!",8;
+	set #LID,0;
+	close;
+
+// MATCHED AT LEAST 4
+LWinSmall:
+	mes "[Lottery]";
+	mes "You have matched at least 4 numbers!";
+	mes "You've won ^0000FF" + $L_Prize_Money_Small + "z^000000.";
+	set Zeny, Zeny+$L_Prize_Money_Small;
+	Announce "Lottery: " + strcharinfo(0) + " has won a prize of " + $L_Prize_Money_Small + "z!",8;
+	set #LID,0;
+	close;
+
+// NO ZENY
+L_NoZeny:
+	mes "[Lottery]";
+	mes "You can't afford a lottery ticket.";
+	close;
+
+// INVALID TICKET
+L_Invalid:
+	mes "[Lottery]";
+	mes "I'm sorry but it appears that you have an invalid ticket.";
+	close;
+
+// DOUBLE TICKET
+L_DoubleTicket:
+	mes "[Lottery]";
+	mes "It appears that you already have a ticket for today.";
+	mes "You may only purchase one ticket per draw.";
+	close;
+
+L_Cancel:
+	mes "[Lottery]";
+	mes "Come back soon!";
+	close;
+
+// GM MENU (Lets you manually do draws)
+L_GM:
+	menu "Claim Prize",L_Claim,"Buy New Ticket",L_Buy,"[GM]Do Draw Now",-,"[GM]Rig the Lottery",L_GM_Rig,"Cancel",L_Cancel;
+
+	// CHECKS IF LOTTERY IS RIGGED
+	if ($L_Rigged == 1) goto L_Rigged_Draw;
+	// GENERATES RANDOM NUMBERS 1-40
+GMPick1:
+	set $LW1,rand (1,40);
+
+GMPick2:
+	set $LW2,rand (1,40);
+	if ($LW2 == $LW1) goto GMPick2;
+
+GMPick3:
+	set $LW3,rand (1,40);
+	if ($LW3 == $LW2) goto GMPick3;
+	if ($LW3 == $LW1) goto GMPick3;
+
+GMPick4:
+	set $LW4,rand (1,40);
+	if ($LW4 == $LW2) goto GMPick4;
+	if ($LW4 == $LW1) goto GMPick4;
+	if ($LW4 == $LW3) goto GMPick4;
+
+GMPick5:
+	set $LW5,rand (1,40);
+	if ($LW5 == $LW1) goto GMPick5;
+	if ($LW5 == $LW2) goto GMPick5;
+	if ($LW5 == $LW3) goto GMPick5;
+	if ($LW5 == $LW4) goto GMPick5;
+
+GMPick6:
+	set $LW6,rand (1,40);
+	if ($LW6 == $LW1) goto GMPick6;
+	if ($LW6 == $LW2) goto GMPick6;
+	if ($LW6 == $LW3) goto GMPick6;
+	if ($LW6 == $LW4) goto GMPick6;
+	if ($LW6 == $LW5) goto GMPick6;
+
+// BROADCASTS DRAW
+L_Broadcast:
+	Announce "Lottery: Welcome to the special GM's lotto draw!",8;
+	Announce "The numbers are as follows: [" + $LW1 + "] [" + $LW2 + "] [" + $LW3 + "] [" + $LW4 + "] [" + $LW5 + "] [" + $LW6 + "]",8;
+	Announce "Congratulations to the winners!",8;
+
+// GENERATES DRAW ID CODE
+L_GenID:
+	set $LID2,$LID;
+	// SETS TOMORROW'S ID NUMBER
+	set $LID,rand (100000,999999);
+	close;
+
+// SETS DRAW TO RIGGED NUMBERS
+L_Rigged_Draw:
+	set $LW1,$LR1;
+	set $LW2,$LR2;
+	set $LW3,$LR3;
+	set $LW4,$LR4;
+	set $LW5,$LR5;
+	set $LW6,$LR6;
+	set $L_Rigged,0;
+	goto L_Broadcast;
+
+// ALLOWS GM TO DO A RIGGED DRAW
+L_GM_Rig:
+	mes "[Lottery]";
+	mes "Please pick your numbers (1-40):";
+	set $LR1,0;
+	set $LR2,0;
+	set $LR3,0;
+	set $LR4,0;
+	set $LR5,0;
+	set $LR6,0;
+GMInput1:
+	Input $LR1;
+	if ($LR1 < 1 || $LR1 > 40) goto GMInput1;
+	mes $LR1;
+GMInput2:
+	Input $LR2;
+	if ($LR2 < 1 || $LR2 > 40) goto GMInput2;
+	if ($LR2 == $LR1) goto GMInput2;
+	mes $LR2;
+GMInput3:
+	Input $LR3;
+	if ($LR3 < 1 || $LR3 > 40) goto GMInput3;
+	if ($LR3 == $LR1) goto GMInput3;
+	if ($LR3 == $LR2) goto GMInput3;
+	mes $LR3;
+GMInput4:
+	Input $LR4;
+	if ($LR4 < 1 || $LR4 > 40) goto GMInput4;
+	if ($LR4 == $LR1) goto GMInput4;
+	if ($LR4 == $LR2) goto GMInput4;
+	if ($LR4 == $LR3) goto GMInput4;
+	mes $LR4;
+GMInput5:
+	Input $LR5;
+	if ($LR5 < 1 || $LR5 > 40) goto GMInput5;
+	if ($LR5 == $LR1) goto GMInput5;
+	if ($LR5 == $LR2) goto GMInput5;
+	if ($LR5 == $LR3) goto GMInput5;
+	if ($LR5 == $LR4) goto GMInput5;
+	mes $LR5;
+GMInput6:
+	Input $LR6;
+	if ($LR6 < 1 || $LR6 > 40) goto GMInput6;
+	if ($LR6 == $LR1) goto GMInput6;
+	if ($LR6 == $LR2) goto GMInput6;
+	if ($LR6 == $LR3) goto GMInput6;
+	if ($LR6 == $LR4) goto GMInput6;
+	if ($LR6 == $LR5) goto GMInput6;
+	mes $LR6;
+	next;
+	mes "[Lottery]";
+	mes "Lottery rigged for next draw.";
+	set $L_Rigged,1;
+	close;
+}

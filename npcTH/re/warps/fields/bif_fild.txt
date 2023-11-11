@@ -1,0 +1,44 @@
+//===== rAthena Script =======================================
+//= Bifrost Field Warp Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Bifrost Field
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Added official warp scripts. [Euphy]
+//= 1.2 Updated to match the official script. [Euphy]
+//============================================================
+
+splendide,275,390,0	warp	bifrost_field0001	1,1,bif_fild01,316,50
+bif_fild01,318,48,0	warp	bifrost_field0002	1,1,splendide,271,382
+mora,182,74,0	warp	bifrost_field0003	1,1,bif_fild02,286,327
+mora,20,159,0	warp	bifrost_field0004	1,1,bif_fild02,99,308
+mora,56,25,0	warp	bifrost_field0005	1,1,bif_fild02,176,162
+
+-	script	bifrost_field0000	-1,{
+	mes "ในตอนท้ายของเส้นทางเล็กๆ ผ่านสวนดอกไม้ที่สดใส";
+	mes "เป็นทางเข้าสิ่งที่ดูเหมือนเนินเขาเล็ก ๆ ";
+	next;
+	if(select("น็อคน็อค: นี่เป็นหนอนหรือไม่") == 1) {
+		mes "เมื่อคุณเคาะสิ่งที่เหมือนประตูเพื่อความสนุก";
+		mes "ประตูเปิดออกและคุณรู้สึกว่ามีพลังลึกลับดึงคุณเข้าไปข้างใน";
+		close2;
+		switch(atoi(charat(strnpcinfo(2),9))) {
+			case 1: warp "mora",179,74; end;
+			case 2: warp "mora",22,157; end;
+			case 3: warp "mora",58,27; end;
+		}
+	}
+	close;
+OnTouch_:
+	specialeffect EF_LEVEL99_4;
+	end;
+}
+bif_fild02,285,332,0	duplicate(bifrost_field0000)	Small Hole#ep14_mora1	844
+bif_fild02,95,310,0	duplicate(bifrost_field0000)	Small Hole#ep14_mora2	844
+bif_fild02,174,162,0	duplicate(bifrost_field0000)	Small Hole#ep14_mora3	844

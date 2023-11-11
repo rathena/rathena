@@ -1,0 +1,263 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable return warp.
+//===== Description: ========================================= 
+//= Disables the following items:
+//=   Butterfly Wing (602), Siege Teleport Scroll (14591),
+//=   Yellow/Green/Red/Blue Butterfly Wings (14582-14585),
+//=   Dungeon Teleport Scrolls (14527/14581)
+//= Also restricts "warpparty" and "warpguild" script commands.
+//===== Additional Comments: ================================= 
+//= 1.3 According to the patch, enabled Butterfly wings in the Castles. [Lupus]
+//= 1.4 Enabled Butterfly wings on PvP maps. [Skotlex]
+//= 1.4a Added job_knt. [Samuray22]
+//= 1.5 Commented out new_zone entries. [L0ne_W0lf]
+//= 1.6 Enabled B. wings on all maps but que_hugel. [L0ne_W0lf]
+//============================================================
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
+//ayo_in01	mapflag	noreturn
+//ayo_in02	mapflag	noreturn
+//alb_ship	mapflag	noreturn
+//alberta_in	mapflag	noreturn
+//aldeba_in	mapflag	noreturn
+//ama_in01	mapflag	noreturn
+//ama_in02	mapflag	noreturn
+//ama_test	mapflag	noreturn
+//cmd_in01	mapflag	noreturn
+//cmd_in02	mapflag	noreturn
+//gef_tower	mapflag	noreturn
+//geffen_in	mapflag	noreturn
+//gon_test	mapflag	noreturn
+//gon_in	mapflag	noreturn
+//in_orcs01	mapflag	noreturn
+//izlude_in	mapflag	noreturn
+//hu_in01	mapflag	noreturn
+//jawaii_in	mapflag	noreturn
+//lou_in01	mapflag	noreturn
+//lou_in02	mapflag	noreturn
+//moc_castle	mapflag	noreturn
+//morocc_in	mapflag	noreturn
+//mosk_in	mapflag	noreturn
+//new_zone01	mapflag	noreturn
+//new_zone02	mapflag	noreturn
+//new_zone03	mapflag	noreturn
+//new_zone04	mapflag	noreturn
+//nif_in	mapflag	noreturn
+//payon_in01	mapflag	noreturn
+//payon_in02	mapflag	noreturn
+//payon_in03	mapflag	noreturn
+//prt_are_in	mapflag	noreturn
+//prt_are01	mapflag	noreturn
+//prt_castle	mapflag	noreturn
+//prt_church	mapflag	noreturn
+//prt_in	mapflag	noreturn
+//um_in	mapflag	noreturn
+//xmas_in	mapflag	noreturn
+//yuno_in01	mapflag	noreturn
+//yuno_in03	mapflag	noreturn
+//yuno_in04	mapflag	noreturn
+//yuno_in05	mapflag	noreturn
+//que_sign01	mapflag	noreturn
+//ein_in01	mapflag	noreturn
+//airport	mapflag	noreturn
+//airplane	mapflag	noreturn
+//airplane_01	mapflag	noreturn
+//yuno_pre	mapflag	noreturn
+//y_airport	mapflag	noreturn
+//lhz_airport	mapflag	noreturn
+//lhz_in01	mapflag	noreturn
+//lhz_in02	mapflag	noreturn
+//lhz_in03	mapflag	noreturn
+//lhz_que01	mapflag	noreturn
+//kh_mansion	mapflag	noreturn
+//kh_rossi	mapflag	noreturn
+//kh_school	mapflag	noreturn
+//kh_vila	mapflag	noreturn
+//ra_in01	mapflag	noreturn
+//ra_temin	mapflag	noreturn
+//ve_in	mapflag	noreturn
+//ve_in02	mapflag	noreturn
+
+//============================================================
+// Job Quests
+//============================================================
+//job_sword1	mapflag	noreturn
+//job_thief1	mapflag	noreturn
+// 2-1 Classes
+//job_knt	mapflag	noreturn
+//job_hunte	mapflag	noreturn
+//job_prist	mapflag	noreturn
+//job_wiz	mapflag	noreturn
+//in_hunter	mapflag	noreturn
+//in_moc_16	mapflag	noreturn
+// 2-2 Classes
+//alde_alche	mapflag	noreturn
+//job_cru	mapflag	noreturn
+//job_duncer	mapflag	noreturn
+//job_monk	mapflag	noreturn
+//monk_test	mapflag	noreturn
+//monk_in	mapflag	noreturn
+//in_rogue	mapflag	noreturn
+//job_sage	mapflag	noreturn
+//que_ng	mapflag	noreturn
+
+//============================================================
+// Quest Places
+//============================================================
+//que_god01	mapflag	noreturn
+//que_god02	mapflag	noreturn
+//que_bingo	mapflag	noreturn
+que_hugel	mapflag	noreturn
+//que_thor	mapflag	noreturn
+//poring_c01	mapflag	noreturn
+//poring_c02	mapflag	noreturn
+
+//============================================================
+// WoE:FE Castles
+//============================================================
+//= 1.3 According to the kRO patch, enabled Butterfly wings in the Castles
+//aldeg_cas01	mapflag	noreturn
+//aldeg_cas02	mapflag	noreturn
+//aldeg_cas03	mapflag	noreturn
+//aldeg_cas04	mapflag	noreturn
+//aldeg_cas05	mapflag	noreturn
+//gefg_cas01	mapflag	noreturn
+//gefg_cas02	mapflag	noreturn
+//gefg_cas03	mapflag	noreturn
+//gefg_cas04	mapflag	noreturn
+//gefg_cas05	mapflag	noreturn
+//payg_cas01	mapflag	noreturn
+//payg_cas02	mapflag	noreturn
+//payg_cas03	mapflag	noreturn
+//payg_cas04	mapflag	noreturn
+//payg_cas05	mapflag	noreturn
+//prtg_cas01	mapflag	noreturn
+//prtg_cas02	mapflag	noreturn
+//prtg_cas03	mapflag	noreturn
+//prtg_cas04	mapflag	noreturn
+//prtg_cas05	mapflag	noreturn
+//nguild_alde	mapflag	noreturn
+//nguild_gef	mapflag	noreturn
+//nguild_pay	mapflag	noreturn
+//nguild_prt	mapflag	noreturn
+
+//============================================================
+// GvG Arenas
+//============================================================
+//guild_vs1	mapflag	noreturn
+//guild_vs2	mapflag	noreturn
+//guild_vs3	mapflag	noreturn
+//guild_vs4	mapflag	noreturn
+//guild_vs5	mapflag	noreturn
+
+//============================================================
+// Arenas
+//============================================================
+//arena_room	mapflag	noreturn
+//sec_in01	mapflag	noreturn
+//sec_in02	mapflag	noreturn
+
+//============================================================
+// PvP Arenas
+//============================================================
+//pvp_y_room	mapflag	noreturn
+//pvp_y_1-1	mapflag	noreturn
+//pvp_y_1-2	mapflag	noreturn
+//pvp_y_1-3	mapflag	noreturn
+//pvp_y_1-4	mapflag	noreturn
+//pvp_y_1-5	mapflag	noreturn
+//pvp_y_2-1	mapflag	noreturn
+//pvp_y_2-2	mapflag	noreturn
+//pvp_y_2-3	mapflag	noreturn
+//pvp_y_2-4	mapflag	noreturn
+//pvp_y_2-5	mapflag	noreturn
+//pvp_y_3-1	mapflag	noreturn
+//pvp_y_3-2	mapflag	noreturn
+//pvp_y_3-3	mapflag	noreturn
+//pvp_y_3-4	mapflag	noreturn
+//pvp_y_3-5	mapflag	noreturn
+//pvp_y_4-1	mapflag	noreturn
+//pvp_y_4-2	mapflag	noreturn
+//pvp_y_4-3	mapflag	noreturn
+//pvp_y_4-4	mapflag	noreturn
+//pvp_y_4-5	mapflag	noreturn
+//pvp_y_5-1	mapflag	noreturn
+//pvp_y_5-2	mapflag	noreturn
+//pvp_y_5-3	mapflag	noreturn
+//pvp_y_5-4	mapflag	noreturn
+//pvp_y_5-5	mapflag	noreturn
+//pvp_y_6-1	mapflag	noreturn
+//pvp_y_6-2	mapflag	noreturn
+//pvp_y_6-3	mapflag	noreturn
+//pvp_y_6-4	mapflag	noreturn
+//pvp_y_6-5	mapflag	noreturn
+//pvp_y_7-1	mapflag	noreturn
+//pvp_y_7-2	mapflag	noreturn
+//pvp_y_7-3	mapflag	noreturn
+//pvp_y_7-4	mapflag	noreturn
+//pvp_y_7-5	mapflag	noreturn
+//pvp_y_8-1	mapflag	noreturn
+//pvp_y_8-2	mapflag	noreturn
+//pvp_y_8-3	mapflag	noreturn
+//pvp_y_8-4	mapflag	noreturn
+//pvp_y_8-5	mapflag	noreturn
+//pvp_n_room	mapflag	noreturn
+//pvp_n_1-1	mapflag	noreturn
+//pvp_n_1-2	mapflag	noreturn
+//pvp_n_1-3	mapflag	noreturn
+//pvp_n_1-4	mapflag	noreturn
+//pvp_n_1-5	mapflag	noreturn
+//pvp_n_2-1	mapflag	noreturn
+//pvp_n_2-2	mapflag	noreturn
+//pvp_n_2-3	mapflag	noreturn
+//pvp_n_2-4	mapflag	noreturn
+//pvp_n_2-5	mapflag	noreturn
+//pvp_n_3-1	mapflag	noreturn
+//pvp_n_3-2	mapflag	noreturn
+//pvp_n_3-3	mapflag	noreturn
+//pvp_n_3-4	mapflag	noreturn
+//pvp_n_3-5	mapflag	noreturn
+//pvp_n_4-1	mapflag	noreturn
+//pvp_n_4-2	mapflag	noreturn
+//pvp_n_4-3	mapflag	noreturn
+//pvp_n_4-4	mapflag	noreturn
+//pvp_n_4-5	mapflag	noreturn
+//pvp_n_5-1	mapflag	noreturn
+//pvp_n_5-2	mapflag	noreturn
+//pvp_n_5-3	mapflag	noreturn
+//pvp_n_5-4	mapflag	noreturn
+//pvp_n_5-5	mapflag	noreturn
+//pvp_n_6-1	mapflag	noreturn
+//pvp_n_6-2	mapflag	noreturn
+//pvp_n_6-3	mapflag	noreturn
+//pvp_n_6-4	mapflag	noreturn
+//pvp_n_6-5	mapflag	noreturn
+//pvp_n_7-1	mapflag	noreturn
+//pvp_n_7-2	mapflag	noreturn
+//pvp_n_7-3	mapflag	noreturn
+//pvp_n_7-4	mapflag	noreturn
+//pvp_n_7-5	mapflag	noreturn
+//pvp_n_8-1	mapflag	noreturn
+//pvp_n_8-2	mapflag	noreturn
+//pvp_n_8-3	mapflag	noreturn
+//pvp_n_8-4	mapflag	noreturn
+//pvp_n_8-5	mapflag	noreturn
+//pvp_2vs2	mapflag	noreturn
+
+//============================================================
+// Battlegrounds
+//============================================================
+bat_c01	mapflag	noreturn
+bat_c02	mapflag	noreturn
+bat_c03	mapflag	noreturn
+bat_b01	mapflag	noreturn
+bat_b02	mapflag	noreturn
+bat_a01	mapflag	noreturn
+bat_a02	mapflag	noreturn
+
+//============================================================
+// Events
+//============================================================
+//evt_zombie	mapflag	noreturn

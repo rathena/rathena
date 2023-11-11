@@ -1,0 +1,408 @@
+//===== rAthena Script =======================================
+//= Alberta Town
+//===== By: ==================================================
+//= DZeroX
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Town-specific Alberta NPCs
+//===== Additional Comments: =================================
+//= 1.0 Converted from Aegis 10.4 [DZeroX]
+//= 1.1 Optimized, missing next, REMOVED .GATs! again [Lupus]
+//= 1.2 Implemented progression fixes provided by $ephiroth. [L0ne_W0lf]
+//= 1.2b More pregression clean up provided by Barron-Monster. [L0ne_W0lf]
+//= 1.3 Removed npc "Tourist#al" as it's a quest NPC. [L0ne_W0lf]
+//= 1.4 Removed "Fastidious Old Man" duplicate. [L0ne_W0lf]
+//= 1.5 Updated to match AEGIS script. [Kisuka]
+//= 1.6 Added Izlude RE coordinates. [Euphy]
+//= 1.7 Bug fixes and syntax. [Capuche]
+//============================================================
+
+alberta,97,51,0	script	Fabian	84,{
+	mes "[Fabian]";
+	mes "Man... When you travel all around the world, you'll hear of some crazy things.";
+	next;
+	mes "[Fabian]";
+	mes "Once, I heard that there are Cards which contain the power of monsters. If someone happens to get their hands on a card, they'll be able to use that monster's power.";
+	next;
+	mes "[Fabian]";
+	mes "I'm guessing it's some sort of fad or scam, where they make you collect all the cards or whatever. I mean, how can a card really hold the power of a monster?!";
+	next;
+	mes "[Fabian]";
+	mes "Seriously...";
+	close;
+}
+
+alberta,53,39,0	script	Steiner	100,{
+	mes "[Steiner]";
+	mes "Oh...!";
+	mes "Welcome to Alberta,";
+	mes "young adventurer!";
+	next;
+	mes "[Steiner]";
+	mes "Pardon me if I seem distracted. I'm milling about, trying to make a plan. You see, I hear that there is a store in Geffen that sells armor that is resistant to magic.";
+	next;
+	mes "[Steiner]";
+	mes "If I buy a lot of them in bulk, and then resell them here for a higher price...";
+	close;
+}
+
+alberta_in,20,183,0	script	Chad	1_M_03,{
+	mes "[Chad]";
+	mes "People say the legendary weapon Gungnir never misses its target. I wonder if it's possibly true...";
+	next;
+	mes "[Chad]";
+	mes "People also say that babies are assembled by the storks before delivery, girls dig guys who act like jerks, and that Santa Claus exists! But only in Lutie.";
+	next;
+	mes "[Chad]";
+	mes "I wonder...";
+	mes "If any of that";
+	mes "is possibly";
+	mes "true...";
+	close;
+}
+
+alberta,131,139,2	script	Drunken Old Man	1_M_JOBGUIDER,{
+	mes "[Deagle]";
+	mes "^666666*Hiccup*^000000";
+	mes "Wh-what are you";
+	mes "staring at? Get lost!!";
+	next;
+	switch(select("Say nothing.","Leave him alone.")) {
+	case 1:
+		mes "[Deagle]";
+		mes "Hahahaha ^666666*hiccup*^000000... You've got some nerve. I may look worthless now, but I used to be a sailor on the 'Going Mary.'";
+		next;
+		switch(select("Never heard of it.","Really? No kidding!")) {
+		case 1:
+			mes "[Deagle]";
+			mes "Never heard of it?! Everybody knows th'notorious pirate ship 'Going Mary!' ^666666*Hiccup~*^000000";
+			next;
+			mes "[Deagle]";
+			mes "Ah~ The ol'days. If only... If only we hadn't run into that STORM...^666666*hiccup*^000000";
+			next;
+			mes "[Deagle]";
+			mes "AH~ Captain. I miss our cap'n more than anything... No foe survived before cap'n's sword.";
+			close;
+		case 2:
+			mes "[Deagle]";
+			mes "That's right! NOBODY meshes with the crew of the 'Going Mary!' And nobody can beat out cap'n in a sword fight!";
+			next;
+			mes "[Deagle]";
+			mes "CAPTAIN~!!! ^666666*HICCUP~*^000000 He would swing his sword like this, then... THEN!!";
+			next;
+			mes "[Deagle]";
+			mes "The bastard the captain was fighting, and anyone of his friends near him, were surrounded in flame!";
+			next;
+			mes "[Deagle]";
+			mes "Man, that sword must have had some sort of mysterious power, or the captain was just that good...!";
+			next;
+			mes "[Deagle]";
+			mes "Phew~~ ^666666*Sob* *Sob...*^000000 God, I miss everyone! Now I'm depressed! Please, go away now.";
+			close;
+		}
+	case 2:
+		mes "[Deagle]";
+		mes "That's right!";
+		mes "Go AWAY~";
+		close;
+	}
+}
+
+alberta,58,80,2	script	Shakir	99,{
+	mes "[Shakir]";
+	if (rand(2)) {
+		mes "We Merchants have our own negotiating skill when we sell goods. This skill can get us more money than when other people sell goods.";
+		next;
+		mes "[Shakir]";
+		mes "It's more than just yelling 'You'll have to give more money please!' You need to have charisma, and master rhetoric!";
+		next;
+		mes "[Shakir]";
+		mes "We can get up to 24 % more zeny with this incredible skill. But remember to train hard to acquire it!!";
+	} else {
+		mes "We Merchants can";
+		mes "open roadside stands";
+		mes "to do business.";
+		next;
+		mes "[Shakir]";
+		mes "With the Discount skill, we can buy goods really cheap from the stores in towns and load them into the cart we rent.";
+		next;
+		mes "[Shakir]";
+		mes "Then afterwards, we can travel anywhere, and sells our goods to make a profit!";
+		next;
+		mes "[Shakir]";
+		mes "This way, business is more convenient and safe. Don't fall asleep, although it's too easy to do that.";
+	}
+	close;
+}
+
+alberta,62,156,2	script	Sonya	102,{
+	mes "[Sonya]";
+	switch(rand(3)){
+	case 0:
+		mes "Hey, you know, this one time I was walking through the forest and I saw this little green stem moving around.";
+		next;
+		mes "[Sonya]";
+		mes "I went to see what it was and when I went to touch it. The stem actually slapped my hand!";
+		next;
+		mes "[Sonya]";
+		mes "It startled me, so I jumped back a bit and then I realized it wasn't a stem, but a very small animal.";
+		next;
+		mes "[Sonya]";
+		mes "I was lucky I didn't upset it. Even the smallest animal can be dangerous if angered.";
+		close;
+	case 1:
+		mes "You know those lazy looking bears that live in the forest on the way to Payon?";
+		next;
+		mes "[Sonya]";
+		mes "Just for fun, I threw a rock at it and all of sudden it rushed at me! I was sooooo scared, I started to run away, then BAM!!!";
+		next;
+		mes "[Sonya]";
+		mes "It ran into a low tree branch and knocked itself out! I swear, I'll never provoke an animal for fun again!";
+		close;
+	case 2:
+		mes "I once saw a pack of wolves take on one of those huge, lazy bears!";
+		next;
+		mes "[Sonya]";
+		mes "Wolves are much more cooperative than they may seem. If one of them is attacked, then any nearby wolves will run to help.";
+		next;
+		mes "[Sonya]";
+		mes "I'd think twice if you ever want to fight one when others of its kind are around. Be careful: don't get ganged up on!";
+		close;
+	}
+}
+
+alberta,93,174,2	script	Grandmother Alma	103,{
+	mes "[Grandmother Alma]";
+	mes "Some time ago,";
+	mes "a derelict ship";
+	mes "drifted into";
+	mes "Alberta harbour.";
+	next;
+	mes "[Grandmother Alma]";
+	mes "Hoping to save any survivors, some of the townspeople ventured into the ship. However, they all ran out terrified, saying that corpses were walking around inside the ship.";
+	next;
+	mes "[Grandmother Alma]";
+	mes "The ship was also packed with dangerous marine organisms, and they couldn't get inside, even if they wanted to.";
+	next;
+	mes "[Grandmother Alma]";
+	mes "We couldn't do anything about that ominous looking ship, and just left it as it was. Nowadays, exploration teams try to enter that ship and wipe out its monsters.";
+	next;
+	mes "[Grandmother Alma]";
+	mes "So it might be a good experience for a young person like yourself to be a recruit. But, it's still not worth risking your life if you're not strong enough.";
+	close;
+}
+
+alberta,189,151,5	script	Fisk	4W_SAILOR,{
+	mes "[Fisk]";
+	mes "Ahoy mate,";
+	mes "where'd ya";
+	mes "wanna go?";
+	next;
+	switch(select("Sunken Ship -> 250 zeny.","Izlude Marina -> 500 zeny.","Never mind.")) {
+	case 1:
+		if (Zeny < 250) {
+			mes "[Fisk]";
+			mes "Hey now, don't try to cheat me! I said 250 zeny!";
+			close;
+		}
+		Zeny = Zeny - 250;
+		warp "alb2trea",43,53;
+		end;
+	case 2:
+		if (Zeny < 500) {
+			mes "[Fisk]";
+			mes "Ain't no way yer getting there without the 500 zeny first!";
+			close;
+		}
+		Zeny = Zeny - 500;
+		if (checkre(0))
+			warp "izlude",195,212;
+		else
+			warp "izlude",176,182;
+		end;
+	case 3:
+		mes "[Fisk]";
+		mes "Alright...";
+		mes "Landlubber.";
+		close;
+	}
+}
+
+alb2trea,39,50,6	script	Fisk#a2t	4W_SAILOR,{
+	mes "[Fisk]";
+	mes "So you wanna head back to the mainland in Alberta, eh?";
+	next;
+	if (select("Yes please.","I changed my mind.") == 1)
+		warp "alberta",192,169;
+	close;
+}
+
+alberta,195,151,2	script	Paul	4_M_04,{
+	mes "[Paul]";
+	mes "Good day~";
+	mes "Would you like";
+	mes "to join the";
+	mes "exploration team";
+	mes "of the Sunken Ship?";
+	next;
+	mes "[Paul]";
+	mes "Oh! Before you join, I must warn you. If you're not that strong, you may not want to go.";
+	next;
+	mes "[Paul]";
+	mes "So, want";
+	mes "to sign up?";
+	mes "The admission";
+	mes "fee is only";
+	mes "200 Zeny.";
+	next;
+	switch(select("Sign me up!","Uh, no thanks.")) {
+	case 1:
+		if (Zeny < 200) {
+			mes "[Paul]";
+			mes "It seems you don't have the money, my friend. But please come back when you're able to pay.";
+			close;
+		}
+		Zeny = Zeny - 200;
+		warp "alb2trea",62,69;
+		close;
+	case 2:
+		mes "[Paul]";
+		mes "Alright, well...";
+		mes "I'll be around";
+		mes "if you change";
+		mes "your mind.";
+		close;
+	}
+}
+
+alberta,190,173,4	script	Phelix	4_M_03,{
+	mes "[Phelix]";
+	if ((MaxWeight - Weight) < 10000) {
+		mes "Wait a moment!!";
+		mes "You have brought too many things!";
+		mes "You cannot accept any more items!";
+		mes "Please reduce the amount of items,";
+		mes "then come see me again.";
+		close;
+	}
+	if (@event_zelopy == 0) {
+		mes "The hell are you doing here?";
+		mes "There is nothing you can get for free on this ship, if you want somethin', work for it!!";
+		next;
+		mes "[Phelix]";
+		mes "Hmm, so why don't you bring me 10 Jellopies and I will give 1 potion. How's that sound?";
+		mes "Or if that's too hard for your pansy ass, 3 Jellopies for 1 Carrot.";
+		next;
+		mes "[Phelix]";
+		mes "If you're interested in my offer, get me the stuff I mentioned.";
+		@event_zelopy = 1;
+		close;
+	}
+	mes "Hmm.. you want to exchange Jellopies for Red Potions or some Carrots eh? Well.. which one?";
+	next;
+	switch(select("Red Potions please.","Carrots please.")) {
+	case 1:
+		mes "[Phelix]";
+		mes "Alright...";
+		mes "Let's see";
+		mes "what'cha got...";
+		next;
+		mes "[Phelix]";
+		if (countitem(909) < 10) {
+			mes "Hey! Weren't you listening? I said 10 Jellopies for 1 Red Potion.. are ya deaf?";
+			close;
+		} else {
+			.@max = countitem(909)/10;
+			mes "Hmm, not bad...";
+			mes "How many potions";
+			mes "do you want to get?";
+			next;
+			switch(select("As many as I can, please.","I want this many.","Never mind, I like my jellopy.")) {
+			case 1:
+				delitem 909,.@max*10;// Jellopy
+				getitem 501,.@max;// Red_Potion
+				break;
+			case 2:
+				mes "[Phelix]";
+				mes "I'm not giving you more than 100 at a time so don't bother, OK? If you don't want any, just say '0'.";
+				mes "Right now, the most you can get is " + .@max + " but remember, 100 at most, you want to break my back?.";
+				input .@amount;
+				next;
+				mes "[Phelix]";
+				if (.@amount <= 0) {
+					mes "Much obliged, come again anytime.";
+					close;
+				}
+				if (.@amount > 100) {
+					mes "Hey, what'd I say? 100 at a time at most, you're trying to kill me aren't you!";
+					close;
+				}
+				if (countitem(909) < .@amount*10) {
+					mes "Hmm, it looks like you don't have enough. Go get more Jellopies if you want anything else from me.";
+					close;
+				}
+				delitem 909,.@amount*10;// Jellopy
+				getitem 501,.@amount;// Red_Potion
+				break;
+			case 3:
+				mes "[Phelix]";
+				mes "No problem,";
+				mes "see you next time.";
+				close;
+			}
+			mes "[Phelix]";
+			mes "There you go! As I promised. Don't go suckin' them all down at once.";
+			close;
+		}
+	case 2:
+		mes "[Phelix]";
+		mes "Alright, let's see what ya got...";
+		next;
+		mes "[Phelix]";
+		if (countitem(909) < 3) {
+			mes "Hmm, look pansy ass, I said 3 Jellopies for 1 Carrot.. got it?";
+			close;
+		}
+		.@max = countitem(909)/3;
+		mes "Not too bad pansy...";
+		mes "How many do you want?";
+		next;
+		switch(select("As many as I can get, please","I want this many.","Never mind, I like my jellopy.")) {
+		case 1:
+			delitem 909,.@max*3;// Jellopy
+			getitem 515,.@max;// Carrot
+			break;
+		case 2:
+			mes "[Phelix]";
+			mes "Right I'm not giving you more than 100 at a time so don't bother, okay? If you don't want any, just say '0'.";
+			input .@amount;
+			next;
+			mes "[Phelix]";
+			if (.@amount == 0) {
+				mes "Alright then, see you next time.";
+				close;
+			}
+			if (.@amount > 100) {
+				mes "Hey pansy ass, I said 100 at most, no more than that! I'm not going to break my back for the likes of you!";
+				close;
+			}
+			if (countitem(909) < .@amount*3) {
+				mes "Seems you don't have enough. Go get some more if you want anything else.";
+				close;
+			}
+			delitem 909,.@amount*3;// Jellopy
+			getitem 515,.@amount;// Carrot
+			break;
+		case 3:
+			mes "[Phelix]";
+			mes "Catch'ya later.";
+			close;
+		}
+		mes "[Phelix]";
+		mes "There you go~! As I promised. Try not to stuff yer face.";
+		close;
+	}
+}

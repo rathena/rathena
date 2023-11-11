@@ -1,0 +1,28 @@
+//===== rAthena Script =======================================
+//= Mercenary related NPCs
+//===== By: ==================================================
+//= Daegaladh
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Sells Lancer, Sword, and Archer mercenaries,
+//= along with related mercenary items.
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Change the hidden name to fix a bug. [Capuche]
+//============================================================
+
+izlude,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword	4_M_JOB_KNIGHT2
+izlude_a,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword1	4_M_JOB_KNIGHT2
+izlude_b,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword2	4_M_JOB_KNIGHT2
+izlude_c,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword3	4_M_JOB_KNIGHT2
+izlude_d,47,170,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Sword4	4_M_JOB_KNIGHT2
+
+izlude,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Sword	4_F_HUWOMAN
+izlude_a,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_a	4_F_HUWOMAN
+izlude_b,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_b	4_F_HUWOMAN
+izlude_c,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_c	4_F_HUWOMAN
+izlude_d,55,170,4	duplicate(MercMerchant)	Mercenary Merchant#Swo_d	4_F_HUWOMAN

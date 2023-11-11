@@ -1,0 +1,195 @@
+//===== rAthena Script =======================================
+//= Eden Group Quests - Mission [91 - 99]
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 91 - 99.
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Chilly]
+//= 1.1 Some little improvements here and there. [Masao]
+//= 1.2 Optimized. [Euphy]
+//= 1.3 Updated to match the official script. [Euphy]
+//= 1.4 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.5 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+moc_para01,48,177,3	script	91-99 Mission Board	857,{
+	if (!callfunc("F_HasEdenGroupMark")) {
+		mes "เดี๋ยวก่อน!";
+		mes "- คุณต้องมี -";
+		mes "- ^4d4dff'Eden Group Mark'^000000 -";
+		mes "- เพื่อรับภารกิจเหล่านี้ -";
+		next;
+		switch(select("เพียงแค่เดินออกไป:ภารกิจ ^0000FFEden Group^000000?:ฉันจะเป็นสมาชิกของ ^0000FFEden Group^000000 ได้อย่างไร")) {
+		case 1:
+			close;
+		case 2:
+			mes "::ภารกิจของกลุ่ม Eden เป็นภารกิจที่ผู้คนจากทั่วราชอาณาจักรร้องขอโดยทั่วไป";
+			mes "::เราแค่จัดหมวดหมู่ให้";
+			next;
+			mes "::ใน Eden Group เราจัดเรียงภารกิจตามระดับความยาก";
+			mes "::ตามระดับนี้คุณจะพบภารกิจที่เหมาะกับคุณ";
+			next;
+			mes "::เมื่อเสร็จแล้วคุณสามารถกลับมาที่กระดานภารกิจได้";
+			next;
+			mes "::แล้วคุณจะได้รับรางวัล !!";
+			mes "::ง่ายๆไม่ใช่หรอ !!";
+			mes "::ไม่ต้องมีค่านายหน้า !!";
+			close;
+		case 3:
+			mes "::คุณสามารถเป็นสมาชิกของ Eden Group ได้ที่ ^ 0000FFLaime Evenor ^ 000000 ซึ่งรออยู่ที่ชั้น 1";
+			next;
+			mes "::หากคุณเป็นสมาชิกคุณจะได้รับ \"^006400Eden Group Mark^000000\".";
+			mes "::จากนั้นคุณจะสามารถเห็นกระดานภารกิจ";
+			close;
+		}
+	}
+	if (BaseLevel < 91 || BaseLevel > 99) {
+		// Quest IDs: 4181-4196
+		// Quest cooldown IDs: 4212-4227
+		setarray .@names$[0],
+			"Solider","Freezer","Heater",
+			"Injustice","Rybio","Dark Priest",
+			"Stapo","Roween","Siroma",
+			"Shinobi","Evil Nymph",
+			"Deviruchi","Mineral","Kaho","Neraid","Disguise";
+		setarray .@exp[0],
+			90000,94000,114000,
+			96000,96000,146000,
+			96000,102000,110000,
+			102000,108000,
+			110000,138000,118000,96000,134000;
+		mes "คุณต้องอยู่ในระดับ 91-99 เพื่อรับภารกิจเหล่านี้";
+		for(set .@quest,4181; .@quest<=4196; set .@quest,.@quest+1) {
+			set .@hunting, checkquest(.@quest,HUNTING);
+			if (.@hunting == 0 || .@hunting == 1) {
+				next;
+				mes ":: คุณไม่สามารถดำเนินการต่อใน ^0000FF" + .@names$[.@quest-4181] + " Hunting^000000.";
+				mes ":: การลงทะเบียนภารกิจถูกยกเลิก";
+				erasequest .@quest;
+				close;
+			} else if (.@hunting == 2) {
+				next;
+				mes ":: คุณเพิ่มข้อมูลเกี่ยวกับภารกิจ ^0000FF" + .@names$[.@quest-4181] + " Hunting^000000 บนกระดานภารกิจ";
+				mes ":: คุณได้รับประสบการณ์ที่ดี";
+				erasequest .@quest;
+				getexp .@exp[.@quest-4181],0;
+				close;
+			}
+		}
+		close;
+	}
+	mes "[91-99 Mission Board]";
+	mes "มีคำขอมากมายในบอร์ดนี้";
+	next;
+	switch(select("^8B4513Turtle Island^000000:^8B4513Glast Heim^000000:^8B4513Rachel / Veins^000000:^8B4513Expansion Cities^000000:^8B4513Other regions^000000")) {
+	case 1:
+		mes "^8B4513Turtle Island^000000.";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFSolider^000000:^0000FFFreezer^000000:^0000FFHeater^000000")) {
+			case 1: callsub L_Quest,4181,"Solider",90000,"Solider","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000";
+			case 2: callsub L_Quest,4182,"Freezer",94000,"Freezer","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000";
+			case 3: callsub L_Quest,4183,"Heater",114000,"Heater","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000";
+		}
+	case 2:
+		mes "^8B4513Glast Heim^000000.";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFInjustice^000000:^0000FFRybio^000000:^0000FFDark Priest^000000")) {
+			case 1: callsub L_Quest,4184,"Injustice",96000,"Injustice","มีสัตว์ประหลาดที่พบได้เฉพาะใน ^8B4513Glast Heim prison^000000";
+			case 2: callsub L_Quest,4185,"Rybio",96000,"Rybio","มีสัตว์ประหลาดที่พบได้เฉพาะใน ^8B4513Glast Heim prison^000000";
+			case 3: callsub L_Quest,4186,"Dark Priest",146000,"Dark Priest","มีสัตว์ประหลาดที่พบได้เฉพาะใน ^8B4513Glast Heim prison^000000";
+		}
+	case 3:
+		mes "^8B4513Rachel / Veins^000000.";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFStapo^000000:^0000FFRoween^000000:^0000FFSiroma^000000")) {
+			case 1: callsub L_Quest,4187,"Stapo",96000,"Stapo","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Veins^000000.";
+			case 2: callsub L_Quest,4188,"Roween",102000,"Roween","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Rachel^000000.";
+			case 3: callsub L_Quest,4189,"Siroma",110000,"Siroma","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Ice Dungeon^000000.";
+		}
+	case 4:
+		mes "^8B4513Expansion Cities^000000.";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFShinobi^000000:^0000FFEvil Nymph^000000")) {
+			case 1: callsub L_Quest,4190,"Shinobi",102000,"Shinobi","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Amatsu Dungeon^000000.";
+			case 2: callsub L_Quest,4191,"Evil Nymph",108000,"Evil Nymph","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Kunlun Dungeon^000000.";
+		}
+	case 5:
+		mes "Other Regions.";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFDeviruchi^000000:^0000FFMineral^000000:^0000FFKaho^000000:^0000FFNeraid^000000:^0000FFDisguise^000000")) {
+			case 1: callsub L_Quest,4192,"Deviruchi",110000,"Deviruchi","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Geffen Dungeon^000000.";
+			case 2: callsub L_Quest,4193,"Mineral",138000,"Mineral","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Einbech Dungeon^000000.";
+			case 3: callsub L_Quest,4194,"Kaho",118000,"Kaho","มีสัตว์ประหลาดที่พบใน ^8B4513Nogg Road Magma 1^000000.";
+			case 4: callsub L_Quest,4195,"Neraid",96000,"Neraid","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Comodo Dungeon^000000.";
+			case 5: callsub L_Quest,4196,"Disguise",134000,"Disguise","มีมอนสเตอร์ที่พบเฉพาะใน ^8B4513Niflheim^000000.";
+		}
+	}
+	end;
+
+//callsub L_Quest,<quest ID>,"<monster name>",<reward EXP>,"<cutin image>","<description>"{,"s"};
+L_Quest:
+	set .@quest1, getarg(0);
+	set .@quest2, .@quest1+31;
+	.@cutin$ = getarg(3);
+	set .@playtime, checkquest(.@quest2,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[91-99 Mission Board]";
+		mes "คุณต้องรอ 3 ชั่วโมงก่อนจึงจะสามารถทำภารกิจนี้ได้อีกครั้ง";
+		close;
+	}
+	set .@hunting, checkquest(.@quest1,HUNTING);
+	if (.@hunting == 0 || .@hunting == 1) {
+		mes "[91-99 Mission Board]";
+		mes "คุณล่าครบ 30 " + getarg(1) + getarg(5,"") + " หรือยัง?";
+		close;
+	} else if (.@hunting == 2) {
+		mes "[91-99 Mission Board]";
+		mes "คุณล่าสัตว์เสร็จแล้ว";
+		mes "โปรดรับรางวัลนี้เป็นค่าตอบแทน";
+		erasequest .@quest1;
+		if (.@playtime > -1) erasequest .@quest2;
+		setquest .@quest2;
+
+		// Job Experience calculation.
+		if (JobLevel > 50 && JobLevel < 56) set .@jexp,67000;
+		else if (JobLevel > 55 && JobLevel < 61) set .@jexp,94000;
+		else if (JobLevel > 60 && JobLevel < 66) set .@jexp,141000;
+		else if (JobLevel > 65 && JobLevel < 69) set .@jexp,212000;
+		else if (JobLevel == 69) set .@jexp,311000;
+
+		getexp getarg(2),.@jexp;
+		close;
+	}/* else if (.@hunting == 3) {
+//		recall_completequest .@quest1
+		erasequest .@quest1;
+		mes "[91-99 Mission Board]";
+		mes "คุณได้ยอมรับ" + getarg(1) + "ภารกิจล่าสัตว์อีกครั้ง";
+		close;
+	}*/ else {
+		mes "[91-99 Mission Board]";
+		mes getarg(4);
+		next;
+		if (.@cutin$ != "") cutin .@cutin$,3;
+		mes "[91-99 Mission Board]";
+		mes "ล่า 30" + getarg(1) + "ที่นั่นแล้วโพสต์ความสำเร็จของคุณบนกระดานนี้";
+		next;
+		if (.@cutin$ != "") cutin .@cutin$,255;
+		if(select("ฉันจะตามล่าพวกมัน:ไม่ต้องขอบคุณ") == 1) {
+			mes "[91-99 Mission Board]";
+			mes "เมื่อคุณทำภารกิจสำเร็จแล้วให้โพสต์บนกระดานนี้และรับรางวัลของคุณ";
+			if (.@playtime > -1) erasequest .@quest2;
+			setquest .@quest1;
+		}
+		close;
+	}
+}

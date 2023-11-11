@@ -1,0 +1,57 @@
+//===== rAthena Script ======================================= 
+//= Mage Solutions
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Traders for Morocc Solution and Payon Solution, used in
+//= the Sage skill quests and the Pre-Renewal Mage job quest.
+//===== Additional Comments: ================================= 
+//= 1.0 Split from Pre-Renewal Mage job quest. [Zopokx]
+//============================================================ 
+
+pay_arche,122,100,0	script	Dollshoi	88,{
+	mes "[Mage Guildsman]";
+	mes "คุณต้องการทางออกหรือไม่อืมให้ 50 Zeny กับ Empty Test Tube 1 อัน";
+	next;
+	if (select("ตกลงตกลง:ไม่ลืมมันซะ") == 1) {
+		mes "[Mage Guildsman]";
+		if (Zeny < 50) {
+			mes "เฮ้! เจ้ามีเงินไม่พอที่จะจ่าย 50 Zeny ของฉัน";
+			close;
+		}
+		if (countitem(1092) == 0) {
+			mes "เจ้าไม่สามารถพกสารละลายได้โดยไม่ต้องใช้ขวดเลยนำ Empty Test Tube มาให้ข้าด้วย";
+			close;
+		}
+		delitem 1092,1; //Empty_Cylinder
+		set Zeny, Zeny-50;
+		getitem 1089,1; //Payon_Potion
+	}
+	close;
+}
+
+moc_ruins,91,150,0	script	Ponka-Hontas	93,{
+	mes "[Mage Guildsman]";
+	mes "คุณต้องการทางออกหรือไม่อืมให้ 50 Zeny กับ Empty Test Tube 1 อัน";
+	next;
+	if (select("ตกลงตกลง:ไม่ลืมมันซะ") == 1) {
+		mes "[Mage Guildsman]";
+		if (Zeny < 50) {
+			mes "เฮ้! เจ้ามีเงินไม่พอที่จะจ่าย 50 Zeny ของฉัน";
+			close;
+		}
+		if (countitem(1092) == 0) {
+			mes "เจ้าไม่สามารถพกสารละลายได้โดยไม่ต้องใช้ขวดเลยนำ Empty Test Tube มาให้ข้าด้วย";
+			close;
+		}
+		delitem 1092,1; //Empty_Cylinder
+		set Zeny, Zeny-50;
+		getitem 1088,1; //Morocc_Potion
+	}
+	close;
+}

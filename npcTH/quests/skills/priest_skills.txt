@@ -1,0 +1,378 @@
+//===== rAthena Script ======================================= 
+//= Priest Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Redempito
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+prt_church,111,112,1	script	Sister Linus	79,{
+	if (BaseJob == Job_Priest) {
+		if (PRIEST_SK == 100) {
+			if (getskilllv("PR_REDEMPTIO") == 0) {
+				mes "[Sister Linus]";
+				mes "Hm? We've met before,";
+				mes "haven't we? Then again,";
+				mes "all Priests begin to look";
+				mes "the same after a while. Ah,";
+				mes "were you one of the ones";
+				mes "to whom I taught Redemptio?";
+				next;
+				mes "[Sister Linus]";
+				mes "Ah, you've forgotten, have";
+				mes "you? Well, it's no problem for";
+				mes "me to teach you again. This skill enables you to revive your fallen";
+				mes "Party Members by sacrificing";
+				mes "your own life for them.";
+				next;
+				mes "[Sister Linus]";
+				mes "^3131FFOh holy and venerable one,";
+				mes "we pray to you. Please show";
+				mes "us your mercy and guide us";
+				mes "with your light. Give us the";
+				mes "strength to walk the path of";
+				mes "love and sacrifice. Redemptio!^000000";
+				skill "PR_REDEMPTIO",1,SKILL_PERM;
+				next;
+				mes "[Sister Linus]";
+				mes "There...";
+				mes "You should be able";
+				mes "to perform Redemptio";
+				mes "now. I hope you use it";
+				mes "well on your adventures~";
+				close;
+			}
+			else {
+				mes "[Sister Linus]";
+				mes "I'll always be praying";
+				mes "for your safety. Be careful,";
+				mes "and I hope that you can bring";
+				mes "love and compassion to all";
+				mes "whom you meet in your travels.";
+				close;
+			}
+		}
+		else if (PRIEST_SK == 0) {
+			set redemp,1014;
+			if (getskilllv("PR_REDEMPTIO")) {
+				mes "[Sister Linus]";
+				mes "I'll always be praying";
+				mes "for your safety. Be careful,";
+				mes "and I hope that you can bring";
+				mes "love and compassion to all";
+				mes "whom you meet in your travels.";
+				set PRIEST_SK,100;
+				close;
+			}
+			mes "[Sister Linus]";
+			mes "Please have mercy and";
+			mes "spread your light through";
+			mes "the world. Guide her with";
+			mes "your benevolent wisdom...";
+			mes "Bless her, and may she";
+			mes "be protected by your grace.";
+			next;
+			select("Whom are you praying for, sister?");
+			mes "[Sister Linus]";
+			mes "Oh! You startled me!";
+			mes "Whom am I praying for?";
+			mes "Well, I once knew a young,";
+			mes "playful and merry nun who was";
+			mes "also a bit brazen. But I have";
+			mes "many joyful memories of her.";
+			next;
+			mes "[Sister Linus]";
+			mes "One day, a group of adventurers";
+			mes "came to Prontera Church in hopes of hiring a Priest to accompany";
+			mes "them to ^3131DDGlast Heim^000000. It must have been fate that she was the only";
+			mes "Priest that was available.";
+			next;
+			mes "[Sister Linus]";
+			mes "I remember that she was";
+			mes "so determined to join those";
+			mes "adventurers, and we had no";
+			mes "choice but to let her go.";
+			mes "Still, many of us believed";
+			mes "that it was too dangerous...";
+			next;
+			mes "[Sister Linus]";
+			mes "I hear that, at first, their";
+			mes "ragtag team was able to";
+			mes "successfully exterminate";
+			mes "a great number of monsters.";
+			mes "But supporting them as a Priest";
+			mes "must have been tough for her...";
+			next;
+			mes "[Sister Linus]";
+			mes "Then, tragedy struck.";
+			mes "Surrounded by Wanderers,";
+			mes "the adventurers quickly fell";
+			mes "in defeat, one by one. Soon,";
+			mes "the young nun was the only one of the group still standing.";
+			next;
+			mes "[Sister Linus]";
+			mes "Alone against impossible";
+			mes "odds, that poor girl had no";
+			mes "choice but to try a desperate";
+			mes "gamble. She began to chant";
+			mes "the ancient holy spell...";
+			next;
+			select("Ancient spell...?");
+			mes "[Sister Linus]";
+			mes "Yes! ^FF0000Redemptio^000000!";
+			mes "A skill that only the";
+			mes "most talented Priests";
+			mes "can perform! And here she";
+			mes "was, a young nun with very";
+			mes "little experience, trying it!";
+			next;
+			mes "[Sister Linus]";
+			mes "Redemptio is the last";
+			mes "resort skill that can be";
+			mes "used to nobly save the";
+			mes "lives of others at the cost";
+			mes "of ^3131FFsacrificing your own life^000000.";
+			next;
+			mes "[Sister Linus]";
+			mes "Yes, I remember the days";
+			mes "she wasn't very interested";
+			mes "in studying the Priest and";
+			mes "Acolyte skills. Surprisingly,";
+			mes "she had learned enough to";
+			mes "attempt to cast Redemptio...";
+			next;
+			mes "[Sister Linus]";
+			mes "Miraculously, she succeeded";
+			mes "in reviving her party members.";
+			mes "They quickly used a Yggdrasil";
+			mes "Leaf to restore her life, and they defeated the Wanderers and";
+			mes "returned home safely.";
+			next;
+			mes "[Sister Linus]";
+			mes "Because of this success, she";
+			mes "was promoted to High Priest";
+			mes "despite the many mistakes she";
+			mes "made in the past. Now she travels the world, helping adventurers";
+			mes "in any way that she can.";
+			next;
+			mes "[Sister Linus]";
+			mes "But, well, she'll";
+			mes "always be that spunky";
+			mes "and joyful girl to me.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Wait, you still haven't";
+			mes "answered my question.";
+			mes "Are you praying for this";
+			mes "nun? And if so, is she";
+			mes "in some kind of danger?";
+			next;
+			mes "[Sister Linus]";
+			mes "Well, a few months ago,";
+			mes "she went on a mission to";
+			mes "^3131FFLighthalzen^000000, a city in the";
+			mes "Schwarzwald Republic. I was";
+			mes "just worried since I haven't";
+			mes "heard from her in a while.";
+			next;
+			mes "[Sister Linus]";
+			mes "I come here to pray for";
+			mes "her everyday, and hope that";
+			mes "she'll come back safely and";
+			mes "share stories of her adventures";
+			mes "with me. Ooh, we'll talk all night long! It'll be so much fun!";
+			next;
+			mes "[Sister Linus]";
+			mes "Goodness, I've been";
+			mes "running my mouth! I'm";
+			mes "sorry to keep you, did you";
+			mes "have somewhere to go? Well,";
+			mes "I'll be praying for your safety~";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Before I go, would you";
+			mes "please tell me the name";
+			mes "of that High Priest you were";
+			mes "talking about? If I see her,";
+			mes "I'll ask her to contact you.";
+			next;
+			mes "[Sister Linus]";
+			mes "Oh, thank you! Her name";
+			mes "is High Priest Sorin. Um,";
+			mes "^3131FFMargaretha Sorin^000000. If you";
+			mes "happen to find her, please";
+			mes "let her know that I am";
+			mes "praying for her safety.";
+			set PRIEST_SK,1;
+			close;
+		}
+		else if (PRIEST_SK == 1) {
+			mes "[Sister Linus]";
+			mes "Oh, hello~";
+			mes "How are you";
+			mes "doing today?";
+			next;
+			if (select("Please teach me ^3131FFRedemptio^000000.:Cancel") == 1) {
+				mes "[Sister Linus]";
+				mes "Ooh, Redemptio would be";
+				mes "a good skill for you to learn~";
+				mes "It's difficult to cast, but when you succeed, you can revive all";
+				mes "of your defeated Party Members.";
+				next;
+				mes "[Sister Linus]";
+				mes "Of course, the drawback";
+				mes "is that you must ^3131FFsacrifice";
+				mes "your own life^000000 in order to";
+				mes "use the skill. Now, to learn";
+				mes "Redemptio, you must first";
+				mes "learn ^3131FFLevel 1 Resurrection^000000.";
+				next;
+				mes "[Sister Linus]";
+				mes "Ah, you must";
+				mes "also bring me";
+				mes "^3131FF30 Holy Waters and";
+				mes "20 Blue Gemstones^000000";
+				mes "so you can attempt";
+				mes "to learn the skill.";
+				set PRIEST_SK,2;
+				next;
+				mes "[Sister Linus]";
+				mes "Um, but if you fail to";
+				mes "learn Redemptio, you'll";
+				mes "lose 1 Holy Water and";
+				mes "1 Blue Gemstone and";
+				mes "you'll have to try it again...";
+				close;
+			}
+			mes "[Sister Linus]";
+			mes "Praying gives me a";
+			mes "sense of peace and";
+			mes "comfort. Perhaps that";
+			mes "is one of the reasons";
+			mes "why I chose this job...";
+			close;
+		}
+		else if (PRIEST_SK == 2) {
+			if (getskilllv("ALL_RESURRECTION") > 0) {
+				if (countitem(523) > 29 && countitem(717) > 19) {
+					mes "[Sister Linus]";
+					mes "Ooh, it seems like you've";
+					mes "brought everything that you";
+					mes "need to learn Redemptio.";
+					mes "Are you ready to try it? If you";
+					mes "fail, you'll lose 1 Holy Water";
+					mes "and 1 Blue Gemstone, okay?";
+					next;
+					mes "[Sister Linus]";
+					mes "Now, please";
+					mes "concentrate and";
+					mes "repeat this special";
+					mes "prayer after me.";
+					next;
+					mes "[Sister Linus]";
+					mes "^3131FFOh holy and venerable one,";
+					mes "we pray to you. Please show";
+					mes "us your mercy and guide us";
+					mes "with your light. Give us the";
+					mes "strength to walk the path of";
+					mes "love and sacrifice. Redemptio!^000000";
+					next;
+					set .@redem_s,JobLevel+getskilllv("ALL_RESURRECTION");
+					set .@red_suc,rand(1,100);
+					if( .@redem_s < 31 ) {
+						if( .@red_suc > 20 && .@red_suc < 41 )
+							set .@success,1;
+					} else if( .@redem_s < 41 ) {
+						if( .@red_suc > 10 && .@red_suc < 41 )
+							set .@success,1;
+					} else {
+						if( .@red_suc > 10 && .@red_suc < 51 )
+							set .@success,1;
+					}
+
+					if (.@success) {
+						specialeffect2 EF_HEALSP;
+						mes "[Sister Linus]";
+						mes "Congratulations!";
+						mes "You successfully";
+						mes "learned Redemptio!";
+						mes "Please remember to only";
+						mes "use this skill in the most";
+						mes "critical situations.";
+						delitem 717,20; //Blue_Gemstone
+						delitem 523,30; //Holy_Water
+						set PRIEST_SK,100;
+						skill "PR_REDEMPTIO",1,SKILL_PERM;
+						close;
+					}
+					else {
+						specialeffect2 EF_POISONHIT;
+						mes "[Sister Linus]";
+						mes "Oh no! I'm sorry,";
+						mes "but you failed to";
+						mes "learn Redemptio. Well,";
+						mes "I'll be waiting right here,";
+						mes "so we can try again when";
+						mes "you're ready, okay?";
+						delitem 717,1; //Blue_Gemstone
+						delitem 523,1; //Holy_Water
+						close;
+					}
+
+				}
+				else {
+					mes "[Sister Linus]";
+					mes "If you want to try to learn";
+					mes "Redemptio, please bring";
+					mes "^3131FF20 Blue Gemstones^000000 and";
+					mes "^3131FF30 Holy Waters^000000. Ah, and";
+					mes "you need to learn ^3131FFLevel 1";
+					mes "Resurrection^000000 beforehand.";
+					close;
+				}
+			}
+			else {
+				mes "[Sister Linus]";
+				mes "If you want to try to learn";
+				mes "Redemptio, please bring";
+				mes "^3131FF20 Blue Gemstones^000000 and";
+				mes "^3131FF30 Holy Waters^000000. Ah, and";
+				mes "you need to learn ^3131FFLevel 1";
+				mes "Resurrection^000000 beforehand.";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Sister Linus]";
+		mes "Please have mercy and";
+		mes "spread your light through";
+		mes "the world. Guide her with";
+		mes "your benevolent wisdom...";
+		mes "Bless her, and may she";
+		mes "be protected by your grace.";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================

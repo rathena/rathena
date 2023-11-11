@@ -1,0 +1,167 @@
+//===== rAthena Script =======================================
+//= Mapflag: nocostume
+//===== Description: =========================================
+//= A mapflag to disable costume's sprite on map.
+//= Usage:
+//=     [mapname]	mapflag	nocostume
+//===== Changelogs: ==========================================
+//= 1.0 Initial release. [Cydh]
+//= 1.1 Added arug_dun01 and schg_dun01. [Cydh]
+//============================================================
+
+//============================================================
+// Guild Dungeons
+//============================================================
+teg_dun01	mapflag	nocostume
+teg_dun02	mapflag	nocostume
+arug_dun01	mapflag	nocostume
+schg_dun01	mapflag	nocostume
+
+//============================================================
+// WoE:FE Castles
+//============================================================
+aldeg_cas01	mapflag	nocostume
+aldeg_cas02	mapflag	nocostume
+aldeg_cas03	mapflag	nocostume
+aldeg_cas04	mapflag	nocostume
+aldeg_cas05	mapflag	nocostume
+gefg_cas01	mapflag	nocostume
+gefg_cas02	mapflag	nocostume
+gefg_cas03	mapflag	nocostume
+gefg_cas04	mapflag	nocostume
+gefg_cas05	mapflag	nocostume
+payg_cas01	mapflag	nocostume
+payg_cas02	mapflag	nocostume
+payg_cas03	mapflag	nocostume
+payg_cas04	mapflag	nocostume
+payg_cas05	mapflag	nocostume
+prtg_cas01	mapflag	nocostume
+prtg_cas02	mapflag	nocostume
+prtg_cas03	mapflag	nocostume
+prtg_cas04	mapflag	nocostume
+prtg_cas05	mapflag	nocostume
+
+//============================================================
+// WoE:SE Castles
+//============================================================
+schg_cas01	mapflag	nocostume
+schg_cas02	mapflag	nocostume
+schg_cas03	mapflag	nocostume
+schg_cas04	mapflag	nocostume
+schg_cas05	mapflag	nocostume
+arug_cas01	mapflag	nocostume
+arug_cas02	mapflag	nocostume
+arug_cas03	mapflag	nocostume
+arug_cas04	mapflag	nocostume
+arug_cas05	mapflag	nocostume
+
+//============================================================
+// WoE:TE Castles
+//============================================================
+te_prtcas01	mapflag	nocostume
+te_prtcas02	mapflag	nocostume
+te_prtcas03	mapflag	nocostume
+te_prtcas04	mapflag	nocostume
+te_prtcas05	mapflag	nocostume
+te_aldecas1	mapflag	nocostume
+te_aldecas2	mapflag	nocostume
+te_aldecas3	mapflag	nocostume
+te_aldecas4	mapflag	nocostume
+te_aldecas5	mapflag	nocostume
+
+//============================================================
+// WoE:Novice Castles
+//============================================================
+//n_castle	mapflag	nocostume
+nguild_alde	mapflag	nocostume
+nguild_gef	mapflag	nocostume
+nguild_pay	mapflag	nocostume
+nguild_prt	mapflag	nocostume
+
+//============================================================
+// PvP Arenas
+//============================================================
+pvp_y_1-1	mapflag	nocostume
+pvp_y_1-2	mapflag	nocostume
+pvp_y_1-3	mapflag	nocostume
+pvp_y_1-4	mapflag	nocostume
+pvp_y_1-5	mapflag	nocostume
+pvp_y_2-1	mapflag	nocostume
+pvp_y_2-2	mapflag	nocostume
+pvp_y_2-3	mapflag	nocostume
+pvp_y_2-4	mapflag	nocostume
+pvp_y_2-5	mapflag	nocostume
+pvp_y_3-1	mapflag	nocostume
+pvp_y_3-2	mapflag	nocostume
+pvp_y_3-3	mapflag	nocostume
+pvp_y_3-4	mapflag	nocostume
+pvp_y_3-5	mapflag	nocostume
+pvp_y_4-1	mapflag	nocostume
+pvp_y_4-2	mapflag	nocostume
+pvp_y_4-3	mapflag	nocostume
+pvp_y_4-4	mapflag	nocostume
+pvp_y_4-5	mapflag	nocostume
+pvp_y_5-1	mapflag	nocostume
+pvp_y_5-2	mapflag	nocostume
+pvp_y_5-3	mapflag	nocostume
+pvp_y_5-4	mapflag	nocostume
+pvp_y_5-5	mapflag	nocostume
+pvp_y_6-1	mapflag	nocostume
+pvp_y_6-2	mapflag	nocostume
+pvp_y_6-3	mapflag	nocostume
+pvp_y_6-4	mapflag	nocostume
+pvp_y_6-5	mapflag	nocostume
+pvp_y_7-1	mapflag	nocostume
+pvp_y_7-2	mapflag	nocostume
+pvp_y_7-3	mapflag	nocostume
+pvp_y_7-4	mapflag	nocostume
+pvp_y_7-5	mapflag	nocostume
+pvp_y_8-1	mapflag	nocostume
+pvp_y_8-2	mapflag	nocostume
+pvp_y_8-3	mapflag	nocostume
+pvp_y_8-4	mapflag	nocostume
+pvp_y_8-5	mapflag	nocostume
+pvp_n_1-1	mapflag	nocostume
+pvp_n_1-2	mapflag	nocostume
+pvp_n_1-3	mapflag	nocostume
+pvp_n_1-4	mapflag	nocostume
+pvp_n_1-5	mapflag	nocostume
+pvp_n_2-1	mapflag	nocostume
+pvp_n_2-2	mapflag	nocostume
+pvp_n_2-3	mapflag	nocostume
+pvp_n_2-4	mapflag	nocostume
+pvp_n_2-5	mapflag	nocostume
+pvp_n_3-1	mapflag	nocostume
+pvp_n_3-2	mapflag	nocostume
+pvp_n_3-3	mapflag	nocostume
+pvp_n_3-4	mapflag	nocostume
+pvp_n_3-5	mapflag	nocostume
+pvp_n_4-1	mapflag	nocostume
+pvp_n_4-2	mapflag	nocostume
+pvp_n_4-3	mapflag	nocostume
+pvp_n_4-4	mapflag	nocostume
+pvp_n_4-5	mapflag	nocostume
+pvp_n_5-1	mapflag	nocostume
+pvp_n_5-2	mapflag	nocostume
+pvp_n_5-3	mapflag	nocostume
+pvp_n_5-4	mapflag	nocostume
+pvp_n_5-5	mapflag	nocostume
+pvp_n_6-1	mapflag	nocostume
+pvp_n_6-2	mapflag	nocostume
+pvp_n_6-3	mapflag	nocostume
+pvp_n_6-4	mapflag	nocostume
+pvp_n_6-5	mapflag	nocostume
+pvp_n_7-1	mapflag	nocostume
+pvp_n_7-2	mapflag	nocostume
+pvp_n_7-3	mapflag	nocostume
+pvp_n_7-4	mapflag	nocostume
+pvp_n_7-5	mapflag	nocostume
+pvp_n_8-1	mapflag	nocostume
+pvp_n_8-2	mapflag	nocostume
+pvp_n_8-3	mapflag	nocostume
+pvp_n_8-4	mapflag	nocostume
+pvp_n_8-5	mapflag	nocostume
+pvp_2vs2	mapflag	nocostume
+turbo_e_4	mapflag	nocostume
+turbo_e_8	mapflag	nocostume
+turbo_e_16	mapflag	nocostume

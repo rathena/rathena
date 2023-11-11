@@ -1,0 +1,100 @@
+//===== rAthena Script =======================================
+//= Renewal Guild Monster Spawn Script
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version, Hall of Abyss update. [Euphy]
+//============================================================
+
+//==================================================
+// Baldur - gld_dun01, gld_dun01_2, gld2_pay
+//==================================================
+gld_dun01,0,0	monster	Gullinbursti	1311,30,5000
+gld_dun01,0,0	monster	Leib Olmai	1306,55,5000
+gld_dun01,0,0	monster	Cat O' Nine Tails	1307,3,1200000,0,0
+gld_dun01,0,0,0,0	boss_monster	Moonlight Flower	1150,1,28800000,600000,1
+
+gld_dun01_2,0,0	monster	Skeleton General	1290,50,5000
+gld_dun01_2,0,0	monster	Am Mut	1301,15,5000
+gld_dun01_2,0,0	monster	Gajomart	1309,20,5000
+gld_dun01_2,0,0,0,0	boss_monster	Eddga	1115,1,28800000,600000,1
+
+gld2_pay,0,0	monster	Skeleton General	1290,60,5000
+gld2_pay,0,0	monster	Am Mut	1301,25,5000
+gld2_pay,0,0	monster	Gajomart	1309,30,5000
+gld2_pay,0,0,0,0	boss_monster	General Daehyun	2253,1,28800000,600000,1
+gld2_pay,0,0	monster	Samurai Soheon	2254,1,1800000,600000
+
+//==================================================
+// Luina - gld_dun02, gld_dun02_2, gld2_ald
+//==================================================
+gld_dun02,0,0	monster	Giant Hornet	1303,30,5000
+gld_dun02,0,0	monster	Ancient Worm	1305,25,5000
+gld_dun02,0,0	monster	Giant Spider	1304,15,5000
+gld_dun02,0,0,0,0	boss_monster	Mistress	1059,1,28800000,600000,1
+
+gld_dun02_2,0,0	monster	Killer Mantis	1294,30,5000
+gld_dun02_2,0,0	monster	Angra Mantis	2133,40,5000
+gld_dun02_2,0,0	monster	Maya Purple	1289,3,1200000,600000
+gld_dun02_2,0,0,0,0	boss_monster	Maya	1147,1,28800000,600000,1
+
+gld2_ald,0,0	monster	Killer Mantis	1294,60,5000
+gld2_ald,0,0	monster	Angra Mantis	2133,70,5000
+gld2_ald,0,0	monster	Maya Purple	1289,3,1200000
+gld2_ald,0,0,0,0	boss_monster	Gioia	2251,1,28800000,600000,1
+gld2_ald,0,0	monster	Elvira	2252,1,1800000,600000
+
+//==================================================
+// Valkyrie - gld_dun03, gld_dun03_02, gld2_prt
+//==================================================
+gld_dun03,0,0	monster	Caterpillar	1300,35,5000
+gld_dun03,0,0	monster	Creamy Fear	1293,35,5000
+gld_dun03,0,0,0,0	boss_monster	Baphomet	1039,1,28800000,600000,1
+
+gld_dun03_2,0,0	monster	Dark Axe Kobold	2284,13,5000
+gld_dun03_2,0,0	monster	Dark Hammer Kobold	2285,23,5000
+gld_dun03_2,0,0	monster	Dark Mace Kobold	2286,23,5000
+gld_dun03_2,0,0	monster	Dark Kobold Archer	2287,23,5000
+gld_dun03_2,0,0	monster	Kobold Leader	1296,1,14400000,7200000
+gld_dun03_2,0,0,0,0	boss_monster	Atroce	1785,1,28800000,600000,1
+
+gld2_prt,0,0	monster	Dark Axe Kobold	2284,25,5000
+gld2_prt,0,0	monster	Dark Hammer Kobold	2285,35,5000
+gld2_prt,0,0	monster	Dark Mace Kobold	2286,35,5000
+gld2_prt,0,0	monster	Dark Kobold Archer	2287,35,5000
+gld2_prt,0,0,0,0	boss_monster	Angry Student Pyuriel	2249,1,28800000,600000,1
+gld2_prt,0,0	monster	Warrior Laura	2250,1,1800000,600000
+
+//==================================================
+// Britoniah - gld_dun04, gld_dun04_02, gld2_gef
+//==================================================
+gld_dun04,0,0	monster	Mini Demon	1292,10,5000
+gld_dun04,0,0	monster	Zombie Master	1298,55,5000
+gld_dun04,0,0	monster	Wraith Dead	1291,25,5000
+gld_dun04,0,0	monster	Ghostring	1120,1,14400000,7200000
+gld_dun04,0,0,0,0	boss_monster	Doppelganger	1046,1,28800000,600000,1
+
+gld_dun04_2,0,0	monster	Dark Frame	2282,15,5000
+gld_dun04_2,0,0	monster	Dark Priest	2283,15,5000
+gld_dun04_2,0,0	monster	Dark Shadow	2281,45,5000
+gld_dun04_2,0,0	monster	Dark Illusion	1302,1,1200000
+gld_dun04_2,0,0,0,0	boss_monster	Dark Lord	1272,1,28800000,600000,1
+
+gld2_gef,0,0	monster	Dark Frame	2282,20,5000
+gld2_gef,0,0	monster	Dark Priest	2283,20,5000
+gld2_gef,0,0	monster	Dark Shadow	2281,80,5000
+gld2_gef,0,0	monster	Dark Illusion	1302,1,1200000
+gld2_gef,0,0,0,0	boss_monster	Dark Guardian Kades	2255,1,28800000,600000,1
+gld2_gef,0,0	monster	Rudo	2256,1,1800000,600000
+
+//==================================================
+// Treasure Chests
+//==================================================
+gld2_pay,0,0	monster	Treasure Chest	2288,5,5000
+gld2_ald,0,0	monster	Treasure Chest	2288,5,5000
+gld2_prt,0,0	monster	Treasure Chest	2288,5,5000
+gld2_gef,0,0	monster	Treasure Chest	2288,5,5000

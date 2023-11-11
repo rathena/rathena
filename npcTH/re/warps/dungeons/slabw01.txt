@@ -1,0 +1,8 @@
+//===== rAthena Script ======================================= 
+//= Werner Laboratory dungeon warps script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+que_swat,155,61,0	warp	#in_slbw	1,1,slabw01,14,88
+slabw01,10,88,0	warp	#out_slbw	1,1,que_swat,155,58

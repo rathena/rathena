@@ -1,0 +1,176 @@
+//===== rAthena Script ======================================= 
+//= Clothes Dyer
+//===== By: ================================================== 
+//= Usnul
+//===== Current Version: ===================================== 
+//= 2.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Clothes dyer with standard palletes
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 2.1 Shortened some labels to make this script loading,
+//= Added Black+White Colors desc [Lupus]
+//= 2.1a added adv classes + baby class support [Lupus]
+//= 2.2 Spell checked. [Nexon]
+//= 2.3 Fixed dis $hit! [Poki#3]
+//= 2.4 Disabled cloth dyeing since it's not implemented
+//	   on official servers and cause your client to crash
+//	   [Playtester]
+//= 2.5 Optimized. [Euphy]
+//============================================================
+
+prt_in,284,168,2	script	Dyer Ginedin Rephere	55,{
+function Dyes;
+
+	set .@EnableDyes,1;	// Disable (set to 0) if palettes cause errors [see note v2.4]
+
+	set .n$,"[Dyer Ginedin Rephere]";
+	mes .n$;
+	mes "11... 12... Mmm... good. I think I'll be able to finish before tonight's party. Oh! I didn't notice you were here!";
+	while(1) {
+		next;
+		mes .n$;
+		mes "How may I assist you?";
+		next;
+		switch(select("- Talk:- Dye Clothing:- Price List:- ^777777Cancel^000000")) {
+		case 1:
+			mes .n$;
+			mes "Life may have gotten a bit better, but when I look at all of the orders I've received... Whew!";
+			mes "It seems that the young women of Rune-Midgarts must be very well off these days.";
+			next;
+			mes .n$;
+			mes "Not that I think that they are indulging in anything luxurious, mind you.";
+			mes "I don't think there is anything wrong with the pursuit of beauty and being fashionable.";
+			next;
+			mes .n$;
+			mes "For us humans, who have no colorful fur or decorative scales, clothes are one of the few ways we have to display our personality, style, and beauty.";
+			next;
+			mes .n$;
+			mes "Haha... When I think about it, I really feel that my job is worthwhile.  I believe that I provide a service that the people desire.";
+			next;
+			mes .n$;
+			mes "Can you feel it too? The energy that is released when rough fabric and leather are brought to life with color?.....";
+			next;
+			mes .n$;
+			mes "Although the process is very tedious and time consuming, the joy and happiness I feel when a dress is finished more than makes up for all of the hard work!!";
+			break;
+		case 2:
+			mes .n$;
+			if (!.@EnableDyes) {
+				mes "Sorry, I'm too busy with other jobs to dye your clothes.";
+				break;
+			}
+			mes "Oh... you need my work? Well... okay, sounds good.";
+			next;
+			mes .n$;
+			mes "Please choose a color";
+			mes "that suits you.";
+			next;
+
+			// Dyes(<color value>,<dye number>{,...});
+			// Colors: [1]Orange, [2]Violet, [3]Red, [4]Black, [5]Green, [6]Blue, [7]White, [8]Yellow
+			switch(BaseJob) {
+			case Job_Novice:
+				if (Sex == SEX_MALE) Dyes(4,1,6,2,5,3); else Dyes(6,1,3,2,5,3,4,4);
+			case Job_Swordman:
+				if (Sex == SEX_MALE) Dyes(4,1,6,2,5,3); else Dyes(3,1,5,3,4,4);
+			case Job_Mage:
+				if (Sex == SEX_MALE) Dyes(3,1,2,2,1,3,7,4); else Dyes(3,1,2,2,7,3,4,4);
+			case Job_Archer:
+				if (Sex == SEX_MALE) Dyes(4,1,2,2,5,3); else Dyes(3,1,5,2,7,3,4,4);
+			case Job_Acolyte:
+				if (Sex == SEX_MALE) Dyes(6,1,3,2,7,3,4,4); else Dyes(3,1,5,3,4,4);
+			case Job_Merchant:
+				if (Sex == SEX_MALE) Dyes(4,1,6,2,5,3); else Dyes(2,1,5,3,4,4);
+			case Job_Thief:
+				if (Sex == SEX_MALE) Dyes(5,1,3,2,7,4); else Dyes(3,1,7,3,4,4);
+			case Job_Knight:
+			case Job_Crusader:
+				if (Sex == SEX_MALE) Dyes(2,1,3,3,4,4); else Dyes(6,1,7,3,4,4);
+			case Job_Priest:
+			case Job_Monk:
+				if (Sex == SEX_MALE) Dyes(6,1,5,2,3,3,7,4); else Dyes(3,1,5,2,7,3,4,4);
+			case Job_Wizard:
+			case Job_Sage:
+				if (Sex == SEX_MALE) Dyes(6,1,5,3,4,4); else Dyes(3,1,6,2,7,3,5,4);
+			case Job_Blacksmith:
+			case Job_Alchemist:
+				if (Sex == SEX_MALE) Dyes(4,4,5,2,7,3); else Dyes(3,1,5,2,2,3,4,4);
+			case Job_Hunter:
+			case Job_Bard:
+			case Job_Dancer:
+				if (Sex == SEX_MALE) Dyes(4,1,6,2,5,3); else Dyes(6,1,5,3,2,4);
+			case Job_Assassin:
+			case Job_Rogue:
+				if (Sex == SEX_MALE) Dyes(6,1); else Dyes(4,1,8,2,7,3);
+			case Job_Super_Novice:
+				if (Sex == SEX_MALE) Dyes(2,1,6,2,5,3,4,4); else Dyes(6,1,3,2,5,3,4,4);
+			default: 
+				mes "Wow, I've never seen clothes like that before! I'm sorry, but I don't think I can paint it.";
+				close;
+			}
+		case 3:
+			mes .n$;
+			mes "Each color costs 10000z and 1 dye:";
+			mes " ";
+			mes " - ^FF4422Red^000000: Scarlet Dyestuffs";
+			mes " - ^D5A500Yellow^000000: Lemon Dyestuffs";
+			mes " - ^AA00AAViolet^000000: Violet Dyestuffs";
+			mes " - ^FF8800Orange^000000: Orange Dyestuffs";
+			mes " - ^4422FFBlue^000000: CobaltBlue Dyestuffs";
+			mes " - ^009500Green^000000: DarkGreen Dyestuffs";
+			mes " - Black: Black Dyestuffs";
+			mes " - White: White Dyestuffs";
+			break;
+		case 4:
+			goto L_End;
+		}
+	}
+
+L_End:
+	mes .n$;
+	mes "Make yourself at home. Even though I don't have time for you.";
+	close;
+
+function Dyes {
+	setarray .@DyeName$[0],"the default color","Orange","Violet","Red","Black","Green","Blue","White","Yellow";
+	setarray .@DyeItems[0],0,980,981,975,983,979,978,982,976;
+	set .@menu$,"- Default:";
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+2)
+		set .@menu$, .@menu$+"- "+.@DyeName$[getarg(.@i)]+":";
+	set .@menu$, .@menu$+"- ^777777Cancel^000000";
+	set .@s, select(.@menu$)-1;
+	if (.@s == (getargcount()/2)+1) goto L_End;
+	mes .n$;
+	if (.@s == 0) {
+		mes "I can change your dye to";
+		mes "the default for free.";
+		mes "Are you sure?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			mes .n$;
+			setlook 7,0;
+			mes "Your clothes have been dyed "+.@DyeName$[0]+".";
+			close;
+		case 2:
+			goto L_End;
+		}
+	}
+	if (!countitem(.@DyeItems[getarg((.@s-1)*2)])) {
+		mes "For me to dye your clothes, I'll need the appropriate Dyestuffs. Please check my price list for the information.";
+		close;
+	}
+	if (Zeny < 10000) {
+		mes "I'm sorry, but you don't have enough money.";
+		close;
+	}
+	delitem .@DyeItems[getarg((.@s-1)*2)],1;
+	set Zeny, Zeny-10000;
+	setlook 7, ((.@s)?(getarg((.@s-1)*2+1)):0);
+	mes "Your clothes have been dyed "+((.@s)?.@DyeName$[getarg((.@s-1)*2)]:.@DyeName$[0])+".";
+	close;
+}
+}

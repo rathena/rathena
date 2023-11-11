@@ -1,0 +1,92 @@
+//===== rAthena Script =======================================
+//= Moscovia Guides
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the town of Moscovia.
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Kisuka]
+//============================================================
+
+moscovia,161,76,4	script	Moscovia Guide#mosk	959,{
+	mes "[Moscovia Guide]";
+	mes "Welcome to Moscovia";
+	mes "Here is the paradise spreading on";
+	mes "the endless seas";
+	mes "You'll be happy with the beautiful";
+	mes "scenery and the sunlight!";
+	next;
+	mes "[Moscovia Guide]";
+	mes "I was sent from Moscovia Palace";
+	mes "to guide tourists and to give them";
+	mes "information on this town.";
+	mes "If you have some questions, please ask me.";
+	next;
+	switch(select("Ask where you can go.:Delete all the marks on the mini-map.:Cancel.")) {
+		case 1:
+			mes "[Moscovia Guide]";
+			mes "Where would you like to go?";
+			next;
+			switch(select("The Palace:Armor Shop:Tool Shop:An Inn:Cancel")) {
+				case 1:
+					mes "[Moscovia Guide]";
+					mes "The Palace can be found ^ff0000+^000000 at the";
+					mes "end of the North sea from";
+					mes "Rune-Midgarts.";
+					mes "There resides our Lord the Czar of";
+					mes "Moscovia and his retainers.";
+					close2;
+					viewpoint 1,257,138,1,0xFF0000;
+					end;
+				case 2:
+					viewpoint 1,185,187,2,0x00FF00;
+					mes "[Moscovia Guide]";
+					mes "The Armor Shop is located at the";
+					mes "southwest corner of town..";
+					mes "You can buy armor made by the best";
+					mes "craftsmen of Moscovia there.";
+					close;
+				case 3:
+					mes "[Moscovia Guide]";
+					mes "The Tool Shop is located just south";
+					mes "from the center of town.";
+					mes "You can find all sorts of things";
+					mes "you need for your travels.";
+					close2;
+					viewpoint 1,223,174,3,0x00FF00;
+					end;
+				case 4:
+					mes "[Moscovia Guide]";
+					mes "The Inn 'Sticky Herb Tree' is just";
+					mes "north from the center of town.";
+					mes "If you need to rest, there is no";
+					mes "better place to stay.";
+					close2;
+					viewpoint 1,229,208,4,0x3355FF;
+					end;
+				case 5:
+					close;
+			}
+		case 2:
+			mes "[Moscovia Guide]";
+			mes "I've deleted all marks on the mini-map.";
+			mes "Whenever you'd like to put marks";
+			mes "there, you can ask me.";
+			viewpoint 2,257,138,1,0xFF0000;
+			viewpoint 2,185,187,2,0x00FF00;
+			viewpoint 2,223,174,3,0x00FF00;
+			viewpoint 2,229,208,4,0x3355FF;
+			close;
+		
+		case 3:
+			mes "[Moscovia Guide]";
+			mes "It'd be great to walk about alone.";
+			mes "Take care.";
+			close;
+	}
+}

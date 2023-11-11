@@ -1,0 +1,34 @@
+//===== rAthena Script =======================================
+//= Splendide Fields Monster Spawn Script
+//===== By: ==================================================
+//= alexx, MaC
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Official spawn ammounts from Aegis script [alexx]
+//= 1.1 Added 13.2 mob spawn update [scriptor]
+//= 1.2 Correct Spawn by Navigation's mob data. [attackjom]
+//============================================================
+
+//==================================================
+// spl_fild01 - Splendide Field
+//==================================================
+spl_fild01,0,0	monster	Dark Pinguicula	2015,98,5000
+spl_fild01,0,0	monster	Naga	1993,68,5000
+spl_fild01,0,0	monster	Cornus	1992,49,5000
+
+//==================================================
+// spl_fild02 - Splendide Field
+//==================================================
+spl_fild02,0,0	monster	Pinguicula	1995,135,5000
+spl_fild02,0,0	monster	Luciola Vespa	1994,27,5000
+
+//==================================================
+// spl_fild03 - Splendide Field
+//==================================================
+spl_fild03,0,0	monster	Luciola Vespa	1994,74,5000
+spl_fild03,0,0	monster	Cornus	1992,52,5000
+spl_fild03,0,0	monster	Naga	1993,42,5000
+spl_fild03,0,0	monster	Tendrilion	1991,2,3600000

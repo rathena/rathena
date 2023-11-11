@@ -1,0 +1,76 @@
+//===== rAthena Script =======================================
+//= Prontera Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//= Nana (1.2)
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Prontera
+//===== Additional Comments: =================================
+//= 1.3 prt19 warp fix [shadow]
+//= 1.4 Added warps for the sign quest [MasterOfMuppets]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 Renewal script update for ep16.1 [Capuche]
+//============================================================
+
+//= Prontera City ============================================
+prontera,107,215,0	warp	prt01	2,2,prt_in,240,139
+prontera,120,267,0	warp	prt02	2,2,prt_in,180,97
+prontera,133,183,0	warp	prt03	2,2,prt_in,50,105
+prontera,134,221,0	warp	prt04	1,1,prt_in,131,71
+prontera,156,22,0	warp	prt001	3,2,prt_fild08,170,375
+prontera,177,221,0	warp	prt05	2,2,prt_in,168,128
+prontera,179,184,0	warp	prt06	2,2,prt_in,60,73
+prontera,192,267,0	warp	prt07	2,2,prt_in,178,55
+prontera,204,192,0	warp	prt08	2,2,prt_in,68,134
+prontera,208,154,0	warp	prt09	2,2,prt_in,172,29
+prontera,22,203,0	warp	prt002	2,3,prt_fild05,367,205
+prontera,237,317,0	warp	prt004	2,2,prt_church,100,60
+prontera,289,203,0	warp	prt003	2,3,prt_fild06,27,193
+prontera,42,67,0	warp	prt10	2,2,prt_in,44,29
+prontera,45,346,0	warp	prt11	2,2,prt_in,80,110
+prontera,73,100,0	warp	prt12	1,1,prt_in,208,176
+prontera,74,90,0	warp	prt13	2,2,prt_in,248,170
+prontera,84,89,0	warp	prt14-1	1,1,prt_in,282,176
+prontera,263,279,0	warp	prt15-2	2,2,prt_in,227,18
+prt_in,135,71,0	warp	prt04-1	1,2,prontera,136,219
+prt_in,168,124,0	warp	prt05-1	2,1,prontera,174,218
+prt_in,172,33,0	warp	prt09-1	2,1,prontera,205,157
+prt_in,181,55,0	warp	prt07-1	1,2,prontera,192,264
+prt_in,183,97,0	warp	prt02-1	1,2,prontera,120,264
+prt_in,208,179,0	warp	prt12-1	3,1,prontera,76,102
+prt_in,217,163,0	warp	prt15	1,3,prt_in,236,163
+prt_in,234,163,0	warp	prt15-1	1,3,prt_in,215,163
+prt_in,240,141,0	warp	prt01-1	3,1,prontera,107,218
+prt_in,248,173,0	warp	prt13-1	3,2,prontera,77,93
+prt_in,254,113,0	warp	prt16	3,2,prt_in,256,134
+prt_in,256,131,0	warp	prt16-1	2,2,prt_in,254,110
+prt_in,263,163,0	warp	prt17	1,3,prt_in,276,163
+prt_in,274,163,0	warp	prt17-1	1,3,prt_in,261,163
+//prt_in,280,68,0	warp	w472	6,6,prontera,147,287
+//prt_in,281,36,0	warp	w473	6,6,prontera,147,287
+//prt_in,282,100,0	warp	w471	6,6,prontera,147,287
+prt_in,282,179,0	warp	prt14	3,1,prontera,87,91
+//prt_in,285,130,0	warp	w470	6,6,prontera,147,287
+prt_in,37,65,0	warp	prt18	1,3,prt_in,51,65
+prt_in,47,29,0	warp	prt10-1	2,1,prontera,46,67
+prt_in,48,65,0	warp	prt18-1	1,3,prt_in,34,65
+prt_in,53,105,0	warp	prt03-1	1,2,prontera,136,186
+prt_in,60,77,0	warp	prt06-1	2,1,prontera,175,188
+prt_in,68,130,0	warp	prt08-1	2,1,prontera,204,188
+prt_in,69,65,0	warp	prt19a	1,3,prt_in,84,65
+prt_in,70,143,0	warp	prt20	2,1,prt_in,70,165
+prt_in,70,162,0	warp	prt20-1	2,1,prt_in,70,140
+prt_in,80,113,0	warp	prt11-1	2,1,prontera,48,343
+prt_in,82,65,0	warp	prt19b	1,3,prt_in,66,65
+prt_in,227,15,0	warp	prt20-2	2,2,prontera,263,275
+
+//= Prontera Church ==========================================
+prt_church,100,56,0	warp	prtch001	7,1,prontera,234,314
+prt_church,109,81,0	warp	prtch01	1,2,prt_church,172,19
+prt_church,168,19,0	warp	prtch01-1	1,2,prt_church,105,81
+prt_church,31,19,0	warp	prtch02	1,2,prt_church,94,81
+prt_church,90,81,0	warp	prtch02-1	1,2,prt_church,27,19

@@ -1,0 +1,178 @@
+//===== rAthena Script =======================================
+//= Eden Group Quests - Mission [86 - 90]
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 86 - 90.
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Chilly]
+//= 1.1 Some little improvements here and there. [Masao]
+//= 1.2 Optimized. [Euphy]
+//= 1.3 Updated to match the official script. [Euphy]
+//= 1.4 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.5 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+moc_para01,48,175,3	script	86-90 Mission Board	857,{
+	if (!callfunc("F_HasEdenGroupMark")) {
+		mes "เดี๋ยวก่อน!";
+		mes "- คุณต้องมี -";
+		mes "- ^4d4dff'Eden Group Mark'^000000 -";
+		mes "- เพื่อรับภารกิจเหล่านี้ -";
+		next;
+		switch(select("เพียงแค่เดินออกไป:ภารกิจ ^0000FFEden Group^000000?:ฉันจะเป็นสมาชิกของ ^0000FFEden Group^000000 ได้อย่างไร")) {
+		case 1:
+			close;
+		case 2:
+			mes "::ภารกิจของกลุ่ม Eden เป็นภารกิจที่ผู้คนจากทั่วราชอาณาจักรร้องขอโดยทั่วไป";
+			mes "::เราแค่จัดหมวดหมู่ให้";
+			next;
+			mes "::ใน Eden Group เราจัดเรียงภารกิจตามระดับความยาก";
+			mes "::ตามระดับนี้คุณจะพบภารกิจที่เหมาะกับคุณ";
+			next;
+			mes "::เมื่อเสร็จแล้วคุณสามารถกลับมาที่กระดานภารกิจได้";
+			next;
+			mes "::แล้วคุณจะได้รับรางวัล !!";
+			mes "::ง่ายๆไม่ใช่หรอ !!";
+			mes "::ไม่ต้องมีค่านายหน้า !!";
+			close;
+		case 3:
+			mes "::คุณสามารถเป็นสมาชิกของ Eden Group ได้ที่ ^ 0000FFLaime Evenor ^ 000000 ซึ่งรออยู่ที่ชั้น 1";
+			next;
+			mes "::หากคุณเป็นสมาชิกคุณจะได้รับ \"^006400Eden Group Mark^000000\".";
+			mes "::จากนั้นคุณจะสามารถเห็นกระดานภารกิจ";
+			close;
+		}
+	}
+	if (BaseLevel < 86  || BaseLevel > 90) {
+		// Quest IDs: 4167-4180
+		// Quest cooldown IDs: 4198-4211
+		setarray .@names$[0],
+			"Dragon Tail","Spring Rabbit","Pest",
+			"Bathory","Alarm",
+			"Baba Yaga","Yao Jun","Firelock Soldier","Zipper Bear",
+			"Ground Petite","Rafflesia","Venomous","Pitman","Yellow Novus";
+		setarray .@exp[0],
+			76000,82000,82000,
+			72000,76000,
+			72000,78000,82000,80000,
+			72000,72000,72000,86000,80000;
+		mes "คุณต้องอยู่ในระดับ 86-90 เพื่อรับภารกิจเหล่านี้";
+		for(set .@quest,4167; .@quest<=4180; set .@quest,.@quest+1) {
+			set .@hunting, checkquest(.@quest,HUNTING);
+			if (.@hunting == 0 || .@hunting == 1) {
+				next;
+				mes ":: คุณไม่สามารถดำเนินการต่อใน ^0000FF" + .@names$[.@quest-4167] + " Hunting^000000.";
+				mes ":: การลงทะเบียนภารกิจถูกยกเลิก";
+				erasequest .@quest;
+				close;
+			} else if (.@hunting == 2) {
+				next;
+				mes ":: คุณเพิ่มข้อมูลเกี่ยวกับภารกิจ ^0000FF" + .@names$[.@quest-4167] + " Hunting^000000 บนกระดานภารกิจ";
+				mes ":: คุณได้รับประสบการณ์ที่ดี";
+				erasequest .@quest;
+				getexp .@exp[.@quest-4167],0;
+				close;
+			}
+		}
+		close;
+	}
+	mes "[86-90 Mission Board]";
+	mes "มีคำขอมากมายในบอร์ดนี้";
+	next;
+	switch(select("^8B4513Turtle Island^000000:^8B4513Clock Tower Dungeon^000000:^8B4513Expansion Towns^000000:^8B4513Other Regions^000000")) {
+	case 1:
+		mes "^8B4513Turtle Island^000000.";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFDragon Tail^000000:^0000FFSpring Rabbit^000000:^0000FFPest^000000")) {
+			case 1: callsub L_Quest,4167,"Dragon Tail",76000,"Dragon Tail","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000","s";
+			case 2: callsub L_Quest,4168,"Spring Rabbit",82000,"Spring Rabbit","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000","s";
+			case 3: callsub L_Quest,4169,"Pest",82000,"Pest","มีมอนสเตอร์ที่สามารถพบได้เฉพาะบน ^8B4513Turtle Island^000000","s";
+		}
+	case 2:
+		mes "^8B4513Clock Tower Dungeon^000000.";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFBathory^000000:^0000FFAlarm^000000")) {
+			case 1: callsub L_Quest,4170,"Bathory",72000,"Bathory","ดันเจี้ยนหอนาฬิกาเต็มไปด้วยสัตว์ประหลาดอันตราย";
+			case 2: callsub L_Quest,4171,"Alarm",76000,"Alarm","ดันเจี้ยนหอนาฬิกาเต็มไปด้วยสัตว์ประหลาดอันตราย";
+		}
+	case 3:
+		mes "^8B4513Expansion Cities^000000";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFBaba Yaga^000000:^0000FFYao Jun^000000:^0000FFFirelock Soldier^000000:^0000FFZipper Bear^000000")) {
+			case 1: callsub L_Quest,4172,"Baba Yaga",72000,"","แม่มด Baba Yaga สามารถพบได้ในเขตชานเมืองของ Moscovia";
+			case 2: callsub L_Quest,4173,"Yao Jun",117000,"Yao Jun","มีสัตว์ประหลาดคล้ายมนุษย์ที่เร่ร่อนไปทั่วคุกใต้ดินใน Luoyang.";
+			case 3: callsub L_Quest,4174,"Firelock Soldier",82000,"Firelock Soldier","มีสัตว์ประหลาดคล้ายมนุษย์ที่เร่ร่อนไปทั่วคุกใต้ดินใน Amatsu.","s";
+			case 4: callsub L_Quest,4175,"Zipper Bear",120000,"Zipper Bear","มีมอนสเตอร์หมีรุมในดันเจี้ยน Kunlun";
+		}
+	case 4:
+		mes "[86-90 Mission Board]";
+		mes "นี่คือรายการคำขอแบบสุ่มเพื่อล่ามอนสเตอร์ในภูมิภาคอื่นๆ ของมิดการ์ด";
+		mes "คุณจะล่ามอนสเตอร์ตัวไหนหรือล่าเสร็จแล้ว";
+		next;
+		switch(select("^0000FFGround Petite^000000:^0000FFRafflesia^000000:^0000FFVenomous^000000:^0000FFPitman^000000:^0000FFYellow Novus^000000")) {
+			case 1: callsub L_Quest,4176,"Ground Petite",72000,"Ground Petite","มีสัตว์ประหลาดประเภทมังกรรุมกินพื้นที่ทางตะวันตกของเมือง Geffen";
+			case 2: callsub L_Quest,4177,"Rafflesia",72000,"Rafflesia","มีสัตว์ประหลาดประเภทพืชอาศัยอยู่ในทุ่ง Lighthalzen";
+			case 3: callsub L_Quest,4178,"Venomous",72000,"Venomous","มีสัตว์ประหลาดไร้รูปร่างลอยอยู่รอบๆ ทุ่ง Einbroch";
+			case 4: callsub L_Quest,4179,"Pitman",86000,"Pitman","มีมอนสเตอร์ที่ไม่ตายกำลังเข็นรถเข็นไปรอบๆ ทุ่งและดันเจี้ยนของ Einbroch";
+			case 5: callsub L_Quest,4180,"Yellow Novus",80000,"Yellow Novus","มีมอนสเตอร์ประเภทมังกรสีเหลืองกำลังคุกคามทุ่ง Hugel";
+		}
+	}
+	end;
+
+//callsub L_Quest,<quest ID>,"<monster name>",<reward EXP>,"<cutin image>","<description>"{,"s"};
+L_Quest:
+	set .@quest1, getarg(0);
+	set .@quest2, .@quest1+31;
+	.@cutin$ = getarg(3);
+	set .@playtime, checkquest(.@quest2,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[86-90 Mission Board]";
+		mes "คุณต้องรอ 3 ชั่วโมงก่อนจึงจะสามารถทำภารกิจนี้ได้อีกครั้ง";
+		close;
+	}
+	set .@hunting, checkquest(.@quest1,HUNTING);
+	if (.@hunting == 0 || .@hunting == 1) {
+		mes "[86-90 Mission Board]";
+		mes "คุณล่าครบ 30 " + getarg(1) + getarg(5,"") + " หรือยัง?";
+		close;
+	} else if (.@hunting == 2) {
+		mes "[86-90 Mission Board]";
+		mes "คุณล่าสัตว์เสร็จแล้ว";
+		mes "โปรดรับรางวัลนี้เป็นค่าตอบแทน";
+		erasequest .@quest1;
+		if (.@playtime > -1) erasequest .@quest2;
+		setquest .@quest2;
+		getexp getarg(2),0;
+		close;
+	}/* else if (.@hunting == 3) {
+//		recall_completequest .@quest1
+		erasequest .@quest1;
+		mes "[86-90 Mission Board]";
+		mes "คุณได้ยอมรับ" + getarg(1) + "ภารกิจล่าสัตว์อีกครั้ง";
+		close;
+	}*/ else {
+		mes "[86-90 Mission Board]";
+		mes getarg(4);
+		next;
+		if (.@cutin$ != "") cutin .@cutin$,3;
+		mes "[86-90 Mission Board]";
+		mes "ล่า 30" + getarg(1) + "ที่นั่นแล้วโพสต์ความสำเร็จของคุณบนกระดานนี้";
+		next;
+		if (.@cutin$ != "") cutin .@cutin$,255;
+		if(select("ฉันจะตามล่าพวกมัน:ไม่ต้องขอบคุณ") == 1) {
+			mes "[86-90 Mission Board]";
+			mes "เมื่อคุณทำภารกิจสำเร็จแล้วให้โพสต์บนกระดานนี้และรับรางวัลของคุณ";
+			if (.@playtime > -1) erasequest .@quest2;
+			setquest .@quest1;
+		}
+		close;
+	}
+}

@@ -1,0 +1,1458 @@
+//===== rAthena Script =======================================
+//= Morse Cave
+//===== Description: =========================================
+//= [Official Conversion]
+//= Morse Cave Instance
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//= 1.1 Updated to match official script. [Capuche]
+//============================================================
+
+moro_cav,61,69,3	script	Senior Tracker#a1	4_M_JOB_ASSASSIN,{
+	if (ep14_3_isle == 0) {
+		mes "[Senior Tracker]";
+		mes "This is our advance base";
+		mes "to stop Morocc.";
+		mes "I'm a tracker";
+		mes "charged with leading my army";
+		mes "to Morocc's lair.";
+		close;
+	}
+	if (checkweight(2104,2) == 0) {
+		mes "Your backpack is too full";
+		mes "I can't talk to you!";
+		close;
+	}
+	if (BaseLevel < 160) {
+		mes "You need to reach level 160 first";
+		mes "to enter the Red Flower!";
+		close;
+	}
+	switch( checkquest(9319,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Senior Tracker]";
+		mes "We're nowhere near close";
+		mes "to stopping Morocc's resurrection.";
+		mes "I can't sleep at night,";
+		mes "knowing Morocc is doing everything he can";
+		mes "to recover his strength.";
+		mes "Could you come back tomorrow?";
+		close;
+	case 2:
+		mes "[Senior Tracker]";
+		mes "I knew you'd return.";
+		mes "You look well-rested.";
+		next;
+		mes "[Senior Tracker]";
+		mes "According to my intel,";
+		mes "Morocc is hiding out in this place,";
+		mes "recovering his strength.";
+		next;
+		mes "[Senior Tracker]";
+		mes "Fighting Morocc";
+		mes "takes more than a few warriors, no matter how strong they are.";
+		mes "I recommend you join forces with";
+		mes "as many comrades as you can find.";
+		mes "Are you ready to enter the Red Flower";
+		mes "where Morocc is believed to be hiding?";
+		if (getcharid(1) < 1 || is_party_leader() == false)
+			close;
+		next;
+		if (select( "No.", "Yes." ) == 1) {
+			mes "[Senior Tracker]";
+			mes "Come back";
+			mes "if you change your mind.";
+			close;
+		}
+		if (instance_create("Morse's Cave") < 1) {
+			mes "[Senior Tracker]";
+			mes "The entrance to the Red Flower";
+			mes "is not open yet.";
+			mes "Please come back later";
+			mes "and try again.";
+			close;
+		}
+		mes "[Senior Tracker]";
+		mes "The entrance to the Red Flower";
+		mes "has opened.";
+		mes "It will only stay open for a while.";
+		mes "You'd better use it";
+		mes "while you can.";
+		close;
+	}
+	.@hunting_9318 = checkquest(9318,HUNTING);
+	if (.@hunting_9318 == -1) {
+		mes "[Senior Tracker]";
+		mes "This is our advance base";
+		mes "to stop Morocc.";
+		mes "I'm a tracker";
+		mes "charged with leading my army";
+		mes "to Morocc's lair.";
+		next;
+		mes "[Senior Tracker]";
+		mes "After a painstaking search,";
+		mes "I've located";
+		mes "the place with the highest chance of";
+		mes "hiding Morocc inside.";
+		next;
+		mes "[Senior Tracker]";
+		mes "According to my intel,";
+		mes "Morocc is hiding out in this place,";
+		mes "trying to recover";
+		mes "his full strength.";
+		next;
+		mes "[Senior Tracker]";
+		mes "Even though I've located this place myself,";
+		mes "I have to admit";
+		mes "that I'm not equipped to";
+		mes "explore it by myself.";
+		mes "I'm a tracker after all, not a fighter.";
+		next;
+		mes "[Senior Tracker]";
+		mes "You look like";
+		mes "a warrior spoiling for";
+		mes "a good fight with Morocc,";
+		mes "and I think";
+		mes "you have a chance at winning it.";
+		next;
+		mes "[Senior Tracker]";
+		mes "How'd you like to";
+		mes "enter Morocc's lair,";
+		mes "defeat him,";
+		mes "and become the hero";
+		mes "who saved the world from evil?";
+		next;
+		if (getcharid(1) < 1 || is_party_leader() == false) {
+			mes "[Senior Tracker]";
+			mes "If you're interested in my proposition,";
+			mes "let me talk to your party leader.";
+			mes "We'll discuss more details together.";
+			close;
+		}
+		mes "[Senior Tracker]";
+		mes "Morocc may not have recovered his full strength, but fighting him still";
+		mes "takes more than a few warriors, no matter how strong they are.";
+		mes "I recommend you join forces with";
+		mes "as many comrades as you can find.";
+		mes "Are you ready to enter the Red Flower";
+		mes "where Morocc is believed to be hiding?";
+		next;
+		if (select( "No.", "Yes." ) == 1) {
+			mes "[Senior Tracker]";
+			mes "Come back";
+			mes "if you change your mind.";
+			close;
+		}
+		if (instance_create("Morse's Cave") < 1) {
+			mes "[Senior Tracker]";
+			mes "The entrance to the Red Flower";
+			mes "is not open yet.";
+			mes "Please come back later";
+			mes "and try again.";
+			close;
+		}
+		mes "[Senior Tracker]";
+		mes "The entrance to the Red Flower";
+		mes "has opened.";
+		mes "It will only stay open for a while.";
+		mes "You'd better use it";
+		mes "while you can.";
+		close;
+	}
+	else {
+		mes "[Senior Tracker]";
+		mes "Finally you're back!";
+		mes "What happened in there?";
+		next;
+		mes "- You relay";
+		mes "your experience in the Red Flower. -";
+		next;
+		mes "[Senior Tracker]";
+		mes "So Morocc got away.";
+		mes "That's a shame.";
+		next;
+		if (checkquest(9318,HUNTING) == 2) {
+			mes "[Senior Tracker]";
+			mes "At least";
+			mes "you wiped out";
+			mes "his army.";
+			mes "That's an accomplishment in itself.";
+			next;
+		}
+		mes "[Senior Tracker]";
+		mes "At least we know";
+		mes "where he is.";
+		mes "Could you come back tomorrow";
+		mes "and help me track";
+		mes "him down again?";
+		mes "I'll be waiting here.";
+		if (checkquest(9318,HUNTING) == 2)
+			getitem 6684,1;	// TokenOfHero
+		erasequest 9318;// Pursuing Hiding Morocc
+		setquest 9319;// Pursuing Hiding Morocc Continues
+		ep14_3_mors01 = 1;
+		close;
+	}
+}
+
+moro_cav,57,69,3	script	Red Flower#a1	CLEAR_NPC,{
+	if (ep14_3_isle == 0) {
+		mes "[Senior Tracker]";
+		mes "This is our advance base";
+		mes "to stop Morocc.";
+		mes "I'm a tracker";
+		mes "charged with leading my army";
+		mes "to Morocc's lair.";
+		close;
+	}
+	if (BaseLevel < 160) {
+		mes "You need to reach level 160 first";
+		mes "to enter the Red Flower!";
+		close;
+	}
+	if (isbegin_quest(9318) > 0) {
+		mes "- The Red Flower is closed.";
+		mes "You cannot enter it yet. -";
+		close;
+	}
+	switch( checkquest(9319,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "- The Red Flower is closed.";
+		mes "You cannot enter it yet. -";
+		close;
+	case 2:
+		break;
+	}
+	if (select( "Do not enter the Red Flower.", "Enter the Red Flower." ) == 1) {
+		mes "- You can sense some sinister energy. -";
+		close;
+	}
+	switch( instance_enter("Morse's Cave") ) {
+	case IE_OTHER:
+		mes "An unknown error occurred.";
+		close;
+	case IE_NOINSTANCE:
+		mes "The Memorial dungeon Morse's Cave does not exist.";
+		mes "Your party leader has not yet created the Memorial dungeon.";
+		close;
+	case IE_NOMEMBER:
+		mes "Only party members can enter this Memorial dungeon.";
+		close;
+	case IE_OK:
+		mapannounce "moro_cav", getpartyname( getcharid(1) ) + " party's " + strcharinfo(0) + " is entering Morse's Cave.", bc_map,0xFF99;
+		if (isbegin_quest(9319) > 0)
+			erasequest 9319;// Pursuing Hiding Morocc Continues
+		if (isbegin_quest(9318) > 0)
+			erasequest 9318;
+		setquest 9318;// Pursuing Hiding Morocc
+		// warp "1@rev",26,181;
+		end;
+	}
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+OnTimer3000:
+	specialeffect EF_BOTTOM_VO;
+	end;
+OnTimer15000:
+	initnpctimer;
+	end;
+}
+
+1@rev,33,117,0	script	#Pause Effect RZ1	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	if (getnpctimer(0) > 0)
+		end;
+	initnpctimer;
+	//disablenpc();
+	hideonnpc instance_npcname( strnpcinfo(0) );
+	specialeffect EF_ICEWALL;
+	end;
+OnTimer30000:
+	specialeffect EF_ICEWALL;
+	end;
+OnTimer60000:
+	specialeffect EF_ICEWALL;
+	initnpctimer;
+	end;
+}
+1@rev,36,118,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ2	HIDDEN_WARP_NPC,1,1
+1@rev,36,121,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ3	HIDDEN_WARP_NPC,1,1
+1@rev,34,122,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ4	HIDDEN_WARP_NPC,1,1
+1@rev,31,121,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ5	HIDDEN_WARP_NPC,1,1
+1@rev,31,118,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ6	HIDDEN_WARP_NPC,1,1
+1@rev,112,116,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ7	HIDDEN_WARP_NPC,1,1
+1@rev,114,117,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ8	HIDDEN_WARP_NPC,1,1
+1@rev,114,120,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ9	HIDDEN_WARP_NPC,1,1
+1@rev,111,121,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ10	HIDDEN_WARP_NPC,1,1
+1@rev,109,120,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ11	HIDDEN_WARP_NPC,1,1
+1@rev,109,117,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ12	HIDDEN_WARP_NPC,1,1
+
+1@rev,31,50,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ1_	HIDDEN_WARP_NPC,1,1
+1@rev,36,49,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ2_	HIDDEN_WARP_NPC,1,1
+1@rev,37,45,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ3_	HIDDEN_WARP_NPC,1,1
+1@rev,30,45,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ4_	HIDDEN_WARP_NPC,1,1
+1@rev,29,47,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ5_	HIDDEN_WARP_NPC,1,1
+1@rev,33,51,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ6_	HIDDEN_WARP_NPC,1,1
+1@rev,38,49,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ7_	HIDDEN_WARP_NPC,1,1
+1@rev,34,44,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ8_	HIDDEN_WARP_NPC,1,1
+1@rev,32,44,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ9_	HIDDEN_WARP_NPC,1,1
+1@rev,29,49,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ10_	HIDDEN_WARP_NPC,1,1
+1@rev,35,51,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ11_	HIDDEN_WARP_NPC,1,1
+1@rev,37,47,0	duplicate(#Pause Effect RZ1)	#Pause Effect RZ12_	HIDDEN_WARP_NPC,1,1
+
+
+// Event A
+1@rev,27,181,0	script	#RZ Memorial Start	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#RZ Memorial Start");
+	enablenpc instance_npcname("#RZ Event_1");
+	.@mob_name$ = "" + strcharinfo(0) + "'s Soul";
+	.@label$ = instance_npcname("#RZ Memorial Start") + "::OnSoulDead";
+	monster 'map_rev$, 34,120, .@mob_name$, 3007,1, .@label$;	// EP14_MORS_DUMMY
+	monster 'map_rev$,112,118, .@mob_name$, 3007,1, .@label$;
+	monster 'map_rev$, 34, 48, .@mob_name$, 3007,1, .@label$;
+	monster 'map_rev$,112, 48, .@mob_name$, 3007,1, .@label$;
+	end;
+OnSoulDead:
+	end;
+
+OnInstanceInit:
+	'map_rev$ = instance_mapname("1@rev");
+	'event_right = false;
+	'event_ended = false;
+	'boss_id = 0;
+	'monster_id[4] = 0;
+	'monster_id[5] = 0;
+	'monster_id[6] = 0;
+	'monster_id[7] = 0;
+
+	disablenpc instance_npcname("#RZ Event_1");
+	disablenpc instance_npcname("#RZ Event_3");
+	
+	disablenpc instance_npcname("Grim Reaper Ankou#RZ Event_2");
+	disablenpc instance_npcname("Grim Reaper Ankou#RZ Event_3");
+	disablenpc instance_npcname("Grim Reaper Ankou#RZ Event_4");
+	disablenpc instance_npcname("Grim Reaper Ankou#RZ Event_5");
+	disablenpc instance_npcname("Grim Reaper Ankou#RZ Event_6");
+
+	disablenpc instance_npcname("#RZ Debuff Recovery_1");
+	disablenpc instance_npcname("#RZ Debuff Recovery_2");
+	disablenpc instance_npcname("#RZ Debuff Recovery_3");
+	disablenpc instance_npcname("#RZ Debuff Recovery_4");
+
+	for ( .@i = 5; .@i < 18; ++.@i )
+		disablenpc instance_npcname("#RZ Move_" + .@i + "a");
+	for ( .@i = 1; .@i < 13; ++.@i )
+		disablenpc instance_npcname("#RZ Debuff_" + .@i);
+
+	for ( .@i = 1; .@i < 17; ++.@i )
+		disablenpc instance_npcname("#RZ Move_" + .@i);
+	disablenpc instance_npcname("#RZ Move_30");
+	disablenpc instance_npcname("#RZ Move_31");
+	disablenpc instance_npcname("#RZ Move_32");
+
+	disablenpc instance_npcname("#Battle_1RZ1");
+	disablenpc instance_npcname("#Battle_1RZ2");
+	disablenpc instance_npcname("#Battle_2RZ1");
+	disablenpc instance_npcname("#Battle_3RZ2");
+	disablenpc instance_npcname("#Battle_3RZ3");
+	disablenpc instance_npcname("#Battle_3RZ4");
+	disablenpc instance_npcname("#Battle_3RZ5");
+	disablenpc instance_npcname("#Battle_3RZ6");
+	disablenpc instance_npcname("#Battle_3RZ7");
+
+	disablenpc instance_npcname("Weakened Morocc#RZ1");
+	disablenpc instance_npcname("Morocc Necromancer#RZ1");
+	end;
+}
+
+1@rev,34,120,0	script	#RZ Memorial Effect 1	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnInstanceInit:
+	//disablenpc();
+	hideonnpc instance_npcname( strnpcinfo(0) );
+	initnpctimer;
+	end;
+OnTimer1000:
+	specialeffect EF_CURSEATTACK;
+	end;
+OnTimer2000:
+	initnpctimer;
+	end;
+}
+1@rev,112,118,0	duplicate(#RZ Memorial Effect 1)	#RZ Memorial Effect 2	HIDDEN_WARP_NPC,4,4
+1@rev,34,48,0	duplicate(#RZ Memorial Effect 1)	#RZ Memorial Effect 3	HIDDEN_WARP_NPC,4,4
+
+1@rev,31,181,0	script	#RZ Event_1	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#RZ Event_1");
+	// specialeffect EF_HIT2, AREA, "";	// npc target undefined
+	mapannounce 'map_rev$, "Morocc: Who dares to disrupt my sleep?!", bc_map,00EBFF;
+	.@account_id = getcharid(3);
+	.@name$ = strcharinfo(0);
+	unittalk .@account_id, "" + .@name$ + " : We came to the right place!";
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 3000;
+	unittalk .@account_id, "" + .@name$ + " : Wait! There's something ahead of us!";
+	sleep2 3000;
+	setpcblock PCBLOCK_NPC, false;
+
+	// debug in case of reload script
+	getpartymember getcharid(1), 1, .@char_id;
+	getpartymember getcharid(1), 2, .@account_id;
+
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
+			continue;
+		if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
+			setpcblock PCBLOCK_MOVE, false, .@account_id[.@i];
+	}
+
+	specialeffect2 EF_LOCKON;
+	.@label$ = instance_npcname("#RZ Event_1") + "::OnMobDead";
+	monster 'map_rev$,38,180,"Morocc's Ghoul",3001,1, .@label$;	// EP14_MORS_MOB1
+	monster 'map_rev$,38,181,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,38,182,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,54,180,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,54,181,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,54,182,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,70,180,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,70,181,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,70,182,"Morocc's Ghoul",3001,1, .@label$;
+	unittalk .@account_id, "" + .@name$ + " : Are these hideous monsters Morocc's lackeys?";
+	initnpctimer;
+	end;
+OnTimer2000:
+	if (mobcount( 'map_rev$, instance_npcname("#RZ Event_1") + "::OnMobDead" ) < 1) {
+		stopnpctimer;
+		donpcevent instance_npcname("Grim Reaper Ankou#RZ Event_2") + "::OnStart";
+	}
+	end;
+OnTimer4000:
+	initnpctimer;
+	end;
+OnMobDead:
+	end;
+}
+
+1@rev,64,181,4	script	Grim Reaper Ankou#RZ Event_2	3029,{
+	end;
+OnStart:
+	enablenpc instance_npcname("Grim Reaper Ankou#RZ Event_2");
+	enablenpc instance_npcname("#RZ Event_3");
+	npctalk "Grim Reaper Ankou: *Chuckle* We meet again!";
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: You shouldn't have come. You're interrupting Lord Morocc from recovering his strength.";
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: This world resides in his mind.";
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: You can't do anything against his will. *Chuckle*";
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: Lord Morocc is expecting you. Let me take you to him. *Chuckle*";
+	sleep 3000;
+	disablenpc instance_npcname("Grim Reaper Ankou#RZ Event_2");
+	sleep 3000;
+	enablenpc instance_npcname("#RZ Move_30");
+	enablenpc instance_npcname("#RZ Move_31");
+	enablenpc instance_npcname("#RZ Move_32");
+	end;
+}
+
+// Fail, warp out
+1@rev,34,126,4	script	Grim Reaper Ankou#RZ Event_3	3029,{
+	end;
+OnEnd:
+	.@ankou_3$ = instance_npcname("Grim Reaper Ankou#RZ Event_3");
+	.@ankou_4$ = instance_npcname("Grim Reaper Ankou#RZ Event_4");
+	enablenpc .@ankou_3$;
+	enablenpc .@ankou_4$;
+	npctalk "Grim Reaper Ankou: You're pathetic.", .@ankou_3$;
+	npctalk "Grim Reaper Ankou: You're pathetic.", .@ankou_4$;
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: Weaklings like you aren't enough food for Lord Morocc", .@ankou_3$;
+	npctalk "Grim Reaper Ankou: Weaklings like you aren't enough food for Lord Morocc", .@ankou_4$;
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: to get the energy he needs for a full recovery.", .@ankou_3$;
+	npctalk "Grim Reaper Ankou: to get the energy he needs for a full recovery.", .@ankou_4;
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: I'll give you one chance to leave. NOW!", .@ankou_3$;
+	npctalk "Grim Reaper Ankou: I'll give you one chance to leave. NOW!", .@ankou_4$;
+	sleep 3000;
+	disablenpc .@ankou_3$;
+	disablenpc .@ankou_4$;
+	sleep 5000;
+	enablenpc instance_npcname("#RZ Move_5a");
+	enablenpc instance_npcname("#RZ Move_6a");
+	enablenpc instance_npcname("#RZ Move_7a");
+	enablenpc instance_npcname("#RZ Move_8a");
+	enablenpc instance_npcname("#RZ Move_9a");
+	enablenpc instance_npcname("#RZ Move_10a");
+	enablenpc instance_npcname("#RZ Move_11a");
+	enablenpc instance_npcname("#RZ Move_12a");
+	end;
+}
+1@rev,112,126,4	script	Grim Reaper Ankou#RZ Event_4	3029,{ end; }
+
+1@rev,34,55,4	script	Grim Reaper Ankou#RZ Event_5	3029,{
+	end;
+OnEnd:
+	enablenpc instance_npcname("Grim Reaper Ankou#RZ Event_5");
+	npctalk "Grim Reaper Ankou: You're pathetic.";
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: Weaklings like you aren't enough food for Lord Morocc";
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: to get the energy he needs for a full recovery.";
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: I'll give you one chance to leave. NOW!!";
+	sleep 3000;
+	disablenpc instance_npcname("Grim Reaper Ankou#RZ Event_5");
+	sleep 5000;
+	enablenpc instance_npcname("#RZ Move_13a");
+	enablenpc instance_npcname("#RZ Move_14a");
+	enablenpc instance_npcname("#RZ Move_15a");
+	enablenpc instance_npcname("#RZ Move_16a");
+	end;
+}
+
+
+// Event B
+1@rev,104,176,0	script	#RZ Event_3	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#RZ Event_3");
+	enablenpc instance_npcname("Weakened Morocc#RZ1");
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Finally, here we are, Morocc.";
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 3000;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : It's been almost too easy to find you,";
+	sleep2 3000;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : but it doesn't matter; you'll die today!";
+	sleep2 3000;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect2 EF_LOCKON;
+	donpcevent instance_npcname("Weakened Morocc#RZ1") + "::OnTalk1";
+	end;
+}
+
+1@rev,111,178,4	script	Weakened Morocc#RZ1	1916,{
+	end;
+OnTalk1:
+	npctalk "Weakened Morocc: I should punish you for disturbing my slumber.";
+	sleep 3000;
+	npctalk "Weakened Morocc: Do you really think you can stop me?";
+	sleep 3000;
+	npctalk "Weakened Morocc: I'll make you regret ever coming here.";
+	sleep 3000;
+	npctalk "Weakened Morocc: I may have not recovered my full strength,";
+	specialeffect EF_ENERGYCOAT;
+	sleep 3000;
+	npctalk "Weakened Morocc: but I still can take down a bunch of you easily.";
+	sleep 3000;
+	npctalk "Weakened Morocc: Death is your only escape!";
+	specialeffect EF_VOLCANO;
+	sleep 3000;
+	disablenpc instance_npcname("Weakened Morocc#RZ1");
+	initnpctimer;
+	monster 'map_rev$,111,178,"Weakened Morocc",2998,1, instance_npcname("Weakened Morocc#RZ1") + "::OnMobDead";	// EP14_MORS_EVENT
+	end;
+OnTalk2:
+	npctalk "Weakened Morocc: I'm sorry, but I haven't recovered my full strength.";
+	sleep 3000;
+	npctalk "Weakened Morocc: I'll have to leave you to my soldiers for now.";
+	sleep 3000;
+	npctalk "Weakened Morocc: Do your worst to get out of my world!";
+	sleep 3000;
+	npctalk "Weakened Morocc: In the end, you'll learn the meaning of helplessness in the most painful way!";
+	sleep 3000;
+	npctalk "Weakened Morocc: And your souls will be mine! Mwah hah hah!";
+	sleep 3000;
+	disablenpc instance_npcname("Weakened Morocc#RZ1");
+	sleep 3000;
+	enablenpc instance_npcname("#RZ Move_1");
+	enablenpc instance_npcname("#RZ Move_2");
+	enablenpc instance_npcname("#RZ Move_3");
+	enablenpc instance_npcname("#RZ Move_4");
+	enablenpc instance_npcname("#Battle_1RZ1");
+	enablenpc instance_npcname("#Battle_1RZ2");
+	end;
+OnTimer2000:
+	if (mobcount( 'map_rev$, instance_npcname("Weakened Morocc#RZ1") + "::OnMobDead" ) < 1) {
+		stopnpctimer;
+		enablenpc instance_npcname("Weakened Morocc#RZ1");
+		donpcevent instance_npcname("Weakened Morocc#RZ1") + "::OnTalk2";
+	}
+	end;
+OnTimer4000:
+	initnpctimer;
+	end;
+OnMobDead:
+	end;
+}
+
+
+// Event C1 - left side
+1@rev,35,119,0	script	#Battle_1RZ1	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#Battle_1RZ1");
+	disablenpc instance_npcname("#RZ Move_30");
+	disablenpc instance_npcname("#RZ Move_31");
+	disablenpc instance_npcname("#RZ Move_32");
+	specialeffect EF_STORMGUST, AREA, instance_npcname("#RZ Memorial Effect 1");
+	mapannounce 'map_rev$, "Morocc: How do you like to be separated from each other and have your bodies and minds bound?", bc_map,0x00EBFF;
+	setpcblock PCBLOCK_MOVE, true;
+	sleep2 3000;
+	mapannounce 'map_rev$, "Morocc: You're trespassing! Riff-raff like you have no business in here!", bc_map,0x00EBFF;
+	sleep2 3000;
+	mapannounce 'map_rev$, "Morocc: Your bodies are mine to control!", bc_map,0x00EBFF;
+	sleep2 3000;
+	mapannounce 'map_rev$, "Morocc: Your souls are food for my resurrection!", bc_map,0x00EBFF;
+	sleep2 3000;
+	setpcblock (PCBLOCK_NPC ^ PCBLOCK_MOVE), false;
+	mapannounce 'map_rev$, "Morocc: My soldiers, tear their bodies asunder and bring their souls to me!", bc_map,0x00EBFF;
+	initnpctimer;
+	end;
+
+OnTimer4000:
+	callsub( S_Spawn );
+OnTimer25000:
+	callsub( S_Spawn );
+OnTimer45000:
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: My soldiers, make them suffer! Feast on their bodies and souls!", bc_map,0x00EBFF;
+	callsub( S_Spawn );
+OnTimer65000:
+	callsub( S_Spawn );
+OnTimer85000:
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: Not enough. Make them feel terror!", bc_map,0x00EBFF;
+	callsub( S_Spawn );
+OnTimer105000:
+	callsub( S_Spawn );
+OnTimer125000:
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: Resist me! Fight to the death!", bc_map,0x00EBFF;
+	callsub( S_Spawn );
+OnTimer145000:
+	callsub( S_Spawn );
+OnTimer160000:
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: Mwa hah hah, I can feel my power returning!", bc_map,0x00EBFF;
+	monster 'map_rev$,33,111,"Morocc's Archer Skeleton",3003,1, instance_npcname("#Battle_1RZ1") + "::OnMobDead";// EP14_MORS_MOB3
+	callsub( S_Spawn );
+OnTimer170000:
+	monster 'map_rev$,32,128,"Morocc's Archer Skeleton",3003,1, instance_npcname("#Battle_1RZ1") + "::OnMobDead";
+	callsub( S_Spawn );
+OnTimer180000:
+	if (mobcount( 'map_rev$, instance_npcname("#Battle_1RZ1") + "::OnMobDead") > 19) {
+		stopnpctimer;
+		stopnpctimer instance_npcname("#Battle_1RZ2");
+		donpcevent instance_npcname("Grim Reaper Ankou#RZ Event_3") + "::OnEnd";
+	}
+	end;
+OnTimer186000:
+	killmonster 'map_rev$, instance_npcname("#Battle_1RZ1") + "::OnMobDead";
+	end;
+OnTimer187000:
+	enablenpc instance_npcname("#Battle_2RZ1");
+	mapannounce 'map_rev$, "Morocc: You're more resilient than I thought.", bc_map,0x00EBFF;
+	sleep 2000;
+	mapannounce 'map_rev$, "Morocc: But enough is enough.", bc_map,0x00EBFF;
+	end;
+OnTimer193000:
+	enablenpc instance_npcname("#RZ Move_5");
+	enablenpc instance_npcname("#RZ Move_6");
+	enablenpc instance_npcname("#RZ Move_7");
+	enablenpc instance_npcname("#RZ Move_8");
+	enablenpc instance_npcname("#RZ Move_9");
+	enablenpc instance_npcname("#RZ Move_10");
+	enablenpc instance_npcname("#RZ Move_11");
+	enablenpc instance_npcname("#RZ Move_12");
+	stopnpctimer;
+	end;
+OnMobDead:
+	end;
+
+S_Spawn:
+	.@label$ = instance_npcname("#Battle_1RZ1") + "::OnMobDead";
+	monster 'map_rev$,33,128,"Morocc's Ghoul",3001,1, .@label$;// EP14_MORS_MOB1
+	monster 'map_rev$,42,120,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,34,111,"Morocc's Ghoul",3001,1, .@label$;
+	monster 'map_rev$,25,119,"Morocc's Ghoul",3001,1, .@label$;
+	end;
+}
+
+// Event C2 - right side
+1@rev,112,126,0	script	#Battle_1RZ2	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#RZ Move_30");
+	disablenpc instance_npcname("#RZ Move_31");
+	disablenpc instance_npcname("#RZ Move_32");
+	disablenpc instance_npcname("#Battle_1RZ2");
+	specialeffect EF_STORMGUST, AREA, instance_npcname("#RZ Memorial Effect 2");
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 6000;
+	'event_right = true;
+	setpcblock (PCBLOCK_NPC ^ PCBLOCK_MOVE), false;
+	initnpctimer;
+	end;
+OnTimer4000:
+	callsub( S_Spawn );
+OnTimer25000:
+	mapannounce 'map_rev$, "Morocc: My soldiers, make them suffer! Feast on their bodies and souls!", bc_map,0x00EBFF;
+	callsub( S_Spawn );
+OnTimer45000:
+	callsub( S_Spawn );
+OnTimer65000:
+	mapannounce 'map_rev$, "Morocc: Not enough. Make them feel terror!", bc_map,0x00EBFF;
+	callsub( S_Spawn );
+OnTimer85000:
+	callsub( S_Spawn );
+OnTimer105000:
+	mapannounce 'map_rev$, "Morocc: Resist me! Fight to the death!", bc_map,0x00EBFF;
+	callsub( S_Spawn );
+OnTimer125000:
+	callsub( S_Spawn );
+OnTimer145000:
+	mapannounce 'map_rev$, "Morocc: Mwa hah hah, I can feel my power returning!", bc_map,0x00EBFF;
+	callsub( S_Spawn );
+OnTimer160000:
+	monster 'map_rev$,103,118, "Morocc's Archer Skeleton", 3003,1, instance_npcname("#Battle_1RZ2") + "::OnMobDead";	// EP14_MORS_MOB3
+	callsub( S_Spawn );
+OnTimer170000:
+	monster 'map_rev$,120,117, "Morocc's Archer Skeleton", 3003,1, instance_npcname("#Battle_1RZ2") + "::OnMobDead";
+	callsub( S_Spawn );
+OnTimer182000:
+	//if (mobcount( 'map_rev$, instance_npcname("#Battle_1RZ1") + "::OnMobDead") > 19) {	// Official script check Battle_1RZ1
+	if (mobcount( 'map_rev$, instance_npcname("#Battle_1RZ2") + "::OnMobDead") > 19) {
+		stopnpctimer;
+		stopnpctimer instance_npcname("#Battle_1RZ1");
+		donpcevent instance_npcname("Grim Reaper Ankou#RZ Event_3") + "::OnEnd";
+	}
+	end;
+OnTimer186000:
+	enablenpc instance_npcname("#Battle_2RZ1");
+	killmonster 'map_rev$, instance_npcname("#Battle_1RZ2") + "::OnMobDead";
+	end;
+OnTimer194000:
+	enablenpc instance_npcname("#RZ Move_5");
+	enablenpc instance_npcname("#RZ Move_6");
+	enablenpc instance_npcname("#RZ Move_7");
+	enablenpc instance_npcname("#RZ Move_8");
+	enablenpc instance_npcname("#RZ Move_9");
+	enablenpc instance_npcname("#RZ Move_10");
+	enablenpc instance_npcname("#RZ Move_11");
+	enablenpc instance_npcname("#RZ Move_12");
+	stopnpctimer;
+	end;
+OnMobDead:
+	end;
+
+S_Spawn:
+	.@label$ = instance_npcname("#Battle_1RZ2") + "::OnMobDead";
+	monster 'map_rev$,112,126, "Morocc's Ghoul", 3001,1, .@label$;	// EP14_MORS_MOB1
+	monster 'map_rev$,120,118, "Morocc's Ghoul", 3001,1, .@label$;
+	monster 'map_rev$,112,109, "Morocc's Ghoul", 3001,1, .@label$;
+	monster 'map_rev$,103,117, "Morocc's Ghoul", 3001,1, .@label$;
+	end;
+}
+
+// Event D
+1@rev,34,47,0	script	#Battle_2RZ1	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#Battle_2RZ1");
+	specialeffect EF_STORMGUST, AREA, instance_npcname("#RZ Memorial Effect 3");
+	mapannounce 'map_rev$, "Morocc: This world of mine is evolving.", bc_map,0x00EBFF;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 3000;
+	mapannounce 'map_rev$, "Morocc: My power is returning!", bc_map,0x00EBFF;
+	sleep2 3000;
+	mapannounce 'map_rev$, "Morocc: Your bodies and souls are under my command!", bc_map,0x00EBFF;
+	sleep2 3000;
+	setpcblock (PCBLOCK_NPC ^ PCBLOCK_MOVE), false;
+	mapannounce 'map_rev$, "Morocc: My soldiers, tear their bodies asunder and bring their souls to me!", bc_map,0x00EBFF;
+	initnpctimer;
+	end;
+OnTimer4000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,27,53, "Morocc's Archer Skeleton", 3003,1, .@label$;	// EP14_MORS_MOB3
+	monster 'map_rev$,27,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	mapannounce 'map_rev$, "Morocc: This power! It feels great! Mwah hah hah!", bc_map,0x00EBFF;
+	end;
+OnTimer30000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,40,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,40,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	mapannounce 'map_rev$, "Morocc: How do you like losing control of your own body? *Chuckle*", bc_map,0x00EBFF;
+	end;
+OnTimer55000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,40,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,40,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,27,53, "Morocc's Verit", 3005,1, .@label$;	// EP14_MORS_MOB5
+	end;
+OnTimer80000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,40,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,40,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,27,53, "Morocc's Verit", 3005,1, .@label$;
+	mapannounce 'map_rev$, "Morocc: More! I need more energy!", bc_map,0x00EBFF;
+	end;
+OnTimer105000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,40,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,40,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,27,53, "Morocc's Verit", 3005,1, .@label$;
+	mapannounce 'map_rev$, "Morocc: Mwah hah hah! Fear my army! Struggle harder!", bc_map,0x00EBFF;
+	end;
+OnTimer130000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,40,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,40,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,27,53, "Morocc's Verit", 3005,1, .@label$;
+	end;
+OnTimer155000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,27,53, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,27,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,40,41, "Morocc's Verit", 3005,1, .@label$;
+	monster 'map_rev$,40,54, "Morocc's Verit", 3005,1, .@label$;
+	mapannounce 'map_rev$, "Morocc: You're pathetic, struggling to survive!", bc_map,0x00EBFF;
+	end;
+OnTimer170000:
+	.@label$ = callsub(S_Spawn);
+	monster 'map_rev$,40,41, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,40,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+	monster 'map_rev$,27,53, "Morocc's Verit", 3005,1, .@label$;
+	monster 'map_rev$,27,41, "Morocc's Verit", 3005,1, .@label$;
+	end;
+OnTimer180000:
+	if (mobcount( 'map_rev$, instance_npcname("#Battle_2RZ1") + "::OnMobDead" ) > 19) {
+		stopnpctimer;
+		donpcevent instance_npcname("Grim Reaper Ankou#RZ Event_5") + "::OnEnd";
+	}
+	end;
+OnTimer185000:
+	killmonster 'map_rev$, instance_npcname("#Battle_2RZ1") + "::OnMobDead";
+	disablenpc instance_npcname("#RZ Debuff_9");
+	disablenpc instance_npcname("#RZ Debuff_10");
+	disablenpc instance_npcname("#RZ Debuff_11");
+	disablenpc instance_npcname("#RZ Debuff_12");
+	end;
+OnTimer186000:
+	mapannounce 'map_rev$, "Morocc: I'm surprised you've lasted this long. Thank you for helping me recover most of my strength.", bc_map,0x00EBFF;
+	end;
+OnTimer190000:
+	mapannounce 'map_rev$, "Morocc: Good, I feel rejuvenated.", bc_map,0x00EBFF;
+	end;
+OnTimer192500:
+	enablenpc instance_npcname("#RZ Debuff Recovery_1");
+	enablenpc instance_npcname("#RZ Debuff Recovery_2");
+	enablenpc instance_npcname("#RZ Debuff Recovery_3");
+	enablenpc instance_npcname("#RZ Debuff Recovery_4");
+	end;
+OnTimer193000:
+	enablenpc instance_npcname("#RZ Move_13");
+	enablenpc instance_npcname("#RZ Move_14");
+	enablenpc instance_npcname("#RZ Move_15");
+	enablenpc instance_npcname("#RZ Move_16");
+	stopnpctimer;
+	end;
+S_Spawn:
+	.@label$ = instance_npcname("#Battle_2RZ1") + "::OnMobDead";
+	monster 'map_rev$,34,57, "Morocc's Ghoul", 3001,1, .@label$;	// EP14_MORS_MOB1
+	monster 'map_rev$,43,48, "Morocc's Ghoul", 3001,1, .@label$;
+	monster 'map_rev$,33,38, "Morocc's Ghoul", 3001,1, .@label$;
+	monster 'map_rev$,24,48, "Morocc's Ghoul", 3001,1, .@label$;
+	return .@label$;
+OnMobDead:
+	end;
+}
+
+// Event E - final
+1@rev,112,48,4	script	Morocc Necromancer#RZ1	4_GHOST_STAND,{
+	end;
+OnFinal:
+	.@ankou$ = instance_npcname("Grim Reaper Ankou#RZ Event_6");
+	'event_ended = true;
+	sleep 3000;
+	enablenpc .@ankou$;
+	npctalk "Grim Reaper Ankou: Sigh, Necromancer, why did you have to die so quickly?", .@ankou$;
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: Don't be so happy!", .@ankou$;
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: Now that Lord Morocc has fully recovered his strength, you're as good as dead!", .@ankou$;
+	sleep 3000;
+	npctalk "Grim Reaper Ankou: We'll meet again. *Chuckle*", .@ankou$;
+	sleep 3000;
+	disablenpc .@ankou$;
+	enablenpc instance_npcname("#RZ Move_17a");
+	specialeffect EF_THUNDERSTORM, AREA, instance_npcname("#morocc_necromancer_dummy");
+	sleep 1000;
+	specialeffect EF_LORD, AREA, instance_npcname("#morocc_necromancer_dummy");
+	end;
+}
+1@rev,112,48,4	script	Grim Reaper Ankou#RZ Event_6	3029,{ end; }
+
+// additionnal npc to display the effect on Morocc Necromancer#RZ1 coordinates without bothered the player
+1@rev,112,48,4	script	#morocc_necromancer_dummy	HIDDEN_WARP_NPC,{ end; }
+
+
+1@rev,104,47,0	script	#Battle_3RZ1	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#Battle_3RZ1");
+	mapannounce 'map_rev$, "Morocc: I can't let you go unscathed!", bc_map,0x00EBFF;
+	sleep2 3000;
+	mapannounce 'map_rev$, "Morocc: Hah hah, my Necromancer. I'll leave them to you.", bc_map,0x00EBFF;
+	sleep2 3000;
+	mapannounce 'map_rev$, "Morocc: My loyal soldier, I'll trust you with their deaths!", bc_map,0x00EBFF;
+	sleep2 3000;
+	killmonster 'map_rev$, instance_npcname("#RZ Memorial Start") + "::OnSoulDead";
+	.@necromancer$ = instance_npcname("Morocc Necromancer#RZ1");
+	enablenpc .@necromancer$;
+	sleep2 3000;
+	specialeffect EF_TWOHANDQUICKEN, AREA, .@necromancer$;
+	npctalk "Morocc Necromancer: As you wish, My Lord!", .@necromancer$;
+	sleep2 3000;
+	npctalk "Morocc Necromancer: *Chuckle* You still have no idea, do you?", .@necromancer$;
+	sleep2 3000;
+	npctalk "Morocc Necromancer: The energy you generated to protect me while I was hiding within your soul", .@necromancer$;
+	sleep2 3000;
+	npctalk "Morocc Necromancer: has been converted to healing energy for Lord Morocc the moment you entered this world of his!", .@necromancer$;
+	sleep2 3000;
+	npctalk "Morocc Necromancer: *Chuckle* Your stupidity was a blessing for us. We don't need you anymore. DIE!", .@necromancer$;
+	specialeffect EF_BEGINSPELL2, AREA, .@necromancer$;
+	sleep2 3000;
+	disablenpc .@necromancer$;
+	monster 'map_rev$,112,48, "Morocc Necromancer", 2999,1, instance_npcname("#Battle_3RZ1") + "::OnMobDead";	// EP14_MORS_BOSSA
+	'boss_id = $@mobid[0];
+	initnpctimer;
+	end;
+OnTimer2000:
+	if (unitexists('boss_id) == false || mobcount( 'map_rev$, instance_npcname("#Battle_3RZ1") + "::OnMobDead" ) < 1) {
+		stopnpctimer;
+		donpcevent instance_npcname("#Battle_3RZ2") + "::OnStart";
+	}
+	end;
+OnTimer4000:
+	initnpctimer;
+	end;
+OnMobDead:
+	end;
+}
+
+1@rev,106,57,0	script	#Battle_3RZ2	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+	.@necromancer$ = instance_npcname("Morocc Necromancer#RZ1");
+	enablenpc .@necromancer$;
+	sleep 3000;
+	npctalk "Morocc Necromancer: You're stronger than you look.", .@necromancer$;
+	sleep 3000;
+	npctalk "Morocc Necromancer: *Giggle* I'll show you what I'm truly capable of.", .@necromancer$;
+	sleep 3000;
+	npctalk "Morocc Necromancer: Beg me for your lives!", .@necromancer$;
+	sleep 3000;
+	npctalk "Morocc Necromancer: *Giggle*", .@necromancer$;
+	sleep 3000;
+	disablenpc .@necromancer$;
+	monster 'map_rev$,112,48, "Morocc Necromancer", 3000,1, instance_npcname("#Battle_3RZ2") + "::OnMobDead";	// EP14_MORS_BOSSB
+	'boss_id = $@mobid[0];
+	initnpctimer instance_npcname("#Battle_3RZ3");	// init monsters spawn
+	initnpctimer;
+	end;
+OnTimer1000:
+	if (mobcount( 'map_rev$, instance_npcname("#Battle_3RZ2") + "::OnMobDead" ) < 1 || unitexists('boss_id) == false) {
+		donpcevent instance_npcname("#Battle_3RZ3") + "::OnStop";
+		donpcevent instance_npcname("Morocc Necromancer#RZ1") + "::OnFinal";
+		donpcevent instance_npcname("#Battle_3RZ4") + "::OnStop";
+		donpcevent instance_npcname("#Battle_3RZ5") + "::OnStop";
+		donpcevent instance_npcname("#Battle_3RZ6") + "::OnStop";
+		donpcevent instance_npcname("#Battle_3RZ7") + "::OnStop";
+		stopnpctimer;
+		end;
+	}
+	'timer++;
+	if ('timer == 30) {
+		getunitdata 'boss_id, .@data;
+		if (.@data[UMOB_HP] < 3000000 && .@data[UMOB_HP] > 1) {
+			.@necromancer$ = instance_npcname("#morocc_necromancer_dummy");
+			setunitdata 'boss_id, UMOB_HP, 3000000;
+			specialeffect EF_HEAL, AREA, .@necromancer$;
+			specialeffect EF_HEAL2, AREA, .@necromancer$;
+			specialeffect EF_HEAL4, AREA, .@necromancer$;
+			specialeffect EF_HEAL3, AREA, .@necromancer$;
+			unittalk 'boss_id, "Morocc Necromancer: You can't kill me!";
+		}
+		'timer = 0;
+	}
+	initnpctimer;
+	end;
+OnMobDead:
+	end;
+}
+
+1@rev,120,54,0	script	#Battle_3RZ3	HIDDEN_WARP_NPC,{
+	end;
+OnStop:
+	stopnpctimer;
+	killmonster 'map_rev$, instance_npcname("#Battle_3RZ3") + "::OnMobDead";
+	end;
+OnTimer4500:
+	if ('event_ended == true) {
+		stopnpctimer;
+		end;
+	}
+	end;
+OnTimer7000:
+	if ('event_ended == true) {
+		stopnpctimer;
+		end;
+	}
+	.@count = mobcount( 'map_rev$, instance_npcname("#Battle_3RZ3") + "::OnMobDead" );
+	if (.@count > 39) {
+		if (unitexists('boss_id) == true)
+			unittalk 'boss_id, "Morocc Necromancer: You are surrounded by a lot! It's already in the middle of it! Can't escape! Hey!";
+		end;
+	}
+	donpcevent instance_npcname("#Battle_3RZ4") + "::OnStop";
+	donpcevent instance_npcname("#Battle_3RZ5") + "::OnStop";
+	donpcevent instance_npcname("#Battle_3RZ6") + "::OnStop";
+	donpcevent instance_npcname("#Battle_3RZ7") + "::OnStop";
+	.@label$ = instance_npcname("#Battle_3RZ3") + "::OnMobDead";
+	if (.@count < 10) {
+		.@wRand = rand(1,100);
+		if (.@wRand < 11) {
+			.@string$ = "Morocc Necromancer: We the soldiers of Morocc know no mercy!";
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;			// EP14_MORS_MOB1
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;	// EP14_MORS_MOB3
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;			// EP14_MORS_MOB5
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;			// EP14_MORS_MOB4
+			donpcevent instance_npcname("#Battle_3RZ4") + "::OnStart";
+		}
+		else if (.@wRand < 21) {
+			.@string$ = "Morocc Necromancer: You're doing good so far. *Giggle*";
+			monster 'map_rev$,112,57, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ5") + "::OnStart";
+		}
+		else if (.@wRand < 31) {
+			.@string$ = "Morocc Necromancer: I see you're weakening, though.";
+			monster 'map_rev$,112,57, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ6") + "::OnStart";
+		}
+		else if (.@wRand < 41) {
+			.@string$ = "Morocc Necromancer: Feel the power of his army!";
+			monster 'map_rev$,112,57, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+		}
+		else if (.@wRand < 51) {
+			.@string$ = "Morocc Necromancer: Feel the power of his army!";
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ4") + "::OnStart";
+		}
+		else if (.@wRand < 61) {
+			.@string$ = "Morocc Necromancer: I see you're weakening, though.";
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Verit", 3005,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ4") + "::OnStart";
+		}
+		else if (.@wRand < 71) {
+			.@string$ = "Morocc Necromancer: You're doing good so far. *Giggle*";
+			monster 'map_rev$,112,57, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Verit", 3005,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ5") + "::OnStart";
+		}
+		else if (.@wRand < 81) {
+			.@string$ = "Morocc Necromancer: We the soldiers of Morocc know no mercy!";
+			monster 'map_rev$,112,57, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Verit", 3005,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ6") + "::OnStart";
+		}
+		else if (.@wRand < 91) {
+			.@string$ = "Morocc Necromancer: Feel the power of his army!";
+			monster 'map_rev$,112,57, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+		}
+		else if (.@wRand < 101) {
+			.@string$ = "Morocc Necromancer: I see you're weakening, though.";
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ4") + "::OnStart";
+		}
+	}
+	else if (.@count < 15) {
+		.@wRand = rand(1,60);
+		if (.@wRand < 11) {
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ4") + "::OnStart";
+			donpcevent instance_npcname("#Battle_3RZ5") + "::OnStart";
+			.@string$ = "Morocc Necromancer: Go to hell! Send them to hell!";
+		}
+		else if (.@wRand < 21) {
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ4") + "::OnStart";
+			donpcevent instance_npcname("#Battle_3RZ6") + "::OnStart";
+			.@string$ = "Morocc Necromancer: Morocc's army is not afraid!";
+		}
+		else if (.@wRand < 31) {
+			monster 'map_rev$,112,38, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ4") + "::OnStart";
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+			.@string$ = "Morocc Necromancer: My loyal men are coming! Come over!";
+		}
+		else if (.@wRand < 41) {
+			monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ5") + "::OnStart";
+			donpcevent instance_npcname("#Battle_3RZ6") + "::OnStart";
+			.@string$ = "Morocc Necromancer: For Morocc!!";
+		}
+		else if (.@wRand < 51) {
+			monster 'map_rev$,112,57, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ5") + "::OnStart";
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+			.@string$ = "Morocc Necromancer: For Morocc!!";
+		}
+		else {
+			monster 'map_rev$,121,47, "Morocc's Ghoul", 3001,1, .@label$;
+			monster 'map_rev$,120,54, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Verit", 3005,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Archer Skeleton", 3003,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ6") + "::OnStart";
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+			.@string$ = "Morocc Necromancer: My loyal men are coming! Come over!";
+		}
+	}
+	else if (.@count < 20) {
+		.@wRand = rand(1,40);
+		monster 'map_rev$,102,48, "Morocc's Ghoul", 3001,1, .@label$;
+		if (.@wRand < 11) {
+			monster 'map_rev$,120,54, "Morroc's Pumpkin Soul", 3006,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ6") + "::OnStart";
+			.@string$ = "Morocc Necromancer: You are alive and can't go back!";
+		}
+		else if (.@wRand < 21) {
+			monster 'map_rev$,119,40, "Morroc's Pumpkin Soul", 3006,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+			.@string$ = "Morocc Necromancer: You are alive and can't go back!";
+		}
+		else if (.@wRand < 31) {
+			monster 'map_rev$,104,40, "Morroc's Pumpkin Soul", 3006,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+			.@string$ = "Morocc Necromancer: You are gradually entering death!";
+		}
+		else {
+			monster 'map_rev$,104,54, "Morroc's Pumpkin Soul", 3006,1, .@label$;
+			donpcevent instance_npcname("#Battle_3RZ7") + "::OnStart";
+			.@string$ = "Morocc Necromancer: Let me pray for your impending death!";
+		}
+	}
+	else {
+		.@wRand = rand(1,100);
+		if (.@wRand < 21) {
+			monster 'map_rev$,120,54, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			if (.@wRand < 11)
+				.@string$ = "Morocc Necromancer: You are no different from the walking dead!";
+			else
+				.@string$ = "Morocc Necromancer: Can hold you up now and you are lucky!";
+		}
+		else if (.@wRand < 31) {
+			monster 'map_rev$,120,54, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,119,40, "Morocc's Wraith", 3004,1, .@label$;
+			.@string$ = "Morocc Necromancer: The result is only this level!";
+		}
+		else if (.@wRand < 51) {
+			monster 'map_rev$,119,40, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			.@string$ = "Morocc Necromancer: Even I can't cope with it and dare to fight against Morocc!";
+		}
+		else {
+			monster 'map_rev$,119,40, "Morroc's Pumpkin Soul", 3006,1, .@label$;	// EP14_MORS_MOB6
+			monster 'map_rev$,104,40, "Morocc's Wraith", 3004,1, .@label$;
+			monster 'map_rev$,104,54, "Morocc's Wraith", 3004,1, .@label$;
+			if (.@wRand < 61)
+				.@string$ = "Morocc Necromancer: The result is only this level!";
+			else
+				.@string$ = "Morocc Necromancer: Can hold you up now and you are lucky!";
+		}
+	}
+	if (unitexists('boss_id) == true)
+		unittalk 'boss_id, .@string$;
+	end;
+OnTimer24000:
+OnTimer24500:
+	if ('event_ended == true)
+		stopnpctimer;
+	end;
+OnTimer25000:
+	if ('event_ended == true) {
+		stopnpctimer;
+		end;
+	}
+	initnpctimer;
+	end;
+OnMobDead:
+	end;
+}
+
+1@rev,120,55,0	script	#Battle_3RZ4	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+	sscanf( strnpcinfo(2), "Battle_3RZ%d", .@num );
+	if (.@num == 4) setarray .@xy[0],112,57;
+	else if (.@num == 5) setarray .@xy[0],121,47;
+	else if (.@num == 6) setarray .@xy[0],112,38;
+	else setarray .@xy[0],102,48;
+	monster 'map_rev$, .@xy[0], .@xy[1], "Morocc's Osiris", 3002,1, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";	// EP14_MORS_MOB2
+	'monster_id[.@num] = $mobid[0];
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	killmonster 'map_rev$, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";
+	end;
+OnTimer4500:
+	callsub S_Spawn;
+	end;
+OnTimer9000:
+	callsub S_Spawn;
+	initnpctimer;
+	end;
+OnMobDead:
+	end;
+S_Spawn:
+	if ('event_ended == true) {
+		donpcevent instance_npcname( strnpcinfo(0) ) + "::OnStop";
+		end;
+	}
+	sscanf( strnpcinfo(2), "Battle_3RZ%d", .@num );
+	if (unitexists('monster_id[.@num]) == true && mobcount( 'map_rev$, instance_npcname( strnpcinfo(0) ) + "::OnMobDead" ) > 0) {
+		getunitdata 'monster_id[.@num], .@data;
+		monster 'map_rev$, .@data[UMOB_X], .@data[UMOB_Y], "#Poison", 3008,1, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";	// EP14_MORS_HIDDEN
+	}
+	return;
+}
+1@rev,120,56,0	duplicate(#Battle_3RZ4)	#Battle_3RZ5	HIDDEN_WARP_NPC
+1@rev,120,57,0	duplicate(#Battle_3RZ4)	#Battle_3RZ6	HIDDEN_WARP_NPC
+1@rev,120,58,0	duplicate(#Battle_3RZ4)	#Battle_3RZ7	HIDDEN_WARP_NPC
+
+
+// Warps
+// Entrance -> Weakened Morocc
+1@rev,63,181,0	warp2	#RZ Move_30	10,10,1@rev,103,177
+1@rev,47,181,0	warp2	#RZ Move_31	10,10,1@rev,103,177
+1@rev,31,181,0	warp2	#RZ Move_32	10,10,1@rev,103,177
+
+1@rev,106,183,0	script	#RZ Move_1	WARPNPC,10,10,{
+	end;
+OnTouch:
+	if (is_party_leader() == false)
+		end;
+	sscanf( strnpcinfo(2), "RZ Move_%d", .@num );
+
+	if (.@num < 5) {
+		setarray .@x[0],  33, 112,  36, 114,  36, 114,  34, 111,  31, 109,  31, 109;
+		setarray .@y[0], 117, 116, 118, 117, 121, 120, 122, 121, 121, 120, 118, 117;
+	}
+	else if (.@num < 13) {
+		setarray .@x[0], 31, 36, 37, 30, 29, 33, 38, 34, 32, 29, 35, 37;
+		setarray .@y[0], 50, 49, 45, 45, 47, 51, 49, 44, 44, 49, 51, 47;
+	}
+	else {
+		setarray .@x[0], 104, 104, 104, 104, 103, 103, 103, 103, 102, 102, 102, 102;
+		setarray .@y[0],  48,  47,  46,  49,  49,  48,  47,  46,  46,  47,  48,  49;
+	}
+	.@size = getarraysize(.@x);
+
+	getpartymember getcharid(1), 1, .@char_id;
+	getpartymember getcharid(1), 2, .@account_id;
+
+	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
+			continue;
+		if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$) {
+			.@n = (.@index % .@size);
+			warp 'map_rev$, .@x[.@n], .@y[.@n], .@char_id[.@i];
+		}
+		.@index++;
+	}
+	end;
+}
+1@rev,106,172,0	duplicate(#RZ Move_1)	#RZ Move_2	WARPNPC,10,10
+1@rev,117,172,0	duplicate(#RZ Move_1)	#RZ Move_3	WARPNPC,10,10
+1@rev,117,183,0	duplicate(#RZ Move_1)	#RZ Move_4	WARPNPC,10,10
+1@rev,28,125,0	duplicate(#RZ Move_1)	#RZ Move_5	WARPNPC,10,10
+1@rev,28,114,0	duplicate(#RZ Move_1)	#RZ Move_6	WARPNPC,10,10
+1@rev,39,114,0	duplicate(#RZ Move_1)	#RZ Move_7	WARPNPC,10,10
+1@rev,39,125,0	duplicate(#RZ Move_1)	#RZ Move_8	WARPNPC,10,10
+1@rev,106,123,0	duplicate(#RZ Move_1)	#RZ Move_9	WARPNPC,10,10
+1@rev,106,112,0	duplicate(#RZ Move_1)	#RZ Move_10	WARPNPC,10,10
+1@rev,117,112,0	duplicate(#RZ Move_1)	#RZ Move_11	WARPNPC,10,10
+1@rev,117,123,0	duplicate(#RZ Move_1)	#RZ Move_12	WARPNPC,10,10
+1@rev,28,53,0	duplicate(#RZ Move_1)	#RZ Move_13	WARPNPC,10,10
+1@rev,28,42,0	duplicate(#RZ Move_1)	#RZ Move_14	WARPNPC,10,10
+1@rev,39,42,0	duplicate(#RZ Move_1)	#RZ Move_15	WARPNPC,10,10
+1@rev,39,53,0	duplicate(#RZ Move_1)	#RZ Move_16	WARPNPC,10,10
+
+1@rev,28,125,0	script	#RZ Move_5a	WARPNPC,10,10,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_MOVE, false;
+	warp "prontera",97,167;
+	end;
+}
+1@rev,28,114,0	duplicate(#RZ Move_5a)	#RZ Move_6a	WARPNPC,10,10
+1@rev,39,114,0	duplicate(#RZ Move_5a)	#RZ Move_7a	WARPNPC,10,10
+1@rev,39,125,0	duplicate(#RZ Move_5a)	#RZ Move_8a	WARPNPC,10,10
+1@rev,106,123,0	duplicate(#RZ Move_5a)	#RZ Move_9a	WARPNPC,10,10
+1@rev,106,112,0	duplicate(#RZ Move_5a)	#RZ Move_10a	WARPNPC,10,10
+1@rev,117,112,0	duplicate(#RZ Move_5a)	#RZ Move_11a	WARPNPC,10,10
+1@rev,117,123,0	duplicate(#RZ Move_5a)	#RZ Move_12a	WARPNPC,10,10
+1@rev,28,53,0	duplicate(#RZ Move_5a)	#RZ Move_13a	WARPNPC,10,10
+1@rev,28,42,0	duplicate(#RZ Move_5a)	#RZ Move_14a	WARPNPC,10,10
+1@rev,39,42,0	duplicate(#RZ Move_5a)	#RZ Move_15a	WARPNPC,10,10
+1@rev,39,53,0	duplicate(#RZ Move_5a)	#RZ Move_16a	WARPNPC,10,10
+
+1@rev,112,56,3	script	#RZ Move_17a	PORTAL,{
+	mes "Do you want to exit through the portal?";
+	next;
+	if (select( "No.", "Yes." ) == 1)
+		close;
+	mes "- Teleporting... -";
+	close2;
+	warp "moro_cav",59,63;
+	end;
+}
+
+// dummy npc
+// 1@rev,10,10,0	script	#RZ Move_18	WARPNPC,{ end; }
+
+1@rev,28,125,0	script	#RZ Debuff_1	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_MOVE, true;
+	end;
+}
+1@rev,28,114,0	duplicate(#RZ Debuff_1)	#RZ Debuff_2	HIDDEN_WARP_NPC,10,10
+1@rev,39,114,0	duplicate(#RZ Debuff_1)	#RZ Debuff_3	HIDDEN_WARP_NPC,10,10
+1@rev,39,125,0	duplicate(#RZ Debuff_1)	#RZ Debuff_4	HIDDEN_WARP_NPC,10,10
+1@rev,106,123,0	duplicate(#RZ Debuff_1)	#RZ Debuff_5	HIDDEN_WARP_NPC,10,10
+1@rev,106,112,0	duplicate(#RZ Debuff_1)	#RZ Debuff_6	HIDDEN_WARP_NPC,10,10
+1@rev,117,112,0	duplicate(#RZ Debuff_1)	#RZ Debuff_7	HIDDEN_WARP_NPC,10,10
+1@rev,117,123,0	duplicate(#RZ Debuff_1)	#RZ Debuff_8	HIDDEN_WARP_NPC,10,10
+1@rev,28,53,0	duplicate(#RZ Debuff_1)	#RZ Debuff_9	HIDDEN_WARP_NPC,10,10
+1@rev,28,42,0	duplicate(#RZ Debuff_1)	#RZ Debuff_10	HIDDEN_WARP_NPC,10,10
+1@rev,39,42,0	duplicate(#RZ Debuff_1)	#RZ Debuff_11	HIDDEN_WARP_NPC,10,10
+1@rev,39,53,0	duplicate(#RZ Debuff_1)	#RZ Debuff_12	HIDDEN_WARP_NPC,10,10
+
+
+1@rev,28,53,0	script	#RZ Debuff Recovery_1	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_MOVE, false;
+	end;
+}
+1@rev,28,42,0	duplicate(#RZ Debuff Recovery_1)	#RZ Debuff Recovery_2	HIDDEN_WARP_NPC,10,10
+1@rev,39,42,0	duplicate(#RZ Debuff Recovery_1)	#RZ Debuff Recovery_3	HIDDEN_WARP_NPC,10,10
+1@rev,39,53,0	duplicate(#RZ Debuff Recovery_1)	#RZ Debuff Recovery_4	HIDDEN_WARP_NPC,10,10
+
+// GM NPC
+sec_in02,20,20,6	script	Death Cave#a2	4_M_KHKYEL,{
+	if (callfunc("F_GM_NPC",1854,0,1,9999) < 1)
+		end;
+	switch( select( "Death Cave Reset", "Set Vars", "Cancel" ) ) {
+	case 1:
+		mes "[Death Cave]";
+		mes "Yes. Reset.";
+		next;
+		if (isbegin_quest(9318) > 0)
+			erasequest 9318;
+		if (isbegin_quest(9319) > 0)
+			erasequest 9319;
+		mes "[Death Cave]";
+		mes "Done!";
+		close;
+	case 2:
+		ep14_3_bios01 = 1;
+		mes "[Death Cave]";
+		mes "Thank You!";
+		close;
+	case 3:
+		mes "[Death Cave]";
+		mes "Thank You!";
+		close;
+	}
+}

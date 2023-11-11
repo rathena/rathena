@@ -1,0 +1,126 @@
+//===== rAthena Script ======================================= 
+//= Renewal Archer Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Archer Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy)) {
+			mes "[Archer Guildsman]";
+			mes "เฮ้ฉันรู้จักคุณแล้ว";
+			mes "คุณได้ทำการทดสอบนี้มาก่อนใช่มั้ย";
+			next;
+			mes "[Archer Guildsman]";
+			mes "อาเจ้าต้องไปที่ Valhalla แล้วเกิดใหม่";
+			mes "ว้าวมันช่างน่าประทับใจเหลือเกิน!";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[Archer Guildsman]";
+				mes "เอ่อ ... ";
+				mes "คุณควรที่จะเรียนรู้ทักษะพื้นฐานทั้งหมดก่อนที่คุณจะกลายเป็นนักธนู";
+				next;
+				mes "[Archer Guildsman]";
+				mes "เอาล่ะมาพบกันใหม่ในภายหลัง";
+				close;
+			}
+			mes "[Archer Guildsman]";
+			mes "ถ้างั้นข้าไม่ต้องพูดอะไรอีก";
+			mes "ฉันรู้ว่าคุณจะสร้างนักธนูที่ยิ่งใหญ่ ... ";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Archer_high;
+			skill "AC_MAKINGARROW",1,SKILL_PERM;
+			skill "AC_CHARGEARROW",1,SKILL_PERM;
+			mes "[Archer Guildsman]";
+			mes "ถึงจะไม่มีอะไรพิเศษ";
+			mes "รางวัลสำหรับคุณในครั้งนี้ฉันหวังว่าคุณจะเข้าใจดูแลตัวเอง";
+			close;
+		}else{
+			mes "[Archer Guildsman]";
+			mes "โอ้ ... ?";
+			mes "เฮ้อะไรนะ";
+			mes "คุณมาที่นี่... ?";
+			next;
+			mes "[Archer Guildsman]";
+			mes "ฉันบอกได้เลยว่าคุณไม่ได้เป็น Archer มันรู้สึกเหมือนกับว่าคุณตั้งใจจะทำ";
+			mes "อย่างอื่น ... ";
+			close;
+		}
+	}
+	mes "[Archer Guildsman]";
+	mes "ดีใจที่ได้พบคุณฉันจะช่วยคุณได้อย่างไร";
+	next;
+	switch(select("ฉันต้องการเป็นนักยิงธนู:ฉันต้องการข้อกำหนดโปรด:ไม่มีอะไรขอบคุณ")) {
+	case 1:
+		mes "[Archer Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Archer)
+				mes "ฮ่าฮ่าเจ้าล้อเล่นข้า... ";
+			else {
+				mes "ข้ารู้สึกเสียใจ แต่มีเพียงสามเณรเท่านั้นที่สามารถเปลี่ยนอาชีพ";
+				mes "เจ้ามีงานที่ดีของเจ้าแล้วใช่ไหม?";
+			}
+			close;
+		}else{
+			mes "คุณคือ... " + strcharinfo(0) + ", จริงไหม?";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[Archer Guildsman]";
+				mes "คุณไม่ได้อยู่ในระดับทักษะที่เหมาะสม";
+				mes "Job Level ของคุณต้องมีอย่างน้อย ^4A4AFF10^000000 และระดับทักษะพื้นฐานของคุณควรจะถึงระดับ ^4A4AFFlevel 9";
+				next;
+				mes "[Archer Guildsman]";
+				mes "เพราะอาร์เชอร์ต้องการสมาธิสูงมากดังนั้นเราจึงไม่ยอมรับคนที่มีความอดทนน้อย";
+				close;
+			}
+			mes "[Archer Guildsman]";
+			mes "ทักษะพื้นฐานของคุณก็เพียงพอแล้ว .. ";
+			mes ".... อืม ~~ ดังนั้นตอนนี้คุณก็พร้อมที่จะเป็นนักธนูแล้วฉันจะก้าวไปทันที";
+			next;
+			mes "[Archer Guildsman]";
+			mes "ขอแสดงความยินดีด้วยตอนนี้คุณเป็นนักยิงธนู! นอกจากนี้เราหวังว่าคุณจะเข้าร่วมในหลาย ๆ โปรแกรมเพื่อการฟื้นฟูของ Archer Guild";
+			mes "อ่าไอเท็มมาจากฝ่ายผลิตแล้วเอานี่ไปนี่เป็นของคุณทั้งหมด!";
+			callfunc "Job_Change",Job_Archer;
+			getitem 1742,1;	// N_Composite_Bow
+			getitem 12004,1;	// Arrow_Container
+			getitem 12009,1;	// Silver_Arrow_Container
+			getitem 12008,1;	// Fire_Arrow_Container
+			next;
+			mes "[Archer Guildsman]";
+			mes "มีธนูและลูกธนูตอนนี้เจ้ากลายเป็นนักธนูที่แท้จริง";
+			mes "ถ้าคุณเปิดที่เก็บลูกศรมันจะมีลูกธนูอยู่ข้างในแล้วเจ้าจะสามารถจัดให้มันได้";
+			mes "ดีฉันคาดหวังว่าจะได้ยินข่าวที่ดีขึ้นจากคุณถึงเวลาที่ต้องกล่าวคำอำลา";
+			mes "Bye.";
+			close;
+		}
+	case 2:
+		mes "[Archer Guildsman]";
+		mes "นักธนูมีทักษะในการใช้ธนูและมีความสามารถที่หลากหลาย";
+		mes "ความสามารถที่ยอดเยี่ยมที่สุดของนักธนูคือการโจมตีศัตรูจากระยะไกล";
+		next;
+		mes "[Archer Guildsman]";
+		mes "ถึงแม้ว่า Archer จะอ่อนแอกว่า HP แต่เขาหรือเธอสามารถยิงศัตรูได้ในระยะยาว";
+		mes "ดังนั้น Archer จึงปลอดภัยกว่าในการต่อสู้ที่แท้จริง";
+		next;
+		mes "[Archer Guildsman]";
+		mes "ถึงแม้ว่า Archer ใน Ragnarok จะมีค่า HP ที่ต่ำกว่า แต่เขาหรือเธอมีความแม่นยำและอัตราการโจมตีที่สูงเพื่อที่นักธนูจะสามารถฆ่าสัตว์ประหลาดได้ก่อนที่พวกเขาจะเข้าใกล้ Archer";
+		next;
+		mes "[Archer Guildsman]";
+		mes "^8C2121นักธนูสามารถเปลี่ยนอาชีพเป็น Hunter^000000";
+		mes "^8C2121นอกจาก Hunter ถ้าคุณเป็นผู้ชายคุณสามารถเปลี่ยนอาชีพของคุณเป็น Bard และถ้าคุณเป็นผู้หญิงคุณสามารถเปลี่ยนอาชีพของคุณเป็น Dancer ได้^000000";
+		close;
+	case 3:
+		mes "[Archer Guildsman]";
+		mes "หากคุณมีคำถามใดๆ อย่าลังเลที่จะมาและถามฉัน";
+		close;
+	}
+}

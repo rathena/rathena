@@ -1,0 +1,2209 @@
+//===== rAthena Script =======================================
+//= Wolfchev's Laboratory
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Defeat Wolfchev's human experimentations.
+//===== Additional Comments: =================================
+//= 1.0 First version, edited. [Euphy]
+//= 1.1 Moved the Enchant (Sorcerer#Bio4Reward) and Reward
+//=		(Weird old man#Bio4Reward) NPC in merchant folder. [Capuche]
+//============================================================
+
+// Giacomo Girolam
+//============================================================
+lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	if (lhz_curse > 30) {
+		if (!lght_duk01) {
+			if (Sex == SEX_MALE) {
+				emotion ET_HNG;
+				mes "[Giacomo Girolamo]";
+				mes "....a guy....?";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Ah! Hey! Man!";
+				next;
+				select("What's up?");
+				emotion ET_QUESTION, playerattached();
+				mes "[Giacomo Girolamo]";
+				mes "Have you ever heard of horrific human experimentation committed in Rekenber Corporation whose head office is here in Lighthalzen?";
+				next;
+				select("Whaaat?! human experimentation?");
+				emotion ET_HUK, playerattached();
+				mes "[Giacomo Girolamo]";
+				mes "Yea! human experimentation!!";
+				mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
+				next;
+				emotion ET_PROFUSELY_SWEAT;
+				mes "[Giacomo Girolamo]";
+				mes "Well! and those rich people, seem to know something but they never mention that...";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Ahh!! And this is a secret that just SOME PEOPLE know. I heard that from Rekenber Lab.,.. a person named...um...Wol....";
+				next;
+				emotion ET_SCRATCH;
+				mes "[Giacomo Girolamo]";
+				mes "Anyway!! A scientist named Wolf.. something suddenly got sacked. and he must be related with this rumor, I think...";
+				next;
+				select("You mean... Wolfchev?");
+				emotion ET_SURPRISE;
+				mes "[Giacomo Girolamo]";
+				mes "Ohhhh?! yeah Wolfchev!! That's right, the name was Wolfchev.. The mad scientist..";
+				next;
+				emotion ET_OK;
+				mes "[Giacomo Girolamo]";
+				mes "I suppose you can then understand the story faster... I am sure that he's involved in the rumor. I swear.";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "By the way..what about you? Is there anything that you know about him?";
+				next;
+				if (select("Pretend you know nothing.", "Tell him what you know.") == 1) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "Not really. I've ever heard of his name, but I don't know anything about him..";
+					next;
+					mes "[Giacomo Girolamo]";
+					mes "Hm.... You sound suspicious, dude! huh?";
+					next;
+				} else {
+					mes "["+ strcharinfo(0) +"]";
+					mes "He happens to research into Human 'Homunculus' without telling that to Rekenber Corp., and there was a whistle-blower who reported to the corp. so he was fired.";
+					next;
+					emotion ET_BEST;
+					mes "[Giacomo Girolamo]";
+					mes "Oh! Man..! You seem to know pretty much! By any chance, are you concerned with Rekenber??";
+					next;
+					emotion ET_THINK;
+					mes "["+ strcharinfo(0) +"]";
+					mes "... .... ...";
+					next;
+				}
+				emotion ET_SCRATCH;
+				mes "[Giacomo Girolamo]";
+				mes "Don't worry. I didn't mean anything.";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Well! I am just curious only because some people in the slum and some adventurers were missing,";
+				mes "and I heard that Rekenber was doing human experimentation with those missing people. Hope you don't get me wrong.";
+				next;
+				lght_duk01 = 1;
+				setquest 5109;
+				mes "Actually, it is not a funny rumor.";
+				mes "Should investigate the lab where the experiment was carried out.";
+				close;
+			} else {
+				emotion ET_THROB;
+				mes "[Giacomo Girolamo]";
+				mes "Oh! What a beautiful lady!!";
+				next;
+				emotion ET_QUESTION;
+				mes "[Giacomo Girolamo]";
+				mes "How come a beauty is here, in a place with dangerous rumor?";
+				next;
+				switch(select("Walking...", "To hang out...", "Shopping...")) {
+				case 1:
+					mes "[Giacomo Girolamo]";
+					mes "Ahh.. Lady, you are so graceful even when you are just walking.....";
+					next;
+					break;
+				case 2:
+					mes "[Giacomo Girolamo]";
+					mes "Lady. You are a dignified lady even if you hang out in this poor town...";
+					next;
+					break;
+				case 3:
+					mes "[Giacomo Girolamo]";
+					mes "Ahh.. Lady.. Shopping in the slum!!.. Are you a type who needs to look around every single shop?";
+					next;
+					break;
+				}
+			}
+			select("... .... ... ....");
+			mes "[Giacomo Girolamo]";
+			mes "Well, how dare I ask you and be interested in what the lady does...";
+			next;
+			emotion ET_OK;
+			mes "[Giacomo Girolamo]";
+			mes "I just hope that the lady gets out of this town with dangerous rumors..";
+			next;
+			select("Dangerous rumors?");
+			emotion ET_QUESTION, playerattached();
+			mes "[Giacomo Girolamo]";
+			mes "Ah... Lady may not have heard of the rumor.";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "Recently, some people from this town, actually from the slum...and some adventurers are missing...";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "and then the rumor came up, since disappearance cases happen pretty often, that Rekenber is committing a horrible human experimentation in their secret lab.";
+			next;
+			select("Excuse me?! human experimentation?");
+			emotion ET_HUK, playerattached();
+			mes "[Giacomo Girolamo]";
+			mes "Yea! human experimentation!!";
+			mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "Well! the rich people either want to believe..I think.. Ah!! And couple of weeks ago. um. what's his name? Wolfchev??";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "Anyway!! that research got fired from the lab. I think he must be involved with this rumor.";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "So, please, lady. Please don't be in a place like this and stay in safe ways.";
+			next;
+			lght_duk01 = 1;
+			setquest 5109;
+			mes "............ It seems a pretty serious matter.";
+			mes "Should investigate the lab where the experiment was carried out.";
+			close;
+		} else {
+			mes "[Giacomo Girolamo]";
+			if (Sex == SEX_MALE) {
+				emotion ET_WRAP;
+				mes "Take care yourself and don't disappear!";
+			} else {
+				emotion ET_BIGTHROB;
+				mes "Be careful, Lady.";
+			}
+			close;
+		}
+	} else {
+		if (Sex == SEX_MALE) {
+			emotion ET_DELIGHT;
+			mes "[Giacomo Girolamo]";
+			mes "Only those beautiful ladies are the reason of my life~!";
+			mes "I, Giacomo Girolamo Casanova de Seingalt am never interested in guys like you though!!";
+			next;
+			emotion ET_FRET;
+			mes "[Giacomo Girolamo]";
+			mes "but I can listen to you...you wanna say anything to me?";
+			next;
+			switch(select("No..?", "About ladies..", "You Womanizer!!", "Envy you...", "What's the rumor lately?")) {
+			case 1:
+				emotion ET_SCRATCH;
+				mes "[Giacomo Girolamo]";
+				mes "Hey you, get out of my way then..";
+				close;
+			case 2:
+				emotion ET_FRET;
+				mes "[Giacomo Girolamo]";
+				mes "I don't feel like talking about my precious ladies making fun of them. You do it with your friends.";
+				close;
+			case 3:
+				mes "[Giacomo Girolamo]";
+				mes "Hey.. Excuse me!!! but I'm not a 'Womanizer', I am just a person who adores ladies.";
+				next;
+				emotion ET_OK;
+				mes "[Giacomo Girolamo]";
+				mes "Of course..... Yea... If I'm a womanizer, all the men on earth are too! I'm just Casanova. umhahahaha.";
+				close;
+			case 4:
+				emotion ET_QUESTION;
+				mes "[Giacomo Girolamo]";
+				mes "Haa.. Do you....? not have any woman but your sister and mother around you?";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "... .... ...";
+				next;
+				emotion ET_PROFUSELY_SWEAT;
+				mes "[Giacomo Girolamo]";
+				mes "Oh...... sorry.. I got your point....";
+				close;
+			case 5:
+				mes "[Giacomo Girolamo]";
+				mes "You.. are not like how you seem? Interesting..";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Yea, actually recently a lot of people from the slum and some wandering adventurers got disappeared. and I don't know why.";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "You gotta be careful too..";
+				close;
+			}
+		} else {
+			emotion ET_QUESTION;
+			mes "[Giacomo Girolamo]";
+			mes "Hey, lady?";
+			next;
+			mes "[Giacomo Girolamo]";
+			switch(rand(1,10)) {
+			case 1:
+				mes "Wasn't it painful when you fell down from Heaven, my Angel?";
+				next;
+				break;
+			case 2:
+				mes "You must be tired. Because you are always wandering my mind.";
+				next;
+				break;
+			case 3:
+				mes "Are you not tired of walking around in my dream last night?";
+				next;
+				break;
+			case 4:
+				mes "Excuse me. But I think I lost my heart. Could you please borrow me yours?";
+				next;
+				break;
+			case 5:
+				mes "Do you believe in love at first sight?? Or can we start again..?";
+				next;
+				break;
+			case 6:
+				mes "I am so sorry but, can you kiss with a person who just met?? Noo? Ok then let me introduce myself.";
+				next;
+				break;
+			case 7:
+				mes "I'm so lost here since it's the first time. Can you let me know which is the way to your heart?";
+				next;
+				break;
+			case 8:
+				mes "Give me a map please.. To get a way....I'm fallen in your eyes.";
+				next;
+				break;
+			case 9:
+				mes "Your eyes....I wanna be forever there.";
+				next;
+				break;
+			case 10:
+				mes "I promise that I will be your everything in any case, in any difficult situation.";
+				next;
+				break;
+			}
+			emotion ET_BIGTHROB;
+			mes "[Giacomo Girolamo]";
+			mes "Today is the first day we met, but I love you, Lady <3 ";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "And I am telling you this because I'm just worried about you. You need to get out of this town which is full of disappearance cases.";
+			close;
+		}
+	}
+
+OnTouch:
+	if (!lght_duk01)
+		emotion (Sex == SEX_MALE? ET_HNG : ET_BIGTHROB), "Giacomo Girolamo#kiup2";
+	end;
+}
+
+// Warp portal to the 4th Fl.
+//============================================================
+lhz_dun03,239,78,1	script	lhz_dun03_lhz_dun04	WARPNPC,1,1,{
+	end;
+
+OnTouch:
+	if (lght_duk01 > 0 && lght_duk01 < 6) {
+		mes "In order to investigate human experimentation, I had to go down whilst I didn't want to because of gruesome sound.";
+		close2;
+		if (lght_duk01 < 3) {
+			warp "que_lhz", 245, 56;
+		} else if (lght_duk01 == 3) {
+			warp "que_lhz", 96, 136;
+		} else {
+			warp "que_lhz", 148, 215;
+		}
+	} else {
+		if (lhz_curse < 31) {
+			mes "- Whistling sound -";
+			mes "From below, there comes a gruesome sound mingling with the wind.";
+			close2;
+		}
+		warp "lhz_dun04", 245, 56;
+	}
+	end;
+}
+
+// Warp Portal to the 3rd Fl.
+//============================================================
+lhz_dun04,244,61,1	warp	lhz_dun04_lhz_dun03	1,1,lhz_dun03,240,75
+
+// Inside the Lab
+//============================================================
+que_lhz,242,50,0	script	#01Startpoint	-1,3,3,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	mapannounce "que_lhz", "Man's whisper: Pl.. please.. save me.. I don't wanna die.. wouaaaa..", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer120000:
+	mapannounce "que_lhz", "Woman's whisper: .. Save.. aaaah.. us...", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer180000:
+	mapannounce "que_lhz", "Kid's whisper: Bawwww~ Where am I? Mama......aaaa....", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer240000:
+	mapannounce "que_lhz", "Oldman's whisper: Kirk...hel...help......", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer300000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+
+OnTouch:
+	if (lght_duk01 == 1) {
+		mes "I arrived at a research facility which seems it has been used till these days.";
+		next;
+		mes "There are some destroyed part, but the basic facility seem fine.";
+		next;
+		lght_duk01 = 2;
+		mes "Get around a little more...";
+		close;
+	}
+	end;
+}
+
+que_lhz,206,74,4	script	Researcher#02	4_LGTSCIENCE,3,3,{
+	end;
+
+OnTouch:
+	if (lght_duk01 == 2) {
+		emotion ET_HUK, playerattached();
+		mes "["+ strcharinfo(0) +"]";
+		mes "You!!!! are Wolfchev?";
+		next;
+		emotion ET_KIK;
+		mes "[Wolfchev]";
+		mes "A Human! kaahaha. People tend to hate this place, why are you here?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You!!! I heard that you were committing human experimentation. Wolfchev!!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "And I see that you are still committing that!!!";
+		next;
+		emotion ET_KIK;
+		mes "[Wolfchev]";
+		mes "Kihihihi. I can see that you know something about me. Is that you who accused me?";
+		mes "How dare you come back to me after you did that. Kihihih";
+		next;
+		mes "[Wolfchev]";
+		mes "I feel good to see a human";
+		mes "in a long time, but I gotta go. Kihihihi.";
+		next;
+		mes "- Wolfchev ran away giving a awkward laughing sound. -";
+		next;
+		erasequest 5109;
+		setquest 5110;
+		lght_duk01 = 3;
+		emotion ET_HUK, playerattached();
+		mes "["+ strcharinfo(0) +"]";
+		mes "Whoa! Wolfchev, stop!";
+		close2;
+		warp "que_lhz", 96, 136;
+	}
+	end;
+}
+
+que_lhz,94,119,4	script	Researcher#03	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	if (lght_duk01 == 3) {
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Wolfchev]";
+		mes "(Gasping) Pshaw... you are still following me. Hey, why do you keep following me?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Wolfchev.. You said before. that you are doing research for everybody.";
+		next;
+		mes "[Wolfchev]";
+		mes "I might have said that.... so what?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "But, your experiment seem really dangerous. How come this is what everybody wants?";
+		next;
+		emotion ET_KIK;
+		mes "[Wolfchev]";
+		mes "Everyone has a desire to be stronger and wants to dominate others so those other people obey and admire you. Do you not have that desire?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... .... ...";
+		next;
+		mes "[Wolfchev]";
+		mes "If you want to save yourself, should stop following me. Bugger off.";
+		next;
+		mes "Wolfchev is again running away with a strange sound.";
+		next;
+		lght_duk01 = 4;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Awwww!! You!! running away again..... Stop!";
+		close2;
+		warp "que_lhz", 148, 215;
+	}
+	end;
+}
+
+que_lhz,147,224,4	script	Researcher#04	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	if (lght_duk01 == 4) {
+		mes "[Wolfchev]";
+		mes "You are pretty persistent, aren't you? Or I think.......that you like me, huh? Kihihii.";
+		next;
+		emotion ET_THINK;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... .... ...";
+		next;
+		specialeffect EF_SIGHTRASHER;
+		mes "Wolfchev mocked you at your silence and pressed a button in his hand. Then guinea pigs woken up around him.";
+		next;
+		for(.@i = 1; .@i < 9; .@i++)
+			donpcevent "Human Guinea pig#0"+.@i+"::OnEnable";
+		mes "[Wolfchev]";
+		mes "Again.. it's time to say goodbye.";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Wolfchev]";
+		mes "Well! May be....";
+		next;
+		mes "[Wolfchev]";
+		mes "If you come to me for the experimentation, I can treat you better.";
+		next;
+		donpcevent "#Eventctrl::OnEnable";
+		progressbar "FF00FF", 5;
+		emotion ET_HUK;
+		mes "[Wolfchev]";
+		mes "Oh my,... What happened?";
+		next;
+		donpcevent "#Eventctrl::OnEnable2";
+		for(.@i = 1; .@i < 9; .@i++)
+			donpcevent "Human Guinea pig#0"+.@i+"::OnDisable";
+		mes "[Wolfchev]";
+		mes "No! Don't come to me! Don't!!";
+		next;
+		lght_duk01 = 5;
+		mes "First of all, I gotta handle those guinea pigs!";
+		close;
+	} else if (lght_duk01 == 5) {
+		.@i = rand(1,3);
+		if (.@i == 2) {
+			mes "Wolfchev is confused and has no idea now since those monsters are attacking him too.";
+			next;
+			specialeffect EF_STUNATTACK;
+			specialeffect EF_STUNATTACK;
+			mes "- Hit him to wake him up -";
+			next;
+			specialeffect EF_DARKBREATH;
+			emotion ET_STARE_ABOUT;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Hey Dude! Anyway let's get out of here first! Isn't there any place where they cannot reach?";
+			next;
+			mes "[Wolfchev]";
+			mes "Oooops.. then my....my lab....to my lab...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Your lab?? Okay, where's that?";
+			next;
+			mes "[Wolfchev]";
+			mes "to the north....... . Not so far from here..";
+			next;
+			erasequest 5110;
+			setquest 5111;
+			lght_duk01 = 6;
+			mes "Go to '^0000FFWolfchev's Lab^000000' at the 12 o'clock direction...";
+			close;
+		} else {
+			emotion ET_CONFUSE;
+			mes "Wolfchev is confused and has no idea now since those monsters are attacking him too.";
+			close;
+		}
+	} else if (lght_duk01 == 6) {
+		mes "Go to '^0000FFWolfchev's Lab^000000' at the 12 o'clock direction...";
+		close;
+	}
+	end;
+}
+
+// Warp to lhz_dun04 from Wolfchev's Lab
+//============================================================
+que_lhz,148,251,0	script	#Move2lab	-1,12,0,{
+	end;
+
+OnTouch:
+	if (lght_duk01 == 6) {
+		mes "I arrived at '^0000FFWolfchev's Lab^000000'.";
+		close2;
+		warp "lhz_dun04", 148, 269;
+		end;
+	} else {
+		mes "I still have something to do with Wolfchev.";
+		close;
+	}
+}
+
+// Event Controller
+//============================================================
+que_lhz,1,1,0	script	#Eventctrl	-1,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnEnable2:
+	monster "que_lhz", 139, 232, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 147, 232, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 156, 232, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 156, 224, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 156, 215, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 147, 215, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 139, 215, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 139, 224, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	end;
+
+OnTimer1000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#01";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#01";
+	end;
+
+OnTimer2000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#02";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#02";
+	end;
+
+OnTimer3000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#03";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#03";
+	end;
+
+OnTimer4000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#04";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#04";
+	end;
+
+OnTimer5000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#05";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#05";
+	end;
+
+OnTimer6000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#06";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#06";
+	end;
+
+OnTimer7000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#07";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#07";
+	end;
+
+OnTimer8000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#08";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#08";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	if (mobcount("que_lhz", "#Eventctrl::OnMyMobDead") < 4)
+		killmonster "que_lhz", "#Eventctrl::OnMyMobDead";
+}
+que_lhz,139,232,0	script	#01	-1,{ end; }
+que_lhz,147,232,0	script	#02	-1,{ end; }
+que_lhz,156,232,0	script	#03	-1,{ end; }
+que_lhz,156,224,0	script	#04	-1,{ end; }
+que_lhz,156,215,0	script	#05	-1,{ end; }
+que_lhz,147,215,0	script	#06	-1,{ end; }
+que_lhz,139,215,0	script	#07	-1,{ end; }
+que_lhz,139,224,0	script	#08	-1,{ end; }
+
+// Human Guinea pigs
+//============================================================
+que_lhz,140,231,1	script	Human Guinea pig#01	2224,{
+	end;
+
+OnInit:
+	disablenpc();
+	end;
+
+OnEnable:
+	enablenpc();
+	end;
+
+OnDisable:
+	specialeffect EF_FLASHER;
+	disablenpc();
+	end;
+}
+que_lhz,147,231,0	duplicate(Human Guinea pig#01)	Human Guinea pig#02	2224
+que_lhz,155,231,7	duplicate(Human Guinea pig#01)	Human Guinea pig#03	2224
+que_lhz,155,224,6	duplicate(Human Guinea pig#01)	Human Guinea pig#04	2224
+que_lhz,155,216,5	duplicate(Human Guinea pig#01)	Human Guinea pig#05	2224
+que_lhz,147,216,4	duplicate(Human Guinea pig#01)	Human Guinea pig#06	2224
+que_lhz,140,216,3	duplicate(Human Guinea pig#01)	Human Guinea pig#07	2224
+que_lhz,140,224,2	duplicate(Human Guinea pig#01)	Human Guinea pig#08	2224
+
+// Instance Creation
+//============================================================
+lhz_dun04,151,276,3	script	Researcher#memo	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000You cannot continue the process due to possessing too many belongings.^000000";
+		close;
+	}
+	.@quest_time = checkquest(5112, PLAYTIME);
+	.@killed_bosses = true;
+	for(.@quest_id = 5113; .@quest_id <= 5125; .@quest_id++) {
+		if (checkquest(.@quest_id, HUNTING) <= 1)
+			.@killed_bosses = false;
+	}
+	if (lght_duk01 < 6) {
+		mes "[Researcher]";
+		mes "What! Do you have any business here?";
+		next;
+		if (select("Yes I do!!", "Umm.. No..") == 1) {
+			mes "[Researcher]";
+			mes "Why don't stop staring at other's laboratory, and be on your way?";
+			close;
+		}
+		mes "[Researcher]";
+		mes "Stop wondering here, and be on your way. Will you? Khh Khh.";
+		close;
+	} else if (lght_duk01 == 6) {
+		mes "It seems experimental creatures cannot come near the laboratory, just like Wolfchev said.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey, is there any way to stop those creatures? You should know something, you made those things!";
+		next;
+		mes "[Wolfchev]";
+		mes "Urrgg.. I didn't expect them to loose control like that...";
+		next;
+		mes "[Wolfchev]";
+		mes "What is wrong with this whole thing?";
+		next;
+		mes "[Wolfchev]";
+		mes "Urr.. I think they will ruin my whole laboratory!";
+		next;
+		emotion ET_BLABLA, playerattached();
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey! Wolfchev!!";
+		next;
+		mes "[Wolfchev]";
+		mes "You!? Hey, please stop them!";
+		mes "Creatures are ^9f6077organically connected with same job field^000000.";
+		next;
+		mes "[Wolfchev]";
+		mes "There is one special creature being their ^46B951boss position^000000...";
+		mes "If you could deactivate that creature, all ^A1BB44slave creatures^000000 walking around here will stop moving right away.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Boss creature?";
+		mes "Hey! Wolfchev! Where is that ^46B951Boss creature^000000?";
+		next;
+		mes "[Wolfchev]";
+		mes "Inside.. of laboratory.. It should be waken up now. It's sad to destroy my life of work, but I can't take this any more.. ...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "How can I get into the Wolfchev's laboratory?";
+		next;
+		mes "[Wolfchev]";
+		mes "Oh.. Wait!";
+		mes "I will help you get in there.";
+		next;
+		mes "[Wolfchev]";
+		mes "Good news is that boss creatures are not set up to wake up all at once, even though slaves are.";
+		next;
+		erasequest 5111;
+		lght_duk01 = 7;
+		for(.@i = 5113; .@i <= 5125; .@i++)
+			setquest .@i;
+		mes "[Wolfchev]";
+		mes "But still, it is really dangerous since we don't know when they will escape from there.";
+		mes "So, please prepare your party members, and take care of those boss creatures. I'm not sure how long this place can hold.";
+		close;
+	} else if (lght_duk01 > 6) {
+		if (getcharid(1) > 0) {
+			mes "[Wolfchev]";
+			mes "Are you all set there? I will prepare the entrance if you are the leader of that party.";
+			next;
+			switch(select("Any warnings?", "Going into the laboratory", "Do not enter")) {
+			case 1:
+				mes "[Wolfchev]";
+				mes "I didn't know pressing the emergency alarm would cause such problem. The management system seems to be changed to emergency mode.";
+				next;
+				mes "[Wolfchev]";
+				mes "There are so many systems set up inside of the laboratory, so eve I cannot be sure how systems are twisted by now.";
+				next;
+				mes "[Wolfchev]";
+				mes "Ah! If the emergency system is activating, only the leader of party should control everything. It is a lot of pressure I understand.";
+				next;
+				mes "[Wolfchev]";
+				mes "And just so you know, please do not touch random things out of curiosity. I don't want you to get hurt.";
+				close;
+			case 2:
+				if (.@quest_time == 0) {
+					mes "[Wolfchev]";
+					mes "I'm sorry, but it seems you still cannot enter to the laboratory yet. Will you come back later? The system is kind of tricky you know.";
+					close;
+				} else {
+					//if (.@quest_time == 2)
+						//recall_completequest 5112;
+					if (isbegin_quest(5112))
+						erasequest 5112;
+					if (!.@killed_bosses) {
+						if (lght_duk01 == 9) {
+							mes "[Wolfchev]";
+							mes "You came back, Ka Ha Ha.";
+							next;
+							mes "[Wolfchev]";
+							mes "After you left, I was fixing some system parts. And then suddenly strange thing happened.";
+							next;
+							mes "["+ strcharinfo(0) +"]";
+							mes "What was that?";
+							next;
+							mes "[Wolfchev]";
+							mes "All those boss creatures you took care of started to regenerate themselves..";
+							next;
+							mes "["+ strcharinfo(0) +"]";
+							mes "What.. How is that possible...?!";
+							next;
+							mes "[Wolfchev]";
+							mes "I am also completely lost here.. But, this should not be happening..";
+							next;
+							mes "["+ strcharinfo(0) +"]";
+							mes "... .... ...";
+							next;
+							mes "[Wolfchev]";
+							mes "As you can see, you are the only one I can trust. Would you and your party help me once again deactivating those creatures?";
+							next;
+							if (select("I am not sure", "Why not") == 1) {
+								mes "[Wolfchev]";
+								mes "I see. I understand why you are hesitating, and don't want to press you any more. But, still I'm not sure why you want go there anyways,";
+								next;
+							} else {
+								for(.@i = 5113; .@i <= 5125; .@i++) {
+									setquest .@i;
+								}
+								lght_duk01 = 10;
+								mes "[Wolfchev]";
+								mes "Thank you very much. "+strcharinfo(0)+"";
+								mes "I will help you get in the laboratory right away.";
+								next;
+							}
+						} else {
+							mes "[Wolfchev]";
+							mes "Hmm.. Those boss creatures regenerating once again..";
+							next;
+							mes "[Wolfchev]";
+							mes "Can you help me just one more time?";
+							next;
+							if (select("I am not sure", "Why not") == 1) {
+								mes "[Wolfchev]";
+								mes "I see. I understand why you are hesitating, and don't want to press you any more. But, still I'm not sure why you want go there anyways,";
+								next;
+							} else {
+								for(.@i = 5113; .@i <= 5125; .@i++) {
+									setquest .@i;
+								}
+								lght_duk01 = 10;
+								mes "[Wolfchev]";
+								mes "Thank you. "+strcharinfo(0)+"";
+								mes "You want to get in there fast, right?";
+								next;
+							}
+						}
+					}
+				}
+				if (is_party_leader() == true) {
+					if (instance_create("Wolfchev's Laboratory") < 0) {
+						mes "[Wolfchev]";
+						mes "Hmm.. Lab entering system is a bit weird. Would wait for me to check the system?";
+						close;
+					}
+					mes "[Wolfchev]";
+					mes "Please hold on...";
+					next;
+					mes "Wolfchev starts to control certain gear.";
+					next;
+					progressbar "FF00FF", 2;
+					mes "[Wolfchev]";
+					mes "Alright! I have marked lan entering system code as";
+					mes "^0000ff"+ strcharinfo(1) +"^000000 party leader's name ^0000ff"+ strcharinfo(0) +"^000000!!.";
+					next;
+					mes "[Wolfchev]";
+					mes "Now, your party is free to pass the entrance.";
+					close;
+				} else {
+					mes "[Wolfchev]";
+					mes "You are not the ^0000ffLeader of the party^000000, are you? Please go get the leader.";
+					close;
+				}
+			case 3:
+				mes "[Wolfchev]";
+				mes "Need more preparation? Please, we don't have all day.";
+				close;
+			}
+		} else {
+			mes "[Wolfchev]";
+			mes "Are you trying to go there along? That is a suicide! Our lab entering system is not as easy as you thinkz`.";
+			close;
+		}
+	} else {
+		mes "[Wolfchev]";
+		mes "Woot! Something weird just happen. If this keep happening, maybe we should try other way..";
+		close;
+	}
+}
+
+lhz_dun04,147,279,0	script	Laboratory Entrance#memo	CLEAR_NPC,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000You cannot continue the process due to possessing too many belongings.^000000";
+		close;
+	}
+	.@lhz_time = checkquest(5112, PLAYTIME);
+	if (lght_duk01 < 7) {
+		mes "It says,";
+		mes "'^0000FF****'s laboratory member only^000000'";
+		close;
+	}
+	if (.@lhz_time == -1) {
+		mes "This is an entrance towards Wolfchev's laboratory. Something is howling over the entrance.";
+		next;
+		if (select("Go inside", "Think one more time") == 2) {
+			mes "You have stopped entering to Wolfchev's laboratory.";
+			close;
+		}
+		if (instance_enter("Wolfchev's Laboratory") != IE_OK) {  // probably missing failure cases
+			mes "^FF0000Warning^000000";
+			mes ""+ strcharinfo(0) +". . .";
+			mes "^FF0000Unregistered personnel^000000";
+			next;
+			pushpc 0, 10;
+			percentheal -5,0;
+			specialeffect EF_AUTOCOUNTER;
+			specialeffect2 EF_BASH;
+			mes "You have been wounded by laboratory entrance system attack.";
+			close;
+		}
+		mapannounce "lhz_dun04","Laboratory entrance system ["+ strcharinfo(1) +"] member ["+ strcharinfo(0) +"] access granted..",bc_map,"0x0DF297";
+		setquest 5112;
+		//warp "1@lhz", 45, 148;
+		close;
+	} else if (.@lhz_time == 0) {
+		mes "Di Rit- Di- Di- Dit-";
+		next;
+		mes ""+ strcharinfo(0) +". . .";
+		mes "^FF0000Forbidden personnel^000000";
+		next;
+		mes "The system denied your entrance.";
+		close;
+	} else if (.@lhz_time >= 1) {
+		mes "Di Rit- Di- Di- Dit-";
+		next;
+		//if (.@lhz_time == 2)
+			//recall_completequest 5112;
+		erasequest 5112;
+		mes ""+ strcharinfo(0) +". . .";
+		mes "^FF0000Access denial has been deactivated.^000000";
+		close;
+	} else {
+		mes "^FF0000Error! Error!^000000";
+		mes "^FF0000Please try again.^000000";
+		close;
+	}
+}
+
+// The Lab No.1 : System 1_1
+//============================================================
+1@lhz,35,108,4	script	Lab1#1_1	CLEAR_NPC,{
+	end;
+
+OnInstanceInit:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnType_02:
+	donpcevent instance_npcname("Manual Sheet#1_1")+"::OnEnable";
+	donpcevent instance_npcname("Valve#1_2")+"::OnEnable";
+	donpcevent instance_npcname("Valve#1_3")+"::OnEnable";
+	mapannounce instance_mapname("1@lhz"),"[Security System] the persons concerned, access with the emergency access method.",bc_map,"0xff9977";
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] This is a warning notice! Warning notice! Intruder Detected.",bc_map,"0xff9977";
+	end;
+
+OnTimer2000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, The Lab No.1's security system will be activated.",bc_map,"0xff9977";
+	end;
+
+OnTimer7000:
+	donpcevent instance_npcname("MobCtrl1#mob01")+"::OnEnable";
+	end;
+}
+
+// The Lab No.1 Monster Control
+//============================================================
+1@lhz,37,108,4	script	MobCtrl1#mob01	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	.@map$ = instance_mapname("1@lhz");
+	mapannounce .@map$,"[Security System] Security system Activated !! Experimental animals are released. The persons concerned have to evacuate.",bc_map,"0xff9977";
+	areamonster .@map$,35,159,50,169,"Starving Lab animal",2242,rand(10,15),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	initnpctimer;
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	if (mobcount(instance_mapname("1@lhz"), instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("Lab1#1_1")+"::OnType_02";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Lab No.1's security system has been stopped.",bc_map,"0xff9977";
+	} else {
+		initnpctimer;
+	}
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"), instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("Lab1#1_1")+"::OnType_02";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Lab No.1's security system has been stopped.",bc_map,"0xff9977";
+		stopnpctimer;
+	}
+	end;
+}
+
+// Emergency Access Valve Manual
+//============================================================
+1@lhz,39,168,0	script	Manual Sheet#1_1	CLEAR_NPC,{
+	mes "There are valve manual sheets littered on the floor.";
+	next;
+	if (is_party_leader() == true) {
+		mes "You the party leader, started to read the manual.";
+		next;
+		mes "[Emergency Access Valve Manual]";
+		switch(lght_duk02) {
+		case 0:
+			switch(rand(1,6)) {
+			case 1:
+				lght_duk02 = 1;
+				mes "Turn the left valve Clockwise twice, Counterclockwise once, Clockwise once";
+				break;
+			case 2:
+				lght_duk02 = 2;
+				mes "Turn the left valve Clockwise once, Counterclockwise twice, Clockwise once";
+				break;
+			case 3:
+				lght_duk02 = 3;
+				mes "Turn the left valve Clockwise once, Counterclockwise once, Clockwise twice";
+				break;
+			case 4:
+				lght_duk02 = 4;
+				mes "Turn the right valve Counterclockwise twice, Clockwise once, Counterclockwise once";
+				break;
+			case 5:
+				lght_duk02 = 5;
+				mes "Turn the right valve Counterclockwise once, Clockwise twice, Counterclockwise once";
+				break;
+			case 6:
+				lght_duk02 = 6;
+				mes "Turn the right valve Counterclockwise once, Clockwise once, Counterclockwise twice";
+				break;
+			default:
+				mes "This is a unknown Error. If you get the same problem after trying one more time, contact GM.";
+				break;
+			}
+			break;
+		case 1:
+			mes "Turn the left valve Clockwise twice, Counterclockwise once, Clockwise once";
+			break;
+		case 2:
+			mes "Turn the left valve Clockwise once, Counterclockwise twice, Clockwise once";
+			break;
+		case 3:
+			mes "Turn the left valve Clockwise once, Counterclockwise once, Clockwise twice";
+			break;
+		case 4:
+			mes "Turn the right valve Counterclockwise twice, Clockwise once, Counterclockwise once";
+			break;
+		case 5:
+			mes "Turn the right valve Counterclockwise once, Clockwise twice, Counterclockwise once";
+			break;
+		case 6:
+			mes "Turn the right valve Counterclockwise once, Clockwise once, Counterclockwise twice";
+			break;
+		default:
+			mes "This is an unknown error. If you get the same problem after trying one more time, contact a GM.";
+			break;
+		}
+	} else {
+		mes "Let your party leader handle the valve.";
+	}
+	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname("Manual Sheet#1_1");
+	end;
+
+OnEnable:
+	specialeffect EF_LIGHTSPHERE;
+	enablenpc instance_npcname("Manual Sheet#1_1");
+	end; 
+}
+
+// Left Valve
+//============================================================
+1@lhz,41,172,0	script	Valve#1_2	CLEAR_NPC,{
+	.@open_portal = 0;
+	mes "This is the left valve for the emergency access.";
+	if (is_party_leader() == true) {
+		next;
+		mes "To which direction do you wish to turn?";
+		next;
+		if (lght_duk02 < 1 || lght_duk02 > 3) {
+			for(.@i = 1; .@i <= 4; .@i++) {
+				select("Clockwise", "Counterclockwise");
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		} else {
+			// lght_duk02 == 1 : Clockwise, Clockwise, Counterclockwise, Clockwise
+			// lght_duk02 == 2 : Clockwise, Counterclockwise, Counterclockwise, Clockwise
+			// lght_duk02 == 3 : Clockwise, Counterclockwise, Clockwise, Clockwise
+			for(.@i = 1; .@i <= 4; .@i++) {
+				switch(select("Clockwise", "Counterclockwise")) {
+				case 1:
+					if ((.@i == 1 || .@i == 4) || (.@i == 2 && lght_duk02 == 1) || (.@i == 3 && lght_duk02 == 3)) {
+						.@open_portal += 1;
+					}
+				case 2:
+					if ((.@i == 2 && lght_duk02 != 1) || (.@i == 3 && lght_duk02 != 3)) {
+						.@open_portal += 1;
+					}
+				}
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		}
+		if (.@open_portal == 4) {
+			donpcevent instance_npcname("#potal_01")+"::OnEnable";
+			lght_duk02 = 0;
+			mes "-Door opened-";
+			next;
+			mes "The door which connects to the Lab No.2 is now open.";
+		} else {
+			lght_duk02 = 0;
+			mes "Nothing happened.";
+			next;
+			mes "You need to review the manual.";
+		}
+	}
+	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname("Valve#1_2");
+	end;
+
+OnEnable:
+	specialeffect EF_LIGHTSPHERE;
+	enablenpc instance_npcname("Valve#1_2");
+	end;
+}
+
+// Right Valve
+//============================================================
+1@lhz,52,172,0	script	Valve#1_3	CLEAR_NPC,{
+	.@open_portal = 0;
+	mes "This is the left valve for the emergency access.";
+	if (is_party_leader() == true) {
+		next;
+		mes "To which direction do you wish to turn?";
+		next;
+		if (lght_duk02 < 4 || lght_duk02 > 6) {
+			for(.@i = 1; .@i <= 4; .@i++) {
+				select("Clockwise", "Counterclockwise");
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		} else {
+			// lght_duk02 == 4 : Counterclockwise, Counterclockwise, Clockwise, Counterclockwise
+			// lght_duk02 == 5 : Counterclockwise, Clockwise, Clockwise, Counterclockwise
+			// lght_duk02 == 6 : Counterclockwise, Clockwise, Counterclockwise, Counterclockwise
+			for(.@i = 1; .@i <= 4; .@i++) {
+				switch(select("Clockwise", "Counterclockwise")) {
+				case 1:
+					if ((.@i == 2 && lght_duk02 != 4) || (.@i == 3 && lght_duk02 != 6))
+						.@open_portal += 1;
+					break;
+				case 2:
+					if ((.@i == 1 || .@i == 4) || (.@i == 2 && lght_duk02 == 4) || (.@i == 3 && lght_duk02 == 6))
+						.@open_portal += 1;
+					break;
+				}
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		}
+		if (.@open_portal == 4) {
+			donpcevent instance_npcname("#potal_01")+"::OnEnable";
+			lght_duk02 = 0;
+			mes "-Door opened-";
+			next;
+			mes "The door which connects to the Lab No.2 is now open.";
+		} else {
+			lght_duk02 = 0;
+			mes "Nothing happened.";
+			next;
+			mes "You need to review the manual.";
+		}
+	}
+	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname("Valve#1_3");
+	end;
+
+OnEnable:
+	specialeffect EF_LIGHTSPHERE;
+	enablenpc instance_npcname("Valve#1_3");
+	end;
+}
+
+
+// The Lab No.1 >> The Lab No.2 Warp portal
+//============================================================
+1@lhz,45,173,0	script	#potal_01	WARPNPC,2,2,{
+	end;
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("#potal_01");
+	end;
+
+OnEnable:
+	mapannounce instance_mapname("1@lhz"),"[Management System] The door which connects to the Lab No.2 is now open.",bc_map,"0xff9977";
+	enablenpc instance_npcname("#potal_01");
+	end;
+
+OnTouch_:
+	warp instance_mapname("1@lhz"), 151, 29;
+	end;
+}
+
+// The Lab No.2
+//============================================================
+1@lhz,151,29,0	script	#2_0	-1,1,1,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("#2_0");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#2_0");
+	end;
+
+OnTouch_:
+	donpcevent instance_npcname("Lab2#2_1")+"::OnEnable";
+	donpcevent instance_npcname("#2_0")+"::OnDisable";
+	end;
+}
+
+// The Lab No.2 2_1 System - Control of Monster Wave and Pipe right before exploding
+//============================================================
+1@lhz,35,106,4	script	Lab2#2_1	CLEAR_NPC,{
+	end;
+
+OnInstanceInit:
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] This is a warning notice! Warning notice! Intruder Detected in The Lab No.2!!",bc_map,"0xff9977";
+	end;
+
+OnTimer3000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, The Lab No.2 Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer5000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure in the Lab No.2 is too high.",bc_map,"0xff99ff";
+	end;
+
+OnTimer8000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] First security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On01";
+	end;
+
+OnTimer10000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer190000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer303000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Second Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer308000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Second security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On02";
+	end;
+
+OnTimer370000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer550000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer603000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Third Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer608000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Third security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On03";
+	end;
+
+OnTimer730000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer903000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Fourth Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer908000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fourth security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On04";
+	end;
+
+OnTimer910000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer1090000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer1203000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Fifth Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer1208000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fifth security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On05";
+	end;
+
+OnTimer1270000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	stopnpctimer;
+	end;
+}
+
+// The Lab No.2 2_2 System - Pipe Operation Control
+// When 3 pipes explode, system will shut down.
+//============================================================
+1@lhz,37,106,4	script	Lab2#2_2	CLEAR_NPC,{
+	end;
+
+OnInstanceInit:
+	'broken_pipes = 0;
+	stopnpctimer;
+	end;
+
+OnPipePressure:
+	switch(rand(1,6)) {
+	case 1:
+		donpcevent instance_npcname("Valve#2_1")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_01";
+	case 2:
+		donpcevent instance_npcname("Valve#2_2")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_02";
+	case 3:
+		donpcevent instance_npcname("Valve#2_3")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_03";
+	case 4:
+		donpcevent instance_npcname("Valve#2_4")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_04";
+	case 5:
+		donpcevent instance_npcname("Valve#2_5")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_05";
+	case 6:
+		donpcevent instance_npcname("Valve#2_6")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_06";
+	}
+	initnpctimer;
+	end;
+
+OnDisableValve1:
+	disablenpc instance_npcname("Valve#2_1");
+	stopnpctimer;
+	end;
+
+OnDisableValve2:
+	disablenpc instance_npcname("Valve#2_2");
+	stopnpctimer;
+	end;
+
+OnDisableValve3:
+	disablenpc instance_npcname("Valve#2_3");
+	stopnpctimer;
+	end;
+
+OnDisableValve4:
+	disablenpc instance_npcname("Valve#2_4");
+	stopnpctimer;
+	end;
+
+OnDisableValve5:
+	disablenpc instance_npcname("Valve#2_5");
+	stopnpctimer;
+	end;
+
+OnDisableValve6:
+	disablenpc instance_npcname("Valve#2_6");
+	stopnpctimer;
+	end;
+
+OnTimer63000:
+	for(.@i = 1; .@i < 7; .@i++) {
+		specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Valve#2_"+.@i+"");
+		disablenpc instance_npcname("Valve#2_"+.@i+"");
+	}
+	'broken_pipes += 1;
+	if ('broken_pipes == 3) {
+		donpcevent instance_npcname("#2_3")+"::OnEnable";
+		stopnpctimer;
+	} else {
+		mapannounce instance_mapname("1@lhz"),"[Management System] Pipe explosion detected! When "+ (3 - 'broken_pipes) +" more break, the system will stop.",bc_map,"0xff99ff";
+	}
+	end;
+}
+
+// The Lab No.2 2_3 System
+//============================================================
+1@lhz,151,48,0	script	#2_3	-1,20,20,{
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname("#2_3");
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] System Freezes! System Freezes! Evacuate from the Lab in 10 seconds.",bc_map,"0xff99ff";
+	end;
+
+OnTimer11000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Evacuate!!",bc_map,"0xff99ff";
+	enablenpc instance_npcname("#2_3");
+	end;
+
+OnTouch:
+	warp "lhz_dun04", 147, 273;
+	end;
+}
+
+// The Lab No.2 Monster Control
+//============================================================
+1@lhz,39,106,4	script	MobCtrl2#mob02	CLEAR_NPC,{
+	end;
+
+On01:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,10,.@label$;
+	end;
+
+On02:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,20,.@label$;
+	end;
+
+On03:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,16,.@label$;
+	end;
+
+On04:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,19,.@label$;
+	end;
+
+On05:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,20,.@label$;
+	end;
+
+On2_01:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),155,43,161,49,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_02:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),137,40,143,46,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_03:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),137,51,143,57,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_04:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),143,56,149,62,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_05:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),160,48,166,54,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_06:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),135,44,141,50,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"),instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("#potal_02")+"::OnEnable";
+		donpcevent instance_npcname("Lab2#2_1")+"::OnDisable";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Security system of The Lab No.2 has been stopped.",bc_map,"0xff9977";
+	}
+	end;
+}
+
+// The Lab No.2 Valves
+//============================================================
+-	script	bio4FLab2Valve	-1,{
+	if (is_party_leader() == true) {
+		progressbar "0xffff00", 20;
+		stopnpctimer;
+		donpcevent instance_npcname("Lab2#2_2")+"::OnDisableValve1";
+		disablenpc();
+		end;
+	} else {
+		mes "Let your party leader handle the valve.";
+		close;
+	}
+
+OnInstanceInit:
+	disablenpc();
+	end;
+
+OnEnable:
+	enablenpc();
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	specialeffect EF_DRAGONSMOKE,AREA,instance_npcname(strnpcinfo(0));
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+1@lhz,158,46,0	duplicate(bio4FLab2Valve)	Valve#2_1	CLEAR_NPC
+1@lhz,138,43,0	duplicate(bio4FLab2Valve)	Valve#2_2	CLEAR_NPC
+1@lhz,139,54,0	duplicate(bio4FLab2Valve)	Valve#2_3	CLEAR_NPC
+1@lhz,145,60,0	duplicate(bio4FLab2Valve)	Valve#2_4	CLEAR_NPC
+1@lhz,165,51,0	duplicate(bio4FLab2Valve)	Valve#2_5	CLEAR_NPC
+1@lhz,137,47,0	duplicate(bio4FLab2Valve)	Valve#2_6	CLEAR_NPC
+
+// The Lab No.2 >> The Lab No.3 Warp portal(General)
+//============================================================
+1@lhz,151,64,0	script	#potal_02	WARPNPC,2,2,{
+	end;
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("#potal_02");
+	end;
+
+OnEnable:
+	mapannounce instance_mapname("1@lhz"),"[Management System] The door which connects to the Lab No.3 is now open.",bc_map,"0xff99ff";
+	enablenpc instance_npcname("#potal_02");
+	end;
+
+OnTouch_:
+	warp instance_mapname("1@lhz"), 84, 28;
+	end;
+}
+
+// The Lab No.3
+//============================================================
+1@lhz,84,28,0	script	#3_0	-1,1,1,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("#3_0");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#3_0");
+	end;
+
+OnTouch_:
+	donpcevent instance_npcname("Lab3#3_1")+"::OnEnable";
+	donpcevent instance_npcname("#3_0")+"::OnDisable";
+	end;
+}
+
+// The Lab No.3 3_1 System - Monster wave control
+//============================================================
+1@lhz,35,104,4	script	Lab3#3_1	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] This is a warning notice! Warning notice!",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::OnDisable";
+	end;
+
+OnTimer5000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Intruder Detected in The Lab No.3!!",bc_map,"0xff9977";
+	end;
+
+OnTimer7000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, The Security system of The Lab No.3 will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer12000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] First security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On01";
+	end;
+
+OnTimer192000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Second security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On02";
+	end;
+
+OnTimer372000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Third security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On03";
+	end;
+
+OnTimer552000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fourth security system of The Lab No.3activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On04";
+	end;
+
+OnTimer732000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fifth security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On05";
+	stopnpctimer;
+	end;
+}
+
+// The Lab No.3 Monster Control
+//============================================================
+1@lhz,37,104,4	script	MobCtrl3#mob03	CLEAR_NPC,{
+	end;
+
+On01:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2243,1,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2243,1,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2243,1,.@label$;		
+	monster .@map$,86,60,"Starving Lab animal",2243,1,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2243,1,.@label$;
+	end;
+
+On02:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2243,.@amount2,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2242,.@amount2,.@label$;
+	end;
+
+On03:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@amount3 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2243,.@amount2,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2242,.@amount1,.@label$;
+	end;
+
+On04:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@amount3 = rand(1,5);
+	.@amount4 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2242,.@amount4,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2242,.@amount4,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2242,.@amount2,.@label$;
+	end;
+
+On05:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@amount3 = rand(1,5);
+	.@amount4 = rand(1,5);
+	.@amount5 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2243,.@amount4,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,.@amount5,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2243,.@amount2,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2242,.@amount4,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2243,.@amount5,.@label$;
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"),instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("#potal_03")+"::OnEnable";
+		donpcevent instance_npcname("Lab3#3_1")+"::OnDisable";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Security system of The Lab No.3 has been stopped.",bc_map,"0xff9977";
+	}
+	end;
+}
+
+// The Lab No.3 >> Boss's Room Warp portal
+//============================================================
+1@lhz,83,62,0	script	#potal_03	WARPNPC,2,2,{
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname("#potal_03");
+	end;
+
+OnEnable:
+	mapannounce instance_mapname("1@lhz"),"[Management System] The door which connects to the Lab No.4 is now open.",bc_map,"0x7799ff";
+	enablenpc instance_npcname("#potal_03");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#potal_03");
+	end;
+
+OnTouch_:
+	warp instance_mapname("1@lhz"), 137, 100;
+	end;
+}
+
+// The Lab No.4
+//============================================================
+1@lhz,137,100,0	script	#4_0	-1,1,1,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("#4_0");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#4_0");
+	end;
+
+OnTouch_:
+	donpcevent instance_npcname("Lab4#4_1")+"::OnEnable";
+	donpcevent instance_npcname("#4_0")+"::OnDisable";
+	end;
+}
+
+// The Lab No.4 4_1 System - Summon of Boss Monster
+//============================================================
+1@lhz,35,102,4	script	Lab4#4_1	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Who are you....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Seyren Windsor#boss01");
+	end;
+
+OnTimer2000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Cecile Damon#boss02");
+	end;
+
+OnTimer3000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Do not approach more...",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Gertie Wie#boss03");
+	end;
+
+OnTimer4000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Eremes Guile#boss04");
+	end;
+
+OnTimer5000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: This is a very dangerous place..",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Trentini#boss05");
+	end;
+
+OnTimer6000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Chen Liu#boss06");
+	end;
+
+OnTimer7000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: You won't go out alive....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Alphochio Basil#boss07");
+	end;
+
+OnTimer8000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Flamel Emul#boss08");
+	end;
+
+OnTimer9000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: If you don't want to be a part of us....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Randel Lawrence#boss09");
+	end;
+
+OnTimer10000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Celia Alde#boss10");
+	end;
+
+OnTimer11000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Leave now....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Kathryne Keyron#boss11");
+	end;
+
+OnTimer12000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Margaretha Sorin#boss12");
+	end;
+
+OnTimer13000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Before this place is thoroughly filled with sorrow and pain....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Howard Alt-Eisen#boss13");
+	end;
+
+OnTimer14000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Type_**Gren#boss14");
+	end;
+
+OnTimer15000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Type_**Roke#boss15");
+	end;
+
+OnTimer16000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Type_**Dree#boss16");
+	end;
+
+OnTimer17000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Ah....it....it's too late......",bc_map,"0x7DCBF0";
+	donpcevent instance_npcname("MobCtrl4#mob04")+"::OnEnable";
+	stopnpctimer;
+	end;
+}
+
+// Area No. 4 - Boss Summon Control
+//============================================================
+1@lhz,37,102,4	script	MobCtrl4#mob04	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	switch(rand(1,13)) {
+	case 1:
+		donpcevent instance_npcname("Seyren Windsor#boss01")+"::OnEnable";
+		end;
+	case 2:
+		donpcevent instance_npcname("Cecile Damon#boss02")+"::OnEnable";
+		end;
+	case 3:
+		donpcevent instance_npcname("Gertie Wie#boss03")+"::OnEnable";
+		end;
+	case 4:
+		donpcevent instance_npcname("Eremes Guile#boss04")+"::OnEnable";
+		end;
+	case 5:
+		donpcevent instance_npcname("Trentini#boss05")+"::OnEnable";
+		end;
+	case 6:
+		donpcevent instance_npcname("Chen Liu#boss06")+"::OnEnable";
+		end;
+	case 7:
+		donpcevent instance_npcname("Alphochio Basil#boss07")+"::OnEnable";
+		end;
+	case 8:
+		donpcevent instance_npcname("Flamel Emul#boss08")+"::OnEnable";
+		end;
+	case 9:
+		donpcevent instance_npcname("Randel Lawrence#boss09")+"::OnEnable";
+		end;
+	case 10:
+		donpcevent instance_npcname("Celia Alde#boss10")+"::OnEnable";
+		end;
+	case 11:
+		donpcevent instance_npcname("Kathryne Keyron#boss11")+"::OnEnable";
+		end;
+	case 12:
+		donpcevent instance_npcname("Margaretha Sorin#boss12")+"::OnEnable";
+		end;
+	case 13:
+		donpcevent instance_npcname("Howard Alt-Eisen#boss13")+"::OnEnable";
+		end; 
+	}
+
+OnDisable:
+	//stopnpctimer;
+	end;
+}
+
+// Random Experiments in Tubes
+//============================================================
+1@lhz,156,148,3	script	Type_**Gren#boss14	4_M_03,{ end; }
+1@lhz,152,152,3	script	Type_**Roke#boss15	4_M_HUMAN_01,{ end; }
+1@lhz,148,156,3	script	Type_**Dree#boss16	4_M_DWARF,{ end; }
+
+// Bosses
+//============================================================
+-	script	bio4FBoss	-1,{
+	end;
+
+OnEnable:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	specialeffect EF_SUI_EXPLOSION;
+
+	if (strnpcinfo(0) == "Seyren Windsor#boss01")
+		monster .@map$,129,154,"Load Knight Seyren",1646,1,.@label$;
+	else if (strnpcinfo(0) == "Cecile Damon#boss02")
+		monster .@map$,125,150,"Sniper Cecile",1650,1,.@label$;
+	else if (strnpcinfo(0) == "Gertie Wie#boss03")
+		monster .@map$,121,146,"Stalker Gertie",2239,1,.@label$;
+	else if (strnpcinfo(0) == "Eremes Guile#boss04")
+		monster .@map$,117,142,"Assassin Cross Eremes",1647,1,.@label$;
+	else if (strnpcinfo(0) == "Trentini#boss05")
+		monster .@map$,117,125,"Gypsy Trentini",2241,1,.@label$;
+	else if (strnpcinfo(0) == "Chen Liu#boss06")
+		monster .@map$,121,121,"Champion Chen",2238,1,.@label$;
+	else if (strnpcinfo(0) == "Alphochio Basil#boss07")
+		monster .@map$,125,117,"Crown Alphochio",2240,1,.@label$;
+	else if (strnpcinfo(0) == "Flamel Emul#boss08")
+		monster .@map$,129,113,"Creator Flamel",2236,1,.@label$;
+	else if (strnpcinfo(0) == "Randel Lawrence#boss09")
+		monster .@map$,146,113,"Paladin Randel",2235,1,.@label$;
+	else if (strnpcinfo(0) == "Celia Alde#boss10")
+		monster .@map$,150,117,"Professor Celia",2237,1,.@label$;
+	else if (strnpcinfo(0) == "Kathryne Keyron#boss11")
+		monster .@map$,154,121,"High Wizard Kathryne",1651,1,.@label$;
+	else if (strnpcinfo(0) == "Margaretha Sorin#boss12")
+		monster .@map$,158,125,"High Priest Margaretha",1649,1,.@label$;
+	else if (strnpcinfo(0) == "Howard Alt-Eisen#boss13")
+		monster .@map$,158,142,"White Smith Howard",1648,1,.@label$;
+
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	disablenpc();
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"), instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
+		.@map$ = instance_mapname("1@lhz");
+
+		if (strnpcinfo(0) == "Seyren Windsor#boss01")
+			mapannounce .@map$,"Awww... Where are all my fellows....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Cecile Damon#boss02")
+			mapannounce .@map$,"Any..one, please help.. please.....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Gertie Wie#boss03")
+			mapannounce .@map$,".. did I act too.. rashly...?",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Eremes Guile#boss04")
+			mapannounce .@map$,"Ah..... I am absolutely defeated....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Trentini#boss05")
+			mapannounce .@map$,"ah.. If I.. ever can ... dance and.... sing...happily....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Chen Liu#boss06")
+			mapannounce .@map$,"I.... am so .. sorry....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Alphochio Basil#boss07")
+			mapannounce .@map$,"...the new song......was ....for.....her....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Flamel Emul#boss08")
+			mapannounce .@map$,"Ha...I wanted to show.... the new potion....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Randel Lawrence#boss09")
+			mapannounce .@map$,"Wooooo.. everyone got defeated.....??",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Celia Alde#boss10")
+			mapannounce .@map$,"No..... this experiment is.....dang...",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Kathryne Keyron#boss11")
+			mapannounce .@map$,"awww.. is everyone Ok....?",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Margaretha Sorin#boss12")
+			mapannounce .@map$,"My good boy.. Don't cry... ah.... our Great Odin.. please save us...",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Howard Alt-Eisen#boss13")
+			mapannounce .@map$,"oh...no.... can't breath.... and my sister...?? sister!!",bc_map,"0xFD3B02";
+
+		donpcevent instance_npcname("Wolfchev#last")+"::OnEnable";
+		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
+	}
+	end;
+}
+1@lhz,127,156,5	duplicate(bio4FBoss)	Seyren Windsor#boss01	1646
+1@lhz,123,152,5	duplicate(bio4FBoss)	Cecile Damon#boss02	1650
+1@lhz,119,148,5	duplicate(bio4FBoss)	Gertie Wie#boss03	2239
+1@lhz,115,144,5	duplicate(bio4FBoss)	Eremes Guile#boss04	1647
+1@lhz,115,123,7	duplicate(bio4FBoss)	Trentini#boss05	2241
+1@lhz,119,119,7	duplicate(bio4FBoss)	Chen Liu#boss06	2238
+1@lhz,123,115,7	duplicate(bio4FBoss)	Alphochio Basil#boss07	2240
+1@lhz,127,111,7	duplicate(bio4FBoss)	Flamel Emul#boss08	2236
+1@lhz,148,111,1	duplicate(bio4FBoss)	Randel Lawrence#boss09	2235
+1@lhz,152,115,1	duplicate(bio4FBoss)	Celia Alde#boss10	2237
+1@lhz,156,119,1	duplicate(bio4FBoss)	Kathryne Keyron#boss11	1651
+1@lhz,160,123,1	duplicate(bio4FBoss)	Margaretha Sorin#boss12	1649
+1@lhz,160,144,3	duplicate(bio4FBoss)	Howard Alt-Eisen#boss13	1648
+
+// Wolfchev - Final encounter
+//============================================================
+1@lhz,137,156,7	script	Wolfchev#last	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	for(.@i = 5113; .@i <= 5125; .@i++) {
+		switch( checkquest(.@i,HUNTING) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			.@all_quests_complete += 1;
+			break;
+		case 2:
+			.@all_quests_complete += 2;
+			break;
+		}
+	}
+	if (.@all_quests_complete == 26) {
+		// Quests Complete. Get Rewards.
+		if (lght_duk01 == 8) {
+			// First time beating the instance.
+			mes "[Wolfchev]";
+			mes "You finally defeated my Boss creature.";
+			next;
+			mes "[Wolfchev]";
+			mes "Finally. is this the result?? For whom did I experiment? Did they cheat me?";
+			next;
+			mes "[Wolfchev]";
+			mes "The button was supposed to be pressed for an emergency case...but..";
+			next;
+			mes "[Wolfchev]";
+			mes "Hey... You and I met by a bad connection....";
+			next;
+			mes "[Wolfchev]";
+			mes "But...., you helped me... How could you do that?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "When I met you for the first time, you seemed mad but sad, even if you could commit those cruel and horrific experiments.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "But actually, you did that because you was lonely,.. you just concentrated on that for this reason, huh?";
+			next;
+			mes "[Wolfchev]";
+			mes "HAHAHAHA. Loneliness... you say?";
+			next;
+			mes "[Wolfchev]";
+			mes "It might be seen like that to you. But, it isn't. Loneliness is just a good and easy excuse of the losers.";
+			next;
+			mes "[Wolfchev]";
+			mes "I'm so happy doing experiments pursuing for a perfection, I never feel lonely.";
+			next;
+			mes "[Wolfchev]";
+			mes "Anyway, since I realized that Rekenber betrayed me, I cannot just let them do what they want.";
+			next;
+			mes "[Wolfchev]";
+			mes "For now, I will leave them alone, but I will make them cry and regret for trying to remove Wolfchev.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "... .... ... ....";
+			next;
+			lght_duk01 = 9;
+			callsub L_Reward;
+			mes "[Wolfchev]";
+			mes "aaaaaah, "+ strcharinfo(0) +" Thank you so much to remove my boys who had gone mad. Not a big gift but I wish you don't deny, I don't need this anymore.";
+			next;
+			mes "[Wolfchev]";
+			mes "And, if you can...hope you to come back often, especially with your friends. I want the place to be with human heart again so the sadness in here gets disappear.";
+			next;
+			mes "I looked at Wolfchev again before leaving his lab. and I could feel that he was not obsessed anymore..";
+			close2;
+			warp "lhz_dun04", 147, 273;
+			end;
+		} else {
+			mes "[Wolfchev]";
+			mes "You did defeat all of the Boss creatures. Thank you again.";
+			next;
+			callsub L_Reward;
+			mes "[Wolfchev]";
+			mes "I say again, "+ strcharinfo(0) +" Thank you so much to remove my boys who had gone mad. Not a big gift but I wish you don't deny, I don't need this anymore.";
+			next;
+			mes "[Wolfchev]";
+			mes "Khahaha, See you again. Do you want to get out of here now?";
+			next;
+			if (select("Not yet", "Yes") == 1) {
+				mes "[Wolfchev]";
+				mes "Then tell me when you want to.";
+				close;
+			}
+			mes "[Wolfchev]";
+			mes "Then I will send you out.";
+			close2;
+			warp "lhz_dun04", 147, 273;
+			end;
+		}
+	} else {
+		if (.@all_quests_complete == 0) {
+			mes "[Wolfchev]";
+			mes "I was looking at the system.... don't know who made this..... but it's so complicated to get..no idea...";
+			next;
+		} else {
+			mes "[Wolfchev]";
+			mes "kakakaah.. Thank you. You handled those Boss creatures well...";
+			next;
+		}
+		if (lght_duk01 == 7) {
+			lght_duk01 = 8;
+			mes "[Wolfchev]";
+			mes "While you were struggling...";
+			next;
+			mes "[Wolfchev]";
+			mes "I figured something out... and there's a system error which doesn't let us come and go freely, so you could help me in 72 hours... Go somewhere to rest before you come back.";
+			next;
+			mes "[Wolfchev]";
+			mes "Ah... and I can send you out of my laboratory. Do you want?";
+			next;
+		} else {
+			mes "[Wolfchev]";
+			mes "Do you want to get out of here now?";
+			next;
+		}
+		if (select("Not yet", "Yes") == 1) {
+			mes "[Wolfchev]";
+			mes "Then tell me when you want to.";
+			close;
+		}
+		mes "[Wolfchev]";
+		mes "Then I will send you out.";
+		close2;
+		warp "lhz_dun04", 147, 273;
+		end;
+	}
+
+L_Reward:
+	for(.@i = 5113; .@i <= 5125; .@i++) {
+		erasequest .@i;
+	}
+	.@r = rand(1, 1000);
+	if      (.@r < 84)  getitem 2582,  1; //Salvage_Cape
+	else if (.@r < 167) getitem 18570, 1; //Ancient_Gold_Deco
+	else if (.@r < 250) getitem 1490,  1; //Giant_Lance
+	else if (.@r < 333) getitem 16017, 1; //Bloody_Cross
+	else if (.@r < 416) getitem 1291,  1; //Guillotine_Katar
+	else if (.@r < 499) getitem 1584,  1; //Chilly_Spell_Book
+	else if (.@r < 582) getitem 6471, 10; //Goast_Chill
+	else if (.@r < 665) getitem 6470, 10; //Blood_Thirst
+	else if (.@r < 748) getitem 6469, 10; //Will_Of_Warrior
+	else if (.@r < 831) getitem 6471, 20; //Goast_Chill
+	else if (.@r < 914) getitem 6470, 20; //Blood_Thirst
+	else                getitem 6469, 20; //Will_Of_Warrior
+	return;
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("Wolfchev#last");
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("Wolfchev#last");
+	end;
+}

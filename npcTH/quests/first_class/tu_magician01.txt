@@ -1,0 +1,785 @@
+//===== rAthena Script =======================================
+//= Magician Class Tutorial and Job Specific Quest
+//===== By: ==================================================
+//= Fix up by Jukka
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Magician training quest.
+//===== Additional Comments: =================================
+//= 1.0 Fully working
+//= 1.1 Optimized [Lupus]
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.3 Misc. updates. [L0ne_W0lf]
+//= 1.4 Updated to match the official script. [Euphy]
+//= 2.0 Replaced occurrence of PcName and clean-up. [Capuche]
+//============================================================
+
+// Sign
+//============================================================
+geffen,61,174,4	script	Sign#M	HIDDEN_NPC,{
+	mes "- Mage Job Change -";
+	close;
+}
+
+// New Mage Manager
+//============================================================
+geffen,67,180,4	script	New Mage Manager#M	8_F,{
+	mes "[Mana]";
+	if(Class == Job_Novice){
+		mes "You're not ready for";
+		mes "any of the training I have";
+		mes "to offer. You'll have to train";
+		mes "some more and become";
+		mes "a Mage first. Alright, dear?";
+		close;
+	}
+	if(BaseClass != Job_Mage || (eaclass()&EAJL_BABY)){
+		mes "You know, sometimes";
+		mes "other jobs might look a";
+		mes "little better in some battle";
+		mes "situations, but always have";
+		mes "pride in yourself. Not just";
+		mes "anyone can do what you do~";
+		close;
+	}
+	if(Class != Job_Mage && tu_magician01 < 7){
+		mes "Although I offer magic";
+		mes "training, it's not very helpful";
+		mes "if you're already experienced";
+		mes "in the use of magic. I'm sorry,";
+		mes "but you'll have to rely on your";
+		mes "own self to hone your skills.";
+		close;
+	}
+	switch(tu_magician01){
+	case 0:
+		mes "Ah, welcome~";
+		mes "My name is Mana,";
+		mes "a trainer in charge";
+		mes "of new recruits in the";
+		mes "Mage Guild. That means";
+		mes "I'm responsible for you~";
+		next;
+		mes "[Mana]";
+		mes "I've only been doing";
+		mes "this for just a little while,";
+		mes "but I'm here to help you if";
+		mes "you want to learn more on";
+		mes "the basics of the Mage job.";
+		next;
+		switch(select("Will you teach me?:Perhaps later...")) {
+		case 1:
+			mes "[Mana]";
+			mes "Of course!";
+			mes "And don't worry,";
+			mes "everyone is a beginner";
+			mes "at one point or another.";
+			mes "You can only get better!";
+			next;
+			break;
+		case 2:
+			mes "[Mana]";
+			mes "Well, I guess";
+			mes "it'll all work out.";
+			mes "But I look forward";
+			mes "to meeting you again";
+			mes "if you decide that you";
+			mes "do want some instruction~";
+			close;
+		}
+		mes "[Mana]";
+		mes "Alright, let's begin with";
+		mes "a general description";
+		mes "of our job, shall we?";
+		mes "What exactly are Mages?";
+		next;
+		mes "[Mana]";
+		mes "Instead of physical strength,";
+		mes "Mages use the power of the";
+		mes "elements in battle. These are";
+		mes "^ff0000Fire^000000, ^5C4033Earth^000000, ^93DB70Wind^000000, ^0000FFWater^000000.";
+		mes "We also have access to spells";
+		mes "to spells with the ^CFB53BGhost^000000 property.";
+		next;
+		mes "[Mana]";
+		mes "Now, when an enemy has";
+		mes "an elemental property, it will";
+		mes "be able to resist that element, but will be susceptible to others.";
+		mes "That's why knowing elemental properties is so important to us.";
+		next;
+		mes "[Mana]";
+		mes "Listen carefully to these";
+		mes "elemental relationships.";
+		mes "^FF0000Fire^000000 is strong against Earth,";
+		mes "but is weak against Water.";
+		mes "^5C4033Earth^000000 is strong against Wind,";
+		mes "but is weak against Fire.";
+		next;
+		mes "[Mana]";
+		mes "^0000FFWater^000000 is strong against";
+		mes "Fire, but weak against Wind.";
+		mes "Finally, ^93DB70Wind^000000 is strong against";
+		mes "Water, but weak against Earth.";
+		next;
+		mes "[Mana]";
+		mes "I can't remember";
+		mes "the last time I've";
+		mes "spoken so much in one";
+		mes "sitting! I'm bushed, so it's";
+		mes "time for a break. But we'll";
+		mes "continue this later, okay?";
+		tu_magician01 = 1;
+		if (checkre(3))
+			getexp BaseLevel*3,BaseLevel*2;
+		else
+			getexp BaseLevel*30,BaseLevel*15;
+		specialeffect2 EF_HIT5;
+		close;
+	case 1:
+		mes "Are you ready";
+		mes "to continue our";
+		mes "discussion on the";
+		mes "elemental properties?";
+		next;
+		mes "[Mana]";
+		mes "You should know that";
+		mes "each monster has an";
+		mes "elemental property and that";
+		mes "there are different levels for";
+		mes "all of these elements. It's";
+		mes "important to understand this...";
+		next;
+		mes "[Mana]";
+		mes "Let me explain to you";
+		mes "all of the nuances of";
+		mes "each element. Just ask";
+		mes "me which specific element";
+		mes "you'd like to learn more about.";
+		next;
+		mes "[Mana]";
+		mes "In other words, even the same properties";
+		mes "have different features that must be considered.";
+		mes "I will explain the properties now.";
+		while((1)){
+			next;
+			switch(select("^ff0000Fire^000000", "^5C4033Earth^000000", "^93DB70Wind^000000", "^0000FFWater^000000", "^CFB53BGhost^000000", "Quit.")){
+			case 1:
+				mes "[Mana]";
+				mes "Monsters with the ^ff0000Fire^000000";
+				mes "property tend to have strong";
+				mes "attacks. Since we Mages are";
+				mes "physically weaker, even slight";
+				mes "hits from these monsters can";
+				mes "be extremely damaging to us.";
+				next;
+				mes "[Mana]";
+				mes "So if we have to fight";
+				mes "monsters with the ^FF0000Fire^000000";
+				mes "property on our own, we";
+				mes "can use Frost Diver to";
+				mes "freeze them in their tracks.";
+				next;
+				mes "[Mana]";
+				mes "But if we use Fire";
+				mes "property skills on Fire";
+				mes "monsters, we'd do little to no";
+				mes "damage and that's not good.";
+				next;
+				mes "[Mana]";
+				mes "For reference, our Fire";
+				mes "property skills are Sight,";
+				mes "Fire Bolt, Fire Ball and Fire";
+				mes "Wall. Ooh, let me tell you";
+				mes "a little more about Fire Wall.";
+				next;
+				mes "[Mana]";
+				mes "Fire Wall is very distinctive";
+				mes "in that it can be used up to";
+				mes "3 times on one screen. Any";
+				mes "monsters that run into it will";
+				mes "get damaged, then move away";
+				mes "in the opposite direction.";
+				next;
+				mes "[Mana]";
+				mes "But if an Undead monster";
+				mes "runs into a Fire Wall, it's ";
+				mes "only slightly injured and the";
+				mes "Fire Wall won't necessarily";
+				mes "block its approach. So beware!";
+				.@eread_1 = 1;
+				break;
+			case 2:
+				mes "[Mana]";
+				mes "Alright, ^5C4033Earth^000000 property";
+				mes "monsters usually have";
+				mes "good targeting, so even";
+				mes "if your Dodge Rate is high,";
+				mes "you might find it hard to";
+				mes "evade all of their attacks.";
+				next;
+				mes "[Mana]";
+				mes "When dealing with these";
+				mes "monsters, use Fire property";
+				mes "spells. Fire Wall is usually";
+				mes "pretty effective, since it'll";
+				mes "stop the monster and also";
+				mes "cause some good damage.";
+				next;
+				mes "[Mana]";
+				mes "It's also handy to know";
+				mes "that when you use Stone";
+				mes "Curse on a monster, that";
+				mes "monster becomes Earth";
+				mes "property while the spell";
+				mes "is in effect. Cool, huh?";
+				next;
+				mes "[Mana]";
+				mes "So if you use Stone Curse,";
+				mes "a good strategy would be to";
+				mes "use Fire property skills right";
+				mes "afterwards, like Fire Bolt and";
+				mes "Fire Ball, to take advantage of";
+				mes "the monster's Earth property.";
+				.@eread_2 = 1;
+				break;
+			case 3:
+				mes "[Mana]";
+				mes "Now, don't be too surprised";
+				mes "if you keep missing when you";
+				mes "attack ^93DB70Wind^000000 property monsters.";
+				mes "Most of them can avoid physical";
+				mes "attacks really well because of";
+				mes "their high Dodge Rates.";
+				next;
+				mes "[Mana]";
+				mes "But since we Mages";
+				mes "mostly attack with our";
+				mes "spells, we don't need to";
+				mes "worry so much about that.";
+				mes "Still, Wind monsters tend to";
+				mes "be pretty quick, so be careful.";
+				next;
+				mes "[Mana]";
+				mes "When it comes to attacking";
+				mes "Wind monsters, it'd be ideal";
+				mes "to use Earth property skills.";
+				mes "But since only Wizards have";
+				mes "access to Earth property attacks,";
+				mes "we should settle for Fire skills.";
+				next;
+				mes "[Mana]";
+				mes "Fire property skills might";
+				mes "not do a whole lot of damage,";
+				mes "but they'll have a greater effect than Wind or Water property skills, which would do very little or no damage at all to Wind monsters.";
+				next;
+				mes "[Mana]";
+				mes "Just so you know,";
+				mes "the ^93DB70Wind^000000 property skills";
+				mes "that we Mages can use are";
+				mes "Lighning Bolt and Thunder Storm.";
+				.@eread_3 = 1;
+				break;
+			case 4:
+				mes "[Mana]";
+				mes "^0000FFWater^000000 property monsters";
+				mes "tend to have a lot of health,";
+				mes "so they can take more damage";
+				mes "than other monsters, making";
+				mes "battles with them longer.";
+				next;
+				mes "[Mana]";
+				mes "Now, remember how I said";
+				mes "that there are differing levels";
+				mes "for properties? Water property monsters are actually a bit more";
+				mes "sensitive to damage from their opposing element at higher levels.";
+				next;
+				mes "[Mana]";
+				mes "In other words, monsters";
+				mes "that are higher in level for";
+				mes "the Water property are going";
+				mes "to take even more damage";
+				mes "from Wind property attacks.";
+				next;
+				mes "[Mana]";
+				mes "Water property skills";
+				mes "in the Mage's repertoire";
+				mes "include Cold Bolt and Frost";
+				mes "Diver. These skills are very";
+				mes "effective against Fire monsters.";
+				next;
+				mes "[Mana]";
+				mes "Frost Diver is special in";
+				mes "that it has the chance to";
+				mes "actually freeze monsters.";
+				mes "While monsters are frozen by";
+				mes "Frost Diver, they're considered Water monsters. Interesting, huh?";
+				.@eread_4 = 1;
+				break;
+			case 5:
+				mes "[Mana]";
+				mes "Now, there aren't many";
+				mes "^CFB53BGhost^000000 property monsters";
+				mes "around. But if you do run into";
+				mes "them, go ahead and use your";
+				mes "Ghost property skills, which";
+				mes "should be effective.";
+				next;
+				mes "[Mana]";
+				mes "The Ghost property attacks";
+				mes "that we Mages can use are";
+				mes "Napalm Beat and Soul Strike.";
+				mes "These skills generally tend";
+				mes "to work pretty well, except on";
+				mes "high Holy property monsters.";
+				next;
+				mes "[Mana]";
+				mes "Now, the Safety Wall spell";
+				mes "is sort of a Ghost property";
+				mes "skill, but it's hard to classify. Casting Safety Wall creates";
+				mes "a barrier than protects against";
+				mes "close range physical attacks.";
+				next;
+				mes "[Mana]";
+				mes "However, this barrier only";
+				mes "fits one person and doesn't";
+				mes "shield against long range";
+				mes "attacks or strong property";
+				mes "attacks, so be really careful!";
+				.@eread_5 = 1;
+				break;
+			case 6:
+				mes "[Mana]";
+				mes "Are you sure that you've";
+				mes "heard enough about the";
+				mes "nuances of the elemental";
+				mes "properties? Because if you're";
+				mes "ready, we'll cover some new";
+				mes "material for you to learn.";
+				next;
+				if(select("W-wait, not yet!:I'm ready to go on.") == 2) {
+					mes "[Mana]";
+					mes "Alrighty, we'll";
+					mes "move on to the next";
+					mes "subject then. Ho ho ho~!";
+					tu_magician01 = 2;
+					specialeffect2 EF_HIT5;
+					.@total = .@eread_1 + .@eread_2 + .@eread_3 + .@eread_4 + .@eread_5;
+					if (.@total) getexp (.@total*150),(.@total*70);
+					close;
+				}
+				break;
+			}
+		}
+	case 2:
+		mes "I know that the concept";
+		mes "of properties might be";
+		mes "confusing now, but over";
+		mes "time you'll get the hang";
+		mes "of it. Now it's time to talk";
+		mes "about magic skills in depth~";
+		next;
+		mes "[Mana]";
+		mes "Now, the most basic magic";
+		mes "attack spells are Fire Bolt,";
+		mes "Cold Bolt, Lightning Bolt and";
+		mes "Napalm Beat. Learning these";
+		mes "enables Mages to learn their";
+		mes "more advanced skills.";
+		specialeffect2 EF_NAPALMBEAT;
+		next;
+		mes "[Mana]";
+		mes "Increasing the levels of";
+		mes "these skills not only opens";
+		mes "access to other spells, but";
+		mes "the damage of those basic";
+		mes "attack skills is also increased.";
+		specialeffect2 EF_LIGHTBOLT;
+		next;
+		mes "[Mana]";
+		mes "Other skills that are";
+		mes "basic to the Mage class";
+		mes "are Sight, Stone Curse and";
+		mes "Increase SP Recovery. They're";
+		mes "not really attack spells, but are useful in certain situations.";
+		next;
+		specialeffect2 EF_SIGHT;
+		mes "[Mana]";
+		mes "Sight is used to";
+		mes "reveal enemies that";
+		mes "are hiding. Keep in";
+		mes "mind that this skill's";
+		mes "range doesn't go too far.";
+		next;
+		specialeffect2 EF_STONECURSE;
+		mes "[Mana]";
+		mes "Stone Curse has the chance";
+		mes "to curse a target, temporarily";
+		mes "immobilizing it and making it";
+		mes "^5C4033Earth^000000 property. However, each";
+		mes "attempt to cast Stone Curse";
+		mes "requires 1 Red Gemstone.";
+		next;
+		mes "[Mana]";
+		mes "Increase SP Recovery is";
+		mes "a passive skill which helps";
+		mes "you recover more SP while sitting down to rest. It doesn't directly affect battle, but having more SP is always better.";
+		next;
+		mes "[Mana]";
+		mes "Well, I feel like I've";
+		mes "explained the basic spells";
+		mes "enough. Now, before I talk";
+		mes "about our advanced skills,";
+		mes "there's an assignment I want";
+		mes "you to complete for training.";
+		next;
+		mes "[Mana]";
+		mes "If you head west from";
+		mes "here, you'll find a big bridge";
+		mes "bridge where you can encounter";
+		mes "these monsters called Pupa.";
+		mes "Pupa don't move and can't";
+		mes "attack to save their lives.";
+		next;
+		mes "[Mana]";
+		mes "Hunt these Pupa";
+		mes "until you've collected";
+		mes "10 Chrysalis from them.";
+		mes "Then bring them to me, okay?";
+		tu_magician01 = 3;
+		getexp 400,200;
+		specialeffect2 EF_HIT5;
+		close;
+	case 3:
+	case 4:
+		if (tu_magician01 == 3) {
+			mes "Ah, you're back?";
+			mes "Let's see if you gathered";
+			mes "all 10 Chrysalis from hunting";
+			mes "all of those Pupa. Hmmmm...";
+		}
+		else {
+			mes "So...";
+			mes "Did you get";
+			mes "10 Chrysalis";
+			mes "from hunting Pupa";
+			mes "like I asked? I hope so...";
+			mes "Because I'm going to check~";
+		}
+		next;
+		mes "[Mana]";
+		if (countitem(915) < 10){// Chrysalis
+			if (tu_magician01 == 3) {
+				mes "Aw, you don't";
+				mes "have enough of";
+				mes "them yet. Head west";
+				mes "from here and hunt Pupa";
+				mes "to get more Chrysalis, okay?";
+				mes "For now, I'll just heal you up.";
+				tu_magician01 = 4;
+				percentheal 100,100;
+			}
+			else {
+				mes "Whoa, you need";
+				mes "more than just this.";
+				mes "I know you can do it...";
+				mes "Pupas are completely";
+				mes "defenseless monsters!";
+			}
+		}
+		else {
+			mes "...Nine, ten.";
+			mes "Alright, you pass!";
+			mes "By now, you must be more";
+			mes "used to using your skills, huh?";
+			mes "Anyway, let me know when you're ready for the next lesson, okay?";
+			tu_magician01 = 5;
+			getexp 400,200;
+			specialeffect2 EF_HIT5;
+		}
+		close;
+	case 5:
+		mes "Now I'll tell you";
+		mes "what I know about the";
+		mes "more advanced Mage";
+		mes "skills. Which one would";
+		mes "you like me to explain?";
+		while(1){
+			next;
+			switch(select("Soul Strike:Safety Wall:Fire Ball:Frost Diver:Thunderstorm:Fire Wall:Energy Coat:Quit.")) {
+			case 1:
+				mes "[Mana]";
+				mes "Soul Strike is a ^CFB53BGhost^000000";
+				mes "property skill that you can";
+				mes "learn after increasing the";
+				mes "Napalm Beat skill up to";
+				mes "a certain level. It attacks";
+				mes "with ancient spiritual power~";
+				next;
+				specialeffect2 EF_SOULSTRIKE;
+				next;
+				mes "[Mana]";
+				mes "As you train in the use";
+				mes "of Soul Strike and increase";
+				mes "that skill's level, it will grow in strength and you'll be able";
+				mes "to cast it much more quickly.";
+				.@skill_e1 = 1;
+				break;
+			case 2:
+				mes "[Mana]";
+				mes "You can learn Safety Wall";
+				mes "after training in the use of";
+				mes "Napalm Beat and Soul Strike.";
+				mes "Safety Wall protects against";
+				mes "most close range attacks.";
+				next;
+				specialeffect2 EF_GLASSWALL;
+				next;
+				mes "[Mana]";
+				mes "However, Safety Wall";
+				mes "has a time duration and";
+				mes "can only protect from a";
+				mes "certain number of attacks,";
+				mes "depending on the level of the";
+				mes "Safety Wall skill that you use.";
+				.@skill_e2 = 1;
+				break;
+			case 3:
+				mes "[Mana]";
+				mes "Fire Ball is a ^FF0000Fire^000000";
+				mes "property skill that you";
+				mes "can learn after training";
+				mes "in the use of Fire Bolt.";
+				next;
+				specialeffect2 EF_FIREBALL;
+				next;
+				mes "[Mana]";
+				mes "Fire Ball can actually";
+				mes "inflict damage on multiple";
+				mes "enemies if they are within";
+				mes "the range of the skill. Make";
+				mes "good use of the destructive";
+				mes "power of the Fire Ball!";
+				.@skill_e3 = 1;
+				break;
+			case 4:
+				mes "[Mana]";
+				mes "Frost Diver is a ^0000FFWater^000000";
+				mes "property skill that can be";
+				mes "learned after increasing";
+				mes "the Cold Bolt skill to";
+				mes "a certain level.";
+				specialeffect2 EF_FROSTDIVER;
+				next;
+				specialeffect2 EF_FROSTDIVER2;
+				mes "[Mana]";
+				mes "Frost Diver will damage";
+				mes "enemies and has the chance";
+				mes "to freeze them as well. Once";
+				mes "frozen, the monster will be";
+				mes "considered to be a Water";
+				mes "property creature.";
+				next;
+				mes "[Mana]";
+				mes "Now, as you increase";
+				mes "the level of the Frost Diver";
+				mes "skill, its damage and chance";
+				mes "of freezing monsters will also";
+				mes "increase. Pretty dangerous, eh? ^FFFFFFkamenriderblack^000000";
+				.@skill_e4 = 1;
+				break;
+			case 5:
+				mes "[Mana]";
+				mes "Thunderstorm is a";
+				mes "^93DB70Wind^000000 property skill";
+				mes "that you can learn after";
+				mes "increasing the Lightning";
+				mes "Bolt skill to a certain level.";
+				next;
+				specialeffect2 EF_THUNDERSTORM;
+				mes "[Mana]";
+				mes "Thunderstorm is similar";
+				mes "to Fire Ball in that it can";
+				mes "attack multiple enemies";
+				mes "within a certain range.";
+				mes "It's an incredibly potent";
+				mes "ground targeting attack.";
+				.@skill_e5 = 1;
+				break;
+			case 6:
+				mes "[Mana]";
+				mes "Fire Wall is a ^FF0000Fire^000000";
+				mes "property skill that can";
+				mes "be learned after training";
+				mes "in the use of Fire Ball and";
+				mes "Sight. Unlike other skills,";
+				mes "Fire Wall targets an area.";
+				next;
+				specialeffect2 EF_FIREWALL;
+				mes "[Mana]";
+				mes "So you can place";
+				mes "a Fire Wall in locations";
+				mes "where you think the enemy";
+				mes "will move towards. And it's";
+				mes "especially useful when";
+				mes "monsters approach you!";
+				next;
+				mes "[Mana]";
+				mes "So if you can use";
+				mes "Fire Well strategically";
+				mes "and effectively, it can";
+				mes "be a very powerful skill~";
+				.@skill_e6 = 1;
+				break;
+			case 7:
+				mes "[Mana]";
+				mes "Energy Coat is, well,";
+				mes "a unique skill that you";
+				mes "can't just learn on your own.";
+				mes "You'll have to ask Blizardis";
+				mes "inside the Mage Guild to";
+				mes "teach you how to use it.";
+				next;
+				specialeffect2 EF_ENERGYCOAT;
+				next;
+				mes "[Mana]";
+				mes "If you do decide to";
+				mes "learn Energy Coat, I'm";
+				mes "sure Blizardis will tell";
+				mes "you all you need to know.";
+				.@skill_e7 = 1;
+				break;
+			case 8:
+				mes "[Mana]";
+				mes "Did you understand";
+				mes "all of that? Good, because";
+				mes "now I have a mission to give";
+				mes "you on behalf of the Mage";
+				mes "Guild. When you're ready for";
+				mes "briefing, talk to me, okay?";
+				next;
+				mes "[Mana]";
+				mes "Oh, and please take";
+				mes "this. It's a present for";
+				mes "you to help you in your";
+				mes "training. I hope it comes";
+				mes "in handy when fighting...";
+				tu_magician01 = 6;
+				getitem 1604,1; //Wand
+				specialeffect2 EF_HIT5;
+				.@total = .@skill_e1 + .@skill_e2 + .@skill_e3 + .@skill_e4 + .@skill_e5;
+				if (.@total) getexp (.@total*300),(.@total*100);
+				close;
+			}
+		}
+		close;
+	case 6:
+		mes "Oh good, you're back.";
+		mes "Let me tell you about";
+		mes "your mission. Recently,";
+		mes "something has happened in";
+		mes "Morocc and the Thief Guild";
+		mes "is requesting our assistance.";
+		next;
+		mes "[Mana]";
+		mes "It's not mandatory";
+		mes "for you to do this, but";
+		mes "you will be compensated";
+		mes "for your efforts and we'll";
+		mes "give you some support.";
+		mes "So what do you think?";
+		next;
+		switch(select("I'll do it.:Sorry, but...")) {
+		case 1:
+			mes "[Mana]";
+			mes "Great! Alright,";
+			mes "I'll send you straight";
+			mes "to Morocc, then. Once you";
+			mes "get there, go to the front";
+			mes "of the Morocc Pyramid and";
+			mes "speak to Yierhan. Thanks~";
+			next;
+			mes "[Mana]";
+			mes "Oh, and when you're";
+			mes "done with what Yierhan";
+			mes "has you do, come back";
+			mes "and report to me, okay?";
+			tu_magician01 = 7;
+			emotion ET_SMILE;
+			warp "morocc",182,286;
+			close;
+		case 2:
+			mes "[Mana]";
+			mes "Mmm...?";
+			mes "Oh, I see. Well, if";
+			mes "you happen to change";
+			mes "your mind, come back";
+			mes "and ask me later, okay?";
+			close;
+		}
+	case 7:
+		mes "I don't know";
+		mes "what kind of work";
+		mes "Yierhan has in store";
+		mes "for you, but hopefully";
+		mes "it won't be too difficult.";
+		close;
+	case 27:
+		mes "Yierhan just sent me";
+		mes "a message, saying that";
+		mes "you've done a great job in";
+		mes "completing your mission.";
+		mes "Very nice work, "+strcharinfo(0)+"~";
+		next;
+		mes "[Mana]";
+		mes "It seems like there are";
+		mes "two secret organizations";
+		mes "involved in all of this dirty";
+		mes "business. Why would they";
+		mes "be working together?";
+		next;
+		mes "[Mana]";
+		mes "Well, in any case...";
+		mes "This is some pretty";
+		mes "major business that";
+		mes "I guess the higher-ups";
+		mes "will handle, so you don't";
+		mes "need to worry about it for now.";
+		next;
+		mes "[Mana]";
+		mes "Please take this as";
+		mes "a little reward for helping";
+		mes "out both of our guilds. Once";
+		mes "again, thanks very much~";
+		tu_magician01 = 28;
+		getitem 2321,1; //Silk_Robe
+		Zeny = Zeny + 3000;
+		getexp 3000,1000;
+		close;
+	default:
+		if(tu_magician01 < 27){
+			mes "So...";
+			mes "It looks like something is";
+			mes "going on in the Rune-Midgarts";
+			mes "Kingdom for sure. No wonder";
+			mes "all the guilds are so busy...";
+			next;
+			mes "[Mana]";
+			mes "Anyway, please ";
+			mes "keep up the good";
+			mes "work. And, um, is";
+			mes "Yierhan doing well?";
+		} else {
+			mes "You seem to be well";
+			mes "experienced now and there";
+			mes "isn't anything else that I can";
+			mes "really teach you. Now it's up";
+			mes "to you to find ways to master";
+			mes "the ways of magic on your own.";
+		}
+		close;
+	}
+}

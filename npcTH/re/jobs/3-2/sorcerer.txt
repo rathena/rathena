@@ -1,0 +1,427 @@
+//===== rAthena Script ======================================= 
+//= Sorcerer Job Quest
+//===== By: ================================================== 
+//= Muad_Dib
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Job change Quest from Sage / Professor -> Sorcerer.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Masao]
+//= 1.1 Cleaning. [Euphy]
+//= 1.2 Updated script, optimized. [Euphy]
+//= 1.3 Added VIP features. [Euphy]
+//============================================================
+
+gef_tower,102,34,5	script	Merito	742,{
+	mes "[Merito]";
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "You packed so much in your bag. Try again after emptying your bag.";
+		close;
+	}
+	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T || Class == Job_Baby_Sorcerer) {
+		mes "Please get on with the sprits well~ You should~!";
+		close;
+	}
+	if (BaseLevel < 99 || JobLevel < 50 || SkillPoint != 0) {
+		mes "Wow~ you are a young adventurer. I envy you.";
+		close;
+	}
+	if (BaseJob != Job_Sage) {
+		mes "Ahh~ I think you don't need to have a conversation with me.";
+		close;
+	}
+	if (job_soc == 0) {
+		mes "Welcome. What can I help you with?";
+		next;
+		select("Do you know about Sorcerers?");
+		mes "[Merito]";
+		mes "Wouldn't it be more comfortable to just live as a scholar? Sorcerers are busy communicating with the spirits and don't have much time to read books...";
+		next;
+		mes "[Merito]";
+		mes "What made you want to be a sorcerer?";
+		next;
+		if(select("The spirit of fire led me here.:The spirit of water led me here.:The spirit of earth led me here:The spirit of meat led me here.") == 4) {
+			mes "[Merito]";
+			mes "That kind of spirit doesn't exist!";
+			close;
+		}
+		mes "[Merito]";
+		mes "Oh, I see.";
+		mes "You must be born with the natural ability to see that you already communicated with the spirits, or you must be an excellent liar.";
+		next;
+		mes "[Merito]";
+		mes "Hmm... Then first, can you write down your name on this list?";
+		next;
+		if(select("Write name.:I won't.") == 2) {
+			mes "[Merito]";
+			mes "Well, okay. See you again when you get a chance.";
+			close;
+		}
+		mes "[Merito]";
+		mes "So, you are [" + strcharinfo(0) + "].";
+		next;
+		mes "[Merito]";
+		mes "Give me a second to register your name.";
+		mes "Talk to me again in a second.";
+		set job_soc,1;
+		close;
+	} else if (job_soc == 1) {
+		mes "Good, then I'll give you a short explanation about the Sorcerer.";
+		next;
+		mes "[Merito]";
+		mes "[" + strcharinfo(0) + "], can you handle magic skillfully?";
+		next;
+		if(select("Yes, I can.:No, I'm not really good at it.") == 2) {
+			mes "[Merito]";
+			mes "What!? You don't know how to use magic?";
+			mes "What are you doing here then? Get out of here. Right now!";
+			close;
+		}
+		mes "[Merito]";
+		mes "Okay, that should be obvious.";
+		mes "Of course, Sorcerers use magic, too. But, do you know the main difference Sorcerers have from other magical jobs?";
+		next;
+		switch(select("They know how to sing.:They're all old fogies.:They can deal with the spirits.")) {
+		case 1:
+			mes "[Merito]";
+			mes "Well maybe some but that's not the main difference.";
+			close;
+		case 2:
+			mes "[Merito]";
+			mes "What! How dare you!?!";
+			close;
+		case 3:
+			break;
+		}
+		mes "[Merito]";
+		mes "That's right. That is the most distinguishing feature that Sorcerers have.";
+		next;
+		mes "[Merito]";
+		mes "When the people who want to be a Sorcerer come, the first thing we do is to check whether they can communicate with spirits or not.";
+		next;
+		mes "[Merito]";
+		mes "So that's the basic introduction, so you just need to decide whether or not you want to take the qualification test.";
+		next;
+		mes "[Merito]";
+		mes "Well, it's all up to you. What are you going to do?";
+		next;
+		switch(select("I will take the test.:I'll do it later.")) {
+		case 1:
+			if (VIP_SCRIPT) {
+				callfunc "VIP_Third_Class";
+				set job_soc,2;
+				setquest 12096;
+				next;
+			}
+			mes "[Merito]";
+			mes "Okay. ";
+			mes "Then I'll hand it over to Karacas who is on the 4th floor. He will guide you through the process of the test.";
+			set job_soc,2;
+			setquest 12096;
+			close;
+		case 2:
+			mes "[Merito]";
+			mes "What? I was sure that you wanted to become a Sorcerer.";
+			close;
+		}
+	} else {
+		mes "How about your test? Well, Karacas is a little lazy, so that might bother you some... kkk";
+		close;
+	}
+}
+
+gef_tower,113,161,5	script	Karacas	754,{
+	mes "[Karacas]";
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "Oh, it seems that you're too heavy. Empty your bag and then come again.";
+		close;
+	}
+	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T || Class == Job_Baby_Sorcerer) {
+		mes "You look happy. Have a great journey.";
+		close;
+	}
+	if (BaseLevel < 99 || JobLevel < 50 || SkillPoint != 0) {
+		mes "Is there anything I can do for you?";
+		close;
+	}
+	if (BaseJob != Job_Sage) {
+		mes "I belong to the Sorcerer association. I don't think you have any business with me.";
+		close;
+	}
+	if (job_soc < 2) {
+		mes "More people are visiting Geffen Tower these days.";
+		close;
+	} else if (job_soc == 2) {
+		mes "....";
+		next;
+		select("Ah... excuse me~");
+		mes "[Karacas]";
+		mes "... (Z z z~)";
+		next;
+		select("Hm hm!!!~");
+		mes "[Karacas]";
+		mes "Aaaak!! ";
+		mes "Oh, my... ";
+		next;
+		mes "[Karacas]";
+		mes "Wh... where are you from?";
+		next;
+		select("Merito told me to visit you.");
+		mes "[Karacas]";
+		mes "I see, give me a moment.";
+		mes "The list... has already arrived.";
+		next;
+		mes "[Karacas]";
+		mes "So, you are [" + strcharinfo(0) + "]... right?";
+		next;
+		if(select("Yes, I am.:No, I'm not!") == 2) {
+			mes "[Karacas]";
+			mes "Oh, there must be some mistake in the list, I think. Will you come again later?";
+			close;
+		}
+		mes "[Karacas]";
+		mes "Before you take the Sorcerer test, let me give you the basic information.";
+		next;
+		mes "[Karacas]";
+		mes "The way to get a Sorcerer registration ticket is really simple. You just need to go and find one of each spirit scattered around the world, and then convert their power into the shape of a certain material.";
+		next;
+		mes "[Karacas]";
+		mes "Sounds easy, right?";
+		next;
+		select("Ahh... sir. Is that really possible?");
+		mes "[Karacas]";
+		mes "Well, it is impossible to meet every spirit by yourself. You need to train yourself very hard to give a shape to the spirits and see them clearly through your eyes.";
+		next;
+		mes "[Karacas]";
+		mes "So, usually we perform a certain ceremony parade toward the place where we can feel the spirits.";
+		next;
+		mes "[Karacas]";
+		mes "I will tell you how to do that. So listen carefully.";
+		next;
+		mes "[Karacas]";
+		mes "Usually we cannot see the spirits with our eyes but there is a way to realize the part of the spirits through a special medium.";
+		next;
+		mes "[Karacas]";
+		mes "For example, if you visit the place where the spirit of wind stays with a certain amount of Wind of Verdure, the reaction of the spirit is amplified.";
+		next;
+		mes "[Karacas]";
+		mes "Likewise, if you approach the place where the spirit of fire seems to stay while you have a certain amount of Red Blood, the spirit will show the adverse reaction.";
+		next;
+		mes "[Karacas]";
+		mes "Sorcerers use this basic principle, this is the essential knowledge that Sorcerers need to have to reach the spirits.";
+		next;
+		select("So communicating with spirits...");
+		mes "[Karacas]";
+		mes "Right~";
+		mes "This job is based on the power of spirits.";
+		next;
+		mes "[Karacas]";
+		mes "Hmm, but it might be hard for someone like you who's focused only on reading books...";
+		next;
+		mes "[Karacas]";
+		mes "First, you need to bring the following materials needed for the test.";
+		next;
+		mes "[Karacas]";
+		mes "3 Wind of Verdure.";
+		mes "3 Crystal Blue.";
+		mes "3 Red Blood.";
+		mes "3 Green Live.";
+		next;
+		mes "[Karacas]";
+		mes "When you bring these materials, I'll tell you the next step.";
+		set job_soc,3;
+		changequest 12096,12097;
+		close;
+	} else if (job_soc == 3) {
+		if (countitem(992) > 2 && countitem(991) > 2 && countitem(990) > 2 && countitem(993) > 2) {
+			mes "Oh, you have all the materials.";
+			next;
+			select("What should I do next?");
+			mes "[Karacas]";
+			mes "I'll tell you about it now. First, I'll tell you the places for the test. You better write them down.";
+			next;
+			mes "[Karacas]";
+			mes "1. 1st floor of Ice Cave";
+			mes "2. 1st floor of Thor Volcano Dungeon";
+			mes "3. 3rd floor of Mjolnir Dead Pit";
+			mes "4. 2nd floor of Kunlun Dungeon";
+			next;
+			mes "[Karacas]";
+			mes "We have set up the detecting poles in these 4 places so that ordinary people can communicate with the spirits.";
+			next;
+			mes "[Karacas]";
+			mes "Be aware that these detecting poles are activated only when you have more than the certain amount of property stones.";
+			next;
+			mes "[Karacas]";
+			mes "You need to prepare at least 3 small stones for each property. For example, you need Wind of Verdure, not Rough Wind.";
+			next;
+			select("So I need the property stones...");
+			mes "[Karacas]";
+			mes "Yes, you have quick wits!";
+			next;
+			mes "[Karacas]";
+			mes "Once you bring the stones to the poles, put them into the property decomposing machine which is attached to the pole. The detecting pole will be activated, and you can communicate with the spirit.";
+			next;
+			mes "[Karacas]";
+			mes "If you succeed, you can extract a part of the spirit as a reagent. If you fail, the property stone will break up.";
+			next;
+			mes "[Karacas]";
+			mes "Of course if you are lucky enough, if you fail, a Wind of Verdure can be changed into a Rough Wind... Well, that's not a common situation so let's leave that out of the discussion for now.";
+			next;
+			select("What if I run out of stones?");
+			mes "[Karacas]";
+			mes "Ahahaha... If you run out of property stones, you simply have to get more.";
+			next;
+			mes "[Karacas]";
+			mes "So people who have this test usually start with as many property stones as they can carry. The amount I told you to get is just the bare minimum.";
+			next;
+			mes "[Karacas]";
+			mes "If you are an advanced Sorcerer, you will be able to talk with spirits without going through this process again. But beginners need to use that kind of medium to talk with them.";
+			next;
+			select("So the reagent is...?");
+			mes "[Karacas]";
+			mes "We don't know which reagent is going to be made from the spirits. It differs by the state of spirits.";
+			next;
+			mes "[Karacas]";
+			mes "When you succeed in getting 3 different kinds of reagents, you can come back.";
+			next;
+			mes "[Karacas]";
+			mes "A reagent that one spirit makes won't be over 2 kinds so if you're going to make 3 kinds of reagents, I suggest you go around several places.";
+			next;
+			mes "[Karacas]";
+			mes "Have any questions?";
+			next;
+			if(select("No.:Please explain it again.") == 2) {
+				mes "[Karacas]";
+				mes "Haha, then can I have a cup of water for a minute? Please come and find me again later.";
+				next;
+			}
+			mes "[Karacas]";
+			mes "Then I'll write down the progress that I've summarized shortly. Wait...";
+			next;
+			mes "^000099You got a paper on which the way of communicating with spirits is written. For more information please open your quest window^000000.";
+			set job_soc,4;
+			changequest 12097,12098;
+			close;
+		}
+		mes "Before I let you know the progressing way, you'll need to bring some required material.";
+		next;
+		mes "[Karacas]";
+		mes "3 Wind of Verdure.";
+		mes "3 Crystal Blue.";
+		mes "3 Red Blood.";
+		mes "3 Green Live.";
+		next;
+		mes "[Karacas]";
+		mes "When you bring these basic things, I'll guide you to the next step.";
+		close;
+	} else if (job_soc == 4) {
+		if (countitem(6276) && countitem(6278) && countitem(6277)) {
+			mes "Wow~ your skill is good.";
+			mes "I thought you'd be overwhelmed by the spirits but you've managed to get the effective medicine!";
+			next;
+			select("Is this all I need to do?");
+			mes "[Karacas]";
+			mes "Well done. First, I will organize the miraculous medicine so please wait a moment.";
+			delitem 6276,1; //Clear_Reagent
+			delitem 6278,1; //Black_Reagent
+			delitem 6277,1; //Red_Reagent
+			set job_soc,5;
+			completequest 12098;
+			close;
+		}
+		mes "It's not an easy thing to get the desired effect by communicating with spirits.";
+		next;
+		mes "[Karacas]";
+		mes "Don't give up and keep on trying~";
+		close;
+	} else if (job_soc == 5) {
+		mes "Originally my teacher needs to check the Sorcerer job change but after he went out to find the spirit of fish, I can't see him. So I'll check it myself.";
+		next;
+		mes "[Karacas]";
+		mes "Dear [" + strcharinfo(0) + "],";
+		mes "you went around the rough wilds to open the door as a Sorcerer and passed all the requirements that our Academy has given.";
+		next;
+		mes "[Karacas]";
+		mes "Of course it is just a beginning, we don't know which spirit you're going to commune with or what kind of hardships await you.";
+		next;
+		mes "[Karacas]";
+		mes "But with the ability you've shown until now, you will be capable to do anything from now on. Dear [" + strcharinfo(0) + "]";
+		next;
+		mes "[Kalakas]";
+		if (BaseLevel < 99 || JobLevel < 50 || SkillPoint) {
+			mes "Before I appointed you the need job, please check on your own body status. ";
+			next;
+			mes "[Kalakas]";
+			mes "You must have the etiquette of your job now before you accept the new job! ";
+			close;
+		}
+		if (ismounting()) {
+			mes "Good, before we get started...";
+			mes "Please unequip your riding pet~";
+			close;
+		}
+		mes "Moreover, I formally acknowledge that you've completed all the job transfer tests of the Sorcerer Academy.";
+		next;
+		mes "[Karacas]";
+		mes "Congratulations, [" + strcharinfo(0) + "]";
+		jobchange roclass(eaclass()|EAJL_THIRD);
+		getitem 5756,1; //Wind_Whisper
+		getitem 2795,1; //Green_Apple_Ring
+		next;
+		mes "[Karacas]";
+		mes "I hope that you gain more communion with spirits from now on.";
+		close;
+	}
+}
+-	script	Spirit Detecting Staff#0	-1,{
+
+	if (strnpcinfo(4) == "thor_v01") setarray .@id[0],990,994,6276,6278;
+	else if (strnpcinfo(4) == "ice_dun01") setarray .@id[0],991,995,6278,6276;
+	else if (strnpcinfo(4) == "mjo_dun03") setarray .@id[0],993,997,6277,6276;
+	else if (strnpcinfo(4) == "gon_dun02") setarray .@id[0],992,996,6277,6278;
+
+	if (job_soc == 4 && countitem(.@id[0]) > 2) {
+		progressbar "ffff00",5;
+		delitem .@id[0],3; //Boody_Red,Crystal_Blue,Yellow_Live,Wind_Of_Verdure
+		set .@soc_ran, rand(1,70);
+		if (.@soc_ran < 10) {
+			if (countitem(.@id[2]) == 0) {
+				mes "You got a reagent by communicating with an unseen spirit.";
+				getitem .@id[2],1; //Clear_Reagent,Black_Reagent,Red_Reagent
+				close;
+			}
+			mes "It doesn't seem like you got anything special from the spirits.";
+			close;
+		} else if (.@soc_ran > 9 && .@soc_ran < 16) {
+			if (countitem(.@id[3]) == 0) {
+				mes "You got a reagent by communicating with an unseen spirit.";
+				getitem .@id[3],1; //Clear_Reagent,Black_Reagent,Red_Reagent
+				close;
+			}
+			mes "It doesn't seem like you got anything special from the spirits.";
+			close;
+		} else if (.@soc_ran == 56) {
+			mes "The spirit combined the property stones into a huge property stone.";
+			getitem .@id[1],1; //Flame_Heart,Mistic_Frozen,Great_Nature,Rough_Wind
+			close;
+		} else {
+			mes "You used the property stones but it looks like you failed to communicate with the spirits.";
+			close;
+		}
+	}
+	mes "I can see the detecting staff that's been installed by the Sorcerer Union to communicate with the spirits.";
+	if (job_soc == 4 && countitem(.@id[0]) < 3) {
+		next;
+		mes "If you have the suitable property stones, you should be able to commune with the spirits.";
+	}
+	close;
+}
+thor_v01,64,252,0	duplicate(Spirit Detecting Staff#0)	Spirit Detecting Staff#1	836
+ice_dun01,274,274,0	duplicate(Spirit Detecting Staff#0)	Spirit Detecting Staff#2	836
+mjo_dun03,200,141,0	duplicate(Spirit Detecting Staff#0)	Spirit Detecting Staff#3	836
+gon_dun02,195,190,0	duplicate(Spirit Detecting Staff#0)	Spirit Detecting Staff#4	836

@@ -1,0 +1,632 @@
+//===== rAthena Script =======================================
+//= Clan masters
+//===== Description: =========================================
+//= The clan master NPCs that allow you to join and leave
+//= one of the clans.
+//===== Changelogs: ==========================================
+//= 1.0 Initial release. [Lemongrass]
+//= 1.1 iRO translation. [RagnarokNova]
+//= 1.2 Dialogue cleanup. [Aleos]
+//= 1.3 Added clan helper. [exneval]
+//============================================================
+
+prontera,138,183,7	script	Clan Helper	703,{
+	mes "[Clan Helper]";
+	mes "เจ้าอยากสร้างปฏิสัมพันธ์กับผู้คนไหม ?";
+	next;
+	mes "[Clan Helper]";
+	mes "เจ้ามองหากิลด์ดีๆอยู่ใช่ไหม ?";
+	next;
+	mes "[Clan Helper]";
+	mes "เจ้าสามารถเข้าร่วมหรือออกจากแคลนได้อย่างอิสระ!";
+	next;
+	mes "[Clan Helper]";
+	mes "ดังนั้นแล้ว, ไม่มาร่วมเป็นส่วนหนึ่งในแคลนของอาณาจักรละ!";
+	close;
+}
+
+prt_in,33,114,5	script	Raffam Oranpere	10058,{
+	cutin "laperm01.bmp", 2;
+	mes "[Raffam Oranpere]";
+	mes "หวัดดี! ข้าชื่อ Raffam, เป็นมาสเตอร์ของ ^3131FFSword Clan^000000 แห่งอาณาจักร Rune-Midgard.";
+	next;
+	switch( select( "รายละเอียดแคลน:เข้าร่วม.:ออก." ) ){
+		case 1:
+			switch( select( "แคลนคืออะไร ?:เกี่ยวกับ Sword Clan:ยกเลิก." ) ){
+				case 1:
+					mes "[Raffam Oranpere]";
+					mes "^3131FFClans^000000 คือกิลด์รูปแบบหนึ่งของอาณาจักร.";
+					mes "พวกเขาไม่ได้มีส่วนร่วมในการบุกโจมตีปราสาท, ดังนั้นสมาชิกจึงมีอิสระในการเข้าหรือออกแคลน.";
+					next;
+					mes "[Raffam Oranpere]";
+					mes "ข้าหวังว่าพวกเราคงมีโอกาสทำสงครามน่ะ. ข้าชอบที่จะบินไปกับมังกรของข้าและเผาทุกคนที่ขวางทาง!";
+					mes "อุปส์, มันดูน่ากลัวเนอะ!";
+					next;
+					mes "[Raffam Oranpere]";
+					mes "เข้าร่วมกับข้าสิ, ถ้าเจ้ายังไม่มีแคลน.";
+					mes "สมาชิกใหม่จะได้รับ ^3131FFโบนัสสเตตัส^000000.";
+					next;
+					mes "[Raffam Oranpere]";
+					mes "ถ้าชอบโจมตีใกล้ขอแนะนำ ^3131FFSword Clan^000000 เป็นที่ขึ้นชื่อเลย, แต่ไม่ใช่ว่าทุกคนจะเป็นสายโจมตีใกล้หรอกน่ะ.";
+					mes "อย่ากดดันตัวเอง, ลองดูก่อนได้!";
+					next;
+					cutin "laperm02.bmp", 2;
+					mes "[Raffam Oranpere]";
+					mes "ลองสร้างความแตกต่างดูมันอาจสนุกขึ้นได้.";
+					mes "ไม่มีใครเบื่อข้าเลยเมื่ออยู่ในปาร์ตี้.";
+					next;
+					mes "[Raffam Oranpere]";
+					mes "ใครจะไปรู้เจ้าอาจเจอเนื้อคู่ในแคลนก็ได้ ? 5555!";
+					break;
+				case 2:
+					mes "[Raffam Oranpere]";
+					mes "^3131FFSword Clan^000000 สนับสนุนนักผจญภัยสายโจมตีใกล้ซะส่วนใหญ่.";
+					mes "เมื่อเข้าร่วมจะได้รับ ^FF0000<STR+1, VIT+1, MHP+30, MSP+10>^000000!";
+					next;
+					mes "[Raffam Oranpere]";
+					mes "จำเอาไว้, ไม่มีสงครามชิงปราสาท.";
+					mes "เจ้าต้องเข้ากิลด์ถ้าอยากทำสงคราม.";
+					next;
+					mes "[Raffam Oranpere]";
+					mes "มีคำถามอีกไหม ?";
+					mes "ตื่นเต้นที่จะเข้าร่วมไหม ? 5555!";
+					break;
+				case 3:
+					break;
+			}			
+			break;
+		case 2:
+			mes "[Raffam Oranpere]";
+			mes "โอ้, เจ้าจะเข้าร่วมหรอ ? ตัดสินใจได้ดี!";
+			mes "มาเริ่มขั้นตอนการเข้าแคลนดีกว่า.";
+			next;
+			mes "[Raffam Oranpere]";
+			mes "^3131FFสมาชิกแคลน^000000 ไม่สามารถทำสงครามชิงปราสาทได้.";
+			mes "สมาชิกใหม่จะได้รับค่าโบนัส: ^FF0000<STR+1, VIT+1, MHP+30, MSP+10>^000000.";
+			mes "ต่อไหม ?";
+			next;
+			if( select( "ต่อ.:ไม่." ) == 1 ){
+				mes "[Raffam Oranpere]";
+				mes "เจ้าสามารถเข้าหรือออกจากแคลนได้ตลอดเวลา, แต่ถ้าเจ้าไม่ได้เข้าเกม ^FF0000เกินกว่า 2 สัปดาห์^000000, เจ้าจะถูก ^FF0000ไล่ออก^000000.";
+				mes "โดยที่มาสเตอร์ไม่จำเป็นต้องบอกเหตุผล.";
+				mes "เข้าใจไหม ?";
+				next;
+				if( select( "เข้าใจ.:ไม่เข้าใจ." ) == 1 ){
+					mes "[Raffam Oranpere]";
+					mes "เยี่ยม, ลงทะเบียนชื่อของเจ้า.";
+					next;
+					input .@name$;
+					mes "[Raffam Oranpere]";
+					mes "เจ้าคือ ^3131FF" + strcharinfo( 0 ) + "^000000! เป็นชื่อที่ดี!";
+					mes "ข้าจะเริ่มสมัครให้เจ้าเอง.";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Raffam Oranpere]";
+						mes "กลับมาใหม่เมื่อออกจากกิลด์แล้ว.";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						cutin "laperm04.bmp", 2;
+						mes "[Raffam Oranpere]";
+						mes "เอ๋ ? เจ้ามีแคลนอยู่แล้ว.";
+						mes "อย่ามาหลอกข้าซะให้ยาก!";
+					}else{
+						cutin "laperm02.bmp", 2;
+						if (clan_join(SWORDCLAN)) {
+							sc_start2 SC_SWORDCLAN, INFINITE_TICK, 0, SWORDCLAN;
+							mes "[Raffam Oranpere]";
+							mes "ยินดีต้อนรับสู่ ^3131FFSword Clan^000000!";
+							mes "เจ้าสามารถดูรายละเอียดแคลนได้โดยกด ^3131FFCtrl+G^000000.";
+							mes "ยินดีที่ให้บริการ!";
+						} else
+							mes "มีข้อผิดพลาดบางอย่าง.";
+					}
+				}else{
+					mes "[Raffam Oranpere]";
+					mes "โอ้, ม่าย. กลับไปเริ่มใหม่.";
+				}
+			}else{
+				cutin "laperm03.bmp", 2;
+				mes "[Raffam Oranpere]";
+				mes "โอ้, ม่าย. กลับไปเริ่มใหม่.";
+			}
+			break;
+		case 3:
+			cutin "laperm01.bmp", 2;
+			mes "[Raffam Oranpere]";
+			mes "เจ้าอยากจะออก ?";
+			mes "ไม่มีปัญหา. ข้าหวังว่าเจ้าจะเจอแคลนที่ถูกใจน่ะ.";
+			mes "พร้อมรึยัง ?";
+			next;
+			if( select( "พร้อม.:ยกเลิก." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					cutin "laperm04.bmp", 2;
+					mes "[Raffam Oranpere]";
+					mes "ประเดี๋ยวก่อน, เจ้าไม่มีแคลนนิ! ก๊าซ, เดี๋ยวข้าก็เผาเจ้าซะหรอก!";
+				}else if( getcharid( 5 ) != SWORDCLAN ){
+					cutin "laperm04.bmp", 2;
+					mes "[Raffam Oranpere]";
+					mes "เฮ้, ไปคุยกับมาสเตอร์แคลนของเจ้าถ้าเจ้าอยากจะออก.";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_SWORDCLAN;
+						mes "[Raffam Oranpere]";
+						mes "Okay, เรียบร้อย.";
+						mes "ขอให้เจอแต่สิ่งที่ดีๆน่ะ!";
+					} else
+						mes "มีข้อผิดพลาดบางอย่าง.";
+				}
+			}
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_SWORDCLAN, INFINITE_TICK, 0, SWORDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}
+
+prt_in,35,114,5	script	Devon Aire	10059,{
+	cutin "debon01.bmp", 2;
+	mes "[Devon Aire]";
+	mes "ข้าชื่อ Devon, เป็นมาสเตอร์ของ ^3131FFArc Wand Clan^000000.";
+	next;
+	switch( select( "รายละเอียดแคลน:เข้าร่วม.:ออก." ) ){
+		case 1:
+			switch( select( "แคลนคืออะไร?:เกี่ยวกับ Arc Wand Clan:ยกเลิก." ) ){
+				case 1:
+					mes "[Devon Aire]";
+					mes "^3131FFClans^000000 คือกิลด์รูปแบบหนึ่งของอาณาจักร, ไม่เหมือนกับกิลด์ทั่วไป.";
+					mes "และข้าก็เป็นส่วนหนึ่งในนั้น.";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Devon Aire]";
+					mes "...";
+					mes "มองอะไร ? เจ้ามีปัญหาหรอ ?";
+					next;
+					cutin "birman01.bmp", 2;
+					mes "[Berman Aire]";
+					mes "พี่ชาย, ท่านกำลังทำให้เค้ากลัว, ใจดีเข้าไว้.";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Devon Aire]";
+					mes "...";
+					next;
+					cutin "debon01.bmp", 2;
+					mes "[Devon Aire]";
+					mes "เข้าร่วมกับข้าสิถ้าเจ้ากำลังมองหาสถานที่ฝึกฝน. พวกเราจะให้ ^3131FFค่าโบนัสฟรี^000000. แต่ไม่มีสงครามชิงปราสาทน่ะ.";
+					next;
+					mes "[Devon Aire]";
+					mes "ขอแนะนำ ^3131FFArc Wand Clan^000000 ซึ่งสมาชิกส่วนมากจะเป็นสายนักเวทย์, แต่ก็ไม่ทุกคน.";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Devon Aire]";
+					mes "...เฮ้, Shaam Rumi.";
+					mes "หยุดตีน้องชายข้าแล้วไปทำงานไป๊.";
+					next;
+					cutin "sham03.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "อาราย!";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Devon Aire]";
+					mes "...ชิ!";
+					mes "ฟังน่ะ, มาสเตอร์ของ Crossbow Clan คือปิศาจ.";
+					next;
+					cutin "sham02.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "ก็ได้ๆ, Devon! หยุดกระจายข่าวลือสักที!";
+					next;
+					cutin "birman01.bmp", 2;
+					mes "[Berman Aire]";
+					mes "555. ก็หยุดทั้งคู่นั่นแหละ.";
+					mes "กลับไปทำงานได้แล้ว.";
+					break;
+				case 2:
+					cutin "debon01.bmp", 2;
+					mes "[Devon Aire]";
+					mes "^3131FFArc Wand Clan^000000 สนับสนุนนักเวทย์.";
+					mes "สมาชิกใหม่จะได้รับ ^FF0000<INT+1, DEX+1, MHP+30, MSP+10>^000000. อย่าถามมากกว่านี้; มันเป็นกฎของอาณาจักร.";
+					next;
+					mes "[Devon Aire]";
+					mes "^3131FFสมาชิกแคลน^000000 ไม่สามารถทำสงครามชิงปราสาทได้.";
+					mes "ถ้าเจ้าชื่นชอบสงคราม, ให้เข้ากิลด์แทน.";
+					next;
+					mes "[Devon Aire]";
+					mes "หมดแล้ว. ไม่มีคำถามนะ.";
+					break;
+				case 3:
+					break;
+			}
+			break;
+		case 2:
+			cutin "debon01.bmp", 2;
+			mes "[Devon Aire]";
+			mes "...";
+			mes "มาเริ่มขั้นตอนการเข้าแคลนดีกว่า.";
+			next;
+			mes "[Devon Aire]";
+			mes "^3131FFสมาชิกแคลน^000000 ไม่สามารถทำสงครามชิงปราสาทได้.";
+			mes "สมาชิกใหม่จะได้รับค่าโบนัส: ^FF0000<INT+1, DEX+1, MHP+30, MSP+10>^000000.";
+			mes "ต่อไหม ?";
+			next;
+			if( select( "ต่อ.:ไม่." ) == 1 ){
+				mes "[Devon Aire]";
+				mes "เจ้าสามารถเข้าหรือออกจากแคลนได้ตลอดเวลา, แต่ถ้าเจ้าไม่ได้เข้าเกม ^FF0000เกินกว่า 2 สัปดาห์^000000, เจ้าจะถูก ^FF0000ไล่ออก^000000.";
+				mes "ตกลงไหม ?";
+				next;
+				if( select( "ตกลง.:ไม่." ) == 1 ){
+					mes "[Devon Aire]";
+					mes "เขียนชื่อของเจ้า.";
+					next;
+					input .@name$;
+					mes "[Devon Aire]";
+					mes "^3131FF" + strcharinfo( 0 ) + "^000000.....";
+					mes "เยี่ยม, ข้าจะเริ่มชวนเจ้าเอง.";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Devon Aire]";
+						mes "ออกจากกิลด์ก่อนเข้าแคลน, ย่าห์.";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						cutin "debon03.bmp", 2;
+						mes "[Devon Aire]";
+						mes "เจ้าอยู่ในแคลนแล้ว. ตลกละ?!";
+						mes "เห็นข้าสนุกหรอ, --FIRE PILLAR!";
+					}else{
+						if (clan_join(ARCWANDCLAN)) {
+							sc_start2 SC_ARCWANDCLAN, INFINITE_TICK, 0, ARCWANDCLAN;
+							mes "[Devon Aire]";
+							mes "เจ้าได้เข้าร่วม ^3131FFArc Wand Clan^000000 แล้ว.";
+							next;
+							mes "[Devon Aire]";
+							mes "เจ้าสามารถดูรายละเอียดแคลนได้โดยกด ^3131FFCtrl+G^000000.";
+							mes "ดังนั้นแล้วอย่ามาถามข้า.";
+							next;
+							mes "[Devon Aire]";
+							mes "เสร็จสักที. อย่าลืมเข้ามาเล่นบ่อยๆล่ะ.";
+						} else
+							mes "มีข้อผิดพลาดบางอย่าง.";
+					}
+				}else{
+					mes "[Devon Aire]";
+					mes "ข้าไม่ต้องการเจ้า.";
+				}
+			}else{
+				mes "[Devon Aire]";
+				mes "กรอด, ลองกลับไปฟังอีกครั้ง.";
+			}
+			break;
+		case 3:
+			mes "[Devon Aire]";
+			mes "อยากจะออก, หือ ?";
+			mes "ข้าเข้าใจแล้ว, เพราะสงครามใช่ไหม. หรือไม่ใช่, แล้วงั้น..ทำไมละ..";
+			mes "ข้าจะดำเนินการให้เจ้า.";
+			next;
+			if( select( "ตกลง.:ยกเลิก." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					cutin "debon03.bmp", 2;
+					mes "[Devon Aire]";
+					mes "เด็กๆช่วยมายิง Jupitel Thunder ที.";
+				}else if( getcharid( 5 ) != ARCWANDCLAN ){
+					cutin "debon02.bmp", 2;
+					mes "[Devon Aire]";
+					mes "เจ้ามาผิดที่แล้ว. ไปหามาสเตอร์แคลนของเจ้าซะ.";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_ARCWANDCLAN;
+						mes "[Devon Aire]";
+						mes "เจ้าได้ออกจากแคลนแล้ว.";
+						mes "ข้าไม่รู้สึกเสียใจหรอกน่ะ.";
+					} else
+						mes "มีข้อผิดพลาดบางอย่าง.";
+				}
+			}				
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_ARCWANDCLAN, INFINITE_TICK, 0, ARCWANDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}
+
+prt_in,37,114,5	script	Berman Aire	10060,{
+	cutin "birman01.bmp", 2;
+	mes "[Berman Aire]";
+	mes "ยินดีที่ได้พบ. ข้าชื่อ Berman Aire, เป็นมาสเตอร์ของ ^3131FFGolden Mace Clan^000000.";
+	mes "ข้ามีพี่ชายคือ Devon Aire. Devon อาจดูเข้าถึงยาก, แต่เขาก็ใจดีน่ะ.";
+	next;
+	switch( select( "รายละเอียดแคลน:เข้าร่วม.:ออก." ) ){
+		case 1:
+			switch( select( "แคลนคืออะไร ?:เกี่ยวกับ Golden Mace Clan:ยกเลิก." ) ){
+				case 1:
+					mes "[Berman Aire]";
+					mes "^3131FFClans^000000 คือที่รวบรวมเหล่านักผจญภัยของอาณาจักรไว้คอยช่วยเหลือกันและกัน.";
+					next;
+					mes "[Berman Aire]";
+					mes "เพราะแคลนเป็นส่วนหนึ่งของอาณาจักร, จึงไม่มีสงครามชิงปราสาท, แต่เหล่าสมาชิกจะได้รับ ^3131FFค่าโบนัสแทน^000000.";
+					mes "แม้จะให้น้อย, แต่มันก็ช่วยนักผจญภัยได้.";
+					next;
+					mes "[Berman Aire]";
+					mes "พวกเรามีชื่อว่า ^3131FFGolden Mace Clan^000000, แต่พวกเราไม่เลือกปฏิบัติต่อสายอาชีพอื่นๆน่ะ.";
+					mes "ชื่อมันจะช่วยเจ้าแยกแยะแคลนออก.";
+					next;
+					cutin "sham02.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "Berman, เจ้ามีแพลนอะไรไหม. อยากจะไป Glast Heim กับข้าเปล่า.";
+					next;
+					cutin "debon03.bmp", 2;
+					mes "[Devon Aire]";
+					mes "... เห้ย.";
+					next;
+					cutin "sham03.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "โอ้ย, เจ้าทำข้ากลัวน่ะ.";
+					mes "Berman, ค่อยคุยกันใหม่!~";
+					next;
+					cutin "birman03.bmp", 2;
+					mes "[Berman Aire]";
+					mes "ฮา ฮ่า, ข้าขอโทษแทนพี่ชายข้าด้วย.";
+					next;
+					cutin "birman01.bmp", 2;
+					mes "[Berman Aire]";
+					mes "เจ้ามีคำถามอะไรอีกไหม ?";
+					mes "ถ้าเจ้าอยากลุยเดี่ยว, มาสิ! เจ้าสามารถเข้าหรือออกจากแคลนได้ตลอดเวลาที่เจ้าต้องการ.";
+					break;
+				case 2:
+					mes "[Berman Aire]";
+					mes "^3131FFGolden Mace Clan^000000 สนับสนุนทุกสายอาชีพ.";
+					mes "พวกเราจะให้ ^FF0000<INT+1, LUK+1, MHP+30, MSP+10>^000000 สำหรับสมาชิกใหม่.";
+					next;
+					mes "[Berman Aire]";
+					mes "ข้าจะเตือนเจ้า, แคลนไม่สามารถเข้าร่วมสงครามชิงปราสาทได้เพราะว่าเป็นส่วนหนึ่งของอาณาจักร.";
+					mes "ถ้าเจ้าอยากจะทำสงคราม, ข้าขอแนะนำให้เจ้าเข้ากิลด์.";
+					next;
+					mes "[Berman Aire]";
+					mes "เจ้าเข้าใจแล้วรึยัง ?";
+					break;
+				case 3:
+					break;
+			}
+			break;
+		case 2:
+			mes "[Berman Aire]";
+			mes "เยี่ยม!";
+			mes "มาเริ่มขั้นตอนการเข้าแคลนดีกว่า.";
+			next;
+			mes "[Berman Aire]";
+			mes "^3131FFสมาชิกแคลน^000000 ไม่สามารถทำสงครามชิงปราสาทได้.";
+			mes "สำหรับสมาชิกใหม่จะได้รับโบนัส: ^FF0000<INT+1, LUK+1, MHP+30, MSP+10>^000000.";
+			mes "เจ้าตกลงไหม ?";
+			next;
+			if( select( "ตกลง.:ไม่." ) == 1 ){
+				mes "[Berman Aire]";
+				mes "เจ้าสามารถเข้าหรือออกจากแคลนได้ตลอดเวลา, แต่ถ้าเจ้าไม่ได้เข้าเกม ^FF0000เกินกว่า 2 สัปดาห์^000000, เจ้าจะถูก ^FF0000ไล่ออก^000000.";
+				mes "เจ้ายอมรับได้ไหม ?";
+				next;
+				if( select( "ได้.:ไม่." ) == 1 ){
+					mes "[Berman Aire]";
+					mes "ตอนนี้, โปรดเขียนชื่อของเจ้า.";
+					next;
+					input .@name$;
+					mes "[Berman Aire]";
+					mes "^3131FF" + strcharinfo( 0 ) + "^000000! เป็นชื่อที่ดี!";
+					mes "Okay, ต่อไปก็...";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Berman Aire]";
+						mes "โอ้, ม่าย.";
+						mes "เจ้าต้องออกจากกิลด์ก่อน.";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						mes "[Berman Aire]";
+						mes "เจ้ามีแคลนอยู่แล้ว.";
+						mes "เจ้าอย่าสับสนสิ, เข้าใจ ?";
+					}else{
+						if (clan_join(GOLDENMACECLAN)) {
+							sc_start2 SC_GOLDENMACECLAN, INFINITE_TICK, 0, GOLDENMACECLAN;
+							cutin "birman02.bmp", 2;
+							mes "[Berman Aire]";
+							mes "ยินดีต้อนรับสู่ ^3131FFGolden Mace Clan^000000!";
+							next;
+							mes "[Berman Aire]";
+							mes "เจ้าสามารถดูรายละเอียดแคลนได้โดยกด ^3131FFCtrl+G^000000.";
+							next;
+							mes "[Berman Aire]";
+							mes "อย่าลืมเข้ามาเล่นบ่อยๆล่ะ!";
+						} else
+							mes "มีข้อผิดพลาดบางอย่าง.";
+					}
+				}
+			}
+			break;
+		case 3:
+			mes "[Berman Aire]";
+			mes "ยินดีที่ได้พบกันอีก.";
+			mes "ข้าหวังว่าเจ้าจะสนุกตอนที่อยู่ใน ^3131FFGolden Mace Clan^000000.";
+			mes "เอาล่ะ, เจ้าพร้อมที่จะออกยัง ?";
+			next;
+			if( select( "พร้อม.:ยกเลิก." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					mes "[Berman Aire]";
+					mes "เจ้าไม่มีแคลนตั้งแต่แรก.";
+				}else if( getcharid( 5 ) != GOLDENMACECLAN ){
+					mes "[Berman Aire]";
+					mes "ข้าขอโทษ, ข้าเอาเจ้าออกจากแคลนคนอื่นไม่ได้...";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_GOLDENMACECLAN;
+						mes "[Berman Aire]";
+						mes "เรียบร้อย.";
+						mes "กลับมาได้ตลอด ^3131FFGolden Mace Clan^000000. ยินดีต้อนรับ.";
+					} else
+						mes "มีข้อผิดพลาดบางอย่าง.";
+				}
+			}
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_GOLDENMACECLAN, INFINITE_TICK, 0, GOLDENMACECLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}
+
+prt_in,39,114,5	script	Shaam Rumi	10027,{
+	cutin "sham01.bmp", 2;
+	mes "[Shaam Rumi]";
+	mes "หวัดดี, ข้าชื่อ Shaam, เป็นมาสเตอร์ของ ^3131FFCrossbow Clan^000000";
+	mes "ข้าทำอะไรให้เจ้าได้บ้าง ?";
+	next;
+	switch( select( "รายละเอียดแคลน:เข้าร่วม.:ออก." ) ){
+		case 1:
+			switch( select( "แคลนคืออะไร ?:เกี่ยวกับ Crossbow Clan:ยกเลิก." ) ){
+				case 1:
+					mes "[Shaam Rumi]";
+					mes "แคลนเป็นส่วนหนึ่งของอาณาจักร Rune-Midgarts ...";
+					mes "Raffam, ^3131FFclans^000000 มีไว้ทำไม ?";
+					next;
+					cutin "laperm01.bmp", 2;
+					mes "[Raffam Oranpere]";
+					mes "เจ้าแอบหลับในห้องเรียนใช่ไหม ? กรอด.";
+					mes "แคลนมีไว้คอยช่วยเหลือนักผจญภัยด้วยกัน.";
+					next;
+					cutin "sham01.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "อา-หะ, ยอดเยี่ยม! ขอบใจมาก, หัวหน้า!";
+					mes "เจ้าได้ยินแล้วใช่ไหม ?";
+					next;
+					mes "[Shaam Rumi]";
+					mes "เพราะแคลนเป็นส่วนหนึ่งของอาณาจักร, ทำให้ไม่สามารถทำสงครามชิงปราสาทได้, แต่มีข่าวดีสมาชิกจะได้รับ ^3131FFค่าโบนัสฟรี^000000.";
+					next;
+					mes "[Shaam Rumi]";
+					mes "ในความเป็นจริง^3131FFCrossbow Clan^000000 สนับสนุนนักธนู, แต่ก็ไม่ใช่ทั้งหมด.";
+					mes "ทุกแคลนรองรับทุกสายอาชีพ. เจ้าสามารถเลือกแคลนที่ต้องการได้.";
+					next;
+					cutin "sham02.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "นั้นคือทั้งหมดที่ข้ารู้.";
+					mes "Berman, อยากจะไป Glast Heim ไหม.";
+					next;
+					cutin "debon03.bmp", 2;
+					mes "[Devon Aire]";
+					mes "เจ้า...";
+					next;
+					cutin "sham03.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "โอ้ย, น่ากลัว! ปกป้องข้าจากพี่ชายเจ้าที.";
+					break;
+				case 2:
+					mes "[Shaam Rumi]";
+					mes "^3131FFCrossbow Clan^000000 สนับสนุนสายโจมตีไกล.";
+					next;
+					mes "[Shaam Rumi]";
+					mes "โดยสมาชิกใหม่จะได้รับค่าโบนัส: ^FF0000<DEX+1, AGI+1, MHP+30, MSP+10>^000000.";
+					next;
+					mes "[Shaam Rumi]";
+					mes "แคลนไม่สามารถเข้าร่วมสงครามชิงปราสาทได้; เจ้าต้องเข้ากิลด์ถ้าอยากทำสงคราม.";
+					mes "แคลนมีไว้สำหรับนักผจญภัยที่เกลียดสงคราม.";
+					next;
+					mes "[Shaam Rumi]";
+					mes "เจ้ามีคำถามอะไรอีกไหม ?";
+					break;
+				case 3:
+					break;
+			}
+			break;
+		case 2:
+			mes "[Shaam Rumi]";
+			mes "โอ้, เย้ ? ตัดสินใจได้ดี!";
+			mes "มาเริ่มขั้นตอนการเข้าแคลนดีกว่า.";
+			next;
+			mes "[Shaam Rumi]";
+			mes "^3131FFสมาชิกแคลน^000000 ไม่สามารถทำสงครามชิงปราสาทได้.";
+			mes "สำหรับสมาชิกใหม่จะได้รับโบนัส: ^FF0000<DEX+1, AGI+1, MHP+30, MSP+10>^000000.";
+			mes "เจ้าตกลงไหม ?";
+			next;
+			if( select( "ตกลง.:ไม่." ) == 1 ){
+				mes "[Shaam Rumi]";
+				mes "เจ้าสามารถเข้าหรือออกจากแคลนได้ตลอดเวลา, แต่ถ้าเจ้าไม่ได้เข้าเกม ^FF0000เกินกว่า 2 สัปดาห์^000000, เจ้าจะถูก ^FF0000ไล่ออก^000000.";
+				mes "เจ้าเห็นด้วยรึไม่ ?";
+				next;
+				if( select( "เห็นด้วย.:ไม่." ) == 1 ){
+					mes "[Shaam Rumi]";
+					mes "เยี่ยม, เขียนชื่อของเจ้าตรงนี้.";
+					next;
+					input .@name$;
+					mes "[Shaam Rumi]";
+					mes "^3131FF" + strcharinfo( 0 ) + "^000000..!";
+					mes "อั๊กส์, ลายมือแย่จริงๆ. ข้าจะเริ่มสมัครให้เจ้าเอง.";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Shaam Rumi]";
+						mes "เจ้ามีกิลด์อยู่แล้ว ?";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						mes "[Shaam Rumi]";
+						mes "เอ๋, เจ้ามีแคลนอยู่แล้ว. เฮ้, มันไม่ตลกน่ะ.";
+					}else{
+						if (clan_join(CROSSBOWCLAN)) {
+							sc_start2 SC_CROSSBOWCLAN, INFINITE_TICK, 0, CROSSBOWCLAN;
+							cutin "sham02.bmp", 2;
+							mes "[Shaam Rumi]";
+							mes "ยินดีต้อนรับสู่ ^3131FFCrossbow Clan^000000!";
+							next;
+							cutin "sham01.bmp", 2;
+							mes "[Shaam Rumi]";
+							mes "เจ้าสามารถดูรายละเอียดแคลนได้โดยกด ^3131FFCtrl+G^000000.";
+							next;
+							mes "[Shaam Rumi]";
+							mes "อย่าทะเลาะกับสมาชิกกันเองล่ะ.";
+							mes "ถ้าเจ้าต้องการความช่วยเหลือ, ให้กระซิบหาข้า, okay? ถ้าข้าตอบล่ะน่ะ!";
+						} else
+							mes "มีข้อผิดพลาดบางอย่าง.";
+					}
+				}else{
+					mes "[Shaam Rumi]";
+					mes "ยอดเยี่ยม. ข้าว่าข้าจะไปหาอะไรสนุกๆทำ.";
+				}
+			}else{
+				mes "[Shaam Rumi]";
+				mes "อ่าห์, เจ้าอยากได้เวลาคิด ? ไม่มีปัญหา.";
+			}
+			break;
+		case 3:
+			mes "[Shaam Rumi]";
+			mes "ทำไม, เจ้าเห็นแคลนอื่นดีกว่ารึ ?";
+			mes "ข้าเสียใจน่ะ, แต่ข้าก็จะดำเนินการให้.";
+			next;
+			if( select( "ต่อเลย.:ยกเลิก." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					cutin "sham04.bmp", 2;
+					mes "[Shaam Rumi]";
+					mes "ข้าเอาเจ้าออกจากแคลนไม่ได้--เพราะเจ้าไม่มีแคลน!";
+				}else if( getcharid( 5 ) != CROSSBOWCLAN ){
+					mes "[Shaam Rumi]";
+					mes "ขอโทษด้วย, ข้ายุ่งเกี่ยวกับแคลนคนอื่นไม่ได้มันเป็นธุรกิจ.";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_CROSSBOWCLAN;
+						mes "[Shaam Rumi]";
+						mes "เรียบร้อย.";
+						mes "ถ้าเจ้าอยากเจอพวกข้า, อย่าลืมกลับมาหา, เข้าใจ ?";
+					} else
+						mes "มีข้อผิดพลาดบางอย่าง.";
+				}
+			}
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_CROSSBOWCLAN, INFINITE_TICK, 0, CROSSBOWCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}

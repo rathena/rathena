@@ -1,0 +1,243 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Acorns)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+mjolnir_01,293,20,3	script	Nutters#Coco_Hunt	779,{
+	if (checkquest(60113) != -1) {
+		if (checkquest(60113,HUNTING) != 2 ) {
+			mes "[Nutters]";
+			mes "Have you finished hunting the 50 Cocos?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Nutters]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Nutters]";
+				mes "Remember, I need help hunting Cocos so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Nutters]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Nutters]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60113;
+					close;
+				case 2:
+					mes "[Nutters]";
+					mes "Please kill 50 Cocos.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Nutters]";
+			mes "Amazing, you did that with speed.";
+			getexp 3600,3905;
+			erasequest 60113;
+			close;
+		}
+	}
+	if (checkquest(60114) != -1) {
+		if (checkquest(60114,HUNTING) != 2 ) {
+			mes "[Nutters]";
+			mes "Have you finished hunting the 50 Cocos?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Nutters]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Nutters]";
+				mes "Remember, I need help hunting Cocos so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Nutters]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Nutters]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60114;
+					close;
+				case 2:
+					mes "[Nutters]";
+					mes "Please kill 100 Cocos.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Nutters]";
+			mes "Amazing, you did that with speed.";
+			getexp 3600,3905;
+			getexp 3600,3905;
+			erasequest 60114;
+			close;
+		}
+	}
+	if (checkquest(60115) != -1) {
+		if (checkquest(60115,HUNTING) != 2 ) {
+			mes "[Nutters]";
+			mes "Have you finished hunting the 150 Cocos?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Nutters]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Nutters]";
+				mes "Remember, I need help hunting Cocos so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Nutters]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Nutters]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60115;
+					close;
+				case 2:
+					mes "[Nutters]";
+					mes "Please kill 150 Cocos.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Nutters]";
+			mes "Amazing, you did that with speed.";
+			getexp 3600,3905;
+			getexp 3600,3905;
+			getexp 3600,3905;
+			erasequest 60115;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 17) {
+		//for maximum level
+		if (BaseLevel < 60) {
+			mes "[Nutters]";
+			mes "I..I just can't seem to find any.";
+			mes "Pesky Coco's have hidden all the Acorns.";
+			mes "Do you think you could help me?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Nutters]";
+				mes "Oh, that's great! I knew I could count on you, just from looking at you!";
+				next;
+				switch(select("Gather Items:Hunt Cocos:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Nutters]";
+					mes "Can you help me find ^00CE0025 Acorns^000000.";
+					mes "I will reward you with much if you can.";
+					next;
+					switch(select("I have 25 Acorns:Please come again?")) {
+					case 1:
+						/*
+						if (checkweight(502,5) == 0) {
+							mes "[Nutters]";
+							mes "Hey, it looks like that the weight on";
+							mes "your back will crush you. Come back";
+							mes "after you have lost some weight.";
+							close;
+						}
+						*/
+						if (countitem(1026) > 24) {
+							mes "[Nutters]";
+							mes "Oh great you found out where they were hiding them.";
+							mes "Gimme Gimme!!!";
+							next;
+							mes "[Nutters]";
+							mes "Oh that's right, sorry I just love roasting Acorns. Mmm.";
+							mes "Here is what I promised you.";
+							delitem 1026,25; //Acorn
+							getexp 3600,3905;
+							//getitem 502,5; //Orange_Potion
+							close;
+						}
+						else {
+							mes "[Nutters]";
+							mes "Where are my ^00CE00Acorns^000000?";
+							mes "Hey, I'm not playing, you better not hold out on me.";
+							close;
+						}
+					case 2:
+						mes "[Nutters]";
+						mes "I need ^00CE0025 Acorns^000000.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Nutters]";
+					mes "Ah, ok I think you can help me out by hunting some Cocos.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Cocos:100 Cocos:150 Cocos")) {
+					case 1:
+						mes "[Nutters]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60113;
+						close;
+					case 2:
+						mes "[Nutters]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60114;
+						close;
+					case 3:
+						mes "[Nutters]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60115;
+						close;
+					}
+				case 3:
+					mes "[Nutters]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Nutters]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Nutters]";
+			mes "You are much to strong to be fighting these things!";
+			close;
+		}
+	}
+	else {
+		mes "[Nutters]";
+		mes "You are just too small to fight these things for me.";
+		mes "Can you get a little taller then return?";
+		close;
+	}
+}

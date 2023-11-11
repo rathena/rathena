@@ -1,0 +1,361 @@
+//===== rAthena Script =======================================
+//= Kagerou/Oboro Equipment Quests
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Quests for Kagerou/Oboro weapons and armor.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//= 1.1 Little clean-up. [Capuche]
+//============================================================
+
+// Armor and Weapon NPCs :: kaboro_gearmix
+//============================================================
+que_ng,21,72,6	script	Master Armor Craftsman	4_M_RASWORD,{
+	mes "[Gyo]";
+	mes "How would you define victory?";
+	mes "To fell the enemy...";
+	mes "However, the most important thing is...";
+	mes "Never to fall yourself!";
+	next;
+	mes "[Gyo]";
+	mes "For that, you must better protect yourself.";
+	mes "You cannot protect 'others' while you hinder your 'own' protection.";
+	next;
+	if(select("Combine armor.:End conversation.") == 2) {
+		mes "[Gyo]";
+		mes "Prudence is also an important virtue in battle.";
+		close;
+	}
+	switch(select("Wolf Armguard[1]:Crescent Armguard[1]:Ninja Scale Armor[1]:Tenebris Latitantes[1]:Quit.")) {
+	case 1:
+		mes "[Gyo]";
+		mes "Wolf Armguard... One beastly piece of armor.";
+		next;
+		callsub L_Select,2172;
+		if (countitem(2171) > 0 && countitem(6252) > 9) {  //custom translation
+			delitem 2171,1; //Fox_Armguard
+			delitem 6252,10; //Wolf_Blood
+			getitem 2172,1; //Wolf_Armguard
+			mes "[Gyo]";
+			mes "Do you feel the nature of the wolf?";
+			mes "Both wild and charming...";
+			close;
+		}
+		break;
+	case 2:
+		mes "[Gyo]";
+		mes "Crescent Armguard... A thing of beauty and strength... With none the lesser.";
+		next;
+		callsub L_Select,2173;
+		if (countitem(2171) > 0 && countitem(7321) > 99) {  //custom translation
+			delitem 2171,1; //Fox_Armguard
+			delitem 7321,100; //Fragment_Of_Crystal
+			getitem 2173,1; //Crescent_Armguard
+			mes "[Gyo]";
+			mes "Such beauty...";
+			mes "As if the whole body is overflowing with magic.";
+			close;
+		}
+		break;
+	case 3:
+		mes "[Gyo]";
+		mes "Ninja Scale Armor... It's said that a legendary Ninja once wore it.";
+		next;
+		callsub L_Select,15054;
+		if (countitem(7451) > 29 && countitem(7562) > 29 && countitem(6091) > 29) {  //custom translation
+			delitem 7451,30; //Scale_Of_Red_Dragon
+			delitem 7562,30; //Ice_Scale
+			delitem 6091,30; //Dark_Red_Scale
+			getitem 15054,1; //Ninja_Scale_Armor
+			mes "[Gyo]";
+			mes "This is truly a legendary armor...";
+			mes "Even if I don't believe in legends...";
+			close;
+		}
+		break;
+	case 4:
+		mes "[Gyo]";
+		mes "Shadow King's Armor... It was made to protect others.";
+		next;
+		callsub L_Select,15055;
+		if (countitem(15056) > 0 && countitem(6089) > 9) {  //custom translation
+			delitem 15056,1; //Special_Ninja_Suit_
+			delitem 6089,10; //Piece_Of_Darkness
+			getitem 15055,1; //Tenebris_Latitantes
+			mes "[Gyo]";
+			mes "How is it?";
+			mes "Does the armor not appear as if there are two?";
+			close;
+		}
+		break;
+	case 5:
+		close;
+	}
+	mes "[Gyo]";
+	mes "You don't have enough ingredients.";
+	mes "Look again...";
+	close;
+
+L_Select:
+	.@string1$ = "Check Ingredients.";
+	.@string2$ = "Check Stats.";
+	while(1) {
+		switch(select(.@string1$,.@string2$,"Combine.","Quit.")) {
+		case 1:
+			.@string1$ = "";
+			callsub L_Ingredients, getarg(0);
+			break;
+		case 2:
+			.@string2$ = "";
+			callsub L_Stats, getarg(0);
+			break;
+		case 3:
+			callsub L_Combine;
+			return;
+		case 4:
+			mes "[Gyo]";
+			mes "Looks like you need more time to decide.";
+			close;
+		}
+	}
+
+L_Ingredients:
+	mes "[Gyo]";
+	switch (getarg(0)) {
+	case 2172:	//Wolf_Armguard
+		mes "To make a ^ff0000Wolf Armguard, you need 1 Fox Armguard and 10 Blood of Wolf^000000.";
+		mes "Can you feel it? The throbbing of the wolf blood...";
+		break;
+	case 2173:	//Crescent_Armguard
+		mes "To make a ^ff0000Crescent Armguard, you need 1 Fox Armguard and 100 Crystal Fragments^000000.";
+		mes "A crescent as beautiful and clear as a crystal will be engraved on it.";
+		break;
+	case 15054:	//Ninja_Scale_Armor
+		mes "To make a ^ff0000Ninja Scale Armor, you need 30 Fire Dragon Scales, 30 Ice Scales, and 30 Darkred Scale Pieces^000000.";
+		mes "You can feel its legendary powers.";
+		break;
+	case 15055:	//Tenebris_Latitantes
+		mes "To make a ^ff0000Shadow King's Armor, you'll need a Special Ninja Suit with a slot and 10 Dark Pieces^000000.";
+		mes "With the darkness it erases existence itself...";
+		break;
+	}
+	next;
+	return;
+
+L_Stats:
+	mes "[" + getitemname(getarg(0)) + "]";
+	switch (getarg(0)) {
+	case 2172:	//Wolf_Armguard
+		mes "Chance to have 5 sec. of ATK+100, FLEE -50 upon melee attack.";
+		mes "Shield Type, Defense 45, Slot 1";
+		mes "Required Level 100, Ninja Type Only";
+		break;
+	case 2173:	//Crescent_Armguard
+		mes "Decreases post skill delay for 2% for every enhancement.";
+		mes "Shield Type, Defense 70, Slot 1";
+		mes "Required Level 100, Ninja Type Only";
+		break;
+	case 15054:	//Ninja_Scale_Armor
+		mes "MHP+15%, MSP-30%";
+		mes "Armor Type, Defense 90, Slot 1";
+		mes "Required Level 100, Ninja Type Only";
+		break;
+	case 15055:	//Tenebris_Latitantes
+		mes "Chance to activate Lvl. 1 Illusion - Shadow when attacked by melee attacks.";
+		mes "Armor Type, Defense 60, Slot 1";
+		mes "Required Level 100, Ninja Type Only";
+		break;
+	}
+	next;
+	return;
+
+L_Combine:
+	mes "[Gyo]";
+	mes "Make sure that ^ff0000you have the correct ingredients and equipment at hand^000000.";
+	mes "No use crying over it later.";
+	next;
+	switch(select("Combine.:Quit.")) {
+	case 1:
+		if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+			mes "- Hold on!! -";
+			mes "- You cannot receive items -";
+			mes "- because you carry too much. -";
+			mes "- Please try again -";
+			mes "- after lightening your burden. -";
+			close;
+		}
+		return;
+	case 2:
+		mes "[Gyo]";
+		mes "Looks like you need more time to decide.";
+		close;
+	}
+	end;
+}
+
+que_ng,23,70,3	script	Master Weapon Craftsman	4_DST_SOLDIER,{
+	mes "[Ki]";
+	mes "To attack is the best means of defense.";
+	mes "A powerful weapon ill make you truly complete.";
+	next;
+	mes "[Ki]";
+	mes "Of course, it would be better to have something special at hand.";
+	next;
+	if(select("Combine weapon.:End conversation.") == 2) {
+		mes "[Ki]";
+		mes "Being too careful could sometimes be lethal.";
+		close;
+	}
+	switch(select("Raksasa Dagger[1]:Mikatsuki[1]:Huuma Swirling Petal[2]:Quit.")) {
+	case 1:
+		mes "[Ki]";
+		mes "Raksasa Dagger can only be used after plenty of training.";
+		next;
+		callsub L_Select,13076;
+		if (countitem(13013) > 0 && countitem(718) > 0) {  //custom translation
+			delitem 13013,1; //Murasame_
+			delitem 718,1; //Dark_Red_Jewel
+			getitem 13076,1; //Raksasa_Dagger
+			mes "[Ki]";
+			mes "Ah...";
+			mes "What a beautiful luster...";
+			close;
+		}
+		mes "[Ki]";
+		mes "Hmm... You do not have enough to make a Raksasa Dagger.";
+		break;
+	case 2:
+		mes "[Ki]";
+		mes "Mikatsuki... A beautiful curve like the crescent moon...";
+		mes "There aren't many who can make them.";
+		next;
+		callsub L_Select,13078;
+		if (countitem(13015) > 0 && countitem(727) > 0) {  //custom translation
+			delitem 13015,1; //Hakujin_
+			delitem 727,1; //White_Jewel
+			getitem 13078,1; //Mikatsuki
+			mes "[Ki]";
+			mes "Truly beautiful...";
+			mes "I am so fortunate to be able to see such a magnificent dagger.";
+			close;
+		}
+		mes "[Ki]";
+		mes "Hmm... You do not have enough to make a Mikatsuki.";
+		break;
+	case 3:
+		mes "[Ki]";
+		mes "Huuma Swirling Petal... Have you ever seen petals swirl?";
+		next;
+		callsub L_Select,13313;
+		if (countitem(13304) > 0 && countitem(7156) > 99) {  //custom translation
+			delitem 13304,1; //Huuma_Calm_Mind
+			delitem 7156,100; //Broken_Shuriken
+			getitem 13313,1; //Huuma_Swirling_Petal
+			mes "[Ki]";
+			mes "Flying... petals!!";
+			close;
+		}
+		mes "[Ki]";
+		mes "Hmm... You do not have enough to make a Huuma Swirling Petal.";
+		break;
+	case 4:
+		close;
+	}
+	mes "Why don't you check again?";
+	mes "Some just can't give up what they hold.";
+	close;
+
+L_Select:
+	.@string1$ = "Check Ingredients.";
+	.@string2$ = "Check Stats.";
+	while(1) {
+		switch(select(.@string1$,.@string2$,"Combine.","Quit.")) {
+		case 1:
+			.@string1$ = "";
+			callsub L_Ingredients, getarg(0);
+			break;
+		case 2:
+			.@string2$ = "";
+			callsub L_Stats, getarg(0);
+			break;
+		case 3:
+			callsub L_Combine;
+			return;
+		case 4:
+			mes "[Ki]";
+			mes "Think carefully~~";
+			close;
+		}
+	}
+
+L_Ingredients:
+	mes "[Ki]";
+	switch (getarg(0)) {
+	case 13076:	//Raksasa_Dagger
+		mes "For a ^ff0000Raksasa Dagger, you need 1 Murasame with 2 sockets and 1 Garnet^000000.";
+		mes "The garnet gives the Raksasa Dagger its unique color.";
+		break;
+	case 13078:	//Mikatsuki
+		mes "For a ^ff0000Mikatsuki, you need a Hakujin with a Slot and an Opal^000000.";
+		mes "The opal is what gives off the translucent glow.";
+		break;
+	case 13313:	//Huuma_Swirling_Petal
+		mes "For a ^ff0000Huuma Swirling Petal, you need one Huuma Calm Mind Shuriken and 100 Broken Shurikens^000000.";
+		mes "It may seem like too many shurikens are needed... But it is essential for the beautiful fluttering effect.";
+		break;
+	}
+	next;
+	return;
+
+L_Stats:
+	mes "[" + getitemname(getarg(0)) + "]";
+	switch (getarg(0)) {
+	case 13076:	//Raksasa_Dagger
+		mes "INT+3 MATK+100.";
+		mes "Dagger Type, ATK 120, Slot 1";
+		mes "Required Level 110, Ninja Type Only";
+		break;
+	case 13078:	//Mikatsuki
+		mes "MATK + 120, Flucuated Casting and SP use decreased by 5% upon skill use.";
+		mes "Dagger Type, ATK 50, Weapon Lvl. 4 Slot 1";
+		mes "Required Level 100, Ninja Type Only";
+		break;
+	case 13313:	//Huuma_Swirling_Petal
+		mes "MATK + 50, Huuma Swirling Petal skill damage increased by 20%.";
+		mes "Shuriken Type, ATK 150";
+		mes "Weapon Lvl. 3, Slot 2";
+		mes "Required Level 110, Ninja Type Only";
+		break;
+	}
+	next;
+	return;
+
+L_Combine:
+	mes "[Ki]";
+	mes "Make sure that ^ff0000you have the correct ingredients and equipment at hand^000000.";
+	mes "Once done, it cannot be undone.";
+	next;
+	switch(select("Combine.:Quit.")) {
+	case 1:
+		if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+			mes "- Hold on!! -";
+			mes "- You cannot receive items -";
+			mes "- because you carry too much. -";
+			mes "- Please try again -";
+			mes "- after lightening your burden. -";
+			close;
+		}
+		return;
+	case 2:
+		mes "[Ki]";
+		mes "Think carefully~~";
+		close;
+	}
+	end;
+}

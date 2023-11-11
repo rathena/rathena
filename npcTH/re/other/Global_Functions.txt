@@ -1,0 +1,68 @@
+//============================================================ 
+//===== rAthena Script =======================================
+//= Global Functions
+//===== Description: =========================================
+//= General script functions.
+//===== Changelogs: ==========================================
+//= 1.0 WoeTETimeStart(X) function check if the woe
+//	will start in X seconds or less. [Capuche]
+//============================================================
+
+// WoeTETimeStart(<seconds>) : return true if the woe te will start in X seconds or less, false otherwise
+function	script	WoeTETimeStart	{
+	.@woe_status = agitcheck3();
+	.@min_today  = gettime(DT_MINUTE);
+	.@hour_today = gettime(DT_HOUR);
+	.@day_today  = gettime(DT_DAYOFWEEK);
+
+	if (getvariableofnpc( getd( ".day_"+ .@day_today ),"woe_TE_contoller" )) {
+		.@h = getvariableofnpc( getd( ".hour_start_"+ .@hour_today ),"woe_TE_contoller" );
+		if (.@h > .@hour_today) {
+			.@time = (60 - .@min_today) *60 + ( .@h - .@hour_today -1 ) *3600;
+			if (.@time <= getarg(0))
+				return true;
+		}
+	}
+	return false;
+}
+
+function	script	F_22507	{// ShabbyOldScroll
+	.@r = rand(1,10);
+	if (.@r == 1) warp "pay_fild01",141,211;
+	else if (.@r == 2) warp "payon_in03",99,190;
+	else if (.@r == 3) warp "pay_dun04",120,116;
+	else if (.@r == 4) warp "pay_gld",202,186;
+	else if (.@r == 5) warp "gld_dun01",61,155;
+	else if (.@r == 6) warp "pay_fild04",348,333;
+	else if (.@r == 7) warp "payon_in02",17,62;
+	else if (.@r == 8) warp "payon_in01",144,15;
+	else if (.@r == 9) warp "pay_fild07",200,186;
+	else if (.@r == 10) warp "pay_fild10",147,267;
+	end;
+}
+
+// Return a value according to the quests states.
+// -1 : One of the quest has a different state
+//  0 : All the quests are not started
+//  1 : All the quests are started
+//  2 : All the quests are completed
+function	script	F_queststatus	{
+	.@type = getarg(0);
+	.@base = checkquest(getarg(1),.@type);
+	.@size = getargcount();
+
+	for ( .@i = 2; .@i < .@size; ++.@i ) {
+		if (checkquest(getarg(.@i),.@type) != .@base)
+			return -1;
+	}
+	switch( .@base ) {
+	case -1:
+		return 0;
+	case 0:
+	case 1:
+		return 1;
+	case 2:
+		return 2;
+	}
+	end;
+}	

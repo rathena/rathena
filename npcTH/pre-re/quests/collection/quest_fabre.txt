@@ -1,0 +1,231 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Fluffs)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+gef_fild07,321,193,4	script	Langry#Fabre_Hunt	754,{
+	if (checkquest(60107) != -1) {
+		if (checkquest(60107,HUNTING) != 2 ) {
+			mes "[Langry]";
+			mes "Have you finished hunting the 50 Fabres?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Langry]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Langry]";
+				mes "Remember, I need help hunting Fabres so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Langry]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Langry]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60107;
+					close;
+				case 2:
+					mes "[Langry]";
+					mes "Please kill 50 Fabres.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Langry]";
+			mes "Amazing, you did that with speed.";
+			getexp 385,30;
+			erasequest 60107;
+			close;
+		}
+	}
+	if (checkquest(60108) != -1) {
+		if (checkquest(60108,HUNTING) != 2 ) {
+			mes "[Langry]";
+			mes "Have you finished hunting the 50 Fabres?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Langry]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Langry]";
+				mes "Remember, I need help hunting Fabres so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Langry]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Langry]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60108;
+					close;
+				case 2:
+					mes "[Langry]";
+					mes "Please kill 100 Fabres.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Langry]";
+			mes "Amazing, you did that with speed.";
+			getexp 385,30;
+			getexp 385,30;
+			erasequest 60108;
+			close;
+		}
+	}
+	if (checkquest(60109) != -1) {
+		if (checkquest(60109,HUNTING) != 2 ) {
+			mes "[Langry]";
+			mes "Have you finished hunting the 150 Fabres?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Langry]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Langry]";
+				mes "Remember, I need help hunting Fabres so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Langry]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Langry]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60109;
+					close;
+				case 2:
+					mes "[Langry]";
+					mes "Please kill 150 Fabres.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Langry]";
+			mes "Amazing, you did that with speed.";
+			getexp 385,30;
+			getexp 385,30;
+			getexp 385,30;
+			erasequest 60109;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 1) {
+		//for maximum level
+		if (BaseLevel < 21) {
+			mes "[Langry]";
+			mes "Do you think you can help me?";
+			mes "Please?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Langry]";
+				mes "Really?!";
+				mes "That's great!";
+				next;
+				switch(select("Gather Items:Hunt Fabres:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Langry]";
+					mes "I need to collect ^0000CE25 Fluff^000000 to";
+					mes "complete this community service project.";
+					mes "You know what? I can even reward you a little for helping me.";
+					next;
+					switch(select("I have some Fluff:What was that again?")) {
+					case 1:
+						if (countitem(914) > 24) {
+							mes "[Langry]";
+							mes "Thank you for the Fluff. This helps me out greatly.";
+							mes "Oh and here you go, this should help you get stronger, faster!";
+							delitem 914,25; //Fluff
+							getexp 385,30;
+							close;
+						}
+						else {
+							mes "[Langry]";
+							mes "I see no Fluff, wait yea I do it's the lies coming from your mouth.";
+							close;
+						}
+					case 2:
+						mes "[Langry]";
+						mes "I need ^00CE0025 Fluff^000000.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Langry]";
+					mes "Ah, ok I think you can help me out by hunting some Fabres.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Fabres:100 Fabres:150 Fabres")) {
+					case 1:
+						mes "[Langry]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60107;
+						close;
+					case 2:
+						mes "[Langry]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60108;
+						close;
+					case 3:
+						mes "[Langry]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60109;
+						close;
+					}
+				case 3:
+					mes "[Langry]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Langry]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Langry]";
+			mes "Hello, my name is Langry.";
+			mes "I have to complete this community service, but I am just too lazy.";
+			close;
+		}
+	}
+	else {
+		mes "[Langry]";
+		mes "You may just be the most unlikely person ever, recycle a few Fabres and come back.";
+		close;
+	}
+}
+
+

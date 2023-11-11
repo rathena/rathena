@@ -1,0 +1,517 @@
+//===== rAthena Script ======================================= 
+//= Thief Skills Quests
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 1.8
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Quests for skills: Sand Attack, Back Slide, Find Stone, 
+//= Stone Fling.
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.6 Fixed a Exploit for Assassins and Rogues. (bugreport:2332) [Samuray22]
+//= 1.7 Updated to latest available official file. [Masao]
+//= 1.8 Fixed JobLevel requirement for Assassins and Rogues. [Joseph]
+//============================================================ 
+
+moc_prydb1,154,128,4	script	Alcouskou	118,{
+	if (BaseClass == Job_Thief) {
+		mes "[Alcouskou]";
+		mes "As you live life you will encounter";
+		mes "many things. Sometimes you will";
+		mes "not understand and wonder why some";
+		mes "things are so important. You may consider it";
+		mes "as useless knowledge, but it isn't";
+		mes "Let me explain.";
+		next;
+		switch (select("Sand Attack:Back Slide:Find Stone:Stone Fling:I will be back later.")) {
+		case 1:
+			switch (skill_thief_1) {
+			case 0:
+				if ((countitem(7041) > 4) && ((JobLevel > 24) || (BaseJob == Job_Assassin || BaseJob == Job_Rogue))) {
+					mes "[Alcouskou]";
+					mes "Luckily, you have brought some";
+					mes "sand with you. It is very important";
+					mes "to a thief to have a small quantity at";
+					mes "all times. Most people do not";
+					mes "realize the value of such a common";
+					mes "substance.";
+					next;
+					mes "[Alcouskou]";
+					mes "In case you meet a powerful";
+					mes "monster in a dungeon with no";
+					mes "sand, you could use this sand to";
+					mes "blind the monster and flee.";
+					mes "You should have a special sand pocket.";
+					next;
+					mes "[Alcouskou]";
+					mes "What? You don't expect me to";
+					mes "do that for you as well do you?";
+					mes "You must be very lazy! ! !";
+					mes "Very well, find the one named";
+					mes "RuRumuni. He will make you a";
+					mes "sturdy leather pocket.";
+					next;
+					mes "[Alcouskou]";
+					mes "I will be preparing for your";
+					mes "return. Find RuRumuni in";
+					mes "west Payon. That is where I";
+					mes "heard he is these days.";
+					delitem 7041,5; //Fine_Grit
+					set skill_thief_1,1;
+					close;
+				}
+				mes "[Alcouskou]";
+				mes "The most important part";
+				mes "of being a good thief is stealth.";
+				mes "A thief should never be seen or";
+				mes "touched unless he wants to.";
+				mes "Some consider this cowardly";
+				mes "but I think differently.";
+				next;
+				mes "[Alcouskou]";
+				mes "The way I see it, we live in a";
+				mes "world where survival of the fittest";
+				mes "rules our lives. ";
+				mes "They may think less of me for use";
+				mes "this special skill. . . What is this skill?";
+				mes "This is the sand blinding skill.";
+				next;
+				mes "[Alcouskou]";
+				mes "If you can throw or kick sand";
+				mes "in the eyes of your opponent,";
+				mes "not only does their defense decrease,";
+				mes "but their ability to attack is impaired.";
+				mes "It is so effective, you may even stun them.";
+				next;
+				mes "[Alcouskou]";
+				mes "Well, we have to survive too.";
+				mes "Its either us or them. . .";
+				mes "I think it is important and vital";
+				mes "that we prepare a little sand.";
+				mes "What do you think? If you like it ";
+				mes "go and get five Fine Grit.";
+				next;
+				mes "[Alcouskou]";
+				mes "I am sure you eager to learn this";
+				mes "skill, but you must first gather five Fine Grit";
+				mes "Until you have gathered them,";
+				mes "I cannot teach you this skill.";
+				mes "Don't be disappointed, hurry and gather them.";
+				next;
+				mes "[Alcouskou]";
+				mes "Oh, I almost forgot! ! !";
+				mes "If you want to learn this ";
+				mes "special skill, be sure that";
+				mes "you are sufficiently experienced";
+				mes "to use this properly. This means";
+				mes "you should be at least job level 25.";
+				close;
+			case 1:
+				mes "[Alcouskou]";
+				mes "Go to west payon and find";
+				mes "RuRumuni. He will make you";
+				mes "fine durable pouch for your";
+				mes "sand.";
+				next;
+				mes "[Alcouskou]";
+				mes "I will take these five Fine Grit";
+				mes "and prepare them for you while I wait.";
+				close;
+			case 2:
+				mes "[Alcouskou]";
+				mes "Okay! Great !!";
+				mes "What a fine pouch indeed!";
+				mes "Small and easy to carry, with enough";
+				mes "capacity for enough sand. ";
+				mes "This is a perfect ^3355FFLeather Bag of Infinity^000000 !!";
+				mes "for you to use with this skill.";
+				next;
+				mes "[Alcouskou]";
+				mes "Well let's see what your skill";
+				mes "is like -";
+				mes "Try it out ! !";
+				next;
+				mes "[Alcouskou]";
+				mes "AHhh, watch out for my eyes !!";
+				mes "^5533FF- *throwing sand* -^000000";
+				next;
+				mes "^5533FF- *tossing sand* -^000000";
+				next;
+				mes "[Alcouskou]";
+				mes "Hoo Hoo Hoo... You are a";
+				mes "natural! ! ! Excellent !";
+				mes "I guess I have nothing more";
+				mes "that I can teach you.";
+				mes "I hope that this skill will";
+				mes "aid you in the future. -";
+				delitem 7042,1; //Leather_Bag_Of_Infinity
+				skill "TF_SPRINKLESAND",1,SKILL_PERM;
+				close;
+			}
+	case 2:
+		if ((countitem(940) > 19) && ((JobLevel > 34) || (BaseJob == Job_Assassin || BaseJob == Job_Rogue))) {
+			mes "[Alcouskou]";
+			mes "Okay! Let's practice!";
+			next;
+			mes "[Alcouskou]";
+			mes "Suuu Suuu uk -";
+			next;
+			mes "[Alcouskou]";
+			mes "Suuuuk - -";
+			next;
+			mes "[Alcouskou]";
+			mes "Suk - Suuuk - - -";
+			next;
+			mes "[Alcouskou]";
+			mes "Great! -At this level,";
+			mes "I am sure you can increase";
+			mes "your skill on your own.";
+			delitem 940,20; //Grasshopper's_Leg
+			skill "TF_BACKSLIDING",1,SKILL_PERM;
+			close;
+		}
+		mes "[Alcouskou]";
+		mes "Usually we like to think about";
+		mes "attacking and damage, but";
+		mes "it is important to realize that";
+		mes "fleeing is just as important";
+		mes "as attacking!";
+		mes "We pride ourselves in our";
+		next;
+		mes "[Alcouskou]";
+		mes "speed and quick dodges,";
+		mes "but I am sure that at times you";
+		mes "have realized while fighting that";
+		mes "despite the fact that our dodging";
+		mes "is superior, if we are hit once we are";
+		mes "serious danger.";
+		next;
+		mes "[Alcouskou]";
+		mes "It is true that at times we";
+		mes "can view others as humorous as";
+		mes "we easily dodge their attacks.";
+		mes "But if we are attacked by many at";
+		mes "once, you must remember that we";
+		mes "may not even have room to doge.";
+		next;
+		mes "[Alcouskou]";
+		mes "You must make a quick decision";
+		mes "to flee. Most would flee immediately,";
+		mes "but we don't need to.";
+		mes "Even if we don't see an opening,";
+		mes "our skill can allow us to slip out";
+		mes "of a very serious predicament.";
+		next;
+		mes "[Alcouskou]";
+		mes "This skill uses our energies in";
+		mes "allowing us to slip out unnoticed.";
+		mes "In a short amount of time we can use";
+		mes "this skill to put a large amount of ";
+		mes "distance between us and our opponent.";
+		mes "This skill requires endless hours of";
+		next;
+		mes "[Alcouskou]";
+		mes "practice for us to master.";
+		mes "If you wish to learn and practice,";
+		mes "you will need to prepare some items.";
+		mes "Prepare ^3355FF20 Grasshopper's Leg^";
+		mes "to begin your training.";
+		next;
+		mes "[Alcouskou]";
+		mes "Oh, by the way. . .";
+		mes "You need to have some background";
+		mes "in the skills of a thief to properly master";
+		mes "this skill. This means you require at";
+		mes "least the experience of job level ^3355FF35^000000 .";
+		mes "If not, I cannot teach you.";
+		close;
+	case 3:
+		if ((countitem(912) > 0) && (countitem(948) > 0) && (countitem(908) > 4) && ((JobLevel > 19) || (BaseJob == Job_Assassin || BaseJob == Job_Rogue))) {
+			mes "[Alcouskou]";
+			mes "Wow, you have already prepared?";
+			mes "Great, I see promise in you. -";
+			mes "Your zeal is truly sincere.";
+			mes "Okay, Shall we begin your training?";
+			mes "Stone throwing . . . . .";
+			mes "Find a smoot stone with a good weight.";
+			next;
+			mes "[Alcouskou]";
+			mes "Picking the right stone is ";
+			mes "very important in being successful.";
+			mes "Well I could tell you a million";
+			mes "times but it is better to see for yourself.";
+			mes "Okay why don't you try the skill out";
+			mes "right here where I can watch you.";
+			next;
+			mes "^3355FF- Shweeput ! -^000000";
+			next;
+			mes "^3355FF- Cheeeguk! -^000000";
+			next;
+			mes "^3355FF- Shyaaaakkk ! -^000000";
+			next;
+			mes "[Alcouskou]";
+			mes "Very nice. You seem to take up -";
+			mes "the skill easily.";
+			mes "You can improve your skill with";
+			mes "practice on your own time.";
+			mes "I hope it aids you in the future.";
+			mes ". . . . . Hope to see you soon";
+			delitem 912,1; //Zargon
+			delitem 948,1; //Bear's_Foot
+			delitem 908,5; //Spawn
+			skill "TF_PICKSTONE",1,SKILL_PERM;
+			close;
+		}
+		mes "[Alcouskou]";
+		mes "The skilled and experienced";
+		mes "members of our guild are usually very handy!";
+		mes "They can pick up a small stone";
+		mes "by the road and use it to hit an";
+		mes "opponent accurately and quickly from";
+		mes "a distance.";
+		next;
+		mes "[Alcouskou]";
+		mes "They realized what a waste it was";
+		mes "to not teach this skill to others. -";
+		mes "They founded a group to train";
+		mes "others in this skill. . .";
+		mes "That is how the ^3355FF' Find Stone '^000000 and";
+		mes "^3355FF' Stone Fling '^000000 skills came to be.";
+		next;
+		mes "[Alcouskou]";
+		mes "It is handy to be able to find a stone";
+		mes "in most any place and have the";
+		mes "ability to hurl it into a distanced enemy.";
+		mes "A very valuable skill indeed. -";
+		mes "Without costing you a zeny, you";
+		mes "can have this skill at your disposal.";
+		next;
+		mes "[Alcouskou]";
+		mes "I really think of this as a great skill.";
+		mes "What do you think of it?";
+		mes ". . . . . Hah Hah Hah . . . . . .";
+		next;
+		mes "[Alcouskou]";
+		mes "^3355FF' Find Stone ! '^000000 skill";
+		mes "can be used in just about any location.";
+		mes "Picking stones off the ground that";
+		mes "are smooth and well weighted for";
+		mes "throwing. It does take some familiarity";
+		mes "and skill to learn this skill well.";
+		next;
+		mes "[Alcouskou]";
+		mes "The small amount of training required";
+		mes "does require that you put in a full";
+		mes "effort . . .-";
+		mes ". . . . . *Ahem* . . . . .";
+		mes "Let first begin by practicing how to pick up";
+		mes "one ^3355FFBear's Footskin^000000 to familiarize the action.";
+		next;
+		mes "[Alcouskou]";
+		mes "And in lieu of a stone, try picking up";
+		mes " a ^3355FFZargon^000000 !";
+		mes "Would that be too little ?";
+		mes "Lets add ^3355FF5 Spawn^000000 !!";
+		mes "Show me your skill !";
+		mes "Retrieve these items by any means you see fit.";
+		close;
+	case 4:
+		if ((countitem(910) > 1) && (countitem(911) > 1) && ((JobLevel > 14) || (BaseJob == Job_Assassin || BaseJob == Job_Rogue))) {
+			mes "[Alcouskou]";
+			mes "Wow! Have you already gathered the items!";
+			mes "Very well, do you wish to begin?";
+			mes "Prepare the items you have gathered ..";
+			next;
+			mes "^3355FF- Shyuuk ! -^000000";
+			next;
+			mes "^3355FF- Shyuuuk Tuk. . -^000000";
+			next;
+			mes "^3355FF- Shyupattt !! - Tauk !! -^000000";
+			next;
+			mes "[Alcouskou]";
+			mes "Strike~~~!!";
+			mes "That was excellent !";
+			mes "You know have sufficient";
+			mes "power and skill.";
+			next;
+			mes "[Alcouskou]";
+			mes "Okay, that is all there is";
+			mes "to it. How you use it in";
+			mes "the future is up to you ..";
+			mes "I wish you luck!";
+			delitem 910,2; //Garlet
+			delitem 911,2; //Scell
+			skill "TF_THROWSTONE",1,SKILL_PERM;
+			close;
+		}
+		mes "[Alcouskou]";
+		mes "The skilled and experienced";
+		mes "members of our guild are usually very handy!";
+		mes "They can pick up a small stone";
+		mes "by the road and use it to hit an";
+		mes "opponent accurately and quickly from";
+		mes "a distance.";
+		next;
+		mes "[Alcouskou]";
+		mes "They realized what a waste it was";
+		mes "to not teach this skill to others. -";
+		mes "They founded a group to train";
+		mes "others in this skill. . .";
+		mes "That is how the ^3355FF' Find Stone '^000000 and";
+		mes "^3355FF' Stone Fling '^000000 skills came to be.";
+		next;
+		mes "[Alcouskou]";
+		mes "It is handy to be able to find a stone";
+		mes "in most any place and have the";
+		mes "ability to hurl it into a distanced enemy.";
+		mes "A very valuable skill indeed. -";
+		mes "Without costing you a zeny, you";
+		mes "can have this skill at your disposal.";
+		next;
+		mes "[Alcouskou]";
+		mes "I really think of this as a great skill.";
+		mes "What do you think of it?";
+		mes ". . . . . Hah Hah Hah . . . . . .";
+		next;
+		mes "[Alcouskou]";
+		mes "^3355FFStone Fling !!^000000";
+		mes "This skill can be used so";
+		mes "readily and does not take any";
+		mes "extra money if you can pick up";
+		mes "stones well . . .";
+		mes "If you don't know how to choose";
+		next;
+		mes "[Alcouskou]";
+		mes "stones well, you can always buy";
+		mes "them from those who can.";
+		mes "And if you can choose stones well,";
+		mes "it could be very profitable for you.";
+		mes "What do you think? Do you like the idea?";
+		next;
+		mes "[Alcouskou]";
+		mes "If you wish to master this skill,";
+		mes "you will have to train quite a bit.";
+		mes "The training also requires some items";
+		mes "that won't be easy to find. . .";
+		mes "Of course, I am sure it won't be";
+		mes "impossible with your skill . .";
+		next;
+		mes "[Alcouskou]";
+		mes "You will need two ^3355FF' Garlet '^000000";
+		mes "and two ^3355FF' Scell '^000000 to start with.";
+		mes "Make sure they are similar to stones";
+		mes "and able to be thrown. When you";
+		mes "have gathered these items, I will be";
+		mes "happy to teach you.";
+		close;
+	case 5:
+		mes "[Alcouskou]";
+		mes "It seems you are not very experienced. . .";
+		mes "We may need some more time to consider you.";
+		close;
+	}
+}
+	mes "[Alcouskou]";
+	mes "Most thieves and assassins";
+	mes "have the basic skills to do";
+	mes "well at their job. However,";
+	mes "the skills that I can teach them";
+	mes "cannot be learned anywhere else.";
+	mes "If you every decide to";
+	next;
+	mes "[Alcouskou]";
+	mes "become a thief or assassin,";
+	mes "or know someone who is,";
+	mes "come to me or send them to me.";
+	mes "These new skills should be";
+	mes "taught to all who want to learn them.";
+	close;
+}
+
+payon,91,77,3	script	Bag Seller	99,{
+	mes "[RuRumuni]";
+	mes "I am a humble merchant here";
+	mes "in Payon. I buy the leather";
+	mes "hides of animals brought in by";
+	mes "the hunters and make leather";
+	mes "pouches to sell. I grew up";
+	mes "around leather working and am quite good at it.";
+	next;
+	switch (skill_thief_1) {
+	case 0:
+		mes "[RuRumuni]";
+		mes "There is a thief guild in the";
+		mes "area of Morocc. I know one there";
+		mes "that sends me thieves in need";
+		mes "of items I make such as a";
+		mes "^3355FF' Leather Bag of Infinity '^000000.";
+		mes "They visit my store often.";
+		close;
+	case 1:
+		if ((countitem(952) > 0) && (countitem(1055) > 0) && (countitem(1025) > 0)) {
+			mes "[RuRumuni]";
+			mes "Ahhh... You have come for a leather bag.";
+			mes "Very good, very good.";
+			mes "I will make you the leather bag";
+			mes "right away if you wait just a bit.";
+			mes "TuTak TuTak Shyuku Shyuku Shyuku";
+			mes "- - - - -";
+			next;
+			mes "[RuRumuni]";
+			mes "Okay, here it is all done.";
+			mes "Take this leather bag";
+			mes "to the Thief guild's Alcouskou";
+			mes "If you take him this, he will";
+			mes "teach you the skill that you ";
+			mes "wish to learn.";
+			delitem 952,1; //Cactus_Needle
+			delitem 1055,1; //Earthworm_Peeling
+			delitem 1025,1; //Spiderweb
+			set skill_thief_1,2;
+			getitem 7042,1; //Leather_Bag_Of_Infinity
+			close;
+		}
+		mes "[RuRumuni]";
+		mes "Find Alcouskou of the thief guild";
+		mes "to place and order for a leather bag of infinity.";
+		mes "You should know that the leather bag of infinity";
+		mes "takes much time and skill to make.";
+		mes "In order to make such an item, you";
+		mes "must provide me with the materials.";
+		next;
+		mes "The items needed as materials are";
+		mes "these items. ..";
+		mes "^3355FF' Earthworm Peeling '^000000";
+		mes "^3355FF' Cobweb '^000000";
+		mes "^3355FF' Cactus Needle '^000000";
+		mes "I need one of each.";
+		close;
+	case 2:
+		mes "[RuRumuni]";
+		mes "Here is your leather bag of infinity.";
+		mes "Take this to the Thief guilds";
+		mes "Alcouskou and let him know ";
+		mes "that you are now ready to learn";
+		mes "the skill.";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 Fully working
+//= 1.1 Changed Sand Attack requirements from 5 Grit to 5 Fine Grit and a
+//=     Leather Bag of Infinity.  These are the official RO requirements
+//=     Added npc RuRumuni, maker of Leather Bag of Infinity. [kobra_k88]
+//= 1.1a Now using functions found in "Global_Functions.txt" for
+//=     class checks.[kobra_k88]
+//= 1.2 Added Baby Class Support [Lupus]
+//= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 1.4 Fixed exploit [Lupus]
+//= 1.4a Fixed some typos [IVBela]
+//= 1.4b changed perm. variables to temp ones [Lupus]
+//============================================================ 

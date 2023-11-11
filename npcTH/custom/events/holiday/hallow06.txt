@@ -1,0 +1,124 @@
+//===== rAthena Script =======================================
+//= Custom Halloween Event 2006
+//===== By: ==================================================
+//= Stryker
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Halloween Event Script
+//===== Additional Comments: =================================
+//= 1.1 - Added trick to script
+//= 1.2 fixed bugs, optimized. Now uses 1 var instead of 3 [Lupus]
+//============================================================
+
+prontera,151,190,5	script	Hallows' Eve Event	807,{
+	mes "[Hallows' Eve Event]";
+	if(Class == Job_Novice){
+		mes "I am sorry but you have to got a job to complete the event.";
+		emotion ET_SWEAT, playerattached();
+		close;
+	}
+	if((EVENT_HALWN06&1) && (EVENT_HALWN06&2)){
+		mes "I am sorry but you have already completed the event.";
+		emotion ET_SORRY;
+		close;
+	}
+	mes "Greetings fellow lively human.";
+	next;
+	mes "[Hallows' Eve Event]";
+	mes "Halloween is upon us and it is almost time to adventure out into places few dare go.";
+	next;
+	mes "[Hallows' Eve Event]";
+	mes "Trick or treat, which do you prefer?";
+	next;
+	menu "Trick",-, "Treat",L_Treat;
+
+	mes "[Hallows' Eve Event]";
+	if(EVENT_HALWN06&2){
+		mes "I'm sorry but you have already had a trick. Why don't you go pick a treat now.";
+		emotion ET_SORRY;
+		close;
+	}
+	mes "Give me a min...";
+	next;
+	set BaseExp,BaseExp+BaseLevel*1000;
+	set EVENT_HALWN06,EVENT_HALWN06|2;
+
+	mes "[Hallows' Eve Event]";
+	mes "Here is your treat. Your Base EXP has been slightly increased.";
+	next;
+	mes "[Hallows' Eve Event]";
+	mes "I hope you enjoy your trick and Happy Halloween!";
+	close;
+
+L_Treat:
+	mes "[Hallows' Eve Event]";
+	if(EVENT_HALWN06&1){
+		mes "I'm sorry but you have already had a treat. Why don't you go pick a trick now.";
+		emotion ET_SORRY;
+		close;
+	}
+	if(!(EVENT_HALWN06&4)){
+		mes "Great! This shall be so much fun.";
+		next;
+		mes "[Hallows' Eve Event]";
+		mes "I will be sending you on a scavenger hunt for items.";
+		next;
+		mes "[Hallows' Eve Event]";
+		mes "Bring back all the necessary items, and I will create you a treat.";
+		next;
+		mes "[Hallows' Eve Event]";
+		mes "Not just any normal treat either that you can eat, but it is something you can wear on your head.";
+		next;
+		mes "[Hallows' Eve Event]";
+		mes "But with all things made, some items are required first.";
+		mes "The list:";
+		mes "1 Hat,";
+		mes "30 Pumpkin, and";
+		mes "20 Black Piece of Cloth";
+		next;
+		mes "[Hallows' Eve Event]";
+		mes "Hurry along now.";
+		set EVENT_HALWN06,EVENT_HALWN06|4;
+		close;
+	}
+	mes "Did you get the items I requested or do you need to see the list again?";
+	next;
+	menu "Got'em",-, "Don't Have",L_Dont_Have, "See List",L_List;
+
+	mes "[Hallows' Eve Event]";
+	if((countitem(2220) < 1) || (countitem(535) < 30) || (countitem(7205) < 20)){
+		mes "You don't have enough items. Come back when you do.";
+		emotion ET_SORRY;
+		close;
+	}
+	delitem 2220,1;
+	delitem 535,30;
+	delitem 7205,20;
+	getitem 5134,1;
+	set EVENT_HALWN06,EVENT_HALWN06|1;
+	mes "Good job! I hope you are happy with your item.";
+	emotion ET_CONGRATULATION;
+	next;
+	mes "[Hallows' Eve Event]";
+	mes "Enjoy the rest of your Halloween.";
+	emotion ET_SCISSOR, playerattached();
+	close;
+
+L_Dont_Have:
+	mes "[Hallows' Eve Event]";
+	mes "Go back out and search for them. Would you like to view the list?";
+	next;
+	menu "No",-, "Yes",L_List;
+	close;
+
+L_List:
+	mes "[Hallows' Eve Event]";
+	mes "I require the following items:";
+	mes "1 Hat,";
+	mes "30 Pumpkin, and";
+	mes "20 Black Piece of Cloth.";
+	close;
+}

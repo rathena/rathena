@@ -1,0 +1,21 @@
+//===== rAthena Script =======================================
+//= Mail Boxes
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Pickup and write mail from/to players in game.
+//===== Additional Comments: =================================
+//= 1.0 First version, Renewal duplicates.
+//============================================================
+
+// Izlude
+//============================================================
+izlude_a,136,94,0	duplicate(MailBox)	Mailbox#iz_a	888
+izlude_b,136,94,0	duplicate(MailBox)	Mailbox#iz_b	888
+izlude_c,136,94,0	duplicate(MailBox)	Mailbox#iz_c	888
+izlude_d,136,94,0	duplicate(MailBox)	Mailbox#iz_d	888

@@ -1,0 +1,307 @@
+//===== rAthena Script =======================================
+//= Lighthalzen Dungeon(Biolabs) Monster Spawn Script
+//===== By: ==================================================
+//= The Prometheus Project, rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 08/24/05 : Added 1st version. [Muad_Dib]
+//= 1.1 Some corrections to level 1, 2 as pointed out by
+//=     MasterofMuppets. [Skotlex]
+//= 1.3 Some fixes based on kRO's "RO Map" [Poki#3]
+//=     I also made the place more Moby ^^
+//= 1.4 Adjusted spawns according to own info from iRO [MasterOfMuppets]
+//= 1.5 More accurate spawn numbers and iRO names thanks to Tharis [Playtester]
+//= 1.6 Official X.3 spawns [Playtester]
+//= 1.7 Corrected MVP spawn function to be standard to iRO. [L0ne_W0lf]
+//=	- A random 99 will now be spawned when the MVP spawns.
+//=	- Spare spawn and MVP spawn now spawn in official locations.
+//=	- Expandeded timer to allow for varying spawn times.
+//= 1.7a Added dummy event to keep from causnig warnings. [L0ne_W0lf]
+//= 1.8 Corrected MVP spawn variance (Labs2 MVP). [L0ne_W0lf]
+//============================================================
+
+//========================================================================================
+// lhz_dun01 - Bio-life Labs 1F
+//========================================================================================
+lhz_dun01,0,0	monster	Metaling	1613,50
+lhz_dun01,0,0	monster	Anopheles	1627,70
+lhz_dun01,0,0	monster	Remover	1682,100
+lhz_dun01,0,0	monster	Egnigem Cenia	1652,1
+lhz_dun01,0,0	monster	Wickebine Tres	1653,1
+lhz_dun01,0,0	monster	Armeyer Dinze	1654,1
+lhz_dun01,0,0	monster	Errende Ebecee	1655,1
+lhz_dun01,0,0	monster	Kavach Icarus	1656,1
+lhz_dun01,0,0	monster	Laurell Weinder	1657,1
+lhz_dun01,150,50,16,18	monster	Egnigem Cenia	1652,1,900000,800000
+lhz_dun01,150,50,16,18	monster	Wickebine Tres	1653,1,900000,800000
+lhz_dun01,150,50,16,18	monster	Armeyer Dinze	1654,1,900000,800000
+lhz_dun01,150,50,16,18	monster	Errende Ebecee	1655,5,900000,800000
+lhz_dun01,150,50,16,18	monster	Kavach Icarus	1656,5,600000,300000
+lhz_dun01,150,50,16,18	monster	Laurell Weinder	1657,5,600000,300000
+lhz_dun01,250,150,18,30	monster	Egnigem Cenia	1652,4,900000,800000
+lhz_dun01,250,150,18,30	monster	Wickebine Tres	1653,4,600000,300000
+lhz_dun01,250,150,18,30	monster	Armeyer Dinze	1654,4,900000,800000
+lhz_dun01,250,150,18,30	monster	Errende Ebecee	1655,2,900000,800000
+lhz_dun01,250,150,18,30	monster	Kavach Icarus	1656,2,900000,800000
+lhz_dun01,250,150,18,30	monster	Laurell Weinder	1657,2,600000,300000
+lhz_dun01,50,150,11,35	monster	Egnigem Cenia	1652,1,600000,300000
+lhz_dun01,50,150,11,35	monster	Wickebine Tres	1653,4,900000,800000
+lhz_dun01,50,150,11,35	monster	Armeyer Dinze	1654,1,900000,800000
+lhz_dun01,50,150,11,35	monster	Errende Ebecee	1655,4,900000,800000
+lhz_dun01,50,150,11,35	monster	Kavach Icarus	1656,4,900000,800000
+lhz_dun01,50,150,11,35	monster	Laurell Weinder	1657,2,600000,300000
+lhz_dun01,192,61,18,30	monster	Egnigem Cenia	1652,1,900000,800000
+lhz_dun01,192,61,18,30	monster	Wickebine Tres	1653,1,900000,800000
+lhz_dun01,192,61,18,30	monster	Armeyer Dinze	1654,1,900000,800000
+lhz_dun01,192,61,18,30	monster	Errende Ebecee	1655,1,900000,800000
+lhz_dun01,192,61,18,30	monster	Kavach Icarus	1656,1,900000,800000
+lhz_dun01,192,61,18,30	monster	Laurell Weinder	1657,1,900000,800000
+lhz_dun01,0,0	monster	Gemini-S58	1681,1,7200000,5400000
+
+//========================================================================================
+// lhz_dun02 - Bio-life Labs 2F
+//========================================================================================
+lhz_dun02,0,0	monster	Egnigem Cenia	1652,26
+lhz_dun02,0,0	monster	Wickebine Tres	1653,26
+lhz_dun02,0,0	monster	Armeyer Dinze	1654,26
+lhz_dun02,0,0	monster	Errende Ebecee	1655,26
+lhz_dun02,0,0	monster	Kavach Icarus	1656,26
+lhz_dun02,0,0	monster	Laurell Weinder	1657,26
+lhz_dun02,150,150,56,54	monster	Egnigem Cenia	1652,4,120000,60000
+lhz_dun02,150,150,56,54	monster	Wickebine Tres	1653,4,120000,60000
+lhz_dun02,150,150,56,54	monster	Armeyer Dinze	1654,4,120000,60000
+lhz_dun02,150,150,56,54	monster	Errende Ebecee	1655,4,120000,60000
+lhz_dun02,150,150,56,54	monster	Kavach Icarus	1656,4,120000,60000
+lhz_dun02,150,150,56,54	monster	Laurell Weinder	1657,4,120000,60000
+lhz_dun02,150,150,105,90	monster	Egnigem Cenia	1652,10,120000,60000
+lhz_dun02,150,150,105,90	monster	Wickebine Tres	1653,10,120000,60000
+lhz_dun02,150,150,105,90	monster	Armeyer Dinze	1654,10,120000,60000
+lhz_dun02,150,150,105,90	monster	Errende Ebecee	1655,10,120000,60000
+lhz_dun02,150,150,105,90	monster	Kavach Icarus	1656,10,120000,60000
+lhz_dun02,150,150,105,90	monster	Laurell Weinder	1657,10,120000,60000
+lhz_dun02,0,0	monster	Egnigem Cenia	1652,10,300000,150000
+lhz_dun02,0,0	monster	Wickebine Tres	1653,10,300000,150000
+lhz_dun02,0,0	monster	Armeyer Dinze	1654,10,300000,150000
+lhz_dun02,0,0	monster	Errende Ebecee	1655,10,300000,150000
+lhz_dun02,0,0	monster	Kavach Icarus	1656,10,300000,150000
+lhz_dun02,0,0	monster	Laurell Weinder	1657,10,300000,150000
+lhz_dun02,0,0	monster	Remover	1682,20,300000,150000
+lhz_dun02,0,0	monster	Eremes Guile	1635,1,180000,120000
+lhz_dun02,0,0	monster	Gemini-S58	1681,10,5400000,180000
+lhz_dun02,0,0,0,0	boss_monster	Egnigem Cenia	1658,1,7200000,600000,1
+
+//========================================================================================
+// lhz_dun03 - Bio-life Labs 3F
+//========================================================================================
+lhz_dun03,140,235,116,30	monster	Seyren Windsor	1634,4,180000,120000
+lhz_dun03,140,235,116,30	monster	Eremes Guile	1635,4,180000,120000
+lhz_dun03,140,235,116,30	monster	Howard Alt-Eisen	1636,4,180000,120000
+lhz_dun03,140,235,116,30	monster	Margaretha Sorin	1637,4,180000,120000
+lhz_dun03,140,235,116,30	monster	Cecil Damon	1638,4,180000,120000
+lhz_dun03,140,235,116,30	monster	Kathryne Keyron	1639,4,180000,120000
+
+lhz_dun03,40,214,16,16	monster	Seyren Windsor	1634,1,120000,60000
+lhz_dun03,40,214,16,16	monster	Eremes Guile	1635,1,120000,60000
+lhz_dun03,40,214,16,16	monster	Howard Alt-Eisen	1636,1,120000,60000
+lhz_dun03,40,214,16,16	monster	Margaretha Sorin	1637,1,120000,60000
+lhz_dun03,40,214,16,16	monster	Cecil Damon	1638,1,120000,60000
+lhz_dun03,40,214,16,16	monster	Kathryne Keyron	1639,1,120000,60000
+
+lhz_dun03,240,213,16,17	monster	Seyren Windsor	1634,1,120000,60000
+lhz_dun03,240,213,16,17	monster	Eremes Guile	1635,1,120000,60000
+lhz_dun03,240,213,16,17	monster	Howard Alt-Eisen	1636,1,120000,60000
+lhz_dun03,240,213,16,17	monster	Margaretha Sorin	1637,1,120000,60000
+lhz_dun03,240,213,16,17	monster	Cecil Damon	1638,1,120000,60000
+lhz_dun03,240,213,16,17	monster	Kathryne Keyron	1639,1,120000,60000
+
+lhz_dun03,140,65,108,38	monster	Seyren Windsor	1634,7,120000,160000
+lhz_dun03,140,65,108,38	monster	Eremes Guile	1635,7,120000,160000
+lhz_dun03,140,65,108,38	monster	Howard Alt-Eisen	1636,7,120000,160000
+lhz_dun03,140,65,108,38	monster	Margaretha Sorin	1637,7,120000,160000
+lhz_dun03,140,65,108,38	monster	Cecil Damon	1638,7,120000,60000
+lhz_dun03,140,65,108,38	monster	Kathryne Keyron	1639,7,120000,60000
+
+lhz_dun03,140,31,8,15	monster	Seyren Windsor	1634,1,600000,540000
+lhz_dun03,140,31,8,15	monster	Eremes Guile	1635,1,540000,480000
+lhz_dun03,140,31,8,15	monster	Howard Alt-Eisen	1636,1,600000,540000
+lhz_dun03,140,31,8,15	monster	Margaretha Sorin	1637,1,540000,480000
+lhz_dun03,140,31,8,15	monster	Cecil Damon	1638,1,600000,540000
+lhz_dun03,140,31,8,15	monster	Kathryne Keyron	1639,1,540000,480000
+
+lhz_dun03,40,66,16,16	monster	Seyren Windsor	1634,1,120000,60000
+lhz_dun03,40,66,16,16	monster	Eremes Guile	1635,1,120000,60000
+lhz_dun03,40,66,16,16	monster	Howard Alt-Eisen	1636,1,120000,60000
+lhz_dun03,40,66,16,16	monster	Margaretha Sorin	1637,1,120000,60000
+lhz_dun03,40,66,16,16	monster	Cecil Damon	1638,1,120000,60000
+lhz_dun03,40,66,16,16	monster	Kathryne Keyron	1639,1,120000,60000
+
+lhz_dun03,240,66,16,16	monster	Seyren Windsor	1634,1,120000,60000
+lhz_dun03,240,66,16,16	monster	Eremes Guile	1635,1,120000,60000
+lhz_dun03,240,66,16,16	monster	Howard Alt-Eisen	1636,1,120000,60000
+lhz_dun03,240,66,16,16	monster	Margaretha Sorin	1637,1,120000,60000
+lhz_dun03,240,66,16,16	monster	Cecil Damon	1638,1,120000,60000
+lhz_dun03,240,66,16,16	monster	Kathryne Keyron	1639,1,120000,60000
+
+lhz_dun03,54,131,35,39	monster	Seyren Windsor	1634,5,180000,120000
+lhz_dun03,54,131,35,39	monster	Eremes Guile	1635,5,180000,120000
+lhz_dun03,54,131,35,39	monster	Howard Alt-Eisen	1636,5,180000,120000
+lhz_dun03,54,131,35,39	monster	Margaretha Sorin	1637,5,180000,120000
+lhz_dun03,54,131,35,39	monster	Cecil Damon	1638,5,120000,60000
+lhz_dun03,54,131,35,39	monster	Kathryne Keyron	1639,5,120000,60000
+
+lhz_dun03,228,137,35,39	monster	Seyren Windsor	1634,5,180000,120000
+lhz_dun03,228,137,35,39	monster	Eremes Guile	1635,5,180000,120000
+lhz_dun03,228,137,35,39	monster	Howard Alt-Eisen	1636,5,180000,120000
+lhz_dun03,228,137,35,39	monster	Margaretha Sorin	1637,5,180000,120000
+lhz_dun03,228,137,35,39	monster	Cecil Damon	1638,5,120000,60000
+lhz_dun03,228,137,35,39	monster	Kathryne Keyron	1639,5,120000,60000
+
+lhz_dun03,138,138,36,34	monster	Seyren Windsor	1634,3,120000,60000
+lhz_dun03,138,138,36,34	monster	Eremes Guile	1635,3,120000,60000
+lhz_dun03,138,138,36,34	monster	Howard Alt-Eisen	1636,3,120000,60000
+lhz_dun03,138,138,36,34	monster	Margaretha Sorin	1637,3,180000,120000
+lhz_dun03,138,138,36,34	monster	Cecil Damon	1638,4
+lhz_dun03,138,138,36,34	monster	Kathryne Keyron	1639,4
+
+lhz_dun03,140,192,66,21	monster	Seyren Windsor	1634,7,120000,60000
+lhz_dun03,140,192,66,21	monster	Eremes Guile	1635,7,180000,120000
+lhz_dun03,140,192,66,21	monster	Howard Alt-Eisen	1636,7,120000,60000
+lhz_dun03,140,192,66,21	monster	Margaretha Sorin	1637,7,180000,120000
+lhz_dun03,140,192,66,21	monster	Cecil Damon	1638,7,120000,60000
+lhz_dun03,140,192,66,21	monster	Kathryne Keyron	1639,7,120000,60000
+
+lhz_dun03,89,164,4,8	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,89,164,4,8	monster	Cecil Damon	1638,3,120000,60000
+lhz_dun03,107,167,4,5	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,107,167,4,5	monster	Cecil Damon	1638,3,120000,60000
+lhz_dun03,171,167,4,5	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,171,167,4,5	monster	Cecil Damon	1638,3,120000,60000
+lhz_dun03,189,164,4,8	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,189,164,4,8	monster	Cecil Damon	1638,3,120000,60000
+lhz_dun03,89,113,4,9	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,89,113,4,9	monster	Cecil Damon	1638,3,120000,60000
+lhz_dun03,107,109,4,5	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,107,109,4,5	monster	Cecil Damon	1638,3,120000,60000
+lhz_dun03,171,109,4,5	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,171,109,4,5	monster	Cecil Damon	1638,3,120000,60000
+lhz_dun03,189,113,4,9	monster	Kathryne Keyron	1639,1,120000,60000
+lhz_dun03,189,113,4,9	monster	Cecil Damon	1638,3,120000,60000
+
+lhz_dun03,96,164,13,8	monster	Seyren Windsor	1634,2,300000,120000
+lhz_dun03,96,164,13,8	monster	Eremes Guile	1635,2,300000,120000
+lhz_dun03,96,164,13,8	monster	Margaretha Sorin	1637,2,300000,120000
+lhz_dun03,96,164,13,8	monster	Cecil Damon	1638,5
+lhz_dun03,96,164,13,8	monster	Kathryne Keyron	1639,3
+lhz_dun03,180,164,13,8	monster	Seyren Windsor	1634,2,300000,120000
+lhz_dun03,180,164,13,8	monster	Howard Alt-Eisen	1636,2,300000,120000
+lhz_dun03,180,164,13,8	monster	Margaretha Sorin	1637,2,300000,120000
+lhz_dun03,180,164,13,8	monster	Cecil Damon	1638,5
+lhz_dun03,180,164,13,8	monster	Kathryne Keyron	1639,3
+lhz_dun03,98,113,13,9	monster	Seyren Windsor	1634,2,300000,120000
+lhz_dun03,98,113,13,9	monster	Eremes Guile	1635,2,300000,120000
+lhz_dun03,98,113,13,9	monster	Howard Alt-Eisen	1636,2,300000,120000
+lhz_dun03,98,113,13,9	monster	Cecil Damon	1638,5
+lhz_dun03,98,113,13,9	monster	Kathryne Keyron	1639,3
+lhz_dun03,180,113,13,9	monster	Eremes Guile	1635,2,300000,120000
+lhz_dun03,180,113,13,9	monster	Howard Alt-Eisen	1636,2,300000,120000
+lhz_dun03,180,113,13,9	monster	Margaretha Sorin	1637,2,300000,120000
+lhz_dun03,180,113,13,9	monster	Cecil Damon	1638,5
+lhz_dun03,180,113,13,9	monster	Kathryne Keyron	1639,3
+
+lhz_dun03,114,138,12,16	monster	Lord Knight Seyren	1640,1,2700000,2400000
+lhz_dun03,163,138,12,16	monster	Whitesmith Howard	1642,1,3000000,2700000
+lhz_dun03,139,158,20,11	monster	Assassin Cross Eremes	1641,1,2580000,2340000
+lhz_dun03,139,117,20,11	monster	Sniper Cecil	1644,1,2700000,2500000
+lhz_dun03,138,138,36,34	monster	High Priest Margaretha	1643,1,3300000,3000000
+lhz_dun03,138,138,36,34	monster	High Wizard Kathryne	1645,1,2580000,2460000
+
+lhz_dun03,2,2,0	script	summon_boss_lt	-1,{
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer6000000:
+	if (rand(1,6) == 1) {
+		donpcevent "summon_boss_lt::OnSummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer6300000:
+	if (rand(1,6) == 2) {
+		donpcevent "summon_boss_lt::OnSummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer6600000:
+	if (rand(1,6) == 3) {
+		donpcevent "summon_boss_lt::OnSummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer6900000:
+	if (rand(1,6) == 4) {
+		donpcevent "summon_boss_lt::OnSummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer7200000:
+	if (rand(1,6) == 5) {
+		donpcevent "summon_boss_lt::OnSummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer7500000:
+	if (rand(1,6) == 6) {
+		donpcevent "summon_boss_lt::OnSummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer7800000:
+	donpcevent "summon_boss_lt::OnSummon";
+	stopnpctimer;
+	end;
+
+OnSummon:
+	// Select Coordinates to summon a random MVP on
+	switch(rand(1,6)) {
+	case 1: set .@x,140;	set .@y,232;	break;
+	case 2: set .@x,75;	set .@y,138;	break;
+	case 3: set .@x,140;	set .@y,87;		break;
+	case 4: set .@x,205;	set .@y,140;	break;
+	case 5: set .@x,123;	set .@y,137;	break;
+	case 6: set .@x,175;	set .@y,137;	break;
+	}
+	set .@mob,rand(1646,1651);
+	monster "lhz_dun03",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,"summon_boss_lt::OnLhzMvPDead";
+
+	// Select Coordinates to summon a random 99 on
+	switch(rand(1,6)) {
+	case 1: set .@x2,183;	set .@y2,97;	break;
+	case 2: set .@x2,97;	set .@y2,96;	break;
+	case 3: set .@x2,47;	set .@y2,139;	break;
+	case 4: set .@x2,231;	set .@y2,140;	break;
+	case 5: set .@x2,139;	set .@y2,211;	break;
+	case 6: set .@x2,139;	set .@y2,259;	break;
+	}
+	set .@mob2,rand(1640,1645);
+	monster "lhz_dun03",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,"summon_boss_lt::OnMy99Dead";
+	end;
+
+OnLhzMvPDead:
+	killmonster "lhz_dun03","summon_boss_lt::OnMy99Dead";
+	initnpctimer;
+	end;
+
+//Required to keep from erroring
+OnMy99Dead:
+	end;
+}

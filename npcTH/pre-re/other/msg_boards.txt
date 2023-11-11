@@ -1,0 +1,29 @@
+//===== rAthena Script ======================================= 
+//= Misc. Message Boards
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= [Official Conversion]
+//= rAthena Project; 7.15 +
+//===== Description: ========================================= 
+//= Misc. Message Boards for:
+//=  - Izlude
+//===== Additional Comments: ================================= 
+//= 1.0 Moved Izlude NPCs to Pre-RE path.
+//============================================================
+
+// Izlude
+//============================================================
+izlude,54,139,1	script	Sign#Iz1	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Welcome to the Swordsman Academy.";
+	close;
+}
+
+izlude,144,148,1	script	Sign#Iz2	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Welcome.";
+	close;
+}

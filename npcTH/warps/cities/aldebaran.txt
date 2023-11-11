@@ -1,0 +1,56 @@
+//===== rAthena Script =======================================
+//= Al de Baran Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//= Nana (1.1)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 2+
+//===== Description: =========================================
+//= Warp Points for Al de Baran
+//===== Additional Comments: =================================
+//= 1.2 Added Turbo Room Warps [Justin84]
+//= 1.3 Removed Turbo Track entrance. Scripted warp. [L0ne_W0lf]
+//= 1.4 Added missing warps. [L0ne_W0lf]
+//============================================================
+
+//===== Al De Baran Warps =====================================
+aldebaran,118,63,0	warp	ald01	1,1,aldeba_in,211,117
+aldebaran,139,34,0	warp	ald001	3,2,mjolnir_12,199,375
+aldebaran,197,70,0	warp	ald02	1,1,aldeba_in,94,41
+aldebaran,233,105,0	warp	ald04	1,1,aldeba_in,157,190
+aldebaran,51,218,0	warp	ald05	1,1,aldeba_in,24,227
+aldebaran,61,229,0	warp	ald06	1,1,aldeba_in,148,227
+aldebaran,72,197,0	warp	ald07	1,1,aldeba_in,27,37
+aldebaran,89,234,0	warp	ald08	1,1,aldeba_in,242,237
+aldeba_in,103,157,0	warp	ald09	2,2,aldeba_in,137,237
+aldeba_in,103,61,0	warp	ald10	2,2,aldeba_in,97,105
+aldeba_in,134,237,0	warp	ald09-1	2,2,aldeba_in,100,157
+aldeba_in,144,92,0	warp	ald11	2,2,aldeba_in,149,52
+aldeba_in,148,224,0	warp	ald06-1	2,2,aldebaran,63,227
+aldeba_in,149,55,0	warp	ald11-1	2,2,aldeba_in,144,95
+aldeba_in,157,193,0	warp	ald04-1	3,2,aldebaran,231,107
+aldeba_in,208,117,0	warp	ald01-1	2,2,aldebaran,116,63
+aldeba_in,217,131,0	warp	ald12	2,2,aldeba_in,217,163
+aldeba_in,217,160,0	warp	ald12-1	2,2,aldeba_in,217,128
+aldeba_in,217,71,0	warp	ald13-1	2,2,aldeba_in,218,107
+aldeba_in,218,104,0	warp	ald13	2,2,aldeba_in,218,68
+aldeba_in,24,224,0	warp	ald05-1	2,2,aldebaran,53,216
+aldeba_in,245,237,0	warp	ald08-1	2,2,aldebaran,91,234
+aldeba_in,27,102,0	warp	ald14-1	2,2,aldeba_in,27,68
+aldeba_in,27,34,0	warp	ald07-1	2,2,aldebaran,72,195
+aldeba_in,27,71,0	warp	ald14	2,2,aldeba_in,27,105
+aldeba_in,37,238,0	warp	ald15	2,2,aldeba_in,67,157
+aldeba_in,64,157,0	warp	ald15-1	2,2,aldeba_in,34,238
+aldeba_in,83,191,0	warp	ald16	2,2,aldeba_in,83,227
+aldeba_in,83,224,0	warp	ald16-1	2,2,aldeba_in,83,188
+aldeba_in,94,38,0	warp	ald02-1	3,2,aldebaran,197,68
+aldeba_in,97,102,0	warp	ald10-1	2,2,aldeba_in,103,58
+
+aldebaran,225,54,0	warp	aldeb_sign1-1	1,1,aldeba_in,149,120
+aldeba_in,149,123,0	warp	aldeb_sign1-2	3,2,aldebaran,223,56
+
+
+//Turbo Track Room
+turbo_room,100,62,0	warp	exit_turbo	1,1,alde_gld,183,198

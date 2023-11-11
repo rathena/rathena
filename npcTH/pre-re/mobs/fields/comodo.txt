@@ -1,0 +1,200 @@
+//===== rAthena Script =======================================
+//= Comodo Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.2 Official kRO 10.1 spawns [Playtester]
+//= 1.3 More accurate spawns [Playtester]
+//============================================================
+
+//==================================================
+// cmd_fild01 - Papuchicha Forest
+//==================================================
+cmd_fild01,0,0	monster	Alligator	1271,60
+cmd_fild01,0,0	monster	Savage	1166,30
+cmd_fild01,0,0	monster	Poporing	1031,30
+cmd_fild01,0,0	monster	Poison Spore	1077,20
+cmd_fild01,313,213,10,10	monster	Shining Plant	1083,1,1800000,900000
+cmd_fild01,313,213,10,10	monster	Blue Plant	1079,1,1800000,900000
+cmd_fild01,171,339,10,10	monster	Blue Plant	1079,2,1800000,900000
+cmd_fild01,72,78,10,10	monster	Blue Plant	1079,2,1800000,900000
+cmd_fild01,194,176,20,20	monster	Blue Plant	1079,1,1800000,900000
+cmd_fild01,0,0	monster	Green Plant	1080,5,1800000,900000
+
+//==================================================
+// cmd_fild02 - Kokomo Beach
+//==================================================
+cmd_fild02,73,100,40,100	monster	Aster	1266,5
+cmd_fild02,200,130,150,50	monster	Aster	1266,5
+cmd_fild02,0,0	monster	Crab	1073,20
+cmd_fild02,0,0	monster	Alligator	1271,10
+cmd_fild02,0,0	monster	Raggler	1254,30
+cmd_fild02,94,85,40,80	monster	Raggler	1254,2,60000
+cmd_fild02,95,89,40,80	monster	Cornutus	1067,5,180000
+cmd_fild02,279,78,100,20	monster	Cornutus	1067,10,60000
+cmd_fild02,0,0	monster	Shellfish	1074,35
+cmd_fild02,93,82,40,80	monster	Shellfish	1074,5,180000
+cmd_fild02,0,0	monster	Mobster	1313,1
+cmd_fild02,200,130,150,40	monster	Seal	1317,18
+cmd_fild02,93,82,40,80	monster	Seal	1317,2,180000
+cmd_fild02,0,0	monster	Galapago	1391,20
+
+//==================================================
+// cmd_fild03 - Zenhai Marsh
+//==================================================
+cmd_fild03,0,0	monster	Mutant Dragonoid	1262,1
+cmd_fild03,0,0	monster	Pest	1256,30
+cmd_fild03,0,0	monster	Poporing	1031,10
+cmd_fild03,0,0	monster	Anolian	1206,90
+cmd_fild03,0,0	monster	Toad	1089,1,3600000,1800000
+cmd_fild03,356,232,3,3	monster	Shining Plant	1083,1,1800000,900000
+cmd_fild03,262,289,3,3	monster	Shining Plant	1083,1,1800000,900000
+cmd_fild03,145,191,3,3	monster	Shining Plant	1083,1,1800000,900000
+
+//==================================================
+// cmd_fild04 - Kokomo Beach
+//==================================================
+cmd_fild04,221,120,120,40	monster	Aster	1266,45
+cmd_fild04,0,0	monster	Alligator	1271,40
+cmd_fild04,0,0	monster	Crab	1073,20
+cmd_fild04,0,0	monster	Raggler	1254,20
+cmd_fild04,0,0	monster	Shellfish	1074,20
+cmd_fild04,221,120,120,40	monster	Sea Otter	1323,20
+
+//==================================================
+// cmd_fild05 - Border of Papuchica Forest
+//==================================================
+cmd_fild05,0,0	monster	Frilldora	1119,45
+cmd_fild05,0,0	monster	Alligator	1271,20
+cmd_fild05,0,0	monster	Stem Worm	1215,5
+cmd_fild05,0,0	monster	Poporing	1031,10
+cmd_fild05,0,0	monster	Pest	1256,5
+cmd_fild05,63,158,10,10	monster	Shining Plant	1083,1,1800000,900000
+cmd_fild05,318,277,10,10	monster	Yellow Plant	1081,3,1800000,900000
+cmd_fild05,282,49,20,20	monster	Yellow Plant	1081,3,1800000,900000
+cmd_fild05,0,0	monster	Green Plant	1080,5,1800000,900000
+
+//==================================================
+// cmd_fild06 - Fortress Saint Darmain (West)
+//==================================================
+cmd_fild06,0,0	monster	Kobold Archer	1282,5
+cmd_fild06,0,0	monster	Kobold Archer	1282,5,300000
+cmd_fild06,357,299,80,70	monster	Kobold Archer	1282,2
+cmd_fild06,357,299,80,70	monster	Kobold Archer	1282,2,120000
+cmd_fild06,318,146,120,80	monster	Kobold Archer	1282,4
+cmd_fild06,318,146,120,80	monster	Kobold Archer	1282,4,120000
+cmd_fild06,244,113	monster	Kobold Archer	1282,1,180000
+cmd_fild06,290,164	monster	Kobold Archer	1282,1,190000
+cmd_fild06,284,197	monster	Kobold Archer	1282,1,180000
+cmd_fild06,286,289	monster	Kobold Archer	1282,1,180000
+cmd_fild06,314,267	monster	Kobold Archer	1282,1,180000
+cmd_fild06,0,0	monster	Goblin Archer	1258,10
+cmd_fild06,0,0	monster	Goblin Archer	1258,10,30000
+cmd_fild06,355,294,80,70	monster	Goblin Archer	1258,3
+cmd_fild06,355,294,80,70	monster	Goblin Archer	1258,3,120000
+cmd_fild06,307,97,70,200	monster	Goblin Archer	1258,4
+cmd_fild06,307,97,70,200	monster	Goblin Archer	1258,4,120000
+cmd_fild06,100,265,10,40	monster	Goblin Archer	1258,3,130000
+cmd_fild06,244,110	monster	Goblin Archer	1258,1,180000
+cmd_fild06,292,169	monster	Goblin Archer	1258,1,180000
+cmd_fild06,284,129	monster	Goblin Archer	1258,1,180000
+cmd_fild06,184,126	monster	Goblin Archer	1258,1,180000
+cmd_fild06,279,199	monster	Goblin Archer	1258,1,180000
+cmd_fild06,277,186	monster	Goblin Archer	1258,1,180000
+cmd_fild06,284,186	monster	Goblin Archer	1258,1,180000
+cmd_fild06,354,342	monster	Goblin Archer	1258,1,180000
+cmd_fild06,365,342	monster	Goblin Archer	1258,1,180000
+cmd_fild06,340,334	monster	Goblin Archer	1258,1,180000
+cmd_fild06,0,0	monster	Drops	1113,20
+cmd_fild06,0,0	monster	Harpy	1376,1,1500000,1000000
+cmd_fild06,293,235,5,5	monster	Yellow Plant	1081,2,1800000,900000
+cmd_fild06,84,375,10,10	monster	Yellow Plant	1081,3,1800000,900000
+
+//==================================================
+// cmd_fild07 - Beacon Island, Pharos
+//==================================================
+cmd_fild07,242,108,40,90	monster	Aster	1266,2,60000
+cmd_fild07,102,177,60,90	monster	Aster	1266,3,60000
+cmd_fild07,240,107,40,90	monster	Crab	1073,3,60000
+cmd_fild07,100,175,60,90	monster	Crab	1073,2,60000
+cmd_fild07,101,176,60,90	monster	Raggler	1254,1,180000
+cmd_fild07,241,106,40,90	monster	Raggler	1254,1,180000
+cmd_fild07,204,317,60,60	monster	Raggler	1254,1,60000
+cmd_fild07,323,310,60,60	monster	Raggler	1254,1,60000
+cmd_fild07,0,0	monster	Drops	1113,20
+cmd_fild07,239,105,40,90	monster	Shellfish	1074,2,60000
+cmd_fild07,104,180,40,90	monster	Shellfish	1074,3,60000
+
+//==================================================
+// cmd_fild08 - Fortress Saint Darmain (East)
+//==================================================
+cmd_fild08,127,279,30,50	monster	Kobold Archer	1282,5,60000
+cmd_fild08,130,192,110,150	monster	Kobold Archer	1282,5
+cmd_fild08,146,136,30,80	monster	Kobold Archer	1282,5
+cmd_fild08,73,132,40,100	monster	Kobold Archer	1282,5
+cmd_fild08,146,136,30,90	monster	Kobold Archer	1282,5
+cmd_fild08,157,329	monster	Kobold Archer	1282,1,190000
+cmd_fild08,150,320	monster	Kobold Archer	1282,1,190000
+cmd_fild08,195,174	monster	Kobold Archer	1282,1,190000
+cmd_fild08,173,168	monster	Kobold Archer	1282,1,190000
+cmd_fild08,178,363	monster	Kobold Archer	1282,1,190000
+cmd_fild08,175,367	monster	Kobold Archer	1282,1,190000
+cmd_fild08,53,248	monster	Kobold Archer	1282,1,190000
+cmd_fild08,52,238	monster	Kobold Archer	1282,1,190000
+cmd_fild08,272,175,40,2	monster	Kobold Archer	1282,2,60000
+cmd_fild08,190,115,100,80	monster	Kobold Archer	1282,10
+cmd_fild08,130,192,110,150	monster	Kobold Archer	1282,7
+cmd_fild08,72,131,40,100	monster	Kobold Archer	1282,8
+cmd_fild08,319,177	monster	Kobold Archer	1282,1,180000
+cmd_fild08,319,172	monster	Kobold Archer	1282,1,180000
+cmd_fild08,139,71	monster	Kobold Archer	1282,1,180000
+cmd_fild08,136,64	monster	Kobold Archer	1282,1,180000
+cmd_fild08,67,80	monster	Kobold Archer	1282,1,180000
+cmd_fild08,132,149	monster	Kobold Archer	1282,1,180000
+cmd_fild08,97,144	monster	Kobold Archer	1282,1,180000
+cmd_fild08,79,140	monster	Kobold Archer	1282,1,180000
+cmd_fild08,28,102	monster	Kobold Archer	1282,1,180000
+cmd_fild08,80,348,60,40	monster	Goblin Archer	1258,5
+cmd_fild08,130,192,110,150	monster	Goblin Archer	1258,5
+cmd_fild08,194,291,25,40	monster	Goblin Archer	1258,5
+cmd_fild08,73,132,40,100	monster	Goblin Archer	1258,5
+cmd_fild08,182,205	monster	Goblin Archer	1258,1,150000
+cmd_fild08,177,210	monster	Goblin Archer	1258,1,150000
+cmd_fild08,58,40	monster	Goblin Archer	1258,1,150000
+cmd_fild08,55,45	monster	Goblin Archer	1258,1,150000
+cmd_fild08,104,313	monster	Goblin Archer	1258,1,150000
+cmd_fild08,98,307	monster	Goblin Archer	1258,1,150000
+cmd_fild08,41,126	monster	Goblin Archer	1258,1,150000
+cmd_fild08,37,129	monster	Goblin Archer	1258,1,150000
+cmd_fild08,66,252,40,30	monster	Stem Worm	1215,5,30000
+cmd_fild08,130,192,110,150	monster	Stem Worm	1215,10
+cmd_fild08,70,130,40,90	monster	Stem Worm	1215,2
+cmd_fild08,189,64,30,30	monster	Stem Worm	1215,3,180000
+cmd_fild08,174,172	monster	Stem Worm	1215,1,180000
+cmd_fild08,266,175	monster	Stem Worm	1215,1,180000
+cmd_fild08,127,273	monster	Stem Worm	1215,1,180000
+cmd_fild08,92,141	monster	Stem Worm	1215,1,180000
+cmd_fild08,85,135	monster	Stem Worm	1215,1,180000
+cmd_fild08,0,0	monster	Drops	1113,10
+cmd_fild08,326,258,50,110	monster	Sandman	1165,15
+cmd_fild08,326,258,50,110	monster	Kobold Archer	1282,10
+cmd_fild08,326,258,50,110	monster	Side Winder	1037,2
+cmd_fild08,0,0	monster	Side Winder	1037,3
+cmd_fild08,130,192,110,150	monster	Side Winder	1037,15
+cmd_fild08,0,0	monster	Gryphon	1259,1,3600000,1800000
+cmd_fild08,60,143,10,10	monster	Yellow Plant	1081,4,1800000,900000
+cmd_fild08,130,201,10,10	monster	Yellow Plant	1081,4,1800000,900000
+
+//==================================================
+// cmd_fild09 - Fortress Saint Darmain (South)
+//==================================================
+cmd_fild09,0,0	monster	Steel Chonchon	1042,20
+cmd_fild09,0,0	monster	Drops	1113,20
+cmd_fild09,0,0	monster	Anacondaq	1030,60
+cmd_fild09,0,0	monster	Condor	1009,20
+cmd_fild09,142,325,40,50	monster	Hode	1127,3,150000
+cmd_fild09,140,323,40,50	monster	Gargoyle	1253,2,150000

@@ -1,0 +1,460 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable teleportation.
+//===== Description: ========================================= 
+//= Disables all means of teleportation within a map.
+//= Script commands 'warp', 'areawarp', 'warpchar',
+//=   'warpparty', 'warpguild', 'warpwaitingpc' will not
+//=   work with "Random" destination.
+//= Disables skills AL_TELEPORT and TK_HIGHJUMP.
+//= Disables the following items:
+//=   Fly Wing (601), Giant Fly Wing (12212)
+//===== Changelogs: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added dali, dali02 [Nova]
+//= 1.2 Added WOE:TE maps [Cydh,Capuche]
+//= 1.3 Added Para Market maps [mazvi]
+//============================================================
+
+//============================================================
+// Paradise Market
+//============================================================
+paramk	mapflag	noteleport
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
+moc_para01	mapflag	noteleport
+
+//============================================================
+// Episode 13
+//============================================================
+s_atelier	mapflag	noteleport
+bra_in01	mapflag	noteleport
+dic_in01	mapflag	noteleport
+job3_gen01	mapflag	noteleport
+job3_sha01	mapflag	noteleport
+
+//============================================================
+// Episode 14
+//============================================================
+1@mist	mapflag	noteleport
+1@mist	mapflag	monster_noteleport
+dew_in01	mapflag	noteleport
+mal_in01	mapflag	noteleport
+mal_in02	mapflag	noteleport
+1@cash	mapflag	noteleport
+1@cash	mapflag	monster_noteleport
+1@pump	mapflag	noteleport
+1@pump	mapflag	monster_noteleport
+2@pump	mapflag	noteleport
+2@pump	mapflag	monster_noteleport
+que_lhz	mapflag	noteleport
+que_lhz	mapflag	monster_noteleport
+1@lhz	mapflag	noteleport
+1@lhz	mapflag	monster_noteleport
+ma_scene01	mapflag	noteleport
+ma_in01	mapflag	noteleport
+1@ma_h	mapflag	noteleport
+1@ma_h	mapflag	monster_noteleport
+1@ma_c	mapflag	noteleport
+1@ma_c	mapflag	monster_noteleport
+1@ma_b	mapflag	noteleport
+1@ma_b	mapflag	monster_noteleport
+ma_zif01	mapflag	noteleport
+ma_zif02	mapflag	noteleport
+ma_zif03	mapflag	noteleport
+ma_zif04	mapflag	noteleport
+ma_zif05	mapflag	noteleport
+ma_zif06	mapflag	noteleport
+ma_zif07	mapflag	noteleport
+ma_zif08	mapflag	noteleport
+ma_zif09	mapflag	noteleport
+job_ko	mapflag	noteleport
+job_gun	mapflag	noteleport
+ecl_in01	mapflag	noteleport
+ecl_in02	mapflag	noteleport
+ecl_in03	mapflag	noteleport
+ecl_in04	mapflag	noteleport
+1@ecl	mapflag	noteleport
+1@ecl	mapflag	monster_noteleport
+ecl_hub01	mapflag	noteleport
+
+//============================================================
+// Glastheim Memorial Dungeon
+//============================================================
+1@gl_k	mapflag	noteleport
+1@gl_k	mapflag	monster_noteleport
+2@gl_k	mapflag	noteleport
+2@gl_k	mapflag	monster_noteleport
+gl_chyard_	mapflag	noteleport
+gl_cas02_	mapflag	noteleport
+
+//============================================================
+// Wave Mode Memorial Dungeon
+//============================================================
+1@def01	mapflag	noteleport
+1@def01	mapflag	monster_noteleport
+1@def02	mapflag	noteleport
+1@def02	mapflag	monster_noteleport
+1@def03	mapflag	noteleport
+1@def03	mapflag	monster_noteleport
+
+//============================================================
+// Heroes' Trail - Part 1
+//============================================================
+1@face	mapflag	noteleport
+1@face	mapflag	monster_noteleport
+1@sara	mapflag	noteleport
+1@sara	mapflag	monster_noteleport
+dali	mapflag	noteleport
+dali02	mapflag	noteleport
+
+//============================================================
+// Heroes' Trail - Part 2
+//============================================================
+1@ge_st	mapflag	noteleport
+1@ge_st	mapflag	monster_noteleport
+1@gef	mapflag	noteleport
+1@gef	mapflag	monster_noteleport
+1@gef_in	mapflag	noteleport
+1@gef_in	mapflag	monster_noteleport
+1@spa	mapflag	noteleport
+1@spa	mapflag	monster_noteleport
+1@tnm1	mapflag	noteleport
+1@tnm1	mapflag	monster_noteleport
+1@tnm2	mapflag	noteleport
+1@tnm2	mapflag	monster_noteleport
+1@tnm3	mapflag	noteleport
+1@tnm3	mapflag	monster_noteleport
+
+//============================================================
+// Horror Toy Factory Memorial Dungeon
+//============================================================
+1@xm_d	mapflag	monster_noteleport
+1@xm_d	mapflag	noteleport
+
+//============================================================
+// Heroes' Trail - Part 3
+//============================================================
+1@glast	mapflag	noteleport
+1@air1	mapflag	noteleport
+1@air2	mapflag	noteleport
+1@glast	mapflag	monster_noteleport
+1@air1	mapflag	monster_noteleport
+1@air2	mapflag	monster_noteleport
+
+//============================================================
+// Decisive Battle - Part 1
+//============================================================
+1@dth1	mapflag	noteleport
+1@dth2	mapflag	noteleport
+1@dth3	mapflag	noteleport
+1@rev	mapflag	noteleport
+1@dth1	mapflag	monster_noteleport
+1@dth2	mapflag	monster_noteleport
+1@dth3	mapflag	monster_noteleport
+1@rev	mapflag	monster_noteleport
+
+//============================================================
+// Decisive Battle - Part 2
+//============================================================
+1@eom	mapflag	noteleport
+1@jtb	mapflag	noteleport
+1@eom	mapflag	monster_noteleport
+1@jtb	mapflag	monster_noteleport
+
+//============================================================
+// Episode 15 - Phantasmagorica
+//============================================================
+1@lab	mapflag	noteleport
+1@uns	mapflag	noteleport
+un_bk_q	mapflag	noteleport
+un_myst	mapflag	noteleport
+verus04	mapflag	noteleport
+1@mcd	mapflag	noteleport
+1@lab	mapflag	monster_noteleport
+1@uns	mapflag	monster_noteleport
+un_bk_q	mapflag	monster_noteleport
+verus04	mapflag	monster_noteleport
+1@mcd	mapflag	monster_noteleport
+
+//============================================================
+// Nightmare Biolab
+//============================================================
+lhz_dun_n	mapflag	noteleport
+lhz_d_n2	mapflag	noteleport
+
+//============================================================
+// Infinite Space
+//============================================================
+1@infi	mapflag	noteleport
+1@infi	mapflag	monster_noteleport
+
+//============================================================
+// WoE:TE Castles
+//============================================================
+te_prtcas01	mapflag	noteleport
+te_prtcas02	mapflag	noteleport
+te_prtcas03	mapflag	noteleport
+te_prtcas04	mapflag	noteleport
+te_prtcas05	mapflag	noteleport
+te_aldecas1	mapflag	noteleport
+te_aldecas2	mapflag	noteleport
+te_aldecas3	mapflag	noteleport
+te_aldecas4	mapflag	noteleport
+te_aldecas5	mapflag	noteleport
+te_prtcas01	mapflag	monster_noteleport
+te_prtcas02	mapflag	monster_noteleport
+te_prtcas03	mapflag	monster_noteleport
+te_prtcas04	mapflag	monster_noteleport
+te_prtcas05	mapflag	monster_noteleport
+te_aldecas1	mapflag	monster_noteleport
+te_aldecas2	mapflag	monster_noteleport
+te_aldecas3	mapflag	monster_noteleport
+te_aldecas4	mapflag	monster_noteleport
+te_aldecas5	mapflag	monster_noteleport
+
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
+prt_cas	mapflag	noteleport
+prt_cas_q	mapflag	noteleport
+prt_pri00	mapflag	noteleport
+prt_lib	mapflag	noteleport
+prt_lib_q	mapflag	noteleport
+que_swat	mapflag	noteleport
+rebel_in	mapflag	noteleport
+rebel_in	mapflag	monster_noteleport
+1@mir	mapflag	noteleport
+2@mir	mapflag	noteleport
+1@sthb	mapflag	noteleport
+1@sthc	mapflag	noteleport
+1@sthd	mapflag	noteleport
+1@slw	mapflag	noteleport
+1@swat	mapflag	noteleport
+1@mir	mapflag	monster_noteleport
+2@mir	mapflag	monster_noteleport
+1@sthb	mapflag	monster_noteleport
+1@sthc	mapflag	monster_noteleport
+1@sthd	mapflag	monster_noteleport
+1@slw	mapflag	monster_noteleport
+1@swat	mapflag	monster_noteleport
+
+//============================================================
+// Rockridge
+//============================================================
+har_in01	mapflag	noteleport
+rockmi2	mapflag	noteleport
+
+//============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	noteleport
+1@md_pay	mapflag	noteleport
+
+//============================================================
+// Lasagna
+//============================================================
+lasa_in01	mapflag	noteleport
+conch_in	mapflag	noteleport
+
+//============================================================
+// Chicken Mode - Nightmare Glastheim
+//============================================================
+1@gl_k2	mapflag	noteleport
+2@gl_k2	mapflag	noteleport
+1@gl_k2	mapflag	monster_noteleport
+2@gl_k2	mapflag	monster_noteleport
+
+//============================================================
+// Chicken Mode - Horror Toy Factory
+//============================================================
+1@xm_d2	mapflag	noteleport
+1@xm_d2	mapflag	monster_noteleport
+
+//============================================================
+// Suspicious Shipwreck
+//============================================================
+1@tre	mapflag	noteleport
+1@tre	mapflag	monster_noteleport
+
+//============================================================
+// Poring Village
+//============================================================
+1@begi	mapflag	noteleport
+1@begi	mapflag	monster_noteleport
+
+//============================================================
+// Volcanic Island Korodo
+//============================================================
+1@crd	mapflag	noteleport
+1@crd	mapflag	monster_noteleport
+
+//============================================================
+// Noodles Festival July
+//============================================================
+1@drdo	mapflag	noteleport
+1@drdo	mapflag	monster_noteleport
+
+//============================================================
+// Soul Reaper Job Change
+//============================================================
+1@soul	mapflag	noteleport
+1@soul	mapflag	monster_noteleport
+
+//============================================================
+// Episode 17.1
+//============================================================
+1@cor	mapflag	noteleport
+1@os_a	mapflag	noteleport
+1@os_b	mapflag	noteleport
+1@rgsr	mapflag	noteleport
+pub_cat	mapflag	noteleport
+rgsr_in	mapflag	noteleport
+1@cor	mapflag	monster_noteleport
+1@os_a	mapflag	monster_noteleport
+1@os_b	mapflag	monster_noteleport
+1@rgsr	mapflag	monster_noteleport
+
+//============================================================
+// Episode 17.2
+//============================================================
+1@bamn	mapflag	noteleport
+1@bamq	mapflag	noteleport
+1@ghg	mapflag	noteleport
+1@herbs	mapflag	noteleport
+1@lost	mapflag	noteleport
+ba_in01	mapflag	noteleport
+1@odin	mapflag	noteleport
+1@bamn	mapflag	monster_noteleport
+1@bamq	mapflag	monster_noteleport
+1@ghg	mapflag	monster_noteleport
+1@herbs	mapflag	monster_noteleport
+1@lost	mapflag	monster_noteleport
+1@odin	mapflag	monster_noteleport
+
+//============================================================
+// 4th Jobs Change
+//============================================================
+1@4win	mapflag	noteleport
+1@4mag	mapflag	noteleport
+1@4mst	mapflag	noteleport
+1@4sac	mapflag	noteleport
+1@4tro	mapflag	noteleport
+1@4inq	mapflag	noteleport
+1@4cdn	mapflag	noteleport
+1@4igd	mapflag	noteleport
+1@4drk	mapflag	noteleport
+job4_bio	mapflag	noteleport
+job4_mag	mapflag	noteleport
+job4_tro	mapflag	noteleport
+1@4win	mapflag	monster_noteleport
+1@4mag	mapflag	monster_noteleport
+1@4mst	mapflag	monster_noteleport
+1@4sac	mapflag	monster_noteleport
+1@4tro	mapflag	monster_noteleport
+1@4inq	mapflag	monster_noteleport
+1@4cdn	mapflag	monster_noteleport
+1@4igd	mapflag	monster_noteleport
+1@4drk	mapflag	monster_noteleport
+
+//============================================================
+// Geffen Night Arena
+//============================================================
+1@ge_sn	mapflag	noteleport
+1@ge_sn	mapflag	monster_noteleport
+
+//============================================================
+// Traces of Heroes
+//============================================================
+1@mjo1	mapflag	noteleport
+1@mjo2	mapflag	noteleport
+1@spa2	mapflag	noteleport
+1@mjo1	mapflag	monster_noteleport
+1@mjo2	mapflag	monster_noteleport
+1@spa2	mapflag	monster_noteleport
+
+//============================================================
+// Thanatos Tower Memorial Dungeon
+//============================================================
+1@thts	mapflag	noteleport
+2@thts	mapflag	noteleport
+3@thts	mapflag	noteleport
+4@thts	mapflag	noteleport
+5@thts	mapflag	noteleport
+6@thts	mapflag	noteleport
+7@thts	mapflag	noteleport
+8@thts	mapflag	noteleport
+1@thts	mapflag	monster_noteleport
+2@thts	mapflag	monster_noteleport
+3@thts	mapflag	monster_noteleport
+4@thts	mapflag	monster_noteleport
+5@thts	mapflag	monster_noteleport
+6@thts	mapflag	monster_noteleport
+7@thts	mapflag	monster_noteleport
+8@thts	mapflag	monster_noteleport
+
+//============================================================
+// Glastheim Challenge Mode
+//============================================================
+1@gl_he	mapflag	noteleport
+1@gl_he2	mapflag	noteleport
+1@gl_he	mapflag	monster_noteleport
+1@gl_he2	mapflag	monster_noteleport
+
+//============================================================
+// EDDA
+//============================================================
+1@gl_prq	mapflag	noteleport
+1@gol1	mapflag	noteleport
+1@gol2	mapflag	noteleport
+1@gl_prq	mapflag	monster_noteleport
+1@gol1	mapflag	monster_noteleport
+1@gol2	mapflag	monster_noteleport
+
+//============================================================
+// 2018 Halloween
+//============================================================
+1@halo	mapflag	noteleport
+1@halo	mapflag	monster_noteleport
+
+//============================================================
+// Constellation Tower
+//============================================================
+1@ch_t	mapflag	noteleport
+2@ch_t	mapflag	noteleport
+3@ch_t	mapflag	noteleport
+1@ch_t	mapflag	monster_noteleport
+2@ch_t	mapflag	monster_noteleport
+3@ch_t	mapflag	monster_noteleport
+
+//============================================================
+// Episode 18 - Direction of Prayer
+//============================================================
+1@adv	mapflag	noteleport
+1@advs	mapflag	noteleport
+1@nyr	mapflag	noteleport
+1@oz	mapflag	noteleport
+1@tcamp	mapflag	noteleport
+2@nyr	mapflag	noteleport
+que_thr	mapflag	noteleport
+1@adv	mapflag	monster_noteleport
+1@advs	mapflag	monster_noteleport
+1@nyr	mapflag	monster_noteleport
+1@oz	mapflag	monster_noteleport
+1@tcamp	mapflag	monster_noteleport
+2@nyr	mapflag	monster_noteleport
+
+//============================================================
+// Sunken Tower
+//============================================================
+1@ch_u	mapflag	noteleport
+1@ch_u	mapflag	noteleport
+1@ch_u	mapflag	monster_noteleport
+1@ch_u	mapflag	monster_noteleport
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	noteleport
+itemmall	mapflag	monster_noteleport

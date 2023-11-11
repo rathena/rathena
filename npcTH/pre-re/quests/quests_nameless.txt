@@ -1,0 +1,18 @@
+//===== rAthena Script ======================================= 
+//= Nameless Island Quests
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Contains:
+//= - Muff's Loan
+//===== Additional Comments: ================================= 
+//= 1.0 Moved Dorian to pre-re/re paths.
+//============================================================ 
+
+izlude_in,110,64,3	duplicate(Dorian_izlude)	Dorian	878,2,2
+izlude_in,113,66,0	duplicate(StrangeMachine_izlude)	Strange Machine	111

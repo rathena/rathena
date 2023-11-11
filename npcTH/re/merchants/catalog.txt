@@ -1,0 +1,110 @@
+//===== rAthena Script =======================================
+//= Catalog Magician
+//===== By: ==================================================
+//= skyiing, Scriptor
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Catalogs allow players to easily search for items in-game,
+//= and to buy/sell directly from the catalog interface.
+//===== Additional Comments: =================================
+//= 1.0 Moved from root directory. [Euphy]
+//= 1.1 Updated dialogue. [Euphy]
+//============================================================ 
+
+// Main NPC :: catalog_merchant
+//============================================================
+moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
+	if (!checkweight(1301,3)) {
+		mes "- คุณมีรายการไอเท็มมากเกินไปโปรดสร้างที่ว่าง -";
+		close;
+	}
+	set .@ticket_cost, 200;
+	mes "[Catalog Magician]";
+	mes "ดูนี่สิ... Magic Academy";
+	mes "ใน Geffen ตรงนี้";
+	mes "สินค้าใหม่";
+	mes "^007777Universal Catalog Silver^000000!";
+	next;
+	mes "เขากำลังดูคำว่า";
+	mes "เขียนด้วยมือของเขา";
+	mes "เขาดูยุ่งเกินไป";
+	mes "เพื่อดูเจ้า";
+	next;
+	mes "[Catalog Magician]";
+	mes "แคตตาล็อกใหม่เอี่ยม";
+	mes "เพิ่งออกมา!";
+	mes "คุณสามารถตรวจสอบได้";
+	mes "เจ้าสามารถค้าอะไรได้บ้าง";
+	mes "และไอเท็มลดราคา";
+	mes "จากผู้ขาย";
+	next;
+	mes "[Catalog Magician]";
+	mes "The ^007777Universal Catalog Silver^000000";
+	mes "ราคาแค่ 200z!";
+	mes "คุณสามารถซื้อได้สูงสุด 50 ชิ้นพร้อมกัน!";
+	next;
+	switch(select("ซื้อ ^007777Universal Catalog Silver^000000:ฉันไม่ต้องการมัน:คุณดูไม่เหมือนผู้ขายเลย!")) {
+	case 1:
+		mes "[Catalog Magician]";
+		mes "คุณ ... ต้องการทั้งหมด 50 ชิ้น";
+		mes "หรือเจ้าต้องการเท่าไร";
+		next;
+		while (1) {
+			input .@input;
+			mes "[Catalog Magician]";
+			if (.@input == 0) {
+				mes "การค้าหยุดลง!";
+				mes "ฉันไม่รู้จะทำอย่างไรต่อไป ... ";
+				mes "ฉันควรทำอย่างไรดี";
+				emotion ET_PROFUSELY_SWEAT, playerattached();
+				close;
+			} else if (.@input < 1 || .@input > 50) {
+				mes "มันควรจะน้อยกว่า 50 ชิ้น";
+				next;
+			} else
+				break;
+		}
+		set .@sell, .@ticket_cost * .@input;
+		mes "จำนวนแคตตาล็อกทั้งหมดที่คุณพยายามซื้อคือ" + .@input + " ชิ้น";
+		mes "มันราคา" + .@sell + "z.";
+		if (Zeny < .@sell) {
+			mes "ดูเหมือนว่าคุณไม่มีเงินเพียงพอ";
+			mes "คุณสามารถขายอุปกรณ์ของคุณ";
+			mes "เพื่อหารายได้เพิ่มเติม ... ถ้าคุณต้องการ";
+			close;
+		}
+		mes "ตกลงเจ้าไปนี่";
+		set Zeny, Zeny - .@sell;
+		getitem 12580,.@input; //Vending_Search_Scroll
+		close;
+	case 2:
+		mes "[Catalog Magician]";
+		mes "Argh ... เจ้าต้องการสิ่งนี้จริง ๆ ";
+		mes "item ... เจ้าต้องการให้ข้า";
+		mes "อธิบายอีกครั้งหรือไม่ข้าไม่รู้";
+		mes "จะทำอย่างไรต่อไป ... ";
+		mes "ฉันควรทำอย่างไรดี";
+		emotion ET_PROFUSELY_SWEAT, playerattached();
+		close;
+	case 3:
+		mes "[Catalog Magician]";
+		mes "งานที่แท้จริงของฉันคือนักมายากล";
+		mes "ฉันจะถามพ่อค้า";
+		mes "กิลด์ที่จะขายพวกมัน แต่พวกมันเป็น";
+		mes "พยายามใช้มันเป็นภาคผนวก";
+		mes "เข้าสู่การขายไม้กวาดนั่นเป็นสาเหตุ";
+		mes "ข้าขายมันเอง";
+		next;
+		mes "[Catalog Magician]";
+		mes "มีนักผจญภัยมากมาย";
+		mes "ที่นี่ใครจะไปแล้ว";
+		mes "ฉันค่อนข้างแน่ใจว่าฉันสามารถขายให้กับพวกเขาได้ในไม่ช้า";
+		mes "เจ้าไม่คิดอย่างงั้นเหรอ?";
+		mes "งั้น ... มาเริ่มกันเถอะ !! ซื้อของให้มากขึ้นได้โปรดได้โปรด ... !";
+		close;
+	}
+}

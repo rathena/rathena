@@ -1,0 +1,441 @@
+//===== rAthena Script ======================================= 
+//= Eden Group Quests - Common NPCs
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 2.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Eden Group Headquarter NPC's.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//= 1.1 Removed showevent use, and use of duplicates.
+//=     Commented out warps that should not be active.
+//= 1.2 Reduced 300+ copy-paste lines to 1 duplicated NPC. [Brian]
+//= 1.3 Some little optimization here and there. [Masao]
+//= 1.4 Updated to match the new Izlude Map. [Masao]
+//= 1.5 Added some missing Eden Group Teleport Officers. [Masao]
+//= 1.6 Added Izlude RE coordinates. [Euphy]
+//= 1.7 Added Malaya teleporter. [Euphy]
+//= 1.8 Updated to match the latest official script. [Euphy]
+//= 1.9 Added support to Para_Team_Mark_ in Eden Group. [AtlantisRO/Ragno]
+//= 2.0 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+// Common NPCs :: lv_tre
+//============================================================
+moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
+	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
+		mes "- รอสักครู่ !! -";
+		mes "- ขณะนี้คุณกำลังแบก -";
+		mes "- มีรายการกับคุณมากเกินไป -";
+		mes "- โปรดลองอีกครั้ง -";
+		mes "- หลังจากที่คุณลดน้ำหนักแล้ว -";
+		close;
+	}
+	if (countitem(6219) > 0) {
+		mes "[Lime Evenor]";
+		mes "ขอบคุณนักผจญภัยมากมายที่มาเยี่ยมชมกลุ่ม Eden ของเราเมื่อเร็ว ๆ นี้เราได้เตรียม Eden Group Mark เวอร์ชั่นใหม่สำหรับผู้เยี่ยมชมของเรา";
+		mes "และยังเป็นไปได้ที่จะเปลี่ยนเวอร์ชั่นเก่าของ Eden Group Mark ไปเป็นเวอร์ชั่นใหม่";
+		next;
+		mes "[Lime Evenor]";
+		mes "แม้ว่ามันจะมีความล่าช้าเล็กน้อย แต่ Eden Group Mark เวอร์ชั่นใหม่นี้จะส่งคุณกลับไปยังตำแหน่งที่บันทึกไว้ในปัจจุบัน";
+		mes "คุณต้องการแลกเปลี่ยนของคุณหรือไม่";
+		next;
+		if (select("แน่นอน: ฉันดี") == 2){
+			mes "[Lime Evenor]";
+			mes "เหตุผลใดที่คุณจะต้องมี ... ที่จะไม่แลกเปลี่ยน";
+			close;
+		}
+		delitem 6219,1;
+		getitem 22508,1;
+		mes "[Lime Evenor]";
+		mes "ไปแล้วกลับมาอีกแล้ว ~";
+		close;
+	}
+	mes "[Lime Evenor]";
+	mes "ผู้ที่ติดตามความฝันและความรักของพวกเราฟังเราเราเป็นตัวแทนของสวรรค์ที่เรียกว่า 'สวนแห่งอีเดน' เรียกว่ากลุ่มเอเดนไม่มีที่ไหนที่นี่อีกเลย";
+	mes "สวัสดี. ฉันช่วยคุณได้ไหม";
+	next;
+	while (1) {
+		switch (select("กลุ่ม Eden คืออะไร: เข้าร่วมกลุ่ม Eden: ลงทะเบียนภารกิจใหม่: ค้นหาภารกิจ: ยกเลิก")) {
+		case 1:
+			mes "[Lime Evenor]";
+			mes "Eden Group เป็นกลุ่มที่ช่วยให้ผู้ที่ทุกข์ทรมานจากความทุกข์ใน Midgard";
+			next;
+			mes "[Lime Evenor]";
+			mes "ถ้าผู้คนต้องการความช่วยเหลือพวกเราวางเรื่องไว้บนกระดานข่าวและแนะนำให้สมาชิกของเราที่กระตือรือร้นที่จะช่วยเหลือผู้ที่ต้องการความช่วยเหลือ";
+			next;
+			mes "[Lime Evenor]";
+			mes "สมาชิกอีเด็นจะทบทวนภารกิจและช่วยเหลือผู้ที่โพสต์มันไว้";
+			mes "สมาชิกทำภารกิจเหล่านี้เพื่อรับรางวัล";
+			next;
+			mes "[Lime Evenor]";
+			mes "ถ้าคุณไม่คุ้นเคยกับ Midgard นี่เป็นวิธีที่ยอดเยี่ยมในการสำรวจโลก";
+			mes "หรือถ้าคุณโตพอแล้วคุณสามารถท่องเที่ยวไปทั่วโลกและหาเพื่อนใหม่ในขณะทำภารกิจชื่ออันทรงเกียรติของคุณจะถูกกระจายออกไปในดินแดนต่าง ๆ ";
+			next;
+			break;
+		case 2:
+			if (!callfunc("F_HasEdenGroupMark")) {
+				mes "[Lime Evenor]";
+				mes "คุณสามารถเป็นสมาชิกของ Eden ได้เพียงแค่ลงทะเบียนกับฉัน";
+				mes "คุณต้องการเข้าร่วมกลุ่มอีเดนหรือไม่";
+				next;
+				switch (select("ใช่ฉันต้องการเข้าร่วม: ไม่ฉันไม่ต้องการเข้าร่วม")) {
+				case 1:
+					mes "[Lime Evenor]";
+					mes "ดีมากเยี่ยมโปรดเขียนชื่อของคุณที่นี่";
+					input .@input$;
+					next;
+					mes "[Lime Evenor]";
+					mes "คุณทำเสร็จแล้วหรือ";
+					mes "มาดูกันเถอะ";
+					next;
+					mes "[Lime Evenor]";
+					mes "ชื่อของคุณคือ ^3131FF " + .@input$ + " ^000000 ใช่ไหม?";
+					mes "หืมมใช่เหรอ?";
+					next;
+					emotion ET_SWEAT;
+					mes "[Lime Evenor]";
+					mes "อืมนั่นไม่ใช่สิ่งที่คุณเขียน?";
+					mes "โอเคอืมดูเหมือนยากที่จะอ่าน";
+					next;
+					mes "[Lime Evenor]";
+					mes "คุณกรุณาเขียนชื่อของคุณอีกครั้งได้ไหมกรุณาเขียนมัน ^3131FF อย่างชัดเจน^000000";
+					input .@input$;
+					next;
+					mes "[Lime Evenor]";
+					mes "อา ~ ฮ่า. คุณคือ ^3131FF" + strcharinfo(0) + "^000000.";
+					mes "คราวนี้ข้าเข้าใจถูกแล้ว";
+					next;
+					emotion ET_BEST;
+					mes "[Lime Evenor]";
+					mes "เราได้ใส่ชื่อของคุณไว้ในรายการแล้ว";
+					mes "ยินดีต้อนรับสมาชิกใหม่ของ Eden!";
+					next;
+					mes "[Lime Evenor]";
+					mes "หวังว่าคุณจะสามารถทำงานได้ดีในฐานะสมาชิกของ Eden";
+					getitem 22508,1; //Para_Team_Mark_
+					getitem 14582,5; //	Yellow Butterfly Wing
+					getitem 12215,15; //	LV10 Blessing Scroll
+					getitem 12216,15; //	LV10 Agil Scroll
+					next;
+					break;
+				case 2:
+					mes "[Lime Evenor]";
+					mes "คุณยังมีคำถามเกี่ยวกับกลุ่ม Eden หรือไม่";
+					next;
+					break;
+				}
+			} else {
+				mes "[Lime Evenor]";
+				mes "คุณเป็นสมาชิกของ Eden Group อยู่แล้ว";
+				next;
+			}
+			break;
+		case 3:
+			mes "[Lime Evenor]";
+			mes "คุณต้องการลงทะเบียนภารกิจที่คุณต้องการให้เราทำหรือไม่";
+			next;
+			if(select("ใช่ฉันต้องการลงทะเบียน: ไม่ฉันไม่ต้องการ") == 1) {
+				mes "[Lime Evenor]";
+				mes "Alrigh กรุณาเขียนชื่อของคุณลงไปด้วย";
+				input .@input$;
+				next;
+				mes "[Lime Evenor]";
+				mes "^3131FF" + strcharinfo(0) + "^000000 .. นั่นคือชื่อของคุณหรือไม่";
+				mes "อืมลายมือของคุณไม่ชัดเจนฉันอ่านไม่ออก";
+				next;
+				mes "[Lime Evenor]";
+				mes "^3131FF" + strcharinfo(0) + "^000000 บอกสิ่งที่คุณต้องการลงทะเบียน";
+				mes "แผนที่อันไหนที่เราควรไป";
+				input .@input$;
+				next;
+				mes "[Lime Evenor]";
+				mes "^3131FF แผนที่ภารกิจ:" + .@inputstr$ + "^000000";
+				mes "hum, ข้าจะทราบว่า";
+				next;
+				mes "[Lime Evenor]";
+				mes "โปรดแจ้งให้เราทราบว่าคุณกำลังมองหาภารกิจประเภทใด";
+				mes "มันควรจะสั้น ๆ เหมือน 'Hunt 10 Porings'";
+				input .@input$;
+				next;
+				mes "[Lime Evenor]";
+				mes "คุณทำเสร็จแล้วหรือ";
+				mes "ให้ฉันตรวจสอบ";
+				next;
+				mes "[Lime Evenor]";
+				mes "Huh...........";
+				next;
+				mes "[Lime Evenor]";
+				mes "Hum.. huh??..................";
+				next;
+				emotion ET_THINK;
+				mes "[Lime Evenor]";
+				mes "ข้าคิดว่าเจ้าควรทำภารกิจให้สำเร็จก่อนที่จะทำภารกิจใหม่";
+				next;
+				emotion ET_HNG;
+				mes "[Lime Evenor]";
+				mes "^3131FFClient: Lime Evenor ^000000";
+				mes "^3131FFMission: ฝึกลายมือของคุณเป็นเวลาหนึ่งเดือน ^000000";
+				mes "เจ้ามีความรู้สึกแย่จริงๆ!";
+				next;
+				mes "[Lime Evenor]";
+				mes "^3131FFMission:" + .@input$ + "^000000";
+				mes "อย่างไรก็ตามคุณลงทะเบียนภารกิจใหม่เสร็จแล้ว";
+				next;
+				mes "[Lime Evenor]";
+				mes "ภารกิจถูกจองเต็มแล้วคุณต้องรอจุดที่จะล้างข้อมูล";
+				mes "ได้โปรดรอจนกว่าจะถึงตาคุณ";
+				next;
+			}
+			break;
+		case 4:
+			if (callfunc("F_HasEdenGroupMark")) {
+				mes "[Lime Evenor]";
+				mes "อยากจะลองทำภารกิจในฐานะสมาชิกอีเด็นไหม?";
+				next;
+				mes "[Lime Evenor]";
+				mes "ตรวจสอบทางด้านขวาของกระดานข่าวมีภารกิจหลากหลายรอคุณอยู่";
+				mes "โปรดอ่านรายละเอียดภารกิจและคุณสมบัติและเลือกอย่างใดอย่างหนึ่ง";
+				next;
+			}
+			else {
+				mes "[Lime Evenor]";
+				mes "คุณต้องเข้าร่วมกลุ่ม Eden ก่อนถ้าคุณต้องการทำภารกิจ";
+				close;
+			}
+			break;
+		case 5:
+			mes "[Lime Evenor]";
+			mes "หากคุณมีคำถามใด ๆ โปรดกลับมาอีกครั้ง";
+			close;
+		}
+	}
+	close;
+}
+
+-	script	Eden Teleport Officer#0::eto	-1,{
+	mes "[Eden Teleport Officer]";
+	mes "ใครที่กำลังจะออกเดินทางไปยังสถานที่แปลกใหม่ และยังไม่มีจุดหมายปลายทาง ฟังทางนี้และมากับข้า!";
+	mes "Eden group จะช่วยท่านและแสดงให้เห็นถึงอนาคตที่ดีกว่า";
+	next;
+	mes "[Eden Teleport Officer]";
+	mes "ท่านเคยรู้สึกว่าปล่อยเวลาให้สูญไป โดยเปล่าประโยชน์ไหม?";
+	mes "ท่านเป็นคนที่มีความกระตือรือร้น แต่ไม่มีใครหยิบยื่นงานดีๆให้ทำ หรือเปล่า?";
+	mes "ท่านต้องการผู้ที่สามารถแก้ปัญหา เหล่านี้ได้หรือไม่?";
+	mes "Eden group สามารถช่วยแก้ไขปัญหาต่างๆ เหล่านี้ให้ท่านได้";
+	next;
+	switch (select("ไปยัง Eden Group.:ไม่อยากพูดอะไรแล้ว")) {
+	case 1:
+		mes "[Eden Teleport Officer]";
+		mes "ไปยังฐานลับของเรากันเลยยยย!";
+		set nak_warp,strnpcinfo(2);
+		close2;
+		warp "moc_para01",31,14;
+		end;
+	case 2:
+		mes "[Eden Teleport Officer]";
+		mes "ถ้าท่านไม่รู้ว่าจะทำยังไงกับอนาคต ของท่านดี อย่าลังเลที่จะบอกข้า ทิ้งมันไปสะ แล้วบอกข้า! ตกลงนะ?";
+		close;
+	}
+}
+prontera,124,76,3	duplicate(eto)	Eden Teleport Officer#1	729
+moc_ruins,68,164,3	duplicate(eto)	Eden Teleport Officer#2	729
+geffen,132,66,3	duplicate(eto)	Eden Teleport Officer#3	729
+alberta,124,67,3	duplicate(eto)	Eden Teleport Officer#4	729
+aldebaran,133,119,5	duplicate(eto)	Eden Teleport Officer#5	729
+izlude_in,68,162,1	duplicate(eto)	Eden Teleport Officer#6	729
+prt_church,103,78,3	duplicate(eto)	Eden Teleport Officer#7	729
+geffen_in,160,104,5	duplicate(eto)	Eden Teleport Officer#8	729
+moc_prydb1,53,126,3	duplicate(eto)	Eden Teleport Officer#9	729
+alberta_in,75,39,3	duplicate(eto)	Eden Teleport Officer#10	729
+payon_in02,58,58,1	duplicate(eto)	Eden Teleport Officer#11	729
+payon,177,111,3	duplicate(eto)	Eden Teleport Officer#12	729
+que_ng,33,73,3	duplicate(eto)	Eden Teleport Officer#13	729
+que_ng,144,161,5	duplicate(eto)	Eden Teleport Officer#14	729
+yuno,144,189,5	duplicate(eto)	Eden Teleport Officer#15	729
+rachel,125,144,3	duplicate(eto)	Eden Teleport Officer#16	729
+comodo,202,151,4	duplicate(eto)	Eden Teleport Officer#17	729
+hugel,93,153,4	duplicate(eto)	Eden Teleport Officer#18	729
+veins,220,109,4	duplicate(eto)	Eden Teleport Officer#19	729
+einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#20	729
+lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#21	729
+amatsu,100,145,5	duplicate(eto)	Eden Teleport Officer#22	729
+ayothaya,221,191,3	duplicate(eto)	Eden Teleport Officer#23	729
+louyang,224,107,3	duplicate(eto)	Eden Teleport Officer#24	729
+gonryun,162,122,5	duplicate(eto)	Eden Teleport Officer#25	729
+moscovia,209,197,5	duplicate(eto)	Eden Teleport Officer#26	729
+brasilis,191,224,3	duplicate(eto)	Eden Teleport Officer#27	729
+dewata,192,193,5	duplicate(eto)	Eden Teleport Officer#28	729
+morocc,161,97,5	duplicate(eto)	Eden Teleport Officer#29	729
+izlude,131,148,4	duplicate(eto)	Eden Teleport Officer#30	729
+izlude_a,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_a	729
+izlude_b,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_b	729
+izlude_c,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_c	729
+izlude_d,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_d	729
+umbala,105,158,3	duplicate(eto)	Eden Teleport Officer#31	729
+malaya,225,218,1	duplicate(eto)	Eden Teleport Officer#32	729
+verus04,116,243,0	duplicate(eto)	Eden Teleport Officer#33	729
+
+moc_para01,30,10,0	script	#eden_out	45,1,1,{
+OnTouch:
+	switch (nak_warp) {
+		case 1: warp "prontera",116,72; end;
+		case 2: warp "moc_ruins",64,161; end;
+		case 3: warp "geffen",120,39; end;
+		case 4: warp "alberta",117,56; end;
+		case 5: warp "aldebaran",168,112; end;
+		case 6: warp "izlude_in",73,165; end;
+		case 7: warp "prt_church",99,78; end;
+		case 8: warp "geffen_in",162,99; end;
+		case 9: warp "moc_prydb1",51,118; end;
+		case 10: warp "alberta_in",73,43; end;
+		case 11: warp "payon_in02",64,60; end;
+		case 12: warp "payon",161,58; end;
+		case 13: warp "que_ng",33,63; end;
+		case 14: warp "que_ng",144,166; end;
+		case 15: warp "yuno",158,125; end;
+		case 16: warp "rachel",115,125; end;
+		case 17: warp "comodo",192,145; end;
+		case 18: warp "hugel",88,148; end;
+		case 19: warp "veins",216,104; end;
+		case 20: warp "einbroch",246,204; end;
+		case 21: warp "lighthalzen",159,95; end;
+		case 22: warp "amatsu",110,150; end;
+		case 23: warp "ayothaya",217,178; end;
+		case 24: warp "louyang",217,103; end;
+		case 25: warp "gonryun",155,120; end;
+		case 26: warp "moscovia",218,198; end;
+		case 27: warp "brasilis",190,220; end;
+		case 28: warp "dewata",192,182; end;
+		case 29: warp "morocc",161,97; end;
+		case 30: warp "izlude",134,118; end;	// Old coordinates: (127,142)
+		case 31: warp "umbala",94,154; end;
+		case 32: warp "malaya",234,199; end;
+		case 33: warp "verus04",115,243; end;
+		default: warp "prontera",116,72; end;
+	}
+	end;
+}
+
+moc_para01,47,39,3	script	#warp_2_pass	111,{
+	if (callfunc("F_HasEdenGroupMark")) {
+		mes "[Lime Evenor]";
+		mes "โอ้มันเป็นสถานที่พิเศษสำหรับสมาชิกของ Eden เท่านั้น";
+		mes "ถ้าคุณเป็นสมาชิกคุณสามารถมาได้ทุกเมื่อที่คุณต้องการ!";
+		next;
+		switch (select("เข้า: ไม่เข้า")) {
+		case 1:
+			mes "ประตูนี้ได้รับการตกแต่งอย่างสวยงาม แต่ดูเหมือนจะหนักไปหน่อย";
+			close2;
+			warp "moc_para01",106,14;
+			end;
+		case 2:
+			mes "[Lime Evenor]";
+			mes "ถ้าคุณไม่สนใจ";
+			close;
+		}
+	}
+	mes "[Lime Evenor]";
+	mes "โอ้นี่เป็นสถานที่พิเศษสำหรับสมาชิกของ Eden เท่านั้น";
+	mes "ถ้าคุณต้องการเข้าไปข้างในคุณจะต้องเข้าร่วมกับ Eden Group";
+	close;
+}
+
+moc_para01,16,22,7	script	Old Adventurer#eden	900,{
+	mes "[Old Adventurer]";
+	mes "รุนแรงข้าแข็งแรงพอแม้ว่าข้าจะแก่แล้ว! เธอชื่ออะไร? Lime Evenor? เธอแค่ไม่สนใจข้าเหมือนข้าเป็นคนชราที่แก่ชรา";
+	next;
+	mes "[Old Adventurer]";
+	mes "ฉันมาที่นี่เพื่อเข้าร่วมกลุ่ม Eden! ฉันไม่สมควรได้รับสิ่งนี้!";
+	mes "คุณคิดว่าฉันเหมือนฉันแก่แล้วเหรอ?";
+	close;
+}
+
+moc_para01,182,48,3	script	Eden's Chief#eden	886,{
+	set .@eggf,rand(1,118);
+	set .@eggf_1,.@eggf + 1;
+	set .@eggf_2,.@eggf + 2;
+	set .@eggf_6,.@eggf + 6;
+	mes "[Eden's Chief]";
+	mes ""+.@eggf+".. "+.@eggf_1+"... "+.@eggf_2+".... "+.@eggf_6+"..?";
+	next;
+	emotion ET_CRY;
+	mes "[Eden's Chief]";
+	mes "โอ้, ยิง! ฉันได้ทำไข่กี่ตัวแล้ว?";
+	mes "Aww !!! ฉันลืมไปแล้ว! ฉันต้องนับอีกครั้ง!";
+	next;
+	emotion ET_CRY;
+	mes "[Eden's Chief]";
+	mes "ทำไมเจ้าขอให้ข้าทำอย่างนี้มันเป็นภารกิจแบบไหนกันเนี่ย?";
+	next;
+	emotion ET_CRY;
+	mes "[หัวหน้าของ Eden]";
+	mes "คุณจะทำอะไรกับไข่ดาวเหล่านั้นทั้งหมดฉันแน่ใจว่าคุณไม่สามารถกินได้ทั้งหมดคุณแค่ต้องการรบกวนฉันใช่มั้ย";
+	close;
+}
+
+moc_para01,172,28,5	script	Eden's Intern#eden	883,{
+	mes "[Eden's Intern]";
+	mes "ที่จริงฉันรู้แล้ว";
+	next;
+	mes "[Eden's Intern]";
+	mes "พวกเราต้องทำงานหนักมากยกเว้นว่าคุณต้องการล้มเหลว";
+	next;
+	mes "[Eden's Intern]";
+	mes "แต่ฉันยังไม่เคยเรียนเกี่ยวกับเวชภัณฑ์เลย";
+	next;
+	mes "[Eden's Intern]";
+	mes "ฉันจะล้มเหลวฉันไม่สามารถทำสิ่งนี้ได้";
+	close;
+}
+
+moc_para01,20,35,5	script	Office Assistant Neede	814,{
+	mes "[Neede]";
+	mes "ฉันกลายเป็นสมาชิกของ Eden เมื่อหลายปีก่อน แต่มันรู้สึกเหมือนเมื่อวานนี้";
+	mes "ฉันทำงานมาเยอะมากฉันเลยไม่ได้สังเกตเลยว่าฉันใช้เวลากี่ปีที่นี่";
+	next;
+	mes "[Neede]";
+	mes "มันทำให้ข้านึกว่ามันเหมือนสงครามทุกวัน";
+	next;
+	mes "[Neede]";
+	mes "หัวหน้าของ ^3131FF ร้านอาหารด้านขวา ^000000";
+	mes "ใช้ปรุงรสมากเกินไปทุกครั้งที่เขาทำอาหารมีกลิ่นอยู่ทั่วล็อบบี้เราต้องเปิดหน้าต่างเป็นประจำเพราะเราทนกลิ่นไม่ได้!";
+	next;
+	mes "[Neede]";
+	mes "และคุณเห็น ^3131FFgymnasium ^000000 บนไม้กางเขนของ ^3131FF ทางด้านเหนือของล็อบบี้ ^000000 หรือไม่พวกเขามักจะตะโกนเมื่อออกกำลังกายฉันสามารถได้ยินพวกเขาจากที่นี่!";
+	next;
+	emotion ET_ANGER;
+	mes "[Neede]";
+	mes "นอกจากสาวประหลาดจาก ^3131FF ชั้นสอง ^000000 กำลังร้องไห้ตลอดเวลาเสียงร้องของเธอทำให้ฉันบ้า";
+	next;
+	mes "[Neede]";
+	mes "อ๊ะผู้หญิงแปลก ๆ นั่นจริง ๆ แล้วเป็นเจ้านายของเรา ... ";
+	next;
+	mes "[Neede]";
+	mes "ข้าไม่รู้ว่าเธอทำอะไรอยู่ แต่เธอก็ร้องไห้และตะโกนตลอดเวลาโอ้บางครั้งฉันก็ได้ยิน 'บาง!' เสียงดังที่เฟื่องฟู ... ฉันไม่รู้ว่ามาจากไหน" ;
+	next;
+	emotion ET_HUK;
+	mes "[Neede]";
+	mes "Wait!";
+	mes "Shh! มันเป็นความลับ, เจ้าไม่สามารถบอกใครได้เลย";
+	next;
+	mes "[Neede]";
+	emotion ET_OHNO;
+	mes "ข้าไม่ไว้ใจ Evenor เธอไม่เคยแสดงความรู้สึกของเธอ ... เธอกำลังจะพูดกับข้ากับเจ้านายของข้า";
+	next;
+	emotion ET_HNG, getnpcid(0, "Secretary Lime Evenor");
+	mes "[Lime Evenor]";
+	mes "ฉันไม่ใช่ผู้หญิงแบบนั้น";
+	next;
+	emotion ET_KEK;
+	mes "[Neede]";
+	mes "Huh คุณได้ยินเหรอ? Gosh ~!";
+	close;
+}
+
+function	script	F_HasEdenGroupMark	{
+	return (countitem(6219) > 0 || countitem(22508) > 0);
+}

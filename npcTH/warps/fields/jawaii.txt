@@ -1,0 +1,26 @@
+//===== rAthena Script =======================================
+//= Jawaii Warp Script
+//===== By: ==================================================
+//= Muad Dib (1.0)
+//= Darkchild (1.1)
+//= MasterOfMuppets (1.2)
+//===== Current Version: =====================================
+//= 1.2b
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 6+
+//===== Description: =========================================
+//= Warp Points for Jawaii
+//===== Additional Comments: =================================
+//= Split off npc_warp.txt
+//= 1.2a Added a missing warp, thanks to Zoc [MasterOfMuppets]
+//= 1.2b Added a missing warp [Komurka]
+//============================================================
+
+jawaii_in,90,78,0	warp	jawaiiwarp001	1,1,jawaii,115,172
+jawaii_in,113,61,0	warp	jawaiiwarp002	1,1,jawaii,138,202
+jawaii_in,133,107,0	warp	jawaiiwarp003	1,1,jawaii,111,199
+jawaii_in,88,117,0	warp	jawaiiwarp004	1,1,jawaii,109,186
+jawaii,192,215,0	warp	jawaiiwarp005	1,1,jawaii_in,28,94
+jawaii_in,27,91,4	script	jawaiiwarp006	45,1,1,{
+if (getpartnerid() > 0) warp "jawaii",192,218; else warp "jawaii_in",27,94;
+}

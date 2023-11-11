@@ -1,0 +1,48 @@
+//===== rAthena Script =======================================
+//= Ice Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version from jAthena [Playtester]
+//= 1.1 More accurate spawns [Playtester]
+//= 1.2 Removed Ktullanux spawn, quest implemented [L0ne_W0lf]
+//= 1.3 Correct Spawn by Navigation's mob data. [attackjom]
+//= 1.4 Added Illusion of Frozen. [Capuche]
+//============================================================
+
+//==================================================
+// ice_dun01 - Ice Cave
+//==================================================
+ice_dun01,0,0	monster	Siroma	1776,76,5000
+ice_dun01,0,0	monster	Roween	1782,5,5000
+ice_dun01,0,0	monster	Muscipular	1780,5,5000
+ice_dun01,0,0	monster	Gazeti	1778,2,5000
+
+//==================================================
+// ice_dun02 - Ice Cave
+//==================================================
+ice_dun02,0,0	monster	Snowier	1775,70,5000
+ice_dun02,0,0	monster	Siroma	1776,30,5000
+ice_dun02,0,0	monster	Iceicle	1789,19,5000
+ice_dun02,0,0	monster	Gazeti	1778,15,5000
+ice_dun02,0,0	monster	Ice Titan	1777,7,5000
+
+//==================================================
+// ice_dun03 - Ice Cave
+//==================================================
+ice_dun03,0,0	monster	Ice Titan	1777,70,5000
+ice_dun03,0,0	monster	Gazeti	1778,42,5000
+ice_dun03,0,0	monster	Iceicle	1789,32,5000
+ice_dun03,0,0	monster	Snowier	1775,15,5000
+
+//==================================================
+// ice_d03_i - Illusion of Frozen
+//==================================================
+ice_d03_i	monster	Angry Gazeti	3792,30
+ice_d03_i	monster	Angry Snowier	3793,30
+ice_d03_i	monster	Angry Ice Titan	3794,20
+ice_d03_i	monster	Solid Icicle	3795,20

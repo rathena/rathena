@@ -1,0 +1,15 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Izlude
+//===== By: ================================================== 
+//= Daegaladh
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Edgar's Offer
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================
+
+izlude,182,186,2	duplicate(Edgar_izlude)	Edgar#izlude	49

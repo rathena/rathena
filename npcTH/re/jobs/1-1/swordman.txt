@@ -1,0 +1,123 @@
+//===== rAthena Script ======================================= 
+//= Renewal Swordman Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Swordman Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+izlude_in,74,172,4	script	Swordman#swd	119,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin)) {
+			mes "[Swordman]";
+			mes "มัน ... ";
+			mes "ไม่สามารถเป็น ... ";
+			mes "คุณเกิดแล้วใช่มั้ย";
+			next;
+			mes "[Swordman]";
+			mes "ฉันเห็นว่าคุณกำลังพูดจาซ้ำซากเส้นทางของ Swordman! เมื่อคุณคุ้นเคยกับการกวัดแกะดาบ";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[Swordman]";
+				mes "อืม? อาก่อนอื่นคุณต้องมีทักษะพื้นฐานก่อนที่คุณจะพร้อมที่จะเป็นนักดาบ";
+				next;
+				mes "[Swordman]";
+				mes "กลับมาหาฉันเมื่อเจ้าเสร็จการเรียนรู้ทักษะเณรพื้นฐาน";
+				close;
+			}
+			mes "[Swordman]";
+			mes "ยอดเยี่ยม! ฉันจะยกระดับคุณเป็นนักดาบทันที";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Swordman_High;
+			skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+			skill "SM_FATALBLOW",1,SKILL_PERM;
+			skill "SM_AUTOBERSERK",1,SKILL_PERM;
+			mes "[Swordman]";
+			mes "อืม... เจ้าดูเหมือน Swordman ที่มีประสบการณ์มาก่อนข้ายังมั่นใจว่าเจ้าจะต้องฝึกฝนเพื่อพัฒนาทักษะและเสริมกำลัง!";
+			close;
+		}else{
+			mes "[Swordman]";
+			mes "หืมมม...?";
+			mes "เจ้าเกิดใหม่แล้ว";
+			mes "นักรบเจ้าไม่ได้เหรอ?";
+			next;
+			mes "[Swordman]";
+			mes "อืม... ";
+			mes "ดูเหมือนว่าการเป็นนักดาบนั้นไม่ได้เป็นส่วนหนึ่งของโชคชะตาของคุณฉันขอโทษ แต่ดูเหมือนว่าไม่มีอะไร";
+			mes "ฉันทำได้เพื่อคุณ";
+			close;
+		}
+	}
+	mes "[Swordman Guildsman]";
+	mes "นี่คือสมาคมนักดาบ"; 
+	mes "คุณมาที่นี่ทำไม";
+	next;
+	switch(select("บอกฉันเกี่ยวกับการเป็นนักดาบ:ฉันต้องการเป็นนักดาบ:ไม่มี")) {
+	case 1:
+		mes "[Swordman Guildsman]";
+		mes "ดังนั้นคุณต้องการที่จะรู้มากขึ้นเกี่ยวกับ Swordman ผู้ยิ่งใหญ่หรือไม่โอเค!";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "คุณสมบัติที่โดดเด่นที่สุดของ Swordman ก็คือ Swordman สามารถแสดงความสามารถที่แท้จริงของเขา/เธอในการต่อสู้อย่างใกล้ชิด";
+		mes "มีสามเหตุผล!";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "อย่างแรก, Swordman มี HP สูงกว่าอาชีพอื่น";
+		mes "Second, ยกเว้นธนูและ Rods, Swordman สามารถใช้อาวุธอื่นๆ ทั้งหมดเพื่อที่พวกเขาจะสามารถต่อสู้ได้อย่างเต็มประสิทธิภาพ";
+		mes "และสาม, ทักษะส่วนใหญ่ของ Swordman ให้การโจมตีทางกายภาพที่ทรงพลัง";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "แม้ว่าฉันจะให้คำอธิบายง่ายๆแก่คุณ แต่ฉันเชื่อว่าคุณเข้าใจความหมายหลักของสิ่งที่จะเป็น Swordman";
+		mes "ในความคิดของฉัน Swordman เป็นอาชีพที่ดีที่สุดตลอดกาล!";
+		close;
+	case 2:
+		mes "[Swordman Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Swordman) {
+				mes "เจ้าเป็น Swordman ที่ยอดเยี่ยมแล้วใช่ไหม?";
+				mes "แค่อุทิศตัวเองเพื่อเป็นนักดาบผู้ยิ่งใหญ่";
+			}else{
+				mes "เจ้าเป็นอาชีพอื่นแล้วใช่ไหม?";
+				mes "เจ้าตลกไปมากแล้ว";
+			}
+			close;
+		}else{
+			if (!callfunc("F_CanChangeJob")) {
+				mes "ฉันขอโทษที่ต้องบอกคุณ แต่การเป็นนักดาบคุณต้องไปถึงอย่างน้อย ^4A4AFFJob Level 10^000000";
+				mes "และ ^4A4AFFBasic Skill Level 9^000000";
+				next;
+				mes "[Swordman Guildsman]";
+				mes "อยากเป็นนักดาบโดยไม่ต้องมีข้อกำหนดขั้นต่ำเหรอ?";
+				mes "คุณคิดว่าการเป็นนักดาบนั้นง่ายไหม";
+				close;
+			}
+			mes "อืมทั้ง Job Level และ Basic Skill Level ของคุณลองดู";
+			mes "ดี. คุณต้องการเป็นนักดาบในทันทีหรือไม่";
+			next;
+			if(select("ใช่ฉันทำแล้ว:ฉันจะพิจารณาอีกครั้ง") == 2) {
+				mes "[Swordman Guildsman]";
+				mes "ใช่การตัดสินใจที่รอบคอบเป็นสิ่งจำเป็นสำหรับการเลือกอาชีพ";
+				mes "แต่ฉันรู้สึกเสียใจ... ที่คุณจะพิจารณาอีกครั้งหลังจากเอาชนะความยากลำบากทั้งหมด ... ";
+				close;
+			}
+			mes "[Swordman Guildsman]";
+			mes "ขอแสดงความยินดีด้วยจากนี้ไปคุณจะใช้ชีวิตของ Swordman!";
+			mes "มาทำกันเถอะ!";
+			next;
+			mes "[Swordman Guildsman]";
+			mes "ขอแสดงความยินดีอีกครั้งสำหรับการเป็นนักดาบและฉันหวังว่าคุณจะมีส่วนร่วมในกิจกรรมมากมายสำหรับการฟื้นฟูกิลด์ของเรา";
+			callfunc "Job_Change",Job_Swordman;
+			getitem 13415,1; // N_Falchion
+			close;
+		}
+	case 3:
+		close;
+	}
+}

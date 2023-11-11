@@ -1,0 +1,83 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,53,56,3	script	Gypsy#Valkyrie	101,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[Gypsy]";
+			mes "Congratulations.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		mes "[Gypsy]";
+		mes "Move left,";
+		mes "move right~!";
+		mes "And step...!";
+		mes "Dancing can be";
+		mes "more than a hobby.";
+		mes "For me, it's a way of life~";
+		close;
+	}
+	else if (ADVJOB == Job_Gypsy && Class == Job_Archer_High && JobLevel > 39) {
+		mes "[Gypsy]";
+		mes "The land of Midgard";
+		mes "is in need of talented women";
+		mes "to subtly change the balances";
+		mes "in the battle between good";
+		mes "and evil.";
+		next;
+		mes "[Gypsy]";
+		mes "Are you ready";
+		mes "to take up this role,";
+		mes "and become a Gypsy?";
+		next;
+		if (select("No.:Yes.") == 1) {
+			mes "[Gypsy]";
+			mes "When you're ready,";
+			mes "feel free to come back.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[Gypsy]";
+			mes "It is still possible for you to learn more skills. Please use";
+			mes "all of your remaining Skill Points before returning to me.";
+			close;
+		}
+		jobchange Job_Gypsy;
+		set ADVJOB,0;
+		mes "[Gypsy]";
+		mes "Congratulations!";
+		mes "As a Gypsy, I know";
+		mes "that your performances";
+		mes "sway the hearts of all";
+		mes "those who will be watching...";
+		close;
+	}
+	mes "[Gypsy]";
+	mes "Welcome";
+	mes "to Valhalla,";
+	mes "the Hall of Honor.";
+	next;
+	mes "[Gypsy]";
+	mes "Please make";
+	mes "yourself comfortable";
+	mes "while you are here.";
+	mes "Honor to the warriors!";
+	close;
+}

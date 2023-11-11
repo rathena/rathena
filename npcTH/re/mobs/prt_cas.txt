@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Episode 16.1 Monsters Spawn Script
+//===== Description: =========================================
+//= Spawns monsters in prt_cas.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Prontera Castle - GLASS_PLATE
+prt_cas,367,138,16,22	monster	Plate	3455,15

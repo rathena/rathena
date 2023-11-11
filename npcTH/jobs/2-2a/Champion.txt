@@ -1,0 +1,87 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,53,42,3	script	Champion#Valkyrie	52,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[Champion]";
+			mes "Congratulations.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		mes "[Champion]";
+		mes "Skill.";
+		mes "Speed.";
+		mes "Strength.";
+		mes "Agility.";
+		next;
+		mes "[Champion]";
+		mes "A Champion can";
+		mes "benefit from all";
+		mes "these things. But";
+		mes "one can only master";
+		mes "so much in life...";
+		close;
+	}
+	else if (ADVJOB == Job_Champion && Class == Job_Acolyte_High && JobLevel > 39) {
+		mes "[Champion]";
+		mes "It's time.";
+		mes "Time for great heroes";
+		mes "to stand up against the";
+		mes "forces of evil which plague";
+		mes "the world of Midgard!";
+		next;
+		mes "[Champion]";
+		mes "Would you like";
+		mes "to become a Champion?";
+		next;
+		if (select("No.:Yes.") == 1) {
+			mes "[Champion]";
+			mes "When you're ready,";
+			mes "feel free to come back.";
+			mes "Honor to the warriors!";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[Champion]";
+			mes "It is still possible for you to learn more skills. Please use";
+			mes "all of your remaining Skill Points before returning to me.";
+			close;
+		}
+		jobchange Job_Champion;
+		set ADVJOB,0;
+		mes "[Champion]";
+		mes "Congratulations!";
+		mes "Live as a Champion,";
+		mes "and bring light into";
+		mes "the world through the";
+		mes "strength of your fists.";
+		close;
+	}
+	mes "[Champion]";
+	mes "Welcome";
+	mes "to Valhalla,";
+	mes "the Hall of Honor.";
+	next;
+	mes "[Champion]";
+	mes "Please make";
+	mes "yourself comfortable";
+	mes "while you are here.";
+	mes "Honor to the warriors!";
+	close;
+}

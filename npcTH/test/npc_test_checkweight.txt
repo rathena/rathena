@@ -1,0 +1,178 @@
+//===== rAthena Script =======================================
+//= Test: Checkweight
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140123
+//===== Description: ========================================= 
+//= Tests 'checkweight' and 'checkweight2' commands.
+//============================================================
+
+prontera,161,181,6	script	ChkSpace	763,{
+
+function ChkResult;
+function FinalReport;
+
+L_RESET:
+	resetlvl(1);
+	getinventorylist; 
+	for(set .@i,0; .@i < @inventorylist_count; set .@i,.@i+1){	
+		delitem(@inventorylist_id[.@i],@inventorylist_amount[.@i]); //clear inventory
+	}
+
+L_TEST1: //basic backward chk
+	.@testid = 0;
+	.@success = 0;
+	.@ret = checkweight(512,10);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	.@ret =	checkweight("Apple",10);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	.@ret = checkweight(6320,33000);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure too many item amount item weight=0
+	.@ret = checkweight("Premium_Reset_Stone",33000);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure too many item amount
+	.@ret = checkweight(717,500);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success weight based on max weight=2030
+	.@ret = checkweight(717,1000);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure weight based on max weight=2030
+	.@ret = checkweight(2794,100);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	.@ret = checkweight(2794,101);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure (with MAX_INVENTORY = 100)
+	.@ret = checkweight(-1,1);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure invalid item id
+	.@ret = checkweight(512,0);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure invalid amount
+
+	debugmes "End backward test";
+	FinalReport(.@testid,.@success);
+
+L_TEST2: //update using list test
+	.@testid = 0;
+	.@success = 0;
+
+	.@ret = checkweight(512,10,513,10);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	.@ret =	checkweight("Apple",10,"Banana",10);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	.@ret = checkweight(512,80,513,33000);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure
+	.@ret = checkweight("Apple",80,"Banana",33000);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure too many item amount
+	.@ret = checkweight("Apple",10,"Banana",21,512);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure invalid nb of args
+	.@ret = checkweight(717,500,716,100);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be succes weight 1800/2030
+	.@ret = checkweight(717,500,716,500);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure weight 3000/2030
+	.@ret = checkweight(2794,95,2795,5);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success 
+	.@ret = checkweight(2794,95,2795,10);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure (with MAX_INVENTORY = 100)
+	.@ret = checkweight(512,1,-1,1);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure invalid item id
+	.@ret = checkweight(512,1,513,0);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure invalid amount
+	.@ret = checkweight(6320,31000,6320,2000);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure overamount inventory
+	.@ret = checkweight(512,1,513,1,514,1,515,1);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	
+	debugmes "End update by list tests";
+	FinalReport(.@testid,.@success);
+
+L_TEST3: //update using array tests
+	.@testid = 0;
+	.@success = 0;
+
+	setarray .@item[0], 512,513,514,515;
+	setarray .@count[0], 1,5,9,12;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	
+	cleararray .@item[0], 0, 4;
+	cleararray .@count[0], 0, 4;
+	setarray .@item[0], 512,513,514,515;
+	setarray .@count[0], 1,5,-1,12;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure, invalid amount
+	
+	cleararray .@item[0], 0, 4;
+	cleararray .@count[0], 0, 4;
+	setarray .@item[0], 512,513,514,-1;
+	setarray .@count[0], 1,5,15,12;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure, invalid id
+	
+	cleararray .@item[0], 0, 4;
+	cleararray .@count[0], 0, 4;
+	setarray .@item[0], 717,715,716,714;
+	setarray .@count[0], 300,300,300,300;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure, total by weight
+	
+	cleararray .@item[0], 0, 4;
+	cleararray .@count[0], 0, 4;
+	setarray .@item[0], 6320,6320;
+	setarray .@count[0], 31000,2000;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure, total by weight
+	
+	cleararray .@item[0], 0, 2;
+	cleararray .@count[0], 0, 2;
+	setarray .@item[0], 2794,2795;
+	setarray .@count[0], 95,5;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success
+	
+	setarray .@count[0], 95,10;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure overamount item
+	
+	cleararray .@item[0], 0, 2;
+	cleararray .@count[0], 0, 2;
+	setarray .@item[0], 6320,6320,512;
+	setarray .@count[0], 1,3;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure, size mismatch
+	
+	cleararray .@item[0], 0, 3;
+	cleararray .@count[0], 0, 2;
+	setarray .@item[0], 6320,6321;
+	setarray .@count[0], 1,3,5;
+	.@ret = checkweight2(.@item,.@count);
+	set .@success,.@success+ChkResult(.@testid++,0,.@ret); //should be failure, size mismatch
+	
+	set .@weight_limit, MaxWeight;
+	set MaxWeight, 2147483647; //currently maxweight is stored as uint32 (2^32-1)
+	cleararray .@item[0], 0, 2;
+	cleararray .@count[0], 0, 3;
+	setarray .@item[0], 714;
+	setarray .@count[0], 300;
+	.@ret = checkweight2(.@item,.@count);
+	set MaxWeight, .@weight_limit;
+	set .@success,.@success+ChkResult(.@testid++,1,.@ret); //should be success, (test weight over 65k)
+
+	debugmes "End update by array tests";
+	FinalReport(.@testid,.@success);
+
+L_FINAL:
+	end;
+
+	function ChkResult {
+		.@tid = getarg(0);
+		.@expected = getarg(1);
+		.@ret = getarg(2);
+		.@success = (.@ret==.@expected);
+		debugmes "Test "+.@tid+" = "+(.@success?"Success":"Fail");
+		return .@success;
+	}
+
+	function FinalReport {
+		.@tdone = getarg(0);
+		.@success = getarg(1);
+		debugmes "Results = Pass : "+.@success+"/"+.@tdone+" Fails : "+(.@tdone-.@success)+"/"+.@tdone;
+		if(.@success != .@tdone) { debugmes "One or more failures have occurred. Enable chkresult print to find failed tests."; }
+		return;
+	}
+}

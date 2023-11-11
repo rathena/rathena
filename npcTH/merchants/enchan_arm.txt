@@ -1,0 +1,151 @@
+//===== rAthena Script ======================================= 
+//= Armor Enchanter
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.3a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Add a +1, +2, or +3 random stat to a specified armor.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Corrected typo (Sit -> Suit) (bugreport:4586)
+//= 1.2 Optimized. [Euphy]
+//= 1.3 Fixed some typos and optimized a little more. [Daegaladh]
+//= 1.3a Added 'disable_items' command. [Euphy]
+//============================================================ 
+
+prontera,165,60,2	script	Apprentice Craftsman	73,{
+	disable_items;
+	mes "[Apprentice Craftsman]";
+	if (Zeny >= 400000) {
+		mes "ข้ากำลังศึกษาการออฟเกราะอยู่.";
+		next;
+		mes "[Apprentice Craftsman]";
+		mes "มันเป็นการปลุกพลังความสามารถพิเศษที่ซ่อนอยู่ในเกราะออกมา.";
+		next;
+		mes "[Apprentice Craftsman]";
+		mes "อย่างไรก็ตาม, ถ้าเจ้ามีเกราะที่เหมือนกันอยู่ในกระเป๋า, ออฟอาจจะไปโผล่ในเกราะที่อยู่ในกระเป๋าแทน.";
+		next;
+		mes "[Apprentice Craftsman]";
+		mes "ในกรณีนี้, ไม่ได้หมายความว่าเจ้ายังไม่ได้ออฟของชิ้นนั้น. เพื่อเป็นการกันโปรดมีแค่ ^5555ffหนึ่ง Armor^000000 ที่เจ้าอยากจะออฟเท่านั้น...";
+		next;
+		mes "[Apprentice Craftsman]";
+		mes "ข้าจะไม่รับผิดชอบต่อสิ่งที่เกิดขึ้นในกระเป๋าของเจ้า.";
+		next;
+		switch(select("Non Slotted Armor.:Slotted Armor.:High Grade Armor.:ไว้โอกาสหน้า.")) {
+		case 1:
+			setarray .@Items[0],2307,2309,2314,2316,2321,2325,2327,2328,2330,2332,2334,2335,2341,2344,2346,2348,2350,2337,2386,2394,2395,2396;
+			set .@j,50;
+			break;
+		case 2:
+			setarray .@Items[0],2311,2318,2319,2320,2308,2310,2315,2317,2322,2324,2326,2331,2333,2336,2342,2345,2347,2349,2351;
+			set .@j,55;
+			set .@k,1;
+			break;
+		case 3:
+			setarray .@Items[0],2364,2365,2391,2374,2375,2376,2377,2378,2379,2380,2381,2382,2387,2388,2389,2390;
+			set .@j,60;
+			break;
+		case 4:
+			mes "[Apprentice Craftsman]";
+			mes "กลับมาใหม่เมื่อเจ้าสนใจที่จะออฟเกราะ.";
+			close;
+		}
+		set .@menu$,"";
+		for(set .@i,0; .@i<getarraysize(.@Items); set .@i,.@i+1)
+			set .@menu$, .@menu$+getitemname(.@Items[.@i])+((.@k)?" [1]":"")+":";
+		callsub S_EnchantArmor, .@Items[select(.@menu$)-1], .@j;
+		end;
+	}
+	mes "ข้ากำลังศึกษาการเพิ่มพลังให้เกราะอยู่.";
+	next;
+	mes "[Apprentice Craftsman]";
+	mes "ถ้าเจ้าต้องการออฟเกราะของเจ้า, นำเงิน 400,000 zeny และเกราะที่เจ้าต้องการจะออฟมาให้ข้า.";
+	close;
+
+S_EnchantArmor:
+	set .@itemid,getarg(0);
+	set .@failrate,getarg(1);
+	mes "[Apprentice Craftsman]";
+	if (countitem(.@itemid) == 1) {
+		mes "ในการออฟเจ้าต้องจ่าย 400,000 zeny. และมันจะสุ่มค่าออฟที่ได้. ระวัง, มันมีโอกาสที่เกราะจะแตกได้.";
+		next;
+		mes "[Apprentice Craftsman]";
+		mes "สิ่งสำคัญที่สุด.";
+		mes "^ff5555ค่าตีบวก";
+		mes "และการ์ดจะหายไป.^000000";
+		mes "เจ้ายังอยากจะออฟอยู่ไหม ?";
+		next;
+		if(select("หืมมม... ขอเวลาคิดสักหน่อย.:เอาเลย.") == 1) {
+			mes "[Apprentice Craftsman]";
+			mes "เยี่ยม, ข้าจะไม่ตำหนิเจ้า. ความปลอดภัยมาก่อนเสมอ ?";
+			mes "ขอให้เป็นวันที่ดี.";
+			close;
+		}
+		mes "[Apprentice Craftsman]";
+		mes "สมแล้วที่เป็นนักผจญภัย ?";
+		close2;
+		specialeffect2 EF_MAPPILLAR;
+		if (Zeny < 400000) {
+			mes "[Apprentice Craftsman]";
+			mes "โทษที, แต่เจ้ามีเงินไม่พอ.";
+			close;
+		}
+		progressbar "ffff00",7;
+		set Zeny, Zeny-400000;
+		delitem .@itemid,1;
+		switch (rand(1,.@failrate)) {
+			case 1: set .@addpart,4702;break;
+			case 2: set .@addpart,4712;break;
+			case 3: set .@addpart,4722;break;
+			case 4: set .@addpart,4732;break;
+			case 5: set .@addpart,4742;break;
+			case 6: set .@addpart,4752;break;
+			case 7:
+			case 8: set .@addpart,4701;break;
+			case 9:
+			case 10: set .@addpart,4711;break;
+			case 11:
+			case 12: set .@addpart,4721;break;
+			case 13:
+			case 14: set .@addpart,4731;break;
+			case 15:
+			case 16: set .@addpart,4741;break;
+			case 17:
+			case 18: set .@addpart,4751;break;
+			case 19:
+			case 20:
+			case 21: set .@addpart,4700;break;
+			case 22:
+			case 23:
+			case 24: set .@addpart,4710;break;
+			case 25:
+			case 26:
+			case 27: set .@addpart,4720;break;
+			case 28:
+			case 29:
+			case 30: set .@addpart,4730;break;
+			case 31:
+			case 32:
+			case 33: set .@addpart,4740;break;
+			case 34:
+			case 35:
+			case 36: set .@addpart,4750;break;
+			default:
+				specialeffect2 EF_PHARMACY_FAIL;
+				mes "[Apprentice Craftsman]";
+				mes "แย่จริงๆ.";
+				mes "การออฟล้มเหลว.";
+				close;
+		}
+		getitem2 .@itemid, 1, 1, 0, 0, 0, 0, 0, .@addpart;
+	}
+	else {
+		mes "หืมม? ไม่มีอะไรจะออฟ!";
+		mes "กลับมาใหม่เมื่อเจ้ามีของอยากจะออฟ.";
+		close;
+	}
+}

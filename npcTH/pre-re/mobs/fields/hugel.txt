@@ -1,0 +1,136 @@
+//===== rAthena Script =======================================
+//= Hugel Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= Spawns for hu_fild05 and hu_fild04, numbers may not be correct [MasterOfMuppets]
+//= 0.2 Fixed Petit ID
+//= 0.3 Updated the spawns using kRO's website as info,  [MasterOfMuppets]
+//=      thanks to battousai90
+//= 0.4 Updated after Episode 10.4 - Hugel [Poki#3]
+//=     Mob quantity is custom.
+//= 1.0 Updated by using Tharis' Homun AI, by Tharis [Vicious]
+//= 1.1 Official X.3 spawns [Playtester]
+//= 1.2 Some 11.1 spawn updates [Playtester]
+//= 1.3 More accurate spawns [Playtester]
+//============================================================
+
+//==================================================
+// hu_fild01 - Hugel Field
+//==================================================
+hu_fild01,0,0	monster	Breeze	1692,5,900000,300000
+hu_fild01,0,0	monster	Plasma	1697,5,900000,300000
+hu_fild01,0,0	monster	Plasma	1695,5,900000,300000
+hu_fild01,0,0	monster	Plasma	1696,5,900000,300000
+hu_fild01,0,0	monster	Plasma	1694,5,900000,300000
+hu_fild01,0,0	monster	Plasma	1693,5,900000,300000
+hu_fild01,0,0	monster	Geographer	1368,30,300000
+hu_fild01,0,0	monster	Demon Pungus	1378,30,1200000,600000
+
+//==================================================
+// hu_fild02 - Hugel Field
+//==================================================
+hu_fild02,0,0	monster	Anopheles	1627,30
+hu_fild02,0,0	monster	Novus	1715,20
+hu_fild02,0,0	monster	Novus	1718,40
+hu_fild02,0,0	monster	Breeze	1692,10
+hu_fild02,0,0	monster	Geographer	1368,10,600000,120000
+hu_fild02,0,0	monster	Grove	1687,20,600000,120000
+hu_fild02,85,85,53,47	monster	Demon Pungus	1378,3,300000,120000
+hu_fild02,85,85,37,47	monster	Novus	1715,1,300000,120000
+hu_fild02,85,85,37,47	monster	Novus	1718,1,300000,120000
+
+//==================================================
+// hu_fild03 - Hugel Field
+//==================================================
+hu_fild03,0,0	monster	Grove	1687,70
+hu_fild03,0,0	monster	Novus	1715,30
+hu_fild03,0,0	monster	Poporing	1031,20
+hu_fild03,0,0	monster	Thief Bug	1051,10
+hu_fild03,40,157,3,3	monster	Red Mushroom	1085,2,300000
+hu_fild03,219,211,7,5	monster	Red Mushroom	1085,3,300000
+hu_fild03,285,230,5,4	monster	Red Mushroom	1085,2,300000
+hu_fild03,247,118,9,4	monster	Red Mushroom	1085,3,300000
+hu_fild03,96,156,5,5	monster	Black Mushroom	1084,3,300000
+hu_fild03,170,220,5,4	monster	Black Mushroom	1084,3,300000
+hu_fild03,212,328,5,4	monster	Black Mushroom	1084,2,300000
+hu_fild03,231,151,3,3	monster	Black Mushroom	1084,2,300000
+
+//==================================================
+// hu_fild04 - Hugel Field
+//==================================================
+hu_fild04,0,0	monster	Breeze	1692,20
+hu_fild04,0,0	monster	Deleter	1384,10,420000,24000
+hu_fild04,0,0	monster	Deleter	1385,10,420000,240000
+hu_fild04,0,0	monster	Petite	1155,10
+hu_fild04,0,0	monster	Petite	1156,60
+hu_fild04,0,0	monster	Novus	1715,20
+hu_fild04,0,0	monster	Novus	1718,10
+hu_fild04,0,0	monster	Anopheles	1627,30
+hu_fild04,0,0	monster	Grove	1687,20
+hu_fild04,60,149,35,122	monster	Sleeper	1386,7,600000,300000
+hu_fild04,0,0	monster	Green Plant	1080,10
+hu_fild04,0,0	monster	Yellow Plant	1081,10
+hu_fild04,206,210,30,18	monster	Blue Plant	1079,4,120000,600000
+hu_fild04,206,120,10,10	monster	Blue Plant	1079,2,120000,600000
+
+//==================================================
+// hu_fild05 - Hugel Field
+//==================================================
+hu_fild05,185,208,15,24	monster	Anopheles	1627,3,42000,30000
+hu_fild05,112,272,62,82	monster	Grove	1687,15
+hu_fild05,112,272,62,82	monster	Novus	1715,2
+hu_fild05,112,272,62,82	monster	Novus	1718,2
+hu_fild05,112,272,62,82	monster	Anopheles	1627,10
+hu_fild05,112,272,62,82	monster	Mutant Dragonoid	1262,1,24000000,1800000
+hu_fild05,276,302,93,60	monster	Grove	1687,15
+hu_fild05,276,302,93,60	monster	Novus	1715,2
+hu_fild05,276,302,93,60	monster	Novus	1718,1
+hu_fild05,276,302,93,60	monster	Anopheles	1627,10
+hu_fild05,276,302,93,60	monster	Mutant Dragonoid	1262,1,24000000,1800000
+hu_fild05,286,144,82,90	monster	Grove	1687,15
+hu_fild05,286,144,82,90	monster	Novus	1715,2
+hu_fild05,286,144,82,90	monster	Novus	1718,2
+hu_fild05,286,144,82,90	monster	Anopheles	1627,10
+hu_fild05,286,144,82,90	monster	Mutant Dragonoid	1262,1,24000000,1800000
+hu_fild05,118,106,80,70	monster	Grove	1687,15
+hu_fild05,118,106,80,70	monster	Novus	1715,2
+hu_fild05,118,106,80,70	monster	Novus	1718,1
+hu_fild05,118,106,80,70	monster	Anopheles	1627,10
+hu_fild05,118,106,80,70	monster	Mutant Dragonoid	1262,1,24000000,1800000
+hu_fild05,0,0	monster	Anopheles	1627,10
+hu_fild05,0,0	monster	Dragon Egg	1721,1,7200000,1800000
+hu_fild05,196,196,5,5	monster	Dragon Egg	1721,1,7200000,1800000
+hu_fild05,340,50,10,10	monster	Dragon Egg	1721,1,7200000,1800000
+hu_fild05,320,325,5,5	monster	Dragon Egg	1721,1,7200000,1800000
+
+//==================================================
+// hu_fild06 - Hugel Field
+//==================================================
+hu_fild06,0,0	monster	Holden	1628,50
+hu_fild06,0,0	monster	Caramel	1103,20
+hu_fild06,0,0	monster	Poring	1002,10
+hu_fild06,0,0	monster	Poporing	1031,10
+hu_fild06,0,0	monster	Metaling	1613,10
+hu_fild06,234,251,14,120	monster	Green Plant	1080,10,600000
+hu_fild06,234,251,14,120	monster	Yellow Plant	1081,10,600000
+
+//==================================================
+// hu_fild07 - Hugel Field
+//==================================================
+hu_fild07,0,0	monster	Breeze	1692,10
+hu_fild07,0,0	monster	Deleter	1384,10,420000,24000
+hu_fild07,0,0	monster	Deleter	1385,10,420000,240000
+hu_fild07,0,0	monster	Petite	1155,60
+hu_fild07,0,0	monster	Petite	1156,20
+hu_fild07,0,0	monster	Novus	1715,10
+hu_fild07,0,0	monster	Novus	1718,10
+hu_fild07,0,0	monster	Anopheles	1627,30
+hu_fild07,0,0	monster	Grove	1687,10
+hu_fild07,0,0	monster	Geographer	1368,20
+hu_fild07,0,0	monster	Demon Pungus	1378,10
+hu_fild07,0,0	monster	Yellow Plant	1081,20

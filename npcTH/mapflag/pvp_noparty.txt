@@ -1,0 +1,7 @@
+//===== rAthena Script =======================================
+//= Mapflag: Ignore parties.
+//===== Description: ========================================= 
+//= Ignores party alliances on PvP-enabled maps.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//============================================================

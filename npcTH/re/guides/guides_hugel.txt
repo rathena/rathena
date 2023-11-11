@@ -1,0 +1,301 @@
+//===== rAthena Script ======================================= 
+//= Hugel Guides
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guides for the city of Hugel.
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Renewal guide.
+//= 1.1 Optimized. [Euphy]
+//= 1.2 Navigation system update. [Euphy]
+//============================================================ 
+
+hugel,98,56,3	script	Hugel Guide Granny#hugel	863,{
+	mes "[Hugel Guide Granny]";
+	mes "Oh, hello~ you are one energetic adventurer.";
+	mes "Welcome to ^8B4513Hugel^000000. I am honored to guide you in this beautiful village.";
+	mes "If this is the first time for you to use the guide services, you should ask a lot of questions.";
+	F_Navi("[Hugel Guide Granny]");
+	next;
+	set .@str$,"Would you like to know more locations?";
+	while (1) {
+		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Church ]:[ Inn ]:[ Pub ]:[ Airport ]:[ Weapon Shop ]:[ Tool Shop ]:[ Bingo Game Room ]:[ ^3131FFHunter Guild^000000 ]:[ Party Supplies Shop ]:[ ^3131FFShrine Expedition^000000 ]:Previous Menu")) {
+				case 1:
+					mes "[Hugel Guide Granny]";
+					mes "Well, to me, this "+F_Navi("Church","hugel,159,113")+" is rather like a place for old folks like me, you know...";
+					mes .@str$;
+					viewpoint 1,159,113,0,0xFF0000;
+					next;
+					break;
+				case 2:
+					mes "[Hugel Guide Granny]";
+					mes "Pudding rather than praise.";
+					mes "You'd better unpack your stuff at the "+F_Navi("Inn","hugel,101,77")+" first before you start looking around this village.";
+					mes .@str$;
+					viewpoint 1,101,77,1,0x8B4513;
+					next;
+					break;
+				case 3:
+					mes "[Hugel Guide Granny]";
+					mes "Yes, when you travel, you want to drop by a "+F_Navi("Pub","hugel,126,65")+" and make new friends.";
+					mes "Go east from here, then you will arrive at the pub.";
+					mes .@str$;
+					viewpoint 1,126,65,2,0xDAA520;
+					next;
+					break;
+				case 4:
+					mes "[Hugel Guide Granny]";
+					mes "A while ago, strangers came to the village and built that strange "+F_Navi("Airport","hugel,178,146")+" kind of thing...";
+					mes "What do they call it? Airship?";
+					mes .@str$;
+					viewpoint 1,178,146,3,0xD7567F;
+					next;
+					break;
+				case 5:
+					mes "[Hugel Guide Granny]";
+					mes "Well, we have a "+F_Navi("Weapon Shop","hugel,88,167")+" in the center of the village.";
+					mes "But I don't know if there is any weapon that you find useful.";
+					mes .@str$;
+					viewpoint 1,88,167,4,0xCD5C5C;
+					next;
+					break;
+				case 6:
+					mes "[Hugel Guide Granny]";
+					mes "Yes, I love Hugel brand Red Potions. I haven't tasted Red Potions from any other brands yet...hohoho. ";
+					mes "The "+F_Navi("Tool Shop","hugel,92,163")+" is located in the center of village.";
+					mes .@str$;
+					viewpoint 1,92,163,5,0x000080;
+					next;
+					break;
+				case 7:
+					mes "[Hugel Guide Granny]";
+					mes "I will mark the location";
+					mes "of the "+F_Navi("Bingo Game Room","hugel,58,206","^800080");
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,58,206,6,0x800080;
+					next;
+					break;
+				case 8:
+					mes "[Hugel Guide Granny]";
+					mes "Oh, are you an aspiring Hunter?";
+					mes "Then head northeast following the beach, then you will find the "+F_Navi("Hunter Guild","hugel,209,224")+".";
+					mes .@str$;
+					viewpoint 1,209,224,7,0xFF1493;
+					next;
+					break;
+				case 9:
+					mes "[Hugel Guide Granny]";
+					mes "I will mark the location";
+					mes "of the "+F_Navi("Party Supplies Shop","hugel,95,103","^483D8B");
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,95,103,8,0x483D8B;
+					next;
+					break;
+				case 10:
+					mes "[Hugel Guide Granny]";
+					mes "I heard that the ";
+					mes F_Navi("Shrine Expedition","hugel,52,95")+" is staying in a house at the west.";
+					mes "They have put some kind of sign in the middle of village, so I guess that they are hiring people for something...";
+					mes "I wonder what they are doing in here... hmmm.";
+					mes .@str$;
+					viewpoint 1,52,95,9,0x834683;
+					next;
+					break;
+				case 11:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Monster Race Arena ]:[ Cool Event Corp. Staff ]:Previous Menu")) {
+				case 1:
+					mes "[Hugel Guide Granny]";
+					mes "I also like playing Monster Race games. It is pretty fun, you know?";
+					mes "Oh, you haven't tried it yet? No~ you'd better try. Trust me, you will like it.";
+					mes .@str$;
+					viewpoint 1,60,71,10,0xFF1493;
+					next;
+					break;
+				case 2:
+					mes "[Hugel Guide Granny]";
+					mes "I will mark the location";
+					mes "of the ^DA70D6Cool Event Corp. Staff^000000";
+					mes "on your mini-map.";
+					mes .@str$;
+					viewpoint 1,88,168,11,0xDA70D6;
+					next;
+					break;
+				case 3:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			mes "[Hugel Guide Granny]";
+			mes "I'll remove the marks from your mini-map.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 2,159,113,0,0xFFFFFF;
+			viewpoint 2,101,77,1,0xFFFFFF;
+			viewpoint 2,126,65,2,0xFFFFFF;
+			viewpoint 2,178,146,3,0xFFFFFF;
+			viewpoint 2,88,167,4,0xFFFFFF;
+			viewpoint 2,92,163,5,0xFFFFFF;
+			viewpoint 2,58,206,6,0xFFFFFF;
+			viewpoint 2,209,224,7,0xFFFFFF;
+			viewpoint 2,95,103,8,0xFFFFFF;
+			viewpoint 2,52,95,9,0xFFFFFF;
+			viewpoint 2,60,71,10,0xFFFFFF;
+			viewpoint 2,88,168,11,0xFFFFFF;
+			next;
+			break;
+		case 4:
+			mes "[Hugel Guide Granny]";
+			mes "Ho ho ho ~!";
+			mes "Guiding is very interesting.";
+			close;
+		}
+	}
+}
+
+hugel,187,172,6	script	Guide Rich King#hugel	414,{
+	mes "[Rich King]";
+	mes "What business do you have";
+	mes "in this countryside village?";
+	next;
+	mes "[Rich King]";
+	mes "This is ^8B4513Hugel^000000";
+	mes "in the Schwarzwald Republic.";
+	mes "You are very honored to receive guidance from a great person like me.";
+	F_Navi("[Rich King]");
+	next;
+	while (1) {
+		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Church ]:[ Inn ]:[ Pub ]:[ Airport ]:[ Weapon Shop ]:[ Tool Shop ]:[ Bingo Game Room ]:[ Hunter Guild ]:[ Party Supplies Shop ]:[ Shrine Expedition ]:Previous Menu")) {
+				case 1:
+					callsub L_Mark, F_Navi("Church","hugel,159,113","^FF0000");
+					viewpoint 1,159,113,0,0xFF0000;
+					next;
+					break;
+				case 2:
+					callsub L_Mark, F_Navi("Inn","hugel,101,77","^8B4513");
+					viewpoint 1,101,77,1,0x8B4513;
+					next;
+					break;
+				case 3:
+					callsub L_Mark, F_Navi("Pub","hugel,126,65","^DAA520");
+					viewpoint 1,126,65,2,0xDAA520;
+					next;
+					break;
+				case 4:
+					callsub L_Mark, F_Navi("Airport","hugel,178,146","^D7567F");
+					viewpoint 1,178,146,3,0xD7567F;
+					next;
+					break;
+				case 5:
+					callsub L_Mark, F_Navi("Weapon Shop","hugel,88,167","^CD5C5C");
+					viewpoint 1,88,167,4,0xCD5C5C;
+					next;
+					break;
+				case 6:
+					callsub L_Mark, F_Navi("Tool Shop","hugel,92,163","^000080");
+					viewpoint 1,92,163,5,0x000080;
+					next;
+					break;
+				case 7:
+					callsub L_Mark, F_Navi("Bingo Game Room","hugel,58,206","^800080");
+					viewpoint 1,58,206,6,0x800080;
+					next;
+					break;
+				case 8:
+					callsub L_Mark, F_Navi("Hunter Guild","hugel,209,224","^FF1493");
+					viewpoint 1,209,224,7,0xFF1493;
+					next;
+					break;
+				case 9:
+					callsub L_Mark, F_Navi("Party Supplies Shop","hugel,95,103","^483D8B");
+					viewpoint 1,95,103,8,0x483D8B;
+					next;
+					break;
+				case 10:
+					callsub L_Mark, F_Navi("Shrine Expedition","hugel,52,95","^834683");
+					viewpoint 1,52,95,9,0x834683;
+					next;
+					break;
+				case 11:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Monster Race Arena ]:[ Cool Event Corp. Staff ]:Previous Menu")) {
+				case 1:
+					callsub L_Mark, "^FF1493Monster Race Arena^000000";
+					viewpoint 1,60,71,10,0xFF1493;
+					next;
+					break;
+				case 2:
+					callsub L_Mark, "^DA70D6Cool Event Corp. Staff^000000";
+					viewpoint 1,88,168,11,0xDA70D6;
+					next;
+					break;
+				case 3:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			mes "[Rich King]";
+			mes "I'll remove the marks from your mini-map.";
+			mes "I know you're curious but you need to stop bugging me.";
+			viewpoint 2,159,113,0,0xFFFFFF;
+			viewpoint 2,101,77,1,0xFFFFFF;
+			viewpoint 2,126,65,2,0xFFFFFF;
+			viewpoint 2,178,146,3,0xFFFFFF;
+			viewpoint 2,88,167,4,0xFFFFFF;
+			viewpoint 2,92,163,5,0xFFFFFF;
+			viewpoint 2,58,206,6,0xFFFFFF;
+			viewpoint 2,209,224,7,0xFFFFFF;
+			viewpoint 2,95,103,8,0xFFFFFF;
+			viewpoint 2,52,95,9,0xFFFFFF;
+			viewpoint 2,60,71,10,0xFFFFFF;
+			viewpoint 2,88,168,11,0xFFFFFF;
+			next;
+			break;
+		case 4:
+			mes "[Rich King]";
+			mes "I'm getting a little bit hungry after working so hard...";
+			mes "I am eager to eat something!";
+			close;
+		}
+	}
+	end;
+L_Mark:
+	mes "[Rich King]";
+	mes "I will mark the location";
+	mes "of the "+getarg(0)+".";
+	mes "Do you want to know more locations?";
+	mes "Are you going to keep bugging me and make me get upset?";
+	return;
+}

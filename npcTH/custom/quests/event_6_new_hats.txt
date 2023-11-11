@@ -1,0 +1,371 @@
+//===== rAthena Script =======================================
+//= Custom Quest For New Headgears
+//===== By: ==================================================
+//= RedxSwordxHero, Lupus
+//===== Current Version: =====================================
+//= 1.4b
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= 4 brothers give you quests to get 6 new hats (missing
+//=   from official quests)
+//= Use this custom quest instead of event_32_new_hats.txt
+//= -Bongun Hat
+//= -Poring Hat, Sphinx Hat
+//= -Kafra Band, Panda Hat
+//= -Crescent Hairpin
+//===== Additional Comments: =================================
+//= Event New Hats by RedxSwordxHero 
+//= Ported and improved with timers [Lupus]
+//= Thanks to x[tsk],fixed all item requirements to iRO specs exept
+//= for hats which cannot be made on the real server. [Lupus]
+//= 1.2 removed already existing official hat quests [Lupus]
+//= 1.3 Spiffed up the NPC coords and their appearance [Lupus]
+//= 1.4 Fixed exploits. 1.4a fixed wrong item ID [Lupus] 
+//============================================================
+
+prt_in,130,66,5	script	Zac	704,{
+	mes "[Zac]";
+	mes "I am the oldest and strongest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
+	next;
+	mes "[Zac]";
+	mes "I provide 1 hat and my brothers provides the other 5.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:
+	mes "[Zac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Bongun Hat",L1_4;
+L1_4:
+	mes "[Zac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if(countitem(609) < 10) goto L_ITEM_1c;//Items: Amulet,
+	if(countitem(978) < 1) goto L_ITEM_2c;//Items: Cobaltblue Dyestuff,
+	if(countitem(2264) < 1) goto L_ITEM_3c;//Items: Munak Hat,
+	delitem 609,10;//Items: Amulet,
+	delitem 978,1;//Items: Cobaltblue Dyestuff,
+	delitem 2264,1;	//Items: Munak Hat,
+	mes "[Zac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Bongun Hat for you right away. Please Wait a Moment.";
+   	next;
+	mes "[Zac]";
+	mes "Tah Dah! ^FF0000Bongun Hat^000000...! Please Take it!";
+	getitem 5046,1;//Items: Bongun Hat,
+	next;
+	mes "[Zac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1c:
+	mes "[Zac]";
+	mes "Oh, dear. You need 10 Amulets...";
+	close;
+L_ITEM_2c:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Cobaltblue Dyestuffs...";
+	close;
+L_ITEM_3c:
+	mes "[Zac]";
+	mes "Oh, dear. You need 1 Munak Hat...";
+	close;
+L2:
+	mes "[Zac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Bongun Hat",L2_4;
+L2_4:
+	mes "[Zac]";
+	mes "You need 10 Amulets, 1 Cobaltblue Dyestuffs and 1 Munak Hat for Bongun Hat.";
+	close;
+L3:
+	mes "[Zac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+prt_in,162,131,5	script	Blac	732,{
+	mes "[Blac]";
+	mes "I am the youngest and sexiest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
+	next;
+	mes "[Blac]";
+	mes "I provide 1 hat and my brothers provides the other 5.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:
+	mes "[Blac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Crescent Hairpin",L1_9;
+L1_9:
+	mes "[Blac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if(countitem(5041) < 1) goto L_ITEM_1;//Items: Heart Hairpin,
+	if(countitem(999) < 10) goto L_ITEM_2;//Items: Steel,
+	delitem 5041,1;//Items: Heart Hairpin,
+	delitem 999,10;	//Items: Steel,
+	mes "[Blac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Crescent Hairpin for you right away. Please Wait a Moment.";
+   	next;
+	mes "[Blac]";
+	mes "Tah Dah! ^FF0000Crescent Hairpin^000000...! Please Take it!";
+	getitem 5048,1;//Items: Cresent Hairpin,
+	next;
+	mes "[Blac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1:
+	mes "[Blac]";
+	mes "Oh, dear. You need 1 Heart Hairpin...";
+	close;
+L_ITEM_2:
+	mes "[Blac]";
+	mes "Oh, dear. You need 10 Steels...";
+	close;
+L2:
+	mes "[Blac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Crescent Hairpin",L2_9;
+L2_9:
+	mes "[Blac]";
+	mes "You need 1 Heart Hairpin and 10 Steels for Crescent Hairpin.";
+	close;
+L3:
+	mes "[Blac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+prt_in,53,56,5	script	Jac	107,{
+	mes "[Jac]";
+	mes "I am the 2nd oldest and calmest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
+	next;
+	mes "[Jac]";
+	mes "I provide 2 hats and my brothers provides the other 4.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:
+	mes "[Jac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Kafra Band",L1_19,"Panda Hat",L1_24;
+L1_19:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if(countitem(10007) < 1) goto L_ITEM_1b;//Items: Silk Ribbon,
+	if(countitem(10009) < 1) goto L_ITEM_2b;//Items: Wild Flower,
+	delitem 10007,1;//Items: Silk Ribbon,
+	delitem 10009,1;	//Items: Wild Flower,
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Kafra Band for you right away. Please Wait a Moment.";
+   	next;
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Kafra Band^000000...! Please Take it!";
+	getitem 5020,1;//Items: Kafra's Band,
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1b:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Silk Ribbon...";
+	close;
+L_ITEM_2b:
+	mes "[Jac]";
+	mes "Oh, dear. You need 1 Wild Flower...";
+	close;
+L1_24:
+	mes "[Jac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if(countitem(999) < 10) goto L_ITEM_1g;//Items: Steel,
+	if(countitem(948) < 200) goto L_ITEM_2g;//Items: Bears Footskin,
+	delitem 999,10;//Items: Steel,
+	delitem 948,200;	//Items: Bears Footskin,
+	mes "[Jac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Panda Hat for you right away. Please Wait a Moment.";
+   	next;
+	mes "[Jac]";
+	mes "Tah Dah! ^FF0000Panda Hat^000000...! Please Take it!";
+	getitem 5030,1;//Items: Panda Hat,
+	next;
+	mes "[Jac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1g:
+	mes "[Jac]";
+	mes "Oh, dear. You need 10 Steels...";
+	close;
+L_ITEM_2g:
+	mes "[Jac]";
+	mes "Oh, dear. You need 200 Bear Footskins...";
+	close;
+L2:
+	mes "[Jac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Kafra Band",L2_19,"Panda Hat",L2_24;
+L2_19:
+	mes "[Jac]";
+	mes "You need 1 Silk Ribbon and 1 Wild Flower for Kafra Band.";
+	close;
+L2_24:
+	mes "[Jac]";
+	mes "You need 10 Steels and 200 Bear Footskins for Panda Hat.";
+	close;
+L3:
+	mes "[Jac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+prt_in,45,113,5	script	Pac	705,{
+	mes "[Pac]";
+	mes "I am 3rd oldest and wisest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat so I can make them.";
+	next;
+	mes "[Pac]";
+	mes "I provide 2 hats and my brothers provides the other 4.";
+	next;
+	menu "Join",L1,"Information",L2,"Cancel",L3;
+L1:
+	mes "[Pac]";
+	mes "What hat do you want me to make?";
+	next;
+	menu "Poring Hat",L1_26,"Sphinx Hat",L1_29;
+L1_26:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if(countitem(741) < 1) goto L_ITEM_1a;//Items: Poring Doll,
+	if(countitem(909) < 300) goto L_ITEM_2a;//Items: Jellopy,
+	delitem 741,1;//Items: Poring Doll,
+	delitem 909,300;//Items: Jellopy,
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Poring Hat for you right away. Please Wait a Moment.";
+   	next;
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Poring Hat^000000...! Please Take it!";
+	getitem 5035,1;//Items: Poring Hat,
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1a:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Poring Doll...";
+	close;
+L_ITEM_2a:
+	mes "[Pac]";
+	mes "Oh, dear. You need 300 Jellopies...";
+	close;
+L1_29:
+	mes "[Pac]";
+	mes "Let me check the items you have brought here.";
+	next;
+	if(countitem(999) < 25) goto L_ITEM_1d;//Items: Steel,
+	if(countitem(979) < 1) goto L_ITEM_2d;//Items: Darkgreen Dyestuff,
+	if(countitem(976) < 1) goto L_ITEM_3d;//Items: Lemon Dyestuffs,
+	if(countitem(1059) < 150) goto L_ITEM_4d;//Items: Fabric,
+	if(countitem(969) < 2) goto L_ITEM_5d;//Items: Gold,
+	delitem 999,25;//Items: Steel,
+	delitem 979,1;//Items: Darkgreen Dyestuff,
+	delitem 976,1;//Items: Lemon Dyestuffs,
+	delitem 1059,150;//Items: Fabric,
+	delitem 969,2; 	//Items: Gold,
+	mes "[Pac]";
+	mes "Wow!! Well done! Finally you have gathered all items needed! We will make the Sphinx Hat for you right away. Please Wait a Moment.";
+   	next;
+	mes "[Pac]";
+	mes "Tah Dah! ^FF0000Sphinx Hat^000000...! Please Take it!";
+	getitem 5053,1;//Items: Sphinx Hat,
+	next;
+	mes "[Pac]";
+	mes "I liked that, I look forward to making more. Thank you.";
+	close;
+L_ITEM_1d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 25 Steels...";
+	close;
+L_ITEM_2d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 DarkGreen Dyestuffs...";
+	close;
+L_ITEM_3d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 1 Lemon Dyestuffs...";
+	close;
+L_ITEM_4d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 150 Fabric...";
+	close;
+L_ITEM_5d:
+	mes "[Pac]";
+	mes "Oh, dear. You need 2 Gold Bar's...";
+	close;
+L2:
+	mes "[Pac]";
+	mes "Which hat materials do you wish to know?";
+	next;
+	menu "Poring Hat",L2_26,"Sphinx Hat",L2_29;
+L2_26:
+	mes "[Pac]";
+	mes "You need 1 Poring Doll and 300 Jellopies for Poring Hat.";
+	close;
+L2_29:
+	mes "[Pac]";
+	mes "You need 25 Steels, 1 DarkGreen Dyestuffs, 1 Lemon Dyestuffs, 150 Fabric and 2 Gold Bar's for Sphinx Hat.";
+	close;
+L3:
+	mes "[Pac]";
+	mes "Stop by some other time with the right materials, so I can make the hats for you.";
+	close;
+}
+
+
+//these scripts make our brothers to appear and disappear in order
+-	script	EDZac	-1,{
+OnInit:
+OnMinute15:
+	disablenpc "Zac";
+	end;
+OnMinute01:
+	if(rand(2)) end;
+	enablenpc "Zac";
+	end;
+}
+
+-	script	EDJac	-1,{
+OnInit:
+OnMinute30:
+	disablenpc "Jac";
+	end;
+OnMinute16:
+	if(rand(2)) end;
+	enablenpc "Jac";
+	end;
+}
+
+-	script	EDPac	-1,{
+OnInit:
+OnMinute45:
+	disablenpc "Pac";
+	end;
+OnMinute31:
+	if(rand(2)) end;
+	enablenpc "Pac";
+	end;
+}
+
+-	script	EDBlac	-1,{
+OnInit:
+OnMinute00:
+	disablenpc "Blac";
+	end;
+OnMinute46:
+	if(rand(2)) end;
+	enablenpc "Blac";
+	end;
+}

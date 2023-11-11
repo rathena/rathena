@@ -1,0 +1,26 @@
+//===== rAthena Script =======================================
+//= Malangdo Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Official kRO monster spawns
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//= 1.1 Updated to official script. [Euphy]
+//= 1.2 Added Pouring spawn, source iRO. [Euphy]
+//============================================================
+
+//==================================================
+// mal_dun01 - Lagoon in the Stars
+//==================================================
+mal_dun01,0,0	monster	Crab	1073,10,5000
+mal_dun01,0,0	monster	Shellfish	1074,10,5000
+mal_dun01,0,0	monster	Aster	1266,20,5000
+mal_dun01,0,0	monster	Red Eruma	2197,60,5000
+mal_dun01,0,0	monster	Siorava	2199,45,5000
+mal_dun01,0,0	monster	Wild Rider	2208,1,5000
+mal_dun01,0,0	monster	Pouring	1894,30,5000

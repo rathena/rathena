@@ -1,0 +1,15 @@
+//===== rAthena Script =======================================
+//= Swordsman Skills Quests
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Quests for skills: Mobile HP Recovery
+//===== Additional Comments: =================================
+//= 1.0 Moved Izlude NPC to pre-re/re paths.
+//============================================================
+
+izlude_in,118,175,2	duplicate(KnightDeThomas)	Knight De Thomas	98,4,4

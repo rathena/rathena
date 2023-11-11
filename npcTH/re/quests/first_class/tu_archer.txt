@@ -1,0 +1,25 @@
+//===== rAthena Script ======================================= 
+//= Archer Class Tutorial and Job Specific Quest
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Archer training quest.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Euphy]
+//= 1.1 Location changed in ep16.1 of Minister NPC. [Capuche]
+//============================================================ 
+
+pay_fild08,40,83,5	duplicate(Acolyte_Tu)	Acolyte#tu	95
+
+// Minister
+//============================================================
+prt_cas,97,289,3	duplicate(Minister#tu_)	Minister#tu	1_M_JOBTESTER
+
+// Range NPC
+//============================================================
+prt_cas,94,270,5	duplicate(#sound_tu_)	#sound_tu	HIDDEN_WARP_NPC,6,6

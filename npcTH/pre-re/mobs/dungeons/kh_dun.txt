@@ -1,0 +1,62 @@
+//===== rAthena Script =======================================
+//= Kiel Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version [MasterOfMuppets]
+//= 1.1 Added official mob types [Playtester]
+//= 1.2 Updated amounts [Playtester]
+//= 1.3 More accurate spawns [Playtester]
+//============================================================
+
+//==================================================
+// kh_kiehl01
+//==================================================
+kh_kiehl01,0,0	monster	Constant	1745,10
+kh_kiehl01,80,22,3,3	monster	Aliot	1740,1,180000,120000
+kh_kiehl01,105,40,3,3	monster	Aliza	1746,1,180000,120000
+kh_kiehl01,105,40,3,3	monster	Aliza	1737,1,180000,120000
+kh_kiehl01,135,24,3,3	monster	Alicel	1739,1,180000,120000
+kh_kiehl01,173,90,3,3	monster	Aliot	1740,1,180000,120000
+kh_kiehl01,156,101,3,3	monster	Aliza	1746,1,180000,120000
+kh_kiehl01,128,102,3,3	monster	Alicel	1739,1,180000,120000
+kh_kiehl01,128,102,3,3	monster	Aliot	1740,1,180000,120000
+kh_kiehl01,37,110,3,3	monster	Alicel	1739,1,180000,120000
+kh_kiehl01,37,110,3,3	monster	Alicel	1735,1,180000,120000
+kh_kiehl01,32,124,3,3	monster	Aliot	1740,1,180000,120000
+kh_kiehl01,67,171,5,5	monster	Aliot	1740,1,180000,120000
+kh_kiehl01,67,171,5,5	monster	Aliot	1736,1,180000,120000
+kh_kiehl01,85,154,3,3	monster	Alicel	1739,1,180000,120000
+kh_kiehl01,85,154,3,3	monster	Aliot	1740,1,180000,120000
+kh_kiehl01,106,154,3,3	monster	Aliza	1746,1,180000,120000
+kh_kiehl01,122,155,3,3	monster	Aliot	1740,1,180000,120000
+kh_kiehl01,122,155,3,3	monster	Aliot	1736,1,180000,120000
+kh_kiehl01,122,155,3,3	monster	Alicel	1739,1,180000,120000
+kh_kiehl01,122,155,3,3	monster	Aliza	1746,1,180000,120000
+
+//==================================================
+// kh_dun01 - Machine doll factory, 1st floor
+//==================================================
+kh_dun01,83,179,70,40	monster	Alice	1275,9,1800000,1200000
+kh_dun01,83,179,30,20	monster	Aliza	1737,15,300000,240000
+kh_dun01,83,179,70,40	monster	Constant	1738,3
+kh_dun01,120,104,105,80	monster	Alice	1275,16,1800000,1200000
+kh_dun01,120,104,105,80	monster	Aliza	1737,30,300000,240000
+kh_dun01,120,104,105,80	monster	Constant	1738,5
+kh_dun01,0,0	monster	Constant	1745,5
+kh_dun01,0,0	monster	Aliot	1736,3,600000,300000
+kh_dun01,0,0	monster	Alicel	1735,3,600000,300000
+
+//==================================================
+// kh_dun02 - Machine doll factory, 2nd floor
+//==================================================
+kh_dun02,0,0	monster	Aliot	1736,25
+kh_dun02,0,0	monster	Alicel	1735,30
+kh_dun02,0,0	monster	Aliza	1737,10
+kh_dun02,0,0	monster	Constant	1738,15,1800000,1200000
+kh_dun02,0,0	monster	Constant	1745,5
+kh_dun02,0,0,0,0	boss_monster	Kiel D-01	1734,1,7200000,3600000,0

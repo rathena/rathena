@@ -1,0 +1,186 @@
+//===== rAthena Script =======================================
+//= CTRO-Server
+//===== By: ==================================================
+//= SamMeePay (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A bank which has an interest %
+//===== Additional Comments: =================================
+// สคลิป npc เฉพาะ CTRO-Server
+//============================================================
+
+-	script	AllEXPRates	-1,{
+
+OnHour00:
+OnHour12:
+	set $@brate,1000;
+	set $@jrate,1000;
+	set $@drate,1000;
+	
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true);
+	
+	announce "อัตราปัจจุบันตอนนี้อยู่ที่: Base exp = "+($@brate/100)+"x Job exp = "+($@jrate/100)+"x Drops = "+($@drate/100)+"x",bc_all,0xFF6060;
+	end;
+
+OnHour06:
+OnHour18:
+	set $@brate,500;
+	set $@jrate,500;
+	set $@drate,500;
+
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true);
+	
+	announce "อัตราปัจจุบันตอนนี้อยู่ที่: Base exp = "+($@brate/100)+"x Job exp = "+($@jrate/100)+"x Drops = "+($@drate/100)+"x",bc_all,0xFF6060;
+	end;
+}
+
+// Start AtCommands : "voffline" "renpc" for CTRO-Server
+//===================================================================
+-	script	#voffline	-1,{
+OnInit:
+//bindatcmd "<command>","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>};
+	bindatcmd("voffline",strnpcinfo(0)+"::OnCommand_voffline",0,99);
+	bindatcmd("reitem",strnpcinfo(0)+"::OnCommand_reitem",0,99);
+	bindatcmd("usegm",strnpcinfo(0)+"::OnCommand_usegm",0,99);
+end;
+
+OnCommand_voffline:
+	//if (!getarraysize(.@atcmd_parameters$)) {
+	//	message strcharinfo(0), "Invalid syntax.";
+	//	callsub L_Help;
+	//	end;
+	//}
+	//.@command$[0] = strtolower(.@atcmd_parameters$[0]);
+	//.@command$[1] = strtolower(.@atcmd_parameters$[1]);
+	atcommand "@at";
+	end;
+
+OnCommand_reitem:
+	atcommand "@reloaditemdb";
+	end;
+	
+OnCommand_usegm:
+	input .@cmd$;
+	atcommand .@cmd$;
+	end;
+}
+
+// Function CTRO-Server
+//===================================================================
+
+//Function for iteem
+function	script	menu_GM	{
+		switch(select(" ~ เซ็ต VIP ให้ Player 1 วัน: ~ ใช้คำสั่ง GM สำหรับ Player:~ ใช้คำสั่ง GM @reloadscript:~ ใช้คำสั่ง GM @reloaditemdb: ~ ^777777ยกเลิก^000000")){
+		case 1:
+			atcommand "@vip +1d " + strcharinfo(0);
+			break;
+		case 2:
+			input .@cmd$;
+			atcommand .@cmd$;
+			break;
+		case 3:
+			atcommand "@reloadscript";
+			break;
+		case 4:
+			atcommand "@reloaditemdb";
+			break;
+		case 5:
+			break;
+		}
+		//return;
+		end;
+}
+
+// Script CTRO-Server for Web CP UPDATE Status WOE
+//===================================================================
+//-	script	OnAgitStart	-1,{
+//OnAgitStart:
+//     query_sql "UPDATE woe_status SET status = 1";
+//	 end;
+//OnAgitEnd:
+//	 query_sql "UPDATE woe_status SET status = 0";
+//	 end;
+//OnInit:
+//        if(agitcheck()==1)
+//                query_sql "UPDATE woe_status SET status = 1";
+//        else
+//                query_sql "UPDATE woe_status SET status = 0";
+//		end;
+//}
+
+
+// Start NPC CTRO-Server
+//===================================================================
+
+payon,257,161,4	script	Mr.BaBo Service::npcgm	833,{
+	mes "[ "+strnpcinfo(1)+" ]";
+	mes "บอกรหัสข้ามา ข้าจะให้เจ้าใช้บริการข้า";
+	next;
+	input .pass$;
+	if(.pass$ == "sammeepay"){
+		switch(select(
+			" ~ เซ็ต VIP ให้ Player 1 วัน: ~ ใช้คำสั่ง GM สำหรับ Player:~ ใช้คำสั่ง GM @reloadscript:~ ใช้คำสั่ง GM @reloaditemdb: ~ ^777777ยกเลิก^000000"
+		)) {
+		case 1:
+			mes "[ Service Player ]";
+			mes "ว่าไงต้องเป็น VIP ใช่ไหม";
+			next;
+			mes "[ Service Player ]";
+			mes "งั้นให้เป็นเพิ่มเป็น 1 วัน ละกันนะ";
+			atcommand "@vip +1d " + strcharinfo(0);
+			close;
+		case 2:
+			mes "[ Service Player ]";
+			mes "เชิญใส่คำสั่งเลย";
+			next;
+			input .@cmd$;
+			atcommand .@cmd$;
+			close;
+		case 3:
+			atcommand "@reloadscript";
+			close;
+		case 4:
+			atcommand "@reloaditemdb";
+			close;
+		case 5:
+			mes "[ Service Player ]";
+			mes "งั้นมาใหม่นะ";
+			close;
+		}
+		end;
+	}else{
+		mes "[ "+strnpcinfo(1)+" ]";
+		mes "รหัสที่ บอกข้ามาไม่ถูกต้อง เจ้าไม่ควรมานี่";
+		mes "เจ้าไม่ใช่คนของ CTRO";
+		close;
+	}
+}
+
+-	script	LoginController	-1,{
+OnPCLoginEvent:
+	#CASHPOINTS = ##CASHPOINTS;
+	end;
+	
+OnPCLogoutEvent:
+	##CASHPOINTS = #CASHPOINTS;
+	end;
+}

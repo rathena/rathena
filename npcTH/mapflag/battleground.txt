@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Mapflag: Battleground map setting.
+//===== Description: ========================================= 
+//= Defines a Battleground map.
+//= Additional parameter '2' shows scoreboard.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Epoque]
+//============================================================
+
+bat_c01	mapflag	battleground	2
+bat_c02	mapflag	battleground	2
+bat_c03	mapflag	battleground	2
+bat_b01	mapflag	battleground	2
+bat_b02	mapflag	battleground
+bat_a01	mapflag	battleground
+bat_a02	mapflag	battleground

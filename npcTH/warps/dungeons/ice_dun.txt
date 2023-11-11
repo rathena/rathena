@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Ice Dungeon Warp Script
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Ice Dungeon
+//===== Additional Comments: =================================
+//= 1.0 Initial version [Playtester]
+//= 1.1 Official warps [Playtester]
+//= 1.2 Added quest warp. FLoor 4 to floor 3. [L0ne_W0lf]
+//= 1.3 Fixed the warp coords from floor 4 to 3. [L0ne_W0lf]
+//============================================================
+
+ice_dun01,157,10,0	warp	ice001	1,1,ra_fild01,233,327
+ice_dun01,146,161,0	warp	ice002	1,1,ice_dun02,151,139
+ice_dun02,151,145,0	warp	ice003	1,1,ice_dun01,146,157
+ice_dun02,150,285,0	warp	ice004	1,1,ice_dun03,149,24
+ice_dun03,149,19,0	warp	ice005	1,1,ice_dun02,150,280
+//Additional Warp (4th floor -> 3rd)
+ice_dun04,33,140,0	warp	ice006	1,1,ice_dun03,149,130

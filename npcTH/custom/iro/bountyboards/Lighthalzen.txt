@@ -1,0 +1,68 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Lighthalzen
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+lighthalzen,194,161,3	script	Bounty Board 81-100#lz1	837,{
+	callfunc "F_Bounty_Board", 81, 100, 9, 1,
+		1613,	62745,	107325,		120825,	// METALING
+		1162,	62746,	131625,		148050,	// RAFFLESIA
+		1215,	62747,	121500,		136575,	// STEM_WORM
+		1692,	62748,	179775,		202050,	// BREEZE
+		1627,	62749,	190125,		213975;	// ANOPHELES
+	end;
+}
+
+lighthalzen,192,161,3	script	Bounty Board 101-150#lz2	837,{
+	callfunc "F_Bounty_Board", 101, 150, 4, 1,
+		1133,	62750,	255825,		191925,	// KOBOLD_1
+		1134,	62751,	218700,		164025,	// KOBOLD_2
+		1135,	62752,	205425,		154125,	// KOBOLD_3
+		1282,	62753,	243000,		294750;	// KOBOLD_ARCHER
+	end;
+}
+
+lighthalzen,190,161,3	script	Bounty Board 121-175#lz3	837,{
+	callfunc "F_Bounty_Board", 121, 0, 10, 1,
+		1682,	62754,	424350,		318150,	// REMOVAL
+		1657,	62755,	506250,		503550,	// RAWREL
+		1655,	62756,	546750,		511200,	// EREND
+		1654,	62757,	550575,		552150,	// ARMAIA
+		1653,	62758,	573075,		531000,	// WHIKEBAIN
+		1656,	62759,	573975,		481050,	// KAVAC
+		1652,	62760,	588510,		501750;	// YGNIZEM
+	end;
+}
+
+lighthalzen,188,162,3	script	Bounty Board 141#lz4	837,{
+	callfunc "F_Bounty_Board", 141, 0, 1, 4,
+		1639,	62761,	1516950,	1997550,	// KATRINN
+		1637,	62762,	1736100,	1738912,	// MAGALETA
+		1638,	62763,	1863225,	1861312,	// SHECIL
+		1635,	62764,	1880325,	1993162,	// EREMES
+		1634,	62765,	1996987,	2010825,	// SEYREN
+		1636,	62766,	1918687,	2022525,	// HARWORD
+		2227,	62767,	1799325,	1490400,	// TRENTINI
+		2223,	62768,	2486925,	2139300,	// CELIA
+		2226,	62769,	2496600,	2286225,	// ALPHOCCIO
+		2225,	62770,	2729925,	2276100,	// GERTIE
+		2224,	62771,	2889450,	2228625,	// CHEN
+		2222,	62772,	2969550,	2596500,	// FLAMEL
+		2221,	62773,	3641175,	2706075;	// RANDEL
+	end;
+}

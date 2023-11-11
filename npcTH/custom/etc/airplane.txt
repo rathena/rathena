@@ -1,0 +1,442 @@
+//===== rAthena Script =======================================
+//= elRO Airship
+//===== By: ==================================================
+//= Draike, Bluto, Hephaestus
+//===== Current Version: =====================================
+//= 2.2a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= It's the elRO airship. XD
+//===== Additional Comments: =================================
+//= ALWAYS HAVE AT LEAST TWELVE (12) LOCATIONS AS THE MINIMUM.  This is unless you modify to OnMinutes and change the schedule around.
+//= If you have "airplane,103,72,0	warp	airs02a	1,1,airplane,102,200" as a warp, remove it.  Where it's supposed to go, I have no clue.
+//= 2.1 Removed Duplicates [Silent]
+//= 2.2 Added missing next;'s [Evera]
+//============================================================
+
+payon,153,43,5	script	itinsetter	-1,{
+	//This is just OnInit stuff to set the hourly intinerary.
+OnInit:
+	deletearray $locationsname$[0],500;
+	deletearray $locationsmap$[0],500;
+	deletearray $locationsx[0],500;
+	deletearray $locationsy[0],500;
+	deletearray $alreadygoneto[0],500;
+	setarray $locationsname$[0],"Airport"; 
+	setarray $locationsname$[1],"Prontera"; 
+	setarray $locationsname$[2],"Payon"; 
+	setarray $locationsname$[3],"Aldebaran"; 
+	setarray $locationsname$[4],"Alberta"; 
+	setarray $locationsname$[5],"Geffen"; 
+	setarray $locationsname$[6],"Morocc"; 
+	setarray $locationsname$[7],"Glast Heim"; 
+	setarray $locationsname$[8],"Umbala"; 
+	setarray $locationsname$[9],"Comodo"; 
+	setarray $locationsname$[10],"Amatsu"; 
+	setarray $locationsname$[11],"Niflheim"; 
+	setarray $locationsname$[12],"Lutie"; 
+	setarray $locationsname$[13],"Luoyang"; 
+	setarray $locationsname$[14],"Kunlun"; 
+	setarray $locationsname$[15],"Juno"; 
+	setarray $locationsname$[16],"Ant Hell"; 
+	setarray $locationsname$[17],"Jawaii"; 
+	setarray $locationsname$[18],"Orc Village"; 
+	setarray $locationsname$[19],"Mjolnir Coal Mines"; 
+	setarray $locationsname$[20],"Gefenia Ruins"; 
+	setarray $locationsname$[21],"Ayothaya"; 
+	setarray $locationsname$[22],"Lighthalzen"; 
+	setarray $locationsname$[23],"Juperos"; 
+	setarray $locationsmap$[0],"airport"; 
+	setarray $locationsmap$[1],"prt_fild08"; 
+	setarray $locationsmap$[2],"pay_fild08"; 
+	setarray $locationsmap$[3],"mjolnir_12"; 
+	setarray $locationsmap$[4],"pay_fild03"; 
+	setarray $locationsmap$[5],"gef_fild00"; 
+	setarray $locationsmap$[6],"moc_fild10"; 
+	setarray $locationsmap$[7],"glast_01"; 
+	setarray $locationsmap$[8],"umbala"; 
+	setarray $locationsmap$[9],"comodo"; 
+	setarray $locationsmap$[10],"amatsu"; 
+	setarray $locationsmap$[11],"niflheim"; 
+	setarray $locationsmap$[12],"xmas"; 
+	setarray $locationsmap$[13],"louyang"; 
+	setarray $locationsmap$[14],"gonryun"; 
+	setarray $locationsmap$[15],"yuno"; 
+	setarray $locationsmap$[16],"moc_fild04"; 
+	setarray $locationsmap$[17],"jawaii"; 
+	setarray $locationsmap$[18],"gef_fild10"; 
+	setarray $locationsmap$[19],"mjolnir_02"; 
+	setarray $locationsmap$[20],"gefenia01"; 
+	setarray $locationsmap$[21],"ayothaya"; 
+	setarray $locationsmap$[22],"lighthalzen";
+	setarray $locationsmap$[23],"jupe_gate";
+	setarray $locationsx[0],148; 
+	setarray $locationsx[1],206; 
+	setarray $locationsx[2],159; 
+	setarray $locationsx[3],62; 
+	setarray $locationsx[4],194; 
+	setarray $locationsx[5],50; 
+	setarray $locationsx[6],163; 
+	setarray $locationsx[7],196; 
+	setarray $locationsx[8],187;
+	setarray $locationsx[9],203; 
+	setarray $locationsx[10],115;
+	setarray $locationsx[11],132;
+	setarray $locationsx[12],232;
+	setarray $locationsx[13],36; 
+	setarray $locationsx[14],82; 
+	setarray $locationsx[15],58;
+	setarray $locationsx[16],209;
+	setarray $locationsx[17],248; 
+	setarray $locationsx[18],158;
+	setarray $locationsx[19],76;
+	setarray $locationsx[20],98; 
+	setarray $locationsx[21],183;
+	setarray $locationsx[22],99;
+	setarray $locationsx[23],46;
+	setarray $locationsy[0],45; 
+	setarray $locationsy[1],280;
+	setarray $locationsy[2],92; 
+	setarray $locationsy[3],381;
+	setarray $locationsy[4],182;
+	setarray $locationsy[5],365;
+	setarray $locationsy[6],172;
+	setarray $locationsy[7],327;
+	setarray $locationsy[8],98;
+	setarray $locationsy[9],76; 
+	setarray $locationsy[10],79;
+	setarray $locationsy[11],241;
+	setarray $locationsy[12],308;
+	setarray $locationsy[13],279; 
+	setarray $locationsy[14],96; 
+	setarray $locationsy[15],194;
+	setarray $locationsy[16],326;
+	setarray $locationsy[17],175; 
+	setarray $locationsy[18],95;
+	setarray $locationsy[19],363;
+	setarray $locationsy[20],21; 
+	setarray $locationsy[21],104;
+	setarray $locationsy[22],240; 
+	setarray $locationsy[23],19;
+	goto resetgoneto;
+	end;
+
+setrandomitin:
+	set $@settervariable,$@settervariable + 1;
+	setarray $locationn[$@settervariable],rand(0,getarraysize($locationsname$) - 1);
+	if($alreadygoneto[$locationn[$@settervariable]]==1)set $@settervariable,$@settervariable - 1; 
+	if($alreadygoneto[$locationn[$@settervariable]]==1)goto setrandomitin;
+	setarray $alreadygoneto[$locationn[$@settervariable]], 1;
+	if($@settervariable<12)goto setrandomitin;
+	end;
+
+resetgoneto:
+	deletearray $alreadygoneto[0], 500;
+	set $@currenttime, 0;
+	goto setrandomitin;
+
+OnMinute00:
+	set $@currenttime, 1;
+	callfunc "F_Itinreset",12,1,2;
+
+OnMinute03:
+	set $destination,250;
+	end;
+
+OnMinute05:
+	set $@currenttime, 2;
+	callfunc "F_Itinreset",1,2,3;
+
+OnMinute08:
+	set $destination,250;
+	end;
+
+OnMinute10:
+	set $@currenttime, 3;
+	callfunc "F_Itinreset",2,3,4;
+
+OnMinute13:
+	set $destination,250;
+	end;
+
+OnMinute15:
+	set $@currenttime, 4;
+	callfunc "F_Itinreset",3,4,5;
+
+OnMinute18:
+	set $destination,250;
+	end;
+
+OnMinute20:
+	set $@currenttime, 5;
+	callfunc "F_Itinreset",4,5,6;
+
+OnMinute23:
+	set $destination,250;
+	end;
+
+OnMinute25:
+	set $@currenttime, 6;
+	callfunc "F_Itinreset",5,6,7;
+
+OnMinute28:
+	set $destination,250;
+	end;
+
+OnMinute30:
+	set $@currenttime, 7;
+	callfunc "F_Itinreset",6,7,8;
+
+OnMinute33:
+	set $destination,250;
+	end;
+
+OnMinute35:
+	set $@currenttime, 8;
+	callfunc "F_Itinreset",7,8,9;
+
+OnMinute38:
+	set $destination,250;
+	end;
+
+OnMinute40:
+	set $@currenttime, 9;
+	callfunc "F_Itinreset",8,9,10;
+
+OnMinute43:
+	set $destination,250;
+	end;
+
+OnMinute45:
+	set $@currenttime, 10;
+	callfunc "F_Itinreset",9,10,11;
+
+OnMinute48:
+	set $destination,250;
+	end;
+
+OnMinute50:
+	set $@currenttime, 11;
+	callfunc "F_Itinreset",10,11,12;
+
+OnMinute53:
+	set $destination,250;
+	end;
+
+OnMinute55:
+	set $@currenttime, 12;
+	callfunc "F_Itinreset",11,12,1;
+
+OnMinute58:
+	set $destination,250;
+	end;
+}
+
+function	script	F_Porter	{
+	if($destination==getarg(0))goto Board;
+	if($destination!=getarg(0))goto Notime;
+
+Board:
+	mes "^FF0000[Porter]^000000";
+	mes "ขณะนี้เครื่องบินกำลังเทียบท่า  คุณต้องการขึ้นเครื่องไหม?";
+	next;
+	menu "ใช่",L_Yes,"ไม่",L_Nope,"ดูกำหนดการเดินทางรายชั่วโมง",Itin;
+
+L_Yes:
+	if($destination!=getarg(0))goto Notime;
+	warp "airplane", 105, 72;
+	specialeffect2 EF_CASTSPIN;
+L_Nope:
+	mes "^FF0000[Porter]^000000";
+	mes "โชคดีนะ  ขอขอบคุณสำหรับการเดินทางไปกับเรือเหาะ";
+	close;
+
+Notime:
+	mes "^FF0000[Porter]^000000";
+	if(Sex==SEX_FEMALE) mes "ขออภัยแหม่ม แต่เครื่องบินยังไม่ได้รับการติดต่อ อย่างไรก็ตามคุณสามารถดูแผนการเดินทางรายชั่วโมงของเครื่องบินได้";
+	else mes "ขออภัยครับ แต่เครื่องบินยังไม่ได้รับการติดต่อ อย่างไรก็ตามคุณสามารถดูแผนการเดินทางรายชั่วโมงของเครื่องบินได้";
+	next;
+	menu "ได้โปรด",Itin,"ไม่เป็นไรขอบคุณ",L_Nope;
+	close;
+	end;
+
+Itin:
+	mes "^FF0000[Porter]^000000";
+	callfunc "F_Itin";
+}
+
+airport,153,43,5	script	Airport Porter	774,{
+	callfunc "F_Porter",0;
+}
+prt_fild08,206,279,5	script	Porter#01	774,{
+	callfunc "F_Porter",1;
+}
+gef_fild00,50,364,5	script	Porter#02	774,{
+	callfunc "F_Porter",5;
+}
+moc_fild10,163,173,5	script	Porter#03	774,{
+	callfunc "F_Porter",6;
+}
+mjolnir_12,61,380,5	script	Porter#04	774,{
+	callfunc "F_Porter",3;
+}
+pay_fild08,159,91,5	script	Porter#05	774,{
+	callfunc "F_Porter",2;
+}
+pay_fild03,194,181,5	script	Porter#06	774,{
+	callfunc "F_Porter",4;
+}
+glast_01,196,326,1	script	Porter#07	774,{
+	callfunc "F_Porter",7;
+}
+umbala,188,98,3	script	Porter#08	774,{
+	callfunc "F_Porter",8;
+}
+comodo,203,75,8	script	Porter#09	774,{
+	callfunc "F_Porter",9;
+}
+amatsu,115,78,8	script	Porter#10	774,{
+	callfunc "F_Porter",10;
+}
+niflheim,132,242,5	script	Porter#11	774,{
+	callfunc "F_Porter",11;
+}
+xmas,232,309,5	script	Porter#12	774,{
+	callfunc "F_Porter",12;
+}
+louyang,35,279,8	script	Porter#13	774,{
+	callfunc "F_Porter",13;
+}
+gonryun,82,95,7	script	Porter#14	774,{
+	callfunc "F_Porter",14;
+}
+yuno,58,195,4	script	Porter#15	774,{
+	callfunc "F_Porter",15;
+}
+moc_fild04,210,326,2	script	Porter#16	774,{
+	callfunc "F_Porter",16;
+}
+jawaii,247,174,7	script	Porter#17	774,{
+	callfunc "F_Porter",17;
+}
+gef_fild10,159,95,2	script	Porter#18	774,{
+	callfunc "F_Porter",18;
+}
+mjolnir_02,76,364,5	script	Porter#19	774,{
+	callfunc "F_Porter",19;
+}
+gefenia01,97,22,6	script	Porter#20	774,{
+	callfunc "F_Porter",20;
+}
+ayothaya,182,105,5	script	Porter#21	774,{
+	callfunc "F_Porter",21;
+}
+lighthalzen,99,241,4	script	Porter#22	774,{
+	callfunc "F_Porter",22;
+}
+jupe_gate,46,18,7	script	Porter#23	774,{
+	callfunc "F_Porter",23;
+}
+airport,141,43,5	script	Itinerary Schedule	837,{
+	mes "^FF0000[Itinerary]^000000";
+	callfunc "F_Itin";
+}
+
+airplane,102,68,5	script	Docker	852,{
+	if($destination == 250) goto Nowhere;
+	mes "^FF0000[Airplane Attendant]^000000";
+	if($destination == 250)goto Notime;
+	set @dockky, $destination;
+	if($destination != 250)mes "ขณะนี้เรากำลังเทียบท่าอยู่ที่ "+$locationsname$[$destination]+" คุณต้องการออกหรือไม่?";
+	next;
+	menu "ใช่",Lyes,"ไม่",Lnope;
+
+Lyes:
+	if($destination == 250)goto Notime;
+	if($destination != @dockky)goto Notime;
+	warp $locationsmap$[$destination], $locationsx[$destination], $locationsy[$destination];
+	specialeffect2 EF_CASTSPIN;
+
+Lnope:
+	mes "^FF0000[Airplane Attendant]^000000";
+	mes "โชคดีนะ  ขอบคุณที่ร่วมเดินทางไปกับเรา";
+	close;
+
+Notime:
+	mes "^FF0000[Airplane Attendant]^000000";
+	if(Sex==SEX_FEMALE) mes "ขออภัยแหม่ม แต่ขณะนี้เครื่องบินไม่ได้เทียบท่า กรุณารอสักครู่...";
+	else mes "ขออภัยครับ แต่ขณะนี้เครื่องบินไม่ได้เทียบท่า กรุณารอสักครู่...";
+	close;
+
+Nowhere:
+	mes "^FF0000[Airplane Attendant]^000000";
+	mes "ขณะนี้เรากำลังอยู่บนท้องฟ้า โปรดรอจนกว่านักบินจะประกาศว่าเราลงจอดอย่างปลอดภัย";
+	close;
+}
+
+function	script	F_Itin	{
+	//This is the itinerary's function.  It should work well enough.
+	if($@currenttime==0)mes "โปรดลองอีกครั้งในภายหลัง การรีบูตเซิร์ฟเวอร์หรือการรีแฮชครั้งล่าสุดทำให้กำหนดการเดินทางยุ่งขึ้นเล็กน้อย";
+	if($@currenttime==0)close;
+	if($@currenttime==0)end;
+	set @tempo, 0;
+	set @tempo, $@currenttime - 1;
+	goto seta;
+	close;
+
+seta:
+	set @tempo, @tempo + 1;
+	set @time, gettime(DT_HOUR);
+	set @minutes, 5 * @tempo - 5;
+	set @minutess, 5 * @tempo - 2;
+	if(@minutes<10)set @minutes$, "0" + @minutes;
+	if(@minutes>9)set @minutes$, @minutes;
+	if(@minutess<10)set @minutess$, "0" + @minutess;
+	if(@minutess>9)set @minutess$, @minutess;
+	if(@time<12)set @time$,@time;
+	if(@time==12)set @time$,12;
+	if(@time>12)set @time$,@time - 12;
+	if(@time<12)mes @time$+":"+ @minutes$ + " A.M. - "+@time$+ ":"+ @minutess$ + " A.M. - "+"^FF0000"+$locationsname$[$locationn[@tempo]]+"^000000";
+	if(@time==12)mes @time$+":"+ @minutes$ + " P.M. - "+@time$+ ":"+ @minutess$ + " P.M. -"+"^FF0000 "+$locationsname$[$locationn[@tempo]]+"^000000";
+	if(@time>12 && time<24)mes @time$ +":"+ @minutes$ + " P.M. - "+@time$ + ":"+ @minutess$ + " P.M. -"+"^FF0000 "+$locationsname$[$locationn[@tempo]]+"^000000";
+	if(@time==24)mes @time$+":"+ @minutes$ + " A.M. - "+@time$+ ":"+ @minutess$ + " A.M. -"+"^FF0000 "+$locationsname$[$locationn[@tempo]]+"^000000";
+	if(@tempo<12)goto seta;
+	set @tempo, 0;
+	goto setb;
+
+setb:
+	if($@currenttime - 1==@tempo)goto setc;
+	set @tempo, @tempo + 1;
+	set @time, gettime(DT_HOUR) + 1;
+	set @minutes, 5 * @tempo - 5;
+	set @minutess, 5 * @tempo - 2;
+	if(@minutes<10)set @minutes$, "0" + @minutes;
+	if(@minutes>9)set @minutes$, @minutes;
+	if(@minutess<10)set @minutess$, "0" + @minutess;
+	if(@minutess>9)set @minutess$, @minutess;
+	if(@time<12)set @time$,@time;
+	if(@time==12)set @time$,12;
+	if(@time>12)set @time$,@time - 12;
+	if(@time<12)mes @time$+":"+ @minutes$ + " A.M. - "+@time$+ ":"+ @minutess$ + " A.M. - "+"^FF0000"+$locationsname$[$locationn[@tempo]]+"^000000";
+	if(@time==12)mes @time$+":"+ @minutes$ + " P.M. - "+@time$+ ":"+ @minutess$ + " P.M. -"+"^FF0000 "+$locationsname$[$locationn[@tempo]]+"^000000";
+	if(@time>12 && time<24)mes @time$ +":"+ @minutes$ + " P.M. - "+@time$+ ":"+ @minutess$ + " P.M. -"+"^FF0000 "+$locationsname$[$locationn[@tempo]]+"^000000";
+	if(@time==24)mes @time$+":"+ @minutes$ + " A.M. - "+@time$+ ":"+ @minutess$ + " A.M. -"+"^FF0000 "+$locationsname$[$locationn[@tempo]]+"^000000";
+	goto setb;
+
+setc:
+	close;
+	end;
+}
+
+function	script	F_Itinreset	{
+	setarray $alreadygoneto[$locationn[getarg(0)]], 0;
+	goto sest;
+sest:
+	setarray $locationn[getarg(0)],rand(0,getarraysize($locationsname$) - 1);
+	if($alreadygoneto[$locationn[getarg(0)]]==1)goto sest;
+	setarray $alreadygoneto[$locationn[getarg(0)]], 1;
+	set $destination,$locationn[$@currenttime];
+	announce "นักบิน: เครื่องบินมาถึงที่ "+$locationsname$[$locationn[getarg(1)]]+".  จะออกเดินทางไปยัง "+ $locationsname$[$locationn[getarg(2)]] + " ใน 3 นาที",16;
+	end;
+}
