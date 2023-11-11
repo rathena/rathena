@@ -8570,6 +8570,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			// Additional Damage
 			md.damage += sstatus->max_hp / (6 - min(5, skill_lv)) + status_get_max_sp(src) * (2 * skill_lv);
 			break;
+		case NPC_CANE_OF_EVIL_EYE:
+			md.damage = 15000;
+			break;
 	}
 
 	if (nk[NK_SPLASHSPLIT]) { // Divide ATK among targets
