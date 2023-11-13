@@ -1926,6 +1926,11 @@ bool pc_lastpoint_special( map_session_data& sd ){
 		return true;
 	}
 
+	if (strcmpi(sd.status.last_point.map, MAP_JAIL) == 0) {
+		// Don't return jailed player to save point.
+		return false;
+	}
+
 	// Maybe since the player's logout the nosave mapflag was added to the map
 	if( mapdata->getMapFlag(MF_NOSAVE) ){
 		// The map has a specific return point
