@@ -88,6 +88,40 @@ Header:
   Type: ITEM_DB
   Version: 3
 
+Body:
+# Item Customs By CTRO
+# ID Item Start : 35000
+#=============================================================
+  - Id: 35000
+    AegisName: Auto_Trade_Voucher
+    Name: "Auto Trade Voucher"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      atcommand "@at";
+  - Id: 35001
+    AegisName: GM_by_pass_Voucher
+    Name: "GM by pass Voucher"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      callfunc "menu_GM";
 #Body:
 # THQ Quest Items
 #=============================================================
