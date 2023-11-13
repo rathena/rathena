@@ -10021,7 +10021,7 @@ Remove the quest of the given <ID> from the user's quest log.
 *changequest <ID>,<ID2>{,<char_id>};
 
 Remove quest of the given <ID> from the user's quest log.
-Add quest of the <ID2> to the the quest log, and the state is "active".
+Add quest <ID2> to the quest log, and the state is "active".
 
 ---------------------------------------
 
@@ -11125,7 +11125,7 @@ Use <color> hex code to set the color for this channel, if not defined, default
 channel color will be used.
 
 If <char_id> is defined, the channel will be a private channel and the player
-will be the the channel owner.
+will be the channel owner.
 
 Returns 1 on success.
 
@@ -11367,3 +11367,11 @@ Note: Only works with classes that use the ranking system.
 Returns true if the player is dead else false.
 
 ---------------------------------------
+
+*has_autoloot({<char_id>});
+
+This command checks whether a player configured autoloot.
+Returns current autoloot value on success.
+
+---------------------------------------
+
