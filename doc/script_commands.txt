@@ -8414,6 +8414,14 @@ error message instead.
 This command requires packet version 2021-11-03 or newer.
 
 ---------------------------------------
+
+*opentips({<Tip ID>,{<char ID>}});
+
+Opens the tip box UI for the attached player or the given character ID.
+
+This command requires packet version 2017-11-22 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
