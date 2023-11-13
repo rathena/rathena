@@ -14015,7 +14015,7 @@ TIMER_FUNC(status_change_timer){
 			int hp = 0;
 			if( status->hp < status->max_hp && !sc->getSCE(SC_BERSERK) )
 				hp = (sce->val1 < 0) ? (int)(status->max_hp * -1 * sce->val1 / 100.) : sce->val1;
-			status_heal(bl, hp, 0, 2);
+			status_heal(bl, hp, 0, 0);
 			sc_timer_next((sce->val2 * 1000) + tick);
 			return 0;
 		}
@@ -14027,7 +14027,7 @@ TIMER_FUNC(status_change_timer){
 			int sp = 0;
 			if( status->sp < status->max_sp && !sc->getSCE(SC_BERSERK) )
 				sp = (sce->val1 < 0) ? (int)(status->max_sp * -1 * sce->val1 / 100.) : sce->val1;
-			status_heal(bl, 0, sp, 2);
+			status_heal(bl, 0, sp, 0);
 			sc_timer_next((sce->val2 * 1000) + tick);
 			return 0;
 		}
