@@ -52474,8 +52474,11 @@ Body:
       bonus bShortAtkRate,10;
       bonus2 bAddSize,Size_Small,15;
       bonus2 bAddSize,Size_Large,15;
-      bonus2 bSubSize,Size_Small,7;
-      bonus2 bSubSize,Size_Large,7;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubSize,Size_Small,7;
+         bonus2 bSubSize,Size_Large,7;
+      }
   - Id: 300488
     AegisName: aegis_300488
     Name: Lookie Card
@@ -52501,9 +52504,12 @@ Body:
       bonus2 bAddRace,RC_Formless,15;
       bonus2 bAddRace,RC_DemiHuman,15;
       bonus2 bAddRace,RC_Player_Human,15;
-      bonus2 bSubRace,RC_Formless,7;
-      bonus2 bSubRace,RC_DemiHuman,7;
-      bonus2 bSubRace,RC_Player_Human,7;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubRace,RC_Formless,7;
+         bonus2 bSubRace,RC_DemiHuman,7;
+         bonus2 bSubRace,RC_Player_Human,7;
+      }
   - Id: 300490
     AegisName: aegis_300490
     Name: Est Card
@@ -52528,8 +52534,11 @@ Body:
       bonus bLongAtkRate,10;
       bonus2 bAddSize,Size_Small,15;
       bonus2 bAddSize,Size_Large,15;
-      bonus2 bSubSize,Size_Small,7;
-      bonus2 bSubSize,Size_Large,7;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubSize,Size_Small,7;
+         bonus2 bSubSize,Size_Large,7;
+      }
   - Id: 300492
     AegisName: aegis_300492
     Name: Gony Card
@@ -52555,9 +52564,12 @@ Body:
       bonus2 bAddRace,RC_Formless,15;
       bonus2 bAddRace,RC_DemiHuman,15;
       bonus2 bAddRace,RC_Player_Human,15;
-      bonus2 bSubRace,RC_Formless,7;
-      bonus2 bSubRace,RC_DemiHuman,7;
-      bonus2 bSubRace,RC_Player_Human,7;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubRace,RC_Formless,7;
+         bonus2 bSubRace,RC_DemiHuman,7;
+         bonus2 bSubRace,RC_Player_Human,7;
+      }
   - Id: 300494
     AegisName: aegis_300494
     Name: Tes Card
@@ -52582,8 +52594,11 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,10;
       bonus2 bMagicAddSize,Size_Small,15;
       bonus2 bMagicAddSize,Size_Large,15;
-      bonus2 bSubSize,Size_Small,7;
-      bonus2 bSubSize,Size_Large,7;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubSize,Size_Small,7;
+         bonus2 bSubSize,Size_Large,7;
+      }
   - Id: 300496
     AegisName: aegis_300496
     Name: Leizi Card
@@ -52607,9 +52622,12 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,10;
       bonus2 bMagicAtkEle,Ele_Neutral,15;
-      bonus2 bSubRace,RC_Formless,7;
-      bonus2 bSubRace,RC_DemiHuman,7;
-      bonus2 bSubRace,RC_Player_Human,7;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubRace,RC_Formless,7;
+         bonus2 bSubRace,RC_DemiHuman,7;
+         bonus2 bSubRace,RC_Player_Human,7;
+      }
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)

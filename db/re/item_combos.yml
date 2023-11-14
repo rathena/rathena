@@ -44727,7 +44727,7 @@ Body:
          skill "RK_IGNITIONBREAK",5;
          bonus2 bSkillAtk,"RK_IGNITIONBREAK",7*(getequiprefinerycnt(EQI_HAND_R)/2);
       }
-    - Combos:
+  - Combos:
       - Combo:
           - Remorse_Crown    # 400474
           - Poenitentia_Clava    # 590016
@@ -46288,8 +46288,8 @@ Body:
       bonus bSMatk,2;
       bonus bMatkRate,2;
       if (.@sum>=18) {
-         bonus2 bMagicAddEle,Ele_All,10;
          bonus2 bMagicAtkEle,Ele_All,5;
+         bonus2 bMagicAddSize,Size_All,10;
       }
   - Combos:
       - Combo:
@@ -46395,7 +46395,9 @@ Body:
     Script: |
       bonus2 bMagicAddSize,Size_Small,15;
       bonus2 bMagicAddSize,Size_Large,15;
-      bonus2 bMagicAtkEle,Ele_Neutral,15;
+      bonus2 bMagicAddRace,RC_DemiHuman,15;
+      bonus2 bMagicAddRace,RC_Player_Human,15;
+      bonus2 bMagicAddRace,RC_Formless,15;
   - Combos:
       - Combo:
           - Justice_Vigor_ABC   # 312685
@@ -46468,6 +46470,7 @@ Body:
           - aegis_312692   # 312692
           - Shadowchaser_Bottom3   # 311364
     Script: |
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",15;
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",15;
   - Combos:
       - Combo:
@@ -46480,6 +46483,7 @@ Body:
           - aegis_312693   # 312693
           - WanderMins_Middle3   # 311006
     Script: |
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",10;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10;
   - Combos:
       - Combo:
@@ -46646,7 +46650,7 @@ Body:
   - Combos:
       - Combo:
           - Clover_Ace_Defense   # 420269
-          - aegis_410232   # 410232
+          - Gambler_Seal_KR_   # 410233
     Script: |
       bonus bMaxHPrate,5;
       bonus bMdef,30;
