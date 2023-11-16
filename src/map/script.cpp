@@ -20872,7 +20872,6 @@ BUILDIN_FUNC(waitingroom2bg)
 	chats::ChatData *cd;
 	const char *map_name;
 	int mapindex = 0, bg_id;
-	unsigned char i,c=0;
 	struct s_battleground_team team;
 
 	if( script_hasdata(st,7) )
@@ -20912,7 +20911,8 @@ BUILDIN_FUNC(waitingroom2bg)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
+	uint32 c = 0;
+	for (uint32 i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd, false) ){
 			mapreg_setreg(reference_uid(add_str("$@arenamembers"), c), sd->bl.id);
