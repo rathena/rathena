@@ -540,11 +540,11 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 	case CHAT:
 	case CHAT_WOS:
 		{
-			struct chat_data *cd;
+			chats::ChatData *cd;
 			if (sd) {
-				cd = (struct chat_data*)map_id2bl(sd->chatID);
+				cd = (chats::ChatData*)map_id2bl(sd->chatID);
 			} else if (bl->type == BL_CHAT) {
-				cd = (struct chat_data*)bl;
+				cd = (chats::ChatData*)bl;
 			} else break;
 			if (cd == NULL)
 				break;
@@ -4497,7 +4497,7 @@ void clif_createchat(map_session_data* sd, int flag)
 ///     1 = public
 ///     2 = arena (npc waiting room)
 ///     3 = PK zone (non-clickable)
-void clif_dispchat(struct chat_data* cd, int fd)
+void clif_dispchat(chats::ChatData* cd, int fd)
 {
 	unsigned char buf[128];
 	uint8 type;
@@ -4535,7 +4535,7 @@ void clif_dispchat(struct chat_data* cd, int fd)
 ///     1 = public
 ///     2 = arena (npc waiting room)
 ///     3 = PK zone (non-clickable)
-void clif_changechatstatus(struct chat_data* cd)
+void clif_changechatstatus(chats::ChatData* cd)
 {
 	unsigned char buf[128];
 	uint8 type;
@@ -4562,7 +4562,7 @@ void clif_changechatstatus(struct chat_data* cd)
 
 /// Removes the chatroom (ZC_DESTROY_ROOM).
 /// 00d8 <chat id>.L
-void clif_clearchat(struct chat_data *cd,int fd)
+void clif_clearchat(chats::ChatData *cd,int fd)
 {
 	unsigned char buf[32];
 
@@ -4611,7 +4611,7 @@ void clif_joinchatfail(map_session_data *sd,int flag)
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_joinchatok(map_session_data *sd,struct chat_data* cd)
+void clif_joinchatok(map_session_data *sd,chats::ChatData* cd)
 {
 	int fd;
 	int i,t;
@@ -4648,7 +4648,7 @@ void clif_joinchatok(map_session_data *sd,struct chat_data* cd)
 
 /// Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
 /// 00dc <users>.W <name>.24B
-void clif_addchat(struct chat_data* cd,map_session_data *sd)
+void clif_addchat(chats::ChatData* cd,map_session_data *sd)
 {
 	unsigned char buf[29];
 
@@ -4667,7 +4667,7 @@ void clif_addchat(struct chat_data* cd,map_session_data *sd)
 /// role:
 ///     0 = owner (menu)
 ///     1 = normal
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
+void clif_changechatowner(chats::ChatData* cd, map_session_data* sd)
 {
 	unsigned char buf[64];
 
@@ -4691,7 +4691,7 @@ void clif_changechatowner(struct chat_data* cd, map_session_data* sd)
 /// flag:
 ///     0 = left
 ///     1 = kicked
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag)
+void clif_leavechat(chats::ChatData* cd, map_session_data* sd, bool flag)
 {
 	unsigned char buf[32];
 
@@ -5012,8 +5012,8 @@ static void clif_getareachar_pc(map_session_data* sd,map_session_data* dstsd)
 	int i;
 
 	if( dstsd->chatID ) {
-		struct chat_data *cd = NULL;
-		if( (cd = (struct chat_data*)map_id2bl(dstsd->chatID)) && cd->usersd[0]==dstsd)
+		chats::ChatData *cd = NULL;
+		if( (cd = (chats::ChatData*)map_id2bl(dstsd->chatID)) && cd->usersd[0]==dstsd)
 			clif_dispchat(cd,sd->fd);
 	} else if( dstsd->state.vending )
 		clif_showvendingboard( *dstsd, SELF, &sd->bl );
@@ -5110,7 +5110,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		{
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if( nd->chat_id )
-				clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
+				clif_dispchat((chats::ChatData*)map_id2bl(nd->chat_id),sd->fd);
 			if( nd->size == SZ_BIG )
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if( nd->size == SZ_MEDIUM )
@@ -5630,8 +5630,8 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			if(sd->vd.class_ != JT_INVISIBLE)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
 			if(sd->chatID){
-				struct chat_data *cd;
-				cd=(struct chat_data*)map_id2bl(sd->chatID);
+				chats::ChatData *cd;
+				cd=(chats::ChatData*)map_id2bl(sd->chatID);
 				if(cd->usersd[0]==sd)
 					clif_dispchat(cd,tsd->fd);
 			}
@@ -9991,7 +9991,7 @@ void clif_refresh(map_session_data *sd)
 	map_foreachinallrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
 	if( sd->chatID )
-		chat_leavechat(sd,0);
+		chats::LeaveChat(sd,0);
 	if( sd->state.vending )
 		clif_openvending(sd, sd->bl.id, sd->vending);
 	if( pc_issit(sd) )
@@ -12440,7 +12440,7 @@ void clif_parse_CreateChatRoom(int fd, map_session_data* sd)
 	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
 	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
 
-	chat_createpcchat(sd, s_title, s_password, limit, pub);
+	chats::CreatePcChat(sd, s_title, s_password, limit, pub);
 }
 
 
@@ -12451,7 +12451,7 @@ void clif_parse_ChatAddMember(int fd, map_session_data* sd){
 	int chatid = RFIFOL(fd,info->pos[0]);
 	const char* password = RFIFOCP(fd,info->pos[1]); // not zero-terminated
 
-	chat_joinchat(sd,chatid,password);
+	chats::JoinChat(sd,chatid,password);
 }
 
 
@@ -12476,7 +12476,7 @@ void clif_parse_ChatRoomStatusChange(int fd, map_session_data* sd){
 	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
 	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE)); //NOTE: assumes that safestrncpy will not access the len+1'th byte
 
-	chat_changechatstatus(sd, s_title, s_password, limit, pub);
+	chats::ChangeChatStatus(sd, s_title, s_password, limit, pub);
 }
 
 
@@ -12488,7 +12488,7 @@ void clif_parse_ChatRoomStatusChange(int fd, map_session_data* sd){
 void clif_parse_ChangeChatOwner(int fd, map_session_data* sd)
 {
 	//int role = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
-	chat_changechatowner(sd,RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[1]));
+	chats::ChangeChatOwner(sd,RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[1]));
 }
 
 
@@ -12496,7 +12496,7 @@ void clif_parse_ChangeChatOwner(int fd, map_session_data* sd)
 /// 00e2 <name>.24B
 void clif_parse_KickFromChat(int fd,map_session_data *sd)
 {
-	chat_kickchat(sd,RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[0]));
+	chats::KickPcFromChat(sd,RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[0]));
 }
 
 
@@ -12504,7 +12504,7 @@ void clif_parse_KickFromChat(int fd,map_session_data *sd)
 /// 00e3
 void clif_parse_ChatLeave(int fd, map_session_data* sd)
 {
-	chat_leavechat(sd,0);
+	chats::LeaveChat(sd,0);
 }
 
 

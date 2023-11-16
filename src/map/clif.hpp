@@ -28,7 +28,7 @@ struct homun_data;
 struct pet_data;
 struct mob_data;
 struct npc_data;
-struct chat_data;
+namespace chats{class ChatData;}
 struct flooritem_data;
 struct skill_unit;
 struct s_vending;
@@ -685,14 +685,14 @@ void clif_changeoption2(struct block_list* bl);	// area
 void clif_useitemack(map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
 void clif_createchat(map_session_data* sd, int flag);	// self
-void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
+void clif_dispchat(chats::ChatData* cd, int fd);	// area or fd
 void clif_joinchatfail(map_session_data *sd,int flag);	// self
-void clif_joinchatok(map_session_data *sd,struct chat_data* cd);	// self
-void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
-void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
-void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
-void clif_leavechat(struct chat_data* cd, map_session_data* sd, bool flag);	// chat
-void clif_changechatstatus(struct chat_data* cd);	// chat
+void clif_joinchatok(map_session_data *sd,chats::ChatData* cd);	// self
+void clif_addchat(chats::ChatData* cd,map_session_data *sd);	// chat
+void clif_changechatowner(chats::ChatData* cd, map_session_data* sd);	// chat
+void clif_clearchat(chats::ChatData *cd,int fd);	// area or fd
+void clif_leavechat(chats::ChatData* cd, map_session_data* sd, bool flag);	// chat
+void clif_changechatstatus(chats::ChatData* cd);	// chat
 void clif_refresh_storagewindow(map_session_data *sd);
 void clif_refresh(map_session_data *sd);	// self
 
