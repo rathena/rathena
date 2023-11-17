@@ -52450,6 +52450,184 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMaxSPrate,15;
+  - Id: 300486
+    AegisName: aegis_300486
+    Name: Elena Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300487
+    AegisName: aegis_300487
+    Name: Rebellion Elena Volkova Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus2 bAddSize,Size_Small,15;
+      bonus2 bAddSize,Size_Large,15;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubSize,Size_Small,7;
+         bonus2 bSubSize,Size_Large,7;
+      }
+  - Id: 300488
+    AegisName: aegis_300488
+    Name: Lookie Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300489
+    AegisName: aegis_300489
+    Name: Rebellion Lookie Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus2 bAddRace,RC_Formless,15;
+      bonus2 bAddRace,RC_DemiHuman,15;
+      bonus2 bAddRace,RC_Player_Human,15;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubRace,RC_Formless,7;
+         bonus2 bSubRace,RC_DemiHuman,7;
+         bonus2 bSubRace,RC_Player_Human,7;
+      }
+  - Id: 300490
+    AegisName: aegis_300490
+    Name: Est Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300491
+    AegisName: aegis_300491
+    Name: Rebellion Est Loveroy Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus2 bAddSize,Size_Small,15;
+      bonus2 bAddSize,Size_Large,15;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubSize,Size_Small,7;
+         bonus2 bSubSize,Size_Large,7;
+      }
+  - Id: 300492
+    AegisName: aegis_300492
+    Name: Gony Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300493
+    AegisName: aegis_300493
+    Name: Rebellion Gony Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus2 bAddRace,RC_Formless,15;
+      bonus2 bAddRace,RC_DemiHuman,15;
+      bonus2 bAddRace,RC_Player_Human,15;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubRace,RC_Formless,7;
+         bonus2 bSubRace,RC_DemiHuman,7;
+         bonus2 bSubRace,RC_Player_Human,7;
+      }
+  - Id: 300494
+    AegisName: aegis_300494
+    Name: Tes Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300495
+    AegisName: aegis_300495
+    Name: Secret Wing Philopontes Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bMagicAddSize,Size_Small,15;
+      bonus2 bMagicAddSize,Size_Large,15;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubSize,Size_Small,7;
+         bonus2 bSubSize,Size_Large,7;
+      }
+  - Id: 300496
+    AegisName: aegis_300496
+    Name: Leizi Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300497
+    AegisName: aegis_300497
+    Name: Secret Wing Leizi Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,15;
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
+         bonus2 bSubRace,RC_Formless,7;
+         bonus2 bSubRace,RC_DemiHuman,7;
+         bonus2 bSubRace,RC_Player_Human,7;
+      }
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -75199,6 +75377,302 @@ Body:
     Name: Evil Energy (Shinkiro & Shiranui)    # !todo check english name
     Type: Card
     SubType: Enchant
+  - Id: 312655
+    AegisName: Shadow_ATK_1
+    Name: S. Attack Power 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,1;
+  - Id: 312656
+    AegisName: Shadow_ATK_2
+    Name: S. Attack Power 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,2;
+  - Id: 312657
+    AegisName: Shadow_ATK_3
+    Name: S. Attack Power 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,3;
+  - Id: 312658
+    AegisName: Shadow_ATK_4
+    Name: S. Attack Power 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,4;
+  - Id: 312659
+    AegisName: Shadow_ATK_5
+    Name: S. Attack Power 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,5;
+  - Id: 312660
+    AegisName: Shadow_MATK_1
+    Name: S. Magic Power 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,1;
+  - Id: 312661
+    AegisName: Shadow_MATK_2
+    Name: S. Magic Power 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,2;
+  - Id: 312662
+    AegisName: Shadow_MATK_3
+    Name: S. Magic Power 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,3;
+  - Id: 312663
+    AegisName: Shadow_MATK_4
+    Name: S. Magic Power 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,4;
+  - Id: 312664
+    AegisName: Shadow_MATK_5
+    Name: S. Magic Power 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5;
+  - Id: 312665
+    AegisName: Shadow_CRI_1
+    Name: S. Critical 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,1;
+  - Id: 312666
+    AegisName: Shadow_CRI_2
+    Name: S. Critical 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,2;
+  - Id: 312667
+    AegisName: Shadow_CRI_3
+    Name: S. Critical 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,3;
+  - Id: 312668
+    AegisName: Shadow_CRI_4
+    Name: S. Critical 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,4;
+  - Id: 312669
+    AegisName: Shadow_CRI_5
+    Name: S. Critical 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,5;
+  - Id: 312670
+    AegisName: Shadow_CAST_1
+    Name: S. Casting 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-1;
+  - Id: 312671
+    AegisName: Shadow_CAST_2
+    Name: S. Casting 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-2;
+  - Id: 312672
+    AegisName: Shadow_CAST_3
+    Name: S. Casting 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-3;
+  - Id: 312673
+    AegisName: Shadow_CAST_4
+    Name: S. Casting 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-4;
+  - Id: 312674
+    AegisName: Shadow_CAST_5
+    Name: S. Casting 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-5;
+  - Id: 312675
+    AegisName: Shadow_HP_1
+    Name: S. Vitality 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,1;
+  - Id: 312676
+    AegisName: Shadow_HP_2
+    Name: S. Vitality 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,2;
+  - Id: 312677
+    AegisName: Shadow_HP_3
+    Name: S. Vitality 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,3;
+  - Id: 312678
+    AegisName: Shadow_HP_4
+    Name: S. Vitality 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,4;
+  - Id: 312679
+    AegisName: Shadow_HP_5
+    Name: S. Vitality 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,5;
+  - Id: 312680
+    AegisName: Shadow_SP_1
+    Name: S. Mentality 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,1;
+  - Id: 312681
+    AegisName: Shadow_SP_2
+    Name: S. Mentality 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,2;
+  - Id: 312682
+    AegisName: Shadow_SP_3
+    Name: S. Mentality 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,3;
+  - Id: 312683
+    AegisName: Shadow_SP_4
+    Name: S. Mentality 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,4;
+  - Id: 312684
+    AegisName: Shadow_SP_5
+    Name: S. Mentality 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,5;
+  - Id: 312685
+    AegisName: Justice_Vigor_ABC
+    Name: Good Vigor (Abyss Chaser)
+    Type: Card
+    SubType: Enchant
+  - Id: 312686
+    AegisName: Injustice_Vigor_ABC
+    Name: Evil Vigor (Abyss Chaser)
+    Type: Card
+    SubType: Enchant
+  - Id: 312687
+    AegisName: Justice_Vigor_TR
+    Name: Good Vigor (Troubadour & Trouvere)
+    Type: Card
+    SubType: Enchant
+  - Id: 312688
+    AegisName: Injustice_Vigor_TR
+    Name: Evil Vigor (Troubadour & Trouvere)
+    Type: Card
+    SubType: Enchant
+  - Id: 312689
+    AegisName: Justice_Vigor_HN
+    Name: Good Vigor (Hyper Novice)
+    Type: Card
+    SubType: Enchant
+  - Id: 312690
+    AegisName: Injustice_Vigor_HN
+    Name: Evil Vigor (Hyper Novice)
+    Type: Card
+    SubType: Enchant
+  - Id: 312692
+    AegisName: aegis_312692
+    Name: Abyss Chaser Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,(getskilllv("ABC_FRENZY_SHOT")/2);
+      bonus2 bAddRace,RC_Player_Human,-(getskilllv("ABC_FRENZY_SHOT")/2);
+      bonus2 bAddRace,RC_Player_Doram,-(getskilllv("ABC_FRENZY_SHOT")/2);
+  - Id: 312693
+    AegisName: aegis_312693
+    Name: Troubadour & Trouvere Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("TR_RHYTHMSHOOTING");
+  - Id: 312694
+    AegisName: aegis_312694
+    Name: Hyper Novice Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",10;
+      bonus2 bMagicAtkEle,Ele_Ghost,getskilllv("HN_SELFSTUDY_SOCERY");
+      bonus2 bMagicAtkEle,Ele_Wind,getskilllv("HN_SELFSTUDY_SOCERY");
+      bonus2 bMagicAtkEle,Ele_Water,getskilllv("HN_SELFSTUDY_SOCERY");
+  - Id: 312801
+    AegisName: Justice_Vigor_IG
+    Name: Good Vigor (Imperial Guard)
+    Type: Card
+    SubType: Enchant
+  - Id: 312802
+    AegisName: Injustice_Vigor_IG
+    Name: Evil Vigor (Imperial Guard)
+    Type: Card
+    SubType: Enchant
+  - Id: 312803
+    AegisName: Justice_Vigor_AG
+    Name: Good Vigor (Arch Mage)
+    Type: Card
+    SubType: Enchant
+  - Id: 312804
+    AegisName: Injustice_Vigor_AG
+    Name: Evil Vigor (Arch Mage)
+    Type: Card
+    SubType: Enchant
+  - Id: 312805
+    AegisName: Justice_Vigor_NW
+    Name: Good Vigor (Night Watch)
+    Type: Card
+    SubType: Enchant
+  - Id: 312806
+    AegisName: Injustice_Vigor_NW
+    Name: Evil Vigor (Night Watch)
+    Type: Card
+    SubType: Enchant
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -80712,6 +81186,24 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001338
+    AegisName: aegis_1001338
+    Name: Adventurer's Bag
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001339
+    AegisName: aegis_1001339
+    Name: Homemade Jerky
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001340
+    AegisName: aegis_1001340
+    Name: Fairy Tale Book
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1001355
     AegisName: aegis_1001355
     Name: Ancient Hero's Modification Coupon I
@@ -81663,6 +82155,21 @@ Body:
     Weight: 300
     Flags:
       DropEffect: CLIENT
+  - Id: 1001487
+    AegisName: AbysschaserStone_Robe
+    Name: Abyss Chaser Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001488
+    AegisName: TRTRStone_Robe
+    Name: Troubadour & Trouvere Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001489
+    AegisName: HNoviceStone_Robe
+    Name: Hyper Novice Stone (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
