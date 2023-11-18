@@ -75643,6 +75643,961 @@ Body:
       bonus2 bMagicAtkEle,Ele_Ghost,getskilllv("HN_SELFSTUDY_SOCERY");
       bonus2 bMagicAtkEle,Ele_Wind,getskilllv("HN_SELFSTUDY_SOCERY");
       bonus2 bMagicAtkEle,Ele_Water,getskilllv("HN_SELFSTUDY_SOCERY");
+  - Id: 312695
+    AegisName: T_D_Jewel_STR_1
+    Name: Jewel of Time and Space (Strength) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,(.@r/2);
+      bonus bShortAtkRate,(.@r/3);
+  - Id: 312696
+    AegisName: T_D_Jewel_STR_2
+    Name: Jewel of Time and Space (Strength) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bShortAtkRate,(.@r/3);
+      bonus bPAtk,(.@r/5);
+  - Id: 312697
+    AegisName: T_D_Jewel_STR_3
+    Name: Jewel of Time and Space (Strength) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bShortAtkRate,2*(.@r/3);
+      bonus bPAtk,(.@r/4);
+  - Id: 312698
+    AegisName: T_D_Jewel_AGI_1
+    Name: Jewel of Time and Space (Agility) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2);
+      bonus bBaseAtk,(.@r/2);
+      bonus bDelayrate,-(.@r/3);
+      bonus bAspdRate,2*(.@r/3);
+  - Id: 312699
+    AegisName: T_D_Jewel_AGI_2
+    Name: Jewel of Time and Space (Agility) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,3*(.@r/2);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bDelayrate,-(.@r/3);
+      bonus bAspdRate,2*(.@r/3);
+      bonus bPAtk,(.@r/5);
+      bonus bSMatk,(.@r/5);
+  - Id: 312700
+    AegisName: T_D_Jewel_AGI_3
+    Name: Jewel of Time and Space (Agility) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,5*(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bDelayrate,-2*(.@r/3);
+      bonus bAspdRate,4*(.@r/3);
+      bonus bPAtk,(.@r/4);
+      bonus bSMatk,(.@r/4);
+  - Id: 312701
+    AegisName: T_D_Jewel_DEX_1
+    Name: Jewel of Time and Space (Dexterity) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,(.@r/2);
+      bonus bLongAtkRate,(.@r/3);
+  - Id: 312702
+    AegisName: T_D_Jewel_DEX_2
+    Name: Jewel of Time and Space (Dexterity) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bLongAtkRate,(.@r/3);
+      bonus bPAtk,(.@r/5);
+  - Id: 312703
+    AegisName: T_D_Jewel_DEX_3
+    Name: Jewel of Time and Space (Dexterity) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bLongAtkRate,2*(.@r/3);
+      bonus bPAtk,(.@r/4);
+  - Id: 312704
+    AegisName: T_D_Jewel_VIT_1
+    Name: Jewel of Time and Space (Stamina) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2);
+      bonus bBaseAtk,(.@r/2);
+      bonus bMaxHPrate,(.@r/3);
+  - Id: 312705
+    AegisName: T_D_Jewel_VIT_2
+    Name: Jewel of Time and Space (Stamina) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,3*(.@r/2);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bMaxHPrate,(.@r/3);
+      bonus bPAtk,(.@r/5);
+      bonus bSMatk,(.@r/5);
+  - Id: 312706
+    AegisName: T_D_Jewel_VIT_3
+    Name: Jewel of Time and Space (Stamina) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,5*(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bMaxHPrate,2*(.@r/3);
+      bonus bPAtk,(.@r/4);
+      bonus bSMatk,(.@r/4);
+  - Id: 312707
+    AegisName: T_D_Jewel_INT_1
+    Name: Jewel of Time and Space (Intellect) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2);
+      bonus2 bMagicAtkEle,Ele_All,(.@r/3);
+  - Id: 312708
+    AegisName: T_D_Jewel_INT_2
+    Name: Jewel of Time and Space (Intellect) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,3*(.@r/2);
+      bonus2 bMagicAtkEle,Ele_All,(.@r/3);
+      bonus bSMatk,(.@r/5);
+  - Id: 312709
+    AegisName: T_D_Jewel_INT_3
+    Name: Jewel of Time and Space (Intellect) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,5*(.@r/2);
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/3);
+      bonus bSMatk,(.@r/4);
+  - Id: 312710
+    AegisName: T_D_Jewel_LUK_1
+    Name: Jewel of Time and Space (Lucky) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,(.@r/2);
+      bonus bCritAtkRate,2*(.@r/3);
+  - Id: 312711
+    AegisName: T_D_Jewel_LUK_2
+    Name: Jewel of Time and Space (Lucky) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,(.@r/2);
+      bonus bBaseAtk,2*(.@r/2);
+      bonus bCritAtkRate,2*(.@r/3);
+      bonus bCRate,(.@r/5);
+  - Id: 312712
+    AegisName: T_D_Jewel_LUK_3
+    Name: Jewel of Time and Space (Lucky) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,2*(.@r/2);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bCritAtkRate,3*(.@r/3);
+      bonus bCRate,(.@r/4);
+  - Id: 312713
+    AegisName: T_D_Jewel_SPR_1
+    Name: Jewel of Time and Space (Mental Power) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2);
+      bonus bBaseAtk,(.@r/2);
+      bonus bMaxSPrate,(.@r/3);
+  - Id: 312714
+    AegisName: T_D_Jewel_SPR_2
+    Name: Jewel of Time and Space (Mental Power) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,3*(.@r/2);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bMaxSPrate,(.@r/3);
+      bonus bPAtk,(.@r/5);
+      bonus bSMatk,(.@r/5);
+  - Id: 312715
+    AegisName: T_D_Jewel_SPR_3
+    Name: Jewel of Time and Space (Mental Power) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,5*(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bMaxSPrate,2*(.@r/3);
+      bonus bPAtk,(.@r/4);
+      bonus bSMatk,(.@r/4);
+  - Id: 312716
+    AegisName: T_D_Jewel_WIS_1
+    Name: Jewel of Time and Space (Gem) 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2);
+      bonus bBaseAtk,(.@r/2);
+      bonus bDelayrate,-(.@r/3);
+      bonus bVariableCastrate,-2*(.@r/3);
+  - Id: 312717
+    AegisName: T_D_Jewel_WIS_2
+    Name: Jewel of Time and Space (Gem) 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,3*(.@r/2);
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bDelayrate,-(.@r/3);
+      bonus bVariableCastrate,-2*(.@r/3);
+      bonus bPAtk,(.@r/5);
+      bonus bSMatk,(.@r/5);
+  - Id: 312718
+    AegisName: T_D_Jewel_WIS_3
+    Name: Jewel of Time and Space (Gem) 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,5*(.@r/2);
+      bonus bBaseAtk,5*(.@r/2);
+      bonus bDelayrate,-2*(.@r/3);
+      bonus bVariableCastrate,-4*(.@r/3);
+      bonus bPAtk,(.@r/4);
+      bonus bSMatk,(.@r/4);
+  - Id: 312719
+    AegisName: Mettle_Jewel_1
+    Name: Jewel of Passion 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+      bonus bAtkRate,5;
+  - Id: 312720
+    AegisName: Mettle_Jewel_2
+    Name: Jewel of Passion 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,6;
+      bonus bAtkRate,10;
+  - Id: 312721
+    AegisName: Mettle_Jewel_3
+    Name: Jewel of Passion 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,9;
+      bonus bAtkRate,15;
+  - Id: 312722
+    AegisName: Mettle_Jewel_4
+    Name: Jewel of Passion 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,12;
+      bonus bAtkRate,20;
+  - Id: 312723
+    AegisName: Mettle_Jewel_5
+    Name: Jewel of Passion 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,15;
+      bonus bAtkRate,25;
+  - Id: 312724
+    AegisName: Mettle_Jewel_6
+    Name: Jewel of Passion 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,18;
+      bonus bAtkRate,30;
+  - Id: 312725
+    AegisName: Mettle_Jewel_7
+    Name: Jewel of Passion 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,21;
+      bonus bAtkRate,35;
+  - Id: 312726
+    AegisName: Mettle_Jewel_8
+    Name: Jewel of Passion 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,24;
+      bonus bAtkRate,40;
+  - Id: 312727
+    AegisName: Mettle_Jewel_9
+    Name: Jewel of Passion 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,27;
+      bonus bAtkRate,45;
+  - Id: 312728
+    AegisName: Mettle_Jewel_10
+    Name: Jewel of Passion 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,30;
+      bonus bAtkRate,50;
+  - Id: 312729
+    AegisName: Tenacity_Jewel_1
+    Name: Indomitable Jewel 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,7;
+      bonus bPAtk,1;
+  - Id: 312730
+    AegisName: Tenacity_Jewel_2
+    Name: Indomitable Jewel 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,14;
+      bonus bPAtk,2;
+  - Id: 312731
+    AegisName: Tenacity_Jewel_3
+    Name: Indomitable Jewel 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,21;
+      bonus bPAtk,3;
+  - Id: 312732
+    AegisName: Tenacity_Jewel_4
+    Name: Indomitable Jewel 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,28;
+      bonus bPAtk,4;
+  - Id: 312733
+    AegisName: Tenacity_Jewel_5
+    Name: Indomitable Jewel 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,35;
+      bonus bPAtk,5;
+  - Id: 312734
+    AegisName: Tenacity_Jewel_6
+    Name: Indomitable Jewel 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,42;
+      bonus bPAtk,6;
+  - Id: 312735
+    AegisName: Tenacity_Jewel_7
+    Name: Indomitable Jewel 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,49;
+      bonus bPAtk,7;
+  - Id: 312736
+    AegisName: Tenacity_Jewel_8
+    Name: Indomitable Jewel 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,56;
+      bonus bPAtk,8;
+  - Id: 312737
+    AegisName: Tenacity_Jewel_9
+    Name: Indomitable Jewel 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,63;
+      bonus bPAtk,9;
+  - Id: 312738
+    AegisName: Tenacity_Jewel_10
+    Name: Indomitable Jewel 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,70;
+      bonus bPAtk,10;
+  - Id: 312739
+    AegisName: Master_A_Jewel_1
+    Name: Sun Palace Jewel 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,7;
+      bonus bPAtk,1;
+  - Id: 312740
+    AegisName: Master_A_Jewel_2
+    Name: Sun Palace Jewel 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,14;
+      bonus bPAtk,2;
+  - Id: 312741
+    AegisName: Master_A_Jewel_3
+    Name: Sun Palace Jewel 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,21;
+      bonus bPAtk,3;
+  - Id: 312742
+    AegisName: Master_A_Jewel_4
+    Name: Sun Palace Jewel 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,28;
+      bonus bPAtk,4;
+  - Id: 312743
+    AegisName: Master_A_Jewel_5
+    Name: Sun Palace Jewel 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,35;
+      bonus bPAtk,5;
+  - Id: 312744
+    AegisName: Master_A_Jewel_6
+    Name: Sun Palace Jewel 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,42;
+      bonus bPAtk,6;
+  - Id: 312745
+    AegisName: Master_A_Jewel_7
+    Name: Sun Palace Jewel 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,49;
+      bonus bPAtk,7;
+  - Id: 312746
+    AegisName: Master_A_Jewel_8
+    Name: Sun Palace Jewel 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,56;
+      bonus bPAtk,8;
+  - Id: 312747
+    AegisName: Master_A_Jewel_9
+    Name: Sun Palace Jewel 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,63;
+      bonus bPAtk,9;
+  - Id: 312748
+    AegisName: Master_A_Jewel_10
+    Name: Sun Palace Jewel 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,70;
+      bonus bPAtk,10;
+  - Id: 312749
+    AegisName: Acute_Jewel_1
+    Name: Jewel of Anticipation 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,20;
+      bonus bCRate,1;
+      bonus bCritical,3;
+  - Id: 312750
+    AegisName: Acute_Jewel_2
+    Name: Jewel of Anticipation 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,35;
+      bonus bCRate,2;
+      bonus bCritical,6;
+  - Id: 312751
+    AegisName: Acute_Jewel_3
+    Name: Jewel of Anticipation 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,50;
+      bonus bCRate,3;
+      bonus bCritical,9;
+  - Id: 312752
+    AegisName: Acute_Jewel_4
+    Name: Jewel of Anticipation 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,65;
+      bonus bCRate,4;
+      bonus bCritical,12;
+  - Id: 312753
+    AegisName: Acute_Jewel_5
+    Name: Jewel of Anticipation 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,80;
+      bonus bCRate,5;
+      bonus bCritical,15;
+  - Id: 312754
+    AegisName: Acute_Jewel_6
+    Name: Jewel of Anticipation 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,95;
+      bonus bCRate,6;
+      bonus bCritical,18;
+  - Id: 312755
+    AegisName: Acute_Jewel_7
+    Name: Jewel of Anticipation 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,110;
+      bonus bCRate,7;
+      bonus bCritical,21;
+  - Id: 312756
+    AegisName: Acute_Jewel_8
+    Name: Jewel of Anticipation 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,125;
+      bonus bCRate,8;
+      bonus bCritical,24;
+  - Id: 312757
+    AegisName: Acute_Jewel_9
+    Name: Jewel of Anticipation 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,140;
+      bonus bCRate,9;
+      bonus bCritical,27;
+  - Id: 312758
+    AegisName: Acute_Jewel_10
+    Name: Jewel of Anticipation 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,155;
+      bonus bCRate,10;
+      bonus bCritical,30;
+  - Id: 312759
+    AegisName: Magic_E_Jewel_1
+    Name: Magic Jewel 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,3;
+      bonus bMatkRate,5;
+  - Id: 312760
+    AegisName: Magic_E_Jewel_2
+    Name: Magic Jewel 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,6;
+      bonus bMatkRate,10;
+  - Id: 312761
+    AegisName: Magic_E_Jewel_3
+    Name: Magic Jewel 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,9;
+      bonus bMatkRate,15;
+  - Id: 312762
+    AegisName: Magic_E_Jewel_4
+    Name: Magic Jewel 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,12;
+      bonus bMatkRate,20;
+  - Id: 312763
+    AegisName: Magic_E_Jewel_5
+    Name: Magic Jewel 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,15;
+      bonus bMatkRate,25;
+  - Id: 312764
+    AegisName: Magic_E_Jewel_6
+    Name: Magic Jewel 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,18;
+      bonus bMatkRate,30;
+  - Id: 312765
+    AegisName: Magic_E_Jewel_7
+    Name: Magic Jewel 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,21;
+      bonus bMatkRate,35;
+  - Id: 312766
+    AegisName: Magic_E_Jewel_8
+    Name: Magic Jewel 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,24;
+      bonus bMatkRate,40;
+  - Id: 312767
+    AegisName: Magic_E_Jewel_9
+    Name: Magic Jewel 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,27;
+      bonus bMatkRate,45;
+  - Id: 312768
+    AegisName: Magic_E_Jewel_10
+    Name: Magic Jewel 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,30;
+      bonus bMatkRate,50;
+  - Id: 312769
+    AegisName: Spell_Jewel_1
+    Name: Magical Jewel 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,7;
+      bonus bSMatk,1;
+  - Id: 312770
+    AegisName: Spell_Jewel_2
+    Name: Magical Jewel 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,14;
+      bonus bSMatk,2;
+  - Id: 312771
+    AegisName: Spell_Jewel_3
+    Name: Magical Jewel 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,21;
+      bonus bSMatk,3;
+  - Id: 312772
+    AegisName: Spell_Jewel_4
+    Name: Magical Jewel 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,28;
+      bonus bSMatk,4;
+  - Id: 312773
+    AegisName: Spell_Jewel_5
+    Name: Magical Jewel 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,35;
+      bonus bSMatk,5;
+  - Id: 312774
+    AegisName: Spell_Jewel_6
+    Name: Magical Jewel 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,42;
+      bonus bSMatk,6;
+  - Id: 312775
+    AegisName: Spell_Jewel_7
+    Name: Magical Jewel 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,49;
+      bonus bSMatk,7;
+  - Id: 312776
+    AegisName: Spell_Jewel_8
+    Name: Magical Jewel 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,56;
+      bonus bSMatk,8;
+  - Id: 312777
+    AegisName: Spell_Jewel_9
+    Name: Magical Jewel 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,63;
+      bonus bSMatk,9;
+  - Id: 312778
+    AegisName: Spell_Jewel_10
+    Name: Magical Jewel 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,70;
+      bonus bSMatk,10;
+  - Id: 312779
+    AegisName: Adamatine_Jewel_1
+    Name: Diamond Jewel 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bDef,20;
+      bonus bRes,10;
+  - Id: 312780
+    AegisName: Adamatine_Jewel_2
+    Name: Diamond Jewel 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bDef,60;
+      bonus bRes,20;
+  - Id: 312781
+    AegisName: Adamatine_Jewel_3
+    Name: Diamond Jewel 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus bDef,100;
+      bonus bRes,30;
+  - Id: 312782
+    AegisName: Adamatine_Jewel_4
+    Name: Diamond Jewel 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,20;
+      bonus bDef,140;
+      bonus bRes,40;
+  - Id: 312783
+    AegisName: Adamatine_Jewel_5
+    Name: Diamond Jewel 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus bDef,180;
+      bonus bRes,50;
+  - Id: 312784
+    AegisName: Adamatine_Jewel_6
+    Name: Diamond Jewel 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,30;
+      bonus bDef,220;
+      bonus bRes,60;
+  - Id: 312785
+    AegisName: Adamatine_Jewel_7
+    Name: Diamond Jewel 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,35;
+      bonus bDef,260;
+      bonus bRes,70;
+  - Id: 312786
+    AegisName: Adamatine_Jewel_8
+    Name: Diamond Jewel 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,40;
+      bonus bDef,300;
+      bonus bRes,80;
+  - Id: 312787
+    AegisName: Adamatine_Jewel_9
+    Name: Diamond Jewel 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,45;
+      bonus bDef,340;
+      bonus bRes,90;
+  - Id: 312788
+    AegisName: Adamatine_Jewel_10
+    Name: Diamond Jewel 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,50;
+      bonus bDef,380;
+      bonus bRes,100;
+  - Id: 312789
+    AegisName: Affection_Jewel_1
+    Name: Jewel of Love 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-3;
+      bonus bMaxSPrate,5;
+  - Id: 312790
+    AegisName: Affection_Jewel_2
+    Name: Jewel of Love 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-6;
+      bonus bMaxSPrate,10;
+  - Id: 312791
+    AegisName: Affection_Jewel_3
+    Name: Jewel of Love 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-9;
+      bonus bMaxSPrate,15;
+  - Id: 312792
+    AegisName: Affection_Jewel_4
+    Name: Jewel of Love 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-12;
+      bonus bMaxSPrate,20;
+  - Id: 312793
+    AegisName: Affection_Jewel_5
+    Name: Jewel of Love 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-15;
+      bonus bMaxSPrate,25;
+  - Id: 312794
+    AegisName: Affection_Jewel_6
+    Name: Jewel of Love 6Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-18;
+      bonus bMaxSPrate,30;
+  - Id: 312795
+    AegisName: Affection_Jewel_7
+    Name: Jewel of Love 7Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-21;
+      bonus bMaxSPrate,35;
+  - Id: 312796
+    AegisName: Affection_Jewel_8
+    Name: Jewel of Love 8Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-24;
+      bonus bMaxSPrate,40;
+  - Id: 312797
+    AegisName: Affection_Jewel_9
+    Name: Jewel of Love 9Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-27;
+      bonus bMaxSPrate,45;
+  - Id: 312798
+    AegisName: Affection_Jewel_10
+    Name: Jewel of Love 10Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-30;
+      bonus bMaxSPrate,50;
+  - Id: 312800
+    AegisName: Barmund_Poison3
+    Name: Barmund's Crystal (Poison) Lv3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Poison,10;
+      bonus2 bAddEle,Ele_Poison,10;
+      bonus2 bMagicAddEle,Ele_Neutral,10;
+      bonus2 bAddEle,Ele_Neutral,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Poison,4;
+         bonus2 bAddEle,Ele_Poison,4;
+         bonus2 bMagicAddEle,Ele_Neutral,4;
+         bonus2 bAddEle,Ele_Neutral,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Poison,4;
+            bonus2 bAddEle,Ele_Poison,4;
+            bonus2 bMagicAddEle,Ele_Neutral,4;
+            bonus2 bAddEle,Ele_Neutral,4;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Poison,6;
+               bonus2 bAddEle,Ele_Poison,6;
+               bonus2 bMagicAddEle,Ele_Neutral,6;
+               bonus2 bAddEle,Ele_Neutral,6;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Poison,6;
+                  bonus2 bAddEle,Ele_Poison,6;
+                  bonus2 bMagicAddEle,Ele_Neutral,6;
+                  bonus2 bAddEle,Ele_Neutral,6;
+               }
+            }
+         }
+      }
   - Id: 312801
     AegisName: Justice_Vigor_IG
     Name: Good Vigor (Imperial Guard)
@@ -82170,6 +83125,601 @@ Body:
     Name: Hyper Novice Stone (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001500
+    AegisName: R_Adulter_F_A_Bow
+    Name: Engraved Adulter Fides Aiming Bow    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001501
+    AegisName: R_Adulter_F_T_Sword
+    Name: Engraved Adulter Fides Two-handed Sword    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001502
+    AegisName: R_Adulter_F_Lance
+    Name: Engraved Adulter Fides Lance    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001503
+    AegisName: R_Adulter_F_G_Sword
+    Name: Engraved Adulter Fides Guardian Sword    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001504
+    AegisName: R_Adulter_F_G_Spear
+    Name: Engraving of Adulter Fides Guardian Spear    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001505
+    AegisName: R_Adulter_F_Axe
+    Name: Engraving of Adulter Fides Axe    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001506
+    AegisName: R_Adulter_F_Mace
+    Name: Engraving of Adulter Fides Mace    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001507
+    AegisName: R_Adulter_F_Lapier
+    Name: Engraved Adulter Fides Rapier    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001508
+    AegisName: R_Adulter_F_Hall
+    Name: Engraving of Adulter Fides Hall    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001509
+    AegisName: R_Adulter_F_Cakram
+    Name: Engraving of Adulter Fides Chakram    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001510
+    AegisName: R_Adulter_F_Katar
+    Name: Engraving Adulter Fides Katar    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001511
+    AegisName: R_Adulter_F_Dagger
+    Name: Engraving of Adulter Fides Dagger    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001512
+    AegisName: R_Adulter_F_C_Bow
+    Name: Engraved Adulter Fides Crossbow    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001513
+    AegisName: R_Adulter_F_T_Staff
+    Name: Engraved Adulter Fides Two-handed Staff    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001514
+    AegisName: R_Adulter_F_Rod
+    Name: Engraving Adulter Fides Road    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001515
+    AegisName: R_Adulter_F_M_Book
+    Name: Engraving Adulter Fides Magic Book    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001516
+    AegisName: R_Adulter_F_P_Book
+    Name: Printed Adulter Fides Poison Book    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001517
+    AegisName: R_Adulter_F_Bible
+    Name: Engraving of Adulter Fides Bible    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001518
+    AegisName: R_Adulter_F_Wand
+    Name: Engraved Adulter Fides Wand    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001519
+    AegisName: R_Adulter_F_Knuckle
+    Name: Engraved Adulter Fides Knuckle    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001520
+    AegisName: R_Adulter_F_Claw
+    Name: Engraving of Adulterre Fides Cro    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001521
+    AegisName: R_Adulter_F_Ballista
+    Name: Engraving Adulter Fides Ballista    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001522
+    AegisName: R_Adulter_F_Violin
+    Name: Engraved Adulter Fides Violin    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001523
+    AegisName: R_Adulter_F_C_Rope
+    Name: Engraving Adulter Fides Chain Rope    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001524
+    AegisName: R_Adulter_F_Harp
+    Name: Engraved Adulter Fides Harp    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001525
+    AegisName: R_Adulter_F_Ribbon
+    Name: Engraved Adulter Fides Ribbon    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001526
+    AegisName: R_Adulter_F_Humma
+    Name: Engraved Adulter Fides Wind Demon Shuriken    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001527
+    AegisName: R_Adulter_F_C_Humma
+    Name: Engraved Adulter Fides Cross Wind Horse Shuriken    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001528
+    AegisName: R_Adulter_F_Revolver
+    Name: Engraved Adulter Fides Revolver    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001529
+    AegisName: R_Adulter_F_Shotgun
+    Name: Engraved Adulter Fides Shotgun    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001530
+    AegisName: R_Adulter_F_Rifle
+    Name: Engraved Adulter Fides Rifle    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001531
+    AegisName: R_Adulter_F_Gatling
+    Name: Engraved Adulter Fides Gatling Gun    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001532
+    AegisName: R_Adulter_F_Launcher
+    Name: Engraved Adulter Fides Launcher    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001533
+    AegisName: R_Adulter_F_Moon_B
+    Name: Engraving of Adulter Fides Book of Books    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001534
+    AegisName: R_Adulter_F_Star_B
+    Name: Printed Adulter Fides Stardust Book    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001535
+    AegisName: R_Adulter_F_S_Stick
+    Name: Engraved Adulter Fides Soul Stick    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001536
+    AegisName: R_Adulter_F_D_Wand
+    Name: Engraved Adulter Fides Dark Wand    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001537
+    AegisName: R_Adulter_F_F_Wand
+    Name: Engraved Adulter Fides Foxtail Wand    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001538
+    AegisName: R_Adulter_F_F_model
+    Name: Engraving of Adulter Fides Foxtail Model    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001539
+    AegisName: R_Gray_W_Suits
+    Name: Engraved Gray Wolf Suit    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001540
+    AegisName: R_Gray_W_Robe
+    Name: Engraved Gray Wolf Robe    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001541
+    AegisName: R_Gray_W_Muffler
+    Name: Engraved Gray Wolf Muffler    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001542
+    AegisName: R_Gray_W_Manteau
+    Name: Engraved Gray Wolf Cloak    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001543
+    AegisName: R_Gray_W_Boots
+    Name: Engraved Gray Wolf Boots    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001544
+    AegisName: R_Gray_W_Shoes
+    Name: Engraved Gray Wolf Shoes    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001545
+    AegisName: R_Gray_W_Pendant
+    Name: Engraved Gray Wolf Pendant    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001546
+    AegisName: R_Gray_W_Ring
+    Name: Engraved Gray Wolf Ring    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001547
+    AegisName: R_Gray_W_Earing
+    Name: Engraved Gray Wolf Earrings    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001548
+    AegisName: R_Gray_W_Necklace
+    Name: Engraved Gray Wolf Necklace    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001550
+    AegisName: Abyss_Jewel_Fragment
+    Name: Abyss Jewel Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001551
+    AegisName: Time_Dim_J_Fragment
+    Name: Space-Time Gem Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001552
+    AegisName: Abyss_Magic_Jewel
+    Name: Abyss Magic Gem    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001553
+    AegisName: Time_Dimension_Jewel
+    Name: Time-Space Magic Gem    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001554
+    AegisName: Abyss_Rune_Ore
+    Name: Abyssal Magic Rune Fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001555
+    AegisName: Abyss_Rune
+    Name: Abyss Magic Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001556
+    AegisName: Time_D_Ma_Rune
+    Name: Time-Space Magic Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

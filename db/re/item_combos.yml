@@ -46655,3 +46655,416 @@ Body:
       bonus bMaxHPrate,5;
       bonus bMdef,30;
       bonus bDef,200;
+  - Combos:
+      - Combo:
+          - Dimen_IG_Sword   # 500092
+          - Time_DM_R_Crown_IG   # 400530
+    Script: |
+      bonus2 bSkillCooldown,"LG_RAYOFGENESIS",-500;
+      bonus2 bMagicAtkEle,Ele_Holy,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"IG_CROSS_RAIN",-1000;
+         bonus2 bSkillAtk,"LG_RAYOFGENESIS",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_BO_Sword   # 500093
+          - Time_DM_R_Crown_BO   # 400532
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",45;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",45;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",45;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",.@sum;
+         bonus2 bSkillCooldown,"BO_MAYHEMIC_THORNS",-200;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_HN_Sword   # 500094
+          - Time_DM_R_Crown_HN   # 400545
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         skill "GC_CROSSIMPACT",5;
+         bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_ABC_Knife   # 510139
+          - Time_DM_R_Crown_ABC   # 400534
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"ABC_DEFT_STAB",-200;
+         bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",1;
+         bonus2 bSkillAtk,"ABC_DEFT_STAB",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_IG_Spear   # 530054
+          - Time_DM_R_Crown_IG   # 400530
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bShortAtkRate,10;
+      bonus2 bSkillAtk,"LG_OVERBRAND",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"LG_OVERBRAND",2*.@sum;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_EM_M_Book   # 540079
+          - Time_DM_R_Crown_EM   # 400536
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Poison,30;
+      bonus2 bSkillAtk,"EM_VENOM_SWAMP",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_EM_S_Book   # 540080
+          - Time_DM_R_Crown_EM   # 400536
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Poison,30;
+      bonus2 bSkillAtk,"EM_VENOM_SWAMP",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_CD_Bible   # 540081
+          - Time_DM_R_Crown_CD   # 400537
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"CD_EFFLIGO",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         skill "ABC_UNLUCKY_RUSH",3;
+         bonus2 bSkillAtk,"CD_EFFLIGO",1;
+         bonus2 bSkillCooldown,"CD_PETITIO",-150;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SKE_M_Book   # 540082
+          - Time_DM_R_Crown_SKE   # 400543
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SKE_S_Book   # 540083
+          - Time_DM_R_Crown_SKE   # 400543
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"SKE_NOON_BLAST",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_CD_Rod   # 550130
+          - Time_DM_R_Crown_CD   # 400537
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bMagicAtkEle,Ele_Holy,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus2 bSkillAtk,"AB_ADORAMUS",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"AB_ADORAMUS",2*.@sum;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SOA_Stick   # 550131
+          - Time_DM_R_Crown_SOA   # 400544
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SOA_Rod   # 550132
+          - Time_DM_R_Crown_SOA   # 400544
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_HN_Rod   # 550133
+          - Time_DM_R_Crown_HN   # 400545
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Ghost,30;
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SH_Foxtail   # 550134
+          - Time_DM_R_Crown_SH   # 400546
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"SH_HOWLING_OF_CHUL_HO",-300;
+         bonus2 bSkillAtk,"SH_CHUL_HO_SONIC_CLAW",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SH_F_Model   # 550135
+          - Time_DM_R_Crown_SH   # 400546
+    Script: |
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      bonus2 bSkillCooldown,"SH_HYUN_ROKS_BREEZE",-2000;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_IQ_Knuckle   # 560060
+          - Time_DM_R_Crown_IQ   # 400538
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus2 bSkillAtk,"SR_TIGERCANNON",85;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_IQ_Claw   # 560061
+          - Time_DM_R_Crown_IQ   # 400538
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"IQ_MASSIVE_F_BLASTER",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"IQ_EXPOSION_BLASTER",-200-2000;
+         bonus2 bSkillCooldown,"IQ_MASSIVE_F_BLASTER",-2000;
+         bonus2 bSkillAtk,"IQ_MASSIVE_F_BLASTER",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_TR_Vilolin   # 570062
+          - Crown   # 2235
+          - Ruber   # 13421
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bSkillAtk,"WM_REVERBERATION",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",2*.@sum;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_TR_Harp   # 570063
+          - Time_DM_R_Crown_TR   # 400540
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_TR_Ribbon   # 580061
+          - Crown   # 2235
+          - Ruber   # 13421
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bSkillAtk,"WM_REVERBERATION",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_TR_Rope   # 580062
+          - Time_DM_R_Crown_TR   # 400540
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_MT_Mace   # 590079
+          - Time_DM_R_Crown_MT   # 400531
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"MT_SPARK_BLASTER",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"MT_TRIPLE_LASER",.@sum;
+         bonus2 bSkillCooldown,"MT_SPARK_BLASTER",-150;
+         bonus2 bSkillAtk,"MT_SPARK_BLASTER",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_BO_Hall   # 590080
+          - Time_DM_R_Crown_BO   # 400532
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bShortAtkRate,10;
+      bonus2 bSkillAtk,"GN_CART_TORNADO",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"BO_EXPLOSIVE_POWDER",-(200*2*.@sum);
+         bonus2 bSkillAtk,"GN_CART_TORNADO",2*.@sum;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_DK_T_Sword   # 600054
+          - Time_DM_R_Crown_DK   # 400529
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"DK_STORMSLASH",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-(200*3*.@sum);
+         bonus2 bSkillCooldown,"DK_HACKANDSLASHER",-(200*3*.@sum);
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SHC_Katar   # 610064
+          - Time_DM_R_Crown_SHC   # 400533
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",85;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"SHC_SAVAGE_IMPACT",-200;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SHC_Cakram   # 610065
+          - Time_DM_R_Crown_SHC   # 400533
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_MT_Axe   # 620037
+          - Time_DM_R_Crown_MT   # 400531
+    Script: |
+      bonus2 bSkillAtk,"MT_AXE_STOMP",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_DK_Lance   # 630041
+          - Time_DM_R_Crown_DK   # 400529
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",85;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",85;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"DK_DRAGONIC_BREATH",-150;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_AG_Staff   # 640049
+          - Time_DM_R_Crown_AG   # 400535
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Ghost,30;
+      bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_AG_Rod   # 640050
+          - Time_DM_R_Crown_AG   # 400535
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Ghost,30;
+      bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SS_Humma   # 650046
+          - Time_DM_R_Crown_SS   # 400541
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"SS_KAGENOMAI",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillCooldown,"SS_KAGEGISSEN",-1500;
+         bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-1500;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_SS_Wheel   # 650047
+          - Time_DM_R_Crown_SS   # 400541
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Dark,30+30;
+      bonus2 bSkillAtk,"SS_ANTENPOU",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"SS_SEKIENHOU",1;
+         bonus2 bSkillAtk,"SS_RAIDENPOU",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_ABC_Bow   # 700092
+          - Time_DM_R_Crown_ABC   # 400534
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         skill "ABC_CHAIN_REACTION_SHOT_ATK",5;
+         bonus2 bSkillAtk,"ABC_FRENZY_SHOT",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_WH_C_Bow   # 700093
+          - Time_DM_R_Crown_WH   # 400539
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"WH_GALESTORM",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_WH_Bow   # 700094
+          - Time_DM_R_Crown_WH   # 400539
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"WH_HAWKBOOMERANG",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"WH_HAWKBOOMERANG",1;
+      }
+  - Combos:
+      - Combo:
+          - Dimen_NW_Rifle   # 810040
+          - Time_DM_R_Crown_NW   # 400542
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
+  - Combos:
+      - Combo:
+          - Dimen_NW_Launcher   # 840032
+          - Time_DM_R_Crown_NW   # 400542
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",45;
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+      }
