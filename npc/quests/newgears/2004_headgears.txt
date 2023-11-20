@@ -1804,7 +1804,7 @@ yuno_in03,20,18,6	script	Nehris#1	726,{
 		close;
 	case 2:
 		mes "[Nehris]";
-		mes "This crown is inspired by the the one worn by the 'Isis' monster. It has a elegant look fitting for ancient royalty.";
+		mes "This crown is inspired by the one worn by the 'Isis' monster. It has an elegant look fitting for ancient royalty.";
 		next;
 		if (countitem(10006) > 0 && countitem(714) > 0 && countitem(969) > 2 && Zeny > 19999) {
 			mes "[Nehris]";

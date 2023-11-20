@@ -44727,7 +44727,7 @@ Body:
          skill "RK_IGNITIONBREAK",5;
          bonus2 bSkillAtk,"RK_IGNITIONBREAK",7*(getequiprefinerycnt(EQI_HAND_R)/2);
       }
-    - Combos:
+  - Combos:
       - Combo:
           - Remorse_Crown    # 400474
           - Poenitentia_Clava    # 590016
@@ -46133,3 +46133,525 @@ Body:
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bMagicAddRace,RC_All,3*(.@r/3);
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10*(.@r/3);
+  - Combos:
+      - Combo:
+          - S_Full_Power_Armor   # 24872
+          - S_P_Power_Weapon   # 24751
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON);
+      bonus bAtkRate,3;
+      if (.@sum>=18) {
+         bonus bPAtk,3;
+         bonus bPow,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Power_Armor   # 24872
+          - S_Full_Power_Shoes   # 24873
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=18) {
+         bonus2 bAddSize,Size_All,10;
+         bonus bLongAtkRate,5;
+         bonus bShortAtkRate,5;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Power_Shoes   # 24873
+          - S_P_Power_Shield   # 24752
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD);
+      bonus bAtkRate,3;
+      if (.@sum>=18) {
+         bonus bPAtk,3;
+         bonus bPow,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Rate_Armor   # 24874
+          - S_Creative_Weapon   # 24761
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON);
+      bonus bAtkRate,3;
+      if (.@sum>=18) {
+         bonus bCRate,3;
+         bonus bCrt,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Rate_Armor   # 24874
+          - S_Full_Rate_Shoes   # 24875
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bCRate,2;
+      bonus bAtkRate,2;
+      if (.@sum>=18) {
+         bonus2 bAddSize,Size_All,10;
+         bonus bCritAtkRate,5;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Rate_Shoes   # 24875
+          - S_Creative_Shield   # 24762
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD);
+      bonus bAtkRate,3;
+      if (.@sum>=18) {
+         bonus bCRate,3;
+         bonus bCrt,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Focusing_Pendant   # 24876
+          - S_Concentration_Weapon   # 24755
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_WEAPON);
+      bonus bAtkRate,3;
+      if (.@sum>=18) {
+         bonus bPAtk,3;
+         bonus bCon,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Focusing_Pendant   # 24876
+          - S_Focusing_Earring   # 24877
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R);
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      if (.@sum>=18) {
+         bonus2 bAddEle,Ele_All,10;
+      }
+  - Combos:
+      - Combo:
+          - S_Focusing_Earring   # 24877
+          - S_Concentration_Shield   # 24756
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_SHIELD);
+      bonus bAtkRate,3;
+      if (.@sum>=18) {
+         bonus bPAtk,3;
+         bonus bCon,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Stout_Pendant   # 24878
+          - S_Stamina_Weapon   # 24759
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_WEAPON);
+      bonus bRes,15;
+      if (.@sum>=18) {
+         bonus bMaxHPrate,5;
+         bonus bSta,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Stout_Pendant   # 24878
+          - S_Stout_Earring   # 24879
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R);
+      bonus bDef,15;
+      bonus bRes,25;
+      if (.@sum>=18) {
+         bonus bMaxHPrate,7;
+      }
+  - Combos:
+      - Combo:
+          - S_Stout_Earring   # 24879
+          - S_Stamina_Shield   # 24760
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_SHIELD);
+      bonus bRes,15;
+      if (.@sum>=18) {
+         bonus bMaxHPrate,5;
+         bonus bSta,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Spell_Armor   # 24883
+          - S_M_Spell_Weapon   # 24753
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON);
+      bonus bMatkRate,3;
+      if (.@sum>=18) {
+         bonus bSMatk,3;
+         bonus bSpl,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Spell_Armor   # 24883
+          - S_Full_Spell_Shoes   # 24884
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      if (.@sum>=18) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         bonus2 bMagicAddSize,Size_All,10;
+      }
+  - Combos:
+      - Combo:
+          - S_Full_Spell_Shoes   # 24884
+          - S_M_Spell_Shield   # 24754
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_SHIELD);
+      bonus bMatkRate,3;
+      if (.@sum>=18) {
+         bonus bSMatk,3;
+         bonus bSpl,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Centering_Pendant   # 24885
+          - S_Concentration_Weapon   # 24755
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_WEAPON);
+      bonus bMatkRate,3;
+      if (.@sum>=18) {
+         bonus bSMatk,3;
+         bonus bCon,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Centering_Pendant   # 24885
+          - S_Centering_Earring   # 24886
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R);
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      if (.@sum>=18) {
+         bonus2 bMagicAddEle,Ele_All,10;
+      }
+  - Combos:
+      - Combo:
+          - S_Centering_Earring   # 24886
+          - S_Concentration_Shield   # 24756
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_SHIELD);
+      bonus bMatkRate,3;
+      if (.@sum>=18) {
+         bonus bSMatk,3;
+         bonus bCon,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Witty_Pendant   # 24887
+          - S_Wisdom_Weapon   # 24757
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_WEAPON);
+      bonus bMRes,15;
+      if (.@sum>=18) {
+         bonus bMaxSPrate,5;
+         bonus bWis,3;
+      }
+  - Combos:
+      - Combo:
+          - S_Witty_Pendant   # 24887
+          - S_Witty_Earring   # 24888
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R);
+      bonus bMdef,15;
+      bonus bMRes,25;
+      if (.@sum>=18) {
+         bonus bMaxSPrate,7;
+      }
+  - Combos:
+      - Combo:
+          - S_Witty_Earring   # 24888
+          - S_Wisdom_Shield   # 24758
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_SHIELD);
+      bonus bMRes,15;
+      if (.@sum>=18) {
+         bonus bMaxSPrate,5;
+         bonus bWis,3;
+      }
+  - Combos:
+      - Combo:
+          - aegis_300487   # 300487
+          - aegis_300489   # 300489
+    Script: |
+      bonus2 bAddRace,RC_Formless,15;
+      bonus2 bAddRace,RC_DemiHuman,15;
+      bonus2 bAddRace,RC_Player_Human,15;
+      bonus2 bAddSize,Size_Small,15;
+      bonus2 bAddSize,Size_Large,15;
+  - Combos:
+      - Combo:
+          - aegis_300491   # 300491
+          - aegis_300493   # 300493
+    Script: |
+      bonus2 bAddRace,RC_Formless,15;
+      bonus2 bAddRace,RC_DemiHuman,15;
+      bonus2 bAddRace,RC_Player_Human,15;
+      bonus2 bAddSize,Size_Small,15;
+      bonus2 bAddSize,Size_Large,15;
+  - Combos:
+      - Combo:
+          - aegis_300495   # 300495
+          - aegis_300497   # 300497
+    Script: |
+      bonus2 bMagicAddSize,Size_Small,15;
+      bonus2 bMagicAddSize,Size_Large,15;
+      bonus2 bMagicAddRace,RC_DemiHuman,15;
+      bonus2 bMagicAddRace,RC_Player_Human,15;
+      bonus2 bMagicAddRace,RC_Formless,15;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_ABC   # 312685
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"ABC_DEFT_STAB",40;
+      bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_ABC   # 312686
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"ABC_FRENZY_SHOT",40;
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_TR   # 312687
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",40;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_TR   # 312688
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"TR_SOUNDBLEND",40;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_HN   # 312689
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"HN_SPIRAL_PIERCE_MAX",40;
+      bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_HN   # 312690
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"HN_GROUND_GRAVITATION",40;
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",20;
+  - Combos:
+      - Combo:
+          - aegis_312692   # 312692
+          - Shadowchaser_Top3   # 311362
+    Script: |
+      bonus2 bAddSize,Size_All,3*(getskilllv("ABC_DAGGER_AND_BOW_M")/2);
+  - Combos:
+      - Combo:
+          - aegis_312692   # 312692
+          - Shadowchaser_Middle3   # 311363
+    Script: |
+      bonus bCritical,10;
+      bonus2 bSkillAtk,"ABC_FRENZY_SHOT",10;
+  - Combos:
+      - Combo:
+          - aegis_312692   # 312692
+          - Shadowchaser_Bottom3   # 311364
+    Script: |
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",15;
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",15;
+  - Combos:
+      - Combo:
+          - aegis_312693   # 312693
+          - WanderMins_Top3   # 311005
+    Script: |
+      bonus2 bAddEle,Ele_All,3*getskilllv("TR_STAGE_MANNER");
+  - Combos:
+      - Combo:
+          - aegis_312693   # 312693
+          - WanderMins_Middle3   # 311006
+    Script: |
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",10;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10;
+  - Combos:
+      - Combo:
+          - aegis_312693   # 312693
+          - WanderMins_Bottom3   # 311007
+    Script: |
+      bonus bPAtk,3;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",15;
+  - Combos:
+      - Combo:
+          - aegis_312694   # 312694
+          - aegis_312403   # 312403
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,3*(getskilllv("HN_JACK_FROST_NOVA")/2);
+  - Combos:
+      - Combo:
+          - aegis_312694   # 312694
+          - aegis_312404   # 312404
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",10;
+  - Combos:
+      - Combo:
+          - aegis_312694   # 312694
+          - aegis_312405   # 312405
+    Script: |
+      bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",10;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_IG   # 312801
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bShortAtkRate,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"IG_OVERSLASH",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_IG   # 312802
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus2 bMagicAtkEle,Ele_Holy,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"IG_CROSS_RAIN",30;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_AG   # 312803
+          - Justice_Power   # 312014
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"AG_RAIN_OF_CRYSTAL",40;
+      bonus2 bSkillAtk,"AG_FROZEN_SLASH",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_AG   # 312804
+          - Injustice_Power   # 312021
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,20;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"AG_MYSTERY_ILLUSION",40;
+      bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",20;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_NW   # 312805
+          - Justice_Power   # 312014
+          - GoodnEvil_Circlet_NW   # 400391
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"NW_WILD_FIRE",30;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_NW   # 312805
+          - Justice_Power   # 312014
+          - GoodnEvil_Circlet_NW2   # 400392
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bCritical,5;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",30;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_NW   # 312805
+          - Justice_Power   # 312014
+          - GoodnEvil_Circlet_NW3   # 400393
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",30;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_NW   # 312805
+          - Justice_Power   # 312014
+          - GoodnEvil_Circlet_NW4   # 400394
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",30;
+  - Combos:
+      - Combo:
+          - Justice_Vigor_NW   # 312805
+          - Justice_Power   # 312014
+          - GoodnEvil_Circlet_NW5   # 400395
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",40;
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",20;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_NW   # 312806
+          - Injustice_Power   # 312021
+          - GoodnEvil_Circlet_NW   # 400391
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_NW   # 312806
+          - Injustice_Power   # 312021
+          - GoodnEvil_Circlet_NW2   # 400392
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_NW   # 312806
+          - Injustice_Power   # 312021
+          - GoodnEvil_Circlet_NW3   # 400393
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bDelayrate,-5;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_NW   # 312806
+          - Injustice_Power   # 312021
+          - GoodnEvil_Circlet_NW4   # 400394
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bLongAtkRate,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"NW_WILD_FIRE",30;
+  - Combos:
+      - Combo:
+          - Injustice_Vigor_NW   # 312806
+          - Injustice_Power   # 312021
+          - GoodnEvil_Circlet_NW5   # 400395
+    Script: |
+      bonus2 bAddEle,Ele_All,20;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"NW_GRENADES_DROPPING",40;
+      bonus2 bSkillAtk,"NW_HASTY_FIRE_IN_THE_HOLE",20;
+  - Combos:
+      - Combo:
+          - Clover_Ace_Defense   # 420269
+          - Gambler_Seal_KR_   # 410233
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMdef,30;
+      bonus bDef,200;
