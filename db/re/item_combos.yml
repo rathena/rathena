@@ -40556,14 +40556,6 @@ Body:
       bonus bUseSPrate,-10;
   - Combos:
       - Combo:
-          - Heros_TriumphantSong    # 311074
-          - MD_Geffen_Cloth_JP    # 480331
-    Script: |
-      bonus2 bSubClass,Class_Normal,5;
-      bonus2 bSubClass,Class_Boss,5;
-      bonus2 bSubEle,Ele_Ghost,30;
-  - Combos:
-      - Combo:
           - Illusion_Box_Garden    # 311075
           - aegis_410247    # 410247
     Script: |
@@ -43430,22 +43422,6 @@ Body:
       }
   - Combos:
       - Combo:
-          - Thanatos_Sword_FA   # 480324
-          - Red_Force_Pendant_LT   # 490382
-      - Combo:
-          - Thanatos_Sword_FA   # 480324
-          - Blue_Mental_Pendant_LT   # 490383
-    Script: |
-      bonus bPAtk,3;
-      bonus bSMatk,3;
-      bonus bMatk,50;
-      bonus bBaseAtk,50;
-      bonus2 bAddSize,Size_Medium,15;
-      bonus2 bMagicAddSize,Size_Medium,15;
-      bonus2 bAddSize,Size_Large,15;
-      bonus2 bMagicAddSize,Size_Large,15;
-  - Combos:
-      - Combo:
           - Bakonawa_Tattoo    # 2910
           - Tatoo_Brush_BR    # 15924
     Script: |
@@ -43907,31 +43883,6 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",10;
   - Combos:
       - Combo:
-          - Dolor_HatK_LT    # 400465
-          - Thanatos_Sword_FA    # 480324
-    Script: |
-      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      bonus bVariableCastrate,-10;
-      if (.@r>=7) {
-         bonus2 bAddEle,Ele_Holy,20;
-         bonus2 bAddEle,Ele_Dark,20;
-         bonus2 bMagicAddEle,Ele_Holy,20;
-         bonus2 bMagicAddEle,Ele_Dark,20;
-      }
-      if (.@r>=9) {
-         bonus2 bAddRace,RC_Angel,15;
-         bonus2 bAddRace,RC_Dragon,15;
-         bonus2 bMagicAddRace,RC_Angel,15;
-         bonus2 bMagicAddRace,RC_Dragon,15;
-      }
-      if (.@r>=11) {
-         bonus2 bAddSize,Size_Medium,15;
-         bonus2 bAddSize,Size_Large,15;
-         bonus2 bMagicAddSize,Size_Medium,15;
-         bonus2 bMagicAddSize,Size_Large,15;
-      }
-  - Combos:
-      - Combo:
           - Thanatos_Sword_FA    # 480324
           - Red_Force_Pendant_LT    # 490382
       - Combo:
@@ -43976,12 +43927,12 @@ Body:
           - Comp_Royal_Bow_K    # 700057
       - Combo:
           - Royal_Bow_K    # 18164
-          - aegis_480358    # 480359
+          - aegis_480359    # 480359
       - Combo:
-          - aegis_480358    # 480359
+          - aegis_480359    # 480359
           - Up_Royal_Bow_K    # 700018
       - Combo:
-          - aegis_480358    # 480359
+          - aegis_480359    # 480359
           - Comp_Royal_Bow_K    # 700057
     Script: |
       bonus2 bSkillCooldown,"RA_ARROWSTORM",-2500;
@@ -43991,7 +43942,7 @@ Body:
           - aegis_480358    # 480358
       - Combo:
           - Arrow_Of_Shadow    # 1767
-          - aegis_480358    # 480359
+          - aegis_480359    # 480359
     Script: |
       bonus bLongAtkRate,20;
       bonus2 bSkillAtk,"RA_ARROWSTORM",10;
