@@ -46793,7 +46793,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,10;
-      bonus5 bAutoSpell,"NPC_CRITICALWOUND",3,5+(10*(getrefine()/3)),BF_MAGIC,1;
+      bonus5 bAutoSpell,"NPC_WIDECRITICALWOUND",8,5+(10*(getrefine()/3)),BF_MAGIC,1;
   - Id: 31024
     AegisName: As_Bdy_Knight_Card
     Name: Immortal Cursed Knight Card
