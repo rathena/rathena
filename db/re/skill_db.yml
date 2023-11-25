@@ -39270,6 +39270,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39333,7 +39335,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    Status: Handicapstate_Deepblind
   - Id: 5332
     Name: WH_SOLIDTRAP
     Description: Solid Trap
@@ -39342,6 +39343,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39387,7 +39390,6 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
-    Status: HandicapState_Crystallization
     Unit:
       Id: Solidtrap
       Range:
@@ -39414,6 +39416,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39459,7 +39463,6 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
-    Status: HandicapState_LightningStrike
     Unit:
       Id: Swifttrap
       Range:
@@ -39533,6 +39536,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39596,7 +39601,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    Status: HandicapState_Conflagration
   - Id: 5336
     Name: BO_BIONIC_PHARMACY
     Description: Bionic Pharmacy
