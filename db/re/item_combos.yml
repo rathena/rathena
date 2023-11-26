@@ -20081,7 +20081,6 @@ Body:
           - Ramor_Shield_Undead
     Script: |
       bonus2 bSubRace,RC_DemiHuman,getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bSubRace,RC_Player_Human,getequiprefinerycnt(EQI_GARMENT);
       bonus2 bAddEle,Ele_Undead,getequiprefinerycnt(EQI_HAND_L);
       bonus2 bMagicAddEle,Ele_Undead,getequiprefinerycnt(EQI_HAND_L);
   - Combos:
