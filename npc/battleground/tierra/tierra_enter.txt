@@ -19,7 +19,7 @@ bat_room,124,178,5	script	Tierra Gorge Officer#01a	418,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Guillaume Army Officer]";
@@ -88,7 +88,7 @@ bat_room,140,178,5	script	Tierra Gorge Officer#02a	418,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Guillaume Army Officer]";
@@ -225,7 +225,7 @@ bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Croix Army Officer]";
@@ -294,7 +294,7 @@ bat_room,140,121,1	script	Tierra Gorge Officer#02b	414,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Croix Army Officer]";
