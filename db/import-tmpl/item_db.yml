@@ -90,7 +90,7 @@ Header:
 
 Body:
 # Item Customs By CTRO
-# ID Item Start : 35000
+# ID Item Start : 35000 - 40000
 #=============================================================
   - Id: 35000
     AegisName: Auto_Trade_Voucher
@@ -122,6 +122,13 @@ Body:
       NoAuction: true
     Script: |
       callfunc "menu_GM";
+  - Id: 35002
+    AegisName: Cash_Coin
+    Name: "Cash Coin"
+    Type: Usable
+    Weight: 0
+    Script: |
+      #CASHPOINTS = #CASHPOINTS+1;
 #Body:
 # THQ Quest Items
 #=============================================================
