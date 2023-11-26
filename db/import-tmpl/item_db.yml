@@ -129,6 +129,58 @@ Body:
     Weight: 0
     Script: |
       #CASHPOINTS = #CASHPOINTS+1;
+
+# Add Script VIP Items or Premium Items
+#=============================================================
+  - Id: 23207
+    AegisName: Premium_Box
+    Name: "[30Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      atcommand "@vip +30d"+strcharinfo(0);
+      getitem 23165,1;
+  - Id: 23209
+    AegisName: Premium_Box_1d
+    Name: "[1Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      atcommand "@vip +1d"+strcharinfo(0);
+      getitem 23165,1;
+  - Id: 23213
+    AegisName: Premium_Box_5d7
+    Name: "[7Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      atcommand "@vip +7d"+strcharinfo(0);
+      getitem 23165,1;
+
 #Body:
 # THQ Quest Items
 #=============================================================
