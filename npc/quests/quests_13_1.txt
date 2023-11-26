@@ -2720,7 +2720,7 @@ mid_camp,123,290,4	script	Otto#ep13bs	967,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	if (ep13_newbs == 23) {
@@ -3049,7 +3049,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 			mes "- Currently you're carrying -";
 			mes "- too many items with you. -";
 			mes "- Please try again -";
-			mes "- after you loose some weight. -";
+			mes "- after you lose some weight. -";
 			close;
 		}
 		else {
@@ -3448,7 +3448,7 @@ spl_fild02,348,76,0	script	Tree#ep13bs1::ep13tree	111,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	if (ep13_newbs == 6) {
@@ -9263,7 +9263,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 			mes "As a last resort, they had to select Commander Agip since he's unaffiliated with any of those countries, but is talented enough to lead the expedition.";
 			next;
 			mes "[Staff Officer Abidal]";
-			mes "We, the commander, Igrid, and I aren't used to the the leadership role. We're having trouble taking care of everything that's happening. *Sigh*";
+			mes "We, the commanders, Igrid, and I aren't used to the leadership role. We're having trouble taking care of everything that's happening. *Sigh*";
 			next;
 			mes "[Staff Officer Abidal]";
 			mes "The members of the Midgard Expedition are conducting various kinds of research about the Ash-Vacuum searching for possible living creatures and studying what might be beneficial for the development of the mainland.";

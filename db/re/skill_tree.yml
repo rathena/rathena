@@ -6683,6 +6683,13 @@ Body:
         Requires:
           - Name: DK_TWOHANDDEF
             Level: 5
+      - Name: DK_DRAGONIC_BREATH
+        MaxLevel: 10
+        Requires:
+          - Name: RK_DRAGONBREATH
+            Level: 10
+          - Name: RK_DRAGONBREATH_WATER
+            Level: 10
       - Name: DK_DRAGONIC_AURA
         MaxLevel: 10
         Requires:
@@ -6765,6 +6772,21 @@ Body:
             Level: 3
           - Name: MT_SUMMON_ABR_BATTLE_WARIOR
             Level: 2
+      - Name: MT_SPARK_BLASTER
+        MaxLevel: 10
+        Requires:
+          - Name: MT_M_MACHINE
+            Level: 1
+      - Name: MT_TRIPLE_LASER
+        MaxLevel: 5
+        Requires:
+          - Name: MT_SPARK_BLASTER
+            Level: 5
+      - Name: MT_MIGHTY_SMASH
+        MaxLevel: 10
+        Requires:
+          - Name: MT_AXE_STOMP
+            Level: 3
       - Name: MT_SUMMON_ABR_MOTHER_NET
         MaxLevel: 4
         Requires:
@@ -7313,6 +7335,18 @@ Body:
           - Name: BO_WOODENWARRIOR
             Level: 3
           - Name: BO_WOODEN_FAIRY
+            Level: 3
+      - Name: BO_EXPLOSIVE_POWDER
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 3
+      - Name: BO_MAYHEMIC_THORNS
+        MaxLevel: 10
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 5
+          - Name: BO_EXPLOSIVE_POWDER
             Level: 3
   - Job: Abyss_Chaser
     Inherit:
