@@ -28,7 +28,73 @@
 #     - Day                 Reward day.
 #       ItemId              Item ID.
 ###########################################################################
+# Last generated using Hosting Malaya Attendance Generator (https://hostingmalaya.com): 20231121
 
 Header:
   Type: ATTENDANCE_DB
   Version: 1
+
+Body:
+  - Start: 20230101
+    End: 20231231
+    Rewards:
+      - Day: 1
+        ItemId: 100933
+        Amount: 2
+      - Day: 2
+        ItemId: 25464
+        Amount: 10
+      - Day: 3
+        ItemId: 23582
+        Amount: 1
+      - Day: 4
+        ItemId: 14533
+        Amount: 1
+      - Day: 5
+        ItemId: 23307
+        Amount: 10
+      - Day: 6
+        ItemId: 23012
+        Amount: 10
+      - Day: 7
+        ItemId: 23043
+        Amount: 1
+      - Day: 8
+        ItemId: 6413
+        Amount: 2
+      - Day: 9
+        ItemId: 9587
+        Amount: 1
+      - Day: 10
+        ItemId: 23047
+        Amount: 5
+      - Day: 11
+        ItemId: 23048
+        Amount: 5
+      - Day: 12
+        ItemId: 14533
+        Amount: 2
+      - Day: 13
+        ItemId: 22777
+        Amount: 1
+      - Day: 14
+        ItemId: 100934
+        Amount: 1
+      - Day: 15
+        ItemId: 6316
+        Amount: 2
+      - Day: 16
+        ItemId: 12264
+        Amount: 5
+      - Day: 17
+        ItemId: 23899
+        Amount: 5
+      - Day: 18
+        ItemId: 23898
+        Amount: 5
+      - Day: 19
+        ItemId: 100333
+        Amount: 5
+      - Day: 20
+        ItemId: 25464
+        Amount: 10

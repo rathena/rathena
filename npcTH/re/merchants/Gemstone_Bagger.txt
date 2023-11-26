@@ -57,14 +57,3 @@ um_in,103,115,3	duplicate(#GemstoneBagger)	Gemstone Bagger#25	4_M_UMOLDMAN
 xmas_in,36,37,5	duplicate(#GemstoneBagger)	Gemstone Bagger#26	4_M_04
 yuno,221,115,3	duplicate(#GemstoneBagger)	Gemstone Bagger#27	4_F_02
 yuno_in01,34,30,3	duplicate(#GemstoneBagger)	Gemstone Bagger#28	4_F_02
-emstoneBagger)	Gemstone Bagger#18	4W_M_03
-morocc,143,101,5	duplicate(#GemstoneBagger)	Gemstone Bagger#19	4_F_04
-payon,163,96,3	duplicate(#GemstoneBagger)	Gemstone Bagger#20	1_F_ORIENT_01
-payon_in01,12,47,3	duplicate(#GemstoneBagger)	Gemstone Bagger#21	1_F_ORIENT_01
-payon_in02,84,40,3	duplicate(#GemstoneBagger)	Gemstone Bagger#22	4_M_ORIENT01
-prt_fild05,292,226,3	duplicate(#GemstoneBagger)	Gemstone Bagger#23	1_M_01
-prt_in,125,78,5	duplicate(#GemstoneBagger)	Gemstone Bagger#24	1_M_INNKEEPER
-um_in,103,115,3	duplicate(#GemstoneBagger)	Gemstone Bagger#25	4_M_UMOLDMAN
-xmas_in,36,37,5	duplicate(#GemstoneBagger)	Gemstone Bagger#26	4_M_04
-yuno,221,115,3	duplicate(#GemstoneBagger)	Gemstone Bagger#27	4_F_02
-yuno_in01,34,30,3	duplicate(#GemstoneBagger)	Gemstone Bagger#28	4_F_02
