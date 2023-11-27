@@ -44,3 +44,8 @@
 Header:
   Type: BARTER_DB
   Version: 1
+
+Footer:
+  Imports:
+#  - Path: npcTH/custom/merchants/barters/Test.yml
+#  - Path: npcTH/custom/merchants/barters/Test.yml

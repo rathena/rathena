@@ -26,11 +26,11 @@ function Go; function Disp; function Pick; function Restrict;
 menu	"วาร์ปล่าสุด ^777777["+lastwarp$+"]^000000",-,
     	" ~ เมืองหลวง",Towns,
     	" ~ Fields",Fields,
-    	" ~ Dungeons",Dungeons,
-    	" ~ ปราสาทกิลด์",Castles,
-    	" ~ Guild Dungeons",Guild_Dungeons,
-    	" ~ Instances",Instances,
-    	" ~ พื้นที่พิเศษ",Special;
+    	" ~ Dungeons",Dungeons;
+    	//" ~ ปราสาทกิลด์",Castles,
+    	//" ~ Guild Dungeons",Guild_Dungeons,
+    	//" ~ Instances",Instances,
+    	//" ~ พื้นที่พิเศษ",Special;
 
 	if (lastwarp$ == "")
 		message strcharinfo(0),"คุณยังไม่เคยวาร์ปไปไหนเลย";

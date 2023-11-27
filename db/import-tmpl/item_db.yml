@@ -128,7 +128,8 @@ Body:
     Type: Usable
     Weight: 0
     Script: |
-      #CASHPOINTS = #CASHPOINTS+1;
+      #CASHPOINTS++;
+      dispbottom "คุณได้รับจำนวน 1 Cash Point";
 
 # Add Script VIP Items or Premium Items
 #=============================================================
@@ -180,6 +181,61 @@ Body:
     Script: |
       atcommand "@vip +7d"+strcharinfo(0);
       getitem 23165,1;
+  - Id: 400309
+    AegisName: C_20th_Anniversary_Hat
+    Name: Costume 20th Anniversary Poring
+    Type: Armor
+    Buy: 20
+    Weight: 0
+    Defense: 3
+    Locations:
+      Costume_Head_Top: true
+    View: 2284
+    Script: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_GARMENT), ITEMINFO_ID) == 480202){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
+    EquipScript: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_GARMENT), ITEMINFO_ID) == 480202){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
+  - Id: 480202
+    AegisName: C_Guardian_Butterwing
+    Name: Costume 20th Anniversary Fairy Wing
+    Type: Armor
+    Buy: 20
+    Weight: 0
+    Defense: 3
+    Locations:
+      Costume_Garment: true
+    Script: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_HEAD_TOP), ITEMINFO_ID) == 400309){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
+    EquipScript: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_HEAD_TOP), ITEMINFO_ID) == 400309){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
 
 #Body:
 # THQ Quest Items
