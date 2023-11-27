@@ -1,0 +1,82 @@
+//===== rAthena Script =======================================
+//= Rachel Sanctuary Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version with guessed amounts [Playtester]
+//= 1.1 More accurate spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// ra_san01
+//==================================================
+ra_san01,0,0	monster	Vanberk	1771,20,180000
+ra_san01,0,0	monster	Isilla	1772,10
+ra_san01,61,141,58,98	monster	Vanberk	1771,20,300000
+ra_san01,61,141,58,98	monster	Isilla	1772,10,180000
+ra_san01,61,141,58,98	monster	Gremlin	1632,5,60000
+ra_san01,61,141,58,98	monster	Hodremlin	1773,2,60000
+ra_san01,218,141,58,98	monster	Vanberk	1771,20,300000
+ra_san01,218,141,58,98	monster	Isilla	1772,10,180000
+ra_san01,218,141,58,98	monster	Gremlin	1632,5,60000
+ra_san01,218,141,58,98	monster	Hodremlin	1773,2,60000
+ra_san01,140,63,38,59	monster	Vanberk	1771,7,180000
+ra_san01,140,63,38,59	monster	Isilla	1772,3,180000
+ra_san01,140,63,38,59	monster	Beholder	1633,3,60000
+ra_san01,140,63,38,59	monster	Hodremlin	1773,1,60000
+ra_san01,140,226,50,51	monster	Vanberk	1771,7,180000
+ra_san01,140,226,50,51	monster	Isilla	1772,3,180000
+ra_san01,140,226,50,51	monster	Beholder	1633,3,60000
+ra_san01,140,226,50,51	monster	Hodremlin	1773,1,60000
+ra_san01,64,215,23,23	monster	Vanberk	1771,2,420000
+ra_san01,215,215,23,23	monster	Vanberk	1771,2,420000
+ra_san01,64,65,23,23	monster	Vanberk	1771,2,420000
+ra_san01,215,65,23,23	monster	Vanberk	1771,2,420000
+
+//==================================================
+// ra_san02
+//==================================================
+ra_san02,0,0	monster	Isilla	1772,35
+ra_san02,100,150,92,140	monster	Isilla	1772,25
+ra_san02,240,147,50,145	monster	Isilla	1772,25
+ra_san02,0,0	monster	Vanberk	1771,10
+ra_san02,100,150,92,140	monster	Vanberk	1771,10
+ra_san02,240,147,50,145	monster	Vanberk	1771,10
+ra_san02,0,0	monster	Gremlin	1632,10
+ra_san02,0,0	monster	Hodremlin	1773,3
+ra_san02,0,0	monster	Beholder	1633,10
+ra_san02,0,0	monster	Seeker	1774,2
+
+//==================================================
+// ra_san03
+//==================================================
+ra_san03,0,0	monster	Beholder	1633,5
+ra_san03,0,0	monster	Gremlin	1632,5
+ra_san03,148,221,145,71	monster	Seeker	1774,40
+ra_san03,0,0	monster	Hodremlin	1773,20
+ra_san03,148,79,146,71	monster	Hodremlin	1773,40
+
+//==================================================
+// ra_san04
+//==================================================
+ra_san04,0,0	monster	Echio	1770,60
+ra_san04,0,0	monster	Agav	1769,20
+ra_san04,0,0	monster	Seeker	1774,10
+ra_san04,0,0	monster	Hodremlin	1773,10
+
+//==================================================
+// ra_san05
+//==================================================
+ra_san05,0,0	monster	Agav	1769,70
+ra_san05,0,0	monster	Echio	1770,20
+ra_san05,0,0	monster	Isilla	1772,10
+ra_san05,0,0	monster	Seeker	1774,20
+ra_san05,0,0	monster	Hodremlin	1773,20
+ra_san05,0,0	monster	Agav	1769,10,18000000,14400000
+ra_san05,0,0	monster	Echio	1770,10,18000000,14400000
+ra_san05,0,0,0,0	boss_monster	Gloom Under Night	1768,1,18000000,600000,0

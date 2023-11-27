@@ -1,0 +1,20 @@
+//===== rAthena Script =======================================
+//= El Dicastes Field Warp Script
+//===== By: ==================================================
+//= Chilly, Muad_Dib
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for El Dicastes Field
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Updated to match the official script. [Joseph]
+//============================================================
+
+dic_dun01,371,44,0	warp	dic_field0001	1,1,dic_fild01,28,79
+dic_fild01,24,79,0	warp	dic_field0002	1,1,dic_dun01,366,45
+dic_fild01,69,23,0	warp	dic_field0003	1,1,dic_fild02,70,373
+dic_fild02,71,375,0	warp	dic_field0004	1,1,dic_fild01,69,25
+dicastes01,199,34,0	warp	dic_field0005	1,1,dic_fild01,149,279

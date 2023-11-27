@@ -1,0 +1,52 @@
+//===== rAthena Script =======================================
+//= Job Quest Renewal Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 2.3
+//===== Compatible With: =====================================
+//= rAthena Project; RO Version Ep4+
+//===== Description: =========================================
+//= Warp Points for Job Quest Maps
+//===== Additional Comments: =================================
+//= 2.1 Added one Shadow Chaser job warp. [Euphy]
+//= 2.2 Moved common warps to base path, added warps. [Euphy]
+//= 2.3 Added exit warps (job_exit) for 2nd class quests. [Euphy]
+//============================================================
+
+//==============================================================================
+//Exit Warps
+//==============================================================================
+job_knt,89,98,0	warp	knt_out	1,1,prt_in,77,99
+job_wiz,49,154,0	warp	wiz_out	1,1,gef_tower,108,29
+job_sage,55,154,0	warp	sage_out	1,1,yuno_in03,169,171
+
+//==============================================================================
+//Arch Bishop
+//==============================================================================
+job3_arch01,29,24,0	warp2	#archout	1,1,odin_tem02,282,263
+
+//==============================================================================
+//Guillotine Cross
+//==============================================================================
+veins,257,256,0	warp	#gate_to_guil01	1,1,job3_guil01,9,93
+job3_guil01,6,93,0	warp	#gate_to_guil02	1,1,veins,254,255
+job3_guil01,18,48,0	warp	#gate_to_guil03	1,1,job3_guil01,68,91
+job3_guil01,67,95,0	warp	#gate_to_guil04	1,1,job3_guil01,18,53
+job3_guil01,65,50,0	warp	#gate_to_guil06	1,1,job3_guil01,83,77
+job3_guil01,11,4,0	warp	#gate_to_guil08	1,1,job3_guil01,51,50
+job3_guil01,79,27,0	warp	#gate_to_guil10	1,1,job3_guil01,51,50
+job3_guil01,143,61,0	warp	#gate_to_guil11	1,1,job3_guil01,51,50
+
+//==============================================================================
+//Genetic
+//==============================================================================
+lighthalzen,52,132,0	warp	#lighttogen	1,1,job3_gen01,45,50
+job3_gen01,49,49,0	warp	#gentolight	1,1,lighthalzen,54,132
+job3_gen01,7,59,0	warp	#from1to2gen	1,1,job3_gen01,72,52
+job3_gen01,71,56,0	warp	#from2to1gen	1,1,job3_gen01,11,60
+
+//==============================================================================
+//Shadow Chaser
+//==============================================================================
+job3_sha01,71,19,0	warp	shadowc1	1,1,tha_t01,149,224

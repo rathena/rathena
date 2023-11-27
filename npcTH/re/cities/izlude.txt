@@ -1,0 +1,276 @@
+//===== rAthena Script ======================================= 
+//= Izlude Town Renewal
+//===== By: ================================================== 
+//= Masao
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Izlude town NPCs.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. Still missing many new NPCs and their dialogues. [Masao]
+//= 1.1 Updated to match the official script. [Euphy]
+//= 1.2 Added Channel Warper and Izlude duplicates. [Euphy]
+//============================================================
+
+// Izlude
+//============================================================
+izlude,197,205,1	duplicate(Sailor_izlude)	Sailor#izlude	4W_SAILOR
+izlude_a,197,205,1	duplicate(Sailor_izlude)	Sailor#izlude_a	4W_SAILOR
+izlude_b,197,205,1	duplicate(Sailor_izlude)	Sailor#izlude_b	4W_SAILOR
+izlude_c,197,205,1	duplicate(Sailor_izlude)	Sailor#izlude_c	4W_SAILOR
+izlude_d,197,205,1	duplicate(Sailor_izlude)	Sailor#izlude_d	4W_SAILOR
+
+izlude,71,92,2	duplicate(Bonne_izlude)	Bonne#izlude	4_F_01
+izlude_a,71,92,2	duplicate(Bonne_izlude)	Bonne#izlude_a	4_F_01
+izlude_b,71,92,2	duplicate(Bonne_izlude)	Bonne#izlude_b	4_F_01
+izlude_c,71,92,2	duplicate(Bonne_izlude)	Bonne#izlude_c	4_F_01
+izlude_d,71,92,2	duplicate(Bonne_izlude)	Bonne#izlude_d	4_F_01
+
+izlude,172,215,4	duplicate(Charfri_izlude)	Charfri#izlude	4_F_02
+izlude_a,172,215,4	duplicate(Charfri_izlude)	Charfri#izlude_a	4_F_02
+izlude_b,172,215,4	duplicate(Charfri_izlude)	Charfri#izlude_b	4_F_02
+izlude_c,172,215,4	duplicate(Charfri_izlude)	Charfri#izlude_c	4_F_02
+izlude_d,172,215,4	duplicate(Charfri_izlude)	Charfri#izlude_d	4_F_02
+
+izlude,174,164,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude	4_F_TELEPORTER
+izlude_a,174,164,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude_a	4_F_TELEPORTER
+izlude_b,174,164,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude_b	4_F_TELEPORTER
+izlude_c,174,164,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude_c	4_F_TELEPORTER
+izlude_d,174,164,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude_d	4_F_TELEPORTER
+
+izlude,85,103,4	duplicate(Dega_izlude)	Dega#izlude	4_M_02
+izlude_a,85,103,4	duplicate(Dega_izlude)	Dega#izlude_a	4_M_02
+izlude_b,85,103,4	duplicate(Dega_izlude)	Dega#izlude_b	4_M_02
+izlude_c,85,103,4	duplicate(Dega_izlude)	Dega#izlude_c	4_M_02
+izlude_d,85,103,4	duplicate(Dega_izlude)	Dega#izlude_d	4_M_02
+
+izlude,140,186,4	duplicate(Kylick_izlude)	Kylick#izlude	4W_M_01
+izlude_a,140,186,4	duplicate(Kylick_izlude)	Kylick#izlude_a	4W_M_01
+izlude_b,140,186,4	duplicate(Kylick_izlude)	Kylick#izlude_b	4W_M_01
+izlude_c,140,186,4	duplicate(Kylick_izlude)	Kylick#izlude_c	4W_M_01
+izlude_d,140,186,4	duplicate(Kylick_izlude)	Kylick#izlude_d	4W_M_01
+
+izlude,57,159,2	duplicate(Red_izlude)	Red#izlude	4_M_03
+izlude_a,57,159,2	duplicate(Red_izlude)	Red#izlude_a	4_M_03
+izlude_b,57,159,2	duplicate(Red_izlude)	Red#izlude_b	4_M_03
+izlude_c,57,159,2	duplicate(Red_izlude)	Red#izlude_c	4_M_03
+izlude_d,57,159,2	duplicate(Red_izlude)	Red#izlude_d	4_M_03
+
+izlude,55,159,2	duplicate(Cebalis_izlude)	Cebalis#izlude	4W_M_02
+izlude_a,55,159,2	duplicate(Cebalis_izlude)	Cebalis#izlude_a	4W_M_02
+izlude_b,55,159,2	duplicate(Cebalis_izlude)	Cebalis#izlude_b	4W_M_02
+izlude_c,55,159,2	duplicate(Cebalis_izlude)	Cebalis#izlude_c	4W_M_02
+izlude_d,55,159,2	duplicate(Cebalis_izlude)	Cebalis#izlude_d	4W_M_02
+
+izlude,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude	8W_SOLDIER
+izlude_a,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude_a	8W_SOLDIER
+izlude_b,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude_b	8W_SOLDIER
+izlude_c,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude_c	8W_SOLDIER
+izlude_d,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude_d	8W_SOLDIER
+
+-	script	::Guard_izlude	-1,{
+	mes "[Izlude Guard]";
+	mes "Welcome to Izlude.";
+	close;
+}
+prt_fild08,350,219,4	duplicate(Guard_izlude)	Guard#izlude	8W_SOLDIER
+prt_fild08a,350,219,4	duplicate(Guard_izlude)	Guard#izlude_a	8W_SOLDIER
+prt_fild08b,350,219,4	duplicate(Guard_izlude)	Guard#izlude_b	8W_SOLDIER
+prt_fild08c,350,219,4	duplicate(Guard_izlude)	Guard#izlude_c	8W_SOLDIER
+prt_fild08d,350,219,4	duplicate(Guard_izlude)	Guard#izlude_d	8W_SOLDIER
+
+// Channel Warper :: channel
+//============================================================
+function	script	F_IzludeChannel	{
+	mes "[Channel Warp Official]";
+	mes "Izlude is a verly lively place is it not?";
+	mes "I am here to help make Izlude feel more smooth!";
+	mes "I can send you to another copy of Izlude.";
+	mes "Do you want to go to another copy?";
+	next;
+	set .@i, select(getarg(0)+":Never mind");
+	if (.@i < 6) {
+		setarray .@maps$[1],"izlude","izlude_a","izlude_b","izlude_c","izlude_d";
+		savepoint .@maps$[.@i],128,98,1,1;
+		warp .@maps$[.@i],128,98;
+		end;
+	}
+	close;
+}
+izlude,122,105,5	script	Channel Warp Official	1_M_WIZARD,{ callfunc "F_IzludeChannel",":Go to copy 2:Go to copy 3:Go to copy 4:Go to copy 5"; }
+izlude_a,122,105,5	script	Channel Warp Official#_a	1_M_WIZARD,{ callfunc "F_IzludeChannel","Go to copy 1::Go to copy 3:Go to copy 4:Go to copy 5"; }
+izlude_b,122,105,5	script	Channel Warp Official#_b	1_M_WIZARD,{ callfunc "F_IzludeChannel","Go to copy 1:Go to copy 2::Go to copy 4:Go to copy 5"; }
+izlude_c,122,105,5	script	Channel Warp Official#_c	1_M_WIZARD,{ callfunc "F_IzludeChannel","Go to copy 1:Go to copy 2:Go to copy 3::Go to copy 5"; }
+izlude_d,122,105,5	script	Channel Warp Official#_d	1_M_WIZARD,{ callfunc "F_IzludeChannel","Go to copy 1:Go to copy 2:Go to copy 3:Go to copy 4:"; }
+
+// Talking NPCs
+//============================================================
+izlude,143,205,7	script	Talkative Kid#iz	4_F_KID2,{
+	end;
+
+OnTimer64000:
+	npctalk "Talkative Kid : I used all my Novice Red Potions. What should I do?";
+	end;
+
+OnTimer72000:
+	npctalk "Talkative Kid : Where is the shop?";
+	end;
+
+OnTimer136000:
+	npctalk "Talkative Kid : Idiot! You do not know about the 'shortcut window'?";
+	end;
+
+OnTimer144000:
+	npctalk "Talkative Kid : The items in your inventory can be dragged and put in the shortcut window.";
+	end;
+
+OnTimer212000:
+	npctalk "Talkative Kid : I got so many beginner's items in the Academy!";
+	end;
+
+OnTimer276000:
+	npctalk "Talkative Kid : They even gave me weapons and a shield!";
+	end;
+
+OnTimer284000:
+	npctalk "Talkative Kid : Just press  <Ctrl+~key> to open the map you have.";
+	end;
+
+OnTimer344000:
+	npctalk "Talkative Kid : Then do you want to go Criatura Academy with me? I'm learning how to battle from Instructor Subino!";
+	end;
+
+OnTimer348000:
+	npctalk "Talkative Kid : The Academy is in North side of Izlude. Let's go~!";
+	end;
+
+OnTimer416000:
+	npctalk "Talkative Kid : It's a system to guide you to a destination.";
+	end;
+
+OnTimer424000:
+	npctalk "Talkative Kid : In the basic menu, please click the [Navigation] button.";
+	end;
+
+OnTimer492000:
+	npctalk "Talkative Kid : Whee, Ain't gonna use your brain? Please type /where in the chat window now!";
+	end;
+
+OnTimer552000:
+	npctalk "Talkative Kid : In this case, you can push the <Enter> key.";
+	end;
+
+OnTimer560000:
+	npctalk "Talkative Kid : We are just repeating the same dialog. HaHaha.";
+	end;
+
+OnTimer565000:
+OnInit:
+	initnpctimer;
+	end;
+}
+
+izlude_a,143,205,7	duplicate(Talkative Kid#iz)	Talkative Kid#iza	4_F_KID2
+izlude_b,143,205,7	duplicate(Talkative Kid#iz)	Talkative Kid#izb	4_F_KID2
+izlude_c,143,205,7	duplicate(Talkative Kid#iz)	Talkative Kid#izc	4_F_KID2
+izlude_d,143,205,7	duplicate(Talkative Kid#iz)	Talkative Kid#izd	4_F_KID2
+
+izlude,146,205,7	script	Talkative Adventurer#iz	4_M_KID1,{
+	end;
+
+OnTimer69000:
+	npctalk "Talkative Adventurer : You can buy potion from Merchants.";
+	end;
+
+OnTimer77000:
+	npctalk "Talkative Adventurer : It's the Potion image in the mini map.";
+	end;
+
+OnTimer131000:
+	npctalk "Talkative Adventurer : Is there any way to use items easily?";
+	end;
+
+OnTimer141000:
+	npctalk "Talkative Adventurer : Shortcut window? The slots at the top of the screen? How can I use it?";
+	end;
+
+OnTimer149000:
+	npctalk "Talkative Adventurer : For inventory, do you mean 'item' menu? Oh, it is!";
+	end;
+
+OnTimer217000:
+	npctalk "Talkative Adventurer : I have a bunch of potions?";
+	end;
+
+OnTimer281000:
+	npctalk "Talkative Adventurer : What?! I should go to the Academy now!";
+	end;
+
+OnTimer279000:
+	npctalk "Talkative Adventurer : Where is Izlude? In the center?";
+	end;
+
+OnTimer339000:
+	npctalk "Talkative Adventurer : I do not know what to do.";
+	end;
+
+OnTimer349000:
+	npctalk "Talkative Adventurer : Oh yea? I want to know so many things~ I will go with you!";
+	end;
+
+OnTimer411000:
+	npctalk "Talkative Adventurer : Navigation, What is that?";
+	end;
+
+OnTimer421000:
+	npctalk "Talkative Adventurer : Oh-! Should I search for a Kafra Employee?";
+	end;
+
+OnTimer487000:
+	npctalk "Talkative Adventurer : What is the town name?";
+	end;
+
+OnTimer497000:
+	npctalk "Talkative Adventurer : I cannot see the part where I can write something in the chat window?";
+	end;
+
+OnTimer557000:
+	npctalk "Talkative Adventurer : Oh you smarty...";
+	end;
+
+OnTimer555000:
+	npctalk "Talkative Adventurer : A while ago, one Novice talked to me like hey 'Talkative Adventurer'?. HaHaha.";
+	end;
+
+OnTimer565000:
+OnInit:
+	initnpctimer;
+	end;
+}
+
+izlude_a,146,205,7	duplicate(Talkative Adventurer#iz)	Talkative Adventurer#iza	4_M_KID1
+izlude_b,146,205,7	duplicate(Talkative Adventurer#iz)	Talkative Adventurer#izb	4_M_KID1
+izlude_c,146,205,7	duplicate(Talkative Adventurer#iz)	Talkative Adventurer#izc	4_M_KID1
+izlude_d,146,205,7	duplicate(Talkative Adventurer#iz)	Talkative Adventurer#izd	4_M_KID1
+
+prt_fild08,338,217,7	script	Resting Adventurer#iz	4_F_SITDOWN,{
+	end;
+
+OnTimer60000:
+	npctalk "Resting Adventurer : You know what? If you are sitting, HP and SP recovery is faster.";
+	end;
+
+OnTimer65000:
+	npctalk "Resting Adventurer : Sitting is possible if your basic job skill level is more than 3. Shortcut is pressing the <INSERT> key.";
+OnInit:
+	initnpctimer;
+	end;
+}
+
+prt_fild08a,338,217,7	duplicate(Resting Adventurer#iz)	Resting Adventurer#iza	4_F_SITDOWN
+prt_fild08b,338,217,7	duplicate(Resting Adventurer#iz)	Resting Adventurer#izb	4_F_SITDOWN
+prt_fild08c,338,217,7	duplicate(Resting Adventurer#iz)	Resting Adventurer#izc	4_F_SITDOWN
+prt_fild08d,338,217,7	duplicate(Resting Adventurer#iz)	Resting Adventurer#izd	4_F_SITDOWN

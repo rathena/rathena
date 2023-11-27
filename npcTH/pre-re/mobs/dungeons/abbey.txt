@@ -1,0 +1,129 @@
+//===== rAthena Script =======================================
+//= Abbey Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Initial version [$ephiroth]
+//= 1.1 Updated spawns [Playtester]
+//= 1.2 More official spawns [Playtester]
+//============================================================
+
+// Nameless Island
+nameless_n,93,211,51,62	monster	Zombie Slaughter	1864,3,15000
+nameless_n,93,211,51,62	monster	Ragged Zombie	1865,3,15000
+nameless_n,93,211,51,62	monster	Hell Poodle	1866,5,15000
+nameless_n,93,211,51,62	monster	Banshee	1867,4,15000
+nameless_n,93,211,51,62	monster	Flame Skull	1869,1,30000
+nameless_n,93,211,51,62	monster	Ghoul	1036,10,30000
+nameless_n,204,225,57,70	monster	Zombie Slaughter	1864,5,15000
+nameless_n,204,225,57,70	monster	Ragged Zombie	1865,5,15000
+nameless_n,204,225,57,70	monster	Hell Poodle	1866,5,15000
+nameless_n,204,225,57,70	monster	Banshee	1867,4,15000
+nameless_n,204,225,57,70	monster	Flame Skull	1869,1,30000
+nameless_n,204,225,57,70	monster	Ghoul	1036,10,30000
+nameless_n,127,103,59,46	monster	Zombie Slaughter	1864,2,15000
+nameless_n,127,103,59,46	monster	Ragged Zombie	1865,2,15000
+nameless_n,127,103,59,46	monster	Hell Poodle	1866,5,15000
+nameless_n,127,103,59,46	monster	Banshee	1867,4,15000
+nameless_n,127,103,59,46	monster	Flame Skull	1869,1,30000
+nameless_n,127,103,59,46	monster	Ghoul	1036,10,30000
+nameless_n,234,95,40,58	monster	Zombie Slaughter	1864,2,15000
+nameless_n,234,95,40,58	monster	Ragged Zombie	1865,2,15000
+nameless_n,234,95,40,58	monster	Hell Poodle	1866,2,15000
+nameless_n,234,95,40,58	monster	Banshee	1867,4,15000
+nameless_n,234,95,40,58	monster	Ghoul	1036,10,30000
+
+// Cursed Abbey Dungeon 1
+abbey01,0,0	monster	Banshee	1867,30
+abbey01,97,270,87,87	monster	Banshee	1867,30
+abbey01,97,270,87,87	monster	Hell Poodle	1866,15
+abbey01,97,270,87,87	monster	Zombie Slaughter	1864,10
+abbey01,97,270,87,87	monster	Ragged Zombie	1865,10
+abbey01,97,270,87,87	monster	Flame Skull	1869,9
+abbey01,97,270,87,87	monster	Ghoul	1036,10
+abbey01,250,370,49,50	monster	Banshee	1867,3
+abbey01,250,370,49,50	monster	Hell Poodle	1866,2
+abbey01,250,370,49,50	monster	Zombie Slaughter	1864,3
+abbey01,250,370,49,50	monster	Ragged Zombie	1865,3
+abbey01,250,370,49,50	monster	Flame Skull	1869,2
+abbey01,250,370,49,50	monster	Ghoul	1036,4
+abbey01,374,207,39,100	monster	Banshee	1867,3
+abbey01,374,207,39,100	monster	Hell Poodle	1866,1
+abbey01,374,207,39,100	monster	Zombie Slaughter	1864,1
+abbey01,374,207,39,100	monster	Ragged Zombie	1865,2
+abbey01,374,207,39,100	monster	Flame Skull	1869,1
+abbey01,374,207,39,100	monster	Ghoul	1036,4
+abbey01,283,283,99,100	monster	Banshee	1867,10
+abbey01,283,283,99,100	monster	Hell Poodle	1866,5
+abbey01,283,283,99,100	monster	Zombie Slaughter	1864,7
+abbey01,283,283,99,100	monster	Ragged Zombie	1865,7
+abbey01,283,283,99,100	monster	Flame Skull	1869,3
+abbey01,283,283,99,100	monster	Ghoul	1036,10
+abbey01,71,67,64,58	monster	Banshee	1867,3
+abbey01,71,67,64,58	monster	Zombie Slaughter	1864,3
+abbey01,71,67,64,58	monster	Ragged Zombie	1865,3
+abbey01,71,67,64,58	monster	Flame Skull	1869,1
+abbey01,71,67,64,58	monster	Ghoul	1036,10
+abbey01,71,67,64,58	monster	Zombie Slaughter	1864,4
+abbey01,71,67,64,58	monster	Ragged Zombie	1865,4
+abbey01,71,67,64,58	monster	Flame Skull	1869,3
+abbey01,71,67,64,58	monster	Ghoul	1036,10
+abbey01,260,70,35,30	monster	Banshee	1867,7
+abbey01,260,70,35,30	monster	Hell Poodle	1866,1
+abbey01,260,70,35,30	monster	Zombie Slaughter	1864,1
+abbey01,260,70,35,30	monster	Ragged Zombie	1865,2
+abbey01,260,70,35,30	monster	Flame Skull	1869,1
+abbey01,260,70,35,30	monster	Ghoul	1036,4
+abbey01,260,100,35,30	monster	Banshee	1867,7
+abbey01,260,100,35,30	monster	Hell Poodle	1866,1
+abbey01,260,100,35,30	monster	Zombie Slaughter	1864,1
+abbey01,260,100,35,30	monster	Ragged Zombie	1865,2
+abbey01,260,100,35,30	monster	Flame Skull	1869,1
+abbey01,260,100,35,30	monster	Ghoul	1036,4
+
+// Cursed Abbey Dungeon 2
+abbey02,150,66,36,64	monster	Zombie Slaughter	1864,30,60000
+abbey02,150,66,36,64	monster	Ragged Zombie	1865,10
+abbey02,150,66,36,64	monster	Flame Skull	1869,3
+abbey02,150,66,36,64	monster	Necromancer	1870,1
+abbey02,67,75,46,54	monster	Zombie Slaughter	1864,30,124000
+abbey02,67,75,46,54	monster	Ragged Zombie	1865,10
+abbey02,67,75,46,54	monster	Flame Skull	1869,3
+abbey02,67,75,46,54	monster	Necromancer	1870,1
+abbey02,232,76,46,54	monster	Zombie Slaughter	1864,30,63000
+abbey02,232,76,46,54	monster	Ragged Zombie	1865,10
+abbey02,232,76,46,54	monster	Flame Skull	1869,3
+abbey02,232,76,46,54	monster	Necromancer	1870,1
+abbey02,236,78,21,18	boss_monster	Fallen Bishop Hibram	1871,1,7200000,600000,1
+abbey02,150,153,142,23	monster	Zombie Slaughter	1864,30,122000
+abbey02,150,153,142,23	monster	Ragged Zombie	1865,10
+abbey02,150,153,142,23	monster	Flame Skull	1869,3
+abbey02,150,153,142,23	monster	Necromancer	1870,1
+abbey02,68,220,46,58	monster	Zombie Slaughter	1864,30,6000
+abbey02,68,220,46,58	monster	Ragged Zombie	1865,10
+abbey02,68,220,46,58	monster	Flame Skull	1869,3
+abbey02,68,220,46,58	monster	Necromancer	1870,1
+abbey02,150,240,35,44	monster	Zombie Slaughter	1864,30,120000
+abbey02,150,240,35,44	monster	Ragged Zombie	1865,10
+abbey02,150,240,35,44	monster	Flame Skull	1869,3
+abbey02,150,240,35,44	monster	Necromancer	1870,1
+abbey02,232,220,46,58	monster	Zombie Slaughter	1864,30,60000
+abbey02,232,220,46,58	monster	Ragged Zombie	1865,10
+abbey02,232,220,46,58	monster	Flame Skull	1869,3
+abbey02,232,220,46,58	monster	Necromancer	1870,1
+
+// Cursed Abbey Dungeon 3
+abbey03,0,0,0,0	boss_monster	Beelzebub	1873,1,43200000,600000,1
+abbey03,120,212,116,24	monster	Necromancer	1870,10
+abbey03,120,212,116,24	monster	Banshee	1867,10
+abbey03,120,212,116,24	monster	Flame Skull	1869,5
+abbey03,122,152,111,36	monster	Necromancer	1870,20
+abbey03,122,152,111,36	monster	Banshee	1867,10
+abbey03,122,152,111,36	monster	Flame Skull	1869,10
+abbey03,120,64,117,53	monster	Necromancer	1870,30
+abbey03,120,64,117,53	monster	Banshee	1867,10
+abbey03,120,64,117,53	monster	Flame Skull	1869,10

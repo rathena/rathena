@@ -1,0 +1,62 @@
+//===== rAthena Script =======================================
+//= un_myst warps
+//===== Description: =========================================
+//= Warp Points for episodes 15.1 & 15.2
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//= 2.0 Updated using Aegis files. [Capuche]
+//============================================================
+
+// A
+un_myst,124,189,0	warp2	#m101	1,1,un_myst,171,197
+un_myst,171,183,0	warp2	#m102	1,1,un_myst,259,200
+
+un_myst,258,208,0	script	#m103	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(1,100);
+	if (.@r < 40)
+		warp "un_myst",291,203;
+	else if (.@r > 80)
+		warp "un_myst",329,205;
+	else
+		warp "un_myst",259,200;
+	end;
+}
+un_myst,295,208,0	duplicate(#m103)	#m104	WARPNPC,1,1
+
+// B
+un_myst,393,139,0	script	#m201	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(1,100);
+	if (.@r < 40)
+		warp "un_myst",86,136;
+	else if (.@r > 80)
+		warp "un_myst",176,137;
+	else
+		warp "un_myst",138,138;
+	end;
+}
+un_myst,104,136,0	duplicate(#m201)	#m202	WARPNPC,1,1
+un_myst,138,140,0	duplicate(#m201)	#m203	WARPNPC,1,1
+
+// C
+un_myst,75,91,0	script	#m301	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@r = rand(1,100);
+	if (.@r < 40)
+		warp "un_myst",107,88;
+	else if (.@r > 80)
+		warp "un_myst",160,89;
+	else
+		warp "un_myst",217,84;
+	end;
+}
+un_myst,121,82,0	duplicate(#m301)	#m302	WARPNPC,1,1
+un_myst,169,89,0	duplicate(#m301)	#m303	WARPNPC,1,1
+un_myst,219,88,0	duplicate(#m301)	#m304	WARPNPC,1,1
+
+un_bunker,387,79,0	warp2	#room_out_	1,1,un_bunker,300,166
+un_myst,108,38,0	warp2	#way	1,1,un_myst,209,33

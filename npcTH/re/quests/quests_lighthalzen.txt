@@ -1,0 +1,24 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs located in Lighthalzen
+//===== By: ================================================== 
+//= Ziu, Heris (translation)
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Quests related to Lighthalzen City.
+//===== Additional Comments: ================================= 
+//= 1.0 Updated to match the new Izlude Map. [Masao]
+//= 1.1 Added Somatology Laboratory F4 quest. [Euphy]
+//= 1.2 Added Izlude duplicates. [Euphy]
+//= 1.3 Removed Somatology Laboratory F4 quest. [Euphy]
+//============================================================ 
+
+// Renewal split [Daegaladh]
+//============================================================
+izlude,172,73,6	duplicate(Scamp)	Scamp#iz	853
+izlude_a,172,73,6	duplicate(Scamp)	Scamp#iz_a	853
+izlude_b,172,73,6	duplicate(Scamp)	Scamp#iz_b	853
+izlude_c,172,73,6	duplicate(Scamp)	Scamp#iz_c	853
+izlude_d,172,73,6	duplicate(Scamp)	Scamp#iz_d	853

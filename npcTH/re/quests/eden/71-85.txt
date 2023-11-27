@@ -1,0 +1,228 @@
+//===== rAthena Script =======================================
+//= Eden Group Quests - Mission [71 - 85]
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 71 - 85.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Some little optimization here and there. [Masao]
+//= 1.2 Optimized. [Euphy]
+//= 1.3 Updated to match the official scripts. [Euphy]
+//= 1.4 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.5 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+moc_para01,44,38,3	script	Mission [71 - 85]	857,{
+	if (!callfunc("F_HasEdenGroupMark")) {
+		mes "- เฉพาะสมาชิกของ -";
+		mes "- Eden Group สามารถอ่าน -";
+		mes "- กระดานข่าวนี้ -";
+		close;
+	}
+
+	// Clear the original quest data (no longer used).
+	if (slv_quest) set slv_quest,0;
+	if (checkquest(10102) > -1 || checkquest(10103) > -1 || checkquest(10104) > -1 || checkquest(10105) > -1 || checkquest(10106) > -1) {
+		for(set .@quest,10102; .@quest<=10106; set .@quest,.@quest+1) {
+			if (checkquest(.@quest) > -1)
+				erasequest .@quest;
+		}
+		mes "- เนื่องจากลูกค้าย้าย -";
+		mes "- ไปยังที่อื่น -";
+		mes "- ลบแบบฟอร์มใบสมัครแล้ว -";
+		next;
+	}
+
+	if (BaseLevel < 71) {
+		mes "- เฉพาะสมาชิกของ -";
+		mes "- ระดับที่เหมาะสมสามารถอ่าน -";
+		mes "- กระดานข่าวนี้ -";
+		mes "- ลองหากระดาน -";
+		mes "- ที่เหมาะกับระดับของคุณ -";
+		close;
+	} else if (BaseLevel > 85) {
+		// Quest IDs: 10107-10123, 5055-5057
+		setarray .@quests[0],
+			10107,10108,10109,
+			10110,10111,10112,10113,
+			10114,10115,10116,10117,
+			10118,10119,10120,
+			10121,10122,10123,5055,5056;
+		for(set .@i,0; .@i<getarraysize(.@quests); set .@i,.@i+1) {
+			if (checkquest(.@quests[.@i],HUNTING) == 2)
+				set .@complete[getarraysize(.@complete)], .@quests[.@i];
+		}
+		if (checkquest(5057) > -1 && countitem(7187) >= 30)
+			set .@complete[getarraysize(.@complete)],5057;
+		if (getarraysize(.@complete)) {
+			mes "เจ้ามีภารกิจที่ต้องทำ";
+			mes "คุณต้องการที่จะเปิดมันหรือไม่";
+			next;
+			if(select("แน่นอน:ไม่มี") == 2)
+				close;
+			for(set .@i,0; .@i<getarraysize(.@complete); set .@i,.@i+1)
+				callsub L_Quest,.@complete[.@i];
+			close;
+		}
+		mes "- เฉพาะสมาชิกของ -";
+		mes "- ระดับที่เหมาะสมสามารถอ่าน -";
+		mes "- กระดานข่าวนี้ -";
+		mes "- ลองหากระดาน -";
+		mes "- ที่เหมาะกับระดับของคุณ -";
+		close;
+	}
+	mes "- เลือกตำแหน่งที่คุณ -";
+	mes "- ต้องการล่า -";
+	next;
+	switch(select("Sphinx Dungeon:Glast Heim:Juno Area:Clock Tower:Localized Islands")) {
+	case 1:
+		mes "- มีหลายคำขอ -";
+		mes "- เกี่ยวข้องกับ Sphinx Dungeon -";
+		mes "- บนกระดานภารกิจนี้ -";
+		next;
+		set .@str1$,"ชาว Morocc มีความกังวลใจจากจำนวนสัตว์ประหลาดใน Sphinx Dungeon ที่เพิ่มขึ้น";
+		set .@str2$,"- Meidi จาก Morocc -";
+		switch(select("ตามล่า Requiem:ตามล่า Marduk:ตามล่า Pasana")) {
+			case 1: callsub L_Quest,10107,.@str1$+"ตามล่า 10 Requiems.",.@str2$;
+			case 2: callsub L_Quest,10108,.@str1$+"ตามล่า 10 Marduks.",.@str2$;
+			case 3: callsub L_Quest,10109,.@str1$+"ตามล่า 10 Pasanas.",.@str2$;
+		}
+	case 2:
+		mes "- มีหลายคำขอ -";
+		mes "- เกี่ยวข้องกับ Glast Heim -";
+		mes "- บนกระดานภารกิจนี้ -";
+		next;
+		set .@str1$,"ฉันกลัวมากว่าสัตว์ประหลาดจาก Glast Heim จะโจมตีเรา";
+		set .@str2$,"- Ancellia จาก Geffen -";
+		switch(select("ตามล่า Dark Frame:ตามล่า Evil Druid:ตามล่า Wraith:ตามล่า Raydric Archer")) {
+			case 1: callsub L_Quest,10110,.@str1$+"ตามล่า 10 Dark Frames.",.@str2$;
+			case 2: callsub L_Quest,10111,.@str1$+"ตามล่า 10 Evil Druids.",.@str2$;
+			case 3: callsub L_Quest,10112,.@str1$+"ตามล่า 10 Wraiths.",.@str2$;
+			case 4: callsub L_Quest,10113,.@str1$+"ตามล่า 10 Raydric Archers.",.@str2$;
+		}
+	case 3:
+		mes "- มีหลายคำขอ -";
+		mes "- เกี่ยวข้องกับพื้นที่ -";
+		mes "- รอบ ๆ Juno. -";
+		next;
+		set .@str1$,"ผู้ที่ไม่สามารถต่อสู้เช่นเดียวกับฉันพบว่ามันยากกว่าในการเดินทางเนื่องจากสัตว์ประหลาดจำนวนมาก";
+		set .@str2$,"- Jeanbai, นักท่องเที่ยว -";
+		switch(select("ตามล่า Grand Peco:ตามล่า Sleeper:ตามล่า Goat:ตามล่า Harpy")) {
+			case 1: callsub L_Quest,10114,.@str1$+"ตามล่า 20 Grand Pecos.",.@str2$;
+			case 2: callsub L_Quest,10115,.@str1$+"ตามล่า 20 Sleepers.",.@str2$;
+			case 3: callsub L_Quest,10116,.@str1$+"ตามล่า 20 Goats.",.@str2$;
+			case 4: callsub L_Quest,10117,.@str1$+"ตามล่า 20 Harpies.",.@str2$;
+		}
+	case 4:
+		mes "- มีหลายคำขอ -";
+		mes "- เกี่ยวข้องกับ Clock Tower -";
+		mes "- บนกระดานภารกิจนี้ -";
+		next;
+		set .@str1$,"ฉันเคยรักที่จะฟังทำนองหวานของหอนาฬิกา Al De Baran แต่ฉันไม่สามารถได้ยินอะไรอีกต่อไปเพราะเสียงทั้งหมดที่สัตว์ประหลาดกำลังทำ";
+		set .@str2$,"- Rizingsetter ประธานชุมชน Love Clock -";
+		switch(select("ตามล่า Clock:ตามล่า Punk:ตามล่า Rideword")) {
+			case 1: callsub L_Quest,10118,.@str1$+"ตามล่า 15 Clocks ก่อนที่มันจะแตก",.@str2$;
+			case 2: callsub L_Quest,10119,.@str1$+"ตามล่า 15 Punks ก่อนที่มันจะแตก",.@str2$;
+			case 3: callsub L_Quest,10120,.@str1$+"ตามล่า 15 Ridewords ก่อนที่มันจะแตก",.@str2$;
+		}
+	case 5:
+		mes "- มีหลายคำขอ -";
+		mes "- เกี่ยวข้องกับ Localized Islands -";
+		mes "- บนกระดานภารกิจนี้ -";
+		next;
+		set .@str1$,"I want to go on an adventure but there are so many things I have to deal with. If I can't, then others can't either! ";
+		set .@str2$,"- Funfy, who wants to go on an adventure -";
+		switch(select("ตามล่า Kikimora:ตามล่า Miyabi Doll:ตามล่า Mi Gao:ตามล่า Headless Mule:ตามล่า Tamruan:รวบรวม Festival Masks for the Festival")) {
+			case 1: callsub L_Quest,10121,.@str1$+"ตามล่า 15 Kikimoras ใน Moscovia!",.@str2$;
+			case 2: callsub L_Quest,10122,.@str1$+"ตามล่า 15 Miyabi Dolls ใน Amatsu!",.@str2$;
+			case 3: callsub L_Quest,10123,.@str1$+"ตามล่า 15 Mi Gaos ใน Luoyang!",.@str2$;
+			case 4: callsub L_Quest,5055,"ฉันรู้ว่ามีสัตว์ประหลาดมากมายที่น่ากลัวนอกเมือง แต่สิ่งที่ทำให้ฉันกลัวคือ Headless Mules เหล่านี้ซุ่มซ่อนอยู่รอบๆ ฉันหวังว่าพวกเขาจะไม่กล้าเข้าไปในเมืองตามล่า 15 Headless Mules!","- Mariana จาก Brasilis -";
+			case 5: callsub L_Quest,5056,"Tamruans ทำเสียงดังมากฉันไม่รังเกียจในตอนเช้า แต่พวกเขาทำให้ฉันหลับไปในเวลากลางคืนฉันอยากนอนหลับล่า 15 Tamruans!","- Shaman Pumo จาก Ayothaya -";
+			case 6: callsub L_Quest,5057,"The Dumpling Childs ขโมยมาสก์ทั้งหมดที่ฉันได้เตรียมไว้สำหรับเทศกาลลองจับมาสก์ 30 ตัว! ฉันจะเป็นหนี้คุณ ~","- SaYumMoon Chief of Kunlun -";
+		}
+	}
+	end;
+
+//callsub L_Quest,<quest ID>{,"<description1>","<description2>"};
+L_Quest:
+	set .@quest, getarg(0);
+	switch(.@quest) {
+		case 10107: set .@name$,"ตามล่า Requiem"; set .@exp,15000; break;
+		case 10108: set .@name$,"ตามล่า Marduk"; set .@exp,15000; break;
+		case 10109: set .@name$,"ตามล่า Pasana"; set .@exp,15000; break;
+		case 10110: set .@name$,"ตามล่า Dark Frame"; set .@exp,20000; break;
+		case 10111: set .@name$,"ตามล่า Evil Druid"; set .@exp,20000; break;
+		case 10112: set .@name$,"ตามล่า Wraith"; set .@exp,20000; break;
+		case 10113: set .@name$,"ตามล่า Raydric Archer"; set .@exp,20000; break;
+		case 10114: set .@name$,"ตามล่า Grand Peco"; set .@exp,30000; break;
+		case 10115: set .@name$,"ตามล่า Sleeper"; set .@exp,30000; break;
+		case 10116: set .@name$,"ตามล่า Goat"; set .@exp,30000; break;
+		case 10117: set .@name$,"ตามล่า Harpy"; set .@exp,30000; break;
+		case 10118: set .@name$,"ตามล่า Clock"; set .@exp,25000; break;
+		case 10119: set .@name$,"ตามล่า Punk"; set .@exp,25000; break;
+		case 10120: set .@name$,"ตามล่า Rideword"; set .@exp,25000; break;
+		case 10121: set .@name$,"ตามล่า Kikimora"; set .@exp,30000; break;
+		case 10122: set .@name$,"ตามล่า Miyabi Doll"; set .@exp,30000; break;
+		case 10123: set .@name$,"ตามล่า Mi Gao"; set .@exp,30000; break;
+		case 5055: set .@name$,"ตามล่า Headless Mule"; set .@exp,30000; break;
+		case 5056: set .@name$,"ตามล่า Tamruan"; set .@exp,30000; break;
+		case 5057: set .@name$,"รวบรวม Festival Masks for the Festival"; set .@exp,30000; break;
+	}
+	if (getargcount() == 1) {
+		mes "'"+.@name$+"' เสร็จสิ้น. คุณต้องการที่จะเปิดและรับรางวัลของคุณ?";
+		next;
+		if(select("Turn in quest.:Cancel.") == 1) {
+			if (.@quest == 5057) delitem 7187,30; //Festival_Mask
+			erasequest .@quest;
+			getexp .@exp,0;
+			mes "คุณได้รับ EXP สำหรับการทำภารกิจให้สำเร็จ";
+			next;
+			return;
+		}
+		close;
+	} else {
+		if (.@quest == 5057) {
+			// Quest 5057 is the only collection quest, so separate conditions are unnecessary.
+			if (checkquest(5057) == -1)
+				set .@hunting,-1;
+			else if (countitem(7187) >= 30)
+				set .@hunting,2;
+		} else
+			set .@hunting, checkquest(.@quest,HUNTING);
+		if (.@hunting == 0 || .@hunting == 1) {
+			mes getarg(1);
+			mes getarg(2);
+			next;
+			mes "กลับมาที่นี่เมื่อทำเควสสำเร็จ";
+		} else if (.@hunting == 2) {
+			mes "เจ้าทำภารกิจสำเร็จแล้ว";
+			next;
+			if(select("หันไปหาเควส: ยกเลิก") == 1) {
+				if (.@quest == 5057) delitem 7187,30; //Festival_Mask
+				erasequest .@quest;
+				getexp .@exp,0;
+				mes "คุณได้รับ EXP สำหรับการทำภารกิจให้สำเร็จ";
+			}
+		}/* else if (.@hunting == 3) {
+//			recall_completequest .@quest
+			erasequest .@quest;
+			mes "คุณได้ยอมรับภารกิจใหม่อีกครั้ง '"+.@name$+"'.";
+		}*/ else {
+			mes getarg(1);
+			mes getarg(2);
+			next;
+			mes "คุณต้องการที่จะยอมรับภารกิจหรือไม่";
+			next;
+			if(select("ใช่:ไม่") == 1) {
+				mes "คุณได้รับเควส '" + .@name$ + "'. ดูรายละเอียดเพิ่มเติมจากเควสของคุณ";
+				setquest .@quest;
+			}
+		}
+		close;
+	}
+}

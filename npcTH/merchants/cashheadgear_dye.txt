@@ -1,0 +1,120 @@
+//===== rAthena Script ======================================= 
+//= Headgear Dyer (Cash)
+//===== By: ==================================================
+//= Xantara
+//= Maud_Dib
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Change headgear's color. Cost is a Mysterious Dyestuff
+//===== Additional Comments: =================================
+//= 1.0 First / Optimized Version
+//============================================================
+
+prt_in,253,168,4	script	Alora	862,{
+
+// Mysterious Dyestuff
+	set .@dyeID, 6220;
+// Headgear Choices
+	setarray .@hgn$[1], "Mage Hat","Beanie","Drooping Cat","Deviruchi Hat","Wig","Ribbon","Magestic Goat";
+// Mage Hats - Normal, Yellow, Blue, Brown, Gray, Red
+	setarray .@hg_1[1], 5027, 5242, 5241, 5240, 5239, 5238;
+// Beanies - Normal, Pink, Blue, Brown
+	setarray .@hg_2[1], 5076, 5237, 5236, 5235;
+// Drooping Cats - Normal, Blue, Brown, Gray, Pink, Yellow
+	setarray .@hg_3[1], 5058, 5233, 5231, 5230, 5232, 5234;
+// Deviruchi Hats - Normal, Red, Gray, Brown
+	setarray .@hg_4[1], 5038, 5227, 5228, 5229;
+// Wigs - Happy, Shiny, Marvelous, Fantastic
+	setarray .@hg_5[1], 5273, 5274, 5275, 5276;
+// Ribbons - Normal, Black, Yellow, Green, Pink, Red, Orange, White
+	setarray .@hg_6[1], 2208, 5191, 5192, 5193, 5194, 5195, 5196, 5197;
+// Magestic Goats - Normal, Evolved
+	setarray .@hg_7[1], 2256, 5217;
+
+	mes "[Alora]";
+	mes "สวัสดีฉันสามารถเปลี่ยนสีหมวกของคุณได้ถ้าคุณเอาสีย้อมลึกลับ(Mysterious Dyestuff) มาให้ฉัน";
+	next;
+	mes "[Alora]";
+	mes "คุณมีหมวกที่คุณต้องการจะย้อมไหม";
+	next;
+	for(set .@i,1; .@i < getarraysize(.@hgn$); set .@i,.@i+1) {
+		if(.@i == 1)    set .@menu$, .@hgn$[.@i];
+		else            set .@menu$, .@menu$ +":"+ .@hgn$[.@i];
+	}
+	set .@menu$, .@menu$ +":ยกเลิก";
+	set .@t, select(.@menu$);
+	if(.@t == getarraysize(.@hgn$)) {
+		mes "[Alora]";
+		mes "มีนักผจญภัยการเดินทางที่ดี!";
+		mes "ถ้าคุณอยากรู้อยากเห็นลองสีใหม่บนหมวก Kafra ของคุณหรือสิ่งที่คุณพบในการผจญภัยของคุณโปรดมาหาฉัน!";
+		close;
+	}
+	mes "[Alora]";
+	mes "โอเคคุณต้องการเปลี่ยนเป็นสีอะไร?";
+	next;
+	for(set .@i,1; .@i < getarraysize(getd(".@hg_"+.@t+"")); set .@i,.@i+1) {
+		if(.@i == 1 && .@t != 5)
+			set .@menu$, "ปกติ";
+		else if(.@i == 1 && .@t == 5)
+			set .@menu$, getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
+		else {
+			sscanf(getitemname(getd(".@hg_"+.@t+"["+.@i+"]")),"%s "+ .@hgn$[.@t],.@colour$);
+			set .@menu$, .@menu$ +":"+ .@colour$;
+		}
+	}
+	set .@menu$, .@menu$ +":ยกเลิก";
+	set .@c, select(.@menu$);
+	if(.@c == getarraysize(getd(".@hg_"+.@t+""))) {
+		mes "[Alora]";
+		mes "โอ้โอเคไม่มีปัญหา!";
+		close;
+	}
+	set .@dyHG, getd(".@hg_"+.@t+"["+.@c+"]");
+	mes "[Alora]";
+	mes "โอ้ฉันตื่นเต้นมากใช่มั้ย";
+	mes "และเพื่อให้แน่ใจว่าสีอะไรคือ " + .@hgn$[.@t] + " คุณต้องการให้ฉันใช้?";
+	next;
+	mes "[Alora]";
+	//mes "Please understand that I'm going to use the ^FF00001st "+ .@hgn$[.@t] +" of that color in your inventory!^000000";
+	mes "โปรดเข้าใจว่าฉันจะใช้ ^FF00001" + .@hgn$[.@t] + " ของสีนั้นในกระเป๋าของคุณ!^000000";
+	next;
+	mes "[Alora]";
+	mes "การอัพเกรดและการ์ดใดๆ จะถูกละลายโดยสีย้อมลึกลับดังนั้นโปรดแน่ใจว่าคุณมี ^0000FF+0 " + getitemname(.@dyHG) + " โดยไม่ต้องใช้การ์ดใดๆ^000000";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "โอเคขอบคุณสำหรับคำเตือนฉันคิดว่าฉันจะให้คุณ";
+	next;
+	set .@menu$, "ไม่เป็นไร";
+	for(set .@i,1; .@i < getarraysize(getd(".@hg_"+.@t+"")); set .@i,.@i+1) {
+		if(.@i == 1)    set .@menu$, .@menu$ +":ปกติ "+ getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
+		else            set .@menu$, .@menu$ +":"+ getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
+	}
+	set .@mine, select(.@menu$) - 1;
+	if(!.@mine) {
+		mes "[Alora]";
+		mes "เป็นการดีที่สุดที่จะมั่นใจมากๆ ขอให้มีการเดินทางที่ปลอดภัย";
+		close;
+	}
+	set .@myHG, getd(".@hg_"+.@t+"["+.@mine+"]");
+	if(.@dyHG == .@myHG) {
+		mes "[Alora]";
+		mes "ว้าวเกิดอะไรขึ้น?";
+		close;
+	}
+	if(!countitem(.@dyeID) || !countitem(.@myHG)) {
+		mes "[Alora]";
+		mes "โอ้ฉันดูเหมือนว่าคุณจะหายไปบางสิ่งบางอย่าง";
+		close;
+	}
+	mes "[Alora]";
+	mes "ดูดีไม่ได้เหรอ?!";
+	mes "ฉันหวังว่าคุณจะกลับมาย้อมหมวกสวยๆ !";
+	delitem .@dyeID,1; // Dyestuff
+	delitem .@myHG,1;  // Your headgear
+	getitem .@dyHG,1;  // Dyed headgear
+	close;
+}

@@ -8414,6 +8414,14 @@ error message instead.
 This command requires packet version 2021-11-03 or newer.
 
 ---------------------------------------
+
+*opentips({<Tip ID>,{<char ID>}});
+
+Opens the tip box UI for the attached player or the given character ID.
+
+This command requires packet version 2017-11-22 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
@@ -10013,7 +10021,7 @@ Remove the quest of the given <ID> from the user's quest log.
 *changequest <ID>,<ID2>{,<char_id>};
 
 Remove quest of the given <ID> from the user's quest log.
-Add quest of the <ID2> to the the quest log, and the state is "active".
+Add quest <ID2> to the quest log, and the state is "active".
 
 ---------------------------------------
 
@@ -11117,7 +11125,7 @@ Use <color> hex code to set the color for this channel, if not defined, default
 channel color will be used.
 
 If <char_id> is defined, the channel will be a private channel and the player
-will be the the channel owner.
+will be the channel owner.
 
 Returns 1 on success.
 

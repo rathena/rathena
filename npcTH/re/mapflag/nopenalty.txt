@@ -1,0 +1,114 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable death penalty.
+//===== Description: ========================================= 
+//= Same as 'noexppenalty' and 'nozenypenalty' combined.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Para Market maps [mazvi]
+//============================================================
+
+//============================================================
+// Paradise Market
+//============================================================
+paramk	mapflag	nopenalty
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
+brasilis	mapflag	nopenalty
+bra_in01	mapflag	nopenalty
+dicastes01	mapflag	nopenalty
+dicastes02	mapflag	nopenalty
+dic_in01	mapflag	nopenalty
+s_atelier	mapflag	nopenalty
+mora	mapflag	nopenalty
+dewata	mapflag	nopenalty
+dew_in01	mapflag	nopenalty
+izlude_a	mapflag	nopenalty
+izlude_b	mapflag	nopenalty
+izlude_c	mapflag	nopenalty
+izlude_d	mapflag	nopenalty
+malangdo	mapflag	nopenalty
+mal_in01	mapflag	nopenalty
+mal_in02	mapflag	nopenalty
+malaya	mapflag	nopenalty
+ma_scene01	mapflag	nopenalty
+ma_in01	mapflag	nopenalty
+ma_zif01	mapflag	nopenalty
+ma_zif02	mapflag	nopenalty
+ma_zif03	mapflag	nopenalty
+ma_zif04	mapflag	nopenalty
+ma_zif05	mapflag	nopenalty
+ma_zif06	mapflag	nopenalty
+ma_zif07	mapflag	nopenalty
+ma_zif08	mapflag	nopenalty
+ma_zif09	mapflag	nopenalty
+eclage	mapflag	nopenalty
+ecl_in01	mapflag	nopenalty
+ecl_in02	mapflag	nopenalty
+ecl_in03	mapflag	nopenalty
+ecl_in04	mapflag	nopenalty
+ecl_hub01	mapflag	nopenalty
+que_avan01	mapflag	nopenalty
+
+//============================================================
+// Job Quests
+//============================================================
+// 3-1 Classes
+job3_arch01	mapflag	nopenalty
+job3_arch02	mapflag	nopenalty
+job3_arch03	mapflag	nopenalty
+job3_guil01	mapflag	nopenalty
+job3_guil02	mapflag	nopenalty
+job3_guil03	mapflag	nopenalty
+job3_rang01	mapflag	nopenalty
+job3_rang02	mapflag	nopenalty
+job3_rune01	mapflag	nopenalty
+job3_rune02	mapflag	nopenalty
+job3_rune03	mapflag	nopenalty
+job3_war01	mapflag	nopenalty
+job3_war02	mapflag	nopenalty
+// 3-2 Classes
+job3_gen01	mapflag	nopenalty
+// Expanded Classes
+job3_sha01	mapflag	nopenalty
+job_ko	mapflag	nopenalty
+job_gun	mapflag	nopenalty
+
+//============================================================
+// Nightmare Biolab
+//============================================================
+lhz_dun_n	mapflag	nopenalty
+lhz_d_n2	mapflag	nopenalty
+
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
+prt_cas	mapflag	nopenalty
+prt_cas_q	mapflag	nopenalty
+prt_pri00	mapflag	nopenalty
+prt_lib	mapflag	nopenalty
+prt_lib_q	mapflag	nopenalty
+que_swat	mapflag	nopenalty
+
+//============================================================
+// Rockridge
+//============================================================
+har_in01	mapflag	nopenalty
+rebel_in	mapflag	nopenalty
+rockmi2	mapflag	nopenalty
+
+//============================================================
+// Lasagna
+//============================================================
+lasagna	mapflag	nopenalty
+lasa_in01	mapflag	nopenalty
+conch_in	mapflag	nopenalty
+
+wolfvill	mapflag	nopenalty
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	nopenalty

@@ -1,0 +1,20 @@
+//===== rAthena Script =======================================
+//= Moscovia Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Added spawns [Playtester]
+
+//==================================================
+// mosk_fild02 - Moscovia Field
+//==================================================
+mosk_fild02,0,0	monster	Bigfoot	1060,40
+mosk_fild02,0,0	monster	Caramel	1103,20
+mosk_fild02,0,0	monster	Mantis	1139,30
+mosk_fild02,0,0	monster	Poring	1002,10
+mosk_fild02,0,0	monster	Yellow Plant	1081,5
+mosk_fild02,0,0	monster	White Plant	1082,5,10000

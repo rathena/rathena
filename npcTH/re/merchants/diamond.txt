@@ -1,0 +1,246 @@
+//===== rAthena Script =======================================
+//= Rare Diamond Merchant
+//===== By: ==================================================
+//= Z3R0
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Exchanges 17 Carat Diamond
+//===== Additional Comments: =================================
+//= 1.0 First / Optimized Version
+//= 1.1 Adjusted for Missing ; on Line #271 (#15425)
+//= 1.2 Removed Comments per Request (#15426)
+//= 1.3 Changed Emotion # to Const Definition (#15427)
+//= 1.4 Removed Double Space on Line #148 (#15428)
+//= 1.5 Added This Version History (#15429)
+//============================================================
+
+// Main NPC :: diamond
+//============================================================
+-	script	RareDiamondMerchant	58,{
+
+	set .@npc$, "[Rare Diamond Merchant]";
+
+	mes .@npc$;
+	mes "ท่านสุภาพบุรุษและสุภาพสตรี !!!";
+	mes "เจ้าเคยได้ยินข่าวลือ แต่เจ้าไม่เคยเห็นด้วยตาของเจ้าครั้งเดียว";
+	mes "เพชรหายากที่สุดในโลก!";
+	mes "^FF82FF'17 Carat Diamond'^000000 กำลังเปิดขายในราคาถูก !!";
+	mes "ถ้าเพชรมีค่าสนใจเจ้าจงฟัง!";
+	next;
+	
+	mes .@npc$;
+	mes "คุณสามารถมอบเพชรเป็นของขวัญให้คนรักของคุณได้";
+	mes "ผู้รับของ ^FF82FF'17 Carat Diamond'^000000 จะถนอมมัน";
+	mes "และสะสมคุณไว้ในหัวใจของพวกเขา";
+	emotion ET_BLABLA;
+	next;
+	
+	mes .@npc$;
+	mes "อะไรนะเจ้าไม่มีคนรัก";
+	mes "คุณยังคงสามารถทำได้ด้วยตัวเอง";
+	mes "ออร่าที่มีเสน่ห์ของ ^FF82FF'17 Carat Diamond'^000000 น่าจะเป็น";
+	mes "เพื่อนำความรักเข้ามาในชีวิตของคุณ";
+	next;
+	
+	mes .@npc$;
+	mes "รู้จักกันในนามเพชรที่มีเสน่ห์ของเพชร ... ";
+	mes "มันคือ^FF82FF'17 Carat Diamond'^000000!";
+	next;
+
+	set .@menu$, "^FF82FF'17 Carat Diamond'^000000?";
+	if (countitem(6024))
+		set .@menu$, .@menu$ + ":แลก 17 Carat Diamond เพื่อรับ zeny...";
+
+	switch(select(.@menu$)) {
+	case 1:
+		mes .@npc$;
+		mes "ใช่!";
+		mes "ฮิฮิ,^FF82FF'17 Carat Diamond'^000000 ที่คุณเห็นตอนนี้";
+		mes "เป็นหนึ่งในเพชรที่มีคุณภาพสูงสุด 17 กะรัต";
+		mes "เทียบกับก้อนหินที่ไม่มีสีใด ๆ ที่คุณอาจมี";
+		mes "ขุดขึ้นมาจาก Morocc ไม่สามารถพูดได้!";
+		emotion ET_HUK;
+		next;
+		
+		mes .@npc$;
+		mes "บางคนอ้างว่านี่เป็นเพชรเดียวกัน";
+		mes "ที่ Kachua เห็นใน Comodo!";
+		next;
+		
+		if (select("สิ้นสุดการสนทนา: มันราคาเท่าไหร่?") == 1) {
+			mes .@npc$;
+			mes "มันค่อนข้างไม่แพงเลย!";
+			mes "ถ้าเจ้าสนใจจงพูดกับข้าได้ตลอดเวลา!";
+			close;
+		}
+		
+		mes .@npc$;
+		mes "แน่นอน! สิ่งที่สำคัญที่สุดคือราคา!";
+		mes "อย่างที่ข้าได้พูดไปก่อนหน้านี้ ^FF82FF'17 Carat Diamond'^000000 ได้รับ";
+		mes "ประเมินว่าเป็นเพชร 17 กะรัต";
+		mes "มีอยู่ไม่มากในโลกนี้";
+		next;
+		
+		mes .@npc$;
+		mes "ราคานี้มันแค่ 500 ล้านเซนี!";
+		mes "นอกจากนี้ยังมีค่าบริการ 1,000,000z";
+		mes "เทียบกับคุณภาพของเพชร";
+		mes "นี่เป็นราคาเล็ก ๆ ที่ต้องจ่าย";
+		next;
+		
+		if (select("^828282มันแพงเกินไป^000000:ฉันจะซื้อ") == 1) {
+			mes .@npc$;
+			mes "จะบอกว่าเป็นเพชรเช่น";
+			mes "^FF82FF'17 Carat Diamond'^000000 นั้นแพงเกินไป";
+			mes "คุณทิ้งฉันไว้ไม่พูด";
+			close;
+		}
+		
+		mes .@npc$;
+		mes "โฮ้! ฉันรู้ตั้งแต่เวลาที่ฉันเห็นคุณว่าคุณเป็นคนชอบธรรม";
+		mes "เจ้าของเพชรวิเศษนี้";
+		mes "ฉันดีใจที่ฉันไม่ผิด!";
+		mes "ฉันเชื่อว่าเพชรนี้เหมาะกับคุณค่อนข้างดี";
+		mes "สิ่งที่ฉันต้องการจากคุณคือทำสัญญานี้ให้เสร็จ";
+		next;
+		
+		while(1) {
+			if (select("^B9062FIจะเซ็นสัญญา^000000:^828282ไม่เป็นไรฉันเปลี่ยนใจแล้ว^000000") == 2) {
+				mes .@npc$;
+				mes "ฉันเห็นแล้วมันแย่มาก .. ";
+				close;
+			}
+			
+			mes .@npc$;
+			mes "คุณชื่ออะไร";
+			next;
+			
+			mes "[" + strcharinfo(0) + "]";
+			mes "ฉันชื่อ" + strcharinfo(0) + ".";
+			next;
+
+			mes .@npc$;
+			mes "เอาล่ะได้โปรดลงชื่อที่นี่";
+			next;
+			
+			input .@charname$;
+			if (.@charname$ == strcharinfo(0)) {
+				mes .@npc$;
+				mes "โอเคดี";
+				mes "ที่เหลือคือการชำระ";
+				next;
+				
+				if (Zeny >= 501000000) {
+					mes .@npc$;
+					mes ". . . . . .";
+					next;
+					
+					mes .@npc$;
+					mes "การคำนวณราคาและค่าบริการ .. ";
+					mes "501,000,000 zeny.";
+					mes "จำนวนเงินได้รับการยืนยันแล้ว";
+					emotion ET_BLABLA;
+					set Zeny, Zeny - 501000000;
+					getitem 6024, 1;
+					next;
+
+					mes .@npc$;
+					mes "คุณสามารถแลกเปลี่ยนเพชรกลับไปหาเซนีได้ตลอดเวลา";
+					mes "อย่างไรก็ตามจะมีค่าบริการ 1,000,000z";
+					mes "ขอบคุณสำหรับธุรกิจของคุณ";
+					emotion ET_THANKS;
+					close;
+				}
+				else {
+					mes .@npc$;
+					mes "หืมม?";
+					mes "ฉันขอโทษ แต่คุณไม่มีเงินเพียงพอ";
+					mes "รวมค่าบริการแล้ว, ต้องมีทั้งหมด 501,000,000z";
+					mes "โปรดตรวจสอบยอดเงินเซนีของคุณแล้วลองอีกครั้ง";
+					emotion ET_SCRATCH;
+					close;
+				}
+			}
+			else {
+				mes .@npc$;
+				mes "นี่เป็นลายเซ็นของคุณจริงหรือ";
+				mes "จะลงชื่ออีกครั้งเพื่อยืนยัน";
+				next;
+			}
+		}
+	case 2:
+		mes .@npc$;
+		mes "อ่า.. คุณต้องการแลกเปลี่ยน ^FF82FF'17 Carat Diamond'^000000 สำหรับ zeny ของคุณหรือไม่";
+		emotion ET_SURPRISE;
+		next;
+		if (select("ใช่:ไม่") == 2) {
+			mes .@npc$;
+			mes "ถ้างั้นเจ้าต้องการอะไร? .. ";
+			mes ". . . . . ....";
+			emotion ET_THINK;
+			close;
+		}
+
+		mes .@npc$;
+		mes "ฉันเห็นแล้วหลังจากฉันได้รับลายเซ็นของคุณ";
+		mes "คุณต้องเสนอ ^FF82FF'17 Carat Diamond'^000000 ของคุณ";
+		mes "อย่าลืมว่ามีค่าบริการ 1,000,000z!";
+		next;
+		
+		mes .@npc$;
+		mes "คุณชื่ออะไร";
+		next;
+		
+		mes "[" + strcharinfo(0) + "]";
+		mes "ฉันชื่อ" + strcharinfo(0) + ".";
+		next;
+		
+		mes .@npc$;
+		mes "เอาล่ะได้โปรดลงชื่อที่นี่";
+		next;
+		
+		while (1) {
+			if (select("ลงชื่อ:อย่าลงชื่อ") == 2) {
+				mes .@npc$;
+				mes "การค้าไม่สามารถเสร็จสิ้นได้หากไม่มีลายเซ็นของคุณ";
+				close;
+			}
+			
+			input .@charname$;
+			if (.@charname$ == strcharinfo(0)) {
+				mes .@npc$;
+				mes "ได้รับลายเซ็นของคุณแล้ว";
+				mes "ตอนนี้ฉันจะใช้ ^FF82FF'17 Carat Diamond'^000000.. ของคุณแล้ว";
+				mes "คุณจะได้รับ ^0000FF499,000,000z ^000000 หลังจากนั้น";
+				next;
+				
+				mes .@npc$;
+				mes "ขอบคุณสำหรับธุรกิจของคุณ";
+				mes "เมื่อใดก็ตามที่คุณต้องการ ^FF82FF'17 Carat Diamond'^000000,";
+				mes "กลับมาได้ทุกเมื่อด้วย 500 ล้านเซนี";
+				emotion ET_THANKS;
+				delitem 6024, 1;
+				set Zeny, Zeny + 499000000;
+				close;
+			}
+			else {
+				mes .@npc$;
+				mes "นี่เป็นลายเซ็นของคุณจริงหรือ";
+				mes "จะลงชื่ออีกครั้งเพื่อยืนยัน";
+				next;
+			}
+		}
+	}
+}
+
+prontera,165,89,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#1	58
+geffen,106,63,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#2	58
+morocc,146,100,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#3	58
+alberta,129,60,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#4	58
+lighthalzen,163,65,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#5	58
+rachel,106,142,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#6	58
+payon,180,130,6	duplicate(RareDiamondMerchant)	Rare Diamond Merchant#7	58

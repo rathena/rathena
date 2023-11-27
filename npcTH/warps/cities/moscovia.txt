@@ -1,0 +1,45 @@
+//===== rAthena Script =======================================
+//= Moscovia City Warp Script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Moscovia City
+//===== Additional Comments: =================================
+//= 1.0 Initial version [$ephiroth]
+//= 1.1 Fixed "Private House" Warps. [Samuray22]
+//	-Thanks to $ephiroth
+//= 1.2 Updated from jA
+//============================================================
+
+// ---[ Mansion ]--- 
+moscovia,256,138,0	warp	moskwarp1001	1,1,mosk_in,96,61
+mosk_in,93,61,0	warp	moskwarp1002	1,1,moscovia,255,140
+mosk_in,99,126,0	warp	moskwarp1003	1,1,mosk_in,21,116
+mosk_in,21,113,0	warp	moskwarp1004	1,1,mosk_in,99,123
+// ---[ Weapon House ]--- 
+moscovia,185,188,0	warp	moskwarp1005	1,1,mosk_in,15,179
+mosk_in,12,179,0	warp	moskwarp1006	1,1,moscovia,186,191
+moscovia,203,171,0	warp	moskwarp1007	1,1,mosk_in,86,180
+mosk_in,89,180,0	warp	moskwarp1008	1,1,moscovia,204,169
+// ---[ Instrument House / Tool Dealer ]--- 
+moscovia,223,174,0	warp	moskwarp1009	1,1,mosk_in,14,246
+mosk_in,11,246,0	warp	moskwarp1010	1,1,moscovia,222,176
+// ---[ Inn ]--- 
+moscovia,229,208,0	warp	moskwarp1011	1,1,mosk_in,142,178
+mosk_in,142,175,0	warp	moskwarp1012	1,1,moscovia,227,207
+mosk_in,150,192,0	warp	moskwarp1013	1,1,mosk_in,204,188
+mosk_in,202,188,0	warp	moskwarp1014	1,1,mosk_in,148,192
+// ---[ Mansion ]--- 
+moscovia,256,179,0	warp	moskwarp1015	1,1,mosk_in,211,114
+mosk_in,211,111,0	warp	moskwarp1016	1,1,moscovia,253,179
+mosk_in,222,128,0	warp	moskwarp1017	1,1,mosk_in,288,118
+mosk_in,288,116,0	warp	moskwarp1018	1,1,mosk_in,222,126
+// ---[ Private House ]--- 
+moscovia,205,98,0	warp	moskwarp1021	1,1,mosk_in,214,255
+mosk_in,214,252,0	warp	moskwarp1022	1,1,moscovia,203,96
+mosk_in,220,273,0	warp	moskwarp1023	1,1,mosk_in,152,275
+mosk_in,152,272,0	warp	moskwarp1024	1,1,mosk_in,220,270

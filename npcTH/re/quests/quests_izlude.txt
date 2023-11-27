@@ -1,0 +1,21 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Izlude
+//===== By: ================================================== 
+//= Daegaladh, Masao
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Contains:
+//= - Edgar's Offer
+//===== Additional Comments: ================================= 
+//= 1.0 Updated to match the new Izlude Map. [Masao]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//============================================================
+
+izlude,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude	49
+izlude_a,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_a	49
+izlude_b,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_b	49
+izlude_c,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_c	49
+izlude_d,179,219,2	duplicate(Edgar_izlude)	Edgar#izlude_d	49

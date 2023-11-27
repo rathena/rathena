@@ -1,0 +1,47 @@
+//===== rAthena Script =======================================
+//= Mapflag: Night mode.
+//===== Description: ========================================= 
+//= Enables night mode effects.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//============================================================
+
+//============================================================
+// Episode 13
+//============================================================
+brasilis	mapflag	nightenabled
+bra_fild01	mapflag	nightenabled
+dicastes01	mapflag	nightenabled
+dicastes02	mapflag	nightenabled
+dic_fild01	mapflag	nightenabled
+dic_fild02	mapflag	nightenabled
+
+//============================================================
+// Episode 14
+//============================================================
+bif_fild01	mapflag	nightenabled
+bif_fild02	mapflag	nightenabled
+dewata	mapflag	nightenabled
+dew_fild01	mapflag	nightenabled
+dew_dun02	mapflag	nightenabled
+malangdo	mapflag	nightenabled
+malaya	mapflag	nightenabled
+ma_fild01	mapflag	nightenabled
+ma_fild02	mapflag	nightenabled
+ma_scene01	mapflag	nightenabled
+eclage	mapflag	nightenabled
+ecl_fild01	mapflag	nightenabled
+ecl_hub01	mapflag	nightenabled
+
+//============================================================
+// Izlude Duplicates
+//============================================================
+izlude_a	mapflag	nightenabled
+izlude_b	mapflag	nightenabled
+izlude_c	mapflag	nightenabled
+izlude_d	mapflag	nightenabled
+prt_fild08a	mapflag	nightenabled
+prt_fild08b	mapflag	nightenabled
+prt_fild08c	mapflag	nightenabled
+prt_fild08d	mapflag	nightenabled

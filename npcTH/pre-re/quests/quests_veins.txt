@@ -1,0 +1,15 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs located in Veins
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Quests related to Lighthalzen City.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+ve_fild05,257,130,4	duplicate(WincingOldMan_veins)	Wincing Old Man#ve	945

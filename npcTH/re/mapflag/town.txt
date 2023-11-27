@@ -1,0 +1,22 @@
+//===== rAthena Script =======================================
+//= Mapflag: Town.
+//===== Description: ========================================= 
+//= Designates a map as a town, granting mailbox access.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Epoque]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//============================================================
+
+brasilis	mapflag	town
+dewata	mapflag	town
+dicastes01	mapflag	town
+eclage	mapflag	town
+izlude_a	mapflag	town
+izlude_b	mapflag	town
+izlude_c	mapflag	town
+izlude_d	mapflag	town
+malangdo	mapflag	town
+malaya	mapflag	town
+mora	mapflag	town
+lasagna	mapflag	town
+wolfvill	mapflag	town

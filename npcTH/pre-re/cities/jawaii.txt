@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Jawaii Town Pre-Renewal
+//===== By: ================================================== 
+//= Daegaladh
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Jawaii town NPCs.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================
+
+izlude,171,185,3	duplicate(Honeymoon_Helper_Izlude)	Honeymoon Helper#Izlude	71

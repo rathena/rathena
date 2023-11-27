@@ -1,0 +1,272 @@
+//===== rAthena Script ======================================= 
+//= Hair Dyer
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Hair Dyer with standard palletes
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 1.1 Bugfix: fixed missing menu label LEnd->M_End [Lupus]
+//= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.3 Fixed problem what "freezes" the NPC. (bugreport:509) [Samuray22]
+//= 1.4 Fixed getlook checking the wrong color. (bugreport:2392) [L0ne_W0lf]
+//= 1.5 Added Lighthalzen Hair Dying NPC. [L0ne_W0lf]
+//= 1.6 Moving NPC Jovovich to Pre-Renewal [JohnnyPlayy]
+//============================================================ 
+
+// Lighthalzen
+lhz_in02,100,134,3	script	Hair Dyer#lich	850,{
+	mes "[Rossa]";
+	if (Sex == SEX_MALE) {
+		mes "Welcome, come in~";
+		mes "Oh, I see that you take";
+		mes "much better care of your";
+		mes "hair than those other boys.";
+		mes "Now would you like to dye";
+		mes "your hair another color?";
+	}
+	else {
+		mes "Oh, wow~ Where did";
+		mes "you get your hair styled?";
+		mes "I love it! But... It would";
+		mes "be even more beautiful if";
+		mes "you dyed your hair. What";
+		mes "do you think about that?";
+	}
+	while (.@choose_success != 2) {
+		next;
+		switch(select("Dye Hair:Coloring Information:Cancel")) {
+		case 1:
+			mes "[Rossa]";
+			mes "Ho ho ho ho~";
+			mes "So which color would";
+			mes "you like to try? Something";
+			mes "vivid or dark? Sexy or cute?";
+			next;
+			while (.@choose_success != 2) {
+				if (.@choose_success == 1) {
+					mes "[Rossa]";
+					mes "Ooh, I like this color!";
+					mes "But would you like to";
+					mes "try a different one?";
+					next;
+					switch(select("Yes:No")) {
+					case 1:
+						mes "[Rossa]";
+						mes "Please select";
+						mes "another color~";
+						next;
+						break;
+					case 2:
+						mes "[Rossa]";
+						mes "An excellent choice~";
+						mes "Alright then, thank you";
+						mes "for using my service and";
+						mes "I hope you come by again!";
+						close2;
+						set .@choose_success,2;
+						break;
+					}
+				}
+				while (.@choose_success != 2) {
+					switch(select("Red, please.:Yellow, please.:Purple, please.:Orange, please.:Green, please.:Blue, please.:White, please.:Dark Brown, please.:I like my hair color.")) {
+					case 1:
+						set .@headpalette,8;
+						break;
+					case 2:
+						set .@headpalette,1;
+						break;
+					case 3:
+						set .@headpalette,2;
+						break;
+					case 4:
+						set .@headpalette,3;
+						break;
+					case 5:
+						set .@headpalette,4;
+						break;
+					case 6:
+						set .@headpalette,5;
+						break;
+					case 7:
+						set .@headpalette,6;
+						break;
+					case 8:
+						set .@headpalette,7;
+						break;
+					case 9:
+						if (.@choose_success != 0) {
+							mes "[Rossa]";
+							mes "Are you sure?";
+							mes "Alright then, you";
+							mes "know what's best for";
+							mes "your beauty and to tell";
+							mes "the truth, I agree with you~";
+							close2;
+							set .@choose_success,2;
+						}
+						else {
+							mes "[Rossa]";
+							mes "Oh, I see. Still, I can't";
+							mes "help but feel so disappointed.";
+							mes "You'd look so good if you dyed";
+							mes "your hair a different color~";
+							close2;
+							set .@choose_success,2;
+						}
+						break;
+					}
+					if (getlook(VAR_HEADPALETTE) == .@headpalette) {
+						mes "[Rossa]";
+						mes "Hmm, your hair color";
+						mes "is still fine, so there's";
+						mes "no need to dye it the same";
+						mes "color again, if that's what";
+						mes "you're worried about.";
+						next;
+					}
+					else {
+						if ((.@headpalette == 8) && (countitem(975) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "Scarlet Dyestuffs with you...";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 1) && (countitem(976) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "Lemon Dyestuffs with you...";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 2) && (countitem(981) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "Violet Dyestuffs with you...";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 3) && (countitem(980) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "Orange Dyestuffs with you...";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 4) && (countitem(979) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "Darkgreen Dyestuffs";
+							mes "with you. Would you come";
+							mes "back after you get some?";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 5) && (countitem(978) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "Cobaltblue Dyestuffs";
+							mes "with you. Would you come";
+							mes "back after you get some?";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 6) && (countitem(982) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "White Dyestuffs with you...";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 7) && (countitem(983) == 0)) {
+							mes "[Rossa]";
+							mes "Oh, I'm sorry dear,";
+							mes "but I can't dye your";
+							mes "hair if you didn't bring";
+							mes "Black Dyestuffs with you...";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						if (Zeny < 1000) {
+							mes "[Rossa]";
+							mes "Oh, I'm so sorry dear,";
+							mes "but my service fee is";
+							mes "1,000 zeny. Did you forget";
+							mes "to bring your money with you?";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						if (.@headpalette == 8) delitem 975,1; //Scarlet_Dyestuffs
+						else if (.@headpalette == 1) delitem 976,1; //Lemon_Dyestuffs
+						else if (.@headpalette == 2) delitem 981,1; //Violet_Dyestuffs
+						else if (.@headpalette == 3) delitem 980,1; //Orange_Dyestuffs
+						else if (.@headpalette == 4) delitem 979,1; //Darkgreen_Dyestuffs
+						else if (.@headpalette == 5) delitem 978,1; //Cobaltblue_Dyestuffs
+						else if (.@headpalette == 6) delitem 982,1; //White_Dyestuffs
+						else if (.@headpalette == 7) delitem 983,1; //Black_Dyestuffs
+						set Zeny, Zeny-1000;
+						setlook VAR_HEADPALETTE,.@headpalette;
+						set .@choose_success,1;
+						break;
+					}
+				}
+			}
+			break;
+		case 2:
+			mes "[Rossa]";
+			mes "When you're feeling";
+			mes "down, when you just want";
+			mes "to look nice for the one you";
+			mes "love, or when you just want";
+			mes "a different look, why don't";
+			mes "you dye your hair?";
+			next;
+			mes "[Rossa]";
+			mes "All you need is one";
+			mes "Dyestuffs item of the";
+			mes "color that you want to";
+			mes "dye your hair, as well as";
+			mes "a 1,000 zeny service fee.";
+			mes "I'm here for your beauty needs~";
+			break;
+		case 3:
+			mes "[Rossa]";
+			mes "You know, when you";
+			mes "put some effort into";
+			mes "your appearance, you'll";
+			mes "not only look better, but";
+			mes "you'll feel better about";
+			mes "yourself. Makes sense, right?";
+			close;
+		}
+	}
+	close;
+}

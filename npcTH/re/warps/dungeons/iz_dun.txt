@@ -1,0 +1,63 @@
+//===== rAthena Script =======================================
+//= Izlude Dungeon Renewal Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//= Nana (1.1)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Bibilyn Island & Undersea Cave
+//===== Additional Comments: =================================
+//= 1.2 Moved common warps to base path. [Euphy]
+//= 1.3 Added Undersea Tunnel 6th floor warper.
+//============================================================
+
+// Undersea Tunnel Warper :: iz_dun05
+//============================================================
+iz_dun04,130,234,5	script	Gatekeeper#iz_dun	413,{
+	mes "[Gatekeeper]";
+	mes "หยุด!";
+	mes "อะไรทำให้คุณมาที่นี่นักผจญภัย?";
+	mes "เราค้นพบชั้นใหม่ของเมืองใต้น้ำนี้";
+	next;
+	mes "[Gatekeeper]";
+	mes "คุณคิดว่าคุณจะท้าทายหรือไม่";
+	mes "สัตว์ประหลาดที่นี่อยู่ระหว่างเลเวล 110 และ 124";
+	mes "และเจ้าต้องระวัง Kraken!";
+	next;
+	switch(select("ปล่อย Kraken!: ฉันจะอยู่ที่นี่")) {
+	case 1:
+		mes "[Gatekeeper]";
+		mes "จงระวังและโชคดี";
+		mes "ถ้าคุณเห็น Kraken ต้องแน่ใจว่าคุณมีเพื่อนช่วยหรือทำในสิ่งที่เราทำและวิ่ง";
+		close2;
+		warp "iz_dun05",141,187;
+		end;
+	case 2:
+		mes "[Gatekeeper]";
+		mes "เป็นการเตรียมพร้อมที่ดีที่สุดก่อนที่จะสำรวจพื้นที่ใหม่";
+		mes "กลับมาเมื่อเจ้าพร้อมที่จะไป";
+		close;
+	}
+}
+
+iz_dun05,142,190,5	script	Guard#iz_dun	413,{
+	mes "[Gatekeeper]";
+	mes "ข้าคิดว่าเจ้าต้องการกลับไปที่ชั้นห้าเหรอ?";
+	next;
+	switch(select("ใช่!: ไม่ฉันจะอยู่ต่อ")) {
+	case 1:
+		mes "[Gatekeeper]";
+		mes "จงปลอดภัยนักผจญภัย";
+		close2;
+		warp "iz_dun04",129,232;
+		end;
+	case 2:
+		mes "[Gatekeeper]";
+		mes "คุณจะไม่ไปไหน";
+		mes "เจ้าเก่งกว่าที่ข้าคิด";
+		close;
+	}
+}

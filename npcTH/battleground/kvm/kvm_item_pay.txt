@@ -1,0 +1,311 @@
+//===== rAthena Script =======================================
+//= BattleGround System - KvM Item Dealer
+//===== Description: =========================================
+//= [Official Conversion]
+//= Kreiger Von Midgard Battleground Point redemption NPC
+//= * NOTE * 
+//= KvM Does NOT use items, but a character variable to
+//= keep track of points. This NPC when talked to will
+//= convert already-given tokens and convert them to points.
+//= under the player variable kvm_point.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
+//============================================================
+
+bat_room,151,144,3	script	KVM Logistic Officer#a	734,{
+	if (countitem(6376)) {// KVM_Badge
+		set .@pointstoadd,countitem(6376);
+		delitem 6376,.@pointstoadd;
+		set kvm_point,kvm_point+.@pointstoadd;
+		mes "[Logistics]";
+		mes "ข้าเห็น "+getitemname(6376)+"s ?";
+		mes "เราไม่รับสกุลเงินนั้นอีกต่อไป";
+		mes "แต่ข้าสามารถแลกเปลี่ยนกับท่านได้";
+		mes "ท่านมี "+.@pointstoadd+" "+getitemname(6376)+"s?";
+		mes "เอาล่ะ, ท่านมีคะแนน ^580080"+ kvm_point +"^000000 KVM";
+		next;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "- เดี๋ยวก่อน !! -";
+		mes "- ขณะนี้ท่านกำลังพก -";
+		mes "- สิ่งของติดตัวมากเกินไป -";
+		mes "- โปรดลองอีกครั้ง -";
+		mes "- หลังจากลดน้ำหนัก -";
+		close;
+	}
+	mes "[Logistics]";
+	mes "สวัสดี?";
+	mes "ข้ารับผิดชอบในการแจกจ่าย";
+	mes "ของรางวัล สำหรับคะแนน KVM";
+	mes "การเลือกรายการผิดใด ๆ";
+	mes "จะไม่ถูกยกเลิก โปรดระวัง";
+	mes "กรุณาเลือกขั้นตอนต่อไป";
+	next;
+	set .@name$,strcharinfo(0);
+	switch(select("ดูรายการของรางวัล KVM:ซื้อไอเทม KVM:ยืนยันคะแนน KVM:คำอธิบายของรางวัล KVM:คำอธิบายคะแนน KVM")) {
+	case 1:
+		mes "[Logistics]";
+		mes "นี่คือ รายการของรางวัล KVM";
+		mes "Weapon แต่ละชิ้น จะต้องใช้";
+		mes "2,000 คะแนน และ Armor จะใช้";
+		mes "10 ถึง 1,200 คะแนน ดังนั้น";
+		mes "ควรระมัดระวังในการเลือกของรางวัล";
+		close2;
+		readbook 11017,1;
+		end;
+	case 2:
+		mes "[Logistics]";
+		mes "ท่านต้องการดูรายการใด";
+		mes "สำหรับรายละเอียดของ";
+		mes "รายการ โปรดดูที่";
+		mes "^3131FFรายการของรางวัล KVM^000000";
+		next;
+		switch(select("Weapon:Armor/Accessory:Mass-Production Armor/Accessory:Popularized Armor/Accessory")) {
+		case 1:
+			mes "[Logistics]";
+			mes "ท่านได้เลือกหมวดหมู่ Weapon";
+			mes "โปรดเลือกหมวดหมู่ย่อย";
+			next;
+			switch(select("Dagger/Sword/Spear:Staff/Mace/Axe/Shuriken:Bow/Katar/Instrument/Whip:Book/Knuckle:Revolver/Rifle/Gun/Grenade Launcher")) {
+			case 1:
+				mes "[Logistics]";
+				mes "ท่านได้เลือกหมวดหมู่ Dagger/Sword/Spear";
+				mes "โปรดเลือกหมวดหมู่ย่อย";
+				next;
+				switch(select("Dagger:One-handed Sword:Two-handed Sword:One-handed Spear:Two-handed Spear")) {
+				case 1: callsub PurchaseItem,13042,0,1; //Krieger_Dagger1 
+				case 2:
+					mes "[Logistics]";
+					mes "ท่านเลือกหมวดหมู่ 'One-handed Sword'";
+					mes "มี 3 รายการ สำหรับ One-handed Swords: Glorious Flamberge, Glorious Rapier และ Glorious Holy Avenger.";
+					mes "หากท่านต้องการรายละเอียดโปรดไปที่ ดูรายการของรางวัล KVM";
+					mes "โปรดเลือกหนึ่งรายการ";
+					next;
+					switch(select("Glorious Flamberge:Glorious Rapier:Glorious Holy Avenger")) {
+					case 1: callsub PurchaseItem,13416,0,0; //Krieger_Onehand_Sword1
+					case 2: callsub PurchaseItem,13417,0,0; //Krieger_Onehand_Sword2
+					case 3: callsub PurchaseItem,13418,0,0; //Krieger_Onehand_Sword3
+					}
+				case 3: callsub PurchaseItem,1187,0,1; //Krieger_Twohand_Sword1
+				case 4: callsub PurchaseItem,1426,0,1; //Krieger_Onehand_Spear1
+				case 5: callsub PurchaseItem,1486,0,1; //Krieger_Twohand_Spear1
+				}
+			case 2:
+				mes "[Logistics]";
+				mes "ท่านได้เลือกหมวดหมู่ 'Staff/Mace/Axe/Shuriken'";
+				mes "โปรดเลือกหมวดหมู่ย่อย";
+				next;
+				switch(select("Staff:Mace:One-handed Axe:Two-handed Axe:Shuriken")) {
+				case 1:
+					mes "[Logistics]";
+					mes "ท่านเลือกหมวดหมู่ 'Staff'";
+					mes "มี 3 รายการ สำหรับ Staffs: a Two-handed Weapon Glorious Destruction Staff, a One-handed Glorious Arc Wand เเละ a Glorious Healing Staff.";
+					mes "หากท่านต้องการรายละเอียดโปรดไปที่ ดูรายการของรางวัล KVM";
+					mes "โปรดเลือกหนึ่งรายการ";
+					next;
+					switch(select("Glorious Destruction Staff:Glorious Arc Wand:Glorious Healing Staff")) {
+					case 1: callsub PurchaseItem,2002,0,0; //Krieger_Twohand_Staff1
+					case 2: callsub PurchaseItem,1640,0,0; //Krieger_Onehand_Staff1
+					case 3: callsub PurchaseItem,1641,0,0; //Krieger_Onehand_Staff2
+					}
+				case 2: callsub PurchaseItem,1546,0,1; //Krieger_Onehand_Mace1
+				case 3: callsub PurchaseItem,1310,0,1; //Krieger_Onehand_Axe1
+				case 4: callsub PurchaseItem,1382,0,1; //Krieger_Twohand_Axe1
+				case 5: callsub PurchaseItem,13307,0,1; //Krieger_Huuma_Shuriken1
+				}
+			case 3:
+				mes "[Logistics]";
+				mes "ท่านได้เลือกหมวดหมู่ Bow/Katar/Instrument/Whip";
+				mes "โปรดเลือกหมวดหมู่ย่อย";
+				next;
+				switch(select("Bow:Katar:Instrument:Whip")) {
+				case 1: callsub PurchaseItem,1743,0,1; //Krieger_Bow1
+				case 2:
+					mes "[Logistics]";
+					mes "ท่านเลือกหมวดหมู่ 'Katar'";
+					mes "มี 2 รายการ สำหรับ Katars: Glorious Bloody Roar และ Glorious Jamadhar.";
+					mes "หากท่านต้องการรายละเอียดโปรดไปที่ ดูรายการของรางวัล KVM";
+					mes "โปรดเลือกหนึ่งรายการ";
+					next;
+					switch(select("Glorious Bloody Roar:Glorious Jamadhar")) {
+					case 1: callsub PurchaseItem,1281,0,0; //Krieger_Katar1
+					case 2: callsub PurchaseItem,1282,0,0; //Krieger_Katar2
+					}
+				case 3: callsub PurchaseItem,1927,0,1; //Krieger_Instrument1
+				case 4: callsub PurchaseItem,1981,0,1; //Krieger_Whip1
+				}
+			case 4:
+				mes "[Logistics]";
+				mes "ท่านได้เลือกหมวดหมู่ Book/Knuckle";
+				mes "โปรดเลือกหมวดหมู่ย่อย";
+				next;
+				switch(select("Book:Knuckle")) {
+				case 1:
+					mes "[Logistics]";
+					mes "ท่านเลือกหมวดหมู่ 'Book'";
+					mes "มี 2 รายการ สำหรับ Books: Glorious Tablet และ Glorious Apocalypse.";
+					mes "หากท่านต้องการรายละเอียดโปรดไปที่ ดูรายการของรางวัล KVM";
+					mes "โปรดเลือกหนึ่งรายการ";
+					next;
+					switch(select("Glorious Tablet:Glorious Apocalypse")) {
+					case 1: callsub PurchaseItem,1576,0,0; //Krieger_Book1
+					case 2: callsub PurchaseItem,1577,0,0; //Krieger_Book2
+					}
+				case 2:
+					mes "[Logistics]";
+					mes "ท่านเลือกหมวดหมู่ 'Knuckle'";
+					mes "มี 2 รายการ สำหรับ Knuckles: Glorious Claw และ Glorious Fist";
+					mes "หากท่านต้องการรายละเอียดโปรดไปที่ ดูรายการของรางวัล KVM";
+					mes "โปรดเลือกหนึ่งรายการ";
+					next;
+					switch(select("Glorious Claw:Glorious Fist")) {
+					case 1: callsub PurchaseItem,1826,0,0; //Krieger_Knuckle1
+					case 2: callsub PurchaseItem,1827,0,0; //Krieger_Knuckle2
+					}
+				}
+			case 5:
+				mes "[Logistics]";
+				mes "ท่านได้เลือกหมวดหมู่ 'Revolver/Rifle/Gun/Grenade Launcher'";
+				mes "โปรดเลือกหมวดหมู่ย่อย";
+				next;
+				switch(select("Revolver:Rifle:Gatling Gun:Shotgun:Grenade Launcher")) {
+				case 1: callsub PurchaseItem,13110,0,1; //Krieger_Pistol1
+				case 2: callsub PurchaseItem,13176,0,1; //Krieger_Rifle1
+				case 3: callsub PurchaseItem,13177,0,1; //Krieger_Gatling1
+				case 4: callsub PurchaseItem,13178,0,1; //Krieger_Shotgun1
+				case 5: callsub PurchaseItem,13179,0,1; //Krieger_Launcher1
+				}
+			}
+		case 2:
+			mes "[Logistics]";
+			mes "ท่านได้เลือกหมวดหมู่ 'Armor/Accessory'";
+			mes "โปรดเลือกหมวดหมู่ย่อย";
+			next;
+			switch(select("Armor:Cloak:Shoes:Accessory")) {
+			case 1: callsub PurchaseItem,2394,1,2; //Krieger_Suit1
+			case 2: callsub PurchaseItem,2549,2,2; //Krieger_Muffler1
+			case 3: callsub PurchaseItem,2444,3,2; //Krieger_Shoes1
+			case 4: callsub PurchaseItem,2772,4,2; //Krieger_Ring1
+			}
+		case 3:
+			mes "[Logistics]";
+			mes "ท่านได้เลือกหมวดหมู่ 'Mass-Production Armor/Accessory'";
+			mes "โปรดเลือกหมวดหมู่ย่อย";
+			next;
+			switch(select("Mass-Production Armor:Mass-Production Shoes:Mass-Production Accessory")) {
+			case 1: callsub PurchaseItem,2395,5,3; //Krieger_Suit2
+			case 2: callsub PurchaseItem,2445,6,3; //Krieger_Shoes2
+			case 3: callsub PurchaseItem,2773,7,3; //Krieger_Ring2
+			}
+		case 4:
+			mes "[Logistics]";
+			mes "ท่านได้เลือกหมวดหมู่ 'Popularized Armor/Accessory'";
+			mes "โปรดเลือกหมวดหมู่ย่อย";
+			next;
+			switch(select("Popularized Armor:Popularized Shoes:Popularized Accessory")) {
+			case 1: callsub PurchaseItem,2396,8,4; //Krieger_Suit3
+			case 2: callsub PurchaseItem,2446,9,4; //Krieger_Shoes3
+			case 3: callsub PurchaseItem,2774,10,4; //Krieger_Ring3
+			}
+		}
+	case 3:
+		mes "[Logistics]";
+		mes ""+ .@name$ +", คะแนนปัจจุบันของท่านคือ ^580080"+ kvm_point +"^000000 KVM";
+		close;
+	case 4:
+		mes "[Logistics]";
+		mes "รางวัล KVM มี 3 ประเภท: Weapon/Armor/Accessory";
+		next;
+		mes "[Logistics]";
+		mes "รางวัล Weapon ต้องการคะแนน 2,000 KVM ต่อรายการ";
+		mes "รางวัล Armor มี 3 ประเภท และต้องการคะแนน 840/630/580 KVM ต่อรายการ";
+		mes "รางวัล Accessory ต้องการคะแนน 1,200 KVM ต่อรายการ";
+		next;
+		mes "[Logistics]";
+		mes "Kreiger Weapons เป็นอาวุธ LV 4, สามารถอัพเกรดได้ และจะมี effects: Slaughter, Destruction และ Blessing";
+		next;
+		mes "[Logistics]";
+		mes "เมื่อสวมใส่ชุดเกราะทั้ง 3 ตัท่านสามารถมี options พิเศษ";
+		mes "นอกจากนี้ เมื่อรับรางวัล Kreiger Accessory สวมใส่ด้วยเหรียญ มันจะมอบรางวัลชุดพิเศษให้แก่ท่าน";
+		next;
+		mes "[Logistics]";
+		mes "ในที่สุดก็มี Mass-Production Armor และรางวัล Accessory";
+		mes "ผู้เล่นที่มีเลเวลสูงกว่า 60 สามารถใส่ Mass-Production Armors และมีขีดจำกัด Level สำหรับ Popularized Armor เช่นกัน";
+		close;
+	case 5:
+		mes "[Logistics]";
+		mes "คะแนน KVM จะได้รับรางวัลเมื่อท่าน ชนะ, แพ้ หรือ เสมอ ใน Kreiger Von Midgard (KVM)";
+		mes "ท่านสามารถรับรางวัลพิเศษได้โดยใช้คะแนนเหล่านี้";
+		close;
+	}
+
+PurchaseItem:
+	// Pricing for Weapon, Suit1, Muffler1, Shoes1, Ring1m Suit2, Shoes2, Ring2, Suit3, Shoes3, Ring3
+	setarray .@prices[0],2000,840,630,580,1200,120,70,200,15,10,30;
+
+	.@item_id = getarg(0);
+	.@req_setting = getarg(1);
+	.@item_type = getarg(2);
+
+	mes "[Logistics]";
+
+	if (!.@item_type)
+		mes "ท่านได้เลือก ^ff0000"+ getitemname(.@item_id) +"^000000.";
+	else if (.@item_type == 1)
+		mes "เพียงหนึ่งเดียว "+ callfunc("F_GetWeaponType",.@item_id) +": "+ getitemname(.@item_id) +".";
+	else if (.@item_type == 2) {
+		mes "ท่านได้เลือก '"+ callfunc("F_GetArmorType",.@item_id) +"'.";
+		mes "Armor สำหรับผู้ที่มี Level มากกว่า 80 คือ: ^ff0000"+ getitemname(.@item_id) +"^000000.";
+	}
+	else if (.@item_type == 3) {
+		mes "ท่านได้เลือก 'Mass-Production "+ callfunc("F_GetArmorType",.@item_id) +"'.";
+		mes "Mass-Production เพียงหนึ่งเดียว "+ callfunc("F_GetArmorType",.@item_id) +": ^ff0000"+ getitemname(.@item_id) +"^000000.";
+	}
+	else if (.@item_type == 4) {
+		mes "ท่านได้เลือก 'Popularized "+ callfunc("F_GetArmorType",.@item_id) +"'.";
+		mes "Popularized เพียงหนึ่งเดียว "+ callfunc("F_GetArmorType",.@item_id) +": ^ff0000"+ getitemname(.@item_id) +"^000000.";
+	}
+
+	if (!.@req_setting)
+		mes "ต้องใช้คะแนน ^0000ff2,000^000000 KVM, และ "+ .@name$ +", คะแนนท่านคือ: ^580080"+ kvm_point +"^000000.";
+	else if (.@req_setting == 4)
+		mes "ต้องใช้คะแนน ^0000ff1,200^000000 KVM, และ "+ .@name$ +", คะแนนท่านคือ: ^580080"+ kvm_point +"^000000.";
+	else
+		mes "ต้องใช้คะแนน ^0000ff"+ .@prices[.@req_setting] +"^000000 KVM, และ "+ .@name$ +", คะแนนท่านคือ: ^580080"+ kvm_point +"^000000.";
+
+	mes "ท่านแน่ใจหรือว่าต้องการรายการนี้?";
+	next;
+	switch(select("ไม่ ข้าจะไม่ซื้อ:ใช่ ข้าจะซื้อ")) {
+	case 1:
+		mes "[Logistics]";
+		mes "ท่านได้เลือก 'ข้าจะไม่ซื้อมัน'";
+		mes "โปรดระวังในการซื้อสินค้า เพราะไม่สามารถคืนสินค้าได้";
+		break;
+	case 2:
+		if (kvm_point >= .@prices[.@req_setting]) {
+			kvm_point = kvm_point -.@prices[.@req_setting];
+			getitem .@item_id,1;
+			mes "[Logistics]";
+			mes "ท่านได้ซื้อ "+ getitemname(.@item_id) +".";
+			if (!.@req_setting)
+				mes "คะแนน KVM ของท่านลดลง ^0000ff"+ .@req_setting +"^000000 คะแนน และคะแนน KVM ของท่านคงเหลือ ^580080"+kvm_point+"^000000";
+			if (.@req_setting == 4)
+				mes "คะแนน KVM ของท่านลดลง ^0000ff1,200^000000 คะแนน และคะแนน KVM ของท่านคงเหลือ ^580080"+kvm_point+"^000000";
+			else
+				mes "คะแนน KVM ของท่านลดลง ^0000ff"+ .@prices[.@req_setting] +"^000000 คะแนน และคะแนน KVM ของท่านคงเหลือ ^580080"+kvm_point+"^000000";
+		}
+		else {
+			mes "[Logistics]";
+			if (!.@req_setting)
+				mes "ท่านต้องมีคะแนน ^0000ff2,000^000000 KVM เพื่อซื้อรายการนี้";
+			else if (.@req_setting == 4)
+				mes "ท่านต้องมีคะแนน ^0000ff1,200^000000 KVM เพื่อซื้อรายการนี้";
+			else
+				mes "ท่านต้องมีคะแนน ^0000ff"+ .@prices[.@req_setting] +"^000000 KVM เพื่อซื้อรายการนี้";
+			mes "อย่างไรก็ตามคะแนน KVM ของของท่านคงเหลือ ^580080"+ kvm_point +"^000000";
+			mes "ซึ่งไม่เพียงพอที่จะซื้อ";
+			mes "เมื่อท่านมีคะแนนมาก KVM มากพอ โปรดกลับมาอีกครั้ง";
+		}
+	}
+	close;
+}

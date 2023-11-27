@@ -1,0 +1,473 @@
+//===== rAthena Script ======================================= 
+//= Eclage Instance Script
+//===== By: ================================================== 
+//= Dastgir
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Eclage Interior Instance
+//===== Additional Comments: ================================= 
+//= 1.0 Converted from the official Aegis script. [Dastgir]
+//= 1.1 Converted from Hercules script to rAthena script & Small bug fix. [Skorm]
+//============================================================ 
+
+ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
+	.@party_id = getcharid(1);
+	.@md_name$ = "Eclage Interior";
+
+	if (.@party_id == 0 || is_party_leader() == false){
+		mes "-! Warning !-";
+		mes "This current quest will be held at Memorial dungeon.";
+		mes "Only the party leader will enter. Please create your party.";
+		close;
+	}
+	if (ep14_2_mylord == 29) {
+		mes "[Shenime]";
+		mes "This place is set up with lighting for Orb.";
+		mes "If you favor Mayor, you should be cautious here.";
+		next;
+		switch (select("Enter it.:Forget it.")) {
+		case 1:
+			if (instance_create(.@md_name$) < 0) {
+				mes "[Shenime]";
+				mes "There are some soldiers dispatched by Mayor not too long ago.";
+				mes "I should sure hope that you aren't the disturbance they're looking for, right?";
+				close;
+			}
+			ecl_interior_time = gettimetick(2) + 20 * 60;
+			mes "[Shenime]";
+			mes "Given the tight internal security, you should prepare yourself.";
+			mes "Wait here for a minute.";
+			close;
+		case 2:
+			mes "[Shenime]";
+			mes "It's not an easy task.";
+			close;
+		}
+	}
+	mes "[High-level Laphine's]";
+	mes "Hmm? This room?";
+	mes "Never mind. Don't worry about it.";
+	close;
+}
+
+ecl_hub01,130,15,0	script	It is closed shut.	844,{
+	if (ep14_2_mylord == 29) {
+		mes "This door connects to the plaza's ceiling.";
+		mes "It's also a place where the lighting is set up to make Orb seem more beautiful.";
+		next;
+		if (select("Enter it.:Forget it.") == 1) {
+			.@party_id = getcharid(1);
+			.@md_name$ = "Eclage Interior";
+			if (.@party_id == 0 || is_party_leader() == false) {
+				mes "-! Warning !-";
+				mes "This current quest will be held at Memorial dungeon.";
+				mes "Only the party leader will enter. Please create your party.";
+				close;
+			}
+			if (gettimetick(2) >= ecl_interior_time){
+				mes "[Shenime]";
+				mes "Looks like the soldiers inside are really tense.";
+				mes "It is pretty difficult to guide an outsider like you.";
+				close;
+			}
+			switch (instance_enter(.@md_name$)) {
+			case IE_OTHER:
+				mes "An unknown error has occurred.";
+				close;
+			case IE_NOINSTANCE:
+				mes "It is closed shut.";
+				close;
+			case IE_OK:
+				mapannounce "ecl_hub01",getpartyname(.@party_id) + " Party leader " + strcharinfo(0) + " is entering " + .@md_name$,bc_map,"0x00ff99";
+				end;
+			default:
+			}
+		} else
+			close;
+	}
+	mes "This door connects to the plaza's ceiling.";
+	mes "It's also a place where the lighting is set up to make Orb seem more beautiful.";
+	mes "It is closed shut.";
+	close;
+}
+
+1@ecl,58,69,3	script	Shenime#ecl01	435,{
+	mes "[Shenime]";
+	mes "Oh, what's going on here?";
+	mes "They destroyed additional troops that Mayor sent?";
+	next;
+	select("What...?:I fought monsters off!");
+	mes "[Shenime]";
+	mes "It doesn't matter.";
+	mes "Your job ends here.";
+	mes "Now you became a betrayer.";
+	mes "Farewell, then!";
+	specialeffect EF_BEGINSPELL3;
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "No...way!!!";
+	specialeffect2 EF_LORD;
+	percentheal -99,0;
+	soundeffect "wander_man_move.wav",1;
+	sc_start SC_BLIND,60000,0;
+	close2;
+	warp instance_mapname("1@ecl"),146,95;
+	end;
+
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnEnable:
+	hideoffnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@ecl,51,64,1	script	Suspicious Creature#1	2375,{
+	end;
+}
+1@ecl,43,67,3	duplicate(Suspicious Creature#1)	Suspicious Creature#2	2375,0,0
+1@ecl,55,80,3	duplicate(Suspicious Creature#1)	Suspicious Creature#3	2375,0,0
+1@ecl,60,75,3	duplicate(Suspicious Creature#1)	Suspicious Creature#4	2375,0,0
+
+1@ecl,42,80,5	script	Suspicious Creature#5	2376,{
+	end;
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+1@ecl,48,86,3	duplicate(Suspicious Creature#5)	Suspicious Creature#6	2376,0,0
+1@ecl,58,82,3	duplicate(Suspicious Creature#5)	Suspicious Creature#7	2376,0,0
+1@ecl,56,88,3	duplicate(Suspicious Creature#5)	Suspicious Creature#8	2376,0,0
+
+1@ecl,53,83,0	script	#sndmaster	HIDDEN_WARP_NPC,10,10,{
+	end;
+
+OnInstanceInit:
+	'mob_summoned = 0;
+	disablenpc();
+	end;
+
+OnEnable:
+	sleep 1000;
+    mapannounce instance_mapname("1@ecl"),"Warning: Abnormal occurrence in the lighting room. Abnormal occurrence in the lighting room.",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
+	sleep 2000;
+    mapannounce instance_mapname("1@ecl"),"Suspicious Creature: Kerrrrr....krwahhhh!!",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
+	hideoffnpc instance_npcname("Suspicious Creature#5");
+	hideoffnpc instance_npcname("Suspicious Creature#6");
+	hideoffnpc instance_npcname("Suspicious Creature#7");
+	hideoffnpc instance_npcname("Suspicious Creature#8");
+	sleep 3000;
+	hideonnpc instance_npcname("#sndmaster");
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@ecl"),instance_npcname("#sndmaster")+"::OnMyMobDead") == 0) {
+		donpcevent instance_npcname("Shenime#ecl01")+"::OnEnable";
+		mapannounce instance_mapname("1@ecl"),"Shenime: Good, I got here just in time.",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
+	}
+	end;
+
+OnTouch:
+	if ('mob_summoned > 1) end;
+    mes "Upon eliminating the intruders near the Orb, another strange-looking creatures appeared.";
+    next;
+    mes "We couldn't communicate with them either, and one of them seemed furious after looking around and finding out that its fellows are defeated.";
+    next;
+    mes "[" + strcharinfo(0) + "]";
+    mes "They look as if they are incarnation of Morocc.";
+    mes "Is the King of Domons after the Orb?";
+    mes "Or is it just a coincidence?";
+    next;
+    mes "[Subordinate of the King of Demons]";
+    mes "Kyaarr...Keraahhh!!!";
+    mes "Kkwaaa!";
+    next;
+    mes "A battle cannot be avoided!";
+    mes "They will kill me!";
+	close2;
+	hideonnpc instance_npcname("Suspicious Creature#5");
+	hideonnpc instance_npcname("Suspicious Creature#6");
+	hideonnpc instance_npcname("Suspicious Creature#7");
+	hideonnpc instance_npcname("Suspicious Creature#8");
+	disablenpc instance_npcname("Suspicious Creature#5");
+	disablenpc instance_npcname("Suspicious Creature#6");
+	disablenpc instance_npcname("Suspicious Creature#7");
+	disablenpc instance_npcname("Suspicious Creature#8");
+	.@eclmap$ = instance_mapname("1@ecl");
+	.@sndmaster$ = instance_npcname("#sndmaster");
+	monster .@eclmap$,42,80,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	monster .@eclmap$,48,86,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	monster .@eclmap$,59,82,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	monster .@eclmap$,56,88,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	monster .@eclmap$,39,72,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	monster .@eclmap$,42,69,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	monster .@eclmap$,47,64,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	monster .@eclmap$,50,60,"Subordinate of the King of Demons",2376,1,.@sndmaster$+"::OnMyMobDead";
+	'mob_summoned = 2;
+    end;
+}
+
+1@ecl,57,65,0	script	#event	139,5,5,{
+	end;
+OnTouch:
+	if ('mob_summoned > 0) end;
+	.@eclmap$ = instance_mapname("1@ecl");
+	.@eventname$ = instance_npcname("#event");
+	mes "An empty room with nothing inside.";
+	mes "a light is coming out of a circular equipment in the middle of the room.";
+	next;
+	mes "[Suspicious Creature]";
+	mes "Keheehehehe......";
+	next;
+	mes "A group of unidentifiable creatures is approaching threateningly.";
+	mes "They seemed surprised, and although Bifrost's will still holds, it's hard to communicate.";
+	next;
+	mes "[Suspicious Creature]";
+	mes "Kyaarr...Ke...Keryarya!!";
+	next;
+	mes "It seems like they are going to start attacking any minute.";
+	mes "We cannot help fighting them!";
+	close2;
+	hideonnpc instance_npcname("Suspicious Creature#1");
+	hideonnpc instance_npcname("Suspicious Creature#2");
+	hideonnpc instance_npcname("Suspicious Creature#3");
+	hideonnpc instance_npcname("Suspicious Creature#4");
+	disablenpc instance_npcname("Suspicious Creature#1");
+	disablenpc instance_npcname("Suspicious Creature#2");
+	disablenpc instance_npcname("Suspicious Creature#3");
+	disablenpc instance_npcname("Suspicious Creature#4");
+	monster .@eclmap$,51,64,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
+	monster .@eclmap$,43,67,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
+	monster .@eclmap$,55,80,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
+	monster .@eclmap$,60,75,"Suspicious Creature",2375,1,.@eventname$+"::OnMyMobDead";
+	'mob_summoned = 1;
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@ecl"),instance_npcname("#event")+"::OnMyMobDead") == 0) {
+		enablenpc instance_npcname("#sndmaster");
+		donpcevent instance_npcname("#sndmaster")+"::OnEnable";
+	}
+	end;
+}
+
+1@ecl,148,97,3	script	Avant#	618,{
+	mes "[Avant]";
+	mes "Hey, look who's here!";
+	mes "You're a friend of my son, right?";
+	mes "What a strange chance it is that has brought us together here!";
+	cutin "avant01",1;
+	next;
+	mes "[Avant]";
+	mes "Did something happen to you?";
+	mes "There was a subtle and magical echo to it.";
+	mes "Immediately after that, you were thrown here.";
+	next;
+	if (select("It's all because of you!:Shenime said...") == 1) {
+		mes "[Avant]";
+		mes "I don't understand a word you're saying.";
+		mes "Can't you organize your story? Don't you know 'five W's and one H' rule?";
+		next;
+	}
+	mes "[Avant]";
+	mes "Ooh...so that's what happened.";
+	mes "So you're saying that Shenime was after the Orb?";
+	next;
+	mes "[Avant]";
+	mes "hehehe...hahahhaha ahahahahha";
+	mes "Well, well...did he get me, too?";
+	mes "Me, Avant, of all the people?! Hahahaha!";
+	cutin "avant02",1;
+	next;
+	select("What do you mean?");
+	mes "[Avant]";
+	mes "I was doing a research on the power of the Orb on my own.";
+	mes "But Shenime just urged me persistently.";
+	cutin "avant01",1;
+	next;
+	mes "[Avant]";
+	mes "I started from thinking about the beauty of the Orb and went on to wondering what kind of power is accumulated inside the Orb...";
+	mes "and I started questioning the principle of the Orb's power since we all benefit from it.";
+	next;
+	mes "[Avant]";
+	mes "All Laphines think of the Orb as something natural as air and water, but he was the first one to make me perceive it differently and investigate its origin.";
+	mes "Right...Shenime. He excited my curiosity on purpose.";
+	next;
+	mes "[Avant]";
+	mes "Stimulate a person who wasn't aware of air and water, and make him recognize and carry on investigating!";
+	mes "Well, well...isn't that interesting!";
+	cutin "avant02",1;
+	next;
+	mes "[Avant]";
+	mes "Ha...hahaha...";
+	mes "...I'm so angry about the fact that I just realized how he used me, but what's even worse is that I've done something horrible to our people.";
+	mes "I think I'm pretty irritated now.";
+	next;
+	select("You had a conscience?");
+	mes "[Avant]";
+	mes "What kind of a person do you think I am, seriously!";
+	mes "Is it because of my sons?";
+	mes "Well, then, I can't blame you too much.";
+	cutin "avant01",1;
+	next;
+	mes "[Avant]";
+	mes "...Bah.";
+	mes "It's no fun.";
+	mes "It's not fun anymore. I'm no longer interested in you.";
+	next;
+	mes "[Avant]";
+	mes "......";
+	mes "Seems like there's a visitor.";
+	next;
+	cutin "minuel01",4;
+	mes "[Minuel]";
+	mes "" + strcharinfo(0) + "Sir,";
+	mes "Although you're detained on suspicion of being responsible for the recent incident in the lighting room,";
+	mes "there are some witnesses to prove your innocence.";
+	next;
+	mes "[Minuel]";
+	mes "I don't know the details,";
+	mes "but I also believe you're not guilty.";
+	mes "I'll move you to the treatment room since this seems like a severe wound.";
+	next;
+	mes "[Minuel]";
+	mes "I don't think it's a big deal.";
+	mes "...hopefully.";
+	mes "Let's go. I'll guide you.";
+	close2;
+	cutin "",255;
+	warp "1@ecl",146,29;
+	end;
+}
+	
+1@ecl,148,29,3	script	Loki#ecl01	512,{
+	mes "[Loki]";
+	mes "It seems like this guy next to me has a lot more to say than I do.";
+	mes "Why don't you explain to him first?";
+	close;
+}	
+	
+1@ecl,147,30,3	script	Nydhog#ecl01	510,{
+	mes "[Guardian Nydhog]";
+	mes "I think you should talk to Hisie first.";
+	close;
+}
+	
+1@ecl,144,27,5	script	Hisie#ecl01	623,{
+	cutin "hisie01",0;
+	mes "[Hisie]";
+	mes "Can you tell me exactly what happened?";
+	next;
+	select("I fought with monsters.");
+	cutin "hisie03",0;
+	mes "[Hisie]";
+	mes "Monsters? Subordinates of Morocc?";
+	mes "What you were trying to kill were our soldiers, the Laphines!!";
+	mes "What on earth happened there?";
+	npcskill "AL_HEAL",9,99,80;
+	next;
+	cutin "",255;
+	mes "[Loki]";
+	mes "It's because of this.";
+	mes "" + strcharinfo(0) + "It was inside the body of -";
+	mes "This is how powerful Shenime is.";
+	next;
+	mes "On Loki's palm, there rested a small, thin, and dried piece of thorn.";
+	next;
+	cutin "hisie03",0;
+	mes "[Hisie]";
+	mes "Shenime, the Chief of Staff?";
+	mes "Why is he related to this?";
+	npcskill "AL_HEAL",9,99,80;
+	next;
+	cutin "",255;
+	mes "[Loki]";
+	mes "Shenime is one of the subordinates of Morocc.";
+	mes "His power enbales him to control another person directly or mentally influence that person indirectly through a part of his body.";
+	next;
+	select("Now that I think about it...");
+	mes "[" + strcharinfo(0) + "]";
+	mes "Right before coming here, Shenime reached his hand out to me and I felt a spark when I held his hand.";
+	mes "I thought it was just my imagination and ignored it...maybe that's when he...";
+	next;
+	mes "[Nydhog]";
+	mes "You're probably right.";
+	mes "They use wicked tricks.";
+	mes "This thorn here probably has clouded your judgement.";
+	next;
+	cutin "hisie03",0;
+	mes "[Hisie]";
+	mes "So you're saying that he deceived us all?";
+	mes "The Chief of Staff is a Laphine who stayed with us for a long time! He can't be...";
+	npcskill "AL_HEAL",9,99,80;
+	next;
+	cutin "",255;
+	mes "[Loki]";
+	mes "He might have been under the influence for a good while.";
+	mes "Anyway, this guy is not guilty.";
+	mes "I can prove it.";
+	next;
+	mes "[Nydhog]";
+	mes "I swear by the name of the guardian of Yggdrasil, too.";
+	mes "" + strcharinfo(0) + "- will by no means do such a thing.";
+	next;
+	cutin "hisie02",0;
+	mes "[Hisie]";
+	mes "Hah...";
+	mes "But things got out of control.";
+	mes "I didn't expect this.";
+	next;
+	select("What happened to the Orb?");
+	mes "[Hisie]";
+	mes "The inner core is stolen.";
+	mes "Nobody knows that the Orb's inner core is gone,";
+	mes "and that's why Karr didn't make it here.";
+	npcskill "AL_HEAL",9,99,80;
+	next;
+	mes "[Hisie]";
+	mes "And what's more, several soldiers are injured because of you.";
+	mes "None of them died fortunately, but most of them are wounded severely.";
+	mes "The situation is not very good right now.";
+	next;
+	cutin "",255;
+	mes "[Loki]";
+	mes "Someone has to take the responsibility here then.";
+	mes "In all probablility," + strcharinfo(0) + "it will be you.";
+	next;
+	cutin "hisie02",0;
+	mes "[Hisie]";
+	mes "......these two gentlemen here cleared up all charges related to the Orb,";
+	mes "but both you and Karr won't be able to avoid your responsibility.";
+	mes "you'll have to catch Shenime.";
+	npcskill "AL_HEAL",9,99,80;
+	next;
+	cutin "hisie01",0;
+	mes "[Hisie]";
+	mes "It seems like you've rested enough. Let's get going.";
+	mes "Karr is waiting for you.";
+	mes "What will you two do?";
+	next;
+	cutin "",255;
+	mes "[Loki]";
+	mes "Don't worry about us.";
+	mes "Our target is Morocc, the King of Demons.";
+	mes "It's good enough that we found an evidence here.";
+	next;
+	cutin "hisie01",0;
+	mes "[Hisie]";
+	mes "Thank you for your help.";
+	mes "We will take off now.";
+	mes "Let's go." + strcharinfo(0) + ".";
+	ep14_2_mylord = 30;
+	changequest 7450,7451;
+	close2;
+	cutin "",255;
+	warp "ecl_in03",57,76;
+	instance_destroy;
+	end;
+}

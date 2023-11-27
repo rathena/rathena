@@ -1,0 +1,28 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Umbala
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+umbala,124,85,1	script	Bounty Board 40-100#um1	837,{
+	callfunc "F_Bounty_Board", 40, 100, 5, 1,
+		1261,	62609,	 81000,		124875,	// WILD_ROSE
+		1493,	62610,	 94050,		105525,	// DRYAD
+		1499,	62611,	 79650,		 89775,	// WOOTAN_FIGHTER
+		1500,	62612,	103725,		150300;	// PARASITE
+	end;
+}

@@ -1,0 +1,18 @@
+//===== rAthena Script =======================================
+//= Jail Monster Spawn Script
+//===== By: ==================================================
+//= Masao
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Spawns monsters in Jail.
+//============================================================
+
+sec_in02,139,80,20,10	monster	Poring	1002,5
+sec_in02,138,54,20,20	monster	Marin	1242,5
+sec_in02,161,46,15,15	monster	Poporing	1031,5
+sec_in02,114,47,10,10	monster	Drops	1113,5
+sec_in02,114,47,10,10	monster	Bigfoot	1060,10
+sec_in02,139,80,30,30	monster	Flora	1118,10

@@ -1,0 +1,168 @@
+//===== rAthena Script =======================================
+//= Abyss Cave Warper
+//===== By: ==================================================
+//= erKURITA
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warper to Abyss Cave. and warper out
+//===== Additional Comments: =================================
+//= 1.0 Added by Nexon [Nexon]
+//= 1.1 Removed Duplicates [Silent]
+//= 1.2 Fixed tab - missing pillar's appeared [Lupus]
+//= 1.3 Updated Abyss Lake entrance based on official [SinSloth]
+//= 1.3a Removed .GATs [Lupus]
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//============================================================
+
+hu_fild05,168,304,0	script	Column#abyss1	111,{
+
+	mes "^3355FFThere are 3 oddly";
+	mes "shaped grooves on";
+	mes "the surface of this";
+	mes "column. It seems that";
+	mes "certain dragon body parts";
+	mes "would fit perfectly into";
+	mes "the column grooves.^000000";
+	if((countitem(1035)) && (countitem(1036)) && (countitem(1037)))
+	{
+		next;
+		switch( select( "Insert Dragon Body Parts","Eat Dragon Body Parts" ) )
+		{
+			case 1:
+				mes "^3355FFYou carefully place a";
+				mes "Dragon Canine into one of";
+				mes "the grooves, and then you";
+				mes "hear a powerful rumbling";
+				mes "from within the column.^000000";
+				specialeffect EF_WINDHIT;
+				next;
+				mes "^3355FFYou slowly insert a";
+				mes "Dragon Scale into another";
+				mes "of the column's grooves,";
+				mes "trigerring another small";
+				mes "tremor from the column.^000000";
+				specialeffect EF_WINDHIT;
+				next;
+				mes "^3355FFYou cautiously insert";
+				mes "a Dragon Tail into the";
+				mes "final groove. Lights shine";
+				mes "forth from cracks in the";
+				mes "column's surface...^000000";
+				specialeffect EF_WINDHIT;
+				next;
+				mes "^3355FFThe ground beneath";
+				mes "your feet begins to";
+				mes "violently shake.^000000";
+				specialeffect EF_BOWLINGBASH;
+				donpcevent "AbyssWarp::OnWarp";
+				specialeffect2 EF_PORTAL;
+				delitem 1035,1;
+				delitem 1036,1;
+				delitem 1037,1;
+				close2;
+				warp "hu_fild05",184,204;
+				end;
+
+			case 2:
+				mes "^3355FFYou gingerly place a";
+				mes "Dragon's Canine, a Dragon";
+				mes "Scale, and a Dragon Tail into";
+				mes "your mouth and slowly begin";
+				mes "to chew. Nothing happens";
+				mes "and the taste of these items";
+				mes "is surprisingly putrid.^000000";
+				next;
+				emotion ET_HUNGRY, playerattached();
+				delitem 1035,1;
+				delitem 1036,1;
+				delitem 1037,1;
+				percentheal -10,0;
+				close;
+		}
+	}
+	close;
+}
+
+hu_fild05,171,211,0	script	Column#abyss2	111,1,1,{
+
+	mes "^3355FFThis column looks";
+	mes "very similar to the";
+	mes "one you've seen in";
+	mes "the lake. There is";
+	mes "a conspicious blue";
+	mes "groove on its surface.^000000";
+	next;
+	switch( select( "Touch the Groove","Remove Item from Groove" ) )
+	{
+		case 1:
+			mes "^3355FF*Clatter Clatter*^000000";
+			next;
+			mes "^3355FFThe light emanating from";
+			mes "the groove distorts and";
+			mes "the column starts to shake.";
+			mes "You hear a faint rumbling";
+			mes "from inside the column.^000000";
+			specialeffect EF_WINDHIT;
+			next;
+			mes "*Ggghhhhhzzzz!*";
+			mes "*BAM!*";
+			next;
+			mes "^3355FFThe light shining from";
+			mes "the column's groove grows";
+			mes "brighter as you feel the";
+			mes "ground beneath your feet";
+			mes "begin to slowly sink away...^000000";
+			next;
+			specialeffect EF_BOWLINGBASH;
+			specialeffect2 EF_PORTAL;
+			close2;
+			warp "hu_fild05",169,305;
+			end;
+
+		case 2:
+			mes "^3355FF*Ppppsssh!*";
+			mes "You accidentally";
+			mes "broke the item.^000000";
+			specialeffect EF_WINDHIT;
+			next;
+			mes "^3355FF*Gggggggghhhhhhhhzzzzzzjjjjhh!*^000000";
+			next;
+			mes "^3355FFThe light emanating from";
+			mes "the groove distorts and";
+			mes "the column starts to shake.";
+			mes "The tremors in the ground";
+			mes "make it difficult to stand";
+			mes "steadily, but suddently you";
+			mes "are warped somewhere else...^000000";
+			next;
+			specialeffect EF_BOWLINGBASH;
+			specialeffect2 EF_PORTAL;
+			close2;
+			warp "hu_fild05",157,284;
+			end;
+	}
+}
+
+hu_fild05,196,210,1	script	AbyssWarp	45,2,2,{
+
+OnInit:
+	disablenpc "AbyssWarp";
+	end;
+
+OnTouch_:
+	warp "abyss_01",260,268;
+	end;
+
+OnWarp:
+	initnpctimer;
+	enablenpc "AbyssWarp";
+	end;
+
+OnTimer30000:
+	stopnpctimer;
+	disablenpc "AbyssWarp";
+	end;
+}

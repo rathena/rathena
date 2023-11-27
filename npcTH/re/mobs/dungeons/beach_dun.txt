@@ -1,0 +1,152 @@
+//===== rAthena Script =======================================
+//= Beach Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Small 11.1 spawn update [Playtester]
+//= 1.3 More accurate spawns [Playtester]
+//= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
+//= 1.5 Added Illusion of Luanda. [Capuche]
+//============================================================
+
+//==================================================
+// beach_dun - Karu, the West cave 
+//==================================================
+beach_dun,0,0	monster	Medusa	1148,60,5000
+beach_dun,0,0	monster	Nereid	1255,20,5000
+beach_dun,0,0	monster	Pest	1256,20,5000
+beach_dun,0,0	monster	Merman	1264,3,5000
+beach_dun,0,0,0,0	boss_monster	Tao Gunka	1583,1,18000000,600000,0
+
+//==================================================
+// beach_dun2 - Ruande the northern cave 
+//==================================================
+beach_dun2,0,0	monster	Stalactic Golem	1278,65,5000
+beach_dun2,0,0	monster	Tri Joint	1279,20,5000
+beach_dun2,0,0	monster	Megalith	1274,15,5000
+beach_dun2,0,0	monster	Hydra	1068,10,5000
+beach_dun2,0,0	monster	Nereid	1255,3,5000
+
+//==================================================
+// beach_dun3 - Mao, the East Cave 
+//==================================================
+beach_dun3,0,0	monster	Thara Frog	1034,50,5000
+beach_dun3,0,0	monster	Megalodon	1064,30,5000
+beach_dun3,0,0	monster	Hydra	1068,30,5000
+beach_dun3,0,0	monster	Nereid	1255,1,5000
+
+//==================================================
+// Illusion of Luanda
+//==================================================
+// Todo: the count should start after the end of the cooldown?
+-	script	illusion_luanda	-1,{
+	end;
+OnMob20270: callsub( S_Mob, 20270, 5 );	// ILL_TRI_JOINT
+OnMob20271: callsub( S_Mob, 20271, 5 );	// ILL_STALACTIC_GOLEM
+OnMob20272: callsub( S_Mob, 20272, 5 );	// ILL_MEGALITH
+OnMob20274: callsub( S_Mob, 20274, 4 );	// ILL_STONE_SHOOTER
+OnMob20275: callsub( S_Mob, 20275, 4 );	// ILL_WOOTAN_SHOOTER
+OnMob20276: callsub( S_Mob, 20276, 4 );	// ILL_WOOTAN_FIGHTER
+S_Mob:
+	.@group = getarg(1);
+	if (.@group != .group)
+		end;
+	if (playerattached()) {
+		if (.count < 1500)
+			.count++;
+		if (.count == 1500 && !.boss_spawn && !.cooldown) {
+			getunitdata( killedgid, .@data );
+			callsub( S_Boss, (20273 + .swap), .@group, .@data[UMOB_X], .@data[UMOB_Y] );
+		}
+	}
+	.@mob_id = getarg(0);
+	sleep 5000;
+	if (.@group == .group) {
+		monster "com_d02_i",0,0,"--ja--",.@mob_id,1,"illusion_luanda::OnMob" + .@mob_id;
+		// setunittitle for the title, setunitdata
+		setunitdata $@mobid[0], UMOB_GROUP_ID, getarg(1);
+	}
+	end;
+
+S_Boss:
+	killmonster "com_d02_i", "illusion_luanda::OnBossDeath";
+	.boss_spawn = true;
+	monster "com_d02_i",getarg(2),getarg(3),"--ja--",getarg(0),1,"illusion_luanda::OnBossDeath";
+	setunitdata $@mobid[0], UMOB_GROUP_ID, getarg(1);
+	if (.swap == 0)	// ILL_TAO_GUNKA
+		mapannounce "com_d02_i", "Ancient Tao Gunka: Is it time to show off your megalithic power?", bc_map, 0x70DBDB;
+	else	// ILL_WOOTAN_DEFENDER
+		mapannounce "com_d02_i", "Ancient Wootan Defender: I guess I'll have to step in after all these useless guys.", bc_map, 0x70DBDB;
+	end;
+
+OnBossDeath:
+	killmonster "com_d02_i", "illusion_luanda::OnBossDeath";
+	.boss_spawn = false;
+	.cooldown = true;
+
+	if (.swap == 0) {	// ILL_TAO_GUNKA
+		mapannounce "com_d02_i", "Ancient Tao Gunka: Megaliths, it's time to crouch and hold your breath.", bc_map, 0x70DBDB;
+		sleep 2000;
+		mapannounce "com_d02_i", "Ancient Tao Gunka: We'll grow stronger as we unhook and step out into the world.", bc_map, 0x70DBDB;
+		sleep 2000;
+		mapannounce "com_d02_i", "Ancient Tao Gunka: Crouch. When you crouch, you megalith.", bc_map, 0x70DBDB;
+	}
+	else {	// ILL_WOOTAN_DEFENDER
+		mapannounce "com_d02_i", "Ancient Wootan Defender: Ugh.. Quite a dangerous wound..", bc_map, 0x70DBDB;
+		sleep 2000;
+		mapannounce "com_d02_i", "Ancient Wootan Defender: You pushed me, a warrior of the Wootan tribe, this far. It's pretty good. It's a pity, but I'm going to step down now.", bc_map, 0x70DBDB;
+		sleep 2000;
+		mapannounce "com_d02_i", "Ancient Wootan Defender: Listen to all Wootans! Leave now and commit to the next one.", bc_map, 0x70DBDB;
+	}
+	sleep 1000;
+	.group = (.group == 4 ? 5 : 4);
+
+	// all the mobs are killed and immediately replaced with new mobs
+	for ( .@i = 0; .@i < 3; ++.@i ) {
+		.@mob_id = 20270 + .@i + .swap;
+		killmonster "com_d02_i", "illusion_luanda::OnMob" + .@mob_id;
+	}
+
+	.swap = .swap ^ 4;	// swap 0 -> 4, 4 -> 0 (used for mob ID)
+
+	callsub( S_SpawnInit,
+		(20270 + .swap),
+		(20271 + .swap),
+		(20272 + .swap)
+	);
+	initnpctimer;
+	end;
+
+OnTimer7200000:
+	.cooldown = false;
+	stopnpctimer;
+	end;
+
+S_SpawnInit:
+	.count = 0;
+	monster "com_d02_i",0,0,"--ja--",getarg(0),50,"illusion_luanda::OnMob" + getarg(0);
+	copyarray .@gid[0], $@mobid[0], 50;
+	monster "com_d02_i",0,0,"--ja--",getarg(1),50,"illusion_luanda::OnMob" + getarg(1);
+	copyarray .@gid[50], $@mobid[0], 50;
+	monster "com_d02_i",0,0,"--ja--",getarg(2),50,"illusion_luanda::OnMob" + getarg(2);
+	copyarray .@gid[100], $@mobid[0], 50;
+
+	for ( .@i = 0; .@i < 150; ++.@i )
+		setunitdata .@gid[.@i], UMOB_GROUP_ID, .group;
+	return;
+
+OnInit:
+	.group = 5;	// UMOB_GROUP_ID
+
+	callsub( S_SpawnInit,
+		20270,	// ILL_TRI_JOINT
+		20271,	// ILL_STALACTIC_GOLEM
+		20272	// ILL_MEGALITH
+	);
+	end;
+}

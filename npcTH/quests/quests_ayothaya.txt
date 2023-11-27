@@ -1,0 +1,3057 @@
+//===== rAthena Script =======================================
+//= Quest NPCs related to Ayothaya
+//===== By ===================================================
+//= Fredzilla, MasterOfMuppets
+//===== Version ==============================================
+//= 2.6
+//===== Compatible With ======================================
+//= rAthena Project
+//===== Description ==========================================
+//= [Official Conversion]
+//= Ayothaya Ring Quest
+//= Ayothaya Dungeon Quest
+//= Tom Yum Goong Quest
+//===== Comments =============================================
+//= 1.0 First Release, made with infomation from RagnaInfo
+//= 1.1 Added anti-novice protection [Lupus]
+//= 1.3 Fixed exploit [Lupus]
+//= 1.4 Updated, more close to the official. Thanks to birkiczd
+//=     Also optimized it again, remove unused global variable [Lupus]
+//= 1.5 Removed Duplicates [Silent]
+//= 1.6 Moved quests from cities/ to here:
+//=     Shrimp, Dungeon, Tom Yum Goong [Evera]
+//= 1.7 Updated the Ayothaya Ring quest to the official one [MasterOfMuppets]
+//= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.0 Rescripted Tom Yum Goong and Dungeon quest to Aegis [L0ne_W0lf]
+//=     10.3 standards.
+//= 2.0a Corrected a Typo error ";;". [Samuray22]
+//= 2.1 Added missing checkweights. [L0ne_W0lf]
+//= 2.2 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 2.3 Replaced effect numerics with constants. [Samuray22]
+//= 2.4 Updated RE/Pre-RE EXP. [Euphy]
+//= 2.5 Added questlog support. [Euphy]
+//= 2.6 Added Renewal quest items. [Euphy]
+//============================================================
+
+// Ayothaya Ring Quest :: ayo_ring
+//============================================================
+ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
+	if (thai_find == 14) {
+		mes "[Shuda]";
+		mes "Have you";
+		mes "found Annon?";
+		next;
+		mes "[Shuda]";
+		mes "You haven't";
+		mes "found him yet?";
+		mes "Then where the";
+		mes "is he, then?!";
+		next;
+		mes "[Shuda]";
+		mes "Oh well...";
+		mes "I'm not sure if I can believe everything you said, but since you found the ring for me, that's good enough. Thank you for your help.";
+		next;
+		mes "[Shuda]";
+		mes "If you happen to meet Annon during your travels, tell him to come back right away. You can go ahead and continue your adventures now~";
+		next;
+		mes "[Shuda]";
+		mes "If I ever";
+		mes "see him again...";
+		mes "He will be ^660000punished^000000...";
+		mes "^666666*grinds teeth*^000000";
+		close;
+	} else if (thai_find > 2 && thai_find < 14) {
+		mes "[Shuda]";
+		mes "^666666*Sigh...*^000000";
+		mes "You haven't";
+		mes "found Annon yet?";
+		mes "I see. Oh well, it's alright.";
+		mes "Time isn't an issue for us.";
+		next;
+		mes "[Shuda]";
+		mes "And by 'us,' I mean '^660000you^000000.' I don't care about your plans or whatever else you may have scheduled, because you're going to make";
+		mes "time for me! Oho ho ho ho ho!";
+		close;
+	} else if (thai_find == 2) {
+		if (countitem(7288)) {
+			mes "[Shuda]";
+			mes "Ah... Is it...?!!";
+			mes "Yes, that's it!";
+			mes "My engagement ring that was";
+			mes "thrown into the water by that stupid Annon!";
+			next;
+			mes "[Shuda]";
+			mes "Thank you so much! In your honor, our first seven kids will be named after you! Oho ho ho ho ho ho ho~";
+			next;
+			mes "[Shuda]";
+			mes "Now...";
+			mes "All I gotta do";
+			mes "is find Annon.";
+			mes "Where the hell";
+			mes "did that moron go?!";
+			next;
+			mes "[Shuda]";
+			mes "^666666*Ahem*^000000";
+			mes "I-I didn't mean";
+			mes "to scare him, all I wanted was";
+			mes "my engagement ring back.";
+			next;
+			mes "[Shuda]";
+			mes "^666666*Sigh*^000000";
+			mes "I guess the days";
+			mes "of being a happy bride";
+			mes "are still far away from me...";
+			next;
+			mes "^3355FFShuda gazes directly";
+			mes "at you with a puppy eyed look.^000000";
+			next;
+			switch(select("D-Don't look at me that way!:Alright, alright.")) {
+			case 1:
+				mes "[Shuda]";
+				mes "Oh come on, you know everything that happened, and I know you're gonna continue adventuring";
+				mes "around this area.";
+				next;
+				mes "[Shuda]";
+				mes "I was just asking you to find Annon while you do that. Now, isn't that such a small favor? Thank you for doing this for me~";
+				next;
+				mes "[Shuda]";
+				mes "In the meantime, I'll think of how I'm gonna pay back Annon for leaving me in misery! So hurry and find Annon! Hoo ho ho ho ho!";
+				emotion ET_SMILE;
+				next;
+				emotion ET_THINK, playerattached();
+				mes "["+strcharinfo(0)+"]";
+				mes "(She's so scary!";
+				mes "Making me do stuff";
+				mes "for her again...)";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "(Why am I always";
+				mes "doing things for other";
+				mes "people anyway?!)";
+				break;
+			case 2:
+				mes "[Shuda]";
+				mes "Yes, I knew I could count on you! So find Annon! It's my destiny to make him ^660000mine^000000. Hoo ho ho ho ho!";
+				next;
+				mes "[Shuda]";
+				mes "I haven't seen him around the village for a while. And I don't think he jumped into the water to find my ring, since he's too sissy for that. He probably doesn't have the guts to see me without it.";
+				next;
+				mes "[Shuda]";
+				mes "Will you please tell Annon that";
+				mes "I got my ring back so he can come back to me now? I hope you'll remember that for me, adventurer.";
+				break;
+			}
+			delitem 7288,1; //Thai_Ring
+			changequest 12030,12031;
+			set thai_find,3;
+			close;
+		} else {
+			mes "[Shuda]";
+			mes "Huh...?";
+			mes "Did you find my ring?";
+			mes "Show me, show it to me!";
+			next;
+			mes "[Shuda]";
+			mes "What the...";
+			mes "You got nothing!";
+			mes "Don't lie to me,";
+			mes "bring me my ring!";
+			next;
+			mes "[Shuda]";
+			mes "Hurry up and find";
+			mes "my ring. I'll be waiting";
+			mes "here for the good news.";
+			mes "Oho ho ho ho ho~!";
+			if (checkquest(12029) == -1)
+				setquest 12029;
+			close;
+		}
+	} else if (thai_find == 1) {
+		mes "[Shuda]";
+		mes "I feel a little bad asking you this, especially since you're";
+		mes "an outsider.";
+		next;
+		mes "[Shuda]";
+		mes "But that ring is really important to me. If you could find it for me, I'd be the happiest woman in the whole world.";
+		next;
+		mes "[Shuda]";
+		mes "So please, I beg you.";
+		mes "Please bring my ring back to me.";
+		mes "I want to live with Annon as a happy couple forever. Can't you understand that?!";
+		close;
+	} else {
+		mes "[Powerful-Looking Woman]";
+		mes "Umm...?";
+		mes "Ah, you must be one of the tourists. I'd guide you around and listen to your stories about the outside world, but...";
+		next;
+		if (rand(0,1)) {
+			mes "[Powerful-Looking Woman]";
+			mes "I'm reeeally";
+			mes "busy right now.";
+			mes "So very busy.";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "Huh...?";
+			mes "You don't think I look busy just because I'm standing on one spot and not moving at all?! Oh. My. God. You're so rude!";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "Now, I've got to find my";
+			mes "engagement ring. If only";
+			mes "my fiancee hadn't";
+			mes "thrown it...";
+			next;
+			switch(select("What...?:Lies~!")) {
+			case 1:
+				mes "[Powerful-Looking Woman]";
+				mes "What 'what?'";
+				mes "You still think I'm";
+				mes "standing around for my";
+				mes "own amusement or something?!";
+				next;
+				emotion ET_KIK, playerattached();
+				mes "["+strcharinfo(0)+"]";
+				mes "No no no no...";
+				mes "I meant, I can't";
+				mes "believe that you're";
+				mes "engaged to someone!";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "Wwwwaaaaaahhhhh!";
+				mes "Wh-who are you to say";
+				mes "something so rude to such a nice lady like myself. Go away, I don't wanna talk to you!";
+				close;
+			case 2:
+				mes "[Powerful-Looking Woman]";
+				mes "What lies?";
+				mes "I'm not gonna put up with crap";
+				mes "if you're gonna say something like 'I can't believe you're engaged to someone!'";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Whoa whoa whoa~";
+				mes "Calm down, lady.";
+				mes "Hear me out first.";
+				mes "What I'm wondering is...";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "I know, I know.";
+				mes "You're wondering why I'm";
+				mes "standing near the water, right? Well, it's because my ring was thrown there and I've gotta";
+				mes "get it back.";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "What am I doing, talking to a tourist like this? ^666666*Sigh...*^000000 Well, you learned what you wanted to know. I hope you're satisfied now.";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "...";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "...";
+				mes "......";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "...";
+				mes "......";
+				mes "........Hey.";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "Why are you staring at me?";
+				mes "Don't you have anything to do?";
+				next;
+				switch(select("No.:No~ and you are an interesting girl.")) {
+				case 1:
+					mes "[Powerful-Looking Woman]";
+					mes "I see. Hmmm...";
+					mes "You're kind of my type.";
+					if (Sex == SEX_MALE) {
+						mes "No no, that doesn't mean I'm interested in you. Plus I'm";
+						mes "already engaged.";
+					} else
+						mes "Before you think of anything weird, I meant that I think you and me are a lot alike.";
+					next;
+					mes "[Powerful-Looking Woman]";
+					mes "Let me introduce myself.";
+					mes "My name is Shuda, I've lived in Ayothaya all my life. Since you don't have anything to do, I have";
+					mes "a favor to ask of you.";
+					next;
+					mes "[Shuda]";
+					mes "My fiance Annon is always interested in things other than me. I don't understand why, and I don't think I deserve to be ignored!";
+					next;
+					mes "[Shuda]";
+					mes "^666666*Sigh...*^000000";
+					mes "Anyways, we're engaged";
+					mes "and we got rings for each other...";
+					next;
+					mes "[Shuda]";
+					mes "I thought being engaged would improve our relationship. But he just took my ring and threw it into the water.";
+					next;
+					mes "[Shuda]";
+					mes "I got upset and yelled at him to get my ring back for me, and then";
+					mes "I never saw him after that.";
+					mes "So what I want to ask is...";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "You want me";
+					mes "to find your";
+					mes "ring, don't you?";
+					next;
+					mes "[Shuda]";
+					mes "Ah...";
+					mes "So you know";
+					mes "what I want.";
+					mes "That makes it";
+					mes "much simpler.";
+					next;
+					mes "[Shuda]";
+					mes "And once I retrieve";
+					mes "the ring, I'll make";
+					mes "him treat me to a much";
+					mes "deserved vacation in Jawaii...";
+					next;
+					mes "[Shuda]";
+					mes "...Where I will";
+					mes "^660000enslave^000000 him.";
+					mes "^666666*Grinds teeth*^000000";
+					next;
+					emotion ET_SURPRISE, playerattached();
+					mes "[" +strcharinfo(0)+ "]";
+					mes "(...H-Horrifying!)";
+					next;
+					mes "[Shuda]";
+					mes "So anyway, I want you to go out and find my engagement ring. Since the water is calm and still around here, the ring is probably still under the water, and hasn't been swept away yet.";
+					next;
+					mes "[Shuda]";
+					mes "And so, that is my quest for you. It should keep you entertained for a while. So get into the water, and I'll supervise from here.";
+					mes "Oho ho ho ho ho!";
+					emotion ET_SMILE;
+					set thai_find,1;
+					close;
+				case 2:
+					mes "[Powerful-Looking Woman]";
+					mes "^666666*Sigh...*^000000";
+					mes "Are you gonna just stare and";
+					mes "not help at all? I thought the word adventurer was synonymous";
+					mes "with 'hero,' not 'lazy.'";
+					next;
+					mes "[Powerful-Looking Woman]";
+					mes "Oh I see...";
+					mes "Don't help strangers, do you?";
+					mes "Well, my name is Shuda, a beautiful damsel waiting for her engagement ring to rise up from the water.";
+					next;
+					mes "[Powerful-Looking Woman]";
+					mes "There...!";
+					mes "We're not";
+					mes "strangers anymore!";
+					mes "Oho ho ho ho ho!";
+					next;
+					mes "[Shuda]";
+					mes "Don't you pity me, and my tragic situation? If someone were to help this precious maiden find her ring, she'd be the happiest bride in the whole world.";
+					next;
+					mes "[Shuda]";
+					mes "And her savior";
+					mes "would be known as";
+					mes "the hero of Ayothaya.";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes " ...Say what?!";
+					next;
+					mes "[Shuda]";
+					mes "Basically, you're gonna find my engagement ring, and I'll be the happiest bride in the whole world and I'll live happily ever after. What's so hard to understand";
+					mes "about that?";
+					next;
+					mes "[Shuda]";
+					mes "Sure, Annon, he's my fiancee, is spineless and disappears whenever";
+					mes "I say something a little too harsh. What a little girl! Can't he see I'm trying to make him a better man?!";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "He ran away";
+					mes "from you, didn't he?";
+					next;
+					mes "[Shuda]";
+					mes "Eh...?";
+					mes "What was that?";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "^666666*Ahem*^000000";
+					mes "You're way";
+					mes "too good for him.";
+					mes "(I'd have run away myself!)";
+					next;
+					mes "[Shuda]";
+					mes "Yes, yes, I know.";
+					mes "But what's important";
+					mes "is that once I get my ring back, Annon will be permanently mine. Till ^660000death do we part^000000.";
+					next;
+					mes "[Shuda]";
+					mes "So, are you";
+					mes "gonna help me or what?!";
+					mes "If you do, me and Annon are gonna name our first seven children after you.";
+					next;
+					mes "[Shuda]";
+					mes "So go and look under the water! There's no water current, so I'm sure it's still there! What are you waiting for, it's should be an easy swim for you! Oho ho ho ho ho!";
+					if (checkquest(12029) == -1)
+						setquest 12029;
+					set thai_find,1;
+					close;
+				}
+			break;
+			}
+		} else {
+			mes "[Powerful-Looking Woman]";
+			mes "^666666*Sigh...*^000000";
+			mes "Why isn't it coming up from the water? Maybe if I stirred around with a wooden stick...?";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "...?!";
+			mes "What are you";
+			mes "looking at?!";
+			mes "I'm busy, so if you";
+			mes "want something";
+			mes "I can't help you!";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "^666666Stupid tourists, running";
+			mes "around all over Ayothaya,";
+			mes "pestering and bothering";
+			mes "beautiful girls like me...^000000";
+			close;
+		}
+	}
+
+OnTouch_:
+	if (thai_find == 0) {
+		mes "[Powerful-Looking Woman]";
+		mes "^666666*Sigh...*^000000";
+		mes "Where the";
+		mes "hell is it!?";
+		next;
+		mes "[Powerful-Looking Woman]";
+		mes "What are";
+		mes "you looking at?";
+		mes "Haven't you ever seen a delicate damsel sigh before? Leave me the hell alone!";
+		close;
+	}
+}
+
+ayo_dun02,91,263,0	script	#Annonblood	111,2,3,{
+if (!$@annonactive) {
+	if (thai_find == 13) {
+		mes "["+strcharinfo(0)+"]";
+		mes "A blood stain?";
+		mes "What's going on?";
+		mes "I should take a look...";
+		next;
+		mes "^3355FFUnder a giant tree,";
+		mes "you find some bushes with";
+		mes "blood smudged on some";
+		mes "of the leaves.^000000";
+		next;
+		mes "^3355FFWithin the bushes, you see";
+		mes "that the trail of blood continues, almost as if a bleeding animal struggled to find refuge within";
+		mes "the bushes.^000000";
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "Hmmm....";
+		next;
+		switch(select("Scatter the bushes.:Dig up the bushes.")) {
+		case 1:
+			if (!rand(0,2)) {
+				mes "[" +strcharinfo(0)+ "]";
+				mes "^666666*Cough cough*^000000";
+				mes "It's so dusty!";
+				next;
+				mes "[?]";
+				mes "...Awwww";
+				mes "Oh... Oh God...!";
+				next;
+				emotion ET_SURPRISE, playerattached();
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Huh...?";
+				mes "I heard something";
+				mes "from below! Let's";
+				mes "dig it up!";
+				next;
+				mes "^3355FFYou pull up the bushes,";
+				mes "^3355FFand beneath the dust and";
+				mes "^3355FFshrubbery, you find";
+				mes "a small burrow.^000000";
+				next;
+				set $@annonactive,1;
+				enablenpc "Haggard Man";
+				mes "[Haggard Man]";
+				mes "^666666*Cough cough!*^000000";
+				mes "Wh...who's there?";
+				mes "Shuda?! If that's you,";
+				mes "stay back, or I'll kill myself!";
+				emotion ET_HUK, playerattached();
+				next;
+				switch(select("What are you doing here?:I'm not Shuda!")) {
+				case 1:
+					mes "["+strcharinfo(0)+"]";
+					mes "Hey...";
+					mes "What are you doi--";
+					next;
+					set $@annonactive,0;
+					disablenpc "Haggard Man";
+					mes "^3355FFHe vanished!^000000";
+					close;
+				case 2:
+					mes "[Haggard Man]";
+					mes "Hmmm...?";
+					mes "I sense kindess, sincerity and a general love for mankind in your voice. Verily, you are not Shuda.";
+					next;
+					mes "[Haggard Man]";
+					mes "You are unfamiliar to me, outsider. I'm unsure of how you found my hiding place, but if you have something to say, make it short!";
+					close;
+				}
+			} else {
+				mes "^3355FFYou dig up the bushes, stirring";
+				mes "up a large, choking cloud of dust.^000000";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "^666666*Cough cough!*^000000";
+				mes "What a large,";
+				mes "choking cloud";
+				mes "of dust!";
+				close;
+			}
+		case 2:
+			mes "^3355FFAs you dig up the bushes, the ground beneath one of the bushes crumbles and you hear a scream";
+			mes "from beneath.^000000";
+			next;
+			if (!rand(0,2)) {
+				set $@annonactive,1;
+				enablenpc "Haggard Man";
+				mes "[?]";
+				mes "^666666*Cough cough*^000000";
+				mes "...M-my legs!";
+				close;
+			} else {
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Hmmm...?";
+				mes "What was that noise?";
+				mes "Ugh, it's awfully dusty.";
+				mes "I better stop digging.";
+				mes "^666666*cough cough cough*^000000";
+				close;
+			}
+		}
+	} else if (thai_find == 14) {
+		mes "^3355FFYou find that the burrow is empty. It seems Annon has found a new hiding place.^000000";
+		close;
+	} else {
+		mes "^3355FFYou find a pile of dead bushes under a large tree. The area around the bushes seems awfully dusty.^000000";
+		close;
+	}
+
+OnTouch_:
+	if (thai_find == 12) {
+		if (!rand(0,2)) {
+			emotion ET_SURPRISE, playerattached();
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Huh...?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "That looks";
+			mes "like blood!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Hmm...";
+			mes "Yes...";
+			mes "That's definitely blood.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Strange to see";
+			mes "a blood stain in";
+			mes "this kind of place...";
+			set thai_find,13;
+			changequest 12033,12034;
+			close;
+		}
+	}
+}
+
+}
+
+ayo_dun02,91,264,3	script	Haggard Man	841,{
+	//completequest 12034;
+	if (thai_find == 13) {
+		mes "[Haggard Man]";
+		mes "^666666*...Cough cough*^000000";
+		mes "No...! My hiding place!";
+		next;
+		mes "[Haggard Man]";
+		mes "Hmmm...?";
+		mes "I'm bleeding?!";
+		mes "Oh, how did this happen?";
+		mes "My spiritual training wasn't supposed to go like this...!";
+		next;
+		switch(select("Treat his wound first.:Is that you, Annon?")) {
+		case 1:
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Anyway, I think you need to be treated. Let me check if I have some potions.";
+			next;
+			if (countitem(504)) {
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah...";
+				mes "Here we are,";
+				mes "a White Potion.";
+				delitem 504,1; //White_Potion
+				next;
+				mes "[Haggard Man]";
+				mes "You mean the White Potion,";
+				mes "the ultimate drink for healing?";
+				mes "I appreciate you doing me this favor. ^666666*Phew*^000000 Now, I feel much better.";
+				next;
+				mes "[Annon]";
+				mes "Ah, my apologies for not introducing myself earlier.";
+				mes "I am called Annon. You must wondering what I must be doing";
+				mes "here under the ground.";
+				next;
+				mes "[Annon]";
+				mes "Well, I'm performing a special exercise for my spiritual training. Though, it may be hard to believe.";
+				next;
+				mes "[Annon]";
+				mes "What...?";
+				mes "Shuda sent you?! Oh well...";
+				mes "I thank you for curing me. Now, it's time for me to resume my training.";
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				specialeffect EF_CLOAKING;
+				mes "Wait, I can't let you go! You don't know how hard it was for me to find you! You can't just leave!";
+				next;
+				mes "[Annon]";
+				mes "Hm? Then what is it that you want? I implore you, do not tell Shuda that you have found me. No matter what, I am not going back to her!";
+				next;
+				mes "[Annon]";
+				mes "Eh...?";
+				mes "Did you find";
+				mes "her ring already?";
+				mes "Ooh, I was hoping it";
+				mes "would never be found.";
+				next;
+				mes "[Annon]";
+				mes "She probably told you that I ran away out of shame for losing the ring, and that if you got the ring back, I'd be happy to return, right?";
+				next;
+				mes "[Annon]";
+				mes "Well...";
+				mes "I threw away";
+				mes "that ring on purpose!";
+				mes "I'm serious about not";
+				mes "going back to Shuda.";
+				next;
+				mes "[Annon]";
+				mes "It looks like you wish to know more. If you promise me that you will not mention my whereabouts";
+				mes "to Shuda, then I'll explain.";
+				next;
+				switch(select("You think the world revolves around you?:What do you want me to do?")) {
+				case 1:
+					mes "[" +strcharinfo(0)+ "]";
+					mes "You think the world";
+					mes "revolves around you?";
+					mes "You can't just run away!";
+					next;
+					mes "[Annon]";
+					mes "Oh, I know, I know!";
+					mes "But you don't understand. Obviously, Shuda is beautiful.";
+					next;
+					mes "[Annon]";
+					mes "But our parents arranged our marriage when we were babies.";
+					mes "That kind of arrangement doesn't matter to me, but she obviously cares about it.";
+					next;
+					mes "[Annon]";
+					mes "In all honesty, she scares me";
+					mes "to death. Whenever I'm with her,";
+					mes "I can't help but break into a cold sweat. And when she's near, I have nightmares about her. ^666666*Brrr...*^000000";
+					next;
+					mes "[Annon]";
+					mes "She thinks it's funny to electrocute me. and ties me up in";
+					mes "a darkened room and feeds me only Jellopy whenever I don't listen to her. Now can you see why I crave freedom?";
+					next;
+					mes "[Annon]";
+					mes "Of course, if you reveal to her that you've found me, I'll repay your favor. I implore you, just pretend you haven't found me, please?";
+					next;
+					select("...Alright, alright.");
+					mes "[Annon]";
+					mes "Thank you so much!";
+					mes "Now, to pay you back, let me use one of the skills I've learned in my spiritual training.";
+					break;
+				case 2:
+					mes "[Annon]";
+					mes "Of course, what I want you to do is to keep me a secret from Shuda. Just forget that you've ever met me, and let Shuda know it was impossible to find me.";
+					next;
+					mes "[Annon]";
+					mes "Besides, even if you help her, all she'll do is offer to name her kids after you. Now... Do you really want that? I know for sure that she and I won't be having children. There's enough evil in the world.";
+					next;
+					mes "[Annon]";
+					mes "Now, you must be wondering";
+					mes "how I would repay you for your silence. Well, let me show you one of the skills I've learned in my spiritual training.";
+					break;
+				}
+				next;
+				mes "[Annon]";
+				mes "Let's see...";
+				mes "Let me twist your";
+				mes "arm this way, and";
+				mes "apply pressure here...";
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Wahhh~!";
+				mes "What the hell";
+				mes "are you doing!";
+				mes "You're hurting me, man!";
+				next;
+				mes "[Annon]";
+				mes "Oh, this is a special kind";
+				mes "of massage. Don't worry, it'll";
+				mes "relieve you of fatigue. It's quite heavenly, actually. You'll see~";
+				next;
+				mes "^3355FF*Snap snap snap*";
+				mes "*Snap snap snap*";
+				mes "*Crack crack crack*";
+				mes "*Crack crack crack*^000000";
+				next;
+				mes "^3355FFYou feel as though Annon";
+				mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
+				set thai_find,14;
+				completequest 12034;
+				if (checkre(3)) {
+					if (BaseLevel < 56) getexp 900,0;
+					else if (BaseLevel > 55 && BaseLevel < 61) getexp 1050,0;
+					else if (BaseLevel > 60 && BaseLevel < 66) getexp 1868,0;
+					else if (BaseLevel > 65 && BaseLevel < 71) getexp 2741,0;
+					else if (BaseLevel > 70 && BaseLevel < 76) getexp 7075,0;
+					else if (BaseLevel > 75 && BaseLevel < 81) getexp 13024,0;
+					else if (BaseLevel > 80 && BaseLevel < 86) getexp 15034,0;
+					else if (BaseLevel > 85 && BaseLevel < 91) getexp 18205,0;
+					else getexp 40678,0;
+				} else {
+					if (BaseLevel < 56) getexp 9000,0;
+					else if (BaseLevel > 55 && BaseLevel < 61) getexp 10500,0;
+					else if (BaseLevel > 60 && BaseLevel < 66) getexp 18684,0;
+					else if (BaseLevel > 65 && BaseLevel < 71) getexp 27411,0;
+					else if (BaseLevel > 70 && BaseLevel < 76) getexp 70757,0;
+					else if (BaseLevel > 75 && BaseLevel < 81) getexp 130246,0;
+					else if (BaseLevel > 80 && BaseLevel < 86) getexp 150340,0;
+					else if (BaseLevel > 85 && BaseLevel < 91) getexp 182052,0;
+					else getexp 406786,0;
+				}
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Whoa...?";
+				mes "That felt was so great~";
+				mes "It even feels like my mind";
+				mes "has been cleansed too!";
+				mes "You've got a deal!";
+				next;
+				mes "[Annon]";
+				mes "Thank you, thank you so much.";
+				mes "Now I can avoid being tied to Shuda, at least for a little longer.";
+				next;
+				mes "[Annon]";
+				mes "Now, if you'll excuse me,";
+				mes "I must make good my escape";
+				mes "before others find me.";
+				mes "Good day~!";
+				close2;
+				set $@annonactive,0;
+				disablenpc "Haggard Man";
+				end;
+			} else {
+				mes "[" +strcharinfo(0)+ "]";
+				mes "No way, no way.";
+				mes "He's too seriously";
+				mes "wounded to be cured";
+				mes "with the normal potions";
+				mes "that I have. I'll need";
+				mes "a stronger potion...";
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Okay, you stay";
+				mes "here for a while.";
+				mes "I'll bring you some";
+				mes "medicine and treat";
+				mes "your wound.";
+				next;
+				mes "[Haggard Man]";
+				mes "No, you don't have to...";
+				mes "^666666*Cough cough cough*^000000";
+				mes "W-wait, don't push";
+				mes "me back inside!";
+				mes "Wahhhhhh~!";
+				next;
+				set $@annonactive,0;
+				disablenpc "Haggard Man";
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Okay, it's time";
+				mes "for me to play doctor!";
+				mes "I don't have much time!";
+				mes "My mission: Bring back an";
+				mes "ultra powerful potion for";
+				mes "this poor guy~";
+				emotion ET_BEST, playerattached();
+				close;
+			}
+		case 2:
+			mes "[Haggard Man]";
+			mes "Annon...?";
+			mes "Who's that?";
+			mes "I've never heard of him!";
+			mes "I don't know him, okay!";
+			mes "Stop disturbing my training!";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Uh...";
+			mes "Hmm, it doesn't seem like you should be yelling with that kind of wound. You sure you're not Annon?";
+			next;
+			mes "[Haggard Man]";
+			mes "I told you!";
+			mes "I've never";
+			mes "heard of him!";
+			mes "L-leave me alone!";
+			next;
+			mes "[Haggard Man]";
+			mes "I have to";
+			mes "hide from Shuda.";
+			mes "^666666*Cries*^000000";
+			close2;
+			set $@annonactive,0;
+			disablenpc "Haggard Man";
+			end;
+		}
+	} else {
+		mes "[Haggard Man]";
+		mes "Huh? Who are you?";
+		mes "This isn't a safe place for a tourists! You should leave right away!";
+		close2;
+		set $@annonactive,0;
+		disablenpc "Haggard Man";
+		end;
+	}
+
+OnInit:
+	set $@annonactive,0;
+	disablenpc "Haggard Man";
+	end;
+}
+		
+ayothaya,253,99,3	script	Fisherman	843,{
+	if (thai_find == 1) {
+		mes "[Dannai]";
+		mes "This place is known to be";
+		mes "teeming with fish. The fish here tend to eat anything they find,";
+		mes "so it's easy to catch them.";
+		next;
+		mes "[Dannai]";
+		mes "We are providing a fishing rod rental service. Every time you fish, you'll need ^3355FF 1 Monster's Feed^000000 to use as bait, and pay";
+		mes "a rod rental fee of ^3355FF50 Zeny^000000.";
+		next;
+		mes "[Dannai]";
+		mes "Would you";
+		mes "like to try?";
+		next;
+		switch(select("Yes.:No, thanks.")) {
+		case 1:
+			if (countitem(528) && Zeny > 49) {
+				mes "^3355FFYou cast your";
+				mes "fishing line";
+				mes "into the water.^000000";
+				next;
+				mes "...";
+				next;
+				mes "...";
+				mes "......";
+				next;
+				mes "^3355FFYou've hooked a Phen!^000000";
+				next;
+				delitem 528,1; //Monster's_Feed
+				set Zeny, Zeny-50;
+				set .@randfish,rand(1,100);
+				if (.@randfish > 0 && .@randfish < 40) {
+					mes "^3355FFWhile cooking the Phen, you";
+					mes "find that it's swallowed a Stone.^000000";
+					close2;
+					getitem 7049,1; //Stone
+					end;
+				} else if (.@randfish > 39 && .@randfish < 60) {
+					mes "^3355FFInside of the Phen,";
+					mes "you find a Red Potion.^000000";
+					close2;
+					getitem 501,1; //Red_Potion
+					end;
+				} else if (.@randfish > 59 && .@randfish < 70) {
+					mes "^3355FFInside of the Phen,";
+					mes "you find a Yellow Potion.^000000";
+					close2;
+					getitem 503,1; //Yellow_Potion
+					end;
+				} else if (.@randfish > 69 && .@randfish < 80) {
+					mes "^3355FFThere's nothing inside...";
+					mes "But now you can eat Sushi!^000000";
+					close2;
+					getitem 551,1; //Shusi
+					end;
+				} else if (.@randfish > 79 && .@randfish < 90) {
+					mes "^3355FFYou find";
+					mes "a Flower Ring";
+					mes "inside the Phen.^000000";
+					close2;
+					getitem 2612,1; //Flower_Ring
+					end;
+				} else if (.@randfish == 90) {
+					mes "^3355FFYou find";
+					mes "a Diamond Ring";
+					mes "inside the Phen.^000000";
+					close2;
+					getitem 2613,1; //Diamond_Ring
+					end;
+				} else if (.@randfish > 90 && .@randfish < 101) {
+					mes "^3355FFYou find a ring";
+					mes "with a name engraved";
+					mes "inside the band.^000000";
+					next;
+					mes "^3355FFYou take the";
+					mes "engagement ring.^000000";
+					close2;
+					set thai_find,2;
+					changequest 12029,12030;
+					getitem 7288,1; //Thai_Ring
+					end;
+				}
+			} else {
+				mes "[Dannai]";
+				mes "Remember, you need ^3355FF1 Monster's Feed^000000 to use as bait and ^3355FF50 zeny^000000 to rend a rod.";
+				close;
+			}
+		case 2:
+			mes "[Dannai]";
+			mes "No problem,";
+			mes "come back anytime you";
+			mes "want. Fishing relaxes";
+			mes "the mind and makes you";
+			mes "feel at peace...";
+			close;
+		}
+		close;
+	} else if (thai_find < 1) {
+		mes "[Dannai]";
+		mes "The fish here tend";
+		mes "to eat anything they find.";
+		mes "When you gut them, you can";
+		mes "often find interesting things inside.";
+		next;
+		mes "[Dannai]";
+		mes "So when you get a chance,";
+		mes "why don't you sit down, relax";
+		mes "and enjoy some quiet fishing?";
+		close;
+	} else {
+		mes "[Dannai]";
+		mes "Welcome, long time no see!";
+		mes "It seems people learned that you found some kind of fortune from fishing here. After word got around, I've been getting lots";
+		mes "of customers.";
+		next;
+		mes "[Dannai]";
+		mes "I understand that you want";
+		mes "fish, but right now there";
+		mes "aren't any fishing spots";
+		mes "for you at the moment.";
+		next;
+		mes "[Dannai]";
+		mes "Please let other";
+		mes "people have their";
+		mes "chance to find their";
+		mes "own fortunes.";
+		close;
+	}
+}
+
+ayo_dun01,255,62,0	script	AyoFootprint1	139,2,0,{
+OnTouch_:
+	if (thai_find == 4) {
+		if (rand(1,3) < 2) {
+			emotion ET_SURPRISE, playerattached();
+			mes "^3355FFYou find footprints heading to the ^5C3317North^3355FF. It looks like somebody was in quite a hurry, just like the villager said!^000000";
+			set thai_find,5;
+			changequest 12032,12033;
+			close;
+		}
+	}
+	end;
+}
+
+ayo_dun01,74,142,0	script	AyoFootprint2	139,2,0,{
+OnTouch_:
+	if (thai_find == 5) {
+		if (rand(1,3) < 2) {
+			emotion ET_THINK, playerattached();
+			mes "^3355FFYou find another set of footprints. It seems that somebody was running away from something. These prints are heading to the ^5C3317East^3355FF. You'd better follow them to see what";
+			mes "you can find.^000000";
+			set thai_find,6;
+			close;
+		}
+	}
+	end;
+}
+
+ayo_dun01,244,256,2	script	AyoFootprint3	139,2,0,{
+OnTouch_:
+	if (thai_find == 6) {
+		if (rand(1,3) < 2) {
+			emotion ET_STARE_ABOUT, playerattached();
+			mes "^3355FFThe footprints end around this area. Whoever was running must";
+			mes "have been exhausted and stumbled on something. Perhaps the owner of the footprints is nearby...^000000";
+			set thai_find,7;
+			close;
+		}
+	}
+	end;
+}
+
+ayo_dun01,17,257,0	script	AyoFootprint4	139,2,0,{
+OnTouch_:
+	if (thai_find == 7) {
+		if (rand(1,3) < 2) {
+			emotion ET_AHA, playerattached();
+			mes "^3355FFAs you follow the footprints,";
+			mes "you arrive at the '^5C3317Entrance of the Shrine^3355FF.' Whoever this person was, he just ran into the second level.^000000";
+			set thai_find,8;
+			close;
+		}
+	}
+	end;
+}
+
+ayo_dun02,145,120,0	script	AyoFootprint5	139,2,0,{
+OnTouch_:
+	if (thai_find == 8) {
+		if (rand(1,3) < 2) {
+			mes "^3355FFYou find the same footprints";
+			mes "in this place. It seems pretty";
+			mes "dangerous, and you wonder why";
+			mes "anyone would come here. The";
+			mes "footprints continue towards";
+			mes "the ^5C3317North^3355FF.^000000";
+			set thai_find,9;
+			close;
+		}
+	}
+	end;
+}
+
+ayo_dun02,135,168,0	script	AyoFootprint6	139,0,2,{
+OnTouch_:
+	if (thai_find == 9) {
+		if (rand(1,3) == 1) {
+			emotion ET_SURPRISE, playerattached();
+			mes "^3355FFThe trail of footprints";
+			mes "continue here, and seem";
+			mes "to look more freshly made.^000000.";
+			next;
+			mes "^3355FFHmm...?";
+			mes "There's something here...^000000";
+			next;
+			switch(select("Ignore.:^5C3317Investigate.^000000")) {
+			case 1:
+				mes "["+strcharinfo(0)+"]";
+				mes "Well, it's probably nothing. But which way should I go now?";
+				set thai_find,10;
+				close;
+			case 2:
+				set .@randayo,rand(1,10);
+				if (.@randayo < 2) {
+					mes "["+strcharinfo(0)+"]";
+					mes "Why, this is a pack of White Potions. Whoever owned these must have dropped these by accident. Hmm, I could use these for later...";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Wait...";
+					mes "There are more";
+					mes "footprints heading";
+					mes "toward the ^5C3317East^000000.";
+					mes "I better look";
+					mes "into this.";
+					set thai_find,10;
+					getitem 504,10; //White_Potion
+					close;
+				} else if (.@randayo > 2 && .@randayo < 5) {
+					mes "["+strcharinfo(0)+"]";
+					mes "Why, this is a pack of Yellow Potions. Whoever owned these must have dropped these by accident. Hmm, I could use these for later...";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Wait...";
+					mes "There are more";
+					mes "footprints heading";
+					mes "toward the ^5C3317East^000000.";
+					mes "I better look";
+					mes "into this.";
+					set thai_find,10;
+					getitem 503,10; //Yellow potion
+					close;
+				} else {
+					mes "[Rat]";
+					mes "^FF0000Squeak!";
+					mes "^FF0000Squeak Squeak!^000000";
+					emotion ET_HUK, playerattached();
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "^8C1717Wah^000000!";
+					mes "What was that?!";
+					next;
+					mes "^3355FFIt was just a rat.";
+					mes "It feels awful silly to be scared by just a little rat, does it not?^000000";
+					next;
+					mes "^3355FFYou find another trail";
+					mes "of footprints that heads";
+					mes "towards the ^5C3317East^3355FF.^000000";
+					set thai_find,10;
+					close;
+				}
+			}
+			close;
+		}
+	}
+	end;
+}
+
+ayo_dun02,77,213,0	script	AyoFootprint7	139,1,1,{
+OnTouch_:
+	if (thai_find == 10) {
+		if (rand(1,3) < 2) {
+			emotion ET_SURPRISE, playerattached();
+			mes "^3355FFWhere is he...?";
+			mes "He seems to have gone";
+			mes "deep into the dungeon.";
+			mes "Just looking for this";
+			mes "guy is exhausting...^000000";
+			set thai_find,11;
+			close;
+		}
+	}
+	end;
+}
+
+ayo_dun02,86,254,0	script	AyoFootprint8	139,1,1,{
+OnTouch_:
+	if (thai_find == 11) {
+		if (rand(1,3) < 2) {
+			emotion ET_SURPRISE, playerattached();
+			mes "^3355FFYou find traces of blood. Whoever was running in this direction may have been wounded. The trail of blood leads to the ^5C3317North^3355FF.^000000";
+			changequest 12032,12033;
+			set thai_find,12;
+			close;
+		}
+	}
+	end;
+}
+
+ayothaya,193,171,3	script	Old Man#02	842,{
+	if (thai_find == 3) {
+		mes "[Tham]";
+		mes "Weird...";
+		mes "Why was that guy";
+		mes "running into the";
+		mes "shrine like that?";
+		mes "That really";
+		mes "bothers me...";
+		next;
+		mes "[Tham]";
+		emotion ET_SURPRISE;
+		mes "Oh, aren't you";
+		mes "from Midgard?";
+		mes "Hello there~";
+		next;
+		mes "[Tham]";
+		mes "Ah...";
+		mes "You heard me talking to myself? Well, I didn't see who he was but, some guy ran into the forest which leads to the shrine. He seemed really terrified of something.";
+		next;
+		mes "[Tham]";
+		mes "He came from out of nowhere, so he scared the crap out of me. Do you think he could be a criminal?";
+		next;
+		mes "[Tham]";
+		emotion ET_AHA;
+		mes "Ah! I think, in his intense fear, he was screaming something about some kind of '^FF0000Shuda^000000,' or whatever. But what could it possibly mean?";
+		next;
+		mes "[Tham]";
+		mes "Oh well, don't worry. All of our villagers aren't like that. Anyway, I hope you enjoy your travels in Ayothaya.";
+		set thai_find,4;
+		changequest 12031,12032;
+		close;
+	} else {
+		set .@randayo,rand(1,7);
+		if (.@randayo < 5) {
+			mes "[Tham]";
+			mes "Oh hello~";
+			mes "I can tell from your clothes that you must be from Midgard.";
+			next;
+			mes "[Tham]";
+			mes "Recently, it seems that";
+			mes "our village has been receiving";
+			mes "more tourism, and I can see that";
+			mes "our village is being influenced";
+			mes "in a positive way.";
+			next;
+			mes "[Tham]";
+			mes "Ah...";
+			mes "While you're here,";
+			mes "why don't you taste some";
+			mes "authentic Ayothaya cuisine";
+			mes "for yourself?";
+			next;
+			mes "[Tham]";
+			mes "We're known for our";
+			mes "spicy and sweet seafood,";
+			mes "and there are some nice";
+			mes "restaurants around here.";
+			next;
+			mes "[Tham]";
+			mes "Anyway, I'm sure that you'll like it. I hope that you come visit Ayothaya as often as you can~";
+			close;
+		} else if (.@randayo > 4 && .@randayo < 7) {
+			mes "[Tham]";
+			mes "Ah~";
+			mes "I've got this craving for Ms. Mali the Spicy's food, especially her 'Tom Yum Goong.'";
+			next;
+			mes "[Tham]";
+			mes "I think it's the";
+			mes "most delicious dish";
+			mes "in the entire world!";
+			close;
+		} else {
+			mes "[Tham]";
+			mes "Oh hello~";
+			mes "I can tell from your clothes that you must be from Midgard.";
+			next;
+			mes "[Tham]";
+			mes "I hope that you enjoy your stay here, and that you come visit Ayothaya as often as you can~";
+			close;
+		}
+	}
+}
+
+// Ayothaya Dungeon Quest :: ayo_tiger
+//============================================================
+ayothaya,83,132,0	script	Dusit#thai	843,{
+	if (ayodunquest == 0) {
+		mes "[Dusit]";
+		mes "Oh...!";
+		mes "You must be a traveller.";
+		mes "I have a tale you may wish to hear if you're interested in listening.";
+		next;
+		if (select("What is it?:I know what the story is.") == 1) {
+			mes "[Dusit]";
+			mes "Ayothaya has a long history. Perhaps it looks calm and peaceful now, but in the past our village was terrorized by a terrible creature.";
+			next;
+			mes "[Dusit]";
+			mes "This beast is known to us as";
+			mes "the ^660000Sa-mhing Tiger^000000, which used";
+			mes "to dwell deep in the ancient ruins.";
+			next;
+			mes "[Dusit]";
+			mes "The Sa-mhing Tiger is addicted";
+			mes "to the taste of human flesh. It has been known to transform into the shape of a person it has eaten in order to lure out his family and friends.";
+			next;
+			mes "[Dusit]";
+			mes "The local people are still afraid that the creature might transform into someone they know, and sneak into their homes to eat them.";
+			next;
+			mes "[Dusit]";
+			mes "However, there is one way you can identify the Sa-mhing Tiger from a human being. Since it's a tiger, it cannot do some of the things";
+			mes "humans are taught to do,";
+			mes "such as light a match.";
+			next;
+			mes "[Dusit]";
+			mes "So, if by any chance you see";
+			mes "a friend acting strangely all";
+			mes "of a sudden, ask him to strike";
+			mes "a match. Make sure he is not";
+			mes "the Sa-mhing Tiger.";
+			next;
+			mes "[Dusit]";
+			mes "However...";
+			mes "I'm not sure if this actually works or not. I guess the best thing to do is just run for your life if you even suspect someone of being";
+			mes "the Sa-mhing Tiger.";
+			next;
+			mes "[Dusit]";
+			mes "Do you believe";
+			mes "in the existance";
+			mes "of man-eating tigers?";
+			next;
+			if (select("Well, not really.:Yes, I do and I think they're scary!") == 1) {
+				mes "[Dusit]";
+				mes "Umm...";
+				mes "Oh well. My late grandfather told me about the Sa-mhing Tiger when";
+				mes "I was a little kid. Of course,";
+				mes "I haven't seen it.";
+				next;
+				mes "[Dusit]";
+				mes "The closest thing I've seen to the Sa-mhing Tiger was a golden cat with a bell. Somehow, I don't think it ate men.";
+				close;
+			}
+			mes "[Dusit]";
+			mes "Run for your life if you ever encounter the Sa-mhing Tiger!";
+			mes "It'll eat you alive!";
+			next;
+			mes "[Dusit]";
+			mes "If you're interested in finding";
+			mes "out more about the story, I can introduce you to someone who";
+			mes "knows that creature more than";
+			mes "anyone else.";
+			next;
+			mes "[Dusit]";
+			mes "Why don't you talk to Boonthom? He's a pretty strange person, but there's something about him...";
+			next;
+			mes "[Dusit]";
+			mes "...";
+			mes "......";
+			next;
+			mes "[Dusit]";
+			mes "Ah well, you'll see what I'm talking about. I hope he'll help you learn more about that evil creature.";
+			set ayodunquest,1;
+			setquest 12035;
+			close;
+		}
+		mes "[Dusit]";
+		mes "You do now?";
+		mes "Then be careful!";
+		mes "It'll eat you alive!";
+		close;
+	} else if (ayodunquest > 0) {
+		mes "[Dusit]";
+		mes "How are you?";
+		mes "If you're interested";
+		mes "in the Sa-mhing Tiger,";
+		mes "please go talk to Boonthom.";
+		next;
+		mes "[Dusit]";
+		mes "But beware!";
+		mes "The Sa-mhing Tiger might be";
+		mes "closer to you than you expect!";
+		close;
+	}
+}
+
+ayo_in01,181,193,4	script	Shaman#thai	840,{
+
+	// For both parts of the quest:
+	// - Pre-Renewal requires Needle Packet and Spool.
+	// - Renewal requires Fabric and Nine Tails.
+	if (checkre(0))
+		setarray .@items[0],7213,7217; //Needle_Pouch, Spool
+	else
+		setarray .@items[0],1059,1022; //Transparent_Cloth, Fox_Tail
+
+	if (ayodunquest == 1) {
+		mes "[Boonthom]";
+		mes "You...!";
+		mes "Isn't it....!";
+		mes "Oooooohhhhhhh!";
+		next;
+		mes "[Boonthom]";
+		mes "Oh...?";
+		next;
+		mes "[Boonthom]";
+		mes "...";
+		next;
+		mes "[Boonthom]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[Boonthom]";
+		mes "...";
+		mes "......";
+		mes ".........";
+		next;
+		mes "[Boonthom]";
+		mes "Never mind.";
+		mes "Hah! I've lost my";
+		mes "train of thought.";
+		next;
+		mes "[Boonthom]";
+		mes "So have you come to me to seek help? I can see the fear in your eyes. Let me gaze into your soul, and see what your fear is for myself. Hmmm...";
+		next;
+		mes "[Boonthom]";
+		mes "...";
+		next;
+		mes "[Boonthom]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[Boonthom]";
+		mes "...";
+		mes "......";
+		mes ".........";
+		next;
+		mes "[Boonthom]";
+		mes "What...!";
+		mes "I see that you dread the Sa-mhing Tiger! I haven't heard any news of that monster for a long time...";
+		next;
+		mes "[Boonthom]";
+		mes "A long time ago,";
+		mes "the Sa-mhing Tiger";
+		mes "really did roam the village";
+		mes "and ate innocent people.";
+		next;
+		mes "[Boonthom]";
+		mes "However, its terror";
+		mes "was brought to an end when it";
+		mes "was finally captured. I was one of those involved in capturing the Sa-mhing Tiger.";
+		next;
+		mes "[Boonthom]";
+		mes "I insisted killing on it, but the other people were too afraid to do so. Instead, the Sa-mhing Tiger";
+		mes "was locked in a cave inside of the ancient ruins.";
+		next;
+		mes "[Boonthom]";
+		mes "I believe that was at least 10 years ago. Perhaps it's already dead by now. However, no one";
+		mes "knows how powerful the tiger truly";
+		mes "is. It may still be alive.";
+		next;
+		mes "[Boonthom]";
+		mes "I don't think we need to worry about it though. It is locked up and there it shall remain.";
+		next;
+		switch(select("I want to explore the ancient ruins.:Locked up! Good! I'm not afraid!")) {
+		case 1:
+			mes "[Boonthom]";
+			mes "You...";
+			mes "You are strange.";
+			mes "You want to explore the ancient ruins. Do all adventurers disregard their safety like that?";
+			next;
+			mes "[Boonthom]";
+			mes "It's your choice. But remember, it is very dangerous to go through the path to the center of the building. Usually, I forbid it.";
+			next;
+			mes "[Boonthom]";
+			mes "But if you want to go in,";
+			mes "I can give you some useful tips.";
+			mes "Would you like to listen?";
+			next;
+			if (select("If it's that dangerous, I'd rather not try.:Sure!") == 1) {
+				mes "[Boonthom]";
+				mes "You made a good decision.";
+				mes "You'd better be careful if";
+				mes "you want to stay alive.";
+				close;
+			}
+			mes "[Boonthom]";
+			mes "Umm, okay.";
+			mes "Since you're";
+			mes "that interested...";
+			next;
+			mes "[Boonthom]";
+			mes "If you wish to enter the ancient building, you must have protection against evil spirits and malice.";
+			next;
+			if (Class == Job_Priest || Class == Job_Acolyte || Class == Job_Crusader) {
+				mes "[Boonthom]";
+				mes "Even if you can";
+				mes "wield the power of";
+				mes "holiness, you will still need the spiritual security of our land.";
+			} else {
+				mes "[Boonthom]";
+				mes "There are many ghosts and";
+				mes "demons within the cave, and they will attack people who do not possess holy power... Like you.";
+			}
+			next;
+			mes "[Boonthom]";
+			mes "I can make you an object";
+			mes "containing this holy power if you wish. In order to make it, I will need some materials.";
+			next;
+			mes "[Boonthom]";
+			mes "^3366991 "+getitemname(.@items[0])+"^000000,";
+			mes "^3366991 "+getitemname(.@items[1])+"^000000,";
+			mes "^3366991 Solid Husk^000000 and";
+			mes "^3366991 Holy Water^000000...";
+			mes "That's all I need.";
+			next;
+			mes "[Boonthom]";
+			mes "Please come back";
+			mes "when you prepare all";
+			mes "the materials.";
+			set ayodunquest,2;
+			changequest 12035,12036;
+			close;
+		}
+		mes "[Boonthom]";
+		mes "Hmmm...";
+		mes "Not afraid";
+		mes "of it, are you?";
+		next;
+		mes "[Boonthom]";
+		mes "............";
+		mes "............";
+		close;
+	} else if (ayodunquest == 2) {
+		if (countitem(.@items[0]) > 0 && countitem(.@items[1]) > 0 && countitem(7190) > 0 && countitem(523) > 0) {
+			mes "[Boonthom]";
+			mes "Excellent!";
+			mes "Now you have brought";
+			mes "everything I need. Let me make";
+			mes "the thing for you as promised...";
+			next;
+			mes "[Boonthom]";
+			mes "Ooooohmmmmm...";
+			next;
+			mes "[Boonthom]";
+			mes "Hmmmmmm...";
+			mes "Hmmmmmmmmm.";
+			next;
+			mes "[Boonthom]";
+			mes "Pffff pffff...";
+			next;
+			mes "[Boonthom]";
+			mes "Here you go.";
+			mes "Please take these holy threads.";
+			mes "With this, you will be able to enter the ruins with less worry.";
+			delitem .@items[0],1;
+			delitem .@items[1],1;
+			delitem 7190,1; //Solid_Peeling
+			delitem 523,1; //Holy_Water
+			set ayodunquest,3;
+			changequest 12036,12037;
+			getitem 7285,1; //Thread_Skein
+			next;
+			mes "[Boonthom]";
+			mes "Even if you lose this, don't worry. Just bring me the materials, and";
+			mes "I will make you another one.";
+			next;
+			mes "[Boonthom]";
+			mes "The ancient building consists";
+			mes "of 2 levels. Before you enter the 2nd underground level, please return to me so that I can tell you how to enter that place.";
+			close;
+		}
+		mes "[Boonthom]";
+		mes "Did you forget what materials";
+		mes "you need to create my object of holy power? Please listen";
+		mes "carefully this time.";
+		next;
+		mes "[Boonthom]";
+		mes "^3366991 "+getitemname(.@items[0])+"^000000,";
+		mes "^3366991 "+getitemname(.@items[1])+"^000000,";
+		mes "^3366991 Solid Husk^000000 and";
+		mes "^3366991 Holy Water^000000.";
+		next;
+		mes "[Boonthom]";
+		mes "See you later.";
+		close;
+	} else if (ayodunquest == 3) {
+		if (countitem(.@items[0]) > 0 && countitem(.@items[1]) > 0 && countitem(7190) > 0 && countitem(523) > 0) {
+			mes "[Boonthom]";
+			mes "Excellent! Now you have brought everything I need, let me make the thing for you as I promised...";
+			next;
+			mes "[Boonthom]";
+			mes "Ooooohmmmmm...";
+			next;
+			mes "[Boonthom]";
+			mes "Hmmmmmm...";
+			mes "Hmmmmmmmmm.";
+			next;
+			mes "[Boonthom]";
+			mes "Pffff pffff...";
+			next;
+			mes "[Boonthom]";
+			mes "Here you go.";
+			mes "Please take these holy threads.";
+			mes "With this, you will be able to enter the ruins with less worry.";
+			delitem .@items[0],1;
+			delitem .@items[1],1;
+			delitem 7190,1; //Solid_Peeling
+			delitem 523,1; //Holy_Water
+			getitem 7285,1; //Thread_Skein
+			next;
+			mes "[Boonthom]";
+			mes "Even if you lose this, don't worry. Just bring me the materials, I can make you another one.";
+			close;
+		}
+		mes "[Boonthom]";
+		mes "If you lose the holy threads, don't worry. I can make some more for you. Just gather the following items.";
+		next;
+		mes "[Boonthom]";
+		mes "^3366991 "+getitemname(.@items[0])+"^000000,";
+		mes "^3366991 "+getitemname(.@items[1])+"^000000,";
+		mes "^3366991 Solid Husk^000000 and";
+		mes "^3366991 Holy Water^000000.";
+		next;
+		mes "[Boonthom]";
+		mes "See you later.";
+		close;
+	} else if (ayodunquest > 3 && ayodunquest < 9) {
+		mes "[Boonthom]";
+		mes "You finally started seeking the tiger. I hope that you will be safe from harm.";
+		next;
+		mes "[Boonthom]";
+		mes "Feel free to ask";
+		mes "me for help at anytime.";
+		close;
+	} else if (ayodunquest == 9) {
+		mes "["+strcharinfo(0)+"]";
+		mes "I copied down this";
+		mes "message while exploring";
+		mes "the dungeon. Would you";
+		mes "take a look at this?";
+		next;
+		mes "[Stone Slate]";
+		mes "^333333Do not enter the";
+		mes "2nd underground level";
+		mes "...is danger... You wil...";
+		mes "...encounter... tiger...^000000";
+		next;
+		mes "[Stone Slate]";
+		mes "^333333You must kill... In order to do... MUST... How to go... the 2nd underground level...";
+		mes "You need more... Holy power... in order to... Otherwise, it's impossible...^000000";
+		next;
+		mes "[Boonthom]";
+		mes "That was written by one of my comrades who entered the ruins,";
+		mes "as he regretted letting the tiger live, lest it return.";
+		next;
+		mes "[Boonthom]";
+		mes "If you were able to find this note, you must have strong determination to venture through the ruins.";
+		next;
+		mes "[Boonthom]";
+		mes "As you can guess from the";
+		mes "note, the 2nd underground level is very very dangerous. You will need holy threads that contain even more holy protection.";
+		next;
+		mes "[Boonthom]";
+		mes "Now, go and gather some materials so that I can create more powerful holy threads for you.";
+		next;
+		mes "[Boonthom]";
+		mes "^3366992 Holy Water^000000,";
+		mes "^3366991 Yggdrasil Leaf^000000,";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
+		set ayodunquest,10;
+		changequest 12037,12038;
+		next;
+		mes "[Boonthom]";
+		mes "Return to me";
+		mes "once you have";
+		mes "gathered everything.";
+		close;
+	} else if (ayodunquest == 10) {
+		if (countitem(523) > 1 && countitem(610) > 0 && countitem(.@items[0]) > 1 && countitem(.@items[1]) > 1) {
+			mes "[Boonthom]";
+			mes "Hmm~";
+			mes "You've brought";
+			mes "everything. Quite";
+			mes "the enthusiastic one,";
+			mes "aren't you?";
+			next;
+			mes "[Boonthom]";
+			mes "Ooooohmmmmm...";
+			next;
+			mes "[Boonthom]";
+			mes "Hmmmmmm...";
+			mes "Hmmmmmmmmm.";
+			next;
+			mes "[Boonthom]";
+			mes "Pffff pffff...";
+			next;
+			mes "[Boonthom]";
+			mes "Here you go.";
+			mes "Please take these holy threads.";
+			mes "With this, you will be able to enter the ruins with less worry.";
+			delitem .@items[0],2;
+			delitem .@items[1],2;
+			delitem 610,1; //Leaf_Of_Yggdrasil
+			delitem 523,2; //Holy_Water
+			set ayodunquest,11;
+			getitem 7287,1; //Thread_Skein_
+			changequest 12038,12039;
+			next;
+			mes "[Boonthom]";
+			mes "Even if you lose this, don't worry. Just bring me the materials, and";
+			mes "I will make you another one.";
+			close;
+		}
+		mes "[Boonthom]";
+		mes "Hmm...?";
+		mes "Didn't I tell you";
+		mes "what I need to make";
+		mes "a more powerful";
+		mes "holy thread?";
+		next;
+		mes "[Boonthom]";
+		mes "^3366992 Holy Water^000000,";
+		mes "^3366991 Yggdrasil Leaf^000000,";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
+		next;
+		mes "[Boonthom]";
+		mes "Return to me";
+		mes "with those items";
+		mes "and I will craft";
+		mes "more powerful holy";
+		mes "threads for you.";
+		close;
+	} else if (ayodunquest == 11) {
+		if (countitem(7287) > 0) {
+			mes "[Boonthom]";
+			mes "Those threads";
+			mes "will protect you";
+			mes "from the spiritual";
+			mes "dangers, but it's up";
+			mes "to you to defend yourself";
+			mes "from monster attacks, okay?";
+			close;
+		} else if (countitem(523) > 1 && countitem(610) > 0 && countitem(.@items[0]) > 1 && countitem(.@items[1]) > 1 && countitem(7287) == 0) {
+			mes "[Boonthom]";
+			mes "Ooooohmmmmm...";
+			next;
+			mes "[Boonthom]";
+			mes "Hmmmmmm...";
+			mes "Hmmmmmmmmm.";
+			next;
+			mes "[Boonthom]";
+			mes "Pffff pffff...";
+			next;
+			mes "[Boonthom]";
+			mes "Here you go.";
+			mes "Please take these holy threads.";
+			mes "With this, you will be able to enter the ruins with less worry.";
+			delitem .@items[0],2;
+			delitem .@items[1],2;
+			delitem 610,1; //Leaf_Of_Yggdrasil
+			delitem 523,2; //Holy_Water
+			getitem 7287,1; //Thread_Skein_
+			close;
+		}
+		mes "[Boonthom]";
+		mes "Hmm...?";
+		mes "Didn't I tell you";
+		mes "what I need to make";
+		mes "a more powerful";
+		mes "holy thread?";
+		next;
+		mes "[Boonthom]";
+		mes "^3366992 Holy Water^000000,";
+		mes "^3366991 Yggdrasil Leaf^000000,";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
+		close;
+	} else if (ayodunquest == 12) {
+		mes "[Boonthom]";
+		mes "Huh...!";
+		mes "You must have seen something.";
+		mes "I can tell by the gloomy look on your face, and the shadow looming over your soul.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I found";
+		mes "this old letter";
+		mes "in the ruins.";
+		next;
+		mes "[Old Letter]";
+		mes "^333333Dear, Boonthom...I was a fool...There is Sa-mhing Tig'...One who ....my remains... Please take...to Boonthom...";
+		next;
+		mes "[Boonthom]";
+		mes "I see...";
+		mes "Oh, my dear";
+		mes "old friend...";
+		next;
+		mes "[Boonthom]";
+		mes "Thank you for your trouble.";
+		mes "My friend left that box for me.";
+		mes "But I guess he would wish to give that box to the person who found his remains.";
+		next;
+		mes "[Boonthom]";
+		mes "If you wish to explore the building again, but you don't have any holy thread, feel free to ask me at anytime.";
+		set ayodunquest,13;
+		completequest 12039;
+		close;
+	} else if (ayodunquest > 12) {
+		if (countitem(7287) > 0) {
+			mes "[Boonthom]";
+			mes "Best of luck on your";
+			mes "expeditions, brave";
+			mes "adventurer~";
+			close;
+		} else if (countitem(523) > 1 && countitem(610) > 0 && countitem(.@items[0]) > 1 && countitem(.@items[1]) > 1 && countitem(7287) == 0) {
+			mes "[Boonthom]";
+			mes "Lost the";
+			mes "holy threads";
+			mes "somehow, did you?";
+			mes "With the items you";
+			mes "have, I'll simply";
+			mes "make more of them.";
+			next;
+			mes "[Boonthom]";
+			mes "Ooooohmmmmm...";
+			next;
+			mes "[Boonthom]";
+			mes "Hmmmmmm...";
+			mes "Hmmmmmmmmm.";
+			next;
+			mes "[Boonthom]";
+			mes "Pffff pffff...";
+			next;
+			mes "[Boonthom]";
+			mes "Here you go.";
+			mes "Please take these holy threads.";
+			mes "With this, you will be able to enter the ruins with less worry.";
+			delitem .@items[0],2;
+			delitem .@items[1],2;
+			delitem 610,1; //Leaf_Of_Yggdrasil
+			delitem 523,2; //Holy_Water
+			getitem 7287,1; //Thread_Skein_
+			close;
+		}
+		mes "[Boonthom]";
+		mes "Hmm...?";
+		mes "Didn't I tell you";
+		mes "what I need to make";
+		mes "a more powerful";
+		mes "holy thread?";
+		next;
+		mes "[Boonthom]";
+		mes "^3366992 Holy Water^000000,";
+		mes "^3366991 Yggdrasil Leaf^000000,";
+		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
+		close;
+	}
+	mes "[Boonthom]";
+	mes "Ooooohmmmmm...";
+	close;
+}
+
+ayo_fild01,129,197,0	script	Puraim#thai1	842,{
+	if ((ayodunquest > 2 && countitem(7285) > 0) || (ayodunquest > 2 && countitem(7287) > 0)) {
+		mes "[Puraim]";
+		mes "Huh...?";
+		mes "I feel it!";
+		mes "I can feel the";
+		mes "power of holiness!";
+		mes "It's coming from you!";
+		next;
+		mes "[Puraim]";
+		mes "I guess you can go ahead";
+		mes "into the ruins. So that's";
+		mes "what you want? To explore";
+		mes "this area?";
+		next;
+		mes "[Puraim]";
+		mes "I would suggest";
+		mes "against coming inside.";
+		mes "Even the local people";
+		mes "fear this area.";
+		next;
+		mes "[Puraim]";
+		mes "If the Sa-mhing Tiger wasn't around, there would still be all the evil spirits in this place. Even with the holy thread, this place is still dangerous.";
+		next;
+		mes "[Puraim]";
+		mes "So what do you want?";
+		mes "Do you still want to";
+		mes "explore the area,";
+		mes "adventurer?";
+		next;
+		if (select("Yes.:No! I'm too afraid of the ruins now.") == 1) {
+			mes "[Puraim]";
+			mes "Hmmm...";
+			mes "It seems you adventurers are tempted by the thrill of danger,";
+			mes "or you've all got some death wish.";
+			next;
+			mes "[Puraim]";
+			mes "Oh well, that's none of my business. After all, you already";
+			mes "have a holy spirit. Still, be careful. You might not want to go to the 2nd underground level of the ruins.";
+			next;
+			mes "[Puraim]";
+			mes "As you Midgardians";
+			mes "say, 'curiousity killed the cat.'";
+			mes "Anyway, go for it!";
+			next;
+			mes "^3355FFHe shoved you off the hill";
+			mes "and you plummet like a rock.^000000";
+			close2;
+			percentheal -10,0;
+			warp "ayo_fild02",30,135;
+			end;
+		}
+		mes "[Puraim]";
+		mes "Good decision!";
+		mes "As I expected, you're";
+		mes "smart enough not to";
+		mes "stupidly jeopardize your life.";
+		close;
+	}
+	mes "[Puraim]";
+	mes "If I were you, I wouldn't";
+	mes "even dare to approach";
+	mes "the ruins down over there.";
+	next;
+	mes "[Puraim]";
+	mes "Anyone who doesn't have the protection of a holy spirit will be easy game for the evil creatures living there. You'd be killed in";
+	mes "no time at all!";
+	next;
+	mes "[Puraim]";
+	mes "Go back, adventurer.";
+	mes "If you wish to explore";
+	mes "this area, you'd better";
+	mes "show me some holy spirit.";
+	close;
+}
+
+ayo_fild02,25,154,0	script	Aik#thai	843,{
+	mes "[Aik]";
+	mes "So, how was your expedition?";
+	mes "I hope that the evil spirits will not follow you outside of the ruins, and haunt your dreams.";
+	next;
+	mes "[Aik]";
+	mes "When you go back,";
+	mes "remember to ward off";
+	mes "the evil from your mind.";
+	mes "Otherwise you will encounter";
+	mes "trouble later...";
+	next;
+	mes "[Aik]";
+	mes "So, would you";
+	mes "like to go back?";
+	next;
+	if (select("Yes.:No, I need to look around more...") == 1) {
+		mes "[Aik]";
+		mes "Alright then...";
+		mes "Here we go...";
+		next;
+		mes "^3355FFHe suddenly grabbed you";
+		mes "and hurled you up into the air!^000000";
+		close2;
+		warp "ayo_fild01",115,200;
+		end;
+	}
+	mes "[Aik]";
+	mes "I see.";
+	mes "Take care.";
+	close;
+}
+
+// Water Traps
+ayo_dun01,273,26,0	script	 #th_dun1_1_1::AyoTrap1	111,0,4,{
+	mes "^3355FFYou look down and see a pool";
+	mes "of water in the distance. It looks like a long drop to the bottom.^000000";
+	next;
+	mes "^3355FFYou are filled";
+	mes "with apprehension,";
+	mes "After all, if you fall down,^000000";
+	mes "^2F2F4Fyou might get killed.^000000";
+	close;
+
+OnTouch_:
+	mes "^3355FFYou look down and see a pool";
+	mes "of water in the distance. It looks like a long drop to the bottom.^000000";
+	next;
+	mes "^3355FFYou are filled";
+	mes "with apprehension.";
+	mes "After all, if you fall down,";
+	mes "^2F2F4Fyou might get killed.^000000";
+	close;
+}
+
+ayo_dun01,273,27,0	duplicate(AyoTrap1)	 #th_dun1_1_2	111
+ayo_dun01,272,27,0	duplicate(AyoTrap1)	 #th_dun1_1_3	111,0,4
+ayo_dun01,272,26,0	duplicate(AyoTrap1)	 #th_dun1_1_4	111
+
+ayo_dun01,26,27,0	script	 #th_dun1_1::AyoTrap2	-1,1,1,{
+OnTouch_:
+	percentheal -100,0;
+	end;
+}
+
+ayo_dun01,28,27,0	duplicate(AyoTrap2)	 #th_dun1_2	-1,0,1
+ayo_dun01,27,25,0	duplicate(AyoTrap2)	 #th_dun1_3	-1,1,0
+ayo_dun01,25,25,0	duplicate(AyoTrap2)	 #th_dun1_4	-1
+ayo_dun01,272,273,0	duplicate(AyoTrap2)	 #th_dun1_5	-1,1,1
+ayo_dun01,274,273,0	duplicate(AyoTrap2)	 #th_dun1_6	-1,0,1
+ayo_dun01,273,271,0	duplicate(AyoTrap2)	 #th_dun1_7	-1,1,0
+ayo_dun01,271,271,0	duplicate(AyoTrap2)	 #th_dun1_8	-1
+ayo_dun01,26,273,0	duplicate(AyoTrap2)	 #th_dun1_9	-1,1,1
+ayo_dun01,28,273,0	duplicate(AyoTrap2)	 #th_dun1_10	-1,0,1
+ayo_dun01,27,271,0	duplicate(AyoTrap2)	 #th_dun1_11	-1,1,0
+ayo_dun01,25,271,0	duplicate(AyoTrap2)	 #th_dun1_12	-1
+
+// Hints
+ayo_dun01,156,148,0	script	 #hint01::AyoHint	-1,0,4,{
+OnTouch_:
+	if (rand(1,100) > 60 && ayodunquest < 11) {
+		mes "^3355FFThe Holy Thread in your pocket suddenly began to glow. You feel that something is near you...^000000";
+		close2;
+		viewpoint 1,198,164,0,0xFF0000;
+		viewpoint 1,87,16,1,0xFF0000;
+		viewpoint 1,268,214,2,0xFF0000;
+		viewpoint 1,147,274,3,0xFF0000;
+		viewpoint 1,99,118,4,0xFF0000;
+		viewpoint 1,16,188,5,0xFF0000;
+	}
+	end;
+}
+
+ayo_dun01,259,42,0	duplicate(AyoHint)	 #hint02	-1,2,0
+ayo_dun01,259,44,0	duplicate(AyoHint)	 #hint02_2	-1,2,0
+ayo_dun01,259,46,0	duplicate(AyoHint)	 #hint02_3	-1,2,0
+
+// Puzzle pieces
+ayo_dun01,198,164,0	script	 #hun_thai_1	111,{
+	if (ayodunquest == 3) {
+		set ayodunquest,4;
+		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 1st part of the slate.^000000";
+		next;
+		mes "^3355FFIt reads '^0000FFDo not enter the 2nd underground level^3355FF.' You are unable to read the rest of the message.^000000";
+		close;
+	}
+	mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 1st part of the slate.^000000";
+	close;
+}
+
+ayo_dun01,87,16,0	script	 #hun_thai_2	111,{
+	if (ayodunquest == 4) {
+		set ayodunquest,5;
+		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 2nd part of the slate.^000000";
+		next;
+		mes "^3355FFIt reads '^0000FF...is danger... You wil...^3355FF.' You are unable to read the rest of the message.^000000";
+		close;
+	}
+	mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 2nd part of the slate.^000000";
+	close;
+}
+
+ayo_dun01,268,214,0	script	 #hun_thai_3	111,{
+	if (ayodunquest == 5) {
+		set ayodunquest,6;
+		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 3rd part of the slate.^000000";
+		next;
+		mes "^3355FFIt reads '^0000FF...encounter... tiger...^3355FF.' You are unable to read the rest of the message.^000000";
+		close;
+	}
+	mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 3rd part of the slate.^000000";
+	close;
+}
+
+ayo_dun01,147,274,0	script	 #hun_thai_4	111,{
+	if (ayodunquest == 6) {
+		set ayodunquest,7;
+		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 4th part of the slate.^000000";
+		next;
+		mes "^3355FFIt reads '^0000FFYou must kill... In order to do... MUST... How to go... the 2nd underground level...^3355FF' You are unable to read the rest of the message.^000000";
+		close;
+	}
+	mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 4th part of the slate.^000000";
+	close;
+}
+
+ayo_dun01,99,118,0	script	 #hun_thai_5	111,{
+	if (ayodunquest == 7) {
+		set ayodunquest,8;
+		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 5th part of the slate.^000000";
+		next;
+		mes "^3355FFIt reads '^0000FFYou need more... Holy power... in order to...^3355FF' You are unable to read the rest of the message.^000000";
+		close;
+	}
+	mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the 5th part of the slate.^000000";
+	close;
+}
+
+ayo_dun01,16,188,0	script	 #hun_thai_6	111,{
+	if (ayodunquest == 8) {
+		set ayodunquest,9;
+		// setquest 12036;
+		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the last part of the slate.^000000";
+		next;
+		mes "^3355FFIt reads '^0000FFOtherwise, it's impossible...^3355FF' You are unable to read the rest of the message.^000000";
+		close;
+	}
+	mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the last part of the slate.^000000";
+	close;
+}
+
+ayo_dun01,24,283,0	script	 #2_dun_in	111,{
+	if (ayodunquest > 10) {
+		if (countitem(7287) > 0) {
+			mes "^3355FFThe holy threads";
+			mes "emanate a powerful sense";
+			mes "of safety and security.";
+			mes "With the protection of";
+			mes "holiness, you begin your";
+			mes "descent into the 2nd level.^000000.";
+			close2;
+			if (rand(1,10) > 5) {
+				warp "ayo_dun02",23,26;
+			} else {
+				warp "ayo_dun02",275,26;
+			}
+			end;
+		}
+		mes "^3355FFYou find what seems to be the entrance to the 2nd level. However, you are filled with an overwhelming sense of dread. Somehow, you can't bring yourself to go down...^000000";
+		close;
+	}
+	mes "^3355FFYou find what seems to be the entrance to the 2nd level. However, you are filled with an overwhelming sense of dread. Somehow, you can't bring yourself to go down...^000000";
+	close;
+}
+
+ayo_dun02,268,108,0	script	 #reward_tiger	111,{
+	if (ayodunquest == 11 && countitem(7287) > 0) {
+		mes "^3355FFYou find half of the skeletal remains of a person sticking out from the ground. It seems to be the remains of Boonthom's comrade.^000000";
+		next;
+		mes "^3355FFYou find a piece of paper beside the skeleton, as well as a box.^000000";
+		next;
+		mes "^3355FFYou read what is written on the old sheet of paper. The letters have faded with age, and it is difficult to read.^000000";
+		next;
+		mes "[Old Letter]";
+		mes "^333333Dear, Boonthom,";
+		mes "I was a fool. There is 'Sa-mhing Tig'...One who ....my remains... Please take...to Boonthom...";
+		next;
+		mes "^3355FFYou pick";
+		mes "up the box.^000000";
+		set ayodunquest,12;
+		// completequest 12039;
+		getitem 603,1; //Old_Blue_Box
+		close;
+	}
+}
+
+// Tom Tung Goong Quest :: ayo_tom
+//============================================================
+ayothaya,196,265,3	script	Einon#ayo	842,{
+	if (tomyumgoong == 0) {
+		mes "[Einon]";
+		mes "Do you know what the";
+		mes "most popular cuisine";
+		mes "of this village is?";
+		next;
+		mes "[Einon]";
+		mes "Ayothaya is world famous";
+		mes "for its regional cuisine, but";
+		mes "out of all Ayothayan dishes,";
+		mes "'^3131FFTom Yum Goong^000000' is the best.";
+		next;
+		mes "[Einon]";
+		mes "Tom Yum Goong is a type";
+		mes "of soup that is very spicy. Try it once, and you will be amazed by its profound taste. Try it twice, and you will be enraptured by its tantalizing aroma.";
+		next;
+		mes "[Einon]";
+		mes "It's really one of the most delicious foods in the world!";
+		mes "Everyone in the world would";
+		mes "want to try this at least once in his lifetime. So, would you like";
+		mes "to try some?";
+		next;
+		if (select("Sure thing.:No, thanks. I hate spicy food.") == 1) {
+			mes "[Einon]";
+			mes "Okay...!";
+			mes "Now who would be";
+			mes "best for preparing";
+			mes "Tom Yum Goong for you?";
+			mes "Hmmmmm...";
+			next;
+			mes "[Einon]";
+			mes "Everyone in the village";
+			mes "knows how to make it, but";
+			mes "I recommend that you go";
+			mes "visit ^3131FFMali the Spicy^000000.";
+			next;
+			emotion ET_BEST;
+			set tomyumgoong,1;
+			setquest 8123;
+			mes "[Einon]";
+			mes "She is the best cook when it";
+			mes "comes to Tom Yum Goong!";
+			mes "Why don't you ask her";
+			mes "to cook you some?";
+			close;
+		}
+		mes "[Einon]";
+		mes "Oh I see...";
+		mes "However, when you";
+		mes "change your mind,";
+		mes "please come back.";
+		close;
+	} else if (tomyumgoong == 1) {
+		mes "[Einon]";
+		mes "Ah, you wanna know";
+		mes "where ^3131FFMali the Spicy^000000 is?";
+		mes "Well, there's not too many places";
+		mes "a cook would stay other than in";
+		mes "a restaurant, right? Hahaha~";
+		close;
+	}
+	mes "[Einon]";
+	mes "Golden Ayothaya...";
+	mes "Although I've grown";
+	mes "up in this village,";
+	mes "I still think my village";
+	mes "is magnificient and beautiful.";
+	next;
+	mes "[Einon]";
+	mes "What do you think?";
+	mes "Wouldn't you agree with me?";
+	close;
+}
+
+ayo_in01,145,163,3	script	Cook#ayo	839,{
+	if (tomyumgoong < 2) {
+		mes "[Mali the Spicy]";
+		mes "Hello, there!";
+		mes "I am called Mali the Spicy.";
+		mes "All of my dishes always amaze";
+		mes "my customers with their tempting scents and deep flavors.";
+		next;
+		mes "[Mali the Spicy]";
+		mes "I am especially proud of my";
+		mes "^3131FFTom Yum Goong^000000, which is the";
+		mes "best in the village. I suppose";
+		mes "it's my fate to cook the greatest Tom Yum Goong ever.";
+		if (tomyumgoong == 0) {
+			close;
+		} else {
+			next;
+			mes "[Mali the Spicy]";
+			mes "Oh I see...";
+			mes "You want me to cook";
+			mes "Tom Yum Goong for you,";
+			mes "don't you?";
+			next;
+			mes "[Mali the Spicy]";
+			mes "Honestly, I've been really";
+			mes "busy ever since I opened this restaurant. If you really wish to taste my Tom Yum Goong, would";
+			mes "you do something for me?";
+			next;
+			if (select("Sure!:Eh... I dunno.") == 1) {
+				mes "[Mali the Spicy]";
+				mes "First, would you get";
+				mes "the ingredients to make";
+				mes "Tom Yum Goong for me? I'll need some ^CE0000Shrimps^000000, ^CE0000Chiles^000000 and ^CE0000Lemons^000000.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Remember, Shrimp is the main ingredient of this dish. So, the fresher the Shrimp, the tastier your food will be.";
+				next;
+				select("Where can I find them?");
+				mes "[Mali the Spicy]";
+				mes "I expected you";
+				mes "to ask me that.";
+				mes "For Shrimps, look around";
+				mes "the beach. You should see";
+				mes "a lot of them there.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "However, you might have a hard time finding them since you haven't done that before. So just buy some Shrimp from the guy who sells";
+				mes "the freshest Shrimp around.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Hmmm...";
+				mes "If you mention";
+				mes "my name, that guy";
+				mes "might give you a discount.";
+				set tomyumgoong,2;
+				changequest 8123,8124;
+				next;
+				mes "[Mali the Spicy]";
+				mes "His name is ^3131FFThongpool^000000.";
+				mes "He will be somewhere around the village selling Shrimps. Go and ask him to give you 20 Shrimps to cook Tom Yum Goong.";
+				close;
+			}
+			mes "[Mali the Spicy]";
+			mes "I understand this might be difficult to do, but it's worth";
+			mes "a try if you really want to taste the best Tom Yum Goong.";
+			close;
+		}
+	} else if (tomyumgoong > 1 && tomyumgoong < 4) {
+		if (tomyumgoong == 2 && countitem(567) > 19) {
+			mes "[Mali the Spicy]";
+			mes "Errr...";
+			mes "What's wrong with these Shrimp?";
+			mes "They all have these scratches and rips in them! I can't believe Thongpool sold such bad Shrimp";
+			mes "to his customers!";
+			next;
+			mes "[Mali the Spicy]";
+			mes "I'm so sorry, but";
+			mes "I can't cook the best";
+			mes "Tom Yum Goong with";
+			mes "these Shrimp.";
+			next;
+			mes "[Mali the Spicy]";
+			mes "I know it's an inconvenience, but would you go back to Thongpool";
+			mes "and ask him to give you the freshest Shrimp to cook the best";
+			mes "Tom Yum Goong?";
+			close;
+		} else if (tomyumgoong == 3) {
+			if (countitem(567) > 19) {
+				mes "[Mali the Spicy]";
+				mes "Ah, you came back!";
+				mes "Now, let me see what";
+				mes "you've brought. Hmm...";
+				mes "These are...";
+				next;
+				emotion ET_BEST;
+				mes "[Mali the Spicy]";
+				mes "The freshest Shrimp that";
+				mes "I've been looking for! Well done~";
+				mes "With these big and fresh Shrimp,";
+				mes "I can cook the best Tom Yum Goong for you! Thank you so much!";
+				delitem 567,20; //Prawn
+				next;
+				mes "[Mali the Spicy]";
+				mes "It will be a perfect food with the natural sweetness of the Shrimp, the sourness of Lemons and a little bit of fish sauce!";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Oh... Right.";
+				mes "But we only have Shrimp.";
+				mes "Now, I want you to bring";
+				mes "me some ^CE0000Lemons^000000.";
+				next;
+				if (select("Where can I find Lemons?:I hate sour food. I'd better quit!") == 1) {
+					set tomyumgoong,4;
+					changequest 8124,8125;
+					mes "[Mali the Spicy]";
+					mes "A few days ago, I saw a good";
+					mes "Lemon tree while taking a walk.";
+					mes "But this tree belongs to an ordinary man who's not a Fruit Merchant.";
+					next;
+					mes "[Mali the Spicy]";
+					mes "I'm not sure whether";
+					mes "or not he'd sell Lemons";
+					mes "to you, but you can try,";
+					mes "I guess.";
+					close;
+				}
+				emotion ET_ANGER;
+				mes "[Mali the Spicy]";
+				mes "What a stupid...!";
+				mes "If you quit just because you really hate sour flavors, you must not be that eager to have my Tom Yum Goong!";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Once you taste my";
+				mes "Tom Yum Goong, you'll";
+				mes "regret what you just said!";
+				close;
+			}
+			mes "[Mali the Spicy]";
+			mes "Huh...?";
+			mes "What did you do";
+			mes "with the Shrimps?";
+			mes "You didn't eat them";
+			mes "on the way here, did you?";
+			close;
+		}
+		mes "[Mali the Spicy]";
+		mes "Make sure you ask";
+		mes "Mr. Thongpool to give";
+		mes "you 20 Shrimps.";
+		mes "Now hurry~";
+		close;
+	} else if (tomyumgoong > 3 && tomyumgoong < 6) {
+		if (tomyumgoong == 4 && countitem(568) > 9) {
+			mes "[Mali the Spicy]";
+			mes "You think these are";
+			mes "the best quality Lemons?";
+			mes "Take a closer look!";
+			next;
+			mes "[Mali the Spicy]";
+			mes "The skin of these";
+			mes "Lemons lack luster";
+			mes "and they don't even smell";
+			mes "fresh! They're just";
+			mes "common Lemons!";
+			close;
+		} else if (tomyumgoong == 5) {
+			if (countitem(568) > 9) {
+				emotion ET_SURPRISE;
+				mes "[Mali the Spicy]";
+				mes "Welcome back!";
+				mes "Wow, you came back";
+				mes "really fast! Okay, let me";
+				mes "see the Lemons";
+				mes "you brought?";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Wow, great!";
+				mes "These are really fresh Lemons!";
+				mes "How could you bring all of these by yourself? Thanks for your trouble~";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Now, you should go buy";
+				mes "some ^CE0000Chiles^000000 and some";
+				mes "other materials in the Market.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "When you talk";
+				mes "to the Merchants";
+				mes "in the Market, they";
+				mes "will know what you want.";
+				next;
+				if (select("Okay, I'll be right back.:Ah, I'm tired now. Let me take a rest first...") == 1) {
+					delitem 568,10; //Lemon
+					set tomyumgoong,6;
+					changequest 8125,8126;
+					mes "[Mali the Spicy]";
+					mes "See you in a bit~";
+					close;
+				}
+				mes "[Mali the Spicy]";
+				mes "It's your call.";
+				mes "But remember...";
+				mes "The Shrimps might go bad";
+				mes "while you're taking a rest.";
+				close;
+			}
+			mes "[Mali the Spicy]";
+			mes "Huh...?";
+			mes "What did you";
+			mes "do with Lemons?";
+			mes "You didn't eat them";
+			mes "all on the way here, did you?";
+			close;
+		}
+		mes "[Mali the Spicy]";
+		mes "Alright...";
+		mes "I'm counting on you";
+		mes "to get the best Lemons";
+		mes "from the guy that owns that tree.";
+		next;
+		mes "[Mali the Spicy]";
+		mes "Somehow, you've got";
+		mes "to get those high quality";
+		mes "Lemons so that I can make";
+		mes "some Tom Yum Goong!";
+		close;
+	} else if (tomyumgoong == 6) {
+		if (countitem(7286) > 29) {
+			mes "[Mali the Spicy]";
+			mes "I don't understand...";
+			mes "Where did you get these";
+			mes "bad ingredients?! Didn't";
+			mes "I tell you that my";
+			mes "Tom Yum Goong";
+			mes "requires the best?!";
+			close;
+		}
+		mes "[Mali the Spicy]";
+		mes "I know you've been working hard to do me this favor. I hope you'll put forth that last little bit of effort to finish this.";
+		next;
+		mes "[Malli the Spicy]";
+		mes "Please go take a look in the Market. I don't doubt that it will be a good experience. After all, my fantastic Tom Yum Goong is waiting for you!";
+		close;
+	} else if (tomyumgoong == 7) {
+		if (MaxWeight - Weight > 1499) {
+			if (countitem(7286) > 29) {
+				delitem 7286,30; //Chilli
+				emotion ET_SURPRISE;
+				mes "[Mali the Spicy]";
+				mes "Now...";
+				mes "Everything is all set!";
+				mes "Before we start, let me";
+				mes "check the materials.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "^CE0000Shrimp^000000, ^CE0000Chiles^000000, ^CE0000Lemons^000000...";
+				mes "Fish sauce and other little things...";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Perfect!";
+				mes "Shall we begin?";
+				next;
+				mes "^FF0000*Tuk*^000000";
+				mes "^9C009C*Tup*^000000";
+				mes "^009C00*Puk*^000000";
+				specialeffect EF_ENCHANTPOISON;
+				next;
+				mes "^FF0031*Chop chop*^000000";
+				mes "^FF9C00*Tup tup tup*^000000";
+				mes "^639CFF*Pu pu^000000 -";
+				specialeffect EF_VENOMDUST;
+				next;
+				mes "[Mali the Spicy]";
+				mes "- ^9C6300Tup tup^000000 ^006363chook^000000";
+				mes "^316363Chop chop^000000";
+				mes "^FF0000Tup tup tup^000000 ^009C00Pu pu^000000 -";
+				specialeffect EF_STONECURSE;
+				specialeffect EF_HASTEUP;
+				specialeffect EF_BEGINSPELL;
+				next;
+				mes "[Mali the Spicy]";
+				mes "Wah^00009Cah^0000FFahhhh^0063FFaaaahhh^000000!";
+				emotion ET_HUK;
+				specialeffect EF_FLASHER;
+				specialeffect EF_LORD;
+				next;
+				mes "[Mali the Spicy]";
+				mes " ...";
+				mes " ......";
+				mes " .........";
+				next;
+				set tomyumgoong,8;
+				completequest 8126;
+				getitem 566,10; //Tomyumkung
+				emotion ET_BEST;
+				mes "[Mali the Spicy]";
+				mes "Here's your";
+				mes "Tom Yum Goong!";
+				mes "Ah~ This taste,";
+				mes "this scent... Yeah.";
+				mes "I know I did a good job.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Do you know what is the secret of Tom Yum Goong? It isn't simply just food. This has the power to heal you, and help you get into better shape.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Because...";
+				mes "It contains the";
+				mes "power of God.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Okay...!";
+				mes "I'm giving you";
+				mes "10 Tom Yum Goong";
+				mes "free of charge~";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Thank you for all the trouble that you have been though to get these ingredients. It would make me happy if you shared Tom Yum Goong with your friends.";
+				next;
+				mes "[Mali the Spicy]";
+				mes "Share the flavor of Ayothaya, and let them know how beautiful our land is. It was good to see you, take care now~";
+				close;
+			}
+			mes "[Mali the Spicy]";
+			mes "Huh? What did you do with the Chiles? You didn't eat them all on the way here, did you?";
+			close;
+		}
+		mes "[Mali the Spicy]";
+		mes "Hmm...";
+		mes "You seem to be carrying too many things. Why don't you free up some space in your inventory first, and then come back?";
+		close;
+	}
+	emotion ET_KEK;
+	mes "[Mali the Spicy]";
+	mes "Ah...!";
+	mes "So busy, so busy!";
+	mes "My customers never get tired of";
+	mes "the taste of my Tom Yum Goong!";
+	mes "Heh heh heh~!";
+	close;
+}
+
+ayothaya,153,86,5	script	Thongpool#ayo	843,{
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please enlighten your weight -";
+		mes "- and try again. -";
+		close;
+	}
+	if (tomyumgoong == 2) {
+		mes "[Thongpool]";
+		mes "Come adventurers,";
+		mes "take a look! I have";
+		mes "plenty of Shrimp!";
+		next;
+		mes "[Thongpool]";
+		mes "You're looking for Shrimp,";
+		mes "aren't you? How many Shrimp";
+		mes "do you need? Twenty? Forty?";
+		next;
+		if (select("I need Shrimp for Tom Yum Goong.:Err, they look expensive.") == 1) {
+			mes "[Thongpool]";
+			mes "Ah! I guess Ms. Mali the Spicy recommended me to you. I guess";
+			mes "that also means you want to buy them in bulk?";
+			next;
+			mes "[Thongpool]";
+			mes "After all,";
+			mes "you'll need a larger";
+			mes "amount of Shrimp to";
+			mes "cook Tom Yum Goong.";
+			next;
+			mes "[Thongpool]";
+			mes "Oh yes, you will need 20 Shrimps for Ms. Mali's Tom Yum Goong.";
+			mes "I'll even give you a discount:";
+			mes "11,000 zeny for 20 shrimps.";
+			mes "What do you say?";
+			next;
+			if (select("I will take them.:I could get 100 Jellopies for that much!") == 1) {
+				if (Zeny > 10999) {
+					if (MaxWeight - Weight > 3999) {
+						set Zeny, Zeny-11000;
+						set tomyumgoong,3;
+						getitem 567,20; //Prawn
+						emotion ET_BEST;
+						mes "[Thongpool]";
+						mes "Good, now you have the";
+						mes "freshest Shrimp in this village! It's time for you to go back and ask Ms. Mali to cook them for you.";
+						close;
+					}
+					mes "[Thongpool]";
+					mes "Awww...";
+					mes "You're carrying too much stuff with you. I don't think you can carry more than what you have right now.";
+					close;
+				}
+				mes "[Thongpool]";
+				mes "Awww...";
+				mes "You don't have";
+				mes "enough money.";
+				close;
+			}
+			mes "[Thongpool]";
+			mes "Well well well...";
+			mes "You might fill your hungry stomach with that many Jellopies but they wouldn't taste as good as my Shrimp!";
+			close;
+		}
+		mes "[Thongpool]";
+		mes "What...?";
+		mes "Do you think";
+		mes "it's expensive?";
+		mes "But the fantastic taste";
+		mes "of Tom Yum Goong";
+		mes "is priceless!";
+		close;
+	} else if (tomyumgoong == 3) {
+		mes "[Thongpool]";
+		mes "Mmm...?";
+		mes "Did you need";
+		mes "more Shrimps?";
+		mes "Would you like";
+		mes "to buy more?";
+		next;
+		if (select("Yes!:No, thanks.") == 1) {
+			if (Zeny > 10999) {
+				if (MaxWeight - Weight > 3999) {
+					set Zeny, Zeny-11000;
+					getitem 567,20; //Prawn
+					mes "[Thongpool]";
+					mes "There you go~";
+					mes "The freshest Shrimp you can ever get in this village, and maybe even the world!";
+					close;
+				}
+				mes "[Thongpool]";
+				mes "Awww...";
+				mes "You're carrying too much stuff with you. I don't think you can carry more than what you have right now.";
+				close;
+			}
+			mes "[Thongpool]";
+			mes "Awww...";
+			mes "You don't have";
+			mes "enough money.";
+			close;
+		}
+		mes "[Thongpool]";
+		mes "Good, now you have gotten the freshest shrimps in this village!";
+		mes "It's time for you to go back and ask Ms. Mali to cook for you.";
+		close;
+	}
+	mes "[Thongpool]";
+	mes "Welcome, welcome!";
+	mes "I've got the best Shrimp caught in the cleanest waters in the world~!";
+	close;
+}
+
+ayothaya,121,240,7	script	Mr. Jun#ayo	842,1,1,{
+	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please enlighten your weight -";
+		mes "- and try again. -";
+		close;
+	}
+	if (tomyumgoong == 5) {
+		emotion ET_SWEAT;
+		mes "[Mr. Jun]";
+		mes "Umm...?";
+		mes "You don't need";
+		mes "more Lemons";
+		mes "again, do you?";
+		next;
+		switch(select("No.:Give me Lemons, old man!:Can I have some more Lemons, please?")) {
+		case 1:
+			emotion ET_DELIGHT;
+			mes "[Mr. Jun]";
+			mes "Then why don't you taste";
+			mes "the Lemons I gave you last time? They're really sour, but also very delicious!";
+			close;
+		case 2:
+			emotion ET_FRET;
+			mes "[Mr. Jun]";
+			mes "What...!?";
+			mes "What's wrong with you, kid?";
+			mes "What have you done with the";
+			mes "Lemons I gave you last time?";
+			close;
+		case 3:
+			mes "[Mr. Jun]";
+			mes "Oh, I am sorry....recently my lemon storage";
+			mes "was attacked by ^3131FF'Leaf Cats'^000000 that are roaming around the Shrine.";
+			next;
+			mes "[Mr. Jun]";
+			mes "I wish that I could help you,";
+			mes "but I don't even have enough lemons for my business.";
+			mes "If you need lemons, why don't you go hunt them?";
+			close;
+		}
+	}
+	mes "[Mr. Jun]";
+	mes "...";
+	close;
+
+OnTouch_:
+	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please enlighten your weight -";
+		mes "- and try again. -";
+		close;
+	}
+	if (tomyumgoong == 4) {
+		mes "[Mr. Jun]";
+		mes "Hello, there?";
+		mes "Did you need";
+		mes "some help...?";
+		emotion ET_SCRATCH;
+		next;
+		if (select("I need some Lemons.:No, thanks.") == 1) {
+			mes "[Mr. Jun]";
+			mes "Umm...";
+			mes "Lemons?";
+			mes "As you see, I have plenty";
+			mes "of Lemons on my tree.";
+			mes "Do you really need some?";
+			next;
+			if (select("Yes, I will pay you.:No, thanks.") == 1) {
+				mes "[Mr. Jun]";
+				mes "I started growing this Lemon tree as a hobby, but I didn't expect to have such a good harvest of sweet,";
+				mes "succulent Lemons.";
+				next;
+				mes "[Mr. Jun]";
+				mes "Did you just say you were";
+				mes "going to pay me for the Lemons?";
+				mes "Oh, you've got me wrong. I don't intend to sell these.";
+				next;
+				mes "[Mr. Jun[";
+				mes "But...";
+				mes "I'm more than willing";
+				mes "to share some of them with";
+				mes "you, but only if you can...";
+				next;
+				mes "[Mr. Jun]";
+				mes "Play a small game with me!";
+				mes "How about that? I've been so bored to death. Even an old man like me needs to enjoy himself!";
+				next;
+				mes "[Mr. Jun]";
+				mes "Hahahaha~!";
+				mes "What do you say?";
+				mes "Would you like to try?";
+				next;
+				if (select("Sure, why not!:No, thanks.") == 1) {
+					mes "[Mr. Jun]";
+					mes "Good!";
+					mes "The game I want us";
+					mes "to play is an easy";
+					mes "children's game.";
+					next;
+					mes "[Mr. Jun]";
+					mes "^660000Rock,";
+					mes "Paper, Scissors!^000000";
+					mes "Perhaps you've heard";
+					mes "of it in your land.";
+					emotion ET_SCISSOR;
+					next;
+					mes "[Mr. Jun]";
+					mes "Nuh-uh, don't look at me like that. I'm an old man, and I want to play this game and re-live my youth";
+					mes "a little bit. You'll understand when you're my age.";
+					next;
+					mes "[Mr. Jun]";
+					mes "Alright, if you win";
+					mes "^3131FF3^000000 out of ^3131FF5^000000 matches,";
+					mes "The Lemons are yours.";
+					mes "Are you ready?";
+					next;
+					mes "[Mr. Jun]";
+					mes "Okay...";
+					mes "As you kids say,";
+					mes "^990000Let's get eXtreme!^000000";
+					next;
+					set @user_score,0;
+					set @pc_score,0;
+					mes "[Mr. Jun]";
+					mes "Rock!";
+					mes "Paper!";
+					mes "Scissors!";
+					next;
+					while(1) {
+						if (@pc_score == 5 || @user_score == 3) {
+							break;
+						}
+						else {
+							set .@jun_mark,rand(1,3);
+							switch(select("Scissors:Rock:Paper")) {
+							case 1:
+								if (.@jun_mark == 1) {
+									emotion ET_SCISSOR;
+									emotion ET_SCISSOR, playerattached();
+									mes "[Mr. Jun]";
+									mes "Hmpf.";
+									mes "It's a draw.";
+									mes "One more time!";
+									mes "Rock! Paper!";
+									mes "Scissors!";
+									next;
+								}
+								else if (.@jun_mark == 2) {
+									emotion ET_ROCK;
+									emotion ET_SCISSOR, playerattached();
+									set @pc_score,@pc_score + 1;
+									mes "[Mr. Jun]";
+									mes "Yes...!";
+									mes "Oh my God, yes!";
+									next;
+								}
+								else {
+									emotion ET_WRAP;
+									emotion ET_SCISSOR, playerattached();
+									set @pc_score,@pc_score + 1;
+									set @user_score,@user_score + 1;
+									mes "[Mr. Jun]";
+									mes "What...?";
+									mes "I don't believe it!";
+									mes "Bah.. !";
+									next;
+								}
+								break;
+							case 2:
+								if (.@jun_mark == 1) {
+									emotion ET_SCISSOR;
+									emotion ET_ROCK, playerattached();
+									set @pc_score,@pc_score + 1;
+									set @user_score,@user_score + 1;
+									mes "[Mr. Jun]";
+									mes "No...!";
+									mes "Sacrilege!";
+									next;
+								}
+								else if (.@jun_mark == 2) {
+									emotion ET_ROCK;
+									emotion ET_ROCK, playerattached();
+									mes "[Mr. Jun]";
+									mes "Hmpf.";
+									mes "It's a draw.";
+									mes "One more time!";
+									mes "Rock! Paper!";
+									mes "Scissors!";
+									next;
+								}
+								else {
+									emotion ET_WRAP;
+									emotion ET_ROCK, playerattached();
+									set @pc_score,@pc_score + 1;
+									mes "[Mr. Jun]";
+									mes "Bwahahaha!";
+									mes "You lose, kid!";
+									next;
+								}
+								break;
+							case 3:
+								if (.@jun_mark == 1) {
+									emotion ET_SCISSOR;
+									emotion ET_WRAP, playerattached();
+									set @pc_score,@pc_score + 1;
+									mes "[Mr. Jun]";
+									mes "Heh heh~";
+									mes "Young fool!";
+									next;
+								}
+								else if (.@jun_mark == 2) {
+									emotion ET_ROCK;
+									emotion ET_WRAP, playerattached();
+									set @user_score,@user_score + 1;
+									set @pc_score,@pc_score + 1;
+									mes "[Mr. Jun]";
+									mes "Noooo...!";
+									mes "This cannot be!";
+									next;
+								}
+								else {
+									emotion ET_WRAP;
+									emotion ET_WRAP, playerattached();
+									mes "[Mr. Jun]";
+									mes "Hmpf.";
+									mes "It's a draw.";
+									mes "One more time!";
+									mes "Rock! Paper!";
+									mes "Scissors!";
+									next;
+								}
+								break;
+							}
+						}
+					}
+					if (@user_score == 3) {
+						emotion ET_HNG;
+						mes "[Mr. Jun]";
+						mes "You... won.";
+						mes "I'm so exhausted.";
+						mes "I guess I can't compete";
+						mes "with you youngsters";
+						mes "anymore. Ha ha ha!";
+						next;
+						mes "[Mr. Jun]";
+						mes "As promised,";
+						mes "I shall share some";
+						mes "of my Lemons with you.";
+						mes "Grab as many as you want!";
+						mes "^3355FFYou have plucked";
+						mes "10 Lemons from the tree.^000000";
+						set tomyumgoong,5;
+						getitem 568,10; //Lemon
+						next;
+						emotion ET_THINK;
+						mes "[Mr. Jun]";
+						mes "Hmm...";
+						mes "Looks like you need a lot of them. Oh well, that's fine with me. I had a good time with you.";
+						next;
+						mes "[Mr. Jun]";
+						mes "Don't forget this though:";
+						mes "Don't be selfish, and always share what you have with others. That's one of the most important values for human beings.";
+						close;
+					}
+					emotion ET_SCISSOR;
+					mes "[Mr. Jun]";
+					mes "Muhahahaha!";
+					mes "Victory is mine!";
+					mes "Looks like you won't be getting";
+					mes "any Lemons for now! But feel free to challenge me anytime!";
+					close;
+				}
+				mes "[Mr. Jun]";
+				mes "Afraid are we?";
+				mes "There's no fooling you:";
+				mes "I'm one of the best at games!";
+				close;
+			}
+			mes "[Mr. Jun]";
+			mes "Hmm...";
+			mes "Now what can";
+			mes "I possibly do";
+			mes "with all these";
+			mes "Lemons?";
+			close;
+		}
+		mes "[Mr. Jun]";
+		mes "Feel free to";
+		mes "ask me for help";
+		mes "any time, okay?";
+		close;
+	}
+	mes "[Mr. Jun]";
+	mes "...";
+	close;
+}
+
+ayothaya,213,94,7	script	Merchant#ayo	841,{
+	if (tomyumgoong == 6) {
+		mes "[Merchant Thongdum]";
+		mes "Hello, there~";
+		mes "Are you looking for";
+		mes "ingredients to make";
+		mes "Tom Yum Goong?";
+		next;
+		mes "[Merchant Thongdum]";
+		mes "Let's see...";
+		mes "I'm selling chiles,";
+		mes "fish sauce, and some";
+		mes "spices and flavorings";
+		mes "you'll need. I'll sell";
+		mes "it all to you for 2,000 zeny.";
+		next;
+		if (select("Thanks, I'll take it.:It's a rip-off, man!") == 1) {
+			emotion ET_THANKS;
+			if (Zeny > 1999) {
+				if (MaxWeight - Weight > 1199) {
+					set Zeny, Zeny-2000;
+					set tomyumgoong,7;
+					getitem 7286,30; //Chilli
+					mes "[Merchant Thongdum]";
+					mes "Thank you.";
+					mes "I hope you will enjoy";
+					mes "your Tom Yum Goong~";
+					close;
+				}
+				mes "[Merchant Thongdum]";
+				mes "Uh oh...";
+				mes "It looks like";
+				mes "you're carrying";
+				mes "too much stuff";
+				mes "right now.";
+				next;
+				mes "[Merchant Thongdum]";
+				mes "I can't give you";
+				mes "anything if you don't";
+				mes "have the room to hold it!";
+				close;
+			}
+			mes "[Merchant Thongdum]";
+			mes "Hmm...?";
+			mes "Right now, it looks";
+			mes "like you don't have the";
+			mes "money to buy what you";
+			mes "need from me.";
+			close;
+		}
+		emotion ET_STARE_ABOUT;
+		mes "[Merchant Thongdum]";
+		mes "Don't say that.";
+		mes "My prices are always";
+		mes "reasonable. I want you to know";
+		mes "that I'm a respectable Merchant.";
+		close;
+	} else if (tomyumgoong == 7) {
+		mes "[Merchant Thongdum]";
+		mes "I thought I provided you";
+		mes "with enough ingredients, but";
+		mes "now that I think about it, I don't";
+		mes "know how much Tom Yum Goong";
+		mes "you're making.";
+		next;
+		mes "[Merchant Thongdum]";
+		mes "Would you like to";
+		mes "buy some more Chilis?";
+		next;
+		if (select("No, thanks.:Yes, please.") == 1) {
+			mes "[Merchant Thongdum]";
+			mes "Fare well~";
+			close;
+		}
+		if (Zeny > 1999) {
+			if (MaxWeight - Weight > 1199) {
+				set Zeny, Zeny-2000;
+				getitem 7286,30; //Chilli
+				mes "[Merchant Thongdum]";
+				mes "Thank you,";
+				mes "come again!";
+				close;
+			}
+			mes "[Merchant Thongdum]";
+			mes "Uh oh...";
+			mes "It looks like";
+			mes "you're carrying";
+			mes "too much stuff";
+			mes "right now.";
+			next;
+			mes "[Merchant Thongdum]";
+			mes "I can't give you";
+			mes "anything if you don't";
+			mes "have the room to hold it!";
+			close;
+		}
+		mes "[Merchant Thongdum]";
+		mes "Hmm...?";
+		mes "Right now, it looks";
+		mes "like you don't have the";
+		mes "money to buy what you";
+		mes "need from me.";
+		close;
+	}
+	mes "[Merchant Thongdum]";
+	mes "Hello there!";
+	mes "Ever try a Chili before?";
+	next;
+	mes "[Merchant Thongdom]";
+	mes "Despite its tiny appearance,";
+	mes "it has a very strong flavor. It's also hot and spicy, so you should be careful when you eat one.";
+	next;
+	mes "[Merchant Thongdum]";
+	mes "The people of Ayothaya enjoy sensational food with distinct, spicy flavors. In Ayothayan cuisine, we use things like Chilis, garlic, ginger and cilantro.";
+	next;
+	mes "[Merchant Thongdum]";
+	mes "I'm selling Chilis,";
+	mes "so if you need any,";
+	mes "please come to me~";
+	close;
+}

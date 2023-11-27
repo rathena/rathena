@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Comodo Dungeon Warp
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Comodo Beach Dungeon warp script
+//===== Additional Comments: =================================
+//= 1.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+comodo,24,214,0	warp	cmd_beach_dun1-1	1,1,beach_dun,266,67
+beach_dun,276,67,0	warp	cmd_beach_dun1-2	1,1,comodo,31,215
+comodo,176,358,0	warp	cmd_beach_dun2-1	1,1,beach_dun2,154,25
+beach_dun2,154,13,0	warp	cmd_beach_dun2-2	2,1,comodo,176,353
+comodo,333,175,0	warp	cmd_beach_dun3-1	1,1,beach_dun3,23,260
+beach_dun3,17,265,0	warp	cmd_beach_dun3-2	1,1,comodo,328,175
+beach_dun3,286,57,0	warp	cmd_beach_dun4-1	1,1,cmd_fild01,30,317
+cmd_fild01,26,318,0	warp	cmd_beach_dun4-2	1,1,beach_dun3,281,56

@@ -1,0 +1,798 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Niflheim
+//===== By: ================================================== 
+//= The rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project; 7.15 +
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Piano Key Ouest
+//= - Escape from Niflheim
+//= - Variables in use: nif_esc, MISC_QUEST (Bit 32)
+//= Message Delivery Quest
+//= - Deliver a message to Erious' departed wife.
+//= - Variables in use: nif_revive, MISC_QUEST (Bit 16384)
+//===== Additional Comments: ================================= 
+//= 1.0 Initial release, moved Book of Devil and Piano quest
+//=     from npc/cities/niflheim.txt [Evera]
+//= 1.1 Optimized Book of Devil quest. used bit-wise var,
+//=     Optimized Piano Quest - now uses 1 variable [Lupus]
+//= 1.2 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.3 Moved the Book of Devil quest to custom folder. [L0ne_W0lf]
+//=     Updated to Aegis 10.3 Standed, added Message Delivery Quest.
+//=     Rescripted Piano Quest. Prior quest progress will be lost.
+//= 1.4 Fixed NPCs using ID 111 when it shoudl have been 139. [L0ne_W0lf]
+//= 1.5 Swapped NPC IDs back from last change (139 back to 111). [L0ne_W0lf]
+//=     Clicking will do nothing, you have to still "touch" the npc. 
+//= 1.6 Added questlog support. [Euphy]
+//============================================================ 
+
+// Piano Quest :: nif_ryu
+//============================================================
+niflheim,224,243,3	script	Alreg#nif	795,{
+	if (nif_piano) set nif_piano,0;
+	mes "[Alreg]";
+	mes "Me like meat, muheh.";
+	mes "You! Look tempting.";
+	next;
+	mes "[Alreg]";
+	mes "Me want to taste you.";
+	next;
+	mes "^FF3355*Crunch* Crunch*^000000";
+	if (nif_esc == 0 && (MISC_QUEST & 32) == 0) {
+		percentheal -60,0;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "NooOOoOOoOoO~!";
+		next;
+		mes "[Alreg]";
+		mes "It long time since I had meat";
+		mes "so... so good. You taste";
+		mes "good. Alreg give you this";
+		mes "for payback. Present!";
+		mes "*Burrrp*";
+		set nif_esc,rand(1,2);
+		getitem 7184,1; //Piano_Keyboard
+		close;
+	}
+	percentheal -30,0;
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "Ow~! What are you";
+	mes "trying to do, kill me?!";
+	next;
+	mes "[Alreg]";
+	mes "Hm? Oh, no no no.";
+	mes "Me am trying to eat you.";
+	close;
+}
+
+nif_in,105,81,3	script	Crayu#nif	794,{
+	mes "[Crayu]";
+	mes "Living one...";
+	mes "Listen to this song...";
+	mes "It's been sung by many for a";
+	mes "long time, but nobody knows";
+	mes "when it was made or who wrote it.";
+	next;
+	mes "[Crayu]";
+	mes "^FF00001. Mountain sunset to the west";
+	mes "^FF00002. Where the purple dusk falls ";
+	mes "^FF00003. Surrounded by beautiful melody";
+	mes "^FF00004. You become the key that ignores its master^000000";
+	next;
+	if (nif_esc == 1 || nif_esc == 4) {
+		mes "[Crayu]";
+		mes "Okay, wait! Here's a test for you!";
+		switch(rand(1,4)) {
+		case 1:
+			set .@songline$,"Mountain sunset to the west";
+			mes "Write down the first line of the song.";
+			break;
+		case 2:
+			set .@songline$,"Where the purple dusk falls";
+			mes "Write down the second line of the song.";
+			break;
+		case 3:
+			set .@songline$,"Surrounded by beautiful melody";
+			mes "Write down the third line of the song.";
+			break;
+		case 4:
+			set .@songline$,"You become the key that ignores its master";
+			mes "Write down the fourth line of the song.";
+			break;
+		}
+		next;
+		input .@input$;
+		if (.@input$ == .@songline$) {
+			mes "[Crayu]";
+			mes "Excellent...!";
+			mes "So you've been listening~!";
+			mes "That makes you one of my";
+			mes "favorite guests. Here's a";
+			mes "little reward for you.";
+			next;
+			if (nif_esc == 1) set nif_esc,3;
+			else set nif_esc,6;
+			getitem 7184,1; //Piano_Keyboard
+			mes "[Crayu]";
+			mes "Lastly, I hope you will show your";
+			mes "respect to other Bards, just as";
+			mes "you have done for me.";
+			close;
+		}
+		else {
+			mes "[Crayu]";
+			mes "*Sigh*... If you had only";
+			mes "listened to me, it would";
+			mes "have been easy to answer.";
+			mes "Try to remember the line";
+			mes "and try again!";
+			close;
+		}
+	}
+	next;
+	mes "[Crayu]";
+	mes "I wonder what the lyrics mean...";
+	mes "They seem quite profound...";
+	mes "I have the feeling that this song";
+	mes "carries some secret.";
+	close;
+}
+
+nif_in,31,20,3	script	Kuzkahina#nif	794,{
+	if (nif_esc == 2 || nif_esc == 3) {
+		mes "[Kuzkahina]";
+		mes "I don't understand";
+		mes "why I can't make any";
+		mes "money with this store...";
+		mes "Even when I was alive";
+		mes "I could never make any";
+		mes "money with my businesses...";
+		next;
+		mes "[Kuzkahina]";
+		mes "Hey you! Make yourself useful";
+		mes "and throw this away when you leave.";
+		set nif_esc,nif_esc+2;
+		getitem 7184,1; //Piano_Keyboard
+		next;
+		mes "[Kuzkahina]";
+		mes "Gosh, what's with this store?";
+		mes "How did I end up hiring such useless employees...?";
+		mes "*mumble mumble*";
+		mes "*mumble mumble*";
+		close;
+	}
+	mes "[Kuzkahina]";
+	mes "I don't understand";
+	mes "why I can't make any";
+	mes "money with this store...";
+	mes "Even when I was alive";
+	mes "I could never make any";
+	mes "money with my businesses...";
+	close;
+}
+
+niflheim,208,103,1	script	#Graveyard1	111,1,1,{
+	end;
+
+OnTouch_:
+	if (nif_esc == 5 || nif_esc == 7 || nif_esc == 8 || nif_esc == 10) {
+		mes "^3355FFYou found something";
+		mes "half-buried near a grave.";
+		mes "It looks very well-shaped.^000000";
+		next;
+		mes "^3355FFWould you like to pick it up?^000000";
+		if (select("Yes:No") == 1) {
+			if (nif_esc < 10)
+				set nif_esc,nif_esc+2;
+			else if (nif_esc == 10)
+				set nif_esc,11;
+			getitem 7184,1; //Piano_Keyboard
+		}
+		close;
+	}
+	end;
+}
+
+niflheim,169,71,1	script	#Graveyard2	111,1,1,{
+	end;
+
+OnTouch_:
+	if (nif_esc == 6 || nif_esc == 9) {
+		mes "^3355FFYou found something";
+		mes "half-buried near a grave.";
+		mes "It looks very well-shaped.^000000";
+		next;
+		mes "^3355FFWould you like to pick it up?^000000";
+		if (select("Yes:No") == 1) {
+			set nif_esc,nif_esc+2;
+			getitem 7184,1; //Piano_Keyboard
+		}
+		close;
+	}
+	end;
+}
+
+nif_in,115,181,0	script	#Piano	111,1,1,{
+	end;
+
+OnTouch_:
+	if (nif_esc == 0 && (MISC_QUEST & 32) == 0) {
+		mes "^3355FFYou see a big, heavy piano.";
+		mes "You get the feeling that";
+		mes "its music would sound magnificient.^000000";
+		next;
+		mes "^3355FFAs you examine the piano,";
+		mes "you find that 7 keys";
+		mes "are missing in the";
+		mes "middle of the keyboard.";
+		mes "If you had all the keys,";
+		mes "you could play music...^000000";
+		close;
+	}
+	if (nif_esc == 11 && countitem(7184) > 5) {
+		set nif_esc,12;
+		delitem 7184,6; //Piano_Keyboard
+		mes "^3355FFYou took the keys you've found";
+		mes "and inserted them into";
+		mes "each empty space.^000000";
+		next;
+		mes "^3355FFBut then you realize";
+		mes "that you're missing the last";
+		mes "key for the space on the far";
+		mes "left of the keyboard...^000000";
+		close;
+	}
+	end;
+}
+
+-	script	Piano3	HIDDEN_NPC,{
+	end;
+
+OnTouch_:
+	if (nif_esc == 12 || nif_esc == 13 || (MISC_QUEST & 32)) {
+		mes "^3355FFAs you bend towards";
+		mes "the final empty key space";
+		mes "to take a better look at it...^000000";
+		next;
+		soundeffect "complete.wav",0;
+		next;
+		if (nif_esc == 12) {
+			set MISC_QUEST,MISC_QUEST | 32;
+			set nif_piano, 0;
+		}
+		mes "^3355FFYou begin to feel dizzy and";
+		mes "your body feels as if it were";
+		mes "floating in air. Then, your";
+		mes "vision starts to blur...^000000";
+		close2;
+		warp "nif_in",179,163;
+		end;
+	}
+	end;
+}
+
+nif_in,188,168,3	script	Witch#nif	792,{
+	mes "[Kirkena]";
+	mes "Huh? ...You're alive, aren't you?";
+	mes "I'm not sure how more of you are";
+	mes "able to get here and I don't";
+	mes "know your reasons for coming,";
+	mes "but this place is dangerous for";
+	mes "the living.";
+	next;
+	mes "[Kirkena]";
+	mes "I am sending you back";
+	mes "outside of this town.";
+	mes "If you can help it, you";
+	mes "better not come back to";
+	mes "this place.";
+	close2;
+	warp "umbala",138,208;
+	end;
+}
+
+// Message Delivery Quest :: nif_npc_lackee
+//============================================================
+prt_in,161,20,3	script	Erious#nif	92,{
+	if (MISC_QUEST & 16384) {
+		mes "[Erious]";
+		mes "I wish you safety from harm";
+		mes "in your journeys, adventurer.";
+		close;
+	}
+	if (nif_revive == 0) {
+		mes "[Erious]";
+		mes "*Sob*Sob*";
+		mes "*Cries* Wahhh...!";
+		mes "Elly, how could you";
+		mes "leave me this way...";
+		emotion ET_CRY;
+		next;
+		if (select("Comfort him.:Neglect him.") == 1) {
+			mes "[Erious]";
+			mes "Ah, thank you for your kindness.";
+			mes "*Sob* My wife died while I was on";
+			mes "a trip. I'm so sorry that I";
+			mes "couldn't be with her when";
+			mes "the end came...";
+			next;
+			mes "[Erious]";
+			mes "I wish I could talk to my Elly,";
+			mes "although I know it's too late now.";
+			mes "*Cries* But... there is one last";
+			mes "hope that I have. My absolute";
+			mes "final chance...";
+			next;
+			mes "[Erious]";
+			mes "I was told that somewhere";
+			mes "in this world, there exists a town";
+			mes "where the dead reside. I might be";
+			mes "able to meet my wife there, but";
+			mes "I cannot leave my children here";
+			mes "without me. *Cries*";
+			next;
+			if (select("I can deliver your message to her.:I am so sorry to hear that.") == 1) {
+				mes "[Erious]";
+				mes "Oh, can you?";
+				mes "Thank you so much for your";
+				mes "generosity. If you can do";
+				mes "this for me, I would be";
+				mes "greatly indebted to you.";
+				next;
+				mes "[Erious]";
+				mes "You're an adventurer, aren't you?";
+				mes "If your journeys take you to that";
+				mes "town of the dead, and if you";
+				mes "happen to meet her by chance...";
+				next;
+				mes "[Erious]";
+				mes "Please send Elly a message for me,";
+				mes "let her know that what happened";
+				mes "a month ago was all my fault.";
+				mes "Thank you for your help,";
+				mes "and please take care.";
+				set nif_revive,1;
+				setquest 11038;
+				close;
+			}
+			mes "[Erious]";
+			mes "*Cries* Is there no way that I";
+			mes "can see her again? If I could";
+			mes "talk to her at least once more,";
+			mes "even if it's the last time,";
+			mes "I would do anything...";
+			close;
+		}
+		mes "[Erious]";
+		mes "*Cries* Eeeeelllllyyyy~~~~!";
+		mes "I never thought that would be";
+		mes "the last time we would see";
+		mes "each other...";
+		mes "*Sob*...";
+		close;
+	}
+	else if (nif_revive == 1) {
+		mes "[Erious]";
+		mes "This place I was told about...";
+		mes "The town of the dead...";
+		mes "From what I remember, it was";
+		mes "located near some rest area.";
+		next;
+		mes "[Erious]";
+		mes "All day and night, it's filled";
+		mes "with never ending screams of";
+		mes "agony and despair. I hope that";
+		mes "this will be helpful in your search.";
+		close;
+	}
+	else if (nif_revive == 5 || nif_revive == 6) {
+		mes "[Erious]";
+		mes "Oh my! You really found the town,";
+		mes "have you? I really appreciate that";
+		mes "you've endured all this hardship";
+		mes "for me... Um...So in the end...";
+		mes "Were you able to meet my Elly?";
+		next;
+		if (select("Yes.:Sorry, I couldn't.") == 1) {
+			if (nif_revive == 6 && countitem(934) > 0) {
+				mes "[Erious]";
+				mes "Are you serious? What did she say?";
+				mes "Did she say she will forgive me?";
+				next;
+				select("Yes. And she gave me...this.");
+				delitem 934,1; //Mementos
+				mes "[Erious]";
+				mes "Ah...In this box were the gifts";
+				mes "I gave her when we started";
+				mes "seeing each other. She had a";
+				mes "serious illness even before we";
+				mes "met, so I promised her that I";
+				mes "would cure her illness...";
+				next;
+				mes "[Erious]";
+				mes "That's why I went on that trip...";
+				mes "to find a cure or medicine";
+				mes "for her... But my efforts turned";
+				mes "out to be a good for nothing.";
+				mes "...................";
+				mes ".........";
+				next;
+				mes "[Erious]";
+				mes "Anyway, I appreciate your";
+				mes "generousity. I want to pay";
+				mes "you back for all the trouble";
+				mes "I caused you, but I only have";
+				mes "the medicine I found for her";
+				mes "illness during this trip.";
+				next;
+				mes "[Erious]";
+				mes "I hope you will take this medicine";
+				mes "as a token of my gratitute.";
+				next;
+				if (checkweight(610,26)) {
+					set MISC_QUEST,MISC_QUEST | 16384;
+					set nif_revive,0;
+					completequest 11043;
+					getitem 607,2; //Yggdrasilberry
+					getitem 608,2; //Seed_Of_Yggdrasil
+					getitem 610,10; //Leaf_Of_Yggdrasil
+					mes "[Erious]";
+					mes "Thank you for everything.";
+					mes "I wish you luck and safety";
+					mes "in your adventures.";
+					close;
+				}
+				mes "[Erious]";
+				mes "I have something to give you,";
+				mes "but you're carrying too much";
+				mes "stuff for me to give it to";
+				mes "right now. Why don't you";
+				mes "store your items somewhere?";
+				close;
+			}
+			else if (nif_revive == 6 && countitem(934) < 1) {
+				mes "[Erious]";
+				mes "Hmm...this is odd. I'm sure she would give you something as a token of meeting her. By any chance, is there anything that you've forgetten to bring me?";
+				close;
+			}
+			mes "[Erious]";
+			mes "I guess you misunderstood";
+			mes "something or you're trying";
+			mes "to scam a man in grief.";
+			close;
+		}
+		if (nif_revive == 5) {
+			mes "[Erious]";
+			mes "I see...you have failed to find";
+			mes "her... However, I also understand";
+			mes "that fulfilling my request may";
+			mes "be impossible...";
+			next;
+			mes "[Erious]";
+			mes "You've really gone out of your way";
+			mes "to help me, so I want to give you";
+			mes "something as a token of my";
+			mes "gratitute.";
+			next;
+			if (checkweight(610,10)) {
+				set MISC_QUEST,MISC_QUEST | 16384;
+				set nif_revive,0;
+				completequest 11042;
+				getitem 610,10; //Leaf_Of_Yggdrasil
+				mes "[Erious]";
+				mes "Thank you for everything.";
+				mes "I wish you luck and safety";
+				mes "from harm in your journeys.";
+				close;
+			}
+			mes "[Erious]";
+			mes "I have something to give you,";
+			mes "but you're carrying too much";
+			mes "stuff for me to give it to";
+			mes "right now. Why don't you";
+			mes "store your items somewhere?";
+			close;
+		}
+		mes "[Erious]";
+		mes "I see...";
+		mes "...Wait! Doesn't that belong";
+		mes "to my wife, Elly? Why are you";
+		mes "trying to cheat a grieving man...?";
+		close;
+	}
+	end;
+}
+
+umbala,215,181,3	script	Billik	733,{
+	if (nif_revive > 1 || (MISC_QUEST & 16384)) {
+		mes "[Billik]";
+		mes "Well, long time no see.";
+		mes "If you have a chance in the";
+		mes "future, let's meet in the";
+		mes "town of the dead later.";
+		mes "Hahahaha~";
+		emotion ET_BEST;
+		close;
+	}
+	if (nif_revive == 1) {
+		mes "[Billik]";
+		mes "The Town of the dead...";
+		mes "It's a very dangerous place.";
+		mes "Why would you want to go there?";
+		next;
+		if (select("I have to meet somebody there.:It's a part of my adventure.") == 1) {
+			mes "[Billik]";
+			mes "Someone you have to meet there...";
+			mes "Hmm... I suppose you wish to";
+			mes "contact the dead...";
+			mes "I can also see that you're";
+			mes "determined to go.";
+			next;
+			mes "[Billik]";
+			mes "*Sigh* Okay, if you really want to";
+			mes "go, you must find a man named";
+			mes "'Feylin.' It's very important to";
+			mes "let him know that I introduced";
+			mes "him to you.";
+			next;
+			mes "[Billik]";
+			mes "He's not very trusting, but he";
+			mes "likes roses a lot, so bring a rose";
+			mes "for him. That way, he'll know for";
+			mes "sure that I've sent you.";
+			set nif_revive,2;
+			changequest 11038,11039;
+			next;
+			mes "[Billik]";
+			mes "The town of the dead is located";
+			mes "north of this place. Remember, it";
+			mes "is very dangerous to go there,";
+			mes "even for well experienced";
+			mes "adventurers, so...";
+			mes "Be careful.";
+			close;
+		}
+		mes "[Billik]";
+		mes "Hahaha~ I guess you like adventure";
+		mes "as much as I do. Although it's a";
+		mes "very dangrous place, you will be";
+		mes "paid back for your effort after";
+		mes "you get there. But be careful.";
+		close;
+	}
+	else if (nif_revive == 0) {
+		mes "[Billik]";
+		mes "What brings you here? I'm busy,";
+		mes "leave if you don't have any business.";
+		close;
+	}
+}
+
+niflheim,153,215,3	script	Feylin	794,{
+	if (nif_revive == 2) {
+		mes "[Feylin]";
+		mes "Poor "+((Sex == SEX_MALE)?"guy":"girl")+"...";
+		mes "Dying at such a young age...";
+		mes "I am always sorry to see the";
+		mes "young pass away.";
+		next;
+		mes "[Feylin]";
+		mes "............??";
+		mes "Oh, I see you're not dead yet,";
+		mes "are you? It's unbelievable to";
+		mes "see another living person";
+		mes "in this town.";
+		next;
+		mes "[Feylin]";
+		mes "Are you coming to rescue someone,";
+		mes "or do you have another purpose?";
+		mes "If you came here to meet a";
+		mes "deceased friend of yours, you've";
+		mes "come to the wrong person.";
+		next;
+		mes "[Feylin]";
+		mes "Nobody in Niflheim can";
+		mes "perform that kind of miracle...";
+		next;
+		mes "[Feylin]";
+		mes "I can tell you have been through";
+		mes "much hardship, but unfortunately,";
+		mes "you came here for nothing. I hope";
+		mes "you go back to where you came";
+		mes "from before it's too late.";
+		set nif_revive,3;
+		changequest 11039,11040;
+		close;
+	}
+	else if (nif_revive == 3) {
+		mes "[Feylin]";
+		mes "I've asked you to leave this";
+		mes "town immediately. I'm sorry";
+		mes "but I know nothing about what";
+		mes "you are asking.";
+		emotion ET_FRET;
+		next;
+		if (select("But...:I am sorry.") == 1) {
+			mes "[Feylin]";
+			mes "You must know something...";
+			mes "Otherwise, you wouldn't be";
+			mes "so stubborn. I am not sure";
+			mes "who told you contacting the";
+			mes "dead might be possible...";
+			next;
+			mes "[Feylin]";
+			mes "But I surely wouldn't have told";
+			mes "you. Besides, speaking about";
+			mes "such things is taboo.";
+			set nif_revive,4;
+			changequest 11040,11041;
+			close;
+		}
+		mes "[Feylin]";
+		mes "Please consider leaving this";
+		mes "place as soon as possible.";
+		mes "Nobody should stay in";
+		mes "Niflheim for too long.";
+		close;
+	}
+	else if (nif_revive == 4) {
+		if (countitem(748) > 0) {
+			mes "[Feylin]";
+			mes "Huh, Billik must have sent you.";
+			mes "Since I'm indebted to him, I";
+			mes "suppose I will help you.";
+			mes "But let me warn you.";
+			mes "The price that I demand may be";
+			mes "more that you expect...";
+			next;
+			if (select("I'm willing to do this.:I don't think I can do this.") == 1) {
+				if (BaseLevel > 79) {
+					mes "[Feylin]";
+					mes "Alright, but you must promise";
+					mes "me that you will not let other";
+					mes "people know what I am about";
+					mes "to tell you.";
+					next;
+					mes "[Feylin]";
+					mes "This sorcery requires great";
+					mes "sacrifice. Needless to say, there";
+					mes "is a chance that this spell may";
+					mes "fail. I must also have";
+					mes "10 Yggdrasil Leaf to cast this";
+					mes "spell. Do you wish to continue?";
+					next;
+					if (select("Yes:No") == 1) {
+						if (countitem(610) > 9) {
+							mes "[Feylin]";
+							mes "I see. Then we shall begin.";
+							mes "Woombahsokasabahah!";
+							mes "Woombah woombah hoombabah!";
+							mes "Yeeeeep!";
+							next;
+							set .@nif_revive1,rand(1,100);
+							if (.@nif_revive1 > 0) && (.@nif_revive1 < 88) {
+								mes "[Feylin]";
+								mes "...I am sorry.";
+								mes "I have failed to summon";
+								mes "who you wish to see. I am";
+								mes "really sorry for this result.";
+								emotion ET_HUK;
+								delitem 748,1; //Witherless_Rose
+								delitem 610,10; //Leaf_Of_Yggdrasil
+								set nif_revive,5;
+								changequest 11041,11042;
+								percentheal -99,0;
+								next;
+								mes "[Feylin]";
+								mes "Unfortunately, it may be";
+								mes "impossible to summon the";
+								mes "spirit of the person with";
+								mes "whom you wished to speak...";
+								close;
+							}
+							else if (.@nif_revive1 > 87) && (.@nif_revive1 < 101) {
+								delitem 748,1; //Witherless_Rose
+								delitem 610,10; //Leaf_Of_Yggdrasil
+								percentheal -50,0;
+								mes "[Feylin]";
+								mes "..........";
+								mes "..........";
+								next;
+								mes "[Elly]";
+								mes "..........";
+								mes ".....Umm...";
+								mes "...Wasn't I just dead?";
+								mes "Um, do I know you?";
+								next;
+								select("I brought a message from your husband.");
+								mes "[Elly]";
+								mes "Oh...I see...I'm sorry that I could not meet him before I died...";
+								mes "So what is his message for me?";
+								next;
+								select("Forgive him for what happened a month ago.");
+								mes "[Elly]";
+								mes "*Sigh* He's such a nice husband...";
+								mes "He pays such attention, even to";
+								mes "the little things. Though, I";
+								mes "should be the one apologizing";
+								mes "to him...";
+								next;
+								mes "[Elly]";
+								mes "Please give him this box, and tell";
+								mes "him to forget about me. He should";
+								mes "live the rest of his life happily";
+								mes "with someone else. Oh, also let";
+								mes "him know that I forgive him.";
+								set nif_revive,6;
+								changequest 11040,11043;
+								getitem 934,1; //Mementos
+								next;
+								mes "[Elly]";
+								mes "I am glad to hear from my";
+								mes "husband one more time. But I";
+								mes "think I have to go now.";
+								mes "Thank you for your trouble.";
+								mes "Farewell...";
+								next;
+								mes "[Elly]";
+								mes ".....................";
+								mes "....................";
+								next;
+								mes "[Feylin]";
+								mes "I guess you have accomplished what";
+								mes "you wanted. Well then, be careful";
+								mes "when you go back...";
+								close;
+							}
+						}
+						else {
+							mes "[Feylin]";
+							mes "If you don't have the";
+							mes "items, we cannot proceed.";
+							mes "Remember, I need 10 Yggdrasil";
+							mes "Leaves to perform this spell.";
+							mes "Please bring them as soon";
+							mes "as possible.";
+							close;
+						}
+					}
+					mes "[Feylin]";
+					mes "I hope you will bring the items";
+					mes "first. But... I don't have the";
+					mes "confidence to promise that";
+					mes "this spell will cast successfully.";
+					close;
+				}
+				mes "[Feylin]";
+				mes "Hmm... You don't seem to have";
+				mes "the strength to endure the";
+				mes "casting of this spell. At";
+				mes "your current strength, this";
+				mes "spell will kill you.";
+				mes "I cannot take that risk.";
+				close;
+			}
+			mes "[Feylin]";
+			mes "You made a good decision.";
+			mes "It's not a good idea to perform";
+			mes "this kind of sorcery in the";
+			mes "first place because of the";
+			mes "risks involved...";
+			close;
+		}
+		mes "[Feylin]";
+		mes "No matter how many times you ask";
+		mes "me, I cannot help you. Please";
+		mes "leave this place as soon as you can.";
+		close;
+	}
+	mes "[Feylin]";
+	mes "What makes you to come to such";
+	mes "a dangerous town? Please leave";
+	mes "this place as soon as you can.";
+	close;
+}

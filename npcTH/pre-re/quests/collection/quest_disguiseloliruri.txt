@@ -1,0 +1,150 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= Masao
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Custom Version.
+//= Repeatable EXP Quest : Kill 50 Disguise or Loli Ruri.
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+nif_fild01,332,327,4	script	Deadman	795,{
+
+	if (checkquest(60173) != -1) {
+		if (checkquest(60173,HUNTING) != 2 ) {
+			mes "[Deadman]";
+			mes "Have you finished hunting the 50 Disguise?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Deadman]";
+				mes "Hmm, I don't think you've hunted 50 yet.";
+				close;
+			case 2:
+				mes "[Deadman]";
+				mes "Remember, I need help hunting Disguise so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Deadman]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Deadman]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60173;
+					close;
+				case 2:
+					mes "[Deadman]";
+					mes "Please kill 50 Disguise in order to make this a Place were people can go to and gather Experience.";
+					close;
+				}
+			}
+		}
+		mes "[Deadman]";
+		mes "Amazing, you did that with speed.";
+		getexp 140600,95800;
+		erasequest 60173;
+		close;
+	}
+	if (checkquest(60176) != -1) {
+		if (checkquest(60176,HUNTING) != 2 ) {
+			mes "[Deadman]";
+			mes "Have you finished hunting the 50 Loli Ruri?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Deadman]";
+				mes "Hmm, I don't think you've hunted 50 yet.";
+				close;
+			case 2:
+				mes "[Deadman]";
+				mes "Remember, I need help hunting Loli Ruri so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Deadman]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Deadman]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60176;
+					close;
+				case 2:
+					mes "[Deadman]";
+					mes "Please kill 50 Loli Ruri in order to make this a Place were people can go to and gather Experience.";
+					close;
+				}
+			}
+		}
+		mes "[Deadman]";
+		mes "Amazing, you did that with speed.";
+		getexp 332000,239500;
+		erasequest 60176;
+		close;
+	}
+	if ((BaseLevel > 59) && (BaseLevel < 99)) {
+		mes "[Deadman]";
+		mes "Oh great!";
+		mes "You are here to help me right?";
+		mes "If not, i don't know what to do with the Monsters in this Place!";
+		next;
+		switch(select("Sure:No")) {
+		case 1:
+			mes "[Deadman]";
+			mes "Great! I knew the moment i saw you that i can count on you!";
+			mes "I need you to reduce the Amount of Monsters which are currently rampaging on this Map!";
+			mes "There are to many Disguise and Loli Ruri around, which makes it impossible for the lower level players to gain good experience here.";
+			next;
+			mes "[Deadman]";
+			mes "So, which of those Monsters would you like to hunt for me?";
+			next;
+			switch(select("Disguise:Loli Ruri:Cancel")) {
+			case 1:
+				if (BaseLevel > 90) {
+					mes "[Deadman]";
+					mes "Thank you for your great help with the Disguise!";
+					mes "Currently the Situation is stable and i'm not in need of your help anymore to kill them.";
+					close;
+				}
+				mes "[Deadman]";
+				mes "Kill 50 of those Disguise and let me know when you're done. I will reward you for your efforts.";
+				setquest 60173;
+				close;
+			case 2:
+				if (BaseLevel > 98) {
+					mes "[Deadman]";
+					mes "Thank you for your great help with the Loli Ruri!";
+					mes "Currently the Situation is stable and i'm not in need of your help anymore to kill them.";
+					close;
+				}
+				mes "[Deadman]";
+				mes "Kill 50 of those Loli Ruri and let me know when you're done. I will reward you for your efforts.";
+				setquest 60176;
+				close;
+			case 3:
+				mes "[Deadman]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		case 2:
+			mes "[Deadman]";
+			mes "If you change your mind, please come back.";
+			close;
+		}
+	}
+	mes "[Deadman]";
+	mes "Oh boy, Oh boy!";
+	next;
+	mes "[Deadman]";
+	mes "Sorry I can't talk right now I am in a world of pain here, these darn Disguise and Loli Ruri are going to kill me.";
+	close;
+}

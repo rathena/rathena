@@ -1,0 +1,972 @@
+//===== rAthena Script =======================================
+//= Einbroch Town
+//===== By: ==================================================
+//= Everybody mentioned in the comments
+//===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Einbroch Town Script
+//===== Additional Comments: =================================
+//= 0.2 Added some NPCs [MasterOfMuppets]
+//= 0.3 Added a few npcs by reddozen [MasterOfMuppets]
+//= 0.4 Added a crappy quest, have fun guys... [MasterOfMuppets]
+//= 0.4a Added exp bonus for the factory quest, borrowed from a Korean fansite.
+//= 0.4b Added missing close [Komurka]
+//= 0.5 Added Temporal Locations of Gunslinger Job Change map.
+//=     Info provided by RockmanEXE [erKURITA]
+//= 0.6 Implemented a crap quest [MasterOfMuppets]
+//= 0.7 Implemented an inn NPC [MasterOfMuppets]
+//= 0.8 Implemented the Shinokas quest, thanks to [MasterOfMuppets]
+//=      Dj-Yhn for scripting it.
+//= 0.9 Removed Duplicates [Silent]
+//= 1.0 Implemented the Lover's quest. [MasterOfMuppets]
+//= 1.1 Split quests into quests/cities_einbroch.txt [Evera]
+//= 1.2 Split more quests into above file [Evera]
+//= 1.3 Added (finally) the Garrison quest npc [erKURITA]
+//= 1.4 Implemented the polution script. [MasterOfMuppets]
+//= 1.5 Updated Hotel Employee to work with Airship Ticket Quest [Samuray22]
+//= 1.6 Optimized several NPCs [DZeroX]
+//= 1.7 Replaced outdated variable with getarg. [L0ne_W0lf]
+//= 1.8 Fixed Occurances of PcName. [L0ne_W0lf]
+//============================================================
+
+einbroch,218,198,5	script	Mark#ein	855,{
+	.@npc_name$ = strnpcinfo(1);
+	mes "["+ .@npc_name$ +"]";
+	mes "Good day~";
+	mes "I'm "+ .@npc_name$ +", your";
+	mes "guide to exploring";
+	mes "the Einbroch Tower.";
+	next;
+	mes "["+ .@npc_name$ +"]";
+	mes "Einbroch Tower offers";
+	mes "the best view of our city";
+	mes "and it's a great place to";
+	mes "meet with friends or take";
+	mes "a date. The Einbroch Tower";
+	mes "admission fee is 10 zeny.";
+	next;
+	mes "["+ .@npc_name$ +"]";
+	mes "Right now, we're offering";
+	mes "a special promotion called";
+	mes "the Apple Combo Set for only";
+	mes "20 zeny. This set includes";
+	mes "Einbroch Tower admission";
+	mes "and an Apple to snack on.";
+	next;
+	switch(select("Tower Admission Only:Apple Combo Set:Cancel")) {
+	case 1:
+		if (Zeny < 10) {
+			mes "["+ .@npc_name$ +"]";
+			mes "I'm sorry, but you";
+			mes "don't have enough";
+			mes "zeny. The Einbroch";
+			mes "Tower Admission";
+			mes "fee is 10 zeny.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "Thank you for";
+			mes "using our services.";
+			mes "Let me guide you to";
+			mes "the tower right away.";
+			set Zeny, Zeny-10;
+			close2;
+			warp "einbroch",181,196;
+			end;
+		}
+	case 2:
+		if (Zeny < 20) {
+			mes "["+ .@npc_name$ +"]";
+			mes "I'm sorry, but you don't";
+			mes "have enough zeny. The";
+			mes "Apple Combo Set is 20 zeny.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "Before I guide you to";
+			mes "the tower, let me check";
+			mes "your status to insure";
+			mes "your safety before I give";
+			mes "you the Apple Combo Set.";
+			next;
+			if (checkweight(512,1)) {
+				mes "["+ .@npc_name$ +"]";
+				mes "Thank you for";
+				mes "using our services.";
+				mes "Let me guide you to";
+				mes "the tower right away.";
+				set Zeny, Zeny-20;
+				getitem 512,1; //Apple
+				close2;
+				warp "einbroch",174,204;
+				end;
+			}
+			else {
+				mes "["+ .@npc_name$ +"]";
+				mes "I'm sorry, but you're carrying";
+				mes "too many items with you. Please store some of your things in your Kafra Storage before purchasing";
+				mes "the Apple Combo Set.";
+				close;
+			}
+		}
+	case 3:
+		mes "["+ .@npc_name$ +"]";
+		mes "I see.";
+		mes "Feel free to";
+		mes "come back any";
+		mes "time. Thank you.";
+		close;
+	}
+}
+
+einbroch,175,196,5	script	Morei#ein	854,{
+	mes "[Morei]";
+	mes "Greetings,";
+	mes "I am Morei,";
+	mes "Assistant Guide";
+	mes "of Einbroch Tower.";
+	next;
+	mes "[Morei]";
+	mes "If you wish to return";
+	mes "to the ground floor,";
+	mes "please let me know.";
+	mes "Would you like to go";
+	mes "back to ground level?";
+	next;
+	switch(select("Yes.:No.")) {
+	case 1:
+		mes "[Morei]";
+		mes "I see.";
+		mes "Let me lead you";
+		mes "to the ground floor.";
+		mes "Thank you for using";
+		mes "our services.";
+		close2;
+		switch(rand(1,3)) {
+		case 1:
+			warp "einbroch",170,229;
+			end;
+		case 2:
+			warp "einbroch",216,188;
+			end;
+		case 3:
+			warp "einbroch",178,167;
+			end;
+		}
+	case 2:
+		mes "[Morei]";
+		mes "I see.";
+		mes "I hope you";
+		mes "enjoy your time";
+		mes "in Einbroch Tower.";
+		close;
+	}
+}
+
+einbroch,173,229,5	duplicate(Mark#ein)	Oberu#ein	855
+einbroch,176,172,5	duplicate(Mark#ein)	Khemko#ein	855
+
+einbroch,232,272,3	script	Train Station Staff#ein1::EinbrochTrain	852,{
+	mes "[Staff]";
+	mes "Welcome to";
+	mes "the Train Station.";
+	mes "Trains to Einbech";
+	mes "are always running";
+	mes "so if you miss one,";
+	mes "it's no problem.";
+	next;
+	mes "[Staff]";
+	mes "The fare to board the";
+	mes "train that runs the Einbroch";
+	mes "to Einbech line is 200 zeny.";
+	mes "Would you like to buy a ticket?";
+	next;
+	switch(select("Yes.:No.:About the Environment...")) {
+	case 1:
+		if (Zeny > 199) {
+			mes "[Staff]";
+			mes "Thank you";
+			mes "very much.";
+			mes "Have a safe trip.";
+			mes "^333333*Ahem*^000000 All aboard!";
+			close2;
+			set Zeny, Zeny-200;
+			warp "einbech",43,215;
+			end;
+		}
+		else {
+			mes "[Staff]";
+			mes "I'm sorry, but this";
+			mes "isn't enough zeny";
+			mes "to pay the train fare.";
+			close;
+		}
+	case 2:
+		mes "[Staff]";
+		mes "Very well, then.";
+		mes "Please enjoy your";
+		mes "stay in Einbroch.";
+		close;
+	case 3:
+		mes "[Staff]";
+		mes "Einbroch is infamous for";
+		mes "its air pollution, no doubt";
+		mes "caused by the industrial";
+		mes "facilities located here.";
+		mes "It's really horrible...";
+		next;
+		mes "[Staff]";
+		mes "Sometimes the air pollution";
+		mes "gets so bad that it becomes";
+		mes "hard to breathe. If you hear";
+		mes "the Einbroch Smog Alert, you";
+		mes "should find shelter immediately!";
+		close;
+	}
+}
+
+einbroch,252,301,3	duplicate(EinbrochTrain)	Train Station Staff#ein2	852
+
+einbroch,259,326,3	script	Leslie#ein_1	846,{
+	mes "[Leslie]";
+	mes "^666666*Cough cough!*^000000";
+	mes "Laaaand sakes!";
+	next;
+	mes "[Leslie]";
+	mes "An old woman like me";
+	mes "can't breathe this air! How";
+	mes "do people even live in all this";
+	mes "smog? Sure, the air in Einbech";
+	mes "isn't pristine, but the air here in Einbroch is much worse! ^333333*Cough~!*^000000";
+	next;
+	mes "[Leslie]";
+	mes "I hate coming here";
+	mes "sometimes! The air is";
+	mes "totally polluted and this";
+	mes "city is full of stuck up";
+	mes "pricks! But they sell stuff";
+	mes "here I can't buy back home...";
+	close;
+}
+
+einbroch,236,191,3	script	Tan#ein	855,{
+	mes "[Tan]";
+	mes "All the factories";
+	mes "here in Einbroch are";
+	mes "causing a serious air";
+	mes "pollution problem.";
+	next;
+	mes "[Tan]";
+	mes "I'm an Airship engineer and";
+	mes "everyday, all day long, I deal";
+	mes "with oil stains and all sorts";
+	mes "of pollutants. I'm surprised";
+	mes "I haven't gotten sick yet...";
+	next;
+	mes "[Tan]";
+	mes "Still, I try to be careful";
+	mes "when I can. Whenever I go";
+	mes "out into the city's red fog,";
+	mes "I always wear my Flu Mask.";
+	mes "If you'll be here for a while,";
+	mes "you should carry one with you.";
+	close;
+}
+
+einbroch,228,121,5	script	Little Toby#ein-1	855,{
+	mes "[Little Toby]";
+	mes "Excuse me...";
+	mes "But I'm lost!";
+	mes "I can't find my";
+	mes "mom or dad!";
+	next;
+	mes "[Little Toby]";
+	mes "A-am I at the Airport?!";
+	mes "My parents are supposed";
+	mes "to come get me, but I still";
+	mes "haven't found them! We just";
+	mes "moved here, so I don't know";
+	mes "where anything is!";
+	next;
+	mes "[Little Toby]";
+	mes "W-wait!";
+	mes "Where are you";
+	mes "going?! Don't leave";
+	mes "me, I'm all alone...!";
+	close;
+}
+
+einbroch,40,116,1	script	Airship Engineer#ein-1	855,{
+	mes "[Airship Engineer]";
+	mes "H-hey! Don't";
+	mes "touch my precious";
+	mes "Burielle! I just finished";
+	mes "her tune-up and now she's";
+	mes "sleeping! J-just step away!";
+	next;
+	switch(select("Who's Burielle?:Sorry about That.")) {
+	case 1:
+		mes "[Airship Engineer]";
+		mes "Burielle is the prettiest";
+		mes "model among all the Airships";
+		mes "made within the last ten years!";
+		mes "She might be grounded now, but";
+		mes "with my healing hands, she'll";
+		mes "conquer the skies again!";
+		next;
+		switch(select("Ah~:Uh huh...")) {
+		case 1:
+			mes "["+strcharinfo(0)+"]";
+			mes "Ah~";
+			mes "I see, so you're";
+			mes "working on restoring";
+			mes "this magnificent specimen";
+			mes "of an Airship. Best of luck~";
+			next;
+			mes "[Airship Engineer]";
+			mes "Yeah. I'd appreciate";
+			mes "it if you'd just be careful.";
+			mes "I've put a lot of love into";
+			mes "fixing up Burielle...";
+			close;
+		case 2:
+			mes "["+strcharinfo(0)+"]";
+			mes "Uh huh...";
+			mes "Right. For a second";
+			mes "there, I thought you were";
+			mes "talking about a person, but";
+			mes "then I also assumed that you";
+			mes "weren't, you know, a nutcase.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oh, did you say,";
+			mes "''prettiest model?''";
+			mes "All Airships look the";
+			mes "same to me, this one";
+			mes "ain't special at all. You've";
+			mes "gone loony tunes, paley boy.";
+			next;
+			emotion ET_FRET;
+			mes "[Airship Engineer]";
+			mes "Wh-what...?!";
+			close;
+		}
+	case 2:
+		mes "[Airship Engineer]";
+		mes "Well, at least you know";
+		mes "what you did wrong. Now";
+		mes "quit disturbing her and git!";
+		close;
+	}
+}
+
+einbroch,294,312,3	script	Centzu#ein	854,{
+	mes "[Centzu]";
+	mes "I've lived here for";
+	mes "a long time and I see";
+	mes "that this huge city is still";
+	mes "growing bigger everyday.";
+	next;
+	mes "[Centzu]";
+	mes "How did Einbroch get so";
+	mes "huge so quickly? I still can't";
+	mes "believe there's been this much";
+	mes "development. Well, I suppose";
+	mes "it's not my concern. Nothing";
+	mes "I do will make a difference... ";
+	next;
+	mes "[Centzu]";
+	mes "Even though such";
+	mes "rapid industrialization";
+	mes "can't be good for the";
+	mes "environment or the people,";
+	mes "I'll just sit back, watch what";
+	mes "happens and just enjoy life...";
+	close;
+}
+
+einbroch,232,255,5	script	Khowropher#ein	847,{
+	mes "[Khowropher]";
+	mes "^666666*Cough cough*^000000";
+	mes "Jiminy! The air here";
+	mes "is so thick and grimy!";
+	mes "And it's worse for us old";
+	mes "people with breathing";
+	mes "problems! ^333333*Haaack!*^000000";
+	next;
+	mes "[Khowropher]";
+	mes "I don't care if they keep";
+	mes "building more and more";
+	mes "factories and homes in this";
+	mes "town. Still, I'd like to spend";
+	mes "the rest of my life somewhere";
+	mes "quiet and with clean air...";
+	next;
+	mes "[Khowropher]";
+	mes "Then again, Einbroch is my";
+	mes "hometown and I can't just up";
+	mes "and leave. I suppose it's my";
+	mes "fate to suffer from this foul air until the day I die. ^666666*Sigh...*^000000";
+	close;
+}
+
+einbroch,143,109,5	script	Khetine#ein	855,{
+	mes "[Khetine]";
+	mes "Lately, there's been";
+	mes "talk about this empty";
+	mes "building downtown that's";
+	mes "been converted into some";
+	mes "sort of mysterious facility.";
+	next;
+	mes "[Khetine]";
+	mes "It all seems pretty";
+	mes "shady, but I guess it's";
+	mes "not really my job to know";
+	mes "about that. I mean, if it";
+	mes "doesn't affect me, why";
+	mes "should I be concerned?";
+	close;
+}
+
+einbroch,229,149,3	script	Sleik#ein	854,{
+	mes "[Sleik]";
+	mes "Surprisingly, we have";
+	mes "a Train Station that everyone";
+	mes "has been calling a victory for";
+	mes "science. I mean, shouldn't we";
+	mes "be more amazed by the Airship?";
+	next;
+	mes "[Sleik]";
+	mes "Now, if you want to know";
+	mes "where the train actually goes,";
+	mes "I wouldn't be able to tell you.";
+	mes "After all, I never rode it. But";
+	mes "still, I guess having our own";
+	mes "Train Station is a good thing.";
+	close;
+}
+
+airport,174,41,6	script	Young Man#air	99,{
+	mes "[Runnan]";
+	mes "...And that's why";
+	mes "I travel around the";
+	mes "globe. My bosses have";
+	mes "a keen eye for the most";
+	mes "exotic goods, so I acquire";
+	mes "them and make deliveries.";
+	next;
+	mes "[Runnan]";
+	mes "There even was a time";
+	mes "when they had me collect";
+	mes "Jellopy, though that stuff is";
+	mes "pretty common nowadays.";
+	mes "Now that I think about it, why";
+	mes "did they need so much stuff?";
+	close;
+}
+
+airport,176,41,4	script	Old Man#air	88,{
+	mes "[Zhen Lan]";
+	mes "Now, I hear that the";
+	mes "monsters around here";
+	mes "carry around some ore";
+	mes "that dazzles with a sublimely";
+	mes "beautiful light. Neat, huh?";
+	next;
+	mes "[Zhen Lan]";
+	mes "These ores are a great";
+	mes "material to use in making";
+	mes "flower vases. My friend, who";
+	mes "happens to be a doll maker,";
+	mes "told me that. He makes these dolls using all sorts of materials.";
+	next;
+	mes "[Zhen Lan]";
+	mes "He fashions them out of";
+	mes "Well-Tanned Leather, stuffs";
+	mes "them with Bird Feathers, and";
+	mes "uses Cyfar or Zargon to make";
+	mes "the eyes. He even uses a Jellopy at the bottom to balance the doll.";
+	next;
+	mes "[Zhen Lan]";
+	mes "I guess that goes to show";
+	mes "that things that seem useless";
+	mes "might actually be handy in some";
+	mes "way. So don't worry about having too much stuff. Sooner or later, it might be useful to someone.";
+	close;
+}
+
+ein_in01,113,211,3	script	Teinz#ein	851,{
+	mes "[Teinz]";
+	mes "If you just pay me money,";
+	mes "I'll be your slave! There's";
+	mes "nothing I won't do! Anything";
+	mes "is fair game. Hell, I'll get buck naked if you pay me enough.";
+	next;
+	mes "[Teinz]";
+	mes "If you pay me what I'm";
+	mes "worth, I'll work hard at";
+	mes "any task you set me to.";
+	mes "Sure, mining's rough, but";
+	mes "as long as the zeny's coming";
+	mes "in, I'm happy. Heh heh heh~";
+	close;
+}
+
+ein_in01,48,220,5	script	Lowe#ein	851,{
+	mes "[Lowe]";
+	mes "...";
+	mes "......";
+	next;
+	mes "[Lowe]";
+	mes "...";
+	mes "......";
+	mes ".........";
+	next;
+	mes "[Lowe]";
+	mes "Hey. Why are you";
+	mes "looking at me like";
+	mes "that? There's no idle";
+	mes "chatting allowed at work.";
+	mes "If Canphotii catches";
+	mes "you, you'll be punished...";
+	next;
+	mes "[Lowe]";
+	mes "Oh wait...";
+	mes "You don't work here.";
+	mes "I apologize, that kind";
+	mes "of reaction's an old";
+	mes "habit for me, adventurer.";
+	close;
+}
+
+ein_in01,87,237,5	script	Dinje#ein	850,{
+	mes "[Dinje]";
+	mes "Do you know why a woman";
+	mes "like me has to work in this";
+	mes "factory? I'll tell you why... ";
+	next;
+	mes "[Dinje]";
+	mes "My lazy husband, Gesin,";
+	mes "is just lying there on the";
+	mes "ground! So I have to work";
+	mes "in order to support us!";
+	next;
+	mes "[Dinje]";
+	mes "We can't rest for even";
+	mes "a second if we want to save";
+	mes "enough money to become";
+	mes "wealthy and powerful some";
+	mes "day. Don't you understand?";
+	next;
+	mes "[Dinje]";
+	mes "Well, my husband obviously";
+	mes "doesn't! How can he not know";
+	mes "how the real world works?!";
+	mes "Hey, kick his ass for me if";
+	mes "he doesn't wake up soon!";
+	close;
+}
+
+ein_in01,84,218,3	script	Tsuen#ein	851,{
+	mes "[Tsuen]";
+	mes "There was a time";
+	mes "when I dreamed of";
+	mes "being an adventurer,";
+	mes "just like you. But that";
+	mes "was a long time ago...";
+	next;
+	mes "[Tsuen]";
+	mes "Now, I'm nothing but";
+	mes "a factory manager. Still,";
+	mes "even if my job's not that";
+	mes "great, I'm pretty satisfied.";
+	mes "I'm sure people enjoy the";
+	mes "products I oversee and all...";
+	next;
+	mes "[Tsuen]";
+	mes "Maybe my life was meant";
+	mes "to be this way, even if it's";
+	mes "not how I planned it. But the";
+	mes "time will come when I up and";
+	mes "leave and travel the world";
+	mes "once I get my chance!";
+	next;
+	mes "[Tsuen]";
+	mes "I hope the day will";
+	mes "come when I can meet";
+	mes "you out in that big wide";
+	mes "world and greet you as";
+	mes "a fellow adventurer.";
+	close;
+}
+
+ein_in01,103,239,1	script	Gesin#ein	849,{
+	mes "[Gesin]";
+	mes "Arrrgh!";
+	mes "This is killing me!";
+	mes "Why should I be rich?";
+	mes "What's wrong with living";
+	mes "within our means?";
+	next;
+	mes "[Gesin]";
+	mes "I've got no problem";
+	mes "with my current way";
+	mes "of life, but the old ball";
+	mes "and chain disagrees.";
+	mes "Why is she so obsessed";
+	mes "with riches and power?";
+	next;
+	mes "[Gesin]";
+	mes "Well, in any case, I'd";
+	mes "like to help her, but I can't";
+	mes "get up! I'm exhausted and";
+	mes "my body is just overtaxed.";
+	mes "I have no strength at all.";
+	next;
+	mes "[Gesin]";
+	mes "This is horrible~";
+	mes "I should be resting";
+	mes "instead of worrying";
+	mes "about making money...";
+	close;
+}
+
+ein_in01,33,275,1	script	Pevtatin#ein	848,{
+	mes "[Pevtatin]";
+	mes "Good god!";
+	mes "I'm so stressed!";
+	mes "It's been nonstop";
+	mes "since I moved here!";
+	next;
+	mes "[Pevtatin]";
+	mes "The work is tough and";
+	mes "already the boss hates";
+	mes "me! I didn't move here";
+	mes "for this! Still, the pay is";
+	mes "decent so I guess I should";
+	mes "endure just a little longer.";
+	next;
+	mes "[Pevtatin]";
+	mes "Here goes...!";
+	mes "Yo-heave-ho!";
+	mes "Yo-heave-ho~!";
+	close;
+}
+
+ein_in01,36,204,3	script	Rombell#ein	851,{
+	mes "[Rombell]";
+	mes "It's great that the";
+	mes "factory is making good";
+	mes "business and drawing";
+	mes "in a lot of profit, but I still";
+	mes "have one major concern.";
+	next;
+	mes "[Rombell]";
+	mes "The amount of pollution";
+	mes "that this place is causing";
+	mes "is horrific! We've got these";
+	mes "machines blowing out toxic";
+	mes "gas all day long! The air";
+	mes "can't be safe for very long...";
+	next;
+	mes "[Rombell]";
+	mes "I mean, the air we're";
+	mes "breathing right now is";
+	mes "pretty foul and things";
+	mes "are only going to get";
+	mes "worse. How can we";
+	mes "solve this problem?";
+	close;
+}
+
+ein_in01,64,271,3	script	Vonstein#ein	855,{
+	mes "[Vonstein]";
+	mes "Staring at this";
+	mes "bubbling hot liquid";
+	mes "metal gives me a good";
+	mes "feeling inside. It's like";
+	mes "that stuff can melt anything!";
+	next;
+	mes "[Vonstein]";
+	mes "Imagine covering an";
+	mes "entire street of people";
+	mes "with that stuff! Bwahah--";
+	mes "Oh, I'm sorry if I'm talking";
+	mes "crazy talk! I'm just kidding~";
+	close;
+}
+
+ein_in01,49,202,3	script	Dorf#ein	851,{
+	mes "[Dorf]";
+	mes "Machines are sooo";
+	mes "convenient. Just look";
+	mes "at this contraption easily";
+	mes "do tasks that'd be tough";
+	mes "for me to finish alone.";
+	next;
+	mes "[Dorf]";
+	mes "Now this is what";
+	mes "I call technology!";
+	mes "Sure, it takes effort and";
+	mes "money to make one of";
+	mes "these, but what do I care?";
+	next;
+	mes "[Dorf]";
+	mes "I've got no problems,";
+	mes "so long as this freaking";
+	mes "thing keeps working the";
+	mes "way I want it to!";
+	close;
+}
+
+ein_in01,68,209,5	script	Khashurantze#ein	852,{
+	mes "[Khashurantze]";
+	mes "I'm sorry, but you need";
+	mes "special authority in order";
+	mes "to enter this place. I'll have";
+	mes "to ask you to leave right now.";
+	close2;
+	warp "einbroch",179,63;
+	end;
+}
+
+ein_in01,85,261,3	script	Zherin#ein	851,{
+	mes "[Zherin]";
+	mes "I'm in charge of this";
+	mes "blast furnace which";
+	mes "contains all of this";
+	mes "boiling magma.";
+	next;
+	mes "[Zherin]";
+	mes "Even though it doesn't";
+	mes "require actual labor, this";
+	mes "job is pretty tiring. I've got";
+	mes "to pay careful attention all";
+	mes "the time. It's pretty stressful.";
+	next;
+	mes "[Zherin]";
+	mes "Still, I'm proud of my job";
+	mes "since I have the responsibility";
+	mes "of ensuring employee safety.";
+	mes "Anyway, don't get too close";
+	mes "to the furnace. It won't do if";
+	mes "you get burned on accident!";
+	close;
+}
+
+ein_in01,43,252,3	script	Canphotii#ein	852,{
+	mes "[Canphotii]";
+	mes "Hustle, hustle!";
+	mes "Pick up the pace!";
+	mes "Anyone working too";
+	mes "slowly will be punished!";
+	next;
+	mes "[Canphotii]";
+	mes "Can't you understand";
+	mes "that?! Now go to your";
+	mes "station and get back to";
+	mes "work! Wait, are you even";
+	mes "an employee? If not, then";
+	mes "stop wandering around!";
+	next;
+	mes "[Canphotii]";
+	mes "You're not supposed";
+	mes "to be able to get in here!";
+	mes "I can't believe they let you";
+	mes "in! This requires extreme";
+	mes "disciplinary action!";
+	close;
+}
+
+ein_in01,206,224,3	script	Hotel Employee#ein	855,{
+	mes "[Hotel Employee]";
+	mes "Good day, welcome to the";
+	mes "Einbroch Hotel. The staff is";
+	mes "always striving to accommodate";
+	mes "our guests with the highest";
+	mes "standards in cleanliness,";
+	mes "service and convenience~";
+	next;
+	if (kain_ticket == 5) {
+		mes "[Hotel Employee]";
+		mes "Are you looking";
+		mes "for Mr. Defru Ark?";
+		mes "Oh right, he did mention";
+		mes "waiting for some package";
+		mes "from the Airport. Now let";
+		mes "me pull up that information...";
+		next;
+		mes "[Hotel Employee]";
+		mes "Ah, here we are.";
+		mes "Mr. Defru Ark is";
+		mes "staying in Room 201.";
+		next;
+	}
+	else {
+		switch(select("Save:Take Rest - 5,000 zeny:Cancel")) {
+		case 1:
+			mes "[Hotel Employee]";
+			mes "Your Respawn Point";
+			mes "has been saved here";
+			mes "in the Einbroch Hotel.";
+			mes "Thank you, and please";
+			mes "come again.";
+			close2;
+			savepoint "ein_in01",200,224,1,1;
+			end;
+		case 2:
+			if (Zeny > 4999) {
+				mes "[Hotel Employee]";
+				mes "Thank you.";
+				mes "Please enjoy";
+				mes "your rest~";
+				close2;
+				set Zeny, Zeny-5000;
+				percentheal 100,100;
+				warp "ein_in01",272,167;
+				end;
+			}
+			else {
+				mes "[Hotel Employee]";
+				mes "I'm sorry, but the";
+				mes "accommodation fee is";
+				mes "5,000 zeny. Next time,";
+				mes "please make sure that you";
+				mes "bring enough zeny, okay?";
+				close;
+			}
+		case 3:
+			mes "[Hotel Employee]";
+			mes "Thank you and";
+			mes "please come again~";
+			close;
+		}
+	}
+	mes "[Hotel Employee]";
+	mes "Have a good day.";
+	close;
+}
+
+einbroch,244,255,5	script	Bulletin Board#ein1	858,{
+	mes " ";
+	mes " Train Station ";
+	mes " ";
+	close;
+}
+
+einbroch,253,203,5	script	Bulletin Board#ein2	858,{
+	mes " ";
+	mes " Hotel ";
+	mes " ";
+	close;
+}
+
+einbroch,68,206,5	script	Bulletin Board#ein3	858,{
+	mes " ";
+	mes " Airship Airport ";
+	mes " ";
+	close;
+}
+
+einbroch,90,84,5	script	Bulletin Board#ein4	858,{
+	mes " ";
+	mes " Laboratory ";
+	mes " ";
+	close;
+}
+
+einbroch,101,106,5	script	Bulletin Board#ein5	858,{
+	mes " ";
+	mes " Airship Repair Shop ";
+	mes " ";
+	close;
+}
+
+einbroch,220,208,5	script	Bulletin Board#ein6	858,{
+	mes " ";
+	mes " Weapon Shop ";
+	mes " ";
+	close;
+}
+
+einbroch,132,76,5	script	Bulletin Board#ein7	858,{
+	mes " ";
+	mes " Factory ";
+	mes " ";
+	close;
+}
+
+einbroch,152,46,5	script	Bulletin Board#ein11	858,{
+	mes "West - Laboratory, Airship Repair Shop";
+	mes "South - Einbroch Front Gate";
+	mes "North - Airport";
+	mes "Northeast - Train Station, Hotel, Weapon Shop";
+	close;
+}
+
+einbroch,235,141,5	script	Bulletin Board#ein22	858,{
+	mes "Southwest - Airship Repair Shop, Laboratory";
+	mes "Northwest - Airport";
+	mes "North - Weapon Shop, Hotel, Train Station";
+	close;
+}
+
+einbroch,162,256,5	script	Bulletin Board#ein33	858,{
+	mes "East - Train Station";
+	mes "Southeast - Hotel";
+	mes "South - Weapon Shop, Factory";
+	mes "Southwest - Airport, Airship Repair Shop, Laboratory";
+	close;
+}
+
+einbroch,183,174,5	script	Bulletin Board#ein44	858,{
+	mes "East - Weapon Shop, Hotel";
+	mes "South - Factory";
+	mes "Southwest - Airship Repair Shop, Laboratory";
+	mes "Northwest - Airport";
+	close;
+}
+
+einbroch,104,202,5	script	Bulletin Board#ein55	858,{
+	mes "Northeast - Train Station";
+	mes "East - Weapon Shop,Hotel";
+	mes "South - Airship Repair Shop, Laboratory";
+	close;
+}
+
+ein_in01,31,217,3	script	Cendadt#ein	851,{
+	mes "[Cendadt]";
+	mes "This factory has a lot";
+	mes "of things that need fixing,";
+	mes "pronto! I'm amazed that";
+	mes "the place is still operating!";
+	next;
+	mes "[Cendadt]";
+	mes "Lucky for us, I hear that";
+	mes "some altruistic adventurers";
+	mes "have been donating materials";
+	mes "to help keep this factory from";
+	mes "falling apart... Or worse.";
+	mes "But that's just a rumor.";
+	next;
+	mes "[Cendadt]";
+	mes "^666666*Sigh*^000000";
+	mes "Even if it is true,";
+	mes "there's nothing no one";
+	mes "here can do. Nobody has";
+	mes "the courage to challenge";
+	mes "the system, you know?";
+	next;
+	mes "[Cendadt]";
+	mes "I...";
+	mes "I better get";
+	mes "back to work";
+	mes "before I get";
+	mes "in trouble...";
+	close;
+}

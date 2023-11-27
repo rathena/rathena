@@ -10692,14 +10692,6 @@ static const struct _battle_data {
 	{ "feature.instance_allow_reconnect",   &battle_config.instance_allow_reconnect,        0,      0,      1,              },
 #endif
 
-	{ "feature.goldpc_active",              &battle_config.feature_goldpc_active,           1,      0,      1,              },
-	{ "feature.goldpc_time",                &battle_config.feature_goldpc_time,          3600,      0,   3600,              },
-	{ "feature.goldpc_max_points",          &battle_config.feature_goldpc_max_points,     300,      0,    300,              },
-	{ "feature.goldpc_vip",                 &battle_config.feature_goldpc_vip,              1,      0,      1,              },
-	{ "feature.goldpc_script",              &battle_config.feature_goldpc_script,           1,      0,      1,              },
-	
-	{ "feature.attendance_close",           &battle_config.feature_attendance_close,        1,      0,      1,              },
-
 #include <custom/battle_config_init.inc>
 };
 

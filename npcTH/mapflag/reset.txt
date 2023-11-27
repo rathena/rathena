@@ -1,0 +1,41 @@
+//===== rAthena Script =======================================
+//= Mapflag: Enable Neuralizer use.
+//===== Description: ========================================= 
+//= Maps where Neuralizer (12213) can be used.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Daegaladh]
+//= 1.1 Renewal split. [Euphy]
+//============================================================
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
+alberta	mapflag	reset
+aldebaran	mapflag	reset
+amatsu	mapflag	reset
+ayothaya	mapflag	reset
+comodo	mapflag	reset
+einbroch	mapflag	reset
+einbech	mapflag	reset
+geffen	mapflag	reset
+gonryun	mapflag	reset
+izlude	mapflag	reset
+jawaii	mapflag	reset
+hugel	mapflag	reset
+lighthalzen	mapflag	reset
+louyang	mapflag	reset
+manuk	mapflag	reset
+mid_camp	mapflag	reset
+moc_ruins	mapflag	reset
+morocc	mapflag	reset
+moscovia	mapflag	reset
+niflheim	mapflag	reset
+prontera	mapflag	reset
+payon	mapflag	reset
+pay_arche	mapflag	reset
+rachel	mapflag	reset
+splendide	mapflag	reset
+umbala	mapflag	reset
+veins	mapflag	reset
+xmas	mapflag	reset
+yuno	mapflag	reset

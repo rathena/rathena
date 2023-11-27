@@ -1,0 +1,42 @@
+//===== rAthena Script =======================================
+//= Floating Server Rates
+//===== By: ==================================================
+//= Lupus
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= It's a simply example of setbattleflag
+//= This script will change your server rates from 1x to 1.5x every 6 hours
+//= Note: It doesn't affect Card granted drops, MVP & Treasure Chests drops ^_-
+//=       It also doesn't affect CARD drops, because they are just 0.01%
+//===== Additional Comments: =================================
+//= You can make incredible scripts with 'setbattleflag'!
+//============================================================
+
+-	script	FloatingRates	-1,{
+OnInit:
+//add any other HOURS
+OnHour00:
+OnHour06:
+OnHour12:
+OnHour18:
+//-------------------
+	set $@brate,rand(100,150);
+	set $@jrate,rand(100,150);
+	set $@drate,rand(100,150);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+	end;
+}

@@ -1,0 +1,21 @@
+//===== rAthena Script =======================================
+//= Lighthalzen Field Warp Script
+//===== By: ==================================================
+//= Sara-chan (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for Lighthalzen Field
+//===== Additional Comments: =================================
+//= 1.1 Applied Poki#3's fix for lhz001 & lhz001a [DracoRPG]
+//= 1.2 Updated the warp, according to korean eA site [Vicious]
+//= 1.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//============================================================
+
+lhz_fild01,210,18,0	warp	lhz043-1	1,1,lighthalzen,214,324
+lighthalzen,214,329,0	warp	lhz043a-1	1,1,lhz_fild01,210,23
+
+lhz_fild01,367,222,0	warp	lhz044-1	1,1,lhz_fild02,36,221
+lhz_fild02,29,219,0	warp	lhz044a-1	1,1,lhz_fild01,361,222

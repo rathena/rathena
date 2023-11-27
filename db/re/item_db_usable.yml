@@ -54303,21 +54303,6 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_GUNSLINGER_SCROLL);
-  - Id: 23165
-    AegisName: Service30_AID_Buff
-    Name: Premium Service Staff
-    Type: Usable
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      /* T */
   - Id: 23167
     AegisName: Green_Scroll_K
     Name: July Green Scroll
@@ -54643,24 +54628,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      atcommand "@vip +30d"+strcharinfo(0);
-      getitem 23165,1;
-  - Id: 23209
-    AegisName: Premium_Box_1d
-    Name: "[1Day] Premium Subscription Box"
-    Type: Usable
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      atcommand "@vip +1d"+strcharinfo(0);
-      getitem 23165,1;
+      /* TODO */
   - Id: 23213
     AegisName: Premium_Box_5d7
     Name: "[7Day] Premium Subscription Box"
@@ -54675,8 +54643,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      atcommand "@vip +7d"+strcharinfo(0);
-      getitem 23165,1;
+      /* TODO */
   - Id: 23217
     AegisName: 2016_Special_Scroll
     Name: 2016 Special Scroll

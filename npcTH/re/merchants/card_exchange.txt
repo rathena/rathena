@@ -1,0 +1,515 @@
+//===== rAthena Script =======================================
+//= Card Exchanger
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Exchange any card for a Card Coin, and 5 Card Coins for
+//= a random card in exchange.
+//=
+//= NOTE: This NPC is only available in pRO and twRO.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Main NPC :: Card_Change_tw
+//============================================================
+comodo,148,306,4	script	Card Vendor Machine#pa08	562,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many items, please reduce it and come back later!";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are overweight now, please reduce it and come back later!";
+		close;
+	}
+	mes "[Terminator RX1]";
+	mes "Text Explanation Begins:";
+	mes "Press 1 for Cancel,";
+	mes "Press 2 for Explanation,";
+	mes "Press 3 for Coin Exchange,";
+	mes "Press 4 for Card Exchange.";
+	next;
+	switch(select("1.Cancel:2.Explanation:3.Change Card into Coin:4.Change Coin into Card:^ffffff5.Start Security System^000000")) {
+	case 1:
+		mes "[Terminator RX1]";
+		mes "You are welcome!";
+		close;
+	case 2:
+		mes "[Terminator RX1]";
+		mes "No.3, when you choose Coin Exchange, system will collect ONE card from your inventory randomly to exchange into ONE Coin.";
+		next;
+		mes "[Terminator RX1]";
+		mes "No.4, when you choose Card Excahnge, system will collect FIVE coin from your inventory to exchange into ONE Card randomly.";
+		next;
+		mes "[Terminator RX1]";
+		mes "You are welcome!";
+		close;
+	case 3:
+		specialeffect2 EF_COIN;
+		specialeffect2 EF_LOUD;
+		progressbar "0xffff00",3;
+		callsub L_Exchange,	// yes, this list is hardcoded in the official script...
+			4001, 4002, 4003, 4004, 4005, 4006, 4008, 4009, 4010, 4011,
+			4012, 4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020, 4021,
+			4022, 4023, 4024, 4025, 4026, 4028, 4029, 4031, 4032, 4033,
+			4034, 4036, 4037, 4038, 4039, 4041, 4042, 4045, 4046, 4048,
+			4016, 4056, 4057, 4059, 4061, 4062, 4067, 4068, 4070, 4071,
+			4072, 4073, 4075, 4076, 4078, 4080, 4081, 4082, 4084, 4087,
+			4090, 4093, 4094, 4095, 4096, 4101, 4102, 4103, 4104, 4105,
+			4106, 4107, 4108, 4109, 4110, 4112, 4113, 4114, 4116, 4117,
+			4118, 4119, 4122, 4124, 4125, 4127, 4138, 4149, 4150, 4151,
+			4152, 4153, 4154, 4155, 4156, 4157, 4158, 4159, 4161, 4162,
+			4164, 4165, 4166, 4167, 4170, 4171, 4172, 4173, 4175, 4176,
+			4177, 4178, 4179, 4180, 4181, 4182, 4183, 4184, 4185, 4186,
+			4187, 4188, 4189, 4190, 4191, 4192, 4193, 4194, 4195, 4196,
+			4197, 4199, 4200, 4201, 4202, 4204, 4206, 4208, 4211, 4212,
+			4213, 4214, 4215, 4217, 4219, 4220, 4221, 4222, 4223, 4224,
+			4225, 4226, 4227, 4228, 4231, 4232, 4233, 4234, 4235, 4239,
+			4240, 4242, 4244, 4246, 4247, 4248, 4249, 4251, 4252, 4253,
+			4257, 4258, 4259, 4260, 4261, 4265, 4266, 4267, 4268, 4270,
+			4271, 4272, 4273, 4274, 4275, 4278, 4280, 4282, 4286, 4287,
+			4289, 4291, 4292, 4294, 4295, 4296, 4297, 4298, 4299, 4301,
+			4304, 4306, 4307, 4308, 4309, 4310, 4311, 4312, 4313, 4315,
+			4316, 4319, 4321, 4322, 4323, 4325, 4326, 4328, 4329, 4331,
+			4332, 4333, 4335, 4338, 4339, 4341, 4343, 4344, 4345, 4346,
+			4347, 4348, 4350, 4351, 4353, 4355, 4356, 4358, 4369, 4370,
+			4371, 4377, 4380, 4382, 4383, 4385, 4387, 4388, 4389, 4390,
+			4391, 4393, 4400, 4401, 4404, 4405, 4406, 4409, 4410, 4414,
+			4417, 4418, 4420, 4421, 4422, 4423, 4432, 4434, 4435, 4436,
+			4437, 4438, 4439, 4442, 4443, 4444, 4445, 4447, 4448, 4449,
+			4450, 4452;
+		mes "[Terminator RX1]";
+		mes "Card searching has finished!";
+		next;
+		mes "[Terminator RX1]";
+		mes "Thank you for coming!";
+		close;
+	case 4:
+		specialeffect2 EF_COIN;
+		specialeffect2 EF_LOUD;
+		progressbar "0xffff00",3;
+		if (countitem(6379) < 5) {
+			mes "[Terminator RX1]";
+			mes "You do not have enough coins.";
+			close;
+		}
+		delitem 6379,5; //Card_Coin
+		.@r = rand(1,34261);
+		     if (.@r <= 2001)  getitem 4001,1; //Poring_Card
+		else if (.@r <= 4002)  getitem 4002,1; //Fabre_Card
+		else if (.@r <= 4053)  getitem 4003,1; //Pupa_Card
+		else if (.@r <= 6054)  getitem 4004,1; //Drops_Card
+		else if (.@r <= 6105)  getitem 4005,1; //Poring__Card
+		else if (.@r <= 6156)  getitem 4006,1; //Lunatic_Card
+		else if (.@r <= 8157)  getitem 4008,1; //Picky_Card
+		else if (.@r <= 10158) getitem 4009,1; //Chonchon_Card
+		else if (.@r <= 10209) getitem 4010,1; //Wilow_Card
+		else if (.@r <= 10260) getitem 4011,1; //Picky__Card
+		else if (.@r <= 10311) getitem 4012,1; //Thief_Bug_Egg_Card
+		else if (.@r <= 10362) getitem 4013,1; //Andre_Egg_Card
+		else if (.@r <= 12363) getitem 4014,1; //Roda_Frog_Card
+		else if (.@r <= 14364) getitem 4015,1; //Condor_Card
+		else if (.@r <= 14415) getitem 4016,1; //Thief_Bug_Card
+		else if (.@r <= 14466) getitem 4017,1; //Savage_Babe_Card
+		else if (.@r <= 14517) getitem 4018,1; //Andre_Larva_Card
+		else if (.@r <= 14568) getitem 4019,1; //Hornet_Card
+		else if (.@r <= 16569) getitem 4020,1; //Farmiliar_Card
+		else if (.@r <= 16620) getitem 4021,1; //Rocker_Card
+		else if (.@r <= 18621) getitem 4022,1; //Spore_Card
+		else if (.@r <= 18672) getitem 4023,1; //Desert_Wolf_Babe_Card
+		else if (.@r <= 18723) getitem 4024,1; //Plankton_Card
+		else if (.@r <= 18774) getitem 4025,1; //Skeleton_Card
+		else if (.@r <= 18825) getitem 4026,1; //Thief_Bug_Female_Card
+		else if (.@r <= 18876) getitem 4028,1; //Tarou_Card
+		else if (.@r <= 20877) getitem 4029,1; //Wolf_Card
+		else if (.@r <= 20928) getitem 4031,1; //Pecopeco_Card
+		else if (.@r <= 20979) getitem 4032,1; //Ambernite_Card
+		else if (.@r <= 21030) getitem 4033,1; //Poporing_Card
+		else if (.@r <= 21081) getitem 4034,1; //Worm_Tail_Card
+		else if (.@r <= 21132) getitem 4036,1; //Muka_Card
+		else if (.@r <= 21183) getitem 4037,1; //Snake_Card
+		else if (.@r <= 21234) getitem 4038,1; //Zombie_Card
+		else if (.@r <= 21285) getitem 4039,1; //Stainer_Card
+		else if (.@r <= 21336) getitem 4041,1; //Coco_Card
+		else if (.@r <= 21387) getitem 4042,1; //Steel_Chonchon_Card
+		else if (.@r <= 21438) getitem 4045,1; //Horn_Card
+		else if (.@r <= 21489) getitem 4046,1; //Martin_Card
+		else if (.@r <= 21540) getitem 4048,1; //Poison_Spore_Card
+		else if (.@r <= 21591) getitem 4016,1; //Thief_Bug_Card
+		else if (.@r <= 21642) getitem 4056,1; //Dustiness_Card
+		else if (.@r <= 21693) getitem 4057,1; //Metaller_Card
+		else if (.@r <= 21744) getitem 4059,1; //Soldier_Andre_Card
+		else if (.@r <= 21795) getitem 4061,1; //Cornutus_Card
+		else if (.@r <= 21846) getitem 4062,1; //Anacondaq_Card
+		else if (.@r <= 21897) getitem 4067,1; //Megalodon_Card
+		else if (.@r <= 21948) getitem 4070,1; //Eggyra_Card
+		else if (.@r <= 21999) getitem 4071,1; //Orc_Zombie_Card
+		else if (.@r <= 22050) getitem 4072,1; //Golem_Card
+		else if (.@r <= 22101) getitem 4073,1; //Pirate_Skel_Card
+		else if (.@r <= 22152) getitem 4075,1; //Argos_Card
+		else if (.@r <= 22203) getitem 4076,1; //Magnolia_Card
+		else if (.@r <= 22254) getitem 4078,1; //Savage_Card
+		else if (.@r <= 22305) getitem 4080,1; //Flora_Card
+		else if (.@r <= 22356) getitem 4081,1; //Hode_Card
+		else if (.@r <= 22407) getitem 4082,1; //Desert_Wolf_Card
+		else if (.@r <= 22458) getitem 4084,1; //Marine_Sphere_Card
+		else if (.@r <= 22509) getitem 4087,1; //Giearth_Card
+		else if (.@r <= 22560) getitem 4090,1; //Munak_Card
+		else if (.@r <= 22611) getitem 4093,1; //Obeaune_Card
+		else if (.@r <= 22662) getitem 4094,1; //Archer_Skeleton_Card
+		else if (.@r <= 22713) getitem 4095,1; //Marse_Card
+		else if (.@r <= 22764) getitem 4096,1; //Zenorc_Card
+		else if (.@r <= 22815) getitem 4101,1; //Sand_Man_Card
+		else if (.@r <= 22866) getitem 4102,1; //Whisper_Card
+		else if (.@r <= 22917) getitem 4103,1; //Horong_Card
+		else if (.@r <= 22968) getitem 4104,1; //Requiem_Card
+		else if (.@r <= 23019) getitem 4105,1; //Marc_Card
+		else if (.@r <= 23070) getitem 4106,1; //Mummy_Card
+		else if (.@r <= 23121) getitem 4107,1; //Verit_Card
+		else if (.@r <= 23172) getitem 4108,1; //Myst_Card
+		else if (.@r <= 23223) getitem 4109,1; //Jakk_Card
+		else if (.@r <= 23274) getitem 4110,1; //Ghoul_Card
+		else if (.@r <= 23325) getitem 4112,1; //Marduk_Card
+		else if (.@r <= 23376) getitem 4113,1; //Marionette_Card
+		else if (.@r <= 23427) getitem 4114,1; //Argiope_Card
+		else if (.@r <= 23478) getitem 4116,1; //Isis_Card
+		else if (.@r <= 23529) getitem 4117,1; //Side_Winder_Card
+		else if (.@r <= 23580) getitem 4118,1; //Petit_Card
+		else if (.@r <= 23631) getitem 4119,1; //Bathory_Card
+		else if (.@r <= 23682) getitem 4122,1; //Deviruchi_Card
+		else if (.@r <= 23733) getitem 4124,1; //Medusa_Card
+		else if (.@r <= 23784) getitem 4125,1; //Deviace_Card
+		else if (.@r <= 23835) getitem 4127,1; //Nightmare_Card
+		else if (.@r <= 23886) getitem 4068,1; //Scorpion_Card
+		else if (.@r <= 23937) getitem 4138,1; //Anubis_Card
+		else if (.@r <= 23988) getitem 4149,1; //Gargoyle_Card
+		else if (.@r <= 24039) getitem 4150,1; //Goat_Card
+		else if (.@r <= 24090) getitem 4151,1; //Gajomart_Card
+		else if (.@r <= 24141) getitem 4152,1; //Galapago_Card
+		else if (.@r <= 24192) getitem 4153,1; //Crab_Card
+		else if (.@r <= 24243) getitem 4154,1; //Rice_Cake_Boy_Card
+		else if (.@r <= 24294) getitem 4155,1; //Goblin_Leader_Card
+		else if (.@r <= 24345) getitem 4156,1; //Steam_Goblin_Card
+		else if (.@r <= 24396) getitem 4157,1; //Goblin_Archer_Card
+		else if (.@r <= 24447) getitem 4158,1; //Flying_Deleter_Card
+		else if (.@r <= 24498) getitem 4159,1; //Nine_Tail_Card
+		else if (.@r <= 24549) getitem 4161,1; //Grand_Peco_Card
+		else if (.@r <= 24600) getitem 4162,1; //Grizzly_Card
+		else if (.@r <= 24651) getitem 4164,1; //Gullinbursti_Card
+		else if (.@r <= 24702) getitem 4165,1; //Gig_Card
+		else if (.@r <= 24753) getitem 4166,1; //Nightmare_Terror_Card
+		else if (.@r <= 24804) getitem 4167,1; //Neraid_Card
+		else if (.@r <= 24855) getitem 4170,1; //Dark_Frame_Card
+		else if (.@r <= 24906) getitem 4171,1; //Dark_Priest_Card
+		else if (.@r <= 24957) getitem 4172,1; //The_Paper_Card
+		else if (.@r <= 25008) getitem 4173,1; //Demon_Pungus_Card
+		else if (.@r <= 25059) getitem 4175,1; //Poison_Toad_Card
+		else if (.@r <= 25110) getitem 4176,1; //Dullahan_Card
+		else if (.@r <= 25161) getitem 4177,1; //Dryad_Card
+		else if (.@r <= 25212) getitem 4178,1; //Dragon_Tail_Card
+		else if (.@r <= 25263) getitem 4179,1; //Dragon_Fly_Card
+		else if (.@r <= 25314) getitem 4180,1; //Driller_Card
+		else if (.@r <= 25365) getitem 4181,1; //Disguise_Card
+		else if (.@r <= 25416) getitem 4182,1; //Diabolic_Card
+		else if (.@r <= 25467) getitem 4183,1; //Vagabond_Wolf_Card
+		else if (.@r <= 25518) getitem 4184,1; //Lava_Golem_Card
+		else if (.@r <= 25569) getitem 4185,1; //Rideword_Card
+		else if (.@r <= 25620) getitem 4186,1; //Raggler_Card
+		else if (.@r <= 25671) getitem 4187,1; //Raydric_Archer_Card
+		else if (.@r <= 25722) getitem 4188,1; //Leib_Olmai_Card
+		else if (.@r <= 25773) getitem 4189,1; //Wraith_Dead_Card
+		else if (.@r <= 25824) getitem 4190,1; //Wraith_Card
+		else if (.@r <= 25875) getitem 4191,1; //Loli_Ruri_Card
+		else if (.@r <= 25926) getitem 4192,1; //Rotar_Zairo_Card
+		else if (.@r <= 25977) getitem 4193,1; //Lude_Card
+		else if (.@r <= 26028) getitem 4194,1; //Rybio_Card
+		else if (.@r <= 26079) getitem 4195,1; //Leaf_Cat_Card
+		else if (.@r <= 26130) getitem 4196,1; //Marin_Card
+		else if (.@r <= 26181) getitem 4197,1; //Mastering_Card
+		else if (.@r <= 26232) getitem 4199,1; //Merman_Card
+		else if (.@r <= 26283) getitem 4200,1; //Megalith_Card
+		else if (.@r <= 26334) getitem 4201,1; //Majoruros_Card
+		else if (.@r <= 26385) getitem 4202,1; //Civil_Servant_Card
+		else if (.@r <= 26436) getitem 4204,1; //Mini_Demon_Card
+		else if (.@r <= 26487) getitem 4206,1; //Mystcase_Card
+		else if (.@r <= 26538) getitem 4208,1; //Miyabi_Ningyo_Card
+		else if (.@r <= 26589) getitem 4211,1; //Vocal_Card
+		else if (.@r <= 26640) getitem 4212,1; //Bon_Gun_Card
+		else if (.@r <= 26691) getitem 4213,1; //Brilight_Card
+		else if (.@r <= 26742) getitem 4214,1; //Bloody_Murderer_Card
+		else if (.@r <= 26793) getitem 4215,1; //Blazzer_Card
+		else if (.@r <= 26844) getitem 4217,1; //Live_Peach_Tree_Card
+		else if (.@r <= 26895) getitem 4219,1; //Sageworm_Card
+		else if (.@r <= 26946) getitem 4220,1; //Solider_Card
+		else if (.@r <= 26997) getitem 4221,1; //Skeleton_General_Card
+		else if (.@r <= 27048) getitem 4222,1; //Skel_Prisoner_Card
+		else if (.@r <= 27099) getitem 4223,1; //Stalactic_Golem_Card
+		else if (.@r <= 27150) getitem 4224,1; //Stem_Worm_Card
+		else if (.@r <= 27201) getitem 4225,1; //Stone_Shooter_Card
+		else if (.@r <= 27252) getitem 4226,1; //Sting_Card
+		else if (.@r <= 27303) getitem 4227,1; //Spring_Rabbit_Card
+		else if (.@r <= 27354) getitem 4228,1; //Sleeper_Card
+		else if (.@r <= 27405) getitem 4231,1; //Increase_Soil_Card
+		else if (.@r <= 27456) getitem 4232,1; //Wild_Ginseng_Card
+		else if (.@r <= 27507) getitem 4233,1; //Baby_Leopard_Card
+		else if (.@r <= 27558) getitem 4234,1; //Anolian_Card
+		else if (.@r <= 27609) getitem 4235,1; //Cookie_XMAS_Card
+		else if (.@r <= 27660) getitem 4239,1; //Iron_Fist_Card
+		else if (.@r <= 27711) getitem 4240,1; //Arclouse_Card
+		else if (.@r <= 27762) getitem 4242,1; //Apocalips_Card
+		else if (.@r <= 27813) getitem 4244,1; //Alarm_Card
+		else if (.@r <= 27864) getitem 4246,1; //Assulter_Card
+		else if (.@r <= 27915) getitem 4247,1; //Aster_Card
+		else if (.@r <= 27966) getitem 4248,1; //Ancient_Mummy_Card
+		else if (.@r <= 28017) getitem 4249,1; //Ancient_Worm_Card
+		else if (.@r <= 28068) getitem 4251,1; //Elder_Card
+		else if (.@r <= 28119) getitem 4252,1; //Alligator_Card
+		else if (.@r <= 28170) getitem 4253,1; //Alice_Card
+		else if (.@r <= 28221) getitem 4257,1; //Wild_Rose_Card
+		else if (.@r <= 28272) getitem 4258,1; //Wicked_Nymph_Card
+		else if (.@r <= 28323) getitem 4259,1; //Wooden_Golem_Card
+		else if (.@r <= 28374) getitem 4260,1; //Wootan_Shooter_Card
+		else if (.@r <= 28425) getitem 4261,1; //Wootan_Fighter_Card
+		else if (.@r <= 28476) getitem 4265,1; //Li_Me_Mang_Ryang_Card
+		else if (.@r <= 28527) getitem 4266,1; //Eclipse_Card
+		else if (.@r <= 28578) getitem 4267,1; //Explosion_Card
+		else if (.@r <= 28629) getitem 4268,1; //Injustice_Card
+		else if (.@r <= 28680) getitem 4270,1; //Giant_Spider_Card
+		else if (.@r <= 28731) getitem 4271,1; //Giant_Honet_Card
+		else if (.@r <= 28782) getitem 4272,1; //Dancing_Dragon_Card
+		else if (.@r <= 28833) getitem 4273,1; //Shellfish_Card
+		else if (.@r <= 28884) getitem 4274,1; //Zombie_Master_Card
+		else if (.@r <= 28935) getitem 4275,1; //Zombie_Prisoner_Card
+		else if (.@r <= 28986) getitem 4278,1; //Gibbet_Card
+		else if (.@r <= 29037) getitem 4280,1; //Geographer_Card
+		else if (.@r <= 29088) getitem 4282,1; //Tengu_Card
+		else if (.@r <= 29139) getitem 4286,1; //Karakasa_Card
+		else if (.@r <= 29190) getitem 4287,1; //Kapha_Card
+		else if (.@r <= 29241) getitem 4289,1; //Caterpillar_Card
+		else if (.@r <= 29292) getitem 4291,1; //Kobold_Leader_Card
+		else if (.@r <= 29343) getitem 4292,1; //Kobold_Archer_Card
+		else if (.@r <= 29394) getitem 4100,1; //Sohee_Card
+		else if (.@r <= 29445) getitem 4294,1; //Quve_Card
+		else if (.@r <= 29496) getitem 4295,1; //Kraben_Card
+		else if (.@r <= 29547) getitem 4296,1; //Cramp_Card
+		else if (.@r <= 29598) getitem 4297,1; //Cruiser_Card
+		else if (.@r <= 29649) getitem 4298,1; //Cremy_Fear_Card
+		else if (.@r <= 29700) getitem 4299,1; //Clock_Card
+		else if (.@r <= 29751) getitem 4301,1; //Killer_Mantis_Card
+		else if (.@r <= 29802) getitem 4304,1; //Tamruan_Card
+		else if (.@r <= 29853) getitem 4306,1; //Toad_Card
+		else if (.@r <= 29904) getitem 4307,1; //Kind_Of_Beetle_Card
+		else if (.@r <= 29955) getitem 4308,1; //Tri_Joint_Card
+		else if (.@r <= 30006) getitem 4309,1; //Parasite_Card
+		else if (.@r <= 30057) getitem 4310,1; //Panzer_Goblin_Card
+		else if (.@r <= 30108) getitem 4311,1; //Permeter_Card
+		else if (.@r <= 30159) getitem 4312,1; //Fur_Seal_Card
+		else if (.@r <= 30210) getitem 4313,1; //Punk_Card
+		else if (.@r <= 30261) getitem 4315,1; //Pest_Card
+		else if (.@r <= 30312) getitem 4316,1; //Fake_Angel_Card
+		else if (.@r <= 30363) getitem 4319,1; //Freezer_Card
+		else if (.@r <= 30414) getitem 4321,1; //Hylozoist_Card
+		else if (.@r <= 30465) getitem 4322,1; //High_Orc_Card
+		else if (.@r <= 30516) getitem 4323,1; //Garm_Baby_Card
+		else if (.@r <= 30567) getitem 4325,1; //Harpy_Card
+		else if (.@r <= 30618) getitem 4326,1; //See_Otter_Card
+		else if (.@r <= 30669) getitem 4328,1; //Hyegun_Card
+		else if (.@r <= 30720) getitem 4329,1; //Phendark_Card
+		else if (.@r <= 30771) getitem 4331,1; //Heater_Card
+		else if (.@r <= 30822) getitem 4332,1; //Waste_Stove_Card
+		else if (.@r <= 30873) getitem 4333,1; //Venomous_Card
+		else if (.@r <= 30924) getitem 4335,1; //Pitman_Card
+		else if (.@r <= 30975) getitem 4338,1; //Obsidian_Card
+		else if (.@r <= 31026) getitem 4339,1; //Mineral_Card
+		else if (.@r <= 31077) getitem 4341,1; //Metaling_Card
+		else if (.@r <= 31128) getitem 4343,1; //Mole_Card
+		else if (.@r <= 31179) getitem 4344,1; //Anopheles_Card
+		else if (.@r <= 31230) getitem 4345,1; //Hill_Wind_Card
+		else if (.@r <= 31281) getitem 4346,1; //Ygnizem_Card
+		else if (.@r <= 31332) getitem 4347,1; //Armaia_Card
+		else if (.@r <= 31383) getitem 4348,1; //Whikebain_Card
+		else if (.@r <= 31434) getitem 4350,1; //Rawrel_Card
+		else if (.@r <= 31485) getitem 4351,1; //Kavac_Card
+		else if (.@r <= 31536) getitem 4353,1; //Removal_Card
+		else if (.@r <= 31587) getitem 4355,1; //Gremlin_Card
+		else if (.@r <= 31638) getitem 4356,1; //Beholder_Card
+		else if (.@r <= 31689) getitem 4358,1; //Seyren_Card
+		else if (.@r <= 31740) getitem 4369,1; //Venatu_Card
+		else if (.@r <= 31791) getitem 4370,1; //Dimik_Card
+		else if (.@r <= 31842) getitem 4371,1; //Archdam_Card
+		else if (.@r <= 31893) getitem 4377,1; //Green_Iguana_Card
+		else if (.@r <= 31944) getitem 4380,1; //Ferus_Card
+		else if (.@r <= 31995) getitem 4382,1; //Novus__Card
+		else if (.@r <= 32046) getitem 4383,1; //Novus_Card
+		else if (.@r <= 32097) getitem 4385,1; //Dragon_Egg_Card
+		else if (.@r <= 32148) getitem 4387,1; //Ancient_Mimic_Card
+		else if (.@r <= 32199) getitem 4388,1; //Deathword_Card
+		else if (.@r <= 32250) getitem 4389,1; //Plasma_Card
+		else if (.@r <= 32301) getitem 4390,1; //Breeze_Card
+		else if (.@r <= 32352) getitem 4391,1; //Retribution_Card
+		else if (.@r <= 32403) getitem 4393,1; //Shelter_Card
+		else if (.@r <= 32454) getitem 4400,1; //Aliza_Card
+		else if (.@r <= 32505) getitem 4401,1; //Alicel_Card
+		else if (.@r <= 32556) getitem 4404,1; //Skogul_Card
+		else if (.@r <= 32607) getitem 4405,1; //Frus_Card
+		else if (.@r <= 32658) getitem 4406,1; //Skeggiold_Card
+		else if (.@r <= 32709) getitem 4409,1; //Agav_Card
+		else if (.@r <= 32760) getitem 4410,1; //Echio_Card
+		else if (.@r <= 32811) getitem 4414,1; //Seeker_Card
+		else if (.@r <= 32862) getitem 4417,1; //Ice_Titan_Card
+		else if (.@r <= 32913) getitem 4418,1; //Gazeti_Card
+		else if (.@r <= 32964) getitem 4420,1; //Muscipular_Card
+		else if (.@r <= 33015) getitem 4421,1; //Drosera_Card
+		else if (.@r <= 33066) getitem 4422,1; //Roween_Card
+		else if (.@r <= 33117) getitem 4423,1; //Galion_Card
+		else if (.@r <= 33168) getitem 4432,1; //Magmaring_Card
+		else if (.@r <= 33219) getitem 4434,1; //Knocker_Card
+		else if (.@r <= 33270) getitem 4435,1; //Zombie_Slaughter_Card
+		else if (.@r <= 33321) getitem 4436,1; //Ragged_Zombie_Card
+		else if (.@r <= 33372) getitem 4437,1; //Hell_Poodle_Card
+		else if (.@r <= 33423) getitem 4438,1; //Banshee_Card
+		else if (.@r <= 33474) getitem 4439,1; //Flame_Skull_Card
+		else if (.@r <= 33525) getitem 4442,1; //Tatacho_Card
+		else if (.@r <= 33576) getitem 4443,1; //Aqua_Elemental_Card
+		else if (.@r <= 33627) getitem 4444,1; //Draco_Card
+		else if (.@r <= 33678) getitem 4445,1; //Luciola_Vespa_Card
+		else if (.@r <= 33729) getitem 4447,1; //Centipede_Card
+		else if (.@r <= 33780) getitem 4448,1; //Cornus_Card
+		else if (.@r <= 33831) getitem 4449,1; //Dark_Shadow_Card
+		else if (.@r <= 33882) getitem 4450,1; //Banshee_Master_Card
+		else if (.@r <= 33933) getitem 4452,1; //Centipede_Larva_Card
+		else if (.@r <= 33939) getitem 4007,1; //Pecopeco_Egg_Card
+		else if (.@r <= 33945) getitem 4027,1; //Kukre_Card
+		else if (.@r <= 33951) getitem 4043,1; //Andre_Card
+		else if (.@r <= 33957) getitem 4052,1; //Elder_Wilow_Card
+		else if (.@r <= 33963) getitem 4055,1; //Marina_Card
+		else if (.@r <= 33969) getitem 4060,1; //Goblin_Card
+		else if (.@r <= 33975) getitem 4063,1; //Caramel_Card
+		else if (.@r <= 33981) getitem 4066,1; //Orc_Warrior_Card
+		else if (.@r <= 33987) getitem 4069,1; //Drainliar_Card
+		else if (.@r <= 33993) getitem 4074,1; //BigFoot_Card
+		else if (.@r <= 33999) getitem 4079,1; //Mantis_Card
+		else if (.@r <= 34005) getitem 4085,1; //Orc_Skeleton_Card
+		else if (.@r <= 34011) getitem 4089,1; //Sword_Fish_Card
+		else if (.@r <= 34017) getitem 4091,1; //Kobold_Card
+		else if (.@r <= 34023) getitem 4097,1; //Matyr_Card
+		else if (.@r <= 34029) getitem 4098,1; //Dokebi_Card
+		else if (.@r <= 34035) getitem 4099,1; //Pasana_Card
+		else if (.@r <= 34041) getitem 4293,1; //Cookie_Card
+		else if (.@r <= 34047) getitem 4111,1; //Strouf_Card
+		else if (.@r <= 34053) getitem 4120,1; //Petit__Card
+		else if (.@r <= 34059) getitem 4139,1; //Joker_Card
+		else if (.@r <= 34065) getitem 4160,1; //Antique_Firelock_Card
+		else if (.@r <= 34071) getitem 4210,1; //Wander_Man_Card
+		else if (.@r <= 34077) getitem 4216,1; //Sasquatch_Card
+		else if (.@r <= 34083) getitem 4255,1; //Orc_Lady_Card
+		else if (.@r <= 34089) getitem 4256,1; //Orc_Archer_Card
+		else if (.@r <= 34095) getitem 4262,1; //Evil_Cloud_Hermit_Card
+		else if (.@r <= 34101) getitem 4264,1; //Wind_Ghost_Card
+		else if (.@r <= 34107) getitem 4279,1; //Deleter_Card
+		else if (.@r <= 34113) getitem 4283,1; //Greatest_General_Card
+		else if (.@r <= 34119) getitem 4284,1; //Chepet_Card
+		else if (.@r <= 34125) getitem 4300,1; //Chimera_Card
+		else if (.@r <= 34131) getitem 4327,1; //Blood_Butterfly_Card
+		else if (.@r <= 34137) getitem 4362,1; //Harword_Card
+		else if (.@r <= 34143) getitem 4366,1; //Katrinn_Card
+		else if (.@r <= 34149) getitem 4378,1; //Acidus_Card
+		else if (.@r <= 34155) getitem 4395,1; //Tha_Maero_Card
+		else if (.@r <= 34161) getitem 4411,1; //Vanberk_Card
+		else if (.@r <= 34167) getitem 4412,1; //Isilla_Card
+		else if (.@r <= 34173) getitem 4030,1; //Mandragora_Card
+		else if (.@r <= 34179) getitem 4035,1; //Hydra_Card
+		else if (.@r <= 34185) getitem 4044,1; //Smokie_Card
+		else if (.@r <= 34191) getitem 4049,1; //Vadon_Card
+		else if (.@r <= 34197) getitem 4051,1; //Yoyo_Card
+		else if (.@r <= 34199) getitem 4058,1; //Thara_Frog_Card
+		else if (.@r <= 34201) getitem 4065,1; //Kaho_Card
+		else if (.@r <= 34203) getitem 4077,1; //Phen_Card
+		else if (.@r <= 34205) getitem 4083,1; //Rafflesia_Card
+		else if (.@r <= 34207) getitem 4086,1; //Soldier_Skeleton_Card
+		else if (.@r <= 34209) getitem 4126,1; //Minorous_Card
+		else if (.@r <= 34211) getitem 4136,1; //Khalitzburg_Card
+		else if (.@r <= 34213) getitem 4141,1; //Evil_Druid_Card
+		else if (.@r <= 34215) getitem 4205,1; //Mimic_Card
+		else if (.@r <= 34217) getitem 4209,1; //Violy_Card
+		else if (.@r <= 34219) getitem 4230,1; //Shinobi_Card
+		else if (.@r <= 34221) getitem 4237,1; //Owl_Duke_Card
+		else if (.@r <= 34223) getitem 4277,1; //Zherlthsh_Card
+		else if (.@r <= 34225) getitem 4281,1; //Zipper_Bear_Card
+		else if (.@r <= 34227) getitem 4317,1; //Mobster_Card
+		else if (.@r <= 34229) getitem 4334,1; //Noxious_Card
+		else if (.@r <= 34231) getitem 4354,1; //Gemini_Card
+		else if (.@r <= 34233) getitem 4359,1; //B_Eremes_Card
+		else if (.@r <= 34235) getitem 4368,1; //Shecil_Card
+		else if (.@r <= 34237) getitem 4375,1; //Orc_Baby_Card
+		else if (.@r <= 34239) getitem 4379,1; //Acidus__Card
+		else if (.@r <= 34241) getitem 4381,1; //Ferus__Card
+		else if (.@r <= 34243) getitem 4394,1; //Solace_Card
+		else if (.@r <= 34245) getitem 4397,1; //Tha_Despero_Card
+		else if (.@r <= 34247) getitem 4402,1; //Aliot_Card
+		else if (.@r <= 34249) getitem 4416,1; //Siroma_Card
+		else if (.@r <= 34251) getitem 4424,1; //Stapo_Card
+		else if (.@r <= 34253) getitem 4429,1; //Salamander_Card
+		else if (.@r <= 34255) getitem 4431,1; //Kasa_Card
+		else if (.@r <= 34257) getitem 4433,1; //Imp_Card
+		else if (.@r <= 34259) getitem 4440,1; //Necromancer_Card
+		else if (.@r <= 34261) {
+			if (rand(1,10) == 1)
+				getitem 4396,1; //Tha_Odium_Card
+			else
+				getitem 4092,1; //Skel_Worker_Card
+		}
+		mes "[Terminator RX1]";
+		mes "All cards have finished.";
+		next;
+		mes "[Terminator RX1]";
+		mes "Thank you for coming!";
+		close;
+	case 5:
+		mes "[Terminator RX1]";
+		mes "Found unauthorized signal, starting security system...";
+		close2;
+		warp "comodo",263,286;
+		end;
+	}
+	close;
+
+L_Exchange:
+	freeloop(1);
+	.@args = getargcount();
+	for (.@i = 0; .@i < .@args; .@i++) {
+		if (countitem(getarg(.@i))) {
+			mes "Found ^980078" + getitemname(getarg(.@i)) + "^000000,";
+			mes "Do you want to exchange ONE Card into ONE Coin?";
+			next;
+			switch(select("No:Yes")) {
+			case 1:
+				mes "^980078Do you want search for other cards?^000000";
+				next;
+				if(select("No:Yes") == 1) {
+					mes "^980078Card searching is interrupted^000000";
+					close;
+				}
+				break;
+			case 2:
+				if (countitem(getarg(.@i))) {
+					delitem getarg(.@i),1;
+					getitem 6379,1; //Card_Coin
+					mes "^980078" + getitemname(getarg(.@i)) + " has exchanged into Coin.^000000";
+					next;
+				} else {
+					mes "^980078Your inventory does not contain the card for exchange.^000000";
+					next;
+				}
+				break;
+			}
+		}
+	}
+	freeloop(0);
+	return;
+}

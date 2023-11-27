@@ -1,0 +1,23 @@
+//==== rAthena Script ========================================
+//= Turtle Island warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Turtle Island
+//===== Additional Comments: =================================
+//= 1.0 Split from combined warp file alberta_duns. [L0ne_W0lf]
+//============================================================
+
+//Turtle Island Warp's
+tur_dun01,154,241,0	warp	ttl01	1,1,tur_dun02,148,264
+tur_dun02,148,268,0	warp	ttl01-1	1,1,tur_dun01,154,237
+tur_dun02,167,19,0	warp	ttl02	1,1,tur_dun03,132,189
+tur_dun03,132,193,0	warp	ttl02-1	1,1,tur_dun02,167,23
+tur_dun03,217,71,0	warp	ttl03	1,1,tur_dun04,100,192
+tur_dun04,100,196,0	warp	ttl03-1	1,1,tur_dun03,215,75
+tur_dun05,89,69,0	warp	ttl05	1,1,tur_dun02,148,264
+tur_dun05,9,45,0	warp	ttl06	1,1,tur_dun01,154,237

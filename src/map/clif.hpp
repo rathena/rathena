@@ -1181,7 +1181,8 @@ enum out_ui_type : int8 {
 	OUT_UI_STYLIST,
 	OUT_UI_CAPTCHA,
 	OUT_UI_MACRO,
-	OUT_UI_QUEST = 6,
+	OUT_UI_TIP = 5,
+	OUT_UI_QUEST,
 	OUT_UI_ATTENDANCE,
 	OUT_UI_ENCHANTGRADE,
 	OUT_UI_ENCHANT = 10,
@@ -1252,7 +1253,5 @@ void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> 
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
-
-void clif_goldpc_info( map_session_data& sd );
 
 #endif /* CLIF_HPP */

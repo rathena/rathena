@@ -1,0 +1,232 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Stone Hearts)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+moc_fild11,57,138,0	script	Private Jeremy#hunt	707,{
+	if (checkquest(60140) != -1) {
+		if (checkquest(60140,HUNTING) != 2 ) {
+			mes "[Private Jeremy]";
+			mes "Have you finished hunting the 50 Golems?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Private Jeremy]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Private Jeremy]";
+				mes "Remember, I need help hunting Golems so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Private Jeremy]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Private Jeremy]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60140;
+					close;
+				case 2:
+					mes "[Private Jeremy]";
+					mes "Please kill 50 Golems.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Private Jeremy]";
+			mes "Amazing, you did that with speed.";
+			getexp 14000,9000;
+			erasequest 60140;
+			close;
+		}
+	}
+	if (checkquest(60141) != -1) {
+		if (checkquest(60141,HUNTING) != 2 ) {
+			mes "[Private Jeremy]";
+			mes "Have you finished hunting the 50 Golems?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Private Jeremy]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Private Jeremy]";
+				mes "Remember, I need help hunting Golems so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Private Jeremy]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Private Jeremy]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60141;
+					close;
+				case 2:
+					mes "[Private Jeremy]";
+					mes "Please kill 100 Golems.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Private Jeremy]";
+			mes "Amazing, you did that with speed.";
+			getexp 14000,9000;
+			getexp 14000,9000;
+			erasequest 60141;
+			close;
+		}
+	}
+	if (checkquest(60142) != -1) {
+		if (checkquest(60142,HUNTING) != 2 ) {
+			mes "[Private Jeremy]";
+			mes "Have you finished hunting the 150 Golems?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Private Jeremy]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Private Jeremy]";
+				mes "Remember, I need help hunting Golems so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Private Jeremy]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Private Jeremy]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60142;
+					close;
+				case 2:
+					mes "[Private Jeremy]";
+					mes "Please kill 150 Golems.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Private Jeremy]";
+			mes "Amazing, you did that with speed.";
+			getexp 14000,9000;
+			getexp 14000,9000;
+			getexp 14000,9000;
+			erasequest 60142;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 24) {
+		//for maximum level
+		if (BaseLevel < 61) {
+			mes "[Private Jeremy]";
+			mes "Greetings citizen!";
+			mes "Say, how would you like to help me?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Private Jeremy]";
+				mes "Thanks! I really appreciate it.";
+				next;
+				switch(select("Gather Items:Hunt Golems:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Private Jeremy]";
+					mes "The Morocc Guard needs ^FF0000Stone Hearts^000000 for our training regimen.";
+					next;
+					switch(select("I have Stone Hearts:What did you need?")) {
+					case 1:
+						if (countitem(953) > 24) {
+							mes "[Private Jeremy]";
+							mes "The Morocc Guard thanks you, citizen.";
+							delitem 953,25; //Stone_Heart
+							getexp 14000,9000;
+							close;
+						}
+						else {
+							mes "[Private Jeremy]";
+							mes "It doesn't look like you have enough.";
+							next;
+							mes "[Private Jeremy]";
+							mes "The Morocc Guard needs ^FF000025 Stone Hearts^000000, for our training regimen.";
+							close;
+						}
+					case 2:
+						mes "[Private Jeremy]";
+						mes "The Morocc Guard needs ^FF000025 Stone Hearts^000000, for our training regimen.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Private Jeremy]";
+					mes "Ah, ok I think you can help me out by hunting some Golems.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Golems:100 Golems:150 Golems")) {
+					case 1:
+						mes "[Private Jeremy]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60140;
+						close;
+					case 2:
+						mes "[Private Jeremy]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60141;
+						close;
+					case 3:
+						mes "[Private Jeremy]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60142;
+						close;
+					}
+				case 3:
+					mes "[Private Jeremy]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Private Jeremy]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Private Jeremy]";
+			mes "Greetings citizen!";
+			next;
+			mes "[Private Jeremy]";
+			mes "Please do not interrupt my mission for the Morocc Guard.";
+			close;
+		}
+	}
+	else {
+		mes "[Private Jeremy]";
+		mes "It is dangerous here citizen.";
+		close;
+	}
+}
+
+

@@ -1,0 +1,21 @@
+//===== rAthena Script =======================================
+//= Yggdrasil Root Dungeon
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version
+//============================================================
+
+//==================================================
+// nyd_dun01 - Yggdrasil Root Dungeon
+//==================================================
+nyd_dun01,0,0	monster	Draco	2013,40
+nyd_dun01,0,0	monster	Draco's Egg	2014,10
+nyd_dun01,0,0	monster	Aqua Elemental	2016,20
+nyd_dun01,0,0	monster	Dark Pinguicula	2015,10
+nyd_dun01,0,0	monster	Rata	2017,2,900000
+nyd_dun01,0,0	monster	Duneyrr	2018,2,900000

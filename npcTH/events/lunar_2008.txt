@@ -1,0 +1,283 @@
+//===== rAthena Script =======================================
+//= Lunar New Year Event (2008)
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= iRO Lunar New Year event; Year of the Rat. (2008)
+//= Kill Cramps, Taruus, and Matrins to retrieve "Rice Pouches"
+//= in return for various rice-themed foods, envelopes, and
+//= a "New year Doll" egg. Rates are guessed.
+//=
+//= Cramp, Tarou, and Matrin drops altered, Uncomment in
+//= mob_db2 to enable. [required]
+//=
+//= Miss Lunar NPC uses the sprite 4_f_nacoruri, which isn't
+//= standard in kRO's data files. If you're having problems
+//= or are unsure if your client supports that sprite, an
+//= alternate NPC header has been included.
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added missing checkweights. [L0ne_W0lf]
+//============================================================
+
+payon_in01,193,30,4	script	Rice Mill Grandma#rat	78,{
+	mes "[Rice Mill Grandma]";
+	if (!lunar_rat) {
+		mes "Those filthy little";
+		mes "creatures! Scurrying";
+		mes "around, snatching things";
+		mes "from me! If only they";
+		mes "weren't so blamed quick...";
+		next;
+		select("What's wrong?");
+		mes "[Rice Mill Grandma]";
+		mes "Oh, I was just making";
+		mes "some rice cakes and";
+		mes "pastries to celebrate";
+		mes "the new year, but these";
+		mes "animals have been stealing";
+		mes "the Rice Pouches I've prepared.";
+		next;
+		select("Rice Pouches?");
+		mes "[Rice Mill Grandma]";
+		mes "Yes, my son needs those";
+		mes "Rice Pouches to pound the";
+		mes "rice in a mortar, but I can't";
+		mes "make any pastries if I don't";
+		mes "even have the rice. Do you";
+		mes "think you can help me?";
+		next;
+		if (select("Of course.:I don't even know you.") == 1) {
+			set lunar_rat,1;
+			mes "[" + strcharinfo(0)+"]";
+			mes "Of course.";
+			mes "What can I do?";
+			next;
+			mes "[Rice Mill Grandma]";
+			mes "Well, do you think you";
+			mes "can catch the animals that";
+			mes "stole my Rice Pouches?";
+			mes "They're these blue and";
+			mes "white rats and these";
+			mes "nasty little moles.";
+			next;
+			select("Not a problem.");
+			mes "[" + strcharinfo(0)+"]";
+			mes "Not a problem.";
+			mes "I'll catch those animals,";
+			mes "and bring back any Rice";
+			mes "Pouches that I can find.";
+			next;
+			mes "[Rice Mill Grandma]";
+			mes "Oh, thank you!";
+			mes "Good luck catching";
+			mes "those pests for me~";
+			close;
+		}
+		mes "[Rice Mill Grandma]";
+		mes "I... Well...";
+		mes "That's true, but I was";
+		mes "planning on giving you";
+		mes "something nice in return";
+		mes "for your help. I know you're";
+		mes "not a bad person, so...";
+		close;
+	}
+	else if ((lunar_rat >= 1 && lunar_rat <= 2) || lunar_rat == 4) {
+		if (countitem(7770) >= 1 && lunar_rat == 2) {
+			mes "Oh, is that the";
+			mes "Sweet Rice my son made?";
+			mes "Would you let me have it?";
+			mes "Please wait here a moment,";
+			mes "and I'll make you some pastry~";
+			delitem 7770,1; //Sweet_rice
+			set lunar_rat,3;
+			close;
+		}
+		else if (lunar_rat == 4) {
+			if (countitem(7770) >= 1) {
+				mes "Oh, is that the";
+				mes "Sweet Rice my son made?";
+				mes "Would you let me have it?";
+				mes "Please wait here a moment,";
+				mes "and I'll make you some pastry~";
+				delitem 7770,1; //Sweet_rice
+				set lunar_rat,5;
+				close;
+			}
+			mes "Oh, where are all the";
+			mes "Rice Pouches? We need";
+			mes "them to make more rice cakes...";
+			close;
+		}
+		else if (countitem(7869) < 1 && lunar_rat <= 2) {
+			mes "Ooh, those white and";
+			mes "blue mouses might have";
+			mes "snatched my Rice Pouches";
+			mes "Those moles probably took";
+			mes "them too. Such nasty little";
+			mes "creatures, aren't they?";
+			close;
+		}
+		mes "Oh, is that one of my";
+		mes "Rice Pouches? I'm sorry,";
+		mes "but the pain my hips..";
+		mes "Would you mind being";
+		mes "a dear, and delivering";
+		mes "that to my son for me?";
+		set lunar_rat,2;
+		close;
+	}
+	else if (lunar_rat == 3 || lunar_rat == 5) {
+		set .@reward,rand(1,100);
+		if (.@reward <= 5) {
+			if (lunar_rat == 3) {
+				getitem 9038,1; // New_Year_Doll_Egg
+				set lunar_rat,4;
+			}
+			else if (lunar_rat == 5) {
+				getitem 668,1; // Red_Envelope
+			}
+		}
+		else if (.@reward >= 6 && .@reward <= 10) getitem 12198,2; // Lucky_Rice_Cake
+		else if (.@reward >= 11 && .@reward <= 30) getitem 12195,3; // Plain_Rice_Cake
+		else if (.@reward >= 31 && .@reward <= 40) getitem 12196,2; // Hearty_Rice_Cake
+		else if (.@reward >= 41 && .@reward <= 55) getitem 12123,2; // Honey_Pastry
+		else if (.@reward >= 56 && .@reward <= 70) getitem 12122,2; // Sesame_Pastry
+		else if (.@reward >= 71 && .@reward <= 80) getitem 12124,2; // Rainbow_Cake
+		else if (.@reward >= 81 && .@reward <= 90) getitem 12198,2; // Korean_Rice_Cake
+		else if (.@reward >= 91 && .@reward <= 100) getitem 12197,3; // Salty_Rice_Cake
+		// After getting the egg there is a chance to get an envelope with each turn in
+		if (rand(1,20) <= 5 && lunar_rat == 4) getitem 668,1; // Red_Envelope
+		// Set the quest accordingly for repeat turn-ins.
+		if (lunar_rat == 3) set lunar_rat,2;
+		else if (lunar_rat == 5) set lunar_rat,4;
+		mes "It's not nearly enough";
+		mes "to repay you for what you've";
+		mes "done for me, but I'd like";
+		mes "you to have this pastry that";
+		mes "I just made. Please enjoy it~";
+		next;
+		mes "[Rice Mill Grandma]";
+		mes "Thank you for the";
+		mes "Sweet Rice! I'll be";
+		mes "sure to make something";
+		mes "delicious for you if you";
+		mes "bring me more, okay?";
+		close;
+	}
+}
+
+payon,215,127,4	script	Rice Mill Man#rat	54,{
+	mes "[Rice Mill Man]";
+	if (!lunar_rat) {
+		mes "Breaks my heart...";
+		mes "My mom spends all this";
+		mes "time preparing rice for";
+		mes "the new year, and it's all";
+		mes "stolen by rats and vermin!";
+		close;
+	}
+	else if (lunar_rat == 1) {
+		mes "I hear from my mother";
+		mes "that you're helping her out.";
+		mes "She's a sweet old lady, huh?";
+		mes "If you find ang Rice Pouches,";
+		mes "you might want to have her";
+		mes "inspect them first.";
+		close;
+	}
+	else if (lunar_rat >= 2) {
+		if (countitem(7869) < 1) {
+			mes "If you bring me some";
+			mes "Rice Pouches, then I can";
+			mes "pound into into Sweet Rice.";
+			mes "You're here to help out my";
+			mes "mother, right? Thanks,";
+			mes "I really appreciate that.";
+			close;
+		}
+		mes "Oh, you brought me some";
+		mes "Rice Pouches from my mother?";
+		mes "Give me a second, and I'll";
+		mes "get this rice pounded into";
+		mes "paste, lickety split.";
+		next;
+		mes "[Rice Mill Man]";
+		mes "Hoo! Haa! Hi-yah!";
+		mes "Woosha! Whoosha!";
+		mes "Ka-taaaaaaaaaa!";
+		mes "WOOOSHA!";
+		next;
+		mes "[Rice Mill Man]";
+		mes "All done. Here, this";
+		mes "Sweet Rice is ready to";
+		mes "be made into pastries";
+		mes "Would you please bring";
+		mes "this to my mother?";
+		delitem 7869,1; //Rice_Pouch
+		getitem 7770,1; //Sweet_Rice
+		close;
+	}
+}
+
+//payon,126,113,4	script	Miss Lunar#rat	862,{
+payon,126,113,4	script	Miss Lunar#rat	719,{
+	mes "[Lunar]";
+	if ((MaxWeight-Weight) < 3000 || checkweight(1201,1) == 0) {
+		mes "Oh, I'm sorry, but we";
+		mes "can't do any business if";
+		mes "you're carry so much stuff.";
+		mes "Would you mind storing some of";
+		mes "your things with the Kafra Service?";
+		close;
+	}
+	if (lunar_rat < 4) {
+		mes "I want to earn enough";
+		mes "money to buy that big";
+		mes "crescent silver pin.";
+		mes "I have to sell as much";
+		mes "of this Mojji as I can!";
+		close;
+	}
+	else if (lunar_rat >= 4) {
+		mes "Oh, hello! I'm selling";
+		mes "special rice cakes made";
+		mes "from sweet rice. You can";
+		mes "eat it yourself, or feed it";
+		mes "to your New Year Doll if";
+		mes "you have one as a pet.";
+		next;
+		mes "[Lunar]";
+		mes "Anyway, I'm selling";
+		mes "10 Mojji for 3,000 zeny";
+		mes "Would you like to try some?";
+		next;
+		if (select("Yes:No") == 1) {
+			if (Zeny >= 3000) {
+				set Zeny,Zeny-3000;
+				getitem 554,10; // Mojji
+				mes "[Lunar]";
+				mes "Thank you, and I hope you";
+				mes "have a happy new year!";
+				mes "Please come again~";
+				close;
+			}
+			mes "[Lunar]";
+			mes "Oh, I'm sorry, but you";
+			mes "don't have enough";
+			mes "zeny right now....";
+			close;
+		}
+		mes "[Lunar]";
+		mes "Oh, alright. Well, I'll";
+		mes "be here if you or your";
+		mes "friends want some Mojji";
+		mes "later, alight? Goodbye~";
+		close;
+	}
+}

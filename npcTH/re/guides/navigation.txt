@@ -1,0 +1,43 @@
+//===== rAthena Script ======================================= 
+//= Navigation Functions
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Controls the navigation system for Renewal guides.
+//= Clients before 2011-10-10 do not support navigation
+//= links, and will default to colored or plain text.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Added 'is_clientver' command. [Euphy]
+//= 1.2 Dropped 'is_clientver' command. [Lemongrass]
+//============================================================ 
+
+function	script	F_Navi	{
+
+	if ( PACKETVER < 20111010 )
+		set .@disabled,1;
+
+	// This function takes 0 ~ 3 parameters.
+	switch(getargcount()) {
+	case 0:	// Check if system is disabled.
+		return .@disabled;
+	case 1:	// Display information message, if enabled.
+		if (!.@disabled) {
+			next;
+			mes getarg(0);
+			mes "When you click on the ^B9062F[location name]^000000, you'll receive the most advanced ^B9062FNavigation^000000 services!";
+		}
+		return;
+	default: // Display navigation link, if enabled; else set text color, if available.
+		if (!.@disabled)
+			return "<NAVI>[" + getarg(0) + "]<INFO>" + getarg(1) + ",0,000,0</INFO></NAVI>";
+		else if (getargcount() == 3)
+			return getarg(2)+getarg(0)+"^000000";
+		else
+			return getarg(0);
+	}
+}

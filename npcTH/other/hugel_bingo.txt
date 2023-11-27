@@ -1,0 +1,970 @@
+//===== rAthena Script =======================================
+//= Hugel Bingo script
+//===== By: ==================================================
+//= SinSloth
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Hugel Bingo game
+//===== Additional Comments: =================================
+//= 1.0 First version. Please report bugs you find out. [SinSloth]
+//= 1.1 Fixed a minor bug. [SinSloth]
+//= 1.2 Added some Bingo Staff NPCs. [SinSloth]
+//= 1.3 Fixed a bug where an AFK-player wasn't warped out of the game,
+//=     preventing players from launching another. [SinSloth]
+//= 1.4 Fixed a minor bug added in the last revision. [SinSloth]
+//= 1.5 Applied a fix to players locations which were not rotating properly. [SinSloth]
+//= 1.6 Removed nescesity to win to proceed with quest [Yommy]
+//= 1.7 Replaced effect numerics with constants. [Samuray22]
+//= 1.8 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.9 Some optimization/standardization. [Euphy]
+//============================================================
+
+que_bingo,48,84,5	script	Bingo Waiting Room	124,{
+	end;
+
+OnInit:
+	waitingroom "Bingo Waiting Room - 5 People",50,"Bingo Waiting Room::OnWarp",5,1000;
+	end;
+
+OnWarp:
+	warpwaitingpc "que_bingo",46,141;
+	donpcevent "start#bingo::OnStart";
+	enablenpc "plate1#bingo";
+	enablenpc "plate2#bingo";
+	enablenpc "plate3#bingo";
+	enablenpc "plate4#bingo";
+	enablenpc "plate5#bingo";
+	disablewaitingroomevent;
+	end;
+
+OnStart:
+	enablewaitingroomevent;
+	end;
+}
+
+que_bingo,49,125,0	script	plate1#bingo	139,1,1,{
+
+OnInit:
+	disablenpc "plate1#bingo";
+	disablenpc "plate2#bingo";
+	disablenpc "plate3#bingo";
+	disablenpc "plate4#bingo";
+	disablenpc "plate5#bingo";
+	end;
+
+OnTouch:
+	set @bingo_a1$,0;
+	set @bingo_a2$,0;
+	set @bingo_a3$,0;
+	set @bingo_a4$,0;
+	set @bingo_a5$,0;
+	set @bingo_b1$,0;
+	set @bingo_b2$,0;
+	set @bingo_b3$,0;
+	set @bingo_b4$,0;
+	set @bingo_b5$,0;
+	set @bingo_c1$,0;
+	set @bingo_c2$,0;
+	set @bingo_c3$,0;
+	set @bingo_c4$,0;
+	set @bingo_c5$,0;
+	set @bingo_d1$,0;
+	set @bingo_d2$,0;
+	set @bingo_d3$,0;
+	set @bingo_d4$,0;
+	set @bingo_d5$,0;
+	set @bingo_e1$,0;
+	set @bingo_e2$,0;
+	set @bingo_e3$,0;
+	set @bingo_e4$,0;
+	set @bingo_e5$,0;
+	set @bingo_case,1;
+L_Fill:
+	set @bingo_fill,callfunc("Func_Bingo",@bingo_case);
+	if (!@bingo_fill) {
+		mes "The numbers you have entered";
+  		mes "exceed the limit, or you have";
+		mes "already entered these numbers.";
+		mes "Please enter your numbers again.";
+		next;
+	} else if (@bingo_fill) {
+		if(@bingoplate[25] < 10) set @bingo_e5$,"0"+@bingoplate[25]+""; else set @bingo_e5$,@bingoplate[25];
+		donpcevent "start#bingo::OnEnter";
+		mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ["+@bingo_a4$+"] ["+@bingo_a5$+"]";
+		mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ["+@bingo_b3$+"] ["+@bingo_b4$+"] ["+@bingo_b5$+"]";
+		mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ["+@bingo_c4$+"] ["+@bingo_c5$+"]";
+		mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ["+@bingo_d5$+"]";
+		mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ["+@bingo_e3$+"] ["+@bingo_e4$+"] ["+@bingo_e5$+"]";
+		close;
+
+	}
+	goto L_Fill;
+}
+
+que_bingo,53,121,0	duplicate(plate1#bingo)	plate2#bingo	139,1,1
+que_bingo,51,116,0	duplicate(plate1#bingo)	plate3#bingo	139,1,1
+que_bingo,46,116,0	duplicate(plate1#bingo)	plate4#bingo	139,1,1
+que_bingo,45,121,0	duplicate(plate1#bingo)	plate5#bingo	139,1,1
+
+que_bingo,51,51,0	script	start#bingo	139,{
+
+OnStart:
+	initnpctimer;
+	end;
+
+OnEnter:
+	if ($@hu_bingoa == 4) {
+		set $@hu_bingoa,5;
+		donpcevent "start2#bingo::OnStart";
+		stopnpctimer;
+		end;
+	}
+	set $@hu_bingoa,$@hu_bingoa +1;
+	end;
+
+OnTimer1000:
+	mapannounce "que_bingo","Eukran: Hello, everyone! I'm Eukran, your Bingo Guide~",1,0xFFAB54;
+	end;
+
+OnTimer6000:
+	mapannounce "que_bingo","Eukran: Game participants, please enter the Warp Portal at the bottom of your screen and choose a Bingo Plate by entering a number.",1,0xFFAB54;
+	end;
+
+OnTimer11000:
+	mapannounce "que_bingo","Eukran: All participants must choose their Bingo Plates within 3 minutes, or the game will be canceled.",1,0xFFAB54;
+	end;
+
+OnTimer192000:
+	mapannounce "que_bingo","Eukran: Please enter a number in 5 seconds, or the game will be canceled.",1,0xFFAB54;
+	end;
+
+OnTimer200000:
+	mapannounce "que_bingo","Eukran: I'm sorry, but the game has been canceled. Please come again and enjoy a game of Bingo with us!",1,0xFFAB54;
+	end;
+
+OnTimer202000:
+	disablenpc "plate1#bingo";
+	disablenpc "plate2#bingo";
+	disablenpc "plate3#bingo";
+	disablenpc "plate4#bingo";
+	disablenpc "plate5#bingo";
+	end;
+
+OnTimer203000:
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,124;
+	enablenpc "out3#bingo";
+	end;
+
+OnTimer204000:
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
+	disablenpc "out3#bingo";
+	set $@hu_bingoa,0;
+	set $@hu_bingob,0;
+	donpcevent "Bingo Waiting Room::OnStart";
+	end;
+}
+
+que_bingo,52,52,0	script	start2#bingo	139,{
+
+OnStop:
+	stopnpctimer;
+	end;
+
+OnStart:
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "que_bingo","Eukran: Great, everyone seems to be ready~",1,0xFFAB54;
+	disablenpc "plate1#bingo";
+	disablenpc "plate2#bingo";
+	disablenpc "plate3#bingo";
+	disablenpc "plate4#bingo";
+	disablenpc "plate5#bingo";
+	end;
+
+OnTimer5000:
+	mapannounce "que_bingo","Eukran: Now, let the game begin!",1,0xFFAB54;
+	setarray $@bingoarray[0],1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25;
+	set .@max_index, 24;
+	for(set .@i,0; .@i < 25; set .@i,.@i +1) {
+		set $@bingo0,rand(0,.@max_index);
+		set $bingo[.@i],$@bingoarray[$@bingo0];
+		set $@bingoarray[$@bingo0], $@bingoarray[.@max_index];
+		set .@max_index, .@max_index - 1;
+	}
+	end;
+
+OnTimer8000:
+	mapannounce "que_bingo","Eukran: I'll announce the Bingo Numbers. If you get 5 lines by matching 5 Bingo Numbers in a straight line on your Bingo Plate, yell out ''Bingo'' to win~",1,0xFFAB54;
+	end;
+
+OnTimer10000:
+	set $@bingoresult,1;
+	callfunc "Func_BingoResult",$@bingoresult;
+	end;
+
+OnTimer15000:
+OnTimer25000:
+OnTimer35000:
+OnTimer45000:
+OnTimer55000:
+OnTimer65000:
+OnTimer75000:
+OnTimer85000:
+OnTimer95000:
+OnTimer105000:
+OnTimer115000:
+OnTimer125000:
+OnTimer135000:
+OnTimer145000:
+OnTimer155000:
+OnTimer179000:
+OnTimer199000:
+OnTimer219000:
+OnTimer239000:
+OnTimer259000:
+OnTimer279000:
+OnTimer299000:
+OnTimer319000:
+OnTimer339000:
+	donpcevent "1a#bingo::OnInit";
+	end;
+
+OnTimer20000:
+OnTimer30000:
+OnTimer40000:
+OnTimer50000:
+OnTimer60000:
+OnTimer70000:
+OnTimer80000:
+OnTimer90000:
+OnTimer100000:
+OnTimer110000:
+OnTimer120000:
+OnTimer130000:
+OnTimer140000:
+OnTimer150000:
+OnTimer160000:
+OnTimer180000:
+OnTimer200000:
+OnTimer220000:
+OnTimer240000:
+OnTimer260000:
+OnTimer280000:
+OnTimer300000:
+OnTimer320000:
+OnTimer340000:
+	callfunc "Func_BingoResult",$@bingoresult;
+	end;
+
+OnTimer440000:
+	mapannounce "que_bingo","Eukran: I've announced all of the selected numbers, but I haven't heard anyone yell ''Bingo.''",1,0xFFAB54;
+	end;
+
+OnTimer445000:
+	mapannounce "que_bingo","Eukran: I'll give you all 10 seconds to check if any of you have won. If no one can yell ''Bingo'' in 10 seconds, this game will end without a winner.",1,0xFFAB54;
+	end;
+
+OnTimer460000:
+	mapannounce "que_bingo","Eukran: I'm sorry, but this game has ended without a winner. Thanks for playing, everyone~",1,0xFFAB54;
+	donpcevent "1a#bingo::OnInit";
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
+	set $@hu_bingoa,0;
+	donpcevent "Bingo Waiting Room::OnStart";
+	end;
+}
+
+que_bingo,49,125,0	script	1a#bingo	139,1,1,{
+	end;
+
+OnInit:
+	disablenpc "1a#bingo";
+	disablenpc "2a#bingo";
+	disablenpc "3a#bingo";
+	disablenpc "4a#bingo";
+	disablenpc "5a#bingo";
+	disablenpc "6a#bingo";
+	disablenpc "7a#bingo";
+	disablenpc "8a#bingo";
+	disablenpc "9a#bingo";
+	disablenpc "10a#bingo";
+	disablenpc "11a#bingo";
+	disablenpc "12a#bingo";
+	disablenpc "13a#bingo";
+	disablenpc "14a#bingo";
+	disablenpc "15a#bingo";
+	disablenpc "16a#bingo";
+	disablenpc "17a#bingo";
+	disablenpc "18a#bingo";
+	disablenpc "19a#bingo";
+	disablenpc "20a#bingo";
+	disablenpc "21a#bingo";
+	disablenpc "22a#bingo";
+	disablenpc "23a#bingo";
+	disablenpc "24a#bingo";
+	disablenpc "25a#bingo";
+	disablenpc "1b#bingo";
+	disablenpc "2b#bingo";
+	disablenpc "3b#bingo";
+	disablenpc "4b#bingo";
+	disablenpc "5b#bingo";
+	disablenpc "6b#bingo";
+	disablenpc "7b#bingo";
+	disablenpc "8b#bingo";
+	disablenpc "9b#bingo";
+	disablenpc "10b#bingo";
+	disablenpc "11b#bingo";
+	disablenpc "12b#bingo";
+	disablenpc "13b#bingo";
+	disablenpc "14b#bingo";
+	disablenpc "15b#bingo";
+	disablenpc "16b#bingo";
+	disablenpc "17b#bingo";
+	disablenpc "18b#bingo";
+	disablenpc "19b#bingo";
+	disablenpc "20b#bingo";
+	disablenpc "21b#bingo";
+	disablenpc "22b#bingo";
+	disablenpc "23b#bingo";
+	disablenpc "24b#bingo";
+	disablenpc "25b#bingo";
+	disablenpc "1c#bingo";
+	disablenpc "2c#bingo";
+	disablenpc "3c#bingo";
+	disablenpc "4c#bingo";
+	disablenpc "5c#bingo";
+	disablenpc "6c#bingo";
+	disablenpc "7c#bingo";
+	disablenpc "8c#bingo";
+	disablenpc "9c#bingo";
+	disablenpc "10c#bingo";
+	disablenpc "11c#bingo";
+	disablenpc "12c#bingo";
+	disablenpc "13c#bingo";
+	disablenpc "14c#bingo";
+	disablenpc "15c#bingo";
+	disablenpc "16c#bingo";
+	disablenpc "17c#bingo";
+	disablenpc "18c#bingo";
+	disablenpc "19c#bingo";
+	disablenpc "20c#bingo";
+	disablenpc "21c#bingo";
+	disablenpc "22c#bingo";
+	disablenpc "23c#bingo";
+	disablenpc "24c#bingo";
+	disablenpc "25c#bingo";
+	disablenpc "1d#bingo";
+	disablenpc "2d#bingo";
+	disablenpc "3d#bingo";
+	disablenpc "4d#bingo";
+	disablenpc "5d#bingo";
+	disablenpc "6d#bingo";
+	disablenpc "7d#bingo";
+	disablenpc "8d#bingo";
+	disablenpc "9d#bingo";
+	disablenpc "10d#bingo";
+	disablenpc "11d#bingo";
+	disablenpc "12d#bingo";
+	disablenpc "13d#bingo";
+	disablenpc "14d#bingo";
+	disablenpc "15d#bingo";
+	disablenpc "16d#bingo";
+	disablenpc "17d#bingo";
+	disablenpc "18d#bingo";
+	disablenpc "19d#bingo";
+	disablenpc "20d#bingo";
+	disablenpc "21d#bingo";
+	disablenpc "22d#bingo";
+	disablenpc "23d#bingo";
+	disablenpc "24d#bingo";
+	disablenpc "25d#bingo";
+	disablenpc "1e#bingo";
+	disablenpc "2e#bingo";
+	disablenpc "3e#bingo";
+	disablenpc "4e#bingo";
+	disablenpc "5e#bingo";
+	disablenpc "6e#bingo";
+	disablenpc "7e#bingo";
+	disablenpc "8e#bingo";
+	disablenpc "9e#bingo";
+	disablenpc "10e#bingo";
+	disablenpc "11e#bingo";
+	disablenpc "12e#bingo";
+	disablenpc "13e#bingo";
+	disablenpc "14e#bingo";
+	disablenpc "15e#bingo";
+	disablenpc "16e#bingo";
+	disablenpc "17e#bingo";
+	disablenpc "18e#bingo";
+	disablenpc "19e#bingo";
+	disablenpc "20e#bingo";
+	disablenpc "21e#bingo";
+	disablenpc "22e#bingo";
+	disablenpc "23e#bingo";
+	disablenpc "24e#bingo";
+	disablenpc "25e#bingo";
+	end;
+	
+OnTouch:
+	if(@bingoplate[1] == $bingo[$@bingoresult -1]){ set @bingo_a1$,"^ff0000-  -^000000"; setarray @bingoplate[1],99; }
+	else if(@bingoplate[2] == $bingo[$@bingoresult -1]){ set @bingo_a2$,"^ff0000-  -^000000"; setarray @bingoplate[2],99; }
+	else if(@bingoplate[3] == $bingo[$@bingoresult -1]){ set @bingo_a3$,"^ff0000-  -^000000"; setarray @bingoplate[3],99; }
+	else if(@bingoplate[4] == $bingo[$@bingoresult -1]){ set @bingo_a4$,"^ff0000-  -^000000"; setarray @bingoplate[4],99; }
+	else if(@bingoplate[5] == $bingo[$@bingoresult -1]){ set @bingo_a5$,"^ff0000-  -^000000"; setarray @bingoplate[5],99; }
+	else if(@bingoplate[6] == $bingo[$@bingoresult -1]){ set @bingo_b1$,"^ff0000-  -^000000"; setarray @bingoplate[6],99; }
+	else if(@bingoplate[7] == $bingo[$@bingoresult -1]){ set @bingo_b2$,"^ff0000-  -^000000"; setarray @bingoplate[7],99; }
+	else if(@bingoplate[8] == $bingo[$@bingoresult -1]){ set @bingo_b3$,"^ff0000-  -^000000"; setarray @bingoplate[8],99; }
+	else if(@bingoplate[9] == $bingo[$@bingoresult -1]){ set @bingo_b4$,"^ff0000-  -^000000"; setarray @bingoplate[9],99; }
+	else if(@bingoplate[10] == $bingo[$@bingoresult -1]){ set @bingo_b5$,"^ff0000-  -^000000"; setarray @bingoplate[10],99; }
+	else if(@bingoplate[11] == $bingo[$@bingoresult -1]){ set @bingo_c1$,"^ff0000-  -^000000"; setarray @bingoplate[11],99; }
+	else if(@bingoplate[12] == $bingo[$@bingoresult -1]){ set @bingo_c2$,"^ff0000-  -^000000"; setarray @bingoplate[12],99; }
+	else if(@bingoplate[13] == $bingo[$@bingoresult -1]){ set @bingo_c3$,"^ff0000-  -^000000"; setarray @bingoplate[13],99; }
+	else if(@bingoplate[14] == $bingo[$@bingoresult -1]){ set @bingo_c4$,"^ff0000-  -^000000"; setarray @bingoplate[14],99; }
+	else if(@bingoplate[15] == $bingo[$@bingoresult -1]){ set @bingo_c5$,"^ff0000-  -^000000"; setarray @bingoplate[15],99; }
+	else if(@bingoplate[16] == $bingo[$@bingoresult -1]){ set @bingo_d1$,"^ff0000-  -^000000"; setarray @bingoplate[16],99; }
+	else if(@bingoplate[17] == $bingo[$@bingoresult -1]){ set @bingo_d2$,"^ff0000-  -^000000"; setarray @bingoplate[17],99; }
+	else if(@bingoplate[18] == $bingo[$@bingoresult -1]){ set @bingo_d3$,"^ff0000-  -^000000"; setarray @bingoplate[18],99; }
+	else if(@bingoplate[19] == $bingo[$@bingoresult -1]){ set @bingo_d4$,"^ff0000-  -^000000"; setarray @bingoplate[19],99; }
+	else if(@bingoplate[20] == $bingo[$@bingoresult -1]){ set @bingo_d5$,"^ff0000-  -^000000"; setarray @bingoplate[20],99; }
+	else if(@bingoplate[21] == $bingo[$@bingoresult -1]){ set @bingo_e1$,"^ff0000-  -^000000"; setarray @bingoplate[21],99; }
+	else if(@bingoplate[22] == $bingo[$@bingoresult -1]){ set @bingo_e2$,"^ff0000-  -^000000"; setarray @bingoplate[22],99; }
+	else if(@bingoplate[23] == $bingo[$@bingoresult -1]){ set @bingo_e3$,"^ff0000-  -^000000"; setarray @bingoplate[23],99; }
+	else if(@bingoplate[24] == $bingo[$@bingoresult -1]){ set @bingo_e4$,"^ff0000-  -^000000"; setarray @bingoplate[24],99; }
+	else if(@bingoplate[25] == $bingo[$@bingoresult -1]){ set @bingo_e5$,"^ff0000-  -^000000"; setarray @bingoplate[25],99; }
+	set @bingowin,0;
+	if(@bingoplate[1] == @bingoplate[2] && @bingoplate[1] == @bingoplate[3] && @bingoplate[1] == @bingoplate[4] && @bingoplate[1] == @bingoplate[5]) set @bingowin,@bingowin +1;
+	if(@bingoplate[6] == @bingoplate[7] && @bingoplate[6] == @bingoplate[8] && @bingoplate[6] == @bingoplate[9] && @bingoplate[6] == @bingoplate[10]) set @bingowin,@bingowin +1;
+	if(@bingoplate[11] == @bingoplate[12] && @bingoplate[11] == @bingoplate[13] && @bingoplate[11] == @bingoplate[14] && @bingoplate[11] == @bingoplate[15]) set @bingowin,@bingowin +1;
+	if(@bingoplate[16] == @bingoplate[17] && @bingoplate[16] == @bingoplate[18] && @bingoplate[16] == @bingoplate[19] && @bingoplate[16] == @bingoplate[20]) set @bingowin,@bingowin +1;
+	if(@bingoplate[21] == @bingoplate[22] && @bingoplate[21] == @bingoplate[23] && @bingoplate[21] == @bingoplate[24] && @bingoplate[21] == @bingoplate[25]) set @bingowin,@bingowin +1;
+	if(@bingoplate[1] == @bingoplate[6] && @bingoplate[1] == @bingoplate[11] && @bingoplate[1] == @bingoplate[16] && @bingoplate[1] == @bingoplate[21]) set @bingowin,@bingowin +1;
+	if(@bingoplate[2] == @bingoplate[7] && @bingoplate[2] == @bingoplate[12] && @bingoplate[2] == @bingoplate[17] && @bingoplate[2] == @bingoplate[22]) set @bingowin,@bingowin +1;
+	if(@bingoplate[3] == @bingoplate[8] && @bingoplate[3] == @bingoplate[13] && @bingoplate[3] == @bingoplate[18] && @bingoplate[3] == @bingoplate[23]) set @bingowin,@bingowin +1;
+	if(@bingoplate[4] == @bingoplate[9] && @bingoplate[4] == @bingoplate[14] && @bingoplate[4] == @bingoplate[19] && @bingoplate[4] == @bingoplate[24]) set @bingowin,@bingowin +1;
+	if(@bingoplate[5] == @bingoplate[10] && @bingoplate[5] == @bingoplate[15] && @bingoplate[5] == @bingoplate[20] && @bingoplate[5] == @bingoplate[25]) set @bingowin,@bingowin +1;
+	if(@bingoplate[1] == @bingoplate[7] && @bingoplate[1] == @bingoplate[13] && @bingoplate[1] == @bingoplate[19] && @bingoplate[1] == @bingoplate[25]) set @bingowin,@bingowin +1;
+	if(@bingoplate[5] == @bingoplate[9] && @bingoplate[5] == @bingoplate[13] && @bingoplate[5] == @bingoplate[17] && @bingoplate[5] == @bingoplate[21]) set @bingowin,@bingowin +1;
+	if($@bingoresult == 1 || $@bingoresult == 21) mes "[ "+$@bingoresult+"st Number - "+$bingo[$@bingoresult -1]+" ]";
+	else if($@bingoresult == 2 || $@bingoresult == 22) mes "[ "+$@bingoresult+"nd Number - "+$bingo[$@bingoresult -1]+" ]";
+	else if($@bingoresult == 3 || $@bingoresult == 23) mes "[ "+$@bingoresult+"rd Number - "+$bingo[$@bingoresult -1]+" ]";
+	else mes "[ "+$@bingoresult+"th Number - "+$bingo[$@bingoresult -1]+" ]"; 
+	mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ["+@bingo_a4$+"] ["+@bingo_a5$+"]";
+	mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ["+@bingo_b3$+"] ["+@bingo_b4$+"] ["+@bingo_b5$+"]";
+	mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ["+@bingo_c4$+"] ["+@bingo_c5$+"]";
+	mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ["+@bingo_d5$+"]";
+	mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ["+@bingo_e3$+"] ["+@bingo_e4$+"] ["+@bingo_e5$+"]";
+	mes "[Currently Finished Lines - "+@bingowin+" ]";
+	if ($@bingoresult > 15) {
+		if (@bingowin > 4) {
+			next;
+			mes "We just have made 5 lines!";
+			mes "Say ^ff0000Bingo^000000!";
+			mes "W-we just matched";
+			mes "5 numbers in a row!";
+			mes "Quickly, say ''^FF0000Bingo^000000!''";
+			mes "Remember, you'll only";
+			mes "have one chance to say it!";
+			input @bingoyell$;
+			if (@bingoyell$ == "Bingo") {
+				if ($@hu_bingoa == 5) {
+					set $@hu_bingoa,6;
+					donpcevent "start2#bingo::OnStop";
+					set $@bingowinner$,strcharinfo(0);
+					donpcevent "win1a#bingo::OnWin";
+					close;
+
+				} else if ($@hu_bingoa == 6) {
+					next;
+					mes "Oh no! I'm sorry, but";
+					mes "someone already yelled";
+					mes "''bingo'' before you did.";
+					mes "I'm sorry, but you missed";
+					mes "your chance! Better luck,";
+					mes "next time, alright?";
+					close;
+				}
+			} else {
+				next;
+				mes "I'm sorry, but you";
+				mes "said it wrong. Next time,";
+				mes "make sure that you yell";
+				mes "out the word, ''^FF0000Bingo^000000,'' okay?";
+				close;
+			}
+		}
+		close;
+	}
+	close;
+}
+
+que_bingo,49,125,0	duplicate(1a#bingo)	2a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	3a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	4a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	5a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	6a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	7a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	8a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	9a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	10a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	11a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	12a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	13a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	14a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	15a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	16a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	17a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	18a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	19a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	20a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	21a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	22a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	23a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	24a#bingo	139,1,1
+que_bingo,49,125,0	duplicate(1a#bingo)	25a#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	1b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	2b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	3b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	4b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	5b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	6b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	7b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	8b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	9b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	10b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	11b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	12b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	13b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	14b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	15b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	16b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	17b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	18b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	19b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	20b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	21b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	22b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	23b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	24b#bingo	139,1,1
+que_bingo,53,121,0	duplicate(1a#bingo)	25b#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	1c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	2c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	3c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	4c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	5c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	6c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	7c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	8c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	9c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	10c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	11c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	12c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	13c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	14c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	15c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	16c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	17c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	18c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	19c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	20c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	21c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	22c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	23c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	24c#bingo	139,1,1
+que_bingo,51,116,0	duplicate(1a#bingo)	25c#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	1d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	2d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	3d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	4d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	5d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	6d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	7d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	8d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	9d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	10d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	11d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	12d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	13d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	14d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	15d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	16d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	17d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	18d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	19d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	20d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	21d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	22d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	23d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	24d#bingo	139,1,1
+que_bingo,46,116,0	duplicate(1a#bingo)	25d#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	1e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	2e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	3e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	4e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	5e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	6e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	7e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	8e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	9e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	10e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	11e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	12e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	13e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	14e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	15e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	16e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	17e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	18e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	19e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	20e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	21e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	22e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	23e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	24e#bingo	139,1,1
+que_bingo,45,121,0	duplicate(1a#bingo)	25e#bingo	139,1,1
+
+que_bingo,79,19,0	script	win1a#bingo	139,4,4,{
+	end;
+
+OnWin:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	donpcevent "1a#bingo::OnInit";
+	enablenpc "win2a#bingo";
+	enablenpc "win2b#bingo";
+	enablenpc "win2c#bingo";
+	enablenpc "win2d#bingo";
+	enablenpc "win2e#bingo";
+	end;
+}
+
+que_bingo,49,125,0	script	win2a#bingo	139,1,1,{
+	end;
+
+OnInit:
+	disablenpc "win2a#bingo";
+	disablenpc "win2b#bingo";
+	disablenpc "win2c#bingo";
+	disablenpc "win2d#bingo";
+	disablenpc "win2e#bingo";
+	end;
+
+OnTouch:
+	if ($@bingowinner$ != strcharinfo(0)) end;
+	specialeffect EF_SUI_EXPLOSION;
+	soundeffect "tming_success.wav",1;
+	if ($@bingoresult == 16) getitem 7515,50;
+	else getitem 7515,1;
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "que_bingo","Eukran: Wow, Bingo! It's Bingo!",1,0xFFAB54;
+	end;
+
+OnTimer5000:
+	mapannounce "que_bingo","Eukran: "+$@bingowinner$+" has said Bingo!",1,0xFFAB54;
+	end;
+
+OnTimer10000:
+	if ($@bingoresult == 16)
+		mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 50 Marvelous Medals.",1,0xFFAB54;
+	else
+		mapannounce "que_bingo","Eukran: Congratulations, "+$@bingowinner$+"! You will be rewarded with 1 Marvelous Medal.",1,0xFFAB54;
+	end;
+
+OnTimer15000:
+	mapannounce "que_bingo","Eukran: Thank you all for participating in the game. See you next time!",1,0xFFAB54;
+	end;
+
+OnTimer20000:
+	donpcevent "end#bingo::OnEnd";
+	donpcevent "win2a#bingo::OnInit";
+	end;
+}
+
+que_bingo,53,121,0	duplicate(win2a#bingo)	win2b#bingo	139,1,1
+que_bingo,51,116,0	duplicate(win2a#bingo)	win2c#bingo	139,1,1
+que_bingo,46,116,0	duplicate(win2a#bingo)	win2d#bingo	139,1,1
+que_bingo,45,121,0	duplicate(win2a#bingo)	win2e#bingo	139,1,1
+
+que_bingo,89,59,0	script	end#bingo	139,4,4,{
+	end;
+
+OnEnd:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	enablenpc "end1a#bingo";
+	enablenpc "end1b#bingo";
+	enablenpc "end1c#bingo";
+	enablenpc "end1d#bingo";
+	enablenpc "end1e#bingo";
+	end;
+
+OnTimer5000:
+	disablenpc "end1a#bingo";
+	disablenpc "end1b#bingo";
+	disablenpc "end1c#bingo";
+	disablenpc "end1d#bingo";
+	disablenpc "end1e#bingo";
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
+	set $@hu_bingoa,0;
+	donpcevent "Bingo Waiting Room::OnStart";
+	end;
+}
+
+que_bingo,49,125,0	script	end1a#bingo	139,1,1,{
+
+OnInit:
+	disablenpc "end1a#bingo";
+	disablenpc "end1b#bingo";
+	disablenpc "end1c#bingo";
+	disablenpc "end1d#bingo";
+	disablenpc "end1e#bingo";
+	end;
+
+OnTouch:
+	if(hg_ma1 == 6) warp "que_bingo",45,186;
+	else warp "que_bingo",40,121;
+	end;
+}
+
+que_bingo,53,121,0	duplicate(end1a#bingo)	end1b#bingo	139,1,1
+que_bingo,51,116,0	duplicate(end1a#bingo)	end1c#bingo	139,1,1
+que_bingo,46,116,0	duplicate(end1a#bingo)	end1d#bingo	139,1,1
+que_bingo,45,121,0	duplicate(end1a#bingo)	end1e#bingo	139,1,1
+
+que_bingo,50,138,1	script	out3#bingo	139,5,8,{
+
+OnInit:
+	disablenpc "out3#bingo";
+	end;
+
+OnTouch_:
+	warp "que_bingo",40,121;
+	end;
+}
+
+que_bingo,49,136,0	script	go3#bingo	45,1,1,{
+
+OnTouch_:
+	switch($@hu_bingob) {
+		case 0: warp "que_bingo",49,125; break;
+		case 1: warp "que_bingo",53,121; break;
+		case 2: warp "que_bingo",51,116; break;
+		case 3: warp "que_bingo",46,116; break;
+		case 4: warp "que_bingo",45,121; break;
+	}
+	set $@hu_bingob,$@hu_bingob +1;
+	if ($@hu_bingob == 5) set $@hu_bingob,0;
+	end;
+}
+
+function	script	Func_Bingo	{
+	for(set .@i,getarg(0); .@i < 26; set .@i,.@i +1) {
+		if(@bingoplate[1] < 10) set @bingo_a1$,"0"+@bingoplate[1]+""; else set @bingo_a1$,@bingoplate[1];
+		if(@bingoplate[2] < 10) set @bingo_a2$,"0"+@bingoplate[2]+""; else set @bingo_a2$,@bingoplate[2];
+		if(@bingoplate[3] < 10) set @bingo_a3$,"0"+@bingoplate[3]+""; else set @bingo_a3$,@bingoplate[3];
+		if(@bingoplate[4] < 10) set @bingo_a4$,"0"+@bingoplate[4]+""; else set @bingo_a4$,@bingoplate[4];
+		if(@bingoplate[5] < 10) set @bingo_a5$,"0"+@bingoplate[5]+""; else set @bingo_a5$,@bingoplate[5];
+		if(.@i > 5) mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ["+@bingo_a4$+"] ["+@bingo_a5$+"]";
+		else {
+			switch(.@i) {
+				case 1: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
+				case 2: mes "["+@bingo_a1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
+				case 3:	mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
+				case 4: mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ^ff0000[__]^000000 [   ]"; break;
+				case 5: mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ["+@bingo_a4$+"] ^ff0000[__]^000000"; break;
+			}
+		}
+		if(@bingoplate[6] < 10) set @bingo_b1$,"0"+@bingoplate[6]+""; else set @bingo_b1$,@bingoplate[6];
+		if(@bingoplate[7] < 10) set @bingo_b2$,"0"+@bingoplate[7]+""; else set @bingo_b2$,@bingoplate[7];
+		if(@bingoplate[8] < 10) set @bingo_b3$,"0"+@bingoplate[8]+""; else set @bingo_b3$,@bingoplate[8];
+		if(@bingoplate[9] < 10) set @bingo_b4$,"0"+@bingoplate[9]+""; else set @bingo_b4$,@bingoplate[9];
+		if(@bingoplate[10] < 10) set @bingo_b5$,"0"+@bingoplate[10]+""; else set @bingo_b5$,@bingoplate[10];
+		if(.@i > 10) mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ["+@bingo_b3$+"] ["+@bingo_b4$+"] ["+@bingo_b5$+"]";
+		else if(.@i < 6) mes "[   ] [   ] [   ] [   ] [   ]";
+		else {
+			switch(.@i) {
+				case 6: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
+				case 7: mes "["+@bingo_b1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
+				case 8:	mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
+				case 9: mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ["+@bingo_b3$+"] ^ff0000[__]^000000 [   ]"; break;
+				case 10: mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ["+@bingo_b3$+"] ["+@bingo_b4$+"] ^ff0000[__]^000000"; break;
+			}
+		}
+		if(@bingoplate[11] < 10) set @bingo_c1$,"0"+@bingoplate[11]+""; else set @bingo_c1$,@bingoplate[11];
+		if(@bingoplate[12] < 10) set @bingo_c2$,"0"+@bingoplate[12]+""; else set @bingo_c2$,@bingoplate[12];
+		if(@bingoplate[13] < 10) set @bingo_c3$,"0"+@bingoplate[13]+""; else set @bingo_c3$,@bingoplate[13];
+		if(@bingoplate[14] < 10) set @bingo_c4$,"0"+@bingoplate[14]+""; else set @bingo_c4$,@bingoplate[14];
+		if(@bingoplate[15] < 10) set @bingo_c5$,"0"+@bingoplate[15]+""; else set @bingo_c5$,@bingoplate[15];
+		if(.@i > 15) mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ["+@bingo_c4$+"] ["+@bingo_c5$+"]";
+		else if(.@i < 11) mes "[   ] [   ] [   ] [   ] [   ]";
+		else {
+			switch(.@i) {
+				case 11: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
+				case 12: mes "["+@bingo_c1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
+				case 13: mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
+				case 14: mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ^ff0000[__]^000000 [   ]"; break;
+				case 15: mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ["+@bingo_c4$+"] ^ff0000[__]^000000"; break;
+			}
+		}
+		if(@bingoplate[16] < 10) set @bingo_d1$,"0"+@bingoplate[16]+""; else set @bingo_d1$,@bingoplate[16];
+		if(@bingoplate[17] < 10) set @bingo_d2$,"0"+@bingoplate[17]+""; else set @bingo_d2$,@bingoplate[17];
+		if(@bingoplate[18] < 10) set @bingo_d3$,"0"+@bingoplate[18]+""; else set @bingo_d3$,@bingoplate[18];
+		if(@bingoplate[19] < 10) set @bingo_d4$,"0"+@bingoplate[19]+""; else set @bingo_d4$,@bingoplate[19];
+		if(@bingoplate[20] < 10) set @bingo_d5$,"0"+@bingoplate[20]+""; else set @bingo_d5$,@bingoplate[20];
+		if(.@i > 20) mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ["+@bingo_d5$+"]";
+		else if(.@i < 16) mes "[   ] [   ] [   ] [   ] [   ]";
+		else {
+			switch(.@i) {
+				case 16: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
+				case 17: mes "["+@bingo_d1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
+				case 18: mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
+				case 19: mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ^ff0000[__]^000000 [   ]"; break;
+				case 20: mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ^ff0000[__]^000000"; break;
+			}
+		}
+		if(@bingoplate[21] < 10) set @bingo_e1$,"0"+@bingoplate[21]+""; else set @bingo_e1$,@bingoplate[21];
+		if(@bingoplate[22] < 10) set @bingo_e2$,"0"+@bingoplate[22]+""; else set @bingo_e2$,@bingoplate[22];
+		if(@bingoplate[23] < 10) set @bingo_e3$,"0"+@bingoplate[23]+""; else set @bingo_e3$,@bingoplate[23];
+		if(@bingoplate[24] < 10) set @bingo_e4$,"0"+@bingoplate[24]+""; else set @bingo_e4$,@bingoplate[24];
+		if(.@i < 21) mes "[   ] [   ] [   ] [   ] [   ]";
+		else {
+			switch(.@i) {
+				case 21: mes "^ff0000[__]^000000 [   ] [   ] [   ] [   ]"; break;
+				case 22: mes "["+@bingo_e1$+"] ^ff0000[__]^000000 [   ] [   ] [   ]"; break;
+				case 23: mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ^ff0000[__]^000000 [   ] [   ]"; break;
+				case 24: mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ["+@bingo_e3$+"] ^ff0000[__]^000000 [   ]"; break;
+				case 25: mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ["+@bingo_e3$+"] ["+@bingo_e4$+"] ^ff0000[__]^000000"; break;
+			}
+		}
+		next;
+		input .@bingoinput;
+		if(.@bingoinput < 1 || .@bingoinput > 25) { set @bingo_case,.@i; return 0; }
+		if(.@i > 1) {
+			for(set .@j,.@i; .@j > 0; set .@j,.@j -1) {
+				if(.@bingoinput == @bingoplate[.@j -1]) { set @bingo_case,.@i; return 0; }
+			}
+		}
+		setarray @bingoplate[.@i],.@bingoinput;
+	}
+	return 1;
+}
+
+function	script	Func_BingoResult	{
+	.@num = getarg(0);
+	mapannounce "que_bingo","Eukran: The "+ callfunc("F_GetNumSuffix",.@num) +" number is "+ $bingo[.@num - 1] +". Please check your Bingo Plate.",4,0xFFAB54;
+	enablenpc .@num +"a#bingo";
+	enablenpc .@num +"b#bingo";
+	enablenpc .@num +"c#bingo";
+	enablenpc .@num +"d#bingo";
+	enablenpc .@num +"e#bingo";
+	set $@bingoresult, $@bingoresult + 1;
+	end;
+}
+
+que_bingo,49,31,4	script	Arcade Helper#1	47,{
+	mes "[Helper]";
+	mes "If you'd like to play";
+	mes "a game of bingo, then";
+	mes "please proceed this way.";
+	close;
+}
+que_bingo,42,31,4	duplicate(Arcade Helper#1)	Arcade Helper#2	66
+
+que_bingo,54,17,5	script	Arcade Owner	712,{
+	mes "[Arcade Owner]";
+	mes "Welcome to the";
+	mes "Bingo Game Arcade.";
+	mes "Care to play a game of";
+	mes "bingo? If you have any";
+	mes "questions, feel free to ask.";
+	next;
+	switch(select("Rules for Bingo:Bingo Room:Marvelous Medals")) {
+	case 1:
+		mes "[Arcade Owner]";
+		mes "The rules for playing bingo";
+		mes "are simple. First, take a board";
+		mes "with 25 boxes organized so that";
+		mes "there are five rows and five";
+		mes "columns. Then, number the";
+		mes "boxes in any order you like.";
+		next;
+		mes "[Arcade Owner]";
+		mes "Of course, you must use";
+		mes "the numbers 1 through 25.";
+		mes "When everyone's bingo board";
+		mes "is ready, the game will begin.";
+		mes "Our game coordinator will call out a number from 1 to 25 at random.";
+		next;
+		mes "[Arcade Owner]";
+		mes "Each time the coordinator";
+		mes "calls out a number, make sure";
+		mes "that you mark the corresponding";
+		mes "numbered square on your bingo";
+		mes "board. Now, these are the";
+		mes "conditions for winning...";
+		next;
+		mes "[Arcade Owner]";
+		mes "If you can make a line of";
+		mes "5 squares in a row, horizontally, vertically, or diagonally, using";
+		mes "the numbers called out by the";
+		mes "coordinator, you quickly yell";
+		mes "the word, ''Bingo.''";
+		next;
+		mes "[Arcade Owner]";
+		mes "If you are the first to yell";
+		mes "the word, ''Bingo,'' you'll";
+		mes "win! But if someone beats you";
+		mes "to it, then it can't be helped.";
+		mes "Anyway, it costs 1,000 zeny";
+		mes "to play each bingo game~";
+		close;
+	case 2:
+		mes "[Arcade Owner]";
+		mes "Ah, if you want to join a";
+		mes "bingo game, enter the right";
+		mes "door. There must be at least";
+		mes "5 people to play a game, so";
+		mes "you may need to wait until";
+		mes "that requirement is fulfilled.";
+		next;
+		mes "[Arcade Owner]";
+		mes "If you just want to";
+		mes "watch the bingo game,";
+		mes "then you may enter the";
+		mes "left door as a spectator";
+		mes "in the Bingo Room.";
+		close;
+	case 3:
+		mes "[Arcade Owner]";
+		mes "When you win a bingo";
+		mes "game, you will be rewarded";
+		mes "with ''Marvelous Medals,''";
+		mes "which can only be used within";
+		mes "this arcade. You also can't trade medals with other players.";
+		next;
+		mes "[Arcade Owner]";
+		mes "You usually get 1 Marvelous";
+		mes "Medal for winning a bingo game,";
+		mes "but you can win 50 at one time";
+		mes "under special conditions. You";
+		mes "can also play Monster Racing";
+		mes "games to win more medals.";
+		next;
+		mes "[Arcade Owner]";
+		mes "Collect as many Marvelous";
+		mes "Medals as you can, and trade";
+		mes "them for products in the Monster Racing Arena. I hear there's also";
+		mes "a place in Einbroch where you can use them, but I wouldn't know.";
+		close;
+	}
+}

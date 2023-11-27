@@ -1,0 +1,184 @@
+//===== rAthena Script =======================================
+//= Bulletin Boards
+//===== Description: ========================================= 
+//= Bulletin Boards for beginners.
+//===== Changelogs: ==========================================
+//= 1.0 Moved Izlude NPCs to Pre-RE/RE paths. [Euphy]
+//= 1.1 Updated. [Capuche]
+//============================================================
+
+izlude,131,116,4	script	Bulletin Board#5	837,{
+	mes "[Izlude: The Satellite City]";
+	mes "Welcome to Izlude, the satellite of Prontera. Izlude was built to support Prontera's defense and to accommodate its burgeoning population.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "Points of interest include the Swordsman Association building which allows adventurers to change their job to Swordsman, and the Battle Area that is North of Izlude.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "At the docks, you may take a ship and travel to ^123972Alberta^000000 or ^2F0400Byalan Island^000000.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "From Izlude, ^6D6FE0Prontera^000000 is located to the Northwest, and ^1F3A11Payon^000000 is located to the South.";
+	mes "Enjoy your travels in the Rune-Midgarts Kingdom.";
+	close;
+}
+
+gef_tower,55,142,5	script	Bulletin Board#21	837,{
+	mes "[Geffen Dungeon]";
+	mes "^6B1312Caution!^000000"; 
+	mes "Geffen dungeon is consisted of 3 levels";
+	mes "is too difficult for new adventurers to venture.";
+	mes "As main monsters constantly appear,";
+	mes "there are ^6B1312Hunter Flies^000000, ^6B1312Nightmares^000000 and ^6B1312Jakks^000000.";
+	mes "Nightmares and Jakks only appear in this dungeon.";
+	next;
+	mes "[Geffen Dungeon]";
+	mes "On the 2nd level of this dungeon,";
+	mes "^6B1312Ogretooth^000000, the creature of a doomed sword and ^6B1312Dracula^000000,";
+	mes "the boss monster appear without warning.";
+	mes "On the 3rd level, ^6B1312Doppelganger^000000 one of the strongest boss monster appears at certain time.";
+	close;
+}
+
+yuno_fild03,37,143,5	script	Bulletin Board#24	837,{
+	mes "[The Magma Dungeon, Nogg Road]";
+	mes "^6B1312Caution!^000000";
+	mes "Nogg Road is filled with very dangerous creatures.";
+	mes "It is limited to enter only to well-experienced adventurers.";
+	next;
+	mes "[The Magma Dungeon, Nogg Road]";
+	mes "Main Monsters of this dungeon is";
+	mes "^6B1312Kahos^000000 and ^6B1312Nightmare Terrors^000000.";
+	mes "Please be attentive.";
+	close;
+}
+
+mjolnir_02,76,362,5	script	Bulletin Board#10	837,{
+	mes "[Coal Mine]";
+	mes "^6B1312Caution!^000000";
+	mes "The Coal Mine consists of a total of 3 levels. This dungeon is suited to both new and experienced adventurers, depending on the dungeon level.";
+	next;
+	mes "[Coal Mine]";
+	mes "In the third level, monsters tend to attack adventurers in swarms, so avoid being surrounded. Since this area is a mine, many Ores can be found within the depths of this dungeon.";
+	close;
+}
+
+moc_fild19,107,101,5	script	Bulletin Board#20	837,{
+	mes "[Sphinx]";
+	mes "^6B1312Caution!^000000";
+	mes "The Sphinx consists of 5 levels.";
+	mes "This dungeon is suited for training";
+	mes "well-experienced adventurers.";
+	next;
+	mes "[Sphinx]";
+	mes "There are many aggressive monsters";
+	mes "residing in the Sphinx, and it is";
+	mes "advised to run away if you happen";
+	mes "to be surrounded by them.";
+	next;
+	mes "[Sphinx]";
+	mes "In the fifth level, the boss";
+	mes "monster ^6B1312Pharaoh^000000 will appear at";
+	mes "certain times. Exorcise with";
+	mes "extreme prejudice.";
+	close;
+}
+
+aldebaran,136,133,5	script	Bulletin Board#19	837,{
+	mes "[Clock Tower]";
+	mes "^6B1312Caution!^000000";
+	mes "Only well-experienced adventurers";
+	mes "should consider entering the Clock";
+	mes "Tower. There are a total of 8";
+	mes "levels: 4 beneath the ground and 4 above the earth.";
+	next;
+	mes "[Clock Tower]";
+	mes "The main monsters of the Clock";
+	mes "Tower are Clocks, Alarms and";
+	mes "Bathories. Beware of the Clock";
+	mes "Tower Keepers on patrol.";
+	next;
+	mes "[Clock Tower]";
+	mes "The paths in the Clock Tower are";
+	mes "winding and complicated, so please";
+	mes "be careful and avoid getting";
+	mes "lost.";
+	close;
+}
+
+gef_fild10,69,340,5	script	Bulletin Board#3	837,{
+	mes "[Orc Dungeon]";
+	mes "^6B1312Caution!^000000";
+	mes "The Orc Dungeon is comprised of 2 levels. Although not very strong individually, the monsters here attack in groups. Be careful.";
+	next;
+	mes "[Orc Dungeon]";
+	mes "Only in this dungeon will you be able to encounter Orc Skeletons, Zenorcs and Orc Zombies.";
+	next;
+	mes "[Orc Dungeon]";
+	mes "Holy attribute weapons will greatly aid you in this place, since most of the monsters in this dungeon are Undead.";
+	next;
+	mes "[Orc Dungeon]";
+	mes "If you don't have a Holy Weapon and you're teamed with a Priest, the Priest's Aspersio spell would be of tremendous help.";
+	close;
+}
+
+xmas,147,311,5	script	Bulletin Board#23	837,{
+	mes "[Toy Factory]";
+	mes "^6B1312Caution!^000000";
+	mes "Toy Factory is consisting of 2 levels.";
+	mes "This dungeon is not that difficult to venture for new adventurers,";
+	mes "but there are 3 dangerous boss monsters spawn at certain time.";
+	next;
+	mes "[Toy Factory]";
+	mes "In 1st level, you will encounter a boss monster, ^6B1312Angeling^000000.";
+	mes "In 2nd level, you will encounter 2 dangrous boss monsters which are";
+	mes "^6B1312Stormy Knight^000000 and ^6B1312Hatii^000000. It is advised to be attentive while venturing.";
+	mes "For your reference, ^6B1312Myst Cases^000000, ^6B1312Cruisers^000000 and ^6B1312Cookies^000000 only appear in this dungeon.";
+	close;
+}
+
+pay_arche,39,134,5	script	Bulletin Board#08	837,{
+	mes "[Payon Cave]";
+	mes "^6B1312Caution!^000000";
+	mes "Payon Cave consists of 5 levels full of Undead and Demon monsters. Beware of swarms of Hydra in the third and fourth levels.";
+	next;
+	mes "[Payon Cave]";
+	mes "In the fifth level, there is a pretty, yet dreadful boss monster known as ^6B1312Moonlight^000000 that spawns at certain times. Approach with extreme caution.";
+	close;
+}
+
+moc_ruins,61,164,5	script	Bulletin Board#27	837,{
+	mes "[Pyramids]";
+	mes "^6B1312Caution!^000000";
+	mes "Pyramids is consisting of total 7 levels as 4 levels on the earth and the rest under the ground.";
+	mes "First few levels are suited for new adventurers to venture, but as deeper you go down, you will encounter stronger monsters.";
+	next;
+	mes "[Pyramids]";
+	mes "In first level, there is the thief guild where people can change their jobs into Thief.";
+	mes "In the 4:th level, a boss monster called ^6B1312Osiris^000000 appears at certain time.";
+	mes "In the 3:d basement, ^6B1312Amon Ra^000000 appears at certain time.";
+	close;
+}
+
+prt_fild05,278,220,5	script	Bulletin Board#16	837,{
+	mes "[Culvert]";
+	mes "Culvert is comprised of a total of";
+	mes "4 levels, and is a good training";
+	mes "ground for new adventurers.";
+	next;
+	mes "[Culvert]";
+	mes "In order to access the Culver, you";
+	mes "must volunteer as a monster";
+	mes "exterminator at the Prontera";
+	mes "Chivalry. Remember that the";
+	mes "monsters here may attack in";
+	mes "swarms.";
+	next;
+	mes "[Culvert]";
+	mes "In the fourth level of the Prontera";
+	mes "Culvert, you may encounter the boss";
+	mes "monster known as the ^6B1312Golden Thief";
+	mes "^6B1312Bug^000000. New adventurers should";
+	mes "exercise caution.";
+	close;
+}

@@ -1,0 +1,1781 @@
+//===== rAthena Script ======================================= 
+//= Mora Enchants
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Adds enchantments to various items in exchange for
+//= Mora coins.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Euphy]
+//= 1.1 Optimized. [Euphy]
+//= 1.1a Bug fixes. [Lemongrass]
+//= 1.2 Bug fixes (bugreport:7930) [DeadlySilence]
+//============================================================ 
+
+// Arch Bishop Enchants :: coin_arc
+//============================================================
+mora,88,89,5	script	Keeper of Secrets#pa082	495,{
+	if (checkweight(1201,1) == 0) {
+		mes "ช่องในกระเป๋ามีไม่พอ. ทิ้งของบางส่วนก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "น้ำหนักในกระเป๋าเต็ม. ลดน้ำหนักก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	disable_items;
+	if (countitem(6380) < 10) {
+		mes "[Artifice]";
+		mes "อุปกรณ์ของ Archbishops จะเน้นที่ป้องกันและสนับสนุน!";
+		next;
+		mes "[Artifice]";
+		mes "เหมือนกับผู้พิทักษ์คนอื่น, พวกเราใช้เหรียญในการแลกเปลี่ยน, ดังนั้้นเก็บ Mora Coins ไว้!";
+		next;
+		mes "[Artifice]";
+		mes "ถ้าเจ้าพอจะมี 10 เหรียญหรือมากกว่าให้มาหาข้า!";
+		close;
+	}
+	mes "[Artifice]";
+	mes "ภายใต้แสงสว่าง! เจ้าดูเหมือนพร้อมที่จะแลกเปลี่ยนแล้ว.";
+	next;
+	mes "[Artifice]";
+	mes "Ring, Shoes, Shawl, Robe, Shield, หรือ Weapon.";
+	mes "เลือกมาหนึ่งอย่างจากหกอย่าง.";
+	next;
+	mes "[Artifice]";
+	mes "ข้าจะสุ่มให้เจ้าจากที่เจ้าเลือกมา, โดยขึ้นอยู่กับสภาพอากาศและอารมณ์ของข้า.";
+	next;
+	mes "[Artifice]";
+	mes "ข้าต้องการแค่ 10 Mora Coins สำหรับของๆเจ้า!";
+	next;
+	switch(select("ข้าไม่คิดว่าข้าพร้อมน่ะ.:ข้าพร้อมที่แลกด้วย Mora Coins แล้ว.:ขอแลกแหวนคืน.")) {
+	case 1:
+		mes "[Artifice]";
+		mes "แล้วพบกันใหม่!";
+		close;
+	case 2:
+		mes "[Artifice]";
+		// What does this even mean? (custom dialogue below)
+		//mes "You influence what part are you?";
+		mes "เจ้าต้องการของแบบไหน ?";
+		next;
+		switch(select("ข้าไม่พร้อม.:Ring:Shoes:Shawl:Robe:Shield:Weapon")) {
+		case 1:
+			mes "[Artifice]";
+			mes "ให้แสงนำทาง.";
+			close;
+		case 2:
+			if (countitem(2864) || countitem(2865) || countitem(2866)) {
+				mes "[Artifice]";
+				mes "เจ้าจะแลกเปลี่ยนทั้งๆที่มีแหวนอยู่แล้วไม่ได้!";
+				close;
+			}
+			if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Arch_Bishop) {
+				setarray .@items[0],2864,2865,2866; //Light_Of_Cure,Seal_Of_Cathedral,Ring_Of_Archbishop
+				break;
+			} else {
+				mes "[Artifice]";
+				mes "พวกเราจะแลกกับ Arch-Bishops เท่านั้น.";
+				close;
+			}
+		case 3:
+			setarray .@items[0],2471,2472; //Shoes_Of_Affection,Shoes_Of_Judgement
+			break;
+		case 4:
+			setarray .@items[0],2569,2570; //Shawl_Of_Affection,Shawl_Of_Judgement
+			break;
+		case 5:
+			setarray .@items[0],15029,15030; //Robe_Of_Affection,Robe_Of_Judgement
+			break;
+		case 6:
+			setarray .@items[0],2156; //Bible_Of_Promise1
+			break;
+		case 7:
+			setarray .@items[0],1657,16013; //Wand_Of_Affection,Mace_Of_Judgement
+			break;
+		}
+		set .@item, .@items[rand(getarraysize(.@items))];
+		delitem 6380,10; //Mora_Coin
+		getitem .@item,1;
+		mes "[Artifice]";
+		mes "เจ้าได้รับ ^aa00aa"+getitemname(.@item)+"^000000. ขอให้แสงอวยพรแก่เจ้า.";
+		close;
+	case 3:
+		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Arch_Bishop) {
+			mes "[Artifice]";
+			mes "พวกเราแลกเปลี่ยญแหวนด้วยเหรียญสำหรับคนที่ไม่สามารถควบคุมแหวนได้.";
+			next;
+			mes "[Artifice]";
+			mes "แต่ดูเหมือนว่าเจ้าจะมีพลังควบคุมแหวน ดังนั้นข้าจะแลกเปลี่ยนแหวนคืนด้วยเหรียญ.";
+			close;
+		}
+		     if (countitem(2864)) set .@item,2864; //Light_Of_Cure
+		else if (countitem(2865)) set .@item,2865; //Seal_Of_Cathedral
+		else if (countitem(2866)) set .@item,2866; //Ring_Of_Archbishop
+		else {
+			mes "[Artifice]";
+			mes "เจ้าจะแลกสิ่งใด?";
+			close;
+		}
+		mes "[Artifice]";
+		mes "เจ้ามี "+getitemname(.@item)+". เจ้าอยากแลกเป็น 10 Mora Coins ไหม ?";
+		next;
+		switch(select("ข้าไม่พร้อม:แลกด้วย "+getitemname(.@item))) {
+		case 1:
+			mes "[Artifice]";
+			mes "ถ้าเจ้าเปลี่ยนใจ, กลับมาหาข้า.";
+			close;
+		case 2:
+			delitem .@item,1;
+			getitem 6380,10; //Mora_Coin
+			mes "[Artifice]";
+			mes "ข้าคิดว่าเป็นการแลกเปลี่ยนที่่ดี.";
+			close;
+		}
+	}
+}
+
+mora,96,74,5	script	Master of Relics#pa0829	495,{
+	if (checkweight(1201,1) == 0) {
+		mes "ช่องในกระเป๋ามีไม่พอ. ทิ้งของบางส่วนก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "น้ำหนักในกระเป๋าเต็ม. ลดน้ำหนักก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	disable_items;
+	mes "[Relice]";
+	mes "ข้าสามารถออฟของ Arch-Bishops ได้, โดยใช้ 2 Mora Coins ในการออฟแต่ละครั้ง.";
+	next;
+	switch(select("ช่วยบอกรายละเอียดหน่อย.:ออฟของข้าที.")) {
+	case 1:
+		mes "[Relice]";
+		mes "ในการออฟแต่ละครั้งจะใช้ 2 Mora Coins และข้าจะออฟเพียงหนึ่งออฟในของสวมใส่ให้.";
+		next;
+		mes "[Relice]";
+		mes "พวกข้าสามารถรีออฟได้ถ้าเจ้าไม่ชอบออฟที่ได้ไป.";
+		next;
+		mes "[Relice]";
+		mes "ดังนั้นเมื่อเจ้าอยากจะออฟ, ให้มาหาข้า.";
+		next;
+		mes "[Relice]";
+		mes "อ้า, มีอีกหนึ่งสิ่งที่ต้องบอก! ถ้ามันล้มเหลวของๆเจ้าจะหายไปตลอดกาล.";
+		close;
+	case 2:
+		mes "[Relice]";
+		mes "Ok, เจ้าสามารถไปแลก Relic กับ Artifice ใหม่ได้ถ้ามันล้มเหลว.";
+		next;
+		mes "[Relice]";
+		mes "ถ้าเจ้าเชื่อมั่นในโชคแล้ว, เจ้าเลือกของที่จะออฟเลย!";
+		next;
+		set .@select, select("รอก่อน!:Light of Cure:Seal of Cathedral:Ring of Archbishop:Shoes of Affection:Shoes of Judgement:Shawl of Affection:Shawl of Judgement:Robe of Affection:Robe of Judgement:Bible of Promise 1st Vol:Wand of Affection:Mace of Judgement");
+		switch(.@select) {
+		case 1:
+			mes "[Relice]";
+			mes "แน่นอน. ขอให้พบกับแสงสว่าง.";
+			close;
+		case 2:
+		case 3:
+		case 4:
+			setarray .@items[0],2864,2865,2866; //Light_Of_Cure,Seal_Of_Cathedral,Ring_Of_Archbishop
+			setarray .@special[0],4803,4804,4805; //Highness_Heal_3sec,Coluceo_Heal30,Heal_Amount2
+			set .@item, .@items[.@select-2];
+			set .@sp, .@special[.@select-2];
+			set .@enchant_type,1;
+			break;
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+			setarray .@items[0],2471,2472,2569,2570,15029,15030,2156; //Shoes_Of_Affection,Shoes_Of_Judgement,Shawl_Of_Affection,Shawl_Of_Judgement,Robe_Of_Affection,Robe_Of_Judgement,Bible_Of_Promise1
+			set .@item, .@items[.@select-5];
+			set .@enchant_type,2;
+			break;
+		case 12:
+			set .@item,1657; //Wand_Of_Affection
+			set .@enchant_type,3;
+			break;
+		case 13:
+			set .@item,16013; //Mace_Of_Judgement
+			set .@enchant_type,4;
+			break;
+		}
+		if (countitem(6380) < 2 || countitem(.@item) == 0) {
+			mes "[Relice]";
+			mes "ต้องใช้ 2 Mora Coins ข้าถึงจะสามารถออฟได้!";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		delitem 6380,2; //Mora_Coin
+		delitem .@item,1;
+		switch(.@enchant_type) {
+		case 1:
+			set .@i, rand(1,1487);
+			if (.@i <= 1024) {
+				// Basic combinations
+				// (raw: .@i increments by 16, 4 repeats)
+				setarray .@enchant_slot2[0],4711,4720,4721,4740; //Inteligence2,Dexterity1,Dexterity2,Vitality1
+				setarray .@enchant_slot3[0],.@sp,4799,4766,4788; //[sp],HP500,Atk2,Mdef6
+				setarray .@enchants[2],
+					.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
+					.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
+			}
+			else if (.@i <= 1040) setarray .@enchants[2],.@sp,.@sp; //[sp] [sp]
+			else if (.@i <= 1487) {
+				mes "[Relice]";
+				mes "บางทีมันก็ไม่ได้เป็นไปตามที่เจ้าต้องการนักหรอก. ข้าหวังว่าครั้งหน้ามันจะดีขึ้น. ถ้างั้น, good bye.";
+				close;
+			}
+			break;
+		case 2:
+			set .@i, rand(1,1487);
+			if (.@i <= 1024) {
+				// Basic combinations
+				// (raw: .@i increments by 16)
+				setarray .@enchant_slot1[0],4710,4711,4720,4721; //Inteligence1,Inteligence2,Dexterity1,Dexterity2
+				setarray .@enchant_slot2[0],4711,4720,4721,4740; //Inteligence2,Dexterity1,Dexterity2,Vitality1
+				setarray .@enchant_slot3[0],4764,4799,4766,4788; //Critical5,HP500,Atk2,Mdef6
+				setarray .@enchants[1],
+					.@enchant_slot1[rand(getarraysize(.@enchant_slot1))],
+					.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
+					.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
+			}
+			else if (.@i <= 1026) setarray .@enchants[1],4761,4761,4761; //Matk2 Matk2 Matk2
+			else if (.@i <= 1028) setarray .@enchants[1],4712,4713,4713; //Inteligence3 Inteligence4 Inteligence4
+			else if (.@i <= 1030) setarray .@enchants[1],4712,4761,4761; //Inteligence3 Matk2 Matk2
+			else if (.@i <= 1032) setarray .@enchants[1],4712,4713,4761; //Inteligence3 Inteligence4 Matk2
+			else if (.@i <= 1034) setarray .@enchants[1],4722,4723,4723; //Dexterity3 Dexterity4 Dexterity4
+			else if (.@i <= 1036) setarray .@enchants[1],4722,4703,4703; //Dexterity3 Strength4 Strength4
+			else if (.@i <= 1038) setarray .@enchants[1],4722,4767,4767; //Dexterity3 Atk3 Atk3
+			else if (.@i <= 1040) setarray .@enchants[1],4767,4767,4767; //Atk3 Atk3 Atk3
+			else if (.@i <= 1487) {
+				mes "[Relice]";
+				mes "บางทีมันก็ไม่ได้เป็นไปตามที่เจ้าต้องการนักหรอก. ข้าหวังว่าครั้งหน้ามันจะดีขึ้น. ถ้างั้น, good bye.";
+				close;
+			}
+			break;
+		case 3:
+			set .@i, rand(1,2852);
+			if (.@i <= 1984) {
+				// Basic combinations
+				// (raw: .@i increments by 31, 4 repeats)
+				setarray .@enchant_slot2[0],4720,4740,4741,4801; //Dexterity1,Vitality1,Vitality2,SP100
+				setarray .@enchant_slot3[0],4710,4711,4721,4760; //Inteligence1,Inteligence2,Dexterity2,Matk1
+				setarray .@enchants[2],
+					.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
+					.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
+			}
+			else if (.@i <= 1986) setarray .@enchants[2],4761,4761; //Matk2 Matk2
+			else if (.@i <= 1988) setarray .@enchants[2],4761,4723; //Matk2 Dexterity4
+			else if (.@i <= 1990) setarray .@enchants[2],4761,4714; //Matk2 Inteligence5
+			else if (.@i <= 1992) setarray .@enchants[2],4714,4714; //Inteligence5 Inteligence5
+			else if (.@i <= 1994) setarray .@enchants[2],4714,4723; //Inteligence5 Dexterity4
+			else if (.@i <= 1996) setarray .@enchants[2],4723,4723; //Dexterity4 Dexterity4
+			else if (.@i <= 2852) {
+				mes "[Relice]";
+				mes "บางทีมันก็ไม่ได้เป็นไปตามที่เจ้าต้องการนักหรอก. ข้าหวังว่าครั้งหน้ามันจะดีขึ้น. ถ้างั้น, good bye.";
+				close;
+			}
+			break;
+		case 4:
+			set .@i, rand(1,2852);
+			if (.@i <= 1984) {
+				// Basic combinations
+				// (raw: .@i increments by 31, 4 repeats)
+				setarray .@enchant_slot2[0],4720,4740,4741,4701; //Dexterity1,Vitality1,Vitality2,Strength2
+				setarray .@enchant_slot3[0],4700,4701,4721,4767; //Strength1,Strength2,Dexterity2,Atk3
+				setarray .@enchants[2],
+					.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
+					.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
+			}
+			else if (.@i <= 1986) setarray .@enchants[2],4767,4767; //Atk3 Atk3
+			else if (.@i <= 1988) setarray .@enchants[2],4767,4723; //Atk3 Dexterity4
+			else if (.@i <= 1990) setarray .@enchants[2],4767,4704; //Atk3 Strength5
+			else if (.@i <= 1992) setarray .@enchants[2],4704,4704; //Strength5 Strength5
+			else if (.@i <= 1994) setarray .@enchants[2],4704,4723; //Strength5 Dexterity4
+			else if (.@i <= 1996) setarray .@enchants[2],4723,4723; //Dexterity4 Dexterity4
+			else if (.@i <= 2852) {
+				mes "[Relice]";
+				mes "บางทีมันก็ไม่ได้เป็นไปตามที่เจ้าต้องการนักหรอก. ข้าหวังว่าครั้งหน้ามันจะดีขึ้น. ถ้างั้น, good bye.";
+				close;
+			}
+			break;
+		}
+		getitem2 .@item,1,1,0,0,0,.@enchants[1],.@enchants[2],.@enchants[3];
+		mes "[Relice]";
+		mes "การออฟประสบความสำเร็จ, เยี่ยมไปเลย!";
+		close;
+	}
+}
+
+// Warlock Enchants :: coin_warrock
+//============================================================
+mora,104,76,4	script	Guardian of Artifacts#p	495,{
+	if (checkweight(1201,1) == 0) {
+		mes "ช่องในกระเป๋ามีไม่พอ. ทิ้งของบางส่วนก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "น้ำหนักในกระเป๋าเต็ม. ลดน้ำหนักก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (countitem(6380) < 10) {
+		mes "[Guardian of Artifacts]";
+		mes "งานของข้าคือปกป้องของล้ำค่าของ Warlock.";
+		next;
+		mes "[Guardian of Artifacts]";
+		mes "เยี่ยม, มันไม่ได้ยิ่งใหญ่อะไรหรอก. ข้าอาจจะให้เจ้าก็ได้แลกกับ Mora Coins เล็กน้อย.";
+		next;
+		mes "[Guardian of Artifacts]";
+		mes "ข้าจะแลกเปลี่ยนกับเจ้าเมื่อเจ้ามี 10 เหรียญหรือมากกว่า. แล้วพบกันใหม่.";
+		close;
+	}
+	mes "[Guardian of Artifacts]";
+	mes "ว้าว~ ข้าเห็นว่าเจ้าพร้อมที่จะแลกของ Warlock แล้ว.";
+	next;
+	mes "[Guardian of Artifacts]";
+	mes "ข้ามีให้เจ้าเลือก 4 ชนิด:";
+	mes "staffs, orbs, shoes, และ robes.";
+	next;
+	mes "[Guardian of Artifacts]";
+	mes "แต่ไอเท็มจะเปลี่ยนไปแบบวันต่อวัน, แล้วแต่อารมณ์ของข้า.";
+	next;
+	mes "[Guardian of Artifacts]";
+	mes "เจ้าอยากจะซื้อด้วย Mora Coins ของเจ้าไหม ?";
+	next;
+	if(select("ไว้โอกาสหน้า... ข้ามีสิ่งอื่นที่ต้องทำ.:ใช่, ข้าอยาก.") == 1) {
+		mes "[Guardian of Artifacts]";
+		mes "Okay, แล้วพบกันใหม่.";
+		close;
+	}
+	mes "[Guardian of Artifacts]";
+	mes "เจ้าจะซื้อของประเภทอะไร ?";
+	next;
+	switch(select("ออก:Shoes:Orbs:Robes:Staves")) {
+	case 1:
+		mes "[Guardian of Artifacts]";
+		mes "Okay, แล้วพบกันใหม่.";
+		close;
+ 	case 2:
+		setarray .@items[0],2467,2468,2469,2470; //Golden_Rod_Shoes,Aqua_Shoes,Crimson_Shoes,Forest_Shoes
+		set .@plural,1;
+		break;
+	case 3:
+		setarray .@items[0],2859,2860,2861,2862; //Golden_Rod_Orb,Aqua_Orb,Crimson_Orb,Forest_Orb
+		break;
+	case 4:
+		setarray .@items[0],15025,15026,15027,15028; //Golden_Rod_Robe,Aqua_Robe,Crimson_Robe,Forest_Robe
+		break;
+	case 5:
+		setarray .@items[0],2007,2008,2009,2010; //Golden_Rod_Staff,Aqua_Staff,Crimson_Staff,Forest_Staff
+		break;
+	}
+	if (countitem(6380) < 10) {
+		mes "[Guardian of Artifacts]";
+		mes "กลับมาหาข้าเมื่อเจ้ามีเหรียญมากพอ ?";
+		close;
+	}
+	set .@item, .@items[rand(getarraysize(.@items))];
+	delitem 6380,10; //Mora_Coin
+	getitem .@item,1;
+	mes "[Guardian of Artifacts]";
+	mes "ข้ามี ^aa00aa"+getitemname(.@item)+"^000000 สำหรับวันนี้. หวังว่า "+((.@plural)?"ของพวกเจ้า":"ของมัน")+" จะมีประโยชน์...";
+	close;
+}
+
+mora,99,93,5	script	Artifact Crafter#pa0829	495,{
+	if (checkweight(1201,1) == 0) {
+		mes "ช่องในกระเป๋ามีไม่พอ. ทิ้งของบางส่วนก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "น้ำหนักในกระเป๋าเต็ม. ลดน้ำหนักก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	disable_items;
+	mes "[Artifact Crafter]";
+	mes "งานของข้าคือการออฟของ. ถ้าเจ้าพอจะมี Coins เหลือ, เจ้าสามารถนำมันมาออฟของกับข้าได้.";
+	next;
+	if(select("ช่วยบอกเพิ่มหน่อย.:ข้าอยากออฟของ.") == 1) {
+		mes "[Artifact Crafter]";
+		mes "ข้าจะบอกให้ฟัง. ในการออฟหนึ่งครั้งใช้สอง Coins.";
+		next;
+		set .@info_only,1;
+	}
+	mes "[Artifact Crafter]";
+	mes "พวกข้าสามารถรีออฟได้ถ้าเจ้าไม่ชอบออฟที่ได้ไป.";
+	next;
+	mes "[Artifact Crafter]";
+	mes "ดังนั้นเมื่อเจ้าอยากจะออฟ, ให้มาหาข้า.";
+	next;
+	mes "[Artifact Crafter]";
+	mes "มีอีกหนึ่งสิ่งที่ต้องบอก, ของสวมใส่จะหายไปถ้ามันออฟล้มเหลว.";
+	if (.@info_only)
+		close;
+	next;
+	set .@select, select("ไว้โอกาสหน้า.:Golden Rod Staff:Aqua Staff:Crimson Staff:Forest Staff:Golden Rod Shoes:Aqua Shoes:Crimson Shoes:Forest Shoes:Golden Rod Orb:Aqua Orb:Crimson Orb:Forest Orb:Golden Rod Robe:Aqua Robe:Crimson Robe:Forest Robe");
+	switch(.@select) {
+	case 1:
+		mes "[Artifact Crafter]";
+		mes "แล้วแต่เลย.";
+		close;
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		setarray .@items[0],2007,2008,2009,2010; //Golden_Rod_Staff,Aqua_Staff,Crimson_Staff,Forest_Staff
+		set .@enchant_type,1;
+		break;
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+		setarray .@items[0],2467,2468,2469,2470; //Golden_Rod_Shoes,Aqua_Shoes,Crimson_Shoes,Forest_Shoes
+		set .@enchant_type,2;
+		break;
+	case 10:
+	case 11:
+	case 12:
+	case 13:
+		setarray .@items[0],2859,2860,2861,2862; //Golden_Rod_Orb,Aqua_Orb,Crimson_Orb,Forest_Orb
+		set .@enchant_type,2;
+		break;
+	case 14:
+	case 15:
+	case 16:
+	case 17:
+		setarray .@items[0],15025,15026,15027,15028; //Golden_Rod_Robe,Aqua_Robe,Crimson_Robe,Forest_Robe
+		set .@enchant_type,2;
+		break;
+	}
+	set .@item, .@items[(.@select-2)%4];
+	if (countitem(6380) < 2 || countitem(.@item) == 0) {
+		mes "[Artifact Crafter]";
+		mes "เจ้าไม่มี 2 Mora Coins ไปหามาซะข้าจะได้เริ่มงานสักที.";
+		close;
+	}
+	specialeffect2 EF_REPAIRWEAPON;
+	delitem 6380,2; //Mora_Coin
+	delitem .@item,1;
+	switch(.@enchant_type) {
+	case 1:
+		set .@i, rand(1,2847);
+		if (.@i <= 1984) {
+			// Basic combinations
+			// (raw: .@i increments by 31, 4 repeats)
+			setarray .@enchant_slot2[0],4720,4796,4710,4801; //Dexterity1,HP200,Inteligence1,SP100
+			setarray .@enchant_slot3[0],4786,4760,4711,4721; //Mdef2,Matk1,Inteligence2,Dexterity2
+			setarray .@enchants[2],
+				.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
+				.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
+		}
+		else if (.@i <= 1986) setarray .@enchants[2],4713,4761; //Inteligence4 Matk2
+		else if (.@i <= 1988) setarray .@enchants[2],4713,4713; //Inteligence4 Inteligence4
+		else if (.@i <= 1990) setarray .@enchants[2],4761,4761; //Matk2 Matk2
+		else if (.@i <= 1992) setarray .@enchants[2],4761,4713; //Matk2 Inteligence4
+		else if (.@i <= 2847) {
+			mes "[Artifact Crafter]";
+			mes "โอ้ม่าย... มันแตก... มันเกิดขึ้นจนได้. หวังว่าครั้งหน้าจะดีกว่านี้.";
+			close;
+		}
+		break;
+	case 2:
+		set .@i, rand(1,2858);
+		if (.@i <= 1984) {
+			// Basic combinations
+			// (raw: .@i increments by 31)
+			setarray .@enchant_slot1[0],4710,4711,4720,4721; //Inteligence1,Inteligence2,Dexterity1,Dexterity2
+			setarray .@enchant_slot2[0],4720,4796,4710,4801; //Dexterity1,HP200,Inteligence1,SP100
+			setarray .@enchant_slot3[0],4786,4760,4711,4721; //Mdef2,Matk1,Inteligence2,Dexterity2
+			setarray .@enchants[1],
+				.@enchant_slot1[rand(getarraysize(.@enchant_slot1))],
+				.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
+				.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
+		}
+		else if (.@i <= 1986) setarray .@enchants[1],4712,4713,4761; //Inteligence3 Inteligence4 Matk2
+		else if (.@i <= 1988) setarray .@enchants[1],4712,4713,4713; //Inteligence3 Inteligence4 Inteligence4
+		else if (.@i <= 1990) setarray .@enchants[1],4712,4761,4761; //Inteligence3 Matk2 Matk2
+		else if (.@i <= 1992) setarray .@enchants[1],4712,4761,4713; //Inteligence3 Matk2 Inteligence4
+		else if (.@i <= 1994) setarray .@enchants[1],4722,4713,4761; //Dexterity3 Inteligence4 Matk2
+		else if (.@i <= 1996) setarray .@enchants[1],4722,4713,4713; //Dexterity3 Inteligence4 Inteligence4
+		else if (.@i <= 1998) setarray .@enchants[1],4722,4761,4761; //Dexterity3 Matk2 Matk2
+		else if (.@i <= 2000) setarray .@enchants[1],4722,4761,4713; //Dexterity3 Matk2 Inteligence4
+		else if (.@i <= 2858) {
+			mes "[Artifact Crafter]";
+			mes "โอ้ม่าย... มันแตก... มันเกิดขึ้นจนได้. หวังว่าครั้งหน้าจะดีกว่านี้.";
+			close;
+		}
+		break;
+	}
+	getitem2 .@item,1,1,0,0,0,.@enchants[1],.@enchants[2],.@enchants[3];
+	mes "[Artifact Crafter]";
+	mes "การออฟประสบความสำเร็จ.";
+	close;
+}
+
+// Rune Knight, Guillotine Cross, & Ranger Enchants :: new_artifact
+//============================================================
+mora,152,97,5	script	Guardian of Power#pa082	515,{
+	if (checkweight(1201,1) == 0) {
+		mes "ช่องในกระเป๋ามีไม่พอ. ทิ้งของบางส่วนก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "น้ำหนักในกระเป๋าเต็ม. ลดน้ำหนักก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (countitem(6380) < 10) {
+		mes "[Guardian of Power]";
+		mes "ข้ามีของ Rune Knights, Guillotine Crosses, และ Rangers มันจะช่วยเจ้าในการทำภารกิจ.";
+		next;
+		mes "[Guardian of Power]";
+		mes "เหล่าผู้พิทักษ์จะให้ Mora Village coins แก่เจ้าเอาไว้ใช้แลกเปลี่ยน.";
+		next;
+		mes "[Guardian of Power]";
+		mes "ถ้าเจ้ามี Mora coins 10 หรือมากกว่า , ข้าถึงจะทำการแลกของกับเจ้า.";
+		close;
+	}
+	mes "[Guardian of Power]";
+	mes "ข้าคิดว่าเจ้าพร้อมที่จะแลกเปลี่ยนแล้วน่ะ.";
+	next;
+	mes "[Guardian of Power]";
+	mes "จงเลือกให้เหมาะกับอาชีพพื้นฐานของเจ้า.";
+	next;
+	mes "[Guardian of Power]";
+	mes "^ff0000เพราะว่ามันไม่ได้หามาง่ายๆ^000000. ดังนั้นเจ้าจะเลือกของอาชีพอะไร ?";
+	next;
+	setarray .@jobs$[0],"Rune Knight","Guillotine Cross","Ranger";
+	set .@job, select("ยกเลิก:Rune Knight:Guillotine Cross:Ranger")-2;
+	if (.@job == -1) {
+		mes "[Guardian of Power]";
+		mes "ไว้คุยกันคราวหลัง.";
+		close;
+	}
+	mes "[Guardian of Power]";
+	mes .@jobs$[.@job]+"?";
+	mes "ของที่เจ้าต้องการคือชิ้นไหน ?";
+	next;
+	switch(.@job) {
+	case 0: // Rune Knight
+		setarray .@items[0],2475,2476,2574,2575;
+		set .@i, select("Cancel:Ur's Greaves (Shoes):Peuz's Greaves (Shoes):Ur's Manteau (Garment):Peuz's Manteau (Garment)")-2;
+		break;
+	case 1: // Guillotine Cross
+		setarray .@items[0],2477,2478,2577,2578;
+		set .@i, select("Cancel:Sapha Shoes (Shoes):Nab Shoes (Shoes):Sapha Hood (Garment):Nab Hood (Garment)")-2;
+		break;
+	case 2: // Ranger
+		setarray .@items[0],2479,2480,2580,2581;
+		set .@i, select("Cancel:White Wing Boots (Shoes):Black Wing Boots (Shoes):White Wing Manteau (Garment):Black Wing Manteau (Garment)")-2;
+		break;
+	}
+	if (.@i == -1) {
+		mes "[Guardian of Power]";
+		mes "ไว้คุยกันคราวหลัง.";
+		close;
+	}
+	if (countitem(6380) < 10) {
+		mes "[Guardian of Power]";
+		mes "ข้าบอกเจ้าเกี่ยวกับจำนวน Mora Coins แล้วใช่ไหม ?";
+		close;
+	}
+	delitem 6380,10; //Mora_Coin
+	getitem .@items[.@i],1;
+	mes "[Guardian of Power]";
+	mes "ขอบคุณสำหรับ 10 Mora Coins. เอาของเจ้าไป "+.@jobs$[.@job]+" . กลับมาหาข้าเมื่อเจ้ามี Mora Coins เยอะๆ.";
+	close;
+}
+
+mora,148,98,3	script	Artifact Researcher#new	521,{
+	if (checkweight(1201,1) == 0) {
+		mes "ช่องในกระเป๋ามีไม่พอ. ทิ้งของบางส่วนก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "น้ำหนักในกระเป๋าเต็ม. ลดน้ำหนักก่อนแล้วค่อยมาใหม่.";
+		close;
+	}
+	disable_items;
+	mes "[Artifact Researcher]";
+	mes "ยินดีที่ได้รู้จัก.";
+	mes "ข้าอาศัยอยู่ในโมราเพื่อศึกษาชิ้นส่วนและสมบัติโบราณ. เมื่อมีการค้นพบใหม่ๆมันทำให้ข้าตื่นเต้น.";
+	next;
+	switch(select("บอกมากกว่านี้ที...:ออฟของให้ข้าที.:ลบออฟออก.")) {
+	case 1:
+		mes "[Artifact Researcher]";
+		mes "มันเป็นสิ่งใหม่ที่ถูกค้นพบในเมืองโมรานี้, เจ้าเคยได้ยินข่าวลือหรือไม่ ?";
+		next;
+		mes "[Artifact Researcher]";
+		mes "ถ้าเจ้ามีของสวมใส่พิเศษนี้, มันสามารถปลุกพลังขึ้นมาได้.";
+		next;
+		mes "[Artifact Researcher]";
+		mes "เพียงแค่เจ้าจ่าย Mora Coins แก่ข้า ข้าจะออฟของให้เจ้าทันที...";
+		next;
+		mes "[Artifact Researcher]";
+		mes "ข้ามีบริการพิเศษในการลบออฟออกใช้แค่เงิน 100,000 zeny และ 1 Mora Coin เท่านั้น.";
+		next;
+		mes "[Artifact Researcher]";
+		mes "ในส่วนของการลบออฟนั้นของจะไม่มีวันเสียหาย.";
+		close;
+	case 2:
+		set @mora_enchant_select,1;
+		break;
+	case 3:
+		set @mora_enchant_select,2;
+		break;
+	}
+	if (Zeny < 100000 || countitem(6380) == 0) {
+		mes "[Artifact Researcher]";
+		mes "การลบออฟนั้นเจ้าต้องจ่าย 100,000 zeny และ 1 Mora Coin. เข้าใจไหม ?";
+		close;
+	}
+	mes "[Artifact Researcher]";
+	mes "Ok, เหมือนเจ้าจะพร้อมแล้ว ? ก่อนที่จะออฟ, ดูให้แน่ใจก่อนว่าเจ้าได้ใส่มันมาด้วย ?";
+	next;
+	set .@i, select("ข้าไม่ได้ใส่มันมา:1. Weapon:2. Shoes:3. Garment:4. Armor:5. Accessory")-2;
+	if (.@i == -1) {
+		mes "[Artifact Researcher]";
+		mes "ไปใส่มาให้เรียบร้อย.";
+		close;
+	}
+	setarray .@parts[0], EQI_HAND_R, EQI_SHOES, EQI_GARMENT, EQI_ARMOR, EQI_ACC_L;
+	set .@part, .@parts[.@i];
+	if (!getequipisequiped(.@part)) {
+		mes "[Artifact Researcher]";
+		mes "แน่ใจว่าใส่มันมาถูกต้อง.";
+		close;
+	}
+	set .@equip_id, getequipid(.@part);
+	set @mora_equip_part, .@part;
+
+	//callsub L_Socket,<enchant type>,<bonus enchant type>,<4-x enchants possible>;
+	// Enchant types:
+	//   [1]ATK [2]CRIT [3]EVA [4]Healer [5]Spell 1 [6]Assist 1 [7]Assist 2 [8]STR [9]Range [10]Physical [11]Spell 2
+	switch(.@part) {
+	case EQI_HAND_R:
+		switch(.@equip_id) {
+			case 1660: callsub L_Socket,4,5,1;  //Wand_Of_Affection2
+			case 2011: callsub L_Socket,5,11,1; //Golden_Rod_Staff2
+			case 2012: callsub L_Socket,5,11,1; //Aqua_Staff2
+			case 2013: callsub L_Socket,5,11,1; //Crimson_Staff2
+			case 2014: callsub L_Socket,5,11,1; //Forest_Staff2
+			case 16018: callsub L_Socket,1,5,1; //Mace_Of_Judgement2
+		}
+		break;
+	case EQI_SHOES:
+		switch(.@equip_id) {
+			case 2475: callsub L_Socket,6,8,1;  //Ur_Greave
+			case 2476: callsub L_Socket,6,10,1; //Peuz_Greave
+			case 2477: callsub L_Socket,6,2,1;  //Sabah_Shoes
+			case 2478: callsub L_Socket,6,1,1;  //Nab_Shoes
+			case 2479: callsub L_Socket,6,2,1;  //White_Wing_Boots
+			case 2480: callsub L_Socket,6,1,1;  //Black_Wing_Boots
+		}
+		break;
+	case EQI_GARMENT:
+		switch(.@equip_id) {
+			case 2574: callsub L_Socket,3,8,1; //Ur_Manteau
+			case 2575: callsub L_Socket,3,2,1; //Peuz_Manteau
+			case 2577: callsub L_Socket,3,2,1; //Sabah_Hood
+			case 2578: callsub L_Socket,3,2,1; //Nab_Hood
+			case 2580: callsub L_Socket,3,1,1; //White_Wing_Manteau
+			case 2581: callsub L_Socket,3,1,1; //Black_Wing_Manteau
+		}
+		break;
+	case EQI_ARMOR:
+		switch(.@equip_id) {
+			case 15036: callsub L_Socket,8,1,1;  //Ur_Plate
+			case 15037: callsub L_Socket,10,2,1; //Peuz_Plate
+			case 15038: callsub L_Socket,2,10,1; //Sabah_Cloth
+			case 15039: callsub L_Socket,1,2,1;  //Nab_Cloth
+			case 15042: callsub L_Socket,2,9,1;  //White_Wing_Suits
+			case 15043: callsub L_Socket,1,9,1;  //Black_Wing_Suits
+		}
+		break;
+	case EQI_ACC_L:
+		switch(.@equip_id) {
+			case 2883: callsub L_Socket,6,0,2; //Ur_Seal
+			case 2884: callsub L_Socket,6,0,2; //Peuz_Seal
+			case 2886: callsub L_Socket,6,0,2; //Sabah_Ring
+			case 2887: callsub L_Socket,6,0,2; //Nab_Ring
+			case 2890: callsub L_Socket,6,0,2; //White_Wing_Brooch
+			case 2891: callsub L_Socket,6,0,2; //Black_wing_Brooch
+		}
+		break;
+	}
+	mes "[Artifact Researcher]";
+	mes "^990099"+getequipname(.@part)+"^000000??";
+	mes "ข้าพร้อมที่จะออฟแล้ว...";
+	set @mora_equip_part,0;
+	close;
+
+L_Socket:
+	set .@select, @mora_enchant_select;
+	set .@enchant_type, getarg(0);
+	.@bonus_enchant = getarg(1);
+	.@allowed_slot = getarg(2);
+	set .@part, @mora_equip_part;
+	set .@equip_id, getequipid(.@part);
+	set .@equip_name$, getitemname(.@equip_id);
+	set .@equip_refine, getequiprefinerycnt(.@part);
+	setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+	set @mora_equip_part,0;
+	set @mora_enchant_select,0;
+
+	if (.@select == 1) {
+		// If refine is +9 or higher, unlock bonus enchant type.
+		if (.@equip_refine >= 9 && .@bonus_enchant > 0) {
+			if (.@enchant_type < 1 || .@enchant_type > 11 || .@bonus_enchant > 11) {
+				mes "[Artifact Researcher]";
+				mes "อืม-มมม บางอย่างมันผิดพลาด.";
+				close;
+			}
+			setarray .@enchant_type$[1],"ATK Type","Critical Type","Evasion Type","Healer Type","Spell Ability 1","Assist Ability 1","Assist Ability 2","Strength","Range Type","Physical Type","Spell Ability 2";
+			mes "[Artifact Researcher]";
+			mes "ในกรณีที่ของสวมใส่มีค่าตีบวกที่มาก. เจ้าสามารถได้รับผลประโยชน์จากสิ่งนั้นได้. เจ้าอยากจะออฟค่าไหนล่ะ ?";
+			next;
+			switch(select(.@enchant_type$[.@enchant_type],.@enchant_type$[.@bonus_enchant])) {
+			case 1:
+				break;
+			case 2:
+				set .@enchant_type, .@bonus_enchant;
+				break;
+			}
+		}
+		if (.@equip_card[3] == 0 && .@allowed_slot < 4) {
+			set .@slot,4;
+			mes "[Artifact Researcher]";
+			mes "พยายามเสริมความแข็งแกร่ง. ยังอยากทำต่อไหม ?";
+		} else if (.@equip_card[2] == 0 && .@allowed_slot < 3) {
+			set .@slot,3;
+			mes "[Artifact Researcher]";
+			mes "พยายามออฟครั้งที่สอง.";
+			next;
+			mes "[Artifact Researcher]";
+			mes "ข้าว่ามันมีโอกาสล้มเหลวน่ะถ้าพยายามทำต่อ. ยังอยากทำต่อไหม ?";
+		} else if (.@equip_card[1] == 0 && .@allowed_slot < 2) {
+			set .@slot,2;
+			mes "[Artifact Researcher]";
+			mes "เริ่มออฟครั้งที่สาม. ข้าจะให้ค่าที่ดีที่สุดในครั้งนี้,แต่จำไว้ ^990000มันมีโอกาสที่ของจะถูกทำลายและออฟก่อนหน้าก็จะหายไปด้วย^000000. ต่อไหม ?";
+		} else {
+			mes "[Artifact Researcher]";
+			mes "ออฟเต็มแล้ว. เป็นไปไม่ได้ที่จะออฟเพิ่มอีก.";
+			close;
+		}
+		next;
+		if(select("I'll come back later.:Please continue!") == 1) {
+			mes "[Artifact Researcher]";
+			mes "ถ้าเจ้าเปลี่ยนใจ, ให้กลับมาใหม่.";
+			close;
+		}
+		switch(.@enchant_type) {
+		case 1: //Attack
+			     if (.@slot == 4) set .@i, rand(1,525);
+			else if (.@slot == 3) set .@i, rand(301,655);
+			else if (.@slot == 2) set .@i, rand(451,750);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4700; //Strength1
+			else if (.@i < 201) set .@enchant,4811; //Fighting_Spirit1
+			else if (.@i < 301) set .@enchant,4819; //Atk1
+			else if (.@i < 351) set .@enchant,4701; //Strength2
+			else if (.@i < 401) set .@enchant,4810; //Fighting_Spirit2
+			else if (.@i < 451) set .@enchant,4766; //Atk2
+			else if (.@i < 476) set .@enchant,4702; //Strength3
+			else if (.@i < 501) set .@enchant,4809; //Fighting_Spirit3
+			else if (.@i < 526) set .@enchant,4767; //Atk3
+			else if (.@i < 626) set .@enchant,0;
+			else if (.@i < 641) set .@enchant,4703; //Strength4
+			else if (.@i < 656) set .@enchant,4808; //Fighting_Spirit4
+			else if (.@i < 661) set .@enchant,4704; //Strength5
+			else if (.@i < 666) set .@enchant,4820; //Fighting_Spirit5
+			else if (.@i < 668) set .@enchant,4705; //Strength6
+			else if (.@i < 670) set .@enchant,4821; //Fighting_Spirit6
+			else set .@enchant,9;
+			break;
+		case 2: //Critical
+			     if (.@slot == 4) set .@i, rand(1,470);
+			else if (.@slot == 3) set .@i, rand(201,610);
+			else if (.@slot == 2) set .@i, rand(381,750);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4750; //Luck1
+			else if (.@i < 201) set .@enchant,4700; //Strength1
+			else if (.@i < 261) set .@enchant,4751; //Luck2
+			else if (.@i < 321) set .@enchant,4701; //Strength2
+			else if (.@i < 351) set .@enchant,4752; //Luck3
+			else if (.@i < 381) set .@enchant,4702; //Strength3
+			else if (.@i < 411) set .@enchant,4764; //Critical5
+			else if (.@i < 441) set .@enchant,4818; //Sharp1
+			else if (.@i < 471) set .@enchant,4752; //Luck3
+			else if (.@i < 571) set .@enchant,0;
+			else if (.@i < 586) set .@enchant,4753; //Luck4
+			else if (.@i < 601) set .@enchant,4754; //Luck5
+			else if (.@i < 606) set .@enchant,4765; //Critical7
+			else if (.@i < 611) set .@enchant,4817; //Sharp2
+			else if (.@i < 616) set .@enchant,4703; //Strength4
+			else if (.@i < 618) set .@enchant,4816; //Sharp3
+			else set .@enchant,9;
+			break;
+		case 3: //Evasion
+			     if (.@slot == 4) set .@i, rand(1,525);
+			else if (.@slot == 3) set .@i, rand(301,670);
+			else if (.@slot == 2) set .@i, rand(451,800);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4859; //Evasion1
+			else if (.@i < 201) set .@enchant,4750; //Luck1
+			else if (.@i < 301) set .@enchant,4730; //Agility1
+			else if (.@i < 351) set .@enchant,4860; //Evasion3
+			else if (.@i < 401) set .@enchant,4751; //Luck2
+			else if (.@i < 451) set .@enchant,4731; //Agility2
+			else if (.@i < 476) set .@enchant,4731; //Agility2
+			else if (.@i < 501) set .@enchant,4752; //Luck3
+			else if (.@i < 526) set .@enchant,4732; //Agility3
+			else if (.@i < 626) set .@enchant,0;
+			else if (.@i < 641) set .@enchant,4762; //Evasion6
+			else if (.@i < 656) set .@enchant,4753; //Luck4
+			else if (.@i < 671) set .@enchant,4733; //Agility4
+			else if (.@i < 676) set .@enchant,4763; //Evasion12
+			else if (.@i < 681) set .@enchant,4754; //Luck5
+			else if (.@i < 683) set .@enchant,4734; //Agility5
+			else set .@enchant,9;
+			break;
+		case 4: //Healer
+			     if (.@slot == 4) set .@i, rand(1,375);
+			else if (.@slot == 3) set .@i, rand(201,535);
+			else if (.@slot == 2) set .@i, rand(301,650);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4710; //Inteligence1
+			else if (.@i < 201) set .@enchant,4720; //Dexterity1
+			else if (.@i < 251) set .@enchant,4711; //Inteligence2
+			else if (.@i < 301) set .@enchant,4721; //Dexterity2
+			else if (.@i < 326) set .@enchant,4805; //Heal_Amount2
+			else if (.@i < 351) set .@enchant,4712; //Inteligence3
+			else if (.@i < 376) set .@enchant,4722; //Dexterity3
+			else if (.@i < 476) set .@enchant,0;
+			else if (.@i < 491) set .@enchant,4760; //Matk1
+			else if (.@i < 506) set .@enchant,4850; //Heal_Amount3
+			else if (.@i < 521) set .@enchant,4713; //Inteligence4
+			else if (.@i < 536) set .@enchant,4723; //Dexterity4
+			else if (.@i < 541) set .@enchant,4761; //Matk2
+			else if (.@i < 546) set .@enchant,4851; //Heal_Amount4
+			else if (.@i < 548) set .@enchant,4806; //Matk3
+			else if (.@i < 550) set .@enchant,4852; //Heal_Amount5
+			else set .@enchant,9;
+			break;
+		case 5: //Spell 1
+			     if (.@slot == 4) set .@i, rand(1,600);
+			else if (.@slot == 3) set .@i, rand(401,760);
+			else if (.@slot == 2) set .@i, rand(401,766);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4710; //Inteligence1
+			else if (.@i < 201) set .@enchant,4720; //Dexterity1
+			else if (.@i < 301) set .@enchant,4795; //HP100
+			else if (.@i < 401) set .@enchant,4815; //Spell1
+			else if (.@i < 451) set .@enchant,4711; //Inteligence2
+			else if (.@i < 501) set .@enchant,4721; //Dexterity2
+			else if (.@i < 551) set .@enchant,4796; //HP200
+			else if (.@i < 601) set .@enchant,4814; //Spell2
+			else if (.@i < 701) set .@enchant,0;
+			else if (.@i < 716) set .@enchant,4712; //Inteligence3
+			else if (.@i < 731) set .@enchant,4722; //Dexterity3
+			else if (.@i < 746) set .@enchant,4797; //HP300
+			else if (.@i < 761) set .@enchant,4813; //Spell3
+			else if (.@i < 763) set .@enchant,4713; //Inteligence4
+			else if (.@i < 765) set .@enchant,4723; //Dexterity4
+			else if (.@i < 767) set .@enchant,4812; //Spell4
+			else set .@enchant,9;
+			break;
+		case 6: //Assist 1
+			     if (.@slot == 4) set .@i, rand(1,520);
+			else if (.@slot == 3) set .@i, rand(321,720);
+			else if (.@slot == 2) set .@i, rand(521,850);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 81)  set .@enchant,4792; //Def6
+			else if (.@i < 161) set .@enchant,4787; //Mdef4
+			else if (.@i < 241) set .@enchant,4801; //SP100
+			else if (.@i < 321) set .@enchant,4796; //HP200
+			else if (.@i < 371) set .@enchant,4700; //Strength1
+			else if (.@i < 421) set .@enchant,4720; //Dexterity1
+			else if (.@i < 471) set .@enchant,4730; //Agility1
+			else if (.@i < 521) set .@enchant,4740; //Vitality1
+			else if (.@i < 621) set .@enchant,0;
+			else if (.@i < 646) set .@enchant,4793; //Def9
+			else if (.@i < 671) set .@enchant,4788; //Mdef6
+			else if (.@i < 696) set .@enchant,4802; //SP150
+			else if (.@i < 721) set .@enchant,4797; //HP300
+			else if (.@i < 731) set .@enchant,4701; //Strength2
+			else if (.@i < 741) set .@enchant,4721; //Dexterity2
+			else if (.@i < 751) set .@enchant,4731; //Agility2
+			else set .@enchant,9;
+			break;
+		case 7: //Assist 2
+			     if (.@slot == 4) set .@i, rand(1,520);
+			else if (.@slot == 3) set .@i, rand(321,720);
+			else if (.@slot == 2) set .@i, rand(521,850);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 81)  set .@enchant,4792; //Def6
+			else if (.@i < 161) set .@enchant,4787; //Mdef4
+			else if (.@i < 241) set .@enchant,4801; //SP100
+			else if (.@i < 321) set .@enchant,4796; //HP200
+			else if (.@i < 371) set .@enchant,4710; //Inteligence1
+			else if (.@i < 421) set .@enchant,4720; //Dexterity1
+			else if (.@i < 471) set .@enchant,4730; //Agility1
+			else if (.@i < 521) set .@enchant,4740; //Vitality1
+			else if (.@i < 621) set .@enchant,0;
+			else if (.@i < 646) set .@enchant,4793; //Def9
+			else if (.@i < 671) set .@enchant,4788; //Mdef6
+			else if (.@i < 696) set .@enchant,4802; //SP150
+			else if (.@i < 721) set .@enchant,4797; //HP300
+			else if (.@i < 731) set .@enchant,4711; //Inteligence2
+			else if (.@i < 741) set .@enchant,4721; //Dexterity2
+			else if (.@i < 751) set .@enchant,4741; //Vitality2
+			else set .@enchant,9;
+			break;
+		case 8: //Strength
+			     if (.@slot == 4) set .@i, rand(1,525);
+			else if (.@slot == 3) set .@i, rand(301,685);
+			else if (.@slot == 2) set .@i, rand(451,800);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4740; //Vitality1
+			else if (.@i < 201) set .@enchant,4797; //HP300
+			else if (.@i < 301) set .@enchant,4791; //Def3
+			else if (.@i < 351) set .@enchant,4741; //Vitality2
+			else if (.@i < 401) set .@enchant,4798; //HP400
+			else if (.@i < 451) set .@enchant,4792; //Def6
+			else if (.@i < 476) set .@enchant,4742; //Vitality3
+			else if (.@i < 501) set .@enchant,4793; //Def9
+			else if (.@i < 526) set .@enchant,4799; //HP500
+			else if (.@i < 626) set .@enchant,0;
+			else if (.@i < 641) set .@enchant,4742; //Vitality3
+			else if (.@i < 656) set .@enchant,4743; //Vitality4
+			else if (.@i < 671) set .@enchant,4794; //Def12
+			//else if (.@i < 686) set .@enchant,01; // ??
+			else if (.@i < 688) set .@enchant,4744; //Vitality5
+			//else if (.@i < 690) set .@enchant,02; // ??
+			else set .@enchant,9;
+			break;
+		case 9: //Range
+			     if (.@slot == 4) set .@i, rand(1,470);
+			else if (.@slot == 3) set .@i, rand(201,610);
+			else if (.@slot == 2) set .@i, rand(321,750);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4750; //Luck1
+			else if (.@i < 201) set .@enchant,4720; //Dexterity1
+			else if (.@i < 261) set .@enchant,4751; //Luck2
+			else if (.@i < 321) set .@enchant,4721; //Dexterity2
+			else if (.@i < 351) set .@enchant,4752; //Luck3
+			else if (.@i < 381) set .@enchant,4722; //Dexterity3
+			else if (.@i < 411) set .@enchant,4764; //Critical5
+			else if (.@i < 441) set .@enchant,4832; //Expert_Archer1
+			else if (.@i < 471) set .@enchant,4753; //Luck4
+			else if (.@i < 571) set .@enchant,0;
+			else if (.@i < 586) set .@enchant,4723; //Dexterity4
+			else if (.@i < 601) set .@enchant,4833; //Expert_Archer2
+			else if (.@i < 606) set .@enchant,4765; //Critical7
+			else if (.@i < 611) set .@enchant,4834; //Expert_Archer3
+			else if (.@i < 616) set .@enchant,4724; //Dexterity5
+			else if (.@i < 618) set .@enchant,4835; //Expert_Archer4
+			else set .@enchant,9;
+			break;
+		case 10: //Physical
+			     if (.@slot == 4) set .@i, rand(1,600);
+			else if (.@slot == 3) set .@i, rand(401,800);
+			else if (.@slot == 2) set .@i, rand(601,930);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4791; //Def3
+			else if (.@i < 201) set .@enchant,4730; //Agility1
+			else if (.@i < 301) set .@enchant,4750; //Luck1
+			else if (.@i < 401) set .@enchant,4795; //HP100
+			else if (.@i < 451) set .@enchant,4792; //Def6
+			else if (.@i < 501) set .@enchant,4731; //Agility2
+			else if (.@i < 551) set .@enchant,4751; //Luck2
+			else if (.@i < 601) set .@enchant,4796; //HP200
+			else if (.@i < 701) set .@enchant,0;
+			else if (.@i < 726) set .@enchant,4793; //Def9
+			else if (.@i < 751) set .@enchant,4732; //Agility3
+			else if (.@i < 776) set .@enchant,4752; //Luck3
+			else if (.@i < 801) set .@enchant,4797; //HP300
+			else if (.@i < 816) set .@enchant,4733; //Agility4
+			else if (.@i < 831) set .@enchant,4753; //Luck4
+			else if (.@i < 833) set .@enchant,4807; //Atk_Speed1
+			else set .@enchant,9;
+			break;
+		case 11: //Spell 2
+			     if (.@slot == 4) set .@i, rand(1,600);
+			else if (.@slot == 3) set .@i, rand(401,760);
+			else if (.@slot == 2) set .@i, rand(401,766);
+			else {
+				mes "[Artifact Researcher]";
+				mes "เกิดข้อผิดพลาดบางอย่างขึ้น.";
+				close;
+			}
+			     if (.@i < 101) set .@enchant,4711; //Inteligence2
+			else if (.@i < 201) set .@enchant,4721; //Dexterity2
+			else if (.@i < 301) set .@enchant,4796; //HP200
+			else if (.@i < 401) set .@enchant,4814; //Spell2
+			else if (.@i < 451) set .@enchant,4712; //Inteligence3
+			else if (.@i < 501) set .@enchant,4722; //Dexterity3
+			else if (.@i < 551) set .@enchant,4760; //Matk1
+			else if (.@i < 601) set .@enchant,4813; //Spell3
+			else if (.@i < 701) set .@enchant,0;
+			else if (.@i < 716) set .@enchant,4713; //Inteligence4
+			else if (.@i < 731) set .@enchant,4723; //Dexterity4
+			else if (.@i < 746) set .@enchant,4761; //Matk2
+			else if (.@i < 761) set .@enchant,4812; //Spell4
+			else if (.@i < 763) set .@enchant,4714; //Inteligence5
+			else if (.@i < 765) set .@enchant,4724; //Dexterity5
+			else if (.@i < 767) set .@enchant,4806; //Matk3
+			else set .@enchant,9;
+			break;
+		default:
+			mes "[Artifact Researcher]";
+			mes "เยี่ยมข้าเดาว่าข้าทำพลาด...";
+			close;
+		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+		    callfunc("F_IsEquipRefineHack", .@part, .@equip_refine) ||
+		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+			close;
+
+		if (.@equip_card[3] == 0 && .@allowed_slot < 4) {
+			set .@equip_card[3],.@enchant;
+		} else if (.@equip_card[2] == 0 && .@allowed_slot < 3) {
+			set .@equip_card[2],.@enchant;
+			if (.@enchant == 0) {
+				set .@equip_card[3],0;
+			}
+		} else if (.@equip_card[1] == 0 && .@allowed_slot < 2) {
+			set .@equip_card[1],.@enchant;
+			if (.@enchant == 0) {
+				set .@equip_card[2],0;
+				set .@equip_card[3],0;
+			}
+		} else {
+			mes "[Artifact Researcher]";
+			mes "ข้าคิดว่าออฟเต็มแล้วน่ะ.";
+			close;
+		}
+		if (Zeny < 100000 || countitem(6380) == 0) {
+			mes "[Artifact Researcher]";
+			mes "ข้าจะไม่ทำให้ถ้าเจ้าไม่จ่ายค่าบริการ.";
+			close;
+		}
+		delitem 6380,1; //Mora_Coin
+		set Zeny, Zeny-100000;
+		delequip .@part;
+		if (.@enchant == 9) {
+			specialeffect2 EF_SUI_EXPLOSION;
+			mes "[Artifact Researcher]";
+			mes "นี่มัน !";
+ 			mes "ข้า...ข้าขอโทษด้วยมันแตกไปแล้ว.";
+			close;
+		}
+		if (.@enchant == 0) {
+			specialeffect2 EF_SHIELDCHARGE;
+			mes "[Artifact Researcher]";
+			mes "พลังมันไม่สมดุล, ทำให้ขั้นตอนสุดท้ายถูกทำลาย. โชคไม่ดีเลย หวังว่าครั้งหน้าจะดีกว่านี้.";
+		} else {
+			specialeffect2 EF_REPAIRWEAPON;
+			mes "[Artifact Researcher]";
+			// Replacing original dialogue since it doesn't make sense.
+			//mes "The artifact ^990000"+.@slot+" will have the first enhancement retained.";
+			mes "การออฟ ^990000"+.@equip_name$+"^000000 ประสบความสำเร็จในช่องที่ "+.@slot+".";
+		}
+
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+		close;
+	} else if (.@select == 2) {
+		if (Zeny < 100000 || countitem(6380) == 0) {
+			mes "[Artifact Researcher]";
+			mes "เจ้าต้องจ่ายค่าบริการด้วย.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Artifact Researcher]";
+		mes "ลบออฟเรียบร้อย.";
+		delitem 6380,1; //Mora_Coin
+		set Zeny, Zeny-100000;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
+		delequip .@part;
+
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+		for ( .@i = getiteminfo(.@equip_id, ITEMINFO_SLOT); .@i < MAX_SLOTS; .@i++ ) {
+			if (getiteminfo(.@equip_card[.@i], ITEMINFO_SUBTYPE) == CARD_ENCHANT)
+				.@equip_card[.@i] = 0;// Armor Enchant System
+		}
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+		close;
+	}
+}
+
+// Arch Bishop & Warlock Empowering :: relic_change
+//============================================================
+mora,124,82,4	script	Artifact Collector#blan	522,{
+	if (checkweight(1201,1) == 0) {
+		mes "ลดของในกระเป๋าก่อนเพราะที่ว่างไม่พอ.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "น้ำหนักในกระเป๋าไม่พอ.";
+		close;
+	}
+	disable_items;
+	emotion ET_DELIGHT;
+	mes "สิ่งประดิษฐ์โมรานั้นยอดเยี่ยม!";
+	mes "แต่ข้ารู้ว่าเจ้ายังต้องการอันที่ดีกว่านี้!";
+	next;
+	mes "[Artifact Collector]";
+	mes "หวัดดีนักผจญภัย. พวกเราอาจจะเป็นเพื่อนสนิทกันก็ได้หลังจากที่ข้าจะบอกกับเจ้าเกี่ยวกับสิ่งประดิษฐ์ Empower!";
+	next;
+	switch(select("ทำมันเลย!:สิ่งประดิษฐ์ Empower ?:ไม่อ่ะ, ข้าไม่สน!")) {
+	case 1:
+		break;
+	case 2:
+		emotion ET_OK;
+		mes "[Artifact Collector]";
+		mes "เจ้าเป็นคนที่มีการตัดสินใจที่ดี.";
+		next;
+		mes "[Artifact Collector]";
+		mes "มากกว่า 200 ปีก่อนข้าเคยทำงานเกี่ยวกับสิ่งประดิษฐ์อยู่ในเมืองโมราแห่งนี้. ด้วยความพยายามทำให้ได้สิ่งประดิษฐ์ +9 มา!";
+		next;
+		select("ห๊าาา... +9?!");
+		emotion ET_HUK, playerattached();
+		mes "[Artifact Collector]";
+		mes "ธุรกิจของข้าเกี่ยวกับการรวบรวมของเก่าและตีบวกพวกมัน!";
+		next;
+		emotion ET_CRY;
+		mes "[Artifact Collector]";
+		mes "การหาสุุดยอดสิ่งประดิษฐ์คือตลอดชีวิตในการทำงานของข้า.";
+		mes "นอกจากนี้การได้เห็นความมหัศจรรย์ของมรดกในอดีตข้าก็พอใจแล้ว.";
+		next;
+		select("ข้าได้เห็นแล้วว่ามันสนุกแค่ไหน.");
+		emotion ET_GOODBOY;
+		mes "[Artifact Collector]";
+		mes "ขอบใจเจ้าน่ะ เจ้ามนุษย์.";
+		next;
+		mes "[Artifact Collector]";
+		mes "ข้าทำมานานตลอด 200 ปี, อยู่ๆความต้องการของสิ่งประดิษฐ์ก็หายไป, เหล่านักประดิษฐ์ไม่ต้องการค้าขายกับข้า...";
+		next;
+		emotion ET_THINK;
+		mes "[Artifact Collector]";
+		mes "แต่บางทีมนุษย์ที่เริ่มเข้ามาเยี่ยมเยียนอาจจะเป็นหุ้นส่วนใหม่ก็ได้!";
+		next;
+		select("มนุษย์... หุ้นส่วน ?");
+		emotion ET_QUESTION, playerattached();
+		mes "[Artifact Collector]";
+		mes "ใช่! ถ้ามนุษย์สามารถนำสิ่งประดิษฐ์ใหม่ ๆ มาให้กับข้าได้ก็สามารถทำงานให้สำเร็จได้!";
+		next;
+		select("ความสำเร็จสูงสุด ?");
+		emotion ET_QUESTION, playerattached();
+		emotion ET_OK;
+		mes "[Artifact Collector]";
+		mes "ความพยายาม, จะพาพวกเราไปถึงเป้าหมาย...";
+		next;
+		mes "[Artifact Collector]";
+		mes "ข้าเป็นนักเก็บสะสมโดยการค้าขาย แต่ความสำเร็จที่ยิ่งใหญ่ที่สุดของข้าคือการเพิ่มขีดความสามารถของสิ่งประดิษฐ์บางอย่างให้มีพลังมากขึ้น!";
+		mes "ความสามารถที่ยอดเยี่ยมของข้าใช้ได้กับสิ่งประดิษฐ์ไม่กี่ประเภทเท่านั้น.";
+		next;
+		mes "[Artifact Collector]";
+		mes "เจ้าอาจจะเป็นคนที่ช่วยข้าได้.";
+		next;
+		emotion ET_OTL;
+		mes "[Artifact Collector]";
+		mes "โอ้ บางทีข้าก็ชอบในโชคชะตาที่ทำให้เรามาเจอกัน...";
+		next;
+		mes "[Artifact Collector]";
+		mes "+1, +2, +3, +4, +5, +6 เป็นค่าตีบวกที่อ่อนแอเกินไปไม่เหมาะกับงานของข้า.";
+		next;
+		emotion ET_OTL;
+		mes "[Artifact Collector]";
+		mes "แต่ +7! +7 เป็นของหายากและมันน่าจะแข็งแรงพอที่จะทำงานให้ลุล่วง.";
+		next;
+		select("ข้าอาจจะโดนปรามาสได้...");
+		emotion ET_SCRATCH, playerattached();
+		mes "[Artifact Collector]";
+		mes "ก็ถูกของเจ้า! แต่ข้ารู้มาว่าธรรมชาติของมนุษย์ชอบช่วยเหลือเพื่อน, ข้าไม่ใช่เพื่อนเจ้ารึ...";
+		next;
+		select("ข้าไม่แน่ใจนัก ถ้า...");
+		emotion ET_QUESTION, playerattached();
+		mes "[Artifact Collector]";
+		mes "งั้นเอาตามนี้เจ้ายอมที่จะช่วยข้า!  ตามหา...";
+		next;
+		mes "- Golden Rod Staff -";
+		mes "- Aqua Staff -";
+		mes "- Crimson Staff -";
+		mes "- Forest Staff -";
+		mes "- Staff of Mercy -";
+		mes "- Mace of Judgement -";
+		next;
+		select("มีอีกไหม ?");
+		emotion ET_QUESTION, playerattached();
+		mes "[Artifact Collector]";
+		mes "นอกเหนือจากค่าตี +7 ก็ต้องมีออฟชั่นที่เฉพาะเจาะจงมากและต้องอยู่ในสิ่งประดิษฐ์ด้วย.";
+		next;
+		mes "[Artifact Collector]";
+		mes "ถ้าค่าตี +7 หรือออฟชั่นพิเศษไม่มีมันจะทำให้ข้าทำงานไม่ได้.";
+		next;
+		select("ค่าตีบวกจะยังอยู่ไหม ?");
+		emotion ET_HUK, playerattached();
+		emotion ET_FRET;
+		mes "[Artifact Collector]";
+		mes "ไม่, แต่เจ้าจะได้ของที่ดีกว่ากลับไป!";
+		next;
+		mes "[Artifact Collector]";
+		mes "ตอนนี้เจ้ากำลังสงสัยเกี่ยวกับสิ่งประดิษฐ์ที่ข้ากำลังมองหาอยู่หรอ ?";
+		next;
+		emotion ET_QUESTION;
+		mes "[Artifact Collector]";
+		mes "ไปต่อและถามมาได้เลย!";
+		next;
+		setarray .@artifacts[0],1657,16013,2007,2008,2009,2010;
+		setarray .@empowered[0],1660,16018,2011,2012,2013,2014;
+		while(1) {
+			set .@i, select("ข้าไม่คิดว่าข้าจะสนใจ:Staff of Mercy:Mace of Judgement:Golden Rod Staff:Aqua Staff:Crimson Staff:Forest Staff")-2;
+			if (.@i == -1) {
+				emotion ET_QUESTION;
+				mes "[Artifact Collector]";
+				mes "Ok, วันอื่นเจ้าอาจสนใจก็ได้.";
+				close;
+			}
+			mes "[Artifact Collector]";
+			mes getitemname(.@artifacts[.@i])+" ต้องมีค่าตี +7 หรือสูงกว่า.";
+			next;
+			switch(.@i) {
+			case 0:
+				setarray .@enchants[0],4761,4723,4714;
+				set .@str$, "MATK+2%, DEX+4, INT+5";
+				break;
+			case 1:
+				setarray .@enchants[0],4767,4723,4704;
+				set .@str$, "ATK+3%, DEX+4, STR+5";
+				break;
+			default:
+				setarray .@enchants[0],4761,4713;
+				set .@str$, "MATK+2%, INT+4";
+				break;
+			}
+			mes "[Artifact Collector]";
+			mes "และมันควรมีออฟชั่น: "+.@str$+" อยู่ด้วย.";
+			next;
+			select(getitemname(.@empowered[.@i])+" คุณสมบัติ ?");
+			callsub L_ShowInfo, .@empowered[.@i];
+			mes "[Artifact Collector]";
+			mes "แต่ได้โปรดถ้าเจ้ามีสักหนึ่งอันเอามันมาให้ข้าถือว่าข้าขอร้องเจ้า.";
+			next;
+		}
+	case 3:
+		mes "[Artifact Collector]";
+		mes "มันเป็นวันที่ดี. บาย~";
+		close;
+	}
+	emotion ET_SPARK;
+	mes "[Artifact Collector]";
+	mes "ให้ข้าดูสิ่งที่เจ้านำมาให้ข้าสิ.";
+	next;
+	if (!getequipisequiped(EQI_HAND_R)) {
+		emotion ET_FRET;
+		mes "[Artifact Collector]";
+		mes "ข้าไม่รู้ว่าเจ้าพยายามจะทำอะไร... เจ้าไม่ได้เอามันมาด้วย.";
+		close;
+	}
+	set .@equip_id, getequipid(EQI_HAND_R);
+	.@equip_refine = getequiprefinerycnt(EQI_HAND_R);
+	setarray .@equip_card[0], getequipcardid(EQI_HAND_R,0), getequipcardid(EQI_HAND_R,1), getequipcardid(EQI_HAND_R,2),getequipcardid(EQI_HAND_R,3);
+	switch(.@equip_id) {
+	case 2007: //Golden_Rod_Staff
+	case 2008: //Aqua_Staff
+	case 2009: //Crimson_Staff
+	case 2010: //Forest_Staff
+		if (.@equip_card[2] == 4761 || .@equip_card[3] == 4761 || //Matk2
+		    .@equip_card[2] == 4713 || .@equip_card[3] == 4713)   //Inteligence4
+			set .@empowered,.@equip_id+4; //Golden_Rod_Staff2,Aqua_Staff2,Crimson_Staff2,Forest_Staff2
+		break;
+	case 1657: //Wand_Of_Affection
+		if (.@equip_card[2] == 4761 || .@equip_card[3] == 4761 || //Matk2
+		    .@equip_card[2] == 4714 || .@equip_card[3] == 4714 || //Inteligence5
+		    .@equip_card[2] == 4723 || .@equip_card[3] == 4723)   //Dexterity4
+			set .@empowered,1660; //Wand_Of_Affection2
+		break;
+	case 16013: //Mace_Of_Judgement
+		if (.@equip_card[2] == 4723 || .@equip_card[3] == 4723 || //Dexterity4
+		    .@equip_card[2] == 4704 || .@equip_card[3] == 4704 || //Strength5
+		    .@equip_card[2] == 4767 || .@equip_card[3] == 4767)   //Atk3
+			set .@empowered,16018; //Mace_Of_Judgement2
+		break;
+	default:
+		emotion ET_FRET;
+		mes "[Artifact Collector]";
+		mes "อาวุธที่เจ้ามีอยู่ไม่ใช่สิ่งประดิษฐ์ที่ข้าต้องการ.";
+		close;
+	}
+	if (.@equip_refine < 7) {
+		emotion ET_FRET;
+		mes "[Artifact Collector]";
+		mes "ข้าต้องการอาวุธที่มีค่าตีบวกอย่างน้อย +7!";
+		close;
+	}
+	if (!.@empowered) {
+		emotion ET_FRET;
+		mes "[Artifact Collector]";
+		mes "ออฟชั่นมันไม่ตรงกับที่ต้องการ ลองไปสุ่มใหม่.";
+		close;
+	}
+	emotion ET_SEXY;
+	mes "[Artifact Collector]";
+	mes "ข้ารู้สึกเสียวซ่า!";
+	mes "เจ้าได้นำของที่ข้าต้องการมา!!";
+	next;
+	emotion ET_OK;
+	mes "[Artifact Collector]";
+	mes "ถ้าเจ้าพร้อมแล้วข้าจะแสดงให้เห็นว่าข้าทำอะไรกับ +"+getequiprefinerycnt(EQI_HAND_R)+" ได้บ้าง!";
+	next;
+	mes "[Artifact Collector]";
+	mes "ข้าจะนำ ^FF0000"+getequipname(EQI_HAND_R)+"^000000 ของเจ้าไปเปลี่ยน, เจ้าพร้อมไหม ?";
+	next;
+	switch(select("ม่ายยยย!:ได้, ข้าพร้อมมานานแล้ว!:อะไรจะเกิดขึ้นหลังจากนั้น?")) {
+	case 1:
+		emotion ET_FRET;
+		mes "[Artifact Collector]";
+		mes "เจ้าสารเลว... เจ้าให้ความหวังข้า...";
+		close;
+	case 2:
+		break;
+	case 3:
+		callsub L_ShowInfo, .@empowered;
+		mes "[Artifact Collector]";
+		mes "แน่นอนว่ามันไม่มีอะไร ?";
+		next;
+		if(select("ไม่, ข้าไม่เชื่อ.:ได้, ทำเลย!") == 1) {
+			emotion ET_FRET;
+			mes "[Artifact Collector]";
+			mes "เจ้าสารเลว... เจ้าให้ความหวังข้า...";
+			close;
+		}
+		break;
+	}
+	emotion ET_SMILE;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine))
+		close;
+
+	delequip EQI_HAND_R;
+	getitem .@empowered,1;
+	mes "[Artifact Collector]";
+	mes "เรียบร้อย, เจ้าดูมีความสุข! ลาก่อนเพื่อนยาก~";
+	close;
+
+L_ShowInfo:
+	mes "[Artifact Collector]";
+	mes getitemname(getarg(0));
+	switch(getarg(0)) {
+	case 1660: //Wand_Of_Affection2
+		mes "One handed Staff / โจมตี : 30";
+		mes "น้ำหนัก : 50 / ทุกเพศ";
+		mes "เฉพาะ Archbishop เท่านั้น";
+		mes "อาวุธเลเวล : 4 / ^ff0000ต้องการเลเวล: 130^000000";
+		mes "MATK + 180, INT + 4.";
+		mes "เพิ่มโบนัส Heal 20%.";
+		mes "ถ้าสวมใส่กับ Robes, Shoes, และ Robe of Mercy จะเพิ่มโบนัส Heal อีก 45% และ ลดการใช้ SP ของ 'Heal' ลง 50.";
+		mes "เมื่อได้รับการโจมตีระยะประชิด, มีโอกาสเล็กน้อยที่จะใช้สกิล Lv.1 Silentium.";
+		mes "ลดดีเลย์การใช้สกิลลง 3 วิสำหรับสกิล Clearance, Laudaramus, และ Laudaagnus.";
+		break;
+	case 16018: //Mace_Of_Judgement2
+		mes "Mace / โจมตี : 170";
+		mes "น้ำหนัก : 120 / ทุกเพศ";
+		mes "เฉพาะ Archbishop เท่านั้น";
+		mes "อาวุธเลเวล : 4 / ^ff0000ต้องการเลเวล: 130^000000";
+		mes "MATK + 180, STR + 2, INT + 2.";
+		mes "เมื่อโจมตีแบบกายภาพและเวทมนต์ มีโอกาสเพิ่มความแรง 40% ต่อมอสเตอร์ประเภท Demon เป็นเวลา 7 วิ.";
+		mes "ถ้าสวมใส่กับ Judgement Golves, Shoes และ Shawl, จะเพิ่มความแรงต่อประเภท Undead ขึ้น 30%.";
+		mes "เพิ่มความแรงของสกิล Adoramus ขึ้น 200%, และเพิ่มการใช้ SP ของสกิล Adoramus ขึ้น 30.";
+		break;
+	case 2011: //Golden_Rod_Staff2
+		mes "Staff / โจมตี: 30";
+		mes "น้ำหนัก : 90 / ทุกเพศ";
+		mes "เฉพาะ Warlock เท่านั้น";
+		mes "อาวุธเลเวล : 4 / ^ff0000ต้องการเลเวล : 130^000000";
+		mes "INT + 5, MATK + 270.";
+		mes "เพิ่มความแรงของสกิล Jupitel Thunder ขึ้น 30%.";
+		mes "ถ้าสวมใส่กับ Golden Robe, Golden Shoes, และ Golden Orb จะเพิ่มความแรงเวทธาตุลมขึ้น 60%.";
+		mes "ลดความแรงเวทธาตุดินลง 60% และลดกันธาตุดินลง 50%.";
+		break;
+	case 2012: //Aqua_Staff2
+		mes "Staff / โจมตี : 30";
+		mes "น้ำหนัก : 90 / ทุกเพศ";
+		mes "เฉพาะ Warlock เท่านั้น";
+		mes "อาวุธเลเวล : 4 / ^ff0000ต้องการเลเวล: 130^000000";
+		mes "INT + 5, MATK + 270.";
+		mes "เพิ่มความแรงของสกิล Cold Bolt และ Frost Diver ขึ้น 30%.";
+		mes "ถ้าสวมใส่กับ Aqua Robe, Shoes, และ Orb จะเพิ่มความแรงเวทธาตุน้ำขึ้น 60%.";
+		mes "ลดความแรงเวทธาตุลมลง 60% และลดกันธาตุลมลง 50%.";
+		break;
+	case 2013: //Crimson_Staff2
+		mes "Staff / โจมตี : 30";
+		mes "น้ำหนัก : 90 / ทุกเพศ";
+		mes "เฉพาะ Warlock เท่านั้น";
+		mes "อาวุธเลเวล : 4 / ^ff0000ต้องการเลเวล: 130^000000";
+		mes "INT + 5, MATK + 270.";
+		mes "เพิ่มความแรงของสกิล Fire Bolt และ Fireball ขึ้น 30%.";
+		mes "ถ้าสวมใส่กับ Crimson Robe, Shoes, และ Orb จะเพิ่มความแรงเวทธาตุไฟขึ้น 60%.";
+		mes "ลดความแรงเวทธาตุน้ำลง 60% และลดกันธาตุน้ำลง 50%.";
+		break;
+	case 2014: //Forest_Staff2
+		mes "Staff / โจมตี : 30";
+		mes "น้ำหนัก : 90 / ทุกเพศ";
+		mes "เฉพาะ Warlock เท่านั้น";
+		mes "อาวุธเลเวล : 4 / ^ff0000ต้องการเลเวล: 130^000000";
+		mes "INT + 5, MATK + 270.";
+		mes "เพิ่มความแรงของสกิล Earth Spike และ Heaven's Drive ขึ้น 30%.";
+		mes "ถ้าสวมใส่กับ Forest Robe, Shoes, และ Orb จะเพิ่มความแรงเวทธาตุดินขึ้น 60%.";
+		mes "ลดความแรงเวทธาตุไฟลง 60% และลดกันธาตุไฟลง 50%.";
+		break;
+	}
+	next;
+	return;
+}
+
+// Other Enchants :: sangjo
+//============================================================
+function	script	F_Mora_Enchant	{
+	specialeffect2 EF_REPAIRWEAPON;
+	progressbar "ffff00",3;
+	delitem 6380,5; //Mora_Coin
+	if (countitem(getarg(0)) < 1)
+		return 0;
+	delitem getarg(0),1;
+	set .@i, rand(1,4568);
+	if (.@i <= 3168) {
+		// Basic combinations
+		// (raw: .@i increments by 11)
+		setarray .@enchant_slot1[0],4766,4767,4764,4765,4762,4763,4760,4761; //Atk2,Atk3,Critical5,Critical7,Evasion6,Evasion12,Matk1,Matk2
+		setarray .@enchant_slot2[0],4720,4721,4710,4711,4750,4751; //Dexterity1,Dexterity2,Inteligence1,Inteligence2,Luck1,Luck2
+		setarray .@enchant_slot3[0],4700,4701,4730,4731,4740,4741; //Strength1,Strength2,Agility1,Agility2,Vitality1,Vitality2
+		setarray .@enchants[1],
+			.@enchant_slot1[rand(getarraysize(.@enchant_slot1))],
+			.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
+			.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
+	}
+	else if (.@i <= 3179) setarray .@enchants[1],4761,4720,4700; //Matk2 Dexterity1 Strength1
+	else if (.@i <= 3181) setarray .@enchants[1],4761,4712,4712; //Matk2 Inteligence3 Inteligence3
+	else if (.@i <= 3183) setarray .@enchants[1],4765,4732,4732; //Critical7 Agility3 Agility3
+	else if (.@i <= 3185) setarray .@enchants[1],4763,4752,4753; //Evasion12 Luck3 Luck4
+	else if (.@i <= 3187) setarray .@enchants[1],4763,4742,4742; //Evasion12 Vitality3 Vitality3
+	else if (.@i <= 3189) setarray .@enchants[1],4763,4722,4722; //Evasion12 Dexterity3 Dexterity3
+	else if (.@i <= 3191) setarray .@enchants[1],4742,4742,4742; //Vitality3 Vitality3 Vitality3
+	else if (.@i <= 3193) setarray .@enchants[1],4761,4722,4722; //Matk2 Dexterity3 Dexterity3
+	else if (.@i <= 3195) setarray .@enchants[1],4767,4702,4702; //Atk3 Strength3 Strength3
+	else if (.@i <= 3197) setarray .@enchants[1],4763,4732,4732; //Evasion12 Agility3 Agility3
+	else if (.@i <= 4568) return 0;
+
+	getitem2 getarg(0),1,1,0,0,0,.@enchants[1],.@enchants[2],.@enchants[3];
+	return 1;
+}
+mora,105,176,4	script	Master Tailor#pa0829	509,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "เจ้ามีของเยอะเกินไป. ทิ้งบางอย่างแล้วมาลองใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "เจ้าแบกของมาหนักเกิน. ลดน้ำหนักกระเป๋าแล้วมาลองใหม่.";
+		close;
+	}
+	if (countitem(6380) < 5 || countitem(15024) < 1) {
+		mes "[Master Tailor]";
+		mes "ด้วยมือของข้า, ข้าสามารถเปลี่ยน army padding เป็นงานศิลปะได้. ข้าคือ Kay ปรมาจารย์ด้านการตัดเย็บ, สร้างผลงานด้วย army paddings.";
+		next;
+		mes "[Master Tailor]";
+		mes "เยี่ยม, ข้าสามารถเปลี่ยน army padding ของเจ้าเป็นงานศิลปะได้ถ้าเจ้านำ ^ff00005 Mora Coins และ Army Padding^000000 มาให้ข้า.";
+		if (countitem(6380)) {
+			next;
+			mes "[Master Tailor]";
+			mes "ข้าพอมี army paddings เหลืออยู่. เจ้าอยากได้สักตัวไหม ? ราคาแค่ 1 Mora Coin. ถือว่าถูกมาก.";
+			next;
+			switch(select("ไว้โอกาสหน้า.:ข้าจะซื้อสักตัว.")) {
+	 		case 1:
+				mes "[Master Tailor]";
+				mes "Okay, ข้าเข้าใจ.";
+				mes "กลับมาหาข้าเมื่อเจ้าเปลี่ยนใจ.";
+				close;
+			case 2:
+				delitem 6380,1; //Mora_Coin
+				getitem 15024,1; //Army_Padding
+				mes "[Master Tailor]";
+				mes "เอามันไป.";
+				mes "มันนุ่มและใส่สบาย.";
+				close;
+			}
+		}
+		close;
+	}
+	mes "[Master Tailor]";
+	mes "เจ้าอยากเพิ่มงานศิลปะบน army paddings ของเจ้าหรอ ?";
+	next;
+	switch(select("ขอรายละเอียด.:ใช่, ข้าจะทำ.")) {
+	case 1:
+		mes "[Master Tailor]";
+		mes "โดยทั่วไป army padding ให้ความอบอุ่นไม่พอ. ผิวของเจ้าจะรู้สึกหยาบกระด้างและมันยังรู้สึกไม่สบายตัวอีกด้วย.";
+		next;
+		mes "[Master Tailor]";
+		mes "อย่างไรก็ตาม, ข้าจะปักด้วยเส้นด้ายกำมะหยี่, และมันจะเพิ่ม 3 options บนตัวมัน.";
+		next;
+		mes "[Master Tailor]";
+		mes "เพียงนำ ^8888005 Mora Coins^000000 และ Army Padding มา, แล้วพวกเราจะทำงานศิลปะด้วยกัน!";
+		close;
+	case 2:
+		mes "[Master Tailor]";
+		mes "ข้าจะบอกกับเจ้าว่า - ข้าจะทำ army padding ให้เจ้า, ไม่ว่ามันจะเป็นของใหม่หรือเคยซ่อมแซมมาก่อน.";
+		next;
+		mes "[Master Tailor]";
+		mes "ดังนั้นถ้าเจ้ามี army padding ที่เป็นตัวโปรด, เก็บมันไว้ในที่ปลอดภัยแล้วค่อยกลับมาใหม่.";
+		next;
+		mes "[Master Tailor]";
+		mes "และสิ่งอื่นๆ - ถ้าข้าพลาดขึ้นมา, มันจะใช้ไม่ได้อีก... เจ้าต้องซื้อตัวใหม่.";
+		next;
+		switch(select("เข้ามา, รึว่าป๊อด ?:Okay! ทำมันเลย!!")) {
+		case 1:
+			mes "[Master Tailor]";
+			mes "เจ้าเป็นอะไรมากเปล่า ?";
+			mes "ข้ายุ่งพออยู่แล้ว.";
+			close;
+		case 2:
+			if (countitem(6380) < 5 || countitem(15024) == 0) {
+				mes "[Master Tailor]";
+				mes "มันดูเหมือนเจ้าไม่มีสิ่งที่ข้าต้องการน่ะ.";
+				next;
+				mes "[Master Tailor]";
+				mes "เจ้าต้องมี 5 Mora Coins และ Army Padding มาให้ข้า.";
+				close;
+			}
+			if (callfunc("F_Mora_Enchant",15024) == 0) {
+				mes "[Master Tailor]";
+				mes "โอ้......";
+				mes "ข้าไม่อยากจะเชื่อเลย.";
+				next;
+				mes "[Master Tailor]";
+				mes "ข้าอยากอยู่คนเดียว. ไปให้พ้นซะ!";
+				close;
+			}
+			mes "[Master Tailor]";
+			mes "ผลงานข้ายอดเยี่ยมไปเลย.";
+			close;
+		}
+	}
+}
+
+mora,123,177,6	script	Pendant Crafter#pa0829	509,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "เจ้ามีของเยอะเกินไป. ทิ้งบางอย่างแล้วมาลองใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "เจ้าแบกของมาหนักเกิน. ลดน้ำหนักกระเป๋าแล้วมาลองใหม่.";
+		close;
+	}
+	if (countitem(6380) < 5 || countitem(2858) == 0) {
+		mes "[Pendant Crafter]";
+		mes "งานของข้าคือการขัดหินใน Guardian's Pendant, และลงอักขระพิเศษบนตัวมัน.";
+		next;
+		mes "[Pendant Crafter]";
+		mes "มันจะทำให้ Guardian's Pendant มีพลังมากกว่าประดับทั่วไป.";
+		next;
+		mes "[Pendant Crafter]";
+		mes "ถ้าเจ้าสนใจ, ข้าทำให้เจ้าได้แค่มี ^ff00005 Mora Coins^000000. และก็ Guardian's Pendant มาให้ข้า.";
+		close;
+	}
+	mes "[Pendant Crafter]";
+	mes "เจ้ามาเพื่ออัพเกรด Guardian's Pendant ใช่ไหม ?";
+	next;
+	switch(select("ขอรายละเอียด.:ใช่แล้ว.")) {
+	case 1:
+		mes "[Pendant Crafter]";
+		mes "งานของข้าคือการขัดหินใน Guardian's Pendant, และลงอักขระพิเศษบนตัวมัน.";
+		next;
+		mes "[Pendant Crafter]";
+		mes "มันจะทำให้ Guardian's Pendant มีพลังมากกว่าประดับทั่วไป.";
+		next;
+		mes "[Pendant Crafter]";
+		mes "ถ้าเจ้าสนใจ, ข้าทำให้เจ้าได้แค่มี ^ff00005 Mora Coins^000000. และก็ Guardian's Pendant มาให้ข้า.";
+		close;
+	case 2:
+		mes "[Pendant Crafter]";
+		mes "ข้าจะบอกกับเจ้าว่า - ";
+		mes "ถ้าข้าทำการอัพเกรด Guardian's Pendant ให้เจ้า, พลังก่อนหน้านั้นจะหายไป.";
+		next;
+		mes "[Pendant Crafter]";
+		mes "และที่แย่สุด, มันจะสูญเสียพลังและกลับเป็นประดับธรรมดา. แน่นอนว่า, เจ้าจะไม่สูญเสียประดับไป.";
+		next;
+		switch(select("เข้ามา, รึว่าป๊อด ?:Okay! ทำมันเลย!!")) {
+		case 1:
+			mes "[Pendant Crafter]";
+			mes "มาใหม่เมื่อเจ้าหายหัวร้อน. ข้าไม่มีเวลาว่างพอหรอกน่ะ.";
+			close;
+		case 2:
+			if (countitem(6380) < 5 || countitem(2858) == 0) {
+				mes "[Pendant Crafter]";
+				mes "มันดูเหมือนเจ้าไม่มีสิ่งที่ข้าต้องการน่ะ.";
+				next;
+				mes "[Pendant Crafter]";
+				mes "เจ้าต้องมี 5 Mora Coins และ Guardian's Pendant มาให้ข้า.";
+				close;
+			}
+			if (callfunc("F_Mora_Enchant",2858) == 0) {
+				getitem 2858,1; //Pendant_Of_Guardian
+				mes "[Pendant Crafter]";
+				mes "อะไร~!!";
+				mes "มันเกิดขึ้นได้อย่างไร!!";
+				close;
+			}
+			mes "[Pendant Crafter]";
+			mes "ดูเหมือนว่าข้าจะทำได้!";
+			close;
+		}
+	}
+}
+
+mora,134,166,4	script	Bulberry Westhood#pa0829	509,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "เจ้ามีของเยอะเกินไป. ทิ้งบางอย่างแล้วมาลองใหม่.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "เจ้าแบกของมาหนักเกิน. ลดน้ำหนักกระเป๋าแล้วมาลองใหม่.";
+		close;
+	}
+	if (countitem(6380) < 5 || countitem(2568) == 0) {
+		mes "[Bulberry Westhood]";
+		mes "ข้าคือ Bulberry Westhood, การเก็บรักษาผ้าคลุมจะทำให้ใช้ได้นานขึ้น.";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "ข้าทำเป็นแต่ของชั้นเลิศเท่านั้น - ไม่ใช่ของทั่วไปที่หาได้จากตลาด.";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "ถ้าเจ้ามีแต่ไม่รู้ว่าดีแล้วรึยัง, มาหาข้าพร้อมกับ ^ff00005 Mora Coins^000000.";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "ข้าจะทำให้เป็นของชั้นเลิศด้วยมือข้าเอง.";
+		close;
+	}
+	mes "[Bulberry Westhood]";
+	mes "ถ้าเจ้ามี Loki's Scarf 1042 Special Edition มาด้วย. ข้าจะได้เริ่มทำมันทันที ?";
+	next;
+	switch(select("ข้าไม่ได้เอามันมาด้วย.:ได้, เริ่มเลย.")) {
+	case 1:
+		mes "[Bulberry Westhood]";
+		mes "ข้าบอกว่า, ข้าทำเป็นแต่ของชั้นเลิศเท่านั้น - ไม่ใช่ของทั่วไปที่หาได้จากตลาด.";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "Loki's Scarf นั้น. มันเป็นของ limited edition ที่สร้างโดย Loki เท่านั้น!";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "ข้าจะปลุกพลังที่ซ่อนอยู่โดยจ่ายแค่... ";
+		mes "5 Mora Coins.";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "กลับมาหาข้าเมื่อเจ้าเปลี่ยนใจ.";
+		close;
+	case 2:
+		mes "[Bulberry Westhood]";
+		mes "ข้าจะบอกกับเจ้าว่า - ";
+		mes "ถ้าข้าทำการอัพเกรด Loki's Scarf ให้เจ้า, พลังก่อนหน้านั้นจะหายไป.";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "และที่แย่สุด, มันจะสูญเสียพลังและกลับเป็นผ้าคลุมธรรมดา.";
+		next;
+		mes "[Bulberry Westhood]";
+		mes "แน่นอนว่า, Loki's Scarf เป็นของชั้นเลิศ, เจ้าจะไม่สูญเสียมันไป.";
+		next;
+		switch(select("ไว้โอกาสหน้า...:ข้าอยากจะทำ!")) {
+		case 1:
+			mes "[Bulberry Westhood]";
+			mes "ห๊า...!";
+			mes "เจ้าพูดว่า 'โอกาสหน้า' ทั้งๆที่มีของดีอยู่ในมือ ? เยี่ยม, แล้วแต่เจ้า.";
+			close;
+		case 2:
+			if (countitem(6380) < 5 || countitem(2568) == 0) {
+				mes "[Bulberry Westhood]";
+				mes "มันดูเหมือนเจ้าไม่มีสิ่งที่ข้าต้องการน่ะ.";
+				next;
+				mes "[Bulberry Westhood]";
+				mes "เจ้าต้องมี 5 Mora Coins และ Loki's Scarf มาให้ข้า.";
+				close;
+			}
+			if (callfunc("F_Mora_Enchant",2568) == 0) {
+				getitem 2568,1; //Muffler_Of_Roki
+				mes "[Bulberry Westhood]";
+				mes "อ้ากกกกก, เป็นไปไม่ได้!";
+				mes "ของข้า! Loki's Scarf ของข้า!....";
+				next;
+				mes "[Bulberry Westhood]";
+				mes "โอ้, ข้าขอโทษมันติดเป็นนิสัยไปแล้ว. ที่ข้าจะเศร้าไปด้วย.";
+				next;
+				mes "[Bulberry Westhood]";
+				mes "โชคยังดี, มันแค่กลับไปเป็นแบบเดิมก่อนที่ข้าจะทำ. ไม่มีอะไรเสียหาย. สภาพยังดีอยู่. โห โห้ โห้~";
+				close;
+			}
+			mes "[Bulberry Westhood]";
+			mes "ว้าว~ ภารกิจสำเร็จ!";
+			close;
+		}
+	}
+}

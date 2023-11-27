@@ -1,0 +1,190 @@
+//===== rAthena Script =======================================
+//= Penal Servitude 
+//===== By: ==================================================
+//= Lupus
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A simple Penal Servitude Script.
+//= It could cheer up your prisoners a bit.
+//===== Additional Comments: =================================
+// This script uses CHEQUES of the 2nd KAFRA_BANK.TXT
+// var PRISON - it counts number of your imprisonments.
+// 1.1 English translation
+// 1.2 Stricted the conditions a bit
+//============================================================
+
+sec_pri,36,58,1	script	Chief Warder	105,{ 
+	mes "[Saddeus]";
+	emotion ET_QUESTION;
+	mes (Sex==SEX_MALE?"Mr.":"Ms.")+" Prisoner #"+BaseLevel+JobLevel+",";
+	mes "what's the noise over there?";
+	next;
+	menu "Let me free, I'll pay!",-, "Let me to work off my freedom!",M_Q1, "Nothing",M_NO_THANKS;
+
+M_PAY:
+	mes "[Saddeus]";
+	set .@MUSTPAY,(PRISON+1)*1000000;
+	if (.@MUSTPAY<1000000) set .@MUSTPAY,1000000;
+	if (.@MUSTPAY>100000000) set .@MUSTPAY,100000000;
+	if (PRISON==0) mes "I can't remember you. Is it your 1st time?";
+	if (PRISON>0) mes "You again? Somebody hasn't grown wiser from the very first visit...";
+	mes "OK, we could release you for ^FF0000"+.@MUSTPAY+"z^000000.";
+	next;
+	menu "I pay cash!",M_PAYCASH,"Do you accept cheques?",M_PAYBANK,"I've changed my mind.",-;
+
+	mes "[Saddeus]";
+	mes "You've got some time to think about...";
+	close;
+
+M_PAYCASH:
+	if (.@MUSTPAY>Zeny) goto L_NOCASH;
+	set Zeny,Zeny-.@MUSTPAY;
+	mes "[Saddeus]";
+	mes "OK, sing here and there.";
+	goto L_RELEASE;
+
+L_NOCASH:
+	mes "[Saddeus]";
+	mes "What's this? It's not enough!";
+	close;
+
+M_PAYBANK:
+	if (.@MUSTPAY>#kafrabank) goto L_NOBANK;
+	set #kafrabank,#kafrabank-.@MUSTPAY;
+	mes "[Saddeus]";
+	mes "OK, sign your cheque. And put down your name in my book.";
+	goto L_RELEASE;
+
+L_NOBANK:
+	mes "[Saddeus]";
+	if (#kafrabank==0) mes "Your case says nothing about your bank accounts.";
+	if (#kafrabank!=0) mes "Alas, there's your bank account info... ^FF0000"+#kafrabank+"z^000000... in the case. It's not enough.";
+	mes "Stop your silly games now!";
+	close;
+
+L_RELEASE:
+	set PRISON,PRISON+1;
+	next;
+	mes "[Saddeus]";
+	mes "You are free now!";
+	next;
+	savepoint "izlude",105,112;
+	warp "izlude",105,112;
+	close;
+
+M_Q1:
+	mes "[Saddeus]";
+	mes "Our stocks are short of toadstools.  Remember your morning's skilly?  What about some work at our sponsored mushroom farm?";
+	next;
+	menu "OK, I'll work off!",-, "I love this prison!",M_NO_THANKS;
+
+	mes "[Saddeus]";
+	if(checkcart() || checkfalcon() || checkriding()){
+		emotion ET_SCRATCH;
+		mes "I'm sorry, you should release your Cart, PecoPeco or Falcon!";
+		close;
+	}
+	mes "Talk to our overseer, Oliver.";
+	next;
+
+	nude;
+
+	set .@rw,rand(1,4);
+	if (.@rw==2) goto L_W2;
+	if (.@rw==3) goto L_W3;
+	if (.@rw==4) goto L_W4;
+
+L_W1:
+	savepoint "sec_in02",179,76;
+	warp "sec_in02",179,76;
+	close;
+
+L_W2:
+	savepoint "sec_in02",139,32;
+	warp "sec_in02",139,32;
+	close;
+
+L_W3:
+	savepoint "sec_in02",100,28;
+	warp "sec_in02",100,28;
+	close;
+
+L_W4:
+	savepoint "sec_in02",107,75;
+	warp "sec_in02",107,75;
+	close;
+
+M_NO_THANKS:
+	mes "[Saddeus]";  
+	if (rand(2)) mes "Is today X-Mas time, huh?";
+	mes "Now shut up and back off!";
+	if (rand(2)) emotion ET_HUK;
+	close;  
+}
+
+sec_in02,137,57,1	script	Overseer	708,{ 
+	mes "[Oliver]";
+
+	delitem 4002,countitem(4002);//Items: Fabre_Card,
+	delitem 4009,countitem(4009);//Items: Chonchon_Card,
+	delitem 4022,countitem(4022);//Items: Spore_Card,
+	delitem 4048,countitem(4048);//Items: Poison_Spore_Card,
+	
+	if (PRISON_Q <= 0 ) goto L_GET_Q;
+
+	mes "I want you to gather ^FF0000"+PRISON_Q+" Orange Net Mushroom^000000.";
+	if ( countitem(1069)<PRISON_Q ) close;//Items: Orange_Net_Mushroom,
+	mes "OK... hand me all the shrooms...";
+	mes "Let me see... "+countitem(1069)+" of almost edible ones...";//Items: Orange_Net_Mushroom,
+	mes "And "+countitem(1070)+" useless deadly ones.";//Items: Orange_Gooey_Mushroom_,
+	next;
+	mes "[Oliver]";
+	mes "Thank you. You are free!";
+	set PRISON_Q,0;
+	delitem 1069,countitem(1069);//Items: Orange_Net_Mushroom,
+	delitem 1070,countitem(1070);//Items: Orange_Gooey_Mushroom_,
+	next;
+	savepoint "izlude",105,112;
+	warp "izlude",105,112;
+	close;
+
+L_GET_Q:
+	set PRISON,PRISON+1;
+	if (PRISON > 1) mes "Hmm... You've been here already... Well-well...";
+
+	if ( countitem(1069) || countitem(1070) ) mes "Drop these mushrooms!! They are poisonous!";//Items: Orange_Net_Mushroom, Orange_Gooey_Mushroom_,
+	delitem 1069,countitem(1069);//Items: Orange_Net_Mushroom,
+	delitem 1070,countitem(1070);//Items: Orange_Gooey_Mushroom_,
+
+	set PRISON_Q, PRISON*3 + BaseLevel/3;
+	set PRISON_Q, PRISON_Q * (readparam(bAspd)/55 + 1);
+	set PRISON_Q, PRISON_Q+rand(50,60);
+	mes "OK, you must bring me ^FF0000"+PRISON_Q+"^000000 edible ^FF0000Orange Net Mushroom^000000 toadstoo.. shrooms.";
+	if(readparam(bAspd)>=100) mes "You're a fast fella! You'll have to get more shrooms, then.";
+	if (rand(10)<4) mes "And you may eat the deadly ones for breakfast.";
+	close;
+}
+
+
+sec_in02	mapflag	nomemo
+sec_in02	mapflag	nosave	SavePoint
+sec_in02	mapflag	noteleport
+sec_in02	mapflag	nobranch
+sec_in02	mapflag	nowarp
+sec_in02	mapflag	nowarpto
+sec_in02	mapflag	noexp
+sec_in02	mapflag	noskill
+//sec_in02	mapflag	pvp
+//sec_in02	mapflag	pvp_noparty
+//sec_in02	mapflag	gvg
+sec_in02	mapflag	pvp_nightmaredrop	random,all,300
+sec_in02	mapflag	hidemobhpbar
+
+sec_in02,138,55,100,100	monster	Toadstool	1182,30,10000,10000
+sec_in02,138,55,100,100	monster	Fabre	1184,10,20000,20000
+sec_in02,138,55,100,100	monster	Chonchon	1183,11,20000,20000
+sec_in02,138,55,100,100	monster	Spore	1014,12,20000,20000
+sec_in02,138,55,100,100	monster	Poison Spore	1077,3,20000,20000

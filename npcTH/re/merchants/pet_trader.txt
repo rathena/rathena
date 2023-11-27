@@ -1,0 +1,169 @@
+//===== rAthena Script =======================================
+//= Pet Trader NPC
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Exchanges Cute Pet Tickets for Pet Eggs.
+//===== Additional Comments: =================================
+//= 1.0 First version [Latiosu]
+//============================================================
+
+prontera,210,209,5	script	Pet Trader#1	4_M_JPNOJI,{
+	disable_items;
+	mes "[Pet Trader]";
+	mes "การเลี้ยงชีพด้วยธุรกิจไม่ใช่เรื่องง่าย.";
+	mes "ข้ารู้สึกแย่อารมณ์เหมือนคนป่วย, วันนี้ข้าถูกขังอยู่ในพายุระหว่างการเดินทาง.";
+	next;
+	mes "[Pet Trader]";
+	mes "มันช่างเป็นประสบการณ์ที่น่ากลัว. ขอบคุณที่, ข้ารู้สึกไม่ดีเลย. อุ๊บบบ...";
+	next;
+	mes "[Pet Trader]";
+	mes "อย่างไรก็ตาม, เจ้ามาที่นี่เพื่อมองหาสัตว์เลี้ยงแสนน่ารักใช่หรือเปล่า ?";
+	mes "เจ้าได้นำตั๋วมาด้วยไหม ?";
+	next;
+	switch (select("ตรวจสอบตั๋ว:ยกเลิก")) {
+	case 1:
+		setarray .@tickets,
+			6116, //Succu_Pet_Coupon
+			6117, //Imp_Pet_Coupon
+			6118, //Chung_E_Pet_Coupon
+			6129, //Ticket_Nightmare
+			6130, //Ticket_Loli_Ruri
+			6131, //Ticket_Goblin_Leader
+			6132, //Ticket_Incubus
+			6133, //Ticket_Miyabi_Ningyo
+			6134, //Ticket_Whisper
+			6135, //Ticket_Wicked_Nymph
+			6136, //Ticket_Medusa
+			6137, //Ticket_Stoneshooter
+			6138, //Ticket_Marionette
+			6139, //Ticket_Leafcat
+			6140, //Ticket_Dullahan
+			6141, //Ticket_Shinobi
+			6142, //Ticket_Golem
+			6143, //Ticket_Civil_Servant
+			6157, //Poring_Ticket
+			6158, //Drops_Ticket
+			6159, //Poporing_Ticket
+			6160, //Lunatic_Ticket
+			6161, //Picky_Ticket
+			6162, //Pecopeco_Ticket
+			6163, //Savage_Baby_Ticket
+			6164, //Spore_Ticket
+			6165, //Poison_Spore_Ticket
+			6166, //Chonchon_Ticket
+			6167, //Steel_Chonchon_Ticket
+			6168, //Petit_Ticket
+			6169, //Deviruchi_Ticket
+			6170, //Isis_Ticket
+			6171, //Smokie_Ticket
+			6172, //Dokebi_Ticket
+			6173, //Desert_Wolf_B_Ticket
+			6174, //Yoyo_Ticket
+			6175, //Sohee_Ticket
+			6176, //Rocker_Ticket
+			6177, //Hunter_Fly_Ticket
+			6178, //Orc_Warrior_Ticket
+			6179, //Bapho_Jr_Ticket
+			6180, //Munak_Ticket
+			6181, //Bongun_Ticket
+			6182, //Goblin_Ticket
+			6183, //Hardtack_Ticket
+			6184, //Zherlthsh_Ticket
+			6185, //Alice_Ticket
+			6883, //Pet_Snow_Bunny_Ticket
+			6884; //Pet_Tikbalang_Ticket
+		setarray .@eggs,
+			9055, //Succubus_Egg
+			9056, //Imp_Egg
+			9030, //Chung_E_Egg
+			9054, //Nightmare_Terror_Egg
+			9042, //Loli_Ruri_Egg
+			9046, //Goblin_Leader_Egg
+			9052, //Incubus_Egg
+			9048, //Miyabi_Ningyo_Egg
+			9045, //Whisper_Egg
+			9047, //Wicked_Nymph_Egg
+			9050, //Medusa_Egg
+			9051, //Stone_Shooter_Egg
+			9043, //Marionette_Egg
+			9041, //Leaf_Cat_Egg
+			9049, //Dullahan_Egg
+			9044, //Shinobi_Egg
+			9053, //Golem_Egg
+			9040, //Civil_Servant_Egg
+			9001, //Poring_Egg
+			9002, //Drops_Egg
+			9003, //Poporing_Egg
+			9004, //Lunatic_Egg
+			9005, //Picky_Egg
+			9014, //PecoPeco_Egg
+			9009, //Savage_Bebe_Egg
+			9012, //Spore_Egg
+			9013, //Poison_Spore_Egg
+			9006, //Chonchon_Egg
+			9007, //Steel_Chonchon_Egg
+			9022, //Green_Petite_Egg
+			9023, //Deviruchi_Egg
+			9021, //Isis_Egg
+			9015, //Smokie_Egg
+			9019, //Dokkaebi_Egg
+			9010, //Baby_Desert_Wolf_Egg
+			9016, //Yoyo_Egg
+			9020, //Sohee_Egg
+			9011, //Rocker_Egg
+			9008, //Hunter_Fly_Egg
+			9017, //Orc_Warrior_Egg
+			9024, //Bapho_Jr
+			9018, //Munak_Egg
+			9025, //Bongun_Egg
+			9029, //Santa_Goblin_Egg
+			9028, //Rice_Cake_Egg
+			9026, //Zherlthsh_Egg
+			9027, //Alice_Egg
+			9058, //Snow_Rabbit_Egg
+			9059; //Tikbalang_Pet
+		for (.@i = 0; .@i < getarraysize(.@tickets); .@i++) {
+			if (countitem(.@tickets[.@i]) > 0) {
+				.@menu$ += getitemname(.@tickets[.@i]) + ":";
+				.@ticketIndices[.@count++] = .@i;
+			}
+		}
+
+		if (.@count == 0) {
+			mes "[Pet Trader]";
+			mes "ข้าคิดว่าเจ้าไม่มีสิ่งที่ข้าต้องการมาด้วย.";
+			close;
+		}
+
+		mes "[Pet Trader]";
+		mes "ตั๋วอันไหนที่เจ้าต้องการแลกเปลี่ยน ?";
+		next;
+		.@index = .@ticketIndices[select(.@menu$) - 1];
+
+		mes "[Pet Trader]";
+		mes "เยี่ยม!";
+		mes "^0000FF"+ getitemname(.@eggs[.@index]) +"^000000";
+		mes "เจ้าแน่ใจนะว่าต้องการสัตว์เลี้ยงตัวนี้ ?";
+		next;
+		if (select("ใช่:ไม่") == 2) close;
+		if (!checkweight(.@eggs[.@index], 1)) {
+			mes "เจ้าแบกของมามากเกินไป!";
+			mes "กลับมาใหม่เมื่อมีช่องว่างในกระเป๋า.";
+			close;
+		}
+
+		mes "[Pet Trader]";
+		mes "นี่คือสัตว์เลี้ยงของเจ้า~";
+		delitem .@tickets[.@index], 1;
+		getitem .@eggs[.@index], 1;
+		close;
+	case 2:
+		mes "[Pet Trader]";
+		mes "งั้นเจ้าต้องการได้ยินเกี่ยวกับดินแดนทางฝั่งทะเล, แต่วันนี้ข้ารู้สึกไม่ค่อยดี.";
+		close;
+	}
+	end;
+}
+
+// Duplicate NPCs
+alberta,179,141,5	duplicate(Pet Trader#1)	Pet Trader#2	4_M_JPNOJI

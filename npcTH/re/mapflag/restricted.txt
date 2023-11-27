@@ -1,0 +1,268 @@
+//===== rAthena Script =======================================
+//= Mapflag: Restricted.
+//===== Description: =========================================
+//= Disables items configured in item_noequip.txt
+//= and skills configured in skill_nocast_db.txt.
+//===== Changelogs: ==========================================
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Copied towns into this file. [Euphy]
+//= 1.2 Added WOE:TE maps [Cydh]
+//============================================================
+
+//============================================================
+// Instances
+//============================================================
+1@mist	mapflag	restricted	6
+1@cash	mapflag	restricted	6
+1@pump	mapflag	restricted	6
+2@pump	mapflag	restricted	6
+1@lhz	mapflag	restricted	6
+1@ma_h	mapflag	restricted	6
+1@ma_c	mapflag	restricted	6
+1@ma_b	mapflag	restricted	6
+1@ecl	mapflag	restricted	6
+
+//============================================================
+// Glastheim Memorial Dungeon
+//============================================================
+1@gl_k	mapflag	restricted	6
+2@gl_k	mapflag	restricted	6
+
+//============================================================
+// Wave Mode Memorial Dungeon
+//============================================================
+1@def01	mapflag	restricted	9
+1@def02	mapflag	restricted	9
+1@def03	mapflag	restricted	9
+
+//============================================================
+// Heroes' Trail - Part 1
+//============================================================
+1@face	mapflag	restricted	6
+1@sara	mapflag	restricted	6
+
+//============================================================
+// Heroes' Trail - Part 2
+//============================================================
+1@ge_st	mapflag	restricted	6
+1@gef	mapflag	restricted	6
+1@gef_in	mapflag	restricted	6
+1@spa	mapflag	restricted	6
+1@tnm1	mapflag	restricted	6
+1@tnm2	mapflag	restricted	6
+1@tnm3	mapflag	restricted	6
+
+//============================================================
+// Horror Toy Factory Memorial Dungeon
+//============================================================
+1@xm_d	mapflag	restricted	6
+
+//============================================================
+// Heroes' Trail - Part 3
+//============================================================
+1@glast	mapflag	restricted	6
+1@air1	mapflag	restricted	6
+1@air2	mapflag	restricted	6
+
+//============================================================
+// Decisive Battle - Part 1
+//============================================================
+1@dth1	mapflag	restricted	6
+1@dth2	mapflag	restricted	6
+1@dth3	mapflag	restricted	6
+1@rev	mapflag	restricted	6
+
+//============================================================
+// Decisive Battle - Part 2
+//============================================================
+1@eom	mapflag	restricted	6
+1@jtb	mapflag	restricted	6
+
+//============================================================
+// Episode 15 - Phantasmagorica
+//============================================================
+1@lab	mapflag	restricted	6
+1@uns	mapflag	restricted	6
+1@mcd	mapflag	restricted	6
+
+//============================================================
+// Nightmare Biolab
+//============================================================
+lhz_dun_n	mapflag	restricted	6
+lhz_d_n2	mapflag	restricted	6
+
+//============================================================
+// Infinite Space
+//============================================================
+1@infi	mapflag	restricted	6
+
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
+1@mir	mapflag	restricted	6
+2@mir	mapflag	restricted	6
+1@sthb	mapflag	restricted	6
+1@sthc	mapflag	restricted	6
+1@sthd	mapflag	restricted	6
+1@slw	mapflag	restricted	6
+1@swat	mapflag	restricted	6
+
+//============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	restricted	6
+1@md_pay	mapflag	restricted	6
+
+//============================================================
+// Chicken Mode Nightmare Glastheim
+//============================================================
+1@gl_k2	mapflag	restricted	6
+2@gl_k2	mapflag	restricted	6
+
+//============================================================
+// Chicken Mode Horror Toy Factory
+//============================================================
+1@xm_d2	mapflag	restricted	6
+
+//============================================================
+// Suspicious Shipwreck
+//============================================================
+1@tre	mapflag	restricted	6
+
+//============================================================
+// Poring Village
+//============================================================
+1@begi	mapflag	restricted	6
+
+//============================================================
+// Volcanic Island Korodo
+//============================================================
+1@crd	mapflag	restricted	6
+
+//============================================================
+// Noodles Festival July
+//============================================================
+1@drdo	mapflag	restricted	6
+
+//============================================================
+// Soul Reaper Job Change
+//============================================================
+1@soul	mapflag	restricted	6
+
+//============================================================
+// Episode 17.1
+//============================================================
+1@cor	mapflag	restricted	6
+1@os_a	mapflag	restricted	6
+1@os_b	mapflag	restricted	6
+1@rgsr	mapflag	restricted	6
+
+//============================================================
+// Episode 17.2
+//============================================================
+1@bamn	mapflag	restricted	6
+1@bamq	mapflag	restricted	6
+1@ghg	mapflag	restricted	6
+1@herbs	mapflag	restricted	6
+1@lost	mapflag	restricted	6
+1@odin	mapflag	restricted	6
+
+//============================================================
+// 4th Jobs Change
+//============================================================
+1@4win	mapflag	restricted	6
+1@4mag	mapflag	restricted	6
+1@4mst	mapflag	restricted	6
+1@4sac	mapflag	restricted	6
+1@4tro	mapflag	restricted	6
+1@4inq	mapflag	restricted	6
+1@4cdn	mapflag	restricted	6
+1@4igd	mapflag	restricted	6
+1@4drk	mapflag	restricted	6
+
+//============================================================
+// Geffen Night Arena
+//============================================================
+1@ge_sn	mapflag	restricted	6
+
+//============================================================
+// Traces of Heroes
+//============================================================
+1@mjo1	mapflag	restricted	6
+1@mjo2	mapflag	restricted	6
+1@spa2	mapflag	restricted	6
+
+//============================================================
+// Thanatos Tower Memorial Dungeon
+//============================================================
+1@thts	mapflag	restricted	6
+2@thts	mapflag	restricted	6
+3@thts	mapflag	restricted	6
+4@thts	mapflag	restricted	6
+5@thts	mapflag	restricted	6
+6@thts	mapflag	restricted	6
+7@thts	mapflag	restricted	6
+8@thts	mapflag	restricted	6
+
+//============================================================
+// Glastheim Challenge Mode
+//============================================================
+1@gl_he	mapflag	restricted	6
+1@gl_he2	mapflag	restricted	6
+
+//============================================================
+// EDDA
+//============================================================
+1@gl_prq	mapflag	restricted	6
+1@gol1	mapflag	restricted	6
+1@gol2	mapflag	restricted	6
+
+//============================================================
+// 2018 Halloween
+//============================================================
+1@halo	mapflag	restricted	6
+
+//============================================================
+// Constellation Tower
+//============================================================
+1@ch_t	mapflag	restricted	6
+2@ch_t	mapflag	restricted	6
+3@ch_t	mapflag	restricted	6
+
+//============================================================
+// Episode 18 - Direction of Prayer
+//============================================================
+1@adv	mapflag	restricted	6
+1@advs	mapflag	restricted	6
+1@nyr	mapflag	restricted	6
+1@oz	mapflag	restricted	6
+1@tcamp	mapflag	restricted	6
+2@nyr	mapflag	restricted	6
+
+//============================================================
+// Sunken Tower
+//============================================================
+1@ch_u	mapflag	restricted	6
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
+brasilis	mapflag	restricted	7
+dewata	mapflag	restricted	7
+dicastes01	mapflag	restricted	7
+eclage	mapflag	restricted	7
+izlude_a	mapflag	restricted	7
+izlude_b	mapflag	restricted	7
+izlude_c	mapflag	restricted	7
+izlude_d	mapflag	restricted	7
+malangdo	mapflag	restricted	7
+malaya	mapflag	restricted	7
+mora	mapflag	restricted	7
+lasagna	mapflag	restricted	7
+wolfvill	mapflag	restricted	7
+
+//============================================================
+// WoE:TE Item Restrictions
+//============================================================
+teg_dun01	mapflag	restricted	8
+teg_dun02	mapflag	restricted	8

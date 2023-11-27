@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Manuk Field Warp Script
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Warp Points for Manuk Field
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Updated warps positions. [L0ne_W0lf]
+//============================================================
+
+man_fild01,35,232,0	warp	man_fild01-2	1,1,mid_camp,341,176
+man_fild01,103,55,0	warp	man_fild01-3	1,1,man_fild03,84,366
+man_fild03,84,369,0	warp	man_fild03-1	1,1,man_fild01,103,58
+
+man_fild01,372,230,0	warp	man_fild01-4	1,1,man_fild02,34,261
+man_fild02,32,261,0	warp	man_fild02-1	1,1,man_fild01,369,230
+man_fild02,139,41,0	warp	man_fild02-2	1,1,manuk,112,356
+manuk,114,357,0	warp	man_fild02-3	1,1,man_fild02,138,43

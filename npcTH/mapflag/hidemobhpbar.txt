@@ -1,0 +1,193 @@
+//===== rAthena Script =======================================
+//= Mapflag: hidemobhpbar.
+//===== Description: =========================================
+//= Hide monster's HP bar (added in episode 14.2).
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Lemongrass]
+//============================================================
+
+//============================================================
+// PvP Arenas
+//============================================================
+pvp_y_1-1	mapflag	hidemobhpbar
+pvp_y_1-2	mapflag	hidemobhpbar
+pvp_y_1-3	mapflag	hidemobhpbar
+pvp_y_1-4	mapflag	hidemobhpbar
+pvp_y_1-5	mapflag	hidemobhpbar
+pvp_y_2-1	mapflag	hidemobhpbar
+pvp_y_2-2	mapflag	hidemobhpbar
+pvp_y_2-3	mapflag	hidemobhpbar
+pvp_y_2-4	mapflag	hidemobhpbar
+pvp_y_2-5	mapflag	hidemobhpbar
+pvp_y_3-1	mapflag	hidemobhpbar
+pvp_y_3-2	mapflag	hidemobhpbar
+pvp_y_3-3	mapflag	hidemobhpbar
+pvp_y_3-4	mapflag	hidemobhpbar
+pvp_y_3-5	mapflag	hidemobhpbar
+pvp_y_4-1	mapflag	hidemobhpbar
+pvp_y_4-2	mapflag	hidemobhpbar
+pvp_y_4-3	mapflag	hidemobhpbar
+pvp_y_4-4	mapflag	hidemobhpbar
+pvp_y_4-5	mapflag	hidemobhpbar
+pvp_y_5-1	mapflag	hidemobhpbar
+pvp_y_5-2	mapflag	hidemobhpbar
+pvp_y_5-3	mapflag	hidemobhpbar
+pvp_y_5-4	mapflag	hidemobhpbar
+pvp_y_5-5	mapflag	hidemobhpbar
+pvp_y_6-1	mapflag	hidemobhpbar
+pvp_y_6-2	mapflag	hidemobhpbar
+pvp_y_6-3	mapflag	hidemobhpbar
+pvp_y_6-4	mapflag	hidemobhpbar
+pvp_y_6-5	mapflag	hidemobhpbar
+pvp_y_7-1	mapflag	hidemobhpbar
+pvp_y_7-2	mapflag	hidemobhpbar
+pvp_y_7-3	mapflag	hidemobhpbar
+pvp_y_7-4	mapflag	hidemobhpbar
+pvp_y_7-5	mapflag	hidemobhpbar
+pvp_y_8-1	mapflag	hidemobhpbar
+pvp_y_8-2	mapflag	hidemobhpbar
+pvp_y_8-3	mapflag	hidemobhpbar
+pvp_y_8-4	mapflag	hidemobhpbar
+pvp_y_8-5	mapflag	hidemobhpbar
+pvp_n_1-1	mapflag	hidemobhpbar
+pvp_n_1-2	mapflag	hidemobhpbar
+pvp_n_1-3	mapflag	hidemobhpbar
+pvp_n_1-4	mapflag	hidemobhpbar
+pvp_n_1-5	mapflag	hidemobhpbar
+pvp_n_2-1	mapflag	hidemobhpbar
+pvp_n_2-2	mapflag	hidemobhpbar
+pvp_n_2-3	mapflag	hidemobhpbar
+pvp_n_2-4	mapflag	hidemobhpbar
+pvp_n_2-5	mapflag	hidemobhpbar
+pvp_n_3-1	mapflag	hidemobhpbar
+pvp_n_3-2	mapflag	hidemobhpbar
+pvp_n_3-3	mapflag	hidemobhpbar
+pvp_n_3-4	mapflag	hidemobhpbar
+pvp_n_3-5	mapflag	hidemobhpbar
+pvp_n_4-1	mapflag	hidemobhpbar
+pvp_n_4-2	mapflag	hidemobhpbar
+pvp_n_4-3	mapflag	hidemobhpbar
+pvp_n_4-4	mapflag	hidemobhpbar
+pvp_n_4-5	mapflag	hidemobhpbar
+pvp_n_5-1	mapflag	hidemobhpbar
+pvp_n_5-2	mapflag	hidemobhpbar
+pvp_n_5-3	mapflag	hidemobhpbar
+pvp_n_5-4	mapflag	hidemobhpbar
+pvp_n_5-5	mapflag	hidemobhpbar
+pvp_n_6-1	mapflag	hidemobhpbar
+pvp_n_6-2	mapflag	hidemobhpbar
+pvp_n_6-3	mapflag	hidemobhpbar
+pvp_n_6-4	mapflag	hidemobhpbar
+pvp_n_6-5	mapflag	hidemobhpbar
+pvp_n_7-1	mapflag	hidemobhpbar
+pvp_n_7-2	mapflag	hidemobhpbar
+pvp_n_7-3	mapflag	hidemobhpbar
+pvp_n_7-4	mapflag	hidemobhpbar
+pvp_n_7-5	mapflag	hidemobhpbar
+pvp_n_8-1	mapflag	hidemobhpbar
+pvp_n_8-2	mapflag	hidemobhpbar
+pvp_n_8-3	mapflag	hidemobhpbar
+pvp_n_8-4	mapflag	hidemobhpbar
+pvp_n_8-5	mapflag	hidemobhpbar
+pvp_2vs2	mapflag	hidemobhpbar
+
+//============================================================
+// Aldebaran Turbo Track
+//============================================================
+turbo_e_4	mapflag	hidemobhpbar
+turbo_e_8	mapflag	hidemobhpbar
+turbo_e_16	mapflag	hidemobhpbar
+
+//============================================================
+// GvG Arenas
+//============================================================
+guild_vs1	mapflag	hidemobhpbar
+guild_vs2	mapflag	hidemobhpbar
+guild_vs3	mapflag	hidemobhpbar
+guild_vs4	mapflag	hidemobhpbar
+guild_vs5	mapflag	hidemobhpbar
+
+//============================================================
+// WoE:FE Castles
+//============================================================
+aldeg_cas01	mapflag	hidemobhpbar
+aldeg_cas02	mapflag	hidemobhpbar
+aldeg_cas03	mapflag	hidemobhpbar
+aldeg_cas04	mapflag	hidemobhpbar
+aldeg_cas05	mapflag	hidemobhpbar
+gefg_cas01	mapflag	hidemobhpbar
+gefg_cas02	mapflag	hidemobhpbar
+gefg_cas03	mapflag	hidemobhpbar
+gefg_cas04	mapflag	hidemobhpbar
+gefg_cas05	mapflag	hidemobhpbar
+payg_cas01	mapflag	hidemobhpbar
+payg_cas02	mapflag	hidemobhpbar
+payg_cas03	mapflag	hidemobhpbar
+payg_cas04	mapflag	hidemobhpbar
+payg_cas05	mapflag	hidemobhpbar
+prtg_cas01	mapflag	hidemobhpbar
+prtg_cas02	mapflag	hidemobhpbar
+prtg_cas03	mapflag	hidemobhpbar
+prtg_cas04	mapflag	hidemobhpbar
+prtg_cas05	mapflag	hidemobhpbar
+
+//============================================================
+// WoE:SE Castles
+//============================================================
+schg_cas01	mapflag	hidemobhpbar
+schg_cas02	mapflag	hidemobhpbar
+schg_cas03	mapflag	hidemobhpbar
+schg_cas04	mapflag	hidemobhpbar
+schg_cas05	mapflag	hidemobhpbar
+arug_cas01	mapflag	hidemobhpbar
+arug_cas02	mapflag	hidemobhpbar
+arug_cas03	mapflag	hidemobhpbar
+arug_cas04	mapflag	hidemobhpbar
+arug_cas05	mapflag	hidemobhpbar
+
+//============================================================
+// WoE:Novice Castles
+//============================================================
+//n_castle	mapflag	hidemobhpbar
+nguild_alde	mapflag	hidemobhpbar
+nguild_gef	mapflag	hidemobhpbar
+nguild_pay	mapflag	hidemobhpbar
+nguild_prt	mapflag	hidemobhpbar
+
+//============================================================
+// Guild Dungeons
+//============================================================
+arug_dun01	mapflag	hidemobhpbar
+schg_dun01	mapflag	hidemobhpbar
+
+//============================================================
+// Battlegrounds
+//============================================================
+bat_c01	mapflag	hidemobhpbar
+bat_c02	mapflag	hidemobhpbar
+bat_c03	mapflag	hidemobhpbar
+bat_b01	mapflag	hidemobhpbar
+bat_b02	mapflag	hidemobhpbar
+bat_a01	mapflag	hidemobhpbar
+bat_a02	mapflag	hidemobhpbar
+
+//============================================================
+// RWC
+//============================================================
+2009rwc_01	mapflag	hidemobhpbar
+2009rwc_02	mapflag	hidemobhpbar
+2009rwc_03	mapflag	hidemobhpbar
+2009rwc_04	mapflag	hidemobhpbar
+2009rwc_05	mapflag	hidemobhpbar
+2009rwc_06	mapflag	hidemobhpbar
+2009rwc_07	mapflag	hidemobhpbar
+2009rwc_08	mapflag	hidemobhpbar
+2009rwc_f01	mapflag	hidemobhpbar
+2012rwc_01	mapflag	hidemobhpbar
+2012rwc_02	mapflag	hidemobhpbar
+2012rwc_03	mapflag	hidemobhpbar
+2012rwc_04	mapflag	hidemobhpbar
+2012rwc_05	mapflag	hidemobhpbar
+2012rwc_06	mapflag	hidemobhpbar
+2012rwc_07	mapflag	hidemobhpbar
+2012rwc_08	mapflag	hidemobhpbar

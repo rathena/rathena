@@ -1,0 +1,430 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Geffen
+//===== By: ================================================== 
+//= kobra_k88 & Samuray22
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project; 7.15 +
+//===== Description: ========================================= 
+//= Welding Mask and Headset Quests.
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed exploits [Lupus]
+//= 1.2 Removed Duplicates [Silent]
+//= 1.3 Updated "Welding Mask" Quest to the Official one. [Samuray22]
+//= 1.3a replaced item "names" with item id. Added missing [Lupus]
+//= 1.4 Updated welding mask and headset quests. [L0ne_W0lf]
+//= 1.5 Added Number Match Game. [Euphy]
+//============================================================ 
+
+// Blacksmith: 'Welding Mask' Quest
+//============================================================
+geffen_in,144,166,4	script	Blacksmith	63,{
+	mes "[Blacksmith]";
+	mes "You've never heard of me? Why, I'm the Veteran Blacksmith of this land. I've spent 30 years in this hot and bloody hellfire, bending steel to my iron will!";
+	next;
+	mes "[Blacksmith]";
+	mes "But...";
+	mes "I am growing older and my prowess begins to fade with age. So I've invented something for young, hot, upcoming Blacksmiths, in hopes that they too will master my craft...";
+	next;
+	switch(select("What is it?:...")) {
+	case 1:
+		mes "[Blacksmith]";
+		mes "We Blacksmiths must always manipulate steel under extreme heat, and the hot air and melted metals are more than most people can stand.";
+		next;
+		mes "[Blacksmith]";
+		mes "For the sake of our craft, our beautiful, yet masculine faces are put at risk...";
+		next;
+		mes "[Blacksmith]";
+		mes "But with this wonder of technology, there's no need to worry! Behold, the ^3355FFWelding Mask^000000 !!";
+		next;
+		mes "[Blacksmith]";
+		mes "It works by covering your face with a fat metal plate. Truly, it's an item that everyone should want! If not yourself, it'd be a good idea to give this to a friend who is studying smithing.";
+		next;
+		mes "[Blacksmith]";
+		mes "So how about it ? If you give me ^2244FF50 Steel^000000 and ^4422FFonly 2000 Zeny^000000, I will make it for you right away~!!";
+		next;
+		switch(select("Hm... Not bad. Alright.:How does it work again?")) {
+		case 1:
+			if ((countitem(999) > 49) && (Zeny > 1999)){
+				mes "[Blacksmith]";
+				mes "Ah, I see that you appreciate a Blacksmith's work! Alright, I'll do it right away !!";
+				next;
+				delitem 999,50;  //Steel
+				set Zeny,Zeny-2000;
+				getitem 2292,1; // Welding_Mask
+				mes "[Blacksmith]";
+				mes "Hahaha~! Make good use of that!";
+				close;
+			}
+			else {
+				mes "[Blacksmith]";
+				mes "Hmmm...";
+				mes "You do not have the items I require.";
+				next;
+				mes "[Blacksmith]";
+				mes "A common Blacksmith would interpret this as a sign of disrepect, but I will forgive you. Just don't forget what I need if you want me to make you this mask.";
+				close;
+			}
+		case 2:
+			mes "[Blacksmith]";
+			mes "The ^3355FFWelding Mask^000000 protects your face by covering it with a fat metal plate. This invention is the result of 30 years of endless toil at the hammer and anvil.";
+			close;
+		}
+	case 2:
+		mes "[Blacksmith]";
+		mes "Ah...!";
+		mes "I guess this is the first time you've met a Blacksmith as great as me, and you're just speechless with awe. Please, take your time and speak up when you are ready.";
+		next;
+		mes "^3355FFThis guy seems";
+		mes "a little full";
+		mes "of himself.^000000";
+		close;
+	}
+}
+
+// Eric: 'Headset' Quest
+//============================================================
+geffen_in,30,71,4	script	Eric	83,{
+	mes "[Eric]";
+	mes "Please listen";
+	mes "to my story";
+	mes "of my blessed";
+	mes "grandfather.";
+	next;
+	switch(select("Talk:Ask about Items needed:Manufacture:Quit")) {
+	case 1:
+		mes "[Eric]";
+		mes "My Grandfather, who passed away a few years ago, was special to me. He always stayed with me, and took care of me. He was much better than my old man, who was always busy working.";
+		next;
+		mes "[Eric]";
+		mes "To me, Grandfather's library was always like a fantasy land where I could escape. I spent most of my time there.";
+		next;
+		mes "[Eric]";
+		mes "I learned a lot of things from his books in the Library. Grandfather was interested in Alchemy and Music, and his Library was filled with many mysterious old books.";
+		next;
+		mes "[Eric]";
+		mes "One day...";
+		mes "As usual, I went to the Library and discovered an interesting schematic.";
+		next;
+		mes "[Eric]";
+		mes "It showed some instrument which looked like Ear Muffs that, when worn on the head, could transmit music or whispers to the ears through a thin wire.";
+		next;
+		mes "[Eric]";
+		mes "I guess...";
+		mes "It is my grand father's unfinished work. I met a few Alchemists and asked them to produce it, but they rejected my offer...";
+		next;
+		mes "[Eric]";
+		mes "In the end, I thought 'I've gotta make it myself.' So I researched for a few years, and now I fully understand how to make that thing. But, I could never gather the materials to make it!";
+		next;
+		mes "[Eric]";
+		mes "If I can get those articles, I would build it right away. If you are interested in my idea, would you bring them for me?";
+		next;
+		mes "[Eric]";
+		mes "All I wanna do is build this thing in honor of my grandfather and finish the work he started. If you ask me to keep it, I wouldn't mind.";
+		close;
+	case 2:
+		mes "[Eric]";
+		mes "40 ^3355FFSteel^000000";
+		mes "1 ^3355FFOridecon^000000";
+		mes "1 ^3355FFAlcohol^000000";
+		mes "1 ^3355FFCoal^000000";
+		mes "These are the things I need for Grandfather's masterpiece.";
+		close;
+	case 3:
+		if ((countitem(999) > 39) && (countitem(984) > 0) && (countitem(970) > 0) && (countitem(1003) > 0)) {
+			delitem 999,40; //Steel
+			delitem 984,1; //Oridecon
+			delitem 970,1; //Alchol
+			delitem 1003,1; //Coal
+			getitem 5001,1; //Headset
+			mes "*Tap! Tap! Tap!*";
+			next;
+			mes "[Eric]";
+			mes "Thank you.";
+			mes "Because of you, I could accomplish my grandfather's wish. He would be happy if he looked down on me from Heaven.";
+			next;
+			mes "[Eric]";
+			mes "As I said, please take this. I am just proud that I can make this by myself.";
+			close;
+		}
+		else {
+			mes "[Eric]";
+			mes "Thank you for trying to help me, but you didn't bring all the items I need. I think you will find them all soon though.";
+			close;
+		}
+	case 4:
+		mes "[Eric]";
+		mes "N-no?";
+		mes "Well...";
+		mes "You have your own";
+		mes "worries, I suppose.";
+		mes "Farewell.";
+		close;
+	}
+}
+
+// Number Match Game :: gef_yagu
+//============================================================
+geffen,122,77,4	script	Nia#yagu	700,{
+	mes "[Nia]";
+	mes "Hello, I'm Nia, the fifth";
+	mes "disciple of Mawong, the";
+	mes "gaming mastermind. Now,";
+	mes "how would you like to play a";
+	mes "Number Match game with me?";
+	next;
+	switch(select("Number Match Game?:Practice Number Match:Play Number Match:Record Holder:Cancel")) {
+	case 1:
+		mes "[Nia]";
+		mes "Ah, well, the objective of";
+		mes "the Number Match game is to";
+		mes "guess the number I'm thinking";
+		mes "of. Of course, there are a few";
+		mes "rules that limit the numbers";
+		mes "that I can choose from.";
+		next;
+		mes "[Nia]";
+		mes "All the numbers that I make";
+		mes "up must be 3 digits, I can't";
+		mes "use 0 for any of the digits,";
+		mes "and I can't use the same";
+		mes "number for any of the digits";
+		mes "more than once.";
+		next;
+		mes "[Nia]";
+		mes "So, for example, I can't";
+		mes "use the numbers 103, 112,";
+		mes "252, or 701. Those numbers";
+		mes "either have a 0, or they use";
+		mes "the same number in the digits";
+		mes "more than once. Got it now?";
+		next;
+		mes "[Nia]";
+		mes "Now, you only get 5 guesses,";
+		mes "and after each guess, I'll tell";
+		mes "you how many digits you guessed";
+		mes "correctly, followed by the number of correctly guessed digits in";
+		mes "the correct digit place.";
+		next;
+		mes "[Nia]";
+		mes "For example, let's say the";
+		mes "number I come up with is 168.";
+		mes "If your first guess is 678, then you guessed two of the digits,";
+		mes "6 and 8, correctly. However,";
+		mes "only 8 is in the correct place.";
+		next;
+		mes "[Nia]";
+		mes "You know, it'd be a good idea";
+		mes "if you try the Practice Mode";
+		mes "first. Then, when you're more";
+		mes "comfortable, play the actual";
+		mes "Number Match game. Don't forget that speed counts for your score!";
+		next;
+		mes "[Nia]";
+		mes "Ah, if you happen to";
+		mes "make a new record in the";
+		mes "Number Match game, you'll";
+		mes "have your name recorded,";
+		mes "so don't miss this chance for";
+		mes "fame and maybe even fortune~";
+		close;
+	case 2:
+		mes "[Nia]";
+		mes "Great, let's do a practice";
+		mes "Number Match game. Please";
+		mes "try to guess my number, okay?";
+		mes "If you want to cancel, then please enter a number greater than 1,000.";
+		set .@practice,1;
+		break;
+	case 3:
+		mes "[Nia]";
+		mes "Great, let's play Number Match!";
+		mes "You will have 5 chances to guess the number that I'm thinking of.";
+		mes "If you want to cancel, then please enter a number greater than 1,000.";
+		set .@practice,0;
+		break;
+	case 4:
+		set .@name_record$, $050908_minus1_yagu$;
+		if (.@name_record$ == "") //custom
+			set .@name_record$,"(null)";
+		set .@score_record, $050908_minus1_yagu;
+		set .@score_min, .@score_record / 60;
+		set .@score_sec, .@score_record % 60;
+		mes "[Nia]";
+		mes "^ff0000" + .@name_record$ + "^000000 is the";
+		mes "record holder for the Number";
+		mes "Match game with a time of";
+		mes "^ff0000" + .@score_min + " minutes, " + .@score_sec + " seconds^000000.";
+		close;
+	case 5:
+		mes "[Nia]";
+		mes "Take care of yourself,";
+		mes "adventurer. If you ever";
+		mes "feel like playing a Number";
+		mes "Match game, come and talk";
+		mes "to me, alright? See you~";
+		close;
+	}
+	next;
+
+	// Generate 3 digits of a number.
+	while(1) {
+		set .@yagu100, rand(1,9);
+		set .@yagu10, rand(1,9);
+		set .@yagu1, rand(1,9);
+		if ((.@yagu100 != .@yagu10) && (.@yagu100 != .@yagu1) && (.@yagu10 != .@yagu1)) {
+			// Store the actual number (unofficial).
+			set .@yagu, (100*.@yagu100) + (10*.@yagu10) + .@yagu1;
+			break;
+		}
+	}
+
+	// The official time calculation is based on ServerTime,
+	// an int HHMMSS equivalent to atoi(gettimestr("%H%M%S",7)).
+	// UNIX time is really a better way to do this.
+	set .@start_time, gettimetick(2);
+
+	while(1) {
+
+		// Guess a number that meets all conditions.
+		while(1) {
+			if (input(.@input,100,999) != 0) {
+				mes "[Nia]";
+				mes "You've canceled the";
+				mes "Number Match game.";
+				close;
+			}
+			set .@input100, .@input / 100;
+			set .@input10, (.@input % 100) / 10;
+			set .@input1, .@input % 10;
+			if ((.@input100 > 0) && (.@input10 > 0) && (.@input1 > 0)) {
+				if ((.@input100 != .@input10) && (.@input100 != .@input1) && (.@input10 != .@input1))
+					break;
+			}
+			mes "[Nia]";
+			mes "You entered one of the";
+			mes "digits as 0, or input the";
+			mes "same numerical value in";
+			mes "the digits more than once.";
+			mes "Please enter another guess.";
+			next;
+		}
+
+		set .@retry, .@retry+1;
+		mes "[Nia]";
+		mes "^ff0000"+strcharinfo(0)+"^000000,";
+		mes "your guess is ^0000ff"+.@input+"^000000.";
+		mes "Give me a moment to";
+		mes "come up with your results.";
+		next;
+
+		// Correct digits in correct locations.
+		set .@strike,0;
+		if (.@yagu100 == .@input100)
+			set .@strike, .@strike+1;
+		if (.@yagu10 == .@input10)
+			set .@strike, .@strike+1;
+		if (.@yagu1 == .@input1)
+			set .@strike, .@strike+1;
+
+		// Correct digits in incorrect locations.
+		set .@ball,0;
+		if ((.@yagu100 == .@input10) || (.@yagu100 == .@input1))
+			set .@ball, .@ball+1;
+		if ((.@yagu10 == .@input100) || (.@yagu10 == .@input1))
+			set .@ball, .@ball+1;
+		if ((.@yagu1 == .@input100) || (.@yagu1 == .@input10))
+			set .@ball, .@ball+1;
+
+		if (.@strike == 3) {
+			if (.@practice) {
+				mes "[Nia]";
+				mes "Yes, the number that";
+				mes "I guessed was ^ff0000"+.@yagu+"^000000!";
+				mes "Congratulations, you";
+				mes "just won this practice";
+				mes "game! Now you should be";
+				mes "ready for the real thing~";
+				close;
+			} else {
+
+				// Calculate final time and check against the previous record.
+				set .@end_time, gettimetick(2);
+				if (.@end_time < .@start_time)
+					set .@end_time, .@end_time + 3600;
+				set .@total_time, .@end_time - .@start_time;
+				set .@total_min, .@total_time / 60;
+				set .@total_sec, .@total_time % 60;
+				set .@name_record$, $050908_minus1_yagu$;
+				if (.@name_record$ == "") //custom
+					set .@name_record$,"(null)";
+				set .@score_record, $050908_minus1_yagu;
+				set .@score_min, .@score_record / 60;
+				set .@score_sec, .@score_record % 60;
+
+				if (.@score_record >= .@total_time || !.@score_record) { //custom (second condition)
+					set $050908_minus1_yagu$, strcharinfo(0);
+					set $050908_minus1_yagu, .@total_time;
+					mes "[Nia]";
+					mes "Great! You guessed";
+					mes "my number, which was";
+					mes "^ff0000" + .@yagu + "^000000. You finished in";
+					mes "^ff0000" + .@total_min + " minutes, " + .@total_sec + " seconds^000000,";
+					mes "breaking the previous record";
+					mes "of ^ff0000" + .@score_min + " minutes, " + .@score_sec + " seconds^000000.";
+					next;
+					mes "[Nia]";
+					mes "^ff0000" + .@name_record$ + "^000000";
+					mes "set that old record,";
+					mes "but now you are the";
+					mes "new person to beat in the";
+					mes "Match Game. Congratulations";
+					mes "for setting a new record!";
+					close;
+				}
+				mes "[Nia]";
+				mes "Nice work, you guessed";
+				mes "my number! The answer, of";
+				mes "course, was ^ff0000" + .@yagu + "^000000. You managed";
+				mes "to guess this number correctly";
+				mes "in ^ff0000" + .@total_min + " minutes, " + .@total_sec + " seconds^000000.";
+				next;
+				mes "[Nia]";
+				mes "^ff0000" + .@name_record$ + "^000000 is";
+				mes "the current Number Match";
+				mes "record holder with a time";
+				mes "of ^ff0000" + .@score_min + " minutes, " + .@score_sec + " seconds^000000.";
+				mes "Good luck, and hopefully you";
+				mes "can break this record someday~";
+				close;
+			}
+		} else {
+			if (.@practice) {
+				mes "[Nia]";
+				mes "Your guess has ^ff0000" + .@ball + "^000000 of the";
+				mes "correct numbers. ^ff0000" + .@strike + "^000000 of the";
+				mes "digits in your guess have";
+				mes "the correct number in the";
+				mes "correct digit placement.";
+				mes "Alright, try it again~";
+				next;
+			} else {
+				mes "[Nia]";
+				mes "Your last guess had ^ff0000" + .@ball + "^000000";
+				mes "of the correct numbers,";
+				mes "and ^ff0000" + .@strike + "^000000 digits in your guess";
+				mes "had the correct number in";
+				mes "the correct digit placement.";
+				switch(.@retry) {
+					case 1: mes "You have four guesses left."; break;
+					case 2: mes "You have three guesses left."; break;
+					case 3: mes "You have two guesses left."; break;
+					case 4: mes "You only have one guess left..."; break;
+					case 5: mes "The answer was ^ff0000" + .@yagu + "^000000."; close;
+				}
+				next;
+			}
+		}
+	}
+}

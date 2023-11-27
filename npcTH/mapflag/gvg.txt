@@ -1,0 +1,99 @@
+//===== rAthena Script =======================================
+//= Mapflag: Guild versus Guild mode.
+//===== Description: =========================================
+//= Players can attack other guilds, and will have their guild
+//= icons shown. WoE damage reductions will also take place.
+//= gvg: Turns on GvG mode.
+//= gvg_castle: Describes castle maps for WoE.
+//= gvg_dungeon: Describes dungeon maps for WoE.
+//= gvg_te: Turns on GvG mode for WoE:TE.
+//= gvg_te_castle: Describes castle maps for WoE:TE.
+//===== Changelogs: ==========================================
+//= 1.1 Added Novice Guild Castles.
+//= 1.2 Updated with new meanings of gvg and gvg_castle.
+//= 1.3 Renewal split. [Euphy]
+//= 1.4 Disable costumes in GvG castles. [Aleos]
+//============================================================
+
+//============================================================
+// GvG Arenas
+//============================================================
+guild_vs1	mapflag	gvg
+guild_vs2	mapflag	gvg
+guild_vs3	mapflag	gvg
+guild_vs4	mapflag	gvg
+guild_vs5	mapflag	gvg
+
+//============================================================
+// WoE:FE Castles
+//============================================================
+aldeg_cas01	mapflag	gvg_castle
+aldeg_cas02	mapflag	gvg_castle
+aldeg_cas03	mapflag	gvg_castle
+aldeg_cas04	mapflag	gvg_castle
+aldeg_cas05	mapflag	gvg_castle
+gefg_cas01	mapflag	gvg_castle
+gefg_cas02	mapflag	gvg_castle
+gefg_cas03	mapflag	gvg_castle
+gefg_cas04	mapflag	gvg_castle
+gefg_cas05	mapflag	gvg_castle
+payg_cas01	mapflag	gvg_castle
+payg_cas02	mapflag	gvg_castle
+payg_cas03	mapflag	gvg_castle
+payg_cas04	mapflag	gvg_castle
+payg_cas05	mapflag	gvg_castle
+prtg_cas01	mapflag	gvg_castle
+prtg_cas02	mapflag	gvg_castle
+prtg_cas03	mapflag	gvg_castle
+prtg_cas04	mapflag	gvg_castle
+prtg_cas05	mapflag	gvg_castle
+
+//============================================================
+// WoE:SE Castles
+//============================================================
+schg_cas01	mapflag	gvg_castle
+schg_cas02	mapflag	gvg_castle
+schg_cas03	mapflag	gvg_castle
+schg_cas04	mapflag	gvg_castle
+schg_cas05	mapflag	gvg_castle
+arug_cas01	mapflag	gvg_castle
+arug_cas02	mapflag	gvg_castle
+arug_cas03	mapflag	gvg_castle
+arug_cas04	mapflag	gvg_castle
+arug_cas05	mapflag	gvg_castle
+
+//============================================================
+// WoE:Novice Castles
+//============================================================
+//n_castle	mapflag	gvg_castle
+nguild_alde	mapflag	gvg_castle
+nguild_gef	mapflag	gvg_castle
+nguild_pay	mapflag	gvg_castle
+nguild_prt	mapflag	gvg_castle
+
+//============================================================
+// Guild Dungeons
+//============================================================
+arug_dun01	mapflag	gvg_dungeon
+schg_dun01	mapflag	gvg_dungeon
+
+//============================================================
+// RWC
+//============================================================
+2009rwc_01	mapflag	gvg
+2009rwc_02	mapflag	gvg
+2009rwc_03	mapflag	gvg
+2009rwc_04	mapflag	gvg
+2009rwc_05	mapflag	gvg
+2009rwc_06	mapflag	gvg
+2009rwc_07	mapflag	gvg
+2009rwc_08	mapflag	gvg
+2009rwc_f01	mapflag	gvg
+2012rwc_01	mapflag	gvg
+2012rwc_02	mapflag	gvg
+2012rwc_03	mapflag	gvg
+2012rwc_04	mapflag	gvg
+2012rwc_05	mapflag	gvg
+2012rwc_06	mapflag	gvg
+2012rwc_07	mapflag	gvg
+2012rwc_08	mapflag	gvg

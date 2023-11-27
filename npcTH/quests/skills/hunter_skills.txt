@@ -1,0 +1,377 @@
+//===== rAthena Script ======================================= 
+//= Hunter Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen, Kisuka
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Phantasmic Arrow
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//=     Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//=     some of the items required and made them into real
+//=     quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Fixed some typos [IVBela]
+//= 1.3d Changed NPC Name to the official [Lupus]
+//= 1.4 Moved Arpesto from tu_archer and added his script. [Kisuka]
+//============================================================
+
+pay_arche,109,169,3	script	Arpesto	712,{
+	if (BaseJob == Job_Hunter) {
+		if (qskill_hunter == 100) {
+			if (getskilllv("HT_PHANTASMIC")) {
+				mes "[Arpesto]";
+				mes "Hm, I'm sorry if I made";
+				mes "a big scene when you grazed";
+				mes "me with that attack accidentally. It's just that I was training so";
+				mes "diligently and blood sugar was incredibly low and the fatigue...";
+				next;
+				mes "[Reidin Corse]";
+				mes "Hah! Admit it,";
+				mes "old man! You were";
+				mes "just scared! Me, on";
+				mes "the other hand...";
+				emotion ET_KIK, getnpcid(0, "Reidin Corse#tu");
+				next;
+				mes "[Arpesto]";
+				mes "You little";
+				mes "whippersnapper!";
+				mes "I don't know what";
+				mes "you're talking about!";
+				close;
+			} else {
+				mes "[Arpesto]";
+				mes "I recognize you";
+				mes "from somewhere,";
+				mes "I think. Reidin, do you";
+				mes "remember this guy?";
+				next;
+				mes "[Reidin Corse]";
+				mes "Oh come on, we see";
+				mes "hundreds of Archers and";
+				mes "Hunters and Snipers and...";
+				mes "I can't remember them all.";
+				mes "But I guess this guy's up";
+				mes "to snuff. Trust me on this!";
+				next;
+				mes "[Arpesto]";
+				mes "Alright, alright.";
+				mes "If Reidin thinks you're";
+				mes "worthy, then you're probably";
+				mes "are. In that case, I'd like to";
+				mes "offer to teach you my secret";
+				mes "skill, ''Phantasmic Arrow.''";
+				next;
+				mes "[Reidin Corse]";
+				mes "Wait, wait. This guy";
+				mes "only needs a refresher.";
+				mes "Yeah, I'm pretty sure you";
+				mes "were here to learn this";
+				mes "skill before. Yeah, I've";
+				mes "got a gut feeling about it.";
+				next;
+				mes "[Arpesto]";
+				mes "Damn. Only a refresher?";
+				mes "That means you'll learn";
+				mes "this free of charge. Alright...";
+				mes "You should be able to use the";
+				mes "Phantasmic Arrow skill now.";
+				mes "Travel safely now, you hear?";
+				skill "HT_PHANTASMIC",1,SKILL_PERM;
+				close;
+			}
+		}
+		else if (qskill_hunter == 1) {
+			if (countitem(724) > 4 && countitem(7115) > 4 && countitem(537) > 29) {
+				mes "[Arpesto]";
+				mes "Hm? You're back?";
+				mes "Oh, did you bring";
+				mes "everything? Ah, you did.";
+				mes "Good! Now I shall reveal";
+				mes "my super secret skill...";
+				mes "The 1st Arpesto Form!";
+				next;
+				mes "[Reidin Corse]";
+				mes "Wait! Wait...";
+				mes "Didn't you call it";
+				mes "Arpesto's 3rd Form";
+				mes "or something at first?";
+				emotion ET_SWEAT, getnpcid(0, "Reidin Corse#tu");
+				next;
+				mes "[Arpesto]";
+				mes "Er, yes, Arpesto's";
+				mes "3rd Form, that's right.";
+				mes "It's just there's just so";
+				mes "many of them, that... ";
+				mes "Anyway, let me teach you";
+				mes "the ''Emergency Arrow'' skill.";
+				next;
+				mes "[Reidin Corse]";
+				mes "Whoa, hold on!";
+				mes "''Emergency Arrow?!''";
+				mes "That's the old name you";
+				mes "gave that skill, right?";
+				mes "Didn't you change it?";
+				emotion ET_HUK;
+				next;
+				emotion ET_HUK;
+				mes "[Arpesto]";
+				mes "What the hell";
+				mes "are you talkin--";
+				next;
+				mes "[Arpesto]";
+				mes "Oh, you're right.";
+				mes "We agreed that name";
+				mes "was too cheesy. What";
+				mes "did we call it now? Um...";
+				mes "''Phantasmic Arrow?''";
+				emotion ET_THINK;
+				next;
+				mes "[Arpesto]";
+				mes "...";
+				mes "......";
+				emotion ET_CRY;
+				next;
+				mes "[Reidin Corse]";
+				mes "Umm....";
+				mes "Ummm........";
+				next;
+				mes "[Reidin Corse]";
+				mes "Yeah, that was the one!";
+				mes "''^3131FFPhantasmic Arrow^000000'' sounds";
+				mes "soooo much cooler than that";
+				mes "other name you came up with!";
+				emotion ET_AHA, getnpcid(0, "Reidin Corse#tu");
+				next;
+				mes "[Arpesto]";
+				mes "You can be pretty handy";
+				mes "sometimes, Reidin. Now,";
+				mes "back to the matter at hand.";
+				mes "I shall teach you my awesome";
+				mes "skill, Phantasmic Arrow. Now...";
+				mes "Ready your mind and body!";
+				next;
+				mes "[Arpesto]";
+				mes "Phan-!";
+				mes "Ta-!";
+				mes "Ssssss-!";
+				mes "Mic-!";
+				next;
+				mes "[Arpesto]";
+				mes "ARRRRRRRROOOOOOW~!";
+				specialeffect EF_FLASHER;
+				specialeffect2 EF_FLASHER;
+				next;
+				mes "[Arpesto]";
+				mes "^333333*Pant Pant*^000000";
+				mes "Alright, I used a special";
+				mes "technique to teach you the";
+				mes "skill-- directly into your brain. You should be able to use it";
+				mes "now. Why don't give it a try?";
+				next;
+				mes "^3355FF*Swwwwwww!*";
+				mes "*Bang!*^000000";
+				specialeffect EF_HIT2;
+				emotion ET_HUK;
+				emotion ET_HUK, playerattached();
+				next;
+				mes "[Arpesto]";
+				mes "^333333*Pant Pant*";
+				mes "*Cough Cough*";
+				mes "*Cough Cough*^000000";
+				next;
+				mes "[Arpesto]";
+				mes "WHHHHHHHY MEEEEE?!";
+				emotion ET_HUK, getnpcid(0, "Reidin Corse#tu");
+				next;
+				mes "^3355FF*Thump*^000000";
+				next;
+				mes "[Reidin Corse]";
+				mes "Ar-Arpesto, no!";
+				mes "...........................";
+				mes "Oh. Oh, come on! The arrow";
+				mes "just glanced you! You'll be";
+				mes "alright. Quit being a baby.";
+				next;
+				mes "[Reidin Corse]";
+				mes "Eh, don't worry about";
+				mes "Arpesto. He's just being";
+				mes "a crazy old man. I'll take";
+				mes "care of him, so just make";
+				mes "sure you make good use";
+				mes "of that new skill. Take care~";
+				delitem 724,5; //Cardinal_Jewel_
+				delitem 7115,5; //Harpy's_Feather
+				delitem 537,30; //Pet_Food
+				set qskill_hunter,100;
+				skill "HT_PHANTASMIC",1,SKILL_PERM;
+				close;
+			} else {
+				mes "[Arpesto]";
+				mes "Hurry up and bring";
+				mes "^3131FF5 Cursed Rubies^000000,";
+				mes "^3131FF30 Pet Foods^000000 and";
+				mes "^3131FF5 Harpy Feathers^000000.";
+				mes "Then, I can teach you";
+				mes "the Emergency Arrow skill.";
+				close;
+			}
+		}
+		else {
+			if (getskilllv("HT_PHANTASMIC")) {
+				mes "[Arpesto]";
+				mes "Ah, very nice.";
+				mes "Um, as you demonstrated";
+				mes "earlier, my teaching technique";
+				mes "was perfect. But next time, use";
+				mes "the skill on foes that deserve";
+				mes "to be beaten, alright? Good.";
+				set qskill_hunter,100;
+				close;
+			}
+			if (BaseJob == Job_Hunter && JobLevel < 40) {
+				mes "[Arpesto]";
+				mes "Did the master send you";
+				mes "to me? Hmm... You're still";
+				mes "pretty green from the looks";
+				mes "of it. Yeah, I don't think there's anything I can teach quite yet.";
+				next;
+				mes "[Arpesto]";
+				mes "Train a little more and get";
+				mes "some more experience in";
+				mes "your job. When you become";
+				mes "more adept at hunting, you'll";
+				mes "be able to grasp what I've been";
+				mes "teaching Hunters and Snipers.";
+				close;
+			} else {
+				mes "[Arpesto]";
+				mes "Has the master sent you?";
+				mes "Ah, you definitely have the";
+				mes "keen, vulture like eyes of a";
+				mes "true Hunter. You should be";
+				mes "capable of learning my secret";
+				mes "skill, the 3rd Arpesto Form...";
+				next;
+				mes "[Arpesto]";
+				mes "It's a handy skill that";
+				mes "I developed while battling";
+				mes "Medusas and running out";
+				mes "of arrows. I simply call it,";
+				mes "''^3131FFEmergency Arrow^000000.'' Would you";
+				mes "be interested in learning it?";
+				next;
+				switch(select("Yes, please!:Ummm...")) {
+				case 1:
+					mes "[Arpesto]";
+					mes "Great, great. Of course,";
+					mes "you can't resist this offer";
+					mes "if you recognize this skill's";
+					mes "value. However, I'd like to";
+					mes "ask for a little tuition in return for me teaching this to you.";
+					next;
+					mes "[Arpesto]";
+					mes "Although I feel guilt at";
+					mes "asking for payment from";
+					mes "a fellow Hunter, creating";
+					mes "this skill required much";
+					mes "sacrifice and unimaginable";
+					mes "bloodshed on my part...";
+					next;
+					mes "[Reidin Corse]";
+					mes "Hey! You liar!";
+					mes "I was there when you";
+					mes "accidently made up that";
+					mes "skill when you were bored";
+					mes "and just messing around";
+					mes "with one of the Bows!";
+					emotion ET_KIK, getnpcid(0, "Reidin Corse#tu");
+					next;
+					emotion ET_HUK;
+					mes "[Arpesto]";
+					mes "^333333*Ahem*^000000 Please Reidin,";
+					mes "don't entertain unfounded";
+					mes "rumors. It was only after";
+					mes "countless battles with Eddga";
+					mes "that I managed to invent and";
+					mes "perfect Emergency Arrow.";
+					next;
+					mes "[Reidin Corse]";
+					mes "^333333*Tsk tsk*^000000 Huh.";
+					mes "I thought you said";
+					mes "you developed it while";
+					mes "you were fighting Medusas.";
+					next;
+					mes "[Arpesto]";
+					mes "A-anyway, please bring";
+					mes "me the following items";
+					mes "as tuition in exchange for";
+					mes "me teaching you this skill.";
+					next;
+					mes "[Arpesto]";
+					mes "Please bring me";
+					mes "^3131FF5 Cursed Rubies^000000,";
+					mes "^3131FF30 Pet Foods^000000 and";
+					mes "^3131FF5 Harpy Feathers^000000.";
+					mes "Then I can teach";
+					mes "you this skill.";
+					next;
+					mes "[Reidin Corse]";
+					mes "30 Pet Foods?";
+					mes "What the heck do";
+					mes "you need all that for?";
+					next;
+					mes "[Arpesto]";
+					mes "I...";
+					mes "I'm going to";
+					mes "use it to feed";
+					mes "my pet Falcon.";
+					next;
+					mes "[Reidin Corse]";
+					mes "...";
+					mes "......";
+					mes ".........";
+					mes "......Riiiight.";
+					emotion ET_THINK, getnpcid(0, "Reidin Corse#tu");
+					set qskill_hunter,1;
+					close;
+				case 2:
+					mes "[Arpesto]";
+					mes "Alright, it's your";
+					mes "decision. However, I'm";
+					mes "sure that you may have";
+					mes "great need of my skill";
+					mes "sooner or later, so return";
+					mes "to me if you change your mind.";
+					close;
+				}
+			}
+		}
+	} else {
+		mes "[Arpesto]";
+		mes "The sky still looks clear, but recently the winds that have been blowing through the land seem to carry with them an air of misfortune.";
+		next;
+		emotion ET_HNG, getnpcid(0, "Reidin Corse#tu");
+		mes "[Reidin Corse]";
+		mes "So...";
+		mes "Danger's coming?";
+		mes "Heh! Chill, gramps~";
+		mes "I got it covered!";
+		next;
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Arpesto]";
+		mes "Ho ho...";
+		mes "Energetic, but";
+		mes "cocky. Kids nowadays...";
+		close;
+	}
+}
+

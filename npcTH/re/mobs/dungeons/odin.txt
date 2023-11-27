@@ -1,0 +1,56 @@
+//===== rAthena Script =======================================
+//= Odin Temple Monster Spawn Script
+//===== By: ==================================================
+//= Poki#3 (0.1)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Updated by using Tharis' Homun AI, by Tharis [Vicious]
+//= 1.1 More accurate spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//= 1.3 Correct Spawn by Navigation's mob data. [attackjom]
+//============================================================
+
+//==================================================
+// odin_tem01 - Odin Shrine
+//==================================================
+odin_tem01,0,0	monster	Plasma	1693,14,5000
+odin_tem01,0,0	monster	Breeze	1692,14,5000
+odin_tem01,0,0	monster	Frus	1753,7,5000
+odin_tem01,0,0	monster	Skogul	1752,7,5000
+odin_tem01,0,0	monster	Plasma	1697,4,5000
+odin_tem01,0,0	monster	Plasma	1695,4,5000
+odin_tem01,0,0	monster	Plasma	1696,4,5000
+odin_tem01,0,0	monster	Plasma	1694,4,5000
+odin_tem01,0,0	monster	Green Plant	1080,7,60000,30000
+odin_tem01,0,0	monster	Yellow Plant	1081,7,60000,30000
+odin_tem01,0,0	monster	Blue Plant	1079,7,600000,300000
+
+//==================================================
+// odin_tem02 - Odin Shrine
+//==================================================
+odin_tem02,0,0	monster	Skogul	1752,40,5000
+odin_tem02,0,0	monster	Frus	1753,40,5000
+odin_tem02,0,0	monster	Plasma	1693,20,5000
+odin_tem02,0,0	monster	Frus	1762,4,5000
+odin_tem02,0,0	monster	Skogul	1761,2,5000
+odin_tem02,0,0	monster	Skeggiold	1754,1,5000
+odin_tem02,0,0	monster	Skeggiold	1755,1,5000
+odin_tem02,0,0	monster	Blue Plant	1079,13,1800000,900000
+
+//==================================================
+// odin_tem03 - Odin Shrine
+//==================================================
+odin_tem03,0,0	monster	Plasma	1693,24,5000
+odin_tem03,0,0	monster	Skeggiold	1754,19,5000
+odin_tem03,0,0	monster	Skeggiold	1755,19,5000
+odin_tem03,0,0	monster	Skogul	1761,6,5000
+odin_tem03,0,0	monster	Frus	1762,6,5000
+odin_tem03,0,0	monster	Skogul	1752,4,5000
+odin_tem03,0,0	monster	Frus	1753,4,5000
+odin_tem03,0,0	monster	Valkyrie	1765,2,5400000,1800000
+odin_tem03,0,0,0,0	boss_monster	Valkyrie Randgris	1751,1,28800000,600000,1
+odin_tem03,0,0	monster	Blue Plant	1079,18,1800000,900000
+odin_tem03,0,0	monster	Shining Plant	1083,18,1800000,900000

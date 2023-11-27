@@ -1,0 +1,487 @@
+//===== rAthena Script =======================================
+//= Swordsman Skills Quests
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Quests for skills: Fatal Blow, Mobile HP Recovery,
+//  Auto-Berserk
+//===== Additional Comments: =================================
+//= 1.6 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.7 Updated to latest available official file. [Masao]
+//= 1.8 Fixed JobLevel requirements. [Euphy]
+//= 1.9 Moved Izlude NPC to pre-re/re paths. [Euphy]
+//=     Updated "Knight De Thomas" NPC to latest version.
+//============================================================
+
+-	script	::KnightDeThomas	98,4,4,{
+	if ((BaseClass == Job_Swordman) && (JobLevel >= 35 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
+		if (getskilllv("SM_MOVINGRECOVERY") == 1) {
+			mes "[De Thomas]";
+			mes "Oh, it's you?";
+			mes "Long time no see!";
+			mes "You seem healthier than before.";
+			mes "Hahahaha!";
+			mes "Take care! See you again!";
+			close;
+		} else if (countitem(713) >= 200 && countitem(1058) >= 1) {
+			mes "[De Thomas]";
+			mes "Welcome back...";
+			mes "Are you ready to learn Body Movin'?";
+			next;
+			switch (select("Yes.:No, I'm not ready yet.")) {
+			case 1:
+				mes "[De Thomas]";
+				mes "Let's see.....";
+				next;
+				mes "[De Thomas]";
+				mes "Ok! I shall now teach you...";
+				mes "...The Body Movin' skill!";
+				next;
+				delitem 713,200; //Empty_Bottle
+				delitem 1058,1; //Wing_Of_Moth
+				skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+				mes "[De Thomas]";
+				mes "There you go!";
+				mes "Try it yourself.";
+				mes "But don't overdo it.";
+				next;
+				mes "[De Thomas]";
+				mes "Oh yeah, I won't be needing your";
+				mes "armor so you can keep it.";
+				mes "Good luck now!";
+				close;
+			case 2:
+				mes "[De Thomas]";
+				mes "Is that so?";
+				mes "Then come when you are prepared.";
+				close;
+			}
+		} else {
+			mes "[De Thomas]";
+			mes "Hmmm... He's a swordsman...";
+			mes "You know that I am De Thomas Carlos, right?";
+			mes "Knight of Prontera's 3rd Calvary.";
+			mes "De Thomas Carlos!";
+			next;
+			mes "[De Thomas]";
+
+			// bug: official script always states that job level is too low
+			//mes "Wait a second, your Job level isn't above ^00880035^000000!";
+			//mes "Come back when it is.";
+
+			// custom: old dialog
+			mes "You do not have all the items I asked for.";
+			next;
+			mes "[De Thomas]";
+			mes "Remember, I need ^008800200 empty bottles^000000, your armor, and a ^008800Moth Wing^000000. Come back when you have it all.";
+			close;
+		}
+	} else {
+		mes "[De Thomas]";
+		mes "My name is De Thomas Carlos.";
+		mes "Knight of Prontera's 3rd Calvary.";
+		mes "I have a certain duty these days.";
+		mes "Ehem! Need I say more.";
+		close;
+	}
+	end;
+
+OnTouch:
+	if ((BaseClass == Job_Swordman) && (JobLevel >= 35 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
+		mes "[De Thomas]";
+		mes "Oh, no! You must have been hurt! Are you ok?";
+		mes "You must have fought hard to get such serious injuries..";
+		mes "Being a swordsman must come with a lot of responsibility and sacrifice.";
+		next;
+		mes "[De Thomas]";
+		if (Sex == SEX_MALE)
+			mes "For these swordsmen and knights, there is a wonderful skill.";
+		else
+			mes "For these swordswomen and knights, there is a wonderful skill young lady.";
+		mes "I present to you - HP Recovery While Moving!";
+		mes "Body moving is a splendid skill";
+		mes "that allows you to regain strength(HP)";
+		mes "while you are moving!";
+		next;
+		mes "[De Thomas]";
+		mes "It is currently under development";
+		mes "so it may not recover that much,";
+		mes "but it will help a little.";
+		mes "What do you think? Would you like to learn this skill?";
+		next;
+		switch (select("What a nice skill! I want to learn it!:No, thank you.")) {
+		case 1:
+			mes "[De Thomas]";
+			mes "Very well. I will tell you what you need to learn this skill.";
+			mes "First, your job level must be higher than ^00880035^000000.";
+			mes "You will also need ^008800200 empty bottles^000000.";
+			mes "Why? Because it is proof that you fought fiercely to have used that many potions.";
+			next;
+			mes "[De Thomas]";
+			mes "Also, the armor you used in battle.";
+			mes "This is also proof of an experienced fighter.";
+			mes "For the armor... your armor is perfect!";
+			mes "Bring your armor!";
+			mes "Last but not least... bring me one ^008800Moth Wing^000000.";
+			next;
+			select("Eh? You need that, too?");
+			mes "[De Thomas]";
+			mes "Not really.. I don't really NEED it.";
+			mes "It's just that my niece has gotten a bug hunting as a holiday task during the summer vacation.";
+			mes "Of course! It would be much easier for me to get it myself.";
+			mes "but I must work here all the time so I don't exactly have the time to go out and get it.";
+			next;
+			mes "[De Thomas]";
+			mes "Don't you think it is pitiful that I have to stay in once place everyday, not being able to go outside?";
+			mes "Please, find me one...*sniffsniff*";
+			mes "If you don't...";
+			close;
+		case 2:
+			mes "[De Thomas]";
+			mes "...";
+			close;
+		}
+	}
+	end;
+}
+
+prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
+	if ((BaseClass == Job_Swordman) && (JobLevel >= 25 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
+		if (getskilllv("SM_FATALBLOW") == 1) {
+			mes "[Leon]";
+			mes "Eh?";
+			mes "I was wondering who that was!";
+			mes "Why it's you from before!";
+			mes "Nice to see you again! How are you?";
+			mes "Be careful! Hahaha!";
+			close;
+		}
+		else if ((countitem(1752) > 9) && (countitem(1751) > 9) && (countitem(532) > 0) && (countitem(962) > 29) && (countitem(526) > 4)) {
+			mes "[Leon]";
+			mes "Ooh! You are more than ready";
+			mes "to learn Fatal Blow!";
+			mes "So how about it? Would you like to learn?";
+			next;
+			switch (select("Yes!:No, I don't want to.:But, what is Fatal Blow?")) {
+			case 1:
+				mes "[Leon]";
+				mes "OK, lets begin!";
+				next;
+				delitem 1752,10; //Fire_Arrow
+				delitem 1751,10; //Silver_Arrow
+				delitem 532,1; //Banana_Juice
+				delitem 962,30; //Tentacle
+				delitem 526,5; //Royal_Jelly
+				skill "SM_FATALBLOW",1,SKILL_PERM;
+				mes "[Leon]";
+				mes "Success!";
+				mes "Go use your new skill to its full potential.";
+				mes "Hahahahahahahaha!";
+				close;
+			case 2:
+				mes "[Leon]";
+				mes "I don't like you!!!";
+				close;
+			case 3:
+				mes "[Leon]";
+				mes "I developed this skill recently.";
+				mes "When you use bash, depending ";
+				mes "on your level, you can stun ";
+				mes "your opponent. .";
+				mes "You have learned bash, haven't you?";
+				next;
+				mes "[Leon]";
+				mes "What do you think. Stun is";
+				mes "a very useful technique. Don't you find this skill attractive?";
+				mes "When you think you do, just come right back to me!";
+				close;
+			}
+		}
+		mes "[Leon]";
+		mes "Ooh! A young and strong swordsman!";
+		next;
+		mes "[Leon]";
+		mes "Wow, seeing your arm, you must enjoy using bash?";
+		next;
+		select("Eh, I... just...");
+		mes "[Leon]";
+		if (Sex == SEX_FEMALE) {
+			mes "No need to be surprised.";
+			mes "If you use a sword, of course you ought to have a good arm!";
+		}
+		else {
+			mes "Nothing to be embarrassed about.";
+			mes "Even if you are a female you need a strong arm to use a sword!";
+		}
+		mes "In times of only useless and lazy youngsters,";
+		mes "I'm glad I met someone strong like you.";
+		next;
+		mes "[Leon]";
+		mes "Yes, I would like to give a present to an awesome swordsman like you.";
+		next;
+		switch (select("What present?:It's ok.")) {
+		case 1:
+			mes "[Leon]";
+			mes "Haha nothing special, but a skill to attack the vital point!";
+			next;
+		case 2:
+			mes "[Leon]";
+			mes "...Haha nothing special, just a skill that aims at the vital spot!";
+			next;
+		}
+		mes "[Leon]";
+		mes "It's a skill I developed recently.";
+		mes "When you use bash, depending on";
+		mes "your level, your opponent can";
+		mes "become stunned.";
+		mes "You have learned bash, haven't you?";
+		next;
+		mes "[Leon]";
+		mes "When I was a swordsman like you,";
+		mes "I used to enjoy using Bash. Every time, I thought";
+		mes "- maybe the attack would be more powerful";
+		mes "if I use stun at the same time.";
+		next;
+		mes "[Leon]";
+		mes "I drew back from the battlefield to do research";
+		mes "and finally, I developed this wonderful new skill!";
+		mes "Would you like to learn this skill?";
+		next;
+		switch (select("Yes.:No.:Do you have any advice on how to eat sushi?")) {
+		case 1:
+			mes "[Leon]";
+			mes "Ok. I'll tell you the requirements.";
+			mes "First you need to have level 5 Bash.";
+			mes "You will also need to prepare 10 Fire Arrows, 10 Silver Arrows, 1 bottle of Banana Juice, 30 Tentacles, and 5 bottles of Royal Jelly.";
+			mes "They are.. somewhat like ingredients.";
+			next;
+			mes "[Leon]";
+			mes "come to me again once you have all the materials.";
+			mes "We shall talk then.";
+			close;
+		case 2:
+			mes "[Leon]";
+			mes "Hahahahahahahahahaha!";
+			mes "... ";
+			mes " ... ";
+			mes " ...";
+			mes "I'm at a loss of words!?";
+			close;
+		case 3:
+			mes "[Sushi King Leon]";
+			mes "The best way to eat sushi is";
+			mes "with your hands.";
+			mes "That is the basic.";
+			mes "And dip the fish, not the rice,";
+			mes "in the soy sauce.";
+			next;
+			mes "[Sushi King Leon]";
+			mes "That way you get a richer flavor.";
+			mes "Also, always eat the kind that is in season.";
+			mes "Eating in the order of white fish then";
+			mes "blue fish will make it taste better!";
+			mes "Mmm! I like sushi~~!";
+			close;
+		}
+	}
+	mes "[Leon]";
+	mes "Oh, no! I have nothing to offer you!";
+	mes "I can't say nice and fun things to anyone";
+	mes "other than swordsmen!";
+	mes "See you in a better world!";
+	close;
+
+OnTouch_:
+	mes "[Leon]";
+	mes "Hahahahahahaha!";
+	mes "Hahahahahahaha!";
+	close;
+}
+
+prt_in,94,57,3	script	Juan	85,4,4,{
+	if (BaseClass == Job_Swordman) {
+		if (getskilllv("SM_AUTOBERSERK") == 1) {
+			mes "[Juan]";
+			mes "Mmm? Long time no see!";
+			mes "How are you?";
+			mes "You got stronger than before.";
+			mes "Many expect great things from you.";
+			mes "You can do it.";
+			close;
+		}
+		else if (JobLevel < 10 && (BaseJob != Job_Knight && BaseJob != Job_Crusader)) {
+			mes "[?]";
+			mes "What are you?";
+			mes "Eh, still a beginner.";
+			mes "I'm busy, so go train a little more";
+			mes "before coming back.";
+			close;
+		}
+		else if (JobLevel < 30 && (BaseJob != Job_Knight && BaseJob != Job_Crusader)) {
+			mes "[Juan]";
+			mes "Oh, nice to meet you.";
+			mes "You can be on your way. (smiley~)";
+			close;
+		}
+		else if ((countitem(924) > 34) && (countitem(958) > 9) && (countitem(957) > 9) && (countitem(518) > 9)) {
+			mes "[Juan]";
+			mes "Ooh. Young swordsman!";
+			mes "You are ready to learn the";
+			mes "newest skill, Auto Berserk?!";
+			next;
+			switch (select("Hoho, I would like to learn it now.:What is that?")) {
+			case 1:
+				mes "[Juan]";
+				mes "Ok. Then...";
+				next;
+				delitem 924,35; //Powder_Of_Butterfly
+				delitem 958,10; //Horrendous_Mouth
+				delitem 957,10; //Decayed_Nail
+				delitem 518,10; //Honey
+				skill "SM_AUTOBERSERK",1,SKILL_PERM;
+				mes "[Juan]";
+				mes "You have just become a swordsman";
+				mes "that can use Auto Berserk.";
+				mes "You can go about ";
+				mes "and achieve great things!";
+				next;
+				mes "[Juan]";
+				mes "Good luck!";
+				next;
+				mes "[Juan]";
+				mes "....................................oh yeah.";
+				mes "I forgot to say something.";
+				mes "There are some things you must keep in mind.";
+				next;
+				mes "[Juan]";
+				mes "Once you regain health,";
+				mes "this skill will subside.";
+				mes "Also, there isn't really a time limit";
+				mes "but it can still disappear when";
+				mes "it is attacked with a skill that can";
+				mes "nullify provoke.";
+				next;
+				mes "[Juan]";
+				mes "If you don't remember these characteristics,";
+				mes "you may run into some problems on the battlefield";
+				mes "when the skill disappears all of a sudden.";
+				next;
+				mes "[Juan]";
+				mes "Then... bye for real~";
+				close;
+			case 2:
+				mes "[Juan]";
+				mes "Auto Berserk?";
+				mes "It's a skill crucial on the battlefield.";
+				mes "When your health is in red,";
+				mes "your hidden potential provokes yourself";
+				mes "to help you in battle.";
+				next;
+				mes "[Juan]";
+				mes "It is perfect for those that";
+				mes "fight on the battlefield like fire!";
+				mes "With your ability, you can learn";
+				mes "this skill right now.";
+				mes "Then, I shall tell you the necessary materials.";
+				next;
+				mes "[Juan]";
+				mes "You need 35 Powder of Butterfly.";
+				mes "The energy from the magnificent";
+				mes "wings of a butterfly will";
+				mes "help you gather your strength!";
+				mes "And 10 Horrendous Mouth.";
+				mes "10 Decayed Nail.";
+				mes "and last but not least...";
+				mes "10 Honey!";
+				next;
+				mes "[Juan]";
+				mes "Did you get all that down?";
+				mes "As always, please come back";
+				mes "when you are ready.";
+				mes "I look forward to seeing you again.";
+				close;
+			}
+		}
+		mes "[Juan]";
+		mes "Oh no, you have more injuries";
+		mes "since the last time I saw you.";
+		mes "You went into battle like this?";
+		mes "Seems like you are straining yourself.";
+		next;
+		mes "[Juan]";
+		mes "Even though you may have a lot of strength";
+		mes "you can't do much when you reach your limits so";
+		mes "don't overestimate your powers.";
+		mes "Of course you could always use the";
+		mes "skill we developed to overcome these limits.";
+		next;
+		switch (select("Eh! What are you talking about?:Haha, there can't be such a thing.:Keuuuuuuuh!")) {
+		case 1:
+			mes "[Juan]";
+			mes "The skill is called Berserk.";
+			mes "It is deemed the flower of a battlefield.";
+			mes "When your health is red,";
+			mes "your hidden potential is provokes yourself";
+			mes "to help you in battle.";
+			next;
+			mes "[Juan]";
+			mes "It is perfect for those that";
+			mes "fight on the battlefield like fire!";
+			mes "With your ability, you can learn";
+			mes "this skill right now.";
+			mes "Then, I shall tell you the necessary materials.";
+			next;
+			mes "[Juan]";
+			mes "You need 35 Powder of Butterfly.";
+			mes "The energy from the magnificent";
+			mes "wings of a butterfly will";
+			mes "help you gather your strength!";
+			mes "And 10 Horrendous Mouth.";
+			mes "10 Decayed Nail.";
+			mes "and last but not least...";
+			mes "10 Honeys!";
+			next;
+			mes "[Juan]";
+			mes "Did you get all that down?";
+			mes "As always, please come back";
+			mes "when you are ready.";
+			mes "I look forward to seeing you again.";
+			close;
+		case 2:
+			mes "[Juan]";
+			mes "Bleh, were you fooled all your life.";
+			mes "I don't know. Don't talk to me.";
+			close;
+		case 3:
+			mes "[Juan]";
+			mes "Keuuuuuuuuuuuuuh!";
+			mes "Ooowwwwwuuuuuuuuuuuuuhhh!";
+			mes "Keuaaaaaaaaaaah!";
+			close;
+		}
+	}
+	mes "[Juan]";
+	mes "Are you enjoying your trip?";
+	mes "I hope you have nice days ahead of you.";
+	mes "Ah, I am just a kind knight Juan.";
+	mes "Don't worry about me too much. Hahaha...";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Fully working
+//= 1.0a Now using functions found in "Global_Functions.txt"
+//=     for class checks.
+//= 1.1 Added missing delitem [Lupus]
+//= 1.2 Added Baby Class Support [Lupus]
+//= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 1.4 Updated the NPC to allow subclasses of swordsman to learn the skills, [MasterOfMuppets]
+//= 1.5 Fixed exploits [Lupus]
+//= 1.5a Fixed some typos [IVBela]
+//============================================================

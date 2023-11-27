@@ -1,0 +1,27 @@
+//===== rAthena Script =======================================
+//= Yggdrasil Tree Warp Script
+//===== By: ==================================================
+//= PKGINGO (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 6+
+//===== Description: =========================================
+//= Warp Points for Yggdrasil Tree
+//===== Additional Comments: =================================
+//= Extracted from Vidar -> Athena
+//= 1.1 Renewal warp adjustments.
+//============================================================
+
+//Umbala Entrance
+//um_dun02,125,163,0	warp	nwarp1	1,1,yggdrasil01,40,63
+
+// RE Yggdrasil Entrance
+umbala,106,285,1	warp	ygGate_yg1	1,1,yggdrasil01,39,63
+
+//Niflheim Exit
+yggdrasil01,249,262,0	warp	nwarp5	1,1,nif_fild01,315,66
+
+//Yggdrasil Tree
+yggdrasil01,271,51,0	warp	nwarp3	1,1,yggdrasil01,26,196
+yggdrasil01,26,193,0	warp	nwarp4	1,1,yggdrasil01,269,53

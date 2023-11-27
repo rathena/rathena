@@ -1,0 +1,1366 @@
+//===== rAthena Script =======================================
+//= Ninja Equipment Quests
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.2a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Quests for Ninja weapons and armor.
+//===== Additional Comments: =================================
+//= 1.0 Ninja Arm Guards only yet [Playtester]
+//= 1.1 Added Kaibara [Playtester]
+//= 1.2 Added Tetsu [Playtester]
+//= 1.2a Kagerou/Oboro support (BaseJob -> BaseClass) [Euphy]
+//============================================================
+
+que_ng,28,50,3	script	Boshuu	709,{
+
+	if (BaseClass != Job_Ninja){
+		mes "[Boshuu]";
+		mes "I'm the best craftsman out of what people call the Three Craftsmen of Ninja Tools.";
+		mes "They call me Murata Boshuu.";
+		next;
+		mes "[Boshuu]";
+		mes "I know how to create any armor and shield of the eastern world, and my shields are considered the best there is.";
+		next;
+		mes "[Boshuu]";
+		mes "But seeing how you are an outsider...";
+		mes "Looks like I have no business with you.";
+		mes "Ehem~";
+		close;
+	}
+	if (BaseLevel < 20){
+		mes "[Boshuu]";
+		mes "I make the best shields for Ninjas of all ages,";
+		mes "But even I have some minimum requirements";
+		next;
+		mes "[Boshuu]";
+		mes "It looks like what you need isn't a shield, but more levels.";
+		mes "Come back after you've grown a bit more.";
+		close;
+	}
+	if (countitem(2102) < 1 && !(MISC_QUEST & 2048)){
+		mes "[Boshuu]";
+		mes "I'm the best craftsman out of what people call the Three Craftsmen of Ninja Tools.";
+		mes "They call me Murata Boshuu.";
+		next;
+		mes "[Boshuu]";
+		mes "They say it's three craftsmen, but the other two are probably scammers.";
+		mes "There's not a single craftsman better than I for ninjas in this world.";
+		next;
+		mes "[Boshuu]";
+		mes "I know how to make all the eastern armor and shield.";
+		next;
+		mes "[Boshuu]";
+		mes "Because the armor I'd create was so superior and defensive, when two people battle wearing armor made by me, no one can win!";
+		next;
+		mes "[Boshuu]";
+		mes "For that reason, I no longer make any armor.";
+		mes "I'm only collecting armors nowadays, just to make sure my skills do not go to waste..";
+		next;
+		mes "[Boshuu]";
+		mes "But I feel so bored nowadays.";
+		next;
+		mes "[Boshuu]";
+		mes "Now that I only collect armor, I feel like the creative flame within me is dying out.";
+		next;
+		mes "[Boshuu]";
+		mes "From what I heard, there's an armor overseas which I haven't even heard of.";
+		mes "It was called a... hmm.. what was it called?";
+		next;
+		mes "[Boshuu]";
+		mes "^ff0000Guard[1]^000000? Well, it's a name like that.";
+		mes "I wish to see the real thing myself.";
+		next;
+		mes "[Boshuu]";
+		mes "But obviously, it's probably worthless compared to the armor I make.";
+		next;
+		mes "[Boshuu]";
+		mes "Do me a favor and I'll make you something special.";
+		next;
+		mes "[Boshuu]";
+		mes "I'm not sure what I'll do, but I get the feeling I'll feel inspired once I see that armor.";
+		mes "How 'bout it~ Will you find me a ^ff0000Guard[1]^000000?";
+		next;
+		if(select("Hmm.. I don't feel like it.:Very well.") == 1){
+			mes "[Boshuu]";
+			mes "Ah~ What a shame..";
+			mes "You're missing out on an opportunity to get your hands on something made by a genius craftsman like myself...";
+			close;
+		}else{
+			mes "[Boshuu]";
+			mes "Oh, Very well.";
+			mes "Get a move on.";
+			mes "Find the shield called ^ff0000Guard[1]^000000 and bring it to me.";
+			set ninbo,1;
+			close;
+		}
+	}
+	if (ninbo == 1){
+		mes "[Boshuu]";
+		mes "Oh.. so did you bring it?";
+		mes "Show it to me...";
+		mes "Hmmmmm...";
+		next;
+		mes "[Boshuu]";
+		mes "Oh~ ! I see, it's even possible to slot armor!";
+		next;
+		mes "[Boshuu]";
+		mes "Ahh, Now I'm just itching to imitating this armor and making a slot on other armors.";
+		next;
+		mes "[Boshuu]";
+		mes "If you have a regular non-slotted Arm Guard and a slotted Guard, I'll make the non-slotted one slotted at the cost of 10,000 Zeny.";
+		next;
+		mes "[Boshuu]";
+		mes "How 'bout it? Want to try?";
+		next;
+		if(select("No thanks.:Ok, sounds good.") == 1){
+			mes "[Boshuu]";
+			mes "Hmm, Ok.";
+			mes "I'm so grateful that I was able to see such a rare thing from overseas.";
+			mes "Thanks for everything.";
+			set ninbo,0;
+			close;
+		}else{
+			mes "[Boshuu]";
+			mes "Oh ok.";
+			mes "I can't wait to begin.";
+			mes "If you bring me 1 Arm Guard";
+			mes "1 Slotted Guard, and";
+			mes "10,000 Zeny..";
+			next;
+			mes "[Boshuu]";
+			mes "Then I'll slot your slotless Arm Guard.";
+			mes "Come back when you have all the required materials.";
+			set ninbo,2;
+			close;
+		}
+	}
+	else if (ninbo == 2){
+		if (countitem(2102) < 1 || countitem(2117) < 1){
+			mes "[Boshuu]";
+			mes "Hmm... It looks like you didn't bring me enough materials.";
+			mes "In order to create a Slotted Arm Guard, I need 1 Slotted Guard";
+			mes "1 Arm Guard, and 10,000 Zeny";
+			mes "Come back when you're sure you have everything.";
+			close;
+		}
+		if (Zeny < 10000){
+			mes "[Boshuu]";
+			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+			next;
+			mes "[Boshuu]";
+			mes "In order to create a Slotted Arm Guard, I need 1 Guard[1]";
+			mes "1 Arm Guard, and 10,000 Zeny.";
+			mes "Come back when you're sure you have everything.";
+			close;
+		}
+		mes "[Boshuu]";
+		mes "Oh, I see you're back with all the required materials.";
+		mes "But before I start, I must ask you one more time.";
+		mes "Do you want to give me the materials you've brought and receive a Slotted Arm Guard instead?";
+		next;
+		if(select("No:Yes") == 1){
+			mes "[Boshuu]";
+			mes "Ok";
+			mes "Well, if you make up your mind again, come and see me.";
+			close;
+		}else{
+			mes "[Boshuu]";
+			mes "All right!";
+			mes "This should only take a second";
+			mes "Bang Clang~  Bang Clang~";
+			next;
+			if(countitem(2102) < 1 || countitem(2117) < 1 || Zeny < 10000){
+				mes "HACK DETECTED";
+				close;
+			}
+			mes "[Boshuu]";
+			mes "Here, it's finally complete.";
+			mes "I present to you a Slotted Arm Guard.";
+			mes "Come and find me whenever you're ready to request more.";
+			delitem 2102,1;
+			delitem 2117,1;
+			set Zeny,Zeny-10000;
+			set ninbo,0;
+			set MISC_QUEST,MISC_QUEST | 2048;
+			getitem 2118,1;
+			close;
+		}
+	}
+	else if (MISC_QUEST & 2048){
+		set ninbo,0;
+		mes "[Boshuu]";
+		mes "Oh~ I see you've come back.";
+		mes "Is it because you need another slotted Arm Guard?";
+		next;
+		if(select("Nope, not really.:Yes, make me another one.") == 1){
+			mes "[Boshuu]";
+			mes "Hmmph~ You sure a weird one.";
+			mes "Well, I'll see you later~";
+			close;
+		}else{
+			if (countitem(2102) < 1 || countitem(2117) < 1){
+				mes "[Boshuu]";
+				mes "Hmm... It looks like you didn't bring me enough materials.";
+				mes "In order to make a Slotted Arm Guard,";
+				mes "I need 1 Slotted Guard";
+				mes "1 Arm Guard, and";
+				mes "10,000 Zeny.";
+				mes "Come back when you're sure you have everything.";
+				close;
+			}
+			if (Zeny < 10000){
+				mes "[Boshuu]";
+				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+				next;
+				mes "[Boshuu]";
+				mes "In order to create one Slotted Arm Guard,";
+				mes "I need 1 Slotted Guard, 1 Arm Guard, and 10,000 Zeny.";
+				mes "Come back when you're sure you have everything.";
+				close;
+			}
+			mes "[Boshuu]";
+			mes "Oh, You've brought me the needed materials.";
+			mes "Before I begin, let me ask one final time...";
+			mes "Will you give me the materials you've gathered, and in turn, receive a slotted Arm Guard?";
+			next;
+			if(select("No:Yes") == 1){
+				mes "[Boshuu]";
+				mes "Ok";
+				mes "If you ever make up your mind";
+				mes "come and find me again.";
+				close;
+			}else{
+				mes "[Boshuu]";
+				mes "All right!";
+				mes "This should only take a second";
+				mes "Bang Clang ~Bang Clang ~";
+				next;
+				mes "[Boshuu]";
+				mes "Here, it's finally complete.";
+				mes "I present to you a Slotted Arm Guard.";
+				next;
+				if(countitem(2102) < 1 || countitem(2117) < 1 || Zeny < 10000){
+					mes "HACK DETECTED";
+					close;
+				}
+				mes "[Boshuu]";
+				mes "If you ever want to ask me to make you more items, feel free to come back anytime.";
+				delitem 2102,1;
+				delitem 2117,1;
+				set Zeny,Zeny-10000;
+				getitem 2118,1;
+				close;
+			}
+		}
+	}
+	else{
+		set ninbo,0;
+		mes "[Boshuu]";
+		mes "Oh~ You~!";
+		mes "Is what you have there the shield from overseas called a Guard? Let me take a look.";
+		next;
+		mes "[Boshuu]";
+		mes "Unbelievable!! It is~!";
+		mes "If all shields had a slot, they could become more effective than ever.";
+		mes "How is it that I've only realised this now?";
+		next;
+		mes "[Boshuu]";
+		mes "I'm the best out of the three craftsmen of Ninja tools called Murata Boshuu.";
+		mes "I know how to create all the armor and shields of the eastern world.";
+		next;
+		mes "[Boshuu]";
+		mes "But because the armor I would create was so refined and high in defense, when people wearing my armor would fight again each other, neither side could win.";
+		next;
+		mes "[Boshuu]";
+		mes "For that reason, I no longer make shields and armor.";
+		next;
+		mes "[Boshuu]";
+		mes "Nowadays, all I do is collect shields and armor.";
+		next;
+		mes "[Boshuu]";
+		mes "But life is kind of boring without crafting things.";
+		next;
+		mes "[Boshuu]";
+		mes "Since all I do is collect now, I feel like the creative spirit within me is disappearing.";
+		next;
+		mes "[Boshuu]";
+		mes "But at the sight of your shield, I feel like my sleeping spirit of creativity has awoken.";
+		next;
+		mes "[Boshuu]";
+		mes "I you want to, bring me an Arm Guard, a Slotted Guard, and 10,000 Zeny, and I'll make you a Slotted Arm Guard.";
+		mes "How 'bout it? Would you like to obtain a Slotted Arm Guard?";
+		next;
+		if(select("No, I'd rather not.:Yes~!! Please make it for me!") == 1){
+			mes "[Boshuu]";
+			mes "Hmm, is that so?";
+			mes "What a shame...";
+			mes "Well, if you change your mind later, come back and see me.";
+			close;
+		}else{
+			if (countitem(2102) < 1 || countitem(2117) < 1){
+				mes "[Boshuu]";
+				mes "Hmm... It looks like you didn't bring me enough materials.";
+				next;
+				mes "[Boshuu]";
+				mes "In order to make a Slotted Arm Guard,";
+				mes "I need 1 Slotted Guard";
+				mes "1 Arm Guard, and";
+				mes "10,000 Zeny.";
+				mes "Come back when you're sure you have everything.";
+				close;
+			}
+			if (Zeny < 10000){
+				mes "[Boshuu]";
+				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+				next;
+				mes "[Boshuu]";
+				mes "In order to make a Slotted Arm Guard,";
+				mes "I need 1 Slotted Guard";
+				mes "1 Arm Guard, and";
+				mes "10,000 Zeny.";
+				mes "Come back when you're sure you have everything.";
+				close;
+			}
+			mes "[Boshuu]";
+			mes "Oh, You've brought me the needed materials.";
+			mes "Before I begin, let me ask one final time...";
+			mes "Will you give me the materials you've gathered,";
+			mes "and in turn, receive a Slotted Arm Guard?";
+			next;
+			if(select("No:Yes") == 1){
+				mes "[Boshuu]";
+				mes "Ok";
+				mes "If you ever make up your mind";
+				mes "come and find me again.";
+				close;
+			}else{
+				mes "[Boshuu]";
+				mes "All right!";
+				mes "This should only take a second";
+				mes "Bang Clang ~Bang Clang ~";
+				next;
+				if(countitem(2102) < 1 || countitem(2117) < 1 || Zeny < 10000){
+					mes "HACK DETECTED";
+					close;
+				}
+				mes "[Boshuu]";
+				mes "Here, it's finally complete.";
+				mes "I present to you a Slotted Arm Guard.";
+				mes "If you ever want to ask me to make you more items, feel free to come back anytime.";
+				delitem 2102,1;
+				delitem 2117,1;
+				set Zeny,Zeny-10000;
+				set MISC_QUEST,MISC_QUEST | 2048;
+				getitem 2118,1;
+				close;
+			}
+		}
+	}
+}
+
+que_ng,28,45,3	script	Basshu	86,{
+
+	if(BaseClass != Job_Ninja){
+		mes "[Basshu]";
+		mes "I am one of the brothers of the three brothers in charge of crafting shields in the east named Murata Basshu";
+		next;
+		mes "[Basshu]";
+		mes "People normally call us the Three Craftsmen, but the other two craftsmen are my brothers.";
+		next;
+		mes "[Basshu]";
+		mes "But It looks like you're not my usual customer type, so I cannot make you any shields.";
+		mes "Sorry.";
+		close;
+	}
+	if(BaseLevel < 50){
+		mes "[Basshu]";
+		mes "I am one of the brothers of the three brothers in charge of crafting shields in the east named Murata Basshu";
+		next;
+		mes "[Basshu]";
+		mes "Unfortunately, many of my shields have minimum requirements, and I'm afraid you would not meet them.";
+		next;
+		mes "[Basshu]";
+		mes "Come back when you're stronger.";
+		close;
+	}
+	if (countitem(2107) < 1 && !(MISC_QUEST & 4096)){
+		mes "[Basshu]";
+		mes "I am one of the brothers of the three craftsmen in charge of crafting shields in the east named Murata Basshu";
+		next;
+		mes "[Basshu]";
+		mes "We are called the Three Craftsmen, but the other two craftsmen are my brothers.";
+		mes "I've learned my craft by sneaking looks over my brothers, so my skill is a little less than them, but many people praise me highly.";
+		next;
+		mes "[Basshu]";
+		mes "As of now, I've given up making shields and am currently running an antique shop for shields.";
+		mes "I'm researching to see if shields can be enchanted with magic.";
+		next;
+		mes "[Basshu]";
+		mes "Do you happen to know a shield called the Mirror shield from overseas?";
+		mes "I'd love to see that item, but I can't get my hands on one.";
+		next;
+		mes "[Basshu]";
+		mes "It'd help me greatly if I could see that shield up close.";
+		mes "Can you help me?";
+		next;
+		if(select("Hmm...I don't feel like it.:Very well.") == 1){
+			mes "[Basshu]";
+			mes "Ah~ I guess it was an impossible request.";
+			mes "I'm sorry.";
+			mes "If you ever find a Mirror shield and want to get rid of it, please come and see me.";
+			close;
+		}else{
+			mes "[Basshu]";
+			mes "Oh, thank you.";
+			mes "If you could really find me a Mirror Shield, I might get some really good ideas.";
+			set ninbot,1;
+			close;
+		}
+	}
+	if (ninbot == 1){
+		mes "[Basshu]";
+		mes "Oh. You have it?";
+		mes "Let me see...";
+		mes "Hmm ...";
+		next;
+		mes "[Basshu]";
+		mes "Oh! That's it! This proves it's not impossible to make a shield resistant to magical attacks.";
+		mes "Whew...";
+		next;
+		mes "[Basshu]";
+		mes "This sure gets me excited.";
+		mes "If you have a normal Arm Guard, bring me your Arm Guard, and...";
+		next;
+		mes "[Basshu]";
+		mes "1 Mirror Shield, and";
+		mes "20,000 Zeny, and I'll improve your Arm Guard into an Improved Arm Guard.";
+		next;
+		mes "[Basshu]";
+		mes "How about it? Would you like that?";
+		next;
+		if(select("No, I wouldn't.:Yes, I would.") == 1){
+			mes "[Basshu]";
+			mes "Hmm, Very Well.";
+			mes "I'm so grateful you showed me that rare shield from overseas.";
+			next;
+			mes "[Basshu]";
+			mes "Thanks for everything.";
+			set ninbot,0;
+			close;
+		}else{
+			mes "[Basshu]";
+			mes "Very Well.";
+			mes "I'm looking forward to this.";
+			next;
+			mes "[Basshu]";
+			mes "Bring me 1 Arm Guard,";
+			mes "1 Mirror Shield, and";
+			mes "20,000 Zeny,";
+			mes "and I'll make you an Improved Arm Guard.";
+			next;
+			mes "[Basshu]";
+			mes "Come and see me when you have everything ready.";
+			set ninbot,2;
+			close;
+		}
+	}
+	else if (ninbot == 2){
+		if(countitem(2107) < 1 || countitem(2117) < 1){
+			mes "[Basshu]";
+			mes "Hmm.. It looks like there aren't enough materials.";
+			mes "For an Improved Arm Guard, I require...";
+			mes "1 Mirror Shield, 1 Arm Guard";
+			mes "and 20,000 Zeny.";
+			mes "Come again when you have these materials.";
+			close;
+		}
+		if(Zeny < 20000){
+			mes "[Basshu]";
+			mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+			mes "In order to create an Improved Arm Guard, I require...";
+			mes "1 Mirror Shield, 1 Arm Guard";
+			mes "and 20,000 Zeny.";
+			mes "Come again when you have these materials.";
+			close;
+		}
+		mes "[Basshu]";
+		mes "The proper ingredients";
+		mes "have been gathered.";
+		mes "Before I begin,";
+		mes "I'll ask one last time.";
+		next;
+		mes "[Basshu]";
+		mes "In trade of the magical defence of the Arm Guard increasing, the shield's ability to block physical attacks may inevitably decrease.";
+		next;
+		mes "[Basshu]";
+		mes "Will you give me the materials you've gathered";
+		mes "and in trade, receive an Improved Arm Guard?";
+		next;
+		if(select("No:Yes") == 1){
+			mes "[Basshu]";
+			mes "Very Well.";
+			mes "If you ever make up your mind";
+			mes "come and find me again.";
+			close;
+		}else{
+			mes "[Basshu]";
+			mes "Hmm~ Well then~";
+			mes "Shall we begin?";
+			mes "Bang Clang ~Bang Clang ~";
+			mes "Sweep Sweep~ Saw Saw~";
+			next;
+			if(countitem(2107) < 1 || countitem(2117) < 1 || Zeny < 20000){
+				mes "HACK DETECTED";
+				close;
+			}
+			mes "[Basshu]";
+			mes "Here it is -- it's complete.";
+			mes "I've made you an Improved Arm Guard.";
+			mes "If you ever want me to create more items, come and ask me anytime.";
+			delitem 2107,1;
+			delitem 2117,1;
+			set Zeny,Zeny-20000;
+			set ninbot,0;
+			set MISC_QUEST,MISC_QUEST | 4096;
+			getitem 2119,1;
+			close;
+		}
+	}
+	else if (MISC_QUEST & 4096){
+		set ninbot,0;
+		mes "[Basshu]";
+		mes "Oh~ I see you've come back.";
+		mes "Are you here because you need an Improved Arm Guard?";
+		next;
+		if(select("Nope, not really.:Yes, make me another one.") == 1){
+			mes "[Basshu]";
+			mes "Aha~ I see~.";
+			mes "Come back and talk to me anytime.";
+			close;
+		}else{
+			if(countitem(2107) < 1 || countitem(2117) < 1){
+				mes "[Basshu]";
+				mes "Hmm.. It looks like there aren't enough materials.";
+				mes "In order to make an Improved Arm Guard, I require...";
+				mes "1 Mirror Shield, 1 Arm Guard,";
+				mes "And 20,000 Zeny.";
+				mes "Come again when you have these materials.";
+				close;
+			}
+			if(Zeny < 20000){
+				mes "[Basshu]";
+				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+				mes "In order to make an Improved Arm Guard, I require...";
+				mes "1 Mirror Shield, 1 Arm Guard,";
+				mes "and 20,000 Zeny.";
+				mes "Come again when you have these materials.";
+				close;
+			}
+			mes "[Basshu]";
+			mes "Looks like you brought me the correct ingredients.";
+			mes "Before I begin,";
+			mes "I'll ask one last time.";
+			next;
+			mes "[Basshu]";
+			mes "In trade of the magical defence of the Arm Guard increasing, the shield's ability to block physical attacks may inevitably decrease.";
+			next;
+			mes "[Basshu]";
+			mes "Will you give me the materials you've gathered to receive an Improved Arm Guard?";
+			next;
+			if(select("No:Yes") == 1){
+				mes "[Basshu]";
+				mes "Very Well.";
+				mes "If you make up your mind";
+				mes "come and find me again.";
+				close;
+			}else{
+				mes "[Basshu]";
+				mes "Hmm~ Well then~";
+				mes "Shall we begin?";
+				mes "Bang Clang ~Bang Clang ~";
+				mes "Sweep Sweep~ Saw Saw~";
+				next;
+				mes "[Basshu]";
+				mes "Here it is -- it's complete.";
+				mes "I've made you an Improved Arm Guard";
+				next;
+				if(countitem(2107) < 1 || countitem(2117) < 1 || Zeny < 20000){
+					mes "HACK DETECTED";
+					close;
+				}
+				mes "[Basshu]";
+				mes "If you ever want me to create more items, come and ask me anytime.";
+				delitem 2107,1;
+				delitem 2117,1;
+				set Zeny,Zeny-20000;
+				getitem 2119,1;
+				close;
+			}
+		}
+	}
+	else{
+		set ninbot,0;
+		mes "[Basshu]";
+		mes "Why~ That's~!";
+		mes "Is what you have there that shield which is called a 'Mirror Shield' overseas?";
+		next;
+		mes "[Basshu]";
+		mes "Excuse me, but may I take a look?";
+		next;
+		mes "[Basshu]";
+		mes "I knew it!! It is a Mirror Shield~!";
+		mes "There must be a way any shield can posess magical powers!!";
+		next;
+		mes "[Basshu]";
+		mes "Shields could be much more useful than now.";
+		mes "Why didn't I think of this before?";
+		next;
+		mes "[Basshu]";
+		mes "I have two brothers, and together we are the Three Craftsmen of the East.";
+		mes "I learned my crafting skill by watching my older brothers.";
+		next;
+		mes "[Basshu]";
+		mes "Due to that, my skill is not as good as theirs, but many people say I am skilled...";
+		next;
+		mes "[Basshu]";
+		mes "As of now, I have also given up making shields and am currently running an antique shop for shields.";
+		next;
+		mes "[Basshu]";
+		mes "I'm researching to see if shields can be enchanted with magic.";
+		next;
+		mes "[Basshu]";
+		mes "Therefore, I wanted to get an idea of how magic works on shields by studying a shield from overseas called the Mirror Shield, but I couldn't get my hands on one.";
+		mes "What stress that had caused me.";
+		next;
+		mes "[Basshu]";
+		mes "But luckily, you, a traveller, happened to have a mirror shield, and now I feel my creative spirit burning lively inside.";
+		next;
+		mes "[Basshu]";
+		mes "If you want, I will make you an Improved Arm Guard if you bring me 1 Arm Guard, 1 Mirror Shield, And 20,000 Zeny.";
+		mes "Would you like to try using one?";
+		next;
+		if(select("No, I don't wanna!:Yeah~!! Hurry and make it for me!") == 1){
+			mes "[Basshu]";
+			mes "Hmm, is that so.";
+			mes "What a shame.";
+			mes "Come and find me if you change your mind.";
+			close;
+		}else{
+			if(countitem(2107) < 1 || countitem(2117) < 1){
+				mes "[Basshu]";
+				mes "Hmm.. It looks like there aren't enough materials.";
+				mes "In order to create an Improved Arm Guard, I require...";
+				mes "1 Mirror Shield, 1 Arm Guard";
+				mes "And 20,000 Zeny";
+				mes "Come again when you have these materials.";
+				close;
+			}
+			if(Zeny < 20000){
+				mes "[Basshu]";
+				mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+				mes "In order to make an Improved Arm Guard, I require...";
+				mes "1 Mirror Shield, 1 Arm Guard,";
+				mes "And 20,000 Zeny.";
+				mes "Come again when you have these materials.";
+				close;
+			}
+			mes "[Basshu]";
+			mes "The proper ingredients";
+			mes "have been gathered.";
+			mes "Before I begin,";
+			mes "I'll ask one last time.";
+			next;
+			mes "[Basshu]";
+			mes "In trade of the magical defence of the Arm Guard increasing, the shield's ability to block physical attacks may inevitably decrease.";
+			next;
+			mes "[Basshu]";
+			mes "Will you give me the materials you've gathered";
+			mes "to receive an Improved Arm Guard?";
+			next;
+			if(select("No:Yes") == 1){
+				mes "[Basshu]";
+				mes "Very Well.";
+				mes "If you ever make up your mind";
+				mes "come and find me again.";
+				close;
+			}else{
+				mes "[Basshu]";
+				mes "Hmm~ Well then~";
+				mes "Shall we begin?";
+				mes "Bang Clang ~Bang Clang ~";
+				mes "Sweep Sweep~ Saw Saw~";
+				next;
+				if(countitem(2107) < 1 || countitem(2117) < 1 || Zeny < 20000){
+					mes "HACK DETECTED";
+					close;
+				}
+				mes "[Basshu]";
+				mes "Here it is -- it's complete.";
+				mes "I've made you an Improved Arm Guard";
+				mes "If you ever want me to create more items, come and ask me anytime.";
+				delitem 2107,1;
+				delitem 2117,1;
+				set Zeny,Zeny-20000;
+				set MISC_QUEST,MISC_QUEST | 4096;
+				getitem 2119,1;
+				close;
+			}
+		}
+	}
+}
+
+que_ng,27,18,3	script	Toshu	709,{
+	
+	if(BaseClass != Job_Ninja){
+		mes "[Toshu]";
+		mes "How are you~";
+		mes "My young friend~";
+		mes "I am one of the three brothers of the eastern world who craft armor. The name is Murata Toshu.";
+		next;
+		mes "[Toshu]";
+		mes "I've learned how to slot things from a land overseas.";
+		mes "I'm thinking about earning some money using this ability.";
+		next;
+		mes "[Toshu]";
+		mes "But you don't seem like the kind of customer which I can do business with...";
+		close;
+	}
+	mes "[Toshu]";
+	mes "How are you, my young friend~";
+	mes "I'm the middle brother of the three brothers in charge of crafting shields in the east.";
+	mes "They call me Murata Toshu.";
+	next;
+	mes "[Toshu]";
+	mes "I learned how to slot things from overseas, so I'm thinking about earning some money with that ability part time.";
+	next;
+	mes "[Toshu]";
+	mes "If you want, I can create a Slotted Improved Arm Guard if you bring me";
+	mes "1 Improved Arm Guard, 1 Slotted Buckler";
+	mes "and 40,000 Zeny.";
+	next;
+	mes "[Toshu]";
+	mes "By the way, I'm sorry to say this, but there's a chance I might break your materials and fail slotting the Improved Arm Guard, so you might want to think about it.";
+	mes "How 'bout it? Do we have a deal?";
+	next;
+	if(select("No. I don't want to do this.:Yes! Let's do this!") == 1){
+		mes "[Toshu]";
+		mes "Ok.";
+		mes "Of course, the shields are important to you.";
+		mes "If you decide to go foward with this afterwards, come and find me.";
+		close;
+	}else{
+		if(countitem(2104) < 1 || countitem(2119) < 1){
+			mes "[Toshu]";
+			mes "It doesn't look like you brought me enough materials.";
+			mes "The required materials are 1 Slotted Buckler";
+			mes "1 Improved Arm Guard, and";
+			mes "40,000 Zeny.";
+			mes "You must bring me the right number of materials and Zeny.";
+			mes "Don't forget that.";
+			close;
+		}
+		if(Zeny < 40000){
+			mes "[Toshu]";
+			mes "It looks like you brought the right amount of materials.";
+			mes "However.. you didn't bring enough Zeny.";
+			mes "The required materials are 1 Slotted Buckler";
+			mes "1 Improved Arm Guard, and 40,000 Zeny.";
+			mes "You must bring me the right number of materials and Zeny.";
+			mes "Don't forget that.";
+			close;
+		}
+		mes "[Toshu]";
+		mes "Hmm. materials and zeny checked!";
+		mes "Time to begin my part.";
+		mes "Just to warn you..";
+		next;
+		mes "[Toshu]";
+		mes "While I am in production, I may fail to create your gear, so you may want to think it over.";
+		next;
+		mes "[Toshu]";
+		mes "Do you want me to produce your gear, even if there's a chance I may fail?";
+		next;
+		if(select("I think I better back off. Sob..:Yes! Let's try anyway!") == 1){
+			mes "[Toshu]";
+			mes "Ok.";
+			mes "Well, come back later when you've got the guts to try.";
+			mes "Erherherherher~";
+			close;
+		}else{
+			mes "[Toshu]";
+			mes "OK! I have your order!";
+			mes "Just wait 3 seconds!!";
+			mes "Clink Clank~!Clink Clank~!!";
+			mes "Sweep Sweep~ Saw Saw~";
+			next;
+			if(countitem(2104) < 1 || countitem(2119) < 1 || Zeny < 40000){
+				mes "HACK DETECTED";
+				close;
+			}
+			delitem 2104,1;
+			delitem 2119,1;
+			set Zeny,Zeny-40000;
+
+			switch (rand(5)) {
+				case 1:
+					getitem 12043,1;
+					mes "[Toshu]";
+					mes "Aaah!!!";
+					mes "Ah.. this";
+					mes "is bad news.";
+					mes "Slotting the shield has failed";
+					mes "as I feared.";
+					mes "I'm very sorry about this.";
+					mes "Eat this and cheer up.";
+					close;
+					break;
+				case 2:
+					getitem 12043,1;
+					mes "[Toshu]";
+					mes "Aaah!!!";
+					mes "Ah.. this";
+					mes "is bad news.";
+					mes "Slotting the shield has failed";
+					mes "as I feared.";
+					mes "I'm very sorry about this.";
+					mes "Eat this and cheer up.";
+					close;
+					break;
+				default:
+					getitem 2120,1;
+					mes "[Toshu]";
+					mes "Hmm~~ Looks like everything went all right.";
+					mes "Here is your completed Slotted";
+					mes "Improved Arm Guard.";
+					mes "I was nervous that it might fail, but hey, there's a reason why I'm called a Craftsman, right?";
+					mes "If you need me again, come and seek me.";
+					close;
+					break;
+			}
+		}
+	}
+}
+
+que_ng,72,34,3	script	Craftsman Kaibara	847,{
+
+	if (BaseClass != Job_Ninja){
+		mes "[Kaibara]";
+		mes "I am a Craftsman called Kaibara";
+		mes "I create weapons for Ninjas.";
+		mes "However, It doesn't look like you are a ninja.";
+		next;
+		mes "[Kaibara]";
+		mes "Even if I created a sword for you, I doubt you would be able to appreciate it. What a shame...";
+		close;
+	}
+	mes "[Kaibara]";
+	mes "I am the last Craftsman who knows how to make a sword out of a Black Dragon's scales. They call me Kaibara.";
+	mes "You look like a Ninja.";
+	mes "If you're interested, take a look at my goods while you decide what you want.";
+	next;
+	switch(select("Gokurin:Jitte:Ashura[3]:Murasame:Hakujin:Cancel")){
+		case 1:
+			mes "[Kaibara]";
+			mes "Hmm~ I see you've picked the Gokurin.";
+			mes "Gokurin is made with various materials, one of them being Dragon's Scale.";
+			next;
+			mes "[Kaibara]";
+			mes "The required material for this sword is 400 Dragon Scales,";
+			mes "5 Oridecons, and 30 Dragon Skins.";
+			mes "and 200,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(1036) < 400 || countitem(984) < 5 || countitem(7123) < 30){
+					mes "[Kaibara]";
+					mes "It looks like there are not enough ingredients for me to make you a Gokurin.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to make the Gokurin,";
+					mes "I require ^ff0000 400 Dragon's Scale,^000000";
+					mes "^ff00005 Oridecons^000000, ^ff000030 Dragon Skins^000000";
+					mes "and ^ff0000200000 Zeny^000000.";
+					mes "Make sure you have those items when you return to me.";
+					close;
+				}
+				if(Zeny < 200000){
+					mes "[Kaibara]";
+					mes "Hmm, it looks like you have enough materials, but you're short on Zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to make the Gokurin,";
+					mes "I require ^ff0000 400 Dragon Scales,^000000";
+					mes "^ff00005 Oridecons^000000, ^ff000030 Dragon Skins^000000";
+					mes "and ^ff0000200,000 Zeny^000000.";
+					mes "Make sure you have those items when you return to me.";
+					close;
+				}
+				delitem 1036,400;
+				delitem 984,5;
+				delitem 7123,30;
+				set Zeny,Zeny-200000;
+				getitem 13006,1;
+				mes "[Kaibara]";
+				mes "Hmm, looks good.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Gokurin.";
+				close;
+			}
+			break;
+		case 2:
+			mes "[Kaibara]";
+			mes "Hmm~ You've picked the ^ff0000Jitte^000000.";
+			mes "This sword has a legend that the more enemies you slay with it, the stronger it gets.";
+			next;
+			mes "[Kaibara]";
+			mes "The required materials are 30 Steel, one Old Hilt";
+			mes "and 20,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(999) < 30 || countitem(7022) < 1){
+					mes "[Kaibara]";
+					mes "It looks like you need more materials before I can make you a Jitte.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Jitte, I require";
+					mes "^ff000030 Steel^000000, ";
+					mes "^f00001 Old Hilt^000000,";
+					mes "and ^ff000020,000 Zeny^000000.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 20000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create the Jitte, I require";
+					mes "^ff000030 Steel,^000000";
+					mes "^f00001 Old Hilt^000000,";
+					mes "and ^ff000020,000 Zeny^000000.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 999,30;
+				delitem 7022,1;
+				set Zeny,Zeny-20000;
+				getitem 13007,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Jitte.";
+				close;
+			}
+			break;
+		case 3:
+			mes "[Kaibara]";
+			mes "Hmm~ You've chose the ^ff0000Ashura[3]^000000.";
+			mes "In order to create an Ashura[3], I require ";
+			mes "25 Steel, 5 Worn-out Magic Scrolls";
+			mes "And 32,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(999) < 25 || countitem(7099) < 5){
+					mes "[Kaibara]";
+					mes "It looks like you don't have all the materials I need to create an Ashura[3] for you.";
+					next;
+					mes "[Kaibara]";
+					mes "I require ^ff000025 Steel,^000000";
+					mes "^ff0000Five Worn-out Magic Scrolls,^000000";
+					mes "and ^ff0000 32,000 Zeny^000000 in order to create an Ashura[3].";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 32000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create an Ashura[3], I require the following materials - ";
+					mes "^ff000025 Steel,^000000";
+					mes "^ff00005 Worn-out Magic Scrolls^000000,";
+					mes "and ^ff0000 32,000 Zeny^000000";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 999,25;
+				delitem 7099,5;
+				set Zeny,Zeny-32000;
+				getitem 13011,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Ashura[3].";
+				close;
+			}
+			break;
+		case 4:
+			mes "[Kaibara]";
+			mes "Hmm~ You've chose the ^ff0000Murasame^000000.";
+			mes "To create the Murasame, I require";
+			mes "30 Steel, 10 Aquamarines";
+			mes "And 48,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(999) < 30 || countitem(720) < 10){
+					mes "[Kaibara]";
+					mes "It looks like your short on materials for me to create you a Murasame.";
+					next;
+					mes "[Kaibara]";
+					mes "I require ^ff000030 Steel^000000, ";
+					mes "^ff000010 Aquamarines^000000,";
+					mes "and ^ff000048,000 Zeny^000000";
+					mes "in order to create a Murasame.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 48000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Murasame, I require..";
+					mes "^ff000030 Steel^000000, ";
+					mes "^ff000010 Aquamarines^000000,";
+					mes "and ^ff000048,000 Zeny^000000.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 999,30;
+				delitem 720,10;
+				set Zeny,Zeny-48000;
+				getitem 13012,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Murasame.";
+				close;
+			}
+			break;
+		case 5:
+			mes "[Kaibara]";
+			mes "Hmm~ You've chose the ^ff0000Hakujin^000000.";
+			mes "In order to create a Hakujin, I require...";
+			mes "500 Skel-Bones, 5 Pearls";
+			mes "10 Level 3 Heal Scrolls";
+			mes "and 120,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(932) < 500 || countitem(12001) < 10 || countitem(722) < 5){
+					mes "[Kaibara]";
+					mes "It looks like you're short on raw materials for me to be able to make you a Hakujin.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Hakujin, I require...";
+					mes "500 Skel-Bones, 5 Pearls";
+					mes "10 Level 3 Heal Scrolls";
+					mes "and 120,000 Zeny.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 120000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Hakujin, I require...";
+					mes "500 Skel-Bones, 5 Pearls";
+					mes "10 Level 3 Heal Scrolls";
+					mes "and 120,000 Zeny.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 932,500;
+				delitem 12001,10;
+				delitem 722,5;
+				set Zeny,Zeny-120000;
+				getitem 13014,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've double checked the materials and Zeny you've brought.";
+				mes "Here is your completed Hakujin.";
+				close;
+			}
+			break;
+		default:
+			mes "[Kaibara]";
+			mes "Hmm, Very well.";
+			mes "Come and look for me again.";
+			close;
+			break;
+	}
+}
+
+que_ng,22,62,3	script	Tetsu	709,{
+
+	mes "[Tetsu]";
+	if(BaseClass != Job_Ninja){
+		mes "I'm The Craftman of Fuuma Ninjas called Tetsu.";
+		next;
+		mes "[Tetsu]";
+		mes "My living is getting tough because of my gambling, so I've started to make weapons part time.";
+		next;
+		mes "[Tetsu]";
+		mes "However, it looks like you're not a ninja.";
+		mes "There's no point of me explaining any further then.";
+		next;
+		mes "[Tetsu]";
+		mes "Perhaps when I have some money to spare, we could play a game of Mah-jong together.";
+		close;
+	}
+	mes "I am the Craftman of the Fuuma Ninja. I am called Tetsu.";
+	next;
+	mes "[Tetsu]";
+	mes "Things have become tough for me due to my habit of gambling... So, here I am making weapons again, at long last.";
+	next;
+	mes "[Tetsu]";
+	mes "I may not look it, but if it's about any items related to Fuuma, there's none who come close to my craftsmenship.";
+	mes "Well, look around, look around.";
+	next;
+	menu "Fuuma Shuriken Beneki",M_BENEKI,"Fuuma Shuriken Daisharin",M_DAIS,
+		"Fuuma Shuriken Daisharin[4]",M_DAIS4,"Fuuma Shuriken Rekka",M_REKKA,"Cancel",M_CANCEL;
+
+//=====================BENEKI========================
+M_BENEKI:
+	mes "[Tetsu]";
+	mes "Hmm~ You've chose the ^ff0000Fuuma Beneki^000000.";
+	mes "In order to make the Fuuma Beneki, I need";
+	mes "50 Steel, 20 Harpy Feather";
+	mes "5 Oridecon, and 90,000 Zeny.";
+	mes "Do you want me to create this item for you?";
+	next;
+	menu "Well .. erm .. it's kind of pricey.",M_NOPE,"Yes! Make it for me!",-;
+	
+	if(countitem(999)<50 || countitem(7115)<20 || countitem(984)<5){
+		mes "[Tetsu]";
+		mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Beneki.";
+		next;
+		mes "[Tetsu]";
+		mes "In order to create a Fuuma shuriken Beneki, I require...";
+		mes "^ff000050 Steel,^000000";
+		mes "^ff000020 Harpy Feathers^000000,";
+		mes "^ff00005 Oridecons^000000,";
+		mes "and ^ff000090,000 Zeny^000000.";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	if(Zeny < 90000){
+		mes "[Tetsu]";
+		mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "In order to create a Fuuma Shuriken Beneki, I require...";
+		mes "^ff000050 Steel,^000000";
+		mes "^ff000020 Harpy Feathers^000000,";
+		mes "^ff00005 Oridecons^000000,";
+		mes "and ^ff000090,000 Zeny^000000.";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	delitem 999,50;
+	delitem 7115,20;
+	delitem 984,5;
+	set Zeny,Zeny-90000;
+	getitem 13300,1;
+	mes "[Tetsu]";
+	mes "Hmm, very well.";
+	mes "Looks like you've brought me the correct amount of materials and Zeny";
+	mes "Here is your completed Fuuma Shuriken Beneki";
+	close;
+
+//=====================DAISHARIN========================
+M_DAIS:
+	mes "[Tetsu]";
+	mes "Hmm~ I see you've chose the ^ff0000Fuuma Shuriken Daisharin^000000.";
+	mes "Fuuma Shuriken Daisharin In order to create Fuuma Shuriken Daisharin, I require...";
+	mes "30 Steel, 100 Tassels";
+	mes "2 Oridecons, and 40,000 Zeny.";
+	mes "Do you want me to create this item for you?";
+	next;
+	menu "Well .. erm .. it's kind of pricey.",M_NOPE,"Yes! Make it for me!",-;
+
+	if(countitem(999)<30 || countitem(7301)<100 || countitem(984)<2){
+		mes "[Tetsu]";
+		mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Daisharin.";
+		next;
+		mes "[Tetsu]";
+		mes "Fuuma Shuriken Daisharin, I require...";
+		mes "^ff000030 Steel^000000, ";
+		mes "^ff0000100 Tassels^000000,";
+		mes "^ff00002 Oridecons^000000,";
+		mes "and ^ff000040,000 Zeny^000000.";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	if(Zeny < 40000){
+		mes "[Tetsu]";
+		mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "Fuuma Shuriken Daisharin, I require...";
+		mes "^ff000030 Steel^000000, ";
+		mes "^ff0000100 Tassels^000000,";
+		mes "^ff00002 Oridecons^000000,";
+		mes "and ^ff000040,000 Zeny^000000.";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	delitem 999,30;
+	delitem 7301,100;
+	delitem 984,2;
+	set Zeny,Zeny-40000;
+	getitem 13301,1;
+	mes "[Tetsu]";
+	mes "Hmm, very well.";
+	mes "Looks like you've brought me the correct amount of materials and Zeny";
+	mes "Here is your completed Fuuma Shuriken Daisharin";
+	close;
+
+//=====================DAISHARIN4========================
+M_DAIS4:
+	mes "[Tetsu]";
+	mes "Hmm~ I see you've chose the ^ff0000Fuuma Shuriken Daisharin[4]^000000.";
+	mes "In order to create Fuuma Shuriken Daisharin[4], I require...";
+	mes "20 Cracked Diamonds, 1 Fuuma Shuriken Daisharin";
+	mes "3 Oridecons, and 40,000 Zeny.";
+	mes "Do you want me to create this item for you?";
+	next;
+	mes "[Tetsu]";
+	mes "And in case you don't know...";
+	mes "In the process of slotting a weapon, your weapon will lose any refine points and slotted cards, if any.";
+	mes "Think this over with caution, and then decide if you really want to do this or not.";
+	next;
+	menu "No thanks.. It's a little pricey..",M_NOPE,"Yes! Make it for me!",-;
+
+	if(countitem(733)<20 || countitem(13301)<1 || countitem(984)<3){
+		mes "[Tetsu]";
+		mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Daisharin[4].";
+		next;
+		mes "[Tetsu]";
+		mes "In order to create a Fuuma Shuriken Daisharin[4], I require...";
+		mes "^ff000020 Cracked Diamonds^000000,";
+		mes "^ff00003 Oridecons^000000,";
+		mes "1 Fuuma Shuriken Daisharin, and";
+		mes "^ff000040,000 Zeny^000000.";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	if(Zeny < 40000){
+		mes "[Tetsu]";
+		mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "In order to create a Fuuma Shuriken Daisharin[4], I require...";
+		mes "^ff000020 Cracked Diamonds^000000,";
+		mes "^ff00003 Oridecons^000000,";
+		mes "1 Fuuma Shuriken Daisharin, and";
+		mes "^ff000040,000 Zeny^000000.";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	delitem 733,20;
+	delitem 984,3;
+	set Zeny,Zeny-40000;
+	delitem 13301,1;
+	getitem 13302,1;
+	mes "[Tetsu]";
+	mes "Hmm, very well.";
+	mes "Looks like you've brought me the correct amount of materials and Zeny";
+	mes "Here is your completed Fuuma Shuriken Daisharin[4].";
+	close;
+
+//=====================REKKA========================
+M_REKKA:
+	mes "[Tetsu]";
+	mes "Hmm~ I see you've chose the ^ff0000Fuuma Shuriken Rekka^000000.";
+	mes "In order to create a Fuuma Shuriken Rekka, I require";
+	mes "50 Steel, 100 Live Coal";
+	mes "100 Burning Hearts, 50 Burning Stones";
+	mes "and 78,000 Zeny.";
+	mes "Do you want me to create this item for you?";
+	next;
+	menu "Well .. erm .. it's kind of pricey",M_NOPE,"Yes! Make it for me!",-;
+
+	if(countitem(999)<50 || countitem(7098)<100 || countitem(7097)<100 || countitem(7521)<50){
+		mes "[Tetsu]";
+		mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Rekka.";
+		next;
+		mes "[Tetsu]";
+		mes "In order to create a Fuuma Shuriken Rekka, I require...";
+		mes "^ff000050 Steel^000000,^ff000050 Burning Stones^000000,";
+		mes "^ff0000100 Burning Hearts^000000,^ff0000100 Live Coal^000000,";
+		mes "and ^ff000078,000 Zeny^000000";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	if(Zeny < 78000){
+		mes "[Tetsu]";
+		mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+		next;
+		mes "[Tetsu]";
+		mes "In order to create a Fuuma Shuriken Rekka, I require...";
+		mes "^ff000050 Steel^000000,^ff000050 Burning Stones^000000,";
+		mes "^ff0000100 Burning Hearts^000000,^ff0000100 Live Coal^000000,";
+		mes "and ^ff000078,000 Zeny^000000";
+		mes "Remember these needed materials, and come back after you're positive you have them all.";
+		close;
+	}
+	delitem 999,50;
+	delitem 7098,100;
+	delitem 7097,100;
+	delitem 7521,50;
+	set Zeny,Zeny-78000;
+	getitem 13303,1;
+	mes "[Tetsu]";
+	mes "Hmm, very well.";
+	mes "Looks like you've brought me the correct amount of materials and Zeny";
+	mes "Here is your completed Fuuma Shuriken Rekka.";
+	close;
+
+//=====================I'M SORRY========================
+M_NOPE:
+	mes "[Tetsu]";
+	mes "Hmm. The cost to create this item is kind of expensive...";
+	mes "All right. If you do gather all the required materials one day, come back and see me.";
+	close;
+
+M_CANCEL:
+	mes "[Tetsu]";
+	mes "What a shame.";
+	mes "I wanted to show you the weapons I put my heart and soul into making them.";
+	mes "If you ever have second thoughts, it's never too late to come back and ask.";
+	close;
+}

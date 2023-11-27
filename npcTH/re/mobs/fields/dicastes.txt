@@ -1,0 +1,29 @@
+//===== rAthena Script =======================================
+//= El Dicastes Fields Monster Spawn Script
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Official spawns from Aegis [Kisuka]
+//= 1.1 Correct Spawn by Navigation's mob data. [attackjom]
+//============================================================
+
+//==================================================
+// dic_fild01 - At the Foot of the Kamidal Mountain
+//==================================================
+dic_fild01,0,0	monster	Centipede	1987,60,5000
+dic_fild01,0,0	monster	Centipede Larva	1999,30,5000
+dic_fild01,0,0	monster	Tatacho	1986,25,5000
+dic_fild01,0,0	monster	Dolomedes	2092,20,5000
+
+//==================================================
+// dic_fild02 - At the Foot of the Kamidal Mountain
+//==================================================
+dic_fild02,0,0	monster	Bradium Golem	2024,3,5000
+dic_fild02,0,0	monster	Centipede	1987,38,5000
+dic_fild02,0,0	monster	Centipede Larva	1999,10,5000
+dic_fild02,0,0	monster	Tatacho	1986,27,5000
+dic_fild02,0,0	monster	Dolomedes	2092,87,5000

@@ -1,0 +1,1053 @@
+//===== rAthena Script =======================================
+//= iRO 2008 Christmas Event
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= iRO Christmas Event. (2008)
+//= Create Music Box and Cake.
+//= Play card game with Santa.
+//= Create Santa Suits.
+//=
+//= NOTE: Must enable X-mas08 mobs in mob_db2.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Kisuka]
+//= 1.1 Fixed some issues, revamped the whole script. [Kisuka]
+//============================================================
+
+// Caroller - Music Box
+//============================================================
+prontera,226,306,4	script	Caroller#iROxmas08	79,{
+	if (iROxmas08carol < 1 || iROxmas08carol == 3) {
+		if (iROxmas08carol == 3) {
+			mes "[Caroller]";
+			mes "Jingle Bells! Jingle Bells! Jingle all the way!";
+			mes "O' what fun it is to ride in a one-horse open sleeeigh, Hey!";
+			next;
+			mes "[Caroller]";
+			mes "Merry Christmas!";
+			mes "Hey! You! What comes to mind when you think about Christmas?";
+			next;
+		} else {
+			mes "[Caroller]";
+			mes "Jingle Bells! Jingle Bells! Jingle all the way!";
+			next;
+			specialeffect EF_GLORIA;
+			mes "[Caroller]";
+			mes "O' what fun it is to ride in a one-horse open sleigh!";
+			next;
+			mes "[Caroller]";
+			mes "Merry Christmas!";
+			if (Sex == SEX_MALE) {
+				mes "Hey, boy! What comes to mind when";
+			} else {
+				mes "Hey, girl! What comes to mind when";
+			}
+			mes "you think about Christmas?";
+			next;
+		}
+		switch(select("Santa Claus:Gift Boxes:Carols:Santa Costumes:Fake Santa Antonio")) {
+
+			case 1:
+				mes "[Caroller]";
+				mes "Santa Claus!";
+				mes "You're so innocent!!";
+				mes "Ah!";
+				next;
+				mes "[Caroller]";
+				mes "Here's a secret!";
+				mes "There's a rumor that Santa Claus lives in a certain village all throughout the year.";
+				next;
+				mes "[Caroller]";
+				mes "But now!!!";
+				mes "In this Christmas season!!";
+				mes "You guys can meet Santa on either of the five possible villages throughout Rune-Midgerts!";
+				next;
+				mes "[Caroller]";
+				mes "If you win over Santa, you can get a gift. Would you go for it?";
+				next;
+				emotion ET_SMILE;
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
+				mes "Isn't that big news?";
+				close;
+
+			case 2:
+				mes "[Caroller]";
+				mes "Gift boxes?! All right!";
+				mes "Isn't it thrilling to open gifts over your head!!";
+				next;
+				mes "[Caroller]";
+				mes "Anyway, did you know...";
+				mes "Some villain, a fake Santa robbed some gifts from the good Santa!";
+				next;
+				mes "[Caroller]";
+				mes "Furthermore, he has put bad magic on the gifts so that they become monsters!";
+				next;
+				emotion ET_SMILE;
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
+				mes "Isn't it amazing?";
+				close;
+
+			case 3:
+				if (iROxmas08carol == 3) {
+					mes "[Caroller]";
+					mes "Ah, a music box is useful.";
+					next;
+					mes "[Caroller]";
+					mes "Though we can't all play it around the village as we planned, it's cool that you carry it.";
+					next;
+					mes "[Caroller]";
+					mes "We want to enjoy carols all together... I hope to get Crystal Pieces!";
+					next;
+					mes "[Caroller]";
+					mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
+					next;
+					select("Why not? Sure, I can give you some.");
+					if (countitem(6092) < 6) {
+						mes "[Caroller]";
+						mes "Yes, please.";
+						next;
+						mes "[Caroller]";
+						mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
+						close;
+					} else {
+						mes "[Caroller]";
+						mes "Wow, you have them.";
+						next;
+						mes "[Caroller]";
+						mes "I can bake you a cake, and I can carve your name on the cake, if you want!";
+						next;
+						if (select("No, thanks.:Please name it for me.") == 2) {
+							mes "[Caroller]";
+							mes "Thank for your help!";
+							next;
+							mes "[Caroller]";
+							mes "Many people live in the giant world!";
+							mes "So many people hope to hear Caroller, yet I always lack Crystal pieces.";
+							next;
+							mes "[Caroller]";
+							mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
+							next;
+							emotion ET_SMILE;
+							delitem 6092,6;
+							getnameditem 12354,strcharinfo(0);
+							mes "[Caroller]";
+							mes "Let's care about others around you on this Christmas season!";
+							close;
+						} else {
+							mes "[Caroller]";
+							mes "Oh!";
+							mes "Shyness!";
+							next;
+							mes "[Caroller]";
+							mes "Anyway, thanks a lot for your help.";
+							next;
+							mes "[Caroller]";
+							mes "Many people live in the giant world!";
+							mes "So many people hope to hear Caroller, yet I always lack Crystal pieces.";
+							next;
+							mes "[Caroller]";
+							mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
+							next;
+							emotion ET_SMILE;
+							delitem 6092,6;
+							getitem 12354,1;
+							mes "[Caroller]";
+							mes "Let's care about others around you on this Christmas season!";
+							close;
+						}
+					}
+				}
+					mes "[Caroller]";
+					mes "You know about Christmas!";
+					mes "Talking about Christmas...";
+					mes "...it's carols!!!";
+					mes "I've been waiting for this for when";
+					mes "Christmas comes around!";
+					next;
+					mes "[Caroller]";
+					mes "But there's been no caroling here and there like before, so we can't feel the Christmas spirit.";
+					next;
+					mes "[Caroller]";
+					mes "So, I installed a Singing Crystal in Prontera...";
+					next;
+					mes "[Caroller]";
+					mes "but that jerk Antonio broke the crystal!";
+					next;
+					mes "[Caroller]";
+					mes "The gift boxes have been changing into monsters since Antonio placed some magic on them, so the monsters ate up the crystal fragments!";
+					next;
+					mes "[Caroller]";
+					mes "I am so devastated, since the Singing Crystal has been the hope of many children around the villages.";
+					next;
+					if (select("There's no other way to carol?:You can hear carols in Lutie.") == 2) {
+						mes "[Caroller]";
+						mes "And just stay there, every Christmas, for your whole life?";
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "What? What do you mean?";
+						next;
+						mes "[Caroller]";
+						mes "Oh, nevermind.";
+						mes "Ah...";
+						close;
+					}
+					mes "[Caroller]";
+					mes "Maybe, it's quite hard to make a jukebox for the villages, but a music box might be possible.";
+					next;
+					mes "[Caroller]";
+					mes "We need the ^0000FFSinging Crystal Pieces^000000 that the monsters ate up.";
+					next;
+					mes "[Caroller]";
+					mes "Please bring me ^0000FF6 Singing Crystal Pieces^000000, and you will be rewarded with presents!";
+					next;
+					mes "[Caroller]";
+					mes "Sounds cool, huh!!";
+					next;
+					select("........................");
+					mes "[Caroller]";
+					mes "...Why are you staring at me like that?";
+					next;
+					mes "[Caroller]";
+					mes "You're thinking that we are always getting our plans spoiled, aren't you?";
+					next;
+					mes "[Caroller]";
+					mes "I know that we are not good at controlling stuff, but our rewards are good, right?";
+					next;
+					select("........................");
+					mes "[Caroller]";
+					mes "Hey, we treat you good...";
+					next;
+					select("........................");
+					mes "[Caroller]";
+					mes "You are so cruel to me!";
+					mes "Bad! Bad!";
+					next;
+					mes "[Caroller]";
+					mes "Please, for our children's hope!!!?";
+					mes "Please bring me 6 Singing Crystal Pieces from ^0000FFViolent Gift Boxes^000000!";
+					next;
+					emotion ET_OK;
+					mes "[Caroller]";
+					mes "They're definitely as harsh as their name.";
+					mes "Go on please!";
+					set iROxmas08carol,1;
+					close;
+
+			case 4:
+				mes "[Caroller]";
+				mes "Santa costumes!!";
+				mes "You know, the santa costumes that the monsters are wearing now aren't genuine!";
+				next;
+				mes "[Caroller]";
+				mes "The rumor 'round here is, Lutie's designer made these costumes.";
+				next;
+				mes "[Caroller]";
+				mes "Every year, adventurers challenge to attack Antonio the fake Santa, but there's no way to catch up to him due to his hat and costume!";
+				next;
+				mes "[Caroller]";
+				mes "Are there some special abilities within them?";
+				mes "There's still the designer in the Christmas village... How about asking her to make that costume?";
+				next;
+				emotion ET_SMILE;
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
+				mes "It's hot, huh?";
+				close;
+
+
+			case 5:
+				mes "[Caroller]";
+				mes "A-N-T-O-N-I-O!!!";
+				mes "As I heard, this Antonio is quite different from before.";
+				next;
+				mes "[Caroller]";
+				mes "He seems to be quite resolved with himself since he ran away from people before.";
+				next;
+				mes "[Caroller]";
+				mes "And he isn't alone anymore... is what I heard...";
+				next;
+				emotion ET_SMILE;
+				mes "[Caroller]";
+				mes "Caroller's hot news! Ha!";
+				mes "Hotness, right?";
+				close;
+		}
+	}
+	
+	if (iROxmas08carol == 1) {
+		if (countitem(6092) < 6) {
+			mes "[Caroller]";
+			mes "Maybe, it's quite hard to make a jukebox for the villages, but a music box might be possible.";
+			next;
+			mes "[Caroller]";
+			mes "We need the ^0000FFSinging Crystal Pieces^000000 that the monsters ate up.";
+			next;
+			mes "[Caroller]";
+			mes "Please bring me ^0000FF6 Singing Crystal Pieces^000000, and you will be rewarded with presents!";
+			next;
+			mes "[Caroller]";
+			mes "For all of the children of this world!!!";
+			mes "Please bring me ^0000FFSinging Crystal Pieces^000000 from ^0000FFViolent Gift Boxes^000000!";
+			next;
+			emotion ET_OK;
+			mes "[Caroller]";
+			mes "Be careful!";
+			mes "They're definitely as harsh as their name.";
+			mes "Take care!!!";
+			close;
+		} else {
+			specialeffect EF_GLORIA;
+			mes "[Caroller]";
+			mes "Don't cry, don't cry!";
+			mes "Santa won't give you a gift if you're crying.";
+			next;
+			mes "[Caroller]";
+			select("I got them!");
+			mes "[Caroller]";
+			mes "Wow, you got them!";
+			mes "They are so cruel, aren't they?";
+			mes "I'm happy to see you again.";
+			next;
+			mes "[Caroller]";
+			mes "Let's count together!";
+			mes "... ...";
+			mes "Six!!";
+			next;
+			mes "[Caroller]";
+			mes "All right! We can start to make our music box with crystal fragments.";
+			next;
+			mes "[Caroller]";
+			mes "We would amplify the sounds of the crystal fragments to sound through the music box.";
+			next;
+			mes "[Caroller]";
+			mes "You know, a music box that sounds like a jukebox!";
+			next;
+			mes "[Caroller]";
+			mes "It's handy. You can carry it, as well as listen to sweet carols anywhere.";
+			mes "Doesn't that sound cool!?";
+			next;
+			mes "[Caroller]";
+			mes "So, we need more of some materials.";
+			mes "^0000FF10 Trunk, 1 Hammer Of Blacksmith, 1 Jubilee, 10 Sticky Mucus, 3carat Diamond^000000!";
+			next;
+			delitem 6092,6;
+			emotion ET_OK;
+			set iROxmas08carol,2;
+			mes "[Caroller]";
+			mes "Those are all needed.";
+			mes "Isn't that easy?";
+			close;
+		}
+	}
+	
+	if (iROxmas08carol == 2) {
+		if (countitem(1019) < 10 || countitem(1005) < 1 || countitem(7312) < 1 || countitem(938) < 10 || countitem(732) < 1) {
+			mes "[Caroller]";
+			mes "We can make a music box with Singing Crystal Pieces.";
+			mes "It's handy, you can hear carols anywhere. Sounds cool?";
+			next;
+			mes "[Caroller]";
+			mes "So, we need more of some materials.";
+			mes "^0000FF10 Trunk, 1 Hammer Of Blacksmith, 1 Jubilee, 10 Sticky Mucus, 3carat Diamond^000000!";
+			next;
+			emotion ET_OK;
+			mes "[Caroller]";
+			mes "That's all we need.";
+			mes "Isn't that easy?";
+			close;
+		} else {
+			specialeffect EF_GLORIA;
+			mes "[Caroller]";
+			mes "Jingle bells, jingle bells,";
+			mes "jingle all the way!";
+			mes "O what fun it is to ride, in a";
+			mes "one... horse... o-pen... sleigh!!!";
+			next;
+			mes "[Caroller]";
+			mes "Wow!";
+			mes "You came back!";
+			mes "Did you bring all the materials?";
+			next;
+			mes "[Caroller]";
+			mes "Good!";
+			mes "No need to hesitate! Let's get started to make our music box.";
+			next;
+			mes "[Caroller]";
+			specialeffect EF_REPAIRWEAPON;
+			mes "Blacksmith hammers on trunk... and we shape the frame.";
+			next;
+			mes "[Caroller]";
+			//(effect - stones from ground?)
+			mes "Please use the Singing Crystal Pieces for a column, the Diamond as a prop, and the Sticky Mucus as glue.";
+			next;
+			mes "[Caroller]";
+			specialeffect EF_HIT2;
+			mes "And now...";
+			mes "we decorate with a Jubilee...";
+			next;
+			mes "[Caroller]";
+			specialeffect EF_SUFFRAGIUM;
+			mes "The last step...!";
+			mes "Breating life into it!";
+			next;
+			mes "[Caroller]";
+			mes "It's done now!!!";
+			next;
+			mes "[Caroller]";
+			mes "It's so cool! Isn't it cute!!?!";
+			next;
+			mes "[Caroller]";
+			mes "You did as I requested, so I will give you gifts, as promised.";
+			next;
+			mes "[Caroller]";
+			mes "One, is this music box.";
+			mes "Please play this music box all over the villages!";
+			next;
+			mes "[Caroller]";
+			mes "Another present is a Christmas cake especially shaped like your name!";
+			mes "I made this cake shaped like your name!";
+			next;
+			mes "[Caroller]";
+			mes "Don't worry, it tastes good.";
+			next;
+			emotion ET_OK;
+			getitem 2784,1;
+			getnameditem 12354,strcharinfo(0);
+			delitem 1019,10;
+			delitem 1005,1;
+			delitem 7312,1;
+			delitem 938,10;
+			delitem 732,1;
+			set iROxmas08carol,3;
+			mes "[Caroller]";
+			mes "Thanks a lot.";
+			mes "Merry Christmas!";
+			mes "Have a good holiday season!";
+			close;
+		}
+	}
+}
+
+// Santa Claus - Card Game
+//============================================================
+-	script	Santa Claus#iROxmas08::08santa	718,{
+	mes "[Santa Claus]";
+	mes "Wow! Were you naughty or nice this year?";
+	mes "All right, what comes to your mind when you think about Christmas?";
+	next;
+	switch(select("Carolling:Santa Claus:Gift Boxes:Santa Costume:Not much really...")) {
+	
+	case 1:
+		mes "[Santa Claus]";
+		mes "Carolling! That's good!";
+		mes "A sweet carol always makes Christmas more happy!!!";
+		next;
+		mes "[Santa Claus]";
+		mes "Yes indeed Carolling spreads Joy throughout the world?";
+		close;
+
+	case 2:
+		mes "[Santa Claus]";
+		if (Sex == SEX_MALE) {
+			mes "Ho ho ho! What a good boy!";
+		} else {
+			mes "Ho ho ho! What a good girl!";
+		}
+		next;
+		mes "[Santa Claus]";
+		mes "But you should be wary of a fake Santa romaing around.";
+		mes "Have you heard of Antonio, who invades villages every Christmas?";
+		next;
+		mes "[Santa Claus]";
+		mes "He has stolen my gifts, as well as attacked adventurers around Toy and Lutie field.";
+		next;
+		mes "[Santa Claus]";
+		mes "A bad Santa ruins us good Santa's reputations!";
+		mes "The World Santa Organization is considering this a grave situation.";
+		close;
+	
+	case 3:
+		mes "[Santa Claus]";
+		mes "A gift box! That sounds good!";
+		mes "It's so exciting to open gift boxes when you wake up on Christmas morning!!!";
+		next;
+		mes "[Santa Claus]";
+		mes "But we have very little gifts now, since Santa Antonio has stolen my gift bag.";
+		next;
+		mes "[Santa Claus]";
+		mes "Many adventurers try to catch up to him, but he is not easy to catch.";
+		next;
+		mes "[Santa Claus]";
+		mes "Anyway let those adventurers try to catch him, I have a small game for you.";
+		next;
+		mes "[Santa Claus]";
+		mes "I will give you a small gift if you beat me!";
+		next;
+		mes "[Santa Claus]";
+		mes "Do you want to play a game with me?";
+		next;
+		if (select("No, thanks.:Yes, I would.") == 1) {
+			mes "[Santa Claus]";
+			mes "Aww, don't be afraid.";
+			mes "If you've been a little naughty this year I won't stuff your stockings with coal.";
+			next;
+			mes "[Santa Claus]";
+			mes "I will stay here throughout the Christmas season, just visit me when you change your mind.";
+			close;
+		}
+		if (gettimetick(2) < SantaCardTime) {
+			mes "[Santa Claus]";
+			mes "Um... You've played the game recently haven't you?";
+			next;
+			mes "[Santa Claus]";
+			mes "You can try the game once a hour.";
+			mes "Please visit me after the one hour has passed.";
+			close;
+		}
+		set .@SantaCardTurn,0;
+		set .@SantaCardWins,0;
+		mes "[Santa Claus]";
+		mes "Wow! You're so cool!";
+		next;
+		mes "[Santa Claus]";
+		mes "Let me explain how to play this game.";
+		next;
+		mes "[Santa Claus]";
+		mes "It's quite simple.";
+		mes "I will pick one of three cards: Poring Card, Ghostring Card, and Angeling Card.";
+		mes "Guess which card I pick and you're a winner!";
+		next;
+		mes "[Santa Claus]";
+		mes "If you guess right 3 times out of 5, I will give you a gift.";
+		mes "Let's get started!";
+		next;
+		while(.@SantaCardTurn != 5) {
+			emotion ET_BLABLA;
+			mes "[Santa Claus]";
+			mes "First let me shuffle up these cards... Ok!!!";
+			next;
+			specialeffect EF_HIT1;
+			mes "[Santa Claus]";
+			mes "One!";
+			next;
+			specialeffect EF_HIT2;
+			mes "[Santa Claus]";
+			mes "Two!";
+			next;
+			specialeffect EF_HIT3;
+			mes "[Santa Claus]";
+			mes "Three!";
+			next;
+			specialeffect EF_STEAL;
+			mes "[Santa Claus]";
+			mes "I'm picking up only one!";
+			next;
+			cutin "sorry",4;
+			mes "[Santa Claus]";
+			mes "I'm picking up only one!";
+			mes "Please guess what is is.";
+			next;
+			switch(select("Poring:Angeling:Ghostring")) {
+				case 1:
+					mes "["+strcharinfo(0)+"]";
+					mes "Um...I choose Poring!";
+					set .@SantaCardP,1;
+					next;
+					break;
+
+				case 2:
+					mes "["+strcharinfo(0)+"]";
+					mes "Um...I choose Angeling!";
+					set .@SantaCardP,2;
+					next;
+					break;
+
+				case 3:
+					mes "["+strcharinfo(0)+"]";
+					mes "Um...I choose Ghostring!";
+					set .@SantaCardP,3;
+					next;
+			}
+			mes "[Santa Claus]";
+			mes "Let's see!!";
+			mes "One! Two! Three!";
+			set .@SantaCardNpc, rand(1,3);
+			next;
+			mes "[Santa Claus]";
+			mes "Let's see!!";
+			mes "One! Two! Three!";
+			if (.@SantaCardNpc == 1) {
+				cutin "포링카드",4; // Poring Card
+			}
+			else if (.@SantaCardNpc == 2) {
+				cutin "엔젤링카드",4; // Angeling Card
+			}
+			else if (.@SantaCardNpc == 3) {
+				cutin "고스트링카드",4; // Ghostring Card
+			}
+			next;
+			set .@SantaCardTurn,.@SantaCardTurn+1;
+			if (.@SantaCardP == .@SantaCardNpc) {
+				set .@SantaCardWins,.@SantaCardWins+1;
+				emotion ET_SURPRISE;
+				emotion ET_AHA, playerattached();
+				cutin "",255;
+				mes "[Santa Claus]";
+				mes "You're lucky.";
+				mes "Can you guess the right card the next time around?";
+				next;
+			} else {
+				emotion ET_SURPRISE;
+				emotion ET_HUK, playerattached();
+				cutin "",255;
+				mes "[Santa Claus]";
+				mes "Aww maybe next time...";
+				next;
+			}
+		}
+		if (.@SantaCardWins < 3) {
+			mes "["+strcharinfo(0)+"]";
+			mes "This is just luck.";
+			mes "Let me try again!!";
+			next;
+			mes "[Santa Claus]";
+			mes "Whenever you want.";
+			close;
+		} else {
+			mes "[Santa Claus]";
+			mes "You're so good!";
+			next;
+			mes "[Santa Claus]";
+			mes "Now this gift is for you.";
+			mes "Put your hand into the bag and pick only one.";
+			set .@SantaCardPrize, rand(1,12);
+			next;
+			if (.@SantaCardPrize == 1) {
+				getitem 12354,2;
+			}
+			else if (.@SantaCardPrize == 2) {
+				getitem 595,3;
+			}
+			else if (.@SantaCardPrize == 3) {
+				getitem 593,3;
+			}
+			else if (.@SantaCardPrize == 4) {
+				getitem 12236,3;
+			}
+			else if (.@SantaCardPrize == 5) {
+				getitem 538,10;
+			}
+			else if (.@SantaCardPrize == 6) {
+				getitem 14546,10;
+			}
+			else if (.@SantaCardPrize == 7) {
+				getitem 5136,1;
+			}
+			else if (.@SantaCardPrize == 8) {
+				getitem 603,1;
+			}
+			else if (.@SantaCardPrize == 9) {
+				getitem 12130,1;
+			}
+			else if (.@SantaCardPrize == 10) {
+				getitem 14550,10;
+			}
+			else if (.@SantaCardPrize == 11) {
+				getitem 12132,3;
+			}
+			else if (.@SantaCardPrize == 12) {
+				getitem 594,3;
+			}
+			set SantaCardTime,gettimetick(2)+3600;
+			mes "[Santa Claus]";
+			mes "Good job! Thanks for playing the card game with me!";
+			mes "Merry Christmas!";
+			close;
+		}
+
+	case 4:
+		mes "[Santa Claus]";
+		mes "Do you mean that ever so fashionable costume for Santa's and youngsters!?!";
+		mes "Light-weight, fashionable, and keeps you warm!";
+		next;
+		mes "[Santa Claus]";
+		mes "There used to be designer who visited my house to make my Santa costumes.";
+		mes "Do you have any ideas?";
+		close;
+	
+	case 5:
+		mes "[Santa Claus]";
+		mes "........................";
+		next;
+		mes "[Santa Claus]";
+		mes "........................";
+		if (Sex == SEX_MALE) {
+			mes "Oh! Poor boy...";
+		} else {
+			mes "Oh! Poor girl...";
+		}
+		next;
+		mes "[Santa Claus]";
+		mes "........................";
+		if (Sex == SEX_MALE) {
+			mes "Oh! Poor boy...";
+		} else {
+			mes "Oh! Poor girl...";
+		}
+		mes "...";
+		next;
+		mes "[Santa Claus]";
+		mes "You should open your heart to the spirit of Christmas!";
+		mes "Once you do, I know you'll be able to think of something.";
+		close;
+	}
+}
+
+payon,171,109,4	duplicate(08santa)	Santa Claus#0801	718
+prontera,156,285,4	duplicate(08santa)	Santa Claus#0802	718
+alberta,117,66,4	duplicate(08santa)	Santa Claus#0803	718
+geffen,119,70,4	duplicate(08santa)	Santa Claus#0804	718
+morocc,158,104,4	duplicate(08santa)	Santa Claus#0805	718
+
+// Louise Kim - Santa Suit
+//============================================================
+xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
+	mes "[Louise Kim]";
+	mes "I always thought about how boring Santa Claus is wearing a too boring costume.";
+	mes "Too boring!";
+	next;
+	mes "[Louise Kim]";
+	mes "I could make a glamorous style for him!";
+	next;
+	mes "[Louise Kim]";
+	mes "I once made a costume for the notorious figure Antonio!";
+	mes "The reason catching up to him is so hard, is that his clothes have been given strong power!";
+	mes "I blessed them with good luck!";
+	next;
+	emotion ET_THROB;
+	mes "[Louise Kim]";
+	mes "Preta Porter!!";
+	mes "Which is quite luxurious but sold at good price ~";
+	next;
+	mes "[Louise Kim]";
+	mes "Hey loosers!";
+	mes "You can share my sense of fashion and wear my look if you run a light mission for me.";
+	next;
+	mes "[Louise Kim]";
+	mes "Are you interested?";
+	next;
+	if (select("Nope.:Yes, please.") == 1) {
+		mes "[Louise Kim]";
+		mes "Ah!";
+		mes "You're silly! You lost your big chance!";
+		next;
+		emotion ET_SMILE;
+		mes "[Louise Kim]";
+		mes "Come to me later if you want to get the mission.";
+		mes "I, Louise Kim, am generous enough to accept you next time.";
+		close;
+	}
+	mes "[Louise Kim]";
+	mes "You're so cool.";
+	next;
+	mes "[Louise Kim]";
+	mes "Don't worry about this mission.";
+	mes "It's not that difficult.";
+	mes "I'm only in need of some materials. Things that are beyond my ability...";
+	next;
+	mes "[Louise Kim]";
+	mes "Anyway, can you bring me some stuff?";
+	next;
+	if (select("Why not? What do you need?:Sorry, no time.") == 2) {
+		emotion ET_SMILE;
+		mes "[Louise Kim]";
+		mes "What?";
+		mes "You will definitely regret it.";
+		mes "No more chances later.";
+		close;
+	}
+	mes "[Louise Kim]";
+	mes "All right, you're cool!!";
+	mes "You need to bring me: ^0000FFCotton Shirt, 3 Red Potion, Holy Water, 4 Wrapping Paper, Wrapping Lace^000000.";
+	next;
+	mes "[Louise Kim]";
+	mes "If you bring me all that stuff, I can make you a glamorous Santa costume.";
+	next;
+	if (countitem(2301) < 1 || countitem(501) < 3 || countitem(523) < 1 || countitem(7175) < 4 || countitem(7174) < 1) {
+			mes "[Louise Kim]";
+			mes "If you were to bring me all the stuff, I would make you a wonderful costume, for free...";
+			next;
+			emotion ET_THROB;
+			mes "[Louise Kim]";
+			mes "Please see me again if you are interested.";
+			close;
+	} else {
+		select("Here you are.");
+		emotion ET_OK;
+		mes "[Louise Kim]";
+		mes "Oh! Good!";
+		mes "Let's not delay.";
+		mes "I will show you my limitless ability.";
+		next;
+		mes "-She pours everything in a pot-";
+		mes "-even the shirt goes in!-";
+		mes "-She takes it out with skill-";
+		mes "-and many blessings she sings.-";
+		next;
+		specialeffect EF_BLESSING;
+		emotion ET_DELIGHT;
+		mes "[Louise Kim]";
+		mes "By artist, Louise Kim!";
+		mes "All over the world will be blessed tonight!";
+		next;
+		mes "-Pour red potion in another pot-";
+		mes "-then stir all of its parts.-";
+		mes "-Put the cotton shirts in-";
+		mes "-and dye it for grateful hearts.-";
+		mes "-Thread by thread-";
+		mes "-String by string-";
+		mes "-Count your blessings and sing!-";
+		next;
+		specialeffect EF_GLORIA;
+		emotion ET_DELIGHT;
+		mes "[Louise Kim]";
+		mes "By artist, Louise Kim!";
+		mes "All over the world will be blessed tonight!";
+		next;
+		mes "-She is knitting clothes-";
+		mes "-with a hooked needle-";
+		mes "-with her great skill.-";
+		mes "-Spread your blessings,-";
+		mes "-cheer and goodwill!-";
+		next;
+		specialeffect EF_BENEDICTIO;
+		emotion ET_THROB;
+		mes "[Louise Kim]";
+		mes "This is miraculous!";
+		mes "I am a genius of the world.";
+		mes "Artist, Louise Kim!!!";
+		next;
+		mes "[Louise Kim]";
+		mes "All right! Isn't it wonderful?";
+		mes "You can call it what you wish.";
+		mes "My fashion is radiant.";
+		mes "I ain't envious of Designer Pierre.";
+		next;
+		emotion ET_SMILE;
+		mes "[Louise Kim]";
+		mes "I am supposed to get paid well, however I will just let it be free, since this is Christmas!";
+		next;
+		delitem 2301,1;
+		delitem 501,3;
+		delitem 523,1;
+		delitem 7175,4;
+		delitem 7174,1;
+		getitem 12132,1;
+		mes "[Louise Kim]";
+		mes "Go brag about these wonderful clothes. There wouldn't be any without me, Louise Kim.";
+		close;
+	}
+}
+
+// Monsters
+//============================================================
+prt_fild00,0,0	monster	Christmas Jakk	1244,5
+prt_fild00,0,0	monster	Christmas Goblin	1245,5
+prt_fild00,0,0	monster	Christmas Cookie	1246,5
+prt_fild00,0,0	monster	Antonio	1247,1
+
+prt_fild01,0,0	monster	Christmas Jakk	1244,5
+prt_fild01,0,0	monster	Christmas Goblin	1245,5
+prt_fild01,0,0	monster	Christmas Cookie	1246,5
+prt_fild01,0,0	monster	Antonio	1247,1
+
+prt_fild02,0,0	monster	Christmas Jakk	1244,5
+prt_fild02,0,0	monster	Christmas Goblin	1245,5
+prt_fild02,0,0	monster	Christmas Cookie	1246,5
+prt_fild02,0,0	monster	Antonio	1247,1
+
+prt_fild03,0,0	monster	Christmas Jakk	1244,5
+prt_fild03,0,0	monster	Christmas Goblin	1245,5
+prt_fild03,0,0	monster	Christmas Cookie	1246,5
+prt_fild03,0,0	monster	Antonio	1247,1
+
+prt_fild04,0,0	monster	Christmas Jakk	1244,5
+prt_fild04,0,0	monster	Christmas Goblin	1245,5
+prt_fild04,0,0	monster	Christmas Cookie	1246,5
+prt_fild04,0,0	monster	Antonio	1247,1
+
+prt_fild05,0,0	monster	Christmas Jakk	1244,5
+prt_fild05,0,0	monster	Christmas Goblin	1245,5
+prt_fild05,0,0	monster	Christmas Cookie	1246,5
+prt_fild05,0,0	monster	Antonio	1247,1
+
+prt_fild06,0,0	monster	Christmas Jakk	1244,5
+prt_fild06,0,0	monster	Christmas Goblin	1245,5
+prt_fild06,0,0	monster	Christmas Cookie	1246,5
+prt_fild06,0,0	monster	Antonio	1247,1
+
+prt_fild07,0,0	monster	Christmas Jakk	1244,5
+prt_fild07,0,0	monster	Christmas Goblin	1245,5
+prt_fild07,0,0	monster	Christmas Cookie	1246,5
+prt_fild07,0,0	monster	Antonio	1247,1
+
+prt_fild08,0,0	monster	Christmas Jakk	1244,5
+prt_fild08,0,0	monster	Christmas Goblin	1245,5
+prt_fild08,0,0	monster	Christmas Cookie	1246,5
+prt_fild08,0,0	monster	Antonio	1247,1
+
+prt_fild09,0,0	monster	Christmas Jakk	1244,5
+prt_fild09,0,0	monster	Christmas Goblin	1245,5
+prt_fild09,0,0	monster	Christmas Cookie	1246,5
+prt_fild09,0,0	monster	Antonio	1247,1
+
+prt_fild10,0,0	monster	Christmas Jakk	1244,5
+prt_fild10,0,0	monster	Christmas Goblin	1245,5
+prt_fild10,0,0	monster	Christmas Cookie	1246,5
+prt_fild10,0,0	monster	Antonio	1247,1
+
+prt_fild11,0,0	monster	Christmas Jakk	1244,5
+prt_fild11,0,0	monster	Christmas Goblin	1245,5
+prt_fild11,0,0	monster	Christmas Cookie	1246,5
+prt_fild11,0,0	monster	Antonio	1247,1
+
+pay_fild01,0,0	monster	Christmas Jakk	1244,5
+pay_fild01,0,0	monster	Christmas Goblin	1245,5
+pay_fild01,0,0	monster	Christmas Cookie	1246,5
+pay_fild01,0,0	monster	Antonio	1247,1
+
+pay_fild02,0,0	monster	Christmas Jakk	1244,5
+pay_fild02,0,0	monster	Christmas Goblin	1245,5
+pay_fild02,0,0	monster	Christmas Cookie	1246,5
+pay_fild02,0,0	monster	Antonio	1247,1
+
+pay_fild03,0,0	monster	Christmas Jakk	1244,5
+pay_fild03,0,0	monster	Christmas Goblin	1245,5
+pay_fild03,0,0	monster	Christmas Cookie	1246,5
+pay_fild03,0,0	monster	Antonio	1247,1
+
+pay_fild04,0,0	monster	Christmas Jakk	1244,5
+pay_fild04,0,0	monster	Christmas Goblin	1245,5
+pay_fild04,0,0	monster	Christmas Cookie	1246,5
+pay_fild04,0,0	monster	Antonio	1247,1
+
+pay_fild05,0,0	monster	Christmas Jakk	1244,5
+pay_fild05,0,0	monster	Christmas Goblin	1245,5
+pay_fild05,0,0	monster	Christmas Cookie	1246,5
+pay_fild05,0,0	monster	Antonio	1247,1
+
+pay_fild06,0,0	monster	Christmas Jakk	1244,5
+pay_fild06,0,0	monster	Christmas Goblin	1245,5
+pay_fild06,0,0	monster	Christmas Cookie	1246,5
+pay_fild06,0,0	monster	Antonio	1247,1
+
+pay_fild07,0,0	monster	Christmas Jakk	1244,5
+pay_fild07,0,0	monster	Christmas Goblin	1245,5
+pay_fild07,0,0	monster	Christmas Cookie	1246,5
+pay_fild07,0,0	monster	Antonio	1247,1
+
+pay_fild08,0,0	monster	Christmas Jakk	1244,5
+pay_fild08,0,0	monster	Christmas Goblin	1245,5
+pay_fild08,0,0	monster	Christmas Cookie	1246,5
+pay_fild08,0,0	monster	Antonio	1247,1
+
+pay_fild09,0,0	monster	Christmas Jakk	1244,5
+pay_fild09,0,0	monster	Christmas Goblin	1245,5
+pay_fild09,0,0	monster	Christmas Cookie	1246,5
+pay_fild09,0,0	monster	Antonio	1247,1
+
+pay_fild10,0,0	monster	Christmas Jakk	1244,5
+pay_fild10,0,0	monster	Christmas Goblin	1245,5
+pay_fild10,0,0	monster	Christmas Cookie	1246,5
+pay_fild10,0,0	monster	Antonio	1247,1
+
+pay_fild11,0,0	monster	Christmas Jakk	1244,5
+pay_fild11,0,0	monster	Christmas Goblin	1245,5
+pay_fild11,0,0	monster	Christmas Cookie	1246,5
+pay_fild11,0,0	monster	Antonio	1247,1
+
+gef_fild00,0,0	monster	Christmas Jakk	1244,5
+gef_fild00,0,0	monster	Christmas Goblin	1245,5
+gef_fild00,0,0	monster	Christmas Cookie	1246,5
+gef_fild00,0,0	monster	Antonio	1247,1
+
+gef_fild01,0,0	monster	Christmas Jakk	1244,5
+gef_fild01,0,0	monster	Christmas Goblin	1245,5
+gef_fild01,0,0	monster	Christmas Cookie	1246,5
+gef_fild01,0,0	monster	Antonio	1247,1
+
+gef_fild02,0,0	monster	Christmas Jakk	1244,5
+gef_fild02,0,0	monster	Christmas Goblin	1245,5
+gef_fild02,0,0	monster	Christmas Cookie	1246,5
+gef_fild02,0,0	monster	Antonio	1247,1
+
+gef_fild03,0,0	monster	Christmas Jakk	1244,5
+gef_fild03,0,0	monster	Christmas Goblin	1245,5
+gef_fild03,0,0	monster	Christmas Cookie	1246,5
+gef_fild03,0,0	monster	Antonio	1247,1
+
+gef_fild04,0,0	monster	Christmas Jakk	1244,5
+gef_fild04,0,0	monster	Christmas Goblin	1245,5
+gef_fild04,0,0	monster	Christmas Cookie	1246,5
+gef_fild04,0,0	monster	Antonio	1247,1
+
+gef_fild05,0,0	monster	Christmas Jakk	1244,5
+gef_fild05,0,0	monster	Christmas Goblin	1245,5
+gef_fild05,0,0	monster	Christmas Cookie	1246,5
+gef_fild05,0,0	monster	Antonio	1247,1
+
+gef_fild06,0,0	monster	Christmas Jakk	1244,5
+gef_fild06,0,0	monster	Christmas Goblin	1245,5
+gef_fild06,0,0	monster	Christmas Cookie	1246,5
+gef_fild06,0,0	monster	Antonio	1247,1
+
+gef_fild07,0,0	monster	Christmas Jakk	1244,5
+gef_fild07,0,0	monster	Christmas Goblin	1245,5
+gef_fild07,0,0	monster	Christmas Cookie	1246,5
+gef_fild07,0,0	monster	Antonio	1247,1
+
+gef_fild08,0,0	monster	Christmas Jakk	1244,5
+gef_fild08,0,0	monster	Christmas Goblin	1245,5
+gef_fild08,0,0	monster	Christmas Cookie	1246,5
+gef_fild08,0,0	monster	Antonio	1247,1
+
+gef_fild09,0,0	monster	Christmas Jakk	1244,5
+gef_fild09,0,0	monster	Christmas Goblin	1245,5
+gef_fild09,0,0	monster	Christmas Cookie	1246,5
+gef_fild09,0,0	monster	Antonio	1247,1
+
+gef_fild10,0,0	monster	Christmas Jakk	1244,5
+gef_fild10,0,0	monster	Christmas Goblin	1245,5
+gef_fild10,0,0	monster	Christmas Cookie	1246,5
+gef_fild10,0,0	monster	Antonio	1247,1
+
+gef_fild11,0,0	monster	Christmas Jakk	1244,5
+gef_fild11,0,0	monster	Christmas Goblin	1245,5
+gef_fild11,0,0	monster	Christmas Cookie	1246,5
+gef_fild11,0,0	monster	Antonio	1247,1
+
+gef_fild12,0,0	monster	Christmas Jakk	1244,5
+gef_fild12,0,0	monster	Christmas Goblin	1245,5
+gef_fild12,0,0	monster	Christmas Cookie	1246,5
+gef_fild12,0,0	monster	Antonio	1247,1
+
+gef_fild13,0,0	monster	Christmas Jakk	1244,5
+gef_fild13,0,0	monster	Christmas Goblin	1245,5
+gef_fild13,0,0	monster	Christmas Cookie	1246,5
+gef_fild13,0,0	monster	Antonio	1247,1
+
+gef_fild14,0,0	monster	Christmas Jakk	1244,5
+gef_fild14,0,0	monster	Christmas Goblin	1245,5
+gef_fild14,0,0	monster	Christmas Cookie	1246,5
+gef_fild14,0,0	monster	Antonio	1247,1
+
+xmas_fild01,0,0	monster	Christmas Jakk	1244,5
+xmas_fild01,0,0	monster	Christmas Goblin	1245,5
+xmas_fild01,0,0	monster	Christmas Cookie	1246,5
+xmas_fild01,0,0	monster	Antonio	1247,1

@@ -1,0 +1,144 @@
+//===== rAthena Script =======================================
+//= Hypnotist
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Permenent first class, base level 40 and under skill resetter.
+//= First Class characters and expanded classes only.
+//= Baby Classes and First Class trans can't use this service.
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================
+
+prontera,146,232,4	script	Hypnotist#2	124,{
+	mes "[Hypnotist]";
+	mes "Greetings, adventurer.";
+	mes "I'm a member of the Hypnotist";
+	mes "Academy sent here to Prontera";
+	mes "to provide Skill Reset services";
+	mes "to certain First Class characters for a really good price: free!";
+	next;
+	mes "[Hypnotist]";
+	mes "Although I offer unlimited";
+	mes "skill resets for now, I have";
+	mes "two conditions that must be";
+	mes "fulfilled. First, you must be";
+	mes "lower than ^FF0000Base Level 40^000000.";
+	next;
+	mes "[Hypnotist]";
+	mes "Second, you must be a";
+	mes "^FF0000Swordman, Acolyte, Mage,";
+	mes "Thief, Archer, Merchant,";
+	mes "Taekwon Boy, Taekwon Girl, Gunslinger and Ninja^000000";
+	mes "Job character to qualify.";
+	mes "Now, do you have any questions?";
+	next;
+	switch(select("Skill Reset?:I want a Skill Reset:Nothing")) {
+
+	case 1:
+		mes "[Hypnotist]";
+		mes "Skill Resets allow adventuers";
+		mes "to redistribute their Skill";
+		mes "Points if they are unhappy";
+		mes "with their current skills.";
+		next;
+		mes "[Hypnotist]";
+		mes "Before proceeding with";
+		mes "a Skill Reset, you must";
+		mes "reduce all of the weight";
+		mes "of all carried items on your";
+		mes "character to 0. You can put";
+		mes "extra items in Kafra Storage.";
+		next;
+		mes "[Hypnotist]";
+		mes "Ah, it's also important";
+		mes "to remove your ^FF0000Pushcart^000000";
+		mes "if you have one equipped.";
+		mes "Otherwise, hypnosis won't";
+		mes "work, or will backfire...";
+		close;
+
+	case 2:
+		mes "[Hypnotist]";
+		mes "Are you sure that you";
+		mes "want to proceed with";
+		mes "my ^FF0000Skill Reset^000000 service?";
+		next;
+		if (select("Yes:Cancel") == 1) {
+			if (BaseLevel > 40) {
+				mes "[Hypnotist]";
+				mes "I'm sorry, but characters";
+				mes "with Base Levels higher";
+				mes "than 40 are ineligible for the";
+				mes "Skill Reset service I provide.";
+				close;
+			}
+			if ((Class > 0 && Class < 7 && Upper == 0) || (Class == Job_Gunslinger) || (Class == Job_Ninja) || (Class == Job_Taekwon)) {
+				if (checkcart()) {
+					mes "[Hypnotist]";
+					mes "Oh! Please remove your";
+					mes "Pushcart before proceeding";
+					mes "with the Skill Reset service.";
+					mes "Thanks for cooperating~";
+					close;
+				}
+				if (Weight) {
+					mes "[Hypnotist]";
+					mes "If you're here for my Skill";
+					mes "Reset service, please";
+					mes "remember that you can't";
+					mes "reset your skills until the";
+					mes "^FF0000weight of your carried items in";
+					mes "your Inventory is reduced to 0^000000.";
+					next;
+					mes "[Hypnotist]";
+					mes "Why don't you place your";
+					mes "things into the Kafra Storage";
+					mes "for now? That way, you can";
+					mes "safely keep all of your goods.";
+					close;
+				}
+				mes "[Hypnotist]";
+				mes "Thank you for using";
+				mes "my Skill Redistribution";
+				mes "services. Oh, and best";
+				mes "of luck to you on your";
+				mes "travels, adventurer.";
+				ResetSkill;
+				close;
+			}
+			mes "[Hypnotist]";
+			mes "I'm sorry, but your";
+			mes "Job Class doesn't qualify";
+			mes "for the Skill Reset service";
+			mes "that I provide. I can only";
+			mes "offer Skill Resets to the";
+			mes "following Jobs...";
+			next;
+			mes "[Hypnotist]";
+			mes "^FF0000Swordman, Acolyte,";
+			mes "Mage, Thief, Archer,";
+			mes "Merchant, Taekwon";
+			mes "Boy, Taekwon Girl, Gunslinger and Ninja^000000.";
+			close;
+		}
+		mes "[Hypnotist]";
+		mes "Thank you, and good";
+		mes "luck on your adventures.";
+		mes "Please travel in safety~";
+		close;
+
+	case 3:
+		mes "[Hypnotist]";
+		mes "Thank you, and good";
+		mes "luck on your adventures.";
+		mes "Please travel in safety~";
+		close;
+	}
+
+}

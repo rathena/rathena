@@ -1,0 +1,176 @@
+//===== rAthena Script =======================================
+//= Prontera Arena & PvP Warp Script
+//===== By: ==================================================
+//= Athena (any)
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Prontera Arena and PvP Maps
+//===== Additional Comments: =================================
+//= Split off npc_warp.txt
+//= 1.1 Fixed Prontera Arena warp [Yor]
+//= 1.2 Added addition warps for PvP Nightmare Mode maps.
+//= 1.3 Fixed duplicate warp names [Timexy]
+//= 1.4 Disabled ordeal_*-3 and ordeal_*-4 maps.
+//============================================================
+
+//Battle Ordeal Mode
+ordeal_1-1,100,150,0	warp	ord11-1	1,1,ordeal_1-1,128,150
+ordeal_1-1,123,150,0	warp	ord11-2	1,1,ordeal_1-1,95,150
+ordeal_1-1,114,183,0	warp	ord11-3	1,1,ordeal_1-1,135,163
+ordeal_1-1,130,168,0	warp	ord11-4	1,1,ordeal_1-1,109,188
+ordeal_1-1,115,115,0	warp	ord11-5	1,1,ordeal_1-1,136,136
+ordeal_1-1,131,131,0	warp	ord11-6	1,1,ordeal_1-1,110,110
+ordeal_1-1,148,176,0	warp	ord11-7	1,1,ordeal_1-1,149,204
+ordeal_1-1,149,199,0	warp	ord11-8	1,1,ordeal_1-1,148,171
+ordeal_1-1,149,99,0	warp	ord11-9	1,1,ordeal_1-1,151,129
+ordeal_1-1,151,124,0	warp	ord11-10	1,1,ordeal_1-1,151,94
+ordeal_1-1,168,168,0	warp	ord11-11	1,1,ordeal_1-1,189,189
+ordeal_1-1,184,184,0	warp	ord11-12	1,1,ordeal_1-1,163,163
+ordeal_1-1,169,131,0	warp	ord11-13	1,1,ordeal_1-1,188,111
+ordeal_1-1,183,116,0	warp	ord11-14	1,1,ordeal_1-1,164,136
+ordeal_1-1,176,150,0	warp	ord11-15	1,1,ordeal_1-1,204,150
+ordeal_1-1,199,150,0	warp	ord11-16	1,1,ordeal_1-1,171,150
+ordeal_1-2,128,154,0	warp	ord12-1	1,1,ordeal_1-2,24,154
+ordeal_1-2,136,136,0	warp	ord12-2	1,1,ordeal_1-2,24,24
+ordeal_1-2,136,172,0	warp	ord12-3	1,1,ordeal_1-2,24,284
+ordeal_1-2,153,128,0	warp	ord12-4	1,1,ordeal_1-2,153,23
+ordeal_1-2,153,180,0	warp	ord12-5	1,1,ordeal_1-2,144,284
+ordeal_1-2,172,135,0	warp	ord12-6	1,1,ordeal_1-2,284,24
+ordeal_1-2,172,172,0	warp	ord12-7	1,1,ordeal_1-2,284,284
+ordeal_1-2,180,154,0	warp	ord12-8	1,1,ordeal_1-2,284,164
+//ordeal_1-3,100,150,0	warp	ord13-1	1,1,ordeal_1-3,128,150
+//ordeal_1-3,114,183,0	warp	ord13-2	1,1,ordeal_1-3,135,163
+//ordeal_1-3,115,115,0	warp	ord13-3	1,1,ordeal_1-3,136,136
+//ordeal_1-3,123,150,0	warp	ord13-4	1,1,ordeal_1-3,95,150
+//ordeal_1-3,130,168,0	warp	ord13-5	1,1,ordeal_1-3,109,188
+//ordeal_1-3,131,131,0	warp	ord13-6	1,1,ordeal_1-3,110,110
+//ordeal_1-3,148,176,0	warp	ord13-7	1,1,ordeal_1-3,149,204
+//ordeal_1-3,149,99,0	warp	ord13-8	1,1,ordeal_1-3,151,129
+//ordeal_1-3,149,199,0	warp	ord13-9	1,1,ordeal_1-3,148,171
+//ordeal_1-3,151,124,0	warp	ord13-10	1,1,ordeal_1-3,151,94
+//ordeal_1-3,168,168,0	warp	ord13-11	1,1,ordeal_1-3,189,189
+//ordeal_1-3,169,131,0	warp	ord13-12	1,1,ordeal_1-3,188,111
+//ordeal_1-3,176,150,0	warp	ord13-13	1,1,ordeal_1-3,204,150
+//ordeal_1-3,183,116,0	warp	ord13-14	1,1,ordeal_1-3,164,136
+//ordeal_1-3,184,184,0	warp	ord13-15	1,1,ordeal_1-3,163,163
+//ordeal_1-3,199,150,0	warp	ord13-16	1,1,ordeal_1-3,171,150
+//ordeal_1-4,128,154,0	warp	ord14-1	1,1,ordeal_1-4,24,154
+//ordeal_1-4,136,136,0	warp	ord14-2	1,1,ordeal_1-4,24,24
+//ordeal_1-4,136,172,0	warp	ord14-3	1,1,ordeal_1-4,24,284
+//ordeal_1-4,153,128,0	warp	ord14-4	1,1,ordeal_1-4,153,23
+//ordeal_1-4,153,180,0	warp	ord14-5	1,1,ordeal_1-4,144,284
+//ordeal_1-4,172,135,0	warp	ord14-6	1,1,ordeal_1-4,284,24
+//ordeal_1-4,172,172,0	warp	ord14-7	1,1,ordeal_1-4,284,284
+//ordeal_1-4,180,154,0	warp	ord14-8	1,1,ordeal_1-4,284,164
+ordeal_2-1,100,150,0	warp	ord21-1	1,1,ordeal_2-1,128,150
+ordeal_2-1,123,150,0	warp	ord21-2	1,1,ordeal_2-1,95,150
+ordeal_2-1,114,183,0	warp	ord21-3	1,1,ordeal_2-1,135,163
+ordeal_2-1,130,168,0	warp	ord21-4	1,1,ordeal_2-1,109,188
+ordeal_2-1,115,115,0	warp	ord21-5	1,1,ordeal_2-1,136,136
+ordeal_2-1,131,131,0	warp	ord21-6	1,1,ordeal_2-1,110,110
+ordeal_2-1,148,176,0	warp	ord21-7	1,1,ordeal_2-1,149,204
+ordeal_2-1,149,199,0	warp	ord21-8	1,1,ordeal_2-1,148,171
+ordeal_2-1,149,99,0	warp	ord21-9	1,1,ordeal_2-1,151,129
+ordeal_2-1,151,124,0	warp	ord21-10	1,1,ordeal_2-1,151,94
+ordeal_2-1,168,168,0	warp	ord21-11	1,1,ordeal_2-1,189,189
+ordeal_2-1,184,184,0	warp	ord21-12	1,1,ordeal_2-1,163,163
+ordeal_2-1,169,131,0	warp	ord21-13	1,1,ordeal_2-1,188,111
+ordeal_2-1,183,116,0	warp	ord21-14	1,1,ordeal_2-1,164,136
+ordeal_2-1,176,150,0	warp	ord21-15	1,1,ordeal_2-1,204,150
+ordeal_2-1,199,150,0	warp	ord21-16	1,1,ordeal_2-1,171,150
+ordeal_2-2,128,154,0	warp	ord22-1	1,1,ordeal_2-2,24,154
+ordeal_2-2,136,136,0	warp	ord22-2	1,1,ordeal_2-2,24,24
+ordeal_2-2,136,172,0	warp	ord22-3	1,1,ordeal_2-2,24,284
+ordeal_2-2,153,128,0	warp	ord22-4	1,1,ordeal_2-2,153,23
+ordeal_2-2,153,180,0	warp	ord22-5	1,1,ordeal_2-2,144,284
+ordeal_2-2,172,135,0	warp	ord22-6	1,1,ordeal_2-2,284,24
+ordeal_2-2,172,172,0	warp	ord22-7	1,1,ordeal_2-2,284,284
+ordeal_2-2,180,154,0	warp	ord22-8	1,1,ordeal_2-2,284,164
+//ordeal_2-3,100,150,0	warp	ord23-1	1,1,ordeal_2-3,128,150
+//ordeal_2-3,114,183,0	warp	ord23-2	1,1,ordeal_2-3,135,163
+//ordeal_2-3,115,115,0	warp	ord23-3	1,1,ordeal_2-3,136,136
+//ordeal_2-3,123,150,0	warp	ord23-4	1,1,ordeal_2-3,95,150
+//ordeal_2-3,130,168,0	warp	ord23-5	1,1,ordeal_2-3,109,188
+//ordeal_2-3,131,131,0	warp	ord23-6	1,1,ordeal_2-3,110,110
+//ordeal_2-3,148,176,0	warp	ord23-7	1,1,ordeal_2-3,149,204
+//ordeal_2-3,149,99,0	warp	ord23-8	1,1,ordeal_2-3,151,129
+//ordeal_2-3,149,199,0	warp	ord23-9	1,1,ordeal_2-3,148,171
+//ordeal_2-3,151,124,0	warp	ord23-10	1,1,ordeal_2-3,151,94
+//ordeal_2-3,168,168,0	warp	ord23-11	1,1,ordeal_2-3,189,189
+//ordeal_2-3,169,131,0	warp	ord23-12	1,1,ordeal_2-3,188,111
+//ordeal_2-3,176,150,0	warp	ord23-13	1,1,ordeal_2-3,204,150
+//ordeal_2-3,183,116,0	warp	ord23-14	1,1,ordeal_2-3,164,136
+//ordeal_2-3,184,184,0	warp	ord23-15	1,1,ordeal_2-3,163,163
+//ordeal_2-3,199,150,0	warp	ord23-16	1,1,ordeal_2-3,171,150
+//ordeal_2-4,128,154,0	warp	ord24-1	1,1,ordeal_2-4,24,154
+//ordeal_2-4,136,136,0	warp	ord24-2	1,1,ordeal_2-4,24,24
+//ordeal_2-4,136,172,0	warp	ord24-3	1,1,ordeal_2-4,24,284
+//ordeal_2-4,153,128,0	warp	ord24-4	1,1,ordeal_2-4,153,23
+//ordeal_2-4,153,180,0	warp	ord24-5	1,1,ordeal_2-4,144,284
+//ordeal_2-4,172,135,0	warp	ord24-6	1,1,ordeal_2-4,284,24
+//ordeal_2-4,172,172,0	warp	ord24-7	1,1,ordeal_2-4,284,284
+//ordeal_2-4,180,154,0	warp	ord24-8	1,1,ordeal_2-4,284,164
+ordeal_3-1,100,150,0	warp	ord31-1	1,1,ordeal_3-1,128,150
+ordeal_3-1,123,150,0	warp	ord31-2	1,1,ordeal_3-1,95,150
+ordeal_3-1,114,183,0	warp	ord31-3	1,1,ordeal_3-1,135,163
+ordeal_3-1,130,168,0	warp	ord31-4	1,1,ordeal_3-1,109,188
+ordeal_3-1,115,115,0	warp	ord31-5	1,1,ordeal_3-1,136,136
+ordeal_3-1,131,131,0	warp	ord31-6	1,1,ordeal_3-1,110,110
+ordeal_3-1,148,176,0	warp	ord31-7	1,1,ordeal_3-1,149,204
+ordeal_3-1,149,199,0	warp	ord31-8	1,1,ordeal_3-1,148,171
+ordeal_3-1,149,99,0	warp	ord31-9	1,1,ordeal_3-1,151,129
+ordeal_3-1,151,124,0	warp	ord31-10	1,1,ordeal_3-1,151,94
+ordeal_3-1,168,168,0	warp	ord31-11	1,1,ordeal_3-1,189,189
+ordeal_3-1,184,184,0	warp	ord31-12	1,1,ordeal_3-1,163,163
+ordeal_3-1,169,131,0	warp	ord31-13	1,1,ordeal_3-1,188,111
+ordeal_3-1,183,116,0	warp	ord31-14	1,1,ordeal_3-1,164,136
+ordeal_3-1,176,150,0	warp	ord31-15	1,1,ordeal_3-1,204,150
+ordeal_3-1,199,150,0	warp	ord31-16	1,1,ordeal_3-1,171,150
+ordeal_3-2,128,154,0	warp	ord32-1	1,1,ordeal_3-2,24,154
+ordeal_3-2,136,136,0	warp	ord32-2	1,1,ordeal_3-2,24,24
+ordeal_3-2,136,172,0	warp	ord32-3	1,1,ordeal_3-2,24,284
+ordeal_3-2,153,128,0	warp	ord32-4	1,1,ordeal_3-2,153,23
+ordeal_3-2,153,180,0	warp	ord32-5	1,1,ordeal_3-2,144,284
+ordeal_3-2,172,135,0	warp	ord32-6	1,1,ordeal_3-2,284,24
+ordeal_3-2,172,172,0	warp	ord32-7	1,1,ordeal_3-2,284,284
+ordeal_3-2,180,154,0	warp	ord32-8	1,1,ordeal_3-2,284,164
+//ordeal_3-3,100,150,0	warp	ord33-1	1,1,ordeal_3-3,128,150
+//ordeal_3-3,114,183,0	warp	ord33-2	1,1,ordeal_3-3,135,163
+//ordeal_3-3,115,115,0	warp	ord33-3	1,1,ordeal_3-3,136,136
+//ordeal_3-3,123,150,0	warp	ord33-4	1,1,ordeal_3-3,95,150
+//ordeal_3-3,130,168,0	warp	ord33-5	1,1,ordeal_3-3,109,188
+//ordeal_3-3,131,131,0	warp	ord33-6	1,1,ordeal_3-3,110,110
+//ordeal_3-3,148,176,0	warp	ord33-7	1,1,ordeal_3-3,149,204
+//ordeal_3-3,149,99,0	warp	ord33-8	1,1,ordeal_3-3,151,129
+//ordeal_3-3,149,199,0	warp	ord33-9	1,1,ordeal_3-3,148,171
+//ordeal_3-3,151,124,0	warp	ord33-10	1,1,ordeal_3-3,151,94
+//ordeal_3-3,168,168,0	warp	ord33-11	1,1,ordeal_3-3,189,189
+//ordeal_3-3,169,131,0	warp	ord33-12	1,1,ordeal_3-3,188,111
+//ordeal_3-3,176,150,0	warp	ord33-13	1,1,ordeal_3-3,204,150
+//ordeal_3-3,183,116,0	warp	ord33-14	1,1,ordeal_3-3,164,136
+//ordeal_3-3,184,184,0	warp	ord33-15	1,1,ordeal_3-3,163,163
+//ordeal_3-3,199,150,0	warp	ord33-16	1,1,ordeal_3-3,171,150
+//ordeal_3-4,128,154,0	warp	ord34-1	1,1,ordeal_3-4,24,154
+//ordeal_3-4,136,136,0	warp	ord34-2	1,1,ordeal_3-4,24,24
+//ordeal_3-4,136,172,0	warp	ord34-3	1,1,ordeal_3-4,24,284
+//ordeal_3-4,153,128,0	warp	ord34-4	1,1,ordeal_3-4,153,23
+//ordeal_3-4,153,180,0	warp	ord34-5	1,1,ordeal_3-4,144,284
+//ordeal_3-4,172,135,0	warp	ord34-6	1,1,ordeal_3-4,284,24
+//ordeal_3-4,172,172,0	warp	ord34-7	1,1,ordeal_3-4,284,284
+//ordeal_3-4,180,154,0	warp	ord34-8	1,1,ordeal_3-4,284,164
+
+// PvP Nightmare More warps
+pvp_n_8-4,33,122,0	warp	Link#pt_link_1-11	0,2,pvp_n_8-4,0,0
+pvp_n_8-4,62,84,0	warp	Link#pt_link_1-12	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,49,71,0	warp	Link#pt_link_1-21	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,56,166,0	warp	Link#pt_link_1-22	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,99,180,0	warp	Link#pt_link_1-31	2,1,pvp_n_8-4,0,0
+pvp_n_8-4,137,84,0	warp	Link#pt_link_1-32	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,150,71,0	warp	Link#pt_link_1-41	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,144,166,0	warp	Link#pt_link_1-42	1,1,pvp_n_8-4,0,0
+// Invalid Warp
+//pvp_n_8-5,30,30,0	warp	 a	3,3,pvp_n_8-5,100,100
+

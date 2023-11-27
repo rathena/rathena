@@ -1,0 +1,92 @@
+//===== rAthena Script ======================================= 
+//= El Dicastes Guide
+//===== By: ================================================== 
+//= Muad_Dib
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guide for the city of El Dicastes.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Joseph]
+//= 1.1 Fixed viewpoint syntax. [Euphy]
+//= 1.2 Navigation system update. [Euphy]
+//============================================================ 
+
+dicastes01,189,191,5	script	Traveler Ichack#info	481,2,2,{
+	mes "[Traveler Ichack]";
+	mes "Oh!! You are a stranger!";
+	mes "I'm Ichack, the first adventurer that arrived here in El Dicastes!";
+	next;
+	mes "[Traveler Ichack]";
+	mes "There was someone in the expedition team claiming that he was the first, but it WAS me. That's right.";
+	next;
+	mes "[Traveler Ichack]";
+	mes "That's why I will provide a service to guide adventurers from Midgard.";
+	mes "What would you like to know?";
+	F_Navi("[Traveler Ichack]");
+	next;
+	switch(select("Dicastes Diel:Residential Area:Training Room:Factory:Pub:Cat Paw Caravan")) {
+	case 1:
+		mes "[Traveler Ichack]";
+		mes "Ah~ That's a beautiful building.";
+		mes "It's said they discuss important things...";
+		next;
+		mes "[Traveler Ichack]";
+		mes "Please make sure you signed in at the "+F_Navi("Diel","dicastes01,198,351")+", otherwise you'll get in trouble.";
+		mes "Go directly north from here and you can't miss it.";
+		viewpoint 1,198,351,0,0x00FF00;
+		close;
+	case 2:
+		mes "[Traveler Ichack]";
+		mes "The Sapha tribe is so weird. How can they sleep in there?";
+		next;
+		mes "[Traveler Ichack]";
+		mes "You don't understand?";
+		mes "You won't believe me until you see it! Go see it for yourself!";
+		next;
+		mes "[Traveler Ichack]";
+		mes "The residential area is divided into 2 areas.";
+		mes "The "+F_Navi("lower residential area","dicastes01,136,106")+" is around 7 o'clock, and the ";
+		mes F_Navi("upper area","dicastes01,280,283")+" is around 1 o'clock.";
+		viewpoint 1,280,283,1,0x01FF01;
+		viewpoint 1,136,106,2,0x0066FF;
+		close;
+	case 3:
+		mes "[Traveler Ichack]";
+		mes "Because of the dangers here, we need better security...";
+		mes "Have you ever been to the ";
+		mes F_Navi("training room","dicastes01,255,172")+"? The training guards seem to never sleep!";
+		viewpoint 1,255,172,3,0xFFCCCC;
+		close;
+	case 4:
+		mes "[Traveler Ichack]";
+		mes "This is one of the most important reasons why they live here.";
+		mes "If you go to the "+F_Navi("factory","dicastes01,97,256")+", you can see the recently refined Bradium.";
+		viewpoint 1,97,256,4,0x0066FF;
+		close;
+	case 5:
+		mes "[Traveler Ichack]";
+		mes "Although I arrived here as the first adventurer, the owner of the pub was the first person here.";
+		mes F_Navi("Bumen Florine's pub","dicastes01,136,106")+" is located underground in the lower residential area.";
+		mes "He might have some valuable information for you.";
+		viewpoint 1,136,106,5,0xFF3300;
+		close;
+	case 6:
+		mes "[Traveler Ichack]";
+		mes "The "+F_Navi("cats","dicastes01,199,39")+" don't seem to have a good relationship with the Sapha like we do.";
+		mes "Perhaps it's because trading is involved.";
+		mes "Poor cats. They must be shivering from the cold out there.";
+		next;
+		mes "[Traveler Ichack]";
+		mes "You can find their caravan just outside the gates.";
+		viewpoint 1,199,39,6,0x9933FF;
+		close;
+	}
+OnTouch:
+	if (ep13_3_invite == 6) 
+		emotion ET_SURPRISE;
+	end;
+}

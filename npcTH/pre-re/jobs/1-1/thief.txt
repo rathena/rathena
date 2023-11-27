@@ -1,0 +1,539 @@
+//===== rAthena Script =======================================
+//= Thief Job Quest
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Job quest for Thief classes
+//===== Additional Comments: =================================
+//= 1.0 Fully working.
+//= 1.1 Added instant job change for High Novice [Lupus]
+//= 1.3 Added Baby Class support [Lupus]
+//= 1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//=     Fixed possible EXP abuse [Lupus]
+//= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus] 1.6a typos
+//= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=     No longer uses function "F_ToHigh"
+//= 1.8 Added Quest Log commands. [L0ne_W0lf]
+//============================================================
+
+moc_prydb1,39,129,2	script	Thief Guide	69,{
+	if (Upper == 1) {
+		if (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) {
+			if (Class == Job_Novice_High) {
+				mes "[Thief Guide]";
+				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
+				next;
+				if (!callfunc("F_CanChangeJob")) {
+					mes "[Thief Guide]";
+					mes "What, do you want to be a Thief? I'm sorry, but you look like you need more training.";
+					next;
+					mes "[Thief Guide]";
+					mes "Take your time and learn all the Basic Skills, will you? Well then, see you later~!";
+					close;
+				}
+				mes "[Thief Guide]";
+				mes "Well, I got this feeling like you've been through a lifetime of fighting, so I'm promoting you to a Thief right this minute. I better give you tough guys what you want...";
+				next;
+				skill "NV_TRICKDEAD",0,SKILL_PERM;
+				jobchange Job_Thief_High;
+				skill "TF_SPRINKLESAND",1,SKILL_PERM;
+				skill "TF_BACKSLIDING",1,SKILL_PERM;
+				skill "TF_PICKSTONE",1,SKILL_PERM;
+				skill "TF_THROWSTONE",1,SKILL_PERM;
+				mes "[Thief Guide]";
+				mes "Since you've become a Thief, live as a Thief. Now, go for it! Next~";
+				close;
+			}
+			else {
+				mes "[Thief Guide]";
+				if (Sex == SEX_MALE)
+					mes "Hey, dude.";
+				else
+					mes "Hey, baby~";
+				close;
+			}
+		}
+		else {
+			mes "[Thief Guide]";
+			if (Sex == SEX_MALE)
+				mes "Hey, dude.";
+			else
+				mes "Hey, baby.";
+			mes "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!";
+			close;
+		}
+	}
+	if (BaseJob == Job_Thief) {
+		mes "[Thief Guide]";
+		mes "If you have a problem, feel free to speak to me anytime, alright?";
+		close;
+	}
+	else if (BaseJob != Job_Novice && BaseJob != Job_Thief) {
+		mes "[Thief Guide]";
+		mes "What the heck...?";
+		switch(Class) {
+		case 1:
+			mes "Huh.";
+			mes "Now, that's";
+			mes "a big sword.";
+			next;
+			mes "[Thief Guide]";
+			mes "So...";
+			mes "Trying to make";
+			mes "up for something";
+			mes "...Buddy?";
+			break;
+		case 2:
+			mes "What's a Mage doin' here? Shouldn't you be doing card tricks elsewhere? Oh well, it's a free country...";
+			next;
+			mes "[Thief Guide]";
+			mes "Oh wait,";
+			mes "it's not...";
+			mes "Get outta here!";
+			break;
+		case 3:
+			mes "Man, shouldn't you";
+			mes "Archers be playing";
+			mes "in the forest";
+			mes "or something?";
+			break;
+		case 4:
+			mes "You know we all steal for a living, right? What are you doing in this kinda place, Acolyte?";
+			break;
+		case 5:
+			mes "You're a Merchant,";
+			mes "right? Why are you";
+			mes "walking into a den";
+			mes "of Thieves?!";
+			next;
+			mes "[Thief Guide]";
+			mes "It's like you're begging";
+			mes "us to steal from you!";
+			mes "Come on, hurry and";
+			mes "get outta here~";
+			break;
+		case 8:
+			mes "Oh my God...";
+			mes "Am I dying?";
+			next;
+			mes "[Thief Guide]";
+			mes "Why else would a Priest come here? I guess I better start confessing all of my misdeeds.";
+			close;
+		case 12:
+			mes "Didn't you use to be one of us?! Man, you changed. You seem real dangerous now...";
+			close;
+		case 17:
+			mes "Man, you got real cool all of a sudden! You must have some skills I can only dream of!";
+			close;
+		}
+		next;
+		mes "[Thief Guide]";
+		mes "*Sigh* Look, there's really no need for you to be in this kind of place. You oughta go where you ought to go.";
+		close;
+	}
+	if (job_thief_q == 3 && countitem(1069) > 0 || countitem(1070) > 0) {
+		mes "[Thief Guide]";
+		mes "Hmmm?";
+		mes "You gathered Mushrooms for";
+		mes "the Thief test, right?";
+		next;
+		mes "[Thief Guide]";
+		mes "Here, talk to the other guy right next to me. He's the one in charge of checking your Mushrooms.";
+		close;
+	}
+	else if (job_thief_q == 3) {
+		mes "[Thief Guide]";
+		mes "So how was the";
+		mes "Mushroom Farm?";
+		mes "Have any fun?";
+		next;
+		if (select("Yeah, kinda Cool.:It was horrible.") == 1) {
+			mes "[Thief Guide]";
+			mes "Heh heh! That's a good attitude. In our line of work, you gotta enjoy getting your hands dirty, one way or another.";
+			close;
+		}
+		mes "[Thief Guide]";
+		mes "Yeah? I've been there too, so I can see why that place isn't everyone's cup of tea. Still, being a Thief isn't all glamour and trendy night life.";
+		close;
+	}
+	if (job_thief_q == 2) {
+		mes "[Thief Guide]";
+		mes "Hey, whaddya doin' here? Aren't you supposed to be gathering Mushrooms? Or did you need it explained to you again?";
+		next;
+		if  (select("Yes.:No, that's okay.") == 1) {
+			mes "[Thief Guide]";
+			mes "*Sigh* Well, there's always one in the bunch. Alright, listen carefully.";
+			next;
+			mes "[Thief Guide]";
+			mes "Alright, for your test, you gotta steal Mushrooms from a farm. Don't worry, the guy who owns the farm deserves to be robbed.";
+			next;
+			mes "[Thief Guide]";
+			mes "Anyway, you gotta gather two kinds of Mushrooms: ^0000FFOrange Net Mushrooms^000000 and ^0000FFOrange Gooey Mushrooms^000000.";
+			next;
+			mes "[Thief Guide]";
+			mes "Be careful, since there are monsters are the farm that are there to protect the Mushrooms. So this will be no walk in the park.";
+			next;
+			mes "[Thief Guide]";
+			mes "When you come back here after gathering Mushrooms, you'll be graded on the Mushrooms you've collected.";
+			next;
+			mes "[Thief Guide]";
+			mes "Each Orange Net Mushroom gets you 3 points, and you get 1 point for each Orange Gooey Mushroom. You need a total of 25 points to pass the test.";
+			next;
+			mes "[Thief Guide]";
+			mes "Go outside and keep going ahead toward the Eastern Field of the Pyramids. Then you will see one of our comrades between two columns.";
+			next;
+			mes "[Thief Guide]";
+			mes "Speak to that guy, and he'll take you to the farm through the backdoor.";
+			next;
+			mes "[Thief Guide]";
+			mes "On that field, I think his coordinates are '^FF0000141, 125^000000.' Just type ^3355FF/where^000000 in the right side of your chat box to check your present coordinates.";
+			close;
+		}
+		mes "[Thief Guide]";
+		mes "Huh. For a second there, I thought you had something really important to tell me.";
+		close;
+	}
+	mes "[Thief Guide]";
+	if (job_thief_q == 0) {
+		mes "What brings you down";
+		mes "here to this rathole?";
+	}
+	else {
+		mes "Ah...";
+		mes "You came back.";
+		mes "Are you sure you're";
+		mes "ready to try again?";
+	}
+	next;
+	if (select("Hey, I came here to be a Thief!:Nah, I'm just looking around.") == 1) {
+		if (job_thief_q == 0) {
+			mes "[Thief Guide]";
+			mes "Heh, I like your confidence. Still, you know being a Thief isn't all what it's cracked up to be.";
+			next;
+			mes "[Thief Guide]";
+			mes "Still...";
+			mes "Do you really";
+			mes "want to be";
+			mes "a Thief?";
+			next;
+			switch(select("Yeah.:No, just wasting your time.:Why did you become a Thief?")) {
+			case 1:
+				mes "[Thief Guide]";
+				mes "Really...";
+				break;
+			case 2:
+				mes "[Thief Guide]";
+				mes "Yeah...";
+				mes "I can see that.";
+				break;
+			case 3:
+				mes "[Thief Guide]";
+				mes "Me...?";
+				mes "I had no choice at the time. It was either steal or starve. But it's not like I need to give you my life story.";
+				break;
+			}
+			next;
+			mes "[Thief Guide]";
+			mes "So do you want to";
+			mes "apply to become";
+			mes "a Thief or not?";
+			next;
+			switch(select("Yes, I will.:I'm too scared to be a Thief!")) {
+			case 1:
+				mes "[Thief Guide]";
+				mes "Alright, tell";
+				mes "me your name.";
+				next;
+				mes "[Thief Guide]";
+				mes "" + strcharinfo(0) + "?";
+				mes "What kind of name is " + strcharinfo(0) + "? Anyway, give me a second.";
+				set job_thief_q,1;
+				next;
+				mes "[Thief Guide]";
+				mes "Alright, your registration has been processed. Okay, you can begin your test if you're ready.";
+				next;
+				switch(select("Yeah, I'm ready.:No, I'm not ready yet.")) {
+				case 1:
+					break;
+				case 2:
+					mes "[Thief Guide]";
+					mes "Not ready?";
+					mes "How can you";
+					mes "not be ready?!";
+					close;
+				}
+				break;
+			case 2:
+				mes "[Thief Guide]";
+				mes "Too scared?!?";
+				mes "Hahahahahahah!";
+				mes "Oh, please...!";
+				mes "That's hilarious!";
+				close;
+			}
+		}
+		else {
+			mes "[Thief Guide]";
+			mes "Okay...";
+			mes "Give me";
+			mes "one second.";
+			next;
+		}
+		mes "[Thief Guide]";
+		mes "Your name is...";
+		mes strcharinfo(0) + "? Um, where is it? Ah, here it is. Let's see...";
+		next;
+		mes "[Thief Guide]";
+		if (!callfunc("F_CanChangeJob")) {
+			mes "Isn't that cute? I can see you're ambitious, but you gotta learn all of the Basic Skills before you can become a Thief.";
+			close;
+		}
+		mes "Alright. I looked at your Felony Record, and you seem to have a very interesting history. You might have what it takes to be a Thief.";
+		next;
+		mes "[Thief Guide]";
+		mes "Because I feel like it, I now decree that you have passed this interview. Good work!";
+		set job_thief_q,2;
+		setquest 1013;
+		next;
+		mes "[Thief Guide]";
+		mes "Now, your actual abilities will need to be tested. Do you know anything about the test?";
+		next;
+		switch(select("Yes, I do.:Sorry, I don't.")) {
+		case 1:
+			mes "[Thief Guide]";
+			mes "Oh yeah? Well, this makes things a lot easier.";
+			break;
+		case 2:
+			mes "[Thief Guide]";
+			mes "Alright, let me inform you then. Listen carefully. This test decides if you are worthy of becoming a Thief.";
+			next;
+			mes "[Thief Guide]";
+			mes "You will be sneaking to Shibu's Farm. He is the worst Merchant, in terms of character, in Morocc.";
+			next;
+			mes "[Thief Guide]";
+			mes "Alright, for your test, you gotta steal Mushrooms from his farm. Don't worry, that guy deserves to be robbed.";
+			next;
+			mes "[Thief Guide]";
+			mes "Anyway, you gotta gather two kinds of Mushrooms: ^0000FFOrange Net Mushrooms^000000 and ^0000FFOrange Gooey Mushrooms^000000.";
+			next;
+			mes "[Thief Guide]";
+			mes "Be careful, since there are monsters are the farm that are there to protect the Mushrooms. So this will be no walk in the park.";
+			next;
+			mes "[Thief Guide]";
+			mes "When you come back here after gathering Mushrooms, you'll be graded on the Mushrooms you've collected.";
+			next;
+			mes "[Thief Guide]";
+			mes "Each Orange Net Mushroom gets you 3 points, and you get 1 point for each Orange Gooey Mushroom. You need a total of 25 points to pass the test.";
+			next;
+			mes "[Thief Guide]";
+			mes "Go outside and keep going ahead toward the Eastern Field of the Pyramids. Then you will see one of our comrades between two columns.";
+			next;
+			mes "[Thief Guide]";
+			mes "Speak to that guy, and he'll take you to the farm through the backdoor.";
+			next;
+			mes "[Thief Guide]";
+			mes "On that field, I think his coordinates are '^FF0000141, 125^000000.' Just type ^3355FF/where^000000 in the right side of your chat box to check your present coordinates.";
+		}
+		next;
+		mes "[Thief Guide]";
+		mes "Don't forget to make plans and prepare yourself before you go inside the Mushroom Farm. Move as quickly as you can and try not to get killed, alright?";
+		close;
+	}
+	close;
+}
+
+moc_prydb1,42,133,2	script	Comrade	118,{
+	if (BaseJob == Job_Thief) {
+		mes "[Brad]";
+		mes "We don't have any special events yet. Come some other time when there's news, alright?";
+		close;
+	}
+	else if (BaseJob != Job_Novice && BaseJob != Job_Thief) {
+		mes "[Comrade]";
+		mes "Um...";
+		mes "You don't look";
+		mes "like a Thief.";
+		next;
+		mes "[Comrade]";
+		mes "What the heck are";
+		mes "you doing here anyway?";
+		close;
+	}
+	if (job_thief_q == 0 || job_thief_q == 1) {
+		mes "[Comrade]";
+		mes "What's the matter? If you want to be a Thief, speak to the girl beside me.";
+		close;
+	}
+	else if (job_thief_q == 2) {
+		mes "[Comrade]";
+		mes "Did you pass the interview?";
+		mes "Then what are you waiting for?";
+		close;
+	}
+	else if (job_thief_q == 3) {
+		mes "[Comrade]";
+		mes "Ah, the guide told me about you. So, let me check your mushrooms...";
+		if (countitem(1069) == 0 && countitem(1070) == 0) {
+			next;
+			mes "[Comrade]";
+			mes "What the hell...";
+			mes "You don't have any Mushrooms at all! Go back and get them. Otherwise, you won't pass the test and become a Thief!";
+			close;
+		}
+		next;
+		set .@thief_item1,countitem(1069) * 3;
+		set .@thief_item2,countitem(1070);
+		set .@total_thief,.@thief_item1 + .@thief_item2;
+		set .@money_thief,((.@thief_item1 * 5) + (.@thief_item2 * 2)) + 200;
+		mes "[Comrade]";
+		if (countitem(1069) != 0) {
+			mes "First, let me check the Orange Net Mushrooms you got.";
+			mes "Huh, " + countitem(1069) + " of them.";
+		}
+		if (countitem(1070) != 0)
+			mes "Now I'll just check your Orange Gooey Mushrooms. That's " + countitem(1070) + " you gathered.";
+		next;
+		mes "[Comrade]";
+		mes "So that would";
+		mes "bring your total to...";
+		next;
+		mes "[Comrade]";
+		mes "Hmmm. " + .@total_thief + " degrees, multiplied by the speed of light, divided by the integral of pi times height plus the absolute value of politics...";
+		next;
+		mes "[Comrade]";
+		mes "Okay!";
+		mes "I got it.";
+		next;
+		mes "[Comrade]";
+		if (.@total_thief > 25) {
+			mes "You got more";
+			mes "than 25 points!";
+			mes "Awesome!";
+		}
+		else if (.@total_thief == 25) {
+			mes "Exactly 25 points!";
+			mes "You did it! Badass!";
+		}
+		else {
+			mes "Definitely less than the 25 points you need to pass. Go out there and get me more Mushrooms!";
+			close;
+		}
+		next;
+		mes "[Comrade]";
+		mes strcharinfo(0) + "...";
+		mes "You have passed the official Thief Test. You are now one of us.";
+		if (countitem(1069) != 0) delitem 1069,countitem(1069); //Mushroom_Of_Thief_1
+		if (countitem(1070) != 0) delitem 1070,countitem(1070); //Mushroom_Of_Thief_2
+		callfunc "Job_Change",Job_Thief;
+		callfunc "F_ClearJobVar";
+		completequest 1013;
+		next;
+		mes "[Comrade]";
+		mes "Congratulations on becoming a Thief! From now, be an honorable representative of the Thief's Guild.";
+		next;
+		mes "[Comrade]";
+		mes "If you bring disgrace to our guild, you will be killed. I expect you to bring our comrades pride.";
+		next;
+		mes "[Brad]";
+		mes "*Ahem* Welcome to the Guild, comrade! I'm Brad, and I'm in charge of human resources here.";
+		next;
+		mes "[Brad]";
+		mes "Here is a small subsidy for a Newbie like you. Spend it whereever you want. Alright then, I'll see you around~";
+		set Zeny, Zeny+.@money_thief;
+		close;
+	}
+}
+
+moc_ruins,141,125,3	script	Mr. Irrelevant	83,{
+	if (BaseJob == Job_Thief) {
+		mes "[Mr. Irrelevant]";
+		mes "Ah, I see that you are now a Thief. I always knew you'd join us.";
+		next;
+		mes "[Mr. Irrelevant]";
+		mes "Stealing from a Mushroom farm is too easy for you now. You should build up your skills and master our craft.";
+		close;
+	}
+	else if (BaseJob != Job_Novice && BaseJob != Job_Thief) {
+		mes "[Mr. Irrelevant]";
+		switch(rand(4)) {
+		case 1:
+			mes "I could use a good, hard drink.";
+			close;
+		case 2:
+			mes "Gimme your money.";
+			next;
+			mes "[Mr. Irrelevant]";
+			mes "Kidding, I'm off the clock.";
+			close;
+		case 3:
+			mes "WHO YOU CALLING A PSYCHO?!?!";
+			close;
+		case 4:
+			mes "I've got nothing to say to you. Would you mind leaving me alone?";
+			close;
+		default:
+			mes "Today looks like a good day to go to the pyramids and hunt with some of my friends.";
+			close;
+		}
+	}
+	if (job_thief_q == 3) {
+		mes "[Mr. Irrelevant]";
+		mes "Hahahahaha~!";
+		mes "You haven't";
+		mes "passed the test yet?";
+		mes "Alright, I'll let you in...";
+		close2;
+		switch(rand(5)) {
+		case 1: warp "job_thief1",228,106; end;
+		case 2: warp "job_thief1",38,50; end;
+		case 3: warp "job_thief1",66,331; end;
+		case 4: warp "job_thief1",196,331; end;
+		default: warp "job_thief1",309,234; end;
+		}
+	}
+	else if (job_thief_q == 2) {
+		mes "[Mr. Irrelevant]";
+		mes "Hmm...";
+		mes "You've come to take the test, right? I can see in your eyes that you know something.";
+		next;
+		mes "[Mr. Irrelevant]";
+		mes "Your name is " + strcharinfo(0) + "? Ah, it's on the list. Alright, I'll let you into the Mushroom Farm , but I can't guarantee your safety...";
+		close2;
+		set job_thief_q,3;
+		switch(rand(5)) {
+		case 1: warp "job_thief1",228,106; end;
+		case 2: warp "job_thief1",38,50; end;
+		case 3: warp "job_thief1",66,331; end;
+		case 4: warp "job_thief1",196,331; end;
+		default: warp "job_thief1",309,234; end;
+		}
+	}
+	else if (job_thief_q == 1) {
+		mes "[Mr. Irrelevant]";
+		mes "There is this strange smell coming from... You. Now why would that be?";
+		close;
+	}
+	mes "[Mr. Irrelevant]";
+	mes "Hey Novice! Why don't you join the ranks of the Thief Guild? You newbies are always welcome to join us and our selfish cause.";
+	next;
+	mes "[Mr. Irrelevant]";
+	mes "You can get more information in the Underground Room in the Pyramid 1 BF.";
+	close;
+}
+
+// Monsters
+//============================================================
+job_thief1,0,0	monster	Orange Mushroom	1182,180
+job_thief1,0,0	monster	Fabre	1184,50
+job_thief1,0,0	monster	Chonchon	1183,50
+job_thief1,0,0	monster	Spore	1014,30
+
+//============================================================
+// mapflag
+//============================================================

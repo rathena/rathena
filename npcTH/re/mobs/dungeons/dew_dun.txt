@@ -1,0 +1,27 @@
+//===== rAthena Script =======================================
+//= Dewata Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Official kRO monster spawns
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//= 1.1 Updated spawn delays. [Euphy]
+//= 1.2 Correct Spawn by Navigation's mob data. [attackjom]
+//============================================================
+
+//==================================================
+// dew_dun01 - Volcanic Island of Krakatoa
+//==================================================
+dew_dun01,0,0	monster	Comodo	2152,100,5000
+dew_dun01,0,0,0,0	boss_monster	Leak	2156,1,7200000,0,1
+
+//==================================================
+// dew_dun02 - Tina Grace Cave
+//==================================================
+dew_dun02,0,0	monster	Banaspaty	2154,70,5000
+dew_dun02,0,0	monster	Butoijo	2155,40,5000

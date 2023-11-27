@@ -1,0 +1,49 @@
+//===== rAthena Script ======================================= 
+//= Guild Battle NPC
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guild Battle with PVP mechanics.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Optimized. [Euphy]
+//============================================================ 
+
+pvp_y_room,77,85,4	script	Guild Battle Guide	105,{
+
+	setarray .@map1X[1],7,9,16,8,20;
+	setarray .@map2X[1],91,90,83,91,79;
+	setarray .@mapY[1],49,49,50,49,50;
+
+	mes "[Guild Battle Guide]";
+	mes "เป็นไงบ้าง";
+	mes "ฉันคือ Guild Battle Guide สำหรับแผนที่ PvP ใหม่";
+	mes "บอกให้ฉันรู้ว่าคุณต้องการให้ฉันย้ายคุณไปที่แผนที่ไหน";
+	next;
+	set .@i, select("Map 1:Map 2:Map 3:Map 4:Map 5");
+	mes "[Guild Battle Guide]";
+	mes "คุณได้เลือกแผนที่" + .@i + ".";
+	mes "ตอนนี้คุณอยู่ทีมไหน";
+	mes "คุณสามารถเลือกทีม 1 หรือทีม 2 ก็ได้";
+	next;
+	set .@j, select("ทีม 1:ทีม 2");
+	mes "[Guild Battle Guide]";
+	mes "ได้เลยฉันจะย้ายคุณไปที่ Map "+.@i+" ในฐานะสมาชิกของทีม "+.@j+".";
+	mes "คุณพร้อมที่จะไปที่นั่นแล้วหรือยัง?";
+	next;
+	if(select("พร้อมแล้ว:ไม่") == 2) {
+		mes "[Guild Battle Guide]";
+		mes "เอาล่ะฉันหวังว่าจะได้พบคุณอีกครั้งในสนาม PvP!";
+		close;
+	}
+	mes "[Guild Battle Guide]";
+	mes "เยี่ยม! มีความสุข ~";
+	close2;
+	warp "guild_vs"+.@i,getd(".@map"+.@j+"X["+.@i+"]"),.@mapY[.@i];
+	end;
+}

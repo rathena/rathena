@@ -1,0 +1,177 @@
+//===== rAthena Script =======================================
+//= Sunken Ship Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.5
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 More accurate spawns [Playtester]
+//= 1.3 Corrected MVP spawn variance. [L0ne_W0lf]
+//= 1.4 Added 14.2 Novice Version as part of Academy update. [Kisuka]
+//= 1.5 Correct Spawn by Navigation's mob data. [attackjom]
+//============================================================
+
+//==================================================
+// treasure01 - Sunken Ship
+//==================================================
+treasure01,0,0	monster	Pirate Skeleton	1071,56,5000
+treasure01,0,0	monster	Kukre	1070,10,5000
+treasure01,68,66,13,11	monster	Hydra	1068,4,180000,90000
+treasure01,107,39,15,15	monster	Hydra	1068,1,180000,90000
+treasure01,67,161	monster	Hydra	1068,1,263000,100000
+treasure01,87,160	monster	Hydra	1068,1,268000,100000
+treasure01,76,182	monster	Hydra	1068,1,269000,100000
+treasure01,51,160	monster	Hydra	1068,1,270000,100000
+treasure01,162,71	monster	Hydra	1068,1,273000,100000
+treasure01,88,161	monster	Hydra	1068,1,281000,100000
+treasure01,86,161	monster	Hydra	1068,1,285000,100000
+treasure01,159,45	monster	Hydra	1068,1,285000,100000
+treasure01,69,160	monster	Hydra	1068,1,290000,100000
+treasure01,159,40	monster	Hydra	1068,1,290000,100000
+treasure01,168,41	monster	Hydra	1068,1,290000,100000
+treasure01,67,160	monster	Hydra	1068,1,293000,100000
+treasure01,165,70	monster	Hydra	1068,1,293000,100000
+treasure01,88,160	monster	Hydra	1068,1,296000,100000
+treasure01,158,62	monster	Hydra	1068,1,300000,100000
+treasure01,159,63	monster	Hydra	1068,1,300000,100000
+treasure01,158,63	monster	Hydra	1068,1,300000,100000
+treasure01,164,70	monster	Hydra	1068,1,300000,100000
+treasure01,163,70	monster	Hydra	1068,1,300000,100000
+treasure01,159,62	monster	Hydra	1068,1,300000,100000
+treasure01,169,42	monster	Hydra	1068,1,300000,100000
+treasure01,169,45	monster	Hydra	1068,1,300000,100000
+treasure01,168,43	monster	Hydra	1068,1,300000,100000
+treasure01,168,45	monster	Hydra	1068,1,300000,100000
+treasure01,159,42	monster	Hydra	1068,1,300000,100000
+treasure01,169,40	monster	Hydra	1068,1,300000,100000
+treasure01,158,41	monster	Hydra	1068,1,300000,100000
+treasure01,158,42	monster	Hydra	1068,1,300000,100000
+treasure01,158,44	monster	Hydra	1068,1,300000,100000
+treasure01,163,71	monster	Hydra	1068,1,300000,100000
+treasure01,68,160	monster	Hydra	1068,1,300000,100000
+treasure01,49,160	monster	Hydra	1068,1,300000,100000
+treasure01,48,160	monster	Hydra	1068,1,300000,100000
+treasure01,87,161	monster	Hydra	1068,1,300000,100000
+treasure01,89,161	monster	Hydra	1068,1,300000,100000
+treasure01,150,162,5,5	monster	Hydra	1068,1,300000,100000
+treasure01,163,161,5,5	monster	Hydra	1068,1,300000,100000
+treasure01,163,141,5,5	monster	Hydra	1068,1,300000,100000
+treasure01,163,151,5,5	monster	Hydra	1068,1,300000,100000
+treasure01,50,160	monster	Hydra	1068,1,301000,100000
+treasure01,169,44	monster	Hydra	1068,1,302000,100000
+treasure01,158,45	monster	Hydra	1068,1,302000,100000
+treasure01,70,161	monster	Hydra	1068,1,302000,100000
+treasure01,169,43	monster	Hydra	1068,1,305000,100000
+treasure01,158,43	monster	Hydra	1068,1,305000,100000
+treasure01,69,161	monster	Hydra	1068,1,305000,100000
+treasure01,164,71	monster	Hydra	1068,1,305000,100000
+treasure01,89,160	monster	Hydra	1068,1,305000,100000
+treasure01,168,42	monster	Hydra	1068,1,306000,100000
+treasure01,70,160	monster	Hydra	1068,1,306000,100000
+treasure01,159,41	monster	Hydra	1068,1,306000,100000
+treasure01,165,71	monster	Hydra	1068,1,307000,100000
+treasure01,158,40	monster	Hydra	1068,1,307000,100000
+treasure01,50,161	monster	Hydra	1068,1,308000,100000
+treasure01,49,161	monster	Hydra	1068,1,310000,100000
+treasure01,86,160	monster	Hydra	1068,1,310000,100000
+treasure01,159,44	monster	Hydra	1068,1,312000,100000
+treasure01,169,41	monster	Hydra	1068,1,313000,100000
+treasure01,60,182	monster	Hydra	1068,1,313000,100000
+treasure01,51,161	monster	Hydra	1068,1,314000,100000
+treasure01,168,44	monster	Hydra	1068,1,314000,100000
+treasure01,162,70	monster	Hydra	1068,1,314000,100000
+treasure01,48,161	monster	Hydra	1068,1,316000,100000
+treasure01,68,161	monster	Hydra	1068,1,317000,100000
+treasure01,159,43	monster	Hydra	1068,1,318000,100000
+treasure01,168,40	monster	Hydra	1068,1,322000,100000
+
+//==================================================
+// treasure02 - Sunken Ship
+//==================================================
+treasure02,0,0	monster	Pirate Skeleton	1071,40,5000
+treasure02,0,0	monster	Kukre	1070,20,5000
+treasure02,0,0	monster	Whisper	1179,10,5000
+treasure02,0,0	monster	Mimic	1191,1,5000
+treasure02,0,0	monster	Marionette	1143,1,5000
+treasure02,100,136	monster	Hydra	1068,1,300000,100000
+treasure02,101,136	monster	Hydra	1068,1,300000,100000
+treasure02,102,136	monster	Hydra	1068,1,300000,100000
+treasure02,103,136	monster	Hydra	1068,1,300000,100000
+treasure02,100,143	monster	Hydra	1068,1,300000,100000
+treasure02,101,143	monster	Hydra	1068,1,300000,100000
+treasure02,102,143	monster	Hydra	1068,1,300000,100000
+treasure02,103,143	monster	Hydra	1068,1,300000,100000
+treasure02,103,85	monster	Hydra	1068,1,300000,100000
+treasure02,102,85	monster	Hydra	1068,1,300000,100000
+treasure02,95,57	monster	Hydra	1068,1,300000,100000
+treasure02,96,57	monster	Hydra	1068,1,300000,100000
+treasure02,101,57	monster	Hydra	1068,1,300000,100000
+treasure02,102,57	monster	Hydra	1068,1,300000,100000
+treasure02,107,57	monster	Hydra	1068,1,300000,100000
+treasure02,108,57	monster	Hydra	1068,1,300000,100000
+treasure02,100,85	monster	Hydra	1068,1,300000,100000
+treasure02,101,85	monster	Hydra	1068,1,300000,100000
+treasure02,0,0	monster	Ghostring	1120,1,1980000,1200000
+treasure02,101,151,8,8	boss_monster	Drake	1112,1,7200000,600000,1
+
+//==================================================
+// treasure_n1 - Izlude Sunken Ship 1F
+//==================================================
+treasure_n1,0,0	monster	Red Mushroom	1085,10,50000
+treasure_n1,0,0	monster	Black Mushroom	1084,10,50000
+treasure_n1,160,54,13,13	monster	Red Mushroom	1085,10,50000
+treasure_n1,160,54,13,13	monster	Black Mushroom	1084,10,50000
+treasure_n1,160,54,13,13	monster	Dead Plankton	2404,10,50000
+treasure_n1,0,0	monster	Red Plant	1078,5,50000
+treasure_n1,0,0	monster	Green Plant	1080,5,50000
+treasure_n1,0,0	monster	Yellow Plant	1081,5,50000
+treasure_n1,0,0	monster	Blue Plant	1079,5,50000
+treasure_n1,0,0	monster	White Plant	1082,5,50000
+treasure_n1,0,0	monster	Zombie	1015,1,100000
+treasure_n1,0,0	monster	Zombie	1015,1,100000
+treasure_n1,68,47,9,9	monster	Weak Skeleton	2405,4,8000
+treasure_n1,106,42,9,9	monster	Roda Frog	1012,3,60000
+treasure_n1,32,37,9,9	monster	Roda Frog	1012,6,60000
+treasure_n1,69,112,9,9	monster	Spore	1014,3,20000
+treasure_n1,35,112,9,9	monster	Spore	1014,3,20000
+treasure_n1,35,112,9,9	monster	Roda Frog	1012,3,20000
+treasure_n1,111,111,9,9	monster	Roda Frog	1012,3,60000
+treasure_n1,111,111,9,9	monster	Dead Plankton	2404,5,60000
+treasure_n1,69,174,9,9	monster	Dead Plankton	2404,7,120000
+treasure_n1,82,155,9,9	monster	Spore	1014,4,60000
+treasure_n1,55,155,9,9	monster	Spore	1014,2,60000
+treasure_n1,22,160	monster	Weak Skeleton	2405,3,8000
+treasure_n1,163,155,13,13	monster	Weak Skeleton	2405,5,8000
+treasure_n1,163,155,13,13	monster	Zombie	1015,1,8000
+
+//==================================================
+// treasure_n2 - Izlude Sunken Ship 2F
+//==================================================
+treasure_n2,0,0	monster	Red Mushroom	1085,10,50000
+treasure_n2,0,0	monster	Black Mushroom	1084,10,50000
+treasure_n2,150,40,13,13	monster	Weak Soldier Skeleton	2406,3,50000
+treasure_n2,150,40,13,13	monster	Weak Skeleton	2405,5,50000
+treasure_n2,0,0	monster	Red Plant	1078,5,50000
+treasure_n2,0,0	monster	Green Plant	1080,5,50000
+treasure_n2,0,0	monster	Yellow Plant	1081,5,50000
+treasure_n2,0,0	monster	Blue Plant	1079,5,50000
+treasure_n2,0,0	monster	White Plant	1082,5,50000
+treasure_n2,100,50,13,13	monster	Weak Skeleton	2405,7,30000
+treasure_n2,100,50,13,13	monster	Dead Plankton	2404,5,30000
+treasure_n2,50,40,13,13	monster	Weak Soldier Skeleton	2406,3,50000
+treasure_n2,50,40,13,13	monster	Weak Skeleton	2405,5,50000
+treasure_n2,40,75,5,3	monster	Zombie	1015,2,60000
+treasure_n2,40,75,5,5	monster	Dead Plankton	2404,4,60000
+treasure_n2,50,140,5,5	monster	Weak Skeleton	2405,10,60000
+treasure_n2,50,140,5,5	monster	Weak Soldier Skeleton	2406,5,60000
+treasure_n2,160,140,5,5	monster	Weak Skeleton	2405,5,60000
+treasure_n2,160,140,5,5	monster	Weak Soldier Skeleton	2406,3,60000
+treasure_n2,160,140,5,2	monster	Zombie	1015,3,60000
+treasure_n2,160,70,13,13	monster	Weak Skeleton	2405,5,30000
+treasure_n2,160,70,13,13	monster	Dead Plankton	2404,7,30000
+treasure_n2,155,40,9,9	monster	Zombie	1015,3,120000
+treasure_n2,100,85,13,13	monster	Weak Soldier Skeleton	2406,2,50000
+treasure_n2,100,160,13,13	monster	Weak Soldier Skeleton	2406,5,120000
+treasure_n2,100,160,13,13	monster	Weak Skeleton	2405,7,200000
+treasure_n2,100,160,13,13	monster	Dead Plankton	2404,4,60000

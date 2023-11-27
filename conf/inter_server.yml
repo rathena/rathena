@@ -40,9 +40,6 @@ Body:
   - ID: 0
     Name: "Storage"
     Table: storage
-  - ID: 1
-    Name: "VIP Storage"
-    Table: storage_vip
 
 Footer:
   Imports:

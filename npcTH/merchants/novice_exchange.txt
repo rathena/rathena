@@ -1,0 +1,345 @@
+//===== rAthena Script =======================================
+//= Novice Goods Exchanger
+//===== By: ==================================================
+//= ???, rAthena Team
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Exchanges your Basic Monster drops for Red Potions.
+//===== Additional Comments: =================================
+//= 1.2 Rescripted to Aegis 10.standards. [L0ne_W0lf[
+//=     Made it easier to add new items to exhange list
+//=     meaning only the exchange is done in a function now.
+//= 1.3 Fixed dialog mix-up in function. [L0ne_W0lf]
+//= 1.4 Added checkweight, and input min/max values. [L0ne_W0lf]
+//============================================================
+
+prontera,123,102,5	script	Merchant#pron	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "ฮ่าฮ่า!";
+		mes "คุณเป็นอะไรยอดมนุษย์?";
+		mes "คุณแบกของเยอะมาก!";
+		mes "คุณควรใส่บางส่วนลงใน Kafra Storage ~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "หวัดดี!";
+	mes "คุณเก็บไอเทมเช่น Shells หรือ Fluff หรือไม่";
+	mes "แล้ว Jellopies ล่ะ?";
+	mes "โอ้ใช่ฉันต้องการบางสิ่งบางอย่าง";
+	next;
+	mes "[Merchant]";
+	mes "แน่นอนฉันจะไม่ขอให้คุณให้ของฟรีกับฉันแล้วถ้าฉันแลกเปลี่ยน Red Potion เป็น 5 Shells, 10 Fluff หรือ 10 Jellopies?";
+	next;
+	switch(select("แน่นอน!:ฉันคิดว่ามันเป็นการฉ้อโกง!:ไม่ขอบคุณ")) {
+	case 1:
+		mes "[Merchant]";
+		mes "แล้วคุณจะเอาของชิ้นไหนมาให้ฉัน?";
+		mes "Shells, Fluffs หรือ Jellopies?";
+		next;
+		switch(select("Shells:Jellopies:Fluff:ยกเลิก")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",909,10;
+		case 3: callfunc "F_PotExchange",914,10;
+		case 4:
+			mes "[Merchant]";
+			mes "ชัวร์~";
+			mes "ไม่มีปัญหา";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "ฉีก...?";
+		mes "ถ้าคุณตรวจสอบมูลค่าตลาดของสินค้าที่ซื้อขายฉันเป็นคนที่ถูกฉีกทิ้งที่นี่";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "ได้เลย";
+		mes "ไม่มีปัญหา";
+		mes "แต่กลับมาหาฉันเถอะ";
+		mes "ถ้าคุณเปลี่ยนใจ";
+		close;
+	}
+}
+
+morocc,180,259,3	script	Merchant#Morocc	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "ฮ่าฮ่า!";
+		mes "คุณเป็นอะไรยอดมนุษย์?";
+		mes "คุณแบกของเยอะมาก!";
+		mes "คุณควรใส่บางส่วนลงใน Kafra Storage ~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "หวัดดี!";
+	mes "คุณเก็บไอเทมเช่น Shells หรือ Feathers of Bird หรือไม่";
+	mes "แล้ว Jellopies ล่ะ?";
+	mes "โอ้ใช่ฉันต้องการบางสิ่งบางอย่าง";
+	next;
+	mes "[Merchant]";
+	mes "แน่นอนฉันจะไม่ขอให้คุณให้ของฟรีกับฉันแล้วถ้าฉันแลกเปลี่ยน Red Potion เป็น 5 Shells, 7 Feathers of Bird หรือ 10 Jellopies?";
+	next;
+	switch(select("แน่นอน!:ฉันคิดว่ามันเป็นการฉ้อโกง!:ไม่ขอบคุณ")) {
+	case 1:
+		mes "[Merchant]";
+		mes "แล้วคุณจะเอาของชิ้นไหนมาให้ฉัน?";
+		mes "Shells, Feathers of Bird หรือ Jellopies?";
+		next;
+		switch(select("Shells:Feathers of Birds:Jellopies:ยกเลิก")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",916,7;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[Merchant]";
+			mes "ชัวร์~";
+			mes "ไม่มีปัญหา";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "ฉีก...?";
+		mes "ถ้าคุณตรวจสอบมูลค่าตลาดของสินค้าที่ซื้อขายฉันเป็นคนที่ถูกฉีกทิ้งที่นี่";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "ได้เลย";
+		mes "ไม่มีปัญหา";
+		mes "แต่กลับมาหาฉันเถอะ";
+		mes "ถ้าคุณเปลี่ยนใจ";
+		close;
+	}
+}
+
+payon,200,134,5	script	Merchant#pay	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "ฮ่าฮ่า!";
+		mes "คุณเป็นอะไรยอดมนุษย์?";
+		mes "คุณแบกของเยอะมาก!";
+		mes "คุณควรใส่บางส่วนลงใน Kafra Storage ~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "หวัดดี!";
+	mes "คุณเก็บไอเทมเช่น Tree Roots แล้วหรือยัง";
+	mes "แล้ว Jellopies ล่ะ";
+	mes "ฉันต้องการบางสิ่งบางอย่าง";
+	next;
+	mes "[Merchant]";
+	mes "แน่นอนฉันจะไม่ขอให้คุณให้ของฟรีกับฉันแล้วถ้าฉันแลกเปลี่ยน Red Potion สำหรับ 6 Tree Roots หรือ 10 Jellopies?";
+	next;
+	switch(select("แน่นอน!:ฉันคิดว่ามันเป็นการฉ้อโกง!:ไม่ขอบคุณ")) {
+	case 1:
+		mes "[Merchant]";
+		mes "แล้วรายการไหนทำ";
+		mes "อยากพามาด้วยเหรอ?";
+		mes "Tree Roots หรือ Jellopies?";
+		next;
+		switch(select("Tree Roots:Jellopies:ยกเลิก")) {
+		case 1: callfunc "F_PotExchange",902,6;
+		case 2: callfunc "F_PotExchange",909,10;
+		case 3:
+			mes "[Merchant]";
+			mes "ชัวร์~";
+			mes "ไม่มีปัญหา";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "ฉีก...?";
+		mes "ถ้าคุณตรวจสอบมูลค่าตลาดของสินค้าที่ซื้อขายฉันเป็นคนที่ถูกฉีกทิ้งที่นี่";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "ได้เลย";
+		mes "ไม่มีปัญหา";
+		mes "แต่กลับมาหาฉันเถอะ";
+		mes "ถ้าคุณเปลี่ยนใจ";
+		close;
+	}
+}
+
+aldebaran,152,63,5	script	Merchant#alde	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "ฮ่าฮ่า!";
+		mes "คุณเป็นอะไรยอดมนุษย์?";
+		mes "คุณแบกของเยอะมาก!";
+		mes "คุณควรใส่บางส่วนลงใน Kafra Storage ~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "หวัดดี!";
+	mes "คุณเก็บ Worm Peelings หรือ Feather of Birds?";
+	mes "แล้ว Jellopies ล่ะ";
+	mes "ฉันต้องการบางสิ่งบางอย่าง";
+	next;
+	mes "[Merchant]";
+	mes "แน่นอนฉันจะไม่ขอให้คุณให้ของฟรีกับฉันแล้วถ้าฉันแลกเปลี่ยน Red Potion สำหรับ 1 Worm Peelings, 7 Feather of Birds หรือ 10 Jellopies";
+	next;
+	switch(select("แน่นอน!:ฉันคิดว่ามันเป็นการฉ้อโกง!:ไม่ขอบคุณ")) {
+	case 1:
+		mes "[Merchant]";
+		mes "แล้วคุณจะเอาของชิ้นไหนมาให้ฉัน?";
+		mes "Feathers of Birds?";
+		mes "Worm Peelings?";
+		mes "หรือ Jellopies?";
+		next;
+		switch(select("Worm Peelings:Feathers of Birds:Jellopies:ยกเลิก")) {
+		case 1: callfunc "F_PotExchange",955,1;
+		case 2: callfunc "F_PotExchange",916,7;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[Merchant]";
+			mes "ชัวร์~";
+			mes "ไม่มีปัญหา";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "ฉีก...?";
+		mes "ถ้าคุณตรวจสอบมูลค่าตลาดของสินค้าที่ซื้อขายฉันเป็นคนที่ถูกฉีกทิ้งที่นี่";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "ได้เลย";
+		mes "ไม่มีปัญหา";
+		mes "แต่กลับมาหาฉันเถอะ";
+		mes "ถ้าคุณเปลี่ยนใจ";
+		close;
+	}
+}
+
+geffen,173,88,5	script	Merchant#geff	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "ฮ่าฮ่า!";
+		mes "คุณเป็นอะไรยอดมนุษย์?";
+		mes "คุณแบกของเยอะมาก!";
+		mes "คุณควรใส่บางส่วนลงใน Kafra Storage ~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "หวัดดี!";
+	mes "คุณเก็บไอเท็ม Shells หรือ Chrysalises?";
+	mes "แล้ว Jellopies ล่ะ";
+	mes "ฉันต้องการบางสิ่งบางอย่าง";
+	next;
+	mes "[Merchant]";
+	mes "แน่นอนฉันจะไม่ขอให้คุณให้ของฟรีกับฉันแล้วถ้าฉันแลกเปลี่ยน Red Potion เป็น 5 Shells หรือ 6 Chrysalises หรือ 10 Jellopies?";
+	next;
+	switch(select("แน่นอน!:ฉันคิดว่ามันเป็นการฉ้อโกง!:ไม่ขอบคุณ")) {
+	case 1:
+		mes "[Merchant]";
+		mes "แล้วคุณจะเอาของชิ้นไหนมาให้ฉัน?";
+		mes "Shells, Chrysalises, หรือ Jellopies?";
+		next;
+		switch(select("Shells:Chrysalises:Jellopies:ยกเลิก")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",915,6;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[Merchant]";
+			mes "ชัวร์~";
+			mes "ไม่มีปัญหา";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "ฉีก...?";
+		mes "ถ้าคุณตรวจสอบมูลค่าตลาดของสินค้าที่ซื้อขายฉันเป็นคนที่ถูกฉีกทิ้งที่นี่";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "ได้เลย";
+		mes "ไม่มีปัญหา";
+		mes "แต่กลับมาหาฉันเถอะ";
+		mes "ถ้าคุณเปลี่ยนใจ";
+		close;
+	}
+}
+
+function	script	F_PotExchange	{
+	.@item_req = getarg(0);
+	.@req_amount = getarg(1);
+
+	if (countitem(.@item_req) < .@req_amount) {
+		mes "[Merchant]";
+		mes "เฮ้ที่ไหน";
+		mes "ทั้งหมดนั้น " + getitemname(.@item_req) + "";
+		mes "ที่คุณสัญญา?";
+		mes "ให้ฉัน " + getitemname(.@item_req) + "!";
+		close;
+	}
+	else {
+		mes "[Merchant]";
+		mes "เอาล่ะให้ฉันตรวจสอบว่าคุณมี " + getitemname(.@item_req) + " กับคุณกี่อัน";
+		mes "หืม...";
+		next;
+		mes "[Merchant]";
+		mes "คุณมีจำนวน " + countitem(.@item_req) + " " + getitemname(.@item_req) + ".";
+		mes "ฉันสามารถให้คุณได้ทั้งหมด " + (countitem(.@item_req)/.@req_amount) + " Red Potions สำหรับพวกนั้น";
+		next;
+		mes "[Merchant]";
+		mes "ว่าไง";
+		mes "เรามีข้อตกลงหรือไม่";
+		next;
+		if (select("แลก:ไม่แลก") == 1) {
+			mes "[Merchant]";
+			mes "คุณรู้จำนวนที่แน่นอนของ Red Potions ที่คุณต้องการรับสำหรับ " + getitemname(.@item_req) + " ใช่ไหม";
+			next;
+			mes "[Merchant]";
+			mes "ตอนนี้ฉันสามารถแลกเปลี่ยน Red Potion ขั้นต่ำ 1 ขวดและสูงสุด 100 Red Potion ในครั้งเดียวถ้าคุณเปลี่ยนใจให้ป้อน '0' เพื่อยกเลิก";
+			next;
+			while(1) {
+				input .@input,0,101;
+				if (.@input == 0) {
+					mes "[Merchant]";
+					mes "อะไร...?";
+					mes "ทำไมคุณถึงมารบกวนที่จะคุยกับฉันด้วย";
+					mes "สวยไม่แน่ใจใช่ไหม";
+					close;
+				}
+				else if (.@input > 100) {
+					mes "[Merchant]";
+					mes "ฉันไม่สามารถให้ Red Potions ได้มากกว่า 100 ขวดในครั้งเดียวลองอีกครั้ง";
+					next;
+				}
+				else {
+					break;
+				}
+			}
+			.@put_out_item = .@input * .@req_amount;
+			if (countitem(.@item_req) < .@put_out_item) {
+				mes "[Merchant]";
+				mes "เอ่อหมายเลขที่คุณป้อนดูเหมือนจะไม่ถูกต้องคุณควรตรวจสอบจำนวน Red Potions ที่คุณสามารถแลกเปลี่ยนได้อีกครั้ง";
+				close;
+			}
+			mes "[Merchant]";
+			mes "เอาล่ะ!";
+			mes "ตรวจสอบจำนวน Red Potions";
+			mes "ฉันให้คุณแล้วมันน่าจะดีขอบคุณที่เป็นข้อตกลงที่ดี~";
+			delitem .@item_req,.@put_out_item; //Shell
+			getitem 501,.@input; //Red_Potion
+			close;
+		}
+		mes "[Merchant]";
+		mes "หือ~";
+		mes "ได้เลย";
+		mes "แม้ว่าจะไม่ใช่";
+		mes "Red Potions มีประโยชน์มากกว่าสำหรับนักผจญภัยเช่นคุณ?";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 Made it as a function. U can add your own Merchs [Lupus]
+//= 1.1a Fixed item select [KarLaeda]
+//============================================================ 

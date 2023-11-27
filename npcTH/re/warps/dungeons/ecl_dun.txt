@@ -1,0 +1,26 @@
+//===== rAthena Script =======================================
+//= Eclage Dungeon Warp Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Portals for Eclage Dungeon
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Corrected Warp Co-ordinates and 
+//=      name of Warp Portal. [Dastgir]
+//============================================================
+
+ecl_fild01,182,82,0	warp	Tenter_TOut	1,1,ecl_tdun01,60,13
+ecl_tdun01,61,11,0	warp	TOut_Tenter	1,1,ecl_fild01,182,85
+ecl_tdun01,67,106,0	warp	tdun1up_tdun2dn	1,1,ecl_tdun02,60,88
+ecl_tdun02,60,90,0	warp	tdun2dn_tdun1up	1,1,ecl_tdun01,70,105
+ecl_tdun02,52,9,0	warp	tdun2up_tdun3dn	1,1,ecl_tdun03,47,13
+ecl_tdun03,49,11,0	warp	tdun3dn_tdun2up	1,1,ecl_tdun02,50,11
+ecl_tdun03,50,46,0	warp	tdun3up_tdun4dn	1,1,ecl_tdun04,26,24
+ecl_tdun04,26,26,0	warp	tdun4dn_tdun3up	1,1,ecl_tdun03,50,44
+ecl_tdun04,34,17,0	warp	tdun4-1_ttop	1,1,ecl_fild01,183,73
+ecl_fild01,183,70,0	warp	ttop_tdun4-1	1,1,ecl_tdun04,33,19

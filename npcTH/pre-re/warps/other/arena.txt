@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Arena Warps
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points related to Izlude Arena.
+//===== Additional Comments: =================================
+//= 1.0 First version, Pre-Renewal warps.
+//============================================================
+
+izlude,128,226,0	warp	welcome_arena	1,1,arena_room,100,30
+arena_room,99,24,0	warp	bye_arena	2,2,izlude,128,220

@@ -1,0 +1,17 @@
+//===== rAthena Script =======================================
+//= Brasilis Fild Warps Script
+//===== By: ==================================================
+//= Protimus
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Warp Points for Brasilis
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+bra_fild01,72,34,0	warp	bra_fild01_brasilis	1,1,brasilis,309,334
+brasilis,308,336,0	warp	brasilis_bra_fild01	1,1,bra_fild01,74,34

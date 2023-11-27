@@ -1,0 +1,498 @@
+//===== rAthena Script ======================================= 
+//= Sage Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Create Converter, Elemental Change
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 standards. [5511]
+//= 1.5 Optimized. [Euphy]
+//============================================================
+
+yuno_in03,176,24,3	script	Mischna	755,{
+	if(BaseJob != Job_Sage) {
+		mes "[Mishuna]";
+		mes "Good day, I'm Mishuna, one";
+		mes "of the instructors here in the";
+		mes "Schweicherbil Magic Academy.";
+		mes "By any chance, are you a Sage";
+		mes "or Scholar? Oh... You're not?";
+		next;
+		mes "[Mishuna]";
+		mes "Oh, that's too bad.";
+		mes "My apologies. But if you";
+		mes "happen to know any, or meet";
+		mes "any in your journeys, please";
+		mes "direct them to me if they haven't heard of the lessons I provide.";
+		next;
+		mes "[Mishuna]";
+		mes "I'm sorry to bother";
+		mes "you, and I thank you";
+		mes "for your time. Good";
+		mes "day to you, adventurer.";
+		close;
+	}
+	if(SAG_SK == 100) {
+		set .@Element, getskilllv("SA_ELEMENTFIRE") + getskilllv("SA_ELEMENTGROUND") + getskilllv("SA_ELEMENTWIND") + getskilllv("SA_ELEMENTWATER");
+		set .@Convert, getskilllv("SA_CREATECON");
+		if(.@Element && .@Convert) {
+			mes "[Mishuna]";
+			mes "If you have any Sage or";
+			mes "Scholar friends who haven't";
+			mes "learned the skills from Sir";
+			mes "Barmundt's scrolls, then";
+			mes "please refer them to me.";
+			next;
+			mes "[Mishuna]";
+			mes "I trust that you are";
+			mes "finding that these";
+			mes "element based skills";
+			mes "are very useful in battle.";
+			mes "Knowledge truly equates";
+			mes "to power in the long run...";
+			close;
+		}
+		mes "[Mishuna]";
+		mes "Ah, you must have";
+		mes "forgotten what I taught";
+		mes "you somehow. Perhaps";
+		mes "you lost your copy of the";
+		mes "skill scroll I gave you? No";
+		mes "matter, I'll help you remember.";
+		next;
+		if(.@Element == 0) {
+			mes "[Mishuna]";
+			mes "You'll be given the chance to";
+			mes "choose which kind of ^FF0000Elemental";
+			mes "Change^000000 skill that you want, even one that you didn't previously";
+			mes "learn, so long as you fulfill";
+			mes "the skill's requirements.";
+			next;
+			mes "[Mishuna]";
+			mes "Keep in mind that once";
+			mes "you learn your Elemental";
+			mes "Change skill, you won't be";
+			mes "able to change it. Now, which";
+			mes "skill would you like to learn?";
+			next;
+			setarray .@ReqSkill[0],280,283,282,281;
+			setarray .@ReqSkill$[0],"Blaze","Quake","Tornado","Tsunami";
+			setarray .@Skill[0],1018,1017,1019,1008;
+			setarray .@Skill$[0],"Fire","Earth","Wind","Water";
+			while(1) {
+				set .@i, select("Fire Elemental Change:Earth Elemental Change:Wind Elemental Change:Water Elemental Change")-1;
+				if(getskilllv(.@ReqSkill[.@i]) == 0) {
+					mes "[Mishuna]";
+					mes "I'm sorry, but you haven't";
+					mes "learned ^FF0000Endow "+.@ReqSkill$[.@i]+"^000000, the skill";
+					mes "required for ^FF0000"+.@Skill$[.@i]+" Elemental";
+					mes "Change^000000. You'll need to learn";
+					mes "Endow "+.@ReqSkill$[.@i]+" or select another";
+					mes "Elemental Change skill.";
+					next;
+				}
+				else {
+					mes "[Mishuna]";
+					mes "Very well, I shall";
+					mes "teach you the ^FF0000"+.@Skill$[.@i];
+					mes "Elemental Change^000000 skill";
+					mes "and the ^FF0000Elemental Converter";
+					mes "Creation skill^000000. Please remain";
+					mes "still while I chant this spell.";
+					next;
+					mes "[Mishuna]";
+					mes "%$#@!#$% Yap~~";
+					specialeffect2 EF_RUWACH;
+					next;
+					mes "[Mishuna]";
+					mes "Yap!";
+					specialeffect2 EF_BRANDISHSPEAR;
+					next;
+					mes "^3355FFYou've successfully";
+					mes "learned the "+.@Skill$[.@i]+" Elemental";
+					mes "Change skill and the Elemental";
+					mes "Converter Creation skill.^000000";
+					skill .@Skill[.@i],1,SKILL_PERM;
+					if(.@Convert == 0)
+						skill "SA_CREATECON",1,SKILL_PERM;
+					next;
+					break;
+				}
+			}
+		}
+		else if(.@Convert == 0) {
+			mes "[Mishuna]";
+			mes "Alright, I'm going";
+			mes "to cast a spell that";
+			mes "will help you remember";
+			mes "the skills you forgot.";
+			mes "Don't move, and try to";
+			mes "stay as still as possible...";
+			next;
+			mes "[Mishuna]";
+			mes "%$#@!#$% Yap~~";
+			specialeffect2 EF_RUWACH;
+			next;
+			mes "[Mishuna]";
+			mes "Yap!";
+			specialeffect2 EF_BRANDISHSPEAR;
+			next;
+			mes "^3355FFYou successfully recalled";
+			mes "the Elemental Coverter";
+			mes "Creation skill and are";
+			mes "able to use it again.^000000";
+			skill "SA_CREATECON",1,SKILL_PERM;
+			next;
+		}
+		mes "[Mishuna]";
+		mes "Ah, you've learned these";
+		mes "skills as quickly as I thought";
+		mes "you would. Very well then,";
+		mes "I hope you adeptly use these";
+		mes "talents for the right purposes.";
+		mes "Farewell for now, "+strcharinfo(0)+".";
+		close;
+	}
+	else if(SAG_SK == 0) {
+		mes "[Mishuna]";
+		mes "Good day, I'm Mishuna, one";
+		mes "of the instructors here in the";
+		mes "Schweicherbil Magic Academy.";
+		mes "How may I be of service?";
+		next;
+		select("I seek new knowledge.");
+		mes "[Mishuna]";
+		mes "Ah, you must be "+strcharinfo(0)+".";
+		mes "I've looked forward to meeting";
+		mes "you. In the noble pursuit of";
+		mes "knowledge, might I suggest";
+		mes "reading the recently restored";
+		mes "scrolls of Sir Barmundt?";
+		next;
+		mes "[Mishuna]";
+		mes "Sir Barmundt's scrolls contain";
+		mes "knowledge about the 4 elements,";
+		mes "which are Fire, Water, Earth, and Wind. The knowledge of these";
+		mes "scrolls can be applied in the";
+		mes "use of 2 new Sage skills.";
+		next;
+		mes "[Mishuna]";
+		mes "The first is called ^FF0000Elemental";
+		mes "Change^000000, which enables you";
+		mes "to change a monster's attribute";
+		mes "according to the specific element of the Elemental Change skill";
+		mes "that you have learned.";
+		next;
+		mes "[Mishuna]";
+		mes "The second is called";
+		mes "Elemental Converter Creation,";
+		mes "which enables you to create";
+		mes "converter items that are required to use the Elemental Change skill.";
+		next;
+		mes "[Mishuna]";
+		mes "Although the knowledge of";
+		mes "these two skills has been";
+		mes "lost for years, we've finally";
+		mes "been able to recover most";
+		mes "of it. So, do you think you're";
+		mes "ready to learn these skills?";
+		next;
+		if(select("Maybe later.:Yes, I am.") == 1) {
+			mes "[Mishuna]";
+			mes "Ah, you must be busy right";
+			mes "now. No problem, just come";
+			mes "back when you think you're";
+			mes "ready to learn. Well then,";
+			mes "farewell and have a good day~";
+			close;
+		}
+		mes "[Mishuna]";
+		mes "Very well, then. First, you";
+		mes "must learn the Elemental";
+		mes "Coverter Creation skill, which";
+		mes "is essential to learning the";
+		mes "Elemental Change skill.";
+		next;
+		mes "[Mishuna]";
+		mes "Please bring the required";
+		mes "materials so that we can";
+		mes "construct a basic elemental";
+		mes "converter in order for you to";
+		mes "learn the skill. Let's see,";
+		mes "you will need to bring...";
+		next;
+		mes "[Mishuna]";
+		mes "^ff00007 Horns^000000,";
+		mes "^ff000012 Rainbow Shells^000000,";
+		mes "^ff000010 Snail's Shells^000000,";
+		mes "^ff00004 Blank Scrolls^000000 and";
+		mes "^ff000010 Scorpion Tails^000000.^000000";
+		next;
+		mes "[Mishuna]";
+		mes "Alright, I shall be";
+		mes "nexting here for your";
+		mes "return. Remember that we";
+		mes "need these items to create";
+		mes "a converter so that you can learn the skill from my example...";
+		set SAG_SK,1;
+		close;
+	}
+	else if(SAG_SK == 1) {
+		if (countitem(904) < 10 || countitem(947) < 7 || countitem(1013) < 12 || countitem(946) < 10 || countitem(7433) < 4) {
+			mes "[Mishuna]";
+			mes "Hm, you still haven't";
+			mes "gathered all of the materials";
+			mes "required to create an elemental";
+			mes "coverter. Let me remind you";
+			mes "what to bring so that you";
+			mes "don't forget next time...";
+			next;
+			mes "[Mishuna]";
+			mes "^ff00007 Horns^000000,";
+			mes "^ff000012 Rainbow Shells^000000,";
+			mes "^ff000010 Snail's Shells^000000,";
+			mes "^ff00004 Blank Scrolls^000000 and";
+			mes "^ff000010 Scorpion Tails^000000.^000000";
+			next;
+			mes "[Mishuna]";
+			mes "Don't forget that we need";
+			mes "all of these items to create";
+			mes "a converter so that you can";
+			mes "learn the Elemental Converter";
+			mes "Creation skill by watching";
+			mes "me demonstrate it for you.";
+			close;
+		}
+		else {
+			mes "[Mishuna]";
+			mes "Great, you brought everything.";
+			mes "Now, let me explain the skill.";
+			mes "The skills you learn as a Sage";
+			mes "determine what kind of elemental converters that you can craft.";
+			next;
+			mes "[Mishuna]";
+			mes "The ^FF0000Endow Blaze^000000 skill enables";
+			mes "you to create Fire elemental";
+			mes "converters. The ^FF0000Endow Quake^000000";
+			mes "skill enables the creation";
+			mes "of Earth elemental converters.";
+			next;
+			mes "[Mishuna]";
+			mes "^FF0000Endow Tornado^000000 enables";
+			mes "the creation of Wind elemental";
+			mes "converters, and ^FF0000Endow Tsunami^000000";
+			mes "enables the creation of Water";
+			mes "elemental converters. That";
+			mes "all makes sense, right?";
+			next;
+			mes "[Mishuna]";
+			mes "Now, your elemental coverter";
+			mes "creation success rate depends";
+			mes "on the level of the Endow Blaze, Endow Quake, Endow Tornado,";
+			mes "or Endow Tsunami skills, and";
+			mes "your abilities.";
+			next;
+			mes "[Mishuna]";
+			mes "Now, please take this copy";
+			mes "of Barmundt's scroll, and use";
+			mes "it as a reference when you try";
+			mes "to craft elemental converters";
+			mes "when you use the Elemental";
+			mes "Converter Creation skill.";
+			next;
+			mes "^3355FFYou have learned the";
+			mes "Elemental Converter";
+			mes "Creation skill by reviewing";
+			mes "your copy of Barmundt's scroll.^000000";
+			specialeffect2 EF_ABSORBSPIRITS;
+			delitem 904,10; // Scorpion_Tail
+			delitem 947,7; // Horn
+			delitem 1013,12; // Rainbow_Shell
+			delitem 946,10; // Snail's_Shell
+			delitem 7433,4; // Blank_Scroll
+			set SAG_SK,2;
+			skill "SA_CREATECON",1,SKILL_PERM;
+			next;
+			mes "[Mishuna]";
+			mes "Wow, "+strcharinfo(0)+"!";
+			mes "You learned that skill";
+			mes "really quickly! No wonder";
+			mes "people say that you're one";
+			mes "of the best Sages around!";
+			next;
+			mes "[Mishuna]";
+			mes "Now you're ready to";
+			mes "learn the other skill,";
+			mes "Elemental Change. Alright,";
+			mes "I need to prepare a few things";
+			mes "for this lesson, so we'll meet";
+			mes "and discuss this later, okay?";
+			close;
+		}
+	}
+	else if(SAG_SK == 2) {
+		if(getskilllv("SA_CREATECON") == 0) {
+			skill "SA_CREATECON",1,SKILL_PERM;
+			mes "- I recalled ^ff0000Elemental Converter Creation skill^000000 While I talk to Mishuna! -";
+			next;
+		}
+		mes "[Mishuna]";
+		mes "You'll be given the chance to";
+		mes "choose which kind of ^FF0000Elemental";
+		mes "Change^000000 skill that you want, even one that you didn't previously";
+		mes "learn, so long as you fulfill";
+		mes "the skill's requirements.";
+		next;
+		mes "[Mishuna]";
+		mes "Keep in mind that once";
+		mes "you learn your Elemental";
+		mes "Change skill, you won't be";
+		mes "able to change it. Now, which";
+		mes "skill would you like to learn?";
+		next;
+		setarray .@ReqSkill[0],280,283,282,281;
+		setarray .@ReqSkill$[0],"Blaze","Quake","Tornado","Tsunami";
+		setarray .@ReqItem$[0],"Red Bloods","Green Lives","Wind of Verdure","Crystal Blues";
+		setarray .@Skill$[0],"Fire","Earth","Wind","Water";
+		while(1) {
+			set .@i, select("Fire Elemental Change:Earth Elemental Change:Wind Elemental Change:Water Elemental Change")-1;
+			if(getskilllv(.@ReqSkill[.@i]) == 0) {
+				mes "[Mishuna]";
+				mes "I'm sorry, but you have not";
+				mes "learned ^FF0000Endow "+.@ReqSkill$[.@i]+"^000000, the skill";
+				mes "required for the "+.@Skill$[.@i]+" Elemental Change skill. Please learn Endow";
+				mes .@ReqSkill$[.@i]+" or select another Elemental Change skill for me to teach you.";
+				next;
+			}
+			else {
+				mes "[Mishuna]";
+				mes "Very well, then. Please";
+				mes "bring the following items";
+				mes "so that you can learn the";
+				mes .@Skill$[.@i]+" Elemental Change skill.";
+				next;
+				mes "[Mishuna]";
+				mes "^FF000020 "+.@ReqItem$[.@i]+"^000000,";
+				mes "^FF00001 Payon Solution^000000 and";
+				mes "^FF00001 Morocc Solution^000000. Please";
+				mes "return to me once you have";
+				mes "all the materials ready.";
+				set SAG_SK, 10 * (.@i+1); //10,20,30,40
+				close;
+			}
+		}
+	}
+	else if(SAG_SK == 10 || SAG_SK == 20 || SAG_SK == 30 || SAG_SK == 40) {
+		if(getskilllv("SA_CREATECON") == 0) {
+			skill "SA_CREATECON",1,SKILL_PERM;
+			mes "- I recalled ^ff0000Elemental Converter Creation skill^000000 While I talk to Mishuna! -";
+			next;
+		}
+		set .@i, (SAG_SK/10) - 1;
+		setarray .@ReqItem[0],990,993,992,991;
+		setarray .@ReqItem$[0],"Red Bloods","Green Lives","Wind of Verdure","Crystal Blues";
+		setarray .@Skill[0],1018,1017,1019,1008;
+		setarray .@Skill$[0],"Fire","Earth","Wind","Water";
+		if (countitem(.@ReqItem[.@i]) < 20 || countitem(1089) < 1 || countitem(1088) < 1) {
+			mes "[Mishuna]";
+			mes "Are you having trouble";
+			mes "gathering all the required";
+			mes "items? Just in case, let me";
+			mes "remind you of what you need";
+			mes "to bring me to learn the "+.@Skill$[.@i];
+			mes "Elemental Change skill.";
+			next;
+			mes "[Mishuna]";
+			mes "^ff000020 "+.@ReqItem$[.@i]+"^000000,";
+			mes "^ff00001 Payon Solution^000000 and";
+			mes "^ff00001 Morocc Solution^000000. Please";
+			mes "don't forget and have the";
+			mes "materials ready for the next";
+			mes "time you see me, alright?";
+			close;
+		}
+		mes "[Mishuna]";
+		mes "Ah, you're back. I can now";
+		mes "finally teach you about the";
+		mes .@Skill$[.@i]+" Elemental Change skill.";
+		mes "This skill has the chance to";
+		mes "permanently change a targeted";
+		mes "monster's attribute to "+.@Skill$[.@i]+".";
+		next;
+		mes "[Mishuna]";
+		mes "Remember that you must";
+		mes "use an elemental converter to";
+		mes "cast this skill, and that it has a success rate, similarly to the";
+		mes "Elemental Converter Creation";
+		mes "skill. So be aware of that.";
+		next;
+		mes "[Mishuna]";
+		mes "Now, "+strcharinfo(0)+",";
+		mes "I'm going to cast a spell";
+		mes "that will help you memorize";
+		mes "the "+.@Skill$[.@i]+" Elemental Change";
+		mes "skill. Try to stay still...";
+		next;
+		mes "^3355FFMishuna begins to chant";
+		mes "a strange incantation as";
+		mes "a soft blue glow surrounds";
+		mes "his body and slowly grows";
+		mes "brighter and more intense.^000000";
+		specialeffect2 EF_RUWACH;
+		next;
+		mes "[Mishuna]";
+		mes "@#$%^~ Yap!";
+		specialeffect2 EF_BRANDISHSPEAR;
+		delitem .@ReqItem[.@i],20;
+		delitem 1089,1; // Payon Potion
+		delitem 1088,1; // Morocc Potion
+		set SAG_SK,100;
+		skill .@Skill[.@i],1,0;
+		next;
+		mes "[Mishuna]";
+		mes strcharinfo(0)+"...";
+		mes "I'm happy to say that you've";
+		mes "successfully memorized the";
+		mes .@Skill$[.@i]+" Elemental Change skill.";
+		mes "I hope that it serves you well";
+		mes "in battle. Farewell for now~";
+		close;
+	}
+	else {
+		mes "[Mishuna]";
+		mes "If you have any Sage or";
+		mes "Scholar friends who haven't";
+		mes "learned the skills from Sir";
+		mes "Barmundt's scrolls, then";
+		mes "please refer them to me.";
+		next;
+		mes "[Mishuna]";
+		mes "I trust that you are";
+		mes "finding that these";
+		mes "element based skills";
+		mes "are very useful in battle.";
+		mes "Knowledge truly equates";
+		mes "to power in the long run...";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Fixed some typos [IVBela]
+//============================================================

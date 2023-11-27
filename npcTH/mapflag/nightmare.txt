@@ -1,0 +1,52 @@
+//===== rAthena Script =======================================
+//= Mapflag: Nightmare mode.
+//===== Description: ========================================= 
+//= Players drop items/equipment on death.
+//= pvp_nightmaredrop	id,type,percent
+//=   id: Drop a specific item ID or "random"
+//=   type: "inventory", "equip", or "all"
+//=   percent: Rate of item drop.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//============================================================
+
+pvp_n_1-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_2-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_3-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_4-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_5-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_6-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_7-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_8-1	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_1-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_2-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_3-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_4-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_5-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_6-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_7-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_8-2	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_1-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_2-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_3-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_4-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_5-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_6-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_7-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_8-3	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_1-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_2-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_3-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_4-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_5-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_6-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_7-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_8-4	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_1-5	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_2-5	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_3-5	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_4-5	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_5-5	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_6-5	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_7-5	mapflag	pvp_nightmaredrop	random,equip,300
+pvp_n_8-5	mapflag	pvp_nightmaredrop	random,equip,300

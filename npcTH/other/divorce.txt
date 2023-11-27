@@ -1,0 +1,217 @@
+//===== rAthena Script ======================================= 
+//= Divorcing Deviruchi
+//===== By: ================================================== 
+//= Perkka, Scriptor, LightFighter
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Official Divorce script.
+//= Added isloggedin() check, even though Aegis doesn't do it;
+//= should be able to divorce even when the spouse is not online.
+//===== Additional Comments: ================================= 
+//= Both players should be online to get divorced
+//= Fixed menu [Lupus]
+//= 1.1 Added check if the patner's online, added effects [Lupus]
+//= 1.2 Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.2a Commented out check of 'wedding_sign' to let
+//=     old married players divorcing, optimized, fixed a bug [Lupus]
+//= 1.3 Wedding variable 'wedding_sign' is now unset on divorce. [L0ne_W0lf]
+//= 1.4 Removed ifpartneron check, fixed typo in percentheal. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================ 
+
+nif_in,190,112,5	script	Deviruchi#divorce	738,{
+	mes "[Deviruchi]";
+//	if (wedding_sign == 0) {
+//		mes "Heh heh...";
+//		mes "Look at that depressed face.";
+//		mes "You must be feeling very lonely.";
+//		mes "But that's something everyone";
+//		mes "has to deal with.";
+//		next;
+//		mes "[Deviruchi]";
+//		mes "If you feel that lonely,";
+//		mes "how about raising a Pet?";
+//		mes "I hear that my kind is very";
+//		mes "popular nowadays, heh heh~";
+//		close;
+//	}
+//	else 
+  	if (!getpartnerid()) {
+		mes "Bwah hah hah~!";
+		mes "That look in your eyes~!";
+		if (Sex == SEX_MALE) {
+			mes "Those are definitely the eyes";
+			mes "of a lonely male bachelor.";
+			mes "I'm almost 100 percent sure";
+			mes "you got ditched at the altar.";
+		}
+		else {
+			mes "They're just filled with the";
+			mes "pain of an old maid--!";
+			mes "Couldn't rope some poor guy";
+			mes "into marriage, huh?";
+		}
+		next;
+		mes "[Deviruchi]";
+		mes "HHAHAHAHA~!";
+		mes "Oooooh...Hee hee~";
+		mes "I'd be more sympathetic if,";
+		mes "you know, I weren't a creature";
+		mes "of darkness.";
+		close;
+	}
+	mes "You look awfully depressed...";
+	mes "Lucky for you, I could care";
+	mes "less about happy people...";
+	mes "It's the humans in despair";
+	mes "that I take an interest in.";
+	mes "Hahahahahahah~!";
+	next;
+	mes "[Deviruchi]";
+	mes "I sense that you carry a";
+	mes "tiresome burden...";
+	mes "If I'm not wrong, you're";
+	if (Sex == SEX_MALE)
+		mes "a married man, aren't you?";
+	else
+		mes "a married woman, aren't you?";
+	next;
+	mes "[Deviruchi]";
+	mes "Let me ask you one thing.";
+	mes "Are you happy to be married?";
+	mes "Forget about responsibilities,";
+	mes "romance and all that other junk";
+	mes "for now.";
+	next;
+	mes "[Deviruchi]";
+	mes "I mean, can just one single";
+	mes "person really bring you all that";
+	mes "happiness? I know all about how";
+	mes "special weddings and the magic";
+	mes "of love is supposed to be, but...";
+	next;
+	mes "[Deviruchi]";
+	mes "At the end of the day, you and";
+	mes "your partner fight, and you feel";
+	mes "totally totally miserable.";
+	if (Sex == SEX_MALE)
+		mes "...all because of HER.";
+	else
+		mes "...all because of HIM.";
+	next;
+	mes "[Deviruchi]";
+	mes "Yes, it's your destiny to find me";
+	mes "here. We all make mistakes...";
+	mes "Even if you promised everlasting";
+	mes "love, even if you made a vow...";
+	mes "I can free you from that prison";
+	mes "of matrimony.";
+	next;
+	mes "[Deviruchi]";
+	mes "It's simple if you look at";
+	mes "marriage as a contract...a";
+	mes "contract that ends with 'till";
+	mes "death do we part.' Here in";
+	mes "Niflheim, it's easy to use";
+	mes "that little loophole...";
+	next;
+	mes "[Deviruchi]";
+	mes "*whispers*";
+	mes "^555555It's not like you're breaking^000000";
+	if (Sex == SEX_MALE) {
+		mes "^555555any promises, and it's not";
+		mes "like your wife will care if she";
+		mes "doesn't know... Don't you";
+		mes "want to be freed from her?^000000";
+	}
+	else {
+		mes "^555555any promises. Hell, your husband";
+		mes "doesn't even have to know";
+		mes "about it... you deserve";
+		mes "real happiness, right?^000000";
+	}
+	next;
+	mes "[Deviruchi]";
+	mes "You can have a brand new love";
+	mes "with a better person...";
+	mes "Wouldn't that be great...?";
+	mes "I can help you if you want...";
+	mes "I can make all of this happen!";
+	next;
+	if (select("No thanks, I am happy.:Yes, please do.") == 1) {
+		mes "[Deviruchi]";
+		mes "Hmpf~! You must still be";
+		mes "fascinated with the silly";
+		mes "notion of eternal love. Well,";
+		mes "if you think you're happy,";
+		mes "then I'll have nothing";
+		mes "to do with you--!";
+		close2;
+		warp "niflheim",169,162;
+		end;
+	}
+	mes "[Deviruchi]";
+	mes "Good, good...";
+	mes "Now all you have to do is give";
+	mes "me what I want in exchange...";
+	mes "Just 2,500,000 zeny and...*cough!*";
+	mes "^666666An eensy piece of your soul.^000000";
+	next;
+	mes "[Deviruchi]";
+	mes "After that, it's the carefree";
+	mes "single's life. All you have to";
+	mes "do is say the word...";
+	next;
+	if (select("...Give me some time to think.:Any price will do, give me a divorce right now!") == 1) {
+		mes "[Deviruchi]";
+		mes "I understand. But if you think";
+		mes "about anything, think about";
+		if (Sex == SEX_MALE) {
+			mes "your wife's nagging, and";
+			mes "how great it would be to";
+			mes "finally free yourself of the";
+			mes "old ball and chain~";
+		}
+		else {
+			mes "how horrible your husband is,";
+			mes "and what a relief it would";
+			mes "be to be rid of that crumbum~";
+		}
+		close;
+	}
+	mes "[Deviruchi]";
+	if (Zeny > 2499999) {
+		mes "Excellent choice~";
+		mes "Let's get started right";
+		mes "away! This may take some";
+		mes "time, but it's better than";
+		mes "being hopelessly married";
+		mes "^FF0000for the rest of your life.^000000";
+		next;
+		specialeffect EF_MAGICROD;
+		specialeffect2 EF_DEVIL;
+		set wedding_sign,0;
+		set Zeny, Zeny-2500000;
+		percentheal -100,-100;
+		divorce;
+		mes "[Deviruchi]";
+		mes "Bwahhahahaha~!";
+		mes "Now you're free~!";
+		mes "Don't you feel so much";
+		mes "better now as a single?";
+		mes "Ah, bachelorhood...";
+		close;
+	}
+	mes "Hmmm...I did tell you to bring";
+	mes "2,500,000 zeny, right?";
+	mes "No one else in this world can";
+	mes "offer this kind of freedom...";
+	mes "You can't put a price on";
+	mes "peace of mind, can you?";
+	close;
+}

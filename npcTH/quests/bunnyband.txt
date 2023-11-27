@@ -1,0 +1,117 @@
+//===== rAthena Script ======================================= 
+//= Bunny Band Quest
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quest to obtain a Bunny Band headgear.
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//	Changed @BUNYBAN back to BUNYBND, it should be this way.
+//	Removed duplicates. NPC is ALberta-only.
+//= 1.6 Cleaning. [Euphy]
+//============================================================ 
+
+alberta,26,229,0	script	Kafra Employee#bunny	83,{
+	if (BUNYBND == 1) {
+		mes "[Kafra Employee]";
+		mes "สวัสดีที่นั่น ~!";
+		mes "คุณต้องการมีส่วนร่วมในกิจกรรมพิเศษของ Kafra Corporation";
+		mes "^529DFFกิจกรรม Bunny Band^000000?";
+		next;
+		switch(select("แน่นอนว่าฉันนำสิ่งของมา:ข้อมูลกิจกรรม:ยกเลิก")) {
+		case 1:
+			mes "[Kafra Employee]";
+			mes "เอาล่ะ~";
+			mes "ให้ฉันตรวจสอบดูว่าคุณนำของมาทั้งหมดหรือไม่ ... ";
+			next;
+			setarray .@Items[0],949,100,706,1,722,1,2213,1;
+			for(set .@i,0; .@i<8; set .@i,.@i+2)
+				if (countitem(.@Items[.@i]) < .@Items[.@i+1]) {
+					mes "[Kafra Employee]";
+					mes "โอ้ข้าขอโทษ แต่ท่านต้องนำอย่างน้อย";
+					mes callfunc("F_InsertPlural",.@Items[.@i+1],getitemname(.@Items[.@i]))+".";
+					close;
+				}
+			mes "[Kafra Employee]";
+			mes "เยี่ยมมากฉันเห็นว่าคุณได้รวบรวมทุกสิ่งที่ฉันต้องการเพื่อทำ Bunny Band";
+			mes "โปรดรอสักครู่ขณะที่ฉันรวบรวมมันเข้าด้วยกัน ... ";
+			next;
+			for(set .@i,0; .@i<8; set .@i,.@i+2)
+				if (countitem(.@Items[.@i]) < .@Items[.@i+1]) {
+					mes "[Kafra Employee]";
+					mes "หืมมมฉันขอโทษ แต่จริง ๆ แล้วฉันไม่สามารถทำสิ่งนี้ได้ในตอนนี้";
+					mes "คุณต้องการ" + callfunc("F_InsertPlural",.@Items[.@i + 1],getitemname(.@Items[.@i]));
+					mes "เพื่อให้ข้าใส่ Bunny Band นี้เข้าด้วยกัน... ";
+					close;
+				}
+			delitem 949,100; //Feather
+			delitem 706,1; //Four_Leaf_Clover
+			delitem 722,1; //Scarlet_Jewel
+			delitem 2213,1; //Cat_Hairband
+			mes "[Kafra Employee]";
+			mes "อา, ไปเลย~";
+			mes "Bunny Band ที่สมบูรณ์แบบ!";
+			mes "ดีฉันหวังว่าคุณจะสนุกกับมัน";
+			getitem 2214,1; //Bunny_Band
+			set BUNYBND,0;
+			next;
+			mes "[Kafra Employee]";
+			mes "ขอบคุณสำหรับการเข้าร่วมในกิจกรรมพิเศษนี้และการสนับสนุน Kafra Services~";
+			close;
+		case 2:
+			goto L_Info;
+		case 3:
+			close;
+		}
+	}
+	mes "[Kafra Employee]";
+	mes "สวัสดีที่นั่น~ คุณต้องการเข้าร่วมกิจกรรม ^529DFFBunny Band พิเศษของเรา^000000จัดทำโดย Kafra Corporation และได้รับการสนับสนุนจากสมาคมพ่อค้าแห่ง Alberta หรือไม่";
+	next;
+	switch(select("เข้าร่วมกิจกรรม:ข้อมูลกิจกรรม:ยกเลิก")) {
+	case 1:
+		set BUNYBND,1;
+		mes "[Kafra Employee]";
+		mes "เยี่ยมมากขอบคุณสำหรับการเข้าร่วม! ถ้าคุณยังไม่เคยได้ยินคุณจะต้องรวบรวมรายการเหล่านี้ถ้าคุณต้องการให้ฉันใส่ Bunny Band เข้าด้วยกันเพื่อคุณ... ";
+		next;
+		mes "[พนักงาน Kafra]";
+		mes "100 Feathers";
+		mes "1 Four-Leaf Clover";
+		mes "1 Kitty Band และ";
+		mes "1 Pearl นั่นแหล่ะ!";
+		mes "โชคดีแล้วฉันจะรอคุณที่นี่ ~";
+		close;
+	case 2:
+		break;
+	case 3:
+		close;
+	}
+L_Info:
+	mes "[Kafra Employee]";
+	mes "เพื่อขอบคุณลูกค้าที่มีค่าของเรา Kafra Corporation ได้เตรียมกิจกรรมพิเศษที่พนักงาน Kafra จะรวบรวม Bunny Band สำหรับนักผจญภัยที่นำสิ่งของที่จำเป็นมาใช้";
+	next;
+	mes "[พนักงาน Kafra]";
+	mes "สำหรับรายการพิเศษอันนี้เป็นหนึ่งในประเภท";
+	mes "นำ 100 Feathers";
+	mes "1 Four-Leaf Clover";
+	mes "1 Kitty Band และ";
+	mes "1 Pearl";
+	next;
+	mes "[พนักงาน Kafra]";
+	mes "เมื่อคุณพร้อมกลับมาและนำสิ่งของเหล่านั้นมาให้ฉัน";
+	mes "(สนับสนุนโดยสมาคมพ่อค้าแห่ง Alberta)";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 using duplicate command
+//= 1.2 Fixed NPC location, removed NPC dupes [Lupus]
+//= 1.3 RE-Fixed exploit V_V, also cleared used VAR [Lupus]
+//= 1.4 replaced BUNYBND with @BUNYBND [Lupus]
+//============================================================ 

@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   KEY `party_id` (`party_id`),
   KEY `guild_id` (`guild_id`),
   KEY `online` (`online`)
-) ENGINE=MyISAM AUTO_INCREMENT=150000; 
+) ENGINE=MyISAM DEFAULT CHARSET=tis620 AUTO_INCREMENT=150000 ; 
 
 --
 -- Table structure for table `char_reg_num`
@@ -795,6 +795,9 @@ CREATE TABLE IF NOT EXISTS `login` (
 
 INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 'sv1', 'pv1', 'S','athena@athena.com');
 INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('2', 'sv2', 'pv2', 'S','athena@athena.com');
+INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('3', 'sv3', 'pv3', 'S','athena@athena.com');
+INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('4', 'sv4', 'pv4', 'S','athena@athena.com');
+INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('5', 'sv5', 'pv5', 'S','athena@athena.com');
 
 --
 -- Table structure for table `mail`
@@ -1096,10 +1099,10 @@ CREATE TABLE IF NOT EXISTS `storage` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for table `storage_vip`
+-- Table structure for table `vip_storage`
 --
 
-CREATE TABLE IF NOT EXISTS `storage_vip` (
+CREATE TABLE IF NOT EXISTS `vip_storage` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `account_id` int(11) unsigned NOT NULL default '0',
   `nameid` int(10) unsigned NOT NULL default '0',

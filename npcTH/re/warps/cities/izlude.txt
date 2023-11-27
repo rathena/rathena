@@ -1,0 +1,290 @@
+//===== rAthena Script =======================================
+//= Izlude Warp Script
+//===== By: ==================================================
+//= Athena (1.0), Nana (1.1)
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Izlude
+//===== Additional Comments: =================================
+//= 1.3 Added warps to Izlude Airship [Justin84]
+//= 1.4 Minor correction on airport warps
+//= 1.5 Updated to match the new Izlude Map. [Masao]
+//= 1.6 Added new warps. [Streusel]
+//= 1.7 Updated to match the official scripts. [Euphy]
+//= 1.8 Added Izlude & Prontera Field 8 duplicates. [Euphy]
+//= 1.9 Fix & Added Criatura Academy warps for new Criatura. [mundussan]
+//============================================================
+
+//= Izlude City ==============================================
+prt_fild08,371,212,0	warp	prtf005	3,3,izlude,24,98
+izlude,20,98,0	warp	iz001	3,3,prt_fild08,367,212
+izlude_in,116,46,0	warp	iz02-1	3,2,izlude,128,98
+izlude,110,182,0	warp	iz01	2,2,izlude_in,65,87
+izlude_in,65,84,0	warp	iz01-1	2,2,izlude,112,179
+izlude,52,172,0	warp	iz04	2,2,izlude_in,74,161
+izlude_in,74,158,0	warp	iz04-1	3,2,izlude,52,168
+izlude_in,43,169,0	warp	w219	2,3,izlude_in,63,169
+izlude_in,87,169,0	warp	iz05-1	2,3,izlude_in,111,169
+izlude_in,108,169,0	warp	iz05	2,3,izlude_in,84,169
+izlude_in,148,127,0	warp	iz03-1	2,5,izlude,210,161
+izlude_in,172,139,0	warp	iz07	3,2,izlude_in,172,161
+izlude_in,172,158,0	warp	iz07-1	3,2,izlude_in,172,136
+izlude_in,172,116,0	warp	iz06-1	3,2,izlude_in,172,94
+izlude_in,171,97,0	warp	iz06	3,2,izlude_in,172,119
+
+//= Izlude & Prontera Field 8 Duplicates =====================
+prt_fild08a,371,212,0	warp	prtf005_a	3,3,izlude_a,24,98
+prt_fild08b,371,212,0	warp	prtf005_b	3,3,izlude_b,24,98
+prt_fild08c,371,212,0	warp	prtf005_c	3,3,izlude_c,24,98
+prt_fild08d,371,212,0	warp	prtf005_d	3,3,izlude_d,24,98
+izlude_a,20,98,0	warp	iz001_a	3,3,prt_fild08a,367,212
+izlude_b,20,98,0	warp	iz001_b	3,3,prt_fild08b,367,212
+izlude_c,20,98,0	warp	iz001_c	3,3,prt_fild08c,367,212
+izlude_d,20,98,0	warp	iz001_d	3,3,prt_fild08d,367,212
+izlude_a,110,182,0	warp	iz01_a	2,2,izlude_in,65,87
+izlude_b,110,182,0	warp	iz01_b	2,2,izlude_in,65,87
+izlude_c,110,182,0	warp	iz01_c	2,2,izlude_in,65,87
+izlude_d,110,182,0	warp	iz01_d	2,2,izlude_in,65,87
+izlude_a,52,172,0	warp	iz04_a	2,2,izlude_in,74,161
+izlude_b,52,172,0	warp	iz04_b	2,2,izlude_in,74,161
+izlude_c,52,172,0	warp	iz04_c	2,2,izlude_in,74,161
+izlude_d,52,172,0	warp	iz04_d	2,2,izlude_in,74,161
+
+//= iz_int(Intro) & int_land(Secluded Island) ================
+iz_int,27,30,0	warp	#room_out	1,1,iz_int,51,30
+iz_int01,27,30,0	warp	#room_out01	1,1,iz_int01,51,30
+iz_int02,27,30,0	warp	#room_out02	1,1,iz_int02,51,30
+iz_int03,27,30,0	warp	#room_out03	1,1,iz_int03,51,30
+iz_int04,27,30,0	warp	#room_out04	1,1,iz_int04,51,30
+
+iz_int,47,30,0	warp	#room_in	1,1,iz_int,22,30
+iz_int01,47,30,0	warp	#room_in01	1,1,iz_int01,22,30
+iz_int02,47,30,0	warp	#room_in02	1,1,iz_int02,22,30
+iz_int03,47,30,0	warp	#room_in03	1,1,iz_int03,22,30
+iz_int04,47,30,0	warp	#room_in04	1,1,iz_int04,22,30
+
+iz_int,56,15,0	script	#ship_out	WARPNPC,1,1,{
+	end;
+OnTouch:
+	.@num$ = replacestr( strnpcinfo(2), "ship_out", "" );
+	.@map$ = "int_land" + .@num$;
+	savepoint .@map$,77,101;
+	warp .@map$,85,107;
+	end;
+}
+iz_int01,56,15,0	duplicate(#ship_out)	#ship_out01	WARPNPC,1,1
+iz_int02,56,15,0	duplicate(#ship_out)	#ship_out02	WARPNPC,1,1
+iz_int03,56,15,0	duplicate(#ship_out)	#ship_out03	WARPNPC,1,1
+iz_int04,56,15,0	duplicate(#ship_out)	#ship_out04	WARPNPC,1,1
+
+int_land,49,57,0	script	#intro_to_izlude	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if (isbegin_quest(21008) == 1) {
+		mes "^4d4dffเมื่อคุณออกจากเกาะนี้ไม่มีทางกลับ";
+		mes "คุณแน่ใจหรือว่าต้องการไปที่ Izlude โดยตรง^000000";
+		next;
+		mes "^4d4dffหากคุณทำเควสต์นั้นจะถูกลบออกจาก Quest Log ของคุณ^000000";
+		next;
+		if (select("อย่าไป Izlude เลย", "ออกเดินทางไปยัง Izlude!") == 1) {
+			mes "[Sailor]";
+			mes "คุณต้องการที่จะอยู่ที่นี่อีกต่อไป?";
+			mes "เยี่ยมแล้วฉันจะรอจนกว่าคุณจะพร้อม ~";
+			close;
+		}
+		completequest 21008;
+	}
+	mes "[Sailor]";
+	mes "มามุ่งหน้าไปที่ Izlude!";
+	close2;
+	if (isbegin_quest(21001) == 1)
+		completequest 21001;
+	.@map$ = "izlude" + replacestr( strnpcinfo(2), "intro_to_izlude", "" );
+	warp .@map$,196,209;
+	savepoint .@map$,128,142,1,1;
+	end;
+}
+int_land01,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_a	WARPNPC,2,2
+int_land02,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_b	WARPNPC,2,2
+int_land03,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_c	WARPNPC,2,2
+int_land04,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_d	WARPNPC,2,2
+
+//= Izlude Academy ===========================================
+izlude,125,257,0	warp	#to_ac01	2,2,iz_ac01,99,29
+izlude,130,257,0	warp	#to_ac02	2,2,iz_ac01,99,29
+iz_ac01,100,24,0	warp	#to_ac01-1	2,2,izlude,127,253
+iz_ac01,78,25,0	warp	#to_ac2f01	2,2,iz_ac02,207,27
+iz_ac01,122,25,0	warp	#to_ac2f02	2,2,iz_ac02,207,27
+iz_ac02,198,27,0	warp	#to_ac1f01	2,2,iz_ac01,78,28
+iz_ac02,217,27,0	warp	#to_ac1f02	2,2,iz_ac01,122,28
+new_1-3,96,176,0	warp	#to_ac01-2	1,1,iz_ac01,49,73
+
+//= Izlude Academy Duplicates ================================
+izlude_a,125,257,0	warp	#to_ac01_a	2,2,iz_ac01_a,99,29
+izlude_b,125,257,0	warp	#to_bc01_b	2,2,iz_ac01_b,99,29
+izlude_c,125,257,0	warp	#to_cc01_c	2,2,iz_ac01_c,99,29
+izlude_d,125,257,0	warp	#to_dc01_d	2,2,iz_ac01_d,99,29
+izlude_a,130,257,0	warp	#to_ac02_a	2,2,iz_ac01_a,99,29
+izlude_b,130,257,0	warp	#to_bc02_b	2,2,iz_ac01_b,99,29
+izlude_c,130,257,0	warp	#to_cc02_c	2,2,iz_ac01_c,99,29
+izlude_d,130,257,0	warp	#to_dc02_d	2,2,iz_ac01_d,99,29
+
+iz_ac01_a,100,24,0	warp	#to_ac01-1_a	2,2,izlude_a,127,253
+iz_ac01_b,100,24,0	warp	#to_ac01-1_b	2,2,izlude_b,127,253
+iz_ac01_c,100,24,0	warp	#to_ac01-1_c	2,2,izlude_c,127,253
+iz_ac01_d,100,24,0	warp	#to_ac01-1_d	2,2,izlude_d,127,253
+
+iz_ac01_a,78,25,0	warp	#to_ac2f01_a	2,2,iz_ac02_a,207,27
+iz_ac01_b,78,25,0	warp	#to_bc2f01_b	2,2,iz_ac02_b,207,27
+iz_ac01_c,78,25,0	warp	#to_cc2f01_c	2,2,iz_ac02_c,207,27
+iz_ac01_d,78,25,0	warp	#to_dc2f01_d	2,2,iz_ac02_d,207,27
+iz_ac01_a,122,25,0	warp	#to_ac2f02_a	2,2,iz_ac02_a,207,27
+iz_ac01_b,122,25,0	warp	#to_bc2f02_b	2,2,iz_ac02_b,207,27
+iz_ac01_c,122,25,0	warp	#to_cc2f02_c	2,2,iz_ac02_c,207,27
+iz_ac01_d,122,25,0	warp	#to_dc2f02_d	2,2,iz_ac02_d,207,27
+iz_ac02_a,198,27,0	warp	#to_ac1f01_a	2,2,iz_ac01_a,78,28
+iz_ac02_b,198,27,0	warp	#to_bc1f01_b	2,2,iz_ac01_b,78,28
+iz_ac02_c,198,27,0	warp	#to_cc1f01_c	2,2,iz_ac01_c,78,28
+iz_ac02_d,198,27,0	warp	#to_dc1f01_d	2,2,iz_ac01_d,78,28
+iz_ac02_a,217,27,0	warp	#to_ac1f02_a	2,2,iz_ac01_a,122,28
+iz_ac02_b,217,27,0	warp	#to_bc1f02_b	2,2,iz_ac01_b,122,28
+iz_ac02_c,217,27,0	warp	#to_cc1f02_c	2,2,iz_ac01_c,122,28
+iz_ac02_d,217,27,0	warp	#to_dc1f02_d	2,2,iz_ac01_d,122,28
+
+//= Izlude Academy Floor 2 Warps and Duplicates =================
+
+//= Izlude Academy Floor 2 Swordsman ============================
+iz_ac02,194,44,0	warp	#to_swordmanroom	2,2,iz_ac02,80,48
+iz_ac02_a,194,44,0	warp	#to_swordmanroom_a	2,2,iz_ac02_a,80,48
+iz_ac02_b,194,44,0	warp	#to_swordmanroom_b	2,2,iz_ac02_b,80,48
+iz_ac02_c,194,44,0	warp	#to_swordmanroom_c	2,2,iz_ac02_c,80,48
+iz_ac02_d,194,44,0	warp	#to_swordmanroom_d	2,2,iz_ac02_d,80,48
+//= Swordsman Hallway Return ====================================
+iz_ac02,83,48,0	warp	#from_sword_toac02	2,2,iz_ac02,197,44
+iz_ac02_a,83,48,0	warp	#from_sword_toac02_a	2,2,iz_ac02_a,197,44
+iz_ac02_b,83,48,0	warp	#from_sword_toac02_b	2,2,iz_ac02_b,197,44
+iz_ac02_c,83,48,0	warp	#from_sword_toac02_c	2,2,iz_ac02_c,197,44
+iz_ac02_d,83,48,0	warp	#from_sword_toac02_d	2,2,iz_ac02_d,197,44
+//= Izlude Academy Floor 2 Helproom ================================= 
+iz_ac02,221,44,0	warp	#to_helproom	2,2,iz_ac02,127,48
+iz_ac02_a,221,44,0	warp	#to_helproom_a	2,2,iz_ac02_a,127,48
+iz_ac02_b,221,44,0	warp	#to_helproom_b	2,2,iz_ac02_b,127,48
+iz_ac02_c,221,44,0	warp	#to_helproom_c	2,2,iz_ac02_c,127,48
+iz_ac02_d,221,44,0	warp	#to_helproom_d	2,2,iz_ac02_d,127,48
+//= Helproom Hallway Return =========================================
+iz_ac02,124,48,0	warp	#from_help_toac02	2,2,iz_ac02,218,44
+iz_ac02_a,124,48,0	warp	#from_help_toac02_a	2,2,iz_ac02_a,218,44
+iz_ac02_b,124,48,0	warp	#from_help_toac02_b	2,2,iz_ac02_b,218,44
+iz_ac02_c,124,48,0	warp	#from_help_toac02_c	2,2,iz_ac02_c,218,44
+iz_ac02_d,124,48,0	warp	#from_help_toac02_d	2,2,iz_ac02_d,218,44
+//= Izlude Academy Floor 2 Taekwon ============================
+iz_ac02,194,60,0	warp	#to_taekwonroom	2,2,iz_ac02,80,77
+iz_ac02_a,194,60,0	warp	#to_taekwonroom_a	2,2,iz_ac02_a,80,77
+iz_ac02_b,194,60,0	warp	#to_taekwonroom_b	2,2,iz_ac02_b,80,77
+iz_ac02_c,194,60,0	warp	#to_taekwonroom_c	2,2,iz_ac02_c,80,77
+iz_ac02_d,194,60,0	warp	#to_taekwonroom_d	2,2,iz_ac02_d,80,77
+//= Taekwon Hallway Return ======================================
+iz_ac02,83,77,0	warp	#from_taek_toac02	2,2,iz_ac02,197,60
+iz_ac02_a,83,77,0	warp	#from_taek_toac02_a	2,2,iz_ac02_a,197,60
+iz_ac02_b,83,77,0	warp	#from_taek_toac02_b	2,2,iz_ac02_b,197,60
+iz_ac02_c,83,77,0	warp	#from_taek_toac02_c	2,2,iz_ac02_c,197,60
+iz_ac02_d,83,77,0	warp	#from_taek_toac02_d	2,2,iz_ac02_d,197,60
+//= Izlude Academy Floor 2 Gunslinger ===========================
+iz_ac02,221,60,0	warp	#to_gunslingerroom	2,2,iz_ac02,127,78
+iz_ac02_a,221,60,0	warp	#to_gunslingerroom_a	2,2,iz_ac02_a,127,78
+iz_ac02_b,221,60,0	warp	#to_gunslingerroom_b	2,2,iz_ac02_b,127,78
+iz_ac02_c,221,60,0	warp	#to_gunslingerroom_c	2,2,iz_ac02_c,127,78
+iz_ac02_d,221,60,0	warp	#to_gunslingerroom_d	2,2,iz_ac02_d,127,78
+//= Gunslinger Hallway Return ===================================
+iz_ac02,124,78,0	warp	#from_guns_toac02	2,2,iz_ac02,218,60
+iz_ac02_a,124,78,0	warp	#from_guns_toac02_a	2,2,iz_ac02_a,218,60
+iz_ac02_b,124,78,0	warp	#from_guns_toac02_b	2,2,iz_ac02_b,218,60
+iz_ac02_c,124,78,0	warp	#from_guns_toac02_c	2,2,iz_ac02_c,218,60
+iz_ac02_d,124,78,0	warp	#from_guns_toac02_d	2,2,iz_ac02_d,218,60
+//= Izlude Academy Floor 2 Archer ===============================
+iz_ac02,194,76,0	warp	#to_archerroom	2,2,iz_ac02,80,108
+iz_ac02_a,194,76,0	warp	#to_archerroom_a	2,2,iz_ac02_a,80,108
+iz_ac02_b,194,76,0	warp	#to_archerroom_b	2,2,iz_ac02_b,80,108
+iz_ac02_c,194,76,0	warp	#to_archerroom_c	2,2,iz_ac02_c,80,108
+iz_ac02_d,194,76,0	warp	#to_archerroom_d	2,2,iz_ac02_d,80,108
+//= Archer Hallway Return =======================================
+iz_ac02,83,108,0	warp	#from_archer_toac02	2,2,iz_ac02,197,76
+iz_ac02_a,83,108,0	warp	#from_archer_toac02_a	2,2,iz_ac02_a,197,76
+iz_ac02_b,83,108,0	warp	#from_archer_toac02_b	2,2,iz_ac02_b,197,76
+iz_ac02_c,83,108,0	warp	#from_archer_toac02_c	2,2,iz_ac02_c,197,76
+iz_ac02_d,83,108,0	warp	#from_archer_toac02_d	2,2,iz_ac02_d,197,76
+//= Izlude Academy Floor 2 Mage ================================
+iz_ac02,221,76,0	warp	#to_mageroom	2,2,iz_ac02,127,108
+iz_ac02_a,221,76,0	warp	#to_mageroom_a	2,2,iz_ac02_a,127,108
+iz_ac02_b,221,76,0	warp	#to_mageroom_b	2,2,iz_ac02_b,127,108
+iz_ac02_c,221,76,0	warp	#to_mageroom_c	2,2,iz_ac02_c,127,108
+iz_ac02_d,221,76,0	warp	#to_mageroom_d	2,2,iz_ac02_d,127,108
+//= Mage Hallway Return =========================================
+iz_ac02,124,108,0	warp	#from_mage_toac02	2,2,iz_ac02,218,76
+iz_ac02_a,124,108,0	warp	#from_mage_toac02_a	2,2,iz_ac02_a,218,76
+iz_ac02_b,124,108,0	warp	#from_mage_toac02_b	2,2,iz_ac02_b,218,76
+iz_ac02_c,124,108,0	warp	#from_mage_toac02_c	2,2,iz_ac02_c,218,76
+iz_ac02_d,124,108,0	warp	#from_mage_toac02_d	2,2,iz_ac02_d,218,76
+//= Izlude Academy Floor 2 Thief =============================
+iz_ac02,194,92,0	warp	#to_thiefroom	2,2,iz_ac02,80,138
+iz_ac02_a,194,92,0	warp	#to_thiefroom_a	2,2,iz_ac02_a,80,138
+iz_ac02_b,194,92,0	warp	#to_thiefroom_b	2,2,iz_ac02_b,80,138
+iz_ac02_c,194,92,0	warp	#to_thiefroom_c	2,2,iz_ac02_c,80,138
+iz_ac02_d,194,92,0	warp	#to_thiefroom_d	2,2,iz_ac02_d,80,138
+//=Thief Hallway Return ======================================
+iz_ac02,83,138,0	warp	#from_thief_toac02	2,2,iz_ac02,197,92
+iz_ac02_a,83,138,0	warp	#from_thief_toac02_a	2,2,iz_ac02_a,197,92
+iz_ac02_b,83,138,0	warp	#from_thief_toac02_b	2,2,iz_ac02_b,197,92
+iz_ac02_c,83,138,0	warp	#from_thief_toac02_c	2,2,iz_ac02_c,197,92
+iz_ac02_d,83,138,0	warp	#from_thief_toac02_d	2,2,iz_ac02_d,197,92
+//= Izlude Academy Floor 2 Ninja ================================
+iz_ac02,221,92,0	warp	#to_ninjaroom	2,2,iz_ac02,127,137
+iz_ac02_a,221,92,0	warp	#to_ninjaroom_a	2,2,iz_ac02_a,127,137
+iz_ac02_b,221,92,0	warp	#to_ninjaroom_b	2,2,iz_ac02_b,127,137
+iz_ac02_c,221,92,0	warp	#to_ninjaroom_c	2,2,iz_ac02_c,127,137
+iz_ac02_d,221,92,0	warp	#to_ninjaroom_d	2,2,iz_ac02_d,127,137
+//= Ninja Hallway Return ========================================
+iz_ac02,124,137,0	warp	#from_ninja_toac02	2,2,iz_ac02,218,92
+iz_ac02_a,124,137,0	warp	#from_ninja_toac02_a	2,2,iz_ac02_a,218,92
+iz_ac02_b,124,137,0	warp	#from_ninja_toac02_b	2,2,iz_ac02_b,218,92
+iz_ac02_c,124,137,0	warp	#from_ninja_toac02_c	2,2,iz_ac02_c,218,92
+iz_ac02_d,124,137,0	warp	#from_ninja_toac02_d	2,2,iz_ac02_d,218,92
+//= Izlude Academy Floor 2 Merchant =============================
+iz_ac02,194,108,0	warp	#to_merchantroom	2,2,iz_ac02,80,168
+iz_ac02_a,194,108,0	warp	#to_merchantroom_a	2,2,iz_ac02_a,80,168
+iz_ac02_b,194,108,0	warp	#to_merchantroom_b	2,2,iz_ac02_b,80,168
+iz_ac02_c,194,108,0	warp	#to_merchantroom_c	2,2,iz_ac02_c,80,168
+iz_ac02_d,194,108,0	warp	#to_merchantroom_d	2,2,iz_ac02_d,80,168
+//= Merchant Hallway Return =====================================
+iz_ac02,83,168,0	warp	#from_merch_toac02	2,2,iz_ac02,197,108
+iz_ac02_a,83,168,0	warp	#from_merch_toac02_a	2,2,iz_ac02_a,197,108
+iz_ac02_b,83,168,0	warp	#from_merch_toac02_b	2,2,iz_ac02_b,197,108
+iz_ac02_c,83,168,0	warp	#from_merch_toac02_c	2,2,iz_ac02_c,197,108
+iz_ac02_d,83,168,0	warp	#from_merch_toac02_d	2,2,iz_ac02_d,197,108
+//= Izlude Academy Floor 2 Acolyte  =============================
+iz_ac02,221,108,0	warp	#to_acolyteroom	2,2,iz_ac02,127,168
+iz_ac02_a,221,108,0	warp	#to_acolyteroom_a	2,2,iz_ac02_a,127,168
+iz_ac02_b,221,108,0	warp	#to_acolyteroom_b	2,2,iz_ac02_b,127,168
+iz_ac02_c,221,108,0	warp	#to_acolyteroom_c	2,2,iz_ac02_c,127,168
+iz_ac02_d,221,108,0	warp	#to_acolyteroom_d	2,2,iz_ac02_d,127,168
+//= Acolyte Hallway Return ======================================
+iz_ac02,124,168,0	warp	#from_aco_toac02	2,2,iz_ac02,218,108
+iz_ac02_a,124,168,0	warp	#from_aco_toac02_a	2,2,iz_ac02_a,218,108
+iz_ac02_b,124,168,0	warp	#from_aco_toac02_b	2,2,iz_ac02_b,218,108
+iz_ac02_c,124,168,0	warp	#from_aco_toac02_c	2,2,iz_ac02_c,218,108
+iz_ac02_d,124,168,0	warp	#from_aco_toac02_d	2,2,iz_ac02_d,218,108
+//= Izlude Academy Floor 2 Principal's Room ============================
+iz_ac02,208,121,0	warp	#to_principalroom	2,2,iz_ac02,104,187
+iz_ac02_a,208,121,0	warp	#to_principalroom_a	2,2,iz_ac02_a,104,187
+iz_ac02_b,208,121,0	warp	#to_principalroom_b	2,2,iz_ac02_b,104,187
+iz_ac02_c,208,121,0	warp	#to_principalroom_c	2,2,iz_ac02_c,104,187
+iz_ac02_d,208,121,0	warp	#to_principalroom_d	2,2,iz_ac02_d,104,187
+//= Principal's Room Hallway Return ====================================
+iz_ac02,104,184,0	warp	#from_principal_toac02	2,2,iz_ac02,208,118
+iz_ac02_a,104,184,0	warp	#from_principal_toac02_a	2,2,iz_ac02_a,208,118
+iz_ac02_b,104,184,0	warp	#from_principal_toac02_b	2,2,iz_ac02_b,208,118
+iz_ac02_c,104,184,0	warp	#from_principal_toac02_c	2,2,iz_ac02_c,208,118
+iz_ac02_d,104,184,0	warp	#from_principal_toac02_d	2,2,iz_ac02_d,208,118

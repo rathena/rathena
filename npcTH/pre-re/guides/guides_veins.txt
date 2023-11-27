@@ -1,0 +1,129 @@
+//===== rAthena Script =======================================
+//= Veins Guide
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Veins City guide
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added second Veins guide NPC. [L0ne_W0lf]
+//= 1.2 Fixed a few small typos. [L0ne_W0lf]
+//============================================================
+
+veins,210,345,5	script	Veins Guide#1::ve_guide	934,{
+	mes "[Veins Guide]";
+	mes "Desert City Veins welcomes adventurers seeking shelter from harsh sandstorms.";
+	mes "If this is the first time for you to use the guide services, why don't you check the...";
+	set .@loop1,1;
+	while(.@loop1) {
+		next;
+		switch(select("Village Guide:Remove Marks from Mini-Map:Notice:Cancel")) {
+		case 1:
+			mes "[Veins Guide]";
+			mes "I can tell you any building location as long as it is in Veins.";
+			mes "So where do you want to go?";
+			if (.@compass_check == 0) {
+				mes "Would you like me";
+				mes "to mark locations";
+				mes "on your Mini-Map?";
+				next;
+				if (select("Yes:No") == 1) set .@compass_check,1;
+			}
+			set .@loop2,1;
+			while(.@loop2) {
+				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
+				else next;
+
+				switch(select("Temple:Inn:Weapon Shop:Tool Shop:Airship:Tavern:Geological Research Institute:Cancel")) {
+				case 1:
+					mes "[Veins Guide]";
+					mes "Our temple is located north,";
+					mes "and always crowded with sincere followers of Goddess Freya.";
+					if (.@compass_check == 1) viewpoint 1,196,258,1,0xFF0000;
+					break;
+				case 2:
+					mes "[Veins Guide]";
+					mes "You can rest your fatigue of the journey in the Inn.";
+					mes "The left building next to me is the Inn of Veins.";
+					if (.@compass_check == 1) viewpoint 1,128,266,2,0xFF00FF;
+					break;
+				case 3:
+					mes "[Veins Guide]";
+					mes "Yes, you should protect yourself from danger on your own.";
+					mes "Purchase high quality weapons at affordable prices.";
+					mes "The Veins Weapon Shop is located to the West.";
+					if (.@compass_check == 1) viewpoint 1,150,175,3,0x99FFFF;
+					break;
+				case 4:
+					mes "[Veins Guide]";
+					mes "Have you packed enough necessities  for your adventure?";
+					mes "If not, I suggest you check what the Veins in the Center can offer you.";
+					if (.@compass_check == 1) viewpoint 1,230,161,4,0x0000FF;
+					break;
+				case 5:
+					mes "[Veins Guide]";
+					mes "Please be aware that Veins only operates cargo airships.";
+					if (.@compass_check == 1) viewpoint 1,273,285,5,0x00FF00;
+					break;
+				case 6:
+					mes "[Veins Guide]";
+					mes "If you'd like to make friends with";
+					mes "the townspeople, I suggest you";
+					mes "go have a drink at the tavern to";
+					mes "the west.";
+					if (.@compass_check == 1) viewpoint 1,150,217,6,0x00FF00;
+					break;
+				case 7:
+					mes "[Veins Guide]";
+					mes "Are you interested in studying geology?";
+					mes "Then you'd better go check out the";
+					mes "Geological Research Institute on";
+					mes "the 2nd floor of the weapon shop.";
+					if (.@compass_check == 1) viewpoint 1,150,175,7,0x00FF00;
+					break;
+				case 8:
+					mes "[Veins Guide]";
+					mes "If you like to get rid of all the location marks on your Mini-Map,";
+					mes "just ask me again, and choose 'Remove Marks from Mini-Map' menu.";
+					set .@loop2,0;
+					break;
+				}
+			}
+			break;
+
+		case 2:
+			viewpoint 2,196,258,1,0xFF0000;
+			viewpoint 2,128,266,2,0xFF00FF;
+			viewpoint 2,150,175,3,0x99FFFF;
+			viewpoint 2,230,161,4,0x0000FF;
+			viewpoint 2,273,285,5,0x00FF00;
+			viewpoint 2,150,217,6,0x00FF00;
+			viewpoint 2,150,175,7,0x00FF00;
+			mes "[Veins Guide]";
+			mes "Okay, they are gone now. If you have more locations to ask, just let me know.";
+			mes "Enjoy your stay in Veins.";
+			break;
+		case 3:
+			mes "[Veins Guide]";
+			mes "When you are using the ''Village Guide'' menu,";
+			mes "make sure that building locations will be marked on your mini-map at the upper right side of your screen.";
+			mes "If you cannot see your mini-map, use the short cut key ''ctrl+tab'' or press the ''Map'' button on your basic information windows, okay?";
+			mes "And you can also zoom out your mini-map by using the ''-'' button in case you cannot view the entire map of the village.";
+			break;
+		case 4:
+			mes "[Veins Guide]";
+			mes "Enjoy your stay in Veins.";
+			close2;
+			set .@loop1,0;
+			break;
+		}
+	}
+	close;
+}
+
+veins,189,101,5	duplicate(ve_guide)	Veins Guide#2	934

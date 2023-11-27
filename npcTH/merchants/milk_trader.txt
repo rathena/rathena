@@ -1,0 +1,61 @@
+//===== rAthena Script =======================================
+//= Milk Trader
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Trades bottles for milk
+//===== Additional Comments: =================================
+//= Fully working
+//= 1.1 Negative input bug fixed [Lupus]
+//= 1.2 Raised the price to close zeny exploit [Lupus]
+//= 1.2a Switched to Lupus's "loopless" technique.[kobra_k88]
+//= 1.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4 Implemented checkweight. [L0ne_W0lf]
+//= 1.5 Fixed missed variable. (bugreport:1523) [L0ne_W0lf]
+//============================================================
+
+prontera,73,140,0	script	Milk Vendor	86,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFเพียงหนึ่งนาที!";
+		mes "ฉันไม่สามารถให้บริการใด ๆ กับคุณได้เพราะคุณกำลังแบกสิ่งของมากเกินไปใส่รายการพิเศษของคุณลงใน Kafra Storage แล้วกลับมาอีก ~";
+		close;
+	}
+	mes "[Milk Vendor]";
+	mes "เฮ้เฮ้ ... ";
+	mes "ถ้าคุณนำขวดเปล่า(Empty Bottle) 1 ขวดกับ 15 Zeny มาให้ฉันฉันจะเปลี่ยนเป็นนม 1 ขวดเสียงนั้นจะเป็นอย่างไร";
+	next;
+	if (select("แลกเปลี่ยนขวดเปล่าทั้งหมด:ยกเลิก") == 1) {
+		if (countitem(713) <= 0) {
+			mes "[Milk Vendor]";
+			mes "เฮ้ ... ";
+			mes "คุณไม่มีขวดเปล่าเลย";
+			mes "ข้าไม่สามารถให้นมเจ้าแบบนี้ได้อีกแล้วเจ้ารู้ ... ";
+			close;
+		}
+		set .@bottles,countitem(713);
+		set .@total_weight,.@bottles * 50;
+		set .@total_cost,.@bottles * 15;
+		if (Zeny < .@Total_cost) {
+			mes "[Milk Vendor]";
+			mes "โอ้โห ~!";
+			mes "คุณมี zeny ไม่พอที่จะแลกเปลี่ยนขวดเปล่าเหล่านี้ทั้งหมดสำหรับนมคุณต้องมีอย่างน้อย" + .@total_cost + " zeny.";
+			close;
+		}
+		if (MaxWeight - Weight < .@total_weight) {
+			mes "[Milk Vendor]";
+			mes "อืม ... ";
+			mes "คุณจะเพิ่มพื้นที่ในกระเป๋าของคุณก่อนที่ฉันจะให้นมทั้งหมดนี้กับคุณหรือไม่";
+			close;
+		}
+		set Zeny, Zeny-.@total_cost;
+		delitem 713,.@bottles; //Empty Bottles
+		getitem 519,.@bottles; //Milk
+		close;
+	}
+	close;
+}

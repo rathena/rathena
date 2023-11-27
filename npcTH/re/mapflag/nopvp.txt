@@ -1,0 +1,129 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Player versus Player mode.
+//===== Description: ========================================= 
+//= Prevents PvP mode on a map.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Para Market maps [mazvi]
+//============================================================
+
+//============================================================
+// Paradise Market
+//============================================================
+paramk	mapflag	pvp	off
+
+//============================================================
+// Instances
+//============================================================
+1@mist	mapflag	pvp	off
+1@cash	mapflag	pvp	off
+1@pump	mapflag	pvp	off
+2@pump	mapflag	pvp	off
+1@lhz	mapflag	pvp	off
+1@ma_h	mapflag	pvp	off
+1@ma_c	mapflag	pvp	off
+1@ma_b	mapflag	pvp	off
+1@ecl	mapflag	pvp	off
+1@gl_k	mapflag	pvp	off
+2@gl_k	mapflag	pvp	off
+1@def01	mapflag	pvp	off
+1@def02	mapflag	pvp	off
+1@def03	mapflag	pvp	off
+
+//============================================================
+// Heroes' Trail - Part 1
+//============================================================
+1@face	mapflag	pvp	off
+1@sara	mapflag	pvp	off
+
+//============================================================
+// Heroes' Trail - Part 2
+//============================================================
+1@ge_st	mapflag	pvp	off
+1@gef	mapflag	pvp	off
+1@gef_in	mapflag	pvp	off
+1@spa	mapflag	pvp	off
+1@tnm1	mapflag	pvp	off
+1@tnm2	mapflag	pvp	off
+1@tnm3	mapflag	pvp	off
+
+//============================================================
+// Horror Toy Factory Memorial Dungeon
+//============================================================
+1@xm_d	mapflag	pvp	off
+
+//============================================================
+// Heroes' Trail - Part 3
+//============================================================
+1@glast	mapflag	pvp	off
+1@air1	mapflag	pvp	off
+1@air2	mapflag	pvp	off
+
+//============================================================
+// Decisive Battle - Part 1
+//============================================================
+1@dth1	mapflag	pvp	off
+1@dth2	mapflag	pvp	off
+1@dth3	mapflag	pvp	off
+1@rev	mapflag	pvp	off
+
+//============================================================
+// Decisive Battle - Part 2
+//============================================================
+1@eom	mapflag	pvp	off
+1@jtb	mapflag	pvp	off
+
+//============================================================
+// Episode 15 - Phantasmagorica
+//============================================================
+1@lab	mapflag	pvp	off
+1@uns	mapflag	pvp	off
+1@mcd	mapflag	pvp	off
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
+moc_para01	mapflag	pvp	off
+brasilis	mapflag	pvp	off
+bra_in01	mapflag	pvp	off
+dicastes01	mapflag	pvp	off
+dicastes02	mapflag	pvp	off
+dic_in01	mapflag	pvp	off
+s_atelier	mapflag	pvp	off
+mora	mapflag	pvp	off
+dewata	mapflag	pvp	off
+dew_in01	mapflag	pvp	off
+izlude_a	mapflag	pvp	off
+izlude_b	mapflag	pvp	off
+izlude_c	mapflag	pvp	off
+izlude_d	mapflag	pvp	off
+malangdo	mapflag	pvp	off
+mal_in01	mapflag	pvp	off
+mal_in02	mapflag	pvp	off
+malaya	mapflag	pvp	off
+ma_scene01	mapflag	pvp	off
+ma_in01	mapflag	pvp	off
+ma_zif01	mapflag	pvp	off
+ma_zif02	mapflag	pvp	off
+ma_zif03	mapflag	pvp	off
+ma_zif04	mapflag	pvp	off
+ma_zif05	mapflag	pvp	off
+ma_zif06	mapflag	pvp	off
+ma_zif07	mapflag	pvp	off
+ma_zif08	mapflag	pvp	off
+ma_zif09	mapflag	pvp	off
+eclage	mapflag	pvp	off
+ecl_in01	mapflag	pvp	off
+ecl_in02	mapflag	pvp	off
+ecl_in03	mapflag	pvp	off
+ecl_in04	mapflag	pvp	off
+ecl_hub01	mapflag	pvp	off
+que_avan01	mapflag	pvp	off
+dali	mapflag	pvp	off
+wolfvill	mapflag	pvp	off
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	pvp	off

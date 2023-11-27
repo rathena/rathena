@@ -1,0 +1,42 @@
+//===== rAthena Script =======================================
+//= Amatsu Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 replaced Hydra -> G_Hydra (to fix drops exploit) [Lupus]
+//= 1.2 Official kRO 10.1 spawns [Playtester]
+//= 1.3 Small update [Playtester]
+//============================================================
+
+//==================================================
+// ama_fild01 - Amatsu Field
+//==================================================
+ama_fild01,0,0	monster	Karakasa	1400,50
+ama_fild01,174,207,20,20	monster	Kapha	1406,5,1200000,600000
+ama_fild01,241,310,10,10	monster	Kapha	1406,5,600000,300000
+ama_fild01,114,230,10,10	monster	Kapha	1406,5,600000,300000
+ama_fild01,174,253,10,10	monster	Kapha	1406,5,600000,300000
+ama_fild01,177,315	monster	Hydra	1068,1,60000,30000
+ama_fild01,175,315	monster	Hydra	1068,1,63000,31500
+ama_fild01,173,315	monster	Hydra	1068,1,66000,33000
+ama_fild01,171,315	monster	Hydra	1068,1,69000,34500
+ama_fild01,169,315	monster	Hydra	1068,1,72000,39000
+ama_fild01,177,314	monster	Hydra	1068,1,66000,33000
+ama_fild01,175,314	monster	Hydra	1068,1,72000,39000
+ama_fild01,173,314	monster	Hydra	1068,1,60000,30000
+ama_fild01,171,314	monster	Hydra	1068,1,69000,34500
+ama_fild01,169,314	monster	Hydra	1068,1,63000,31500
+ama_fild01,171,313	monster	Hydra	1068,1,66000,33000
+ama_fild01,173,313	monster	Hydra	1068,1,60000,30000
+ama_fild01,175,313	monster	Hydra	1068,1,66000,33000
+ama_fild01,173,310	monster	Hydra	1068,1,60000,30000
+ama_fild01,0,0	monster	Kapha	1406,20,60000,30000
+ama_fild01,174,306,20,20	monster	Kapha	1406,10,300000,150000
+ama_fild01,0,0	monster	Miyabi Doll	1404,2,180000,90000
+ama_fild01,0,0	monster	Poison Toad	1402,1,180000,90000
+ama_fild01,0,0	monster	Poporing	1031,15
+ama_fild01,0,0	monster	Bigfoot	1060,15,60000,30000

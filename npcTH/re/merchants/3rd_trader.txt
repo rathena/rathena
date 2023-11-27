@@ -1,0 +1,142 @@
+//===== rAthena Script ======================================= 
+//= 3rd Item Seller
+//===== By: ================================================== 
+//= Masao, Mercurial
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Sells some 3rd Job related items:
+//= - Poison Herbs, Rune Stones, Rare Herbs, Points
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//= 1.1 Optimized Poison Herb Salesman NPC
+//= 1.2 Optimized and standardized. [Euphy]
+//= 1.3 Added Malangdo/Mora Points NPC. [Euphy]
+//= 1.4 Updated to match the official scripts. [Euphy]
+//= 1.5 Added Izlude duplicates. [Euphy]
+//= 1.5a Remove useless array & misc. [Capuche]
+//= 1.6 Changing Shape of NPCs. [JohnnyPlayy]
+//============================================================ 
+
+// Poison Herb Merchants (Guillotine Cross) :: poison_herb_3rd_trader
+//============================================================
+-	shop	Herb_Seller	HIDDEN_NPC,no,7932:4000,7933:4000,7934:4000,7935:4000,7936:4000,7937:4000,7931:5000
+
+-	script	::phs	HIDDEN_NPC,{
+	npctalk "Do you need poison?", "", bc_self;
+	callshop "Herb_Seller",1;
+	end;
+}
+
+job3_guil01,79,96,3	duplicate(phs)	Poison Herb Merchant	4_F_YUNYANG
+morocc,193,100,4	duplicate(phs)	Poison Herb Merchant#moc	4_F_YUNYANG
+lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	4_F_YUNYANG
+
+// Rune Stone Merchants (Rune Knight) :: rune_3rd_trader
+//============================================================
+-	shop	Runes_Seller	HIDDEN_NPC,no,12737:1000,12734:2500,12738:7500,12735:18000,12736:50000,7939:20000,7938:10000
+
+-	script	::runesale	HIDDEN_NPC,{
+	npctalk "There are several types of runes.", "", bc_self;
+	callshop "Runes_Seller",1;
+	end;
+}
+
+job3_rune01,90,62,3	duplicate(runesale)	Rune Merchant#job3	4W_M_01
+prontera,168,228,3	duplicate(runesale)	Rune Merchant#prt	4W_M_01
+
+// Rare Herb Merchants (Guillotine Cross) :: rare_herb_3rd_trader
+//============================================================
+job3_guil01,91,93,3	script	Rare Herb Collector	1_M_03,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
+		close;
+	}
+	if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Guillotine_Cross) {
+		mes "[Rare Poison Herb Collector]";
+		mes "I wander around the world and collect rare poison herbs. Recently, I started dealing in the herb called Izidor. If you are interested, you can buy them.";
+		next;
+		.@i = select("How can I buy them?:Exchange it for Animal Blood:Exchange it for a Bitter Herb:Exchange it for a Deadly Noxious Herb:Exchange it for a Frozen Rose:Exchange it for Ment:Exchange it for Hinalle")-2;
+		if (.@i == -1) {
+			mes "[Rare Poison Herb Collector]";
+			mes "You can buy them for 10,000 zeny and one of these rare items, Animal Blood, Bitter Herb, Deadly Noxious Herb, Frozen Rose, Ment or an Hinalle.";
+			next;
+			mes "[Rare Poison Herb Collector]";
+			mes "Why do I ask money? That's just to pay a little respect to a collector like me. Ha ha ha...";
+			close;
+		} else {
+			setarray .@exchange[0],702,621,631,749,605,703;
+			.@item = .@exchange[.@i];
+			.@price = 10000;
+
+			mes "[Rare Poison Herb Collector]";
+			mes "How many do you want?";
+			mes "You can only buy a maximum of '2000' ea.";
+			mes "Enter '0' if you want to cancel.";
+			next;
+			input .@amount;
+			if (.@amount == 0) {
+				mes "[Rare Poison Herb Collector]";
+				mes "You've cancelled the trade.";
+				close;
+			}
+			if (.@amount > 2000) {
+				mes "[Rare Poison Herb Collector]";
+				mes "The number must be less than 2,000!";
+				close;
+			}
+			.@total = .@amount * .@price;
+			if (countitem(.@item) < .@amount || Zeny < .@total) {
+				mes "[Rare Poison Herb Collector]";
+				mes "Hey, come back when you have all the requirements for the exchange.";
+				close;
+			}
+			mes "[Rare Poison Herb Collector]";
+			mes "Good. I've received the money and the special item.";
+			delitem .@item, .@amount;
+			Zeny = Zeny - .@total;
+			getitem 709, .@amount; //Izidor
+			close;
+		}
+	}
+	mes "[Rare Poison Herb Collector]";
+	mes "I wander around the world and collect rare poison herbs. But I don't feel like selling my herbs to a person like you... ha ha ha...";
+	close;
+}
+
+// Point Merchants (Sorcerer) :: point_3rd_trader
+//============================================================
+-	shop	Shard_Seller	HIDDEN_NPC,no,6360:200,6363:200,6361:200,6362:200
+
+-	script	::pss	HIDDEN_NPC,{
+	npctalk "Do you have an element for each property?", "", bc_self;
+	callshop "Shard_Seller",1;
+	end;
+}
+
+gef_tower,105,172,5	duplicate(pss)	Point Merchant#Sorcerer	8_F_GIRL
+prt_in,131,66,0	duplicate(pss)	Point Merchant#Prontera	8_F_GIRL
+alberta,105,52,7	duplicate(pss)	Point Merchant#Alberta	8_F_GIRL
+aldebaran,133,114,5	duplicate(pss)	Point Merchant#Aldebaran	8_F_GIRL
+comodo,193,159,5	duplicate(pss)	Point Merchant#Comodo	8_F_GIRL
+geffen,129,49,5	duplicate(pss)	Point Merchant#Geffen	8_F_GIRL
+izlude,138,163,5	duplicate(pss)	Point Merchant#Izlude	8_F_GIRL	// Old coordinates: izlude (135,121)
+izlude_a,138,163,5	duplicate(pss)	Point Merchant#Izlude_a	8_F_GIRL
+izlude_b,138,163,5	duplicate(pss)	Point Merchant#Izlude_b	8_F_GIRL
+izlude_c,138,163,5	duplicate(pss)	Point Merchant#Izlude_c	8_F_GIRL
+izlude_d,138,163,5	duplicate(pss)	Point Merchant#Izlude_d	8_F_GIRL
+malangdo,214,163,5	duplicate(pss)	Point Merchant#Malangdo	8_F_GIRL
+mora,115,118,3	duplicate(pss)	Point Merchant#Mora	8_F_GIRL
+ra_in01,256,273,3	duplicate(pss)	Point Merchant#Rachel	8_F_GIRL
+veins,202,128,5	duplicate(pss)	Point Merchant#Veins	8_F_GIRL
+dicastes01,207,200,5	duplicate(pss)	Point Merchant#Dicastes	8_F_GIRL
+manuk,261,206,3	duplicate(pss)	Point Merchant#Manuk	8_F_GIRL
+splendide,207,160,5	duplicate(pss)	Point Merchant#Splendide	8_F_GIRL
+mid_camp,224,237,3	duplicate(pss)	Point Merchant#Midgard	8_F_GIRL

@@ -1,0 +1,568 @@
+//===== rAthena Script =======================================
+//= Mission WoE TE
+//===== Description: =========================================
+//= [Official Conversion]
+//= Template for mission WoE TE
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+// This npc call the duplicate of pop_mission_TE npc in order to spawn the mobs mission.
+-	script	#popswitch	-1,{
+OnInit:
+	if (strnpcinfo(4) == "") end;
+	if (agitcheck3() == 1)
+		donpcevent strnpcinfo(0) + "::OnCommandOn";
+	else
+		donpcevent strnpcinfo(0) + "::OnReset";
+	end;
+
+OnCommandOn:
+	.@map$ = strnpcinfo(4);
+	if (compare( .@map$,"te_alde" ))
+		callsub S_Event, "alde0"+ charat( .@map$,getstrlen(.@map$)-1 ) + "::OnCommandOn";// #popa_alde0[1-5]::OnCommandOn
+	else
+		callsub S_Event, "prt0"+ charat( .@map$,getstrlen(.@map$)-1 ) + "::OnCommandOn";
+	end;
+
+OnReset:
+	.@map$ = strnpcinfo(4);
+	if (compare( .@map$,"te_alde" ))
+		callsub S_Event, "alde0"+ charat( .@map$,getstrlen(.@map$)-1 ) + "::OnReset";
+	else
+		callsub S_Event, "prt0"+ charat( .@map$,getstrlen(.@map$)-1 ) + "::OnReset";
+	end;
+
+S_Event:
+	.@string$ = getarg(0);
+	donpcevent "#popa_"+ .@string$;
+	donpcevent "#popb_"+ .@string$;
+	donpcevent "#popc_"+ .@string$;
+	donpcevent "#popd_"+ .@string$;
+	end;
+}
+
+-	script	pop_mission_TE	-1,{
+OnMyMobDead:
+	.@map$ = strnpcinfo(4);
+	if (mobcount( .@map$,strnpcinfo(0) +"::OnMyMobDead" ) < 1 && playerattached()) {// playerattached stop the script if killmonster / maprespawnguildid
+		callsub S_Coord, .@item_id, .@mob_id, .@coord;
+		for ( .@mtem = 0; .@mtem < 20; .@mtem++ )
+			makeitem .@item_id,1, .@map$, rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] );
+		initnpctimer;
+	}
+	end;
+
+OnTimer12000:
+	stopnpctimer;
+OnCommandOn:
+	callsub S_Coord, .@item_id, .@mob_id, .@coord;
+	monster strnpcinfo(4), rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] ),"--ja--",.@mob_id,1,strnpcinfo(0) + "::OnMyMobDead";
+	end;
+
+OnReset:
+	killmonster strnpcinfo(4),strnpcinfo(0) +"::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+S_Coord:
+	if (compare( strnpcinfo(4),"te_alde" )) {
+		set getarg(0), 7056;// Payroll_Of_Kafra
+		set getarg(1), 2450;// THIEF_PORING
+		.@hidden_name$ = strnpcinfo(2);
+
+		if (.@hidden_name$ == "popa_alde01") setarray .@coord[0],178,234, 128,175;// area x1,x2, y1,y2
+		else if (.@hidden_name$ == "popb_alde01") setarray .@coord[0],14,65, 186,222;
+		else if (.@hidden_name$ == "popc_alde01") setarray .@coord[0],46,114, 37,105;
+		else if (.@hidden_name$ == "popd_alde01") setarray .@coord[0],198,233, 5,41;
+		else if (.@hidden_name$ == "popa_alde02") setarray .@coord[0],29,73, 169,211;
+		else if (.@hidden_name$ == "popb_alde02") setarray .@coord[0],175,220, 136,184;
+		else if (.@hidden_name$ == "popc_alde02") setarray .@coord[0],196,231, 7,40;
+		else if (.@hidden_name$ == "popd_alde02") setarray .@coord[0],53,125, 11,80;
+		else if (.@hidden_name$ == "popa_alde03") setarray .@coord[0],43,107, 212,264;
+		else if (.@hidden_name$ == "popb_alde03") setarray .@coord[0],181,215, 150,187;
+		else if (.@hidden_name$ == "popc_alde03") setarray .@coord[0],59,121, 63,123;
+		else if (.@hidden_name$ == "popd_alde03") setarray .@coord[0],192,215, 24,51;
+		else if (.@hidden_name$ == "popa_alde04") setarray .@coord[0],154,189, 34,101;
+		else if (.@hidden_name$ == "popb_alde04") setarray .@coord[0],21,76, 64,125;
+		else if (.@hidden_name$ == "popc_alde04") setarray .@coord[0],120,143, 200,219;
+		else if (.@hidden_name$ == "popd_alde04") setarray .@coord[0],13,37, 199,222;
+		else if (.@hidden_name$ == "popa_alde05") setarray .@coord[0],145,207, 47,78;
+		else if (.@hidden_name$ == "popb_alde05") setarray .@coord[0],13,43, 87,116;
+		else if (.@hidden_name$ == "popc_alde05") setarray .@coord[0],11,63, 177,230;
+		else if (.@hidden_name$ == "popd_alde05") setarray .@coord[0],130,167, 191,225;
+	}
+	else {
+		set getarg(0), 6592;// Small_Wooden_Chest
+		set getarg(1), 2451;// BABY_STRANGE
+		.@hidden_name$ = strnpcinfo(2);
+
+		if (.@hidden_name$ == "popa_prt01") setarray .@coord[0],10,90, 10,80;
+		else if (.@hidden_name$ == "popb_prt01") setarray .@coord[0],146,190, 64,118;
+		else if (.@hidden_name$ == "popc_prt01") setarray .@coord[0],92,128, 170,204;
+		else if (.@hidden_name$ == "popd_prt01") setarray .@coord[0],188,204, 180,204;
+		else if (.@hidden_name$ == "popa_prt02") setarray .@coord[0],15,95, 162,225;
+		else if (.@hidden_name$ == "popb_prt02") setarray .@coord[0],144,172, 152,175;
+		else if (.@hidden_name$ == "popc_prt02") setarray .@coord[0],43,99, 23,62;
+		else if (.@hidden_name$ == "popd_prt02") setarray .@coord[0],168,204, 24,58;
+		else if (.@hidden_name$ == "popa_prt03") setarray .@coord[0],7,76, 48,110;
+		else if (.@hidden_name$ == "popb_prt03") setarray .@coord[0],160,204, 32,81;
+		else if (.@hidden_name$ == "popc_prt03") setarray .@coord[0],138,190, 183,232;
+		else if (.@hidden_name$ == "popd_prt03") setarray .@coord[0],8,36, 202,227;
+		else if (.@hidden_name$ == "popa_prt04") setarray .@coord[0],246,270, 233,275;
+		else if (.@hidden_name$ == "popb_prt04") setarray .@coord[0],14,53,236,273;
+		else if (.@hidden_name$ == "popc_prt04") setarray .@coord[0],13,96, 12,63;
+		else if (.@hidden_name$ == "popd_prt04") setarray .@coord[0],259,283, 14,35;
+		else if (.@hidden_name$ == "popa_prt05") setarray .@coord[0],17,95, 226,281;
+		else if (.@hidden_name$ == "popb_prt05") setarray .@coord[0],243,287, 243,288;
+		else if (.@hidden_name$ == "popc_prt05") setarray .@coord[0],16,66, 17,60;
+		else if (.@hidden_name$ == "popd_prt05") setarray .@coord[0],205,282, 12,93;
+	}
+	for ( .@i = 0; .@i < 4; .@i++ )
+		set getelementofarray( getarg(2),.@i ), .@coord[.@i];
+	return;
+}
+
+
+-	script	Training_Instructor_TE	-1,{
+	if (checkweight(1201,5) == 0) {
+		mes "You have too many items to proceed with the quest.";
+		mes "Please lighten your load and try again.";
+		close;
+	}
+	.@map$ = strnpcinfo(4);
+	if (.@map$ == "te_alde_gld") {
+		.@npc_name$ = "Mana";
+		.@fortress$ = "Kafragarten";
+		.@menu$ = callsub( S_Menu, .@quest_id,
+			7510,"1 Suspicious Poring",
+			7511,"10 Suspicious Poring",
+			7512,"30 Suspicious Poring",
+			7504,"Destroy 1 Emperium",
+			7505,"Destroy 3 Emperiums",
+			7506,"Destroy 5 Emperiums",
+			7513,"10 Kafra's Paychecks",
+			7514,"20 Kafra's Paychecks",
+			7515,"30 Kafra's Paychecks" );
+	}
+	else {
+		.@npc_name$ = "Rune";
+		.@fortress$ = "Gloria";
+		.@menu$ = callsub( S_Menu, .@quest_id,
+			7501,"1 Suspicious Babee",
+			7502,"10 Suspicious Babee",
+			7503,"30 Suspicious Babee",
+			7504,"Destroy 1 Emperium",
+			7505,"Destroy 3 Emperiums",
+			7506,"Destroy 5 Emperiums",
+			7507,"10 Small Wooden Boxes",
+			7508,"20 Small Wooden Boxes",
+			7509,"30 Small Wooden Boxes" );
+	}
+	mes "["+ .@npc_name$ +"]";
+	if (jobcanentermap("te_prtcas01") == 0) {
+		mes "Ah... you...";
+		mes "based on TE rules, I won't be ordering you or asking you favors unfortunately.";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "Hey now, since this place is just for primary and secondary job classes as well as users without expanded levels, could you leave if you got nothing else to do here?";
+		close;
+	}
+	mes "There are missions you can complete in TE region.";
+	mes "Let's see, what do you want?";
+	next;
+	switch( select( "Accept/Conform Missions", "What do you mean a mission?", "I don't have any." ) ) {
+	case 1:
+		mes "["+ .@npc_name$ +"]";
+		if (BaseLevel < 70) {
+			mes "Mm, I'm sorry but missions are for users with ^4d4dff70 level^000000 or higher.";
+			mes "Honestly, it's hard to complete a mission if your level is too low.";
+			close;
+		}
+		.@time_check = WoeTETimeStart(3600);
+		.@siege_check = agitcheck3();
+		mes "You already know that you have to accept a mission in a certain period of time, right?";
+		if (.@time_check == 1 || .@siege_check == 1)
+			mes "Moreover, you have to keep in mind that you can't accept both high-level and low-level missions simultaneously if they are of the same content.";
+		else {
+			mes "Unfortunately, you can't accept missions right now.";
+			next;
+			mes "["+ .@npc_name$ +"]";
+			.@playtime_check2 = checkquest(7516,PLAYTIME);// A Break for Commercial Development
+			if (.@playtime_check2 == 2) {
+				erasequest 7516;
+				mes "Mm, you were taking a break?";
+				mes "Well, it doesn't matter anymore.";
+			}
+			mes "You can only check the results of the missions you've already accepted.";
+		}
+		next;
+		.@s = select( .@menu$ + "Cancel" ) -1;
+		mes "["+ .@npc_name$ +"]";
+		if (.@s == 9) {
+			mes "See you later then.";
+			close;
+		}
+
+		.@main_quest = .@quest_id[.@s];
+		deletearray .@quest_id[.@s],1;
+		.@mission01 = isbegin_quest(.@main_quest);
+		.@playtime_check = checkquest(.@main_quest,PLAYTIME);
+		.@hunting_check = checkquest(.@main_quest,HUNTING);
+
+		.@index = (.@s/3) *3;
+		.@mission02 = isbegin_quest(.@quest_id[.@index]);
+		.@mission03 = isbegin_quest(.@quest_id[.@index+1]);
+
+		if (.@s == 0 || .@s == 1 || .@s == 2) {// Hunting suspicious quest
+			if (.@map$ == "te_alde_gld")
+				setarray .@mob_name$[0],"Porings","suspicious Porings";
+			else
+				setarray .@mob_name$[0],"Orc Babies","suspicious creatures";
+
+			if (.@s == 0)
+				.@num_kill = 1;
+			else if (.@s == 1) {
+				.@num_tool_box = 2;
+				.@num_kill = 10;
+				setarray .@reward[0],12873,2;
+				setarray .@exp[0],20000,10000;
+			}
+			else if (.@s == 2) {
+				.@num_tool_box = 3;
+				.@num_kill = 30;
+				setarray .@reward[0],12873,3;
+				setarray .@exp[0],30000,15000;
+			}
+
+			if (.@mission01 == 1) {
+				if (.@playtime_check == 0) {
+					if (.@hunting_check == 2) {
+						mes "You did it in time.";
+						mes "I don't understand why "+ .@mob_name$[0] +" appear at that time of the day.";
+						mes "Anyway, good job.";
+						if (.@num_tool_box == 0) {
+							erasequest .@main_quest;
+							getitem 11558,5;// TE_White_Slim_Potion
+							getexp 5000,2500;
+							close;
+						}
+						next;
+						mes "["+ .@npc_name$ +"]";
+						mes "Since you've done a good job, I'll let you open my tool box " + .@num_tool_box + " times.";
+						mes "Although you won't find anything mostly...";
+						mes "It's a bonus, so don't complaint even if you don't find anything.";
+						next;
+						mes "Just like "+ .@npc_name$ +" said, you went through the box in front, and...";
+						erasequest .@main_quest;
+						getitem .@reward[0],.@reward[1];
+						getexp .@exp[0],.@exp[1];
+						callsub( S_Rentbox, .@num_tool_box );
+					}
+					callsub( S_Cancelquest, .@main_quest, .@npc_name$, "This mission is to eliminate "+ .@mob_name$[1] +" that secretly appear at the fortress in "+ .@fortress$ +"." );
+				}
+				mes "Time's up.";
+				mes "Unfortunately, mission failed!";
+				mes "Maybe next time!";
+				erasequest .@main_quest;
+				close;
+			}
+			if (.@time_check != 1 && .@siege_check != 1) {
+				mes "You're not on this mission currently.";
+				mes "Could you check again?";
+				close;
+			}
+			if (.@mission02 == 1 || .@mission03 == 1) {
+				if (.@num_tool_box == 0) {
+					mes "You are already on a high-level mission!";
+					mes "You cannot accept a low-level mission if you're already on a high-level mission of the same content!";
+				}
+				else {
+					mes "You're already on a elimination mission!";
+					mes "I would like you to take care of what you already have unless you want to cancel it.";
+				}
+				next;
+				mes "["+ .@npc_name$ +"]";
+				mes "It only makes sense that way, doesn't it?";
+				mes "Don't you think so?";
+				close;
+			}
+			mes "I've been told that "+ .@mob_name$[1] +" appear during the busy siege hours at the fortress in "+ .@fortress$ +".";
+			mes "I would like you to ^4d4dffeliminate "+ .@num_kill +" or more of "+ .@mob_name$[1] +"^000000.";
+			callsub( S_Acceptquest, .@main_quest, .@npc_name$ );
+		}
+		else if (.@s == 3 || .@s == 4 || .@s == 5) {// Breaking Emperiums
+			if (.@s == 3) {
+				.@num_tool_box = 1;
+				.@num_kill = 1;
+				setarray .@reward[0],12873,3;
+				setarray .@exp[0],30000,10000;
+			}
+			else if (.@s == 4) {
+				.@num_tool_box = 3;
+				.@num_kill = 3;
+				setarray .@reward[0],12873,9;
+				setarray .@exp[0],90000,30000;
+			}
+			else if (.@s == 5) {
+				.@num_tool_box = 5;
+				.@num_kill = 5;
+				setarray .@reward[0],12873,15;
+				setarray .@exp[0],150000,50000;
+			}
+			if (.@mission01 == 1) {
+				if (.@playtime_check == 0) {
+					if (.@hunting_check == 2) {
+						mes "Incredible!";
+						mes "Breaking Emperiums is definitely not an easy job.";
+						mes "You must be contributing a lot to your guild. Good job!";
+						next;
+						mes "["+ .@npc_name$ +"]";
+						mes "Since you've done a good job, I'll let you open my tool box "+ .@num_tool_box +" times.";
+						mes "Although you won't find anything mostly...";
+						mes "It's a bonus, so don't complaint even if you don't find anything.";
+						next;
+						mes "Just like "+ .@npc_name$ +" said, you went through the box in front, and...";
+						erasequest .@main_quest;
+						setquest 7516;
+						getitem .@reward[0],.@reward[1];
+						getexp .@exp[0],.@exp[1];
+						callsub( S_Rentbox, .@num_tool_box );
+					}
+					callsub( S_Cancelquest, .@main_quest, .@npc_name$, "This mission is to ^4d4dff destroy Emperiums that exist all over Gloria and Kafragarten regions.^000000" );
+				}
+				mes "Time's up.";
+				mes "Unfortunately, mission failed!";
+				mes "Maybe next time!";
+				erasequest .@main_quest;
+				close;
+			}
+			if (.@time_check != 1 && .@siege_check != 1) {
+				mes "You're not on this mission currently.";
+				mes "Could you check again?";
+				close;
+			}
+			if (.@mission02 == 1 || .@mission03 == 1) {
+				mes "You're already on a mission of the same content,";
+				mes "the level is different though";
+				mes "I would like you to take care of what you already have unless you want to cancel it.";
+				next;
+				mes "["+ .@npc_name$ +"]";
+				mes "It only makes sense that way, doesn't it?";
+				mes "Don't you think so?";
+				close;
+			}
+			.@playtime_check2 = checkquest(7516,PLAYTIME);
+			if (.@playtime_check2 == 0) {
+				mes "There is something called 'commercial development level' in each fortress.";
+				mes "It increases as much as each guild invests.";
+				next;
+				mes "["+ .@npc_name$ +"]";
+				mes "However, this is closely related to Emperiums.";
+				mes "Destroying Emperiums repeatedly staggers commercial development level.";
+				next;
+				mes "["+ .@npc_name$ +"]";
+				mes "So, now we take a break in order to prevent an excessive decrease in commercial development level.";
+				mes "See you in a bit.";
+				close;
+			}
+			else if (.@playtime_check2 == 2) {
+				erasequest 7516;
+				mes "The break for commercial development of the fortress is over now.";
+				mes "Good. Think about what kind of missions you want and come back again.";
+				close;
+			}
+			mes "What is the most important thing in siege battles?";
+			mes "It's destroying Emperiums! Let me give you that exact mission of destroying Emperiums!";
+			next;
+			mes "["+ .@npc_name$ +"]";
+			mes "Gloria or Kafragarten, wherever it is! Right now, at this very hour, ^4d4dffdestroy Emperiums!^000000";
+			mes "^4d4dffTarget number is "+ .@num_kill +" or more!^000000";
+			callsub( S_Acceptquest, .@main_quest, .@npc_name$ );
+		}
+		else if (.@s == 6 || .@s == 7 || .@s == 8) {
+			if (.@map$ == "te_alde_gld") {
+				.@item_quest = 7056;// Payroll_Of_Kafra
+				setarray .@string$[0], "paychecks", "I don't understand why Porings would steal Kafra's Paychecks", "Kafra's stolen paychecks";
+			}
+			else {
+				.@item_quest = 6592;// Small_Wooden_Chest
+				setarray .@string$[0], "wooden boxes", "So, those Orc Babies were after this, huh?", "wooden boxes";
+			}
+			if (.@s == 6) {
+				.@num_tool_box = 1;
+				.@num_items = 10;
+				setarray .@reward[0],12873,1;
+				setarray .@exp[0],10000,5000;
+			}
+			else if (.@s == 7) {
+				.@num_tool_box = 2;
+				.@num_items = 20;
+				setarray .@reward[0],12873,2;
+				setarray .@exp[0],20000,10000;
+			}
+			else if (.@s == 8) {
+				.@num_tool_box = 3;
+				.@num_items = 30;
+				setarray .@reward[0],12873,3;
+				setarray .@exp[0],30000,15000;
+			}
+
+			if (.@mission01 == 1) {
+				if (.@playtime_check == 0) {
+					if (countitem(.@item_quest) > 9) {
+						mes .@num_items +" or more of "+ .@string$[0] +" let's see you've done it right.";
+						mes .@string$[1];
+						mes "Anyway, good job.";
+						next;
+						mes "["+ .@npc_name$ +"]";
+						mes "Let me take the rest of the "+ .@string$[0] +".";
+						mes "I'll return it to its original owner.";
+						next;
+						mes "["+ .@npc_name$ +"]";
+						mes "Since you've done a good job, I'll let you open my tool box "+ .@num_tool_box +" times.";
+						mes "Although you won't find anything mostly...";
+						mes "It's a bonus, so don't complaint even if you don't find anything.";
+						next;
+						mes "Just like "+ .@npc_name$ +" said, you went through the box in front, and...";
+						delitem .@item_quest, countitem(.@item_quest);
+						erasequest .@main_quest;
+						getitem .@reward[0],.@reward[1];
+						getexp .@exp[0],.@exp[1];
+						callsub( S_Rentbox, .@num_tool_box );
+					}
+					callsub( S_Cancelquest, .@main_quest, .@npc_name$, "This mission is to ^4d4dffcollect "+ .@string$[2] +"^000000 at the fortress in "+ .@fortress$ +"." );
+				}
+				mes "Time's up.";
+				mes "Unfortunately, mission failed!";
+				mes "Maybe next time!";
+				erasequest .@main_quest;
+				close;
+			}
+			if (.@time_check != 1 && .@siege_check != 1) {
+				mes "You're not on this mission currently.";
+				mes "Could you check again?";
+				close;
+			}
+			if (.@mission02 == 1 || .@mission03 == 1) {
+				mes "You're already on a mission of the same content,";
+				mes "the level is different though";
+				mes "I would like you to take care of what you already have unless you want to cancel it.";
+				next;
+				mes "["+ .@npc_name$ +"]";
+				mes "It only makes sense that way, doesn't it?";
+				mes "Don't you think so?";
+				close;
+			}
+			mes "Hmm you wouldn't believe it, but this mission is related to a theft.";
+			mes "They told me a bunch of "+ .@string$[2] +" is missing from the fortress in "+ .@fortress$ +".";
+			next;
+			mes "["+ .@npc_name$ +"]";
+			mes "The thief probably took advantage of the siege hours.";
+			mes "It's a request to find ^4d4dff"+ .@num_items +" or more of "+ .@string$[2] +"^000000.";
+			callsub( S_Acceptquest, .@main_quest, .@npc_name$ );
+		}
+	case 2:
+		mes "["+ .@npc_name$ +"]";
+		mes "Since TE Region has more of a casual atmosphere,";
+		mes "it's not fun doing just siege battles, right?";
+		mes "So, I brought ^4d4dffsome works you can do during the siege hours^000000~";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "You can accept missions ^4d4dffstarting from 1 hour before the beginning of the siege and until the end of the siege battle TE^000000,";
+		mes "and every mission has ^4d4dffa 4-hour time limit^000000 for completion.";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "Simply put, you accept a mission from me during the siege hours and";
+		mes "^4d4dffcome back to give me a report within the time limit^000000.";
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "Try it for fun.";
+		close;
+	case 3:
+		mes "["+ .@npc_name$ +"]";
+		mes "I see.";
+		mes "Come back anytime if you change your mind.";
+		mes "I might not be available, though. Hehehe.";
+		close;
+	}
+
+S_Cancelquest:
+	.@npc_name$ = getarg(1);
+	if (WoeTETimeStart(3600) == 1 || agitcheck3()) {
+		mes "It seems like you haven't accomplished the mission yet?";
+		mes getarg(2);
+		next;
+		mes "["+ .@npc_name$ +"]";
+		mes "Do you want to cancel by any chance?";
+		next;
+		switch( select( "No.","Yes." ) ) {
+		case 1:
+			mes "["+ .@npc_name$ +"]";
+			mes "Good luck!";
+			close;
+		case 2:
+			mes "["+ .@npc_name$ +"]";
+			mes "As you wanted, this mission is canceled.";
+			erasequest getarg(0);
+			close;
+		}
+	}
+	else {
+		mes "Hmm you still have some time left, but it's not the siege hour yet";
+		mes "I don't think you should go on.";
+		mes "You should cancel this mission. I would say it's failed.";
+		next;
+		switch( select( "I would like to go on.","Yes, I'll cancel it." ) ) {
+		case 1:
+			mes "["+ .@npc_name$ +"]";
+			mes "I don't think it's worth it. Well, good luck!";
+			close;
+		case 2:
+			mes "["+ .@npc_name$ +"]";
+			mes "As you wanted, this mission is canceled.";
+			erasequest getarg(0);
+			close;
+		}
+	}
+
+S_Acceptquest:
+	.@npc_name$ = getarg(1);
+	next;
+	switch( select( "Accept it.","Do not accept it." ) ) {
+	case 1:
+		mes "["+ .@npc_name$ +"]";
+		mes "^4d4dffThe time limit is 4 hours.^000000";
+		mes "Accomplish the mission with in that time and report to me.";
+		setquest getarg(0);
+		close;
+	case 2:
+		mes "["+ .@npc_name$ +"]";
+		mes "Try another mission then.";
+		close;
+	}
+
+S_Rentbox:
+	setarray .@item_id[0], 2950,15067,20709,22012;// Rune_Ring, Rune_Suit, Mana_Manteau, Mana_Boots
+	for ( .@count = 0; .@count < getarg(0); .@count++ ) {
+		.@miss_item01 = rand(100);
+		if (.@miss_item01 > 3)
+			mes "You didn't find anything.";
+		else {
+			rentitem .@item_id[ .@miss_item01 ],86400;
+			mes "You found '"+ getitemname(.@item_id[ .@miss_item01 ]) +" !'";
+		}
+	}
+	close;
+
+S_Menu:
+	for ( .@i = 1; .@i < getargcount(); .@i += 2 ) {
+		if ( isbegin_quest(getarg(.@i)) )
+			.@menu$ = .@menu$ + getarg(.@i+1) + " ^4d4dffCheck the result^000000:";
+		else
+			.@menu$ = .@menu$ + getarg(.@i+1) + ":";
+		set getelementofarray( getarg(0),.@index ), getarg(.@i);
+		.@index++;
+	}
+	return .@menu$;
+}

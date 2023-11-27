@@ -1,0 +1,369 @@
+//===== rAthena Script ======================================= 
+//= idRO Cash Shop NPCs
+//===== By: ================================================== 
+//= Cydh
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Sells cash shop items based on idRO's cash shop.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial release. 2014-Jan-13 [Cydh]
+//= 1.1 2014-Jan-18 [Cydh]
+//      - Fixed the item list
+//      - Added NPC placement for some maps
+//= 1.2 2014-Feb-4 [Cydh]
+//      - Added Cash Trader with special offer for Chinese
+//        New Year
+//= 1.3 2015-Aug-24 [Cydh]
+//      - Added Cash Trader with special offer for Indonesia
+//        70th Independence Day
+//============================================================
+
+// Main NPCs
+//============================================================
+-	cashshop	idROCK::idRO_kafra	721,16555:1000,12202:150,12203:150,12204:150,12205:150,12206:150,12207:150,12208:200,12209:250,12909:375,12910:375,12213:25000,12214:250,12215:150,12216:150,12217:150,12218:150,12219:150,12220:150,7619:200,7620:150,7621:100,12221:75,12210:200,5210:20000,7622:3500,5294:12500,5292:12500,5291:12500,5284:12500,5139:12500,5140:12500,5213:12500,5286:12500,5151:12500,5431:12500,5410:12500,13569:350,13849:250,13850:450,13851:250,13852:450,13853:250,13854:450,13855:250,13856:450,13857:400,13858:750,13905:5500,13906:32500,13907:2750,13908:20000,13909:1000,13910:3750,5478:12500,5385:12500,5137:12500,12350:200,12351:150,12375:250,5491:12500,5335:12500,5463:12500,5293:12500,5198:12500,5289:12500,5258:12500,5143:12500,5334:12500,5099:12500,5211:12500,5333:12500,5288:12500,5257:12500,5285:12500,5189:12500,5146:12500,5142:12500,5138:12500,5188:12500,5212:12500,5181:12500,5182:12500,5183:12500,5185:12500,5186:12500,5253:12500,5256:12500,5287:12500,5490:12500,5501:12500,5502:12500,5498:12500,5495:12500,5503:12500,5499:12500,5505:12500,5496:12500,5497:12500,5504:6250,5508:12500,5467:12500,13420:12500,5655:12500,5546:12500,5545:12500,5550:12500,5549:12500,5547:12500,5657:7500,5548:7500,13553:2000,5537:12500,5538:12500,5539:12500,5470:12500,5471:12500,5511:12500,5526:12500,5529:12500,5527:12500,5509:12500,5363:12500,5395:12500,5464:12500,5563:12500,5528:12500,5558:12500,5554:12500,5555:12500,5556:12500,5557:12500,5514:12500,5515:12500,5316:12500,6240:7500,6241:10000,5396:12500,5573:12500,15008:12500,7823:100,5584:12500,5765:12500,5766:12500,5767:12500,2855:12500,5789:12500,5790:12500,5776:12500,5413:12500,5594:12500,5585:12500,17079:500,18533:12500,5777:12500,18531:12500,6113:100,6114:100,6115:100,5148:10000,5530:12500,5359:15000,6098:100,6100:100,6110:100,18616:7500,18618:10000,18626:15000,18589:12500,18596:12500,18619:12500,18620:7500,19507:12500,19515:12500,19517:12500,19516:12500,19509:10000,19510:10000,19513:7500,19514:7500,6046:2500,6047:2500
+-	cashshop	idROCK2::idRO_kafra2	80,19518:12500,19519:12500,19520:12500,19521:12500,19522:12500,15058:12500,2888:5000,2751:5000,2573:35000,18630:12500,18636:12500,18665:12500,18666:12500,18676:12500,18679:12500,18681:12500,5575:12500,5591:12500,5388:12500,17126:2250,6225:15000,6226:11250,6104:100,6108:100,6112:100,6097:100,18574:12500,18697:12500,18698:12500,18729:12500,2936:12500,2177:12500,18692:12500,18694:12500,18695:12500,17106:15000,7776:2000,5045:12500,14616:250,14617:250,14618:250,14619:250,14620:250,14621:250,16770:4750,16771:19000,16979:2000,18642:12500,18643:12500,18644:12500,7825:5000,5403:12500,5020:12500,18713:12500,18759:12500,2597:12500,2481:12500,18934:12500,17076:250,28602:12500,15123:12500,21013:12500,21012:12500
+-	cashshop	idROCC::idRO_cons	721,633:125,619:125,620:125,621:125,622:125,623:125,624:125,625:125,626:125,627:125,628:125,629:125,630:125,631:125,632:125,635:125,636:125,640:125,644:25,659:125,984:50,985:75,989:1250,13814:2000,634:250,505:25,13531:150,13532:250,13533:400,13534:750,13535:250,13536:500,13537:650,642:750,641:750,684:100,638:750,639:750,975:1500,976:1500,978:1500,979:1500,980:1500,981:1500,982:1500,983:1500,554:100,14293:300,14294:1200,13569:350,13849:250,13850:450,13851:250,13852:450,13853:250,13854:450,13855:250,13856:450,13857:400,13858:750,13905:5500,13906:32500,13907:2750,13908:20000,13909:1000,13910:3750,12350:200,12351:150,12375:250,660:850,661:850,13553:2000,6223:75,6224:100,637:150,7823:100,17079:500,6113:100,16555:1000
+-	cashshop	idROCC2::idRO_cons2	80,6114:100,6115:100,6098:100,6100:100,6110:100,17126:2250,6225:15000,6226:11250,6104:100,6108:100,6112:100,6097:100,17106:15000,7776:2000,14616:250,14617:250,14618:250,14619:250,14620:250,14621:250,16770:4750,16771:19000,16979:2000,7825:5000,17076:250
+-	cashshop	idROCG::idRO_gear	721,5380:15000,5381:15000,5382:15000,2214:6250,2217:500,2227:500,2229:625,2252:1250,2280:1250,2285:6250,2287:2500,5119:500,5120:1250,2278:75,2281:1250,5087:375,5088:375,5089:375,5090:375,2225:500,2264:2500,5046:2500,2213:2500,2269:2500,2270:2500,2299:2500,5008:2500,5082:625,2245:6250,2286:6250,5014:1250,2296:1250,5118:2500,2248:6250,5035:7500,2254:10000,2233:750,2231:750,2255:5000,2258:6250,2295:7500,5026:8000,5032:7500,5210:20000,2234:10000,2235:10000,2271:10000,5229:7500,5227:7500,5228:7500,5233:7500,5231:7500,5232:7500,5230:7500,5234:7500,5236:7500,5235:7500,5237:7500,5241:7500,5240:7500,5238:7500,5239:7500,5242:7500,5294:12500,5292:12500,5291:12500,5284:12500,5139:12500,5140:12500,5213:12500,5286:12500,2249:7500,5096:1250,5151:12500,5431:12500,5410:12500,5478:12500,5385:12500,5137:12500,5491:12500,5335:12500,5463:12500,5293:12500,5198:12500,5289:12500,5258:12500,5143:12500,5334:12500,5099:12500,5211:12500,5333:12500,5288:12500,5257:12500,5285:12500,5189:12500,5146:12500,5142:12500,5138:12500,5188:12500,5212:12500,5181:12500,5182:12500,5183:12500,5185:12500,5186:12500,5253:12500,5256:12500,5287:12500,5490:12500,5501:12500,5502:12500,5498:12500,5495:12500,5503:12500,5499:12500,5505:12500,5496:12500,2289:5000,5066:5000,5072:5000,5003:5000,5497:12500,5504:6250,5508:12500,5467:12500,5655:12500,5546:12500,5545:12500,2291:725,2274:4250,5550:12500,5549:12500,5547:12500,5657:7500,5548:7500,5537:12500,5538:12500,5539:12500,5470:12500,5471:12500,5511:12500,5526:12500,5529:12500,5527:12500,5509:12500,5363:12500,5395:12500,5464:12500,5563:12500,5528:12500,5558:12500,5554:12500,5555:12500,5556:12500,5557:12500,5514:12500,5515:12500,5316:12500,5396:12500,5573:12500,5172:5000,5413:12500,5594:12500,5585:12500,18533:12500,5777:12500,18531:12500,5148:10000,5530:12500,5359:15000,18616:7500,18618:10000,18626:15000,18589:12500,18596:12500,18619:12500,18620:7500
+-	cashshop	idROCG2::idRO_gear2	80,19518:12500,19519:12500,19520:12500,19521:12500,19522:12500,18630:12500,18636:12500,18665:12500,18666:12500,18676:12500,18679:12500,18681:12500,5575:12500,5591:12500,5388:12500,18574:12500,18697:12500,18698:12500,18729:12500,18692:12500,18694:12500,18695:12500,5045:12500,18642:12500,18643:12500,18644:12500,5403:12500,5020:12500,18713:12500,18759:12500,18934:12500
+-	cashshop	idROCE::idRO_eq	721,2102:625,2104:625,2106:750,2120:375,2310:375,2313:500,2315:1250,2317:1875,2322:1250,2326:1250,2331:1875,2336:1875,2339:125,2342:1875,2404:500,2406:625,2412:750,2502:250,2504:625,2506:1250,1117:250,1155:375,1162:750,1158:750,1251:625,1253:750,1352:375,1355:375,1361:625,1464:625,13300:625,13302:625,1705:375,1716:750,1715:625,13101:375,13103:625,13105:625,13157:625,1125:625,1127:625,1128:625,1120:750,1208:250,1217:375,1220:625,1408:250,1517:625,1520:625,1551:375,1602:250,1608:250,1611:375,1802:375,1810:625,1902:250,1908:375,1910:375,1912:375,1961:625,1962:625,13006:625,13008:625,1261:3750,1133:3750,1468:3750,1236:3750,1719:3750,1557:2500,1615:2500,1363:3750,1524:3750,1558:250,7170:500,2338:500,2311:750,13150:2500,1259:5000,1164:5000,13012:2500,2345:2500,2347:2500,2349:2500,2351:2500,1472:10000,1132:7500,1131:7500,1226:750,13015:1050,1111:850,1461:1050,1514:850,1726:1050,1806:625,1906:750,1951:325,1957:625,13304:850,13152:750,13107:850,2320:850,2359:850,2432:750,1919:2500,13404:8250,1255:1250,13153:850,2531:7500,2108:1050,2125:5000,13011:325,1152:375,1455:375,1358:625,1108:250,1511:375,1711:500,1808:625,1605:375,1505:250,13420:12500,1731:7500,1730:7500,1732:7500,1733:7500,1564:4250,13164:1250,1532:1250,1812:850,1256:5000,1258:5000,1257:5000,1822:7500,1820:7500,1819:7500,1818:7500,1821:7500,1458:625,1307:5000,1262:2500,1968:500,1264:750,13156:1050,1974:5000,13034:7500,1260:5000,1188:4250,1548:4250,1736:850,1971:5000,1629:5000,1916:4250,1734:3750,1825:5000,1914:4250,1917:4250,1915:4250,1904:1050,1918:2500,1967:5000,1966:5000,1965:5000,1969:4250,15008:12500,2148:3750,1630:1250,2138:3750,2521:1000,2420:1000,2355:1000,2116:1000,1485:750,1925:1875,1980:1875,13038:3750,1290:3750,1392:10000
+-	cashshop	idROCE2::idRO_eq2	80,1393:10000,1659:7500,13070:5000,18109:3750,15058:12500,2573:35000,2177:12500,2597:12500,2481:12500,28602:12500,15123:12500,21013:12500,21012:12500
+-	cashshop	idROCA::idRO_acc	721,2607:1875,2617:1875,2601:1875,2602:1875,2603:1875,2604:1875,2605:1875,2618:1875,10003:250,10007:250,10009:250,10010:250,10011:250,10012:250,10015:250,10017:250,10020:1250,4002:1250,4003:3750,4004:1250,4006:1250,4008:1250,4021:1250,4022:1250,4027:1250,4028:1250,4032:1250,4034:1250,4035:5000,4038:1250,4043:1875,4049:1875,4053:5000,4058:5000,4069:1875,4077:5000,4086:5000,4097:1875,4102:5000,4106:1875,4133:5000,4044:3750,4052:1250,4100:1875,4042:1875,4023:1250,4014:1250,4107:1875,4091:1875,2619:3750,2625:5000,2622:5000,2624:5000,2623:5000,2621:5000,2626:5000,4092:5000,7825:5000,4105:7500,10004:500,10001:1500,4064:7500,4073:5000,4205:7500,4062:5000,4065:7500,4030:5000,4085:5000,4005:7500,4130:7500,4202:7500,4015:3750,4056:5000,4070:5000,4082:3750,4126:3750,4031:3250,4045:3250,4066:3250,4074:3250,4160:4250,4229:6250,4296:3250,4161:3750,4094:3750,4109:3750,4089:3750,4081:3750,4084:3250,4288:3750,4050:1875,4252:1250,4234:1850,4327:6250,4117:1250,4334:5000,4255:3750,4269:3750,4218:7500,4055:1850,4199:5000,2652:3750,4193:2000,4293:1875,4258:1250,4112:7500,4294:2000,4337:1250,4340:5000,4382:3250,4402:6250,4378:6250,4371:5000,4060:1875,4157:1875,4310:1875,4156:1875,4155:3750
+-	cashshop	idROCA2::idRO_acc2	80,4253:7500,4113:3750,4268:2000,2888:5000,2751:5000,2936:12500
+-	cashshop	idROCR::idRO_rental	874,12936:625,13775:925,13770:1000,13767:1000,13772:625,13768:925,12944:925,12940:625,13956:925,13954:1000,13955:1000,13958:1000,13957:1000,12951:625,12953:625,13783:625,13784:925,13953:652,12947:652,12948:652,12949:652,13502:652,13778:925,13779:625,13782:925,12938:1000,13952:925,12937:1000,13766:1000,13773:625,14321:1000,14322:925,14323:925,14324:925,14325:925,14326:925,14327:925,14328:925,14329:925,14330:925,14426:925,14427:925,14428:925,14429:1000,14430:1000,14431:1000,14432:1250,14433:1500,14434:1500,14435:625,14436:625,14437:925,14242:925,14243:925,14244:925,14245:925,14246:925,14247:925,14248:925,14249:925,14250:925,14251:925,14252:1500,14253:1500,14254:1500,14255:1500,14256:1500,14257:1500,14258:1500,14259:1500,14260:1500,14261:1500,13771:1000,13654:925,13656:625,13653:925,13663:625,13671:925,13672:925,13673:925,13674:925,13675:925,13650:925,13657:925,16638:625,16639:1000,16374:625,16389:1000,16372:625,16385:1000,17396:1250,17397:7000,17398:1250,17399:7000,17416:1250,17417:7000,17422:1250,17423:7000,16628:10000,17311:2000,17404:1250,17405:7000,17408:1250,17409:7000,17418:1250,17419:7000,17420:1250,17421:7000,16625:10000,17308:2000,17400:1250,17401:7000,17406:1250,17407:7000,17410:1250,17411:7000,17412:1250,17413:7000,17414:2000,17415:10000,17424:1250,17425:7000,17426:1250,17427:7000,17402:1250,17403:7000,16682:2500
+
+// Payon
+//============================================================
+payon,172,128,3	duplicate(idRO_kafra)	Kafra Shop#pay	721
+payon,172,130,3	duplicate(idRO_kafra2)	Kafra Shop 2#pay	80
+payon,175,128,3	duplicate(idRO_cons)	Consumable#pay	721
+payon,175,130,3	duplicate(idRO_cons2)	Consumable 2#pay	80
+payon,178,128,3	duplicate(idRO_gear)	Headgear#pay	721
+payon,178,130,3	duplicate(idRO_gear2)	Headgear 2#pay	80
+payon,181,128,3	duplicate(idRO_eq)	Equipment#pay	721
+payon,181,130,3	duplicate(idRO_eq2)	Equipment 2#pay	80
+payon,184,128,3	duplicate(idRO_acc)	Acc and Kartu#pay	721
+payon,184,130,3	duplicate(idRO_acc2)	Acc and Kartu 2#pay	80
+payon,187,128,3	duplicate(idRO_rental)	Rental Shop#pay	874
+
+payon,184,104,3	duplicate(idRO_kafra)	Kafra Shop#pay-1	721
+payon,183,104,3	duplicate(idRO_kafra2)	Kafra Shop 2#pay-1	80
+payon,188,104,3	duplicate(idRO_rental)	Rental Shop#pay-1	874
+
+payon,177,226,3	duplicate(idRO_kafra)	Kafra Shop#pay-2	721
+payon,178,226,3	duplicate(idRO_kafra2)	Kafra Shop 2#pay-2	80
+payon,181,226,3	duplicate(idRO_rental)	Rental Shop#pay-2	874
+
+// Archer Village
+//============================================================
+pay_arche,57,125,3	duplicate(idRO_kafra)	Kafra Shop#payarc	721
+pay_arche,58,125,1	duplicate(idRO_kafra2)	Kafra Shop 2#payarc	80
+pay_arche,61,125,8	duplicate(idRO_rental)	Rental Shop#payarc	874
+
+// Prontera
+//============================================================
+// East-Gate
+prontera,282,198,1	duplicate(idRO_kafra)	Kafra Shop#prt-1	721
+prontera,282,197,1	duplicate(idRO_kafra2)	Kafra Shop 2#prt-1	80
+prontera,282,194,1	duplicate(idRO_rental)	Rental Shop#prt-1	874
+
+// West-Gate
+prontera,29,209,5	duplicate(idRO_kafra)	Kafra Shop#prt-2	721
+prontera,29,210,5	duplicate(idRO_kafra2)	Kafra Shop 2#prt-2	80
+prontera,32,212,5	duplicate(idRO_rental)	Rental Shop#prt-2	874
+
+// South
+prontera,146,91,5	duplicate(idRO_kafra)	Kafra Shop#prt-3	721
+prontera,146,92,5	duplicate(idRO_kafra2)	Kafra Shop 2#prt-3	80
+prontera,146,95,5	duplicate(idRO_rental)	Rental Shop#prt-3	874
+
+// South-Gate
+prontera,149,29,8	duplicate(idRO_kafra)	Kafra Shop#prt-4	721
+prontera,148,29,8	duplicate(idRO_kafra2)	Kafra Shop 2#prt-4	80
+prontera,145,29,8	duplicate(idRO_rental)	Rental Shop#prt-4	874
+
+// Center
+prontera,164,183,3	duplicate(idRO_kafra)	Kafra Shop#prt	721
+prontera,164,185,3	duplicate(idRO_kafra2)	Kafra Shop 2#prt	80
+prontera,151,183,3	duplicate(idRO_cons)	Consumable#prt	721
+prontera,151,185,3	duplicate(idRO_cons2)	Consumable 2#prt	80
+prontera,154,183,3	duplicate(idRO_gear)	Headgear#prt	721
+prontera,154,185,3	duplicate(idRO_gear2)	Headgear 2#prt	80
+prontera,157,183,3	duplicate(idRO_eq)	Equipment#prt	721
+prontera,157,185,3	duplicate(idRO_eq2)	Equipment 2#prt	80
+prontera,161,183,3	duplicate(idRO_acc)	Acc and Kartu#prt	721
+prontera,161,185,3	duplicate(idRO_acc2)	Acc and Kartu 2#prt	80
+prontera,148,183,3	duplicate(idRO_rental)	Rental Shop#prt	874
+
+// Prontera Field
+prt_fild05,290,230,3	duplicate(idRO_rental)	Rental Shop#prt05	874
+prt_fild05,290,228,3	duplicate(idRO_kafra2)	Kafra Shop 2#prt05	80
+prt_fild05,290,227,3	duplicate(idRO_kafra)	Kafra Shop#prt05	721
+
+// Izlude
+//============================================================
+izlude,135,99,3	duplicate(idRO_kafra)	Kafra Shop#izl-1	721
+izlude,135,100,3	duplicate(idRO_kafra2)	Kafra Shop 2#izl-1	80
+izlude,135,102,3	duplicate(idRO_rental)	Rental Shop#izl-1	874
+
+// Center
+izlude,135,142,3	duplicate(idRO_kafra)	Kafra Shop#izl	721
+izlude,135,144,3	duplicate(idRO_kafra2)	Kafra Shop 2#izl	80
+izlude,124,142,3	duplicate(idRO_cons)	Consumable#izl	721
+izlude,124,144,3	duplicate(idRO_cons2)	Consumable 2#izl	80
+izlude,127,142,3	duplicate(idRO_gear)	Headgear#izl	721
+izlude,127,144,3	duplicate(idRO_gear2)	Headgear 2#izl	80
+izlude,130,142,3	duplicate(idRO_eq)	Equipment#izl	721
+izlude,130,144,3	duplicate(idRO_eq2)	Equipment 2#izl	80
+izlude,133,142,3	duplicate(idRO_acc)	Acc and Kartu#izl	721
+izlude,133,144,3	duplicate(idRO_acc2)	Acc and Kartu 2#izl	80
+izlude,121,142,3	duplicate(idRO_rental)	Rental Shop#izl	874
+
+/* Pre-Renewal locations */
+
+//izlude,134,86,3	duplicate(idRO_kafra)	Kafra Shop#izl-1	721
+//izlude,134,85,3	duplicate(idRO_kafra2)	Kafra Shop 2#izl-1	80
+//izlude,134,91,3	duplicate(idRO_rental)	Rental Shop#izl-1	874
+
+// Center
+//izlude,136,113,3	duplicate(idRO_kafra)	Kafra Shop#izl	721
+//izlude,136,115,3	duplicate(idRO_kafra2)	Kafra Shop 2#izl	80
+//izlude,124,113,3	duplicate(idRO_cons)	Consumable#izl	721
+//izlude,124,115,3	duplicate(idRO_cons2)	Consumable 2#izl	80
+//izlude,127,113,3	duplicate(idRO_gear)	Headgear#izl	721
+//izlude,127,115,3	duplicate(idRO_gear2)	Headgear 2#izl	80
+//izlude,130,113,3	duplicate(idRO_eq)	Equipment#izl	721
+//izlude,130,115,3	duplicate(idRO_eq2)	Equipment 2#izl	80
+//izlude,133,113,3	duplicate(idRO_acc)	Acc and Kartu#izl	721
+//izlude,133,115,3	duplicate(idRO_acc2)	Acc and Kartu 2#izl	80
+//izlude,121,113,3	duplicate(idRO_rental)	Rental Shop#izl	874
+
+// Byalan
+//============================================================
+izlu2dun,108,57,3	duplicate(idRO_kafra)	Kafra Shop#byl	721
+izlu2dun,109,57,3	duplicate(idRO_kafra2)	Kafra Shop 2#byl	80
+izlu2dun,104,57,3	duplicate(idRO_rental)	Rental Shop#byl	874
+
+// Alberta
+//============================================================
+// Center
+alberta,113,63,5	duplicate(idRO_kafra)	Kafra Shop#alb-1	721
+alberta,114,64,3	duplicate(idRO_kafra2)	Kafra Shop 2#alb-1	80
+alberta,110,59,5	duplicate(idRO_rental)	Rental Shop#alb-1	874
+
+// Left-Top
+alberta,32,229,8	duplicate(idRO_kafra)	Kafra Shop#alb-2	721
+alberta,31,229,8	duplicate(idRO_kafra2)	Kafra Shop 2#alb-2	80
+alberta,34,229,8	duplicate(idRO_rental)	Rental Shop#alb-2	874
+
+alberta,25,238,3	duplicate(idRO_kafra)	Kafra Shop#alb	721
+alberta,25,240,3	duplicate(idRO_kafra2)	Kafra Shop 2#alb	80
+alberta,27,238,3	duplicate(idRO_cons)	Consumable#alb	721
+alberta,27,240,3	duplicate(idRO_cons2)	Consumable 2#alb	80
+alberta,30,238,3	duplicate(idRO_gear)	Headgear#alb	721
+alberta,30,240,3	duplicate(idRO_gear2)	Headgear 2#alb	80
+alberta,33,238,3	duplicate(idRO_eq)	Equipment#alb	721
+alberta,33,240,3	duplicate(idRO_eq2)	Equipment 2#alb	80
+alberta,37,238,3	duplicate(idRO_acc)	Acc and Kartu#alb	721
+alberta,37,240,3	duplicate(idRO_acc2)	Acc and Kartu 2#alb	80
+alberta,40,238,3	duplicate(idRO_rental)	Rental Shop#alb	874
+
+// Brasilis
+//============================================================
+brasilis,199,218,3	duplicate(idRO_kafra)	Kafra Shop#bra	721
+brasilis,198,220,3	duplicate(idRO_kafra2)	Kafra Shop 2#bra	80
+brasilis,191,218,3	duplicate(idRO_cons)	Consumable#bra	721
+brasilis,190,220,3	duplicate(idRO_cons2)	Consumable 2#bra	80
+brasilis,193,218,3	duplicate(idRO_gear)	Headgear#bra	721
+brasilis,192,220,3	duplicate(idRO_gear2)	Headgear 2#bra	80
+brasilis,195,218,3	duplicate(idRO_eq)	Equipment#bra	721
+brasilis,194,220,3	duplicate(idRO_eq2)	Equipment 2#bra	80
+brasilis,197,218,3	duplicate(idRO_acc)	Acc and Kartu#bra	721
+brasilis,196,220,3	duplicate(idRO_acc2)	Acc and Kartu 2#bra	80
+brasilis,201,218,3	duplicate(idRO_rental)	Rental Shop#bra	874
+
+// Amatsu
+//============================================================
+amatsu,101,147,3	duplicate(idRO_kafra)	Kafra Shop#ama	721
+amatsu,100,146,5	duplicate(idRO_kafra2)	Kafra Shop 2#ama	80
+amatsu,100,144,5	duplicate(idRO_rental)	Rental Shop#ama	874
+
+// Ayothaya
+//============================================================
+ayothaya,212,171,5	duplicate(idRO_kafra)	Kafra Shop#ayo	721
+ayothaya,212,172,5	duplicate(idRO_kafra2)	Kafra Shop 2#ayo	80
+ayothaya,212,175,5	duplicate(idRO_rental)	Rental Shop#ayo	874
+
+// Luoyang
+//============================================================
+louyang,208,102,3	duplicate(idRO_kafra)	Kafra Shop#lou	721
+louyang,207,102,3	duplicate(idRO_kafra2)	Kafra Shop 2#lou	80
+louyang,205,102,3	duplicate(idRO_rental)	Rental Shop#lou	874
+
+// Dewata
+//============================================================
+dewata,204,178,3	duplicate(idRO_kafra)	Kafra Shop#dew	721
+dewata,204,180,3	duplicate(idRO_kafra2)	Kafra Shop 2#dew	80
+dewata,192,178,3	duplicate(idRO_cons)	Consumable#dew	721
+dewata,192,180,3	duplicate(idRO_cons2)	Consumable 2#dew	80
+dewata,195,178,3	duplicate(idRO_gear)	Headgear#dew	721
+dewata,195,180,3	duplicate(idRO_gear2)	Headgear 2#dew	80
+dewata,198,178,3	duplicate(idRO_eq)	Equipment#dew	721
+dewata,198,180,3	duplicate(idRO_eq2)	Equipment 2#dew	80
+dewata,201,178,3	duplicate(idRO_acc)	Acc and Kartu#dew	721
+dewata,201,180,3	duplicate(idRO_acc2)	Acc and Kartu 2#dew	80
+dewata,207,178,3	duplicate(idRO_rental)	Rental Shop#dew	874
+
+// Juno
+//============================================================
+// Center
+yuno,149,187,3	duplicate(idRO_kafra)	Kafra Shop#yun-1	721
+yuno,148,187,3	duplicate(idRO_kafra2)	Kafra Shop 2#yun-1	80
+yuno,146,187,3	duplicate(idRO_rental)	Rental Shop#yun-1	874
+
+// Right
+yuno,329,108,3	duplicate(idRO_kafra)	Kafra Shop#yun-2	721
+yuno,330,108,3	duplicate(idRO_kafra2)	Kafra Shop 2#yun-2	80
+yuno,332,108,3	duplicate(idRO_rental)	Rental Shop#yun-2	874
+
+// Morocc
+//============================================================
+// Center
+morocc,154,97,3	duplicate(idRO_kafra)	Kafra Shop#moc-1	721
+morocc,153,97,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc-1	80
+morocc,151,97,3	duplicate(idRO_rental)	Rental Shop#moc-1	874
+
+// Top
+morocc,163,258,3	duplicate(idRO_kafra)	Kafra Shop#moc-2	721
+morocc,162,258,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc-2	80
+morocc,165,258,3	duplicate(idRO_rental)	Rental Shop#moc-2	874
+
+morocc,167,261,3	duplicate(idRO_kafra)	Kafra Shop#moc	721
+morocc,167,263,3	duplicate(idRO_kafra2)	Kafra Shop 2#moc	80
+morocc,155,261,3	duplicate(idRO_cons)	Consumable#moc	721
+morocc,155,263,3	duplicate(idRO_cons2)	Consumable 2#moc	80
+morocc,158,261,3	duplicate(idRO_gear)	Headgear#moc	721
+morocc,158,263,3	duplicate(idRO_gear2)	Headgear 2#moc	80
+morocc,161,261,3	duplicate(idRO_eq)	Equipment#moc	721
+morocc,161,263,3	duplicate(idRO_eq2)	Equipment 2#moc	80
+morocc,164,261,3	duplicate(idRO_acc)	Acc and Kartu#moc	721
+morocc,164,263,3	duplicate(idRO_acc2)	Acc and Kartu 2#moc	80
+morocc,152,261,3	duplicate(idRO_rental)	Rental Shop#moc	874
+
+// Kunlun
+//============================================================
+gonryun,156,122,3	duplicate(idRO_kafra)	Kafra Shop#gon	721
+gonryun,155,122,3	duplicate(idRO_kafra2)	Kafra Shop 2#gon	80
+gonryun,153,122,3	duplicate(idRO_rental)	Rental Shop#gon	874
+
+// Geffen
+//============================================================
+// South
+geffen,122,62,8	duplicate(idRO_kafra)	Kafra Shop#gef-1	721
+geffen,122,60,3	duplicate(idRO_kafra2)	Kafra Shop 2#gef-1	80
+geffen,124,62,8	duplicate(idRO_rental)	Rental Shop#gef-1	874
+
+// East
+geffen,200,124,1	duplicate(idRO_kafra)	Kafra Shop#gef-2	721
+geffen,201,124,3	duplicate(idRO_kafra2)	Kafra Shop 2#gef-2	80
+geffen,198,124,1	duplicate(idRO_rental)	Rental Shop#gef-2	874
+
+// Center
+geffen,129,103,3	duplicate(idRO_kafra)	Kafra Shop#gef	721
+geffen,129,105,3	duplicate(idRO_kafra2)	Kafra Shop 2#gef	80
+geffen,117,103,3	duplicate(idRO_cons)	Consumable#gef	721
+geffen,117,105,3	duplicate(idRO_cons2)	Consumable 2#gef	80
+geffen,120,103,3	duplicate(idRO_gear)	Headgear#gef	721
+geffen,120,105,3	duplicate(idRO_gear2)	Headgear 2#gef	80
+geffen,123,103,3	duplicate(idRO_eq)	Equipment#gef	721
+geffen,123,105,3	duplicate(idRO_eq2)	Equipment 2#gef	80
+geffen,126,103,3	duplicate(idRO_acc)	Acc and Kartu#gef	721
+geffen,126,105,3	duplicate(idRO_acc2)	Acc and Kartu 2#gef	80
+geffen,114,103,3	duplicate(idRO_rental)	Rental Shop#gef	874
+
+// Aldebaran
+//============================================================
+aldebaran,146,119,3	duplicate(idRO_kafra)	Kafra Shop#alde	721
+aldebaran,145,119,3	duplicate(idRO_kafra2)	Kafra Shop 2#alde	80
+aldebaran,148,119,3	duplicate(idRO_rental)	Rental Shop#alde	874
+
+// Comodo
+//============================================================
+comodo,198,148,3	duplicate(idRO_kafra)	Kafra Shop#cmd	721
+comodo,200,148,3	duplicate(idRO_kafra2)	Kafra Shop 2#cmd	80
+comodo,202,148,3	duplicate(idRO_rental)	Rental Shop#cmd	874
+
+// Comodo Pharos Beacon
+//============================================================
+cmd_fild07,139,134,3	duplicate(idRO_kafra)	Kafra Shop#cmdp	721
+cmd_fild07,138,134,3	duplicate(idRO_kafra2)	Kafra Shop 2#cmdp	80
+cmd_fild07,141,134,3	duplicate(idRO_rental)	Rental Shop#cmdp	874
+
+// Umbala
+//============================================================
+umbala,90,159,3	duplicate(idRO_kafra)	Kafra Shop#um	721
+umbala,89,159,3	duplicate(idRO_kafra2)	Kafra Shop 2#um	80
+umbala,94,158,3	duplicate(idRO_rental)	Rental Shop#um	874
+
+// Hugel
+//============================================================
+hugel,97,167,3	duplicate(idRO_kafra)	Kafra Shop#hu	721
+hugel,95,167,3	duplicate(idRO_kafra2)	Kafra Shop 2#hu	80
+hugel,100,167,3	duplicate(idRO_rental)	Rental Shop#hu	874
+
+// Einbroch
+//============================================================
+// West
+einbroch,58,200,8	duplicate(idRO_kafra)	Kafra Shop#einbr	721
+einbroch,58,201,8	duplicate(idRO_kafra2)	Kafra Shop 2#einbr	80
+einbroch,58,197,8	duplicate(idRO_rental)	Rental Shop#einbr	874
+
+// East
+einbroch,245,205,3	duplicate(idRO_kafra)	Kafra Shop#einbr-1	721
+einbroch,244,205,3	duplicate(idRO_kafra2)	Kafra Shop 2#einbr-1	80
+einbroch,248,205,3	duplicate(idRO_rental)	Rental Shop#einbr-1	874
+
+// Einbech
+//============================================================
+einbech,174,132,8	duplicate(idRO_kafra)	Kafra Shop#ein	721
+einbech,175,132,8	duplicate(idRO_kafra2)	Kafra Shop 2#ein	80
+einbech,170,132,8	duplicate(idRO_rental)	Rental Shop#ein	874
+
+// Lighthalzen
+//============================================================
+lighthalzen,167,101,3	duplicate(idRO_kafra)	Kafra Shop#lhz	721
+lighthalzen,166,101,3	duplicate(idRO_kafra2)	Kafra Shop 2#lhz	80
+lighthalzen,169,103,3	duplicate(idRO_rental)	Rental Shop#lhz	874
+
+// Rachel
+//============================================================
+rachel,98,131,3	duplicate(idRO_kafra)	Kafra Shop#ra	721
+rachel,98,133,3	duplicate(idRO_kafra2)	Kafra Shop 2#ra	80
+rachel,106,137,3	duplicate(idRO_cons)	Consumable#ra	721
+rachel,104,139,3	duplicate(idRO_cons2)	Consumable 2#ra	80
+rachel,104,135,3	duplicate(idRO_gear)	Headgear#ra	721
+rachel,102,137,3	duplicate(idRO_gear2)	Headgear 2#ra	80
+rachel,102,133,3	duplicate(idRO_eq)	Equipment#ra	721
+rachel,100,135,3	duplicate(idRO_eq2)	Equipment 2#ra	80
+rachel,100,131,3	duplicate(idRO_acc)	Acc and Kartu#ra	721
+rachel,100,133,3	duplicate(idRO_acc2)	Acc and Kartu 2#ra	80
+rachel,95,131,3	duplicate(idRO_rental)	Rental Shop#ra	874
+
+// Lutie
+//============================================================
+xmas,138,310,3	duplicate(idRO_rental)	Rental Shop#xmas	874
+xmas,140,310,3	duplicate(idRO_kafra)	Kafra Shop#xmas	721
+xmas,142,310,3	duplicate(idRO_kafra2)	Kafra Shop 2#xmas	80
+
+// Special Prices for Chinese New Year 2014
+//============================================================
+//-	cashshop	idROC2014::idRO_C2014	721,2936:6250,2177:6250,18574:6250,6225:7500,6226:5625,5381:7500,5210:10000,5294:6250,5463:6250,5335:6250,5256:6250,5495:6250,18630:6250,19518:6250,19519:6250,19520:6250,2573:6250,15058:6250,5490:6250,5498:6250,5253:6250,5502:6250,5526:6250,5529:6250,19509:6250,5359:7500,18729:6250,18666:6250,5284:6250,5471:6250,5467:6250,5363:6250,5546:6250,5334:6250,1472:5000,13420:6250,1392:5000,15008:6250,1731:3750,1825:2500,1261:1875,5545:6250,5550:6250,5549:6250,5515:6250,5514:6250,5470:6250,5505:6250,18695:6250,18694:6250
+//prontera,156,178,3	duplicate(idRO_C2014)	Kafra Shop#C2014_prt	721
+
+// Special Prices for Indonesia 70th Independence Day 2015
+//============================================================
+//-	cashshop	idROHUT2015::idROHUT2015	721,12213:12500,2936:6250,2177:6250,18574:6250,16770:2375,16979:1000,16771:9500
+//prontera,156,178,3	duplicate(idROHUT2015)	Kafra Shop#idROHUT2015	721

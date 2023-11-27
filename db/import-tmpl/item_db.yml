@@ -90,7 +90,7 @@ Header:
 
 Body:
 # Item Customs By CTRO
-# ID Item Start : 35000
+# ID Item Start : 35000 - 40000
 #=============================================================
   - Id: 35000
     AegisName: Auto_Trade_Voucher
@@ -122,6 +122,121 @@ Body:
       NoAuction: true
     Script: |
       callfunc "menu_GM";
+  - Id: 35002
+    AegisName: Cash_Coin
+    Name: "Cash Coin"
+    Type: Usable
+    Weight: 0
+    Script: |
+      #CASHPOINTS++;
+      dispbottom "คุณได้รับจำนวน 1 Cash Point";
+
+# Add Script VIP Items or Premium Items
+#=============================================================
+  - Id: 23207
+    AegisName: Premium_Box
+    Name: "[30Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      atcommand "@vip +30d"+strcharinfo(0);
+      getitem 23165,1;
+  - Id: 23209
+    AegisName: Premium_Box_1d
+    Name: "[1Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      atcommand "@vip +1d"+strcharinfo(0);
+      getitem 23165,1;
+  - Id: 23213
+    AegisName: Premium_Box_5d7
+    Name: "[7Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      atcommand "@vip +7d"+strcharinfo(0);
+      getitem 23165,1;
+  - Id: 400309
+    AegisName: C_20th_Anniversary_Hat
+    Name: Costume 20th Anniversary Poring
+    Type: Armor
+    Buy: 20
+    Weight: 0
+    Defense: 3
+    Locations:
+      Costume_Head_Top: true
+    View: 2284
+    Script: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_GARMENT), ITEMINFO_ID) == 480202){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
+    EquipScript: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_GARMENT), ITEMINFO_ID) == 480202){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
+  - Id: 480202
+    AegisName: C_Guardian_Butterwing
+    Name: Costume 20th Anniversary Fairy Wing
+    Type: Armor
+    Buy: 20
+    Weight: 0
+    Defense: 3
+    Locations:
+      Costume_Garment: true
+    Script: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_HEAD_TOP), ITEMINFO_ID) == 400309){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
+    EquipScript: |
+      bonus bAllStats,2;
+      bonus2 bExpAddRace,RC_All,20;
+      if (getiteminfo(getequipid(EQI_COSTUME_HEAD_TOP), ITEMINFO_ID) == 400309){
+            bonus bPAtk,20;
+            bonus bSMatk,20;
+            bonus bHit,20;
+            bonus bFlee,20;
+      }
+
 #Body:
 # THQ Quest Items
 #=============================================================

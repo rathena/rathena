@@ -1,0 +1,59 @@
+//===== rAthena Script ======================================= 
+//= Umbala Fields Monster Spawn Script
+//===== By: ================================================== 
+//= Darkchild (1.0)
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project; RO Episode 6+
+//===== Additional Comments: ================================= 
+//= 1.3 Official kRO 10.1 spawns [Playtester]
+//= 1.4 More accurate spawns [Playtester]
+//= 1.5 Updated spawns to renewal. [L0ne_W0lf]
+//= 1.6 Correct Spawn by Navigation's mob data. [attackjom]
+//============================================================ 
+
+//==================================================
+// um_fild01 - Luluka Forest 
+//==================================================
+um_fild01,0,0	monster	Dryad	1493,97,5000
+um_fild01,0,0	monster	Stone Shooter	1495,40,5000
+um_fild01,0,0	monster	Wootan Shooter	1498,16,5000
+um_fild01,0,0	monster	Wootan Fighter	1499,16,5000
+um_fild01,0,0	monster	Wooden Golem	1497,16,5000
+um_fild01,0,0	monster	Green Plant	1080,10,180000,90000
+um_fild01,0,0	monster	Yellow Plant	1081,10,180000,90000
+um_fild01,0,0	monster	Shining Plant	1083,5,180000,90000
+
+//==================================================
+// um_fild02 - Hoomga Forest 
+//==================================================
+um_fild02,0,0	monster	Wootan Fighter	1499,68,5000
+um_fild02,0,0	monster	Stone Shooter	1495,25,5000
+um_fild02,0,0	monster	Wootan Shooter	1498,17,5000
+um_fild02,0,0	monster	Choco	1214,8,5000
+um_fild02,0,0	monster	Red Plant	1078,5,180000,90000
+um_fild02,0,0	monster	Yellow Plant	1081,5,180000,90000
+
+//==================================================
+// um_fild03 - Kalala Swamp 
+//==================================================
+um_fild03,0,0	monster	Parasite	1500,121,5000
+um_fild03,0,0	monster	Stone Shooter	1495,30,5000
+um_fild03,0,0	monster	Wootan Shooter	1498,20,5000
+um_fild03,0,0	monster	Wootan Fighter	1499,20,5000
+um_fild03,0,0	monster	Blue Plant	1079,5,180000,90000
+um_fild03,0,0	monster	Green Plant	1080,10,180000,90000
+um_fild03,0,0	monster	Shining Plant	1083,2,180000,90000
+
+//==================================================
+// um_fild04 - Hoomga Jungle 
+//==================================================
+um_fild04,0,0	monster	Wild Rose	1261,38,5000
+um_fild04,0,0	monster	Stone Shooter	1495,19,5000
+um_fild04,0,0	monster	Wootan Shooter	1498,6,5000
+um_fild04,0,0	monster	Wootan Fighter	1499,6,5000
+um_fild04,0,0	monster	Wooden Golem	1497,12,5000
+um_fild04,0,0	monster	Choco	1214,2,5000
+um_fild04,0,0	monster	Red Plant	1078,5,180000,90000
+um_fild04,0,0	monster	Yellow Plant	1081,5,180000,90000

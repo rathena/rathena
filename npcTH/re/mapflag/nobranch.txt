@@ -1,0 +1,404 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Dead Branch use.
+//===== Description: ========================================= 
+//= Disables the following items:
+//=   Dead Branch (604), Bloody Branch (12103),
+//=   Red Pouch (12024), Poring Box (12109)
+//===== Changelogs: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Nightmare Clock Tower [Lemongrass]
+//= 1.3 Added dali02 [Nova]
+//= 1.4 Added Nightmare Glastheim [Ridley8819]
+//= 1.5 Added WOE:TE maps [Cydh]
+//= 1.6 Added Para Market maps [mazvi]
+//============================================================
+
+//============================================================
+// Paradise Market
+//============================================================
+paramk	mapflag	nobranch
+moc_para01	mapflag	nobranch
+
+//============================================================
+// 3rd Class Job Quests
+//============================================================
+job3_arch01	mapflag	nobranch
+job3_arch02	mapflag	nobranch
+job3_arch03	mapflag	nobranch
+job3_gen01	mapflag	nobranch
+job3_guil01	mapflag	nobranch
+job3_guil02	mapflag	nobranch
+job3_guil03	mapflag	nobranch
+job_ko	mapflag	nobranch
+job_gun	mapflag	nobranch
+job3_rang01	mapflag	nobranch
+job3_rang02	mapflag	nobranch
+job3_rune01	mapflag	nobranch
+job3_rune02	mapflag	nobranch
+job3_rune03	mapflag	nobranch
+job3_sha01	mapflag	nobranch
+job3_war01	mapflag	nobranch
+job3_war02	mapflag	nobranch
+jupe_core2	mapflag	nobranch
+
+//============================================================
+// Brasilis
+//============================================================
+brasilis	mapflag	nobranch
+bra_in01	mapflag	nobranch
+
+//============================================================
+// Episode 13.3
+//============================================================
+dicastes01	mapflag	nobranch
+dicastes02	mapflag	nobranch
+dic_in01	mapflag	nobranch
+s_atelier	mapflag	nobranch
+
+//============================================================
+// Episode 14.1 & Dewata
+//============================================================
+mora	mapflag	nobranch
+1@mist	mapflag	nobranch
+dewata	mapflag	nobranch
+dew_in01	mapflag	nobranch
+
+//============================================================
+// Episode Zero & Malaya Port
+//============================================================
+malangdo	mapflag	nobranch
+mal_in01	mapflag	nobranch
+mal_in02	mapflag	nobranch
+1@cash	mapflag	nobranch
+1@pump	mapflag	nobranch
+2@pump	mapflag	nobranch
+1@lhz	mapflag	nobranch
+que_lhz	mapflag	nobranch
+malaya	mapflag	nobranch
+ma_scene01	mapflag	nobranch
+ma_in01	mapflag	nobranch
+ma_zif01	mapflag	nobranch
+ma_zif02	mapflag	nobranch
+ma_zif03	mapflag	nobranch
+ma_zif04	mapflag	nobranch
+ma_zif05	mapflag	nobranch
+ma_zif06	mapflag	nobranch
+ma_zif07	mapflag	nobranch
+ma_zif08	mapflag	nobranch
+ma_zif09	mapflag	nobranch
+1@ma_h	mapflag	nobranch
+1@ma_c	mapflag	nobranch
+1@ma_b	mapflag	nobranch
+c_tower2_	mapflag	nobranch
+c_tower3_	mapflag	nobranch
+gl_chyard_	mapflag	nobranch
+gl_cas02_	mapflag	nobranch
+
+//============================================================
+// Episode 14.2 - Eclage
+//============================================================
+eclage	mapflag	nobranch
+ecl_in01	mapflag	nobranch
+ecl_in02	mapflag	nobranch
+ecl_in03	mapflag	nobranch
+ecl_in04	mapflag	nobranch
+1@ecl	mapflag	nobranch
+ecl_hub01	mapflag	nobranch
+que_avan01	mapflag	nobranch
+
+//============================================================
+// Izlude Duplicates
+//============================================================
+izlude_a	mapflag	nobranch
+izlude_b	mapflag	nobranch
+izlude_c	mapflag	nobranch
+izlude_d	mapflag	nobranch
+
+//============================================================
+// Glastheim Memorial Dungeon
+//============================================================
+1@gl_k	mapflag	nobranch
+2@gl_k	mapflag	nobranch
+
+//============================================================
+// Wave Mode Memorial Dungeon
+//============================================================
+1@def01	mapflag	nobranch
+1@def02	mapflag	nobranch
+1@def03	mapflag	nobranch
+
+//============================================================
+// Heroes' Trail - Part 1
+//============================================================
+1@face	mapflag	nobranch
+1@sara	mapflag	nobranch
+dali	mapflag	nobranch
+dali02	mapflag	nobranch
+
+//============================================================
+// Heroes' Trail - Part 2
+//============================================================
+1@ge_st	mapflag	nobranch
+1@gef	mapflag	nobranch
+1@gef_in	mapflag	nobranch
+1@spa	mapflag	nobranch
+1@tnm1	mapflag	nobranch
+1@tnm2	mapflag	nobranch
+1@tnm3	mapflag	nobranch
+
+//============================================================
+// Horror Toy Factory Memorial Dungeon
+//============================================================
+1@xm_d	mapflag	nobranch
+
+//============================================================
+// Heroes' Trail - Part 3
+//============================================================
+1@glast	mapflag	nobranch
+1@air1	mapflag	nobranch
+1@air2	mapflag	nobranch
+
+//============================================================
+// Decisive Battle - Part 1
+//============================================================
+1@dth1	mapflag	nobranch
+1@dth2	mapflag	nobranch
+1@dth3	mapflag	nobranch
+1@rev	mapflag	nobranch
+
+//============================================================
+// Decisive Battle - Part 2
+//============================================================
+1@eom	mapflag	nobranch
+1@jtb	mapflag	nobranch
+
+//============================================================
+// Episode 15 - Phantasmagorica
+//============================================================
+1@lab	mapflag	nobranch
+1@uns	mapflag	nobranch
+1@mcd	mapflag	nobranch
+un_myst	mapflag	nobranch
+
+//============================================================
+// Nightmare Biolab
+//============================================================
+lhz_dun_n	mapflag	nobranch
+lhz_d_n2	mapflag	nobranch
+
+//============================================================
+// Infinite Space
+//============================================================
+1@infi	mapflag	nobranch
+
+//============================================================
+// WoE:TE Castles
+//============================================================
+te_alde_gld	mapflag	nobranch
+te_prt_gld	mapflag	nobranch
+te_prtcas01	mapflag	nobranch
+te_prtcas02	mapflag	nobranch
+te_prtcas03	mapflag	nobranch
+te_prtcas04	mapflag	nobranch
+te_prtcas05	mapflag	nobranch
+te_aldecas1	mapflag	nobranch
+te_aldecas2	mapflag	nobranch
+te_aldecas3	mapflag	nobranch
+te_aldecas4	mapflag	nobranch
+te_aldecas5	mapflag	nobranch
+
+//============================================================
+// Novice Training
+//============================================================
+int_land	mapflag	nobranch
+int_land01	mapflag	nobranch
+int_land02	mapflag	nobranch
+int_land03	mapflag	nobranch
+int_land04	mapflag	nobranch
+
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
+prt_lib	mapflag	nobranch
+prt_lib_q	mapflag	nobranch
+prt_cas	mapflag	nobranch
+prt_cas_q	mapflag	nobranch
+prt_pri00	mapflag	nobranch
+rebel_in	mapflag	nobranch
+que_swat	mapflag	nobranch
+1@mir	mapflag	nobranch
+2@mir	mapflag	nobranch
+1@sthb	mapflag	nobranch
+1@sthc	mapflag	nobranch
+1@sthd	mapflag	nobranch
+1@slw	mapflag	nobranch
+1@swat	mapflag	nobranch
+
+//============================================================
+// Rockridge
+//============================================================
+har_in01	mapflag	nobranch
+rockmi2	mapflag	nobranch
+
+//============================================================
+// Memorial day
+//============================================================
+1@md_gef	mapflag	nobranch
+1@md_pay	mapflag	nobranch
+
+//============================================================
+// Lasagna
+//============================================================
+lasagna	mapflag	nobranch
+lasa_in01	mapflag	nobranch
+conch_in	mapflag	nobranch
+lasa_dun_q	mapflag	nobranch
+
+//============================================================
+// Chicken Mode Nightmare Glastheim
+//============================================================
+1@gl_k2	mapflag	nobranch
+2@gl_k2	mapflag	nobranch
+
+//============================================================
+// Chicken Mode Horror Toy Factory
+//============================================================
+1@xm_d2	mapflag	nobranch
+
+//============================================================
+// Suspicious Shipwreck
+//============================================================
+1@tre	mapflag	nobranch
+
+//============================================================
+// Poring Village
+//============================================================
+1@begi	mapflag	nobranch
+
+//============================================================
+// Volcanic Island Korodo
+//============================================================
+1@crd	mapflag	nobranch
+
+//============================================================
+// Noodles Festival July
+//============================================================
+1@drdo	mapflag	nobranch
+
+//============================================================
+// Soul Reaper Job Change
+//============================================================
+1@soul	mapflag	nobranch
+
+//============================================================
+// Episode 17.1
+//============================================================
+1@cor	mapflag	nobranch
+1@os_a	mapflag	nobranch
+1@os_b	mapflag	nobranch
+1@rgsr	mapflag	nobranch
+pub_cat	mapflag	nobranch
+rgsr_in	mapflag	nobranch
+
+//============================================================
+// Episode 17.2
+//============================================================
+1@bamn	mapflag	nobranch
+1@bamq	mapflag	nobranch
+1@ghg	mapflag	nobranch
+1@herbs	mapflag	nobranch
+1@lost	mapflag	nobranch
+ba_in01	mapflag	nobranch
+1@odin	mapflag	nobranch
+
+//============================================================
+// 4th Jobs Change
+//============================================================
+1@4win	mapflag	nobranch
+1@4mag	mapflag	nobranch
+1@4mst	mapflag	nobranch
+1@4sac	mapflag	nobranch
+1@4tro	mapflag	nobranch
+1@4inq	mapflag	nobranch
+1@4cdn	mapflag	nobranch
+1@4igd	mapflag	nobranch
+1@4drk	mapflag	nobranch
+job4_bio	mapflag	nobranch
+job4_mag	mapflag	nobranch
+job4_tro	mapflag	nobranch
+
+//============================================================
+// Geffen Night Arena
+//============================================================
+1@ge_sn	mapflag	nobranch
+
+//============================================================
+// Traces of Heroes
+//============================================================
+1@mjo1	mapflag	nobranch
+1@mjo2	mapflag	nobranch
+1@spa2	mapflag	nobranch
+
+//============================================================
+// Thanatos Tower Memorial Dungeon
+//============================================================
+1@thts	mapflag	nobranch
+2@thts	mapflag	nobranch
+3@thts	mapflag	nobranch
+4@thts	mapflag	nobranch
+5@thts	mapflag	nobranch
+6@thts	mapflag	nobranch
+7@thts	mapflag	nobranch
+8@thts	mapflag	nobranch
+
+//============================================================
+// Glastheim Challenge Mode
+//============================================================
+1@gl_he	mapflag	nobranch
+1@gl_he2	mapflag	nobranch
+
+//============================================================
+// EDDA
+//============================================================
+1@gl_prq	mapflag	nobranch
+1@gol1	mapflag	nobranch
+1@gol2	mapflag	nobranch
+
+//============================================================
+// 2018 Halloween
+//============================================================
+1@halo	mapflag	nobranch
+
+//============================================================
+// Constellation Tower
+//============================================================
+1@ch_t	mapflag	nobranch
+2@ch_t	mapflag	nobranch
+3@ch_t	mapflag	nobranch
+
+//============================================================
+// Training Ground outside Prontera
+//============================================================
+tra_fild	mapflag	nobranch
+
+//============================================================
+// Episode 18 - Direction of Prayer
+//============================================================
+1@adv	mapflag	nobranch
+1@advs	mapflag	nobranch
+1@nyr	mapflag	nobranch
+1@oz	mapflag	nobranch
+1@tcamp	mapflag	nobranch
+2@nyr	mapflag	nobranch
+que_thr	mapflag	nobranch
+
+//============================================================
+// Sunken Tower
+//============================================================
+1@ch_u	mapflag	nobranch
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	nobranch

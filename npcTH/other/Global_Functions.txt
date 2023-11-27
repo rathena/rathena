@@ -1,0 +1,761 @@
+//===== rAthena Script ======================================= 
+//= Global Functions
+//===== Description: ========================================= 
+//= General script functions.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Lupus] [kobra_k88]
+//= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
+//= Removed individual job check functions as they were redundant [kobra_k88]
+//= 1.3 Added Job Change Function for Baby/Normal Classes
+//= 1.3b a fix, due to const.txt change [Lupus]
+//= 1.4 Added Is_Taekwon_Class: Taekwondo, Star Knight(Gladiator),Soul Linker [Lupus]
+//= 1.5 Added clear of Bard Quest variables. 1.5a updated [Lupus]
+//= 1.6 Added F_RandMes, F_SexMes, F_Hi, F_Bye functions [Lupus]
+//=     Moved here useful function 'getJobName'
+//= 1.7 Added "F_ItemName" function, added a great sample for "F_ItemName"
+//= 1.8 Added Job Vars clear for Extended classes: TK,SL,SG [Lupus]
+//= 1.9 Added "F_ClearGarbage" func that clears outdated, wasted variables [Lupus]
+//= 1.91 Added "F_SaveQuestSkills","F_Load?Skills" functions [Lupus]
+//= 2.0 Fixed F_Save/LoadQuestSkills functions. Had to split in into 2 vars [Lupus]
+//= 2.01 Added $talk to F_ClearGarbage [Evera]
+//= 2.02 Added $dtsglobalelig and $dts|(1<<6) to F_ClearGarbage [Evera]
+//= 2.03 Added Gunslinger vars to F_ClearJobVar [Lupus]
+//= 2.04 Added dtseligible 2 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
+//= 2.05 Book of Devil -> MISC_QUEST|256, clear other Niflheim garbage vars [Lupus]
+//=     +more garbage clean
+//= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
+//= 2.07 Added TK_Q variable clear. 2.08 Added NINJ_Q variable clear [Lupus]
+//= 2.09 Cleared F_ClearGarbage [Lupus]
+//= 2.10 Added F_CheckMaxCount to check count of carrid items. [L0ne_w0lf]
+//= 2.10a Removed function F_CheckMaxCount. Not needed. [L0ne_W0lf]
+//= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
+//= 2.12 Added more unused vars to F_ClearGarbage [Lupus]
+//= 2.13 Added more unused vars to F_ClearGarbage [Lupus]
+//= 2.14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
+//= 2.15 Added no unused DTS variables to F_ClearGarbage. [L0ne_W0lf]
+//= 2.16 Added F_GetWeaponType, and F_GetArmorType. [L0ne_W0lf]
+//= 2.17 Renamed 'F_RandMes' to 'F_Rand'. [Euphy]
+//= 2.18 Removed useless 'getJobName' function. [Euphy]
+//= 2.2 Added "F_GetPlural", "F_InsertPlural", "F_InsertArticle", "F_InsertComma", "F_GetNumSuffix". [Euphy]
+//=     Standardized descriptions, updated 'F_GetArmorType'.
+//= 2.21 Added format string to "F_InsertPlural" and more checks to "F_GetPlural". [Euphy]
+//= 2.22 Further improvements to "F_GetPlural". [Euphy]
+//= 2.23 Completed article function and added "F_GetArticle". [Euphy]
+//= 2.24 Added functions to check for equipment swap hacks. [Euphy]
+//= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
+//= 2.26 Added "F_getpositionname". [Capuche]
+//= 2.27 Added "F_GetPlatinumSkills". [mazvi]
+//= 2.28 Added "close3". [Capuche]
+//= 2.29 Updated "F_IsCharm" to support all latest enchants [Everade]
+//============================================================ 
+
+//////////////////////////////////////////////////////////////////////////////////
+// Clears job quest variables.
+// -- callfunc "F_ClearJobVar"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_ClearJobVar	{
+	// Misc ---------------------------------
+	set JBLVL,0;
+	set FIRSTAID,0;
+	set PLAYDEAD,0;
+	set got_bandage,0;
+	set got_novnametag,0;
+	// First Class Jobs ---------------------
+	set job_acolyte_q,0; set job_acolyte_q2,0;
+	set job_archer_q,0;
+	set job_magician_q,0;
+	set job_merchant_q,0; set job_merchant_q2,0; set job_merchant_q3,0;
+	set job_sword_q,0; set SWTEST, 0;
+	set job_thief_q,0;
+	// Super Novice
+	set SUPNOV_Q,0;
+	// 2-1 Jobs ------------------------------
+	set ASSIN_Q,0; set ASSIN_Q2,0; set ASSIN_Q3,0;
+	set BSMITH_Q,0; set BSMITH_Q2,0;
+	set HNTR_Q,0; set HNTR_Q2,0;
+	set KNIGHT_Q,0; set KNIGHT_Q2,0;
+	set PRIEST_Q,0; set PRIEST_Q2,0; set PRIEST_Q3,0;
+	set WIZ_Q,0; set WIZ_Q2,0;
+	// 2-2 Jobs ------------------------------
+	set ROGUE_Q,0; set ROGUE_Q2,0;
+	set ALCH_Q,0; set ALCH_Q2,0;
+	set CRUS_Q,0;
+	set MONK_Q,0; set JOB_MONK_C,0;
+	set SAGE_Q,0; set SAGE_Q2,0;
+	set DANC_Q,0;
+	set BARD_Q,0;
+	// Extended Classes
+	set TAEK_Q,0; set TK_Q,0;
+	set STGL_Q,0;
+	set SOUL_Q,0;
+	set GUNS_Q,0;
+	set NINJ_Q,0;
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Clears other unused variables.
+// -- callfunc "F_ClearGarbage"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_ClearGarbage	{
+	// Clear outdated global VARS
+	//Clear TURTLE var if the Turtle Islans Quest is already done
+		if(TURTLE==20) set MISC_QUEST,MISC_QUEST | 65536;
+		if(MISC_QUEST & 65536) set TURTLE,0; //now clear the var if the quest is over
+	//Clear previously saved Quest Skills (now it isn't used)
+		set ADV_QSK,0;
+		set ADV_QSK2,0;
+	//Old Reset Skill Event used to use RES_SKILL var
+		set RES_SKILL,0;
+	//Here you put outdated variables from your outdated EVENTS
+	//e.g. Is XMAS done? Add the EVENT var clearing code here.
+	
+	//due to bugs in BS quest:
+	set wizard_m2,0;
+	
+	// Old Novice Ground Variables.
+	set NEW_MES_FLAG0,0;
+	set NEW_MES_FLAG1,0;
+	set NEW_MES_FLAG2,0;
+	set NEW_MES_FLAG3,0;
+	set NEW_MES_FLAG4,0;
+	set NEW_MES_FLAG5,0;
+	set NEW_LVUP0,0;
+	set NEW_LVUP1,0;
+	set NEW_JOBLVUP,0;
+	
+	// Old DTS variables that are no longer used.
+	set dtseligible,0;
+	set MISC_QUEST,MISC_QUEST & ~128;
+	
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Job change based on Upper value (normal, advanced, baby).
+// -- callfunc "Job_Change",<Class value>;
+// See Job_* constants in 'db/const.txt' for Class values.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	Job_Change	{
+	jobchange getarg(0),Upper;
+//	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Functions used to spiff up dialoges [Lupus]
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns a random argument.
+// -- callfunc "F_Rand",arg0,arg1,...
+// Example:
+//    // You can use it to pick a random number from a list:
+//    set @itemIDfromList, callfunc("F_Rand",1129,1222,1163,1357,1360,1522,1811,1410);
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_Rand	{
+	return getarg(rand(getargcount()));
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns 1st argument if female, 2nd argument if male.
+// -- callfunc "F_SexMes",argFemale,argMale
+// Example:
+//     mes callfunc("F_SexMes","What a beautiful lady!","What a handsome man!");
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_SexMes	{
+	return getarg(Sex);
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns random "hello" and "goodbye" messages.
+// -- callfunc "F_Hi"
+// -- callfunc "F_Bye"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_Hi	{
+	return callfunc("F_Rand","Hi!","Hello!","Good day!","How are you?","Hello there.");
+}
+function	script	F_Bye	{
+	return callfunc("F_Rand","Bye. See you again.","Later.","Goodbye.","Good luck!","Have a nice day!","Byebye!!!");
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns expanded item name string.
+// -- callfunc "F_ItemName",<item ID>,{<element>{,<VVS meter 0..3>{,<refine rate>}}}
+//    Elements: 0=none, 1=Ice, 2=Earth, 3=Fire, 4=Wind
+// Example:
+//    // Displays "Show me your ^000090+5 VVS Fire Knife^000000..."
+//    mes "Show me your "+callfunc("F_ItemName",1201,1,2,5)+"...";
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_ItemName	{
+	if (getarg(3,0))
+		set .@t$,"+"+getarg(3)+" ";
+	switch (getarg(2,0)) {
+		case 0: break;
+		case 1: set .@t$,.@t$+"VS "; break;
+		case 2: set .@t$,.@t$+"VVS "; break;
+		case 3: set .@t$,.@t$+"VVVS "; break;
+		default: set .@t$,.@t$+getarg(2)+"xVS "; break;
+	}
+	switch (getarg(1,0)) {
+		case 0: break;
+		case 1: set .@t$,.@t$+"Ice "; break;
+		case 2: set .@t$,.@t$+"Earth "; break;
+		case 3: set .@t$,.@t$+"Fire "; break;
+		case 4: set .@t$,.@t$+"Wind "; break;
+		default: set .@t$,.@t$+"Strange "; break;
+	}
+	return "^000090"+.@t$+getitemname(getarg(0))+"^000000";
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Stores learnt quest skills as variables ADV_QSK and ADV_QSK2.
+// -- callfunc "F_SaveQuestSkills"
+//
+// Restores learnt 1st class quest skills.
+// -- callfunc "F_Load1Skills"
+//
+// Restores learnt 2nd class quest skills.
+// -- callfunc "F_Load2Skills"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_SaveQuestSkills	{
+	set ADV_QSK,0; set ADV_QSK2,0;
+	//1st classes quest skills
+	for(set .@i, 0; .@i < 14; set .@i, .@i + 1){
+		if(getskilllv(144+.@i)) set ADV_QSK,ADV_QSK|pow(2,.@i);
+	}
+	//2nd classes quest skills
+	for(set .@i, 0; .@i < 19; set .@i, .@i + 1){
+		if(getskilllv(1001+.@i)) set ADV_QSK2,ADV_QSK2|pow(2,.@i);
+	}
+	return;
+}
+function	script	F_Load1Skills	{
+	for(set .@i, 0; .@i < 14; set .@i, .@i + 1){
+		if(ADV_QSK|pow(2,.@i) == ADV_QSK) skill 144+.@i,1,0;
+	}
+	set ADV_QSK,0; //Clear var
+	return;
+}
+function	script	F_Load2Skills	{
+	for(set .@i, 0; .@i < 19; set .@i, .@i + 1){
+		if(ADV_QSK2|pow(2,.@i) == ADV_QSK2) skill 1001+.@i,1,0;
+	}
+	set ADV_QSK2,0; //Clear var
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns weapon type, based on view.
+// -- callfunc "F_GetWeaponType",<weapon ID>
+//
+// Returns equipment type, based on equip location.
+// -- callfunc "F_GetArmorType",<item ID>
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetWeaponType	{
+	switch(getiteminfo(getarg(0), ITEMINFO_VIEW)) {
+		case 1: return "Dagger"; break;
+		case 2: return "One-handed Sword"; break;
+		case 3: return "Two-handed Sword"; break;
+		case 4: return "One-handed Spear"; break;
+		case 5: return "Two-handed Spear"; break;
+		case 6: return "One-handed Axe"; break;
+		case 7: return "Two-handed Axe"; break;
+		case 8: return "Mace"; break;
+		//case 9: return "Unused"; break;
+		case 10: return "Staff"; break;
+		case 11: return "Bow"; break;
+		case 12: return "Knuckle"; break;
+		case 13: return "Instrument"; break;
+		case 14: return "Whip"; break;
+		case 15: return "Book"; break;
+		case 16: return "Katar"; break;
+		case 17: return "Revolver"; break;
+		case 18: return "Rifle"; break;
+		case 19: return "Gatling gun"; break;
+		case 20: return "Shotgun"; break;
+		case 21: return "Grenade Launcher"; break;
+		case 22: return "Shuriken"; break;
+		default: return "Unknown Weapon"; break;
+	}
+	end;
+}
+function	script	F_GetArmorType	{
+	switch(getiteminfo(getarg(0), ITEMINFO_LOCATIONS)) {
+		case EQP_HEAD_LOW:
+			return "Lower Headgear";
+		case EQP_HAND_R:
+			return callfunc("F_GetWeaponType",getarg(0));
+		case EQP_GARMENT:
+			return "Garment";
+		case EQP_ACC_L:
+		case EQP_ACC_R:
+		case EQP_ACC_RL:
+			return "Accessory";
+		case EQP_ARMOR:
+			return "Armor";
+		case EQP_HAND_L:
+			return "Shield";
+		case EQP_SHOES:
+			return "Shoes";
+		case EQP_HEAD_TOP:
+			return "Upper Headgear";
+		case EQP_HEAD_MID:
+			return "Middle Headgear";
+		case EQP_COSTUME_HEAD_TOP:
+			return "Costume Upper Headgear";
+		case EQP_COSTUME_HEAD_MID:
+			return "Costume Midle Headgear";
+		case EQP_COSTUME_HEAD_LOW:
+			return "Costume Lower Headgear";
+		case EQP_COSTUME_GARMENT:
+			return "Costume Garment";
+		case EQP_AMMO:
+			return "Ammo";
+		case EQP_SHADOW_ARMOR:
+			return "Shadow Armor";
+		case EQP_SHADOW_WEAPON:
+			return "Shadow Weapon";
+		case EQP_SHADOW_SHIELD:
+			return "Shadow Shield";
+		case EQP_SHADOW_SHOES:
+			return "Shadow Shoes";
+		case EQP_SHADOW_ACC_R:
+		case EQP_SHADOW_ACC_L:
+		case EQP_SHADOW_ACC_RL:
+			return "Shadow Accessory";
+		default:
+			return "Unknown Equip";
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns time remaining in a readable format.
+// The argument is subtracted from UNIX epoch time, or 'gettimetick(2)'.
+// -- callfunc "Time2Str",<tick in UNIX epoch time>
+// Example:
+//    // Displays "Time left: 1 day, 1 hour, 8 minutes, 20 seconds"
+//    set .@Timer, gettimetick(2) + 90500;
+//    mes "Time left: " + callfunc("Time2Str",.@Timer);
+//////////////////////////////////////////////////////////////////////////////////
+function	script	Time2Str	{
+	set .@Time_Left, getarg(0) - gettimetick(2);
+	
+	set .@Days, .@Time_Left / 86400;
+	set .@Time_Left, .@Time_Left - (.@Days * 86400);
+	set .@Hours, .@Time_Left / 3600;
+	set .@Time_Left, .@Time_Left - (.@Hours * 3600);
+	set .@Minutes, .@Time_Left / 60;
+	set .@Time_Left, .@Time_Left - (.@Minutes * 60);
+	
+	set .@Time$, "";
+	if( .@Days > 1 )
+		set .@Time$, .@Time$ + .@Days + " วัน, ";
+	else if( .@Days > 0 )
+		set .@Time$, .@Time$ + .@Days + " วัน, ";
+
+	if( .@Hours > 1 )
+		set .@Time$, .@Time$ + .@Hours + " ชั่วโมง, ";
+	else if( .@Hours > 0 )
+		set .@Time$, .@Time$ + .@Hours + " ชั่วโมง, ";
+
+	if( .@Minutes > 1 )
+		set .@Time$, .@Time$ + .@Minutes + " นาที, ";
+	else if( .@Minutes > 0 )
+		set .@Time$, .@Time$ + .@Minutes + " นาที, ";
+
+	if( .@Time_Left > 1 || .@Time_Left == 0 )
+		set .@Time$, .@Time$ + .@Time_Left + " วินาที";
+	else if( .@Time_Left == 1 )
+		set .@Time$, .@Time$ + .@Time_Left + " วินาที";
+	
+	return .@Time$;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Checks if equipment has been swapped (i.e. via hacks).
+// The function checks the current equipment at a position against the supplied
+// values, and logs any mismatches.
+// Returns 0 if match, 1 if mismatch.
+// -- callfunc "F_IsEquipIDHack",<equip position>,<equip ID>
+// -- callfunc "F_IsEquipRefineHack",<equip position>,<refine>
+// -- callfunc "F_IsEquipCardHack",<equip position>,<card 0>,<card 1>,<card 2>,<card 3>
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_IsEquipIDHack	{
+	set .@id_chk, getequipid(getarg(0));
+	set .@id, getarg(1);
+	if (.@id != .@id_chk) {
+		logmes "Hack: Tried to swap equip " + getitemname(.@id) + " for " + getitemname(.@id_chk) + ".";
+		return 1;
+	}
+	return 0;
+}
+function	script	F_IsEquipRefineHack	{
+	set .@refine_chk, getequiprefinerycnt(getarg(0));
+	set .@refine, getarg(1);
+	if (.@refine != .@refine_chk) {
+		logmes "Hack: Tried to swap equip with refine +" + .@refine + " for +" + .@refine_chk + ".";
+		return 1;
+	}
+	return 0;
+}
+function	script	F_IsEquipCardHack	{
+	set .@pos, getarg(0);
+	for (set .@i,0; .@i < 4; set .@i, .@i+1) {
+		set .@card, getarg(.@i + 1);
+		set .@card_chk, getequipcardid(.@pos, .@i);
+		if (.@card != .@card_chk) {
+			logmes "Hack: Tried to swap card " + getitemname(.@card) + " for " + getitemname(.@card_chk) + ".";
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Functions for text manipulation [Euphy]
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns the plural of a noun - works in most cases, but not for everything!
+// -- callfunc "F_GetPlural","<noun>"{,<0:normal/1:uppercase>}
+// Examples:
+//    callfunc("F_GetPlural","dog")            // returns "dogs"
+//    callfunc("F_GetPlural","fox",1)          // returns "FOXES"
+//    callfunc("F_GetPlural","knife")          // returns "knives"
+//    callfunc("F_GetPlural","Piece of Cake")  // returns "Pieces of Cake"
+//
+// Returns the plural of a noun if the given number is not 1.
+// -- callfunc "F_InsertPlural",<number>,"<noun>"{,<0:normal/1:uppercase>{,"<format string>"}}
+// Format string uses sprintf(), and MUST contain %d (arg0) and %s (arg1), in that order.
+// Examples:
+//    callfunc("F_InsertPlural",1,"dog")    // returns "1 dog"
+//    callfunc("F_InsertPlural",3,"fox",1)  // returns "3 FOXES"
+//    // returns "^FF00005^000000 knives"
+//    callfunc("F_InsertPlural",5,"knife",0,"^FF0000%d^000000 %s")
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetPlural	{
+	set .@str$, getarg(0);
+
+	if (countstr(.@str$," ")) {  // multiple words
+		explode(.@tmp$,.@str$," ");
+		set .@size, getarraysize(.@tmp$);
+
+		// if format is "... of|in|on ...", pluralize preceding word; else pluralize last word
+		if (compare(.@str$," of ") || compare(.@str$," in ") || compare(.@str$," on ")) {
+			for (set .@i,1; .@i<.@size; set .@i,.@i+1) {
+				if (getstrlen(.@tmp$[.@i]) == 2 && compare("of|in|on",.@tmp$[.@i]))
+					break;
+				set .@index, .@index + 1;
+			}
+		} else
+			set .@index, .@size - 1;
+
+		set .@str$, .@tmp$[.@index];
+		set .@tmp$[.@index],"%s";
+		set .@format$, implode(.@tmp$," ");
+	} else
+		set .@format$, "%s";
+
+	set .@strlen, getstrlen(.@str$);
+	if (.@strlen < 3)  // prevent errors
+		return ((getarg(1,0)) ? strtoupper(sprintf(.@format$,.@str$)) : sprintf(.@format$,.@str$));
+
+	setarray .@suffix$[0], charat(.@str$,.@strlen - 1), substr(.@str$,.@strlen - 2,.@strlen - 1);
+	if (!compare("abcdefghijklmnopqrstuvwxyz",.@suffix$[0])) {  // last character is not a letter
+		set .@result$, .@str$;
+	}
+
+	// common exceptions --> singular form == plural form
+	else if (compare("fish|glasses|sunglasses|clothes|boots|shoes|greaves|sandals|wings|ears",.@str$)) {
+		set .@result$, .@str$;
+	}
+
+	// ends in -s, -x, -z, -ch, -sh --> add -es
+	else if (.@suffix$[0] == "s" || .@suffix$[0] == "x" || .@suffix$[0] == "z" ||
+	    .@suffix$[1] == "ch" || .@suffix$[1] == "sh") {
+		set .@result$, .@str$ + "es";
+	}
+
+	// ends in -f, -fe --> remove -f, -fe --> add -ves
+	else if ((.@suffix$[0] == "f" || .@suffix$[1] == "fe") && .@suffix$[1] != "ff") {
+		if (compare("belief|cliff|chief|dwarf|grief|gulf|proof|roof",.@str$))
+			set .@result$, .@str$ + "s";  // exceptions --> add -s
+		else
+			set .@result$, substr(.@str$,0,.@strlen - 2 - (.@suffix$[1] == "fe")) + "ves";
+	}
+	
+	// ends in consonant + -y --> remove -y --> add -ies
+	else if (.@suffix$[0] == "y" && !compare("aeiou",charat(.@suffix$[1],0))) {
+		set .@result$, delchar(.@str$,.@strlen - 1) + "ies";
+	}
+
+	// ends in -o --> exceptions --> add -es
+	else if (.@suffix$[0] == "o" &&
+	         compare("buffalo|domino|echo|grotto|halo|hero|mango|mosquito|potato|tomato|tornado|torpedo|veto|volcano",.@str$)) {
+		set .@result$, .@str$ + "es";
+	}
+
+	// default --> add -s
+	else {
+		set .@result$, .@str$ + "s";
+	}
+
+	return ((getarg(1,0)) ? strtoupper(sprintf(.@format$,.@result$)) : sprintf(.@format$,.@result$));
+}
+function	script	F_InsertPlural	{
+	return sprintf(getarg(3,"%d %s"), getarg(0), ((getarg(0) == 1) ? getarg(1) : callfunc("F_GetPlural",getarg(1),getarg(2,0))));
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns 'a' or 'an' based on a word.
+// -- callfunc "F_GetArticle","<noun>";
+// Examples:
+//    callfunc("F_GetArticle","Apple")  // returns "an"
+//    callfunc("F_GetArticle","dog")    // returns "a"
+//
+// Returns 'a' or 'an' based on a word, followed by the word.
+// -- callfunc "F_InsertArticle","<word>"{,<0:lowercase a/1:uppercase A>}
+// Examples:
+//    callfunc("F_InsertArticle","Apple")  // returns "an Apple"
+//    callfunc("F_InsertArticle","dog",1)  // returns "A dog"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetArticle	{
+	set .@str$, strtolower(getarg(0));
+
+	// not a word
+	if (!charisalpha(.@str$,0))
+		return "a";
+
+	// 1-letter words
+	if (getstrlen(.@str$) == 1) {
+		if (strpos("aefhilmnorsx",.@str$) > -1)
+			return "an";
+		else
+			return "a";
+	}
+
+	// special cases
+	if (preg_match("(euler|hour(?!i)|heir|honest|hono)",.@str$))
+		return "an";
+
+	// consonants
+	if (preg_match("^[^aeiouy]",.@str$))
+		return "a";
+
+	// special vowel forms
+	if (preg_match("^e[uw]",.@str$) || preg_match("^onc?e\b",.@str$) || preg_match("^uni([^nmd]|mo)",.@str$) || preg_match("^u[bcfhjkqrst][aeiou]",.@str$))
+		return "a";
+	if (preg_match("^ut[th]",.@str$))
+		return "an";
+
+	// special capitals (rare)
+	//if (preg_match("^U[NK][AIEO]?",getarg(0)))
+	//	return "a";
+
+	// vowels
+	if (preg_match("^[aeiou]",.@str$))
+		return "an";
+
+	// y... (rare)
+	//if (preg_match("^(y(b[lor]|cl[ea]|fere|gg|p[ios]|rou|tt))",.@str$))
+	//	return "an";
+
+	return "a";
+}
+function	script	F_InsertArticle	{
+	set .@article$, callfunc("F_GetArticle",getarg(0));
+	return sprintf("%s %s", ((getarg(1,0)) ? replacestr(.@article$,"a","A") : .@article$), getarg(0));
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns a number with commas between every three digits.
+// -- callfunc "F_InsertComma",<number>
+// Examples:
+//    callfunc("F_InsertComma",7777777)  // returns "7,777,777"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_InsertComma	{
+	set .@str$, getarg(0);
+	for (set .@i,getstrlen(.@str$)-3; .@i>0; set .@i,.@i-3)
+		set .@str$, insertchar(.@str$,",",.@i);
+	return .@str$;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns a number with a '-st', '-nd', '-rd', or '-th' suffix.
+// -- callfunc "F_GetNumSuffix",<number>
+// Examples:
+//    callfunc("F_GetNumSuffix",1)   // returns "1st"
+//    callfunc("F_GetNumSuffix",11)  // returns "11th"
+//    callfunc("F_GetNumSuffix",32)  // returns "32nd"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetNumSuffix	{
+	set .@n, getarg(0);
+	set .@mod, .@n % 10;
+	if      (.@mod == 1 && .@n != 11) return .@n+"st";
+	else if (.@mod == 2 && .@n != 12) return .@n+"nd";
+	else if (.@mod == 3 && .@n != 13) return .@n+"rd";
+	else return .@n+"th";
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Indicate if attached player can open storage
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_CanOpenStorage	{
+	return (!basicskillcheck() || !(getskilllv("NV_BASIC") < 6 && getskilllv("SU_BASIC_SKILL") < 1));
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Indicate if attached player can advance to class 1 by checking
+// basic skill level 9.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_CanChangeJob	{
+	return (!basicskillcheck() || getskilllv("NV_BASIC") > 8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Return the position name of the EQI_* equipment slot.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_getpositionname	{
+	switch( getarg(0,999) ) {
+		case EQI_ACC_L:		return "Accessory 1";
+		case EQI_ACC_R:		return "Accessory 2";
+		case EQI_SHOES:		return "Shoes";
+		case EQI_GARMENT:	return "Robe";
+		case EQI_HEAD_LOW:	return "Head 3";
+		case EQI_HEAD_MID:	return "Head 2";
+		case EQI_HEAD_TOP:	return "Head";
+		case EQI_ARMOR:		return "Body";
+		case EQI_HAND_L:	return "Left hand";
+		case EQI_HAND_R:	return "Right hand";
+		case EQI_COSTUME_HEAD_TOP:	return "Upper Costume Headgear";
+		case EQI_COSTUME_HEAD_MID:	return "Middle Costume Headgear";
+		case EQI_COSTUME_HEAD_LOW:	return "Lower Costume Headgear";
+		case EQI_COSTUME_GARMENT:	return "Costume Garment";
+		case EQI_AMMO:			return "Arrow/Ammunition";
+		case EQI_SHADOW_ARMOR:	return "Shadow Armor";
+		case EQI_SHADOW_WEAPON:	return "Shadow Weapon";
+		case EQI_SHADOW_SHIELD:	return "Shadow Shield";
+		case EQI_SHADOW_SHOES:	return "Shadow Shoes";
+		case EQI_SHADOW_ACC_R:	return "Shadow Accessory 2";
+		case EQI_SHADOW_ACC_L:	return "Shadow Accessory 1";
+		default:
+			return "Unknown";
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Gives attached player their Platinum Skill based on their class.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetPlatinumSkills	{
+	skill "NV_FIRSTAID",1,SKILL_PERM;
+	switch (BaseClass) {
+	case Job_Novice:
+		if (Class != Job_Super_Novice)
+			skill "NV_TRICKDEAD",1,SKILL_PERM;
+		break;
+	case Job_Swordman:
+		skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+		skill "SM_FATALBLOW",1,SKILL_PERM;
+		skill "SM_AUTOBERSERK",1,SKILL_PERM;
+		break;
+	case Job_Mage:
+		skill "MG_ENERGYCOAT",1,SKILL_PERM;
+		break;
+	case Job_Archer:
+		skill "AC_MAKINGARROW",1,SKILL_PERM;
+		skill "AC_CHARGEARROW",1,SKILL_PERM;
+		break;
+	case Job_Acolyte:
+		skill "AL_HOLYLIGHT",1,SKILL_PERM;
+		break;
+	case Job_Merchant:
+		skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+		skill "MC_CHANGECART",1,SKILL_PERM;
+		skill "MC_LOUD",1,SKILL_PERM;
+		if(PACKETVER >= 20150826)
+			skill "MC_CARTDECORATE",1,SKILL_PERM;
+		break;
+	case Job_Thief:
+		skill "TF_SPRINKLESAND",1,SKILL_PERM;
+		skill "TF_BACKSLIDING",1,SKILL_PERM;
+		skill "TF_PICKSTONE",1,SKILL_PERM;
+		skill "TF_THROWSTONE",1,SKILL_PERM;
+		break;
+	default:
+		break;
+	}
+	switch (BaseJob) {
+	case Job_Knight:
+		skill "KN_CHARGEATK",1,SKILL_PERM;
+		break;
+	case Job_Priest:
+		skill "PR_REDEMPTIO",1,SKILL_PERM;
+		break;
+	case Job_Wizard:
+		skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
+		break;
+	case Job_Blacksmith:
+		skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
+		skill "BS_GREED",1,SKILL_PERM;
+		break;
+	case Job_Hunter:
+		skill "HT_PHANTASMIC",1,SKILL_PERM;
+		break;
+	case Job_Assassin:
+		skill "AS_SONICACCEL",1,SKILL_PERM;
+		skill "AS_VENOMKNIFE",1,SKILL_PERM;
+		break;
+	case Job_Crusader:
+		skill "CR_SHRINK",1,SKILL_PERM;
+		break;
+	case Job_Monk:
+		skill "MO_KITRANSLATION",1,SKILL_PERM;
+		skill "MO_BALKYOUNG",1,SKILL_PERM;
+		break;
+	case Job_Sage:
+		skill "SA_CREATECON",1,SKILL_PERM;
+		skill "SA_ELEMENTWATER",1,SKILL_PERM;
+		skill "SA_ELEMENTGROUND",1,SKILL_PERM;
+		skill "SA_ELEMENTFIRE",1,SKILL_PERM;
+		skill "SA_ELEMENTWIND",1,SKILL_PERM;
+		break;
+	case Job_Rogue:
+		skill "RG_CLOSECONFINE",1,SKILL_PERM;
+		break;
+	case Job_Alchemist:
+		skill "AM_BIOETHICS",1,SKILL_PERM;
+		break;
+	case Job_Bard:
+		skill "BA_PANGVOICE",1,SKILL_PERM;
+		break;
+	case Job_Dancer:
+		skill "DC_WINKCHARM",1,SKILL_PERM;
+		break;
+	default:
+		break;
+	}
+	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Return true if the card is a charm (enchant card), false otherwise.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_IsCharm	{
+	.@id = getarg(0);
+	return ((.@id >= 4700 && .@id <= 4999) || (.@id >= 29000 && .@id <= 29689) || (.@id >= 310000 && .@id <= 311091 ));
+}

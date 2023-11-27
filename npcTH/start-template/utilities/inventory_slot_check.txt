@@ -1,0 +1,12 @@
+function	script	InventorySlotCheck	{
+	getinventorylist;
+	if(@inventorylist_count >= 90){
+		clear;
+		mes getarg(0);
+		mes "โปรดเช็คกระเป๋าของคุณก่อน";
+		mes "ต้องมีช่องว่างอย่างน้อย 10 ช่อง";
+		mes "คุณใช้ไป: " + @inventorylist_count + "/100 ช่อง";
+		close;
+	}
+	return;
+}

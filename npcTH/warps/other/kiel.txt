@@ -1,0 +1,101 @@
+//===== rAthena Script =======================================
+//= Kiel Warp Script (Kiel Buildings)
+//===== By: ==================================================
+//= Playtester; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for all Kiel Buildings
+//===== Additional Comments: =================================
+//= 1.0 Added Kiel warps thanks to Celestria [Playtester]
+//= 1.1 Added more warps thanks to Celestria [Playtester]
+//= 1.2 Added warps according to Kiel quest [Playtester]
+//= 1.3 Removed and altered exploitable warps for Kiel Hyre Quest. [L0ne_W0lf]
+//= 1.4 Removed FIELD entrance into Kiel Hyre's Villa. [L0ne_W0lf]
+//= 1.5 Rewrite of the warps. No more exploits/bugs should be present after this. [L0ne_W0lf]
+//= 1.6 Thanks Tsuyuki for pointing out that bug! Bah! [L0ne_W0lf]
+//============================================================
+
+//============================================================
+// Kiel Hyre Academy (kh_school)
+//============================================================
+kh_school,76,156,0	warp	kh_school_01	1,1,yuno_fild08,155,189
+kh_school,30,125,0	warp	kh_school_02a	1,1,kh_school,67,14
+kh_school,71,14,0	warp	kh_school_02b	1,1,kh_school,36,125
+kh_school,35,133,0	warp	kh_school_03a	1,1,kh_school,148,16
+kh_school,153,16,0	warp	kh_school_03b	1,1,kh_school,39,136
+kh_school,30,155,0	warp	kh_school_04a	1,1,kh_school,182,116
+kh_school,186,117,0	warp	kh_school_04b	1,1,kh_school,35,155
+kh_school,35,176,0	warp	kh_school_05a	1,1,kh_school,148,56
+kh_school,153,56,0	warp	kh_school_05b	1,1,kh_school,40,176
+kh_school,30,185,0	warp	kh_school_06a	1,1,kh_school,67,74
+kh_school,71,74,0	warp	kh_school_06b	1,1,kh_school,35,184
+
+//============================================================
+// Kiel Hyre's Cottage (kh_vila)
+//============================================================
+kh_vila,79,11,0	warp	kh_vila_01	1,1,yuno_fild02,92,208
+kh_vila,71,38,0	warp	kh_vila_02a	1,1,kh_vila,42,38
+kh_vila,46,38,0	warp	kh_vila_02b	1,1,kh_vila,75,38
+kh_vila,71,54,0	warp	kh_vila_03a	1,1,kh_vila,42,54
+kh_vila,46,54,0	warp	kh_vila_03b	1,1,kh_vila,75,54
+kh_vila,34,66,0	warp	kh_vila_04a	1,1,kh_vila,20,108
+kh_vila,20,103,0	warp	kh_vila_04b	1,1,kh_vila,34,61
+kh_vila,84,66,0	warp	kh_vila_05a	1,1,kh_vila,44,107
+kh_vila,44,103,0	warp	kh_vila_05b	1,1,kh_vila,84,62
+kh_vila,32,128,0	warp	kh_vila_06a	1,1,kh_vila,23,171
+kh_vila,22,167,0	warp	kh_vila_06b	1,1,kh_vila,32,123
+kh_vila,90,47,0	warp	kh_vila_07a	1,1,kh_vila,119,47
+kh_vila,115,47,0	warp	kh_vila_07b	1,1,kh_vila,85,47
+kh_vila,126,75,0	warp	kh_vila_08a	1,1,kh_vila,180,176
+kh_vila,180,171,0	warp	kh_vila_08b	1,1,kh_vila,126,70
+kh_vila,175,71,0	warp	kh_vila_09	1,1,kh_vila,136,64
+kh_vila,191,19,0	warp	kh_vila_10	1,1,yuno_fild02,74,215
+
+//============================================================
+// Kiel Hyre's Mansion (kh_mansion)
+//============================================================
+lighthalzen,188,204,0	warp	kh_mansion_01a	1,1,kh_mansion,84,49
+kh_mansion,88,50,0	warp	kh_mansion_01b	1,1,lighthalzen,188,199
+kh_mansion,21,11,0	warp	kh_mansion_02	1,1,kh_mansion,72,49
+
+//============================================================
+// Abandoned Rosimir Mansion (kh_rossi)
+//============================================================
+kh_rossi,15,92,0	warp	kh_rossi_01	1,1,yuno,270,139
+kh_rossi,35,87,0	warp	kh_rossi_02a	1,1,kh_rossi,27,37
+kh_rossi,27,42,0	warp	kh_rossi_02b	1,1,kh_rossi,35,91
+kh_rossi,63,87,0	warp	kh_rossi_03a	1,1,kh_rossi,99,38
+kh_rossi,99,42,0	warp	kh_rossi_03b	1,1,kh_rossi,63,91
+kh_rossi,90,87,0	warp	kh_rossi_04a	1,1,kh_rossi,168,30
+kh_rossi,168,34,0	warp	kh_rossi_04b	1,1,kh_rossi,90,90
+kh_rossi,35,98,0	warp	kh_rossi_05a	1,1,kh_rossi,27,147
+kh_rossi,27,143,0	warp	kh_rossi_01b	1,1,kh_rossi,35,94
+kh_rossi,90,101,0	warp	kh_rossi_06a	1,1,kh_rossi,282,64
+kh_rossi,42,26,0	warp	kh_rossi_06b	1,1,kh_rossi,92,25
+kh_rossi,87,25,0	warp	kh_rossi_07a	1,1,kh_rossi,36,26
+kh_rossi,282,60,0	warp	kh_rossi_07b	1,1,kh_rossi,90,96
+kh_rossi,222,68,0	warp	kh_rossi_08a	1,1,kh_rossi,22,277
+kh_rossi,22,273,0	warp	kh_rossi_08b	1,1,kh_rossi,222,64
+kh_rossi,248,68,0	warp	kh_rossi_09a	1,1,kh_rossi,88,277
+kh_rossi,88,273,0	warp	kh_rossi_09b	1,1,kh_rossi,248,64
+kh_rossi,222,25,0	warp	kh_rossi_10a	1,1,kh_rossi,22,219
+kh_rossi,22,222,0	warp	kh_rossi_10b	1,1,kh_rossi,222,29
+kh_rossi,248,25,0	warp	kh_rossi_11a	1,1,kh_rossi,88,217
+kh_rossi,88,222,0	warp	kh_rossi_11b	1,1,kh_rossi,248,29
+kh_rossi,259,46,0	warp	kh_rossi_12a	1,1,kh_rossi,224,234
+kh_rossi,228,234,0	warp	kh_rossi_12b	1,1,kh_rossi,263,46
+kh_rossi,220,231,0	warp	kh_rossi_13a	1,1,kh_rossi,260,186
+kh_rossi,260,190,0	warp	kh_rossi_13b	1,1,kh_rossi,220,234
+kh_rossi,204,231,0	warp	kh_rossi_14a	1,1,kh_rossi,204,186
+kh_rossi,204,190,0	warp	kh_rossi_14b	1,1,kh_rossi,204,234
+kh_rossi,188,231,0	warp	kh_rossi_15a	1,1,kh_rossi,148,186
+kh_rossi,148,190,0	warp	kh_rossi_15b	1,1,kh_rossi,188,234
+kh_rossi,188,238,0	warp	kh_rossi_16a	1,1,kh_rossi,148,283
+kh_rossi,148,279,0	warp	kh_rossi_16b	1,1,kh_rossi,188,235
+kh_rossi,204,238,0	warp	kh_rossi_17a	1,1,kh_rossi,204,283
+kh_rossi,204,279,0	warp	kh_rossi_17b	1,1,kh_rossi,204,235
+kh_rossi,220,238,0	warp	kh_rossi_18a	1,1,kh_rossi,261,283
+kh_rossi,260,279,0	warp	kh_rossi_18b	1,1,kh_rossi,220,235

@@ -1,0 +1,116 @@
+//===== rAthena Script ======================================= 
+//= Kafras (Cities/Dungeons/Fields)
+//===== By: ================================================== 
+//= Joseph
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: =========================================
+//= Argument settings for callfunc "F_Kafra":
+//=  arg(0): 0 - Default Kafra message
+//=          1 - Niflhiem Kafra message
+//=          2 - Guild Kafra message
+//=  arg(1): 1 - Disable teleport menu 
+//=  arg(2): 1 - Disable info menu
+//=  arg(3): Cost of Storage service
+//=  arg(4): Cost of Rent a Pushcart service
+//===== Additional Comments: ================================= 
+//= 0.x Previous Authors: 
+//=     - L0ne_W0lf, Daegaladh
+//= 1.0 Merged and cleaned up Kafras. [Euphy]
+//= 1.1 Added Dewata Kafra. [Lemongrass]
+//= 1.2 Added Port Malaya Kafras. [Euphy]
+//= 1.3 Added Eden Group Kafra. [Euphy]
+//= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
+//= 1.4 Added Izlude duplicates. [Euphy]
+//= 1.5 Added Glastheim Kafra [Ridley8819]
+//= 1.6 Added Lutie [Lemongrass]
+//= 1.7 Added Rock Ridge Kafra. [Capuche]
+//============================================================ 
+
+// Brasilis
+//============================================================
+brasilis,197,221,4	script	Kafra Employee::kaf_bra	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "brasilis",195,259,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
+}
+
+// Dewata
+//============================================================
+dewata,202,184,6	script	Kafra Employee::kaf_dewata	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,10,1,40,700;
+	savepoint "dewata",206,174,1,1;
+	callfunc "F_KafEnd",0,1,"on Dewata Island";
+}
+
+// Glastheim
+//============================================================
+glast_01,200,275,0	script	Kafra Employee::kaf_glast	4_F_KAFRA3,{
+	cutin "kafra_03",2;
+	callfunc "F_Kafra",0,3,2,500,700;
+	savepoint "glast_01",200,272,1,1;
+	callfunc "F_KafEnd",0,1,"in Glast Heim";
+}
+
+// Lutie
+//============================================================
+xmas,148,134,6	script	Kafra Employee::kaf_xmas	4_F_KAFRA3,{
+	cutin "kafra_03",2;
+	callfunc "F_Kafra",0,6,2,50,700;
+	callfunc "F_KafEnd",0,0,"in Lutie";
+}
+
+// Eden Group
+//============================================================
+moc_para01,10,185,4	script	Kafra Employee::kaf_eden	4_F_KAFRA7,{
+	cutin "kafra_07",2;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "I only offer Storage!";
+	callfunc "F_Kafra",5,2,0,80,0;
+}
+
+// Izlude
+//============================================================
+izlude,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz	4_F_KAFRA1
+izlude_a,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_a	4_F_KAFRA1
+izlude_b,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_b	4_F_KAFRA1
+izlude_c,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_c	4_F_KAFRA1
+izlude_d,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_d	4_F_KAFRA1
+
+// Port Malaya
+//============================================================
+malaya,71,79,4	script	Kafra Employee::kaf_malaya1	4_MAL_KAFRA,{
+	callfunc "F_Kafra",0,3,2,500,700;
+	savepoint "malaya",44,56,1,1;
+	callfunc "F_KafEnd",0,1,"in Port Malaya";
+}
+
+malaya,234,204,4	script	Kafra Employee::kaf_malaya2	4_MAL_KAFRA,{
+	callfunc "F_Kafra",0,3,2,500,700;
+	savepoint "malaya",281,212,1,1;
+	callfunc "F_KafEnd",0,1,"in Port Malaya";
+}
+
+// Rune Knight
+//============================================================
+job3_rune01,92,62,3	script	Kafra Employee::kaf_rune	4_F_KAFRA4,{
+	cutin "kafra_04",2;
+	callfunc "F_KafSet";
+	callfunc "F_Kafra",0,9,2,80,700;
+}
+
+// Rockridge
+//============================================================
+harboro1,291,207,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	callfunc "F_Kafra",0,8,2,500,0;
+	savepoint "harboro1",355,207,1,1;
+	callfunc "F_KafEnd",2,0,0;
+}

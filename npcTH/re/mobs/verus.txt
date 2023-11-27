@@ -1,0 +1,37 @@
+//===== rAthena Script =======================================
+//= Verus Monster Spawn Script
+//===== Current Version: =====================================
+//= 1.1
+//===== Description: =========================================
+//= Spawns monsters around Verus.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//= 1.1 Correct Spawn by Navigation's mob data. [attackjom]
+//============================================================
+
+// ver_eju
+ver_eju,0,0,0,0	monster	Recon Robot	3154,50,5000
+ver_eju,0,0,0,0	monster	Excavator Robot	3153,10,5000
+// ver_tunn
+ver_tunn,0,0,0,0	monster	Recon Robot	3154,5,30000
+// verus01
+verus01,0,0,0,0	monster	Green Cenere	3247,50,5000
+verus01,0,0,0,0	monster	Explorer Robot Turbo	3249,25,5000
+verus01,0,0,0,0	monster	Repair Robot Turbo	3248,25,5000
+// verus02
+verus02,0,0,0,0	monster	Repair Robot Turbo	3248,50,5000
+verus02,0,0,0,0	monster	Explorer Robot Turbo	3249,50,5000
+// verus03
+verus03,0,0,0,0	monster	Illegal Promotion	3159,40,5000
+verus03,0,0,0,0	monster	Explorer Robot	3156,50,5000
+verus03,0,0,0,0	monster	Repair Robot	3155,50,5000
+verus03,0,0,0,0	monster	Ruin Grace Believer	3158,10,5000
+// un_bunker
+un_bunker,0,0,0,0	monster	Thief Bug	1051,6,5000
+un_bunker,0,0,0,0	monster	Smelly Ghoul	3255,68,5000
+un_bunker,0,0,0,0	monster	Smelly Zombie	3256,80,5000
+un_bunker,0,0,0,0	monster	Machine Component	3250,28,5000
+un_bunker,0,0,0,0	monster	DR815	3252,14,5000
+un_bunker,0,0,0,0	monster	GC109	3251,10,5000
+un_bunker,0,0,0,0	monster	Black Mushroom	1084,1,5000
+un_bunker,0,0,0,0	monster	Chonchon	1011,2,5000

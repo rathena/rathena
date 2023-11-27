@@ -1,0 +1,692 @@
+//===== rAthena Script ======================================= 
+//= Expanded Super Novice Job Quest
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.1a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change quest for Expanded Super Novice class.
+//===== Additional Comments: ================================= 
+//= 1.0 All dialogue is custom, contains some incorrect behaviors.
+//= 1.1 Switched to a translated copy of the official script
+//=     by Gennosuke Kouga, but vastly edited its content. [Euphy]
+//= 1.1a Replaced effect numerics with constants. [Euphy]
+//============================================================ 
+
+function	script	Esseray_Ex	{
+	if (BaseLevel > 98 && JobLevel > 98) {
+		if (EXSUPNOV_Q > 0 && EXSUPNOV_Q < 6) {
+			mes "[Esseray]";
+			mes "ตำนานในโลกสามเณรหายไปจากการทำอะไรบางอย่างในโคโมโด";
+			mes "เจ้าควรจะพบเขา";
+			next;
+			mes "[Esseray]";
+			mes "เขาสามารถนำทางคุณไปได้";
+			mes "เส้นทางที่ถูกต้อง ... ";
+			close;
+		}
+		mes "[Esseray]";
+		mes "โอ้คุณเป็นหนึ่งใน Novice สังคมของเราหรือไม่";
+		mes "เจ้าดูดี";
+		next;
+		mes "[Esseray]";
+		mes "เจ้าดูเต็มไปด้วยพลังงาน ... ";
+		mes "เจ้าแข็งแกร่งพอที่จะทนต่อการทดสอบ";
+		next;
+		mes "[Esseray]";
+		mes "ฉันรู้วิธีที่จะแข็งแกร่งขึ้นคุณเต็มใจลองหรือยัง?";
+		next;
+		if(select("ไม่ฉันไม่เป็นไรตอนนี้:ฉันต้องการที่จะแข็งแกร่งขึ้น!") == 1) {
+			mes "[Esseray]";
+			mes "ถ้าคุณพอใจกับคนธรรมดาฉันก็ช่วยคุณไม่ได้";
+			mes "จงใช้ชีวิตเหมือนคนปกติ";
+			close;
+		}
+		mes "[Esseray]";
+		mes "ดี!";
+		mes "ตำนานในโลก Novice หายไปจากการทำอะไรบางอย่างในโคโมโด";
+		mes "เจ้าควรจะพบเขา";
+		next;
+		setquest 5092;
+		set EXSUPNOV_Q,1;
+		mes "[Esseray]";
+		mes "เขาสามารถนำทางคุณไปได้";
+		mes "เส้นทางที่ถูกต้อง ... ";
+		close;
+	}
+	else return;
+}
+
+beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
+	if (checkquest(5092) >= 0) {
+		mes "[Fishing Novice]";
+		mes "Sh --------- !!";
+		mes "จงเงียบเถิด";
+		mes "คุณจะทำให้ปลาตกใจ";
+		next;
+		select("อืม...ทำให้ฉันรำคาญ... ");
+		mes "[Fishing Novice]";
+		mes "Aaaaaaak !!";
+		mes "เจ้ากำลังทำอะไรอยู่";
+		mes "ฉันบอกว่าคุณเงียบ!";
+		mes "พวกมันกำลังว่ายน้ำเพราะเสียง ~";
+		next;
+		mes "[Fishing Novice]";
+		mes "(- sh - aking -)";
+		mes "คุณเป็นใคร ... ";
+		mes "ทำไมคุณถึงรบกวนการตกปลาของฉัน";
+		next;
+		select("ฉันได้รับสินค้าจาก Esseray ...");
+		emotion ET_SCRATCH;
+		mes "[Fishing Novice]";
+		mes "อะไรนะ Esseray? Esseray";
+		mes "อืมฉันรู้จักเขา ... ";
+		mes "Esseray ... Esseray ... hmm.";
+		next;
+		emotion ET_THINK, playerattached();
+		emotion ET_THINK;
+		mes "..................";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Fishing Novice]";
+		mes "Ahhhh --- !! ----- Ahhhh --- !!";
+		mes "เข้าใจแล้ว --- ได้รับแล้ว!";
+		mes "^ 0000FFA สมาชิกของ Novice Society ใน Aldebaran ^ 000000";
+		mes "Esseray ใช่มั้ยผิด?";
+		next;
+		if(select("ไม่เขาไม่ใช่:ใช่ถูก") == 2) {
+			mes "[Fishing Novice]";
+			mes "Hu hu ~ ความรู้สึกของข้ายังมีชีวิตอยู่ ... ";
+			next;
+			mes "[Fishing Novice]";
+			mes "แล้วคุณต้องการอะไรจากฉัน";
+		}
+		else {
+			mes "[Fishing Novice]";
+			mes "นี่อะไรนะ!";
+			mes "แล้ว Esseray มาจากไหน";
+			next;
+			emotion ET_THINK, playerattached();
+			emotion ET_THINK;
+			mes ".... .... .... ....";
+			next;
+			mes "[Fishing Novice]";
+			mes "อะไรนะ-------- !!";
+			mes "นั่นมันไม่สำคัญใช่มั้ย";
+			next;
+			mes "[Fishing Novice]";
+			mes "ถ้างั้น -------- !!";
+			mes "ทำไมคุณมาที่นี่";
+		}
+		next;
+		mes "- คุณอธิบายว่าทำไมคุณมาที่นี่ -";
+		next;
+		emotion ET_SCRATCH;
+		mes "[Fishing Novice]";
+		mes "อืม... มันเป็นคำถามที่ง่ายและยากในเวลาเดียวกัน";
+		next;
+		mes "- คุณได้ยินเสียงบ่นเกี่ยวกับบางอย่าง -";
+		next;
+		emotion ET_FRET;
+		mes "[Fishing Novice]";
+		mes "Esseray! ลูกชายของ% @ & $ # ทำให้เสียวันหยุดของฉัน ... ";
+		next;
+		mes "[Fishing Novice]";
+		mes "Haaaaa ~";
+		mes "ชีวิตที่น่าสงสารของฉัน ~";
+		mes "Ahhh ~ ปัญหามากมาย";
+		next;
+		emotion ET_QUESTION;
+		mes "[Fishing Novice]";
+		mes "ยากเกินไป ~ เฮ้เด็กน้อย!";
+		mes "คุณชื่ออะไร";
+		next;
+		select(strcharinfo(0) + "แล้วคุณล่ะ?");
+		mes "[Nodor]";
+		mes "ฉันชื่อ Nodor! Nodor.";
+		next;
+		mes "[Nodor]";
+		mes ".... .... ..... ..... ";
+		next;
+		mes "[Nodor]";
+		mes "เฮ้! ฉันเห็นสิ่งที่คุณกำลังคิดอยู่ในหน้าคุณ ~";
+		next;
+		mes "[Nodor]";
+		mes "เพราะชื่อของฉันคือ Nodor ฉันสนุกไปทั้งชีวิต";
+		mes "Condor และ Odor ... ";
+		mes "อย่าพยายามหลอกข้า";
+		next;
+		changequest 5092,5093;
+		mes "[Nodor]";
+		mes "ไม่ว่าด้วยเหตุผลอะไร ... เจ้าอยู่ที่นี่!";
+		mes "มารวมกันเพื่อก้าวต่อไป";
+		mes "กลับมาอีกซักพักนึง ~";
+		next;
+		mes "- คุยกับเขาอีกครั้ง -";
+		close;
+	}
+	else if (checkquest(5093) >= 0) {
+		mes "[Nodor]";
+		mes "Emmhmm ----- !!";
+		next;
+		mes "- Nodor ให้รูปลักษณ์ที่น่าสงสัยแก่คุณ -";
+		next;
+		mes "[Nodor]";
+		mes "เจ้าไม่รู้หรือว่า ^0000FFSuper Novice^000000 ยอดเยี่ยมเหรอ?";
+		next;
+		mes "- Nodor ถามด้วยความมั่นใจ -";
+		next;
+		mes "[Nodor]";
+		mes "เฮ้! Super Novice ~";
+		mes "คุณรู้ไหมว่าฉันเป็นใคร";
+		next;
+		select("คุณกำลังพูดถึงอะไร!");
+		mes "[Nodor]";
+		mes "Heh ... ";
+		mes "เจ้ามีเส้นประสาทมากมายใช่ไหม?";
+		next;
+		select("... ........ ");
+		mes "- เจ้านี่มันแปลกมาก -";
+		next;
+		mes "[Nodor]";
+		mes "เฮ้! Super Novice ~";
+		mes "ข้าจะทำให้เจ้าแข็งแกร่งขึ้น!";
+		mes "คุณจะเชื่อในสิ่งที่ฉันบอกคุณหรือไม่";
+		next;
+		if(select("ฉันจะไม่ติดตามคุณ:ทำไมไม่เหรอ ~") == 1) {
+			mes "[Nodor]";
+			mes "ไม่ยอมหรอกเจ้าไม่ต้องการเข้มแข็งหรอกเหรอ?";
+			mes "ข้าชอบที่จะไม่ทำอะไรเช่นกัน";
+			mes "แค่ให้ฉันตกปลาถ้าคุณต้องการไป";
+			close;
+		}
+		mes "[Nodor]";
+		mes "Emmhmm ~ ฉันจะฟังดูรุนแรงเหรอ?";
+		mes "อืมฉันไม่สามารถใช้คำเหล่านี้ได้";
+		next;
+		mes "[Nodor]";
+		mes "อย่าเหงื่อมัน";
+		mes "มันไม่มีปัญหาที่ฉันจะสอนให้คุณแข็งแกร่งขึ้น";
+		next;
+		mes "[Nodor]";
+		mes "ยอดเยี่ยม ~!";
+		mes "ปัญหาของคุณคืออะไร";
+		mes "เจ้าไม่รู้วิธีที่จะแข็งแกร่งใช่ไหม";
+		next;
+		select("ใช่ฉันไม่แข็งแกร่งขึ้น");
+		emotion ET_SCRATCH;
+		mes "[Nodor]";
+		mes "Hhhmmm ~!";
+		mes "มีวิธีที่จะทำ ... ";
+		mes "มันอันตราย แต่ข้าทำได้";
+		mes "บอกเจ้าอย่างไร";
+		next;
+		mes "[Nodor]";
+		mes "ฉันจะทำสิ่งนี้ด้วยเงื่อนไขเดียวคุณไม่ได้ถามอะไรและทำทุกอย่างที่ฉันบอกคุณ!";
+		mes "แล้วมันเป็นอย่างไร";
+		mes "คุณเต็มใจที่จะทำสิ่งนี้หรือไม่?";
+		next;
+		if(select("ไม่ฉันจะไม่ทำ!:มาทำสิ่งนี้กันเถอะ!") == 1) {
+			mes "[Nodor]";
+			mes "การมีความเข้มแข็งเป็นหนทางเดียวที่จะมีชีวิตอยู่!";
+			mes "คุณต้องการที่จะอ่อนแอตลอดไปหรือไม่";
+			next;
+			mes "[Nodor]";
+			mes "ฉันจะให้คำแนะนำแก่คุณ";
+			mes "เจ้าไม่ถูกต้องเสมอไป";
+			mes "บางครั้งคุณต้องตรวจสอบอัตตาของคุณและฟังผู้อื่น";
+			emotion ET_FRET;
+			close;
+		}
+		mes "[Nodor]";
+		mes "เอาล่ะ --------- !!";
+		mes "ความปรารถนาของคุณจะทำให้คุณแข็งแกร่งขึ้น";
+		mes "เจ้าสงบไหม";
+		next;
+		mes "[Nodor]";
+		mes "สิ่งที่ฉันต้องการให้คุณทำคือ ... ";
+		mes "ตามล่ามอนสเตอร์ 1,000 ตัว";
+		next;
+		mes "[Nodor]";
+		mes "เจ้ารู้หรือเปล่าว่าสิ่งนี้มีไว้เพื่ออะไร";
+		next;
+		setarray .@Monsters$[0],"Poring","Lunatic","Fabre","Picky";
+		set .@i, rand(4);
+		changequest 5093,5094+.@i;
+		mes "[Nodor]";
+		mes "คุณรู้ว่า ^FF0000" + .@Monsters$[.@i] + "^000000 สัตว์ประหลาดนั่นใช่มั้ย";
+		next;
+		mes "[Nodor]";
+		mes "ตามล่า 1,000!";
+		mes "อย่าบอกว่าเจ้าทำอย่างนี้ไม่ได้!";
+		mes "ข้ารู้ว่ามันมีสัตว์ประหลาดมากมาย แต่พวกมันอ่อนแอมาก!";
+		next;
+		select("คุณล้อเล่นกับฉันหรือเปล่า");
+		mes "[Nodor]";
+		mes "Huh huh ~!";
+		mes "Rembember ไม่มีคำถาม!";
+		mes "อย่ากลับมาจนกว่าเจ้าจะล่า 1,000 แล้ว";
+		close;
+	}
+	else if (checkquest(5094) >= 0 || checkquest(5095) >= 0 || checkquest(5096) >= 0 || checkquest(5097) >= 0) {
+		mes "["+strcharinfo(0)+"]";
+		mes "เฮ้ Nodor!";
+		next;
+		emotion ET_HUK;
+		mes "[Nodor]";
+		mes "โอ้พระเจ้า!";
+		mes "น่ากลัวมาก ... ให้ข้าดูหน่อย";
+		next;
+		if (checkquest(5094,HUNTING) != 2 && checkquest(5095,HUNTING) != 2 && checkquest(5096,HUNTING) != 2 && checkquest(5097,HUNTING) != 2) {
+			mes "[Nodor]";
+			mes "เฮ้! Super Novice!";
+			mes "ฉันไม่ได้บอกว่าจะล่า 1,000?";
+			mes "อย่ากลับมาจนกว่าเจ้าจะมี";
+			close;
+		}
+		mes "[Nodor]";
+		mes "เจ้าล่าครบ 1,000 คนแล้วหรือยัง?";
+		next;
+		mes "[Nodor]";
+		mes "เจ้าเก่งกว่าที่ข้าคิด";
+		mes "อย่างไรก็ตามสัตว์ประหลาดที่ข้าบอกให้เจ้าตามล่าคืออะไร";
+		next;
+		set .@i, select("Poring:Lunatic:Fabre:Picky:Baphomet")-1;
+		if (.@i == 4) {
+			mes "[Nodor]";
+			mes "Heheh? คุณช่วยล่า Baphomet อย่างจริงจังคนเดียวได้ไหม?";
+			mes "อย่าโกหก! ฉันจะตบคุณ !!";
+			close;
+		}
+		if (checkquest(5094+.@i,HUNTING) != 2) {
+			mes "[Nodor]";
+			mes "อย่าโกหก!";
+			mes "ข้าไม่ได้บอกให้เจ้าตามล่า!";
+			close;
+		}
+		changequest 5094+.@i,5098;
+		emotion ET_SMILE;
+		mes "[Nodor]";
+		mes "keheheheheheh~";
+		next;
+		mes "[Nodor]";
+		mes "คุณทำให้ฉันรำคาญฉันเลยทำให้คุณทำภารกิจนี้ ... ";
+		next;
+		mes "[Nodor]";
+		mes "ว้าว! เจ้าตามล่าทั้ง 1,000 จริงๆ ";
+		mes "ฉันคิดว่าฉันไม่สามารถถามความปรารถนาของคุณให้แข็งแกร่งขึ้นได้";
+		next;
+		mes "[Nodor]";
+		mes "โอเคดีมากแล้ว";
+		mes "ข้าจะบอกให้เจ้ารู้ว่าจะเอาชนะจุดอ่อนของเจ้าได้อย่างไร";
+		close;
+	}
+	else if (checkquest(5098) >= 0) {
+		if (rand(10) != 1) {
+			mes "[Nodor]";
+			mes "โอ้เจ้ามานี่แล้วเหรอ?";
+			mes "คุณไม่ได้บอกว่าคุณมีบางอย่างที่จะจัดการหรือไม่";
+			mes "เจ้ามีความปรารถนามากพอ แต่ ... ";
+			mes "คุณต้องเรียนรู้ที่จะอดทน";
+			close;
+		}
+		emotion ET_KIK;
+		mes "[Nodor]";
+		mes "Hhhhhhhhhh~";
+		next;
+		mes "[Nodor]";
+		mes "โอ้ขอโทษ! ขอโทษ!";
+		mes "ฉันได้รับจดหมายจากพี่ชายของฉันนานแล้วคุณจะอ่านจดหมายของฉันสำหรับข้อมูลของคุณหรือไม่";
+		next;
+		if(select("ใช่ฉันจะ:ไม่ฉันจะไม่") == 2) {
+			mes "[Nodor]";
+			mes "คุณควรอ่านเพิ่มเติม!";
+			next;
+		}
+		else {
+			mes "["+strcharinfo(0)+"]";
+			mes "Tsk*...ตกลง... ";
+			next;
+		}
+		mes "- เขาส่งจดหมายมาหาคุณ -";
+		next;
+		mes "Dear Bro. Nodor,";
+		mes "";
+		mes "เฮ้พี่พี่มันเป็นพี่ชายของคุณ Nudor เป็นไงบ้างเหตุผลที่ข้าเขียนจดหมายนี้ก็คือ ... ";
+		mes "ฉันต้องการเงินเพื่อเป็นอาหารคุณมีเงินมากดังนั้นช่วยข้าด้วย";
+		next;
+		mes "ถ้าคุณไม่... จำครั้งสุดท้ายที่คุณ%$&*@*&%$... ";
+		mes "- จดหมายยู่ยี่ดังนั้นคุณไม่สามารถอ่านเพิ่มเติมได้ -";
+		mes "ข้ายังอยู่ในสาธารณรัฐ Schwarzwald";
+		mes "~ Nudor";
+		next;
+		mes "- คุณรู้สึกไม่สบายใจจากการอ่านจดหมายนี้ -";
+		next;
+		mes "[Nodor]";
+		mes "Hu ~ u ~";
+		mes "อืมฉันมีแค่พี่ชายคนเดียวและเขามักจะขอเงิน";
+		mes "มันต้องเป็นชื่อเสียงของข้า ... T_T";
+		next;
+		mes "- ตอนนี้เจ้ามีความรู้สึกไม่สบายใจจริงๆ -";
+		next;
+		changequest 5098,5099;
+		mes "[Nodor]";
+		mes "เฮ้ - ซูเปอร์สามเณร" + strcharinfo (0) + "!";
+		next;
+		mes "[Nodor]";
+		mes "คุณสามารถมอบบางอย่างให้เพื่อนของฉันเขาอยู่ในเรือบิน";
+		close;
+	}
+	else if (checkquest(5099) >= 0) {
+		mes "[Nodor]";
+		mes "เจ้าเคยไปมาแล้วเหรอ?";
+		next;
+		select("ฉันควรให้เงินเท่าไหร่?");
+		mes "[Nodor]";
+		mes "โอ้เจ้ายังไม่ไปที่นั่นเหรอ?";
+		mes "ให้เขาหน่อย ya ~";
+		next;
+		mes "[Nodor]";
+		mes "100,000 zeny ไม่เป็นไร ~";
+		mes "1,000,000 zeny ไม่เป็นไร ~";
+		mes "10,000,000 zeny ก็โอเค ~";
+		close;
+	}
+	else if (checkquest(5100) >= 0) {
+		if (EXSUPNOV_Q_ == 3) set .@n,300000;
+		else if (EXSUPNOV_Q_ == 4) set .@n,1000000;
+		else set .@n,100000;
+		mes "[Nodor]";
+		mes "เฮ้เจ้าไปที่นั่นแล้วเหรอ?";
+		mes "ฉันได้รับข้อความจากพี่ชายของฉันอีก";
+		next;
+		mes "พี่ชายให้ข้า ... ";
+		mes callfunc("F_InsertComma",.@n) + " Zeny.";
+		mes "คุณแคร์ฉัน... ";
+		mes "~ Nudor";
+		next;
+		select("เขาดูหิวมาก ... ");
+		mes "[Nodor]";
+		mes "โดยวิธี... ";
+		mes callfunc("F_InsertComma",.@n) + " เซนีไม่ค่อยมีสถานะผู้มีชื่อเสียงของฉันเลยเจ้าคิดเหรอ?";
+		next;
+		select( "เอ๊ะ .....");
+		mes "[Nodor]";
+		mes "อย่างไรก็ตาม~";
+		mes callfunc("F_InsertComma",.@n) + " Zeny... ";
+		mes "คุณไม่คิดว่าคุณให้เขาน้อยเกินไปเหรอ? ชื่อเสียงของฉันกำลังจะถูกโจมตี";
+		next;
+		select( "เฮ้ ...");
+		mes "[Nodor]";
+		mes "ว้าว, เจ้ามีจุดของข้าแล้ว?";
+		next;
+		mes "[Nodor]";
+		mes "ฉันคิดว่าคุณพูดถูก";
+		mes "การทดสอบนี้เกี่ยวกับความสามารถของคุณในการเปิดความเห็นอกเห็นใจของผู้อื่น";
+		next;
+		mes "[Nodor]";
+		mes "ฉันหมายถึงนิสัยการบริโภคและอุทรของคุณ ... ";
+		mes "ฮ่าฮ่าฮ่าฮ่า!";
+		next;
+		select("เฮ้นั่นไม่ใช่ของฉัน ... ");
+		mes "[Nodor]";
+		mes "อืม? อ่า ... ";
+		mes "ฉันเกือบจะลืมบอก";
+		mes "คุณทำเกินขีด จำกัด ได้อย่างไร";
+		mes "ไม่ใช่ฉัน?";
+		next;
+		mes "[Nodor]";
+		mes "Eh-hem! ฉันไม่ได้ฆ่าเวลาหลังจากส่งเจ้า !!";
+		next;
+		emotion ET_HUK;
+		mes "[Nodor]";
+		mes "อะไรกัน? --- อา? --- !!";
+		next;
+		select("??????");
+		emotion ET_SWEAT;
+		mes "[Nodor]";
+		mes "ระวัง !! กลุ่มโกเลมส์กำลังตามเรามา!";
+		mes "พวกเรา ... ต้องวิ่ง ... !!!";
+		next;
+		emotion ET_HUK, playerattached();
+		if(select("อะไร:?!หนอ?") == 2) {
+			mes "- คุณมองไปรอบๆ และ -";
+			mes "- ไม่มีอะไรอยู่ข้างหลังคุณ -";
+			mes "- เมื่อคุณกำลังสงสัย ... -";
+		}
+		else {
+			mes "- คุณถาม Nodor หนึ่งครั้ง -";
+			mes "- อีกครั้งในความหวาดกลัวของคุณ... -";
+		}
+		next;
+		if (SkillPoint) {
+			mes "[Nodor]";
+			mes "คุณยังมีคะแนนทักษะที่ยังไม่หมด";
+			mes "ฉันไม่สามารถทำให้คุณแข็งแกร่งขึ้นได้จนกว่าคุณจะใช้คะแนนเหล่านั้น";
+			close;
+		}
+		specialeffect2 EF_LORD;
+		specialeffect2 EF_SIGHTRASHER;
+		specialeffect2 EF_STORMGUST;
+		erasequest 5100;
+		mes "[Nodor]";
+		mes "ฮ่าฮ่า ------------- !!";
+		mes "----- uhhahaha ----- !!";
+		mes "------------ yay - !!";
+		next;
+		nude;
+		callfunc "F_ClearJobVar"; // -- Clears all job variables for the current player
+		jobchange roclass(eaclass()|EAJL_THIRD);
+		set EXSUPNOV_Q,5;	
+		emotion ET_SMILE;
+		mes "[Nodor]";
+		mes "Hahahahahahahahahahahaha!!";
+		mes "ดี! คุณกลัวหรือยัง";
+		next;
+		select("... ... ...");
+		emotion ET_THINK, playerattached();
+		emotion ET_SORRY;
+		mes "[Nodor]";
+		mes "ขอโทษที่ทำให้ท่านกลัว!";
+		mes "ข้าคิดว่าหน้าที่และภารกิจของเราในฐานะ Novice ที่จะทำให้วันปีติยินดี";
+		next;
+		mes "[Nodor]";
+		mes "งั้นเจ้าไม่รู้สึกว่ามีอะไรเปลี่ยนไปเหรอ?";
+		mes "รู้สึกว่าร่างกายของคุณเบากว่า แต่ก่อน... ?";
+		mes "หรือมีพลังมากกว่านี้";
+		next;
+		select("...? ...? ...?");
+		emotion ET_QUESTION, playerattached();
+		mes "[Nodor]";
+		mes "Oh--- My--- (tut,tut,tut)!!";
+		next;
+		emotion ET_SCRATCH;
+		mes "[Nodor]";
+		mes "Mr. Sieu Ngu -";
+		mes "ไม่ต้องใจร้าย แต่";
+		mes "เจ้าน่าเบื่อนิดหน่อย ... ";
+		mes "ตอนนี้คุณไม่รู้สึกแตกต่างเหรอ?";
+		next;
+		if(select("คุณกำลังพูดถึงอะไร:ฉันเข้าใจแล้ว!") == 1) {
+			mes "[Nodor]";
+			mes "เอ๊ะ--- เจ้าน่าเบื่อใช่มั้ย";
+			mes "คุณใช้เกินวงเงินแล้ว";
+			next;
+			mes "[Nodor]";
+			mes "เจ้าแข็งแกร่งกว่า แต่ก่อนได้";
+			mes "มันไม่ใช่ความฝันของคุณเหรอ?";
+			next;
+		}
+		mes "[Nodor]";
+		mes "ตกลง ~!";
+		mes "ตอนนี้เดินไปทั่วโลกและใช้ชีวิตเป็นสามเณรและสนุกกับชีวิตที่ฟรีและมีความสุขของคุณ!";
+		mes "แค่นั้นแหละ!";
+		close;
+	}
+	else if (EXSUPNOV_Q == 5) {
+		mes "[Nodor]";
+		mes "(มุ่ย) ------------- !!";
+		mes "เจ้ากลับมาแล้วในที่สุด";
+		next;
+		mes "[Nodor]";
+		mes "เพื่อเฉลิมฉลองสหายสามเณรใหม่นี้ฉันได้เตรียมอุปกรณ์บางอย่างที่จะให้คุณ -";
+		next;
+		mes "[Nodor]";
+		mes "อย่าลืมตรวจสอบให้แน่ใจว่าคุณมี ^FF0000กระเป๋าเก็บของ^000000 เพียงพอที่จะนำสิ่งของเหล่านี้มาจากฉัน";
+		mes "และอย่าพูดว่าข้าไม่ได้เตือนเจ้าเช่นกัน";
+		next;
+		if(select("ใช่ให้ฉันตรวจสอบคลังของฉัน:ฉันดีแล้วแสดงให้ฉันดู") == 1) {
+			mes "[Nodor]";
+			mes "ก็ดี!";
+			mes "คุณรู้! ไม่ต้องเสียใจ";
+			close;
+		}
+		mes "[Nodor]";
+		mes "มีสิ่งที่ข้าใส่เมื่อตอนเด็ก";
+		mes "แต่พวกมันก็ยังดีอยู่";
+		if (EXSUPNOV_Q_ == 3) getitem 2522,1; // Undershirt
+		else if (EXSUPNOV_Q_ == 4) {
+			getitem 2628,1; // Novice Armlet [1]
+			getitem 2113,1; // Novice Shield [1]
+			getitem 2416,1; // Novice Shoes [1]
+			getitem 5119,1; // Super Novice Hat [1]
+			getitem 2512,1; // Novice Manteau [1]
+			getitem 2340,1; // Novice Breastplate [1]
+		}
+		else getitem 2340,1; // Novice Breastplate [1]
+		next;
+		select("สิ่งของมือสองเหรอ?");
+		mes "[Nodor]";
+		mes "ให้พวกเขากลับมาหาข้า";
+		mes "เจ้าจะตอบสนองเช่นนั้นได้อย่างไรเมื่อฉันมอบสมบัติของฉันให้เจ้า";
+		next;
+		mes "[Nodor]";
+		mes "ฉัน ... ";
+		mes "ข้าไม่สามารถเอาสิ่งที่ได้คืนไปแล้วกลับมาได้";
+		next;
+		mes "[Nodor]";
+		mes "ตอนนี้ฉันจะกล่าวทักทายอีกครั้ง";
+		next;
+		specialeffect2 EF_RECOVERY;
+		mes "[Nodor]";
+		mes "ให้ Super Novice " + strcharinfo(0) + " ได้รับพรจาก Super Novice Guardian!";
+		set EXSUPNOV_Q,6;
+		close;
+	}
+	else if (EXSUPNOV_Q > 5) {
+		mes "[Nodor]";
+		mes "อย่าลืมว่าคุณเป็น Novice";
+		mes "จงเป็นมือใหม่เสมอ!";
+		mes "เป้าหมายของชีวิตคือการมีช่วงเวลาที่ดีและปกติ!";
+		close;
+	}
+	mes "[Fishing Novice]";
+	mes "Hush!";
+	mes "ได้โปรดเงียบเพราะคุณ";
+	mes "ทำให้ปลากลัวออกไป";
+	close;
+}
+
+airplane,33,47,5	script	Nudor#sp2	729,{
+	if (checkquest(5099) >= 0) {
+		mes "[Nudor]";
+		mes "Ahhh ~ ฉันไม่มีเงินซื้ออาหารเลย";
+		mes "ข้าหิว แต่ข้าไม่รู้ว่าเมื่อไรพี่จะมา ... ";
+		next;
+		select("เฮ้คุณคือ... นายนูดอร์เหรอ?");
+		mes "[Nudor]";
+		mes "Eeeeeh ?! ใครอยากรู้?";
+		mes "ฉันรู้จักคุณหรือเปล่า";
+		next;
+		mes "- คุณอธิบายให้ Nudor ทำไมคุณถึงมาพบเขา -";
+		next;
+		mes "[Nudor]";
+		mes "Aha! คุณได้ให้เงินค่าขนมแทนพี่ ~";
+		next;
+		mes "[Nudor]";
+		mes "ว้าวววว ~~ เขาให้คุณเท่าไหร่";
+		next;
+		mes "- Nudor จ้องมองด้วยแวว -";
+		mes "- ตาจับมือเขาไว้ -";
+		mes "- คุณต้องการให้เท่าไหร่ -";
+		next;
+		set .@i, select("ฉันไม่มีเงิน:ให้ 100,000 Zeny:ให้ 300,000 Zeny:ให้ 1,000,000 Zeny:ให้เงินทั้งหมดที่คุณมี");
+		mes "[Nudor]";
+		if (.@i == 1) {
+			mes "- ร้องไห้ -";
+			mes "ฉันเกลียด Nodor ---!";
+			mes "ฉันก็เกลียดเธอเช่นกัน ---!";
+			close2;
+			warp "airplane",70,93;
+			end;
+		}
+		else if (.@i < 5) {
+			switch(.@i) {
+				case 2: set .@n,100000; break;
+				case 3: set .@n,300000; break;
+				case 4: set .@n,1000000; break;
+			}
+			mes "น่ารัก~~ เขาให้คุณ" + callfunc("F_InsertComma",.@n) + " Zeny? นั่นมันค่อนข้างมาก!";
+			next;
+			if (Zeny < .@n) {
+				mes "[Nudor]";
+				mes "อะไรนะ แต่ที่ไหน" + callfunc("F_InsertComma",.@n) + " Zeny?";
+				close;
+			}
+		}
+		else {
+			mes "โอ้ ... โอ้เอ้ยเอ้ยเจ้าให้ Zeny ทั้งหมดที่ฉันมีให้ฉันเหรอ?";
+			next;
+			if(select("ไม่ไม่ใช่... :มอบให้ทั้งหมด") == 1) {
+				mes "[Nudor]";
+				mes "Pshaw! น่าผิดหวังมาก!";
+				close;
+			}
+			if (!Zeny) {
+				mes "[Nudor]";
+				mes "ใช่มั้ย แต่เจ้าไม่มีเงินเจ้าสงสารเหรอ";
+				close;
+			}
+			set .@n,Zeny;
+		}
+		mes "[Nudor]";
+		mes "Woa ~ !!" +.@n + " Zeny! สิ่งนี้ช่วยฉันได้มาก~ Tehee~";
+		mes "ข้าไม่อยากเชื่อเลย ... ";
+		changequest 5099,5100;
+		set Zeny, Zeny - .@n;
+		if (.@i < 5) set EXSUPNOV_Q_, .@i;
+		else {
+			if (.@n > 1000000) set EXSUPNOV_Q_,4;
+			else if (.@n > 300000) set EX_SUPNOV_Q_,3;
+			else set EXSUPNOV_Q_,2;
+		}
+		next;
+		mes "[Nudor]";
+		if (Sex == SEX_MALE) mes "คุณรู้หรือไม่คุณหล่อจริงๆ~";
+		else mes "ฉันต้องบอกคุณว่าคุณจริงๆ...สวยจริงๆ~";
+		next;
+		mes "[Nudor]";
+		mes "- คุณรู้สึกว่าคุณเป็น -";
+		mes "- ถูกหลอกดังนั้นกลับไปที่ Nodor -";
+		close;
+	}
+	else if (checkquest(5100) >= 0) {
+		mes "[Nudor]";
+		mes "ฉันไม่อยากจะเชื่อว่าพี่ชายของฉันส่งเงินให้ฉัน ... ฉันรักมัน ~";
+		next;
+		mes "[Nudor]";
+		mes "Ooooops!";
+		mes strcharinfo(0)+", hush --- !!";
+		next;
+		mes "[Nudor]";
+		mes "อย่าบอก Nodor เกี่ยวกับเรื่องนี้ ~~";
+		close;
+	}
+	mes "[Nudor]";
+	mes "Ahhh~ ฉันไม่มีเงินซื้ออาหารเลย";
+	mes "ข้าหิว แต่ข้าไม่รู้ว่าเมื่อไรพี่จะมา... ";
+	close;
+}
+

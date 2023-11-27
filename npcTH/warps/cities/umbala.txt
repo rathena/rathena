@@ -1,0 +1,38 @@
+//===== rAthena Script =======================================
+//= Umbala Warp Script
+//===== By: ==================================================
+//= Darkchild (1.0v A) 
+//= Athena (1.0v B)
+//= 1.1 (Akaru)
+//= Nana (1.2)
+//===== Current Version: =====================================
+//= 1.2 
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 6+
+//===== Description: =========================================
+//= [Official Conversion]
+//= Warp Points for Umbala
+//===== Additional Comments: =================================
+//= 1.3 Rescripted to Aegis 10.3 Standards. [L0nE_W0lf]
+//============================================================
+
+umbala,68,253,0	warp	um_chief1-1	1,1,um_in,38,113
+um_in,38,110,0	warp	um_chief1-2	1,1,umbala,66,250
+umbala,138,129,0	warp	um_tool1-1	1,1,um_in,99,114
+um_in,99,111,0	warp	um_tool1-2	1,1,umbala,136,127
+umbala,125,157,0	warp	um_weapon1-1	1,1,um_in,155,114
+um_in,155,111,0	warp	um_weapon1-2	1,1,umbala,126,154
+umbala,94,186,0	warp	um_houseA1-1	1,1,um_in,141,42
+um_in,141,39,0	warp	um_houseA1-2	1,1,umbala,94,183
+umbala,100,203,0	warp	um_houseA2-1	1,1,um_in,163,69
+um_in,166,69,0	warp	um_houseA2-2	1,1,umbala,102,205
+umbala,107,130,0	warp	um_houseB1-1	1,1,um_in,99,66
+um_in,99,63,0	warp	um_houseB1-2	1,1,umbala,108,127
+umbala,220,189,0	script	um_shaman1-1	45,1,1,{
+OnTouch_:
+	if (event_umbala == 7) {
+		warp "um_in",32,71;
+	}
+	end;
+}
+um_in,29,71,0	warp	um_shaman2-1	1,1,umbala,217,186

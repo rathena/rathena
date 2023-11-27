@@ -1,0 +1,686 @@
+//===== rAthena Script =======================================
+//= Rachel City NPCs
+//===== By: ==================================================
+//= First Version: Tsuyuki and Harp
+//= iRO Version: L0ne_W0lf
+//===== Current Version: =====================================
+//= 0.9a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Partial Official Conversion]
+//= Arunafeltz NPCs
+//===== Additional Comments: =================================
+//= 0.5 Text translated from Korean > English, incomplete,
+//= possibly missing some NPCs and missing all quests.
+//= 0.6 Removed Inn Keeper (it's in inn.txt), name duplicates [Lupus]
+//= 0.7 Total update of most if not all NPCs. [L0ne_W0lf]
+//= 0.8 Updated "Frozen Boy" dialog. (euRO) [L0ne_W0lf]
+//= 0.9 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 0.9a Added 'consumeitem' command. [Euphy]
+//============================================================
+
+//===== Set 1 ================================================
+ice_dun04,33,166,3	script	Frozen Boy	925,{
+	cutin "ra_sboy.bmp",2;
+	mes "["+strcharinfo(0)+"]";
+	mes "This boy must be the one who Ktullanux tried to protect.";
+	next;
+	mes "- The boy was frozen inside a giant ice pole, and he looks as if he is in sleep rather than dead. -";
+	next;
+	mes "- You felt freezing as you come closer to the giant ice pole that held the boy within,";
+	mes "- but for some reason, you felt a mysterious power from the pole. -";
+	next;
+	mes "- The boy appeared to be snowy white, and beautiful from the head to the toe. -";
+	next;
+	mes "- You wondered why a young boy had to be confined within this isolated cave, -";
+	mes "- you instinctively knew that no mage in this world would be able to release him from the ice pole.";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "What happened to this boy?";
+	close2;
+	cutin "",255;
+	end;
+}
+
+ra_san04,137,48,3	script	Loomin-1st Class Secret	111,{
+	mes "^3131FFLoomin, the boy";
+	mes "trapped in the Ice Cave.^000000";
+	mes "Class: 1st";
+	mes " ";
+	mes " ";
+	mes " ";
+	mes "^333333The pope was born together";
+	mes "with a twin brother, a fair";
+	mes "skinned boy with pale skin";
+	mes "and silver blond hair. This";
+	mes "had never happened before";
+	mes "and presented a unique problem";
+	mes " ";
+	mes "High Priest Niren acted as";
+	mes "their maternity nurse and";
+	mes "came to Rachel, where the";
+	mes "twins were cared for by the";
+	mes "Priests. They all argued";
+	mes "over the boy's ultimate fate...";
+	mes " ";
+	mes "No one doubted that the boy";
+	mes "was spiritually powerful, but";
+	mes "was he a sacred complement to";
+	mes "his sister, or a great evil that";
+	mes "was in direct opposition to";
+	mes "her? It was a grueling debate";
+	mes " ";
+	mes "In the end, the High Priests";
+	mes "decided that the boy posed";
+	mes "a great risk to their society";
+	mes "People may not consider the";
+	mes "pope's birth as divine if they";
+	mes "knew she had a twin brother.";
+	mes " ";
+	mes "However, not wanting to fear";
+	mes "the wrath of the gods, the";
+	mes "High Priests did not kill the";
+	mes "boy. Instead, they sealed";
+	mes "him in the Ice Cave.";
+	mes " ";
+	mes "The High Priests made";
+	mes "a contract with Ktullanux,";
+	mes "a fearsome ice monster, to";
+	mes "guard the boy's prison, and";
+	mes "to insure that no one would.";
+	close;
+}
+
+rachel,124,132,1	script	Citizen#1 	921,{
+	mes "[Citizen]";
+	mes "May Freya bless";
+	mes "you, and give you an";
+	mes "abundance of health,";
+	mes "wealth, joy, and happiness!";
+	next;
+	mes "[Citizen]";
+	mes "Freya is the goddess of";
+	mes "love and beauty. Do you";
+	mes "think that if I pray hard";
+	mes "enough, she'll help me";
+	mes "get a really pretty girlfriend?";
+	close;
+}
+
+rachel,74,150,7	script	Girl#1	914,{
+	mes "[Girl]";
+	mes "I've never seen our pope";
+	mes "before, I hear that she has";
+	mes "silver blond hair and really";
+	mes "white skin. Daddy says that";
+	mes "only one girl is like that";
+	mes "in every generation.";
+	next;
+	mes "[Girl]";
+	mes "My daddy says the pope is";
+	mes "very special to us because";
+	mes "she's Freya. I mean, Freya";
+	mes "is a goddess, but she also";
+	mes "becomes people like us to talk";
+	mes "to us. Well, just the priests...";
+	next;
+	mes "[Girl]";
+	mes "I don't get it all,";
+	mes "but it sounds like";
+	mes "she's a secret princess.";
+	mes "Doesn't that sound so nice?";
+	mes "But when I tell that to Daddy,";
+	mes "he gets so mad at me! Oh, well.";
+	close;
+}
+
+rachel,144,243,5	script	Cheshrumnir Guard::ChesGuard	934,{
+	mes "[Cheshrumnir Guard]";
+	mes "You are at Cheshrumnir,";
+	mes "the hallowed grounds occupied";
+	mes "by our pope, Freya's mortal";
+	mes "incarnation. In respect for";
+	mes "her Excellency, I expect you";
+	mes "to enter with a pious heart.";
+	close;
+}
+
+rachel,155,243,3	duplicate(ChesGuard)	Cheshrumnir Guard	934
+
+
+rachel,209,198,3	script	Kinos#aru	921,{
+	mes "[Kid]";
+	mes "If you open this door, you";
+	mes "can go inside this house,";
+	mes "and live in one of the rooms!";
+	mes "Then, you can add your couches";
+	mes "and a bed, and all of your stuff!";
+	next;
+	mes "[Kid]";
+	mes "All you gotta do is...";
+	mes "Ugh! Turn this knob";
+	mes "and... Grrrrah! Open";
+	mes "this door... But it's";
+	mes "almost impossible..";
+	close;
+}
+
+rachel,260,175,3	script	Anku#aru	914,{
+	mes "[Anku]";
+	mes "It's been so long";
+	mes "already! I can't find";
+	mes "Himuhimu! Hide-and-Seek";
+	mes "shouldn't take this long...";
+	next;
+	mes "[Anku]";
+	mes "Oh, I'm already hungry...";
+	mes "Himuhimu, come out so";
+	mes "we can go home and eat!";
+	mes "Himuhimu! I give up!";
+	mes "H-Himuhimu...?";
+	close;
+}
+
+rachel,272,141,3	script	Himuhimu#aru	921,{
+	mes "[Himuhimu]";
+	mes "Zzzz...Z...";
+	mes "Anku, you'll never";
+	mes "find m... never find";
+	mes "me here... Zzzzz...";
+	mes "... So hungry...";
+	close;
+}
+
+rachel,268,120,1	script	Rachel Guard#1aru::RaGuard	934,{
+	mes "[Rachel Guard]";
+	mes "Welcome to Rachel";
+	mes "the capital of Arunafeltz.";
+	mes "Please ask our guide";
+	mes "at the center of the city";
+	mes "for information and";
+	mes "guest services.";
+	close;
+}
+
+rachel,125,33,5	duplicate(RaGuard)	Rachel Guard#2aru	934
+
+rachel,31,130,3	duplicate(RaGuard)	Rachel Guard#3aru	934
+
+rachel,76,77,3	script	Rachel Priest	927,{
+	mes "[Rachel Priest]";
+	mes "Bwahahaha! Somehow,";
+	mes "drinks taste much better";
+	mes "during work hours!";
+	close;
+}
+
+ra_fild12,45,230,3	script	Airship Guide#Fild	934,{
+	mes "[Airship Guide]";
+	mes "The Schwarzwald Republic's";
+	mes "international Airship service";
+	mes "for Arunafeltz can only be";
+	mes "accessed in Rachel. Please";
+	mes "follow the mark on your";
+	mes "Mini-Map to find the Airport.";
+	viewpoint 1,293,208,1,0xFF0000;
+	close;
+}
+
+//rachel,201,174,3	script	Freya's Follower	927,{
+rachel,201,174,3	script	Freya's Follower	926,{
+	mes "[Freya's Follower]";
+	mes "All of Arunafeltz believes";
+	mes "in the goddess Freya, but";
+	mes "there are those of us that";
+	mes "are more seriously involved";
+	mes "in adoration and worship.";
+	next;
+	mes "[Freya's Follower]";
+	mes "First, there are ''Freya's";
+	mes "Followers,'' men and women";
+	mes "like me that dress in holy masks";
+	mes "and garments. I realize that our";
+	mes "dress may seem a bit peculiar";
+	mes "to you, but that is our way.";
+	next;
+	mes "[Freya's Follower]";
+	mes "Then, there are the Priests";
+	mes "who dress in clean, white";
+	mes "flowing robes. They work in";
+	mes "the temple and serve the";
+	mes "community as religious leaders.";
+	next;
+	mes "[Freya's Follower]";
+	mes "Among these priests are";
+	mes "the elite High Priests that";
+	mes "directly assist our pope.";
+	mes "They wear more colorful";
+	mes "clothes as a sign of their";
+	mes "higher status in Rachel.";
+	next;
+	mes "[Freya's Follower]";
+	mes "All of us work tirelessly";
+	mes "to bring prosperity to";
+	mes "Arunafeltz, and to carry";
+	mes "out the teachings of our";
+	mes "beloved goddess Freya.";
+	close;
+}
+
+rachel,206,30,3	script	Freya's Priest#play	920,{
+	mes "[Freya's Priest]";
+	mes "This...";
+	mes "bores me...";
+	next;
+	mes "[Freya's Priest]";
+	mes "You!";
+	mes "Entertain me!";
+	emotion ET_ANGER;
+	next;
+	if (select("What? You can't tell me what to do!:You got it.") == 1) {
+		mes "[Freya's Priest]";
+		mes "Oh. That much is";
+		mes "true, I suppose.";
+		close;
+	}
+	mes "[Freya's Priest]";
+	mes "Well, then,";
+	mes "what will you be";
+	mes "doing to entertain me?";
+	next;
+	if (select("Here's a funny story...:I will do what you want me to do.") == 1) {
+		mes "^3355FFYou told her the first";
+		mes "funny story that you";
+		mes "could think of.^000000";
+		specialeffect2 EF_TALK_FROSTJOKE;
+		next;
+		mes "[Freya's Priest]";
+		mes "That's supposed to";
+		mes "be funny? I suppose";
+		mes "that I don't understand";
+		mes "hoi polloi humor.";
+		close;
+	}
+	mes "[Freya's Priest]";
+	mes "Fine, fine~";
+	mes "Let me see what these";
+	mes "item of yours can do...";
+	mes "Oh? Oh! That's wonderful!";
+	close2;
+	set .@play,rand(1,10);
+	if (.@play < 3)
+		//consumeitem 601; //Wing_Of_Fly
+		warp "Random",0,0;
+	else if (.@play < 5)
+		consumeitem 12016; //Speed_Up_Potion
+	else
+		consumeitem 12017; //Slow_Down_Potion
+	end;
+}
+
+rachel,197,137,3	script	Bard#aru	51,{
+	mes "[Bard]";
+	mes "I've wandered this";
+	mes "land, singing my songs~";
+	mes "Searching for someone";
+	mes "for my heart longs~";
+	next;
+	mes "[Bard]";
+	mes "Can I fulfill this hope~?";
+	mes "Meeting the girl with";
+	mes "skin as white as lilies,";
+	mes "eyes sparkling like stars~";
+	mes "Yes, I'm talking about the pope~";
+	mes "Pope, yeah~ Pope, yeah~";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "You must be off your";
+	mes "rocker singing that";
+	mes "kind of song here";
+	mes "in Arunafeltz!";
+	next;
+	mes ".........";
+	mes ".........";
+	mes ".........";
+	emotion ET_CRY;
+	close;
+}
+
+ra_temple,148,91,3	script	Follower Akarna	916,{
+	mes "[Follower Akarna]";
+	mes "Cheshrumnir...";
+	mes "It is said that one";
+	mes "day, our goddess Freya";
+	mes "will descend to this place";
+	mes "in all of her glory. I hope";
+	mes "that I live to see that.";
+	close;
+}
+
+ra_temple,115,148,7	script	Follower Yakum	916,{
+	mes "[Follower Yakum]";
+	mes "......";
+	mes ".........";
+	mes "............";
+	next;
+	mes "^3355FFShe is completely";
+	mes "immersed in deep,";
+	mes "meditative prayer.";
+	mes "It'd be rude to";
+	mes "disturb her now.^000000";
+	close;
+}
+
+ra_temin,287,88,7	script	Follower Lekua	926,{
+	mes "[Follower Lekua]";
+	mes "Look at these flowers.";
+	mes "Aren't they so beautiful?";
+	mes "I've spent a lot of time";
+	mes "cultivating this flower garden.";
+	next;
+	mes "[Follower Lekua]";
+	mes "I think it's Freya's";
+	mes "will for us to";
+	mes "bring as much beauty into";
+	mes "the world as we can. What";
+	mes "do you think about that?";
+	close;
+}
+
+//ra_temin,228,303,5	script	Freya's Follower#in1	927,{
+ra_temin,228,303,5	script	Freya's Follower#in1	926,{
+	mes "[Freya's Follower]";
+	mes "Once again, I didn't get";
+	mes "any sleep yesterday... I'm";
+	mes "praying so hard for Freya's";
+	mes "second coming. I'm exhausted,";
+	mes "but I feel pretty good about";
+	mes "making that small sacrifice.";
+	close;
+}
+
+//ra_temin,230,303,3	script	Freya's Follower#in2	927,{
+ra_temin,230,303,3	script	Freya's Follower#in2	926,{
+	mes "[Freya's Follower]";
+	mes "You have done well,";
+	mes "my brother. I am certain";
+	mes "that Freya would be proud";
+	mes "of all your effots.";
+	close;
+}
+
+ra_temin,138,64,5	script	Child Follower#in1	921,{
+	mes "[Child Follower]";
+	mes "No! My Mingming is dead!";
+	next;
+	select("Mingming?");
+	mes "[Child Follower]";
+	mes "Mingming is a sick bird";
+	mes "I found on the street, and";
+	mes "I really wanted it to just";
+	mes "rest and be healthy again";
+	mes "but it died! Waaaaah!";
+	emotion ET_CRY;
+	next;
+	mes "[Child Follower]";
+	mes "I... I'm going to";
+	mes "try to ask the pope!";
+	mes "M-maybe she can bring";
+	mes "Mingming back to life!";
+	mes "Do you know how I can";
+	mes "find our pope?";
+	close;
+}
+
+
+//===== Set 2 ================================================
+ra_fild12,283,208,3	script	Apprentice Priestess	914,{
+	if ($rachel_donate < 10000) {
+		mes "[Papaii]";
+		mes "Welcome to Arunafeltz,";
+		mes "adventurer! Enjoy your stay~";
+		next;
+		if (select("Are you a guide?:Thanks, have a good day.") == 1) {
+			mes "[Papaii]";
+			mes "Oh, actually, if you";
+			mes "want to speak to a guide,";
+			mes "head west to Rachel, and";
+			mes "then go north from the plaza";
+			mes "in the center of the city.";
+			mes "You'll find one over there.";
+			next;
+			mes "[Papaii]";
+			mes "My name is Papaii,";
+			mes "and I've been sent here to";
+			mes "promote the upcoming festival";
+			mes "in honor of Freya. I encourage";
+			mes "you to donate for our festival";
+			mes "if you can spare the zeny.";
+			next;
+			mes "[Papaii]";
+			mes "If you're interested in";
+			mes "learning more, then please";
+			mes "visit our temple, which will";
+			mes "be accepting donations and";
+			mes "hosting the festival, and";
+			mes "speak to Priestess Nemma.";
+			next;
+			mes "[Papaii]";
+			mes "If you donate, you can";
+			mes "receive Lottery Tickets";
+			mes "that you can redeem for";
+			mes "randomly selected items from";
+			mes "the temple's storage. May";
+			mes "Freya bless you, traveler~";
+			close;
+		}
+		mes "[Papaii]";
+		mes "May Freya bless you.";
+		mes "If you have time, please";
+		mes "visit our temple and make";
+		mes "a donation if you can~";
+		close;
+	}
+	mes "[Papaii]";
+	mes "Welcome to Arunafeltz!";
+	mes "The city over the rampart";
+	mes "is Rachel, the capital of";
+	mes "Arunafeltz. If you'd like to";
+	mes "rest from your travels, why";
+	mes "don't you visit Rachel?";
+	next;
+	if (select("Are you a guide?:Tell me more about Rachel.") == 1) {
+		mes "[Papaii]";
+		mes "Actually, my name is";
+		mes "Papaii, and I'm stationed";
+		mes "here on behalf of the temple";
+		mes "spread awareness of this our";
+		mes "religion to visiting tourists.";
+		next;
+		mes "[Papaii]";
+		mes "The entire nation of";
+		mes "Arunafeltz worships the";
+		mes "goddess Freya, and most";
+		mes "aspects of our lives are";
+		mes "largely influenced by our";
+		mes "religion. Did you know that?";
+		next;
+		mes "[Papaii]";
+		mes "I invite you to visit";
+		mes "our temple if you'd like";
+		mes "to learn more about goddess";
+		mes "Freya. May Freya guide you";
+		mes "in all that you do, and may she";
+		mes "protect you in your journeys!";
+		next;
+		mes "[Papaii]";
+		mes "Welcome to Arunafeltz!";
+		mes "The city over the rampart";
+		mes "is Rachel, the capital of";
+		mes "Arunafeltz. If you'd like to";
+		mes "rest from your travels, why";
+		mes "don't you visit Rachel?";
+		close;
+	}
+	mes "[Papaii]";
+	mes "Well, Rachel used to be";
+	mes "a barren desert until our";
+	mes "goddess led our ancestors to";
+	mes "this land. They cultivated the";
+	mes "desert by Freya's grace, and";
+	mes "made this area habitable.";
+	next;
+	mes "[Papaii]";
+	mes "Everything that you see here";
+	mes "has been artificially created";
+	mes "by humans. See? The blessings";
+	mes "of Freya truly enable us to";
+	mes "do miraculous things. You'll";
+	mes "see once you enter the capital.";
+	close;
+}
+
+rachel,127,117,4	script	Child Follower#2	914,{
+	mes "[Deno]";
+	mes "Although we pray to";
+	mes "the goddess Freya and";
+	mes "ask her for all sorts of";
+	mes "things, we can't expect";
+	mes "her to do everything for us.";
+	next;
+	mes "[Deno]";
+	mes "As humans, it is our";
+	mes "responsibility to do all";
+	mes "in our power to conceive";
+	mes "our own happiness. We";
+	mes "believe that if it is Freya's";
+	mes "will, then it shall be realized.";
+	next;
+	emotion ET_QUESTION;
+	mes "[Deno]";
+	mes "I know it might seem";
+	mes "a little confusing to";
+	mes "an outsider, the idea of";
+	mes "being reliant on our goddess";
+	mes "while relying our ourselves.";
+	close;
+}
+
+ra_temple,167,155,4	script	Child Follower#3	914,{
+	mes "[Lewei]";
+	mes "Shushh!";
+	mes "Be quiet.";
+	next;
+	mes "[Lewei]";
+	mes "......";
+	mes ".........";
+	next;
+	mes "[Lewei]";
+	mes "Go away! If someone!";
+	mes "sees you, I'm gonna";
+	mes "get caught, you jerk!";
+	next;
+	if (select("What are you doing?:Alright.") == 1) {
+		mes "[Lewei]";
+		mes "Hellooo~?";
+		mes "Can't you see?";
+		mes "It's called Hide-and-";
+		mes "Go-Seek. Gee whiz!";
+		mes "Hurry, get away!";
+		close;
+	}
+	mes "[Lewei]";
+	mes "Hurry, and get";
+	mes "outta here!";
+	close;
+}
+
+ra_temple,179,161,7	script	Child Follower#4	921,{
+	mes "[Zhikka]";
+	mes "Shh! I'm playing";
+	mes "Hide-and-Seek. Would";
+	mes "you leave me alone, please?";
+	mes "I don't wanna get caught again!";
+	mes "Maybe it's because I always";
+	mes "use the same hiding place...";
+	close;
+}
+
+ra_temple,77,114,7	script	Child Follower#5	921,{
+	mes "[Emmet]";
+	mes "Oh my Freya! You scared me!";
+	mes "I thought you were one of the";
+	mes "kids playing Hide-and-Seek!";
+	mes "Ack! Get away, get away!";
+	mes "Can't let them find me!";
+	close;
+}
+
+ra_temple,172,113,5	script	Child Follower#6	921,{
+	mes "[Harse]";
+	mes "Where are yoooou~";
+	mes "Come out, come out";
+	mes "wherever you are~";
+	next;
+	mes "[Harse]";
+	mes "What the Freya?";
+	mes "What's a grown-up";
+	mes "doing around here?";
+	mes "Can't you see I'm";
+	mes "playing Hide-and-Go-Seek?";
+	close;
+}
+
+airplane,238,54,7	script	Adventurer	4_M_ORIENT01,{
+	if ($rachel_donate < 10000) {
+		mes "[Adventurer]";
+		mes "You know that the temple";
+		mes "in Rachel is accepting";
+		mes "donations? They're asking";
+		mes "for a lot of zeny, but my buddies";
+		mes "and I donated anyway. Heck, we";
+		mes "wanted to see what we could win~";
+		next;
+		mes "[Adventurer]";
+		mes "One of my buddies was";
+		mes "real freakin' lucky. He";
+		mes "got some kind of album,";
+		mes "opened it up and found";
+		mes "some kinda card inside.";
+		mes "Really pretty stuff.";
+		next;
+		mes "[Adventurer]";
+		mes "Another buddy of mine?";
+		mes "Not so lucky. He got a";
+		mes "Condensed White Potion...";
+		mes "Yeah, I don't blame him for";
+		mes "feeling a little gypped, but he";
+		mes "donated for a good cause, right?";
+		next;
+		mes "[Adventurer]";
+		mes "Me? I got some yellow";
+		mes "bell shaped fruit. I didn't";
+		mes "really feel like eating it,";
+		mes "but after I took a bite,";
+		mes "it was like... whoa.";
+		mes "So refreshing!";
+		next;
+		mes "[Adventurer]";
+		mes "Anyway, all the donations";
+		mes "will be used to fund some";
+		mes "kinda festival. Sooo, I don't";
+		mes "think they'll be holding this";
+		mes "special lottery anymore once";
+		mes "they get enough money, you know?";
+		close;
+	}
+	mes "[Adventurer]";
+	mes "You know, one of the";
+	mes "priestesses at the temple";
+	mes "in Rachel looked troubled";
+	mes "for some reason. I should've";
+	mes "asked what was bothering her,";
+	mes "and offered my help. Mm, nah.";
+	close;
+}

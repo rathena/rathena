@@ -1,0 +1,393 @@
+//===== rAthena Script =======================================
+//= Juno City
+//===== By: ==================================================
+//= KitsuneStarwind, kobra_k88, L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= NPCs for the City of Juno
+//===== Additional Comments: =================================
+//= Added additional npcs.  Added Metto quest. [kobra_k88]
+//= Moved item quest to quest folder. Re-edited a majority of the npcs. [kobra_k88]
+//=a Removed duplicate npcs already found in the sage quest.
+//= Fixed & Spellchecked [massdriller]
+//= 1.3 Started updating Juno NPCs based on iRO. 10% complete.
+//= 1.3.2 Started updating Juno NPCs based on iRO. 30% complete.
+//= 1.3.3 Removed Noyee NPC (it's implemented in sleipnir_seal.txt)
+//= 1.4 Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//=     Added Juno Airship Representative.
+//= 1.4a Corrected a Typo error (bugreport:716) [Samuray22]
+//= 1.5 Added Renewal coordinates for Payon and Izlude. [Euphy]
+//=     Split Soldier NPCs into Pre-RE/RE (sprite change).
+//============================================================
+
+// Juno
+//============================================================
+yuno,184,173,4	script	Freidrich#juno	729,{
+	if (rand(1,5) == 1) {
+		mes "[Freidrich]";
+		mes "^3355FFJuno^000000 is kept aloft in the air by an ancient and mysterious force.";
+		next;
+		mes "[Freidrich]";
+		mes "This power is said to come from a relic from an ancient civilization called ^3355FFJuperos^000000 which existed here long before Juno.";
+		next;
+		mes "[Freidrich]";
+		mes "Research revealed that Juno's power source based on ^3355FFPieces of Ymir's Heart^000000. I hear that this power source is found where Juperos used to exist.";
+		next;
+		mes "[Freidrich]";
+		mes "Since many scholars have been coming to Juno to study and research this power source, our city is basically a well known mecca for scholars.";
+		close;
+	}
+	else {
+		mes "[Freidrich]";
+		mes "The city of Sages,";
+		mes "^3355FFJuno,^000000 is made of";
+		mes "three islands.";
+		next;
+		mes "[Freidrich]";
+		mes "These are Solomon, the island of honor, Mineta, the island of prosperity, and Snotora, the island of knowledge.";
+		next;
+		mes "[Freidrich]";
+		mes "The location of each island is";
+		mes "North-west : Solomon";
+		mes "North-east : Snotora";
+		mes "South : Mineta.";
+		close;
+	}
+}
+
+yuno,337,227,4	script	Juno Granny#juno	103,{
+	mes "[Granny]";
+	if (rand(1,50) == 1) {
+		if (Zeny > 999) {
+			mes "So, do you enjoy candy?";
+			next;
+			mes "^3355FFGranny hands you some candy^000000.";
+			next;
+			mes "[Granny]";
+			mes "You've already chosen. It doesn't matter whether or not you get this candy. That doesn't matter at all. You have to understand why it's happened.";
+			next;
+			mes "[Granny]";
+			mes "Here's ^3355FF1,000 zeny^000000.";
+			mes "Do you accept this?";
+			next;
+			if (select("Accept:Do not accept") == 1) {
+				mes "[Granny]";
+				mes "*Giggle*";
+				mes "There you go~";
+				set Zeny, Zeny-1000;
+				getitem 529,1; //Candy
+				next;
+				mes "[Granny]";
+				mes "*Giggle*";
+				mes "Well then...";
+				mes "See you ~";
+				close;
+			}
+			mes "[Granny]";
+			mes "Yes, that's right. Now you must ask yourself why you didn't accept the candy I offered.";
+			close;
+		}
+		else {
+			mes "*Giggle giggle*";
+			mes "The time has come.";
+			mes "Well then...";
+			close;
+		}
+	}
+	else {
+		mes "I am an old Sage granny who foresees everything...";
+		next;
+		mes "[Granny]";
+		mes "Have you heard of a boss monster that has been around Juno for a long time? It's known only as the ^FF3355Lord of the Dead^000000.";
+		next;
+		mes "[Granny]";
+		mes "It is rumored to be from the realm of the dead. It brings many undead monsters with it, intending to lead living creatures to its cold and icy realm.";
+		next;
+		mes "[Granny]";
+		mes "You have already chosen whether or not you will challenge the Lord of the Dead. All you need to do right now is understand why you made the decision.";
+		close;
+	}
+}
+
+yuno,328,239,4	script	Juno Fighter#juno	732,{
+	mes "[Sergiof]";
+	mes "My name is Sergiof,";
+	mes "the fighter who";
+	mes "serves Granny.";
+	next;
+	mes "[Sergiof]";
+	mes "I will tell you about ^3355FFGrand Peco^000000 which is a high level Peco Peco. Grand Peco is faster than Peco Peco and is quite aggressive.";
+	next;
+	mes "[Sergiof]";
+	mes "It attacks using its strong bill and many Peco Pecos follow it. There's quite a difference in power between Peco Peco and the Grand Peco.";
+	close;
+}
+
+yuno,343,68,4	script	Juno Despot#juno	730,{
+	mes "[Ninno]";
+	if (rand(1,1000) == 1) {
+		mes "You are very lucky to have me tell you this story. This only happens by ^FF33551 out of a 1,000 chance^000000.";
+		next;
+		mes "[Ninno]";
+		mes "This world you are experiencing is actually fabricated! It's time for you to see reality for what it is!";
+		next;
+		mes "[Ninno]";
+		mes "Open your eyes! Stop being manipulated by virtual reality!";
+		close2;
+		warp "prontera",182,206;
+		end;
+	}
+	mes "Have you ever heard of an Egyptian king who was once believed to be a son of a god? His name is ^3355FFPharoah^000000.";
+	next;
+	mes "[Ninno]";
+	mes "He was rumored to be a high sorcerer that used his power to curse innocents. It is said that he is still around, placing his curses on people.";
+	next;
+	mes "[Ninno]";
+	mes "As an adventurer, it's possible that you may see him in your travels. Be careful...";
+	close;
+}
+
+yuno,165,111,4	script	Juno Sage#juno	123,,{
+	mes "[Le Morpheus]";
+	if (rand(1,50) == 25) {
+		if (Zeny > 4999) {
+			mes "Look in my hand. I am holding two different kinds of herbs.";
+			next;
+			mes "[Le Morpheus]";
+			mes "One is a ^3355FFBlue Herb^000000 which will make you forget about reality and keep you in this virtual reality^000000.";
+			next;
+			mes "[Le Morpheus]";
+			mes "The other is a ^FF3355Red Herb^000000 which will reveal to you what is true and real.";
+			next;
+			mes "[Le Morpheus]";
+			mes "Whichever one you choose, you must spend ^3355FF5,000 zeny^000000. Now, please select one.";
+			next;
+			if (select("Choose ^FF3355Red Herb^000000:Choose ^3355FFBlue Herb^000000.") == 1) {
+				mes "[Le Morpheus]";
+				mes "As you have chosen, you will forget everything, and remain in this virtual reality.";
+				set Zeny, Zeny-5000;
+				getitem 507,1; //Red_Herb
+				close2;
+				warp "prontera",182,206;
+				end;
+			}
+			mes "[Le Morpheus]";
+			mes "You will see the truth.";
+			set Zeny, Zeny-5000;
+			getitem 510,1; //Blue_Herb
+			close2;
+			warp "pay_dun03",200,222;
+			end;
+		}
+		else {
+			mes "Hmm. I'm sorry to say you just missed a fortunate chance. However, I can tell you don't have enough wealth to bring this fortune to fruition.";
+			close;
+		}
+	}
+	else {
+		mes "^3355FFApocalypse^000000...";
+		mes "It is the name of an android that used to guard Juno long ago.";
+		next;
+		mes "[Le Morpheus]";
+		mes "Because its artificial intelligence has corrupted over the years, it can no longer distinguish comrades from enemies. Sadly, that android is nothing but a mindless monster now.";
+		close;
+	}
+}
+
+yuno,157,205,4	script	Juno Artisan#juno	54,{
+	mes "[Artisan]";
+	mes "*Mumble mumble...*";
+	next;
+	mes "[Artisan]";
+	mes "Oh, hello there. Let me introduce myself. I am an artisan who tries to succeed the rights and duties of item makers in Juno.";
+	next;
+	switch(select("About Powerful Equipment:About Unique Items:About Authentic Food:End Conversation")) {
+	case 1:
+		mes "[Artisan]";
+		mes "Let me suggest the ^3355FFHoly Guard^000000 and ^3355FFHoly Avenger^000000 which are special items for Crusaders.";
+		next;
+		mes "[Artisan]";
+		mes "These pieces of equipment are very light and have sufficient abilities. They also happen to possess holy power.";
+		next;
+		mes "[Artisan]";
+		mes "Therefore, this equipment is more powerful over some kinds of monsters such as Ghosts or the Undead.";
+		next;
+		mes "[Artisan]";
+		mes "However it is rumored that only a few chosen Crusaders are able to obtain those items due of their rarity.";
+		close;
+	case 2:
+		mes "[Artisan]";
+		mes "It looks like a simple scroll marked with concentric circles and a star. Although the ^FF3355Worn-Out Magic Scroll^000000 is very old, it's wanted by many Sages for research purposes.";
+		next;
+		mes "[Artisan]";
+		mes "It seems you can use that item when you chant a high-level magic spell.";
+		close;
+	case 3:
+		mes "[Artisan]";
+		mes "^3355FFRice Cake^000000! Yes, it's a traditional food that's favored by a lot of people. There's a lot of nostalgic memories of old fashioned markets that are connected to the Rice Cake.";
+		next;
+		mes "[Artisan]";
+		mes "Ahhh~";
+		mes "I wish I could eat a bit of Rice Cake right now.";
+		close;
+	case 4:
+		mes "[Artisan]";
+		mes "Although Juno is known as a city of Sages, I hope you understand that ordinary people live and prosper here as well. Please enjoy the unique atmosphere that Juno has to offer.";
+		close;
+	}
+}
+
+-	script	::JunoSoldier1	-1,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "There is a monster near here known as Lava Golem. This golem is made from a stone heart whose power happened to be amplified with magic power when it was swept away by molten rock.";
+	next;
+	mes "[Juno Soldier]";
+	mes "The lava dripping from its body is so hot that it can melt down armor and weapons made out of high quality steel.";
+	next;
+	mes "[Juno Soldier]";
+	mes "You'd better be careful when you encounter this monster. It will damage armor and weapons in the twinkling of an eye.";
+	close;
+}
+
+-	script	::JunoSoldier2	-1,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Geographer...";
+	mes "That monster looks like a flower blooming from the ground.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Strangely, it can extend its body a long distance. Even if you're far away from it, it can still pose a threat.";
+	next;
+	mes "[Juno Soldier]";
+	mes "The name of this monster originated from a story about a poor geographer who, unfortunately, was eaten by this monster while he was immersed in his studies.";
+	close;
+}
+
+-	script	::JunoSoldier3	-1,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Near Juno, there exists a fallen angel named 'False Angel.' It feigns innocence, pretending to bless adventurers and then stabbing them in the back without any warning.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Don't be fooled by its appearance, or you'll find yourself in trouble.";
+	close;
+}
+
+-	script	::JunoSoldier4	-1,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "'Goat' is a monster that was an antelope living in the high mountains that was somehow turned into a monster.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Even if you manage to dodge to its horns, you still need to be wary of its powerful legs.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Goat's legs are so strong because it's always climbing cliffs when it's not busy slaughtering the innocent.";
+	close;
+}
+
+-	script	::JunoSoldier5	-1,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Have you ever";
+	mes "seen a Large Jellopy?";
+	mes "Those things are huuuge!";
+	next;
+	mes "[Juno Soldier]";
+	mes "It's hard to believe";
+	mes "that such a large and";
+	mes "shining jellopy even exists!";
+	close;
+}
+
+-	script	::JunoSoldier6	-1,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "Among the Sage's weapons, there is a 'Dagger of Counter.'";
+	next;
+	mes "[Juno Soldier]";
+	mes "Its use is limited to the Sage class, and it increases the chance of inflicting critical attacks. So, for Sages, that dagger can be very useful, as well as make them look stylish in battle.";
+	close;
+}
+
+-	script	::JunoSoldier7	-1,{
+	mes "[Juno Soldier]";
+	mes "Welcome to Juno, the city of noble-mindedness.";
+	next;
+	mes "[Juno Soldier]";
+	mes "There is a holy shield named 'Sacred Mission' which can only be used by Crusaders.";
+	next;
+	mes "[Juno Soldier]";
+	mes "It's a long and narrow shield with an angel wing engraved in the center of the front side. Against Devil and Undead monsters, it is especially powerful.";
+	close;
+}
+
+yuno,142,183,5	script	Airship Representative	100,{
+	mes "[Airship Representative]";
+	mes "Good day, I am here to inform you";
+	mes "about the Juno Airship which";
+	mes "we plan to operate in the near future.";
+	next;
+	mes "[Air ship Representative]";
+	mes "Unfortunately, it is still in";
+	mes "development, and we've yet";
+	mes "to complete testing. However,";
+	mes "we feel the need to let our";
+	mes "eager customers know of our";
+	mes "progress.";
+	next;
+	mes "[Airship Representative]";
+	mes "The Airship we're developing will provide you with convenient travel to any town. You can also enjoy the sights while aloft in the sky. Unique products from various areas will also be provided.";
+	next;
+	mes "[Airship Representative]";
+	mes "We promise our customers an";
+	mes "amazing travel experience";
+	mes "once the Airship is in";
+	mes "operation. In the meantime,";
+	mes "we are providing a special";
+	mes "teleport service.";
+	next;
+	mes "[Airship Representative]";
+	mes "The teleport fee is 1,800 zeny, regardless of where you want to go. Please let me know your desired destination.";
+	next;
+	switch(select("Prontera:Izlude:Geffen:Morocc:Payon:Alberta:Comodo:Cancel")) {
+		case 1: callsub S_Warp,"prontera",116,72;
+		case 2: if (checkre(0)) callsub S_Warp,"izlude",128,98; else callsub S_Warp,"izlude",94,103;
+		case 3: callsub S_Warp,"geffen",120,39;
+		case 4: callsub S_Warp,"morocc",156,46;
+		case 5: if (checkre(0)) callsub S_Warp,"payon",162,59; else callsub S_Warp,"payon",69,100;
+		case 6: callsub S_Warp,"alberta",117,56;
+		case 7: callsub S_Warp,"comodo",209,143;
+		case 8: close;
+	}
+
+S_Warp:
+	if (Zeny >= 1800) {
+		set Zeny, Zeny-1800;
+		warp getarg(0),getarg(1),getarg(2);
+		end;
+	}
+	else {
+		mes "[Airship Representative]";
+		mes "I regret to say that you do not have enough zeny with you.";
+		mes "Please check the amount of zeny that you have.";
+		close;
+	}
+}

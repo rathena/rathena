@@ -276,13 +276,8 @@ function	script	F_KafStor	{
 		}
 	}
 	callfunc("F_CheckKafCode");	//check your storage password, if set
-	if (vip_status(1)){
-		close2;
-		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
-	}else{
-		close2;
-		openstorage;
-	}
+	close2;
+	openstorage;
 	cutin "", 255;
 	end;
 }

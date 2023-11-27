@@ -1,0 +1,67 @@
+//===== rAthena Script ======================================
+//= Dimensional Gap Warps
+//===== Description: =========================================
+//= Warps for Dimensional Gap
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Nova]
+//============================================================
+
+mid_camp,210,292,4	script	Transport Device#01	10007,{
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
+	next;
+	switch(select("ใช่:ไม่")) {
+	case 1:
+		close2;
+		warp "dali",141,82;
+		end;
+	case 2:
+		close;
+	}
+}
+
+moc_fild22b,222,200,4	script	Transport Device#02	10007,{
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
+	next;
+	switch(select("ใช่:ไม่")) {
+	case 1:
+		close2;
+		warp "dali",119,56;
+		end;
+	case 2:
+		close;
+	}
+}
+
+bif_fild01,318,159,4	script	Transport Device#03	10007,{
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
+	next;
+	switch(select("ใช่:ไม่")) {
+	case 1:
+		close2;
+		warp "dali",43,92;
+		end;
+	case 2:
+		close;
+	}
+}
+
+dic_fild02,241,31,4	script	Transport Device#04	10007,{
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
+	next;
+	switch(select("ใช่:ไม่")) {
+	case 1:
+		close2;
+		warp "dali",41,134;
+		end;
+	case 2:
+		close;
+	}
+}
+
+dali,149,82,0	warp	dg001	2,2,mid_camp,210,289
+dali,122,48,0	warp	dg002	2,2,moc_fild22b,227,200
+dali,38,87,0	warp	dg003	2,2,bif_fild01,318,155
+dali,34,139,0	warp	dg004	2,2,dic_fild02,237,32
+
+dali,64,129,0	warp	#dali_to_dali02	1,1,dali02,66,101
+dali02,66,97,0	warp	#dali02_to_dali	1,1,dali,64,125

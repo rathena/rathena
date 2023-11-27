@@ -1,0 +1,175 @@
+//===== rAthena Script ======================================= 
+//= Prontera Warp Script
+//===== Description: =========================================
+//= Warp Points for Prontera
+//===== Changelogs: ==========================================
+//= 1.0 Prontera castle map changed in ep16.1 [Capuche]
+//= 1.1 Episode 17.2 Sage's Legacy update [crazyarashi]
+//= 1.2 Added warp to the Illusion Investigation room [Capuche]
+//============================================================
+
+prt_lib_q,9,25,0	script	lib_q_to_pprt	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (ep16_royal < 21) {
+		mes "There are more to find out.";
+		mes "Go back to Nillem.";
+		close;
+	}
+	warp "prt_q",155,354;
+	end;
+}
+
+prt_cas,152,163,0	script	way_to_qroom_L_qroom_L_to_way	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (ep16_royal == 0) {
+		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#02", bc_self;
+		setpcblock PCBLOCK_NPC, true;
+		sleep2 3000;
+		setpcblock PCBLOCK_NPC, false;
+		npctalk "If you are invited, a severnt should be there to greet you. Please be guided officially.", "Royal Guardian Knight#02", bc_self;
+		end;
+	}
+	warp "prt_cas_q",150,8;
+    end;
+}
+
+prt_cas,278,163,0	script	way_to_qroom_R_qroom_R_to_way	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (ep16_royal == 0) {
+		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#03", bc_self;
+		setpcblock PCBLOCK_NPC, true;
+		sleep2 3000;
+		setpcblock PCBLOCK_NPC, false;
+		npctalk "If you are invited, a severnt should be there to greet you. Please be guided officially.", "Royal Guardian Knight#03", bc_self;
+		end;
+	}
+	warp "prt_cas_q",135,119;
+    end;
+}
+
+prt_cas_q,130,32,0	script	qroom_heine_in_qroom_heine_out	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (ep16_royal > 7 && ep16_royal < 16) {
+		mes "It is locked.";
+		close;
+	}
+	warp "prt_cas_q",30,78;
+    end;
+}
+
+prt_cas_q,130,56,0	script	qroom_nerius_in_qroom_nerius_out	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (ep16_royal > 2 && ep16_royal < 15 && ep16_royal != 7) {
+		mes "It is locked.";
+		close;
+	}
+	if (ep16_royal == 15) {
+		if (isbegin_quest(7697) < 1) {
+			mes "Let's first reply to the servant that the invitation will be accepted.";
+			close;
+		}
+	}
+	warp "prt_cas_q",30,128;
+    end;
+}
+
+prt_lib,9,24,0	script	lib_to_prt_prison	WARPNPC,1,1,{
+	end;
+OnTouch_:
+	if (ep16_royal > 13)
+		warp "prt_pri00",60,127;
+	else {
+		mes "[Guardian Knight]";
+		mes "You cannot go that way.";
+		close2;
+		warp "prt_lib",60,61;
+	}
+	end;
+}
+
+prt_cas,188,258,0	script	prt_cas_to_prt_pri00	WARPNPC,1,1,{
+	end;
+OnTouch_:
+	if (ep16_royal >= 2)
+		warp "prt_pri00",54,134;
+	else {
+		npctalk "You shouldn't enter the place like that.", "Guardian Knight#ep16_prigate01", bc_self;
+		setpcblock PCBLOCK_NPC, true;
+		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
+		warp "prt_cas",182,258;
+	}
+	end;
+}
+
+prt_pri00,54,139,0	warp	prt_pri_to_prt_cas	1,1,prt_cas,182,258
+
+prt_prison,155,290,0	warp2	prt_prison_OUT	2,2,prt_pri00,50,120
+
+prt_q,155,358,0	warp	#prt_q_tp_lib_q	1,1,prt_lib_q,89,43
+
+prt_cas_q,34,78,0	warp	qroom_heine_out_qroom_heine_in	1,1,prt_cas_q,134,32
+prt_cas_q,154,8,0	warp	qroom_L_to_way_way_to_qroom_L	1,1,prt_cas,156,163
+prt_cas_q,132,119,0	warp	qroom_R_to_way_way_to_qroom_R	1,1,prt_cas,274,163
+prt_cas_q,130,8,0	warp	qroom_vip_in_qroom_vip_out	1,1,prt_cas_q,30,28
+prt_cas_q,34,28,0	warp	qroom_vip_out_qroom_vip_in	1,1,prt_cas_q,134,8
+
+prt_cas_q,34,128,0	warp	qroom_nerius_out_qroom_nerius_in	1,1,prt_cas_q,134,56
+prt_cas_q,130,80,0	warp	qroom_valter_in_qroom_balter_out	1,1,prt_cas_q,30,178
+prt_cas_q,34,178,0	warp	qroom_balter_out_qroom_valter_in	1,1,prt_cas_q,134,80
+prt_cas_q,153,119,0	warp	qroom_wigner_in_qroom_wigner_out	1,1,prt_cas_q,78,21
+prt_cas_q,74,21,0	warp	qroom_wigner_out_qroom_wigner_in	1,1,prt_cas_q,149,119
+prt_cas_q,153,143,0	warp	qroom_richard_in_qroom_richard_out	1,1,prt_cas_q,78,77
+prt_cas_q,74,77,0	warp	qroom_richard_out_qroom_richard_in	1,1,prt_cas_q,149,143
+prt_cas_q,153,167,0	warp	qroom_geob_in_qroom_geob_out	1,1,prt_cas_q,78,131
+prt_cas_q,74,131,0	warp	qroom_geob_out_qroom_geob_in	1,1,prt_cas_q,149,167
+prt_cas_q,153,191,0	warp	qroom_lugen_in_qroom_lugen_out	1,1,prt_cas_q,78,189
+prt_cas_q,74,189,0	warp	qroom_lugen_out_qroom_lugen_in	1,1,prt_cas_q,149,191
+prt_cas,216,184,0	warp	mainhall_in_mainhall_out	1,1,prt_cas,93,212
+prt_cas,93,208,0	warp	mainhall_out_mainhall_in	1,1,prt_cas,216,180
+prt_cas,197,148,0	warp	guestroom_l1_in_guestroom_l1	1,1,prt_cas,31,117
+prt_cas,31,120,0	warp	guestroom_l1_guestroom_l1_in	1,1,prt_cas,197,152
+prt_cas,178,148,0	warp	guestroom_l2_in_guestroom_l2	1,1,prt_cas,27,43
+prt_cas,27,47,0	warp	guestroom_l2_guestroom_l2_in	1,1,prt_cas,178,152
+prt_cas,235,148,0	warp	guestroom_r1_in_guestroom_r1	1,1,prt_cas,174,104
+prt_cas,174,108,0	warp	guestroom_r1_guestroom_r1_in	1,1,prt_cas,235,152
+prt_cas,253,148,0	warp	guestroom_r2_in_guestroom_r2	1,1,prt_cas,174,37
+prt_cas,174,40,0	warp	guestroom_r2_guestroom_r2_in	1,1,prt_cas,253,152
+prt_cas,164,177,0	warp	way_up_L_way_down_L	1,1,prt_cas,54,156
+prt_cas,54,152,0	warp	way_down_L_way_up_L	1,1,prt_cas,164,172
+prt_cas,268,176,0	warp	way_up_R_way_down_R	1,1,prt_cas,110,156
+prt_cas,110,152,0	warp	way_down_R_way_up_R	1,1,prt_cas,268,172
+prt_cas,82,175,0	warp	way_to_gld_gld_to_cas	1,1,prt_gld,159,30
+prt_gld,159,24,0	warp	gld_to_cas_way_to_gld	1,1,prt_cas,82,171
+prt_cas,130,218,0	warp	library_in_library_out	1,1,prt_cas,303,48
+prt_cas,300,48,0	warp	library_out_library_in	1,1,prt_cas,127,218
+prt_cas,174,234,0	warp	cruroom_in_cruroom_out	1,1,prt_cas,247,107
+prt_cas,247,111,0	warp	cruroom_out_cruroom_in	1,1,prt_cas,174,237
+prt_cas,41,275,0	warp	cuisine_in_cuisine_out	1,1,prt_cas,320,182
+prt_cas,320,178,0	warp	cuisine_out_cuisine_in	1,1,prt_cas,41,271
+prt_cas,54,217,0	warp	dining_in_dining_out	1,1,prt_cas,388,137
+prt_cas,392,137,0	warp	dining_out_dining_in	1,1,prt_cas,58,217
+prt_cas,216,142,0	warp	cas_out_prt_to_cas	1,1,prontera,156,354
+prontera,156,358,0	warp	prt_to_cas_cas_out	1,1,prt_cas,216,146
+
+//============================================================
+//= Episode 17.2 Sage's Legacy update
+//============================================================
+prt_cas,146,330,0	warp	#ep172_prt_to_prt-0	1,1,prt_cas,309,288
+prt_cas,309,291,0	warp	#ep172_prt_to_prt-1	1,1,prt_cas,146,334
+prt_cas,48,330,0	warp	#ep172_prt_to_prt-2	1,1,prt_cas,252,242
+prt_cas,251,246,0	warp	#ep172_prt_to_prt-3	1,1,prt_cas,48,334
+prt_cas,20,342,0	warp	#ep172_prt_to_prt-4	1,1,prt_cas,269,313
+prt_cas,273,313,0	warp	#ep172_prt_to_prt-5	1,1,prt_cas,23,342
+prt_cas,254,347,0	warp	#ep172_prt_to_prt-6	1,1,prt_cas,96,18
+prt_cas,96,14,0	warp	#ep172_prt_to_prt-7	1,1,prt_cas,254,343
+prt_cas,174,342,0	warp	#ep172_prt_to_prt-8	1,1,prt_cas,322,336
+prt_cas,318,336,0	warp	#ep172_prt_to_prt-9	1,1,prt_cas,170,342
+
+prontera,50,228,0	warp	illusion123	2,2,prt_in,128,40
+prt_in,128,45,0	warp	illusion124	2,2,prontera,47,228

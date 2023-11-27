@@ -307,31 +307,8 @@ int chrif_save(map_session_data *sd, int flag) {
 	if (sd->premiumStorage.dirty)
 		storage_premiumStorage_save(sd);
 
-	if( flag&CSAVE_QUITTING ){
+	if (flag&CSAVE_QUITTING)
 		sd->state.storage_flag = 0; //Force close it.
-		
-		if( sd->goldpc_tid != INVALID_TIMER ){
-			const struct TimerData* td = get_timer( sd->goldpc_tid );
-
-			if( td != nullptr ){
-				// Get the remaining milliseconds until the next reward
-				t_tick remaining = td->tick - gettick();
-
-				// Always round up to full second and a little safety delay
-				remaining += ( remaining % 1000 ) + 2000;
-
-				// Store the seconds that already fully passed
-				pc_setreg2( sd, GOLDPC_SECONDS_VAR, battle_config.feature_goldpc_time - remaining / 1000 );
-
-				// If a player logs out or starts autotrade, stop counting
-				delete_timer( sd->goldpc_tid, pc_goldpc_update );
-				sd->goldpc_tid = INVALID_TIMER;
-			}
-		}else{
-			// Invalid timer anyway
-			sd->goldpc_tid = INVALID_TIMER;
-		}
-	}
 
 	//Saving of registry values.
 	if (sd->vars_dirty)
@@ -1597,9 +1574,6 @@ void chrif_parse_ack_vipActive(int fd) {
 			clif_displaymessage(sd->fd,msg_txt(sd,438));
 		}
 	}
-	
-	clif_goldpc_info( *sd );
-	
 	// Show info if status changed
 	if (((flag&0x4) || changed) && !sd->vip.disableshowrate) {
 		clif_display_pinfo( *sd );

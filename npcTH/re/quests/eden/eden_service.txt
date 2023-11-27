@@ -1,0 +1,67 @@
+//===== rAthena Script =======================================
+//= Eden Group Quests - Service NPCs
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Paradise Group storage access.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Replaced 2nd NPC with duplicate function. [Masao]
+//= 1.2 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.3 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+// Goods Cabinets :: pare_service
+//============================================================
+-	script	Goods Cabinet#00::pggc	-1,{
+	mes "It is a Goods Storage Cabinet.";
+	mes "A message is written on a piece of paper.";
+	next;
+	mes "+ Cabinet is exclusively +";
+	mes "+ for the Eden group +";
+	mes "If you want to use this";
+	mes "cabinet please check";
+	mes "the following:";
+	next;
+	mes "1.Are you a member";
+	mes "   of Eden group?";
+	mes "2.Have you learned";
+	mes "   enough basic skills?";
+	mes "3.Cabinet fee is";
+	mes "  ^4d4dff500 zeny^000000!";
+	next;
+	if (callfunc("F_HasEdenGroupMark")) {
+		mes "You need to insert zeny to use the cabinet.";
+		mes "Cost : 500 Zeny ";
+		mes "Would you like to use it?";
+		next;
+		switch(select("Use the Cabinet.:Cancel.")) {
+			case 1:
+				if (Zeny > 499) {
+					if(!callfunc("F_CanOpenStorage")){
+						mes "The cabinet is not working for me.";
+						mes "Maybe I am not yet qualified to use Cabinet.";
+						close;
+					}
+					set Zeny, Zeny - 500;
+					close2;
+					openstorage;
+					end;
+				}
+				mes "I don't have enough zeny.";
+				mes "I need at least 500 zeny to use the Cabinet.";
+				close;
+			case 2:
+				mes "I will use it next time.";
+				close;
+		}
+	}
+	mes "I need an Eden Group Mark to use this Cabinet.";
+	close;
+}
+moc_para01,173,120,0	duplicate(pggc)	Goods Cabinet#01	111
+moc_para01,170,120,0	duplicate(pggc)	Goods Cabinet#02	111

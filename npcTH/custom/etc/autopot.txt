@@ -1,0 +1,203 @@
+//===== rAthena Script =======================================
+//= Auto-Potion
+//===== Description: =========================================
+//= Provides an @autopot command to automatically use potions.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Euphy]
+//= 2.0 rewrite and adding SP option. [sader1992]
+//============================================================
+-	script	#autopot	-1,{
+OnInit:
+	.HP_Option = true;	//Allow HP option
+	.SP_Option = true;	//Allow SP option
+	.MinDelay = 100;	//Minimum Delay Allowed in milliseconds (Default and Recommended: 100) [lower values will increase server strain]
+	.MaxDelay = 1000;	//Maximum Delay Allowed in milliseconds (Default and Recommended: 1000)
+	setarray .blackList[0],0;	//Array of black listed item ID
+
+	if(!.HP_Option && !.SP_Option){
+		debugmes "Warning: @autopot both hp and sp are Disabled";
+		debugmes "Warning: @autopot script has been Disabled!";
+		end;
+	}
+	bindatcmd("autopot",strnpcinfo(0)+"::OnCommand",0,99);
+end;
+
+L_Help:
+	dispbottom "Available commands:";
+	if(.HP_Option && .SP_Option){
+		dispbottom "    @autopot <hp|sp> <item id> {<min hp|sp % [1..100]> {<delay [" + .MinDelay + ".."+.MaxDelay+"]>}}";
+		dispbottom "    @autopot <hp|sp> list";
+		dispbottom "    @autopot <hp|sp> <on|off>";
+	}else{
+		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> <item id> {<min " + (.HP_Option?"hp":"sp") + " % [1..100]> {<delay [" + .MinDelay + ".."+.MaxDelay+"]>}}";
+		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> list";
+		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> <on|off>";
+	}
+	dispbottom "    @autopot info";
+	dispbottom "    @autopot help";
+	dispbottom "    @autopot blacklist";
+	return;
+
+L_Info:
+	dispbottom "----------Auto-Potion Information-----------";
+	if(.HP_Option){
+		dispbottom "HP POTION:  " + getitemname(@autopot_hp_ID) + " (" + @autopot_hp_ID + ")";
+		dispbottom "MIN HP:   " + @autopot_hp_Min + " %";
+	}
+	if(.SP_Option){
+		dispbottom "SP POTION:  " + getitemname(@autopot_sp_ID) + " (" + @autopot_sp_ID + ")";
+		dispbottom "MIN SP:   " + @autopot_sp_Min + " %";
+	}
+	dispbottom "DELAY:    " + @autopot_delay + " ms";
+	dispbottom "---------------------------------------------";
+	return;
+
+L_Start:
+	deltimer strnpcinfo(3) + "::OnStart";
+	.@type$  = getarg(0,0);
+	.@potion = getarg(1,0);
+	setd "@autopot_" + .@type$ + "_Min",getarg(2,0);
+	@autopot_delay = getarg(3,.MinDelay);
+
+	if (getd("@autopot_" + .@type$ + "_Min")   < 1  || getd("@autopot_" + .@type$ + "_Min") > 100)  setd "@autopot_" + .@type$ + "_Min",90;
+	if (@autopot_delay < .MinDelay) @autopot_delay = .MinDelay;
+	if (@autopot_delay > .MaxDelay) @autopot_delay = .MaxDelay;
+	if (getiteminfo(.@potion, ITEMINFO_TYPE) != IT_HEALING) {
+		dispbottom getitemname(.@potion) + " is not a healing item.";
+		end;
+	}
+	if(inarray(.blackList[0],.@potion) != -1){
+		message strcharinfo(0), "'" + getitemname(.@potion) + "' is black listed and cannot be used.";
+		end;
+	}
+	if (BaseLevel < getiteminfo(.@potion, ITEMINFO_EQUIPLEVELMIN)) {
+		message strcharinfo(0), "Your base level is too low to use '" + getitemname(.@potion) + "'.";
+		end;
+	}
+	setd "@autopot_" + .@type$ + "_ID",.@potion;
+	setd "@autopot_" + .@type$ + "_Active",true;
+	addtimer @autopot_delay,strnpcinfo(3) + "::OnStart";
+	message strcharinfo(0), "Auto-Potion " + strtoupper(.@type$) + " enabled.";
+	callsub L_Info;
+	return;
+
+OnCommand:
+	if (!getarraysize(.@atcmd_parameters$)) {
+		message strcharinfo(0), "Invalid syntax.";
+		callsub L_Help;
+		end;
+	}
+	.@command$[0] = strtolower(.@atcmd_parameters$[0]);
+	.@command$[1] = strtolower(.@atcmd_parameters$[1]);
+	
+	if(.@command$[0] == "hp" || .@command$[0] == "sp"){
+		if((!.HP_Option && .@command$[0] == "hp") || (!.SP_Option && .@command$[0] == "sp")){
+			message strcharinfo(0), "Auto-Potion " + strtoupper(.@command$[0]) + " is Disabled from The Server.";
+			end;
+		}
+		if(.@command$[1] == "on"){
+			if(getd("@autopot_" + .@command$[0] + "_Active")){
+				message strcharinfo(0), "Auto-Potion " + strtoupper(.@command$[0]) + " is already on.";
+				end;
+			}
+			if(!getd("@autopot_" + .@command$[0] + "_ID")){
+				dispbottom "You need to set a " + strtoupper(.@command$[0]) + " Potion to be used.";
+				callsub L_Help;
+				end;
+			}
+			callsub L_Start,.@command$[0],getd("@autopot_" + .@command$[0] + "_ID");
+			end;
+		}
+		if(.@command$[1] == "off"){
+			message strcharinfo(0), "Auto-Potion " + strtoupper(.@command$[0]) + " disabled.";
+			setd "@autopot_" + .@command$[0] + "_Active",false;
+			if(!@autopot_hp_Active || !@autopot_sp_Active)
+				deltimer strnpcinfo(3) + "::OnStart";
+			end;
+		}
+		if(.@command$[1] == "list"){
+			getinventorylist;
+			for(.@i = 0;.@i < @inventorylist_count;.@i++){
+				if (getiteminfo(@inventorylist_id[.@i], ITEMINFO_TYPE) == IT_HEALING) {
+					.@items[.@count] = @inventorylist_id[.@i];
+					.@menu$ = .@menu$ + sprintf("~ ^0055FF%s^000000 (%dx)" + (inarray(.blackList[0],@inventorylist_id[.@i]) != -1? " ^364022Black Listed^000000":"") + (BaseLevel < getiteminfo(@inventorylist_id[.@i], ITEMINFO_EQUIPLEVELMIN)? " ^E82C0CNeed Higher Level^000000":"") + ":", getitemname(@inventorylist_id[.@i]), countitem(@inventorylist_id[.@i]));
+					.@count++;
+				}
+			}
+			if(.@count){
+				mes "[ Auto-Potion ]";
+				mes "Select a " + strtoupper(.@command$[0]) + " item.";
+				.@select = select(.@menu$ + "   ^777777Cancel^000000") - 1;
+				if (.@select != .@count)
+					callsub L_Start,.@command$[0],.@items[.@select];
+				close2;
+			}else{
+				message strcharinfo(0), "There are no healing items in your inventory.";
+			}
+			end;
+		}
+		.@potion = atoi(.@command$[1]);
+		.@percent = atoi(.@atcmd_parameters$[2]);
+		.@delay = atoi(.@atcmd_parameters$[3]);
+		if(getitemname(.@potion) != "null"){
+			callsub L_Start,.@command$[0],.@potion,.@percent,.@delay;
+			end;
+		}
+		message strcharinfo(0), "Auto-Potion : something went wrong!";
+		callsub L_Help;
+		end;
+	}
+	if(.@command$[0] == "blacklist"){
+		dispbottom "--------------Black Listed Items--------------";
+		for(.@i=0;.@i<getarraysize(.blackList);.@i++){
+			dispbottom "    " + getitemname(.blackList[.@i]) + " (" + .blackList[.@i] + ")";
+		}
+		dispbottom "---------------------------------------------";
+		end;
+	}
+	if(.@command$[0] == "info"){
+		if(@autopot_hp_Active || @autopot_sp_Active){
+			message strcharinfo(0), "Auto-Potion information is displayed below.";
+			callsub L_Info;
+		}else{
+			message strcharinfo(0), "Auto-Potion is not enabled.";
+		}
+		end;
+	}
+	if(.@command$[0] == "help"){
+		message strcharinfo(0), "List of commands is displayed below.";
+		callsub L_Help;
+		end;
+	}
+	
+	message strcharinfo(0), "Invalid syntax.";
+	callsub L_Help;
+end;
+
+OnStart:
+	if (!getstatus(SC_BERSERK) && !getstatus(SC_SATURDAYNIGHTFEVER) && !getstatus(SC_GRAVITATION) &&
+	    !getstatus(SC_TRICKDEAD) && !getstatus(SC_HIDING) && !getstatus(SC__SHADOWFORM) && !getstatus(SC__INVISIBILITY) &&
+	    !getstatus(SC__MANHOLE) && !getstatus(SC_KAGEHUMI) && !getstatus(SC_HEAT_BARREL_AFTER) &&
+		!getstatus(SC_STONE) && !getstatus(SC_FREEZE) && !getstatus(SC_STUN) && !getstatus(SC_SLEEP))
+		{
+		if(Hp){
+			if(@autopot_hp_Active && Hp * 100 / MaxHp < @autopot_hp_Min) {
+				if (countitem(@autopot_hp_ID)) {
+					delitem @autopot_hp_ID,1;
+					consumeitem @autopot_hp_ID;
+					specialeffect2 207;
+				}
+			}
+			if(@autopot_sp_Active && Sp * 100 / MaxSp < @autopot_sp_Min) {
+				if (countitem(@autopot_sp_ID)) {
+					delitem @autopot_sp_ID,1;
+					consumeitem @autopot_sp_ID;
+					specialeffect2 208;
+				}
+			}
+		}
+	}
+	if(@autopot_hp_Active || @autopot_sp_Active)
+		addtimer @autopot_delay,strnpcinfo(3) + "::OnStart";
+end;
+}

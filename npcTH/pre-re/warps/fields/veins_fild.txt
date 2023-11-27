@@ -1,0 +1,49 @@
+//===== rAthena Script =======================================
+//= Veins Field Warp Script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Veins Field
+//===== Additional Comments: =================================
+//= 1.4 Rescripted to Aegis 11.2 Standards. [L0ne_W0lf]
+//============================================================
+
+ve_fild01,366,267,0	warp	ve_fild1-1	1,1,ve_fild02,36,263
+ve_fild01,184,20,0	warp	ve_fild1-2	1,1,ve_fild04,174,334
+ra_fild11,233,27,0	warp	ve_fild1-3	1,1,ve_fild01,243,363
+ve_fild01,243,368,0	warp	ve_fild1-4	1,1,ra_fild11,232,32
+ve_fild01,350,92,0	warp	ve_fild1-5	1,1,ve_fild02,78,133
+ra_fild13,29,308,0	warp	ve_fild2-1	1,1,ve_fild02,380,308
+ve_fild02,385,308,0	warp	ve_fild2-2	1,1,ra_fild13,34,308
+ve_fild02,195,382,0	warp	ve_fild2-3	1,1,rachel,130,25
+ve_fild02,31,263,0	warp	ve_fild2-4	1,1,ve_fild01,361,267
+ve_fild02,73,133,0	warp	ve_fild2-5	1,1,ve_fild01,345,92
+ve_fild03,355,223,0	warp	ve_fild3-1	1,1,ve_fild04,49,249
+ve_fild03,222,43,0	warp	ve_fild3-2	1,1,ve_fild05,200,325
+ve_fild04,174,339,0	warp	ve_fild4-1	1,1,ve_fild01,184,25
+ve_fild04,44,249,0	warp	ve_fild4-2	1,1,ve_fild03,350,220
+ve_fild04,115,50,0	warp	ve_fild4-3	1,1,ve_fild06,80,183
+ve_fild05,200,330,0	warp	ve_fild5-1	1,1,ve_fild03,222,48
+ve_fild05,359,192,0	warp	ve_fild5-2	1,1,ve_fild06,80,183
+ve_fild06,153,220,0	warp	ve_fild6-1	1,1,veins,218,355
+ve_fild06,81,177,0	script	ve_fild6-2	45,1,1,{
+	if (rand(2))
+		warp "ve_fild04",115,55;
+	else
+		warp "ve_fild05",354,191;
+	end;
+}
+ve_fild07,147,371,0	warp	ve_fild7-1	1,1,veins,146,28
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 Initial version [$ephiroth]
+//= 1.1 Updated more warps [$ephiroth]
+//= 1.2 Removed some unofficial warps [Playtester]
+//= 1.3 Added random Veins exit [Playtester]
+//============================================================

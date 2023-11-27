@@ -1,0 +1,147 @@
+//• อธิบายคำสั่งใหม่
+//•
+//• >=, <=, >, <, ==, !=, !, &&, || << ตัวเช็คตรรกะ ว่าเงื่อนไขถูกต้องหรือไม่ ( โปรดศึกษาเพิ่มเติม )
+//•
+//•
+//• (*) อธิบายคำสั่งใหม่
+//•
+//• close2; << ใช้สำหรับปิดกล่องข้อความแต่ยังไม่สิ้นสุดการทำงาน ระหว่างผู้เล่นกับ NPC
+//•
+//•
+//• (**) อธิบายคำสั่งใหม่
+//•
+//• BaseLevel << ตัวแปรชนิด ตัวละคร ใช้เก็บข้อมูล Level ผู้เล่น
+//• JobLevel << ตัวแปรชนิด ตัวละคร ใช้เก็บข้อมูล Level ผู้เล่น
+//• #CASHPOINTS << ตัวแปรชนิด ทั้ง ID ใช้เก็บข้อมูล Cash ข้อผู้เล่นทั้ง ID
+
+
+//• แบบที่ 1 - เงื่อนไขแบบ if else
+//•
+//• ก่อนที่จะใช้ else ต้องมี if ขึ้นก่อน
+prontera,148,144,0	script	เงื่อนไข	54,{
+	mes "โปรดใส่เลข 0 หรือ 1 หรือ 2";
+	
+	next;
+	
+	input .@i;
+
+	if(.@i == 0){
+		mes "ถูกต้อง คุณระบุเลข 0";
+	}
+	else if(.@i == 1){
+		mes "ถูกต้อง คุณระบุเลข 1";
+	}
+	else if(.@i == 2){
+		mes "ถูกต้อง คุณระบุเลข 2";
+	}
+	else{
+		mes "Error";
+		.@lose = 1;
+	}
+
+	close2; //(*)
+	
+	if(.@lose == 0){
+		#CASHPOINTS++; //(**)
+		message strcharinfo(0),"คุณได้รับ 1 Cash, Cash ปัจจุบัน: " + #CASHPOINTS;
+	}
+	
+	end;
+}
+
+prontera,150,144,0	script	เงื่อนไข#02	54,{
+	mes "โปรดใส่เลข 0 หรือ 1 หรือ 2";
+	
+	next;
+	
+	input .@i;
+
+	if(.@i == 0 || .@i == 1 || .@i == 2){
+		mes "ถูกต้อง คุณระบุเลข 0 หรือ 1 หรือ 2";
+	}
+	else{
+		mes "Error";
+		.@lose = 1;
+	}
+
+	close2; //(*)
+	
+	if(.@lose == 0){
+		#CASHPOINTS++; //(**)
+		message strcharinfo(0),"คุณได้รับ 1 Cash, Cash ปัจจุบัน: " + #CASHPOINTS;
+	}
+	
+	end;
+}
+
+prontera,152,144,0	script	เงื่อนไข#03	54,{
+	mes "ต้องมี Level 99 และ Job Level 1";
+	
+	next;
+
+	if(BaseLevel == 99 && JobLevel == 1){ //(**)
+		mes "เยี่ยม คุณทำตามเงื่อนไขเป๊ะ ๆ เลย";
+	}
+	else{
+		mes "Error";
+		.@lose = 1;
+	}
+
+	close2; //(*)
+	
+	if(.@lose == 0){
+		#CASHPOINTS++; //(**)
+		message strcharinfo(0),"คุณได้รับ 1 Cash, Cash ปัจจุบัน: " + #CASHPOINTS;
+	}
+	
+	end;
+}
+
+//• แบบที่ 2 - เงื่อนไขแบบ if else เหมือนกันแต่เขียนคนละแบบ
+prontera,154,144,0	script	เงื่อนไขเขียนอีกแบบ	54,{
+	mes "โปรดใส่เลขน้อยกว่า 3";
+	
+	next;
+	
+	input .@i;
+
+	mes (.@i < 3 ? "ถูกต้อง คุณระบุเลข น้อยกว่า 3" : "Error");
+
+	if(.@i >= 3){
+		.@lose = 1;
+	}
+
+	close2; //(*)
+	
+	if(.@lose == 0){
+		#CASHPOINTS++; //(**)
+		message strcharinfo(0),"คุณได้รับ 1 Cash, Cash ปัจจุบัน: " + #CASHPOINTS;
+	}
+	
+	end;
+}
+
+prontera,156,144,0	script	เงื่อนไขเขียนอีกแบบ#02	54,{
+	mes "โปรดพิมพ์ yes";
+	
+	next;
+	
+	input .@s$;
+	
+	.@pass = (.@s$ == "yes" ? 1 : 0);
+	
+	if(.@pass){
+		#CASHPOINTS++; //(**)
+		message strcharinfo(0),"คุณได้รับ 1 Cash, Cash ปัจจุบัน: " + #CASHPOINTS;
+	}
+	else{
+		message strcharinfo(0),"Error";
+	}
+	
+	end;
+}
+
+
+//• ศึกษาเพิ่มเติม \doc\script_commands.txt บรรทัด 430
+//• ศึกษาเพิ่มเติม \doc\script_commands.txt บรรทัด 668
+//• ศึกษาเพิ่มเติม \doc\script_commands.txt บรรทัด 1180

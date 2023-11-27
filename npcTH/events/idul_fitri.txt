@@ -1,0 +1,73 @@
+//===== rAthena Script ======================================= 
+//= Feast Day Of Ramadan Idul Fitri Event
+//===== By: ================================================== 
+//= $ephiroth
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Info : Official idRO
+//= 2006/10/16: 1.0 Release and fully working. [$ephiroth]
+//= 1.1 Replaced effect numerics with constants. [Samuray22]
+//============================================================
+
+prontera,146,92,3	script	Cellerb	58,{
+	mes "[Staff Idul Fitri]";
+	if((gettime(DT_MONTH)==OCTOBER && (gettime(DT_DAYOFMONTH)==24 || gettime(DT_DAYOFMONTH)==25))==0) {
+		mes "Congratulation! Celebrate Feast Day Of Ramadan Idul Fitri 1427 H.";
+		specialeffect EF_SANDMAN;
+		close;
+	}
+	mes "Haii......^FF8800"+strcharinfo(0)+"^000000!!";
+	mes "First day of Idul Fitri has arrived.";
+	mes "Congratulation celebrate him.";
+	mes "There is event special today.";
+	next;
+	mes "[Staff Idul Fitri]";
+	mes "Event today.....^009500Idul Fitri Quest!^000000";
+	next;
+	mes "[Staff Idul Fitri]";
+	mes "If you interest to follow this event, I will cook it to you.";
+	next;
+	switch(select("Allright. I like that!!","Next time.... Thanks.")){
+	case 1:
+		mes "[Staff Idul Fitri]";
+		mes "I have something that might interest you.";
+		mes "I need all of the following items:";
+		mes "^D5A500Ketupat Sayur Ingredient :^000000";
+		mes "^00B6FF~5 Ketupat, 5 Carrot~,^000000";
+		mes "^CC6633~5 Sweet Potato, 10 Meat~,^000000";
+		mes "^000088~2 Green Herb, 5 Stem~.^000000";
+		next;
+		mes "[Staff Idul Fitri]";
+		if ( (countitem(552)<5 || countitem(515)<5 ||countitem(516)<5 || countitem(517)<10 || countitem(511)<2 || countitem(905)<5) ) { 
+			mes "You don't have enough items.";
+			mes "Come back when you have them all.";
+			close;
+		}
+		delitem 552,5;
+		delitem 515,5;
+		delitem 516,2;
+		delitem 517,10;
+		delitem 511,2;
+		delitem 905,5;
+		mes "I see you already have all the items you need.";
+		mes "Just a moment, please!!";
+		next;
+		mes "^009500-Plupping snapping bubbling~^000000";
+		mes "^009500-Clinking clingking~^000000";
+		mes "^009500-Clang clang~^000000";
+		getitem 583,1;
+		next;
+		mes "[Staff Idul Fitri]";
+		mes "We appreciate your participation in this special event.";
+		emotion ET_THANKS;
+		close;
+	case 2:
+		mes "[Staff Idul Fitri]";
+		mes "Oh well, maybe you will participate in tommorow's quest.";
+		emotion ET_SCRATCH;
+		close;
+	}
+}

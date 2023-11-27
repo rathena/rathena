@@ -1,0 +1,138 @@
+//===== rAthena Script =======================================
+//= Moscovia Town
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Moscovia Town Script
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Removed villagers (they are part of a quest). [Kisuka]
+//= 1.2 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//============================================================
+
+// Moscovia Transportation :: mosk_trans
+//============================================================
+-	script	::PR_Officer_moscovia	-1,{
+	mes "[Moscovia P.R. Officer]";
+	mes "Moscovia! Do you know Moscovia?";
+	mes "the paradise spreading on the endless seas...";
+	mes "Welcome to Moscovia";
+	mes "It's adventurous and mystic.";
+	next;
+	switch(select("About Moscovia...:Go to Moscovia.:Cancel")) {
+		case 1:
+			mes "[Moscovia P.R. Officer]";
+			mes "Moscovia is a beautiful kingdom";
+			mes "on an island located north of Rune-";
+			mes "Midgarts.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "I'm sure that you will be";
+			mes "absolutely fascinated";
+			mes "by Moscovia's beautiful scenery";
+			mes "and gorgeous palace.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "Now that our long winter has";
+			mes "passed,";
+			mes "I'm happy that I can now show you";
+			mes "our gorgeous hometown.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "If you feel like visiting Moscovia";
+			mes "take the chance now!";
+			mes "I'll help you to have a nice trip";
+			mes "to Moscovia!";
+			close;
+
+		case 2:
+			mes "[Moscovia P.R. Officer]";
+			mes "Ok then, let us start now.";
+			mes "You should pay me 10,000 zeny";
+			mes "to go to Moscovia.";
+			mes "But when you come back,";
+			mes "you don't have to pay.";
+			next;
+			mes "[Moscovia P.R. Officer]";
+			mes "Can we leave now?";
+			next;
+			if (select("Let's go!:Cancel") == 2) {
+				mes "[Moscovia P.R. Officer]";
+				mes "If you're too busy now,";
+				mes "please tell me again whenever you want.";
+				mes "I'm always ready to guide anyone to Moscovia.";
+				close;
+			}
+			if (Zeny < 10000) {
+				mes "[Moscovia P.R. Officer]";
+				mes "I'm sorry but you don't have";
+				mes "enough zeny now";
+				mes "You need 10,000 zeny";
+				mes "to go to Moscovia";
+				mes "Thank you.";
+				close;
+			} else {
+				mes "[Moscovia P.R. Officer]";
+				mes "Ok then, we're leaving now.";
+				close2;
+				set Zeny,Zeny - 10000;
+				warp "moscovia",163,55;
+				end;
+			}
+		case 3:
+			mes "[Moscovia P.R. Officer]";
+			mes "If you're too busy now,";
+			mes "please tell me again whenever you want.";
+			mes "I'm always ready to guide anyone to Moscovia.";
+			close;
+	}
+}
+
+moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
+	mes "[Moscovia P.R. Officer]";
+	mes "How was your trip?";
+	mes "Do you have good memories from Moscovia?";
+	mes "A ship is now leaving";
+	mes "for Rune-Midgarts.";
+	next;
+	if (select("Return to Alberta:Cancel") == 2) {
+		mes "[Moscovia P.R. Officer]";
+		mes "If you want to see more";
+		mes "please take your time.";
+		close;
+	}
+	mes "[Moscovia P.R. Officer]";
+	mes "Please come and visit soon.";
+	mes "Ok then, Let's get going.";
+	close2;
+	if (checkre(0))
+		warp "alberta",244,52;
+	else
+		warp "alberta",243,67;
+	end;
+}
+
+
+// Moscovia Palace :: mos_swan
+//============================================================
+moscovia,253,166,4	script	Soldier#mosk1	966,{
+	mes "[Soldier]";
+	mes "Our dear Csar Alexsay III is in the palace.";
+	mes "He rules over Moscovia.";
+	mes "Please be careful not to cause him any trouble.";
+	close;
+}
+
+-	script	Soldier#mosk::MoscSoldier	966,{
+	mes "[Soldier]";
+	mes "Please be silent or the Csar will be angry.";
+	close;
+}
+mosk_in,118,66,5	duplicate(MoscSoldier)	Soldier#mosk02	966
+mosk_in,133,110,3	duplicate(MoscSoldier)	Soldier#mosk03	966
+mosk_in,133,73,3	duplicate(MoscSoldier)	Soldier#mosk04	966
+mosk_in,113,124,5	duplicate(MoscSoldier)	Soldier#mosk05	966

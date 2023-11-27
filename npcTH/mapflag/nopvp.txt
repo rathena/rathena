@@ -1,0 +1,149 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Player versus Player mode.
+//===== Description: ========================================= 
+//= Prevents PvP mode on a map.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//= 1.2 Updated. [L0ne_W0lf]
+//= 1.3 Renewal split. [Euphy]
+//============================================================
+
+//============================================================
+// Instances
+//============================================================
+1@cata	mapflag	pvp	off
+2@cata	mapflag	pvp	off
+1@nyd	mapflag	pvp	off
+2@nyd	mapflag	pvp	off
+1@orcs	mapflag	pvp	off
+2@orcs	mapflag	pvp	off
+1@tower	mapflag	pvp	off
+2@tower	mapflag	pvp	off
+3@tower	mapflag	pvp	off
+4@tower	mapflag	pvp	off
+5@tower	mapflag	pvp	off
+6@tower	mapflag	pvp	off
+
+//============================================================
+// Battlegrounds
+//============================================================
+bat_room	mapflag	pvp	off
+bat_a01	mapflag	pvp	off
+bat_a02	mapflag	pvp	off
+bat_b01	mapflag	pvp	off
+bat_b02	mapflag	pvp	off
+bat_c01	mapflag	pvp	off
+bat_c02	mapflag	pvp	off
+bat_c03	mapflag	pvp	off
+
+//============================================================
+// GvG Arenas
+//============================================================
+guild_vs1	mapflag	pvp	off
+guild_vs2	mapflag	pvp	off
+guild_vs3	mapflag	pvp	off
+guild_vs4	mapflag	pvp	off
+guild_vs5	mapflag	pvp	off
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
+ayo_in01	mapflag	pvp	off
+ayo_in02	mapflag	pvp	off
+alberta_in	mapflag	pvp	off
+alberta	mapflag	pvp	off
+alde_alche	mapflag	pvp	off
+aldeba_in	mapflag	pvp	off
+aldebaran	mapflag	pvp	off
+ama_in01	mapflag	pvp	off
+ama_in02	mapflag	pvp	off
+amatsu	mapflag	pvp	off
+cmd_in01	mapflag	pvp	off
+cmd_in02	mapflag	pvp	off
+comodo	mapflag	pvp	off
+gef_tower	mapflag	pvp	off
+geffen	mapflag	pvp	off
+geffen_in	mapflag	pvp	off
+gon_in	mapflag	pvp	off
+gonryun	mapflag	pvp	off
+gon_test	mapflag	pvp	off
+in_hunter	mapflag	pvp	off
+in_moc_16	mapflag	pvp	off
+in_orcs01	mapflag	pvp	off
+izlude_in	mapflag	pvp	off
+izlude	mapflag	pvp	off
+hugel	mapflag	pvp	off
+hu_in01	mapflag	pvp	off
+lighthalzen	mapflag	pvp	off
+lhz_airport	mapflag	pvp	off
+lhz_in01	mapflag	pvp	off
+lhz_in02	mapflag	pvp	off
+lhz_in03	mapflag	pvp	off
+louyang	mapflag	pvp	off
+lou_in01	mapflag	pvp	off
+lou_in02	mapflag	pvp	off
+moc_castle	mapflag	pvp	off
+monk_in	mapflag	pvp	off
+morocc_in	mapflag	pvp	off
+morocc	mapflag	pvp	off
+mosk_in	mapflag	pvp	off
+nif_in	mapflag	pvp	off
+payon_in01	mapflag	pvp	off
+payon_in02	mapflag	pvp	off
+payon_in03	mapflag	pvp	off
+payon	mapflag	pvp	off
+pay_arche	mapflag	pvp	off
+prt_are_in	mapflag	pvp	off
+prt_are01	mapflag	pvp	off
+prt_castle	mapflag	pvp	off
+prt_church	mapflag	pvp	off
+prt_in	mapflag	pvp	off
+prontera	mapflag	pvp	off
+sec_in01	mapflag	pvp	off
+job_sword1	mapflag	pvp	off
+um_in	mapflag	pvp	off
+umbala	mapflag	pvp	off
+xmas_in	mapflag	pvp	off
+xmas	mapflag	pvp	off
+yuno_in01	mapflag	pvp	off
+yuno_in03	mapflag	pvp	off
+yuno_in04	mapflag	pvp	off
+yuno_in05	mapflag	pvp	off
+yuno	mapflag	pvp	off
+yuno_pre	mapflag	pvp	off
+y_airport	mapflag	pvp	off
+rachel	mapflag	pvp	off
+ra_in01	mapflag	pvp	off
+ra_temin	mapflag	pvp	off
+airplane	mapflag	pvp	off
+airport	mapflag	pvp	off
+einbech	mapflag	pvp	off
+einbroch	mapflag	pvp	off
+ein_in01	mapflag	pvp	off
+ayothaya	mapflag	pvp	off
+veins	mapflag	pvp	off
+ve_in	mapflag	pvp	off
+ve_in02	mapflag	pvp	off
+cave	mapflag	pvp	off
+
+e_tower	mapflag	pvp	off
+
+mid_camp	mapflag	pvp	off
+mid_campin	mapflag	pvp	off
+man_fild01	mapflag	pvp	off
+moc_fild22b	mapflag	pvp	off
+que_dan01	mapflag	pvp	off
+que_dan02	mapflag	pvp	off
+schg_que01	mapflag	pvp	off
+arug_que01	mapflag	pvp	off
+
+manuk	mapflag	pvp	off
+man_in01	mapflag	pvp	off
+splendide	mapflag	pvp	off
+spl_in01	mapflag	pvp	off
+spl_in02	mapflag	pvp	off
+
+//============================================================
+// Events
+//============================================================
+//evt_zombie	mapflag	pvp	off

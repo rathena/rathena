@@ -1,0 +1,128 @@
+//===== rAthena Script =======================================
+//= Comodo Guides
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Comodo
+//===== Additional Comments: =================================
+//= Fully working
+//= 1.1 Now using duplicate command.
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks
+//=     to Muad_Dib [MasterOfMuppets]
+//= 1.4 Removed 3 guides, and converted to use functions.
+//= 1.5 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+comodo,322,178,4	script	Comodo Guide#cmd::CmdGuide	700,{
+	callfunc "F_CmdGuide","Native Kokomo";
+}
+
+comodo,176,350,4	script	Comodo Guide#2cmd	700,{
+	callfunc "F_CmdGuide","Native Nutcoco";
+}
+
+comodo,37,219,4	script	Guide#2cmd	700,{
+	callfunc "F_CmdGuide","Native Papaya";
+}
+
+function	script	F_CmdGuide	{
+	mes "["+getarg(0)+"]";
+	mes "Welcome to Comodo, the";
+	mes "city of dreams and fantasy,";
+	mes "where the nightlife never ends!";
+	mes "I know this area really well,";
+	mes "so let me know if you need";
+	mes "directions anywhere here.";
+	next;
+	switch(select("Casino:Hula Dance Stage ^3355FF(Dancer Job Change)^000000:Weapon and Armor Shop:Tool Shop:Tourist Shop:Kafra Co. Western Branch:Chief's House:Pub:Campground:End Conversation")) {
+	case 1:
+		viewpoint 1,140,98,0,0xFF6633;
+		mes "Please refer to the cross mark,";
+		mes "^FF6633+^000000, on your Mini-Map to find the";
+		mes "Casino, a haven for rest for";
+		mes "weary travlers and the heart";
+		mes "of Comodo's nightlife.";
+		close;
+	case 2:
+		viewpoint 1,188,168,1,0x0000FF;
+		mes "Please refer to the cross mark,";
+		mes "^0000FF+^000000, on your Mini-Map to find the";
+		mes "Hula Dance Stage, the place";
+		mes "where female Archers can";
+		mes "change jobs to Dancers.";
+		close;
+	case 3:
+		viewpoint 1,266,70,2,0x00FFFF;
+		mes "Please refer to the cross mark,";
+		mes "^00FFFF+^000000, on your Mini-Map to find the";
+		mes "Weapon and Armor shop. Be";
+		mes "sure to check that shop for";
+		mes "any special items that are";
+		mes "unique to Comodo!";
+		close;
+	case 4:
+		viewpoint 1,86,128,3,0x515151;
+		mes "Please refer to the cross mark,";
+		mes "^515151+^000000, on your Mini-Map to find the";
+		mes "Tool Shop. If you've never been";
+		mes "there before, then I suggest";
+		mes "you check it out and stock up";
+		mes "on tools you might need later.";
+		close;
+	case 5:
+		viewpoint 1,298,124,4,0x3355FF;
+		mes "Please refer to the cross mark,";
+		mes "^3355FF+^000000, on your Mini-Map to find the";
+		mes "Tourist Shop where you can ";
+		mes "buy gifts that can only be found in the Comodo region~";
+		close;
+	case 6:
+		viewpoint 1,136,202,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Western branch of the Kafra";
+		mes "Corporation. They offer some";
+		mes "pretty important services that you may want to check out later.";
+		close;
+	case 7:
+		viewpoint 1,114,294,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Chief's House. You're welcome";
+		mes "to visit him, and he's usually";
+		mes "happy to have visitors.";
+		close;
+	case 8:
+		viewpoint 1,166,298,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Pub. There, you can meet other";
+		mes "tourists, relax, and socialize";
+		mes "in an enjoyable environment~";
+		close;
+	case 9:
+		viewpoint 1,210,308,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Campground. Gather with your";
+		mes "family and friends, and enjoy";
+		mes "the special barbeque of";
+		mes "Comodo's camping grounds~";
+		close;
+	case 10:
+		mes "["+getarg(0)+"]";
+		mes "Actually, it always looks";
+		mes "like nighttime in Comodo";
+		mes "because it's built in a huge";
+		mes "cave. We don't get any sunlight";
+		mes "here, but the darkness here is";
+		mes "more exciting than gloomy~";
+		close;
+	}
+}
