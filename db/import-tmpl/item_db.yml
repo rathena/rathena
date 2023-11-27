@@ -190,6 +190,7 @@ Body:
     Defense: 3
     Locations:
       Costume_Head_Top: true
+    ArmorLevel: 1
     View: 2284
     Script: |
       bonus bAllStats,2;
@@ -218,6 +219,7 @@ Body:
     Defense: 3
     Locations:
       Costume_Garment: true
+    ArmorLevel: 1
     Script: |
       bonus bAllStats,2;
       bonus2 bExpAddRace,RC_All,20;
