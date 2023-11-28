@@ -12,19 +12,19 @@
 // Main Quest
 prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	if (checkweight(1301,5) == 0) {
-		mes "- You cannot proceed with the quest since you have too many items. -";
+		mes "- คุณไม่สามารถทำภารกิจต่อได้เนื่องจากคุณมีไอเทมมากเกินไป - -";
 		close;
 	}
 	switch( ep16_royal ) {
 	case 0:
 		if (BaseLevel < 100 || (ep13_ryu < 100 && ep13_start < 100)) {// Access to the New World pre-req (Onward to the New World Quest or Cat Paw Agent Quest)
 			mes "[Royal Messenger]";
-			mes "Hello!";
-			mes "Now ^4d4dffthe palace is hosting a banquet for the returning heroes from Vacuum^000000.";
-			mes "Please tell me ^4d4dffwhere the heroes who have participated in the expedition are^000000 if you know any.";
+			mes "สวัสดี!";
+			mes "ตอนนี้ ^4d4dffพระราชวังกำลังจัดงานเลี้ยงสำหรับฮีโร่ที่กลับมาจาก Vacuum^000000.";
+			mes "โปรดบอกฉันว่า^4d4dffฮีโร่ที่เข้าร่วมการสำรวจอยู่ที่ใด^000000 ถ้าคุณรู้จัก";
 			next;
 			mes "[Royal Messenger]";
-			mes "I wonder where they are. They are so scattered that it is difficult to locate each one of them. Hahaha!";
+			mes "ฉันสงสัยว่าพวกเขาอยู่ที่ไหน พวกมันกระจัดกระจายมากจนยากที่จะค้นหาแต่ละอัน ฮ่าๆๆ!";
 			close;
 		}
 		mes "[Royal Messenger]";
@@ -125,9 +125,9 @@ prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 
 OnTouch:
 	if (ep16_royal == 0 && BaseLevel > 99 && (ep13_ryu > 99 || ep13_start > 99))
-		npctalk "Wait! You must be... " + strcharinfo(0) + ". I have something to tell you!", "", bc_self;
+		npctalk "รอ! คุณต้องเป็น... " + strcharinfo(0) + ". ฉันมีเรื่องจะเล่าให้ฟัง!", "", bc_self;
 	else
-		npctalk "I am looking for the hero who returned from the expedition...", "", bc_self;
+		npctalk "ฉันกำลังมองหาฮีโร่ที่กลับมาจากการสำรวจ...", "", bc_self;
 	end;
 }
 rachel,119,131,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ra	4_M_ZONDAOYAJI,5,5
@@ -4629,7 +4629,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16wal	4_M_1STPRIN1,{
 		mes "Adventurer, how did your meeting with the Guardian Knight in Alberta go? Not that I expect too much...";
 		next;
 		mes "[Isenhonor]";
-		mes "However, still, I have hoped to hear good news from you...";
+		mes "However, still, I have hoped to hear a good news from you...";
 		close;
 	}
 	if (ep16_wal == 6) {

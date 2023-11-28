@@ -1,0 +1,53 @@
+-	script	mobctroevents	-1,{
+OnInit:
+	delmonsterdrop 2093,12492;
+	delmonsterdrop 2093,12492;
+	delmonsterdrop 2093,12492;
+	delmonsterdrop 2093,5204;
+	addmonsterdrop 2093,35002,8000,true;
+	end;
+
+OnKillEventCTRO:
+	dispbottom "Botaring โดนกำจัดแล้ว";
+	end;
+}
+
+prontera,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+alberta,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+aldebaran,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+amatsu,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+ayothaya,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+comodo,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+einbech,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+einbroch,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+geffen,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+gonryun,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+hugel,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+izlude,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+jawaii,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"9
+lighthalzen,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+louyang,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+manuk,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+mid_camp,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+moc_ruins,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+morocc,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+moscovia,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+niflheim,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+payon,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+rachel,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+splendide,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+thor_camp,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+umbala,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+veins,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+xmas,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+yuno,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+
+// Duplicates (Renewal)
+//============================================================
+brasilis,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+dewata,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+dicastes01,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+ecl_in01,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+malangdo,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+malaya,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
+mora,0,0	monster	Botaring	2093,10,5000,0,"mobctroevents::OnKillEventCTRO"
