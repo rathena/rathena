@@ -75,7 +75,7 @@ OnGuildBreak:
 	disablenpc "Kafra Employee#"+substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9);
 	setcastledata strnpcinfo(2),CD_GUILD_ID,0;
 	sleep 7000;
-	announce "Guild Base ["+getcastlename(strnpcinfo(2))+"] has been abandoned.",0;
+	announce "ฐานกิลด์ ["+getcastlename(strnpcinfo(2))+"] ถูกยกเลิก",0;
 	donpcevent strnpcinfo(0)+"::OnRecvCastle2";
 	end;
 
