@@ -67,7 +67,13 @@ morocc,154,97,6	duplicate(Healer)	Healer#mor	909
 moscovia,220,191,4	duplicate(Healer)	Healer#mos	909
 niflheim,212,182,5	duplicate(Healer)	Healer#nif	909
 payon,179,106,4	duplicate(Healer)	Healer#pay	909
+
 prontera,162,193,4	duplicate(Healer)	Healer#prt	909
+prontera,143,99,4	duplicate(Healer)	Healer#prt1	909
+prontera,33,212,4	duplicate(Healer)	Healer#prt2	909
+prontera,276,212,4	duplicate(Healer)	Healer#prt3	909
+prontera,161,326,4	duplicate(Healer)	Healer#prt4	909
+
 rachel,125,116,6	duplicate(Healer)	Healer#rac	909
 splendide,201,153,4	duplicate(Healer)	Healer#spl	909
 thor_camp,249,74,4	duplicate(Healer)	Healer#thor	909

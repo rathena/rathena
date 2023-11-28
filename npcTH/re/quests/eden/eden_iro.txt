@@ -1016,16 +1016,24 @@ moc_para01,35,168,1	cashshop	Kafra Utility Shop#eden	113,16677:25,13990:400,1639
 
 // Weapon/Armor Refiner "Normalson" (merchants/refine.txt)
 moc_para01,14,185,4	script	Normalson#ed	826,{
-	callfunc "refinemain","Normalson",0;
-	end;
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Normalson]";
+		mes "ฉันคือช่างตีเหล็กที่เก่งที่สุด!";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinenew","Normalson",0;
+		end;
+	}
 }
 
 // Advanced Refiner "Suhnmi" (merchants/advanced_refiner.txt)
-moc_para01,26,185,4	duplicate(Suhnbi#cash)	Suhnmi#eden	85
+//moc_para01,26,185,4	duplicate(Suhnbi#cash)	Suhnmi#eden	85
 
 // HD Refiner "Blacksmith Mighty Hammer" (re/merchants/hd_refiner.txt)
 // A combination of the +7~9 and +10 and up refiner, currently a placeholder.
-moc_para01,38,185,4	duplicate(MightyHammer)	Mighty Hammer#ed	826
+//moc_para01,38,185,4	duplicate(MightyHammer)	Mighty Hammer#ed	826
 
 // Refiner Effect
 -	script	#eden_refine_effect	-1,{
@@ -1033,8 +1041,13 @@ OnInit:
 	initnpctimer;
 	end;
 OnTimer5000:
-	specialeffect EF_REFINEOK,AREA,"Suhnmi#eden";
-	specialeffect EF_REFINEOK,AREA,"Mighty Hammer#ed";
+	if( getbattleflag( "feature.refineui" ) ){
+		specialeffect EF_REFINEOK,AREA,"Normalson#ed";
+	}else{
+		specialeffect EF_REFINEOK,AREA,"Normalson#ed";
+		specialeffect EF_REFINEOK,AREA,"Mighty Hammer#ed";
+		specialeffect EF_REFINEOK,AREA,"Suhnmi#eden";
+	}
 	initnpctimer;
 	end;
 }
