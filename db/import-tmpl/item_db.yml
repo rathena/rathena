@@ -196,8 +196,8 @@ Body:
       bonus bAllStats,2;
       bonus2 bExpAddRace,RC_All,20;
       if (getiteminfo(getequipid(EQI_COSTUME_GARMENT), ITEMINFO_ID) == 480202){
-            bonus bPAtk,20;
-            bonus bSMatk,20;
+            bonus bAtk,20;
+            bonus bMatk,20;
             bonus bHit,20;
             bonus bFlee,20;
       }
@@ -205,8 +205,8 @@ Body:
       bonus bAllStats,2;
       bonus2 bExpAddRace,RC_All,20;
       if (getiteminfo(getequipid(EQI_COSTUME_GARMENT), ITEMINFO_ID) == 480202){
-            bonus bPAtk,20;
-            bonus bSMatk,20;
+            bonus bAtk,20;
+            bonus bMatk,20;
             bonus bHit,20;
             bonus bFlee,20;
       }
@@ -224,8 +224,8 @@ Body:
       bonus bAllStats,2;
       bonus2 bExpAddRace,RC_All,20;
       if (getiteminfo(getequipid(EQI_COSTUME_HEAD_TOP), ITEMINFO_ID) == 400309){
-            bonus bPAtk,20;
-            bonus bSMatk,20;
+            bonus bAtk,20;
+            bonus bMatk,20;
             bonus bHit,20;
             bonus bFlee,20;
       }
@@ -233,8 +233,8 @@ Body:
       bonus bAllStats,2;
       bonus2 bExpAddRace,RC_All,20;
       if (getiteminfo(getequipid(EQI_COSTUME_HEAD_TOP), ITEMINFO_ID) == 400309){
-            bonus bPAtk,20;
-            bonus bSMatk,20;
+            bonus bAtk,20;
+            bonus bMatk,20;
             bonus bHit,20;
             bonus bFlee,20;
       }
