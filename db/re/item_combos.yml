@@ -46816,6 +46816,7 @@ Body:
       if (getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
          .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",.@sum;
+         bonus4 bAutoSpellOnSkill,"HN_NAPALM_VULCAN_STRIKE","AG_SOUL_VC_STRIKE",5,500;
       }
   - Combos:
       - Combo:
@@ -46852,7 +46853,12 @@ Body:
          .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
          bonus2 bSkillCooldown,"IQ_FIRST_BRAND",1500;
          bonus2 bSkillAtk,"IQ_SECOND_FLAME",.@sum;
-         /* todo (incomplete) */
+         if (getskilllv("IQ_SECOND_FLAME") > 0) {
+            bonus4 bAutoSpellOnSkill,"IQ_FIRST_BRAND","IQ_SECOND_FLAME",getskilllv("IQ_SECOND_FLAME"),1000;
+            if (getskilllv("IQ_THIRD_FLAME_BOMB") > 0) {
+               bonus4 bAutoSpellOnSkill,"IQ_SECOND_FLAME","IQ_THIRD_FLAME_BOMB",getskilllv("IQ_THIRD_FLAME_BOMB"),1000;
+            }
+         }
       }
   - Combos:
       - Combo:
@@ -46970,9 +46976,9 @@ Body:
          bonus2 bSkillAtk,"SHC_ETERNAL_SLASH",.@sum;
          if (getskilllv("GC_ROLLINGCUTTER") > 0) {
             bonus4 bAutoSpellOnSkill,"GC_PHANTOMMENACE","GC_ROLLINGCUTTER",getskilllv("GC_ROLLINGCUTTER"),1000;
-         }
-         if (getskilllv("SHC_IMPACT_CRATER") > 0) {
-            bonus4 bAutoSpellOnSkill,"GC_ROLLINGCUTTER","SHC_IMPACT_CRATER",getskilllv("SHC_IMPACT_CRATER"),1000;
+            if (getskilllv("SHC_IMPACT_CRATER") > 0) {
+               bonus4 bAutoSpellOnSkill,"GC_ROLLINGCUTTER","SHC_IMPACT_CRATER",getskilllv("SHC_IMPACT_CRATER"),1000;
+            }
          }
       }
   - Combos:
