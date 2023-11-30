@@ -17,7 +17,8 @@
 //=     Cleaned up the script.
 //=     TODO: Confirm Hugin NPC's code flow.
 //= 1.6 Cleaned up the dialogue. [Aleos]
-//= 1.7 Added the possibility to cut. [Atemo]
+//= 1.7 Implemented fast mode. [Atemo]
+//      Note: The treasure room is not accessible in fast mode.
 //============================================================
 
 glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
@@ -181,7 +182,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 		cutin "gl_barmund2",2;
 		close3;
 	}
-	// If the instance has already been completed once, the player can skip sectors 1 and 2
+	// If the instance has already been completed once, the player can skip sector 1,2,3 and starts from the 1st boss MG_CORRUPTION_ROOT
 	if (isbegin_quest(12321) == 2) {
 		mes "You have a previous clear record. You can skip the scenario and proceed accordingly.";
 		next;
@@ -655,6 +656,7 @@ OnMyMobDead:
 	end;
 }
 
+// Fast mode
 1@gl_k,1,1,0	script	#talkinstance2	HIDDEN_WARP_NPC,{
 	end;
 OnEnable:
@@ -1418,7 +1420,7 @@ OnStart:
 OnMyMobDead:
 	if (mobcount('map_name$[1], instance_npcname("#ghmemorialmob05") + "::OnBossDead") > 0)	// Prevent boss re-spawn
 		end;
-	if ('mode == 2)	// Higher (but unknown) spawn rate in cut mode
+	if ('mode == 2)	// Higher (but unknown) spawn rate in fast mode
 		.@r = 10;
 	else
 		.@r = 50;
@@ -1506,7 +1508,7 @@ OnStart:
 OnMyMobDead:
 	if (mobcount('map_name$[1], instance_npcname("#ghmemorialmob06") + "::OnBossDead") > 0)	// Prevent boss re-spawn
 		end;
-	if ('mode == 2)	// Higher (but unknown) spawn rate in cut mode
+	if ('mode == 2)	// Higher (but unknown) spawn rate in fast mode
 		.@r = 10;
 	else
 		.@r = 50;
@@ -2195,7 +2197,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("#24 Control2");
 	disablenpc instance_npcname("#Secret Room Exit");
 
-	// Cut
+	// Fast mode
 	disablenpc instance_npcname("#cut01");
 	end;
 }
