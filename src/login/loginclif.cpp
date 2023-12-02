@@ -15,7 +15,7 @@
 #include <common/timer.hpp> //difftick
 #include <common/utils.hpp>
 
-#include "account.hpp"
+#include "accountdb/accountdb.hpp"
 #include "ipban.hpp" //ipban_check
 #include "login.hpp"
 #include "loginchrif.hpp"
@@ -219,7 +219,7 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
 	else { // 6 = You are prohibited to log in until %s
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
-		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		time_t unban_time = ( accounts->load_str(acc, sd->userid) ) ? acc.unban_time : 0;
 		timestamp2string(WFIFOCP(fd,6), 20, unban_time, login_config.date_format);
 	}
 	WFIFOSET(fd,26);
@@ -232,7 +232,7 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
 	else { // 6 = You are prohibited to log in until %s
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
-		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		time_t unban_time = ( accounts->load_str(acc, sd->userid) ) ? acc.unban_time : 0;
 		timestamp2string(WFIFOCP(fd,3), 20, unban_time, login_config.date_format);
 	}
 	WFIFOSET(fd,23);

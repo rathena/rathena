@@ -4,6 +4,7 @@
 #pragma warning(disable:4800)
 #include "login.hpp"
 
+#include <memory>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
@@ -24,7 +25,9 @@
 #include <common/utils.hpp>
 #include <config/core.hpp>
 
-#include "account.hpp"
+#include "accountdb/accountdb.hpp"
+#include "accountdb/accountdbsql.hpp"
+#include "mmo_account.hpp"
 #include "ipban.hpp"
 #include "loginchrif.hpp"
 #include "loginclif.hpp"
@@ -44,7 +47,7 @@ std::unordered_map<uint32,struct online_login_data> online_db;
 std::unordered_map<uint32,struct auth_node> auth_db;
 
 // account database
-AccountDB* accounts = NULL;
+std::unique_ptr<AccountDB> accounts = nullptr;
 // Advanced subnet check [LuzZza]
 struct s_subnet {
 	uint32 mask;
@@ -60,7 +63,7 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 
 ///Accessors
 AccountDB* login_get_accounts_db(void){
-	return accounts;
+	return accounts.get();
 }
 
 // Console Command Parser [Wizputer]
@@ -99,7 +102,7 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
 		}
 	}
 
-	accounts->enable_webtoken( accounts, account_id );
+	accounts->enable_webtoken(account_id);
 
 	return p;
 }
@@ -121,7 +124,7 @@ void login_remove_online_user(uint32 account_id) {
 		delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
 	}
 
-	accounts->disable_webtoken( accounts, account_id );
+	accounts->disable_webtoken(account_id);
 
 	online_db.erase( account_id );
 }
@@ -240,7 +243,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 		return 0; // 0 = Unregistered ID
 
 	// check if the account doesn't exist already
-	if( accounts->load_str(accounts, &acc, userid) ) {
+	if( accounts->load_str(acc, userid) ) {
 		ShowNotice("Attempt of creation of an already existant account (account: %s, sex: %c)\n", userid, sex);
 		return 1; // 1 = Incorrect Password
 	}
@@ -258,11 +261,9 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pincode, "", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = MIN_CHARS;
-#ifdef VIP_ENABLE
 	acc.vip_time = 0;
 	acc.old_group = 0;
-#endif
-	if( !accounts->create(accounts, &acc) )
+	if( !accounts->create(acc) )
 		return 0;
 
 	ShowNotice("Account creation (account %s, id: %d, sex: %c)\n", acc.userid, acc.account_id, acc.sex);
@@ -340,7 +341,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		}
 	}
 
-	if( !accounts->load_str(accounts, &acc, sd->userid) ) {
+	if( !accounts->load_str(acc, sd->userid) ) {
 		ShowNotice("Unknown account (account: %s, ip: %s)\n", sd->userid, ip);
 		return 0; // 0 = Unregistered ID
 	}
@@ -414,7 +415,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;
-	accounts->save(accounts, &acc, true);
+	accounts->save(acc, true);
 
 	if( login_config.use_web_auth_token ){
 		safestrncpy( sd->web_auth_token, acc.web_auth_token, WEB_AUTH_TOKEN_LENGTH );
@@ -713,7 +714,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else {// try the account engines
 			if (!normal)
 				continue;
-			if (accounts && accounts->set_property(accounts, w1, w2))
+			if (accounts && accounts->set_property(w1, w2))
 				continue;
 			// try others
 			ipban_config_read(w1, w2);
@@ -783,7 +784,7 @@ void login_set_defaults() {
  */
 void LoginServer::finalize(){
 	struct client_hash_node *hn = login_config.client_hash_nodes;
-	AccountDB* db = accounts;
+	auto * db = login_get_accounts_db();
 
 	while (hn)
 	{
@@ -803,10 +804,8 @@ void LoginServer::finalize(){
 	do_final_loginclif();
 	do_final_logincnslif();
 
-	if (db) { // destroy account engine
-		db->destroy(db);
-		db = NULL;
-	}
+	// destroy account engine
+	db = nullptr;
 
 	accounts = NULL; // destroyed in account_engine
 	online_db.clear();
@@ -835,7 +834,7 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
 	// initialize engine
-	accounts = account_db_sql();
+	accounts = std::make_unique<AccountDBSql>();
 
 	// read login-server configuration
 	login_set_defaults();
@@ -872,7 +871,7 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 		ShowFatalError("do_init: account engine not found.\n");
 		return false;
 	} else {
-		if(!accounts->init(accounts)) {
+		if(!accounts->init()) {
 			ShowFatalError("do_init: Failed to initialize account engine.\n");
 			return false;
 		}

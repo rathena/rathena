@@ -11,7 +11,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="account.hpp">
+    <ClInclude Include="accountdb.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="accountdbsql.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ipban.hpp">
@@ -34,7 +37,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="account.cpp">
+    <ClCompile Include="accountdbsql.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ipban.cpp">
