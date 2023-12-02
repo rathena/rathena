@@ -1813,6 +1813,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case NPC_CRITICALWOUND:
+	case NPC_WIDECRITICALWOUND:
 		sc_start(src,bl,SC_CRITICALWOUND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_FIRESTORM:
@@ -5669,6 +5670,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case EM_EL_DEADLY_POISON:
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
+	case NPC_WIDECRITICALWOUND:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -8632,6 +8634,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_HELLJUDGEMENT2:
 	case NPC_PULSESTRIKE:
 	case LG_MOONSLASHER:
+	case NPC_WIDECRITICALWOUND:
 		skill_castend_damage_id(src, src, skill_id, skill_lv, tick, flag);
 		break;
 
