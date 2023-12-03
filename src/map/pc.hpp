@@ -940,6 +940,15 @@ public:
 
 	s_macro_detect macro_detect;
 
+	/*==========================
+	 RESTORE ANIMATION BY AOSHINHO
+	============================*/
+	struct{
+		int tid;
+		int iter;
+		int hitcount;
+	} animation_force;
+
 	std::vector<uint32> party_booking_requests;
 };
 
@@ -1747,6 +1756,10 @@ void pc_macro_detector_disconnect(map_session_data &sd);
 // Macro Reporter
 void pc_macro_reporter_area_select(map_session_data &sd, const int16 x, const int16 y, const int8 radius);
 void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id = -1);
+/*==========================
+ RESTORE ANIMATION BY AOSHINHO
+============================*/
+TIMER_FUNC(pc_animation_force_sub);
 
 #ifdef MAP_GENERATOR
 void pc_reputation_generate();

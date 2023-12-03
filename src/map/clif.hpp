@@ -1254,4 +1254,10 @@ void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status styp
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
 
+/*==========================
+ RESTORE ANIMATION BY AOSHINHO
+============================*/
+void clif_animation_force_packet(map_session_data* sd, int skill_id);
+void clif_hit_frame(struct block_list* bl);
+
 #endif /* CLIF_HPP */

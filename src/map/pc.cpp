@@ -15802,6 +15802,33 @@ uint64 CaptchaDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 	return 1;
 }
+/*==========================
+ RESTORE ANIMATION BY AOSHINHO
+============================*/
+TIMER_FUNC(pc_animation_force_sub){
+	map_session_data* sd = map_id2sd( id );
+
+	if( sd == nullptr ){
+		return 0;
+	}
+
+	if (DIFF_TICK(sd->animation_force.tid, gettick()) > 0) {
+		clif_authfail_fd(sd->fd, 15);
+	} else if(sd->animation_force.iter < sd->animation_force.hitcount/2){
+		pc_stop_walking(sd,USW_FIXPOS);
+		sd->ud.state.blockedmove = 1;
+		clif_hit_frame(&sd->bl);
+		sd->animation_force.tid = add_timer(gettick() + data, pc_animation_force_sub, sd->bl.id, data);
+		sd->animation_force.iter++;
+	} else {
+		sd->animation_force.tid = INVALID_TIMER;
+		sd->animation_force.iter = 0;
+		sd->animation_force.hitcount = 0;
+		sd->ud.state.blockedmove = 0;
+	}
+
+	return 0;
+}
 
 /*==========================================
  * pc Init/Terminate
@@ -15851,6 +15878,10 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
 
+	/*==========================
+	 RESTORE ANIMATION BY AOSHINHO
+	============================*/
+	add_timer_func_list(pc_animation_force_sub, "pc_animation_force_sub");
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 
 	// 0=day, 1=night [Yor]
