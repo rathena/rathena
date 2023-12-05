@@ -780,9 +780,25 @@ To drop all weapons in inventory...
 
 ---------------------------------------
 
-@stockall
+@stockall {<item type>}
 
-Transfer all items from cart to inventory.
+Transfer all items from cart to inventory based on the item type.
+
+Valid item types:
+    -1 = All Items (default)
+     0 = Healing Items
+     2 = Useable Items
+     3 = Etc Items
+     4 = Armors
+     5 = Weapons
+     6 = Cards
+     7 = Pet Eggs
+     8 = Pet Armors
+     10 = Ammunition Items
+
+Example:
+To transfer all weapons from cart to inventory...
+@stockall 5
 
 ---------------------------------------
 
