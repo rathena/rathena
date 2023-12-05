@@ -6567,17 +6567,17 @@ int pc_cartitem_amount(map_session_data* sd, int idx, int amount)
 /*==========================================
  * Retrieve an item at index idx from cart.
  *------------------------------------------*/
-bool pc_getitemfromcart(map_session_data *sd,int idx,int amount)
+void pc_getitemfromcart(map_session_data *sd,int idx,int amount)
 {
-	nullpo_retr(1, sd);
+	nullpo_retrv(sd);
 
 	if (idx < 0 || idx >= MAX_CART) //Invalid index check [Skotlex]
-		return false;
+		return;
 
 	struct item *item_data=&sd->cart.u.items_cart[idx];
 
 	if (item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->state.vending || sd->state.prevend)
-		return false;
+		return;
 
 	enum e_additem_result flag = pc_additem(sd, item_data, amount, LOG_TYPE_NONE);
 
@@ -6588,7 +6588,6 @@ bool pc_getitemfromcart(map_session_data *sd,int idx,int amount)
 		clif_additem(sd, idx, amount, flag);
 		clif_cart_additem(sd, idx, amount);
 	}
-	return true;
 }
 
 /*==========================================
