@@ -5967,7 +5967,6 @@ ACMD_FUNC(dropall)
 ACMD_FUNC(stockall)
 {
 	int8 type = -1;
-	uint16 i, count = 0, count2 = 0;
 	nullpo_retr(-1, sd);
 	
 	if (!pc_iscarton(sd)) {
@@ -5996,7 +5995,7 @@ ACMD_FUNC(stockall)
 				return -1;
 		}
 	}
-
+	uint16 count = 0, count2 = 0;
 	for ( uint16 i = 0; i < MAX_CART; i++ ) {
 		if ( sd->cart.u.items_cart[i].amount > 0 ) {
 			std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_cart[i].nameid);
@@ -6009,6 +6008,7 @@ ACMD_FUNC(stockall)
 					count += sd->cart.u.items_cart[i].amount;
 				else
 					count2 += sd->cart.u.items_cart[i].amount;
+			}
 		}
 	}
 	sprintf(atcmd_output, msg_txt(sd,1535), count,count2); // %d items are transferred (%d skipped)!
