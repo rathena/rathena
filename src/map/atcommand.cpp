@@ -5988,15 +5988,13 @@ ACMD_FUNC(stockall)
 	if (pc_iscarton(sd)) {
 		for( i = 0; i < MAX_CART; i++ ) {
 			if( sd->cart.u.items_cart[i].amount ) {
-				std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_inventory[i].nameid);
+				std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_cart[i].nameid);
 				if( id == nullptr ) {
-					ShowDebug("Non-existant item %d on stockall list (account_id: %d, char_id: %d)\n", sd->cart.u.items_inventory[i].nameid, sd->status.account_id, sd->status.char_id);
+					ShowDebug("Non-existent item %d on stockall list (account_id: %d, char_id: %d)\n", sd->cart.u.items_cart[i].nameid, sd->status.account_id, sd->status.char_id);
 					continue;
 				}
 				if( type == -1 || type == (uint8)id->type ) {
-					if(pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
-						count += sd->cart.u.items_cart[i].amount;
-					else count2 += sd->cart.u.items_cart[i].amount;
+					pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount);
 				}
 			}
 		}
