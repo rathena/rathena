@@ -308,7 +308,7 @@ function	script	F_KafTele	{
 			mes "ฉันขออภัย แต่คุณ";
 			mes "มี zeny ไม่มีเพียงพอ";
 			mes "ที่จะใช้บริการเทเลพอต";
-			mes "to " + @wrpD$[.@j] + " is " + @wrpP[.@j] + " zeny.";
+			mes "ไปยัง " + @wrpD$[.@j] + " ราคา " + @wrpP[.@j] + " zeny.";
 			close3;
 		}
 		Zeny -= @wrpP[.@j];

@@ -103,8 +103,8 @@ OnAgitBreak:
 	set .@GID,getcharid(2);
 	// Show and log error if an unguilded player breaks the Emperium. (Should NEVER happen)
 	if (.@GID <= 0) {
-		set .@notice$,"Character "+strcharinfo(0)+" ("+getcharid(0)+") broke the Emperium in Castle: "+strnpcinfo(2)+" while guildless. No data will be saved and Emperium respawned.";
- 		logmes .@notice$; debugmes .@notice$;
+		set .@notice$,"ผู้เล่น "+strcharinfo(0)+" ("+getcharid(0)+") ได้ทำลายหิน Emperium ในปราสาท: "+strnpcinfo(2)+" ในขณะที่ไม่มีกิลด์ จะไม่มีการบันทึกข้อมูลและ Emperium จะเกิดใหม่อีกครั้ง";
+		logmes .@notice$; debugmes .@notice$;
 		donpcevent "Agit#"+strnpcinfo(2)+"::OnStartArena";
 		end;
 	}
@@ -121,7 +121,7 @@ OnAgitBreak:
 	SetCastleData strnpcinfo(2),CD_GUILD_ID, .@GID;
 
 	// Announce that the Emperium is destroyed, and respawn all but new castle-occupants.
-	mapannounce strnpcinfo(2),"The emperium has been destroyed.",bc_map|bc_woe,"0x00CCFF",FW_NORMAL,12;
+	mapannounce strnpcinfo(2),"หิน Emperium ถูกทำลายแล้ว",bc_map|bc_woe,"0x00CCFF",FW_NORMAL,12;
 	MapRespawnGuildID strnpcinfo(2),.@GID,6;
 
 	// Refresh castle data, disable Kafra and reset Invest information.
@@ -141,7 +141,7 @@ OnAgitBreak:
 	if( agitcheck() )
 		donpcevent "Agit#"+strnpcinfo(2)+"::OnStartArena";
 	sleep 7000;
-	announce "The [" + getcastlename(strnpcinfo(2)) + "] castle has been conquered by the [" + getguildName(.@GID) + "] guild.",bc_all|bc_woe;
+	announce "ปราสาท [" + getcastlename(strnpcinfo(2)) + "] ถูกยึดครองโดยกิลด์ [" + getguildName(.@GID) + "]",bc_all|bc_woe;
 	end;
 
 // War of Emperium has ended.
@@ -163,7 +163,7 @@ OnGuildBreak:
 	SetCastleData strnpcinfo(2),CD_GUILD_ID,0;
 	// Wait before refreshing guild information.
 	sleep 7000;
-	Announce "Guild Base [" + GetCastleName(strnpcinfo(2)) + "] has been abandoned.",0;
+	Announce "ฐานกิลด์ [" + GetCastleName(strnpcinfo(2)) + "] ถูกยกเลิก",0;
 	donpcevent strnpcinfo(0)+"::OnRecvCastle";
 	end;
 
@@ -344,43 +344,49 @@ OnRecvCastle:
 	cutin "kafra_01",2;
 	if (getcharid(2) == .@GID) {
 		mes "[Kafra Employee]";
-		mes "Welcome. ^ff0000" + GetGuildName(.@GID) + "^000000 Member.";
-		mes "The Kafra Corporation will stay with you wherever you go.";
+		mes "ยินดีต้อนรับ. สมาชิก ^ff0000" + GetGuildName(.@GID) + "^000000.";
+		mes "Kafra Corporation จะอยู่กับคุณทุกที่ที่คุณไป";
 		next;
-		switch (select("Use Storage:Use Teleport Service:Rent a Pushcart:Cancel")) {
+		switch (select("เปิดคลัง:ใช้บริการ Teleport:เช่ารถเข็น:ยกเลิก")) {
 		case 1:
 			if(!callfunc("F_CanOpenStorage")){
 				mes "[Kafra Employee]";
-				mes "I'm sorry, but you";
-				mes "need the Novice's";
-				mes "Basic Skill Level 6 to";
-				mes "use the Storage Service.";
+				mes "ฉันขออภัย คุณ";
+				mes "Novice";
+				mes "ต้องเรียนรู้ Basic Skill Level 6";
+				mes "เพื่อใช้งาน Storage Service";
 				close2;
 				cutin "",255;
 				end;
 			}
 			mes "[Kafra Employee]";
-			mes "Here, let me open";
-			mes "your Storage for you.";
-			mes "Thank you for using";
-			mes "the Kafra Service.";
-			close2;
-			cutin "",255;
-			openstorage;
+			mes "เอาหล่ะ, ให้ฉันได้";
+			mes "เปิดคลังให้คุณ";
+			mes "ขอบคุณที่ใช้บริการ";
+			mes "Kafra Service.";
+			if (vip_status(1)){
+				close2;
+				cutin "",255;
+				openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+			}else{
+				close2;
+				cutin "",255;
+				openstorage;
+			}
 			end;
 		case 2:
 			mes "[Kafra Employee]";
-			mes "Please choose";
-			mes "your destination.";
+			mes "โปรดเลือก";
+			mes "จุดหมายของคุณ";
 			next;
-			switch (select(.@destination$+" -> 200z:Cancel")) {
+			switch (select(.@destination$+" -> 200z:ยกเลิก")) {
 			case 1:
 				if (Zeny < 200) {
 					mes "[Kafra Employee]";
-					mes "I'm sorry, but you don't have";
-					mes "enough zeny for the Teleport";
-					mes "Service. The fee to teleport";
-					mes "to "+.@destination$+" is 200 zeny.";
+					mes "ฉันขออภัย แต่คุณ";
+					mes "มี zeny ไม่มีเพียงพอ";
+					mes "ที่จะใช้บริการเทเลพอต";
+					mes "ไปที่ "+.@destination$+" ราคา 200 zeny.";
 					close2;
 					cutin "",255;
 					end;
@@ -398,40 +404,38 @@ OnRecvCastle:
 		case 3:
 			if (BaseClass != Job_Merchant) {
 				mes "[Kafra Employee]";
-				mes "I'm sorry, but the";
-				mes "Pushcart rental service";
-				mes "is only available to Merchants,";
+				mes "ฉันขออภัย แต่ว่า";
+				mes "บริการเช่ารถเข็น";
+				mes "มีให้บริการเพียงแค่ Merchant";
 				mes "Blacksmiths, Master Smiths,";
 				mes "Alchemists, Biochemists,";
-				mes "Mechanics and Geneticists.";
+				mes "Mechanics และ Geneticists.";
 				close2;
 				cutin "",255;
 				end;
 			}
 			if (checkcart()) {
 				mes "[Kafra Employee]";
-				mes "You already have";
-				mes "a Pushcart equipped.";
-				mes "Unfortunately, we can't";
-				mes "rent more than one to";
-				mes "each customer at a time.";
+				mes "คุณได้มี";
+				mes "รถเข็นอยู่แล้ว";
+				mes "น่าเสียดายที่เราทำไม่ได้";
+				mes "ให้คุณได้เช่ามากกว่าหนึ่ง";
+				mes "ในเวลาขณะเดียวกันนี้";
 				close2;
 				cutin "",255;
 				end;
 			}
 			mes "[Kafra Employee]";
-			mes "The Pushcart rental";
-			mes "fee is 800 zeny. Would";
-			mes "you like to rent a Pushcart?";
+			mes "ค่าเช่ารถเข็นคือ 800 zeny คุณต้องการเช่ารถรถเข็นหรือไม่?";
 			next;
-			switch (select("Rent a Pushcart.:Cancel")) {
+			switch (select("เช่ารถเข็น.:ยกเลิก")) {
 			case 1:
 				if (Zeny < 800) {
 					mes "[Kafra Employee]";
-					mes "I'm sorry, but you";
-					mes "don't have enough";
-					mes "zeny to pay the Pushcart";
-					mes "rental fee of 800 zeny.";
+					mes "ขอโทษนะค๊ะ แต่คุณ";
+					mes "มียอดเงินคงเหลือไม่เพียงพอ";
+					mes "สำหรับการใช้บริการกรุณาเติม  Zeny";
+					mes "ค่าธรรมเนียมคือ 800 zeny.";
 					close2;
 					cutin "",255;
 					end;
@@ -449,15 +453,14 @@ OnRecvCastle:
 			}
 		case 4:
 			mes "[Kafra Employee]";
-			mes "We, here at Kafra Corporation,";
-			mes "are always endeavoring to provide you with the best services. We hope that we meet your adventuring needs and standards of excellence.";
+			mes "พวกเรา Kafra Corporation พยายามอย่างเต็มที่เพื่อมอบบริการที่ดีที่สุดให้กับคุณ เราหวังว่าเราจะตอบสนองความต้องการในการผจญภัยและมาตรฐานความเป็นเลิศของคุณ";
 			close2;
 			cutin "",255;
 			end;
 		}
 	}
 	mes "[Kafra Employee]";
-	mes "I am instructed to only offer my services to the ^ff0000"+GetGuildName(.@GID)+"^000000 Guild. Please try another Kafra Employee around here. Sorry for the inconvenience.";
+	mes "ฉันได้รับคำสั่งให้เสนอบริการของฉันให้กับ ^ff0000"+GetGuildName(.@GID)+"^000000 Guild เท่านั้น โปรดลองพนักงาน Kafra คนอื่นแถวๆ นี้ ขออภัยในความไม่สะดวก.";
 	close2;
 	cutin "",255;
 	end;
