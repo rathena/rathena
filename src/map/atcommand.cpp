@@ -6005,11 +6005,14 @@ ACMD_FUNC(stockall)
 				continue;
 			}
 			if ( type == -1 || type == (uint8)id->type ) {
-				pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount);
+				if(pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
+						count += sd->cart.u.items_cart[i].amount;
+					else count2 += sd->cart.u.items_cart[i].amount;
 			}
 		}
 	}
-
+	sprintf(atcmd_output, msg_txt(sd,1535), count,count2); // %d items are transferred (%d skipped)!
+	clif_displaymessage(fd, atcmd_output); 
 	return 0;
 }
 
