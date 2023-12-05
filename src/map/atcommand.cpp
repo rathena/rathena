@@ -5997,18 +5997,18 @@ ACMD_FUNC(stockall)
 		}
 	}
 
-	for	( i = 0; i < MAX_CART; i++ ) {
+	for ( uint16 i = 0; i < MAX_CART; i++ ) {
 		if ( sd->cart.u.items_cart[i].amount > 0 ) {
 			std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_cart[i].nameid);
 			if ( id == nullptr ) {
-				ShowDebug("Non-existent item %d on stockall list (account_id: %d, char_id: %d)\n", sd->cart.u.items_cart[i].nameid, sd->status.account_id, sd->status.char_id);
+				ShowDebug("Non-existent item %u on stockall list (account_id: %d, char_id: %d)\n", sd->cart.u.items_cart[i].nameid, sd->status.account_id, sd->status.char_id);
 				continue;
 			}
-			if ( type == -1 || type == (uint8)id->type ) {
-				if(pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
-						count += sd->cart.u.items_cart[i].amount;
-					else count2 += sd->cart.u.items_cart[i].amount;
-			}
+			if ( type == -1 || static_cast<item_types>(type) == id->type ) {
+				if (pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
+					count += sd->cart.u.items_cart[i].amount;
+				else
+					count2 += sd->cart.u.items_cart[i].amount;
 		}
 	}
 	sprintf(atcmd_output, msg_txt(sd,1535), count,count2); // %d items are transferred (%d skipped)!
