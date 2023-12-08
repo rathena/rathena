@@ -44106,7 +44106,7 @@ Body:
              .@c = 35;
              .@t += 1000;
          }
-         autobonus "{ bonus bVariableCastrate,-100; bonus bDelayrate,-100 }",.@c,.@t,BF_MAGIC;
+         autobonus "{ bonus bVariableCastrate,-100; bonus bDelayrate,-100; }",.@c,.@t,BF_MAGIC;
       }
   - Id: 29175
     AegisName: Reactor_S_CRI
