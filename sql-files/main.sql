@@ -991,9 +991,9 @@ CREATE TABLE IF NOT EXISTS `party_bookings` (
   `minimum_level` smallint(5) unsigned NOT NULL,
   `maximum_level` smallint(5) unsigned NOT NULL,
   `comment` varchar(255) NOT NULL DEFAULT '',
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`world_name`, `account_id`, `char_id`)
-) ENGINE=MyISAM;
+) ENGINE=MYISAM;
 
 --
 -- Table structure for table `pet`
