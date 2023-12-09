@@ -537,6 +537,21 @@ prt_in,63,60,0	script	Hollgrehenn	4_M_03,{
 	}
 }
 
+izlude,157,125,0	script	Hollgrehenn	4_M_03,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Hollgrehenn]";
+		mes "I'm a blacksmith who can refine weapons and equipment.";
+		mes "Do you have any items that you'd like to refine?";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Hollgrehenn",0;
+		end;
+	}
+}
+
+
 morocc_in,73,38,6	script	Aragham	4W_M_03,{
 	if( getbattleflag( "feature.refineui" ) ){
 		mes "[Aragham]";
