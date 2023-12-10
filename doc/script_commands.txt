@@ -11362,7 +11362,15 @@ Returns true if the player is dead else false.
 
 *autoloot(<rate>{, <char_id>});
 
-This command set the rate of autoloot.
-Returns autoloot value on success.
+This command sets the rate of autoloot (default: 10000 = 100%).
+Returns true on success and false on failure.
+Note: It will toggle existing autoloot settings if rate value aren't provided.
+
+---------------------------------------
+
+*has_autoloot({<char_id>});
+
+This command checks whether a player configured autoloot.
+Returns current autoloot value on success.
 
 ---------------------------------------

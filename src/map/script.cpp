@@ -26941,18 +26941,47 @@ BUILDIN_FUNC(macro_detector) {
 
 // ===================================
 // *autoloot(<rate>{, <char_id>});
-// This command set the rate of autoloot.
-// Returns autoloot value on success.
+// This command sets the rate of autoloot (10000 = 100%).
+// Returns true on success and false on failure.
+// Note: It will toggle existing autoloot settings if rate value aren't provided.
 // ===================================
 BUILDIN_FUNC(autoloot) {
 	map_session_data *sd;
 
 	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int rate = 0;
+	if (script_hasdata(st, 2))
+		rate = script_getnum(st, 2);
+	else if (sd->state.autoloot <= 0)
+		rate = 10000;
+
+	if (rate < 0 || rate > 10000) {
+		ShowWarning("buildin_autoloot: invalid rate value %d, shall be between 0 ~ 10000.\n", rate);
+		rate = cap_value(rate, 0, 10000);
+	}
+
+	sd->state.autoloot = rate;
+	script_pushint(st, true);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+// *has_autoloot({<char_id>});
+// This command checks whether a player configured autoloot.
+// Returns current autoloot value on success.
+// ===================================
+BUILDIN_FUNC(has_autoloot) {
+	map_session_data *sd;
+
+	if (!script_charid2sd(2, sd)) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	sd->state.autoloot = cap_value(script_getnum(st, 2), 0, 10000);
 	script_pushint(st, sd->state.autoloot);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -27713,7 +27742,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
-	BUILDIN_DEF(autoloot,"i?"),
+	BUILDIN_DEF(autoloot,"??"),
 
 #include <custom/script_def.inc>
 
