@@ -24659,17 +24659,17 @@ BUILDIN_FUNC(channel_create) {
 // ===================================
 // *channel_join "<channel_name>"{, <char_id>};
 // Join an existing channel.
-// The command returns 0 upon success, andthese values upon failure :
+// The command returns 0 upon success, and these values upon failure:
 // -1 : Invalid channel or player
 // -2 : Player already in channel
 // -3 : Player banned
 // -4 : Reached max limit
 // ===================================
 BUILDIN_FUNC(channel_join) {
-	map_session_data *sd;
+	map_session_data *sd = nullptr;
 
 	if (!script_charid2sd(3, sd)) {
-		script_pushint(st, false);
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -24678,7 +24678,7 @@ BUILDIN_FUNC(channel_join) {
 
 	if (!(channel = channel_name2channel((char *)chname, nullptr, 0))) {
 		ShowError("buildin_channel_join: Channel name '%s' is invalid.\n", chname);
-		script_pushint(st, false);
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
