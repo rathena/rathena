@@ -24657,27 +24657,32 @@ BUILDIN_FUNC(channel_create) {
 }
 
 // ===================================
-// *channel_join "<chname>"{, <char_id>};
-// Join an existing public or private channel.
-// Returns 1 on success.
+// *channel_join "<channel_name>"{, <char_id>};
+// Join an existing channel.
+// The command returns 0 upon success, andthese values upon failure :
+// -1 : Invalid channel or player
+// -2 : Player already in channel
+// -3 : Player banned
+// -4 : Reached max limit
 // ===================================
 BUILDIN_FUNC(channel_join) {
 	map_session_data *sd;
 
-	if (!script_charid2sd(3, sd))
-		return SCRIPT_CMD_FAILURE;
-
-	struct Channel *ch = NULL;
-	const char *chname = script_getstr(st, 2);
-
-	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
-		ShowError("buildin_channel_join: Channel name '%s' is invalid.\n", chname);
-		script_pushint(st, 0);
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	channel_join(ch, sd);
-	script_pushint(st, 1);
+	struct Channel *channel = nullptr;
+	const char *chname = script_getstr(st, 2);
+
+	if (!(channel = channel_name2channel((char *)chname, nullptr, 0))) {
+		ShowError("buildin_channel_join: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, channel_join(channel, sd));
 
 	return SCRIPT_CMD_SUCCESS;
 }
