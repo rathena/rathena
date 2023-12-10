@@ -18,7 +18,7 @@
 
 // Main NPC :: safety_Ref_NPC
 //============================================================
-prontera,184,177,6	script	Refine Master	851,{
+izlude,155,135,6	script	Refine Master	851,{
 	disable_items;
 	setarray .@cert_weapon[0],
 		6864,	// Guarantee_Weapon_19Up
