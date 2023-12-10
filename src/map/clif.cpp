@@ -22883,7 +22883,6 @@ void clif_hit_frame(struct block_list* bl)
 {
 	unsigned char buf[32];
 	nullpo_retv(bl);
-
 	WBUFW(buf, 0) = 0x8a;
 	WBUFL(buf, 2) = bl->id;
 	WBUFB(buf, 26) = 10;
