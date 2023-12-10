@@ -22901,7 +22901,6 @@ void clif_animation_force_packet(map_session_data * sd, int skill_id)
 {
 #if PACKETVER >= 20181128
 	nullpo_retv(sd);
-
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 	if (skill == NULL)
 		return;
