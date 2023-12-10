@@ -13280,7 +13280,7 @@ BUILDIN_FUNC(addrid)
 			if (script_getnum(st, 4) == 0) {
 				script_pushint(st, 0);
 				mapit_free(iter);
-				return SCRIPT_CMD_SUCCESS;
+				return SCRIPT_CMD_FAILURE;
 			}
 			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
 				if (!forceflag || !sd->st)
@@ -13292,7 +13292,7 @@ BUILDIN_FUNC(addrid)
 			if (script_getnum(st, 4) == 0) {
 				script_pushint(st, 0);
 				mapit_free(iter);
-				return SCRIPT_CMD_SUCCESS;
+				return SCRIPT_CMD_FAILURE;
 			}
 			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
 				if (!forceflag || !sd->st)
