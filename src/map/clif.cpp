@@ -22910,7 +22910,13 @@ void clif_animation_force_packet(map_session_data * sd, int skill_id)
 
 	sd->animation_force.iter = 0;
 	sd->animation_force.hitcount = skill->num[pc_checkskill(sd, skill_id)] < 0 ? std::abs(skill->num[pc_checkskill(sd, skill_id)]) : skill->num[pc_checkskill(sd, skill_id)];
-	sd->animation_force.tid = add_timer(gettick(), pc_animation_force_sub, sd->bl.id, sd->battle_status.amotion + sd->battle_status.dmotion);
+
+	if(skill_id == GC_CROSSIMPACT)
+		sd->animation_force.hitcount--;
+
+	sd->animation_force.tid = add_timer( gettick() +
+		(skill_id == GC_CROSSIMPACT ? sd->battle_status.amotion + sd->battle_status.dmotion : 0),
+		pc_animation_force_sub, sd->bl.id, sd->battle_status.amotion + sd->battle_status.dmotion);
 #endif
 }
 void clif_barter_open( map_session_data& sd, struct npc_data& nd ){

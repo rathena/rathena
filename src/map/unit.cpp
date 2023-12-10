@@ -2093,11 +2093,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	/*==========================
 	 RESTORE ANIMATION BY AOSHINHO
 	============================*/
-#ifndef RENEWAL
+
 	if(battle_config.feature_restore_animation_skills && src->type&BL_PC)
 	{
 		switch(skill_id)
 		{
+#if PACKETVER >= 20191016
+			case GC_CROSSIMPACT:
+#endif
 			case AS_SONICBLOW:
 			case CG_ARROWVULCAN:
 				clif_animation_force_packet(sd,skill_id);
@@ -2106,7 +2109,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				break;
 		}
 	}
-#endif
+
 
 	return 1;
 }
