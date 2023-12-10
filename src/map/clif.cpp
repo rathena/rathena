@@ -22888,7 +22888,6 @@ void clif_hit_frame(struct block_list* bl)
 	WBUFL(buf, 2) = bl->id;
 	WBUFB(buf, 26) = 10;
 	clif_send(buf, packet_len(0x8a), bl, AREA);
-
 	if (disguised(bl)) {
 		WBUFL(buf, 2) = disguised_bl_id(bl->id);
 		WBUFB(buf, 26) = 10;
