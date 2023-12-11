@@ -11396,4 +11396,11 @@ This command sets the rate of autoloot (default: 10000 = 100%).
 Returns true on success and false on failure.
 Note: It will toggle existing autoloot settings if rate value aren't provided.
 
+Example:
+    autoloot();      // toggle on/off depend on existing autoloot
+    autoloot(0);     //   0.00% or off
+    autoloot(100);   //   1.00%
+    autoloot(3333);  //  33.33%
+    autoloot(10000); // 100.00%
+
 ---------------------------------------
