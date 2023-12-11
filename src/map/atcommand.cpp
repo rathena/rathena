@@ -5966,7 +5966,6 @@ ACMD_FUNC(dropall)
  *------------------------------------------*/
 ACMD_FUNC(stockall)
 {
-	int8 type = -1;
 	nullpo_retr(-1, sd);
 	
 	if (!pc_iscarton(sd)) {
@@ -5974,6 +5973,7 @@ ACMD_FUNC(stockall)
 		return -1;
 	}
 
+	int8 type = -1;
 	if ( message[0] ) {
 		type = atoi(message);
 		switch (type) {
