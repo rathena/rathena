@@ -11140,6 +11140,17 @@ Returns 1 on success.
 
 ---------------------------------------
 
+*channel_join "<channel_name>"{, <char_id>};
+
+Join an existing channel.
+The command returns 0 upon success, and these values upon failure:
+ -1 : Invalid channel or player
+ -2 : Player already in channel
+ -3 : Player banned
+ -4 : Reached max limit
+
+---------------------------------------
+
 *channel_setopt "<chname>",<option>,<value>;
 
 Set option for the channel. Use 1 in <value> to set it, or 0 to unset.
