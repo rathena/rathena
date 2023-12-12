@@ -27037,7 +27037,7 @@ BUILDIN_FUNC(autoloot) {
 		rate = script_getnum(st, 2);
 
 		if (rate < 0 || rate > 10000) {
-			ShowWarning("buildin_autoloot: invalid rate value %d, shall be between 0 ~ 10000.\n", rate);		
+			ShowWarning("buildin_autoloot: Invalid rate value %d, should be between 0 ~ 10000.\n", rate);		
 			script_pushint(st, false);
 			return SCRIPT_CMD_FAILURE;
 		}
