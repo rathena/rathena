@@ -27031,14 +27031,18 @@ BUILDIN_FUNC(autoloot) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int rate = (sd->state.autoloot > 0 ? 0 : 10000);
-	if (script_hasdata(st, 2))
+	int rate;
+
+	if (script_hasdata(st, 2)) {
 		rate = script_getnum(st, 2);
 
-	if (rate < 0 || rate > 10000) {
-		ShowWarning("buildin_autoloot: invalid rate value %d, shall be between 0 ~ 10000.\n", rate);		
-		script_pushint(st, false);
-		return SCRIPT_CMD_FAILURE;
+		if (rate < 0 || rate > 10000) {
+			ShowWarning("buildin_autoloot: invalid rate value %d, shall be between 0 ~ 10000.\n", rate);		
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		rate = (sd->state.autoloot > 0 ? 0 : 10000);
 	}
 
 	sd->state.autoloot = rate;
