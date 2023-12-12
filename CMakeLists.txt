@@ -31,6 +31,24 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
 endif()
 
+if(CMAKE_GENERATOR MATCHES "Visual Studio")
+  set(ENABLE_MSVC_PARALLEL ON CACHE STRING "\
+Enables /MP flag for parallel builds using MSVC. Specify an integer value to control \
+the number of threads used (Only works on versions of Visual Studio). Setting to ON \
+lets the toolchain decide how many threads to use. Set to OFF to disable /MP completely." )
+
+  if(ENABLE_MSVC_PARALLEL)
+    if(ENABLE_MSVC_PARALLEL GREATER 0)
+      string(APPEND CMAKE_C_FLAGS " /MP${ENABLE_MSVC_PARALLEL}")
+      string(APPEND CMAKE_CXX_FLAGS " /MP${ENABLE_MSVC_PARALLEL}")
+    else()
+      string(APPEND CMAKE_C_FLAGS " /MP")
+      string(APPEND CMAKE_CXX_FLAGS " /MP")
+    endif()
+  endif()
+endif()
+
+
 #
 # Prevent building in the source directory by default
 #
