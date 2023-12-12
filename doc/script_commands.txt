@@ -11390,11 +11390,12 @@ Returns current autoloot value on success.
 
 ---------------------------------------
 
-*autoloot(<rate>{, <char_id>});
+*autoloot({<rate>{, <char_id>}});
 
-This command sets the rate of autoloot (default: 10000 = 100%).
+This command sets the rate of autoloot.
+If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+if the user has autoloot enabled it will default to 0 = 0% (disabled).
 Returns true on success and false on failure.
-Note: It will toggle existing autoloot settings if rate value aren't provided.
 
 Example:
     autoloot();      // toggle on/off depend on existing autoloot

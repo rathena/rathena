@@ -27017,13 +27017,14 @@ BUILDIN_FUNC(has_autoloot) {
 }
 
 // ===================================
-// *autoloot(<rate>{, <char_id>});
-// This command sets the rate of autoloot (10000 = 100%).
+// *autoloot({<rate>{, <char_id>}});
+// This command sets the rate of autoloot.
+// If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+// if the user has autoloot enabled it will default to 0 = 0% (disabled).
 // Returns true on success and false on failure.
-// Note: It will toggle existing autoloot settings if rate value aren't provided.
 // ===================================
 BUILDIN_FUNC(autoloot) {
-	map_session_data *sd;
+	map_session_data *sd = nullptr;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, false);
@@ -27035,8 +27036,9 @@ BUILDIN_FUNC(autoloot) {
 		rate = script_getnum(st, 2);
 
 	if (rate < 0 || rate > 10000) {
-		ShowWarning("buildin_autoloot: invalid rate value %d, shall be between 0 ~ 10000.\n", rate);
-		rate = cap_value(rate, 0, 10000);
+		ShowWarning("buildin_autoloot: invalid rate value %d, shall be between 0 ~ 10000.\n", rate);		
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	sd->state.autoloot = rate;
