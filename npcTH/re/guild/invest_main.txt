@@ -114,17 +114,17 @@ function	script	F_Invest_Status	{
 //callfunc "F_Invest_Abyss","<variable>","<NPC name>"{,"<addon message>"};
 function	script	F_Invest_Abyss	{
 	.@npc_name$ = getarg(1);
-	mes "There are 2 ways to invest, by Zeny or the Investment Certificate given out by the Cat Paw Merchant Guild.";
-	mes "Which way would you like to make your investment?";
+	mes "มี 2 วิธีในการลงทุน โดย Zeny หรือใบรับรองการลงทุนที่ออกโดย Cat Paw Merchant Guild";
+	mes " คุณต้องการลงทุนด้วยวิธีไหน?";
 	next;
-	switch(select("Invest with Zeny.:Invest with Investment Certificates.:Cancel")) {
+	switch(select("ลงทุนกับ Zeny.:ลงทุนด้วยใบรับรองการลงทุน:ยกเลิก")) {
 	case 1:
 		mes .@npc_name$;
-		mes "So you've decided to invest in Zeny.";
-		mes "Minimum investment unit is ^4d4dff10,000 Zeny^000000.";
-		mes "You can invest a maximum of 50 units which is ^4d4dff500,000 Zeny^000000.";
+		mes "ดังนั้นคุณจึงตัดสินใจลงทุนใน Zeny";
+		mes "หน่วยการลงทุนขั้นต่ำคือ ^4d4dff10,000 Zeny^000000";
+		mes "คุณสามารถลงทุนได้สูงสุด 50 หน่วย ซึ่งเท่ากับ ^4d4dff500,000 Zeny^000000";
 		next;
-		switch(select("1 unit 10,000 Zeny:10 units 100,000 Zeny:50 units 500,000 Zeny:Another amount:Cancel")) {
+		switch(select("1 หน่วย 10,000 Zeny:10 หน่วย 100,000 Zeny:50 หน่วย 500,000 Zeny:จำนวนอื่น:ยกเลิก")) {
 		case 1:
 			set .@units,1;
 			break;
@@ -136,44 +136,44 @@ function	script	F_Invest_Abyss	{
 			break;
 		case 4:
 			mes .@npc_name$;
-			mes "Please enter the amount you want to invest.";
-			mes "Please choose between 1 to 200.";
-			mes "Please enter 0 to cancel.";
+			mes "กรุณากรอกจำนวนเงินที่คุณต้องการลงทุน";
+			mes "กรุณาเลือกระหว่าง 1 ถึง 200";
+			mes "กรุณาใส่ 0 เพื่อยกเลิก";
 			next;
 			input .@units;
 			if (.@units < 0 || .@units > 200) {
 				mes .@npc_name$;
-				mes "You've exceeded the amount per investment.";
-				mes "Please try again.";
+				mes "คุณใส่เกินจำนวนต่อการลงทุน";
+				mes "กรุณาลองอีกครั้ง";
 				close;
 			} else if (.@units == 0) {
 				mes .@npc_name$;
-				mes "Canceled.";
+				mes "ยกเลิกแล้ว";
 				close;
 			} else
 				break;
 		case 5:
 			mes .@npc_name$;
-			mes "Canceled.";
+			mes "ยกเลิกแล้ว";
 			close;
 		}
 		set .@zeny, .@units * 10000;
 		if (Zeny < .@zeny) {
 			mes .@npc_name$;
-			mes "You do not have enough money.";
+			mes "คุณมีเงินไม่พอ";
 			close;
 		}
 		mes .@npc_name$;
-		mes "You've invested "+callfunc("F_InsertPlural",.@units,"unit")+" "+callfunc("F_InsertComma",.@zeny)+" Zeny"+getarg(2,"")+".";
-		mes "Not much but this is a small gift. You can exchange it with items in Malangdo.";
+		mes "คุณได้ลงทุน "+callfunc("F_InsertPlural",.@units,"unit")+" "+callfunc("F_InsertComma",.@zeny)+" Zeny"+getarg(2,"")+" ";
+		mes "ไม่มาก แต่นี่เป็นของขวัญเล็กๆ น้อยๆ คุณสามารถแลกเปลี่ยนกับไอเทมใน Malangdo ได้";
 		set Zeny, Zeny-.@zeny;
 		setd getarg(0), getd(getarg(0)) + .@units;
 		getitem 6488,.@units; //Thanks_Invest_Ticket
 		close;
 	case 2:
 		mes .@npc_name$;
-		mes "Wow, you've brought Investment Certificates.";
-		mes "How many certificates will you submit?";
+		mes "ว้าว คุณได้นำใบรับรองการลงทุนมาด้วย";
+		mes "คุณจะส่งใบรับรองกี่ใบ?";
 		next;
 		switch(select("1 Investment Certificate:5 Investment Certificates:Another amount:Cancel")) {
 		case 1:
@@ -184,43 +184,43 @@ function	script	F_Invest_Abyss	{
 			break;
 		case 3:
 			mes .@npc_name$;
-			mes "Please enter the number of Investment Certificates you want to submit.";
-			mes "Please choose between 1 to 20.";
-			mes "Please enter 0 to cancel.";
+			mes "กรุณากรอกจำนวน Investment Certificates ที่คุณต้องการส่ง";
+			mes "กรุณาเลือกระหว่าง 1 ถึง 20";
+			mes "กรุณาใส่ 0 เพื่อยกเลิก";
 			next;
 			input .@tickets;
 			if (.@tickets < 0 || .@tickets > 20) {
 				mes .@npc_name$;
-				mes "You've exceeded the amount per investment.";
-				mes "Please try again.";
+				mes "คุณใส่เกินจำนวนต่อการลงทุน";
+				mes "กรุณาลองอีกครั้ง";
 				close;
 			} else if (.@tickets == 0) {
 				mes .@npc_name$;
-				mes "Canceled.";
+				mes "ยกเลิกแล้ว";
 				close;
 			} else
 				break;
 		case 4:
 			mes .@npc_name$;
-			mes "Canceled.";
+			mes "ยกเลิกแล้ว";
 			close;
 		}
 		if (countitem(6489) < .@tickets) {
 			mes .@npc_name$;
-			mes "Looks like you have fewer Investment Certificates than you want to submit.";
+			mes "ดูเหมือนว่าคุณมี Investment Certificates น้อยกว่าที่คุณต้องการส่ง";
 			close;
 		}
 		set .@units, .@tickets * 10;
 		mes .@npc_name$;
-		mes .@tickets+" Investment Certificate"+((.@tickets == 1)?" is":"s are")+" the same as an investment of "+.@units+" units ("+((.@units < 100)?.@units:insertchar(""+.@units,",",1))+"0,000z)"+getarg(2,"")+".";
-		mes "Not much but this is a small gift. You can exchange it with items in Malangdo.";
+		mes .@tickets+" Investment Certificate เท่ากับการลงทุน "+.@units+" หน่วย ("+((.@units < 100)?.@units:insertchar(""+.@units,",",1))+"0,000z)"+getarg(2,"")+".";
+		mes "ไม่มาก แต่นี่เป็นของขวัญเล็กๆ น้อยๆ คุณสามารถแลกเปลี่ยนกับไอเทมใน Malangdo ได้";
 		delitem 6489,.@tickets; //Cats_Invest_Certif
 		setd getarg(0), getd(getarg(0)) + .@units;
 		getitem 6488,.@units; //Thanks_Invest_Ticket
 		close;
 	case 3:
 		mes .@npc_name$;
-		mes "Canceled.";
+		mes "ยกเลิกแล้ว";
 		close;
 	}
 }
@@ -325,7 +325,7 @@ OnCalculate:
 	}
 	end;
 OnInvest_start:
-	announce "From now on, we are going to start the investments to connect the 'Abyss Gate' in the WOE areas: Valkyrie Realm, Greenwood Lake, Luina, Britoniah.",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "จากนี้ไป เราจะเริ่มการลงทุนเพื่อเชื่อมต่อ 'Abyss Gate' ในพื้นที่ WOE: Valkyrie Realm, Greenwood Lake, Luina, Britoniah",bc_all,0xFF0000; //FW_NORMAL 10
 	set $fund_prt01,0;
 	set $fund_prt02,0;
 	set $fund_prt03,0;
@@ -349,12 +349,12 @@ OnInvest_start:
 	donpcevent "Investment_total#fund00::OnEnable";
 	end;
 OnInvest_stop:
-	announce "We've finished the investments to connect the 'Abyss Gate'.",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "เราได้เสร็จสิ้นการลงทุนเพื่อเชื่อมต่อ 'Abyss Gate' แล้ว",bc_all,0xFF0000; //FW_NORMAL 10
 	donpcevent "Investment_total#fund00::OnReset";
 	donpcevent "#fund_master::OnCalculate_Election";
 	end;
 OnResult:
-	announce "We've got the results of the investments for the 'Abyss Gate'. You can check through the Investment Status Board in each WOE area.",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "เราได้ผลลัพธ์จากการลงทุนสำหรับ 'Abyss Gate' แล้ว สามารถตรวจสอบได้จากกระดานสถานะการลงทุนในแต่ละพื้นที่ WOE",bc_all,0xFF0000; //FW_NORMAL 10
 	if ($2011_agit_invest == 4) {
 		set $fund_prt01,0;
 		set $fund_prt02,0;
@@ -391,22 +391,22 @@ OnReset:
 
 prt_gld,2,2,0	script	Investment_total#fund00	844,{
 	callfunc "F_GM_NPC";
-	mes "Is this not working properly?";
+	mes "นี่ทำงานไม่ถูกต้องใช่ไหม?";
 	next;
 	if (callfunc("F_GM_NPC",1854,0) == 1) {
-		mes "If you think the investment timer is dead, please adjust the timer.";
+		mes "หากคุณคิดว่าตัวจับเวลาการลงทุนนั้นตายแล้ว โปรดปรับเปลี่ยนตัวจับเวลา";
 		next;
-		switch(select("Turn on the timer:Cancel")) {
+		switch(select("เปิดตัวจับเวลา: ยกเลิก")) {
 		case 1:
 			donpcevent "Investment_total#fund00::OnTimerReset";
-			mes "You've turned on the timer.";
+			mes "คุณได้เปิดตัวจับเวลาแล้ว";
 			close;
 		case 2:
-			mes "Canceled.";
+			mes "ยกเลิกแล้ว";
 			close;
 		}
 	} else {
-		mes "I don't need to adjust anything now.";
+		mes "ฉันไม่จำเป็นต้องปรับแต่งอะไรตอนนี้";
 		close;
 	}
 
@@ -452,7 +452,7 @@ OnTimer3600000:
 			if ($agit_result_timer % 10 == 5 || $agit_result_timer % 10 == 0 || $agit_result_timer == 58) {
 				set $agit_result_notice, $agit_result_notice+1;
 				donpcevent "Investment_total#fund00::OnVarInit";
-				announce "No. "+$agit_result_notice+" Interim statement is now available. You can check through the Investment Status Board in each WOE area.",bc_all,0xFF0000; //FW_NORMAL 10
+				announce "ไม่ "+$agit_result_notice+" ใบแจ้งยอดชั่วคราวพร้อมใช้งานแล้ว สามารถตรวจสอบได้จากกระดานสถานะการลงทุนในแต่ละพื้นที่ WOE",bc_all,0xFF0000; //FW_NORMAL 10
 			}
 
 			donpcevent "Investment_total#fund00::OnTimerReset";
@@ -467,8 +467,8 @@ OnTimer3600000:
 
 prt_gld,164,98,3	script	Revoting Manager#Invest1	421,{
 	mes "[Revoting Manager]";
-	mes "We are not accepting additional votes.";
-	mes "Please wait for our results announcement.";
+	mes "เราไม่รับการโหวตเพิ่มเติม";
+	mes "กรุณารอประกาศผลของเราก่อน";
 	close;
 OnInit:
 	set .@invest_status, callfunc("F_Invest_Status");
@@ -538,7 +538,7 @@ OnTimer60000:
 		set $agit_revoting_timer, $agit_revoting_timer+1;
 		donpcevent "Revoting Manager#Invest1::OnTimerReset";
 	} else if (.@revote == 30) {
-		announce "Cat Paw Merchant Guild: Now we are going to close the additional vote. We will announce the results soon.",bc_all,0xFF0000; //FW_NORMAL 10
+		announce "Cat Paw Merchant Guild: ตอนนี้เรากำลังจะปิดการโหวตเพิ่มเติม เราจะประกาศผลเร็วๆ นี้",bc_all,0xFF0000; //FW_NORMAL 10
 		donpcevent "Revoting Manager#Invest2::OnDisable";
 		donpcevent "Revoting Manager#Invest1::OnEnable";
 		set $agit_revoting_timer, $agit_revoting_timer+1;
@@ -559,7 +559,7 @@ prt_gld,164,98,3	script	Revoting Manager#Invest2	421,{
 	set .@invest, $2011_agit_invest;
 	if (.@invest < 11) {
 		mes "[Revoting Manager]";
-		mes "No! This is not the time to take a revote.";
+		mes "ไม่! นี่ไม่ใช่เวลาที่จะเพิกถอน";
 		close2;
 		disablenpc "Revoting Manager#Invest2";
 		end;
@@ -567,22 +567,22 @@ prt_gld,164,98,3	script	Revoting Manager#Invest2	421,{
 	set .@playtime, checkquest(7349,PLAYTIME);
 	if (.@playtime == 0 || .@playtime == 1) {
 		mes "[Revoting Manager]";
-		mes "You've already participated in the vote.";
-		mes "Please relax and wait for the results.";
+		mes "คุณได้มีส่วนร่วมในการโหวตแล้ว";
+		mes "กรุณาผ่อนคลายและรอผล";
 		close;
 	} else if (.@playtime == 2)
 		erasequest 7349;
 	mes "[Revoting Manager]";
-	mes "Would you like to participate in the vote for choosing where to connect the 'Abyss Gate'?";
+	mes "คุณต้องการมีส่วนร่วมในการโหวตเพื่อเลือกสถานที่ที่จะเชื่อมต่อ 'Abyss Gate' หรือไม่?";
 	next;
-	if(select("Participate in the vote.:Skip for now.") == 2) {
+	if(select("มีส่วนร่วมในการโหวต:ข้ามไปก่อน") == 2) {
 		mes "[Revoting Manager]";
-		mes "You've canceled the vote.";
+		mes "คุณได้ยกเลิกการโหวตแล้ว";
 		close;
 	}
 	mes "[Revoting Manager]";
-	mes "You can vote once and won't need to invest for your choice.";
-	mes "Plesae choose one WOE area.";
+	mes "คุณสามารถลงคะแนนได้ครั้งเดียวและไม่ต้องลงทุนสำหรับการเลือกของคุณ"; 
+	mes "โปรดเลือกหนึ่งพื้นที่ WOE";
 	next;
 
 	// Create menu.
@@ -600,8 +600,8 @@ prt_gld,164,98,3	script	Revoting Manager#Invest2	421,{
 	set .@vote, select(implode(.@menu$,":"))-1;
 
 	mes "[Revoting Manager]";
-	mes "You've voted for "+.@menu$[.@vote]+".";
-	mes "Thanks for voting.";
+	mes "คุณได้โหวตให้กับ "+.@menu$[.@vote]+"";
+	mes "ขอบคุณสำหรับการโหวต";
 	setquest 7349;
 	setd "$fund_"+.@candidates$[.@vote]+"_extra", getd("$fund_"+.@candidates$[.@vote]+"_extra") + 1;
 	close;
@@ -634,16 +634,16 @@ OnNotice_on:
 	initnpctimer;
 	end;
 OnTimer5000:
-	announce "Cat Paw Merchant Guild: As no WOE area has reached the maximum investment level to connect the 'Abyss Gate'...",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "Cat Paw Merchant Guild: เนื่องจากไม่มีพื้นที่ WOE ถึงระดับการลงทุนสูงสุดเพื่อเชื่อมต่อ 'Abyss Gate'...",bc_all,0xFF0000; //FW_NORMAL 10
 	end;
 OnTimer8000:
-	announce "Cat Paw Merchant Guild: We were about to connect the 'Abyss Gate' to the WOE area which invested most.",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "Cat Paw Merchant Guild: เรากำลังจะเชื่อมต่อ 'Abyss Gate' กับพื้นที่ WOE ที่ลงทุนมากที่สุด",bc_all,0xFF0000; //FW_NORMAL 10
 	end;
 OnTimer11000:
-	announce "Cat Paw Merchant Guild: However, there were areas which invested the same amount. So we will put them to a vote.",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "Cat Paw Merchant Guild: อย่างไรก็ตาม มีพื้นที่ที่ลงทุนจำนวนเท่ากัน ดังนั้นเราจะให้พวกเขาลงคะแนนเสียง",bc_all,0xFF0000; //FW_NORMAL 10
 	end;
 OnTimer14000:
-	announce "Cat Paw Merchant Guild: Additional votes will be available for 30 minutes. You can vote in Valkyrie Realm.",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "Cat Paw Merchant Guild: สามารถโหวตเพิ่มเติมได้เป็นเวลา 30 นาที คุณสามารถโหวตได้ในอาณาจักรวาลคิรี",bc_all,0xFF0000; //FW_NORMAL 10
 	end;
 OnTimer20000:
 	explode(.@candidates$, callsub(OnGetCandidates, $2011_agit_invest),"|");
@@ -657,7 +657,7 @@ OnTimer20000:
 		else if (.@candidates$[.@i] == "prt")
 			set .@choices$[.@i],"Valkyrie Realm";
 	}
-	announce "Cat Paw Merchant Guild: The candidates for the additional vote are... "+implode(.@choices$," vs. ")+".",bc_all,0xFF0000; //FW_NORMAL 10
+	announce "Cat Paw Merchant Guild: ผู้สมัครชิงคะแนนเสียงเพิ่มเติมคือ... "+implode(.@choices$," vs. ")+"",bc_all,0xFF0000; //FW_NORMAL 10
 	set $fund_prt_extra,0;
 	set $fund_pay_extra,0;
 	set $fund_gef_extra,0;
@@ -670,7 +670,7 @@ OnTimer20000:
 
 /*
 prtg_cas01,2,2,0	script	Abrai	55,{
-	mes "I should quit my steward job.";
+	mes " ฉันควรลาออกจากงานสจ๊วตแล้ว";
 	close;
 OnAgitInvest:
 	switch(callfunc("F_Invest_Status")) {
