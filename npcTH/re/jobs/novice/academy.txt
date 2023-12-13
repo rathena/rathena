@@ -25,14 +25,14 @@ OnTouch:
 	if (getd(".start" + strnpcinfo(1)) == 0) {
 		setd ".start" + strnpcinfo(1), 1;
 		initnpctimer;
-		mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
+		mapannounce strnpcinfo(4), "[เคล็ดลับ] คุณสามารถย้ายไปยังจุดที่ต้องการได้โดยคลิกพื้นด้วยปุ่มซ้ายของเมาส์", bc_map,0xFF0000;
 	}
 	end;
 OnTimer9000:
-	mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[เคล็ดลับ] ขณะที่กดปุ่มเมาส์ขวาค้างไว้ ให้ลากเพื่อหมุนหน้าจอ", bc_map,0xFF0000;
 	end;
 OnTimer18000:
-	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[เคล็ดลับ] คุณสามารถออกไปทางประตูวาร์ปสีน้ำเงินได้", bc_map,0xFF0000;
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer21000:
@@ -42,7 +42,7 @@ OnTimer24000:
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer27000:
-	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[เคล็ดลับ] ออกจากพื้นที่นี้เพื่อดำเนินการต่อ", bc_map,0xFF0000;
 	stopnpctimer;
 	setd ".start" + strnpcinfo(1), 0;
 	end;
@@ -65,15 +65,15 @@ iz_int04,51,30,0	duplicate(iz_int#intro_evt02)	iz_int04#intro_evt02	HIDDEN_WARP_
 
 //== Wounded Swordsman (iz_int) =================================
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
-	npctalk "Oh...", "", bc_self;
+	npctalk "โอ้...", "", bc_self;
 	cloakonnpcself();
 	cloakoffnpcself( "Wounded Swordsman#intro_npc02_" + strnpcinfo(4) );
 	end;
 
 OnTouch:
-	npctalk "Urgh... please... help me...", "", bc_self;
+	npctalk "เอ่อ...ได้โปรด...ช่วยฉันด้วย...", "", bc_self;
 	sleep2 500;
-	npctalk "In order to talk with me.. click my body..", "", bc_self;
+	npctalk "เพื่อที่จะคุยกับฉัน..คลิกที่ร่างกายของฉัน..", "", bc_self;
 	end;
 
 OnInit:
@@ -88,32 +88,32 @@ iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsm
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	4_TOWER_02,{
 	if (isbegin_quest(21001) == 0) {
 		mes "[Wounded]";
-		mes "Wow! Thanks a lot!";
-		mes "I don't know how this happened to our ship";
-		mes "but we should go to see the captain.";
+		mes "ว้าว! ขอบคุณมาก!";
+		mes "ฉันไม่รู้ว่ามันเกิดขึ้นกับเรือของเราได้อย่างไร";
+		mes "แต่เราควรไปพบกัปตัน";
 		next;
 		mes "[Wounded]";
-		mes "... ohh, it seems my body is too injured.";
-		mes "Maybe you can go without me?";
+		mes "... โอ้ ดูเหมือนว่าร่างกายของฉันจะบาดเจ็บเกินไป";
+		mes "บางทีคุณอาจจะไปโดยไม่มีฉันได้ไหม?";
 		setquest 21001;
 		next;
 		cutin "tutorial02",4;
-		mes "^4d4dff!- Information -!^000000";
-		mes "NPC Quest Received.";
+		mes "^4d4dff!- ข้อมูล -!^000000";
+		mes "ได้รับภารกิจ NPC แล้ว";
 	}
 	else {
 		mes "[Wounded]";
-		mes "Luckily the water has not entered the ship.";
-		mes "I will wait here, you should go see the captain.";
+		mes "โชคดีน้ำไม่เข้าเรือ";
+		mes "ฉันจะรออยู่ที่นี่ คุณควรไปพบกัปตัน";
 		next;
 		mes "[Wounded]";
-		mes "I'm fine! I'm fine!";
-		mes "Don't worry about me, you should really go to the captain!";
+		mes "ฉันสบายดี! ฉันสบายดี!";
+		mes "ไม่ต้องกังวลเกี่ยวกับฉัน คุณควรไปหากัปตันจริงๆ!";
 		next;
-		mes "^4d4dff!- Information -!^000000";
+		mes "^4d4dff!- ข้อมูล -!^000000";
 	}
-	mes "^4d4dffQuestinfo Shortcut is Alt + U^000000";
-	mes "You can check your quest status there anytime.";
+	mes "^4d4dffทางลัด Questinfo คือ Alt + U^000000";
+	mes "คุณสามารถตรวจสอบสถานะภารกิจของคุณได้ตลอดเวลา";
 	close2;
 	cutin "",255;
 	end;
@@ -134,36 +134,36 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 	switch( isbegin_quest(21008) ) {
 	case 0:
 		mes "[Captain Carocc]";
-		mes "There are still people in the cabins?!";
-		mes "At least you are safe.";
-		mes "Are you alright?";
+		mes "กระท่อมยังมีคนอยู่เหรอ?!";
+		mes "อย่างน้อยคุณก็ปลอดภัย";
+		mes "คุณสบายดีหรือเปล่า?";
 		next;
-		if (select("I'm alright, but others need help.", "I think I am the last?") == 1) {
+		if (select("ฉันไม่เป็นไร แต่คนอื่นต้องการความช่วยเหลือ", "ฉันคิดว่าฉันเป็นคนสุดท้ายเหรอ?") == 1) {
 			mes "[Captain Carocc]";
-			mes "There are more people left?";
-			mes "I will send a rescue team to them.";
-			mes "Thank you for your report.";
+			mes "มีคนเหลืออีกเหรอ?";
+			mes "ฉันจะส่งทีมกู้ภัยไปให้พวกเขา";
+			mes "ขอบคุณสำหรับรายงานของคุณ";
 		} else {
 			mes "[Captain Carocc]";
-			mes "Alright, that's good.";
-			mes "The storm came unexpectedly but I never thought it would hit us that hard.";
+			mes "เอาล่ะเป็นสิ่งที่ดี";
+			mes "พายุมาอย่างไม่คาดคิดแต่ฉันไม่เคยคิดว่ามันจะโจมตีเราแรงขนาดนั้น";
 		}
 		next;
 		mes "[Captain Carocc]";
-		mes "At least most people made it to safety.";
+		mes "อย่างน้อยคนส่วนใหญ่ก็ไปถึงที่ปลอดภัย";
 		next;
 		mes "[Captain Carocc]";
-		mes "Look at the trees there, ^4d4dfffollow them to the southwest^000000 to find a new ship.";
-		mes "The ship will take you to ^4d4dffIzlude^000000, our original destination.";
+		mes "ดูต้นไม้ที่นั่น ^4d4dffตามพวกมันไปทางตะวันตกเฉียงใต้^000000 เพื่อค้นหาเรือลำใหม่";
+		mes "เรือจะพาคุณไปยัง ^4d4dffIzlude^000000 ซึ่งเป็นจุดหมายปลายทางเดิมของเรา";
 		next;
 		mes "[Captain Carocc]";
-		mes "Ah! Speaking of it, those ^4d4dffPorings^000000 on this island drop several materials we could use for repairs.";
+		mes "อา! เมื่อพูดถึงเรื่องนี้ ^4d4dffPorings^000000 บนเกาะนี้จะดรอปวัสดุหลายอย่างที่เราสามารถใช้เพื่อซ่อมแซมได้";
 		next;
 		mes "[Captain Carocc]";
-		mes "^4d4dffKill the Porings and bring 2 Lumbers to the southern crew^000000.";
+		mes "^4d4dffฆ่า Porings และนำไม้แปรรูป 2 อันไปให้ลูกเรือทางใต้^000000";
 		next;
 		mes "[Captain Carocc]";
-		mes "It is a hard task, but you look tough enough.";
+		mes "มันเป็นงานที่ยาก แต่คุณดูแข็งแกร่งพอ";
 		specialeffect2 EF_HEAL2;
 		heal 9999,0;
 		skilleffect 34,0;
@@ -177,26 +177,26 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 		setquest 21008;
 		next;
 		mes "[Captain Carocc]";
-		mes "Speaking of Porings, you have to equip your gears.";
-		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
+		mes "เมื่อพูดถึง Porings คุณต้องเตรียมอุปกรณ์ของคุณ";
+		mes "คุณควรมี ^4d4dffอาวุธ และชุดเกราะ^000000 ติดตั้งอยู่";
 		next;
 		cutin "tutorial03",4;
-		mes "!- Information -!";
-		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
-		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
+		mes "!- ข้อมูล -!";
+		mes "^4d4dffคุณสามารถสวมใส่อุปกรณ์หรือใช้ไอเทมได้เพียงแค่ดับเบิลคลิก";
+		mes "หน้าต่างรายการสามารถเปิดได้โดยการกด Alt + E หรือใช้ปุ่มเมนู^000000";
 		next;
-		mes "!- Information -!";
-		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
-		mes "Either double click or drag & drop to equip or unequip them.^000000";
+		mes "!- ข้อมูล -!";
+		mes "^4d4dffไอเทมที่สวมใส่สามารถดูได้โดยการกด Alt + Q";
+		mes "ดับเบิลคลิกหรือลากและวางเพื่อติดตั้งหรือถอดออก^000000";
 		next;
 		cutin "",255;
 		mes "[Captain Carlock]";
-		mes "Did you check all your equipment?";
-		mes "^4d4dffSkill distribution^000000 should be done.";
+		mes "คุณได้ตรวจสอบอุปกรณ์ทั้งหมดของคุณแล้วหรือยัง?";
+		mes "ควรมีการ ^4d4dffกระจายทักษะ^000000";
 		next;
 		mes "[Captain Carlock]";
-		mes "For a smooth battle, you have to distribute your abilities properly.";
-		mes "^4d4dffIf you want to increase your strength, you need to raise Str^000000. ^4d4dffIf you want to increase your hit, you must raise Dex^000000.";
+		mes "เพื่อการต่อสู้ที่ราบรื่น คุณจะต้องกระจายความสามารถของคุณอย่างเหมาะสม";
+		mes "^4d4dffอยากเพิ่มความแข็งแกร่งต้องเพิ่ม Str^000000. ^4d4dffหากคุณต้องการเพิ่ม Hit คุณต้องเพิ่ม Dex^000000.";
 		break;
 	case 1:
 		mes "[Captain Carocc]";
@@ -206,29 +206,29 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 		sc_start SC_BLESSING,240000,10;
 		skilleffect 29,0;
 		sc_start SC_INCREASEAGI,240000,10;
-		mes "^4d4dffThe Ship^000000 is anchored in the southwest. It will take you to Izlude.";
-		mes "Don't forget to ^4d4dffget some Lumber^000000 for the ship.";
+		mes "^4d4dffเรือ^000000ทอดสมออยู่ทางตะวันตกเฉียงใต้ มันจะพาคุณไปที่ Izlude.";
+		mes "อย่าลืม ^4d4dffรับ Lumber^000000 สำหรับเรือ";
 		next;
 		mes "[Captain Carocc]";
-		mes "Don't forget to raise your ^4d4dffskills^000000.";
+		mes "อย่าลืมเพิ่ม ^4d4dffskills^000000 ของคุณ";
 		break;
 	case 2:
 		mes "[Captain Carocc]";
-		mes "Everything is ready to sail over to Izlude.";
-		mes "The ship is located at the south-western part of the island.";
+		mes "ทุกอย่างพร้อมที่จะแล่นไปยัง Izlude แล้ว.";
+		mes "เรือตั้งอยู่ทางตะวันตกเฉียงใต้ของเกาะ";
 		close;
 	}
 	next;
-	mes "! - Information -!";
-	mes "^4d4dffYou get a stats bonus for every level you raise.";
-	mes "The status window can be opened and closed with the shortcut Alt + A^000000.";
+	mes "! - ข้อมูล -!";
+	mes "^4d4dffคุณจะได้รับโบนัสสถิติสำหรับทุกระดับที่คุณเพิ่ม";
+	mes "หน้าต่างสถานะสามารถเปิดและปิดได้โดยใช้ทางลัด Alt + A^000000.";
 	next;
-	mes "! - Information -!";
-	mes "^4d4dffPlease properly allocate the stats you need to battle^000000.";
+	mes "! - ข้อมูล -!";
+	mes "^4d4dffโปรดจัดสรรสถิติที่คุณต้องการต่อสู้อย่างเหมาะสม^000000.";
 	next;
 	mes "[Captain Carocc]";
-	mes "Kill Porings and bring the Lumber to the crew.";
-	mes "Good luck!";
+	mes "สังหาร Porings และนำ Lumber มาให้ลูกเรือ";
+	mes "ขอให้โชคดี!";
 	close;
 
 OnInit:
@@ -251,43 +251,43 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 		next;
 		cutin "fly_trock.bmp",2;
 		mes "[Captain Carocc]";
-		mes "Had a good dream?";
-		mes "Soon, we will get to Izlude. And you can talk to other people like you just talked to me.";
+		mes "ฝันดีมั้ย?";
+		mes "อีกไม่นานเราก็จะถึงอิซลูเดแล้ว และคุณสามารถพูดคุยกับคนอื่นได้เหมือนกับที่คุณเพิ่งคุยกับฉัน";
 		next;
 		mes "[Captain Carocc]";
-		mes "I think that guy over there lost his memory. I gave him a new name.";
+		mes "ฉันคิดว่าผู้ชายคนนั้นสูญเสียความทรงจำไปแล้ว ฉันตั้งชื่อใหม่ให้เขา";
 		mes "Lumin.";
 		next;
 		mes "[Captain Carocc]";
-		mes "Many youngsters visit the ^4d4dffRune-Midgarts Kingdom^000000 to chase their dreams.";
-		mes "Izlude is a satellite city of Prontera, the capital of the Rune-Midgarts Kingdom.";
+		mes "เด็กๆ จำนวนมากมาที่ ^4d4dffRune-Midgarts Kingdom^000000 เพื่อไล่ตามความฝันของพวกเขา";
+		mes "Izlude คือเมืองบริวารของฟรอนเตรา เมืองหลวงของ Rune-Midgarts Kingdom.";
 		next;
 		mes "[Captain Carocc]";
-		mes "Izlude always welcomes young adventurers like you who have just started their journey through the world.";
-		mes "You are one of them, of course.";
+		mes "Izlude ยินดีต้อนรับนักผจญภัยรุ่นเยาว์เช่นคุณที่เพิ่งเริ่มต้นการเดินทางรอบโลกเสมอ";
+		mes "แน่นอนคุณเป็นหนึ่งในนั้น";
 		next;
 		mes "[Captain Carocc]";
-		mes "I would like to tell you more stories, but it's time to get ready for arrival.";
-		mes "There is an academy in Izlude for newcomers like yourself.";
+		mes "อยากจะเล่าเรื่องเพิ่มเติมให้ฟังแต่ก็ถึงเวลาเตรียมตัวให้พร้อมสำหรับการมาถึง";
+		mes "มีสถานศึกษาใน Izlude สำหรับผู้มาใหม่เช่นคุณ";
 		next;
 		mes "[Captain Carocc]";
-		mes "Let me give you more details later. See you back at the harbor deck.";
+		mes "ฉันจะให้รายละเอียดเพิ่มเติมในภายหลัง แล้วพบกันใหม่ ณ ดาดฟ้าท่าเรือ";
 		next;
 		mes "[Captain Carocc]";
-		mes "To get off this ship, you should enter the ^4d4dffShining Portal^000000 over there.";
-		mes "All transportation is made through the portals.";
+		mes "ในการลงจากเรือลำนี้ คุณควรเข้าไปใน ^4d4dffShining Portal^000000 ตรงนั้น";
+		mes "การขนส่งทั้งหมดทำผ่านพอร์ทัล";
 		setquest 7471;
 		completequest 7471;
 		next;
 		cutin "nov_lumin01.bmp", 0;
 		mes "[Lumin]";
-		mes "Yes.";
+		mes "ใช่.";
 		next;
 		cloakonnpcself();
 		cutin "fly_trock.bmp",2;
 		mes "[Captain Carocc]";
-		mes "Oh boy.";
-		mes "What a cute reaction.";
+		mes "โอ้เด็ก.";
+		mes "ช่างเป็นปฏิกิริยาที่น่ารัก";
 		close2;
 		cutin "",255;
 		end;
@@ -296,28 +296,28 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 	mes "[Lumin]";
 	mes ".....";
 	next;
-	select("Should I introduce myself?", "My name is ~!");
+	select("ฉันควรจะแนะนำตัวเองไหม?", "ฉันชื่อ~!");
 	mes "[" + strcharinfo(0) + "]";
-	mes "I am " + strcharinfo(0) + "!";
+	mes "ฉัน " + strcharinfo(0) + "!";
 	next;
 	mes "[Lu]";
 	mes ".....";
 	next;
 	mes "[Lu]";
 	mes ".....";
-	mes "....So?";
+	mes "....ดังนั้น?";
 	next;
 	cloakonnpcself();
-	mes "- Lu just walked away with a cynical look on his face.";
+	mes "- ลูเพิ่งเดินจากไปพร้อมกับดูถูกเหยียดหยามบนใบหน้า";
 	next;
 	cutin "fly_trock.bmp",2;
 	mes "[Captain Carocc]";
-	mes "Looks like... he has a shy personality.";
-	mes "When you go to Izlude, will you check on him?";
+	mes "ดูเหมือน...เขามีนิสัยขี้อาย";
+	mes "เมื่อคุณไปที่ Izlude คุณจะตรวจสอบเขาไหม?";
 	next;
 	mes "[Captain Carocc]";
-	mes "From now on I'll be sailing the ship around the island.";
-	mes "Let's go, shall we?";
+	mes "จากนี้ไปผมจะล่องเรือรอบเกาะ";
+	mes "ไปกันเลยมั้ย?";
 	close2;
 	cutin "",255;
 	end;
@@ -335,42 +335,42 @@ int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
 	if (isbegin_quest(21008) == 1) {
 		if (countitem(6008) < 2) {
 			mes "[Sailor]";
-			mes "These Porings stole my materials to repair the ship. Can you help me to get them back?";
-			mes "There are plenty of Porings on this island.";
+			mes "พวกพอริงพวกนี้ขโมยวัสดุของฉันไปซ่อมเรือ คุณช่วยฉันพาพวกเขากลับมาได้ไหม?";
+			mes "มี Porings มากมายบนเกาะนี้";
 			next;
 			mes "[Sailor]";
-			mes "I would really appreciate it if you help me.";
-			mes "I am not allowed to set foot on this island.";
-			mes "That's why I ask for your help~";
+			mes "ฉันจะขอบคุณมากถ้าคุณช่วยฉัน";
+			mes "ฉันไม่ได้รับอนุญาตให้เดินเท้าบนเกาะนี้";
+			mes "เพราะเหตุนี้ฉันจึงขอความช่วยเหลือจากคุณ~";
 			close;
 		}
 		mes "[Sailor]";
-		mes "Unbelievable, perfect! Any chance you want to join my crew?";
-		mes "Enough talking!!";
-		mes "Come on, we're ready to set sail!";
-		mes "Thank you so much!";
+		mes "เหลือเชื่อ สมบูรณ์แบบ! มีโอกาสคุณอยากจะเข้าร่วมทีมของฉันไหม?";
+		mes "พูดจบแล้ว!!";
+		mes "เอาล่ะ เราพร้อมออกเรือแล้ว!";
+		mes "ขอบคุณมาก!";
 		next;
 		mes "[Sailor]";
-		mes "If you want to sail with us to Izlude, jump on board!";
+		mes "หากคุณต้องการล่องเรือกับเราไปยัง Izlude กระโดดขึ้นเรือได้เลย!";
 		delitem 6008,2;
 		getexp 100,100;
 		getitem 611,5;
 		completequest 21008;
 		next;
 		mes "[Sailor]";
-		mes "Oh, and take these ^4d4dffMagnifiers^000000.";
-		mes "When you hunt monsters you can find ^4d4dffunidentified items^000000.";
+		mes "โอ้ แล้วเอา ^4d4dffMagnifiers^000000 พวกนี้ไปด้วย";
+		mes "เมื่อคุณล่ามอนสเตอร์ คุณจะพบ ^4d4dffไอเท็มที่ไม่ระบุชื่อ^000000";
 		next;
 		mes "[Sailor]";
-		mes "Using a Magnifier will identify the item.";
+		mes "การใช้ Magnifiers จะระบุ ไอเท็มนั้น";
 		next;
 		mes "[Sailor]";
-		mes "Maybe you already have some unidentified items from your fights with those Porings?";
+		mes "บางทีคุณอาจมีสิ่งของที่ไม่ปรากฏชื่อจากการต่อสู้กับ Poring เหล่านั้นอยู่แล้ว?";
 		close;
 	}
 	mes "[Sailor]";
-	mes "The ship is heading to Izlude soon~!";
-	mes "I'll let you know when we set sail~!";
+	mes "เรือกำลังมุ่งหน้าไปยัง Izlude เร็วๆ นี้~!";
+	mes "ฉันจะแจ้งให้คุณทราบเมื่อเราออกเดินทาง~!";
 	close;
 
 OnInit:
@@ -391,59 +391,59 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 		if (isbegin_quest(4269) == 2) {
 			if (isbegin_quest(7471) == 2 || isbegin_quest(7472) > 0) {
 				mes "[Carocc]";
-				mes "Oh, "+strcharinfo(0)+"!";
-				mes "Why are you here at the wharf?";
-				mes "I guess you are doing well at the academy.";
+				mes "โอ้, "+strcharinfo(0)+"!";
+				mes "ทำไมคุณถึงมาที่ท่าเรือ?";
+				mes "ฉันเดาว่าคุณทำได้ดีในสถาบันการศึกษา";
 				next;
 				mes "[Carocc]";
-				mes "I'm going to be docking and reparing the ship here for a while.";
-				mes "I will be taking the same route I tried before.";
+				mes "ฉันจะไปเทียบท่าและซ่อมเรือที่นี่สักพัก";
+				mes "ฉันจะใช้เส้นทางเดียวกับที่ฉันเคยลองมาก่อน";
 			} else {
 				mes "[Carocc]";
-				mes "Hmm? You must be a student of the Criatura Academy?";
-				mes "Were you on my ship?";
-				mes "Hmm I can't remember.";
+				mes "อืม? คุณต้องเป็นนักเรียนของ Criatura Academy หรือไม่?";
+				mes "คุณอยู่บนเรือของฉันเหรอ?";
+				mes "อืม ฉันจำไม่ได้";
 				next;
 				mes "[Carocc]";
-				mes "Well, anything is fine.";
-				mes "Shall I go easy on you since you said you were a student of the Academy?";
-				mes "I am still the captain of the ship, regardless.";
+				mes "อะไรก็ดีไปหมด";
+				mes "ฉันจะสบายใจกับคุณไหมเมื่อคุณบอกว่าคุณเป็นนักเรียนของ Academy?";
+				mes "ฉันยังคงเป็นกัปตันเรืออยู่ดี";
 			}
 			next;
 			mes "[Carocc]";
-			mes "I plan on taking off as soon as the repairs are complete.";
-			mes "The route will open with ^4d4dffPharos Lighthouse^000000 by then.";
+			mes "ฉันวางแผนจะออกเดินทางทันทีที่การซ่อมแซมเสร็จสิ้น";
+			mes "เส้นทางจะเปิดด้วย ^4d4dffPharos Lighthouse^000000 เมื่อถึงตอนนั้น";
 		} else {
 			if (isbegin_quest(7471) == 2) {
 				if (!isbegin_quest(7472)) {
 					mes "[Carocc]";
-					mes "This is Izlude.";
-					mes "The best city for you to take wings to your dreams.";
+					mes "นี่คือ Izlude.";
+					mes "เมืองที่ดีที่สุดสำหรับคุณที่จะติดปีกไปสู่ความฝันของคุณ";
 					next;
 					mes "[Carocc]";
-					mes "Although I don't have any particular feelings for you,";
-					mes "I've seen a lot of young people like you, while operating the ship.";
+					mes "แม้ว่าฉันจะไม่รู้สึกอะไรกับคุณเป็นพิเศษ";
+					mes "ฉันเคยเห็นคนหนุ่มสาวมากมายเช่นคุณในขณะที่ควบคุมเรือ";
 					next;
 					mes "[Carocc]";
-					mes "There were those among them who succeeded and failed and went back after being unable to adjust.";
-					mes "I want you to have a successful start with this place.";
+					mes "มีผู้ที่ประสบความสำเร็จและล้มเหลวและกลับไปหลังจากปรับตัวไม่ได้";
+					mes "ฉันอยากให้คุณประสบความสำเร็จในการเริ่มต้นกับสถานที่แห่งนี้";
 					next;
 					mes "[Carocc]";
-					mes "Did you know this?";
-					mes "Izlude has a new Institute for budding adventurers like you!";
+					mes "คุณรู้เรื่องนี้หรือไม่?";
+					mes "Izlude มีสถาบันใหม่สำหรับนักผจญภัยหน้าใหม่เช่นคุณ!";
 					next;
-					select("You mean the Academy?");
+					select("คุณหมายถึง Academy ใช่ไหม?");
 					mes "[Carocc]";
-					mes "Yes! It's called the ^4d4dffRoyal Criatura Academy^000000.";
-					mes "Founded by the Rune-Midgarts lineage to help out new adventurers.";
-					next;
-					mes "[Carocc]";
-					mes "A friend of mine works there, so I'll give you the introduction to him.";
-					mes "He could make a lot of things easier for you.";
+					mes "ใช่! มีชื่อว่า ^4d4dffRoyal Criatura Academy^000000";
+					mes "ก่อตั้งโดยเชื้อสาย Rune-Midgarts เพื่อช่วยเหลือนักผจญภัยหน้าใหม่";
 					next;
 					mes "[Carocc]";
-					mes "He usually talks to new adventurers near the entrance of the academy.";
-					mes "Go and meet him there.";
+					mes "เพื่อนของฉันทำงานที่นั่น ดังนั้นฉันจะแนะนำให้คุณรู้จักเขา";
+					mes "เขาสามารถทำให้หลายสิ่งหลายอย่างง่ายขึ้นสำหรับคุณ";
+					next;
+					mes "[Carocc]";
+					mes "เขามักจะพูดคุยกับนักผจญภัยหน้าใหม่ใกล้ทางเข้าสถาบัน";
+					mes "ไปพบเขาที่นั่น";
 					next;
 					if (!isbegin_quest(7473)) {
 						mes "[Carocc]";
@@ -4248,11 +4248,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
-				cutin "ฦฤบ๊ธฃฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Green Herbs are dropped by Fabres.";
 				next;
@@ -4274,11 +4274,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Apple & 2 Carrots^000000.";
 				next;
-				cutin "ฦ๗ธตฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Carrots are given by Lunatics.";
 				next;
@@ -4300,15 +4300,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
-				cutin "ฦ๗ธตฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
 				next;
-				cutin "ฦฤบ๊ธฃฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Fluff can be received from Fabre or Lunatic.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Mille Feuille]";
 				mes "Feathers are dropped by Lunatics or Fabres.";
 				next;
@@ -4330,11 +4330,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
-				cutin "ฦ๗ธตฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Apple can be found in Porings in the field outside of Izlude.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Clovers are dropped by Lunatics or Fabre in the field outside Izlude.";
 				next;
