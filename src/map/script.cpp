@@ -27016,6 +27016,41 @@ BUILDIN_FUNC(has_autoloot) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// ===================================
+// *autoloot({<rate>{, <char_id>}});
+// This command sets the rate of autoloot.
+// If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+// if the user has autoloot enabled it will default to 0 = 0% (disabled).
+// Returns true on success and false on failure.
+// ===================================
+BUILDIN_FUNC(autoloot) {
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int rate;
+
+	if (script_hasdata(st, 2)) {
+		rate = script_getnum(st, 2);
+
+		if (rate < 0 || rate > 10000) {
+			ShowWarning("buildin_autoloot: Invalid rate value %d, should be between 0 ~ 10000.\n", rate);		
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		rate = (sd->state.autoloot > 0 ? 0 : 10000);
+	}
+
+	sd->state.autoloot = rate;
+	script_pushint(st, true);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(opentips){
 #if PACKETVER < 20171122
 	ShowError( "buildin_opentips: This command requires PACKETVER 20171122 or newer.\n" );
@@ -27788,6 +27823,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
 	BUILDIN_DEF(has_autoloot,"?"),
+	BUILDIN_DEF(autoloot,"??"),
 	BUILDIN_DEF(opentips, "i?"),
 
 #include <custom/script_def.inc>
