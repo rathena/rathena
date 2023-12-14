@@ -1044,7 +1044,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						close;
 					case 2:
 						mes "[Hun]";
-						แต่ถึงอย่างนั้น";
+						mes "แต่ถึงอย่างนั้น";
 						mes "มันยากที่จะออกไปคนเดียวในสถานที่ใหม่";
 						mes "นั่นเป็นเหตุผลว่าทำไม Criatura Academy ถึงอยู่ที่นั่น";
 						next;
@@ -1067,23 +1067,23 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						close;
 					case 3:
 						mes "[Hun]";
-						mes "มีแผนวางไว้แล้วเหรอ?”;
-mes "เตรียมตัวมาอย่างดี";
-mes "แต่ในกรณีที่ ถ้าคุณอยากรู้เกี่ยวกับ Criatura Academy ลองมาเยี่ยมชมสิ";
-next;
-mes "[ฮุน]";
-mes "เมื่อเจ้าไปทางเหนือนี้เจ้าจะพบ";
-mes "<NAVI>[อาคารสถาบัน]<INFO>iz_ac01,100,39</INFO></NAVI>";
-mes "อะไรสบายดี สบายดีใช่ไหม?";
-next;
-emotion ET_SURPRISE,getnpcid(0,"Information Staff#"+strnpcinfo(2));
-mes "[Information Staff]";
-mes "คุณพูดถูก";
-mes "การเตรียมตัวคือกุญแจสำคัญ";
-mes "แต่ ^4d4dffถ้าคุณต้องการข้อมูลตำแหน่ง กรุณาถามฉัน^000000";
-next;
-mes "[Information Staff]";
-mes "ข้อมูลของฮุนมีขีดจำกัด";
+						mes "มีแผนวางไว้แล้วเหรอ?";
+						mes "เตรียมตัวมาอย่างดี";
+						mes "แต่ในกรณีที่ ถ้าคุณอยากรู้เกี่ยวกับ Criatura Academy ลองมาเยี่ยมชมสิ";
+						next;
+						mes "[Hun]";
+						mes "เมื่อเจ้าไปทางเหนือนี้เจ้าจะพบ";
+						mes "<NAVI>[อาคาร Academy]<INFO>iz_ac01,100,39</INFO></NAVI>";
+						mes "อะไรสบายดี สบายดีใช่ไหม?";
+						next;
+						emotion ET_SURPRISE,getnpcid(0,"Information Staff#"+strnpcinfo(2));
+						mes "[Information Staff]";
+						mes "คุณพูดถูก";
+						mes "การเตรียมตัวคือกุญแจสำคัญ";
+						mes "แต่ ^4d4dffถ้าคุณต้องการข้อมูลตำแหน่ง กรุณาถามฉัน^000000";
+						next;
+						mes "[Information Staff]";
+						mes "ข้อมูลของฮุนมีขีดจำกัด";
 						close;
 					}
 				} else {
@@ -1379,7 +1379,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			next;
 			if (select("ฉันไม่ต้องการความเห็นใจจากคุณ", "!!!!!") == 1) {
 				mes "[Lumin]";
-				mes "อย่างนั้นเหรอ?”;
+				mes "อย่างนั้นเหรอ?";
 				mes "กัปตันบอกให้ฉันช่วยเหลือคนยากจนเสมอ";
 				mes "แต่เจ้าทำให้โอกาสที่ข้าจะช่วยหายไป";
 				cutin "nov_lumin02.bmp", 2;
@@ -1389,7 +1389,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				next;
 			} else {
 				mes "[Lumin]";
-				mes "ตอนนี้เราแบ่ง 7 เป็น 3 ได้แล้วเหรอ?”;
+				mes "ตอนนี้เราแบ่ง 7 เป็น 3 ได้แล้วเหรอ?";
 				mes "ฉันโอเคกับ 6 ถึง 4";
 				cutin "nov_lumin02.bmp", 2;
 				next;
@@ -1414,7 +1414,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			next;
 			cutin "", 255;
 			mes "[Information Staff]";
-			mes "คุณสองคนเป็นเพื่อนกันไม่ใช่เหรอ?”;
+			mes "คุณสองคนเป็นเพื่อนกันไม่ใช่เหรอ?";
 			mes "พวกคุณทั้งคู่ดูเป็นมิตรมากพอใช่ไหม?";
 			next;
 			mes "[Information Staff]";
@@ -2714,7 +2714,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					mes "[Receptionist]";
 					mes "มันมีประโยชน์มั้ย?";
 					next;
-					if (select("เดี๋ยวก่อน" "ฉันต้องไปแล้ว") == 1) {
+					if (select("เดี๋ยวก่อน","ฉันต้องไปแล้ว") == 1) {
 						continue;
 					} else {
 						if (Class == Job_Novice) {
@@ -2745,7 +2745,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					mes "[Receptionist]";
 					mes "มันมีประโยชน์มั้ย?";
 					next;
-					if (select("เดี๋ยวก่อน" "ฉันต้องไปแล้ว") == 1) {
+					if (select("เดี๋ยวก่อน","ฉันต้องไปแล้ว") == 1) {
 						continue;
 					} else {
 						if (Class == Job_Novice) {
