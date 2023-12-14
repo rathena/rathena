@@ -392,7 +392,7 @@ bat_room,160,150,3	script	Erundek	109,{
 		close;
 	}
 	mes "[Erundek]";
-	mes "คุณมีตราสนามรบไหม?”;
+	mes "คุณมีตราสนามรบไหม?";
 	mes "ฉันสามารถแลกเปลี่ยน Bravery Badges และ Valor Badges เป็นไอเทมรางวัลได้";
 	next;
 	switch(select("แลกเปลี่ยน Badges:ตรวจสอบแค็ตตาล็อก")) {

@@ -990,7 +990,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							close;
 						case 3:
 							mes "[Hun]";
-							mes "มีแผนวางไว้แล้วเหรอ?”;
+							mes "มีแผนวางไว้แล้วเหรอ?";
 							mes "เตรียมตัวมาอย่างดี";
 							mes "แต่ในกรณีที่ ถ้าคุณอยากรู้เกี่ยวกับ Criatura Academy ลองมาเยี่ยมชมสิ";
 							next;
