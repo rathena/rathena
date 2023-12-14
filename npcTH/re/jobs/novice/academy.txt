@@ -3436,37 +3436,37 @@ iz_ac01_d,36,52,3	duplicate(Odd Novice#ac)	Odd Novice#ac_d	4_M_SIT_NOVICE
 // -----------------------------------------------------------------------------
 izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 	if (!checkweight(1301,3)) {
-		mes "- Quest cannot be continued due to your overfilled inventory. -";
+		mes "- ภารกิจไม่สามารถดำเนินการต่อได้เนื่องจากสินค้าคงคลังของคุณล้น -";
 		close;
 	}
 
 	if (Class == Job_Novice) {
 		if (!isbegin_quest(1237)) {
 			mes "[Shop Helper Leonie]";
-			mes "How are you doing with your basic studies?";
-			mes "You need to learn about the shop information.";
+			mes "คุณเป็นยังไงบ้างกับการเรียนขั้นพื้นฐานของคุณ";
+			mes "คุณต้องเรียนรู้เกี่ยวกับข้อมูลร้านค้า";
 			next;
-			if (select("I'm doing fine myself!", "Ok I'll listen!") == 1) {
+			if (select("ฉันสบายดี!","โอเค ฉันจะฟัง!") == 1) {
 				mes "[Shop Helper Leonie]";
-				mes "If you listen carefully, I will give you a souvenir.";
+				mes "ถ้าฟังดีๆ ฉันจะให้ของที่ระลึกแก่คุณ";
 				close;
 			}
 			mes "[Shop Helper Leonie]";
-			mes "Wise choise.";
-			mes "Midgard has many shops and many variety of currencies.";
-			mes "So you need to listen to me well to use them accordingly.";
+			mes "ทางเลือกที่ชาญฉลาด";
+			mes "Midgard มีร้านค้ามากมายและมีสกุลเงินที่หลากหลาย"; 
+			mes "ดังนั้นคุณต้องฟังฉันให้ดีเพื่อใช้มันตามนั้น";
 			setquest 1237;
 			close;
 		}
 		if (!isbegin_quest(1238)) {
 			mes "[Shop Helper Leonie]";
-			mes "Let's start.";
+			mes "เริ่มกันเลย.";
 		} else if (isbegin_quest(1238) == 1) {
 			if (countitem(501) > 0) {
 				mes "[Shop Helper Leonie]";
-				mes "Ok 1 ^0000ffRed Potion^000000.";
-				mes "For now on you can use them at a field in a dungeon.";
-				mes "As a reward I'll give you a couple of ^ff0000Fly Wing^000000s.";
+				mes "ตกลง 1 ^0000ffRed Potion^000000";
+				mes "สำหรับตอนนี้ คุณสามารถใช้พวกมันได้ที่สนามในดันเจี้ยน";
+				mes "เพื่อเป็นรางวัล ฉันจะมอบ ^ff0000Fly Wing^000000s สองสามอันให้กับคุณ";
 				completequest 1238;
 				setquest 1239;
 				getitem 12323,50;// N_Fly_Wing
@@ -3474,44 +3474,44 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				close;
 			}
 			mes "[Shop Helper Leonie]";
-			mes "Go to the shop and buy one ^0000ffRed Potion^000000 and bring it back.";
-			mes "You have that much money, right?";
+			mes "ไปที่ร้านแล้วซื้อ ^0000ffRed Potion^000000 หนึ่งอันแล้วนำมันกลับมา";
+			mes "คุณมีเงินมากขนาดนั้นใช่ไหม?";
 			next;
 			mes "[Shop Helper Leonie]";
-			mes "If not, go hunt monsters in the vicnity and then when you sell their loot you should make enough money.";
+			mes "ถ้าไม่ ไปล่ามอนเตอร์ในบริเวณใกล้เคียง และเมื่อคุณขายของที่ปล้นมาได้ คุณควรทำเงินได้เพียงพอ";
 			next;
-			if (select("I will do it.", "Question about the shop.") == 1) {
+			if (select("ฉันจะทำ", "คำถามเกี่ยวกับร้านค้า") == 1) {
 				mes "[Shop Helper Leonie]";
-				mes "Let's go into the next lesson.";
-				mes "Hurry back.";
+				mes "เข้าสู่บทเรียนต่อไปกันดีกว่า";
+				mes "รีบกลับมา";
 				close;
 			}
 			mes "[Shop Helper Leonie]";
 		} else {
 			if (!isbegin_quest(1240)) {
 				mes "[Shop Helper Leonie]";
-				mes "We'll do the next lesson.";
-				mes "In your future travels.";
-				mes "You will acquire many items in your inventory.";
+				mes "เราจะทำบทเรียนต่อไป";
+				mes "ในการเดินทางในอนาคตของคุณ";
+				mes "คุณจะได้รับไอเทมมากมายในคลังของคุณ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "Among those items, there will be ones that you can't drop or trade, these are for quests. These are important items but often times you will also find them to be a burden.";
+				mes "ในบรรดาไอเทมเหล่านั้น จะมีไอเทมที่คุณไม่สามารถดรอปหรือแลกเปลี่ยนได้ สิ่งเหล่านี้มีไว้สำหรับภารกิจ สิ่งเหล่านี้เป็นไอเทมที่สำคัญ แต่บ่อยครั้งคุณจะพบว่ามันเป็นภาระ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "In those times, sell what you can to shops in order to decrease your inventory.";
-				mes "I'll give you an example.";
-				mes "Go to a shop to unload it.";
+				mes "ในช่วงเวลานั้น จงขายสิ่งที่คุณทำได้ให้กับร้านค้าเพื่อลดจำนวนสินค้าคงคลังของคุณ";
+				mes "ฉันจะยกตัวอย่างให้ฟัง";
+				mes "ไปที่ร้านเพื่อขนมันออก";
 				next;
-				switch(select("I don't want to do it.", "I will do it.", "Question about the shop.")) {
+				switch(select("ฉันไม่อยากทำ", "ฉันจะทำ", "คำถามเกี่ยวกับร้านค้า")) {
 					case 1:
 						mes "[Shop Helper Leonie]";
-						mes "Stingy person!";
+						mes "คนตระหนี่!";
 						close;
 					case 2:
 						mes "[Shop Helper Leonie]";
-						mes "About shop variety.";
-						mes "You can buy these items everywhere in the world.";
-						mes "Go sell one ^ff0000Poor Can^000000 that I gave you to the shop.";
+						mes "เกี่ยวกับความหลากหลายของร้านค้า";
+						mes "คุณสามารถซื้อไอเทมเหล่านี้ได้ทุกที่ในโลก";
+						mes "ไปขาย ^ff0000Poor Can^000000 ที่ฉันให้คุณไปที่ร้านค้าไปหนึ่งอัน";
 						completequest 1239;
 						setquest 1240;
 						getitem 6426,1;// Bad_Can
@@ -3523,23 +3523,23 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 			} else if (isbegin_quest(1240) == 1) {
 				if (!countitem(6426)) {
 					mes "[Shop Helper Leonie]";
-					mes "You went and sold the ^ff0000Poor Can^000000.";
-					mes "Good work, here's the reward for it.";
-					mes "The things I haven't told you, you will learn throughout your travels.";
+					mes "คุณไปขาย ^ff0000Poor Can^000000 แล้ว";
+					mes "ทำได้ดีมาก นี่คือรางวัลสำหรับมัน";
+					mes "สิ่งที่ฉันไม่ได้บอกคุณ คุณจะได้เรียนรู้ตลอดการเดินทางของคุณ";
 					completequest 1240;
 					getitem 12324,10;// N_Butterfly_Wing
 					getexp 1000,50;
 					close;
 				}
 				mes "[Shop Helper Leonie]";
-				mes "You are now in trial period.";
-				mes "Go sell the Poor Can and come back after selling it.";
+				mes "ตอนนี้คุณอยู่ในช่วงทดลอง";
+				mes "ไปขาย Poor Can แล้วกลับมาขายมัน";
 				next;
-				if (select("I will do it.", "Question about the shop.") == 1) {
+				if (select("ฉันจะทำ", "คำถามเกี่ยวกับร้านค้า") == 1) {
 					mes "[Shop Helper Leonie]";
-					mes "About shop variety.";
-					mes "You can buy these items everywhere in the world.";
-					mes "Go sell one ^ff0000Poor Can^000000 that I gave you to the shop.";
+					mes "เกี่ยวกับความหลากหลายของร้านค้า";
+					mes "คุณสามารถซื้อไอเทมเหล่านี้ได้ทุกที่ในโลก";
+					mes "ไปขาย ^ff0000Poor Can^000000 ที่ฉันให้คุณไปที่ร้านค้าไปหนึ่งอัน";
 					close;
 				}
 				mes "[Shop Helper Leonie]";
@@ -3548,33 +3548,33 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 	}
 	if (Class != Job_Novice || isbegin_quest(1240) == 2) {
 		mes "[Shop Helper Leonie]";
-		mes "Anything else?";
+		mes "มีอะไรอีกไหม?";
 		next;
-		if (select("No", "Yes, there are lot.") == 1) {
+		if (select("ไม่","ใช่ มีเยอะมาก") == 1) {
 			mes "[Shop Helper Leonie]";
-			mes "Goodbye.";
-			mes "The things I haven't told you, you will learn throughout your travels.";
+			mes "ลาก่อน";
+			mes "สิ่งที่ฉันไม่ได้บอกคุณ คุณจะได้เรียนรู้ตลอดการเดินทางของคุณ";
 			close;
 		}
 		mes "[Shop Helper Leonie]";
 	}
 	while(1) {
-		mes "What would you like to know?";
+		mes "คุณอยากจะรู้อะไร?";
 		next;
-		set .@menu$,"Shop types:Currency types:Cash Shop:"+(Class == Job_Novice && !isbegin_quest(1238)?"Experience training.":"No, I know enough.");
+		set .@menu$,"ประเภทร้านค้า:ประเภทสกุลเงิน:Cash Shop:"+(Class == Job_Novice && !isbegin_quest(1238)?"ประสบการณ์การฝึกอบรม":"ไม่ ฉันรู้เพียงพอแล้ว");
 		switch(select(.@menu$)) {
 			case 1:
 				mes "[Shop Helper Leonie]";
-				mes "You can buy weapons and armor at various armory merchants in each town.";
+				mes "คุณสามารถซื้ออาวุธและชุดเกราะได้จากร้านขายอาวุธต่างๆ ในแต่ละเมือง";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "Healing potions and movement consummables can be found at Tool Shops.";
+				mes "ยารักษาและยุทโธปกรณ์การเคลื่อนไหวสามารถพบได้ที่ร้านขายเครื่องมือ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "You'll also find merchants selling items for refining.";
+				mes "คุณจะพบกับพ่อค้าที่ขายสินค้าสำหรับการกลั่น";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "So when you go into a town, try figuring out what shops there are for your benefit.";
+				mes "ดังนั้นเมื่อคุณเข้าไปในเมือง ลองหาดูว่ามีร้านค้าอะไรบ้างที่เป็นประโยชน์กับคุณ";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3582,14 +3582,14 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				break;
 			case 2:
 				mes "[Shop Helper Leonie]";
-				mes "Kafras and most NPC merchants use ^ff0000Zeny^000000 but Malangdo and some of the Ash Vacuum worlds use different types of currency.";
+				mes "Kafras และพ่อค้า NPC ส่วนใหญ่ใช้ ^ff0000Zeny^000000 แต่ Malangdo และโลก Ash Vacuum บางโลกใช้สกุลเงินที่แตกต่างกัน";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "They are ^ff0000Silvervine Fruit^000000, ^ff0000Splendide Coins^000000, they can be bought at Cash Shop or acquired through quests. The fruits and coins that are collected this way.";
+				mes "พวกมันคือ ^ff0000Silvervine Fruit^000000, ^ff0000Splendide Coins^000000, พวกมันสามารถซื้อได้ที่ Cash Shop หรือได้มาจากภารกิจ ผลไม้และเหรียญที่รวบรวมด้วยวิธีนี้";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "They can be exchanged with unique equipments or gears.";
-				mes "So, if you have plans to venture out to these areas, be sure to collect them.";
+				mes "พวกมันสามารถแลกเปลี่ยนได้ด้วยอุปกรณ์หรือเกียร์เฉพาะ";
+				mes "ดังนั้น ถ้าคุณมีแผนที่จะออกไปผจญภัยในพื้นที่เหล่านี้ อย่าลืมรวบรวมพวกมัน";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3597,10 +3597,10 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				break;
 			case 3:
 				mes "[Shop Helper Leonie]";
-				mes "The icon on the right side called Cash Shop, if you click on it, whether you're in a town, dungeon, or field, you can still buy items anywhere you want.";
+				mes "ไอคอนทางด้านขวาเรียกว่า Cash Shop ถ้าคุณคลิกที่มัน ไม่ว่าคุณจะอยู่ในเมือง ดันเจี้ยน หรือทุ่งนา คุณยังคงสามารถซื้อไอเทมได้ทุกที่ที่คุณต้องการ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "The cash you need to buy the items can be charged on the website.";
+				mes "เงินสดที่คุณต้องการเพื่อซื้อสินค้าสามารถเรียกเก็บเงินได้จากเว็บไซต์";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3609,30 +3609,30 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 			case 4:
 				if (Class == Job_Novice && !isbegin_quest(1238)) {
 					mes "[Shop Helper Leonie]";
-					mes "Let's do a simple tutorial.";
-					mes "Go to the shop and buy one ^0000ffRed Potion^000000 and bring it back.";
-					mes "You have that much money, right?";
+					mes "มาทำแบบฝึกหัดง่ายๆกันเถอะ";
+					mes "ไปที่ร้านแล้วซื้อ ^0000ffRed Potion^000000 หนึ่งอันแล้วนำมันกลับมา";
+					mes "คุณมีเงินมากขนาดนั้นใช่ไหม?";
 					next;
 					mes "[Shop Helper Leonie]";
-					mes "If not, go hunt monsters in the vicnity and then when you sell their loot you should make enough money.";
+					mes "ถ้าไม่ ไปล่ามอนสเตอร์ในบริเวณใกล้เคียง และเมื่อคุณขายของที่ปล้นมาได้ คุณควรทำเงินได้เพียงพอ";
 					next;
-					if (select("That's too tedious.", "I will do it.") == 1) {
+					if (select("มันน่าเบื่อเกินไป", "ฉันจะทำมัน") == 1) {
 						mes "[Shop Helper Leonie]";
-						mes "Are you that lazy?";
-						mes "I am watching!";
+						mes "คุณขี้เกียจขนาดนั้นเลยเหรอ?";
+						mes "ฉันกำลังดูอยู่!";
 						close;
 					}
 					mes "[Shop Helper Leonie]";
-					mes "Let's go into the next lesson.";
-					mes "Hurry back.";
+					mes "เข้าสู่บทเรียนต่อไปกันดีกว่า";
+					mes "รีบกลับมา";
 					if (isbegin_quest(1237) == 1)
 						completequest 1237;
 					setquest 1238;
 					close;
 				}
 				mes "[Shop Helper Leonie]";
-				mes "That's a relief that you know enough.";
-				mes "If you have more questions, please ask me again.";
+				mes "นั่นเป็นเรื่องโล่งใจที่คุณรู้เพียงพอ";
+				mes "หากคุณมีคำถามเพิ่มเติม โปรดถามฉันอีกครั้ง";
 				close;
 		}
 	}
