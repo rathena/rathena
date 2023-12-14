@@ -1,10 +1,10 @@
 -	script	mobctroevents	-1,{
 OnInit:
-	delmonsterdrop 2093,12492;
-	delmonsterdrop 2093,12492;
-	delmonsterdrop 2093,12492;
-	delmonsterdrop 2093,5204;
-	addmonsterdrop 2093,35002,8000,true;
+	//delmonsterdrop 2093,12492;
+	//delmonsterdrop 2093,12492;
+	//delmonsterdrop 2093,12492;
+	//delmonsterdrop 2093,5204;
+	//addmonsterdrop 2093,35002,8000,true;
 	end;
 
 OnKillEventCTRO:
