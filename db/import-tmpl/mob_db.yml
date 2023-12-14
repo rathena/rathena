@@ -1180,7 +1180,6 @@ Body:
     Drops:
       - Item: Cash_Coin
         Rate: 1000
-        StealProtected: true
       - Item: Gift_Box_1
         Rate: 1000
       - Item: Gift_Box_2
