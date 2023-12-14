@@ -1179,7 +1179,13 @@ Body:
       IgnoreRanged: true
     Drops:
       - Item: Cash_Coin
-        Rate: 1000
+        Rate: 3500
+#      - Item: Crumpled_Paper
+#        Rate: 1750
+#      - Item: Crumpled_Paper
+#        Rate: 500
+#      - Item: Event_Pierrot_Nose
+#        Rate: 350
       - Item: Gift_Box_1
         Rate: 1000
       - Item: Gift_Box_2
