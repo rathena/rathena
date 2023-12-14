@@ -11134,6 +11134,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(npcmove),
 		ACMD_DEF(killable),
 		ACMD_DEF(dropall),
+		ACMD_DEF(stockall),
 		ACMD_DEF(storeall),
 		ACMD_DEF(skillid),
 		ACMD_DEF(useskill),

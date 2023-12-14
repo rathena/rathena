@@ -41140,6 +41140,58 @@ Body:
     AttackMotion: 480
     DamageMotion: 864
     Ai: 20
+  - Id: 2093
+    AegisName: BOTARING
+    Name: Botaring
+    Level: 15
+    Hp: 15
+    BaseExp: 3
+    JobExp: 3
+    Attack: 20
+    Attack2: 20
+    Defense: 20
+    MagicDefense: 20
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 77
+    Luk: 77
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 170
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 01
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Cash_Coin
+        Rate: 3500
+#      - Item: Crumpled_Paper
+#        Rate: 1750
+#      - Item: Crumpled_Paper
+#        Rate: 500
+#      - Item: Event_Pierrot_Nose
+#        Rate: 350
+      - Item: Gift_Box_1
+        Rate: 1000
+      - Item: Gift_Box_2
+        Rate: 1000
+      - Item: Gift_Box_3
+        Rate: 1000
+      - Item: Old_Blue_Box
+        Rate: 250
+        StealProtected: true
   - Id: 2158
     AegisName: S_HORNET
     Name: Hornet
