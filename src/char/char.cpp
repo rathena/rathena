@@ -2372,7 +2372,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking scdata_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`type`,`tick`,`val1`,`val2`,`val3`,`val4`"
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`type`,`tick`,`tick_total`,`tick_time`,`val1`,`val2`,`val3`,`val4`"
 		" FROM `%s` LIMIT 1;", schema_config.scdata_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;

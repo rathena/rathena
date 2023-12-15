@@ -9912,19 +9912,22 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 }
 
 /**
- * Applies SC defense to a given status change
- * This function also determines whether or not the status change will be applied
+ * Applies a Status Change for a given amount of time
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
  * @param bl: Target of the status change (See: enum sc_type)
  * @param type: Status change (SC_*)
  * @param rate: Initial percentage rate of affecting bl (0~10000)
- * @param val1~4: Depends on type of status change
- * @param duration: Initial duration that the status change affects bl
+ * @param val1: Depends on type of status change
+ * @param val2: Depends on type of status change
+ * @param val3: Depends on type of status change
+ * @param val4: Depends on type of status change
+ * @param duration: Remaining duration
+ * @param duration_total: Initial duration
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @param delay: Delay in milliseconds before the SC is applied
  * @return adjusted duration based on flag values
  */
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay) {
+int status_change_start_sub(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,t_tick duration_total,t_tick duration_tick,unsigned char flag, int32 delay) {
 	map_session_data *sd = NULL;
 	status_change* sc;
 	struct status_change_entry* sce;
@@ -9998,14 +10001,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 	}
 
-	// Adjust tick according to status resistances
+	// Adjust duration_total according to status resistances
 	if( !(flag&(SCSTART_NOAVOID|SCSTART_LOADED)) ) {
-		duration = status_get_sc_def(src, bl, type, rate, duration, flag);
-		if( !duration )
+		duration_total = status_get_sc_def(src, bl, type, rate, duration_total, flag);
+		if( duration_total == 0 )
 			return 0;
 	}
 
-	int tick = (int)duration;
+	int tick = static_cast<int>(duration_total);
 
 	sd = BL_CAST(BL_PC, bl);
 	vd = status_get_viewdata(bl);
@@ -12875,6 +12878,33 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag.reset(SCB_BODY);
 	}*/
 
+	t_tick totaltick, subtick, subticktime = (intptr_t)nullptr;
+	bool has_tick_interval = false;
+
+	//if (tick_time)
+	//	tick += 1;
+
+	if (duration_total > INT_MAX)
+		totaltick = duration_total;
+	else
+		totaltick = tick;
+
+	if (!(flag & SCSTART_LOADED)) {
+		subtick = totaltick; // When starting a new SC (not loading), its remaining duration is the same as the total
+
+		if (tick_time) {
+			subticktime = tick_time;
+			has_tick_interval = true;
+		}
+	} else {
+		subtick = duration;
+
+		if (duration_tick > 0) {
+			subticktime = duration_tick;
+			has_tick_interval = true;
+		}
+	}
+
 	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])) {
 		int status_icon = scdb->icon;
 
@@ -12883,15 +12913,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
 #endif
 
-		clif_status_change(bl, status_icon, 1, tick, scdb->flag[SCF_SENDVAL1] ? val1 : 1, scdb->flag[SCF_SENDVAL2] ? val2 : 0, scdb->flag[SCF_SENDVAL3] ? val3 : 0);
+		if (sc->getSCE(type))
+			clif_status_change(bl, status_icon, 0, 0, 0, 0, 0);
+		clif_status_change_sub(bl, bl->id, status_icon, 1, totaltick, subtick, scdb->flag[SCF_SENDVAL1] ? val1 : 1, scdb->flag[SCF_SENDVAL2] ? val2 : 0, scdb->flag[SCF_SENDVAL3] ? val3 : 0);
 	}
-
-	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
-	if( tick_time )
-		tick = tick_time;
 
 	// Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
 	if((sce=sc->getSCE(type))) { // reuse old sc
+		if (has_tick_interval && sce->tick_timer != INVALID_TIMER)
+			delete_timer(sce->tick_timer, status_change_tick_timer);
 		if( sce->timer != INVALID_TIMER )
 			delete_timer(sce->timer, status_change_timer);
 		sc_isnew = false;
@@ -12903,10 +12933,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	sce->val2 = val2;
 	sce->val3 = val3;
 	sce->val4 = val4;
-	if (tick >= 0)
-		sce->timer = add_timer(gettick() + tick, status_change_timer, bl->id, type);
+	if (subtick >= 0)
+		sce->timer = add_timer(gettick() + subtick, status_change_timer, bl->id, type);
 	else
 		sce->timer = INVALID_TIMER; // Infinite duration
+	if (has_tick_interval && subticktime >= 0)
+		sce->tick_timer = add_timer(gettick() + subticktime, status_change_tick_timer, bl->id, type);
+	else
+		sce->tick_timer = INVALID_TIMER; // Infinite duration
+	sce->tick_total = totaltick;
 
 	if (calc_flag.any()) {
 		if (sd != nullptr) {
@@ -13023,6 +13058,24 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 }
 
 /**
+ * Applies a Status Change for its full time
+ * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
+ * @param bl: Target of the status change (See: enum sc_type)
+ * @param type: Status change (SC_*)
+ * @param rate: Initial percentage rate of affecting bl (0~10000)
+ * @param val1: Depends on type of status change
+ * @param val2: Depends on type of status change
+ * @param val3: Depends on type of status change
+ * @param val4: Depends on type of status change
+ * @param tick: Remaining duration
+ * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
+ * @return adjusted duration based on flag values
+ */
+int status_change_start(struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int val1, int val2, int val3, int val4, t_tick tick, unsigned char flag, int32 delay) {
+	return status_change_start_sub(src, bl, type, rate, val1, val2, val3, val4, 0, tick, flag, delay);
+}
+
+/**
  * End all statuses except those listed
  * TODO: May be useful for dispel instead resetting a list there
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
@@ -13075,6 +13128,8 @@ int status_change_clear(struct block_list* bl, int type)
 		status_change_end(bl, status);
 		if( type == 1 && sc->getSCE(status) ) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
 			(sc->count)--;
+			if (sc->getSCE(status)->tick_timer != INVALID_TIMER)
+				delete_timer(sc->getSCE(status)->tick_timer, status_change_tick_timer);
 			if (sc->getSCE(status)->timer != INVALID_TIMER)
 				delete_timer(sc->getSCE(status)->timer, status_change_timer);
 			sc->deleteSCE(status);
@@ -13161,6 +13216,8 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (!status_isdead(bl) && (sce->val2 || sce->val3 || sce->val4))
 				return 0; //Don't end the status change yet as there are still unit groups associated with it
 		}
+		if (sce->tick_timer != INVALID_TIMER)
+			delete_timer(sce->tick_timer, status_change_tick_timer);
 		if (sce->timer != INVALID_TIMER) // Could be a SC with infinite duration
 			delete_timer(sce->timer,status_change_timer);
 	}
@@ -13807,7 +13864,68 @@ TIMER_FUNC(status_change_timer){
 	std::function<void (t_tick)> sc_timer_next = [&sce, &bl, &data](t_tick t) {
 		sce->timer = add_timer(t, status_change_timer, bl->id, data);
 	};
-	
+
+	// If status has an interval and there is at least 100ms remaining time, wait for next interval
+	if (interval > 0 && sc->getSCE(type) && sce->val4 >= 100) {
+		sc_timer_next(min(sce->val4, interval) + tick);
+		sce->val4 -= interval;
+		if (dounlock)
+			map_freeblock_unlock();
+		return 0;
+	}
+
+	if (dounlock)
+		map_freeblock_unlock();
+
+	// Default for all non-handled control paths is to end the status
+	return status_change_end(bl, type, tid);
+}
+
+/**
+ * Resets timers for statuses that have an interval
+ * Used with reoccurring status effects, such as dropping SP every 5 seconds
+ * @param tid: Timer ID
+ * @param tick: How long before next call
+ * @param id: ID of character
+ * @param data: Information passed through the timer call
+ * @return 1: Success 0: Fail
+ */
+TIMER_FUNC(status_change_tick_timer) {
+	block_list *bl = map_id2bl(id);
+
+	if (!bl) {
+		ShowDebug("status_change_tick_timer: Null pointer id: %d data: %" PRIdPTR "\n", id, data);
+		return 0;
+	}
+
+	status_change *const sc = status_get_sc(bl);
+	status_data *const status = status_get_status_data(bl);
+
+	if (!sc) {
+		ShowDebug("status_change_tick_timer: Null pointer id: %d data: %" PRIdPTR " bl-type: %d\n", id, data, bl->type);
+		return 0;
+	}
+
+	sc_type type = (sc_type)data;
+	status_change_entry *const sce = sc->getSCE(type);
+
+	if (!sce) {
+		ShowDebug("status_change_tick_timer: Null pointer id: %d data: %" PRIdPTR " bl-type: %d\n", id, data, bl->type);
+		return 0;
+	}
+	if (sce->tick_timer != tid) {
+		ShowError("status_change_tick_timer: Mismatch for type %d: %d != %d (bl id %d)\n", type, tid, sce->tick_timer, bl->id);
+		return 0;
+	}
+
+	int interval = status_get_sc_interval(type);
+	bool dounlock = false;
+	map_session_data *sd = BL_CAST(BL_PC, bl);
+
+	std::function<void(t_tick)> sc_timer_next = [&sce, &bl, &data](t_tick t) {
+		sce->tick_timer = add_timer(t, status_change_tick_timer, bl->id, data);
+	};
+
 	switch(type) {
 	case SC_MAXIMIZEPOWER:
 	case SC_CLOAKING:
@@ -14004,7 +14122,7 @@ TIMER_FUNC(status_change_timer){
 			bl->m == sd->feel_map[1].m ||
 			bl->m == sd->feel_map[2].m)
 		{	// Timeout will be handled by pc_setpos
-			sce->timer = INVALID_TIMER;
+			sce->tick_timer = INVALID_TIMER;
 			return 0;
 		}
 		break;
@@ -14826,8 +14944,7 @@ TIMER_FUNC(status_change_timer){
 	if (dounlock)
 		map_freeblock_unlock();
 
-	// Default for all non-handled control paths is to end the status
-	return status_change_end( bl,type,tid );
+	return 1;
 }
 
 /**
@@ -15998,6 +16115,7 @@ void do_init_status(void) {
 	memset(SCDisabled, 0, sizeof(SCDisabled));
 
 	add_timer_func_list(status_change_timer,"status_change_timer");
+	add_timer_func_list(status_change_tick_timer, "status_change_tick_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
 	add_timer_func_list(status_clear_lastEffect_timer, "status_clear_lastEffect_timer");
 	initDummyData();

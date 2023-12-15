@@ -288,7 +288,7 @@ int chmapif_parse_askscdata(int fd){
 		int aid, cid;
 		aid = RFIFOL(fd,2);
 		cid = RFIFOL(fd,6);
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT type, tick, val1, val2, val3, val4 from `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT type, tick, val1, val2, val3, val4, tick_total, tick_time from `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
 			schema_config.scdata_db, aid, cid) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -312,6 +312,8 @@ int chmapif_parse_askscdata(int fd){
 				Sql_GetData(sql_handle, 3, &data, NULL); scdata.val2 = atoi(data);
 				Sql_GetData(sql_handle, 4, &data, NULL); scdata.val3 = atoi(data);
 				Sql_GetData(sql_handle, 5, &data, NULL); scdata.val4 = atoi(data);
+				Sql_GetData(sql_handle, 6, &data, NULL); scdata.tick_total = strtoll(data, nullptr, 10);
+				Sql_GetData(sql_handle, 7, &data, NULL); scdata.tick_time = strtoll(data, nullptr, 10);
 				memcpy(WFIFOP(fd, 14+count*sizeof(struct status_change_data)), &scdata, sizeof(struct status_change_data));
 			}
 			if (count >= 50)
@@ -967,14 +969,14 @@ int chmapif_parse_save_scdata(int fd){
 			int i;
 
 			StringBuf_Init(&buf);
-			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `val1`, `val2`, `val3`, `val4`) VALUES ", schema_config.scdata_db);
+			StringBuf_Printf(&buf, "INSERT INTO `%s` (`account_id`, `char_id`, `type`, `tick`, `tick_total`, `tick_time`, `val1`, `val2`, `val3`, `val4`) VALUES ", schema_config.scdata_db);
 			for( i = 0; i < count; ++i )
 			{
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
-				StringBuf_Printf(&buf, "('%d','%d','%hu','%" PRtf "','%ld','%ld','%ld','%ld')", aid, cid,
-					data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
+				StringBuf_Printf(&buf, "('%d','%d','%hu','%" PRtf "','%" PRtf "','%" PRtf "','%ld','%ld','%ld','%ld')", aid, cid,
+					data.type, data.tick, data.tick_total, data.tick_time, data.val1, data.val2, data.val3, data.val4);
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 				Sql_ShowDebug(sql_handle);

@@ -941,6 +941,8 @@ CREATE TABLE IF NOT EXISTS `sc_data` (
   `char_id` int(11) unsigned NOT NULL,
   `type` smallint(11) unsigned NOT NULL,
   `tick` bigint(20) NOT NULL,
+  `tick_total` bigint(20) NOT NULL,
+  `tick_time` bigint(20) NOT NULL,
   `val1` int(11) NOT NULL default '0',
   `val2` int(11) NOT NULL default '0',
   `val3` int(11) NOT NULL default '0',
