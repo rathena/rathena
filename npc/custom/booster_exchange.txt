@@ -1,0 +1,71 @@
+//===== rAthena Script =======================================
+//= Booster Exchange NPC
+//===== Description: =========================================
+//= Exange Booster Ticket
+//===== Additional Comments: =================================
+//============================================================
+
+izlude,147,144,5	script	ItemExchange_NPC	123,{
+	menu "Welcome to Item Exchange", Exchange;
+	close;
+	
+	Exchange:
+		switch (select("Exchange Item ID 1000253 for Items:Leave"))
+		{
+			case 1:
+				next;
+				exchanging = true;
+				mes "[Item Exchange]";
+				mes "You want to exchange the item (ID: 1000253) for multiple items?";
+				next;
+				
+				// Check if the player has the required item
+				if (countitem(1000253) >= 1) { // Item ID: 1000253
+					mes "You have the required item!";
+					
+					if (BaseClass == Job_Rogue) {
+						mes "As a Shadow Chaser, I'll give you an additional item!";
+						
+						// Remove the specified item
+						delitem 1000253, 1;
+						
+						// Give multiple items in return
+						getitem 24584, 1; // Item ID: 24584
+						getitem 24585, 1; // Item ID: 24585
+						getitem 24586, 1; // Item ID: 24586
+						getitem 24587, 1; // Item ID: 24587
+						getitem 24588, 1; // Item ID: 24588
+						getitem 510001, 1; // Additional item for Shadow Chasers
+						getitem 24594, 1; // Item ID: 24594
+						
+						mes "The exchange was successful. Here are your items, including an extra for being a Shadow Chaser!";
+					} else {
+						// If the player is not a Shadow Chaser, proceed with the regular exchange
+						mes "However, the additional item is only available for Shadow Chasers.";
+						
+						// Remove the specified item
+						delitem 1000253, 1;
+						
+						// Give multiple items in return
+						getitem 24584, 1; // Item ID: 24584
+						getitem 24585, 1; // Item ID: 24585
+						getitem 24586, 1; // Item ID: 24586
+						getitem 24587, 1; // Item ID: 24587
+						getitem 24588, 1; // Item ID: 24588
+						
+						mes "The exchange was successful. Here are your items!";
+					}
+				} else {
+					mes "I'm sorry, but you don't have the required item for exchange.";
+				}
+				
+				close;
+				break;
+				
+			case 2:
+				mes "[Item Exchange]";
+				mes "Thank you for visiting. Come again!";
+				close;
+				break;
+		}
+}
