@@ -73781,3 +73781,205 @@ Body:
           - Index: 23
             Item: C_Blackhand_Of_Fate
             Rate: 1
+  - Group: ENCHANT_STONE_BOX33
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: Range_Stone_Robe_D
+            Rate: 10
+          - Index: 1
+            Item: Melee_Stone_Robe_D
+            Rate: 10
+          - Index: 2
+            Item: Magic_Stone_Robe_D
+            Rate: 10
+          - Index: 3
+            Item: SmatkStone_Robe
+            Rate: 10
+          - Index: 4
+            Item: M_PATKStone_Robe
+            Rate: 10
+          - Index: 5
+            Item: R_PATKStone_Robe
+            Rate: 10
+          - Index: 6
+            Item: ResistDefStone_Robe
+            Rate: 10
+          - Index: 7
+            Item: StaminaWISStone_Robe_D
+            Rate: 10
+          - Index: 8
+            Item: POWStone_Robe_D
+            Rate: 10
+          - Index: 9
+            Item: SplStone_Robe_D
+            Rate: 10
+          - Index: 10
+            Item: ConStone_Robe_D
+            Rate: 10
+          - Index: 11
+            Item: CrtStone_Robe_D
+            Rate: 10
+          - Index: 12
+            Item: MinorCastStone_Robe_D
+            Rate: 10
+          - Index: 13
+            Item: AbysschaserStone_Robe
+            Rate: 10
+          - Index: 14
+            Item: TRTRStone_Robe
+            Rate: 10
+          - Index: 15
+            Item: HNoviceStone_Robe
+            Rate: 10
+          - Index: 16
+            Item: ReloadStone_Robe_D
+            Rate: 10
+          - Index: 17
+            Item: CriticalStone_Robe_D
+            Rate: 10
+          - Index: 18
+            Item: DoubleAttack_Stone
+            Rate: 20
+          - Index: 19
+            Item: Critical_Stone_Robe
+            Rate: 20
+          - Index: 20
+            Item: CastStone_Robe_D
+            Rate: 40
+          - Index: 21
+            Item: SPdrainStone_Robe_D
+            Rate: 40
+          - Index: 22
+            Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Index: 23
+            Item: ASPDStone_Robe_D
+            Rate: 80
+          - Index: 24
+            Item: CastStone_Robe
+            Rate: 80
+          - Index: 25
+            Item: ShadowchasStone_Top3
+            Rate: 80
+          - Index: 26
+            Item: ShadowchasStone_Middle3
+            Rate: 80
+          - Index: 27
+            Item: ShadowchasStone_Bottom3
+            Rate: 80
+          - Index: 28
+            Item: WanderMinsStone_Top3
+            Rate: 80
+          - Index: 29
+            Item: WanderMinsStone_Middle3
+            Rate: 80
+          - Index: 30
+            Item: WanderMinsStone_Bottom3
+            Rate: 80
+          - Index: 31
+            Item: SuNoviceStone_Top
+            Rate: 80
+          - Index: 32
+            Item: SuNoviceStone_Middle
+            Rate: 80
+          - Index: 33
+            Item: SuNoviceStone_Bottom
+            Rate: 80
+          - Index: 34
+            Item: Stone_Robe_Box
+            Rate: 170
+          - Index: 35
+            Item: aegis_102333
+            Rate: 170
+          - Index: 36
+            Item: Magic_Stone_Top
+            Rate: 200
+          - Index: 37
+            Item: Magic_Stone_Middle
+            Rate: 200
+          - Index: 38
+            Item: Magic_Stone_Bottom
+            Rate: 200
+          - Index: 39
+            Item: Range_Stone_Top
+            Rate: 200
+          - Index: 40
+            Item: Range_Stone
+            Rate: 200
+          - Index: 41
+            Item: Range_Stone_Bottom
+            Rate: 200
+          - Index: 42
+            Item: Melee_Stone_Top
+            Rate: 200
+          - Index: 43
+            Item: Melee_Stone_Middle
+            Rate: 200
+          - Index: 44
+            Item: Melee_Stone_Bottom
+            Rate: 200
+          - Index: 45
+            Item: DefenseStone_Top
+            Rate: 200
+          - Index: 46
+            Item: DefenseStone_Middle
+            Rate: 200
+          - Index: 47
+            Item: DefenseStone_Bottom
+            Rate: 200
+          - Index: 48
+            Item: ReloadStone_Top
+            Rate: 200
+          - Index: 49
+            Item: ReloadStone_Middle
+            Rate: 200
+          - Index: 50
+            Item: ReloadStone_Bottom
+            Rate: 200
+          - Index: 51
+            Item: EXPStone_Middle
+            Rate: 200
+          - Index: 52
+            Item: EXPStone_Bottom
+            Rate: 200
+          - Index: 53
+            Item: EXPStone_Top
+            Rate: 200
+          - Index: 54
+            Item: Stone_Top_Box
+            Rate: 400
+          - Index: 55
+            Item: Stone_Top2_Box
+            Rate: 400
+          - Index: 56
+            Item: Stone_Middle_Box
+            Rate: 400
+          - Index: 57
+            Item: Stone_Middle2_Box
+            Rate: 400
+          - Index: 58
+            Item: Stone_Bottom_Box
+            Rate: 400
+          - Index: 59
+            Item: Stone_Bottom2_Box
+            Rate: 400
+          - Index: 60
+            Item: CastingStone_Top
+            Rate: 400
+          - Index: 61
+            Item: CastingStone_Middle
+            Rate: 400
+          - Index: 62
+            Item: CastingStone_Bottom
+            Rate: 400
+          - Index: 63
+            Item: Critical_Stone
+            Rate: 400
+          - Index: 64
+            Item: Critical_Stone_Top
+            Rate: 400
+          - Index: 65
+            Item: Critical_Stone_Bottom
+            Rate: 400

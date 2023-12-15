@@ -40182,7 +40182,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubClass,Class_Normal,40;
-      bonus2 bSubClass,Class_Boss,40;
+      bonus2 bSubClass,Class_Boss,-40;
   - Id: 27196
     AegisName: S_Nihil_Card
     Name: Nihil M. Heine Card
@@ -42018,6 +42018,20 @@ Body:
       bonus2 bSkillAtk,"SU_CN_METEOR",5+.@r;
       if (.@r>=10)
          bonus2 bSkillAtk,"SU_CN_METEOR",5;
+  - Id: 27368
+    AegisName: Colorful_T_Bear_Card_J
+    Name: Colorful Teddy Bear Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bInt,5;
+      if (readparam(bInt)>=125)
+         bonus bMatkRate,4;
   - Id: 27369
     AegisName: Shining_T_Bear_Card_J
     Name: Shiny Teddy Bear Card
@@ -42033,6 +42047,22 @@ Body:
       bonus bMaxSPrate,-50;
       bonus2 bAddRace,RC_Demon,50;
       bonus2 bAddRace,RC_Undead,50;
+  - Id: 27370
+    AegisName: Pitman_Worker_Card_J
+    Name: Hardworking Pitman Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddEle,Ele_Neutral,30;
+      bonus2 bMagicAddEle,Ele_Neutral,30;
+      bonus2 bIgnoreDefRaceRate,RC_Formless,30;
   - Id: 27371
     AegisName: Fragment_Of_Soul_Card_J
     Name: Soul Fragment Card
@@ -42048,6 +42078,71 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",50;
       bonus2 bSkillAtk,"SN_SHARPSHOOTING",50;
+  - Id: 27372
+    AegisName: Sinister_Obsidian_Card_
+    Name: Evil Obsidian Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bPerfectHitAddRate,5;
+  - Id: 27373
+    AegisName: Ancient_Trijoint_Card_J
+    Name: Ancient Tri Joint Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus3 bAutoSpell,"TF_STEAL",5,200;
+  - Id: 27374
+    AegisName: Anc_Sta_Golem_Card_J
+    Name: Ancient Stalactic Golem Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAtkRate,3;
+      bonus bHPGainValue,50;
+      bonus bSPGainValue,5;
+  - Id: 27375
+    AegisName: Anc_Megalith_Card_J
+    Name: Ancient Megalith Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@a = (readparam(bVit)/10);
+      .@b = (readparam(bLuk)/10);
+      bonus bBaseAtk,((3*.@a)+(3*.@b));
+      bonus bHit,5*.@a;
+      bonus bAspdRate,.@b;
+      if (readparam(bVit)>=125) {
+         bonus bBaseAtk,50;
+         bonus bHit,25;
+      }
+      if (readparam(bLuk)>=125) {
+         bonus bBaseAtk,50;
+         bonus bAspdRate,5;
+      }
   - Id: 27376
     AegisName: Anc_Tao_Gunka_Card_J
     Name: Ancient Tao Gunka Card
@@ -42065,6 +42160,59 @@ Body:
       bonus bMdef,-50;
       if (.@r>=9)
          bonus2 bResEff,Eff_Freeze,10000;
+  - Id: 27377
+    AegisName: Anc_S_Shooter_Card_J
+    Name: Ancient Stone Shooter Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxSP,20*(readparam(bStr)/10);
+      if (readparam(bStr)>=125)
+         bonus bAtkRate,5;
+  - Id: 27378
+    AegisName: Anc_W_Shooter_Card_J
+    Name: Ancient Wootan Shooter Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@a = (readparam(bVit)/10);
+      .@b = (readparam(bLuk)/10);
+      bonus bMatk,((3*.@a)+(3*.@b));
+      bonus bDef,10*.@a;
+      bonus bAspdRate,.@b;
+      if (readparam(bVit)>=125) {
+         bonus bMatk,50;
+         bonus bDef,50;
+      }
+      if (readparam(bLuk)>=125) {
+         bonus bMatk,50;
+         bonus bAspdRate,5;
+      }
+  - Id: 27379
+    AegisName: Anc_W_Fighter_Card_J
+    Name: Ancient Wootan Fighter Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAtkRate,10;
+      skill "SA_SEISMICWEAPON",1;
   - Id: 27380
     AegisName: Anc_W_Deffend_Card_J
     Name: Ancient Wootan Defender Card
@@ -42176,6 +42324,57 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bHPrecovRate,50;  /* note: 30% from the description */
+  - Id: 27389
+    AegisName: Wolf_Card_EV
+    Name: Wolfe Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      skill "RG_COMPULSION",5;
+  - Id: 27390
+    AegisName: S_Wolf_Card_E
+    Name: Wolfe Lugenburg Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Insect,15;
+      bonus2 bMagicAddRace,RC_Insect,15;
+  - Id: 27391
+    AegisName: Poe_Card_E
+    Name: Poe Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,150;
+      /*Todo: When hit by a physical attack There is a chance that player will die - Refine will reduce the chance*/
+  - Id: 27392
+    AegisName: S_Poe_Card_E
+    Name: Poe Richard Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Plant,15;
+      bonus2 bMagicAddRace,RC_Plant,15;
   - Id: 27393
     AegisName: Kathryn_Card
     Name: Kathryn Card
@@ -42374,6 +42573,114 @@ Body:
     Script: |
       bonus bAtkRate,3;
       bonus bMatkRate,3;
+  - Id: 27421
+    AegisName: aegis_27421
+    Name: Shard of Strength Jewel
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Low: true
+      Head_Mid: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bShortAtkRate,3*(.@r/2);
+      bonus bHit,7*(.@r/2);
+      bonus bAtkRate,3*(.@r/5);
+  - Id: 27422
+    AegisName: aegis_27422
+    Name: Shard of Agility Jewel
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Low: true
+      Head_Mid: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,5*(.@r/2);
+      bonus bFlee,7*(.@r/2);
+      bonus bAspd,(.@r/5);
+  - Id: 27423
+    AegisName: aegis_27423
+    Name: Shard of Dexterity Jewel
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Low: true
+      Head_Mid: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,3*(.@r/2);
+      bonus bHit,7*(.@r/2);
+      bonus bAtkRate,3*(.@r/5);
+  - Id: 27424
+    AegisName: aegis_27424
+    Name: Shard of Fatality Jewel
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Low: true
+      Head_Mid: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,6*(.@r/2);
+      bonus bCritical,3*(.@r/2);
+      bonus bAtkRate,3*(.@r/5);
+  - Id: 27425
+    AegisName: aegis_27425
+    Name: Shard of Vitality Jewel
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Low: true
+      Head_Mid: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-5*(.@r/2);
+      bonus bMatk,7*(.@r/2);
+      bonus bMatkRate,3*(.@r/5);
+  - Id: 27426
+    AegisName: aegis_27426
+    Name: Shard of Intelligence Jewel
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Low: true
+      Head_Mid: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,3*(.@r/2);
+      bonus bMatk,7*(.@r/2);
+      bonus bMatkRate,3*(.@r/5);
   - Id: 29000
     AegisName: Neev_INT_1
     Name: Rune of Intellect Lv 1
@@ -43799,7 +44106,7 @@ Body:
              .@c = 35;
              .@t += 1000;
          }
-         autobonus "{ bonus bVariableCastrate,-100; bonus bDelayrate,-100 }",.@c,.@t,BF_MAGIC;
+         autobonus "{ bonus bVariableCastrate,-100; bonus bDelayrate,-100; }",.@c,.@t,BF_MAGIC;
       }
   - Id: 29175
     AegisName: Reactor_S_CRI
@@ -43824,7 +44131,7 @@ Body:
       }
   - Id: 29176
     AegisName: Sky_Ground
-    Name: Tenji
+    Name: Heaven & Earth
     Type: Card
     SubType: Enchant
     Buy: 10
@@ -43834,14 +44141,16 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Brute,15;
+      bonus2 bAddRace,RC_Player_Doram,15;
       bonus2 bAddRace,RC_Plant,15;
       bonus2 bMagicAddRace,RC_Brute,15;
+      bonus2 bMagicAddRace,RC_Player_Doram,15;
       bonus2 bMagicAddRace,RC_Plant,15;
       bonus2 bAddEle,Ele_Wind,15;
       bonus2 bAddEle,Ele_Earth,15;
       bonus2 bMagicAddEle,Ele_Wind,15;
       bonus2 bMagicAddEle,Ele_Earth,15;
-      autobonus2 "{ bonus bVariableCastrate,-70;bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus bIgnoreMDefRace,RC_All; }",1,10000;
+      autobonus "{ bonus bVariableCastrate,-70;bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus bIgnoreMDefRace,RC_All; }",5,10000;
   - Id: 29208
     AegisName: SPdrain2_Top
     Name: SPabsorp2
@@ -45386,9 +45695,34 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
+  - Id: 29525
+    AegisName: NJ_1
+    Name: Ninja Essence Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,3*getskilllv("NJ_TOBIDOUGU");
+      bonus2 bSkillAtk,"NJ_KIRIKAGE",20;
+      bonus2 bSkillAtk,"NJ_HUUMA",20;
+      bonus bMaxHP,100*(.@r/2);
+      bonus bHit,5*(.@r/2);
+  - Id: 29526
+    AegisName: NJ_2
+    Name: Ninja Essence Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,5*getskilllv("NJ_TOBIDOUGU");
+      bonus2 bSkillAtk,"NJ_KIRIKAGE",20;
+      bonus2 bSkillAtk,"NJ_HUUMA",20;
+      bonus bMaxHP,100*(.@r/2);
+      bonus bHit,5*(.@r/2);
+      autobonus3 "{ bonus bSkillAtk,\"NJ_KIRIKAGE\",20; bonus bSkillAtk,\"NJ_HUUMA\",20; }",1000,60000,"NJ_NEN";
   - Id: 29527
     AegisName: Improve_Orb_Def
-    Name: Modification Orb(Defense)
+    Name: Modification Orb (DEF)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45402,7 +45736,7 @@ Body:
       }
   - Id: 29528
     AegisName: Improve_Orb_Mdef
-    Name: Modification Orb(Magic Defense)
+    Name: Modification Orb (MDEF)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45416,14 +45750,14 @@ Body:
       }
   - Id: 29529
     AegisName: Improve_Orb_HealHP
-    Name: Modification Orb(HP Recovery)
+    Name: Modification Orb (HP Recovery)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bHPrecovRate,20;
   - Id: 29530
     AegisName: Improve_Orb_Spirit
-    Name: Modification Orb(Spirit)
+    Name: Modification Orb (Spirit)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45437,7 +45771,7 @@ Body:
       }
   - Id: 29531
     AegisName: Improve_Orb_Health
-    Name: Modification Orb(Stamina)
+    Name: Modification Orb (Health)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45451,14 +45785,14 @@ Body:
       }
   - Id: 29532
     AegisName: Improve_Orb_HealSP
-    Name: Modification Orb(SP Recovery)
+    Name: Modification Orb (SP Recovery)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bSPrecovRate,20;
   - Id: 29533
     AegisName: Improve_Orb_Heal
-    Name: Modification Orb(Heal)
+    Name: Modification Orb (Heal)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45472,7 +45806,7 @@ Body:
       }
   - Id: 29534
     AegisName: Improve_Orb_Atk
-    Name: Modification Orb(Attack Power)
+    Name: Modification Orb (ATK)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45486,7 +45820,7 @@ Body:
       }
   - Id: 29535
     AegisName: Improve_Orb_Matk
-    Name: Modification Orb(Magic Power)
+    Name: Modification Orb (MATK)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45500,7 +45834,7 @@ Body:
       }
   - Id: 29536
     AegisName: Improve_Orb_Archer
-    Name: Modification Orb(Sharpshooter)
+    Name: Modification Orb (Sharpshooter)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45514,7 +45848,7 @@ Body:
       }
   - Id: 29537
     AegisName: Improve_Orb_Speed
-    Name: Modification Orb(Swift)
+    Name: Modification Orb (Speed)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45528,7 +45862,7 @@ Body:
       }
   - Id: 29538
     AegisName: Improve_Orb_Cast
-    Name: Modification Orb(Caster)
+    Name: Modification Orb (Caster)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45542,7 +45876,7 @@ Body:
       }
   - Id: 29539
     AegisName: Improve_Orb_Cri
-    Name: Modification Orb(Critical)
+    Name: Modification Orb (Critical)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45556,7 +45890,7 @@ Body:
       }
   - Id: 29540
     AegisName: Improve_Orb_Delay
-    Name: Modification Orb(After Skill Delay)
+    Name: Modification Orb (Global Delay)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45570,7 +45904,7 @@ Body:
       }
   - Id: 29541
     AegisName: Improve_Orb_Fix
-    Name: Modification Orb(Fixed Casting Time)
+    Name: Modification Orb (Fixed Casting)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45584,7 +45918,7 @@ Body:
       }
   - Id: 29542
     AegisName: Improve_Orb_Above
-    Name: Modification Orb(Above All)
+    Name: Modification Orb (Above All)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45600,35 +45934,35 @@ Body:
       }
   - Id: 29543
     AegisName: Improve_Orb_Life
-    Name: Modification Orb(Life Drain)
+    Name: Modification Orb (Drain Life)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bHPDrainRate,20,2;
   - Id: 29544
     AegisName: Improve_Orb_Soul
-    Name: Modification Orb(Soul Drain)
+    Name: Modification Orb (Drain Soul)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSPDrainRate,10,1;
   - Id: 29545
     AegisName: Improve_Orb_M_Heal
-    Name: Modification Orb(Magic Healing)
+    Name: Modification Orb (Magic Healing)
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus2 bHPRegenRate,400,500; }",20,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29546
     AegisName: Improve_Orb_M_Soul
-    Name: Modification Orb(Magic Soul)
+    Name: Modification Orb (Magic Soul)
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus2 bSPRegenRate,80,500; }",10,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29547
     AegisName: Improve_Orb_L_Vit
-    Name: Modification Orb(Unlimited Vital)
+    Name: Modification Orb (Unlimited Vitality)
     Type: Card
     SubType: Enchant
     Script: |
@@ -45636,35 +45970,35 @@ Body:
       autobonus2 "{ bonus bVit,50; bonus2 bHPRegenRate,400,500; bonus2 bSPLossRate,1,20000; }",50,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29548
     AegisName: Improve_Orb_L_INT
-    Name: Modification Orb(Spell Buster)
+    Name: Modification Orb (Spell Buster)
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bInt,50; bonus bMatkRate,15; bonus bAtkRate,-15; }",30,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29549
     AegisName: Improve_Orb_L_DEX
-    Name: Modification Orb(Firing Shot)
+    Name: Modification Orb (Fierce Shooter)
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDex,50; bonus bLongAtkRate,10; bonus2 bSPLossRate,1,20000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29550
     AegisName: Improve_Orb_L_STR
-    Name: Modification Orb(Over Power)
+    Name: Modification Orb (Overpower)
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bStr,50; bonus bAtkRate,15; bonus bMatkRate,-15; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29551
     AegisName: Improve_Orb_L_AGI
-    Name: Modification Orb(Fatal Flash)
+    Name: Modification Orb (Fatal Flash)
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bAgi,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29552
     AegisName: Improve_Orb_L_LUK
-    Name: Modification Orb(Lucky Strike)
+    Name: Modification Orb (Lucky Strike)
     Type: Card
     SubType: Enchant
     Script: |
@@ -60224,6 +60558,102 @@ Body:
     SubType: Enchant
     Script: |
       bonus bMaxHP,25*BaseLevel;
+  - Id: 310833
+    AegisName: Tenacity1_Infinite
+    Name: Indomitable 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,4;
+      bonus bPerfectHitAddRate,1;
+  - Id: 310834
+    AegisName: Tenacity2_Infinite
+    Name: Indomitable 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,8;
+      bonus bPerfectHitAddRate,2;
+  - Id: 310835
+    AegisName: Tenacity3_Infinite
+    Name: Indomitable 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+      bonus bPerfectHitAddRate,3;
+  - Id: 310836
+    AegisName: Tenacity4_Infinite
+    Name: Indomitable 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,16;
+      bonus bPerfectHitAddRate,4;
+  - Id: 310837
+    AegisName: Tenacity5_Infinite
+    Name: Indomitable 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,20;
+      bonus bPerfectHitAddRate,5;
+  - Id: 310838
+    AegisName: Unlimite_Matk1_infinite
+    Name: Infinite Magic Power 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,2*(.@r/2);
+      bonus bHealPower,.@r/2;
+      bonus bMatkRate,.@r/5;
+  - Id: 310839
+    AegisName: Unlimite_Matk2_infinite
+    Name: Infinite Magic Power 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,4*(.@r/2);
+      bonus bHealPower,3*(.@r/2);
+      bonus bMatkRate,2*(.@r/5);
+  - Id: 310840
+    AegisName: Unlimite_Matk3_infinite
+    Name: Infinite Magic Power 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,7*(.@r/2);
+      bonus bHealPower,5*(.@r/2);
+      bonus bMatkRate,3*(.@r/5);
+  - Id: 310841
+    AegisName: LimiteBroken_Fight_Inf
+    Name: Breaking Through (Infinite Fighting Spirit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,20;
+      bonus bPerfectHitAddRate,5;
+      autobonus "{ bonus bStr,30; bonus bShortAtkRate,15; }",30,10000,BF_WEAPON;
+  - Id: 310842
+    AegisName: LimiteBroken_Matk_Inf
+    Name: Breaking Through (Infinite Magic Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,20;
+      autobonus "{ bonus bInt,30; bonus2 bMagicAtkEle,Ele_All,15; }",30,10000,BF_MAGIC;
+  - Id: 310843
+    AegisName: LimiteBroken_Archer_Inf
+    Name: Breaking Through (Infinite Archery)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,20;
+      bonus bAspdRate,5;
+      autobonus "{ bonus bDex,30; bonus bLongAtkRate,15; }",30,10000,BF_WEAPON;
   - Id: 310844
     AegisName: Summer_Hot_Lv1
     Name: Summer Heat(Lv1)
@@ -60254,6 +60684,15 @@ Body:
     Name: Summer Coolness(Lv3)
     Type: Card
     SubType: Enchant
+  - Id: 310850
+    AegisName: Firework_Effect
+    Name: Firework
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect HAT_EF_firework,true;
+    UnEquipScript: |
+      hateffect HAT_EF_firework,false;
   - Id: 310851
     AegisName: Mad_Bunny_Enchant_1_1
     Name: Delay after skill 1Lv
@@ -69858,11 +70297,83 @@ Body:
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,5+5*getenchantgrade();
+  - Id: 312012
+    AegisName: Sigrun_Orb_Def_Z
+    Name: Sigrun Orb (Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,25;
+      if (getrefine()>=9)
+         bonus bDef,10;
+  - Id: 312013
+    AegisName: Sigrun_Orb_Mdef_Z
+    Name: Sigrun Orb (Magic Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,2;
+      if (getrefine()>=9)
+         bonus bMdef,3;
   - Id: 312014
     AegisName: Justice_Power
     Name: Good Spell
     Type: Card
     SubType: Enchant
+  - Id: 312015
+    AegisName: Sigrun_Orb_Speed_Z
+    Name: Sigrun Orb (Quick)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspd,1;
+      if (getrefine()>=9)
+         bonus bAspdRate,3;
+  - Id: 312016
+    AegisName: Sigrun_Orb_Cast_Z
+    Name: Sigrun Orb (Caster)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-5;
+      if (getrefine()>=9)
+         bonus bVariableCastrate,-3;
+  - Id: 312017
+    AegisName: Sigrun_Orb_Cri_Z
+    Name: Sigrun Orb (Critical)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,10;
+      if (getrefine()>=9)
+         bonus bCritAtkRate,5;
+  - Id: 312018
+    AegisName: Sigrun_Orb_Health_Z
+    Name: Sigrun Orb (Health)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,5;
+      if (getrefine()>=9)
+         bonus bMaxHP,750;
+  - Id: 312019
+    AegisName: Sigrun_Orb_Spirit_Z
+    Name: Sigrun Orb (Mental)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,5;
+      if (getrefine()>=9)
+         bonus bMaxSP,150;
+  - Id: 312020
+    AegisName: Sigrun_Orb_Heal_Z
+    Name: Sigrun Orb (Heal)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHealPower,5;
+      if (getrefine()>=9)
+         bonus bHealPower,5;
   - Id: 312021
     AegisName: Injustice_Power
     Name: Evil Spell
@@ -69880,6 +70391,33 @@ Body:
     Name: Latent Release (Archmage II)
     Type: Card
     SubType: Enchant
+  - Id: 312032
+    AegisName: aegis_312032
+    Name: Cri + 25
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,25;
+  - Id: 312033
+    AegisName: aegis_312033
+    Name: Latent Release (Abyss Chaser II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312034
+    AegisName: aegis_312034
+    Name: Latent Release (Inquisitor II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312035
+    AegisName: aegis_312035
+    Name: Latent Release (Imperial Guard II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312036
+    AegisName: aegis_312036
+    Name: Latent Release (Windhawk II)
+    Type: Card
+    SubType: Enchant
   - Id: 312037
     AegisName: aegis_312037
     Name: Latent Release (Elemental Master II)
@@ -69888,6 +70426,11 @@ Body:
   - Id: 312038
     AegisName: aegis_312038
     Name: Latent Release (Cardinal II)
+    Type: Card
+    SubType: Enchant
+  - Id: 312039
+    AegisName: aegis_312039
+    Name: Latent Release (Shadow Cross II)
     Type: Card
     SubType: Enchant
   - Id: 312040
@@ -72077,6 +72620,11 @@ Body:
     Name: Latent Release (Dragon Knight III)
     Type: Card
     SubType: Enchant
+  - Id: 312301
+    AegisName: aegis_312301
+    Name: Latent Release (Biolo III)
+    Type: Card
+    SubType: Enchant
   - Id: 312302
     AegisName: DK_Soul_DB
     Name: Dragon Knight Soul (Dragonic Breath)
@@ -72084,6 +72632,11 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"DK_DRAGONIC_BREATH",2+(getrefine()/2);
+  - Id: 312303
+    AegisName: aegis_312303
+    Name: Latent Release (Elemental Master III)
+    Type: Card
+    SubType: Enchant
   - Id: 312304
     AegisName: aegis_312304
     Name: Latent Release (Cardinal III)
@@ -75617,6 +76170,11 @@ Body:
     Name: Evil Vigor (Hyper Novice)
     Type: Card
     SubType: Enchant
+  - Id: 312691
+    AegisName: aegis_312691
+    Name: Latent Release (Cardinal V)
+    Type: Card
+    SubType: Enchant
   - Id: 312692
     AegisName: aegis_312692
     Name: Abyss Chaser Stone (Garment)
@@ -76628,6 +77186,491 @@ Body:
     Name: Evil Vigor (Night Watch)
     Type: Card
     SubType: Enchant
+  - Id: 312848
+    AegisName: Z_Bijou_STR_1
+    Name: STR I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bStr,2;
+  - Id: 312849
+    AegisName: Z_Bijou_STR_2
+    Name: STR II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bStr,3;
+  - Id: 312850
+    AegisName: Z_Bijou_STR_3
+    Name: STR III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bStr,4;
+  - Id: 312851
+    AegisName: Z_Bijou_STR_4
+    Name: STR IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bStr,6;
+  - Id: 312852
+    AegisName: Z_Bijou_AGI_1
+    Name: AGI I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAgi,2;
+  - Id: 312853
+    AegisName: Z_Bijou_AGI_2
+    Name: AGI II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAgi,3;
+  - Id: 312854
+    AegisName: Z_Bijou_AGI_3
+    Name: AGI III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAgi,4;
+  - Id: 312855
+    AegisName: Z_Bijou_AGI_4
+    Name: AGI IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAgi,6;
+  - Id: 312856
+    AegisName: Z_Bijou_VIT_1
+    Name: VIT I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVit,2;
+  - Id: 312857
+    AegisName: Z_Bijou_VIT_2
+    Name: VIT II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVit,3;
+  - Id: 312858
+    AegisName: Z_Bijou_VIT_3
+    Name: VIT III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVit,4;
+  - Id: 312859
+    AegisName: Z_Bijou_VIT_4
+    Name: VIT IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVit,6;
+  - Id: 312860
+    AegisName: Z_Bijou_INT_1
+    Name: INT I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bInt,2;
+  - Id: 312861
+    AegisName: Z_Bijou_INT_2
+    Name: INT II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bInt,3;
+  - Id: 312862
+    AegisName: Z_Bijou_INT_3
+    Name: INT III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bInt,4;
+  - Id: 312863
+    AegisName: Z_Bijou_INT_4
+    Name: INT IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bInt,6;
+  - Id: 312864
+    AegisName: Z_Bijou_DEX_1
+    Name: DEX I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDex,2;
+  - Id: 312865
+    AegisName: Z_Bijou_DEX_2
+    Name: DEX II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDex,3;
+  - Id: 312866
+    AegisName: Z_Bijou_DEX_3
+    Name: DEX III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDex,4;
+  - Id: 312867
+    AegisName: Z_Bijou_DEX_4
+    Name: DEX IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDex,6;
+  - Id: 312868
+    AegisName: Z_Bijou_LUK_1
+    Name: LUK I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLuk,2;
+  - Id: 312869
+    AegisName: Z_Bijou_LUK_2
+    Name: LUK II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLuk,3;
+  - Id: 312870
+    AegisName: Z_Bijou_LUK_3
+    Name: LUK III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLuk,4;
+  - Id: 312871
+    AegisName: Z_Bijou_LUK_4
+    Name: LUK IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLuk,6;
+  - Id: 312872
+    AegisName: Z_Bijou_DEF_1
+    Name: DEF I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,4;
+  - Id: 312873
+    AegisName: Z_Bijou_DEF_2
+    Name: DEF II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,8;
+  - Id: 312874
+    AegisName: Z_Bijou_DEF_3
+    Name: DEF III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,12;
+  - Id: 312875
+    AegisName: Z_Bijou_DEF_4
+    Name: DEF IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,16;
+  - Id: 312876
+    AegisName: Z_Bijou_DEF_5
+    Name: DEF V
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,20;
+  - Id: 312877
+    AegisName: Z_Bijou_MHP_F_1
+    Name: HP I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHP,475;
+  - Id: 312878
+    AegisName: Z_Bijou_MHP_F_2
+    Name: HP II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHP,675;
+  - Id: 312879
+    AegisName: Z_Bijou_MHP_F_3
+    Name: HP III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHP,875;
+  - Id: 312880
+    AegisName: Z_Bijou_MHP_F_4
+    Name: HP IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHP,1075;
+  - Id: 312881
+    AegisName: Z_Bijou_MHP_F_5
+    Name: HP V
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHP,1275;
+  - Id: 312882
+    AegisName: Z_Bijou_MSP_F_1
+    Name: SP I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSP,250;
+  - Id: 312883
+    AegisName: Z_Bijou_MSP_F_2
+    Name: SP II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSP,375;
+  - Id: 312884
+    AegisName: Z_Bijou_MSP_F_3
+    Name: SP III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSP,500;
+  - Id: 312885
+    AegisName: Z_Bijou_MSP_F_4
+    Name: SP IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSP,625;
+  - Id: 312886
+    AegisName: Z_Bijou_MSP_F_5
+    Name: SP V
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSP,750;
+  - Id: 312887
+    AegisName: Z_Bijou_MHP_P_1
+    Name: MHP I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,2;
+  - Id: 312888
+    AegisName: Z_Bijou_MHP_P_2
+    Name: MHP II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,4;
+  - Id: 312889
+    AegisName: Z_Bijou_MHP_P_3
+    Name: MHP III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHPrate,6;
+  - Id: 312890
+    AegisName: Z_Bijou_MSP_P_1
+    Name: MSP I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,2;
+  - Id: 312891
+    AegisName: Z_Bijou_MSP_P_2
+    Name: MSP II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,4;
+  - Id: 312892
+    AegisName: Z_Bijou_MSP_P_3
+    Name: MSP III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxSPrate,6;
+  - Id: 312893
+    AegisName: Z_Bijou_ATK_1
+    Name: ATK I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,10;
+  - Id: 312894
+    AegisName: Z_Bijou_ATK_2
+    Name: ATK II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,18;
+  - Id: 312895
+    AegisName: Z_Bijou_ATK_3
+    Name: ATK III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,26;
+      bonus bHit,5;
+  - Id: 312896
+    AegisName: Z_Bijou_ATK_4
+    Name: ATK IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,34;
+      bonus bHit,6;
+  - Id: 312897
+    AegisName: Z_Bijou_ATK_5
+    Name: ATK V
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bBaseAtk,42;
+      bonus bHit,7;
+  - Id: 312898
+    AegisName: Z_Bijou_MATK_1
+    Name: MATK I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,10;
+  - Id: 312899
+    AegisName: Z_Bijou_MATK_2
+    Name: MATK II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,18;
+  - Id: 312900
+    AegisName: Z_Bijou_MATK_3
+    Name: MATK III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,26;
+      bonus bVariableCastrate,-5;
+  - Id: 312901
+    AegisName: Z_Bijou_MATK_4
+    Name: MATK IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,34;
+      bonus bVariableCastrate,-6;
+  - Id: 312902
+    AegisName: Z_Bijou_MATK_5
+    Name: MATK V
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatk,42;
+      bonus bVariableCastrate,-7;
+  - Id: 312903
+    AegisName: Z_Bijou_Range_1
+    Name: Concentration I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,6;
+  - Id: 312904
+    AegisName: Z_Bijou_Range_2
+    Name: Concentration II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,9;
+  - Id: 312905
+    AegisName: Z_Bijou_Range_3
+    Name: Concentration III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,12;
+  - Id: 312906
+    AegisName: Z_Bijou_Melee_1
+    Name: Forearm I
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,7;
+  - Id: 312907
+    AegisName: Z_Bijou_Melee_2
+    Name: Forearm II
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,10;
+  - Id: 312908
+    AegisName: Z_Bijou_Melee_3
+    Name: Forearm III
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,13;
+      bonus bPerfectHitAddRate,1;
+  - Id: 312909
+    AegisName: Z_Bijou_Melee_4
+    Name: Forearm IV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,16;
+      bonus bPerfectHitAddRate,2;
+  - Id: 312910
+    AegisName: Z_Bijou_Melee_5
+    Name: Forearm V
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,19;
+      bonus bPerfectHitAddRate,3;
+  - Id: 312911
+    AegisName: Z_Bijou_MDamage_1
+    Name: Intelligence Ⅰ
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,4;
+  - Id: 312912
+    AegisName: Z_Bijou_MDamage_2
+    Name: Intelligence ⅠI
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,7;
+  - Id: 312913
+    AegisName: Z_Bijou_MDamage_3
+    Name: Intelligence ⅠII
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 312914
+    AegisName: Z_Bijou_MDamage_4
+    Name: Intelligence ⅠV
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,13;
+  - Id: 312915
+    AegisName: Z_Bijou_MDamage_5
+    Name: Intelligence V
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,16;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
