@@ -218,6 +218,38 @@ Body:
       sc_end SC_BLIND;
       sc_end SC_CONFUSION;
       sc_end SC_CURSE;
+  - Id: 102064
+    AegisName: Silvervine_Box100
+    Name: Silvervine 100 Box
+    Type: Cash
+    Buy: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6417,100;
+  - Id: 102065
+    AegisName: Silvervine_Box500
+    Name: Silvervine 500 Box
+    Type: Cash
+    Buy: 10
+    Weight: 0
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6417,500;
       
 # Add Items Equip
 #=============================================================

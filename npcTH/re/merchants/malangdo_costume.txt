@@ -36,443 +36,752 @@
 // Costume exchange
 mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	if (checkweight(1301,1) == 0) {
-		mes "- Please stop here!! -";
-		mes "- You have carried too much items, -";
-		mes "- Therefore unable receive any item again, -";
-		mes "- Please reduce your weight, -";
-		mes "- And come back again later! -";
+		mes "- กรุณาหยุดที่นี่!! -";
+		mes "- คุณบรรทุกสิ่งของมากเกินไป -";
+		mes "- จึงไม่สามารถรับไอเทมใดๆได้อีก, -";
+		mes "- กรุณาลดน้ำหนักของคุณ, -";
+		mes "- และกลับมาใหม่ทีหลัง! -";
 		close;
 	}
 	disable_items;
 	mes "[Designer Heidam]";
-	mes "I am Designer Heidam, who has all kinds of cool costumes in the World.";
-	mes "If you have any Kitcoins with you, come look for Designer Heidam!";
+	mes "ผู้ที่มีชุด Costume สวยๆในครอบครองมากที่สุดในโลกนี้คือข้าเอง Designer Heidam";
+	mes "หากเจ้ามี Kitcoins ไม่ต้องคิดให้มากมาย มาหาข้า Designer Heidam ได้เลย!";
 	next;
-	if (select( "Exchange costume for random enchant box", "Continue conversation" ) == 2) {
-		mes "[Designer Heidam]";
-		mes "Though I look out of shape right now, I used to be a well known fashion model and designer!";
-		next;
-		mes "[Designer Heidam]";
-		mes "Don't pity me! I am well aware of my looks, but I like who I am inside.";
-		close;
-	}
-	mes "[" + strcharinfo(0) + "]";
-	mes "This item is useless to me! Do you have anything else?";
-	next;
-	mes "[Designer Heidam]";
-	mes "Oh, then I can exchange it for a box of costume enchantment items.";
-	next;
-	mes "- Rummaging -";
-	next;
-	// ===================================================================
-	// =================== Costume Enchant Stone Box 4 ===================
-	// ===================================================================
-	.@box_list[0] = 22826;		// Enchant_Stone_Box4
-	setarray .@item_list_0[0],
-		19608,		// C_Chick_Hat
-		19654,		// C_J_Captain_Hat
-		19712,		// C_Little_Angel_Doll
-		19721,		// C_Darkness_Helm
-		19823,		// C_White_Cat_Hood
-		19876,		// C_Rabbit_Ear_Hat
-		20036,		// C_Sword_Master_Crown
-		20145,		// C_Robo_Eye
-		20146,		// C_Angel_Spirit
-		20147,		// C_Bell_Pigeon
-		20746;		// C_Rudra_Wing
-	// ===================================================================
-	// =================== Costume Enchant Stone Box 5 ===================
-	// ===================================================================
-	.@box_list[1] = 22868;		// Enchant_Stone_Box5
-	setarray .@item_list_1[0],
-		19643,		// C_Whikebain_Ears
-		20130,		// C_Whisper_Tall_Hat
-		20132,		// C_Subject_Aura
-		20133,		// C_Poring_Mascot_Costume
-		20199,		// C_Evil_Marcher_Hat
-		20200,		// C_Rabbit_Head_Dress
-		20201,		// C_Banshee_Master_Kiss
-		20202,		// C_Deviruchi_Balloon
-		20230,		// C_Mask_Of_Bankrupt
-		20231,		// C_Snowman_Hat
-		20232,		// C_Celines_Ribbon
-		20233,		// C_Gold_Angel_Sculpture
-		20761;		// C_Wing_Of_Happiness
-	// ===================================================================
-	// =================== Costume Enchant Stone Box 6 ===================
-	// ===================================================================
-	.@box_list[2] = 22905;		// Enchant_Stone_Box6
-	setarray .@item_list_2[0],
-		19954,		// C_3D_Glasses
-		20071,		// C_Worg_In_Mouth
-		20239,		// C_Large_Ribbon_Muffler
-		20242,		// C_Snownow_Hat
-		20273,		// C_Soft_Sheep_Hat
-		20762;		// C_GreatDevilWing
-	// ===================================================================
-	// =================== Costume Enchant Stone Box 7 ===================
-	// ===================================================================
-	.@box_list[3] = 22953;		// Enchant_Stone_Box7
-	setarray .@item_list_3[0],
-		18740,		// C_Hair_Of_The_Strong
-		19815,		// C_Lolita_Ten_Gallon_Hat
-		20255,		// C_Love_Cheek
-		20266,		// C_Secret_Zipper
-		20268,		// C_Sleep_Eclipse_Family
-		20286,		// C_Under_Rim_Glasses_Red
-		20329,		// C_Tare_HSchool_Doll_Hat
-		20330;		// C_Sombrero
-	// ===================================================================
-	// =================== Costume Enchant Stone Box 8 ===================
-	// ===================================================================
-	.@box_list[4] = 23001;		// Enchant_Stone_Box8
-	setarray .@item_list_4[0],
-		5979,		// C_Angel_Fluttering
-		19158,		// C_Gemini_Eyes
-		19816,		// C_Pecopeco_Cap
-		20315,		// C_Analyze_Eye
-		20318,		// C_Charleston_Antenna
-		20325,		// C_Little_Aquarium
-		20340,		// C_Straight_Pony_BL
-		20341,		// C_Cowlick_BL
-		20342,		// C_Loose_Wave_Twin_BL
-		20349,		// C_FlyingGalapago
-		20350,		// C_Cowlick_YL
-		20351,		// C_Cowlick_GN
-		20352,		// C_Cowlick_PP
-		20353,		// C_Cowlick_RD
-		20354,		// C_Cowlick_OM
-		20355,		// C_Cowlick_BU
-		20356,		// C_Cowlick_WH
-		20357,		// C_Straight_Pony_YL
-		20358,		// C_Straight_Pony_GN
-		20359,		// C_Straight_Pony_PP
-		20360,		// C_Straight_Pony_RD
-		20361,		// C_Straight_Pony_OM
-		20362,		// C_Straight_Pony_BU
-		20363,		// C_Straight_Pony_WH
-		20364,		// C_Loose_Wave_Twin_YL
-		20365,		// C_Loose_Wave_Twin_GN
-		20366,		// C_Loose_Wave_Twin_PP
-		20367,		// C_Loose_Wave_Twin_RD
-		20368,		// C_Loose_Wave_Twin_OM
-		20369,		// C_Loose_Wave_Twin_BU
-		20370,		// C_Loose_Wave_Twin_WH
-		20396,		// C_Woodie_Hat
-		20448,		// C_Cons_Of_Water
-		20487,		// C_Floral_Waltz
-		20489,		// C_Pope_Crown
-		20504,		// C_Cupid_Wing_Pink
-		20299,		// C_Face_Crusher
-		20300;		// C_Hill_Wind_Mask
-	// ===================================================================
-	// =================== Costume Enchant Stone Box 9 ===================
-	// ===================================================================
-	.@box_list[5] = 23058;		// Enchant_Stone_Box9
-	setarray .@item_list_5[0],
-		19761,		// C_White_Lily
-		20172,		// C_Pumpkin_Head
-		20398,		// C_Niflheim_Bunny_Hat
-		20399,		// C_Crow_Tengu_Mask
-		20404,		// C_Blessing_Of_Angels
-		20405,		// C_Eremes_Scarf
-		20447;		// C_Small_Poring_Band
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 10 ===================
-	// ====================================================================
-	.@box_list[6] = 23086;		// Enchant_Stone_Box10
-	setarray .@item_list_6[0],
-		20430,		// C_Morocc_Kid_Servant
-		20432,		// C_Khalitzburg_KN_Helm
-		20433,		// C_Louise_Red_Hat
-		20440,		// C_Tone_Of_Gold
-		20458,		// C_Wild_Poring_Rider
-		20459,		// C_Valhalla_Idol
-		20464,		// C_Monochrome_RibbonHat
-		20491,		// C_Laser_Of_Eagle
-		20502,		// C_Devil_Wing
-		20507,		// C_Poring_Bag
-		31087,		// C_Dwarf_Beard
-		31088;		// C_Mad_Hatter
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 11 ===================
-	// ====================================================================
-	.@box_list[7] = 23174;		// Enchant_Stone_Box11
-	setarray .@item_list_7[0],
-		5909,		// C_Valkyrie_Circlet
-		20381,		// C_Steampunk_Hat
-		20499,		// C_Cat_Ear_Hat
-		20509,		// C_Wings_of_Uriel
-		20510,		// C_SwordWing
-		31029,		// C_Pig_Nose
-		31040,		// C_Magical_Feather
-		31055,		// C_Poring_Soap_Pipe
-		31057,		// C_Eremes_Scarf_Black
-		31062,		// C_Eleanor_Wig
-		31063,		// C_Hair_Bun_BU
-		31064,		// C_Hair_Bun_RD
-		31065,		// C_Hair_Bun_YL
-		31066,		// C_Hair_Bun_GN
-		31067,		// C_Hair_Bun_BL
-		31068,		// C_Hair_Bun_WH
-		31069,		// C_Hair_Bun_OM
-		31070,		// C_Hair_Bun_PP
-		31071,		// C_Roll_Twin_BU
-		31072,		// C_Roll_Twin_RD
-		31073,		// C_Roll_Twin_YL
-		31074,		// C_Roll_Twin_GN
-		31075,		// C_Roll_Twin_BL
-		31076,		// C_Roll_Twin_WH
-		31077,		// C_Roll_Twin_OM
-		31078,		// C_Roll_Twin_PP
-		31079,		// C_Long_Pony_BU
-		31080,		// C_Long_Pony_RD
-		31081,		// C_Long_Pony_YL
-		31082,		// C_Long_Pony_GN
-		31083,		// C_Long_Pony_BL
-		31084,		// C_Long_Pony_WH
-		31085,		// C_Long_Pony_OM
-		31086,		// C_Long_Pony_PP
-		31120,		// C_Vampire_Familiar
-		31123,		// C_Ghostring_Tall_Hat
-		31125,		// C_QueenAnzRevenge
-		31118;		// C_Assassin_Skull_Mask
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 12 ===================
-	// ====================================================================
-	.@box_list[8] = 23299;		// Enchant_Stone_Box12
-	setarray .@item_list_8[0],
-		20195,		// C_Scratching_Cat
-		20449,		// C_White_Black_Temp
-		20511,		// C_Blue_Fairy_Wing
-		20514,		// C_Thanatos_Sword
-		20765,		// C_Archangel_Wing
-		31134,		// C_Happy_Parrot_J
-		31136,		// C_Clock_Casket
-		31160,		// C_RuneHelm
-		31162,		// C_Shaving_Foam
-		31165,		// C_Piggyback
-		31186,		// C_Black_Cat
-		31300;		// C_Warm_Cat_Muffler
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 13 ===================
-	// ====================================================================
-	.@box_list[9] = 23524;		// Enchant_Stone_Box13
-	setarray .@item_list_9[0],
-		20488,		// C_Pope_Ribbon
-		31031,		// C_Tare_Pope_Casual
-		31033,		// C_BelieversCap
-		31164,		// C_Brown_Stall
-		31166,		// C_Teddy_Bear_Hood
-		31168,		// C_Mouton_Life_BL
-		31178,		// C_Flame_Muffler
-		31397;		// C_Pope_Sitting_Head
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 14 ===================
-	// ====================================================================
-	.@box_list[10] = 23629;		// Enchant_Stone_Box14
-	setarray .@item_list_10[0],
-		31415,		// C_Wanderer_Sakkat
-		19289,		// C_Moon_Eyepatch
-		19291,		// C_Shiba_Inu
-		19294,		// C_CatEars_Cyber_HeadP_R
-		20516,		// C_Wings_of_Michael
-		31180,		// C_Shura_King_Pledge
-		31329,		// C_Alice_Wig
-		31332;		// Khalitzburg_KN_Helm_BL
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 15 ===================
-	// ====================================================================
-	.@box_list[11] = 23682;		// Enchant_Stone_Box15
-	setarray .@item_list_11[0],
-		19959,		// C_Drooping_Argiope
-		19960,		// C_Chain_Puppet
-		19992,		// C_Chilly_Breath
-		20515,		// C_Magic_Circle
-		20517,		// C_GiantCatBag_TW
-		31314,		// C_Ghost_Holiday
-		31396,		// C_Sorcerer_Hood
-		31398,		// C_Blinking_Thin_Eyes
-		31432,		// C_Luwmin_Ice
-		31433,		// C_Astro_Circle
-		31437,		// C_Baby_Penguin
-		31439,		// C_Fluffy_Heart_Earmuffs
-		31452,		// C_White_Cat
-		31460,		// C_Blessing_Sky_Lantern
-		31463,		// C_Flying_Drone
-		31498;		// C_Elephangel_TH
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 16 ===================
-	// ====================================================================
-	.@box_list[12] = 23770;		// Enchant_Stone_Box16
-	setarray .@item_list_12[0],
-		20033,		// C_Buddhist_Priest_Crown
-		20098,		// C_Vampire_Hairband
-		20171,		// C_Sepia_Cap
-		20174,		// C_Halloween_Hat_Orange
-		20395,		// C_BlackWitchHat
-		20482,		// C_Heaven_Cage
-		20533,		// C_PinkButterfly_Wing_T
-		20535,		// C_Digital_Space
-		20543,		// C_Halloween_Poring_Bag
-		31139,		// C_White_Rabbit_Ear
-		31249,		// C_Rabbit_Hopping
-		31489,		// C_Bouquet_Hat
-		31490,		// C_Poring_Muffler
-		31529,		// C_Happy_Rabbit_Ribbon
-		31606;		// C_Autumn_Headband
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 17 ===================
-	// ====================================================================
-	.@box_list[13] = 9510;		// Enchant_Stone_Box17
-	setarray .@item_list_13[0],
-		19990,		// C_Snow_Rabbit_Knit_Hat
-		20175,		// C_Diabolic_Headphone
-		20546,		// C_Backside_Ribbon_Bell
-		20764,		// C_Fallen_Angel_Wing
-		31440,		// C_Snow_Bear_Food
-		31565,		// C_Princess_Ribbon_Crown
-		31586,		// C_Poporing_Muffler
-		31616,		// C_Sleep_Sheep_TW
-		31625,		// C_Protect_Cloth
-		31693;		// C_LunaticMuffler
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 18 ===================
-	// ====================================================================
-	.@box_list[14] = 100019;		// Enchant_Stone_Box18
-	setarray .@item_list_14[0],
-		20257,		// C_Black_Rabbit_Bonnet
-		20486,		// C_Twin_Margaret
-		20570,		// C_HeartChocoBag
-		20572,		// C_WingOfHeart
-		31382,		// C_Cat_Ears_Punkish
-		31481,		// C_CatCoffeeCup_TW
-		31624,		// C_HeartOfCat_TW
-		31699;		// C_Smiling_Eyes
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 19 ===================
-	// ====================================================================
-	.@box_list[15] = 100052;		// Enchant_Stone_Box19
-	setarray .@item_list_15[0],
-		20022,		// C_Love_Piece
-		20519,		// C_Full_BloomCherry_Tree
-		20576,		// C_Cat_Fork
-		31027,		// C_Pretty_Bear
-		31483,		// C_CatEarRibbon_TW
-		31512,		// C_Panda_Rabbit
-		31569,		// C_OpenAir_Headset
-		31572,		// C_Mobile_Pursuit_System
-		31573,		// C_Mecha_Cat_Ears
-		31574,		// C_Cyber_Income
-		31600,		// C_Kishu_Inu
-		31614,		// C_Fox
-		31698,		// C_Pigtail_Red_Hood
-		31765,		// C_Garnet_Tiara
-		31766,		// C_Peony_Hair_Ornament
-		440000;		// C_SharkHead
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 20 ===================
-	// ====================================================================
-	.@box_list[16] = 100202;		// Enchant_Stone_Box20
-	setarray .@item_list_16[0],
-		20582,		// C_T_Bear_Bag
-		20584,		// C_Big_Foxtail
-		20588,		// C_Nifl_Bloom
-		31479,		// C_ManyStars_TW
-		31568,		// C_Floating_Ball_TW
-		31611,		// C_Dark_Snake_Lord_Stall
-		31671,		// Costume_Twin_Cannon
-		31673,		// C_Picnic_Basket
-		31688,		// C_Poring_On_Shoulder
-		31735,		// Costume_Yawata_Seal
-		31787,		// C_SavageB_On_Shoulder
-		31798,		// C_Baby_Panda
-		31799,		// C_Pretty_Bear_WH
-		31832,		// C_Bicolor_Cat_Witch_Hat
-		31884,		// C_Magic_Helm
-		400020;		// C_BeachBall
-	// ====================================================================
-	// =================== Costume Enchant Stone Box 21 ===================
-	// ====================================================================
-	.@box_list[17] = 100314;		// Enchant_Stone_Box21
-	setarray .@item_list_17[0],
-		19802,		// C_Drooping_Nine_Tail
-		20153,		// C_Monochrome_Cap
-		20379,		// C_PocketWatch_Hair_Orna
-		20451,		// C_Sky_Of_Memory
-		20589,		// C_Gimmick_One_Feather
-		20592,		// C_Santa_Backpack
-		20593,		// C_Ice_Wing
-		20598,		// C_GiantCatBag_JP_BL
-		20599,		// C_Sakura_Wing
-		31176,		// C_Looking
-		31179,		// C_Wolf_Masquerade
-		31404,		// C_Poring_Traffic_Light
-		31497,		// C_Flowery_Vision_TH
-		31509,		// C_Fawn_Ear
-		31559,		// C_Royalguard_Necklace
-		31566,		// C_Stall_Of_Dominions
-		31601,		// C_Under_Rim_Glasses_Bu
-		31716,		// C_Blinking_Eyes_RD
-		31815,		// C_Angola_Intention
-		31849,		// C_Runaway_Accelerator
-		31848,		// C_Rose_Gothic_Bonnet
-		31906,		// C_PGstone_Knit_Hat_PK
-		31911,		// C_LittleGarden
-		31916,		// C_Frill_Collar
-		31923,		// C_Baby_Polar_Bear
-		31930,		// C_Mike_Stand
-		31931,		// C_Half_Rim_Glasses
-		31934,		// C_Blink_Eyes_Sakura
-		400073,		// C_Romance_Rose_TW
-		400074,		// C_Disapear_Time_TW
-		410005,		// C_Magic_Heir_TW
-		440002;		// C_Happy_Cat_TW
-
-	while(1) {
-		for ( .@i = 0; .@i < 18; ++.@i ) {
-			if (getiteminfo(.@box_list[.@i], ITEMINFO_TYPE) == -1)	// temporary check
-				continue;
-			.@size = getarraysize( getd(".@item_list_" + .@i) );
-			for ( .@h = 0; .@h < .@size; ++.@h ) {
-				.@id = getd( ".@item_list_" + .@i + "[" + .@h + "]" );
-				if (getiteminfo(.@id, ITEMINFO_TYPE) == -1)	// temporary check
-					continue;
-				if (countitem(.@id) < 1)
-					continue;
+	switch(select("แลกเปลี่ยน Silvervine เป็น costume","แลกเปลี่ยน costume เป็นกล่องสุ่ม Costume Enchant Stone","ทำการสนทนา")){
+		case 1:
+			mes "^ff0000[คำเตือน]";
+			mes "แลกปลี่ยน Silvervine 15 ea สุ่มรับไอเทม costume ไอเทมทีู่กแลกเปลี่ยนด้านบน ไม่รวมการถอนสัญญาและไม่สามารถนำกลับไปแลกเปลี่ยนคืนเป็น Silvervine ได้^000000";
+			next;
+			if (select("เริ่มดำเนินการ","ยกเลิก")  ==  2){
 				mes "[Designer Heidam]";
-				mes "I see that you have a ^3131FF" + getitemname(.@id) + "^000000. Do you want to exchange this for a costume enchantment box?";
-				next;
-				switch( select( "Exchange", "Look for something else", "Stop Exchanging" ) ) {
-				case 1:
-					mes "[Designer Heidam]";
-					if (countitem(.@id) < 1)
-						mes "Oh~ Something suddenly disappeared...";
-					else {
-						mes "Exchange Completed.";
-						delitem .@id, 1;
-						getitem .@box_list[.@i], 1;
+				mes "..............";
+				close;
+			}
+			if (countitem(6417) < 15){
+				mes "- Silvervine ไม่เพียงพอ -";
+				close;
+			}
+			delitem 6417,15;
+			setarray .@item_id[0],
+			19608,		// C_Chick_Hat
+			19654,		// C_J_Captain_Hat
+			19712,		// C_Little_Angel_Doll
+			19721,		// C_Darkness_Helm
+			19823,		// C_White_Cat_Hood
+			19876,		// C_Rabbit_Ear_Hat
+			20036,		// C_Sword_Master_Crown
+			20145,		// C_Robo_Eye
+			20146,		// C_Angel_Spirit
+			20147,		// C_Bell_Pigeon
+			20746,		// C_Rudra_Wing
+			19643,		// C_Whikebain_Ears
+			20130,		// C_Whisper_Tall_Hat
+			20132,		// C_Subject_Aura
+			20133,		// C_Poring_Mascot_Costume
+			20199,		// C_Evil_Marcher_Hat
+			20200,		// C_Rabbit_Head_Dress
+			20201,		// C_Banshee_Master_Kiss
+			20202,		// C_Deviruchi_Balloon
+			20230,		// C_Mask_Of_Bankrupt
+			20231,		// C_Snowman_Hat
+			20232,		// C_Celines_Ribbon
+			20233,		// C_Gold_Angel_Sculpture
+			20761,		// C_Wing_Of_Happiness
+			19954,		// C_3D_Glasses
+			20071,		// C_Worg_In_Mouth
+			20239,		// C_Large_Ribbon_Muffler
+			20242,		// C_Snownow_Hat
+			20273,		// C_Soft_Sheep_Hat
+			20762,		// C_GreatDevilWing
+			18740,		// C_Hair_Of_The_Strong
+			19815,		// C_Lolita_Ten_Gallon_Hat
+			20255,		// C_Love_Cheek
+			20266,		// C_Secret_Zipper
+			20268,		// C_Sleep_Eclipse_Family
+			20286,		// C_Under_Rim_Glasses_Red
+			20329,		// C_Tare_HSchool_Doll_Hat
+			20330,		// C_Sombrero
+			5979,		// C_Angel_Fluttering
+			19158,		// C_Gemini_Eyes
+			19816,		// C_Pecopeco_Cap
+			20315,		// C_Analyze_Eye
+			20318,		// C_Charleston_Antenna
+			20325,		// C_Little_Aquarium
+			20340,		// C_Straight_Pony_BL
+			20341,		// C_Cowlick_BL
+			20342,		// C_Loose_Wave_Twin_BL
+			20349,		// C_FlyingGalapago
+			20350,		// C_Cowlick_YL
+			20351,		// C_Cowlick_GN
+			20352,		// C_Cowlick_PP
+			20353,		// C_Cowlick_RD
+			20354,		// C_Cowlick_OM
+			20355,		// C_Cowlick_BU
+			20356,		// C_Cowlick_WH
+			20357,		// C_Straight_Pony_YL
+			20358,		// C_Straight_Pony_GN
+			20359,		// C_Straight_Pony_PP
+			20360,		// C_Straight_Pony_RD
+			20361,		// C_Straight_Pony_OM
+			20362,		// C_Straight_Pony_BU
+			20363,		// C_Straight_Pony_WH
+			20364,		// C_Loose_Wave_Twin_YL
+			20365,		// C_Loose_Wave_Twin_GN
+			20366,		// C_Loose_Wave_Twin_PP
+			20367,		// C_Loose_Wave_Twin_RD
+			20368,		// C_Loose_Wave_Twin_OM
+			20369,		// C_Loose_Wave_Twin_BU
+			20370,		// C_Loose_Wave_Twin_WH
+			20396,		// C_Woodie_Hat
+			20448,		// C_Cons_Of_Water
+			20487,		// C_Floral_Waltz
+			20489,		// C_Pope_Crown
+			20504,		// C_Cupid_Wing_Pink
+			20299,		// C_Face_Crusher
+			20300,		// C_Hill_Wind_Mask
+			19761,		// C_White_Lily
+			20172,		// C_Pumpkin_Head
+			20398,		// C_Niflheim_Bunny_Hat
+			20399,		// C_Crow_Tengu_Mask
+			20404,		// C_Blessing_Of_Angels
+			20405,		// C_Eremes_Scarf
+			20447,		// C_Small_Poring_Band
+			20430,		// C_Morocc_Kid_Servant
+			20432,		// C_Khalitzburg_KN_Helm
+			20433,		// C_Louise_Red_Hat
+			20440,		// C_Tone_Of_Gold
+			20458,		// C_Wild_Poring_Rider
+			20459,		// C_Valhalla_Idol
+			20464,		// C_Monochrome_RibbonHat
+			20491,		// C_Laser_Of_Eagle
+			20502,		// C_Devil_Wing
+			20507,		// C_Poring_Bag
+			31087,		// C_Dwarf_Beard
+			31088,		// C_Mad_Hatter
+			5909,		// C_Valkyrie_Circlet
+			20381,		// C_Steampunk_Hat
+			20499,		// C_Cat_Ear_Hat
+			20509,		// C_Wings_of_Uriel
+			20510,		// C_SwordWing
+			31029,		// C_Pig_Nose
+			31040,		// C_Magical_Feather
+			31055,		// C_Poring_Soap_Pipe
+			31057,		// C_Eremes_Scarf_Black
+			31062,		// C_Eleanor_Wig
+			31063,		// C_Hair_Bun_BU
+			31064,		// C_Hair_Bun_RD
+			31065,		// C_Hair_Bun_YL
+			31066,		// C_Hair_Bun_GN
+			31067,		// C_Hair_Bun_BL
+			31068,		// C_Hair_Bun_WH
+			31069,		// C_Hair_Bun_OM
+			31070,		// C_Hair_Bun_PP
+			31071,		// C_Roll_Twin_BU
+			31072,		// C_Roll_Twin_RD
+			31073,		// C_Roll_Twin_YL
+			31074,		// C_Roll_Twin_GN
+			31075,		// C_Roll_Twin_BL
+			31076,		// C_Roll_Twin_WH
+			31077,		// C_Roll_Twin_OM
+			31078,		// C_Roll_Twin_PP
+			31079,		// C_Long_Pony_BU
+			31080,		// C_Long_Pony_RD
+			31081,		// C_Long_Pony_YL
+			31082,		// C_Long_Pony_GN
+			31083,		// C_Long_Pony_BL
+			31084,		// C_Long_Pony_WH
+			31085,		// C_Long_Pony_OM
+			31086,		// C_Long_Pony_PP
+			31120,		// C_Vampire_Familiar
+			31123,		// C_Ghostring_Tall_Hat
+			31125,		// C_QueenAnzRevenge
+			31118,		// C_Assassin_Skull_Mask
+			20195,		// C_Scratching_Cat
+			20449,		// C_White_Black_Temp
+			20511,		// C_Blue_Fairy_Wing
+			20514,		// C_Thanatos_Sword
+			20765,		// C_Archangel_Wing
+			31134,		// C_Happy_Parrot_J
+			31136,		// C_Clock_Casket
+			31160,		// C_RuneHelm
+			31162,		// C_Shaving_Foam
+			31165,		// C_Piggyback
+			31186,		// C_Black_Cat
+			31300,		// C_Warm_Cat_Muffler
+			20488,		// C_Pope_Ribbon
+			31031,		// C_Tare_Pope_Casual
+			31033,		// C_BelieversCap
+			31164,		// C_Brown_Stall
+			31166,		// C_Teddy_Bear_Hood
+			31168,		// C_Mouton_Life_BL
+			31178,		// C_Flame_Muffler
+			31397,		// C_Pope_Sitting_Head
+			31415,		// C_Wanderer_Sakkat
+			19289,		// C_Moon_Eyepatch
+			19291,		// C_Shiba_Inu
+			19294,		// C_CatEars_Cyber_HeadP_R
+			20516,		// C_Wings_of_Michael
+			31180,		// C_Shura_King_Pledge
+			31329,		// C_Alice_Wig
+			31332,		// Khalitzburg_KN_Helm_BL
+			19959,		// C_Drooping_Argiope
+			19960,		// C_Chain_Puppet
+			19992,		// C_Chilly_Breath
+			20515,		// C_Magic_Circle
+			20517,		// C_GiantCatBag_TW
+			31314,		// C_Ghost_Holiday
+			31396,		// C_Sorcerer_Hood
+			31398,		// C_Blinking_Thin_Eyes
+			31432,		// C_Luwmin_Ice
+			31433,		// C_Astro_Circle
+			31437,		// C_Baby_Penguin
+			31439,		// C_Fluffy_Heart_Earmuffs
+			31452,		// C_White_Cat
+			31460,		// C_Blessing_Sky_Lantern
+			31463,		// C_Flying_Drone
+			31498,		// C_Elephangel_TH
+			20033,		// C_Buddhist_Priest_Crown
+			20098,		// C_Vampire_Hairband
+			20171,		// C_Sepia_Cap
+			20174,		// C_Halloween_Hat_Orange
+			20395,		// C_BlackWitchHat
+			20482,		// C_Heaven_Cage
+			20533,		// C_PinkButterfly_Wing_T
+			20535,		// C_Digital_Space
+			20543,		// C_Halloween_Poring_Bag
+			31139,		// C_White_Rabbit_Ear
+			31249,		// C_Rabbit_Hopping
+			31489,		// C_Bouquet_Hat
+			31490,		// C_Poring_Muffler
+			31529,		// C_Happy_Rabbit_Ribbon
+			31606,		// C_Autumn_Headband
+			19990,		// C_Snow_Rabbit_Knit_Hat
+			20175,		// C_Diabolic_Headphone
+			20546,		// C_Backside_Ribbon_Bell
+			20764,		// C_Fallen_Angel_Wing
+			31440,		// C_Snow_Bear_Food
+			31565,		// C_Princess_Ribbon_Crown
+			31586,		// C_Poporing_Muffler
+			31616,		// C_Sleep_Sheep_TW
+			31625,		// C_Protect_Cloth
+			31693,		// C_LunaticMuffler
+			20257,		// C_Black_Rabbit_Bonnet
+			20486,		// C_Twin_Margaret
+			20570,		// C_HeartChocoBag
+			20572,		// C_WingOfHeart
+			31382,		// C_Cat_Ears_Punkish
+			31481,		// C_CatCoffeeCup_TW
+			31624,		// C_HeartOfCat_TW
+			31699,		// C_Smiling_Eyes
+			20022,		// C_Love_Piece
+			20519,		// C_Full_BloomCherry_Tree
+			20576,		// C_Cat_Fork
+			31027,		// C_Pretty_Bear
+			31483,		// C_CatEarRibbon_TW
+			31512,		// C_Panda_Rabbit
+			31569,		// C_OpenAir_Headset
+			31572,		// C_Mobile_Pursuit_System
+			31573,		// C_Mecha_Cat_Ears
+			31574,		// C_Cyber_Income
+			31600,		// C_Kishu_Inu
+			31614,		// C_Fox
+			31698,		// C_Pigtail_Red_Hood
+			31765,		// C_Garnet_Tiara
+			31766,		// C_Peony_Hair_Ornament
+			440000,		// C_SharkHead
+			20582,		// C_T_Bear_Bag
+			20584,		// C_Big_Foxtail
+			20588,		// C_Nifl_Bloom
+			31479,		// C_ManyStars_TW
+			31568,		// C_Floating_Ball_TW
+			31611,		// C_Dark_Snake_Lord_Stall
+			31671,		// Costume_Twin_Cannon
+			31673,		// C_Picnic_Basket
+			31688,		// C_Poring_On_Shoulder
+			31735,		// Costume_Yawata_Seal
+			31787,		// C_SavageB_On_Shoulder
+			31798,		// C_Baby_Panda
+			31799,		// C_Pretty_Bear_WH
+			31832,		// C_Bicolor_Cat_Witch_Hat
+			31884,		// C_Magic_Helm
+			400020,		// C_BeachBall
+			19802,		// C_Drooping_Nine_Tail
+			20153,		// C_Monochrome_Cap
+			20379,		// C_PocketWatch_Hair_Orna
+			20451,		// C_Sky_Of_Memory
+			20589,		// C_Gimmick_One_Feather
+			20592,		// C_Santa_Backpack
+			20593,		// C_Ice_Wing
+			20598,		// C_GiantCatBag_JP_BL
+			20599,		// C_Sakura_Wing
+			31176,		// C_Looking
+			31179,		// C_Wolf_Masquerade
+			31404,		// C_Poring_Traffic_Light
+			31497,		// C_Flowery_Vision_TH
+			31509,		// C_Fawn_Ear
+			31559,		// C_Royalguard_Necklace
+			31566,		// C_Stall_Of_Dominions
+			31601,		// C_Under_Rim_Glasses_Bu
+			31716,		// C_Blinking_Eyes_RD
+			31815,		// C_Angola_Intention
+			31849,		// C_Runaway_Accelerator
+			31848,		// C_Rose_Gothic_Bonnet
+			31906,		// C_PGstone_Knit_Hat_PK
+			31911,		// C_LittleGarden
+			31916,		// C_Frill_Collar
+			31923,		// C_Baby_Polar_Bear
+			31930,		// C_Mike_Stand
+			31931,		// C_Half_Rim_Glasses
+			31934,		// C_Blink_Eyes_Sakura
+			400073,		// C_Romance_Rose_TW
+			400074,		// C_Disapear_Time_TW
+			410005,		// C_Magic_Heir_TW
+			440002;		// C_Happy_Cat_TW
+			for(.@i=0; .@i<1;.@i++){
+				.@pass = 0;
+				while(1){
+					// random item
+					.@item = .@item_id[rand(0,getarraysize(.@item_id)-1)];
+					if(getarraysize(.@del) != 0){
+						for(.@j=0; .@j<getarraysize(.@del);.@j++){
+							if(.@del[.@j]==.@item)	// repeat
+								break;
+							if(.@j == (getarraysize(.@del)-1))
+								.@pass = 1;
+						}
+					} else {
+						break;
+					}			
+					if(.@pass == 1)
+						break;
+				}
+				getitem .@item,1;
+				// record gived
+				.@del[.@i] = .@item;
+			}
+			end;
+		case 2:
+			// ===================================================================
+			// =================== Costume Enchant Stone Box 4 ===================
+			// ===================================================================
+			.@box_list[0] = 22826;		// Enchant_Stone_Box4
+			setarray .@item_list_0[0],
+				19608,		// C_Chick_Hat
+				19654,		// C_J_Captain_Hat
+				19712,		// C_Little_Angel_Doll
+				19721,		// C_Darkness_Helm
+				19823,		// C_White_Cat_Hood
+				19876,		// C_Rabbit_Ear_Hat
+				20036,		// C_Sword_Master_Crown
+				20145,		// C_Robo_Eye
+				20146,		// C_Angel_Spirit
+				20147,		// C_Bell_Pigeon
+				20746;		// C_Rudra_Wing
+			// ===================================================================
+			// =================== Costume Enchant Stone Box 5 ===================
+			// ===================================================================
+			.@box_list[1] = 22868;		// Enchant_Stone_Box5
+			setarray .@item_list_1[0],
+				19643,		// C_Whikebain_Ears
+				20130,		// C_Whisper_Tall_Hat
+				20132,		// C_Subject_Aura
+				20133,		// C_Poring_Mascot_Costume
+				20199,		// C_Evil_Marcher_Hat
+				20200,		// C_Rabbit_Head_Dress
+				20201,		// C_Banshee_Master_Kiss
+				20202,		// C_Deviruchi_Balloon
+				20230,		// C_Mask_Of_Bankrupt
+				20231,		// C_Snowman_Hat
+				20232,		// C_Celines_Ribbon
+				20233,		// C_Gold_Angel_Sculpture
+				20761;		// C_Wing_Of_Happiness
+			// ===================================================================
+			// =================== Costume Enchant Stone Box 6 ===================
+			// ===================================================================
+			.@box_list[2] = 22905;		// Enchant_Stone_Box6
+			setarray .@item_list_2[0],
+				19954,		// C_3D_Glasses
+				20071,		// C_Worg_In_Mouth
+				20239,		// C_Large_Ribbon_Muffler
+				20242,		// C_Snownow_Hat
+				20273,		// C_Soft_Sheep_Hat
+				20762;		// C_GreatDevilWing
+			// ===================================================================
+			// =================== Costume Enchant Stone Box 7 ===================
+			// ===================================================================
+			.@box_list[3] = 22953;		// Enchant_Stone_Box7
+			setarray .@item_list_3[0],
+				18740,		// C_Hair_Of_The_Strong
+				19815,		// C_Lolita_Ten_Gallon_Hat
+				20255,		// C_Love_Cheek
+				20266,		// C_Secret_Zipper
+				20268,		// C_Sleep_Eclipse_Family
+				20286,		// C_Under_Rim_Glasses_Red
+				20329,		// C_Tare_HSchool_Doll_Hat
+				20330;		// C_Sombrero
+			// ===================================================================
+			// =================== Costume Enchant Stone Box 8 ===================
+			// ===================================================================
+			.@box_list[4] = 23001;		// Enchant_Stone_Box8
+			setarray .@item_list_4[0],
+				5979,		// C_Angel_Fluttering
+				19158,		// C_Gemini_Eyes
+				19816,		// C_Pecopeco_Cap
+				20315,		// C_Analyze_Eye
+				20318,		// C_Charleston_Antenna
+				20325,		// C_Little_Aquarium
+				20340,		// C_Straight_Pony_BL
+				20341,		// C_Cowlick_BL
+				20342,		// C_Loose_Wave_Twin_BL
+				20349,		// C_FlyingGalapago
+				20350,		// C_Cowlick_YL
+				20351,		// C_Cowlick_GN
+				20352,		// C_Cowlick_PP
+				20353,		// C_Cowlick_RD
+				20354,		// C_Cowlick_OM
+				20355,		// C_Cowlick_BU
+				20356,		// C_Cowlick_WH
+				20357,		// C_Straight_Pony_YL
+				20358,		// C_Straight_Pony_GN
+				20359,		// C_Straight_Pony_PP
+				20360,		// C_Straight_Pony_RD
+				20361,		// C_Straight_Pony_OM
+				20362,		// C_Straight_Pony_BU
+				20363,		// C_Straight_Pony_WH
+				20364,		// C_Loose_Wave_Twin_YL
+				20365,		// C_Loose_Wave_Twin_GN
+				20366,		// C_Loose_Wave_Twin_PP
+				20367,		// C_Loose_Wave_Twin_RD
+				20368,		// C_Loose_Wave_Twin_OM
+				20369,		// C_Loose_Wave_Twin_BU
+				20370,		// C_Loose_Wave_Twin_WH
+				20396,		// C_Woodie_Hat
+				20448,		// C_Cons_Of_Water
+				20487,		// C_Floral_Waltz
+				20489,		// C_Pope_Crown
+				20504,		// C_Cupid_Wing_Pink
+				20299,		// C_Face_Crusher
+				20300;		// C_Hill_Wind_Mask
+			// ===================================================================
+			// =================== Costume Enchant Stone Box 9 ===================
+			// ===================================================================
+			.@box_list[5] = 23058;		// Enchant_Stone_Box9
+			setarray .@item_list_5[0],
+				19761,		// C_White_Lily
+				20172,		// C_Pumpkin_Head
+				20398,		// C_Niflheim_Bunny_Hat
+				20399,		// C_Crow_Tengu_Mask
+				20404,		// C_Blessing_Of_Angels
+				20405,		// C_Eremes_Scarf
+				20447;		// C_Small_Poring_Band
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 10 ===================
+			// ====================================================================
+			.@box_list[6] = 23086;		// Enchant_Stone_Box10
+			setarray .@item_list_6[0],
+				20430,		// C_Morocc_Kid_Servant
+				20432,		// C_Khalitzburg_KN_Helm
+				20433,		// C_Louise_Red_Hat
+				20440,		// C_Tone_Of_Gold
+				20458,		// C_Wild_Poring_Rider
+				20459,		// C_Valhalla_Idol
+				20464,		// C_Monochrome_RibbonHat
+				20491,		// C_Laser_Of_Eagle
+				20502,		// C_Devil_Wing
+				20507,		// C_Poring_Bag
+				31087,		// C_Dwarf_Beard
+				31088;		// C_Mad_Hatter
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 11 ===================
+			// ====================================================================
+			.@box_list[7] = 23174;		// Enchant_Stone_Box11
+			setarray .@item_list_7[0],
+				5909,		// C_Valkyrie_Circlet
+				20381,		// C_Steampunk_Hat
+				20499,		// C_Cat_Ear_Hat
+				20509,		// C_Wings_of_Uriel
+				20510,		// C_SwordWing
+				31029,		// C_Pig_Nose
+				31040,		// C_Magical_Feather
+				31055,		// C_Poring_Soap_Pipe
+				31057,		// C_Eremes_Scarf_Black
+				31062,		// C_Eleanor_Wig
+				31063,		// C_Hair_Bun_BU
+				31064,		// C_Hair_Bun_RD
+				31065,		// C_Hair_Bun_YL
+				31066,		// C_Hair_Bun_GN
+				31067,		// C_Hair_Bun_BL
+				31068,		// C_Hair_Bun_WH
+				31069,		// C_Hair_Bun_OM
+				31070,		// C_Hair_Bun_PP
+				31071,		// C_Roll_Twin_BU
+				31072,		// C_Roll_Twin_RD
+				31073,		// C_Roll_Twin_YL
+				31074,		// C_Roll_Twin_GN
+				31075,		// C_Roll_Twin_BL
+				31076,		// C_Roll_Twin_WH
+				31077,		// C_Roll_Twin_OM
+				31078,		// C_Roll_Twin_PP
+				31079,		// C_Long_Pony_BU
+				31080,		// C_Long_Pony_RD
+				31081,		// C_Long_Pony_YL
+				31082,		// C_Long_Pony_GN
+				31083,		// C_Long_Pony_BL
+				31084,		// C_Long_Pony_WH
+				31085,		// C_Long_Pony_OM
+				31086,		// C_Long_Pony_PP
+				31120,		// C_Vampire_Familiar
+				31123,		// C_Ghostring_Tall_Hat
+				31125,		// C_QueenAnzRevenge
+				31118;		// C_Assassin_Skull_Mask
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 12 ===================
+			// ====================================================================
+			.@box_list[8] = 23299;		// Enchant_Stone_Box12
+			setarray .@item_list_8[0],
+				20195,		// C_Scratching_Cat
+				20449,		// C_White_Black_Temp
+				20511,		// C_Blue_Fairy_Wing
+				20514,		// C_Thanatos_Sword
+				20765,		// C_Archangel_Wing
+				31134,		// C_Happy_Parrot_J
+				31136,		// C_Clock_Casket
+				31160,		// C_RuneHelm
+				31162,		// C_Shaving_Foam
+				31165,		// C_Piggyback
+				31186,		// C_Black_Cat
+				31300;		// C_Warm_Cat_Muffler
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 13 ===================
+			// ====================================================================
+			.@box_list[9] = 23524;		// Enchant_Stone_Box13
+			setarray .@item_list_9[0],
+				20488,		// C_Pope_Ribbon
+				31031,		// C_Tare_Pope_Casual
+				31033,		// C_BelieversCap
+				31164,		// C_Brown_Stall
+				31166,		// C_Teddy_Bear_Hood
+				31168,		// C_Mouton_Life_BL
+				31178,		// C_Flame_Muffler
+				31397;		// C_Pope_Sitting_Head
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 14 ===================
+			// ====================================================================
+			.@box_list[10] = 23629;		// Enchant_Stone_Box14
+			setarray .@item_list_10[0],
+				31415,		// C_Wanderer_Sakkat
+				19289,		// C_Moon_Eyepatch
+				19291,		// C_Shiba_Inu
+				19294,		// C_CatEars_Cyber_HeadP_R
+				20516,		// C_Wings_of_Michael
+				31180,		// C_Shura_King_Pledge
+				31329,		// C_Alice_Wig
+				31332;		// Khalitzburg_KN_Helm_BL
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 15 ===================
+			// ====================================================================
+			.@box_list[11] = 23682;		// Enchant_Stone_Box15
+			setarray .@item_list_11[0],
+				19959,		// C_Drooping_Argiope
+				19960,		// C_Chain_Puppet
+				19992,		// C_Chilly_Breath
+				20515,		// C_Magic_Circle
+				20517,		// C_GiantCatBag_TW
+				31314,		// C_Ghost_Holiday
+				31396,		// C_Sorcerer_Hood
+				31398,		// C_Blinking_Thin_Eyes
+				31432,		// C_Luwmin_Ice
+				31433,		// C_Astro_Circle
+				31437,		// C_Baby_Penguin
+				31439,		// C_Fluffy_Heart_Earmuffs
+				31452,		// C_White_Cat
+				31460,		// C_Blessing_Sky_Lantern
+				31463,		// C_Flying_Drone
+				31498;		// C_Elephangel_TH
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 16 ===================
+			// ====================================================================
+			.@box_list[12] = 23770;		// Enchant_Stone_Box16
+			setarray .@item_list_12[0],
+				20033,		// C_Buddhist_Priest_Crown
+				20098,		// C_Vampire_Hairband
+				20171,		// C_Sepia_Cap
+				20174,		// C_Halloween_Hat_Orange
+				20395,		// C_BlackWitchHat
+				20482,		// C_Heaven_Cage
+				20533,		// C_PinkButterfly_Wing_T
+				20535,		// C_Digital_Space
+				20543,		// C_Halloween_Poring_Bag
+				31139,		// C_White_Rabbit_Ear
+				31249,		// C_Rabbit_Hopping
+				31489,		// C_Bouquet_Hat
+				31490,		// C_Poring_Muffler
+				31529,		// C_Happy_Rabbit_Ribbon
+				31606;		// C_Autumn_Headband
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 17 ===================
+			// ====================================================================
+			.@box_list[13] = 9510;		// Enchant_Stone_Box17
+			setarray .@item_list_13[0],
+				19990,		// C_Snow_Rabbit_Knit_Hat
+				20175,		// C_Diabolic_Headphone
+				20546,		// C_Backside_Ribbon_Bell
+				20764,		// C_Fallen_Angel_Wing
+				31440,		// C_Snow_Bear_Food
+				31565,		// C_Princess_Ribbon_Crown
+				31586,		// C_Poporing_Muffler
+				31616,		// C_Sleep_Sheep_TW
+				31625,		// C_Protect_Cloth
+				31693;		// C_LunaticMuffler
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 18 ===================
+			// ====================================================================
+			.@box_list[14] = 100019;		// Enchant_Stone_Box18
+			setarray .@item_list_14[0],
+				20257,		// C_Black_Rabbit_Bonnet
+				20486,		// C_Twin_Margaret
+				20570,		// C_HeartChocoBag
+				20572,		// C_WingOfHeart
+				31382,		// C_Cat_Ears_Punkish
+				31481,		// C_CatCoffeeCup_TW
+				31624,		// C_HeartOfCat_TW
+				31699;		// C_Smiling_Eyes
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 19 ===================
+			// ====================================================================
+			.@box_list[15] = 100052;		// Enchant_Stone_Box19
+			setarray .@item_list_15[0],
+				20022,		// C_Love_Piece
+				20519,		// C_Full_BloomCherry_Tree
+				20576,		// C_Cat_Fork
+				31027,		// C_Pretty_Bear
+				31483,		// C_CatEarRibbon_TW
+				31512,		// C_Panda_Rabbit
+				31569,		// C_OpenAir_Headset
+				31572,		// C_Mobile_Pursuit_System
+				31573,		// C_Mecha_Cat_Ears
+				31574,		// C_Cyber_Income
+				31600,		// C_Kishu_Inu
+				31614,		// C_Fox
+				31698,		// C_Pigtail_Red_Hood
+				31765,		// C_Garnet_Tiara
+				31766,		// C_Peony_Hair_Ornament
+				440000;		// C_SharkHead
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 20 ===================
+			// ====================================================================
+			.@box_list[16] = 100202;		// Enchant_Stone_Box20
+			setarray .@item_list_16[0],
+				20582,		// C_T_Bear_Bag
+				20584,		// C_Big_Foxtail
+				20588,		// C_Nifl_Bloom
+				31479,		// C_ManyStars_TW
+				31568,		// C_Floating_Ball_TW
+				31611,		// C_Dark_Snake_Lord_Stall
+				31671,		// Costume_Twin_Cannon
+				31673,		// C_Picnic_Basket
+				31688,		// C_Poring_On_Shoulder
+				31735,		// Costume_Yawata_Seal
+				31787,		// C_SavageB_On_Shoulder
+				31798,		// C_Baby_Panda
+				31799,		// C_Pretty_Bear_WH
+				31832,		// C_Bicolor_Cat_Witch_Hat
+				31884,		// C_Magic_Helm
+				400020;		// C_BeachBall
+			// ====================================================================
+			// =================== Costume Enchant Stone Box 21 ===================
+			// ====================================================================
+			.@box_list[17] = 100314;		// Enchant_Stone_Box21
+			setarray .@item_list_17[0],
+				19802,		// C_Drooping_Nine_Tail
+				20153,		// C_Monochrome_Cap
+				20379,		// C_PocketWatch_Hair_Orna
+				20451,		// C_Sky_Of_Memory
+				20589,		// C_Gimmick_One_Feather
+				20592,		// C_Santa_Backpack
+				20593,		// C_Ice_Wing
+				20598,		// C_GiantCatBag_JP_BL
+				20599,		// C_Sakura_Wing
+				31176,		// C_Looking
+				31179,		// C_Wolf_Masquerade
+				31404,		// C_Poring_Traffic_Light
+				31497,		// C_Flowery_Vision_TH
+				31509,		// C_Fawn_Ear
+				31559,		// C_Royalguard_Necklace
+				31566,		// C_Stall_Of_Dominions
+				31601,		// C_Under_Rim_Glasses_Bu
+				31716,		// C_Blinking_Eyes_RD
+				31815,		// C_Angola_Intention
+				31849,		// C_Runaway_Accelerator
+				31848,		// C_Rose_Gothic_Bonnet
+				31906,		// C_PGstone_Knit_Hat_PK
+				31911,		// C_LittleGarden
+				31916,		// C_Frill_Collar
+				31923,		// C_Baby_Polar_Bear
+				31930,		// C_Mike_Stand
+				31931,		// C_Half_Rim_Glasses
+				31934,		// C_Blink_Eyes_Sakura
+				400073,		// C_Romance_Rose_TW
+				400074,		// C_Disapear_Time_TW
+				410005,		// C_Magic_Heir_TW
+				440002;		// C_Happy_Cat_TW
+			while(1) {
+				for ( .@i = 0; .@i < 18; ++.@i ) {
+					if (getiteminfo(.@box_list[.@i], ITEMINFO_TYPE) == -1)	// temporary check
+						continue;
+					.@size = getarraysize( getd(".@item_list_" + .@i) );
+					for ( .@h = 0; .@h < .@size; ++.@h ) {
+						.@id = getd( ".@item_list_" + .@i + "[" + .@h + "]" );
+						if (getiteminfo(.@id, ITEMINFO_TYPE) == -1)	// temporary check
+							continue;
+						if (countitem(.@id) < 1)
+							continue;
+						mes "[Designer Heidam]";
+						mes "ข้าเห็นว่าเจ้ามี ^3131FF" + getitemname(.@id) + "^000000 เจ้าต้องการแลกเปลี่ยนสิ่งนี้เป็นกล่อง costume enchant หรือไม่?";
+						next;
+						switch( select( "แลกเปลี่ยน", "มองหาสิ่งอื่น", "หยุดการแลกเปลี่ยน" ) ) {
+						case 1:
+							mes "[Designer Heidam]";
+							if (countitem(.@id) < 1)
+								mes "โอ้~ จู่ๆ ก็มีบางอย่างหายไป...";
+							else {
+								mes "การแลกเปลี่ยนเสร็จสมบูรณ์";
+								delitem .@id, 1;
+								getitem .@box_list[.@i], 1;
+							}
+							mes "ให้ข้าเช็คดูไอเทมเจ้าอีกรอบเพื่อแลกเปลี่ยน...";
+							next;
+							break;
+						case 2:
+							break;
+						case 3:
+							mes "[Designer Heidam]";
+							mes "เหมียว? คุณกำลังจะไปไหน";
+							close;
+						}
 					}
-					mes "Let me check you for another item to exchange...";
-					next;
-					break;
-				case 2:
-					break;
-				case 3:
+				}
+				mes "[Designer Heidam]";
+				mes "ไม่มีอะไรแล้วล่ะ";
+				next;
+				if (select( "ลองหาอีกครั้ง", "ยกเลิก" ) == 2) {
 					mes "[Designer Heidam]";
-					mes "Meow? Where are you going?";
+					mes "โชคดี~";
 					close;
 				}
 			}
-		}
-		mes "[Designer Heidam]";
-		mes "Guess that is all.";
-		next;
-		if (select( "Look more", "Quit" ) == 2) {
+		case 3:
 			mes "[Designer Heidam]";
-			mes "Bye~";
+			mes "ตอนนี้อาจจะดูเหมือนลุงแก่ขี้ขลาดก็จริงแต่ว่า ฉันเคยเป็นผู้นำด้านแฟชั่นมาก่อนนะ!";
+			next;
+			mes "[Designer Heidam]";
+			mes "อย่ามาถามว่าทำไมกลายเป็นแบบนี้! แค่รู้ว่าตอนนี้ฉันไม่ได้ดูหรูหราไว้เดี๋ยวจะทำให้เจ้าตะลึงจนน้ำตาไหลเลยล่ะ ฮึ่กก";
+			next;
+			mes "[Designer Heidam]";
+			mes "แม้ว่าตอนนี้จะว่าดูไม่หรูหราก็ตามแต่ข้าจะคอยเนรมิตสิ่งที่ดีๆให้กับลูกค้าด้วย Fashion Stone เอง";
+			mes "แม้จะแค่นี้แต่ฉันก็พอใจ";
 			close;
-		}
 	}
 }
 

@@ -28,98 +28,98 @@ prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 			close;
 		}
 		mes "[Royal Messenger]";
-		mes "Oh, wait. You are...";
-		mes "" + strcharinfo(0) + ", right?";
-		mes "Let's see.";
+		mes "โอ้ เดี๋ยวนะ คุณคือ...";
+		mes "" + strcharinfo(0) + "ใช่ไหม?";
+		mes "มาดูกัน";
 		next;
 		mes "[Royal Messenger]";
-		mes "I am right. You look exactly the same as the montage from the guild. Hahahaha!";
-		mes "My eyes are doing what they are supposed to do now, I guess.";
+		mes "ฉันพูดถูก คุณดูเหมือนกับภาพตัดต่อจากกิลด์ทุกประการ ฮ่าๆๆ!";
+		mes "ดวงตาของฉันกำลังทำในสิ่งที่พวกเขาควรจะทำตอนนี้ ฉันคิดว่า";
 		next;
 		mes "[Royal Messenger]";
-		mes "It is difficult to find the freelance adventurers who don't belong to the military.";
-		mes "It was very difficult to find you since you are not bound to anywhere.";
+		mes "มันยากที่จะหานักผจญภัยอิสระที่ไม่ได้เป็นทหาร";
+		mes "มันยากมากที่จะพบคุณ เนื่องจากคุณไม่ผูกพันกับที่ไหนเลย";
 		next;
-		select("May I help you?");
+		select("ฉันช่วยคุณได้ไหม");
 		mes "[Royal Messenger]";
-		mes "Help? Sure thing!";
-		mes "You know that there is a banquet taking place in celebration of subjugating Morocc.";
-		mes "An invitation has been issued for you. But it was just impossible to meet you.";
-		next;
-		mes "[Royal Messenger]";
-		mes "I am sure that all the Royal Messengers of the city must be looking for with the portrait of you.";
-		mes "Hey, since we don't have enough time, please take this invitation for you.";
+		mes "ช่วยด้วย? แน่นอน!";
+		mes "เจ้าก็รู้ว่ามีงานเลี้ยงฉลองการพิชิตโมร็อกโก";
+		mes "มีการเชิญคุณแล้ว แต่มันเป็นไปไม่ได้เลยที่จะพบคุณ";
 		next;
 		mes "[Royal Messenger]";
-		mes "You must attend the banquet. Do you understand? ^4d4dffYou've been invited as a special guest^000000.";
-		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : A special guest?", bc_self;
-		mes "[Royal Messenger]";
-		mes "The people in the palace will fill you up with the details.";
-		mes "I am just a messenger after all.";
-		mes "Although the banquet will be held for quite a while, don't take too much time to get there.";
+		mes "ฉันแน่ใจว่า Royal Messengers ทั้งหมดของเมืองจะต้องมองหาด้วยรูปเหมือนของคุณ";
+		mes "เฮ้ เนื่องจากเราไม่มีเวลาเพียงพอ โปรดรับคำเชิญนี้ให้กับคุณ";
 		next;
 		mes "[Royal Messenger]";
-		mes "Make sure to bring the invitation with you. Don't forget!";
-		mes "Why don't you go right now? ^4d4dffI can teleport you there now if you want^000000.";
+		mes "คุณต้องเข้าร่วมงานเลี้ยง เข้าใจไหม? ^4d4dffคุณได้รับเชิญให้เป็นแขกพิเศษ^000000";
+		next;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : แขกรับเชิญพิเศษ?", bc_self;
+		mes "[Royal Messenger]";
+		mes "ผู้คนในวังจะคอยเติมรายละเอียดให้เจ้า";
+		mes "ในที่สุดฉันก็เป็นเพียงผู้ส่งสาร";
+		mes "ถึงแม้ว่างานเลี้ยงจะจัดขึ้นสักพักหนึ่ง แต่อย่าใช้เวลามากเกินไปในการไปถึงที่นั่น";
+		next;
+		mes "[Royal Messenger]";
+		mes "อย่าลืมนำคำเชิญติดตัวไปด้วย อย่าลืม!";
+		mes "ทำไมคุณไม่ไปตอนนี้ล่ะ? ^4d4dffฉันสามารถเทเลพอร์ตคุณไปที่นั่นได้ถ้าคุณต้องการ^000000";
 		getitem 6933,1;// Banquet_Invitation
 		setquest 7681;// Invitation to Royal Banquet
 		ep16_royal = 1;
 		next;
-		if (select( "I'll go on my own.", "I'll go right away." ) == 1) {
+		if (select( "ฉันจะไปเอง", "ฉันจะไปทันที" ) == 1) {
 			mes "[Royal Messenger]";
-			mes "You can visit the Prontera Palace.";
-			mes "You may show the invitation to the guard at the gate or";
-			mes "A servant in charge of the banquet.";
+			mes "ท่านสามารถเยี่ยมชมพระราชวังพรอนเทราได้";
+			mes "เจ้าอาจแสดงคำเชิญต่อยามที่ประตูหรือ";
+			mes "คนรับใช้ที่ดูแลงานเลี้ยง";
 			next;
 			mes "[Royal Messenger]";
-			mes "Since I have delivered the invitation to you, I shall wait for another one.";
-			mes "I hope you have a good time there, dear hero.";
+			mes "ในเมื่อฉันได้ส่งคำเชิญถึงคุณแล้ว ฉันจะรออีกครั้งหนึ่ง";
+			mes "ฉันหวังว่าคุณจะมีช่วงเวลาที่ดีที่นั่น ฮีโร่ที่รัก";
 			close;
 		}
 		mes "[Royal Messenger]";
-		mes "Let me teleport you there right away.";
-		mes "When you arrive, there will be a servant for reception. You can show the invitation then.";
+		mes "ให้ข้าเคลื่อนย้ายเจ้าไปที่นั่นเดี๋ยวนี้";
+		mes "เมื่อคุณมาถึงจะมีคนรับใช้คอยต้อนรับ คุณสามารถแสดงคำเชิญได้";
 		close2;
 		warp "prontera",156,327;
 		end;
 	case 1:
 		mes "[Royal Messenger]";
-		mes "Why are you still here?";
-		mes "What can I do for you?";
+		mes "ทำไมคุณยังอยู่ที่นี่?";
+		mes "มีอะไรให้ช่วยไหม?";
 		next;
-		if (select( "Send me to the Banquet Hall.", "I have lost the invitation." ) == 2) {
+		if (select( "ส่งฉันไปที่ห้องจัดเลี้ยง", "ฉันทำคำเชิญหาย" ) == 2) {
 			if (countitem(6933) < 1) {
 				mes "[Royal Messenger]";
-				mes "What a shame! What happened?";
-				mes "Well, since the message that you'll be there has already been sent there,";
-				mes "You may not really need the invitation anyways.";
+				mes "ช่างน่าเสียดาย! เกิดอะไรขึ้น?";
+				mes "เอาล่ะ เนื่องจากข้อความที่คุณจะไปที่นั่นได้ถูกส่งไปที่นั่นแล้ว";
+				mes "คุณอาจจะไม่ต้องการคำเชิญแล้วก็ได้";
 				next;
 				mes "[Royal Messenger]";
-				mes "When you go to the palace, the servant in charge will recognize you.";
-				mes "Don't worry, and you may go to the palace now.";
+				mes "เมื่อคุณไปที่วัง คนรับใช้ที่ดูแลจะจำคุณได้";
+				mes "อย่ากังวลไป และเจ้าไปพระราชวังได้แล้ว";
 				close;
 			}
 			mes "[Royal Messenger]";
-			mes "Eh? What is that you have in your pocket? It looks like an invitation to me.";
-			mes "I may have a tiny set of eyes, but I wouldn't miss it.";
+			mes "เอ๊ะ? คุณมีอะไรอยู่ในกระเป๋าของคุณ? มันดูเหมือนคำเชิญมาให้ฉัน";
+			mes " ฉันอาจมีดวงตาเล็ก ๆ แต่ฉันจะไม่พลาด";
 			next;
 			mes "[Royal Messenger]";
-			mes "Since you have found your invitation, let's get going! Hahahaha!";
+			mes " ในเมื่อคุณพบคำเชิญของคุณแล้ว ลุยเลย! ฮ่าฮ่าฮ่าฮ่า!";
 			close;
 		}
 		mes "[Royal Messenger]";
-		mes "Let me teleport you there right away.";
-		mes "When you arrive, there will be a servant for reception. You can show the invitation then.";
+		mes "ให้ข้าเคลื่อนย้ายเจ้าไปที่นั่นเดี๋ยวนี้";
+		mes "เมื่อคุณมาถึงจะมีคนรับใช้คอยต้อนรับ คุณสามารถแสดงคำเชิญได้";
 		close2;
 		warp "prontera",156,327;
 		end;
 	default:
 		mes "[Royal Messenger]";
-		mes "I have heard that you have attended the banquet safely.";
-		mes "I need to find the others and send them to the banquet as well.";
+		mes "ข้าได้ยินมาว่าท่านเข้าร่วมงานเลี้ยงอย่างปลอดภัย";
+		mes "ฉันต้องไปหาคนอื่นๆ และส่งพวกเขาไปงานเลี้ยงด้วย";
 		close2;
-		npctalk "I want to go home...", "", bc_self;
+		npctalk "ฉันอยากกลับบ้าน...", "", bc_self;
 		end;
 	}
 
@@ -127,7 +127,7 @@ OnTouch:
 	if (ep16_royal == 0 && BaseLevel > 99 && (ep13_ryu > 99 || ep13_start > 99))
 		npctalk "รอ! คุณต้องเป็น... " + strcharinfo(0) + ". ฉันมีเรื่องจะเล่าให้ฟัง!", "", bc_self;
 	else
-		npctalk "ฉันกำลังมองหาฮีโร่ที่กลับมาจากการสำรวจ...", "", bc_self;
+		npctalk "ข้ากำลังตามหาวีรบุรุษที่กลับมาจากการสำรวจ Foreing World อยู่...", "", bc_self;
 	end;
 }
 rachel,119,131,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ra	4_M_ZONDAOYAJI,5,5
@@ -143,18 +143,18 @@ lighthalzen,152,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4
 prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
 	if (ep16_royal == 1) {
 		mes "[Guard]";
-		mes "Here comes the hero!";
-		mes "The Banquet Hall is inside the palace. You may follow the passage to get there.";
-		mes "Let me send a message for the Chamberlain to find you.";
+		mes " ฮีโร่มาแล้ว!";
+		mes "Banquet Hall อยู่ภายในพระราชวัง คุณสามารถเดินไปตามทางเพื่อไปที่นั่นได้";
+		mes "ให้ฉันส่งข้อความไปหา Chamberlain เพื่อตามหาคุณ";
 		close;
 	}
-	npctalk "Welcome to the glorious Prontera Palace in the heart of Rune-Midgarts!", "Royal Guard#ep16_ect01", bc_self;// Royal Guard#ep16_ect01 only
+	npctalk "ยินดีต้อนรับสู่พระราชวัง Prontera อันรุ่งโรจน์ในใจกลาง Rune-Midgarts!", "Royal Guard#ep16_ect01", bc_self;// Royal Guard#ep16_ect01 only
 	end;
 
 OnTouch:
 	if (ep16_royal > 0) {
-		npctalk "Eternal glory to the hero of the Midgards!", "Royal Guard#ep16_ect01", bc_self;
-		npctalk "Eternal glory to the hero of the Midgards!", "Royal Guard#ep16_ect02", bc_self;
+		npctalk "ความรุ่งโรจน์ชั่วนิรันดร์แด่ฮีโร่แห่ง Midgards!", "Royal Guard#ep16_ect01", bc_self;
+		npctalk "ความรุ่งโรจน์ชั่วนิรันดร์แด่ฮีโร่แห่ง Midgards!", "Royal Guard#ep16_ect02", bc_self;
 	}
 	end;
 }
@@ -168,7 +168,7 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
-		npctalk "I've been waiting for you. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_01", bc_self;
+		npctalk "ฉันรอคุณอยู่ ท่าน " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_01", bc_self;
 	}
 	end;
 }
@@ -176,22 +176,22 @@ OnTouch:
 prt_cas,217,150,3	script	Chamberlain Bell#ep16_01	4_M_RUSMAN1,{
 	if (isbegin_quest(7681) == 1) {
 		mes "[Chamberlain Bell]";
-		mes "You must be Sir " + strcharinfo(0) + "... Am I right?";
-		mes "You are here at last.";
-		mes "I've been waiting for you.";
-		mes "I am glad that the invitation have found you in time.";
+		mes " คุณต้องเป็นท่านเซอร์ " + strcharinfo(0) + "... ฉันพูดถูกหรือเปล่า?";
+		mes "ในที่สุดคุณก็มาถึงแล้ว";
+		mes "ฉันรอคุณอยู่";
+		mes " ฉันดีใจที่คำเชิญได้พบคุณทันเวลา";
 		next;
 		mes "[Belle]";
-		mes "I am Chamberlain Bell Twilight. I will be at your service during your stay at the palace.";
-		mes "You can call me Belle.";
+		mes "ฉันชื่อ Chamberlain Bell Twilight ฉันจะคอยให้บริการคุณระหว่างที่คุณอยู่ที่วัง";
+		mes "เรียกฉันว่าเบลล์ก็ได้";
 		next;
 		mes "[Belle]";
-		mes "" + strcharinfo(0) + " since you have been invited as a special guest here, a separate guest room is prepared for you.";
-		mes "You may go upstairs and walk ^4d4dffstraight to the left corridor^000000.";
+		mes "" + strcharinfo(0) + " เนื่องจากคุณได้รับเชิญเป็นแขกพิเศษที่นี่ จึงได้เตรียมห้องพักแขกแยกต่างหากไว้สำหรับคุณ";
+		mes "คุณสามารถขึ้นไปชั้นบนแล้วเดิน ^4d4dffตรงไปยังทางเดินด้านซ้าย^000000";
 		next;
 		mes "[Belle]";
-		mes "Let me go ahead and mall all the preparations.";
-		mes "Come with me, please.";
+		mes "ให้ข้าไปเตรียมของทั้งหมดเลย";
+		mes "กรุณามากับฉันด้วย";
 		close2;
 		cloakonnpcself( "Chamberlain Bell#ep16_01" );
 		end;
@@ -210,7 +210,7 @@ prt_cas,163,163,0	script	#ep16_evt_02_on	HIDDEN_WARP_NPC,3,3,{
 OnTouch:
 	if (isbegin_quest(7681) == 1) {
 		cloakoffnpcself( "Chamberlain Bell#ep16_02" );
-		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_02", bc_self;
+		npctalk "ทางนี้. ท่าน " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_02", bc_self;
 	}
 	end;
 }
@@ -218,12 +218,12 @@ OnTouch:
 prt_cas,155,165,4	script	Chamberlain Bell#ep16_02	4_M_RUSMAN1,{
 	if (isbegin_quest(7681) == 1) {
 		mes "[Chamberlain Bell]";
-		mes "The special guestroom is prepared this way.";
-		mes "It is the ^4d4dfffirst room^000000 you'll see in there.";
+		mes "ห้องรับแขกพิเศษถูกจัดเตรียมไว้ด้วยวิธีนี้";
+		mes "มันคือ ^4d4dffห้องแรก^000000 ที่คุณเห็นในนั้น";
 		next;
 		mes "[Chamberlain Bell]";
-		mes "Let me tell you the story in detail after moving into the room.";
-		mes "Come this way.";
+		mes "ฉันจะเล่าเรื่องราวให้ฟังอย่างละเอียดหลังจากย้ายเข้ามาในห้อง";
+		mes "มาทางนี้สิ";
 		close2;
 		cloakonnpcself( "Chamberlain Bell#ep16_02" );
 	}
@@ -235,7 +235,7 @@ prt_cas_q,150,8,0	script	#ep16_evt_03_on	HIDDEN_WARP_NPC,1,1,{
 OnTouch:
 	if (isbegin_quest(7681) == 1) {
 		cloakoffnpcself( "Chamberlain Bell#ep16_03" );
-		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_03", bc_self;
+		npctalk "ทางนี้. ท่าน " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_03", bc_self;
 	}
 	end;
 }
@@ -243,13 +243,13 @@ OnTouch:
 prt_cas_q,135,10,4	script	Chamberlain Bell#ep16_03	4_M_RUSMAN1,{
 	if (isbegin_quest(7681) == 1) {
 		mes "[Chamberlain Bell]";
-		mes "Let me tell you about the detailed schedule inside.";
-		mes "Let's go inside.";
+		mes "ให้ฉันเล่ารายละเอียดกำหนดการข้างในให้ฟังหน่อย";
+		mes "เข้าไปข้างในกันเถอะ";
 	}
 	else {
 		mes "[Chamberlain Bell]";
-		mes "I'll be waiting for you here in this room at all times.";
-		mes "You may find me when you need a help.";
+		mes "ฉันจะรอคุณอยู่ที่นี่ในห้องนี้ตลอดเวลา";
+		mes "คุณอาจจะพบฉันเมื่อคุณต้องการความช่วยเหลือ";
 	}
 	close2;
 	cloakonnpcself( "Chamberlain Bell#ep16_03" );
