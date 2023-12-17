@@ -15878,6 +15878,10 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 	add_timer_func_list(pc_macro_detector_timeout, "pc_macro_detector_timeout");
 
+	/*==========================
+	 RESTORE ANIMATION BY AOSHINHO
+	============================*/
+	add_timer_func_list(pc_animation_force_sub, "pc_animation_force_sub");
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 
 	// 0=day, 1=night [Yor]
