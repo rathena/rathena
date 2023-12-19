@@ -5582,17 +5582,17 @@ BUILDIN_FUNC(rand)
 		min = script_getnum(st,2);
 		if( max < min )
 			SWAP(min, max);
-		range = max - min + 1;
+		range = max;
 	}
 	else
 	{// range
 		min = 0;
-		range = script_getnum(st,2);
+		range = script_getnum( st, 2 ) - 1;
 	}
 	if( range <= 1 )
 		script_pushint(st, min);
 	else
-		script_pushint(st, rnd_value(min, min + range));
+		script_pushint( st, rnd_value( min, range ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
