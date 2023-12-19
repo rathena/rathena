@@ -4,9 +4,10 @@
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
-#include "cbasetypes.hpp"
 #include <type_traits>
 #include <random>
+
+#include "cbasetypes.hpp"
 
 inline std::random_device device;
 inline std::mt19937 generator = std::mt19937(device());
