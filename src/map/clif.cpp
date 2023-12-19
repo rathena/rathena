@@ -21004,10 +21004,10 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 		return;
 	}
 
-	uint32 count = sd->inventory.u.items_inventory[idx_main].amount;
+	uint32 total_amount = sd->inventory.u.items_inventory[idx_main].amount;
 
 	for( uint16 idx : indices ){
-		count += sd->inventory.u.items_inventory[idx].amount;
+		total_amount += sd->inventory.u.items_inventory[idx].amount;
 	}
 
 	uint16 stack = sd->inventory_data[idx_main]->stack.amount;
@@ -21016,7 +21016,7 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 		stack = MAX_AMOUNT;
 	}
 
-	if( count >= stack ){
+	if( total_amount >= stack ){
 		clif_merge_item_ack( *sd, MERGE_ITEM_FAILED_MAX_COUNT );
 		return;
 	}
@@ -21031,9 +21031,9 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 		clif_delitem( sd, idx, amount, 0 );
 	}
 
-	sd->inventory.u.items_inventory[idx_main].amount = count;
+	sd->inventory.u.items_inventory[idx_main].amount = total_amount;
 
-	clif_merge_item_ack( *sd, MERGE_ITEM_SUCCESS, idx_main, count );
+	clif_merge_item_ack( *sd, MERGE_ITEM_SUCCESS, idx_main, total_amount );
 }
 
 /**
