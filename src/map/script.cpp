@@ -5585,6 +5585,7 @@ BUILDIN_FUNC(rand)
 
 		if( maximum < 0 ){
 			ShowError( "buildin_rand: range (%" PRId64 ") is negative.\n", maximum );
+			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -5594,11 +5595,13 @@ BUILDIN_FUNC(rand)
 
 	if( minimum > maximum ){
 		ShowError( "buildin_rand: minimum (%" PRId64 ") is bigger than maximum (%" PRId64 ").\n", minimum, maximum );
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( minimum == maximum ){
 		ShowError( "buildin_rand: minimum (%" PRId64 ") and maximum (%" PRId64 ") are equal. No randomness possible.\n", minimum, maximum );
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
