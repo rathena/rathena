@@ -20953,7 +20953,7 @@ void clif_merge_item_open( map_session_data& sd ){
 void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 	struct PACKET_CZ_REQ_MERGE_ITEM* p = (struct PACKET_CZ_REQ_MERGE_ITEM*)RFIFOP( fd, 0 );
 
-	int count = p->packetLength / sizeof( p->indices[0] );
+	int count = ( p->packetLength - sizeof( *p ) ) / sizeof( p->indices[0] );
 
 	// No item need to be merged
 	if( count < 2 ){
@@ -20999,7 +20999,7 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 		indices.insert( idx );
 	}
 
-	if( indices.size() < 2 ){
+	if( indices.empty() ){
 		clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
 		return;
 	}
