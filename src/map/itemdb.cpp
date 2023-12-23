@@ -2872,7 +2872,7 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
 		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
 
-		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// always return entry for rate 0 ('must' item)
+		if (entry->rate == 0 || rnd_chance<uint32>(entry->rate, random->total_rate))	// always return entry for rate 0 ('must' item)
 			return entry;
 	}
 
@@ -2956,9 +2956,9 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
 				tmp.refine = rnd_value( data->refineMinimum, data->refineMaximum );
 			}else if( data->refineMinimum > 0 ){
-				tmp.refine = rnd_value( data->refineMinimum, MAX_REFINE );
+				tmp.refine = rnd_value<uint16>( data->refineMinimum, MAX_REFINE );
 			}else if( data->refineMaximum > 0 ){
-				tmp.refine = rnd_value( 1, data->refineMaximum );
+				tmp.refine = rnd_value<uint16>( 1, data->refineMaximum );
 			}else{
 				tmp.refine = 0;
 			}
@@ -4456,7 +4456,7 @@ void s_random_opt_group::apply( struct item& item ){
 		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
 
-			if( rnd() % 10000 < option->chance ){
+			if ( rnd_chance<uint16>(option->chance, 10000) ) {
 				apply_sub( item.option[i], option );
 				break;
 			}
@@ -4481,7 +4481,7 @@ void s_random_opt_group::apply( struct item& item ){
 
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
 
-			if( rnd() % 10000 < option->chance ){
+			if ( rnd_chance<uint16>(option->chance, 10000) ){
 				apply_sub( item.option[i], option );
 			}
 		}

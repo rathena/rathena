@@ -1278,7 +1278,7 @@ int party_share_loot(struct party_data* p, map_session_data* sd, struct item* it
 			}
 
 			while (count > 0) { //Pick a random member.
-				i = rnd()%count;
+				i = rnd_value(0, count-1);
 
 				if (pc_additem(psd[i],item,item->amount,LOG_TYPE_PICKDROP_PLAYER)) { // Discard this receiver.
 					psd[i] = psd[count-1];

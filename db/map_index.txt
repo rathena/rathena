@@ -1236,6 +1236,10 @@ bl_depth1
 for_dun01
 for_dun02
 t_garden
+1@vrpop
+2@vrpop
+3@vrpop
+bl_depth2
 
 //======================================================================================
 // - Other/Extra maps -

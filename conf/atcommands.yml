@@ -365,6 +365,10 @@ Body:
     Help: |
       Params: [<item type>]
       Throws all your possession on the ground. No type specified will drop all items.
+  - Command: stockall
+    Help: |
+      Params: [<item type>]
+      Transfer items from cart to your inventory. No type specified will transfer all items.
   - Command: storeall
     Help: |
       Puts all your possessions in storage.
@@ -685,20 +689,20 @@ Body:
       Gives you the desired item.
   - Command: pvpon
     Help: |
-      Turns pvp on on the current map
+      Enables PvP on the current map
   - Command: pvpoff
     Help: |
-      Turns pvp off on the current map
+      Disables PvP on the current map
   - Command: gvgon
     Aliases:
       - gpvpon
     Help: |
-      Turns gvg on on the current map
+      Enables GvG on the current map
   - Command: gvgoff
     Aliases:
       - gpvpoff
     Help: |
-      Turns gvg off on the current map
+      Disables GvG on the current map
   - Command: agitstart
     Help: |
       Starts War of Emperium
