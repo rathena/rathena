@@ -66932,6 +66932,15 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Ponytail_Hair_Box);
+  - Id: 102605
+    AegisName: aegis_102605
+    Name: Costume Enchant Stone Box 33
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box33);
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)
