@@ -1927,7 +1927,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		break;
 	case LG_HESPERUSLIT:
 		if( pc_checkskill(sd,LG_PINPOINTATTACK) > 0 && sc && sc->getSCE(SC_BANDING) && sc->getSCE(SC_BANDING)->val2 > 5 )
-			skill_castend_damage_id(src,bl,LG_PINPOINTATTACK,rnd_value(1, pc_checkskill(sd,LG_PINPOINTATTACK)),tick,0);
+			skill_castend_damage_id(src,bl,LG_PINPOINTATTACK, rnd_value<uint16>(1, pc_checkskill(sd,LG_PINPOINTATTACK)),tick,0);
 		break;
 	case SR_DRAGONCOMBO:
 		sc_start(src,bl, SC_STUN, 1 + skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -2332,7 +2332,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 			uint16 autospl_skill_lv = it.lv ? it.lv : 1;
 
 			if (it.flag & AUTOSPELL_FORCE_RANDOM_LEVEL)
-				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
+				autospl_skill_lv = rnd_value<uint16>( 1, autospl_skill_lv );
 
 			int rate = (!sd->state.arrow_atk) ? it.rate : it.rate / 2;
 
@@ -2479,7 +2479,7 @@ int skill_onskillusage(map_session_data *sd, struct block_list *bl, uint16 skill
 		uint16 skill_lv = it.lv ? it.lv : 1;
 
 		if (it.flag & AUTOSPELL_FORCE_RANDOM_LEVEL)
-			skill_lv = rnd_value( 1, skill_lv ); //random skill_lv
+			skill_lv = rnd_value<uint16>( 1, skill_lv ); //random skill_lv
 
 		e_cast_type type = skill_get_casttype(skill);
 
@@ -2699,7 +2699,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			uint16 autospl_skill_id = it.id, autospl_skill_lv = it.lv ? it.lv : 1;
 
 			if (it.flag & AUTOSPELL_FORCE_RANDOM_LEVEL)
-				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
+				autospl_skill_lv = rnd_value<uint16>( 1, autospl_skill_lv );
 
 			int autospl_rate = it.rate;
 
