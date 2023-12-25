@@ -106,7 +106,7 @@ int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
 				int fy = ( dy != 0 && map_getcellp(mapdata,x0,y0+dy,CELL_CHKPASS) );
 				if( fx && fy )
 				{
-					if(rnd()&1)
+					if(rnd_chance(50, 100))
 						dx=0;
 					else
 						dy=0;

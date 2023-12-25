@@ -395,7 +395,7 @@ amatsu,243,202,3	script	Drama Teacher#ama	760,{
 		mes "The 'White Dryad' is a nymph of";
 		mes "cherry tree... It has been hard to";
 		mes "find a girl who can perform";
-		mes "as the 'White Drayd...'";
+		mes "as the 'White Dryad...'";
 		close;
 	}
 	emotion ET_SURPRISE;

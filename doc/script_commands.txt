@@ -4212,7 +4212,11 @@ invoking RID. It returns 1 if successful and 0 upon failure.
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
  5: All players in the map.
-    [ Parameters: "<map name>" ]
+    [ Parameters: "<map name>" ] 
+ 6: Battleground members of a specified battleground ID.
+    [ Parameters: <battleground id> ]
+ 7: Clan members of a specified clan ID.
+    [ Parameters: <clan id> ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
@@ -8414,6 +8418,14 @@ error message instead.
 This command requires packet version 2021-11-03 or newer.
 
 ---------------------------------------
+
+*opentips({<Tip ID>,{<char ID>}});
+
+Opens the tip box UI for the attached player or the given character ID.
+
+This command requires packet version 2017-11-22 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
@@ -10013,7 +10025,7 @@ Remove the quest of the given <ID> from the user's quest log.
 *changequest <ID>,<ID2>{,<char_id>};
 
 Remove quest of the given <ID> from the user's quest log.
-Add quest of the <ID2> to the the quest log, and the state is "active".
+Add quest <ID2> to the quest log, and the state is "active".
 
 ---------------------------------------
 
@@ -11117,7 +11129,7 @@ Use <color> hex code to set the color for this channel, if not defined, default
 channel color will be used.
 
 If <char_id> is defined, the channel will be a private channel and the player
-will be the the channel owner.
+will be the channel owner.
 
 Returns 1 on success.
 
@@ -11129,6 +11141,17 @@ Returns 1 on success.
 	 **/
 	channel_create("#rathena","[rAthena]");
 	channel_create("#vip","[VIP]","vipmemberonly");
+
+---------------------------------------
+
+*channel_join "<channel_name>"{, <char_id>};
+
+Join an existing channel.
+The command returns 0 upon success, and these values upon failure:
+ -1 : Invalid channel or player
+ -2 : Player already in channel
+ -3 : Player banned
+ -4 : Reached max limit
 
 ---------------------------------------
 
@@ -11357,5 +11380,28 @@ Note: Only works with classes that use the ranking system.
 *isdead({<account id>})
 
 Returns true if the player is dead else false.
+
+---------------------------------------
+
+*has_autoloot({<char_id>});
+
+This command checks whether a player configured autoloot.
+Returns current autoloot value on success.
+
+---------------------------------------
+
+*autoloot({<rate>{, <char_id>}});
+
+This command sets the rate of autoloot.
+If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+if the user has autoloot enabled it will default to 0 = 0% (disabled).
+Returns true on success and false on failure.
+
+Example:
+    autoloot();      // toggle on/off depend on existing autoloot
+    autoloot(0);     //   0.00% or off
+    autoloot(100);   //   1.00%
+    autoloot(3333);  //  33.33%
+    autoloot(10000); // 100.00%
 
 ---------------------------------------

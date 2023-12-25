@@ -585,7 +585,7 @@ S_Quest3:
 		mes "I don't know if it is the proper course or not, but anyway it's the last course of our training.";
 		next;
 		mes "[Boya]";
-		mes "First take a ship to to Byalan Island from Izlude!";
+		mes "First take a ship to Byalan Island from Izlude!";
 		mes "There is an underground cave. Go in and get to the bottom floor where you will find a historic underwater city..";
 		next;
 		mes "[Boya]";

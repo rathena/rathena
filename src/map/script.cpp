@@ -5582,17 +5582,17 @@ BUILDIN_FUNC(rand)
 		min = script_getnum(st,2);
 		if( max < min )
 			SWAP(min, max);
-		range = max - min + 1;
+		range = max;
 	}
 	else
 	{// range
 		min = 0;
-		range = script_getnum(st,2);
+		range = script_getnum( st, 2 ) - 1;
 	}
 	if( range <= 1 )
 		script_pushint(st, min);
 	else
-		script_pushint(st, rnd()%range + min);
+		script_pushint( st, rnd_value( min, range ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -5656,8 +5656,8 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 
 		// find a suitable map cell
 		do {
-			tx = rnd()%(x3-x2+1)+x2;
-			ty = rnd()%(y3-y2+1)+y2;
+			tx = rnd_value(x2, x3);
+			ty = rnd_value(y2, y3);
 			j++;
 		} while( map_getcell(m,tx,ty,CELL_CHKNOPASS) && j < max );
 
@@ -5815,8 +5815,8 @@ BUILDIN_FUNC(warpparty)
 
 			i = 0;
 			do {
-				x = rnd()%(mapdata->xs - 2) + 1;
-				y = rnd()%(mapdata->ys - 2) + 1;
+				x = rnd_value(1, mapdata->xs - 1);
+				y = rnd_value(1, mapdata->ys - 1);
 			} while ((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
 
 			if (i >= 1000) {
@@ -5881,8 +5881,8 @@ BUILDIN_FUNC(warpparty)
 					uint8 attempts = 10;
 
 					do {
-						nx = x0 + rnd()%(x1 - x0 + 1);
-						ny = y0 + rnd()%(y1 - y0 + 1);
+						nx = x0 + rnd_value(x0, x1);
+						ny = y0 + rnd_value(y0, y1);
 					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
 
 					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
@@ -10693,8 +10693,8 @@ BUILDIN_FUNC(savepoint)
 			x0 = x - dx, y0 = y - dy;
 		uint8 n = 10;
 		do {
-			x = x0 + rnd()%(x1-x0+1);
-			y = y0 + rnd()%(y1-y0+1);
+			x = rnd_value(x0, x1);
+			y = rnd_value(y0, y1);
 		} while (m != -1 && (--n) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
 	}
 
@@ -12536,7 +12536,7 @@ BUILDIN_FUNC(homunculus_evolution)
  *------------------------------------------*/
 BUILDIN_FUNC(homunculus_mutate)
 {
-	int homun_id;
+	uint16 homun_id;
 	TBL_PC *sd;
 
 	if( !script_rid2sd(sd) || sd->hd == NULL )
@@ -12545,7 +12545,7 @@ BUILDIN_FUNC(homunculus_mutate)
 	if(script_hasdata(st,2))
 		homun_id = script_getnum(st,2);
 	else
-		homun_id = 6048 + (rnd() % 4);
+		homun_id = rnd_value<uint16>(MER_EIRA, MER_ELEANOR);
 
 	if( sd->hd->homunculus.vaporize == HOM_ST_MORPH ) {
 		int m_class = hom_class2mapid(sd->hd->homunculus.class_);
@@ -13179,6 +13179,10 @@ void script_detach_rid(struct script_state* st)
  *	    [ Parameters: <x0>,<y0>,<x1>,<y1> ]
  *	5 : All players in the map.
  *	    [ Parameters: "<map name>" ]
+ *	6 : Battleground members of a specified battleground ID.
+ *	    [ Parameters: <battleground id> ]
+ *	7 : Clan members of a specified clan ID.
+ *	    [ Parameters: <clan id> ]
  *	Account ID: The specified account ID.
  * <flag>:
  *	0 : Players are always attached. (default)
@@ -13271,6 +13275,30 @@ BUILDIN_FUNC(addrid)
 				return SCRIPT_CMD_FAILURE;
 			}
 			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
+			break;
+		case 6:
+			if (script_getnum(st, 4) == 0) {
+				script_pushint(st, 0);
+				mapit_free(iter);
+				return SCRIPT_CMD_FAILURE;
+			}
+			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
+				if (!forceflag || !sd->st)
+					if ((sd->status.account_id != st->rid) && (sd->bg_id == script_getnum(st, 4))) //attached player already runs.
+						run_script(st->script, st->pos, sd->status.account_id, st->oid);
+			}
+			break;
+		case 7:
+			if (script_getnum(st, 4) == 0) {
+				script_pushint(st, 0);
+				mapit_free(iter);
+				return SCRIPT_CMD_FAILURE;
+			}
+			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
+				if (!forceflag || !sd->st)
+					if ((sd->status.account_id != st->rid) && (sd->status.clan_id == script_getnum(st, 4))) //attached player already runs.
+						run_script(st->script, st->pos, sd->status.account_id, st->oid);
+			}
 			break;
 		default:
 			mapit_free(iter);
@@ -24656,6 +24684,37 @@ BUILDIN_FUNC(channel_create) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// ===================================
+// *channel_join "<channel_name>"{, <char_id>};
+// Join an existing channel.
+// The command returns 0 upon success, and these values upon failure:
+// -1 : Invalid channel or player
+// -2 : Player already in channel
+// -3 : Player banned
+// -4 : Reached max limit
+// ===================================
+BUILDIN_FUNC(channel_join) {
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct Channel *channel = nullptr;
+	const char *chname = script_getstr(st, 2);
+
+	if (!(channel = channel_name2channel((char *)chname, nullptr, 0))) {
+		ShowError("buildin_channel_join: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, channel_join(channel, sd));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Set channel option
  * channel_setopt "<chname>",<option>,<value>;
@@ -26939,6 +26998,75 @@ BUILDIN_FUNC(macro_detector) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// ===================================
+// *has_autoloot({<char_id>});
+// This command checks whether a player configured autoloot.
+// Returns current autoloot value on success.
+// ===================================
+BUILDIN_FUNC(has_autoloot) {
+	map_session_data *sd;
+
+	if (!script_charid2sd(2, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->state.autoloot);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+// ===================================
+// *autoloot({<rate>{, <char_id>}});
+// This command sets the rate of autoloot.
+// If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+// if the user has autoloot enabled it will default to 0 = 0% (disabled).
+// Returns true on success and false on failure.
+// ===================================
+BUILDIN_FUNC(autoloot) {
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int rate;
+
+	if (script_hasdata(st, 2)) {
+		rate = script_getnum(st, 2);
+
+		if (rate < 0 || rate > 10000) {
+			ShowWarning("buildin_autoloot: Invalid rate value %d, should be between 0 ~ 10000.\n", rate);		
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		rate = (sd->state.autoloot > 0 ? 0 : 10000);
+	}
+
+	sd->state.autoloot = rate;
+	script_pushint(st, true);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(opentips){
+#if PACKETVER < 20171122
+	ShowError( "buildin_opentips: This command requires PACKETVER 20171122 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	map_session_data* sd;
+
+	if (!script_charid2sd(3, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( *sd, OUT_UI_TIP, script_getnum(st, 2) );
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27600,6 +27728,7 @@ struct script_function buildin_func[] = {
 
 	// Channel System
 	BUILDIN_DEF(channel_create,"ss?????"),
+	BUILDIN_DEF(channel_join, "s?"),
 	BUILDIN_DEF(channel_setopt,"sii"),
 	BUILDIN_DEF(channel_getopt,"si"),
 	BUILDIN_DEF(channel_setcolor,"si"),
@@ -27694,6 +27823,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
+	BUILDIN_DEF(has_autoloot,"?"),
+	BUILDIN_DEF(autoloot,"??"),
+	BUILDIN_DEF(opentips, "i?"),
 
 #include <custom/script_def.inc>
 
