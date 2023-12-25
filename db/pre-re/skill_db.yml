@@ -32348,6 +32348,7 @@ Body:
         - Level: 10
           Amount: 16
       SpCost: 30
+    Status: Sub_Weaponproperty
   - Id: 8203
     Name: MS_BOWLINGBASH
     Description: Bowling_Bash
@@ -32420,6 +32421,7 @@ Body:
         Time: 60000
     Requires:
       SpCost: 50
+    Status: Parrying
   - Id: 8205
     Name: MS_REFLECTSHIELD
     Description: Shield_Reflect
@@ -32453,6 +32455,7 @@ Body:
           Amount: 75
         - Level: 10
           Amount: 80
+    Status: ReflectShield
   - Id: 8206
     Name: MS_BERSERK
     Description: Frenzy
@@ -32467,6 +32470,7 @@ Body:
     Duration2: 15000
     Requires:
       SpCost: 100
+    Status: Berserk
   - Id: 8207
     Name: MA_DOUBLE
     Description: Double_Strafe
@@ -32595,6 +32599,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+    Status: Stun
   - Id: 8211
     Name: MA_SANDMAN
     Description: Sandman
@@ -32634,6 +32639,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+    Status: Sleep
   - Id: 8212
     Name: MA_FREEZINGTRAP
     Description: Freezing_Trap
@@ -32685,6 +32691,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+    Status: Freeze
   - Id: 8213
     Name: MA_REMOVETRAP
     Description: Remove_Trap
@@ -32851,6 +32858,7 @@ Body:
           Amount: 27
         - Level: 5
           Amount: 30
+    Status: Stop
   - Id: 8219
     Name: ML_DEFENDER
     Description: Defending_Aura
@@ -32868,6 +32876,7 @@ Body:
     Requires:
       SpCost: 30
       State: Shield
+    Status: Defender
   - Id: 8220
     Name: ML_AUTOGUARD
     Description: Guard
@@ -32903,6 +32912,7 @@ Body:
           Amount: 28
         - Level: 10
           Amount: 30
+    Status: AutoGuard
   - Id: 8221
     Name: ML_DEVOTION
     Description: Sacrifice
@@ -32945,6 +32955,7 @@ Body:
       IgnoreItemBonus: true
     Requires:
       SpCost: 25
+    Status: Devotion
   - Id: 8222
     Name: MER_MAGNIFICAT
     Description: Magnificat

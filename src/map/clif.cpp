@@ -4,6 +4,8 @@
 
 #include "clif.hpp"
 
+#include <unordered_set>
+
 #include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
@@ -20943,69 +20945,95 @@ void clif_merge_item_open( map_session_data& sd ){
 }
 
 /**
- * Process item merger
- * CZ 096E <size>.W { <index>.W }* (CZ_REQ_MERGE_ITEM)
+ * Process item merge request.
+ * 096E <size>.W { <index>.W }* (CZ_REQ_MERGE_ITEM)
  * @param fd
  * @param sd
  **/
-void clif_parse_merge_item_req(int fd, map_session_data* sd) {
-	struct s_packet_db *info = NULL;
-	unsigned short n = 0, indexes[MAX_INVENTORY] = { 0 }, i, j;
-	unsigned int count = 0;
-	struct item_data *id = NULL;
+void clif_parse_merge_item_req( int fd, map_session_data* sd ){
+	struct PACKET_CZ_REQ_MERGE_ITEM* p = (struct PACKET_CZ_REQ_MERGE_ITEM*)RFIFOP( fd, 0 );
 
-	nullpo_retv(sd);
-	if (!clif_session_isValid(sd))
-		return;
-	if (!(info = &packet_db[RFIFOW(fd,0)]) || info->len == 0)
-		return;
+	int count = ( p->packetLength - sizeof( *p ) ) / sizeof( p->indices[0] );
 
-	n = (RFIFOW(fd, info->pos[0]) - 4) / 2;
-
-	if (n < 2) { // No item need to be merged
-		clif_msg(sd, MERGE_ITEM_NOT_AVAILABLE);
+	// No item need to be merged
+	if( count < 2 ){
+		clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
 		return;
 	}
 
-	for (i = 0, j = 0; i < n; i++) {
-		uint16 idx = server_index( RFIFOW( fd, info->pos[1] + i * 2 ) );
+	uint16 idx_main = server_index( p->indices[0] );
+
+	if( idx_main >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( !clif_merge_item_check( sd->inventory_data[idx_main], &sd->inventory.u.items_inventory[idx_main] ) ){
+		clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
+		return;
+	}
+
+	// Ensure each index only comes once
+	std::unordered_set<uint16> indices;
+
+	for( int i = 1; i < count; i++ ){
+		uint16 idx = server_index( p->indices[i] );
 
 		if( idx >= MAX_INVENTORY ){
 			return;
 		}
 
-		if (!clif_merge_item_check((id = sd->inventory_data[idx]), &sd->inventory.u.items_inventory[idx]))
-			continue;
-		indexes[j] = idx;
-		if (j && id->nameid != sd->inventory_data[indexes[0]]->nameid) { // Only can merge 1 kind at once
-			clif_merge_item_ack( *sd, MERGE_ITEM_FAILED_NOT_MERGE );
+		if( sd->inventory_data[idx] == nullptr ){
 			return;
 		}
-		count += sd->inventory.u.items_inventory[idx].amount;
-		j++;
+
+		// Check if it is the same item
+		if( sd->inventory_data[idx]->nameid != sd->inventory_data[idx_main]->nameid ){
+			return;
+		}
+
+		if( !clif_merge_item_check( sd->inventory_data[idx], &sd->inventory.u.items_inventory[idx] ) ){
+			clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
+			return;
+		}
+
+		indices.insert( idx );
 	}
 
-	if (n != j || !(id = sd->inventory_data[indexes[0]])) {
-		clif_msg(sd, MERGE_ITEM_NOT_AVAILABLE);
+	if( indices.empty() ){
+		clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
 		return;
 	}
 
-	if (count >= (id->stack.amount ? id->stack.amount : MAX_AMOUNT)) {
+	uint32 total_amount = sd->inventory.u.items_inventory[idx_main].amount;
+
+	for( uint16 idx : indices ){
+		total_amount += sd->inventory.u.items_inventory[idx].amount;
+	}
+
+	uint16 stack = sd->inventory_data[idx_main]->stack.amount;
+
+	if( stack == 0 ){
+		stack = MAX_AMOUNT;
+	}
+
+	if( total_amount >= stack ){
 		clif_merge_item_ack( *sd, MERGE_ITEM_FAILED_MAX_COUNT );
 		return;
 	}
 
 	// Merrrrge!!!!
-	for (i = 1; i < n; i++) {
-		unsigned short idx = indexes[i], amt = sd->inventory.u.items_inventory[idx].amount;
-		log_pick_pc(sd, LOG_TYPE_MERGE_ITEM, -amt, &sd->inventory.u.items_inventory[idx]);
-		memset(&sd->inventory.u.items_inventory[idx], 0, sizeof(sd->inventory.u.items_inventory[0]));
-		sd->inventory_data[idx] = NULL;
-		clif_delitem(sd, idx, amt, 0);
-	}
-	sd->inventory.u.items_inventory[indexes[0]].amount = count;
+	for( uint16 idx : indices ){
+		uint16 amount = sd->inventory.u.items_inventory[idx].amount;
 
-	clif_merge_item_ack( *sd, MERGE_ITEM_SUCCESS, indexes[0], count );
+		log_pick_pc( sd, LOG_TYPE_MERGE_ITEM, -amount, &sd->inventory.u.items_inventory[idx] );
+		memset( &sd->inventory.u.items_inventory[idx], 0, sizeof( sd->inventory.u.items_inventory[0] ) );
+		sd->inventory_data[idx] = nullptr;
+		clif_delitem( sd, idx, amount, 0 );
+	}
+
+	sd->inventory.u.items_inventory[idx_main].amount = total_amount;
+
+	clif_merge_item_ack( *sd, MERGE_ITEM_SUCCESS, idx_main, total_amount );
 }
 
 /**
@@ -23561,11 +23589,11 @@ void clif_parse_laphine_upgrade( int fd, map_session_data* sd ){
 			item->refine = rnd_value( upgrade->resultRefineMinimum, upgrade->resultRefineMaximum );
 		}else{
 			// Otherwise it can only be upgraded until the maximum, but not downgraded
-			item->refine = rnd_value( item->refine, upgrade->resultRefineMaximum );
+			item->refine = rnd_value<uint16>( item->refine, upgrade->resultRefineMaximum );
 		}
 	}else if( upgrade->resultRefineMinimum > 0 ){
 		// No maximum has been specified, so it can be anything between minimum and MAX_REFINE
-		item->refine = rnd_value( upgrade->resultRefineMinimum, MAX_REFINE );
+		item->refine = rnd_value<uint16>( upgrade->resultRefineMinimum, MAX_REFINE );
 	}
 
 	// Log retrieving the item again -> with the new options

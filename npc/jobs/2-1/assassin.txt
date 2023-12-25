@@ -833,7 +833,7 @@ OnTouch_:
 			mes "Now, we shall test you once more! Keep in mind, you must answer 9 questions out of 10 correctly. Remember I am doing you a favor...";
 			next;
 			mes "[The Anonymous One]";
-			mes "You must answer 9 questions out of 10 correctly. If you miss more then one question, you can never become an Assassin.";
+			mes "You must answer 9 questions out of 10 correctly. If you miss more than one question, you can never become an Assassin.";
 			next;
 			mes "[The Anonymous One]";
 			mes "Okay,";

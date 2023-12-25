@@ -403,8 +403,8 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	// update session data
 	sd->account_id = acc.account_id;
-	sd->login_id1 = rnd() + 1;
-	sd->login_id2 = rnd() + 1;
+	sd->login_id1 = rnd_value(1u, UINT32_MAX);
+	sd->login_id2 = rnd_value(1u, UINT32_MAX);
 	safestrncpy(sd->lastlogin, acc.lastlogin, sizeof(sd->lastlogin));
 	sd->sex = acc.sex;
 	sd->group_id = acc.group_id;
@@ -845,8 +845,6 @@ bool LoginServer::initialize( int argc, char* argv[] ){
 	msg_config_read(login_config.msgconf_name);
 	login_lan_config_read(login_config.lanconf_name);
 	//end config
-
-	rnd_init();
 
 	do_init_loginclif();
 	do_init_loginchrif();
