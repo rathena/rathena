@@ -1298,8 +1298,8 @@ lasagna,230,127,3	script	Vigilante Aglio#doram09	HIDDEN_WARP_NPC,{
 }
 
 izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
-	npctalk "Here are the shrimps, carrots and catnip!", "", bc_self;
-	switch( select( "Buy", "Sell", "Cancel" ) ) {
+	npctalk "นี่กุ้ง แครอท และหญ้าชนิดหนึ่ง!", "", bc_self;
+	switch( select( "ซื้อ", "ขาย", "ยกเลิก" ) ) {
 	case 1:
 		callshop "doram_shrimp",1;
 		end;
@@ -1307,7 +1307,7 @@ izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
 		callshop "doram_shrimp",2;
 		end;
 	case 3:
-		npctalk "Come back again soon!", "", bc_self;
+		npctalk "กลับมาอีกครั้งเร็วๆ นี้!", "", bc_self;
 		end;
 	}
 }
@@ -1347,23 +1347,23 @@ yuno,205,116,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#yu	
 
 izlude,195,213,5	script	Con-Chliina Crewman#doi	4_M_MERCAT1,{
 	mes "[Con-Chliina Crewman]";
-	mes "From the continent of Midgard to Far-Star!";
+	mes "จากทวีป Midgard สู่ Far-Star!";
 	next;
 	mes "[Con-Chliina Crewman]";
 	if (Class == Job_Summoner)
 		.@cost = 200;
 	else
 		.@cost = 2000;
-	mes "Only ^0000cd" + .@cost + " Zenies^000000 to the port city Lasagna.";
+	mes "เพียง ^0000cd" + .@cost + " Zeny^000000 ไปยังเมือง Lasagna.";
 	next;
-	if (select( "To Lasagna - " + .@cost + "z", "Cancel" ) == 2) {
+	if (select( "ไป Lasagna - " + .@cost + "z", "ยกเลิก" ) == 2) {
 		mes "[Con-Chliina Crewman]";
-		mes "I see.";
+		mes "ฉันเห็น.";
 		close;
 	}
 	if (Zeny < .@cost) {
 		mes "[Con-Chliina Crewman]";
-		mes "Not enough? How about checking how much he has?";
+		mes "ไม่พอ? ลองเช็คดูว่าเขามีเงินเท่าไหร่?";
 		close;
 	}
 	Zeny = Zeny - .@cost;

@@ -17,56 +17,56 @@
 
 prontera,121,77,3	script	Phantasmagorika Spokesperson#prt::spokesperson	4_F_ZONDAGIRL,4,4,{
 	mes "[Spokesperson]";
-	mes "Good day.";
-	mes "Rekenber is recruiting adventurers for an excavation project that takes place in Phantasmagorika, the newly discovered ruins in Juperos.";
+	mes "ขอให้เป็นวันดีๆ";
+	mes "Rekenber กำลังรับสมัครนักผจญภัยสำหรับโครงการขุดค้นที่เกิดขึ้นใน Phantasmagorika ซากปรักหักพังที่เพิ่งค้นพบใน Juperos";
 	next;
 	mes "[Spokesperson]";
-	mes "If you're interested, just come as you are.";
-	mes "Everything you need for the excavation will be provided by Rekenber.";
+	mes "ถ้าสนใจก็เชิญตามที่คุณเป็น";
+	mes "ทุกสิ่งที่คุณต้องการสำหรับการขุดค้นจะถูกจัดเตรียมโดย Rekenber";
 	next;
 	mes "[Spokesperson]";
-	mes "Join us for adventure at the newly discovered ruins in Juperos,";
-	mes "an ancient city whose scientific knowledge has fueled the development of modern civilization.";
+	mes "ร่วมผจญภัยไปกับพวกเราที่ซากปรักหักพังที่เพิ่งค้นพบใน Juperos";
+	mes "เมืองโบราณที่มีความรู้ทางวิทยาศาสตร์เป็นเชื้อเพลิงในการพัฒนาอารยธรรมสมัยใหม่";
 	next;
 	mes "[Spokesperson]";
-	mes "If you'd like to join, then form an excavation team and fill out your application.";
+	mes "ถ้าคุณต้องการเข้าร่วม ให้ตั้งทีมขุดค้นและกรอกใบสมัครของคุณ";
 	next;
-	switch( select( "Excavation team? Application?", "Phantasmagorika?", "Bye." ) ) {
+	switch( select( "ทีมขุดค้น? สมัคร?", "Phantasmagorika?", "ขอบคุณ" ) ) {
 	case 1:
 		mes "[Spokesperson]";
-		mes "We're recruiting teams of excavators for the research of Phantasmagorika, the newly discovered ruins.";
-		mes "This project requires expertise in various fields, so we've decided to recruit";
-		mes "teams of excavators instead of individuals.";
+		mes " เรากำลังรับสมัครทีมขุดเพื่อการวิจัย Phantasmagorika ซากปรักหักพังที่เพิ่งค้นพบ";
+		mes "โครงการนี้ต้องใช้ความเชี่ยวชาญในด้านต่างๆ ดังนั้นเราจึงcutinสินใจรับสมัคร";
+		mes "ทีมขุดแทนตัวบุคคล";
 		next;
 		mes "[Spokesperson]";
-		mes "You can register for the excavation project,";
-		mes "and help us however you can.";
-		mes "Registered excavators receive special benefits and commodities";
+		mes "คุณสามารถลงทะเบียนสำหรับโครงการขุดค้นได้";
+		mes "และช่วยพวกเราเท่าที่คุณสามารถทำได้";
+		mes "รถขุดที่จดทะเบียนได้รับสิทธิประโยชน์พิเศษและสินค้าโภคภัณฑ์";
 		next;
 		mes "[Spokesperson]";
-		mes "in exchange for information that they discover in the ruins. We'll use the information to research the ruins.";
-		mes "Even if you fail to find useful information, we'll reward you just for your participation.";
+		mes "เพื่อแลกกับข้อมูลที่พวกเขาค้นพบในซากปรักหักพัง เราจะใช้ข้อมูลนั้นเพื่อวิจัยซากปรักหักพัง";
+		mes "แม้ว่าคุณจะไม่พบข้อมูลที่เป็นประโยชน์ เราจะตอบแทนคุณเพียงสำหรับการเข้าร่วม";
 		next;
 		mes "[Spokesperson]";
-		mes "If you want to join the project, please go submit your application to the Eden Group.";
+		mes "ถ้าคุณต้องการเข้าร่วมโครงการ โปรดไปส่งใบสมัครของคุณไปที่ Eden Group";
 		close;
 	case 2:
 		mes "[Spokesperson]";
-		mes "An ancient site was just discovered in Juperos.";
-		mes "It was hidden at the end of a long tunnel.";
+		mes "โบราณสถานเพิ่งถูกค้นพบในจูเปรอส";
+		mes " มันถูกซ่อนอยู่ที่ปลายอุโมงค์อันยาวไกล";
 		next;
 		mes "[Spokesperson]";
-		mes "Rekenber has named the site ^4d4dffPhantasmagorika^000000";
-		mes "and commenced an excavation.";
+		mes "Rekenber ได้ตั้งชื่อไซต์นี้ ^4d4dffPhantasmagorika^000000";
+		mes "และเริ่มการขุดค้น";
 		next;
 		mes "[Spokesperson]";
-		mes "We're hoping to find more advanced mado gears and a higher level of scientific knowledge than what was ever discovered in the Juperos region.";
+		mes "เราหวังว่าจะพบอุปกรณ์ Mado ขั้นสูงและความรู้ทางวิทยาศาสตร์ในระดับที่สูงกว่าที่เคยค้นพบในภูมิภาค Juperos";
 		close;
 	case 3:
 		mes "[Spokesperson]";
-		mes "Rekenber is looking for talented adventurers for the excavation of Phantasmagorika.";
-		mes "Feel free to join us anytime!";
-		mes "We need you!";
+		mes "Rekenber กำลังมองหานักผจญภัยที่มีพรสวรรค์ในการขุดค้น Phantasmagorika";
+		mes "เข้าร่วมกับเราได้ทุกเวลาเลย!";
+		mes "เราต้องการคุณ!";
 		close;
 	}
 	end;
@@ -77,7 +77,7 @@ OnTouch_:
 		end;
 	setd "." + .@npc$, 1;
 	sleep 3000;
-	npctalk "Spokesperson: Recruiting adventurers for the excavation of Phantasmagorika.";
+	npctalk "Spokesperson: รับสมัครนักผจญภัยเพื่อขุดค้น Phantasmagorika";
 	sleep 17000;
 	setd "." + .@npc$, 0;
 	end;
@@ -99,27 +99,27 @@ OnTouch:
 	if (ep15_1_atnad == 0 && BaseLevel > 139) {
 		cutin "laime_evenor01.bmp",2;
 		mes "[Secretary Lime Evenor]";
-		mes "Welcome back,";
-		mes "" + strcharinfo(0) + ". I don't know how we can survive without you.";
+		mes "ยินดีต้อนรับกลับมา";
+		mes "" + strcharinfo(0) + ". ฉันไม่รู้ว่าเราจะอยู่รอดได้อย่างไรหากไม่มีคุณ";
+		next;
+		mes "[Secretary Lime Evenor]";;
+		mes "คุณเคยได้ยินไหม?";
+		mes "โบราณสถานเพิ่งถูกค้นพบในจูเปรอส";
+		mes "Rekenber กำลังรับสมัครนักผจญภัยเพื่อขุดค้นสถานที่";
 		next;
 		mes "[Secretary Lime Evenor]";
-		mes "Have you heard?";
-		mes "An ancient site was just discovered in Juperos.";
-		mes "Rekenber is recruiting adventurers for the excavation of the place,";
+		mes "และเราcutinสินใจเข้าร่วมแล้ว";
+		mes "กัปตันต้องการพบคุณเกี่ยวกับเรื่องนั้น";
 		next;
-		mes "[Secretary Lime Evenor]";
-		mes "and we've decided to join it.";
-		mes "The Captain wants to see you about that.";
-		next;
-		select("I didn't know you had a captain.");
+		select("ฉันไม่รู้ว่าคุณมีกัปตัน");
 		cutin "laime_evenor02.bmp",2;
 		mes "[Secretary Lime Evenor]";
-		mes "What, did you think I was running this gig alone?";
-		mes "The Mistre--I mean, the Captain is rarely excited about anything, and this is one of those rare occasions. You should meet her.";
+		mes "อะไรนะ คุณคิดว่าฉันจัดงานนี้คนเดียวเหรอ?";
+		mes "Mistre--ฉันหมายความว่า กัปตันไม่ค่อยตื่นเต้นกับสิ่งใดๆ และนี่เป็นหนึ่งในโอกาสที่หายาก คุณควรพบเธอ";
 		next;
 		cutin "laime_evenor01.bmp",2;
 		mes "[Secretary Lime Evenor]";
-		mes "Her office is to the far left on the second floor.";
+		mes "ห้องทำงานของเธออยู่ทางซ้ายสุดบนชั้นสอง";
 		ep15_1_atnad = 1;
 		setquest 7607;	// Eden Group Leader
 		close3;
@@ -129,76 +129,75 @@ OnTouch:
 
 moc_para01,38,175,5	script	Secretary Lime Evenor#evtat01	4_F_EDEN_OFFICER,{
 	if (checkweight(1301,3) == 0) {
-		mes "- You are carrying too many items to proceed with the quest. -";
+		mes "- คุณบรรทุกสิ่งของมากเกินไปที่จะทำภารกิจต่อ -";
 		close;
 	}
-	mes "[Secretary Lime Evenor]";
+	mes "[Secretary Lime Evenor]";;
 	if (countitem(6219) < 1 && countitem(22508) < 1) {
 		cutin "laime_evenor01.bmp",2;
-		mes "You need to Join the Eden Group first.";
+		mes "คุณต้องเข้าร่วม Eden Group ก่อน";
 		close3;
 	}
 	if (BaseLevel < 140) {
 		cutin "laime_evenor01.bmp",2;
-		mes "I also come up here sometimes to attend some business.";
-		mes "Actually the central room is mine.";
+		mes "ฉันก็มาที่นี่บางครั้งเพื่อไปทำธุระด้วย";
+		mes "จริงๆ แล้วห้องกลางเป็นของฉัน";
 		close3;
 	}
 	switch(ep15_1_atnad) {
 	case 0:
 		cutin "laime_evenor01.bmp",2;
-		mes "Welcome back,";
-		mes "" + strcharinfo(0) + ". I don't know how we can survive without you.";
+		mes "ยินดีต้อนรับกลับมา";
+		mes "" + strcharinfo(0) + ". ฉันไม่รู้ว่าเราจะอยู่รอดได้อย่างไรหากไม่มีคุณ";
 		next;
-		mes "[Secretary Lime Evenor]";
-		mes "Have you heard?";
-		mes "An ancient site was just discovered in Juperos.";
-		mes "Rekenber is recruiting adventurers for the excavation of the place,";
+		mes "[Secretary Lime Evenor]";;
+		mes "คุณเคยได้ยินไหม?";
+		mes "โบราณสถานเพิ่งถูกค้นพบในจูเปรอส";
+		mes "Rekenber กำลังรับสมัครนักผจญภัยเพื่อขุดค้นสถานที่";
 		next;
-		mes "[Secretary Lime Evenor]";
-		mes "and we've decided to join it.";
-		mes "The Captain wants to see you about that.";
+		mes "[Secretary Lime Evenor]";;
+		mes "และเราcutinสินใจเข้าร่วมแล้ว";
+		mes "กัปตันต้องการพบคุณเกี่ยวกับเรื่องนั้น";
 		next;
-		select("I didn't know you had a captain.");
+		select("ฉันไม่รู้ว่าคุณมีกัปตัน");
 		cutin "laime_evenor02.bmp",2;
-		mes "[Secretary Lime Evenor]";
-		mes "What, did you think I was running this gig alone?";
-		mes "The Mistre--I mean, the Captain is rarely excited about anything, and this is one of those rare occasions. You should meet her.";
+		mes "[Secretary Lime Evenor]";;
+		mes "อะไรนะ คุณคิดว่าฉันจัดงานนี้คนเดียวเหรอ?";
+		mes "Mistre--ฉันหมายความว่า กัปตันไม่ค่อยตื่นเต้นกับสิ่งใดๆ และนี่เป็นหนึ่งในโอกาสที่หายาก คุณควรพบเธอ";
 		next;
 		cutin "laime_evenor01.bmp",2;
-		mes "[Secretary Lime Evenor]";
-		mes "Her office is to the far left on the second floor.";
+		mes "[Secretary Lime Evenor]";;
+		mes "ห้องทำงานของเธออยู่ทางซ้ายสุดบนชั้นสอง";
 		ep15_1_atnad = 1;
 		setquest 7607;// Eden Group Leader
 		close3;
 	case 1:
 	case 2:
 		cutin "laime_evenor03.bmp",2;
-		mes "The Captain is waiting for you.";
-		mes "Her office is to the far left from here.";
-		mes "I'll see you again later.";
+		mes "กัปตันกำลังรอคุณอยู่";
+		mes "ห้องทำงานของเธออยู่ทางซ้ายสุดจากที่นี่";
+		mes "แล้วพบกันใหม่";
 		close3;
 	case 3:
 		cutin "laime_evenor03.bmp",2;
-		mes "It seems everything went smoothly with the Captain.";
-		mes "Let's move to the central room, shall we?";
-		mes "We have a guest waiting";
-		mes "to talk us about something.";
+		mes "ดูเหมือนทุกอย่างจะราบรื่นกับกัปตัน";
+		mes "เราย้ายไปที่ห้องกลางกันเถอะ?";
+		mes "เรามีแขกคนหนึ่งกำลังรอที่จะพูดคุยกับเราเกี่ยวกับบางสิ่งบางอย่าง";
 		close3;
 	case 4:
 		cutin "laime_evenor01.bmp",2;
-		mes "I'll be here rooting for you.";
-		mes "Don't worry about support.";
-		mes "I'll see that you get everything you need.";
+		mes "ฉันจะคอยให้กำลังใจคุณอยู่ตรงนี้";
+		mes "อย่ากังวลกับการสนับสนุน";
+		mes "ฉันจะเห็นว่าคุณได้รับทุกสิ่งที่คุณต้องการ";
 		close3;
 	default:
 		cutin "laime_evenor01.bmp",2;
-		mes "The excavation seems to be going well so far.";
-		mes "The item Dr. Atnad was interested in is also on Rekenber's radar; it should be appraised highly.";
+		mes "การขุดค้นดูเหมือนจะไปได้ดี";
+		mes "สิ่งของที่ Dr. Atnad สนใจนั้นก็อยู่ในเรดาร์ของ Rekenber เช่นกัน มันควรจะได้รับการประเมินในระดับสูง";
 		next;
-		mes "[Secretary Lime Evenor]";
-		mes "Thank you for helping the doctors focus on their work.";
-		mes "Keep up the good work.";
+		mes "[Secretary Lime Evenor]";;
+		mes "ขอบคุณที่ช่วยให้แพทย์มีสมาธิกับงานของพวกเขา";
+		mes "ทำความดีต่อไป";
 		close3;
 	}
 
@@ -209,166 +208,166 @@ OnInit:
 
 moc_para01,174,165,3	script	Lime Evenor#atnd02	4_F_EDEN_OFFICER,{
 	if (checkweight(1301,3) == 0) {
-		mes "- You are carrying too many items to proceed with the quest. -";
+		mes "- คุณบรรทุกสิ่งของมากเกินไปที่จะทำภารกิจต่อ -";
 		close;
 	}
 	mes "[Lime]";
 	switch(ep15_1_atnad) {
 	case 0:
 		cutin "laime_evenor01.bmp",2;
-		mes "This room is for employees only.";
-		mes "If you need a place to rest, please use the next room.";
+		mes "ห้องนี้สำหรับพนักงานเท่านั้น";
+		mes "ถ้าคุณต้องการสถานที่พักผ่อน กรุณาใช้ห้องถัดไป";
 		break;
 	case 1:
 	case 2:
 		cutin "laime_evenor01.bmp",2;
-		mes "The Captain is in the next room.";
-		mes "It's to the left.";
-		mes "Please talk to the Captain first.";
+		mes "กัปตันอยู่ในห้องถัดไป";
+		mes "มันอยู่ทางซ้าย";
+		mes "กรุณาคุยกับกัปตันก่อน";
 		break;
 	case 3:
 		cutin "laime_evenor01.bmp",2;
-		mes "" + strcharinfo(0) + ". Please come this way.";
-		mes "Let me introduce you to";
-		mes "Archaeologist Aures of the Atnad Excavation Team.";
+		mes "" + strcharinfo(0) + ". กรุณามาทางนี้";
+		mes "ให้ฉันแนะนำให้คุณรู้จัก";
+		mes "นักโบราณคดี Aures แห่งทีมขุดค้น Atnad";
 		next;
 		mes "[Lime]";
-		mes "Dr. Aures, this is " + strcharinfo(0) + ", who will assist you in Phantasmagorika.";
+		mes "Dr. Aures นี่คือ " + strcharinfo(0) + " ที่จะช่วยเหลือคุณใน Phantasmagorika";
 		next;
 		cutin "verus_aures.bmp",0;
 		mes "[Aures]";
-		mes "Nice to meet you. My name is Aures.";
-		mes "Every member of my team is old and feeble. We really can use some young blood like you.";
-		mes "Welcome to the team.";
+		mes "ยินดีที่ได้รู้จัก ฉันชื่อ ออเรส";
+		mes "สมาชิกทุกคนในทีมของฉันแก่และอ่อนแอ เราสามารถใช้เลือดเด็กเช่นคุณได้จริงๆ";
+		mes "ยินดีต้อนรับสู่ทีม";
 		next;
 		cutin "laime_evenor01.bmp",2;
 		mes "[Lime]";
-		mes "It seems everything went smoothly with the Captain.";
-		mes "Your job is simple:";
-		mes "just help Dr. Aures and his Atnad Excavation Team.";
+		mes "ดูเหมือนทุกอย่างจะราบรื่นกับกัปตัน";
+		mes "งานของคุณนั้นเรียบง่าย:";
+		mes "ช่วย Dr. Aures และ Atnad Excavation Team ของเขาหน่อย";
 		next;
 		mes "[Lime]";
-		mes "I expect you'll spend most of your time running errands";
-		mes "and doing things that require physical stamina since all the members of the team are past their prime.";
+		mes "ฉันคาดว่าคุณจะใช้เวลาส่วนใหญ่ไปกับการทำธุระ";
+		mes "และทำสิ่งที่ต้องการความแข็งแกร่งทางกายภาพ เนื่องจากสมาชิกทุกคนในทีมได้ผ่านช่วงรุ่งโรจน์ไปแล้ว";
 		next;
 		cutin "verus_aures.bmp",0;
 		mes "[Aures]";
-		mes "That's right. All of us retired a long time ago.";
-		mes "This excavation will probably be the last excavation we do before we die.";
+		mes "ถูกต้อง พวกเราทุกคนเกษียณไปนานแล้ว";
+		mes "การขุดค้นนี้อาจจะเป็นการขุดครั้งสุดท้ายก่อนที่เราจะตาย";
 		next;
 		mes "[Aures]";
-		mes "If Lime didn't help us, we would have changed our minds at the entrance to that place.";
+		mes "ถ้า Lime ไม่ช่วยเรา เราคงเปลี่ยนใจที่ทางเข้าสถานที่นั้นแล้ว";
 		next;
 		cutin "laime_evenor01.bmp",2;
 		mes "[Lime]";
-		mes "Please don't say that.";
-		mes "You're the most experienced archaeologists I've met.";
-		mes "By the way, how's Dr. Atnad?";
+		mes "ได้โปรดอย่าพูดแบบนั้น";
+		mes "คุณเป็นนักโบราณคดีที่มีประสบการณ์มากที่สุดที่ฉันเคยพบมา";
+		mes "ว่าแต่ ดร.แอทนาด เป็นยังไงบ้าง?";
 		next;
 		cutin "verus_aures.bmp",0;
 		mes "[Aures]";
-		mes "Atnad? Don't get me started.";
-		mes "He's as stubborn as his daughter, if not more.";
-		mes "She liquidated her inheritance and left when she couldn't hear from her father.";
+		mes "Atnad? อย่าให้ฉันเริ่มเลย";
+		mes "เขาเป็นคนดื้อรั้นเหมือนกับลูกสาวของเขา ถ้ามากกว่านั้น";
+		mes "เธอได้ชำระมรดกของเธอและจากไปเมื่อเธอไม่ได้ยินข่าวคราวจากพ่อของเธอ";
 		next;
 		mes "[Aures]";
-		mes "He didn't keep touch with his family for years. When he found out his house was sold,";
-		mes "he lashed out and went off the grid,";
-		mes "and he's still angry at her.";
+		mes "เขาไม่ได้ติดต่อกับครอบครัวมาหลายปีแล้ว เมื่อเขารู้ว่าบ้านของเขาถูกขายไปแล้ว";
+		mes "เขาฟาดออกไปและออกจากกริด";
+		mes "และเขายังคงโกรธเธออยู่";
 		next;
 		cutin "laime_evenor01.bmp",2;
 		mes "[Lime]";
-		mes "And we're stuck in the middle of their mind game.";
+		mes "และเราติดอยู่ท่ามกลางเกมความคิดของพวกเขา";
 		next;
-		switch( select( "Who are they?", "Cut to the chase, please." ) ) {
+		switch( select( "พวกเขาเป็นใคร", "กรุณาcutinบทไล่ล่าซะ" ) ) {
 		case 1:
 			cutin "verus_aures.bmp",0;
 			mes "[Aures]";
-			mes "Let me tell you. When Lime came to us,";
-			mes "we all wondered why a famous company like Eden Group would support a ragtag bunch of old men like us.";
-			mes "Then we found out they're father and daughter.";
+			mes " ให้ฉันเล่าให้ฟังหน่อย เมื่อ Lime มาหาพวกเรา";
+			mes "เราทุกคนสงสัยว่าทำไมบริษัทชื่อดังอย่าง Eden Group ถึงสนับสนุนกลุ่มคนแก่อย่างเรา";
+			mes "แล้วเราก็พบว่าพวกเขาเป็นพ่อและลูกสาว";
 			next;
-			select("Father and daughter? Who?");
+			select("พ่อและลูกสาว? WHO?");
 			cutin "laime_evenor03.bmp",2;
 			mes "[Lime]";
-			mes "Oh, didn't the Captain tell you?";
-			mes "Her father is the leader of the Atnad Excavation Team.";
+			mes "โอ้ กัปตันไม่ได้บอกคุณเหรอ?";
+			mes " พ่อของเธอเป็นหัวหน้าทีมขุดค้น Atnad";
 			next;
 			mes "[Lime]";
-			mes "When I first suggested we should join the project,";
-			mes "she wanted to support the Atnad Excavation Team.";
-			mes "At first I was thinking more along the lines of merging the team.";
+			mes "เมื่อฉันเสนอแนะครั้งแรกว่าเราควรเข้าร่วมโครงการ";
+			mes "เธอต้องการสนับสนุนทีมขุด Atnad";
+			mes "ทีแรกฉันคิดมากขึ้นเกี่ยวกับการรวมทีม";
 			next;
 			mes "[Lime]";
-			mes "Rekenber takes care of the financial aspects of the project, while we handle the manpower.";
-			mes "Then I realized the leader of the team is the father of my boss's.";
+			mes "Rekenber ดูแลด้านการเงินของโครงการ ในขณะที่เราจัดการกำลังคน";
+			mes "แล้วฉันก็รู้ว่าหัวหน้าทีมคือพ่อของเจ้านายของฉัน";
 			next;
 			cutin "laime_evenor04.bmp",2;
 			mes "[Lime]";
-			mes "I want to support the team to the best of my ability,";
-			mes "but their rocky relationship is getting in the way.";
+			mes " ฉันต้องการสนับสนุนทีมอย่างสุดความสามารถ";
+			mes "แต่ความสัมพันธ์ที่หินของพวกเขากำลังขวางทางอยู่";
 			next;
 			cutin "verus_aures.bmp",0;
 			mes "[Aures]";
-			mes "Ian, I mean the old Atnad, welcomed your proposal with open arms.";
-			mes "Then he hit the roof when he realized your captain was his daughter.";
+			mes "เอียน ฉันหมายถึง Atnad ผู้เฒ่า ยินดีต้อนรับข้อเสนอของคุณอย่างเปิดกว้าง";
+			mes "แล้วเขาก็กระแทกหลังคาเมื่อรู้ว่ากัปตันของคุณคือลูกสาวของเขา";
 			next;
 			mes "[Aures]";
-			mes "I don't understand the hangup.";
-			mes "I mean she's his daughter, for the goodness's sake.";
-			mes "I think you should mediate between the two.";
+			mes "ฉันไม่เข้าใจเรื่องการวางสาย";
+			mes " ฉันหมายถึงเธอเป็นลูกสาวของเขา เพื่อเห็นแก่ความดี";
+			mes " ฉันคิดว่าคุณควรจะเป็นสื่อกลางระหว่างทั้งสอง";
 			next;
 			cutin "laime_evenor01.bmp",2;
 			mes "[Lime]";
-			mes "I hope this collaboration will be a chance for them to reconcile with each other.";
-			mes "Well, we should move to the site now.";
+			mes "ฉันหวังว่าความร่วมมือนี้จะเป็นโอกาสสำหรับพวกเขาที่จะคืนดีกัน";
+			mes "เอาล่ะ เราควรย้ายไปที่ไซต์แล้ว";
 			break;
 		case 2:
 			cutin "laime_evenor03.bmp",2;
 			mes "[Lime]";
-			mes "Indeed. Before we go, let's talk about what we can expect at the site.";
+			mes "จริงสิ ก่อนที่เราจะไป มาคุยกันถึงสิ่งที่เราคาดหวังได้ที่ไซต์นี้";
 			break;
 		}
 		next;
 		cutin "laime_evenor03.bmp",2;
 		mes "[Lime]";
-		mes "Aures, Luke will come with you.";
-		mes "" + strcharinfo(0) + ", you can go to Phantasmagorika whenever you're ready.";
+		mes "ออเรส ลุคจะมากับเจ้า";
+		mes "" + strcharinfo(0) + ", คุณสามารถไปที่ Phantasmagorika ได้ทุกเมื่อที่คุณพร้อม";
 		next;
 		mes "[Lime]";
-		mes "It's accessible through Juperos,";
-		mes "so move to Juno first, then get to the entrance to Juperos from there.";
+		mes "สามารถเข้าถึงได้ผ่านทาง Juperos";
+		mes "จงย้ายไปที่ Juno ก่อน จากนั้นไปที่ทางเข้า Juperos จากที่นั่น";
 		next;
 		cutin "verus_aures.bmp",0;
 		mes "[Aures]";
-		mes "Rekenber has been promoting this project across the continent,";
-		mes "and has succeeded in bringing in more people than you can imagine.";
-		mes "Just look for a big crowd, and you won't miss the place. See you when you get there.";
+		mes "Rekenber ได้ส่งเสริมโครงการนี้ไปทั่วทวีป";
+		mes "และประสบความสำเร็จในการนำผู้คนเข้ามามากกว่าที่คุณจะจินตนาการได้";
+		mes "แค่มองหาฝูงชนจำนวนมาก แล้วคุณจะไม่พลาดที่นี่ เจอกันเมื่อไปถึงที่นั่น";
 		next;
 		cutin "laime_evenor01.bmp",2;
 		mes "[Lime]";
-		mes "Everything should be easy enough for you,";
-		mes "though you'll have to register with Rekenber for the excavation.";
-		mes "You can register as an individual excavator, but I'd prefer if you do it as a member of the Atnad Excavation Team instead.";
+		mes "ทุกสิ่งควรจะง่ายพอสำหรับคุณ";
+		mes "ถึงแม้ว่าคุณจะต้องลงทะเบียนกับ Rekenber เพื่อดำเนินการขุดค้น";
+		mes "คุณสามารถลงทะเบียนเป็นรถขุดส่วนบุคคลได้ แต่ฉันอยากให้คุณทำในฐานะสมาชิกของ Atnad Excavation Team แทน";
 		next;
 		mes "[Lime]";
-		mes "Once your registration goes through, you can start working for the Atnad Excavation Team,";
-		mes "and everything else will take care of itself.";
-		mes "Thank you for doing this.";
+		mes "เมื่อการลงทะเบียนของคุณเสร็จสิ้น คุณสามารถเริ่มทำงานให้กับ Atnad Excavation Team ได้";
+		mes "และทุกสิ่งทุกอย่างจะดูแลตัวเอง";
+		mes "ขอบคุณที่ทำสิ่งนี้";
 		ep15_1_atnad = 4;
 		completequest 7608;// Atnad Excavation Team 1
 		setquest 7609;// Atnad Excavation Team 2
 		break;
 	case 4:
 		cutin "laime_evenor01.bmp",2;
-		mes "The excavation site is connected to Juperos,";
-		mes "so you should move to Juperos first.";
-		mes "The excavation project has been promoted widely, so you won't have a problem finding the representative.";
+		mes "สถานที่ขุดค้นเชื่อมต่อกับจูเปรอส";
+		mes "ดังนั้นคุณควรย้ายไปที่ Juperos ก่อน";
+		mes "โครงการขุดค้นได้รับการส่งเสริมอย่างกว้างขวาง ดังนั้นคุณจะไม่มีปัญหาในการหาตัวแทน";
 		break;
 	default:
 		cutin "laime_evenor02.bmp", 2;
-		mes "How's the situation at the excavation site?";
-		mes "Sigh, why can't Ian just forgive his daughter?";
+		mes "สถานการณ์ที่ขุดค้นเป็นอย่างไรบ้าง";
+		mes "เฮ้อ ทำไมเอียนจะยกโทษให้ลูกสาวของเขาไม่ได้";
 		break;
 	}
 	close3;
@@ -378,28 +377,28 @@ moc_para01,172,164,5	script	Archaeologist Aures#atnd02	4_M_OLDSCHOLAR,{
 	if (ep15_1_atnad < 4) {
 		cutin "laime_evenor01.bmp",2;
 		mes "[Lime]";
-		mes "I'm sorry, but he's our guest.";
-		mes "And this office is for Eden Group employees only.";
-		mes "The dormitory is the next room.";;
+		mes "ฉันขอโทษ แต่เขาเป็นแขกของเรา";
+		mes "และสำนักงานนี้มีไว้สำหรับพนักงานของ Eden Group เท่านั้น";
+		mes "หอพักคือห้องถัดไป";
 	}
 	else if (ep15_1_atnad == 4) {
 		cutin "verus_aures.bmp",0;
 		mes "[Aures]";
-		mes "I'll see you again at the excavation site, yeah?";
-		mes "The Eden Group has hired an escort for me, so I'll be traveling with him.";
-		mes "See you at the site.";
+		mes "เจอกันใหม่ที่แหล่งขุดค้น ใช่ไหม?";
+		mes "The Eden Group ได้ว่าจ้างผู้คุ้มกันให้ฉัน ดังนั้นฉันจะเดินทางไปกับเขา";
+		mes "เจอกันที่ไซต์งาน";
 	}
 	else {
 		cutin "verus_aures.bmp",0;
 		mes "[Aures]";
-		mes "Oh, you came.";
-		mes "I came here often.";
-		mes "I feel sorry for Luke, for he has to travel so often because of me.";
+		mes "อ้าว คุณมาแล้ว";
+		mes "ฉันมาที่นี่บ่อยๆ";
+		mes "ฉันรู้สึกเสียใจกับลุค เพราะเขาต้องเดินทางบ่อยเพราะฉัน";
 		next;
 		mes "[Aures]";
-		mes "It's great to have a place where I can come anytime I want. It's been years since I had a place I could call home.";
-		mes "Hah hah hah!";
-		mes "I'll see you at the excavation site.";
+		mes "การมีสถานที่ที่ฉันสามารถมาได้ทุกเวลาที่ต้องการเป็นเรื่องดี เป็นเวลาหลายปีแล้วที่ฉันมีสถานที่ที่เรียกได้ว่าเป็นบ้าน";
+		mes "ฮ่า ฮ่า ฮ่า!";
+		mes "เจอกันที่สถานที่ขุดค้น";
 	}
 	close3;
 }
@@ -408,25 +407,25 @@ moc_para01,178,167,3	script	Luke Lapez#atnd03	4_M_EDEN_GUARDER,{
 	mes "[Luke]";
 	if (ep15_1_atnad < 4) {
 		cutin "looke_rapez02.bmp",0;
-		mes "Hey, Lime.";
-		mes "We have a guest.";
+		mes "เฮ้, Lime.";
+		mes "เรามีแขก";
 		mes "...";
 	}
 	else if (ep15_1_atnad == 4) {
 		cutin "looke_rapez02.bmp",0;
 		mes "...";
-		mes "I've got nothing to say to you.";
+		mes " ฉันไม่มีอะไรจะพูดกับคุณ";
 	}
 	else {
 		cutin "looke_rapez04.bmp",0;
-		mes "Hmm...";
+		mes "อืม...";
 	}
 	close3;
 }
 
 ver_eju,114,40,4	script	Manager Michelle#atnd05	4_M_LGTGUARD,{
 	if (checkweight(1301,3) == 0) {
-		mes "- You are carrying too many items to proceed with the quest. -";
+		mes "- คุณบรรทุกสิ่งของมากเกินไปที่จะทำภารกิจต่อ -";
 		close;
 	}
 	mes "[Manager Michelle]";

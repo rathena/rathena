@@ -59,6 +59,7 @@ OnHour18:
 OnInit:
 	bindatcmd("reitem",strnpcinfo(0)+"::OnCommand_reitem",0,99);
 	bindatcmd("usegm",strnpcinfo(0)+"::OnCommand_usegm",0,99);
+	bindatcmd("botusegm",strnpcinfo(0)+"::OnCommand_botusegm",0,99);
 end;
 
 OnCommand_reitem:
@@ -69,6 +70,15 @@ OnCommand_usegm:
 	input .@cmd$;
 	atcommand .@cmd$;
 	end;
+	
+OnCommand_botusegm:
+	mes "เริ่มคำสั่ง สำหรับ bot";
+	next;
+	input .@cmd$;
+	atcommand .@cmd$;
+	close;
+	end;
+
 }
 
 // Function CTRO-Server
