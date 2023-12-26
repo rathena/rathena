@@ -3,7 +3,7 @@
 
 #include "timer.hpp"
 
-#include <algorithm>
+#include <utility>
 
 #include <stdlib.h>
 #include <string.h>

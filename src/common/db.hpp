@@ -42,7 +42,7 @@
 #ifndef DB_HPP
 #define DB_HPP
 
-#include <algorithm>
+#include <utility>
 
 #include <stdarg.h>
 
