@@ -1172,7 +1172,7 @@ void bg_queue_join_multi(const char *name, map_session_data *sd, std::vector <ma
 			break;
 		}
 
-		bool r = rnd() % 2 != 0;
+		bool r = rnd_chance(50, 100);
 		std::vector<map_session_data *> *team = r ? &queue->teamb_members : &queue->teama_members;
 
 		if (queue->state == QUEUE_STATE_ACTIVE) {

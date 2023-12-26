@@ -2603,7 +2603,7 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 
 	nullpo_ret(ud);
 
-	if(dir > 7)
+	if(dir >= DIR_MAX || dir <= DIR_CENTER)
 		return 1;
 
 	ud->to_x = tx;
@@ -2630,7 +2630,7 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 			int i;
 
 			for( i = 0; i < 12; i++ ) {
-				int k = rnd()%8; // Pick a Random Dir
+				int k = rnd_value<int>(DIR_NORTH, DIR_NORTHEAST); // Pick a Random Dir
 
 				dx = -dirx[k] * 2;
 				dy = -diry[k] * 2;
