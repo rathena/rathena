@@ -2954,11 +2954,11 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 		if( itemdb_isequip( data->nameid ) ){
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
-				tmp.refine = rnd_value( data->refineMinimum, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, data->refineMaximum ) );
 			}else if( data->refineMinimum > 0 ){
-				tmp.refine = rnd_value<uint16>( data->refineMinimum, MAX_REFINE );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, MAX_REFINE ) );
 			}else if( data->refineMaximum > 0 ){
-				tmp.refine = rnd_value<uint16>( 1, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( 1, data->refineMaximum ) );
 			}else{
 				tmp.refine = 0;
 			}
