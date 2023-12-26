@@ -18197,11 +18197,13 @@ BUILDIN_FUNC(addmonsterdrop)
 	}
 
 	uint16 c = 0;
+	bool existing = false;
 
 	for (uint16 i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 		if (mob->dropitem[i].nameid > 0) {
 			if (mob->dropitem[i].nameid == item_id) { // If it equals item_id we update that drop
 				c = i;
+				existing = true;
 				break;
 			}
 			continue;
@@ -18235,20 +18237,14 @@ BUILDIN_FUNC(addmonsterdrop)
 	}
 
 	// Fill in the slot with the item and rate
+	if (existing) {
+		itm->removeMonsterDrop(mob->id, mob->dropitem[c].rate);
+	}
 	mob->dropitem[c].nameid = item_id;
 	mob->dropitem[c].rate = rate;
 	mob->dropitem[c].steal_protected = steal_protected > 0;
 	mob->dropitem[c].randomopt_group = group;
-	item_data::drop_chance drop{static_cast<uint32>(rate), mob->id};
-	itm->mobs.insert(
-		std::lower_bound(
-			itm->mobs.begin(),
-			itm->mobs.end(),
-			drop,
-			[](const auto &drop, const auto &it) {
-				return drop.chance > it.chance;
-			}),
-		drop);
+	itm->addMonsterDrop(mob->id, mob->dropitem[c].rate);
 
 	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
@@ -18267,44 +18263,38 @@ BUILDIN_FUNC(delmonsterdrop)
 {
 	std::shared_ptr<s_mob_db> mob;
 
-	if(script_isstring(st, 2))
+	if (script_isstring(st, 2)) {
 		mob = mob_db.find(mobdb_searchname(script_getstr(st,2)));
-	else
+		if (!mob) {
+			ShowError("delmonsterdrop: bad mob name given %s\n", script_getstr(st, 2));
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
 		mob = mob_db.find(script_getnum(st,2));
+		if (!mob) {
+			ShowError("delmonsterdrop: bad mob id given %d\n", script_getnum(st, 2));
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 
-	t_itemid item_id=script_getnum(st,3);
+	t_itemid item_id = script_getnum(st,3);
+	std::shared_ptr<item_data> itm = item_db.find(item_id);
 
-	if(!item_db.exists(item_id)){
-		ShowError("delmonsterdrop: Nonexistant item %u requested.\n", item_id );
+	if (!itm) {
+		ShowError("delmonsterdrop: Nonexistant item %u requested.\n", item_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (!mob) {
-		if (script_isstring(st, 2))
-			ShowWarning("delmonsterdrop: bad mob name given %s\n", script_getstr(st, 2));
-		else
-			ShowWarning("delmonsterdrop: bad mob id given %d\n", script_getnum(st, 2));
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	unsigned char i;
-	for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-		if(mob->dropitem[i].nameid != item_id) {
+	for (unsigned char i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		if (mob->dropitem[i].nameid != item_id) {
 			continue;
 		}
+		itm->removeMonsterDrop(mob->id, mob->dropitem[i].rate);
 		mob->dropitem[i].nameid = 0;
 		mob->dropitem[i].rate = 0;
 		mob->dropitem[i].steal_protected = false;
 		mob->dropitem[i].randomopt_group = 0;
 
-		std::shared_ptr<item_data> itm = item_db.find(item_id);
-		if (itm) {
-			auto it = std::find_if(itm->mobs.begin(), itm->mobs.end(), [&mob](const auto &drop) {
-				return drop.mob_id == mob->id;
-			});
-			if (it != itm->mobs.end())
-				itm->mobs.erase(it);
-		}
 
 		script_pushint(st,1);
 		return SCRIPT_CMD_SUCCESS;

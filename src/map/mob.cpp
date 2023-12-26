@@ -6284,11 +6284,7 @@ static void mob_drop_ratio_adjust(void){
 					id->maxchance = rate; // item has bigger drop chance or sold in shops
 				}
 
-				item_data::drop_chance drop{static_cast<uint32>(rate), pair.second->id};
-
-				id->mobs.insert(std::lower_bound(id->mobs.begin(), id->mobs.end(), drop, [](const auto &drop, const auto &it) {
-					return drop.chance > it.chance;
-				}), drop);
+				id->addMonsterDrop(mob_id, rate);
 			}
 
 			mob->dropitem[j].rate = rate;
@@ -6611,18 +6607,7 @@ void mob_reload_itemmob_data(void) {
 			struct item_data *id = itemdb_search(pair.second->dropitem[d].nameid);
 			if (!id)
 				continue;
-
-			item_data::drop_chance drop{pair.second->dropitem[d].rate, pair.second->id};
-
-			id->mobs.insert(
-				std::lower_bound(
-					id->mobs.begin(),
-					id->mobs.end(),
-					drop,
-					[](const auto &drop, const auto &it) {
-						return drop.chance < it.chance;
-					}),
-				drop);
+			id->addMonsterDrop(pair.second->id, pair.second->dropitem[d].rate);
 		}
 	}
 }

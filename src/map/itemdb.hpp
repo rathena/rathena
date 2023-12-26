@@ -2263,7 +2263,7 @@ struct item_data
 		uint32 chance;
 		uint32 mob_id;
 	};
-	std::vector<drop_chance> mobs; // Sorted vector that holds the mobs that have the highest drop rate for this item.
+	std::vector<drop_chance> mobs; // Sorted vector of mobs that drop this item.
 	struct script_code *script;	//Default script for everything.
 	struct script_code *equip_script;	//Script executed once when equipping.
 	struct script_code *unequip_script;//Script executed once when unequipping.
@@ -2321,6 +2321,8 @@ struct item_data
 
 	bool isStackable();
 	int inventorySlotNeeded(int quantity);
+	void addMonsterDrop(uint32 mob_id, uint32 chance);
+	int removeMonsterDrop(uint32 mob_id, uint32 chance);
 };
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {

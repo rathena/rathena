@@ -8371,7 +8371,7 @@ ACMD_FUNC(whodrops)
 		if (id->mobs.empty()) {
 			strcpy(atcmd_output, msg_txt(sd,1286)); //  - Item is not dropped by mobs.
 			clif_displaymessage(fd, atcmd_output);
-			return 0;
+			continue;
 		}
 		sprintf(atcmd_output, msg_txt(sd,1287), MAX_SEARCH); //  - Common mobs with highest drop chance (only max %d are listed):
 		clif_displaymessage(fd, atcmd_output);
