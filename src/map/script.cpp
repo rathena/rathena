@@ -5566,33 +5566,51 @@ BUILDIN_FUNC(return)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Returns a random number from 0 to <range>-1.
-/// Or returns a random number from <min> to <max>.
-/// If <min> is greater than <max>, their numbers are switched.
-/// rand(<range>) -> <int>
-/// rand(<min>,<max>) -> <int>
+/// Returns a random number.
+/// rand(<range>) -> <int64> in the mathematical range [0, <range - 1>]
+/// rand(<min>,<max>) -> <int64> in the mathematical range [<min>, <max>]
 BUILDIN_FUNC(rand)
 {
-	int range;
-	int min;
+	int64 minimum;
+	int64 maximum;
 
-	if( script_hasdata(st,3) )
-	{// min,max
-		int max = script_getnum(st,3);
-		min = script_getnum(st,2);
-		if( max < min )
-			SWAP(min, max);
-		range = max;
+	// min,max
+	if( script_hasdata( st, 3 ) ){
+		minimum = script_getnum64( st, 2 );
+		maximum = script_getnum64( st, 3 );
+
+		if( minimum > maximum ){
+			ShowWarning( "buildin_rand: minimum (%" PRId64 ") is bigger than maximum (%" PRId64 ").\n", minimum, maximum );
+			// rnd_value already fixes this by swapping minimum and maximum automatically
+		}
+	// range
+	}else{
+		minimum = 0;
+		maximum = script_getnum64( st, 2 );
+
+		if( maximum < 0 ){
+			ShowError( "buildin_rand: range (%" PRId64 ") is negative.\n", maximum );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		// The range version is exclusive maximum
+		maximum -= 1;
+
+		if( maximum < 1 ){
+			ShowError( "buildin_rand: range (%" PRId64 ") is too small. No randomness possible.\n", maximum );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
-	else
-	{// range
-		min = 0;
-		range = script_getnum( st, 2 ) - 1;
+
+	if( minimum == maximum ){
+		ShowError( "buildin_rand: minimum (%" PRId64 ") and maximum (%" PRId64 ") are equal. No randomness possible.\n", minimum, maximum );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
 	}
-	if( range <= 1 )
-		script_pushint(st, min);
-	else
-		script_pushint( st, rnd_value( min, range ) );
+
+	script_pushint64( st, rnd_value( minimum, maximum ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
