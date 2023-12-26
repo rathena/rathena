@@ -17949,6 +17949,11 @@ BUILDIN_FUNC(npcshopitem)
 		}
 		int32 price = script_getnum(st, i + 1);
 		if (price < 0) {
+			if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+				ShowError("builtin_npcshopitem: Invalid price in shop '%s'.\n", nd->exname);
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
 			price = id->value_buy;
 		}
 
@@ -18008,12 +18013,11 @@ BUILDIN_FUNC(npcshopadditem)
 			}
 
 			int32 price = script_getnum(st, i + 1);
-			int32 stock = script_getnum(st, i + 2);
-
 			if (price < 0) {
 				price = id->value_buy;
 			}
 
+			int32 stock = script_getnum(st, i + 2);
 			if( stock < -1 ){
 				ShowError( "builtin_npcshopadditem: Invalid stock amount in marketshop '%s'.\n", nd->exname );
 				script_pushint( st, 0 );
@@ -18045,6 +18049,11 @@ BUILDIN_FUNC(npcshopadditem)
 		}
 		int32 price = script_getnum(st, i + 1);
 		if (price < 0) {
+			if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+				ShowError("builtin_npcshopadditem: Invalid price in shop '%s'.\n", nd->exname);
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
 			price = id->value_buy;
 		}
 		nd->u.shop.shop_item[n].nameid = nameid;
@@ -23819,7 +23828,12 @@ BUILDIN_FUNC(npcshopupdate) {
 		if (nd->u.shop.shop_item[i].nameid == nameid) {
 			if (price != 0) {
 				if (price < 0) {
-					auto id = item_db.find(nameid);
+					if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+						ShowError("builtin_npcshopupdate: Invalid price in shop '%s'.\n", nd->exname);
+						script_pushint(st, 0);
+						return SCRIPT_CMD_FAILURE;
+					}
+					std::shared_ptr<item_data> id = item_db.find(nameid);
 					if (!id) {
 						ShowError("buildin_npcshopupdate: Item ID %u does not exist.\n", nameid);
 						script_pushint(st, 0);
