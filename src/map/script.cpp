@@ -5567,7 +5567,7 @@ BUILDIN_FUNC(return)
 }
 
 /// Returns a random number.
-/// rand(<range>) -> <int64> in the mathematical range [0, <range>[
+/// rand(<range>) -> <int64> in the mathematical range [0, <range - 1>]
 /// rand(<min>,<max>) -> <int64> in the mathematical range [<min>, <max>]
 BUILDIN_FUNC(rand)
 {
@@ -5578,6 +5578,11 @@ BUILDIN_FUNC(rand)
 	if( script_hasdata( st, 3 ) ){
 		minimum = script_getnum64( st, 2 );
 		maximum = script_getnum64( st, 3 );
+
+		if( minimum > maximum ){
+			ShowWarning( "buildin_rand: minimum (%" PRId64 ") is bigger than maximum (%" PRId64 ").\n", minimum, maximum );
+			// rnd_value already fixes this by swapping minimum and maximum automatically
+		}
 	// range
 	}else{
 		minimum = 0;
@@ -5591,12 +5596,12 @@ BUILDIN_FUNC(rand)
 
 		// The range version is exclusive maximum
 		maximum -= 1;
-	}
 
-	if( minimum > maximum ){
-		ShowError( "buildin_rand: minimum (%" PRId64 ") is bigger than maximum (%" PRId64 ").\n", minimum, maximum );
-		st->state = END;
-		return SCRIPT_CMD_FAILURE;
+		if( maximum < 1 ){
+			ShowError( "buildin_rand: range (%" PRId64 ") is too small. No randomness possible.\n", maximum );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	if( minimum == maximum ){
