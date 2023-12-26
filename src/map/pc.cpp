@@ -8642,7 +8642,7 @@ int pc_need_status_point(map_session_data* sd, int type, int val)
 	high = low + val;
 
 	if ( val < 0 )
-		SWAP(low, high);
+		std::swap(low, high);
 
 	for ( ; low < high; low++ )
 		sp += PC_STATUS_POINT_COST(low);
@@ -8800,7 +8800,7 @@ int pc_need_trait_point(map_session_data* sd, int type, int val)
 	int high = low + val, sp = 0;
 
 	if (val < 0)
-		SWAP(low, high);
+		std::swap(low, high);
 
 	for (; low < high; low++)
 		sp += 1;

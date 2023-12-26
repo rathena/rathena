@@ -145,8 +145,8 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 
 	dx = (x1 - x0);
 	if (dx < 0) {
-		SWAP(x0, x1);
-		SWAP(y0, y1);
+		std::swap(x0, x1);
+		std::swap(y0, y1);
 		dx = -dx;
 	}
 	dy = (y1 - y0);
@@ -198,7 +198,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
 
-#define swap_ptrcast_pathnode(a, b) swap_ptrcast(struct path_node *, a, b)
+#define swap_ptrcast_pathnode(a, b) std::swap(a, b)
 
 static void heap_push_node(struct node_heap *heap, struct path_node *node)
 {

@@ -763,9 +763,9 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 		return 0;
 
 	if (x1 < x0)
-		SWAP(x0, x1);
+		std::swap(x0, x1);
 	if (y1 < y0)
-		SWAP(y0, y1);
+		std::swap(y0, y1);
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -942,9 +942,9 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 		return 0;
 
 	if ( x1 < x0 )
-		SWAP(x0, x1);
+		std::swap(x0, x1);
 	if ( y1 < y0 )
-		SWAP(y0, y1);
+		std::swap(y0, y1);
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -1021,9 +1021,9 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	y1 = center->y + range;
 
 	if ( x1 < x0 )
-		SWAP(x0, x1);
+		std::swap(x0, x1);
 	if ( y1 < y0 )
-		SWAP(y0, y1);
+		std::swap(y0, y1);
 
 	if( dx == 0 || dy == 0 ) {
 		//Movement along one axis only.
@@ -1254,9 +1254,9 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 
 	//The two fors assume mx0 < mx1 && my0 < my1
 	if ( mx0 > mx1 )
-		SWAP(mx0, mx1);
+		std::swap(mx0, mx1);
 	if ( my0 > my1 )
-		SWAP(my0, my1);
+		std::swap(my0, my1);
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -1416,9 +1416,9 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 
 	//The following assumes mx0 < mx1 && my0 < my1
 	if (mx0 > mx1)
-		SWAP(mx0, mx1);
+		std::swap(mx0, mx1);
 	if (my0 > my1)
-		SWAP(my0, my1);
+		std::swap(my0, my1);
 
 	//Apply width to the path by turning 90 degrees
 	mx0 -= abs( range * dirx[( dir + 2 ) % DIR_MAX] );

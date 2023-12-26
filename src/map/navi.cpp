@@ -78,7 +78,7 @@ static enum directions walk_choices [3][3] =
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
 
-#define swap_ptrcast_pathnode(a, b) swap_ptrcast(struct path_node *, a, b)
+#define swap_ptrcast_pathnode(a, b) std::swap(a, b)
 
 static void heap_push_node(struct node_heap *heap, struct path_node *node)
 {
