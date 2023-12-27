@@ -5708,8 +5708,8 @@ BUILDIN_FUNC(areawarp)
 			y3 = 0;
 		} else if( x3 && y3 ) {
 			// normalize x3/y3 coordinates
-			if( x3 < x2 ) SWAP(x3,x2);
-			if( y3 < y2 ) SWAP(y3,y2);
+			if( x3 < x2 ) std::swap(x3,x2);
+			if( y3 < y2 ) std::swap(y3,y2);
 		}
 	}
 
@@ -20344,8 +20344,8 @@ BUILDIN_FUNC(setcell)
 
 	int x,y;
 
-	if( x1 > x2 ) SWAP(x1,x2);
-	if( y1 > y2 ) SWAP(y1,y2);
+	if( x1 > x2 ) std::swap(x1,x2);
+	if( y1 > y2 ) std::swap(y1,y2);
 
 	for( y = y1; y <= y2; ++y )
 		for( x = x1; x <= x2; ++x )
