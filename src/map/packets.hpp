@@ -177,19 +177,6 @@ struct PACKET_CZ_GUILD_EMBLEM_CHANGE2 {
 	uint32 version;
 } __attribute__((packed));
 
-struct PACKET_ZC_CHANGE_GUILD {
-	int16 packetType;
-#if PACKETVER < 20190724
-	uint32 aid;
-	uint32 guild_id;
-	uint16 emblem_id;
-#else
-	uint32 guild_id;
-	uint32 emblem_id;
-	uint32 unknown;
-#endif
-} __attribute__((packed));
-
 struct PACKET_ZC_BROADCAST{
 	int16 packetType;
 	int16 PacketLength;
@@ -501,11 +488,6 @@ DEFINE_PACKET_HEADER(ZC_BROADCAST2, 0x1c3)
 	DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0xb66)
 #else
 	DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0x1fd)
-#endif
-#if PACKETVER >= 20190724
-	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x0b47)
-#else
-	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x1b4)
 #endif
 DEFINE_PACKET_HEADER(ZC_COUPLENAME, 0x1e6);
 DEFINE_PACKET_HEADER(ZC_FRIENDS_LIST, 0x201)
