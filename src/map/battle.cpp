@@ -1605,6 +1605,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 					case W_WHIP:
 						if(!tsd->state.arrow_atk)
 							break;
+						[[fallthrough]];
 					case W_BOW:
 					case W_REVOLVER:
 					case W_RIFLE:
@@ -2263,7 +2264,7 @@ int64 battle_addmastery(map_session_data *sd,struct block_list *target,int64 dmg
 		case W_FIST:
 			if((skill = pc_checkskill(sd,TK_RUN)) > 0)
 				damage += (skill * 10);
-			// No break, fallthrough to Knuckles
+			[[fallthrough]];
 		case W_KNUCKLE:
 			if((skill = pc_checkskill(sd,MO_IRONHAND)) > 0)
 				damage += (skill * 3);
@@ -2924,6 +2925,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					break;
 				clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
 				status_change_end(src, SC_AUTOCOUNTER);
+				[[fallthrough]];
 			case KN_AUTOCOUNTER:
 				if(battle_config.auto_counter_type &&
 					(battle_config.auto_counter_type&src->type))
@@ -4036,11 +4038,30 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		{
 			int chance = rnd()%100;
 			switch(sc->getSCE(SC_FEARBREEZE)->val1) {
-				case 5: if( chance < 4) { wd->div_ = 5; break; } // 3 % chance to attack 5 times.
-				case 4: if( chance < 7) { wd->div_ = 4; break; } // 6 % chance to attack 4 times.
-				case 3: if( chance < 10) { wd->div_ = 3; break; } // 9 % chance to attack 3 times.
+				case 5:
+					if (chance < 4) {
+						wd->div_ = 5;
+						break;
+					} // 3 % chance to attack 5 times.
+					[[fallthrough]];
+				case 4:
+					if (chance < 7) {
+						wd->div_ = 4;
+						break;
+					} // 6 % chance to attack 4 times.
+					[[fallthrough]];
+				case 3:
+					if (chance < 10) {
+						wd->div_ = 3;
+						break;
+					} // 9 % chance to attack 3 times.
+					[[fallthrough]];
 				case 2:
-				case 1: if( chance < 13) { wd->div_ = 2; break; } // 12 % chance to attack 2 times.
+				case 1:
+					if (chance < 13) {
+						wd->div_ = 2;
+						break;
+					} // 12 % chance to attack 2 times.
 			}
 			wd->div_ = min(wd->div_,sd->inventory.u.items_inventory[i].amount);
 			sc->getSCE(SC_FEARBREEZE)->val4 = wd->div_-1;
@@ -4491,7 +4512,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 					skillratio += 100 + 50 * skill_lv;
 				break;
 			}
-			// Fall through
+			[[fallthrough]];
 		case MA_SHARPSHOOTING:
 #ifdef RENEWAL
 			skillratio += -100 + 300 + 300 * skill_lv;
@@ -6608,7 +6629,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 
 			case GS_GROUNDDRIFT:
 				wd.amotion = sstatus->amotion;
-				//Fall through
+				[[fallthrough]];
 			case KN_SPEARSTAB:
 #ifndef RENEWAL
 			case KN_BOWLINGBASH:
@@ -7267,7 +7288,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		case MG_FIREWALL:
 			if ( tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele) )
 				ad.blewcount = 0; //No knockback
-			//Fall through
+			[[fallthrough]];
 		case NJ_KAENSIN:
 		case PR_SANCTUARY:
 			ad.dmotion = 1; //No flinch animation.
@@ -8649,6 +8670,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
  		case RA_ICEBOUNDTRAP:
 			if (md.damage == 1)
 				break;
+			[[fallthrough]];
 		case RA_CLUSTERBOMB:
 			{
 				struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);

@@ -529,6 +529,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 	case AREA_WOSC:
 		if (sd && bl->prev == NULL) //Otherwise source misses the packet.[Skotlex]
 			clif_send (buf, len, bl, SELF);
+		[[fallthrough]];
 	case AREA_WOC:
 	case AREA_WOS:
 		map_foreachinallarea(clif_send_sub, bl->m, bl->x-AREA_SIZE, bl->y-AREA_SIZE, bl->x+AREA_SIZE, bl->y+AREA_SIZE,
@@ -568,6 +569,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 		y0 = bl->y - AREA_SIZE;
 		x1 = bl->x + AREA_SIZE;
 		y1 = bl->y + AREA_SIZE;
+		[[fallthrough]];
 	case PARTY:
 	case PARTY_WOS:
 	case PARTY_SAMEMAP:
@@ -644,6 +646,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 		y0 = bl->y - AREA_SIZE;
 		x1 = bl->x + AREA_SIZE;
 		y1 = bl->y + AREA_SIZE;
+		[[fallthrough]];
 	case GUILD_SAMEMAP:
 	case GUILD_SAMEMAP_WOS:
 	case GUILD:
@@ -695,6 +698,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 		y0 = bl->y - AREA_SIZE;
 		x1 = bl->x + AREA_SIZE;
 		y1 = bl->y + AREA_SIZE;
+		[[fallthrough]];
 	case BG_SAMEMAP:
 	case BG_SAMEMAP_WOS:
 	case BG:
@@ -15170,6 +15174,7 @@ void clif_parse_NoviceDoriDori(int fd, map_session_data *sd)
 		case MAPID_TAEKWON:
 			if (!sd->state.rest)
 				break;
+			[[fallthrough]];
 		case MAPID_SUPER_NOVICE:
 		case MAPID_SUPER_BABY:
 		case MAPID_SUPER_NOVICE_E:
@@ -17677,7 +17682,7 @@ std::string clif_quest_string( std::shared_ptr<s_quest_objective> objective ){
 		case RC_DRAGON:		race_name = "Dragon"; break;
 		default:
 			ShowWarning( "clif_quest_string: Unsupported race %d - using empty string...\n", objective->race );
-			// Fallthrough
+			[[fallthrough]];
 		case RC_ALL:		race_name = ""; break;
 	}
 
@@ -17689,7 +17694,7 @@ std::string clif_quest_string( std::shared_ptr<s_quest_objective> objective ){
 		case SZ_BIG:	size_name = "Large"; break;
 		default:
 			ShowWarning( "clif_quest_string: Unsupported size %d - using empty string...\n", objective->size );
-			// Fallthrough
+			[[fallthrough]];
 		case SZ_ALL:	size_name = ""; break;
 	}
 
@@ -17708,7 +17713,7 @@ std::string clif_quest_string( std::shared_ptr<s_quest_objective> objective ){
 		case ELE_UNDEAD:	ele_name = "Undead Element"; break;
 		default:
 			ShowWarning( "clif_quest_string: Unsupported element %d - using empty string...\n", objective->element );
-			// Fallthrough
+			[[fallthrough]];
 		case ELE_ALL:		ele_name = ""; break;
 	}
 
