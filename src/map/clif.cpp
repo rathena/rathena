@@ -23586,14 +23586,14 @@ void clif_parse_laphine_upgrade( int fd, map_session_data* sd ){
 	}else if( upgrade->resultRefineMaximum > 0 ){
 		// If a minimum is specified it can also downgrade
 		if( upgrade->resultRefineMinimum ){
-			item->refine = rnd_value( upgrade->resultRefineMinimum, upgrade->resultRefineMaximum );
+			item->refine = static_cast<uint8>( rnd_value<uint16>( upgrade->resultRefineMinimum, upgrade->resultRefineMaximum ) );
 		}else{
 			// Otherwise it can only be upgraded until the maximum, but not downgraded
-			item->refine = rnd_value<uint16>( item->refine, upgrade->resultRefineMaximum );
+			item->refine = static_cast<uint8>( rnd_value<uint16>( item->refine, upgrade->resultRefineMaximum ) );
 		}
 	}else if( upgrade->resultRefineMinimum > 0 ){
 		// No maximum has been specified, so it can be anything between minimum and MAX_REFINE
-		item->refine = rnd_value<uint16>( upgrade->resultRefineMinimum, MAX_REFINE );
+		item->refine = static_cast<uint8>( rnd_value<uint16>( upgrade->resultRefineMinimum, MAX_REFINE ) );
 	}
 
 	// Log retrieving the item again -> with the new options
