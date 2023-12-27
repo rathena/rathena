@@ -2928,7 +2928,7 @@ static void clif_item_equip( short idx, struct EQUIPITEM_INFO *p, struct item *i
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	p->enchantgrade = it->enchantgrade;
+	p->grade = it->enchantgrade;
 #endif
 }
 
