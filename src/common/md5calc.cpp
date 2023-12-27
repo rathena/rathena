@@ -236,10 +236,7 @@ void MD5_String(const char * string, char * output)
 
 /** output is a sequence of non-zero characters to be used as password salt. */
 void MD5_Salt( size_t len, char* output ){
-	for( size_t i = 0, max = len - 1; i < max; ++i ){
+	for( size_t i = 0; i < len; ++i ){
 		output[i] = static_cast<char>( rnd_value( 1, 255 ) );
 	}
-
-	// Zero terminate the string
-	output[len - 1] = '\0';
 }

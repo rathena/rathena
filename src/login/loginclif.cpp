@@ -383,7 +383,7 @@ static int logclif_parse_reqkey(int fd, struct login_session_data *sd){
 		WFIFOHEAD(fd,4 + sd->md5keylen);
 		WFIFOW(fd,0) = 0x01dc;
 		WFIFOW(fd,2) = 4 + sd->md5keylen;
-		safestrncpy( WFIFOCP( fd, 4 ), sd->md5key, sd->md5keylen );
+		memcpy(WFIFOP(fd,4), sd->md5key, sd->md5keylen);
 		WFIFOSET(fd,WFIFOW(fd,2));
 	}
 	return 1;
