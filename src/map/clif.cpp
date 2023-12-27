@@ -24692,7 +24692,7 @@ void clif_parse_enchantwindow_reset( int fd, map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_close( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	sd->state.item_enchant_index = 0;
 #endif
 }
