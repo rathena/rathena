@@ -23995,7 +23995,7 @@ void clif_item_reform_open( map_session_data& sd, t_itemid item ){
 }
 
 void clif_parse_item_reform_close( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	sd->state.item_reform = 0;
 #endif
 }
