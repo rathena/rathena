@@ -245,12 +245,6 @@ struct PACKET_ZC_UI_OPEN_V3{
 	uint64 data;
 } __attribute__((packed));
 
-struct PACKET_ZC_RESPONSE_ENCHANT{
-	int16 packetType;
-	uint32 messageId;
-	uint32 enchantItemId;
-} __attribute__((packed));
-
 struct PACKET_CZ_CLOSE_UI_ENCHANT{
 	int16 packetType;
 } __attribute__((packed));

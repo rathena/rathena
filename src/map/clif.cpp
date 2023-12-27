@@ -24197,13 +24197,13 @@ void clif_enchantwindow_result( map_session_data& sd, bool success, t_itemid enc
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_ZC_RESPONSE_ENCHANT p = {};
 
-	p.packetType = HEADER_ZC_RESPONSE_ENCHANT;
+	p.PacketType = HEADER_ZC_RESPONSE_ENCHANT;
 	if( success ){
-		p.messageId = C_ENCHANT_SUCCESS;
+		p.msgId = C_ENCHANT_SUCCESS;
 	}else{
-		p.messageId = C_ENCHANT_FAILURE;
+		p.msgId = C_ENCHANT_FAILURE;
 	}
-	p.enchantItemId = enchant;
+	p.ITID = enchant;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 
