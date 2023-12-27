@@ -23982,11 +23982,11 @@ void clif_reputation_list( map_session_data& sd ){
 }
 
 void clif_item_reform_open( map_session_data& sd, t_itemid item ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_ZC_OPEN_REFORM_UI p = {};
 
-	p.packetType = HEADER_ZC_OPEN_REFORM_UI;
-	p.itemId = item;
+	p.PacketType = HEADER_ZC_OPEN_REFORM_UI;
+	p.ITID = item;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 
