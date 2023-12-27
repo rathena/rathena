@@ -84763,6 +84763,30 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1001581
+    AegisName: aegis_1001581
+    Name: Coffin of Good and Evil Coupon    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001583
+    AegisName: aegis_1001583
+    Name: Good and Evil Boots Coupon    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001584
+    AegisName: aegis_1001584
+    Name: Good Weapon Coupon    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001588
+    AegisName: aegis_1001588
+    Name: Weapon of Evil Coupon    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
