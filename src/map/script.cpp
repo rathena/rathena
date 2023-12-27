@@ -17958,15 +17958,25 @@ BUILDIN_FUNC(npcshopitem)
 	nd->u.shop.count = 0;
 	for (n = 0, i = 3; n < amount; n++, i+=offs) {
 		t_itemid nameid = script_getnum( st, i );
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
-		if( !item_db.exists( nameid ) ){
+		if( !id ){
 			ShowError( "builtin_npcshopitem: Item ID %u does not exist.\n", nameid );
 			script_pushint( st, 0 );
 			return SCRIPT_CMD_FAILURE;
 		}
+		int32 price = script_getnum(st, i + 1);
+		if (price < 0) {
+			if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+				ShowError("builtin_npcshopitem: Invalid price in shop '%s'.\n", nd->exname);
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			price = id->value_buy;
+		}
 
 		nd->u.shop.shop_item[n].nameid = nameid;
-		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		nd->u.shop.shop_item[n].value = price;
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
 			nd->u.shop.shop_item[n].qty = script_getnum(st,i+2);
@@ -18003,8 +18013,9 @@ BUILDIN_FUNC(npcshopadditem)
 		for (int n = 0, i = 3; n < amount; n++, i += offs) {
 			t_itemid nameid = script_getnum(st,i);
 			uint16 j;
+			std::shared_ptr<item_data> id = item_db.find(nameid);
 
-			if( !item_db.exists( nameid ) ){
+			if( !id ){
 				ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
 				script_pushint( st, 0 );
 				return SCRIPT_CMD_FAILURE;
@@ -18019,8 +18030,12 @@ BUILDIN_FUNC(npcshopadditem)
 				nd->u.shop.count++;
 			}
 
-			int32 stock = script_getnum( st, i + 2 );
+			int32 price = script_getnum(st, i + 1);
+			if (price < 0) {
+				price = id->value_buy;
+			}
 
+			int32 stock = script_getnum(st, i + 2);
 			if( stock < -1 ){
 				ShowError( "builtin_npcshopadditem: Invalid stock amount in marketshop '%s'.\n", nd->exname );
 				script_pushint( st, 0 );
@@ -18028,7 +18043,7 @@ BUILDIN_FUNC(npcshopadditem)
 			}
 
 			nd->u.shop.shop_item[j].nameid = nameid;
-			nd->u.shop.shop_item[j].value = script_getnum(st,i+1);
+			nd->u.shop.shop_item[j].value = price;
 			nd->u.shop.shop_item[j].qty = stock;
 
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
@@ -18043,15 +18058,24 @@ BUILDIN_FUNC(npcshopadditem)
 	for (int n = nd->u.shop.count, i = 3, j = 0; j < amount; n++, i+=offs, j++)
 	{
 		t_itemid nameid = script_getnum( st, i );
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
-		if( !item_db.exists( nameid ) ){
+		if( !id ){
 			ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
 			script_pushint( st, 0 );
 			return SCRIPT_CMD_FAILURE;
 		}
-
+		int32 price = script_getnum(st, i + 1);
+		if (price < 0) {
+			if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+				ShowError("builtin_npcshopadditem: Invalid price in shop '%s'.\n", nd->exname);
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			price = id->value_buy;
+		}
 		nd->u.shop.shop_item[n].nameid = nameid;
-		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		nd->u.shop.shop_item[n].value = price;
 		nd->u.shop.count++;
 	}
 
@@ -23820,9 +23844,23 @@ BUILDIN_FUNC(npcshopupdate) {
 
 	for (i = 0; i < nd->u.shop.count; i++) {
 		if (nd->u.shop.shop_item[i].nameid == nameid) {
-
-			if (price != 0)
+			if (price != 0) {
+				if (price < 0) {
+					if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+						ShowError("builtin_npcshopupdate: Invalid price in shop '%s'.\n", nd->exname);
+						script_pushint(st, 0);
+						return SCRIPT_CMD_FAILURE;
+					}
+					std::shared_ptr<item_data> id = item_db.find(nameid);
+					if (!id) {
+						ShowError("buildin_npcshopupdate: Item ID %u does not exist.\n", nameid);
+						script_pushint(st, 0);
+						return SCRIPT_CMD_FAILURE;
+					}
+					price = id->value_buy;
+				}
 				nd->u.shop.shop_item[i].value = price;
+			}
 #if PACKETVER >= 20131223
 			if (nd->subtype == NPCTYPE_MARKETSHOP) {
 				nd->u.shop.shop_item[i].qty = stock;
