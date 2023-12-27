@@ -4940,10 +4940,10 @@ void clif_storageitemadded( map_session_data* sd, struct item* i, int index, int
 	p.damaged = i->attribute; // attribute
 	p.refine = i->refine; //refine
 	clif_addcards( &p.slot, i );
-#if PACKETVER >= 20150226
+#if PACKETVER_MAIN_NUM >= 20140813 || PACKETVER_RE_NUM >= 20140402 || defined(PACKETVER_ZERO)
 	clif_add_random_options( p.option_data, *i );
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	p.enchantgrade = i->enchantgrade;
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20221024
+	p.grade = i->enchantgrade;
 #endif
 #endif
 
