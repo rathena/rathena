@@ -24377,10 +24377,10 @@ void clif_parse_enchantwindow_general( int fd, map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_CZ_REQUEST_PERFECT_ENCHANT *p = (struct PACKET_CZ_REQUEST_PERFECT_ENCHANT*)RFIFOP( fd, 0 );
 
-	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+	if( sd->state.item_enchant_index != p->enchant_group ){
 		return;
 	}
 
@@ -24395,7 +24395,7 @@ void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
 	}
 
 	struct item& selected_item = sd->inventory.u.items_inventory[index];
-	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->enchant_group );
 
 	if( enchant == nullptr ){
 		return;
@@ -24428,7 +24428,7 @@ void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
 		return;
 	}
 
-	std::shared_ptr<s_item_enchant_perfect> perfect_enchant = util::umap_find( enchant_slot->perfect.enchants, p->itemId );
+	std::shared_ptr<s_item_enchant_perfect> perfect_enchant = util::umap_find( enchant_slot->perfect.enchants, p->ITID );
 
 	if( perfect_enchant == nullptr ){
 		return;

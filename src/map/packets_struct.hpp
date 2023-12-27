@@ -5759,7 +5759,7 @@ struct PACKET_CZ_REQUEST_PERFECT_ENCHANT {
 	int16 PacketType;
 	int64 enchant_group;
 	int16 index;
-	int ITID;
+	uint32 ITID;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQUEST_PERFECT_ENCHANT, 0x0b9c);
 #endif // PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
