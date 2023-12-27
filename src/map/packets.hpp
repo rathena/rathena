@@ -252,14 +252,6 @@ struct PACKET_ZC_TARGET_SPIRITS {
 	uint16 amount;
 } __attribute__((packed));
 
-struct PACKET_CZ_USE_PACKAGEITEM{
-	int16 PacketType;
-	uint16 index;
-	uint32 AID;
-	uint32 itemID;
-	uint32 BoxIndex;
-} __attribute__((packed));
-
 struct PACKET_ZC_FRIENDS_LIST_sub{
 	uint32 AID;
 	uint32 CID;
@@ -477,7 +469,6 @@ DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
 DEFINE_PACKET_HEADER(ZC_REPUTE_INFO, 0x0b8d)
 DEFINE_PACKET_HEADER(ZC_UI_OPEN_V3, 0x0b9a)
-DEFINE_PACKET_HEADER(CZ_USE_PACKAGEITEM, 0x0baf)
 DEFINE_PACKET_HEADER(CZ_PC_SELL_ITEMLIST, 0x00c9)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
