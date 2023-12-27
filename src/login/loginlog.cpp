@@ -13,13 +13,6 @@
 #include <common/sql.hpp>
 #include <common/strlib.hpp>
 
-// global sql settings (in ipban_sql.cpp)
-static char   global_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f
-static uint16 global_db_port = 3306;
-static char   global_db_username[32] = "ragnarok";
-static char   global_db_password[32] = ""; //empty by default since mysql is empty by default as well
-static char   global_db_database[32] = "ragnarok";
-static char   global_codepage[32] = "";
 // local sql settings
 static char   log_db_hostname[64] = ""; // Doubled to reflect the change on commit #0f2dd7f
 static uint16 log_db_port = 0;
@@ -93,34 +86,6 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message) 
  * @return true if successful, false if config not complete or server already running
  */
 bool loginlog_config_read(const char* key, const char* value) {
-	const char* signature;
-
-	signature = "sql.";
-	if( strncmpi(key, signature, strlen(signature)) == 0 )
-	{
-		key += strlen(signature);
-		if( strcmpi(key, "db_hostname") == 0 )
-			safestrncpy(global_db_hostname, value, sizeof(global_db_hostname));
-		else
-		if( strcmpi(key, "db_port") == 0 )
-			global_db_port = (uint16)strtoul(value, NULL, 10);
-		else
-		if( strcmpi(key, "db_username") == 0 )
-			safestrncpy(global_db_username, value, sizeof(global_db_username));
-		else
-		if( strcmpi(key, "db_password") == 0 )
-			safestrncpy(global_db_password, value, sizeof(global_db_password));
-		else
-		if( strcmpi(key, "db_database") == 0 )
-			safestrncpy(global_db_database, value, sizeof(global_db_database));
-		else
-		if( strcmpi(key, "codepage") == 0 )
-			safestrncpy(global_codepage, value, sizeof(global_codepage));
-		else
-			return false;// not found
-		return true;
-	}
-
 	if( strcmpi(key, "log_db_ip") == 0 )
 		safestrncpy(log_db_hostname, value, sizeof(log_db_hostname));
 	else
@@ -156,44 +121,18 @@ bool loginlog_config_read(const char* key, const char* value) {
  * @return true if success else exit execution
  */
 bool loginlog_init(void) {
-	const char* username;
-	const char* password;
-	const char* hostname;
-	uint16      port;
-	const char* database;
-	const char* codepage;
-
-	if( log_db_hostname[0] != '\0' )
-	{// local settings
-		username = log_db_username;
-		password = log_db_password;
-		hostname = log_db_hostname;
-		port     = log_db_port;
-		database = log_db_database;
-		codepage = log_codepage;
-	}
-	else
-	{// global settings
-		username = global_db_username;
-		password = global_db_password;
-		hostname = global_db_hostname;
-		port     = global_db_port;
-		database = global_db_database;
-		codepage = global_codepage;
-	}
-
 	sql_handle = Sql_Malloc();
 
-	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, log_db_username, log_db_password, log_db_hostname, log_db_port, log_db_database) )
 	{
         ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-                        username, password, hostname, port, database);
+			log_db_username, log_db_password, log_db_hostname, log_db_port, log_db_database);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
+	if( log_codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, log_codepage) )
 		Sql_ShowDebug(sql_handle);
 
 	enabled = true;
