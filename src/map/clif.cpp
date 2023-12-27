@@ -24001,10 +24001,10 @@ void clif_parse_item_reform_close( int fd, map_session_data* sd ){
 }
 
 void clif_item_reform_result( map_session_data& sd, uint16 index, uint8 result ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_ZC_ITEM_REFORM_ACK p = {};
 
-	p.packetType = HEADER_ZC_ITEM_REFORM_ACK;
+	p.PacketType = HEADER_ZC_ITEM_REFORM_ACK;
 	p.index = client_index( index );
 	p.result = result;
 
