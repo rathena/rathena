@@ -2928,7 +2928,7 @@ static void clif_item_equip( short idx, struct EQUIPITEM_INFO *p, struct item *i
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	p->enchantgrade = it->enchantgrade;
+	p->grade = it->enchantgrade;
 #endif
 }
 
@@ -4940,10 +4940,10 @@ void clif_storageitemadded( map_session_data* sd, struct item* i, int index, int
 	p.damaged = i->attribute; // attribute
 	p.refine = i->refine; //refine
 	clif_addcards( &p.slot, i );
-#if PACKETVER >= 20150226
+#if PACKETVER_MAIN_NUM >= 20140813 || PACKETVER_RE_NUM >= 20140402 || defined(PACKETVER_ZERO)
 	clif_add_random_options( p.option_data, *i );
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	p.enchantgrade = i->enchantgrade;
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20221024
+	p.grade = i->enchantgrade;
 #endif
 #endif
 
@@ -9156,12 +9156,7 @@ void clif_guild_emblem_area(struct block_list* bl)
 	p.packetType = HEADER_ZC_CHANGE_GUILD;
 	p.guild_id = status_get_guild_id(bl);
 	p.emblem_id = status_get_emblem_id(bl);
-
-#if PACKETVER < 20190724
-	p.aid = bl->id;
-#else
-	p.unknown = 0;
-#endif
+	p.AID = bl->id;
 
 	clif_send(&p, sizeof(p), bl, AREA_WOS);
 }
@@ -23987,11 +23982,11 @@ void clif_reputation_list( map_session_data& sd ){
 }
 
 void clif_item_reform_open( map_session_data& sd, t_itemid item ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_ZC_OPEN_REFORM_UI p = {};
 
-	p.packetType = HEADER_ZC_OPEN_REFORM_UI;
-	p.itemId = item;
+	p.PacketType = HEADER_ZC_OPEN_REFORM_UI;
+	p.ITID = item;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 
@@ -24000,16 +23995,16 @@ void clif_item_reform_open( map_session_data& sd, t_itemid item ){
 }
 
 void clif_parse_item_reform_close( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	sd->state.item_reform = 0;
 #endif
 }
 
 void clif_item_reform_result( map_session_data& sd, uint16 index, uint8 result ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_ZC_ITEM_REFORM_ACK p = {};
 
-	p.packetType = HEADER_ZC_ITEM_REFORM_ACK;
+	p.PacketType = HEADER_ZC_ITEM_REFORM_ACK;
 	p.index = client_index( index );
 	p.result = result;
 
@@ -24023,7 +24018,7 @@ void clif_item_reform_result( map_session_data& sd, uint16 index, uint8 result )
 }
 
 void clif_parse_item_reform_start( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	// Not opened
 	if( sd->state.item_reform == 0 ){
 		return;
@@ -24032,7 +24027,7 @@ void clif_parse_item_reform_start( int fd, map_session_data* sd ){
 	struct PACKET_CZ_ITEM_REFORM *p = (struct PACKET_CZ_ITEM_REFORM*)RFIFOP( fd, 0 );
 
 	// Item mismatch
-	if( p->itemId != sd->state.item_reform ){
+	if( p->ITID != sd->state.item_reform ){
 		return;
 	}
 
@@ -24202,13 +24197,13 @@ void clif_enchantwindow_result( map_session_data& sd, bool success, t_itemid enc
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_ZC_RESPONSE_ENCHANT p = {};
 
-	p.packetType = HEADER_ZC_RESPONSE_ENCHANT;
+	p.PacketType = HEADER_ZC_RESPONSE_ENCHANT;
 	if( success ){
-		p.messageId = C_ENCHANT_SUCCESS;
+		p.msgId = C_ENCHANT_SUCCESS;
 	}else{
-		p.messageId = C_ENCHANT_FAILURE;
+		p.msgId = C_ENCHANT_FAILURE;
 	}
-	p.enchantItemId = enchant;
+	p.ITID = enchant;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 
@@ -24253,10 +24248,10 @@ bool clif_parse_enchant_basecheck( struct item& selected_item, std::shared_ptr<s
 }
 
 void clif_parse_enchantwindow_general( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_CZ_REQUEST_RANDOM_ENCHANT *p = (struct PACKET_CZ_REQUEST_RANDOM_ENCHANT*)RFIFOP( fd, 0 );
 
-	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+	if( sd->state.item_enchant_index != p->enchant_group ){
 		return;
 	}
 
@@ -24271,7 +24266,7 @@ void clif_parse_enchantwindow_general( int fd, map_session_data* sd ){
 	}
 
 	struct item& selected_item = sd->inventory.u.items_inventory[index];
-	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->enchant_group );
 
 	if( enchant == nullptr ){
 		return;
@@ -24382,10 +24377,10 @@ void clif_parse_enchantwindow_general( int fd, map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_CZ_REQUEST_PERFECT_ENCHANT *p = (struct PACKET_CZ_REQUEST_PERFECT_ENCHANT*)RFIFOP( fd, 0 );
 
-	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+	if( sd->state.item_enchant_index != p->enchant_group ){
 		return;
 	}
 
@@ -24400,7 +24395,7 @@ void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
 	}
 
 	struct item& selected_item = sd->inventory.u.items_inventory[index];
-	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->enchant_group );
 
 	if( enchant == nullptr ){
 		return;
@@ -24433,7 +24428,7 @@ void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
 		return;
 	}
 
-	std::shared_ptr<s_item_enchant_perfect> perfect_enchant = util::umap_find( enchant_slot->perfect.enchants, p->itemId );
+	std::shared_ptr<s_item_enchant_perfect> perfect_enchant = util::umap_find( enchant_slot->perfect.enchants, p->ITID );
 
 	if( perfect_enchant == nullptr ){
 		return;
@@ -24482,10 +24477,10 @@ void clif_parse_enchantwindow_perfect( int fd, map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_upgrade( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT *p = (struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT*)RFIFOP( fd, 0 );
 
-	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+	if( sd->state.item_enchant_index != p->enchant_group ){
 		return;
 	}
 
@@ -24500,7 +24495,7 @@ void clif_parse_enchantwindow_upgrade( int fd, map_session_data* sd ){
 	}
 
 	struct item& selected_item = sd->inventory.u.items_inventory[index];
-	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->enchant_group );
 
 	if( enchant == nullptr ){
 		return;
@@ -24579,10 +24574,10 @@ void clif_parse_enchantwindow_upgrade( int fd, map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_reset( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	struct PACKET_CZ_REQUEST_RESET_ENCHANT *p = (struct PACKET_CZ_REQUEST_RESET_ENCHANT*)RFIFOP( fd, 0 );
 
-	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+	if( sd->state.item_enchant_index != p->enchant_group ){
 		return;
 	}
 
@@ -24610,7 +24605,7 @@ void clif_parse_enchantwindow_reset( int fd, map_session_data* sd ){
 		return;
 	}
 
-	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->enchant_group );
 
 	if( enchant == nullptr ){
 		return;
@@ -24697,7 +24692,7 @@ void clif_parse_enchantwindow_reset( int fd, map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_close( int fd, map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	sd->state.item_enchant_index = 0;
 #endif
 }
@@ -25066,7 +25061,7 @@ void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result ){
 #if PACKETVER_MAIN_NUM >= 20140430 || PACKETVER_RE_NUM >= 20140430 || defined(PACKETVER_ZERO)
 	struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT p = {};
 
-	p.packetType = HEADER_ZC_DYNAMICNPC_CREATE_RESULT;
+	p.PacketType = HEADER_ZC_DYNAMICNPC_CREATE_RESULT;
 	p.result = result;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
