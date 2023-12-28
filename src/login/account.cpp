@@ -193,7 +193,7 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "codepage") == 0 )
-			safesnprintf(buf, buflen, "%s", db->codepage);
+			safesnprintf(buf, buflen, "%s", db->codepage.c_str());
 		else
 		if( strcmpi(key, "case_sensitive") == 0 )
 			safesnprintf(buf, buflen, "%d", (db->case_sensitive ? 1 : 0));
