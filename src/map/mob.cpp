@@ -1286,12 +1286,12 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 		return 0; //Gangster paradise protection.
 
 	if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
-		(*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
+		(*target) != nullptr && (*target)->type == BL_HOM && bl->type != BL_HOM)
 		return 0; //For some reason Homun targets are never overriden.
 
 	dist = distance_bl(&md->bl, bl);
 	if(
-		((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
+		((*target) == nullptr || !check_distance_bl(&md->bl, *target, dist)) &&
 		battle_check_range(&md->bl,bl,md->db->range2)
 	) { //Pick closest target?
 #ifdef ACTIVEPATHSEARCH

@@ -13357,8 +13357,8 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 		case SC_CLOSECONFINE2:
 			{
-				struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
-				status_change *sc2 = src?status_get_sc(src):NULL;
+				struct block_list *src = sce->val2?map_id2bl(sce->val2):nullptr;
+				status_change *sc2 = src?status_get_sc(src):nullptr;
 				if (src && sc2 && sc2->getSCE(SC_CLOSECONFINE)) {
 					// If status was already ended, do nothing.
 					// Decrease count
