@@ -10518,7 +10518,7 @@ Body:
           - Shoes_Of_Punishment     # 22120
           - Holy_Stick     # 1631
       - Combo:
-          - Shoes_Of_Punishment     # 22225
+          - Shoes_Of_Punishment_     # 22225
           - Holy_Stick     # 1631
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -47267,7 +47267,7 @@ Body:
   - Combos:
       - Combo:
           - Hero    # 29509
-          - aegis_312300    # 312300
+          - aegis_312301    # 312301
     Script: |
       bonus2 bSkillCooldown,"BO_ACIDIFIED_ZONE_FIRE",-200;
       bonus2 bSkillCooldown,"BO_ACIDIFIED_ZONE_WATER",-200;
@@ -47454,21 +47454,6 @@ Body:
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
       bonus2 bSubEle,Ele_Earth,15;
-  - Combos:
-      - Combo:
-          - Goddess_of_Abundance    # 311073
-          - aegis_450286    # 450286
-    Script: |
-      bonus2 bAddSize,Size_All,30;
-      bonus2 bMagicAddSize,Size_All,30;
-  - Combos:
-      - Combo:
-          - Goddess_of_Abundance    # 311073
-          - aegis_420223    # 420223
-    Script: |
-      bonus2 bSubRace,RC_Player_Human,3;
-      bonus2 bSubRace,RC_Player_Doram,3;
-      bonus bNoCastCancel;
   - Combos:
       - Combo:
           - Bakonawa_Tattoo    # 2910
