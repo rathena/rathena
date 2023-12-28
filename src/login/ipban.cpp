@@ -196,8 +196,9 @@ void ipban_init(void) {
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
-        ShowInfo("Ipban connection made.\n");
-        
+
+	ShowInfo("Ipban connection made.\n");
+
 	if( !ipban_codepage.empty() && SQL_ERROR == Sql_SetEncoding(sql_handle, ipban_codepage.c_str()) )
 		Sql_ShowDebug(sql_handle);
 

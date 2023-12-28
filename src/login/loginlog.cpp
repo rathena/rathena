@@ -125,7 +125,7 @@ bool loginlog_init(void) {
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) )
 	{
-        ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
 			log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
