@@ -14134,8 +14134,8 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if( !exists ){
 		entry = std::make_shared<s_statpoint_entry>();
 		entry->level = level;
-		entry->statpoints = point;
 	}
+	entry->statpoints = point;
 
 	if( this->nodeExists( node, "TraitPoints" ) ){
 		uint32 traitpoints;
