@@ -81,9 +81,6 @@ static inline int32 client_exp(t_exp exp) {
 static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
-// Reuseable global packet buffer to prevent too many allocations
-// Take socket.cpp::socket_max_client_packet into consideration
-static int8 packet_buffer[UINT16_MAX];
 unsigned long color_table[COLOR_MAX];
 
 #include "clif_obfuscation.hpp"

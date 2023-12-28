@@ -30,10 +30,6 @@
 
 using namespace rathena;
 
-// Reuseable global packet buffer to prevent too many allocations
-// Take socket.cpp::socket_max_client_packet into consideration
-static int8 packet_buffer[UINT16_MAX];
-
 std::vector<struct s_point_str> accessible_maps{
 	s_point_str{ MAP_PRONTERA, 273, 354 },
 	s_point_str{ MAP_GEFFEN, 120, 100 },
