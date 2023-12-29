@@ -3,8 +3,9 @@
 
 #include "loginlog.hpp"
 
-#include <stdlib.h> // exit
 #include <string>
+
+#include <stdlib.h> // exit
 
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>
@@ -14,8 +15,8 @@
 #include <common/strlib.hpp>
 
 
-int log_db_port = 3306;
 std::string log_db_hostname = "127.0.0.1";
+uint16 log_db_port = 3306;
 std::string log_db_username = "ragnarok";
 std::string log_db_password = "";
 std::string log_db_database = "ragnarok";
@@ -90,7 +91,7 @@ bool loginlog_config_read(const char* key, const char* value) {
 		log_db_hostname = value;
 	else
 	if( strcmpi(key, "log_db_port") == 0 )
-		log_db_port = atoi(value);
+		log_db_port = (uint16)strtoul(value, NULL, 10);
 	else
 	if( strcmpi(key, "log_db_id") == 0 )
 		log_db_username = value;
@@ -125,7 +126,7 @@ bool loginlog_init(void) {
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, log_db_username.c_str(), log_db_password.c_str(), log_db_hostname.c_str(), log_db_port, log_db_database.c_str()) )
 	{
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			log_db_username.c_str(), log_db_hostname.c_str(), log_db_port, log_db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);

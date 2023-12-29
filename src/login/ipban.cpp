@@ -16,8 +16,8 @@
 #include "loginlog.hpp"
 
 
-int ipban_db_port = 3306;
 std::string ipban_db_hostname = "127.0.0.1";
+uint16 ipban_db_port = 3306;
 std::string ipban_db_username = "ragnarok";
 std::string ipban_db_password = "";
 std::string ipban_db_database = "ragnarok";
@@ -126,7 +126,7 @@ bool ipban_config_read(const char* key, const char* value) {
 			ipban_db_hostname = value;
 		else
 		if( strcmpi(key, "port") == 0 )
-			ipban_db_port = atoi(value);
+			ipban_db_port = (uint16)strtoul( value, nullptr, 10 );
 		else
 		if( strcmpi(key, "id") == 0 )
 			ipban_db_username = value;
@@ -190,7 +190,7 @@ void ipban_init(void) {
 	sql_handle = Sql_Malloc();
 	if( SQL_ERROR == Sql_Connect(sql_handle, ipban_db_username.c_str(), ipban_db_password.c_str(), ipban_db_hostname.c_str(), ipban_db_port, ipban_db_database.c_str()) )
 	{
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			ipban_db_username.c_str(), ipban_db_hostname.c_str(), ipban_db_port, ipban_db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);

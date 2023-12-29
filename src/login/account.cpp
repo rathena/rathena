@@ -22,8 +22,8 @@
 typedef struct AccountDB_SQL {
 	AccountDB vtable;    // public interface
 	Sql* accounts;       // SQL handle accounts storage
-	int db_port = 3306;
 	std::string db_hostname = "127.0.0.1";
+	uint16 db_port = 3306;
 	std::string db_username = "ragnarok";
 	std::string db_password = "";
 	std::string db_database = "ragnarok";
@@ -112,7 +112,7 @@ static bool account_db_sql_init(AccountDB* self) {
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, db->db_username.c_str(), db->db_password.c_str(), db->db_hostname.c_str(), db->db_port, db->db_database.c_str()) )
 	{
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			db->db_username.c_str(), db->db_hostname.c_str(), db->db_port, db->db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(db->accounts);
@@ -167,7 +167,7 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 			safesnprintf(buf, buflen, "%s", db->db_hostname.c_str());
 		else
 		if( strcmpi(key, "port") == 0 )
-			safesnprintf(buf, buflen, "%d", db->db_port);
+			safesnprintf(buf, buflen, "%hu", db->db_port);
 		else
 		if( strcmpi(key, "id") == 0 )
 			safesnprintf(buf, buflen, "%s", db->db_username.c_str());
@@ -226,7 +226,7 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 			db->db_hostname = value;
 		else
 		if( strcmpi(key, "port") == 0 )
-			db->db_port = atoi(value);
+			db->db_port = (uint16)strtoul( value, nullptr, 10 );
 		else
 		if( strcmpi(key, "id") == 0 )
 			db->db_username = value;
