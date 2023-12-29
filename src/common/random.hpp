@@ -15,15 +15,15 @@ inline std::mt19937 generator = std::mt19937(device());
 int32 rnd(void);// [0, SINT32_MAX]
 
 /*
- * Generates a random number in the interval [a, b]
+ * Generates a random number in the interval [min, max]
  * @return random number
  */
 template <typename T>
-typename std::enable_if<std::is_integral<T>::value, T>::type rnd_value(T a, T b) {
-	if (a > b) {
-		std::swap(a, b);
+typename std::enable_if<std::is_integral<T>::value, T>::type rnd_value(T min, T max) {
+	if (min > max) {
+		std::swap(min, max);
 	}
-	std::uniform_int_distribution<T> dist(a, b);
+	std::uniform_int_distribution<T> dist(min, max);
 	return dist(generator);
 }
 

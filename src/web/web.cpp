@@ -44,26 +44,26 @@ struct Web_Config web_config {};
 struct Inter_Config inter_config {};
 std::shared_ptr<httplib::Server> http_server;
 
-int login_server_port = 3306;
 std::string login_server_ip = "127.0.0.1";
+uint16 login_server_port = 3306;
 std::string login_server_id = "ragnarok";
 std::string login_server_pw = "";
 std::string login_server_db = "ragnarok";
 
-int  char_server_port = 3306;
 std::string char_server_ip = "127.0.0.1";
+uint16  char_server_port = 3306;
 std::string char_server_id = "ragnarok";
 std::string char_server_pw = "";
 std::string char_server_db = "ragnarok";
 
-int map_server_port = 3306;
 std::string map_server_ip = "127.0.0.1";
+uint16 map_server_port = 3306;
 std::string map_server_id = "ragnarok";
 std::string map_server_pw = "";
 std::string map_server_db = "ragnarok";
 
-int web_server_port = 3306;
 std::string web_server_ip = "127.0.0.1";
+uint16 web_server_port = 3306;
 std::string web_server_id = "ragnarok";
 std::string web_server_pw = "";
 std::string web_server_db = "ragnarok";
@@ -188,7 +188,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"login_server_ip"))
 			login_server_ip = w2;
 		else if(!strcmpi(w1,"login_server_port"))
-			login_server_port = atoi(w2);
+			login_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"login_server_id"))
 			login_server_id = w2;
 		else if(!strcmpi(w1,"login_server_pw"))
@@ -198,7 +198,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"char_server_ip"))
 			char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
-			char_server_port = atoi(w2);
+			char_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"char_server_id"))
 			char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
@@ -208,7 +208,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"map_server_ip"))
 			map_server_ip = w2;
 		else if(!strcmpi(w1,"map_server_port"))
-			map_server_port = atoi(w2);
+			map_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"map_server_id"))
 			map_server_id = w2;
 		else if(!strcmpi(w1,"map_server_pw"))
@@ -218,7 +218,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"web_server_ip"))
 			web_server_ip = w2;
 		else if(!strcmpi(w1,"web_server_port"))
-			web_server_port = atoi(w2);
+			web_server_port = (uint16)strtoul( w2, nullptr, 10 );
 		else if(!strcmpi(w1,"web_server_id"))
 			web_server_id = w2;
 		else if(!strcmpi(w1,"web_server_pw"))
@@ -276,7 +276,7 @@ int web_sql_init(void) {
 	ShowInfo("Connecting to the Login DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(login_handle, login_server_id.c_str(), login_server_pw.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			login_server_id.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str());
 		Sql_ShowDebug(login_handle);
 		Sql_Free(login_handle);
@@ -293,7 +293,7 @@ int web_sql_init(void) {
 	ShowInfo("Connecting to the Char DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(char_handle, char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			char_server_id.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
 		Sql_ShowDebug(char_handle);
 		Sql_Free(char_handle);
@@ -310,7 +310,7 @@ int web_sql_init(void) {
 	ShowInfo("Connecting to the Map DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(map_handle, map_server_id.c_str(), map_server_pw.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			map_server_id.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str());
 		Sql_ShowDebug(map_handle);
 		Sql_Free(map_handle);
@@ -327,7 +327,7 @@ int web_sql_init(void) {
 	ShowInfo("Connecting to the Web DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(web_handle, web_server_id.c_str(), web_server_pw.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			web_server_id.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str());
 		Sql_ShowDebug(web_handle);
 		Sql_Free(web_handle);

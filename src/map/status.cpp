@@ -2017,11 +2017,24 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 		if (sc->getSCE(SC_BLADESTOP)) {
 			switch (sc->getSCE(SC_BLADESTOP)->val1) {
-				case 5: if (skill_id == MO_EXTREMITYFIST) break;
-				case 4: if (skill_id == MO_CHAINCOMBO) break;
-				case 3: if (skill_id == MO_INVESTIGATE) break;
-				case 2: if (skill_id == MO_FINGEROFFENSIVE) break;
-				default: return false;
+				case 5:
+					if (skill_id == MO_EXTREMITYFIST)
+						break;
+					[[fallthrough]];
+				case 4:
+					if (skill_id == MO_CHAINCOMBO)
+						break;
+					[[fallthrough]];
+				case 3:
+					if (skill_id == MO_INVESTIGATE)
+						break;
+					[[fallthrough]];
+				case 2:
+					if (skill_id == MO_FINGEROFFENSIVE)
+						break;
+					[[fallthrough]];
+				default:
+					return false;
 			}
 		}
 
@@ -2157,6 +2170,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				return false; // Can't use Potion Pitcher on Mercenaries
 			if (tsc && tsc->getSCE(SC_ELEMENTAL_VEIL) && !(src && status_get_class_(src) == CLASS_BOSS) && !status_has_mode(status, MD_DETECTOR))
 				return false;
+			[[fallthrough]];
 		default:
 			// Check for chase-walk/hiding/cloaking opponents.
 			if( tsc ) {
@@ -10398,6 +10412,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					case SC_BERSERK:
 					case SC_SATURDAYNIGHTFEVER:
 						sc->getSCE(rem_sc)->val2 = 0; // Mark to not lose hp
+						[[fallthrough]];
 					default:
 						status_change_end(bl, rem_sc);
 						break;
@@ -10502,6 +10517,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sc && sc->getSCE(type)->val2 & BREAK_NECK)
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
+				[[fallthrough]];
 			default:
 				if (scdb->flag[SCF_OVERLAPIGNORELEVEL])
 					break;
@@ -10868,7 +10884,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					diff = status->hp - (status->max_hp / 4);
 				status_zap(bl, diff, 0);
 			}
-			// Fall through
+			[[fallthrough]];
 		case SC_STONE:
 		case SC_POISON:
 		case SC_BLEEDING:
@@ -10889,6 +10905,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				break;
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
+			break;
 		case SC_LEECHESEND:
 			if (val3 == 0)
 				break;
@@ -11227,6 +11244,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			switch (val1) {
 				case 3: // 33*3 + 1 -> 100%
 					val2++;
+					[[fallthrough]];
 				case 1:
 				case 2: // 33, 66%
 					val2 += 33*val1;
@@ -11454,6 +11472,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Level 1 ~ 5 & 6 ~ 10 has different duration
 			// Level 6 ~ 10 use effect of level 1 ~ 5
 			val1 = 1 + ((val1-1)%5);
+			[[fallthrough]];
 		case SC_SLOWCAST:
 			val2 = 20*val1; // Magic reflection/cast rate
 			break;
@@ -11975,17 +11994,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WILD_STORM:
 		case SC_UPHEAVAL:
 			val2 += 10;
+			[[fallthrough]];
 		case SC_HEATER:
 		case SC_COOLER:
 		case SC_BLAST:
 		case SC_CURSED_SOIL:
 			val2 += 10;
+			[[fallthrough]];
 		case SC_PYROTECHNIC:
 		case SC_AQUAPLAY:
 		case SC_GUST:
 		case SC_PETROLOGY:
 			val2 += 5;
 			val3 += 9000;
+			[[fallthrough]];
 		case SC_CIRCLE_OF_FIRE:
 		case SC_FIRE_CLOAK:
 		case SC_WATER_DROP:
@@ -12729,6 +12751,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					break;
 				tick_time = tick;
 				tick = tick_time + max(val4, 0);
+				[[fallthrough]];
 			case SC_MAGICMUSHROOM:
 			case SC_PYREXIA:
 			case SC_LEECHESEND:
@@ -13332,16 +13355,18 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
 			}
 			break;
-		case SC_CLOSECONFINE2:{
-			struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
-			status_change *sc2 = src?status_get_sc(src):NULL;
-			if (src && sc2 && sc2->getSCE(SC_CLOSECONFINE)) {
-				// If status was already ended, do nothing.
-				// Decrease count
-				if (--(sc2->getSCE(SC_CLOSECONFINE)->val1) <= 0) // No more holds, free him up.
-					status_change_end(src, SC_CLOSECONFINE);
+		case SC_CLOSECONFINE2:
+			{
+				struct block_list *src = sce->val2?map_id2bl(sce->val2):nullptr;
+				status_change *sc2 = src?status_get_sc(src):nullptr;
+				if (src && sc2 && sc2->getSCE(SC_CLOSECONFINE)) {
+					// If status was already ended, do nothing.
+					// Decrease count
+					if (--(sc2->getSCE(SC_CLOSECONFINE)->val1) <= 0) // No more holds, free him up.
+						status_change_end(src, SC_CLOSECONFINE);
+				}
 			}
-		}
+			[[fallthrough]];
 		case SC_CLOSECONFINE:
 			if (sce->val2 > 0) {
 				// Caster has been unlocked... nearby chars need to be unlocked.
@@ -14102,6 +14127,7 @@ TIMER_FUNC(status_change_timer){
 					sp= 4*(sce->val1>>16);
 					// Upkeep is also every 10 secs.
 #ifndef RENEWAL
+				[[fallthrough]];
 				case DC_DONTFORGETME:
 #endif
 					s=10;

@@ -177,19 +177,6 @@ struct PACKET_CZ_GUILD_EMBLEM_CHANGE2 {
 	uint32 version;
 } __attribute__((packed));
 
-struct PACKET_ZC_CHANGE_GUILD {
-	int16 packetType;
-#if PACKETVER < 20190724
-	uint32 aid;
-	uint32 guild_id;
-	uint16 emblem_id;
-#else
-	uint32 guild_id;
-	uint32 emblem_id;
-	uint32 unknown;
-#endif
-} __attribute__((packed));
-
 struct PACKET_ZC_BROADCAST{
 	int16 packetType;
 	int16 PacketLength;
@@ -252,67 +239,10 @@ struct PACKET_ZC_REPUTE_INFO{
 	struct PACKET_ZC_REPUTE_INFO_sub list[];
 } __attribute__((packed));
 
-struct PACKET_ZC_OPEN_REFORM_UI{
-	int16 packetType;
-	uint32 itemId;
-} __attribute__((packed));
-
-struct PACKET_CZ_CLOSE_REFORM_UI{
-	int16 packetType;
-} __attribute__((packed));
-
-struct PACKET_CZ_ITEM_REFORM{
-	int16 packetType;
-	uint32 itemId;
-	uint16 index;
-} __attribute__((packed));
-
-struct PACKET_ZC_ITEM_REFORM_ACK{
-	int16 packetType;
-	uint16 index;
-	uint8 result;
-} __attribute__((packed));
-
 struct PACKET_ZC_UI_OPEN_V3{
 	int16 packetType;
 	uint8 type;
 	uint64 data;
-} __attribute__((packed));
-
-struct PACKET_CZ_REQUEST_RANDOM_ENCHANT{
-	int16 packetType;
-	uint64 clientLuaIndex;
-	uint16 index;
-} __attribute__((packed));
-
-struct PACKET_CZ_REQUEST_PERFECT_ENCHANT{
-	int16 packetType;
-	uint64 clientLuaIndex;
-	uint16 index;
-	uint32 itemId;
-} __attribute__((packed));
-
-struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT{
-	int16 packetType;
-	uint64 clientLuaIndex;
-	uint16 index;
-	uint16 slot;
-} __attribute__((packed));
-
-struct PACKET_CZ_REQUEST_RESET_ENCHANT{
-	int16 packetType;
-	uint64 clientLuaIndex;
-	uint16 index;
-} __attribute__((packed));
-
-struct PACKET_ZC_RESPONSE_ENCHANT{
-	int16 packetType;
-	uint32 messageId;
-	uint32 enchantItemId;
-} __attribute__((packed));
-
-struct PACKET_CZ_CLOSE_UI_ENCHANT{
-	int16 packetType;
 } __attribute__((packed));
 
 struct PACKET_ZC_TARGET_SPIRITS {
@@ -320,14 +250,6 @@ struct PACKET_ZC_TARGET_SPIRITS {
 	uint32 GID;
 	uint32 unknown_val;
 	uint16 amount;
-} __attribute__((packed));
-
-struct PACKET_CZ_USE_PACKAGEITEM{
-	int16 PacketType;
-	uint16 index;
-	uint32 AID;
-	uint32 itemID;
-	uint32 BoxIndex;
 } __attribute__((packed));
 
 struct PACKET_ZC_FRIENDS_LIST_sub{
@@ -418,11 +340,6 @@ struct PACKET_ZC_COUPLENAME {
 	char name[NAME_LENGTH];
 } __attribute__((packed));
 
-struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT{
-	int16 packetType;
-	int32 result;
-} __attribute__((packed));
-
 struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN{
 	int16 packetType;
 	uint32 CID;
@@ -481,6 +398,11 @@ struct PACKET_CZ_REQ_MERGE_ITEM{
 	uint16 indices[];
 } __attribute__((packed));
 
+struct PACKET_CZ_RESET_SKILL{
+	int16 packetType;
+	uint8 unknown;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -501,11 +423,6 @@ DEFINE_PACKET_HEADER(ZC_BROADCAST2, 0x1c3)
 	DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0xb66)
 #else
 	DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0x1fd)
-#endif
-#if PACKETVER >= 20190724
-	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x0b47)
-#else
-	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x1b4)
 #endif
 DEFINE_PACKET_HEADER(ZC_COUPLENAME, 0x1e6);
 DEFINE_PACKET_HEADER(ZC_FRIENDS_LIST, 0x201)
@@ -537,7 +454,6 @@ DEFINE_PACKET_HEADER(ZC_ACK_OPEN_BANKING, 0x9b7)
 DEFINE_PACKET_HEADER(ZC_ACK_CLOSE_BANKING, 0x9b9)
 DEFINE_PACKET_HEADER(ZC_ACK_COUNT_BARGAIN_SALE_ITEM, 0x9c4)
 DEFINE_PACKET_HEADER(ZC_ACK_GUILDSTORAGE_LOG, 0x9da)
-DEFINE_PACKET_HEADER(ZC_DYNAMICNPC_CREATE_RESULT, 0xa17)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
 DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE, 0xa46)
 DEFINE_PACKET_HEADER(ZC_STYLE_CHANGE_RES, 0xa47)
@@ -557,18 +473,8 @@ DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
 DEFINE_PACKET_HEADER(ZC_REPUTE_INFO, 0x0b8d)
-DEFINE_PACKET_HEADER(ZC_OPEN_REFORM_UI, 0x0b8f)
-DEFINE_PACKET_HEADER(CZ_CLOSE_REFORM_UI, 0x0b90)
-DEFINE_PACKET_HEADER(CZ_ITEM_REFORM, 0x0b91)
-DEFINE_PACKET_HEADER(ZC_ITEM_REFORM_ACK, 0x0b92)
 DEFINE_PACKET_HEADER(ZC_UI_OPEN_V3, 0x0b9a)
-DEFINE_PACKET_HEADER(CZ_REQUEST_RANDOM_ENCHANT, 0x0b9b)
-DEFINE_PACKET_HEADER(CZ_REQUEST_PERFECT_ENCHANT, 0x0b9c)
-DEFINE_PACKET_HEADER(CZ_REQUEST_UPGRADE_ENCHANT, 0x0b9d)
-DEFINE_PACKET_HEADER(CZ_REQUEST_RESET_ENCHANT, 0x0b9e)
-DEFINE_PACKET_HEADER(ZC_RESPONSE_ENCHANT, 0x0b9f)
-DEFINE_PACKET_HEADER(CZ_CLOSE_UI_ENCHANT, 0x0ba0)
-DEFINE_PACKET_HEADER(CZ_USE_PACKAGEITEM, 0x0baf)
+DEFINE_PACKET_HEADER(CZ_RESET_SKILL, 0x0bb1)
 DEFINE_PACKET_HEADER(CZ_PC_SELL_ITEMLIST, 0x00c9)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
