@@ -7840,7 +7840,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							if (sc->getSCE(SC_CLIMAX)->val1 == 3)
 								skillratio += skillratio * 150 / 100;
 							else if (sc->getSCE(SC_CLIMAX)->val1 == 5)
-								skillratio += skillratio * 20 / 100;
+								skillratio -= skillratio * 20 / 100;
 						}
 						break;
 					case AG_RAIN_OF_CRYSTAL:
