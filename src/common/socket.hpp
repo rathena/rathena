@@ -199,4 +199,34 @@ void send_shortlist_add_fd(int fd);
 void send_shortlist_do_sends();
 #endif
 
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+static int8 packet_buffer[UINT16_MAX];
+
+template <typename P>
+bool socket_send( int fd, P& packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, sizeof( P ) );
+	memcpy( WFIFOP( fd, 0 ), &packet, sizeof( P ) );
+	WFIFOSET( fd, sizeof( P ) );
+
+	return true;
+}
+
+template <typename P>
+bool socket_send( int fd, P* packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, packet->packetLength );
+	memcpy( WFIFOP( fd, 0 ), packet, packet->packetLength );
+	WFIFOSET( fd, packet->packetLength );
+
+	return true;
+}
+
 #endif /* SOCKET_HPP */
