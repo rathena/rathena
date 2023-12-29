@@ -25168,11 +25168,11 @@ void clif_goldpc_info( map_session_data& sd ){
 		struct PACKET_ZC_GOLDPCCAFE_POINT p = {};
 
 		p.packetType = HEADER_ZC_GOLDPCCAFE_POINT;
-		p.active = true;
+		p.isActive = true;
 		if( battle_config.feature_goldpc_vip && pc_isvip( &sd ) ){
-			p.unitPoint = 2;
+			p.mode = 2;
 		}else{
-			p.unitPoint = 1;
+			p.mode = 1;
 		}
 		p.point = (int32)pc_readparam( &sd, SP_GOLDPC_POINTS );
 		if( sd.goldpc_tid != INVALID_TIMER ){
@@ -25185,12 +25185,12 @@ void clif_goldpc_info( map_session_data& sd ){
 				// Always round up to full second
 				remaining += ( remaining % 1000 );
 
-				p.accumulatePlaySecond = (int32)( client_max_seconds - ( remaining / 1000 ) );
+				p.playedTime = (int32)( client_max_seconds - ( remaining / 1000 ) );
 			}else{
-				p.accumulatePlaySecond = 0;
+				p.playedTime = 0;
 			}
 		}else{
-			p.accumulatePlaySecond = client_max_seconds;
+			p.playedTime = client_max_seconds;
 		}
 
 		clif_send( &p, sizeof( p ), &sd.bl, SELF );
