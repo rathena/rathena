@@ -398,6 +398,11 @@ struct PACKET_CZ_REQ_MERGE_ITEM{
 	uint16 indices[];
 } __attribute__((packed));
 
+struct PACKET_CZ_RESET_SKILL{
+	int16 packetType;
+	uint8 unknown;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -469,6 +474,7 @@ DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
 DEFINE_PACKET_HEADER(ZC_REPUTE_INFO, 0x0b8d)
 DEFINE_PACKET_HEADER(ZC_UI_OPEN_V3, 0x0b9a)
+DEFINE_PACKET_HEADER(CZ_RESET_SKILL, 0x0bb1)
 DEFINE_PACKET_HEADER(CZ_PC_SELL_ITEMLIST, 0x00c9)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
