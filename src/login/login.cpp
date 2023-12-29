@@ -345,6 +345,11 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		return 0; // 0 = Unregistered ID
 	}
 
+	if( !isServer && sex_str2num( acc.sex ) == SEX_SERVER ){
+		ShowWarning( "Connection refused: ip %s tried to log into server account '%s'\n", ip, sd->userid );
+		return 0; // 0 = Unregistered ID
+	}
+
 	if( !login_check_password( *sd, acc ) ) {
 		ShowNotice("Invalid password (account: '%s', ip: %s)\n", sd->userid, ip);
 		return 1; // 1 = Incorrect Password
