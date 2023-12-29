@@ -1281,37 +1281,33 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 	if(battle_check_target(&md->bl,bl,BCT_ENEMY)<=0)
 		return 0;
 
-	switch (bl->type)
-	{
-	case BL_PC:
-		if (((TBL_PC*)bl)->state.gangsterparadise &&
-			!status_has_mode(&md->status,MD_STATUSIMMUNE))
-			return 0; //Gangster paradise protection.
-	default:
-		if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
-			(*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
-			return 0; //For some reason Homun targets are never overriden.
+	if (bl->type == BL_PC && BL_CAST(BL_PC, bl)->state.gangsterparadise &&
+		!status_has_mode(&md->status,MD_STATUSIMMUNE))
+		return 0; //Gangster paradise protection.
 
-		dist = distance_bl(&md->bl, bl);
-		if(
-			((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
-			battle_check_range(&md->bl,bl,md->db->range2)
-		) { //Pick closest target?
+	if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
+		(*target) != nullptr && (*target)->type == BL_HOM && bl->type != BL_HOM)
+		return 0; //For some reason Homun targets are never overriden.
+
+	dist = distance_bl(&md->bl, bl);
+	if(
+		((*target) == nullptr || !check_distance_bl(&md->bl, *target, dist)) &&
+		battle_check_range(&md->bl,bl,md->db->range2)
+	) { //Pick closest target?
 #ifdef ACTIVEPATHSEARCH
-			struct walkpath_data wpd;
-			if (!path_search(&wpd, md->bl.m, md->bl.x, md->bl.y, bl->x, bl->y, 0, CELL_CHKWALL)) // Count walk path cells
-				return 0;
-			//Standing monsters use range2, walking monsters use range3
-			if ((md->ud.walktimer == INVALID_TIMER && wpd.path_len > md->db->range2)
-				|| (md->ud.walktimer != INVALID_TIMER && wpd.path_len > md->db->range3))
-				return 0;
+		struct walkpath_data wpd;
+		if (!path_search(&wpd, md->bl.m, md->bl.x, md->bl.y, bl->x, bl->y, 0, CELL_CHKWALL)) // Count walk path cells
+			return 0;
+		//Standing monsters use range2, walking monsters use range3
+		if ((md->ud.walktimer == INVALID_TIMER && wpd.path_len > md->db->range2)
+			|| (md->ud.walktimer != INVALID_TIMER && wpd.path_len > md->db->range3))
+			return 0;
 #endif
-			(*target) = bl;
-			md->target_id=bl->id;
-			md->min_chase = cap_value(dist + md->db->range3 - md->status.rhw.range, md->db->range3, MAX_MINCHASE);
-			return 1;
-		}
-		break;
+		(*target) = bl;
+		md->target_id=bl->id;
+		md->min_chase = cap_value(dist + md->db->range3 - md->status.rhw.range, md->db->range3, MAX_MINCHASE);
+		return 1;
+
 	}
 	return 0;
 }
@@ -1518,6 +1514,7 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 			break;
 		//Because it is not unset when the mob finishes walking.
 		md->state.skillstate = MSS_IDLE;
+		[[fallthrough]];
 	case MSS_IDLE:
 		if( md->ud.walktimer == INVALID_TIMER && md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0 ){
 			md->idle_event[0] = 0;
@@ -3857,8 +3854,9 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 					bl = &md->bl;
 					if (md->master_id)
 						bl = map_id2bl(md->master_id);
-					if (bl) //Otherwise, fall through.
+					if (bl)
 						break;
+					[[fallthrough]];
 				case MST_FRIEND:
 					bl = fbl?fbl:(fmd?&fmd->bl:&md->bl);
 					break;
@@ -3907,8 +3905,9 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 					bl = &md->bl;
 					if (md->master_id)
 						bl = map_id2bl(md->master_id);
-					if (bl) //Otherwise, fall through.
+					if (bl)
 						break;
+					[[fallthrough]];
 				case MST_FRIEND:
 					if (fbl) {
 						bl = fbl;
@@ -3916,7 +3915,8 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 					} else if (fmd) {
 						bl = &fmd->bl;
 						break;
-					} // else fall through
+					}
+					[[fallthrough]];
 				default:
 					bl = &md->bl;
 					break;

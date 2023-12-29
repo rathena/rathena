@@ -66,6 +66,7 @@ struct Channel* channel_create(struct Channel *tmp_chan) {
 			break;
 		case CHAN_TYPE_PRIVATE:
 			channel->char_id = tmp_chan->char_id;
+			[[fallthrough]];
 		default:
 			strdb_put(channel_db, channel->name, channel);
 			break;

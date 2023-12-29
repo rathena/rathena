@@ -1424,6 +1424,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 	case AS_VENOMKNIFE:
 		if (sd) //Poison chance must be that of Envenom. [Skotlex]
 			skill_lv = pc_checkskill(sd, TF_POISON);
+		[[fallthrough]];
 	case TF_POISON:
 	case AS_SPLASHER:
 		if(!sc_start2(src,bl,SC_POISON,(4*skill_lv+10),skill_lv,src->id,skill_get_time2(skill_id,skill_lv))
@@ -1568,7 +1569,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 #ifndef RENEWAL
 	case PA_PRESSURE:
 		status_percent_damage(src, bl, 0, 15+5*skill_lv, false);
-		//Fall through
+		[[fallthrough]];
 	case HW_GRAVITATION:
 		//Pressure and Gravitation can trigger physical autospells
 		attack_type |= BF_NORMAL;
@@ -2179,6 +2180,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		break;
 	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
 		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
+		[[fallthrough]];
 	case WM_METALICSOUND:
 	case WM_REVERBERATION:
 	case TR_RHYTHMSHOOTING:
@@ -3305,11 +3307,13 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
+			[[fallthrough]]; // so we can possibly cast TigerFist or straight to ExtremityFist
 		case CH_TIGERFIST:
 			if (!duration && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
 				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
+			[[fallthrough]]; // so we can possibly cast ChainCrush or straight to ExtremityFist
 		case CH_CHAINCRUSH:
 			if (!duration && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS)) {
 				duration = 1;
@@ -3814,7 +3818,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			if(src->type == BL_PC)
 				dmg.blewcount = 10;
 			dmg.amotion = 0; //Disable delay or attack will do no damage since source is dead by the time it takes effect. [Skotlex]
-			// fall through
+			[[fallthrough]];
 		case KN_AUTOCOUNTER:
 		case NPC_CRITICALSLASH:
 		case TF_DOUBLE:
@@ -3896,7 +3900,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			dmg.dmotion = clif_skill_damage(src, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, (flag&SD_LEVEL) ? -1 : skill_lv, DMG_SPLASH);
 			if( dsrc != src ) // avoid damage display redundancy
 				break;
-			//Fall through
+			[[fallthrough]];
 		case HT_LANDMINE:
 			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -1, dmg_type);
 			break;
@@ -3917,7 +3921,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				type = DMG_SPLASH;
 			if (!(flag&SD_ANIMATION))
 				clif_skill_nodamage(dsrc, bl, skill_id, skill_lv, 1);
-			// Fall through
+			[[fallthrough]];
 		case WM_REVERBERATION:
 			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -2, dmg_type);
 			break;
@@ -3948,6 +3952,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
 			dmg.amotion = 300;/* makes the damage value not overlap with previous damage (when displayed by the client) */
+			[[fallthrough]];
 		default:
 			if( flag&SD_ANIMATION && dmg.div_ < 2 ) //Disabling skill animation doesn't works on multi-hit.
 				dmg_type = DMG_SPLASH;
@@ -4217,7 +4222,7 @@ static int skill_check_unit_range_sub(struct block_list *bl, va_list ap)
 		case AL_PNEUMA: //Pneuma doesn't work even if just one cell overlaps with Land Protector
 			if(g_skill_id == SA_LANDPROTECTOR)
 				break;
-			//Fall through
+			[[fallthrough]];
 		case MH_STEINWAND:
 		case MG_SAFETYWALL:
 		case SC_MAELSTROM:
@@ -4606,7 +4611,8 @@ static TIMER_FUNC(skill_timerskill){
 						if (unit)
 							break;
 					}
-				}	// Fall through
+				}
+					[[fallthrough]];
 				case WZ_JUPITEL:
 					// Official behaviour is to hit as long as there is a line of sight, regardless of distance
 					if (skl->type > 0 && !status_isdead(target) && path_search_long(NULL,src->m,src->x,src->y,target->x,target->y,CELL_CHKWALL)) {
@@ -4755,6 +4761,7 @@ static TIMER_FUNC(skill_timerskill){
 						int dummy = 1, i = skill_get_unit_range(skl->skill_id,skl->skill_lv);
 						map_foreachinarea(skill_cell_overlap, src->m, skl->x-i, skl->y-i, skl->x+i, skl->y+i, BL_SKILL, skl->skill_id, &dummy, src);
 					}
+					[[fallthrough]];
 				case WL_EARTHSTRAIN:
 					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,(skl->type<<16)|skl->flag);
 					break;
@@ -5362,6 +5369,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #ifndef RENEWAL
 	case SN_SHARPSHOOTING:
 		flag |= 2; // Flag for specific mob damage formula
+		[[fallthrough]];
 #endif
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
@@ -5517,6 +5525,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case SU_PICKYPECK:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		[[fallthrough]];
 	case SU_BITE:
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -5532,6 +5541,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MC_CARTREVOLUTION:
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
+		[[fallthrough]];
 	case AS_SPLASHER:
 	case HT_BLITZBEAT:
 	case AC_SHOWER:
@@ -6075,6 +6085,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case AL_HOLYLIGHT:
 		status_change_end(bl, SC_P_ALTER);
+		[[fallthrough]];
 	case MG_SOULSTRIKE:
 	case NPC_DARKSTRIKE:
 	case MG_COLDBOLT:
@@ -6177,6 +6188,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case SL_SMA:
 		status_change_end(src, SC_SMA);
+		[[fallthrough]];
 	case SL_STIN:
 	case SL_STUN:
 	case SP_SPA:
@@ -6192,6 +6204,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		clif_emotion(src,ET_ANGER);
 		if (rnd() % 2 == 0)
 			break; // 50% chance
+		[[fallthrough]];
 	case SN_FALCONASSAULT:
 #ifndef RENEWAL
 	case PA_PRESSURE:
@@ -6248,6 +6261,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_SELFDESTRUCTION:
 		if( tsc && tsc->getSCE(SC_HIDING) )
 			break;
+		[[fallthrough]];
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
@@ -6570,6 +6584,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 			break;
 		}
+		[[fallthrough]];
 	case RA_WUGBITE:
 		if( path_search(NULL,src->m,src->x,src->y,bl->x,bl->y,1,CELL_CHKNOREACH) ) {
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
@@ -7206,6 +7221,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0) ;
 				break ;
 			}
+			[[fallthrough]];
  		case AL_HEAL:
 		case ALL_RESURRECTION:
 		case PR_ASPERSIO:
@@ -7338,6 +7354,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		} else if (status_isdead(bl) && flag&1) { //Revive
 			skill_area_temp[0]++; //Count it in, then fall-through to the Resurrection code.
 			skill_lv = 3; //Resurrection level 3 is used
+			[[fallthrough]];
 		} else //Invalid target, skip resurrection.
 			break;
 
@@ -7509,7 +7526,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if (sd) mob_once_spawn(sd, src->m, src->x, src->y,"--ja--", -1, 1, "", SZ_SMALL, AI_NONE);
+		if (sd)
+			mob_once_spawn(sd, src->m, src->x, src->y,"--ja--", -1, 1, "", SZ_SMALL, AI_NONE);
 		break;
 	case SA_LEVELUP:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -7522,6 +7540,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_QUESTION:
 		clif_emotion(src,ET_QUESTION);
+		[[fallthrough]];
 	case SA_GRAVITY:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
@@ -7777,6 +7796,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 			break;
 		}
+		[[fallthrough]];
 	case PR_SLOWPOISON:
 	case PR_LEXAETERNA:
 #ifndef RENEWAL
@@ -8630,6 +8650,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_WINDMILL:
 	case GN_CART_TORNADO:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+		[[fallthrough]];
 	case SR_EARTHSHAKER:
 	case NC_INFRAREDSCAN:
 	case NPC_VAMPIRE_GIFT:
@@ -9128,6 +9149,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( !mer )
 			break;
 		sd = mer->master;
+		[[fallthrough]];
 	case WZ_ESTIMATION:
 		if( sd == NULL )
 			break;
@@ -9719,6 +9741,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SA_ELEMENTWIND:
 		if (sd && (!dstmd || status_has_mode(tstatus,MD_STATUSIMMUNE))) // Only works on monsters (Except status immune monsters).
 			break;
+		[[fallthrough]];
 	case NPC_ATTRICHANGE:
 	case NPC_CHANGEWATER:
 	case NPC_CHANGEGROUND:
@@ -10071,7 +10094,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 							// if it is already trapping something don't spring it,
 							// remove trap should be used instead
 							break;
-						// otherwise fallthrough to below
+						[[fallthrough]];
 					case UNT_BLASTMINE:
 					case UNT_SKIDTRAP:
 					case UNT_LANDMINE:
@@ -10351,6 +10374,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(bl, SC_SWOO);
 			break;
 		}
+		[[fallthrough]];
 	case SL_SKA: // [marquis007]
 	case SL_SKE:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
@@ -10603,6 +10627,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			break;
 		}
+		[[fallthrough]];
 	case NPC_WIDEBLEEDING:
 	case NPC_WIDEBLEEDING2:
 	case NPC_WIDECONFUSE:
@@ -12152,6 +12177,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			break;
 		}
+		[[fallthrough]];
 	case KO_IZAYOI:
 	case OB_ZANGETSU:
 	case KG_KYOMU:
@@ -13609,6 +13635,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			return 0; // Don't consume gems if cast on Land Protector
 		}
 	}
+	[[fallthrough]];
 	case MG_FIREWALL:
 	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
@@ -13742,6 +13769,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case EM_CONFLAGRATION:
 	case EM_TERRA_DRIVE:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
+		[[fallthrough]];
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 	case GN_WALLOFTHORN:
 	case GN_DEMONIC_FIRE:
@@ -13818,7 +13846,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if (pc_checkskill(sd, SU_SPIRITOFLAND))
 				sc_start(src, src, SC_DORAM_SVSP, 100, 100, skill_get_time(SU_SPIRITOFLAND, 1));
 		}
-	// Fall through
+		[[fallthrough]];
 	case WZ_METEOR:
 	{
 		int area = skill_get_splash(skill_id, skill_lv);
@@ -14059,6 +14087,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case AC_SHOWER:
 		status_change_end(src, SC_CAMOUFLAGE);
+		[[fallthrough]];
 	case MA_SHOWER:
 	case NC_COLDSLOWER:
 	case RK_DRAGONBREATH:
@@ -14794,6 +14823,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case MA_SKIDTRAP:
 		//Save position of caster
 		val1 = ((src->x)<<16)|(src->y);
+		[[fallthrough]];
 	case HT_ANKLESNARE:
 	case HT_SHOCKWAVE:
 	case HT_SANDMAN:
@@ -14966,12 +14996,16 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 			switch (val1) {
 				case ELE_FIRE:
 					subunt++;
+					[[fallthrough]];
 				case ELE_WATER:
 					subunt++;
+					[[fallthrough]];
 				case ELE_POISON:
 					subunt++;
+					[[fallthrough]];
 				case ELE_DARK:
 					subunt++;
+					[[fallthrough]];
 				case ELE_WIND:
 					break;
 				default:
@@ -15007,6 +15041,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case WM_POEMOFNETHERWORLD:	// Can't be placed on top of Land Protector.
 		if( skill_id == WM_POEMOFNETHERWORLD && map_flag_gvg2(src->m) )
 			target = BCT_ALL;
+		[[fallthrough]];
 	case WM_SEVERE_RAINSTORM:
 	case SO_WATER_INSIGNIA:
 	case SO_FIRE_INSIGNIA:
@@ -15476,6 +15511,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		case UNT_HERMODE:
 			if (sg->src_id!=bl->id && battle_check_target(&unit->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
 				status_change_clear_buffs(bl, SCCB_HERMODE); //Should dispell only allies.
+			[[fallthrough]];
 		case UNT_RICHMANKIM:
 		case UNT_ETERNALCHAOS:
 		case UNT_DRUMBATTLEFIELD:
@@ -15953,11 +15989,13 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_VERDURETRAP:
 			if( bl->type == BL_PC )// it won't work on players
 				break;
+			[[fallthrough]];
 		case UNT_FIRINGTRAP:
 		case UNT_ICEBOUNDTRAP:
 		case UNT_CLUSTERBOMB:
 			if( bl->id == ss->id )// it won't trigger on caster
 				break;
+			[[fallthrough]];
 		case UNT_BLASTMINE:
 		case UNT_SHOCKWAVE:
 		case UNT_SANDMAN:
@@ -16475,6 +16513,7 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, t_tick tick)
 					}
 				}
 			}
+			[[fallthrough]];
 		case UNT_WHISTLE:
 		case UNT_ASSASSINCROSS:
 		case UNT_POEMBRAGI:
@@ -16534,6 +16573,7 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 				//your own. Let's pray that scenario is pretty unlikely and noone will complain too much about it.
 				status_change_end(bl, SC_DANCING);
 			}
+			[[fallthrough]];
 		case MH_STEINWAND:
 		case MG_SAFETYWALL:
 		case AL_PNEUMA:
@@ -17174,15 +17214,15 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 	// perform skill-group checks
 	if(skill_id != WM_GREAT_ECHO && inf2[INF2_ISCHORUS]) {
 		if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) < 1) {
-		    clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-		    return false;
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			return false;
 		}
 	}
 	else if(inf2[INF2_ISENSEMBLE]) {
-	    if (skill_check_pc_partner(sd, skill_id, &skill_lv, 1, 0) < 1 && !(sc && sc->getSCE(SC_KVASIR_SONATA))) {
-		    clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-		    return false;
-	    }
+		if (skill_check_pc_partner(sd, skill_id, &skill_lv, 1, 0) < 1 && !(sc && sc->getSCE(SC_KVASIR_SONATA))) {
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			return false;
+		}
 	}
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
@@ -17197,6 +17237,7 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
+			[[fallthrough]];
 		case SA_CASTCANCEL:
 			if(sd->ud.skilltimer == INVALID_TIMER) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -17484,6 +17525,7 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
+			[[fallthrough]];
 		case GD_EMERGENCYCALL:
 		case GD_ITEMEMERGENCYCALL:
 			// other checks were already done in skill_isNotOk()
@@ -17507,6 +17549,7 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
+			[[fallthrough]];
 		case NJ_BUNSINJYUTSU:
 			if (!(sc && sc->getSCE(SC_NEN))) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -18366,7 +18409,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			case MO_KITRANSLATION:
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone
 				require.spiritball = 0;
-				//Fall through
+				[[fallthrough]];
 			default:
 				if(sd->state.autocast)
 					require.sp = 0;
@@ -18605,7 +18648,7 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		case NC_REPAIR: // NOTE: Repair_Kit must be last in the ItemCost list depending on the skill's max level
 			req.itemid[1] = skill->require.itemid[skill->max];
 			req.amount[1] = skill->require.amount[skill->max];
-			// Fall through
+			[[fallthrough]];
 
 		/* Normal skill requirements and gemstone checks */
 		default:
@@ -19700,7 +19743,7 @@ int skill_attack_area(struct block_list *bl, va_list ap)
 				return 0; //Does not hit current cell
 			if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR)) // Attack should not happen if the target is on Land Protector
 				return 0;
-			//Fall through
+			[[fallthrough]];
 		case NPC_ACIDBREATH:
 		case NPC_DARKNESSBREATH:
 		case NPC_FIREBREATH:
@@ -19982,6 +20025,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 		case GN_CRAZYWEED_ATK:
 			if (skill_get_unit_flag(unit->group->skill_id, UF_CRAZYWEEDIMMUNE))
 				break;
+			[[fallthrough]];
 		case HW_GANBANTEIN:
 		case LG_EARTHDRIVE:
 			// Officially songs/dances are removed
@@ -20164,6 +20208,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 				if (su && su->group->unit_id == UNT_USED_TRAPS)
 					break;
 			}
+			[[fallthrough]];
 		case UNT_CLUSTERBOMB:
 			if( ss != bl )
 				skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1|SD_LEVEL);
@@ -20192,6 +20237,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 						break;
 				}
 			}
+			[[fallthrough]];
 		default: {
 				int split_count = 0;
 
@@ -20951,7 +20997,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				unit->limit = DIFF_TICK(tick + group->interval,group->tick);
 				if( unit->val1 <= 0 )
 					skill_delunit(unit);
-			break;
+				break;
 			case UNT_BLASTMINE:
 #ifdef RENEWAL
 			case UNT_CLAYMORETRAP:
@@ -20965,7 +21011,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				//clif_changetraplook(bl, UNT_FIREPILLAR_ACTIVE);
 				group->limit=DIFF_TICK(tick+1500,group->tick);
 				unit->limit=DIFF_TICK(tick+1500,group->tick);
-			break;
+				break;
 
 			case UNT_ANKLESNARE:
 			case UNT_ELECTRICSHOCKER:
@@ -20973,6 +21019,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 					skill_delunit(unit);
 					break;
 				}
+				[[fallthrough]];
 			case UNT_SKIDTRAP:
 			case UNT_LANDMINE:
 			case UNT_SHOCKWAVE:
@@ -21002,7 +21049,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				}
 				skill_delunit(unit);
 			}
-			break;
+				break;
 
 			case UNT_WARP_ACTIVE:
 				// warp portal opens (morph to a UNT_WARP_WAITING cell)
@@ -21013,7 +21060,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				unit->limit = skill_get_time(group->skill_id,group->skill_lv);
 				// apply effect to all units standing on it
 				map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
-			break;
+				break;
 
 			case UNT_CALLFAMILY:
 			{
@@ -21032,7 +21079,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				}
 				skill_delunit(unit);
 			}
-			break;
+				break;
 
 			case UNT_REVERBERATION:
 			case UNT_NETHERWORLD:
@@ -21055,7 +21102,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 					map_foreachinrange(skill_area_sub, &unit->bl, unit->range, BL_CHAR|BL_SKILL, src, group->skill_id, group->skill_lv, tick, BCT_ENEMY|SD_ANIMATION|5, skill_castend_damage_id);
 				skill_delunit(unit);
 			}
-			break;
+				break;
 
 			case UNT_BANDING:
 			{
@@ -21069,7 +21116,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				group->limit = DIFF_TICK(tick+group->interval,group->tick);
 				unit->limit = DIFF_TICK(tick+group->interval,group->tick);
 			}
-			break;
+				break;
 
 			case UNT_B_TRAP:
 				{
@@ -22132,6 +22179,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 		switch (skill_id) {
 			case ASC_CDP: //25% Damage yourself, and display same effect as failed potion.
 				status_percent_damage(NULL, &sd->bl, -25, 0, true);
+				[[fallthrough]];
 			case AM_PHARMACY:
 			case AM_TWILIGHT1:
 			case AM_TWILIGHT2:
@@ -23336,6 +23384,7 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
 		case SC_KAGEHUMI:
 			if (skill_get_inf2(skill_id, INF2_IGNOREKAGEHUMI))
 				return 1;
+			break;
 		case SC_BITE:
 			if (skill_get_inf2(skill_id, INF2_IGNOREWUGBITE))
 				return 1;

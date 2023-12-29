@@ -5883,13 +5883,13 @@ BUILDIN_FUNC(warpparty)
 		case WARPPARTY_LEADER:
 			if (p->party.member[i].leader)
 				continue;
-			// Fall through
+			[[fallthrough]];
 		case WARPPARTY_RANDOMALL:
 			if (pl_sd == sd) {
 				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
 				break;
 			}
-			// Fall through
+			[[fallthrough]];
 		case WARPPARTY_RANDOMALLAREA:
 			if(!mapdata->getMapFlag(MF_NORETURN) && !mapdata->getMapFlag(MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))){
 				if (rx || ry) {
@@ -15731,6 +15731,7 @@ BUILDIN_FUNC(recovery)
 				map_idx = sd->bl.m;
 			if(map_idx < 1)
 				return SCRIPT_CMD_FAILURE; //No sd and no map given - return
+			[[fallthrough]];
 		case 4:
 		{
 			struct s_mapiterator *iter;
