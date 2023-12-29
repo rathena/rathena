@@ -37915,30 +37915,31 @@ Body:
     Hit: Multi_Hit
     HitCount: 3
     Element: Weapon
-    SplashArea: 2
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     CastCancel: true
     AfterCastActDelay: 300
-    Cooldown:
-      - Level: 1
-        Time: 3000
-      - Level: 2
-        Time: 2800
-      - Level: 3
-        Time: 2600
-      - Level: 4
-        Time: 2400
-      - Level: 5
-        Time: 2200
-      - Level: 6
-        Time: 2000
-      - Level: 7
-        Time: 1800
-      - Level: 8
-        Time: 1600
-      - Level: 9
-        Time: 1400
-      - Level: 10
-        Time: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
@@ -38056,7 +38057,7 @@ Body:
       IgnoreDefense: true
     Range: 2
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 2
     Element: Weapon
     GiveAp: 2
     CastCancel: true
