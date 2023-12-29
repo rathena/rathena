@@ -39202,8 +39202,8 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 300000
+    Duration1: 180000
+    Cooldown: 180000
     FixedCastTime: 1000
     Requires:
       SpCost: 300
@@ -39260,38 +39260,38 @@ Body:
       - Level: 7
         Area: 3
       - Level: 8
-        Area: 4
+        Area: 3
       - Level: 9
         Area: 4
       - Level: 10
-        Area: 5
+        Area: 4
     CastCancel: true
     CastTime: 3500
     AfterCastActDelay: 500
-    Cooldown: 1500
+    Cooldown: 1200
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 64
+          Amount: 93
         - Level: 2
-          Amount: 68
-        - Level: 3
-          Amount: 72
-        - Level: 4
-          Amount: 76
-        - Level: 5
-          Amount: 80
-        - Level: 6
-          Amount: 84
-        - Level: 7
-          Amount: 88
-        - Level: 8
-          Amount: 92
-        - Level: 9
           Amount: 96
+        - Level: 3
+          Amount: 99
+        - Level: 4
+          Amount: 102
+        - Level: 5
+          Amount: 105
+        - Level: 6
+          Amount: 108
+        - Level: 7
+          Amount: 111
+        - Level: 8
+          Amount: 114
+        - Level: 9
+          Amount: 117
         - Level: 10
-          Amount: 100
+          Amount: 120
       Weapon:
         Bow: true
       Ammo:
@@ -39305,6 +39305,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39368,7 +39370,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    Status: Handicapstate_Deepblind
   - Id: 5332
     Name: WH_SOLIDTRAP
     Description: Solid Trap
@@ -39377,6 +39378,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39422,7 +39425,6 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
-    Status: HandicapState_Crystallization
     Unit:
       Id: Solidtrap
       Range:
@@ -39449,6 +39451,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39494,7 +39498,6 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
-    Status: HandicapState_LightningStrike
     Unit:
       Id: Swifttrap
       Range:
@@ -39528,9 +39531,10 @@ Body:
     GiveAp: 1
     CastCancel: true
     CastTime: 800
-    AfterCastActDelay: 300
+    AfterCastActDelay: 700
     Duration1: 10000
     FixedCastTime: 200
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
@@ -39567,6 +39571,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39630,7 +39636,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    Status: HandicapState_Conflagration
   - Id: 5336
     Name: BO_BIONIC_PHARMACY
     Description: Bionic Pharmacy

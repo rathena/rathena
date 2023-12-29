@@ -5732,6 +5732,8 @@ Body:
     DurationLookup: RA_UNLIMIT
     Flags:
       DisplayPc: true
+      NoDispell: true
+      NoClearance: true
   - Status: Kings_Grace
     Icon: EFST_KINGS_GRACE
     DurationLookup: LG_KINGS_GRACE
@@ -7633,7 +7635,7 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Lightningstrike
     Icon: EFST_HANDICAPSTATE_LIGHTNINGSTRIKE
-    DurationLookup: WH_SWIFTTRAP
+    DurationLookup: EM_LIGHTNING_LAND
     States:
       #NoMove: true
       #NoCast: true
@@ -7646,7 +7648,7 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Crystallization
     Icon: EFST_HANDICAPSTATE_CRYSTALLIZATION
-    DurationLookup: WH_SOLIDTRAP
+    DurationLookup: EM_TERRA_DRIVE
     States:
       #NoMove: true
       #NoCast: true
@@ -7660,7 +7662,7 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Conflagration
     Icon: EFST_HANDICAPSTATE_CONFLAGRATION
-    DurationLookup: WH_FLAMETRAP
+    DurationLookup: EM_CONFLAGRATION
     Flags:
       BlEffect: true
       DisplayPc: true
