@@ -14105,19 +14105,11 @@ const std::string PlayerStatPointDatabase::getDefaultLocation() {
 }
 
 uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
-	if (!this->nodesExist(node, { "Level", "Points" })) {
-		return 0;
-	}
 
 	uint16 level;
 
 	if (!this->asUInt16(node, "Level", level))
-		return 0;
-
-	uint32 point;
-
-	if (!this->asUInt32(node, "Points", point))
-		return 0;
+	    return 0;
 
 	if (level == 0) {
 		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
@@ -14133,19 +14125,32 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	bool exists = entry != nullptr;
 
 	if( !exists ){
-		entry = std::make_shared<s_statpoint_entry>();
-		entry->level = level;
-		entry->statpoints = point;
+	    if( !this->nodesExist( node, { "Points" } ) ){
+			return 0;
+	    }
+
+	    entry = std::make_shared<s_statpoint_entry>();
+	    entry->level = level;
 	}
 
-	if( this->nodeExists( node, "TraitPoints" ) ){
-		uint32 traitpoints;
+	if( this->nodeExists( node, "Points" ) ){
+	    uint32 points;
 
-		if( !this->asUInt32( node, "TraitPoints", traitpoints ) ){
+		if( !this->asUInt32( node, "Points", points ) ){
 			return 0;
 		}
 
-		entry->traitpoints = traitpoints;
+	    entry->statpoints = points;
+	}
+
+	if( this->nodeExists( node, "TraitPoints" ) ){
+	    uint32 traitpoints;
+
+	    if( !this->asUInt32( node, "TraitPoints", traitpoints ) ){
+	        return 0;
+	    }
+
+	    entry->traitpoints = traitpoints;
 	}else{
 		if( !exists ){
 			entry->traitpoints = 0;
