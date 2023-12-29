@@ -36370,11 +36370,11 @@ Body:
       - Level: 2
         Area: 3
       - Level: 3
-        Area: 4
+        Area: 3
       - Level: 4
         Area: 4
       - Level: 5
-        Area: 5
+        Area: 4
     CastCancel: true
     Duration1:
       - Level: 1
@@ -36387,7 +36387,7 @@ Body:
         Time: 6000
       - Level: 5
         Time: 7000
-    Cooldown: 2000
+    Cooldown: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36400,9 +36400,6 @@ Body:
           Amount: 75
         - Level: 5
           Amount: 85
-      ItemCost:
-        - Item: Holy_Water
-          Amount: 1
     Status: Holy_Oil
   - Id: 5242
     Name: IQ_SINCERE_FAITH
@@ -36455,8 +36452,9 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea: 5
+    SplashArea: 4
     CastCancel: true
+    AfterCastActDelay: 500
     Duration1: 150000
     Cooldown: 5000
     Requires:
@@ -36482,37 +36480,37 @@ Body:
       - Level: 2
         Area: 3
       - Level: 3
-        Area: 4
+        Area: 3
       - Level: 4
         Area: 4
       - Level: 5
-        Area: 5
+        Area: 4
     GiveAp: 4
     CastCancel: true
     AfterCastActDelay:
       - Level: 1
-        Time: 500
+        Time: 1500   # TODO
       - Level: 2
-        Time: 400
+        Time: 1400   # TODO
       - Level: 3
-        Time: 300
+        Time: 1300   # TODO
       - Level: 4
-        Time: 200
+        Time: 1200   # TODO
       - Level: 5
-        Time: 0
+        Time: 1000
     Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
-          Amount: 70
+          Amount: 105
         - Level: 2
-          Amount: 75
+          Amount: 110
         - Level: 3
-          Amount: 80
+          Amount: 115
         - Level: 4
-          Amount: 85
+          Amount: 120
         - Level: 5
-          Amount: 90
+          Amount: 125
   - Id: 5245
     Name: IQ_FIRST_BRAND
     Description: First Brand
