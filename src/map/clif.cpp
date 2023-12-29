@@ -25193,6 +25193,12 @@ void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
 #endif
 }
 
+void clif_parse_reset_skill( int fd, map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203
+	PACKET_CZ_RESET_SKILL* p = (PACKET_CZ_RESET_SKILL*)RFIFOP( fd, 0 );
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
