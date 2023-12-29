@@ -25573,6 +25573,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 140
@@ -25620,6 +25622,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 190
@@ -31172,6 +31176,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Ghost
     ElementLevel: 3
     WalkSpeed: 200
@@ -31228,6 +31234,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 300
@@ -31275,6 +31283,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 250
@@ -31322,6 +31332,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 250
@@ -31369,6 +31381,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 300
@@ -31416,6 +31430,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 140
@@ -31465,6 +31481,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Wind
     ElementLevel: 3
     WalkSpeed: 190
@@ -60651,6 +60669,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 187
@@ -68263,6 +68283,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 300
@@ -68734,6 +68756,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 140
@@ -70573,6 +70597,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 250
@@ -73816,6 +73842,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Rachel_Sanctuary: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 225
@@ -92522,6 +92550,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Demon
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 200
@@ -92569,6 +92599,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 250
@@ -92616,6 +92648,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 170
@@ -92663,6 +92697,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -92710,6 +92746,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 250
@@ -92757,6 +92795,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Brute
+    RaceGroups:
+      Illusion_Turtle: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -94048,6 +94088,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -94095,6 +94137,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 150
@@ -94142,6 +94186,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -94187,6 +94233,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 150
@@ -94237,6 +94285,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 175
@@ -94284,6 +94334,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -94331,6 +94383,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
@@ -94378,6 +94432,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Fire
     ElementLevel: 4
     WalkSpeed: 150

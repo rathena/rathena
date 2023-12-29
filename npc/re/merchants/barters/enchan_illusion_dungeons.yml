@@ -412,3 +412,405 @@ Body:
           - Index: 3
             Item: IllusionStone
             Amount: 120
+  - Name: barter_ill_moonlight
+    Items:
+      - Index: 0
+        Item: Staff_Of_Bordeaux_IL
+        RequiredItems:
+          - Index: 0
+            Item: Staff_Of_Bordeaux
+          - Index: 1
+            Item: IllusionStone
+            Amount: 30
+          - Index: 2
+            Item: HazyDream
+            Amount: 100
+      - Index: 1
+        Item: Moonlight_Sword_IL
+        RequiredItems:
+          - Index: 0
+            Item: Moonlight_Sword
+          - Index: 1
+            Item: IllusionStone
+            Amount: 60
+          - Index: 2
+            Item: HazyDream
+            Amount: 100
+      - Index: 2
+        Item: Long_Mace_IL
+        RequiredItems:
+          - Index: 0
+            Item: Long_Mace
+          - Index: 1
+            Item: IllusionStone
+            Amount: 10
+          - Index: 2
+            Item: HazyDream
+            Amount: 20
+      - Index: 3
+        Item: Spectral_Spear_IL
+        RequiredItems:
+          - Index: 0
+            Item: Spectral_Spear
+          - Index: 1
+            Item: IllusionStone
+            Amount: 20
+          - Index: 2
+            Item: HazyDream
+            Amount: 100
+      - Index: 4
+        Item: Nurse_Cap_IL
+        RequiredItems:
+          - Index: 0
+            Item: Nurse_Cap
+          - Index: 1
+            Item: IllusionStone
+            Amount: 10
+          - Index: 2
+            Item: Bloody_LoveLetter
+            Amount: 100
+      - Index: 5
+        Item: Apple_Of_Archer_IL
+        RequiredItems:
+          - Index: 0
+            Item: Apple_Of_Archer
+          - Index: 1
+            Item: IllusionStone
+            Amount: 10
+          - Index: 2
+            Item: BrokenArrow
+            Amount: 100
+      - Index: 6
+        Item: Puente_Robe_IL
+        RequiredItems:
+          - Index: 0
+            Item: Puente_Robe
+          - Index: 1
+            Item: IllusionStone
+            Amount: 10
+          - Index: 2
+            Item: HazyDream
+            Amount: 100
+      - Index: 7
+        Item: Muffler_IL
+        RequiredItems:
+          - Index: 0
+            Item: Muffler_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 10
+          - Index: 2
+            Item: HazyMooncake
+            Amount: 100
+      - Index: 8
+        Item: Shoes_IL
+        RequiredItems:
+          - Index: 0
+            Item: Shoes_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 10
+          - Index: 2
+            Item: HazyMooncake
+            Amount: 100
+  - Name: barter_ill_frozen
+    Items:
+      - Index: 0
+        Item: Huuma_Flutter_Snow_IL
+        RequiredItems:
+          - Index: 0
+            Item: Huuma_Fluttering_Snow
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: KTULLANUXsEye
+            Amount: 20
+      - Index: 1
+        Item: Combo_Battle_Glove_IL
+        RequiredItems:
+          - Index: 0
+            Item: Combo_Battle_Glove
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: Snowball
+            Amount: 100
+      - Index: 2
+        Item: Herald_Of_GOD_IL
+        RequiredItems:
+          - Index: 0
+            Item: Herald_Of_GOD_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: SpritJewel
+            Amount: 300
+      - Index: 3
+        Item: Clack_Of_Servival_IL
+        RequiredItems:
+          - Index: 0
+            Item: Clack_Of_Servival
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: Frozen_PieceOfRock
+            Amount: 200
+      - Index: 4
+        Item: Cap_IL
+        RequiredItems:
+          - Index: 0
+            Item: Cap_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 50
+          - Index: 2
+            Item: Frozen_PieceOfRock
+            Amount: 100
+  - Name: barter_ill_vampire
+    Items:
+      - Index: 0
+        Item: Infiltrator_IL
+        RequiredItems:
+          - Index: 0
+            Item: Infiltrator_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 80
+          - Index: 2
+            Item: Torn_Diary
+            Amount: 20
+      - Index: 1
+        Item: Ghoul_Leg_IL
+        RequiredItems:
+          - Index: 0
+            Item: Ghoul_Leg
+          - Index: 1
+            Item: IllusionStone
+            Amount: 10
+          - Index: 2
+            Item: NightmareOfLump
+            Amount: 100
+      - Index: 2
+        Item: Wizardy_Staff_IL
+        RequiredItems:
+          - Index: 0
+            Item: Wizardy_Staff
+          - Index: 1
+            Item: IllusionStone
+            Amount: 40
+          - Index: 2
+            Item: SuspiciousMagicCircle
+            Amount: 100
+      - Index: 3
+        Item: Balistar_IL
+        RequiredItems:
+          - Index: 0
+            Item: Balistar_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 50
+          - Index: 2
+            Item: Shining_Spore
+            Amount: 100
+      - Index: 4
+        Item: Book_Of_The_Apo_IL
+        RequiredItems:
+          - Index: 0
+            Item: Book_Of_The_Apocalypse
+          - Index: 1
+            Item: IllusionStone
+            Amount: 50
+          - Index: 2
+            Item: Dried_Clover
+            Amount: 10
+      - Index: 5
+        Item: Cape_Of_Ancient_Lord_IL
+        RequiredItems:
+          - Index: 0
+            Item: Cape_Of_Ancient_Lord_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 30
+          - Index: 2
+            Item: Short_Bat_Fur
+            Amount: 200
+      - Index: 6
+        Item: Skul_Ring_IL
+        RequiredItems:
+          - Index: 0
+            Item: Skul_Ring_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 50
+          - Index: 2
+            Item: Dried_Leaf_Of_Ygg
+            Amount: 400
+      - Index: 7
+        Item: Ring_IL
+        RequiredItems:
+          - Index: 0
+            Item: Ring_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 50
+          - Index: 2
+            Item: SuspiciousMagicCircle
+            Amount: 400
+  - Name: barter_ill_turtle
+    Items:
+      - Index: 0
+        Item: Immaterial_Sword_IL
+        RequiredItems:
+          - Index: 0
+            Item: Immaterial_Sword
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: ShipsLog
+            Amount: 50
+      - Index: 1
+        Item: War_Axe_IL
+        RequiredItems:
+          - Index: 0
+            Item: War_Axe
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: PieceOfBlackSpirit
+            Amount: 200
+      - Index: 2
+        Item: Pole_Axe_IL
+        RequiredItems:
+          - Index: 0
+            Item: Pole_Axe
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: PieceOfBlackSpirit
+            Amount: 200
+      - Index: 3
+        Item: Huuma_Bird_Wing_IL
+        RequiredItems:
+          - Index: 0
+            Item: Huuma_Bird_Wing
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: OldShell
+            Amount: 200
+      - Index: 4
+        Item: Iron_Driver_IL
+        RequiredItems:
+          - Index: 0
+            Item: Iron_Driver
+          - Index: 1
+            Item: IllusionStone
+            Amount: 100
+          - Index: 2
+            Item: OldShell
+            Amount: 200
+      - Index: 5
+        Item: Fancy_Flower_IL
+        RequiredItems:
+          - Index: 0
+            Item: Fancy_Flower
+          - Index: 1
+            Item: IllusionStone
+            Amount: 50
+          - Index: 2
+            Item: OldDoll
+            Amount: 50
+  - Name: barter_ill_luanda
+    Items:
+      - Index: 0
+        Item: Tablet_IL
+        RequiredItems:
+          - Index: 0
+            Item: Tablet
+          - Index: 1
+            Item: IllusionStone
+            Amount: 50
+          - Index: 2
+            Item: Weak_Worm
+            Amount: 100
+      - Index: 1
+        Item: Hunter_Bow_IL
+        RequiredItems:
+          - Index: 0
+            Item: Hunter_Bow_
+          - Index: 1
+            Item: IllusionStone
+            Amount: 80
+          - Index: 2
+            Item: Shooting_Stone
+            Amount: 50
+          - Index: 3
+            Item: Pot_Stone
+            Amount: 50
+          - Index: 4
+            Item: Hair_Leaf
+            Amount: 50
+      - Index: 2
+        Item: Goibne_Helmet_IL
+        RequiredItems:
+          - Index: 0
+            Item: Goibne's_Helmet
+          - Index: 1
+            Item: IllusionStone
+            Amount: 120
+          - Index: 2
+            Item: Wootan_D_S_Piece
+            Amount: 30
+          - Index: 3
+            Item: Token_Of_Wootan
+            Amount: 150
+      - Index: 3
+        Item: Goibne_Armor_IL
+        RequiredItems:
+          - Index: 0
+            Item: Goibne's_Armor
+          - Index: 1
+            Item: IllusionStone
+            Amount: 80
+          - Index: 2
+            Item: Hard_Mud
+            Amount: 100
+          - Index: 3
+            Item: Token_Of_Bigstone
+            Amount: 150
+      - Index: 4
+        Item: Goibne_Boots_IL
+        RequiredItems:
+          - Index: 0
+            Item: Goibne's_Combat_Boots
+          - Index: 1
+            Item: IllusionStone
+            Amount: 80
+          - Index: 2
+            Item: Wootan_F_Fur
+            Amount: 100
+          - Index: 3
+            Item: Token_Of_Wootan
+            Amount: 150
+      - Index: 5
+        Item: Goibne_Shoulder_IL
+        RequiredItems:
+          - Index: 0
+            Item: Goibne's_Shoulder_Arms
+          - Index: 1
+            Item: IllusionStone
+            Amount: 120
+          - Index: 2
+            Item: Fragment_Of_Rock
+            Amount: 30
+          - Index: 3
+            Item: Token_Of_Bigstone
+            Amount: 150

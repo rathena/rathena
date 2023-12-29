@@ -5961,6 +5961,62 @@ ACMD_FUNC(dropall)
 }
 
 /*==========================================
+ * @stockall by [Hanashi]
+ * transfer items from cart to inventory
+ *------------------------------------------*/
+ACMD_FUNC(stockall)
+{
+	nullpo_retr(-1, sd);
+	
+	if (!pc_iscarton(sd)) {
+		clif_displaymessage(fd, msg_txt(sd,1533)); // You do not have a cart.
+		return -1;
+	}
+
+	int8 type = -1;
+	if ( message[0] ) {
+		type = atoi(message);
+		switch (type) {
+			case -1:
+			case IT_HEALING:
+			case IT_USABLE:
+			case IT_ETC:
+			case IT_WEAPON:
+			case IT_ARMOR:
+			case IT_CARD:
+			case IT_PETEGG:
+			case IT_PETARMOR:
+			case IT_AMMO:
+				break;
+
+			default:
+				clif_displaymessage(fd, msg_txt(sd, 1534)); // Usage: @stockall {<type>}
+				clif_displaymessage(fd, msg_txt(sd, 1493)); // Type List: (default) all = -1, healing = 0, usable = 2, etc = 3, armor = 4, weapon = 5, card = 6, petegg = 7, petarmor = 8, ammo = 10
+				return -1;
+		}
+	}
+	uint16 count = 0, count2 = 0;
+	for ( uint16 i = 0; i < MAX_CART; i++ ) {
+		if ( sd->cart.u.items_cart[i].amount > 0 ) {
+			std::shared_ptr<item_data> id = item_db.find(sd->cart.u.items_cart[i].nameid);
+			if ( id == nullptr ) {
+				ShowDebug("Non-existent item %u on stockall list (account_id: %d, char_id: %d)\n", sd->cart.u.items_cart[i].nameid, sd->status.account_id, sd->status.char_id);
+				continue;
+			}
+			if ( type == -1 || static_cast<item_types>(type) == id->type ) {
+				if (pc_getitemfromcart(sd, i, sd->cart.u.items_cart[i].amount))
+					count += sd->cart.u.items_cart[i].amount;
+				else
+					count2 += sd->cart.u.items_cart[i].amount;
+			}
+		}
+	}
+	sprintf(atcmd_output, msg_txt(sd,1535), count,count2); // %d items are transferred (%d skipped)!
+	clif_displaymessage(fd, atcmd_output); 
+	return 0;
+}
+
+/*==========================================
  * @storeall by [MouseJstr]
  * Put everything into storage
  *------------------------------------------*/
@@ -7203,7 +7259,7 @@ ACMD_FUNC(pettalk)
 		};
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
-		if( i == ET_DICE1 ) i = rnd()%6 + ET_DICE1; // randomize /dice
+		if( i == ET_DICE1 ) i = rnd_value<int>(ET_DICE1, ET_DICE6); // randomize /dice
 		if( i < ARRAYLENGTH(emo) )
 		{
 			if (sd->emotionlasttime + 1 >= time(NULL)) { // not more than 1 per second
@@ -7961,7 +8017,7 @@ ACMD_FUNC(hommutate)
 	}
 
 	if (!message || !*message) {
-		homun_id = 6048 + (rnd() % 4);
+		homun_id = rnd_value<uint16>(MER_EIRA, MER_ELEANOR);
 	} else {
 		homun_id = atoi(message);
 	}
@@ -9077,8 +9133,8 @@ ACMD_FUNC(clone)
 	}
 
 	do {
-		x = sd->bl.x + (rnd() % 10 - 5);
-		y = sd->bl.y + (rnd() % 10 - 5);
+		x = sd->bl.x + rnd_value(-5, 5);
+		y = sd->bl.y + rnd_value(-5, 5);
 	} while (map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) && i++ < 10);
 
 	if (i >= 10) {
@@ -11078,6 +11134,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(npcmove),
 		ACMD_DEF(killable),
 		ACMD_DEF(dropall),
+		ACMD_DEF(stockall),
 		ACMD_DEF(storeall),
 		ACMD_DEF(skillid),
 		ACMD_DEF(useskill),

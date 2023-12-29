@@ -2624,7 +2624,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 				mes "You can choose the course freely and each course has individual features.";
 				next;
 				mes "[Receptionist]";
-				mes "And this is the the basic equipment for the educational course.";
+				mes "And this is the basic equipment for the educational course.";
 				mes "Please make a good use of it.";
 				mes "Be careful with it as it won't be provided again.";
 				setquest 4269;
@@ -6249,7 +6249,7 @@ iz_ac01,138,69,3	script	Lady#ac	1_F_ORIENT_02,{
 	mes "^3377FF Haven't the kids feeding Picky awaken yet?^000000";
 	next;
 	mes "[Lady]";
-	mes "^3377FF When are you going to Morocc over the dessert?^000000";
+	mes "^3377FF When are you going to Morocc over the desert?^000000";
 	next;
 	mes "[Lady]";
 	mes "... Anonymous...";
@@ -7330,7 +7330,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			mes "Now y'all need to understand, guns aren't some little thing that you just swing at an animal, you don't wiggle those there fingers and shock them to death.";
 			next;
 			mes "[Lusa]";
-			mes "No! You shoot things, which means ya need to aim straight. This takes alot of ^ff0000dexterity^000000 on the part of the gunslinger.";
+			mes "No! You shoot things, which means ya need to aim straight. This takes a lot of ^ff0000dexterity^000000 on the part of the gunslinger.";
 			next;
 			mes "[Lusa]";
 			mes "Now before ya go running off shooting dem guns in the air, all high fallootin and dancing around. Ya need to understand that this isn't an easy job!";

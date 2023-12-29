@@ -14989,3 +14989,332 @@ Body:
         MinValue: 5
         MaxValue: 10
         Chance: 5000
+  - Id: 165
+    Group: JOY_OF_VICTORY
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 10
+            Chance: 857
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 10
+            Chance: 857
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 3
+            Chance: 857
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 20
+            Chance: 857
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 50
+            MaxValue: 200
+            Chance: 857
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 10
+            MaxValue: 100
+            Chance: 857
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 10
+            Chance: 857
+          - Option: HEAL_VALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 857
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 857
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 1
+            MaxValue: 3
+            Chance: 857
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 3
+            Chance: 857
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 573
+      - Slot: 2
+        Options:
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 938
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 938
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 3
+            Chance: 938
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 938
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 938
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 938
+          - Option: HEAL_VALUE
+            MinValue: 1
+            MaxValue: 7
+            Chance: 938
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 938
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 1
+            MaxValue: 3
+            Chance: 938
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 3
+            Chance: 938
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 620
+  - Id: 166
+    Group: LENS_CRAFT_STONE
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 50
+            MaxValue: 200
+            Chance: 950
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 10
+            MaxValue: 100
+            Chance: 950
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 900
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 900
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 20
+            Chance: 900
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 10
+            Chance: 900
+          - Option: HEAL_VALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 900
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 900
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 600
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 10
+            Chance: 600
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 600
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 10
+            Chance: 600
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+      - Slot: 2
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 50
+            MaxValue: 200
+            Chance: 950
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 10
+            MaxValue: 100
+            Chance: 950
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 900
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 900
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 20
+            Chance: 900
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 10
+            Chance: 900
+          - Option: HEAL_VALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 900
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 900
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 600
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 10
+            Chance: 600
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 600
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 10
+            Chance: 600
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+  - Id: 167
+    Group: OVERCLOCKER
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 20
+            Chance: 2000
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 20
+            Chance: 2000
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1000
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1000
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_NOTHING
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_WATER
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_GROUND
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_FIRE
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_WIND
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_POISON
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_SAINT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_DARKNESS
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_TELEKINESIS
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+      - Slot: 2
+        Options:
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 20
+            Chance: 2000
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 20
+            Chance: 2000
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1000
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 1000
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_NOTHING
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_WATER
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_GROUND
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_FIRE
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_WIND
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_POISON
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_SAINT
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_DARKNESS
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400
+          - Option: ADDSKILLMDAMAGE_TELEKINESIS
+            MinValue: 1
+            MaxValue: 7
+            Chance: 400

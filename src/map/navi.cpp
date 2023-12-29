@@ -78,13 +78,11 @@ static enum directions walk_choices [3][3] =
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
 
-#define swap_ptrcast_pathnode(a, b) swap_ptrcast(struct path_node *, a, b)
-
 static void heap_push_node(struct node_heap *heap, struct path_node *node)
 {
 #ifndef __clang_analyzer__ // TODO: Figure out why clang's static analyzer doesn't like this
 	BHEAP_ENSURE2(*heap, 1, 256, struct path_node **);
-	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP, swap_ptrcast_pathnode);
+	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP);
 #endif // __clang_analyzer__
 }
 
@@ -97,7 +95,7 @@ static int heap_update_node(struct node_heap *heap, struct path_node *node)
 		ShowError("heap_update_node: node not found\n");
 		return 1;
 	}
-	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP, swap_ptrcast_pathnode);
+	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP);
 	return 0;
 }
 // end 1:1 copy of definitions from path.cpp
@@ -225,7 +223,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 		}
 
 		current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
-		BHEAP_POP2(g_open_set, NODE_MINTOPCMP, swap_ptrcast_pathnode); // Remove it from 'open' set
+		BHEAP_POP2(g_open_set, NODE_MINTOPCMP); // Remove it from 'open' set
 
 		x = current->x;
 		y = current->y;
