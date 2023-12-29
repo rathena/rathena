@@ -25167,7 +25167,7 @@ void clif_goldpc_info( map_session_data& sd ){
 	if( battle_config.feature_goldpc_active ){
 		struct PACKET_ZC_GOLDPCCAFE_POINT p = {};
 
-		p.packetType = HEADER_ZC_GOLDPCCAFE_POINT;
+		p.PacketType = HEADER_ZC_GOLDPCCAFE_POINT;
 		p.isActive = true;
 		if( battle_config.feature_goldpc_vip && pc_isvip( &sd ) ){
 			p.mode = 2;
