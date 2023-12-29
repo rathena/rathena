@@ -141,6 +141,8 @@ static void account_db_sql_destroy(AccountDB* self){
 
 	Sql_Free(db->accounts);
 	db->accounts = NULL;
+
+	db->~AccountDB_SQL();
 	aFree(db);
 }
 
