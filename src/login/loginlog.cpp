@@ -15,10 +15,10 @@
 
 
 int log_db_port = 3306;
-std::string log_db_ip = "127.0.0.1";
-std::string log_db_id = "ragnarok";
-std::string log_db_pw = "";
-std::string log_db_db = "ragnarok";
+std::string log_db_hostname = "127.0.0.1";
+std::string log_db_username = "ragnarok";
+std::string log_db_password = "";
+std::string log_db_database = "ragnarok";
 std::string log_login_db = "loginlog";
 std::string log_codepage = "";
 
@@ -87,19 +87,19 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message) 
  */
 bool loginlog_config_read(const char* key, const char* value) {
 	if( strcmpi(key, "log_db_ip") == 0 )
-		log_db_ip = value;
+		log_db_hostname = value;
 	else
 	if( strcmpi(key, "log_db_port") == 0 )
 		log_db_port = atoi(value);
 	else
 	if( strcmpi(key, "log_db_id") == 0 )
-		log_db_id = value;
+		log_db_username = value;
 	else
 	if( strcmpi(key, "log_db_pw") == 0 )
-		log_db_pw = value;
+		log_db_password = value;
 	else
 	if( strcmpi(key, "log_db_db") == 0 )
-		log_db_db = value;
+		log_db_database = value;
 	else
 	if( strcmpi(key, "log_codepage") == 0 )
 		log_codepage = value;
@@ -123,10 +123,10 @@ bool loginlog_config_read(const char* key, const char* value) {
 bool loginlog_init(void) {
 	sql_handle = Sql_Malloc();
 
-	if( SQL_ERROR == Sql_Connect(sql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, log_db_username.c_str(), log_db_password.c_str(), log_db_hostname.c_str(), log_db_port, log_db_database.c_str()) )
 	{
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
+			log_db_username.c_str(), log_db_password.c_str(), log_db_hostname.c_str(), log_db_port, log_db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);

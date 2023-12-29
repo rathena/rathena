@@ -17,10 +17,10 @@
 
 
 int ipban_db_port = 3306;
-std::string ipban_db_ip = "127.0.0.1";
-std::string ipban_db_id = "ragnarok";
-std::string ipban_db_pw = "";
-std::string ipban_db_db = "ragnarok";
+std::string ipban_db_hostname = "127.0.0.1";
+std::string ipban_db_username = "ragnarok";
+std::string ipban_db_password = "";
+std::string ipban_db_database = "ragnarok";
 std::string ipban_codepage = "";
 std::string ipban_table = "ipbanlist";
 
@@ -123,19 +123,19 @@ bool ipban_config_read(const char* key, const char* value) {
 	{
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			ipban_db_ip = value;
+			ipban_db_hostname = value;
 		else
 		if( strcmpi(key, "port") == 0 )
 			ipban_db_port = atoi(value);
 		else
 		if( strcmpi(key, "id") == 0 )
-			ipban_db_id = value;
+			ipban_db_username = value;
 		else
 		if( strcmpi(key, "pw") == 0 )
-			ipban_db_pw = value;
+			ipban_db_password = value;
 		else
 		if( strcmpi(key, "db") == 0 )
-			ipban_db_db = value;
+			ipban_db_database = value;
 		else
 			return false;// not found
 		return true;
@@ -188,10 +188,10 @@ void ipban_init(void) {
 
 	// establish connections
 	sql_handle = Sql_Malloc();
-	if( SQL_ERROR == Sql_Connect(sql_handle, ipban_db_id.c_str(), ipban_db_pw.c_str(), ipban_db_ip.c_str(), ipban_db_port, ipban_db_db.c_str()) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, ipban_db_username.c_str(), ipban_db_password.c_str(), ipban_db_hostname.c_str(), ipban_db_port, ipban_db_database.c_str()) )
 	{
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			ipban_db_id.c_str(), ipban_db_pw.c_str(), ipban_db_ip.c_str(), ipban_db_port, ipban_db_db.c_str());
+			ipban_db_username.c_str(), ipban_db_password.c_str(), ipban_db_hostname.c_str(), ipban_db_port, ipban_db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
