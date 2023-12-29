@@ -5550,7 +5550,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_SHADOW_STAB:
-			skillratio += -100 + 300 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 350 * skill_lv + 5 * sstatus->pow;
+
+			if( sc && sc->getSCE( SC_CLOAKINGEXCEED ) ){
+				skillratio += 50 * skill_lv + 2 * sstatus->pow;
+			}
+
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_IMPACT_CRATER:
@@ -6694,7 +6699,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				break;
 			case SHC_SHADOW_STAB:
 				if (wd.miscflag == 2)
-					wd.div_ = 2;
+					wd.div_ = 3;
 				break;
 			case SHC_IMPACT_CRATER:
 				if (sc && sc->getSCE(SC_ROLLINGCUTTER))
