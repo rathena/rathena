@@ -95,7 +95,7 @@ char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
 std::string log_db_ip = "127.0.0.1";
-int log_db_port = 3306;
+uint16 log_db_port = 3306;
 std::string log_db_id = "ragnarok";
 std::string log_db_pw = "";
 std::string log_db_db = "log";
@@ -4189,7 +4189,7 @@ int inter_config_read(const char *cfgName)
 			log_db_pw = w2;
 		else
 		if(strcmpi(w1,"log_db_port")==0)
-			log_db_port = atoi(w2);
+			log_db_port = (uint16)strtoul( w2, nullptr, 10 );
 		else
 		if(strcmpi(w1,"log_db_db")==0)
 			log_db_db = w2;
@@ -4274,7 +4274,7 @@ int log_sql_init(void)
 
 	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db.c_str(), log_db_ip.c_str());
 	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) ){
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			log_db_id.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
