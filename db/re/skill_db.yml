@@ -38742,19 +38742,19 @@ Body:
       - Level: 4
         Time: 900
       - Level: 5
-        Time: 300
+        Time: 400
     Requires:
       SpCost:
         - Level: 1
-          Amount: 48
-        - Level: 2
-          Amount: 52
-        - Level: 3
-          Amount: 56
-        - Level: 4
           Amount: 60
-        - Level: 5
+        - Level: 2
           Amount: 64
+        - Level: 3
+          Amount: 68
+        - Level: 4
+          Amount: 72
+        - Level: 5
+          Amount: 76
       Weapon:
         Dagger: true
         1hSword: true
