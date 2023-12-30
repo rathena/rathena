@@ -5734,13 +5734,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			}
 			break;
 		case TR_RHYTHMSHOOTING:
-			skillratio += -100 + 200 + 120 * skill_lv;
+			skillratio += -100 + 450 + 650 * skill_lv;
 
 			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
-				skillratio += 3 * sstatus->con;
+				skillratio += 5 * sstatus->con;
 
-			if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-				skillratio += 100 + 100 * skill_lv;
+			if (tsc && tsc->getSCE(SC_SOUNDBLEND)) {
+				skillratio += 350 + 100 * skill_lv;
+				skillratio += 2 * sstatus->con;
+			}
 
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {

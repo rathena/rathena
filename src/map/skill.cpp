@@ -2183,7 +2183,6 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		[[fallthrough]];
 	case WM_METALICSOUND:
 	case WM_REVERBERATION:
-	case TR_RHYTHMSHOOTING:
 	case TR_METALIC_FURY:
 		status_change_end(bl, SC_SOUNDBLEND);
 		break;
