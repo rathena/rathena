@@ -35121,6 +35121,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 2
     Hit: Multi_Hit
     HitCount: 2
@@ -35133,19 +35134,19 @@ Body:
       - Level: 3
         Area: 1
       - Level: 4
-        Area: 2
+        Area: 1
       - Level: 5
         Area: 2
       - Level: 6
         Area: 2
       - Level: 7
-        Area: 3
+        Area: 2
       - Level: 8
-        Area: 3
+        Area: 2
       - Level: 9
         Area: 3
       - Level: 10
-        Area: 4
+        Area: 3
     CastCancel: true
     AfterCastActDelay: 250
     Cooldown: 700
@@ -35182,6 +35183,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 2
     Hit: Multi_Hit
     HitCount: 2
@@ -35194,19 +35196,19 @@ Body:
       - Level: 3
         Area: 1
       - Level: 4
-        Area: 2
+        Area: 1
       - Level: 5
         Area: 2
       - Level: 6
         Area: 2
       - Level: 7
-        Area: 3
+        Area: 2
       - Level: 8
-        Area: 3
+        Area: 2
       - Level: 9
         Area: 3
       - Level: 10
-        Area: 4
+        Area: 3
     Requires:
       SpCost: 1
   - Id: 5210
