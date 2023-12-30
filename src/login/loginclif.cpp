@@ -483,17 +483,17 @@ static bool logclif_parse_otp_login( int fd, struct login_session_data& ){
 class LoginPacketDatabase : public PacketDatabase<login_session_data>{
 public:
 	LoginPacketDatabase(){
-		login_packet_db.add( HEADER_CA_CONNECT_INFO_CHANGED, true, sizeof( PACKET_CA_CONNECT_INFO_CHANGED ), logclif_parse_keepalive );
-		login_packet_db.add( HEADER_CA_EXE_HASHCHECK, true, sizeof( PACKET_CA_EXE_HASHCHECK ), logclif_parse_updclhash );
-		login_packet_db.add( HEADER_CA_LOGIN, true, sizeof( PACKET_CA_LOGIN ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN> );
-		login_packet_db.add( HEADER_CA_LOGIN_PCBANG, true, sizeof( PACKET_CA_LOGIN_PCBANG ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN_PCBANG> );
-		login_packet_db.add( HEADER_CA_LOGIN_CHANNEL, true, sizeof( PACKET_CA_LOGIN_CHANNEL ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN_CHANNEL> );
-		login_packet_db.add( HEADER_CA_LOGIN2, true, sizeof( PACKET_CA_LOGIN2 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN2> );
-		login_packet_db.add( HEADER_CA_LOGIN3, true, sizeof( PACKET_CA_LOGIN3 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN3> );
-		login_packet_db.add( HEADER_CA_LOGIN4, true, sizeof( PACKET_CA_LOGIN4 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN4> );
-		login_packet_db.add( HEADER_CA_SSO_LOGIN_REQ, false, sizeof( PACKET_CA_SSO_LOGIN_REQ ), logclif_parse_reqauth_sso<PACKET_CA_SSO_LOGIN_REQ> );
-		login_packet_db.add( HEADER_CA_REQ_HASH, true, sizeof( PACKET_CA_REQ_HASH ), logclif_parse_reqkey );
-		login_packet_db.add( HEADER_CT_AUTH, true, sizeof( PACKET_CT_AUTH ), logclif_parse_otp_login );
+		this->add( HEADER_CA_CONNECT_INFO_CHANGED, true, sizeof( PACKET_CA_CONNECT_INFO_CHANGED ), logclif_parse_keepalive );
+		this->add( HEADER_CA_EXE_HASHCHECK, true, sizeof( PACKET_CA_EXE_HASHCHECK ), logclif_parse_updclhash );
+		this->add( HEADER_CA_LOGIN, true, sizeof( PACKET_CA_LOGIN ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN> );
+		this->add( HEADER_CA_LOGIN_PCBANG, true, sizeof( PACKET_CA_LOGIN_PCBANG ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN_PCBANG> );
+		this->add( HEADER_CA_LOGIN_CHANNEL, true, sizeof( PACKET_CA_LOGIN_CHANNEL ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN_CHANNEL> );
+		this->add( HEADER_CA_LOGIN2, true, sizeof( PACKET_CA_LOGIN2 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN2> );
+		this->add( HEADER_CA_LOGIN3, true, sizeof( PACKET_CA_LOGIN3 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN3> );
+		this->add( HEADER_CA_LOGIN4, true, sizeof( PACKET_CA_LOGIN4 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN4> );
+		this->add( HEADER_CA_SSO_LOGIN_REQ, false, sizeof( PACKET_CA_SSO_LOGIN_REQ ), logclif_parse_reqauth_sso<PACKET_CA_SSO_LOGIN_REQ> );
+		this->add( HEADER_CA_REQ_HASH, true, sizeof( PACKET_CA_REQ_HASH ), logclif_parse_reqkey );
+		this->add( HEADER_CT_AUTH, true, sizeof( PACKET_CT_AUTH ), logclif_parse_otp_login );
 	}
 } login_packet_db;
 
