@@ -35331,19 +35331,19 @@ Body:
     GiveAp: 2
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 35
         - Level: 2
-          Amount: 45
+          Amount: 40
         - Level: 3
-          Amount: 50
+          Amount: 45
         - Level: 4
-          Amount: 55
+          Amount: 50
         - Level: 5
-          Amount: 60
+          Amount: 55
       Weapon:
         2hSword: true
         2hAxe: true
