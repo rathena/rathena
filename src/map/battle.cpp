@@ -5740,7 +5740,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 5 * sstatus->con;
 
 			if (tsc && tsc->getSCE(SC_SOUNDBLEND)) {
-				skillratio += 350 + 100 * skill_lv;
+				if (skill_lv == 4)
+					skillratio += 830;	// Typo in skill description ?
+				else
+					skillratio += 350 + 100 * skill_lv;
 				skillratio += 2 * sstatus->con;
 			}
 
@@ -8041,10 +8044,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case TR_METALIC_FURY:
 						skillratio += -100 + 2600 * skill_lv;
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
+						// !Todo: skill affected by SPL (without SC_SOUNDBLEND) as well?
+						if (tsc && tsc->getSCE(SC_SOUNDBLEND)) {
 							skillratio += 1000 * skill_lv;
-						if (sd)
-							skillratio += 2 * pc_checkskill(sd, TR_STAGE_MANNER) * sstatus->spl;
+							if (sd)
+								skillratio += 2 * pc_checkskill(sd, TR_STAGE_MANNER) * sstatus->spl;
+						}
 						RE_LVL_DMOD(100);
 						break;
 					case TR_SOUNDBLEND:
