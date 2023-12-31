@@ -5496,14 +5496,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * i / 100;
 			break;
 		case IG_SHIELD_SHOOTING:
-			skillratio += -100 + 1400 + 2100 * skill_lv + 5 * sstatus->pow;
-			skillratio += skill_lv * 15 * pc_checkskill( sd, IG_SHIELD_MASTERY );
+			skillratio += -100 + 650 + 2850 * skill_lv;
+			skillratio += 7 * sstatus->pow;
+			skillratio += skill_lv * 50 * pc_checkskill( sd, IG_SHIELD_MASTERY );
 			if (sd) { // Damage affected by the shield's weight and refine. Need official formula. [Rytech]
 				short index = sd->equip_index[EQI_HAND_L];
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
 					skillratio += (sd->inventory_data[index]->weight * 7 / 6) / 10;
-					skillratio += sd->inventory.u.items_inventory[index].refine * 4;
+					skillratio += sd->inventory.u.items_inventory[index].refine * 25;
 				}
 			}
 			RE_LVL_DMOD(100);
