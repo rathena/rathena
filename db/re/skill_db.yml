@@ -38997,29 +38997,29 @@ Body:
       - Level: 9
         Time: 500
       - Level: 10
-        Time: 300
+        Time: 700 # TODO: unknown cooldown for others levels
     Requires:
       SpCost:
         - Level: 1
-          Amount: 35
+          Amount: 45
         - Level: 2
-          Amount: 38
+          Amount: 48
         - Level: 3
-          Amount: 41
+          Amount: 51
         - Level: 4
-          Amount: 44
+          Amount: 54
         - Level: 5
-          Amount: 47
+          Amount: 57
         - Level: 6
-          Amount: 50
+          Amount: 60
         - Level: 7
-          Amount: 53
+          Amount: 63
         - Level: 8
-          Amount: 56
+          Amount: 66
         - Level: 9
-          Amount: 59
+          Amount: 69
         - Level: 10
-          Amount: 62
+          Amount: 72
   - Id: 5321
     Name: ABC_ABYSS_SQUARE
     Description: Abyss Square
