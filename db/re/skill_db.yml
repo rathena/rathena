@@ -37137,12 +37137,12 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 7
+    GiveAp: 4
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 150
-    Duration1: 4500
-    Cooldown: 4500
+    Duration1: 2400
+    Cooldown: 2400
     FixedCastTime: 1500
     Requires:
       SpCost:
