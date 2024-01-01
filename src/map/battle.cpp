@@ -2956,7 +2956,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					return false;
 			case SH_CHUL_HO_SONIC_CLAW:
 			case SH_HOGOGONG_STRIKE:
-				if (!(sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || !(sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) == 0 || !(sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 					return false;
 				break;
 		}
@@ -5751,45 +5751,39 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case ABR_INFINITY_BUSTER:// Need official formula.
 			skillratio += -100 + 50000;
 			break;
-		case SH_CHUL_HO_SONIC_CLAW: {
-			int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+		case SH_CHUL_HO_SONIC_CLAW:
 			skillratio += -100 + 850 + 1650 * skill_lv;
-			skillratio += 50 * tmp_val;
+			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 			skillratio += 5 * sstatus->pow;
 
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
 				skillratio += 100 + 400 * skill_lv;
-				skillratio += 50 * tmp_val;
+				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 			}
 			RE_LVL_DMOD(100);
 			break;
-		}
-		case SH_HOWLING_OF_CHUL_HO: {
-			int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+		case SH_HOWLING_OF_CHUL_HO:
 			skillratio += -100 + 600 + 1050 * skill_lv;
-			skillratio += 50 * tmp_val;
+			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 			skillratio += 5 * sstatus->pow;
 
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
 				skillratio += 100 + 100 * skill_lv;
-				skillratio += 50 * tmp_val;
+				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 			}
 			RE_LVL_DMOD(100);
 			break;
-		}
-		case SH_HOGOGONG_STRIKE: {
-			int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+		case SH_HOGOGONG_STRIKE:
 			skillratio += -100 + 180 + 200 * skill_lv;
-			skillratio += 10 * tmp_val;
+			skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 			skillratio += 5 * sstatus->pow;
 
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
 				skillratio += 70 + 150 * skill_lv;
-				skillratio += 10 * tmp_val;
+				skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 			}
 			RE_LVL_DMOD(100);
 			break;
-		}
 	}
 	return skillratio;
 }
@@ -8173,32 +8167,28 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
 						break;
-					case SH_HYUN_ROKS_BREEZE: {
-						int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+					case SH_HYUN_ROKS_BREEZE:
 						skillratio += -100 + 650 + 750 * skill_lv;
-						skillratio += 20 * tmp_val;
+						skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 						skillratio += 5 * sstatus->spl;
 
-						if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+						if (pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
 							skillratio += 100 + 200 * skill_lv;
-							skillratio += 20 * tmp_val;
+							skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 						}
 						RE_LVL_DMOD(100);
 						break;
-					}
-					case SH_HYUN_ROK_CANNON: {
-						int tmp_val = (sd ? pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY) : 0);
+					case SH_HYUN_ROK_CANNON:
 						skillratio += -100 + 1050 + 1550 * skill_lv;
-						skillratio += 50 * tmp_val;
+						skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 						skillratio += 5 * sstatus->spl;
 
-						if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+						if (pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
 							skillratio += 300 * skill_lv;
-							skillratio += 25 * tmp_val;
+							skillratio += 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
 						}
 						RE_LVL_DMOD(100);
 						break;
-					}
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.

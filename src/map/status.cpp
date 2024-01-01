@@ -14859,7 +14859,7 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4-- > 0) {
 			int i = skill_get_splash(SH_KI_SUL_RAMPAGE, sce->val1);
 			int lv = sce->val1;
-			if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL)) || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
+			if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
 				i += 2;
 				lv += skill_get_max(SH_KI_SUL_RAMPAGE);
 			}
