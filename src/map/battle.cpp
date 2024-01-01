@@ -8047,8 +8047,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						// !Todo: skill affected by SPL (without SC_SOUNDBLEND) as well?
 						if (tsc && tsc->getSCE(SC_SOUNDBLEND)) {
 							skillratio += 1000 * skill_lv;
-							if (sd)
-								skillratio += 2 * pc_checkskill(sd, TR_STAGE_MANNER) * sstatus->spl;
+							skillratio += 2 * pc_checkskill(sd, TR_STAGE_MANNER) * sstatus->spl;
 						}
 						RE_LVL_DMOD(100);
 						break;
