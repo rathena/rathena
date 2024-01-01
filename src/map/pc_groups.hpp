@@ -97,6 +97,8 @@ struct s_player_group{
 	bool log_commands;
 	std::vector<std::string> commands;
 	std::vector<std::string> char_commands;
+	std::vector<std::string> del_commands;
+	std::vector<std::string> del_char_commands;
 	std::bitset<PC_PERM_MAX> permissions;
 	uint32 index;
 
@@ -109,7 +111,7 @@ public:
 class PlayerGroupDatabase : public TypesafeYamlDatabase<uint32, s_player_group>{
 private:
 	std::map<uint32, std::vector<std::string>> inheritance;
-	bool parseCommands( const ryml::NodeRef& node, std::vector<std::string>& commands );
+	bool parseCommands( const ryml::NodeRef& node, std::vector<std::string>& commands, std::vector<std::string>& del_commands );
 
 public:
 	PlayerGroupDatabase() : TypesafeYamlDatabase( "PLAYER_GROUP_DB", 1 ){
