@@ -361,7 +361,7 @@ int logclif_parse_reqauth_sso( int fd, login_session_data& sd, char* ip ){
 
 	ShowStatus( "Request for connection (SSO mode) of %s (ip: %s)\n", sd.userid, ip );
 	// Shinryo: For the time being, just use token as password.
-	safestrncpy( sd.passwd, p->token, token_length );
+	safestrncpy( sd.passwd, p->token, token_length + 1 );
 
 	if( login_config.use_md5_passwds ){
 		MD5_String( sd.passwd, sd.passwd );
@@ -369,7 +369,7 @@ int logclif_parse_reqauth_sso( int fd, login_session_data& sd, char* ip ){
 
 	sd.passwdenc = 0;
 
-	RFIFOSKIP( fd, sizeof( *p ) );
+	RFIFOSKIP( fd, p->packetLength );
 
 	int result = login_mmo_auth( &sd, false );
 

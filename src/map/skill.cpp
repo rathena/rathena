@@ -7991,7 +7991,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (skill_id == AG_DESTRUCTIVE_HURRICANE)
 					splash_size = 9; // 19x19
 				else if(skill_id == AG_CRYSTAL_IMPACT)
-					splash_size = AREA_SIZE; // 29x29 - Entire screen.
+					splash_size = 7; // 15x15
 			}
 
 			skill_area_temp[1] = 0;
