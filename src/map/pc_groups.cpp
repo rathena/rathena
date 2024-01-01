@@ -17,7 +17,7 @@ const std::string PlayerGroupDatabase::getDefaultLocation() {
 	return std::string( conf_path ) + "/groups.yml";
 }
 
-bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<std::string>& commands, std::vector<std::string>& del_commands ){
+bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<std::string>& commands ){
 	for( const auto& it : node.children() ){
 		std::string command;
 
@@ -44,10 +44,12 @@ bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<
 				commands.push_back( command );
 			}
 		}else{
-			if( util::vector_exists( commands, command ) ){
+			if( !util::vector_exists( commands, command ) ){
+				this->invalidWarning( it, "Group does not have command \"%s\". Please check your data.\n", command.c_str() );
+				return false;
+			}else{
 				util::vector_erase_if_exists( commands, command );
 			}
-			del_commands.push_back( command );
 		}
 	}
 
@@ -113,11 +115,11 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 	}
 
-	if( this->nodeExists( node, "Commands" ) && !this->parseCommands( node["Commands"], group->commands, group->del_commands ) ){
+	if( this->nodeExists( node, "Commands" ) && !this->parseCommands( node["Commands"], group->commands ) ){
 		return 0;
 	}
 
-	if( this->nodeExists( node, "CharCommands" ) && !this->parseCommands( node["CharCommands"], group->char_commands, group->del_char_commands ) ){
+	if( this->nodeExists( node, "CharCommands" ) && !this->parseCommands( node["CharCommands"], group->char_commands ) ){
 		return 0;
 	}
 
@@ -314,27 +316,13 @@ PlayerGroupDatabase player_group_db;
  * @param type enum AtCommanndType { COMMAND_ATCOMMAND = 1, COMMAND_CHARCOMMAND = 2 }
  */
 bool s_player_group::can_use_command( const std::string& command, AtCommandType type ){
-	std::string command_lower = command;
-
-	util::tolower( command_lower );
-
-	if( this->del_commands.size() > 0 || this->del_char_commands.size() > 0 ){
-		switch( type ){
-			case COMMAND_ATCOMMAND:
-				if(util::vector_exists( this->del_commands, command_lower ))
-					return false;
-				break;
-			case COMMAND_CHARCOMMAND:
-				if(util::vector_exists( this->del_char_commands, command_lower ))
-					return false;
-				break;
-		}
-	}
-
-
 	if( this->has_permission( PC_PERM_USE_ALL_COMMANDS ) ){
 		return true;
 	}
+
+	std::string command_lower = command;
+
+	util::tolower( command_lower );
 
 	switch( type ){
 		case COMMAND_ATCOMMAND:
