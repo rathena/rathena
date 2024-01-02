@@ -2183,8 +2183,6 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 		[[fallthrough]];
 	case WM_METALICSOUND:
 	case WM_REVERBERATION:
-	case TR_RHYTHMSHOOTING:
-	case TR_METALIC_FURY:
 		status_change_end(bl, SC_SOUNDBLEND);
 		break;
 	case EM_DIAMOND_STORM:
@@ -5676,6 +5674,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case BO_MAYHEMIC_THORNS:
 	case NPC_WIDECRITICALWOUND:
 	case IG_SHIELD_SHOOTING:
+	case TR_METALIC_FURY:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -5894,24 +5893,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				return 0;
 			}
 		}
-		break;
-	case TR_METALIC_FURY:
-	{
-		if (flag & 1) {
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		} else {
-			int area = skill_get_splash(skill_id, skill_lv);
-			int count = map_forcountinarea(skill_check_bl_sc,bl->m,bl->x - area,bl->y - area,bl->x + area,bl->y + area,5,BL_MOB,SC_SOUNDBLEND);
-			if (count > 0){
-				map_foreachinarea(skill_area_sub, bl->m, bl->x - area, bl->y - area, bl->x + area, bl->y + area, BL_CHAR,
-					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-			} else{
-				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-			}
-		}
-	}
 		break;
 
 	//Place units around target
