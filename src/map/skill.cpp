@@ -5218,12 +5218,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MT_TRIPLE_LASER:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-
-	case IG_SHIELD_SHOOTING:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		sc_start(src, src, SC_SHIELD_POWER, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case DK_DRAGONIC_AURA:
 	case DK_STORMSLASH:
 	case IG_GRAND_JUDGEMENT:
@@ -5681,6 +5675,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
 	case NPC_WIDECRITICALWOUND:
+	case IG_SHIELD_SHOOTING:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -5876,6 +5871,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					clif_blown( src );
 					// TODO: does this buff start before or after dealing damage? [Muh]
 					sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
+					break;
+				case IG_SHIELD_SHOOTING:
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+					sc_start(src, src, SC_SHIELD_POWER, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
 			}
 
