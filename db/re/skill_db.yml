@@ -37057,11 +37057,24 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
     GiveAp: 3
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
@@ -37137,12 +37150,12 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 7
+    GiveAp: 4
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 150
-    Duration1: 4500
-    Cooldown: 4500
+    Duration1: 2400
+    Cooldown: 2400
     FixedCastTime: 1500
     Requires:
       SpCost:
