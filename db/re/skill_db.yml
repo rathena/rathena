@@ -35414,20 +35414,20 @@ Body:
     CastTime: 4000
     AfterCastActDelay: 500
     Duration2: 900000
-    Cooldown: 2000
+    Cooldown: 2500
     FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 108
+          Amount: 170
         - Level: 2
-          Amount: 114
+          Amount: 174
         - Level: 3
-          Amount: 120
+          Amount: 178
         - Level: 4
-          Amount: 126
+          Amount: 182
         - Level: 5
-          Amount: 132
+          Amount: 186
     Status: Climax_Des_Hu
   - Id: 5216
     Name: AG_RAIN_OF_CRYSTAL
@@ -35447,28 +35447,28 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
+          Amount: 85
         - Level: 2
-          Amount: 88
+          Amount: 95
         - Level: 3
-          Amount: 92
+          Amount: 105
         - Level: 4
-          Amount: 96
+          Amount: 115
         - Level: 5
-          Amount: 100
+          Amount: 125
     Unit:
       Id: Rain_Of_Crystal
       Range:
         - Level: 1
-          Size: 6
+          Size: 4
         - Level: 2
-          Size: 7
+          Size: 4
         - Level: 3
-          Size: 8
+          Size: 5
         - Level: 4
-          Size: 9
+          Size: 5
         - Level: 5
-          Size: 10
+          Size: 6
       Interval: 500
       Target: Enemy
       Flag:
@@ -35838,15 +35838,15 @@ Body:
     Element: Water
     SplashArea:
       - Level: 1
-        Area: 3
+        Area: 4
       - Level: 2
         Area: 4
       - Level: 3
         Area: 5
       - Level: 4
-        Area: 6
+        Area: 5
       - Level: 5
-        Area: 7
+        Area: 6
     CastCancel: true
     CastTime: 4000
     AfterCastActDelay: 500
@@ -35856,15 +35856,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 100
+          Amount: 170
         - Level: 2
-          Amount: 108
+          Amount: 174
         - Level: 3
-          Amount: 116
+          Amount: 178
         - Level: 4
-          Amount: 124
+          Amount: 182
         - Level: 5
-          Amount: 132
+          Amount: 186
     Status: Climax_CryImp
   - Id: 5226
     Name: AG_CRYSTAL_IMPACT_ATK
@@ -36117,15 +36117,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 68
+          Amount: 72
         - Level: 2
-          Amount: 74
+          Amount: 76
         - Level: 3
           Amount: 80
         - Level: 4
-          Amount: 86
+          Amount: 84
         - Level: 5
-          Amount: 92
+          Amount: 88
   - Id: 5234
     Name: AG_STORM_CANNON
     Description: Storm Cannon
@@ -36157,15 +36157,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 78
+          Amount: 79
         - Level: 2
-          Amount: 82
+          Amount: 79
         - Level: 3
-          Amount: 86
+          Amount: 82
         - Level: 4
-          Amount: 90
+          Amount: 85
         - Level: 5
-          Amount: 94
+          Amount: 88
   - Id: 5235
     Name: AG_CRIMSON_ARROW
     Description: Crimson Arrow
@@ -36197,15 +36197,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 86
+          Amount: 74
         - Level: 2
-          Amount: 88
+          Amount: 78
         - Level: 3
-          Amount: 90
+          Amount: 82
         - Level: 4
-          Amount: 92
+          Amount: 86
         - Level: 5
-          Amount: 94
+          Amount: 90
   - Id: 5236
     Name: AG_CRIMSON_ARROW_ATK
     Description: Crimson Arrow Attack
@@ -36262,15 +36262,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 84
+          Amount: 103
         - Level: 2
-          Amount: 87
+          Amount: 106
         - Level: 3
-          Amount: 90
+          Amount: 109
         - Level: 4
-          Amount: 93
+          Amount: 112
         - Level: 5
-          Amount: 96
+          Amount: 115
   - Id: 5238
     Name: IQ_POWERFUL_FAITH
     Description: Powerful Faith
@@ -37057,11 +37057,24 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
     GiveAp: 3
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
@@ -37137,12 +37150,12 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 7
+    GiveAp: 4
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 150
-    Duration1: 4500
-    Cooldown: 4500
+    Duration1: 2400
+    Cooldown: 2400
     FixedCastTime: 1500
     Requires:
       SpCost:
@@ -39202,8 +39215,8 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 300000
+    Duration1: 180000
+    Cooldown: 180000
     FixedCastTime: 1000
     Requires:
       SpCost: 300
@@ -39260,38 +39273,38 @@ Body:
       - Level: 7
         Area: 3
       - Level: 8
-        Area: 4
+        Area: 3
       - Level: 9
         Area: 4
       - Level: 10
-        Area: 5
+        Area: 4
     CastCancel: true
     CastTime: 3500
     AfterCastActDelay: 500
-    Cooldown: 1500
+    Cooldown: 1200
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 64
+          Amount: 93
         - Level: 2
-          Amount: 68
-        - Level: 3
-          Amount: 72
-        - Level: 4
-          Amount: 76
-        - Level: 5
-          Amount: 80
-        - Level: 6
-          Amount: 84
-        - Level: 7
-          Amount: 88
-        - Level: 8
-          Amount: 92
-        - Level: 9
           Amount: 96
+        - Level: 3
+          Amount: 99
+        - Level: 4
+          Amount: 102
+        - Level: 5
+          Amount: 105
+        - Level: 6
+          Amount: 108
+        - Level: 7
+          Amount: 111
+        - Level: 8
+          Amount: 114
+        - Level: 9
+          Amount: 117
         - Level: 10
-          Amount: 100
+          Amount: 120
       Weapon:
         Bow: true
       Ammo:
@@ -39305,6 +39318,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39368,7 +39383,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    Status: Handicapstate_Deepblind
   - Id: 5332
     Name: WH_SOLIDTRAP
     Description: Solid Trap
@@ -39377,6 +39391,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39422,7 +39438,6 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
-    Status: HandicapState_Crystallization
     Unit:
       Id: Solidtrap
       Range:
@@ -39449,6 +39464,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39494,7 +39511,6 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
-    Status: HandicapState_LightningStrike
     Unit:
       Id: Swifttrap
       Range:
@@ -39528,9 +39544,10 @@ Body:
     GiveAp: 1
     CastCancel: true
     CastTime: 800
-    AfterCastActDelay: 300
+    AfterCastActDelay: 700
     Duration1: 10000
     FixedCastTime: 200
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
@@ -39567,6 +39584,8 @@ Body:
     TargetType: Ground
     DamageFlags:
       IgnoreFlee: true
+    Flags:
+      AllowOnWarg: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -39630,7 +39649,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    Status: HandicapState_Conflagration
   - Id: 5336
     Name: BO_BIONIC_PHARMACY
     Description: Bionic Pharmacy
