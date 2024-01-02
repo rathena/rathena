@@ -116,6 +116,9 @@ typedef uint32 t_itemid;
 #ifndef MAX_BARTER_REQUIREMENTS
 	#define MAX_BARTER_REQUIREMENTS 5
 #endif
+#ifndef WEB_AUTH_TOKEN_LENGTH
+	#define WEB_AUTH_TOKEN_LENGTH 16+1
+#endif
 
 enum e_enchantgrade : uint16{
 	ENCHANTGRADE_NONE = 0,

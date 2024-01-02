@@ -365,6 +365,10 @@ Body:
     Help: |
       Params: [<item type>]
       Throws all your possession on the ground. No type specified will drop all items.
+  - Command: stockall
+    Help: |
+      Params: [<item type>]
+      Transfer items from cart to your inventory. No type specified will transfer all items.
   - Command: storeall
     Help: |
       Puts all your possessions in storage.

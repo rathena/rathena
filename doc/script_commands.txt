@@ -4212,7 +4212,11 @@ invoking RID. It returns 1 if successful and 0 upon failure.
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
  5: All players in the map.
-    [ Parameters: "<map name>" ]
+    [ Parameters: "<map name>" ] 
+ 6: Battleground members of a specified battleground ID.
+    [ Parameters: <battleground id> ]
+ 7: Clan members of a specified clan ID.
+    [ Parameters: <clan id> ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
@@ -7477,10 +7481,10 @@ This command lets you override the contents of an existing NPC shop or cashshop.
 current sell list will be wiped, and only the items specified with the price
 specified will be for sale.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
  - If the attached shop type is a market shop, notice that there is an extra parameter after price, <stock>. Make sure to not add duplicate items! For unlimited stock use -1.
 
 ---------------------------------------
@@ -7492,10 +7496,10 @@ This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
 appear twice on the sell list.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
  - If attached shop type is market shop, need an extra param after price, it's <stock>
    and make sure don't add duplication item! For unlimited stock use -1.
 
@@ -7538,6 +7542,13 @@ NOTES:
 Update an entry from a shop. If the price is 0 it won't be changed. May also be used for
 marketshop to update the stock quantity. For unlimited stock, use -1.
 For other shop types, the stock value has no effect.
+
+If the price is -1, it sets it to the default buy price.
+
+The function returns 1 if shop was updated successfully, or 0 on failure.
+
+NOTES:
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
 
 ---------------------------------------
 
@@ -11140,6 +11151,17 @@ Returns 1 on success.
 
 ---------------------------------------
 
+*channel_join "<channel_name>"{, <char_id>};
+
+Join an existing channel.
+The command returns 0 upon success, and these values upon failure:
+ -1 : Invalid channel or player
+ -2 : Player already in channel
+ -3 : Player banned
+ -4 : Reached max limit
+
+---------------------------------------
+
 *channel_setopt "<chname>",<option>,<value>;
 
 Set option for the channel. Use 1 in <value> to set it, or 0 to unset.
@@ -11375,3 +11397,18 @@ Returns current autoloot value on success.
 
 ---------------------------------------
 
+*autoloot({<rate>{, <char_id>}});
+
+This command sets the rate of autoloot.
+If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+if the user has autoloot enabled it will default to 0 = 0% (disabled).
+Returns true on success and false on failure.
+
+Example:
+    autoloot();      // toggle on/off depend on existing autoloot
+    autoloot(0);     //   0.00% or off
+    autoloot(100);   //   1.00%
+    autoloot(3333);  //  33.33%
+    autoloot(10000); // 100.00%
+
+---------------------------------------
