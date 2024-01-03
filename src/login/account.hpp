@@ -5,12 +5,8 @@
 #define ACCOUNT_HPP
 
 #include <common/cbasetypes.hpp>
-#include <common/mmo.hpp> // ACCOUNT_REG2_NUM
+#include <common/mmo.hpp> // ACCOUNT_REG2_NUM, WEB_AUTH_TOKEN_LENGTH
 #include <config/core.hpp>
-
-#ifndef WEB_AUTH_TOKEN_LENGTH
-#define WEB_AUTH_TOKEN_LENGTH 16+1
-#endif
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
