@@ -3,6 +3,8 @@
 
 #include "strlib.hpp"
 
+#include <algorithm>
+
 #include <stdlib.h>
 
 #include "cbasetypes.hpp"
@@ -359,7 +361,6 @@ int sv_parse_next(struct s_svstate* sv)
 		END
 	} state;
 	const char* str;
-	int len;
 	enum e_svopt opt;
 	char delim;
 	int i;
@@ -368,7 +369,7 @@ int sv_parse_next(struct s_svstate* sv)
 		return -1;// error
 
 	str = sv->str;
-	len = sv->len;
+	size_t len = sv->len;
 	opt = sv->opt;
 	delim = sv->delim;
 
@@ -520,7 +521,7 @@ int sv_parse_next(struct s_svstate* sv)
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt)
+int sv_parse(const char* str, size_t len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt)
 {
 	struct s_svstate sv;
 	int count;
@@ -570,7 +571,7 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// @param nfields Size of the field array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_split(char* str, int len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt)
+int sv_split(char* str, size_t len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt)
 {
 	int pos[1024];
 	int done;
@@ -982,10 +983,10 @@ int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* s
 {
 	for(;;)
 	{
-		int n, size, off;
+		int n, off;
 		va_list apcopy;
 		/* Try to print in the allocated space. */
-		size = self->max_ - (self->ptr_ - self->buf_);
+		size_t size = self->max_ - (self->ptr_ - self->buf_);
 		va_copy(apcopy, ap);
 		n = vsnprintf(self->ptr_, size, fmt, apcopy);
 		va_end(apcopy);
@@ -1004,14 +1005,14 @@ int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* s
 }
 
 /// Appends the contents of another StringBuf to the StringBuf
-int _StringBuf_Append(const char *file, int line, const char *func,StringBuf* self, const StringBuf* sbuf)
+size_t _StringBuf_Append(const char *file, int line, const char *func,StringBuf* self, const StringBuf* sbuf)
 {
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
+	size_t available = self->max_ - (self->ptr_ - self->buf_);
+	size_t needed = sbuf->ptr_ - sbuf->buf_;
 
 	if( needed >= available )
 	{
-		int off = (int)(self->ptr_ - self->buf_);
+		size_t off = self->ptr_ - self->buf_;
 		self->max_ += needed;
 		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
@@ -1019,26 +1020,26 @@ int _StringBuf_Append(const char *file, int line, const char *func,StringBuf* se
 
 	memcpy(self->ptr_, sbuf->buf_, needed);
 	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
+	return self->ptr_ - self->buf_;
 }
 
 // Appends str to the StringBuf
-int _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf* self, const char* str)
+size_t _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf* self, const char* str)
 {
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)strlen(str);
+	size_t available = self->max_ - ( self->ptr_ - self->buf_ );
+	size_t needed = strlen( str );
 
 	if( needed >= available )
 	{// not enough space, expand the buffer (minimum expansion = 1024)
-		int off = (int)(self->ptr_ - self->buf_);
-		self->max_ += max(needed, 1024);
+		size_t off = self->ptr_ - self->buf_;
+		self->max_ += std::max( needed, static_cast<size_t>( 1024 ) );
 		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 
 	memcpy(self->ptr_, str, needed);
 	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
+	return self->ptr_ - self->buf_;
 }
 
 // Returns the length of the data in the Stringbuf
