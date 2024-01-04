@@ -223,14 +223,13 @@ DEFINE_PACKET_HEADER( TC_RESULT, 0xae3 );
 
 template <typename sessiontype> class PacketDatabase{
 private:
-	template <typename sessiontype2>
 	struct s_packet_info{
 		bool fixed;
 		int16 size;
-		std::function<bool ( int fd, sessiontype2& sd )> func;
+		std::function<bool ( int fd, sessiontype& sd )> func;
 	};
 
-	std::unordered_map<int16, s_packet_info<sessiontype>> infos;
+	std::unordered_map<int16, s_packet_info> infos;
 
 public:
 	void add( int16 packetType, bool fixed, int16 size, std::function<bool ( int fd, sessiontype& sd )> func ){
@@ -246,7 +245,7 @@ public:
 			}
 		}
 
-		s_packet_info<sessiontype>& info = infos[packetType];
+		s_packet_info& info = infos[packetType];
 
 		info.fixed = fixed;
 		info.size = size;
@@ -264,7 +263,7 @@ public:
 
 		PACKET* p = (PACKET*)RFIFOP( fd, 0 );
 
-		s_packet_info<sessiontype>* info = util::umap_find( this->infos, p->packetType );
+		s_packet_info* info = util::umap_find( this->infos, p->packetType );
 
 		if( info == nullptr ){
 			ShowError( "Received unknown packet 0x%04x\n", p->packetType );
