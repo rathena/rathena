@@ -888,7 +888,7 @@ const char* skip_escaped_c(const char* p)
 bool sv_readdb( const char* directory, const char* filename, char delim, size_t mincols, size_t maxcols, size_t maxrows, bool (*parseproc)( char* fields[], size_t columns, size_t current ), bool silent ){
 	FILE* fp;
 	int lines = 0;
-	int entries = 0;
+	size_t entries = 0;
 	char** fields; // buffer for fields ([0] is reserved)
 	char path[1024], *line;
 	const short colsize=512;
@@ -991,39 +991,35 @@ void _StringBuf_Init(const char *file, int line, const char *func,StringBuf* sel
 }
 
 /// Appends the result of printf to the StringBuf
-int _StringBuf_Printf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, ...)
-{
-	int len;
+size_t _StringBuf_Printf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, ... ){
 	va_list ap;
 
 	va_start(ap, fmt);
-	len = _StringBuf_Vprintf(file,line,func,self, fmt, ap);
+	size_t len = _StringBuf_Vprintf(file,line,func,self, fmt, ap);
 	va_end(ap);
 
 	return len;
 }
 
 /// Appends the result of vprintf to the StringBuf
-int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, va_list ap)
-{
+size_t _StringBuf_Vprintf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list ap ){
 	for(;;)
 	{
-		int n, off;
 		va_list apcopy;
 		/* Try to print in the allocated space. */
 		size_t size = self->max_ - (self->ptr_ - self->buf_);
 		va_copy(apcopy, ap);
-		n = vsnprintf(self->ptr_, size, fmt, apcopy);
+		int n = vsnprintf( self->ptr_, size, fmt, apcopy );
 		va_end(apcopy);
 		/* If that worked, return the length. */
 		if( n > -1 && n < size )
 		{
 			self->ptr_ += n;
-			return (int)(self->ptr_ - self->buf_);
+			return self->ptr_ - self->buf_;
 		}
 		/* Else try again with more space. */
 		self->max_ *= 2; // twice the old size
-		off = (int)(self->ptr_ - self->buf_);
+		size_t off = self->ptr_ - self->buf_;
 		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
