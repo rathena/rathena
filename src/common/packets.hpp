@@ -13,8 +13,6 @@
 #include <common/socket.hpp>
 #include <common/utilities.hpp>
 
-using namespace rathena;
-
 #pragma warning( push )
 #pragma warning( disable : 4200 )
 
@@ -263,7 +261,7 @@ public:
 
 		PACKET* p = (PACKET*)RFIFOP( fd, 0 );
 
-		s_packet_info* info = util::umap_find( this->infos, p->packetType );
+		s_packet_info* info = rathena::util::umap_find( this->infos, p->packetType );
 
 		if( info == nullptr ){
 			ShowError( "Received unknown packet 0x%04x\n", p->packetType );
