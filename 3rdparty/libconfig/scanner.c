@@ -2,8 +2,10 @@
 
 #line 4 "scanner.c"
 
-#pragma warning( push )
-#pragma warning( disable : 4267 )
+#ifdef _MSC_VER
+	#pragma warning( push )
+	#pragma warning( disable : 4267 )
+#endif
 
 #define  YY_INT_ALIGNED short int
 
@@ -2369,4 +2371,6 @@ void libconfig_yyfree (void * ptr , yyscan_t yyscanner)
 
 #line 192 "scanner.l"
 
-#pragma warning( pop )
+#ifdef _MSC_VER
+	#pragma warning( pop )
+#endif
