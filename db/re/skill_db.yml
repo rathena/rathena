@@ -35121,6 +35121,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 2
     Hit: Multi_Hit
     HitCount: 2
@@ -35133,19 +35134,19 @@ Body:
       - Level: 3
         Area: 1
       - Level: 4
-        Area: 2
+        Area: 1
       - Level: 5
         Area: 2
       - Level: 6
         Area: 2
       - Level: 7
-        Area: 3
+        Area: 2
       - Level: 8
-        Area: 3
+        Area: 2
       - Level: 9
         Area: 3
       - Level: 10
-        Area: 4
+        Area: 3
     CastCancel: true
     AfterCastActDelay: 250
     Cooldown: 700
@@ -35182,6 +35183,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+      Critical: true
     Range: 2
     Hit: Multi_Hit
     HitCount: 2
@@ -35194,19 +35196,19 @@ Body:
       - Level: 3
         Area: 1
       - Level: 4
-        Area: 2
+        Area: 1
       - Level: 5
         Area: 2
       - Level: 6
         Area: 2
       - Level: 7
-        Area: 3
+        Area: 2
       - Level: 8
-        Area: 3
+        Area: 2
       - Level: 9
         Area: 3
       - Level: 10
-        Area: 4
+        Area: 3
     Requires:
       SpCost: 1
   - Id: 5210
@@ -35258,15 +35260,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 36
+          Amount: 27
         - Level: 2
-          Amount: 44
+          Amount: 34
         - Level: 3
-          Amount: 52
+          Amount: 41
         - Level: 4
-          Amount: 60
+          Amount: 48
         - Level: 5
-          Amount: 68
+          Amount: 55
       Weapon:
         2hSword: true
         2hSpear: true
@@ -35331,19 +35333,19 @@ Body:
     GiveAp: 2
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 350
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 35
         - Level: 2
-          Amount: 45
+          Amount: 40
         - Level: 3
-          Amount: 50
+          Amount: 45
         - Level: 4
-          Amount: 55
+          Amount: 50
         - Level: 5
-          Amount: 60
+          Amount: 55
       Weapon:
         2hSword: true
         2hAxe: true
@@ -37057,11 +37059,24 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
     GiveAp: 3
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
@@ -37137,12 +37152,12 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 7
+    GiveAp: 4
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 150
-    Duration1: 4500
-    Cooldown: 4500
+    Duration1: 2400
+    Cooldown: 2400
     FixedCastTime: 1500
     Requires:
       SpCost:
@@ -38211,15 +38226,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 46
+          Amount: 45
         - Level: 2
-          Amount: 53
+          Amount: 55
         - Level: 3
-          Amount: 60
+          Amount: 65
         - Level: 4
-          Amount: 67
+          Amount: 75
         - Level: 5
-          Amount: 74
+          Amount: 85
       Weapon:
         1hAxe: true
         2hAxe: true
@@ -40340,7 +40355,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 350
-    Cooldown: 1150
+    Cooldown: 350
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -40383,10 +40398,11 @@ Body:
       - Level: 4
         Area: 3
       - Level: 5
-        Area: 3
+        Area: 4
     GiveAp: 2
     CastCancel: true
-    Cooldown: 300
+    AfterCastActDelay: 500
+    Cooldown: 400
     Requires:
       SpCost:
         - Level: 1
