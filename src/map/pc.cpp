@@ -14069,7 +14069,7 @@ void JobDatabase::loadingFinished() {
 /**
  * Read job_noenter_map.txt
  **/
-static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
+static bool pc_readdb_job_noenter_map( char *str[], size_t columns, size_t current ){
 	int class_ = -1;
 	int64 class_tmp;
 
