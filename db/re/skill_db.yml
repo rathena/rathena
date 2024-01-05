@@ -36241,8 +36241,8 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: -3
     Element: Water
     SplashArea:
       - Level: 1
