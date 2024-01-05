@@ -38977,27 +38977,7 @@ Body:
     GiveAp: 3
     CastCancel: true
     AfterCastActDelay: 500
-    Cooldown:
-      - Level: 1
-        Time: 2000
-      - Level: 2
-        Time: 1900
-      - Level: 3
-        Time: 1700
-      - Level: 4
-        Time: 1500
-      - Level: 5
-        Time: 1300
-      - Level: 6
-        Time: 1100
-      - Level: 7
-        Time: 900
-      - Level: 8
-        Time: 700
-      - Level: 9
-        Time: 500
-      - Level: 10
-        Time: 700 # TODO: unknown cooldown for others levels
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
