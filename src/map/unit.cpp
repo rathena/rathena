@@ -2100,10 +2100,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		{
 #if PACKETVER >= 20191016
 			case GC_CROSSIMPACT:
+				clif_animation_force_packet(sd,skill_id,3);
+				break;
 #endif
 			case AS_SONICBLOW:
 			case CG_ARROWVULCAN:
-				clif_animation_force_packet(sd,skill_id);
+				clif_animation_force_packet(sd,skill_id,4);
 				break;
 			default:
 				break;
