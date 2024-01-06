@@ -15820,8 +15820,8 @@ TIMER_FUNC(pc_animation_force_timer){
 		return 0;
 	if (DIFF_TICK(sd->animation_force.tid, gettick()) > 0) {
 		clif_authfail_fd(sd->fd, 15);
-		ShowWarning("fail on animation timer sync from char id: %d",sd->status.char_id);
-	} else if(sd->animation_force.iter < sd->animation_force.hitcount/2){
+		ShowWarning("fail on animation timer sync from char id: %d \n",sd->status.char_id);
+	} else if(sd->animation_force.iter < sd->animation_force.hitcount){
 		pc_stop_walking(sd,USW_FIXPOS);
 #ifndef RENEWAL
 		pc_stop_attack(sd);

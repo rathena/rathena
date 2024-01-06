@@ -22913,7 +22913,7 @@ void clif_hit_frame(struct block_list* bl)
 /*==========================
  RESTORE ANIMATION BY AOSHINHO
 ============================*/
-void clif_animation_force_packet(map_session_data * sd, int skill_id)
+void clif_animation_force_packet(map_session_data * sd, int skill_id, short hit_count)
 {
 #if PACKETVER >= 20181128
 	nullpo_retv(sd);
@@ -22922,15 +22922,11 @@ void clif_animation_force_packet(map_session_data * sd, int skill_id)
 		return;
 	sd->animation_force.iter = 0;
 	int animation_interval = sd->battle_status.amotion + sd->battle_status.dmotion; //apsd amotion based
-	switch(skill_id){
-	case AS_SONICBLOW: sd->animation_force.hitcount = 8; break;
-	case CG_ARROWVULCAN: sd->animation_force.hitcount = 8; break;
-	case GC_CROSSIMPACT: sd->animation_force.hitcount = 7; break;
-	default: sd->animation_force.hitcount = 1; break;
-	}
-	sd->animation_force.tid = add_timer( gettick() +
-		(skill_id == GC_CROSSIMPACT ? animation_interval : 0),
-		pc_animation_force_timer, sd->bl.id, animation_interval);
+	t_tick start_timer = gettick();
+	if(skill_id == GC_CROSSIMPACT)
+		start_timer += animation_interval; // CrossImpact need to skip 1st hit because it stay in client
+	sd->animation_force.hitcount = hit_count;
+	sd->animation_force.tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, animation_interval);
 #endif
 }
 
