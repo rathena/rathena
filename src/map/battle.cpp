@@ -5605,7 +5605,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_ABYSS_DAGGER:
-			skillratio += -100 + 100 + 500 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 100 + 900 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_UNLUCKY_RUSH:
@@ -5621,11 +5622,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_DEFT_STAB:
-			skillratio += -100 + 350 + 550 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 250 + 350 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_FRENZY_SHOT:
-			skillratio += -100 + 400 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 150 + 600 * skill_lv;
+			skillratio += 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case WH_HAWKRUSH:
