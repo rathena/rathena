@@ -732,6 +732,8 @@ struct Battle_Config
 	int feature_banking_state_enforce;
 	int instance_allow_reconnect;
 
+	int feature_restore_animation_skills;
+
 #include <custom/battle_config_struct.inc>
 };
 
