@@ -63341,42 +63341,42 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bAtkRate,25; bonus bVit,50; }",30,10000,BF_WEAPON;
+      autobonus "{ bonus bAtkRate,25; bonus bVit,50; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 311121
     AegisName: Ice_F_Orb_Sp_Int
     Name: Ice Magic Orb (Spell Buster)
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bMatkRate,25; bonus bInt,50; }",30,10000,BF_MAGIC;
+      autobonus "{ bonus bMatkRate,25; bonus bInt,50; }",30,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 311122
     AegisName: Ice_F_Orb_Fi_Dex
     Name: Ice Magic Orb (Firing Shot)
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bLongAtkRate,15; bonus bDex,50; }",30,10000,BF_WEAPON;
+      autobonus "{ bonus bLongAtkRate,15; bonus bDex,50; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 311123
     AegisName: Ice_F_Orb_Ov_Str
     Name: Ice Magic Orb (Overpower)
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bShortAtkRate,15; bonus bStr,50; }",30,10000,BF_WEAPON;
+      autobonus "{ bonus bShortAtkRate,15; bonus bStr,50; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 311124
     AegisName: Ice_F_Orb_Fa_Agi
     Name: Ice Magic Orb (Fatal Flash)
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bCritAtkRate,25; bonus bAgi,50; }",30,10000,BF_WEAPON;
+      autobonus "{ bonus bCritAtkRate,25; bonus bAgi,50; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 311125
     AegisName: Ice_F_Orb_Lu_Luk
     Name: Ice Magic Orb (Lucky Strike)
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus2 bMagicAtkEle,Ele_All,15; bonus bLuk,50; }",30,10000,BF_MAGIC;
+      autobonus "{ bonus2 bMagicAtkEle,Ele_All,15; bonus bLuk,50; }",30,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 311126
     AegisName: Ice_F_Orb_A_Delay
     Name: Ice Magic Orb (Delay After Attack)
@@ -70937,9 +70937,9 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus bMaxHPrate,-5;
+      bonus bMaxHPrate,-5; 
       bonus bMaxSPrate,-5;
-      autobonus "{ bonus bStr,50; bonus bPow,15; bonus bSta,15; }",30,10000,BF_WEAPON;
+      autobonus "{ bonus bStr,50; bonus bPow,15; bonus bSta,15; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
       if (.@g>=ENCHANTGRADE_D) {
          bonus bLongAtkRate,5;
          bonus bShortAtkRate,5;
@@ -70957,7 +70957,7 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,-5;
       bonus bMaxSPrate,-5;
-      autobonus "{ bonus bInt,50; bonus bWis,15; bonus bSpl,15; }",30,10000,BF_MAGIC;
+      autobonus "{ bonus bInt,50; bonus bWis,15; bonus bSpl,15; }",30,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
       if (.@g>=ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_All,5;
          if (.@g>=ENCHANTGRADE_C) {
@@ -70973,7 +70973,7 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,-5;
       bonus bMaxSPrate,-5;
-      autobonus "{ bonus bDex,50; bonus bCon,15; bonus bCrt,15; }",30,10000,BF_WEAPON;
+      autobonus "{ bonus bDex,50; bonus bCon,15; bonus bCrt,15; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
       if (.@g>=ENCHANTGRADE_D) {
          bonus bLongAtkRate,5;
          bonus bShortAtkRate,5;
