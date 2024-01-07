@@ -41749,6 +41749,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
+      Head_Low: true
       Head_Mid: true
       Head_Top: true
     Flags:
@@ -41763,6 +41764,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
+      Head_Low: true
       Head_Mid: true
       Head_Top: true
     Flags:
@@ -51300,6 +51302,8 @@ Body:
     Type: Card
     Weight: 10
     Locations:
+      Head_Low: true
+      Head_Mid: true
       Head_Top: true
     Flags:
       BuyingStore: true
