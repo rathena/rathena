@@ -22921,12 +22921,11 @@ void clif_animation_force_packet(map_session_data * sd, int skill_id, short hit_
 	if (skill == NULL)
 		return;
 	sd->animation_force.iter = 0;
-	int animation_interval = cap_value(sd->battle_status.adelay, 200, 500); //apsd amotion based
+	int animation_interval = cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 200, 500); //apsd amotion based
 	t_tick start_timer = gettick();
 	switch(skill_id){
 	case AS_SONICBLOW:
 		{
-		animation_interval = cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 200, 500);
 #ifndef RENEWAL
 		pc_stop_attack(sd);
 #endif
