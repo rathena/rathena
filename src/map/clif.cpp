@@ -22921,10 +22921,22 @@ void clif_animation_force_packet(map_session_data * sd, int skill_id, short hit_
 	if (skill == NULL)
 		return;
 	sd->animation_force.iter = 0;
-	int animation_interval = sd->battle_status.amotion + sd->battle_status.dmotion; //apsd amotion based
+	int animation_interval = cap_value(sd->battle_status.adelay, 200, 500); //apsd amotion based
 	t_tick start_timer = gettick();
-	if(skill_id == GC_CROSSIMPACT)
-		start_timer += animation_interval; // CrossImpact need to skip 1st hit because it stay in client
+	switch(skill_id){
+	case AS_SONICBLOW:
+		{
+		animation_interval = cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 200, 500);
+#ifndef RENEWAL
+		pc_stop_attack(sd);
+#endif
+		}
+		break;
+	case GC_CROSSIMPACT:
+		start_timer += animation_interval; // GC_CROSSIMPACT need to skip 1st hit because it stay in client
+		break;
+	default: break;
+	}		
 	sd->animation_force.hitcount = hit_count;
 	sd->animation_force.tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, animation_interval);
 #endif

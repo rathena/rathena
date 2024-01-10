@@ -15822,19 +15822,14 @@ TIMER_FUNC(pc_animation_force_timer){
 		clif_authfail_fd(sd->fd, 15);
 		ShowWarning("fail on animation timer sync from char id: %d \n",sd->status.char_id);
 	} else if(sd->animation_force.iter < sd->animation_force.hitcount){
-		pc_stop_walking(sd,USW_FIXPOS);
-#ifndef RENEWAL
-		pc_stop_attack(sd);
-#endif
-		sd->ud.state.blockedmove = 1;
 		clif_hit_frame(&sd->bl);
+		sd->ud.canmove_tick = gettick() + data;
 		sd->animation_force.tid = add_timer(gettick() + data, pc_animation_force_timer, sd->bl.id, data);
 		sd->animation_force.iter++;
 	} else {
 		sd->animation_force.tid = INVALID_TIMER;
 		sd->animation_force.iter = 0;
 		sd->animation_force.hitcount = 0;
-		sd->ud.state.blockedmove = 0;
 	}
 	return 0;
 }
