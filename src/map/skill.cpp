@@ -5866,12 +5866,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
 					break;
 				case IG_SHIELD_SHOOTING:
-					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-					sc_start(src, src, SC_SHIELD_POWER, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-					break;
 				case IG_GRAND_JUDGEMENT:
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-					sc_start(src, src, SC_SPEAR_SCAR, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
 			}
 
