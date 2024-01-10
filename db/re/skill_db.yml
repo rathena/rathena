@@ -37417,27 +37417,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 1
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 2
-      - Level: 6
-        Area: 2
-      - Level: 7
-        Area: 3
-      - Level: 8
-        Area: 3
-      - Level: 9
-        Area: 3
-      - Level: 10
-        Area: 4
+    SplashArea: 4
     Requires:
       SpCost: 1
   - Id: 5275
