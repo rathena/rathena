@@ -5605,7 +5605,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_ABYSS_DAGGER:
-			skillratio += -100 + 100 + 500 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 100 + 900 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_UNLUCKY_RUSH:
@@ -5621,11 +5622,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_DEFT_STAB:
-			skillratio += -100 + 350 + 550 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 250 + 350 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_FRENZY_SHOT:
-			skillratio += -100 + 400 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 150 + 600 * skill_lv;
+			skillratio += 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case WH_HAWKRUSH:
@@ -6941,11 +6944,27 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		battle_attack_sc_bonus(&wd, src, target, skill_id, skill_lv);
 
 		if (sd) { //monsters, homuns and pets have their damage computed directly
-			//PATK mod applies to Dragonbreaths if Dragonic Aura is skilled only - [munkrej]
-			if (!((skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER) && pc_checkskill( sd, DK_DRAGONIC_AURA ) == 0)) {
-				wd.damage = (int64)floor((float)((wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.percentAtk) * (100 + sstatus->patk) / 100 + wd.masteryAtk + bonus_damage));
-				if (is_attack_left_handed(src, skill_id))
-					wd.damage2 = (int64)floor((float)((wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.percentAtk2) * (100 + sstatus->patk) / 100 + wd.masteryAtk2 + bonus_damage));
+			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.percentAtk;
+			if( is_attack_left_handed( src, skill_id ) ){
+				wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.percentAtk2;
+			}
+			// Apply PATK mod
+			// But for Dragonbreaths it only applies if Dragonic Aura is skilled
+			if( ( skill_id != RK_DRAGONBREATH && skill_id != RK_DRAGONBREATH_WATER ) || pc_checkskill( sd, DK_DRAGONIC_AURA ) > 0 ){
+				wd.damage = (int64)floor( (float)( wd.damage * ( 100 + sstatus->patk ) / 100 ) );
+				if( is_attack_left_handed( src, skill_id ) ){
+					wd.damage2 = (int64)floor( (float)( wd.damage2 * ( 100 + sstatus->patk ) / 100 ) );
+				}
+			}
+			// Apply MasteryATK
+			wd.damage += wd.masteryAtk;
+			if( is_attack_left_handed( src, skill_id ) ){
+				wd.damage2 += wd.masteryAtk2;
+			}
+			// Apply bonus damage
+			wd.damage += bonus_damage;
+			if( is_attack_left_handed( src, skill_id ) ){
+				wd.damage2 += bonus_damage;
 			}
 
 			// CritAtkRate modifier

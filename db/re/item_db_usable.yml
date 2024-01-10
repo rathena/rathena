@@ -62882,7 +62882,6 @@ Body:
       NoDrop: true
       NoTrade: true
       NoCart: true
-      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
