@@ -467,6 +467,16 @@ Body:
             Level: 3
       - Name: PR_REDEMPTIO
         MaxLevel: 1
+      - Name: AB_CLEMENTIA
+        MaxLevel: 3
+        Requires:
+          - Name: AL_BLESSING
+            Level: 10
+      - Name: AB_CANTO
+        MaxLevel: 3
+        Requires:
+          - Name: AL_INCAGI
+            Level: 10
   - Job: Wizard
     Inherit:
       Novice: true

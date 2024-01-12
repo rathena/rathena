@@ -1,2 +1,3 @@
 char_ip: char
-map_ip: 127.0.0.1
+// map_ip: 127.0.0.1
+map_ip: map

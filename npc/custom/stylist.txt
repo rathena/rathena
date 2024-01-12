@@ -13,7 +13,7 @@
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
 
-prontera,170,180,1	script	Stylist#custom_stylist	122,{
+prontera,163,200,3	script	VuÞ Phýõng#custom_stylist	122,{
 	setarray .@Styles[1],
 		getbattleflag("max_cloth_color"),
 		getbattleflag("max_hair_style"),
@@ -22,13 +22,13 @@ prontera,170,180,1	script	Stylist#custom_stylist	122,{
 		LOOK_CLOTHES_COLOR,
 		LOOK_HAIR,
 		LOOK_HAIR_COLOR;
-	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
+	set .@s, select(" ~ MaÌu quâÌn aìo: ~ Taòo kiêÒu toìc: ~ MaÌu toìc");
 	set .@Revert, getlook(.@Look[.@s]);
 	set .@Style,1;
 	while(1) {
 		setlook .@Look[.@s], .@Style;
-		message strcharinfo(0),"This is style #"+.@Style+".";
-		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
+		message strcharinfo(0),"Ðây laÌ kiêÒu sôì #"+.@Style+".";
+		set .@menu$, " ~ Tiêìp (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Trýõìc ðoì (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ ChuyêÒn tõìi kiêÒu...: ~ Quay vêÌ kiêÒu cuÞ (^0055FF"+.@Revert+"^000000)";
 		switch(select(.@menu$)) {
 		case 1:
 			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);

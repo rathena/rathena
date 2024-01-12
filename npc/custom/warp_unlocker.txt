@@ -1,0 +1,32 @@
+-	script	WarpUnlocker	-1,{
+  callfunc "F_WarpUnlocker","[Warp Unlocker]","Inside Glastheim Chilvalry F1","gl_knt01",150,18;
+  end;
+}
+
+function	script	F_WarpUnlocker	{
+  .@npc_name$ = getarg(0);
+  .@location$ = getarg(1);
+  .@mapname$ = getarg(2);
+  .@map_x = getarg(3);
+  .@map_y = getarg(4);
+
+  .@row_count = query_sql("SELECT char_id, mapname FROM warp_unlocker_locations WHERE char_id=" + getcharid(0) + " AND mapname='" + .@mapname$ + "';", .@qr_char_id, .@qr_mapname$);
+
+  if (.@row_count > 0) {
+    debugmes "Row count > 0 - .@row_count=" + .@row_count;
+  } else {
+    debugmes "Row count <= 0 - .@row_count=" + .@row_count;
+    query_sql("INSERT INTO warp_unlocker_locations (char_id, mapname) VALUES (" + getcharid(0) + ",'" + .@mapname$ + "');");
+  }
+  mes .@npc_name$;
+  mes "Unlocked map: " + .@mapname$;
+
+  // debugmes "1." + .@npc_name$;
+	// debugmes "2." + .@location$;
+	// debugmes "3." + .@mapname$;
+	// debugmes "4." + .@map_x;
+	// debugmes "5." + .@map_y;
+  close;
+}
+
+gl_knt01,158,24,4	duplicate(WarpUnlocker)	Warp Unlocker#gl_knt01	811

@@ -1,0 +1,33 @@
+-	script	#superregen	-1,{
+OnInit:
+	bindatcmd("regenon",strnpcinfo(0)+"::OnRegenOnCommand");
+  bindatcmd("regenoff",strnpcinfo(0)+"::OnRegenOffCommand");
+  atcommand "@regenon";
+end;
+
+OnRegenOnCommand:
+  bonus2 bRegenPercentHP,3,1000;
+  bonus2 bRegenPercentSP,3,1000;
+  // showscript "ĞaŞ bâòt Siêu HôÌi Phuòc";
+  message strcharinfo(0),"ĞaŞ bâòt Siêu HôÌi Phuòc";
+end;
+
+OnRegenOffCommand:
+  bonus2 bRegenPercentHP,0,1000;
+  bonus2 bRegenPercentSP,0,1000;
+  // showscript "ĞaŞ tãìt Siêu HôÌi Phuòc";
+  message strcharinfo(0),"ĞaŞ tãìt Siêu HôÌi Phuòc";
+end;
+
+// OnRegenOnCommand:
+//   bonus bHPrecovRate,500;
+//   bonus bSPrecovRate,500;
+//   message strcharinfo(0),"ĞaŞ bâòt Siêu HôÌi Phuòc";
+// end;
+
+// OnRegenOffCommand:
+//   bonus bHPrecovRate,0;
+//   bonus bSPrecovRate,0;
+//   message strcharinfo(0),"ĞaŞ tãìt Siêu HôÌi Phuòc";
+// end;
+}

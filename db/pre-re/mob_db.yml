@@ -156,6 +156,7 @@ Body:
         Rate: 7000
       - Item: Knife_
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Sticky_Mucus
         Rate: 400
       - Item: Apple
@@ -169,25 +170,6 @@ Body:
       - Item: Poring_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1003
-#    AegisName: TESTEGG
-#    Name: Test Egg
-#    Level: 2
-#    Hp: 100000
-#    BaseExp: 10
-#    JobExp: 10
-#    Attack: 3
-#    Attack2: 9
-#    Defense: 99
-#    Agi: 99
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Insect
-#    Element: Earth
-#    ElementLevel: 1
-#    WalkSpeed: 512
-#    AttackMotion: 512
   - Id: 1004
     AegisName: HORNET
     Name: Hornet
@@ -228,6 +210,7 @@ Body:
         Rate: 3500
       - Item: Main_Gauche_
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Green_Herb
         Rate: 350
       - Item: Honey
@@ -265,6 +248,7 @@ Body:
         Rate: 5500
       - Item: Falchion_
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Ribbon_
         Rate: 15
       - Item: Wing_Of_Fly
@@ -278,20 +262,6 @@ Body:
       - Item: Farmiliar_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1006
-#    AegisName: THIEF_BUG_LARVA
-#    Name: Thief Bug Larva
-#    Level: 1
-#    Size: Small
-#    Race: Formless
-#    Element: Water
-#    ElementLevel: 0
-#    Ai: 25
-#    Modes:
-#      NoCast: true
-#      CastSensorChase: true
-#      CastSensorIdle: true
-#      ChangeChase: true
   - Id: 1007
     AegisName: FABRE
     Name: Fabre
@@ -326,6 +296,7 @@ Body:
         Rate: 500
       - Item: Club_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Azure_Jewel
         Rate: 5
       - Item: Green_Herb
@@ -334,6 +305,7 @@ Body:
         Rate: 1000
       - Item: Club
         Rate: 200
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Fabre_Card
         Rate: 1
         StealProtected: true
@@ -408,6 +380,7 @@ Body:
         Rate: 9000
       - Item: Bow_
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Yellow_Gemstone
         Rate: 80
       - Item: Arrow
@@ -505,6 +478,7 @@ Body:
         Rate: 1500
       - Item: Cutter_
         Rate: 55
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Wing_Of_Fly
         Rate: 100
       - Item: Chonchon_Doll
@@ -588,6 +562,7 @@ Body:
         Rate: 9000
       - Item: Mantle_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Meat
         Rate: 650
       - Item: Monster's_Feed
@@ -718,66 +693,17 @@ Body:
         Rate: 3
       - Item: Great_Bow_
         Rate: 35
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Fire_Arrow
         Rate: 1000
       - Item: Red_Herb
         Rate: 1800
       - Item: Bow
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Archer_Skeleton_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1017
-#    AegisName: THIEF_BUG_FEMALE
-#    Name: Thief Bug Female
-#    Level: 10
-#    Hp: 170
-#    BaseExp: 35
-#    JobExp: 18
-#    Attack: 33
-#    Attack2: 40
-#    Defense: 5
-#    MagicDefense: 5
-#    Agi: 15
-#    Vit: 10
-#    Int: 5
-#    Dex: 23
-#    Luk: 5
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Insect
-#    Element: Dark
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 988
-#    AttackMotion: 288
-#    DamageMotion: 768
-#    Ai: 25
-#    Modes:
-#      NoCast: true
-#      CastSensorChase: true
-#      CastSensorIdle: true
-#      ChangeChase: true
-#    Drops:
-#      - Item: Worm_Peelings
-#        Rate: 3500
-#      - Item: Garlet
-#        Rate: 250
-#      - Item: Blade_
-#        Rate: 15
-#      - Item: Insect_Feeler
-#        Rate: 200
-#      - Item: Red_Herb
-#        Rate: 400
-#      - Item: Red_Gemstone
-#        Rate: 50
-#      - Item: Iron_Ore
-#        Rate: 400
-#      - Item: Thief_Bug_Female_Card
-#        Rate: 1
-#        StealProtected: true
   - Id: 1018
     AegisName: CREAMY
     Name: Creamy
@@ -812,6 +738,7 @@ Body:
         Rate: 9000
       - Item: Silk_Robe_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Honey
         Rate: 150
       - Item: Wing_Of_Butterfly
@@ -856,12 +783,14 @@ Body:
         Rate: 9000
       - Item: Sandals_
         Rate: 20
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Yellow_Herb
         Rate: 200
       - Item: Red_Herb
         Rate: 900
       - Item: Wand
         Rate: 100
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_2
       - Item: Orange
         Rate: 1000
       - Item: Pecopeco_Card
@@ -900,6 +829,7 @@ Body:
         Rate: 9000
       - Item: Spear_
         Rate: 30
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Green_Herb
         Rate: 350
       - Item: Shoot
@@ -908,104 +838,10 @@ Body:
         Rate: 3
       - Item: Whip_Of_Earth
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Mandragora_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1021
-#    AegisName: THIEF_BUG_MALE
-#    Name: Thief Bug Male
-#    Level: 19
-#    Hp: 583
-#    BaseExp: 223
-#    JobExp: 93
-#    Attack: 76
-#    Attack2: 88
-#    Defense: 15
-#    MagicDefense: 5
-#    Agi: 29
-#    Vit: 16
-#    Int: 5
-#    Dex: 36
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Insect
-#    Element: Dark
-#    ElementLevel: 1
-#    WalkSpeed: 300
-#    AttackDelay: 988
-#    AttackMotion: 288
-#    DamageMotion: 768
-#    Ai: 25
-#    Modes:
-#      NoCast: true
-#      Looter: true
-#      CastSensorChase: true
-#      CastSensorIdle: true
-#      ChangeChase: true
-#    Drops:
-#      - Item: Emveretarcon
-#        Rate: 40
-#      - Item: Insect_Feeler
-#        Rate: 5500
-#      - Item: Worm_Peelings
-#        Rate: 1500
-#      - Item: Slayer_
-#        Rate: 10
-#      - Item: Yellow_Herb
-#        Rate: 90
-#      - Item: Bluish_Green_Jewel
-#        Rate: 5
-#      - Item: Katana
-#        Rate: 50
-#      - Item: Thief_Bug_Male_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1022
-#    AegisName: WEREWOLF
-#    Name: Werewolf
-#    Level: 80
-#    Hp: 28600
-#    BaseExp: 11813
-#    JobExp: 7289
-#    Attack: 2560
-#    Attack2: 3280
-#    Defense: 65
-#    MagicDefense: 35
-#    Agi: 97
-#    Vit: 60
-#    Dex: 135
-#    Luk: 52
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 10
-#    Size: Large
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1500
-#    AttackMotion: 768
-#    DamageMotion: 652
-#    Ai: 25
-#    Modes:
-#      NoCast: true
-#      Looter: true
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Steel
-#        Rate: 500
-#      - Item: Cobold_Hair
-#        Rate: 4000
-#      - Item: Oridecon
-#        Rate: 500
-#      - Item: Elunium
-#        Rate: 500
-#      - Item: Executioner's_Mitten
-#        Rate: 800
-#      - Item: Guh_Moon_Goh_
-#        Rate: 300
   - Id: 1023
     AegisName: ORK_WARRIOR
     Name: Orc Warrior
@@ -1047,10 +883,13 @@ Body:
         Rate: 3
       - Item: Battle_Axe_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Orcish_Axe
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Axe
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
@@ -1090,6 +929,7 @@ Body:
         Rate: 5500
       - Item: Pike_
         Rate: 30
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Yellow_Herb
         Rate: 70
       - Item: Azure_Jewel
@@ -1131,6 +971,7 @@ Body:
         Rate: 9000
       - Item: Katana_
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Red_Herb
         Rate: 900
       - Item: Emveretarcon
@@ -1177,49 +1018,21 @@ Body:
         Rate: 2
       - Item: Shoes_
         Rate: 15
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Amulet
         Rate: 20
       - Item: Ninja_Suit
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Adventure_Suit
         Rate: 100
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Girl's_Diary
         Rate: 5
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Munak_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1027
-#    AegisName: RAPTICE
-#    Name: Raptice
-#    Level: 17
-#    Hp: 600
-#    BaseExp: 100
-#    JobExp: 55
-#    Defense: 5
-#    MagicDefense: 10
-#    Str: 5
-#    Agi: 20
-#    Vit: 20
-#    Dex: 28
-#    Luk: 10
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Brute
-#    Element: Earth
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 2000
-#    AttackMotion: 1000
-#    DamageMotion: 500
-#    Ai: 25
-#    Modes:
-#      NoRandomWalk: true
-#      CastSensorIdle: true
-#    Drops:
-#      - Item: Jellopy
-#        Rate: 7000
   - Id: 1028
     AegisName: SOLDIER_SKELETON
     Name: Soldier Skeleton
@@ -1255,14 +1068,17 @@ Body:
         Rate: 60
       - Item: Dagger_
         Rate: 12
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Red_Herb
         Rate: 700
       - Item: Mementos
         Rate: 10
       - Item: Knife
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Stiletto
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Soldier_Skeleton_Card
         Rate: 1
         StealProtected: true
@@ -1348,6 +1164,7 @@ Body:
         Rate: 9000
       - Item: Glaive_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Scale_Of_Snakes
         Rate: 1500
       - Item: Scales_Shell
@@ -1398,6 +1215,7 @@ Body:
         Rate: 5
       - Item: Main_Gauche
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Apple
         Rate: 250
       - Item: Poporing_Card
@@ -1486,6 +1304,7 @@ Body:
         Rate: 40
       - Item: Wooden_Mail_
         Rate: 30
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Fire_Scroll_1_3
         Rate: 100
       - Item: Branch_Of_Dead_Tree
@@ -1582,6 +1401,7 @@ Body:
         Rate: 1
       - Item: Damascus_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Hunter_Fly_Card
         Rate: 1
         StealProtected: true
@@ -1627,6 +1447,7 @@ Body:
         Rate: 150
       - Item: Ghoul_Leg
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Ghoul_Card
         Rate: 1
         StealProtected: true
@@ -1668,6 +1489,7 @@ Body:
         Rate: 134
       - Item: Tsurugi_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Posionous_Canine
         Rate: 2500
       - Item: Scale_Of_Snakes
@@ -1721,16 +1543,19 @@ Body:
         Rate: 2000
       - Item: Assasin_Dagger
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Crown
         Rate: 200
       - Item: Jamadhar_
         Rate: 600
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Sacred_Marks
         Rate: 1000
       - Item: Spinx_Helm
         Rate: 150
       - Item: Cakram
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Osiris_Card
         Rate: 1
         StealProtected: true
@@ -1776,10 +1601,12 @@ Body:
     Drops:
       - Item: Crescent_Scythe
         Rate: 400
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Magestic_Goat
         Rate: 300
       - Item: Crescent_Scythe_
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Emperium
         Rate: 500
       - Item: Magestic_Goat_
@@ -1928,32 +1755,6 @@ Body:
       - Item: Steel_Chonchon_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1043
-#    AegisName: SEAHORES
-#    Name: Seahorse
-#    Level: 18
-#    Hp: 1452
-#    BaseExp: 122
-#    JobExp: 78
-#    Attack: 100
-#    Attack2: 150
-#    Defense: 15
-#    MagicDefense: 7
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 10
-#    Size: Small
-#    Race: Fish
-#    Element: Earth
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1500
-#    AttackMotion: 800
-#    DamageMotion: 600
-#    Ai: 25
-#    Modes:
-#      NoRandomWalk: true
-#      CastSensorIdle: true
   - Id: 1044
     AegisName: OBEAUNE
     Name: Obeaune
@@ -1990,6 +1791,7 @@ Body:
         Rate: 1
       - Item: Saint_Robe_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Skyblue_Jewel
         Rate: 10
       - Item: Fin
@@ -2086,14 +1888,18 @@ Body:
     Drops:
       - Item: Plate_Armor_
         Rate: 250
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Broad_Sword_
         Rate: 220
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Zweihander
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Sharp_Gear
         Rate: 350
       - Item: Lance_
         Rate: 550
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Elunium
         Rate: 3686
       - Item: Oridecon
@@ -2218,6 +2024,7 @@ Body:
         Rate: 700
       - Item: Cotton_Shirt_
         Rate: 150
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Red_Herb
         Rate: 550
       - Item: Milk
@@ -2304,12 +2111,14 @@ Body:
         Rate: 2500
       - Item: Leather_Jacket_
         Rate: 80
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Red_Herb
         Rate: 350
       - Item: Jellopy
         Rate: 2000
       - Item: Leather_Jacket
         Rate: 120
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Iron_Ore
         Rate: 250
       - Item: Thief_Bug_Card
@@ -2350,10 +2159,12 @@ Body:
         Rate: 9000
       - Item: Guitar_Of_Vast_Land
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Green_Feeler
         Rate: 4
       - Item: Javelin_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Leaflet_Of_Hinal
         Rate: 10
       - Item: Grasshopper_Doll
@@ -2400,6 +2211,7 @@ Body:
         Rate: 250
       - Item: Blade_
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Insect_Feeler
         Rate: 200
       - Item: Red_Herb
@@ -2449,12 +2261,14 @@ Body:
         Rate: 1500
       - Item: Slayer_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Yellow_Herb
         Rate: 90
       - Item: Bluish_Green_Jewel
         Rate: 5
       - Item: Katana
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Thief_Bug_Male_Card
         Rate: 1
         StealProtected: true
@@ -2500,6 +2314,7 @@ Body:
         Rate: 1000
       - Item: Guisarme
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Iron_Ore
         Rate: 250
       - Item: Muka_Card
@@ -2639,6 +2454,7 @@ Body:
         Rate: 3000
       - Item: Guitar_Of_Passion
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Metaller_Card
         Rate: 1
         StealProtected: true
@@ -2685,6 +2501,7 @@ Body:
     Drops:
       - Item: Gungnir
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Honey
         Rate: 10000
       - Item: Coronet
@@ -2697,6 +2514,7 @@ Body:
         Rate: 4268
       - Item: Red_Square_Bag
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Mistress_Card
         Rate: 1
         StealProtected: true
@@ -2787,6 +2605,7 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Oridecon
         Rate: 60
       - Item: Nightmare_Card
@@ -2960,6 +2779,7 @@ Body:
         Rate: 2
       - Item: Trident_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Feather
         Rate: 3000
       - Item: Skyblue_Jewel
@@ -3005,6 +2825,7 @@ Body:
         Rate: 3000
       - Item: Padded_Armor_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Solid_Shell
         Rate: 100
       - Item: Elunium_Stone
@@ -3142,6 +2963,7 @@ Body:
         Rate: 50
       - Item: Katana_
         Rate: 25
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Gill
         Rate: 600
       - Item: Sword_Fish_Card
@@ -3232,6 +3054,7 @@ Body:
         Rate: 250
       - Item: Falchion
         Rate: 250
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Oridecon_Stone
         Rate: 43
       - Item: Well_Dried_Bone
@@ -3370,26 +3193,6 @@ Body:
       - Item: Shellfish_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1075
-#    AegisName: TURTLE
-#    Name: Turtle
-#    Level: 3
-#    Hp: 77
-#    Attack: 1
-#    Attack2: 2
-#    Defense: 35
-#    AttackRange: 1
-#    SkillRange: 7
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Fish
-#    Element: Earth
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 500
-#    AttackMotion: 500
-#    DamageMotion: 500
-#    Ai: 01
   - Id: 1076
     AegisName: SKELETON
     Name: Skeleton
@@ -3423,6 +3226,7 @@ Body:
         Rate: 800
       - Item: Mace_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Jellopy
         Rate: 3000
       - Item: Red_Herb
@@ -3862,6 +3666,7 @@ Body:
         Rate: 1000
       - Item: Golden_Mace
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Golden_Gear
         Rate: 250
       - Item: Golden_Bell
@@ -3921,14 +3726,17 @@ Body:
         Rate: 500
       - Item: Right_Epsilon
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Shield_
         Rate: 250
       - Item: Orcish_Sword
         Rate: 1000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Elunium
         Rate: 4559
       - Item: Giant_Axe
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Orc_Hero_Card
         Rate: 1
         StealProtected: true
@@ -3974,10 +3782,12 @@ Body:
         Rate: 1500
       - Item: Angel's_Arrival
         Rate: 1000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Center_Potion
         Rate: 700
       - Item: Guitar_Of_Gentle_Breeze
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Vocal_Card
         Rate: 1
         StealProtected: true
@@ -4155,8 +3965,10 @@ Body:
         Rate: 1500
       - Item: Star_Dust_Blade
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Angel's_Warmth
         Rate: 1000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Red_Jewel
         Rate: 10
       - Item: Monster_Juice
@@ -4206,6 +4018,7 @@ Body:
         Rate: 50
       - Item: Angel's_Protection
         Rate: 1000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Eclipse_Card
         Rate: 1
         StealProtected: true
@@ -4336,6 +4149,7 @@ Body:
         Rate: 100
       - Item: Scapulare_
         Rate: 60
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Leaf_Of_Yggdrasil
         Rate: 500
       - Item: Spirit_Chain
@@ -4421,6 +4235,7 @@ Body:
         Rate: 3000
       - Item: Healing_Staff
         Rate: 10
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Mementos
         Rate: 550
       - Item: Oridecon
@@ -4431,6 +4246,7 @@ Body:
         Rate: 1
       - Item: Blessed_Wand
         Rate: 3
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Anubis_Card
         Rate: 1
         StealProtected: true
@@ -4472,6 +4288,7 @@ Body:
         Rate: 175
       - Item: Boots_
         Rate: 5
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Green_Herb
         Rate: 1500
       - Item: Violet_Jewel
@@ -4562,6 +4379,7 @@ Body:
         Rate: 63
       - Item: Halberd_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Yggdrasilberry
         Rate: 50
       - Item: Leaf_Of_Yggdrasil
@@ -4570,6 +4388,7 @@ Body:
         Rate: 1300
       - Item: Boots
         Rate: 50
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Baphomet__Card
         Rate: 1
         StealProtected: true
@@ -4609,6 +4428,7 @@ Body:
         Rate: 3
       - Item: Arc_Wand_
         Rate: 5
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Star_Crumb
         Rate: 30
       - Item: Old_Magic_Book
@@ -4652,14 +4472,18 @@ Body:
         Rate: 9000
       - Item: Coat_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Animal's_Skin
         Rate: 5500
       - Item: Glaive_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Spear_
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Pike_
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Caramel_Card
         Rate: 1
         StealProtected: true
@@ -4695,6 +4519,7 @@ Body:
         Rate: 9000
       - Item: Hood_
         Rate: 20
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Fluff
         Rate: 3000
       - Item: Animal's_Skin
@@ -4703,6 +4528,7 @@ Body:
         Rate: 500
       - Item: Sandals_
         Rate: 25
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Strawberry
         Rate: 600
       - Item: Coco_Card
@@ -4786,10 +4612,12 @@ Body:
     Drops:
       - Item: Katar_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Claw_Of_Desert_Wolf
         Rate: 5500
       - Item: Mink_Coat
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Meat
         Rate: 1200
       - Item: Claw_Of_Wolves
@@ -4798,6 +4626,7 @@ Body:
         Rate: 53
       - Item: Stiletto_
         Rate: 140
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Desert_Wolf_Card
         Rate: 1
         StealProtected: true
@@ -4835,12 +4664,15 @@ Body:
         Rate: 5500
       - Item: Adventurere's_Suit_
         Rate: 80
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Meat
         Rate: 600
       - Item: Cotton_Shirt
         Rate: 200
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Asura_
         Rate: 5
+        RandomOptionGroup: TBRO_Special_Weapon_Level_1
       - Item: Orange
         Rate: 1000
       - Item: Desert_Wolf_Babe_Card
@@ -4887,6 +4719,7 @@ Body:
         Rate: 200
       - Item: Katar_Of_Cold_Icicle
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Oridecon_Stone
         Rate: 161
       - Item: Deviace_Card
@@ -4931,6 +4764,7 @@ Body:
         Rate: 2
       - Item: Partizan_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Sacred_Marks
         Rate: 5
       - Item: Zargon
@@ -4977,12 +4811,15 @@ Body:
         Rate: 150
       - Item: Sword_Mace_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Mighty_Staff
         Rate: 1
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Gold
         Rate: 1
       - Item: Club
         Rate: 300
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Hammer_Of_Blacksmith
         Rate: 5
       - Item: Dokebi_Card
@@ -5071,18 +4908,23 @@ Body:
     Drops:
       - Item: Saber_
         Rate: 600
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Ring_Pommel_Saber_
         Rate: 950
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Cutlas
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Hae_Dong_Gum_
         Rate: 400
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Corsair
         Rate: 350
       - Item: Elunium
         Rate: 3200
       - Item: Krasnaya
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Drake_Card
         Rate: 1
         StealProtected: true
@@ -5116,6 +4958,7 @@ Body:
         Rate: 7500
       - Item: Rod_
         Rate: 80
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_1
       - Item: Sticky_Mucus
         Rate: 500
       - Item: Apple
@@ -5216,18 +5059,21 @@ Body:
     Drops:
       - Item: Fire_Brand
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Smoking_Pipe
         Rate: 250
       - Item: Honey
         Rate: 10000
       - Item: Katar_Of_Raging_Blaze
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Tiger_Footskin
         Rate: 250
       - Item: Elunium
         Rate: 2300
       - Item: Krieg
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Eddga_Card
         Rate: 1
         StealProtected: true
@@ -5308,10 +5154,13 @@ Body:
         Rate: 10
       - Item: Bone_Wand
         Rate: 1
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Ragamuffin_Cape
         Rate: 2
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Bible
         Rate: 10
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Leaf_Of_Yggdrasil
         Rate: 200
       - Item: Cookbook07
@@ -5449,6 +5298,7 @@ Body:
         Rate: 100
       - Item: Thief_Clothes_
         Rate: 50
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Branch_Of_Dead_Tree
         Rate: 500
       - Item: Old_Blue_Box
@@ -5548,6 +5398,7 @@ Body:
         Rate: 3
       - Item: Dirk_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Buckler_
         Rate: 5
       - Item: Red_Herb
@@ -5594,6 +5445,7 @@ Body:
         Rate: 3
       - Item: Flail_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Buckler_
         Rate: 1
       - Item: Red_Herb
@@ -5692,6 +5544,7 @@ Body:
         Rate: 3
       - Item: Smasher_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Buckler_
         Rate: 1
       - Item: Red_Herb
@@ -5736,6 +5589,7 @@ Body:
         Rate: 9000
       - Item: Wand_
         Rate: 15
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_2
       - Item: Buckler_
         Rate: 1
       - Item: Goblin_Mask_03
@@ -5785,6 +5639,7 @@ Body:
         Rate: 3000
       - Item: Town_Sword_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Foolishness_Of_Blind
         Rate: 1
       - Item: Fatty_Chubby_Earthworm
@@ -5831,6 +5686,7 @@ Body:
         Rate: 5500
       - Item: Guisarme_
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Shell
         Rate: 5500
       - Item: Solid_Shell
@@ -5919,6 +5775,7 @@ Body:
         Rate: 31
       - Item: Tights_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Frozen_Heart
         Rate: 5
       - Item: Pumpkin
@@ -5965,6 +5822,7 @@ Body:
         Rate: 1000
       - Item: Katar_Of_Piercing_Wind
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Oridecon
         Rate: 100
       - Item: Ghost_Scroll_1_5
@@ -6016,6 +5874,7 @@ Body:
         Rate: 2000
       - Item: Saber_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Khalitzburg_Card
         Rate: 1
         StealProtected: true
@@ -6060,6 +5919,7 @@ Body:
         Rate: 25
       - Item: Gladius_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Buckler_
         Rate: 5
       - Item: Kobold_Card
@@ -6152,6 +6012,7 @@ Body:
         Rate: 200
       - Item: Hammer_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Buckler_
         Rate: 3
       - Item: Yellow_Herb
@@ -6159,102 +6020,6 @@ Body:
       - Item: Kobold_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1136
-#    AegisName: KOBOLD_4
-#    Name: Kobold
-#    Level: 31
-#    Hp: 2179
-#    BaseExp: 806
-#    JobExp: 407
-#    Attack: 262
-#    Attack2: 324
-#    Defense: 15
-#    MagicDefense: 10
-#    Agi: 31
-#    Vit: 31
-#    Int: 20
-#    Dex: 46
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Poison
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1528
-#    AttackMotion: 528
-#    DamageMotion: 360
-#    Ai: 13
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Steel
-#        Rate: 50
-#      - Item: Cobold_Hair
-#        Rate: 5335
-#      - Item: Zargon
-#        Rate: 100
-#      - Item: Hammer_
-#        Rate: 5
-#      - Item: Buckler_
-#        Rate: 3
-#      - Item: Yellow_Herb
-#        Rate: 100
-#      - Item: Axe
-#        Rate: 150
-#      - Item: Kobold_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1137
-#    AegisName: KOBOLD_5
-#    Name: Kobold
-#    Level: 31
-#    Hp: 2179
-#    BaseExp: 644
-#    JobExp: 407
-#    Attack: 186
-#    Attack2: 216
-#    Defense: 15
-#    MagicDefense: 10
-#    Agi: 31
-#    Vit: 31
-#    Int: 20
-#    Dex: 88
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Fire
-#    ElementLevel: 2
-#    WalkSpeed: 300
-#    AttackDelay: 1228
-#    AttackMotion: 528
-#    DamageMotion: 360
-#    Ai: 13
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Steel
-#        Rate: 40
-#      - Item: Cobold_Hair
-#        Rate: 5335
-#      - Item: Zargon
-#        Rate: 100
-#      - Item: Morning_Star_
-#        Rate: 5
-#      - Item: Buckler_
-#        Rate: 3
-#      - Item: Yellow_Herb
-#        Rate: 100
-#      - Item: Club
-#        Rate: 150
-#      - Item: Kobold_Card
-#        Rate: 1
-#        StealProtected: true
   - Id: 1138
     AegisName: MAGNOLIA
     Name: Magnolia
@@ -6383,10 +6148,12 @@ Body:
         Rate: 4365
       - Item: Staff_
         Rate: 10
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_2
       - Item: Mitten_Of_Presbyter
         Rate: 1
       - Item: Blessed_Wand
         Rate: 3
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Fire_Scroll_1_5
         Rate: 100
       - Item: Book_Of_Devil
@@ -6468,6 +6235,7 @@ Body:
         Rate: 2500
       - Item: Chain_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Skyblue_Jewel
         Rate: 10
       - Item: Blue_Gemstone
@@ -6517,8 +6285,10 @@ Body:
         Rate: 100
       - Item: Chain_
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Chrystal_Pumps
         Rate: 1
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Marionette_Doll
         Rate: 3
       - Item: Marionette_Card
@@ -6604,6 +6374,7 @@ Body:
         Rate: 500
       - Item: Jur_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Goggle_
         Rate: 5
       - Item: Safety_Helmet
@@ -6712,6 +6483,7 @@ Body:
         Rate: 3500
       - Item: Dea_Staff
         Rate: 100
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Maya_Card
         Rate: 1
         StealProtected: true
@@ -6750,10 +6522,12 @@ Body:
         Rate: 5335
       - Item: Whip_Of_Red_Flame
         Rate: 250
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Animal_Blood
         Rate: 200
       - Item: Sea_Witch_Foot
         Rate: 20
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Scarlet_Jewel
         Rate: 250
       - Item: Turtle_Shell
@@ -6799,12 +6573,14 @@ Body:
         Rate: 196
       - Item: Two_Handed_Axe_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Hammer_Of_Blacksmith
         Rate: 10
       - Item: Sweet_Potato
         Rate: 1500
       - Item: Axe
         Rate: 200
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Lemon
         Rate: 300
       - Item: Minorous_Card
@@ -6853,10 +6629,13 @@ Body:
     Drops:
       - Item: Spectral_Spear
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Moonlight_Sword
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Long_Mace
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Punisher
         Rate: 500
       - Item: Silver_Knife_Of_Chaste
@@ -6865,6 +6644,7 @@ Body:
         Rate: 2600
       - Item: Staff_Of_Bordeaux
         Rate: 100
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Moonlight_Flower_Card
         Rate: 1
         StealProtected: true
@@ -6952,6 +6732,7 @@ Body:
         Rate: 2
       - Item: Buster_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Green_Herb
         Rate: 50
       - Item: Orc_Skeleton_Card
@@ -7033,10 +6814,13 @@ Body:
         Rate: 20
       - Item: Falchion_
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Stiletto_
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Undershirt
         Rate: 100
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Pasana_Card
         Rate: 1
         StealProtected: true
@@ -7079,6 +6863,7 @@ Body:
         Rate: 1000
       - Item: Flail
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Zargon
         Rate: 1500
       - Item: Aloebera
@@ -7125,6 +6910,7 @@ Body:
         Rate: 1000
       - Item: Khukri
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Zargon
         Rate: 1500
       - Item: Aloebera
@@ -7178,14 +6964,18 @@ Body:
         Rate: 2500
       - Item: Solar_Sword
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Holy_Robe
         Rate: 150
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Gemmed_Crown
         Rate: 500
       - Item: Tablet
         Rate: 300
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Bazerald
         Rate: 80
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Pharaoh_Card
         Rate: 1
         StealProtected: true
@@ -7275,8 +7065,10 @@ Body:
         Rate: 9700
       - Item: Forturn_Sword
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Sucsamad
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Jaws_Of_Ant
         Rate: 5000
       - Item: Mr_Scream
@@ -7285,6 +7077,7 @@ Body:
         Rate: 2900
       - Item: Weihna
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Phreeoni_Card
         Rate: 1
         StealProtected: true
@@ -7459,10 +7252,13 @@ Body:
         Rate: 1
       - Item: Chain_Mail_
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Two_Hand_Sword_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Katana
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Patriotism_Marks
         Rate: 10
       - Item: Brigan
@@ -7510,6 +7306,7 @@ Body:
         Rate: 1500
       - Item: Mantle_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cookbook06
         Rate: 1
       - Item: Requiem_Card
@@ -7557,8 +7354,10 @@ Body:
         Rate: 200
       - Item: Katar_Of_Thornbush
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Hypnotist's_Staff_
         Rate: 5
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Sand_Man_Card
         Rate: 1
         StealProtected: true
@@ -7639,6 +7438,7 @@ Body:
         Rate: 9000
       - Item: Axe_
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Meat
         Rate: 500
       - Item: Arrow
@@ -7652,51 +7452,6 @@ Body:
       - Item: Savage_Babe_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1168
-#    AegisName: SCORPION_KING
-#    Name: Scorpion King
-#    Level: 50
-#    Hp: 6354
-#    BaseExp: 2187
-#    JobExp: 1346
-#    Attack: 500
-#    Attack2: 603
-#    Defense: 40
-#    MagicDefense: 10
-#    Agi: 50
-#    Vit: 47
-#    Dex: 83
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demihuman
-#    Element: Fire
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1700
-#    AttackMotion: 1000
-#    DamageMotion: 500
-#    Ai: 24
-#    Modes:
-#      CastSensorIdle: true
-#    Drops:
-#      - Item: Flame_Heart
-#        Rate: 45
-#      - Item: Tweezer
-#        Rate: 4850
-#      - Item: Hammer_Of_Blacksmith
-#        Rate: 15
-#      - Item: Scorpion's_Tail
-#        Rate: 5000
-#      - Item: Solid_Shell
-#        Rate: 3000
-#      - Item: White_Herb
-#        Rate: 700
-#      - Item: Scorpion_King_Card
-#        Rate: 1
-#        StealProtected: true
   - Id: 1169
     AegisName: SKEL_WORKER
     Name: Skeleton Worker
@@ -7780,8 +7535,10 @@ Body:
         Rate: 1
       - Item: Muffler_
         Rate: 5
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Stiletto_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Red_Herb
         Rate: 1000
       - Item: Inspector_Certificate
@@ -7789,135 +7546,6 @@ Body:
       - Item: Sohee_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1171
-#    AegisName: SOLDIER_ANDRE
-#    Name: Soldier Andre
-#    Level: 22
-#    Hp: 1245
-#    BaseExp: 219
-#    JobExp: 138
-#    Attack: 105
-#    Attack2: 127
-#    Defense: 20
-#    Agi: 22
-#    Vit: 44
-#    Int: 20
-#    Dex: 40
-#    Luk: 10
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Insect
-#    Element: Earth
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1001
-#    AttackMotion: 1
-#    DamageMotion: 1
-#    Ai: 09
-#    Drops:
-#      - Item: Jaws_Of_Ant
-#        Rate: 2700
-#      - Item: Scell
-#        Rate: 800
-#      - Item: Elunium_Stone
-#        Rate: 10
-#      - Item: Lapier_
-#        Rate: 15
-#      - Item: Sparkling_Dust
-#        Rate: 30
-#      - Item: Solid_Shell
-#        Rate: 150
-#      - Item: Soldier_Andre_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1172
-#    AegisName: SOLDIER_DENIRO
-#    Name: Soldier Deniro
-#    Level: 29
-#    Hp: 2047
-#    BaseExp: 450
-#    JobExp: 274
-#    Attack: 162
-#    Attack2: 193
-#    Defense: 20
-#    Agi: 29
-#    Vit: 58
-#    Int: 20
-#    Dex: 54
-#    Luk: 10
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Insect
-#    Element: Earth
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 2000
-#    AttackMotion: 1000
-#    DamageMotion: 500
-#    Ai: 09
-#    Drops:
-#      - Item: Jaws_Of_Ant
-#        Rate: 5500
-#      - Item: Scell
-#        Rate: 2000
-#      - Item: Elunium_Stone
-#        Rate: 15
-#      - Item: Lapier_
-#        Rate: 20
-#      - Item: Solid_Shell
-#        Rate: 270
-#      - Item: Sparkling_Dust
-#        Rate: 50
-#      - Item: Soldier_Andre_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1173
-#    AegisName: SOLDIER_PIERE
-#    Name: Soldier Piere
-#    Level: 23
-#    Hp: 1217
-#    BaseExp: 240
-#    JobExp: 149
-#    Attack: 109
-#    Attack2: 131
-#    Defense: 25
-#    Agi: 23
-#    Vit: 46
-#    Int: 20
-#    Dex: 38
-#    Luk: 10
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Insect
-#    Element: Earth
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1001
-#    AttackMotion: 1
-#    DamageMotion: 1
-#    Ai: 09
-#    Drops:
-#      - Item: Jaws_Of_Ant
-#        Rate: 3100
-#      - Item: Scell
-#        Rate: 800
-#      - Item: Scell
-#        Rate: 10
-#      - Item: Scimiter_
-#        Rate: 15
-#      - Item: Sparkling_Dust
-#        Rate: 35
-#      - Item: Solid_Shell
-#        Rate: 200
-#      - Item: Soldier_Andre_Card
-#        Rate: 1
-#        StealProtected: true
   - Id: 1174
     AegisName: STAINER
     Name: Stainer
@@ -8128,10 +7756,12 @@ Body:
         Rate: 190
       - Item: G_Strings
         Rate: 200
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Ganster_Mask
         Rate: 3
       - Item: Cuffs
         Rate: 10
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Iron_Ore
         Rate: 300
       - Item: Iron_Ore
@@ -8175,6 +7805,7 @@ Body:
         Rate: 1
       - Item: Silver_Robe_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Whisper_Card
         Rate: 1
         StealProtected: true
@@ -8223,35 +7854,6 @@ Body:
       - Item: Nine_Tail_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1181
-#    AegisName: ZOMBIE_DRAGON
-#    Name: Zombie Dragon
-#    Level: 1
-#    Hp: 1000
-#    BaseExp: 49500
-#    JobExp: 1650
-#    Attack: 7900
-#    Attack2: 9140
-#    Str: 120
-#    Agi: 145
-#    Vit: 145
-#    Int: 145
-#    Dex: 130
-#    Luk: 120
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Dragon
-#    Element: Undead
-#    ElementLevel: 4
-#    WalkSpeed: 400
-#    AttackDelay: 2700
-#    AttackMotion: 1000
-#    DamageMotion: 500
-#    Ai: 21
-#    Modes:
-#      NoRandomWalk: true
   - Id: 1182
     AegisName: THIEF_MUSHROOM
     Name: Thief Mushroom
@@ -8320,6 +7922,7 @@ Body:
         Rate: 1500
       - Item: Cutter_
         Rate: 55
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Wing_Of_Fly
         Rate: 100
       - Item: Chonchon_Doll
@@ -8359,6 +7962,7 @@ Body:
         Rate: 250
       - Item: Club_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Azure_Jewel
         Rate: 2
       - Item: Green_Herb
@@ -8367,6 +7971,7 @@ Body:
         Rate: 500
       - Item: Club
         Rate: 200
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
   - Id: 1185
     AegisName: WHISPER_
     Name: Whisper
@@ -8398,6 +8003,7 @@ Body:
         Rate: 100
       - Item: Silver_Robe_
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
   - Id: 1186
     AegisName: WHISPER_BOSS
     Name: Giant Whisper
@@ -8434,6 +8040,7 @@ Body:
         Rate: 1
       - Item: Silver_Robe_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Whisper_Boss_Card
         Rate: 1
         StealProtected: true
@@ -8543,6 +8150,7 @@ Body:
         Rate: 2500
       - Item: Orc_Archer_Bow
         Rate: 2
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Red_Herb
         Rate: 1400
       - Item: White_Herb
@@ -8591,18 +8199,21 @@ Body:
     Drops:
       - Item: Brood_Axe
         Rate: 400
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Ring_
         Rate: 400
       - Item: Loard_Circlet
         Rate: 400
       - Item: Doom_Slayer_
         Rate: 400
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Old_Violet_Box
         Rate: 1000
       - Item: Elunium
         Rate: 4268
       - Item: Erde
         Rate: 3100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Orc_Load_Card
         Rate: 1
         StealProtected: true
@@ -8688,12 +8299,14 @@ Body:
         Rate: 10
       - Item: Manteau_
         Rate: 2
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Red_Gemstone
         Rate: 650
       - Item: Wing_Of_Butterfly
         Rate: 1300
       - Item: Manteau
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Crystal_Jewel_
         Rate: 5
       - Item: Wraith_Card
@@ -8828,12 +8441,16 @@ Body:
         Rate: 4850
       - Item: Book_Of_Billows
         Rate: 4
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Book_Of_Mother_Earth
         Rate: 4
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Book_Of_Blazing_Sun
         Rate: 2
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Book_Of_Gust_Of_Wind
         Rate: 2
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Bookclip_In_Memory
         Rate: 300
       - Item: Old_Magic_Book
@@ -8876,12 +8493,14 @@ Body:
         Rate: 100
       - Item: Formal_Suit
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Red_Gemstone
         Rate: 600
       - Item: Rotten_Bandage
         Rate: 3500
       - Item: Cuffs
         Rate: 35
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Mementos
         Rate: 1500
       - Item: Skel_Prisoner_Card
@@ -8927,6 +8546,7 @@ Body:
         Rate: 3500
       - Item: Cuffs
         Rate: 39
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Elunium
         Rate: 112
       - Item: Zombie_Prisoner_Card
@@ -8965,6 +8585,7 @@ Body:
     Drops:
       - Item: Book_Of_The_Apocalypse
         Rate: 5
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Rosary
         Rate: 30
       - Item: Blue_Potion
@@ -8975,8 +8596,10 @@ Body:
         Rate: 50
       - Item: Glittering_Clothes
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cursed_Dagger
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Dark_Priest_Card
         Rate: 1
         StealProtected: true
@@ -9022,6 +8645,7 @@ Body:
         Rate: 1100
       - Item: Hood_
         Rate: 15
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Punk_Card
         Rate: 1
         StealProtected: true
@@ -9064,10 +8688,12 @@ Body:
         Rate: 1500
       - Item: Tights_
         Rate: 8
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Earring_
         Rate: 1
       - Item: Queen's_Whip
         Rate: 100
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Masquerade
         Rate: 3
       - Item: Zherlthsh_Card
@@ -9160,6 +8786,7 @@ Body:
         Rate: 150
       - Item: Electric_Wire
         Rate: 100
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Phendark_Card
         Rate: 1
         StealProtected: true
@@ -9200,10 +8827,13 @@ Body:
         Rate: 1500
       - Item: Slayer_
         Rate: 70
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Bastard_Sword_
         Rate: 40
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Claymore
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -9251,8 +8881,10 @@ Body:
         Rate: 1500
       - Item: Dagger_
         Rate: 70
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Stiletto_
         Rate: 40
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -9297,10 +8929,13 @@ Body:
         Rate: 1500
       - Item: Lapier_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Scimiter_
         Rate: 60
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Ring_Pommel_Saber_
         Rate: 40
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -9439,6 +9074,7 @@ Body:
         Rate: 1
       - Item: Hakujin_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Centimental_Leaf
         Rate: 5
       - Item: Leaf_Of_Yggdrasil
@@ -9447,6 +9083,7 @@ Body:
         Rate: 217
       - Item: Muramasa
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Wander_Man_Card
         Rate: 1
         StealProtected: true
@@ -9495,52 +9132,6 @@ Body:
       - Item: Cramp_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1210
-#    AegisName: FILAMENTOUS
-#    Name: Filamentous
-#    Level: 51
-#    Hp: 6088
-#    BaseExp: 1926
-#    JobExp: 1353
-#    Attack: 425
-#    Attack2: 525
-#    Defense: 35
-#    MagicDefense: 10
-#    Agi: 35
-#    Vit: 30
-#    Int: 5
-#    Dex: 83
-#    Luk: 40
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Insect
-#    Element: Fire
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1500
-#    AttackMotion: 500
-#    DamageMotion: 1000
-#    Ai: 09
-#    Drops:
-#      - Item: Stiff_Horn
-#        Rate: 4850
-#      - Item: Horn
-#        Rate: 8000
-#      - Item: Solid_Shell
-#        Rate: 3880
-#      - Item: Yellow_Live
-#        Rate: 200
-#      - Item: Guisarme
-#        Rate: 40
-#      - Item: Elunium_Stone
-#        Rate: 18
-#      - Item: White_Herb
-#        Rate: 1600
-#      - Item: Horn_Card
-#        Rate: 1
-#        StealProtected: true
   - Id: 1211
     AegisName: BRILIGHT
     Name: Brilight
@@ -9671,6 +9262,7 @@ Body:
         Rate: 2500
       - Item: Orcish_Axe
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Steel
         Rate: 90
       - Item: Orcish_Voucher
@@ -9766,12 +9358,14 @@ Body:
         Rate: 1800
       - Item: Jump_Rope
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Oridecon_Stone
         Rate: 115
       - Item: Great_Nature
         Rate: 5
       - Item: Glaive
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Seed_Of_Yggdrasil
         Rate: 45
       - Item: Stem_Worm_Card
@@ -9818,6 +9412,7 @@ Body:
         Rate: 15
       - Item: Katar_Of_Raging_Blaze
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Red_Gemstone
         Rate: 550
       - Item: Penomena_Card
@@ -9860,10 +9455,13 @@ Body:
         Rate: 5
       - Item: Clothes_Of_The_Lord
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Battle_Hook
         Rate: 25
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Broad_Sword_
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Elunium
         Rate: 369
       - Item: Oridecon
@@ -9901,10 +9499,12 @@ Body:
     Drops:
       - Item: Katar_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Claw_Of_Desert_Wolf
         Rate: 5500
       - Item: Mink_Coat
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Meat
         Rate: 1200
       - Item: Claw_Of_Wolves
@@ -9958,314 +9558,6 @@ Body:
       - Item: Savage_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1222
-#    AegisName: L_HIGH_ORC
-#    Name: High Orc
-#    Level: 52
-#    Hp: 6890
-#    BaseExp: 2128
-#    JobExp: 1490
-#    Attack: 428
-#    Attack2: 533
-#    Defense: 15
-#    MagicDefense: 5
-#    Agi: 46
-#    Vit: 55
-#    Int: 35
-#    Dex: 82
-#    Luk: 40
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demihuman
-#    Element: Fire
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1500
-#    AttackMotion: 500
-#    DamageMotion: 1000
-#    Ai: 21
-#    Drops:
-#      - Item: Ogre_Tooth
-#        Rate: 2500
-#      - Item: Orcish_Axe
-#        Rate: 10
-#      - Item: Steel
-#        Rate: 120
-#      - Item: Orcish_Voucher
-#        Rate: 8000
-#      - Item: Zargon
-#        Rate: 1600
-#      - Item: Oridecon_Stone
-#        Rate: 196
-#      - Item: Yellow_Herb
-#        Rate: 1100
-#      - Item: Orc_Warrior_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1223
-#    AegisName: L_ORC
-#    Name: Orc
-#    Level: 24
-#    Hp: 1400
-#    BaseExp: 261
-#    JobExp: 160
-#    Attack: 114
-#    Attack2: 136
-#    Defense: 10
-#    MagicDefense: 5
-#    Agi: 24
-#    Vit: 48
-#    Int: 25
-#    Dex: 34
-#    Luk: 10
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Earth
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1864
-#    AttackMotion: 864
-#    DamageMotion: 288
-#    Ai: 21
-#    Drops:
-#      - Item: Iron
-#        Rate: 210
-#      - Item: Orcish_Voucher
-#        Rate: 5500
-#      - Item: Oridecon_Stone
-#        Rate: 40
-#      - Item: Cigar
-#        Rate: 3
-#      - Item: Battle_Axe_
-#        Rate: 10
-#      - Item: Orcish_Axe
-#        Rate: 5
-#      - Item: Axe
-#        Rate: 100
-#      - Item: Orc_Warrior_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1224
-#    AegisName: L_POISON_SPORE
-#    Name: Poison Spore
-#    Level: 19
-#    Hp: 665
-#    BaseExp: 169
-#    JobExp: 85
-#    Attack: 89
-#    Attack2: 101
-#    Agi: 19
-#    Vit: 25
-#    Dex: 24
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Poison
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1672
-#    AttackMotion: 672
-#    DamageMotion: 288
-#    Ai: 21
-#    Drops:
-#      - Item: Mushroom_Spore
-#        Rate: 8000
-#      - Item: Hat_
-#        Rate: 20
-#      - Item: Green_Herb
-#        Rate: 650
-#      - Item: Blue_Herb
-#        Rate: 55
-#      - Item: Karvodailnirol
-#        Rate: 35
-#      - Item: Poison_Spore_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1225
-#    AegisName: L_CHOCO
-#    Name: Choco
-#    Level: 43
-#    Hp: 4278
-#    BaseExp: 1150
-#    JobExp: 1150
-#    Attack: 315
-#    Attack2: 402
-#    Defense: 5
-#    MagicDefense: 5
-#    Agi: 68
-#    Vit: 55
-#    Int: 45
-#    Dex: 65
-#    Luk: 25
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Brute
-#    Element: Fire
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1500
-#    AttackMotion: 500
-#    DamageMotion: 1000
-#    Ai: 21
-#    Drops:
-#      - Item: Claw_Of_Monkey
-#        Rate: 5335
-#      - Item: Yoyo_Tail
-#        Rate: 7000
-#      - Item: Yellow_Herb
-#        Rate: 1900
-#      - Item: Banana
-#        Rate: 5000
-#      - Item: Mink_Coat
-#        Rate: 2
-#      - Item: Banana_Juice
-#        Rate: 1000
-#      - Item: Yggdrasilberry
-#        Rate: 25
-#      - Item: Yoyo_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1226
-#    AegisName: L_KOBOLD
-#    Name: Kobold
-#    Level: 36
-#    Hp: 3893
-#    BaseExp: 898
-#    JobExp: 568
-#    Attack: 265
-#    Attack2: 318
-#    Defense: 15
-#    MagicDefense: 10
-#    Agi: 90
-#    Vit: 36
-#    Int: 30
-#    Dex: 52
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Wind
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1028
-#    AttackMotion: 528
-#    DamageMotion: 360
-#    Ai: 21
-#    Drops:
-#      - Item: Steel
-#        Rate: 90
-#      - Item: Cobold_Hair
-#        Rate: 5820
-#      - Item: Zargon
-#        Rate: 750
-#      - Item: Elunium
-#        Rate: 25
-#      - Item: Gladius_
-#        Rate: 2
-#      - Item: Buckler_
-#        Rate: 5
-#      - Item: Kobold_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1227
-#    AegisName: L_GOBLIN
-#    Name: Goblin
-#    Level: 25
-#    Hp: 1176
-#    BaseExp: 282
-#    JobExp: 171
-#    Attack: 118
-#    Attack2: 140
-#    Defense: 10
-#    MagicDefense: 5
-#    Agi: 63
-#    Vit: 25
-#    Int: 20
-#    Dex: 38
-#    Luk: 45
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Wind
-#    ElementLevel: 1
-#    WalkSpeed: 100
-#    AttackDelay: 1120
-#    AttackMotion: 620
-#    DamageMotion: 240
-#    Ai: 21
-#    Drops:
-#      - Item: Iron
-#        Rate: 270
-#      - Item: Scell
-#        Rate: 1200
-#      - Item: Oridecon_Stone
-#        Rate: 43
-#      - Item: Goblini_Mask
-#        Rate: 3
-#      - Item: Dirk_
-#        Rate: 10
-#      - Item: Buckler_
-#        Rate: 5
-#      - Item: Red_Herb
-#        Rate: 800
-#      - Item: Goblin_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 1228
-#    AegisName: L_PHEN
-#    Name: Phen
-#    Level: 26
-#    Hp: 3347
-#    BaseExp: 357
-#    JobExp: 226
-#    Attack: 138
-#    Attack2: 150
-#    MagicDefense: 15
-#    Agi: 26
-#    Vit: 26
-#    Dex: 88
-#    Luk: 75
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Fish
-#    Element: Water
-#    ElementLevel: 2
-#    WalkSpeed: 150
-#    AttackDelay: 2544
-#    AttackMotion: 1344
-#    DamageMotion: 1152
-#    Ai: 21
-#    Drops:
-#      - Item: Fish_Tail
-#        Rate: 6000
-#      - Item: Sharp_Scale
-#        Rate: 2300
-#      - Item: Skyblue_Jewel
-#        Rate: 8
-#      - Item: Meat
-#        Rate: 1100
-#      - Item: Fin
-#        Rate: 550
-#      - Item: Oridecon_Stone
-#        Rate: 25
-#      - Item: Phen_Card
-#        Rate: 1
-#        StealProtected: true
   - Id: 1229
     AegisName: META_FABRE
     Name: Fabre
@@ -10300,6 +9592,7 @@ Body:
         Rate: 600
       - Item: Club_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Azure_Jewel
         Rate: 8
       - Item: Green_Herb
@@ -10308,6 +9601,7 @@ Body:
         Rate: 1500
       - Item: Club
         Rate: 200
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Fabre_Card
         Rate: 1
         StealProtected: true
@@ -10387,6 +9681,7 @@ Body:
         Rate: 6000
       - Item: Silk_Robe_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Honey
         Rate: 180
       - Item: Wing_Of_Butterfly
@@ -10438,48 +9733,6 @@ Body:
       - Item: Pecopeco_Egg_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1233
-#    AegisName: CONCEIVE_PECOPECO
-#    Name: Peco Peco
-#    Level: 19
-#    Hp: 531
-#    BaseExp: 159
-#    JobExp: 36
-#    Attack: 50
-#    Attack2: 64
-#    Agi: 13
-#    Vit: 13
-#    Int: 25
-#    Dex: 27
-#    Luk: 9
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Brute
-#    Element: Fire
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1564
-#    AttackMotion: 864
-#    DamageMotion: 576
-#    Ai: 01
-#    Drops:
-#      - Item: Bill_Of_Birds
-#        Rate: 6000
-#      - Item: Sandals_
-#        Rate: 20
-#      - Item: Yellow_Herb
-#        Rate: 55
-#      - Item: Red_Herb
-#        Rate: 950
-#      - Item: Wand
-#        Rate: 100
-#      - Item: Orange
-#        Rate: 1000
-#      - Item: Pecopeco_Card
-#        Rate: 1
-#        StealProtected: true
   - Id: 1234
     AegisName: PROVOKE_YOYO
     Name: Yoyo
@@ -10562,10 +9815,13 @@ Body:
         Rate: 3
       - Item: Battle_Axe_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Orcish_Axe
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Axe
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
@@ -10780,6 +10036,7 @@ Body:
         Rate: 850
       - Item: Cotton_Shirt_
         Rate: 150
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Red_Herb
         Rate: 650
       - Item: Milk
@@ -10959,6 +10216,7 @@ Body:
         Rate: 31
       - Item: Tights_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Gift_Box
         Rate: 20
       - Item: Packing_Paper
@@ -11007,6 +10265,7 @@ Body:
         Rate: 10
       - Item: Dirk_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Buckler_
         Rate: 5
       - Item: Santa's_Hat
@@ -11050,6 +10309,7 @@ Body:
         Rate: 200
       - Item: Hood_
         Rate: 25
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Gift_Box
         Rate: 5
       - Item: Cold_Scroll_1_3
@@ -11148,6 +10408,7 @@ Body:
         Rate: 3500
       - Item: Branch
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Oridecon_Stone
         Rate: 87
       - Item: Cruiser_Card
@@ -11242,6 +10503,7 @@ Body:
         Rate: 1300
       - Item: Ragamuffin_Cape
         Rate: 5
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Chepet_Card
         Rate: 1
         StealProtected: true
@@ -11289,6 +10551,7 @@ Body:
     Drops:
       - Item: Zephyrus
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Old_Blue_Box
         Rate: 3000
       - Item: Old_Violet_Box
@@ -11297,6 +10560,7 @@ Body:
         Rate: 200
       - Item: Manteau_
         Rate: 500
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Elunium
         Rate: 4559
       - Item: Loard_Circlet
@@ -11350,10 +10614,13 @@ Body:
         Rate: 5500
       - Item: Ice_Falchon
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Katar_Of_Cold_Icicle
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Claw_Of_Garm
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Elunium
         Rate: 3977
       - Item: Oridecon
@@ -11489,6 +10756,7 @@ Body:
         Rate: 230
       - Item: Whip_Of_Ice_Piece
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Grape
         Rate: 250
       - Item: Elunium_Stone
@@ -11576,12 +10844,15 @@ Body:
         Rate: 3500
       - Item: Padded_Armor_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Plate_Armor
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Prohibition_Red_Candle
         Rate: 2
       - Item: Jamadhar_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Injustice_Card
         Rate: 1
         StealProtected: true
@@ -11627,6 +10898,7 @@ Body:
         Rate: 600
       - Item: Composite_Bow_
         Rate: 25
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Grape
         Rate: 300
       - Item: Goblin_Archer_Card
@@ -11671,8 +10943,10 @@ Body:
         Rate: 120
       - Item: Guisarme_
         Rate: 1500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Pole_Axe
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Oridecon
         Rate: 185
       - Item: Rough_Wind
@@ -11717,6 +10991,7 @@ Body:
         Rate: 1000
       - Item: Manteau
         Rate: 30
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Star_Crumb
         Rate: 80
       - Item: Crystal_Mirror
@@ -11812,10 +11087,12 @@ Body:
         Rate: 500
       - Item: Legacy_Of_Dragon
         Rate: 100
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Pyroxene
         Rate: 1500
       - Item: Dragon_Breath
         Rate: 50
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Mutant_Dragon_Card
         Rate: 1
         StealProtected: true
@@ -11859,10 +11136,12 @@ Body:
         Rate: 100
       - Item: Arc_Wand_
         Rate: 8
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Rough_Wind
         Rate: 100
       - Item: Bone_Wand
         Rate: 1
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Wind_Ghost_Card
         Rate: 1
         StealProtected: true
@@ -11908,6 +11187,7 @@ Body:
         Rate: 35
       - Item: Trident
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Oridecon_Stone
         Rate: 203
       - Item: Merman_Card
@@ -11951,6 +11231,7 @@ Body:
         Rate: 50
       - Item: Sandals_
         Rate: 30
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Holy_Scroll_1_3
         Rate: 100
       - Item: Candy
@@ -12036,6 +11317,7 @@ Body:
         Rate: 1000
       - Item: Spiky_Heel
         Rate: 5
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Joker_Jester
         Rate: 1
       - Item: White_Herb
@@ -12079,12 +11361,15 @@ Body:
         Rate: 45
       - Item: Plate_Armor_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Strong_Shield
         Rate: 62
       - Item: Katzbalger
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Pole_Axe
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Elunium
         Rate: 433
       - Item: Bloody_Knight_Card
@@ -12266,14 +11551,19 @@ Body:
     Drops:
       - Item: Bone_Wand
         Rate: 800
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Kronos
         Rate: 100
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Grimtooth_
         Rate: 300
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Mage_Coat
         Rate: 300
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cape_Of_Ancient_Lord
         Rate: 100
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Elunium
         Rate: 5141
       - Item: Bone_Helm_
@@ -12327,6 +11617,7 @@ Body:
         Rate: 3
       - Item: Wedding_Dress
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Orc_Lady_Card
         Rate: 1
         StealProtected: true
@@ -12409,6 +11700,7 @@ Body:
         Rate: 40
       - Item: Chrystal_Pumps
         Rate: 3
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Rouge
         Rate: 30
       - Item: Pair_Of_Red_Ribbon
@@ -12456,12 +11748,15 @@ Body:
         Rate: 4656
       - Item: Chain_Mail_
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Bow
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Incisive_Arrow
         Rate: 2000
       - Item: Arbalest_
         Rate: 3
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Elunium
         Rate: 106
       - Item: Raydric_Archer_Card
@@ -12502,6 +11797,7 @@ Body:
         Rate: 2000
       - Item: Club
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Inspector_Certificate
         Rate: 300
       - Item: Stop_Post
@@ -12649,6 +11945,7 @@ Body:
         Rate: 320
       - Item: The_Garrison
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Elunium_Stone
         Rate: 124
       - Item: Steam_Goblin_Card
@@ -12743,6 +12040,7 @@ Body:
         Rate: 2000
       - Item: CrossBow_
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Oridecon_Stone
         Rate: 79
       - Item: Kobold_Archer_Card
@@ -12786,55 +12084,17 @@ Body:
         Rate: 1000
       - Item: War_Axe
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Citrine
         Rate: 1500
       - Item: Great_Axe
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Oridecon
         Rate: 160
       - Item: Chimera_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1284
-#    AegisName: HUGELING
-#    Name: Hugeling
-#    Level: 1
-#    Hp: 5000
-#    BaseExp: 2
-#    JobExp: 1
-#    Attack: 7
-#    Attack2: 10
-#    Dex: 6
-#    AttackRange: 4
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Ai: 17
-#    Drops:
-#      - Item: Apple
-#        Rate: 100
-#      - Item: Apple
-#        Rate: 100
-#      - Item: Apple
-#        Rate: 100
-#      - Item: Apple
-#        Rate: 100
-#      - Item: Apple
-#        Rate: 100
-#      - Item: Apple
-#        Rate: 100
-#      - Item: Apple
-#        Rate: 100
-#      - Item: Apple
-#        Rate: 100
-#        StealProtected: true
   - Id: 1285
     AegisName: ARCHER_GUARDIAN
     Name: Archer Guardian
@@ -13057,10 +12317,13 @@ Body:
         Rate: 800
       - Item: Gladius_
         Rate: 35
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Gladius
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Sandstorm
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Ghost_Bandana
         Rate: 1
       - Item: Skeleton_General_Card
@@ -13102,6 +12365,7 @@ Body:
         Rate: 10
       - Item: Manteau_
         Rate: 8
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Red_Gemstone
         Rate: 700
       - Item: Crystal_Jewel__
@@ -13159,6 +12423,7 @@ Body:
         Rate: 10
       - Item: Ahlspiess
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Mini_Demon_Card
         Rate: 1
         StealProtected: true
@@ -13198,12 +12463,14 @@ Body:
         Rate: 4550
       - Item: Silver_Robe_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Honey
         Rate: 550
       - Item: Wing_Of_Butterfly
         Rate: 200
       - Item: Book
         Rate: 8
+        RandomOptionGroup: TBRO_Special_Weapon_Level_2
       - Item: Icarus_Wing
         Rate: 5
       - Item: Fruit_Of_Mastela
@@ -13255,6 +12522,7 @@ Body:
         Rate: 25
       - Item: Nail_Of_Loki
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Mirror_Shield_
         Rate: 1
       - Item: Killer_Mantis_Card
@@ -13297,10 +12565,13 @@ Body:
         Rate: 2500
       - Item: Kakkung_
         Rate: 2
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Staff_Of_Soul
         Rate: 1
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Walking_Stick
         Rate: 2
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Wind_Scroll_1_5
         Rate: 100
       - Item: Magician_Hat
@@ -13348,8 +12619,10 @@ Body:
         Rate: 1200
       - Item: Flail_
         Rate: 6
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Mighty_Staff
         Rate: 2
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Panacea
         Rate: 150
       - Item: Royal_Jelly
@@ -13446,8 +12719,10 @@ Body:
         Rate: 100
       - Item: Ghoul_Leg
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Scapulare_
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Zombie_Master_Card
         Rate: 1
         StealProtected: true
@@ -13538,6 +12813,7 @@ Body:
         Rate: 5335
       - Item: Twilight_Desert
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Star_Crumb
         Rate: 100
       - Item: Great_Nature
@@ -13587,6 +12863,7 @@ Body:
         Rate: 250
       - Item: Sword_Mace_
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Gold
         Rate: 5
       - Item: Spirit_Chain
@@ -13631,10 +12908,12 @@ Body:
     Drops:
       - Item: Bone_Wand
         Rate: 3
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Bone_Helm
         Rate: 2
       - Item: Ragamuffin_Cape
         Rate: 3
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Brigan
         Rate: 5335
       - Item: Fruit_Of_Mastela
@@ -13643,6 +12922,7 @@ Body:
         Rate: 1550
       - Item: Broad_Sword_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Dark_Illusion_Card
         Rate: 1
         StealProtected: true
@@ -13688,10 +12968,12 @@ Body:
         Rate: 15
       - Item: Staff_
         Rate: 3
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_2
       - Item: Scarlet_Jewel
         Rate: 20
       - Item: Double_Bound
         Rate: 15
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Giant_Honet_Card
         Rate: 1
         StealProtected: true
@@ -13782,6 +13064,7 @@ Body:
         Rate: 2500
       - Item: Boots_
         Rate: 9
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Bowman_Scarf
         Rate: 5
       - Item: Round_Shell
@@ -13930,6 +13213,7 @@ Body:
         Rate: 580
       - Item: Butcher
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Flame_Heart
         Rate: 160
       - Item: Panzer_Goblin_Card
@@ -14016,6 +13300,7 @@ Body:
         Rate: 4413
       - Item: Two_Handed_Axe_
         Rate: 4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Lemon
         Rate: 300
       - Item: Oridecon
@@ -14119,16 +13404,20 @@ Body:
     Drops:
       - Item: Iron_Driver
         Rate: 8
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: War_Axe
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Cookbook09
         Rate: 200
       - Item: Pole_Axe
         Rate: 9
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Broken_Shell
         Rate: 5335
       - Item: Immaterial_Sword
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Union_Of_Tribe
         Rate: 1
       - Item: Turtle_General_Card
@@ -14166,6 +13455,7 @@ Body:
     Drops:
       - Item: Poison_Knife
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Blue_Jewel
         Rate: 4559
       - Item: Ring_
@@ -14272,6 +13562,7 @@ Body:
         Rate: 1240
       - Item: Huuma_Bird_Wing
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Old_Blue_Box
         Rate: 1
       - Item: Assulter_Card
@@ -14321,6 +13612,7 @@ Body:
         Rate: 850
       - Item: Chain
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Solider_Card
         Rate: 1
         StealProtected: true
@@ -14361,10 +13653,12 @@ Body:
         Rate: 250
       - Item: Coat_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cyfar
         Rate: 1200
       - Item: Guisarme_
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Panacea
         Rate: 200
       - Item: Glass_Bead
@@ -14507,8 +13801,10 @@ Body:
         Rate: 1
       - Item: Guisarme
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Morning_Star
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Magician_Hat
         Rate: 1
       - Item: Owl_Duke_Card
@@ -14678,10 +13974,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -14712,11 +14011,13 @@ Body:
         Rate: 7275
       - Item: Poison_Knife
         Rate: 1500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Wizardry_Hat
         Rate: 75
       - Item: Masamune
         Rate: 8
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 1326
     AegisName: TREASURE_BOX3
     Name: Treasure Chest
@@ -14738,10 +14039,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -14774,6 +14078,7 @@ Body:
         Rate: 1000
       - Item: War_Axe
         Rate: 75
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Helm_Of_Sun
         Rate: 2
         StealProtected: true
@@ -14798,10 +14103,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -14858,10 +14166,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -14894,6 +14205,7 @@ Body:
         Rate: 500
       - Item: Mage_Coat
         Rate: 125
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Earring_
         Rate: 9
         StealProtected: true
@@ -14918,10 +14230,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -14954,6 +14269,7 @@ Body:
         Rate: 500
       - Item: Tights_
         Rate: 150
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Necklace_
         Rate: 10
         StealProtected: true
@@ -14978,10 +14294,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15014,6 +14333,7 @@ Body:
         Rate: 500
       - Item: Kakkung_
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Magestic_Goat
         Rate: 10
         StealProtected: true
@@ -15038,10 +14358,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15072,11 +14395,14 @@ Body:
         Rate: 7275
       - Item: Zeny_Knife
         Rate: 375
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Spanner
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Clothes_Of_The_Lord
         Rate: 10
         StealProtected: true
+        RandomOptionGroup: TBRO_Armor_Group_1
   - Id: 1338
     AegisName: TREASURE_BOX15
     Name: Treasure Chest
@@ -15098,10 +14424,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15134,9 +14463,11 @@ Body:
         Rate: 300
       - Item: Staff_Of_Soul
         Rate: 167
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Holy_Robe
         Rate: 10
         StealProtected: true
+        RandomOptionGroup: TBRO_Armor_Group_1
   - Id: 1340
     AegisName: TREASURE_BOX17
     Name: Treasure Chest
@@ -15158,10 +14489,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15192,8 +14526,10 @@ Body:
         Rate: 7275
       - Item: Gaia_Sword
         Rate: 250
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Grimtooth_
         Rate: 188
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Crown
         Rate: 12
         StealProtected: true
@@ -15218,10 +14554,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15254,6 +14593,7 @@ Body:
         Rate: 250
       - Item: Sasimi
         Rate: 188
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Loard_Circlet
         Rate: 19
         StealProtected: true
@@ -15278,10 +14618,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15312,8 +14655,10 @@ Body:
         Rate: 7275
       - Item: Ragamuffin_Cape
         Rate: 1000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Thief_Clothes_
         Rate: 69
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Ring_
         Rate: 20
         StealProtected: true
@@ -15338,10 +14683,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15374,6 +14722,7 @@ Body:
         Rate: 1000
       - Item: Muramasa
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Helm_Of_Angel
         Rate: 24
         StealProtected: true
@@ -15398,10 +14747,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15458,10 +14810,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15518,10 +14873,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15552,6 +14910,7 @@ Body:
         Rate: 7275
       - Item: Cape_Of_Ancient_Lord
         Rate: 500
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Brooch_
         Rate: 38
       - Item: Magician_Hat
@@ -15578,10 +14937,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15612,11 +14974,13 @@ Body:
         Rate: 7275
       - Item: Chrystal_Pumps
         Rate: 429
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Centimental_Flower
         Rate: 250
       - Item: Plate_Armor_
         Rate: 35
         StealProtected: true
+        RandomOptionGroup: TBRO_Armor_Group_1
   - Id: 1356
     AegisName: TREASURE_BOX33
     Name: Treasure Chest
@@ -15638,10 +15002,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15674,6 +15041,7 @@ Body:
         Rate: 300
       - Item: Boots_
         Rate: 273
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Sharp_Gear
         Rate: 38
         StealProtected: true
@@ -15698,10 +15066,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15732,6 +15103,7 @@ Body:
         Rate: 7275
       - Item: Jewel_Sword
         Rate: 215
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Satanic_Chain
         Rate: 60
       - Item: Bone_Helm
@@ -15758,10 +15130,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15792,6 +15167,7 @@ Body:
         Rate: 7275
       - Item: Pole_Axe
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Spinx_Helm
         Rate: 50
       - Item: Helm_
@@ -15818,10 +15194,13 @@ Body:
         Rate: 2500
       - Item: Muffler_
         Rate: 800
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Shoes_
         Rate: 800
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Chain_Mail_
         Rate: 800
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Buckler_
         Rate: 800
       - Item: Old_Card_Album
@@ -15852,11 +15231,13 @@ Body:
         Rate: 7275
       - Item: Manteau_
         Rate: 43
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Angelic_Chain
         Rate: 43
       - Item: Iron_Driver
         Rate: 38
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 1364
     AegisName: G_ASSULTER
     Name: Assaulter
@@ -15930,8 +15311,10 @@ Body:
         Rate: 5
       - Item: Destroyer_
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Manteau_
         Rate: 20
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Steel
         Rate: 2500
       - Item: Apocalips_Card
@@ -15974,12 +15357,15 @@ Body:
         Rate: 3686
       - Item: Plate_Armor_
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Plate_Armor
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: White_Herb
         Rate: 2500
       - Item: Magma_Fist
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Lava_Golem_Card
         Rate: 1
         StealProtected: true
@@ -16142,6 +15528,7 @@ Body:
         Rate: 1500
       - Item: Chrystal_Pumps
         Rate: 3
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Boy's_Naivety
         Rate: 1
       - Item: Diamond_Ring
@@ -16150,6 +15537,7 @@ Body:
         Rate: 1
       - Item: Staff_Of_Soul
         Rate: 1
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Blue_Potion
         Rate: 1000
       - Item: Succubus_Card
@@ -16195,6 +15583,7 @@ Body:
         Rate: 1000
       - Item: Carrot_Whip
         Rate: 20
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Fake_Angel_Card
         Rate: 1
         StealProtected: true
@@ -16289,16 +15678,20 @@ Body:
         Rate: 5335
       - Item: Pole_Axe
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: House_Auger
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Ring_
         Rate: 2
       - Item: Shine_Spear_Blade
         Rate: 10
       - Item: War_Axe
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Iron_Driver
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Lord_Of_Death_Card
         Rate: 1
         StealProtected: true
@@ -16389,6 +15782,7 @@ Body:
         Rate: 2000
       - Item: Kamaitachi
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: The_Paper_Card
         Rate: 1
         StealProtected: true
@@ -16435,6 +15829,7 @@ Body:
         Rate: 20
       - Item: Electric_Fist
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Harpy_Card
         Rate: 1
         StealProtected: true
@@ -16475,8 +15870,10 @@ Body:
         Rate: 1500
       - Item: Encyclopedia
         Rate: 10
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Wizardy_Staff
         Rate: 1
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Old_Card_Album
         Rate: 1
       - Item: Underground_Key
@@ -16571,6 +15968,7 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Nightmare_Terror_Card
         Rate: 1
         StealProtected: true
@@ -16691,6 +16089,7 @@ Body:
         Rate: 20
       - Item: Unholy_Touch
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Diabolic_Card
         Rate: 1
         StealProtected: true
@@ -16855,8 +16254,10 @@ Body:
         Rate: 300
       - Item: Damascus_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Hypnotist's_Staff_
         Rate: 5
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Fine_Sand
         Rate: 1200
       - Item: Sleeper_Card
@@ -16947,6 +16348,7 @@ Body:
         Rate: 5
       - Item: Plate_Armor_
         Rate: 3
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Turquoise
         Rate: 1500
       - Item: Archangeling_Card
@@ -16996,14 +16398,18 @@ Body:
         Rate: 4700
       - Item: Wizardy_Staff
         Rate: 5
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Balistar
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Cape_Of_Ancient_Lord
         Rate: 15
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Ring_
         Rate: 4
       - Item: Book_Of_The_Apocalypse
         Rate: 4
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Dracula_Card
         Rate: 1
         StealProtected: true
@@ -17044,12 +16450,14 @@ Body:
         Rate: 1200
       - Item: Base_Guitar
         Rate: 50
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Royal_Jelly
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
       - Item: Violin_
         Rate: 500
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Violy_Card
         Rate: 1
         StealProtected: true
@@ -17132,6 +16540,7 @@ Body:
         Rate: 500
       - Item: Padded_Armor
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cyfar
         Rate: 1000
       - Item: Steel
@@ -17387,14 +16796,18 @@ Body:
     Drops:
       - Item: Pole_Axe
         Rate: 550
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: War_Axe
         Rate: 680
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Holy_Avenger
         Rate: 480
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Holy_Guard
         Rate: 640
       - Item: Holy_Robe
         Rate: 1500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Herald_Of_GOD
         Rate: 500
       - Item: Ring_
@@ -17445,6 +16858,7 @@ Body:
         Rate: 30
       - Item: Murasame
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Karakasa_Card
         Rate: 1
         StealProtected: true
@@ -17484,16 +16898,19 @@ Body:
         Rate: 5335
       - Item: Ninja_Suit
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cyfar
         Rate: 2200
       - Item: Shinobi's_Sash
         Rate: 100
       - Item: Thief_Clothes_
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Black_Mask
         Rate: 2000
       - Item: Murasame_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Shinobi_Card
         Rate: 1
         StealProtected: true
@@ -17541,6 +16958,7 @@ Body:
         Rate: 2
       - Item: Cinquedea_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Poison_Toad_Card
         Rate: 1
         StealProtected: true
@@ -17589,6 +17007,7 @@ Body:
         Rate: 250
       - Item: The_Cyclone_
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Antique_Firelock_Card
         Rate: 1
         StealProtected: true
@@ -17636,8 +17055,10 @@ Body:
         Rate: 10
       - Item: Hakujin
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Mandolin_
         Rate: 2
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Miyabi_Ningyo_Card
         Rate: 1
         StealProtected: true
@@ -17679,10 +17100,12 @@ Body:
         Rate: 5500
       - Item: Huuma_Giant_Wheel
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Fruit_Of_Mastela
         Rate: 150
       - Item: Huuma_Giant_Wheel_
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Imperial_Cooking_Kits
         Rate: 20
       - Item: Earth_Scroll_1_5
@@ -17725,25 +17148,20 @@ Body:
         Rate: 3500
       - Item: Huuma_Calm_Mind
         Rate: 20
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Leaflet_Of_Aloe
         Rate: 2300
       - Item: Ment
         Rate: 2
       - Item: Guitar_Of_Blue_Solo
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Jitte_
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Kapha_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1407
-#    AegisName: DOKEBI_
-#    Name: Dokebi
-#    Level: 1
-#    Size: Small
-#    Race: Formless
-#    Element: Water
-#    ElementLevel: 0
   - Id: 1408
     AegisName: BLOOD_BUTTERFLY
     Name: Bloody Butterfly
@@ -17785,8 +17203,10 @@ Body:
         Rate: 5500
       - Item: Waghnakh_
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Lariat
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Blood_Butterfly_Card
         Rate: 1
         StealProtected: true
@@ -17879,14 +17299,6 @@ Body:
       - Item: Live_Peach_Tree_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1411
-#    AegisName: PEACH_TREE_BULLET
-#    Name: Peach Tree Bullet... (mode  129)
-#    JapaneseName: Peach Tree Bullet
-#    Size: Small
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 0
   - Id: 1412
     AegisName: EVIL_CLOUD_HERMIT
     Name: Taoist Hermit
@@ -17927,6 +17339,7 @@ Body:
         Rate: 6800
       - Item: Guitar_
         Rate: 2
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Elunium_Stone
         Rate: 150
       - Item: Wind_Scroll_1_5
@@ -17977,19 +17390,12 @@ Body:
         Rate: 4800
       - Item: Rope_
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Strawberry
         Rate: 1000
       - Item: Wild_Ginseng_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1414
-#    AegisName: GINSENG_BULLET
-#    Name: Ginseng Bullet... (mode 129)
-#    JapaneseName: Ginseng Bullet
-#    Size: Small
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 0
   - Id: 1415
     AegisName: BABY_LEOPARD
     Name: Baby Leopard
@@ -18029,6 +17435,7 @@ Body:
         Rate: 2000
       - Item: Dagger_
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Pet_Food
         Rate: 500
       - Item: Baby_Leopard_Card
@@ -18074,12 +17481,15 @@ Body:
         Rate: 10
       - Item: Mandolin_
         Rate: 4
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Lute_
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Holy_Scroll_1_5
         Rate: 100
       - Item: Oriental_Lute
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Wicked_Nymph_Card
         Rate: 1
         StealProtected: true
@@ -18173,10 +17583,12 @@ Body:
         Rate: 5100
       - Item: Hell_Fire
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Ph.D_Hat
         Rate: 80
       - Item: Gae_Bolg
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Pill
         Rate: 900
       - Item: Sway_Apron
@@ -20152,6 +19564,7 @@ Body:
     Drops:
       - Item: Masamune
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Elunium
         Rate: 3500
       - Item: Assassin_Mask_
@@ -20162,8 +19575,10 @@ Body:
         Rate: 6305
       - Item: Huuma_Blaze
         Rate: 7500
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Azoth
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Incant_Samurai_Card
         Rate: 1
         StealProtected: true
@@ -20203,8 +19618,10 @@ Body:
         Rate: 3000
       - Item: Rope_
         Rate: 80
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Chemeti
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Centimental_Leaf
         Rate: 10
       - Item: Sharp_Leaf
@@ -20298,13 +19715,6 @@ Body:
       - Item: Stone_Shooter_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1496
-#    AegisName: STONE_SHOOTER_BULLET
-#    Name: Stone Shooter Bullet
-#    Size: Small
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 0
   - Id: 1497
     AegisName: WOODEN_GOLEM
     Name: Wooden Golem
@@ -20435,8 +19845,10 @@ Body:
         Rate: 4000
       - Item: Waghnakh
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Finger_
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Banana
         Rate: 1000
       - Item: Great_Leaf
@@ -20485,21 +19897,15 @@ Body:
         Rate: 500
       - Item: Rante_
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Bladed_Whip
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Shoot
         Rate: 500
       - Item: Parasite_Card
         Rate: 1
         StealProtected: true
-#  - Id: 1501
-#    AegisName: PARASITE_BULLET
-#    Name: Parasite Bullet... (mode 2181)
-#    JapaneseName: Parasite Bullet
-#    Size: Small
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 0
   - Id: 1502
     AegisName: PORING_V
     Name: Bring it on!
@@ -20545,12 +19951,16 @@ Body:
         Rate: 10000
       - Item: Flame_Sprits_Armor
         Rate: 2500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Water_Sprits_Armor
         Rate: 2500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Earth_Sprits_Armor
         Rate: 2500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Wind_Sprits_Armor
         Rate: 2500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Bloody_Iron_Ball
         Rate: 4000
       - Item: Large_Jellopy
@@ -20641,8 +20051,10 @@ Body:
         Rate: 1
       - Item: Manteau
         Rate: 13
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Manteau_
         Rate: 1
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Dullahan_Card
         Rate: 1
         StealProtected: true
@@ -20730,14 +20142,18 @@ Body:
         Rate: 3686
       - Item: Hood_
         Rate: 50
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Honey
         Rate: 100
       - Item: Ragamuffin_Cape
         Rate: 50
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Muffler_
         Rate: 2
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Rider_Insignia
         Rate: 5
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Disguise_Card
         Rate: 1
         StealProtected: true
@@ -20782,8 +20198,10 @@ Body:
         Rate: 100
       - Item: Mama's_Knife
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Ginnungagap
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Bloody_Murderer_Card
         Rate: 1
         StealProtected: true
@@ -20973,6 +20391,7 @@ Body:
         Rate: 400
       - Item: Tablet
         Rate: 10
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Yggdrasilberry
         Rate: 3000
       - Item: Amon_Ra_Card
@@ -21017,6 +20436,7 @@ Body:
         Rate: 10
       - Item: Boots_
         Rate: 1
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Munak_Doll
         Rate: 300
       - Item: Hyegun_Card
@@ -21235,8 +20655,10 @@ Body:
         Rate: 400
       - Item: Club
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Spike
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Li_Me_Mang_Ryang_Card
         Rate: 1
         StealProtected: true
@@ -21323,6 +20745,7 @@ Body:
         Rate: 100
       - Item: Hora_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Honey
         Rate: 500
       - Item: Tantanmen
@@ -23129,10 +22552,13 @@ Body:
         Rate: 3000
       - Item: Katana_
         Rate: 40
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Bastard_Sword_
         Rate: 8
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Chain_Mail_
         Rate: 3
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Tamruan_Card
         Rate: 1
         StealProtected: true
@@ -23169,6 +22595,7 @@ Body:
         Rate: 7000
       - Item: Knife_
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Sticky_Mucus
         Rate: 400
       - Item: Apple
@@ -23311,6 +22738,7 @@ Body:
         Rate: 1600
       - Item: Battle_Axe_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Gift_Box
         Rate: 15
       - Item: Packing_Ribbon
@@ -23434,6 +22862,7 @@ Body:
         Rate: 2000
       - Item: Cutter__
         Rate: 3000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Empty_Bottle
         Rate: 1000
       - Item: Popped_Rice
@@ -24072,6 +23501,7 @@ Body:
         Rate: 200
       - Item: Crimson_Bolt_
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Jubilee
         Rate: 5000
       - Item: Metaling_Card
@@ -24166,6 +23596,7 @@ Body:
         Rate: 500
       - Item: Unholy_Touch
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Obsidian_Card
         Rate: 1
         StealProtected: true
@@ -24309,6 +23740,7 @@ Body:
         Rate: 1500
       - Item: Boots_
         Rate: 500
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Ungoliant_Card
         Rate: 1
         StealProtected: true
@@ -24346,6 +23778,7 @@ Body:
         Rate: 5000
       - Item: Main_Gauche_
         Rate: 25
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Insect_Feeler
         Rate: 1000
       - Item: Single_Cell
@@ -24478,6 +23911,7 @@ Body:
         Rate: 300
       - Item: Gold_Lux
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Angry_Mouth
         Rate: 50
       - Item: Cursed_Lucky_Brooch
@@ -24533,16 +23967,20 @@ Body:
         Rate: 6000
       - Item: House_Auger
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: House_Auger_
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Old_Violet_Box
         Rate: 1000
       - Item: Headlamp
         Rate: 5000
       - Item: Counter_Dagger
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Spanner
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Rsx_0806_Card
         Rate: 1
         StealProtected: true
@@ -24720,6 +24158,7 @@ Body:
         Rate: 50
       - Item: Six_Shooter_
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Mole_Card
         Rate: 1
         StealProtected: true
@@ -24856,6 +24295,7 @@ Body:
         Rate: 100
       - Item: Hora_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Honey
         Rate: 500
       - Item: Tantanmen
@@ -24905,8 +24345,10 @@ Body:
         Rate: 100
       - Item: Boots_
         Rate: 1
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Bloody_Roar
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Old_Blue_Box
         Rate: 2
       - Item: Gremlin_Card
@@ -24992,16 +24434,20 @@ Body:
         Rate: 3000
       - Item: Dragon_Killer
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Claymore
         Rate: 200
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Old_Blue_Box
         Rate: 30
       - Item: Helm_
         Rate: 12
       - Item: Plate_Armor_
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Ruber
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Seyren_Card
         Rate: 1
         StealProtected: true
@@ -25042,16 +24488,21 @@ Body:
         Rate: 2000
       - Item: Krishna
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Pauldron
         Rate: 1
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Nail_Of_Loki
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Various_Jur
         Rate: 30
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Poison_Bottle
         Rate: 110
       - Item: Thief_Clothes_
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Eremes_Card
         Rate: 1
         StealProtected: true
@@ -25090,14 +24541,18 @@ Body:
         Rate: 3000
       - Item: Pauldron
         Rate: 1
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Vecer_Axe
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Two_Handed_Axe_
         Rate: 110
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Buckler_
         Rate: 10
       - Item: Clothes_Of_The_Lord
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Old_Blue_Box
         Rate: 50
       - Item: Harword_Card
@@ -25137,16 +24592,21 @@ Body:
         Rate: 2000
       - Item: Croce_Staff
         Rate: 2
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Rod_
         Rate: 200
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_1
       - Item: Hardback
         Rate: 10
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Holy_Robe
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Old_Blue_Box
         Rate: 50
       - Item: Muffler_
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Magaleta_Card
         Rate: 1
         StealProtected: true
@@ -25186,14 +24646,17 @@ Body:
         Rate: 110
       - Item: Tights_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: CrossBow_
         Rate: 100
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Ori_Arrow_Container
         Rate: 150
       - Item: Old_Blue_Box
         Rate: 50
       - Item: Falken_Blitz
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Shecil_Card
         Rate: 1
         StealProtected: true
@@ -25233,14 +24696,17 @@ Body:
         Rate: 50
       - Item: La'cryma_Stick
         Rate: 1
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Survival_Rod2_
         Rate: 5
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Guard_
         Rate: 30
       - Item: Pair_Of_Red_Ribbon
         Rate: 1
       - Item: Shoes_
         Rate: 20
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Katrinn_Card
         Rate: 1
         StealProtected: true
@@ -25492,18 +24958,25 @@ Body:
     Drops:
       - Item: Edge
         Rate: 2500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Full_Plate_Armor_
         Rate: 3500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Grave_
         Rate: 9000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Brionac
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Longinus's_Spear
         Rate: 3000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Dragon_Slayer
         Rate: 2500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Skewer
         Rate: 1500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: B_Seyren_Card
         Rate: 1
         StealProtected: true
@@ -25550,18 +25023,25 @@ Body:
     Drops:
       - Item: Moonlight_Sword
         Rate: 1500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: House_Auger
         Rate: 1500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Glittering_Clothes
         Rate: 9000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Exercise
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Assasin_Dagger
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Bloody_Roar
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Ginnungagap
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: B_Eremes_Card
         Rate: 1
         StealProtected: true
@@ -25609,18 +25089,25 @@ Body:
     Drops:
       - Item: Mysteltainn_
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Byeorrun_Gum
         Rate: 2500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Clothes_Of_The_Lord
         Rate: 9000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Sabbath
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Great_Axe
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Guillotine
         Rate: 2500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Tomahawk
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: B_Harword_Card
         Rate: 1
         StealProtected: true
@@ -25667,18 +25154,24 @@ Body:
     Drops:
       - Item: Berserk
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Safety_Ring
         Rate: 2500
       - Item: Celestial_Robe
         Rate: 9000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Book_Of_The_Apocalypse
         Rate: 3500
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Quadrille
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Grand_Cross
         Rate: 2500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Diary_Of_Great_Sage
         Rate: 3500
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: B_Magaleta_Card
         Rate: 1
         StealProtected: true
@@ -25725,18 +25218,24 @@ Body:
     Drops:
       - Item: Combat_Knife
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Sucsamad
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Old_Violet_Box
         Rate: 9000
       - Item: Moonlight_Sword
         Rate: 1500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Grimtooth_
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Bow_Of_Rudra
         Rate: 1500
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Dragon_Wing
         Rate: 2500
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: B_Shecil_Card
         Rate: 1
         StealProtected: true
@@ -25783,18 +25282,24 @@ Body:
     Drops:
       - Item: Cursed_Dagger
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Counter_Dagger
         Rate: 3500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Critical_Ring
         Rate: 9000
       - Item: Robe_Of_Casting
         Rate: 2500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Celestial_Robe
         Rate: 2500
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Survival_Rod_
         Rate: 3000
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Glittering_Clothes
         Rate: 3500
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: B_Katrinn_Card
         Rate: 1
         StealProtected: true
@@ -25833,16 +25338,22 @@ Body:
         Rate: 1000
       - Item: Katzbalger
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Two_Hand_Sword_
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Saber_
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Padded_Armor_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Slayer_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Plate_Armor_
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Ygnizem_Card
         Rate: 1
         StealProtected: true
@@ -25880,16 +25391,21 @@ Body:
         Rate: 2000
       - Item: Forturn_Sword
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Adventurere's_Suit_
         Rate: 40
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Gladius_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Chain_Mail_
         Rate: 2
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Ring_Of_Rogue
         Rate: 2
       - Item: Coward_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Whikebain_Card
         Rate: 1
         StealProtected: true
@@ -25928,16 +25444,22 @@ Body:
         Rate: 1000
       - Item: Muffler_
         Rate: 1
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Buster_
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Battle_Axe_
         Rate: 40
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Mink_Coat
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Axe_
         Rate: 80
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Windhawk
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Armaia_Card
         Rate: 1
         StealProtected: true
@@ -25977,14 +25499,19 @@ Body:
         Rate: 5
       - Item: Morning_Star_
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Sword_Mace_
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Saint_Robe_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Scapulare_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Spike
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Erend_Card
         Rate: 1
         StealProtected: true
@@ -26023,16 +25550,21 @@ Body:
         Rate: 2000
       - Item: Kakkung_
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Steel_Arrow_Container
         Rate: 100
       - Item: Great_Bow_
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Mantle_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Sandals_
         Rate: 30
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Shoes_
         Rate: 2
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Kavac_Card
         Rate: 1
         StealProtected: true
@@ -26070,14 +25602,18 @@ Body:
         Rate: 1000
       - Item: Staff_Of_Wing
         Rate: 1
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Guard_
         Rate: 5
       - Item: Staff_
         Rate: 50
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_2
       - Item: Silk_Robe_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Silver_Robe_
         Rate: 30
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Clip
         Rate: 1
       - Item: Rawrel_Card
@@ -26127,18 +25663,23 @@ Body:
     Drops:
       - Item: Broad_Sword_
         Rate: 1000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Gift_Box
         Rate: 5000
       - Item: Old_Blue_Box
         Rate: 5000
       - Item: Schweizersabel
         Rate: 1000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Formal_Suit
         Rate: 1000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Boots_
         Rate: 1000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Nagan
         Rate: 1000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: B_Ygnizem_Card
         Rate: 1
         StealProtected: true
@@ -26366,6 +25907,7 @@ Body:
         Rate: 1000
       - Item: Destroyer
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
   - Id: 1666
     AegisName: POTON_CANON_2
     Name: Photon Cannon
@@ -26476,8 +26018,10 @@ Body:
         Rate: 200
       - Item: Gate_Keeper
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Gate_KeeperDD
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Archdam_Card
         Rate: 1
         StealProtected: true
@@ -26552,6 +26096,7 @@ Body:
         Rate: 300
       - Item: Dusk
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Oridecon
         Rate: 10
       - Item: Imperial_Cooking_Kits
@@ -26599,6 +26144,7 @@ Body:
         Rate: 300
       - Item: Thunder_P_
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Oridecon
         Rate: 10
       - Item: Imperial_Cooking_Kits
@@ -26802,6 +26348,7 @@ Body:
         Rate: 300
       - Item: Drifter
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Elunium
         Rate: 10
       - Item: High_end_Cooking_Kits
@@ -26849,6 +26396,7 @@ Body:
         Rate: 300
       - Item: Long_Barrel_
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Elunium
         Rate: 10
       - Item: High_end_Cooking_Kits
@@ -27028,6 +26576,7 @@ Body:
         Rate: 1000
       - Item: Butcher_
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Yellow_Slim_Potion
         Rate: 500
       - Item: White_Slim_Potion
@@ -27342,6 +26891,7 @@ Body:
         Rate: 2000
       - Item: Kakkung_
         Rate: 6000
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Lady_Tanee_Card
         Rate: 1
         StealProtected: true
@@ -27487,6 +27037,7 @@ Body:
         Rate: 10
       - Item: Gust_Bow
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Branch_Of_Dead_Tree
         Rate: 10
       - Item: Centimental_Flower
@@ -27742,6 +27293,7 @@ Body:
         Rate: 500
       - Item: Vidar's_Boots
         Rate: 10
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Cookbook08
         Rate: 2
       - Item: Cookbook09
@@ -27787,10 +27339,13 @@ Body:
         Rate: 50
       - Item: Shoes_
         Rate: 5
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Manteau_
         Rate: 1
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Fricco_Shoes
         Rate: 10
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Gold_Ring
         Rate: 100
       - Item: Ancient_Mimic_Card
@@ -27934,8 +27489,10 @@ Body:
         Rate: 1000
       - Item: Manteau_
         Rate: 5
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Two_Hand_Sword_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Cursed_Seal
         Rate: 50
       - Item: Retribution_Card
@@ -27983,8 +27540,10 @@ Body:
         Rate: 1000
       - Item: Harp_
         Rate: 50
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Harp
         Rate: 100
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Cursed_Seal
         Rate: 50
       - Item: Solace_Card
@@ -28034,6 +27593,7 @@ Body:
         Rate: 10
       - Item: Goibne's_Shoulder_Arms
         Rate: 1000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Tha_Odium_Card
         Rate: 1
         StealProtected: true
@@ -28081,6 +27641,7 @@ Body:
         Rate: 10
       - Item: Goibne's_Combat_Boots
         Rate: 1000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Tha_Despero_Card
         Rate: 1
         StealProtected: true
@@ -28128,6 +27689,7 @@ Body:
         Rate: 10
       - Item: Goibne's_Armor
         Rate: 1000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Tha_Maero_Card
         Rate: 1
         StealProtected: true
@@ -28224,14 +27786,18 @@ Body:
         Rate: 1000
       - Item: Morrigane's_Manteau
         Rate: 1000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Piece_Of_Bone_Armor
         Rate: 5000
       - Item: Full_Plate_Armor_
         Rate: 5000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Grave_
         Rate: 5000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Wing_Of_Eagle
         Rate: 1000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Bloody_Iron_Ball
         Rate: 500
       - Item: Thanatos_Card
@@ -28430,6 +27996,7 @@ Body:
         Rate: 800
       - Item: Inverse_Scale
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Stone_Buckler
         Rate: 50
       - Item: Acidus_Card
@@ -28701,6 +28268,7 @@ Body:
         Rate: 1000
       - Item: Pole_Axe
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Gemmed_Crown
         Rate: 500
       - Item: Detale_Card
@@ -29163,10 +28731,13 @@ Body:
         Rate: 1000
       - Item: Glittering_Clothes
         Rate: 1000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Survival_Rod_
         Rate: 500
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Counter_Dagger
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Morrigane's_Belt
         Rate: 1000
       - Item: Kiel_Card
@@ -29214,10 +28785,12 @@ Body:
         Rate: 500
       - Item: Drill_Katar
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Elunium
         Rate: 10
       - Item: Vali's_Manteau
         Rate: 20
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Alicel_Card
         Rate: 1
         StealProtected: true
@@ -29259,14 +28832,17 @@ Body:
         Rate: 3000
       - Item: Falcon_Robe
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Screw
         Rate: 500
       - Item: Claw_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Elunium
         Rate: 10
       - Item: Curved_Sword
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Aliot_Card
         Rate: 1
         StealProtected: true
@@ -29304,6 +28880,7 @@ Body:
         Rate: 4000
       - Item: Morpheus's_Shawl
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Rosary_
         Rate: 10
       - Item: Alice's_Apron
@@ -29736,10 +29313,13 @@ Body:
         Rate: 5000
       - Item: Valkyrie_Armor
         Rate: 1600
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Valkyrie_Manteau
         Rate: 3000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Valkyrie_Shoes
         Rate: 3000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Helm_
         Rate: 5000
       - Item: Bloody_Edge
@@ -29792,6 +29372,7 @@ Body:
         Rate: 500
       - Item: Blood_Tears
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Skogul_Card
         Rate: 1
         StealProtected: true
@@ -29836,6 +29417,7 @@ Body:
         Rate: 3
       - Item: Mantle_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Elunium_Stone
         Rate: 500
       - Item: Frus_Card
@@ -29880,12 +29462,15 @@ Body:
         Rate: 1000
       - Item: Divine_Cross
         Rate: 25
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Rune_Of_Darkness
         Rate: 1000
       - Item: Silk_Robe_
         Rate: 100
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Odin's_Blessing
         Rate: 100
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Skeggiold_Card
         Rate: 1
         StealProtected: true
@@ -29928,12 +29513,15 @@ Body:
         Rate: 1000
       - Item: Divine_Cross
         Rate: 25
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Rune_Of_Darkness
         Rate: 1000
       - Item: Silk_Robe_
         Rate: 100
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Odin's_Blessing
         Rate: 100
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Skeggiold_Card
         Rate: 1
         StealProtected: true
@@ -30357,8 +29945,10 @@ Body:
         Rate: 5000
       - Item: Celestial_Robe
         Rate: 1000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Hurricane_Fury
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Gloom_Under_Night_Card
         Rate: 1
         StealProtected: true
@@ -30395,6 +29985,7 @@ Body:
         Rate: 2500
       - Item: High_Fashion_Sandals
         Rate: 2
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Bloody_Rune
         Rate: 4000
       - Item: Memorize_Book
@@ -30450,6 +30041,7 @@ Body:
         Rate: 100
       - Item: Divine_Cloth
         Rate: 20
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Echio_Card
         Rate: 1
         StealProtected: true
@@ -30493,6 +30085,7 @@ Body:
         Rate: 10
       - Item: Scalpel
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Bloody_Rune
         Rate: 100
       - Item: Vanberk_Card
@@ -30531,6 +30124,7 @@ Body:
         Rate: 2500
       - Item: High_Fashion_Sandals
         Rate: 1
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Bloody_Rune
         Rate: 1000
       - Item: Gold_Ring
@@ -30580,6 +30174,7 @@ Body:
         Rate: 1000
       - Item: Boots_
         Rate: 2
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Sticky_Mucus
         Rate: 1000
       - Item: Bloody_Rune
@@ -30588,6 +30183,7 @@ Body:
         Rate: 2000
       - Item: Shadow_Walk
         Rate: 10
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Hodremlin_Card
         Rate: 1
         StealProtected: true
@@ -30633,6 +30229,7 @@ Body:
         Rate: 1000
       - Item: Berdysz
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Seeker_Card
         Rate: 1
         StealProtected: true
@@ -30678,6 +30275,7 @@ Body:
         Rate: 500
       - Item: Icicle_Fist
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Crystal_Blue
         Rate: 100
       - Item: Snowier_Card
@@ -30808,6 +30406,7 @@ Body:
         Rate: 20
       - Item: Frozen_Bow
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Gazeti_Card
         Rate: 1
         StealProtected: true
@@ -30858,6 +30457,7 @@ Body:
         Rate: 3000
       - Item: Clack_Of_Servival
         Rate: 3000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Herald_Of_GOD
         Rate: 5000
       - Item: Old_Violet_Box
@@ -30992,6 +30592,7 @@ Body:
         Rate: 50
       - Item: Combo_Battle_Glove
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Roween_Card
         Rate: 1
         StealProtected: true
@@ -31034,6 +30635,7 @@ Body:
         Rate: 10
       - Item: Ulfhedinn
         Rate: 5
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Galion_Card
         Rate: 1
         StealProtected: true
@@ -31078,6 +30680,7 @@ Body:
         Rate: 10
       - Item: Seismic_Fist
         Rate: 3
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Stapo_Card
         Rate: 1
         StealProtected: true
@@ -31136,6 +30739,7 @@ Body:
         Rate: 100
       - Item: Altas_Weapon
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Atroce_Card
         Rate: 1
         StealProtected: true
@@ -31434,16 +31038,22 @@ Body:
     Drops:
       - Item: Pole_Axe
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Grave_
         Rate: 100
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Pauldron
         Rate: 200
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Full_Plate_Armor_
         Rate: 300
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Celestial_Robe
         Rate: 200
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Survival_Rod2_
         Rate: 200
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Old_Violet_Box
         Rate: 7000
       - Item: Anti_Spell_Bead
@@ -31482,6 +31092,7 @@ Body:
         Rate: 2500
       - Item: High_Fashion_Sandals
         Rate: 2
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Bloody_Rune
         Rate: 4000
       - Item: Memorize_Book
@@ -31492,6 +31103,7 @@ Body:
         Rate: 100
       - Item: Musika
         Rate: 5
+        RandomOptionGroup: TBRO_Garment_Group_1
   - Id: 1797
     AegisName: FANAT
     Name: Fanat
@@ -31523,8 +31135,10 @@ Body:
     Drops:
       - Item: Kandura
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: High_Fashion_Sandals
         Rate: 2
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Bloody_Rune
         Rate: 4000
       - Item: Memorize_Book
@@ -32051,10 +31665,12 @@ Body:
         Rate: 10000
       - Item: Dragon_Killer
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Gemmed_Crown
         Rate: 500
       - Item: Pole_Axe
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Int_Dish10
         Rate: 1500
       - Item: Treasure_Box
@@ -32189,10 +31805,13 @@ Body:
         Rate: 10000
       - Item: Dragon_Wing
         Rate: 500
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Wizardy_Staff
         Rate: 500
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Bloody_Roar
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Int_Dish10
         Rate: 1500
       - Item: Luk_Dish10
@@ -32556,14 +32175,18 @@ Body:
         Rate: 3000
       - Item: Doom_Slayer
         Rate: 30
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Claymore
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Zweihander
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Platinum_Shield
         Rate: 10
       - Item: Muscle_Cutter
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Sword_Guardian_Card
         Rate: 1
         StealProtected: true
@@ -32603,10 +32226,13 @@ Body:
         Rate: 3000
       - Item: Luna_Bow
         Rate: 30
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Bow
         Rate: 50
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_1
       - Item: Sniping_Suit
         Rate: 20
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Orleans_Glove
         Rate: 4
       - Item: Bow_Guardian_Card
@@ -32653,10 +32279,12 @@ Body:
         Rate: 1
       - Item: Berserk_Guitar
         Rate: 50
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Ring_
         Rate: 1
       - Item: Meteo_Plate_Armor
         Rate: 20
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Salamander_Card
         Rate: 1
         StealProtected: true
@@ -32711,10 +32339,13 @@ Body:
         Rate: 200
       - Item: Hell_Fire
         Rate: 2000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Fire_Brand
         Rate: 2000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Flame_Sprits_Armor_
         Rate: 100
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Ifrit_Card
         Rate: 1
         StealProtected: true
@@ -32759,10 +32390,13 @@ Body:
         Rate: 1
       - Item: Flame_Sprits_Armor
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Burning_Bow
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Piercing_Staff
         Rate: 10
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Kasa_Card
         Rate: 1
         StealProtected: true
@@ -32896,12 +32530,15 @@ Body:
         Rate: 3000
       - Item: Huuma_Blaze
         Rate: 3
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Live_Coal
         Rate: 2500
       - Item: Heart_Breaker
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Electric_Eel
         Rate: 25
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Flaming_Ice
         Rate: 20
       - Item: Imp_Card
@@ -32953,6 +32590,7 @@ Body:
         Rate: 3
       - Item: Earth_Bow
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Knocker_Card
         Rate: 1
         StealProtected: true
@@ -32989,16 +32627,19 @@ Body:
     Drops:
       - Item: Drill_Katar
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Assassin_Mask_
         Rate: 3
       - Item: Scalpel
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Agi_Dish07
         Rate: 500
       - Item: Old_Blue_Box
         Rate: 40
       - Item: Rider_Insignia_
         Rate: 1
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Vroken_Sword
         Rate: 4365
       - Item: Byorgue_Card
@@ -33493,6 +33134,7 @@ Body:
         Rate: 1000
       - Item: Guisarme
         Rate: 50
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Iron_Ore
         Rate: 250
       - Item: Muka_Card
@@ -33708,6 +33350,7 @@ Body:
         Rate: 9000
       - Item: Spear_
         Rate: 30
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
       - Item: Langka
         Rate: 350
       - Item: Shoot
@@ -33716,6 +33359,7 @@ Body:
         Rate: 3
       - Item: Whip_Of_Earth
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Mandragora_Card
         Rate: 1
         StealProtected: true
@@ -33751,6 +33395,7 @@ Body:
         Rate: 9000
       - Item: Hood_
         Rate: 20
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Fluff
         Rate: 3000
       - Item: Animal's_Skin
@@ -33759,6 +33404,7 @@ Body:
         Rate: 500
       - Item: Sandals_
         Rate: 25
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Sweet_Bean
         Rate: 600
       - Item: Coco_Card
@@ -33846,6 +33492,7 @@ Body:
         Rate: 500
       - Item: Jur_
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Goggle_
         Rate: 5
       - Item: Safety_Helmet
@@ -33923,6 +33570,7 @@ Body:
         Rate: 3000
       - Item: Platinum_Shotel
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Mementos
         Rate: 1500
       - Item: Broken_Farming_Utensil
@@ -33965,6 +33613,7 @@ Body:
         Rate: 3000
       - Item: Tidal_Shoes
         Rate: 15
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Mementos
         Rate: 1500
       - Item: Skel_Bone
@@ -33973,6 +33622,7 @@ Body:
         Rate: 2
       - Item: Wasteland_Outlaw
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Ragged_Zombie_Card
         Rate: 1
         StealProtected: true
@@ -34012,8 +33662,10 @@ Body:
         Rate: 5000
       - Item: Tooth_Blade
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Wild_Beast_Claw
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Skel_Bone
         Rate: 4500
       - Item: Well_Dried_Bone
@@ -34059,10 +33711,13 @@ Body:
         Rate: 3000
       - Item: Orleans_Gown
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Scalpel
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Wool_Scarf
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Mementos
         Rate: 1500
       - Item: Brigan
@@ -34133,8 +33788,10 @@ Body:
         Rate: 5000
       - Item: Black_Leather_Boots
         Rate: 20
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Lever_Action_Rifle
         Rate: 20
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Horrendous_Mouth
         Rate: 6000
       - Item: Flame_Skull_Card
@@ -34172,10 +33829,12 @@ Body:
         Rate: 3000
       - Item: Lich_Bone_Wand
         Rate: 20
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Skel_Bone
         Rate: 4500
       - Item: Mithril_Magic_Cape
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Blue_Gemstone
         Rate: 100
       - Item: Amulet
@@ -34229,14 +33888,17 @@ Body:
         Rate: 10000
       - Item: Long_Horn
         Rate: 1000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Spiritual_Ring
         Rate: 500
       - Item: Hunting_Spear
         Rate: 1000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Elunium
         Rate: 5432
       - Item: Blessed_Wand
         Rate: 2000
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Fallen_Bishop_Card
         Rate: 1
         StealProtected: true
@@ -34341,10 +34003,13 @@ Body:
         Rate: 9000
       - Item: Variant_Shoes
         Rate: 2000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Death_Note
         Rate: 2000
+        RandomOptionGroup: TBRO_Special_Weapon_Level_4
       - Item: Destruction_Rod
         Rate: 2000
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Bison_Horn
         Rate: 2000
       - Item: Elunium
@@ -34628,6 +34293,7 @@ Body:
         Rate: 5000
       - Item: Release_Of_Wish
         Rate: 10
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Pill
         Rate: 150
       - Item: Piece_Of_Cake
@@ -34669,6 +34335,7 @@ Body:
         Rate: 900
       - Item: Ancient_Magic
         Rate: 5
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Bitter_Herb
         Rate: 100
       - Item: Fruit_Of_Mastela
@@ -34710,6 +34377,7 @@ Body:
     Drops:
       - Item: Principles_Of_Magic
         Rate: 5
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Singing_Flower
         Rate: 300
       - Item: Singing_Plant
@@ -34771,8 +34439,10 @@ Body:
         Rate: 1000
       - Item: Ixion_Wing
         Rate: 100
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Pole_Axe
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Treasure_Box
         Rate: 5000
       - Item: Loard_Circlet
@@ -35180,35 +34850,6 @@ Body:
     Class: Guardian
     Modes:
       KnockBackImmune: true
-#  - Id: 1900
-#    AegisName: BOW_GUARDIAN_
-#    Name: Archer Guardian
-#    Level: 80
-#    Hp: 80404
-#    Attack: 1840
-#    Attack2: 2520
-#    Defense: 40
-#    MagicDefense: 62
-#    Str: 95
-#    Agi: 80
-#    Vit: 33
-#    Int: 90
-#    Dex: 165
-#    Luk: 55
-#    AttackRange: 12
-#    SkillRange: 14
-#    ChaseRange: 16
-#    Size: Large
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 4
-#    WalkSpeed: 170
-#    AttackDelay: 76
-#    AttackMotion: 384
-#    DamageMotion: 288
-#    Ai: 05
-#    Modes:
-#      NoRandomWalk: true
   - Id: 1901
     AegisName: E_CONDOR
     Name: Condor
@@ -35640,10 +35281,13 @@ Body:
         Rate: 1000
       - Item: Diabolus_Robe
         Rate: 5000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Diabolus_Armor
         Rate: 5000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Diabolus_Boots
         Rate: 5000
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Dark_Crystal
         Rate: 9000
       - Item: Dark_Debris
@@ -35691,8 +35335,10 @@ Body:
         Rate: 4850
       - Item: Diabolus_Manteau
         Rate: 3
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Nemesis
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 1919
     AegisName: MOROCC_2
     Name: Incarnation of Morocc
@@ -35726,6 +35372,7 @@ Body:
     Drops:
       - Item: Skin_Of_Ventus
         Rate: 3
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Dark_Crystal
         Rate: 1000
       - Item: Dark_Debris
@@ -35769,6 +35416,7 @@ Body:
     Drops:
       - Item: Ragamuffin_Cape
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Dark_Crystal
         Rate: 1000
       - Item: Dark_Debris
@@ -35781,6 +35429,7 @@ Body:
         Rate: 3
       - Item: Bloody_Eater
         Rate: 15
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 1921
     AegisName: MOROCC_4
     Name: Incarnation of Morocc
@@ -36070,16 +35719,21 @@ Body:
         Rate: 500
       - Item: Pauldron
         Rate: 7000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Tae_Goo_Lyeon
         Rate: 5000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Bloody_Iron_Ball
         Rate: 100
       - Item: Celestial_Robe
         Rate: 7000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Holy_Robe
         Rate: 7000
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Crescent_Scythe
         Rate: 9000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Baphomet_Card
         Rate: 1
         StealProtected: true
@@ -36327,11 +35981,14 @@ Body:
         Rate: 7275
       - Item: Pauldron
         Rate: 40
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Healing_Staff
         Rate: 150
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Wild_Beast_Claw
         Rate: 150
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 1939
     AegisName: TREASURE_BOX42
     Name: Treasure Chest
@@ -36357,11 +36014,14 @@ Body:
         Rate: 7275
       - Item: Celestial_Robe
         Rate: 40
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Berdysz
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Inverse_Scale
         Rate: 150
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 1940
     AegisName: TREASURE_BOX43
     Name: Treasure Chest
@@ -36387,11 +36047,14 @@ Body:
         Rate: 7275
       - Item: Scalpel
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Heart_Breaker
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Blood_Tears
         Rate: 150
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 1941
     AegisName: TREASURE_BOX44
     Name: Treasure Chest
@@ -36417,11 +36080,14 @@ Body:
         Rate: 7275
       - Item: Platinum_Shotel
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Burning_Bow
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Divine_Cross
         Rate: 50
         StealProtected: true
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
   - Id: 1942
     AegisName: TREASURE_BOX45
     Name: Treasure Chest
@@ -36447,11 +36113,14 @@ Body:
         Rate: 7275
       - Item: Muscle_Cutter
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Orc_Archer_Bow
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Icicle_Fist
         Rate: 150
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 1943
     AegisName: TREASURE_BOX46
     Name: Treasure Chest
@@ -36477,11 +36146,14 @@ Body:
         Rate: 7275
       - Item: Battle_Hook
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Frozen_Bow
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Combo_Battle_Glove
         Rate: 150
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 1944
     AegisName: TREASURE_BOX47
     Name: Treasure Chest
@@ -36507,11 +36179,14 @@ Body:
         Rate: 7275
       - Item: Ahlspiess
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Earth_Bow
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Ulfhedinn
         Rate: 50
         StealProtected: true
+        RandomOptionGroup: TBRO_Garment_Group_1
   - Id: 1945
     AegisName: TREASURE_BOX48
     Name: Treasure Chest
@@ -36537,11 +36212,14 @@ Body:
         Rate: 7275
       - Item: Lich_Bone_Wand
         Rate: 150
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Gust_Bow
         Rate: 150
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Seismic_Fist
         Rate: 150
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 1946
     AegisName: TREASURE_BOX49
     Name: Treasure Chest
@@ -36567,11 +36245,14 @@ Body:
         Rate: 7275
       - Item: Piercing_Staff
         Rate: 150
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Drill_Katar
         Rate: 150
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Mithril_Magic_Cape
         Rate: 50
         StealProtected: true
+        RandomOptionGroup: TBRO_Garment_Group_1
   - Id: 1947
     AegisName: PIAMETTE_
     Name: Piamette
@@ -36872,16 +36553,20 @@ Body:
     Drops:
       - Item: Twin_Edge_B
         Rate: 9000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Twin_Edge_R
         Rate: 9000
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Flame_Manteau
         Rate: 9000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Bone_Helm
         Rate: 9000
       - Item: Old_Card_Album
         Rate: 9000
       - Item: Pauldron
         Rate: 9000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Turquoise
         Rate: 9000
   - Id: 1957
@@ -36915,16 +36600,21 @@ Body:
     Drops:
       - Item: Thorn_Staff
         Rate: 9000
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Holy_Stick
         Rate: 9000
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Celestial_Robe
         Rate: 9000
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Lich_Bone_Wand
         Rate: 9000
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Old_Card_Album
         Rate: 9000
       - Item: Survival_Rod_
         Rate: 9000
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_3
       - Item: Agate
         Rate: 9000
       - Item: Ant_Buyanne_Card
@@ -37236,6 +36926,7 @@ Body:
         Rate: 4
       - Item: Trident_
         Rate: 4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Feather
         Rate: 3000
       - Item: Skyblue_Jewel
@@ -37327,6 +37018,7 @@ Body:
         Rate: 2
       - Item: Saint_Robe_
         Rate: 20
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Skyblue_Jewel
         Rate: 20
       - Item: Fin
@@ -37372,6 +37064,7 @@ Body:
         Rate: 3000
       - Item: Padded_Armor_
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Solid_Shell
         Rate: 100
       - Item: Elunium_Stone
@@ -37494,10 +37187,12 @@ Body:
         Rate: 3000
       - Item: Orleans_Gown
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cursed_Star
         Rate: 2
       - Item: Wool_Scarf
         Rate: 10
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Mementos
         Rate: 1500
       - Item: Shadow_Guard
@@ -37546,6 +37241,7 @@ Body:
         Rate: 10
       - Item: Chameleon_Armor
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Old_Blue_Box
         Rate: 2
       - Item: Linen_Glove
@@ -37586,6 +37282,7 @@ Body:
         Rate: 500
       - Item: Elemental_Sword
         Rate: 5
+        RandomOptionGroup: TBRO_Special_Weapon_Level_3
       - Item: Oridecon
         Rate: 80
       - Item: Emveretarcon
@@ -37639,6 +37336,7 @@ Body:
         Rate: 200
       - Item: Dagger_Of_Hunter
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Jubilee
         Rate: 5000
   - Id: 1978
@@ -37681,13 +37379,16 @@ Body:
         Rate: 2200
       - Item: Manteau_
         Rate: 20
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Elunium
         Rate: 5
       - Item: Life_Link
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Cardo
         Rate: 1
         StealProtected: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 1979
     AegisName: ZAKUDAM
     Name: Zakudam
@@ -37729,10 +37430,13 @@ Body:
         Rate: 200
       - Item: Gate_Keeper
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Gate_KeeperDD
         Rate: 5
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Improved_Tights
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
   - Id: 1980
     AegisName: KUBLIN
     Name: Kublin
@@ -37953,8 +37657,10 @@ Body:
     Drops:
       - Item: Lunakaligo
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Cello
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Fur
         Rate: 4000
       - Item: Peaked_Hat
@@ -38006,6 +37712,7 @@ Body:
         Rate: 2
       - Item: Cursed_Lyre
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Short_Leg
         Rate: 5335
       - Item: Zargon
@@ -38053,10 +37760,13 @@ Body:
         Rate: 1
       - Item: Stem_Of_Nepenthes
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Harp_Of_Nepenthes
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Nepenthes_Bow
         Rate: 1
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_4
       - Item: Strong_Bine
         Rate: 3000
       - Item: Yellow_Live
@@ -38097,14 +37807,17 @@ Body:
     Drops:
       - Item: Sprint_Shoes
         Rate: 10
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Horn_Of_Hilthrion
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Horn_Of_Hilsrion
         Rate: 3000
       - Item: Fur
         Rate: 2000
       - Item: Wild_Beast_Claw
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Soft_Feather
         Rate: 120
       - Item: Brigan
@@ -38150,8 +37863,10 @@ Body:
         Rate: 200
       - Item: Ivory_Lance
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Ivory_Knife
         Rate: 400
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Hard_Skin
         Rate: 9000
       - Item: Snowy_Horn
@@ -38193,10 +37908,13 @@ Body:
     Drops:
       - Item: Leather_Of_Tendrilion
         Rate: 500
+        RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Death_Guidance
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Eraser
         Rate: 100
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Horn_Of_Tendrilion
         Rate: 9000
       - Item: Fur
@@ -38239,6 +37957,7 @@ Body:
     Drops:
       - Item: Sprint_Mail
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Angelic_Ring
         Rate: 1
       - Item: Mystic_Horn
@@ -38251,6 +37970,7 @@ Body:
         Rate: 2
       - Item: Long_Horn
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Cornus_Card
         Rate: 1
         StealProtected: true
@@ -38288,10 +38008,12 @@ Body:
     Drops:
       - Item: Armor_Of_Naga
         Rate: 10
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Shield_Of_Naga
         Rate: 10
       - Item: Battle_Fork
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Scale_Of_Snakes
         Rate: 5000
       - Item: Scales_Shell
@@ -38300,6 +38022,7 @@ Body:
         Rate: 2000
       - Item: Pike_
         Rate: 20
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
   - Id: 1994
     AegisName: LUCIOLA_VESPA
     Name: Luciola Vespa
@@ -38387,6 +38110,7 @@ Body:
         Rate: 1
       - Item: Whip_Of_Balance
         Rate: 10
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
       - Item: Centimental_Leaf
         Rate: 10
       - Item: Sharp_Leaf
@@ -38397,45 +38121,6 @@ Body:
         Rate: 3000
       - Item: Flower
         Rate: 1000
-#  - Id: 1996
-#    AegisName: BACSOJIN_T
-#    Name: White Lady
-#    JapaneseName: Bacsojin
-#    Level: 85
-#    Hp: 253221
-#    BaseExp: 45250
-#    JobExp: 16445
-#    Attack: 1868
-#    Attack2: 6124
-#    Defense: 20
-#    MagicDefense: 55
-#    Str: 52
-#    Agi: 65
-#    Vit: 44
-#    Int: 112
-#    Dex: 152
-#    Luk: 35
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demihuman
-#    Element: Wind
-#    ElementLevel: 3
-#    WalkSpeed: 130
-#    AttackDelay: 576
-#    AttackMotion: 960
-#    DamageMotion: 480
-#    Ai: 21
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: White_Snake_Hat
-#        Rate: 500
-#      - Item: Exorcize_Sachet
-#        Rate: 80
-#      - Item: Purification_Sachet
-#        Rate: 80
   - Id: 1997
     AegisName: G_TATACHO
     Name: Tatacho
@@ -38530,6 +38215,7 @@ Body:
     Drops:
       - Item: Boots_
         Rate: 9
+        RandomOptionGroup: TBRO_Footgear_Group_1
       - Item: Crystal_Jewel__
         Rate: 50
       - Item: Short_Leg
@@ -38543,297 +38229,6 @@ Body:
       - Item: Centipede_Larva_Card
         Rate: 1
         StealProtected: true
-#  - Id: 2000
-#    AegisName: M_GAMEMASTER
-#    Name: Game Master
-#    JapaneseName: Male Game Master
-#    Level: 50
-#    Hp: 7000
-#    Sp: 250
-#    Attack: 25
-#    Attack2: 25
-#    Defense: 10
-#    MagicDefense: 10
-#    Str: 44
-#    Agi: 121
-#    Int: 60
-#    Dex: 75
-#    Luk: 110
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 300
-#    AttackMotion: 384
-#    DamageMotion: 288
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2001
-#    AegisName: F_GAMEMASTER
-#    Name: Game Master
-#    JapaneseName: Female Game Master
-#    Level: 50
-#    Hp: 7000
-#    Sp: 250
-#    Attack: 25
-#    Attack2: 25
-#    Defense: 10
-#    MagicDefense: 10
-#    Str: 44
-#    Agi: 121
-#    Int: 60
-#    Dex: 75
-#    Luk: 110
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 200
-#    AttackDelay: 300
-#    AttackMotion: 384
-#    DamageMotion: 288
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2002
-#    AegisName: T_SPRING_RABBIT
-#    Name: Spring Rabbit
-#    Level: 50
-#    Hp: 8000
-#    BaseExp: 3982
-#    JobExp: 1766
-#    Attack: 585
-#    Attack2: 813
-#    Defense: 29
-#    MagicDefense: 21
-#    Str: 45
-#    Agi: 61
-#    Vit: 5
-#    Int: 15
-#    Dex: 77
-#    Luk: 90
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Brute
-#    Element: Earth
-#    ElementLevel: 2
-#    WalkSpeed: 160
-#    AttackDelay: 1120
-#    AttackMotion: 552
-#    DamageMotion: 511
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Moon_Cake
-#        Rate: 1000
-#      - Item: Plantain
-#        Rate: 500
-#      - Item: Rabbit_Skin
-#        Rate: 1500
-#  - Id: 2003
-#    AegisName: T_BACSOJIN
-#    Name: White Lady
-#    Level: 72
-#    Hp: 56380
-#    Attack: 560
-#    Attack2: 1446
-#    Defense: 10
-#    MagicDefense: 15
-#    Str: 38
-#    Agi: 65
-#    Vit: 34
-#    Int: 80
-#    Dex: 102
-#    Luk: 35
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demihuman
-#    Element: Water
-#    ElementLevel: 2
-#    WalkSpeed: 160
-#    AttackDelay: 576
-#    AttackMotion: 960
-#    DamageMotion: 480
-#    Ai: 21
-#    Drops:
-#      - Item: Moon_Cake1
-#        Rate: 1000
-#      - Item: Moon_Cake2
-#        Rate: 1000
-#      - Item: Moon_Cake15
-#        Rate: 1000
-#      - Item: Moon_Cake16
-#        Rate: 1000
-#      - Item: Moon_Cake17
-#        Rate: 1000
-#      - Item: Moon_Cake18
-#        Rate: 1000
-#      - Item: Moon_Cake19
-#        Rate: 1000
-#  - Id: 2004
-#    AegisName: T_WICKED_NYMPH
-#    Name: Evil Nymph
-#    Level: 63
-#    Hp: 16029
-#    Attack: 399
-#    Attack2: 1090
-#    Defense: 12
-#    MagicDefense: 75
-#    Agi: 64
-#    Vit: 12
-#    Int: 69
-#    Dex: 100
-#    Luk: 80
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 3
-#    WalkSpeed: 200
-#    AttackDelay: 637
-#    AttackMotion: 1008
-#    DamageMotion: 360
-#    Ai: 21
-#    Drops:
-#      - Item: Moon_Cake1
-#        Rate: 800
-#      - Item: Moon_Cake2
-#        Rate: 800
-#      - Item: Moon_Cake16
-#        Rate: 800
-#      - Item: Moon_Cake17
-#        Rate: 800
-#      - Item: Moon_Cake18
-#        Rate: 800
-#      - Item: Moon_Cake19
-#        Rate: 800
-#      - Item: Moon_Cake20
-#        Rate: 800
-#  - Id: 2005
-#    AegisName: T_PLASMA_B
-#    Name: Plasma
-#    Level: 44
-#    Hp: 8200
-#    Attack: 300
-#    Attack2: 700
-#    MagicDefense: 30
-#    Agi: 30
-#    Vit: 5
-#    Int: 73
-#    Dex: 90
-#    Luk: 30
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Formless
-#    Element: Water
-#    ElementLevel: 4
-#    WalkSpeed: 150
-#    AttackDelay: 608
-#    AttackMotion: 1440
-#    DamageMotion: 576
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Moon_Cake1
-#        Rate: 500
-#      - Item: Moon_Cake2
-#        Rate: 500
-#      - Item: Moon_Cake15
-#        Rate: 500
-#      - Item: Moon_Cake16
-#        Rate: 500
-#      - Item: Moon_Cake17
-#        Rate: 500
-#  - Id: 2006
-#    AegisName: T_PLASMA_P
-#    Name: Plasma
-#    Level: 49
-#    Hp: 5900
-#    Attack: 300
-#    Attack2: 700
-#    MagicDefense: 30
-#    Agi: 30
-#    Vit: 5
-#    Int: 54
-#    Dex: 90
-#    Luk: 30
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Formless
-#    Element: Dark
-#    ElementLevel: 4
-#    WalkSpeed: 150
-#    AttackDelay: 608
-#    AttackMotion: 1440
-#    DamageMotion: 576
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Moon_Cake15
-#        Rate: 500
-#      - Item: Moon_Cake16
-#        Rate: 500
-#      - Item: Moon_Cake17
-#        Rate: 500
-#      - Item: Moon_Cake18
-#        Rate: 500
-#      - Item: Moon_Cake19
-#        Rate: 500
-#  - Id: 2007
-#    AegisName: T_PLASMA_R
-#    Name: Plasma
-#    Level: 43
-#    Hp: 5700
-#    Attack: 300
-#    Attack2: 700
-#    MagicDefense: 30
-#    Agi: 30
-#    Vit: 5
-#    Int: 56
-#    Dex: 90
-#    Luk: 30
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Formless
-#    Element: Fire
-#    ElementLevel: 4
-#    WalkSpeed: 150
-#    AttackDelay: 608
-#    AttackMotion: 1440
-#    DamageMotion: 576
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Moon_Cake1
-#        Rate: 500
-#      - Item: Moon_Cake2
-#        Rate: 500
-#      - Item: Moon_Cake17
-#        Rate: 500
-#      - Item: Moon_Cake18
-#        Rate: 500
-#      - Item: Moon_Cake19
-#        Rate: 500
-#      - Item: Moon_Cake20
-#        Rate: 500
   - Id: 2008
     AegisName: WOOMAWANG
     Name: Woomawang
@@ -38924,61 +38319,6 @@ Body:
     AttackMotion: 960
     DamageMotion: 780
     Class: Boss
-#  - Id: 2011
-#    AegisName: E_GHOUL
-#    Name: Ghoul
-#    Level: 40
-#    Hp: 99999
-#    BaseExp: 1088
-#    JobExp: 622
-#    Attack: 2100
-#    Attack2: 2500
-#    Defense: 100
-#    MagicDefense: 20
-#    Agi: 20
-#    Vit: 29
-#    Dex: 180
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Undead
-#    Element: Undead
-#    ElementLevel: 2
-#    WalkSpeed: 100
-#    AttackDelay: 2456
-#    AttackMotion: 912
-#    DamageMotion: 504
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2012
-#    AegisName: E_ZOMBIE
-#    Name: Zombie
-#    Level: 15
-#    Hp: 99999
-#    BaseExp: 50
-#    JobExp: 33
-#    Attack: 335
-#    Attack2: 395
-#    Defense: 100
-#    MagicDefense: 10
-#    Agi: 8
-#    Vit: 7
-#    Dex: 60
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Undead
-#    Element: Undead
-#    ElementLevel: 1
-#    WalkSpeed: 150
-#    AttackDelay: 2612
-#    AttackMotion: 912
-#    DamageMotion: 288
-#    Modes:
-#      NoRandomWalk: true
   - Id: 2013
     AegisName: DRACO
     Name: Draco
@@ -39166,6 +38506,7 @@ Body:
         Rate: 500
       - Item: Veteran_Hammer
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 2018
     AegisName: DUNEYRR
     Name: Duneyrr
@@ -39205,8 +38546,10 @@ Body:
         Rate: 1
       - Item: Veteran_Sword
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Veteran_Axe
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 2019
     AegisName: ANCIENT_TREE
     Name: Ancient Tree
@@ -39244,8 +38587,10 @@ Body:
         Rate: 5000
       - Item: Dead_Tree_Cane
         Rate: 10
+        RandomOptionGroup: TBRO_Magic_Weapon_Level_4
       - Item: Vital_Tree_Shoes
         Rate: 30
+        RandomOptionGroup: TBRO_Footgear_Group_1
   - Id: 2020
     AegisName: RHYNCHO
     Name: Rhyncho
@@ -39364,12 +38709,16 @@ Body:
         Rate: 5000
       - Item: Cardo
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Katzbalger
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Pole_Axe
         Rate: 500
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Piece_Of_Angent_Skin
         Rate: 2000
+        RandomOptionGroup: TBRO_Garment_Group_1
   - Id: 2023
     AegisName: DARK_SHADOW
     Name: Dark Shadow
@@ -39407,12 +38756,14 @@ Body:
         Rate: 1000
       - Item: Dagger_Of_Hunter
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Piece_Of_Darkness
         Rate: 1000
       - Item: Eyes_Stone_Ring
         Rate: 5
       - Item: Bradium_Stonehammer
         Rate: 10
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Dark_Shadow_Card
         Rate: 1
         StealProtected: true
@@ -39455,52 +38806,6 @@ Body:
         Rate: 500
       - Item: Bradium_Shield
         Rate: 10
-#  - Id: 2025
-#    AegisName: MYSTCASE_EVENT
-#    Name: Mystcase
-#    Level: 10
-#    Hp: 15
-#    Attack: 160
-#    Attack2: 360
-#    Defense: 99
-#    MagicDefense: 99
-#    Str: 65
-#    Agi: 50
-#    Vit: 25
-#    Int: 5
-#    Dex: 48
-#    Luk: 75
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1248
-#    AttackMotion: 1248
-#    DamageMotion: 432
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Fire_Cracker_Xmas
-#        Rate: 5000
-#      - Item: Fire_Cracker_Love
-#        Rate: 5000
-#      - Item: Xmas_Gift
-#        Rate: 50
-#      - Item: Singing_Crystal_Piece
-#        Rate: 2000
-#      - Item: Packing_Paper
-#        Rate: 2000
-#      - Item: Packing_Ribbon
-#        Rate: 2000
-#      - Item: Candy
-#        Rate: 3000
-#      - Item: Candy_Striper
-#        Rate: 3000
-#        StealProtected: true
   - Id: 2026
     AegisName: DANDELION_
     Name: Runaway Dandelion Member
@@ -39575,80 +38880,6 @@ Body:
     Ai: 21
     Modes:
       Detector: true
-#  - Id: 2028
-#    AegisName: E_MINOROUS
-#    Name: Minorous
-#    Level: 1
-#    Hp: 741
-#    Attack: 30
-#    Attack2: 48
-#    Defense: 2
-#    MagicDefense: 5
-#    Str: 6
-#    Agi: 4
-#    Vit: 6
-#    Int: 6
-#    Dex: 5
-#    Luk: 3
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Brute
-#    Element: Fire
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1360
-#    AttackMotion: 960
-#    DamageMotion: 432
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Coin
-#        Rate: 5000
-#  - Id: 2029
-#    AegisName: E_MINOROUS_
-#    Name: Minorous
-#    Level: 10
-#    Hp: 15
-#    BaseExp: 10
-#    Attack: 100
-#    Attack2: 150
-#    Defense: 100
-#    MagicDefense: 99
-#    Dex: 100
-#    Luk: 100
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Brute
-#    Element: Fire
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1360
-#    AttackMotion: 960
-#    DamageMotion: 432
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Nose_Ring
-#        Rate: 10
-#      - Item: Fore_Flank_Sirloin
-#        Rate: 2000
-#      - Item: Fore_Flank_Sirloin
-#        Rate: 4000
-#      - Item: Fore_Flank_Sirloin
-#        Rate: 1000
-#      - Item: Sweet_Potato
-#        Rate: 1000
-#      - Item: Poo_Poo_Hat
-#        Rate: 1
-#      - Item: Grain
-#        Rate: 1000
-#      - Item: Gift_Box
-#        Rate: 1
-#        StealProtected: true
   - Id: 2030
     AegisName: HIDEN_PRIEST
     Name: Hiden Priest
@@ -39706,272 +38937,6 @@ Body:
     Drops:
       - Item: Pope's_Cookie
         Rate: 5000
-#  - Id: 2032
-#    AegisName: GUARDIAN_FOREST
-#    Name: Forest Guardian
-#    Level: 50
-#    Hp: 8578
-#    Attack: 1000
-#    Attack2: 1103
-#    Defense: 15
-#    MagicDefense: 25
-#    Agi: 75
-#    Vit: 55
-#    Dex: 93
-#    Luk: 45
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 1
-#    WalkSpeed: 100
-#    AttackDelay: 868
-#    AttackMotion: 480
-#    DamageMotion: 120
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2033
-#    AegisName: GOLDEN_TULIP
-#    Name: Golden Tulip
-#    Level: 1
-#    Hp: 299
-#    Attack: 1
-#    Attack2: 2
-#    Defense: 100
-#    MagicDefense: 99
-#    AttackRange: 1
-#    SkillRange: 7
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Plant
-#    Element: Earth
-#    ElementLevel: 1
-#    WalkSpeed: 1000
-#    AttackDelay: 1
-#    AttackMotion: 1
-#    DamageMotion: 1
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Gold_Tulip
-#        Rate: 10000
-#  - Id: 2034
-#    AegisName: M_DESERT_WOLF_B
-#    Name: Baby Desert Wolf
-#    Level: 9
-#    Hp: 164
-#    Sp: 15
-#    Attack: 500
-#    Attack2: 600
-#    Agi: 9
-#    Vit: 9
-#    Int: 5
-#    Dex: 40
-#    Luk: 40
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Brute
-#    Element: Fire
-#    ElementLevel: 1
-#    WalkSpeed: 100
-#    AttackDelay: 1600
-#    AttackMotion: 900
-#    DamageMotion: 240
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2035
-#    AegisName: NIHILITY_ZEM
-#    Name: Nihility Zem
-#    Level: 90
-#    Hp: 200000
-#    Attack: 1
-#    Attack2: 2
-#    MagicDefense: 20
-#    Luk: 20
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Insect
-#    Element: Earth
-#    ElementLevel: 1
-#    WalkSpeed: 1000
-#    AttackDelay: 1001
-#    AttackMotion: 1
-#    DamageMotion: 1
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2036
-#    AegisName: VALKYRIE_N
-#    Name: Valkyrie Randgris
-#    Level: 53
-#    Hp: 11280
-#    Attack: 780
-#    Attack2: 930
-#    Defense: 10
-#    MagicDefense: 20
-#    Agi: 24
-#    Vit: 39
-#    Dex: 72
-#    Luk: 25
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Undead
-#    Element: Undead
-#    ElementLevel: 3
-#    WalkSpeed: 170
-#    AttackDelay: 576
-#    AttackMotion: 576
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Broken_Horn_Pipe
-#        Rate: 10000
-#  - Id: 2037
-#    AegisName: VALKYRIE_A
-#    Name: Valkyrie Randgris
-#    Level: 90
-#    Hp: 5000
-#    Sp: 15
-#    Attack: 10
-#    Attack2: 160
-#    Defense: 10
-#    MagicDefense: 20
-#    Agi: 20
-#    Vit: 40
-#    Dex: 20
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Angel
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 576
-#    AttackMotion: 576
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2038
-#    AegisName: VALKYRIE_B
-#    Name: Valkyrie Randgris
-#    Level: 90
-#    Hp: 10000
-#    Sp: 15
-#    Attack: 300
-#    Attack2: 450
-#    Defense: 10
-#    MagicDefense: 40
-#    Agi: 20
-#    Vit: 80
-#    Dex: 80
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Angel
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 576
-#    AttackMotion: 576
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2039
-#    AegisName: EXECUTIONER_R
-#    Name: Executioner
-#    Level: 65
-#    Hp: 28980
-#    Attack: 570
-#    Attack2: 950
-#    Defense: 35
-#    MagicDefense: 35
-#    Str: 64
-#    Agi: 85
-#    Vit: 40
-#    Int: 25
-#    Dex: 88
-#    Luk: 60
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Formless
-#    Element: Dark
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 768
-#    AttackMotion: 500
-#    DamageMotion: 384
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2040
-#    AegisName: TIRFING_R
-#    Name: Ogretooth
-#    JapaneseName: Tirfing
-#    Level: 71
-#    Hp: 29900
-#    Attack: 950
-#    Attack2: 1146
-#    Defense: 30
-#    MagicDefense: 35
-#    Str: 58
-#    Agi: 87
-#    Vit: 55
-#    Int: 35
-#    Dex: 132
-#    Luk: 65
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Formless
-#    Element: Dark
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 816
-#    AttackMotion: 500
-#    DamageMotion: 240
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2041
-#    AegisName: MYSTELTAINN_R
-#    Name: Mysteltainn
-#    Level: 76
-#    Hp: 33350
-#    Attack: 1160
-#    Attack2: 1440
-#    Defense: 30
-#    MagicDefense: 30
-#    Str: 77
-#    Agi: 139
-#    Vit: 80
-#    Int: 35
-#    Dex: 159
-#    Luk: 65
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Formless
-#    Element: Dark
-#    ElementLevel: 4
-#    WalkSpeed: 250
-#    AttackDelay: 1152
-#    AttackMotion: 500
-#    DamageMotion: 240
-#    Modes:
-#      NoRandomWalk: true
   - Id: 2042
     AegisName: SILVERSNIPER
     Name: Silver Sniper
@@ -40152,29 +39117,6 @@ Body:
     Drops:
       - Item: Scale_Of_Snakes
         Rate: 5000
-#  - Id: 2048
-#    AegisName: W_PINGUICULA_D
-#    Name: Dark Pinguicula
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
   - Id: 2049
     AegisName: W_BRADIUM_GOLEM
     Name: Bradium Golem
@@ -40206,170 +39148,6 @@ Body:
     Drops:
       - Item: Purified_Bradium
         Rate: 500
-#  - Id: 2050
-#    AegisName: W_AQUA_ELEMENTAL
-#    Name: Aqua Elemental
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2051
-#    AegisName: E_BAPHOMET
-#    Name: Baphomet
-#    Level: 1
-#    Attack: 1
-#    Attack2: 2
-#    Defense: 1
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demon
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 100
-#    AttackDelay: 768
-#    AttackMotion: 768
-#    DamageMotion: 576
-#    Modes:
-#      NoRandomWalk: true
-#    Drops:
-#      - Item: Fools_Day_Box
-#        Rate: 5000
-#      - Item: Fools_Day_Box2
-#        Rate: 5000
-#  - Id: 2052
-#    AegisName: E_DARK_LORD
-#    Name: Dark Lord
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2053
-#    AegisName: NC_DIMIK
-#    Name: Dimik
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2054
-#    AegisName: E_BATHORY
-#    Name: Bathory
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2055
-#    AegisName: E_INCUBUS
-#    Name: Incubus
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2056
-#    AegisName: E_ZHERLTHSH
-#    Name: Zealotus
-#    JapaneseName: Zherlthsh
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
   - Id: 2057
     AegisName: E_CRAMP
     Name: Cramp
@@ -40392,237 +39170,6 @@ Body:
     AttackMotion: 672
     DamageMotion: 480
     Class: Boss
-#  - Id: 2058
-#    AegisName: M_MIMIC
-#    Name: Mimic
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2059
-#    AegisName: M_DISGUISE
-#    Name: Disguise
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2060
-#    AegisName: M_ALICE
-#    Name: Alice
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2061
-#    AegisName: E_STAPO
-#    Name: Stapo
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2062
-#    AegisName: E_POPORING
-#    Name: poporing
-#    JapaneseName: Poporing
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2063
-#    AegisName: E_DROPS
-#    Name: Drops
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2064
-#    AegisName: E_MAGMARING
-#    Name: Magmaring
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2065
-#    AegisName: E_METALING
-#    Name: Metaling
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2066
-#    AegisName: E_ANOPHELES
-#    Name: Anopheles
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2067
-#    AegisName: E_ANOPHELES_
-#    Name: Anopheles
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
   - Id: 2068
     AegisName: BOITATA
     Name: Boitata
@@ -40668,8 +39215,10 @@ Body:
         Rate: 5000
       - Item: Hurricane_Fury
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Hunting_Spear
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Yggdrasilberry
         Rate: 500
       - Item: Elunium
@@ -40678,6 +39227,7 @@ Body:
         Rate: 1000
       - Item: Hell_Fire
         Rate: 100
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
   - Id: 2069
     AegisName: IARA
     Name: Iara
@@ -40721,6 +39271,7 @@ Body:
         Rate: 10
       - Item: Mage_Coat
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
   - Id: 2070
     AegisName: PIRANHA
     Name: Piranha
@@ -40763,8 +39314,10 @@ Body:
         Rate: 500
       - Item: Scalpel
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Fisherman's_Dagger
         Rate: 5
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
   - Id: 2071
     AegisName: HEADLESS_MULE
     Name: Headless Mule
@@ -40801,16 +39354,20 @@ Body:
         Rate: 4000
       - Item: Plate_Armor_
         Rate: 5
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Burning_Heart
         Rate: 1000
       - Item: Hot_Hair
         Rate: 1000
       - Item: Inverse_Scale
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Plate_Armor_
         Rate: 1
+        RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Jamadhar_
         Rate: 2
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 2072
     AegisName: JAGUAR
     Name: Jaguar
@@ -40851,6 +39408,7 @@ Body:
         Rate: 40
       - Item: Claw_
         Rate: 1
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
   - Id: 2073
     AegisName: TOUCAN
     Name: Toucan
@@ -40931,29 +39489,7 @@ Body:
         Rate: 500
       - Item: Mace_
         Rate: 100
-#  - Id: 2075
-#    AegisName: E_VADON_X
-#    Name: Vadon
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_1
   - Id: 2076
     AegisName: S_WIND_GHOST
     Name: Shadow of Deception
@@ -41041,52 +39577,6 @@ Body:
     Ai: 21
     Modes:
       Detector: true
-#  - Id: 2079
-#    AegisName: CRYSTAL_H
-#    Name: Crystal
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2080
-#    AegisName: CRYSTAL_L
-#    Name: Crystal
-#    Level: 1
-#    Hp: 50
-#    Attack: 7
-#    Attack2: 10
-#    MagicDefense: 5
-#    Dex: 6
-#    Luk: 30
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Plant
-#    Element: Water
-#    ElementLevel: 1
-#    WalkSpeed: 400
-#    AttackDelay: 1872
-#    AttackMotion: 672
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
   - Id: 2081
     AegisName: E_HYDRA
     Name: Strange Hydra

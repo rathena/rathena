@@ -8523,6 +8523,8 @@ static signed short status_calc_smatk(struct block_list *bl, status_change *sc, 
 	if( sc->getSCE( SC_ATTACK_STANCE ) ){
 		smatk += sc->getSCE( SC_ATTACK_STANCE )->val3;
 	}
+	if (sc->getSCE(SC_IMPOSITIO))
+		smatk += sc->getSCE(SC_IMPOSITIO)->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }

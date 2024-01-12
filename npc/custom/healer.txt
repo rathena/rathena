@@ -16,11 +16,20 @@
 -	script	Healer	-1,{
 
 	.@Price = 0;	// Zeny required for heal
-	.@Buffs = 0;	// Also buff players? (1: yes / 0: no)
+	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
 	.@Delay = 0;	// Heal delay, in seconds
+	
+	// Giaìm ðiònh
+	getinventorylist;
+	for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
+		if ( @inventorylist_identify[.@i] == 1 ) continue;
+		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+		getitem @inventorylist_id[.@i],1;
+	}
 
 	if (@HD > gettimetick(2))
 		end;
+
 	if (.@Price) {
 		message strcharinfo(0), "Healing costs " + callfunc("F_InsertComma",.@Price) + " Zeny.";
 		if (Zeny < .@Price)
@@ -29,58 +38,121 @@
 			end;
 		Zeny -= .@Price;
 	}
-	specialeffect2 EF_HEAL2;
-	percentheal 100,100;
-	if (.@Buffs) {
-		specialeffect2 EF_INCAGILITY;
-		sc_start SC_INCREASEAGI,240000,10;
-		specialeffect2 EF_BLESSING;
-		sc_start SC_BLESSING,240000,10;
+
+	mes "[ ^6BCB23Beì laÌm diòch vuò^000000 ]";
+	mes "ChaÌo "+(Sex?"anh":"chiò")+" ^0000EE"+strcharinfo(0)+"^000000, em ðây laÌm diòch vuò ^00EE00chýÞa triò (heal), buff^000000 cuÞng nhý tâÒm quâìt, aÌ nhâÌm ^E80000tâÒm thuôòc tiình^000000 vuÞ khiì aì. "+(Sex?"Anh":"Chiò")+" muôìn choòn loaòi hiÌnh diòch vuò naÌo aò?";
+	switch ( select ("^008E00Heal + Buff^000000","^8E0000TâÒm thuôòc tiình vuÞ khiì^000000") ) {
+		case 1:
+			specialeffect2 EF_HEAL2;
+			percentheal 100,100;
+			if (.@Buffs) {
+				specialeffect2 EF_INCAGILITY;
+				sc_start SC_INCREASEAGI,1800000,10;
+				specialeffect2 EF_BLESSING;
+				sc_start SC_BLESSING,1800000,10;
+				specialeffect2 EF_KYRIE;
+				sc_start SC_KYRIE, 1800000, 10;
+				specialeffect2 EF_IMPOSITIO;
+				sc_start SC_IMPOSITIO, 1800000, 5;
+				specialeffect2 EF_GLORIA;
+				sc_start SC_GLORIA, 1800000, 5;
+			}
+			npctalk (Sex?"Anh ":"Chiò ")+strcharinfo(0)+" ðaÞ ðýõòc chýÞa triò vaÌ nhâòn buff, heòn gãòp laòi aò.";
+			close;
+		case 2:
+			clear;
+			mes "[ ^6BCB23Beì laÌm diòch vuò^000000 ]";
+			mes "^CB0000TâÒm thuôòc tiình vuÞ khiì^000000 seÞ tãng saìt thýõng lên quaìi vâòt ^0000AAkhãìc hêò^000000 thuôòc tiình ðoì.";
+			mes (Sex?"Anh ":"Chiò ")+"muôìn tâÒm thuôòc tiình loaòi naÌo aò?";
+			switch ( select ( "^CB0000LýÒa / Fire","^0000AANýõìc / Water","^AAAA00Gioì / Wind","^8B4513Ðâìt / Earth" ) ) {
+				case 1:
+				specialeffect2 255;
+				sc_start SC_FIREWEAPON,1800000,5;
+				npctalk "ÐaÞ tâÒm xong rôÌi aò, caìm õn ðaÞ sýÒ duòng em.";
+				close;
+				case 2:
+				specialeffect2 256;
+				sc_start SC_WATERWEAPON,1800000,5;
+				npctalk "ÐaÞ tâÒm xong rôÌi aò, caìm õn ðaÞ sýÒ duòng em.";
+				close;
+				case 3:
+				specialeffect2 257;
+				sc_start SC_WINDWEAPON,1800000,5;
+				npctalk "ÐaÞ tâÒm xong rôÌi aò, caìm õn ðaÞ sýÒ duòng em.";
+				close;
+				case 4:
+				specialeffect2 258;
+				sc_start SC_EARTHWEAPON,1800000,5;
+				npctalk "ÐaÞ tâÒm xong rôÌi aò, caìm õn ðaÞ sýÒ duòng em.";
+				end;
+			}
+			end;
+		end;
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;
-	end;
+		end;
+
+	OnTouch:
+		specialeffect2 EF_HEAL2;
+		percentheal 100,100;
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,1800000,10;
+		specialeffect2 EF_BLESSING;
+		sc_start SC_BLESSING,1800000,10;
+		// specialeffect2 EF_KYRIE;
+		sc_start SC_KYRIE, 1800000, 10;
+		// specialeffect2 EF_IMPOSITIO;
+		sc_start SC_IMPOSITIO, 1800000, 5;
+		// specialeffect2 EF_GLORIA;
+		sc_start SC_GLORIA, 1800000, 5;
+		npctalk "Aaaaa~, ðôÌ dê xôÌm, xê ra, beì buff cho rôÌi ðoì >.<";
+		end;
 }
 
 
 // Duplicates
 //============================================================
-alberta,25,240,6	duplicate(Healer)	Healer#alb	909
-aldebaran,135,118,6	duplicate(Healer)	Healer#alde	909
-amatsu,200,79,4	duplicate(Healer)	Healer#ama	909
-ayothaya,207,169,6	duplicate(Healer)	Healer#ayo	909
-comodo,184,158,6	duplicate(Healer)	Healer#com	909
-einbech,57,36,6	duplicate(Healer)	Healer#einbe	909
-einbroch,57,202,6	duplicate(Healer)	Healer#einbr	909
-geffen,115,72,6	duplicate(Healer)	Healer#gef	909
-gonryun,156,122,6	duplicate(Healer)	Healer#gon	909
-hugel,89,150,6	duplicate(Healer)	Healer#hug	909
-izlude,121,150,6	duplicate(Healer)	Healer#izl	909	//Pre-RE: (125,118)
-jawaii,250,139,4	duplicate(Healer)	Healer#jaw	909
-lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	909
-louyang,226,103,4	duplicate(Healer)	Healer#lou	909
-manuk,272,144,6	duplicate(Healer)	Healer#man	909
-mid_camp,203,289,6	duplicate(Healer)	Healer#mid	909
-moc_ruins,72,164,4	duplicate(Healer)	Healer#moc	909
-morocc,153,97,6	duplicate(Healer)	Healer#mor	909
-moscovia,220,191,4	duplicate(Healer)	Healer#mos	909
-niflheim,212,182,5	duplicate(Healer)	Healer#nif	909
-payon,179,106,4	duplicate(Healer)	Healer#pay	909
-prontera,162,193,4	duplicate(Healer)	Healer#prt	909
-rachel,125,116,6	duplicate(Healer)	Healer#rac	909
-splendide,201,153,4	duplicate(Healer)	Healer#spl	909
-thor_camp,249,74,4	duplicate(Healer)	Healer#thor	909
-umbala,105,148,3	duplicate(Healer)	Healer#umb	909
-veins,217,121,4	duplicate(Healer)	Healer#ve	909
-xmas,143,136,4	duplicate(Healer)	Healer#xmas	909
-yuno,164,45,4	duplicate(Healer)	Healer#yuno	909
+alberta,25,240,6	duplicate(Healer)	DêÞ Mêìn#alb	909,4,4
+aldebaran,135,118,6	duplicate(Healer)	DêÞ Mêìn#alde	909,4,4
+amatsu,200,79,4	duplicate(Healer)	DêÞ Mêìn#ama	909,4,4
+ayothaya,207,169,6	duplicate(Healer)	DêÞ Mêìn#ayo	909,4,4
+comodo,184,158,6	duplicate(Healer)	DêÞ Mêìn#com	909,4,4
+einbech,57,36,6	duplicate(Healer)	DêÞ Mêìn#einbe	909,4,4
+einbroch,57,202,6	duplicate(Healer)	DêÞ Mêìn#einbr	909,4,4
+geffen,115,72,6	duplicate(Healer)	DêÞ Mêìn#gef	909,4,4
+gonryun,156,122,6	duplicate(Healer)	DêÞ Mêìn#gon	909,4,4
+hugel,89,150,6	duplicate(Healer)	DêÞ Mêìn#hug	909,4,4
+izlude,121,150,6	duplicate(Healer)	DêÞ Mêìn#izl	909,4,4	//Pre-RE: (125,118)
+izlude_a,121,150,6	duplicate(Healer)	DêÞ Mêìn#izla	909,4,4
+izlude_b,121,150,6	duplicate(Healer)	DêÞ Mêìn#izlb	909,4,4
+izlude_c,121,150,6	duplicate(Healer)	DêÞ Mêìn#izlc	909,4,4
+izlude_d,121,150,6	duplicate(Healer)	DêÞ Mêìn#izld	909,4,4
+jawaii,250,139,4	duplicate(Healer)	DêÞ Mêìn#jaw	909,4,4
+lighthalzen,150,100,6	duplicate(Healer)	DêÞ Mêìn#lhz	909,4,4
+louyang,226,103,4	duplicate(Healer)	DêÞ Mêìn#lou	909,4,4
+manuk,272,144,6	duplicate(Healer)	DêÞ Mêìn#man	909,4,4
+mid_camp,203,289,6	duplicate(Healer)	DêÞ Mêìn#mid	909,4,4
+moc_ruins,72,164,4	duplicate(Healer)	DêÞ Mêìn#moc	909,4,4
+morocc,153,97,6	duplicate(Healer)	DêÞ Mêìn#mor	909,4,4
+moscovia,220,191,4	duplicate(Healer)	DêÞ Mêìn#mos	909,4,4
+niflheim,212,182,5	duplicate(Healer)	DêÞ Mêìn#nif	909,4,4
+payon,179,106,4	duplicate(Healer)	DêÞ Mêìn#pay	909,4,4
+prontera,162,193,4	duplicate(Healer)	DêÞ Mêìn#prt	909,4,4,3,4
+rachel,125,116,6	duplicate(Healer)	DêÞ Mêìn#rac	909,4,4
+splendide,201,153,4	duplicate(Healer)	DêÞ Mêìn#spl	909,4,4
+thor_camp,249,74,4	duplicate(Healer)	DêÞ Mêìn#thor	909,4,4
+umbala,105,148,3	duplicate(Healer)	DêÞ Mêìn#umb	909,4,4
+veins,217,121,4	duplicate(Healer)	DêÞ Mêìn#ve	909,4,4
+xmas,143,136,4	duplicate(Healer)	DêÞ Mêìn#xmas	909,4,4
+yuno,164,45,4	duplicate(Healer)	DêÞ Mêìn#yuno	909,4,4
 
 // Duplicates (Renewal)
 //============================================================
-brasilis,194,221,6	duplicate(Healer)	Healer#bra	909
-dewata,195,187,4	duplicate(Healer)	Healer#dew	909
-dicastes01,201,194,4	duplicate(Healer)	Healer#dic	909
-ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	909
-malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
-malaya,227,204,6	duplicate(Healer)	Healer#ma	909
-mora,55,152,4	duplicate(Healer)	Healer#mora	909
+brasilis,194,221,6	duplicate(Healer)	DêÞ Mêìn#bra	909,4,4
+dewata,195,187,4	duplicate(Healer)	DêÞ Mêìn#dew	909,4,4
+dicastes01,201,194,4	duplicate(Healer)	DêÞ Mêìn#dic	909,4,4
+ecl_in01,45,60,4	duplicate(Healer)	DêÞ Mêìn#ecl	909,4,4
+malangdo,132,114,6	duplicate(Healer)	DêÞ Mêìn#mal	909,4,4
+malaya,227,204,6	duplicate(Healer)	DêÞ Mêìn#ma	909,4,4
+mora,55,152,4	duplicate(Healer)	DêÞ Mêìn#mora	909,4,4

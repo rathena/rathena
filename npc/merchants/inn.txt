@@ -85,7 +85,6 @@ payon_in01,132,62,5	script	Inn Employee#Ahee	53,{
 
 //======================== Morocc ====================================
 // North East --------------------------
-/*
 morocc_in,147,141,3	script	Inn Employee#Hasna	53,{
 
 	callfunc "F_InnMaid","[Employee Hasna]","Morocc Inn","morocc_in",142,140;
@@ -97,7 +96,6 @@ morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 	callfunc "F_InnMaid","[Employee Manar]","Morocc Inn","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
 }
-*/
 
 //====================== Aldebaran ===================================
 aldeba_in,92,58,5	script	Inn Maid#Rilim	53,{
@@ -111,6 +109,27 @@ ra_in01,376,69,4	script	Inn Keeper#Annie	931,{
 
 	callfunc "F_InnMaid","[Annie]","Rachel Inn","ra_in01",375,58;
 	warp "ra_in01",384,128; end;
+}
+
+//======================== Izlude ====================================
+izlude_in,175,124,4	script	Inn Keeper#Cena	53,{
+
+	callfunc "F_InnMaid","[Cena]","Izlude Inn","izlude_in",171,125;
+	warp "izlude_in",173,163; end;
+}
+
+//======================== Lutie (121 159) ====================================
+xmas_in,32,98,4	script	Inn Keeper#Karina	53,{
+
+	callfunc "F_InnMaid","[Karina]","Lutie Inn","xmas_in",35,91;
+	warp "xmas_in",38,93; end;
+}
+
+//======================== Comodo (127 191) ====================================
+cmd_in02,142,184,4	script	Inn Keeper#Katrin	53,{
+
+	callfunc "F_InnMaid","[Katrin]","Comodo Inn","cmd_in02",144,178;
+	warp "cmd_in02",160,206; end;
 }
 
 //====================== Lighthalzen =================================
@@ -148,6 +167,10 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 		close2;
 		warp "lhz_in02",219,150;
 		percentheal 100,100;
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,1800000,10;
+		specialeffect2 EF_BLESSING;
+		sc_start SC_BLESSING,1800000,10;
 		npcskill "AL_BLESSING",10,99,99;
 		end;
 	case 3:
@@ -194,6 +217,10 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		close2;
 		set Zeny,Zeny - 5000;
 		percentheal 100,100;
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,1800000,10;
+		specialeffect2 EF_BLESSING;
+		sc_start SC_BLESSING,1800000,10;
 		warp "ve_in",184,228;
 		end;
 	case 3:
@@ -233,6 +260,10 @@ function	script	F_InnMaid	{
 		close2;
 		set Zeny,Zeny - 5000;
 		percentheal 100,100;
+		// specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,1800000,10;
+		// specialeffect2 EF_BLESSING;
+		sc_start SC_BLESSING,1800000,10;
 		return;
 	case 3:
 		close;

@@ -3290,13 +3290,13 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 		switch (skill_id) {
 		case MO_TRIPLEATTACK:
 			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0) {
-				duration = 1;
+				duration = 1500;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
 		case MO_CHAINCOMBO:
 			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0) {
-				duration = 1;
+				duration = 1500;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
@@ -3304,19 +3304,19 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
 				party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skill_lv);
 			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) {
-				duration = 1;
+				duration = 1500;
 				target_id = 0; // Will target current auto-target instead
 			}
 			[[fallthrough]]; // so we can possibly cast TigerFist or straight to ExtremityFist
 		case CH_TIGERFIST:
 			if (!duration && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
-				duration = 1;
+				duration = 1500;
 				target_id = 0; // Will target current auto-target instead
 			}
 			[[fallthrough]]; // so we can possibly cast ChainCrush or straight to ExtremityFist
 		case CH_CHAINCRUSH:
 			if (!duration && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS)) {
-				duration = 1;
+				duration = 1500;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
@@ -5412,42 +5412,22 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case RG_BACKSTAP:
 		{
-			if (!check_distance_bl(src, bl, 0)) {
-#ifdef RENEWAL
-				uint8 dir = map_calc_dir(src, bl->x, bl->y);
-				short x, y;
+			if (!check_distance_bl(src, bl, 0) || bl->type == BL_SKILL) {
+				// Gank
+				mob_data* dstmd = BL_CAST( BL_MOB, bl );
+				int snatcher_skill;
 
-				if (dir > 0 && dir < 4)
-					x = -1;
-				else if (dir > 4)
-					x = 1;
-				else
-					x = 0;
-
-				if (dir > 2 && dir < 6)
-					y = -1;
-				else if (dir == 7 || dir < 2)
-					y = 1;
-				else
-					y = 0;
-
-				if (battle_check_target(src, bl, BCT_ENEMY) > 0 && unit_movepos(src, bl->x + x, bl->y + y, 2, true)) { // Display movement + animation.
-#else
-				uint8 dir = map_calc_dir(src, bl->x, bl->y), t_dir = unit_getdir(bl);
-
-				if (!map_check_dir(dir, t_dir) || bl->type == BL_SKILL) {
-#endif
-					status_change_end(src, SC_HIDING);
-					dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
-					unit_setdir(bl,dir);
-#ifdef RENEWAL
-					clif_blown(src);
-#endif
-					skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+				if(dstmd && sd->status.weapon != W_BOW &&
+					(snatcher_skill=pc_checkskill(sd,RG_SNATCHER)) > 0 &&
+					(snatcher_skill*15 + 55) + pc_checkskill(sd,TF_STEAL)*10 > rnd()%1000) {
+					if(pc_steal_item(sd,bl,pc_checkskill(sd,TF_STEAL)))
+						clif_skill_nodamage(src,bl,TF_STEAL,snatcher_skill,1);
+					else
+						clif_skill_fail(sd,RG_SNATCHER,USESKILL_FAIL_LEVEL,0);
 				}
-				else if (sd)
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-			}
+				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+			} else if (sd)
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 
@@ -5959,78 +5939,86 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case KN_BOWLINGBASH:
 #endif
 	case MS_BOWLINGBASH:
-		{
-			int min_x,max_x,min_y,max_y,i,c,dir,tx,ty;
-			// Chain effect and check range gets reduction by recursive depth, as this can reach 0, we don't use blowcount
-			c = (skill_lv-(flag&0xFFF)+1)/2;
-			// Determine the Bowling Bash area depending on configuration
-			if (battle_config.bowling_bash_area == 0) {
-				// Gutter line system
-				min_x = ((src->x)-c) - ((src->x)-c)%40;
-				if(min_x < 0) min_x = 0;
-				max_x = min_x + 39;
-				min_y = ((src->y)-c) - ((src->y)-c)%40;
-				if(min_y < 0) min_y = 0;
-				max_y = min_y + 39;
-			} else if (battle_config.bowling_bash_area == 1) {
-				// Gutter line system without demi gutter bug
-				min_x = src->x - (src->x)%40;
-				max_x = min_x + 39;
-				min_y = src->y - (src->y)%40;
-				max_y = min_y + 39;
-			} else {
-				// Area around caster
-				min_x = src->x - battle_config.bowling_bash_area;
-				max_x = src->x + battle_config.bowling_bash_area;
-				min_y = src->y - battle_config.bowling_bash_area;
-				max_y = src->y + battle_config.bowling_bash_area;
-			}
-			// Initialization, break checks, direction
-			if((flag&0xFFF) > 0) {
-				// Ignore monsters outside area
-				if(bl->x < min_x || bl->x > max_x || bl->y < min_y || bl->y > max_y)
-					break;
-				// Ignore monsters already in list
-				if(idb_exists(bowling_db, bl->id))
-					break;
-				// Random direction
-				dir = rnd()%8;
-			} else {
-				// Create an empty list of already hit targets
-				db_clear(bowling_db);
-				// Direction is walkpath
-				dir = (unit_getdir(src)+4)%8;
-			}
-			// Add current target to the list of already hit targets
-			idb_put(bowling_db, bl->id, bl);
-			// Keep moving target in direction square by square
-			tx = bl->x;
-			ty = bl->y;
-			for(i=0;i<c;i++) {
-				// Target coordinates (get changed even if knockback fails)
-				tx -= dirx[dir];
-				ty -= diry[dir];
-				// If target cell is a wall then break
-				if(map_getcell(bl->m,tx,ty,CELL_CHKWALL))
-					break;
-				skill_blown(src,bl,1,dir,BLOWN_NONE);
+		// {
+		// 	int min_x,max_x,min_y,max_y,i,c,dir,tx,ty;
+		// 	// Chain effect and check range gets reduction by recursive depth, as this can reach 0, we don't use blowcount
+		// 	c = (skill_lv-(flag&0xFFF)+1)/2;
+		// 	// Determine the Bowling Bash area depending on configuration
+		// 	if (battle_config.bowling_bash_area == 0) {
+		// 		// Gutter line system
+		// 		min_x = ((src->x)-c) - ((src->x)-c)%40;
+		// 		if(min_x < 0) min_x = 0;
+		// 		max_x = min_x + 39;
+		// 		min_y = ((src->y)-c) - ((src->y)-c)%40;
+		// 		if(min_y < 0) min_y = 0;
+		// 		max_y = min_y + 39;
+		// 	} else if (battle_config.bowling_bash_area == 1) {
+		// 		// Gutter line system without demi gutter bug
+		// 		min_x = src->x - (src->x)%40;
+		// 		max_x = min_x + 39;
+		// 		min_y = src->y - (src->y)%40;
+		// 		max_y = min_y + 39;
+		// 	} else {
+		// 		// Area around caster
+		// 		min_x = src->x - battle_config.bowling_bash_area;
+		// 		max_x = src->x + battle_config.bowling_bash_area;
+		// 		min_y = src->y - battle_config.bowling_bash_area;
+		// 		max_y = src->y + battle_config.bowling_bash_area;
+		// 	}
+		// 	// Initialization, break checks, direction
+		// 	if((flag&0xFFF) > 0) {
+		// 		// Ignore monsters outside area
+		// 		if(bl->x < min_x || bl->x > max_x || bl->y < min_y || bl->y > max_y)
+		// 			break;
+		// 		// Ignore monsters already in list
+		// 		if(idb_exists(bowling_db, bl->id))
+		// 			break;
+		// 		// Random direction
+		// 		dir = rnd()%8;
+		// 	} else {
+		// 		// Create an empty list of already hit targets
+		// 		db_clear(bowling_db);
+		// 		// Direction is walkpath
+		// 		dir = (unit_getdir(src)+4)%8;
+		// 	}
+		// 	// Add current target to the list of already hit targets
+		// 	idb_put(bowling_db, bl->id, bl);
+		// 	// Keep moving target in direction square by square
+		// 	tx = bl->x;
+		// 	ty = bl->y;
+		// 	for(i=0;i<c;i++) {
+		// 		// Target coordinates (get changed even if knockback fails)
+		// 		tx -= dirx[dir];
+		// 		ty -= diry[dir];
+		// 		// If target cell is a wall then break
+		// 		if(map_getcell(bl->m,tx,ty,CELL_CHKWALL))
+		// 			break;
+		// 		skill_blown(src,bl,1,dir,BLOWN_NONE);
 
-				int count;
+		// 		int count;
 
-				// Splash around target cell, but only cells inside area; we first have to check the area is not negative
-				if((max(min_x,tx-1) <= min(max_x,tx+1)) &&
-					(max(min_y,ty-1) <= min(max_y,ty+1)) &&
-					(count = map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY, skill_area_sub_count))) {
-					// Recursive call
-					map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, (flag|BCT_ENEMY)+1, skill_castend_damage_id);
-					// Self-collision
-					if(bl->x >= min_x && bl->x <= max_x && bl->y >= min_y && bl->y <= max_y)
-						skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION|count:count);
-					break;
-				}
-			}
-			// Original hit or chain hit depending on flag
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION:0);
+		// 		// Splash around target cell, but only cells inside area; we first have to check the area is not negative
+		// 		if((max(min_x,tx-1) <= min(max_x,tx+1)) &&
+		// 			(max(min_y,ty-1) <= min(max_y,ty+1)) &&
+		// 			(count = map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY, skill_area_sub_count))) {
+		// 			// Recursive call
+		// 			map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, (flag|BCT_ENEMY)+1, skill_castend_damage_id);
+		// 			// Self-collision
+		// 			if(bl->x >= min_x && bl->x <= max_x && bl->y >= min_y && bl->y <= max_y)
+		// 				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION|count:count);
+		// 			break;
+		// 		}
+		// 	}
+		// 	// Original hit or chain hit depending on flag
+		// 	skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION:0);
+		// }
+		// break;
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, (skill_area_temp[0]) > 0 ? SD_ANIMATION | skill_area_temp[0] : skill_area_temp[0]);
+			skill_blown(src, bl, skill_get_blewcount(skill_id, skill_lv), -1, BLOWN_NONE);
+		} else {
+			skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		}
 		break;
 
@@ -7799,7 +7787,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case PR_SLOWPOISON:
 	case PR_LEXAETERNA:
 #ifndef RENEWAL
-	case PR_IMPOSITIO:
+	// case PR_IMPOSITIO:
 	case PR_SUFFRAGIUM:
 #endif
 	case LK_BERSERK:
@@ -8742,10 +8730,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AL_ANGELUS:
 #ifdef RENEWAL
 	case PR_SUFFRAGIUM:
-	case PR_IMPOSITIO:
 #endif
 	case PR_MAGNIFICAT:
 	case PR_GLORIA:
+	case PR_IMPOSITIO:
 		if (sd == NULL || sd->status.party_id == 0 || (flag & 1)) {
 
 			// Animations don't play when outside visible range
@@ -12884,10 +12872,10 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		case RG_BACKSTAP:
 			{
 #ifndef RENEWAL
-				uint8 dir = map_calc_dir(src,target->x,target->y), t_dir = unit_getdir(target);
+				// uint8 dir = map_calc_dir(src,target->x,target->y), t_dir = unit_getdir(target);
 
-				if (map_check_dir(dir, t_dir))
-					return USESKILL_FAIL_MAX;
+				// if (map_check_dir(dir, t_dir))
+				// 	return USESKILL_FAIL_MAX;
 #endif
 
 				if (check_distance_bl(src, target, 0))
@@ -15894,10 +15882,11 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			break;
 
 		case UNT_MAGNUS:
-#ifndef RENEWAL
-			if (!battle_check_undead(tstatus->race,tstatus->def_ele) && tstatus->race!=RC_DEMON)
-				break;
-#endif
+// Allow this skill in Pre-Renewal
+// #ifndef RENEWAL
+// 			if (!battle_check_undead(tstatus->race,tstatus->def_ele) && tstatus->race!=RC_DEMON)
+// 				break;
+// #endif
 			skill_attack(BF_MAGIC,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
@@ -19196,7 +19185,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		case SJ_PROMINENCEKICK:
 			//If delay not specified, it will be 1000 - 4*agi - 2*dex
 			if (time == 0)
-				time = 1000;
+				time = 700;
 			time -= (4 * status_get_agi(bl) + 2 * status_get_dex(bl));
 			break;
 #ifndef RENEWAL

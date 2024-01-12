@@ -1,0 +1,27 @@
+login_server_id: root
+login_server_pw: quidapchai
+login_server_db: ro2024
+
+ipban_db_id: root
+ipban_db_pw: quidapchai
+ipban_db_db: ro2024
+
+// MySQL Character server
+char_server_id: root
+char_server_pw: quidapchai
+char_server_db: ro2024
+
+// MySQL Map Server
+map_server_id: root
+map_server_pw: quidapchai
+map_server_db: ro2024
+
+// MySQL Web Server
+web_server_id: root
+web_server_pw: quidapchai
+web_server_db: ro2024
+
+// MySQL Log Database
+log_db_id: root
+log_db_pw: quidapchai
+log_db_db: ro2024

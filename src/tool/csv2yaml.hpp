@@ -473,6 +473,9 @@ void init_random_option_constants() {
 	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_DRAGON", 241);
 	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_ALL", 242);
 
+	export_constant2("RDMOPT_TBRO_VAR_RES_FREEZE", 300);
+	export_constant2("RDMOPT_TBRO_VAR_RES_STONE", 301);
+
 	#undef export_constant2
 }
 

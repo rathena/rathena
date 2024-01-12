@@ -34,5 +34,5 @@ Header:
 
 Body:
   - Weapon: Knuckle
-    Medium: 75
-    Large: 50
+    Medium: 100
+    Large: 75

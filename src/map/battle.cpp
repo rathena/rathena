@@ -2575,6 +2575,8 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case KN_BRANDISHSPEAR:
 		// Renewal changes to ranged physical damage
 #endif
+		// Pre-Renewal changes to ranged physical damage too (heehee)
+		case KN_BRANDISHSPEAR:
 		case SR_RAMPAGEBLASTER:
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
 		case BO_ACIDIFIED_ZONE_FIRE_ATK:
@@ -4265,6 +4267,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 #else
 		case KN_BRANDISHSPEAR:
+			skillratio += 150 + 80 * skill_lv;
+			break;
 #endif
 		case ML_BRANDISH:
 			{
@@ -4346,16 +4350,20 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 400 + 200 * skill_lv;
 			break;
 		case RG_BACKSTAP:
-			if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
-				skillratio += (200 + 40 * skill_lv) / 2;
-			else
-				skillratio += 200 + 40 * skill_lv;
+			// if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
+			// 	skillratio += (200 + 40 * skill_lv) / 2;
+			// if (sd && sd->status.weapon == W_DAGGER)
+			// 	skillratio += 150 + 40 * skill_lv;
+			// else
+			skillratio += 75 + 20 * skill_lv;
 			break;
 		case RG_RAID:
 #ifdef RENEWAL
 			skillratio += -100 + 50 + skill_lv * 150;
 #else
-			skillratio += 40 * skill_lv;
+			// skillratio += 40 * skill_lv;
+			// from 40 * 5 (200%) to 90 * 5 (450%)
+			skillratio += 90 * skill_lv;
 #endif
 			break;
 		case RG_INTIMIDATE:
@@ -4378,6 +4386,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 70 * skill_lv;
 			else
 #endif
+			if(sd && sd->status.weapon == W_2HSPEAR)
+				skillratio += 60 * skill_lv;
+			else
 				skillratio += 35 * skill_lv;
 			break;
 		case AM_DEMONSTRATION:
@@ -4427,14 +4438,16 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sd && sd->status.weapon == W_KNUCKLE)
 				skillratio *= 2;
 #else
-			skillratio += 50 + 50 * skill_lv;
+			// skillratio += 50 + 50 * skill_lv;
+			skillratio += 150 + 70 * skill_lv;
 #endif
 			break;
 		case MO_COMBOFINISH:
 #ifdef RENEWAL
 			skillratio += 450 + 50 * skill_lv + sstatus->str; // !TODO: How does STR play a role?
 #else
-			skillratio += 140 + 60 * skill_lv;
+			// skillratio += 140 + 60 * skill_lv;
+			skillratio += 140 + 102 * skill_lv;
 #endif
 			if (sc->getSCE(SC_GT_ENERGYGAIN))
 				skillratio += skillratio * 50 / 100;
@@ -4462,7 +4475,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 200 * skill_lv;
 			RE_LVL_DMOD(100);
 #else
-			skillratio += 300 + 100 * skill_lv;
+			skillratio += 300 + 280 * skill_lv;
 #endif
 			if (sc->getSCE(SC_GT_ENERGYGAIN))
 				skillratio += skillratio * 50 / 100;
@@ -6591,6 +6604,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 		wd.flag |= battle_range_type(src, target, skill_id, skill_lv);
 		switch(skill_id)
 		{
+			case RG_BACKSTAP:
+				if (sd && sd->status.weapon == W_DAGGER)
+					wd.div_ = 2;
+				break;
 #ifdef RENEWAL
 			case RG_BACKSTAP:
 				if (sd && sd->status.weapon == W_DAGGER)
@@ -9232,7 +9249,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 #ifdef RENEWAL
 		int triple_rate = 30; //Base Rate
 #else
-		int triple_rate = 30 - skillv; //Base Rate
+		int triple_rate = 30; //Base Rate
+		// int triple_rate = 30 - skillv; //Base Rate
 #endif
 
 		if (sc && sc->getSCE(SC_SKILLRATE_UP) && sc->getSCE(SC_SKILLRATE_UP)->val1 == MO_TRIPLEATTACK) {

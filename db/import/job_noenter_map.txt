@@ -1,0 +1,28 @@
+// Defines Job(s) that are restricted to enter map (by flag/zones)
+//
+// Structure of Database:
+// JobID,FlagZone,GroupLevelBypass
+//
+// JobID: See JOB_* constants or use job number
+//
+// Legend for 'Flag' field (bitmask):
+// 1    - restricted in normal maps
+// 2    - restricted in PVP
+// 4    - restricted in GVG
+// 8    - restricted in Battlegrounds
+// 16   - restricted in WOE:TE castles
+// Restricted zones - configured by 'restricted <number>' mapflag
+// 32   - restricted in zone 1
+// 64   - restricted in zone 2
+// 128  - restricted in zone 3
+// 256  - restricted in zone 4
+// 512  - restricted in zone 5
+// 1024 - restricted in zone 6
+// 2048 - restricted in zone 7
+// 4096 - restricted in zone 8
+//
+// GroupLevelBypass: Group Level (groups.conf) to ignore the restriction
+//
+// NOTES:
+// - Restriction will be overwritten for multiple defines with the same Job ID
+// - The flag is used by 'jobcanentermap' script.
