@@ -39,8 +39,8 @@ namespace rathena{
 ///Struct of 1 client connected to login-serv
 struct login_session_data {
 	uint32 account_id;			///also GID
-	long login_id1;
-	long login_id2;
+	uint32 login_id1;
+	uint32 login_id2;
 	char sex;			/// 'F','M','S'
 
 	char userid[NAME_LENGTH];	/// account name

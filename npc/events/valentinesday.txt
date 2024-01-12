@@ -37,7 +37,7 @@ alberta,26,243,4	script	Stephen	58,{
 	mes "[Stephen]";
 	mes "Hah!";
 	mes "I knew it!";
-	mes "But I can't sell you more then 5 at once... but, if you really need more....";
+	mes "But I can't sell you more than 5 at once... but, if you really need more....";
 	mes "you can come back again.";
 	mes "So how many do you want?";
 	next;

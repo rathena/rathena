@@ -42,6 +42,8 @@
 #ifndef DB_HPP
 #define DB_HPP
 
+#include <utility>
+
 #include <stdarg.h>
 
 #include "cbasetypes.hpp"
@@ -1483,8 +1485,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __val Value
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_PUSH(__heap,__val,__topcmp,__swp) \
+#define BHEAP_PUSH(__heap,__val,__topcmp) \
 	do{ \
 		size_t _i_ = VECTOR_LENGTH(__heap); \
 		VECTOR_PUSH(__heap,__val); /* insert at end */ \
@@ -1493,7 +1494,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 			size_t _parent_ = (_i_-1)/2; \
 			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
 				break; /* done */ \
-			__swp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
+			std::swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
 			_i_ = _parent_; \
 		} \
 	}while(0)
@@ -1505,12 +1506,11 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __val Value
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_PUSH2(__heap,__val,__topcmp,__swp) \
+#define BHEAP_PUSH2(__heap,__val,__topcmp) \
 	do{ \
 		size_t _i_ = VECTOR_LENGTH(__heap); \
 		VECTOR_PUSH(__heap,__val); /* insert at end */ \
-		BHEAP_SIFTDOWN(__heap,0,_i_,__topcmp,__swp); \
+		BHEAP_SIFTDOWN(__heap,0,_i_,__topcmp); \
 	}while(0)
 
 
@@ -1525,8 +1525,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __heap Binary heap
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_POP(__heap,__topcmp,__swp) BHEAP_POPINDEX(__heap,0,__topcmp,__swp)
+#define BHEAP_POP(__heap,__topcmp) BHEAP_POPINDEX(__heap,0,__topcmp)
 
 
 
@@ -1534,13 +1533,12 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __heap Binary heap
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_POP2(__heap,__topcmp,__swp) \
+#define BHEAP_POP2(__heap,__topcmp) \
 	do{ \
 		VECTOR_INDEX(__heap,0) = VECTOR_POP(__heap); /* put last at index */ \
 		if( !VECTOR_LENGTH(__heap) ) /* removed last, nothing to do */ \
 			break; \
-		BHEAP_SIFTUP(__heap,0,__topcmp,__swp); \
+		BHEAP_SIFTUP(__heap,0,__topcmp); \
 	}while(0)
 
 
@@ -1556,8 +1554,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __idx Index
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_POPINDEX(__heap,__idx,__topcmp,__swp) \
+#define BHEAP_POPINDEX(__heap,__idx,__topcmp) \
 	do{ \
 		size_t _i_ = __idx; \
 		VECTOR_INDEX(__heap,__idx) = VECTOR_POP(__heap); /* put last at index */ \
@@ -1568,7 +1565,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 			size_t _parent_ = (_i_-1)/2; \
 			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
 				break; /* done */ \
-			__swp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
+			std::swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
 			_i_ = _parent_; \
 		} \
 		while( _i_ < VECTOR_LENGTH(__heap) ) \
@@ -1580,12 +1577,12 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 				break; /* done */ \
 			else if( _rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_lchild_),VECTOR_INDEX(__heap,_rchild_)) <= 0 ) \
 			{ /* left child */ \
-				__swp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
+				std::swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
 				_i_ = _lchild_; \
 			} \
 			else \
 			{ /* right child */ \
-				__swp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
+				std::swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
 				_i_ = _rchild_; \
 			} \
 		} \
@@ -1601,8 +1598,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __startidx Index of an ancestor of __idx
 /// @param __idx Index of an inserted element
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_SIFTDOWN(__heap,__startidx,__idx,__topcmp,__swp) \
+#define BHEAP_SIFTDOWN(__heap,__startidx,__idx,__topcmp) \
 	do{ \
 		size_t _i2_ = __idx; \
 		while( _i2_ > __startidx ) \
@@ -1610,7 +1606,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 			size_t _parent_ = (_i2_-1)/2; \
 			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i2_)) <= 0 ) \
 				break; /* done */ \
-			__swp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i2_)); \
+			std::swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i2_)); \
 			_i2_ = _parent_; \
 		} \
 	}while(0)
@@ -1622,8 +1618,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __idx Index of an inserted element
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_SIFTUP(__heap,__idx,__topcmp,__swp) \
+#define BHEAP_SIFTUP(__heap,__idx,__topcmp) \
 	do{ \
 		size_t _i_ = __idx; \
 		size_t _lchild_ = _i_*2 + 1; \
@@ -1632,17 +1627,17 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 			size_t _rchild_ = _i_*2 + 2; \
 			if( _rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_lchild_),VECTOR_INDEX(__heap,_rchild_)) < 0 ) \
 			{ /* left child */ \
-				__swp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
+				std::swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
 				_i_ = _lchild_; \
 			} \
 			else \
 			{ /* right child */ \
-				__swp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
+				std::swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
 				_i_ = _rchild_; \
 			} \
 			_lchild_ = _i_*2 + 1; \
 		} \
-		BHEAP_SIFTDOWN(__heap,__idx,_i_,__topcmp,__swp); \
+		BHEAP_SIFTDOWN(__heap,__idx,_i_,__topcmp); \
 	}while(0)
 
 
@@ -1652,11 +1647,10 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __idx Index
 /// @param __topcmp Comparator
-/// @param __swp Swapper
-#define BHEAP_UPDATE(__heap,__idx,__topcmp,__swp) \
+#define BHEAP_UPDATE(__heap,__idx,__topcmp) \
 	do{ \
-		BHEAP_SIFTDOWN(__heap,0,__idx,__topcmp,__swp); \
-		BHEAP_SIFTUP(__heap,__idx,__topcmp,__swp); \
+		BHEAP_SIFTDOWN(__heap,0,__idx,__topcmp); \
+		BHEAP_SIFTUP(__heap,__idx,__topcmp); \
 	}while(0)
 
 

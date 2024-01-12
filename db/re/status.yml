@@ -5735,6 +5735,8 @@ Body:
       All: true
     Flags:
       DisplayPc: true
+      NoDispell: true
+      NoClearance: true
   - Status: Kings_Grace
     Icon: EFST_KINGS_GRACE
     DurationLookup: LG_KINGS_GRACE

@@ -1040,7 +1040,7 @@ void clif_Auction_message(int fd, unsigned char flag);
 void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, map_session_data *sd);
 
-void clif_bossmapinfo(map_session_data *sd, struct mob_data *md, enum e_bossmap_info flag);
+void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag );
 void clif_cashshop_show(map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION
@@ -1206,7 +1206,8 @@ enum out_ui_type : int8 {
 	OUT_UI_STYLIST,
 	OUT_UI_CAPTCHA,
 	OUT_UI_MACRO,
-	OUT_UI_QUEST = 6,
+	OUT_UI_TIP = 5,
+	OUT_UI_QUEST,
 	OUT_UI_ATTENDANCE,
 	OUT_UI_ENCHANTGRADE,
 	OUT_UI_ENCHANT = 10,
