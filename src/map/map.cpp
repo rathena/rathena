@@ -20,7 +20,6 @@
 #include <common/socket.hpp> // WFIFO*()
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
-#include <common/utilities.hpp>
 #include <common/utils.hpp>
 
 #include "achievement.hpp"
@@ -193,6 +192,312 @@ struct s_generator_options {
 	bool reputation;
 } gen_options;
 #endif
+
+const std::string MapZoneDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/map_zones.yml";
+}
+
+/**
+ * Reads and parses an entry from map_zones.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
+	std::string zone_name;
+
+	if (!this->asString(node, "Id", zone_name))
+		return 0;
+
+	std::string zone_constant = "MAPTYPE_" + zone_name;
+	int64 zone_id_const;
+
+	if (!script_get_constant(zone_constant.c_str(), &zone_id_const)) {
+		this->invalidWarning(node["Id"], "Zone %s is not valid.\n", zone_name.c_str());
+		return 0;
+	}
+
+	uint16 zone_id = static_cast<uint16>(zone_id_const);
+	std::shared_ptr<s_map_zones> zone = this->find(zone_id);
+	bool exists = zone != nullptr;
+
+	if (!exists) {
+		zone = std::make_shared<s_map_zones>();
+		zone->id = zone_id;
+	}
+
+	if (this->nodeExists(node, "DisabledCommands")) {
+		const auto &commandNode = node["DisabledCommands"];
+
+		for (const auto &it : commandNode) {
+			std::string command_name;
+			c4::from_chars(it.key(), &command_name);
+
+			if (!atcommand_exists(command_name.c_str())) {
+				this->invalidWarning(commandNode, "Atcommand %s does not exist.\n", command_name.c_str());
+				continue;
+			}
+
+			uint16 group_lv;
+
+			if (!this->asUInt16(commandNode, command_name, group_lv))
+				continue;
+
+			if (group_lv > 100) {
+				this->invalidWarning(commandNode, "Atcommand %s's Group Level can not be above 100, capping to 100.\n", command_name.c_str(), group_lv);
+				group_lv = 100;
+			}
+
+			zone->disabled_commands[command_name] = group_lv;
+		}
+	}
+
+	if (this->nodeExists(node, "DisabledSkills")) {
+		const auto &skillNode = node["DisabledSkills"];
+
+		for (const auto &it : skillNode) {
+			std::string skill_name;
+
+			if (!this->asString(it, "Skill", skill_name))
+				return 0;
+
+			uint16 skill_id = skill_name2id(skill_name.c_str());
+
+			if (skill_id == 0) {
+				this->invalidWarning(skillNode, "Skill %s does not exist.\n", skill_name.c_str());
+				continue;
+			}
+
+			for (const auto &subBl : it) {
+				std::string bl_name;
+				c4::from_chars(subBl.key(), &bl_name);
+
+				if (bl_name.compare("Skill") == 0)
+					continue;
+
+				std::string bl_name_constant = "BL_" + bl_name;
+				int64 type_const;
+
+				if (!script_get_constant(bl_name_constant.c_str(), &type_const)) {
+					this->invalidWarning(it, "Skill object %s is not a valid object type.\n", bl_name.c_str());
+					continue;
+				}
+
+				uint16 type = static_cast<uint16>(type_const);
+				uint16 group_lv;
+
+				if (!this->asUInt16(it, bl_name, group_lv))
+					continue;
+
+				if (group_lv > 100) {
+					this->invalidWarning(it, "Skill %s's Group Level can not be above 100, capping to 100.\n", bl_name.c_str(), group_lv);
+					group_lv = 100;
+				}
+
+				if (util::umap_exists(zone->disabled_skills, skill_id)) {
+					if (group_lv > 0)
+						zone->disabled_skills[skill_id].first |= type;
+					else {
+						zone->disabled_skills[skill_id].first &= ~type;
+
+						if (zone->disabled_skills[skill_id].first == BL_NUL)
+							zone->disabled_skills.erase(skill_id);
+					}
+				} else
+					zone->disabled_skills.insert({ skill_id, std::pair<uint16, uint16>(type, group_lv) });
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "DisabledItems")) {
+		const auto &itemNode = node["DisabledItems"];
+
+		for (const auto &it : itemNode) {
+			std::string item_name;
+			c4::from_chars(it.key(), &item_name);
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+			if (item == nullptr) {
+				this->invalidWarning(itemNode, "Item %s does not exist.\n", item_name.c_str());
+				continue;
+			}
+
+			uint16 group_lv;
+
+			if (!this->asUInt16(itemNode, item_name, group_lv))
+				continue;
+
+			if (group_lv > 100) {
+				this->invalidWarning(itemNode, "Item %s's Group Level can not be above 100, capping to 100.\n", item_name.c_str(), group_lv);
+				group_lv = 100;
+			}
+
+			zone->disabled_items[item->nameid] = group_lv;
+		}
+	}
+
+	if (this->nodeExists(node, "DisabledStatuses")) {
+		const auto &statusNode = node["DisabledStatuses"];
+
+		for (const auto &it : statusNode) {
+			std::string status_name;
+			c4::from_chars(it.key(), &status_name);
+			std::string status_name_constant = "SC_" + status_name;
+			int64 status;
+
+			if (!script_get_constant(status_name_constant.c_str(), &status)) {
+				this->invalidWarning(statusNode, "Status %s does not exist.\n", status_name.c_str());
+				continue;
+			}
+
+			uint16 group_lv;
+
+			if (!this->asUInt16(statusNode, status_name, group_lv))
+				continue;
+
+			if (group_lv > 100) {
+				this->invalidWarning(statusNode, "Status %s's Group Level can not be above 100, capping to 100.\n", status_name.c_str(), group_lv);
+				group_lv = 100;
+			}
+
+			zone->disabled_statuses[static_cast<sc_type>(status)] = group_lv;
+		}
+	}
+
+	if (this->nodeExists(node, "RestrictedJobs")) {
+		const auto &jobNode = node["RestrictedJobs"];
+
+		for (const auto &it : jobNode) {
+			std::string job_name;
+			c4::from_chars(it.key(), &job_name);
+			std::string job_name_constant = "JOB_" + job_name;
+			int64 job_id;
+
+			if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
+				this->invalidWarning(jobNode, "Job %s does not exist.\n", job_name.c_str());
+				continue;
+			}
+
+			uint16 group_lv;
+
+			if (!this->asUInt16(jobNode, job_name, group_lv))
+				continue;
+
+			if (group_lv > 100) {
+				this->invalidWarning(jobNode, "Job Group Level can not be above 100, capping to 100.\n", group_lv);
+				group_lv = 100;
+			}
+
+			zone->restricted_jobs[static_cast<uint32>(job_id)] = group_lv;
+		}
+	}
+
+	if (this->nodeExists(node, "Maps")) {
+		const auto &mapNode = node["Maps"];
+
+		for (const auto &it : mapNode) {
+			std::string map_name;
+			c4::from_chars(it.key(), &map_name);
+			int16 map_id = map_mapname2mapid(map_name.c_str());
+
+			if (map_id == -1) {
+				this->invalidWarning(mapNode, "Map %s does not exist.\n", map_name.c_str());
+				continue;
+			}
+
+			bool enabled;
+
+			if (!this->asBool(mapNode, map_name, enabled))
+				continue;
+
+			if (enabled) {
+				if (util::vector_exists(zone->maps, map_id)) {
+					this->invalidWarning(mapNode, "Map %s already part of this zone.\n", map_name.c_str());
+					continue;
+				}
+
+				zone->maps.push_back(map_id);
+			} else
+				util::vector_erase_if_exists(zone->maps, map_id);
+		}
+	}
+
+	if (this->nodeExists(node, "Mapflags")) {
+		const auto &mapflagNode = node["Mapflags"];
+
+		// Mapflags are stored as double-key so that duplicate mapflags can be parsed.
+		uint16 mapflag_index = 0;
+
+		for (const auto &it : mapflagNode) {
+			std::string flag_name;
+
+			if (!this->asString(it, "Flag", flag_name))
+				return 0;
+
+			std::string flag_name_constant = "MF_" + flag_name;
+			int64 flag;
+
+			if (!script_get_constant(flag_name_constant.c_str(), &flag)) {
+				this->invalidWarning(mapflagNode, "Mapflag %s does not exist.\n", flag_name.c_str());
+				continue;
+			}
+
+			std::string value;
+
+			if (this->nodeExists(it, "Value")) {
+				if (!this->asString(it, "Value", value))
+					continue;
+			} else
+				value = "1";
+
+			zone->mapflags.insert({ std::pair<int16, uint16>(static_cast<int16>(flag), mapflag_index), value });
+			mapflag_index++;
+		}
+	}
+
+	if (!exists)
+		this->put(zone_id, zone);
+
+	return 1;
+}
+
+/**
+ * Initialize Map Zone data
+ */
+void MapZoneDatabase::loadingFinished() {
+	// Copy Map Zone DB data to the map.
+	// This allows for live modifications to the map without affecting the Map Zone DB.
+	for (const auto &zone : map_zone_db) {
+		for (const auto &map : zone.second->maps) {
+			map_data *mapdata = map_getmapdata(map);
+
+			if (mapdata != nullptr) {
+				mapdata->zone.id = zone.second->id;
+				mapdata->zone.disabled_commands = zone.second->disabled_commands;
+				mapdata->zone.disabled_items = zone.second->disabled_items;
+				mapdata->zone.disabled_skills = zone.second->disabled_skills;
+				mapdata->zone.disabled_statuses = zone.second->disabled_statuses;
+				mapdata->zone.restricted_jobs = zone.second->restricted_jobs;
+
+				// Clear previous mapflags
+				mapdata->initMapFlags();
+				mapdata->skill_damage.clear();
+				mapdata->skill_duration.clear();
+			}
+
+			// Apply mapflags from Map Zone DB
+			for (const auto &flag : zone.second->mapflags) {
+				char flag_name[50] = {}, empty[1] = {};
+
+				if (map_getmapflag_name(static_cast<e_mapflag>(flag.first.first), flag_name))
+					npc_parse_mapflag(const_cast<char *>(map_mapid2mapname(map)), empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, empty);
+				else
+					ShowError("MapZoneDatabase::loadingFinished: Invalid mapflag %s from zone %s.\n", flag_name, script_get_constant_str("MAPTYPE_", zone.first));
+			}
+		}
+	}
+}
+
+MapZoneDatabase map_zone_db;
 
 /**
  * Get the map data
@@ -3600,7 +3905,6 @@ void map_flags_init(void){
 		args.flag_val = 100;
 
 		// additional mapflag data
-		mapdata->zone = 0; // restricted mapflag zone
 		mapdata->setMapFlag(MF_NOCOMMAND, false); // nocommand mapflag level
 		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
 		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
@@ -3615,8 +3919,8 @@ void map_flags_init(void){
 			continue;
 
 		// adjustments
-		if( battle_config.pk_mode && !mapdata_flag_vs2(mapdata) )
-			mapdata->setMapFlag(MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
+		//if( battle_config.pk_mode && !mapdata_flag_vs2(mapdata) ) // !TODO: Is this needed now that the PK zone exists?
+		//	mapdata->setMapFlag(MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
 	}
 }
 
@@ -4518,8 +4822,6 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 	}
 
 	switch(mapflag) {
-		case MF_RESTRICTED:
-			return mapdata->zone;
 		case MF_NOLOOT:
 			return mapdata->getMapFlag(MF_NOMOBLOOT) && mapdata->getMapFlag(MF_NOMVPLOOT);
 		case MF_NOPENALTY:
@@ -4693,25 +4995,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			}
 			mapdata->setMapFlag(mapflag, status);
 			break;
-		case MF_RESTRICTED:
-			if (!status) {
-				if (args == nullptr) {
-					mapdata->zone = 0;
-				} else {
-					mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
-				}
-
-				// Don't completely disable the mapflag's status if other zones are active
-				if (mapdata->zone == 0) {
-					mapdata->setMapFlag(mapflag, status);
-				}
-			} else {
-				nullpo_retr(false, args);
-
-				mapdata->zone |= (1 << (args->flag_val + 1)) << 3;
-				mapdata->setMapFlag(mapflag, status);
-			}
-			break;
 		case MF_NOCOMMAND:
 			if (status) {
 				nullpo_retr(false, args);
@@ -4803,6 +5086,19 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				map_skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
 			}
 			mapdata->setMapFlag(mapflag, status);
+			break;
+		case MF_INVINCIBLE_TIME:
+		case MF_WEAPON_DAMAGE_RATE:
+		case MF_MAGIC_DAMAGE_RATE:
+		case MF_MISC_DAMAGE_RATE:
+		case MF_LONG_DAMAGE_RATE:
+		case MF_SHORT_DAMAGE_RATE:
+			if (status) {
+				nullpo_retr(false, args);
+
+				mapdata->setMapFlag(mapflag, ((args->flag_val < 0) ? 0 : args->flag_val));
+			} else
+				mapdata->setMapFlag(mapflag, false);
 			break;
 		default:
 			mapdata->setMapFlag(mapflag, status);
@@ -5266,6 +5562,7 @@ bool MapServer::initialize( int argc, char *argv[] ){
 	do_init_quest();
 	do_init_achievement();
 	do_init_battleground();
+	map_zone_db.load(); // Initialize before script parsing
 	do_init_npc();
 	do_init_unit();
 	do_init_duel();

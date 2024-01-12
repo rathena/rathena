@@ -6926,7 +6926,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 
 	WBUFL(buf,4) = ((mapdata->getMapFlag(MF_PVP) || (sd && sd->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
-		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
+		((mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata->getMapFlag(MF_HIDEDAMAGE) || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->getMapFlag(MF_FORCEMINEFFECT) || mapdata_flag_gvg2(mapdata))<<3)| // USE_SIMPLE_EFFECT - Forces simpler skill effects, like /mineffect command
 		((mapdata->getMapFlag(MF_NOLOCKON) || mapdata_flag_vs(mapdata) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
 		((mapdata->getMapFlag(MF_PVP))<<5)| // COUNT_PK - Show the PvP counter
@@ -6943,7 +6943,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 
 /// Set the map type (ZC_NOTIFY_MAPPROPERTY2).
 /// 01d6 <type>.W
-void clif_map_type(map_session_data* sd, enum map_type type)
+void clif_map_type(map_session_data* sd, enum e_map_type type)
 {
 	int fd;
 
@@ -10902,12 +10902,8 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if(battle_config.pc_invincible_time > 0) {
-		if(mapdata_flag_gvg(mapdata))
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
-		else
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
-	}
+	if (mapdata->getMapFlag(MF_INVINCIBLE_TIME) > 0)
+		pc_setinvincibletimer(sd, mapdata->getMapFlag(MF_INVINCIBLE_TIME));
 
 	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->bl.m);
@@ -11158,7 +11154,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 			sd->state.hpmeter_visible = 1;
 		}
 
-		status_change_clear_onChangeMap(&sd->bl, &sd->sc);
+		status_change_clear_onChangeMap(&sd->bl);
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
 		status_calc_pc(sd, sd->state.autotrade ? SCO_FIRST : SCO_NONE); // Some conditions are map-dependent so we must recalculate
 
@@ -11237,7 +11233,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	}
 
 	// Trigger skill effects if you appear standing on them
-	if(!battle_config.pc_invincible_time)
+	if (mapdata && mapdata->getMapFlag(MF_INVINCIBLE_TIME))
 		skill_unit_move(&sd->bl,gettick(),1);
 
 	pc_show_questinfo_reinit(sd);

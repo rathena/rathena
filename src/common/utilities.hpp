@@ -97,6 +97,16 @@ namespace rathena {
 		}
 
 		/**
+		 * Determine if a value exists in the unordered_map
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false on failure
+		 */
+		template <typename K, typename V> bool umap_exists(std::unordered_map<K, V> &map, K key) {
+			return map.find(key) != map.end();
+		}
+
+		/**
 		 * Find a key-value pair and return the key value as a reference
 		 * @param map: Unordered Map to search through
 		 * @param key: Key wanted

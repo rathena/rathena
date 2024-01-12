@@ -4330,6 +4330,9 @@ ACMD_FUNC(reload) {
 	}else if( strstr( command, "barterdb" ) || strncmp( message, "barterdb", 4 ) == 0 ){
 		barter_db.reload();
 		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
+	} else if (strstr(command, "zonedb") || strncmp(message, "zonedb", 4) == 0) {
+		map_zone_db.reload();
+		clif_displaymessage(fd, msg_txt(sd, 831)); // Map Zone database has been reloaded.
 	}
 
 	return 0;
@@ -4419,15 +4422,9 @@ ACMD_FUNC(mapinfo) {
 
 	struct map_data *mapdata = map_getmapdata(m_id);
 
-	sprintf(atcmd_output, msg_txt(sd,1040), mapname, mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
+	sprintf(atcmd_output, msg_txt(sd,1040), mapname, script_get_constant_str("MAPTYPE_", mapdata->zone.id), mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s (Zone: %s) | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1041)); // ------ Map Flags ------
-	if (map_getmapflag(m_id, MF_TOWN))
-		clif_displaymessage(fd, msg_txt(sd,1042)); // Town Map
-	if (map_getmapflag(m_id, MF_RESTRICTED)){
-		sprintf(atcmd_output, " Restricted (zone %d)",mapdata->zone);
-		clif_displaymessage(fd, atcmd_output);
-	}
 
 	if (battle_config.autotrade_mapflag == map_getmapflag(m_id, MF_AUTOTRADE))
 		clif_displaymessage(fd, msg_txt(sd,1043)); // Autotrade Enabled
@@ -4470,6 +4467,18 @@ ACMD_FUNC(mapinfo) {
 			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(it.first), it.second);
 			clif_displaymessage(fd, atcmd_output);
 		}
+	}
+
+	if (mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE) || mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE) || mapdata->getMapFlag(MF_MISC_DAMAGE_RATE) || mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE) || mapdata->getMapFlag(MF_LONG_DAMAGE_RATE)) {
+		uint16 weapon = mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE),
+			magic = mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE),
+			misc = mapdata->getMapFlag(MF_MISC_DAMAGE_RATE),
+			short_ = mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE),
+			long_ = mapdata->getMapFlag(MF_LONG_DAMAGE_RATE);
+
+		clif_displaymessage(fd, msg_txt(sd, 1042)); // Damage Rate Adjustments:
+		sprintf(atcmd_output, " Weapon: %d%% | Magic: %d%% | Misc: %d%% | Short: %d%% | Long: %d%%", weapon > 0 ? weapon : 100, magic > 0 ? magic : 100, misc > 0 ? misc : 100, short_ > 0 ? short_ : 100, long_ > 0 ? long_ : 100);
+		clif_displaymessage(fd, atcmd_output);
 	}
 
 	strcpy(atcmd_output,msg_txt(sd,1046)); // PvP Flags:
@@ -8765,7 +8774,6 @@ ACMD_FUNC(mapflag) {
 		if( mapflag != MF_INVALID ){
 			std::vector<e_mapflag> disabled_mf = { MF_NOSAVE,
 												MF_PVP_NIGHTMAREDROP,
-												MF_RESTRICTED,
 												MF_NOCOMMAND,
 												MF_BEXP,
 												MF_JEXP,
@@ -11560,6 +11568,13 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 			clif_displaymessage(fd, msg_txt(sd,1393)); // You can't use commands while dead
 			return true;
 		}
+	}
+
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if (mapdata->zone.isCommandDisabled(info->command, pc_get_group_level(sd))) {
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 828), false, SELF); // This command is disabled on this map.
+		return true;
 	}
 
 	//Attempt to use the command
