@@ -8276,12 +8276,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {
-							// Initial damage: (4500 + (Self Study Sorcery level x 4))% Matk.
 							skillratio += -100 + 3000 + 1500 * skill_lv;
 							skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
 							ad.div_ = -2;
 						} else {
-							// Gravitational field damage: (1500 + (Self Study Sorcery level x 2))% Matk
 							skillratio += -100 + 800 + 700 * skill_lv;
 							skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 2 * skill_lv;
 						}
