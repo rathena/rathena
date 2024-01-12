@@ -786,13 +786,11 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 
 	TBL_PC *sd = BL_CAST(BL_PC, bl);
 
-	if (sd) {
-		if (sd->sc.getSCE(SC_KI_SUL_RAMPAGE))
-			status_change_end(bl, SC_KI_SUL_RAMPAGE);
-	}
-
-	// Start timer to recall summon
 	if( sd != nullptr ){
+		if (sc && sc->getSCE(SC_KI_SUL_RAMPAGE))
+			status_change_end(bl, SC_KI_SUL_RAMPAGE);
+
+		// Start timers to recall summon
 		if (sd->md != nullptr)
 			unit_check_start_teleport_timer(&sd->md->bl);
 		if (sd->ed != nullptr)
@@ -2061,7 +2059,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 			if (!src->prev)
 				return 0; // Warped away!
-		} else if( sc->getSCE(SC_CLOAKINGEXCEED) && !(sc->getSCE(SC_CLOAKINGEXCEED)->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB && skill_id != SHC_SAVAGE_IMPACT ) {
+		} else if( sc->getSCE(SC_CLOAKINGEXCEED) && !(sc->getSCE(SC_CLOAKINGEXCEED)->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB  && skill_id != SHC_SAVAGE_IMPACT ) {
 			status_change_end(src,SC_CLOAKINGEXCEED);
 
 			if (!src->prev)
