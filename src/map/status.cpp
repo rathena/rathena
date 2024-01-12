@@ -4579,7 +4579,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } // SZ_ALL
 		};
 
-		for( uint8 size = SZ_SMALL; size < SZ_ALL; size++ ){
+		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
 			sd->right_weapon.addsize[size] += attack_bonus[size][skill - 1];
 			if( !battle_config.left_cardfix_to_right ){
 				sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
@@ -4892,15 +4892,19 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			int bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
 
 			for( const auto &element : elements ){
-				sd->indexed_bonus.magic_atk_ele[(int)element] += bonus;
-				sd->right_weapon.addele[(int)element] += bonus;
-				sd->left_weapon.addele[(int)element] += bonus;
+				sd->indexed_bonus.magic_atk_ele[element] += bonus;
+				sd->right_weapon.addele[element] += bonus;
+				if( !battle_config.left_cardfix_to_right ){
+					sd->left_weapon.addele[element] += bonus;
+				}
 			}
 		}
 		if( sc->getSCE(SC_HEAVEN_AND_EARTH) ) {
 			i = sc->getSCE(SC_HEAVEN_AND_EARTH)->val2;
 			sd->right_weapon.addele[ELE_ALL] += i;
-			sd->left_weapon.addele[ELE_ALL] += i;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addele[ELE_ALL] += i;
+			}
 			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += i;
 			sd->bonus.short_attack_atk_rate += i;
 			sd->bonus.long_attack_atk_rate += i;
@@ -8713,6 +8717,7 @@ static signed short status_calc_mres(struct block_list *bl, status_change *sc, i
 {
 	if (!sc || !sc->count)
 		return cap_value(mres, 0, SHRT_MAX);
+
 	if (sc->getSCE(SC_GOLDENE_TONE))
 		mres += sc->getSCE(SC_GOLDENE_TONE)->val2;
 	if (sc->getSCE(SC_SHADOW_STRIP) && bl->type != BL_PC)
