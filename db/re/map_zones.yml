@@ -4139,8 +4139,6 @@ Body:
       - Flag: NoTeleport
       - Flag: NoWarpTo
       - Flag: PartyLock
-      - Flag: PvP_NoGuild
-      - Flag: PvP_NoParty
 
   - Id: Unknown_Sealed_Shrine # Sealed Shrine
     DisabledSkills:
@@ -4225,8 +4223,6 @@ Body:
       - Flag: NoTeleport
       - Flag: NoWarpTo
       - Flag: PartyLock
-      - Flag: PvP_NoGuild
-      - Flag: PvP_NoParty
 
   - Id: Unknown_FrancePvP # France PvP
     DisabledSkills:

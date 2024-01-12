@@ -2095,11 +2095,6 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 	if (skill_get_inf2(skill_id, INF2_IGNOREGVGREDUCTION)) //Skills with no gvg damage reduction.
 		return damage;
 
-	/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
-	if (md && md->guardian_data)
-		damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
-	*/
-
 	return i64max(battle_calc_zone_damage_rate(*bl, damage, flag), 1);
 }
 

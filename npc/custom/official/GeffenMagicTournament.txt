@@ -4830,33 +4830,3 @@ OnInstanceInit:
 	hideonnpc instance_npcname("Handsome Adventurer#gef");
 	end;
 }
-
-1@gef	mapflag	nowarp
-1@gef	mapflag	nomemo
-1@gef	mapflag	noteleport
-1@gef	mapflag	monster_noteleport
-1@gef	mapflag	nosave
-1@gef	mapflag	nobranch
-1@gef	mapflag	nowarpto
-1@gef	mapflag	noicewall
-1@gef	mapflag	restricted	9
-
-1@ge_st	mapflag	nowarp
-1@ge_st	mapflag	nomemo
-1@ge_st	mapflag	noteleport
-1@ge_st	mapflag	monster_noteleport
-1@ge_st	mapflag	nosave
-1@ge_st	mapflag	nobranch
-1@ge_st	mapflag	nowarpto
-1@ge_st	mapflag	noicewall
-1@ge_st	mapflag	restricted	9
-
-1@gef_in	mapflag	nowarp
-1@gef_in	mapflag	nomemo
-1@gef_in	mapflag	noteleport
-1@gef_in	mapflag	monster_noteleport
-1@gef_in	mapflag	nosave
-1@gef_in	mapflag	nobranch
-1@gef_in	mapflag	nowarpto
-1@gef_in	mapflag	noicewall
-1@gef_in	mapflag	restricted	9
