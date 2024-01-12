@@ -581,6 +581,12 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)(damage * 50 / 100);
 #endif
+				if (tsc->getSCE(SC_MISTYFROST))
+#ifdef RENEWAL
+					ratio += 15;
+#else
+					damage += (int64)(damage * 15 / 100);
+#endif
 				break;
 			case ELE_EARTH:
 				if (tsc->getSCE(SC_WIND_INSIGNIA))
@@ -1569,6 +1575,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage *= 4;
 #endif
 
+		if (tsc->getSCE(SC_GROUNDGRAVITY) && flag&(BF_MAGIC|BF_WEAPON) && !status_bl_has_mode(bl, MD_STATUSIMMUNE))
+			damage += damage * 15 / 100;
+		if (tsc->getSCE(SC_SHIELDCHAINRUSH) && !status_bl_has_mode(bl, MD_STATUSIMMUNE))
+			damage += damage / 10;
+
 		if (tsc->getSCE(SC_AETERNA) && skill_id != PF_SOULBURN) {
 			if (src->type != BL_MER || !skill_id)
 				damage *= 2; // Lex Aeterna only doubles damage of regular attacks from mercenaries
@@ -1831,6 +1842,36 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	status_change* sc = status_get_sc(src);
 
 	if (sc && sc->count) {
+		if (sc->getSCE(SC_BREAKINGLIMIT)) {
+			switch (skill_id) {
+			case HN_SHIELD_CHAIN_RUSH:
+			case HN_DOUBLEBOWLINGBASH:
+				damage += damage / 2; 
+				break;
+			case HN_MEGA_SONIC_BLOW:
+			case HN_SPIRAL_PIERCE_MAX:
+				damage += damage * 7 / 10;
+				break;
+			}
+		}
+
+		if (sc->getSCE(SC_RULEBREAK)) {
+			switch (skill_id) {
+			case HN_METEOR_STORM_BUSTER:
+			case HN_GROUND_GRAVITATION:
+				damage += damage / 2;
+				break;
+			case HN_JUPITEL_THUNDER_STORM:
+			case HN_JACK_FROST_NOVA:
+			case HN_HELLS_DRIVE:
+				damage += damage * 7 / 10;
+				break;
+			case HN_NAPALM_VULCAN_STRIKE:
+				damage += damage * 4 / 10;
+				break;
+			}
+		}
+
 		if( sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
 			damage += damage * 75 / 100;
 
@@ -5772,6 +5813,30 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case ABR_INFINITY_BUSTER:// Need official formula.
 			skillratio += -100 + 50000;
 			break;
+		case HN_SPIRAL_PIERCE_MAX:
+			skillratio += -100 + 550 + (350 + pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3) * skill_lv + 5 * sstatus->pow;
+			switch (status_get_size(target))
+			{
+				case 0: skillratio = skillratio * 15 / 10;  break;
+				case 1: skillratio = skillratio * 13 / 10;  break;
+				case 2: skillratio = skillratio * 12 / 10;  break;
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case HN_SHIELD_CHAIN_RUSH:
+			skillratio += -100 + 600 + (450 + pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3) * skill_lv + 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case HN_MEGA_SONIC_BLOW:
+			skillratio += -100 + 900 + (450 + pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 5) * skill_lv + 5 * sstatus->pow;
+			if (status_get_hp(target) < status_get_max_hp(target) / 2)
+				skillratio *= 2;
+			RE_LVL_DMOD(100);
+			break;
+		case HN_DOUBLEBOWLINGBASH:
+			skillratio += -100 + 150 + (250 + pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3) * skill_lv + 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
 	}
 	return skillratio;
 }
@@ -6739,6 +6804,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				if (sc && sc->getSCE(SC_RESEARCHREPORT))
 					wd.div_ = 4;
 				break;
+			case HN_DOUBLEBOWLINGBASH:
+				if (wd.miscflag > 1)
+					wd.div_ += min(4, wd.miscflag);
+				break;
 		}
 	} else {
 		bool is_long = false;
@@ -7495,6 +7564,41 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case WZ_WATERBALL:
 						skillratio += 30 * skill_lv;
+						break;
+					case HN_NAPALM_VULCAN_STRIKE:
+						skillratio += -100 + 350 + (650 + 4 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) * skill_lv + 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case HN_JUPITEL_THUNDER_STORM:
+						skillratio += -100 + (1800 + 3 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) * skill_lv + 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case HN_HELLS_DRIVE:
+						skillratio += -100 + 1500 + (700 + 4 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) * skill_lv + 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case HN_GROUND_GRAVITATION:
+						if (mflag & SKILL_ALTDMG_FLAG) {
+							skillratio += -100 + 3000 + (1500 + 4 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) * skill_lv + 5 * sstatus->spl;
+							ad.div_ = -2;
+						} else {
+							skillratio += -100 + 800 + (700 + 2 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) * skill_lv + 5 * sstatus->spl;
+						}
+						RE_LVL_DMOD(100);
+						break;
+					case HN_JACK_FROST_NOVA:
+						skillratio += -100 + (200 + 3 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) * skill_lv + 5 * sstatus->spl;
+						if (!(mflag & SKILL_ALTDMG_FLAG))
+							skillratio += 400 + 300 * skill_lv;
+						RE_LVL_DMOD(100);
+						break;
+					case HN_METEOR_STORM_BUSTER:
+						skillratio += -100 + 450 + (160 + 5 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) * skill_lv + 5 * sstatus->spl;
+						if (mflag & SKILL_ALTDMG_FLAG) {
+							ad.div_ = -3;
+							skillratio += 10 + 160 * (skill_lv-1);
+						}
+						RE_LVL_DMOD(100);
 						break;
 					case WZ_STORMGUST:
 #ifdef RENEWAL
