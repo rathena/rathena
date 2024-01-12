@@ -1514,7 +1514,7 @@ static int64 battle_calc_zone_damage_rate(block_list &bl, int64 damage, int flag
 			damage = damage * mapdata->getMapFlag(MF_LONG_DAMAGE_RATE) / 100;
 	}
 
-	return damage;
+	return i64max(damage, 1);
 }
 
 /**
@@ -1574,8 +1574,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 		case SP_SOULEXPLOSION:
 			// Adjust these based on any possible PK damage rates.
-			if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
-				damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+			if (battle_config.pk_mode > 0 && src->type == BL_PC && bl->type == BL_PC && damage > 0 && map_getmapflag(bl->m, MF_PVP))
+				damage = battle_calc_zone_damage_rate(*bl, damage, flag);
 
 			return damage; //These skills bypass everything else.
 	}
@@ -1584,8 +1584,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	// So can defense sphere's but what the heck is that??? [Rytech]
 	if (skill_id == SJ_NOVAEXPLOSING && !(tsc && (tsc->getSCE(SC_SAFETYWALL) || tsc->getSCE(SC_MILLENNIUMSHIELD)))) {
 		// Adjust this based on any possible PK damage rates.
-		if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
-			damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+		if (battle_config.pk_mode > 0 && src->type == BL_PC && bl->type == BL_PC && damage > 0 && map_getmapflag(bl->m, MF_PVP))
+			damage = battle_calc_zone_damage_rate(*bl, damage, flag);
 
 		return damage;
 	}
@@ -1944,8 +1944,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of caster SC_ check
 
 	//PK damage rates
-	if (battle_config.pk_mode > 0 && src->type == BL_PC && bl->type == BL_PC && damage > 0 && map_getmapflag(bl->m, MF_PVP) > 0)
-		damage = i64max(battle_calc_zone_damage_rate(*bl, damage, flag), 1);
+	if (battle_config.pk_mode > 0 && src->type == BL_PC && bl->type == BL_PC && damage > 0 && map_getmapflag(bl->m, MF_PVP))
+		damage = battle_calc_zone_damage_rate(*bl, damage, flag);
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
 		if ((flag&BF_WEAPON && battle_config.skill_min_damage&1)
@@ -2096,41 +2096,6 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 		return damage;
 
 	return i64max(battle_calc_zone_damage_rate(*bl, damage, flag), 1);
-}
-
-/**
- * Calculates PK related damage adjustments (between players only).
- * @param src: Source object
- * @param bl: Target object
- * @param damage: Damage being done
- * @param skill_id: Skill used
- * @param flag: Battle flag type
- * @return Modified damage
- */
-int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int flag) {
-	if (damage == 0) // No reductions to make.
-		return 0;
-
-	if (battle_config.pk_mode == 0) // PK mode is disabled.
-		return damage;
-
-	if (src.type == BL_PC && bl.type == BL_PC) {
-		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-			if (flag & BF_WEAPON)
-				damage = damage * battle_config.pk_weapon_damage_rate / 100;
-			if (flag & BF_MAGIC)
-				damage = damage * battle_config.pk_magic_damage_rate / 100;
-			if (flag & BF_MISC)
-				damage = damage * battle_config.pk_misc_damage_rate / 100;
-		} else { //Normal attacks get reductions based on range.
-			if (flag & BF_SHORT)
-				damage = damage * battle_config.pk_short_damage_rate / 100;
-			if (flag & BF_LONG)
-				damage = damage * battle_config.pk_long_damage_rate / 100;
-		}
-	}
-
-	return i64max(damage, 1);
 }
 
 /**
@@ -8913,8 +8878,8 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 		rdamage = battle_calc_gvg_damage(src, tbl, rdamage, skill_id, flag);
 	else if (mapdata->getMapFlag(MF_BATTLEGROUND))
 		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->getMapFlag(MF_PVP))
-		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
+	else if (battle_config.pk_mode > 0 && src->type == BL_PC && tbl->type == BL_PC && damage > 0 && mapdata->getMapFlag(MF_PVP))
+		rdamage = battle_calc_zone_damage_rate(*tbl, damage, flag);
 
 	// Skill damage adjustment
 	int skill_damage = battle_skill_damage(src, tbl, skill_id);
