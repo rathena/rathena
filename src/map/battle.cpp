@@ -1575,9 +1575,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage *= 4;
 #endif
 
-		if (tsc->getSCE(SC_GROUNDGRAVITY) && flag&(BF_MAGIC|BF_WEAPON) && !status_bl_has_mode(bl, MD_STATUSIMMUNE))
+		if (tsc->getSCE(SC_GROUNDGRAVITY) && flag&(BF_MAGIC|BF_WEAPON))
 			damage += damage * 15 / 100;
-		if (tsc->getSCE(SC_SHIELDCHAINRUSH) && !status_bl_has_mode(bl, MD_STATUSIMMUNE))
+		if (tsc->getSCE(SC_SHIELDCHAINRUSH))
 			damage += damage / 10;
 
 		if (tsc->getSCE(SC_AETERNA) && skill_id != PF_SOULBURN) {
