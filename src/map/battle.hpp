@@ -297,17 +297,7 @@ struct Battle_Config
 	int pc_cloak_check_type;
 	int monster_cloak_check_type;
 	int estimation_type;
-	int gvg_short_damage_rate;
-	int gvg_long_damage_rate;
-	int gvg_weapon_damage_rate;
-	int gvg_magic_damage_rate;
-	int gvg_misc_damage_rate;
 	int gvg_flee_penalty;
-	int pk_short_damage_rate;
-	int pk_long_damage_rate;
-	int pk_weapon_damage_rate;
-	int pk_magic_damage_rate;
-	int pk_misc_damage_rate;
 	int mob_changetarget_byskill;
 	int attack_direction_change;
 	int land_skill_limit;
