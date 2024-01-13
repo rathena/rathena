@@ -28,7 +28,7 @@
 
 using namespace rathena;
 
-static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second);
+static int split_exact_quest_time(char* modif_p, int* week, int* day, int* hour, int* minute, int *second);
 
 const std::string QuestDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/quest_db.yml";
@@ -81,20 +81,25 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			quest->time = static_cast<time_t>(timediff);
 		}
 		else {// '+' not found, set to specific time
-			int32 day, hour, minute, second;
+			int32 day, hour, minute, second, week;
 
-			if (split_exact_quest_time(const_cast<char *>(time.c_str()), &day, &hour, &minute, &second) == 0) {
+			if (split_exact_quest_time(const_cast<char *>(time.c_str()), &week, &day, &hour, &minute, &second) == 0) {
 				this->invalidWarning(node["TimeLimit"], "Incorrect TimeLimit format %s given, skipping.\n", time.c_str());
 				return 0;
 			}
-			quest->time = day * 86400 + hour * 3600 + minute * 60 + second;
+			if (week > 0)
+				quest->time = hour * 3600 + minute * 60 + second;
+			else
+				quest->time = day * 86400 + hour * 3600 + minute * 60 + second;
 			quest->time_at = true;
+			quest->time_week = week;
 		}
 
 	} else {
 		if (!exists) {
 			quest->time = 0;
 			quest->time_at = false;
+			quest->time_week = -1;
 		}
 	}
 
@@ -441,8 +446,8 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 
-static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second) {
-	int d = -1, h = -1, mn = -1, s = -1;
+static int split_exact_quest_time(char* modif_p, int* week, int* day, int* hour, int* minute, int *second) {
+	int w = -1, d = -1, h = -1, mn = -1, s = -1;
 
 	nullpo_retr(0, modif_p);
 
@@ -453,7 +458,28 @@ static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minut
 			modif_p++;
 		while (modif_p[0] >= '0' && modif_p[0] <= '9')
 			modif_p++;
-		if (modif_p[0] == 's') {
+		if (modif_p[0] == 'S' && modif_p[1] == 'u' && modif_p[2] == 'n' && modif_p[3] == 'd' && modif_p[4] == 'a' && modif_p[5] == 'y') {
+			w = 0;
+			modif_p++;
+		} else if (modif_p[0] == 'M' && modif_p[1] == 'o' && modif_p[2] == 'n' && modif_p[3] == 'd' && modif_p[4] == 'a' && modif_p[5] == 'y') {
+			w = 1;
+			modif_p++;
+		} else if (modif_p[0] == 'T' && modif_p[1] == 'u' && modif_p[2] == 'e' && modif_p[3] == 's' && modif_p[4] == 'd' && modif_p[5] == 'a' && modif_p[6] == 'y') {
+			w = 2;
+			modif_p++;
+		} else if (modif_p[0] == 'W' && modif_p[1] == 'e' && modif_p[2] == 'd' && modif_p[3] == 'n' && modif_p[4] == 'e' && modif_p[5] == 's' && modif_p[6] == 'd' && modif_p[7] == 'a' && modif_p[8] == 'y') {
+			w = 3;
+			modif_p++;
+		} else if (modif_p[0] == 'T' && modif_p[1] == 'h' && modif_p[2] == 'u' && modif_p[3] == 'r' && modif_p[4] == 's' && modif_p[5] == 'd' && modif_p[6] == 'a' && modif_p[7] == 'y') {
+			w = 4;
+			modif_p++;
+		} else if (modif_p[0] == 'F' && modif_p[1] == 'r' && modif_p[2] == 'i' && modif_p[3] == 'd' && modif_p[4] == 'a' && modif_p[5] == 'y') {
+			w = 5;
+			modif_p++;
+		} else if (modif_p[0] == 'S' && modif_p[1] == 'a' && modif_p[2] == 't' && modif_p[3] == 'u' && modif_p[4] == 'r' && modif_p[5] == 'd' && modif_p[6] == 'a' && modif_p[7] == 'y') {
+			w = 6;
+			modif_p++;
+		} else if (modif_p[0] == 's') {
 			s = value;
 			modif_p++;
 		} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
@@ -473,6 +499,7 @@ static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minut
 	if (h < 0 || h > 23 || mn > 59 || s > 59)	// hour is required
 		return 0;
 
+	*week = w;
 	*day = max(0,d);
 	*hour = h;
 	*minute = max(0,mn);
@@ -536,10 +563,18 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 		struct tm *lt = localtime(&t);
 		uint32 time_today = lt->tm_hour * 3600 + lt->tm_min * 60 + lt->tm_sec;
 
-		if (time_today < (qi->time % 86400))
-			return static_cast<time_t>(t + qi->time - time_today);
-		else // Carry over to the next day
-			return static_cast<time_t>(t + 86400 + qi->time - time_today);
+		int32 day_shift = 0;
+
+		if (time_today >= (qi->time % 86400)) // Carry over to the next day
+			day_shift = 1;
+
+		if (qi->time_week > -1) {
+			if (qi->time_week < (lt->tm_wday + day_shift))
+				day_shift = qi->time_week + 7 - lt->tm_wday;
+			else
+				day_shift = qi->time_week - lt->tm_wday;
+		}
+		return static_cast<time_t>(t + (day_shift * 86400) + qi->time - time_today);
 	}
 
 	return 0;
