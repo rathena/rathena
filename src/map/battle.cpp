@@ -3365,7 +3365,8 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 #endif
 	if (sc && sc->getSCE(SC_FUSION))
 		return true;
-	else if (skill_id == RK_WINDCUTTER && sd && sd->status.weapon == W_2HSWORD)
+
+	if (skill_id == RK_WINDCUTTER && sd && sd->status.weapon == W_2HSWORD)
 		return true;
 	else if (skill_id == NW_THE_VIGILANTE_AT_NIGHT && sd && sd->status.weapon == W_GATLING)
 		return true;
