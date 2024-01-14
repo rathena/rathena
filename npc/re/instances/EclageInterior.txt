@@ -266,7 +266,7 @@ OnMyMobDead:
 	mes "[Avant]";
 	mes "Did something happen to you?";
 	mes "There was a subtle and magical echo to it.";
-	mes "Immidiately after that, you were thrown here.";
+	mes "Immediately after that, you were thrown here.";
 	next;
 	if (select("It's all because of you!:Shenime said...") == 1) {
 		mes "[Avant]";

@@ -7,16 +7,16 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "clif.hpp"
 #include "intif.hpp"
@@ -421,7 +421,7 @@ bool mercenary_dead(s_mercenary_data *md) {
 void mercenary_killbonus(s_mercenary_data *md) {
 	std::vector<sc_type> scs = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
 
-	sc_start(&md->bl,&md->bl, util::vector_random(scs), 100, rnd() % 5, 600000);
+	sc_start(&md->bl,&md->bl, util::vector_random(scs), 100, rnd_value(1, 5), 600000);
 }
 
 /**

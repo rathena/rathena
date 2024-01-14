@@ -10299,7 +10299,7 @@ OnTouch_:
 			mes "Son... What is the meaning of this.";
 			next;
 			mes "[????]";
-			mes "I'm putting the equiment to rest, father...";
+			mes "I'm putting the equipment to rest, father...";
 			next;
 			mes "^000099The reactor was activated, but the dimension does not seem to be related to Etran. It's cold somehow.^000000";
 			close;
@@ -10630,7 +10630,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	HIDDEN_NPC,{
 			next;
 			cutin "EP14_etran4",1;
 			mes "[Etran]";
-			mes "(This guy mentioned his initital! Ok, this guy is making it more dangerous than I am!!) He took out equipments from the storage to see if he wants to refine them.";
+			mes "(This guy mentioned his initial! Ok, this guy is making it more dangerous than I am!!) He took out equipments from the storage to see if he wants to refine them.";
 			next;
 			cutin "EP14_robert4",1;
 			mes "[Robert]";
@@ -10653,7 +10653,7 @@ ecl_in04,105,216,4	script	Hiel's Workshop#pa0829	HIDDEN_NPC,{
 			mes "Sorry I laughed.";
 			break;
 		case 4:
-			mes "^000099What if Etran and Robert were the priosoner and the guard?^000000";
+			mes "^000099What if Etran and Robert were the prisoner and the guard?^000000";
 			next;
 			cutin "EP14_etran1",1;
 			mes "[Etran]";
@@ -16862,7 +16862,7 @@ que_avan01,18,38,0	script	Desk#tl01	CLEAR_NPC,{
 		if (select("Examine the desk.:Ignore it.") == 2)
 			mes "Other parts of the desk should be examined.";
 		else {
-			mes "I roughtly organized the stuff on the desk.";
+			mes "I roughly organized the stuff on the desk.";
 			mes "What should we look into?";
 			cutin "avn_desk02",4;
 			while (1) {

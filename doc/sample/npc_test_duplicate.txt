@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20180831
+//= 20211112
 //===== Description: ========================================= 
 //= An example of how duplicate NPCs are handled:
 //=  NPC variables are shared between all duplicates.
@@ -18,14 +18,88 @@ prontera,150,175,4	script	Duplicate Test Script	909,{
 	close;
 
 OnInit:
-	getmapxy(.map$, .x, .y, 1);
+	getmapxy(.map$, .x, .y, BL_NPC);
 	end;
 
 OnTouch:
-	getmapxy(.map$, .x, .y, 1);
+	getmapxy(.map$, .x, .y, BL_NPC);
 	emotion ET_SCISSOR;
 	end;
 }
 
 prontera,155,175,4	duplicate(Duplicate Test Script)	Duplicate Test2	909,2,2
 prontera,160,175,4	duplicate(Duplicate Test Script)	Duplicate Test3	909,3,3
+
+//duplicate command script
+prontera,150,168,4	script	Duplicate Command Test	909,{
+	mes "Would you like to create a new NPC?";
+	.@original_npc$ = "original_npc_unique_name";
+
+	mes "Input Map Name";
+	mes "recommended 'prontera'";
+	input .@map$;
+	clear;
+	mes "Input x";
+	mes "recommended '155'";
+	input .@x,0;
+	clear;
+	mes "Input y";
+	mes "recommended '168'";
+	input .@y,0;
+	clear;
+
+	switch( .@s = select( "Provide no info:With name:With name and look:With name, look and dir:cancel" ) ){
+		case 1:
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y );
+			break;
+		case 2:
+			mes "Input Duplicate NPC Name";
+			input .@name$;
+			clear;
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y, .@name$ );
+			break;
+		case 3:
+			mes "Input Duplicate NPC Name";
+			input .@name$;
+			clear;
+			mes "Input look";
+			mes "recommended '445'";
+			input .@look,0;
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y, .@name$, .@look );
+			break;
+		case 4:
+			mes "Input Duplicate NPC Name";
+			input .@name$;
+			clear;
+			mes "Input look";
+			mes "recommended '445'";
+			input .@look,0;
+			clear;
+			mes "Input dir";
+			mes "between " + DIR_NORTH + " and " + DIR_NORTHEAST;
+			input .@dir,DIR_NORTH,DIR_NORTHEAST;
+			.@new_npc$ = duplicate( .@original_npc$, .@map$, .@x, .@y, .@name$, .@look, .@dir );
+			break;
+		default:
+			mes "Ok, see you next time!";
+			close;
+	}
+
+	if( getnpcid( 0, .@new_npc$ ) == 0 ){
+		mes "Something went wrong!";
+		mes "The new NPC could not be found!";
+		close;
+	}
+	
+	clear;
+	mes "The new NPC is now at " + .@map$ + "," + .@x + "," + .@y;
+	end;
+}
+
+prontera,150,165,0	script	test npc::original_npc_unique_name	444,{
+	getmapxy(.@map$, .@x, .@y, BL_NPC);
+	mes "Hi.";
+	mes "My Unique Name is: " + strnpcinfo(3);
+	mes "My coords are "+ .@map$ +", "+ .@x +"/" +.@y ;
+	close;
+}

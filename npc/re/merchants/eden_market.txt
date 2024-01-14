@@ -63,7 +63,7 @@ function	script	F_CoolDown	{
 
 -	marketshop	para_ref20	FAKE_NPC,984:200000:10,985:200000:100,987:240000:1,988:600000:1,989:1200000:1
 
--	marketshop	para_jew10	FAKE_NPC,969:100000:20,7289:50000:20,7290:50000:20,7291:50000:20,7292:50000:20,7293:50000:20,7294:50000:20,7295:50000:20,7296:50000:20,7297:50000:20
+-	marketshop	para_jew10	FAKE_NPC,969:1000000:20,7289:500000:20,7290:500000:20,7291:500000:20,7292:500000:20,7293:500000:20,7294:500000:20,7295:500000:20,7296:500000:20,7297:500000:20
 
 -	marketshop	para_alc10	FAKE_NPC,971:20000:20,972:12000:20,970:12000:20:7136:7000:20,7135:18000:20
 
@@ -96,8 +96,8 @@ OnClock0000:
 	npcshopupdate "para_hei10",7642,0,1;
 	npcshopupdate "para_hei10",22687,0,1;
 	npcshopupdate "para_hei10",23016,0,1;
-	npcshopupdate "para_key10",7026,10;
-	npcshopupdate "para_key10",7027,10;
+	npcshopupdate "para_key10",7026,0,10;
+	npcshopupdate "para_key10",7027,0,10;
 	npcshopupdate "para_wp00",1181,0,1;
 	npcshopupdate "para_arm10",5007,0,1;
 	npcshopupdate "para_ptn00",678,0,999;
@@ -320,7 +320,7 @@ moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 		next;
 		mes "[Hustler]";
 		mes "More special items are sold on weekends.";
-		mes "I have even seen an <ITEM>Izidor<INFO>709</INFO></ITEM> being sold~";
+		mes "I have even seen an " + mesitemlink( 709, false ) + " being sold~";
 		mes "It was amazing.";
 		mes "Of course it was super expensive and only a handful were up for sale.";
 		next;
