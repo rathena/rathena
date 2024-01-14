@@ -4332,7 +4332,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
 	} else if (strstr(command, "zonedb") || strncmp(message, "zonedb", 4) == 0) {
 		map_zone_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 831)); // Map Zone database has been reloaded.
+		clif_displaymessage(fd, msg_txt(sd, 833)); // Map Zone database has been reloaded.
 	}
 
 	return 0;
@@ -11574,7 +11574,7 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 	if (mapdata->zone.isCommandDisabled(info->command, pc_get_group_level(sd))) {
-		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 828), false, SELF); // This command is disabled on this map.
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 832), false, SELF); // This command is disabled on this map.
 		return true;
 	}
 
