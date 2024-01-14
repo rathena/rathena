@@ -712,6 +712,7 @@ function	script	F_GetPlatinumSkills	{
 	case Job_Blacksmith:
 		skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
 		skill "BS_GREED",1,SKILL_PERM;
+		skill "BS_CARTEFFICIENCY",1,SKILL_PERM;
 		break;
 	case Job_Hunter:
 		skill "HT_PHANTASMIC",1,SKILL_PERM;
@@ -739,6 +740,7 @@ function	script	F_GetPlatinumSkills	{
 		break;
 	case Job_Alchemist:
 		skill "AM_BIOETHICS",1,SKILL_PERM;
+		skill "AM_ALCHEMYEFFICIENCY",3,SKILL_PERM;
 		break;
 	case Job_Bard:
 		skill "BA_PANGVOICE",1,SKILL_PERM;

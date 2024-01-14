@@ -7940,6 +7940,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 #endif
 
+	case AM_ALCHEMYEFFICIENCY:
+		if (skill_lv == 1)
+			type = SC_ALCHEMYEFFICIENCY_ACID;
+		else if (skill_lv == 2)
+			type = SC_ALCHEMYEFFICIENCY_FIRE;
+		else
+			type = SC_ALCHEMYEFFICIENCY_BOTH;
+
+		clif_skill_nodamage(src, bl, skill_id, skill_lv,
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		break;
+
 	case LG_SHIELDSPELL:
 		if (skill_lv == 1)
 			type = SC_SHIELDSPELL_HP;
@@ -18679,6 +18691,15 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 #endif
 						case AB_ADORAMUS:
 							if( itemdb_group.item_exists(IG_GEMSTONE, skill->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 2)) )
+								continue;
+							break;
+
+						case AM_ACIDTERROR:
+							if (sc->getSCE(SC_ALCHEMYEFFICIENCY_ACID) || sc->getSCE(SC_ALCHEMYEFFICIENCY_BOTH))
+								continue;
+							break;
+						case AM_DEMONSTRATION:
+							if (sc->getSCE(SC_ALCHEMYEFFICIENCY_FIRE) || sc->getSCE(SC_ALCHEMYEFFICIENCY_BOTH))
 								continue;
 							break;
 					}

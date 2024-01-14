@@ -16944,7 +16944,7 @@ Body:
       Flag:
         NoReiteration: true
         NoOverlap: true
-  - Id: 777
+  - Id: 784
     Name: BS_CARTEFFICIENCY
     Description: Cart Efficiency
     MaxLevel: 1
@@ -16965,6 +16965,31 @@ Body:
         - Item: Iron_Ore
           Amount: 1
     Status: CartEfficiency
+  - Id: 785
+    Name: AM_ALCHEMYEFFICIENCY
+    Description: Alchemy Efficiency
+    MaxLevel: 3
+    TargetType: Self
+    Flags:
+      IsQuest: true
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Duration1: 600000
+    Requires:
+      SpCost: 10
+      ItemCost:
+        - Level: 1
+          Item: Acid_Bottle
+          Amount: 1
+        - Level: 2
+          Item: Fire_Bottle
+          Amount: 1
+        # TODO: Add Efficient_Bottle to item_db.yml
+        # - Level: 3
+        #   Item: Efficient_Bottle
+        #   Amount: 1
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack

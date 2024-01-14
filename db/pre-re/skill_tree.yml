@@ -1265,6 +1265,8 @@ Body:
     Tree:
       - Name: AM_AXEMASTERY
         MaxLevel: 10
+      - Name: AM_ALCHEMYEFFICIENCY
+        MaxLevel: 3
       - Name: AM_LEARNINGPOTION
         MaxLevel: 10
       - Name: AM_PHARMACY

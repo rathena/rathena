@@ -1289,6 +1289,9 @@ enum sc_type : int16 {
 #endif
 
 	SC_CARTEFFICIENCY,
+	SC_ALCHEMYEFFICIENCY_ACID,
+	SC_ALCHEMYEFFICIENCY_FIRE,
+	SC_ALCHEMYEFFICIENCY_BOTH,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };

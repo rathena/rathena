@@ -1895,6 +1895,9 @@
 	export_constant(SC_RUSH_QUAKE2);
 	export_constant(SC_G_LIFEPOTION);
 	export_constant(SC_CARTEFFICIENCY);
+	export_constant(SC_ALCHEMYEFFICIENCY_ACID);
+	export_constant(SC_ALCHEMYEFFICIENCY_FIRE);
+	export_constant(SC_ALCHEMYEFFICIENCY_BOTH);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
