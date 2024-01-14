@@ -4469,15 +4469,16 @@ ACMD_FUNC(mapinfo) {
 		}
 	}
 
-	if (mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE) || mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE) || mapdata->getMapFlag(MF_MISC_DAMAGE_RATE) || mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE) || mapdata->getMapFlag(MF_LONG_DAMAGE_RATE)) {
+	if (mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE) || mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE) || mapdata->getMapFlag(MF_MISC_DAMAGE_RATE) || mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE) || mapdata->getMapFlag(MF_LONG_DAMAGE_RATE) || mapdata->getMapFlag(MF_FLEE_PENALTY)) {
 		uint16 weapon = mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE),
 			magic = mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE),
 			misc = mapdata->getMapFlag(MF_MISC_DAMAGE_RATE),
 			short_ = mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE),
-			long_ = mapdata->getMapFlag(MF_LONG_DAMAGE_RATE);
+			long_ = mapdata->getMapFlag(MF_LONG_DAMAGE_RATE),
+			flee = mapdata->getMapFlag(MF_FLEE_PENALTY);
 
-		clif_displaymessage(fd, msg_txt(sd, 1042)); // Damage Rate Adjustments:
-		sprintf(atcmd_output, " Weapon: %d%% | Magic: %d%% | Misc: %d%% | Short: %d%% | Long: %d%%", weapon > 0 ? weapon : 100, magic > 0 ? magic : 100, misc > 0 ? misc : 100, short_ > 0 ? short_ : 100, long_ > 0 ? long_ : 100);
+		clif_displaymessage(fd, msg_txt(sd, 1042)); // Battle Rate Adjustments:
+		sprintf(atcmd_output, " Weapon: %d%% | Magic: %d%% | Misc: %d%% | Short: %d%% | Long: %d%% | Flee: %d%%", weapon > 0 ? weapon : 100, magic > 0 ? magic : 100, misc > 0 ? misc : 100, short_ > 0 ? short_ : 100, long_ > 0 ? long_ : 100, flee != 0 ? flee * -1 : 0);
 		clif_displaymessage(fd, atcmd_output);
 	}
 

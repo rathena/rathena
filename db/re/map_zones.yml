@@ -2092,6 +2092,8 @@ Body:
     Maps:
       guild_vs5: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: GvG
       - Flag: GvG_NoParty
       - Flag: HideDamage
@@ -2267,6 +2269,8 @@ Body:
       prtg_cas04: true
       prtg_cas05: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: GuildLock
       - Flag: GvG_Castle
       - Flag: HideDamage
@@ -2609,6 +2613,8 @@ Body:
       pvp_n_1-4: true
       pvp_n_1-5: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: HideMobHpBar
       - Flag: Long_Damage_Rate
         Value: 70
@@ -2792,6 +2798,8 @@ Body:
       turbo_n_4: true
       turbo_n_8: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: HideMobHpBar
       - Flag: Long_Damage_Rate
         Value: 80
@@ -3065,6 +3073,8 @@ Body:
       turbo_e_8: true
       turbo_e_16: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: HideMobHpBar
       - Flag: Long_Damage_Rate
         Value: 80
@@ -3490,6 +3500,8 @@ Body:
     Maps:
       poring_w02: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: HideMobHpBar
       - Flag: Long_Damage_Rate
         Value: 80
@@ -3631,6 +3643,8 @@ Body:
       schg_cas04: true
       schg_cas05: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: GuildLock
       - Flag: GvG_Castle
       - Flag: HideDamage
@@ -3798,6 +3812,8 @@ Body:
       bat_c02: true
       bat_c03: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: HideMobHpBar
       - Flag: Long_Damage_Rate
         Value: 75
@@ -4321,6 +4337,8 @@ Body:
     DisabledStatuses:
       Endure: 100
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       # !TODO: Block party formation; PartyLock is too restrictive
       - Flag: HideDamage
       - Flag: Long_Damage_Rate
@@ -5360,6 +5378,8 @@ Body:
       te_prtcas04: true
       te_prtcas05: true
     Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
       - Flag: GuildLock
       - Flag: GvG_Te
       - Flag: GvG_Te_Castle

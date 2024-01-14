@@ -11114,11 +11114,10 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 			guild_notice = false; // Do not display it twice
 		}
 
-		if (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) {
-			struct map_data *pmap = map_getmapdata(sd->state.pmap);
+		map_data *pmap = map_getmapdata(sd->state.pmap);
 
-			if ((pmap != nullptr && (mapdata_flag_gvg(pmap) || pmap->getMapFlag(MF_BATTLEGROUND))) || (mapdata != nullptr && (mapdata_flag_gvg(mapdata) || mapdata->getMapFlag(MF_BATTLEGROUND))))
-				status_calc_bl(&sd->bl, { SCB_FLEE }); //Refresh flee penalty
+		if (pmap != nullptr && pmap->getMapFlag(MF_FLEE_PENALTY)) {
+			status_calc_bl(&sd->bl, { SCB_FLEE }); //Refresh flee penalty
 		}
 
 		if( night_flag && mapdata->getMapFlag(MF_NIGHTENABLED) )

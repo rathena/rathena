@@ -5093,6 +5093,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_MISC_DAMAGE_RATE:
 		case MF_LONG_DAMAGE_RATE:
 		case MF_SHORT_DAMAGE_RATE:
+		case MF_FLEE_PENALTY:
 			if (status) {
 				nullpo_retr(false, args);
 

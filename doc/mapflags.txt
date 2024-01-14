@@ -407,6 +407,48 @@ Disables the damage display on a map.
 
 ---------------------------------------
 
+*weapon_damage_rate	<rate>
+
+Weapon skills damage adjustments.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*magic_damage_rate	<rate>
+
+Magic skills damage adjustments.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*misc_damage_rate	<rate>
+
+Misc skills damage adjustments.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*short_damage_rate	<rate>
+
+Melee damage adjustments (non-skill).
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*long_damage_rate	<rate>
+
+Ranged damage adjustments (non-skill).
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
+*flee_penalty	<rate>
+
+Flee penalty applied to players.
+<rate> is given as a percentage (i.e. 60 = 60%).
+
+---------------------------------------
+
 ==================
 | 3. Map Effects |
 ==================

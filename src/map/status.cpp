@@ -7478,10 +7478,7 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 	if( bl->type == BL_PC ) {
 		struct map_data *mapdata = map_getmapdata(bl->m);
 
-		if( mapdata_flag_gvg(mapdata) )
-			flee -= flee * battle_config.gvg_flee_penalty/100;
-		else if( mapdata->getMapFlag(MF_BATTLEGROUND) )
-			flee -= flee * battle_config.bg_flee_penalty/100;
+		flee -= flee * mapdata->getMapFlag(MF_FLEE_PENALTY) / 100;
 	}
 
 	if(!sc || !sc->count)
