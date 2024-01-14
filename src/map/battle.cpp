@@ -4240,6 +4240,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 #ifndef RENEWAL
 		case HT_FREEZINGTRAP:
+			break;
 		case MA_FREEZINGTRAP:
 			skillratio += -50 + 10 * skill_lv;
 			break;
@@ -4400,7 +4401,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sd && pc_checkskill(sd, AM_LEARNINGPOTION))
 				skillratio += 100; // !TODO: What's this bonus increase?
 #else
-			skillratio += 40 * skill_lv;
+			skillratio += 150 * skill_lv;
 #endif
 			break;
 		case MO_FINGEROFFENSIVE:
@@ -7598,7 +7599,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 #else
 					case WZ_VERMILION:
-						skillratio += 20 * skill_lv - 20;
+						skillratio += 80 * skill_lv - 20;
 						break;
 #endif
 					case AB_JUDEX:
@@ -8412,15 +8413,22 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage += (sd ? pc_checkskill(sd,RA_RESEARCHTRAP) * 40 : 0);
 			break;
 #else
+		// case HT_LANDMINE:
+		// case MA_LANDMINE:
+		// 	md.damage = skill_lv * (sstatus->dex + 75) * (100 + sstatus->int_) / 100;
+		// 	break;
+		// case HT_BLASTMINE:
+		// 	md.damage = skill_lv * (sstatus->dex / 2 + 50) * (100 + sstatus->int_) / 100;
+		// 	break;
+		// case HT_CLAYMORETRAP:
+		// 	md.damage = skill_lv * (sstatus->dex / 2 + 75) * (100 + sstatus->int_) / 100;
+		// 	break;
 		case HT_LANDMINE:
 		case MA_LANDMINE:
-			md.damage = skill_lv * (sstatus->dex + 75) * (100 + sstatus->int_) / 100;
-			break;
 		case HT_BLASTMINE:
-			md.damage = skill_lv * (sstatus->dex / 2 + 50) * (100 + sstatus->int_) / 100;
-			break;
 		case HT_CLAYMORETRAP:
-			md.damage = skill_lv * (sstatus->dex / 2 + 75) * (100 + sstatus->int_) / 100;
+		case HT_FREEZINGTRAP:
+			md.damage = skill_lv * (sstatus->dex + 75) * (100 + sstatus->int_) / 35;
 			break;
 #endif
 		case HT_BLITZBEAT:

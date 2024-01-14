@@ -3649,43 +3649,43 @@ Body:
   - Id: 12114
     AegisName: Elemental_Fire
     Name: Elemental Converter
-    Type: Delayconsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Flags:
       BuyingStore: true
     Script: |
-      itemskill "ITEM_ENCHANTARMS",4;
+      sc_start SC_FIREWEAPON,600000,1;
   - Id: 12115
     AegisName: Elemental_Water
     Name: Elemental Converter
-    Type: Delayconsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Flags:
       BuyingStore: true
     Script: |
-      itemskill "ITEM_ENCHANTARMS",2;
+      sc_start SC_WATERWEAPON,600000,1;
   - Id: 12116
     AegisName: Elemental_Earth
     Name: Elemental Converter
-    Type: Delayconsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Flags:
       BuyingStore: true
     Script: |
-      itemskill "ITEM_ENCHANTARMS",3;
+      sc_start SC_EARTHWEAPON,600000,1;
   - Id: 12117
     AegisName: Elemental_Wind
     Name: Elemental Converter
-    Type: Delayconsume
+    Type: Usable
     Buy: 2
     Weight: 10
     Flags:
       BuyingStore: true
     Script: |
-      itemskill "ITEM_ENCHANTARMS",5;
+      sc_start SC_WINDWEAPON,600000,1;
   - Id: 12118
     AegisName: Resist_Fire
     Name: Fireproof Potion

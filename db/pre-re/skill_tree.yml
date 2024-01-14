@@ -273,6 +273,8 @@ Body:
             Level: 1
       - Name: MC_CARTDECORATE
         MaxLevel: 1
+      - Name: BS_UNFAIRLYTRICK
+        MaxLevel: 1
   - Job: Thief
     Inherit:
       Novice: true
@@ -663,8 +665,8 @@ Body:
             Level: 3
           - Name: BS_OVERTHRUST
             Level: 2
-      - Name: BS_UNFAIRLYTRICK
-        MaxLevel: 1
+      # - Name: BS_UNFAIRLYTRICK
+      #   MaxLevel: 1
       - Name: BS_GREED
         MaxLevel: 1
       - Name: BS_ADRENALINE2
@@ -1352,6 +1354,8 @@ Body:
        # Requires:
          # - Name: AM_PHARMACY
            # Level: 10
+      - Name: BS_GREED
+        MaxLevel: 1
   - Job: Bard
     Inherit:
       Novice: true

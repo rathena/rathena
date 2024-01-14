@@ -2239,9 +2239,11 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 			if( sc )
 			{
 				if(sc->getSCE(SC_OVERTHRUST))
-					rate += 10;
+					// rate += 10;
+					rate += 0;
 				if(sc->getSCE(SC_MAXOVERTHRUST))
-					rate += 10;
+					// rate += 10;
+					rate += 0;
 			}
 #endif
 			if( rate )
@@ -3296,7 +3298,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			break;
 		case MO_CHAINCOMBO:
 			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0) {
-				duration = 1500;
+				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
@@ -3304,19 +3306,19 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
 				party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skill_lv);
 			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) {
-				duration = 1500;
+				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			[[fallthrough]]; // so we can possibly cast TigerFist or straight to ExtremityFist
 		case CH_TIGERFIST:
 			if (!duration && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
-				duration = 1500;
+				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			[[fallthrough]]; // so we can possibly cast ChainCrush or straight to ExtremityFist
 		case CH_CHAINCRUSH:
 			if (!duration && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.getSCE(SC_EXPLOSIONSPIRITS)) {
-				duration = 1500;
+				duration = 1;
 				target_id = 0; // Will target current auto-target instead
 			}
 			break;
@@ -18735,7 +18737,8 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 #ifdef RENEWAL
 				req.zeny -= req.zeny*20/100;
 #else
-				req.zeny -= req.zeny*10/100;
+				// req.zeny -= req.zeny*10/100;
+				req.zeny -= req.zeny*30/100;
 #endif
 			break;
 		case AL_HOLYLIGHT:

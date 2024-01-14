@@ -3326,7 +3326,7 @@ Body:
       - Level: 10
         Time: 10500
     AfterCastActDelay: 5000
-    Duration1: 4000
+    Duration1: 1000
     Duration2: 30000
     Requires:
       SpCost:
@@ -3963,15 +3963,15 @@ Body:
     SplashArea: -1
     Duration1:
       - Level: 1
-        Time: 30000
+        Time: 220000
       - Level: 2
-        Time: 60000
+        Time: 240000
       - Level: 3
-        Time: 90000
+        Time: 260000
       - Level: 4
-        Time: 120000
+        Time: 280000
       - Level: 5
-        Time: 150000
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -4005,15 +4005,15 @@ Body:
     SplashArea: -1
     Duration1:
       - Level: 1
-        Time: 10000
+        Time: 220000
       - Level: 2
-        Time: 20000
+        Time: 240000
       - Level: 3
-        Time: 30000
+        Time: 260000
       - Level: 4
-        Time: 40000
+        Time: 280000
       - Level: 5
-        Time: 50000
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -4043,15 +4043,15 @@ Body:
     SplashArea: -1
     Duration1:
       - Level: 1
-        Time: 20000
+        Time: 220000
       - Level: 2
-        Time: 40000
+        Time: 240000
       - Level: 3
-        Time: 60000
+        Time: 260000
       - Level: 4
-        Time: 80000
+        Time: 280000
       - Level: 5
-        Time: 100000
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -4404,7 +4404,7 @@ Body:
     Name: HT_FREEZINGTRAP
     Description: Freezing Trap
     MaxLevel: 5
-    Type: Weapon
+    Type: Misc
     TargetType: Ground
     DamageFlags:
       Splash: true
@@ -4549,7 +4549,7 @@ Body:
       SpCost: 15
       ItemCost:
         - Item: Booby_Trap
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Claymoretrap
       Range: 1
@@ -6460,11 +6460,11 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreFlee: true
+      IgnoreAtkCard: false
+      IgnoreFlee: false
     Flags:
-      IgnoreAutoGuard: true
-      IgnoreCicada: true
+      IgnoreAutoGuard: false
+      IgnoreCicada: false
     Range: 9
     Hit: Single
     HitCount: 1
@@ -6487,7 +6487,7 @@ Body:
         Time: 13
     Duration2: 120000
     Requires:
-      SpCost: 15
+      SpCost: 10
       ItemCost:
         - Item: Acid_Bottle
           Amount: 1
@@ -8801,10 +8801,10 @@ Body:
     Flags:
       AllowWhenPerforming: true
     Range: 9
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
-    CastTime: 1500
+    CastTime: 750
     Requires:
       SpCost:
         - Level: 1
@@ -17189,9 +17189,9 @@ Body:
       AllowOnMado: true
     Hit: Single
     SplashArea: 2
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 0
     Requires:
-      SpCost: 10
+      SpCost: 0
   - Id: 1014
     Name: PR_REDEMPTIO
     Description: Redemptio
