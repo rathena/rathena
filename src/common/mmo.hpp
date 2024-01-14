@@ -396,21 +396,6 @@ struct s_skill {
 	uint8 flag; // see enum e_skill_flag
 };
 
-struct script_reg_state {
-	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
-	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
-};
-
-struct script_reg_num {
-	struct script_reg_state flag;
-	int64 value;
-};
-
-struct script_reg_str {
-	struct script_reg_state flag;
-	char *value;
-};
-
 //For saving status changes across sessions. [Skotlex]
 struct status_change_data {
 	unsigned short type; //SC_type

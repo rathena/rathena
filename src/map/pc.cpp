@@ -86,8 +86,6 @@ int day_timer_tid = INVALID_TIMER;
 int night_timer_tid = INVALID_TIMER;
 
 struct eri *pc_sc_display_ers = NULL;
-struct eri *num_reg_ers;
-struct eri *str_reg_ers;
 int pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
@@ -2143,8 +2141,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->mail.pending_zeny = 0;
 	sd->mail.pending_slots = 0;
 
-	sd->regs.vars = i64db_alloc(DB_OPT_BASE);
-	sd->regs.arrays = NULL;
+	sd->regs.vars = reg_db_create();
 	sd->vars_dirty = false;
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
@@ -11168,7 +11165,7 @@ bool pc_candrop(map_session_data *sd, struct item *item)
  *------------------------------------------*/
 int64 pc_readreg(map_session_data* sd, int64 reg)
 {
-	return i64db_i64get(sd->regs.vars, reg);
+	return sd->regs.vars->getnum(reg);
 }
 
 /*==========================================
@@ -11181,13 +11178,11 @@ bool pc_setreg(map_session_data* sd, int64 reg, int64 val)
 	nullpo_retr(false, sd);
 
 	if( val ) {
-		i64db_i64put(sd->regs.vars, reg, val);
-		if( index )
-			script_array_update(&sd->regs, reg, false);
+		reg_db::entry p = val;
+		p.temp = true;
+		sd->regs.vars->move(reg, p);
 	} else {
-		i64db_remove(sd->regs.vars, reg);
-		if( index )
-			script_array_update(&sd->regs, reg, true);
+		sd->regs.vars->erase(reg);
 	}
 
 	return true;
@@ -11196,50 +11191,26 @@ bool pc_setreg(map_session_data* sd, int64 reg, int64 val)
 /*==========================================
  * Read '@type$' variables (temporary string char reg)
  *------------------------------------------*/
-char* pc_readregstr(map_session_data* sd, int64 reg)
+std::string& pc_readregstr(map_session_data* sd, int64 reg)
 {
-	struct script_reg_str *p = NULL;
-
-	p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg);
-
-	return p ? p->value : NULL;
+	return sd->regs.vars->getstr(reg);
 }
 
 /*==========================================
  * Set '@type$' variables (temporary string char reg)
  *------------------------------------------*/
-bool pc_setregstr(map_session_data* sd, int64 reg, const char* str)
+bool pc_setregstr(struct map_session_data* sd, int64 reg, const char* val)
 {
-	struct script_reg_str *p = NULL;
 	unsigned int index = script_getvaridx(reg);
-	DBData prev;
 
 	nullpo_retr(false, sd);
 
-	if( str[0] ) {
-		p = ers_alloc(str_reg_ers, struct script_reg_str);
-
-		p->value = aStrdup(str);
-		p->flag.type = 1;
-
-		if (sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev)) {
-			p = (struct script_reg_str *)db_data2ptr(&prev);
-			if( p->value )
-				aFree(p->value);
-			ers_free(str_reg_ers, p);
-		} else {
-			if( index )
-				script_array_update(&sd->regs, reg, false);
-		}
+	if( val[0] ) {
+		reg_db::entry p = val;
+		p.temp = true;
+		sd->regs.vars->move(reg, p);
 	} else {
-		if (sd->regs.vars->remove(sd->regs.vars, db_i642key(reg), &prev)) {
-			p = (struct script_reg_str *)db_data2ptr(&prev);
-			if( p->value )
-				aFree(p->value);
-			ers_free(str_reg_ers, p);
-			if( index )
-				script_array_update(&sd->regs, reg, true);
-		}
+		sd->regs.vars->erase(reg);
 	}
 
 	return true;
@@ -11263,9 +11234,7 @@ int64 pc_readregistry(map_session_data *sd, int64 reg)
 		return 0;
 	}
 
-	p = (struct script_reg_num *)i64db_get(sd->regs.vars, reg);
-
-	return p ? p->value : 0;
+	return pc_readreg(sd, reg);
 }
 
 /**
@@ -11274,7 +11243,7 @@ int64 pc_readregistry(map_session_data *sd, int64 reg)
  * - '#type$' (permanent str account reg)
  * - '##type$' (permanent str account reg2)
  **/
-char* pc_readregistry_str(map_session_data *sd, int64 reg)
+std::string& pc_readregistry_str(map_session_data *sd, int64 reg)
 {
 	struct script_reg_str *p = NULL;
 
@@ -11283,12 +11252,10 @@ char* pc_readregistry_str(map_session_data *sd, int64 reg)
 		//This really shouldn't happen, so it's possible the data was lost somewhere, we should request it again.
 		//intif->request_registry(sd,type==3?4:type);
 		set_eof(sd->fd);
-		return NULL;
+		return empty_string;
 	}
 
-	p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg);
-
-	return p ? p->value : NULL;
+	return pc_readregstr(sd, reg);
 }
 
 /**
@@ -11297,9 +11264,8 @@ char* pc_readregistry_str(map_session_data *sd, int64 reg)
  * - '#type' (permanent numeric account reg)
  * - '##type' (permanent numeric account reg2)
  **/
-bool pc_setregistry(map_session_data *sd, int64 reg, int64 val)
+bool pc_setregistry(struct map_session_data *sd, int64 reg, int64 val)
 {
-	struct script_reg_num *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
 	uint32 index = script_getvaridx(reg);
 
@@ -11308,37 +11274,23 @@ bool pc_setregistry(map_session_data *sd, int64 reg, int64 val)
 		return false;
 	}
 
-	if ((p = (struct script_reg_num *)i64db_get(sd->regs.vars, reg))) {
-		if( val ) {
-			if( !p->value && index ) /* its a entry that was deleted, so we reset array */
-				script_array_update(&sd->regs, reg, false);
-			p->value = val;
-		} else {
-			p->value = 0;
-			if( index )
-				script_array_update(&sd->regs, reg, true);
-		}
+	if (sd->regs.vars->exists(reg)) {
+		auto& p = sd->regs.vars->get(reg);
+		if (val)
+			p = val;
+		else
+			p = 0;
+
 		if (!reg_load)
-			p->flag.update = 1;/* either way, it will require either delete or replace */
-	} else if( val ) {
-		DBData prev;
+			p.save = 1;
+	} else if (val) {
+		reg_db::entry p = val;
+		p.save = 1;
 
-		if( index )
-			script_array_update(&sd->regs, reg, false);
-
-		p = ers_alloc(num_reg_ers, struct script_reg_num);
-
-		p->value = val;
-		if (!reg_load)
-			p->flag.update = 1;
-
-		if (sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev)) {
-			p = (struct script_reg_num *)db_data2ptr(&prev);
-			ers_free(num_reg_ers, p);
-		}
+		sd->regs.vars->move(reg, p);
 	}
 
-	if (!reg_load && p)
+	if (!reg_load)
 		sd->vars_dirty = true;
 
 	return true;
@@ -11350,9 +11302,8 @@ bool pc_setregistry(map_session_data *sd, int64 reg, int64 val)
  * - '#type$' (permanent str account reg)
  * - '##type$' (permanent str account reg2)
  **/
-bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
+bool pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 {
-	struct script_reg_str *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
 	unsigned int index = script_getvaridx(reg);
 	size_t vlen = 0;
@@ -11368,44 +11319,23 @@ bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
 		return false;
 	}
 
-	if( (p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg) ) ) {
-		if( val[0] ) {
-			if( p->value )
-				aFree(p->value);
-			else if ( index ) // an entry that was deleted, so we reset
-				script_array_update(&sd->regs, reg, false);
-			p->value = aStrdup(val);
-		} else {
-			if (p->value)
-				aFree(p->value);
-			p->value = NULL;
-			if( index )
-				script_array_update(&sd->regs, reg, true);
-		}
-		if( !reg_load )
-			p->flag.update = 1; // either way, it will require either delete or replace
-	} else if( val[0] ) {
-		DBData prev;
+	if (sd->regs.vars->exists(reg)) {
+		auto& p = sd->regs.vars->get(reg);
+		if (val[0])
+			p = val;
+		else
+			p = "";
 
-		if( index )
-			script_array_update(&sd->regs, reg, false);
+		if (!reg_load)
+			p.save = 1;
+	} else if (val[0]) {
+		reg_db::entry p = val;
+		p.save = 1;
 
-		p = ers_alloc(str_reg_ers, struct script_reg_str);
-
-		p->value = aStrdup(val);
-		if( !reg_load )
-			p->flag.update = 1;
-		p->flag.type = 1;
-
-		if( sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev) ) {
-			p = (struct script_reg_str *)db_data2ptr(&prev);
-			if( p->value )
-				aFree(p->value);
-			ers_free(str_reg_ers, p);
-		}
+		sd->regs.vars->move(reg, p);
 	}
 
-	if( !reg_load && p )
+	if (!reg_load)
 		sd->vars_dirty = true;
 
 	return true;
@@ -15822,8 +15752,6 @@ void do_final_pc(void) {
 	do_final_pc_groups();
 
 	ers_destroy(pc_sc_display_ers);
-	ers_destroy(num_reg_ers);
-	ers_destroy(str_reg_ers);
 
 	attendance_db.clear();
 	reputation_db.clear();
@@ -15881,10 +15809,6 @@ void do_init_pc(void) {
 	do_init_pc_groups();
 
 	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.cpp:pc_sc_display_ers", ERS_OPT_FLEX_CHUNK);
-	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.cpp:num_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
-	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.cpp:str_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
 
 	ers_chunk_size(pc_sc_display_ers, 150);
-	ers_chunk_size(num_reg_ers, 300);
-	ers_chunk_size(str_reg_ers, 50);
 }

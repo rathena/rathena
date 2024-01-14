@@ -395,9 +395,6 @@ int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
  */
 int intif_saveregistry(map_session_data *sd)
 {
-	DBIterator *iter;
-	DBKey key;
-	DBData *data;
 	int plen = 0;
 	size_t len;
 
@@ -413,26 +410,22 @@ int intif_saveregistry(map_session_data *sd)
 
 	plen = 14;
 
-	iter = db_iterator(sd->regs.vars);
-	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
+	for (auto& [uid, reg] : *sd->regs.vars) {
 		const char *varname = NULL;
-		struct script_reg_state *src = NULL;
 		bool lValid = false;
 
-		if( data->type != DB_DATA_PTR ) // it's a @number
+		if (reg.temp)
 			continue;
 
-		varname = get_str(script_getvarid(key.i64));
+		varname = get_str(script_getvarid(uid));
 
 		if( varname[0] == '@' ) // @string$ can get here, so we skip
 			continue;
 
-		src = (struct script_reg_state *)db_data2ptr(data);
-
-		if( !src->update )
+		if( !reg.save )
 			continue;
 
-		src->update = false;
+		reg.save = false;
 		lValid = script_check_RegistryVariableLength(0,varname,&len);
 		++len;
 
@@ -446,44 +439,35 @@ int intif_saveregistry(map_session_data *sd)
 		safestrncpy(WFIFOCP(inter_fd,plen), varname, len); //the key
 		plen += len;
 
-		WFIFOL(inter_fd, plen) = script_getvaridx(key.i64);
+		WFIFOL(inter_fd, plen) = script_getvaridx(uid);
 		plen += 4;
 
-		if( src->type ) {
-			struct script_reg_str *p = (struct script_reg_str *)src;
-
-			WFIFOB(inter_fd, plen) = p->value ? 2 : 3; //var type
+		if( reg.is_string ) {
+			WFIFOB(inter_fd, plen) = reg.str_value.size() ? 2 : 3; //var type
 			plen += 1;
 
-			if( p->value ) {
-				lValid = script_check_RegistryVariableLength(1,p->value,&len);
+			if( reg.str_value.size() ) {
+				lValid = script_check_RegistryVariableLength(1,reg.str_value.c_str(),&len);
 				++len;
 				if ( !lValid ) { // error can't be higher; the column size is 254. (nb the transmission limit with be fixed with protobuf revamp)
-					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR " to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
+					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR " to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,reg.str_value.c_str(),len);
 					len = 254;
-					p->value[len - 1] = '\0'; //this is backward for old char-serv but new one doesn't need this
 				}
 
 				WFIFOB(inter_fd, plen) = (uint8)len; 
 				plen += 1;
 
-				safestrncpy(WFIFOCP(inter_fd,plen), p->value, len);
+				safestrncpy(WFIFOCP(inter_fd,plen), reg.str_value.c_str(), len);
 				plen += len;
-			} else {
-				script_reg_destroy_single(sd,key.i64,&p->flag);
 			}
 
 		} else {
-			struct script_reg_num *p = (struct script_reg_num *)src;
-
-			WFIFOB(inter_fd, plen) =  p->value ? 0 : 1;
+			WFIFOB(inter_fd, plen) = reg.i64_value ? 0 : 1;
 			plen += 1;
 
-			if( p->value ) {
-				WFIFOQ(inter_fd, plen) = p->value;
+			if( reg.i64_value ) {
+				WFIFOQ(inter_fd, plen) = reg.i64_value;
 				plen += 8;
-			} else {
-				script_reg_destroy_single(sd,key.i64,&p->flag);
 			}
 
 		}
@@ -505,7 +489,6 @@ int intif_saveregistry(map_session_data *sd)
 			plen = 14;
 		}
 	}
-	dbi_destroy(iter);
 
 	WFIFOW(inter_fd, 2) = plen;
 	WFIFOSET(inter_fd, plen);

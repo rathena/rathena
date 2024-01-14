@@ -665,8 +665,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 	entry->id = db->id;
 	entry->owner_id = owner_id;
 	entry->mode = mode;
-	entry->regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
-	entry->regs.arrays = nullptr;
+	entry->regs.vars = reg_db_create();
 	instances.insert({ instance_id, entry });
 
 	switch(mode) {
@@ -1022,13 +1021,8 @@ bool instance_destroy(int instance_id)
 			clif_instance_changewait(instance_id, 0xffff);
 	}
 
-	if( idata->regs.vars ) {
-		db_destroy(idata->regs.vars);
-		idata->regs.vars = NULL;
-	}
-
-	if( idata->regs.arrays )
-		idata->regs.arrays->destroy(idata->regs.arrays, script_free_array_db);
+	script_free_vars(idata->regs.vars);
+	idata->regs.vars = NULL;
 
 	ShowInfo("[Instance] Destroyed: %s (%d)\n", instance_db.find(idata->id)->name.c_str(), instance_id);
 

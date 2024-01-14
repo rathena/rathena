@@ -13,6 +13,10 @@
 #include <common/mmo.hpp>
 #include <common/timer.hpp>
 
+#include <unordered_map>
+#include <map>
+#include <memory>
+
 #define NUM_WHISPER_VAR 10
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -146,8 +150,6 @@ struct eri;
 extern int potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 extern int potion_hp, potion_per_hp, potion_sp, potion_per_sp;
 extern int potion_target;
-extern unsigned int *generic_ui_array;
-extern unsigned int generic_ui_array_size;
 
 struct Script_Config {
 	unsigned warn_func_mismatch_argtypes : 1;
@@ -264,11 +266,156 @@ typedef enum c_op {
 
 /**
  * Generic reg database abstraction to be used with various types of regs/script variables.
+ * Rewritten with C++ STL containers for better performance. [inhyositsu]
  */
 struct reg_db {
-	struct DBMap *vars;
-	struct DBMap *arrays;
+	struct entry {
+		int64 uid = 0;
+		int64 i64_value = 0;
+		std::string str_value = "";
+		bool save = false;
+		bool is_string = false;
+		bool temp = false;
+
+		bool empty() const {
+			return i64_value == 0 && str_value.empty();
+		}
+
+		entry() = default;
+		entry(int64 value) : i64_value(value), is_string(false) {}
+		entry(int value) : i64_value(value), is_string(false) {}
+		entry(std::string value) : str_value(value), is_string(true) {}
+		entry(const char* value) : str_value(value), is_string(true) {}
+	};
+
+	struct regs {
+	private:
+		std::unordered_map<int64, entry> db;
+		std::unordered_map<int, std::map<int, bool>> arrays;
+	public:
+		using array_iterator = std::map<int, bool>::iterator;
+		bool exists(int id, int index) {
+			return exists(GetUID(id, index));
+		}
+
+		bool exists(int64 uid) {
+			return db.count(uid);
+		}
+
+		entry& get(int id, int index) {
+			return get(GetUID(id, index));
+		}
+
+		entry& get(int64 uid) {
+			return db[uid];
+		}
+
+		std::string& getstr(int64 uid) {
+			if (!exists(uid))
+				get(uid) = entry("");
+
+			return get(uid).str_value;
+		}
+
+		int64 getnum(int64 uid) {
+			return get(uid).i64_value;
+		}
+
+		// use ove semantics to avoid copy
+		// so the original value will be empty
+		void move(int64 uid, entry& value) {
+			auto id = GetID(uid);
+			auto index = GetIndex(uid);
+
+			get(uid) = std::move(value);
+
+			if (get(uid).empty())
+				arrays[id].erase(index);
+			else
+				arrays[id][index] = true;
+		}
+
+		void id_erase(int id) {
+			db.erase(id);
+
+			for (auto [index, exist] : arrays[id]) {
+				if (exist) {
+					auto uid = GetUID(id, index);
+					db.erase(uid);
+				}
+			}
+
+			arrays.erase(id);
+		}
+
+		void erase(int64 uid) {
+			db.erase(uid);
+		}
+
+		auto begin() {
+			return db.begin();
+		}
+
+		auto end() {
+			return db.end();
+		}
+
+		auto begin() const {
+			return db.begin();
+		}
+
+		auto end() const {
+			return db.end();
+		}
+
+		bool array_id_exists(int id) {
+			return arrays.count(id);
+		}
+
+		size_t array_size(int id) {
+			if (!array_id_exists(id))
+				return 0;
+
+			return arrays[id].size();
+		}
+
+		auto array_iterator_begin(int id) {
+			return arrays[id].begin();
+		}
+
+		auto array_iterator_end(int id) {
+			return arrays[id].end();
+		}
+
+		auto array_iterator_rbegin(int id) {
+			return arrays[id].rbegin();
+		}
+
+		auto array_iterator_rend(int id) {
+			return arrays[id].rend();
+		}
+
+		auto& array_get(int id) {
+			return arrays[id];
+		}
+
+		auto array_lower_bound(int id, int index) {
+			return arrays[id].lower_bound(index);
+		}
+
+		auto array_erase_iterator(int id, array_iterator it) {
+			return arrays[id].erase(it);
+		}
+	};
+
+	regs* vars;
+	static regs* create(const char *file, int line, const char *func);
+	static int64 GetUID(int id, int index);
+	static int GetID(int64 uid);
+	static int GetIndex(int64 uid);
 };
+
+#define reg_db_create() reg_db::create(ALC_MARK)
 
 struct script_retinfo {
 	struct reg_db scope;        ///< scope variables
@@ -341,12 +488,6 @@ struct script_reg {
 struct script_regstr {
 	int64 index;
 	char* data;
-};
-
-struct script_array {
-	unsigned int id;       ///< the first 32b of the 64b uid, aka the id
-	unsigned int size;     ///< how many members
-	unsigned int *members; ///< member list
 };
 
 enum script_parse_options {
@@ -2193,7 +2334,6 @@ public:
 /**
  * used to generate quick script_array entries
  **/
-extern struct eri *array_ers;
 extern DBMap *st_db;
 extern unsigned int active_scripts;
 extern unsigned int next_id;
@@ -2225,7 +2365,7 @@ void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);
 void script_free_code(struct script_code* code);
-void script_free_vars(struct DBMap *storage);
+void script_free_vars(reg_db::regs* storage);
 struct script_state* script_alloc_state(struct script_code* rootscript, int pos, int rid, int oid);
 void script_free_state(struct script_state* st);
 
@@ -2258,21 +2398,10 @@ void setd_sub_str( struct script_state* st, map_session_data* sd, const char* va
  * Array Handling
  **/
 struct reg_db *script_array_src(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
-void script_array_update(struct reg_db *src, int64 num, bool empty);
-void script_array_delete(struct reg_db *src, struct script_array *sa);
-void script_array_remove_member(struct reg_db *src, struct script_array *sa, unsigned int idx);
-void script_array_add_member(struct script_array *sa, unsigned int idx);
-unsigned int script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
 unsigned int script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
-void script_array_ensure_zero(struct script_state *st, map_session_data *sd, int64 uid, struct reg_db *ref);
-int script_free_array_db(DBKey key, DBData *data, va_list ap);
 /* */
-void script_reg_destroy_single(map_session_data *sd, int64 reg, struct script_reg_state *data);
-int script_reg_destroy(DBKey key, DBData *data, va_list ap);
-/* */
-void script_generic_ui_array_expand(unsigned int plus);
-unsigned int *script_array_cpy_list(struct script_array *sa);
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
+extern std::string empty_string;
 #endif /* SCRIPT_HPP */

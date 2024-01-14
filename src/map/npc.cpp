@@ -5161,6 +5161,7 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 		ShowInfo("npc_parse_function: Overwriting user function [%s] (%s:%d)\n", w3, filepath, strline(buffer,start-buffer));
 		script_stop_scriptinstances(oldscript);
 		script_free_vars(oldscript->local.vars);
+		oldscript->local.vars = NULL;
 		aFree(oldscript->script_buf);
 		aFree(oldscript);
 	}
