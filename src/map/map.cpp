@@ -217,11 +217,11 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	uint16 zone_id = static_cast<uint16>(zone_id_const);
-	std::shared_ptr<s_map_zones> zone = this->find(zone_id);
+	std::shared_ptr<s_map_zone> zone = this->find(zone_id);
 	bool exists = zone != nullptr;
 
 	if (!exists) {
-		zone = std::make_shared<s_map_zones>();
+		zone = std::make_shared<s_map_zone>();
 		zone->id = zone_id;
 	}
 

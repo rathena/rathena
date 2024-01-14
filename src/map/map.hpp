@@ -949,7 +949,7 @@ private:
 	std::vector<int> flags;
 };
 
-struct s_map_zones {
+struct s_map_zone {
 	uint16 id;
 	std::unordered_map<std::string, uint16> disabled_commands;
 	std::unordered_map<uint16, std::pair<uint16, uint16>> disabled_skills;
@@ -960,7 +960,7 @@ struct s_map_zones {
 	std::map<std::pair<int16, uint16>, std::string> mapflags;
 };
 
-class MapZoneDatabase : public TypesafeYamlDatabase<uint16, s_map_zones> {
+class MapZoneDatabase : public TypesafeYamlDatabase<uint16, s_map_zone> {
 public:
 	MapZoneDatabase() : TypesafeYamlDatabase("MAP_ZONES", 1) {
 
