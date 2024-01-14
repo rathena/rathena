@@ -16944,6 +16944,27 @@ Body:
       Flag:
         NoReiteration: true
         NoOverlap: true
+  - Id: 777
+    Name: BS_CARTEFFICIENCY
+    Description: Cart Efficiency
+    MaxLevel: 1
+    TargetType: Self
+    Flags:
+      IsQuest: true
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Duration1: 600000
+    Requires:
+      SpCost: 10
+      # Need to change this to Tempered Iron (when adding Tempered Iron)
+      ItemCost:
+        - Item: Iron
+          Amount: 3
+        - Item: Iron_Ore
+          Amount: 1
+    Status: CartEfficiency
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack

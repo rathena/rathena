@@ -1894,6 +1894,7 @@
 	export_constant(SC_RUSH_QUAKE1);
 	export_constant(SC_RUSH_QUAKE2);
 	export_constant(SC_G_LIFEPOTION);
+	export_constant(SC_CARTEFFICIENCY);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);

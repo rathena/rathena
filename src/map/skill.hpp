@@ -2503,6 +2503,8 @@ enum e_skill {
 	ABR_NET_REPAIR,
 	ABR_NET_SUPPORT,
 	ABR_INFINITY_BUSTER,
+
+	BS_CARTEFFICIENCY = 777,
 };
 
 /// The client view ids for land skills.

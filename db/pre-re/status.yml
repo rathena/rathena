@@ -7048,3 +7048,6 @@ Body:
       NoClearbuff: true
   - Status: WeaponBreaker
     DurationLookup: NPC_WEAPONBRAKER
+  - Status: CartEfficiency
+    Icon: EFST_GN_CARTBOOST
+    DurationLookup: BS_CARTEFFICIENCY

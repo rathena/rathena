@@ -571,6 +571,8 @@ Body:
     Tree:
       - Name: BS_IRON
         MaxLevel: 5
+      - Name: BS_CARTEFFICIENCY
+        MaxLevel: 1
       - Name: BS_STEEL
         MaxLevel: 5
         Requires:

@@ -7915,6 +7915,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_DAMAGE_HEAL:
 	case NPC_RELIEVE_ON:
 	case NPC_RELIEVE_OFF:
+	case BS_CARTEFFICIENCY:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -18733,6 +18734,9 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 #ifdef RENEWAL
 		case WS_CARTTERMINATION:
 #endif
+			if(sc->getSCE(SC_CARTEFFICIENCY))
+				req.zeny = 0;
+				break;
 			if(pc_checkskill(sd,BS_UNFAIRLYTRICK)>0)
 #ifdef RENEWAL
 				req.zeny -= req.zeny*20/100;

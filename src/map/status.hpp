@@ -1287,6 +1287,9 @@ enum sc_type : int16 {
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
+
+	SC_CARTEFFICIENCY,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
