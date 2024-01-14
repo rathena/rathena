@@ -11232,7 +11232,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	}
 
 	// Trigger skill effects if you appear standing on them
-	if (mapdata && mapdata->getMapFlag(MF_INVINCIBLE_TIME))
+	if (sd->invincible_timer == INVALID_TIMER)
 		skill_unit_move(&sd->bl,gettick(),1);
 
 	pc_show_questinfo_reinit(sd);
