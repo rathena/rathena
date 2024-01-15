@@ -1353,6 +1353,21 @@ Body:
         Requires:
           - Name: AM_PHARMACY
             Level: 10
+      - Name: AM_TWILIGHT4
+        MaxLevel: 1
+        Requires:
+          - Name: AM_PHARMACY
+            Level: 10
+      - Name: AM_TWILIGHT5
+        MaxLevel: 1
+        Requires:
+          - Name: AM_PHARMACY
+            Level: 10
+      - Name: AM_TWILIGHT6
+        MaxLevel: 1
+        Requires:
+          - Name: AM_PHARMACY
+            Level: 10
      # - Name: AM_TWILIGHT4
        # MaxLevel: 1
        # Requires:

@@ -13653,6 +13653,63 @@ Body:
       ItemCost:
         - Item: Medicine_Bowl
           Amount: 200
+  - Id: 576
+    Name: AM_TWILIGHT4
+    Description: Twilight Alchemy 4
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSpirit: true
+    Hit: Single
+    CastTime: 3000
+    AfterCastActDelay: 10000
+    CastTimeFlags:
+      IgnoreDex: true
+    Requires:
+      SpCost: 200
+      ItemCost:
+        - Item: Medicine_Bowl
+          Amount: 200
+  - Id: 787
+    Name: AM_TWILIGHT5
+    Description: Twilight Alchemy 5
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSpirit: true
+    Hit: Single
+    CastTime: 3000
+    AfterCastActDelay: 10000
+    CastTimeFlags:
+      IgnoreDex: true
+    Requires:
+      SpCost: 200
+      ItemCost:
+        - Item: Medicine_Bowl
+          Amount: 400
+  - Id: 788
+    Name: AM_TWILIGHT6
+    Description: Twilight Alchemy 6
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSpirit: true
+    Hit: Single
+    CastTime: 3000
+    AfterCastActDelay: 10000
+    CastTimeFlags:
+      IgnoreDex: true
+    Requires:
+      SpCost: 200
+      ItemCost:
+        - Item: Medicine_Bowl
+          Amount: 200
   - Id: 499
     Name: HT_POWER
     Description: Beast Strafing

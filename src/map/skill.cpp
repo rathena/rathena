@@ -9498,24 +9498,73 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case AM_TWILIGHT3:
+		// if (sd) {
+		// 	int ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
+		// 	short alcohol_idx = -1, acid_idx = -1, fire_idx = -1;
+		// 	if( ebottle >= 0 )
+		// 		ebottle = sd->inventory.u.items_inventory[ebottle].amount;
+		// 	//check if you can produce all three, if not, then fail:
+		// 	if (!(alcohol_idx = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100)) //100 Alcohol
+		// 		|| !(acid_idx = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50)) //50 Acid Bottle
+		// 		|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50)) //50 Flame Bottle
+		// 		|| ebottle < 200 //200 empty bottle are required at total.
+		// 	) {
+		// 		clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		// 		break;
+		// 	}
+		// 	clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+		// 	skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, alcohol_idx-1);
+		// 	skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, acid_idx-1);
+		// 	skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, fire_idx-1);
+		// }
 		if (sd) {
 			int ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
-			short alcohol_idx = -1, acid_idx = -1, fire_idx = -1;
+			short alcohol_idx = -1;
 			if( ebottle >= 0 )
 				ebottle = sd->inventory.u.items_inventory[ebottle].amount;
 			//check if you can produce all three, if not, then fail:
-			if (!(alcohol_idx = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100)) //100 Alcohol
-				|| !(acid_idx = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50)) //50 Acid Bottle
-				|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50)) //50 Flame Bottle
+			if (!(alcohol_idx = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 200)) //100 Alcohol
 				|| ebottle < 200 //200 empty bottle are required at total.
 			) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, alcohol_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, acid_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, fire_idx-1);
+			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 200, alcohol_idx-1);
+		}
+		break;
+	case AM_TWILIGHT4:
+		if (sd) {
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			if (!skill_produce_mix(sd, skill_id, ITEMID_BLUE_POTION, 0, 0, 0, 200, -1))
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		}
+		break;
+	case AM_TWILIGHT5:
+		if (sd) {
+			int ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
+			short acid_idx = -1, fire_idx = -1;
+			if( ebottle >= 0 )
+				ebottle = sd->inventory.u.items_inventory[ebottle].amount;
+			//check if you can produce all three, if not, then fail:
+			if (!(acid_idx = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 200)) //200 Acid Bottle
+				|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 200)) //200 Flame Bottle
+				|| ebottle < 400 //400 empty bottle are required at total.
+			) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				break;
+			}
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 200, acid_idx-1);
+			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 200, fire_idx-1);
+		}
+		break;
+	case AM_TWILIGHT6:
+		if (sd) {
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			//Prepare 200 Slim White Potions.
+			if (!skill_produce_mix(sd, skill_id, ITEMID_COATING_BOTTLE, 0, 0, 0, 200, -1))
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 	case SA_DISPELL:
@@ -17129,6 +17178,9 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 				case AM_TWILIGHT1:
 				case AM_TWILIGHT2:
 				case AM_TWILIGHT3:
+				case AM_TWILIGHT4:
+				case AM_TWILIGHT5:
+				case AM_TWILIGHT6:
 					return false;
 			}
 			break;
@@ -17474,13 +17526,13 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 			}
 			break;
 #endif
-		case AM_TWILIGHT2:
-		case AM_TWILIGHT3:
-			if (!party_skill_check(sd, sd->status.party_id, skill_id, skill_lv)) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return false;
-			}
-			break;
+		// case AM_TWILIGHT2:
+		// case AM_TWILIGHT3:
+		// 	if (!party_skill_check(sd, sd->status.party_id, skill_id, skill_lv)) {
+		// 		clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		// 		return false;
+		// 	}
+		// 	break;
 		case SG_SUN_WARM:
 		case SG_MOON_WARM:
 		case SG_STAR_WARM:
@@ -18174,6 +18226,9 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 				case AM_TWILIGHT1:
 				case AM_TWILIGHT2:
 				case AM_TWILIGHT3:
+				case AM_TWILIGHT4:
+				case AM_TWILIGHT5:
+				case AM_TWILIGHT6:
 					return false;
 			}
 			break;
@@ -21734,6 +21789,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			case AM_TWILIGHT1:
 			case AM_TWILIGHT2:
 			case AM_TWILIGHT3:
+			case AM_TWILIGHT4:
+			case AM_TWILIGHT5:
+			case AM_TWILIGHT6:
 				make_per = pc_checkskill(sd,AM_LEARNINGPOTION)*50
 					+ pc_checkskill(sd,AM_PHARMACY)*300 + sd->status.job_level*20
 					+ (status->int_/2)*10 + status->dex*10+status->luk*10;
@@ -22023,6 +22081,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				case AM_TWILIGHT1:
 				case AM_TWILIGHT2:
 				case AM_TWILIGHT3:
+				case AM_TWILIGHT4:
+				case AM_TWILIGHT5:
+				case AM_TWILIGHT6:
 					flag = battle_config.produce_item_name_input&0x2;
 					break;
 				case AL_HOLYWATER:
@@ -22069,7 +22130,10 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 					if (skill_id != AM_PHARMACY &&
 						skill_id != AM_TWILIGHT1 &&
 						skill_id != AM_TWILIGHT2 &&
-						skill_id != AM_TWILIGHT3)
+						skill_id != AM_TWILIGHT3 &&
+						skill_id != AM_TWILIGHT4 &&
+						skill_id != AM_TWILIGHT5 &&
+						skill_id != AM_TWILIGHT6)
 						continue;
 					//Add fame as needed.
 					switch(++sd->potion_success_counter) {
@@ -22099,6 +22163,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				case AM_TWILIGHT1:
 				case AM_TWILIGHT2:
 				case AM_TWILIGHT3:
+				case AM_TWILIGHT4:
+				case AM_TWILIGHT5:
+				case AM_TWILIGHT6:
 				case ASC_CDP:
 				case GC_CREATENEWPOISON:
 					clif_produceeffect(sd,2,nameid);
@@ -22198,8 +22265,11 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				[[fallthrough]];
 			case AM_PHARMACY:
 			case AM_TWILIGHT1:
-			case AM_TWILIGHT2:
-			case AM_TWILIGHT3:
+				case AM_TWILIGHT2:
+				case AM_TWILIGHT3:
+				case AM_TWILIGHT4:
+				case AM_TWILIGHT5:
+				case AM_TWILIGHT6:
 			case GC_CREATENEWPOISON:
 				clif_produceeffect(sd,3,nameid);
 				clif_misceffect(&sd->bl,6);
