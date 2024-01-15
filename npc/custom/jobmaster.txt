@@ -155,7 +155,7 @@ function	Job_Options	{
 	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
 		
 	// From here on the jobmaster checks the current class
-	// and fills the the array `.@job_opt` with possible
+	// and fills the array `.@job_opt` with possible
 	// job options for the player.
 	
 	if( .@rebirth_possible ) {

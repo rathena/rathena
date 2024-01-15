@@ -481,6 +481,11 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		}
 #endif
 
+		// Remove any possible escape states present for mobs once they stopped moving.
+		if (md != nullptr) {
+			md->state.can_escape = 0;
+		}
+
 		ud->state.force_walk = false;
 
 		if (ud->walk_done_event[0]){
@@ -1560,7 +1565,7 @@ int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int typ
 			if (bl->type == BL_MOB) {
 				mob_data *md = BL_CAST(BL_MOB, bl);
 
-				if (md && md->state.alchemist == 1) // Sphere Mine needs to escape, don't stop it
+				if (md && md->state.can_escape == 1) // Mob needs to escape, don't stop it
 					return 0;
 			}
 			unit_stop_walking(bl,4); //Unit might still be moving even though it can't move
@@ -2598,7 +2603,7 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 
 	nullpo_ret(ud);
 
-	if(dir > 7)
+	if(dir >= DIR_MAX || dir <= DIR_CENTER)
 		return 1;
 
 	ud->to_x = tx;
@@ -2625,7 +2630,7 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 			int i;
 
 			for( i = 0; i < 12; i++ ) {
-				int k = rnd()%8; // Pick a Random Dir
+				int k = rnd_value<int>(DIR_NORTH, DIR_NORTHEAST); // Pick a Random Dir
 
 				dx = -dirx[k] * 2;
 				dy = -diry[k] * 2;
@@ -3285,7 +3290,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				map_delblock(bl);
 				break;
 			}
-			// Fall through
+			[[fallthrough]];
 		default:
 			clif_clearunit_area(bl, clrtype);
 			map_delblock(bl);
