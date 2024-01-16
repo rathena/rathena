@@ -818,7 +818,7 @@ struct s_map_zone_data {
 	bool isCommandDisabled(std::string name, uint16 group_lv);
 	bool isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv);
 	bool isItemDisabled(t_itemid nameid, uint16 group_lv);
-	bool isStatusDisabled(sc_type sc, uint16 group_lv);
+	bool isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv);
 	bool isJobRestricted(int32 job_id, uint16 group_lv);
 };
 

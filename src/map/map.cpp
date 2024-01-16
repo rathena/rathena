@@ -589,10 +589,11 @@ bool s_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
 /**
  * Check if a status is disabled on a map based on group level.
  * @param sc: Status type
+ * @param type: Object type
  * @param group_lv: Group level
  * @return True when status is disabled or false otherwise
  */
-bool s_map_zone_data::isStatusDisabled(sc_type sc, uint16 group_lv) {
+bool s_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv) {
 	if (this->disabled_statuses.empty())
 		return false;
 
@@ -601,7 +602,7 @@ bool s_map_zone_data::isStatusDisabled(sc_type sc, uint16 group_lv) {
 	if (status_lv == nullptr)
 		return false;
 
-	if ((group_lv == 101 && *status_lv > 0) || (*status_lv < group_lv))
+	if ((!(type & BL_PC) && *status_lv > 0) || (*status_lv < group_lv))
 		return false;
 	else
 		return true;

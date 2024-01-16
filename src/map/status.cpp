@@ -9981,7 +9981,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	map_data *mapdata = map_getmapdata(bl->m);
 	map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	if (mapdata != nullptr && mapdata->zone.isStatusDisabled(type, (sd != nullptr) ? pc_get_group_level(sd) : 101))
+	if (mapdata != nullptr && mapdata->zone.isStatusDisabled(type, bl->type, (sd != nullptr) ? pc_get_group_level(sd) : 0))
 		return 0;
 
 	if (sc->getSCE(SC_GRAVITYCONTROL))
@@ -15372,7 +15372,7 @@ void status_change_clear_onChangeMap(block_list *bl)
 
 			map_session_data *sd = (TBL_PC *)bl;
 
-			if (mapdata->zone.isStatusDisabled(type, (sd != nullptr) ? pc_get_group_level(sd) : 101))
+			if (mapdata->zone.isStatusDisabled(type, bl->type, (sd != nullptr) ? pc_get_group_level(sd) : 0))
 				status_change_end(bl, type);
 		}
 	}
