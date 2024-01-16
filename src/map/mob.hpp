@@ -253,22 +253,23 @@ struct s_mob_drop {
 };
 
 struct s_mob_db {
-	uint32 id;
-	std::string sprite, name, jname;
-	t_exp base_exp;
-	t_exp job_exp;
-	t_exp mexp;
-	uint16 range2, range3;
-	std::vector<e_race2> race2;	// celest
-	uint16 lv;
-	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
-	status_data status;
-	view_data vd;
-	uint32 option;
-	std::vector<std::shared_ptr<s_mob_skill>> skill;
-	uint16 damagetaken;
+	uint32 id{};
+	std::string sprite{}, name{}, jname{};
+	t_exp base_exp{};
+	t_exp job_exp{};
+	t_exp mexp{};
+	uint16 range2{}, range3{};
+	std::vector<e_race2> race2{};	// celest
+	uint16 lv{ 1 };
+	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL]{}, mvpitem[MAX_MVP_DROP_TOTAL]{};
+	status_data status{};
+	view_data vd{};
+	uint32 option{};
+	std::vector<std::shared_ptr<s_mob_skill>> skill{};
+	uint16 damagetaken{ 100 };
 
 	e_mob_bosstype get_bosstype();
+	s_mob_db();
 };
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
@@ -331,7 +332,7 @@ struct mob_data {
 		unsigned int aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
 		unsigned int steal_coin_flag : 1;
 		unsigned int soul_change_flag : 1; // Celest
-		unsigned int alchemist: 1;
+		unsigned int can_escape: 1;
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;

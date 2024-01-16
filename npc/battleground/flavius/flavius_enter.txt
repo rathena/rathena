@@ -18,7 +18,7 @@ bat_room,133,178,5	script	Flavius Officer#01a	418,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Guillaume Army Officer]";
@@ -87,7 +87,7 @@ bat_room,133,121,1	script	Flavius Officer#01b	414,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Croix Army Officer]";
@@ -220,7 +220,7 @@ bat_room,148,178,5	script	Flavius Officer#02a	418,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Guillaume Army Officer]";
@@ -289,7 +289,7 @@ bat_room,148,121,1	script	Flavius Officer#02b	414,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Croix Army Officer]";
