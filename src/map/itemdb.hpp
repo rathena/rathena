@@ -2417,10 +2417,7 @@ struct s_laphine_upgrade{
 	uint16 requiredRandomOptions;
 	bool cardsAllowed;
 	std::shared_ptr<s_random_opt_group> randomOptionGroup;
-	uint16 resultRefine;
-	uint16 resultRefineMinimum;
-	uint16 resultRefineMaximum;
-	std::unordered_map<uint16, uint16> resultRefineRate;
+	std::unordered_map<uint16, uint16> resultRefine;
 };
 
 class LaphineUpgradeDatabase : public TypesafeYamlDatabase<t_itemid, s_laphine_upgrade>{
