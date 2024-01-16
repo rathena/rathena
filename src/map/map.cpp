@@ -20,6 +20,7 @@
 #include <common/socket.hpp> // WFIFO*()
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
+#include <common/utilities.hpp>
 #include <common/utils.hpp>
 
 #include "achievement.hpp"
@@ -243,11 +244,14 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				continue;
 
 			if (group_lv > 100) {
-				this->invalidWarning(commandNode, "Atcommand %s's Group Level can not be above 100, capping to 100.\n", command_name.c_str(), group_lv);
+				this->invalidWarning(commandNode, "Atcommand %s's Group Level can not be above 100, capping to 100.\n", command_name.c_str());
 				group_lv = 100;
 			}
 
-			zone->disabled_commands[command_name] = group_lv;
+			if (group_lv == 0)
+				zone->disabled_commands.erase(command_name);
+			else
+				zone->disabled_commands[command_name] = group_lv;
 		}
 	}
 
@@ -283,13 +287,19 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				}
 
 				uint16 type = static_cast<uint16>(type_const);
+
+				if (type == BL_NUL) {
+					this->invalidWarning(it, "Skill %s's Object Type can not be BL_NUL, skipping.\n", bl_name.c_str());
+					continue;
+				}
+
 				uint16 group_lv;
 
 				if (!this->asUInt16(it, bl_name, group_lv))
 					continue;
 
 				if (group_lv > 100) {
-					this->invalidWarning(it, "Skill %s's Group Level can not be above 100, capping to 100.\n", bl_name.c_str(), group_lv);
+					this->invalidWarning(it, "Skill %s's Group Level can not be above 100, capping to 100.\n", bl_name.c_str());
 					group_lv = 100;
 				}
 
@@ -302,7 +312,7 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						if (zone->disabled_skills[skill_id].first == BL_NUL)
 							zone->disabled_skills.erase(skill_id);
 					}
-				} else
+				} else if (group_lv > 0)
 					zone->disabled_skills.insert({ skill_id, std::pair<uint16, uint16>(type, group_lv) });
 			}
 		}
@@ -327,11 +337,14 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				continue;
 
 			if (group_lv > 100) {
-				this->invalidWarning(itemNode, "Item %s's Group Level can not be above 100, capping to 100.\n", item_name.c_str(), group_lv);
+				this->invalidWarning(itemNode, "Item %s's Group Level can not be above 100, capping to 100.\n", item_name.c_str());
 				group_lv = 100;
 			}
 
-			zone->disabled_items[item->nameid] = group_lv;
+			if (group_lv == 0)
+				zone->disabled_items.erase(item->nameid);
+			else
+				zone->disabled_items[item->nameid] = group_lv;
 		}
 	}
 
@@ -355,11 +368,14 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				continue;
 
 			if (group_lv > 100) {
-				this->invalidWarning(statusNode, "Status %s's Group Level can not be above 100, capping to 100.\n", status_name.c_str(), group_lv);
+				this->invalidWarning(statusNode, "Status %s's Group Level can not be above 100, capping to 100.\n", status_name.c_str());
 				group_lv = 100;
 			}
 
-			zone->disabled_statuses[static_cast<sc_type>(status)] = group_lv;
+			if (group_lv == 0)
+				zone->disabled_statuses.erase(static_cast<sc_type>(status));
+			else
+				zone->disabled_statuses[static_cast<sc_type>(status)] = group_lv;
 		}
 	}
 
@@ -383,11 +399,14 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				continue;
 
 			if (group_lv > 100) {
-				this->invalidWarning(jobNode, "Job Group Level can not be above 100, capping to 100.\n", group_lv);
+				this->invalidWarning(jobNode, "Job Group Level can not be above 100, capping to 100.\n");
 				group_lv = 100;
 			}
 
-			zone->restricted_jobs[static_cast<uint32>(job_id)] = group_lv;
+			if (group_lv == 0)
+				zone->restricted_jobs.erase(static_cast<uint32>(job_id));
+			else
+				zone->restricted_jobs[static_cast<uint32>(job_id)] = group_lv;
 		}
 	}
 
@@ -397,9 +416,9 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		for (const auto &it : mapNode) {
 			std::string map_name;
 			c4::from_chars(it.key(), &map_name);
-			int16 map_id = map_mapname2mapid(map_name.c_str());
+			int16 mapidx = mapindex_name2idx(map_name.c_str(), nullptr);
 
-			if (map_id == -1) {
+			if (mapidx == 0) {
 				this->invalidWarning(mapNode, "Map %s does not exist.\n", map_name.c_str());
 				continue;
 			}
@@ -409,15 +428,21 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			if (!this->asBool(mapNode, map_name, enabled))
 				continue;
 
+			int16 map_id = map_mapname2mapid(map_name.c_str());
+
 			if (enabled) {
 				if (util::vector_exists(zone->maps, map_id)) {
-					this->invalidWarning(mapNode, "Map %s already part of this zone.\n", map_name.c_str());
+					this->invalidWarning(mapNode, "Map %s is already part of this zone.\n", map_name.c_str());
 					continue;
 				}
 
 				zone->maps.push_back(map_id);
-			} else
-				util::vector_erase_if_exists(zone->maps, map_id);
+			} else {
+				if (!util::vector_erase_if_exists(zone->maps, map_id)) {
+					this->invalidWarning(mapNode, "Map %s is not part of this zone.\n", map_name.c_str());
+					continue;
+				}
+			}
 		}
 	}
 
@@ -470,34 +495,138 @@ void MapZoneDatabase::loadingFinished() {
 		for (const auto &map : zone.second->maps) {
 			map_data *mapdata = map_getmapdata(map);
 
-			if (mapdata != nullptr) {
-				mapdata->zone.id = zone.second->id;
-				mapdata->zone.disabled_commands = zone.second->disabled_commands;
-				mapdata->zone.disabled_items = zone.second->disabled_items;
-				mapdata->zone.disabled_skills = zone.second->disabled_skills;
-				mapdata->zone.disabled_statuses = zone.second->disabled_statuses;
-				mapdata->zone.restricted_jobs = zone.second->restricted_jobs;
+			if (mapdata == nullptr)
+				continue;
 
-				// Clear previous mapflags
-				mapdata->initMapFlags();
-				mapdata->skill_damage.clear();
-				mapdata->skill_duration.clear();
-			}
+			mapdata->zone.id = zone.second->id;
+			mapdata->zone.disabled_commands = zone.second->disabled_commands;
+			mapdata->zone.disabled_items = zone.second->disabled_items;
+			mapdata->zone.disabled_skills = zone.second->disabled_skills;
+			mapdata->zone.disabled_statuses = zone.second->disabled_statuses;
+			mapdata->zone.restricted_jobs = zone.second->restricted_jobs;
+
+			// Clear previous mapflags
+			mapdata->initMapFlags();
+			mapdata->skill_damage.clear();
+			mapdata->skill_duration.clear();
 
 			// Apply mapflags from Map Zone DB
 			for (const auto &flag : zone.second->mapflags) {
 				char flag_name[50] = {}, empty[1] = {};
 
-				if (map_getmapflag_name(static_cast<e_mapflag>(flag.first.first), flag_name))
-					npc_parse_mapflag(const_cast<char *>(map_mapid2mapname(map)), empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, empty);
-				else
-					ShowError("MapZoneDatabase::loadingFinished: Invalid mapflag %s from zone %s.\n", flag_name, script_get_constant_str("MAPTYPE_", zone.first));
+				npc_parse_mapflag(mapdata->name, empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, "MapZoneDatabase::loadingFinished");
 			}
 		}
 	}
 }
 
 MapZoneDatabase map_zone_db;
+
+/**
+ * Check if a command is disabled on a map based on group level.
+ * @param name: Command name
+ * @param group_lv: Group level
+ * @return True when command is disabled or false otherwise
+ */
+bool s_map_zone_data::isCommandDisabled(std::string name, uint16 group_lv) {
+	if (this->disabled_commands.empty())
+		return false;
+
+	auto cmd_lv = util::umap_find(this->disabled_commands, name);
+
+	if (cmd_lv == nullptr)
+		return false;
+
+	if (*cmd_lv < group_lv)
+		return false;
+	else
+		return true;
+}
+
+/**
+ * Check if a skill is disabled on a map based on group level.
+ * @param skill_id: Skill ID
+ * @param type: Object type
+ * @param group_lv: Group level
+ * @return True when skill is disabled or false otherwise
+ */
+bool s_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv) {
+	if (this->disabled_skills.empty())
+		return false;
+
+	auto skill_lv = util::umap_find(this->disabled_skills, skill_id);
+
+	if (skill_lv == nullptr)
+		return false;
+
+	if ((!(type & BL_PC) && skill_lv->second > 0) || (skill_lv->second < group_lv))
+		return false;
+	else
+		return true;
+}
+
+/**
+ * Check if an item is disabled on a map based on group level.
+ * @param nameid: Item ID
+ * @param group_lv: Group level
+ * @return True when item is disabled or false otherwise
+ */
+bool s_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
+	if (this->disabled_items.empty())
+		return false;
+
+	auto item_lv = util::umap_find(this->disabled_items, nameid);
+
+	if (item_lv == nullptr)
+		return false;
+
+	if (*item_lv < group_lv)
+		return false;
+	else
+		return true;
+}
+
+/**
+ * Check if a status is disabled on a map based on group level.
+ * @param sc: Status type
+ * @param group_lv: Group level
+ * @return True when status is disabled or false otherwise
+ */
+bool s_map_zone_data::isStatusDisabled(sc_type sc, uint16 group_lv) {
+	if (this->disabled_statuses.empty())
+		return false;
+
+	auto status_lv = util::umap_find(this->disabled_statuses, sc);
+
+	if (status_lv == nullptr)
+		return false;
+
+	if ((group_lv == 101 && *status_lv > 0) || (*status_lv < group_lv))
+		return false;
+	else
+		return true;
+}
+
+/**
+ * Check if a job is restricted on a map based on group level.
+ * @param job_id: Job ID
+ * @param group_lv: Group level
+ * @return True when job is restricted or false otherwise
+ */
+bool s_map_zone_data::isJobRestricted(int32 job_id, uint16 group_lv) {
+	if (this->restricted_jobs.empty())
+		return false;
+
+	auto job_lv = util::umap_find(this->restricted_jobs, job_id);
+
+	if (job_lv == nullptr)
+		return false;
+
+	if (*job_lv < group_lv)
+		return false;
+	else
+		return true;
+}
 
 /**
  * Get the map data

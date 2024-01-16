@@ -16,12 +16,14 @@ Id: Zone ID (constant). These are defined in e_map_type::clif.hpp.
 ---------------------------------------
 
 DisabledCommands: @commands can be disabled for players below a certain group level.
+Setting the group level to 0 will remove from the DisabledCommands list. Useful for imports.
 
   heal: 70 # Makes @heal usable only to those group level 70 and above.
 
 ---------------------------------------
 
 DisabledSkills: Skills can be disabled for different game object types below a certain group level.
+Setting the group level to 0 will remove from the DisabledSkills list. Useful for imports.
 
 Object Types:
 Pc   - Player
@@ -42,6 +44,7 @@ Npc  - NPC
 ---------------------------------------
 
 DisabledItems: Items can be disabled from being used or equipped for players below a certain group level.
+Setting the group level to 0 will remove from the DisabledItems list. Useful for imports.
 
   Apple: 100 # Apple will not be able to be consumed by anyone.
   Cap: 100 # Cap will not be able to be equipped by anyone.
@@ -51,12 +54,14 @@ DisabledItems: Items can be disabled from being used or equipped for players bel
 
 DisabledStatuses: Statuses can be disabled in a zone for players below a certain group level. These
 statuses, if active, will be removed when entering a zone and will not be able to be re-applied while in the zone.
+Setting the group level to 0 will remove from the DisabledStatuses list. Useful for imports.
 
   Endure: 100 # Endure will be disabled from activing and being applied within the zone.
 
 ---------------------------------------
 
 RestrictedJobs: Jobs can be disabled from entering a zone for players below a certain group level.
+Setting the group level to 0 will remove from the RestrictedJobs list. Useful for imports.
 
   Priest: 30 # Makes the Priest job unable to enter the map zone to those group level less than 30.
 

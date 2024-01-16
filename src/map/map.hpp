@@ -815,80 +815,11 @@ struct s_map_zone_data {
 	std::unordered_map<sc_type, uint16> disabled_statuses;
 	std::unordered_map<int32, uint16> restricted_jobs;
 
-	bool isCommandDisabled(std::string name, uint16 group_lv) {
-		if (this->disabled_commands.empty())
-			return false;
-
-		auto cmd_lv = util::umap_find(this->disabled_commands, name);
-
-		if (cmd_lv == nullptr)
-			return false;
-
-		if (*cmd_lv < group_lv)
-			return false;
-		else
-			return true;
-	}
-
-	bool isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv) {
-		if (this->disabled_skills.empty())
-			return false;
-
-		auto skill_lv = util::umap_find(this->disabled_skills, skill_id);
-
-		if (skill_lv == nullptr)
-			return false;
-
-		if ((!(type & BL_PC) && skill_lv->second > 0) || (skill_lv->second < group_lv))
-			return false;
-		else
-			return true;
-	}
-
-	bool isItemDisabled(t_itemid nameid, uint16 group_lv) {
-		if (this->disabled_items.empty())
-			return false;
-
-		auto item_lv = util::umap_find(this->disabled_items, nameid);
-
-		if (item_lv == nullptr)
-			return false;
-
-		if (*item_lv < group_lv)
-			return false;
-		else
-			return true;
-	}
-
-	bool isStatusDisabled(sc_type sc, uint16 group_lv) {
-		if (this->disabled_statuses.empty())
-			return false;
-
-		auto status_lv = util::umap_find(this->disabled_statuses, sc);
-
-		if (status_lv == nullptr)
-			return false;
-
-		if ((group_lv == 101 && *status_lv > 0) || (*status_lv < group_lv))
-			return false;
-		else
-			return true;
-	}
-
-	bool isJobRestricted(int32 job_id, uint16 group_lv) {
-		if (this->restricted_jobs.empty())
-			return false;
-
-		auto job_lv = util::umap_find(this->restricted_jobs, job_id);
-
-		if (job_lv == nullptr)
-			return false;
-
-		if (*job_lv < group_lv)
-			return false;
-		else
-			return true;
-	}
+	bool isCommandDisabled(std::string name, uint16 group_lv);
+	bool isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv);
+	bool isItemDisabled(t_itemid nameid, uint16 group_lv);
+	bool isStatusDisabled(sc_type sc, uint16 group_lv);
+	bool isJobRestricted(int32 job_id, uint16 group_lv);
 };
 
 struct map_data {
