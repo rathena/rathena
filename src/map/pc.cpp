@@ -776,8 +776,13 @@ static TIMER_FUNC(pc_invincible_timer){
 void pc_setinvincibletimer(map_session_data* sd, int val) {
 	nullpo_retv(sd);
 
-	if (val <= 0)
+	if (val <= 0) {
+		if (sd->invincible_timer != INVALID_TIMER) {
+			delete_timer(sd->invincible_timer, pc_invincible_timer);
+			sd->invincible_timer = INVALID_TIMER;
+		}
 		return;
+	}
 
 	if( sd->invincible_timer != INVALID_TIMER )
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
