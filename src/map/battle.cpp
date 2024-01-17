@@ -9922,6 +9922,113 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				sd->state.autocast = 0;
 			}
 
+			if( sc->getSCE( SC_AUTO_FIRING_LAUNCHER ) ){
+				uint16 skill_id;
+				uint16 skill_lv;
+
+				switch( sc->getSCE( SC_AUTO_FIRING_LAUNCHER )->val1 ){
+					case 1:
+						skill_id = NW_BASIC_GRENADE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 6, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+						break;
+
+					case 2:
+						skill_id = NW_BASIC_GRENADE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 7, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+						break;
+
+					case 3:
+						skill_id = NW_HASTY_FIRE_IN_THE_HOLE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 3, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+
+						skill_id = NW_BASIC_GRENADE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 8, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+						break;
+
+					case 4:
+						skill_id = NW_HASTY_FIRE_IN_THE_HOLE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 5, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+
+						skill_id = NW_BASIC_GRENADE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 9, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+						break;
+
+					case 5:
+						skill_id = NW_GRENADES_DROPPING;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 3, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+
+						skill_id = NW_HASTY_FIRE_IN_THE_HOLE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 7, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+
+						skill_id = NW_BASIC_GRENADE;
+						skill_lv = pc_checkskill( sd, skill_id );
+
+						if( skill_lv > 0 && rnd_chance( 10, 100 ) ){
+							sd->state.autocast = 1;
+							skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+							battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+							sd->state.autocast = 0;
+						}
+						break;
+				}
+			}
+
 			// Autocasted skills from super elemental supportive buffs.
 			if (sc->getSCE(SC_FLAMETECHNIC_OPTION) && rnd() % 100 < 7)
 				battle_autocast_elembuff_skill(sd, target, MG_FIREBOLT, tick, flag);
@@ -9965,39 +10072,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (sd && tsc && wd.flag&BF_LONG && tsc->getSCE(SC_WINDSIGN) && rand()%100 < tsc->getSCE(SC_WINDSIGN)->val2)
 		status_heal(src, 0, 0, 1, 0);
 
-	if (sc && sc->getSCE(SC_AUTO_FIRING_LAUNCHER)) {
-		uint16 skill_lv = 0;
-		switch (sc->getSCE(SC_AUTO_FIRING_LAUNCHER)->val1) {
-			case 1:
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 6)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				break;
-			case 2:
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 7)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				break;
-			case 3:
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 3)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 8)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				break;
-			case 4:
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 5)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 9)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				break;
-			case 5:
-				if ((skill_lv = pc_checkskill(sd, NW_GRENADES_DROPPING)) && rnd() % 100 < 3)
-					skill_castend_pos2(src, target->x, target->y, NW_GRENADES_DROPPING, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 7)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 10)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				break;
-		}
-	}
 	map_freeblock_unlock();
 	return wd.dmg_lv;
 }
