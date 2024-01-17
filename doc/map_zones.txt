@@ -73,4 +73,4 @@ Mapflags: Mapflags that are applies to a zone. By default, the Value label is 1/
   - Flag: Skill_Duration
 	Value: AL_SANCTUARY,400 # Sets the 'skill_duration' mapflag to the zone.
   - Flag: NoMemo # Removes the 'nomemo' mapflag to the zone. Useful for import.
-    Value: 0
+    Clear: true

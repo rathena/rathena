@@ -888,7 +888,7 @@ struct s_map_zone {
 	std::unordered_map<sc_type, uint16> disabled_statuses;
 	std::unordered_map<int32, uint16> restricted_jobs;
 	std::vector<int16> maps;
-	std::map<std::pair<int16, uint16>, std::string> mapflags;
+	std::multimap<int16, std::string> mapflags;
 };
 
 class MapZoneDatabase : public TypesafeYamlDatabase<uint16, s_map_zone> {
@@ -898,7 +898,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
 	void loadingFinished() override;
 };
 

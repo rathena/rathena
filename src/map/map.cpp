@@ -449,9 +449,6 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Mapflags")) {
 		const auto &mapflagNode = node["Mapflags"];
 
-		// Mapflags are stored as double-key so that duplicate mapflags can be parsed.
-		uint16 mapflag_index = 0;
-
 		for (const auto &it : mapflagNode) {
 			std::string flag_name;
 
@@ -474,8 +471,28 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			} else
 				value = "1";
 
-			zone->mapflags.insert({ std::pair<int16, uint16>(static_cast<int16>(flag), mapflag_index), value });
-			mapflag_index++;
+			bool clear = false;
+
+			if (this->nodeExists(it, "Clear")) {
+				if (!this->asBool(it, "Clear", clear))
+					continue;
+			}
+
+			if (!clear) {
+				zone->mapflags.insert({ std::pair<int16, std::string>(static_cast<int16>(flag), value) });
+			} else {
+				// Get all mapflag keys that match
+				auto mapflagit = zone->mapflags.equal_range(static_cast<int16>(flag));
+
+				// Iterate over the mapflags to get their values
+				for (std::multimap<int16, std::string>::iterator it = mapflagit.first; it != mapflagit.second; ++it) {
+					// Compare parse value with what's already in memory
+					if (it->second.find(value) == 0) {
+						zone->mapflags.erase(it);
+						break;
+					}
+				}
+			}
 		}
 	}
 
