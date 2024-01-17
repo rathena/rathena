@@ -3416,21 +3416,6 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->getSCE(SC_ENCHANTARMS)) // Check for endows
 			element = sc->getSCE(SC_ENCHANTARMS)->val1;
-		// Night Watch Grenade Fragment elementals affecting those skills.
-		if (sc && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD)) {
-			if (sc->getSCE(SC_GRENADE_FRAGMENT_1))
-				element = ELE_WATER;
-			if (sc->getSCE(SC_GRENADE_FRAGMENT_2))
-				element = ELE_WIND;
-			if (sc->getSCE(SC_GRENADE_FRAGMENT_3))
-				element = ELE_EARTH;
-			if (sc->getSCE(SC_GRENADE_FRAGMENT_4))
-				element = ELE_FIRE;
-			if (sc->getSCE(SC_GRENADE_FRAGMENT_5))
-				element = ELE_DARK;
-			if (sc->getSCE(SC_GRENADE_FRAGMENT_6))
-				element = ELE_HOLY;
-		}
 	} else if( element == ELE_ENDOWED ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == ELE_RANDOM ) //Use random element
@@ -3475,6 +3460,37 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 		case RL_H_MINE:
 			if (sd && sd->flicker) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
 				element = ELE_FIRE;
+			break;
+		case NW_BASIC_GRENADE:
+		case NW_HASTY_FIRE_IN_THE_HOLE:
+		case NW_GRENADES_DROPPING:
+		case NW_MISSION_BOMBARD:
+			// Night Watch Grenade Fragment elementals affecting those skills.
+			if( sc != nullptr ){
+				if( sc->getSCE( SC_GRENADE_FRAGMENT_1 ) != nullptr ){
+					element = ELE_WATER;
+				}
+
+				if( sc->getSCE( SC_GRENADE_FRAGMENT_2 ) != nullptr ){
+					element = ELE_WIND;
+				}
+
+				if( sc->getSCE( SC_GRENADE_FRAGMENT_3 ) != nullptr ){
+					element = ELE_EARTH;
+				}
+
+				if( sc->getSCE( SC_GRENADE_FRAGMENT_4 ) != nullptr ){
+					element = ELE_FIRE;
+				}
+
+				if( sc->getSCE( SC_GRENADE_FRAGMENT_5 ) != nullptr ){
+					element = ELE_DARK;
+				}
+
+				if( sc->getSCE( SC_GRENADE_FRAGMENT_6 ) != nullptr ){
+					element = ELE_HOLY;
+				}
+			}
 			break;
 	}
 
