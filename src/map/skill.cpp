@@ -15748,7 +15748,6 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case NW_GRENADES_DROPPING:
 		limit = skill_get_time2(skill_id,skill_lv);
 		break;
-	case HN_METEOR_STORM_BUSTER:
 	case WZ_METEOR:
 	case SU_CN_METEOR:
 	case SU_CN_METEOR2:
