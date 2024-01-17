@@ -3005,12 +3005,14 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 				break;
 			case NW_ONLY_ONE_BULLET:
 			case NW_SPIRAL_SHOOTING:
-				if (!(sd && sd->weapontype1 == W_RIFLE))
+				if( sd == nullptr || sd->weapontype1 != W_RIFLE ){
 					return false;
+				}
 				break;
 			case NW_MAGAZINE_FOR_ONE:
-				if (!(sd && sd->weapontype1 == W_REVOLVER))
+				if( sd == nullptr || sd->weapontype1 != W_REVOLVER ){
 					return false;
+				}
 				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
