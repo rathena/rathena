@@ -532,6 +532,12 @@ void MapZoneDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	// Check for maps with no zones
+	for (int i = 0; i < map_num; i++) {
+		if (map[i].zone == nullptr)
+			ShowNotice("MapZoneDatabase::loadingFinished: Map %s has no zone. Assigning a zone is highly encouraged.\n", map[i].name);
+	}
 }
 
 MapZoneDatabase map_zone_db;
