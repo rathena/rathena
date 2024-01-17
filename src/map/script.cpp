@@ -2472,8 +2472,7 @@ void script_warning(const char* src, const char* file, int start_line, const cha
 /*==========================================
  * Analysis of the script
  *------------------------------------------*/
-struct script_code* parse_script(const char *src,const char *file,int line,int options)
-{
+struct script_code* parse_script_( const char *src, const char *file, int line, int options, const char* src_file, int src_line, const char* src_func ){
 	const char *p,*tmpp;
 	int i;
 	struct script_code* code = NULL;
@@ -2653,7 +2652,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	}
 #endif
 
-	CREATE(code,struct script_code,1);
+	CREATE2( code, struct script_code, 1, src_file, src_line, src_func );
 	code->script_buf  = script_buf;
 	code->script_size = script_size;
 	code->local.vars = NULL;

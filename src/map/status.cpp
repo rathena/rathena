@@ -4388,15 +4388,15 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
+	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_TATICS)) > 0)
+		base_status->patk += skill;
+	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) > 0)
+		base_status->smatk += skill;
 	if (sd->status.weapon == W_2HSTAFF && (skill = pc_checkskill(sd, AG_TWOHANDSTAFF)) > 0)// 2-Handed Staff Mastery
 		base_status->smatk += pc_checkskill(sd, AG_TWOHANDSTAFF) * 2;
 	if ((skill = pc_checkskill(sd, NW_P_F_I)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		base_status->patk += skill + 2;
 	if ((skill = pc_checkskill(sd, SOA_TALISMAN_MASTERY)) > 0)
-		base_status->smatk += skill;
-	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_TATICS)) > 0)
-		base_status->patk += skill;
-	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) > 0)
 		base_status->smatk += skill;
 	if ((skill = pc_checkskill(sd, SKE_WAR_BOOK_MASTERY)) > 0)
 		base_status->patk += skill+2;
@@ -8123,9 +8123,10 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 			if (sc->getSCE(SC_CREATINGSTAR))
 				val = max(val, 90);
 			if (sc->getSCE(SC_SHIELDCHAINRUSH))
-				val = max(val, 20); 
+				val = max(val, 20);
 			if (sc->getSCE(SC_GROUNDGRAVITY))
 				val = max(val, 20);
+
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
 		}
