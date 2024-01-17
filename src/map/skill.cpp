@@ -5279,12 +5279,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NW_WILD_FIRE:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case NW_MAGAZINE_FOR_ONE:
-	case NW_ONLY_ONE_BULLET:
- 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
- 		break;
 	case DK_DRAGONIC_AURA:
 	case DK_STORMSLASH:
 	case CD_EFFLIGO:
@@ -7144,6 +7138,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		}
 		break;
+
+	case NW_MAGAZINE_FOR_ONE:
+	case NW_ONLY_ONE_BULLET:
+ 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
+ 		break;
 
 	default:
 		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skill_id);
@@ -12893,6 +12894,41 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
+#ifdef RENEWAL
+	case CG_HERMODE:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+#endif
+
+	case NPC_LEASH:
+		clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
+
+		if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
+			return 0;
+		}
+
+		clif_blown( bl );
+		break;
+
+	case NPC_WIDELEASH:
+		if( flag & 1 ){
+			if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
+				return 0;
+			}
+
+			clif_blown( bl );
+		}else{
+			skill_area_temp[2] = 0; // For SD_PREAMBLE
+			clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
+			map_foreachinallrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | 1, skill_castend_nodamage_id );
+		}
+		break;
+
+	case HN_HELLS_DRIVE:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+		break;
+
 	case NW_THE_VIGILANTE_AT_NIGHT:
 		i = skill_get_splash(skill_id, skill_lv);
 		skill_area_temp[0] = 0;
@@ -12939,41 +12975,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(src, SC_GRENADE_FRAGMENT_6);
 		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
-		break;
-
-#ifdef RENEWAL
-	case CG_HERMODE:
-		skill_castend_song(src, skill_id, skill_lv, tick);
-		break;
-#endif
-
-	case NPC_LEASH:
-		clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
-
-		if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
-			return 0;
-		}
-
-		clif_blown( bl );
-		break;
-
-	case NPC_WIDELEASH:
-		if( flag & 1 ){
-			if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
-				return 0;
-			}
-
-			clif_blown( bl );
-		}else{
-			skill_area_temp[2] = 0; // For SD_PREAMBLE
-			clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
-			map_foreachinallrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | 1, skill_castend_nodamage_id );
-		}
-		break;
-
-	case HN_HELLS_DRIVE:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 		break;
 
 	default: {
@@ -13754,6 +13755,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case SR_RIDEINLIGHTNING:
+	case NW_BASIC_GRENADE:
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
@@ -14684,24 +14686,16 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			skill_addtimerskill(src, tick + 600, 0, x, y, skill_id, skill_lv, 0, flag | 3 | SKILL_NOCONSUME_REQ);
 		}
 		break;
-	case NW_BASIC_GRENADE:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_area_sub,
-			src->m, x - i, y - i, x + i, y + i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
-			skill_castend_damage_id);
-		break;
 	case NW_GRENADES_DROPPING: {
-			int area = skill_get_splash(skill_id, skill_lv);
-			short tmpx = 0, tmpy = 0;
-			tmpx = x - area + rnd() % (area * 2 + 1);
-			tmpy = y - area + rnd() % (area * 2 + 1);
+			uint16 splash = skill_get_splash(skill_id, skill_lv);
+			uint16 tmpx = rnd_value( x - splash, x + splash );
+			uint16 tmpy = rnd_value( y - splash, y + splash );
 			skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag);
 			for (i = 0; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
 				skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 			}
 		} break;
-	case NW_MISSION_BOMBARD: {
+	case NW_MISSION_BOMBARD:
 		i = skill_get_splash(skill_id,skill_lv);
 		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SKILL_ALTDMG_FLAG|1,skill_castend_damage_id);
 		skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
@@ -14709,8 +14703,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
 			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
-	}
-    	break;
+		break;
 
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
@@ -15048,9 +15041,6 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case NPC_EVILLAND:
 		val1=skill_lv+3;
 		break;
-	case NW_GRENADES_DROPPING:
-		limit = skill_get_time2(skill_id,skill_lv);
-		break;
 	case WZ_METEOR:
 	case SU_CN_METEOR:
 	case SU_CN_METEOR2:
@@ -15381,6 +15371,10 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case WH_SWIFTTRAP:
 	case WH_FLAMETRAP:
 		limit += 3000 * (sd ? pc_checkskill(sd, WH_ADVANCED_TRAP) : 5);
+		break;
+		
+	case NW_GRENADES_DROPPING:
+		limit = skill_get_time2(skill_id,skill_lv);
 		break;
 	}
 
