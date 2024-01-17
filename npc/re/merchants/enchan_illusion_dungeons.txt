@@ -878,5 +878,9 @@ OnInit:
 	setunitdata .@npc_id,UNPC_HEADMIDDLE,92;
 	setunitdata .@npc_id,UNPC_HAIRSTYLE,2;
 	setunitdata .@npc_id,UNPC_HAIRCOLOR,2;
+
+	// Restock
+	npcshopupdate "market_resonance_stone",100003,2000000,99999;
+	npcshopupdate "market_resonance_stone",100004,2000000,99999;
 	end;
 }
