@@ -4774,6 +4774,7 @@ Body:
     Duration2: 5000
     CastDelayFlags:
       IgnoreStatus: true
+      IgnoreItemBonus: true
     Requires:
       SpCost:
         - Level: 1
@@ -17015,11 +17016,8 @@ Body:
     Duration1: 600000
     Requires:
       SpCost: 10
-      # Need to change this to Tempered Iron (when adding Tempered Iron)
       ItemCost:
-        - Item: Iron
-          Amount: 3
-        - Item: Iron_Ore
+        - Item: Tempered_Iron
           Amount: 1
     Status: CartEfficiency
   - Id: 785
@@ -17043,10 +17041,9 @@ Body:
         - Level: 2
           Item: Fire_Bottle
           Amount: 1
-        # TODO: Add Efficient_Bottle to item_db.yml
-        # - Level: 3
-        #   Item: Efficient_Bottle
-        #   Amount: 1
+        - Level: 3
+          Item: Efficient_Bottle
+          Amount: 1
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack

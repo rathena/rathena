@@ -7048,24 +7048,24 @@ Body:
       NoClearbuff: true
   - Status: WeaponBreaker
     DurationLookup: NPC_WEAPONBRAKER
+  # CUSTOM
   - Status: CartEfficiency
-    Icon: EFST_GN_CARTBOOST
+    Icon: EFST_CARTEFFICIENCY
     DurationLookup: BS_CARTEFFICIENCY
-  # TODO: Add Achemyefficiency Icon
   - Status: Alchemyefficiency_Acid
-    Icon: EFST_UNLIMIT
+    Icon: EFST_ALCHEMYEFFICIENCY
     DurationLookup: AM_ALCHEMYEFFICIENCY
     EndOnStart:
       Alchemyefficiency_Fire: true
       Alchemyefficiency_Both: true
   - Status: Alchemyefficiency_Fire
-    Icon: EFST_UNLIMIT
+    Icon: EFST_ALCHEMYEFFICIENCY
     DurationLookup: AM_ALCHEMYEFFICIENCY
     EndOnStart:
       Alchemyefficiency_Acid: true
       Alchemyefficiency_Both: true
   - Status: Alchemyefficiency_Both
-    Icon: EFST_UNLIMIT
+    Icon: EFST_ALCHEMYEFFICIENCY
     DurationLookup: AM_ALCHEMYEFFICIENCY
     EndOnStart:
       Alchemyefficiency_Acid: true

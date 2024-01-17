@@ -687,6 +687,7 @@ function	script	F_GetPlatinumSkills	{
 		skill "MC_CARTREVOLUTION",1,SKILL_PERM;
 		skill "MC_CHANGECART",1,SKILL_PERM;
 		skill "MC_LOUD",1,SKILL_PERM;
+		skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
 		if(PACKETVER >= 20150826)
 			skill "MC_CARTDECORATE",1,SKILL_PERM;
 		break;
@@ -710,7 +711,7 @@ function	script	F_GetPlatinumSkills	{
 		skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
 		break;
 	case Job_Blacksmith:
-		skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
+		// skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
 		skill "BS_GREED",1,SKILL_PERM;
 		skill "BS_CARTEFFICIENCY",1,SKILL_PERM;
 		break;
@@ -741,6 +742,7 @@ function	script	F_GetPlatinumSkills	{
 	case Job_Alchemist:
 		skill "AM_BIOETHICS",1,SKILL_PERM;
 		skill "AM_ALCHEMYEFFICIENCY",3,SKILL_PERM;
+		skill "BS_GREED",1,SKILL_PERM;
 		break;
 	case Job_Bard:
 		skill "BA_PANGVOICE",1,SKILL_PERM;
