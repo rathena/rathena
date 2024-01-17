@@ -515,17 +515,13 @@ void MapZoneDatabase::loadingFinished() {
 			if (mapdata == nullptr)
 				continue;
 
-			mapdata->zone.id = zone.second->id;
-			mapdata->zone.disabled_commands = zone.second->disabled_commands;
-			mapdata->zone.disabled_items = zone.second->disabled_items;
-			mapdata->zone.disabled_skills = zone.second->disabled_skills;
-			mapdata->zone.disabled_statuses = zone.second->disabled_statuses;
-			mapdata->zone.restricted_jobs = zone.second->restricted_jobs;
-
-			// Clear previous mapflags
-			mapdata->initMapFlags();
-			mapdata->skill_damage.clear();
-			mapdata->skill_duration.clear();
+			mapdata->zone = std::make_shared<s_map_zone_data>();
+			mapdata->zone->id = zone.second->id;
+			mapdata->zone->disabled_commands = zone.second->disabled_commands;
+			mapdata->zone->disabled_items = zone.second->disabled_items;
+			mapdata->zone->disabled_skills = zone.second->disabled_skills;
+			mapdata->zone->disabled_statuses = zone.second->disabled_statuses;
+			mapdata->zone->restricted_jobs = zone.second->restricted_jobs;
 
 			// Apply mapflags from Map Zone DB
 			for (const auto &flag : zone.second->mapflags) {

@@ -845,7 +845,7 @@ struct map_data {
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
 
-	s_map_zone_data zone;
+	std::shared_ptr<s_map_zone_data> zone;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]

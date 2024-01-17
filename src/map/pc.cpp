@@ -15144,7 +15144,7 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 
 	map_data *mapdata = map_getmapdata(m);
 
-	if (mapdata != nullptr && mapdata->zone.isJobRestricted(jobid, group_lv))
+	if (mapdata != nullptr && mapdata->zone->isJobRestricted(jobid, group_lv))
 		return false;
 
 	return true;

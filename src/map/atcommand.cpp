@@ -4422,7 +4422,7 @@ ACMD_FUNC(mapinfo) {
 
 	struct map_data *mapdata = map_getmapdata(m_id);
 
-	sprintf(atcmd_output, msg_txt(sd,1040), mapname, script_get_constant_str("MAPTYPE_", mapdata->zone.id), mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s (Zone: %s) | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
+	sprintf(atcmd_output, msg_txt(sd,1040), mapname, script_get_constant_str("MAPTYPE_", mapdata->zone->id), mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s (Zone: %s) | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1041)); // ------ Map Flags ------
 
@@ -11573,7 +11573,7 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if (mapdata->zone.isCommandDisabled(info->command, pc_get_group_level(sd))) {
+	if (mapdata->zone->isCommandDisabled(info->command, pc_get_group_level(sd))) {
 		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 832), false, SELF); // This command is disabled on this map.
 		return true;
 	}
