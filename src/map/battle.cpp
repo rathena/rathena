@@ -2591,8 +2591,10 @@ void battle_consume_ammo(map_session_data*sd, int skill, int lv)
 	if (skill) {
 		qty = skill_get_ammo_qty(skill, lv);
 		if (!qty) qty = 1;
-		if (skill == NW_MAGAZINE_FOR_ONE && sd->weapontype1 == W_GATLING)
+
+		if( skill == NW_MAGAZINE_FOR_ONE && sd != nullptr && sd->weapontype1 == W_GATLING ){
 			qty += 4;
+		}
 	}
 
 	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
