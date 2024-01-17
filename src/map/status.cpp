@@ -2362,7 +2362,8 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 	switch (bl->type) {
 		case BL_HOM:
 #ifdef RENEWAL
-			str = 2 * level + status_get_homstr(bl);
+			// Floor((STR + DEX + LUK) ÷ 3) + Floor(Level ÷ 10)
+			str = (short)(std::floor((status_get_homstr(bl) + status_get_homdex(bl) + status_get_homluk(bl)) / 3) + std::floor(level/10));
 #else
 			dstr = str / 10;
 			str += dstr*dstr;
@@ -2458,7 +2459,11 @@ unsigned short status_base_matk_min(struct block_list *bl, const struct status_d
 		case BL_ELEM:
 			return status->int_ + level + status->rhw.matk * 70 / 100;
 		case BL_HOM:
+#ifdef RENEWAL
+			return status_base_matk_max(bl,status,level);
+#else
 			return status_get_homint(bl) + level + (status_get_homint(bl) + status_get_homdex(bl)) / 5;
+#endif
 		case BL_PC:
 		default:
 			return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4) + 5 * status->spl;
@@ -2477,7 +2482,12 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 		case BL_ELEM:
 			return status->int_ + level + status->rhw.matk * 130 / 100;
 		case BL_HOM:
-			return status_get_homint(bl) + level + (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
+#ifdef RENEWAL
+			// Level + INT + Floor((INT + DEX + LUK) ÷ 3) + Floor(Level ÷ 10) × 2
+			return (short)(level + status_get_homint(bl) + std::floor((status_get_homint(bl) + status_get_homdex(bl) + status_get_homluk(bl)) / 3) + std::floor(level/10) * 2);
+#else
+			return status_get_homint(bl) + level + (status_get_homint(bl) + status_get_homdex(bl)) / 3;
+#endif
 		case BL_PC:
 		default:
 			return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4) + 5 * status->spl;
@@ -2516,17 +2526,20 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		stat = (status_get_homvit(bl) + status_get_homint(bl)) / 2;
 		status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 		// Def
-		stat = status->def;
-		stat += status_get_homvit(bl) + level / 2;
+		// (VIT + Floor(Level ÷ 10)) × 2 + Floor((AGI + Floor(Level ÷ 10)) ÷ 2) + Floor(Level ÷ 2)
+		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) * 2 + (std::floor(status_get_homagi(bl) + std::floor(level / 10)) / 2) + std::floor(level / 2));
 		status->def = cap_value(stat, 0, SHRT_MAX);
 		// Mdef
-		stat = (int)(((float)status_get_homvit(bl) + level) / 4 + (float)status_get_homint(bl) / 2);
+		// (VIT + Floor(Level ÷ 10)) × 2 + Floor((INT + Floor(Level ÷ 10)) ÷ 4) + Floor(Level ÷ 2)
+		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) * 2 + (std::floor(status_get_homint(bl) + std::floor(level / 10)) / 4) + std::floor(level / 2));
 		status->mdef = cap_value(stat, 0, SHRT_MAX);
 		// Hit
-		stat = level + status->dex + 150;
+		// Level + DEX + 150
+		stat = level + status_get_homdex(bl) + 150;
 		status->hit = cap_value(stat, 1, SHRT_MAX);
 		// Flee
-		stat = level + status_get_homagi(bl);
+		// Level + AGI + Floor(Level ÷ 10)
+		stat = level + status_get_homagi(bl) + (short)std::floor(level/10); 
 		status->flee = cap_value(stat, 1, SHRT_MAX);
 	} else {
 		// Hit
