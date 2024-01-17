@@ -2591,6 +2591,8 @@ void battle_consume_ammo(map_session_data*sd, int skill, int lv)
 	if (skill) {
 		qty = skill_get_ammo_qty(skill, lv);
 		if (!qty) qty = 1;
+		if (skill == NW_MAGAZINE_FOR_ONE && sd->weapontype1 == W_GATLING)
+			qty += 4;
 	}
 
 	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
@@ -2621,6 +2623,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case BO_ACIDIFIED_ZONE_FIRE_ATK:
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:
 		case BO_ACIDIFIED_ZONE_WIND_ATK:
+		case NW_THE_VIGILANTE_AT_NIGHT:
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -2997,6 +3000,16 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case WH_GALESTORM:
 				if (sc && !sc->getSCE(SC_CALAMITYGALE))
 					return false;
+				break;
+			case NW_ONLY_ONE_BULLET:
+			case NW_SPIRAL_SHOOTING:
+				if (!(sd && sd->weapontype1 == W_RIFLE))
+					return false;
+				break;
+			case NW_MAGAZINE_FOR_ONE:
+				if (!(sd && sd->weapontype1 == W_REVOLVER))
+					return false;
+				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
@@ -3284,6 +3297,10 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 
 	if (skill_id == RK_WINDCUTTER && sd && sd->status.weapon == W_2HSWORD)
 		return true;
+	else if (skill_id == NW_THE_VIGILANTE_AT_NIGHT && sd && sd->status.weapon == W_GATLING)
+		return true;
+	else if (skill_id == NW_ONLY_ONE_BULLET && sd && sd->status.weapon == W_REVOLVER)
+		return true;
 
 	if (skill_id != CR_GRANDCROSS && skill_id != NPC_GRANDDARKNESS)
 	{	//Ignore Defense?
@@ -3382,6 +3399,21 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->getSCE(SC_ENCHANTARMS)) // Check for endows
 			element = sc->getSCE(SC_ENCHANTARMS)->val1;
+		// Night Watch Grenade Fragment elementals affecting those skills.
+		if (sc && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD)) {
+			if (sc->getSCE(SC_GRENADE_FRAGMENT_1))
+				element = ELE_WATER;
+			if (sc->getSCE(SC_GRENADE_FRAGMENT_2))
+				element = ELE_WIND;
+			if (sc->getSCE(SC_GRENADE_FRAGMENT_3))
+				element = ELE_EARTH;
+			if (sc->getSCE(SC_GRENADE_FRAGMENT_4))
+				element = ELE_FIRE;
+			if (sc->getSCE(SC_GRENADE_FRAGMENT_5))
+				element = ELE_DARK;
+			if (sc->getSCE(SC_GRENADE_FRAGMENT_6))
+				element = ELE_HOLY;
+		}
 	} else if( element == ELE_ENDOWED ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == ELE_RANDOM ) //Use random element
@@ -4175,6 +4207,18 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			if( rnd()%100 < 5 * skill_lv ){
 				wd->div_ = 3;
 			}
+			break;
+		case NW_SPIRAL_SHOOTING:
+			if (sd && sd->weapontype1 == W_GRENADE)
+				wd->div_ += 1;
+			break;
+		case NW_MAGAZINE_FOR_ONE:
+			if (sd && sd->weapontype1 == W_GATLING)
+				wd->div_ += 4;
+			break;
+		case NW_THE_VIGILANTE_AT_NIGHT:
+			if (sd && sd->weapontype1 == W_GATLING)
+				wd->div_ += 3;
 			break;
 #ifdef RENEWAL
 		case AS_POISONREACT:
@@ -5853,6 +5897,70 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
+		case NW_HASTY_FIRE_IN_THE_HOLE:
+			skillratio += -100 + 1500 + 1050 * skill_lv + 20 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			RE_LVL_DMOD(100);
+			break;
+		case NW_BASIC_GRENADE:
+			skillratio += -100 + 1000 + 950 * skill_lv + 50 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			RE_LVL_DMOD(100);
+			break;
+		case NW_GRENADES_DROPPING:
+			skillratio += -100 + 550 + 850 * skill_lv + 30 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			RE_LVL_DMOD(100);
+			break;
+		case NW_WILD_FIRE:
+			skillratio += -100 + 1000 + 2300 * skill_lv + 5 * sstatus->con;
+			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 500 * skill_lv;
+			if (sd && sd->weapontype1 == W_SHOTGUN)
+				skillratio += 150 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
+		case NW_MAGAZINE_FOR_ONE:
+			skillratio += -100 + 100 + 450 * (skill_lv-1) + 5 * sstatus->con;
+			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
+			if (sd && sd->weapontype1 == W_REVOLVER)
+				skillratio += 50 + 100 * (skill_lv-1);
+			RE_LVL_DMOD(100);
+			break;
+		case NW_SPIRAL_SHOOTING:
+			skillratio += -100 + 1000 + 1500 * skill_lv + 5 * sstatus->con;
+			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 150 * skill_lv;
+			if (sd && sd->weapontype1 == W_RIFLE) 
+				skillratio += 200 + 200 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
+		case NW_ONLY_ONE_BULLET:
+			skillratio += -100 + 800 + 1350 * skill_lv + 5 * sstatus->con;
+			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 350 * skill_lv;
+			if (sd && sd->weapontype1 == W_REVOLVER) {
+				skillratio += 150 * skill_lv;
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case NW_THE_VIGILANTE_AT_NIGHT:
+			if (sd && sd->weapontype1 == W_GATLING) {
+				skillratio += -100 + 300 * skill_lv + 5 * sstatus->con;
+				if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+					skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
+			} else {
+				skillratio += -100 + 800 + 700 * skill_lv + 5 * sstatus->con;
+				if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+					skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 200 * skill_lv;
+			}
+			RE_LVL_DMOD(100);
+			break;
+		case NW_MISSION_BOMBARD:
+			if (wd->miscflag & SKILL_ALTDMG_FLAG)
+				skillratio += -100 + 5000 + 1800 * skill_lv + 100 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			else
+				skillratio += -100 + 800 + 200 * skill_lv + 30 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			RE_LVL_DMOD(100);
+			break;
 	}
 	return skillratio;
 }
@@ -6078,6 +6186,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 
 		if (sc->getSCE(SC_MIRACLE))
 			anger_id = 2; // Always treat all monsters as star flagged monster when in miracle state
+		if (sc->getSCE(SC_HIDDEN_CARD) && (wd->flag&BF_LONG) == BF_LONG)
+			RE_ALLATK_ADDRATE(wd, sc->getSCE(SC_HIDDEN_CARD)->val3);
 	}
 
 	if ((wd->flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
@@ -9807,6 +9917,39 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (sd && tsc && wd.flag&BF_LONG && tsc->getSCE(SC_WINDSIGN) && rand()%100 < tsc->getSCE(SC_WINDSIGN)->val2)
 		status_heal(src, 0, 0, 1, 0);
 
+	if (sc && sc->getSCE(SC_AUTO_FIRING_LAUNCHER)) {
+		uint16 skill_lv = 0;
+		switch (sc->getSCE(SC_AUTO_FIRING_LAUNCHER)->val1) {
+			case 1:
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 6)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				break;
+			case 2:
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 7)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				break;
+			case 3:
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 3)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 8)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				break;
+			case 4:
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 5)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 9)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				break;
+			case 5:
+				if ((skill_lv = pc_checkskill(sd, NW_GRENADES_DROPPING)) && rnd() % 100 < 3)
+					skill_castend_pos2(src, target->x, target->y, NW_GRENADES_DROPPING, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 7)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 10)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				break;
+		}
+	}
 	map_freeblock_unlock();
 	return wd.dmg_lv;
 }

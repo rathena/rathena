@@ -1900,6 +1900,16 @@
 	export_constant(SC_GROUNDGRAVITY);
 	export_constant(SC_BREAKINGLIMIT);
 	export_constant(SC_RULEBREAK);
+	export_constant(SC_INTENSIVE_AIM);
+	export_constant(SC_INTENSIVE_AIM_COUNT);
+	export_constant(SC_GRENADE_FRAGMENT_1);
+	export_constant(SC_GRENADE_FRAGMENT_2);
+	export_constant(SC_GRENADE_FRAGMENT_3);
+	export_constant(SC_GRENADE_FRAGMENT_4);
+	export_constant(SC_GRENADE_FRAGMENT_5);
+	export_constant(SC_GRENADE_FRAGMENT_6);
+	export_constant(SC_AUTO_FIRING_LAUNCHER);
+	export_constant(SC_HIDDEN_CARD);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
