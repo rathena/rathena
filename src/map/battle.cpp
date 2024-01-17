@@ -5931,19 +5931,26 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_HASTY_FIRE_IN_THE_HOLE:
-			skillratio += -100 + 1500 + 1050 * skill_lv + 20 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			skillratio += -100 + 1500 + 1050 * skill_lv;
+			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 20;
+			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_BASIC_GRENADE:
-			skillratio += -100 + 1000 + 950 * skill_lv + 50 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			skillratio += -100 + 1000 + 950 * skill_lv;
+			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 50;
+			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_GRENADES_DROPPING:
-			skillratio += -100 + 550 + 850 * skill_lv + 30 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			skillratio += -100 + 550 + 850 * skill_lv;
+			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 30;
+			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_WILD_FIRE:
-			skillratio += -100 + 1000 + 2300 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 1000 + 2300 * skill_lv;
+			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 500 * skill_lv;
 			if (sd && sd->weapontype1 == W_SHOTGUN)
@@ -5951,7 +5958,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_MAGAZINE_FOR_ONE:
-			skillratio += -100 + 100 + 450 * (skill_lv-1) + 5 * sstatus->con;
+			skillratio += -100 + 100 + 450 * ( skill_lv - 1 );
+			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
 			if (sd && sd->weapontype1 == W_REVOLVER)
@@ -5959,7 +5967,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_SPIRAL_SHOOTING:
-			skillratio += -100 + 1000 + 1500 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 1000 + 1500 * skill_lv;
+			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 150 * skill_lv;
 			if (sd && sd->weapontype1 == W_RIFLE) 
@@ -5967,7 +5976,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_ONLY_ONE_BULLET:
-			skillratio += -100 + 800 + 1350 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 800 + 1350 * skill_lv;
+			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 350 * skill_lv;
 			if (sd && sd->weapontype1 == W_REVOLVER) {
@@ -5977,21 +5987,26 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case NW_THE_VIGILANTE_AT_NIGHT:
 			if (sd && sd->weapontype1 == W_GATLING) {
-				skillratio += -100 + 300 * skill_lv + 5 * sstatus->con;
+				skillratio += -100 + 300 * skill_lv;
 				if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 					skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
 			} else {
-				skillratio += -100 + 800 + 700 * skill_lv + 5 * sstatus->con;
+				skillratio += -100 + 800 + 700 * skill_lv;
 				if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 					skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 200 * skill_lv;
 			}
+			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_MISSION_BOMBARD:
-			if (wd->miscflag & SKILL_ALTDMG_FLAG)
-				skillratio += -100 + 5000 + 1800 * skill_lv + 100 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
-			else
-				skillratio += -100 + 800 + 200 * skill_lv + 30 * pc_checkskill(sd, NW_GRENADE_MASTERY) + 5 * sstatus->con;
+			if( wd->miscflag&SKILL_ALTDMG_FLAG ){
+				skillratio += -100 + 5000 + 1800 * skill_lv;
+				skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 100;
+			}else{
+				skillratio += -100 + 800 + 200 * skill_lv;
+				skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 30;
+			}
+			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 	}
