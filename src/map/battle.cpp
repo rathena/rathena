@@ -3299,12 +3299,25 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 	if (sc && sc->getSCE(SC_FUSION))
 		return true;
 
-	if (skill_id == RK_WINDCUTTER && sd && sd->status.weapon == W_2HSWORD)
-		return true;
-	else if (skill_id == NW_THE_VIGILANTE_AT_NIGHT && sd && sd->status.weapon == W_GATLING)
-		return true;
-	else if (skill_id == NW_ONLY_ONE_BULLET && sd && sd->status.weapon == W_REVOLVER)
-		return true;
+	if( sd != nullptr ){
+		switch( skill_id ){
+			case RK_WINDCUTTER:
+				if( sd->status.weapon == W_2HSWORD ){
+					return true;
+				}
+				break;
+			case NW_THE_VIGILANTE_AT_NIGHT:
+				if( sd->status.weapon == W_GATLING ){
+					return true;
+				}
+				break;
+			case NW_ONLY_ONE_BULLET:
+				if( sd->status.weapon == W_REVOLVER ){
+					return true;
+				}
+				break;
+		}
+	}
 
 	if (skill_id != CR_GRANDCROSS && skill_id != NPC_GRANDDARKNESS)
 	{	//Ignore Defense?
