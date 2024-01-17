@@ -527,7 +527,8 @@ void MapZoneDatabase::loadingFinished() {
 			for (const auto &flag : zone.second->mapflags) {
 				char flag_name[50] = {}, empty[1] = {};
 
-				npc_parse_mapflag(mapdata->name, empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, "MapZoneDatabase::loadingFinished");
+				if (map_getmapflag_name(static_cast<e_mapflag>(flag.first), flag_name))
+					npc_parse_mapflag(mapdata->name, empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, "MapZoneDatabase::loadingFinished");
 			}
 		}
 	}
