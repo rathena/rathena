@@ -41942,25 +41942,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 71
+          Amount: 88
         - Level: 2
-          Amount: 74
+          Amount: 91
         - Level: 3
-          Amount: 77
+          Amount: 94
         - Level: 4
-          Amount: 80
+          Amount: 97
         - Level: 5
-          Amount: 83
+          Amount: 100
         - Level: 6
-          Amount: 86
+          Amount: 103
         - Level: 7
-          Amount: 89
+          Amount: 106
         - Level: 8
-          Amount: 92
+          Amount: 109
         - Level: 9
-          Amount: 95
+          Amount: 112
         - Level: 10
-          Amount: 98
+          Amount: 115
   - Id: 5459
     Name: HN_GROUND_GRAVITATION
     Description: Ground Gravitation
