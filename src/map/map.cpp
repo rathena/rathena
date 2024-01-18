@@ -510,26 +510,8 @@ void MapZoneDatabase::loadingFinished() {
 	// This allows for live modifications to the map without affecting the Map Zone DB.
 	for (const auto &zone : map_zone_db) {
 		for (const auto &map : zone.second->maps) {
-			map_data *mapdata = map_getmapdata(map);
-
-			if (mapdata == nullptr)
+			if (map_zone_db.setZone(map, static_cast<e_map_type>(zone.second->id)))
 				continue;
-
-			mapdata->zone = std::make_shared<s_map_zone_data>();
-			mapdata->zone->id = zone.second->id;
-			mapdata->zone->disabled_commands = zone.second->disabled_commands;
-			mapdata->zone->disabled_items = zone.second->disabled_items;
-			mapdata->zone->disabled_skills = zone.second->disabled_skills;
-			mapdata->zone->disabled_statuses = zone.second->disabled_statuses;
-			mapdata->zone->restricted_jobs = zone.second->restricted_jobs;
-
-			// Apply mapflags from Map Zone DB
-			for (const auto &flag : zone.second->mapflags) {
-				char flag_name[50] = {}, empty[1] = {};
-
-				if (map_getmapflag_name(static_cast<e_mapflag>(flag.first), flag_name))
-					npc_parse_mapflag(mapdata->name, empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, "MapZoneDatabase::loadingFinished");
-			}
 		}
 	}
 
@@ -538,6 +520,70 @@ void MapZoneDatabase::loadingFinished() {
 		if (map[i].zone == nullptr)
 			ShowNotice("MapZoneDatabase::loadingFinished: Map %s has no zone. Assigning a zone is highly encouraged.\n", map[i].name);
 	}
+}
+
+/**
+ * Get the zone to a map.
+ * @param map_id: Map ID
+ * @return e_map_type on success or MAPTYPE_UNUSED otherwise
+ */
+e_map_type MapZoneDatabase::getMapZone(int16 map_id) {
+	map_data *mapdata = map_getmapdata(map_id);
+
+	if (mapdata == nullptr) {
+		ShowError("MapZoneDatabase::getMapZone: Unknown map ID %d, skipping.\n", map_id);
+		return MAPTYPE_UNUSED;
+	}
+
+	for (const auto &zone : map_zone_db) {
+		if (util::vector_exists(zone.second->maps, map_id))
+			return static_cast<e_map_type>(zone.second->id);
+	}
+
+	return MAPTYPE_UNUSED;
+}
+
+/**
+ * Set the zone to a map.
+ * @param map_id: Map ID
+ * @param zone: Zone to set
+ * @return True on success or false otherwise
+ */
+bool MapZoneDatabase::setZone(int16 map_id, e_map_type zone) {
+	map_data *mapdata = map_getmapdata(map_id);
+
+	if (mapdata == nullptr) {
+		ShowError("MapZoneDatabase::setZone: Unknown map ID %d, skipping.\n", map_id);
+		return false;
+	}
+
+	auto zonedata = map_zone_db.find(zone);
+
+	if (zonedata == nullptr) {
+		ShowError("MapZoneDatabase::setZone: Unknown zone %d, skipping.\n", zone);
+		return false;
+	}
+
+	mapdata->zone = std::make_shared<s_map_zone_data>();
+	mapdata->zone->id = zonedata->id;
+	mapdata->zone->disabled_commands = zonedata->disabled_commands;
+	mapdata->zone->disabled_items = zonedata->disabled_items;
+	mapdata->zone->disabled_skills = zonedata->disabled_skills;
+	mapdata->zone->disabled_statuses = zonedata->disabled_statuses;
+	mapdata->zone->restricted_jobs = zonedata->restricted_jobs;
+
+	// Intialization and configuration-dependent adjustments of mapflags
+	map_flags_init();
+
+	// Apply mapflags from Map Zone DB
+	for (const auto &flag : zonedata->mapflags) {
+		char flag_name[50] = {}, empty[1] = {};
+
+		if (map_getmapflag_name(static_cast<e_mapflag>(flag.first), flag_name))
+			npc_parse_mapflag(mapdata->name, empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, "MapZoneDatabase::setZone");
+	}
+
+	return true;
 }
 
 MapZoneDatabase map_zone_db;
@@ -4291,9 +4337,6 @@ int map_readallmaps (void)
 		mapdata->damage_adjust = {};
 		mapdata->channel = NULL;
 	}
-
-	// intialization and configuration-dependent adjustments of mapflags
-	map_flags_init();
 
 	if( !enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]

@@ -1786,7 +1786,8 @@ ACMD_FUNC(pvpoff)
 		return -1;
 	}
 
-	map_setmapflag(sd->bl.m, MF_PVP, false);
+	map_setmapflag(sd->bl.m, MF_PVP, false); // Needed to remove battle and client settings.
+	map_zone_db.setZone(sd->bl.m, map_zone_db.getMapZone(sd->bl.m));
 
 	clif_displaymessage(fd, msg_txt(sd,31)); // PvP: Off.
 	return 0;
@@ -1804,7 +1805,7 @@ ACMD_FUNC(pvpon)
 		return -1;
 	}
 
-	map_setmapflag(sd->bl.m, MF_PVP, true);
+	map_zone_db.setZone(sd->bl.m, MAPTYPE_NOPENALTY_FREEPKZONE);
 
 	clif_displaymessage(fd, msg_txt(sd,32)); // PvP: On.
 
@@ -1823,7 +1824,9 @@ ACMD_FUNC(gvgoff)
 		return -1;
 	}
 
-	map_setmapflag(sd->bl.m, MF_GVG, false);
+	map_setmapflag(sd->bl.m, MF_GVG, false); // Needed to remove battle and client settings.
+	map_zone_db.setZone(sd->bl.m, map_zone_db.getMapZone(sd->bl.m));
+
 	clif_displaymessage(fd, msg_txt(sd,33)); // GvG: Off.
 
 	return 0;
@@ -1841,7 +1844,8 @@ ACMD_FUNC(gvgon)
 		return -1;
 	}
 
-	map_setmapflag(sd->bl.m, MF_GVG, true);
+	map_zone_db.setZone(sd->bl.m, MAPTYPE_EVENT_GUILDWAR);
+
 	clif_displaymessage(fd, msg_txt(sd,34)); // GvG: On.
 
 	return 0;

@@ -50,6 +50,7 @@ struct npc_data;
 struct item_data;
 struct Channel;
 enum sc_type : int16;
+enum e_map_type : uint8_t;
 
 struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
@@ -900,6 +901,10 @@ public:
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef &node) override;
 	void loadingFinished() override;
+
+	// Others
+	e_map_type getMapZone(int16 map_id);
+	bool setZone(int16 map_id, e_map_type zone);
 };
 
 extern MapZoneDatabase map_zone_db;
