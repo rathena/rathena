@@ -42045,25 +42045,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 55
+          Amount: 93
         - Level: 2
-          Amount: 60
+          Amount: 96
         - Level: 3
-          Amount: 65
+          Amount: 99
         - Level: 4
-          Amount: 70
+          Amount: 102
         - Level: 5
-          Amount: 75
+          Amount: 105
         - Level: 6
-          Amount: 80
+          Amount: 108
         - Level: 7
-          Amount: 85
+          Amount: 111
         - Level: 8
-          Amount: 90
+          Amount: 114
         - Level: 9
-          Amount: 95
+          Amount: 117
         - Level: 10
-          Amount: 100
+          Amount: 120
     Unit:
       Id: GROUND_GRAVITATION
       Range:
