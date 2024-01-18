@@ -149,15 +149,9 @@ static t_tick tick(void)
 	if(GetTickCount() < 0x7FFFFFFF && GetTickCount() > 0)
 		return GetTickCount();
 	else {
-			OSVERSIONINFO osvi;
-			osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-			if (GetVersionEx(&osvi) && osvi.dwMajorVersion >= 6) 
-				return GetTickCount64();
-			else {
-				auto now = std::chrono::system_clock::now();
-			    auto duration = now.time_since_epoch();
-				return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-			}
+		auto now = std::chrono::system_clock::now();
+	    auto duration = now.time_since_epoch();
+		return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();	
 	}
 #else
 	return GetTickCount64();
