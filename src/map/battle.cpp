@@ -1846,11 +1846,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			switch (skill_id) {
 				case HN_SHIELD_CHAIN_RUSH:
 				case HN_DOUBLEBOWLINGBASH:
-					damage += damage / 2; 
+					damage += damage * 70 / 100; 
 					break;
 				case HN_MEGA_SONIC_BLOW:
 				case HN_SPIRAL_PIERCE_MAX:
-					damage += damage * 70 / 100;
+					damage *= 2;
 					break;
 			}
 		}
