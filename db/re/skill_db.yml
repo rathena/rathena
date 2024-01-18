@@ -41406,7 +41406,7 @@ Body:
     DamageFlags:
       Splash: true
     SplashArea: 4
-    Knockback: 2
+    Knockback: 1
     CastCancel: true
     CastTime: 300
     AfterCastActDelay: 1000
