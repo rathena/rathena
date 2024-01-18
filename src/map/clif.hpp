@@ -1254,7 +1254,7 @@ void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status styp
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
 
-void clif_sayDialogAlign(map_session_data *sd, int npcid, enum say_dialog_align align);
+void clif_sayDialogAlign(map_session_data *sd, int npcid, e_say_dialog_align align);
 void clif_set_npc_window_size(map_session_data *sd, int width, int height);
 void clif_set_npc_window_pos(map_session_data *sd, int x, int y);
 void clif_set_npc_window_pos_percent(map_session_data *sd, int x, int y);

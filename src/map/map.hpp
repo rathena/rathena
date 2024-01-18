@@ -864,7 +864,7 @@ struct map_data_other_server {
 /**
  * align for packet ZC_SAY_DIALOG_ALIGN
  **/
-enum say_dialog_align {
+enum e_say_dialog_align : uint8 {
 	DIALOG_ALIGN_LEFT   = 0,
 	DIALOG_ALIGN_RIGHT  = 1,
 	DIALOG_ALIGN_CENTER = 2,

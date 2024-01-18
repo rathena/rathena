@@ -25187,7 +25187,7 @@ void clif_parse_reset_skill( int fd, map_session_data* sd ){
 #endif
 }
 
-void clif_sayDialogAlign(map_session_data *sd, int npcid, enum say_dialog_align align)
+void clif_sayDialogAlign(map_session_data *sd, int npcid, e_say_dialog_align align)
 {
 #if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	nullpo_retv(sd);

@@ -27130,7 +27130,7 @@ BUILDIN_FUNC(setdialogalign){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_sayDialogAlign(sd, st->oid, (enum say_dialog_align)script_getnum(st, 2));
+	clif_sayDialogAlign(sd, st->oid, (e_say_dialog_align)script_getnum(st, 2));
 
 	return SCRIPT_CMD_SUCCESS;
 }

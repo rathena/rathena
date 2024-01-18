@@ -11415,12 +11415,12 @@ Example:
 
 *setdialogalign(<align>);
 
-Set vertical or horizontal align in npc dialog.
+Set vertical or horizontal align in NPC dialog.
 Valid aligns:
 - horizontal align:
   DIALOG_ALIGN_LEFT
-  DIALOG_ALIGN_RIGHT
   DIALOG_ALIGN_CENTER
+  DIALOG_ALIGN_RIGHT
 
 - vertical align:
   DIALOG_ALIGN_TOP
@@ -11431,18 +11431,18 @@ Valid aligns:
 
 *setdialogsize(<width>, <height>)
 
-Set size for npc dialog.
+Set size for NPC dialog.
 
 ---------------------------------------
 
 *setdialogpos(<x>, <y>)
 
-Set position for npc dialog in pixels.
+Set position for NPC dialog in pixels.
 
 ---------------------------------------
 
 *setdialogpospercent(<x>, <y>)
 
-Set position for npc dialog in screen size percent.
+Set position for NPC dialog in screen size percent.
 
 ---------------------------------------
