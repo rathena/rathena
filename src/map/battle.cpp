@@ -5840,7 +5840,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case HN_MEGA_SONIC_BLOW:
-			skillratio += -100 + 900 + 450 * skill_lv;
+			skillratio += -100 + 900 + 750 * skill_lv;
 			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			if (status_get_hp(target) < status_get_max_hp(target) / 2)

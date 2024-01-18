@@ -41451,7 +41451,7 @@ Body:
     GiveAp: 2
     Element: Weapon
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 350
     Duration2: 5000
     Requires:
       SpCost:
