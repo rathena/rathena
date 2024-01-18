@@ -27123,6 +27123,54 @@ BUILDIN_FUNC(opentips){
 #endif
 }
 
+BUILDIN_FUNC(setdialogalign){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_sayDialogAlign(sd, st->oid, (enum say_dialog_align)script_getnum(st, 2));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setdialogsize){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_npc_window_size(sd, script_getnum(st, 2), script_getnum(st, 3));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setdialogpos){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_npc_window_pos(sd, script_getnum(st, 2), script_getnum(st, 3));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setdialogpospercent){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_npc_window_pos_percent(sd, script_getnum(st, 2), script_getnum(st, 3));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27882,6 +27930,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(has_autoloot,"?"),
 	BUILDIN_DEF(autoloot,"??"),
 	BUILDIN_DEF(opentips, "i?"),
+
+	BUILDIN_DEF(setdialogalign, "i"),
+	BUILDIN_DEF(setdialogsize, "ii"),
+	BUILDIN_DEF(setdialogpos, "ii"),
+	BUILDIN_DEF(setdialogpospercent, "ii"),
 
 #include <custom/script_def.inc>
 
