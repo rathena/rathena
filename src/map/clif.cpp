@@ -25187,62 +25187,54 @@ void clif_parse_reset_skill( int fd, map_session_data* sd ){
 #endif
 }
 
-void clif_sayDialogAlign(map_session_data *sd, int npcid, e_say_dialog_align align)
+void clif_set_dialog_align(map_session_data& sd, int npcid, e_say_dialog_align align)
 {
 #if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
-	nullpo_retv(sd);
+	PACKET_ZC_DIALOG_TEXT_ALIGN p = {};
 
-	const int fd = sd->fd;
-	WFIFOHEAD(fd, sizeof(struct PACKET_ZC_DIALOG_TEXT_ALIGN));
-	struct PACKET_ZC_DIALOG_TEXT_ALIGN *p = (struct PACKET_ZC_DIALOG_TEXT_ALIGN *)WFIFOP(fd, 0);
-	p->PacketType = HEADER_ZC_DIALOG_TEXT_ALIGN;
-	p->align = align;
-	WFIFOSET(fd, sizeof(struct PACKET_ZC_DIALOG_TEXT_ALIGN));
+	p.PacketType = HEADER_ZC_DIALOG_TEXT_ALIGN;
+	p.align = align;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif  // PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 }
 
-void clif_set_npc_window_size(map_session_data *sd, int width, int height)
+void clif_set_npc_window_size(map_session_data& sd, int width, int height)
 {
 #if PACKETVER_MAIN_NUM >= 20220504
-	nullpo_retv(sd);
+	PACKET_ZC_DIALOG_WINDOW_SIZE p = {};
 
-	const int fd = sd->fd;
-	WFIFOHEAD(fd, sizeof(struct PACKET_ZC_DIALOG_WINDOW_SIZE));
-	struct PACKET_ZC_DIALOG_WINDOW_SIZE *p = (struct PACKET_ZC_DIALOG_WINDOW_SIZE*)WFIFOP( fd, 0 );
-	p->PacketType = HEADER_ZC_DIALOG_WINDOW_SIZE;
-	p->width = width;
-	p->height = height;
-	WFIFOSET(fd, sizeof(struct PACKET_ZC_DIALOG_WINDOW_SIZE));
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_SIZE;
+	p.width = width;
+	p.height = height;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif  // PACKETVER_MAIN_NUM >= 20220504
 }
 
-void clif_set_npc_window_pos(map_session_data *sd, int x, int y)
+void clif_set_npc_window_pos(map_session_data& sd, int x, int y)
 {
 #if PACKETVER_MAIN_NUM >= 20220504
-	nullpo_retv(sd);
+	PACKET_ZC_DIALOG_WINDOW_POS p = {};
 
-	const int fd = sd->fd;
-	WFIFOHEAD(fd, sizeof(struct PACKET_ZC_DIALOG_WINDOW_POS));
-	struct PACKET_ZC_DIALOG_WINDOW_POS *p = (struct PACKET_ZC_DIALOG_WINDOW_POS*)WFIFOP( fd, 0 );
-	p->PacketType = HEADER_ZC_DIALOG_WINDOW_POS;
-	p->x = x;
-	p->y = y;
-	WFIFOSET(fd, sizeof(struct PACKET_ZC_DIALOG_WINDOW_POS));
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_POS;
+	p.x = x;
+	p.y = y;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif  // PACKETVER_MAIN_NUM >= 20220504
 }
 
-void clif_set_npc_window_pos_percent(map_session_data *sd, int x, int y)
+void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y)
 {
 #if PACKETVER_MAIN_NUM >= 20220504
-	nullpo_retv(sd);
+	PACKET_ZC_DIALOG_WINDOW_POS2 p = {};
 
-	const int fd = sd->fd;
-	WFIFOHEAD(fd, sizeof(struct PACKET_ZC_DIALOG_WINDOW_POS2));
-	struct PACKET_ZC_DIALOG_WINDOW_POS2 *p = (struct PACKET_ZC_DIALOG_WINDOW_POS2*)WFIFOP( fd, 0 );
-	p->PacketType = HEADER_ZC_DIALOG_WINDOW_POS2;
-	p->x = x;
-	p->y = y;
-	WFIFOSET(fd, sizeof(struct PACKET_ZC_DIALOG_WINDOW_POS2));
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_POS2;
+	p.x = x;
+	p.y = y;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif  // PACKETVER_MAIN_NUM >= 20220504
 }
 

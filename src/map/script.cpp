@@ -27130,7 +27130,7 @@ BUILDIN_FUNC(setdialogalign){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_sayDialogAlign(sd, st->oid, (e_say_dialog_align)script_getnum(st, 2));
+	clif_set_dialog_align(*sd, st->oid, (e_say_dialog_align)script_getnum(st, 2));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27143,7 +27143,7 @@ BUILDIN_FUNC(setdialogsize){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_set_npc_window_size(sd, script_getnum(st, 2), script_getnum(st, 3));
+	clif_set_npc_window_size(*sd, script_getnum(st, 2), script_getnum(st, 3));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27155,7 +27155,7 @@ BUILDIN_FUNC(setdialogpos){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_set_npc_window_pos(sd, script_getnum(st, 2), script_getnum(st, 3));
+	clif_set_npc_window_pos(*sd, script_getnum(st, 2), script_getnum(st, 3));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27167,7 +27167,7 @@ BUILDIN_FUNC(setdialogpospercent){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_set_npc_window_pos_percent(sd, script_getnum(st, 2), script_getnum(st, 3));
+	clif_set_npc_window_pos_percent(*sd, script_getnum(st, 2), script_getnum(st, 3));
 	return SCRIPT_CMD_SUCCESS;
 }
 
