@@ -1,0 +1,77 @@
+moc_para01,52,31,4	script	Richard#Office_Richard	84,{
+	set .zenycost,4000000;    // base cost of the card remover services (in Zeny)
+	set .percardcost,0;  // cost per card of the card remover services (in Zeny)
+	set .faildestroy,0;      // should the card remover have a chance of failure that destroys items? (1=yes, 0=no)
+  set .requireditem,6443; // Sillit Pong
+  set .requireditemcost,1;
+
+	disable_items;
+	mes "[Richard]";
+	mes "Hello, chaÌo anh baòn, tôi coì thêÒ giuìp baòn gõŞ ^800080theÒ baÌi (Card)^000000 ra khoÒi trang biò, nghe hâìp dâŞn ğuìng không?";
+	next;
+	switch(select("Vâng, giuìp võìi ğaòi ca õi.:Yì ông laÌ sao?:Thôi khoÒi.")) {
+	case 1:
+		mes "[Richard]";
+		mes "Ok, thêì baòn muôìn thaìo Cards õÒ trang biò naÌo?";
+		next;
+
+		setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+		for( set .@i,1; .@i <= 10; set .@i,.@i+1 ) {
+			if( getequipisequiped(.@indices[.@i]) )
+				set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			set .@menu$, .@menu$ + ":";
+		}
+		set .@part, .@indices[ select(.@menu$) ];
+		if(!getequipisequiped(.@part)) {
+			mes "[Richard]";
+			mes "NaÌy anh baòn. Không mang trang biò sao tôi giuìp thaìo card ğıõòc.";
+			close;
+		}
+		if(getequipcardcnt(.@part) == 0) {
+			mes "[Richard]";
+			mes "NaÌy anh baòn. Trang biò naÌy ğâu coì card naÌo gãìn õÒ trêÒn ğâu.";
+			close;
+		}
+		set .@cardcount,getequipcardcnt(.@part);
+
+		if (!checkweight(1202,(.@cardcount+1))) { 
+			mes "^3355FFĞõòi xiìu!";
+			mes "Baòn mang nãòng quaì";
+      mes "Câìt bõìt ğôÌ rôÌi haŞy";
+      mes "quay laòi";
+			close;
+		}
+		mes "[Richard]";
+    mes "Moìn naÌy coì " + .@cardcount + " theÒ baÌi gãìn õÒ trêÒn. ĞêÒ taìch thiÌ câÌn:";
+    mes "- " + callfunc("F_InsertComma",zeny) + " / " + callfunc("F_InsertComma",(.zenycost+(.@cardcount * .percardcost))) + " zeny";
+    mes "- " + countitem(6443) + " / " + (.@cardcount * .requireditemcost) + " " + mesitemlink(6443, false);
+		next;
+		if(select("TriêÒn ği.:Thui teì.") == 2) {
+			mes "[Richard]";
+			mes "Ok, heòn gãòp lâÌn sau.";
+			close;
+		}
+		if((zeny < (.zenycost+(.@cardcount * .percardcost))) || (countitem(6443) < (.@cardcount * .requireditemcost)) ) {
+			mes "[Richard]";
+			mes "Kiêìm ğuÒ ğôÌ võìi zeny rôÌi haŞy quay laòi baòn õi.";
+			close;
+		}
+		mes "[Richard]";
+		mes "Ğıõòc rôÌi, bãìt ğâÌu thôi.";
+		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
+		delitem 6443,(.@cardcount * .requireditemcost); //Sillit Poing
+		next;
+		successremovecards .@part;
+		mes "[Richard]";
+		mes "ĞaŞ xong.";
+		close;
+	case 2:
+		mes "[Richard]";
+		mes "Tôi coì thêÒ giuìp baòn taìch card ^00DF00100%^000000 tiÒ lêò thaÌnh công võìi mıìc phiì ^0000FF"+callfunc("F_InsertComma",.zenycost)+"^000000 zeny vaÌ " + mesitemlink( 6443, false ) + ". (cho môŞi card) tıÌ trang biò.";
+		close;
+	case 3:
+		mes "[Richard]";
+		mes "Không coì giÌ. Heòn gãòp lâÌn sau.";
+		close;
+	}
+}
