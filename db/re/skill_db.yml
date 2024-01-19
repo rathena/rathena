@@ -41406,7 +41406,7 @@ Body:
     DamageFlags:
       Splash: true
     SplashArea: 4
-    Knockback: 2
+    Knockback: 1
     CastCancel: true
     CastTime: 300
     AfterCastActDelay: 1000
@@ -41451,7 +41451,7 @@ Body:
     GiveAp: 2
     Element: Weapon
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 350
     Duration2: 5000
     Requires:
       SpCost:
@@ -41492,7 +41492,7 @@ Body:
     CastCancel: true
     CastTime: 1200
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 350
     FixedCastTime: 300
     Duration1: 5000
     Duration2: 1200
@@ -41534,7 +41534,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 350
     FixedCastTime: 300
     Duration2: 2000
     Requires:
@@ -41942,25 +41942,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 71
+          Amount: 88
         - Level: 2
-          Amount: 74
+          Amount: 91
         - Level: 3
-          Amount: 77
+          Amount: 94
         - Level: 4
-          Amount: 80
+          Amount: 97
         - Level: 5
-          Amount: 83
+          Amount: 100
         - Level: 6
-          Amount: 86
+          Amount: 103
         - Level: 7
-          Amount: 89
+          Amount: 106
         - Level: 8
-          Amount: 92
+          Amount: 109
         - Level: 9
-          Amount: 95
+          Amount: 112
         - Level: 10
-          Amount: 98
+          Amount: 115
   - Id: 5459
     Name: HN_GROUND_GRAVITATION
     Description: Ground Gravitation
@@ -42045,25 +42045,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 55
+          Amount: 93
         - Level: 2
-          Amount: 60
+          Amount: 96
         - Level: 3
-          Amount: 65
+          Amount: 99
         - Level: 4
-          Amount: 70
+          Amount: 102
         - Level: 5
-          Amount: 75
+          Amount: 105
         - Level: 6
-          Amount: 80
+          Amount: 108
         - Level: 7
-          Amount: 85
+          Amount: 111
         - Level: 8
-          Amount: 90
+          Amount: 114
         - Level: 9
-          Amount: 95
+          Amount: 117
         - Level: 10
-          Amount: 100
+          Amount: 120
     Unit:
       Id: GROUND_GRAVITATION
       Range:
