@@ -1,0 +1,32 @@
+---
+BasedOnStyle: Google
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+ColumnLimit: 100
+IndentWidth: 4
+Language: Cpp
+TabWidth: 4
+UseTab: ForContinuationAndIndentation
+SpacesBeforeTrailingComments: 1
+BinPackArguments: false
+BinPackParameters: false
+AccessModifierOffset: -4
+SortIncludes: true
+IndentCaseLabels: true
+PointerAlignment: Left
+SortIncludes: true
+AlignTrailingComments: false
+IndentPPDirectives: BeforeHash
+IncludeCategories:
+  - Regex: '<config/.*h.*>'
+    Priority: 3
+  - Regex: '<(common|char|login|map)/.*h.*>'
+    Priority: 4
+  - Regex: '<.*\.(h|hpp)>'
+    Priority: 2
+  - Regex: '<.*'
+    Priority: 1
+  - Regex: '"(common|char|login|map)/.*hpp"'
+    Priority: 5
+...
