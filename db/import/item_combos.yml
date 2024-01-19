@@ -32,3 +32,12 @@
 Header:
   Type: COMBO_DB
   Version: 1
+
+Body:
+  - Combos:
+      - Combo:
+          - Cap_Of_Concentration
+          - Pencil_In_Mouth
+    Script: |
+      bonus bDex,2;
+      bonus bDef,2;

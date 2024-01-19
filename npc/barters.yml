@@ -47,6 +47,6 @@ Header:
 
 Footer:
   Imports:
-  - Path: npc/re/merchants/barters.yml
-    Mode: Renewal
+  # - Path: npc/re/merchants/barters.yml
+  #   Mode: Renewal
   - Path: npc/custom/barters.yml

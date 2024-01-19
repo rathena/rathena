@@ -1,0 +1,32 @@
+moc_para01,22,31,4	script	TiêÒu Baòch#moc_para01_barter_tieubach	4_TARUTUPI,{
+	if ((MaxWeight - Weight) < 10000) {
+		mes "Thiìm mang giÌ nãòng quaì, giaÒm nãòng ði rôÌi miÌnh noìi chuyêòn tiêìp.";
+		close;
+	}
+	mes "[TiêÒu Baòch]";
+	mes "ChaÌo ðôÌng chiì, muôìn ðôÒi giÌ neÌ?";
+	next;
+	switch( select(
+		"Consumable",
+		"Lower Headgear",
+		"Middle Headgear",
+		"Upper Headgear",
+		"Accessories"
+	) ) {
+		case 1:
+			callshop "tieubach_consumable";
+			end;
+		case 2:
+			callshop "tieubach_lower_headgear";
+			end;
+		case 3:
+			callshop "tieubach_middle_headgear";
+			end;
+		case 4:
+			callshop "tieubach_upper_headgear";
+			end;
+		case 5:
+			callshop "tieubach_upper_accessories";
+			end;
+	}
+}

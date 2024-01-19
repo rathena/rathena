@@ -34901,24 +34901,24 @@ Body:
     ArmorLevel: 1
     Refineable: true
     View: 554
-  - Id: 5574
-    AegisName: Pencil_In_Mouth
-    Name: Well-Chewed Pencil
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Locations:
-      Head_Low: true
-    ArmorLevel: 1
-    EquipLevelMin: 10
-    View: 555
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
-    Script: |
-      bonus bdex,2;
-      bonus bHitRate,3;
+  # - Id: 5574
+  #   AegisName: Pencil_In_Mouth
+  #   Name: Well-Chewed Pencil
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Locations:
+  #     Head_Low: true
+  #   ArmorLevel: 1
+  #   EquipLevelMin: 10
+  #   View: 555
+  #   Trade:
+  #     NoDrop: true
+  #     NoSell: true
+  #     NoGuildStorage: true
+  #   Script: |
+  #     bonus bdex,2;
+  #     bonus bHitRate,3;
   - Id: 5575
     AegisName: Onigiri_Hat
     Name: Rice Ball Hat
@@ -35174,18 +35174,18 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     View: 549
-  - Id: 5594
-    AegisName: Donut_In_Mouth
-    Name: Donut In Mouth
-    Type: Armor
-    Buy: 20
-    Weight: 50
-    Defense: 1
-    Locations:
-      Head_Low: true
-    ArmorLevel: 1
-    EquipLevelMin: 1
-    View: 569
+  # - Id: 5594
+  #   AegisName: Donut_In_Mouth
+  #   Name: Donut In Mouth
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 50
+  #   Defense: 1
+  #   Locations:
+  #     Head_Low: true
+  #   ArmorLevel: 1
+  #   EquipLevelMin: 1
+  #   View: 569
   - Id: 5596
     AegisName: 4Leaf_Clover_In_Mouth
     Name: 4Leaf Clover In Mouth
@@ -40812,20 +40812,20 @@ Body:
       bonus bMatkRate,5;
       bonus bMaxHPRate,10;
       bonus bMaxSPRate,10;
-  - Id: 18505
-    AegisName: Umbala_Spirit
-    Name: Umbala Spirit
-    Type: Armor
-    Weight: 200
-    Defense: 1
-    Slots: 1
-    Locations:
-      Head_Low: true
-    ArmorLevel: 1
-    EquipLevelMin: 30
-    View: 675
-    Script: |
-      bonus bVit,1;
+  # - Id: 18505
+  #   AegisName: Umbala_Spirit
+  #   Name: Umbala Spirit
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 1
+  #   Slots: 1
+  #   Locations:
+  #     Head_Low: true
+  #   ArmorLevel: 1
+  #   EquipLevelMin: 30
+  #   View: 675
+  #   Script: |
+  #     bonus bVit,1;
   - Id: 18506
     AegisName: Hattah_Black
     Name: Hattah Black

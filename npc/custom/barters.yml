@@ -44,3 +44,292 @@
 Header:
   Type: BARTER_DB
   Version: 1
+
+Body:
+  - Name: Muìt-lõÌ Cat
+    Map: moc_para01
+    X: 19
+    Y: 31
+    Sprite: 4_XMAS_CAT1
+    Direction: South
+    Items:
+      - Index: 0
+        Item: Tempered_Iron
+        RequiredItems:
+          - Index: 0
+            Item: Iron
+            Amount: 3
+          - Index: 1
+            Item: Iron_Ore
+            Amount: 1
+      - Index: 1
+        Item: Efficient_Bottle
+        RequiredItems:
+          - Index: 0
+            Item: Acid_Bottle
+            Amount: 1
+          - Index: 1
+            Item: Fire_Bottle
+            Amount: 1
+  - Name: tieubach_consumable
+    # Map: moc_para01
+    # X: 22
+    # Y: 31
+    # Sprite: 4_TARUTUPI
+    # Direction: South
+    Items:
+      - Index: 0
+        Item: Advanced_Battle_Manual
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 10
+      - Index: 1
+        Item: Advanced_Battle_Manual_Box
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 2
+        Item: Battle_Manual
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 2
+      - Index: 3
+        Item: Battle_Manual_Box5
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 10
+      - Index: 4
+        Item: Job_Manual50
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 2
+      - Index: 5
+        Item: Job_Manual50_Box_5
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 10
+      - Index: 6
+        Item: Dead_Tree_Branch_Box2
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 2
+      - Index: 7
+        Item: Bloody_Dead_Branch
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 15
+      - Index: 8
+        Item: Max_Weight_Up_Scroll
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 5
+      - Index: 9
+        Item: Max_Weight_Up_Scroll_Box
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 10
+        Item: Inventory_Ex
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 10
+      - Index: 11
+        Item: Boarding_Halter_Box
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 3
+      - Index: 12
+        Item: B_Halter_Box_30Days
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 10
+      - Index: 13
+        Item: Speed_Up_Potion_Box5
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 1
+      - Index: 14
+        Item: Speed_Up_Potion_Box25
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 5
+      - Index: 15
+        Item: Sillit_Pong_Bottle
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 10
+      - Index: 16
+        Item: Insurance
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 1
+      - Index: 17
+        Item: F_Insurance_Package
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 10
+      - Index: 18
+        Item: C_Wing_Of_Fly_7Day_Box
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 25
+      - Index: 19
+        Item: Convex_Mirror
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 3
+
+  - Name: tieubach_lower_headgear
+    Items:
+      - Index: 1
+        Item: Pirate_Dagger
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 2
+        Item: Gang_Scarf
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 3
+        Item: Spiked_Scarf
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 4
+        Item: Rainbow_Scarf
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 5
+        Item: Umbala_Spirit
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 6
+        Item: Fish_In_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 7
+        Item: Scarlet_Rose
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 8
+        Item: Donut_In_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 9
+        Item: Pencil_In_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 10
+        Item: CD_In_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+  - Name: tieubach_middle_headgear
+    Items:
+      - Index: 1
+        Item: Improved_Assassin_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 2
+        Item: Hawk_Eyes02
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 3
+        Item: Blush_Of_Groom
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+  - Name: tieubach_upper_headgear
+    Items:
+      - Index: 1
+        Item: Pecopeco_Hairband
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+  - Name: tieubach_upper_accessories
+    Items:
+      - Index: 1
+        Item: Novice_Figure
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 2
+        Item: Swordman_Figure
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 3
+        Item: Acolyte_Figure
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 4
+        Item: Mage_Figure
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 5
+        Item: Archer_Figure
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 6
+        Item: Thief_Figure
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 7
+        Item: Merchant_Figure
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
