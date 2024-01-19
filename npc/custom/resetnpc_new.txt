@@ -1,0 +1,72 @@
+moc_para01,52,34,4	script	ĞâÌu Nâìm	4_M_FAIRYKID,{
+	.statzenycost = 5000000;
+	.statitem = 88888;
+	.statitemcost = 25;
+	.skillzenycost = 2000000;
+
+	mes "[ ^0000DEĞâÌu Nâìm^000000 ]";
+	mes "Xin chaÌo, em laÌ ^0000DEĞâÌu Nâìm^000000 thiìch reset.";
+	mes (Sex?"Anh":"Chiò")+" muôìn reset giÌ:";
+	next;
+
+	.@i = select("Reset ^00DE00ĞiêÒm^000000:Reset ^0000DEKyŞ nãng^000000:^FF3355HuÒy boÒ");
+	if(.@i > 2) close;
+
+	if(.@i == 1) {
+		mes "[ ^0000DEĞâÌu Nâìm^000000 ]";
+		mes "Reset ^800080ğiêÒm (stats)^000000 dıõìi level 70 ğıõòc " + "^00CF00miêŞn phiì^000000" + ", coÌn không seŞ câÌn:";
+		mes "";
+
+		mes (Zeny>.statzenycost?"^00CF00":"^FF0000") + callfunc("F_InsertComma",Zeny) + "^000000 / " + callfunc("F_InsertComma",.statzenycost) + " zeny";
+		mes (countitem(88888)>.statitemcost?"^00CF00":"^FF0000") + countitem(88888) + "^000000 / " + .statitemcost + " " + mesitemlink(88888, false);
+
+		next;
+		if (select("Tiêìp tuòc"+ (BaseLevel<70?" ^00CF00(miêŞn phiì)^000000":"") +":HuÒy boÒ") == 2)
+			close;
+
+		if (BaseLevel < 70) {
+			ResetStatus;
+			close;
+		} else {
+			if (Zeny >= .statzenycost && countitem(.statitem) >= .statitemcost) {
+				set Zeny, Zeny-.statzenycost;
+				delitem 88888,.statitemcost;
+				ResetStatus;
+			} else {
+				mes "[ ^0000DEĞâÌu Nâìm^000000 ]";
+				mes "Xin lôŞi, ^FF3355không ğuÒ vâòt phâÒm câÌn thiêìt^000000 rôÌi, kiêìm thêm ği rôÌi haŞy tiÌm em.";
+				close;
+			}
+		}
+	}
+
+	if(.@i == 2) {
+		mes "[ ^0000DEĞâÌu Nâìm^000000 ]";
+		mes "Reset ^800080kyŞ nãng (skills)^000000 dıõìi level 70 ğıõòc " + "^00CF00miêŞn phiì^000000" + ", coÌn không seŞ câÌn:";
+		mes "";
+
+		mes (Zeny>.skillzenycost?"^00CF00":"^FF0000") + callfunc("F_InsertComma",Zeny) + "^000000 / " + callfunc("F_InsertComma",.skillzenycost) + " zeny";
+
+		next;
+		if (select("Tiêìp tuòc"+ (BaseLevel<70?" ^00CF00(miêŞn phiì)^000000":"") +":HuÒy boÒ") == 2)
+			close;
+
+		if (BaseLevel < 70) {
+			ResetSkill;
+			close;
+		} else {
+			if (Zeny >= .skillzenycost) {
+				set Zeny, Zeny-.skillzenycost;
+				ResetSkill;
+			} else {
+				mes "[ ^0000DEĞâÌu Nâìm^000000 ]";
+				mes "Xin lôŞi, ^FF3355không ğuÒ vâòt phâÒm câÌn thiêìt^000000 rôÌi, kiêìm thêm ği rôÌi haŞy tiÌm em.";
+				close;
+			}
+		}
+	}
+
+	mes "[ ^0000DEĞâÌu Nâìm^000000 ]";
+	mes "Xong rôÌi ğoì.";
+	close;
+}

@@ -20,7 +20,7 @@ prontera,150,193,5	script	ÐâÌu Nâìm	124,{
 		close;
 	}
 	mes "Xin chaÌo, em laÌ ^0000DEÐâÌu Nâìm^000000 thiìch Reset.";
-	mes "Reset ^00DE00ÐiêÒm: ^FF3355"+ callfunc("F_InsertComma",.@Reset[1]) +"^000000z";
+	mes "Reset ^00DE00ÐiêÒm (Stats): ^FF3355"+ callfunc("F_InsertComma",.@Reset[1]) +"^000000z";
 	mes "Reset ^0000DEKyÞ nãng: ^FF3355"+ callfunc("F_InsertComma",.@Reset[0]) +"^000000z";
 	mes "Reset ^00DEDECaÒ hai: ^FF3355"+ callfunc("F_InsertComma",.@Reset[2]) +"^000000z";
 	if(.@Reset[3]) mes "You may only reset "+callfunc("F_InsertPlural",.@Reset[3],"time")+", so use "+((.@Reset[3]>1)?"them":"it")+" wisely.";
