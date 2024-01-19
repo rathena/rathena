@@ -54,7 +54,7 @@ namespace rathena{
 			CHARACTER,
 			MAP,
 			TOOL,
-			WEB
+			WEB,
 		};
 
 		class Core{

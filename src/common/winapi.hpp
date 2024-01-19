@@ -46,13 +46,17 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define _CRT_NONSTDC_NO_WARNINGS
 
+// clang-format off
+// keep io.h import before windows
 #include <io.h>
+// keep windows before everything else
 #include <Windows.h>
 #include <WinSock2.h>
+// clang-format on
 #include <In6addr.h>
-#include <Ws2tcpip.h>
-#include <Mswsock.h>
 #include <MMSystem.h>
+#include <Mswsock.h>
+#include <Ws2tcpip.h>
 
 #undef NOMINMAX
 
