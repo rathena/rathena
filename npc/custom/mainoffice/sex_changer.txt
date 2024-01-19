@@ -1,0 +1,28 @@
+moc_para01,52,37,4	script	Sex Changer	4_DR_M_01,{
+  .itemRequired = 88888;
+  .itemCost = 10;
+
+	mes "[ ^0000DESex Changer^000000 ]";
+	mes "Xin chaÌo, tôi coì thêÒ giuìp baòn chuyêÒn ğôÒi giõìi tiình.";
+  mes "Phiì seŞ laÌ: " + (countitem(88888)<.itemCost?"^FF0000":"^00DF00") + countitem(88888) + "^000000 / " + .itemCost + " " + mesitemlink(88888, false);
+	mes (Sex?"Anh":"Chiò")+" muôìn thıòc hiêòn không?";
+	next;
+
+  .@i = select("TriêÒn:HuÒy");
+
+  if (.@i > 1) {
+    close;
+  }
+
+  if (countitem(88888) >= .itemCost) {
+    delitem 88888,.itemCost;
+    changesex getcharid(0);
+    close;
+  } else {
+    // mes "[ ^0000DEĞâÌu Nâìm^000000 ]";
+    mes "- thiêìu vâòt phâÒm yêu câÌu -";
+    close;
+  }
+
+  close;
+}
