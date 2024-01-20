@@ -1,0 +1,9 @@
+-	script	TEST_NPC#TEST_NPC::TEST_NPC	-1,{
+	setarray .@myTestArr$[0], "Hello World", "!", "1", "2", "3";
+  for( .@i = 0; .@i < getarraysize(.@myTestArr$); .@i++ ) {
+    mes .@myTestArr$[.@i];
+  }
+  close;
+}
+
+moc_para01,46,37,4	duplicate(TEST_NPC)	Test NPC#moc_para01_TESTNPC	84
