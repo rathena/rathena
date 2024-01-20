@@ -106530,38 +106530,518 @@ Body:
 #    AegisName: AB_YEMOB_131
 #  - Id: 22139
 #    AegisName: AB_YEMOB_132
-#  - Id: 22140
-#    AegisName: BIO_ANOLIAN
-#  - Id: 22141
-#    AegisName: BIO_SKEL_ARCHER
-#  - Id: 22142
-#    AegisName: BIO_DRAGON_TAIL
-#  - Id: 22143
-#    AegisName: BIO_LAVA_TOAD
-#  - Id: 22144
-#    AegisName: BIO_LITTLE_FATUM
-#  - Id: 22145
-#    AegisName: BIO_STING
-#  - Id: 22146
-#    AegisName: BIO_EMPATHIZER
-#  - Id: 22147
-#    AegisName: BIO_FIRE_FRILLDORA
-#  - Id: 22148
-#    AegisName: BIO_HOLY_FRUS
-#  - Id: 22149
-#    AegisName: BIO_HOLY_SKOGUL
-#  - Id: 22150
-#    AegisName: BIO_KAPHA
-#  - Id: 22151
-#    AegisName: BIO_SKEL_SOLDIER
-#  - Id: 22152
-#    AegisName: BIO_PINGUICULA_D
-#  - Id: 22153
-#    AegisName: BIO_POM_SPIDER
-#  - Id: 22154
-#    AegisName: BIO_PRAY_GIVER
-#  - Id: 22155
-#    AegisName: BIO_WOOD_GOBLIN
+  - Id: 22140
+    AegisName: BIO_ANOLIAN
+    Name: Deep Anolian
+    Level: 263
+    Hp: 107320500
+    BaseExp: 5440652
+    JobExp: 3789414
+    Attack: 39880
+    Defense: 229
+    MagicDefense: 115
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 369
+    Agi: 254
+    Vit: 293
+    Int: 236
+    Dex: 423
+    Luk: 323
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 190
+    AttackDelay: 900 # TODO
+    AttackMotion: 500 # TODO
+    DamageMotion: 864 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22141
+    AegisName: BIO_SKEL_ARCHER
+    Name: Deep Skeleton Archer
+    Level: 264
+    Hp: 98579600
+    BaseExp: 5522166
+    JobExp: 3855867
+    Attack: 22235
+    Defense: 172
+    MagicDefense: 100
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 302
+    Agi: 290
+    Vit: 191
+    Int: 253
+    Dex: 441
+    Luk: 319
+    AttackRange: 9 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 541
+    AttackMotion: 540
+    DamageMotion: 576 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22142
+    AegisName: BIO_DRAGON_TAIL
+    Name: Deep Dragon Tail
+    Level: 264
+    Hp: 83702230
+    BaseExp: 5478855
+    JobExp: 3825625
+    Attack: 29537
+    Defense: 201
+    MagicDefense: 119
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 430
+    Agi: 414
+    Vit: 281
+    Int: 361
+    Dex: 597
+    Luk: 455
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 175
+    AttackDelay: 862 # TODO
+    AttackMotion: 534 # TODO
+    DamageMotion: 312 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22143
+    AegisName: BIO_LAVA_TOAD
+    Name: Deep Lava Toad
+    Level: 262
+    Hp: 102957370
+    BaseExp: 5449476
+    JobExp: 3791860
+    Attack: 34538
+    Defense: 363
+    MagicDefense: 159
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 244
+    Agi: 225
+    Vit: 331
+    Int: 286
+    Dex: 411
+    Luk: 295
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 800 # TODO
+    AttackMotion: 840
+    DamageMotion: 300 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22144
+    AegisName: BIO_LITTLE_FATUM
+    Name: Deep Little Fatum
+    Level: 263
+    Hp: 87700530
+    BaseExp: 5475237
+    JobExp: 3830757
+    Attack: 38685
+    Defense: 192
+    MagicDefense: 213
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 243
+    Agi: 251
+    Vit: 274
+    Int: 370
+    Dex: 455
+    Luk: 380
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 432 # TODO
+    AttackMotion: 300 # TODO
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22145
+    AegisName: BIO_STING
+    Name: Deep Sting
+    Level: 265
+    Hp: 101934980
+    BaseExp: 5596403
+    JobExp: 3917482
+    Attack: 22685
+    Defense: 292
+    MagicDefense: 170
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 352
+    Agi: 249
+    Vit: 335
+    Int: 352
+    Dex: 471
+    Luk: 345
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 528 # TODO
+    AttackMotion: 500 # TODO
+    DamageMotion: 240 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22146
+    AegisName: BIO_EMPATHIZER
+    Name: Deep Empathizer
+    Level: 262
+    Hp: 93256470
+    BaseExp: 538961
+    JobExp: 3770674
+    Attack: 40685
+    Defense: 199
+    MagicDefense: 223
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 265
+    Agi: 273
+    Vit: 298
+    Int: 403
+    Dex: 493
+    Luk: 415
+    AttackRange: 2 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 480 # TODO
+    AttackMotion: 780 # TODO
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22147
+    AegisName: BIO_FIRE_FRILLDORA
+    Name: Deep Fire Frilldora
+    Level: 265
+    Hp: 93256470
+    BaseExp: 5675187
+    JobExp: 3962714
+    Attack: 22127
+    Defense: 180
+    MagicDefense: 103
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 321
+    Agi: 309
+    Vit: 210
+    Int: 270
+    Dex: 455
+    Luk: 340
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 1540 # TODO
+    AttackMotion: 720 # TODO
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22148
+    AegisName: BIO_HOLY_FRUS
+    Name: Deep Holy Frus
+    Level: 263
+    Hp: 85467880
+    BaseExp: 5525795
+    JobExp: 3848717
+    Attack: 34216
+    Defense: 299
+    MagicDefense: 115
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 369
+    Agi: 254
+    Vit: 293
+    Int: 236
+    Dex: 423
+    Luk: 323
+    AttackRange: 2 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 480 # TODO
+    AttackMotion: 780
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22149
+    AegisName: BIO_HOLY_SKOGUL
+    Name: Deep Holy Skogul
+    Level: 265
+    Hp: 83587530
+    BaseExp: 5693764
+    JobExp: 3983650
+    Attack: 68405
+    Defense: 187
+    MagicDefense: 207
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 229
+    Agi: 237
+    Vit: 258
+    Int: 349
+    Dex: 431
+    Luk: 359
+    AttackRange: 2 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 720 # TODO
+    AttackMotion: 1056
+    DamageMotion: 480 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22150
+    AegisName: BIO_KAPHA
+    Name: Deep Kapha
+    Level: 263
+    Hp: 105899670
+    BaseExp: 5440652
+    JobExp: 3789414
+    Attack: 37985
+    Defense: 299
+    MagicDefense: 115
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 369
+    Agi: 254
+    Vit: 293
+    Int: 236
+    Dex: 423
+    Luk: 395
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 2012 # TODO
+    AttackMotion: 1728 # TODO
+    DamageMotion: 672 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22151
+    AegisName: BIO_SKEL_SOLDIER
+    Name: Deep Skeleton Soldier
+    Level: 264
+    Hp: 100400600
+    BaseExp: 5526869
+    JobExp: 3849464
+    Attack: 25278
+    Defense: 294
+    MagicDefense: 114
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 355
+    Agi: 244
+    Vit: 282
+    Int: 227
+    Dex: 408
+    Luk: 310
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 2276 # TODO
+    AttackMotion: 576 # TODO
+    DamageMotion: 432 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22152
+    AegisName: BIO_PINGUICULA_D
+    Name: Deep Dark Pinguicula
+    Level: 264
+    Hp: 81679820
+    BaseExp: 5519017
+    JobExp: 3861388
+    Attack: 24025
+    Defense: 198
+    MagicDefense: 222
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 262
+    Agi: 270
+    Vit: 294
+    Int: 398
+    Dex: 487
+    Luk: 409
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 230
+    AttackDelay: 1426 # TODO 
+    AttackMotion: 600 # TODO 
+    DamageMotion: 360 # TODO 
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22153
+    AegisName: BIO_POM_SPIDER
+    Name: Deep Pom Spider
+    Level: 265
+    Hp: 89009870
+    BaseExp: 5613974
+    JobExp: 3910133
+    Attack: 29025
+    Defense: 319
+    MagicDefense: 123
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 420
+    Agi: 289
+    Vit: 334
+    Int: 269
+    Dex: 477
+    Luk: 368
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 864 # TODO
+    AttackMotion: 1056 # TODO
+    DamageMotion: 576 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22154
+    AegisName: BIO_PRAY_GIVER
+    Name: Deep Pray Giver
+    Level: 263
+    Hp: 89002070
+    BaseExp: 5466195
+    JobExp: 3826337
+    Attack: 32822
+    Defense: 299
+    MagicDefense: 175
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 372
+    Agi: 263
+    Vit: 354
+    Int: 372
+    Dex: 496
+    Luk: 365
+    AttackRange: 2 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150 # TODO
+    AttackDelay: 720 # TODO
+    AttackMotion: 1056 # TODO
+    DamageMotion: 480 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22155
+    AegisName: BIO_WOOD_GOBLIN
+    Name: Deep Wood Goblin
+    Level: 264
+    Hp: 99900999
+    BaseExp: 5466757
+    JobExp: 3826730
+    Attack: 35822
+    Defense: 303
+    MagicDefense: 177
+    # Resistance:   # TODO
+    # MagicResistance:   # TODO
+    Str: 382
+    Agi: 270
+    Vit: 363
+    Int: 382
+    Dex: 507
+    Luk: 374
+    AttackRange: 1 # TODO
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 240
+    AttackDelay: 2304 # TODO
+    AttackMotion: 840 # TODO
+    DamageMotion: 360 # TODO
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
 #  - Id: 22156
 #    AegisName: VR_MD_LAKE
 #  - Id: 22157
