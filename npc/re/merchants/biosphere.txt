@@ -394,3 +394,127 @@ OnInit:
 	setunittitle( getnpcid(0), "<Enchant Modified Equipment>" );
 	end;
 }
+
+
+// Guide
+ba_in01,237,301,5	script	Admin Beta#ms02	4_EP17_BASIC_B,{
+	mes "[Admin Beta]";
+	mes "Do you need guidance on the artificial habitat?";
+	mes "Inside this hallway is the Biosphere, an artificial habitat created by Varmundt for ecological research.";
+	next;
+	if (select( "Artificial habitat guide", "No guide needed" ) == 2) {
+		mes "[Admin Beta]";
+		mes "I see. I understand.";
+		mes "I hope you have a comfortable time at Varmundt's mansion.";
+		close;
+	}
+	mes "[Admin Beta]";
+	mes "You're curious about artificial habitats.";
+	next;
+	if (select( "What is an artificial habitat?", "Artificial habitat location information" ) == 1) {
+		mes "[Admin Beta]";
+		mes "As mentioned earlier, the artificial habitat is a space that Varmundt personally managed to create based on the actual natural environment and topography for ecological research.";
+		next;
+		mes "[Admin Beta]";
+		mes "Varmundt created a specimen environment in a place he was particularly interested in and released and studied suitable specimen organisms there.";
+		next;
+		mes "[Admin Beta]";
+		mes "But the master's absence has been prolonged, and the artificial habitat has remained tightly closed until now.";
+		next;
+		mes "[Admin Beta]";
+		mes "Since Varmundt also had the key, we did not open it to ensure a pure environment that is not polluted by external factors...";
+		next;
+		mes "[Admin Beta]";
+		mes "However, we felt the need to open the door to the artificial habitat due to recent reports that the energy inside was unusual.";
+		next;
+		mes "[Admin Beta]";
+		mes "So!";
+		next;
+		select( "So?" );
+		mes "[Admin Beta]";
+		mes "Mansion Manager Alpha has scanned the mansion thoroughly and finally found the master key.";
+		next;
+		mes "[Admin Beta]";
+		mes "But, unlike us, who always remain the same over time, living things are things that change...";
+		next;
+		mes "[Admin Beta]";
+		mes "The specimen organisms grew and became stronger on their own after their habitat was left isolated from the outside world for a long period of time. From a biological point of view, this is a great achievement, and I am sure Varmundt will be pleased...";
+		next;
+		mes "[Admin Beta]";
+		mes "No, um... we were very happy, too. We were only happy until a lot of monsters came rushing through the door that had been opened for the first time in a long time.";
+		next;
+		mes "[Admin Beta]";
+		mes "Looking at the magic circle we placed to identify the monster type, the monster in the data was correct, but the monsters that survived for a long time in extreme situations were stronger than the monsters in the data we had.";
+		next;
+		mes "[Admin Beta]";
+		mes "With no data, it was not enough for us to deal with powerful monsters, so we closed the door and waited for customers.";
+		next;
+		select( "Me?" );
+		mes "[Admin Beta]";
+		mes "From what I've observed, guests love adventure. I've also seen them spark a sense of challenge for new things in this mansion.";
+		mes "The customer response was very strong and responses to all variables were very quick and accurate.";
+		next;
+		mes "[Admin Beta]";
+		mes "So we decided to open the artificial habitat, which no one had visited in a long time, to our guests who are experienced adventurers first.";
+		next;
+		mes "[Admin Beta]";
+		mes "While our guests can ignite their sense of adventure by dealing with monsters, we will focus on managing the artificial habitat.";
+		next;
+		select( "It feels like I'm passing it on..." );
+		mes "[Admin Beta]";
+		mes "Isn't it better to leave the job to the experts? We're leaving it to experts who are slightly more specialized in dealing with monsters. We believe that no one other than our customers will be able to handle this difficult task.";
+		next;
+		mes "[Admin Beta]";
+		mes "In addition, rather than opening all artificial habitats, we are only opening the most urgent artificial habitats, so the burden will be less.";
+		next;
+		mes "[Admin Beta]";
+		mes "Anything obtained from the artificial habitat can be kept by the adventurer. Here's one more.";
+		next;
+		mes "[Admin Beta]";
+		mes "Rare items obtained from monsters can be made into strong equipment <NAVI>[here]<INFO>ba_in01,362,48,0,101,0</INFO></NAVI>, so you may want to take a look as an adventurer. I think it would be good. It is mutually beneficial.";
+		close;
+	}
+	switch( select( "Sample environment - ^9933ccSoul^000000", "Sample environment - ^ff0000Venom^000000", "Sample environment - ^0000cdTemple^000000", "Other habitats", "Equipment combination" ) ) {
+	case 1:
+		mes "[Admin Beta]";
+		mes "Sample Environment - <FONT COLOR = 9933cc><B>Soul</B></FONT>";
+		mes "This is a place that embodies the ecosystem of the soul region. It is a place where monsters even the souls are powerful reside in.";
+		close2;
+		navigateto("ba_in01",201,302);
+		end;
+	case 2:
+		mes "[Admin Beta]";
+		mes "Sample environment - <FONT COLOR = ff0000><B>Venom</B></FONT>";
+		mes "This is a place that embodies the ecosystem of a poisonous area. It is mainly inhabited by monsters that poison everything.";
+		close2;
+		navigateto("ba_in01",215,302);
+		end;
+	case 3:
+		mes "[Admin Beta]";
+		mes "Sample Environment - <FONT COLOR = 0000cd><B>Temple</B></FONT>";
+		mes "It embodies the ecosystem of the temple area. There are many holy creatures, but you should not expect them to be benevolent.";
+		close2;
+		navigateto("ba_in01",229,302);
+		end;
+	case 4:
+		mes "[Admin Beta]";
+		mes "You're curious about habitats other than those found here.";
+		mes "Open specimen environment cold, flame, grassland, and death habitats have been prepared in other places before this one.";
+		next;
+		mes "[Admin Beta]";
+		mes "For further information, please contact Beta at the front of the lobby.";
+		close2;
+		navigateto("ba_in01",252,353);
+		end;
+	case 5:
+		mes "[Admin Beta]";
+		mes "The adventurer guests showed great interest in powerful equipment.";
+		next;
+		mes "[Admin Beta]";
+		mes "So, I found a way to transform the runes and equipment acquired from the artificial habitat into powerful equipment that cannot be found anywhere else. If you are interested, please visit us.";
+		close2;
+		navigateto("ba_in01",362,48);
+		end;
+	}
+	end;
+}

@@ -11,6 +11,9 @@ bl_ice,36,81	warp2	#icetoba	1,1,ba_in01,307,38
 bl_lava,163,14	warp2	#lavatoba	1,1,ba_in01,311,53
 bl_grass,157,16	warp2	#grasstoba	1,1,ba_in01,325,53
 bl_death,315,59,0	warp2	#deathtoba	1,1,ba_in01,339,53
+bl_temple,53,82,0	warp2	#temtoba	1,1,ba_in01,229,300
+bl_venom,146,19,0	warp2	#vnmtoba	1,1,ba_in01,215,300
+bl_soul,155,12,0	warp2	#soltoba	1,1,ba_in01,201,300
 
 ba_in01,310,38,0	script	#batoice	WARPNPC,1,1,{
 	end;
@@ -53,5 +56,38 @@ OnTouch:
 		close;
 	}
 	warp "bl_death",315,62;
+	end;
+}
+
+ba_in01,229,302,0	script	#batotem	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 240) {
+		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
+		close;
+	}
+	warp "bl_temple",53,86;
+	end;
+}
+
+ba_in01,215,302,0	script	#batovnm	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 240) {
+		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
+		close;
+	}
+	warp "bl_venom",146,23;
+	end;
+}
+
+ba_in01,201,302,0	script	#batosol	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (BaseLevel < 240) {
+		mes "^0000cdThis door is only open to those with a base level of 240 or higher^000000.";
+		close;
+	}
+	warp "bl_soul",155,16;
 	end;
 }

@@ -48,6 +48,7 @@ Header:
 Body:
   - Name: barter_biosphere_1
     Items:
+    Items:
       - Index: 0
         Item: Plain_Barmund_Rune2
         Zeny: 20000
@@ -76,6 +77,84 @@ Body:
           - Index: 0
             Item: Death_Barmund_Rune
             Amount: 10
+      - Index: 4
+        Item: Soul_Barmund_Rune2
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Soul_Barmund_Rune
+            Amount: 10
+      - Index: 5
+        Item: Venom_Barmund_Rune2
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Venom_Barmund_Rune
+            Amount: 10
+      - Index: 6
+        Item: Temple_Barmund_Rune2
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Temple_Barmund_Rune
+            Amount: 10
+      - Index: 7
+        Item: Barmund_Water
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Barmund_Plain_Essence
+            Amount: 5
+          - Index: 1
+            Item: Barmund_Flame_Essence
+            Amount: 5
+          - Index: 2
+            Item: Barmund_Ice_Essence
+            Amount: 5
+          - Index: 3
+            Item: Barmund_Death_Essence
+            Amount: 5
+          - Index: 4
+            Item: Barmund_Soul_Essence
+            Amount: 5
+      - Index: 8
+        Item: Barmund_Water3
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Barmund_Plain_Essence
+            Amount: 5
+          - Index: 1
+            Item: Barmund_Flame_Essence
+            Amount: 5
+          - Index: 2
+            Item: Barmund_Ice_Essence
+            Amount: 5
+          - Index: 3
+            Item: Barmund_Death_Essence
+            Amount: 5
+          - Index: 4
+            Item: Barmund_Venom_Essence
+            Amount: 5
+      - Index: 9
+        Item: Barmund_Water2
+        Zeny: 20000
+        RequiredItems:
+          - Index: 0
+            Item: Barmund_Plain_Essence
+            Amount: 5
+          - Index: 1
+            Item: Barmund_Flame_Essence
+            Amount: 5
+          - Index: 2
+            Item: Barmund_Ice_Essence
+            Amount: 5
+          - Index: 3
+            Item: Barmund_Death_Essence
+            Amount: 5
+          - Index: 4
+            Item: Barmund_Temple_Essence
+            Amount: 5
   - Name: barter_biosphere_2
     Items:
       - Index: 0
