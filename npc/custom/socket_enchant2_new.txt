@@ -588,10 +588,8 @@ function	script	Func_Socket2	{
 			}
       close;
     case 3:
-      mes "[Leablem]";
-			mes "Need some time to think about it, huh?";
-			mes "Alright, I can understand.";
-			mes "Just remember that life's no fun if you're always playing it safe~";
+			mes "[Leablem]";
+			mes "See you next time.";
 			close;
   }
 }

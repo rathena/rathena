@@ -585,7 +585,7 @@ function	script	Func_Socket2	{
 				mes "Go bring them quick!";
 				close;
 			}
-		case 2:
+		case 3:
 			mes "[Leablem]";
 			mes "See you next time.";
 			close;
