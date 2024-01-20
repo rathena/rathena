@@ -10125,6 +10125,7 @@ Body:
     FixedCastTime: 700
     CastTimeFlags:
       IgnoreDex: true
+      IgnoreItemBonus: true
     Requires:
       SpCost:
         - Level: 1
