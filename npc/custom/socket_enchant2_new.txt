@@ -15,7 +15,7 @@
 //= 1.1a Added 'disable_items' command. [Euphy]
 //============================================================ 
 
--	script	Leablem#dummy::SocketEnchant2	-1,{
+-	script	Leablem#dummy::SocketEnchant2New	-1,{
 	if (checkweight(1201,1) == 0)
 	{
 		mes "- Wait a minute !! -";
@@ -380,9 +380,10 @@
 	}
 }
 
-payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
-lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
-prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
+// payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
+// lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
+// prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
+moc_para01,46,37,4	duplicate(SocketEnchant2New)	Leablem#moc_para01_TESTNPC	86
 
 function	script	Func_Socket2	{
 	.@item_id = getarg(0);
@@ -416,7 +417,7 @@ function	script	Func_Socket2	{
 	next;
 
   switch(select("Ðuòc lôÞ vaÌ ^0000FFre-roll options^000000.:Ðuòc lôÞ vaÌ ^0000ffgiýÞ nguyên options^000000.:HuÒy.")) {
-		case 1:
+    case 1:
 			mes "[Leablem]";
 			mes "Phiì giao diòch laÌ: ^FF0000" + (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny^000000.";
 			mes "Baòn coì muôìn tiêìp tuòc?";
@@ -430,14 +431,14 @@ function	script	Func_Socket2	{
 				mes "You'd better pray for a successful result.";
 				next;
         specialeffect getarg(3) == 51 ? EF_LORD : EF_SANCTUARY; // only S Class items have Lord of Vermillion effect
-					mes "[Leablem]";
-					mes "Great, it seems to be successful.";
-					mes "It looks pretty well done. Congratulations!";
-					delitem .@item_id,1;
-					delitem .@item_req[0],.@req_amount[0];
-					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
-						delitem .@item_req[1],.@req_amount[1];
-					Zeny = Zeny - .@zeny_req *1000;
+        mes "[Leablem]";
+        mes "Great, it seems to be successful.";
+        mes "It looks pretty well done. Congratulations!";
+        delitem .@item_id,1;
+        delitem .@item_req[0],.@req_amount[0];
+        if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+          delitem .@item_req[1],.@req_amount[1];
+        Zeny = Zeny - .@zeny_req *1000;
 
         if (getiteminfo(.@item_id, ITEMINFO_LOCATIONS) & EQP_HAND_R) { // Weapon
           .@weaponLevel = getiteminfo(.@item_id, ITEMINFO_WEAPONLEVEL);
@@ -501,13 +502,13 @@ function	script	Func_Socket2	{
           randomoptgroup(202);
         }
         getitem3 getarg(1),1,1,0,0,0,0,0,0,.@opt_id,.@opt_value,.@opt_param;
-					next;
-					mes "[Leablem]";
-					mes "See you again, buddy!";
-					close;
-				}
-				else
-				{
+        next;
+        mes "[Leablem]";
+        mes "See you again, buddy!";
+        close;
+			}
+			else
+			{
 				mes "[Leablem]";
 				mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
 				mes "You sure that you have the equipment, required materials and the zeny?";
@@ -561,33 +562,36 @@ function	script	Func_Socket2	{
 				mes "You'd better pray for a successful result.";
 				next;
         specialeffect getarg(3) == 51 ? EF_LORD : EF_SANCTUARY; // only S Class items have Lord of Vermillion effect
-					mes "[Leablem]";
+        mes "[Leablem]";
         mes "Great, it seems to be successful.";
         mes "It looks pretty well done. Congratulations!";
 				if (getequipid(.@part) == .@item_id) {
 					delequip(.@part);
 				}
-					delitem .@item_req[0],.@req_amount[0];
-					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
-						delitem .@item_req[1],.@req_amount[1];
+        delitem .@item_req[0],.@req_amount[0];
+        if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+          delitem .@item_req[1],.@req_amount[1];
         Zeny = Zeny - .@zeny_req_keep_opts *1000;
 
         getitem3 getarg(1),1,1,0,0,0,0,0,0,.@opt_id,.@opt_value,.@opt_param;
-					next;
-					mes "[Leablem]";
-					mes "See you again, buddy!";
-					close;
+        next;
+        mes "[Leablem]";
+        mes "See you again, buddy!";
+        close;
 			}
 			else
 			{
 				mes "[Leablem]";
-				mes "Are you stupid or what? You didn't bring all of the required items!";
-				mes "Go bring them quick!";
+				mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
+				mes "You sure that you have the equipment, required materials and the zeny?";
 				close;
 			}
-		case 2:
-			mes "[Leablem]";
-			mes "See you next time.";
+      close;
+    case 3:
+      mes "[Leablem]";
+			mes "Need some time to think about it, huh?";
+			mes "Alright, I can understand.";
+			mes "Just remember that life's no fun if you're always playing it safe~";
 			close;
-	}
+  }
 }

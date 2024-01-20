@@ -6,4 +6,4 @@
   close;
 }
 
-moc_para01,46,37,4	duplicate(TEST_NPC)	Test NPC#moc_para01_TESTNPC	84
+// moc_para01,46,37,4	duplicate(TEST_NPC)	Test NPC#moc_para01_TESTNPC	84
