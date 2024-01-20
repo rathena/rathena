@@ -11841,6 +11841,222 @@ Body:
     Title: The Price of Labor (1)
   - Id: 16585
     Title: The Price of Labor (2)
+  - Id: 16734
+    Title: Guide to Varmundt's Depth Biosphere
+  - Id: 16735
+    Title: Depth 1st floor sample study
+    Targets:
+      - Id: 1
+        Count: 300
+        Location: bl_depth1
+        MapMobTargets:
+          BIO_ANOLIAN: true
+          BIO_DRAGON_TAIL: true
+          BIO_EMPATHIZER: true
+          BIO_FIRE_FRILLDORA: true
+          BIO_HOLY_FRUS: true
+          BIO_HOLY_SKOGUL: true
+          BIO_KAPHA: true
+          BIO_LAVA_TOAD: true
+          BIO_LITTLE_FATUM: true
+          BIO_PINGUICULA_D: true
+          BIO_POM_SPIDER: true
+          BIO_PRAY_GIVER: true
+          BIO_SKEL_ARCHER: true
+          BIO_SKEL_SOLDIER: true
+          BIO_STING: true
+          BIO_WOOD_GOBLIN: true
+  - Id: 16736
+    Title: Depth 1st floor sample study - Standby
+    TimeLimit: 4h
+  - Id: 16737
+    Title: Depth 1st floor sample deepening study
+    Targets:
+      - Id: 1
+        Count: 2000
+        Location: bl_depth1
+        MapMobTargets:
+          BIO_ANOLIAN: true
+          BIO_DRAGON_TAIL: true
+          BIO_EMPATHIZER: true
+          BIO_FIRE_FRILLDORA: true
+          BIO_HOLY_FRUS: true
+          BIO_HOLY_SKOGUL: true
+          BIO_KAPHA: true
+          BIO_LAVA_TOAD: true
+          BIO_LITTLE_FATUM: true
+          BIO_PINGUICULA_D: true
+          BIO_POM_SPIDER: true
+          BIO_PRAY_GIVER: true
+          BIO_SKEL_ARCHER: true
+          BIO_SKEL_SOLDIER: true
+          BIO_STING: true
+          BIO_WOOD_GOBLIN: true
+  - Id: 16738
+    Title: Depth 1st floor sample deepening study - Standby
+    TimeLimit: Monday 4h
+  - Id: 16739
+    Title: Depth 1st floor Fire sample study I
+    Targets:
+      - Mob: BIO_LAVA_TOAD
+        Count: 50
+      - Mob: BIO_FIRE_FRILLDORA
+        Count: 50
+  - Id: 16740
+    Title: Depth 1st floor Fire sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16741
+    Title: Depth 1st floor Fire sample study II
+    Targets:
+      - Mob: BIO_LAVA_TOAD
+        Count: 80
+      - Mob: BIO_FIRE_FRILLDORA
+        Count: 80
+  - Id: 16742
+    Title: Depth 1st floor Fire sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16743
+    Title: Depth 1st floor Ice sample study I
+    Targets:
+      - Mob: BIO_ANOLIAN
+        Count: 50
+      - Mob: BIO_KAPHA
+        Count: 50
+  - Id: 16744
+    Title: Depth 1st floor Ice sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16745
+    Title: Depth 1st floor Ice sample study II
+    Targets:
+      - Mob: BIO_ANOLIAN
+        Count: 80
+      - Mob: BIO_KAPHA
+        Count: 80
+  - Id: 16746
+    Title: Depth 1st floor Ice sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16747
+    Title: Depth 1st floor Earth sample study I
+    Targets:
+      - Mob: BIO_STING
+        Count: 50
+      - Mob: BIO_WOOD_GOBLIN
+        Count: 50
+  - Id: 16748
+    Title: Depth 1st floor Earth sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16749
+    Title: Depth 1st floor Earth sample study II
+    Targets:
+      - Mob: BIO_STING
+        Count: 80
+      - Mob: BIO_WOOD_GOBLIN
+        Count: 80
+  - Id: 16750
+    Title: Depth 1st floor Earth sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16751
+    Title: Depth 1st floor Wind sample study I
+    Targets:
+      - Mob: BIO_DRAGON_TAIL
+        Count: 50
+      - Mob: BIO_LITTLE_FATUM
+        Count: 50
+  - Id: 16752
+    Title: Depth 1st floor Wind sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16753
+    Title: Depth 1st floor Wind sample study II
+    Targets:
+      - Mob: BIO_DRAGON_TAIL
+        Count: 80
+      - Mob: BIO_LITTLE_FATUM
+        Count: 80
+  - Id: 16754
+    Title: Depth 1st floor Wind sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16755
+    Title: Depth 1st floor Holy sample study I
+    Targets:
+      - Mob: BIO_HOLY_FRUS
+        Count: 50
+      - Mob: BIO_HOLY_SKOGUL
+        Count: 50
+  - Id: 16756
+    Title: Depth 1st floor Holy sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16757
+    Title: Depth 1st floor Holy sample study II
+    Targets:
+      - Mob: BIO_HOLY_FRUS
+        Count: 80
+      - Mob: BIO_HOLY_SKOGUL
+        Count: 80
+  - Id: 16758
+    Title: Depth 1st floor Holy sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16759
+    Title: Depth 1st floor Death sample study I
+    Targets:
+      - Mob: BIO_SKEL_ARCHER
+        Count: 50
+      - Mob: BIO_SKEL_SOLDIER
+        Count: 50
+  - Id: 16760
+    Title: Depth 1st floor Death sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16761
+    Title: Depth 1st floor Death sample study II
+    Targets:
+      - Mob: BIO_SKEL_ARCHER
+        Count: 80
+      - Mob: BIO_SKEL_SOLDIER
+        Count: 80
+  - Id: 16762
+    Title: Depth 1st floor Death sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16763
+    Title: Depth 1st floor Soul sample study I
+    Targets:
+      - Mob: BIO_EMPATHIZER
+        Count: 50
+      - Mob: BIO_PRAY_GIVER
+        Count: 50
+  - Id: 16764
+    Title: Depth 1st floor Soul sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16765
+    Title: Depth 1st floor Soul sample study II
+    Targets:
+      - Mob: BIO_EMPATHIZER
+        Count: 80
+      - Mob: BIO_PRAY_GIVER
+        Count: 80
+  - Id: 16766
+    Title: Depth 1st floor Soul sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16767
+    Title: Depth 1st floor Poison sample study I
+    Targets:
+      - Mob: BIO_PINGUICULA_D
+        Count: 50
+      - Mob: BIO_POM_SPIDER
+        Count: 50
+  - Id: 16768
+    Title: Depth 1st floor Poison sample study I - Standby
+    TimeLimit: 4h
+  - Id: 16769
+    Title: Depth 1st floor Poison sample study II
+    Targets:
+      - Mob: BIO_PINGUICULA_D
+        Count: 80
+      - Mob: BIO_POM_SPIDER
+        Count: 80
+  - Id: 16770
+    Title: Depth 1st floor Poison sample study II - Standby
+    TimeLimit: 4h
+  - Id: 16771
+    Title: Depth 1st floor achievement research
   - Id: 17000
     Title: Meet with Father Bamph
   - Id: 17001

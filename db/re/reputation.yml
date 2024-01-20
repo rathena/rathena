@@ -54,6 +54,16 @@ Body:
     Variable: RepPointsIsgard
     Minimum: -3000
     Maximum: 3000
+  - Id: 5
+    Name: White Cat Alliance
+    Variable: RepPointsWhiteCat
+    Minimum: -3000
+    Maximum: 3000
+  - Id: 6
+    Name: Depth 1st floor research
+    Variable: RepPointsDeep1
+    Minimum: -5000
+    Maximum: 5000
 
 Footer:
   Imports:

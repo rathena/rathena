@@ -41,3 +41,10 @@ function	script	F_Navi	{
 			return getarg(0);
 	}
 }
+
+function	script	F_mesmoblink	{
+	return "<NAVI>[" + getmonsterinfo(getarg(0),MOB_NAME) + "]<INFO>" + getarg(0) + ",0,0,3,-222,1</INFO></NAVI>";
+}
+function	script	F_mesnavi	{
+	return "<NAVI>[" + getarg(0) + "]<INFO>" + getarg(1) + "," + getarg(2) + "," + getarg(3) + ",0,101,0</INFO></NAVI>";
+}
