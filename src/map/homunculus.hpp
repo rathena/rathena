@@ -226,7 +226,8 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
 void hom_reset_stats(struct homun_data *hd);
 int hom_shuffle(struct homun_data *hd); // [Zephyrus]
 void hom_save(struct homun_data *hd);
-bool hom_call(map_session_data *sd);
+// bool hom_call(map_session_data *sd);
+bool hom_call(struct map_session_data *sd, short hom_index);
 bool hom_create_request(map_session_data *sd, int class_);
 void hom_menu(map_session_data *sd,int type);
 int hom_food(map_session_data *sd, struct homun_data *hd);

@@ -14662,12 +14662,25 @@ void clif_parse_CatchPet(int fd, map_session_data *sd){
 
 /// Answer to pet incubator egg selection dialog (CZ_SELECT_PETEGG).
 /// 01a7 <index>.W
-void clif_parse_SelectEgg(int fd, map_session_data *sd){
-	if (sd->menuskill_id != SA_TAMINGMONSTER || sd->menuskill_val != -1)
+// void clif_parse_SelectEgg(int fd, map_session_data *sd){
+// 	if (sd->menuskill_id != SA_TAMINGMONSTER || sd->menuskill_val != -1)
+// 		return;
+
+// 	pet_select_egg(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0])-2);
+// 	clif_menuskill_clear(sd);
+// }
+void clif_parse_SelectEgg(int fd, struct map_session_data* sd) {
+	if (sd->menuskill_val != -1)
 		return;
 
-	pet_select_egg(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0])-2);
-	clif_menuskill_clear(sd);
+	if (sd->menuskill_id == SA_TAMINGMONSTER) {
+		pet_select_egg(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0])-2);
+		clif_menuskill_clear(sd);
+	} else if (sd->menuskill_id == AM_CALLHOMUN) {		
+		hom_call(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0])-2);
+		clif_menuskill_clear(sd);
+		if (sd->pd) clif_send_petstatus(sd); // the client wipes the pet status upon answering this dialog, so it has to be resent.
+	}
 }
 
 
@@ -25435,4 +25448,32 @@ void do_init_clif(void) {
 
 void do_final_clif(void) {
 	ers_destroy(delay_clearunit_ers);
+}
+
+/// Presents a list of embyros that can be revived
+/// 01a6 <packet len>.W { <index>.W }*
+void clif_sendembryo(struct map_session_data* sd)
+{
+	int i, n = 0, fd;
+
+	nullpo_retv(sd);
+
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, MAX_INVENTORY * 2 + 4);
+	WFIFOW(fd, 0) = 0x1a6;
+	for (i = 0, n = 0; i < MAX_INVENTORY; i++) {
+		if (sd->inventory.u.items_inventory[i].nameid <= 0 || sd->inventory_data[i] == NULL ||
+			// (sd->inventory_data[i]->nameid != 7142 && !(sd->inventory_data[i]->nameid >= 9901 && sd->inventory_data[i]->nameid <= 9909)) ||
+			(sd->inventory_data[i]->nameid != 7142 && !(sd->inventory_data[i]->nameid >= 58008 && sd->inventory_data[i]->nameid <= 58011)) ||
+			sd->inventory.u.items_inventory[i].amount <= 0)
+			continue;
+		WFIFOW(fd, n * 2 + 4) = i + 2;
+		n++;
+	}
+	WFIFOW(fd, 2) = 4 + n * 2;
+	WFIFOSET(fd, WFIFOW(fd, 2));
+
+	sd->menuskill_id = AM_CALLHOMUN;
+	sd->menuskill_val = -1;
 }
