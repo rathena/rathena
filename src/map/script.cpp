@@ -12572,7 +12572,8 @@ BUILDIN_FUNC(homunculus_mutate)
 
 		if ( m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99 && i >= 0 ) {
 			sd->hd->homunculus.vaporize = HOM_ST_REST; // Remove morph state.
-			hom_call(sd); // Respawn homunculus.
+			// hom_call(sd); // Respawn homunculus.
+			hom_call(sd, 0); // Respawn homunculus.
 			hom_mutate(sd->hd, homun_id);
 			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_SCRIPT);
 			script_pushint(st, 1);

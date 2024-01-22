@@ -10591,9 +10591,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case AM_CALLHOMUN:	//[orn]
-		if (sd && !hom_call(sd))
+// 	case AM_CALLHOMUN:	//[orn]
+// 		if (sd && !hom_call(sd))
+// 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+// #ifdef RENEWAL
+// 		else if (sd && hom_is_active(sd->hd))
+// 			skill_area_temp[0] = 1; // Already passed pre-cast checks
+// #endif
+// 		break;
+	case AM_CALLHOMUN:
+		if (sd && !sd->status.hom_id) {
+			clif_sendembryo(sd);
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		}
+		else if (sd && !hom_call(sd, 0)) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		}
 #ifdef RENEWAL
 		else if (sd && hom_is_active(sd->hd))
 			skill_area_temp[0] = 1; // Already passed pre-cast checks
@@ -18741,8 +18754,8 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 							break;
 #else
 						case AM_CALLHOMUN:
-							if (sd->status.hom_id) //Don't delete items when hom is already out.
-								continue;
+							// if (sd->status.hom_id) //Don't delete items when hom is already out.
+							// 	continue;
 							break;
 #endif
 						case AB_ADORAMUS:

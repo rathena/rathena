@@ -421,3 +421,27 @@ Body:
       NoAuction: true
     Script: |
       rentitem 12887,604800;
+  - Id: 58008
+    AegisName: Lif_Embryo
+    Name: Lif Embryo
+    Type: Etc
+    Buy: 10
+    Weight: 10
+  - Id: 58009
+    AegisName: Amistr_Embryo
+    Name: Amistr Embryo
+    Type: Etc
+    Buy: 10
+    Weight: 10
+  - Id: 58010
+    AegisName: Filir_Embryo
+    Name: Filir Embryo
+    Type: Etc
+    Buy: 10
+    Weight: 10
+  - Id: 58011
+    AegisName: Vanilmirth_Embryo
+    Name: Vanilmirth Embryo
+    Type: Etc
+    Buy: 10
+    Weight: 10

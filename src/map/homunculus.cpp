@@ -269,9 +269,71 @@ int hom_dead(struct homun_data *hd)
 * @param sd
 * @param flag 1: then HP needs to be 80% or above. 2: then set to morph state.
 */
-int hom_vaporize(map_session_data *sd, int flag)
+// int hom_vaporize(map_session_data *sd, int flag)
+// {
+// 	int itemflag;
+// 	struct item tmp_item;
+
+// 	struct homun_data *hd;
+
+// 	nullpo_ret(sd);
+
+// 	hd = sd->hd;
+// 	if (!hd || hd->homunculus.vaporize)
+// 		return 0;
+
+// 	if (status_isdead(&hd->bl))
+// 		return 0; //Can't vaporize a dead homun.
+
+// 	if (flag == HOM_ST_REST && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
+// 		return 0;
+
+// 	hd->regen.state.block = 3; //Block regen while vaporized.
+// 	//Delete timers when vaporized.
+// 	hom_hungry_timer_delete(hd);
+// 	// hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
+// 	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED) {
+// 		hd->blockskill.clear();
+// 		hd->blockskill.shrink_to_fit();
+// 	}
+// 	clif_hominfo(sd, sd->hd, 0);
+// 	hom_save(hd);
+
+// #ifdef RENEWAL
+// 	status_change_end(&sd->bl, SC_HOMUN_TIME);
+// #endif
+
+// 	if (hd->homunculus.intimacy > 0) {	
+// 		memset(&tmp_item, 0, sizeof(tmp_item));
+// 		tmp_item.nameid = 7142;
+// 		tmp_item.amount = 1;
+// 		tmp_item.identify = 1;
+// 		tmp_item.card[0] = CARD0_CREATE;
+// 		tmp_item.card[1] = hd->homunculus.hom_id;
+// 		tmp_item.card[2] = GetWord(sd->status.char_id, 0); // CharId
+// 		tmp_item.card[3] = GetWord(sd->status.char_id, 1);
+
+// 		if ((itemflag = pc_additem(sd, &tmp_item, tmp_item.amount, LOG_TYPE_PRODUCE))) {
+// 			clif_additem(sd, 0, 0, itemflag);
+// 			if (battle_config.skill_drop_items_full) {
+// 				map_addflooritem(&tmp_item, tmp_item.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0, 0);
+// 			}
+// 		}
+
+// 		unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+// 		sd->status.hom_id = 0;
+// 		unit_free(&hd->bl, CLR_OUTSIGHT);
+// 		sd->hd = 0;
+// 		return 1;
+// 	}
+
+// 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+// }
+int hom_vaporize(struct map_session_data *sd, int flag)
 {
 	struct homun_data *hd;
+	int itemflag;
+	struct item tmp_item;
 
 	nullpo_ret(sd);
 
@@ -288,7 +350,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 	hd->regen.state.block = 3; //Block regen while vaporized.
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
-	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
+	//hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
 	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED) {
 		hd->blockskill.clear();
 		hd->blockskill.shrink_to_fit();
@@ -299,6 +361,65 @@ int hom_vaporize(map_session_data *sd, int flag)
 #ifdef RENEWAL
 	status_change_end(&sd->bl, SC_HOMUN_TIME);
 #endif
+
+	if (hd->homunculus.intimacy > 0) {	
+
+		memset(&tmp_item, 0, sizeof(tmp_item));
+
+		switch (hom_class2mapid(hd->homunculus.class_)) {
+			case MAPID_LIF:
+			case MAPID_LIF_E:
+				tmp_item.nameid = 58008;
+				break;
+			case MAPID_AMISTR:
+			case MAPID_AMISTR_E:
+				tmp_item.nameid = 58009;
+				break;
+			case MAPID_FILIR:
+			case MAPID_FILIR_E:
+				tmp_item.nameid = 58010;
+				break;
+			case MAPID_VANILMIRTH:
+			case MAPID_VANILMIRTH_E:
+				tmp_item.nameid = 58011;
+				break;
+			// case MAPID_EIRA:
+			// 	tmp_item.nameid = 9905;
+			// 	break;
+			// case MAPID_BAYERI:
+			// 	tmp_item.nameid = 9906;
+			// 	break;
+			// case MAPID_SERA:
+			// 	tmp_item.nameid = 9907;
+			// 	break;
+			// case MAPID_DIETER:
+			// 	tmp_item.nameid = 9908;
+			// 	break;
+			// case MAPID_ELANOR:
+			// 	tmp_item.nameid = 9909;
+			// 	break;
+		}
+
+		tmp_item.amount = 1;
+		tmp_item.identify = 1;
+		tmp_item.card[0] = CARD0_CREATE;
+		tmp_item.card[1] = hd->homunculus.hom_id;
+		tmp_item.card[2] = GetWord(sd->status.char_id, 0); // CharId
+		tmp_item.card[3] = GetWord(sd->status.char_id, 1);
+
+		if ((itemflag = pc_additem(sd, &tmp_item, tmp_item.amount, LOG_TYPE_PRODUCE))) {
+			clif_additem(sd, 0, 0, itemflag);
+			if (battle_config.skill_drop_items_full) {
+				map_addflooritem(&tmp_item, tmp_item.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0, 0);
+			}
+		}
+
+		unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+		sd->status.hom_id = 0;
+		unit_free(&hd->bl, CLR_OUTSIGHT);
+		sd->hd = 0;
+		return 1;
+	}
 
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
@@ -1103,16 +1224,139 @@ void hom_init_timers(struct homun_data * hd)
  * @param sd
  * @return False:failure, True:sucess
  */
-bool hom_call(map_session_data *sd)
-{
-	struct homun_data *hd;
+// bool hom_call(map_session_data *sd)
+// {
+// 	struct homun_data *hd;
 
-	if (!sd->status.hom_id) //Create a new homun.
-		return hom_create_request(sd, HM_CLASS_BASE + rnd_value(0, 7)) ;
+// 	// if (!sd->status.hom_id) //Create a new homun.
+// 	// 	return hom_create_request(sd, HM_CLASS_BASE + rnd_value(0, 7)) ;
+// 	struct item ed;
+// 	int n;
+
+// 	// find the embryo
+// 	if (!sd->status.hom_id) { //Create or revive a homun.
+// 		if ((n = pc_search_inventory(sd, 7142)) >= 0) {
+// 			ed = sd->inventory.u.items_inventory[n];
+// 		}
+// 		else {
+// 			return false; // no embryo
+// 		}
+
+// 		if (ed.card[1] != 0) {
+// 			// is it ours?
+// 			if (sd->status.char_id == MakeDWord(ed.card[2], ed.card[3])) {
+// 				// revive the homun
+
+// 				// delete the embryo
+// 				pc_delitem(sd, n, 1, 0, 0, LOG_TYPE_CONSUME);
+
+// 				sd->status.hom_id = ed.card[1];
+// 				// proceed with rest of function
+// 			}
+// 			else {
+// 				// Cannot revive someone else's homunculus
+// 				return false;
+// 			}			
+// 		}
+// 		else {
+// 			// create a new homun
+
+// 			// delete the embryo
+// 			// pc_delitem(sd, n, 1, 0, 0, LOG_TYPE_CONSUME);
+// 			return hom_create_request(sd, HM_CLASS_BASE + rnd_value(0, 7));
+// 		}
+// 	}
+
+// 	// If homunc not yet loaded, load it
+// 	if (!sd->hd)
+// 		return intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id) > 0;
+
+// 	hd = sd->hd;
+
+// 	if (!hd->homunculus.vaporize)
+// 		return false; //Can't use this if homun wasn't vaporized.
+
+// 	if (hd->homunculus.vaporize == HOM_ST_MORPH)
+// 		return false; // Can't call homunculus (morph state).
+
+// 	hom_init_timers(hd);
+// 	hd->homunculus.vaporize = HOM_ST_ACTIVE;
+// 	if (hd->bl.prev == NULL)
+// 	{	//Spawn him
+// 		hd->bl.x = sd->bl.x;
+// 		hd->bl.y = sd->bl.y;
+// 		hd->bl.m = sd->bl.m;
+// 		if(map_addblock(&hd->bl))
+// 			return false;
+// 		clif_spawn(&hd->bl);
+// 		clif_send_homdata(sd,SP_ACK,0);
+// 		clif_hominfo(sd,hd,1);
+// 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+// 		clif_homskillinfoblock(sd);
+// 		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
+// 			status_calc_bl(&hd->bl, { SCB_SPEED });
+// 		hom_save(hd);
+// 	} else
+// 		//Warp him to master.
+// 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
+
+// #ifdef RENEWAL
+// 	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+// #endif
+
+// 	return true;
+// }
+bool hom_call(struct map_session_data* sd, short hom_index)
+{
+	struct homun_data* hd;
+	struct item ed;
+	int n;
+
+	if (hom_index < 0 || hom_index >= MAX_INVENTORY)
+		return 0; //Forged packet!	
+
+	// find the embryo
+	if (!sd->status.hom_id) { //Create or revive a homun.
+
+		// if (sd->inventory.u.items_inventory[hom_index].nameid == 7142 || sd->inventory.u.items_inventory[hom_index].nameid >= 9901 && sd->inventory.u.items_inventory[hom_index].nameid <= 9909)
+		if (sd->inventory.u.items_inventory[hom_index].nameid == 7142 || sd->inventory.u.items_inventory[hom_index].nameid >= 58008 && sd->inventory.u.items_inventory[hom_index].nameid <= 58011)
+			n = hom_index;
+		else
+		{ 
+			ShowError("wrong embryo item inventory %d\n", hom_index);
+			return false;
+		}
+
+		ed = sd->inventory.u.items_inventory[n];
+
+		if (ed.card[1] != 0) {
+			// is it ours?
+			if (sd->status.char_id == MakeDWord(ed.card[2], ed.card[3])) {
+				// revive the homun
+
+				// delete the embryo
+				pc_delitem(sd, n, 1, 0, 0, LOG_TYPE_CONSUME);
+
+				sd->status.hom_id = ed.card[1];
+				// proceed with rest of function
+			}
+			else {
+				// Cannot revive someone else's homunculus
+				return false;
+			}			
+		}
+		else {
+			// create a new homun
+
+			// delete the embryo
+			pc_delitem(sd, n, 1, 0, 0, LOG_TYPE_CONSUME);
+			return hom_create_request(sd, HM_CLASS_BASE + rnd_value(0, 7));
+		}
+	}
 
 	// If homunc not yet loaded, load it
 	if (!sd->hd)
-		return intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id) > 0;
+		return intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
 
 	hd = sd->hd;
 
@@ -1142,11 +1386,6 @@ bool hom_call(map_session_data *sd)
 	} else
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
-
-#ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
-#endif
-
 	return true;
 }
 
