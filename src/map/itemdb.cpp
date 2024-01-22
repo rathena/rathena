@@ -4290,7 +4290,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (randopt->script) {
-			aFree(randopt->script);
+			script_free_code( randopt->script );
 			randopt->script = nullptr;
 		}
 

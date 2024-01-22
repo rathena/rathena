@@ -1894,6 +1894,12 @@
 	export_constant(SC_RUSH_QUAKE1);
 	export_constant(SC_RUSH_QUAKE2);
 	export_constant(SC_G_LIFEPOTION);
+	export_constant(SC_HNNOWEAPON);
+	export_constant(SC_SHIELDCHAINRUSH);
+	export_constant(SC_MISTYFROST);
+	export_constant(SC_GROUNDGRAVITY);
+	export_constant(SC_BREAKINGLIMIT);
+	export_constant(SC_RULEBREAK);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -10065,12 +10071,21 @@
 	export_constant(UNT_LIGHTNING_LAND);
 	export_constant(UNT_VENOM_SWAMP);
 	export_constant(UNT_CONFLAGRATION);
-
 	export_constant(UNT_DEEPBLINDTRAP);
 	export_constant(UNT_SOLIDTRAP);
 	export_constant(UNT_SWIFTTRAP);
 	export_constant(UNT_FLAMETRAP);
-
+	export_constant(UNT_TWINKLING_GALAXY);
+	export_constant(UNT_STAR_CANNON);
+	export_constant(UNT_GRENADES_DROPPING);
+	export_constant(UNT_FUUMASHOUAKU);
+	export_constant(UNT_MISSION_BOMBARD);
+	export_constant(UNT_TOTEM_OF_TUTELARY);
+	export_constant(UNT_HYUN_ROKS_BREEZE);
+	export_constant(UNT_SHINKIROU);
+	export_constant(UNT_JACK_FROST_NOVA);
+	export_constant(UNT_GROUND_GRAVITATION);
+	export_constant(UNT_KUNAIWAIKYOKU);
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
