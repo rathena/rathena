@@ -50,6 +50,8 @@ Body:
       - Name: NV_TRICKDEAD
         MaxLevel: 1
         Exclude: true
+      - Name: NV_TAP
+        MaxLevel: 1
       - Name: WE_CALLBABY
         MaxLevel: 1
   - Job: Swordman

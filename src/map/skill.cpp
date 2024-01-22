@@ -12017,6 +12017,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		}
 		break;
+	case NV_TAP:
+		if( flag&1 ) {
+			// Do nothing
+		} else {
+			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR,
+				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		}
+		break;
 	case GN_SLINGITEM:
 		if( sd ) {
 			i = sd->equip_index[EQI_AMMO];
@@ -15013,7 +15022,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 		val1 = (skill_lv+2)*25;	//Atk increase
 		break;
 	case BD_RICHMANKIM:
-		val1 = 25 + 11*skill_lv; //Exp increase bonus.
+		val1 = 10 + 4*skill_lv; //Exp increase bonus.
 		break;
 	case BD_SIEGFRIED:
 		val1 = 55 + skill_lv*5;	//Elemental Resistance
