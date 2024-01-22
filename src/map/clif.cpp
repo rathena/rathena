@@ -22921,7 +22921,11 @@ void clif_animation_force_packet(map_session_data * sd, int skill_id, short hit_
 	if (skill == NULL)
 		return;
 	sd->animation_force.iter = 0;
+#ifdef RENEWAL
+	int animation_interval = cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 0, 500); //Kiel can remove all animation from skill
+#else
 	int animation_interval = cap_value(sd->battle_status.adelay - ((sd->battle_status.adelay * sd->bonus.delayrate) / 100), 200, 500); //apsd amotion based
+#endif
 	t_tick start_timer = gettick();
 	switch(skill_id){
 	case AS_SONICBLOW:
@@ -22937,7 +22941,8 @@ void clif_animation_force_packet(map_session_data * sd, int skill_id, short hit_
 	default: break;
 	}		
 	sd->animation_force.hitcount = hit_count;
-	sd->animation_force.tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, animation_interval);
+	if(animation_interval > 0)
+		sd->animation_force.tid = add_timer(start_timer, pc_animation_force_timer, sd->bl.id, animation_interval);
 #endif
 }
 
