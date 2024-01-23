@@ -1029,11 +1029,3 @@ Body:
     Option: VAR_CRITICAL_RATE
     Script: |
       bonus bCRate,getrandomoptinfo(ROA_VALUE);
-  # - Id: 300
-  #   Option: TBRO_VAR_RES_FREEZE
-  #   Script: |
-  #     bonus2 bResEff,Eff_Freeze,getrandomoptinfo(ROA_VALUE);
-  # - Id: 301
-  #   Option: TBRO_VAR_RES_STONE
-  #   Script: |
-  #     bonus2 bResEff,Eff_Stone,getrandomoptinfo(ROA_VALUE);

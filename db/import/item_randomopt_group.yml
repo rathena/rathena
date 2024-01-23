@@ -83,14 +83,14 @@ Body:
             MinValue: 1
             MaxValue: 3
             Chance: 2000
-          # - Option: TBRO_VAR_RES_FREEZE
-          #   MinValue: 2000
-          #   MaxValue: 3500
-          #   Chance: 2000
-          # - Option: TBRO_VAR_RES_STONE
-          #   MinValue: 2000
-          #   MaxValue: 3500
-          #   Chance: 2000
+          - Option: TBRO_VAR_RES_FREEZE
+            MinValue: 20
+            MaxValue: 35
+            Chance: 2000
+          - Option: TBRO_VAR_RES_STONE
+            MinValue: 20
+            MaxValue: 35
+            Chance: 2000
       - Slot: 2
         Options:
           - Option: ATTR_TOLERACE_NOTHING
@@ -178,14 +178,14 @@ Body:
             MinValue: 1
             MaxValue: 3
             Chance: 2000
-          # - Option: TBRO_VAR_RES_FREEZE
-          #   MinValue: 2000
-          #   MaxValue: 3500
-          #   Chance: 2000
-          # - Option: TBRO_VAR_RES_STONE
-          #   MinValue: 2000
-          #   MaxValue: 3500
-          #   Chance: 2000
+          - Option: TBRO_VAR_RES_FREEZE
+            MinValue: 20
+            MaxValue: 35
+            Chance: 2000
+          - Option: TBRO_VAR_RES_STONE
+            MinValue: 20
+            MaxValue: 35
+            Chance: 2000
       - Slot: 2
         Options:
           - Option: RACE_TOLERACE_UNDEAD
@@ -261,14 +261,14 @@ Body:
             MinValue: 1
             MaxValue: 3
             Chance: 2000
-          # - Option: TBRO_VAR_RES_FREEZE
-          #   MinValue: 2000
-          #   MaxValue: 3500
-          #   Chance: 2000
-          # - Option: TBRO_VAR_RES_STONE
-          #   MinValue: 2000
-          #   MaxValue: 3500
-          #   Chance: 2000
+          - Option: TBRO_VAR_RES_FREEZE
+            MinValue: 20
+            MaxValue: 35
+            Chance: 2000
+          - Option: TBRO_VAR_RES_STONE
+            MinValue: 20
+            MaxValue: 35
+            Chance: 2000
       - Slot: 2
         Options:
           - Option: RANGE_ATTACK_DAMAGE_USER
