@@ -6,8 +6,8 @@
 
 #include "cbasetypes.hpp"
 
-void MD5_String(const char * string, char * output);
-void MD5_Binary(const char * string, unsigned char * output);
-void MD5_Salt(size_t len, char * output);
+void MD5_String(const char* string, char* output);
+void MD5_Binary(const char* string, unsigned char* output);
+void MD5_Salt(size_t len, char* output);
 
 #endif /* MD5CALC_HPP */

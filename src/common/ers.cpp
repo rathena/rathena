@@ -52,17 +52,15 @@
 
 #ifndef DISABLE_ERS
 
-#define ERS_BLOCK_ENTRIES 2048
+	#define ERS_BLOCK_ENTRIES 2048
 
-struct ers_list
-{
+struct ers_list {
 	struct ers_list *Next;
 };
 
 struct ers_instance_t;
 
-typedef struct ers_cache
-{
+typedef struct ers_cache {
 	// Allocated object size, including ers_list size
 	unsigned int ObjectSize;
 
@@ -116,19 +114,19 @@ struct ers_instance_t {
 	struct ers_instance_t *Next, *Prev;
 };
 
-
 // Array containing a pointer for all ers_cache structures
 static ers_cache_t *CacheList = NULL;
 static struct ers_instance_t *InstanceList = NULL;
 
 /**
- * @param Options the options from the instance seeking a cache, we use it to give it a cache with matching configuration
+ * @param Options the options from the instance seeking a cache, we use it to give it a cache with
+ *matching configuration
  **/
 static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	ers_cache_t *cache;
 
 	for (cache = CacheList; cache; cache = cache->Next)
-		if ( cache->ObjectSize == size && cache->Options == ( Options & ERS_CACHE_OPTIONS ) )
+		if (cache->ObjectSize == size && cache->Options == (Options & ERS_CACHE_OPTIONS))
 			return cache;
 
 	CREATE(cache, ers_cache_t, 1);
@@ -143,12 +141,9 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	cache->ChunkSize = ERS_BLOCK_ENTRIES;
 	cache->Options = (enum ERSOptions)(Options & ERS_CACHE_OPTIONS);
 
-	if (CacheList == NULL)
-	{
+	if (CacheList == NULL) {
 		CacheList = cache;
-	}
-	else
-	{
+	} else {
 		cache->Next = CacheList;
 		cache->Next->Prev = cache;
 		CacheList = cache;
@@ -158,8 +153,7 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	return cache;
 }
 
-static void ers_free_cache(ers_cache_t *cache, bool remove)
-{
+static void ers_free_cache(ers_cache_t *cache, bool remove) {
 	unsigned int i;
 
 	for (i = 0; i < cache->Used; i++)
@@ -178,8 +172,7 @@ static void ers_free_cache(ers_cache_t *cache, bool remove)
 	aFree(cache);
 }
 
-static void *ers_obj_alloc_entry(ERS *self)
-{
+static void *ers_obj_alloc_entry(ERS *self) {
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 	void *ret;
 
@@ -193,18 +186,26 @@ static void *ers_obj_alloc_entry(ERS *self)
 		instance->Cache->ReuseList = instance->Cache->ReuseList->Next;
 	} else if (instance->Cache->Free > 0) {
 		instance->Cache->Free--;
-		ret = &instance->Cache->Blocks[instance->Cache->Used - 1][static_cast<size_t>( instance->Cache->Free ) * static_cast<size_t>( instance->Cache->ObjectSize ) + sizeof( struct ers_list )];
+		ret = &instance->Cache->Blocks[instance->Cache->Used - 1]
+									  [static_cast<size_t>(instance->Cache->Free) *
+										   static_cast<size_t>(instance->Cache->ObjectSize) +
+									   sizeof(struct ers_list)];
 	} else {
 		if (instance->Cache->Used == instance->Cache->Max) {
 			instance->Cache->Max = (instance->Cache->Max * 4) + 3;
 			RECREATE(instance->Cache->Blocks, unsigned char *, instance->Cache->Max);
 		}
 
-		CREATE(instance->Cache->Blocks[instance->Cache->Used], unsigned char, instance->Cache->ObjectSize * instance->Cache->ChunkSize);
+		CREATE(instance->Cache->Blocks[instance->Cache->Used],
+			   unsigned char,
+			   instance->Cache->ObjectSize * instance->Cache->ChunkSize);
 		instance->Cache->Used++;
 
-		instance->Cache->Free = instance->Cache->ChunkSize -1;
-		ret = &instance->Cache->Blocks[instance->Cache->Used - 1][static_cast<size_t>( instance->Cache->Free ) * static_cast<size_t>( instance->Cache->ObjectSize ) + sizeof( struct ers_list )];
+		instance->Cache->Free = instance->Cache->ChunkSize - 1;
+		ret = &instance->Cache->Blocks[instance->Cache->Used - 1]
+									  [static_cast<size_t>(instance->Cache->Free) *
+										   static_cast<size_t>(instance->Cache->ObjectSize) +
+									   sizeof(struct ers_list)];
 	}
 
 	instance->Count++;
@@ -213,8 +214,7 @@ static void *ers_obj_alloc_entry(ERS *self)
 	return ret;
 }
 
-static void ers_obj_free_entry(ERS *self, void *entry)
-{
+static void ers_obj_free_entry(ERS *self, void *entry) {
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 	struct ers_list *reuse = (struct ers_list *)((unsigned char *)entry - sizeof(struct ers_list));
 
@@ -226,8 +226,10 @@ static void ers_obj_free_entry(ERS *self, void *entry)
 		return;
 	}
 
-	if( instance->Cache->Options & ERS_OPT_CLEAN )
-		memset((unsigned char*)reuse + sizeof(struct ers_list), 0, instance->Cache->ObjectSize - sizeof(struct ers_list));
+	if (instance->Cache->Options & ERS_OPT_CLEAN)
+		memset((unsigned char *)reuse + sizeof(struct ers_list),
+			   0,
+			   instance->Cache->ObjectSize - sizeof(struct ers_list));
 
 	reuse->Next = instance->Cache->ReuseList;
 	instance->Cache->ReuseList = reuse;
@@ -235,8 +237,7 @@ static void ers_obj_free_entry(ERS *self, void *entry)
 	instance->Cache->UsedObjs--;
 }
 
-static size_t ers_obj_entry_size(ERS *self)
-{
+static size_t ers_obj_entry_size(ERS *self) {
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 
 	if (instance == NULL) {
@@ -247,8 +248,7 @@ static size_t ers_obj_entry_size(ERS *self)
 	return instance->Cache->ObjectSize;
 }
 
-static void ers_obj_destroy(ERS *self)
-{
+static void ers_obj_destroy(ERS *self) {
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 
 	if (instance == NULL) {
@@ -258,7 +258,9 @@ static void ers_obj_destroy(ERS *self)
 
 	if (instance->Count > 0)
 		if (!(instance->Options & ERS_OPT_CLEAR))
-			ShowWarning("Memory leak detected at ERS '%s', %d objects not freed.\n", instance->Name, instance->Count);
+			ShowWarning("Memory leak detected at ERS '%s', %d objects not freed.\n",
+						instance->Name,
+						instance->Count);
 
 	if (--instance->Cache->ReferenceCount <= 0)
 		ers_free_cache(instance->Cache, true);
@@ -271,7 +273,7 @@ static void ers_obj_destroy(ERS *self)
 	else
 		InstanceList = instance->Next;
 
-	if( instance->Options & ERS_OPT_FREE_NAME )
+	if (instance->Options & ERS_OPT_FREE_NAME)
 		aFree(instance->Name);
 
 	aFree(instance);
@@ -282,25 +284,27 @@ void ers_cache_size(ERS *self, unsigned int new_size) {
 
 	nullpo_retv(instance);
 
-	if( !(instance->Cache->Options&ERS_OPT_FLEX_CHUNK) ) {
-		ShowWarning("ers_cache_size: '%s' has adjusted its chunk size to '%d', however ERS_OPT_FLEX_CHUNK is missing!\n",instance->Name,new_size);
+	if (!(instance->Cache->Options & ERS_OPT_FLEX_CHUNK)) {
+		ShowWarning(
+			"ers_cache_size: '%s' has adjusted its chunk size to '%d', however ERS_OPT_FLEX_CHUNK "
+			"is missing!\n",
+			instance->Name,
+			new_size);
 	}
 
 	instance->Cache->ChunkSize = new_size;
 }
 
-
-ERS *ers_new(uint32 size, const char *name, enum ERSOptions options)
-{
+ERS *ers_new(uint32 size, const char *name, enum ERSOptions options) {
 	struct ers_instance_t *instance;
-	CREATE(instance,struct ers_instance_t, 1);
+	CREATE(instance, struct ers_instance_t, 1);
 
 	size += sizeof(struct ers_list);
 
-#if ERS_ALIGNED > 1 // If it's aligned to 1-byte boundaries, no need to bother.
+	#if ERS_ALIGNED > 1 // If it's aligned to 1-byte boundaries, no need to bother.
 	if (size % ERS_ALIGNED)
 		size += ERS_ALIGNED - size % ERS_ALIGNED;
-#endif
+	#endif
 
 	instance->VTable.alloc = ers_obj_alloc_entry;
 	instance->VTable.free = ers_obj_free_entry;
@@ -308,10 +312,10 @@ ERS *ers_new(uint32 size, const char *name, enum ERSOptions options)
 	instance->VTable.destroy = ers_obj_destroy;
 	instance->VTable.chunk_size = ers_cache_size;
 
-	instance->Name = ( options & ERS_OPT_FREE_NAME ) ? (char *)aStrdup(name) : (char *)name;
+	instance->Name = (options & ERS_OPT_FREE_NAME) ? (char *)aStrdup(name) : (char *)name;
 	instance->Options = options;
 
-	instance->Cache = ers_find_cache(size,instance->Options);
+	instance->Cache = ers_find_cache(size, instance->Options);
 
 	instance->Cache->ReferenceCount++;
 
@@ -335,20 +339,36 @@ void ers_report(void) {
 
 	for (cache = CacheList; cache; cache = cache->Next) {
 		cache_c++;
-		ShowMessage(CL_BOLD"[ERS Cache of size '" CL_NORMAL "" CL_WHITE "%u" CL_NORMAL "" CL_BOLD "' report]\n" CL_NORMAL, cache->ObjectSize);
+		ShowMessage(CL_BOLD "[ERS Cache of size '" CL_NORMAL "" CL_WHITE "%u" CL_NORMAL "" CL_BOLD
+							"' report]\n" CL_NORMAL,
+					cache->ObjectSize);
 		ShowMessage("\tinstances          : %u\n", cache->ReferenceCount);
-		ShowMessage("\tblocks in use      : %u/%u\n", cache->UsedObjs, cache->UsedObjs+cache->Free);
+		ShowMessage(
+			"\tblocks in use      : %u/%u\n", cache->UsedObjs, cache->UsedObjs + cache->Free);
 		ShowMessage("\tblocks unused      : %u\n", cache->Free);
-		ShowMessage("\tmemory in use      : %.2f MB\n", cache->UsedObjs == 0 ? 0. : (double)((cache->UsedObjs * cache->ObjectSize)/1024)/1024);
-		ShowMessage("\tmemory allocated   : %.2f MB\n", (cache->Free+cache->UsedObjs) == 0 ? 0. : (double)(((cache->UsedObjs+cache->Free) * cache->ObjectSize)/1024)/1024);
+		ShowMessage("\tmemory in use      : %.2f MB\n",
+					cache->UsedObjs == 0
+						? 0.
+						: (double)((cache->UsedObjs * cache->ObjectSize) / 1024) / 1024);
+		ShowMessage(
+			"\tmemory allocated   : %.2f MB\n",
+			(cache->Free + cache->UsedObjs) == 0
+				? 0.
+				: (double)(((cache->UsedObjs + cache->Free) * cache->ObjectSize) / 1024) / 1024);
 		blocks_u += cache->UsedObjs;
 		blocks_a += cache->UsedObjs + cache->Free;
 		memory_b += cache->UsedObjs * cache->ObjectSize;
-		memory_t += (cache->UsedObjs+cache->Free) * cache->ObjectSize;
+		memory_t += (cache->UsedObjs + cache->Free) * cache->ObjectSize;
 	}
-	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' caches in use\n",cache_c);
-	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' blocks in use, consuming '" CL_WHITE "%.2f MB" CL_NORMAL "'\n",blocks_u,(double)((memory_b)/1024)/1024);
-	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' blocks total, consuming '" CL_WHITE "%.2f MB" CL_NORMAL "' \n",blocks_a,(double)((memory_t)/1024)/1024);
+	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' caches in use\n", cache_c);
+	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' blocks in use, consuming '" CL_WHITE
+			 "%.2f MB" CL_NORMAL "'\n",
+			 blocks_u,
+			 (double)((memory_b) / 1024) / 1024);
+	ShowInfo("ers_report: '" CL_WHITE "%u" CL_NORMAL "' blocks total, consuming '" CL_WHITE
+			 "%.2f MB" CL_NORMAL "' \n",
+			 blocks_a,
+			 (double)((memory_t) / 1024) / 1024);
 }
 
 /**
@@ -357,9 +377,9 @@ void ers_report(void) {
 void ers_final(void) {
 	struct ers_instance_t *instance = InstanceList, *next;
 
-	while( instance ) {
+	while (instance) {
 		next = instance->Next;
-		ers_obj_destroy((ERS*)instance);
+		ers_obj_destroy((ERS *)instance);
 		instance = next;
 	}
 }

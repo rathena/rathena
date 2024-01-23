@@ -11,12 +11,12 @@
 typedef int64 t_tick;
 #define PRtf PRId64
 
-static inline t_tick tick_diff( t_tick a, t_tick b ){
+static inline t_tick tick_diff(t_tick a, t_tick b) {
 	return a - b;
 }
 
 // Convenience for now
-#define DIFF_TICK(a,b) tick_diff(a,b)
+#define DIFF_TICK(a, b) tick_diff(a, b)
 
 const t_tick INFINITE_TICK = -1;
 
@@ -30,7 +30,7 @@ enum {
 	TIMER_REMOVE_HEAP = 0x10,
 };
 
-#define TIMER_FUNC(x) int x ( int tid, t_tick tick, int id, intptr_t data )
+#define TIMER_FUNC(x) int x(int tid, t_tick tick, int id, intptr_t data)
 
 // Struct declaration
 typedef TIMER_FUNC((*TimerFunc));
@@ -63,7 +63,7 @@ int add_timer_func_list(TimerFunc func, const char* name);
 
 unsigned long get_uptime(void);
 
-//transform a timestamp to string
+// transform a timestamp to string
 const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format);
 void split_time(int time, int* year, int* month, int* day, int* hour, int* minute, int* second);
 double solve_time(char* modif_p);

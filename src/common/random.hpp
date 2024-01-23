@@ -4,15 +4,15 @@
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
-#include <type_traits>
 #include <random>
+#include <type_traits>
 
 #include "cbasetypes.hpp"
 
 inline std::random_device device;
 inline std::mt19937 generator = std::mt19937(device());
 
-int32 rnd(void);// [0, SINT32_MAX]
+int32 rnd(void); // [0, SINT32_MAX]
 
 /*
  * Generates a random number in the interval [min, max]
