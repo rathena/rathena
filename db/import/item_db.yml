@@ -89,6 +89,62 @@ Header:
   Version: 3
 
 Body:
+  - Id: 4545
+    AegisName: Novice_Poring_Card
+    Name: Novice Poring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLuk,1;
+  - Id: 4586
+    AegisName: Tikbalang_Card
+    Name: Tikbalang Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bMatk,10;
+      bonus2 bMagicAtkEle,Ele_Wind,(getrefine()>=9)?10:5;
+  - Id: 4659
+    AegisName: Eggring_Card
+    Name: Eggring Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bLuk,2;
+      bonus bMaxHP,50;
+  - Id: 4663
+    AegisName: Leaf_Lunatic_Card
+    Name: Leaf Lunatic Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxSP,5;
   - Id: 5574
     AegisName: Pencil_In_Mouth
     Name: Well-Chewed Pencil
@@ -134,6 +190,345 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 6496
+    AegisName: Tikbalang_Thick_Spine
+    Name: Tikbalang's Thick Spine
+    Type: Etc
+    Buy: 300
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 6534
+    AegisName: Fruit_Sundae
+    Name: Fruit Sundae
+    Type: Etc
+    Buy: 2
+    Weight: 50
+  - Id: 9057
+    AegisName: Egg_Of_Tiny
+    Name: Egg Of Tiny
+    Type: Petegg
+    Buy: 20
+  - Id: 9058
+    AegisName: Snow_Rabbit_Egg
+    Name: Christmas Snow Rabbit Egg
+    Type: Petegg
+    Buy: 20
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 9059
+    AegisName: Tikbalang_Pet
+    Name: Tikbalang Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9060
+    AegisName: Brownie_Egg
+    Name: Domovoi Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9061
+    AegisName: Marin_Egg
+    Name: Marin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9062
+    AegisName: Novice_Poring_Egg
+    Name: Novice Poring Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9063
+    AegisName: Woodie_Egg
+    Name: Woodie Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9064
+    AegisName: Elephant_Egg
+    Name: Elephant Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9065
+    AegisName: Gorilla_Egg
+    Name: Gorilla Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9066
+    AegisName: Lion_Egg
+    Name: Lion Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9067
+    AegisName: Rhino_Egg
+    Name: Rhino Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9068
+    AegisName: Blue_Unicorn_Egg
+    Name: Blue Unicorn Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9069
+    AegisName: Mastering_Egg
+    Name: Mastering Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9070
+    AegisName: Savage_Egg
+    Name: Savage Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9071
+    AegisName: Grand_Peco_Egg
+    Name: Grand Peco Peco Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9072
+    AegisName: Orc_Hero_Egg
+    Name: Orc Hero Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9073
+    AegisName: Orc_Lord_Egg
+    Name: Orc Lord Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9074
+    AegisName: Rubylit_Egg
+    Name: Rubylit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9075
+    AegisName: Sapphilit_Egg
+    Name: Sapphilit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9076
+    AegisName: Emelit_Egg
+    Name: Emelit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9077
+    AegisName: Topalit_Egg
+    Name: Topalit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9078
+    AegisName: Amelit_Egg
+    Name: Amelit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9079
+    AegisName: Mythlit_Egg
+    Name: Mythlit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9080
+    AegisName: Tamadora_Egg
+    Name: Tamadora Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9087
+    AegisName: High_Orc_Egg
+    Name: High Orc Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9088
+    AegisName: Angeling_Egg
+    Name: Angeling Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9089
+    AegisName: Ammut_Egg
+    Name: Am Mut Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9090
+    AegisName: Littleisis_Egg
+    Name: Little Isis Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9091
+    AegisName: Choco_Egg
+    Name: Choco Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9092
+    AegisName: Eggring_Egg
+    Name: Eggring Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9093
+    AegisName: Hyegun_Egg
+    Name: Hyegun Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9094
+    AegisName: Leaf_Lunatic_Egg
+    Name: Leaf Lunatic Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9095
+    AegisName: Nine_Tail_Egg
+    Name: Nine Tail Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9096
+    AegisName: Cat_O_Nine_Tail_Egg
+    Name: Cat o Nine Tail Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9097
+    AegisName: Diabolic_Egg2
+    Name: Diabolic Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9098
+    AegisName: Red_Deleter_Egg2
+    Name: Fire Deleter Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9099
+    AegisName: Teddy_Bear_Egg
+    Name: Teddy Bear Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9100
+    AegisName: Gremlin_Egg
+    Name: Gremlin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9101
+    AegisName: Scatletoncarrier
+    Name: Scatleton's Cage
+    Type: Petegg
+    Buy: 20
+  - Id: 9102
+    AegisName: Mummy_Egg
+    Name: Mummy Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9103
+    AegisName: Wilow_Egg
+    Name: Willow Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9104
+    AegisName: Roween_Egg
+    Name: Roween Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9105
+    AegisName: Hodremlin_Egg
+    Name: Hodremlin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9106
+    AegisName: Metaller_Egg
+    Name: Metaller Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9107
+    AegisName: Ancient_Mummy_Egg
+    Name: Ancient Mummy Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9108
+    AegisName: Xm_Teddybear_Egg
+    Name: Xmas Teddy Bear Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9109
+    AegisName: Sweets_Drops_Egg
+    Name: Sweet Drops Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9111
+    AegisName: Phreeoni_Egg
+    Name: Phreeoni Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9112
+    AegisName: Moonlight_Egg
+    Name: Moonlight Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9113
+    AegisName: Roost_Of_Skelion
+    Name: Roost Of Skelion
+    Type: Petegg
+    Buy: 20
+  - Id: 9114
+    AegisName: Pouring_Egg
+    Name: Pouring Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9115
+    AegisName: Bacsojin_Egg2
+    Name: Bacsojin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9116
+    AegisName: Nightmare_TerrorH_EGG
+    Name: Rigid Nightmare Terror Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9117
+    AegisName: Wanderer_H_EGG
+    Name: Contaminated Wanderer Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9118
+    AegisName: Aliot_EGG
+    Name: Aliot Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9119
+    AegisName: Alicel_EGG
+    Name: Alicel Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9120
+    AegisName: Aliza_EGG
+    Name: Aliza Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9121
+    AegisName: Ork_Hero_EGG
+    Name: Orc Hero Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9122
+    AegisName: Gloom_Under_Egg
+    Name: Gloom Under Night Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9123
+    AegisName: Ep17_2_C_Admin1_Egg
+    Name: Child Admin Beta Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9124
+    AegisName: Ep17_2_C_Admin2_Egg
+    Name: Child Admin Alpha Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 10039
+    AegisName: Tw_Backpack
+    Name: Tw Backpack
+    Type: Petarmor
+    Buy: 20
+  - Id: 10043
+    AegisName: Ep_17_2_C_Admin1_Acc
+    Name: Little Headdress Beta
+    Type: PetArmor
+  - Id: 10044
+    AegisName: Ep_17_2_C_Admin2_Acc
+    Name: Little Headdress Alpha
+    Type: PetArmor
   - Id: 12622
     AegisName: Boarding_Halter
     Name: Reins Of Mount
@@ -157,6 +552,40 @@ Body:
     UnEquipScript: |
       if (ismounting())
          setmounting();
+  - Id: 12699
+    AegisName: Tikbalang_Belt
+    Name: Tikbalang Harness
+    Type: Usable
+    Buy: 20
+    Weight: 50
+    Flags:
+      BuyingStore: true
+    Script: |
+      pet 2313;
+  - Id: 12700
+    AegisName: Insideout_Shirt
+    Name: Inside-out Shirt
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      warp "malaya",242,211;
+  - Id: 12789
+    AegisName: Juicy_Fruit
+    Name: Juicy Fruit
+    Type: Usable
+    Buy: 2
+    Weight: 100
+  - Id: 12846
+    AegisName: Unripe_Apple2
+    Name: Little Unripe Apple
+    Type: Usable
+    Buy: 10
+    Weight: 50
+    Script: |
+      pet 2398;
   - Id: 12887
     AegisName: C_Wing_Of_Fly
     Name: Infinite Flywing
@@ -261,6 +690,19 @@ Body:
     Script: |
       bonus bCritical,1;
       bonus bCritAtkRate,1;
+  - Id: 19976
+    AegisName: C_Cat_Santa_Hat
+    Name: Cat Santa Hat
+    Type: Armor
+    Buy: 20
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1144
+    Script: |
+      bonus bAspdRate,10;
+      bonus bSpeedRate,25;
   - Id: 20517
     AegisName: C_GiantCatBag_TW
     Name: Costume Giant Cat Bag
@@ -270,6 +712,70 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 25
+  - Id: 23187
+    AegisName: Sap_Jelly
+    Name: Sap Liquid
+    Type: Usable
+    Buy: 10
+    Script: |
+      pet 1180;
+  - Id: 23188
+    AegisName: Airship_Part
+    Name: Unprocessed Parts
+    Type: Usable
+    Buy: 10
+    Script: |
+      pet 1632;
+  - Id: 23256
+    AegisName: Elixir_Bandage
+    Name: Elixir Bandages
+    Type: Usable
+    Buy: 10
+    Script: |
+      pet 1041;
+  - Id: 23189
+    AegisName: Little_Dall_Needle
+    Name: Small Needle Kit
+    Type: Usable
+    Buy: 10
+    Script: |
+      pet 1622;
+  - Id: 25290
+    AegisName: Sweets_Coin
+    Name: Sweets Festival Coin
+    Type: Etc
+  - Id: 25292
+    AegisName: Stolen_Cacao
+    Name: Stolen Cocoa Beans
+    Type: Etc
+  - Id: 25231
+    AegisName: Suspicious_Bottle
+    Name: Suspicious Bottle
+    Type: Etc
+    Buy: 1000
+    Weight: 10
+  - Id: 25232
+    AegisName: Cheap_Lubricant
+    Name: Cheap Lubricant
+    Type: Etc
+    Buy: 1000
+    Weight: 10
+  - Id: 25233
+    AegisName: Wad_Of_Cotton
+    Name: Cotton Tufts
+    Type: Etc
+    Buy: 1000
+    Weight: 10
+  - Id: 25375
+    AegisName: Mightysoul_Essence
+    Name: Powerful Soul Essence
+    Type: Etc
+  - Id: 25377
+    AegisName: High_Class_Pet_food
+    Name: Luxurious Pet Food
+    Type: Etc
+    Buy: 10000
+    Weight: 10
   - Id: 25791
     AegisName: Inventory_Ex_Evt
     Name: "[Event] Inventory Expansion Voucher"
@@ -306,6 +812,30 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 31022
+    AegisName: XM_Teddy_Bear_Card
+    Name: Abandoned Teddy Bear Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxSPrate,20;
+      bonus2 bAddEff2,Eff_Curse,20;
+  - Id: 1000103
+    AegisName: BarMealTicket
+    Name: Barmeal Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000227
+    AegisName: Cloud_Cotton
+    Name: Cloud Cotton
+    Type: Etc
+    Weight: 10
 # =============================== CUSTOM ===============================
   - Id: 58000
     AegisName: Tempered_Iron
