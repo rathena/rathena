@@ -2605,7 +2605,7 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Oridecon
         Rate: 60
       - Item: Nightmare_Card
@@ -8150,7 +8150,7 @@ Body:
         Rate: 2500
       - Item: Orc_Archer_Bow
         Rate: 2
-        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Red_Herb
         Rate: 1400
       - Item: White_Herb
@@ -10551,7 +10551,7 @@ Body:
     Drops:
       - Item: Zephyrus
         Rate: 150
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Old_Blue_Box
         Rate: 3000
       - Item: Old_Violet_Box
@@ -15681,7 +15681,7 @@ Body:
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: House_Auger
         Rate: 10
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Ring_
         Rate: 2
       - Item: Shine_Spear_Blade
@@ -15968,7 +15968,7 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Nightmare_Terror_Card
         Rate: 1
         StealProtected: true
@@ -23967,10 +23967,10 @@ Body:
         Rate: 6000
       - Item: House_Auger
         Rate: 10
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: House_Auger_
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Old_Violet_Box
         Rate: 1000
       - Item: Headlamp
@@ -25026,7 +25026,7 @@ Body:
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: House_Auger
         Rate: 1500
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Glittering_Clothes
         Rate: 9000
         RandomOptionGroup: TBRO_Armor_Group_1
@@ -30085,7 +30085,7 @@ Body:
         Rate: 10
       - Item: Scalpel
         Rate: 5
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Bloody_Rune
         Rate: 100
       - Item: Vanberk_Card
@@ -32632,7 +32632,7 @@ Body:
         Rate: 3
       - Item: Scalpel
         Rate: 150
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Agi_Dish07
         Rate: 500
       - Item: Old_Blue_Box
@@ -33714,7 +33714,7 @@ Body:
         RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Scalpel
         Rate: 10
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Wool_Scarf
         Rate: 10
         RandomOptionGroup: TBRO_Garment_Group_1
@@ -36047,7 +36047,7 @@ Body:
         Rate: 7275
       - Item: Scalpel
         Rate: 150
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Heart_Breaker
         Rate: 150
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
@@ -36116,7 +36116,7 @@ Body:
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Orc_Archer_Bow
         Rate: 150
-        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Icicle_Fist
         Rate: 150
         StealProtected: true
@@ -39314,7 +39314,7 @@ Body:
         Rate: 500
       - Item: Scalpel
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Fisherman's_Dagger
         Rate: 5
         RandomOptionGroup: TBRO_Melee_Weapon_Level_1
