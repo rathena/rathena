@@ -198,7 +198,6 @@ Body:
           - Index: 0
             Item: 3te_Coin
             Amount: 3
-
   - Name: tieubach_lower_headgear
     Items:
       - Index: 1
