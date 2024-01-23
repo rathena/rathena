@@ -942,7 +942,10 @@ static int pet_performance(map_session_data *sd, struct pet_data *pd)
 		val = 1;
 
 	pet_stop_walking(pd,2000<<8);
-	clif_pet_performance(pd, rnd_value(1, val));
+	// Prevent performance when pet is loyal to avoid client crashing
+	if (pd->pet.intimate < PET_INTIMATE_LOYAL) {
+		clif_pet_performance(pd, rnd_value(1, val));
+	}
 	pet_lootitem_drop(pd,NULL);
 
 	return 1;
