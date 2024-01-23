@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 make clean server
+

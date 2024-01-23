@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-./configure --enable-packetver=20211103
+sh configure --enable-packetver=20211103
+
