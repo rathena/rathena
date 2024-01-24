@@ -2422,7 +2422,7 @@ unsigned short status_base_atk_min(struct block_list *bl, const struct status_da
 		case BL_ELEM:
 			return status->rhw.atk * 80 / 100;
 		case BL_HOM:
-			return (status_get_homstr(bl) + status_get_homdex(bl)) / 5;
+			return ((status_get_homstr(bl) + status_get_homdex(bl)) * 2) / 5;
 		default:
 			return status->rhw.atk;
 	}
@@ -2441,7 +2441,7 @@ unsigned short status_base_atk_max(struct block_list *bl, const struct status_da
 		case BL_ELEM:
 			return status->rhw.atk * 120 / 100;
 		case BL_HOM:
-			return (status_get_homluk(bl) + status_get_homstr(bl) + status_get_homdex(bl)) / 3;
+			return ((status_get_homluk(bl) + status_get_homstr(bl) + status_get_homdex(bl)) * 2) / 3;
 		default:
 			return status->rhw.atk2;
 	}
@@ -2484,7 +2484,7 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 		case BL_HOM:
 #ifdef RENEWAL
 			// Level + INT + Floor((INT + DEX + LUK) ÷ 3) + Floor(Level ÷ 10) × 2
-			return (short)(level + status_get_homint(bl) + std::floor((status_get_homint(bl) + status_get_homdex(bl) + status_get_homluk(bl)) / 3) + std::floor(level/10) * 2);
+			return (short)((level + status_get_homint(bl) + std::floor((status_get_homint(bl) + status_get_homdex(bl) + status_get_homluk(bl)) / 3) + std::floor(level / 10)) * 2);
 #else
 			return status_get_homint(bl) + level + (status_get_homint(bl) + status_get_homdex(bl)) / 3;
 #endif
