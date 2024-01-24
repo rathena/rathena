@@ -2530,8 +2530,8 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) * 2 + (std::floor(status_get_homagi(bl) + std::floor(level / 10)) / 2) + std::floor(level / 2));
 		status->def = cap_value(stat, 0, SHRT_MAX);
 		// Mdef
-		// (VIT + Floor(Level ÷ 10)) × 2 + Floor((INT + Floor(Level ÷ 10)) ÷ 4) + Floor(Level ÷ 2)
-		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) * 2 + (std::floor(status_get_homint(bl) + std::floor(level / 10)) / 4) + std::floor(level / 2));
+		// (VIT + Floor(Level ÷ 10)) + Floor((INT + Floor(Level ÷ 10)) ÷ 4) + Floor(Level ÷ 4)
+		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) + (std::floor(status_get_homint(bl) + std::floor(level / 10)) / 4) + std::floor(level / 4));  
 		status->mdef = cap_value(stat, 0, SHRT_MAX);
 		// Hit
 		// Level + DEX + 150
