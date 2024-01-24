@@ -17057,7 +17057,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 15
-    AfterCastActDelay: 100
+    AfterCastActDelay: 300
     Requires:
       SpCost: 1
   - Id: 1001

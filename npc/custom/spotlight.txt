@@ -1,4 +1,47 @@
 -	script	spotlight	-1,{
+  function		F_CalculateBonusExp	{
+		.@spotlightType$ = getarg(0);
+		.@spotlightBonus = getarg(1);
+
+		.@bonusMobBaseExp = ceil((getmonsterinfo(killedrid, MOB_BASEEXP) * .@spotlightBonus / 100), 1);
+		.@bonusMobJobExp = ceil((getmonsterinfo(killedrid, MOB_JOBEXP) * .@spotlightBonus / 100), 1);
+
+		if (getstatus(SC_EXPBOOST, 1) > 0) {
+			.@bonusMobBaseExp += ceil(.@bonusMobBaseExp * getstatus(SC_EXPBOOST, 1) / 100, 1);
+		}
+		if (getstatus(SC_JEXPBOOST, 1) > 0) {
+			.@bonusMobJobExp += ceil(.@bonusMobJobExp * getstatus(SC_JEXPBOOST, 1) / 100, 1);
+		}
+
+		.@partyid = getcharid(1);
+		if (.@partyid) {
+			set .@aid,getcharid(3);
+			set .@baselevel,BaseLevel;
+			set .@map$,strcharinfo(3);
+			getpartymember .@partyid,1;
+			getpartymember .@partyid,2;
+			while( .@i < $@partymembercount ) {
+				if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+					if ( attachrid( $@partymemberaid[.@i] ) )
+						if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
+							set BaseExp,( BaseExp + .@bonusMobBaseExp );
+							set JobExp,( JobExp + .@bonusMobJobExp );
+							if (.showSpotlightExp) {
+								dispbottom "[+% " + .@spotlightType$ + " - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+							}
+						}
+				set .@i,.@i + 1;
+			}
+			attachrid( .@aid );
+		} else {
+			set BaseExp,( BaseExp + .@bonusMobBaseExp );
+			set JobExp,( JobExp + .@bonusMobJobExp );
+			if (.showSpotlightExp) {
+				dispbottom "[+% " + .@spotlightType$ + "] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+			}
+		}
+	}
+
   OnInit:
     bindatcmd "diemnhan",strnpcinfo(3) + "::OnSpotlight";
     bindatcmd "expdiemnhan",strnpcinfo(3) + "::OnSpotlightExp";
@@ -218,113 +261,17 @@
   OnNPCKillEvent:
     // Bonus Size
     if (getmonsterinfo(killedrid, MOB_SIZE) == .today_size) {
-      .@partyid = getcharid(1);
-      .@bonusMobBaseExp = ceil(
-        (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_size_bonus) / 100,
-        1
-      );
-      .@bonusMobJobExp = ceil(
-        (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_size_bonus) / 100,
-        1
-      );
-      if (.@partyid) {
-        set .@aid,getcharid(3);
-        set .@baselevel,BaseLevel;
-        set .@map$,strcharinfo(3);
-        getpartymember .@partyid,1;
-        getpartymember .@partyid,2;
-        while( .@i < $@partymembercount ) {
-          if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
-            if ( attachrid( $@partymemberaid[.@i] ) )
-              if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
-                set BaseExp,( BaseExp + .@bonusMobBaseExp );
-                set JobExp,( JobExp + .@bonusMobJobExp );
-                if (.showSpotlightExp) {
-                  dispbottom "[+% Size - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-                }
-              }
-          set .@i,.@i + 1;
-        }
-        attachrid( .@aid );
-      } else {
-        set BaseExp,( BaseExp + .@bonusMobBaseExp );
-        set JobExp,( JobExp + .@bonusMobJobExp );
-        if (.showSpotlightExp) {
-          dispbottom "[+% Size] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-        }
-      }
+			F_CalculateBonusExp("Size", .today_size_bonus);
     }
     // Bonus Race
     if (getmonsterinfo(killedrid, MOB_RACE) == .today_race_1st || getmonsterinfo(killedrid, MOB_RACE) == .today_race_2nd) {
-      .@partyid = getcharid(1);
-      .@bonusMobBaseExp = ceil(
-        (getmonsterinfo(killedrid, MOB_BASEEXP) * (getmonsterinfo(killedrid, MOB_RACE) == .today_race_1st?.today_race_1st_bonus:.today_race_2nd_bonus)) / 100, 1
-      );
-      .@bonusMobJobExp = ceil(
-        (getmonsterinfo(killedrid, MOB_JOBEXP) * (getmonsterinfo(killedrid, MOB_RACE) == .today_race_1st?.today_race_1st_bonus:.today_race_2nd_bonus)) / 100, 1
-      );
-      if (.@partyid) {
-        set .@aid,getcharid(3);
-        set .@baselevel,BaseLevel;
-        set .@map$,strcharinfo(3);
-        getpartymember .@partyid,1;
-        getpartymember .@partyid,2;
-        while( .@i < $@partymembercount ) {
-          if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
-            if ( attachrid( $@partymemberaid[.@i] ) )
-              if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
-                set BaseExp,( BaseExp + .@bonusMobBaseExp );
-                set JobExp,( JobExp + .@bonusMobJobExp );
-                if (.showSpotlightExp) {
-                  dispbottom "[+% Race - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-                }
-              }
-          set .@i,.@i + 1;
-        }
-        attachrid( .@aid );
-      } else {
-        set BaseExp,( BaseExp + .@bonusMobBaseExp );
-        set JobExp,( JobExp + .@bonusMobJobExp );
-        if (.showSpotlightExp) {
-          dispbottom "[+% Race] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-        }
-      }
+			.@spotlightBonus = getmonsterinfo(killedrid, MOB_RACE) == .today_race_1st ? .today_race_1st_bonus : .today_race_2nd_bonus;
+			F_CalculateBonusExp("Race", .@spotlightBonus);
     }
     // Bonus Element
     if (getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_1st || getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_2nd) {
-      .@partyid = getcharid(1);
-      .@bonusMobBaseExp = ceil(
-        (getmonsterinfo(killedrid, MOB_BASEEXP) * (getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_1st?.today_element_1st_bonus:.today_element_2nd_bonus)) / 100, 1
-      );
-      .@bonusMobJobExp = ceil(
-        (getmonsterinfo(killedrid, MOB_JOBEXP) * (getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_1st?.today_element_1st_bonus:.today_element_2nd_bonus)) / 100, 1
-      );
-      if (.@partyid) {
-        set .@aid,getcharid(3);
-        set .@baselevel,BaseLevel;
-        set .@map$,strcharinfo(3);
-        getpartymember .@partyid,1;
-        getpartymember .@partyid,2;
-        while( .@i < $@partymembercount ) {
-          if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
-            if ( attachrid( $@partymemberaid[.@i] ) )
-              if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
-                set BaseExp,( BaseExp + .@bonusMobBaseExp );
-                set JobExp,( JobExp + .@bonusMobJobExp );
-                if (.showSpotlightExp) {
-                  dispbottom "[+% Element - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-                }
-              }
-          set .@i,.@i + 1;
-        }
-        attachrid( .@aid );
-      } else {
-        set BaseExp,( BaseExp + .@bonusMobBaseExp );
-        set JobExp,( JobExp + .@bonusMobJobExp );
-        if (.showSpotlightExp) {
-          dispbottom "[+% Element] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-        }
-      }
+			.@spotlightBonus = getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_1st ? .today_element_1st_bonus : .today_element_2nd_bonus;
+			F_CalculateBonusExp("Element", .@spotlightBonus);
     }
     // Bonus Map
     if (
@@ -333,62 +280,16 @@
       || compare(strcharinfo(3), .spl_fields_maps$[.today_field_1st])
       || compare(strcharinfo(3), .spl_fields_maps$[.today_field_2nd])
     ) {
-      .@partyid = getcharid(1);
-      if (compare(strcharinfo(3), .spl_dungeons_maps$[.today_dungeon_1st])) {
-        .@bonusMobBaseExp = ceil(
-          (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_dungeon_1st_bonus) / 100, 1
-        );
-        .@bonusMobJobExp = ceil(
-          (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_dungeon_1st_bonus) / 100, 1
-        );
+			if (compare(strcharinfo(3), .spl_dungeons_maps$[.today_dungeon_1st])) {
+				.@spotlightBonus = .today_dungeon_1st_bonus;
       } else if (compare(strcharinfo(3), .spl_dungeons_maps$[.today_dungeon_2nd])) {
-        .@bonusMobBaseExp = ceil(
-          (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_dungeon_2nd_bonus) / 100, 1
-        );
-        .@bonusMobJobExp = ceil(
-          (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_dungeon_2nd_bonus) / 100, 1
-        );
+        .@spotlightBonus = .today_dungeon_2nd_bonus;
       } else if (compare(strcharinfo(3), .spl_fields_maps$[.today_field_1st])) {
-        .@bonusMobBaseExp = ceil(
-          (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_field_1st_bonus) / 100, 1
-        );
-        .@bonusMobJobExp = ceil(
-          (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_field_1st_bonus) / 100, 1
-        );
+				.@spotlightBonus = .today_field_1st_bonus;
       } else if (compare(strcharinfo(3), .spl_fields_maps$[.today_field_2nd])) {
-        .@bonusMobBaseExp = ceil(
-          (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_field_2nd_bonus) / 100, 1
-        );
-        .@bonusMobJobExp = ceil(
-          (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_field_2nd_bonus) / 100, 1
-        );
+				.@spotlightBonus = .today_field_2nd_bonus;
       }
-      if (.@partyid) {
-        set .@aid,getcharid(3);
-        set .@baselevel,BaseLevel;
-        set .@map$,strcharinfo(3);
-        getpartymember .@partyid,1;
-        getpartymember .@partyid,2;
-        while( .@i < $@partymembercount ) {
-          if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
-            if ( attachrid( $@partymemberaid[.@i] ) )
-              if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
-                set BaseExp,( BaseExp + .@bonusMobBaseExp );
-                set JobExp,( JobExp + .@bonusMobJobExp );
-                if (.showSpotlightExp) {
-                  dispbottom "[+% Map - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-                }
-              }
-          set .@i,.@i + 1;
-        }
-        attachrid( .@aid );
-      } else {
-        set BaseExp,( BaseExp + .@bonusMobBaseExp );
-        set JobExp,( JobExp + .@bonusMobJobExp );
-        if (.showSpotlightExp) {
-          dispbottom "[+% Map] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
-        }
-      }
+      F_CalculateBonusExp("Map", .@spotlightBonus);
     }
     end;
 
