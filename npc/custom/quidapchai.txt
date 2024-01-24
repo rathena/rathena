@@ -1,16 +1,413 @@
 -	script	Quidapchai	-1,{
-  debugmes strcharinfo(0) + " has clicked me!";
+  // OnInit:
+  //   bindatcmd "diemnhan",strnpcinfo(3) + "::OnSpotlight";
+  //   bindatcmd "expdiemnhan",strnpcinfo(3) + "::OnSpotlightExp";
 
-  .@qstring$ = "SELECT id FROM achievement WHERE char_id=" + getcharid(0) + ";";
-	.@esc_qstring$ = escape_sql(.@qstring$);
+  //   .showSpotlightExp = 0;
 
-  .@nb = query_sql(.@esc_qstring$, .@ids);
-  debugmes "1." + .@ids[0];
-	debugmes "2." + .@ids[1];
-	debugmes "3." + .@ids[2];
-	debugmes "4." + .@ids[3];
-	debugmes "5." + .@ids[4];
-  debugmes "Debugmes: " + .@nb;
+  //   setarray .spl_races$[0],
+  //     "Formless",
+  //     "Undead",
+  //     "Brute",
+  //     "Plant",
+  //     "Insect",
+  //     "Fish",
+  //     "Demon",
+  //     "Demi Human",
+  //     "Angel",
+  //     "Dragon";
+  //   setarray .spl_sizes$[0],
+  //     "Small",
+  //     "Medium",
+  //     "Big";
+  //   setarray .spl_elements$[0],
+  //     "Neutral",
+  //     "Water",
+  //     "Earth",
+  //     "Fire",
+  //     "Wind",
+  //     "Poison",
+  //     "Holy",
+  //     "Dark",
+  //     "Ghost",
+  //     "Undead";
+  //   setarray .spl_dungeons$[0],
+  //     "Abyss Lakes",
+  //     "Amatsu Dungeon",
+  //     "Anthell",
+  //     "Ayothaya Dungeon",
+  //     "Beach Dungeon",
+  //     "Bio Labs",
+  //     "Byalan Dungeon",
+  //     "Clock Tower",
+  //     "Coal Mines",
+  //     "Culvert",
+  //     "Cursed Abbey",
+  //     "Einbroch Dungeon",
+  //     "Gefenia",
+  //     "Geffen Dungeon",
+  //     "Glastheim (Dungeon)",
+  //     "Hidden Dungeon (Maze)",
+  //     "Ice Dungeon",
+  //     "Juperos",
+  //     "Kiel Dungeon",
+  //     "Kunlun Dungeon",
+  //     "Louyang Dungeon",
+  //     "Magma Dungeon",
+  //     "Moscovia Dungeon",
+  //     "Odin Temple",
+  //     "Orc Dungeon",
+  //     "Payon Dungeon",
+  //     "Pyramids",
+  //     "Rachel Sanctuary",
+  //     "Sphinx",
+  //     "Sunken Ship",
+  //     "Thanatos Tower",
+  //     "Thor Volcano",
+  //     "Turtle Dungeon";
+  //   setarray .spl_dungeons_maps$[0],
+  //     "abyss",
+  //     "ama_dun",
+  //     "anthell",
+  //     "ayo_dun",
+  //     "beach_dun",
+  //     "lhz_dun",
+  //     "iz_dun",
+  //     // "alde_dun01","alde_dun02",
+  //     "c_tower",
+  //     "mjo_dun",
+  //     "prt_sew",
+  //     "abbey",
+  //     "ein_dun",
+  //     "gefenia",
+  //     "gef_dun",
+  //     // "glast_01",
+  //     "gl_",
+  //     "prt_maze",
+  //     "ice_dun",
+  //     "jupe",
+  //     "kh_dun",
+  //     "gon_dun",
+  //     "lou_dun",
+  //     "mag_dun",
+  //     "mosk_dun",
+  //     "odin_tem",
+  //     "orcsdun",
+  //     "pay_dun",
+  //     "moc_pryd",
+  //     "ra_san",
+  //     "in_sphinx",
+  //     "treasure",
+  //     "tha_t",
+  //     "thor_v",
+  //     "tur_dun";
+  //   setarray .spl_fields$[0],
+  //     "Amatsu Field",
+  //     "Ayothaya Field",
+  //     "Comodo Field",
+  //     "Einbroch Field",
+  //     "Geffen Field",
+  //     "Hugel Field",
+  //     "Juno Field",
+  //     "Kunlun Field",
+  //     "Lighthalzen Field",
+  //     "Luoyang Field",
+  //     "Lutie Field",
+  //     "Manuk Field",
+  //     "Mjolnir Field",
+  //     "Moscovia Field",
+  //     "Niflheim Field",
+  //     "Payon Forest",
+  //     "Prontera Field",
+  //     "Rachel Field",
+  //     "Sograt Desert",
+  //     "Umbala Field",
+  //     "Veins Field";
+  //   setarray .spl_fields_maps$[0],
+  //     "ama_fild",
+  //     "ayo_fild",
+  //     "cmd_fild",
+  //     "ein_fild",
+  //     "gef_fild",
+  //     "hu_fild",
+  //     "yuno_fild",
+  //     "gon_fild",
+  //     "lhz_fild",
+  //     "lou_fild",
+  //     "xmas_fild",
+  //     "man_fild",
+  //     "mjolnir_",
+  //     "mosk_fild",
+  //     "nif_fild",
+  //     "pay_fild",
+  //     "prt_fild",
+  //     "ra_fild",
+  //     "moc_fild",
+  //     "um_fild",
+  //     "ve_fild";
+
+  //   .spl_races_size = getarraysize(.spl_races$);
+  //   .spl_sizes_size = getarraysize(.spl_sizes$);
+  //   .spl_elements_size = getarraysize(.spl_elements$);
+  //   .spl_dungeons_size = getarraysize(.spl_dungeons$);
+  //   .spl_fields_size = getarraysize(.spl_fields$);
+  //   .party_level_range = 10;
+
+  // OnClock0000:
+  //   // LOGIC
+  //   .today_size = rand(.spl_sizes_size);
+  //   .today_size_bonus = rand(5, 10);
+
+  //   .today_race_1st = rand(.spl_races_size);
+  //   .today_race_1st_bonus = rand(5, 10);
+
+  //   .today_race_2nd = rand(.spl_races_size);
+  //   while (.today_race_1st == .today_race_2nd) {
+  //     .today_race_2nd = rand(.spl_races_size);
+  //   }
+  //   .today_race_2nd_bonus = rand(5, 10);
+
+  //   .today_element_1st = rand(.spl_elements_size);
+  //   .today_element_1st_bonus = rand(5, 10);
+
+  //   .today_element_2nd = rand(.spl_elements_size);
+  //   while (.today_element_1st == .today_element_2nd) {
+  //     .today_element_2nd = rand(.spl_elements_size);
+  //   }
+  //   .today_element_2nd_bonus = rand(5, 10);
+
+  //   .today_dungeon_1st = rand(.spl_dungeons_size);
+  //   .today_dungeon_1st_bonus = rand(5, 10);
+
+  //   .today_dungeon_2nd = rand(.spl_dungeons_size);
+  //   while (.today_dungeon_1st == .today_dungeon_2nd) {
+  //     .today_dungeon_2nd = rand(.spl_dungeons_size);
+  //   }
+  //   .today_dungeon_2nd_bonus = rand(5, 10);
+
+  //   .today_field_1st = rand(.spl_fields_size);
+  //   .today_field_1st_bonus = rand(5, 10);
+
+  //   .today_field_2nd = rand(.spl_fields_size);
+  //   while (.today_field_1st == .today_field_2nd) {
+  //     .today_field_2nd = rand(.spl_fields_size);
+  //   }
+  //   .today_field_2nd_bonus = rand(5, 10);
+
+  //   // debugmes ".today_size: " + "(" + .spl_sizes$[.today_size] + ")" + .today_size;
+  //   // debugmes ".today_size_bonus: " + .today_size_bonus;
+  //   // debugmes ".today_race_1st: " + "(" + .spl_races$[.today_race_1st] + ")" + .today_race_1st;
+  //   // debugmes ".today_race_1st_bonus: " + .today_race_1st_bonus;
+  //   // debugmes ".today_race_2nd: " + "(" + .spl_races$[.today_race_2nd] + ")" + .today_race_2nd;
+  //   // debugmes ".today_race_2nd_bonus: " + .today_race_2nd_bonus;
+  //   // debugmes ".today_element_1st: " + "(" + .spl_elements$[.today_element_1st] + ")" + .today_element_1st;
+  //   // debugmes ".today_element_1st_bonus: " + .today_element_1st_bonus;
+  //   // debugmes ".today_element_2nd: " + "(" + .spl_elements$[.today_element_2nd] + ")" + .today_element_2nd;
+  //   // debugmes ".today_element_2nd_bonus: " + .today_element_2nd_bonus;
+  //   // debugmes ".today_dungeon_1st: " + "(" + .spl_dungeons$[.today_dungeon_1st] + ")" + .today_dungeon_1st;
+  //   // debugmes ".today_dungeon_1st_bonus: " + .today_dungeon_1st_bonus;
+  //   // debugmes ".today_dungeon_2nd: " + "(" + .spl_dungeons$[.today_dungeon_2nd] + ")" + .today_dungeon_2nd;
+  //   // debugmes ".today_dungeon_2nd_bonus: " + .today_dungeon_2nd_bonus;
+  //   // debugmes ".today_field_1st: " + "(" + .spl_fields$[.today_field_1st] + ")" + .today_field_1st;
+  //   // debugmes ".today_field_1st_bonus: " + .today_field_1st_bonus;
+  //   // debugmes ".today_field_2nd: " + "(" + .spl_fields$[.today_field_2nd] + ")" + .today_field_2nd;
+  //   // debugmes ".today_field_2nd_bonus: " + .today_field_2nd_bonus;
+
+  //   end;
+
+  // OnNPCKillEvent:
+  //   // Bonus Size
+  //   if (getmonsterinfo(killedrid, MOB_SIZE) == .today_size) {
+  //     .@partyid = getcharid(1);
+  //     .@bonusMobBaseExp = ceil(
+  //       (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_size_bonus) / 100,
+  //       1
+  //     );
+  //     .@bonusMobJobExp = ceil(
+  //       (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_size_bonus) / 100,
+  //       1
+  //     );
+  //     if (.@partyid) {
+  //       set .@aid,getcharid(3);
+  //       set .@baselevel,BaseLevel;
+  //       set .@map$,strcharinfo(3);
+  //       getpartymember .@partyid,1;
+  //       getpartymember .@partyid,2;
+  //       while( .@i < $@partymembercount ) {
+  //         if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+  //           if ( attachrid( $@partymemberaid[.@i] ) )
+  //             if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
+  //               set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //               set JobExp,( JobExp + .@bonusMobJobExp );
+  //               if (.showSpotlightExp) {
+  //                 dispbottom "[+% Size - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //               }
+  //             }
+  //         set .@i,.@i + 1;
+  //       }
+  //       attachrid( .@aid );
+  //     } else {
+  //       set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //       set JobExp,( JobExp + .@bonusMobJobExp );
+  //       if (.showSpotlightExp) {
+  //         dispbottom "[+% Size] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //       }
+  //     }
+  //   }
+  //   // Bonus Race
+  //   if (getmonsterinfo(killedrid, MOB_RACE) == .today_race_1st || getmonsterinfo(killedrid, MOB_RACE) == .today_race_2nd) {
+  //     .@partyid = getcharid(1);
+  //     .@bonusMobBaseExp = ceil(
+  //       (getmonsterinfo(killedrid, MOB_BASEEXP) * (getmonsterinfo(killedrid, MOB_RACE) == .today_race_1st?.today_race_1st_bonus:.today_race_2nd_bonus)) / 100, 1
+  //     );
+  //     .@bonusMobJobExp = ceil(
+  //       (getmonsterinfo(killedrid, MOB_JOBEXP) * (getmonsterinfo(killedrid, MOB_RACE) == .today_race_1st?.today_race_1st_bonus:.today_race_2nd_bonus)) / 100, 1
+  //     );
+  //     if (.@partyid) {
+  //       set .@aid,getcharid(3);
+  //       set .@baselevel,BaseLevel;
+  //       set .@map$,strcharinfo(3);
+  //       getpartymember .@partyid,1;
+  //       getpartymember .@partyid,2;
+  //       while( .@i < $@partymembercount ) {
+  //         if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+  //           if ( attachrid( $@partymemberaid[.@i] ) )
+  //             if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
+  //               set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //               set JobExp,( JobExp + .@bonusMobJobExp );
+  //               if (.showSpotlightExp) {
+  //                 dispbottom "[+% Race - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //               }
+  //             }
+  //         set .@i,.@i + 1;
+  //       }
+  //       attachrid( .@aid );
+  //     } else {
+  //       set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //       set JobExp,( JobExp + .@bonusMobJobExp );
+  //       if (.showSpotlightExp) {
+  //         dispbottom "[+% Race] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //       }
+  //     }
+  //   }
+  //   // Bonus Element
+  //   if (getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_1st || getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_2nd) {
+  //     .@partyid = getcharid(1);
+  //     .@bonusMobBaseExp = ceil(
+  //       (getmonsterinfo(killedrid, MOB_BASEEXP) * (getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_1st?.today_element_1st_bonus:.today_element_2nd_bonus)) / 100, 1
+  //     );
+  //     .@bonusMobJobExp = ceil(
+  //       (getmonsterinfo(killedrid, MOB_JOBEXP) * (getmonsterinfo(killedrid, MOB_ELEMENT) == .today_element_1st?.today_element_1st_bonus:.today_element_2nd_bonus)) / 100, 1
+  //     );
+  //     if (.@partyid) {
+  //       set .@aid,getcharid(3);
+  //       set .@baselevel,BaseLevel;
+  //       set .@map$,strcharinfo(3);
+  //       getpartymember .@partyid,1;
+  //       getpartymember .@partyid,2;
+  //       while( .@i < $@partymembercount ) {
+  //         if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+  //           if ( attachrid( $@partymemberaid[.@i] ) )
+  //             if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
+  //               set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //               set JobExp,( JobExp + .@bonusMobJobExp );
+  //               if (.showSpotlightExp) {
+  //                 dispbottom "[+% Element - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //               }
+  //             }
+  //         set .@i,.@i + 1;
+  //       }
+  //       attachrid( .@aid );
+  //     } else {
+  //       set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //       set JobExp,( JobExp + .@bonusMobJobExp );
+  //       if (.showSpotlightExp) {
+  //         dispbottom "[+% Element] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //       }
+  //     }
+  //   }
+  //   // Bonus Map
+  //   if (
+  //     compare(strcharinfo(3), .spl_dungeons_maps$[.today_dungeon_1st])
+  //     || compare(strcharinfo(3), .spl_dungeons_maps$[.today_dungeon_2nd])
+  //     || compare(strcharinfo(3), .spl_fields_maps$[.today_field_1st])
+  //     || compare(strcharinfo(3), .spl_fields_maps$[.today_field_2nd])
+  //   ) {
+  //     .@partyid = getcharid(1);
+  //     if (compare(strcharinfo(3), .spl_dungeons_maps$[.today_dungeon_1st])) {
+  //       .@bonusMobBaseExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_dungeon_1st_bonus) / 100, 1
+  //       );
+  //       .@bonusMobJobExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_dungeon_1st_bonus) / 100, 1
+  //       );
+  //     } else if (compare(strcharinfo(3), .spl_dungeons_maps$[.today_dungeon_2nd])) {
+  //       .@bonusMobBaseExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_dungeon_2nd_bonus) / 100, 1
+  //       );
+  //       .@bonusMobJobExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_dungeon_2nd_bonus) / 100, 1
+  //       );
+  //     } else if (compare(strcharinfo(3), .spl_fields_maps$[.today_field_1st])) {
+  //       .@bonusMobBaseExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_field_1st_bonus) / 100, 1
+  //       );
+  //       .@bonusMobJobExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_field_1st_bonus) / 100, 1
+  //       );
+  //     } else if (compare(strcharinfo(3), .spl_fields_maps$[.today_field_2nd])) {
+  //       .@bonusMobBaseExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_BASEEXP) * .today_field_2nd_bonus) / 100, 1
+  //       );
+  //       .@bonusMobJobExp = ceil(
+  //         (getmonsterinfo(killedrid, MOB_JOBEXP) * .today_field_2nd_bonus) / 100, 1
+  //       );
+  //     }
+  //     if (.@partyid) {
+  //       set .@aid,getcharid(3);
+  //       set .@baselevel,BaseLevel;
+  //       set .@map$,strcharinfo(3);
+  //       getpartymember .@partyid,1;
+  //       getpartymember .@partyid,2;
+  //       while( .@i < $@partymembercount ) {
+  //         if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+  //           if ( attachrid( $@partymemberaid[.@i] ) )
+  //             if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
+  //               set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //               set JobExp,( JobExp + .@bonusMobJobExp );
+  //               if (.showSpotlightExp) {
+  //                 dispbottom "[+% Map - Party] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //               }
+  //             }
+  //         set .@i,.@i + 1;
+  //       }
+  //       attachrid( .@aid );
+  //     } else {
+  //       set BaseExp,( BaseExp + .@bonusMobBaseExp );
+  //       set JobExp,( JobExp + .@bonusMobJobExp );
+  //       if (.showSpotlightExp) {
+  //         dispbottom "[+% Map] : +"+.@bonusMobBaseExp+" Base EXP | " +.@bonusMobJobExp+" Job Exp";
+  //       }
+  //     }
+  //   }
+  //   end;
+
+  // OnSpotlight:
+  //   mes "[ ^0000FFHêò thôìng ðiêÒm nhâìn^000000 ]";
+  //   mes "Size: ^0000FF" + .spl_sizes$[.today_size] + "^000000 (^00AF00+" + .today_size_bonus + "%^000000)";
+  //   mes "Race: ^0000FF" + .spl_races$[.today_race_1st] + "^000000 (^00AF00+" + .today_race_1st_bonus + "%^000000) | ^0000FF" + .spl_races$[.today_race_2nd] + "^000000 (^00AF00+" + .today_race_2nd_bonus + "%^000000)";
+  //   mes "Element: ^0000FF" + .spl_elements$[.today_element_1st] + "^000000 (^00AF00+" + .today_element_1st_bonus + "%^000000) | ^0000FF" + .spl_elements$[.today_element_2nd] + "^000000 (^00AF00+" + .today_element_2nd_bonus + "%^000000)";
+  //   mes "Dungeon: ^0000FF" + .spl_dungeons$[.today_dungeon_1st] + "^000000 (^00AF00+" + .today_dungeon_1st_bonus + "%^000000) | ^0000FF" + .spl_dungeons$[.today_dungeon_2nd] + "^000000 (^00AF00+" + .today_dungeon_2nd_bonus + "%^000000)";
+  //   mes "Field: ^0000FF" + .spl_fields$[.today_field_1st] + "^000000 (^00AF00+" + .today_field_1st_bonus + "%^000000) | ^0000FF" + .spl_fields$[.today_field_2nd] + "^000000 (^00AF00+" + .today_field_2nd_bonus + "%^000000)";
+  //   close;
+  //   end;
+
+  // OnSpotlightExp:
+  //   dispbottom "Bãìt ðâÌu hiêòn % kinh nghiêòm nhâòn thêm týÌ hêò thôìng ðiêÒm nhâìn!";
+  //   if (.showSpotlightExp) {
+  //     .showSpotlightExp = 0;
+  //   } else {
+  //     .showSpotlightExp = 1;
+  //   }
+  //   end;
 }
-
-prontera,162,187,4	duplicate(Quidapchai)	Quidapchai#prt	811
