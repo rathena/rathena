@@ -8753,3 +8753,31 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Hnnoweapon
+    Icon: EFST_NOEQUIPWEAPON
+    DurationLookup: HN_DOUBLEBOWLINGBASH
+  - Status: Shieldchainrush
+    Icon: EFST_SHIELDCHAINRUSH
+    DurationLookup: HN_SHIELD_CHAIN_RUSH
+    CalcFlags:
+      Speed: true
+    Flags:
+      BossResist: true
+  - Status: Mistyfrost
+    Icon: EFST_MISTYFROST
+    DurationLookup: HN_JACK_FROST_NOVA
+    Flags:
+      BossResist: true
+  - Status: Groundgravity
+    Icon: EFST_GROUNDGRAVITY
+    DurationLookup: HN_GROUND_GRAVITATION
+    CalcFlags:
+      Speed: true
+    Flags:
+      BossResist: true
+  - Status: Breakinglimit
+    Icon: EFST_BREAKINGLIMIT
+    DurationLookup: HN_BREAKINGLIMIT
+  - Status: Rulebreak
+    Icon: EFST_RULEBREAK
+    DurationLookup: HN_RULEBREAK
