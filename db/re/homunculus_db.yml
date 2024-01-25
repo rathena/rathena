@@ -827,7 +827,7 @@ Body:
       - Type: Sp
         Base: 11
         GrowthMinimum: 40
-        GrowthMaximum: 120
+        GrowthMaximum: 240
       - Type: Str
         Base: 11
         GrowthMinimum: 20
