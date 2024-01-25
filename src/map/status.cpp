@@ -2519,15 +2519,14 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 		// Def
 		// (VIT + Floor(Level ÷ 10)) × 2 + Floor((AGI + Floor(Level ÷ 10)) ÷ 2) + Floor(Level ÷ 2)
-		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) * 2 + (std::floor(status_get_homagi(bl) + std::floor(level / 10)) / 2) + std::floor(level / 2));
+		stat = (short)((status_get_homvit(bl) + std::floor(level / 10) * 2) + (std::floor(status_get_homagi(bl) + std::floor(level / 10)) / 2) + std::floor(level / 2));
 		status->def = cap_value(stat, 0, SHRT_MAX);
 		// Mdef
-		// (VIT + Floor(Level ÷ 10)) + Floor((INT + Floor(Level ÷ 10)) ÷ 4) + Floor(Level ÷ 4)
-		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) + (std::floor(status_get_homint(bl) + std::floor(level / 10)) / 4) + std::floor(level / 4));  
+		stat = (short)((status_get_homvit(bl) + std::floor(level / 10)) + (std::floor(status_get_homint(bl) + std::floor(level / 10)) / 8));  
 		status->mdef = cap_value(stat, 0, SHRT_MAX);
 		// Hit
 		// Level + DEX + 150
-		stat = level + status_get_homdex(bl) + 150;
+		stat = level + status_get_homdex(bl);
 		status->hit = cap_value(stat, 1, SHRT_MAX);
 		// Flee
 		// Level + AGI + Floor(Level ÷ 10)
