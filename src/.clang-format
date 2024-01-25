@@ -12,7 +12,6 @@ SpacesBeforeTrailingComments: 1
 BinPackArguments: false
 BinPackParameters: false
 AccessModifierOffset: -4
-SortIncludes: true
 IndentCaseLabels: true
 PointerAlignment: Left
 SortIncludes: true
