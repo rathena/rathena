@@ -69,8 +69,8 @@ Body:
         EvolutionMaximum: 7200
       - Type: Sp
         Base: 40
-        GrowthMinimum: 16
-        GrowthMaximum: 36
+        GrowthMinimum: 12
+        GrowthMaximum: 27
         EvolutionMinimum: 660
         EvolutionMaximum: 1440
       - Type: Str
