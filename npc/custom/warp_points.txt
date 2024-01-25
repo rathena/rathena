@@ -1,12 +1,15 @@
 //========================Function=&=Script========================
 
 function	script	Q_Warpra	{
-	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
-	mes "Ğây laÌ ğiêÒm diòch chuyêÒn giuìp";
-	mes "^0000FFdiòch chuyêÒn^000000 tõìi nhıŞng nõi khaìc nhau, ğiêÌu kiêòn laÌ câÌn mõÒ khoìa ^0000FFCôÒng diòch chuyêÒn^000000 õÒ ğoì trıõìc.";
+	mes "- Ğây laÌ ^0000FFCôÒng diòch chuyêÒn^000000 ğiêÒm giuìp ^0000FFdiòch chuyêÒn^000000 tõìi nhıŞng viò triì khaìc, ğiêÌu kiêòn laÌ câÌn mõÒ khoìa ^0000FFCôÒng diòch chuyêÒn^000000 õÒ ğoì trıõìc.";
+	mes "SıÒ duòng môŞi lâÌn câÌn 1 " + mesitemlink(717, false) + " -";
 
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
+
+	if (countitem(717) < 1) {
+		close;
+	}
 
 	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11]);
 
@@ -258,6 +261,7 @@ L_town:
 	if(Zeny<@pTprice[@Tmenuref[@TWMenu-1]]) callsub L_Short_on_zeny,0;
 	set Zeny, Zeny-@pTprice[@Tmenuref[@TWMenu-1]];
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@pTprice[@Tmenuref[@TWMenu-1]]/16);
+	delitem(717, 1);
 	warp @pTmap$[@Tmenuref[@TWMenu-1]],@pTXcoords[@Tmenuref[@TWMenu-1]],@pTYcoords[@Tmenuref[@TWMenu-1]];
 	close2;
 	set Zeny, Zeny+@pTprice[@Tmenuref[@TWMenu-1]];
@@ -299,6 +303,7 @@ L_dungeon:
 	if(Zeny<@warpprice) callsub L_Short_on_zeny,1;
 	set Zeny, Zeny-(@warpprice);
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@warpprice/16);
+	delitem(717, 1);
 	warp @DGat$[@Darrayref],@DXcoords[@Darrayref],@DYcoords[@Darrayref];
 	close2;
 	set Zeny, Zeny+@pTprice[@Tmenuref[@DWMenu-1]];

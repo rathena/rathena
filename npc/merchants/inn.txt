@@ -132,6 +132,37 @@ cmd_in02,142,184,4	script	Inn Keeper#Katrin	53,{
 	warp "cmd_in02",160,206; end;
 }
 
+yuno_in01,25,183,4	script	Inn Keeper#Yuno_Maid	53,{
+
+	callfunc "F_InnMaid","[Sohee]","Yuno Inn","yuno_in01",25,179;
+	warp "yuno_in01",100,170; end;
+}
+
+ama_in01,27,182,4	script	Inn Keeper#Ama_Maid	53,{
+
+	callfunc "F_InnMaid","[Yoshino]","Amatsu Inn","ama_in01",27,179;
+	warp "ama_in01",17,180; end;
+}
+
+
+gon_in,158,34,4	script	Inn Keeper#Gon_Maid	53,{
+
+	callfunc "F_InnMaid","[Yongchun]","Gon Inn","gon_in",158,32;
+	warp "gon_in",173,83; end;
+}
+
+lou_in02,52,182,6	script	Inn Keeper#Lou_Maid	53,{
+
+	callfunc "F_InnMaid","[Shisha]","Louyang Inn","lou_in02",55,177;
+	warp "lou_in02",45,131; end;
+}
+
+ayo_in01,31,90,6	script	Inn Keeper#Lou_Maid	53,{
+
+	callfunc "F_InnMaid","[Matte]","Ayothaya Inn","ayo_in01",31,85;
+	warp "ayo_in01",18,26; end;
+}
+
 //====================== Lighthalzen =================================
 lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 	mes "[Hotel Employee]";
@@ -167,9 +198,9 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 		close2;
 		warp "lhz_in02",219,150;
 		percentheal 100,100;
-		specialeffect2 EF_INCAGILITY;
+		// specialeffect2 EF_INCAGILITY;
 		sc_start SC_INCREASEAGI,1800000,10;
-		specialeffect2 EF_BLESSING;
+		// specialeffect2 EF_BLESSING;
 		sc_start SC_BLESSING,1800000,10;
 		npcskill "AL_BLESSING",10,99,99;
 		end;
@@ -217,9 +248,9 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		close2;
 		set Zeny,Zeny - 5000;
 		percentheal 100,100;
-		specialeffect2 EF_INCAGILITY;
+		// specialeffect2 EF_INCAGILITY;
 		sc_start SC_INCREASEAGI,1800000,10;
-		specialeffect2 EF_BLESSING;
+		// specialeffect2 EF_BLESSING;
 		sc_start SC_BLESSING,1800000,10;
 		warp "ve_in",184,228;
 		end;
