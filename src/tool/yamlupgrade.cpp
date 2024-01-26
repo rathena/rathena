@@ -522,17 +522,17 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 	return true;
 }
 
-static bool upgrade_laphine_upgrade( std::string file, const uint32 source_version ){
+static bool upgrade_laphine_upgrade(std::string file, const uint32 source_version) {
 	size_t entries = 0;
 
-	for( auto input : inNode["Body"] ){
-		if( source_version < 2 ){
-			if( input["ResultRefine"].IsDefined() ){
+	for (auto input : inNode["Body"]) {
+		if (source_version < 2) {
+			if (input["ResultRefine"].IsDefined()) {
 				// Convert ResultRefine to a ResultRefine array
 				uint16 refine_level = input["ResultRefine"].as<uint16>();
 
 				// Remove the existing Refine entry
-				input.remove( "ResultRefine" );
+				input.remove("ResultRefine");
 
 				// Add the ResultRefine array
 				auto RatesNode = input["ResultRefine"];
@@ -542,27 +542,27 @@ static bool upgrade_laphine_upgrade( std::string file, const uint32 source_versi
 			}
 
 			// Convert the values between ResultRefineMinimum and ResultRefineMaximum to a ResultRefine array
-			if( input["ResultRefineMinimum"].IsDefined() || input["ResultRefineMaximum"].IsDefined() ){
+			if (input["ResultRefineMinimum"].IsDefined() || input["ResultRefineMaximum"].IsDefined()) {
 				uint16 refine_level_min = 0, refine_level_max = MAX_REFINE;
 
 				// Save data and remove the existing ResultRefineMinimum/ResultRefineMaximum entry
-				if( input["ResultRefineMinimum"].IsDefined() ) {
+				if (input["ResultRefineMinimum"].IsDefined()) {
 					refine_level_min = input["ResultRefineMinimum"].as<uint16>();
-					input.remove( "ResultRefineMinimum" );
+					input.remove("ResultRefineMinimum");
 				}
-				if( input["ResultRefineMaximum"].IsDefined() ) {
+				if (input["ResultRefineMaximum"].IsDefined()) {
 					refine_level_max = input["ResultRefineMaximum"].as<uint16>();
-					input.remove( "ResultRefineMaximum" );
+					input.remove("ResultRefineMaximum");
 				}
 
 				// Remove existing ResultRefine entry (shouldn't happen)
-				if( input["ResultRefine"].IsDefined() )
-					input.remove( "ResultRefine" );
+				if (input["ResultRefine"].IsDefined())
+					input.remove("ResultRefine");
 
 				// Add the ResultRefine array
 				auto RatesNode = input["ResultRefine"];
 
-				for( int i = refine_level_min, j = 0; i <= refine_level_max; i++, j++ ){
+				for (int i = refine_level_min, j = 0; i <= refine_level_max; i++, j++) {
 					auto RateNode = RatesNode[j];
 
 					RateNode["Level"] = i;
@@ -574,7 +574,7 @@ static bool upgrade_laphine_upgrade( std::string file, const uint32 source_versi
 		entries++;
 	}
 
-	ShowStatus( "Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str() );
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

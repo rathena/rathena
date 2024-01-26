@@ -23572,23 +23572,23 @@ void clif_parse_laphine_upgrade( int fd, map_session_data* sd ){
 		int total_rate = 0;
 
 		// Get the total rate (sum of the rate)
-		for ( const auto& it : upgrade->resultRefine ) {
+		for (const auto& it : upgrade->resultRefine) {
 			if (it.second == 0)	// Level removed on import
 				continue;
 			total_rate += it.second;
 		}
 
 		if (total_rate > 0) {
-			int chance = rnd_value( 1, total_rate );
+			int chance = rnd_value(1, total_rate);
 			int sum_rate = 0;
 
-			for ( const auto& it : upgrade->resultRefine ) {
+			for (const auto& it : upgrade->resultRefine) {
 				if (it.second == 0)
 					continue;
 				sum_rate += it.second;
 
 				if (chance <= sum_rate) {
-					item->refine = cap_value( it.first, 0, MAX_REFINE );
+					item->refine = cap_value(it.first, 0, MAX_REFINE);
 					break;
 				}
 			}

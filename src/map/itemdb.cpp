@@ -1793,7 +1793,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 	}
 
-	if (this->nodeExists( node, "ResultRefine" )) {
+	if (this->nodeExists(node, "ResultRefine")) {
 		const auto& refineNode = node["ResultRefine"];
 
 		for (const auto& refineit : refineNode) {
@@ -1802,16 +1802,17 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			if (!this->asUInt16Rate(refineit, "Level", level, MAX_REFINE))
 				return 0;
 
-			bool refine_exists = util::umap_find( entry->resultRefine, level ) != nullptr;
+			bool refine_exists = util::umap_find(entry->resultRefine, level) != nullptr;
 
-			if (this->nodeExists( refineit, "Rate" )) {
+			if (this->nodeExists(refineit, "Rate")) {
 				uint16 rate;
 
-				if (!this->asUInt16Rate( refineit, "Rate", rate )) {
+				if (!this->asUInt16Rate(refineit, "Rate", rate)) {
 					return 0;
 				}
 				entry->resultRefine[level] = rate;
-			} else {
+			}
+			else {
 				if (!refine_exists) {
 					entry->resultRefine[level] = 1;
 				}
