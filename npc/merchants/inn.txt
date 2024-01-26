@@ -55,7 +55,7 @@ prt_in,244,135,2	script	Inn Employee#Sammy	53,{
 	callfunc "F_InnMaid","[Employee Sammy]","Nenkaras","prt_in",238,130;
 	warp "prt_in",247,104; end;
 }
-prt_in,246,135,4	script	Repairman#prt	86,{
+prt_in,246,135,4	script	Repairman#prt_in	86,{
 	callfunc "repairmain","Grendal";
 	end;
 }
@@ -111,7 +111,7 @@ morocc_in,147,141,3	script	Inn Employee#Hasna	53,{
 	callfunc "F_InnMaid","[Employee Hasna]","Morocc Inn","morocc_in",142,140;
 	warp "morocc_in",173,135; end;
 }
-morocc_in,147,144,4	script	Repairman#repairman_moro	86,{
+morocc_in,147,144,4	script	Repairman#repairman_moro1	86,{
   callfunc "repairmain","Grendal";
 	end;
 }
@@ -121,7 +121,7 @@ morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 	callfunc "F_InnMaid","[Employee Manar]","Morocc Inn","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
 }
-morocc_in,78,100,4	script	Repairman#repairman_moro	86,{
+morocc_in,78,100,4	script	Repairman#repairman_moro2	86,{
   callfunc "repairmain","Grendal";
 	end;
 }
@@ -222,7 +222,7 @@ lou_in02,54,182,4	script	Repairman#repairman_lou_	86,{
 	end;
 }
 
-ayo_in01,31,90,6	script	Inn Keeper#Lou_Maid	53,{
+ayo_in01,31,90,6	script	Inn Keeper#Ayothaya_Maid	53,{
 
 	callfunc "F_InnMaid","[Matte]","Ayothaya Inn","ayo_in01",31,85;
 	warp "ayo_in01",18,26; end;
