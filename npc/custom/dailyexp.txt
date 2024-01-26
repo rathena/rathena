@@ -1,0 +1,23 @@
+-	script	dailyexp	-1,{
+  daily_exp_triggered = 0;
+
+	OnInit:
+		bindatcmd("dailyexp", strnpcinfo(3) + "::OnDailyExp");
+		end;
+	OnDailyExp:
+    if (daily_exp_triggered > 0) {
+      dispbottom "- ĞaŞ hêìt lıõòt sıÒ duòng trong ngaÌy (1/1) -";
+      end;
+    }
+
+    daily_exp_triggered = 1;
+    sc_start SC_EXPBOOST,3600000,100;
+    sc_start SC_JEXPBOOST,3600000,100;
+    dispbottom "- bãìt ğâÌu +100% kinh nghiêòm nhâòn ğıõòc trong 1 tiêìng -";
+
+		end;
+	OnClock0000:
+    query_sql( "DELETE FROM `char_reg_num` WHERE `key`='daily_exp_triggered' " );
+		debugmes "- daily_exp_triggered reseted! -";
+		end;
+}

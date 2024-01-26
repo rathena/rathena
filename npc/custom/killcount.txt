@@ -1,4 +1,4 @@
--	script	Quidapchai	-1,{
+-	script	killcount	-1,{
 	OnInit:
 		bindatcmd("killcount", strnpcinfo(3) + "::OnShowKillCount");
 		end;
