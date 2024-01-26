@@ -8,16 +8,16 @@
 #include <stdlib.h>
 #include <string>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/ers.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/ers.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 
 #include "battle.hpp"
 #include "battleground.hpp"
@@ -58,60 +58,60 @@ short current_equip_opt_index; /// Contains random option index of an equipped i
 
 uint16 SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
 
-static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_vit(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_int(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_dex(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_luk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_pow(struct block_list *, struct status_change *, int);
-static unsigned short status_calc_sta(struct block_list *, struct status_change *, int);
-static unsigned short status_calc_wis(struct block_list *, struct status_change *, int);
-static unsigned short status_calc_spl(struct block_list *, struct status_change *, int);
-static unsigned short status_calc_con(struct block_list *, struct status_change *, int);
-static unsigned short status_calc_crt(struct block_list *, struct status_change *, int);
-static unsigned short status_calc_batk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_watk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_matk(struct block_list *,struct status_change *,int);
-static signed short status_calc_hit(struct block_list *,struct status_change *,int);
-static signed short status_calc_critical(struct block_list *,struct status_change *,int);
-static signed short status_calc_flee(struct block_list *,struct status_change *,int);
-static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
-static defType status_calc_def(struct block_list *bl, struct status_change *sc, int);
-static signed short status_calc_def2(struct block_list *,struct status_change *,int);
-static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int);
-static signed short status_calc_mdef2(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
-static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion);
+static unsigned short status_calc_str(struct block_list *,status_change *,int);
+static unsigned short status_calc_agi(struct block_list *,status_change *,int);
+static unsigned short status_calc_vit(struct block_list *,status_change *,int);
+static unsigned short status_calc_int(struct block_list *,status_change *,int);
+static unsigned short status_calc_dex(struct block_list *,status_change *,int);
+static unsigned short status_calc_luk(struct block_list *,status_change *,int);
+static unsigned short status_calc_pow(struct block_list *, status_change *, int);
+static unsigned short status_calc_sta(struct block_list *, status_change *, int);
+static unsigned short status_calc_wis(struct block_list *, status_change *, int);
+static unsigned short status_calc_spl(struct block_list *, status_change *, int);
+static unsigned short status_calc_con(struct block_list *, status_change *, int);
+static unsigned short status_calc_crt(struct block_list *, status_change *, int);
+static unsigned short status_calc_batk(struct block_list *,status_change *,int);
+static unsigned short status_calc_watk(struct block_list *,status_change *,int);
+static unsigned short status_calc_matk(struct block_list *,status_change *,int);
+static signed short status_calc_hit(struct block_list *,status_change *,int);
+static signed short status_calc_critical(struct block_list *,status_change *,int);
+static signed short status_calc_flee(struct block_list *,status_change *,int);
+static signed short status_calc_flee2(struct block_list *,status_change *,int);
+static defType status_calc_def(struct block_list *bl, status_change *sc, int);
+static signed short status_calc_def2(struct block_list *,status_change *,int);
+static defType status_calc_mdef(struct block_list *bl, status_change *sc, int);
+static signed short status_calc_mdef2(struct block_list *,status_change *,int);
+static unsigned short status_calc_speed(struct block_list *,status_change *,int);
+static short status_calc_aspd_rate(struct block_list *,status_change *,int);
+static unsigned short status_calc_dmotion(struct block_list *bl, status_change *sc, int dmotion);
 #ifdef RENEWAL_ASPD
-static short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed);
+static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fixed);
 #endif
-static short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int);
-static signed short status_calc_patk(struct block_list *, struct status_change *, int);
-static signed short status_calc_smatk(struct block_list *, struct status_change *, int);
-static signed short status_calc_res(struct block_list *, struct status_change *, int);
-static signed short status_calc_mres(struct block_list *, struct status_change *, int);
-static signed short status_calc_hplus(struct block_list *, struct status_change *, int);
-static signed short status_calc_crate(struct block_list *, struct status_change *, int);
+static short status_calc_fix_aspd(struct block_list *bl, status_change *sc, int);
+static signed short status_calc_patk(struct block_list *, status_change *, int);
+static signed short status_calc_smatk(struct block_list *, status_change *, int);
+static signed short status_calc_res(struct block_list *, status_change *, int);
+static signed short status_calc_mres(struct block_list *, status_change *, int);
+static signed short status_calc_hplus(struct block_list *, status_change *, int);
+static signed short status_calc_crate(struct block_list *, status_change *, int);
 static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
 static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp);
 static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap);
-static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
-static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
-static int status_calc_mode(struct block_list *bl, struct status_change *sc, int mode);
+static unsigned char status_calc_element(struct block_list *bl, status_change *sc, int element);
+static unsigned char status_calc_element_lv(struct block_list *bl, status_change *sc, int lv);
+static int status_calc_mode(struct block_list *bl, status_change *sc, int mode);
 #ifdef RENEWAL
-static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int);
+static unsigned short status_calc_ematk(struct block_list *,status_change *,int);
 #endif
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type);
-static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
-static unsigned int status_calc_maxap_pc(struct map_session_data* sd);
+static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int stat, bool isHP);
+static unsigned int status_calc_maxap_pc(map_session_data* sd);
 static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->getMapFlag(MF_PVP) != 0, mapdata_flag_gvg2_no_te((m)), m->getMapFlag(MF_BATTLEGROUND) != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
 
 const std::string RefineDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/refine.yml";
@@ -227,6 +227,32 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}else{
 						if( !level_exists ){
 							level_info->blessing_amount = 0;
+						}
+					}
+
+					if (this->nodeExists(refineLevelNode, "BroadcastSuccess")) {
+						bool bcast;
+						if (!this->asBool(refineLevelNode, "BroadcastSuccess", bcast)) {
+							return 0;
+						}
+						level_info->broadcast_success = bcast;
+					}
+					else {
+						if (!level_exists) {
+							level_info->broadcast_success = false;
+						}
+					}
+
+					if (this->nodeExists(refineLevelNode, "BroadcastFailure")) {
+						bool bcast;
+						if (!this->asBool(refineLevelNode, "BroadcastFailure", bcast)) {
+							return 0;
+						}
+						level_info->broadcast_failure = bcast;
+					}
+					else {
+						if (!level_exists) {
+							level_info->broadcast_failure = false;
 						}
 					}
 
@@ -627,37 +653,38 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			bool gradeExists = grade != nullptr;
 
 			if( !gradeExists ){
+				if( !this->nodesExist( gradeNode, { "Chances", "Options" } ) ){
+					return 0;
+				}
+
 				grade = std::make_shared<s_enchantgradelevel>();
 				grade->grade = gradeLevel;
-
-				if( !this->nodesExist( gradeNode, { "Refine", "Chance", "Options" } ) ){
-					return 0;
+				for( int i = 0; i < ARRAYLENGTH( grade->chances ); i++ ){
+					grade->chances[i] = 0;
 				}
 			}
 
-			if( this->nodeExists( gradeNode, "Refine" ) ){
-				uint16 refine;
+			if( this->nodeExists( gradeNode, "Chances" ) ){
+				for( const ryml::NodeRef& chanceNode : gradeNode["Chances"] ){
+					uint16 refine;
 
-				if( !this->asUInt16( gradeNode, "Refine", refine ) ){
-					return 0;
+					if( !this->asUInt16( chanceNode, "Refine", refine ) ){
+						return 0;
+					}
+
+					if( refine > MAX_REFINE ){
+						this->invalidWarning( chanceNode["Refine"], "Refine %hu is too high. Maximum: %hu.\n", refine, MAX_REFINE );
+						return 0;
+					}
+
+					uint16 chance;
+
+					if( !this->asUInt16Rate( chanceNode, "Chance", chance ) ){
+						return 0;
+					}
+
+					grade->chances[refine] = chance;
 				}
-
-				if( refine > MAX_REFINE ){
-					this->invalidWarning( gradeNode["Refine"], "Refine %hu is too high, capping to %hu...\n", refine, MAX_REFINE );
-					refine = MAX_REFINE;
-				}
-
-				grade->refine = refine;
-			}
-
-			if( this->nodeExists( gradeNode, "Chance" ) ){
-				uint16 chance;
-
-				if( !this->asUInt16Rate( gradeNode, "Chance", chance ) ){
-					return 0;
-				}
-
-				grade->chance = chance;
 			}
 
 			if( this->nodeExists( gradeNode, "Bonus" ) ){
@@ -674,6 +701,34 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 			}
 
+			if( this->nodeExists( gradeNode, "AnnounceSuccess" ) ){
+				bool announce;
+
+				if( !this->asBool( gradeNode, "AnnounceSuccess", announce ) ){
+					return 0;
+				}
+
+				grade->announceSuccess = announce;
+			}else{
+				if( !gradeExists ){
+					grade->announceSuccess = true;
+				}
+			}
+
+			if( this->nodeExists( gradeNode, "AnnounceFail" ) ){
+				bool announce;
+
+				if( !this->asBool( gradeNode, "AnnounceFail", announce) ){
+					return 0;
+				}
+
+				grade->announceFail = announce;
+			}else{
+				if( !gradeExists ){
+					grade->announceFail = false;
+				}
+			}
+
 			if( this->nodeExists( gradeNode, "Announce" ) ){
 				bool announce;
 
@@ -681,11 +736,8 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					return 0;
 				}
 
-				grade->announce = announce;
-			}else{
-				if( !gradeExists ){
-					grade->announce = true;
-				}
+				grade->announceSuccess = announce;
+				grade->announceFail = announce;
 			}
 
 			if( this->nodeExists( gradeNode, "Catalyst") ){
@@ -962,14 +1014,14 @@ std::bitset<SCB_MAX> StatusDatabase::getCalcFlag(sc_type type) {
 }
 
 /**
- * Get SC's END list
+ * Get SC's EndOnStart list
  * @param sc: SC type
  * @return End list
  **/
-std::vector<sc_type> StatusDatabase::getEnd(sc_type type) {
+std::vector<sc_type> StatusDatabase::getEndOnStart(sc_type type) {
 	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	return status ? status->end : std::vector<sc_type> {};
+	return status ? status->endonstart : std::vector<sc_type> {};
 }
 
 /**
@@ -1008,7 +1060,7 @@ bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
 	for (const auto &status_it : *this) {
 		std::shared_ptr<s_status_change_db> status = status_it.second;
 
-		if (sc->data[status->type] && status->flag[flag])
+		if (sc->getSCE(status->type) && status->flag[flag])
 			return true;
 	}
 
@@ -1048,7 +1100,7 @@ void StatusDatabase::changeSkillTree(map_session_data *sd, int32 class_) {
 		uint16 skill_id = it.first;
 		sc_type sc = skill_get_sc(skill_id);
 
-		if (sc > SC_COMMON_MAX && sc < SC_MAX && sd->sc.data[sc])
+		if (sc > SC_COMMON_MAX && sc < SC_MAX && sd->sc.getSCE(sc))
 			status_change_end(&sd->bl, sc);
 	}
 }
@@ -1083,13 +1135,51 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 		std::shared_ptr<s_status_change_db> status = status_it.second;
 		sc_type type = status->type;
 
-		if (sc->data[type]) {
+		if (sc->getSCE(type)) {
 			for (const auto &flag_it : flag) {
 				if (status->flag[flag_it])
 					status_change_end(bl, type);
 			}
 		}
 	}
+}
+/**
+ * Accessor for a status_change_entry in a status_change
+ */
+status_change_entry * status_change::getSCE(enum sc_type type) {
+	// TODO: bounds check
+	if (type == lastStatus.first)
+		return lastStatus.second;
+	
+	lastStatus = {type, data[type]};
+	return lastStatus.second;
+}
+
+status_change_entry * status_change::getSCE(uint32 type) {
+	return getSCE(static_cast<sc_type>(type));
+}
+
+status_change_entry * status_change::createSCE(enum sc_type type) {
+	data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
+	lastStatus = {type, data[type]};
+	return data[type];
+}
+
+/**
+ * free the sce, then clear it
+ */
+void status_change::deleteSCE(enum sc_type type) {
+	ers_free(sc_data_ers, data[type]);
+	data[type] = nullptr;
+	lastStatus = {type, data[type]};
+}
+
+/**
+ * For when we only want to clear the sce without freeing.
+ */
+void status_change::clearSCE(enum sc_type type) {
+	data[type] = nullptr;
+	lastStatus = {type, data[type]};
 }
 
 /** Creates dummy status */
@@ -1325,7 +1415,7 @@ int64 status_charge(struct block_list* bl, int64 hp, int64 sp)
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id)
 {
 	struct status_data *status;
-	struct status_change *sc;
+	status_change *sc;
 	int hp = (int)cap_value(dhp,INT_MIN,INT_MAX);
 	int sp = (int)cap_value(dsp,INT_MIN,INT_MAX);
 	int ap = (int)cap_value(dap,INT_MIN,INT_MAX);
@@ -1385,7 +1475,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		flag |= 8;
 
 	sc = status_get_sc(target);
-	if( hp && battle_config.invincible_nodamage && src && sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
+	if( hp && battle_config.invincible_nodamage && src && sc && sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
 		hp = 1;
 
 	if( hp && !(flag&1) ) {
@@ -1395,7 +1485,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
 
-				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED]) {
+				if (sc->getSCE(type) && it.second->flag[SCF_REMOVEONDAMAGED]) {
 					// A status change that gets broken by damage should still be considered when calculating if a status change can be applied or not (for the same attack).
 					// !TODO: This is a temporary solution until we refactor the code so that the calculation of an SC is done at the start of an attack rather than after the damage was applied.
 					if (sc->opt1 > OPT1_NONE && sc->lastEffectTimer == INVALID_TIMER) {
@@ -1405,7 +1495,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 					status_change_end(target, type);
 				}
 			}
-			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
+			if ((sce=sc->getSCE(SC_ENDURE)) && !sce->val4) {
 				/** [Skotlex]
 				* Endure count is only reduced by non-players on non-gvg maps.
 				* val4 signals infinite endure.
@@ -1414,7 +1504,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 					status_change_end(target, SC_ENDURE);
 			}
 #ifndef RENEWAL
-			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF) {
+			if ((sce=sc->getSCE(SC_GRAVITATION)) && sce->val3 == BCT_SELF) {
 				std::shared_ptr<s_skill_unit_group> sg = skill_id2group(sce->val4);
 
 				if (sg) {
@@ -1424,11 +1514,11 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				}
 			}
 #endif
-			if(sc->data[SC_DANCING] && (unsigned int)hp > status->max_hp>>2)
+			if(sc->getSCE(SC_DANCING) && hp > (status->max_hp / 4))
 				status_change_end(target, SC_DANCING);
-			if(sc->data[SC_CLOAKINGEXCEED] && --(sc->data[SC_CLOAKINGEXCEED]->val2) <= 0)
+			if(sc->getSCE(SC_CLOAKINGEXCEED) && --(sc->getSCE(SC_CLOAKINGEXCEED)->val2) <= 0)
 				status_change_end(target, SC_CLOAKINGEXCEED);
-			if(sc->data[SC_KAGEMUSYA] && --(sc->data[SC_KAGEMUSYA]->val3) <= 0)
+			if(sc->getSCE(SC_KAGEMUSYA) && --(sc->getSCE(SC_KAGEMUSYA)->val3) <= 0)
 				status_change_end(target, SC_KAGEMUSYA);
 		}
 
@@ -1442,15 +1532,15 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	status->ap-= ap;
 
 	if (sc && hp && status->hp) {
-		if (sc->data[SC_AUTOBERSERK] &&
-			(!sc->data[SC_PROVOKE] || !sc->data[SC_PROVOKE]->val4) &&
-			status->hp < status->max_hp>>2)
+		if (sc->getSCE(SC_AUTOBERSERK) &&
+			(!sc->getSCE(SC_PROVOKE) || !sc->getSCE(SC_PROVOKE)->val4) &&
+			status->hp < status->max_hp / 4)
 			sc_start4(src,target,SC_PROVOKE,100,10,0,0,1,0);
-		if (sc->data[SC_BERSERK] && status->hp <= 100)
+		if (sc->getSCE(SC_BERSERK) && status->hp <= 100)
 			status_change_end(target, SC_BERSERK);
-		if( sc->data[SC_RAISINGDRAGON] && status->hp <= 1000 )
+		if( sc->getSCE(SC_RAISINGDRAGON) && status->hp <= 1000 )
 			status_change_end(target, SC_RAISINGDRAGON);
-		if (sc->data[SC_SATURDAYNIGHTFEVER] && status->hp <= 100)
+		if (sc->getSCE(SC_SATURDAYNIGHTFEVER) && status->hp <= 100)
 			status_change_end(target, SC_SATURDAYNIGHTFEVER);
 	}
 
@@ -1510,13 +1600,13 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		}
 	}
 
-	if( sc && sc->data[SC_KAIZEL] && !map_flag_gvg2(target->m) ) { // flag&8 = disable Kaizel
-		int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
+	if( sc && sc->getSCE(SC_KAIZEL) && !map_flag_gvg2(target->m) ) { // flag&8 = disable Kaizel
+		int time = skill_get_time2(SL_KAIZEL,sc->getSCE(SC_KAIZEL)->val1);
 		// Look for Osiris Card's bonus effect on the character and revive 100% or revive normally
 		if ( target->type == BL_PC && BL_CAST(BL_PC,target)->special_state.restart_full_recover )
 			status_revive(target, 100, 100);
 		else
-			status_revive(target, sc->data[SC_KAIZEL]->val2, 0);
+			status_revive(target, sc->getSCE(SC_KAIZEL)->val2, 0);
 		status_change_clear(target,0);
 		clif_skill_nodamage(target,target,ALL_RESURRECTION,1,1);
 		sc_start(src,target,SC_KYRIE,100,10,time);
@@ -1528,7 +1618,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	}
 
 	// Disable Ultimate Sacrifice on GVG maps
-	if (sc && sc->data[SC_ULTIMATE_S] && !map_flag_gvg2(target->m)) {
+	if (sc && sc->getSCE(SC_ULTIMATE_S) && !map_flag_gvg2(target->m)) {
 		status_revive(target, 100, 100);
 		status_change_clear(target, 0);
 		clif_skill_nodamage(target, target, ALL_RESURRECTION, 1, 1);
@@ -1539,8 +1629,8 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		return (int)(hp+sp+ap);
 	}
 
-	if (target->type == BL_MOB && sc && sc->data[SC_REBIRTH] && !((TBL_MOB*) target)->state.rebirth) { // Ensure the monster has not already rebirthed before doing so.
-		status_revive(target, sc->data[SC_REBIRTH]->val2, 0);
+	if (target->type == BL_MOB && sc && sc->getSCE(SC_REBIRTH) && !((TBL_MOB*) target)->state.rebirth) { // Ensure the monster has not already rebirthed before doing so.
+		status_revive(target, sc->getSCE(SC_REBIRTH)->val2, 0);
 		status_change_clear(target,0);
 		((TBL_MOB*)target)->state.rebirth = 1;
 
@@ -1594,7 +1684,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 {
 	struct status_data *status;
-	struct status_change *sc;
+	status_change *sc;
 	int hp = (int)cap_value(hhp,INT_MIN,INT_MAX);
 	int sp = (int)cap_value(hsp,INT_MIN,INT_MAX);
 	int ap = (int)cap_value(hap,INT_MIN,INT_MAX);
@@ -1616,7 +1706,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	}
 
 	if(hp) {
-		if( sc && (sc->data[SC_BERSERK]) ) {
+		if( sc && (sc->getSCE(SC_BERSERK)) ) {
 			if( flag&1 )
 				flag &= ~2;
 			else
@@ -1659,10 +1749,10 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	status->ap += ap;
 
 	if(hp && sc &&
-		sc->data[SC_AUTOBERSERK] &&
-		sc->data[SC_PROVOKE] &&
-		sc->data[SC_PROVOKE]->val4==1 &&
-		status->hp>=status->max_hp>>2
+		sc->getSCE(SC_AUTOBERSERK) &&
+		sc->getSCE(SC_PROVOKE) &&
+		sc->getSCE(SC_PROVOKE)->val4==1 &&
+		status->hp >= status->max_hp / 4
 	)	// End auto berserk.
 		status_change_end(bl, SC_PROVOKE);
 
@@ -1832,13 +1922,18 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  */
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag) {
 	struct status_data *status;
-	struct status_change *sc = NULL, *tsc;
 	int hide_flag;
 
-	status = src ? status_get_status_data(src) : &dummy_status;
+	if (src) {
+		if (src->type != BL_PC && status_isdead(src))
+			return false;
+		status = status_get_status_data(src);
+	}else{
+		status = &dummy_status;
+	}
 
-	if (src && src->type != BL_PC && status_isdead(src))
-		return false;
+	status_change *sc = status_get_sc(src);
+	status_change *tsc = status_get_sc(target);
 
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
@@ -1855,12 +1950,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	switch( skill_id ) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
-			if( flag && target ) {
-				// Gloria Avoids pretty much everything....
-				tsc = status_get_sc(target);
-				if(tsc && tsc->option&OPTION_HIDE)
-					return false;
-			}
+			if( flag && tsc && tsc->option&OPTION_HIDE)
+				return false; // Gloria Avoids pretty much everything....
 			break;
 #endif
 		case GN_WALLOFTHORN:
@@ -1883,16 +1974,13 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			break;
 	}
 
-	if ( src )
-		sc = status_get_sc(src);
-
 	if( sc && sc->count ) {
-		if (sc->data[SC_ALL_RIDING])
+		if (sc->getSCE(SC_ALL_RIDING))
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
 		if (flag == 1 && !status_has_mode(status,MD_STATUSIMMUNE) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
-			(sc->data[SC_ASH] && rnd()%2) || // Volcanic Ash has a 50% chance of causing skills to fail.
-			(sc->data[SC_KYOMU] && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
+			(sc->getSCE(SC_ASH) && rnd()%2) || // Volcanic Ash has a 50% chance of causing skills to fail.
+			(sc->getSCE(SC_KYOMU) && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
 		)) {
 			if (src->type == BL_PC)
 				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -1907,31 +1995,50 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (
-			(sc->data[SC_TRICKDEAD] && skill_id != NV_TRICKDEAD)
-			|| (sc->data[SC_AUTOCOUNTER] && !flag && skill_id)
-			|| (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF && skill_id != PA_GOSPEL)
-			|| (sc->data[SC_SUHIDE] && skill_id != SU_HIDE)
+			(sc->getSCE(SC_TRICKDEAD) && skill_id != NV_TRICKDEAD)
+			|| (sc->getSCE(SC_AUTOCOUNTER) && !flag && skill_id)
+			|| (sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_SELF && skill_id != PA_GOSPEL)
+			|| (sc->getSCE(SC_SUHIDE) && skill_id != SU_HIDE)
 		)
 			return false;
 
-		if (sc->data[SC_WINKCHARM] && target && !flag) { // Prevents skill usage
-			if (unit_bl2ud(src) && (unit_bl2ud(src))->walktimer == INVALID_TIMER)
-				unit_walktobl(src, map_id2bl(sc->data[SC_WINKCHARM]->val2), 3, 1);
-			clif_emotion(src, ET_THROB);
-			return false;
+		if (sc->getSCE(SC_WINKCHARM) && target && !flag) { // Prevents skill usage
+			block_list *wink_target = map_id2bl(sc->getSCE(SC_WINKCHARM)->val2);
+
+			if (wink_target != nullptr) {
+				unit_data *wink_ud = unit_bl2ud(src);
+				if (wink_ud != nullptr && wink_ud->walktimer == INVALID_TIMER)
+					unit_walktobl(src, map_id2bl(sc->getSCE(SC_WINKCHARM)->val2), 3, 1);
+				clif_emotion(src, ET_THROB);
+				return false;
+			} else
+				status_change_end(src, SC_WINKCHARM);
 		}
 
-		if (sc->data[SC_BLADESTOP]) {
-			switch (sc->data[SC_BLADESTOP]->val1) {
-				case 5: if (skill_id == MO_EXTREMITYFIST) break;
-				case 4: if (skill_id == MO_CHAINCOMBO) break;
-				case 3: if (skill_id == MO_INVESTIGATE) break;
-				case 2: if (skill_id == MO_FINGEROFFENSIVE) break;
-				default: return false;
+		if (sc->getSCE(SC_BLADESTOP)) {
+			switch (sc->getSCE(SC_BLADESTOP)->val1) {
+				case 5:
+					if (skill_id == MO_EXTREMITYFIST)
+						break;
+					[[fallthrough]];
+				case 4:
+					if (skill_id == MO_CHAINCOMBO)
+						break;
+					[[fallthrough]];
+				case 3:
+					if (skill_id == MO_INVESTIGATE)
+						break;
+					[[fallthrough]];
+				case 2:
+					if (skill_id == MO_FINGEROFFENSIVE)
+						break;
+					[[fallthrough]];
+				default:
+					return false;
 			}
 		}
 
-		if (sc->data[SC_DANCING] && flag!=2) {
+		if (sc->getSCE(SC_DANCING) && flag!=2) {
 			std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
 			if (!skill)
@@ -1943,14 +2050,14 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				if( pc_checkskill((TBL_PC*)src,WM_LESSON) < 5 )
 					return false;
 #ifndef RENEWAL
-			} else if(sc->data[SC_LONGING]) { // Allow everything except dancing/re-dancing. [Skotlex]
+			} else if(sc->getSCE(SC_LONGING)) { // Allow everything except dancing/re-dancing. [Skotlex]
 				if (skill_id == BD_ENCORE || skill->inf2[INF2_ISSONG] || skill->inf2[INF2_ISENSEMBLE])
 					return false;
 #endif
 			} else if(!skill->inf2[INF2_ALLOWWHENPERFORMING]) // Skills that can be used in dancing state
 				return false;
 #ifndef RENEWAL
-			if ((sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE && skill_id == BD_ADAPTATION)
+			if ((sc->getSCE(SC_DANCING)->val1&0xFFFF) == CG_HERMODE && skill_id == BD_ADAPTATION)
 				return false; // Can't amp out of Wand of Hermode :/ [Skotlex]
 #endif
 		}
@@ -1961,30 +2068,30 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			if (!flag && ( // Blocked only from using the skill (stuff like autospell may still go through
 				( sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE ) ||
 #ifndef RENEWAL
-				(sc->data[SC_BASILICA] && (sc->data[SC_BASILICA]->val4 != src->id || skill_id != HP_BASILICA)) || // Only Basilica caster that can cast, and only Basilica to cancel it
+				(sc->getSCE(SC_BASILICA) && (sc->getSCE(SC_BASILICA)->val4 != src->id || skill_id != HP_BASILICA)) || // Only Basilica caster that can cast, and only Basilica to cancel it
 #endif
-				(sc->data[SC_MARIONETTE] && skill_id != CG_MARIONETTE) || // Only skill you can use is marionette again to cancel it
-				(sc->data[SC_MARIONETTE2] && skill_id == CG_MARIONETTE) || // Cannot use marionette if you are being buffed by another
-				(sc->data[SC_ANKLE] && skill_block_check(src, SC_ANKLE, skill_id)) ||
-				(sc->data[SC_STASIS] && skill_block_check(src, SC_STASIS, skill_id)) ||
-				(sc->data[SC_BITE] && skill_block_check(src, SC_BITE, skill_id)) ||
-				(sc->data[SC_NOVAEXPLOSING] && skill_block_check(src, SC_NOVAEXPLOSING, skill_id)) ||
-				(sc->data[SC_GRAVITYCONTROL] && skill_block_check(src, SC_GRAVITYCONTROL, skill_id)) ||
-				(sc->data[SC_KAGEHUMI] && skill_block_check(src, SC_KAGEHUMI, skill_id))
+				(sc->getSCE(SC_MARIONETTE) && skill_id != CG_MARIONETTE) || // Only skill you can use is marionette again to cancel it
+				(sc->getSCE(SC_MARIONETTE2) && skill_id == CG_MARIONETTE) || // Cannot use marionette if you are being buffed by another
+				(sc->getSCE(SC_ANKLE) && skill_block_check(src, SC_ANKLE, skill_id)) ||
+				(sc->getSCE(SC_STASIS) && skill_block_check(src, SC_STASIS, skill_id)) ||
+				(sc->getSCE(SC_BITE) && skill_block_check(src, SC_BITE, skill_id)) ||
+				(sc->getSCE(SC_NOVAEXPLOSING) && skill_block_check(src, SC_NOVAEXPLOSING, skill_id)) ||
+				(sc->getSCE(SC_GRAVITYCONTROL) && skill_block_check(src, SC_GRAVITYCONTROL, skill_id)) ||
+				(sc->getSCE(SC_KAGEHUMI) && skill_block_check(src, SC_KAGEHUMI, skill_id))
 #ifdef RENEWAL
-				|| (sc->data[SC_ENSEMBLEFATIGUE] && skill_id != CG_SPECIALSINGER)
+				|| (sc->getSCE(SC_ENSEMBLEFATIGUE) && skill_id != CG_SPECIALSINGER)
 #endif
 			))
 				return false;
 
 			// Skill blocking.
 			if (
-				(sc->data[SC_VOLCANO] && skill_id == WZ_ICEWALL) ||
+				(sc->getSCE(SC_VOLCANO) && skill_id == WZ_ICEWALL) ||
 #ifndef RENEWAL
-				(sc->data[SC_ROKISWEIL] && skill_id != BD_ADAPTATION) ||
+				(sc->getSCE(SC_ROKISWEIL) && skill_id != BD_ADAPTATION) ||
 #endif
-				(sc->data[SC_HERMODE] && skill_get_inf(skill_id) & INF_SUPPORT_SKILL) ||
-				(sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOSKILL)
+				(sc->getSCE(SC_HERMODE) && skill_get_inf(skill_id) & INF_SUPPORT_SKILL) ||
+				(sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOSKILL)
 			)
 				return false;
 		}
@@ -1999,26 +2106,24 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 	}
 
-	if (target == NULL || target == src) // No further checking needed.
+	if (target == nullptr || target == src) // No further checking needed.
 		return true;
-
-	tsc = status_get_sc(target);
 
 	if (tsc && tsc->count) {
 		/**
 		* Attacks in invincible are capped to 1 damage and handled in battle.cpp.
 		* Allow spell break and eske for sealed shrine GDB when in INVINCIBLE state.
 		**/
-		if( tsc->data[SC_INVINCIBLE] && !tsc->data[SC_INVINCIBLEOFF] && skill_id && !(skill_id&(SA_SPELLBREAKER|SL_SKE)) )
+		if( tsc->getSCE(SC_INVINCIBLE) && !tsc->getSCE(SC_INVINCIBLEOFF) && skill_id && !(skill_id&(SA_SPELLBREAKER|SL_SKE)) )
 			return false;
-		if(!skill_id && tsc->data[SC_TRICKDEAD])
+		if(!skill_id && tsc->getSCE(SC_TRICKDEAD))
 			return false;
 		if((skill_id == WZ_STORMGUST || skill_id == WZ_FROSTNOVA || skill_id == NJ_HYOUSYOURAKU || skill_id == NPC_STORMGUST2)
-			&& tsc->data[SC_FREEZE])
+			&& tsc->getSCE(SC_FREEZE))
 			return false;
-		if(skill_id == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || tsc->data[SC_STONE]))
+		if(skill_id == PR_LEXAETERNA && (tsc->getSCE(SC_FREEZE) || tsc->getSCE(SC_STONE)))
 			return false;
-		if (tsc->data[SC__MANHOLE] && !skill_get_inf2(skill_id, INF2_TARGETMANHOLE))
+		if (tsc->getSCE(SC__MANHOLE) && !skill_get_inf2(skill_id, INF2_TARGETMANHOLE))
 			return false;
 	}
 
@@ -2031,7 +2136,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 	switch( target->type ) {
 		case BL_PC: {
-				struct map_session_data *tsd = (TBL_PC*)target;
+				map_session_data *tsd = (TBL_PC*)target;
 				bool is_boss = (src && status_get_class_(src) == CLASS_BOSS);
 				bool is_detect = status_has_mode(status,MD_DETECTOR);
 
@@ -2040,11 +2145,11 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				if (tsc) {
 					if ((tsc->option&hide_flag) && !is_boss && (tsd->special_state.perfect_hiding || !is_detect))
 						return false;
-					if ((tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC_NEWMOON]) && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
+					if ((tsc->getSCE(SC_CLOAKINGEXCEED) || tsc->getSCE(SC_NEWMOON)) && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
 						return false; // Works against insect and demon but not against bosses
-					if (tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
+					if (tsc->getSCE(SC__FEINTBOMB) && (is_boss || is_detect))
 						return false; // Works against all
-					if ((tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !(is_boss || is_detect) && (!skill_id || (!flag && src)))
+					if ((tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD) || tsc->getSCE(SC_SUHIDE)) && !(is_boss || is_detect) && (!skill_id || (!flag && src)))
 						return false; // Insect, demon, and boss can detect
 				}
 			}
@@ -2063,8 +2168,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				return false; // Can't use Weapon endow skills on Mercenary (only Master)
 			if( skill_id == AM_POTIONPITCHER && ( target->type == BL_MER || target->type == BL_ELEM) )
 				return false; // Can't use Potion Pitcher on Mercenaries
-			if (tsc && tsc->data[SC_ELEMENTAL_VEIL] && !(src && status_get_class_(src) == CLASS_BOSS) && !status_has_mode(status, MD_DETECTOR))
+			if (tsc && tsc->getSCE(SC_ELEMENTAL_VEIL) && !(src && status_get_class_(src) == CLASS_BOSS) && !status_has_mode(status, MD_DETECTOR))
 				return false;
+			[[fallthrough]];
 		default:
 			// Check for chase-walk/hiding/cloaking opponents.
 			if( tsc ) {
@@ -2086,7 +2192,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 {
 	int view_range;
 	struct status_data* status = status_get_status_data(src);
-	struct status_change* tsc = status_get_sc(target);
+	status_change* tsc = status_get_sc(target);
 	switch (src->type) {
 		case BL_MOB:
 			view_range = ((TBL_MOB*)src)->min_chase;
@@ -2110,22 +2216,22 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 
 		switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
 			case BL_PC: {
-					struct map_session_data *tsd = (TBL_PC*)target;
+					map_session_data *tsd = (TBL_PC*)target;
 
-					if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !is_boss && (tsd->special_state.perfect_hiding || !is_detector))
+					if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD) || tsc->getSCE(SC_SUHIDE)) && !is_boss && (tsd->special_state.perfect_hiding || !is_detector))
 						return 0;
-					if ((tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC_NEWMOON]) && !is_boss && ((tsd && tsd->special_state.perfect_hiding) || is_detector))
+					if ((tsc->getSCE(SC_CLOAKINGEXCEED) || tsc->getSCE(SC_NEWMOON)) && !is_boss && ((tsd && tsd->special_state.perfect_hiding) || is_detector))
 						return 0;
-					if (tsc->data[SC__FEINTBOMB] && !is_boss && !is_detector)
+					if (tsc->getSCE(SC__FEINTBOMB) && !is_boss && !is_detector)
 						return 0;
 				}
 				break;
 			case BL_ELEM:
-				if (tsc->data[SC_ELEMENTAL_VEIL] && !is_boss && !is_detector)
+				if (tsc->getSCE(SC_ELEMENTAL_VEIL) && !is_boss && !is_detector)
 					return 0;
 				break;
 			default:
-				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !is_boss && !is_detector)
+				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD) || tsc->getSCE(SC_SUHIDE)) && !is_boss && !is_detector)
 					return 0;
 		}
 	}
@@ -2140,7 +2246,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
  * @return base amotion after single/dual weapon and shield adjustments [RENEWAL]
  *	  base amotion after single/dual weapon and stats adjustments [PRE-RENEWAL]
  */
-int status_base_amotion_pc(struct map_session_data* sd, struct status_data* status)
+int status_base_amotion_pc(map_session_data* sd, struct status_data* status)
 {
 	std::shared_ptr<s_job_info> job = job_db.find(sd->status.class_);
 
@@ -2180,8 +2286,6 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 		val += 1 + skill_lv;
 	if ((skill_lv = pc_checkskill(sd,GS_SINGLEACTION)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		val += ((skill_lv + 1) / 2);
-	if ((skill_lv = pc_checkskill(sd, RG_PLAGIARISM)) > 0)
-		val += skill_lv;
 	if (pc_isriding(sd))
 		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
 	else if (pc_isridingdragon(sd))
@@ -2504,14 +2608,19 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->def2 = cap_value(stat, 0, SHRT_MAX);
 	// Mdef2
 	stat = status->mdef2;
-	stat += status->int_ + (status->vit>>1);
+	stat += status->int_ + (status->vit / 2);
 	status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 #endif
 
 	//Critical
 	if( bl->type&battle_config.enable_critical ) {
 		stat = status->cri;
+#ifdef RENEWAL
+		stat += (level / 10); // (every 10 BaseLevel = +0.1 critical)
+		stat += 10 + (status->luk*3); // (every 1 luk = +0.3 critical)
+#else
 		stat += 10 + (status->luk*10/3); // (every 1 luk = +0.3 critical)
+#endif
 		status->cri = cap_value(stat, 1, SHRT_MAX);
 	} else
 		status->cri = 0;
@@ -2571,6 +2680,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 			;
 		else
 			md->level = md->db->lv;
+		md->damagetaken = md->db->damagetaken;
 	}
 
 	// Check if we need custom base-status
@@ -2643,18 +2753,18 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 
 	if (flag&2 && battle_config.mob_size_influence) { // Change for sized monsters [Valaris]
 		if (md->special_state.size == SZ_MEDIUM) {
-			status->max_hp >>= 1;
-			status->max_sp >>= 1;
+			status->max_hp /= 2;
+			status->max_sp /= 2;
 			if (!status->max_hp) status->max_hp = 1;
 			if (!status->max_sp) status->max_sp = 1;
 			status->hp = status->max_hp;
 			status->sp = status->max_sp;
-			status->str >>= 1;
-			status->agi >>= 1;
-			status->vit >>= 1;
-			status->int_ >>= 1;
-			status->dex >>= 1;
-			status->luk >>= 1;
+			status->str /= 2;
+			status->agi /= 2;
+			status->vit /= 2;
+			status->int_ /= 2;
+			status->dex /= 2;
+			status->luk /= 2;
 			if (!status->str) status->str = 1;
 			if (!status->agi) status->agi = 1;
 			if (!status->vit) status->vit = 1;
@@ -2662,16 +2772,16 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 			if (!status->dex) status->dex = 1;
 			if (!status->luk) status->luk = 1;
 		} else if (md->special_state.size == SZ_BIG) {
-			status->max_hp <<= 1;
-			status->max_sp <<= 1;
+			status->max_hp *= 2;
+			status->max_sp *= 2;
 			status->hp = status->max_hp;
 			status->sp = status->max_sp;
-			status->str <<= 1;
-			status->agi <<= 1;
-			status->vit <<= 1;
-			status->int_ <<= 1;
-			status->dex <<= 1;
-			status->luk <<= 1;
+			status->str *= 2;
+			status->agi *= 2;
+			status->vit *= 2;
+			status->int_ *= 2;
+			status->dex *= 2;
+			status->luk *= 2;
 		}
 	}
 
@@ -2768,9 +2878,9 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 						// Its unknown how the summoner's stats affects the ABR's stats.
 						// I decided to do something similar to elementals for now until I know.
 						// Also added hit increase from ABR-Mastery for balance reasons. [Rytech]
-						status->max_hp = (5000 + 2000 * abr_mastery) * mstatus->vit / 100;
-						status->rhw.atk = (2 * mstatus->batk + 500 + 200 * abr_mastery) * 70 / 100;
-						status->rhw.atk2 = 2 * mstatus->batk + 500 + 200 * abr_mastery;
+						status->max_hp = ( 5000 + 40000 * abr_mastery ) * mstatus->vit / 100;
+						status->rhw.atk = ( 2 * mstatus->batk + 200 + 600 * abr_mastery ) * 70 / 100;
+						status->rhw.atk2 = 2 * mstatus->batk + 200 + 600 * abr_mastery;
 						status->def = mstatus->def + 20 * abr_mastery;
 						status->mdef = mstatus->mdef + 4 * abr_mastery;
 						status->hit = mstatus->hit + 5 * abr_mastery / 2;
@@ -2803,10 +2913,10 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 						// Its unknown how the summoner's stats affects the bionic's stats.
 						// I decided to do something similar to elementals for now until I know.
 						// Also added hit increase from Bionic-Mastery for balance reasons. [Rytech]
-						status->max_hp = (5000 + 2000 * bionic_mastery) * mstatus->vit / 100;
+						status->max_hp = (5000 + 40000 * bionic_mastery) * mstatus->vit / 100;
 						//status->max_sp = (50 + 20 * bionic_mastery) * mstatus->int_ / 100;// Wait what??? Bionic Mastery increases MaxSP? They have SP???
-						status->rhw.atk = (2 * mstatus->batk + 200 * bionic_mastery) * 70 / 100;
-						status->rhw.atk2 = 2 * mstatus->batk + 200 * bionic_mastery;
+						status->rhw.atk = (2 * mstatus->batk + 600 * bionic_mastery) * 70 / 100;
+						status->rhw.atk2 = 2 * mstatus->batk + 600 * bionic_mastery;
 						status->def = mstatus->def + 20 * bionic_mastery;
 						status->mdef = mstatus->mdef + 4 * bionic_mastery;
 						status->hit = mstatus->hit + 5 * bionic_mastery / 2;
@@ -2859,7 +2969,7 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 	}
 
 	if (battle_config.pet_lv_rate && pd->master) {
-		struct map_session_data *sd = pd->master;
+		map_session_data *sd = pd->master;
 		int lv;
 
 		lv =sd->status.base_level*battle_config.pet_lv_rate/100;
@@ -2916,11 +3026,11 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 	int bonus = 0;
 
 	if (type == STATUS_BONUS_FIX) {
-		struct status_change *sc = status_get_sc(bl);
+		status_change *sc = status_get_sc(bl);
 
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
-			struct map_session_data *sd = map_id2sd(bl->id);
+			map_session_data *sd = map_id2sd(bl->id);
 			uint16 skill_lv;
 
 			bonus += sd->bonus.hp;
@@ -2947,104 +3057,104 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 
 		//Bonus by SC
 		if (sc) {
-			if(sc->data[SC_INCMHP])
-				bonus += sc->data[SC_INCMHP]->val1;
-			if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2)
+			if(sc->getSCE(SC_INCMHP))
+				bonus += sc->getSCE(SC_INCMHP)->val1;
+			if(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 2)
 				bonus += 500;
-			if (sc->data[SC_PROMOTE_HEALTH_RESERCH])
-				bonus += sc->data[SC_PROMOTE_HEALTH_RESERCH]->val3;
-			if(sc->data[SC_SOLID_SKIN_OPTION])
+			if (sc->getSCE(SC_PROMOTE_HEALTH_RESERCH))
+				bonus += sc->getSCE(SC_PROMOTE_HEALTH_RESERCH)->val3;
+			if(sc->getSCE(SC_SOLID_SKIN_OPTION))
 				bonus += 2000;
-			if(sc->data[SC_MARIONETTE])
+			if(sc->getSCE(SC_MARIONETTE))
 				bonus -= 1000;
-			if(sc->data[SC_SWORDCLAN])
+			if(sc->getSCE(SC_SWORDCLAN))
 				bonus += 30;
-			if(sc->data[SC_ARCWANDCLAN])
+			if(sc->getSCE(SC_ARCWANDCLAN))
 				bonus += 30;
-			if(sc->data[SC_GOLDENMACECLAN])
+			if(sc->getSCE(SC_GOLDENMACECLAN))
 				bonus += 30;
-			if(sc->data[SC_CROSSBOWCLAN])
+			if(sc->getSCE(SC_CROSSBOWCLAN))
 				bonus += 30;
-			if(sc->data[SC_GLASTHEIM_HPSP])
-				bonus += sc->data[SC_GLASTHEIM_HPSP]->val1;
+			if(sc->getSCE(SC_GLASTHEIM_HPSP))
+				bonus += sc->getSCE(SC_GLASTHEIM_HPSP)->val1;
 #ifdef RENEWAL
-			if (sc->data[SC_ANGELUS])
-				bonus += sc->data[SC_ANGELUS]->val1 * 50;
+			if (sc->getSCE(SC_ANGELUS))
+				bonus += sc->getSCE(SC_ANGELUS)->val1 * 50;
 #endif
 		}
 	} else if (type == STATUS_BONUS_RATE) {
-		struct status_change *sc = status_get_sc(bl);
+		status_change *sc = status_get_sc(bl);
 
 		//Bonus by SC
 		if (sc) {
 			//Increasing
-			if(sc->data[SC_INCMHPRATE])
-				bonus += sc->data[SC_INCMHPRATE]->val1;
-			if(sc->data[SC_APPLEIDUN])
-				bonus += sc->data[SC_APPLEIDUN]->val2;
-			if(sc->data[SC_DELUGE])
-				bonus += sc->data[SC_DELUGE]->val2;
-			if(sc->data[SC_BERSERK])
+			if(sc->getSCE(SC_INCMHPRATE))
+				bonus += sc->getSCE(SC_INCMHPRATE)->val1;
+			if(sc->getSCE(SC_APPLEIDUN))
+				bonus += sc->getSCE(SC_APPLEIDUN)->val2;
+			if(sc->getSCE(SC_DELUGE))
+				bonus += sc->getSCE(SC_DELUGE)->val2;
+			if(sc->getSCE(SC_BERSERK))
 				bonus += 200; //+200%
-			if(sc->data[SC_MERC_HPUP])
-				bonus += sc->data[SC_MERC_HPUP]->val2;
-			if(sc->data[SC_EPICLESIS])
-				bonus += sc->data[SC_EPICLESIS]->val2;
-			if(sc->data[SC_FRIGG_SONG])
-				bonus += sc->data[SC_FRIGG_SONG]->val2;
-			if(sc->data[SC_LERADSDEW])
-				bonus += sc->data[SC_LERADSDEW]->val3;
-			if(sc->data[SC_FORCEOFVANGUARD])
-				bonus += (3 * sc->data[SC_FORCEOFVANGUARD]->val1);
-			if(sc->data[SC_INSPIRATION])
-				bonus += (4 * sc->data[SC_INSPIRATION]->val1);
-			if(sc->data[SC_RAISINGDRAGON])
-				bonus += sc->data[SC_RAISINGDRAGON]->val1;
-			if(sc->data[SC_GT_REVITALIZE])
-				bonus += sc->data[SC_GT_REVITALIZE]->val2;
-			if(sc->data[SC_ANGRIFFS_MODUS])
-				bonus += (5 * sc->data[SC_ANGRIFFS_MODUS]->val1);
-			if(sc->data[SC_PETROLOGY_OPTION])
-				bonus += sc->data[SC_PETROLOGY_OPTION]->val2;
-			if(sc->data[SC_POWER_OF_GAIA])
-				bonus += sc->data[SC_POWER_OF_GAIA]->val3;
-			if(sc->data[SC_CURSED_SOIL_OPTION])
-				bonus += sc->data[SC_CURSED_SOIL_OPTION]->val2;
-			if(sc->data[SC_UPHEAVAL_OPTION])
-				bonus += sc->data[SC_UPHEAVAL_OPTION]->val2;
-			if(sc->data[SC_LAUDAAGNUS])
-				bonus += 2 + (sc->data[SC_LAUDAAGNUS]->val1 * 2);
+			if(sc->getSCE(SC_MERC_HPUP))
+				bonus += sc->getSCE(SC_MERC_HPUP)->val2;
+			if(sc->getSCE(SC_EPICLESIS))
+				bonus += sc->getSCE(SC_EPICLESIS)->val2;
+			if(sc->getSCE(SC_FRIGG_SONG))
+				bonus += sc->getSCE(SC_FRIGG_SONG)->val2;
+			if(sc->getSCE(SC_LERADSDEW))
+				bonus += sc->getSCE(SC_LERADSDEW)->val3;
+			if(sc->getSCE(SC_FORCEOFVANGUARD))
+				bonus += (3 * sc->getSCE(SC_FORCEOFVANGUARD)->val1);
+			if(sc->getSCE(SC_INSPIRATION))
+				bonus += (4 * sc->getSCE(SC_INSPIRATION)->val1);
+			if(sc->getSCE(SC_RAISINGDRAGON))
+				bonus += sc->getSCE(SC_RAISINGDRAGON)->val1;
+			if(sc->getSCE(SC_GT_REVITALIZE))
+				bonus += sc->getSCE(SC_GT_REVITALIZE)->val2;
+			if(sc->getSCE(SC_ANGRIFFS_MODUS))
+				bonus += (5 * sc->getSCE(SC_ANGRIFFS_MODUS)->val1);
+			if(sc->getSCE(SC_PETROLOGY_OPTION))
+				bonus += sc->getSCE(SC_PETROLOGY_OPTION)->val2;
+			if(sc->getSCE(SC_POWER_OF_GAIA))
+				bonus += sc->getSCE(SC_POWER_OF_GAIA)->val3;
+			if(sc->getSCE(SC_CURSED_SOIL_OPTION))
+				bonus += sc->getSCE(SC_CURSED_SOIL_OPTION)->val2;
+			if(sc->getSCE(SC_UPHEAVAL_OPTION))
+				bonus += sc->getSCE(SC_UPHEAVAL_OPTION)->val2;
+			if(sc->getSCE(SC_LAUDAAGNUS))
+				bonus += 2 + (sc->getSCE(SC_LAUDAAGNUS)->val1 * 2);
 #ifdef RENEWAL
-			if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HPRATE)
+			if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_HPRATE)
 				bonus += 30;
 #endif
-			if(sc->data[SC_LUNARSTANCE])
-				bonus += sc->data[SC_LUNARSTANCE]->val2;
-			if (sc->data[SC_LUXANIMA])
-				bonus += sc->data[SC_LUXANIMA]->val3;
-			if (sc->data[SC_MTF_MHP])
-				bonus += sc->data[SC_MTF_MHP]->val1;
-			if (sc->data[SC_FIRM_FAITH])
-				bonus += sc->data[SC_FIRM_FAITH]->val2;
+			if(sc->getSCE(SC_LUNARSTANCE))
+				bonus += sc->getSCE(SC_LUNARSTANCE)->val2;
+			if (sc->getSCE(SC_LUXANIMA))
+				bonus += sc->getSCE(SC_LUXANIMA)->val3;
+			if (sc->getSCE(SC_MTF_MHP))
+				bonus += sc->getSCE(SC_MTF_MHP)->val1;
+			if (sc->getSCE(SC_FIRM_FAITH))
+				bonus += sc->getSCE(SC_FIRM_FAITH)->val2;
 
 			//Decreasing
-			if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 1)
+			if (sc->getSCE(SC_VENOMBLEED) && sc->getSCE(SC_VENOMBLEED)->val3 == 1)
 				bonus -= 15;
-			if(sc->data[SC_BEYONDOFWARCRY])
-				bonus -= sc->data[SC_BEYONDOFWARCRY]->val3;
-			if(sc->data[SC__WEAKNESS])
-				bonus -= sc->data[SC__WEAKNESS]->val2;
-			if(sc->data[SC_EQC])
-				bonus -= sc->data[SC_EQC]->val3;
-			if(sc->data[SC_PACKING_ENVELOPE3])
-				bonus += sc->data[SC_PACKING_ENVELOPE3]->val1;
-			if(sc->data[SC_2011RWC_SCROLL])
+			if(sc->getSCE(SC_BEYONDOFWARCRY))
+				bonus -= sc->getSCE(SC_BEYONDOFWARCRY)->val3;
+			if(sc->getSCE(SC__WEAKNESS))
+				bonus -= sc->getSCE(SC__WEAKNESS)->val2;
+			if(sc->getSCE(SC_EQC))
+				bonus -= sc->getSCE(SC_EQC)->val3;
+			if(sc->getSCE(SC_PACKING_ENVELOPE3))
+				bonus += sc->getSCE(SC_PACKING_ENVELOPE3)->val1;
+			if(sc->getSCE(SC_2011RWC_SCROLL))
 				bonus -= 10;
-			if(sc->data[SC_INFINITY_DRINK])
+			if(sc->getSCE(SC_INFINITY_DRINK))
 				bonus += 5;
-			if(sc->data[SC_COMBAT_PILL])
+			if(sc->getSCE(SC_COMBAT_PILL))
 				bonus -= 3;
-			if(sc->data[SC_COMBAT_PILL2])
+			if(sc->getSCE(SC_COMBAT_PILL2))
 				bonus -= 5;
 		}
 		// Max rate reduce is -100%
@@ -3071,17 +3181,17 @@ static int status_get_hpbonus_equip(TBL_PC *sd) {
 static int status_get_hpbonus_item(block_list *bl) {
 	int bonus = 0;
 
-	struct status_change *sc = status_get_sc(bl);
+	status_change *sc = status_get_sc(bl);
 
 	//Bonus by SC
 	if (sc) {
-		if (sc->data[SC_INCREASE_MAXHP])
-			bonus += sc->data[SC_INCREASE_MAXHP]->val1;
-		if (sc->data[SC_MUSTLE_M])
-			bonus += sc->data[SC_MUSTLE_M]->val1;
+		if (sc->getSCE(SC_INCREASE_MAXHP))
+			bonus += sc->getSCE(SC_INCREASE_MAXHP)->val1;
+		if (sc->getSCE(SC_MUSTLE_M))
+			bonus += sc->getSCE(SC_MUSTLE_M)->val1;
 
-		if (sc->data[SC_MYSTERIOUS_POWDER])
-			bonus -= sc->data[SC_MYSTERIOUS_POWDER]->val1;
+		if (sc->getSCE(SC_MYSTERIOUS_POWDER))
+			bonus -= sc->getSCE(SC_MYSTERIOUS_POWDER)->val1;
 	}
 
 	// Max rate reduce is -100%
@@ -3099,11 +3209,11 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 	int bonus = 0;
 
 	if (type == STATUS_BONUS_FIX) {
-		struct status_change *sc = status_get_sc(bl);
+		status_change *sc = status_get_sc(bl);
 
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
-			struct map_session_data *sd = map_id2sd(bl->id);
+			map_session_data *sd = map_id2sd(bl->id);
 			uint16 skill_lv;
 
 			bonus += sd->bonus.sp;
@@ -3128,27 +3238,27 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 
 		//Bonus by SC
 		if (sc) {
-			if(sc->data[SC_INCMSP])
-				bonus += sc->data[SC_INCMSP]->val1;
-			if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
+			if(sc->getSCE(SC_INCMSP))
+				bonus += sc->getSCE(SC_INCMSP)->val1;
+			if(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 3)
 				bonus += 50;
-			if(sc->data[SC_SWORDCLAN])
+			if(sc->getSCE(SC_SWORDCLAN))
 				bonus += 10;
-			if(sc->data[SC_ARCWANDCLAN])
+			if(sc->getSCE(SC_ARCWANDCLAN))
 				bonus += 10;
-			if(sc->data[SC_GOLDENMACECLAN])
+			if(sc->getSCE(SC_GOLDENMACECLAN))
 				bonus += 10;
-			if(sc->data[SC_CROSSBOWCLAN])
+			if(sc->getSCE(SC_CROSSBOWCLAN))
 				bonus += 10;
-			if(sc->data[SC_GLASTHEIM_HPSP])
-				bonus += sc->data[SC_GLASTHEIM_HPSP]->val2;
+			if(sc->getSCE(SC_GLASTHEIM_HPSP))
+				bonus += sc->getSCE(SC_GLASTHEIM_HPSP)->val2;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
-		struct status_change *sc = status_get_sc(bl);
+		status_change *sc = status_get_sc(bl);
 
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
-			struct map_session_data *sd = map_id2sd(bl->id);
+			map_session_data *sd = map_id2sd(bl->id);
 			uint8 i;
 
 			if((i = pc_checkskill(sd,HP_MEDITATIO)) > 0)
@@ -3158,7 +3268,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 #ifdef RENEWAL
 			if ((i = pc_checkskill(sd, (sd->status.sex ? BA_MUSICALLESSON : DC_DANCINGLESSON))) > 0)
 				bonus += i;
-			if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_SPRATE)
+			if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_SPRATE)
 				bonus += 30;
 #endif
 		}
@@ -3166,33 +3276,33 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Bonus by SC
 		if (sc) {
 			//Increasing
-			if(sc->data[SC_INCMSPRATE])
-				bonus += sc->data[SC_INCMSPRATE]->val1;
-			if(sc->data[SC_RAISINGDRAGON])
-				bonus += sc->data[SC_RAISINGDRAGON]->val1;
-			if(sc->data[SC_SERVICE4U])
-				bonus += sc->data[SC_SERVICE4U]->val2;
-			if(sc->data[SC_MERC_SPUP])
-				bonus += sc->data[SC_MERC_SPUP]->val2;
-			if (sc->data[SC_LUXANIMA])
-				bonus += sc->data[SC_LUXANIMA]->val3;
-			if (sc->data[SC_MTF_MSP])
-				bonus += sc->data[SC_MTF_MSP]->val1;
-			if(sc->data[SC_PACKING_ENVELOPE4])
-				bonus += sc->data[SC_PACKING_ENVELOPE4]->val1;
+			if(sc->getSCE(SC_INCMSPRATE))
+				bonus += sc->getSCE(SC_INCMSPRATE)->val1;
+			if(sc->getSCE(SC_RAISINGDRAGON))
+				bonus += sc->getSCE(SC_RAISINGDRAGON)->val1;
+			if(sc->getSCE(SC_SERVICE4U))
+				bonus += sc->getSCE(SC_SERVICE4U)->val2;
+			if(sc->getSCE(SC_MERC_SPUP))
+				bonus += sc->getSCE(SC_MERC_SPUP)->val2;
+			if (sc->getSCE(SC_LUXANIMA))
+				bonus += sc->getSCE(SC_LUXANIMA)->val3;
+			if (sc->getSCE(SC_MTF_MSP))
+				bonus += sc->getSCE(SC_MTF_MSP)->val1;
+			if(sc->getSCE(SC_PACKING_ENVELOPE4))
+				bonus += sc->getSCE(SC_PACKING_ENVELOPE4)->val1;
 
 			//Decreasing
-			if (sc->data[SC_MELODYOFSINK])
-				bonus -= sc->data[SC_MELODYOFSINK]->val3;
-			if (sc->data[SC_2011RWC_SCROLL])
+			if (sc->getSCE(SC_MELODYOFSINK))
+				bonus -= sc->getSCE(SC_MELODYOFSINK)->val3;
+			if (sc->getSCE(SC_2011RWC_SCROLL))
 				bonus -= 10;
-			if (sc->data[SC_INFINITY_DRINK])
+			if (sc->getSCE(SC_INFINITY_DRINK))
 				bonus += 5;
-			if (sc->data[SC_MENTAL_POTION])
-				bonus += sc->data[SC_MENTAL_POTION]->val1;
-			if(sc->data[SC_COMBAT_PILL])
+			if (sc->getSCE(SC_MENTAL_POTION))
+				bonus += sc->getSCE(SC_MENTAL_POTION)->val1;
+			if(sc->getSCE(SC_COMBAT_PILL))
 				bonus -= 3;
-			if(sc->data[SC_COMBAT_PILL2])
+			if(sc->getSCE(SC_COMBAT_PILL2))
 				bonus -= 5;
 		}
 		// Max rate reduce is -100%
@@ -3219,18 +3329,18 @@ static int status_get_spbonus_equip(TBL_PC *sd) {
 static int status_get_spbonus_item(block_list *bl) {
 	int bonus = 0;
 
-	struct status_change *sc = status_get_sc(bl);
+	status_change *sc = status_get_sc(bl);
 
 	//Bonus by SC
 	if (sc) {
-		if (sc->data[SC_INCREASE_MAXSP])
-			bonus += sc->data[SC_INCREASE_MAXSP]->val1;
-		if (sc->data[SC_LIFE_FORCE_F])
-			bonus += sc->data[SC_LIFE_FORCE_F]->val1;
-		if (sc->data[SC_VITATA_500])
-			bonus += sc->data[SC_VITATA_500]->val2;
-		if (sc->data[SC_ENERGY_DRINK_RESERCH])
-			bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
+		if (sc->getSCE(SC_INCREASE_MAXSP))
+			bonus += sc->getSCE(SC_INCREASE_MAXSP)->val1;
+		if (sc->getSCE(SC_LIFE_FORCE_F))
+			bonus += sc->getSCE(SC_LIFE_FORCE_F)->val1;
+		if (sc->getSCE(SC_VITATA_500))
+			bonus += sc->getSCE(SC_VITATA_500)->val2;
+		if (sc->getSCE(SC_ENERGY_DRINK_RESERCH))
+			bonus += sc->getSCE(SC_ENERGY_DRINK_RESERCH)->val3;
 	}
 
 	// Max rate reduce is -100%
@@ -3247,11 +3357,11 @@ static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type) {
 	int bonus = 0;
 
 	if (type == STATUS_BONUS_FIX) {
-		struct status_change *sc = status_get_sc(bl);
+		status_change *sc = status_get_sc(bl);
 
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
-			struct map_session_data *sd = map_id2sd(bl->id);
+			map_session_data *sd = map_id2sd(bl->id);
 			//uint16 skill_lv;
 
 			bonus += sd->bonus.ap;
@@ -3261,15 +3371,15 @@ static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type) {
 
 		//Bonus by SC
 		if (sc) {
-			//if (sc->data[SC_NONE])
-			//	bonus += sc->data[SC_NONE]->val1;
+			//if (sc->getSCE(SC_NONE))
+			//	bonus += sc->getSCE(SC_NONE)->val1;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
-		struct status_change *sc = status_get_sc(bl);
+		status_change *sc = status_get_sc(bl);
 
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
-			struct map_session_data *sd = map_id2sd(bl->id);
+			map_session_data *sd = map_id2sd(bl->id);
 			//uint8 i;
 
 			//if ((i = pc_checkskill(sd, NV_BASIC)) > 0)
@@ -3278,8 +3388,8 @@ static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type) {
 
 		//Bonus by SC
 		if (sc) {
-			//if (sc->data[SC_NONE])
-			//	bonus += sc->data[SC_NONE]->val1;
+			//if (sc->getSCE(SC_NONE))
+			//	bonus += sc->getSCE(SC_NONE)->val1;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus, -100, INT_MAX);
@@ -3309,12 +3419,12 @@ static int status_get_apbonus_equip(TBL_PC *sd) {
 static int status_get_apbonus_item(block_list *bl) {
 	int bonus = 0;
 
-	struct status_change *sc = status_get_sc(bl);
+	status_change *sc = status_get_sc(bl);
 
 	//Bonus by SC
 	if (sc) {
-		//if (sc->data[SC_NONE])
-		//	bonus += sc->data[SC_NONE]->val1;
+		//if (sc->getSCE(SC_NONE))
+		//	bonus += sc->getSCE(SC_NONE)->val1;
 	}
 
 	// Max rate reduce is -100%
@@ -3329,7 +3439,7 @@ static int status_get_apbonus_item(block_list *bl) {
  * @param isHP true - calculates Max HP, false - calculated Max SP
  * @return max The max value of HP or SP
  */
-static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP) {
+static unsigned int status_calc_maxhpsp_pc(map_session_data* sd, unsigned int stat, bool isHP) {
 	nullpo_ret(sd);
 
 	double dmax = 0;
@@ -3371,7 +3481,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
  * @param sd: Player data
  * @return AP amount
  */
-static unsigned int status_calc_maxap_pc(struct map_session_data* sd) {
+static unsigned int status_calc_maxap_pc(map_session_data* sd) {
 	double dmax = 0, equip_bonus = 0, item_bonus = 0;
 
 	nullpo_ret(sd);
@@ -3397,10 +3507,10 @@ static unsigned int status_calc_maxap_pc(struct map_session_data* sd) {
  *   CALCWT_MAXBONUS - Skill/Status/Configuration max weight bonus
  * @return false - failed, true - success
  */
-bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag)
+bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag)
 {
 	int b_weight, b_max_weight, skill, i;
-	struct status_change *sc;
+	status_change *sc;
 
 	nullpo_retr(false, sd);
 
@@ -3428,8 +3538,8 @@ bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_o
 			sd->max_weight += 10000;
 		else if (pc_isridingdragon(sd))
 			sd->max_weight += 5000 + 2000 * pc_checkskill(sd, RK_DRAGONTRAINING);
-		if (sc->data[SC_KNOWLEDGE])
-			sd->max_weight += sd->max_weight * sc->data[SC_KNOWLEDGE]->val1 / 10;
+		if (sc->getSCE(SC_KNOWLEDGE))
+			sd->max_weight += sd->max_weight * sc->getSCE(SC_KNOWLEDGE)->val1 / 10;
 		if ((skill = pc_checkskill(sd, ALL_INCCARRY)) > 0)
 			sd->max_weight += 2000 * skill;
 		if (pc_ismadogear(sd))
@@ -3456,7 +3566,7 @@ bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_o
  *   CALCWT_CARTSTATE - Whether to check for cart state
  * @return false - failed, true - success
  */
-bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag)
+bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag)
 {
 	int b_cart_weight_max, i;
 
@@ -3498,11 +3608,11 @@ bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_wei
  * @param opt: Whether it is first calc (login) or not
  * @return (-1) for too many recursive calls, (1) recursive call, (0) success
  */
-int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
+int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 {
 	static int calculating = 0; ///< Check for recursive call preemption. [Skotlex]
 	struct status_data *base_status; ///< Pointer to the player's base status
-	const struct status_change *sc = &sd->sc;
+	status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int i, skill, refinedef = 0;
 	short index = -1;
@@ -3931,8 +4041,8 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		current_equip_opt_index = -1;
 	}
 
-	if (sc->count && sc->data[SC_ITEMSCRIPT]) {
-		std::shared_ptr<item_data> data = item_db.find(sc->data[SC_ITEMSCRIPT]->val1);
+	if (sc->count && sc->getSCE(SC_ITEMSCRIPT)) {
+		std::shared_ptr<item_data> data = item_db.find(sc->getSCE(SC_ITEMSCRIPT)->val1);
 
 		if (data && data->script)
 			run_script(data->script, 0, sd->bl.id, 0);
@@ -4050,9 +4160,9 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	base_status->crt = cap_value(i, 0, USHRT_MAX);
 
 	if (sd->special_state.no_walk_delay) {
-		if (sc->data[SC_ENDURE]) {
-			if (sc->data[SC_ENDURE]->val4)
-				sc->data[SC_ENDURE]->val4 = 0;
+		if (sc->getSCE(SC_ENDURE)) {
+			if (sc->getSCE(SC_ENDURE)->val4)
+				sc->getSCE(SC_ENDURE)->val4 = 0;
 			status_change_end(&sd->bl, SC_ENDURE);
 		}
 		clif_status_load(&sd->bl, EFST_ENDURE, 1);
@@ -4113,7 +4223,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	} else {
 		if((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2)
 			&& battle_config.restart_hp_rate < 50)
-			base_status->hp = base_status->max_hp>>1;
+			base_status->hp = base_status->max_hp / 2;
 		else
 			base_status->hp = (int64)base_status->max_hp * battle_config.restart_hp_rate/100;
 		if(!base_status->hp)
@@ -4241,7 +4351,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	if((skill=pc_checkskill(sd,TF_MISS))>0)
 		base_status->flee += skill*(sd->class_&JOBL_2 && (sd->class_&MAPID_BASEMASK) == MAPID_THIEF? 4 : 3);
 	if((skill=pc_checkskill(sd,MO_DODGE))>0)
-		base_status->flee += (skill*3)>>1;
+		base_status->flee += (skill*3) / 2;
 	if (pc_checkskill(sd, SU_POWEROFLIFE) > 0)
 		base_status->flee += 20;
 	if ((skill = pc_checkskill(sd, SHC_SHADOW_SENSE)) > 0)
@@ -4268,6 +4378,15 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	if ((skill = pc_checkskill(sd, TR_STAGE_MANNER)) > 0 && (sd->status.weapon == W_BOW || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP)) {
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
+	}
+	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_TATICS)) > 0)
+		base_status->patk += skill;
+	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) > 0)
+		base_status->smatk += skill;
+
+	// 2-Handed Staff Mastery
+	if( sd->status.weapon == W_2HSTAFF && ( skill = pc_checkskill( sd, AG_TWOHANDSTAFF ) ) > 0 ){
+		base_status->smatk += skill * 2;
 	}
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
@@ -4359,11 +4478,11 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	if((skill=pc_checkskill(sd,HP_MANARECHARGE))>0 )
 		sd->dsprate -= 4*skill;
 
-	if(sc->data[SC_SERVICE4U])
-		sd->dsprate -= sc->data[SC_SERVICE4U]->val3;
+	if(sc->getSCE(SC_SERVICE4U))
+		sd->dsprate -= sc->getSCE(SC_SERVICE4U)->val3;
 
-	if(sc->data[SC_SPCOST_RATE])
-		sd->dsprate -= sc->data[SC_SPCOST_RATE]->val1;
+	if(sc->getSCE(SC_SPCOST_RATE))
+		sd->dsprate -= sc->getSCE(SC_SPCOST_RATE)->val1;
 
 	// Underflow protections.
 	if(sd->dsprate < 0)
@@ -4383,21 +4502,24 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		sd->indexed_bonus.subele[ELE_FIRE] += skill*5;
 	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0) {
-#ifdef RENEWAL
-		skill = skill * 2;
-#else
+		uint8 dragon_matk = skill * 2;
+
 		skill = skill * 4;
-#endif
+
 		sd->right_weapon.addrace[RC_DRAGON]+=skill;
-		sd->left_weapon.addrace[RC_DRAGON]+=skill;
-		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=skill;
+		if( !battle_config.left_cardfix_to_right ){
+			sd->left_weapon.addrace[RC_DRAGON] += skill;
+		}
+		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=dragon_matk;
 		sd->indexed_bonus.subrace[RC_DRAGON]+=skill;
 	}
 	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addrace[RC_DEMON] += skill;
 		sd->right_weapon.addele[ELE_DARK] += skill;
-		sd->left_weapon.addrace[RC_DEMON] += skill;
-		sd->left_weapon.addele[ELE_DARK] += skill;
+		if( !battle_config.left_cardfix_to_right ){
+			sd->left_weapon.addrace[RC_DEMON] += skill;
+			sd->left_weapon.addele[ELE_DARK] += skill;
+		}
 		sd->indexed_bonus.magic_addrace[RC_DEMON] += skill;
 		sd->indexed_bonus.magic_addele[ELE_DARK] += skill;
 		sd->indexed_bonus.subrace[RC_DEMON] += skill;
@@ -4421,8 +4543,10 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 		sd->right_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
 		sd->right_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
-		sd->left_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
-		sd->left_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
+		if( !battle_config.left_cardfix_to_right ){
+			sd->left_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
+			sd->left_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
+		}
 		sd->indexed_bonus.subrace[RC_UNDEAD] += race_def[skill - 1];
 		sd->indexed_bonus.subrace[RC_DEMON] += race_def[skill - 1];
 	}
@@ -4436,7 +4560,9 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
 			sd->right_weapon.addsize[size] += attack_bonus[size][skill - 1];
-			sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			}
 		}
 	}
 	if ((skill = pc_checkskill(sd, CD_FIDUS_ANIMUS)) > 0) {
@@ -4466,7 +4592,9 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
 			sd->right_weapon.addsize[size] += attack_bonus[size][skill - 1];
-			sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			}
 		}
 	}
 	if ((skill = pc_checkskill(sd, ABC_MAGIC_SWORD_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_SS || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA || sd->status.weapon == W_DOUBLE_SA)) {
@@ -4490,12 +4618,12 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	}
 
 	if(sc->count) {
-		if(sc->data[SC_CONCENTRATE]) { // Update the card-bonus data
-			sc->data[SC_CONCENTRATE]->val3 = sd->indexed_bonus.param_bonus[1]; // Agi
-			sc->data[SC_CONCENTRATE]->val4 = sd->indexed_bonus.param_bonus[4]; // Dex
+		if(sc->getSCE(SC_CONCENTRATE)) { // Update the card-bonus data
+			sc->getSCE(SC_CONCENTRATE)->val3 = sd->indexed_bonus.param_bonus[1]; // Agi
+			sc->getSCE(SC_CONCENTRATE)->val4 = sd->indexed_bonus.param_bonus[4]; // Dex
 		}
-		if(sc->data[SC_SIEGFRIED]) {
-			i = sc->data[SC_SIEGFRIED]->val2;
+		if(sc->getSCE(SC_SIEGFRIED)) {
+			i = sc->getSCE(SC_SIEGFRIED)->val2;
 			sd->indexed_bonus.subele[ELE_WATER] += i;
 			sd->indexed_bonus.subele[ELE_EARTH] += i;
 			sd->indexed_bonus.subele[ELE_FIRE] += i;
@@ -4509,221 +4637,224 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 #endif
 		}
 #ifdef RENEWAL
-		if (sc->data[SC_BASILICA]) {
-			i = sc->data[SC_BASILICA]->val1 * 5;
+		if (sc->getSCE(SC_BASILICA)) {
+			i = sc->getSCE(SC_BASILICA)->val1 * 5;
 			sd->right_weapon.addele[ELE_DARK] += i;
 			sd->right_weapon.addele[ELE_UNDEAD] += i;
-			sd->left_weapon.addele[ELE_DARK] += i;
-			sd->left_weapon.addele[ELE_UNDEAD] += i;
-			sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += sc->data[SC_BASILICA]->val1 * 3;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addele[ELE_DARK] += i;
+				sd->left_weapon.addele[ELE_UNDEAD] += i;
+			}
+			sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += sc->getSCE(SC_BASILICA)->val1 * 3;
 		}
-		if (sc->data[SC_FIREWEAPON])
-			sd->indexed_bonus.magic_atk_ele[ELE_FIRE] += sc->data[SC_FIREWEAPON]->val1;
-		if (sc->data[SC_WINDWEAPON])
-			sd->indexed_bonus.magic_atk_ele[ELE_WIND] += sc->data[SC_WINDWEAPON]->val1;
-		if (sc->data[SC_WATERWEAPON])
-			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += sc->data[SC_WATERWEAPON]->val1;
-		if (sc->data[SC_EARTHWEAPON])
-			sd->indexed_bonus.magic_atk_ele[ELE_EARTH] += sc->data[SC_EARTHWEAPON]->val1;
+		if (sc->getSCE(SC_FIREWEAPON))
+			sd->indexed_bonus.magic_atk_ele[ELE_FIRE] += sc->getSCE(SC_FIREWEAPON)->val1;
+		if (sc->getSCE(SC_WINDWEAPON))
+			sd->indexed_bonus.magic_atk_ele[ELE_WIND] += sc->getSCE(SC_WINDWEAPON)->val1;
+		if (sc->getSCE(SC_WATERWEAPON))
+			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += sc->getSCE(SC_WATERWEAPON)->val1;
+		if (sc->getSCE(SC_EARTHWEAPON))
+			sd->indexed_bonus.magic_atk_ele[ELE_EARTH] += sc->getSCE(SC_EARTHWEAPON)->val1;
 #endif
-		if(sc->data[SC_PROVIDENCE]) {
-			sd->indexed_bonus.subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;
-			sd->indexed_bonus.subrace[RC_DEMON] += sc->data[SC_PROVIDENCE]->val2;
+		if(sc->getSCE(SC_PROVIDENCE)) {
+			sd->indexed_bonus.subele[ELE_HOLY] += sc->getSCE(SC_PROVIDENCE)->val2;
+			sd->indexed_bonus.subrace[RC_DEMON] += sc->getSCE(SC_PROVIDENCE)->val2;
 		}
-        if (sc->data[SC_GEFFEN_MAGIC1]) {
-            sd->right_weapon.addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
-            sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
-            sd->left_weapon.addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
-            sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
-        }
-        if (sc->data[SC_GEFFEN_MAGIC2]) {
-            sd->indexed_bonus.magic_addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
-            sd->indexed_bonus.magic_addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
-        }
-        if(sc->data[SC_GEFFEN_MAGIC3]) {
-            sd->indexed_bonus.subrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
-            sd->indexed_bonus.subrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
-        }
-		if(sc->data[SC_ARMOR_ELEMENT_WATER]) {	// This status change should grant card-type elemental resist.
-			sd->indexed_bonus.subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_WATER]->val1;
-			sd->indexed_bonus.subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_WATER]->val2;
-			sd->indexed_bonus.subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_WATER]->val3;
-			sd->indexed_bonus.subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_WATER]->val4;
+		if (sc->getSCE(SC_GEFFEN_MAGIC1)) {
+			sd->right_weapon.addrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
+			sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace[RC_PLAYER_HUMAN] += sc->getSCE( SC_GEFFEN_MAGIC1 )->val1;
+				sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE( SC_GEFFEN_MAGIC1 )->val1;
+			}
 		}
-		if(sc->data[SC_ARMOR_ELEMENT_EARTH]) {	// This status change should grant card-type elemental resist.
-			sd->indexed_bonus.subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val1;
-			sd->indexed_bonus.subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val2;
-			sd->indexed_bonus.subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val3;
-			sd->indexed_bonus.subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val4;
+		if (sc->getSCE(SC_GEFFEN_MAGIC2)) {
+			sd->indexed_bonus.magic_addrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC2)->val1;
+			sd->indexed_bonus.magic_addrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC2)->val1;
 		}
-		if(sc->data[SC_ARMOR_ELEMENT_FIRE]) {	// This status change should grant card-type elemental resist.
-			sd->indexed_bonus.subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val1;
-			sd->indexed_bonus.subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val2;
-			sd->indexed_bonus.subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val3;
-			sd->indexed_bonus.subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val4;
+		if(sc->getSCE(SC_GEFFEN_MAGIC3)) {
+			sd->indexed_bonus.subrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC3)->val1;
+			sd->indexed_bonus.subrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC3)->val1;
 		}
-		if(sc->data[SC_ARMOR_ELEMENT_WIND]) {	// This status change should grant card-type elemental resist.
-			sd->indexed_bonus.subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_WIND]->val1;
-			sd->indexed_bonus.subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_WIND]->val2;
-			sd->indexed_bonus.subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_WIND]->val3;
-			sd->indexed_bonus.subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_WIND]->val4;
+		if(sc->getSCE(SC_ARMOR_ELEMENT_WATER)) {	// This status change should grant card-type elemental resist.
+			sd->indexed_bonus.subele[ELE_WATER] += sc->getSCE(SC_ARMOR_ELEMENT_WATER)->val1;
+			sd->indexed_bonus.subele[ELE_EARTH] += sc->getSCE(SC_ARMOR_ELEMENT_WATER)->val2;
+			sd->indexed_bonus.subele[ELE_FIRE] += sc->getSCE(SC_ARMOR_ELEMENT_WATER)->val3;
+			sd->indexed_bonus.subele[ELE_WIND] += sc->getSCE(SC_ARMOR_ELEMENT_WATER)->val4;
 		}
-		if(sc->data[SC_ARMOR_RESIST]) { // Undead Scroll
-			sd->indexed_bonus.subele[ELE_WATER] += sc->data[SC_ARMOR_RESIST]->val1;
-			sd->indexed_bonus.subele[ELE_EARTH] += sc->data[SC_ARMOR_RESIST]->val2;
-			sd->indexed_bonus.subele[ELE_FIRE] += sc->data[SC_ARMOR_RESIST]->val3;
-			sd->indexed_bonus.subele[ELE_WIND] += sc->data[SC_ARMOR_RESIST]->val4;
+		if(sc->getSCE(SC_ARMOR_ELEMENT_EARTH)) {	// This status change should grant card-type elemental resist.
+			sd->indexed_bonus.subele[ELE_WATER] += sc->getSCE(SC_ARMOR_ELEMENT_EARTH)->val1;
+			sd->indexed_bonus.subele[ELE_EARTH] += sc->getSCE(SC_ARMOR_ELEMENT_EARTH)->val2;
+			sd->indexed_bonus.subele[ELE_FIRE] += sc->getSCE(SC_ARMOR_ELEMENT_EARTH)->val3;
+			sd->indexed_bonus.subele[ELE_WIND] += sc->getSCE(SC_ARMOR_ELEMENT_EARTH)->val4;
 		}
-		if( sc->data[SC_FIRE_CLOAK_OPTION] ) {
-			i = sc->data[SC_FIRE_CLOAK_OPTION]->val2;
+		if(sc->getSCE(SC_ARMOR_ELEMENT_FIRE)) {	// This status change should grant card-type elemental resist.
+			sd->indexed_bonus.subele[ELE_WATER] += sc->getSCE(SC_ARMOR_ELEMENT_FIRE)->val1;
+			sd->indexed_bonus.subele[ELE_EARTH] += sc->getSCE(SC_ARMOR_ELEMENT_FIRE)->val2;
+			sd->indexed_bonus.subele[ELE_FIRE] += sc->getSCE(SC_ARMOR_ELEMENT_FIRE)->val3;
+			sd->indexed_bonus.subele[ELE_WIND] += sc->getSCE(SC_ARMOR_ELEMENT_FIRE)->val4;
+		}
+		if(sc->getSCE(SC_ARMOR_ELEMENT_WIND)) {	// This status change should grant card-type elemental resist.
+			sd->indexed_bonus.subele[ELE_WATER] += sc->getSCE(SC_ARMOR_ELEMENT_WIND)->val1;
+			sd->indexed_bonus.subele[ELE_EARTH] += sc->getSCE(SC_ARMOR_ELEMENT_WIND)->val2;
+			sd->indexed_bonus.subele[ELE_FIRE] += sc->getSCE(SC_ARMOR_ELEMENT_WIND)->val3;
+			sd->indexed_bonus.subele[ELE_WIND] += sc->getSCE(SC_ARMOR_ELEMENT_WIND)->val4;
+		}
+		if(sc->getSCE(SC_ARMOR_RESIST)) { // Undead Scroll
+			sd->indexed_bonus.subele[ELE_WATER] += sc->getSCE(SC_ARMOR_RESIST)->val1;
+			sd->indexed_bonus.subele[ELE_EARTH] += sc->getSCE(SC_ARMOR_RESIST)->val2;
+			sd->indexed_bonus.subele[ELE_FIRE] += sc->getSCE(SC_ARMOR_RESIST)->val3;
+			sd->indexed_bonus.subele[ELE_WIND] += sc->getSCE(SC_ARMOR_RESIST)->val4;
+		}
+		if( sc->getSCE(SC_FIRE_CLOAK_OPTION) ) {
+			i = sc->getSCE(SC_FIRE_CLOAK_OPTION)->val2;
 			sd->indexed_bonus.subele[ELE_FIRE] += i;
 			sd->indexed_bonus.subele[ELE_WATER] -= i;
 		}
-		if( sc->data[SC_WATER_DROP_OPTION] ) {
-			i = sc->data[SC_WATER_DROP_OPTION]->val2;
+		if( sc->getSCE(SC_WATER_DROP_OPTION) ) {
+			i = sc->getSCE(SC_WATER_DROP_OPTION)->val2;
 			sd->indexed_bonus.subele[ELE_WATER] += i;
 			sd->indexed_bonus.subele[ELE_WIND] -= i;
 		}
-		if( sc->data[SC_WIND_CURTAIN_OPTION] ) {
-			i = sc->data[SC_WIND_CURTAIN_OPTION]->val2;
+		if( sc->getSCE(SC_WIND_CURTAIN_OPTION) ) {
+			i = sc->getSCE(SC_WIND_CURTAIN_OPTION)->val2;
 			sd->indexed_bonus.subele[ELE_WIND] += i;
 			sd->indexed_bonus.subele[ELE_EARTH] -= i;
 		}
-		if( sc->data[SC_STONE_SHIELD_OPTION] ) {
-			i = sc->data[SC_STONE_SHIELD_OPTION]->val2;
+		if( sc->getSCE(SC_STONE_SHIELD_OPTION) ) {
+			i = sc->getSCE(SC_STONE_SHIELD_OPTION)->val2;
 			sd->indexed_bonus.subele[ELE_EARTH] += i;
 			sd->indexed_bonus.subele[ELE_FIRE] -= i;
 		}
-		if (sc->data[SC_MTF_MLEATKED] )
-			sd->indexed_bonus.subele[ELE_NEUTRAL] += sc->data[SC_MTF_MLEATKED]->val3;
-		if (sc->data[SC_MTF_CRIDAMAGE])
-			sd->bonus.crit_atk_rate += sc->data[SC_MTF_CRIDAMAGE]->val1;
-		if (sc->data[SC_GLASTHEIM_ATK]) {
-			sd->indexed_bonus.ignore_mdef_by_race[RC_UNDEAD] += sc->data[SC_GLASTHEIM_ATK]->val1;
-			sd->indexed_bonus.ignore_mdef_by_race[RC_DEMON] += sc->data[SC_GLASTHEIM_ATK]->val1;
+		if (sc->getSCE(SC_MTF_MLEATKED) )
+			sd->indexed_bonus.subele[ELE_NEUTRAL] += sc->getSCE(SC_MTF_MLEATKED)->val3;
+		if (sc->getSCE(SC_MTF_CRIDAMAGE))
+			sd->bonus.crit_atk_rate += sc->getSCE(SC_MTF_CRIDAMAGE)->val1;
+		if (sc->getSCE(SC_GLASTHEIM_ATK)) {
+			sd->indexed_bonus.ignore_mdef_by_race[RC_UNDEAD] += sc->getSCE(SC_GLASTHEIM_ATK)->val1;
+			sd->indexed_bonus.ignore_mdef_by_race[RC_DEMON] += sc->getSCE(SC_GLASTHEIM_ATK)->val1;
 		}
-		if (sc->data[SC_LAUDARAMUS])
-			sd->bonus.crit_atk_rate += 5 * sc->data[SC_LAUDARAMUS]->val1;
+		if (sc->getSCE(SC_LAUDARAMUS))
+			sd->bonus.crit_atk_rate += 5 * sc->getSCE(SC_LAUDARAMUS)->val1;
 #ifdef RENEWAL
-		if (sc->data[SC_FORTUNE])
-			sd->bonus.crit_atk_rate += 2 * sc->data[SC_FORTUNE]->val1;
+		if (sc->getSCE(SC_FORTUNE))
+			sd->bonus.crit_atk_rate += 2 * sc->getSCE(SC_FORTUNE)->val1;
 #endif
-		if (sc->data[SC_SYMPHONYOFLOVER]) {
-			sd->indexed_bonus.subele[ELE_GHOST] += sc->data[SC_SYMPHONYOFLOVER]->val1 * 3;
-			sd->indexed_bonus.subele[ELE_HOLY] += sc->data[SC_SYMPHONYOFLOVER]->val1 * 3;
+		if (sc->getSCE(SC_SYMPHONYOFLOVER)) {
+			sd->indexed_bonus.subele[ELE_GHOST] += sc->getSCE(SC_SYMPHONYOFLOVER)->val1 * 3;
+			sd->indexed_bonus.subele[ELE_HOLY] += sc->getSCE(SC_SYMPHONYOFLOVER)->val1 * 3;
 		}
-		if (sc->data[SC_PYREXIA] && sc->data[SC_PYREXIA]->val3 == 0)
-			sd->bonus.crit_atk_rate += sc->data[SC_PYREXIA]->val2;
-		if (sc->data[SC_LUXANIMA]) {
-			pc_bonus2(sd, SP_ADDSIZE, SZ_ALL, sc->data[SC_LUXANIMA]->val3);
-			sd->bonus.crit_atk_rate += sc->data[SC_LUXANIMA]->val3;
-			sd->bonus.short_attack_atk_rate += sc->data[SC_LUXANIMA]->val3;
-			sd->bonus.long_attack_atk_rate += sc->data[SC_LUXANIMA]->val3;
+		if (sc->getSCE(SC_PYREXIA) && sc->getSCE(SC_PYREXIA)->val3 == 0)
+			sd->bonus.crit_atk_rate += sc->getSCE(SC_PYREXIA)->val2;
+		if (sc->getSCE(SC_LUXANIMA)) {
+			pc_bonus2(sd, SP_ADDSIZE, SZ_ALL, sc->getSCE(SC_LUXANIMA)->val3);
+			sd->bonus.crit_atk_rate += sc->getSCE(SC_LUXANIMA)->val3;
+			sd->bonus.short_attack_atk_rate += sc->getSCE(SC_LUXANIMA)->val3;
+			sd->bonus.long_attack_atk_rate += sc->getSCE(SC_LUXANIMA)->val3;
 		}
-		if (sc->data[SC_STRIKING])
+		if (sc->getSCE(SC_STRIKING))
 			sd->bonus.perfect_hit += 20 + 10 * pc_checkskill(sd, SO_STRIKING);
-		if (sc->data[SC_VIGOR]) {
-			// Skill desc says increases physical damage. Supposed to affect damage from base ATK right???
-			// Because this is only boosting the ATK from the equipped weapon and not from base ATK. [Rytech]
-			sd->right_weapon.addrace[RC_DEMIHUMAN] += 50;
-			sd->left_weapon.addrace[RC_ANGEL] += 50;
+
+		if( sc->getSCE( SC_RUSH_QUAKE2 ) ){
+			sd->bonus.short_attack_atk_rate += 5 * sc->getSCE( SC_RUSH_QUAKE2 )->val1;
+			sd->bonus.long_attack_atk_rate += 5 * sc->getSCE( SC_RUSH_QUAKE2 )->val1;
 		}
-		if (sc->data[SC_DEADLY_DEFEASANCE])
+		if (sc->getSCE(SC_DEADLY_DEFEASANCE))
 			sd->special_state.no_magic_damage = 0;
-		if (sc->data[SC_CLIMAX_DES_HU])
+		if (sc->getSCE(SC_CLIMAX_DES_HU))
 			sd->indexed_bonus.magic_atk_ele[ELE_WIND] += 30;
-		if (sc->data[SC_CLIMAX_EARTH])
+		if (sc->getSCE(SC_CLIMAX_EARTH))
 			sd->indexed_bonus.subele[ELE_EARTH] -= 100;
-		if (sc->data[SC_CLIMAX_BLOOM])
+		if (sc->getSCE(SC_CLIMAX_BLOOM))
 			sd->indexed_bonus.subele[ELE_FIRE] -= 100;
-		if (sc->data[SC_CLIMAX_CRYIMP]) {
+		if (sc->getSCE(SC_CLIMAX_CRYIMP)) {
 			sd->indexed_bonus.subele[ELE_WATER] += 30;
 			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += 30;
 		}
-		if (sc->data[SC_SINCERE_FAITH])
-			sd->bonus.perfect_hit += sc->data[SC_SINCERE_FAITH]->val3;
-		if (sc->data[SC_HOLY_S]) {
-			sd->indexed_bonus.subele[ELE_DARK] += sc->data[SC_HOLY_S]->val2;
-			sd->indexed_bonus.subele[ELE_UNDEAD] += sc->data[SC_HOLY_S]->val2;
-			sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += sc->data[SC_HOLY_S]->val2;
+		if (sc->getSCE(SC_SINCERE_FAITH))
+			sd->bonus.perfect_hit += sc->getSCE(SC_SINCERE_FAITH)->val3;
+		if (sc->getSCE(SC_HOLY_S)) {
+			sd->indexed_bonus.subele[ELE_DARK] += sc->getSCE(SC_HOLY_S)->val2;
+			sd->indexed_bonus.subele[ELE_UNDEAD] += sc->getSCE(SC_HOLY_S)->val2;
+			sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += sc->getSCE(SC_HOLY_S)->val2;
 		}
-		if (sc->data[SC_SUMMON_ELEMENTAL_ARDOR])
+		if (sc->getSCE(SC_SUMMON_ELEMENTAL_ARDOR))
 			sd->indexed_bonus.magic_atk_ele[ELE_FIRE] += 10;
-		if (sc->data[SC_SUMMON_ELEMENTAL_DILUVIO])
+		if (sc->getSCE(SC_SUMMON_ELEMENTAL_DILUVIO))
 			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += 10;
-		if (sc->data[SC_SUMMON_ELEMENTAL_PROCELLA])
+		if (sc->getSCE(SC_SUMMON_ELEMENTAL_PROCELLA))
 			sd->indexed_bonus.magic_atk_ele[ELE_WIND] += 10;
-		if (sc->data[SC_SUMMON_ELEMENTAL_TERREMOTUS])
+		if (sc->getSCE(SC_SUMMON_ELEMENTAL_TERREMOTUS))
 			sd->indexed_bonus.magic_atk_ele[ELE_EARTH] += 10;
-		if (sc->data[SC_SUMMON_ELEMENTAL_SERPENS])
+		if (sc->getSCE(SC_SUMMON_ELEMENTAL_SERPENS))
 			sd->indexed_bonus.magic_atk_ele[ELE_POISON] += 10;
-		if (sc->data[SC_FLAMEARMOR_OPTION]) {
+		if (sc->getSCE(SC_FLAMEARMOR_OPTION)) {
 			sd->indexed_bonus.subele[ELE_FIRE] += 100;
 			sd->indexed_bonus.subele[ELE_WATER] -= 30;
 		}
-		if (sc->data[SC_CRYSTAL_ARMOR_OPTION]) {
+		if (sc->getSCE(SC_CRYSTAL_ARMOR_OPTION)) {
 			sd->indexed_bonus.subele[ELE_WATER] += 100;
 			sd->indexed_bonus.subele[ELE_WIND] -= 30;
 		}
-		if (sc->data[SC_EYES_OF_STORM_OPTION]) {
+		if (sc->getSCE(SC_EYES_OF_STORM_OPTION)) {
 			sd->indexed_bonus.subele[ELE_WIND] += 100;
 			sd->indexed_bonus.subele[ELE_EARTH] -= 30;
 		}
-		if (sc->data[SC_STRONG_PROTECTION_OPTION]) {
+		if (sc->getSCE(SC_STRONG_PROTECTION_OPTION)) {
 			sd->indexed_bonus.subele[ELE_EARTH] += 100;
 			sd->indexed_bonus.subele[ELE_FIRE] -= 30;
 		}
-		if (sc->data[SC_POISON_SHIELD_OPTION]) {
+		if (sc->getSCE(SC_POISON_SHIELD_OPTION)) {
 			sd->indexed_bonus.subele[ELE_POISON] += 100;
 			sd->indexed_bonus.subele[ELE_HOLY] -= 30;
 		}
-		if (sc->data[SC_INFINITY_DRINK]) {
+		if (sc->getSCE(SC_INFINITY_DRINK)) {
 			sd->bonus.crit_atk_rate += 5;
 			sd->bonus.long_attack_atk_rate += 5;
 			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += 5;
 			sd->special_state.no_castcancel = 1;
 		}
-		if(sc->data[SC_MENTAL_POTION])
-			sd->dsprate -= sc->data[SC_MENTAL_POTION]->val1;
-		if (sc->data[SC_LIMIT_POWER_BOOSTER]) {
+		if(sc->getSCE(SC_MENTAL_POTION))
+			sd->dsprate -= sc->getSCE(SC_MENTAL_POTION)->val1;
+		if (sc->getSCE(SC_LIMIT_POWER_BOOSTER)) {
 			pc_bonus(sd, SP_ATK_RATE, 1);
 			pc_bonus(sd, SP_MATK_RATE, 1);
 			sd->dsprate -= 5;
-			sd->bonus.fixcastrate -= sc->data[SC_LIMIT_POWER_BOOSTER]->val1;
+			sd->bonus.fixcastrate -= sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 		}
-		if (sc->data[SC_COMBAT_PILL]) {
-			pc_bonus(sd, SP_ATK_RATE, sc->data[SC_COMBAT_PILL]->val1);
-			pc_bonus(sd, SP_MATK_RATE, sc->data[SC_COMBAT_PILL]->val1);
+		if (sc->getSCE(SC_COMBAT_PILL)) {
+			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_COMBAT_PILL)->val1);
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_COMBAT_PILL)->val1);
 		}
-		if (sc->data[SC_COMBAT_PILL2]) {
-			pc_bonus(sd, SP_ATK_RATE, sc->data[SC_COMBAT_PILL2]->val1);
-			pc_bonus(sd, SP_MATK_RATE, sc->data[SC_COMBAT_PILL2]->val1);
+		if (sc->getSCE(SC_COMBAT_PILL2)) {
+			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_COMBAT_PILL2)->val1);
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_COMBAT_PILL2)->val1);
 		}
-		if (sc->data[SC_SPARKCANDY])
+		if (sc->getSCE(SC_SPARKCANDY))
 			pc_bonus2(sd, SP_HP_LOSS_RATE, 100, 10000);
-		if (sc->data[SC_MAGICCANDY]) {
+		if (sc->getSCE(SC_MAGICCANDY)) {
 			sd->bonus.fixcastrate -= 70;
 			sd->special_state.no_castcancel = 1;
 			pc_bonus2(sd, SP_SP_LOSS_RATE, 90, 10000);
 		}
-		if (sc->data[SC_POPECOOKIE]) {
-			pc_bonus(sd, SP_ATK_RATE, sc->data[SC_POPECOOKIE]->val1);
-			pc_bonus(sd, SP_MATK_RATE, sc->data[SC_POPECOOKIE]->val1);
-			sd->indexed_bonus.subele[ELE_ALL] -= sc->data[SC_POPECOOKIE]->val1;
+		if (sc->getSCE(SC_POPECOOKIE)) {
+			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_POPECOOKIE)->val1);
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_POPECOOKIE)->val1);
+			sd->indexed_bonus.subele[ELE_ALL] -= sc->getSCE(SC_POPECOOKIE)->val1;
 		}
-		if (sc->data[SC_VITALIZE_POTION]) {
-			pc_bonus(sd, SP_ATK_RATE, sc->data[SC_VITALIZE_POTION]->val1);
-			pc_bonus(sd, SP_MATK_RATE, sc->data[SC_VITALIZE_POTION]->val1);
+		if (sc->getSCE(SC_VITALIZE_POTION)) {
+			pc_bonus(sd, SP_ATK_RATE, sc->getSCE(SC_VITALIZE_POTION)->val1);
+			pc_bonus(sd, SP_MATK_RATE, sc->getSCE(SC_VITALIZE_POTION)->val1);
 		}
-		if (sc->data[SC_CUP_OF_BOZA])
+		if (sc->getSCE(SC_CUP_OF_BOZA))
 			sd->indexed_bonus.subele[ELE_FIRE] -= 5;
-		if (sc->data[SC_SKF_CAST])
-			sd->bonus.varcastrate -= sc->data[SC_SKF_CAST]->val1;
-		if (sc->data[SC_BEEF_RIB_STEW]) {
+		if (sc->getSCE(SC_SKF_CAST))
+			sd->bonus.varcastrate -= sc->getSCE(SC_SKF_CAST)->val1;
+		if (sc->getSCE(SC_BEEF_RIB_STEW)) {
 			sd->bonus.varcastrate -= 5;
 			sd->dsprate -= 3;
 		}
-		if (sc->data[SC_PORK_RIB_STEW])
+		if (sc->getSCE(SC_PORK_RIB_STEW))
 			sd->dsprate -= 2;
 	}
 	status_cpy(&sd->battle_status, base_status);
@@ -4734,13 +4865,21 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		calculating = 0;
 		return 0;
 	}
-	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
+	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill))) {
+#if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+		// Client doesn't delete unavailable skills even if we refresh the skill tree, individually delete them.
+		for (i = 0; i < MAX_SKILL; i++) {
+			if (b_skill[i].id != 0 && sd->status.skill[i].id == 0)
+				clif_deleteskill(sd, b_skill[i].id, true);
+		}
+#endif
 		clif_skillinfoblock(sd);
+	}
 
 	// If the skill is learned, the status is infinite.
-	if (pc_checkskill(sd, SU_SPRITEMABLE) > 0 && !sd->sc.data[SC_SPRITEMABLE])
+	if (pc_checkskill(sd, SU_SPRITEMABLE) > 0 && !sd->sc.getSCE(SC_SPRITEMABLE))
 		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
-	if (pc_checkskill(sd, SU_SOULATTACK) > 0 && !sd->sc.data[SC_SOULATTACK])
+	if (pc_checkskill(sd, SU_SOULATTACK) > 0 && !sd->sc.getSCE(SC_SOULATTACK))
 		sc_start(&sd->bl, &sd->bl, SC_SOULATTACK, 100, 1, INFINITE_TICK);
 
 	calculating = 0;
@@ -4749,7 +4888,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 }
 
 /// Intermediate function since C++ does not have a try-finally syntax
-int status_calc_pc_( struct map_session_data* sd, uint8 opt ){
+int status_calc_pc_( map_session_data* sd, uint8 opt ){
 	// Save the old script the player was attached to
 	struct script_state* previous_st = sd->st;
 
@@ -4804,26 +4943,27 @@ int status_calc_mercenary_(s_mercenary_data *md, uint8 opt)
 int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 {
 	struct status_data *status = &hd->base_status;
-	struct s_homunculus *hom = &hd->homunculus;
+	struct s_homunculus &hom = hd->homunculus;
 	int skill_lv;
 	int amotion;
 
-	status->str = hom->str / 10;
-	status->agi = hom->agi / 10;
-	status->vit = hom->vit / 10;
-	status->dex = hom->dex / 10;
-	status->int_ = hom->int_ / 10;
-	status->luk = hom->luk / 10;
+	status->str = hom.str / 10;
+	status->agi = hom.agi / 10;
+	status->vit = hom.vit / 10;
+	status->dex = hom.dex / 10;
+	status->int_ = hom.int_ / 10;
+	status->luk = hom.luk / 10;
 
 	APPLY_HOMUN_LEVEL_STATWEIGHT();
 
 	if (opt&SCO_FIRST) {
-		const struct s_homunculus_db *db = hd->homunculusDB;
+		const std::shared_ptr<s_homunculus_db> db = hd->homunculusDB;
+
 		status->def_ele = db->element;
 		status->ele_lv = 1;
 		status->race = db->race;
 		status->class_ = CLASS_NORMAL;
-		status->size = (hom->class_ == db->evo_class) ? db->evo_size : db->base_size;
+		status->size = (hom.class_ == db->evo_class) ? db->evo_size : db->base_size;
 		status->rhw.range = 1 + status->size;
 		status->mode = static_cast<e_mode>(MD_CANMOVE|MD_CANATTACK);
 		status->speed = DEFAULT_WALK_SPEED;
@@ -4838,13 +4978,13 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 
 #ifdef RENEWAL
 	amotion = hd->homunculusDB->baseASPD;
-	amotion = amotion - amotion * (status->dex + hom->dex_value) / 1000 - (status->agi + hom->agi_value) * amotion / 250;
+	amotion = amotion - amotion * (status->dex + hom.dex_value) / 1000 - (status->agi + hom.agi_value) * amotion / 250;
 	status->def = status->mdef = 0;
 #else
-	skill_lv = hom->level / 10 + status->vit / 5;
+	skill_lv = hom.level / 10 + status->vit / 5;
 	status->def = cap_value(skill_lv, 0, 99);
 
-	skill_lv = hom->level / 10 + status->int_ / 5;
+	skill_lv = hom.level / 10 + status->int_ / 5;
 	status->mdef = cap_value(skill_lv, 0, 99);
 
 	amotion = (1000 - 4 * status->agi - status->dex) * hd->homunculusDB->baseASPD / 1000;
@@ -4853,10 +4993,10 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	status->amotion = cap_value(amotion, battle_config.max_aspd, 2000);
 	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
 
-	status->max_hp = hom->max_hp;
-	status->max_sp = hom->max_sp;
+	status->max_hp = hom.max_hp;
+	status->max_sp = hom.max_sp;
 
-	hom_calc_skilltree(hd, 0);
+	hom_calc_skilltree(hd);
 
 	if((skill_lv = hom_checkskill(hd, HAMI_SKIN)) > 0)
 		status->def += skill_lv * 4;
@@ -4872,19 +5012,44 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 	if((skill_lv = hom_checkskill(hd, HLIF_BRAIN)) > 0)
 		status->max_sp += skill_lv * status->max_sp / 100;
 
+	if((skill_lv = hom_checkskill(hd, MH_CLASSY_FLUTTER)) > 0) {
+		status->matk_min += 100 + 60* skill_lv;
+		status->matk_max += 100 + 60* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_BRUSHUP_CLAW)) > 0) {
+		status->batk += 100 + 60* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_POLISHING_NEEDLE)) > 0) {
+		status->matk_min += 50 + 20* skill_lv;
+		status->matk_max += 50 + 20* skill_lv;
+		status->batk += 100 + 40* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_LICHT_GEHORN)) > 0) {
+		status->matk_min += 100 + 30* skill_lv;
+		status->matk_max += 100 + 30* skill_lv;
+		status->batk += 100 + 30* skill_lv;
+	}
+
+	if((skill_lv = hom_checkskill(hd, MH_BLAZING_LAVA)) > 0) {
+		status->batk += 100 + 60* skill_lv;
+	}
+
 	if (opt&SCO_FIRST) {
-		hd->battle_status.hp = hom->hp;
-		hd->battle_status.sp = hom->sp;
-		if(hom->class_ == 6052) // Eleanor
+		hd->battle_status.hp = hom.hp;
+		hd->battle_status.sp = hom.sp;
+		if(hom.class_ == 6052) // Eleanor
 			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
 	}
 
 #ifndef RENEWAL
 	status->rhw.atk = status->dex;
-	status->rhw.atk2 = status->str + hom->level;
+	status->rhw.atk2 = status->str + hom.level;
 #endif
 
-	status_calc_misc(&hd->bl, status, hom->level);
+	status_calc_misc(&hd->bl, status, hom.level);
 
 	status_cpy(&hd->battle_status, status);
 	return 1;
@@ -4900,7 +5065,7 @@ int status_calc_elemental_(s_elemental_data *ed, uint8 opt)
 {
 	struct status_data *status = &ed->base_status;
 	s_elemental *ele = &ed->elemental;
-	struct map_session_data *sd = ed->master;
+	map_session_data *sd = ed->master;
 
 	if( !sd )
 		return 0;
@@ -4990,8 +5155,8 @@ int status_calc_npc_(struct npc_data *nd, uint8 opt)
  */
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen)
 {
-	struct map_session_data *sd;
-	struct status_change *sc;
+	map_session_data *sd;
+	status_change *sc;
 	int val, skill, reg_flag;
 
 	if( !(bl->type&BL_REGEN) || !regen )
@@ -5011,7 +5176,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 
 	val = 1 + (status->int_/6) + (status->max_sp/100);
 	if( status->int_ >= 120 )
-		val += ((status->int_-120)>>1) + 4;
+		val += ((status->int_-120) / 2) + 4;
 
 	if( sd && sd->sprecov_rate != 100 )
 		val = val*sd->sprecov_rate/100;
@@ -5032,8 +5197,8 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			val += skill*5 + skill*status->max_hp/500;
 
 		if (sc && sc->count) {
-			if (sc->data[SC_INCREASE_MAXHP])
-				val += val * sc->data[SC_INCREASE_MAXHP]->val2 / 100;
+			if (sc->getSCE(SC_INCREASE_MAXHP))
+				val += val * sc->getSCE(SC_INCREASE_MAXHP)->val2 / 100;
 		}
 
 		sregen->hp = cap_value(val, 0, SHRT_MAX);
@@ -5047,10 +5212,10 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			val += 3 + 3 * skill;
 
 		if (sc && sc->count) {
-			if (sc->data[SC_ANCILLA])
-				val += sc->data[SC_ANCILLA]->val2 / 100;
-			if (sc->data[SC_INCREASE_MAXSP])
-				val += val * sc->data[SC_INCREASE_MAXSP]->val2 / 100;
+			if (sc->getSCE(SC_ANCILLA))
+				val += sc->getSCE(SC_ANCILLA)->val2 / 100;
+			if (sc->getSCE(SC_INCREASE_MAXSP))
+				val += val * sc->getSCE(SC_INCREASE_MAXSP)->val2 / 100;
 		}
 
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
@@ -5108,7 +5273,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
  * @param regen: Object's base regeneration data
  * @param sc: Object's status change data
  */
-void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc)
+void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, status_change *sc)
 {
 	if (!(bl->type&BL_REGEN) || !regen)
 		return;
@@ -5136,33 +5301,33 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		return;
 
 	// No HP or SP regen
-	if ((sc->data[SC_POISON] && !sc->data[SC_SLOWPOISON])
-		|| (sc->data[SC_DPOISON] && !sc->data[SC_SLOWPOISON])
-		|| sc->data[SC_BERSERK]
-		|| sc->data[SC_TRICKDEAD]
-		|| sc->data[SC_BLEEDING]
-		|| (sc->data[SC_MAGICMUSHROOM] && sc->data[SC_MAGICMUSHROOM]->val3 == 1)
-		|| sc->data[SC_SATURDAYNIGHTFEVER]
-		|| sc->data[SC_REBOUND])
+	if ((sc->getSCE(SC_POISON) && !sc->getSCE(SC_SLOWPOISON))
+		|| (sc->getSCE(SC_DPOISON) && !sc->getSCE(SC_SLOWPOISON))
+		|| sc->getSCE(SC_BERSERK)
+		|| sc->getSCE(SC_TRICKDEAD)
+		|| sc->getSCE(SC_BLEEDING)
+		|| (sc->getSCE(SC_MAGICMUSHROOM) && sc->getSCE(SC_MAGICMUSHROOM)->val3 == 1)
+		|| sc->getSCE(SC_SATURDAYNIGHTFEVER)
+		|| sc->getSCE(SC_REBOUND))
 		regen->flag = RGN_NONE;
 
 	// No natural SP regen
-	if (sc->data[SC_DANCING] ||
+	if (sc->getSCE(SC_DANCING) ||
 #ifdef RENEWAL
-		sc->data[SC_MAXIMIZEPOWER] ||
+		sc->getSCE(SC_MAXIMIZEPOWER) ||
 #endif
 #ifndef RENEWAL
 		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
-		(sc->data[SC_EXTREMITYFIST] || sc->data[SC_EXPLOSIONSPIRITS]) && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)) ||
+		(sc->getSCE(SC_EXTREMITYFIST) || sc->getSCE(SC_EXPLOSIONSPIRITS)) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK)) ||
 #else
 		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
-		sc->data[SC_EXTREMITYFIST] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)) ||
+		sc->getSCE(SC_EXTREMITYFIST) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK)) ||
 #endif
-		(sc->data[SC_OBLIVIONCURSE] && sc->data[SC_OBLIVIONCURSE]->val3 == 1))
+		(sc->getSCE(SC_OBLIVIONCURSE) && sc->getSCE(SC_OBLIVIONCURSE)->val3 == 1))
 		regen->flag &= ~RGN_SP;
 
-	if (sc->data[SC_TENSIONRELAX]) {
-		if (sc->data[SC_WEIGHT50] || sc->data[SC_WEIGHT90])
+	if (sc->getSCE(SC_TENSIONRELAX)) {
+		if (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90))
 			regen->state.overweight = 0; // 1x HP regen
 		else {
 			regen->rate.hp += 200;
@@ -5171,25 +5336,25 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		}
 	}
 
-	if (sc->data[SC_MAGNIFICAT])
+	if (sc->getSCE(SC_MAGNIFICAT))
 		regen->rate.sp += 100;
 
-	if (sc->data[SC_REGENERATION]) {
-		const struct status_change_entry *sce = sc->data[SC_REGENERATION];
+	if (sc->getSCE(SC_REGENERATION)) {
+		const struct status_change_entry *sce = sc->getSCE(SC_REGENERATION);
 		if (!sce->val4) {
 			regen->rate.hp += (sce->val2*100);
 			regen->rate.sp += (sce->val3*100);
 		} else
 			regen->flag &= ~sce->val4; // Remove regen as specified by val4
 	}
-	if(sc->data[SC_GT_REVITALIZE]) {
-		regen->hp += cap_value(regen->hp * sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
+	if(sc->getSCE(SC_GT_REVITALIZE)) {
+		regen->hp += cap_value(regen->hp * sc->getSCE(SC_GT_REVITALIZE)->val3/100, 1, SHRT_MAX);
 		regen->state.walk = 1;
 	}
-	if (sc->data[SC_EXTRACT_WHITE_POTION_Z])
-		regen->hp += cap_value(regen->hp * sc->data[SC_EXTRACT_WHITE_POTION_Z]->val1 / 100, 1, SHRT_MAX);
-	if (sc->data[SC_VITATA_500])
-		regen->sp += cap_value(regen->sp * sc->data[SC_VITATA_500]->val1 / 100, 1, SHRT_MAX);
+	if (sc->getSCE(SC_EXTRACT_WHITE_POTION_Z))
+		regen->hp += cap_value(regen->hp * sc->getSCE(SC_EXTRACT_WHITE_POTION_Z)->val1 / 100, 1, SHRT_MAX);
+	if (sc->getSCE(SC_VITATA_500))
+		regen->sp += cap_value(regen->sp * sc->getSCE(SC_VITATA_500)->val1 / 100, 1, SHRT_MAX);
 	if (bl->type == BL_ELEM) { // Recovery bonus only applies to the Elementals.
 		int ele_class = status_get_class(bl);
 
@@ -5198,21 +5363,21 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		case ELEMENTALID_AGNI_M:
 		case ELEMENTALID_AGNI_L:
 		case ELEMENTALID_ARDOR:
-			if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 1)
+			if (sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 1)
 				regen->rate.hp += 100;
 			break;
 		case ELEMENTALID_AQUA_S:
 		case ELEMENTALID_AQUA_M:
 		case ELEMENTALID_AQUA_L:
 		case ELEMENTALID_DILUVIO:
-			if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 1)
+			if (sc->getSCE(SC_WATER_INSIGNIA) && sc->getSCE(SC_WATER_INSIGNIA)->val1 == 1)
 				regen->rate.hp += 100;
 			break;
 		case ELEMENTALID_VENTUS_S:
 		case ELEMENTALID_VENTUS_M:
 		case ELEMENTALID_VENTUS_L:
 		case ELEMENTALID_PROCELLA:
-			if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 1)
+			if (sc->getSCE(SC_WIND_INSIGNIA) && sc->getSCE(SC_WIND_INSIGNIA)->val1 == 1)
 				regen->rate.hp += 100;
 			break;
 		case ELEMENTALID_TERA_S:
@@ -5220,30 +5385,30 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		case ELEMENTALID_TERA_L:
 		case ELEMENTALID_TERREMOTUS:
 		case ELEMENTALID_SERPENS:
-			if (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 1)
+			if (sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 1)
 				regen->rate.hp += 100;
 			break;
 		}
 	}
 
-	if (sc->data[SC_CATNIPPOWDER]) {
+	if (sc->getSCE(SC_CATNIPPOWDER)) {
 		regen->rate.hp *= 2;
 		regen->rate.sp *= 2;
 	}
-	if (sc->data[SC_SHRIMPBLESSING])
+	if (sc->getSCE(SC_SHRIMPBLESSING))
 		regen->rate.sp += 50;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN]) {
-		if (sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HPREGEN)
+	if (sc->getSCE(SC_NIBELUNGEN)) {
+		if (sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_HPREGEN)
 			regen->rate.hp += 100;
-		else if (sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_SPREGEN)
+		else if (sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_SPREGEN)
 			regen->rate.sp += 100;
 	}
 #endif
-	if (sc->data[SC_SIRCLEOFNATURE])
-		regen->rate.hp += sc->data[SC_SIRCLEOFNATURE]->val2;
-	if (sc->data[SC_SONGOFMANA])
-		regen->rate.sp += sc->data[SC_SONGOFMANA]->val3;
+	if (sc->getSCE(SC_SIRCLEOFNATURE))
+		regen->rate.hp += sc->getSCE(SC_SIRCLEOFNATURE)->val2;
+	if (sc->getSCE(SC_SONGOFMANA))
+		regen->rate.sp += sc->getSCE(SC_SONGOFMANA)->val3;
 }
 
 /**
@@ -5253,7 +5418,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
  * @param flag: Which state to apply to bl
  * @param start: (1) start state, (0) remove state
  */
-void status_calc_state( struct block_list *bl, struct status_change *sc, std::bitset<SCS_MAX> flag, bool start )
+void status_calc_state( struct block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start )
 {
 
 	/// No sc at all, we can zero without any extra weight over our conciousness
@@ -5267,24 +5432,23 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 		if( !flag[SCS_NOMOVECOND] )
 			sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
 		else if(
-				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
+				     (sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_SELF)	// cannot move while gospel is in effect
 #ifndef RENEWAL
-				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
-				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
+				  || (sc->getSCE(SC_BASILICA) && sc->getSCE(SC_BASILICA)->val4 == bl->id) // Basilica caster cannot move
+				  || (sc->getSCE(SC_GRAVITATION) && sc->getSCE(SC_GRAVITATION)->val3 == BCT_SELF)
 #endif
-				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
-				  || (sc->data[SC_MAGNETICFIELD] && sc->data[SC_MAGNETICFIELD]->val2 != bl->id)
-				  || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
-				  || (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
-				  || (sc->data[SC_HIDING] && (bl->type != BL_PC || (pc_checkskill(BL_CAST(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
-				  || (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
+				  || (sc->getSCE(SC_CAMOUFLAGE) && sc->getSCE(SC_CAMOUFLAGE)->val1 < 3)
+				  || (sc->getSCE(SC_MAGNETICFIELD) && sc->getSCE(SC_MAGNETICFIELD)->val2 != bl->id)
+				  || (sc->getSCE(SC_FEAR) && sc->getSCE(SC_FEAR)->val2 > 0)
+				  || (sc->getSCE(SC_HIDING) && (bl->type != BL_PC || (pc_checkskill(BL_CAST(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
+				  || (sc->getSCE(SC_DANCING) && sc->getSCE(SC_DANCING)->val4 && (
 #ifndef RENEWAL
-						!sc->data[SC_LONGING] ||
+						!sc->getSCE(SC_LONGING) ||
 #endif
-						(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
-						(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
+						(sc->getSCE(SC_DANCING)->val1&0xFFFF) == CG_MOONLIT ||
+						(sc->getSCE(SC_DANCING)->val1&0xFFFF) == CG_HERMODE
 						))
-				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
+				  || (sc->getSCE(SC_CRYSTALIZE) && bl->type != BL_MOB)
  				 )
 				 sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
 	}
@@ -5293,7 +5457,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 	if( flag[SCS_NOCAST] ) {
 		if( !flag[SCS_NOCASTCOND] )
 			sc->cant.cast += (start ? 1 : ((sc->cant.cast) ? -1 : 0));
-		else if (sc->data[SC_OBLIVIONCURSE] && sc->data[SC_OBLIVIONCURSE]->val3 == 1)
+		else if (sc->getSCE(SC_OBLIVIONCURSE) && sc->getSCE(SC_OBLIVIONCURSE)->val3 == 1)
 			sc->cant.cast += (start ? 1 : ((sc->cant.cast) ? -1 : 0));
 	}
 
@@ -5301,7 +5465,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 	if( flag[SCS_NOCHAT] ) {
 		if( !flag[SCS_NOCHATCOND] )
 			sc->cant.chat += (start ? 1 : ((sc->cant.chat) ? -1 : 0));
-		else if(sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOCHAT)
+		else if(sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOCHAT)
 			sc->cant.chat += (start ? 1 : ((sc->cant.chat) ? -1 : 0));
 	}
 
@@ -5317,7 +5481,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 	if (flag[SCS_NOWARP]) {
 		if (!flag[SCS_NOWARPCOND])
 			sc->cant.warp += (start ? 1 : ((sc->cant.warp) ? -1 : 0));
-		/*else if (sc->data[])
+		/*else if (sc->getSCE())
 			sc->cant.warp += ( start ? 1 : ((sc->cant.warp)? -1:0) );*/
 	}
 
@@ -5327,7 +5491,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 		if( flag[SCS_NOPICKITEM] ) {
 			if( !flag[SCS_NOPICKITEMCOND] )
 				sc->cant.pickup += (start ? 1 : ((sc->cant.pickup) ? -1 : 0));
-			else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
+			else if( (sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOITEM) )
 				sc->cant.pickup += (start ? 1 : ((sc->cant.pickup) ? -1 : 0));
 		}
 
@@ -5335,7 +5499,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 		if( flag[SCS_NODROPITEM] ) {
 			if( !flag[SCS_NODROPITEMCOND] )
 				sc->cant.drop += (start ? 1 : ((sc->cant.drop) ? -1 : 0));
-			else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
+			else if( (sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOITEM) )
 				sc->cant.drop += (start ? 1 : ((sc->cant.drop) ? -1 : 0));
 		}
 
@@ -5359,8 +5523,8 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 		if( flag[SCS_NOCONSUMEITEM]) {
 			if( !flag[SCS_NOCONSUMEITEMCOND] )
 				sc->cant.consume += (start ? 1 : ((sc->cant.consume) ? -1 : 0));
-			else if( (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF) ||
-				 (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
+			else if( (sc->getSCE(SC_GRAVITATION) && sc->getSCE(SC_GRAVITATION)->val3 == BCT_SELF) ||
+				 (sc->getSCE(SC_NOCHAT) && sc->getSCE(SC_NOCHAT)->val1&MANNER_NOITEM) )
 				sc->cant.consume += (start ? 1 : ((sc->cant.consume) ? -1 : 0));
 		}
 
@@ -5368,7 +5532,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 		if (flag[SCS_NODEATHPENALTY]) {
 			if (!flag[SCS_NODEATHPENALTYCOND])
 				sc->cant.deathpenalty += (start ? 1 : ((sc->cant.deathpenalty) ? -1 : 0));
-			/*else if (sc->data[])
+			/*else if (sc->getSCE())
 				sc->cant.deathpenalty += ( start ? 1 : ((sc->cant.deathpenalty)? -1:0) );*/
 		}
 
@@ -5376,7 +5540,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 		if (flag[SCS_NOINTERACT]) {
 			if (!flag[SCS_NOINTERACTCOND])
 				sc->cant.interact += (start ? 1 : ((sc->cant.interact) ? -1 : 0));
-			/*else if (sc->data[])
+			/*else if (sc->getSCE())
 				sc->cant.interact += ( start ? 1 : ((sc->cant.interact)? -1:0) );*/
 		}
 	}
@@ -5394,7 +5558,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 {
 	const struct status_data *b_status = status_get_base_status(bl); // Base Status
 	struct status_data *status = status_get_status_data(bl); // Battle Status
-	struct status_change *sc = status_get_sc(bl);
+	status_change *sc = status_get_sc(bl);
 	TBL_PC *sd = BL_CAST(BL_PC,bl);
 	int temp;
 
@@ -5630,7 +5794,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 #ifdef RENEWAL
 			+ (int)( ((float)status->dex/5 - (float)b_status->dex/5) + ((float)status->vit/5 - (float)b_status->vit/5) )
 #else
-			+ ((status->vit - b_status->vit)>>1)
+			+ ((status->vit - b_status->vit) / 2)
 #endif
 			);
 	}
@@ -5655,12 +5819,16 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		if (status->luk == b_status->luk)
 			status->cri = status_calc_critical(bl, sc, b_status->cri);
 		else
+#ifdef RENEWAL
 			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk));
+#else
+			status->cri = status_calc_critical(bl, sc, b_status->cri + (status->luk - b_status->luk)*10/3);
+#endif
 
 		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
 		if (sd) {
 			if (sd->status.weapon == W_KATAR)
-				status->cri <<= 1;
+				status->cri *= 2;
 		}
 	}
 
@@ -5821,7 +5989,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		}
 
 		if ((bl->type&BL_HOM && battle_config.hom_setting&HOMSET_SAME_MATK)  /// Hom Min Matk is always the same as Max Matk
-				|| (sc && sc->data[SC_RECOGNIZEDSPELL]))
+				|| (sc && sc->getSCE(SC_RECOGNIZEDSPELL)))
 			status->matk_min = status->matk_max;
 
 #ifdef RENEWAL
@@ -5998,7 +6166,7 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 	struct status_data* status; // Pointer to current battle status
 
 	if (bl->type == BL_PC) {
-		struct map_session_data *sd = BL_CAST(BL_PC, bl);
+		map_session_data *sd = BL_CAST(BL_PC, bl);
 
 		if (sd->delayed_damage != 0) {
 			if (opt&SCO_FORCE)
@@ -6217,82 +6385,83 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
  * @param str: Initial str
  * @return modified str with cap_value(str,0,USHRT_MAX)
  */
-static unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, int str)
+static unsigned short status_calc_str(struct block_list *bl, status_change *sc, int str)
 {
 	if(!sc || !sc->count)
 		return cap_value(str,0,USHRT_MAX);
 
-	if(sc->data[SC_HARMONIZE]) {
-		str -= sc->data[SC_HARMONIZE]->val2;
+	if(sc->getSCE(SC_HARMONIZE)) {
+		str -= sc->getSCE(SC_HARMONIZE)->val2;
 		return (unsigned short)cap_value(str,0,USHRT_MAX);
 	}
-	if(sc->data[SC_INCALLSTATUS])
-		str += sc->data[SC_INCALLSTATUS]->val1;
-	if(sc->data[SC_CHASEWALK2])
-		str += sc->data[SC_CHASEWALK2]->val1;
-	if(sc->data[SC_INCSTR])
-		str += sc->data[SC_INCSTR]->val1;
-	if(sc->data[SC_STRFOOD])
-		str += sc->data[SC_STRFOOD]->val1;
-	if(sc->data[SC_FOOD_STR_CASH])
-		str += sc->data[SC_FOOD_STR_CASH]->val1;
-	if(sc->data[SC_BATTLEORDERS])
+	if(sc->getSCE(SC_INCALLSTATUS))
+		str += sc->getSCE(SC_INCALLSTATUS)->val1;
+	if(sc->getSCE(SC_CHASEWALK2))
+		str += sc->getSCE(SC_CHASEWALK2)->val1;
+	if(sc->getSCE(SC_INCSTR))
+		str += sc->getSCE(SC_INCSTR)->val1;
+	if(sc->getSCE(SC_STRFOOD))
+		str += sc->getSCE(SC_STRFOOD)->val1;
+	if(sc->getSCE(SC_FOOD_STR_CASH))
+		str += sc->getSCE(SC_FOOD_STR_CASH)->val1;
+	if(sc->getSCE(SC_BATTLEORDERS))
 		str += 5;
-	if(sc->data[SC_LEADERSHIP])
-		str += sc->data[SC_LEADERSHIP]->val1;
-	if(sc->data[SC_LOUD])
+	if(sc->getSCE(SC_LEADERSHIP))
+		str += sc->getSCE(SC_LEADERSHIP)->val1;
+	if(sc->getSCE(SC_LOUD))
 		str += 4;
-	if(sc->data[SC_TRUESIGHT])
+	if(sc->getSCE(SC_TRUESIGHT))
 		str += 5;
-	if(sc->data[SC_SPURT])
+	if(sc->getSCE(SC_SPURT))
 		str += 10;
-	if(sc->data[SC_NEN])
-		str += sc->data[SC_NEN]->val1;
-	if(sc->data[SC_BLESSING]) {
-		if(sc->data[SC_BLESSING]->val2)
-			str += sc->data[SC_BLESSING]->val2;
+	if(sc->getSCE(SC_NEN))
+		str += sc->getSCE(SC_NEN)->val1;
+	if(sc->getSCE(SC_BLESSING)) {
+		if(sc->getSCE(SC_BLESSING)->val2)
+			str += sc->getSCE(SC_BLESSING)->val2;
 		else
 			str -= str / 2;
 	}
-	if(sc->data[SC_MARIONETTE])
-		str -= ((sc->data[SC_MARIONETTE]->val3)>>16)&0xFF;
-	if(sc->data[SC_MARIONETTE2])
-		str += ((sc->data[SC_MARIONETTE2]->val3)>>16)&0xFF;
-	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
-		str += ((sc->data[SC_SPIRIT]->val3)>>16)&0xFF;
-	if(sc->data[SC_GIANTGROWTH])
-		str += sc->data[SC_GIANTGROWTH]->val2;
-	if(sc->data[SC_BEYONDOFWARCRY])
-		str -= sc->data[SC_BEYONDOFWARCRY]->val2;
-	if(sc->data[SC_SAVAGE_STEAK])
-		str += sc->data[SC_SAVAGE_STEAK]->val1;
-	if(sc->data[SC_INSPIRATION])
-		str += sc->data[SC_INSPIRATION]->val3;
-	if(sc->data[SC_STOMACHACHE])
-		str -= sc->data[SC_STOMACHACHE]->val1;
-	if(sc->data[SC_KYOUGAKU])
-		str -= sc->data[SC_KYOUGAKU]->val2;
-	if(sc->data[SC_SWORDCLAN])
+	if(sc->getSCE(SC_MARIONETTE))
+		str -= ((sc->getSCE(SC_MARIONETTE)->val3)>>16)&0xFF;
+	if(sc->getSCE(SC_MARIONETTE2))
+		str += ((sc->getSCE(SC_MARIONETTE2)->val3)>>16)&0xFF;
+	if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
+		str += ((sc->getSCE(SC_SPIRIT)->val3)>>16)&0xFF;
+	if(sc->getSCE(SC_GIANTGROWTH))
+		str += sc->getSCE(SC_GIANTGROWTH)->val2;
+	if(sc->getSCE(SC_BEYONDOFWARCRY))
+		str -= sc->getSCE(SC_BEYONDOFWARCRY)->val2;
+	if(sc->getSCE(SC_SAVAGE_STEAK))
+		str += sc->getSCE(SC_SAVAGE_STEAK)->val1;
+	if(sc->getSCE(SC_INSPIRATION))
+		str += sc->getSCE(SC_INSPIRATION)->val3;
+	if(sc->getSCE(SC_STOMACHACHE))
+		str -= sc->getSCE(SC_STOMACHACHE)->val1;
+	if(sc->getSCE(SC_KYOUGAKU))
+		str -= sc->getSCE(SC_KYOUGAKU)->val2;
+	if(sc->getSCE(SC_SWORDCLAN))
 		str += 1;
-	if(sc->data[SC_JUMPINGCLAN])
+	if(sc->getSCE(SC_JUMPINGCLAN))
 		str += 1;
-	if(sc->data[SC_FULL_THROTTLE])
-		str += str * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP])
+	if(sc->getSCE(SC_FULL_THROTTLE))
+		str += str * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
+	if(sc->getSCE(SC_CHEERUP))
 		str += 3;
-	if(sc->data[SC_GLASTHEIM_STATE])
-		str += sc->data[SC_GLASTHEIM_STATE]->val1;
+	if(sc->getSCE(SC_GLASTHEIM_STATE))
+		str += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		str += 15;
 #endif
-	if (sc->data[SC_UNIVERSESTANCE])
-		str += sc->data[SC_UNIVERSESTANCE]->val2;
-	if (sc->data[SC_ALMIGHTY])
-		str += sc->data[SC_ALMIGHTY]->val1;
-	if (sc->data[SC_ULTIMATECOOK])
-		str += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->getSCE(SC_UNIVERSESTANCE))
+		str += sc->getSCE(SC_UNIVERSESTANCE)->val2;
+	if (sc->getSCE(SC_ULTIMATECOOK))
+		str += sc->getSCE(SC_ULTIMATECOOK)->val1;
+	if (sc->getSCE(SC_ALL_STAT_DOWN))
+		str -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
+	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(str,0,USHRT_MAX);
 }
 
@@ -6303,80 +6472,81 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
  * @param agi: Initial agi
  * @return modified agi with cap_value(agi,0,USHRT_MAX)
  */
-static unsigned short status_calc_agi(struct block_list *bl, struct status_change *sc, int agi)
+static unsigned short status_calc_agi(struct block_list *bl, status_change *sc, int agi)
 {
 	if(!sc || !sc->count)
 		return cap_value(agi,0,USHRT_MAX);
 
-	if(sc->data[SC_HARMONIZE]) {
-		agi -= sc->data[SC_HARMONIZE]->val2;
+	if(sc->getSCE(SC_HARMONIZE)) {
+		agi -= sc->getSCE(SC_HARMONIZE)->val2;
 		return (unsigned short)cap_value(agi,0,USHRT_MAX);
 	}
-	if(sc->data[SC_CONCENTRATE] && !sc->data[SC_QUAGMIRE])
-		agi += (agi-sc->data[SC_CONCENTRATE]->val3)*sc->data[SC_CONCENTRATE]->val2/100;
-	if(sc->data[SC_INCALLSTATUS])
-		agi += sc->data[SC_INCALLSTATUS]->val1;
-	if(sc->data[SC_INCAGI])
-		agi += sc->data[SC_INCAGI]->val1;
-	if(sc->data[SC_AGIFOOD])
-		agi += sc->data[SC_AGIFOOD]->val1;
-	if(sc->data[SC_FOOD_AGI_CASH])
-		agi += sc->data[SC_FOOD_AGI_CASH]->val1;
-	if(sc->data[SC_SOULCOLD])
-		agi += sc->data[SC_SOULCOLD]->val1;
-	if(sc->data[SC_TRUESIGHT])
+	if(sc->getSCE(SC_CONCENTRATE) && !sc->getSCE(SC_QUAGMIRE))
+		agi += (agi-sc->getSCE(SC_CONCENTRATE)->val3)*sc->getSCE(SC_CONCENTRATE)->val2/100;
+	if(sc->getSCE(SC_INCALLSTATUS))
+		agi += sc->getSCE(SC_INCALLSTATUS)->val1;
+	if(sc->getSCE(SC_INCAGI))
+		agi += sc->getSCE(SC_INCAGI)->val1;
+	if(sc->getSCE(SC_AGIFOOD))
+		agi += sc->getSCE(SC_AGIFOOD)->val1;
+	if(sc->getSCE(SC_FOOD_AGI_CASH))
+		agi += sc->getSCE(SC_FOOD_AGI_CASH)->val1;
+	if(sc->getSCE(SC_SOULCOLD))
+		agi += sc->getSCE(SC_SOULCOLD)->val1;
+	if(sc->getSCE(SC_TRUESIGHT))
 		agi += 5;
-	if(sc->data[SC_INCREASEAGI])
-		agi += sc->data[SC_INCREASEAGI]->val2;
-	if(sc->data[SC_INCREASING])
+	if(sc->getSCE(SC_INCREASEAGI))
+		agi += sc->getSCE(SC_INCREASEAGI)->val2;
+	if(sc->getSCE(SC_INCREASING))
 		agi += 4; // Added based on skill updates [Reddozen]
-	if(sc->data[SC_DECREASEAGI])
-		agi -= sc->data[SC_DECREASEAGI]->val2;
-	if(sc->data[SC_QUAGMIRE])
-		agi -= sc->data[SC_QUAGMIRE]->val2;
-	if(sc->data[SC_SUITON] && sc->data[SC_SUITON]->val3)
-		agi -= sc->data[SC_SUITON]->val2;
-	if(sc->data[SC_MARIONETTE])
-		agi -= ((sc->data[SC_MARIONETTE]->val3)>>8)&0xFF;
-	if(sc->data[SC_MARIONETTE2])
-		agi += ((sc->data[SC_MARIONETTE2]->val3)>>8)&0xFF;
-	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
-		agi += ((sc->data[SC_SPIRIT]->val3)>>8)&0xFF;
-	if(sc->data[SC_ADORAMUS])
-		agi -= sc->data[SC_ADORAMUS]->val2;
-	if(sc->data[SC_MARSHOFABYSS])
-		agi -= agi * sc->data[SC_MARSHOFABYSS]->val2 / 100;
-	if(sc->data[SC_DROCERA_HERB_STEAMED])
-		agi += sc->data[SC_DROCERA_HERB_STEAMED]->val1;
-	if(sc->data[SC_INSPIRATION])
-		agi += sc->data[SC_INSPIRATION]->val3;
-	if(sc->data[SC_STOMACHACHE])
-		agi -= sc->data[SC_STOMACHACHE]->val1;
-	if(sc->data[SC_KYOUGAKU])
-		agi -= sc->data[SC_KYOUGAKU]->val2;
-	if(sc->data[SC_CROSSBOWCLAN])
+	if(sc->getSCE(SC_DECREASEAGI))
+		agi -= sc->getSCE(SC_DECREASEAGI)->val2;
+	if(sc->getSCE(SC_QUAGMIRE))
+		agi -= sc->getSCE(SC_QUAGMIRE)->val2;
+	if(sc->getSCE(SC_SUITON) && sc->getSCE(SC_SUITON)->val3)
+		agi -= sc->getSCE(SC_SUITON)->val2;
+	if(sc->getSCE(SC_MARIONETTE))
+		agi -= ((sc->getSCE(SC_MARIONETTE)->val3)>>8)&0xFF;
+	if(sc->getSCE(SC_MARIONETTE2))
+		agi += ((sc->getSCE(SC_MARIONETTE2)->val3)>>8)&0xFF;
+	if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
+		agi += ((sc->getSCE(SC_SPIRIT)->val3)>>8)&0xFF;
+	if(sc->getSCE(SC_ADORAMUS))
+		agi -= sc->getSCE(SC_ADORAMUS)->val2;
+	if(sc->getSCE(SC_MARSHOFABYSS))
+		agi -= agi * sc->getSCE(SC_MARSHOFABYSS)->val2 / 100;
+	if(sc->getSCE(SC_DROCERA_HERB_STEAMED))
+		agi += sc->getSCE(SC_DROCERA_HERB_STEAMED)->val1;
+	if(sc->getSCE(SC_INSPIRATION))
+		agi += sc->getSCE(SC_INSPIRATION)->val3;
+	if(sc->getSCE(SC_STOMACHACHE))
+		agi -= sc->getSCE(SC_STOMACHACHE)->val1;
+	if(sc->getSCE(SC_KYOUGAKU))
+		agi -= sc->getSCE(SC_KYOUGAKU)->val2;
+	if(sc->getSCE(SC_CROSSBOWCLAN))
 		agi += 1;
-	if(sc->data[SC_JUMPINGCLAN])
+	if(sc->getSCE(SC_JUMPINGCLAN))
 		agi += 1;
-	if(sc->data[SC_FULL_THROTTLE])
-		agi += agi * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if (sc->data[SC_ARCLOUSEDASH])
-		agi += sc->data[SC_ARCLOUSEDASH]->val2;
-	if(sc->data[SC_CHEERUP])
+	if(sc->getSCE(SC_FULL_THROTTLE))
+		agi += agi * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
+	if (sc->getSCE(SC_ARCLOUSEDASH))
+		agi += sc->getSCE(SC_ARCLOUSEDASH)->val2;
+	if(sc->getSCE(SC_CHEERUP))
 		agi += 3;
-	if(sc->data[SC_GLASTHEIM_STATE])
-		agi += sc->data[SC_GLASTHEIM_STATE]->val1;
+	if(sc->getSCE(SC_GLASTHEIM_STATE))
+		agi += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		agi += 15;
 #endif
-	if (sc->data[SC_UNIVERSESTANCE])
-		agi += sc->data[SC_UNIVERSESTANCE]->val2;
-	if (sc->data[SC_ALMIGHTY])
-		agi += sc->data[SC_ALMIGHTY]->val1;
-	if (sc->data[SC_ULTIMATECOOK])
-		agi += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->getSCE(SC_UNIVERSESTANCE))
+		agi += sc->getSCE(SC_UNIVERSESTANCE)->val2;
+	if (sc->getSCE(SC_ULTIMATECOOK))
+		agi += sc->getSCE(SC_ULTIMATECOOK)->val1;
+	if (sc->getSCE(SC_ALL_STAT_DOWN))
+		agi -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
+	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(agi,0,USHRT_MAX);
 }
 
@@ -6387,72 +6557,73 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
  * @param vit: Initial vit
  * @return modified vit with cap_value(vit,0,USHRT_MAX)
  */
-static unsigned short status_calc_vit(struct block_list *bl, struct status_change *sc, int vit)
+static unsigned short status_calc_vit(struct block_list *bl, status_change *sc, int vit)
 {
 	if(!sc || !sc->count)
 		return cap_value(vit,0,USHRT_MAX);
 
-	if(sc->data[SC_HARMONIZE]) {
-		vit -= sc->data[SC_HARMONIZE]->val2;
+	if(sc->getSCE(SC_HARMONIZE)) {
+		vit -= sc->getSCE(SC_HARMONIZE)->val2;
 		return (unsigned short)cap_value(vit,0,USHRT_MAX);
 	}
-	if(sc->data[SC_INCALLSTATUS])
-		vit += sc->data[SC_INCALLSTATUS]->val1;
-	if(sc->data[SC_INCVIT])
-		vit += sc->data[SC_INCVIT]->val1;
-	if(sc->data[SC_VITFOOD])
-		vit += sc->data[SC_VITFOOD]->val1;
-	if(sc->data[SC_FOOD_VIT_CASH])
-		vit += sc->data[SC_FOOD_VIT_CASH]->val1;
-	if(sc->data[SC_CHANGE])
-		vit += sc->data[SC_CHANGE]->val2;
-	if(sc->data[SC_GLORYWOUNDS])
-		vit += sc->data[SC_GLORYWOUNDS]->val1;
-	if(sc->data[SC_TRUESIGHT])
+	if(sc->getSCE(SC_INCALLSTATUS))
+		vit += sc->getSCE(SC_INCALLSTATUS)->val1;
+	if(sc->getSCE(SC_INCVIT))
+		vit += sc->getSCE(SC_INCVIT)->val1;
+	if(sc->getSCE(SC_VITFOOD))
+		vit += sc->getSCE(SC_VITFOOD)->val1;
+	if(sc->getSCE(SC_FOOD_VIT_CASH))
+		vit += sc->getSCE(SC_FOOD_VIT_CASH)->val1;
+	if(sc->getSCE(SC_CHANGE))
+		vit += sc->getSCE(SC_CHANGE)->val2;
+	if(sc->getSCE(SC_GLORYWOUNDS))
+		vit += sc->getSCE(SC_GLORYWOUNDS)->val1;
+	if(sc->getSCE(SC_TRUESIGHT))
 		vit += 5;
-	if(sc->data[SC_MARIONETTE])
-		vit -= sc->data[SC_MARIONETTE]->val3&0xFF;
-	if(sc->data[SC_MARIONETTE2])
-		vit += sc->data[SC_MARIONETTE2]->val3&0xFF;
-	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
-		vit += sc->data[SC_SPIRIT]->val3&0xFF;
-	if(sc->data[SC_MINOR_BBQ])
-		vit += sc->data[SC_MINOR_BBQ]->val1;
-	if(sc->data[SC_INSPIRATION])
-		vit += sc->data[SC_INSPIRATION]->val3;
-	if(sc->data[SC_STOMACHACHE])
-		vit -= sc->data[SC_STOMACHACHE]->val1;
-	if(sc->data[SC_KYOUGAKU])
-		vit -= sc->data[SC_KYOUGAKU]->val2;
-	if(sc->data[SC_SWORDCLAN])
+	if(sc->getSCE(SC_MARIONETTE))
+		vit -= sc->getSCE(SC_MARIONETTE)->val3&0xFF;
+	if(sc->getSCE(SC_MARIONETTE2))
+		vit += sc->getSCE(SC_MARIONETTE2)->val3&0xFF;
+	if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
+		vit += sc->getSCE(SC_SPIRIT)->val3&0xFF;
+	if(sc->getSCE(SC_MINOR_BBQ))
+		vit += sc->getSCE(SC_MINOR_BBQ)->val1;
+	if(sc->getSCE(SC_INSPIRATION))
+		vit += sc->getSCE(SC_INSPIRATION)->val3;
+	if(sc->getSCE(SC_STOMACHACHE))
+		vit -= sc->getSCE(SC_STOMACHACHE)->val1;
+	if(sc->getSCE(SC_KYOUGAKU))
+		vit -= sc->getSCE(SC_KYOUGAKU)->val2;
+	if(sc->getSCE(SC_SWORDCLAN))
 		vit += 1;
-	if(sc->data[SC_JUMPINGCLAN])
+	if(sc->getSCE(SC_JUMPINGCLAN))
 		vit += 1;
-	if(sc->data[SC_STRIPARMOR] && bl->type != BL_PC)
-		vit -= vit * sc->data[SC_STRIPARMOR]->val2/100;
-	if(sc->data[SC_FULL_THROTTLE])
-		vit += vit * sc->data[SC_FULL_THROTTLE]->val3 / 100;
+	if(sc->getSCE(SC_STRIPARMOR) && bl->type != BL_PC)
+		vit -= vit * sc->getSCE(SC_STRIPARMOR)->val2/100;
+	if(sc->getSCE(SC_FULL_THROTTLE))
+		vit += vit * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
 #ifdef RENEWAL
-	if(sc->data[SC_DEFENCE])
-		vit += sc->data[SC_DEFENCE]->val2;
+	if(sc->getSCE(SC_DEFENCE))
+		vit += sc->getSCE(SC_DEFENCE)->val2;
 #endif
-	if(sc->data[SC_CHEERUP])
+	if(sc->getSCE(SC_CHEERUP))
 		vit += 3;
-	if(sc->data[SC_GLASTHEIM_STATE])
-		vit += sc->data[SC_GLASTHEIM_STATE]->val1;
+	if(sc->getSCE(SC_GLASTHEIM_STATE))
+		vit += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		vit += 15;
 #endif
-	if (sc->data[SC_UNIVERSESTANCE])
-		vit += sc->data[SC_UNIVERSESTANCE]->val2;
-	if (sc->data[SC_ALMIGHTY])
-		vit += sc->data[SC_ALMIGHTY]->val1;
-	if (sc->data[SC_ULTIMATECOOK])
-		vit += sc->data[SC_ULTIMATECOOK]->val1;
-	if (sc->data[SC_CUP_OF_BOZA])
+	if (sc->getSCE(SC_UNIVERSESTANCE))
+		vit += sc->getSCE(SC_UNIVERSESTANCE)->val2;
+	if (sc->getSCE(SC_ULTIMATECOOK))
+		vit += sc->getSCE(SC_ULTIMATECOOK)->val1;
+	if (sc->getSCE(SC_CUP_OF_BOZA))
 		vit += 10;
+	if (sc->getSCE(SC_ALL_STAT_DOWN))
+		vit -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
+	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
 }
 
@@ -6463,85 +6634,86 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
  * @param int_: Initial int
  * @return modified int with cap_value(int_,0,USHRT_MAX)
  */
-static unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, int int_)
+static unsigned short status_calc_int(struct block_list *bl, status_change *sc, int int_)
 {
 	if(!sc || !sc->count)
 		return cap_value(int_,0,USHRT_MAX);
 
-	if(sc->data[SC_HARMONIZE]) {
-		int_ -= sc->data[SC_HARMONIZE]->val2;
+	if(sc->getSCE(SC_HARMONIZE)) {
+		int_ -= sc->getSCE(SC_HARMONIZE)->val2;
 		return (unsigned short)cap_value(int_,0,USHRT_MAX);
 	}
-	if(sc->data[SC_INCALLSTATUS])
-		int_ += sc->data[SC_INCALLSTATUS]->val1;
-	if(sc->data[SC_INCINT])
-		int_ += sc->data[SC_INCINT]->val1;
-	if(sc->data[SC_INTFOOD])
-		int_ += sc->data[SC_INTFOOD]->val1;
-	if(sc->data[SC_FOOD_INT_CASH])
-		int_ += sc->data[SC_FOOD_INT_CASH]->val1;
-	if(sc->data[SC_CHANGE])
-		int_ += sc->data[SC_CHANGE]->val3;
-	if(sc->data[SC_BATTLEORDERS])
+	if(sc->getSCE(SC_INCALLSTATUS))
+		int_ += sc->getSCE(SC_INCALLSTATUS)->val1;
+	if(sc->getSCE(SC_INCINT))
+		int_ += sc->getSCE(SC_INCINT)->val1;
+	if(sc->getSCE(SC_INTFOOD))
+		int_ += sc->getSCE(SC_INTFOOD)->val1;
+	if(sc->getSCE(SC_FOOD_INT_CASH))
+		int_ += sc->getSCE(SC_FOOD_INT_CASH)->val1;
+	if(sc->getSCE(SC_CHANGE))
+		int_ += sc->getSCE(SC_CHANGE)->val3;
+	if(sc->getSCE(SC_BATTLEORDERS))
 		int_ += 5;
-	if(sc->data[SC_TRUESIGHT])
+	if(sc->getSCE(SC_TRUESIGHT))
 		int_ += 5;
-	if(sc->data[SC_BLESSING]) {
-		if (sc->data[SC_BLESSING]->val2)
-			int_ += sc->data[SC_BLESSING]->val2;
+	if(sc->getSCE(SC_BLESSING)) {
+		if (sc->getSCE(SC_BLESSING)->val2)
+			int_ += sc->getSCE(SC_BLESSING)->val2;
 		else
 			int_ -= int_ / 2;
 	}
-	if(sc->data[SC_NEN])
-		int_ += sc->data[SC_NEN]->val1;
-	if(sc->data[SC_MARIONETTE])
-		int_ -= ((sc->data[SC_MARIONETTE]->val4)>>16)&0xFF;
-	if(sc->data[SC_MARIONETTE2])
-		int_ += ((sc->data[SC_MARIONETTE2]->val4)>>16)&0xFF;
-	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
-		int_ += ((sc->data[SC_SPIRIT]->val4)>>16)&0xFF;
-	if(sc->data[SC_INSPIRATION])
-		int_ += sc->data[SC_INSPIRATION]->val3;
-	if(sc->data[SC_MELODYOFSINK])
-		int_ -= sc->data[SC_MELODYOFSINK]->val2;
-	if(sc->data[SC_MANDRAGORA])
-		int_ -= 4 * sc->data[SC_MANDRAGORA]->val1;
-	if(sc->data[SC_COCKTAIL_WARG_BLOOD])
-		int_ += sc->data[SC_COCKTAIL_WARG_BLOOD]->val1;
-	if(sc->data[SC_STOMACHACHE])
-		int_ -= sc->data[SC_STOMACHACHE]->val1;
-	if(sc->data[SC_KYOUGAKU])
-		int_ -= sc->data[SC_KYOUGAKU]->val2;
-	if(sc->data[SC_ARCWANDCLAN])
+	if(sc->getSCE(SC_NEN))
+		int_ += sc->getSCE(SC_NEN)->val1;
+	if(sc->getSCE(SC_MARIONETTE))
+		int_ -= ((sc->getSCE(SC_MARIONETTE)->val4)>>16)&0xFF;
+	if(sc->getSCE(SC_MARIONETTE2))
+		int_ += ((sc->getSCE(SC_MARIONETTE2)->val4)>>16)&0xFF;
+	if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
+		int_ += ((sc->getSCE(SC_SPIRIT)->val4)>>16)&0xFF;
+	if(sc->getSCE(SC_INSPIRATION))
+		int_ += sc->getSCE(SC_INSPIRATION)->val3;
+	if(sc->getSCE(SC_MELODYOFSINK))
+		int_ -= sc->getSCE(SC_MELODYOFSINK)->val2;
+	if(sc->getSCE(SC_MANDRAGORA))
+		int_ -= 4 * sc->getSCE(SC_MANDRAGORA)->val1;
+	if(sc->getSCE(SC_COCKTAIL_WARG_BLOOD))
+		int_ += sc->getSCE(SC_COCKTAIL_WARG_BLOOD)->val1;
+	if(sc->getSCE(SC_STOMACHACHE))
+		int_ -= sc->getSCE(SC_STOMACHACHE)->val1;
+	if(sc->getSCE(SC_KYOUGAKU))
+		int_ -= sc->getSCE(SC_KYOUGAKU)->val2;
+	if(sc->getSCE(SC_ARCWANDCLAN))
 		int_ += 1;
-	if(sc->data[SC_GOLDENMACECLAN])
+	if(sc->getSCE(SC_GOLDENMACECLAN))
 		int_ += 1;
-	if(sc->data[SC_JUMPINGCLAN])
+	if(sc->getSCE(SC_JUMPINGCLAN))
 		int_ += 1;
-	if(sc->data[SC_FULL_THROTTLE])
-		int_ += int_ * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP])
+	if(sc->getSCE(SC_FULL_THROTTLE))
+		int_ += int_ * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
+	if(sc->getSCE(SC_CHEERUP))
 		int_ += 3;
-	if(sc->data[SC_GLASTHEIM_STATE])
-		int_ += sc->data[SC_GLASTHEIM_STATE]->val1;
-	if (sc->data[SC_UNIVERSESTANCE])
-		int_ += sc->data[SC_UNIVERSESTANCE]->val2;
+	if(sc->getSCE(SC_GLASTHEIM_STATE))
+		int_ += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
+	if (sc->getSCE(SC_UNIVERSESTANCE))
+		int_ += sc->getSCE(SC_UNIVERSESTANCE)->val2;
 
 	if(bl->type != BL_PC) {
-		if(sc->data[SC_STRIPHELM])
-			int_ -= int_ * sc->data[SC_STRIPHELM]->val2/100;
-		if(sc->data[SC__STRIPACCESSORY])
-			int_ -= int_ * sc->data[SC__STRIPACCESSORY]->val2 / 100;
+		if(sc->getSCE(SC_STRIPHELM))
+			int_ -= int_ * sc->getSCE(SC_STRIPHELM)->val2/100;
+		if(sc->getSCE(SC__STRIPACCESSORY))
+			int_ -= int_ * sc->getSCE(SC__STRIPACCESSORY)->val2 / 100;
 	}
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		int_ += 15;
 #endif
-	if (sc->data[SC_ALMIGHTY])
-		int_ += sc->data[SC_ALMIGHTY]->val1;
-	if (sc->data[SC_ULTIMATECOOK])
-		int_ += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->getSCE(SC_ULTIMATECOOK))
+		int_ += sc->getSCE(SC_ULTIMATECOOK)->val1;
+	if (sc->getSCE(SC_ALL_STAT_DOWN))
+		int_ -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
+	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(int_,0,USHRT_MAX);
 }
 
@@ -6552,82 +6724,83 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
  * @param dex: Initial dex
  * @return modified dex with cap_value(dex,0,USHRT_MAX)
  */
-static unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, int dex)
+static unsigned short status_calc_dex(struct block_list *bl, status_change *sc, int dex)
 {
 	if(!sc || !sc->count)
 		return cap_value(dex,0,USHRT_MAX);
 
-	if(sc->data[SC_HARMONIZE]) {
-		dex -= sc->data[SC_HARMONIZE]->val2;
+	if(sc->getSCE(SC_HARMONIZE)) {
+		dex -= sc->getSCE(SC_HARMONIZE)->val2;
 		return (unsigned short)cap_value(dex,0,USHRT_MAX);
 	}
-	if(sc->data[SC_CONCENTRATE] && !sc->data[SC_QUAGMIRE])
-		dex += (dex-sc->data[SC_CONCENTRATE]->val4)*sc->data[SC_CONCENTRATE]->val2/100;
-	if(sc->data[SC_INCALLSTATUS])
-		dex += sc->data[SC_INCALLSTATUS]->val1;
-	if(sc->data[SC_INCDEX])
-		dex += sc->data[SC_INCDEX]->val1;
-	if(sc->data[SC_DEXFOOD])
-		dex += sc->data[SC_DEXFOOD]->val1;
-	if(sc->data[SC_FOOD_DEX_CASH])
-		dex += sc->data[SC_FOOD_DEX_CASH]->val1;
-	if(sc->data[SC_BATTLEORDERS])
+	if(sc->getSCE(SC_CONCENTRATE) && !sc->getSCE(SC_QUAGMIRE))
+		dex += (dex-sc->getSCE(SC_CONCENTRATE)->val4)*sc->getSCE(SC_CONCENTRATE)->val2/100;
+	if(sc->getSCE(SC_INCALLSTATUS))
+		dex += sc->getSCE(SC_INCALLSTATUS)->val1;
+	if(sc->getSCE(SC_INCDEX))
+		dex += sc->getSCE(SC_INCDEX)->val1;
+	if(sc->getSCE(SC_DEXFOOD))
+		dex += sc->getSCE(SC_DEXFOOD)->val1;
+	if(sc->getSCE(SC_FOOD_DEX_CASH))
+		dex += sc->getSCE(SC_FOOD_DEX_CASH)->val1;
+	if(sc->getSCE(SC_BATTLEORDERS))
 		dex += 5;
-	if(sc->data[SC_HAWKEYES])
-		dex += sc->data[SC_HAWKEYES]->val1;
-	if(sc->data[SC_TRUESIGHT])
+	if(sc->getSCE(SC_HAWKEYES))
+		dex += sc->getSCE(SC_HAWKEYES)->val1;
+	if(sc->getSCE(SC_TRUESIGHT))
 		dex += 5;
-	if(sc->data[SC_QUAGMIRE])
-		dex -= sc->data[SC_QUAGMIRE]->val2;
-	if(sc->data[SC_BLESSING]) {
-		if (sc->data[SC_BLESSING]->val2)
-			dex += sc->data[SC_BLESSING]->val2;
+	if(sc->getSCE(SC_QUAGMIRE))
+		dex -= sc->getSCE(SC_QUAGMIRE)->val2;
+	if(sc->getSCE(SC_BLESSING)) {
+		if (sc->getSCE(SC_BLESSING)->val2)
+			dex += sc->getSCE(SC_BLESSING)->val2;
 		else
 			dex -= dex / 2;
 	}
-	if(sc->data[SC_INCREASING])
+	if(sc->getSCE(SC_INCREASING))
 		dex += 4; // Added based on skill updates [Reddozen]
-	if(sc->data[SC_MARIONETTE])
-		dex -= ((sc->data[SC_MARIONETTE]->val4)>>8)&0xFF;
-	if(sc->data[SC_MARIONETTE2])
-		dex += ((sc->data[SC_MARIONETTE2]->val4)>>8)&0xFF;
-	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
-		dex += ((sc->data[SC_SPIRIT]->val4)>>8)&0xFF;
-	if(sc->data[SC_SIROMA_ICE_TEA])
-		dex += sc->data[SC_SIROMA_ICE_TEA]->val1;
-	if(sc->data[SC_INSPIRATION])
-		dex += sc->data[SC_INSPIRATION]->val3;
-	if(sc->data[SC_STOMACHACHE])
-		dex -= sc->data[SC_STOMACHACHE]->val1;
-	if(sc->data[SC_KYOUGAKU])
-		dex -= sc->data[SC_KYOUGAKU]->val2;
-	if(sc->data[SC_ARCWANDCLAN])
+	if(sc->getSCE(SC_MARIONETTE))
+		dex -= ((sc->getSCE(SC_MARIONETTE)->val4)>>8)&0xFF;
+	if(sc->getSCE(SC_MARIONETTE2))
+		dex += ((sc->getSCE(SC_MARIONETTE2)->val4)>>8)&0xFF;
+	if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
+		dex += ((sc->getSCE(SC_SPIRIT)->val4)>>8)&0xFF;
+	if(sc->getSCE(SC_SIROMA_ICE_TEA))
+		dex += sc->getSCE(SC_SIROMA_ICE_TEA)->val1;
+	if(sc->getSCE(SC_INSPIRATION))
+		dex += sc->getSCE(SC_INSPIRATION)->val3;
+	if(sc->getSCE(SC_STOMACHACHE))
+		dex -= sc->getSCE(SC_STOMACHACHE)->val1;
+	if(sc->getSCE(SC_KYOUGAKU))
+		dex -= sc->getSCE(SC_KYOUGAKU)->val2;
+	if(sc->getSCE(SC_ARCWANDCLAN))
 		dex += 1;
-	if(sc->data[SC_CROSSBOWCLAN])
+	if(sc->getSCE(SC_CROSSBOWCLAN))
 		dex += 1;
-	if(sc->data[SC_JUMPINGCLAN])
+	if(sc->getSCE(SC_JUMPINGCLAN))
 		dex += 1;
-	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
-		dex -= dex * sc->data[SC__STRIPACCESSORY]->val2 / 100;
-	if(sc->data[SC_MARSHOFABYSS])
-		dex -= dex * sc->data[SC_MARSHOFABYSS]->val2 / 100;
-	if(sc->data[SC_FULL_THROTTLE])
-		dex += dex * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP])
+	if(sc->getSCE(SC__STRIPACCESSORY) && bl->type != BL_PC)
+		dex -= dex * sc->getSCE(SC__STRIPACCESSORY)->val2 / 100;
+	if(sc->getSCE(SC_MARSHOFABYSS))
+		dex -= dex * sc->getSCE(SC_MARSHOFABYSS)->val2 / 100;
+	if(sc->getSCE(SC_FULL_THROTTLE))
+		dex += dex * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
+	if(sc->getSCE(SC_CHEERUP))
 		dex += 3;
-	if(sc->data[SC_GLASTHEIM_STATE])
-		dex += sc->data[SC_GLASTHEIM_STATE]->val1;
+	if(sc->getSCE(SC_GLASTHEIM_STATE))
+		dex += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		dex += 15;
 #endif
-	if (sc->data[SC_UNIVERSESTANCE])
-		dex += sc->data[SC_UNIVERSESTANCE]->val2;
-	if (sc->data[SC_ALMIGHTY])
-		dex += sc->data[SC_ALMIGHTY]->val1;
-	if (sc->data[SC_ULTIMATECOOK])
-		dex += sc->data[SC_ULTIMATECOOK]->val1;
+	if (sc->getSCE(SC_UNIVERSESTANCE))
+		dex += sc->getSCE(SC_UNIVERSESTANCE)->val2;
+	if (sc->getSCE(SC_ULTIMATECOOK))
+		dex += sc->getSCE(SC_ULTIMATECOOK)->val1;
+	if (sc->getSCE(SC_ALL_STAT_DOWN))
+		dex -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
+	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(dex,0,USHRT_MAX);
 }
 
@@ -6638,70 +6811,71 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
  * @param luk: Initial luk
  * @return modified luk with cap_value(luk,0,USHRT_MAX)
  */
-static unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, int luk)
+static unsigned short status_calc_luk(struct block_list *bl, status_change *sc, int luk)
 {
 	if(!sc || !sc->count)
 		return cap_value(luk,0,USHRT_MAX);
 
-	if(sc->data[SC_HARMONIZE]) {
-		luk -= sc->data[SC_HARMONIZE]->val2;
+	if(sc->getSCE(SC_HARMONIZE)) {
+		luk -= sc->getSCE(SC_HARMONIZE)->val2;
 		return (unsigned short)cap_value(luk,0,USHRT_MAX);
 	}
-	if(sc->data[SC_CURSE])
+	if(sc->getSCE(SC_CURSE))
 		return 0;
-	if(sc->data[SC_INCALLSTATUS])
-		luk += sc->data[SC_INCALLSTATUS]->val1;
-	if(sc->data[SC_INCLUK])
-		luk += sc->data[SC_INCLUK]->val1;
-	if(sc->data[SC_LUKFOOD])
-		luk += sc->data[SC_LUKFOOD]->val1;
-	if(sc->data[SC_FOOD_LUK_CASH])
-		luk += sc->data[SC_FOOD_LUK_CASH]->val1;
-	if(sc->data[SC_TRUESIGHT])
+	if(sc->getSCE(SC_INCALLSTATUS))
+		luk += sc->getSCE(SC_INCALLSTATUS)->val1;
+	if(sc->getSCE(SC_INCLUK))
+		luk += sc->getSCE(SC_INCLUK)->val1;
+	if(sc->getSCE(SC_LUKFOOD))
+		luk += sc->getSCE(SC_LUKFOOD)->val1;
+	if(sc->getSCE(SC_FOOD_LUK_CASH))
+		luk += sc->getSCE(SC_FOOD_LUK_CASH)->val1;
+	if(sc->getSCE(SC_TRUESIGHT))
 		luk += 5;
-	if(sc->data[SC_GLORIA])
+	if(sc->getSCE(SC_GLORIA))
 		luk += 30;
-	if(sc->data[SC_MARIONETTE])
-		luk -= sc->data[SC_MARIONETTE]->val4&0xFF;
-	if(sc->data[SC_MARIONETTE2])
-		luk += sc->data[SC_MARIONETTE2]->val4&0xFF;
-	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
-		luk += sc->data[SC_SPIRIT]->val4&0xFF;
-	if(sc->data[SC_PUTTI_TAILS_NOODLES])
-		luk += sc->data[SC_PUTTI_TAILS_NOODLES]->val1;
-	if(sc->data[SC_INSPIRATION])
-		luk += sc->data[SC_INSPIRATION]->val3;
-	if(sc->data[SC_STOMACHACHE])
-		luk -= sc->data[SC_STOMACHACHE]->val1;
-	if(sc->data[SC_KYOUGAKU])
-		luk -= sc->data[SC_KYOUGAKU]->val2;
-	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
-		luk -= luk * sc->data[SC__STRIPACCESSORY]->val2 / 100;
-	if(sc->data[SC_BANANA_BOMB])
+	if(sc->getSCE(SC_MARIONETTE))
+		luk -= sc->getSCE(SC_MARIONETTE)->val4&0xFF;
+	if(sc->getSCE(SC_MARIONETTE2))
+		luk += sc->getSCE(SC_MARIONETTE2)->val4&0xFF;
+	if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
+		luk += sc->getSCE(SC_SPIRIT)->val4&0xFF;
+	if(sc->getSCE(SC_PUTTI_TAILS_NOODLES))
+		luk += sc->getSCE(SC_PUTTI_TAILS_NOODLES)->val1;
+	if(sc->getSCE(SC_INSPIRATION))
+		luk += sc->getSCE(SC_INSPIRATION)->val3;
+	if(sc->getSCE(SC_STOMACHACHE))
+		luk -= sc->getSCE(SC_STOMACHACHE)->val1;
+	if(sc->getSCE(SC_KYOUGAKU))
+		luk -= sc->getSCE(SC_KYOUGAKU)->val2;
+	if(sc->getSCE(SC__STRIPACCESSORY) && bl->type != BL_PC)
+		luk -= luk * sc->getSCE(SC__STRIPACCESSORY)->val2 / 100;
+	if(sc->getSCE(SC_BANANA_BOMB))
 		luk -= 75;
-	if(sc->data[SC_GOLDENMACECLAN])
+	if(sc->getSCE(SC_GOLDENMACECLAN))
 		luk += 1;
-	if(sc->data[SC_JUMPINGCLAN])
+	if(sc->getSCE(SC_JUMPINGCLAN))
 		luk += 1;
-	if(sc->data[SC_FULL_THROTTLE])
-		luk += luk * sc->data[SC_FULL_THROTTLE]->val3 / 100;
-	if(sc->data[SC_CHEERUP])
+	if(sc->getSCE(SC_FULL_THROTTLE))
+		luk += luk * sc->getSCE(SC_FULL_THROTTLE)->val3 / 100;
+	if(sc->getSCE(SC_CHEERUP))
 		luk += 3;
-	if(sc->data[SC_GLASTHEIM_STATE])
-		luk += sc->data[SC_GLASTHEIM_STATE]->val1;
+	if(sc->getSCE(SC_GLASTHEIM_STATE))
+		luk += sc->getSCE(SC_GLASTHEIM_STATE)->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ALLSTAT)
 		luk += 15;
 #endif
-	if (sc->data[SC_UNIVERSESTANCE])
-		luk += sc->data[SC_UNIVERSESTANCE]->val2;
-	if (sc->data[SC_ALMIGHTY])
-		luk += sc->data[SC_ALMIGHTY]->val1;
-	if (sc->data[SC_ULTIMATECOOK])
-		luk += sc->data[SC_ULTIMATECOOK]->val1;
-	if (sc->data[SC_MYSTICPOWDER])
+	if (sc->getSCE(SC_UNIVERSESTANCE))
+		luk += sc->getSCE(SC_UNIVERSESTANCE)->val2;
+	if (sc->getSCE(SC_ULTIMATECOOK))
+		luk += sc->getSCE(SC_ULTIMATECOOK)->val1;
+	if (sc->getSCE(SC_MYSTICPOWDER))
 		luk += 10;
+	if (sc->getSCE(SC_ALL_STAT_DOWN))
+		luk -= sc->getSCE(SC_ALL_STAT_DOWN)->val2;
 
+	//TODO: Stat points should be able to be decreased below 0
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
 }
 
@@ -6712,13 +6886,13 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 * @param pow: Initial pow
 * @return modified pow with cap_value(pow,0,USHRT_MAX)
 */
-static unsigned short status_calc_pow(struct block_list *bl, struct status_change *sc, int pow)
+static unsigned short status_calc_pow(struct block_list *bl, status_change *sc, int pow)
 {
 	if (!sc || !sc->count)
 		return cap_value(pow, 0, USHRT_MAX);
 
-	if (sc->data[SC_BENEDICTUM])
-		pow += sc->data[SC_BENEDICTUM]->val2;
+	if (sc->getSCE(SC_BENEDICTUM))
+		pow += sc->getSCE(SC_BENEDICTUM)->val2;
 
 	return (unsigned short)cap_value(pow, 0, USHRT_MAX);
 }
@@ -6730,13 +6904,13 @@ static unsigned short status_calc_pow(struct block_list *bl, struct status_chang
 * @param sta: Initial sta
 * @return modified sta with cap_value(sta,0,USHRT_MAX)
 */
-static unsigned short status_calc_sta(struct block_list *bl, struct status_change *sc, int sta)
+static unsigned short status_calc_sta(struct block_list *bl, status_change *sc, int sta)
 {
 	if (!sc || !sc->count)
 		return cap_value(sta, 0, USHRT_MAX);
 
-	if (sc->data[SC_RELIGIO])
-		sta += sc->data[SC_RELIGIO]->val2;
+	if (sc->getSCE(SC_RELIGIO))
+		sta += sc->getSCE(SC_RELIGIO)->val2;
 
 	return (unsigned short)cap_value(sta, 0, USHRT_MAX);
 }
@@ -6748,13 +6922,13 @@ static unsigned short status_calc_sta(struct block_list *bl, struct status_chang
 * @param wis: Initial wis
 * @return modified wis with cap_value(wis,0,USHRT_MAX)
 */
-static unsigned short status_calc_wis(struct block_list *bl, struct status_change *sc, int wis)
+static unsigned short status_calc_wis(struct block_list *bl, status_change *sc, int wis)
 {
 	if (!sc || !sc->count)
 		return cap_value(wis, 0, USHRT_MAX);
 
-	if (sc->data[SC_RELIGIO])
-		wis += sc->data[SC_RELIGIO]->val2;
+	if (sc->getSCE(SC_RELIGIO))
+		wis += sc->getSCE(SC_RELIGIO)->val2;
 
 	return (unsigned short)cap_value(wis, 0, USHRT_MAX);
 }
@@ -6766,13 +6940,13 @@ static unsigned short status_calc_wis(struct block_list *bl, struct status_chang
 * @param spl: Initial spl
 * @return modified spl with cap_value(spl,0,USHRT_MAX)
 */
-static unsigned short status_calc_spl(struct block_list *bl, struct status_change *sc, int spl)
+static unsigned short status_calc_spl(struct block_list *bl, status_change *sc, int spl)
 {
 	if (!sc || !sc->count)
 		return cap_value(spl, 0, USHRT_MAX);
 
-	if (sc->data[SC_RELIGIO])
-		spl += sc->data[SC_RELIGIO]->val2;
+	if (sc->getSCE(SC_RELIGIO))
+		spl += sc->getSCE(SC_RELIGIO)->val2;
 
 	return (unsigned short)cap_value(spl, 0, USHRT_MAX);
 }
@@ -6784,13 +6958,13 @@ static unsigned short status_calc_spl(struct block_list *bl, struct status_chang
 * @param con: Initial con
 * @return modified con with cap_value(con,0,USHRT_MAX)
 */
-static unsigned short status_calc_con(struct block_list *bl, struct status_change *sc, int con)
+static unsigned short status_calc_con(struct block_list *bl, status_change *sc, int con)
 {
 	if (!sc || !sc->count)
 		return cap_value(con, 0, USHRT_MAX);
 
-	if (sc->data[SC_BENEDICTUM])
-		con += sc->data[SC_BENEDICTUM]->val2;
+	if (sc->getSCE(SC_BENEDICTUM))
+		con += sc->getSCE(SC_BENEDICTUM)->val2;
 
 	return (unsigned short)cap_value(con, 0, USHRT_MAX);
 }
@@ -6802,13 +6976,13 @@ static unsigned short status_calc_con(struct block_list *bl, struct status_chang
 * @param crt: Initial crt
 * @return modified crt with cap_value(crt,0,USHRT_MAX)
 */
-static unsigned short status_calc_crt(struct block_list *bl, struct status_change *sc, int crt)
+static unsigned short status_calc_crt(struct block_list *bl, status_change *sc, int crt)
 {
 	if (!sc || !sc->count)
 		return cap_value(crt, 0, USHRT_MAX);
 
-	if (sc->data[SC_BENEDICTUM])
-		crt += sc->data[SC_BENEDICTUM]->val2;
+	if (sc->getSCE(SC_BENEDICTUM))
+		crt += sc->getSCE(SC_BENEDICTUM)->val2;
 
 	return (unsigned short)cap_value(crt, 0, USHRT_MAX);
 }
@@ -6820,82 +6994,82 @@ static unsigned short status_calc_crt(struct block_list *bl, struct status_chang
  * @param batk: Initial batk
  * @return modified batk with cap_value(batk,0,USHRT_MAX)
  */
-static unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk)
+static unsigned short status_calc_batk(struct block_list *bl, status_change *sc, int batk)
 {
 	if(!sc || !sc->count)
 		return cap_value(batk,0,USHRT_MAX);
 
-	if(sc->data[SC_ATKPOTION])
-		batk += sc->data[SC_ATKPOTION]->val1;
-	if(sc->data[SC_BATKFOOD])
-		batk += sc->data[SC_BATKFOOD]->val1;
+	if(sc->getSCE(SC_ATKPOTION))
+		batk += sc->getSCE(SC_ATKPOTION)->val1;
+	if(sc->getSCE(SC_BATKFOOD))
+		batk += sc->getSCE(SC_BATKFOOD)->val1;
 #ifndef RENEWAL
-	if(sc->data[SC_GATLINGFEVER])
-		batk += sc->data[SC_GATLINGFEVER]->val3;
-	if(sc->data[SC_MADNESSCANCEL])
+	if(sc->getSCE(SC_GATLINGFEVER))
+		batk += sc->getSCE(SC_GATLINGFEVER)->val3;
+	if(sc->getSCE(SC_MADNESSCANCEL))
 		batk += 100;
 #endif
-	if(sc->data[SC_FULL_SWING_K])
-		batk += sc->data[SC_FULL_SWING_K]->val1;
-	if(sc->data[SC_ASH])
-		batk -= batk * sc->data[SC_ASH]->val4 / 100;
-	if(bl->type == BL_HOM && sc->data[SC_PYROCLASTIC])
-		batk += sc->data[SC_PYROCLASTIC]->val2;
-	if (sc->data[SC_ANGRIFFS_MODUS])
-		batk += sc->data[SC_ANGRIFFS_MODUS]->val2;
-	if(sc->data[SC_2011RWC_SCROLL])
+	if(sc->getSCE(SC_FULL_SWING_K))
+		batk += sc->getSCE(SC_FULL_SWING_K)->val1;
+	if(sc->getSCE(SC_ASH))
+		batk -= batk * sc->getSCE(SC_ASH)->val4 / 100;
+	if(bl->type == BL_HOM && sc->getSCE(SC_PYROCLASTIC))
+		batk += sc->getSCE(SC_PYROCLASTIC)->val2;
+	if (sc->getSCE(SC_ANGRIFFS_MODUS))
+		batk += sc->getSCE(SC_ANGRIFFS_MODUS)->val2;
+	if(sc->getSCE(SC_2011RWC_SCROLL))
 		batk += 30;
-	if(sc->data[SC_INCATKRATE])
-		batk += batk * sc->data[SC_INCATKRATE]->val1/100;
-	if(sc->data[SC_PROVOKE])
-		batk += batk * sc->data[SC_PROVOKE]->val2/100;
+	if(sc->getSCE(SC_INCATKRATE))
+		batk += batk * sc->getSCE(SC_INCATKRATE)->val1/100;
+	if(sc->getSCE(SC_PROVOKE))
+		batk += batk * sc->getSCE(SC_PROVOKE)->val2/100;
 #ifndef RENEWAL
-	if(sc->data[SC_CONCENTRATION])
-		batk += batk * sc->data[SC_CONCENTRATION]->val2/100;
+	if(sc->getSCE(SC_CONCENTRATION))
+		batk += batk * sc->getSCE(SC_CONCENTRATION)->val2/100;
 #endif
-	if(sc->data[SC_SKE])
+	if(sc->getSCE(SC_SKE))
 		batk += batk * 3;
-	if(sc->data[SC_BLOODLUST])
-		batk += batk * sc->data[SC_BLOODLUST]->val2/100;
-	if(sc->data[SC_JOINTBEAT] && sc->data[SC_JOINTBEAT]->val2&BREAK_WAIST)
+	if(sc->getSCE(SC_BLOODLUST))
+		batk += batk * sc->getSCE(SC_BLOODLUST)->val2/100;
+	if(sc->getSCE(SC_JOINTBEAT) && sc->getSCE(SC_JOINTBEAT)->val2&BREAK_WAIST)
 		batk -= batk * 25/100;
-	if(sc->data[SC_CURSE])
+	if(sc->getSCE(SC_CURSE))
 		batk -= batk * 25/100;
 	/* Curse shouldn't effect on this? <- Curse OR Bleeding??
-	if(sc->data[SC_BLEEDING])
+	if(sc->getSCE(SC_BLEEDING))
 		batk -= batk * 25 / 100; */
-	if(sc->data[SC_FLEET])
-		batk += batk * sc->data[SC_FLEET]->val3/100;
-	if(sc->data[SC__ENERVATION])
-		batk -= batk * sc->data[SC__ENERVATION]->val2 / 100;
-	if( sc->data[SC_ZANGETSU] )
-		batk += sc->data[SC_ZANGETSU]->val2;
-	if(sc->data[SC_QUEST_BUFF1])
-		batk += sc->data[SC_QUEST_BUFF1]->val1;
-	if(sc->data[SC_QUEST_BUFF2])
-		batk += sc->data[SC_QUEST_BUFF2]->val1;
-	if(sc->data[SC_QUEST_BUFF3])
-		batk += sc->data[SC_QUEST_BUFF3]->val1;
-	if (sc->data[SC_SHRIMP])
-		batk += batk * sc->data[SC_SHRIMP]->val2 / 100;
+	if(sc->getSCE(SC_FLEET))
+		batk += batk * sc->getSCE(SC_FLEET)->val3/100;
+	if(sc->getSCE(SC__ENERVATION))
+		batk -= batk * sc->getSCE(SC__ENERVATION)->val2 / 100;
+	if( sc->getSCE(SC_ZANGETSU) )
+		batk += sc->getSCE(SC_ZANGETSU)->val2;
+	if(sc->getSCE(SC_QUEST_BUFF1))
+		batk += sc->getSCE(SC_QUEST_BUFF1)->val1;
+	if(sc->getSCE(SC_QUEST_BUFF2))
+		batk += sc->getSCE(SC_QUEST_BUFF2)->val1;
+	if(sc->getSCE(SC_QUEST_BUFF3))
+		batk += sc->getSCE(SC_QUEST_BUFF3)->val1;
+	if (sc->getSCE(SC_SHRIMP))
+		batk += batk * sc->getSCE(SC_SHRIMP)->val2 / 100;
 #ifdef RENEWAL
-	if (sc->data[SC_LOUD])
+	if (sc->getSCE(SC_LOUD))
 		batk += 30;
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ATKRATE)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ATKRATE)
 		batk += batk * 20 / 100;
 #endif
-	if (sc->data[SC_SUNSTANCE])
-		batk += batk * sc->data[SC_SUNSTANCE]->val2 / 100;
-	if (sc->data[SC_ALMIGHTY])
+	if (sc->getSCE(SC_SUNSTANCE))
+		batk += batk * sc->getSCE(SC_SUNSTANCE)->val2 / 100;
+	if (sc->getSCE(SC_ALMIGHTY))
 		batk += 30;
-	if (sc->data[SC_ULTIMATECOOK])
+	if (sc->getSCE(SC_ULTIMATECOOK))
 		batk += 30;
-	if(sc->data[SC_LIMIT_POWER_BOOSTER])
-		batk += sc->data[SC_LIMIT_POWER_BOOSTER]->val1;
-	if(sc->data[SC_SPARKCANDY])
+	if(sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		batk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
+	if(sc->getSCE(SC_SPARKCANDY))
 		batk += 20;
-	if(sc->data[SC_SKF_ATK])
-		batk += sc->data[SC_SKF_ATK]->val1;
+	if(sc->getSCE(SC_SKF_ATK))
+		batk += sc->getSCE(SC_SKF_ATK)->val1;
 
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
@@ -6907,105 +7081,103 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
  * @param watk: Initial watk
  * @return modified watk with cap_value(watk,0,USHRT_MAX)
  */
-static unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk)
+static unsigned short status_calc_watk(struct block_list *bl, status_change *sc, int watk)
 {
 	if(!sc || !sc->count)
 		return cap_value(watk,0,USHRT_MAX);
 
 #ifndef RENEWAL
-	if(sc->data[SC_DRUMBATTLE])
-		watk += sc->data[SC_DRUMBATTLE]->val2;
+	if(sc->getSCE(SC_DRUMBATTLE))
+		watk += sc->getSCE(SC_DRUMBATTLE)->val2;
 #endif
-	if (sc->data[SC_IMPOSITIO])
-		watk += sc->data[SC_IMPOSITIO]->val2;
-	if(sc->data[SC_WATKFOOD])
-		watk += sc->data[SC_WATKFOOD]->val1;
-	if(sc->data[SC_VOLCANO])
-		watk += sc->data[SC_VOLCANO]->val2;
-	if(sc->data[SC_MERC_ATKUP])
-		watk += sc->data[SC_MERC_ATKUP]->val2;
-	if(sc->data[SC_WATER_BARRIER])
-		watk -= sc->data[SC_WATER_BARRIER]->val2;
+	if (sc->getSCE(SC_IMPOSITIO))
+		watk += sc->getSCE(SC_IMPOSITIO)->val2;
+	if(sc->getSCE(SC_WATKFOOD))
+		watk += sc->getSCE(SC_WATKFOOD)->val1;
+	if(sc->getSCE(SC_VOLCANO))
+		watk += sc->getSCE(SC_VOLCANO)->val2;
+	if(sc->getSCE(SC_MERC_ATKUP))
+		watk += sc->getSCE(SC_MERC_ATKUP)->val2;
+	if(sc->getSCE(SC_WATER_BARRIER))
+		watk -= sc->getSCE(SC_WATER_BARRIER)->val2;
 #ifndef RENEWAL
-	if(sc->data[SC_NIBELUNGEN]) {
+	if(sc->getSCE(SC_NIBELUNGEN)) {
 		if (bl->type != BL_PC)
-			watk += sc->data[SC_NIBELUNGEN]->val2;
+			watk += sc->getSCE(SC_NIBELUNGEN)->val2;
 		else {
 			TBL_PC *sd = (TBL_PC*)bl;
 			short index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
 
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON && sd->inventory_data[index]->weapon_level == 4)
-				watk += sc->data[SC_NIBELUNGEN]->val2;
+				watk += sc->getSCE(SC_NIBELUNGEN)->val2;
 		}
 	}
-	if(sc->data[SC_CONCENTRATION])
-		watk += watk * sc->data[SC_CONCENTRATION]->val2 / 100;
+	if(sc->getSCE(SC_CONCENTRATION))
+		watk += watk * sc->getSCE(SC_CONCENTRATION)->val2 / 100;
 #endif
-	if(sc->data[SC_INCATKRATE])
-		watk += watk * sc->data[SC_INCATKRATE]->val1/100;
-	if(sc->data[SC_PROVOKE])
-		watk += watk * sc->data[SC_PROVOKE]->val2/100;
-	if(sc->data[SC_SKE])
+	if(sc->getSCE(SC_INCATKRATE))
+		watk += watk * sc->getSCE(SC_INCATKRATE)->val1/100;
+	if(sc->getSCE(SC_PROVOKE))
+		watk += watk * sc->getSCE(SC_PROVOKE)->val2/100;
+	if(sc->getSCE(SC_SKE))
 		watk += watk * 3;
-	if(sc->data[SC_FLEET])
-		watk += watk * sc->data[SC_FLEET]->val3/100;
-	if(sc->data[SC_CURSE])
+	if(sc->getSCE(SC_FLEET))
+		watk += watk * sc->getSCE(SC_FLEET)->val3/100;
+	if(sc->getSCE(SC_CURSE))
 		watk -= watk * 25/100;
-	if(sc->data[SC_STRIPWEAPON] && bl->type != BL_PC)
-		watk -= watk * sc->data[SC_STRIPWEAPON]->val2/100;
-	if(sc->data[SC_FIGHTINGSPIRIT])
-		watk += sc->data[SC_FIGHTINGSPIRIT]->val1;
-	if (sc->data[SC_SHIELDSPELL_ATK])
-		watk += sc->data[SC_SHIELDSPELL_ATK]->val2;
-	if(sc->data[SC_INSPIRATION])
-		watk += sc->data[SC_INSPIRATION]->val2;
-	if(sc->data[SC_GT_CHANGE])
-		watk += sc->data[SC_GT_CHANGE]->val2;
-	if(sc->data[SC__ENERVATION])
-		watk -= watk * sc->data[SC__ENERVATION]->val2 / 100;
-	if(sc->data[SC_STRIKING])
-		watk += sc->data[SC_STRIKING]->val2;
-	if(sc->data[SC_RUSHWINDMILL])
-		watk += sc->data[SC_RUSHWINDMILL]->val3;
-	if(sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
+	if(sc->getSCE(SC_STRIPWEAPON) && bl->type != BL_PC)
+		watk -= watk * sc->getSCE(SC_STRIPWEAPON)->val2/100;
+	if(sc->getSCE(SC_FIGHTINGSPIRIT))
+		watk += sc->getSCE(SC_FIGHTINGSPIRIT)->val1;
+	if (sc->getSCE(SC_SHIELDSPELL_ATK))
+		watk += sc->getSCE(SC_SHIELDSPELL_ATK)->val2;
+	if(sc->getSCE(SC_INSPIRATION))
+		watk += sc->getSCE(SC_INSPIRATION)->val2;
+	if(sc->getSCE(SC_GT_CHANGE))
+		watk += sc->getSCE(SC_GT_CHANGE)->val2;
+	if(sc->getSCE(SC__ENERVATION))
+		watk -= watk * sc->getSCE(SC__ENERVATION)->val2 / 100;
+	if(sc->getSCE(SC_STRIKING))
+		watk += sc->getSCE(SC_STRIKING)->val2;
+	if(sc->getSCE(SC_RUSHWINDMILL))
+		watk += sc->getSCE(SC_RUSHWINDMILL)->val3;
+	if(sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 2)
 		watk += 50;
-	if((sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
-	   || (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2)
-	   || (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2)
-	   || (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2))
+	if((sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 2)
+	   || (sc->getSCE(SC_WATER_INSIGNIA) && sc->getSCE(SC_WATER_INSIGNIA)->val1 == 2)
+	   || (sc->getSCE(SC_WIND_INSIGNIA) && sc->getSCE(SC_WIND_INSIGNIA)->val1 == 2)
+	   || (sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 2))
 		watk += watk * 10 / 100;
-	if(sc->data[SC_PYROTECHNIC_OPTION])
-		watk += sc->data[SC_PYROTECHNIC_OPTION]->val2;
-	if(sc->data[SC_HEATER_OPTION])
-		watk += sc->data[SC_HEATER_OPTION]->val2;
-	if(sc->data[SC_TROPIC_OPTION])
-		watk += sc->data[SC_TROPIC_OPTION]->val2;
-	if( sc && sc->data[SC_TIDAL_WEAPON] )
-		watk += watk * sc->data[SC_TIDAL_WEAPON]->val2 / 100;
-	if(bl->type == BL_PC && sc->data[SC_PYROCLASTIC])
-		watk += sc->data[SC_PYROCLASTIC]->val2;
-	if(sc->data[SC_ANGRIFFS_MODUS])
-		watk += watk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
-	if(sc->data[SC_ODINS_POWER])
-		watk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1;
-	if (sc->data[SC_FLASHCOMBO])
-		watk += sc->data[SC_FLASHCOMBO]->val2;
-	if (sc->data[SC_CATNIPPOWDER])
-		watk -= watk * sc->data[SC_CATNIPPOWDER]->val2 / 100;
-	if (sc->data[SC_CHATTERING])
-		watk += sc->data[SC_CHATTERING]->val2;
-	if (sc->data[SC_SUNSTANCE])
-		watk += watk * sc->data[SC_SUNSTANCE]->val2 / 100;
-	if (sc->data[SC_SOULFALCON])
-		watk += sc->data[SC_SOULFALCON]->val2;
-	if (sc->data[SC_PACKING_ENVELOPE1])
-		watk += sc->data[SC_PACKING_ENVELOPE1]->val1;
-	if (sc->data[SC_POWERFUL_FAITH])
-		watk += sc->data[SC_POWERFUL_FAITH]->val2;
-	if (sc->data[SC_GUARD_STANCE])
-		watk -= sc->data[SC_GUARD_STANCE]->val3;
-	if (sc->data[SC_ATTACK_STANCE])
-		watk += sc->data[SC_ATTACK_STANCE]->val3;
+	if(sc->getSCE(SC_PYROTECHNIC_OPTION))
+		watk += sc->getSCE(SC_PYROTECHNIC_OPTION)->val2;
+	if(sc->getSCE(SC_HEATER_OPTION))
+		watk += sc->getSCE(SC_HEATER_OPTION)->val2;
+	if(sc->getSCE(SC_TROPIC_OPTION))
+		watk += sc->getSCE(SC_TROPIC_OPTION)->val2;
+	if( sc && sc->getSCE(SC_TIDAL_WEAPON) )
+		watk += watk * sc->getSCE(SC_TIDAL_WEAPON)->val2 / 100;
+	if(bl->type == BL_PC && sc->getSCE(SC_PYROCLASTIC))
+		watk += sc->getSCE(SC_PYROCLASTIC)->val2;
+	if(sc->getSCE(SC_ANGRIFFS_MODUS))
+		watk += watk * sc->getSCE(SC_ANGRIFFS_MODUS)->val2/100;
+	if(sc->getSCE(SC_ODINS_POWER))
+		watk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1;
+	if (sc->getSCE(SC_FLASHCOMBO))
+		watk += sc->getSCE(SC_FLASHCOMBO)->val2;
+	if (sc->getSCE(SC_CATNIPPOWDER))
+		watk -= watk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
+	if (sc->getSCE(SC_CHATTERING))
+		watk += sc->getSCE(SC_CHATTERING)->val2;
+	if (sc->getSCE(SC_SUNSTANCE))
+		watk += watk * sc->getSCE(SC_SUNSTANCE)->val2 / 100;
+	if (sc->getSCE(SC_SOULFALCON))
+		watk += sc->getSCE(SC_SOULFALCON)->val2;
+	if (sc->getSCE(SC_PACKING_ENVELOPE1))
+		watk += sc->getSCE(SC_PACKING_ENVELOPE1)->val1;
+	if (sc->getSCE(SC_POWERFUL_FAITH))
+		watk += sc->getSCE(SC_POWERFUL_FAITH)->val2;
+	if (sc->getSCE(SC_GUARD_STANCE))
+		watk -= sc->getSCE(SC_GUARD_STANCE)->val3;
 
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
@@ -7018,69 +7190,69 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc, int matk)
+static unsigned short status_calc_ematk(struct block_list *bl, status_change *sc, int matk)
 {
 	if (!sc || !sc->count)
 		return cap_value(matk,0,USHRT_MAX);
 
-	if (sc->data[SC_IMPOSITIO])
-		matk += sc->data[SC_IMPOSITIO]->val2;
-	if (sc->data[SC_MATKPOTION])
-		matk += sc->data[SC_MATKPOTION]->val1;
-	if (sc->data[SC_MATKFOOD])
-		matk += sc->data[SC_MATKFOOD]->val1;
-	if(sc->data[SC_MANA_PLUS])
-		matk += sc->data[SC_MANA_PLUS]->val1;
-	if(sc->data[SC_COOLER_OPTION])
-		matk += sc->data[SC_COOLER_OPTION]->val2;
-	if(sc->data[SC_AQUAPLAY_OPTION])
-		matk += sc->data[SC_AQUAPLAY_OPTION]->val2;
-	if(sc->data[SC_CHILLY_AIR_OPTION])
-		matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
-	if(sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
+	if (sc->getSCE(SC_IMPOSITIO))
+		matk += sc->getSCE(SC_IMPOSITIO)->val2;
+	if (sc->getSCE(SC_MATKPOTION))
+		matk += sc->getSCE(SC_MATKPOTION)->val1;
+	if (sc->getSCE(SC_MATKFOOD))
+		matk += sc->getSCE(SC_MATKFOOD)->val1;
+	if(sc->getSCE(SC_MANA_PLUS))
+		matk += sc->getSCE(SC_MANA_PLUS)->val1;
+	if(sc->getSCE(SC_COOLER_OPTION))
+		matk += sc->getSCE(SC_COOLER_OPTION)->val2;
+	if(sc->getSCE(SC_AQUAPLAY_OPTION))
+		matk += sc->getSCE(SC_AQUAPLAY_OPTION)->val2;
+	if(sc->getSCE(SC_CHILLY_AIR_OPTION))
+		matk += sc->getSCE(SC_CHILLY_AIR_OPTION)->val2;
+	if(sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 3)
 		matk += 50;
-	if(sc->data[SC_ODINS_POWER])
-		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; // 70 lvl1, 100lvl2
-	if(sc->data[SC_MOONLITSERENADE])
-		matk += sc->data[SC_MOONLITSERENADE]->val3;
-	if(sc->data[SC_IZAYOI])
-		matk += 25 * sc->data[SC_IZAYOI]->val1;
-	if(sc->data[SC_ZANGETSU])
-		matk += sc->data[SC_ZANGETSU]->val3;
-	if(sc->data[SC_QUEST_BUFF1])
-		matk += sc->data[SC_QUEST_BUFF1]->val1;
-	if(sc->data[SC_QUEST_BUFF2])
-		matk += sc->data[SC_QUEST_BUFF2]->val1;
-	if(sc->data[SC_QUEST_BUFF3])
-		matk += sc->data[SC_QUEST_BUFF3]->val1;
-	if(sc->data[SC_MTF_MATK2])
-		matk += sc->data[SC_MTF_MATK2]->val1;
-	if(sc->data[SC_2011RWC_SCROLL])
+	if(sc->getSCE(SC_ODINS_POWER))
+		matk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1; // 70 lvl1, 100lvl2
+	if(sc->getSCE(SC_MOONLITSERENADE))
+		matk += sc->getSCE(SC_MOONLITSERENADE)->val3;
+	if(sc->getSCE(SC_IZAYOI))
+		matk += 25 * sc->getSCE(SC_IZAYOI)->val1;
+	if(sc->getSCE(SC_ZANGETSU))
+		matk += sc->getSCE(SC_ZANGETSU)->val3;
+	if(sc->getSCE(SC_QUEST_BUFF1))
+		matk += sc->getSCE(SC_QUEST_BUFF1)->val1;
+	if(sc->getSCE(SC_QUEST_BUFF2))
+		matk += sc->getSCE(SC_QUEST_BUFF2)->val1;
+	if(sc->getSCE(SC_QUEST_BUFF3))
+		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
+	if(sc->getSCE(SC_MTF_MATK2))
+		matk += sc->getSCE(SC_MTF_MATK2)->val1;
+	if(sc->getSCE(SC_2011RWC_SCROLL))
 		matk += 30;
-	if (sc->data[SC_CATNIPPOWDER])
-		matk -= matk * sc->data[SC_CATNIPPOWDER]->val2 / 100;
-	if (sc->data[SC_CHATTERING])
-		matk += sc->data[SC_CHATTERING]->val2;
-	if (sc->data[SC_DORAM_MATK])
-		matk += sc->data[SC_DORAM_MATK]->val1;
-	if (sc->data[SC_SOULFAIRY])
-		matk += sc->data[SC_SOULFAIRY]->val2;
-	if (sc->data[SC__AUTOSHADOWSPELL])
-		matk += sc->data[SC__AUTOSHADOWSPELL]->val4 * 5;
-	if (sc->data[SC_INSPIRATION])
-		matk += sc->data[SC_INSPIRATION]->val2;
-	if (sc->data[SC_PACKING_ENVELOPE2])
-		matk += sc->data[SC_PACKING_ENVELOPE2]->val1;
-	if(sc->data[SC_ALMIGHTY])
+	if (sc->getSCE(SC_CATNIPPOWDER))
+		matk -= matk * sc->getSCE(SC_CATNIPPOWDER)->val2 / 100;
+	if (sc->getSCE(SC_CHATTERING))
+		matk += sc->getSCE(SC_CHATTERING)->val2;
+	if (sc->getSCE(SC_DORAM_MATK))
+		matk += sc->getSCE(SC_DORAM_MATK)->val1;
+	if (sc->getSCE(SC_SOULFAIRY))
+		matk += sc->getSCE(SC_SOULFAIRY)->val2;
+	if (sc->getSCE(SC__AUTOSHADOWSPELL))
+		matk += sc->getSCE(SC__AUTOSHADOWSPELL)->val4 * 5;
+	if (sc->getSCE(SC_INSPIRATION))
+		matk += sc->getSCE(SC_INSPIRATION)->val2;
+	if (sc->getSCE(SC_PACKING_ENVELOPE2))
+		matk += sc->getSCE(SC_PACKING_ENVELOPE2)->val1;
+	if(sc->getSCE(SC_ALMIGHTY))
 		matk += 30;
-	if(sc->data[SC_ULTIMATECOOK])
+	if(sc->getSCE(SC_ULTIMATECOOK))
 		matk += 30;
-	if (sc->data[SC_LIMIT_POWER_BOOSTER])
-		matk += sc->data[SC_LIMIT_POWER_BOOSTER]->val1;
-	if (sc->data[SC_MAGICCANDY])
+	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		matk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
+	if (sc->getSCE(SC_MAGICCANDY))
 		matk += 30;
-	if (sc->data[SC_SKF_MATK])
-		matk += sc->data[SC_SKF_MATK]->val1;
+	if (sc->getSCE(SC_SKF_MATK))
+		matk += sc->getSCE(SC_SKF_MATK)->val1;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
@@ -7093,78 +7265,78 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk)
+static unsigned short status_calc_matk(struct block_list *bl, status_change *sc, int matk)
 {
 	if(!sc || !sc->count)
 		return cap_value(matk,0,USHRT_MAX);
 #ifndef RENEWAL
 	/// Take note fixed value first before % modifiers [PRE-RENEWAL]
-	if (sc->data[SC_MATKPOTION])
-		matk += sc->data[SC_MATKPOTION]->val1;
-	if (sc->data[SC_MATKFOOD])
-		matk += sc->data[SC_MATKFOOD]->val1;
-	if (sc->data[SC_MANA_PLUS])
-		matk += sc->data[SC_MANA_PLUS]->val1;
-	if (sc->data[SC_AQUAPLAY_OPTION])
-		matk += sc->data[SC_AQUAPLAY_OPTION]->val2;
-	if (sc->data[SC_CHILLY_AIR_OPTION])
-		matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
-	if (sc->data[SC_COOLER_OPTION])
-		matk += sc->data[SC_COOLER_OPTION]->val2;
-	if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
+	if (sc->getSCE(SC_MATKPOTION))
+		matk += sc->getSCE(SC_MATKPOTION)->val1;
+	if (sc->getSCE(SC_MATKFOOD))
+		matk += sc->getSCE(SC_MATKFOOD)->val1;
+	if (sc->getSCE(SC_MANA_PLUS))
+		matk += sc->getSCE(SC_MANA_PLUS)->val1;
+	if (sc->getSCE(SC_AQUAPLAY_OPTION))
+		matk += sc->getSCE(SC_AQUAPLAY_OPTION)->val2;
+	if (sc->getSCE(SC_CHILLY_AIR_OPTION))
+		matk += sc->getSCE(SC_CHILLY_AIR_OPTION)->val2;
+	if (sc->getSCE(SC_COOLER_OPTION))
+		matk += sc->getSCE(SC_COOLER_OPTION)->val2;
+	if (sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 3)
 		matk += 50;
-	if (sc->data[SC_ODINS_POWER])
-		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; // 70 lvl1, 100lvl2
-	if (sc->data[SC_IZAYOI])
-		matk += 25 * sc->data[SC_IZAYOI]->val1;
-	if (sc->data[SC_MTF_MATK2])
-		matk += sc->data[SC_MTF_MATK2]->val1;
-	if (sc->data[SC_2011RWC_SCROLL])
+	if (sc->getSCE(SC_ODINS_POWER))
+		matk += 40 + 30 * sc->getSCE(SC_ODINS_POWER)->val1; // 70 lvl1, 100lvl2
+	if (sc->getSCE(SC_IZAYOI))
+		matk += 25 * sc->getSCE(SC_IZAYOI)->val1;
+	if (sc->getSCE(SC_MTF_MATK2))
+		matk += sc->getSCE(SC_MTF_MATK2)->val1;
+	if (sc->getSCE(SC_2011RWC_SCROLL))
 		matk += 30;
-	if (sc->data[SC_ALMIGHTY])
+	if (sc->getSCE(SC_ALMIGHTY))
 		matk += 30;
-	if (sc->data[SC_ULTIMATECOOK])
+	if (sc->getSCE(SC_ULTIMATECOOK))
 		matk += 30;
-	if (sc->data[SC_LIMIT_POWER_BOOSTER])
-		matk += sc->data[SC_LIMIT_POWER_BOOSTER]->val1;
-	if (sc->data[SC_MAGICCANDY])
+	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		matk += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
+	if (sc->getSCE(SC_MAGICCANDY))
 		matk += 30;
-	if (sc->data[SC_SKF_MATK])
-		matk += sc->data[SC_SKF_MATK]->val1;
+	if (sc->getSCE(SC_SKF_MATK))
+		matk += sc->getSCE(SC_SKF_MATK)->val1;
 #endif
-	if (sc->data[SC_ZANGETSU])
-		matk += sc->data[SC_ZANGETSU]->val3;
-	if (sc->data[SC_QUEST_BUFF1])
-		matk += sc->data[SC_QUEST_BUFF1]->val1;
-	if (sc->data[SC_QUEST_BUFF2])
-		matk += sc->data[SC_QUEST_BUFF2]->val1;
-	if (sc->data[SC_QUEST_BUFF3])
-		matk += sc->data[SC_QUEST_BUFF3]->val1;
-	if (sc->data[SC_MAGICPOWER]
+	if (sc->getSCE(SC_ZANGETSU))
+		matk += sc->getSCE(SC_ZANGETSU)->val3;
+	if (sc->getSCE(SC_QUEST_BUFF1))
+		matk += sc->getSCE(SC_QUEST_BUFF1)->val1;
+	if (sc->getSCE(SC_QUEST_BUFF2))
+		matk += sc->getSCE(SC_QUEST_BUFF2)->val1;
+	if (sc->getSCE(SC_QUEST_BUFF3))
+		matk += sc->getSCE(SC_QUEST_BUFF3)->val1;
+	if (sc->getSCE(SC_MAGICPOWER)
 #ifndef RENEWAL
-		&& sc->data[SC_MAGICPOWER]->val4
+		&& sc->getSCE(SC_MAGICPOWER)->val4
 #endif
 		)
-		matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
-	if (sc->data[SC_MINDBREAKER])
-		matk += matk * sc->data[SC_MINDBREAKER]->val2/100;
-	if (sc->data[SC_INCMATKRATE])
-		matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
-	if (sc->data[SC_MOONLITSERENADE])
-		matk += sc->data[SC_MOONLITSERENADE]->val3/100;
-	if (sc->data[SC_MTF_MATK])
-		matk += matk * sc->data[SC_MTF_MATK]->val1 / 100;
-	if (sc->data[SC_SHRIMP])
-		matk += matk * sc->data[SC_SHRIMP]->val2 / 100;
-	if (sc->data[SC_VOLCANO])
-		matk += sc->data[SC_VOLCANO]->val2;
+		matk += matk * sc->getSCE(SC_MAGICPOWER)->val3/100;
+	if (sc->getSCE(SC_MINDBREAKER))
+		matk += matk * sc->getSCE(SC_MINDBREAKER)->val2/100;
+	if (sc->getSCE(SC_INCMATKRATE))
+		matk += matk * sc->getSCE(SC_INCMATKRATE)->val1/100;
+	if (sc->getSCE(SC_MOONLITSERENADE))
+		matk += sc->getSCE(SC_MOONLITSERENADE)->val3/100;
+	if (sc->getSCE(SC_MTF_MATK))
+		matk += matk * sc->getSCE(SC_MTF_MATK)->val1 / 100;
+	if (sc->getSCE(SC_SHRIMP))
+		matk += matk * sc->getSCE(SC_SHRIMP)->val2 / 100;
+	if (sc->getSCE(SC_VOLCANO))
+		matk += sc->getSCE(SC_VOLCANO)->val2;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_MATKRATE)
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
 		matk += matk * 20 / 100;
 #endif
-	if (sc->data[SC_SHIELDSPELL_ATK])
-		matk += sc->data[SC_SHIELDSPELL_ATK]->val2;
-	if (sc->data[SC_CLIMAX_DES_HU])
+	if (sc->getSCE(SC_SHIELDSPELL_ATK))
+		matk += sc->getSCE(SC_SHIELDSPELL_ATK)->val2;
+	if (sc->getSCE(SC_CLIMAX_DES_HU))
 		matk += 100;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
@@ -7177,43 +7349,43 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
  * @param critical: Initial critical
  * @return modified critical with cap_value(critical,10,USHRT_MAX)
  */
-static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical)
+static signed short status_calc_critical(struct block_list *bl, status_change *sc, int critical)
 {
 	if(!sc || !sc->count)
 		return cap_value(critical,10,SHRT_MAX);
 
-	if (sc->data[SC_INCCRI])
-		critical += sc->data[SC_INCCRI]->val2;
-	if (sc->data[SC_EP16_2_BUFF_SC])
+	if (sc->getSCE(SC_INCCRI))
+		critical += sc->getSCE(SC_INCCRI)->val2;
+	if (sc->getSCE(SC_EP16_2_BUFF_SC))
 		critical += 300;// crit +30
-	if (sc->data[SC_CRIFOOD])
-		critical += sc->data[SC_CRIFOOD]->val1;
-	if (sc->data[SC_EXPLOSIONSPIRITS])
-		critical += sc->data[SC_EXPLOSIONSPIRITS]->val2;
-	if (sc->data[SC_FORTUNE])
-		critical += sc->data[SC_FORTUNE]->val2;
-	if (sc->data[SC_TRUESIGHT])
-		critical += sc->data[SC_TRUESIGHT]->val2;
-	if (sc->data[SC_CLOAKING])
+	if (sc->getSCE(SC_CRIFOOD))
+		critical += sc->getSCE(SC_CRIFOOD)->val1;
+	if (sc->getSCE(SC_EXPLOSIONSPIRITS))
+		critical += sc->getSCE(SC_EXPLOSIONSPIRITS)->val2;
+	if (sc->getSCE(SC_FORTUNE))
+		critical += sc->getSCE(SC_FORTUNE)->val2;
+	if (sc->getSCE(SC_TRUESIGHT))
+		critical += sc->getSCE(SC_TRUESIGHT)->val2;
+	if (sc->getSCE(SC_CLOAKING))
 		critical += critical;
 #ifdef RENEWAL
-	if (sc->data[SC_SPEARQUICKEN])
-		critical += 3*sc->data[SC_SPEARQUICKEN]->val1*10;
-	if (sc->data[SC_TWOHANDQUICKEN])
-		critical += (2 + sc->data[SC_TWOHANDQUICKEN]->val1) * 10;
+	if (sc->getSCE(SC_SPEARQUICKEN))
+		critical += 3*sc->getSCE(SC_SPEARQUICKEN)->val1*10;
+	if (sc->getSCE(SC_TWOHANDQUICKEN))
+		critical += (2 + sc->getSCE(SC_TWOHANDQUICKEN)->val1) * 10;
 #endif
-	if (sc->data[SC__INVISIBILITY])
-		critical += sc->data[SC__INVISIBILITY]->val3 * 10;
-	if (sc->data[SC__UNLUCKY])
-		critical -= sc->data[SC__UNLUCKY]->val2;
-	if (sc->data[SC_SOULSHADOW])
-		critical += 10 * sc->data[SC_SOULSHADOW]->val3;
-	if(sc->data[SC_BEYONDOFWARCRY])
-		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
-	if (sc->data[SC_MTF_HITFLEE])
-		critical += sc->data[SC_MTF_HITFLEE]->val1;
-	if (sc->data[SC_PACKING_ENVELOPE9])
-		critical += sc->data[SC_PACKING_ENVELOPE9]->val1 * 10;
+	if (sc->getSCE(SC__INVISIBILITY))
+		critical += sc->getSCE(SC__INVISIBILITY)->val3 * 10;
+	if (sc->getSCE(SC__UNLUCKY))
+		critical -= sc->getSCE(SC__UNLUCKY)->val2;
+	if (sc->getSCE(SC_SOULSHADOW))
+		critical += 10 * sc->getSCE(SC_SOULSHADOW)->val3;
+	if(sc->getSCE(SC_BEYONDOFWARCRY))
+		critical += sc->getSCE(SC_BEYONDOFWARCRY)->val3;
+	if (sc->getSCE(SC_MTF_HITFLEE))
+		critical += sc->getSCE(SC_MTF_HITFLEE)->val1;
+	if (sc->getSCE(SC_PACKING_ENVELOPE9))
+		critical += sc->getSCE(SC_PACKING_ENVELOPE9)->val1 * 10;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
@@ -7225,70 +7397,70 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
  * @param hit: Initial hit
  * @return modified hit with cap_value(hit,1,USHRT_MAX)
  */
-static signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit)
+static signed short status_calc_hit(struct block_list *bl, status_change *sc, int hit)
 {
 	if(!sc || !sc->count)
 		return cap_value(hit,1,SHRT_MAX);
 
-	if(sc->data[SC_INCHIT])
-		hit += sc->data[SC_INCHIT]->val1;
-	if(sc->data[SC_HITFOOD])
-		hit += sc->data[SC_HITFOOD]->val1;
-	if(sc->data[SC_TRUESIGHT])
-		hit += sc->data[SC_TRUESIGHT]->val3;
-	if(sc->data[SC_HUMMING])
-		hit += sc->data[SC_HUMMING]->val2;
-	if(sc->data[SC_CONCENTRATION])
-		hit += sc->data[SC_CONCENTRATION]->val3;
-	if(sc->data[SC_INSPIRATION])
-		hit += 12 * sc->data[SC_INSPIRATION]->val1;
-	if(sc->data[SC_ADJUSTMENT])
+	if(sc->getSCE(SC_INCHIT))
+		hit += sc->getSCE(SC_INCHIT)->val1;
+	if(sc->getSCE(SC_HITFOOD))
+		hit += sc->getSCE(SC_HITFOOD)->val1;
+	if(sc->getSCE(SC_TRUESIGHT))
+		hit += sc->getSCE(SC_TRUESIGHT)->val3;
+	if(sc->getSCE(SC_HUMMING))
+		hit += sc->getSCE(SC_HUMMING)->val2;
+	if(sc->getSCE(SC_CONCENTRATION))
+		hit += sc->getSCE(SC_CONCENTRATION)->val3;
+	if(sc->getSCE(SC_INSPIRATION))
+		hit += 12 * sc->getSCE(SC_INSPIRATION)->val1;
+	if(sc->getSCE(SC_ADJUSTMENT))
 		hit -= 30;
-	if(sc->data[SC_INCREASING])
+	if(sc->getSCE(SC_INCREASING))
 		hit += 20; // RockmanEXE; changed based on updated [Reddozen]
-	if(sc->data[SC_MERC_HITUP])
-		hit += sc->data[SC_MERC_HITUP]->val2;
-	if(sc->data[SC_MTF_HITFLEE])
-		hit += sc->data[SC_MTF_HITFLEE]->val1;
-	if(sc->data[SC_INCHITRATE])
-		hit += hit * sc->data[SC_INCHITRATE]->val1/100;
-	if(sc->data[SC_BLIND])
+	if(sc->getSCE(SC_MERC_HITUP))
+		hit += sc->getSCE(SC_MERC_HITUP)->val2;
+	if(sc->getSCE(SC_MTF_HITFLEE))
+		hit += sc->getSCE(SC_MTF_HITFLEE)->val1;
+	if(sc->getSCE(SC_INCHITRATE))
+		hit += hit * sc->getSCE(SC_INCHITRATE)->val1/100;
+	if(sc->getSCE(SC_BLIND))
 		hit -= hit * 25/100;
-	if(sc->data[SC_HEAT_BARREL])
-		hit -= sc->data[SC_HEAT_BARREL]->val4;
-	if(sc->data[SC__GROOMY])
-		hit -= hit * sc->data[SC__GROOMY]->val3 / 100;
-	if(sc->data[SC_FEAR])
+	if(sc->getSCE(SC_HEAT_BARREL))
+		hit -= sc->getSCE(SC_HEAT_BARREL)->val4;
+	if(sc->getSCE(SC__GROOMY))
+		hit -= hit * sc->getSCE(SC__GROOMY)->val3 / 100;
+	if(sc->getSCE(SC_FEAR))
 		hit -= hit * 20 / 100;
-	if (sc->data[SC_ASH])
-		hit -= hit * sc->data[SC_ASH]->val2 / 100;
-	if (sc->data[SC_TEARGAS])
+	if (sc->getSCE(SC_ASH))
+		hit -= hit * sc->getSCE(SC_ASH)->val2 / 100;
+	if (sc->getSCE(SC_TEARGAS))
 		hit -= hit * 50 / 100;
-	if(sc->data[SC_ILLUSIONDOPING])
-		hit -= sc->data[SC_ILLUSIONDOPING]->val2;
-	if (sc->data[SC_MTF_ASPD])
-		hit += sc->data[SC_MTF_ASPD]->val2;
+	if(sc->getSCE(SC_ILLUSIONDOPING))
+		hit -= sc->getSCE(SC_ILLUSIONDOPING)->val2;
+	if (sc->getSCE(SC_MTF_ASPD))
+		hit += sc->getSCE(SC_MTF_ASPD)->val2;
 #ifdef RENEWAL
-	if (sc->data[SC_BLESSING])
-		hit += sc->data[SC_BLESSING]->val1 * 2;
-	if (sc->data[SC_TWOHANDQUICKEN])
-		hit += sc->data[SC_TWOHANDQUICKEN]->val1 * 2;
-	if (sc->data[SC_ADRENALINE])
-		hit += sc->data[SC_ADRENALINE]->val1 * 3 + 5;
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HIT)
+	if (sc->getSCE(SC_BLESSING))
+		hit += sc->getSCE(SC_BLESSING)->val1 * 2;
+	if (sc->getSCE(SC_TWOHANDQUICKEN))
+		hit += sc->getSCE(SC_TWOHANDQUICKEN)->val1 * 2;
+	if (sc->getSCE(SC_ADRENALINE))
+		hit += sc->getSCE(SC_ADRENALINE)->val1 * 3 + 5;
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_HIT)
 		hit += 50;
 #endif
-	if (sc->data[SC_SOULFALCON])
-		hit += sc->data[SC_SOULFALCON]->val3;
-	if (sc->data[SC_SATURDAYNIGHTFEVER])
-		hit -= 50 + 50 * sc->data[SC_SATURDAYNIGHTFEVER]->val1;
-	if (sc->data[SC_PACKING_ENVELOPE10])
-		hit += sc->data[SC_PACKING_ENVELOPE10]->val1;
-	if (sc->data[SC_ABYSS_SLAYER])
-		hit += sc->data[SC_ABYSS_SLAYER]->val3;
-	if (sc->data[SC_LIMIT_POWER_BOOSTER])
-		hit += sc->data[SC_LIMIT_POWER_BOOSTER]->val1;
-	if (sc->data[SC_ACARAJE])
+	if (sc->getSCE(SC_SOULFALCON))
+		hit += sc->getSCE(SC_SOULFALCON)->val3;
+	if (sc->getSCE(SC_SATURDAYNIGHTFEVER))
+		hit -= 50 + 50 * sc->getSCE(SC_SATURDAYNIGHTFEVER)->val1;
+	if (sc->getSCE(SC_PACKING_ENVELOPE10))
+		hit += sc->getSCE(SC_PACKING_ENVELOPE10)->val1;
+	if (sc->getSCE(SC_ABYSS_SLAYER))
+		hit += sc->getSCE(SC_ABYSS_SLAYER)->val3;
+	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		hit += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
+	if (sc->getSCE(SC_ACARAJE))
 		hit += 5;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
@@ -7301,112 +7473,112 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
  * @param flee: Initial flee
  * @return modified flee with cap_value(flee,1,USHRT_MAX)
  */
-static signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee)
+static signed short status_calc_flee(struct block_list *bl, status_change *sc, int flee)
 {
 	if( bl->type == BL_PC ) {
 		struct map_data *mapdata = map_getmapdata(bl->m);
 
 		if( mapdata_flag_gvg(mapdata) )
 			flee -= flee * battle_config.gvg_flee_penalty/100;
-		else if( mapdata->flag[MF_BATTLEGROUND] )
+		else if( mapdata->getMapFlag(MF_BATTLEGROUND) )
 			flee -= flee * battle_config.bg_flee_penalty/100;
 	}
 
 	if(!sc || !sc->count)
 		return cap_value(flee,1,SHRT_MAX);
-	if (sc->data[SC_POISON_MIST])
+	if (sc->getSCE(SC_POISON_MIST))
 		return 0;
-	if(sc->data[SC_OVERED_BOOST]) //Should be final and unmodifiable by any means
-		return sc->data[SC_OVERED_BOOST]->val2;
+	if(sc->getSCE(SC_OVERED_BOOST)) //Should be final and unmodifiable by any means
+		return sc->getSCE(SC_OVERED_BOOST)->val2;
 
 	// Fixed value
-	if(sc->data[SC_INCFLEE])
-		flee += sc->data[SC_INCFLEE]->val1;
-	if(sc->data[SC_FLEEFOOD])
-		flee += sc->data[SC_FLEEFOOD]->val1;
-	if(sc->data[SC_WHISTLE])
-		flee += sc->data[SC_WHISTLE]->val2;
-	if(sc->data[SC_WINDWALK])
-		flee += sc->data[SC_WINDWALK]->val2;
-	if(sc->data[SC_VIOLENTGALE])
-		flee += sc->data[SC_VIOLENTGALE]->val2;
-	if(sc->data[SC_MOON_COMFORT]) // SG skill [Komurka]
-		flee += sc->data[SC_MOON_COMFORT]->val2;
-	if(sc->data[SC_CLOSECONFINE])
-		flee += sc->data[SC_CLOSECONFINE]->val3;
-	if (sc->data[SC_ANGRIFFS_MODUS])
-		flee -= sc->data[SC_ANGRIFFS_MODUS]->val3;
-	if(sc->data[SC_ADJUSTMENT])
+	if(sc->getSCE(SC_INCFLEE))
+		flee += sc->getSCE(SC_INCFLEE)->val1;
+	if(sc->getSCE(SC_FLEEFOOD))
+		flee += sc->getSCE(SC_FLEEFOOD)->val1;
+	if(sc->getSCE(SC_WHISTLE))
+		flee += sc->getSCE(SC_WHISTLE)->val2;
+	if(sc->getSCE(SC_WINDWALK))
+		flee += sc->getSCE(SC_WINDWALK)->val2;
+	if(sc->getSCE(SC_VIOLENTGALE))
+		flee += sc->getSCE(SC_VIOLENTGALE)->val2;
+	if(sc->getSCE(SC_MOON_COMFORT)) // SG skill [Komurka]
+		flee += sc->getSCE(SC_MOON_COMFORT)->val2;
+	if(sc->getSCE(SC_CLOSECONFINE))
+		flee += sc->getSCE(SC_CLOSECONFINE)->val3;
+	if (sc->getSCE(SC_ANGRIFFS_MODUS))
+		flee -= sc->getSCE(SC_ANGRIFFS_MODUS)->val3;
+	if(sc->getSCE(SC_ADJUSTMENT))
 		flee += 30;
-	if(sc->data[SC_SPEED])
-		flee += 10 + sc->data[SC_SPEED]->val1 * 10;
-	if(sc->data[SC_GATLINGFEVER])
-		flee -= sc->data[SC_GATLINGFEVER]->val4;
-	if(sc->data[SC_PARTYFLEE])
-		flee += sc->data[SC_PARTYFLEE]->val1 * 10;
-	if(sc->data[SC_MERC_FLEEUP])
-		flee += sc->data[SC_MERC_FLEEUP]->val2;
-	if( sc->data[SC_HALLUCINATIONWALK] )
-		flee += sc->data[SC_HALLUCINATIONWALK]->val2;
-	if( sc->data[SC_NPC_HALLUCINATIONWALK] )
-		flee += sc->data[SC_NPC_HALLUCINATIONWALK]->val2;
-	if(sc->data[SC_MTF_HITFLEE])
-		flee += sc->data[SC_MTF_HITFLEE]->val2;
-	if( sc->data[SC_WATER_BARRIER] )
-		flee -= sc->data[SC_WATER_BARRIER]->val2;
-	if( sc->data[SC_C_MARKER] )
-		flee -= sc->data[SC_C_MARKER]->val3;
+	if(sc->getSCE(SC_SPEED))
+		flee += 10 + sc->getSCE(SC_SPEED)->val1 * 10;
+	if(sc->getSCE(SC_GATLINGFEVER))
+		flee -= sc->getSCE(SC_GATLINGFEVER)->val4;
+	if(sc->getSCE(SC_PARTYFLEE))
+		flee += sc->getSCE(SC_PARTYFLEE)->val1 * 10;
+	if(sc->getSCE(SC_MERC_FLEEUP))
+		flee += sc->getSCE(SC_MERC_FLEEUP)->val2;
+	if( sc->getSCE(SC_HALLUCINATIONWALK) )
+		flee += sc->getSCE(SC_HALLUCINATIONWALK)->val2;
+	if( sc->getSCE(SC_NPC_HALLUCINATIONWALK) )
+		flee += sc->getSCE(SC_NPC_HALLUCINATIONWALK)->val2;
+	if(sc->getSCE(SC_MTF_HITFLEE))
+		flee += sc->getSCE(SC_MTF_HITFLEE)->val2;
+	if( sc->getSCE(SC_WATER_BARRIER) )
+		flee -= sc->getSCE(SC_WATER_BARRIER)->val2;
+	if( sc->getSCE(SC_C_MARKER) )
+		flee -= sc->getSCE(SC_C_MARKER)->val3;
 #ifdef RENEWAL
-	if( sc->data[SC_SPEARQUICKEN] )
-		flee += 2 * sc->data[SC_SPEARQUICKEN]->val1;
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_FLEE)
+	if( sc->getSCE(SC_SPEARQUICKEN) )
+		flee += 2 * sc->getSCE(SC_SPEARQUICKEN)->val1;
+	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_FLEE)
 		flee += 50;
 #endif
 
 	// Rate value
-	if(sc->data[SC_INCFLEERATE])
-		flee += flee * sc->data[SC_INCFLEERATE]->val1/100;
-	if(sc->data[SC_SPIDERWEB] || sc->data[SC_WIDEWEB])
+	if(sc->getSCE(SC_INCFLEERATE))
+		flee += flee * sc->getSCE(SC_INCFLEERATE)->val1/100;
+	if(sc->getSCE(SC_SPIDERWEB) || sc->getSCE(SC_WIDEWEB))
 		flee -= flee * 50/100;
-	if(sc->data[SC_BERSERK])
+	if(sc->getSCE(SC_BERSERK))
 		flee -= flee * 50/100;
-	if(sc->data[SC_BLIND])
+	if(sc->getSCE(SC_BLIND))
 		flee -= flee * 25/100;
-	if(sc->data[SC_FEAR])
+	if(sc->getSCE(SC_FEAR))
 		flee -= flee * 20 / 100;
-	if(sc->data[SC_PARALYSE] && sc->data[SC_PARALYSE]->val3 == 1)
+	if(sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 1)
 		flee -= flee * 10 / 100;
-	if(sc->data[SC_INFRAREDSCAN])
+	if(sc->getSCE(SC_INFRAREDSCAN))
 		flee -= flee * 30 / 100;
-	if( sc->data[SC__LAZINESS] )
-		flee -= flee * sc->data[SC__LAZINESS]->val3 / 100;
-	if( sc->data[SC_GLOOMYDAY] )
-		flee -= flee * sc->data[SC_GLOOMYDAY]->val2 / 100;
-	if( sc->data[SC_SATURDAYNIGHTFEVER] )
-		flee -= 20 + 30 * sc->data[SC_SATURDAYNIGHTFEVER]->val1;
-	if( sc->data[SC_WIND_STEP_OPTION] )
-		flee += flee * sc->data[SC_WIND_STEP_OPTION]->val2 / 100;
-	if( sc->data[SC_TINDER_BREAKER] || sc->data[SC_TINDER_BREAKER2] )
+	if( sc->getSCE(SC__LAZINESS) )
+		flee -= flee * sc->getSCE(SC__LAZINESS)->val3 / 100;
+	if( sc->getSCE(SC_GLOOMYDAY) )
+		flee -= flee * sc->getSCE(SC_GLOOMYDAY)->val2 / 100;
+	if( sc->getSCE(SC_SATURDAYNIGHTFEVER) )
+		flee -= 20 + 30 * sc->getSCE(SC_SATURDAYNIGHTFEVER)->val1;
+	if( sc->getSCE(SC_WIND_STEP_OPTION) )
+		flee += flee * sc->getSCE(SC_WIND_STEP_OPTION)->val2 / 100;
+	if( sc->getSCE(SC_TINDER_BREAKER) || sc->getSCE(SC_TINDER_BREAKER2) )
 		flee -= flee * 50 / 100;
-	if( sc->data[SC_ZEPHYR] )
-		flee += sc->data[SC_ZEPHYR]->val2;
-	if(sc->data[SC_ASH])
-		flee -= flee * sc->data[SC_ASH]->val4 / 100;
-	if (sc->data[SC_GOLDENE_FERSE])
-		flee += flee * sc->data[SC_GOLDENE_FERSE]->val2 / 100;
-	if (sc->data[SC_SMOKEPOWDER])
+	if( sc->getSCE(SC_ZEPHYR) )
+		flee += sc->getSCE(SC_ZEPHYR)->val2;
+	if(sc->getSCE(SC_ASH))
+		flee -= flee * sc->getSCE(SC_ASH)->val4 / 100;
+	if (sc->getSCE(SC_GOLDENE_FERSE))
+		flee += flee * sc->getSCE(SC_GOLDENE_FERSE)->val2 / 100;
+	if (sc->getSCE(SC_SMOKEPOWDER))
 		flee += flee * 20 / 100;
-	if (sc->data[SC_TEARGAS])
+	if (sc->getSCE(SC_TEARGAS))
 		flee -= flee * 50 / 100;
-	//if( sc->data[SC_C_MARKER] )
-	//	flee -= (flee * sc->data[SC_C_MARKER]->val3) / 100;
-	if (sc->data[SC_GROOMING])
-		flee += sc->data[SC_GROOMING]->val2;
-	if (sc->data[SC_PACKING_ENVELOPE5])
-		flee += sc->data[SC_PACKING_ENVELOPE5]->val1;
-	if (sc->data[SC_LIMIT_POWER_BOOSTER])
-		flee += sc->data[SC_LIMIT_POWER_BOOSTER]->val1;
-	if (sc->data[SC_MYSTICPOWDER])
+	//if( sc->getSCE(SC_C_MARKER) )
+	//	flee -= (flee * sc->getSCE(SC_C_MARKER)->val3) / 100;
+	if (sc->getSCE(SC_GROOMING))
+		flee += sc->getSCE(SC_GROOMING)->val2;
+	if (sc->getSCE(SC_PACKING_ENVELOPE5))
+		flee += sc->getSCE(SC_PACKING_ENVELOPE5)->val1;
+	if (sc->getSCE(SC_LIMIT_POWER_BOOSTER))
+		flee += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
+	if (sc->getSCE(SC_MYSTICPOWDER))
 		flee += 20;
 
 	return (short)cap_value(flee,1,SHRT_MAX);
@@ -7419,21 +7591,21 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
  * @param flee2: Initial flee2
  * @return modified flee2 with cap_value(flee2,10,USHRT_MAX)
  */
-static signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2)
+static signed short status_calc_flee2(struct block_list *bl, status_change *sc, int flee2)
 {
 	if(!sc || !sc->count)
 		return cap_value(flee2,10,SHRT_MAX);
 
-	if(sc->data[SC_INCFLEE2])
-		flee2 += sc->data[SC_INCFLEE2]->val2;
-	if(sc->data[SC_WHISTLE])
-		flee2 += sc->data[SC_WHISTLE]->val3*10;
-	if(sc->data[SC__UNLUCKY])
-		flee2 -= flee2 * sc->data[SC__UNLUCKY]->val2 / 100;
-	if (sc->data[SC_HISS])
-		flee2 += sc->data[SC_HISS]->val2*10;
-	if (sc->data[SC_DORAM_FLEE2])
-		flee2 += sc->data[SC_DORAM_FLEE2]->val1;
+	if(sc->getSCE(SC_INCFLEE2))
+		flee2 += sc->getSCE(SC_INCFLEE2)->val2;
+	if(sc->getSCE(SC_WHISTLE))
+		flee2 += sc->getSCE(SC_WHISTLE)->val3*10;
+	if(sc->getSCE(SC__UNLUCKY))
+		flee2 -= flee2 * sc->getSCE(SC__UNLUCKY)->val2 / 100;
+	if (sc->getSCE(SC_HISS))
+		flee2 += sc->getSCE(SC_HISS)->val2*10;
+	if (sc->getSCE(SC_DORAM_FLEE2))
+		flee2 += sc->getSCE(SC_DORAM_FLEE2)->val1;
 
 	return (short)cap_value(flee2,10,SHRT_MAX);
 }
@@ -7445,107 +7617,107 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
  * @param def: Initial def
  * @return modified def with cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX)
  */
-static defType status_calc_def(struct block_list *bl, struct status_change *sc, int def)
+static defType status_calc_def(struct block_list *bl, status_change *sc, int def)
 {
 	if(!sc || !sc->count)
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 
-	if(sc->data[SC_BERSERK])
+	if(sc->getSCE(SC_BERSERK))
 		return 0;
-	if(sc->data[SC_BARRIER])
+	if(sc->getSCE(SC_BARRIER))
 		return 100;
-	if(sc->data[SC_KEEPING])
+	if(sc->getSCE(SC_KEEPING))
 		return 90;
 #ifndef RENEWAL /// Steel Body does not provide 90 DEF in [RENEWAL]
-	if(sc->data[SC_STEELBODY])
+	if(sc->getSCE(SC_STEELBODY))
 		return 90;
 #endif
-	if (sc->data[SC_NYANGGRASS]) {
+	if (sc->getSCE(SC_NYANGGRASS)) {
 		if (bl->type == BL_PC)
 			return 0;
 		else
-			return def >>= 1;
+			return def /= 2;
 	}
-	if(sc->data[SC_DEFSET])
-		return sc->data[SC_DEFSET]->val1;
+	if(sc->getSCE(SC_DEFSET))
+		return sc->getSCE(SC_DEFSET)->val1;
 
-	if(sc->data[SC_DRUMBATTLE])
-		def += sc->data[SC_DRUMBATTLE]->val3;
+	if(sc->getSCE(SC_DRUMBATTLE))
+		def += sc->getSCE(SC_DRUMBATTLE)->val3;
 #ifdef RENEWAL
-	if (sc->data[SC_ASSUMPTIO])
-		def += sc->data[SC_ASSUMPTIO]->val1 * 50;
+	if (sc->getSCE(SC_ASSUMPTIO))
+		def += sc->getSCE(SC_ASSUMPTIO)->val1 * 50;
 #else
-	if(sc->data[SC_DEFENCE])
-		def += sc->data[SC_DEFENCE]->val2;
+	if(sc->getSCE(SC_DEFENCE))
+		def += sc->getSCE(SC_DEFENCE)->val2;
 #endif
-	if(sc->data[SC_INCDEFRATE])
-		def += def * sc->data[SC_INCDEFRATE]->val1/100;
-	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2)
+	if(sc->getSCE(SC_INCDEFRATE))
+		def += def * sc->getSCE(SC_INCDEFRATE)->val1/100;
+	if(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 2)
 		def += 50;
-	if(sc->data[SC_ODINS_POWER])
-		def -= 20 * sc->data[SC_ODINS_POWER]->val1;
-	if( sc->data[SC_ANGRIFFS_MODUS] )
-		def -= 20 + 10 * sc->data[SC_ANGRIFFS_MODUS]->val1;
-	if(sc->data[SC_STONEHARDSKIN])
-		def += sc->data[SC_STONEHARDSKIN]->val1;
-	if(sc->data[SC_STONE])
-		def >>=1;
-	if(sc->data[SC_FREEZE])
-		def >>=1;
-	if(sc->data[SC_SIGNUMCRUCIS])
-		def -= def * sc->data[SC_SIGNUMCRUCIS]->val2/100;
-	if(sc->data[SC_CONCENTRATION])
-		def -= def * sc->data[SC_CONCENTRATION]->val4/100;
-	if(sc->data[SC_SKE])
-		def >>=1;
-	if(sc->data[SC_PROVOKE] && bl->type != BL_PC) // Provoke doesn't alter player defense->
-		def -= def * sc->data[SC_PROVOKE]->val3/100;
-	if(sc->data[SC_STRIPSHIELD] && bl->type != BL_PC) // Player doesn't have def reduction only equip removed
-		def -= def * sc->data[SC_STRIPSHIELD]->val2/100;
-	if (sc->data[SC_FLING])
-		def -= def * (sc->data[SC_FLING]->val2)/100;
-	if( sc->data[SC_FREEZING] )
+	if(sc->getSCE(SC_ODINS_POWER))
+		def -= 20 * sc->getSCE(SC_ODINS_POWER)->val1;
+	if( sc->getSCE(SC_ANGRIFFS_MODUS) )
+		def -= 20 + 10 * sc->getSCE(SC_ANGRIFFS_MODUS)->val1;
+	if(sc->getSCE(SC_STONEHARDSKIN))
+		def += sc->getSCE(SC_STONEHARDSKIN)->val1;
+	if(sc->getSCE(SC_STONE))
+		def /= 2;
+	if(sc->getSCE(SC_FREEZE))
+		def /= 2;
+	if(sc->getSCE(SC_SIGNUMCRUCIS))
+		def -= def * sc->getSCE(SC_SIGNUMCRUCIS)->val2/100;
+	if(sc->getSCE(SC_CONCENTRATION))
+		def -= def * sc->getSCE(SC_CONCENTRATION)->val4/100;
+	if(sc->getSCE(SC_SKE))
+		def /= 2;
+	if(sc->getSCE(SC_PROVOKE) && bl->type != BL_PC) // Provoke doesn't alter player defense->
+		def -= def * sc->getSCE(SC_PROVOKE)->val3/100;
+	if(sc->getSCE(SC_STRIPSHIELD) && bl->type != BL_PC) // Player doesn't have def reduction only equip removed
+		def -= def * sc->getSCE(SC_STRIPSHIELD)->val2/100;
+	if (sc->getSCE(SC_FLING))
+		def -= def * (sc->getSCE(SC_FLING)->val2)/100;
+	if( sc->getSCE(SC_FREEZING) )
 		def -= def * (bl->type == BL_PC ? 30 : 10) / 100;
-	if( sc->data[SC_ANALYZE] )
-		def -= def * (14 * sc->data[SC_ANALYZE]->val1) / 100;
-	if( sc->data[SC_NEUTRALBARRIER] )
-		def += def * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
-	if( sc->data[SC_PRESTIGE] )
-		def += sc->data[SC_PRESTIGE]->val3;
-	if( sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 1 )
-		def += 6 * sc->data[SC_BANDING]->val1;
-	if( sc->data[SC_ECHOSONG] )
-		def += sc->data[SC_ECHOSONG]->val3;
-	if( sc->data[SC_CAMOUFLAGE] )
-		def -= def * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
-	if( sc->data[SC_SOLID_SKIN_OPTION] )
-		def += def * sc->data[SC_SOLID_SKIN_OPTION]->val2 / 100;
-	if( sc->data[SC_ROCK_CRUSHER] )
-		def -= def * sc->data[SC_ROCK_CRUSHER]->val2 / 100;
-	if( sc->data[SC_POWER_OF_GAIA] )
-		def += def * sc->data[SC_POWER_OF_GAIA]->val2 / 100;
-	if(sc->data[SC_ASH])
-		def -= def * sc->data[SC_ASH]->val3/100;
-	if( sc->data[SC_OVERED_BOOST] && bl->type == BL_HOM )
-		def -= def * sc->data[SC_OVERED_BOOST]->val4 / 100;
-	if(sc->data[SC_GLASTHEIM_ITEMDEF])
-		def += sc->data[SC_GLASTHEIM_ITEMDEF]->val1;
-	if (sc->data[SC_SOULGOLEM])
-		def += sc->data[SC_SOULGOLEM]->val2;
-	if (sc->data[SC_STONE_WALL])
-		def += sc->data[SC_STONE_WALL]->val2;
-	if( sc->data[SC_PACKING_ENVELOPE7] )
-		def += sc->data[SC_PACKING_ENVELOPE7]->val1;
-	if (sc->data[SC_D_MACHINE])
-		def += sc->data[SC_D_MACHINE]->val2;
-	if (sc->data[SC_CLIMAX_CRYIMP])
+	if( sc->getSCE(SC_ANALYZE) )
+		def -= def * (14 * sc->getSCE(SC_ANALYZE)->val1) / 100;
+	if( sc->getSCE(SC_NEUTRALBARRIER) )
+		def += def * sc->getSCE(SC_NEUTRALBARRIER)->val2 / 100;
+	if( sc->getSCE(SC_PRESTIGE) )
+		def += sc->getSCE(SC_PRESTIGE)->val3;
+	if( sc->getSCE(SC_BANDING) && sc->getSCE(SC_BANDING)->val2 > 1 )
+		def += 6 * sc->getSCE(SC_BANDING)->val1;
+	if( sc->getSCE(SC_ECHOSONG) )
+		def += sc->getSCE(SC_ECHOSONG)->val3;
+	if( sc->getSCE(SC_CAMOUFLAGE) )
+		def -= def * 5 * sc->getSCE(SC_CAMOUFLAGE)->val3 / 100;
+	if( sc->getSCE(SC_SOLID_SKIN_OPTION) )
+		def += def * sc->getSCE(SC_SOLID_SKIN_OPTION)->val2 / 100;
+	if( sc->getSCE(SC_ROCK_CRUSHER) )
+		def -= def * sc->getSCE(SC_ROCK_CRUSHER)->val2 / 100;
+	if( sc->getSCE(SC_POWER_OF_GAIA) )
+		def += def * sc->getSCE(SC_POWER_OF_GAIA)->val2 / 100;
+	if(sc->getSCE(SC_ASH))
+		def -= def * sc->getSCE(SC_ASH)->val3/100;
+	if( sc->getSCE(SC_OVERED_BOOST) && bl->type == BL_HOM )
+		def -= def * sc->getSCE(SC_OVERED_BOOST)->val4 / 100;
+	if(sc->getSCE(SC_GLASTHEIM_ITEMDEF))
+		def += sc->getSCE(SC_GLASTHEIM_ITEMDEF)->val1;
+	if (sc->getSCE(SC_SOULGOLEM))
+		def += sc->getSCE(SC_SOULGOLEM)->val2;
+	if (sc->getSCE(SC_STONE_WALL))
+		def += sc->getSCE(SC_STONE_WALL)->val2;
+	if( sc->getSCE(SC_PACKING_ENVELOPE7) )
+		def += sc->getSCE(SC_PACKING_ENVELOPE7)->val1;
+	if (sc->getSCE(SC_D_MACHINE))
+		def += sc->getSCE(SC_D_MACHINE)->val2;
+	if (sc->getSCE(SC_CLIMAX_CRYIMP))
 		def += 300;
-	if (sc->data[SC_GUARD_STANCE])
-		def += sc->data[SC_GUARD_STANCE]->val2;
-	if (sc->data[SC_ATTACK_STANCE])
-		def -= sc->data[SC_ATTACK_STANCE]->val2;
-	if (sc->data[SC_M_DEFSCROLL])
-		def += 500;
+	if (sc->getSCE(SC_GUARD_STANCE))
+		def += sc->getSCE(SC_GUARD_STANCE)->val2;
+	if (sc->getSCE(SC_ATTACK_STANCE))
+		def -= sc->getSCE(SC_ATTACK_STANCE)->val2;
+	if (sc->getSCE(SC_M_DEFSCROLL))
+		def += sc->getSCE(SC_M_DEFSCROLL)->val1;
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -7557,7 +7729,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
  * @param def2: Initial def2
  * @return modified def2 with cap_value(def2,SHRT_MIN,SHRT_MAX)
  */
-static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
+static signed short status_calc_def2(struct block_list *bl, status_change *sc, int def2)
 {
 	if(!sc || !sc->count)
 #ifdef RENEWAL
@@ -7566,50 +7738,50 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return (short)cap_value(def2,1,SHRT_MAX);
 #endif
 
-	if(sc->data[SC_BERSERK])
+	if(sc->getSCE(SC_BERSERK))
 		return 0;
-	if(sc->data[SC_ETERNALCHAOS])
+	if(sc->getSCE(SC_ETERNALCHAOS))
 		return 0;
-	if(sc->data[SC_DEFSET])
-		return sc->data[SC_DEFSET]->val1;
+	if(sc->getSCE(SC_DEFSET))
+		return sc->getSCE(SC_DEFSET)->val1;
 
-	if(sc->data[SC_SUN_COMFORT])
-		def2 += sc->data[SC_SUN_COMFORT]->val2;
+	if(sc->getSCE(SC_SUN_COMFORT))
+		def2 += sc->getSCE(SC_SUN_COMFORT)->val2;
 #ifdef RENEWAL
-	if (sc->data[SC_SKA])
+	if (sc->getSCE(SC_SKA))
 		def2 += 80;
 #endif
-	if(sc->data[SC_ANGELUS])
+	if(sc->getSCE(SC_ANGELUS))
 #ifdef RENEWAL /// The VIT stat bonus is boosted by angelus [RENEWAL]
-		def2 += status_get_vit(bl) / 2 * sc->data[SC_ANGELUS]->val2/100;
+		def2 += status_get_vit(bl) / 2 * sc->getSCE(SC_ANGELUS)->val2/100;
 #else
-		def2 += def2 * sc->data[SC_ANGELUS]->val2/100;
-	if(sc->data[SC_CONCENTRATION])
-		def2 -= def2 * sc->data[SC_CONCENTRATION]->val4/100;
+		def2 += def2 * sc->getSCE(SC_ANGELUS)->val2/100;
+	if(sc->getSCE(SC_CONCENTRATION))
+		def2 -= def2 * sc->getSCE(SC_CONCENTRATION)->val4/100;
 #endif
-	if(sc->data[SC_POISON])
+	if(sc->getSCE(SC_POISON))
 		def2 -= def2 * 25/100;
-	if(sc->data[SC_DPOISON])
+	if(sc->getSCE(SC_DPOISON))
 		def2 -= def2 * 25/100;
-	if(sc->data[SC_SKE])
+	if(sc->getSCE(SC_SKE))
 		def2 -= def2 * 50/100;
-	if(sc->data[SC_PROVOKE])
-		def2 -= def2 * sc->data[SC_PROVOKE]->val3/100;
-	if(sc->data[SC_JOINTBEAT])
-		def2 -= def2 * ( sc->data[SC_JOINTBEAT]->val2&BREAK_SHOULDER ? 50 : 0 ) / 100
-			  + def2 * ( sc->data[SC_JOINTBEAT]->val2&BREAK_WAIST ? 25 : 0 ) / 100;
-	if(sc->data[SC_FLING])
-		def2 -= def2 * (sc->data[SC_FLING]->val3)/100;
-	if(sc->data[SC_ANALYZE])
-		def2 -= def2 * (14 * sc->data[SC_ANALYZE]->val1) / 100;
-	if(sc->data[SC_ASH])
-		def2 -= def2 * sc->data[SC_ASH]->val3/100;
-	if (sc->data[SC_PARALYSIS])
-		def2 -= def2 * sc->data[SC_PARALYSIS]->val2 / 100;
-	if(sc->data[SC_EQC])
-		def2 -= def2 * sc->data[SC_EQC]->val2 / 100;
-	if( sc->data[SC_CAMOUFLAGE] )
-		def2 -= def2 * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
+	if(sc->getSCE(SC_PROVOKE))
+		def2 -= def2 * sc->getSCE(SC_PROVOKE)->val3/100;
+	if(sc->getSCE(SC_JOINTBEAT))
+		def2 -= def2 * ( sc->getSCE(SC_JOINTBEAT)->val2&BREAK_SHOULDER ? 50 : 0 ) / 100
+			  + def2 * ( sc->getSCE(SC_JOINTBEAT)->val2&BREAK_WAIST ? 25 : 0 ) / 100;
+	if(sc->getSCE(SC_FLING))
+		def2 -= def2 * (sc->getSCE(SC_FLING)->val3)/100;
+	if(sc->getSCE(SC_ANALYZE))
+		def2 -= def2 * (14 * sc->getSCE(SC_ANALYZE)->val1) / 100;
+	if(sc->getSCE(SC_ASH))
+		def2 -= def2 * sc->getSCE(SC_ASH)->val3/100;
+	if (sc->getSCE(SC_PARALYSIS))
+		def2 -= def2 * sc->getSCE(SC_PARALYSIS)->val2 / 100;
+	if(sc->getSCE(SC_EQC))
+		def2 -= def2 * sc->getSCE(SC_EQC)->val2 / 100;
+	if( sc->getSCE(SC_CAMOUFLAGE) )
+		def2 -= def2 * 5 * sc->getSCE(SC_CAMOUFLAGE)->val3 / 100;
 
 #ifdef RENEWAL
 	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
@@ -7625,61 +7797,61 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
  * @param mdef: Initial mdef
  * @return modified mdef with cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX)
  */
-static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
+static defType status_calc_mdef(struct block_list *bl, status_change *sc, int mdef)
 {
 	if(!sc || !sc->count)
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
-	if(sc->data[SC_BERSERK])
+	if(sc->getSCE(SC_BERSERK))
 		return 0;
-	if(sc->data[SC_BARRIER])
+	if(sc->getSCE(SC_BARRIER))
 		return 100;
 
 #ifndef RENEWAL /// Steel Body does not provide 90 MDEF in [RENEWAL]
-	if(sc->data[SC_STEELBODY])
+	if(sc->getSCE(SC_STEELBODY))
 		return 90;
 #endif
-	if (sc->data[SC_NYANGGRASS]) {
+	if (sc->getSCE(SC_NYANGGRASS)) {
 		if (bl->type == BL_PC)
 			return 0;
 		else
-			return mdef >>= 1;
+			return mdef / 2;
 	}
-	if(sc->data[SC_MDEFSET])
-		return sc->data[SC_MDEFSET]->val1;
+	if(sc->getSCE(SC_MDEFSET))
+		return sc->getSCE(SC_MDEFSET)->val1;
 
-	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
+	if(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 3)
 		mdef += 50;
-	if(sc->data[SC_ENDURE] && !sc->data[SC_ENDURE]->val3) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
-		mdef += (sc->data[SC_ENDURE]->val4 == 0) ? sc->data[SC_ENDURE]->val1 : 1;
-	if(sc->data[SC_STONEHARDSKIN])
-		mdef += sc->data[SC_STONEHARDSKIN]->val1;
-	if(sc->data[SC_STONE])
+	if(sc->getSCE(SC_ENDURE) && !sc->getSCE(SC_ENDURE)->val3) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
+		mdef += (sc->getSCE(SC_ENDURE)->val4 == 0) ? sc->getSCE(SC_ENDURE)->val1 : 1;
+	if(sc->getSCE(SC_STONEHARDSKIN))
+		mdef += sc->getSCE(SC_STONEHARDSKIN)->val1;
+	if(sc->getSCE(SC_STONE))
 		mdef += 25 * mdef / 100;
-	if(sc->data[SC_FREEZE])
+	if(sc->getSCE(SC_FREEZE))
 		mdef += 25 * mdef / 100;
-	if(sc->data[SC_BURNING])
+	if(sc->getSCE(SC_BURNING))
 		mdef -= 25 * mdef / 100;
-	if( sc->data[SC_NEUTRALBARRIER] )
-		mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
-	if(sc->data[SC_ANALYZE])
-		mdef -= mdef * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
-	if(sc->data[SC_SYMPHONYOFLOVER])
-		mdef += mdef * sc->data[SC_SYMPHONYOFLOVER]->val3 / 100;
-	if (sc->data[SC_ODINS_POWER])
-		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
-	if(sc->data[SC_GLASTHEIM_ITEMDEF])
-		mdef += sc->data[SC_GLASTHEIM_ITEMDEF]->val2;
-	if (sc->data[SC_SOULGOLEM])
-		mdef += sc->data[SC_SOULGOLEM]->val3;
-	if (sc->data[SC_STONE_WALL])
-		mdef += sc->data[SC_STONE_WALL]->val3;
-	if (sc->data[SC_PACKING_ENVELOPE8])
-		mdef += sc->data[SC_PACKING_ENVELOPE8]->val1;
-	if (sc->data[SC_CLIMAX_CRYIMP])
+	if( sc->getSCE(SC_NEUTRALBARRIER) )
+		mdef += mdef * sc->getSCE(SC_NEUTRALBARRIER)->val2 / 100;
+	if(sc->getSCE(SC_ANALYZE))
+		mdef -= mdef * ( 14 * sc->getSCE(SC_ANALYZE)->val1 ) / 100;
+	if(sc->getSCE(SC_SYMPHONYOFLOVER))
+		mdef += mdef * sc->getSCE(SC_SYMPHONYOFLOVER)->val3 / 100;
+	if (sc->getSCE(SC_ODINS_POWER))
+		mdef -= 20 * sc->getSCE(SC_ODINS_POWER)->val1;
+	if(sc->getSCE(SC_GLASTHEIM_ITEMDEF))
+		mdef += sc->getSCE(SC_GLASTHEIM_ITEMDEF)->val2;
+	if (sc->getSCE(SC_SOULGOLEM))
+		mdef += sc->getSCE(SC_SOULGOLEM)->val3;
+	if (sc->getSCE(SC_STONE_WALL))
+		mdef += sc->getSCE(SC_STONE_WALL)->val3;
+	if (sc->getSCE(SC_PACKING_ENVELOPE8))
+		mdef += sc->getSCE(SC_PACKING_ENVELOPE8)->val1;
+	if (sc->getSCE(SC_CLIMAX_CRYIMP))
 		mdef += 100;
-	if (sc->data[SC_M_DEFSCROLL])
-		mdef += 200;
+	if (sc->getSCE(SC_M_DEFSCROLL))
+		mdef += sc->getSCE(SC_M_DEFSCROLL)->val2;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -7691,7 +7863,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
  * @param mdef2: Initial mdef2
  * @return modified mdef2 with cap_value(mdef2,SHRT_MIN,SHRT_MAX)
  */
-static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
+static signed short status_calc_mdef2(struct block_list *bl, status_change *sc, int mdef2)
 {
 	if(!sc || !sc->count)
 #ifdef RENEWAL
@@ -7700,19 +7872,19 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 		return (short)cap_value(mdef2,1,SHRT_MAX);
 #endif
 
-	if(sc->data[SC_BERSERK])
+	if(sc->getSCE(SC_BERSERK))
 		return 0;
-	if(sc->data[SC_SKA])
+	if(sc->getSCE(SC_SKA))
 		return 90;
-	if(sc->data[SC_MDEFSET])
-		return sc->data[SC_MDEFSET]->val1;
+	if(sc->getSCE(SC_MDEFSET))
+		return sc->getSCE(SC_MDEFSET)->val1;
 
-	if(sc->data[SC_MINDBREAKER])
-		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3/100;
-	if(sc->data[SC_BURNING])
+	if(sc->getSCE(SC_MINDBREAKER))
+		mdef2 -= mdef2 * sc->getSCE(SC_MINDBREAKER)->val3/100;
+	if(sc->getSCE(SC_BURNING))
 		mdef2 -= mdef2 * 25 / 100;
-	if(sc->data[SC_ANALYZE])
-		mdef2 -= mdef2 * (14 * sc->data[SC_ANALYZE]->val1) / 100;
+	if(sc->getSCE(SC_ANALYZE))
+		mdef2 -= mdef2 * (14 * sc->getSCE(SC_ANALYZE)->val1) / 100;
 
 #ifdef RENEWAL
 	return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
@@ -7728,7 +7900,7 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
  * @param speed: Initial speed
  * @return modified speed with cap_value(speed,10,USHRT_MAX)
  */
-static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
+static unsigned short status_calc_speed(struct block_list *bl, status_change *sc, int speed)
 {
 	TBL_PC* sd = BL_CAST(BL_PC, bl);
 	int speed_rate = 100;
@@ -7743,7 +7915,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = 50 - 10 * pc_checkskill(sd, NC_MADOLICENCE);
 		else
 			val -= 25;
-		if (sc->data[SC_ACCELERATION])
+		if (sc->getSCE(SC_ACCELERATION))
 			val -= 25;
 		speed += speed * val / 100;
 
@@ -7759,91 +7931,95 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		int val = 0;
 
 		// GetMoveHasteValue2()
-		if( sc->data[SC_FUSION] )
+		if( sc->getSCE(SC_FUSION) )
 			val = 25;
 		else if( sd ) {
 			if( pc_isriding(sd) || sd->sc.option&OPTION_DRAGON )
 				val = 25; // Same bonus
 			else if( pc_isridingwug(sd) )
 				val = 15 + 5 * pc_checkskill(sd, RA_WUGRIDER);
-			else if( sc->data[SC_ALL_RIDING] )
+			else if( sc->getSCE(SC_ALL_RIDING) )
 				val = battle_config.rental_mount_speed_boost;
 		}
 		speed_rate -= val;
 
 		// GetMoveSlowValue()
-		if( sd && sc->data[SC_HIDING] && pc_checkskill(sd,RG_TUNNELDRIVE) > 0 )
+		if( sd && sc->getSCE(SC_HIDING) && pc_checkskill(sd,RG_TUNNELDRIVE) > 0 )
 			val = 120 - 6 * pc_checkskill(sd,RG_TUNNELDRIVE);
-		else if( sd && sc->data[SC_CHASEWALK] && sc->data[SC_CHASEWALK]->val3 < 0 )
-			val = sc->data[SC_CHASEWALK]->val3;
+		else if( sd && sc->getSCE(SC_CHASEWALK) && sc->getSCE(SC_CHASEWALK)->val3 < 0 )
+			val = sc->getSCE(SC_CHASEWALK)->val3;
 		else {
 			val = 0;
 			// Longing for Freedom/Special Singer cancels song/dance penalty
 #ifdef RENEWAL
-			if (sc->data[SC_ENSEMBLEFATIGUE])
-				val = max(val, sc->data[SC_ENSEMBLEFATIGUE]->val2);
+			if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+				val = max(val, sc->getSCE(SC_ENSEMBLEFATIGUE)->val2);
 #else
-			if( sc->data[SC_LONGING] )
-				val = max( val, 50 - 10 * sc->data[SC_LONGING]->val1 );
+			if( sc->getSCE(SC_LONGING) )
+				val = max( val, 50 - 10 * sc->getSCE(SC_LONGING)->val1 );
 #endif
 			else
-			if( sd && sc->data[SC_DANCING] )
-				val = max( val, 500 - (40 + 10 * (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER)) * pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON)) );
+			if( sd && sc->getSCE(SC_DANCING) )
+				val = max( val, 500 - (40 + 10 * (sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_BARDDANCER)) * pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON)) );
 
-			if( sc->data[SC_DECREASEAGI] )
+			if( sc->getSCE(SC_DECREASEAGI) )
 				val = max( val, 25 );
-			if( sc->data[SC_QUAGMIRE] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY] || (sc->data[SC_GLOOMYDAY] && sc->data[SC_GLOOMYDAY]->val4) )
+			if( sc->getSCE(SC_QUAGMIRE) || sc->getSCE(SC_HALLUCINATIONWALK_POSTDELAY) || (sc->getSCE(SC_GLOOMYDAY) && sc->getSCE(SC_GLOOMYDAY)->val4) )
 				val = max( val, 50 );
-			if( sc->data[SC_DONTFORGETME] )
-				val = max( val, sc->data[SC_DONTFORGETME]->val3 );
-			if( sc->data[SC_CURSE] )
+			if( sc->getSCE(SC_DONTFORGETME) )
+				val = max( val, sc->getSCE(SC_DONTFORGETME)->val3 );
+			if( sc->getSCE(SC_CURSE) )
 				val = max( val, 300 );
-			if( sc->data[SC_CHASEWALK] )
-				val = max( val, sc->data[SC_CHASEWALK]->val3 );
-			if( sc->data[SC_WEDDING] )
+			if( sc->getSCE(SC_CHASEWALK) )
+				val = max( val, sc->getSCE(SC_CHASEWALK)->val3 );
+			if( sc->getSCE(SC_WEDDING) )
 				val = max( val, 100 );
-			if( sc->data[SC_JOINTBEAT] && sc->data[SC_JOINTBEAT]->val2&(BREAK_ANKLE|BREAK_KNEE) )
-				val = max( val, (sc->data[SC_JOINTBEAT]->val2&BREAK_ANKLE ? 50 : 0) + (sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE ? 30 : 0) );
-			if( sc->data[SC_CLOAKING] && (sc->data[SC_CLOAKING]->val4&1) == 0 )
-				val = max( val, sc->data[SC_CLOAKING]->val1 < 3 ? 300 : 30 - 3 * sc->data[SC_CLOAKING]->val1 );
-			if( sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY )
+			if( sc->getSCE(SC_JOINTBEAT) && sc->getSCE(SC_JOINTBEAT)->val2&(BREAK_ANKLE|BREAK_KNEE) )
+				val = max( val, (sc->getSCE(SC_JOINTBEAT)->val2&BREAK_ANKLE ? 50 : 0) + (sc->getSCE(SC_JOINTBEAT)->val2&BREAK_KNEE ? 30 : 0) );
+			if( sc->getSCE(SC_CLOAKING) && (sc->getSCE(SC_CLOAKING)->val4&1) == 0 )
+				val = max( val, sc->getSCE(SC_CLOAKING)->val1 < 3 ? 300 : 30 - 3 * sc->getSCE(SC_CLOAKING)->val1 );
+			if( sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_ENEMY )
 				val = max( val, 75 );
-			if( sc->data[SC_SLOWDOWN] ) // Slow Potion
-				val = max( val, sc->data[SC_SLOWDOWN]->val1 );
-			if( sc->data[SC_GATLINGFEVER] )
+			if( sc->getSCE(SC_SLOWDOWN) ) // Slow Potion
+				val = max( val, sc->getSCE(SC_SLOWDOWN)->val1 );
+			if( sc->getSCE(SC_GATLINGFEVER) )
 				val = max( val, 100 );
-			if( sc->data[SC_SUITON] )
-				val = max( val, sc->data[SC_SUITON]->val3 );
-			if( sc->data[SC_SWOO] )
+			if( sc->getSCE(SC_SUITON) )
+				val = max( val, sc->getSCE(SC_SUITON)->val3 );
+			if( sc->getSCE(SC_SWOO) )
 				val = max( val, 300 );
-			if( sc->data[SC_SKA] )
+			if( sc->getSCE(SC_SKA) )
 				val = max( val, 25 );
-			if( sc->data[SC_FREEZING] )
+			if( sc->getSCE(SC_FREEZING) )
 				val = max( val, 30 );
-			if( sc->data[SC_MARSHOFABYSS] )
-				val = max( val, sc->data[SC_MARSHOFABYSS]->val3 );
-			if( sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 > 2 )
-				val = max( val, 25 * (5 - sc->data[SC_CAMOUFLAGE]->val1) );
-			if( sc->data[SC_STEALTHFIELD] )
+			if( sc->getSCE(SC_MARSHOFABYSS) )
+				val = max( val, sc->getSCE(SC_MARSHOFABYSS)->val3 );
+			if( sc->getSCE(SC_CAMOUFLAGE) && sc->getSCE(SC_CAMOUFLAGE)->val1 > 2 )
+				val = max( val, 25 * (5 - sc->getSCE(SC_CAMOUFLAGE)->val1) );
+			if( sc->getSCE(SC_STEALTHFIELD) )
 				val = max( val, 20 );
-			if( sc->data[SC__LAZINESS] )
+			if( sc->getSCE(SC__LAZINESS) )
 				val = max( val, 25 );
-			if( sc->data[SC_ROCK_CRUSHER_ATK] )
-				val = max( val, sc->data[SC_ROCK_CRUSHER_ATK]->val2 );
-			if( sc->data[SC_POWER_OF_GAIA] )
-				val = max( val, sc->data[SC_POWER_OF_GAIA]->val2 );
-			if( sc->data[SC_MELON_BOMB] )
-				val = max( val, sc->data[SC_MELON_BOMB]->val2 );
-			if( sc->data[SC_REBOUND] )
+			if( sc->getSCE(SC_ROCK_CRUSHER_ATK) )
+				val = max( val, sc->getSCE(SC_ROCK_CRUSHER_ATK)->val2 );
+			if( sc->getSCE(SC_POWER_OF_GAIA) )
+				val = max( val, sc->getSCE(SC_POWER_OF_GAIA)->val2 );
+			if( sc->getSCE(SC_MELON_BOMB) )
+				val = max( val, sc->getSCE(SC_MELON_BOMB)->val2 );
+			if( sc->getSCE(SC_REBOUND) )
 				val = max( val, 25 );
-			if( sc->data[SC_B_TRAP] )
-				val = max( val, sc->data[SC_B_TRAP]->val3 );
-			if (sc->data[SC_CATNIPPOWDER])
-				val = max(val, sc->data[SC_CATNIPPOWDER]->val3);
-			if (sc->data[SC_SP_SHA])
-				val = max(val, sc->data[SC_SP_SHA]->val2);
-			if (sc->data[SC_CREATINGSTAR])
+			if( sc->getSCE(SC_B_TRAP) )
+				val = max( val, sc->getSCE(SC_B_TRAP)->val3 );
+			if (sc->getSCE(SC_CATNIPPOWDER))
+				val = max(val, sc->getSCE(SC_CATNIPPOWDER)->val3);
+			if (sc->getSCE(SC_SP_SHA))
+				val = max(val, sc->getSCE(SC_SP_SHA)->val2);
+			if (sc->getSCE(SC_CREATINGSTAR))
 				val = max(val, 90);
+			if (sc->getSCE(SC_SHIELDCHAINRUSH))
+				val = max(val, 20);
+			if (sc->getSCE(SC_GROUNDGRAVITY))
+				val = max(val, 20);
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -7851,59 +8027,59 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 		speed_rate += val;
 		val = 0;
 
-		if( sc->data[SC_MARSHOFABYSS] && speed_rate > 150 )
+		if( sc->getSCE(SC_MARSHOFABYSS) && speed_rate > 150 )
 			speed_rate = 150;
 
 		// GetMoveHasteValue1()
-		if( sc->data[SC_SPEEDUP1] ) // !FIXME: used both by NPC_AGIUP and Speed Potion script
-			val = max( val, sc->data[SC_SPEEDUP1]->val1 );
-		if( sc->data[SC_INCREASEAGI] )
+		if( sc->getSCE(SC_SPEEDUP1) ) // !FIXME: used both by NPC_AGIUP and Speed Potion script
+			val = max( val, sc->getSCE(SC_SPEEDUP1)->val1 );
+		if( sc->getSCE(SC_INCREASEAGI) )
 			val = max( val, 25 );
-		if( sc->data[SC_WINDWALK] )
-			val = max( val, 2 * sc->data[SC_WINDWALK]->val1 );
-		if( sc->data[SC_CARTBOOST] )
+		if( sc->getSCE(SC_WINDWALK) )
+			val = max( val, 2 * sc->getSCE(SC_WINDWALK)->val1 );
+		if( sc->getSCE(SC_CARTBOOST) )
 			val = max( val, 20 );
 		if( sd && (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && pc_checkskill(sd,TF_MISS) > 0 )
 			val = max( val, 1 * pc_checkskill(sd,TF_MISS) );
-		if( sc->data[SC_CLOAKING] && (sc->data[SC_CLOAKING]->val4&1) == 1 )
-			val = max( val, sc->data[SC_CLOAKING]->val1 >= 10 ? 25 : 3 * sc->data[SC_CLOAKING]->val1 - 3 );
-		if( sc->data[SC_BERSERK] )
+		if( sc->getSCE(SC_CLOAKING) && (sc->getSCE(SC_CLOAKING)->val4&1) == 1 )
+			val = max( val, sc->getSCE(SC_CLOAKING)->val1 >= 10 ? 25 : 3 * sc->getSCE(SC_CLOAKING)->val1 - 3 );
+		if( sc->getSCE(SC_BERSERK) )
 			val = max( val, 25 );
-		if( sc->data[SC_RUN] )
+		if( sc->getSCE(SC_RUN) )
 			val = max( val, 55 );
-		if( sc->data[SC_AVOID] )
-			val = max( val, 10 * sc->data[SC_AVOID]->val1 );
-		if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
+		if( sc->getSCE(SC_AVOID) )
+			val = max( val, 10 * sc->getSCE(SC_AVOID)->val1 );
+		if( sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
 			val = max( val, 75 );
-		if( sc->data[SC_CLOAKINGEXCEED] )
-			val = max( val, sc->data[SC_CLOAKINGEXCEED]->val3);
-		if (sc->data[SC_PARALYSE] && sc->data[SC_PARALYSE]->val3 == 0)
+		if( sc->getSCE(SC_CLOAKINGEXCEED) )
+			val = max( val, sc->getSCE(SC_CLOAKINGEXCEED)->val3);
+		if (sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 0)
 			val = max(val, 50);
-		if( sc->data[SC_HOVERING] )
+		if( sc->getSCE(SC_HOVERING) )
 			val = max( val, 10 );
-		if( sc->data[SC_GN_CARTBOOST] )
-			val = max( val, sc->data[SC_GN_CARTBOOST]->val2 );
-		if( sc->data[SC_SWINGDANCE] )
-			val = max( val, sc->data[SC_SWINGDANCE]->val3 );
-		if( sc->data[SC_WIND_STEP_OPTION] )
-			val = max( val, sc->data[SC_WIND_STEP_OPTION]->val2 );
-		if( sc->data[SC_FULL_THROTTLE] )
+		if( sc->getSCE(SC_GN_CARTBOOST) )
+			val = max( val, sc->getSCE(SC_GN_CARTBOOST)->val2 );
+		if( sc->getSCE(SC_SWINGDANCE) )
+			val = max( val, sc->getSCE(SC_SWINGDANCE)->val3 );
+		if( sc->getSCE(SC_WIND_STEP_OPTION) )
+			val = max( val, sc->getSCE(SC_WIND_STEP_OPTION)->val2 );
+		if( sc->getSCE(SC_FULL_THROTTLE) )
 			val = max( val, 25 );
-		if (sc->data[SC_ARCLOUSEDASH])
-			val = max(val, sc->data[SC_ARCLOUSEDASH]->val3);
-		if( sc->data[SC_DORAM_WALKSPEED] )
-			val = max(val, sc->data[SC_DORAM_WALKSPEED]->val1);
-		if (sc->data[SC_RUSHWINDMILL])
+		if (sc->getSCE(SC_ARCLOUSEDASH))
+			val = max(val, sc->getSCE(SC_ARCLOUSEDASH)->val3);
+		if( sc->getSCE(SC_DORAM_WALKSPEED) )
+			val = max(val, sc->getSCE(SC_DORAM_WALKSPEED)->val1);
+		if (sc->getSCE(SC_RUSHWINDMILL))
 			val = max(val, 25); // !TODO: Confirm bonus movement speed
-		if (sc->data[SC_EMERGENCY_MOVE])
-			val = max(val, sc->data[SC_EMERGENCY_MOVE]->val2);
-		if( sc->data[SC_JAWAII_SERENADE] ){
+		if (sc->getSCE(SC_EMERGENCY_MOVE))
+			val = max(val, sc->getSCE(SC_EMERGENCY_MOVE)->val2);
+		if( sc->getSCE(SC_JAWAII_SERENADE) ){
 			val = max( val, 25 );
 		}
 
 		// !FIXME: official items use a single bonus for this [ultramage]
-		if( sc->data[SC_SPEEDUP0] ) // Temporary item-based speedup
-			val = max( val, sc->data[SC_SPEEDUP0]->val1 );
+		if( sc->getSCE(SC_SPEEDUP0) ) // Temporary item-based speedup
+			val = max( val, sc->getSCE(SC_SPEEDUP0)->val1 );
 		if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate < 0 ) // Permanent item-based speedup
 			val = max( val, -(sd->bonus.speed_rate + sd->bonus.speed_add_rate) );
 
@@ -7916,16 +8092,16 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	// GetSpeed()
 	if( sd && pc_iscarton(sd) )
 		speed += speed * (50 - 5 * pc_checkskill(sd,MC_PUSHCART)) / 100;
-	if( sc->data[SC_PARALYSE] && sc->data[SC_PARALYSE]->val3 == 1 )
+	if( sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 1 )
 		speed += speed * 50 / 100;
 	if( speed_rate != 100 )
 		speed = speed * speed_rate / 100;
-	if( sc->data[SC_STEELBODY] )
+	if( sc->getSCE(SC_STEELBODY) )
 		speed = 200;
-	if( sc->data[SC_DEFENDER] )
+	if( sc->getSCE(SC_DEFENDER) )
 		speed = max(speed, 200);
-	if( sc->data[SC_WALKSPEED] && sc->data[SC_WALKSPEED]->val1 > 0 ) // ChangeSpeed
-		speed = speed * 100 / sc->data[SC_WALKSPEED]->val1;
+	if( sc->getSCE(SC_WALKSPEED) && sc->getSCE(SC_WALKSPEED)->val1 > 0 ) // ChangeSpeed
+		speed = speed * 100 / sc->getSCE(SC_WALKSPEED)->val1;
 
 	return (unsigned short)cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 }
@@ -7940,7 +8116,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
  *               False - percentage value
  * @return modified aspd
  */
-static short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed)
+static short status_calc_aspd(struct block_list *bl, status_change *sc, bool fixed)
 {
 	int bonus = 0;
 
@@ -7950,22 +8126,22 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 	if (fixed) {
 		enum sc_type sc_val;
 
-		if (!sc->data[SC_QUAGMIRE]) {
+		if (!sc->getSCE(SC_QUAGMIRE)) {
 			// !TODO: How does Two-Hand Quicken, Adrenaline Rush, and Spear quick change? (+10%)
-			if (bonus < 7 && (sc->data[SC_TWOHANDQUICKEN] || sc->data[SC_ONEHAND] || sc->data[SC_MERC_QUICKEN] || sc->data[SC_ADRENALINE] || sc->data[SC_SPEARQUICKEN]))
+			if (bonus < 7 && (sc->getSCE(SC_TWOHANDQUICKEN) || sc->getSCE(SC_ONEHAND) || sc->getSCE(SC_MERC_QUICKEN) || sc->getSCE(SC_ADRENALINE) || sc->getSCE(SC_SPEARQUICKEN)))
 				bonus = 7;
-			else if (bonus < 6 && sc->data[SC_ADRENALINE2])
+			else if (bonus < 6 && sc->getSCE(SC_ADRENALINE2))
 				bonus = 6;
-			else if (bonus < 5 && sc->data[SC_FLEET])
+			else if (bonus < 5 && sc->getSCE(SC_FLEET))
 				bonus = 5;
 		}
 
-		if (sc->data[SC_ASSNCROS] && bonus < sc->data[SC_ASSNCROS]->val2) {
+		if (sc->getSCE(SC_ASSNCROS) && bonus < sc->getSCE(SC_ASSNCROS)->val2) {
 #ifdef RENEWAL
-			bonus += sc->data[SC_ASSNCROS]->val2;
+			bonus += sc->getSCE(SC_ASSNCROS)->val2;
 #else
 			if (bl->type != BL_PC)
-				bonus += sc->data[SC_ASSNCROS]->val2;
+				bonus += sc->getSCE(SC_ASSNCROS)->val2;
 			else {
 				switch(((TBL_PC*)bl)->status.weapon) {
 					case W_BOW:
@@ -7976,108 +8152,112 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 					case W_GRENADE:
 						break;
 					default:
-						bonus += sc->data[SC_ASSNCROS]->val2;
+						bonus += sc->getSCE(SC_ASSNCROS)->val2;
 						break;
 				}
 			}
 #endif
 		}
 
-		if (bonus < 20 && sc->data[SC_MADNESSCANCEL])
+		if (bonus < 20 && sc->getSCE(SC_MADNESSCANCEL))
 			bonus = 20;
-		else if (bonus < 15 && sc->data[SC_BERSERK])
+		else if (bonus < 15 && sc->getSCE(SC_BERSERK))
 			bonus = 15;
 
-		if (sc->data[sc_val = SC_ASPDPOTION3] || sc->data[sc_val = SC_ASPDPOTION2] || sc->data[sc_val = SC_ASPDPOTION1] || sc->data[sc_val = SC_ASPDPOTION0])
-			bonus += sc->data[sc_val]->val1;
-		if (sc->data[SC_ATTHASTE_CASH])
-			bonus += sc->data[SC_ATTHASTE_CASH]->val1;
+		if (sc->getSCE(sc_val = SC_ASPDPOTION3) || sc->getSCE(sc_val = SC_ASPDPOTION2) || sc->getSCE(sc_val = SC_ASPDPOTION1) || sc->getSCE(sc_val = SC_ASPDPOTION0))
+			bonus += sc->getSCE(sc_val)->val1;
+		if (sc->getSCE(SC_ATTHASTE_CASH))
+			bonus += sc->getSCE(SC_ATTHASTE_CASH)->val1;
 	} else {
-		if (sc->data[SC_DONTFORGETME])
-			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
+		if (sc->getSCE(SC_DONTFORGETME))
+			bonus -= sc->getSCE(SC_DONTFORGETME)->val2 / 10;
 #ifdef RENEWAL
-		if (sc->data[SC_ENSEMBLEFATIGUE])
-			bonus -= sc->data[SC_ENSEMBLEFATIGUE]->val2 / 10;
+		if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+			bonus -= sc->getSCE(SC_ENSEMBLEFATIGUE)->val2 / 10;
 #else
-		if (sc->data[SC_LONGING])
-			bonus -= sc->data[SC_LONGING]->val2 / 10;
+		if (sc->getSCE(SC_LONGING))
+			bonus -= sc->getSCE(SC_LONGING)->val2 / 10;
 #endif
-		if (sc->data[SC_STEELBODY])
+		if (sc->getSCE(SC_STEELBODY))
 			bonus -= 25;
-		if (sc->data[SC_SKA])
+		if (sc->getSCE(SC_SKA))
 			bonus -= 25;
-		if (sc->data[SC_DEFENDER])
-			bonus -= sc->data[SC_DEFENDER]->val4 / 10;
-		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
+		if (sc->getSCE(SC_DEFENDER))
+			bonus -= sc->getSCE(SC_DEFENDER)->val4 / 10;
+		if (sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_ENEMY)
 			bonus -= 75;
 #ifndef RENEWAL
-		if (sc->data[SC_GRAVITATION])
-			bonus -= sc->data[SC_GRAVITATION]->val2 / 10; // Needs more info
+		if (sc->getSCE(SC_GRAVITATION))
+			bonus -= sc->getSCE(SC_GRAVITATION)->val2 / 10; // Needs more info
 #endif
-		if (sc->data[SC_JOINTBEAT]) { // Needs more info
-			if (sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST)
+		if (sc->getSCE(SC_JOINTBEAT)) { // Needs more info
+			if (sc->getSCE(SC_JOINTBEAT)->val2&BREAK_WRIST)
 				bonus -= 25;
-			if (sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE)
+			if (sc->getSCE(SC_JOINTBEAT)->val2&BREAK_KNEE)
 				bonus -= 10;
 		}
-		if (sc->data[SC_FREEZING])
+		if (sc->getSCE(SC_FREEZING))
 			bonus -= 30;
-		if (sc->data[SC_HALLUCINATIONWALK_POSTDELAY])
+		if (sc->getSCE(SC_HALLUCINATIONWALK_POSTDELAY))
 			bonus -= 50;
-		if (sc->data[SC_PARALYSE] && sc->data[SC_PARALYSE]->val3 == 1)
+		if (sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 1)
 			bonus -= 10;
-		if (sc->data[SC__BODYPAINT])
-			bonus -= 5 * sc->data[SC__BODYPAINT]->val1;
-		if (sc->data[SC__INVISIBILITY])
-			bonus -= sc->data[SC__INVISIBILITY]->val2;
-		if (sc->data[SC__GROOMY])
-			bonus -= sc->data[SC__GROOMY]->val2;
-		if (sc->data[SC_SWINGDANCE])
-			bonus += sc->data[SC_SWINGDANCE]->val3;
-		if (sc->data[SC_DANCEWITHWUG])
-			bonus += sc->data[SC_DANCEWITHWUG]->val3;
-		if (sc->data[SC_GLOOMYDAY])
-			bonus -= sc->data[SC_GLOOMYDAY]->val3;
-		if (sc->data[SC_GT_CHANGE])
-			bonus += sc->data[SC_GT_CHANGE]->val3;
-		if (sc->data[SC_MELON_BOMB])
-			bonus -= sc->data[SC_MELON_BOMB]->val3;
-		if (sc->data[SC_BOOST500])
-			bonus += sc->data[SC_BOOST500]->val1;
-		if (sc->data[SC_EXTRACT_SALAMINE_JUICE])
-			bonus += sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1;
-		if (sc->data[SC_GOLDENE_FERSE])
-			bonus += sc->data[SC_GOLDENE_FERSE]->val3;
-		if (sc->data[SC_INCASPDRATE])
-			bonus += sc->data[SC_INCASPDRATE]->val1;
-		if (sc->data[SC_GATLINGFEVER])
-			bonus += sc->data[SC_GATLINGFEVER]->val1;
-		if (sc->data[SC_STAR_COMFORT])
-			bonus += 3 * sc->data[SC_STAR_COMFORT]->val1;
-		if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2)
+		if (sc->getSCE(SC__BODYPAINT))
+			bonus -= 5 * sc->getSCE(SC__BODYPAINT)->val1;
+		if (sc->getSCE(SC__INVISIBILITY))
+			bonus -= sc->getSCE(SC__INVISIBILITY)->val2;
+		if (sc->getSCE(SC__GROOMY))
+			bonus -= sc->getSCE(SC__GROOMY)->val2;
+		if (sc->getSCE(SC_SWINGDANCE))
+			bonus += sc->getSCE(SC_SWINGDANCE)->val3;
+		if (sc->getSCE(SC_DANCEWITHWUG))
+			bonus += sc->getSCE(SC_DANCEWITHWUG)->val3;
+		if (sc->getSCE(SC_GLOOMYDAY))
+			bonus -= sc->getSCE(SC_GLOOMYDAY)->val3;
+		if (sc->getSCE(SC_GT_CHANGE))
+			bonus += sc->getSCE(SC_GT_CHANGE)->val3;
+		if (sc->getSCE(SC_MELON_BOMB))
+			bonus -= sc->getSCE(SC_MELON_BOMB)->val3;
+		if (sc->getSCE(SC_BOOST500))
+			bonus += sc->getSCE(SC_BOOST500)->val1;
+		if (sc->getSCE(SC_EXTRACT_SALAMINE_JUICE))
+			bonus += sc->getSCE(SC_EXTRACT_SALAMINE_JUICE)->val1;
+		if (sc->getSCE(SC_GOLDENE_FERSE))
+			bonus += sc->getSCE(SC_GOLDENE_FERSE)->val3;
+		if (sc->getSCE(SC_INCASPDRATE))
+			bonus += sc->getSCE(SC_INCASPDRATE)->val1;
+		if (sc->getSCE(SC_GATLINGFEVER))
+			bonus += sc->getSCE(SC_GATLINGFEVER)->val1;
+		if (sc->getSCE(SC_STAR_COMFORT))
+			bonus += 3 * sc->getSCE(SC_STAR_COMFORT)->val1;
+		if (sc->getSCE(SC_WIND_INSIGNIA) && sc->getSCE(SC_WIND_INSIGNIA)->val1 == 2)
 			bonus += 10;
-		if (sc->data[SC_INCREASEAGI])
-			bonus += sc->data[SC_INCREASEAGI]->val1;
-		if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ASPDRATE)
+		if (sc->getSCE(SC_INCREASEAGI))
+			bonus += sc->getSCE(SC_INCREASEAGI)->val1;
+		if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_ASPDRATE)
 			bonus += 20;
-		if (sc->data[SC_STARSTANCE])
-			bonus += sc->data[SC_STARSTANCE]->val2;
-		if( sc->data[SC_2011RWC_SCROLL] )
+		if (sc->getSCE(SC_STARSTANCE))
+			bonus += sc->getSCE(SC_STARSTANCE)->val2;
+		if( sc->getSCE(SC_2011RWC_SCROLL) )
 			bonus += 5;
-		if( sc->data[SC_SPARKCANDY] )
+		if( sc->getSCE(SC_SPARKCANDY) )
 			bonus += 25;
-		if( sc->data[SC_ACARAJE] )
+		if( sc->getSCE(SC_ACARAJE) )
 			bonus += 10;
-		if( sc->data[SC_SKF_ASPD] )
-			bonus += sc->data[SC_SKF_ASPD]->val1;
-		if( sc->data[SC_PORK_RIB_STEW] )
+		if( sc->getSCE(SC_SKF_ASPD) )
+			bonus += sc->getSCE(SC_SKF_ASPD)->val1;
+		if( sc->getSCE(SC_PORK_RIB_STEW) )
 			bonus += 5;
 
-		struct map_session_data* sd = BL_CAST(BL_PC, bl);
+		map_session_data* sd = BL_CAST(BL_PC, bl);
 		uint8 skill_lv;
 
-		if (sd && (skill_lv = pc_checkskill(sd, BA_MUSICALLESSON)) > 0)
-			bonus += skill_lv;
+		if (sd) {
+			if ((skill_lv = pc_checkskill(sd, BA_MUSICALLESSON)) > 0)
+				bonus += skill_lv;
+			if ((skill_lv = pc_checkskill(sd, RG_PLAGIARISM)) > 0)
+				bonus += skill_lv;
+		}
 	}
 
 	return bonus;
@@ -8093,32 +8273,32 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
  * @param aspd: Object's current ASPD
  * @return modified aspd
  */
-static short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int aspd)
+static short status_calc_fix_aspd(struct block_list *bl, status_change *sc, int aspd)
 {
 	if (!sc || !sc->count)
 		return cap_value(aspd, 0, 2000);
-	if (sc->data[SC_OVERED_BOOST])
-		return cap_value(2000 - sc->data[SC_OVERED_BOOST]->val3 * 10, 0, 2000);
+	if (sc->getSCE(SC_OVERED_BOOST))
+		return cap_value(2000 - sc->getSCE(SC_OVERED_BOOST)->val3 * 10, 0, 2000);
 
-	if ((sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION] || sc->data[SC_WILD_STORM_OPTION]))
+	if ((sc->getSCE(SC_GUST_OPTION) || sc->getSCE(SC_BLAST_OPTION) || sc->getSCE(SC_WILD_STORM_OPTION)))
 		aspd -= 50; // +5 ASPD
-	if (sc->data[SC_FIGHTINGSPIRIT])
-		aspd -= sc->data[SC_FIGHTINGSPIRIT]->val2;
-	if (sc->data[SC_MTF_ASPD])
-		aspd -= sc->data[SC_MTF_ASPD]->val1;
-	if (sc->data[SC_MTF_ASPD2])
-		aspd -= sc->data[SC_MTF_ASPD2]->val1;
-	if (sc->data[SC_SOULSHADOW])
-		aspd -= 10 * sc->data[SC_SOULSHADOW]->val2;
-	if (sc->data[SC_HEAT_BARREL])
-		aspd -= sc->data[SC_HEAT_BARREL]->val1 * 10;
-	if (sc->data[SC_EP16_2_BUFF_SS])
+	if (sc->getSCE(SC_FIGHTINGSPIRIT))
+		aspd -= sc->getSCE(SC_FIGHTINGSPIRIT)->val2;
+	if (sc->getSCE(SC_MTF_ASPD))
+		aspd -= sc->getSCE(SC_MTF_ASPD)->val1;
+	if (sc->getSCE(SC_MTF_ASPD2))
+		aspd -= sc->getSCE(SC_MTF_ASPD2)->val1;
+	if (sc->getSCE(SC_SOULSHADOW))
+		aspd -= 10 * sc->getSCE(SC_SOULSHADOW)->val2;
+	if (sc->getSCE(SC_HEAT_BARREL))
+		aspd -= sc->getSCE(SC_HEAT_BARREL)->val1 * 10;
+	if (sc->getSCE(SC_EP16_2_BUFF_SS))
 		aspd -= 100; // +10 ASPD
-	if (sc->data[SC_PACKING_ENVELOPE6])
-		aspd -= sc->data[SC_PACKING_ENVELOPE6]->val1 * 10;
-	if (sc->data[SC_SINCERE_FAITH])
-		aspd -= 10 * sc->data[SC_SINCERE_FAITH]->val2;
-	if( sc->data[SC_LIMIT_POWER_BOOSTER] )
+	if (sc->getSCE(SC_PACKING_ENVELOPE6))
+		aspd -= sc->getSCE(SC_PACKING_ENVELOPE6)->val1 * 10;
+	if (sc->getSCE(SC_SINCERE_FAITH))
+		aspd -= 10 * sc->getSCE(SC_SINCERE_FAITH)->val2;
+	if( sc->getSCE(SC_LIMIT_POWER_BOOSTER) )
 		aspd -= 10;
 
 	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
@@ -8133,53 +8313,53 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
  * @param aspd_rate: Object's current ASPD
  * @return modified aspd_rate
  */
-static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
+static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int aspd_rate)
 {
 	int i;
 
 	if(!sc || !sc->count)
 		return cap_value(aspd_rate,0,SHRT_MAX);
 
-	if( !sc->data[SC_QUAGMIRE] ) {
+	if( !sc->getSCE(SC_QUAGMIRE) ) {
 		int max = 0;
-		if(sc->data[SC_STAR_COMFORT])
-			max = sc->data[SC_STAR_COMFORT]->val2;
+		if(sc->getSCE(SC_STAR_COMFORT))
+			max = sc->getSCE(SC_STAR_COMFORT)->val2;
 
-		if(sc->data[SC_TWOHANDQUICKEN] &&
-			max < sc->data[SC_TWOHANDQUICKEN]->val2)
-			max = sc->data[SC_TWOHANDQUICKEN]->val2;
+		if(sc->getSCE(SC_TWOHANDQUICKEN) &&
+			max < sc->getSCE(SC_TWOHANDQUICKEN)->val2)
+			max = sc->getSCE(SC_TWOHANDQUICKEN)->val2;
 
-		if(sc->data[SC_ONEHAND] &&
-			max < sc->data[SC_ONEHAND]->val2)
-			max = sc->data[SC_ONEHAND]->val2;
+		if(sc->getSCE(SC_ONEHAND) &&
+			max < sc->getSCE(SC_ONEHAND)->val2)
+			max = sc->getSCE(SC_ONEHAND)->val2;
 
-		if(sc->data[SC_MERC_QUICKEN] &&
-			max < sc->data[SC_MERC_QUICKEN]->val2)
-			max = sc->data[SC_MERC_QUICKEN]->val2;
+		if(sc->getSCE(SC_MERC_QUICKEN) &&
+			max < sc->getSCE(SC_MERC_QUICKEN)->val2)
+			max = sc->getSCE(SC_MERC_QUICKEN)->val2;
 
-		if(sc->data[SC_ADRENALINE2] &&
-			max < sc->data[SC_ADRENALINE2]->val3)
-			max = sc->data[SC_ADRENALINE2]->val3;
+		if(sc->getSCE(SC_ADRENALINE2) &&
+			max < sc->getSCE(SC_ADRENALINE2)->val3)
+			max = sc->getSCE(SC_ADRENALINE2)->val3;
 
-		if(sc->data[SC_ADRENALINE] &&
-			max < sc->data[SC_ADRENALINE]->val3)
-			max = sc->data[SC_ADRENALINE]->val3;
+		if(sc->getSCE(SC_ADRENALINE) &&
+			max < sc->getSCE(SC_ADRENALINE)->val3)
+			max = sc->getSCE(SC_ADRENALINE)->val3;
 
-		if(sc->data[SC_SPEARQUICKEN] &&
-			max < sc->data[SC_SPEARQUICKEN]->val2)
-			max = sc->data[SC_SPEARQUICKEN]->val2;
+		if(sc->getSCE(SC_SPEARQUICKEN) &&
+			max < sc->getSCE(SC_SPEARQUICKEN)->val2)
+			max = sc->getSCE(SC_SPEARQUICKEN)->val2;
 
-		if(sc->data[SC_GATLINGFEVER] &&
-			max < sc->data[SC_GATLINGFEVER]->val2)
-			max = sc->data[SC_GATLINGFEVER]->val2;
+		if(sc->getSCE(SC_GATLINGFEVER) &&
+			max < sc->getSCE(SC_GATLINGFEVER)->val2)
+			max = sc->getSCE(SC_GATLINGFEVER)->val2;
 
-		if(sc->data[SC_FLEET] &&
-			max < sc->data[SC_FLEET]->val2)
-			max = sc->data[SC_FLEET]->val2;
+		if(sc->getSCE(SC_FLEET) &&
+			max < sc->getSCE(SC_FLEET)->val2)
+			max = sc->getSCE(SC_FLEET)->val2;
 
-		if(sc->data[SC_ASSNCROS] && max < sc->data[SC_ASSNCROS]->val2) {
+		if(sc->getSCE(SC_ASSNCROS) && max < sc->getSCE(SC_ASSNCROS)->val2) {
 			if (bl->type!=BL_PC)
-				max = sc->data[SC_ASSNCROS]->val2;
+				max = sc->getSCE(SC_ASSNCROS)->val2;
 			else
 				switch(((TBL_PC*)bl)->status.weapon) {
 					case W_BOW:
@@ -8190,96 +8370,96 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 					case W_GRENADE:
 						break;
 					default:
-						max = sc->data[SC_ASSNCROS]->val2;
+						max = sc->getSCE(SC_ASSNCROS)->val2;
 			}
 		}
 		aspd_rate -= max;
 
-		if(sc->data[SC_BERSERK])
+		if(sc->getSCE(SC_BERSERK))
 			aspd_rate -= 300;
-		else if(sc->data[SC_MADNESSCANCEL])
+		else if(sc->getSCE(SC_MADNESSCANCEL))
 			aspd_rate -= 200;
 	}
 
-	if( sc->data[i=SC_ASPDPOTION3] ||
-		sc->data[i=SC_ASPDPOTION2] ||
-		sc->data[i=SC_ASPDPOTION1] ||
-		sc->data[i=SC_ASPDPOTION0] )
-		aspd_rate -= sc->data[i]->val2;
+	if( sc->getSCE(i=SC_ASPDPOTION3) ||
+		sc->getSCE(i=SC_ASPDPOTION2) ||
+		sc->getSCE(i=SC_ASPDPOTION1) ||
+		sc->getSCE(i=SC_ASPDPOTION0) )
+		aspd_rate -= sc->getSCE(i)->val2;
 
-	if (sc->data[SC_ATTHASTE_CASH])
-		aspd_rate -= sc->data[SC_ATTHASTE_CASH]->val2;
+	if (sc->getSCE(SC_ATTHASTE_CASH))
+		aspd_rate -= sc->getSCE(SC_ATTHASTE_CASH)->val2;
 
-	if(sc->data[SC_DONTFORGETME])
-		aspd_rate += sc->data[SC_DONTFORGETME]->val2;
+	if(sc->getSCE(SC_DONTFORGETME))
+		aspd_rate += sc->getSCE(SC_DONTFORGETME)->val2;
 #ifdef RENEWAL
-	if (sc->data[SC_ENSEMBLEFATIGUE])
-		aspd_rate += sc->data[SC_ENSEMBLEFATIGUE]->val2;
+	if (sc->getSCE(SC_ENSEMBLEFATIGUE))
+		aspd_rate += sc->getSCE(SC_ENSEMBLEFATIGUE)->val2;
 #else
-	if(sc->data[SC_LONGING])
-		aspd_rate += sc->data[SC_LONGING]->val2;
+	if(sc->getSCE(SC_LONGING))
+		aspd_rate += sc->getSCE(SC_LONGING)->val2;
 #endif
-	if(sc->data[SC_STEELBODY])
+	if(sc->getSCE(SC_STEELBODY))
 		aspd_rate += 250;
-	if(sc->data[SC_SKA])
+	if(sc->getSCE(SC_SKA))
 		aspd_rate += 250;
-	if(sc->data[SC_DEFENDER])
-		aspd_rate += sc->data[SC_DEFENDER]->val4;
-	if(sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
+	if(sc->getSCE(SC_DEFENDER))
+		aspd_rate += sc->getSCE(SC_DEFENDER)->val4;
+	if(sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_ENEMY)
 		aspd_rate += 250;
 #ifndef RENEWAL
-	if(sc->data[SC_GRAVITATION])
-		aspd_rate += sc->data[SC_GRAVITATION]->val2;
+	if(sc->getSCE(SC_GRAVITATION))
+		aspd_rate += sc->getSCE(SC_GRAVITATION)->val2;
 #endif
-	if(sc->data[SC_JOINTBEAT]) {
-		if( sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST )
+	if(sc->getSCE(SC_JOINTBEAT)) {
+		if( sc->getSCE(SC_JOINTBEAT)->val2&BREAK_WRIST )
 			aspd_rate += 250;
-		if( sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE )
+		if( sc->getSCE(SC_JOINTBEAT)->val2&BREAK_KNEE )
 			aspd_rate += 100;
 	}
-	if( sc->data[SC_FREEZING] )
+	if( sc->getSCE(SC_FREEZING) )
 		aspd_rate += 300;
-	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
+	if( sc->getSCE(SC_HALLUCINATIONWALK_POSTDELAY) )
 		aspd_rate += 500;
-	if( sc->data[SC_PARALYSE] && sc->data[SC_PARALYSE]->val3 == 1 )
+	if( sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 1 )
 		aspd_rate += 100;
-	if( sc->data[SC__BODYPAINT] )
-		aspd_rate +=  50 * sc->data[SC__BODYPAINT]->val1;
-	if( sc->data[SC__INVISIBILITY] )
-		aspd_rate += sc->data[SC__INVISIBILITY]->val2 * 10;
-	if( sc->data[SC__GROOMY] )
-		aspd_rate += sc->data[SC__GROOMY]->val2 * 10;
-	if( sc->data[SC_SWINGDANCE] )
-		aspd_rate -= sc->data[SC_SWINGDANCE]->val3 * 10;
-	if( sc->data[SC_DANCEWITHWUG] )
-		aspd_rate -= sc->data[SC_DANCEWITHWUG]->val3 * 10;
-	if( sc->data[SC_GLOOMYDAY] )
-		aspd_rate += sc->data[SC_GLOOMYDAY]->val3 * 10;
-	if( sc->data[SC_GT_CHANGE] )
-		aspd_rate -= sc->data[SC_GT_CHANGE]->val3 * 10;
-	if( sc->data[SC_MELON_BOMB] )
-		aspd_rate += sc->data[SC_MELON_BOMB]->val3 * 10;
-	if( sc->data[SC_BOOST500] )
-		aspd_rate -= sc->data[SC_BOOST500]->val1 *10;
-	if( sc->data[SC_EXTRACT_SALAMINE_JUICE] )
-		aspd_rate -= sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1 * 10;
-	if( sc->data[SC_INCASPDRATE] )
-		aspd_rate -= sc->data[SC_INCASPDRATE]->val1 * 10;
-	if( sc->data[SC_GOLDENE_FERSE])
-		aspd_rate -= sc->data[SC_GOLDENE_FERSE]->val3 * 10;
-	if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2)
+	if( sc->getSCE(SC__BODYPAINT) )
+		aspd_rate +=  50 * sc->getSCE(SC__BODYPAINT)->val1;
+	if( sc->getSCE(SC__INVISIBILITY) )
+		aspd_rate += sc->getSCE(SC__INVISIBILITY)->val2 * 10;
+	if( sc->getSCE(SC__GROOMY) )
+		aspd_rate += sc->getSCE(SC__GROOMY)->val2 * 10;
+	if( sc->getSCE(SC_SWINGDANCE) )
+		aspd_rate -= sc->getSCE(SC_SWINGDANCE)->val3 * 10;
+	if( sc->getSCE(SC_DANCEWITHWUG) )
+		aspd_rate -= sc->getSCE(SC_DANCEWITHWUG)->val3 * 10;
+	if( sc->getSCE(SC_GLOOMYDAY) )
+		aspd_rate += sc->getSCE(SC_GLOOMYDAY)->val3 * 10;
+	if( sc->getSCE(SC_GT_CHANGE) )
+		aspd_rate -= sc->getSCE(SC_GT_CHANGE)->val3 * 10;
+	if( sc->getSCE(SC_MELON_BOMB) )
+		aspd_rate += sc->getSCE(SC_MELON_BOMB)->val3 * 10;
+	if( sc->getSCE(SC_BOOST500) )
+		aspd_rate -= sc->getSCE(SC_BOOST500)->val1 *10;
+	if( sc->getSCE(SC_EXTRACT_SALAMINE_JUICE) )
+		aspd_rate -= sc->getSCE(SC_EXTRACT_SALAMINE_JUICE)->val1 * 10;
+	if( sc->getSCE(SC_INCASPDRATE) )
+		aspd_rate -= sc->getSCE(SC_INCASPDRATE)->val1 * 10;
+	if( sc->getSCE(SC_GOLDENE_FERSE))
+		aspd_rate -= sc->getSCE(SC_GOLDENE_FERSE)->val3 * 10;
+	if (sc->getSCE(SC_WIND_INSIGNIA) && sc->getSCE(SC_WIND_INSIGNIA)->val1 == 2)
 		aspd_rate -= 100;
-	if (sc->data[SC_STARSTANCE])
-		aspd_rate -= 10 * sc->data[SC_STARSTANCE]->val2;
-	if( sc->data[SC_2011RWC_SCROLL] )
+	if (sc->getSCE(SC_STARSTANCE))
+		aspd_rate -= 10 * sc->getSCE(SC_STARSTANCE)->val2;
+	if( sc->getSCE(SC_2011RWC_SCROLL) )
 		aspd_rate -= 50;
-	if( sc->data[SC_SPARKCANDY] )
+	if( sc->getSCE(SC_SPARKCANDY) )
 		aspd_rate -= 250;
-	if( sc->data[SC_ACARAJE] )
+	if( sc->getSCE(SC_ACARAJE) )
 		aspd_rate -= 100;
-	if( sc->data[SC_SKF_ASPD] )
-		aspd_rate -= sc->data[SC_SKF_ASPD]->val1 * 10;
-	if( sc->data[SC_PORK_RIB_STEW] )
+	if( sc->getSCE(SC_SKF_ASPD) )
+		aspd_rate -= sc->getSCE(SC_SKF_ASPD)->val1 * 10;
+	if( sc->getSCE(SC_PORK_RIB_STEW) )
 		aspd_rate -= 50;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
@@ -8293,7 +8473,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
  * @param dmotion: Object's current damage delay
  * @return modified delay rate
  */
-static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion)
+static unsigned short status_calc_dmotion(struct block_list *bl, status_change *sc, int dmotion)
 {
 	/// It has been confirmed on official servers that MvP mobs have no dmotion even without endure
 	if( bl->type == BL_MOB && status_get_class_(bl) == CLASS_BOSS )
@@ -8307,7 +8487,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 			return 0;
 	}
 
-	if (sc && sc->count > 0 && (sc->data[SC_ENDURE] || sc->data[SC_RUN] || sc->data[SC_WUGDASH] || sc->data[SC_SPARKCANDY]))
+	if (sc && sc->count > 0 && (sc->getSCE(SC_ENDURE) || sc->getSCE(SC_RUN) || sc->getSCE(SC_WUGDASH) || sc->getSCE(SC_SPARKCANDY)))
 		return 0;
 
 	return (unsigned short)cap_value(dmotion,0,USHRT_MAX);
@@ -8320,19 +8500,24 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 * @param patk: Initial patk
 * @return modified patk with cap_value(patk,0,USHRT_MAX)
 */
-static signed short status_calc_patk(struct block_list *bl, struct status_change *sc, int patk)
+static signed short status_calc_patk(struct block_list *bl, status_change *sc, int patk)
 {
 	if (!sc || !sc->count)
 		return cap_value(patk, 0, SHRT_MAX);
 
-	if (sc->data[SC_POWERFUL_FAITH])
-		patk += sc->data[SC_POWERFUL_FAITH]->val3;
-	if (sc->data[SC_COMPETENTIA])
-		patk += sc->data[SC_COMPETENTIA]->val2;
-	if (sc->data[SC_ABYSS_SLAYER])
-		patk += sc->data[SC_ABYSS_SLAYER]->val2;
-	if (sc->data[SC_PRON_MARCH])
-		patk += sc->data[SC_PRON_MARCH]->val2;
+	if (sc->getSCE(SC_POWERFUL_FAITH))
+		patk += sc->getSCE(SC_POWERFUL_FAITH)->val3;
+	if (sc->getSCE(SC_COMPETENTIA))
+		patk += sc->getSCE(SC_COMPETENTIA)->val2;
+	if (sc->getSCE(SC_ABYSS_SLAYER))
+		patk += sc->getSCE(SC_ABYSS_SLAYER)->val2;
+	if (sc->getSCE(SC_PRON_MARCH))
+		patk += sc->getSCE(SC_PRON_MARCH)->val2;
+	if (sc->getSCE(SC_TEMPERING))
+		patk += sc->getSCE(SC_TEMPERING)->val2;
+	if( sc->getSCE( SC_ATTACK_STANCE ) ){
+		patk += sc->getSCE( SC_ATTACK_STANCE )->val3;
+	}
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -8344,19 +8529,22 @@ static signed short status_calc_patk(struct block_list *bl, struct status_change
 * @param smatk: Initial smatk
 * @return modified smatk with cap_value(smatk,0,USHRT_MAX)
 */
-static signed short status_calc_smatk(struct block_list *bl, struct status_change *sc, int smatk)
+static signed short status_calc_smatk(struct block_list *bl, status_change *sc, int smatk)
 {
 	if (!sc || !sc->count)
 		return cap_value(smatk, 0, SHRT_MAX);
 
-	if (sc->data[SC_COMPETENTIA])
-		smatk += sc->data[SC_COMPETENTIA]->val2;
-	if (sc->data[SC_ABYSS_SLAYER])
-		smatk += sc->data[SC_ABYSS_SLAYER]->val2;
-	if (sc->data[SC_JAWAII_SERENADE])
-		smatk += sc->data[SC_JAWAII_SERENADE]->val2;
-	if (sc->data[SC_SPELL_ENCHANTING])
-		smatk += sc->data[SC_SPELL_ENCHANTING]->val2;
+	if (sc->getSCE(SC_COMPETENTIA))
+		smatk += sc->getSCE(SC_COMPETENTIA)->val2;
+	if (sc->getSCE(SC_ABYSS_SLAYER))
+		smatk += sc->getSCE(SC_ABYSS_SLAYER)->val2;
+	if (sc->getSCE(SC_JAWAII_SERENADE))
+		smatk += sc->getSCE(SC_JAWAII_SERENADE)->val2;
+	if (sc->getSCE(SC_SPELL_ENCHANTING))
+		smatk += sc->getSCE(SC_SPELL_ENCHANTING)->val2;
+	if( sc->getSCE( SC_ATTACK_STANCE ) ){
+		smatk += sc->getSCE( SC_ATTACK_STANCE )->val3;
+	}
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }
@@ -8368,21 +8556,25 @@ static signed short status_calc_smatk(struct block_list *bl, struct status_chang
 * @param res: Initial res
 * @return modified res with cap_value(res,0,USHRT_MAX)
 */
-static signed short status_calc_res(struct block_list *bl, struct status_change *sc, int res)
+static signed short status_calc_res(struct block_list *bl, status_change *sc, int res)
 {
 	if (!sc || !sc->count)
 		return cap_value(res, 0, SHRT_MAX);
 
-	if (sc->data[SC_FIRM_FAITH])
-		res += sc->data[SC_FIRM_FAITH]->val3;
-	if (sc->data[SC_D_MACHINE])
-		res += sc->data[SC_D_MACHINE]->val3;
-	if (sc->data[SC_MUSICAL_INTERLUDE])
-		res += sc->data[SC_MUSICAL_INTERLUDE]->val2;
-	if (sc->data[SC_SHADOW_STRIP] && bl->type != BL_PC)
-		res -= res * sc->data[SC_SHADOW_STRIP]->val2 / 100;
-	if (sc->data[SC_AIN_RHAPSODY])
-		res -= sc->data[SC_AIN_RHAPSODY]->val2;
+	if (sc->getSCE(SC_FIRM_FAITH))
+		res += sc->getSCE(SC_FIRM_FAITH)->val3;
+	if (sc->getSCE(SC_D_MACHINE))
+		res += sc->getSCE(SC_D_MACHINE)->val3;
+	if (sc->getSCE(SC_MUSICAL_INTERLUDE))
+		res += sc->getSCE(SC_MUSICAL_INTERLUDE)->val2;
+	if (sc->getSCE(SC_GOLDENE_TONE))
+		res += sc->getSCE(SC_GOLDENE_TONE)->val2;
+	if (sc->getSCE(SC_SHADOW_STRIP) && bl->type != BL_PC)
+		res -= res * sc->getSCE(SC_SHADOW_STRIP)->val2 / 100;
+	if (sc->getSCE(SC_AIN_RHAPSODY))
+		res -= sc->getSCE(SC_AIN_RHAPSODY)->val2;
+	if (sc->getSCE(SC_TOXIN_OF_MANDARA))
+		res -= sc->getSCE(SC_TOXIN_OF_MANDARA)->val2;
 
 	return (short)cap_value(res, 0, SHRT_MAX);
 }
@@ -8394,15 +8586,17 @@ static signed short status_calc_res(struct block_list *bl, struct status_change 
 * @param mres: Initial mres
 * @return modified mres with cap_value(mres,0,USHRT_MAX)
 */
-static signed short status_calc_mres(struct block_list *bl, struct status_change *sc, int mres)
+static signed short status_calc_mres(struct block_list *bl, status_change *sc, int mres)
 {
 	if (!sc || !sc->count)
 		return cap_value(mres, 0, SHRT_MAX);
 
-	if (sc->data[SC_SHADOW_STRIP] && bl->type != BL_PC)
-		mres -= mres * sc->data[SC_SHADOW_STRIP]->val2 / 100;
-	if (sc->data[SC_GEF_NOCTURN])
-		mres -= sc->data[SC_GEF_NOCTURN]->val2;
+	if (sc->getSCE(SC_GOLDENE_TONE))
+		mres += sc->getSCE(SC_GOLDENE_TONE)->val2;
+	if (sc->getSCE(SC_SHADOW_STRIP) && bl->type != BL_PC)
+		mres -= mres * sc->getSCE(SC_SHADOW_STRIP)->val2 / 100;
+	if (sc->getSCE(SC_GEF_NOCTURN))
+		mres -= sc->getSCE(SC_GEF_NOCTURN)->val2;
 
 	return (short)cap_value(mres, 0, SHRT_MAX);
 }
@@ -8414,7 +8608,7 @@ static signed short status_calc_mres(struct block_list *bl, struct status_change
 * @param hplus: Initial hplus
 * @return modified hplus with cap_value(hplus,0,USHRT_MAX)
 */
-static signed short status_calc_hplus(struct block_list *bl, struct status_change *sc, int hplus)
+static signed short status_calc_hplus(struct block_list *bl, status_change *sc, int hplus)
 {
 	if (!sc || !sc->count)
 		return cap_value(hplus, 0, SHRT_MAX);
@@ -8429,13 +8623,13 @@ static signed short status_calc_hplus(struct block_list *bl, struct status_chang
 * @param crate: Initial crate
 * @return modified crate with cap_value(crate,0,USHRT_MAX)
 */
-static signed short status_calc_crate(struct block_list *bl, struct status_change *sc, int crate)
+static signed short status_calc_crate(struct block_list *bl, status_change *sc, int crate)
 {
 	if (!sc || !sc->count)
 		return cap_value(crate, 0, SHRT_MAX);
 
-	if (sc->data[SC_PRE_ACIES])
-		crate += sc->data[SC_PRE_ACIES]->val2;
+	if (sc->getSCE(SC_PRE_ACIES))
+		crate += sc->getSCE(SC_PRE_ACIES)->val2;
 
 	return (short)cap_value(crate, 0, SHRT_MAX);
 }
@@ -8504,29 +8698,29 @@ static unsigned int status_calc_maxap(struct block_list *bl, uint64 maxap)
  * @param element: Object's current element
  * @return new element
  */
-static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element)
+static unsigned char status_calc_element(struct block_list *bl, status_change *sc, int element)
 {
 	if(!sc || !sc->count)
 		return cap_value(element, 0, UCHAR_MAX);
 
-	if(sc->data[SC_FREEZE] || sc->data[SC_CRYSTAL_ARMOR_OPTION])
+	if(sc->getSCE(SC_FREEZE) || sc->getSCE(SC_CRYSTAL_ARMOR_OPTION))
 		return ELE_WATER;
-	if(sc->data[SC_STONE] || sc->data[SC_STRONG_PROTECTION_OPTION])
+	if(sc->getSCE(SC_STONE) || sc->getSCE(SC_STRONG_PROTECTION_OPTION))
 		return ELE_EARTH;
-	if(sc->data[SC_FLAMEARMOR_OPTION])
+	if(sc->getSCE(SC_FLAMEARMOR_OPTION))
 		return ELE_FIRE;
-	if(sc->data[SC_EYES_OF_STORM_OPTION])
+	if(sc->getSCE(SC_EYES_OF_STORM_OPTION))
 		return ELE_WIND;
-	if(sc->data[SC_POISON_SHIELD_OPTION])
+	if(sc->getSCE(SC_POISON_SHIELD_OPTION))
 		return ELE_POISON;
-	if(sc->data[SC_BENEDICTIO])
+	if(sc->getSCE(SC_BENEDICTIO))
 		return ELE_HOLY;
-	if(sc->data[SC_CHANGEUNDEAD])
+	if(sc->getSCE(SC_CHANGEUNDEAD))
 		return ELE_UNDEAD;
-	if(sc->data[SC_ELEMENTALCHANGE])
-		return sc->data[SC_ELEMENTALCHANGE]->val2;
-	if(sc->data[SC_SHAPESHIFT])
-		return sc->data[SC_SHAPESHIFT]->val2;
+	if(sc->getSCE(SC_ELEMENTALCHANGE))
+		return sc->getSCE(SC_ELEMENTALCHANGE)->val2;
+	if(sc->getSCE(SC_SHAPESHIFT))
+		return sc->getSCE(SC_SHAPESHIFT)->val2;
 
 	return (unsigned char)cap_value(element,0,UCHAR_MAX);
 }
@@ -8538,27 +8732,27 @@ static unsigned char status_calc_element(struct block_list *bl, struct status_ch
  * @param lv: Object's current element level
  * @return new element level
  */
-static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv)
+static unsigned char status_calc_element_lv(struct block_list *bl, status_change *sc, int lv)
 {
 	if(!sc || !sc->count)
 		return cap_value(lv, 1, 4);
 
-	if(sc->data[SC_FREEZE])
+	if(sc->getSCE(SC_FREEZE))
 		return 1;
-	if(sc->data[SC_STONE])
+	if(sc->getSCE(SC_STONE))
 		return 1;
-	if(sc->data[SC_BENEDICTIO])
+	if(sc->getSCE(SC_BENEDICTIO))
 		return 1;
-	if(sc->data[SC_CHANGEUNDEAD])
+	if(sc->getSCE(SC_CHANGEUNDEAD))
 		return 1;
-	if(sc->data[SC_ELEMENTALCHANGE])
-		return sc->data[SC_ELEMENTALCHANGE]->val1;
-	if(sc->data[SC_SHAPESHIFT])
+	if(sc->getSCE(SC_ELEMENTALCHANGE))
+		return sc->getSCE(SC_ELEMENTALCHANGE)->val1;
+	if(sc->getSCE(SC_SHAPESHIFT))
 		return 1;
-	if(sc->data[SC__INVISIBILITY])
+	if(sc->getSCE(SC__INVISIBILITY))
 		return 1;
-	if (sc->data[SC_FLAMEARMOR_OPTION] || sc->data[SC_CRYSTAL_ARMOR_OPTION] || sc->data[SC_EYES_OF_STORM_OPTION] || 
-		sc->data[SC_STRONG_PROTECTION_OPTION] || sc->data[SC_POISON_SHIELD_OPTION])
+	if (sc->getSCE(SC_FLAMEARMOR_OPTION) || sc->getSCE(SC_CRYSTAL_ARMOR_OPTION) || sc->getSCE(SC_EYES_OF_STORM_OPTION) || 
+		sc->getSCE(SC_STRONG_PROTECTION_OPTION) || sc->getSCE(SC_POISON_SHIELD_OPTION))
 		return 1;
 
 	return (unsigned char)cap_value(lv,1,4);
@@ -8571,33 +8765,33 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
  * @param element: Object's current attack element
  * @return new attack element
  */
-unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element)
+unsigned char status_calc_attack_element(struct block_list *bl, status_change *sc, int element)
 {
 	if(!sc || !sc->count)
 		return cap_value(element, 0, UCHAR_MAX);
-	if(sc->data[SC_ENCHANTARMS])
-		return sc->data[SC_ENCHANTARMS]->val1;
-	if(sc->data[SC_WATERWEAPON]
-		|| (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
+	if(sc->getSCE(SC_ENCHANTARMS))
+		return sc->getSCE(SC_ENCHANTARMS)->val1;
+	if(sc->getSCE(SC_WATERWEAPON)
+		|| (sc->getSCE(SC_WATER_INSIGNIA) && sc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) )
 		return ELE_WATER;
-	if(sc->data[SC_EARTHWEAPON]
-		|| (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2) )
+	if(sc->getSCE(SC_EARTHWEAPON)
+		|| (sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 2) )
 		return ELE_EARTH;
-	if(sc->data[SC_FIREWEAPON]
-		|| (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2) )
+	if(sc->getSCE(SC_FIREWEAPON)
+		|| (sc->getSCE(SC_FIRE_INSIGNIA) && sc->getSCE(SC_FIRE_INSIGNIA)->val1 == 2) )
 		return ELE_FIRE;
-	if(sc->data[SC_WINDWEAPON]
-		|| (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2) )
+	if(sc->getSCE(SC_WINDWEAPON)
+		|| (sc->getSCE(SC_WIND_INSIGNIA) && sc->getSCE(SC_WIND_INSIGNIA)->val1 == 2) )
 		return ELE_WIND;
-	if(sc->data[SC_ENCPOISON])
+	if(sc->getSCE(SC_ENCPOISON))
 		return ELE_POISON;
-	if(sc->data[SC_ASPERSIO])
+	if(sc->getSCE(SC_ASPERSIO))
 		return ELE_HOLY;
-	if(sc->data[SC_SHADOWWEAPON])
+	if(sc->getSCE(SC_SHADOWWEAPON))
 		return ELE_DARK;
-	if(sc->data[SC_GHOSTWEAPON] || sc->data[SC__INVISIBILITY])
+	if(sc->getSCE(SC_GHOSTWEAPON) || sc->getSCE(SC__INVISIBILITY))
 		return ELE_GHOST;
-	if(sc->data[SC_TIDAL_WEAPON_OPTION] || sc->data[SC_TIDAL_WEAPON] )
+	if(sc->getSCE(SC_TIDAL_WEAPON_OPTION) || sc->getSCE(SC_TIDAL_WEAPON) )
 		return ELE_WATER;
 	return (unsigned char)cap_value(element,0,UCHAR_MAX);
 }
@@ -8609,17 +8803,17 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
  * @param mode: Original mode
  * @return mode with cap_value(mode, 0, INT_MAX)
  */
-static int status_calc_mode(struct block_list *bl, struct status_change *sc, int mode)
+static int status_calc_mode(struct block_list *bl, status_change *sc, int mode)
 {
 	if(!sc || !sc->count)
 		return cap_value(mode, MD_NONE,INT_MAX);
-	if(sc->data[SC_MODECHANGE]) {
-		if (sc->data[SC_MODECHANGE]->val2)
-			mode = (mode&~MD_MASK)|sc->data[SC_MODECHANGE]->val2; // Set mode
-		if (sc->data[SC_MODECHANGE]->val3)
-			mode = mode|sc->data[SC_MODECHANGE]->val3; // Add mode
-		if (sc->data[SC_MODECHANGE]->val4)
-			mode = mode&~sc->data[SC_MODECHANGE]->val4; // Del mode
+	if(sc->getSCE(SC_MODECHANGE)) {
+		if (sc->getSCE(SC_MODECHANGE)->val2)
+			mode = (mode&~MD_MASK)|sc->getSCE(SC_MODECHANGE)->val2; // Set mode
+		if (sc->getSCE(SC_MODECHANGE)->val3)
+			mode = mode|sc->getSCE(SC_MODECHANGE)->val3; // Add mode
+		if (sc->getSCE(SC_MODECHANGE)->val4)
+			mode = mode&~sc->getSCE(SC_MODECHANGE)->val4; // Del mode
 	}
 	return cap_value(mode, MD_NONE, INT_MAX);
 }
@@ -8820,7 +9014,7 @@ int status_get_party_id(struct block_list *bl)
 		case BL_MOB: {
 				struct mob_data *md=(TBL_MOB*)bl;
 				if( md->master_id > 0 ) {
-					struct map_session_data *msd;
+					map_session_data *msd;
 					if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL)
 						return msd->status.party_id;
 					return -md->master_id;
@@ -8864,7 +9058,7 @@ int status_get_guild_id(struct block_list *bl)
 			break;
 		case BL_MOB:
 			{
-				struct map_session_data *msd;
+				map_session_data *msd;
 				struct mob_data *md = (struct mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->guild_id;
@@ -8913,7 +9107,7 @@ int status_get_emblem_id(struct block_list *bl)
 			break;
 		case BL_MOB:
 			{
-				struct map_session_data *msd;
+				map_session_data *msd;
 				struct mob_data *md = (struct mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->emblem_id;
@@ -8931,9 +9125,9 @@ int status_get_emblem_id(struct block_list *bl)
 			break;
 		case BL_NPC:
 			if (((TBL_NPC*)bl)->subtype == NPCTYPE_SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
-				struct guild *g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
+				auto g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
 				if (g)
-					return g->emblem_id;
+					return g->guild.emblem_id;
 			}
 			break;
 		case BL_ELEM:
@@ -8978,13 +9172,13 @@ int status_isdead(struct block_list *bl)
  */
 int status_isimmune(struct block_list *bl)
 {
-	struct status_change *sc =status_get_sc(bl);
+	status_change *sc =status_get_sc(bl);
 
 	if (sc) {
-		if (sc->data[SC_HERMODE])
+		if (sc->getSCE(SC_HERMODE))
 			return 100;
 
-		if (sc->data[SC_DEADLY_DEFEASANCE])
+		if (sc->getSCE(SC_DEADLY_DEFEASANCE))
 			return 0;
 	}
 
@@ -9185,7 +9379,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
  * @param bl: Object whose sc data to get [PC|MOB|HOM|MER|ELEM|NPC]
  * @return status change data structure bl->sc
  */
-struct status_change *status_get_sc(struct block_list *bl)
+status_change *status_get_sc(struct block_list *bl)
 {
 	if( bl )
 	switch (bl->type) {
@@ -9205,9 +9399,9 @@ struct status_change *status_get_sc(struct block_list *bl)
  */
 void status_change_init(struct block_list *bl)
 {
-	struct status_change *sc = status_get_sc(bl);
+	status_change *sc = status_get_sc(bl);
 	nullpo_retv(sc);
-	memset(sc, 0, sizeof (struct status_change));
+	memset(sc, 0, sizeof (status_change));
 	sc->lastEffect = SC_NONE;
 	sc->lastEffectTimer = INVALID_TIMER;
 }
@@ -9224,6 +9418,9 @@ static int status_get_sc_interval(enum sc_type type)
 		case SC_LEECHESEND:
 		case SC_DPOISON:
 		case SC_DEATHHURT:
+		case SC_GRADUAL_GRAVITY:
+		case SC_KILLING_AURA:
+		case SC_BOSSMAPINFO:
 			return 1000;
 		case SC_BURNING:
 		case SC_PYREXIA:
@@ -9270,8 +9467,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	int sc_def2 = 0, tick_def2 = 0;
 
 	struct status_data *status, *status_src;
-	struct status_change *sc;
-	struct map_session_data *sd;
+	status_change *sc;
+	map_session_data *sd;
 
 	nullpo_ret(bl);
 	if (src == NULL)
@@ -9314,7 +9511,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				tick_def2 = status->luk*100;
 			} else {
 				// For monsters: 30000 - 200*vit
-				tick>>=1;
+				tick /= 2;
 				tick_def = (status->vit*200)/3;
 			}
 #else
@@ -9418,7 +9615,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			break;
 		case SC_DECREASEAGI:
 			if (sd)
-				tick >>= 1; // Half duration for players.
+				tick /= 2; // Half duration for players.
 			sc_def2 = status->mdef*100;
 			break;
 		case SC_ANKLE:
@@ -9540,22 +9737,22 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	}
 
 	if (sc) {
-		if (sc->data[SC_SCRESIST])
-			sc_def += sc->data[SC_SCRESIST]->val1*100; // Status resist
+		if (sc->getSCE(SC_SCRESIST))
+			sc_def += sc->getSCE(SC_SCRESIST)->val1*100; // Status resist
 #ifdef RENEWAL
-		else if (sc->data[SC_SIEGFRIED] && (type == SC_BLIND || type == SC_STONE || type == SC_FREEZE || type == SC_STUN || type == SC_CURSE || type == SC_SLEEP || type == SC_SILENCE))
-			sc_def += sc->data[SC_SIEGFRIED]->val3 * 100; // Status resistance.
+		else if (sc->getSCE(SC_SIEGFRIED) && (type == SC_BLIND || type == SC_STONE || type == SC_FREEZE || type == SC_STUN || type == SC_CURSE || type == SC_SLEEP || type == SC_SILENCE))
+			sc_def += sc->getSCE(SC_SIEGFRIED)->val3 * 100; // Status resistance.
 #else
-		else if (sc->data[SC_SIEGFRIED])
-			sc_def += sc->data[SC_SIEGFRIED]->val3*100; // Status resistance.
+		else if (sc->getSCE(SC_SIEGFRIED))
+			sc_def += sc->getSCE(SC_SIEGFRIED)->val3*100; // Status resistance.
 #endif
-		else if (sc->data[SC_LEECHESEND] && sc->data[SC_LEECHESEND]->val3 == 0) {
+		else if (sc->getSCE(SC_LEECHESEND) && sc->getSCE(SC_LEECHESEND)->val3 == 0) {
 			switch (type) {
 				case SC_BLIND:
 				case SC_STUN:
 					return 0; // Immune
 			}
-		} else if (sc->data[SC_OBLIVIONCURSE] && sc->data[SC_OBLIVIONCURSE]->val3 == 0) {
+		} else if (sc->getSCE(SC_OBLIVIONCURSE) && sc->getSCE(SC_OBLIVIONCURSE)->val3 == 0) {
 			switch (type) {
 				case SC_SILENCE:
 				case SC_CURSE:
@@ -9579,8 +9776,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				if (it.id == type)
 					rate -= rate * it.val / 10000;
 			}
-			if (sd->sc.data[SC_COMMONSC_RESIST] && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
-				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
+			if (sd->sc.getSCE(SC_COMMONSC_RESIST) && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
+				rate -= rate*sd->sc.getSCE(SC_COMMONSC_RESIST)->val1/100;
 		}
 
 		// Aegis accuracy
@@ -9608,8 +9805,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			if (it.id == type)
 				tick -= tick * it.val / 10000;
 		}
-		if (sd->sc.data[SC_COMMONSC_RESIST] && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
-			tick -= tick * sd->sc.data[SC_COMMONSC_RESIST]->val1 / 100;
+		if (sd->sc.getSCE(SC_COMMONSC_RESIST) && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
+			tick -= tick * sd->sc.getSCE(SC_COMMONSC_RESIST)->val1 / 100;
 	}
 #endif
 
@@ -9638,7 +9835,7 @@ void status_display_add(struct block_list *bl, enum sc_type type, int dval1, int
 
 	switch( bl->type ){
 		case BL_PC: {
-			struct map_session_data* sd = (struct map_session_data*)bl;
+			map_session_data* sd = (map_session_data*)bl;
 
 			sc_display_ptr = &sd->sc_display;
 			sc_display_count_ptr = &sd->sc_display_count;
@@ -9700,7 +9897,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 
 	switch( bl->type ){
 		case BL_PC: {
-			struct map_session_data* sd = (struct map_session_data*)bl;
+			map_session_data* sd = (map_session_data*)bl;
 
 			sc_display_ptr = &sd->sc_display;
 			sc_display_count_ptr = &sd->sc_display_count;
@@ -9765,8 +9962,8 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @return adjusted duration based on flag values
  */
 int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay) {
-	struct map_session_data *sd = NULL;
-	struct status_change* sc;
+	map_session_data *sd = NULL;
+	status_change* sc;
 	struct status_change_entry* sce;
 	struct status_data *status;
 	struct view_data *vd;
@@ -9792,7 +9989,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (status_change_isDisabledOnMap(type, map_getmapdata(bl->m)))
 		return 0;
 
-	if (sc->data[SC_GRAVITYCONTROL])
+	if (sc->getSCE(SC_GRAVITYCONTROL))
 		return 0; // !TODO: Confirm what statuses/conditions (if not all) are blocked.
 
 	// Uncomment to prevent status adding hp to gvg mob (like bloodylust=hp*3 etc...
@@ -9819,7 +10016,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		for (const auto &it : scdb->endreturn) {
 			sc_type rem_sc = it;
 
-			if (sc->data[rem_sc]) {
+			if (sc->getSCE(rem_sc)) {
 				status_change_end(bl, rem_sc);
 				isRemoved = true;
 			}
@@ -9833,7 +10030,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (!scdb->fail.empty()) {
 		for (const auto &it : scdb->fail) {
 			// Don't let OPT1 that have RemoveOnDamaged start a new effect in the same attack.
-			if (sc->data[it] || sc->lastEffect == it)
+			if (sc->getSCE(it) || sc->lastEffect == it)
 				return 0;
 		}
 	}
@@ -9854,7 +10051,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Check for immunities / sc fails
 	switch (type) {
 		case SC_VACUUM_EXTREME:
-			if (sc && sc->data[SC_VACUUM_EXTREME_POSTDELAY] && sc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
+			if (sc && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY) && sc->getSCE(SC_VACUUM_EXTREME_POSTDELAY)->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
 			break;
 		case SC_STONE:
@@ -9903,16 +10100,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				int32 mode;
 				struct status_data *bstatus = status_get_base_status(bl);
 				if (!bstatus) return 0;
-				if (sc->data[type]) { // Pile up with previous values.
-					if (!val2) val2 = sc->data[type]->val2;
-					val3 |= sc->data[type]->val3;
-					val4 |= sc->data[type]->val4;
+				if (sc->getSCE(type)) { // Pile up with previous values.
+					if (!val2) val2 = sc->getSCE(type)->val2;
+					val3 |= sc->getSCE(type)->val3;
+					val4 |= sc->getSCE(type)->val4;
 				}
 				mode = val2 ? ((val2&~MD_MASK) | val2) : bstatus->mode; // Base mode
 				if (val4) mode = static_cast<e_mode>(mode&~val4); // Del mode
 				if (val3) mode = static_cast<e_mode>(mode | val3); // Add mode
 				if (mode == bstatus->mode) { // No change.
-					if (sc->data[type]) // Abort previous status
+					if (sc->getSCE(type)) // Abort previous status
 						return status_change_end(bl, type);
 					return 0;
 				}
@@ -10011,51 +10208,51 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0; // Stats only for Mercenaries
 			break;
 		case SC_STRFOOD:
-			if (sc->data[SC_FOOD_STR_CASH] && sc->data[SC_FOOD_STR_CASH]->val1 > val1)
+			if (sc->getSCE(SC_FOOD_STR_CASH) && sc->getSCE(SC_FOOD_STR_CASH)->val1 > val1)
 				return 0;
 			break;
 		case SC_AGIFOOD:
-			if (sc->data[SC_FOOD_AGI_CASH] && sc->data[SC_FOOD_AGI_CASH]->val1 > val1)
+			if (sc->getSCE(SC_FOOD_AGI_CASH) && sc->getSCE(SC_FOOD_AGI_CASH)->val1 > val1)
 				return 0;
 			break;
 		case SC_VITFOOD:
-			if (sc->data[SC_FOOD_VIT_CASH] && sc->data[SC_FOOD_VIT_CASH]->val1 > val1)
+			if (sc->getSCE(SC_FOOD_VIT_CASH) && sc->getSCE(SC_FOOD_VIT_CASH)->val1 > val1)
 				return 0;
 			break;
 		case SC_INTFOOD:
-			if (sc->data[SC_FOOD_INT_CASH] && sc->data[SC_FOOD_INT_CASH]->val1 > val1)
+			if (sc->getSCE(SC_FOOD_INT_CASH) && sc->getSCE(SC_FOOD_INT_CASH)->val1 > val1)
 				return 0;
 			break;
 		case SC_DEXFOOD:
-			if (sc->data[SC_FOOD_DEX_CASH] && sc->data[SC_FOOD_DEX_CASH]->val1 > val1)
+			if (sc->getSCE(SC_FOOD_DEX_CASH) && sc->getSCE(SC_FOOD_DEX_CASH)->val1 > val1)
 				return 0;
 			break;
 		case SC_LUKFOOD:
-			if (sc->data[SC_FOOD_LUK_CASH] && sc->data[SC_FOOD_LUK_CASH]->val1 > val1)
+			if (sc->getSCE(SC_FOOD_LUK_CASH) && sc->getSCE(SC_FOOD_LUK_CASH)->val1 > val1)
 				return 0;
 			break;
 		case SC_FOOD_STR_CASH:
-			if (sc->data[SC_STRFOOD] && sc->data[SC_STRFOOD]->val1 > val1)
+			if (sc->getSCE(SC_STRFOOD) && sc->getSCE(SC_STRFOOD)->val1 > val1)
 				return 0;
 			break;
 		case SC_FOOD_AGI_CASH:
-			if (sc->data[SC_AGIFOOD] && sc->data[SC_AGIFOOD]->val1 > val1)
+			if (sc->getSCE(SC_AGIFOOD) && sc->getSCE(SC_AGIFOOD)->val1 > val1)
 				return 0;
 			break;
 		case SC_FOOD_VIT_CASH:
-			if (sc->data[SC_VITFOOD] && sc->data[SC_VITFOOD]->val1 > val1)
+			if (sc->getSCE(SC_VITFOOD) && sc->getSCE(SC_VITFOOD)->val1 > val1)
 				return 0;
 			break;
 		case SC_FOOD_INT_CASH:
-			if (sc->data[SC_INTFOOD] && sc->data[SC_INTFOOD]->val1 > val1)
+			if (sc->getSCE(SC_INTFOOD) && sc->getSCE(SC_INTFOOD)->val1 > val1)
 				return 0;
 			break;
 		case SC_FOOD_DEX_CASH:
-			if (sc->data[SC_DEXFOOD] && sc->data[SC_DEXFOOD]->val1 > val1)
+			if (sc->getSCE(SC_DEXFOOD) && sc->getSCE(SC_DEXFOOD)->val1 > val1)
 				return 0;
 			break;
 		case SC_FOOD_LUK_CASH:
-			if (sc->data[SC_LUKFOOD] && sc->data[SC_LUKFOOD]->val1 > val1)
+			if (sc->getSCE(SC_LUKFOOD) && sc->getSCE(SC_LUKFOOD)->val1 > val1)
 				return 0;
 			break;
 		case SC_CAMOUFLAGE:
@@ -10084,14 +10281,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (src == bl)
 				return 0;
 			else {
-				struct status_change *tsc = status_get_sc(bl);
+				status_change *tsc = status_get_sc(bl);
 				// Failed if the target is already marked and the new marker that isn't same marker
-				if (tsc && tsc->data[type] && tsc->data[type]->val2 != src->id)
+				if (tsc && tsc->getSCE(type) && tsc->getSCE(type)->val2 != src->id)
 					return 0;
 			}
 			break;
 		case SC_MADNESSCANCEL:
-			if (sc->data[type]) { // Toggle the status but still consume requirements.
+			if (sc->getSCE(type)) { // Toggle the status but still consume requirements.
 				status_change_end(bl, type);
 				return 0;
 			}
@@ -10107,9 +10304,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (val3 == 0) // Don't display icon on self
 				flag |= SCSTART_NOICON;
 			for (int32 i = SC_TOXIN; i <= SC_LEECHESEND; i++) {
-				if (sc->data[i] && sc->data[i]->val3 == 1) // It doesn't stack or even renew on the target
+				if (sc->getSCE(i) && sc->getSCE(i)->val3 == 1) // It doesn't stack or even renew on the target
 					return 0;
-				else if (sc->data[i] && sc->data[i]->val3 == 0)
+				else if (sc->getSCE(i) && sc->getSCE(i)->val3 == 0)
 					status_change_end(bl, static_cast<sc_type>(i)); // End the bonus part on the caster
 			}
 			break;
@@ -10165,12 +10362,26 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 						target_class = MAPID_WIZARD;
 						break;
 					case SL_HIGH:
-						if( sd->status.base_level < 70 ){
+						if( sd->status.base_level >= 70 ){
 							return 0;
 						}
 
-						mask |= JOBL_UPPER;
-						target_class = MAPID_NOVICE_HIGH;
+						switch (sd->class_) {
+							case MAPID_SWORDMAN_HIGH:
+							case MAPID_MAGE_HIGH:
+							case MAPID_ARCHER_HIGH:
+							case MAPID_ACOLYTE_HIGH:
+							case MAPID_MERCHANT_HIGH:
+							case MAPID_THIEF_HIGH:
+								// Only these classes are allowed.
+								break;
+							default:
+								return 0;
+						}
+
+						// Set these to pass the check below.
+						mask = sd->class_;
+						target_class = sd->class_;
 						break;
 					default:
 						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
@@ -10201,7 +10412,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		for (const auto &status_it : status_db) {
 			sc_type opt1_type = status_it.second->type;
 
-			if (sc->data[opt1_type] && status_it.second->opt1 > OPT1_NONE)
+			if (sc->getSCE(opt1_type) && status_it.second->opt1 > OPT1_NONE)
 				status_change_end(bl, opt1_type);
 		}
 	}
@@ -10210,20 +10421,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	std::vector<sc_type> endlist;
 
 	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
-		endlist = status_db.getEnd(SC__BLOODYLUST);
+		endlist = status_db.getEndOnStart(SC__BLOODYLUST);
 	else
-		endlist = scdb->end;
+		endlist = scdb->endonstart;
 
 	// End the SCs from the list
 	if (!endlist.empty()) {
 		for (const auto &it : endlist) {
 			sc_type rem_sc = it;
 
-			if (sc->data[rem_sc]) {
+			if (sc->getSCE(rem_sc)) {
 				switch (rem_sc) {
 					case SC_BERSERK:
 					case SC_SATURDAYNIGHTFEVER:
-						sc->data[rem_sc]->val2 = 0; // Mark to not lose hp
+						sc->getSCE(rem_sc)->val2 = 0; // Mark to not lose hp
+						[[fallthrough]];
 					default:
 						status_change_end(bl, rem_sc);
 						break;
@@ -10237,31 +10449,31 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_BLESSING:
 			if (bl->type == BL_PC) {
 				// Remove Curse first, Stone is only removed if the target is not cursed
-				if (sc->data[SC_CURSE]) {
+				if (sc->getSCE(SC_CURSE)) {
 					status_change_end(bl, SC_CURSE);
 					return 1; // End Curse and do not give stat boost
-				} else if (sc->data[SC_STONE]) {
+				} else if (sc->getSCE(SC_STONE)) {
 					status_change_end(bl, SC_STONE);
 					return 1; // End Stone and do not give stat boost
 				}
 			}
-			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
+			if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
 				status_change_end(bl, SC_SPIRIT);
 			break;
 		case SC_INCREASEAGI:
-			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
+			if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_HIGH)
 				status_change_end(bl, SC_SPIRIT);
 			break;
 		case SC_DELUGE:
-			if (sc->data[SC_FOGWALL] && sc->data[SC_BLIND])
+			if (sc->getSCE(SC_FOGWALL) && sc->getSCE(SC_BLIND))
 				status_change_end(bl, SC_BLIND);
 			break;
 		case SC_SILENCE:
-			if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
+			if (sc->getSCE(SC_GOSPEL) && sc->getSCE(SC_GOSPEL)->val4 == BCT_SELF)
 				status_change_end(bl, SC_GOSPEL);
 			break;
 		case SC_IMPOSITIO:
-			if (sc->data[SC_IMPOSITIO] && sc->data[SC_IMPOSITIO]->val1 > val1) //Replace higher level effect for lower.
+			if (sc->getSCE(SC_IMPOSITIO) && sc->getSCE(SC_IMPOSITIO)->val1 > val1) //Replace higher level effect for lower.
 				status_change_end(bl,SC_IMPOSITIO);
 			break;
 		case SC_ENDURE:
@@ -10278,7 +10490,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Check for overlapping fails
-	if( (sce = sc->data[type]) ) {
+	if( (sce = sc->getSCE(type)) ) {
 		switch( type ) {
 			case SC_MERC_FLEEUP:
 			case SC_MERC_ATKUP:
@@ -10314,9 +10526,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val3 = sce->val3;
 				val4 = sce->val4;
 				break;
-			case SC_LERADSDEW:
-				if (sc && sc->data[SC_BERSERK])
-					return 0;
 			case SC_SHAPESHIFT:
 			case SC_PROPERTYWALK:
 				break;
@@ -10328,9 +10537,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 0;
 				break;
 			case SC_JOINTBEAT:
-				if (sc && sc->data[type]->val2 & BREAK_NECK)
+				if (sc && sc->getSCE(type)->val2 & BREAK_NECK)
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
+				[[fallthrough]];
 			default:
 				if (scdb->flag[SCF_OVERLAPIGNORELEVEL])
 					break;
@@ -10379,7 +10589,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (type == SC_ADORAMUS) {
 				// 1000% base chance to blind, but still can be resisted
 				sc_start(src, bl, SC_BLIND, 1000, val1, skill_get_time(scdb->skill_id, val1));
-				if (sc->data[SC_ADORAMUS])
+				if (sc->getSCE(SC_ADORAMUS))
 					return 0; //Adoramus can't refresh itself, but it can cause blind again
 			}
 			val2 = 2 + val1; // Agi change
@@ -10387,7 +10597,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
 			if( !(flag&SCSTART_NOAVOID) && (bl->type&(BL_PC|BL_MER)) && !map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && !val4 ) {
-				struct map_session_data *tsd;
+				map_session_data *tsd;
 				if( sd ) {
 					int i;
 					for( i = 0; i < MAX_DEVOTION; i++ ) {
@@ -10402,8 +10612,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				tick = INFINITE_TICK;
 			break;
 		case SC_AUTOBERSERK:
-			if (status->hp < status->max_hp>>2 &&
-				(!sc->data[SC_PROVOKE] || sc->data[SC_PROVOKE]->val4==0))
+			if (status->hp < status->max_hp / 4 &&
+				(!sc->getSCE(SC_PROVOKE) || sc->getSCE(SC_PROVOKE)->val4==0))
 					sc_start4(src,bl,SC_PROVOKE,100,10,0,0,1,60000);
 			tick = INFINITE_TICK;
 			break;
@@ -10432,7 +10642,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_POISONREACT:
 #ifdef RENEWAL
-			val2=(val1 - ((val1-1) % 1 - 1)) / 2;
+			val2= (val1 + 1) / 2;
 #else
 			val2=(val1+1)/2 + val1/10; // Number of counters [Skotlex]
 #endif
@@ -10485,7 +10695,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 10+val1*3; // %Dmg reflected
 			// val4 used to mark if reflect shield is an inheritance bonus from Devotion
 			if( !(flag&SCSTART_NOAVOID) && (bl->type&(BL_PC|BL_MER)) ) {
-				struct map_session_data *tsd;
+				map_session_data *tsd;
 				if( sd ) {
 					int i;
 					for( i = 0; i < MAX_DEVOTION; i++ ) {
@@ -10691,17 +10901,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_DPOISON:
 			// Lose 10/15% of your life as long as it doesn't brings life below 25%
-			if (status->hp > status->max_hp>>2) {
+			if (status->hp > status->max_hp / 4) {
 				int diff = status->max_hp*(bl->type==BL_PC?10:15)/100;
-				if (status->hp - diff < status->max_hp>>2)
-					diff = status->hp - (status->max_hp>>2);
+				if (status->hp - diff < status->max_hp / 4)
+					diff = status->hp - (status->max_hp / 4);
 				status_zap(bl, diff, 0);
 			}
-			// Fall through
+			[[fallthrough]];
 		case SC_STONE:
 		case SC_POISON:
 		case SC_BLEEDING:
 		case SC_BURNING:
+		case SC_KILLING_AURA:
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
 			break;
@@ -10717,6 +10928,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				break;
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
+			break;
 		case SC_LEECHESEND:
 			if (val3 == 0)
 				break;
@@ -10752,6 +10964,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_L_LIFEPOTION:
 		case SC_M_LIFEPOTION:
 		case SC_S_MANAPOTION:
+		case SC_G_LIFEPOTION:
 			if( val1 == 0 ) return 0;
 			// val1 = heal percent/amout
 			// val2 = seconds between heals
@@ -10761,17 +10974,47 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = 1;
 			tick_time = val2 * 1000; // [GodLesZ] tick time
 			break;
+		case SC_GRADUAL_GRAVITY:
+			val2 = 10 * val1;
+			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
+			break;
+		case SC_ALL_STAT_DOWN:
+			val2 = 20 * val1;
+			if( val1 < skill_get_max( NPC_ALL_STAT_DOWN ) ){
+				val2 -= 10;
+			}
+			break;
+		case SC_DAMAGE_HEAL:
+			switch( val1 ){
+				case 1:
+					val2 = BF_WEAPON;
+					break;
+				case 2:
+					val2 = BF_MAGIC;
+					break;
+				case 3:
+					//TODO: Absorb MISC damage? Both WEAPON & MAGIC damage? Which is correct on level 3?
+					val2 = BF_MISC;
+					break;
+			}
+			break;
 		case SC_BOSSMAPINFO:
-			if( sd != NULL ) {
-				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
+			if( sd == nullptr ){
+				return 0;
+			}else{
+				// Search for Boss on this Map
+				mob_data* boss_md = map_getmob_boss( bl->m );
 
-				if( boss_md == NULL ) { // No MVP on this map
-					clif_bossmapinfo(sd, NULL, BOSS_INFO_NOT);
+				// No MVP on this map
+				if( boss_md == nullptr ){
+					clif_bossmapinfo( *sd, nullptr, BOSS_INFO_NOT );
 					return 0;
 				}
+
 				val1 = boss_md->bl.id;
-				tick_time = 1000; // [GodLesZ] tick time
-				val4 = tick / tick_time;
+				tick_time = status_get_sc_interval( type );
+				val4 = tick - tick_time; // Remaining time
 			}
 			break;
 		case SC_HIDING:
@@ -10783,7 +11026,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CHASEWALK:
 			val2 = tick>0?tick:10000; // Interval at which SP is drained.
 			val3 = 35 - 5 * val1; // Speed adjustment.
-			if (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE)
+			if (sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_ROGUE)
 				val3 -= 40;
 			val4 = 10+val1*2; // SP cost.
 			if (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND)) val4 *= 5;
@@ -10812,10 +11055,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_AUTOGUARD:
 			if( !(flag&SCSTART_NOAVOID) ) {
-				struct map_session_data *tsd;
+				map_session_data *tsd;
 				int i;
 				for( i = val2 = 0; i < val1; i++) {
-					int t = 5-(i>>1);
+					int t = 5-(i / 2);
 					val2 += (t < 0)? 1:t;
 				}
 
@@ -10839,7 +11082,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = 250 - 50*val1; // Aspd adjustment
 
 				if (sd) {
-					struct map_session_data *tsd;
+					map_session_data *tsd;
 					int i;
 					for (i = 0; i < MAX_DEVOTION; i++) { // See if there are devoted characters, and pass the status to them. [Skotlex]
 						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
@@ -10913,8 +11156,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			int stat,max_stat;
 			// Fetch caster information
 			struct block_list *pbl = map_id2bl(val1);
-			struct status_change *psc = pbl?status_get_sc(pbl):NULL;
-			struct status_change_entry *psce = psc?psc->data[SC_MARIONETTE]:NULL;
+			status_change *psc = pbl?status_get_sc(pbl):NULL;
+			struct status_change_entry *psce = psc?psc->getSCE(SC_MARIONETTE):NULL;
 			// Fetch target's stats
 			struct status_data* status2 = status_get_status_data(bl); // Battle status
 
@@ -10979,15 +11222,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DEVOTION:
 		{
 			struct block_list *d_bl;
-			struct status_change *d_sc;
+			status_change *d_sc;
 
 			if( (d_bl = map_id2bl(val1)) && (d_sc = status_get_sc(d_bl)) && d_sc->count ) { // Inherits Status From Source
 				const enum sc_type types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
 				int i = (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))?2:3;
 				while( i >= 0 ) {
 					enum sc_type type2 = types[i];
-					if( d_sc->data[type2] )
-						status_change_start(d_bl, bl, type2, 10000, d_sc->data[type2]->val1, 0, 0, (type2 == SC_REFLECTSHIELD ? 1 : 0), skill_get_time(status_db.getSkill(type2),d_sc->data[type2]->val1), (type2 == SC_DEFENDER) ? SCSTART_NOAVOID : SCSTART_NOAVOID|SCSTART_NOICON);
+					if( d_sc->getSCE(type2) )
+						status_change_start(d_bl, bl, type2, 10000, d_sc->getSCE(type2)->val1, 0, 0, (type2 == SC_REFLECTSHIELD ? 1 : 0), skill_get_time(status_db.getSkill(type2),d_sc->getSCE(type2)->val1), (type2 == SC_DEFENDER) ? SCSTART_NOAVOID : SCSTART_NOAVOID|SCSTART_NOICON);
 					i--;
 				}
 			}
@@ -11001,8 +11244,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CLOSECONFINE2:
 		{
 			struct block_list *src2 = val2?map_id2bl(val2):NULL;
-			struct status_change *sc2 = src2?status_get_sc(src2):NULL;
-			struct status_change_entry *sce2 = sc2?sc2->data[SC_CLOSECONFINE]:NULL;
+			status_change *sc2 = src2?status_get_sc(src2):NULL;
+			struct status_change_entry *sce2 = sc2?sc2->getSCE(SC_CLOSECONFINE):NULL;
 
 			if (src2 && sc2) {
 				if (!sce2) { // Start lock on caster.
@@ -11029,6 +11272,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			switch (val1) {
 				case 3: // 33*3 + 1 -> 100%
 					val2++;
+					[[fallthrough]];
 				case 1:
 				case 2: // 33, 66%
 					val2 += 33*val1;
@@ -11103,7 +11347,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ADRENALINE:
 		case SC_WEAPONPERFECTION:
 			{
-				struct map_session_data * s_sd = BL_CAST(BL_PC, src);
+				map_session_data * s_sd = BL_CAST(BL_PC, src);
 				if (type == SC_OVERTHRUST) {
 					// val2 holds if it was casted on self, or is bonus received from others
 #ifdef RENEWAL
@@ -11201,7 +11445,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_JAILED:
 			// Val1 is duration in minutes. Use INT_MAX to specify 'unlimited' time.
-			tick = val1>0?1000:250;
 			if (sd) {
 				if (sd->mapindex != val2) {
 					int pos =  (bl->x&0xFFFF)|(bl->y<<16), // Current Coordinates
@@ -11212,7 +11455,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					val3 = map_idx;
 					val4 = pos;
 				} else if (!val3 || val3 == sd->mapindex) { // Use save point.
-					val3 = sd->status.save_point.map;
+					val3 = mapindex_name2id( sd->status.save_point.map );
 					val4 = (sd->status.save_point.x&0xFFFF)
 						|(sd->status.save_point.y<<16);
 				}
@@ -11248,12 +11491,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = rnd()%ELE_ALL;
 			break;
 		case SC_CRITICALWOUND:
+			// Level 1 ~ 5 & 6 ~ 10 has different duration
+			// Level 6 ~ 10 use effect of level 1 ~ 5
+			val1 = 1 + ((val1-1)%5);
 			val2 = 20*val1; // Heal effectiveness decrease
 			break;
 		case SC_MAGICMIRROR:
 			// Level 1 ~ 5 & 6 ~ 10 has different duration
 			// Level 6 ~ 10 use effect of level 1 ~ 5
 			val1 = 1 + ((val1-1)%5);
+			[[fallthrough]];
 		case SC_SLOWCAST:
 			val2 = 20*val1; // Magic reflection/cast rate
 			break;
@@ -11474,7 +11721,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 		case SC__SHADOWFORM:
 			{
-				struct map_session_data * s_sd = map_id2sd(val2);
+				map_session_data * s_sd = map_id2sd(val2);
 				if( s_sd )
 					s_sd->shadowform_id = bl->id;
 				val4 = tick / 1000;
@@ -11775,17 +12022,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WILD_STORM:
 		case SC_UPHEAVAL:
 			val2 += 10;
+			[[fallthrough]];
 		case SC_HEATER:
 		case SC_COOLER:
 		case SC_BLAST:
 		case SC_CURSED_SOIL:
 			val2 += 10;
+			[[fallthrough]];
 		case SC_PYROTECHNIC:
 		case SC_AQUAPLAY:
 		case SC_GUST:
 		case SC_PETROLOGY:
 			val2 += 5;
 			val3 += 9000;
+			[[fallthrough]];
 		case SC_CIRCLE_OF_FIRE:
 		case SC_FIRE_CLOAK:
 		case SC_WATER_DROP:
@@ -11920,16 +12170,25 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PYROCLASTIC:
 			val2 += 100 + 10*val1; // atk bonus // !TODO: Confirm formula
 			break;
+		case SC_TEMPERING:
+			val2 += 5 + val1; // patk bonus
+			break;
+		case SC_GOLDENE_TONE:
+			val2 += 3 * val1; // res/mres bonus
+			break;
 		case SC_PARALYSIS: // [Lighta] need real info
 			val2 = 2*val1; // def reduction
 			val3 = 500*val1; // varcast augmentation
+			break;
+		case SC_TOXIN_OF_MANDARA:
+			val2 = 15*val1; // res reduction
 			break;
 		case SC_LIGHT_OF_REGENE: // Yommy leak need confirm
 			val2 = 20 * val1; // hp reco on death %
 			break;
 		case SC_PAIN_KILLER: // Yommy leak need confirm
 			val2 = min((( 200 * val1 ) * status_get_lv(src)) / 150, 1000); // dmg reduction linear. upto a maximum of 1000 [iRO Wiki]
-			if(sc->data[SC_PARALYSIS])
+			if(sc->getSCE(SC_PARALYSIS))
 				sc_start(src,bl, SC_ENDURE, 100, val1, tick); // Start endure for same duration
 			break;
 		case SC_STYLE_CHANGE:
@@ -12003,7 +12262,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 #ifndef RENEWAL
 		case SC_APPLEIDUN:
 		{
-			struct map_session_data * s_sd = BL_CAST(BL_PC, src);
+			map_session_data * s_sd = BL_CAST(BL_PC, src);
 
 			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
 			if (s_sd)
@@ -12162,7 +12421,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_TUNAPARTY:
 			val2 = (status->max_hp * (val1 * 10) / 100); // Max HP% to absorb
 			if (sd && pc_checkskill(sd, SU_SPIRITOFSEA))
-				val2 <<= 1; // Double the shield life
+				val2 *= 2; // Double the shield life
 			break;
 		case SC_HISS:
 			val2 = 50; // Perfect Dodge
@@ -12316,11 +12575,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				tick_time = 500; // Avoid being brought down to 0.
 			val4 = tick - tick_time; // Remaining Time
 			break;
-		case SC_VIGOR: {
-				uint8 hp_loss[10] = { 15, 14, 12, 11, 9, 8, 6, 5, 3, 2 };
-
-				val2 = hp_loss[val1- 1];
-			}
+		case SC_RELIEVE_ON:
+			val2 = min(10*val1, 99); // % damage received reduced from 10 * skill lvl up to 99%
+			break;
+		case SC_VIGOR:
+			val2 = 100 - 10 * (val1 - 1); // HP consumption with each attack is reduced by skill lvl
+			val2 = max(val2, 0);
 			break;
 		case SC_POWERFUL_FAITH:
 			val2 = 5 + 5 * val1;// ATK Increase
@@ -12340,7 +12600,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 		case SC_GUARDIAN_S:
-			val2 = status->max_hp * (50 * val1) / 100;// Barrier HP
+			val2 = ( status->max_hp / 2 ) * ( 50 * val1 ) / 100 + 15 * status->sta; // Barrier HP
 			break;
 		case SC_REBOUND_S:
 			val2 = 10 * val1;// Reduced Damage From Devotion
@@ -12349,7 +12609,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ATTACK_STANCE:
 			val2 = 40 * val1;// DEF Decrease
-			val3 = 5 + 5 * val1;// ATK Increase
+			val3 = 3 * val1; // P.ATK/S.MATK Increase
 			tick = INFINITE_TICK;
 			break;
 		case SC_HOLY_S:
@@ -12379,7 +12639,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 300;
 			break;
 		case SC_POTENT_VENOM:
-			val2 = 3 * val1;// Res Pierce Percentage
+			val2 = 2 * val1;// Res Pierce Percentage
 			break;
 		case SC_A_MACHINE:
 			val4 = tick / 1000;
@@ -12478,9 +12738,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				}
 			}
 			break;
+		case SC_WEAPONBREAKER:
+			val2 = val1 * 2 * 100; // Chance to break weapon
+			break;
 
 		default:
-			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->endreturn.empty() && scdb->fail.empty()) {
+			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
 				// Status change with no calc, no icon, and no skill associated...?
 				ShowWarning("status_change_start: Status %s (%d) is bare. Add the NoWarning flag to suppress this message.\n", script_get_constant_str("SC_", type), type);
 				return 0;
@@ -12516,6 +12779,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					break;
 				tick_time = tick;
 				tick = tick_time + max(val4, 0);
+				[[fallthrough]];
 			case SC_MAGICMUSHROOM:
 			case SC_PYREXIA:
 			case SC_LEECHESEND:
@@ -12595,7 +12859,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_FREEZE:
 			case SC_STUN:
 			case SC_STONE:
-				if (sc->data[SC_DANCING]) {
+				if (sc->getSCE(SC_DANCING)) {
 					unit_stop_walking(bl, 1);
 					status_change_end(bl, SC_DANCING);
 				}
@@ -12678,13 +12942,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		tick = tick_time;
 
 	// Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
-	if((sce=sc->data[type])) { // reuse old sc
+	if((sce=sc->getSCE(type))) { // reuse old sc
 		if( sce->timer != INVALID_TIMER )
 			delete_timer(sce->timer, status_change_timer);
 		sc_isnew = false;
 	} else { // New sc
 		++(sc->count);
-		sce = sc->data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
+		sce = sc->createSCE(type);
 	}
 	sce->val1 = val1;
 	sce->val2 = val2;
@@ -12738,8 +13002,28 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_BOSSMAPINFO:
-			if (sd)
-				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
+			if( sd == nullptr ){
+				return 0;
+			}else{
+				mob_data* boss_md = map_id2boss( sce->val1 );
+
+				if( boss_md == nullptr ){
+					return 0;
+				}
+
+				// Not on same map anymore
+				if( sd->bl.m != boss_md->bl.m ){
+					return 0;
+				// Boss is alive
+				}else if( boss_md->bl.prev != nullptr ){
+					sce->val2 = 0;
+					clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE_WITHMSG );
+				// Boss is dead
+				}else if( boss_md->spawn_timer != INVALID_TIMER ){
+					sce->val2 = 1;
+					clif_bossmapinfo( *sd, boss_md, BOSS_INFO_DEAD );
+				}
+			}
 			break;
 		case SC_FULL_THROTTLE:
 		case SC_MERC_HPUP:
@@ -12781,8 +13065,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_C_MARKER:
 			//Send mini-map, don't wait for first timer triggered
-			if (src->type == BL_PC && (sd = map_id2sd(src->id)))
-				clif_crimson_marker(sd, bl, false);
+			if (src->type == BL_PC) {
+				clif_crimson_marker(*(map_session_data *)(src), *bl, false);
+			}
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd)
@@ -12821,7 +13106,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
  */
 int status_change_clear(struct block_list* bl, int type)
 {
-	struct status_change* sc;
+	status_change* sc;
 
 	sc = status_get_sc(bl);
 
@@ -12841,13 +13126,13 @@ int status_change_clear(struct block_list* bl, int type)
 	for (const auto &it : status_db) {
 		sc_type status = static_cast<sc_type>(it.first);
 
-		if (!sc->data[status])
+		if (!sc->getSCE(status))
 			continue;
 		if (type == 0) { // Type 0: PC killed
 			if (it.second->flag[SCF_NOREMOVEONDEAD]) {
 				switch (status) {
 					case SC_ELEMENTALCHANGE: // Only when its Holy or Dark that it doesn't dispell on death
-						if (sc->data[status]->val2 != ELE_HOLY && sc->data[status]->val2 != ELE_DARK)
+						if (sc->getSCE(status)->val2 != ELE_HOLY && sc->getSCE(status)->val2 != ELE_DARK)
 							break;
 					default:
 						continue;
@@ -12859,12 +13144,11 @@ int status_change_clear(struct block_list* bl, int type)
 			continue;
 
 		status_change_end(bl, status);
-		if( type == 1 && sc->data[status] ) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
+		if( type == 1 && sc->getSCE(status) ) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
 			(sc->count)--;
-			if (sc->data[status]->timer != INVALID_TIMER)
-				delete_timer(sc->data[status]->timer, status_change_timer);
-			ers_free(sc_data_ers, sc->data[status]);
-			sc->data[status] = NULL;
+			if (sc->getSCE(status)->timer != INVALID_TIMER)
+				delete_timer(sc->getSCE(status)->timer, status_change_timer);
+			sc->deleteSCE(status);
 		}
 	}
 
@@ -12889,8 +13173,8 @@ int status_change_clear(struct block_list* bl, int type)
  */
 int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 {
-	struct map_session_data *sd;
-	struct status_change *sc;
+	map_session_data *sd;
+	status_change *sc;
 	struct status_change_entry *sce;
 	struct status_data *status;
 	struct view_data *vd;
@@ -12901,7 +13185,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 
-	if(!sc || !(sce = sc->data[type]) || !scdb)
+	if(!sc || !(sce = sc->getSCE(type)) || !scdb)
 		return 0;
 
 	sd = BL_CAST(BL_PC,bl);
@@ -12957,7 +13241,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	if (scdb->state.any())
 		status_calc_state(bl,sc,scdb->state,false);
 
-	sc->data[type] = NULL;
+	sc->clearSCE(type);
 
 	if (scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])
 		status_display_remove(bl,type);
@@ -13005,7 +13289,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		}
 		break;
 		case SC_AUTOBERSERK:
-			if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->val4 == 1)
+			if (sc->getSCE(SC_PROVOKE) && sc->getSCE(SC_PROVOKE)->val4 == 1)
 				status_change_end(bl, SC_PROVOKE);
 			break;
 
@@ -13014,17 +13298,17 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_REFLECTSHIELD:
 		case SC_AUTOGUARD:
 			{
-				struct map_session_data *tsd;
+				map_session_data *tsd;
 				if( bl->type == BL_PC ) { // Clear Status from others
 					int i;
 					for( i = 0; i < MAX_DEVOTION; i++ ) {
-						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) && tsd->sc.data[type] )
+						if( sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])) && tsd->sc.getSCE(type) )
 							status_change_end(&tsd->bl, type);
 					}
 				}
 				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag ) { // Clear Status from Master
 					tsd = ((TBL_MER*)bl)->master;
-					if( tsd && tsd->sc.data[type] )
+					if( tsd && tsd->sc.getSCE(type) )
 						status_change_end(&tsd->bl, type);
 				}
 			}
@@ -13039,11 +13323,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 						((TBL_MER*)d_bl)->devotion_flag = 0;
 					clif_devotion(d_bl, NULL);
 				}
-
-				status_change_end(bl, SC_AUTOGUARD);
-				status_change_end(bl, SC_DEFENDER);
-				status_change_end(bl, SC_REFLECTSHIELD);
-				status_change_end(bl, SC_ENDURE);
 			}
 			break;
 
@@ -13071,10 +13350,10 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if(sce->val4) {
 				int tid2 = sce->val4; //stop the status for the other guy of bladestop as well
 				struct block_list *tbl = map_id2bl(tid2);
-				struct status_change *tsc = status_get_sc(tbl);
+				status_change *tsc = status_get_sc(tbl);
 				sce->val4 = 0;
-				if(tbl && tsc && tsc->data[SC_BLADESTOP]) {
-					tsc->data[SC_BLADESTOP]->val4 = 0;
+				if(tbl && tsc && tsc->getSCE(SC_BLADESTOP)) {
+					tsc->getSCE(SC_BLADESTOP)->val4 = 0;
 					status_change_end(tbl, SC_BLADESTOP);
 				}
 				clif_bladestop(bl, tid2, 0);
@@ -13085,7 +13364,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				map_session_data *dsd;
 
 				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4))) { // End status on partner as well
-					status_change_entry *dsc = dsd->sc.data[SC_DANCING];
+					status_change_entry *dsc = dsd->sc.getSCE(SC_DANCING);
 
 					if(dsc) {
 						// This will prevent recursive loops.
@@ -13105,12 +13384,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
 					clif_status_change(bl,EFST_MOON,0,0,0,0,0);
-
-#ifdef RENEWAL
-				status_change_end(bl, SC_ENSEMBLEFATIGUE);
-#else
-				status_change_end(bl, SC_LONGING);
-#endif
 			}
 			break;
 		case SC_NOCHAT:
@@ -13130,16 +13403,18 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
 			}
 			break;
-		case SC_CLOSECONFINE2:{
-			struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
-			struct status_change *sc2 = src?status_get_sc(src):NULL;
-			if (src && sc2 && sc2->data[SC_CLOSECONFINE]) {
-				// If status was already ended, do nothing.
-				// Decrease count
-				if (--(sc2->data[SC_CLOSECONFINE]->val1) <= 0) // No more holds, free him up.
-					status_change_end(src, SC_CLOSECONFINE);
+		case SC_CLOSECONFINE2:
+			{
+				struct block_list *src = sce->val2?map_id2bl(sce->val2):nullptr;
+				status_change *sc2 = src?status_get_sc(src):nullptr;
+				if (src && sc2 && sc2->getSCE(SC_CLOSECONFINE)) {
+					// If status was already ended, do nothing.
+					// Decrease count
+					if (--(sc2->getSCE(SC_CLOSECONFINE)->val1) <= 0) // No more holds, free him up.
+						status_change_end(src, SC_CLOSECONFINE);
+				}
 			}
-		}
+			[[fallthrough]];
 		case SC_CLOSECONFINE:
 			if (sce->val2 > 0) {
 				// Caster has been unlocked... nearby chars need to be unlocked.
@@ -13158,27 +13433,27 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sce->val1) { // Check for partner and end their marionette status as well
 				enum sc_type type2 = (type == SC_MARIONETTE) ? SC_MARIONETTE2 : SC_MARIONETTE;
 				struct block_list *pbl = map_id2bl(sce->val1);
-				struct status_change* sc2 = pbl?status_get_sc(pbl):NULL;
+				status_change* sc2 = pbl?status_get_sc(pbl):NULL;
 
-				if (sc2 && sc2->data[type2]) {
-					sc2->data[type2]->val1 = 0;
+				if (sc2 && sc2->getSCE(type2)) {
+					sc2->getSCE(type2)->val1 = 0;
 					status_change_end(pbl, type2);
 				}
 			}
 			break;
 
 		case SC_CONCENTRATION:
-			if (sc->data[SC_ENDURE] && !sc->data[SC_ENDURE]->val4)
+			if (sc->getSCE(SC_ENDURE) && !sc->getSCE(SC_ENDURE)->val4)
 				status_change_end(bl, SC_ENDURE);
 			break;
 		case SC_BERSERK:
-			if(status->hp > 200 && sc && sc->data[SC__BLOODYLUST]) {
+			if(status->hp > 200 && sc && sc->getSCE(SC__BLOODYLUST)) {
 				status_percent_heal(bl, 100, 0);
 				status_change_end(bl, SC__BLOODYLUST);
 			} else if (status->hp > 100 && sce->val2) // If val2 is removed, no HP penalty (dispelled?) [Skotlex]
 				status_set_hp(bl, 100, 0);
-			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4) {
-				sc->data[SC_ENDURE]->val4 = 0;
+			if(sc->getSCE(SC_ENDURE) && sc->getSCE(SC_ENDURE)->val4) {
+				sc->getSCE(SC_ENDURE)->val4 = 0;
 				status_change_end(bl, SC_ENDURE);
 			}
 			sc_start4(bl, bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, sce->val1));
@@ -13226,9 +13501,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			}
 			break;
 		case SC_JAILED:
-			if(tid == INVALID_TIMER)
-				break;
-		  	// Natural expiration.
 			if(sd && sd->mapindex == sce->val2)
 				pc_setpos(sd,(unsigned short)sce->val3,sce->val4&0xFFFF, sce->val4>>16, CLR_TELEPORT);
 			break; // Guess hes not in jail :P
@@ -13253,12 +13525,12 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if( sce->val2 ) {
 				struct block_list* tbl = map_id2bl(sce->val2);
 				sce->val2 = 0;
-				if( tbl && (sc = status_get_sc(tbl)) && sc->data[SC_STOP] && sc->data[SC_STOP]->val2 == bl->id )
+				if( tbl && (sc = status_get_sc(tbl)) && sc->getSCE(SC_STOP) && sc->getSCE(SC_STOP)->val2 == bl->id )
 					status_change_end(tbl, SC_STOP);
 			}
 			break;
 		case SC_TENSIONRELAX:
-			if (sc && (sc->data[SC_WEIGHT50] || sc->data[SC_WEIGHT90]))
+			if (sc && (sc->getSCE(SC_WEIGHT50) || sc->getSCE(SC_WEIGHT90)))
 				status_get_regen_data(bl)->state.overweight = 1; // Add the overweight flag back
 			break;
 		case SC_MONSTER_TRANSFORM:
@@ -13294,7 +13566,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			break;
 		case SC__SHADOWFORM:
 			{
-				struct map_session_data *s_sd = map_id2sd(sce->val2);
+				map_session_data *s_sd = map_id2sd(sce->val2);
 
 				if (s_sd) s_sd->shadowform_id = 0;
 			}
@@ -13330,16 +13602,13 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_CURSEDCIRCLE_TARGET:
 			{
 				struct block_list *src = map_id2bl(sce->val2);
-				struct status_change *sc2 = status_get_sc(src);
+				status_change *sc2 = status_get_sc(src);
 
-				if( sc2 && sc2->data[SC_CURSEDCIRCLE_ATKER] && --(sc2->data[SC_CURSEDCIRCLE_ATKER]->val2) == 0 ) {
+				if( sc2 && sc2->getSCE(SC_CURSEDCIRCLE_ATKER) && --(sc2->getSCE(SC_CURSEDCIRCLE_ATKER)->val2) == 0 ) {
 					clif_bladestop(bl, sce->val2, 0);
 					status_change_end(src, SC_CURSEDCIRCLE_ATKER);
 				}
 			}
-			break;
-		case SC_TEARGAS:
-			status_change_end(bl,SC_TEARGAS_SOB);
 			break;
 		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
@@ -13354,25 +13623,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			calc_flag = status_db.getSCB_ALL(); // Required for overlapping
 			break;
 
-		case SC_SUNSTANCE:
-			status_change_end(bl, SC_LIGHTOFSUN);
-			break;
-		case SC_LUNARSTANCE:
-			status_change_end(bl, SC_NEWMOON);
-			status_change_end(bl, SC_LIGHTOFMOON);
-			break;
-		case SC_STARSTANCE:
-			status_change_end(bl, SC_FALLINGSTAR);
-			status_change_end(bl, SC_LIGHTOFSTAR);
-			break;
-		case SC_UNIVERSESTANCE:
-			status_change_end(bl, SC_LIGHTOFSUN);
-			status_change_end(bl, SC_NEWMOON);
-			status_change_end(bl, SC_LIGHTOFMOON);
-			status_change_end(bl, SC_FALLINGSTAR);
-			status_change_end(bl, SC_LIGHTOFSTAR);
-			status_change_end(bl, SC_DIMENSION);
-			break;
 		case SC_GRAVITYCONTROL:
 			status_fix_damage(bl, bl, sce->val2, clif_damage(bl, bl, gettick(), 0, 0, sce->val2, 0, DMG_NORMAL, 0, false), 0);
 			clif_specialeffect(bl, 223, AREA);
@@ -13410,7 +13660,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_C_MARKER:
 			{
 				// Remove mark data from caster
-				struct map_session_data *caster = map_id2sd(sce->val2);
+				map_session_data *caster = map_id2sd(sce->val2);
 				uint8 i = 0;
 
 				if (!caster)
@@ -13418,7 +13668,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				ARR_FIND(0,MAX_SKILL_CRIMSON_MARKER,i,caster->c_marker[i] == bl->id);
 				if (i < MAX_SKILL_CRIMSON_MARKER) {
 					caster->c_marker[i] = 0;
-					clif_crimson_marker(caster, bl, true);
+					clif_crimson_marker( *caster, *bl, true );
 				}
 			}
 			break;
@@ -13426,14 +13676,14 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			{
 				// Drop the material from target if expired
 				struct item it;
-				struct map_session_data *caster = NULL;
+				map_session_data *caster = NULL;
 
 				if (sce->val3 || status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
 					break;
 
 				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
 
-				if (!itemdb_exists(skill->require.itemid[0]))
+				if (!item_db.exists(skill->require.itemid[0]))
 					break;
 				memset(&it, 0, sizeof(it));
 				it.nameid = skill->require.itemid[0];
@@ -13445,13 +13695,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_VACUUM_EXTREME:
 			///< !CHECKME: Seems on official, there's delay before same target can be vacuumed in same area again [Cydh]
 			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, sce->val1, sce->val2, skill_get_time2(SO_VACUUM_EXTREME,sce->val1));
-			break;
-		case SC_SWORDCLAN:
-		case SC_ARCWANDCLAN:
-		case SC_GOLDENMACECLAN:
-		case SC_CROSSBOWCLAN:
-		case SC_JUMPINGCLAN:
-			status_change_end(bl,SC_CLAN_INFO);
 			break;
 		case SC_DIMENSION1:
 		case SC_DIMENSION2:
@@ -13490,14 +13733,18 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				pc_delservantball( *sd, sd->servantball );
 			}
 			break;
-		case SC_CHARGINGPIERCE:
-			status_change_end(bl, SC_CHARGINGPIERCE_COUNT);
-			break;
 		case SC_ABYSSFORCEWEAPON:
 			if( sd ){
 				pc_delabyssball( *sd, sd->abyssball );
 			}
 			break;
+	}
+
+	// End statuses found in the EndOnEnd list.
+	if (!scdb->endonend.empty()) {
+		for (const auto &it : scdb->endonend) {
+			status_change_end(bl, it);
+		}
 	}
 
 	// Reset the options as needed
@@ -13601,7 +13848,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 TIMER_FUNC(status_change_timer){
 	enum sc_type type = (sc_type)data;
 	struct block_list *bl;
-	struct map_session_data *sd;
+	map_session_data *sd;
 	int interval = status_get_sc_interval(type);
 	bool dounlock = false;
 
@@ -13611,14 +13858,14 @@ TIMER_FUNC(status_change_timer){
 		return 0;
 	}
 
-	struct status_change * const sc = status_get_sc(bl);
+	status_change * const sc = status_get_sc(bl);
 	struct status_data * const status = status_get_status_data(bl);
 	if(!sc) {
 		ShowDebug("status_change_timer: Null pointer id: %d data: %" PRIdPTR " bl-type: %d\n", id, data, bl->type);
 		return 0;
 	}
 	
-	struct status_change_entry * const sce = sc->data[type];
+	struct status_change_entry * const sce = sc->getSCE(type);
 	if(!sce) {
 		ShowDebug("status_change_timer: Null pointer id: %d data: %" PRIdPTR " bl-type: %d\n", id, data, bl->type);
 		return 0;
@@ -13646,9 +13893,9 @@ TIMER_FUNC(status_change_timer){
 		if(!status_charge(bl, 0, sce->val4))
 			break; // Not enough SP to continue.
 
-		if (!sc->data[SC_CHASEWALK2]) {
+		if (!sc->getSCE(SC_CHASEWALK2)) {
 			sc_start(bl,bl, SC_CHASEWALK2,100,1<<(sce->val1-1),
-				(t_tick)(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE?10:1) // SL bonus -> x10 duration
+				(t_tick)(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_ROGUE?10:1) // SL bonus -> x10 duration
 				*skill_get_time2(status_db.getSkill(type),sce->val1));
 		}
 		sc_timer_next(sce->val2+tick);
@@ -13700,7 +13947,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_POISON:
 	case SC_DPOISON:
-		if (sce->val4 >= 0 && !sc->data[SC_SLOWPOISON]) {
+		if (sce->val4 >= 0 && !sc->getSCE(SC_SLOWPOISON)) {
 			unsigned int damage = 0;
 			if (sd)
 				damage = (type == SC_DPOISON) ? 2 + status->max_hp / 50 : 2 + status->max_hp * 3 / 200;
@@ -13756,7 +14003,7 @@ TIMER_FUNC(status_change_timer){
 			if (damage > 0) { // 3% Damage each 4 seconds
 				map_freeblock_lock();
 				status_zap(bl, damage, 0);
-				flag = !sc->data[type]; // Killed? Should not
+				flag = !sc->getSCE(type); // Killed? Should not
 				map_freeblock_unlock();
 			}
 
@@ -13838,12 +14085,13 @@ TIMER_FUNC(status_change_timer){
 	case SC_S_LIFEPOTION:
 	case SC_L_LIFEPOTION:
 	case SC_M_LIFEPOTION:
+	case SC_G_LIFEPOTION:
 		if( --(sce->val4) >= 0 ) {
 			// val1 < 0 = per max% | val1 > 0 = exact amount
 			int hp = 0;
-			if( status->hp < status->max_hp && !sc->data[SC_BERSERK] )
+			if( status->hp < status->max_hp && !sc->getSCE(SC_BERSERK) )
 				hp = (sce->val1 < 0) ? (int)(status->max_hp * -1 * sce->val1 / 100.) : sce->val1;
-			status_heal(bl, hp, 0, 2);
+			status_heal(bl, hp, 0, 0);
 			sc_timer_next((sce->val2 * 1000) + tick);
 			return 0;
 		}
@@ -13853,31 +14101,42 @@ TIMER_FUNC(status_change_timer){
 		if( --(sce->val4) >= 0 ) {
 			// val1 < 0 = per max% | val1 > 0 = exact amount
 			int sp = 0;
-			if( status->sp < status->max_sp && !sc->data[SC_BERSERK] )
+			if( status->sp < status->max_sp && !sc->getSCE(SC_BERSERK) )
 				sp = (sce->val1 < 0) ? (int)(status->max_sp * -1 * sce->val1 / 100.) : sce->val1;
-			status_heal(bl, 0, sp, 2);
+			status_heal(bl, 0, sp, 0);
 			sc_timer_next((sce->val2 * 1000) + tick);
 			return 0;
 		}
 		break;
+		
+	case SC_GRADUAL_GRAVITY:
+		if (sce->val4 >= 0) {
+			status_zap(bl, status->max_hp * sce->val2 / 100, 0);
+		}
+		break;
 
 	case SC_BOSSMAPINFO:
-		if( sd && --(sce->val4) >= 0 ) {
-			struct mob_data *boss_md = map_id2boss(sce->val1);
+		if( sd && sce->val4 >= 0 ){
+			mob_data* boss_md = map_id2boss( sce->val1 );
 
-			if (boss_md) {
-				if (sd->bl.m != boss_md->bl.m) // Not on same map anymore
-					return 0;
-				else if (boss_md->bl.prev != NULL) { // Boss is alive - Update X, Y on minimap
-					sce->val2 = 0;
-					clif_bossmapinfo(sd, boss_md, BOSS_INFO_ALIVE);
-				} else if (boss_md->spawn_timer != INVALID_TIMER && !sce->val2) { // Boss is dead
-					sce->val2 = 1;
-					clif_bossmapinfo(sd, boss_md, BOSS_INFO_DEAD);
-				}
+			if( boss_md == nullptr ){
+				sce->val4 = 0;
+				break;
 			}
-			sc_timer_next(1000 + tick);
-			return 0;
+
+			// Not on same map anymore
+			if( sd->bl.m != boss_md->bl.m ){
+				sce->val4 = 0;
+				break;
+			// Boss is alive - Update X, Y on minimap
+			}else if( boss_md->bl.prev != nullptr ){
+				sce->val2 = 0;
+				clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE );
+			// Boss is dead
+			}else if( boss_md->spawn_timer != INVALID_TIMER && sce->val2 == 0 ){
+				sce->val2 = 1;
+				clif_bossmapinfo( *sd, boss_md, BOSS_INFO_DEAD );
+			}
 		}
 		break;
 
@@ -13921,6 +14180,7 @@ TIMER_FUNC(status_change_timer){
 					sp= 4*(sce->val1>>16);
 					// Upkeep is also every 10 secs.
 #ifndef RENEWAL
+				[[fallthrough]];
 				case DC_DONTFORGETME:
 #endif
 					s=10;
@@ -13928,7 +14188,7 @@ TIMER_FUNC(status_change_timer){
 			}
 			if( s != 0 && sce->val3 % s == 0 ) {
 #ifndef RENEWAL
-				if (sc->data[SC_LONGING])
+				if (sc->getSCE(SC_LONGING))
 					sp*= 3;
 #endif
 				if (!status_charge(bl, 0, sp))
@@ -14002,7 +14262,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_BLIND:
-		if(sc->data[SC_FOGWALL]) { // Blind lasts forever while you are standing on the fog.
+		if(sc->getSCE(SC_FOGWALL)) { // Blind lasts forever while you are standing on the fog.
 			sc_timer_next(5000+tick);
 			return 0;
 		}
@@ -14040,7 +14300,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_RENOVATIO:
 		if( --(sce->val4) >= 0 ) {
 			int heal = status->max_hp * (sce->val1 + 4) / 100;
-			if( sc && sc->data[SC_AKAITSUKI] && heal )
+			if( sc && sc->getSCE(SC_AKAITSUKI) && heal )
 				heal = ~heal + 1;
 			status_heal(bl, heal, 0, 3);
 			sc_timer_next(5000 + tick);
@@ -14119,13 +14379,13 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_WARMER: {
 			int hp = 0;
-			struct status_change *ssc = status_get_sc(map_id2bl(sce->val2));
+			status_change *ssc = status_get_sc(map_id2bl(sce->val2));
 
-			if (ssc && ssc->data[SC_HEATER_OPTION])
+			if (ssc && ssc->getSCE(SC_HEATER_OPTION))
 				hp = status->max_hp * 3 * sce->val1 / 100;
 			else
 				hp = status->max_hp * sce->val1 / 100;
-			if (sc && sc->data[SC_AKAITSUKI] && hp)
+			if (sc && sc->getSCE(SC_AKAITSUKI) && hp)
 				hp = ~hp + 1;
 			if (status->hp != status->max_hp)
 				status_heal(bl, hp, 0, 0);
@@ -14237,7 +14497,7 @@ TIMER_FUNC(status_change_timer){
 			map_freeblock_lock();
 			if (!status_charge(bl, 0, 50))
 				status_zap(bl, 0, status->sp);
-			if (sc->data[type])
+			if (sc->getSCE(type))
 				sc_timer_next(1000 + tick);
 			map_freeblock_unlock();
 			return 0;
@@ -14321,7 +14581,7 @@ TIMER_FUNC(status_change_timer){
 			map_freeblock_lock();
 			clif_damage(bl, bl, tick, 0, 0, damage, 1, DMG_MULTI_HIT_ENDURE, 0, false);
 			status_damage(src, bl, damage,0, 0, 1, 0);
-			if( sc->data[type] ) {
+			if( sc->getSCE(type) ) {
 				sc_timer_next(2000 + tick);
 			}
 			map_freeblock_unlock();
@@ -14419,7 +14679,7 @@ TIMER_FUNC(status_change_timer){
 			if (!caster || caster->bl.m != bl->m) //End the SC if caster isn't in same map
 				break;
 			sc_timer_next(1000 + tick);
-			clif_crimson_marker(caster, bl, false);
+			clif_crimson_marker( *caster, *bl, false );
 			return 0;
 		}
 		break;
@@ -14576,7 +14836,7 @@ TIMER_FUNC(status_change_timer){
 				damage = status->hp - 1;
 			map_freeblock_lock();
 			status_zap(bl,damage,0);
-			if( sc->data[type] ) {
+			if( sc->getSCE(type) ) {
 				sc_timer_next(1000 + tick);
 			}
 			map_freeblock_unlock();
@@ -14627,10 +14887,14 @@ TIMER_FUNC(status_change_timer){
 			dounlock = true;
 		}
 		break;
+	case SC_KILLING_AURA:
+		if (sce->val4 >= 0)
+			skill_castend_damage_id( bl, bl, NPC_KILLING_AURA, sce->val1, tick, 0 );
+		break;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval
-	if(interval > 0 && sc->data[type] && sce->val4 >= 100) {
+	if(interval > 0 && sc->getSCE(type) && sce->val4 >= 100) {
 		sc_timer_next(min(sce->val4,interval)+tick);
 		sce->val4 -= interval;
 		if (dounlock)
@@ -14652,7 +14916,7 @@ TIMER_FUNC(status_change_timer){
  */
 int status_change_timer_sub(struct block_list* bl, va_list ap)
 {
-	struct status_change* tsc;
+	status_change* tsc;
 
 	struct block_list* src = va_arg(ap,struct block_list*);
 	struct status_change_entry* sce = va_arg(ap,struct status_change_entry*);
@@ -14672,13 +14936,13 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		status_change_end(bl, SC_CLOAKINGEXCEED);
 		status_change_end(bl, SC_CAMOUFLAGE);
 		status_change_end(bl, SC_NEWMOON);
-		if (tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 > 0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
-			rnd()%100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10) // [100 - (Skill Level x 10)] %
+		if (tsc && tsc->getSCE(SC__SHADOWFORM) && (sce && sce->val4 > 0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
+			rnd()%100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10) // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM);
 		break;
 	case SC_RUWACH: // Reveal hidden target and deal little dammages if enemy
-		if (tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] ||
-				tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_NEWMOON] || tsc->data[SC_CLOAKINGEXCEED])) {
+		if (tsc && (tsc->getSCE(SC_HIDING) || tsc->getSCE(SC_CLOAKING) ||
+				tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_NEWMOON) || tsc->getSCE(SC_CLOAKINGEXCEED))) {
 			status_change_end(bl, SC_HIDING);
 			status_change_end(bl, SC_CLOAKING);
 			status_change_end(bl, SC_CAMOUFLAGE);
@@ -14687,8 +14951,8 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 			if(battle_check_target( src, bl, BCT_ENEMY ) > 0)
 				skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,1,tick,0);
 		}
-		if (tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 > 0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
-			rnd()%100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10 ) { // [100 - (Skill Level x 10)] %
+		if (tsc && tsc->getSCE(SC__SHADOWFORM) && (sce && sce->val4 > 0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
+			rnd()%100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10 ) { // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM);
 				if (battle_check_target(src, bl, BCT_ENEMY) > 0)
 					skill_attack(BF_MAGIC, src, src, bl, status_db.getSkill(type), 1, tick, 0);
@@ -14714,14 +14978,14 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		break;
 	case SC_CLOSECONFINE:
 		// Lock char has released the hold on everyone...
-		if (tsc && tsc->data[SC_CLOSECONFINE2] && tsc->data[SC_CLOSECONFINE2]->val2 == src->id) {
-			tsc->data[SC_CLOSECONFINE2]->val2 = 0;
+		if (tsc && tsc->getSCE(SC_CLOSECONFINE2) && tsc->getSCE(SC_CLOSECONFINE2)->val2 == src->id) {
+			tsc->getSCE(SC_CLOSECONFINE2)->val2 = 0;
 			status_change_end(bl, SC_CLOSECONFINE2);
 		}
 		break;
 	case SC_CURSEDCIRCLE_TARGET:
-		if( tsc && tsc->data[SC_CURSEDCIRCLE_TARGET] && tsc->data[SC_CURSEDCIRCLE_TARGET]->val2 == src->id ) {
-			clif_bladestop(bl, tsc->data[SC_CURSEDCIRCLE_TARGET]->val2, 0);
+		if( tsc && tsc->getSCE(SC_CURSEDCIRCLE_TARGET) && tsc->getSCE(SC_CURSEDCIRCLE_TARGET)->val2 == src->id ) {
+			clif_bladestop(bl, tsc->getSCE(SC_CURSEDCIRCLE_TARGET)->val2, 0);
 			status_change_end(bl, type);
 		}
 		break;
@@ -14742,7 +15006,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
  */
 void status_change_clear_buffs(struct block_list* bl, uint8 type)
 {
-	struct status_change *sc= status_get_sc(bl);
+	status_change *sc= status_get_sc(bl);
 
 	if (!sc || !sc->count)
 		return;
@@ -14750,28 +15014,35 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 	//Clears buffs with specified flag and type
 	for (const auto &it : status_db) {
 		sc_type status = static_cast<sc_type>(it.first);
-		std::bitset<SCF_MAX> flag = it.second->flag;
-
-		if (!sc->data[status] || flag[SCF_NOCLEARBUFF]) //Skip status with SCF_NOCLEARBUFF, no matter what
+		const std::bitset<SCF_MAX>& flag = it.second->flag;
+		bool end = false;
+		if (!sc->getSCE(status))
 			continue;
-		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA
-		if (!(type&SCCB_LUXANIMA) && flag[SCF_REMOVEONLUXANIMA])
+		// Skip status with SCF_NOCLEARBUFF, no matter what
+		if (flag[SCF_NOCLEARBUFF])
 			continue;
+		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA and has the SCF_REMOVEONLUXANIMA flag
+		if ((type & SCCB_LUXANIMA) && flag[SCF_REMOVEONLUXANIMA])
+			end = true;
 		// &SCCB_CHEM_PROTECT : Clears AM_CP_ARMOR/HELP/SHIELD/WEAPON
-		if (!(type&SCCB_CHEM_PROTECT) && flag[SCF_REMOVECHEMICALPROTECT])
-			continue;
-		// &SCCB_REFRESH : Cleared by RK_REFRESH
-		if (!(type&SCCB_REFRESH) && flag[SCF_REMOVEONREFRESH])
-			continue;
+		else if ((type & SCCB_CHEM_PROTECT) && flag[SCF_REMOVECHEMICALPROTECT])
+			end = true;
+		// &SCCB_REFRESH : Cleared by RK_REFRESH and has the SCF_REMOVEONREFRESH flag
+		else if ((type & SCCB_REFRESH) && flag[SCF_REMOVEONREFRESH])
+			end = true;
 		// &SCCB_DEBUFFS : Clears debuffs
-		if (!(type&SCCB_DEBUFFS) && flag[SCF_DEBUFF])
-			continue;
-		// &SCCB_BUFFS : Clears buffs
-		if (!(type&SCCB_BUFFS) && !(flag[SCF_DEBUFF]))
-			continue;		
+		else if ((type & SCCB_DEBUFFS) && flag[SCF_DEBUFF])
+			end = true;
+		// &SCCB_BUFFS : Clears buffs - skip if it is a debuff
+		else if ((type & SCCB_BUFFS) && !flag[SCF_DEBUFF])
+			end = true;
+		// &SCCB_HERMODE : Cleared by CG_HERMODE and has the SCF_REMOVEONHERMODE flag
+		else if ((type & SCCB_HERMODE) && flag[SCF_REMOVEONHERMODE])
+			end = true;
 		if (status == SC_SATURDAYNIGHTFEVER || status == SC_BERSERK) // Mark to not lose HP
-			sc->data[status]->val2 = 0;
-		status_change_end(bl, status);
+			sc->getSCE(status)->val2 = 0;
+		if(end)
+			status_change_end(bl, status);
 	}
 
 	//Removes bonus_script
@@ -14822,20 +15093,20 @@ int status_change_spread(block_list *src, block_list *bl)
 		sc_type type = static_cast<sc_type>(it.first);
 		const TimerData *timer;
 
-		if (sc->data[type] && it.second->flag[SCF_SPREADEFFECT]) {
-			if (sc->data[type]->timer != INVALID_TIMER) {
-				timer = get_timer(sc->data[type]->timer);
+		if (sc->getSCE(type) && it.second->flag[SCF_SPREADEFFECT]) {
+			if (sc->getSCE(type)->timer != INVALID_TIMER) {
+				timer = get_timer(sc->getSCE(type)->timer);
 
 				if (timer == nullptr || timer->func != status_change_timer || DIFF_TICK(timer->tick, tick) < 0)
 					continue;
 
-				int32 val4 = sc->data[type]->val4;
+				int32 val4 = sc->getSCE(type)->val4;
 
 				sc_tick = DIFF_TICK(timer->tick, tick) + (val4 > 0 ? val4 : 0);
 			} else
 				sc_tick = INFINITE_TICK;
 
-			status_change_start(src, bl, type, 10000, sc->data[type]->val1, sc->data[type]->val2, sc->data[type]->val3, sc->data[type]->val4, sc_tick, SCSTART_NOAVOID | SCSTART_NOTICKDEF | SCSTART_NORATEDEF);
+			status_change_start(src, bl, type, 10000, sc->getSCE(type)->val1, sc->getSCE(type)->val2, sc->getSCE(type)->val3, sc->getSCE(type)->val4, sc_tick, SCSTART_NOAVOID | SCSTART_NOTICKDEF | SCSTART_NORATEDEF);
 
 			if (!hasSpread)
 				hasSpread = true;
@@ -14857,11 +15128,11 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 {
 	struct regen_data *regen;
 	struct status_data *status;
-	struct status_change *sc;
+	status_change *sc;
 	struct unit_data *ud;
 	struct view_data *vd = NULL;
 	struct regen_data_sub *sregen;
-	struct map_session_data *sd;
+	map_session_data *sd;
 	int rate, multi = 1, flag;
 
 	regen = status_get_regen_data(bl);
@@ -14886,7 +15157,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	if (flag && (
 		status_isdead(bl) ||
-		(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || sc->data[SC__INVISIBILITY]))
+		(sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || sc->getSCE(SC__INVISIBILITY)))
 	))
 		flag = RGN_NONE;
 
@@ -14904,7 +15175,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		if(flag&(RGN_SHP)) { // Sitting HP regen
 			rate = (int)(natural_heal_diff_tick * (sregen->rate.hp / 100.));
 			if (regen->state.overweight)
-				rate >>= 1; // Half as fast when overweight.
+				rate /= 2; // Half as fast when overweight.
 			sregen->tick.hp += rate;
 			while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.hp -= battle_config.natural_heal_skill_interval;
@@ -14917,7 +15188,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		if(flag&(RGN_SSP)) { // Sitting SP regen
 			rate = (int)(natural_heal_diff_tick * (sregen->rate.sp / 100.));
 			if (regen->state.overweight)
-				rate >>= 1; // Half as fast when overweight.
+				rate /= 2; // Half as fast when overweight.
 			sregen->tick.sp += rate;
 			while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.sp -= battle_config.natural_heal_skill_interval;
@@ -14983,7 +15254,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			rate /= 2;
 #ifdef RENEWAL
 		if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_MONK &&
-			sc && sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK))
+			sc && sc->getSCE(SC_EXPLOSIONSPIRITS) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK))
 			rate *= 2; // Tick is doubled in Fury state
 #endif
 
@@ -15116,22 +15387,22 @@ static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapI
  * @param bl: Block list data
  * @param sc: Status Change data
  */
-void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc)
+void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc)
 {
 	nullpo_retv(bl);
 
 	if (sc && sc->count) {
 		struct map_data *mapdata = map_getmapdata(bl->m);
 		bool mapIsVS = mapdata_flag_vs2(mapdata);
-		bool mapIsPVP = mapdata->flag[MF_PVP] != 0;
+		bool mapIsPVP = mapdata->getMapFlag(MF_PVP) != 0;
 		bool mapIsGVG = mapdata_flag_gvg2_no_te(mapdata);
-		bool mapIsBG = mapdata->flag[MF_BATTLEGROUND] != 0;
+		bool mapIsBG = mapdata->getMapFlag(MF_BATTLEGROUND) != 0;
 		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
 
 		for (const auto &it : status_db) {
 			sc_type type = static_cast<sc_type>(it.first);
 
-			if (!sc->data[type] || !SCDisabled[type])
+			if (!sc->getSCE(type) || !SCDisabled[type])
 				continue;
 
 			if (status_change_isDisabledOnMap_(type, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapdata->zone, mapIsTE))
@@ -15618,8 +15889,8 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
-	if (this->nodeExists(node, "End")) {
-		const ryml::NodeRef& endNode = node["End"];
+	if (this->nodeExists(node, "EndOnStart")) {
+		const ryml::NodeRef& endNode = node["EndOnStart"];
 
 		for (const auto &it : endNode) {
 			std::string end;
@@ -15629,12 +15900,12 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			int64 constant;
 
 			if (!script_get_constant(end_constant.c_str(), &constant)) {
-				this->invalidWarning(endNode, "End status %s is invalid.\n", end.c_str());
+				this->invalidWarning(endNode, "EndOnStart status %s is invalid.\n", end.c_str());
 				return 0;
 			}
 
 			if (!this->validateStatus(static_cast<sc_type>(constant))) {
-				this->invalidWarning(endNode, "End status %s is out of bounds.\n", end.c_str());
+				this->invalidWarning(endNode, "EndOnStart status %s is out of bounds.\n", end.c_str());
 				return 0;
 			}
 
@@ -15644,9 +15915,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (active)
-				status->end.push_back(static_cast<sc_type>(constant));
+				status->endonstart.push_back(static_cast<sc_type>(constant));
 			else
-				util::vector_erase_if_exists(status->end, static_cast<sc_type>(constant));
+				util::vector_erase_if_exists(status->endonstart, static_cast<sc_type>(constant));
 		}
 	}
 
@@ -15679,6 +15950,38 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				status->endreturn.push_back(static_cast<sc_type>(constant));
 			else
 				util::vector_erase_if_exists(status->endreturn, static_cast<sc_type>(constant));
+		}
+	}
+
+	if (this->nodeExists(node, "EndOnEnd")) {
+		const ryml::NodeRef &endNode = node["EndOnEnd"];
+
+		for (const auto &it : endNode) {
+			std::string end;
+			c4::from_chars(it.key(), &end);
+
+			std::string end_constant = "SC_" + end;
+			int64 constant;
+
+			if (!script_get_constant(end_constant.c_str(), &constant)) {
+				this->invalidWarning(endNode, "EndOnEnd status %s is invalid.\n", end.c_str());
+				return 0;
+			}
+
+			if (!this->validateStatus(static_cast<sc_type>(constant))) {
+				this->invalidWarning(endNode, "EndOnEnd status %s is out of bounds.\n", end.c_str());
+				return 0;
+			}
+
+			bool active;
+
+			if (!this->asBool(endNode, end, active))
+				return 0;
+
+			if (active)
+				status->endonend.push_back(static_cast<sc_type>(constant));
+			else
+				util::vector_erase_if_exists(status->endonend, static_cast<sc_type>(constant));
 		}
 	}
 

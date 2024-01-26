@@ -1,9 +1,12 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #ifndef NAVI_H
 #define NAVI_H
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 struct navi_pos {
 	int m;
 	int x;
@@ -39,5 +42,5 @@ struct navi_walkpath_data {
 
 
 void navi_create_lists();
-#endif // ifdef GENERATE_NAVI
+#endif // ifdef MAP_GENERATOR
 #endif

@@ -6399,7 +6399,7 @@ lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 				mes "Ghalstein that you";
 				mes "just heard, he reacted";
 				mes "pretty strongly to what";
-				mes "you said to to him. Almost";
+				mes "you said to him. Almost";
 				mes "as if he had something to hide... ^000000";
 				close;
 		}

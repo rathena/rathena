@@ -726,6 +726,12 @@ Refines an equipped item by the specified amount.
 128: Right Accessory
 256: Top Headgear
 512: Mid Headgear
+65536: Shadow Armor
+131072: Shadow Weapon
+262144: Shadow Shield
+524288: Shadow Shoes
+1048576: Shadow Right Accessory
+2097152: Shadow Left Accessory
 
 ---------------------------------------
 
@@ -771,6 +777,28 @@ Valid item types:
 Example:
 To drop all weapons in inventory...
 @dropall 5
+
+---------------------------------------
+
+@stockall {<item type>}
+
+Transfer all items from cart to inventory based on the item type.
+
+Valid item types:
+    -1 = All (default)
+     0 = Healing
+     2 = Usable
+     3 = Etc
+     4 = Armors
+     5 = Weapons
+     6 = Cards
+     7 = Pet Eggs
+     8 = Pet Armors
+     10 = Ammunition
+
+Example:
+To transfer all weapons from cart to inventory...
+@stockall 5
 
 ---------------------------------------
 
@@ -1201,6 +1229,27 @@ Opens the enchantgrade UI.
 
 ---------------------------------------
 
+@setcard <equip position> <slot> <card_id>
+
+Adds a card or enchant to the specific slot of the equipment.
+
+<equip position>:
+1: Lower Headgear
+2: Right Hand
+4: Garment
+8: Left Accessory
+16: Body Armor
+32: Left Hand
+64: Shoes
+128: Right Accessory
+256: Top Headgear
+512: Mid Headgear
+
+<slot> number: 0-3.
+<card_id>: Can actually be any existing card or enchant item. Put 0 to remove it.
+
+---------------------------------------
+
 ==============================
 | 5. Administrative Commands |
 ==============================
@@ -1419,6 +1468,7 @@ This will also send a packet to clients causing them to close.
 @reloadstatusdb
 @reloadachievementdb
 @reloadattendancedb
+@reloadbarterdb
 
 Reloads a database or configuration file.
 
@@ -1427,10 +1477,11 @@ Databases:
 -- itemdb: Item Database
 -- mobdb: Monster Database
 -- questdb: Quest Database
--- script: NPC Scripts
+-- script: NPC Scripts and Barter Database
 -- skilldb: Skill Database
 -- achievementdb: Achievement Database
 -- attendancedb: Attendance Database
+-- barterdb: Barter Database
 
 Configuration files:
 -- atcommand: Atcommand Settings
@@ -1450,11 +1501,12 @@ Affected files:
 -- msgconf: atcommands.yml
 -- pcdb: statpoint.yml, job_exp.yml, skill_tree.yml, attr_fix.yml, job_stats.yml, job_basepoints.yml, level_penalty.yml
 -- questdb: quest_db.yml
--- script: /npc/*.txt, /npc/*.conf
+-- script: /npc/*.txt, /npc/*.conf, /npc/barters.yml
 -- skilldb: skill_db.yml, skill_nocast_db.txt, skill_changematerial_db.txt, skill_damage_db.txt, abra_db.yml, create_arrow_db.yml, produce_db.txt, spellbook_db.yml, magicmushroom_db.yml
 -- statusdb: attr_fix.yml, size_fix.yml, refine.yml
 -- achievementdb: achievement_db.yml
 -- attendancedb: attendance.yml
+-- barterdb: /npc/barters.yml
 
 Restriction:
 	- Used from 'atcommand' or 'useatcmd'. For @reload & @reloadscript

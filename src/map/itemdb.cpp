@@ -3,15 +3,20 @@
 
 #include "itemdb.hpp"
 
+#include <chrono>
+#include <fstream>
 #include <iostream>
+#include <map>
 #include <stdlib.h>
+#include <math.h>
+#include <unordered_map>
 
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utils.hpp"
-#include "../common/utilities.hpp"
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utils.hpp>
+#include <common/utilities.hpp>
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
@@ -191,6 +196,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->subtype = 0;
 	}
 
+	bool has_buy = false, has_sell = false;
+
 	if (this->nodeExists(node, "Buy")) {
 		uint32 buy;
 
@@ -202,6 +209,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			buy = MAX_ZENY;
 		}
 
+		has_buy = true;
 		item->value_buy = buy;
 	} else {
 		if (!exists) {
@@ -220,12 +228,15 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			sell = MAX_ZENY;
 		}
 
+		has_sell = true;
 		item->value_sell = sell;
 	} else {
 		if (!exists) {
 			item->value_sell = 0;
 		}
 	}
+
+	hasPriceValue[item->nameid] = { has_buy, has_sell };
 
 	if (this->nodeExists(node, "Weight")) {
 		uint32 weight;
@@ -1148,9 +1159,9 @@ void ItemDatabase::loadingFinished(){
 		}
 
 		// When a particular price is not given, we should base it off the other one
-		if (item->value_buy == 0 && item->value_sell > 0)
+		if (!hasPriceValue[item->nameid].has_buy && hasPriceValue[item->nameid].has_sell)
 			item->value_buy = item->value_sell * 2;
-		else if (item->value_buy > 0 && item->value_sell == 0)
+		else if (hasPriceValue[item->nameid].has_buy && !hasPriceValue[item->nameid].has_sell)
 			item->value_sell = item->value_buy / 2;
 
 		if (item->value_buy / 124. < item->value_sell / 75.) {
@@ -1181,6 +1192,7 @@ void ItemDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+	hasPriceValue.clear();
 }
 
 /**
@@ -1237,6 +1249,179 @@ std::shared_ptr<item_data> ItemDatabase::searchname( const char *name ){
 	}
 
 	return util::umap_find( this->nameToItemDataMap, lowername );
+}
+
+/**
+* Generates an item link string
+* @param data: Item info
+* @return <ITEML> string for the item
+* @author [Cydh]
+**/
+std::string ItemDatabase::create_item_link(struct item& item, std::shared_ptr<item_data>& data){
+	if( data == nullptr ){
+		ShowError( "Tried to create itemlink for unknown item %u.\n", item.nameid );
+		return "Unknown item";
+	}
+
+	std::string itemstr;
+	struct item_data* id = data.get();
+
+// All these dates are unconfirmed
+#if PACKETVER >= 20151104
+	if( battle_config.feature_itemlink ) {
+
+#if PACKETVER >= 20160113
+		const std::string start_tag = "<ITEML>";
+		const std::string closing_tag = "</ITEML>";
+#else // PACKETVER >= 20151104
+		const std::string start_tag = "<ITEM>";
+		const std::string closing_tag = "</ITEM>";
+#endif
+
+		itemstr += start_tag;
+
+		itemstr += util::string_left_pad(util::base62_encode(id->equip), '0', 5);
+		itemstr += itemdb_isequip2(id) ? "1" : "0";
+		itemstr += util::base62_encode(item.nameid);
+		if (item.refine > 0) {
+			itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
+		}
+
+#if PACKETVER >= 20161116
+		if (itemdb_isequip2(id)) {
+			itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
+		}
+#endif
+
+#if PACKETVER >= 20200724
+		itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
+#endif
+
+#if PACKETVER >= 20200724
+		const std::string card_sep = ")";
+		const std::string optid_sep = "+";
+		const std::string optpar_sep = ",";
+		const std::string optval_sep = "-";
+#elif PACKETVER >= 20161116
+		const std::string card_sep = "(";
+		const std::string optid_sep = "*";
+		const std::string optpar_sep = "+";
+		const std::string optval_sep = ",";
+#else // PACKETVER >= 20151104
+		const std::string card_sep = "'";
+		const std::string optid_sep = ")";
+		const std::string optpar_sep = "*";
+		const std::string optval_sep = "+";
+#endif
+
+		for (uint8 i = 0; i < MAX_SLOTS; ++i) {
+			itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
+		}
+
+		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+			if (item.option[i].id == 0) {
+				break; // ignore options including ones beyond this one since the client won't even display them
+			}
+			// Option ID
+			itemstr += optid_sep + util::string_left_pad(util::base62_encode(item.option[i].id), '0', 2);
+			// Param
+			itemstr += optpar_sep + util::string_left_pad(util::base62_encode(item.option[i].param), '0', 2);
+			// Value
+			itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
+		}
+
+		itemstr += closing_tag;
+		if ((itemdb_isequip2(id)) && (data->slots == 0))
+			itemstr += " [" + std::to_string(data->slots) + "]";
+
+		return itemstr;
+	}
+#endif
+
+	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
+	// If that's the case then we format the item prepending the refine and appending the slots
+	if (item.refine > 0)
+		itemstr += "+" + std::to_string(item.refine) + " ";
+
+	itemstr += data->ename;
+
+	if (itemdb_isequip2(id))
+		itemstr += "[" + std::to_string(data->slots) + "]";
+
+	return itemstr;
+}
+
+std::string ItemDatabase::create_item_link( std::shared_ptr<item_data>& data ){
+	struct item it = {};
+	it.nameid = data->nameid;
+
+	return this->create_item_link( it, data );
+}
+
+std::string ItemDatabase::create_item_link(struct item& item) {
+	std::shared_ptr<item_data> data = this->find(item.nameid);
+
+	return this->create_item_link(item, data);
+}
+
+std::string ItemDatabase::create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name ){
+	if( data == nullptr ){
+		return "Unknown item";
+	}
+
+	std::string itemstr;
+
+// All these dates are unconfirmed
+#if PACKETVER >= 20100000
+	if( battle_config.feature_mesitemlink ){
+// It was changed in 2015-11-04, but Gravity actually broke the feature for this specific client, because they introduced the new itemlink feature [Lemongrass]
+// See the following github issues for more details:
+// * https://github.com/rathena/rathena/issues/1236
+// * https://github.com/rathena/rathena/issues/1873
+#if PACKETVER >= 20151104
+		const std::string start_tag = "<ITEM>";
+		const std::string closing_tag = "</ITEM>";
+#else
+		const std::string start_tag = "<ITEMLINK>";
+		const std::string closing_tag = "</ITEMLINK>";
+#endif
+
+		itemstr += start_tag;
+
+		if( use_brackets || battle_config.feature_mesitemlink_brackets ){
+			itemstr += "[";
+		}
+
+		if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
+			// Name was forcefully overwritten
+			itemstr += name;
+		}else{
+			// Use database name
+			itemstr += data->ename;
+		}
+
+		if( use_brackets || battle_config.feature_mesitemlink_brackets ){
+			itemstr += "]";
+		}
+
+		itemstr += "<INFO>";
+		itemstr += std::to_string( data->nameid );
+		itemstr += "</INFO>";
+
+		itemstr += closing_tag;
+
+		return itemstr;
+	}
+#endif
+
+	// This can be reached either because itemlinks are disabled via configuration or because the packet version does not support the feature
+	if( name != nullptr && !battle_config.feature_mesitemlink_dbname ){
+		// Name was forcefully overwritten
+		return name;
+	}else{
+		// Use database name
+		return data->ename;
+	}
 }
 
 ItemDatabase item_db;
@@ -2687,7 +2872,7 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
 		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
 
-		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// always return entry for rate 0 ('must' item)
+		if (entry->rate == 0 || rnd_chance<uint32>(entry->rate, random->total_rate))	// always return entry for rate 0 ('must' item)
 			return entry;
 	}
 
@@ -2769,11 +2954,11 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 		if( itemdb_isequip( data->nameid ) ){
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
-				tmp.refine = rnd_value( data->refineMinimum, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, data->refineMaximum ) );
 			}else if( data->refineMinimum > 0 ){
-				tmp.refine = rnd_value( data->refineMinimum, MAX_REFINE );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, MAX_REFINE ) );
 			}else if( data->refineMaximum > 0 ){
-				tmp.refine = rnd_value( 1, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( 1, data->refineMaximum ) );
 			}else{
 				tmp.refine = 0;
 			}
@@ -3115,43 +3300,58 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			const auto& listNode = subit["List"];
 
 			for (const auto& listit : listNode) {
+				uint32 index;
+
+				if (!this->asUInt32(listit, "Index", index))
+					continue;
+
 				if (this->nodeExists(listit, "Clear")) {
-					std::string item_name;
+					bool active;
 
-					if (!this->asString(listit, "Clear", item_name))
+					if (!this->asBool(listit, "Clear", active) || !active)
 						continue;
 
-					std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-					if (item == nullptr) {
-						this->invalidWarning(listit["Clear"], "Unknown Item %s. Clear failed.\n", item_name.c_str());
-						continue;
-					}
-
-					if (random->data.erase(item->nameid) == 0)
-						this->invalidWarning(listit["Clear"], "Item %hu doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", item->nameid, subgroup, group_name.c_str());
+					if (random->data.erase(index) == 0)
+						this->invalidWarning(listit["Clear"], "Index %u doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", index, subgroup, group_name.c_str());
 
 					continue;
 				}
 
-				std::string item_name;
-
-				if (!this->asString(listit, "Item", item_name))
-					continue;
-
-				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-				if (item == nullptr) {
-					this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
-					continue;
-				}
-
-				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, item->nameid);
+				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, index);
 				bool entry_exists = entry != nullptr;
 
 				if (!entry_exists) {
+					if (!this->nodesExist(listit, { "Item" }))
+						return 0;
+
 					entry = std::make_shared<s_item_group_entry>();
-					random->data[item->nameid] = entry;
+					random->data[index] = entry;
+				}
+
+				std::shared_ptr<item_data> item = nullptr;
+
+				if (this->nodeExists(listit, "Item")) {
+					std::string item_name;
+
+					if (!this->asString(listit, "Item", item_name))
+						continue;
+
+					item = item_db.search_aegisname( item_name.c_str() );
+
+					if (item == nullptr) {
+						this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
+						continue;
+					}
+				} else {
+					if (!entry_exists) {
+						item = item_db.find( entry->nameid );
+					}
+				}
+
+				// (shouldn't happen)
+				if (item == nullptr) {
+					this->invalidWarning(listit["index"], "Missing Item definition for Index %u.\n", index);
+					continue;
 				}
 
 				entry->nameid = item->nameid;
@@ -3562,7 +3762,7 @@ bool itemdb_parse_roulette_db(void)
 			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
 			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
 
-			if (!itemdb_exists(item_id)) {
+			if (!item_db.exists(item_id)) {
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
 				continue;
 			}
@@ -3986,10 +4186,13 @@ static int itemdb_read_sqldb(void) {
 		uint32 total_columns = Sql_NumColumns(mmysql_handle);
 		uint64 total_rows = Sql_NumRows(mmysql_handle), rows = 0, count = 0;
 
+		ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", total_rows, item_db_name[fi]);
+
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
-			ShowStatus( "Loading [%" PRIu64 "/%" PRIu64 "] rows from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, item_db_name[fi] );
-
+#ifdef DETAILED_LOADING_OUTPUT
+			ShowStatus( "Loading [%" PRIu64 "/%" PRIu64 "] entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, item_db_name[fi] );
+#endif
 			std::vector<std::string> data = {};
 
 			for( uint32 i = 0; i < total_columns; ++i ) {
@@ -4030,11 +4233,11 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
-		(id->flag.no_equip&2 && mapdata->flag[MF_PVP]) || // PVP
+		(id->flag.no_equip&2 && mapdata->getMapFlag(MF_PVP)) || // PVP
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
-		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(id->flag.no_equip&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) // Zone restriction
 		)
 		return true;
 	return false;
@@ -4087,7 +4290,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (randopt->script) {
-			aFree(randopt->script);
+			script_free_code( randopt->script );
 			randopt->script = nullptr;
 		}
 
@@ -4253,7 +4456,7 @@ void s_random_opt_group::apply( struct item& item ){
 		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
 
-			if( rnd() % 10000 < option->chance ){
+			if ( rnd_chance<uint16>(option->chance, 10000) ) {
 				apply_sub( item.option[i], option );
 				break;
 			}
@@ -4278,8 +4481,38 @@ void s_random_opt_group::apply( struct item& item ){
 
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
 
-			if( rnd() % 10000 < option->chance ){
+			if ( rnd_chance<uint16>(option->chance, 10000) ){
 				apply_sub( item.option[i], option );
+			}
+		}
+	}
+
+	// Fix any gaps, the client cannot handle this
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+		// If an option is empty
+		if( item.option[i].id == 0 ){
+			// Check if any other options, after the empty option exist
+			size_t j;
+			for( j = i + 1; j < MAX_ITEM_RDM_OPT; j++ ){
+				if( item.option[j].id != 0 ){
+					break;
+				}
+			}
+
+			// Another option was found, after the empty option
+			if( j < MAX_ITEM_RDM_OPT ){
+				// Move the later option forward
+				item.option[i].id = item.option[j].id;
+				item.option[i].value = item.option[j].value;
+				item.option[i].param = item.option[j].param;
+
+				// Reset the option that was moved
+				item.option[j].id = 0;
+				item.option[j].value = 0;
+				item.option[j].param = 0;
+			}else{
+				// Cancel early
+				break;
 			}
 		}
 	}
@@ -4501,12 +4734,38 @@ int item_data::inventorySlotNeeded(int quantity)
 	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
+void itemdb_gen_itemmoveinfo()
+{
+	ShowInfo("itemdb_gen_itemmoveinfo: Generating itemmoveinfov5.txt.\n");
+	auto starttime = std::chrono::system_clock::now();
+	auto os = std::ofstream("./generated/clientside/data/itemmoveinfov5.txt", std::ios::trunc);
+	std::map<t_itemid, std::shared_ptr<item_data>> sorted_itemdb(item_db.begin(), item_db.end());
+
+	os << "// ItemID,\tDrop,\tVending,\tStorage,\tCart,\tNpc Sale,\tMail,\tAuction,\tGuildStorage\n";
+	os << "// This format does not accept blank lines. Be careful.\n";
+
+	item_data tmp_id{};
+	for (auto it = sorted_itemdb.begin(); it != sorted_itemdb.end(); ++it) {
+		if (it->second->type == IT_UNKNOWN)
+			continue;
+		if (memcmp(&it->second->flag.trade_restriction, &tmp_id.flag.trade_restriction, sizeof(tmp_id.flag.trade_restriction)) == 0)
+			continue;
+
+		os << it->first << "\t" << it->second->flag.trade_restriction.drop << "\t" << it->second->flag.trade_restriction.trade << "\t" << it->second->flag.trade_restriction.storage << "\t" << it->second->flag.trade_restriction.cart << "\t" << it->second->flag.trade_restriction.sell << "\t" << it->second->flag.trade_restriction.mail << "\t" << it->second->flag.trade_restriction.auction << "\t" << it->second->flag.trade_restriction.guild_storage << "\t// " << it->second->name << "\n";
+	}
+
+	os.close();
+
+	auto currenttime = std::chrono::system_clock::now();
+	ShowInfo("itemdb_gen_itemmoveinfo: Done generating itemmoveinfov5.txt. The process took %lldms\n", std::chrono::duration_cast<std::chrono::milliseconds>(currenttime - starttime).count());
+}
+
 /**
 * Reload Item DB
 */
 void itemdb_reload(void) {
 	struct s_mapiterator* iter;
-	struct map_session_data* sd;
+	map_session_data* sd;
 
 	do_final_itemdb();
 
@@ -4518,7 +4777,7 @@ void itemdb_reload(void) {
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
-	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
+	for( sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		sd->combos.clear(); // clear combo bonuses
 		pc_setinventorydata(sd);

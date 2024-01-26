@@ -341,7 +341,7 @@ malangdo,233,180,3	script	Dark MachineTX100	564,{
 	getitem .@exchange_id[.@i], .@reward_amount - .@fee;
 	mes "[Dark Machine TX100]";
 	mes "Received ^003399"+getitemname(.@coin)+"^000000 for ^003399"+.@payment_amount+"^000000 unit(s).";
-	mes "We have excanged your coin to ^003399"+(.@reward_amount-.@fee)+"^000000 unit(s) of ^003399"+.@coin_text$+" Level Coin^000000, deducted ^003399"+.@fee+"^000000 unit(s) as exchanging fee.";
+	mes "We have exchanged your coin to ^003399"+(.@reward_amount-.@fee)+"^000000 unit(s) of ^003399"+.@coin_text$+" Level Coin^000000, deducted ^003399"+.@fee+"^000000 unit(s) as exchanging fee.";
 	close;
 }
 
@@ -670,7 +670,7 @@ malangdo,162,146,5	script	Wandering Merchant#mal	495,{
 		case 5: //Malang_Crab_Box1
 		case 12: //Malang_Crab_Box2
 			mes "This is a ^DC143CBow^000000 which increases LUK + 3 and 50% of critical damage,";
-			mes "and increases 20% of long rage phyical ATK when Base Lv. is over 100.";
+			mes "and increases 20% of long rage physical ATK when Base Lv. is over 100.";
 			mes "Base ATK is 120.";
 			next;
 			mes "[Wandering Merchant]";
