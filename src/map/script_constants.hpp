@@ -1900,14 +1900,6 @@
 	export_constant(SC_GROUNDGRAVITY);
 	export_constant(SC_BREAKINGLIMIT);
 	export_constant(SC_RULEBREAK);
-
-	// Hyper Novice
-	export_constant(SC_SHIELDCHAINRUSH);
-	export_constant(SC_MISTYFROST);
-	export_constant(SC_GROUNDGRAVITY);
-	export_constant(SC_BREAKINGLIMIT);
-	export_constant(SC_RULEBREAK);
-	export_constant(SC_HNNOWEAPON);
 	
 	// Sky Emperor
 	export_constant(SC_RISING_SUN);
