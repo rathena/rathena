@@ -1,0 +1,38 @@
+-	script	Quidapchai	-1,{
+	OnInit:
+		bindatcmd("killcount", strnpcinfo(3) + "::OnShowKillCount");
+		end;
+	OnShowKillCount:
+		dispbottom "--- kill count ---";
+		for (.@i = 0; .@i < getarraysize(killedMobs); .@i++) {
+			dispbottom getmonsterinfo(killedMobs[.@i], MOB_NAME) + " (id: " + killedMobs[.@i] + ") = " + killedCount[.@i];
+		}
+		end;
+	OnNPCKillEvent:
+		.@idx = getarraysize(killedMobs);
+		if (.@idx == 0) {
+			setarray killedMobs[.@idx],killedrid;
+			setarray killedCount[.@idx], 1;
+		} else {
+			.@updated = -1;
+			for (.@i = 0; .@i < .@idx; .@i++) {
+				if (.@updated > 0) {
+					break;
+				}
+				if (killedMobs[.@i] == killedrid) {
+					setarray killedCount[.@i],killedCount[.@i] + 1;
+					.@updated = 1;
+				}
+			}
+			if (.@updated < 0) {
+				setarray killedMobs[.@idx],killedrid;
+				setarray killedCount[.@idx],1;
+			}
+		}
+		end;
+	OnMon0000:
+		query_sql( "DELETE FROM `char_reg_num` WHERE `key`='killedMobs' " );
+		query_sql( "DELETE FROM `char_reg_num` WHERE `key`='killedCount' " );
+		debugmes "Kill count reseted!";
+		end;
+}
