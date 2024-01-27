@@ -1790,16 +1790,16 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 #if !(PACKETVER_MAIN_NUM >= 20190619 || PACKETVER_RE_NUM >= 20190605 || PACKETVER_ZERO_NUM >= 20190626)
 	p.itemId = 0; // equip id
 #endif
-	p.hit = status->hit;
 	p.atk2 = cap_value( status->rhw.atk2 + status->batk, 0, INT16_MAX );
 	p.matk = i16min( status->matk_max, INT16_MAX ); //FIXME capping to INT16 here is too late
+	p.hit = status->hit;
 	if( battle_config.hom_setting&HOMSET_DISPLAY_LUK ){
 		p.crit = 1 + (short)std::floor(status->luk / 3);
 	}else{
 		p.crit = status->cri / 10;
 	}
 #ifdef RENEWAL
-	p.def = status->def; 
+	p.def = status->def;
 	p.mdef = status->mdef;
 #else
 	p.def = status->def + status->vit;
