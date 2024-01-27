@@ -5066,7 +5066,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
  *------------------------------------------*/
 int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int flag)
 {
-	map_session_data *sd = NULL,*master_sd = NULL;
+	map_session_data *sd = NULL;
 	struct status_data *tstatus;
 	status_change *sc, *tsc;
 	struct homun_data *hd;
@@ -5083,7 +5083,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	sd = BL_CAST(BL_PC, src);
 	hd = BL_CAST(BL_HOM,src);
-	master_sd = BL_CAST(BL_PC,battle_get_master(src));
 	if (status_isdead(bl))
 		return 1;
 
@@ -5111,10 +5110,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case HFLI_MOON:	//[orn]
 	case HFLI_SBR44:	//[orn]
 	{
-		if (hd)
+		if (hd != nullptr)
+		{
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		if (master_sd)
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			if (hd->master != nullptr)
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
 	}
 	[[fallthrough]];
 	case MER_CRASH:
@@ -6155,10 +6156,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			case 2: sid=MG_LIGHTNINGBOLT; break;
 			case 3: sid=WZ_EARTHSPIKE; break;
 			}
-			if(hd)
+			if (hd != nullptr)
+			{
 				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			if(master_sd)
-				skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				if (hd->master != nullptr)
+					skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 			skill_attack(BF_MAGIC,src,src,bl,sid,skill_lv,tick,flag|SD_LEVEL);
 		}
 		break;
@@ -6280,10 +6283,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
-		if(hd)
+		if (hd != nullptr)
+		{
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		if(master_sd)
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			if (hd->master != nullptr)
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
 		break;
 
 	// Celest
@@ -7223,7 +7228,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
  **/
 int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int flag)
 {
-	map_session_data *sd, *dstsd, *master_sd;
+	map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
 	struct homun_data *hd;
 	s_mercenary_data *mer;
@@ -7246,7 +7251,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	hd = BL_CAST(BL_HOM, src);
 	md = BL_CAST(BL_MOB, src);
 	mer = BL_CAST(BL_MER, src);
-	master_sd = BL_CAST(BL_PC, battle_get_master(src));
+
 	dstsd = BL_CAST(BL_PC, bl);
 	dstmd = BL_CAST(BL_MOB, bl);
 
@@ -7278,10 +7283,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0) ;
 				break ;
 			}
-			if(hd)
+			if (hd != nullptr)
+			{
 				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			if(master_sd)
-				skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				if (hd->master != nullptr)
+					skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 			[[fallthrough]];
  		case AL_HEAL:
 		case ALL_RESURRECTION:
@@ -7306,10 +7313,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			    ret = skill_castend_pos2(src,src->x,src->y,skill_id,skill_lv,tick,flag); //cast on homon
 			if(s_src && !skill_check_unit_range(s_src, s_src->x, s_src->y, skill_id, skill_lv))
 			    ret |= skill_castend_pos2(s_src,s_src->x,s_src->y,skill_id,skill_lv,tick,flag); //cast on master
-			if(hd)
+			if (hd != nullptr)
+			{
 				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			if(master_sd)
-				skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				if (hd->master != nullptr)
+					skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 			return ret;
 		    }
 		    break;
@@ -8206,10 +8215,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HAMI_DEFENCE:
 		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master
 		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv))); // Homunc
-		if(hd)
+		if (hd != nullptr)
+		{
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		if(master_sd)
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			if (hd->master != nullptr)
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
 		break;
 	case NJ_BUNSINJYUTSU:
 		status_change_end(bl, SC_BUNSINJYUTSU); // on official recasting cancels existing mirror image [helvetica]
@@ -10631,10 +10642,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (src != bl && rnd()%100 < 20 * skill_lv) {
 			int x = src->x, y = src->y;
 
-			if (hd)
-				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id,skill_lv));
-			if(master_sd)
-				skill_blockpc_start(master_sd, skill_id, skill_get_time2(skill_id,skill_lv));
+			if (hd != nullptr)
+			{
+				skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id, skill_lv));
+				if (hd->master != nullptr)
+					skill_blockpc_start(hd->master, skill_id, skill_get_time2(skill_id, skill_lv));
+			}
 			// Move source
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
@@ -10670,10 +10683,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
 			clif_skill_nodamage(src,bl,skill_id,i,1);
 			status_heal(bl, i, 0, 0);
-			if(hd)
+			if (hd != nullptr)
+			{
 				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			if(master_sd)
-				skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				if (hd->master != nullptr)
+					skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 		}
 		break;
 	//Homun single-target support skills [orn]
@@ -10685,10 +10700,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if (hd)
-			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
-		if(master_sd)
-			skill_blockpc_start(master_sd, skill_id, skill_get_time2(skill_id,skill_lv));
+		if (hd != nullptr)
+		{
+			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id, skill_lv));
+			if (hd->master != nullptr)
+				skill_blockpc_start(hd->master, skill_id, skill_get_time2(skill_id, skill_lv));
+		}
 		break;
 
 	case NPC_DRAGONFEAR:
@@ -12318,35 +12335,46 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				for (i = 0; i < ARRAYLENGTH(scs); i++)
 					if (tsc->getSCE(scs[i])) status_change_end(bl, scs[i]);
 			}
-			if(hd)
+			if (hd != nullptr)
+			{
 				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			if(master_sd)
-				skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+				if (hd->master != nullptr)
+					skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 		}
 		break;
 	case MH_OVERED_BOOST:
-		if (hd && master_sd) {
-			sc_start(src, &master_sd->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		if (hd != nullptr) {
+			if (hd->master != nullptr)
+			{
+				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 	case MH_GRANITIC_ARMOR:
 	case MH_PYROCLASTIC:
-		if(hd && master_sd) {
-			sc_start2(src, &master_sd->bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv)); //start on master
+		if (hd != nullptr) {
+			if (hd->master != nullptr)
+			{
+				sc_start2(src, &hd->master->bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv)); //start on master
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 			sc_start2(src, bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 	     }
 	     break;
 	case MH_LIGHT_OF_REGENE: //self
-		if(hd && master_sd) {
-			sc_start(src, &master_sd->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		if (hd != nullptr) {
+			if (hd->master != nullptr)
+			{
+				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 			sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 	case MH_STYLE_CHANGE:
@@ -12366,29 +12394,33 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case MH_GOLDENE_TONE:
 	case MH_TEMPERING:
-		if (master_sd){
-			clif_skill_nodamage(src,&master_sd->bl,skill_id,skill_lv,1);
-			sc_start(src, &master_sd->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));		
-			if(hd)
-				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-			if(master_sd)
-				skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		if (hd != nullptr){
+			if (hd->master != nullptr)
+			{
+				clif_skill_nodamage(src, &hd->master->bl, skill_id, skill_lv, 1);
+				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
 	case MH_PAIN_KILLER:
-		if (master_sd){
-			sc_start(src, &master_sd->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		}
-		if (hd)
+		if (hd != nullptr){
+			if (hd->master != nullptr){
+				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			}
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
 		break;
 	case MH_MAGMA_FLOW:
 		sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		if(hd)
+		if (hd != nullptr)
+		{
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		if(master_sd)
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			if (hd->master != nullptr)
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
 	   break;
 	case MH_SUMMON_LEGION: {
 		int summons[5] = {MOBID_S_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_LUCIOLA_VESPA, MOBID_S_LUCIOLA_VESPA};
@@ -12415,10 +12447,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sc_start4(&sum_md->bl,&sum_md->bl, SC_MODECHANGE, 100, 1, 0, MD_CANATTACK|MD_AGGRESSIVE, 0, 60000);
 			}
 		}
-		if (hd)
+
+		if (hd != nullptr)
+		{
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-		if(master_sd)
-			skill_blockpc_start(master_sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			if (hd->master != nullptr)
+				skill_blockpc_start(hd->master, skill_id, skill_get_cooldown(skill_id, skill_lv));
+		}
+
 		}
 		break;
 
