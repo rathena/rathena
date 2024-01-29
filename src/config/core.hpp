@@ -108,6 +108,9 @@
 /// This will noticeably decrease the boot time of the map server by not having to print so many status messages.
 //#undef DETAILED_LOADING_OUTPUT
 
+/// Comment to disable YAML DB read Multi-threading
+#define ENABLE_ASYNC_YAML
+
 /**
  * No settings past this point
  **/

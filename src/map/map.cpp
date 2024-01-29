@@ -52,6 +52,7 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+#include <future>
 
 using namespace rathena;
 using namespace rathena::server_map;
@@ -5140,6 +5141,39 @@ void MapServer::handle_shutdown(){
 	mapit_free(iter);
 	flush_fifos();
 }
+#ifdef ENABLE_ASYNC_YAML
+// parse yaml async by AoShinHo
+static void do_init_async() {
+#define LOAD_ASYNC(f) std::async(std::launch::async, f)
+	std::vector<std::future<void>> do_init;
+	SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
+	auto start_time = std::chrono::high_resolution_clock::now();
+#ifndef MAP_GENERATOR
+	do_init.push_back(LOAD_ASYNC(do_init_clif));
+#endif
+	do_init.push_back(LOAD_ASYNC(do_init_battle));
+	do_init.push_back(LOAD_ASYNC(do_init_atcommand));
+	do_init.push_back(LOAD_ASYNC(do_init_clan));
+	do_init.push_back(LOAD_ASYNC(do_init_channel));
+	do_init.push_back(LOAD_ASYNC(do_init_cashshop));
+	do_init.push_back(LOAD_ASYNC(do_init_party));
+	do_init.push_back(LOAD_ASYNC(do_init_guild));
+	do_init.push_back(LOAD_ASYNC(do_init_storage));
+	do_init.push_back(LOAD_ASYNC(do_init_pc));
+	do_init.push_back(LOAD_ASYNC(do_init_homunculus));
+	do_init.push_back(LOAD_ASYNC(do_init_mercenary));
+	do_init.push_back(LOAD_ASYNC(do_init_elemental));
+	do_init.push_back(LOAD_ASYNC(do_init_battleground));
+	do_init.push_back(LOAD_ASYNC(do_init_duel));
+	do_init.push_back(LOAD_ASYNC(do_init_vending));
+	do_init.push_back(LOAD_ASYNC(do_init_buyingstore));
+	do_init.push_back(LOAD_ASYNC(npc_event_do_oninit));
+	for(size_t i = 0; i < do_init.size() ;++i)
+		do_init[i].wait(); // wait all db finished loading	
+	ShowStatus("Time Elapsed to Read YAML DB Async: %d ms \n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count());
+	SetPriorityClass(GetCurrentProcess(), NORMAL_PRIORITY_CLASS);
+}
+#endif
 
 bool MapServer::initialize( int argc, char *argv[] ){
 #ifdef GCOLLECT
@@ -5240,39 +5274,46 @@ bool MapServer::initialize( int argc, char *argv[] ){
 	
 	map_do_init_msg();
 	do_init_path();
-	do_init_atcommand();
-	do_init_battle();
 	do_init_instance();
 	do_init_chrif();
-	do_init_clan();
+	do_init_script();
+	do_init_itemdb();
+	do_init_skill();
+	do_init_status();
+	do_init_mob();
+	do_init_npc();
+	do_init_quest();
+	do_init_achievement();
+	do_init_unit();
+	do_init_pet();
+#ifdef ENABLE_ASYNC_YAML
+	// parse yaml async by AoShinHo
+	do_init_async();
+#else
+	auto start_time = std::chrono::high_resolution_clock::now();
 #ifndef MAP_GENERATOR
 	do_init_clif();
 #endif
-	do_init_script();
-	do_init_itemdb();
+	do_init_battle();
+	do_init_atcommand();
+	do_init_clan();
 	do_init_channel();
 	do_init_cashshop();
-	do_init_skill();
-	do_init_mob();
 	do_init_pc();
-	do_init_status();
 	do_init_party();
 	do_init_guild();
 	do_init_storage();
-	do_init_pet();
 	do_init_homunculus();
 	do_init_mercenary();
 	do_init_elemental();
-	do_init_quest();
-	do_init_achievement();
 	do_init_battleground();
-	do_init_npc();
-	do_init_unit();
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
+	ShowStatus("Time Elapsed to Read YAML DB: %d ms \n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count());
+#endif
 
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '" CL_WHITE "PK Mode" CL_RESET "'.\n");

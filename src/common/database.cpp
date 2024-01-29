@@ -10,6 +10,10 @@
 #include "showmsg.hpp"
 #include "utilities.hpp"
 
+#ifdef ENABLE_ASYNC_YAML
+#include <future>
+#endif 
+
 using namespace rathena;
 
 bool YamlDatabase::nodeExists( const ryml::NodeRef& node, const std::string& name ){
@@ -76,11 +80,22 @@ bool YamlDatabase::verifyCompatibility( const ryml::Tree& tree ){
 }
 
 bool YamlDatabase::load(){
+#ifdef ENABLE_ASYNC_YAML
+	// load yaml async by AoShinHo
+	std::future<bool> ret = std::async(std::launch::async, [this]() {
+		bool result = this->load(this->getDefaultLocation());
+		this->loadingFinished();
+		return result;
+	});
+
+	return ret.get();
+#else
 	bool ret = this->load( this->getDefaultLocation() );
 
 	this->loadingFinished();
 
 	return ret;
+#endif
 }
 
 bool YamlDatabase::reload(){
@@ -160,6 +175,25 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 		size_t childNodesProgressed = 0;
 #endif
 
+#ifdef ENABLE_ASYNC_YAML
+		// parse yaml async by AoShinHo
+		std::future<void> parseInFuture = std::async(std::launch::async, [this, bodyNode, fileName, childNodesCount]() {
+#ifdef DETAILED_LOADING_OUTPUT
+			size_t childNodesProgressed = 0;
+			ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
+#else
+			ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\r", childNodesCount, fileName);
+#endif
+			uint64 count = 0;
+			for (const ryml::NodeRef& node : bodyNode) {
+				count += this->parseBodyNode(node);
+#ifdef DETAILED_LOADING_OUTPUT
+				ShowStatus("Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName);
+#endif
+			}
+			return ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\n", count, fileName);
+		});
+#else
 		ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
 
 		for( const ryml::NodeRef &node : bodyNode ){
@@ -170,6 +204,7 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 		}
 
 		ShowStatus( "Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\n", count, fileName );
+#endif
 	}
 }
 
