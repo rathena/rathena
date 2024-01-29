@@ -39,6 +39,9 @@ class status_change;
 /// Used with tracking the hitcount of Earthquake for skills that can avoid the first attack
 #define NPC_EARTHQUAKE_FLAG 0x800
 
+/// To control alternative skill scalings
+#define SKILL_ALTDMG_FLAG 0x10
+
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
 /// when determining skill castend function to invoke.

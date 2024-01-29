@@ -3,8 +3,9 @@
 
 #include "loginlog.hpp"
 
+#include <string>
+
 #include <stdlib.h> // exit
-#include <string.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>
@@ -13,14 +14,14 @@
 #include <common/sql.hpp>
 #include <common/strlib.hpp>
 
-// local sql settings
-static char   log_db_hostname[64] = ""; // Doubled to reflect the change on commit #0f2dd7f
-static uint16 log_db_port = 0;
-static char   log_db_username[32] = "";
-static char   log_db_password[32] = "";
-static char   log_db_database[32] = "";
-static char   log_codepage[32] = "";
-static char   log_login_db[256] = "loginlog";
+
+std::string log_db_hostname = "127.0.0.1";
+uint16 log_db_port = 3306;
+std::string log_db_username = "ragnarok";
+std::string log_db_password = "";
+std::string log_db_database = "ragnarok";
+std::string log_login_db = "loginlog";
+std::string log_codepage = "";
 
 static Sql* sql_handle = NULL;
 static bool enabled = false;
@@ -39,7 +40,7 @@ unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes) {
 		return 0;
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `ip` = '%s' AND (`rcode` = '0' OR `rcode` = '1') AND `time` > NOW() - INTERVAL %d MINUTE",
-		log_login_db, ip2str(ip,NULL), minutes) )// how many times failed account? in one ip.
+		log_login_db.c_str(), ip2str(ip,NULL), minutes) )// how many times failed account? in one ip.
 		Sql_ShowDebug(sql_handle);
 
 	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -73,7 +74,7 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message) 
 
 	retcode = Sql_Query(sql_handle,
 		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%s', '%s', '%d', '%s')",
-		log_login_db, ip2str(ip,NULL), esc_username, rcode, esc_message);
+		log_login_db.c_str(), ip2str(ip,NULL), esc_username, rcode, esc_message);
 
 	if( retcode != SQL_SUCCESS )
 		Sql_ShowDebug(sql_handle);
@@ -87,25 +88,25 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message) 
  */
 bool loginlog_config_read(const char* key, const char* value) {
 	if( strcmpi(key, "log_db_ip") == 0 )
-		safestrncpy(log_db_hostname, value, sizeof(log_db_hostname));
+		log_db_hostname = value;
 	else
 	if( strcmpi(key, "log_db_port") == 0 )
 		log_db_port = (uint16)strtoul(value, NULL, 10);
 	else
 	if( strcmpi(key, "log_db_id") == 0 )
-		safestrncpy(log_db_username, value, sizeof(log_db_username));
+		log_db_username = value;
 	else
 	if( strcmpi(key, "log_db_pw") == 0 )
-		safestrncpy(log_db_password, value, sizeof(log_db_password));
+		log_db_password = value;
 	else
 	if( strcmpi(key, "log_db_db") == 0 )
-		safestrncpy(log_db_database, value, sizeof(log_db_database));
+		log_db_database = value;
 	else
 	if( strcmpi(key, "log_codepage") == 0 )
-		safestrncpy(log_codepage, value, sizeof(log_codepage));
+		log_codepage = value;
 	else
 	if( strcmpi(key, "log_login_db") == 0 )
-		safestrncpy(log_login_db, value, sizeof(log_login_db));
+		log_login_db = value;
 	else
 		return false;
 
@@ -123,16 +124,16 @@ bool loginlog_config_read(const char* key, const char* value) {
 bool loginlog_init(void) {
 	sql_handle = Sql_Malloc();
 
-	if( SQL_ERROR == Sql_Connect(sql_handle, log_db_username, log_db_password, log_db_hostname, log_db_port, log_db_database) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, log_db_username.c_str(), log_db_password.c_str(), log_db_hostname.c_str(), log_db_port, log_db_database.c_str()) )
 	{
-        ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			log_db_username, log_db_password, log_db_hostname, log_db_port, log_db_database);
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			log_db_username.c_str(), log_db_hostname.c_str(), log_db_port, log_db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( log_codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, log_codepage) )
+	if( !log_codepage.empty() && SQL_ERROR == Sql_SetEncoding(sql_handle, log_codepage.c_str()) )
 		Sql_ShowDebug(sql_handle);
 
 	enabled = true;

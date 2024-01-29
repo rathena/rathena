@@ -10,6 +10,7 @@
 #include <common/database.hpp>
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
+#include <common/malloc.hpp>
 #include <common/mmo.hpp>
 #include <common/timer.hpp>
 
@@ -2205,7 +2206,8 @@ void script_error(const char* src, const char* file, int start_line, const char*
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
 bool is_number(const char *p);
-struct script_code* parse_script(const char* src,const char* file,int line,int options);
+struct script_code* parse_script_( const char *src, const char *file, int line, int options, const char* src_file, int src_line, const char* src_func );
+#define parse_script( src, file, line, options ) parse_script_( ( src ), ( file ), ( line ), ( options ), ALC_MARK )
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
 bool set_reg_num(struct script_state* st, map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
