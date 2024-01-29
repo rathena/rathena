@@ -359,3 +359,68 @@ Body:
     Drops:
       - Item: Turtle_Hat
         Rate: 1
+  - Id: 1670
+    AegisName: DIMIK_1
+    Name: Dimik
+    BaseExp: 8000
+    JobExp: 3750
+  - Id: 1671
+    AegisName: DIMIK_2
+    Name: Dimik
+    BaseExp: 10000
+    JobExp: 6250
+  - Id: 1672
+    AegisName: DIMIK_3
+    Name: Dimik
+    BaseExp: 7375
+    JobExp: 3500
+  - Id: 1673
+    AegisName: DIMIK_4
+    Name: Dimik
+    BaseExp: 7250
+    JobExp: 5625
+  - Id: 1652
+    AegisName: YGNIZEM
+    Name: Egnigem Cenia
+    BaseExp: 6087
+    JobExp: 4565
+  - Id: 1653
+    AegisName: WHIKEBAIN
+    Name: Wickebine Tres
+    BaseExp: 5255
+    JobExp: 3941
+  - Id: 1654
+    AegisName: ARMAIA
+    Name: Armeyer Dinze
+    BaseExp: 5010
+    JobExp: 3757
+  - Id: 1655
+    AegisName: EREND
+    Name: Errende Ebecee
+    BaseExp: 5626
+    JobExp: 4220
+  - Id: 1656
+    AegisName: KAVAC
+    Name: Kavach Icarus
+    BaseExp: 5112
+    JobExp: 3834
+  - Id: 1657
+    AegisName: RAWREL
+    Name: Laurell Weinder
+    BaseExp: 5775
+    JobExp: 4331
+  - Id: 1755
+    AegisName: SKEGGIOLD_
+    Name: Skeggiold
+    BaseExp: 90000
+    JobExp: 54000
+  - Id: 1753
+    AegisName: FRUS
+    Name: Frus
+    BaseExp: 20620
+    JobExp: 10310
+  - Id: 1752
+    AegisName: SKOGUL
+    Name: Skogul
+    BaseExp: 27620
+    JobExp: 13810

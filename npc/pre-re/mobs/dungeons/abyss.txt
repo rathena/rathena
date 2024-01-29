@@ -53,7 +53,7 @@ abyss_02,0,0	monster	Dragon Egg	1721,10,1800000,600000
 //==================================================
 abyss_03,0,0	monster	Mimic	1191,10,300000
 abyss_03,0,0	monster	Ancient Mimic	1699,10,300000
-abyss_03,0,0	monster	Acidus	1713,60,600000
+abyss_03,0,0	monster	Acidus	1713,60,180000
 abyss_03,0,0	monster	Acidus	1716,10,300000
 abyss_03,0,0	monster	Ferus	1714,10,300000
 abyss_03,0,0	monster	Ferus	1717,10,300000

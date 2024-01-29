@@ -61,16 +61,17 @@ c_tower4,108,78,100,10	monster	Clock	1269,7
 c_tower4,108,58,100,10	monster	Clock	1269,7
 c_tower4,108,38,100,10	monster	Clock	1269,7
 c_tower4,108,18,100,10	monster	Clock	1269,7
-c_tower4,108,198,100,10	monster	Owl Duke	1320,3
-c_tower4,108,178,100,10	monster	Owl Duke	1320,3
-c_tower4,108,158,100,10	monster	Owl Duke	1320,3
-c_tower4,108,138,100,10	monster	Owl Duke	1320,3
-c_tower4,108,118,100,10	monster	Owl Duke	1320,3
-c_tower4,108,98,100,10	monster	Owl Duke	1320,3
-c_tower4,108,78,100,10	monster	Owl Duke	1320,3
-c_tower4,108,58,100,10	monster	Owl Duke	1320,3
-c_tower4,108,38,100,10	monster	Owl Duke	1320,3
-c_tower4,108,18,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,198,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,178,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,158,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,138,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,118,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,98,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,78,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,58,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,38,100,10	monster	Owl Duke	1320,3
+// c_tower4,108,18,100,10	monster	Owl Duke	1320,3
+c_tower4,0,0	monster	Owl Duke	1320,100
 c_tower4,98,180	monster	Rideword	1195,1,300000,150000
 c_tower4,97,180	monster	Rideword	1195,1,240000,150000
 c_tower4,96,180	monster	Rideword	1195,1,350000,150000
