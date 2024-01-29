@@ -1,4 +1,4 @@
-moc_para01,22,31,4	script	TiêÒu Baòch#moc_para01_barter_tieubach	4_TARUTUPI,{
+moc_para01,28,35,4	script	TiêÒu Baòch#moc_para01_barter_tieubach	4_TARUTUPI,{
 	if ((MaxWeight - Weight) < 10000) {
 		mes "Thiìm mang giÌ nãòng quaì, giaÒm nãòng ði rôÌi miÌnh noìi chuyêòn tiêìp.";
 		close;
@@ -7,30 +7,30 @@ moc_para01,22,31,4	script	TiêÒu Baòch#moc_para01_barter_tieubach	4_TARUTUPI,{
 	mes "ChaÌo ðôÌng chiì, muôìn ðôÒi giÌ neÌ?";
 	next;
 	switch( select(
-		"Consumable",
-		"Lower Headgear",
-		"Middle Headgear",
-		"Upper Headgear",
-		"Accessories",
-		"Headgear Exchange"
+		"~ ^0000FFConsumable^000000",
+		"~ ^057F20Headgear Exchange^000000",
+		"~ ^CF0000Lower Headgear^000000",
+		"~ ^9B870CMiddle Headgear^000000",
+		"~ ^0000FFUpper Headgear^000000",
+		"~ ^057F20Accessories^000000"
 	) ) {
 		case 1:
 			callshop "tieubach_consumable";
 			end;
 		case 2:
-			callshop "tieubach_lower_headgear";
+			callshop "tieubach_headgear_exchange";
 			end;
 		case 3:
-			callshop "tieubach_middle_headgear";
+			callshop "tieubach_lower_headgear";
 			end;
 		case 4:
-			callshop "tieubach_upper_headgear";
+			callshop "tieubach_middle_headgear";
 			end;
 		case 5:
-			callshop "tieubach_upper_accessories";
+			callshop "tieubach_upper_headgear";
 			end;
 		case 6:
-			callshop "tieubach_headgear_exchange";
+			callshop "tieubach_upper_accessories";
 			end;
 	}
 }

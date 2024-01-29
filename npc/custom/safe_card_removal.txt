@@ -1,4 +1,4 @@
-moc_para01,52,31,4	script	Richard#Office_Richard	4_M_FAIRYKID2,{
+moc_para01,52,31,4	script	Card Remover#Office_Richard	4_M_FAIRYKID2,{
 	set .zenycost,4000000;    // base cost of the card remover services (in Zeny)
 	set .percardcost,0;  // cost per card of the card remover services (in Zeny)
 	set .faildestroy,0;      // should the card remover have a chance of failure that destroys items? (1=yes, 0=no)
@@ -67,7 +67,7 @@ moc_para01,52,31,4	script	Richard#Office_Richard	4_M_FAIRYKID2,{
 		close;
 	case 2:
 		mes "[ ^0000DERichard^000000 ]";
-		mes "Tôi coì thêÒ giuìp baòn taìch card ^00DF00100%^000000 tiÒ lêò thaÌnh công võìi mıìc phiì ^0000FF"+callfunc("F_InsertComma",.zenycost)+"^000000 zeny vaÌ " + mesitemlink( 6443, false ) + ". (cho môŞi card) tıÌ trang biò.";
+		mes "Tôi coì thêÒ giuìp baòn taìch card (^00DF00100%^000000 tiÒ lêò thaÌnh công) võìi mıìc phiì ^0000FF"+callfunc("F_InsertComma",.zenycost)+"^000000 zeny vaÌ " + mesitemlink( 6443, false ) + ". (cho môŞi card) tıÌ trang biò.";
 		close;
 	case 3:
 		mes "[ ^0000DERichard^000000 ]";
