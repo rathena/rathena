@@ -205,3 +205,157 @@ Body:
     Drops:
       - Item: Tooth_Of_
         Rate: 5500
+  - Id: 1734
+    AegisName: KIEL_
+    Name: Kiel D-01
+    Drops:
+      - Item: Black_Glasses
+        Rate: 200
+  - Id: 1259
+    AegisName: GRYPHON
+    Name: Gryphon
+    Drops:
+      - Item: Filir_Wing
+        Rate: 105
+  - Id: 1832
+    AegisName: IFRIT
+    Name: Ifrit
+    Drops:
+      - Item: Ifrit's_Ear
+        Rate: 500
+      - Item: Essence_Of_Fire
+        Rate: 10000
+  - Id: 1630
+    AegisName: BACSOJIN_
+    Name: White Lady
+    Drops:
+      - Item: Mischievous_Fairy
+        Rate: 200
+      - Item: Ornamental_Hairpin
+        Rate: 10000
+  - Id: 1685
+    AegisName: APOCALIPS_H
+    Name: Vesper
+    Drops:
+      - Item: Robo_Eye
+        Rate: 200
+  - Id: 1688
+    AegisName: LADY_TANEE
+    Name: Lady Tanee
+    Drops:
+      - Item: Spoiled_Banana_Juice
+        Rate: 10000
+  - Id: 1250
+    AegisName: CHEPET
+    Name: Chepet
+    Drops:
+      - Item: Sigrun's_Wing
+        Rate: 20
+  - Id: 1150
+    AegisName: MOONLIGHT
+    Name: Moonlight Flower
+    Drops:
+      - Item: Fox_Symbol
+        Rate: 10000
+  - Id: 1219
+    AegisName: KNIGHT_OF_ABYSS
+    Name: Abysmal Knight
+    Drops:
+      - Item: Helm_Of_Abyss
+        Rate: 3
+  - Id: 1292
+    AegisName: MINI_DEMON
+    Name: Mini Demon
+    Drops:
+      - Item: Gray_Deviruchi_Cap
+        Rate: 3
+  - Id: 1322
+    AegisName: SPRING_RABBIT
+    Name: Spring Rabbit
+    Drops:
+      - Item: Rabbit_Ear_Hat
+        Rate: 1
+  - Id: 1649
+    AegisName: B_MAGALETA
+    Name: High Priest Margaretha
+    Drops:
+      - Item: Dress_Hat
+        Rate: 1000
+  - Id: 1635
+    AegisName: EREMES
+    Name: Eremes Guile
+    Drops:
+      - Item: Hermose_Cap
+        Rate: 25
+  - Id: 1837
+    AegisName: IMP
+    Name: Fire Imp
+    Drops:
+      - Item: Imp_Hat
+        Rate: 10
+  - Id: 1586
+    AegisName: LEAF_CAT
+    Name: Leaf Cat
+    Drops:
+      - Item: Leaf_Cat_Hat
+        Rate: 1
+  - Id: 1093
+    AegisName: ECLIPSE
+    Name: Eclipse
+    Drops:
+      - Item: Lunatic_Hat
+        Rate: 100
+  - Id: 1639
+    AegisName: KATRINN
+    Name: Kathryne Keyron
+    Drops:
+      - Item: Magic_Eyes
+        Rate: 100
+  - Id: 1870
+    AegisName: NECROMANCER
+    Name: Necromancer
+    Drops:
+      - Item: Necromencer's_Hood
+        Rate: 100
+  - Id: 1765
+    AegisName: G_RANDGRIS
+    Name: Valkyrie
+    Drops:
+      - Item: Power_Of_Thor
+        Rate: 100
+  - Id: 1272
+    AegisName: DARK_LORD
+    Name: Dark Lord
+    Drops:
+      - Item: Skull_Cap
+        Rate: 200
+  - Id: 1386
+    AegisName: SLEEPER
+    Name: Sleeper
+    Drops:
+      - Item: Sleepr_Hat
+        Rate: 1
+  - Id: 1418
+    AegisName: DARK_SNAKE_LORD
+    Name: Evil Snake Lord
+    Drops:
+      - Item: Snake_Head
+        Rate: 200
+  - Id: 1737
+    AegisName: ALIZA
+    Name: Aliza
+    Drops:
+      - Item: Tayelin_Doll_Hat
+        Rate: 1
+  - Id: 1057
+    AegisName: YOYO
+    Name: Yoyo
+    Drops:
+      - Item: Yoyo_Hat
+        Rate: 1
+  - Id: 1314
+    AegisName: PERMETER
+    Name: Permeter
+    Drops:
+      - Item: Turtle_Hat
+        Rate: 1
