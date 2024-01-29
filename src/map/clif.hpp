@@ -1015,7 +1015,7 @@ void clif_Auction_message(int fd, unsigned char flag);
 void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, map_session_data *sd);
 
-void clif_bossmapinfo(map_session_data *sd, struct mob_data *md, enum e_bossmap_info flag);
+void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag );
 void clif_cashshop_show(map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION

@@ -403,6 +403,18 @@ struct PACKET_CZ_RESET_SKILL{
 	uint8 unknown;
 } __attribute__((packed));
 
+struct PACKET_ZC_BOSS_INFO{
+	int16 packetType;
+	uint8 type;
+	uint32 x;
+	uint32 y;
+	uint16 minHours;
+	uint16 minMinutes;
+	uint16 maxHours;
+	uint16 maxMinutes;
+	char name[51];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -430,6 +442,7 @@ DEFINE_PACKET_HEADER(ZC_NOTIFY_WEAPONITEMLIST, 0x221)
 DEFINE_PACKET_HEADER(ZC_ACK_WEAPONREFINE, 0x223)
 DEFINE_PACKET_HEADER(CZ_REQ_MAKINGITEM, 0x25b)
 DEFINE_PACKET_HEADER(ZC_PC_CASH_POINT_ITEMLIST, 0x287)
+DEFINE_PACKET_HEADER(ZC_BOSS_INFO, 0x293)
 DEFINE_PACKET_HEADER(ZC_CASH_TIME_COUNTER, 0x298)
 DEFINE_PACKET_HEADER(ZC_CASH_ITEM_DELETE, 0x299)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_BIND_ON_EQUIP, 0x2d3)
