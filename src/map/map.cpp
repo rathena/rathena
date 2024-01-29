@@ -5147,7 +5147,6 @@ static void do_init_async() {
 #define LOAD_ASYNC(f) std::async(std::launch::async, f)
 	std::vector<std::future<void>> do_init;
 	SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
-	auto start_time = std::chrono::high_resolution_clock::now();
 #ifndef MAP_GENERATOR
 	do_init.push_back(LOAD_ASYNC(do_init_clif));
 #endif
@@ -5170,7 +5169,7 @@ static void do_init_async() {
 	do_init.push_back(LOAD_ASYNC(npc_event_do_oninit));
 	for(size_t i = 0; i < do_init.size() ;++i)
 		do_init[i].wait(); // wait all db finished loading	
-	ShowStatus("Time Elapsed to Read YAML DB Async: %d ms \n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count());
+
 	SetPriorityClass(GetCurrentProcess(), NORMAL_PRIORITY_CLASS);
 }
 #endif
@@ -5271,7 +5270,8 @@ bool MapServer::initialize( int argc, char *argv[] ){
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
-	
+
+	auto start_time = std::chrono::high_resolution_clock::now();
 	map_do_init_msg();
 	do_init_path();
 	do_init_instance();
@@ -5290,7 +5290,6 @@ bool MapServer::initialize( int argc, char *argv[] ){
 	// parse yaml async by AoShinHo
 	do_init_async();
 #else
-	auto start_time = std::chrono::high_resolution_clock::now();
 #ifndef MAP_GENERATOR
 	do_init_clif();
 #endif
@@ -5312,9 +5311,8 @@ bool MapServer::initialize( int argc, char *argv[] ){
 	do_init_buyingstore();
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
-	ShowStatus("Time Elapsed to Read YAML DB: %d ms \n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count());
 #endif
-
+	ShowStatus("Time Elapsed to Read YAML DB: %d ms \n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start_time).count());
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '" CL_WHITE "PK Mode" CL_RESET "'.\n");
 

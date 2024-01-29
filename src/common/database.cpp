@@ -180,10 +180,9 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 		std::future<void> parseInFuture = std::async(std::launch::async, [this, bodyNode, fileName, childNodesCount]() {
 #ifdef DETAILED_LOADING_OUTPUT
 			size_t childNodesProgressed = 0;
-			ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
-#else
-			ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\r", childNodesCount, fileName);
 #endif
+			ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
+
 			uint64 count = 0;
 			for (const ryml::NodeRef& node : bodyNode) {
 				count += this->parseBodyNode(node);
