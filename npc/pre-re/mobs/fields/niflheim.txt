@@ -20,8 +20,8 @@
 //==================================================
 nif_fild01,0,0	monster	Disguise	1506,20
 nif_fild01,0,0	monster	Disguise	1506,30,300000,120000
-nif_fild01,227,253,20,20	monster	Dullahan	1504,7,1800000,1200000
-nif_fild01,0,0	monster	Dullahan	1504,13
+// nif_fild01,227,253,20,20	monster	Dullahan	1504,7,1800000,1200000
+nif_fild01,0,0	monster	Dullahan	1504,30
 nif_fild01,0,0	monster	Gibbet	1503,10
 nif_fild01,0,0	monster	Heirozoist	1510,10
 nif_fild01,0,0	monster	Quve	1508,30

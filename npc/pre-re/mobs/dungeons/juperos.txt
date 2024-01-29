@@ -49,9 +49,9 @@ juperos_02,0,0	monster	Apocalypse	1365,70
 // - Juperos Core
 //========================================================================================
 
-jupe_core,0,0	monster	Venatu	1676,25
-jupe_core,0,0	monster	Venatu	1677,25
-jupe_core,0,0	monster	Venatu	1678,25
+// jupe_core,0,0	monster	Venatu	1676,25
+// jupe_core,0,0	monster	Venatu	1677,25
+// jupe_core,0,0	monster	Venatu	1678,25
 jupe_core,0,0	monster	Dimik	1670,40
 jupe_core,0,0	monster	Dimik	1671,40
 jupe_core,0,0	monster	Dimik	1672,40

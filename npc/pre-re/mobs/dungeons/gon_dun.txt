@@ -39,6 +39,7 @@ gon_dun02,0,0	monster	Yellow Plant	1081,10
 //==================================================
 gon_dun03,0,0	monster	White Plant	1082,10
 gon_dun03,0,0	monster	Hermit Plant	1413,20,600000,300000
-gon_dun03,0,0	monster	Evil Nymph	1416,50,600000,300000
+// gon_dun03,0,0	monster	Evil Nymph	1416,50,600000,300000
+gon_dun03,0,0	monster	Evil Nymph	1416,50
 gon_dun03,0,0	monster	Taoist Hermit	1412,30
 gon_dun03,0,0,0,0	boss_monster	Evil Snake Lord	1418,1,5650000,600000,0

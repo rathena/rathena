@@ -111,7 +111,7 @@ yuno_fild06,0,0	monster	Green Plant	1080,10
 yuno_fild07,0,0	monster	Goat	1372,10
 yuno_fild07,0,0	monster	Geographer	1368,20
 yuno_fild07,0,0	monster	Driller	1380,10
-yuno_fild07,0,0	monster	Harpy	1376,40,600000,300000
+yuno_fild07,0,0	monster	Harpy	1376,50
 yuno_fild07,0,0	monster	Red Plant	1078,10,180000,90000
 yuno_fild07,0,0	monster	Green Plant	1080,10,180000,90000
 yuno_fild07,0,0	monster	Yellow Plant	1081,10,180000,90000

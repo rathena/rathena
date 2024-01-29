@@ -35,6 +35,7 @@ ein_dun02,75,151,60,133	monster	Obsidian	1615,30,300000
 ein_dun02,230,155,63,140	monster	Mineral	1614,35,300000
 ein_dun02,0,0	monster	Teddy Bear	1622,10
 ein_dun02,155,230,140,55	monster	Teddy Bear	1622,20,480000
-ein_dun02,0,0	monster	Old Stove	1617,10
-ein_dun02,154,80,134,55	monster	Old Stove	1617,20,480000
+// ein_dun02,0,0	monster	Old Stove	1617,10
+ein_dun02,0,0	monster	Old Stove	1617,50
+// ein_dun02,154,80,134,55	monster	Old Stove	1617,20,480000
 ein_dun02,0,0,0,0	boss_monster	RSX-0806	1623,1,7500000,600000,0
