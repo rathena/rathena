@@ -260,22 +260,34 @@ Body:
           - Index: 0
             Item: 3te_Coin
             Amount: 50
-  - Name: tieubach_middle_headgear
-    Items:
-      - Index: 1
+      - Index: 11
         Item: Improved_Assassin_Mask
         RequiredItems:
           - Index: 0
             Item: 3te_Coin
             Amount: 50
-      - Index: 2
+      - Index: 12
+        Item: Scissorhand_Model
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+  - Name: tieubach_middle_headgear
+    Items:
+      - Index: 1
         Item: Hawk_Eyes02
         RequiredItems:
           - Index: 0
             Item: 3te_Coin
             Amount: 50
-      - Index: 3
+      - Index: 2
         Item: Blush_Of_Groom
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 3
+        Item: Pecopeco_Wing_Ears
         RequiredItems:
           - Index: 0
             Item: 3te_Coin
@@ -332,3 +344,161 @@ Body:
           - Index: 0
             Item: 3te_Coin
             Amount: 50
+  - Name: tieubach_headgear_exchange
+    Items:
+      - Index: 1
+        Item: Alice_Doll
+        RequiredItems:
+          - Index: 0
+            Item: Magestic_Goat
+            Amount: 1
+          - Index: 1
+            Item: Feather_Beret
+            Amount: 1
+          - Index: 2
+            Item: Sway_Apron
+            Amount: 3
+          - Index: 4
+            Item: Alice's_Apron
+            Amount: 500
+      - Index: 2
+        Item: Chick_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Picky_Card
+            Amount: 1
+          - Index: 1
+            Item: Picky__Card
+            Amount: 1
+          - Index: 2
+            Item: Magnolia_Card
+            Amount: 1
+          - Index: 4
+            Item: Feather_Of_Birds
+            Amount: 300
+      - Index: 3
+        Item: Darkness_Helm
+        RequiredItems:
+          - Index: 0
+            Item: Helm_
+            Amount: 1
+          - Index: 1
+            Item: Bloody_Edge
+            Amount: 1
+          - Index: 2
+            Item: Valhalla_Flower
+            Amount: 25
+      - Index: 4
+        Item: Dark_Snake_Lord_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Ph.D_Hat
+            Amount: 1
+          - Index: 1
+            Item: Taegeuk_Plate
+            Amount: 25
+      - Index: 5
+        Item: Hunting_Cap
+        RequiredItems:
+          - Index: 0
+            Item: Boy's_Cap
+            Amount: 1
+          - Index: 1
+            Item: Leopard_Skin
+            Amount: 200
+          - Index: 2
+            Item: Bear's_Foot
+            Amount: 200
+      - Index: 6
+        Item: Mask_Of_Ifrit
+        RequiredItems:
+          - Index: 0
+            Item: Essence_Of_Fire
+            Amount: 10
+      - Index: 7
+        Item: Kettle_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Headlamp
+            Amount: 300
+      - Index: 8
+        Item: Drooping_White_Kitty
+        RequiredItems:
+          - Index: 0
+            Item: Ornamental_Hairpin
+            Amount: 25
+      - Index: 9
+        Item: Lady_Tanee_Doll
+        RequiredItems:
+          - Index: 0
+            Item: Spoiled_Banana_Juice
+            Amount: 25
+      - Index: 10
+        Item: Moonlight_Flower_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Fox_Symbol
+            Amount: 25
+      - Index: 11
+        Item: Rideword_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Rideword_Card
+            Amount: 1
+          - Index: 1
+            Item: Deathword_Card
+            Amount: 1
+          - Index: 2
+            Item: Bookclip_In_Memory
+            Amount: 50
+          - Index: 3
+            Item: Bloody_Page
+            Amount: 100
+          - Index: 4
+            Item: Worn_Out_Page
+            Amount: 600
+      - Index: 12
+        Item: Sahkkat
+        RequiredItems:
+          - Index: 0
+            Item: Sahkkat
+            Amount: 3
+          - Index: 1
+            Item: Skull
+            Amount: 100
+      - Index: 13
+        Item: Wit_Pumpkin_Hat
+        RequiredItems:
+          - Index: 0
+            Item: Pumpkin_Bucket
+            Amount: 200
+          - Index: 1
+            Item: Star_Sparkling
+            Amount: 10
+          - Index: 2
+            Item: Loki's_Whispers
+            Amount: 1
+          - Index: 3
+            Item: Hanging_Doll
+            Amount: 100
+          - Index: 4
+            Item: Dullahan's_Helm
+            Amount: 100
+          # - Index: 5
+          #   Item: Distorted_Portrait
+          #   Amount: 50
+          # - Index: 6
+          #   Item: Needle_Pouch
+          #   Amount: 100
+      - Index: 14
+        Item: Mercury_Helm
+        RequiredItems:
+          - Index: 0
+            Item: Gold
+            Amount: 3
+          - Index: 1
+            Item: Bone_Helm
+            Amount: 1
+          - Index: 2
+            Item: Cursed_Lucky_Brooch
+            Amount: 5

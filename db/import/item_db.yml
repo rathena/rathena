@@ -121,6 +121,20 @@ Body:
     Script: |
       bonus2 bHPRegenRate,1,10000;
       bonus bMaxHP,100;
+  - Id: 5611
+    AegisName: Turtle_Hat
+    Name: Turtle Hat
+    Type: Armor
+    Weight: 300
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    Refineable: true
+    View: 585
+    Script: |
+      bonus bAgi,1;
+      bonus3 bAutoSpellWhenHit,"AL_DECAGI",3,5;
   - Id: 6443
     AegisName: Sillit_Pong_Bottle
     Name: Sillit Pong Bottle
@@ -226,6 +240,23 @@ Body:
       bonus bMaxHPrate,1;
       bonus2 bAddMonsterDropItem,517,500;
       bonus2 bAddItemHealRate,517,25;
+  - Id: 18642
+    AegisName: Scissorhand_Model
+    Name: Scissorhand Model
+    Type: Armor
+    Buy: 20
+    Weight: 200
+    Jobs:
+      All: true
+      Novice: false
+      SuperNovice: false
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 20
+    View: 795
+    Script: |
+      bonus bAgi,1;
   - Id: 18666
     AegisName: CD_In_Mouth
     Name: CD In Mouth

@@ -11,7 +11,8 @@ moc_para01,22,31,4	script	TiêÒu Baòch#moc_para01_barter_tieubach	4_TARUTUPI,{
 		"Lower Headgear",
 		"Middle Headgear",
 		"Upper Headgear",
-		"Accessories"
+		"Accessories",
+		"Headgear Exchange"
 	) ) {
 		case 1:
 			callshop "tieubach_consumable";
@@ -27,6 +28,9 @@ moc_para01,22,31,4	script	TiêÒu Baòch#moc_para01_barter_tieubach	4_TARUTUPI,{
 			end;
 		case 5:
 			callshop "tieubach_upper_accessories";
+			end;
+		case 6:
+			callshop "tieubach_headgear_exchange";
 			end;
 	}
 }
