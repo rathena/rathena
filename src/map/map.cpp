@@ -5147,6 +5147,9 @@ static void do_init_async() {
 #define LOAD_ASYNC(f) std::async(std::launch::async, f)
 	std::vector<std::future<void>> do_init;
 	SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
+	do_init.push_back(LOAD_ASYNC(do_init_pet));
+	do_init.push_back(LOAD_ASYNC(do_init_instance));
+	do_init.push_back(LOAD_ASYNC(do_init_status));
 #ifndef MAP_GENERATOR
 	do_init.push_back(LOAD_ASYNC(do_init_clif));
 #endif
@@ -5271,21 +5274,18 @@ bool MapServer::initialize( int argc, char *argv[] ){
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
 
-	auto start_time = std::chrono::high_resolution_clock::now();
 	map_do_init_msg();
 	do_init_path();
-	do_init_instance();
+	auto start_time = std::chrono::high_resolution_clock::now();
 	do_init_chrif();
 	do_init_script();
 	do_init_itemdb();
 	do_init_skill();
-	do_init_status();
 	do_init_mob();
 	do_init_npc();
 	do_init_quest();
 	do_init_achievement();
 	do_init_unit();
-	do_init_pet();
 #ifdef ENABLE_ASYNC_YAML
 	// parse yaml async by AoShinHo
 	do_init_async();
@@ -5293,6 +5293,9 @@ bool MapServer::initialize( int argc, char *argv[] ){
 #ifndef MAP_GENERATOR
 	do_init_clif();
 #endif
+	do_init_instance();
+	do_init_status();
+	do_init_pet();
 	do_init_battle();
 	do_init_atcommand();
 	do_init_clan();

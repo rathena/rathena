@@ -82,13 +82,12 @@ bool YamlDatabase::verifyCompatibility( const ryml::Tree& tree ){
 bool YamlDatabase::load(){
 #ifdef ENABLE_ASYNC_YAML
 	// load yaml async by AoShinHo
-	std::future<bool> ret = std::async(std::launch::async, [this]() {
-		bool result = this->load(this->getDefaultLocation());
+	std::future<void> ret = std::async(std::launch::async, [this]() {
+		this->load(this->getDefaultLocation());
 		this->loadingFinished();
-		return result;
 	});
 
-	return ret.get();
+	return true;
 #else
 	bool ret = this->load( this->getDefaultLocation() );
 
@@ -180,9 +179,8 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 		std::future<void> parseInFuture = std::async(std::launch::async, [this, bodyNode, fileName, childNodesCount]() {
 #ifdef DETAILED_LOADING_OUTPUT
 			size_t childNodesProgressed = 0;
-#endif
 			ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
-
+#endif
 			uint64 count = 0;
 			for (const ryml::NodeRef& node : bodyNode) {
 				count += this->parseBodyNode(node);

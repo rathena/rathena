@@ -876,6 +876,10 @@ void ShowWarning(const char *string, ...) {
 }
 void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 {
+#ifdef ENABLE_ASYNC_YAML
+	// ShowStatus Lock while yaml async by AoShinHo
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	StringBuf buf;
 	va_list ap;
 	StringBuf_Init(&buf);
