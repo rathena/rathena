@@ -826,7 +826,6 @@ std::mutex MutexDoor;
 #endif
 void ShowStatus(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
@@ -836,7 +835,6 @@ void ShowStatus(const char *string, ...) {
 }
 void ShowSQL(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
@@ -846,7 +844,6 @@ void ShowSQL(const char *string, ...) {
 }
 void ShowInfo(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
@@ -856,7 +853,6 @@ void ShowInfo(const char *string, ...) {
 }
 void ShowNotice(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
@@ -866,7 +862,6 @@ void ShowNotice(const char *string, ...) {
 }
 void ShowWarning(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
@@ -877,7 +872,6 @@ void ShowWarning(const char *string, ...) {
 void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	StringBuf buf;
@@ -892,7 +886,6 @@ void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 }
 void ShowDebug(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
@@ -902,7 +895,6 @@ void ShowDebug(const char *string, ...) {
 }
 void ShowError(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
@@ -912,7 +904,6 @@ void ShowError(const char *string, ...) {
 }
 void ShowFatalError(const char *string, ...) {
 #ifdef ENABLE_ASYNC_YAML
-	// ShowStatus Lock while yaml async by AoShinHo
 	std::lock_guard<std::mutex> lock(MutexDoor);
 #endif
 	va_list ap;
