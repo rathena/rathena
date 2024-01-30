@@ -5145,6 +5145,7 @@ void MapServer::handle_shutdown(){
 // parse yaml async by AoShinHo
 static void do_init_async() {
 #define LOAD_ASYNC(f) std::async(std::launch::async, f)
+#define ASYNC_WAIT(f) for(size_t i = 0; i < f.size(); ++i) f[i].wait(); 
 	std::vector<std::future<void>> do_init;
 	SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
 	do_init.push_back(LOAD_ASYNC(do_init_pet));
@@ -5155,24 +5156,25 @@ static void do_init_async() {
 #endif
 	do_init.push_back(LOAD_ASYNC(do_init_battle));
 	do_init.push_back(LOAD_ASYNC(do_init_atcommand));
+	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_clan));
 	do_init.push_back(LOAD_ASYNC(do_init_channel));
 	do_init.push_back(LOAD_ASYNC(do_init_cashshop));
 	do_init.push_back(LOAD_ASYNC(do_init_party));
 	do_init.push_back(LOAD_ASYNC(do_init_guild));
+	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_storage));
 	do_init.push_back(LOAD_ASYNC(do_init_pc));
 	do_init.push_back(LOAD_ASYNC(do_init_homunculus));
 	do_init.push_back(LOAD_ASYNC(do_init_mercenary));
 	do_init.push_back(LOAD_ASYNC(do_init_elemental));
+	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_battleground));
 	do_init.push_back(LOAD_ASYNC(do_init_duel));
 	do_init.push_back(LOAD_ASYNC(do_init_vending));
 	do_init.push_back(LOAD_ASYNC(do_init_buyingstore));
 	do_init.push_back(LOAD_ASYNC(npc_event_do_oninit));
-	for(size_t i = 0; i < do_init.size() ;++i)
-		do_init[i].wait(); // wait all db finished loading	
-
+	ASYNC_WAIT(do_init);
 	SetPriorityClass(GetCurrentProcess(), NORMAL_PRIORITY_CLASS);
 }
 #endif
