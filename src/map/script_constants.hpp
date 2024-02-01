@@ -9622,6 +9622,7 @@
 	export_constant(HAT_EF_AUTUMN_FULL_MOON);
 	export_constant(HAT_EF_NIFLHEIM_NIGHT_SKY);
 	export_constant(HAT_EF_C_ROS2023_CAPE_1);
+	export_constant(HAT_EF_BLACK_THUNDER_);
 	export_constant(HAT_EF_C_ROS2023_CAPE_2);
 	export_constant(HAT_EF_C_15TH_NOV_HELMET);
 	export_constant(HAT_EF_COSMIC_CONNECTION);
