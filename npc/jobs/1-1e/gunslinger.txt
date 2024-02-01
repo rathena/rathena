@@ -183,10 +183,15 @@ que_ng,152,167,3	script	Master Miller	901,{
 			callfunc "Job_Change",Job_Gunslinger;
 			set GUNS_Q,6;
 			completequest 6024;
-			if (rand(1,2) == 1) {
-				getitem 13100,1; // Six_Shooter
+			if (checkre(0)) {
+				getitem 13180,1;		// Novice_Rifle
+				getitem 12149,2;		// Bullet_Case
+				getitem 12151,1;		// Bullet_Case_Silver
 			} else {
-				getitem 13150,1; // Branch
+				if (rand(2))
+					getitem 13100,1;	// Six_Shooter
+				else
+					getitem 13150,1;	// Branch
 			}
 			close;
 		}
@@ -334,7 +339,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		mes "How can time pass so quickly?";
 		next;
 		mes "[Wise Bull Horn]";
-		mes "Ah... I reallly appreciate";
+		mes "Ah... I really appreciate";
 		mes "Selena and Black Fox for all";
 		mes "of their help in recruiting";
 		mes "young Gunslingers. I'm very";
@@ -378,7 +383,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		mes "[Wise Bull Horn]";
 		mes "Now, please take this voucher";
 		mes "to Miller, the Black Fox, with";
-		mes "my whole hearted approval.";
+		mes "my wholehearted approval.";
 		mes "I hope that you will use your";
 		mes "gun to uphold justice as a";
 		mes "noble warrior of the earth.";
@@ -394,7 +399,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		mes "[Wise Bull Horn]";
 		mes "Please take this voucher";
 		mes "to Miller, the Black Fox, with";
-		mes "my whole hearted approval.";
+		mes "my wholehearted approval.";
 		mes "I hope that you will use your";
 		mes "gun to uphold justice as a";
 		mes "noble warrior of the earth.";

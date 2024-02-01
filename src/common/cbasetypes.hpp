@@ -181,17 +181,6 @@ typedef unsigned long int   ppuint32;
 #include <stddef.h> // size_t
 //#include <stdbool.h> //boolean
 
-#if defined(WIN32) && !defined(MINGW) // does not have a signed size_t
-//////////////////////////////
-#if defined(_WIN64)	// naive 64bit windows platform
-typedef __int64			ssize_t;
-#else
-typedef int				ssize_t;
-#endif
-//////////////////////////////
-#endif
-//////////////////////////////
-
 
 //////////////////////////////////////////////////////////////////////////
 // pointer sized integers
@@ -243,10 +232,6 @@ typedef uintptr_t uintptr;
 #define strncmpi			strncasecmp
 #define strnicmp			strncasecmp
 #endif
-#if defined(_MSC_VER) && _MSC_VER > 1200
-#define strtoull			_strtoui64
-#define strtoll				_strtoi64
-#endif
 
 // keyword replacement
 #ifdef _MSC_VER
@@ -280,18 +265,6 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // macro tools
-
-#ifdef SWAP // just to be sure
-#undef SWAP
-#endif
-// hmm only ints?
-//#define SWAP(a,b) { int temp=a; a=b; b=temp;}
-// if using macros then something that is type independent
-//#define SWAP(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
-// Avoid "value computed is not used" warning and generates the same assembly code
-#define SWAP(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
-#define swap_ptrcast(c,a,b) if ((a) != (b)) ((a) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))), (b) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))), (a) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))) )
-#define swap_ptr(a,b) swap_ptrcast(void*,a,b)
 
 //////////////////////////////////////////////////////////////////////////
 // should not happen

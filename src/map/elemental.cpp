@@ -4,19 +4,18 @@
 #include "elemental.hpp"
 
 #include <cstring>
-#include <ctgmath> //floor
-#include <math.h>
+#include <cmath>
 #include <stdlib.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utils.hpp>
 
 #include "battle.hpp"
 #include "clif.hpp"
@@ -284,7 +283,7 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 		clif_spawn(&ed->bl);
 		clif_elemental_info(sd);
 		clif_elemental_updatestatus(sd,SP_HP);
-		clif_hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.max_hp);
+		clif_hpmeter_single( *sd, ed->bl.id, ed->battle_status.hp, ed->battle_status.max_hp );
 		clif_elemental_updatestatus(sd,SP_SP);
 	}
 
@@ -515,23 +514,16 @@ static int elemental_ai_sub_timer_activesearch(block_list *bl, va_list ap) {
 	if( battle_check_target(&ed->bl,bl,BCT_ENEMY) <= 0 )
 		return 0;
 
-	int dist;
-
-	switch( bl->type ) {
-		case BL_PC:
-			if( !map_flag_vs(ed->bl.m) )
-				return 0;
-		default:
-			dist = distance_bl(&ed->bl, bl);
-			if( ((*target) == NULL || !check_distance_bl(&ed->bl, *target, dist)) && battle_check_range(&ed->bl,bl,ed->db->range2) ) { //Pick closest target?
-				(*target) = bl;
-				ed->target_id = bl->id;
-				ed->min_chase = dist + ed->db->range3;
-				if( ed->min_chase > AREA_SIZE )
-					ed->min_chase = AREA_SIZE;
-				return 1;
-			}
-			break;
+	if (bl->type == BL_PC && !map_flag_vs(ed->bl.m))
+		return 0;
+	int dist = distance_bl(&ed->bl, bl);
+	if( ((*target) == nullptr || !check_distance_bl(&ed->bl, *target, dist)) && battle_check_range(&ed->bl,bl,ed->db->range2) ) { //Pick closest target?
+		(*target) = bl;
+		ed->target_id = bl->id;
+		ed->min_chase = dist + ed->db->range3;
+		if( ed->min_chase > AREA_SIZE )
+			ed->min_chase = AREA_SIZE;
+		return 1;
 	}
 	return 0;
 }
@@ -583,7 +575,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 
 	int master_dist, view_range;
 
-	if( ed->sc.count && ed->sc.data[SC_BLIND] )
+	if( ed->sc.count && ed->sc.getSCE(SC_BLIND) )
 		view_range = 3;
 	else
 		view_range = ed->db->range2;
@@ -623,7 +615,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 			return 1;
 		}
 
-		if( battle_check_range(&ed->bl,target,view_range) && rnd()%100 < 2 ) { // 2% chance to cast attack skill.
+		if( battle_check_range(&ed->bl,target,view_range) && rnd_chance(2, 100) ) { // 2% chance to cast attack skill.
 			if(	elemental_action(ed,target,tick) )
 				return 1;
 		}

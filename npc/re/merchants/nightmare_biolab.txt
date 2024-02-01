@@ -72,17 +72,6 @@ function	script	F_Pieces_Of_Sentiment	{	// 22687
 	return;
 }
 
-function	script	F_Cursed_Crystal	{	// 23080
-	// custom rates
-	.@r = rand(500);
-	if (.@r < 10)		getitem 23016,100;// Cursed_Fragment
-	else if (.@r < 352)	getitem 23016,200;// Cursed_Fragment
-	else if (.@r < 469)	getitem 23016,300;// Cursed_Fragment
-	else if (.@r < 498)	getitem 23016,400;// Cursed_Fragment
-	else				getitem 23016,500;// Cursed_Fragment
-	return;
-}
-
 function	script	F_Cursed_Fragment	{	// 23016
 	.@r = rand(1,12);
 	if (.@r == 1) {
@@ -1773,7 +1762,7 @@ OnTimer1000:
 		.@talker_name$ = "#lhz_dun_talk_A18";
 		switch (rand(4)) {
 			case 0:  .@msg$ = "Nobody around... What is..."; break;
-			case 1:  .@msg$ = "My... survival... and escape... analyzis results..."; break;
+			case 1:  .@msg$ = "My... survival... and escape... analysis results..."; break;
 			case 2:	 .@msg$ = "Where... what... No, no... Never..."; break;
 			default: .@msg$ = "I wanna get out of here as soon as possible..."; break;
 		}

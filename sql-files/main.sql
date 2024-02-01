@@ -259,6 +259,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `last_map` varchar(11) NOT NULL default '',
   `last_x` smallint(4) unsigned NOT NULL default '53',
   `last_y` smallint(4) unsigned NOT NULL default '111',
+  `last_instanceid` int(11) unsigned NOT NULL default '0',
   `save_map` varchar(11) NOT NULL default '',
   `save_x` smallint(4) unsigned NOT NULL default '53',
   `save_y` smallint(4) unsigned NOT NULL default '111',
@@ -282,6 +283,8 @@ CREATE TABLE IF NOT EXISTS `char` (
   `title_id` INT(11) unsigned NOT NULL default '0',
   `show_equip` tinyint(3) unsigned NOT NULL default '0',
   `inventory_slots` smallint(6) NOT NULL default '100',
+  `body_direction` tinyint(1) unsigned NOT NULL default '0',
+  `disable_call` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -969,6 +972,27 @@ CREATE TABLE IF NOT EXISTS `party` (
   `leader_id` int(11) unsigned NOT NULL default '0',
   `leader_char` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`party_id`)
+) ENGINE=MyISAM;
+
+--
+-- Table structure for table `party_bookings`
+--
+
+CREATE TABLE IF NOT EXISTS `party_bookings` (
+  `world_name` varchar(32) NOT NULL,
+  `account_id` int(11) unsigned NOT NULL,
+  `char_id` int(11) unsigned NOT NULL,
+  `char_name` varchar(23) NOT NULL,
+  `purpose` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `assist` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `damagedealer` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `healer` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `tanker` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `minimum_level` smallint(5) unsigned NOT NULL,
+  `maximum_level` smallint(5) unsigned NOT NULL,
+  `comment` varchar(255) NOT NULL DEFAULT '',
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`world_name`, `account_id`, `char_id`)
 ) ENGINE=MyISAM;
 
 --

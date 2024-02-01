@@ -234,14 +234,11 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 	short size_hash = size2hash( size );
 	struct unit_head *head;
 
-	if (((long) size) < 0) {
-		ShowError("_mmalloc: %" PRIuPTR "\n", size);
-		return NULL;
+	if( static_cast<long>( size ) < 0 || size == 0 ){
+		ShowError( "_mmalloc: Invalid allocation size %" PRIuPTR " bytes at %s:%d\n", size, file, line );
+		return nullptr;
 	}
-	
-	if(size == 0) {
-		return NULL;
-	}
+
 	memmgr_usage_bytes += size;
 
 	/* To ensure the area that exceeds the length of the block, using malloc () to */

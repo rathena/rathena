@@ -2922,7 +2922,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 				mes "5 Live Coals^000000";
 				next;
 				mes "[Aumgarl]";
-				mes "It's quite alot, huh?";
+				mes "It's quite a lot, huh?";
 				mes "These are necessary supplies.";
 				mes "We need them to repair the sword.";
 				mes "I'll go find some other materials.";

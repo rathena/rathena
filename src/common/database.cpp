@@ -106,7 +106,17 @@ bool YamlDatabase::load(const std::string& path) {
 	fclose(f);
 
 	parser = {};
-	ryml::Tree tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
+	ryml::Tree tree;
+
+	try{
+		tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
+	}catch( const std::runtime_error& e ){
+		ShowError( "Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str() );
+		ShowError( "There is likely a syntax error in the file.\n" );
+		ShowError( "Error message: %s\n", e.what() );
+		aFree(buf);
+		return false;
+	}
 
 	// Required here already for header error reporting
 	this->currentFile = path;
@@ -145,13 +155,18 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 	if( this->nodeExists( tree.rootref(), "Body" ) ){
 		const ryml::NodeRef& bodyNode = tree["Body"];
 		size_t childNodesCount = bodyNode.num_children();
-		size_t childNodesProgressed = 0;
 		const char* fileName = this->currentFile.c_str();
+#ifdef DEBUG
+		size_t childNodesProgressed = 0;
+#endif
+
+		ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
 
 		for( const ryml::NodeRef &node : bodyNode ){
 			count += this->parseBodyNode( node );
-
+#ifdef DETAILED_LOADING_OUTPUT
 			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
+#endif
 		}
 
 		ShowStatus( "Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\n", count, fileName );
@@ -181,6 +196,12 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 
 #ifdef RENEWAL
 					std::string compiledMode = "Renewal";
+
+					// RENEWAL mode with RENEWAL_ASPD off, load pre-re ASPD
+#ifndef RENEWAL_ASPD
+					if (importFile.find("job_aspd.yml") != std::string::npos)
+						compiledMode = "Prerenewal";
+#endif
 #else
 					std::string compiledMode = "Prerenewal";
 #endif
@@ -189,7 +210,16 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 						// Skip this import
 						continue;
 					}
-				}				
+				}
+
+				if (this->nodeExists(node, "Generator")) {
+					bool isGenerator;
+					if (!this->asBool(node, "Generator", isGenerator)) {
+						continue;
+					}
+					if (!(shouldLoadGenerator && isGenerator))
+						continue; // skip import
+				}
 
 				this->load( importFile );
 			}
@@ -347,6 +377,10 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef& node, const char* fmt, .
 
 std::string YamlDatabase::getCurrentFile(){
 	return this->currentFile;
+}
+
+void YamlDatabase::setGenerator(bool shouldLoad) {
+	shouldLoadGenerator = shouldLoad;
 }
 
 void on_yaml_error( const char* msg, size_t len, ryml::Location loc, void *user_data ){

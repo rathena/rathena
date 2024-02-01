@@ -5,6 +5,8 @@
 
 #include <math.h>
 
+using namespace rathena::tool_csv2yaml;
+
 // Skill database data to memory
 static void skill_txt_data(const std::string& modePath, const std::string& fixedPath) {
 	skill_require.clear();
@@ -52,6 +54,14 @@ static void item_txt_data(const std::string& modePath, const std::string& fixedP
 		sv_readdb(fixedPath.c_str(), "item_nouse.txt", ',', 3, 3, -1, &itemdb_read_nouse, false);
 	if (fileExists(modePath + "/item_trade.txt"))
 		sv_readdb(modePath.c_str(), "item_trade.txt", ',', 3, 3, -1, &itemdb_read_itemtrade, false);
+}
+
+// Homunculus database data to memory
+static void homunculus_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	hom_skill_tree.clear();
+
+	if (fileExists(modePath + "/homun_skill_tree.txt"))
+		sv_readdb(modePath.c_str(), "homun_skill_tree.txt", ',', 15, 15, -1, read_homunculus_skilldb, false);
 }
 
 // Mob database data to memory
@@ -202,7 +212,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 	return true;
 }
 
-int do_init( int argc, char** argv ){
+bool Csv2YamlTool::initialize( int argc, char* argv[] ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
@@ -230,7 +240,7 @@ int do_init( int argc, char** argv ){
 	// Load constants
 	#define export_constant_npc(a) export_constant(a)
 	init_random_option_constants();
-	#include "../map/script_constants.hpp"
+	#include <map/script_constants.hpp>
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -241,91 +251,91 @@ int do_init( int argc, char** argv ){
 	if( !process( "GUILD_SKILL_TREE_DB", 1, root_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 2 + MAX_GUILD_SKILL_REQUIRE * 2, 2 + MAX_GUILD_SKILL_REQUIRE * 2, -1, &guild_read_guildskill_tree_db, false );
 	} ) ){
-		return 0;
+		return false;
 	}
 
 	if( !process( "PET_DB", 1, root_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
-		return 0;
+		return false;
 	}
 
 	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("ABRA_DB", 1, root_paths, "abra_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_abradb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("READING_SPELLBOOK_DB", 1, root_paths, "spellbook_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_spellbookdb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_AVAIL_DB", 1, root_paths, "mob_avail", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 12, -1, &mob_readdb_mobavail, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	skill_txt_data( path_db_mode, path_db );
 	if (!process("SKILL_DB", 3, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
-		return 0;
+		return false;
 	}
 
 	skill_txt_data( path_db_import, path_db_import );
 	if (!process("SKILL_DB", 3, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
-		return 0;
+		return false;
 	}
 
 	if (!process("QUEST_DB", 3, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3 + MAX_QUEST_OBJECTIVES * 2 + MAX_QUEST_DROPS * 3, 100, -1, &quest_read_db, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	item_txt_data(path_db_mode, path_db);
-	if (!process("ITEM_DB", 2, { path_db_mode }, "item_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("ITEM_DB", 3, { path_db_mode }, "item_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_db((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	item_txt_data(path_db_import, path_db_import);
-	if (!process("ITEM_DB", 2, { path_db_import }, "item_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("ITEM_DB", 3, { path_db_import }, "item_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_db((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	rand_opt_db.clear();
 	if (!process("RANDOM_OPTION_DB", 1, root_paths, "item_randomopt_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_randomopt((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	rand_opt_group.clear();
 	if (!process("RANDOM_OPTION_GROUP", 1, root_paths, "item_randomopt_group", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5, 2 + 5 * MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, false) && itemdb_randomopt_group_yaml();
 	})) {
-		return 0;
+		return false;
 	}
 
 #ifdef RENEWAL
@@ -333,14 +343,14 @@ int do_init( int argc, char** argv ){
 	if (!process("PENALTY_DB", 1, { path_db_mode }, "level_penalty", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4, -1, &pc_readdb_levelpenalty, false) && pc_levelpenalty_yaml();
 	})) {
-		return 0;
+		return false;
 	}
 
 	memset( level_penalty, 0, sizeof( level_penalty ) );
 	if (!process("PENALTY_DB", 1, { path_db_import }, "level_penalty", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4, -1, &pc_readdb_levelpenalty, false) && pc_levelpenalty_yaml();
 	})) {
-		return 0;
+		return false;
 	}
 #endif
 
@@ -348,132 +358,132 @@ int do_init( int argc, char** argv ){
 	if (!process("MOB_DB", 3, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	mob_txt_data(path_db_import, path_db_import);
 	if (!process("MOB_DB", 3, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_CHAT_DB", 1, root_paths, "mob_chat_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), '#', 3, 3, -1, &mob_parse_row_chatdb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("HOMUN_EXP_DB", 1, { path_db_mode }, "exp_homun", [](const std::string &path, const std::string &name_ext) -> bool {
 		return read_homunculus_expdb((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("HOMUN_EXP_DB", 1, { path_db_import }, "exp_homun", [](const std::string &path, const std::string &name_ext) -> bool {
 		return read_homunculus_expdb((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	branch_txt_data(path_db_mode, path_db);
 	if (!process("MOB_SUMMONABLE_DB", 1, { path_db_mode }, "mob_branch", [](const std::string &path, const std::string &name_ext) -> bool {
 		return mob_readdb_group_yaml();
 	}, "mob_summon")) {
-		return 0;
+		return false;
 	}
 
 	branch_txt_data(path_db_import, path_db_import);
 	if (!process("MOB_SUMMONABLE_DB", 1, { path_db_import }, "mob_branch", [](const std::string &path, const std::string &name_ext) -> bool {
 		return mob_readdb_group_yaml();
 	}, "mob_summon")) {
-		return 0;
+		return false;
 	}
 
 	if (!process("CREATE_ARROW_DB", 1, root_paths, "create_arrow_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1+2, 1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, &skill_parse_row_createarrowdb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("STATPOINT_DB", 1, { path_db_mode }, "statpoint", [](const std::string &path, const std::string &name_ext) -> bool {
 		return pc_read_statsdb((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("STATPOINT_DB", 1, { path_db_import }, "statpoint", [](const std::string &path, const std::string &name_ext) -> bool {
 		return pc_read_statsdb((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("CASTLE_DB", 1, root_paths, "castle_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4, -1, &guild_read_castledb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("GUILD_EXP_DB", 1, { path_db_mode }, "exp_guild", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, MAX_GUILDLEVEL, &exp_guild_parse_row, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("GUILD_EXP_DB", 1, { path_db_import }, "exp_guild", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, MAX_GUILDLEVEL, &exp_guild_parse_row, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	item_group_txt_data(path_db_mode, path_db);
 	if (!process("ITEM_GROUP_DB", 2, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
-		return 0;
+		return false;
 	}
 
 	item_group_txt_data(path_db_import, path_db_import);
 	if (!process("ITEM_GROUP_DB", 2, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_ITEM_RATIO_DB", 1, root_paths, "mob_item_ratio", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("ATTRIBUTE_DB", 1, { path_db_mode }, "attr_fix", [](const std::string &path, const std::string &name_ext) -> bool {
 		return status_readdb_attrfix((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("ATTRIBUTE_DB", 1, { path_db_import }, "attr_fix", [](const std::string &path, const std::string &name_ext) -> bool {
 		return status_readdb_attrfix((path + name_ext).c_str());
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("CONSTANT_DB", 1, root_paths, "const", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 3, -1, &read_constdb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("JOB_STATS", 2, root_paths, "job_exp", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 1000 + 3, CLASS_COUNT * 2, &pc_readdb_job_exp, false);
 	}, "job_exp")) {
-		return 0;
+		return false;
 	}
 
 	if (!process("JOB_STATS", 2, root_paths, "job_basehpsp_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4 + 500, CLASS_COUNT * 2, &pc_readdb_job_basehpsp, false);
 	}, "job_basepoints")) {
-		return 0;
+		return false;
 	}
 
 	job_txt_data(path_db_mode, path_db);
@@ -484,7 +494,7 @@ int do_init( int argc, char** argv ){
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5 + MAX_WEAPON_TYPE, 5 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #endif
 	}, "job_stats")) {
-		return 0;
+		return false;
 	}
 
 	job_txt_data(path_db_import, path_db_import);
@@ -495,55 +505,72 @@ int do_init( int argc, char** argv ){
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5 + MAX_WEAPON_TYPE, 5 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #endif
 	}, "job_stats")) {
-		return 0;
+		return false;
 	}
 
 	elemental_skill_txt_data(path_db_mode, path_db);
 	if (!process("ELEMENTAL_DB", 1, root_paths, "elemental_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 26, 26, -1, &read_elementaldb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	mercenary_skill_txt_data(path_db_mode, path_db);
 	if (!process("MERCENARY_DB", 1, root_paths, "mercenary_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 26, 26, -1, &mercenary_readdb, false);
 	})) {
-		return 0;
+		return false;
 	}
 
 	skilltree_txt_data(path_db_mode, path_db);
 	if (!process("SKILL_TREE_DB", 1, { path_db_mode }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
 		return pc_readdb_skilltree_yaml();
 	})) {
-		return 0;
+		return false;
 	}
 
 	skilltree_txt_data(path_db_import, path_db_import);
 	if (!process("SKILL_TREE_DB", 1, { path_db_import }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
 		return pc_readdb_skilltree_yaml();
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("COMBO_DB", 1, { path_db_mode }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_combos((path + name_ext).c_str());
 	}, "item_combos")) {
-		return 0;
+		return false;
 	}
 
 	if (!process("COMBO_DB", 1, { path_db_import }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_combos((path + name_ext).c_str());
 	}, "item_combos")) {
+		return false;
+	}
+
+	if( !process( "ITEM_CASH_DB", 1, root_paths, "item_cash_db", []( const std::string& path, const std::string& name_ext ) -> bool {
+		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &cashshop_parse_dbrow, false );
+	}, "item_cash" ) ){
+		return 0;
+	}
+
+	homunculus_txt_data(path_db, path_db);
+	if (!process("HOMUNCULUS_DB", 1, { path_db_mode }, "homunculus_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 50, 50, MAX_HOMUNCULUS_CLASS, read_homunculusdb, false);
+	})) {
+		return 0;
+	}
+	
+	homunculus_txt_data(path_db_import, path_db_import);
+	if (!process("HOMUNCULUS_DB", 1, { path_db_import }, "homunculus_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 50, 50, MAX_HOMUNCULUS_CLASS, read_homunculusdb, false);
+	})) {
 		return 0;
 	}
 
 	// TODO: add implementations ;-)
 
-	return 0;
-}
-
-void do_final(void){
+	return true;
 }
 
 // Implementation of the conversion functions
@@ -4917,4 +4944,340 @@ static bool itemdb_read_combos(const char* file) {
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
 
 	return true;
+}
+
+// Copied and adjusted from cashshop.cpp
+static bool cashshop_parse_dbrow( char* fields[], int columns, int current ){
+	uint16 tab = atoi( fields[0] );
+	t_itemid nameid = strtoul( fields[1], nullptr, 10 );
+	uint32 price = atoi( fields[2] );
+
+	std::string* item_name = util::umap_find( aegis_itemnames, nameid );
+
+	if( item_name == nullptr ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid item id %u.\n", nameid );
+		return false;
+	}
+
+	if( tab >= CASHSHOP_TAB_MAX ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid tab %d in line '%d', skipping...\n", tab, current );
+		return false;
+	}else if( price < 1 ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid price %d in line '%d', skipping...\n", price, current );
+		return false;
+	}
+
+	const char* constant_ptr = constant_lookup( tab, "CASHSHOP_TAB_" );
+
+	if( constant_ptr == nullptr ){
+		ShowError( "cashshop_parse_dbrow: CASHSHOP_TAB constant for tab %hu was not found, skipping...\n", tab );
+		return false;
+	}
+
+	std::string constant = constant_ptr;
+	constant.erase( 0, 13 );
+	constant = name2Upper( constant );
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Tab" << YAML::Value << constant;
+	body << YAML::Key << "Items";
+	body << YAML::BeginSeq;
+	body << YAML::BeginMap;
+	body << YAML::Key << "Item" << YAML::Value << *item_name;
+	body << YAML::Key << "Price" << YAML::Value << price;
+	body << YAML::EndMap;
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// homunculus_db.yml function
+//---------------------------
+static bool read_homunculus_skilldb(char* split[], int columns, int current) {
+	s_homun_skill_tree_entry entry = {};
+
+	entry.id = atoi(split[1]);
+	entry.max = atoi(split[2]);
+	entry.need_level = atoi(split[3]);
+	entry.intimacy = cap_value(atoi(split[14]), 0, 1000);
+
+	for (int i = 0; i < MAX_HOM_SKILL_REQUIRE; i++) {
+		if (atoi(split[4 + i * 2]) > 0)
+			entry.need.emplace(atoi(split[4 + i * 2]), atoi(split[4 + i * 2 + 1]));
+	}
+
+	if (util::umap_find(hom_skill_tree, atoi(split[0])))
+		hom_skill_tree[(uint16)atoi(split[0])].push_back(entry);
+	else {
+		hom_skill_tree[(uint16)atoi(split[0])] = std::vector<s_homun_skill_tree_entry>();
+		hom_skill_tree[(uint16)atoi(split[0])].push_back(entry);
+	}
+
+	return true;
+}
+
+static bool compareHomSkillId(const s_homun_skill_tree_entry &a, const s_homun_skill_tree_entry &b) {
+	return a.id < b.id;
+}
+
+// Copied and adjusted from homunculus.cpp
+static bool read_homunculusdb(char* str[], int columns, int current) {
+	bool has_evo = false;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Class" << YAML::Value << name2Upper(constant_lookup(atoi(str[0]), "MER_") + 4);
+	body << YAML::Key << "Name" << YAML::Value << str[2];
+	if (atoi(str[0]) != atoi(str[1])) {
+		body << YAML::Key << "EvolutionClass" << YAML::Value << name2Upper(constant_lookup(atoi(str[1]), "MER_") + 4);
+		has_evo = true;
+	}
+	if (atoi(str[3]) != ITEMID_PET_FOOD)
+		body << YAML::Key << "Food" << YAML::Value << name2Upper(*util::umap_find(aegis_itemnames, (t_itemid)atoi(str[3])));
+	if (atoi(str[4]) != 60000)
+		body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[4]);
+
+	if (atoi(str[7]) != RC_DEMIHUMAN)
+		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[7]), "RC_") + 3);
+	if (atoi(str[8]) != ELE_NEUTRAL)
+	body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(atoi(str[8]), "ELE_") + 4);
+	if (atoi(str[5]) != SZ_SMALL)
+		body << YAML::Key << "Size" << YAML::Value << name2Upper(constant_lookup(atoi(str[5]), "Size_") + 5);
+	if (atoi(str[6]) != SZ_MEDIUM)
+		body << YAML::Key << "EvolutionSize" << YAML::Value << name2Upper(constant_lookup(atoi(str[6]), "Size_") + 5);
+	if (atoi(str[9]) != 700)
+		body << YAML::Key << "AttackDelay" << YAML::Value << atoi(str[9]);
+
+	body << YAML::Key << "Status";
+	body << YAML::BeginSeq;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Hp";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[10]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[18]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[19]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[34]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[35]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Sp";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[11]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[20]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[21]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[36]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[37]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Str";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[12]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[22]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[23]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[38]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[39]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Agi";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[13]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[24]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[25]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[40]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[41]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Vit";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[14]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[26]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[27]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[42]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[43]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Int";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[15]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[28]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[29]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[44]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[45]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Dex";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[16]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[30]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[31]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[46]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[47]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << "Luk";
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[17]);
+	body << YAML::Key << "GrowthMinimum" << YAML::Value << atoi(str[32]);
+	body << YAML::Key << "GrowthMaximum" << YAML::Value << atoi(str[33]);
+	if (has_evo) {
+		body << YAML::Key << "EvolutionMinimum" << YAML::Value << atoi(str[48]);
+		body << YAML::Key << "EvolutionMaximum" << YAML::Value << atoi(str[49]);
+	}
+	body << YAML::EndMap;
+
+	body << YAML::EndSeq;
+
+	// Gather and sort skill tree data
+	std::vector<s_homun_skill_tree_entry> *skill_tree_base = nullptr, *skill_tree_evo = nullptr;
+
+	skill_tree_base = util::umap_find(hom_skill_tree, atoi(str[0]));
+	std::sort(skill_tree_base->begin(), skill_tree_base->end(), compareHomSkillId);
+
+	if (has_evo) {
+		skill_tree_evo = util::umap_find(hom_skill_tree, atoi(str[1]));
+		std::sort(skill_tree_evo->begin(), skill_tree_evo->end(), compareHomSkillId);
+	}
+
+	// Get a difference between the base class and evo class skill tree to find skills granted through evolution
+	std::vector<s_homun_skill_tree_entry> tree_diff;
+
+	if (skill_tree_evo != nullptr) {
+		for (const auto &evoit : *skill_tree_evo) {
+			bool contains = false;
+
+			for (const auto &baseit : *skill_tree_base) {
+				if (baseit.id == evoit.id) {
+					contains = true;
+					break;
+				}
+			}
+
+			if (!contains) {
+				// Skill is not part of the base tree, we can only assume it's an evolution granted skill thanks to brilliant formatting of our TXT homun_db!
+				tree_diff.push_back(evoit);
+			}
+		}
+	}
+
+	if (skill_tree_base != nullptr) {
+		body << YAML::Key << "SkillTree";
+		body << YAML::BeginSeq;
+
+		for (const auto &skillit : *skill_tree_base) {
+			std::string *skill_name = util::umap_find(aegis_skillnames, skillit.id);
+
+			if (skill_name == nullptr) {
+				ShowError("Skill name for homunculus skill ID %hu is not known.\n", skillit.id);
+				return false;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << (int)skillit.max;
+			if (skillit.need_level > 0)
+				body << YAML::Key << "RequiredLevel" << YAML::Value << (int)skillit.need_level;
+			if (skillit.intimacy > 0)
+				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
+
+			if (!skillit.need.empty()) {
+				body << YAML::Key << "Required";
+				body << YAML::BeginSeq;
+
+				for (const auto &it : skillit.need) {
+					uint16 required_skill_id = it.first;
+					uint16 required_skill_level = it.second;
+
+					if (required_skill_id == 0 || required_skill_level == 0)
+						continue;
+
+					std::string *required_name = util::umap_find(aegis_skillnames, required_skill_id);
+
+					if (required_name == nullptr) {
+						ShowError("Skill name for required skill id %hu is not known.\n", required_skill_id);
+						return false;
+					}
+
+					body << YAML::BeginMap;
+					body << YAML::Key << "Skill" << YAML::Value << *required_name;
+					body << YAML::Key << "Level" << YAML::Value << required_skill_level;
+					body << YAML::EndMap;
+				}
+
+				body << YAML::EndSeq;
+			}
+
+			body << YAML::EndMap;
+		}
+
+		for (const auto &skillit : tree_diff) {
+			std::string *skill_name = util::umap_find(aegis_skillnames, skillit.id);
+
+			if (skill_name == nullptr) {
+				ShowError("Skill name for homunculus skill ID %hu is not known.\n", skillit.id);
+				return false;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << (int)skillit.max;
+			if (skillit.need_level > 0)
+				body << YAML::Key << "RequiredLevel" << YAML::Value << (int)skillit.need_level;
+			if (skillit.intimacy > 0)
+				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
+			body << YAML::Key << "RequireEvolution" << YAML::Value << "true";
+
+			if (!skillit.need.empty()) {
+				body << YAML::Key << "Required";
+				body << YAML::BeginSeq;
+
+				for (const auto &it : skillit.need) {
+					uint16 required_skill_id = it.first;
+					uint16 required_skill_level = it.second;
+
+					if (required_skill_id == 0 || required_skill_level == 0)
+						continue;
+
+					std::string *required_name = util::umap_find(aegis_skillnames, required_skill_id);
+
+					if (required_name == nullptr) {
+						ShowError("Skill name for required skill id %hu is not known.\n", required_skill_id);
+						return false;
+					}
+
+					body << YAML::BeginMap;
+					body << YAML::Key << "Skill" << YAML::Value << *required_name;
+					body << YAML::Key << "Level" << YAML::Value << required_skill_level;
+					body << YAML::EndMap;
+				}
+
+				body << YAML::EndSeq;
+			}
+
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<Csv2YamlTool>( argc, argv );
 }
