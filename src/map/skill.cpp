@@ -12318,7 +12318,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_OVERED_BOOST:
-		if (hd != nullptr) {
+		if (hd != nullptr && hd->master != nullptr) {
 			if (hd->master != nullptr)
 				sc_start(src, &hd->master->bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 
