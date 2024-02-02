@@ -5145,48 +5145,47 @@ void MapServer::handle_shutdown(){
 // parse yaml async by AoShinHo
 static void do_init_async() {
 #define LOAD_ASYNC(f) std::async(std::launch::async, f)
-#define ASYNC_WAIT(f) for(size_t i = 0; i < f.size(); ++i) f[i].wait(); 
+#define ASYNC_WAIT(f) for each(auto&it in f) it.wait();
 	std::vector<std::future<void>> do_init;
 	SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
 	do_init.push_back(LOAD_ASYNC(do_init_atcommand));
 	ASYNC_WAIT(do_init);
-	do_init.push_back(LOAD_ASYNC(do_init_battle));
-	do_init.push_back(LOAD_ASYNC(do_init_instance));
 	do_init.push_back(LOAD_ASYNC(do_init_chrif));
-	do_init.push_back(LOAD_ASYNC(do_init_clan));
 #ifndef MAP_GENERATOR
 	do_init.push_back(LOAD_ASYNC(do_init_clif));
 #endif
+	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_script));
 	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_itemdb));
 	ASYNC_WAIT(do_init);
+	do_init.push_back(LOAD_ASYNC(do_init_skill));
+	ASYNC_WAIT(do_init);
+	do_init.push_back(LOAD_ASYNC(do_init_battle));
+	do_init.push_back(LOAD_ASYNC(do_init_instance));
+	do_init.push_back(LOAD_ASYNC(do_init_clan));
 	do_init.push_back(LOAD_ASYNC(do_init_channel));
 	do_init.push_back(LOAD_ASYNC(do_init_cashshop));
-	ASYNC_WAIT(do_init);
-	do_init.push_back(LOAD_ASYNC(do_init_skill));
 	do_init.push_back(LOAD_ASYNC(do_init_mob));
-	ASYNC_WAIT(do_init);
-	do_init.push_back(LOAD_ASYNC(do_init_pc));
-	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_status));
 	do_init.push_back(LOAD_ASYNC(do_init_party));
 	do_init.push_back(LOAD_ASYNC(do_init_guild));
 	do_init.push_back(LOAD_ASYNC(do_init_storage));
-	ASYNC_WAIT(do_init);
-	do_init.push_back(LOAD_ASYNC(do_init_pet));
 	do_init.push_back(LOAD_ASYNC(do_init_homunculus));
 	do_init.push_back(LOAD_ASYNC(do_init_mercenary));
 	do_init.push_back(LOAD_ASYNC(do_init_elemental));
+	do_init.push_back(LOAD_ASYNC(do_init_battleground));
+	do_init.push_back(LOAD_ASYNC(do_init_unit));
+	do_init.push_back(LOAD_ASYNC(do_init_duel));
+	ASYNC_WAIT(do_init);
+	do_init.push_back(LOAD_ASYNC(do_init_pc));
+	do_init.push_back(LOAD_ASYNC(do_init_pet));
 	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_quest));
 	do_init.push_back(LOAD_ASYNC(do_init_achievement));
-	do_init.push_back(LOAD_ASYNC(do_init_battleground));
 	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_npc));
 	ASYNC_WAIT(do_init);
-	do_init.push_back(LOAD_ASYNC(do_init_unit));
-	do_init.push_back(LOAD_ASYNC(do_init_duel));
 	do_init.push_back(LOAD_ASYNC(do_init_vending));
 	do_init.push_back(LOAD_ASYNC(do_init_buyingstore));
 	do_init.push_back(LOAD_ASYNC(npc_event_do_oninit));

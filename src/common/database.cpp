@@ -82,12 +82,12 @@ bool YamlDatabase::verifyCompatibility( const ryml::Tree& tree ){
 bool YamlDatabase::load(){
 #ifdef ENABLE_ASYNC_YAML
 	// load yaml async by AoShinHo
-	std::future<void> ret = std::async(std::launch::async, [this]() {
-		this->load(this->getDefaultLocation());
+	std::future<bool> loadInFuture = std::async(std::launch::async, [this]() {
+		bool ret = this->load(this->getDefaultLocation());
 		this->loadingFinished();
+		return ret;
 	});
-
-	return true;
+	return loadInFuture.get();
 #else
 	bool ret = this->load( this->getDefaultLocation() );
 
@@ -112,23 +112,38 @@ bool YamlDatabase::load(const std::string& path) {
 	}
 	fseek(f, 0, SEEK_END);
 	size_t size = ftell(f);
+#ifndef ENABLE_ASYNC_YAML
 	char* buf = (char *)aMalloc(size+1);
+#else
+	std::vector<char> buf(size + 1);
+#endif
 	rewind(f);
+#ifndef ENABLE_ASYNC_YAML
 	size_t real_size = fread(buf, sizeof(char), size, f);
 	// Zero terminate
 	buf[real_size] = '\0';
+#else
+	const size_t real_size = fread(buf.data(), sizeof(char), size, f); 
+	buf.at(real_size) = '\0'; // Zero terminate
+#endif
 	fclose(f);
 
 	parser = {};
 	ryml::Tree tree;
 
 	try{
+#ifndef ENABLE_ASYNC_YAML
 		tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
+#else
+		tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf.data()));
+#endif
 	}catch( const std::runtime_error& e ){
 		ShowError( "Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str() );
 		ShowError( "There is likely a syntax error in the file.\n" );
 		ShowError( "Error message: %s\n", e.what() );
+#ifndef ENABLE_ASYNC_YAML
 		aFree(buf);
+#endif
 		return false;
 	}
 
@@ -137,7 +152,9 @@ bool YamlDatabase::load(const std::string& path) {
 
 	if (!this->verifyCompatibility(tree)){
 		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
+#ifndef ENABLE_ASYNC_YAML
 		aFree(buf);
+#endif
 		return false;
 	}
 
@@ -155,7 +172,9 @@ bool YamlDatabase::load(const std::string& path) {
 
 	this->parseImports( tree );
 
+#ifndef ENABLE_ASYNC_YAML
 	aFree(buf);
+#endif
 	return true;
 }
 

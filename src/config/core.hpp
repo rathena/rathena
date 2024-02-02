@@ -109,7 +109,7 @@
 //#undef DETAILED_LOADING_OUTPUT
 
 /// Uncomment to enable YAML DB read Multi-threading
-/// This feature can made your map-server start faster [Be careful, sometimes mapserver can crash at start]
+/// This feature can made your map-server start faster
 //#define ENABLE_ASYNC_YAML
 
 /**
