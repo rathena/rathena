@@ -5426,6 +5426,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case RG_BACKSTAP:
 		{
+			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			if (!check_distance_bl(src, bl, 0) || bl->type == BL_SKILL) {
 				// Gank
 				mob_data* dstmd = BL_CAST( BL_MOB, bl );
@@ -5439,7 +5440,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					else
 						clif_skill_fail(sd,RG_SNATCHER,USESKILL_FAIL_LEVEL,0);
 				}
-				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+				// skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			} else if (sd)
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
@@ -13015,8 +13016,8 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 				// 	return USESKILL_FAIL_MAX;
 #endif
 
-				if (check_distance_bl(src, target, 0))
-					return USESKILL_FAIL_MAX;
+				// if (check_distance_bl(src, target, 0))
+				// 	return USESKILL_FAIL_MAX;
 			}
 			break;
 		case PR_TURNUNDEAD:
@@ -18858,15 +18859,6 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 							if( itemdb_group.item_exists(IG_GEMSTONE, skill->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 2)) )
 								continue;
 							break;
-
-						case AM_ACIDTERROR:
-							if (sc->getSCE(SC_ALCHEMYEFFICIENCY_ACID) || sc->getSCE(SC_ALCHEMYEFFICIENCY_BOTH))
-								continue;
-							break;
-						case AM_DEMONSTRATION:
-							if (sc->getSCE(SC_ALCHEMYEFFICIENCY_FIRE) || sc->getSCE(SC_ALCHEMYEFFICIENCY_BOTH))
-								continue;
-							break;
 					}
 
 					req.itemid[i] = skill->require.itemid[i];
@@ -18910,6 +18902,10 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 				// Check requirement for Magic Gear Fuel
 				if (req.itemid[i] == ITEMID_MAGIC_GEAR_FUEL && sd->special_state.no_mado_fuel)
 					req.itemid[i] = req.amount[i] = 0;
+				if (req.itemid[i] == ITEMID_ACID_BOTTLE && sc && (sc->getSCE(SC_ALCHEMYEFFICIENCY_ACID) || sc->getSCE(SC_ALCHEMYEFFICIENCY_BOTH)))
+					req.itemid[i] = req.amount[i] = 0;
+				if (req.itemid[i] == ITEMID_FIRE_BOTTLE && sc && (sc->getSCE(SC_ALCHEMYEFFICIENCY_FIRE) || sc->getSCE(SC_ALCHEMYEFFICIENCY_BOTH)))
+					req.itemid[i] = req.amount[i] = 0;
 			}
 			break;
 	}
@@ -18920,16 +18916,12 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 #ifdef RENEWAL
 		case WS_CARTTERMINATION:
 #endif
-			if(sc->getSCE(SC_CARTEFFICIENCY))
+			if(sc && sc->getSCE(SC_CARTEFFICIENCY)) {
 				req.zeny = 0;
 				break;
-			if(pc_checkskill(sd,BS_UNFAIRLYTRICK)>0)
-#ifdef RENEWAL
-				req.zeny -= req.zeny*20/100;
-#else
-				// req.zeny -= req.zeny*10/100;
-				req.zeny -= req.zeny*30/100;
-#endif
+			}
+			if(sd && pc_checkskill(sd,BS_UNFAIRLYTRICK))
+				req.zeny -= ceil((req.zeny*30) / 100);
 			break;
 		case AL_HOLYLIGHT:
 			if(sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
