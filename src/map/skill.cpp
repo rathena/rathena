@@ -10627,11 +10627,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd()%100 < 20 * skill_lv) {
 			int x = src->x, y = src->y;
-
-#ifdef RENEWAL
 			if (hd != nullptr)
 				skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id, skill_lv));
-#endif
 			// Move source
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
