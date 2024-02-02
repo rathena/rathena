@@ -61100,7 +61100,7 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      addhomintimacy 250;
+      addhomintimacy rand(10,100);
   - Id: 100372
     AegisName: RoyalGuard_S_Cube
     Name: Royal Guard Shadow Cube
