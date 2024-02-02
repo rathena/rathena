@@ -5145,9 +5145,9 @@ void MapServer::handle_shutdown(){
 // parse yaml async by AoShinHo
 static void do_init_async() {
 #define LOAD_ASYNC(f) std::async(std::launch::async, f)
-#define ASYNC_WAIT(f) for each(auto&it in f) it.wait();
+#define ASYNC_WAIT(f) for(size_t i = 0; i < f.size();i++) f[i].wait();
 	std::vector<std::future<void>> do_init;
-	SetPriorityClass(GetCurrentProcess(), REALTIME_PRIORITY_CLASS);
+
 	do_init.push_back(LOAD_ASYNC(do_init_atcommand));
 	ASYNC_WAIT(do_init);
 	do_init.push_back(LOAD_ASYNC(do_init_chrif));
@@ -5165,8 +5165,8 @@ static void do_init_async() {
 	do_init.push_back(LOAD_ASYNC(do_init_instance));
 	do_init.push_back(LOAD_ASYNC(do_init_clan));
 	do_init.push_back(LOAD_ASYNC(do_init_channel));
-	do_init.push_back(LOAD_ASYNC(do_init_cashshop));
 	do_init.push_back(LOAD_ASYNC(do_init_mob));
+	do_init.push_back(LOAD_ASYNC(do_init_cashshop));
 	do_init.push_back(LOAD_ASYNC(do_init_status));
 	do_init.push_back(LOAD_ASYNC(do_init_party));
 	do_init.push_back(LOAD_ASYNC(do_init_guild));
@@ -5189,8 +5189,6 @@ static void do_init_async() {
 	do_init.push_back(LOAD_ASYNC(do_init_vending));
 	do_init.push_back(LOAD_ASYNC(do_init_buyingstore));
 	do_init.push_back(LOAD_ASYNC(npc_event_do_oninit));
-	ASYNC_WAIT(do_init);
-	SetPriorityClass(GetCurrentProcess(), NORMAL_PRIORITY_CLASS);
 }
 #endif
 
