@@ -10629,7 +10629,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			int x = src->x, y = src->y;
 
 			if (hd)
-				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id, skill_lv));
+				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id,skill_lv));
 			// Move source
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
