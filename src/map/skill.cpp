@@ -7305,8 +7305,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			    ret = skill_castend_pos2(src,src->x,src->y,skill_id,skill_lv,tick,flag); //cast on homon
 			if(s_src && !skill_check_unit_range(s_src, s_src->x, s_src->y, skill_id, skill_lv))
 			    ret |= skill_castend_pos2(s_src,s_src->x,s_src->y,skill_id,skill_lv,tick,flag); //cast on master
-			if (hd != nullptr)
-				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+			if (hd)
+			    skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 			return ret;
 		    }
 		    break;
@@ -10627,7 +10627,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd()%100 < 20 * skill_lv) {
 			int x = src->x, y = src->y;
-			if (hd != nullptr)
+
+			if (hd)
 				skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id, skill_lv));
 			// Move source
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
@@ -10679,8 +10680,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if (hd != nullptr)
-			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id, skill_lv));
+		if (hd)
+			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case NPC_DRAGONFEAR:
@@ -12310,7 +12311,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				for (i = 0; i < ARRAYLENGTH(scs); i++)
 					if (tsc->getSCE(scs[i])) status_change_end(bl, scs[i]);
 			}
-			if (hd != nullptr)
+			if (hd)
 				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
@@ -12375,9 +12376,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case MH_MAGMA_FLOW:
-		sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		if (hd != nullptr)
-			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+	   sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+	   if (hd)
+		   skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 	   break;
 	case MH_SUMMON_LEGION: {
 		int summons[5] = {MOBID_S_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_LUCIOLA_VESPA, MOBID_S_LUCIOLA_VESPA};
@@ -12404,7 +12405,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sc_start4(&sum_md->bl,&sum_md->bl, SC_MODECHANGE, 100, 1, 0, MD_CANATTACK|MD_AGGRESSIVE, 0, 60000);
 			}
 		}
-		if (hd != nullptr)
+		if (hd)
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
