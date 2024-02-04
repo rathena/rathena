@@ -36,9 +36,6 @@ prontera,73,100,0	warp	prt12	1,1,prt_in,208,176
 prontera,74,90,0	warp	prt13	2,2,prt_in,248,170
 prontera,84,89,0	warp	prt14-1	1,1,prt_in,282,176
 prontera,263,279,0	warp	prt15-2	2,2,prt_in,227,18
-// Head Office
-prontera,133,183,0	warp	headoffice	2,2,moc_para01,31,14
-moc_para01,31,11,0	warp	prtoffice	2,2,prontera,136,186
 prt_in,135,71,0	warp	prt04-1	1,2,prontera,136,219
 prt_in,168,124,0	warp	prt05-1	2,1,prontera,174,218
 prt_in,172,33,0	warp	prt09-1	2,1,prontera,205,157
