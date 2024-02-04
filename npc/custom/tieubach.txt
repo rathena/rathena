@@ -15,22 +15,28 @@ moc_para01,28,35,4	script	TiêÒu Baòch#moc_para01_barter_tieubach	4_TARUTUPI,{
 		"~ ^057F20Accessories^000000"
 	) ) {
 		case 1:
-			callshop "tieubach_consumable";
+			close2;
+			callshop "tieubach_consumable", 1;
 			end;
 		case 2:
-			callshop "tieubach_headgear_exchange";
+			close2;
+			callshop "tieubach_headgear_exchange", 1;
 			end;
 		case 3:
-			callshop "tieubach_lower_headgear";
+			close2;
+			callshop "tieubach_lower_headgear", 1;
 			end;
 		case 4:
-			callshop "tieubach_middle_headgear";
+			close2;
+			callshop "tieubach_middle_headgear", 1;
 			end;
 		case 5:
-			callshop "tieubach_upper_headgear";
+			close2;
+			callshop "tieubach_upper_headgear", 1;
 			end;
 		case 6:
-			callshop "tieubach_upper_accessories";
+			close2;
+			callshop "tieubach_upper_accessories", 1;
 			end;
 	}
 }
