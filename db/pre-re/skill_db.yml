@@ -1942,6 +1942,8 @@ Body:
   - Id: 48
     Name: TF_DOUBLE
     Description: Double Attack
+    DamageFlags:
+      Critical: true
     MaxLevel: 10
     Type: Weapon
     Range: -1
