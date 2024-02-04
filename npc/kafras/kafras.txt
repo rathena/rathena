@@ -300,6 +300,20 @@ prontera,146,89,6	script	Kafra Employee::kaf_prontera5	4_F_DRKAFRA01,{
 	callfunc "F_KafEnd",0,1,"in the city of Prontera";
 }
 
+prontera,165,191,4	script	Kafra Employee::kaf_prontera6	4_F_DRKAFRA01,{
+	cutin "kafra_do01",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "The Kafra services";
+	mes "are always on your side.";
+	mes "How may I assist you?";
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "prontera",156,185,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Prontera";
+}
+
 // Juno
 //============================================================
 yuno,152,187,4	script	Kafra Employee::kaf_yuno	4_F_DRKAFRA01,{
