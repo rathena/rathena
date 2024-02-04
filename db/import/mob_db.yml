@@ -148,8 +148,6 @@ Body:
     Drops:
       - Item: Stem
         Rate: 9000
-      - Item: Stem
-        Rate: 9000
   - Id: 1118
     AegisName: FLORA
     Name: Flora
@@ -220,17 +218,19 @@ Body:
   - Id: 1832
     AegisName: IFRIT
     Name: Ifrit
-    Drops:
+    MvpDrops:
       - Item: Ifrit's_Ear
         Rate: 500
+    Drops:
       - Item: Essence_Of_Fire
         Rate: 10000
   - Id: 1630
     AegisName: BACSOJIN_
     Name: White Lady
-    Drops:
+    MvpDrops:
       - Item: Mischievous_Fairy
         Rate: 200
+    Drops:
       - Item: Ornamental_Hairpin
         Rate: 10000
   - Id: 1685
