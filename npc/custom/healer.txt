@@ -20,12 +20,12 @@
 	.@Delay = 0;	// Heal delay, in seconds
 	
 	// Giaìm ðiònh
-	getinventorylist;
-	for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
-		if ( @inventorylist_identify[.@i] == 1 ) continue;
-		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
-		getitem @inventorylist_id[.@i],1;
-	}
+	// getinventorylist;
+	// for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
+	// 	if ( @inventorylist_identify[.@i] == 1 ) continue;
+	// 	delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+	// 	getitem @inventorylist_id[.@i],1;
+	// }
 
 	if (@HD > gettimetick(2))
 		end;
@@ -40,22 +40,26 @@
 	}
 
 	mes "[ ^6BCB23Beì laÌm diòch vuò^000000 ]";
-	mes "ChaÌo "+(Sex?"anh":"chiò")+" ^0000EE"+strcharinfo(0)+"^000000, em ðây laÌm diòch vuò ^00EE00chýÞa triò (heal), buff^000000 cuÞng nhý tâÒm quâìt, aÌ nhâÌm ^E80000tâÒm thuôòc tiình^000000 vuÞ khiì aì. "+(Sex?"Anh":"Chiò")+" muôìn choòn loaòi hiÌnh diòch vuò naÌo aò?";
-	switch ( select ("^008E00Heal + Buff^000000","^8E0000TâÒm thuôòc tiình vuÞ khiì^000000") ) {
+	// mes "ChaÌo "+(Sex?"anh":"chiò")+" ^0000EE"+strcharinfo(0)+"^000000, em ðây laÌm diòch vuò ^00EE00chýÞa triò (heal), buff^000000 cuÞng nhý tâÒm quâìt, aÌ nhâÌm ^E80000tâÒm thuôòc tiình^000000 vuÞ khiì aì. "+(Sex?"Anh":"Chiò")+" muôìn choòn loaòi hiÌnh diòch vuò naÌo aò?";
+	mes "ChaÌo "+(Sex?"anh":"chiò")+" ^0000EE"+strcharinfo(0)+"^000000, em ðây laÌm diòch vuò ^00EE00chýÞa triò (heal), buff^000000 . "+(Sex?"Anh":"Chiò")+" muôìn choòn loaòi hiÌnh diòch vuò naÌo aò?";
+	switch ( select (
+		"^008E00Heal + Buff^000000"
+		// "^8E0000TâÒm thuôòc tiình vuÞ khiì^000000"
+	)) {
 		case 1:
 			specialeffect2 EF_HEAL2;
 			percentheal 100,100;
 			if (.@Buffs) {
 				specialeffect2 EF_INCAGILITY;
-				sc_start SC_INCREASEAGI,1800000,10;
+				sc_start SC_INCREASEAGI,900000,10;
 				specialeffect2 EF_BLESSING;
-				sc_start SC_BLESSING,1800000,10;
-				specialeffect2 EF_KYRIE;
-				sc_start SC_KYRIE, 1800000, 10;
-				specialeffect2 EF_IMPOSITIO;
-				sc_start SC_IMPOSITIO, 1800000, 5;
-				specialeffect2 EF_GLORIA;
-				sc_start SC_GLORIA, 1800000, 5;
+				sc_start SC_BLESSING,900000,10;
+				// specialeffect2 EF_KYRIE;
+				// sc_start SC_KYRIE, 1800000, 10;
+				// specialeffect2 EF_IMPOSITIO;
+				// sc_start SC_IMPOSITIO, 1800000, 5;
+				// specialeffect2 EF_GLORIA;
+				// sc_start SC_GLORIA, 1800000, 5;
 			}
 			npctalk (Sex?"Anh ":"Chiò ")+strcharinfo(0)+" ðaÞ ðýõòc chýÞa triò vaÌ nhâòn buff, heòn gãòp laòi aò.";
 			close;
@@ -96,17 +100,19 @@
 	OnTouch:
 		specialeffect2 EF_HEAL2;
 		percentheal 100,100;
+		// if (.@Buffs) {
 		specialeffect2 EF_INCAGILITY;
-		sc_start SC_INCREASEAGI,1800000,10;
+		sc_start SC_INCREASEAGI,900000,10;
 		specialeffect2 EF_BLESSING;
-		sc_start SC_BLESSING,1800000,10;
-		// specialeffect2 EF_KYRIE;
-		sc_start SC_KYRIE, 1800000, 10;
-		// specialeffect2 EF_IMPOSITIO;
-		sc_start SC_IMPOSITIO, 1800000, 5;
-		// specialeffect2 EF_GLORIA;
-		sc_start SC_GLORIA, 1800000, 5;
-		npctalk "Aaaaa~, ðôÌ dê xôÌm, xê ra, beì buff cho rôÌi ðoì >.<";
+		sc_start SC_BLESSING,900000,10;
+		// }
+		// // specialeffect2 EF_KYRIE;
+		// sc_start SC_KYRIE, 1800000, 10;
+		// // specialeffect2 EF_IMPOSITIO;
+		// sc_start SC_IMPOSITIO, 1800000, 5;
+		// // specialeffect2 EF_GLORIA;
+		// sc_start SC_GLORIA, 1800000, 5;
+		npctalk "- Aaaaa~, ðôÌ dê xôÌm, xê ra, beì buff cho rôÌi ðoì >.< -";
 		end;
 }
 
