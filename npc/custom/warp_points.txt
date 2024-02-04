@@ -770,6 +770,15 @@ function	script	QWS_Tarray	{
 
 	QWS_Make_Town_Menu 13;
 
+	setarray @pTmenuitems$[@Ti], "Gonryun";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "gonryun";
+	setarray @pTXcoords[@Ti], 158;
+	setarray @pTYcoords[@Ti], 116;
+
+	QWS_Make_Town_Menu 14;
+
 //----------------Cancel
 	setarray @pTmenuitems$[@Ti], "Cancel";
 	setarray @pTprice[@Ti], 0;
@@ -881,10 +890,15 @@ function	script	QWS_Darray	{
 	setarray @pDfee$[@Di], "$QW_AW_FEE";
 	setarray @DLevels[@Di], 1;
 
-	setarray @DGat$[@Dref], "moc_fild04";
+	// setarray @DGat$[@Dref], "moc_fild04";
+	// setarray @DLevelName$[@Dref], "Level 1";
+	// setarray @DXcoords[@Dref], 207;
+	// setarray @DYcoords[@Dref], 329;
+	// setarray @DDepth[@Dref], 0;
+	setarray @DGat$[@Dref], "cmd_fild08";
 	setarray @DLevelName$[@Dref], "Level 1";
-	setarray @DXcoords[@Dref], 207;
-	setarray @DYcoords[@Dref], 329;
+	setarray @DXcoords[@Dref], 327;
+	setarray @DYcoords[@Dref], 354;
 	setarray @DDepth[@Dref], 0;
 
 	QWS_Make_Dungeon_Menu 3;
@@ -1551,8 +1565,9 @@ function	script	QWS_Dungeon_Warpra	{
 		QWS_D_setbin(getarg(0));
 		return;
 	} else
-		debugmes "QWS_Dungeon_Warpra error, improper syntax?";
-	return;
+		return;
+	// } else
+	// 	debugmes "QWS_Dungeon_Warpra error, improper syntax?";
 
 
 function	QWS_D_setbin	{
@@ -1596,8 +1611,9 @@ function	script	QWS_Town_Warpra	{
 	} else if (QWS_T_getbin(getarg(0)) == 1) {
 		callfunc "Q_Warpra",0;
 		return;
-	} else
-		debugmes "QWS_Town_Warpra error, improper syntax ?";
+	}
+	// } else
+	// 	debugmes "QWS_Town_Warpra error, improper syntax ?";
 	return;
 
 function	QWS_T_setbin	{
@@ -1644,7 +1660,7 @@ binget:
 // valkyrie,48,35,8	duplicate(Warpra#0)	Warpra#13	113
 // yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
 
-prontera,159,194,4	script	CôÒng diòch chuyêÒn#warpoints_town_1	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+prontera,159,193,4	script	CôÒng diòch chuyêÒn#warpoints_town_1	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
 alberta,28,240,4	script	CôÒng diòch chuyêÒn#warpoints_town_2	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
 aldebaran,145,118,4	script	CôÒng diòch chuyêÒn#warpoints_town_3	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
 comodo,194,158,4	script	CôÒng diòch chuyêÒn#warpoints_town_4	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
@@ -1655,7 +1671,7 @@ umbala,106,150,3	script	CôÒng diòch chuyêÒn#warpoints_town_8	4_ED_ORB,{ callfunc
 payon,182,108,4	script	CôÒng diòch chuyêÒn#warpoints_town_9	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
 yuno,162,47,4	script	CôÒng diòch chuyêÒn#warpoints_town_10	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
 xmas,150,136,6	script	CôÒng diòch chuyêÒn#warpoints_town_11	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
-gonryun,162,122,4	script	CôÒng diòch chuyêÒn#warpoints_town_12	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+// gonryun,162,122,4	script	CôÒng diòch chuyêÒn#warpoints_town_12	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
 
 amatsu,100,154,4	script	CôÒng diòch chuyêÒn#warpoints_town_15	4_ED_ORB,{ callfunc "QWS_Town_Warpra",0,"Amatsu Town"; close; }
 ayothaya,207,169,4	script	CôÒng diòch chuyêÒn#warpoints_town_16	4_ED_ORB,{ callfunc "QWS_Town_Warpra",1,"Ayothaya Town"; close; }
@@ -1671,56 +1687,58 @@ nif_in,17,16,4	script	CôÒng diòch chuyêÒn#warpoints_town_26	4_ED_ORB,{ callfunc 
 rachel,122,147,5	script	CôÒng diòch chuyêÒn#warpoints_town_27	4_ED_ORB,{ callfunc "QWS_Town_Warpra",11,"Rachel Town"; close; }
 splendide,203,185,4	script	CôÒng diòch chuyêÒn#warpoints_town_28	4_ED_ORB,{ callfunc "QWS_Town_Warpra",12,"Splendide Town"; close; }
 veins,211,132,4	script	CôÒng diòch chuyêÒn#warpoints_town_29	4_ED_ORB,{ callfunc "QWS_Town_Warpra",13,"Veins Town"; close; }
+gonryun,162,122,4	script	CôÒng diòch chuyêÒn#warpoints_town_30	4_ED_ORB,{ callfunc "QWS_Town_Warpra",14,"Gonryun Town"; close; }
 // lasagna,202,189,5	script	Warpra#21	4_ED_ORB,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
 
-hu_fild05,176,304,1	script	CôÒng diòch chuyêÒn#0	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
-hugel,211,167,5	script	CôÒng diòch chuyêÒn#1	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",1,"Airship Assault"; close; }
-ama_in02,115,184,3	script	CôÒng diòch chuyêÒn#2	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",2,"Amatsu Dungeon"; close; }
-moc_fild04,207,331,5	script	CôÒng diòch chuyêÒn#3	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",3,"Ant Hell"; close; }
-ayo_fild02,283,144,1	script	CôÒng diòch chuyêÒn#4	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",4,"Ayothaya Dungeon"; close; }
-comodo,32,218,2	script	CôÒng diòch chuyêÒn#5	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",5,"Beach Dungeon 1 (Medusa)"; close; }
-comodo,172,354,4	script	CôÒng diòch chuyêÒn#6	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",6,"Beach Dungeon 1 (Stalatic Golem)"; close; }
-comodo,325,178,4	script	CôÒng diòch chuyêÒn#7	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",7,"Beach Dungeon 1 (Thara Frog)"; close; }
-lhz_in01,36,220,3	script	CôÒng diòch chuyêÒn#8	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",8,"Bio Labs 1"; close; }
-lighthalzen,312,293,0	script	CôÒng diòch chuyêÒn#9	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",9,"Bio Labs 2"; close; }
-bra_in01,209,183,2	script	CôÒng diòch chuyêÒn#10	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",10,"Brasilis Dungeon"; close; }
-izlu2dun,102,83,3	script	CôÒng diòch chuyêÒn#11	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",11,"Byalan Dungeon"; close; }
-iz_dun03,264,240,4	script	CôÒng diòch chuyêÒn#12	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",12,"Byalan Dungeon F4"; close; }
-alde_dun03,260,19,5	script	CôÒng diòch chuyêÒn#13	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",13,"Clock Tower B3"; close; }
-ve_fild07,132,132,3	script	CôÒng diòch chuyêÒn#14	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",14,"Cursed Abbey"; close; }
-einbech,132,249,3	script	CôÒng diòch chuyêÒn#15	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",15,"Einbech Mines"; close; }
-gef_tower,157,35,3	script	CôÒng diòch chuyêÒn#16	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",16,"Geffen Dungeon"; close; }
-glast_01,194,291,3	script	CôÒng diòch chuyêÒn#17	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",17,"Glast Heim Castle"; close; }
-glast_01,79,186,3	script	CôÒng diòch chuyêÒn#18	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",18,"Glast Heim Chivalry"; close; }
-glast_01,204,136,3	script	CôÒng diòch chuyêÒn#19	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",19,"Glast Heim Church"; close; }
-gl_dun02,231,268,1	script	CôÒng diòch chuyêÒn#20	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",20,"Glast Heim Lowest Cave"; close; }
-gl_sew03,179,286,3	script	CôÒng diòch chuyêÒn#21	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",21,"Glast Heim Sewers"; close; }
-glast_01,48,112,3	script	CôÒng diòch chuyêÒn#22	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",22,"Glast Heim Staircase"; close; }
-gonryun,167,192,3	script	CôÒng diòch chuyêÒn#23	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",23,"Gonryun Dungeon"; close; }
-mjolnir_12,39,21,3	script	CôÒng diòch chuyêÒn#24	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",24,"Hidden Labrynth Alde"; close; }
-prt_fild01,140,367,3	script	CôÒng diòch chuyêÒn#25	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",25,"Hidden Labrynth Prontera"; close; }
-ra_fild01,226,325,4	script	CôÒng diòch chuyêÒn#26	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",26,"Ice Dungeon"; close; }
-jupe_cave,33,56,3	script	CôÒng diòch chuyêÒn#27	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",27,"Juperos"; close; }
-yuno_fild08,81,175,3	script	CôÒng diòch chuyêÒn#28	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
-louyang,37,277,3	script	CôÒng diòch chuyêÒn#29	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",29,"Louyang Dungeon"; close; }
-yuno_fild03,36,135,3	script	CôÒng diòch chuyêÒn#30	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",30,"Magma Dungeon"; close; }
-mjolnir_02,88,357,3	script	CôÒng diòch chuyêÒn#31	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",31,"Mjolnir Dead Pit"; close; }
-mosk_fild02,183,252,1	script	CôÒng diòch chuyêÒn#32	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",32,"Moscovia Dungeon"; close; }
-nyd_dun02,104,192,3	script	CôÒng diòch chuyêÒn#33	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",33,"Nidhoggur's Nest"; close; }
-niflheim,154,119,3	script	CôÒng diòch chuyêÒn#34	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",34,"Niflheim Dungeon"; close; }
-hugel,203,110,3	script	CôÒng diòch chuyêÒn#35	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",35,"Odin Temple"; close; }
-in_orcs01,23,174,3	script	CôÒng diòch chuyêÒn#36	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",36,"Orc Dungeon"; close; }
-pay_arche,41,136,3	script	CôÒng diòch chuyêÒn#37	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",37,"Payon Cave"; close; }
-prt_fild05,273,216,3	script	CôÒng diòch chuyêÒn#38	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",38,"Prontera Culverts"; close; }
-moc_ruins,56,156,1	script	CôÒng diòch chuyêÒn#39	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",39,"Pyramid"; close; }
-ra_temin,21,318,3	script	CôÒng diòch chuyêÒn#40	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",40,"Rachel Sanctuary"; close; }
-moc_fild19,107,96,3	script	CôÒng diòch chuyêÒn#41	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",41,"Sphinx"; close; }
-alb2trea,94,106,3	script	CôÒng diòch chuyêÒn#42	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",42,"Sunken Ship"; close; }
-hu_fild01,145,159,3	script	CôÒng diòch chuyêÒn#43	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",43,"Thanatos Tower"; close; }
-ve_fild03,176,239,3	script	CôÒng diòch chuyêÒn#44	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",44,"Thor Volcano"; close; }
-xmas,150,312,4	script	CôÒng diòch chuyêÒn#45	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",45,"Toy Factory"; close; }
-tur_dun01,160,242,3	script	CôÒng diòch chuyêÒn#46	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",46,"Turtle Island"; close; }
-umbala,112,279,4	script	CôÒng diòch chuyêÒn#47	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",47,"Umbala Dungeon"; close; }
+hu_fild05,176,304,1	script	CôÒng diòch chuyêÒn#0	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; }
+hugel,211,167,5	script	CôÒng diòch chuyêÒn#1	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",1,"Airship Assault"; }
+ama_in02,115,184,3	script	CôÒng diòch chuyêÒn#2	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",2,"Amatsu Dungeon"; }
+// moc_fild04,207,331,5	script	CôÒng diòch chuyêÒn#3	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",3,"Ant Hell"; }
+cmd_fild08,336,363,5	script	CôÒng diòch chuyêÒn#3	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",3,"Ant Hell"; }
+ayo_fild02,283,144,1	script	CôÒng diòch chuyêÒn#4	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",4,"Ayothaya Dungeon"; }
+comodo,32,218,2	script	CôÒng diòch chuyêÒn#5	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",5,"Beach Dungeon 1 (Medusa)"; }
+comodo,172,354,4	script	CôÒng diòch chuyêÒn#6	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",6,"Beach Dungeon 1 (Stalatic Golem)"; }
+comodo,325,178,4	script	CôÒng diòch chuyêÒn#7	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",7,"Beach Dungeon 1 (Thara Frog)"; }
+lhz_in01,36,220,3	script	CôÒng diòch chuyêÒn#8	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",8,"Bio Labs 1"; }
+lighthalzen,312,293,0	script	CôÒng diòch chuyêÒn#9	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",9,"Bio Labs 2"; }
+bra_in01,209,183,2	script	CôÒng diòch chuyêÒn#10	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",10,"Brasilis Dungeon"; }
+izlu2dun,102,83,3	script	CôÒng diòch chuyêÒn#11	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",11,"Byalan Dungeon"; }
+iz_dun03,264,240,4	script	CôÒng diòch chuyêÒn#12	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",12,"Byalan Dungeon F4"; }
+alde_dun03,260,19,5	script	CôÒng diòch chuyêÒn#13	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",13,"Clock Tower B3"; }
+ve_fild07,132,132,3	script	CôÒng diòch chuyêÒn#14	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",14,"Cursed Abbey"; }
+einbech,132,249,3	script	CôÒng diòch chuyêÒn#15	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",15,"Einbech Mines"; }
+gef_tower,157,35,3	script	CôÒng diòch chuyêÒn#16	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",16,"Geffen Dungeon"; }
+glast_01,194,291,3	script	CôÒng diòch chuyêÒn#17	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",17,"Glast Heim Castle"; }
+glast_01,79,186,3	script	CôÒng diòch chuyêÒn#18	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",18,"Glast Heim Chivalry"; }
+glast_01,204,136,3	script	CôÒng diòch chuyêÒn#19	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",19,"Glast Heim Church"; }
+gl_dun02,231,268,1	script	CôÒng diòch chuyêÒn#20	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",20,"Glast Heim Lowest Cave"; }
+gl_sew03,179,286,3	script	CôÒng diòch chuyêÒn#21	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",21,"Glast Heim Sewers"; }
+glast_01,48,112,3	script	CôÒng diòch chuyêÒn#22	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",22,"Glast Heim Staircase"; }
+gonryun,167,192,3	script	CôÒng diòch chuyêÒn#23	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",23,"Gonryun Dungeon"; }
+mjolnir_12,39,21,3	script	CôÒng diòch chuyêÒn#24	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",24,"Hidden Labrynth Alde"; }
+prt_fild01,140,367,3	script	CôÒng diòch chuyêÒn#25	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",25,"Hidden Labrynth Prontera"; }
+ra_fild01,226,325,4	script	CôÒng diòch chuyêÒn#26	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",26,"Ice Dungeon"; }
+jupe_cave,33,56,3	script	CôÒng diòch chuyêÒn#27	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",27,"Juperos"; }
+yuno_fild08,81,175,3	script	CôÒng diòch chuyêÒn#28	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; }
+louyang,37,277,3	script	CôÒng diòch chuyêÒn#29	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",29,"Louyang Dungeon"; }
+yuno_fild03,36,135,3	script	CôÒng diòch chuyêÒn#30	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",30,"Magma Dungeon"; }
+mjolnir_02,88,357,3	script	CôÒng diòch chuyêÒn#31	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",31,"Mjolnir Dead Pit"; }
+mosk_fild02,183,252,1	script	CôÒng diòch chuyêÒn#32	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",32,"Moscovia Dungeon"; }
+nyd_dun02,104,192,3	script	CôÒng diòch chuyêÒn#33	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",33,"Nidhoggur's Nest"; }
+niflheim,154,119,3	script	CôÒng diòch chuyêÒn#34	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",34,"Niflheim Dungeon"; }
+hugel,203,110,3	script	CôÒng diòch chuyêÒn#35	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",35,"Odin Temple"; }
+in_orcs01,23,174,3	script	CôÒng diòch chuyêÒn#36	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",36,"Orc Dungeon"; }
+pay_arche,41,136,3	script	CôÒng diòch chuyêÒn#37	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",37,"Payon Cave"; }
+prt_fild05,273,216,3	script	CôÒng diòch chuyêÒn#38	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",38,"Prontera Culverts"; }
+moc_ruins,56,156,1	script	CôÒng diòch chuyêÒn#39	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",39,"Pyramid"; }
+ra_temin,21,318,3	script	CôÒng diòch chuyêÒn#40	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",40,"Rachel Sanctuary"; }
+moc_fild19,107,96,3	script	CôÒng diòch chuyêÒn#41	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",41,"Sphinx"; }
+alb2trea,94,106,3	script	CôÒng diòch chuyêÒn#42	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",42,"Sunken Ship"; }
+hu_fild01,145,159,3	script	CôÒng diòch chuyêÒn#43	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",43,"Thanatos Tower"; }
+ve_fild03,176,239,3	script	CôÒng diòch chuyêÒn#44	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",44,"Thor Volcano"; }
+xmas,150,312,4	script	CôÒng diòch chuyêÒn#45	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",45,"Toy Factory"; }
+tur_dun01,160,242,3	script	CôÒng diòch chuyêÒn#46	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",46,"Turtle Island"; }
+umbala,112,279,4	script	CôÒng diòch chuyêÒn#47	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",47,"Umbala Dungeon"; }
 
 // morroc_des,295,211,5	script	CôÒng diòch chuyêÒn#15	112,{ callfunc "QWS_Dungeon_Warpra",15,"Dimensional Gorge"; close; }
 // lasa_fild02,347,238,4	script	CôÒng diòch chuyêÒn#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Dragon's Nest"; close; }
