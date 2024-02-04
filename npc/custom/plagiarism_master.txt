@@ -1,0 +1,35 @@
+-	script	Plagiarism_Master	-1,{
+  .@plagiarism_level = getskilllv(225);
+
+  mes "[ ^0000FFBâòc thâÌy Sao cheìp^000000 ]";
+	mes "Tôi coì thêÒ giuìp baòn sao cheìp kyÞ nãng.";
+  mes "ÐiêÌu kiêòn laÌ baòn ðaÞ hoòc ^0000FFSao Cheìp (Plagiarism)^000000.";
+  next;
+
+  if (!.@plagiarism_level) {
+    mes "- baòn không ðuÒ ðiêÌu kiêòn ðêÒ sao cheìp kyÞ nãng -";
+    close;
+  }
+
+  mes "[ ^0000FFBâòc thâÌy Sao cheìp^000000 ]";
+  mes "Baòn muôìn hoòc kyÞ nãng naÌo?";
+  mes "^FF0000(Lýu yì: BaÒo tôÌn kyÞ nãng (Preserve) phaÒi ðýõòc tãìt)^000000";
+
+  set .@SkillID,select( implode( .SkillName$,":" ) ) - 1;
+  mes "ÐaÞ choòn: "+.Skillname$[.@SkillID];
+
+  debugmes ".@plagiarism_level="+.@plagiarism_level;
+  debugmes ".SkillLv[.@SkillID]="+.SkillLv[.@SkillID];
+
+  close2;
+  plagiarizeskill .SkillID[.@SkillID], .@plagiarism_level >= .SkillLv[.@SkillID] ? .SkillLv[.@SkillID] : .@plagiarism_level;
+  end;
+
+  OnInit:
+    setarray .SkillID[0],5,7,11,13,14,15,17,18,19,20,21,24,28,42,46,47,52,62,70,77,79,80,81,83,84,85,86,88,89,90,91,116,121,122,123,141,148,152,156,229,230,250,251,253,254,263,266,267,271,272,337,421,526,527,528,530,531,534,535,536,537,539,540,541,542,1001,1004,1006,1009;
+    setarray .SkillLv[0],10,10,10,10,10,10,10,10,10,10,10,1,10,10,10,10,10,10,10,10,10,10,10,10,10,10,5,10,10,5,5,5,5,5,5,10,1,1,1,5,5,5,5,10,10,10,5,5,5,5,1,7,10,5,10,5,5,10,10,5,10,5,10,5,5,1,1,1,1;
+    setarray .SkillName$[0],"- Bash","- Magnum Break","- Napalm Beat","- Soul Strike","- Cold Bolt","- Frost Diver","- Fire Ball","- Fire Wall","- Fire Bolt","- Lightning Bolt","- Thunderstorm","- Ruwach","- Heal","- Mammonite","- Double Strafe","- Arrow Shower","- Envenom","- Bowling Bash","- Sanctuary","- Turn Undead","- Magnus Exorcismus","- Fire Pillar","- Sightrasher","- Meteor Storm","- Jupitel Thunder","- Lord of Vermilion","- Water Ball","- Frost Nova","- Storm Gust","- Earth Spike","- Heaven's Drive","- Land Mine","- Freezing Trap","- Blast Mine","- Claymore Trap","- Venom Splasher","- Arrow Repel","- Stone Fling","- Holy Light","- Bomb","- Acid Terror","- Smite","- Shield Boomerang","- Holy Cross","- Grand Cross","- Raging Trifecta Blow","- Occult Impaction","- Throw Spirit Sphere","- Asura Strike","- Raging Quadruple Blow","- Throw Tomahawk","- Flying Kick","- Throw Zeny","- Improvised Defense","- Vanishing Slash","- Shadow Slash","- Cicada Skin Sheeding","- Crimson Fire Petal","- Crimson Fire Formation","- Raging Fire Dragon","- Spear of Ice","- Ice Meteor","- Wind Blade","- Lightning Strike of Destruction","- Kamaitachi","- Charge Attack","- Throw Venom Knife","- Sight Blaster","- Phantasmic Arrow";
+    end;
+}
+
+moc_para01,49,23,4	duplicate(Plagiarism_Master)	Plagiarism Master#Plagiarism_Master	4_M_TWMASKMAN
