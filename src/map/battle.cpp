@@ -1383,7 +1383,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			unit_set_walkdelay(target, gettick(), delay, 1);
 #ifdef RENEWAL
 			if (sc->getSCE(SC_SHRINK))
-				sc_start(src, target, SC_STUN, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
+				sc_start(target, src, SC_STUN, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
 #else
 			if (sc->getSCE(SC_SHRINK) && rnd() % 100 < 5 * sce->val1)
 				skill_blown(target, src, skill_get_blewcount(CR_SHRINK, 1), -1, BLOWN_NONE);
@@ -1846,11 +1846,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			switch (skill_id) {
 				case HN_SHIELD_CHAIN_RUSH:
 				case HN_DOUBLEBOWLINGBASH:
-					damage += damage / 2; 
+					damage += damage * 70 / 100; 
 					break;
 				case HN_MEGA_SONIC_BLOW:
 				case HN_SPIRAL_PIERCE_MAX:
-					damage += damage * 70 / 100;
+					damage *= 2;
 					break;
 			}
 		}
@@ -5817,7 +5817,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 50000;
 			break;
 		case HN_SPIRAL_PIERCE_MAX:
-			skillratio += -100 + 550 + 350 * skill_lv;
+			skillratio += -100 + 700 + 800 * skill_lv;
 			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			switch (status_get_size(target)){
@@ -5834,13 +5834,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case HN_SHIELD_CHAIN_RUSH:
-			skillratio += -100 + 600 + 450 * skill_lv;
+			skillratio += -100 + 700 + 500 * skill_lv;
 			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case HN_MEGA_SONIC_BLOW:
-			skillratio += -100 + 900 + 450 * skill_lv;
+			skillratio += -100 + 900 + 750 * skill_lv;
 			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 5 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			if (status_get_hp(target) < status_get_max_hp(target) / 2)
@@ -5848,7 +5848,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case HN_DOUBLEBOWLINGBASH:
-			skillratio += -100 + 150 + 250 * skill_lv;
+			skillratio += -100 + 200 + 300 * skill_lv;
 			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
