@@ -35443,7 +35443,7 @@ Body:
     Element: Water
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 250
+    AfterCastActDelay: 750
     Duration1: 4000
     Cooldown: 5000
     FixedCastTime: 1500
