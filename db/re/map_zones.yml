@@ -481,8 +481,9 @@ Body:
       Wraith_Card: 100
       Zeny_Knife: 100
     Maps:
-      airplane: true
+      air_if: true
       airplane2: true
+      airplane: true
       airplane_01: true
       airport: true
       alberta_in: true
@@ -495,14 +496,15 @@ Body:
       auction_02: true
       ayo_in01: true
       ayo_in02: true
+      ba_in01: true
       bat_room: true
       bra_in01: true
       cave: true
       cmd_in01: true
       cmd_in02: true
       conch_in: true
-      dali: true
       dali02: true
+      dali: true
       dew_in01: true
       dic_in01: true
       ecl_hub01: true
@@ -515,27 +517,39 @@ Body:
       gef_tower: true
       geffen_in: true
       gon_in: true
+      grademk: true
       guild_vs2: true
       har_in01: true
       hu_in01: true
+      icas_in2: true
+      icas_in: true
+      icecastle: true
       in_hunter: true
       in_orcs01: true
       in_rogue: true
-      int_land: true
       int_land01: true
       int_land02: true
       int_land03: true
       int_land04: true
+      int_land: true
       itemmall: true
       iz_ac01: true
+      iz_ac01_a: true
+      iz_ac01_b: true
       iz_ac01_c: true
+      iz_ac01_d: true
       iz_ac02: true
+      iz_ac02_a: true
       iz_ac02_b: true
+      iz_ac02_c: true
+      iz_ac02_d: true
       iz_ng01: true
       izlude_in: true
       jawaii: true
       jawaii_in: true
       job3_gen01: true
+      jor_safty1: true
+      jor_safty2: true
       kh_mansion: true
       kh_rossi: true
       kh_school: true
@@ -552,6 +566,7 @@ Body:
       mal_in01: true
       mal_in02: true
       man_in01: true
+      memohall: true
       mid_campin: true
       moc_castle: true
       moc_para01: true
@@ -564,6 +579,12 @@ Body:
       new_5-3: true
       nif_in: true
       nyd_dun02: true
+      ordeal_1-1: true
+      ordeal_1-2: true
+      ordeal_2-1: true
+      ordeal_2-2: true
+      ordeal_3-1: true
+      ordeal_3-2: true
       paramk: true
       pay_arche: true
       payon_in01: true
@@ -574,18 +595,25 @@ Body:
       prt_cas_q: true
       prt_castle: true
       prt_church: true
+      prt_elib: true
+      prt_evt_in: true
       prt_in: true
       prt_lib: true
       prt_lib_q: true
       prt_pri00: true
+      pub_cat: true
       que_house_s: true
       que_ng: true
       que_rachel: true
       que_temsky: true
+      que_thr: true
       ra_in01: true
       ra_temin: true
       ra_temsky: true
+      rag_fes: true
+      rag_fes_a: true
       rebel_in: true
+      rgsr_in: true
       s_atelier: true
       sch_lab: true
       sec_in01: true
@@ -595,8 +623,8 @@ Body:
       turbo_room: true
       um_in: true
       un_bk_q: true
-      ve_in: true
       ve_in02: true
+      ve_in: true
       verus04: true
       xmas_in: true
       y_airport: true
@@ -606,34 +634,6 @@ Body:
       yuno_in04: true
       yuno_in05: true
       yuno_pre: true
-      air_if: true
-      ba_in01: true
-      grademk: true
-      icas_in: true
-      icas_in2: true
-      iz_ac01_a: true
-      iz_ac01_b: true
-      iz_ac01_d: true
-      iz_ac02_a: true
-      iz_ac02_c: true
-      iz_ac02_d: true
-      jor_safty1: true
-      jor_safty2: true
-      prt_elib: true
-      prt_evt_in: true
-      pub_cat: true
-      rgsr_in: true
-      icecastle: true
-      memohall: true
-      que_thr: true
-      rag_fes: true
-      rag_fes_a: true
-      ordeal_1-1: true
-      ordeal_1-2: true
-      ordeal_2-1: true
-      ordeal_2-2: true
-      ordeal_3-1: true
-      ordeal_3-2: true
     Mapflags:
       - Flag: NoBonusItemDrop
       - Flag: NoBranch
@@ -826,6 +826,8 @@ Body:
       guild_vs1-4: true
       guild_vs2-1: true
       guild_vs2-2: true
+      gw_fild01: true
+      gw_fild02: true
       harboro2: true
       hu_fild02: true
       hu_fild03: true
@@ -835,6 +837,15 @@ Body:
       izlu2dun: true
       job_gun: true
       job_thief1: true
+      jor_back1: true
+      jor_back2: true
+      jor_back3: true
+      jor_back4: true
+      jor_back5: true
+      jor_back6: true
+      jor_tail: true
+      jor_twice: true
+      jor_twig: true
       lhz_fild01: true
       lhz_fild02: true
       lhz_fild03: true
@@ -923,17 +934,6 @@ Body:
       yuno_fild10: true
       yuno_fild11: true
       yuno_fild12: true
-      gw_fild01: true
-      gw_fild02: true
-      jor_back1: true
-      jor_back2: true
-      jor_back3: true
-      jor_back4: true
-      jor_back5: true
-      jor_back6: true
-      jor_tail: true
-      jor_twice: true
-      jor_twig: true
     Mapflags:
       - Flag: NightEnabled
       - Flag: PrivateAirship_Destination
@@ -1079,14 +1079,31 @@ Body:
       ama_dun03: true
       amicitia1: true
       amicitia2: true
+      ant_d02_i: true
       anthell01: true
       anthell02: true
       ayo_dun01: true
       ayo_dun02: true
       ayo_fild02: true
-      beach_dun: true
+      ba_2whs01: true
+      ba_2whs02: true
+      ba_bath: true
+      ba_chess: true
+      ba_lib: true
+      ba_lost: true
+      ba_pw01: true
+      ba_pw02: true
+      ba_pw03: true
       beach_dun2: true
       beach_dun3: true
+      beach_dun: true
+      bl_death: true
+      bl_grass: true
+      bl_ice: true
+      bl_lava: true
+      bl_soul: true
+      bl_temple: true
+      bl_venom: true
       bra_dun01: true
       bra_dun02: true
       bra_fild01: true
@@ -1097,6 +1114,7 @@ Body:
       c_tower3_: true
       c_tower4: true
       clock_01: true
+      com_d02_i: true
       dew_dun01: true
       dew_dun02: true
       dew_fild01: true
@@ -1108,8 +1126,12 @@ Body:
       ecl_tdun01: true
       ecl_tdun02: true
       ecl_tdun03: true
+      ein_d02_i: true
       ein_dun01: true
       ein_dun02: true
+      ein_dun03: true
+      for_dun01: true
+      for_dun02: true
       gef_d01_i: true
       gef_dun00: true
       gef_dun01: true
@@ -1124,6 +1146,7 @@ Body:
       gefenia03: true
       gefenia04: true
       gl_cas01: true
+      gl_cas01_: true
       gl_cas02: true
       gl_church: true
       gl_chyard: true
@@ -1132,8 +1155,8 @@ Body:
       gl_in01: true
       gl_knt01: true
       gl_knt02: true
-      gl_prison: true
       gl_prison1: true
+      gl_prison: true
       gl_sew01: true
       gl_sew02: true
       gl_sew03: true
@@ -1152,11 +1175,22 @@ Body:
       in_sphinx3: true
       in_sphinx4: true
       in_sphinx5: true
+      iz_d04_i: true
+      iz_d05_i: true
       iz_dun00: true
       iz_dun01: true
       iz_dun02: true
       iz_dun03: true
       iz_dun04: true
+      jor_ab01: true
+      jor_ab02: true
+      jor_dun01: true
+      jor_dun02: true
+      jor_dun03: true
+      jor_maze: true
+      jor_root1: true
+      jor_root2: true
+      jor_root3: true
       jupe_cave: true
       jupe_core: true
       juperos_01: true
@@ -1180,6 +1214,7 @@ Body:
       ma_dun01: true
       mag_dun01: true
       mag_dun02: true
+      mag_dun03: true
       mal_dun01: true
       man_fild01: true
       man_fild02: true
@@ -1187,6 +1222,7 @@ Body:
       mjo_dun01: true
       mjo_dun02: true
       mjo_dun03: true
+      mjo_wst01: true
       mjolnir_02: true
       mjolnir_04: true
       mjolnir_05: true
@@ -1212,6 +1248,8 @@ Body:
       mosk_dun02: true
       mosk_dun03: true
       nameless_n: true
+      nif_dun01: true
+      nif_dun02: true
       nif_fild01: true
       nif_fild02: true
       niflheim: true
@@ -1222,6 +1260,8 @@ Body:
       odin_tem03: true
       orcsdun01: true
       orcsdun02: true
+      oz_dun01: true
+      oz_dun02: true
       pay_d03_i: true
       pay_dun00: true
       pay_dun01: true
@@ -1232,6 +1272,7 @@ Body:
       prt_maze01: true
       prt_maze02: true
       prt_maze03: true
+      prt_mz03_i: true
       prt_prison: true
       prt_q: true
       prt_sewb1: true
@@ -1239,6 +1280,7 @@ Body:
       prt_sewb3: true
       prt_sewb4: true
       que_san04: true
+      ra_pol01: true
       ra_san01: true
       ra_san02: true
       ra_san03: true
@@ -1248,6 +1290,11 @@ Body:
       sec_in02: true
       silk_lair: true
       slabw01: true
+      sp_os: true
+      sp_rudus2: true
+      sp_rudus3: true
+      sp_rudus4: true
+      sp_rudus: true
       spl_fild01: true
       spl_fild02: true
       spl_fild03: true
@@ -1267,6 +1314,8 @@ Body:
       treasure_n2: true
       tur_d03_i: true
       tur_d04_i: true
+      tur_d04ia: true
+      tur_d04ib: true
       tur_dun01: true
       tur_dun02: true
       tur_dun03: true
@@ -1289,55 +1338,6 @@ Body:
       yuno_fild07: true
       yuno_fild08: true
       yuno_fild09: true
-      ant_d02_i: true
-      com_d02_i: true
-      ein_d02_i: true
-      ein_dun03: true
-      for_dun01: true
-      for_dun02: true
-      mag_dun03: true
-      oz_dun01: true
-      oz_dun02: true
-      prt_mz03_i: true
-      tur_d04ia: true
-      tur_d04ib: true
-      bl_death: true
-      bl_grass: true
-      bl_ice: true
-      bl_lava: true
-      bl_soul: true
-      bl_temple: true
-      bl_venom: true
-      ba_2whs01: true
-      ba_2whs02: true
-      ba_bath: true
-      ba_chess: true
-      ba_lib: true
-      ba_lost: true
-      ba_pw01: true
-      ba_pw02: true
-      ba_pw03: true
-      gl_cas01_: true
-      iz_d04_i: true
-      iz_d05_i: true
-      jor_ab01: true
-      jor_ab02: true
-      jor_dun01: true
-      jor_dun02: true
-      jor_dun03: true
-      jor_maze: true
-      jor_root1: true
-      jor_root2: true
-      jor_root3: true
-      mjo_wst01: true
-      nif_dun01: true
-      nif_dun02: true
-      ra_pol01: true
-      sp_rudus: true
-      sp_rudus2: true
-      sp_rudus3: true
-      sp_rudus4: true
-      sp_os: true
     Mapflags:
       - Flag: NoMemo
       - Flag: NoWarpTo
@@ -1600,15 +1600,9 @@ Body:
       force_3-3: true
       force_4-1: true
       force_5-1: true
-      #force_map1: true
-      #force_map2: true
-      #force_map3: true
       gon_test: true
       guild_room: true
       himinn: true
-      #hunter_1-1: true
-      #hunter_2-1: true
-      #hunter_3-1: true
       ice_dun04: true
       in_moc_16: true
       job3_arch01: true
@@ -1631,19 +1625,15 @@ Body:
       job_cru: true
       job_duncer: true
       job_hunte: true
-      #job_hunter: true
-      #job_knight: true
       job_knt: true
       job_ko: true
       job_monk: true
-      #job_priest: true
       job_prist: true
       job_sage: true
       job_soul: true
       job_star: true
       job_sword1: true
       job_wiz: true
-      #job_wizard: true
       jupe_area1: true
       jupe_area2: true
       jupe_core2: true
@@ -1652,9 +1642,6 @@ Body:
       jupe_gate: true
       kh_kiehl01: true
       kh_kiehl02: true
-      #knight_1-1: true
-      #knight_2-1: true
-      #knight_3-1: true
       lhz_cube: true
       lhz_d_n2: true
       lhz_que01: true
@@ -1667,14 +1654,6 @@ Body:
       ma_zif07: true
       ma_zif08: true
       ma_zif09: true
-      #moc_fild04: true
-      #moc_fild05: true
-      #moc_fild06: true
-      #moc_fild08: true
-      #moc_fild09: true
-      #moc_fild10: true
-      #moc_fild14: true
-      #moc_fild15: true
       moc_fild22b: true
       monk_test: true
       mosk_fild01: true
@@ -1685,9 +1664,6 @@ Body:
       p_track01: true
       p_track02: true
       poring_w01: true
-      #priest_1-1: true
-      #priest_2-1: true
-      #priest_3-1: true
       pvp_n_room: true
       pvp_room: true
       pvp_y_room: true
@@ -1724,11 +1700,35 @@ Body:
       sword_3-1: true
       thor_camp: true
       valkyrie: true
+      yggdrasil01: true
+      z_agit: true
+      #force_map1: true
+      #force_map2: true
+      #force_map3: true
+      #hunter_1-1: true
+      #hunter_2-1: true
+      #hunter_3-1: true
+      #job_hunter: true
+      #job_knight: true
+      #job_priest: true
+      #job_wizard: true
+      #knight_1-1: true
+      #knight_2-1: true
+      #knight_3-1: true
+      #moc_fild04: true
+      #moc_fild05: true
+      #moc_fild06: true
+      #moc_fild08: true
+      #moc_fild09: true
+      #moc_fild10: true
+      #moc_fild14: true
+      #moc_fild15: true
+      #priest_1-1: true
+      #priest_2-1: true
+      #priest_3-1: true
       #wizard_1-1: true
       #wizard_2-1: true
       #wizard_3-1: true
-      yggdrasil01: true
-      z_agit: true
     Mapflags:
       - Flag: GuildLock
       - Flag: NoBonusItemDrop
