@@ -35945,7 +35945,7 @@ Body:
     Element: Fire
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 250
+    AfterCastActDelay: 750
     Duration1: 5000
     Cooldown: 5000
     FixedCastTime: 1500
