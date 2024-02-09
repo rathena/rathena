@@ -5579,7 +5579,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_SAVAGE_IMPACT:
-			skillratio += -100 + 90 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 105 * skill_lv + 5 * sstatus->pow;
 
 			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
 				skillratio += 20 * skill_lv + 3 * sstatus->pow;	// !TODO: check POW ratio
