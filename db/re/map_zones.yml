@@ -180,7 +180,6 @@ Body:
       aldebaran: true
       amatsu: true
       ayothaya: true
-      ba_maison: true
       brasilis: true
       comodo: true
       dewata: true
@@ -201,6 +200,7 @@ Body:
       izlude_d: true
       jor_nest: true
       jor_sanct: true
+      jor_twig: true
       lasagna: true
       louyang: true
       ma_scene01: true
@@ -845,7 +845,6 @@ Body:
       jor_back6: true
       jor_tail: true
       jor_twice: true
-      jor_twig: true
       lhz_fild01: true
       lhz_fild02: true
       lhz_fild03: true
@@ -1091,6 +1090,7 @@ Body:
       ba_chess: true
       ba_lib: true
       ba_lost: true
+      ba_maison: true
       ba_pw01: true
       ba_pw02: true
       ba_pw03: true
@@ -1130,8 +1130,6 @@ Body:
       ein_dun01: true
       ein_dun02: true
       ein_dun03: true
-      for_dun01: true
-      for_dun02: true
       gef_d01_i: true
       gef_dun00: true
       gef_dun01: true
