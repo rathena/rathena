@@ -36072,11 +36072,11 @@ Body:
     CastCancel: true
     AfterCastActDelay: 300
     Duration1: 300000
-    Cooldown: 300000
+    Cooldown: 60000
     FixedCastTime: 4000
     Requires:
       SpCost: 60
-      ApCost: 150
+      ApCost: 125
     Status: Climax
   - Id: 5233
     Name: AG_ROCK_DOWN
