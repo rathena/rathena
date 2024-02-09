@@ -35490,7 +35490,7 @@ Body:
     Element: Dark
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 750
     Duration1: 4000
     Cooldown: 4000
     FixedCastTime: 1500
