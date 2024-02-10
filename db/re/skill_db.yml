@@ -39159,11 +39159,11 @@ Body:
     CastCancel: true
     AfterCastActDelay: 500
     Duration1: 180000
-    Cooldown: 180000
+    Cooldown: 60000
     FixedCastTime: 1000
     Requires:
       SpCost: 300
-      ApCost: 200
+      ApCost: 125
     Status: CalamityGale
   - Id: 5329
     Name: WH_HAWKBOOMERANG
