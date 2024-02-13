@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
-   Copyright (C) 2005-2010  Mark A Lindner
+   Copyright (C) 2005-2020  Mark A Lindner
 
    This file is part of libconfig.
 
@@ -21,14 +21,13 @@
 */
 
 #include "scanctx.h"
+#include "strvec.h"
 #include "wincompat.h"
+#include "util.h"
 
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define STRING_BLOCK_SIZE 64
-#define CHUNK_SIZE 32
 
 /* ------------------------------------------------------------------------- */
 
@@ -37,135 +36,163 @@ static const char *err_include_too_deep = "include file nesting too deep";
 
 /* ------------------------------------------------------------------------- */
 
-static const char *__scanctx_add_filename(struct scan_context *ctx,
-                                          const char *filename)
+void libconfig_scanctx_init(struct scan_context *ctx, const char *top_filename)
 {
-  unsigned int count = ctx->num_filenames;
-  const char **f;
-
-  for(f = ctx->filenames; count > 0; ++f, --count)
-  {
-    if(!strcmp(*f, filename))
-    {
-      free((void *)filename);
-      return(*f); /* already in list */
-    }
-  }
-
-  if((ctx->num_filenames % CHUNK_SIZE) == 0)
-  {
-    ctx->filenames = (const char **)realloc(
-      (void *)ctx->filenames,
-      (ctx->num_filenames + CHUNK_SIZE) * sizeof(const char *));
-  }
-
-  ctx->filenames[ctx->num_filenames] = filename;
-  ++ctx->num_filenames;
-  return(filename);
-}
-
-/* ------------------------------------------------------------------------- */
-
-void scanctx_init(struct scan_context *ctx, const char *top_filename)
-{
-  memset(ctx, 0, sizeof(struct scan_context));
+  __zero(ctx);
   if(top_filename)
-    ctx->top_filename = __scanctx_add_filename(ctx, strdup(top_filename));
+  {
+    ctx->top_filename = strdup(top_filename);
+    libconfig_strvec_append(&(ctx->filenames), ctx->top_filename);
+  }
 }
 
 /* ------------------------------------------------------------------------- */
 
-const char **scanctx_cleanup(struct scan_context *ctx,
-                             unsigned int *num_filenames)
+const char **libconfig_scanctx_cleanup(struct scan_context *ctx)
 {
   int i;
 
-  for(i = 0; i < ctx->depth; ++i)
-    fclose(ctx->streams[i]);
+  for(i = 0; i < ctx->stack_depth; ++i)
+  {
+    struct include_stack_frame *frame = &(ctx->include_stack[i]);
 
-  free((void *)(strbuf_release(&(ctx->string))));
+    if(frame->current_stream)
+      fclose(frame->current_stream);
 
-  *num_filenames = ctx->num_filenames;
-  return(ctx->filenames);
+    __delete(frame->files);
+  }
+
+  __delete(libconfig_strbuf_release(&(ctx->string)));
+
+  return(libconfig_strvec_release(&(ctx->filenames)));
 }
 
 /* ------------------------------------------------------------------------- */
 
-FILE *scanctx_push_include(struct scan_context *ctx, void *buffer,
-                           const char **error)
+FILE *libconfig_scanctx_push_include(struct scan_context *ctx, void *prev_buffer,
+                                     const char *path, const char **error)
 {
-  FILE *fp = NULL;
-  const char *file;
-  char *full_file = NULL;
+  struct include_stack_frame *frame;
+  const char **files = NULL, **f;
+  FILE *fp;
 
-  *error = NULL;
-
-  if(ctx->depth == MAX_INCLUDE_DEPTH)
+  if(ctx->stack_depth == MAX_INCLUDE_DEPTH)
   {
     *error = err_include_too_deep;
     return(NULL);
   }
 
-  file = scanctx_take_string(ctx);
-  if(ctx->config->include_dir)
+  *error = NULL;
+
+  if(ctx->config->include_fn)
+    files = ctx->config->include_fn(ctx->config, ctx->config->include_dir,
+                                    path, error);
+
+  if(*error || !files)
   {
-    full_file = (char *)malloc(strlen(ctx->config->include_dir) + strlen(file)
-                               + 2);
-    strcpy(full_file, ctx->config->include_dir);
-    strcat(full_file, FILE_SEPARATOR);
-    strcat(full_file, file);
+    libconfig_strvec_delete(files);
+    return(NULL);
   }
 
-  fp = fopen(full_file ? full_file : file, "rt");
-  free((void *)full_file);
+  if(!*files)
+  {
+    libconfig_strvec_delete(files);
+    return(NULL);
+  }
 
-  if(fp)
-  {
-    ctx->streams[ctx->depth] = fp;
-    ctx->files[ctx->depth] = __scanctx_add_filename(ctx, file);
-    ctx->buffers[ctx->depth] = buffer;
-    ++(ctx->depth);
-  }
-  else
-  {
-    free((void *)file);
-    *error = err_bad_include;
-  }
+  frame = &(ctx->include_stack[ctx->stack_depth]);
+
+  for(f = files; *f; ++f)
+    libconfig_strvec_append(&(ctx->filenames), *f);
+
+  frame->files = files;
+  frame->current_file = NULL;
+  frame->current_stream = NULL;
+  frame->parent_buffer = prev_buffer;
+  ++(ctx->stack_depth);
+
+  fp = libconfig_scanctx_next_include_file(ctx, error);
+  if(!fp)
+    (void)libconfig_scanctx_pop_include(ctx);
 
   return(fp);
 }
 
 /* ------------------------------------------------------------------------- */
 
-void *scanctx_pop_include(struct scan_context *ctx)
+FILE *libconfig_scanctx_next_include_file(struct scan_context *ctx,
+                                          const char **error)
 {
-  void *buffer;
+  struct include_stack_frame *include_frame;
 
-  if(ctx->depth == 0)
-    return(NULL); /* stack underflow */
+  *error = NULL;
 
-  --(ctx->depth);
-  buffer = ctx->buffers[ctx->depth];
-  fclose(ctx->streams[ctx->depth]);
+  if(ctx->stack_depth == 0)
+    return(NULL);
 
-  return(buffer);
+  include_frame = &(ctx->include_stack[ctx->stack_depth - 1]);
+
+  if(include_frame->current_file)
+    ++(include_frame->current_file);
+  else
+    include_frame->current_file = include_frame->files;
+
+  if(include_frame->current_stream)
+  {
+    fclose(include_frame->current_stream);
+    include_frame->current_stream = NULL;
+  }
+
+  if(!*(include_frame->current_file))
+    return(NULL);
+
+  include_frame->current_stream = fopen(*(include_frame->current_file), "rt");
+  if(!include_frame->current_stream)
+    *error = err_bad_include;
+
+  return(include_frame->current_stream);
 }
 
 /* ------------------------------------------------------------------------- */
 
-char *scanctx_take_string(struct scan_context *ctx)
+void *libconfig_scanctx_pop_include(struct scan_context *ctx)
 {
-  char *r = strbuf_release(&(ctx->string));
+  struct include_stack_frame *frame;
+
+  if(ctx->stack_depth == 0)
+    return(NULL); /* stack underflow */
+
+  frame = &(ctx->include_stack[--(ctx->stack_depth)]);
+
+  __delete(frame->files);
+  frame->files = NULL;
+
+  if(frame->current_stream)
+  {
+    fclose(frame->current_stream);
+    frame->current_stream = NULL;
+  }
+
+  return(frame->parent_buffer);
+}
+
+/* ------------------------------------------------------------------------- */
+
+char *libconfig_scanctx_take_string(struct scan_context *ctx)
+{
+  char *r = libconfig_strbuf_release(&(ctx->string));
 
   return(r ? r : strdup(""));
 }
 
 /* ------------------------------------------------------------------------- */
 
-const char *scanctx_current_filename(struct scan_context *ctx)
+const char *libconfig_scanctx_current_filename(struct scan_context *ctx)
 {
-  return((ctx->depth == 0) ? ctx->top_filename : ctx->files[ctx->depth - 1]);
+  if(ctx->stack_depth > 0)
+    return(*(ctx->include_stack[ctx->stack_depth - 1].current_file));
+
+  return(ctx->top_filename);
 }
 
 /* ------------------------------------------------------------------------- */
-/* eof */

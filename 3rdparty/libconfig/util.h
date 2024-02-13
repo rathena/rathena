@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
-   Copyright (C) 2005-2020  Mark A Lindner
+   Copyright (C) 2005-2018  Mark A Lindner
 
    This file is part of libconfig.
 
@@ -20,30 +20,16 @@
    ----------------------------------------------------------------------------
 */
 
-#ifndef __libconfig_parsectx_h
-#define __libconfig_parsectx_h
+#include <string.h>
+#include <sys/types.h>
 
-#include "libconfig.h"
-#include "strbuf.h"
-#include "util.h"
+#define __new(T) (T *)calloc(1, sizeof(T)) /* zeroed */
+#define __delete(P) free((void *)(P))
+#define __zero(P) memset((void *)(P), 0, sizeof(*P))
 
-struct parse_context
-{
-  config_t *config;
-  config_setting_t *parent;
-  config_setting_t *setting;
-  char *name;
-  strbuf_t string;
-};
+extern long long libconfig_parse_integer(const char *s, int *ok);
+extern unsigned long long libconfig_parse_hex64(const char *s);
 
-#define libconfig_parsectx_init(C) \
-  __zero(C)
-#define libconfig_parsectx_cleanup(C) \
-  __delete(libconfig_strbuf_release(&((C)->string)))
+extern void libconfig_format_double(double val, int precision, int sci_ok,
+                                    char *buf, size_t buflen);
 
-#define libconfig_parsectx_append_string(C, S) \
-  libconfig_strbuf_append_string(&((C)->string), (S))
-#define libconfig_parsectx_take_string(C) \
-  libconfig_strbuf_release(&((C)->string))
-
-#endif /* __libconfig_parsectx_h */

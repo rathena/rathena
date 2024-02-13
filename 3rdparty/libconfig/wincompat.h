@@ -1,8 +1,6 @@
-#pragma once
-
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
-   Copyright (C) 2005-2010  Mark A Lindner
+   Copyright (C) 2005-2018  Mark A Lindner
 
    This file is part of libconfig.
 
@@ -25,7 +23,17 @@
 #ifndef __wincompat_h
 #define __wincompat_h
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
+#include <limits.h>
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) \
+  || defined(WIN64) || defined(_WIN64) || defined(__WIN64__)
+
+/* Prevent warnings about redefined malloc/free in generated code. */
+#ifndef _STDLIB_H
+#define _STDLIB_H
+#endif
+
+#include <malloc.h>
 
 #ifdef _MSC_VER
 #pragma warning (disable: 4996)
@@ -34,21 +42,27 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#define snprintf  _snprintf
+#define fileno _fileno
 
-#ifndef __MINGW32__
+#if _MSC_VER <= 1800
+#define snprintf  _snprintf
+#endif
+
+#if !defined(__MINGW32__) && _MSC_VER < 1800
 #define atoll     _atoi64
 #define strtoull  _strtoui64
-#endif /* __MINGW32__ */
+#define strtoll   _strtoi64
+#endif
+
+#if !defined(S_ISDIR) && defined(S_IFMT) && defined(S_IFDIR)
+#define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+#endif
 
 #endif
 
 #if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__) \
-     || defined(__MINGW32__))
-
-/* Why does gcc on MinGW use the Visual C++ style format directives
- * for 64-bit integers? Inquiring minds want to know....
- */
+  || defined(WIN64) || defined(_WIN64) || defined(__WIN64__) \
+  || defined(__MINGW32__))
 
 #define INT64_FMT "%I64d"
 #define UINT64_FMT "%I64u"
@@ -68,25 +82,37 @@
 
 #endif /* defined(WIN32) || defined(__MINGW32__) */
 
-#if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__)) \
+#if (defined(WIN32) || defined(_WIN32) || defined(__WIN32__) \
+  || defined(WIN64) || defined(_WIN64) || defined(__WIN64__)) \
   && ! defined(__MINGW32__)
 
 #define INT64_CONST(I)  (I ## i64)
 #define UINT64_CONST(I) (I ## Ui64)
 
-#ifndef INT32_MAX
-#define INT32_MAX (2147483647)
+#ifndef INT_MAX
+#define INT_MAX (2147483647)
 #endif
 
-#ifndef INT32_MIN
-#define INT32_MIN (-2147483647-1)
+#ifndef INT_MIN
+#define INT_MIN (-2147483647-1)
 #endif
 
-#else /* defined(WIN32) && ! defined(__MINGW32__) */
+#include <Shlwapi.h>
+#define IS_RELATIVE_PATH(P) \
+  (PathIsRelativeA(P))
+
+extern int fsync(int fd);
+
+#else /* defined(WIN32/WIN64) && ! defined(__MINGW32__) */
 
 #define INT64_CONST(I)  (I ## LL)
 #define UINT64_CONST(I) (I ## ULL)
 
-#endif /* defined(WIN32) && ! defined(__MINGW32__) */
+#define IS_RELATIVE_PATH(P) \
+  ((P)[0] != '/')
+
+#include <unistd.h> /* for fsync() */
+
+#endif /* defined(WIN32/WIN64) && ! defined(__MINGW32__) */
 
 #endif /* __wincompat_h */

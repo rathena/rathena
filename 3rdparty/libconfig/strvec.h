@@ -20,30 +20,24 @@
    ----------------------------------------------------------------------------
 */
 
-#ifndef __libconfig_parsectx_h
-#define __libconfig_parsectx_h
+#ifndef __libconfig_strvec_h
+#define __libconfig_strvec_h
 
-#include "libconfig.h"
-#include "strbuf.h"
-#include "util.h"
+#include <string.h>
+#include <sys/types.h>
 
-struct parse_context
+typedef struct
 {
-  config_t *config;
-  config_setting_t *parent;
-  config_setting_t *setting;
-  char *name;
-  strbuf_t string;
-};
+  const char **strings;
+  const char **end;
+  size_t length;
+  size_t capacity;
+} strvec_t;
 
-#define libconfig_parsectx_init(C) \
-  __zero(C)
-#define libconfig_parsectx_cleanup(C) \
-  __delete(libconfig_strbuf_release(&((C)->string)))
+extern void libconfig_strvec_append(strvec_t *vec, const char *s);
 
-#define libconfig_parsectx_append_string(C, S) \
-  libconfig_strbuf_append_string(&((C)->string), (S))
-#define libconfig_parsectx_take_string(C) \
-  libconfig_strbuf_release(&((C)->string))
+extern const char **libconfig_strvec_release(strvec_t *vec);
 
-#endif /* __libconfig_parsectx_h */
+extern void libconfig_strvec_delete(const char * const *vec);
+
+#endif /* __libconfig_strvec_h */

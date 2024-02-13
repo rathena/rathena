@@ -1,12 +1,10 @@
-#pragma once
-
 #ifndef libconfig_yyHEADER_H
 #define libconfig_yyHEADER_H 1
 #define libconfig_yyIN_HEADER 1
 
-#line 6 "scanner.h"
+#line 5 "scanner.h"
 
-#line 8 "scanner.h"
+#line 7 "scanner.h"
 
 #define  YY_INT_ALIGNED short int
 
@@ -14,10 +12,232 @@
 
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
-#define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 33
+#define YY_FLEX_MINOR_VERSION 6
+#define YY_FLEX_SUBMINOR_VERSION 4
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
+#endif
+
+#ifdef yy_create_buffer
+#define libconfig_yy_create_buffer_ALREADY_DEFINED
+#else
+#define yy_create_buffer libconfig_yy_create_buffer
+#endif
+
+#ifdef yy_delete_buffer
+#define libconfig_yy_delete_buffer_ALREADY_DEFINED
+#else
+#define yy_delete_buffer libconfig_yy_delete_buffer
+#endif
+
+#ifdef yy_scan_buffer
+#define libconfig_yy_scan_buffer_ALREADY_DEFINED
+#else
+#define yy_scan_buffer libconfig_yy_scan_buffer
+#endif
+
+#ifdef yy_scan_string
+#define libconfig_yy_scan_string_ALREADY_DEFINED
+#else
+#define yy_scan_string libconfig_yy_scan_string
+#endif
+
+#ifdef yy_scan_bytes
+#define libconfig_yy_scan_bytes_ALREADY_DEFINED
+#else
+#define yy_scan_bytes libconfig_yy_scan_bytes
+#endif
+
+#ifdef yy_init_buffer
+#define libconfig_yy_init_buffer_ALREADY_DEFINED
+#else
+#define yy_init_buffer libconfig_yy_init_buffer
+#endif
+
+#ifdef yy_flush_buffer
+#define libconfig_yy_flush_buffer_ALREADY_DEFINED
+#else
+#define yy_flush_buffer libconfig_yy_flush_buffer
+#endif
+
+#ifdef yy_load_buffer_state
+#define libconfig_yy_load_buffer_state_ALREADY_DEFINED
+#else
+#define yy_load_buffer_state libconfig_yy_load_buffer_state
+#endif
+
+#ifdef yy_switch_to_buffer
+#define libconfig_yy_switch_to_buffer_ALREADY_DEFINED
+#else
+#define yy_switch_to_buffer libconfig_yy_switch_to_buffer
+#endif
+
+#ifdef yypush_buffer_state
+#define libconfig_yypush_buffer_state_ALREADY_DEFINED
+#else
+#define yypush_buffer_state libconfig_yypush_buffer_state
+#endif
+
+#ifdef yypop_buffer_state
+#define libconfig_yypop_buffer_state_ALREADY_DEFINED
+#else
+#define yypop_buffer_state libconfig_yypop_buffer_state
+#endif
+
+#ifdef yyensure_buffer_stack
+#define libconfig_yyensure_buffer_stack_ALREADY_DEFINED
+#else
+#define yyensure_buffer_stack libconfig_yyensure_buffer_stack
+#endif
+
+#ifdef yylex
+#define libconfig_yylex_ALREADY_DEFINED
+#else
+#define yylex libconfig_yylex
+#endif
+
+#ifdef yyrestart
+#define libconfig_yyrestart_ALREADY_DEFINED
+#else
+#define yyrestart libconfig_yyrestart
+#endif
+
+#ifdef yylex_init
+#define libconfig_yylex_init_ALREADY_DEFINED
+#else
+#define yylex_init libconfig_yylex_init
+#endif
+
+#ifdef yylex_init_extra
+#define libconfig_yylex_init_extra_ALREADY_DEFINED
+#else
+#define yylex_init_extra libconfig_yylex_init_extra
+#endif
+
+#ifdef yylex_destroy
+#define libconfig_yylex_destroy_ALREADY_DEFINED
+#else
+#define yylex_destroy libconfig_yylex_destroy
+#endif
+
+#ifdef yyget_debug
+#define libconfig_yyget_debug_ALREADY_DEFINED
+#else
+#define yyget_debug libconfig_yyget_debug
+#endif
+
+#ifdef yyset_debug
+#define libconfig_yyset_debug_ALREADY_DEFINED
+#else
+#define yyset_debug libconfig_yyset_debug
+#endif
+
+#ifdef yyget_extra
+#define libconfig_yyget_extra_ALREADY_DEFINED
+#else
+#define yyget_extra libconfig_yyget_extra
+#endif
+
+#ifdef yyset_extra
+#define libconfig_yyset_extra_ALREADY_DEFINED
+#else
+#define yyset_extra libconfig_yyset_extra
+#endif
+
+#ifdef yyget_in
+#define libconfig_yyget_in_ALREADY_DEFINED
+#else
+#define yyget_in libconfig_yyget_in
+#endif
+
+#ifdef yyset_in
+#define libconfig_yyset_in_ALREADY_DEFINED
+#else
+#define yyset_in libconfig_yyset_in
+#endif
+
+#ifdef yyget_out
+#define libconfig_yyget_out_ALREADY_DEFINED
+#else
+#define yyget_out libconfig_yyget_out
+#endif
+
+#ifdef yyset_out
+#define libconfig_yyset_out_ALREADY_DEFINED
+#else
+#define yyset_out libconfig_yyset_out
+#endif
+
+#ifdef yyget_leng
+#define libconfig_yyget_leng_ALREADY_DEFINED
+#else
+#define yyget_leng libconfig_yyget_leng
+#endif
+
+#ifdef yyget_text
+#define libconfig_yyget_text_ALREADY_DEFINED
+#else
+#define yyget_text libconfig_yyget_text
+#endif
+
+#ifdef yyget_lineno
+#define libconfig_yyget_lineno_ALREADY_DEFINED
+#else
+#define yyget_lineno libconfig_yyget_lineno
+#endif
+
+#ifdef yyset_lineno
+#define libconfig_yyset_lineno_ALREADY_DEFINED
+#else
+#define yyset_lineno libconfig_yyset_lineno
+#endif
+
+#ifdef yyget_column
+#define libconfig_yyget_column_ALREADY_DEFINED
+#else
+#define yyget_column libconfig_yyget_column
+#endif
+
+#ifdef yyset_column
+#define libconfig_yyset_column_ALREADY_DEFINED
+#else
+#define yyset_column libconfig_yyset_column
+#endif
+
+#ifdef yywrap
+#define libconfig_yywrap_ALREADY_DEFINED
+#else
+#define yywrap libconfig_yywrap
+#endif
+
+#ifdef yyget_lval
+#define libconfig_yyget_lval_ALREADY_DEFINED
+#else
+#define yyget_lval libconfig_yyget_lval
+#endif
+
+#ifdef yyset_lval
+#define libconfig_yyset_lval_ALREADY_DEFINED
+#else
+#define yyset_lval libconfig_yyset_lval
+#endif
+
+#ifdef yyalloc
+#define libconfig_yyalloc_ALREADY_DEFINED
+#else
+#define yyalloc libconfig_yyalloc
+#endif
+
+#ifdef yyrealloc
+#define libconfig_yyrealloc_ALREADY_DEFINED
+#else
+#define yyrealloc libconfig_yyrealloc
+#endif
+
+#ifdef yyfree
+#define libconfig_yyfree_ALREADY_DEFINED
+#else
+#define yyfree libconfig_yyfree
 #endif
 
 /* First, we deal with  platform-specific or compiler-specific issues. */
@@ -37,7 +257,7 @@
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
 
-#if __STDC_VERSION__ >= 199901L
+#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
  * if you want the limit (max/min) macros for int types. 
@@ -60,7 +280,6 @@ typedef int flex_int32_t;
 typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
-#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -91,26 +310,23 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
+#ifndef SIZE_MAX
+#define SIZE_MAX               (~(size_t)0)
+#endif
+
+#endif /* ! C99 */
+
 #endif /* ! FLEXINT_H */
 
-#ifdef __cplusplus
+/* begin standard C++ headers. */
 
-/* The "const" storage-class-modifier is valid. */
-#define YY_USE_CONST
-
-#else	/* ! __cplusplus */
-
-#if __STDC__
-
-#define YY_USE_CONST
-
-#endif	/* __STDC__ */
-#endif	/* ! __cplusplus */
-
-#ifdef YY_USE_CONST
+/* TODO: this is always defined, so inline it */
 #define yyconst const
+
+#if defined(__GNUC__) && __GNUC__ >= 3
+#define yynoreturn __attribute__((__noreturn__))
 #else
-#define yyconst
+#define yynoreturn
 #endif
 
 /* An opaque pointer. */
@@ -130,21 +346,27 @@ typedef void* yyscan_t;
 #define yycolumn (YY_CURRENT_BUFFER_LVALUE->yy_bs_column)
 #define yy_flex_debug yyg->yy_flex_debug_r
 
-int libconfig_yylex_init (yyscan_t* scanner);
+/* Size of default input buffer. */
+#ifndef YY_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k.
+ * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
+ * Ditto for the __ia64__ case accordingly.
+ */
+#define YY_BUF_SIZE 32768
+#else
+#define YY_BUF_SIZE 16384
+#endif /* __ia64__ */
+#endif
 
 #ifndef YY_TYPEDEF_YY_BUFFER_STATE
 #define YY_TYPEDEF_YY_BUFFER_STATE
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 #endif
 
-/* The following is because we cannot portably get our hands on size_t
- * (without autoconf's help, which isn't available because we want
- * flex-generated scanners to compile on their own).
- */
-
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-typedef unsigned int yy_size_t;
+typedef size_t yy_size_t;
 #endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
@@ -159,7 +381,7 @@ struct yy_buffer_state
 	/* Size of input buffer in bytes, not including room for EOB
 	 * characters.
 	 */
-	yy_size_t yy_buf_size;
+	int yy_buf_size;
 
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
@@ -187,7 +409,7 @@ struct yy_buffer_state
 
     int yy_bs_lineno; /**< The line count. */
     int yy_bs_column; /**< The column count. */
-    
+
 	/* Whether to try to fill the input buffer when we reach the
 	 * end of it.
 	 */
@@ -198,69 +420,86 @@ struct yy_buffer_state
 	};
 #endif /* !YY_STRUCT_YY_BUFFER_STATE */
 
-void libconfig_yyrestart (FILE *input_file ,yyscan_t yyscanner );
-void libconfig_yy_switch_to_buffer (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
-YY_BUFFER_STATE libconfig_yy_create_buffer (FILE *file,int size ,yyscan_t yyscanner );
-void libconfig_yy_delete_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
-void libconfig_yy_flush_buffer (YY_BUFFER_STATE b ,yyscan_t yyscanner );
-void libconfig_yypush_buffer_state (YY_BUFFER_STATE new_buffer ,yyscan_t yyscanner );
-void libconfig_yypop_buffer_state (yyscan_t yyscanner );
+void yyrestart ( FILE *input_file , yyscan_t yyscanner );
+void yy_switch_to_buffer ( YY_BUFFER_STATE new_buffer , yyscan_t yyscanner );
+YY_BUFFER_STATE yy_create_buffer ( FILE *file, int size , yyscan_t yyscanner );
+void yy_delete_buffer ( YY_BUFFER_STATE b , yyscan_t yyscanner );
+void yy_flush_buffer ( YY_BUFFER_STATE b , yyscan_t yyscanner );
+void yypush_buffer_state ( YY_BUFFER_STATE new_buffer , yyscan_t yyscanner );
+void yypop_buffer_state ( yyscan_t yyscanner );
 
-YY_BUFFER_STATE libconfig_yy_scan_buffer (char *base,yy_size_t size ,yyscan_t yyscanner );
-YY_BUFFER_STATE libconfig_yy_scan_string (yyconst char *yy_str ,yyscan_t yyscanner );
-YY_BUFFER_STATE libconfig_yy_scan_bytes (yyconst char *bytes,int len ,yyscan_t yyscanner );
+YY_BUFFER_STATE yy_scan_buffer ( char *base, yy_size_t size , yyscan_t yyscanner );
+YY_BUFFER_STATE yy_scan_string ( const char *yy_str , yyscan_t yyscanner );
+YY_BUFFER_STATE yy_scan_bytes ( const char *bytes, int len , yyscan_t yyscanner );
 
-void *libconfig_yyalloc (yy_size_t ,yyscan_t yyscanner );
-void *libconfig_yyrealloc (void *,yy_size_t ,yyscan_t yyscanner );
-void libconfig_yyfree (void * ,yyscan_t yyscanner );
+void *yyalloc ( yy_size_t , yyscan_t yyscanner );
+void *yyrealloc ( void *, yy_size_t , yyscan_t yyscanner );
+void yyfree ( void * , yyscan_t yyscanner );
 
-#define libconfig_yywrap(n) 1
+#define libconfig_yywrap(yyscanner) (/*CONSTCOND*/1)
 #define YY_SKIP_YYWRAP
 
 #define yytext_ptr yytext_r
 
 #ifdef YY_HEADER_EXPORT_START_CONDITIONS
 #define INITIAL 0
-#define COMMENT 1
+#define SINGLE_LINE_COMMENT 1
+#define MULTI_LINE_COMMENT 2
+#define STRING 3
+#define INCLUDE 4
 
 #endif
 
-#ifndef YY_EXTRA_TYPE
-#define YY_EXTRA_TYPE void *
+#ifndef YY_NO_UNISTD_H
+/* Special case for "unistd.h", since it is non-ANSI. We include it way
+ * down here because we want the user's section 1 to have been scanned first.
+ * The user has a chance to override it with an option.
+ */
+#include <unistd.h>
 #endif
+
+#define YY_EXTRA_TYPE struct scan_context *
+
+int yylex_init (yyscan_t* scanner);
+
+int yylex_init_extra ( YY_EXTRA_TYPE user_defined, yyscan_t* scanner);
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
 
-int libconfig_yylex_destroy (yyscan_t yyscanner );
+int yylex_destroy ( yyscan_t yyscanner );
 
-int libconfig_yyget_debug (yyscan_t yyscanner );
+int yyget_debug ( yyscan_t yyscanner );
 
-void libconfig_yyset_debug (int debug_flag ,yyscan_t yyscanner );
+void yyset_debug ( int debug_flag , yyscan_t yyscanner );
 
-YY_EXTRA_TYPE libconfig_yyget_extra (yyscan_t yyscanner );
+YY_EXTRA_TYPE yyget_extra ( yyscan_t yyscanner );
 
-void libconfig_yyset_extra (YY_EXTRA_TYPE user_defined ,yyscan_t yyscanner );
+void yyset_extra ( YY_EXTRA_TYPE user_defined , yyscan_t yyscanner );
 
-FILE *libconfig_yyget_in (yyscan_t yyscanner );
+FILE *yyget_in ( yyscan_t yyscanner );
 
-void libconfig_yyset_in  (FILE * in_str ,yyscan_t yyscanner );
+void yyset_in  ( FILE * _in_str , yyscan_t yyscanner );
 
-FILE *libconfig_yyget_out (yyscan_t yyscanner );
+FILE *yyget_out ( yyscan_t yyscanner );
 
-void libconfig_yyset_out  (FILE * out_str ,yyscan_t yyscanner );
+void yyset_out  ( FILE * _out_str , yyscan_t yyscanner );
 
-int libconfig_yyget_leng (yyscan_t yyscanner );
+			int yyget_leng ( yyscan_t yyscanner );
 
-char *libconfig_yyget_text (yyscan_t yyscanner );
+char *yyget_text ( yyscan_t yyscanner );
 
-int libconfig_yyget_lineno (yyscan_t yyscanner );
+int yyget_lineno ( yyscan_t yyscanner );
 
-void libconfig_yyset_lineno (int line_number ,yyscan_t yyscanner );
+void yyset_lineno ( int _line_number , yyscan_t yyscanner );
 
-YYSTYPE * libconfig_yyget_lval (yyscan_t yyscanner );
+int yyget_column  ( yyscan_t yyscanner );
 
-void libconfig_yyset_lval (YYSTYPE * yylval_param ,yyscan_t yyscanner );
+void yyset_column ( int _column_no , yyscan_t yyscanner );
+
+YYSTYPE * yyget_lval ( yyscan_t yyscanner );
+
+void yyset_lval ( YYSTYPE * yylval_param , yyscan_t yyscanner );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -268,18 +507,18 @@ void libconfig_yyset_lval (YYSTYPE * yylval_param ,yyscan_t yyscanner );
 
 #ifndef YY_SKIP_YYWRAP
 #ifdef __cplusplus
-extern "C" int libconfig_yywrap (yyscan_t yyscanner );
+extern "C" int yywrap ( yyscan_t yyscanner );
 #else
-extern int libconfig_yywrap (yyscan_t yyscanner );
+extern int yywrap ( yyscan_t yyscanner );
 #endif
 #endif
 
 #ifndef yytext_ptr
-static void yy_flex_strncpy (char *,yyconst char *,int ,yyscan_t yyscanner);
+static void yy_flex_strncpy ( char *, const char *, int , yyscan_t yyscanner);
 #endif
 
 #ifdef YY_NEED_STRLEN
-static int yy_flex_strlen (yyconst char * ,yyscan_t yyscanner);
+static int yy_flex_strlen ( const char * , yyscan_t yyscanner);
 #endif
 
 #ifndef YY_NO_INPUT
@@ -288,7 +527,12 @@ static int yy_flex_strlen (yyconst char * ,yyscan_t yyscanner);
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
+#ifdef __ia64__
+/* On IA-64, the buffer size is 16k, not 8k */
+#define YY_READ_BUF_SIZE 16384
+#else
 #define YY_READ_BUF_SIZE 8192
+#endif /* __ia64__ */
 #endif
 
 /* Number of entries by which start-condition stack grows. */
@@ -302,9 +546,11 @@ static int yy_flex_strlen (yyconst char * ,yyscan_t yyscanner);
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int libconfig_yylex (YYSTYPE * yylval_param ,yyscan_t yyscanner);
+extern int yylex \
+               (YYSTYPE * yylval_param , yyscan_t yyscanner);
 
-#define YY_DECL int libconfig_yylex (YYSTYPE * yylval_param , yyscan_t yyscanner)
+#define YY_DECL int yylex \
+               (YYSTYPE * yylval_param , yyscan_t yyscanner)
 #endif /* !YY_DECL */
 
 /* yy_get_previous_state - get the state just before the EOB char was reached */
@@ -321,8 +567,153 @@ extern int libconfig_yylex (YYSTYPE * yylval_param ,yyscan_t yyscanner);
 #undef YY_DECL
 #endif
 
-#line 130 "scanner.l"
+#ifndef libconfig_yy_create_buffer_ALREADY_DEFINED
+#undef yy_create_buffer
+#endif
+#ifndef libconfig_yy_delete_buffer_ALREADY_DEFINED
+#undef yy_delete_buffer
+#endif
+#ifndef libconfig_yy_scan_buffer_ALREADY_DEFINED
+#undef yy_scan_buffer
+#endif
+#ifndef libconfig_yy_scan_string_ALREADY_DEFINED
+#undef yy_scan_string
+#endif
+#ifndef libconfig_yy_scan_bytes_ALREADY_DEFINED
+#undef yy_scan_bytes
+#endif
+#ifndef libconfig_yy_init_buffer_ALREADY_DEFINED
+#undef yy_init_buffer
+#endif
+#ifndef libconfig_yy_flush_buffer_ALREADY_DEFINED
+#undef yy_flush_buffer
+#endif
+#ifndef libconfig_yy_load_buffer_state_ALREADY_DEFINED
+#undef yy_load_buffer_state
+#endif
+#ifndef libconfig_yy_switch_to_buffer_ALREADY_DEFINED
+#undef yy_switch_to_buffer
+#endif
+#ifndef libconfig_yypush_buffer_state_ALREADY_DEFINED
+#undef yypush_buffer_state
+#endif
+#ifndef libconfig_yypop_buffer_state_ALREADY_DEFINED
+#undef yypop_buffer_state
+#endif
+#ifndef libconfig_yyensure_buffer_stack_ALREADY_DEFINED
+#undef yyensure_buffer_stack
+#endif
+#ifndef libconfig_yylex_ALREADY_DEFINED
+#undef yylex
+#endif
+#ifndef libconfig_yyrestart_ALREADY_DEFINED
+#undef yyrestart
+#endif
+#ifndef libconfig_yylex_init_ALREADY_DEFINED
+#undef yylex_init
+#endif
+#ifndef libconfig_yylex_init_extra_ALREADY_DEFINED
+#undef yylex_init_extra
+#endif
+#ifndef libconfig_yylex_destroy_ALREADY_DEFINED
+#undef yylex_destroy
+#endif
+#ifndef libconfig_yyget_debug_ALREADY_DEFINED
+#undef yyget_debug
+#endif
+#ifndef libconfig_yyset_debug_ALREADY_DEFINED
+#undef yyset_debug
+#endif
+#ifndef libconfig_yyget_extra_ALREADY_DEFINED
+#undef yyget_extra
+#endif
+#ifndef libconfig_yyset_extra_ALREADY_DEFINED
+#undef yyset_extra
+#endif
+#ifndef libconfig_yyget_in_ALREADY_DEFINED
+#undef yyget_in
+#endif
+#ifndef libconfig_yyset_in_ALREADY_DEFINED
+#undef yyset_in
+#endif
+#ifndef libconfig_yyget_out_ALREADY_DEFINED
+#undef yyget_out
+#endif
+#ifndef libconfig_yyset_out_ALREADY_DEFINED
+#undef yyset_out
+#endif
+#ifndef libconfig_yyget_leng_ALREADY_DEFINED
+#undef yyget_leng
+#endif
+#ifndef libconfig_yyget_text_ALREADY_DEFINED
+#undef yyget_text
+#endif
+#ifndef libconfig_yyget_lineno_ALREADY_DEFINED
+#undef yyget_lineno
+#endif
+#ifndef libconfig_yyset_lineno_ALREADY_DEFINED
+#undef yyset_lineno
+#endif
+#ifndef libconfig_yyget_column_ALREADY_DEFINED
+#undef yyget_column
+#endif
+#ifndef libconfig_yyset_column_ALREADY_DEFINED
+#undef yyset_column
+#endif
+#ifndef libconfig_yywrap_ALREADY_DEFINED
+#undef yywrap
+#endif
+#ifndef libconfig_yyget_lval_ALREADY_DEFINED
+#undef yyget_lval
+#endif
+#ifndef libconfig_yyset_lval_ALREADY_DEFINED
+#undef yyset_lval
+#endif
+#ifndef libconfig_yyget_lloc_ALREADY_DEFINED
+#undef yyget_lloc
+#endif
+#ifndef libconfig_yyset_lloc_ALREADY_DEFINED
+#undef yyset_lloc
+#endif
+#ifndef libconfig_yyalloc_ALREADY_DEFINED
+#undef yyalloc
+#endif
+#ifndef libconfig_yyrealloc_ALREADY_DEFINED
+#undef yyrealloc
+#endif
+#ifndef libconfig_yyfree_ALREADY_DEFINED
+#undef yyfree
+#endif
+#ifndef libconfig_yytext_ALREADY_DEFINED
+#undef yytext
+#endif
+#ifndef libconfig_yyleng_ALREADY_DEFINED
+#undef yyleng
+#endif
+#ifndef libconfig_yyin_ALREADY_DEFINED
+#undef yyin
+#endif
+#ifndef libconfig_yyout_ALREADY_DEFINED
+#undef yyout
+#endif
+#ifndef libconfig_yy_flex_debug_ALREADY_DEFINED
+#undef yy_flex_debug
+#endif
+#ifndef libconfig_yylineno_ALREADY_DEFINED
+#undef yylineno
+#endif
+#ifndef libconfig_yytables_fload_ALREADY_DEFINED
+#undef yytables_fload
+#endif
+#ifndef libconfig_yytables_destroy_ALREADY_DEFINED
+#undef yytables_destroy
+#endif
+#ifndef libconfig_yyTABLES_NAME_ALREADY_DEFINED
+#undef yyTABLES_NAME
+#endif
 
-#line 325 "scanner.h"
+#line 203 "scanner.l"
+
+#line 717 "scanner.h"
 #undef libconfig_yyIN_HEADER
 #endif /* libconfig_yyHEADER_H */

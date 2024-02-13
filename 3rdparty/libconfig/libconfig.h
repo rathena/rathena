@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
-   Copyright (C) 2005-2010  Mark A Lindner
+   Copyright (C) 2005-2018  Mark A Lindner
 
    This file is part of libconfig.
 
@@ -19,8 +19,6 @@
    <http://www.gnu.org/licenses/>.
    ----------------------------------------------------------------------------
 */
-
-#pragma once
 
 #ifndef __libconfig_h
 #define __libconfig_h
@@ -42,8 +40,8 @@ extern "C" {
 #endif /* WIN32 */
 
 #define LIBCONFIG_VER_MAJOR    1
-#define LIBCONFIG_VER_MINOR    4
-#define LIBCONFIG_VER_REVISION 9
+#define LIBCONFIG_VER_MINOR    7
+#define LIBCONFIG_VER_REVISION 0
 
 #include <stdio.h>
 
@@ -60,7 +58,14 @@ extern "C" {
 #define CONFIG_FORMAT_DEFAULT  0
 #define CONFIG_FORMAT_HEX      1
 
-#define CONFIG_OPTION_AUTOCONVERT 0x01
+#define CONFIG_OPTION_AUTOCONVERT                     0x01
+#define CONFIG_OPTION_SEMICOLON_SEPARATORS            0x02
+#define CONFIG_OPTION_COLON_ASSIGNMENT_FOR_GROUPS     0x04
+#define CONFIG_OPTION_COLON_ASSIGNMENT_FOR_NON_GROUPS 0x08
+#define CONFIG_OPTION_OPEN_BRACE_ON_SEPARATE_LINE     0x10
+#define CONFIG_OPTION_ALLOW_SCIENTIFIC_NOTATION       0x20
+#define CONFIG_OPTION_FSYNC                           0x40
+#define CONFIG_OPTION_ALLOW_OVERRIDES                 0x80
 
 #define CONFIG_TRUE  (1)
 #define CONFIG_FALSE (0)
@@ -100,20 +105,27 @@ typedef struct config_list_t
   config_setting_t **elements;
 } config_list_t;
 
+typedef const char ** (*config_include_fn_t)(struct config_t *,
+                                             const char *,
+                                             const char *,
+                                             const char **);
+
 typedef struct config_t
 {
   config_setting_t *root;
   void (*destructor)(void *);
-  unsigned short flags;
+  int options;
   unsigned short tab_width;
-  short default_format;
+  unsigned short float_precision;
+  unsigned short default_format;
   const char *include_dir;
+  config_include_fn_t include_fn;
   const char *error_text;
   const char *error_file;
   int error_line;
   config_error_t error_type;
   const char **filenames;
-  unsigned int num_filenames;
+  void *hook;
 } config_t;
 
 extern LIBCONFIG_API int config_read(config_t *config, FILE *stream);
@@ -122,8 +134,12 @@ extern LIBCONFIG_API void config_write(const config_t *config, FILE *stream);
 extern LIBCONFIG_API void config_set_default_format(config_t *config,
                                                     short format);
 
-extern LIBCONFIG_API void config_set_auto_convert(config_t *config, int flag);
-extern LIBCONFIG_API int config_get_auto_convert(const config_t *config);
+extern LIBCONFIG_API void config_set_options(config_t *config, int options);
+extern LIBCONFIG_API int config_get_options(const config_t *config);
+
+extern LIBCONFIG_API void config_set_option(config_t *config, int option,
+                                            int flag);
+extern LIBCONFIG_API int config_get_option(const config_t *config, int option);
 
 extern LIBCONFIG_API int config_read_string(config_t *config, const char *str);
 
@@ -136,9 +152,26 @@ extern LIBCONFIG_API void config_set_destructor(config_t *config,
                                                 void (*destructor)(void *));
 extern LIBCONFIG_API void config_set_include_dir(config_t *config,
                                                  const char *include_dir);
+extern LIBCONFIG_API void config_set_include_func(config_t *config,
+                                                  config_include_fn_t func);
+
+extern LIBCONFIG_API void config_set_float_precision(config_t *config,
+                                                     unsigned short digits);
+extern LIBCONFIG_API unsigned short config_get_float_precision(
+  const config_t *config);
+
+extern LIBCONFIG_API void config_set_tab_width(config_t *config,
+                                               unsigned short width);
+extern LIBCONFIG_API unsigned short config_get_tab_width(
+  const config_t *config);
+
+extern LIBCONFIG_API void config_set_hook(config_t *config, void *hook);
+
+#define config_get_hook(C) ((C)->hook)
 
 extern LIBCONFIG_API void config_init(config_t *config);
 extern LIBCONFIG_API void config_destroy(config_t *config);
+extern LIBCONFIG_API void config_clear(config_t *config);
 
 extern LIBCONFIG_API int config_setting_get_int(
   const config_setting_t *setting);
@@ -200,8 +233,23 @@ extern LIBCONFIG_API config_setting_t *config_setting_set_bool_elem(
 extern LIBCONFIG_API config_setting_t *config_setting_set_string_elem(
   config_setting_t *setting, int idx, const char *value);
 
+extern LIBCONFIG_API const char **config_default_include_func(
+    config_t *config, const char *include_dir, const char *path,
+    const char **error);
+
+extern LIBCONFIG_API int config_setting_is_scalar(
+    const config_setting_t *setting);
+
+extern LIBCONFIG_API int config_setting_is_aggregate(
+    const config_setting_t *setting);
+
 #define /* const char * */ config_get_include_dir(/* const config_t * */ C) \
   ((C)->include_dir)
+
+#define /* void */ config_set_auto_convert(/* config_t * */ C, F) \
+  config_set_option((C), CONFIG_OPTION_AUTOCONVERT, (F))
+#define /* int */ config_get_auto_convert(/* const config_t * */ C) \
+  config_get_option((C), CONFIG_OPTION_AUTOCONVERT)
 
 #define /* int */ config_setting_type(/* const config_setting_t * */ S) \
   ((S)->type)
@@ -213,19 +261,10 @@ extern LIBCONFIG_API config_setting_t *config_setting_set_string_elem(
 #define /* int */ config_setting_is_list(/* const config_setting_t * */ S) \
   ((S)->type == CONFIG_TYPE_LIST)
 
-#define /* int */ config_setting_is_aggregate( \
-  /* const config_setting_t * */ S)                                     \
-  (((S)->type == CONFIG_TYPE_GROUP) || ((S)->type == CONFIG_TYPE_LIST)  \
-   || ((S)->type == CONFIG_TYPE_ARRAY))
-
 #define /* int */ config_setting_is_number(/* const config_setting_t * */ S) \
   (((S)->type == CONFIG_TYPE_INT)                                       \
    || ((S)->type == CONFIG_TYPE_INT64)                                  \
    || ((S)->type == CONFIG_TYPE_FLOAT))
-
-#define /* int */ config_setting_is_scalar(/* const config_setting_t * */ S) \
-  (((S)->type == CONFIG_TYPE_BOOL) || ((S)->type == CONFIG_TYPE_STRING) \
-   || config_setting_is_number(S))
 
 #define /* const char * */ config_setting_name( \
   /* const config_setting_t * */ S)             \
@@ -262,7 +301,7 @@ extern LIBCONFIG_API void config_setting_set_hook(config_setting_t *setting,
 
 extern LIBCONFIG_API config_setting_t *config_lookup(const config_t *config,
                                                      const char *path);
-extern LIBCONFIG_API config_setting_t *config_lookup_from(
+extern LIBCONFIG_API config_setting_t *config_setting_lookup(
   config_setting_t *setting, const char *path);
 
 extern LIBCONFIG_API int config_lookup_int(const config_t *config,
@@ -288,13 +327,6 @@ extern LIBCONFIG_API int config_lookup_string(const config_t *config,
 
 #define /* short */ config_get_default_format(/* config_t * */ C)       \
   ((C)->default_format)
-
-#define /* void */ config_set_tab_width(/* config_t * */ C,     \
-                                        /* unsigned short */ W) \
-  (C)->tab_width = ((W) & 0x0F)
-
-#define /* unsigned char */ config_get_tab_width(/* const config_t * */ C) \
-  ((C)->tab_width)
 
 #define /* unsigned short */ config_setting_source_line(   \
   /* const config_setting_t * */ S)                        \

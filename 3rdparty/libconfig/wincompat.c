@@ -1,6 +1,6 @@
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
-   Copyright (C) 2005-2020  Mark A Lindner
+   Copyright (C) 2005-2018  Mark A Lindner
 
    This file is part of libconfig.
 
@@ -20,30 +20,42 @@
    ----------------------------------------------------------------------------
 */
 
-#ifndef __libconfig_parsectx_h
-#define __libconfig_parsectx_h
+#include "wincompat.h"
 
-#include "libconfig.h"
-#include "strbuf.h"
-#include "util.h"
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) \
+  || defined(WIN64) || defined(_WIN64) || defined(__WIN64__)
 
-struct parse_context
+#include <errno.h>
+#include <io.h>
+
+int fsync(int fd)
 {
-  config_t *config;
-  config_setting_t *parent;
-  config_setting_t *setting;
-  char *name;
-  strbuf_t string;
-};
+  HANDLE h = (HANDLE)_get_osfhandle(fd);
+  if(h == INVALID_HANDLE_VALUE)
+  {
+    errno = EBADF;
+    return(-1);
+  }
 
-#define libconfig_parsectx_init(C) \
-  __zero(C)
-#define libconfig_parsectx_cleanup(C) \
-  __delete(libconfig_strbuf_release(&((C)->string)))
+  if(!FlushFileBuffers(h))
+  {
+    DWORD err = GetLastError();
+    switch(err)
+    {
+      case ERROR_ACCESS_DENIED:
+        return(0);
 
-#define libconfig_parsectx_append_string(C, S) \
-  libconfig_strbuf_append_string(&((C)->string), (S))
-#define libconfig_parsectx_take_string(C) \
-  libconfig_strbuf_release(&((C)->string))
+      case ERROR_INVALID_HANDLE:
+        errno = EINVAL;
+        break;
 
-#endif /* __libconfig_parsectx_h */
+      default:
+        errno = EIO;
+    }
+    return(-1);
+  }
+
+  return(0);
+}
+
+#endif // WIN32 || WIN64

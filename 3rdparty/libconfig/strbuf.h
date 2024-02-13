@@ -1,8 +1,6 @@
-#pragma once
-
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
-   Copyright (C) 2005-2010  Mark A Lindner
+   Copyright (C) 2005-2020  Mark A Lindner
 
    This file is part of libconfig.
 
@@ -28,10 +26,6 @@
 #include <string.h>
 #include <sys/types.h>
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-    
 typedef struct
 {
   char *string;
@@ -39,12 +33,10 @@ typedef struct
   size_t capacity;
 } strbuf_t;
 
-char *strbuf_release(strbuf_t *buf);
+void libconfig_strbuf_append_string(strbuf_t *buf, const char *s);
 
-void strbuf_append(strbuf_t *buf, const char *text);
+void libconfig_strbuf_append_char(strbuf_t *buf, char c);
 
-#ifdef	__cplusplus
-}
-#endif
-    
+char *libconfig_strbuf_release(strbuf_t *buf);
+
 #endif /* __libconfig_strbuf_h */

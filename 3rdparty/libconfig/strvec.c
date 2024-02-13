@@ -20,55 +20,55 @@
    ----------------------------------------------------------------------------
 */
 
-#include "strbuf.h"
+#include "strvec.h"
 #include "util.h"
 
-#include <string.h>
 #include <stdlib.h>
 
-#define STRING_BLOCK_SIZE 64
+#define CHUNK_SIZE 32
 
 /* ------------------------------------------------------------------------- */
 
-void libconfig_strbuf_ensure_capacity(strbuf_t *buf, size_t len)
+void libconfig_strvec_append(strvec_t *vec, const char *s)
 {
-  static const size_t mask = ~(STRING_BLOCK_SIZE - 1);
-
-  size_t newlen = buf->length + len + 1; /* add 1 for NUL */
-  if(newlen > buf->capacity)
+  if(vec->length == vec->capacity)
   {
-    buf->capacity = (newlen + (STRING_BLOCK_SIZE - 1)) & mask;
-    buf->string = (char *)realloc(buf->string, buf->capacity);
+    vec->capacity += CHUNK_SIZE;
+    vec->strings = (const char **)realloc(
+        (void *)vec->strings,
+        (vec->capacity + 1) * sizeof(const char *));
+    vec->end = vec->strings + vec->length;
   }
+
+  *(vec->end) = s;
+  ++(vec->end);
+  ++(vec->length);
 }
 
 /* ------------------------------------------------------------------------- */
 
-char *libconfig_strbuf_release(strbuf_t *buf)
+const char **libconfig_strvec_release(strvec_t *vec)
 {
-  char *r = buf->string;
-  __zero(buf);
+  const char **r = vec->strings;
+  if(r)
+    *(vec->end) = NULL;
+
+  __zero(vec);
   return(r);
 }
 
 /* ------------------------------------------------------------------------- */
 
-void libconfig_strbuf_append_string(strbuf_t *buf, const char *s)
+void libconfig_strvec_delete(const char *const *vec)
 {
-  size_t len = strlen(s);
-  libconfig_strbuf_ensure_capacity(buf, len);
-  strcpy(buf->string + buf->length, s);
-  buf->length += len;
-}
+  const char *const *p;
 
-/* ------------------------------------------------------------------------- */
+  if(!vec) return;
 
-void libconfig_strbuf_append_char(strbuf_t *buf, char c)
-{
-  libconfig_strbuf_ensure_capacity(buf, 1);
-  *(buf->string + buf->length) = c;
-  ++(buf->length);
-  *(buf->string + buf->length) = '\0';
+  for(p = vec; *p; ++p)
+    __delete(*p);
+
+  __delete(vec);
 }
 
 /* ------------------------------------------------------------------------- */
