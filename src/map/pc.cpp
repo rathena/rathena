@@ -4288,6 +4288,7 @@ void pc_bonus(map_session_data *sd,int type,int val)
 		case SP_LONG_SP_GAIN_VALUE:
 			if(!sd->state.lr_flag)
 				sd->bonus.long_sp_gain_value += val;
+			break;
 		case SP_LONG_HP_GAIN_VALUE:
 			if(!sd->state.lr_flag)
 				sd->bonus.long_hp_gain_value += val;
@@ -8642,7 +8643,7 @@ int pc_need_status_point(map_session_data* sd, int type, int val)
 	high = low + val;
 
 	if ( val < 0 )
-		SWAP(low, high);
+		std::swap(low, high);
 
 	for ( ; low < high; low++ )
 		sp += PC_STATUS_POINT_COST(low);
@@ -8800,7 +8801,7 @@ int pc_need_trait_point(map_session_data* sd, int type, int val)
 	int high = low + val, sp = 0;
 
 	if (val < 0)
-		SWAP(low, high);
+		std::swap(low, high);
 
 	for (; low < high; low++)
 		sp += 1;
@@ -14104,19 +14105,11 @@ const std::string PlayerStatPointDatabase::getDefaultLocation() {
 }
 
 uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
-	if (!this->nodesExist(node, { "Level", "Points" })) {
-		return 0;
-	}
 
 	uint16 level;
 
 	if (!this->asUInt16(node, "Level", level))
-		return 0;
-
-	uint32 point;
-
-	if (!this->asUInt32(node, "Points", point))
-		return 0;
+	    return 0;
 
 	if (level == 0) {
 		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
@@ -14132,19 +14125,32 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	bool exists = entry != nullptr;
 
 	if( !exists ){
-		entry = std::make_shared<s_statpoint_entry>();
-		entry->level = level;
-		entry->statpoints = point;
+	    if( !this->nodesExist( node, { "Points" } ) ){
+			return 0;
+	    }
+
+	    entry = std::make_shared<s_statpoint_entry>();
+	    entry->level = level;
 	}
 
-	if( this->nodeExists( node, "TraitPoints" ) ){
-		uint32 traitpoints;
+	if( this->nodeExists( node, "Points" ) ){
+	    uint32 points;
 
-		if( !this->asUInt32( node, "TraitPoints", traitpoints ) ){
+		if( !this->asUInt32( node, "Points", points ) ){
 			return 0;
 		}
 
-		entry->traitpoints = traitpoints;
+	    entry->statpoints = points;
+	}
+
+	if( this->nodeExists( node, "TraitPoints" ) ){
+	    uint32 traitpoints;
+
+	    if( !this->asUInt32( node, "TraitPoints", traitpoints ) ){
+	        return 0;
+	    }
+
+	    entry->traitpoints = traitpoints;
 	}else{
 		if( !exists ){
 			entry->traitpoints = 0;

@@ -22,12 +22,12 @@
 typedef struct AccountDB_SQL {
 	AccountDB vtable;    // public interface
 	Sql* accounts;       // SQL handle accounts storage
-	char   db_hostname[1024]; // Doubled for long hostnames (bugreport:8003)
-	uint16 db_port;
-	char   db_username[1024];
-	char   db_password[1024];
-	char   db_database[1024];
-	char   codepage[1024];
+	std::string db_hostname = "127.0.0.1";
+	uint16 db_port = 3306;
+	std::string db_username = "ragnarok";
+	std::string db_password = "";
+	std::string db_database = "ragnarok";
+	std::string codepage = "";
 	// other settings
 	bool case_sensitive;
 	//table name
@@ -67,6 +67,7 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 /// public constructor
 AccountDB* account_db_sql(void) {
 	AccountDB_SQL* db = (AccountDB_SQL*)aCalloc(1, sizeof(AccountDB_SQL));
+	new(db) AccountDB_SQL();
 
 	// set up the vtable
 	db->vtable.init         = &account_db_sql_init;
@@ -85,13 +86,6 @@ AccountDB* account_db_sql(void) {
 
 	// initialize to default values
 	db->accounts = NULL;
-	// local sql settings
-	safestrncpy(db->db_hostname, "127.0.0.1", sizeof(db->db_hostname));
-	db->db_port = 3306;
-	safestrncpy(db->db_username, "ragnarok", sizeof(db->db_username));
-	safestrncpy(db->db_password, "", sizeof(db->db_password));
-	safestrncpy(db->db_database, "ragnarok", sizeof(db->db_database));
-	safestrncpy(db->codepage, "", sizeof(db->codepage));
 	// other settings
 	db->case_sensitive = false;
 	safestrncpy(db->account_db, "login", sizeof(db->account_db));
@@ -112,34 +106,21 @@ AccountDB* account_db_sql(void) {
 static bool account_db_sql_init(AccountDB* self) {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	Sql* sql_handle;
-	const char* username = "ragnarok";
-	const char* password = "";
-	const char* hostname = "127.0.0.1";
-	uint16      port     = 3306;
-	const char* database = "ragnarok";
-	const char* codepage = "";
 
 	db->accounts = Sql_Malloc();
 	sql_handle = db->accounts;
 
-	username = db->db_username;
-	password = db->db_password;
-	hostname = db->db_hostname;
-	port     = db->db_port;
-	database = db->db_database;
-	codepage = db->codepage;
-
-	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, db->db_username.c_str(), db->db_password.c_str(), db->db_hostname.c_str(), db->db_port, db->db_database.c_str()) )
 	{
-                ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
-                        username, hostname, port, database);
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			db->db_username.c_str(), db->db_hostname.c_str(), db->db_port, db->db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(db->accounts);
 		db->accounts = NULL;
 		return false;
 	}
 
-	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
+	if( !db->codepage.empty() && SQL_ERROR == Sql_SetEncoding(sql_handle, db->codepage.c_str()) )
 		Sql_ShowDebug(sql_handle);
 
 	self->remove_webtokens( self );
@@ -160,6 +141,8 @@ static void account_db_sql_destroy(AccountDB* self){
 
 	Sql_Free(db->accounts);
 	db->accounts = NULL;
+
+	db->~AccountDB_SQL();
 	aFree(db);
 }
 
@@ -181,19 +164,19 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_hostname);
+			safesnprintf(buf, buflen, "%s", db->db_hostname.c_str());
 		else
 		if( strcmpi(key, "port") == 0 )
-			safesnprintf(buf, buflen, "%d", db->db_port);
+			safesnprintf(buf, buflen, "%hu", db->db_port);
 		else
 		if( strcmpi(key, "id") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_username);
+			safesnprintf(buf, buflen, "%s", db->db_username.c_str());
 		else
 		if(	strcmpi(key, "pw") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_password);
+			safesnprintf(buf, buflen, "%s", db->db_password.c_str());
 		else
 		if( strcmpi(key, "db") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_database);
+			safesnprintf(buf, buflen, "%s", db->db_database.c_str());
 		else
 		if( strcmpi(key, "account_db") == 0 )
 			safesnprintf(buf, buflen, "%s", db->account_db);
@@ -212,7 +195,7 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "codepage") == 0 )
-			safesnprintf(buf, buflen, "%s", db->codepage);
+			safesnprintf(buf, buflen, "%s", db->codepage.c_str());
 		else
 		if( strcmpi(key, "case_sensitive") == 0 )
 			safesnprintf(buf, buflen, "%d", (db->case_sensitive ? 1 : 0));
@@ -240,19 +223,19 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	if( strncmp(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			safestrncpy(db->db_hostname, value, sizeof(db->db_hostname));
+			db->db_hostname = value;
 		else
 		if( strcmpi(key, "port") == 0 )
-			db->db_port = (uint16)strtoul(value, NULL, 10);
+			db->db_port = (uint16)strtoul( value, nullptr, 10 );
 		else
 		if( strcmpi(key, "id") == 0 )
-			safestrncpy(db->db_username, value, sizeof(db->db_username));
+			db->db_username = value;
 		else
 		if( strcmpi(key, "pw") == 0 )
-			safestrncpy(db->db_password, value, sizeof(db->db_password));
+			db->db_password = value;
 		else
 		if( strcmpi(key, "db") == 0 )
-			safestrncpy(db->db_database, value, sizeof(db->db_database));
+			db->db_database = value;
 		else
 		if( strcmpi(key, "account_db") == 0 )
 			safestrncpy(db->account_db, value, sizeof(db->account_db));
@@ -271,7 +254,7 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "codepage") == 0 )
-			safestrncpy(db->codepage, value, sizeof(db->codepage));
+			db->codepage = value;
 		else
 		if( strcmpi(key, "case_sensitive") == 0 )
 			db->case_sensitive = (config_switch(value)==1);

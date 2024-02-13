@@ -3290,7 +3290,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				map_delblock(bl);
 				break;
 			}
-			// Fall through
+			[[fallthrough]];
 		default:
 			clif_clearunit_area(bl, clrtype);
 			map_delblock(bl);

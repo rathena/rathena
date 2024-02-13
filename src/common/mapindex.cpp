@@ -164,6 +164,7 @@ void mapindex_init(void) {
 			switch (sscanf(line, "%11s\t%d", map_name, &index)) {
 				case 1: //Map with no ID given, auto-assign
 					index = last_index+1;
+					[[fallthrough]];
 				case 2: //Map with ID given
 					mapindex_addmap(index,map_name);
 					break;
