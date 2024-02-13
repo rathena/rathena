@@ -7481,10 +7481,10 @@ This command lets you override the contents of an existing NPC shop or cashshop.
 current sell list will be wiped, and only the items specified with the price
 specified will be for sale.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
  - If the attached shop type is a market shop, notice that there is an extra parameter after price, <stock>. Make sure to not add duplicate items! For unlimited stock use -1.
 
 ---------------------------------------
@@ -7496,10 +7496,10 @@ This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
 appear twice on the sell list.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
  - If attached shop type is market shop, need an extra param after price, it's <stock>
    and make sure don't add duplication item! For unlimited stock use -1.
 
@@ -7542,6 +7542,13 @@ NOTES:
 Update an entry from a shop. If the price is 0 it won't be changed. May also be used for
 marketshop to update the stock quantity. For unlimited stock, use -1.
 For other shop types, the stock value has no effect.
+
+If the price is -1, it sets it to the default buy price.
+
+The function returns 1 if shop was updated successfully, or 0 on failure.
+
+NOTES:
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
 
 ---------------------------------------
 

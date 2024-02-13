@@ -2425,18 +2425,25 @@
 	parseable_packet( HEADER_CZ_GRADE_ENCHANT_CLOSE_UI, sizeof( struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI ), clif_parse_enchantgrade_close, 0 );
 #endif
 
-#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
-	parseable_packet( HEADER_CZ_CHECKNAME2, sizeof( struct PACKET_CZ_CHECKNAME2 ), clif_parse_Mail_Receiver_Check, 0 );
-	parseable_packet( HEADER_CZ_UNCONFIRMED_RODEX_RETURN, sizeof( struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN ), clif_parse_Mail_return, 0 );
-	parseable_packet( HEADER_CZ_REQ_TAKEOFF_EQUIP_ALL, sizeof( struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL ), clif_parse_unequipall, 0 );
-	parseable_packet( 0xb93, 12, clif_parse_dull, 0 );
-	parseable_packet( HEADER_CZ_CLOSE_REFORM_UI, sizeof( struct PACKET_CZ_CLOSE_REFORM_UI ), clif_parse_item_reform_close, 0 );
-	parseable_packet( HEADER_CZ_ITEM_REFORM, sizeof( struct PACKET_CZ_ITEM_REFORM ), clif_parse_item_reform_start, 0 );
+
+#if PACKETVER_MAIN_NUM >= 20201118 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
 	parseable_packet( HEADER_CZ_REQUEST_RANDOM_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_RANDOM_ENCHANT ), clif_parse_enchantwindow_general, 0 );
 	parseable_packet( HEADER_CZ_REQUEST_PERFECT_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_PERFECT_ENCHANT ), clif_parse_enchantwindow_perfect, 0 );
 	parseable_packet( HEADER_CZ_REQUEST_UPGRADE_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT ), clif_parse_enchantwindow_upgrade, 0 );
 	parseable_packet( HEADER_CZ_REQUEST_RESET_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_RESET_ENCHANT ), clif_parse_enchantwindow_reset, 0 );
 	parseable_packet( HEADER_CZ_CLOSE_UI_ENCHANT, sizeof( struct PACKET_CZ_CLOSE_UI_ENCHANT ), clif_parse_enchantwindow_close, 0 );
+#endif
+
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818 || PACKETVER_MAIN_NUM >= 20220330
+	parseable_packet( HEADER_CZ_CHECKNAME2, sizeof( struct PACKET_CZ_CHECKNAME2 ), clif_parse_Mail_Receiver_Check, 0 );
+	parseable_packet( HEADER_CZ_UNCONFIRMED_RODEX_RETURN, sizeof( struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN ), clif_parse_Mail_return, 0 );
+	parseable_packet( HEADER_CZ_REQ_TAKEOFF_EQUIP_ALL, sizeof( struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL ), clif_parse_unequipall, 0 );
+	parseable_packet( 0xb93, 12, clif_parse_dull, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
+	parseable_packet( HEADER_CZ_CLOSE_REFORM_UI, sizeof( struct PACKET_CZ_CLOSE_REFORM_UI ), clif_parse_item_reform_close, 0 );
+	parseable_packet( HEADER_CZ_ITEM_REFORM, sizeof( struct PACKET_CZ_ITEM_REFORM ), clif_parse_item_reform_start, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20220216
@@ -2445,6 +2452,10 @@
 
 #if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220316
 	parseable_packet( HEADER_CZ_USE_PACKAGEITEM, sizeof( struct PACKET_CZ_USE_PACKAGEITEM ), clif_parse_itempackage_select, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203
+	parseable_packet( HEADER_CZ_RESET_SKILL, sizeof( struct PACKET_CZ_RESET_SKILL ), clif_parse_reset_skill, 0 );
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

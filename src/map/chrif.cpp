@@ -915,6 +915,7 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 		case CHRIF_OP_LOGIN_CHANGESEX:
 		case CHRIF_OP_CHANGECHARSEX:
 			type = CHRIF_OP_LOGIN_CHANGESEX; // So we don't have to create a new msgstring.
+			[[fallthrough]];
 		case CHRIF_OP_LOGIN_BLOCK:
 		case CHRIF_OP_LOGIN_BAN:
 		case CHRIF_OP_LOGIN_UNBLOCK:
