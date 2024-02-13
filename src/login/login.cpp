@@ -56,7 +56,7 @@ int subnet_count = 0; //number of subnet config
 int login_fd; // login server file descriptor socket
 
 //early declaration
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass);
+bool login_check_password( struct login_session_data& sd, struct mmo_account& acc );
 
 ///Accessors
 AccountDB* login_get_accounts_db(void){
@@ -345,7 +345,12 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		return 0; // 0 = Unregistered ID
 	}
 
-	if( !login_check_password(sd->md5key, sd->passwdenc, sd->passwd, acc.pass) ) {
+	if( !isServer && sex_str2num( acc.sex ) == SEX_SERVER ){
+		ShowWarning( "Connection refused: ip %s tried to log into server account '%s'\n", ip, sd->userid );
+		return 0; // 0 = Unregistered ID
+	}
+
+	if( !login_check_password( *sd, acc ) ) {
 		ShowNotice("Invalid password (account: '%s', ip: %s)\n", sd->userid, ip);
 		return 1; // 1 = Incorrect Password
 	}
@@ -427,24 +432,6 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 }
 
 /**
- * Sub function of login_check_password.
- *  Checking if password matches the one in db hashed with client md5key.
- *  Test if(md5(str1+str2)==passwd).
- * @param str1: string (atm:md5key or dbpass)
- * @param str2: string (atm:md5key or dbpass)
- * @param passwd: pass to check
- * @return true if matching else false
- */
-bool login_check_encrypted(const char* str1, const char* str2, const char* passwd) {
-	char tmpstr[64+1], md5str[32+1];
-
-	safesnprintf(tmpstr, sizeof(tmpstr), "%s%s", str1, str2);
-	MD5_String(tmpstr, md5str);
-
-	return (0==strcmp(passwd, md5str));
-}
-
-/**
  * Verify if a password is correct.
  * @param md5key: md5key of client
  * @param passwdenc: encode key of client
@@ -452,16 +439,44 @@ bool login_check_encrypted(const char* str1, const char* str2, const char* passw
  * @param refpass: pass register in db
  * @return true if matching else false
  */
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass) {
-	if(passwdenc == 0){
-		return (0==strcmp(passwd, refpass));
+bool login_check_password( struct login_session_data& sd, struct mmo_account& acc ){
+	if( sd.passwdenc == 0 ){
+		return 0 == strcmp( sd.passwd, acc.pass );
 	}
-	else {
-		// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
-		// password mode set to 2 -> md5(refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
-		return ((passwdenc&0x01) && login_check_encrypted(md5key, refpass, passwd)) ||
-		       ((passwdenc&0x02) && login_check_encrypted(refpass, md5key, passwd));
+
+	// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
+	if( sd.passwdenc & 0x01 ){
+		std::string pwd;
+
+		pwd.append( sd.md5key, sd.md5keylen );
+		pwd.append( acc.pass );
+
+		char md5str[32 + 1];
+
+		MD5_String( pwd.c_str(), md5str );
+
+		if( 0 == strcmp( sd.passwd, md5str ) ){
+			return true;
+		}
 	}
+
+	// password mode set to 2 -> md5(refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
+	if( sd.passwdenc & 0x02 ){
+		std::string pwd;
+
+		pwd.append( acc.pass );
+		pwd.append( sd.md5key, sd.md5keylen );
+
+		char md5str[32 + 1];
+
+		MD5_String( pwd.c_str(), md5str );
+
+		if( 0 == strcmp( sd.passwd, md5str ) ){
+			return true;
+		}
+	}
+
+	return false;
 }
 
 int login_get_usercount( int users ){

@@ -95,7 +95,7 @@ char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
 std::string log_db_ip = "127.0.0.1";
-int log_db_port = 3306;
+uint16 log_db_port = 3306;
 std::string log_db_id = "ragnarok";
 std::string log_db_pw = "";
 std::string log_db_db = "log";
@@ -349,7 +349,7 @@ int map_addblock(struct block_list* bl)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if (mapdata->cell == nullptr) // Player warped to a freed map. Stop them!
+	if (mapdata == nullptr || mapdata->cell == nullptr) // Player warped to a freed map. Stop them!
 		return 1;
 
 	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
@@ -402,6 +402,8 @@ int map_delblock(struct block_list* bl)
 
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
+	nullpo_ret(mapdata);
+
 	pos = bl->x/BLOCK_SIZE+(bl->y/BLOCK_SIZE)*mapdata->bxs;
 
 	if (bl->next)
@@ -409,8 +411,10 @@ int map_delblock(struct block_list* bl)
 	if (bl->prev == &bl_head) {
 	//Since the head of the list, update the block_list map of []
 		if (bl->type == BL_MOB) {
+			nullpo_ret(mapdata->block_mob);
 			mapdata->block_mob[pos] = bl->next;
 		} else {
+			nullpo_ret(mapdata->block);
 			mapdata->block[pos] = bl->next;
 		}
 	} else {
@@ -434,6 +438,8 @@ int map_delblock(struct block_list* bl)
  */
 int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 {
+	nullpo_ret(bl);
+
 	int x0 = bl->x, y0 = bl->y;
 	status_change *sc = NULL;
 	int moveblock = ( x0/BLOCK_SIZE != x1/BLOCK_SIZE || y0/BLOCK_SIZE != y1/BLOCK_SIZE);
@@ -763,9 +769,9 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 		return 0;
 
 	if (x1 < x0)
-		SWAP(x0, x1);
+		std::swap(x0, x1);
 	if (y1 < y0)
-		SWAP(y0, y1);
+		std::swap(y0, y1);
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -942,9 +948,9 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 		return 0;
 
 	if ( x1 < x0 )
-		SWAP(x0, x1);
+		std::swap(x0, x1);
 	if ( y1 < y0 )
-		SWAP(y0, y1);
+		std::swap(y0, y1);
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -1021,9 +1027,9 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	y1 = center->y + range;
 
 	if ( x1 < x0 )
-		SWAP(x0, x1);
+		std::swap(x0, x1);
 	if ( y1 < y0 )
-		SWAP(y0, y1);
+		std::swap(y0, y1);
 
 	if( dx == 0 || dy == 0 ) {
 		//Movement along one axis only.
@@ -1254,9 +1260,9 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 
 	//The two fors assume mx0 < mx1 && my0 < my1
 	if ( mx0 > mx1 )
-		SWAP(mx0, mx1);
+		std::swap(mx0, mx1);
 	if ( my0 > my1 )
-		SWAP(my0, my1);
+		std::swap(my0, my1);
 
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -1416,9 +1422,9 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 
 	//The following assumes mx0 < mx1 && my0 < my1
 	if (mx0 > mx1)
-		SWAP(mx0, mx1);
+		std::swap(mx0, mx1);
 	if (my0 > my1)
-		SWAP(my0, my1);
+		std::swap(my0, my1);
 
 	//Apply width to the path by turning 90 degrees
 	mx0 -= abs( range * dirx[( dir + 2 ) % DIR_MAX] );
@@ -4189,7 +4195,7 @@ int inter_config_read(const char *cfgName)
 			log_db_pw = w2;
 		else
 		if(strcmpi(w1,"log_db_port")==0)
-			log_db_port = atoi(w2);
+			log_db_port = (uint16)strtoul( w2, nullptr, 10 );
 		else
 		if(strcmpi(w1,"log_db_db")==0)
 			log_db_db = w2;
@@ -4274,7 +4280,7 @@ int log_sql_init(void)
 
 	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db.c_str(), log_db_ip.c_str());
 	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) ){
-		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
 			log_db_id.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
