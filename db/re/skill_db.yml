@@ -38191,7 +38191,7 @@ Body:
         Area: 3
     GiveAp: 3
     CastCancel: true
-    AfterCastActDelay: 250
+    AfterCastActDelay: 700
     Duration1:
       - Level: 1
         Time: 10000
