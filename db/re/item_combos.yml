@@ -48548,28 +48548,40 @@ Body:
           - Signet_Of_Spring   # 490483
           - Circul_Of_Life_Spring   # 480349
     Script: |
-      bonus2 bAddRace,RC_All,5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bAddRace,RC_All,.@val;
+      bonus2 bAddRace,RC_Player_Human,-.@val;
+      bonus2 bAddRace,RC_Player_Doram,-.@val;
       bonus bDelayrate,-10;
   - Combos:
       - Combo:
           - Signet_Of_Summer   # 490484
           - Circul_Of_Life_Summer   # 480350
     Script: |
-      bonus2 bAddRace,RC_All,5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bAddRace,RC_All,.@val;
+      bonus2 bAddRace,RC_Player_Human,-.@val;
+      bonus2 bAddRace,RC_Player_Doram,-.@val;
       bonus bDelayrate,-10;
   - Combos:
       - Combo:
           - Signet_Of_Autumn   # 490485
           - Circul_Of_Life_Autumn   # 480351
     Script: |
-      bonus2 bMagicAddRace,RC_All,5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bMagicAddRace,RC_All,.@val;
+      bonus2 bMagicAddRace,RC_Player_Human,-.@val;
+      bonus2 bMagicAddRace,RC_Player_Doram,-.@val;
       bonus bDelayrate,-10;
   - Combos:
       - Combo:
           - Signet_Of_Winter   # 490486
           - Circul_Of_Life_Winter   # 480352
     Script: |
-      bonus2 bAddRace,RC_All,5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bAddRace,RC_All,.@val;
+      bonus2 bAddRace,RC_Player_Human,-.@val;
+      bonus2 bAddRace,RC_Player_Doram,-.@val;
       bonus bDelayrate,-10;
   - Combos:
       - Combo:
@@ -48588,13 +48600,17 @@ Body:
           - MoonBook_Furious   # 540088
           - FuriousBoots   # 470265
     Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
       bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",15;
+      bonus2 bSkillAtk,"SKE_DAWN_BREAK",.@sum*2;
   - Combos:
       - Combo:
           - SaintWand_Furious   # 550141
           - FuriousBoots   # 470265
     Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
       bonus bDelayrate,-10;
+      bonus2 bSkillAtk,"CD_FRAMEN",.@sum;
   - Combos:
       - Combo:
           - StormBow_Furious   # 700100

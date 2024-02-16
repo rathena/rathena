@@ -78534,18 +78534,12 @@ Body:
       .@g = getenchantgrade();
       bonus2 bAddRace,RC_DemiHuman,5;
       bonus2 bMagicAddRace,RC_DemiHuman,5;
-      bonus2 bAddRace,RC_Player_Human,5;
-      bonus2 bMagicAddRace,RC_Player_Human,5;
       if (.@g>=ENCHANTGRADE_B) {
          bonus2 bAddRace,RC_DemiHuman,5;
          bonus2 bMagicAddRace,RC_DemiHuman,5;
-         bonus2 bAddRace,RC_Player_Human,5;
-         bonus2 bMagicAddRace,RC_Player_Human,5;
          if (.@g>=ENCHANTGRADE_A) {
             bonus2 bAddRace,RC_DemiHuman,5;
             bonus2 bMagicAddRace,RC_DemiHuman,5;
-            bonus2 bAddRace,RC_Player_Human,5;
-            bonus2 bMagicAddRace,RC_Player_Human,5;
          }
       }
   - Id: 313123
@@ -78608,18 +78602,12 @@ Body:
       .@g = getenchantgrade();
       bonus2 bAddRace,RC_Brute,5;
       bonus2 bMagicAddRace,RC_Brute,5;
-      bonus2 bAddRace,RC_Player_Doram,5;
-      bonus2 bMagicAddRace,RC_Player_Doram,5;
       if (.@g>=ENCHANTGRADE_B) {
          bonus2 bAddRace,RC_Brute,5;
          bonus2 bMagicAddRace,RC_Brute,5;
-         bonus2 bAddRace,RC_Player_Doram,5;
-         bonus2 bMagicAddRace,RC_Player_Doram,5;
          if (.@g>=ENCHANTGRADE_A) {
             bonus2 bAddRace,RC_Brute,5;
             bonus2 bMagicAddRace,RC_Brute,5;
-            bonus2 bAddRace,RC_Player_Doram,5;
-            bonus2 bMagicAddRace,RC_Player_Doram,5;
          }
       }
   - Id: 313127
