@@ -34,6 +34,7 @@
     <ClInclude Include="mmo.hpp" />
     <ClInclude Include="msg_conf.hpp" />
     <ClInclude Include="nullpo.hpp" />
+    <ClInclude Include="packets.hpp" />
     <ClInclude Include="random.hpp" />
     <ClInclude Include="showmsg.hpp" />
     <ClInclude Include="socket.hpp" />
