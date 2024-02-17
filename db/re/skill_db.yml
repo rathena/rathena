@@ -38053,7 +38053,7 @@ Body:
       IgnoreDefense: true
     Range: 2
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: 3
     Element: Weapon
     GiveAp: 2
     CastCancel: true
