@@ -36746,6 +36746,7 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastCancel: true
+    AfterCastActDelay: 700
     Cooldown: 1000
     Requires:
       SpCost:
