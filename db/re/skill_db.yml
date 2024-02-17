@@ -35443,7 +35443,7 @@ Body:
     Element: Water
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 250
+    AfterCastActDelay: 750
     Duration1: 4000
     Cooldown: 5000
     FixedCastTime: 1500
@@ -35490,7 +35490,7 @@ Body:
     Element: Dark
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 750
     Duration1: 4000
     Cooldown: 4000
     FixedCastTime: 1500
@@ -35547,7 +35547,7 @@ Body:
         Area: 4
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 1200
@@ -35675,7 +35675,7 @@ Body:
     Element: Earth
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 250
+    AfterCastActDelay: 750
     Duration1: 4000
     Cooldown: 5000
     FixedCastTime: 1500
@@ -35732,7 +35732,7 @@ Body:
         Area: 4
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 1200
@@ -35894,7 +35894,7 @@ Body:
     Element: Wind
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 250
+    AfterCastActDelay: 750
     Duration1: 3000
     Cooldown: 5000
     FixedCastTime: 1500
@@ -35945,7 +35945,7 @@ Body:
     Element: Fire
     CastCancel: true
     CastTime: 3000
-    AfterCastActDelay: 250
+    AfterCastActDelay: 750
     Duration1: 5000
     Cooldown: 5000
     FixedCastTime: 1500
@@ -36013,7 +36013,7 @@ Body:
         Area: 5
     CastCancel: true
     CastTime: 8000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1: 6000
     Cooldown: 6000
     FixedCastTime: 2000
@@ -36072,11 +36072,11 @@ Body:
     CastCancel: true
     AfterCastActDelay: 300
     Duration1: 300000
-    Cooldown: 300000
+    Cooldown: 60000
     FixedCastTime: 4000
     Requires:
       SpCost: 60
-      ApCost: 150
+      ApCost: 125
     Status: Climax
   - Id: 5233
     Name: AG_ROCK_DOWN
