@@ -37535,15 +37535,16 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -10
-    Element: Holy
+    Element: Neutral
     CastCancel: true
     CastTime: 3000
+    AfterCastActDelay: 500
     Duration1: 12000
     Cooldown: 5000
     FixedCastTime: 2000
     Requires:
       SpCost: 150
-      ApCost: 30
+      ApCost: 20
     Unit:
       Id: Pneumaticus_Procella
       Range:
