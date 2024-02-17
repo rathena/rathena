@@ -36718,7 +36718,8 @@ Body:
     SplashArea: 3
     CastCancel: true
     Duration1: 600000
-    Cooldown: 1000
+    AfterCastActDelay: 500
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
