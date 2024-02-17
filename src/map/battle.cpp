@@ -5690,17 +5690,19 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case WH_GALESTORM:
-			skillratio += -100 + 1000 * skill_lv + 10 * sstatus->con;
+			skillratio += -100 + 1350 * skill_lv;
+			skillratio += 10 * sstatus->con;
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_CALAMITYGALE) && (tstatus->race == RC_BRUTE || tstatus->race == RC_FISH))
 				skillratio += skillratio * 50 / 100;
 			break;
 		case WH_CRESCIVE_BOLT:
-			skillratio += -100 + 400 + 900 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 500 + 1300 * skill_lv;
+			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			if (sc) {
 				if (sc->getSCE(SC_CRESCIVEBOLT))
-					skillratio += skillratio * (10 * sc->getSCE(SC_CRESCIVEBOLT)->val1) / 100;
+					skillratio += skillratio * (20 * sc->getSCE(SC_CRESCIVEBOLT)->val1) / 100;
 
 				if (sc->getSCE(SC_CALAMITYGALE)) {
 					skillratio += skillratio * 20 / 100;
