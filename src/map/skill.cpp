@@ -5263,9 +5263,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case SHC_SHADOW_STAB:
-		if (sc && sc->getSCE(SC_CLOAKINGEXCEED))
-			flag |= 2;// Flag to deal 3 hits.
-
 		status_change_end(src, SC_CLOAKING);
 		status_change_end(src, SC_CLOAKINGEXCEED);
 
@@ -5875,6 +5872,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case WH_GALESTORM:// Give AP if 3 or more targets are hit.
 					if (sd && map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count) >= 3)
 						status_heal(src, 0, 0, 10, 0);
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 					break;
 				case BO_ACIDIFIED_ZONE_WATER:
 				case BO_ACIDIFIED_ZONE_GROUND:
