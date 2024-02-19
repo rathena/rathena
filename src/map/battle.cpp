@@ -5579,7 +5579,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_SAVAGE_IMPACT:
-			skillratio += -100 + 90 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 105 * skill_lv + 5 * sstatus->pow;
 
 			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
 				skillratio += 20 * skill_lv + 3 * sstatus->pow;	// !TODO: check POW ratio
@@ -5588,19 +5588,19 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_ETERNAL_SLASH:
-			skillratio += -100 + 265 * skill_lv + 2 * sstatus->pow;
+			skillratio += -100 + 300 * skill_lv + 2 * sstatus->pow;
 
 			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
-				skillratio += 100 * skill_lv + sstatus->pow;
+				skillratio += 120 * skill_lv + sstatus->pow;
 			}
 
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_SHADOW_STAB:
-			skillratio += -100 + 350 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 550 * skill_lv + 5 * sstatus->pow;
 
 			if( sc && sc->getSCE( SC_CLOAKINGEXCEED ) ){
-				skillratio += 50 * skill_lv + 2 * sstatus->pow;
+				skillratio += 100 * skill_lv + 2 * sstatus->pow;
 			}
 
 			RE_LVL_DMOD(100);
@@ -5690,17 +5690,19 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case WH_GALESTORM:
-			skillratio += -100 + 1000 * skill_lv + 10 * sstatus->con;
+			skillratio += -100 + 1350 * skill_lv;
+			skillratio += 10 * sstatus->con;
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_CALAMITYGALE) && (tstatus->race == RC_BRUTE || tstatus->race == RC_FISH))
 				skillratio += skillratio * 50 / 100;
 			break;
 		case WH_CRESCIVE_BOLT:
-			skillratio += -100 + 400 + 900 * skill_lv + 5 * sstatus->con;
+			skillratio += -100 + 500 + 1300 * skill_lv;
+			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			if (sc) {
 				if (sc->getSCE(SC_CRESCIVEBOLT))
-					skillratio += skillratio * (10 * sc->getSCE(SC_CRESCIVEBOLT)->val1) / 100;
+					skillratio += skillratio * (20 * sc->getSCE(SC_CRESCIVEBOLT)->val1) / 100;
 
 				if (sc->getSCE(SC_CALAMITYGALE)) {
 					skillratio += skillratio * 20 / 100;
@@ -6792,10 +6794,6 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case SHC_ETERNAL_SLASH:
 				if (sc && sc->getSCE(SC_E_SLASH_COUNT))
 					wd.div_ = sc->getSCE(SC_E_SLASH_COUNT)->val1;
-				break;
-			case SHC_SHADOW_STAB:
-				if (wd.miscflag == 2)
-					wd.div_ = 3;
 				break;
 			case SHC_IMPACT_CRATER:
 				if (sc && sc->getSCE(SC_ROLLINGCUTTER))
@@ -8004,7 +8002,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						}
 						break;
 					case AG_SOUL_VC_STRIKE:
-						skillratio += -100 + 250 * skill_lv + 3 * sstatus->spl;
+						skillratio += -100 + 300 * skill_lv + 3 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_STRANTUM_TREMOR:
@@ -8063,7 +8061,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ROCK_DOWN:
-						skillratio += -100 + 1200 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 1550 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
 							skillratio += 300 * skill_lv;
@@ -8072,7 +8070,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_STORM_CANNON:
-						skillratio += -100 + 1200 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 1550 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
 							skillratio += 300 * skill_lv;
@@ -8081,15 +8079,15 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRIMSON_ARROW:
-						skillratio += -100 + 350 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 400 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_CRIMSON_ARROW_ATK:
-						skillratio += -100 + 700 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 750 * skill_lv + 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_FROZEN_SLASH:
-						skillratio += -100 + 400 + 900 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 450 + 950 * skill_lv + 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
 							skillratio += 150 + 350 * skill_lv;
@@ -8134,9 +8132,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case CD_FRAMEN:
-						skillratio += -100 + (950 + 5 * pc_checkskill(sd,CD_FIDUS_ANIMUS)) * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 1300 * skill_lv;
+						skillratio += 5 * pc_checkskill(sd,CD_FIDUS_ANIMUS) * skill_lv;
+						skillratio += 5 * sstatus->spl;
 						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
-							skillratio += 100 * skill_lv;
+							skillratio += 50 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:// Is this affected by BaseLV and SPL too??? [Rytech]
