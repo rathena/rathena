@@ -163,7 +163,7 @@ function	script	F_Warlock	{
 			next;
 			switch(select("What do I need to do?:Cancel.")) {
 			case 1:
-				if (VIP_SCRIPT) {
+				if (vip_is_enabled(CHK_VIP_SCRIPT)) {
 					callfunc "VIP_Third_Class";
 					set job_wl,2;
 					setquest 11106;
@@ -587,7 +587,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 		next;
 		switch(select("How can I be a Warlock?:Cancel.")) {
 		case 1:
-			if (VIP_SCRIPT) {
+			if (vip_is_enabled(CHK_VIP_SCRIPT)) {
 				callfunc "VIP_Third_Class";
 				set job_wl,2;
 				setquest 11106;

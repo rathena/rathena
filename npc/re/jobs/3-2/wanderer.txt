@@ -266,7 +266,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 			mes "You are so cold-hearted....";
 			close;
 		}
-		if (VIP_SCRIPT) {
+		if (vip_is_enabled(CHK_VIP_SCRIPT)) {
 			callfunc "VIP_Third_Class";
 			set job_wan,2;
 			setquest 2218;

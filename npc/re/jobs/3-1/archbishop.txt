@@ -61,7 +61,7 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 				mes "You can't change jobs without using all your skill points. Please use all of your skill points before applying to change jobs~";
 				close;
 			}
-			if (VIP_SCRIPT) {
+			if (vip_is_enabled(CHK_VIP_SCRIPT)) {
 				callfunc "VIP_Third_Class";
 				set job_arch,1;
 				setquest 2187;

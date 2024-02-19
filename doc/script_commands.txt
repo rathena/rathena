@@ -615,7 +615,7 @@ Some source-end constants can also be accessed in scripts. This list is located 
 
 	PACKETVER, MAX_LEVEL, MAX_STORAGE, MAX_INVENTORY, MAX_CART, MAX_ZENY, MAX_PARTY,
 	MAX_GUILD, MAX_GUILDLEVEL, MAX_GUILD_STORAGE, MAX_BG_MEMBERS, MAX_CHAT_USERS,
-	VIP_SCRIPT, MIN_STORAGE
+	MIN_STORAGE
 
 	Option_Nothing, Option_Sight, Option_Hide, Option_Cloak, Option_Falcon, Option_Riding,
 	Option_Invisible, Option_Orcish, Option_Wedding, Option_Chasewalk, Option_Flying,
@@ -2637,6 +2637,16 @@ Changes a player's VIP time (in minutes). A positive value will increase time, a
 negative value will decrease time.
 
 NOTE: This command is only available if the VIP System is enabled.
+
+---------------------------------------
+
+*vip_is_enabled(<type>)
+
+Returns information about the server's VIP configuration.
+
+Valid types:
+ CHK_VIP_ENABLE - VIP is enabled?
+ CHK_VIP_SCRIPT - VIP_SCRIPT is enabled (See src/config/core.hpp)
 
 ---------------------------------------
 

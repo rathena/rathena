@@ -53,7 +53,7 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 				next;
 				switch(select("Of course, I want to meet a Geneticist.:I don't want to meet a Geneticist.")) {
 				case 1:
-					if (VIP_SCRIPT) {
+					if (vip_is_enabled(CHK_VIP_SCRIPT)) {
 						callfunc "VIP_Third_Class";
 						set job_gen,1;
 						setquest 2215;
