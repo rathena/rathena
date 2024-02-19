@@ -50,6 +50,8 @@ struct path_node {
 
 /// Binary heap of path nodes
 static std::vector<path_node*> g_open_set; // use static heap for all path calculations
+auto max_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost > b->f_cost; };
+auto min_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost < b->f_cost; };
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
 
@@ -87,15 +89,11 @@ static int add_path(std::vector<path_node*>& heap, int16 x, int16 y, int g_cost,
 			tp[i].parent = parent;
 			tp[i].f_cost = g_cost + h_cost;
 			if (tp[i].flag == SET_CLOSED) {
-				heap.push_back(&tp[i]);
-				std::push_heap(heap.begin(), heap.end(), [](const path_node* a, const path_node* b) {
-					return a->f_cost > b->f_cost;
-					});
+				heap.push_back(&tp[i]); // Put it in open set again
+				std::push_heap(heap.begin(), heap.end(), max_heap_comp);
 			}
 			else if (std::find(heap.begin(), heap.end(), &tp[i]) != heap.end()) {
-				std::make_heap(heap.begin(), heap.end(), [](const path_node* a, const path_node* b) {
-					return a->f_cost > b->f_cost;
-					});
+				std::make_heap(heap.begin(), heap.end(), max_heap_comp);
 				return 1;
 			}
 			tp[i].flag = SET_OPEN;
@@ -115,9 +113,7 @@ static int add_path(std::vector<path_node*>& heap, int16 x, int16 y, int g_cost,
 	tp[i].flag = SET_OPEN;
 	tpused[i] = 1 + (x << 16 | y);
 	heap.push_back(&tp[i]);
-	std::push_heap(heap.begin(), heap.end(), [](const path_node* a, const path_node* b) {
-		return a->f_cost > b->f_cost;
-		});
+	std::push_heap(heap.begin(), heap.end(), max_heap_comp);
 	return 0;
 }
 ///@}
@@ -158,7 +154,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 		return true;
 	}
 
-	struct path_node *current, *it;
+	struct path_node *current = nullptr, *it;
 	int xs = mapdata->xs - 1;
 	int ys = mapdata->ys - 1;
 	int len = 0;
@@ -182,7 +178,6 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	tpused[i] = 1 + (from->x << 16 | from->y);
 
 	g_open_set.push_back(&tp[i]);
-	current = g_open_set.front();
 	
 	for (;;) {
 		int e = 0; // error flag
@@ -201,12 +196,10 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 			return false;
 
 		// Look for the lowest f_cost node in the 'open' set
-		auto it = std::min_element(g_open_set.begin(), g_open_set.end(), [](const path_node* a, const path_node* b) {
-			return a->f_cost < b->f_cost;
-		});
-
-		current = *it;
-		g_open_set.erase(it); // Remove it from 'open' set
+		std::pop_heap(g_open_set.begin(), g_open_set.end(), min_heap_comp);
+		it = g_open_set.back();
+		g_open_set.pop_back(); // Remove it from 'open' set
+		current = it; 
 
 		x = current->x;
 		y = current->y;
