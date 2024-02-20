@@ -322,6 +322,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		tp[i].flag   = SET_OPEN;
 
 		g_open_set.push_back(&tp[i]);
+		std::push_heap(g_open_set.begin(), g_open_set.end(), min_heap_comp);
 
 		for(;;) {
 			int e = 0; // error flag
@@ -336,7 +337,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 			int g_cost;
 
-			if (g_open_set.size() == 0)
+			if (g_open_set.empty())
 				return false;
 
 			// Look for the lowest f_cost node in the 'open' set

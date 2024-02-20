@@ -178,7 +178,8 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	tpused[i] = 1 + (from->x << 16 | from->y);
 
 	g_open_set.push_back(&tp[i]);
-	
+	std::push_heap(g_open_set.begin(), g_open_set.end(), min_heap_comp);
+
 	for (;;) {
 		int e = 0; // error flag
 		
@@ -192,7 +193,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 
 		int g_cost;
 
-		if (g_open_set.size() == 0)
+		if (g_open_set.empty())
 			return false;
 
 		// Look for the lowest f_cost node in the 'open' set
