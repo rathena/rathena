@@ -1704,6 +1704,10 @@ int clif_spawn( struct block_list *bl, bool walking ){
 		clif_spawn_unit( bl, AREA_WOS );
 	}
 
+	unit_data* ud = unit_bl2ud(bl);
+
+	if (ud->body_size)
+		clif_body_size(bl, ud->body_size);
 	if (vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
 	if (vd->body_style)
@@ -1989,6 +1993,8 @@ static void clif_move2( struct block_list *bl, struct view_data *vd, struct unit
 
 	clif_set_unit_walking( bl, nullptr, ud, AREA_WOS );
 
+	if (ud->body_size)
+		clif_body_size(bl, ud->body_size);
 	if(vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
 	if(vd->body_style)
@@ -5081,6 +5087,8 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		clif_set_unit_idle( bl, false, SELF, &sd->bl );
 	}
 
+	if (ud->body_size)
+		clif_body_size(bl, ud->body_size);
 	if (vd->cloth_color)
 		clif_refreshlook(&sd->bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,SELF);
 	if (vd->body_style)
@@ -6583,6 +6591,14 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 		return;
 
 	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
+}
+
+void clif_body_size(struct block_list *bl, int val1) {
+	nullpo_retv(bl);
+
+	map_session_data *sd = BL_CAST(BL_PC, bl);
+
+	clif_status_change_sub(bl, bl->id, 1421, 1, 9999, val1, 0, 0, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
 }
 
 /**

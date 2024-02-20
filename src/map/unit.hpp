@@ -46,6 +46,7 @@ struct unit_data {
 	uint8 dir;
 	unsigned char walk_count;
 	unsigned char target_count;
+	uint8 body_size;
 	struct s_udState {
 		unsigned change_walk_target : 1 ;
 		unsigned skillcastcancel : 1 ;

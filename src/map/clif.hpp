@@ -1254,4 +1254,7 @@ void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status styp
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
 
+// Body Size Controller
+void clif_body_size(struct block_list* bl, int val1);
+
 #endif /* CLIF_HPP */
