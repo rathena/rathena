@@ -1333,13 +1333,13 @@ public:
 				return index;
 			}
 		}
-		return 0; // Not found
+		return -1; // Not found
 	}
 
 	// Function to access a path node by its index
-    path_node* get_node_at(size_t i) const {
+	path_node* get_node_at(size_t i) const {
 		return open_set.at(i);
-    }
+	}
 
 	//void erase(size_t i) {
 	//	index.erase(open_set[i]); // Remove from index
