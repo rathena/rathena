@@ -1280,6 +1280,82 @@ extern char partybookings_table[32];
 extern char roulette_table[32];
 extern char guild_storage_log_table[32];
 
+
+/// A* Related
+/// @name Structures and defines for A* pathfinding
+/// @{
+struct path_node {
+	struct path_node* parent; ///< pointer to parent (for path reconstruction)
+	short x; ///< X-coordinate
+	short y; ///< Y-coordinate
+	short g_cost; ///< Actual cost from start to this node
+	short f_cost; ///< g_cost + heuristic(this, goal)
+	short flag; ///< SET_OPEN / SET_CLOSED
+};
+
+auto max_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost > b->f_cost; };
+auto min_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost < b->f_cost; };
+
+class open_heap {
+private:
+	std::vector<path_node*> open_set;
+	std::unordered_map<path_node*, size_t> index;
+
+public:
+	// push the node to 'open' set
+	void push(path_node* node) {
+		open_set.push_back(node);
+		std::push_heap(open_set.begin(), open_set.end(), max_heap_comp);
+		index[node] = open_set.size() - 1;
+	}
+	// move min element to back of vector
+	void pop_heap() {
+		std::pop_heap(open_set.begin(), open_set.end(), min_heap_comp);
+		index[open_set.back()] = open_set.size() - 1; // Update index
+	}
+	// erase back of vector
+	void pop_back() {
+		index.erase(open_set.back()); // Remove from index
+		open_set.pop_back();
+	}
+	// clear vector
+	void clear(){
+		open_set.clear();
+		index.clear();
+	}
+
+	// Function to access a index by its node
+	size_t get_index(path_node* node) const {
+		auto it = index.find(node);
+		if (it != index.end()) {
+			size_t index = it->second;
+			if (index < open_set.size()) {
+				return index;
+			}
+		}
+		return 0; // Not found
+	}
+
+	// Function to access a path node by its index
+    path_node* get_node_at(size_t i) const {
+		return open_set.at(i);
+    }
+
+	//void erase(size_t i) {
+	//	index.erase(open_set[i]); // Remove from index
+	//	open_set[i] = nullptr;
+	//}
+
+	bool empty() const {
+		return open_set.empty();
+	}
+
+	path_node* back() const {
+		return open_set.back();
+	}
+};
+/// @}
+
 void do_shutdown(void);
 
 #endif /* MAP_HPP */

@@ -38,19 +38,8 @@ std::string filePrefix = "generated/clientside/data/luafiles514/lua files/naviga
 // @name Structures and defines for A* pathfinding
 // @{
 
-// Path node
-struct path_node {
-	struct path_node *parent; // pointer to parent
-	short x; // x coord
-	short y; // y coord
-	short g_cost; // Actual cost from start to this node
-	short f_cost; // g_cost + heuristic(this, goal)
-	short flag; // SET_OPEN / SET_CLOSED
-};
-
-/// Binary comp
-auto max_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost > b->f_cost; };
-auto min_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost < b->f_cost; };
+/// Binary Heap
+static open_heap open_set;
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
 
@@ -66,43 +55,6 @@ static enum directions walk_choices [3][3] =
 	{DIR_WEST,DIR_CENTER,DIR_EAST},
 	{DIR_SOUTHWEST,DIR_SOUTH,DIR_SOUTHEAST},
 };
-
-class open_heap {
-private:
-	std::vector<path_node*> open_set;
-	std::unordered_map<path_node*, size_t> index;
-
-public:
-	void push(path_node* node) {
-		open_set.push_back(node);
-		std::push_heap(open_set.begin(), open_set.end(), max_heap_comp);
-		index[node] = open_set.size() - 1;
-	}
-
-	void pop_heap() {
-		std::pop_heap(open_set.begin(), open_set.end(), min_heap_comp);
-		index[open_set.back()] = open_set.size() - 1; // Update index
-	}
-
-	void pop_back() {
-		index.erase(open_set.back()); // Remove from index
-		open_set.pop_back();
-	}
-
-	void clear(){
-		open_set.clear();
-		index.clear();
-	}
-
-	bool empty() const {
-		return open_set.empty();
-	}
-
-	path_node* back() const {
-		return open_set.back();
-	}
-};
-static open_heap open_set;
 
 /// @name A* pathfinding related functions
 /// @{
@@ -123,10 +75,10 @@ static int add_path(int16 x, int16 y, int g_cost, struct path_node *parent, int 
 			tp[i].g_cost = g_cost;
 			tp[i].parent = parent;
 			tp[i].f_cost = g_cost + h_cost;
-			if (tp[i].flag == SET_CLOSED) 
-				open_set.push(&tp[i]);
-			else
-				return 1; // (TODO!) make an function to update the heap (if it's needed)
+			if (tp[i].flag == SET_CLOSED) 				
+				open_set.push(&tp[i]); // Put node to 'open' set
+			else if (open_set.get_index(&tp[i])) 
+				return 1;  // (TODO!) make an function to update the heap (if it's needed)	  	
 			tp[i].flag = SET_OPEN;
 		}
 		return 0;
@@ -143,7 +95,7 @@ static int add_path(int16 x, int16 y, int g_cost, struct path_node *parent, int 
 	tp[i].f_cost = g_cost + h_cost;
 	tp[i].flag = SET_OPEN;
 	tpused[i] = 1 + (x << 16 | y);
-	open_set.push(&tp[i]);
+	open_set.push(&tp[i]); // Put node to 'open' set
 	return 0;
 }
 ///@}
@@ -193,7 +145,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	// A* (A-star) pathfinding
 	// We always use A* for finding walkpaths because it is what game client uses.
 	// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
-	open_set.clear();
+	open_set.clear(); // Clear 'open' set
 
 	memset(tpused, 0, sizeof(tpused));
 
@@ -207,7 +159,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	tp[i].flag = SET_OPEN;
 	tpused[i] = 1 + (from->x << 16 | from->y);
 
-	open_set.push(&tp[i]);
+	open_set.push(&tp[i]); // Put node to 'open' set
 
 	for (;;) {
 		int e = 0; // error flag
@@ -225,10 +177,9 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 		if (open_set.empty())
 			return false;
 
-		// Look for the lowest f_cost node in the 'open' set
-		open_set.pop_heap();
-		current = open_set.back();
-		open_set.pop_back(); // Remove it from 'open' set 
+		open_set.pop_heap(); // Look for the lowest f_cost node in the 'open' set and move to back
+		current = open_set.back(); 
+		open_set.pop_back(); // Remove it from 'open' set  
 
 		x = current->x;
 		y = current->y;
