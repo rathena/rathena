@@ -106,8 +106,7 @@ struct path_node {
 	short flag; ///< SET_OPEN / SET_CLOSED
 };
 
-auto max_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost > b->f_cost; };
-auto min_heap_comp = [](const path_node* a, const path_node* b) { return a->f_cost < b->f_cost; };
+auto heap_comp = [](const path_node* a, const path_node* b) { return b->f_cost < a->f_cost; };
 
 class open_heap {
 private:
@@ -115,29 +114,33 @@ private:
 	std::unordered_map<path_node*, size_t> index;
 
 public:
-	// push the node to 'open' set
+
+	// Push the node to 'open' set
 	void push(path_node* node) {
 		open_set.push_back(node);
-		std::push_heap(open_set.begin(), open_set.end(), max_heap_comp);
+		std::push_heap(open_set.begin(), open_set.end(), heap_comp);
 		index[node] = open_set.size() - 1;
 	}
-	// move min element to back of vector
+
+	// Move top element to back of heap
 	void pop_heap() {
-		std::pop_heap(open_set.begin(), open_set.end(), min_heap_comp);
+		std::pop_heap(open_set.begin(), open_set.end(), heap_comp);
 		index[open_set.back()] = open_set.size() - 1; // Update index
 	}
-	// erase back of vector
+
+	// Erase back of heap and index
 	void pop_back() {
 		index.erase(open_set.back()); // Remove from index
 		open_set.pop_back();
 	}
-	// clear vector
+
+	// Clearing the heap and index
 	void clear(){
 		open_set.clear();
-		index.clear();
+		index.clear();		
 	}
 
-	// Function to access a index by its node
+	// Function to get node index
 	size_t get_index(path_node* node) const {
 		auto it = index.find(node);
 		if (it != index.end()) {
@@ -149,15 +152,30 @@ public:
 		return -1; // Not found
 	}
 
-	// Function to access a path node by its index
-	path_node* get_node_at(size_t i) const {
-		return open_set.at(i);
+	// Update 'open' node with an higher cost than this node
+	bool update_node(path_node* node){
+		reindex();
+		size_t i = get_index(node);
+		if( i < 0)
+			return true; // throw path cant be reached
+		erase(i);
+		push(node);
+		return false;
 	}
 
-	//void erase(size_t i) {
-	//	index.erase(open_set[i]); // Remove from index
-	//	open_set[i] = nullptr;
-	//}
+	// Erase node at [i] positison on the 'open' set
+	void erase(size_t i) {
+		index[open_set.back()] = i;
+		std::swap(open_set[i], open_set.back()); // Move the [i] element to the last position
+        pop_back(); // Remove the last element
+	}
+
+	// Re-indexing nodes O(n^2)
+	void reindex() {
+		index.clear();
+		for (size_t i = 0; i < open_set.size(); ++i) 
+			index[open_set[i]] = i;	
+	}
 
 	bool empty() const {
 		return open_set.empty();

@@ -56,8 +56,8 @@ static int add_path(int16 x, int16 y, int g_cost, struct path_node *parent, int 
 			tp[i].f_cost = g_cost + h_cost;
 			if (tp[i].flag == SET_CLOSED) 				
 				open_set.push(&tp[i]); // Put node to 'open' set
-			else if (open_set.get_index(&tp[i]) >= 0) 
-				return 1;  // (TODO!) make an function to update the heap (if it's needed)	  	
+			else if (open_set.update_node(&tp[i]))
+				return 1; // return error if node not found on heap 	
 			tp[i].flag = SET_OPEN;
 		}
 		return 0;
