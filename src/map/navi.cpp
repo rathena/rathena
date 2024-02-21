@@ -27,14 +27,6 @@
 
 std::string filePrefix = "generated/clientside/data/luafiles514/lua files/navigation/";
 
-#define SET_OPEN 0
-#define SET_CLOSED 1
-
-#define PATH_DIR_NORTH 1
-#define PATH_DIR_WEST 2
-#define PATH_DIR_SOUTH 4
-#define PATH_DIR_EAST 8
-
 // @name Structures and defines for A* pathfinding
 // @{
 
@@ -42,19 +34,6 @@ std::string filePrefix = "generated/clientside/data/luafiles514/lua files/naviga
 static open_heap open_set;
 
 #define calc_index(x,y) (((x)+(y)*MAX_WALKPATH_NAVI) & (MAX_WALKPATH_NAVI*MAX_WALKPATH_NAVI-1))
-
-/// Estimates the cost from (x0,y0) to (x1,y1).
-/// This is inadmissible (overestimating) heuristic used by game client.
-#define heuristic(x0, y0, x1, y1)	(MOVE_COST * (abs((x1) - (x0)) + abs((y1) - (y0)))) // Manhattan distance
-/// @}
-
-// Translates dx,dy into walking direction
-static enum directions walk_choices [3][3] =
-{
-	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
-	{DIR_WEST,DIR_CENTER,DIR_EAST},
-	{DIR_SOUTHWEST,DIR_SOUTH,DIR_SOUTHEAST},
-};
 
 /// @name A* pathfinding related functions
 /// @{
