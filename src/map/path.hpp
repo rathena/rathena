@@ -125,7 +125,7 @@ public:
 	// Move top element to back of heap
 	void pop_heap() {
 		std::pop_heap(open_set.begin(), open_set.end(), heap_comp);
-		index[open_set.back()] = open_set.size() - 1; // Update index
+		pop_index(); // Update index
 	}
 
 	// Erase back of heap and index
@@ -143,18 +143,13 @@ public:
 	// Function to get node index
 	size_t get_index(path_node* node) const {
 		auto it = index.find(node);
-		if (it != index.end()) {
-			size_t index = it->second;
-			if (index < open_set.size()) {
-				return index;
-			}
-		}
+		if (it != index.end() && it->second < open_set.size()) 
+			return it->second;
 		return -1; // Not found
 	}
 
 	// Update 'open' node with an higher cost than this node
 	bool update_node(path_node* node){
-		reindex();
 		size_t i = get_index(node);
 		if( i < 0)
 			return true; // throw path cant be reached
@@ -165,16 +160,8 @@ public:
 
 	// Erase node at [i] positison on the 'open' set
 	void erase(size_t i) {
-		index[open_set.back()] = i;
-		std::swap(open_set[i], open_set.back()); // Move the [i] element to the last position
-        pop_back(); // Remove the last element
-	}
-
-	// Re-indexing nodes O(n^2)
-	void reindex() {
-		index.clear();
-		for (size_t i = 0; i < open_set.size(); ++i) 
-			index[open_set[i]] = i;	
+		sift_up(i);
+		pop_back(); // Remove the last element
 	}
 
 	bool empty() const {
@@ -183,6 +170,23 @@ public:
 
 	path_node* back() const {
 		return open_set.back();
+	}
+
+	// Perform a sift up
+	void sift_up(size_t i) {
+		while (i > 0 && heap_comp(open_set[i], open_set[(i - 1) / 2])) {
+			std::swap(open_set[i], open_set[(i - 1) / 2]);
+			index[open_set[i]] = i;
+			index[open_set[(i - 1) / 2]] = (i - 1) / 2;
+			i = (i - 1) / 2;
+		}
+	}
+
+	// Pop the indexes
+	void pop_index() {
+		for(auto& it : open_set)
+			index[it]--;
+		index[open_set.back()] = open_set.size() - 1;
 	}
 };
 /// @}
