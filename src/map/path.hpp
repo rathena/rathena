@@ -133,7 +133,7 @@ public:
 	// Update 'open' node with an higher cost than this node
 	bool update_node(path_node* node, bool occouped = false){
 		size_t i = get_index(node);
-		if(i < 0 || i > open_set.size())
+		if(i >= open_set.size())
 			return true; // node not found on open set throw e
 		if(occouped)
 		{
@@ -155,8 +155,9 @@ public:
 
 	// Function to get node index
 	size_t get_index(path_node* node) const {
-		auto it = std::find(open_set.begin(), open_set.end(), node); // (!TODO!) Optimal function to find node in heap
-		return (it != open_set.end()) ? std::distance(open_set.begin(), it) : -1;
+		size_t i = 0;
+		ARR_FIND(0, open_set.size(), i, open_set[i]->x == node->x && open_set[i]->y == node->y);
+		return i;
 	}
 
 	void erase(size_t i) {
