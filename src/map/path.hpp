@@ -5,6 +5,7 @@
 #define PATH_HPP
 
 #include <common/cbasetypes.hpp>
+#include <functional>
 #include "map.hpp"
 
 enum cell_chk : uint8;
@@ -106,46 +107,27 @@ struct path_node {
 	short flag; ///< SET_OPEN / SET_CLOSED
 };
 
-auto heap_comp = [](const path_node* a, const path_node* b) { return b->f_cost < a->f_cost; };
-
 class open_heap {
 private:
 	std::vector<path_node*> open_set;
-	std::unordered_map<path_node*, size_t> index;
+	std::function<bool(const path_node*, const path_node*)> heap_comp = [](const path_node* a, const path_node* b) { return b->f_cost < a->f_cost; };
 
-public:
-
-	// Push the node to 'open' set
-	void push(path_node* node) {
+public:	
+	// Push the node to 'open' set & heap
+	void heap_push_node(path_node* node) {
 		open_set.push_back(node);
 		std::push_heap(open_set.begin(), open_set.end(), heap_comp);
-		index[node] = open_set.size() - 1;
 	}
 
-	// Move top element to back of heap
+	// Move top element to back of heap & erase it
 	void pop_heap() {
 		std::pop_heap(open_set.begin(), open_set.end(), heap_comp);
-		pop_index(); // Update index
-	}
-
-	// Erase back of heap and index
-	void pop_back() {
-		index.erase(open_set.back()); // Remove from index
 		open_set.pop_back();
 	}
 
 	// Clearing the heap and index
 	void clear(){
 		open_set.clear();
-		index.clear();		
-	}
-
-	// Function to get node index
-	size_t get_index(path_node* node) const {
-		auto it = index.find(node);
-		if (it != index.end() && it->second < open_set.size()) 
-			return it->second;
-		return -1; // Not found
 	}
 
 	// Update 'open' node with an higher cost than this node
@@ -154,39 +136,42 @@ public:
 		if( i < 0)
 			return true; // throw path cant be reached
 		erase(i);
-		push(node);
+		heap_push_node(node);
 		return false;
 	}
 
-	// Erase node at [i] positison on the 'open' set
-	void erase(size_t i) {
-		sift_up(i);
-		pop_back(); // Remove the last element
+	// Update an existent node 
+	bool update_ex_node(path_node* node){
+		size_t i = get_index(node);
+		if(i < 0 || i > open_set.size())
+			return true; // node not found on open set throw e
+		if(heap_comp(open_set[i]->parent, node->parent))
+			return false; // existent node parent f_cost is better then this node
+		erase(i);
+		heap_push_node(node);
+		return false;
 	}
 
 	bool empty() const {
 		return open_set.empty();
 	}
 
-	path_node* back() const {
-		return open_set.back();
+	path_node* front() const {
+		return open_set.front();
 	}
 
-	// Perform a sift up
-	void sift_up(size_t i) {
-		while (i > 0 && heap_comp(open_set[i], open_set[(i - 1) / 2])) {
-			std::swap(open_set[i], open_set[(i - 1) / 2]);
-			index[open_set[i]] = i;
-			index[open_set[(i - 1) / 2]] = (i - 1) / 2;
-			i = (i - 1) / 2;
+	// Function to get node index
+	size_t get_index(path_node* node) const {
+		auto it = std::find(open_set.begin(), open_set.end(), node); // (!TODO!) Optimal function to find node in heap
+		return (it != open_set.end()) ? std::distance(open_set.begin(), it) : -1;
+	}
+
+	void erase(size_t i) {
+		if (i < open_set.size()) {
+			auto range = open_set.begin() + i;
+			std::pop_heap(range, open_set.end(), heap_comp); //send element to back of heap
+			open_set.pop_back(); // erase it from open set
 		}
-	}
-
-	// Pop the indexes
-	void pop_index() {
-		for(auto& it : open_set)
-			index[it]--;
-		index[open_set.back()] = open_set.size() - 1;
 	}
 };
 /// @}
