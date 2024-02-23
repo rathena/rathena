@@ -168,7 +168,7 @@ static short add_path(std::vector<path_node>& tp, int16 x, int16 y, int g_cost, 
 			tp[i].parent = parent;
 			tp[i].f_cost = g_cost + h_cost;
 			if (tp[i].flag == SET_CLOSED)
-				open_set.heap_push_node(&tp[i]); // Put node to 'open' set
+				open_set.push_node(&tp[i]); // Put node to 'open' set
 			else if (open_set.update_node(&tp[i]))
 				return 1; // return error if node not found on heap 
 			tp[i].flag = SET_OPEN;
@@ -177,7 +177,7 @@ static short add_path(std::vector<path_node>& tp, int16 x, int16 y, int g_cost, 
 	}
 
 	if (tp[i].x || tp[i].y) // Index is already taken; update ex node
-		return open_set.update_ex_node(&tp[i]);
+		return open_set.update_node(&tp[i], true);
 
 	// New node
 	tp[i].x = x;
@@ -186,7 +186,7 @@ static short add_path(std::vector<path_node>& tp, int16 x, int16 y, int g_cost, 
 	tp[i].parent = parent;
 	tp[i].f_cost = g_cost + h_cost;
 	tp[i].flag = SET_OPEN;
-	open_set.heap_push_node(&tp[i]); // Put node to 'open' set
+	open_set.push_node(&tp[i]); // Put node to 'open' set
 	return 0;
 }
 ///@}
@@ -279,7 +279,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		tp[i].f_cost = heuristic(x0, y0, x1, y1);
 		tp[i].flag   = SET_OPEN;
 
-		open_set.heap_push_node(&tp[i]); // Put node to 'open' set
+		open_set.push_node(&tp[i]); // Put node to 'open' set
 
 		for(;;) {
 			short e = 0; // error flag

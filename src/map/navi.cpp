@@ -43,7 +43,7 @@ static std::vector<path_node> tp(MAX_WALKPATH_NAVI * MAX_WALKPATH_NAVI + 1);
 
 /// Path_node processing in A* pathfinding.
 /// Adds new node to heap and updates/re-adds old ones if necessary.
-static short add_path(std::vector<path_node>& tp, int16 x, int16 y, int g_cost, struct path_node *parent, int h_cost)
+static short add_path(int16 x, int16 y, int g_cost, struct path_node *parent, int h_cost)
 {
 	int i = calc_index(x, y);
 
@@ -54,7 +54,7 @@ static short add_path(std::vector<path_node>& tp, int16 x, int16 y, int g_cost, 
 			tp[i].parent = parent;
 			tp[i].f_cost = g_cost + h_cost;
 			if (tp[i].flag == SET_CLOSED) 				
-				open_set.heap_push_node(&tp[i]); // Put node to 'open' set
+				open_set.push_node(&tp[i]); // Put node to 'open' set
 			else if (open_set.update_node(&tp[i]))
 				return 1; // return error if node not found on heap 	
 			tp[i].flag = SET_OPEN;
@@ -63,7 +63,7 @@ static short add_path(std::vector<path_node>& tp, int16 x, int16 y, int g_cost, 
 	}
 
 	if (tp[i].x || tp[i].y) // Index is already taken
-		return open_set.update_ex_node(&tp[i]);
+		return open_set.update_node(&tp[i], true);
 
 	// New node
 	tp[i].x = x;
@@ -72,7 +72,7 @@ static short add_path(std::vector<path_node>& tp, int16 x, int16 y, int g_cost, 
 	tp[i].parent = parent;
 	tp[i].f_cost = g_cost + h_cost;
 	tp[i].flag = SET_OPEN;
-	open_set.heap_push_node(&tp[i]); // Put node to 'open' set
+	open_set.push_node(&tp[i]); // Put node to 'open' set
 	return 0;
 }
 ///@}
@@ -134,7 +134,7 @@ static bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_p
 	tp[i].f_cost = heuristic(from->x, from->y, dest->x, dest->y);
 	tp[i].flag = SET_OPEN;
 
-	open_set.heap_push_node(&tp[i]); // Put node to 'open' set
+	open_set.push_node(&tp[i]); // Put node to 'open' set
 
 	for (;;) {
 		short e = 0; // error flag
@@ -173,21 +173,21 @@ static bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_p
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 		// Process neighbors of current node
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y-1, cell))
-			e += add_path(tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, dest->x, dest->y)); // (x+1, y-1) 5
+			e += add_path(x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, dest->x, dest->y)); // (x+1, y-1) 5
 		if (chk_dir(PATH_DIR_EAST))
-			e += add_path(tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, dest->x, dest->y)); // (x+1, y) 6
+			e += add_path(x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, dest->x, dest->y)); // (x+1, y) 6
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y+1, cell))
-			e += add_path(tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, dest->x, dest->y)); // (x+1, y+1) 7
+			e += add_path(x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, dest->x, dest->y)); // (x+1, y+1) 7
 		if (chk_dir(PATH_DIR_NORTH))
-			e += add_path(tp, x,y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, dest->x, dest->y)); // (x, y+1) 0
+			e += add_path(x,y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, dest->x, dest->y)); // (x, y+1) 0
 		if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y+1, cell))
-			e += add_path(tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, dest->x, dest->y)); // (x-1, y+1) 1
+			e += add_path(x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, dest->x, dest->y)); // (x-1, y+1) 1
 		if (chk_dir(PATH_DIR_WEST))
-			e += add_path(tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, dest->x, dest->y)); // (x-1, y) 2
+			e += add_path(x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, dest->x, dest->y)); // (x-1, y) 2
 		if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y-1, cell))
-			e += add_path(tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, dest->x, dest->y)); // (x-1, y-1) 3
+			e += add_path(x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, dest->x, dest->y)); // (x-1, y-1) 3
 		if (chk_dir(PATH_DIR_SOUTH))
-			e += add_path(tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, dest->x, dest->y)); // (x, y-1) 4
+			e += add_path(x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, dest->x, dest->y)); // (x, y-1) 4
 #undef chk_dir
 		if (e) {
 			return false;
