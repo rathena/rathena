@@ -350,7 +350,7 @@ int logclif_parse_reqauth_sso( int fd, login_session_data& sd, char* ip ){
 		return 0;
 	}
 
-	if( RFIFOREST( fd ) < p->packetLength ){
+	if( static_cast<decltype(p->packetLength)>(RFIFOREST(fd)) < p->packetLength){
 		return 0;
 	}
 
