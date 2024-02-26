@@ -27130,7 +27130,14 @@ BUILDIN_FUNC(setdialogalign){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_set_dialog_align(*sd, st->oid, (e_say_dialog_align)script_getnum(st, 2));
+	int32 align = script_getnum( st, 2 );
+	
+	if( align < DIALOG_ALIGN_LEFT || align > DIALOG_ALIGN_BOTTOM ){
+		ShowError( "buildin_setdialogalign: Unknown align value %d\n", align );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_dialog_align( *sd, st->oid, static_cast<e_say_dialog_align>( align ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27143,7 +27150,22 @@ BUILDIN_FUNC(setdialogsize){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_set_npc_window_size(*sd, script_getnum(st, 2), script_getnum(st, 3));
+	int32 x = script_getnum( st, 2 );
+	
+	if( x < 0 || x > INT16_MAX ){
+		ShowError( "buildin_setdialogsize: x size %d is out of range [0,%d]\n", x, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int32 y = script_getnum( st, 3 );
+	
+	if( y < 0 || y > INT16_MAX ){
+		ShowError( "buildin_setdialogsize: y size %d is out of range [0,%d]\n", y, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_npc_window_size( *sd, x, y );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27155,7 +27177,22 @@ BUILDIN_FUNC(setdialogpos){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_set_npc_window_pos(*sd, script_getnum(st, 2), script_getnum(st, 3));
+	int32 x = script_getnum( st, 2 );
+	
+	if( x < 0 || x > INT16_MAX ){
+		ShowError( "buildin_setdialogpos: x position %d is out of range [0,%d]\n", x, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int32 y = script_getnum( st, 3 );
+	
+	if( y < 0 || y > INT16_MAX ){
+		ShowError( "buildin_setdialogpos: y position %d is out of range [0,%d]\n", y, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_npc_window_pos( *sd, x, y );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27167,7 +27204,22 @@ BUILDIN_FUNC(setdialogpospercent){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_set_npc_window_pos_percent(*sd, script_getnum(st, 2), script_getnum(st, 3));
+	int32 x = script_getnum( st, 2 );
+	
+	if( x < 0 || x > 100 ){
+		ShowError( "buildin_setdialogpospercent: x rate %d is out of range [0,100]\n", x );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int32 y = script_getnum( st, 3 );
+	
+	if( y < 0 || y > 100 ){
+		ShowError( "buildin_setdialogpospercent: y rate %d is out of range [0,100]\n", y );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	clif_set_npc_window_pos_percent( *sd, x, y );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 

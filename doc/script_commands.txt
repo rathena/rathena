@@ -11431,7 +11431,7 @@ Valid aligns:
 
 *setdialogsize(<width>, <height>)
 
-Set size for NPC dialog.
+Set size for NPC dialog in pixels.
 
 ---------------------------------------
 
