@@ -69,52 +69,6 @@ int levenshtein(const std::string &s1, const std::string &s2)
 	return result;
 }
 
-bool rathena::util::safe_substraction( int64 a, int64 b, int64& result ){
-#if __has_builtin( __builtin_sub_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
-	return __builtin_sub_overflow( a, b, &result );
-#else
-	bool overflow = false;
-
-	if( b < 0 ){
-		if( a > ( INT64_MAX + b ) ){
-			overflow = true;
-		}
-	}else{
-		if( a < ( INT64_MIN + b ) ){
-			overflow = true;
-		}
-	}
-
-	result = a - b;
-
-	return overflow;
-#endif
-}
-
-bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
-#if __has_builtin( __builtin_mul_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
-	return __builtin_mul_overflow( a, b, &result );
-#else
-	result = a * b;
-
-	if( a > 0 ){
-		if( b > 0 ){
-			return result < 0;
-		}else if( b < 0 ){
-			return result > 0;
-		}
-	}else if( a < 0 ){
-		if( b > 0 ){
-			return result > 0;
-		}else if( b < 0 ){
-			return result < 0;
-		}
-	}
-
-	return false;
-#endif
-}
-
 void rathena::util::string_left_pad_inplace(std::string& str, char padding, size_t num)
 {
 	str.insert(0, min(0, num - str.length()), padding);

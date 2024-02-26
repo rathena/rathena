@@ -233,26 +233,25 @@ namespace rathena {
 			}
 		}
 
+		template <typename T, typename = std::enable_if<std::is_integral<T>::value, T>::type>
+		bool safe_addition( T a, T b, T& result ){
 #if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
-		template <typename T> bool safe_addition(T a, T b, T &result) {
-			return __builtin_add_overflow(a, b, &result);
-		}
+			return __builtin_add_overflow( a, b, &result );
 #else
-		template <typename T> bool safe_addition( T a, T b, T& result ){
 			bool overflow = false;
 
 			if( std::numeric_limits<T>::is_signed ){
 				if( b < 0 ){
-					if( a < ( (std::numeric_limits<T>::min)() - b ) ){
+					if( a < ( std::numeric_limits<T>::min() - b ) ){
 						overflow = true;
 					}
 				}else{
-					if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+					if( a > ( std::numeric_limits<T>::max() - b ) ){
 						overflow = true;
 					}
 				}
 			}else{
-				if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+				if( a > ( std::numeric_limits<T>::max() - b ) ){
 					overflow = true;
 				}
 			}
@@ -260,11 +259,56 @@ namespace rathena {
 			result = a + b;
 
 			return overflow;
-		}
 #endif
+		}
 
-		bool safe_substraction( int64 a, int64 b, int64& result );
-		bool safe_multiplication( int64 a, int64 b, int64& result );
+		template <typename T, typename = std::enable_if<std::is_integral<T>::value, T>::type>
+		bool safe_substraction( T a, T b, T& result ){
+#if __has_builtin( __builtin_sub_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
+			return __builtin_sub_overflow( a, b, &result );
+#else
+			bool overflow = false;
+
+			if( b < 0 ){
+				if( a > ( std::numeric_limits<T>::max() + b ) ){
+					overflow = true;
+				}
+			}else{
+				if( a < ( std::numeric_limits<T>::min() + b ) ){
+					overflow = true;
+				}
+			}
+
+			result = a - b;
+
+			return overflow;
+#endif
+		}
+
+		template <typename T, typename = std::enable_if<std::is_integral<T>::value, T>::type>
+		bool safe_multiplication( T a, T b, T& result ){
+#if __has_builtin( __builtin_mul_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
+			return __builtin_mul_overflow( a, b, &result );
+#else
+			result = a * b;
+
+			if( a > 0 ){
+				if( b > 0 ){
+					return result < 0;
+				}else if( b < 0 ){
+					return result > 0;
+				}
+			}else if( a < 0 ){
+				if( b > 0 ){
+					return result > 0;
+				}else if( b < 0 ){
+					return result < 0;
+				}
+			}
+
+			return false;
+#endif
+		}
 
 		/**
 		 * Safely add values without overflowing.
