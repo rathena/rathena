@@ -25187,6 +25187,57 @@ void clif_parse_reset_skill( int fd, map_session_data* sd ){
 #endif
 }
 
+void clif_set_dialog_align(map_session_data& sd, int npcid, e_say_dialog_align align)
+{
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
+	PACKET_ZC_DIALOG_TEXT_ALIGN p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_TEXT_ALIGN;
+	p.align = align;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
+}
+
+void clif_set_npc_window_size(map_session_data& sd, int width, int height)
+{
+#if PACKETVER_MAIN_NUM >= 20220504
+	PACKET_ZC_DIALOG_WINDOW_SIZE p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_SIZE;
+	p.width = width;
+	p.height = height;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20220504
+}
+
+void clif_set_npc_window_pos(map_session_data& sd, int x, int y)
+{
+#if PACKETVER_MAIN_NUM >= 20220504
+	PACKET_ZC_DIALOG_WINDOW_POS p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_POS;
+	p.x = x;
+	p.y = y;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20220504
+}
+
+void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y)
+{
+#if PACKETVER_MAIN_NUM >= 20220504
+	PACKET_ZC_DIALOG_WINDOW_POS2 p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_POS2;
+	p.x = x;
+	p.y = y;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20220504
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
