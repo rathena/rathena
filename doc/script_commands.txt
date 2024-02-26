@@ -11412,3 +11412,37 @@ Example:
     autoloot(10000); // 100.00%
 
 ---------------------------------------
+
+*setdialogalign(<align>);
+
+Set vertical or horizontal align in NPC dialog.
+Valid aligns:
+- horizontal align:
+  DIALOG_ALIGN_LEFT
+  DIALOG_ALIGN_CENTER
+  DIALOG_ALIGN_RIGHT
+
+- vertical align:
+  DIALOG_ALIGN_TOP
+  DIALOG_ALIGN_MIDDLE
+  DIALOG_ALIGN_BOTTOM
+
+---------------------------------------
+
+*setdialogsize(<width>, <height>)
+
+Set size for NPC dialog in pixels.
+
+---------------------------------------
+
+*setdialogpos(<x>, <y>)
+
+Set position for NPC dialog in pixels.
+
+---------------------------------------
+
+*setdialogpospercent(<x>, <y>)
+
+Set position for NPC dialog in screen size percent.
+
+---------------------------------------

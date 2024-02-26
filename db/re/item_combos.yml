@@ -48064,3 +48064,562 @@ Body:
           - Improve_Orb_Cri    # 29539
     Script: |
       bonus2 bAddRace,RC_All,6;
+  - Combos:
+      - Combo:
+          - Signet_Of_Pow3   # 312984
+          - Star_Cluster_Of_Pow3   # 310676
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Pow4   # 312985
+          - Star_Cluster_Of_Pow3   # 310676
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
+  - Combos:
+      - Combo:
+          - Signet_Of_Pow5   # 312986
+          - Star_Cluster_Of_Pow3   # 310676
+    Script: |
+      bonus2 bAddRace,RC_All,20;
+      bonus2 bAddRace,RC_Player_Human,-20;
+      bonus2 bAddRace,RC_Player_Doram,-20;
+  - Combos:
+      - Combo:
+          - Signet_Of_Con3   # 312989
+          - Star_Cluster_Of_Con3   # 310682
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Con4   # 312990
+          - Star_Cluster_Of_Con3   # 310682
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
+  - Combos:
+      - Combo:
+          - Signet_Of_Con5   # 312991
+          - Star_Cluster_Of_Con3   # 310682
+    Script: |
+      bonus2 bAddRace,RC_All,20;
+      bonus2 bAddRace,RC_Player_Human,-20;
+      bonus2 bAddRace,RC_Player_Doram,-20;
+  - Combos:
+      - Combo:
+          - Signet_Of_Spl3   # 312994
+          - Star_Cluster_Of_Spl3   # 310688
+    Script: |
+      bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Spl4   # 312995
+          - Star_Cluster_Of_Spl3   # 310688
+    Script: |
+      bonus2 bMagicAddRace,RC_All,15;
+      bonus2 bMagicAddRace,RC_Player_Human,-15;
+      bonus2 bMagicAddRace,RC_Player_Doram,-15;
+  - Combos:
+      - Combo:
+          - Signet_Of_Spl5   # 312996
+          - Star_Cluster_Of_Spl3   # 310688
+    Script: |
+      bonus2 bMagicAddRace,RC_All,20;
+      bonus2 bMagicAddRace,RC_Player_Human,-20;
+      bonus2 bMagicAddRace,RC_Player_Doram,-20;
+  - Combos:
+      - Combo:
+          - Signet_Of_Sta3   # 312999
+          - Star_Cluster_Of_Sta3   # 310679
+    Script: |
+      bonus bMaxHPrate,5;
+  - Combos:
+      - Combo:
+          - Signet_Of_Sta4   # 313000
+          - Star_Cluster_Of_Sta3   # 310679
+    Script: |
+      bonus bMaxHPrate,7;
+  - Combos:
+      - Combo:
+          - Signet_Of_Sta5   # 313001
+          - Star_Cluster_Of_Sta3   # 310679
+    Script: |
+      bonus bMaxHPrate,10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Crt3   # 313004
+          - Star_Cluster_Of_Crt3   # 310685
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Crt4   # 313005
+          - Star_Cluster_Of_Crt3   # 310685
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
+  - Combos:
+      - Combo:
+          - Signet_Of_Crt5   # 313006
+          - Star_Cluster_Of_Crt3   # 310685
+    Script: |
+      bonus2 bAddRace,RC_All,20;
+      bonus2 bAddRace,RC_Player_Human,-20;
+      bonus2 bAddRace,RC_Player_Doram,-20;
+  - Combos:
+      - Combo:
+          - Signet_Of_Wis3   # 313009
+          - Star_Cluster_Of_Wis3   # 310691
+    Script: |
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - Signet_Of_Wis4   # 313010
+          - Star_Cluster_Of_Wis3   # 310691
+    Script: |
+      bonus bMaxSPrate,7;
+  - Combos:
+      - Combo:
+          - Signet_Of_Wis5   # 313011
+          - Star_Cluster_Of_Wis3   # 310691
+    Script: |
+      bonus bMaxSPrate,10;
+  - Combos:
+      - Combo:
+          - Life_of_Spring_Pow   # 313012
+          - Star_Armor_Of_Pow   # 450169
+    Script: |
+      bonus2 bAddEle,Ele_All,2;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus2 bAddEle,Ele_All,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Spring_Sta   # 313013
+          - Star_Armor_Of_Sta   # 450170
+    Script: |
+      .@r_armor = getequiprefinerycnt(EQI_ARMOR);
+      bonus bMaxHPrate,3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bMaxHPrate,(.@r_armor/2);
+         bonus bRes,20*(.@r_armor/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Spring_Crt   # 313014
+          - Star_Suit_Of_Crt   # 450172
+    Script: |
+      bonus bCritAtkRate,3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bCritAtkRate,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Summer_Con   # 313015
+          - Star_Suit_Of_Con   # 450171
+    Script: |
+      bonus2 bAddEle,Ele_All,2;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus2 bAddEle,Ele_All,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Summer_Sta   # 313016
+          - Star_Armor_Of_Sta   # 450170
+    Script: |
+      .@r_armor = getequiprefinerycnt(EQI_ARMOR);
+      bonus bMaxHPrate,3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bMaxHPrate,(.@r_armor/2);
+         bonus bRes,20*(.@r_armor/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Summer_Crt   # 313017
+          - Star_Suit_Of_Crt   # 450172
+    Script: |
+      bonus bCritAtkRate,3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bCritAtkRate,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Autumn_Spl   # 313018
+          - Star_Robe_Of_Spl   # 450173
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,2;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus2 bMagicAddEle,Ele_All,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Autumn_Sta   # 313019
+          - Star_Armor_Of_Sta   # 450170
+    Script: |
+      .@r_armor = getequiprefinerycnt(EQI_ARMOR);
+      bonus bMaxHPrate,3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bMaxHPrate,(.@r_armor/2);
+         bonus bRes,20*(.@r_armor/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Autumn_Wis   # 313020
+          - Star_Robe_Of_Wis   # 450174
+    Script: |
+      .@r_armor = getequiprefinerycnt(EQI_ARMOR);
+      bonus bDelayrate,-3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bDelayrate,-2*(.@r_armor/2);
+         bonus bMaxSPrate,(.@r_armor/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Winter_Pow   # 313021
+          - Star_Armor_Of_Pow   # 450169
+    Script: |
+      bonus bCritAtkRate,3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bCritAtkRate,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Winter_Con   # 313022
+          - Star_Suit_Of_Con   # 450171
+    Script: |
+      bonus bCritAtkRate,3;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus bCritAtkRate,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Life_of_Winter_Crt   # 313023
+          - Star_Suit_Of_Crt   # 450172
+    Script: |
+      bonus2 bAddEle,Ele_All,2;
+      if (getenchantgrade(EQI_ARMOR)>=ENCHANTGRADE_A) {
+         bonus2 bAddEle,Ele_All,3*(getequiprefinerycnt(EQI_ARMOR)/2);
+      }
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Str1   # 313024
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,3;
+      bonus2 bAddClass,Class_Boss,3;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Str2   # 313025
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,6;
+      bonus2 bAddClass,Class_Boss,6;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Str3   # 313026
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,9;
+      bonus2 bAddClass,Class_Boss,9;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Str4   # 313027
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,12;
+      bonus2 bAddClass,Class_Boss,12;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Str5   # 313028
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,15;
+      bonus2 bAddClass,Class_Boss,15;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Luk1   # 313029
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,3;
+      bonus2 bAddClass,Class_Boss,3;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Luk2   # 313030
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,6;
+      bonus2 bAddClass,Class_Boss,6;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Luk3   # 313031
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,9;
+      bonus2 bAddClass,Class_Boss,9;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Luk4   # 313032
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,12;
+      bonus2 bAddClass,Class_Boss,12;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Luk5   # 313033
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bAddClass,Class_Normal,15;
+      bonus2 bAddClass,Class_Boss,15;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Int1   # 313034
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bMagicAddClass,Class_Normal,3;
+      bonus2 bMagicAddClass,Class_Boss,3;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Int2   # 313035
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bMagicAddClass,Class_Normal,6;
+      bonus2 bMagicAddClass,Class_Boss,6;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Int3   # 313036
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bMagicAddClass,Class_Normal,9;
+      bonus2 bMagicAddClass,Class_Boss,9;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Int4   # 313037
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bMagicAddClass,Class_Normal,12;
+      bonus2 bMagicAddClass,Class_Boss,12;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Int5   # 313038
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus2 bMagicAddClass,Class_Normal,15;
+      bonus2 bMagicAddClass,Class_Boss,15;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Res1   # 313039
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus bMaxHPrate,1;
+      bonus bMaxSPrate,1;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Res2   # 313040
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Res3   # 313041
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Res4   # 313042
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus bMaxHPrate,4;
+      bonus bMaxSPrate,4;
+  - Combos:
+      - Combo:
+          - Star_Cluster_Of_Res5   # 313043
+          - Token_Of_Life   # 312981
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+  - Combos:
+      - Combo:
+          - aegis_313059   # 313059
+          - Runeknight_Top3   # 310881
+    Script: |
+      bonus2 bAddSize,Size_All,3*(getskilllv("DK_TWOHANDDEF")/2);
+  - Combos:
+      - Combo:
+          - aegis_313059   # 313059
+          - Runeknight_Middle3   # 310882
+    Script: |
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
+  - Combos:
+      - Combo:
+          - aegis_313059   # 313059
+          - Runeknight_Bottom3   # 310883
+    Script: |
+      bonus bCRate,3;
+      bonus2 bSkillAtk,"DK_STORMSLASH",15;
+  - Combos:
+      - Combo:
+          - aegis_313060   # 313060
+          - Royalguard_Top3   # 310887
+    Script: |
+      bonus2 bSkillAtk,"IG_CROSS_RAIN",15;
+  - Combos:
+      - Combo:
+          - aegis_313060   # 313060
+          - Royalguard_Middle3   # 310888
+    Script: |
+      bonus2 bMagicAddSize,Size_All,10;
+  - Combos:
+      - Combo:
+          - aegis_313060   # 313060
+          - Royalguard_Bottom3   # 310889
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,3*(getskilllv("IG_SHIELD_MASTERY")/2);
+  - Combos:
+      - Combo:
+          - aegis_313061   # 313061
+          - aegis_311463   # 311463
+    Script: |
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",10;
+  - Combos:
+      - Combo:
+          - aegis_313061   # 313061
+          - aegis_311464   # 311464
+    Script: |
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",15;
+  - Combos:
+      - Combo:
+          - aegis_313061   # 313061
+          - aegis_311465   # 311465
+    Script: |
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_WH   # 400608
+          - StormBow_Furious   # 700100
+    Script: |
+      bonus2 bSkillAtk,"WH_GALESTORM",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_WH   # 400608
+          - TornadoBow_Furious   # 700101
+    Script: |
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_CD   # 400609
+          - SaintBook_Furious   # 540086
+    Script: |
+      bonus2 bSkillAtk,"CD_PETITIO",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_CD   # 400609
+          - SaintWand_Furious   # 550141
+    Script: |
+      bonus2 bSkillAtk,"CD_FRAMEN",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_SKE   # 400610
+          - SunBook_Furious   # 540087
+    Script: |
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_SKE   # 400610
+          - MoonBook_Furious   # 540088
+    Script: |
+      bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",15;
+  - Combos:
+      - Combo:
+          - Signet_Of_Spring   # 490483
+          - Circul_Of_Life_Spring   # 480349
+    Script: |
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bAddRace,RC_All,.@val;
+      bonus2 bAddRace,RC_Player_Human,-.@val;
+      bonus2 bAddRace,RC_Player_Doram,-.@val;
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Summer   # 490484
+          - Circul_Of_Life_Summer   # 480350
+    Script: |
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bAddRace,RC_All,.@val;
+      bonus2 bAddRace,RC_Player_Human,-.@val;
+      bonus2 bAddRace,RC_Player_Doram,-.@val;
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Autumn   # 490485
+          - Circul_Of_Life_Autumn   # 480351
+    Script: |
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bMagicAddRace,RC_All,.@val;
+      bonus2 bMagicAddRace,RC_Player_Human,-.@val;
+      bonus2 bMagicAddRace,RC_Player_Doram,-.@val;
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - Signet_Of_Winter   # 490486
+          - Circul_Of_Life_Winter   # 480352
+    Script: |
+      .@val = 5+3*(getequiprefinerycnt(EQI_GARMENT)/2);
+      bonus2 bAddRace,RC_All,.@val;
+      bonus2 bAddRace,RC_Player_Human,-.@val;
+      bonus2 bAddRace,RC_Player_Doram,-.@val;
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - SaintBook_Furious   # 540086
+          - FuriousBoots   # 470265
+    Script: |
+      autobonus "{ .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES); bonus2 bSkillAtk,\"AB_DUPLELIGHT_MELEE\",(15*.@sum); bonus2 bSkillAtk,\"AB_DUPLELIGHT_MAGIC\",(15*.@sum); }",70,10000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - SunBook_Furious   # 540087
+          - FuriousBoots   # 470265
+    Script: |
+      bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - MoonBook_Furious   # 540088
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"SKE_MIDNIGHT_KICK",15;
+      bonus2 bSkillAtk,"SKE_DAWN_BREAK",.@sum*2;
+  - Combos:
+      - Combo:
+          - SaintWand_Furious   # 550141
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus bDelayrate,-10;
+      bonus2 bSkillAtk,"CD_FRAMEN",.@sum;
+  - Combos:
+      - Combo:
+          - StormBow_Furious   # 700100
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillUseSP,"WH_GALESTORM",20;
+  - Combos:
+      - Combo:
+          - TornadoBow_Furious   # 700101
+          - FuriousBoots   # 470265
+    Script: |
+      bonus bDelayrate,-10;
