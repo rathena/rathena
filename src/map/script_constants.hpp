@@ -10144,18 +10144,7 @@
 	export_constant(UNT_JACK_FROST_NOVA);
 	export_constant(UNT_GROUND_GRAVITATION);
 	export_constant(UNT_KUNAIWAIKYOKU);
-	export_constant(UNT_TWINKLING_GALAXY);
-	export_constant(UNT_STAR_CANNON);
-	export_constant(UNT_GRENADES_DROPPING);
-	export_constant(UNT_FUUMASHOUAKU);
-	export_constant(UNT_MISSION_BOMBARD);
-	export_constant(UNT_TOTEM_OF_TUTELARY);
-	export_constant(UNT_HYUN_ROKS_BREEZE);
-	export_constant(UNT_SHINKIROU);
-	export_constant(UNT_JACK_FROST_NOVA);
-	export_constant(UNT_GROUND_GRAVITATION);
 	export_constant(UNT_KUNAIKAITEN);
-	export_constant(UNT_KUNAIWAIKYOKU);
 	export_constant(UNT_STAR_BURST);
 
 	export_constant(UNT_GD_LEADERSHIP);
