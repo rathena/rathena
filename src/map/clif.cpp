@@ -17511,40 +17511,31 @@ void clif_parse_Adopt_reply(int fd, map_session_data *sd){
 }
 
 
-/// Convex Mirror (ZC_BOSS_INFO).
-/// 0293 <infoType>.B <x>.L <y>.L <minHours>.W <minMinutes>.W <maxHours>.W <maxMinutes>.W <monster name>.51B
+/// Convex Mirror
+/// 0293 <infoType>.B <x>.L <y>.L <minHours>.W <minMinutes>.W <maxHours>.W <maxMinutes>.W <monster name>.51B (ZC_BOSS_INFO)
 /// infoType:
 ///     BOSS_INFO_NOT = No boss on this map.
 ///     BOSS_INFO_ALIVE = Boss is alive (position update).
 ///     BOSS_INFO_ALIVE_WITHMSG = Boss is alive (initial announce).
 ///     BOSS_INFO_DEAD = Boss is dead.
-void clif_bossmapinfo(map_session_data *sd, struct mob_data *md, enum e_bossmap_info flag)
-{
-	int fd = sd->fd;
+void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag ){
+	PACKET_ZC_BOSS_INFO p = {};
 
-	WFIFOHEAD(fd,70);
-	memset(WFIFOP(fd,0),0,70);
-	WFIFOW(fd,0) = 0x293;
+	p.packetType = HEADER_ZC_BOSS_INFO;
+	p.type = flag;
 
 	switch (flag) {
 		case BOSS_INFO_NOT:
-			WFIFOB(fd,2) = BOSS_INFO_NOT;
 			// No data required
-			break; 
-		case BOSS_INFO_ALIVE:
-			WFIFOB(fd,2) = BOSS_INFO_ALIVE;
-			// Update X/Y
-			WFIFOL(fd,3) = md->bl.x;
-			WFIFOL(fd,7) = md->bl.y;
 			break;
 		case BOSS_INFO_ALIVE_WITHMSG:
-			WFIFOB(fd,2) = BOSS_INFO_ALIVE_WITHMSG;
-			// Current X/Y
-			WFIFOL(fd,3) = md->bl.x;
-			WFIFOL(fd,7) = md->bl.y;
+			[[fallthrough]];
+		case BOSS_INFO_ALIVE:
+
+			p.x = md->bl.x;
+			p.y = md->bl.y;
 			break;
-		case BOSS_INFO_DEAD:
-		{
+		case BOSS_INFO_DEAD: {
 			const struct TimerData * timer_data = get_timer(md->spawn_timer);
 			unsigned int seconds;
 			int hours, minutes;
@@ -17554,18 +17545,18 @@ void clif_bossmapinfo(map_session_data *sd, struct mob_data *md, enum e_bossmap_
 			seconds = seconds - (60 * 60 * hours);
 			minutes = seconds / 60;
 
-			WFIFOB(fd,2) = BOSS_INFO_DEAD;
-			// Add respawn info
-			WFIFOW(fd,11) = hours; // Hours
-			WFIFOW(fd,13) = minutes; // Minutes
-		}
+
+			p.minHours = hours;
+			p.minMinutes = minutes;
 			break;
+		}
 	}
 
-	if (md != NULL)
-		safestrncpy(WFIFOCP(fd,19), md->db->jname.c_str(), NAME_LENGTH);
+	if( md != nullptr ){
+		safestrncpy( p.name, md->db->jname.c_str(), sizeof( p.name ) );
+	}
 
-	WFIFOSET(fd,70);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -25194,6 +25185,57 @@ void clif_parse_reset_skill( int fd, map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220203
 	PACKET_CZ_RESET_SKILL* p = (PACKET_CZ_RESET_SKILL*)RFIFOP( fd, 0 );
 #endif
+}
+
+void clif_set_dialog_align(map_session_data& sd, int npcid, e_say_dialog_align align)
+{
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
+	PACKET_ZC_DIALOG_TEXT_ALIGN p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_TEXT_ALIGN;
+	p.align = align;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
+}
+
+void clif_set_npc_window_size(map_session_data& sd, int width, int height)
+{
+#if PACKETVER_MAIN_NUM >= 20220504
+	PACKET_ZC_DIALOG_WINDOW_SIZE p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_SIZE;
+	p.width = width;
+	p.height = height;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20220504
+}
+
+void clif_set_npc_window_pos(map_session_data& sd, int x, int y)
+{
+#if PACKETVER_MAIN_NUM >= 20220504
+	PACKET_ZC_DIALOG_WINDOW_POS p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_POS;
+	p.x = x;
+	p.y = y;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20220504
+}
+
+void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y)
+{
+#if PACKETVER_MAIN_NUM >= 20220504
+	PACKET_ZC_DIALOG_WINDOW_POS2 p = {};
+
+	p.PacketType = HEADER_ZC_DIALOG_WINDOW_POS2;
+	p.x = x;
+	p.y = y;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20220504
 }
 
 /*==========================================
