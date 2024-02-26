@@ -70937,7 +70937,7 @@ Body:
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus bMaxHPrate,-5; 
+      bonus bMaxHPrate,-5;
       bonus bMaxSPrate,-5;
       autobonus "{ bonus bStr,50; bonus bPow,15; bonus bSta,15; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
       if (.@g>=ENCHANTGRADE_D) {
@@ -77675,6 +77675,1146 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,16;
+  - Id: 312981
+    AegisName: Token_Of_Life
+    Name: Token of Life    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAllTraitStats,3;
+      bonus bAllStats,5;
+      bonus bPAtk,3;
+      bonus bSMatk,3;
+      bonus2 bAddSize,Size_All,5;
+      bonus2 bMagicAddSize,Size_All,5;
+  - Id: 312982
+    AegisName: Signet_Of_Pow1
+    Name: Seal of Power 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,1;
+      bonus bAtkRate,1;
+  - Id: 312983
+    AegisName: Signet_Of_Pow2
+    Name: Seal of Power 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bAtkRate,3;
+  - Id: 312984
+    AegisName: Signet_Of_Pow3
+    Name: Seal of Power 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,6;
+      bonus bAtkRate,6;
+  - Id: 312985
+    AegisName: Signet_Of_Pow4
+    Name: Seal of Power 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bPAtk,10;
+      bonus bAtkRate,10;
+  - Id: 312986
+    AegisName: Signet_Of_Pow5
+    Name: Seal of Power 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bPAtk,15;
+      bonus bAtkRate,15;
+  - Id: 312987
+    AegisName: Signet_Of_Con1
+    Name: Seal of Agility 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,1;
+      bonus bAtkRate,1;
+  - Id: 312988
+    AegisName: Signet_Of_Con2
+    Name: Seal of Agility 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,3;
+      bonus bAtkRate,3;
+  - Id: 312989
+    AegisName: Signet_Of_Con3
+    Name: Seal of Agility 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,6;
+      bonus bAtkRate,6;
+  - Id: 312990
+    AegisName: Signet_Of_Con4
+    Name: Seal of Agility 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus bPAtk,10;
+      bonus bAtkRate,10;
+  - Id: 312991
+    AegisName: Signet_Of_Con5
+    Name: Seal of Agility 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bPAtk,15;
+      bonus bAtkRate,15;
+  - Id: 312992
+    AegisName: Signet_Of_Spl1
+    Name: Seal of Wisdom 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,1;
+      bonus bMatkRate,1;
+  - Id: 312993
+    AegisName: Signet_Of_Spl2
+    Name: Seal of Wisdom 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+      bonus bMatkRate,3;
+  - Id: 312994
+    AegisName: Signet_Of_Spl3
+    Name: Seal of Wisdom 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,6;
+      bonus bMatkRate,6;
+  - Id: 312995
+    AegisName: Signet_Of_Spl4
+    Name: Seal of Wisdom 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus bSMatk,10;
+      bonus bMatkRate,10;
+  - Id: 312996
+    AegisName: Signet_Of_Spl5
+    Name: Seal of Wisdom 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus bSMatk,15;
+      bonus bMatkRate,15;
+  - Id: 312997
+    AegisName: Signet_Of_Sta1
+    Name: Stamina Seal 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,10;
+      bonus bMaxHP,1000;
+  - Id: 312998
+    AegisName: Signet_Of_Sta2
+    Name: Stamina Seal 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,30;
+      bonus bMaxHP,3000;
+  - Id: 312999
+    AegisName: Signet_Of_Sta3
+    Name: Stamina Seal 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,60;
+      bonus bMaxHP,6000;
+  - Id: 313000
+    AegisName: Signet_Of_Sta4
+    Name: Stamina Seal 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,100;
+      bonus bMaxHP,10000;
+      bonus bRes,25;
+  - Id: 313001
+    AegisName: Signet_Of_Sta5
+    Name: Stamina Seal 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDef,150;
+      bonus bMaxHP,15000;
+      bonus bRes,50;
+  - Id: 313002
+    AegisName: Signet_Of_Crt1
+    Name: Lucky Seal 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,1;
+      bonus bAtkRate,1;
+  - Id: 313003
+    AegisName: Signet_Of_Crt2
+    Name: Lucky Seal 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,3;
+      bonus bAtkRate,3;
+  - Id: 313004
+    AegisName: Signet_Of_Crt3
+    Name: Lucky Seal 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,6;
+      bonus bAtkRate,6;
+  - Id: 313005
+    AegisName: Signet_Of_Crt4
+    Name: Lucky Seal 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,10;
+      bonus bPAtk,10;
+      bonus bAtkRate,10;
+  - Id: 313006
+    AegisName: Signet_Of_Crt5
+    Name: Lucky Seal 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bPAtk,15;
+      bonus bAtkRate,15;
+  - Id: 313007
+    AegisName: Signet_Of_Wis1
+    Name: Spirit Seal 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,5;
+      bonus bMaxSP,100;
+  - Id: 313008
+    AegisName: Signet_Of_Wis2
+    Name: Spirit Seal 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,15;
+      bonus bMaxSP,250;
+  - Id: 313009
+    AegisName: Signet_Of_Wis3
+    Name: Spirit Seal 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,30;
+      bonus bMaxSP,450;
+  - Id: 313010
+    AegisName: Signet_Of_Wis4
+    Name: Spirit Seal 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,50;
+      bonus bMaxSP,700;
+      bonus bMRes,25;
+  - Id: 313011
+    AegisName: Signet_Of_Wis5
+    Name: Spirit Seal 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMdef,75;
+      bonus bMaxSP,1000;
+      bonus bMRes,50;
+  - Id: 313012
+    AegisName: Life_of_Spring_Pow
+    Name: The life (power) of spring    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bShortAtkRate,25;
+  - Id: 313013
+    AegisName: Life_of_Spring_Sta
+    Name: The life of spring (stamina)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bShortAtkRate,25;
+  - Id: 313014
+    AegisName: Life_of_Spring_Crt
+    Name: Spring life in full bloom (luck)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bShortAtkRate,25;
+  - Id: 313015
+    AegisName: Life_of_Summer_Con
+    Name: Life in full summer (Agility)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bLongAtkRate,25;
+  - Id: 313016
+    AegisName: Life_of_Summer_Sta
+    Name: Full summer life (stamina)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bLongAtkRate,25;
+  - Id: 313017
+    AegisName: Life_of_Summer_Crt
+    Name: Summer life in full bloom (luck)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bLongAtkRate,25;
+  - Id: 313018
+    AegisName: Life_of_Autumn_Spl
+    Name: The Life of Autumn (Wisdom)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,20;
+      bonus2 bMagicAtkEle,Ele_All,25;
+  - Id: 313019
+    AegisName: Life_of_Autumn_Sta
+    Name: Autumn life in full swing (stamina)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,20;
+      bonus2 bMagicAtkEle,Ele_All,25;
+  - Id: 313020
+    AegisName: Life_of_Autumn_Wis
+    Name: The full life of autumn (spirit)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,20;
+      bonus2 bMagicAtkEle,Ele_All,25;
+  - Id: 313021
+    AegisName: Life_of_Winter_Pow
+    Name: Life (power) of complete winter    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bCritAtkRate,25;
+  - Id: 313022
+    AegisName: Life_of_Winter_Con
+    Name: Complete Winter Life (Agility)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bCritAtkRate,25;
+  - Id: 313023
+    AegisName: Life_of_Winter_Crt
+    Name: Life in perfect winter (luck)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,20;
+      bonus bCritAtkRate,25;
+  - Id: 313024
+    AegisName: Star_Cluster_Of_Str1
+    Name: Strongman's Cluster 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,5;
+      bonus2 bAddRace,RC_Player_Human,-5;
+      bonus2 bAddRace,RC_Player_Doram,-5;
+      bonus bPAtk,(readparam(bPow)/20);
+      bonus bBaseAtk,5*(readparam(bCon)/20);
+  - Id: 313025
+    AegisName: Star_Cluster_Of_Str2
+    Name: Strongman's Cluster 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/20);
+      .@pow = (readparam(bPow)/20);
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus bShortAtkRate,.@pow;
+      bonus bLongAtkRate,.@pow;
+      bonus bPAtk,.@pow;
+      bonus bAtkRate,.@con;
+      bonus bBaseAtk,5*.@con;
+  - Id: 313026
+    AegisName: Star_Cluster_Of_Str3
+    Name: Strongman's Cluster 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/15);
+      .@pow = (readparam(bPow)/15);
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
+      bonus bShortAtkRate,.@pow;
+      bonus bLongAtkRate,.@pow;
+      bonus bPAtk,.@pow;
+      bonus bAtkRate,.@con;
+      bonus bBaseAtk,5*.@con;
+  - Id: 313027
+    AegisName: Star_Cluster_Of_Str4
+    Name: Strongman's Cluster 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/15);
+      .@pow = (readparam(bPow)/15);
+      bonus2 bAddRace,RC_All,20;
+      bonus2 bAddRace,RC_Player_Human,-20;
+      bonus2 bAddRace,RC_Player_Doram,-20;
+      bonus bShortAtkRate,2*.@pow;
+      bonus bLongAtkRate,2*.@pow;
+      bonus bPAtk,.@pow;
+      bonus bAtkRate,.@con;
+      bonus bBaseAtk,10*.@con;
+  - Id: 313028
+    AegisName: Star_Cluster_Of_Str5
+    Name: Strongman's Cluster 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/15);
+      .@pow = (readparam(bPow)/15);
+      bonus2 bAddRace,RC_All,25;
+      bonus2 bAddRace,RC_Player_Human,-25;
+      bonus2 bAddRace,RC_Player_Doram,-25;
+      bonus bShortAtkRate,2*.@pow;
+      bonus bLongAtkRate,2*.@pow;
+      bonus bPAtk,2*.@pow;
+      bonus bAtkRate,2*.@con;
+      bonus bBaseAtk,10*.@con;
+  - Id: 313029
+    AegisName: Star_Cluster_Of_Luk1
+    Name: Heavenly Fortune Cluster 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,5;
+      bonus2 bAddRace,RC_Player_Human,-5;
+      bonus2 bAddRace,RC_Player_Doram,-5;
+      bonus bPAtk,(readparam(bPow)/20);
+      bonus bBaseAtk,5*(readparam(bCrt)/20);
+  - Id: 313030
+    AegisName: Star_Cluster_Of_Luk2
+    Name: Heavenly Fortune Cluster 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@crt = (readparam(bCrt)/20);
+      .@pow = (readparam(bPow)/20);
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus bShortAtkRate,.@pow;
+      bonus bLongAtkRate,.@pow;
+      bonus bPAtk,.@pow;
+      bonus bCritical,.@crt;
+      bonus bBaseAtk,5*.@crt;
+  - Id: 313031
+    AegisName: Star_Cluster_Of_Luk3
+    Name: Heavenly Fortune Cluster 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@crt = (readparam(bCrt)/15);
+      .@pow = (readparam(bPow)/15);
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
+      bonus bShortAtkRate,.@pow;
+      bonus bLongAtkRate,.@pow;
+      bonus bPAtk,.@pow;
+      bonus bCritical,.@crt;
+      bonus bBaseAtk,5*.@crt;
+  - Id: 313032
+    AegisName: Star_Cluster_Of_Luk4
+    Name: Heavenly Fortune Cluster 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@crt = (readparam(bCrt)/15);
+      .@pow = (readparam(bPow)/15);
+      bonus2 bAddRace,RC_All,20;
+      bonus2 bAddRace,RC_Player_Human,-20;
+      bonus2 bAddRace,RC_Player_Doram,-20;
+      bonus bShortAtkRate,2*.@pow;
+      bonus bLongAtkRate,2*.@pow;
+      bonus bPAtk,.@pow;
+      bonus bCritical,.@crt;
+      bonus bBaseAtk,10*.@crt;
+  - Id: 313033
+    AegisName: Star_Cluster_Of_Luk5
+    Name: Heavenly Fortune Cluster 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@crt = (readparam(bCrt)/15);
+      .@pow = (readparam(bPow)/15);
+      bonus2 bAddRace,RC_All,25;
+      bonus2 bAddRace,RC_Player_Human,-25;
+      bonus2 bAddRace,RC_Player_Doram,-25;
+      bonus bShortAtkRate,2*.@pow;
+      bonus bLongAtkRate,2*.@pow;
+      bonus bPAtk,2*.@pow;
+      bonus bCritical,2*.@crt;
+      bonus bBaseAtk,10*.@crt;
+  - Id: 313034
+    AegisName: Star_Cluster_Of_Int1
+    Name: Cluster of Intelligence 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddRace,RC_All,5;
+      bonus2 bMagicAddRace,RC_Player_Human,-5;
+      bonus2 bMagicAddRace,RC_Player_Doram,-5;
+      bonus bSMatk,(readparam(bSpl)/20);
+      bonus bMatk,5*(readparam(bCon)/20);
+  - Id: 313035
+    AegisName: Star_Cluster_Of_Int2
+    Name: Cluster of Intelligence 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/20);
+      .@spl = (readparam(bSpl)/20);
+      bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+      bonus2 bMagicAtkEle,Ele_All,.@spl;
+      bonus bSMatk,.@spl;
+      bonus bMatkRate,.@con;
+      bonus bMatk,5*.@con;
+  - Id: 313036
+    AegisName: Star_Cluster_Of_Int3
+    Name: Cluster of Intelligence 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/15);
+      .@spl = (readparam(bSpl)/15);
+      bonus2 bMagicAddRace,RC_All,15;
+      bonus2 bMagicAddRace,RC_Player_Human,-15;
+      bonus2 bMagicAddRace,RC_Player_Doram,-15;
+      bonus2 bMagicAtkEle,Ele_All,.@spl;
+      bonus bSMatk,.@spl;
+      bonus bMatkRate,.@con;
+      bonus bMatk,5*.@con;
+  - Id: 313037
+    AegisName: Star_Cluster_Of_Int4
+    Name: Cluster of Intelligence 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/15);
+      .@spl = (readparam(bSpl)/15);
+      bonus2 bMagicAddRace,RC_All,20;
+      bonus2 bMagicAddRace,RC_Player_Human,-20;
+      bonus2 bMagicAddRace,RC_Player_Doram,-20;
+      bonus2 bMagicAtkEle,Ele_All,2*.@spl;
+      bonus bSMatk,.@spl;
+      bonus bMatkRate,.@con;
+      bonus bMatk,10*.@con;
+  - Id: 313038
+    AegisName: Star_Cluster_Of_Int5
+    Name: Cluster of Intelligence 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@con = (readparam(bCon)/15);
+      .@spl = (readparam(bSpl)/15);
+      bonus2 bMagicAddRace,RC_All,25;
+      bonus2 bMagicAddRace,RC_Player_Human,-25;
+      bonus2 bMagicAddRace,RC_Player_Doram,-25;
+      bonus2 bMagicAtkEle,Ele_All,2*.@spl;
+      bonus bSMatk,2*.@spl;
+      bonus bMatkRate,2*.@con;
+      bonus bMatk,10*.@con;
+  - Id: 313039
+    AegisName: Star_Cluster_Of_Res1
+    Name: Cluster of Resistance 1Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMRes,10;
+      bonus bRes,10;
+      bonus bDef,10*(readparam(bSta)/20);
+      bonus bMdef,5*(readparam(bWis)/20);
+  - Id: 313040
+    AegisName: Star_Cluster_Of_Res2
+    Name: Cluster of Resistance 2Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@sta = (readparam(bSta)/20);
+      .@wis = (readparam(bWis)/20);
+      bonus bMRes,20+5*.@wis;
+      bonus bRes,20+5*.@sta;
+      bonus bDef,10*.@sta;
+      bonus bMdef,5*.@wis;
+  - Id: 313041
+    AegisName: Star_Cluster_Of_Res3
+    Name: Cluster of Resistance 3Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@sta = (readparam(bSta)/15);
+      .@wis = (readparam(bWis)/15);
+      bonus bMRes,30+5*.@wis;
+      bonus bRes,30+5*.@sta;
+      bonus bDef,10*.@sta;
+      bonus bMdef,5*.@wis;
+  - Id: 313042
+    AegisName: Star_Cluster_Of_Res4
+    Name: Cluster of Resistance 4Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@sta = (readparam(bSta)/15);
+      .@wis = (readparam(bWis)/15);
+      bonus bMRes,40+5*.@wis;
+      bonus bRes,40+10*.@sta;
+      bonus bDef,10*.@sta;
+      bonus bMdef,10*.@wis;
+  - Id: 313043
+    AegisName: Star_Cluster_Of_Res5
+    Name: Cluster of Resistance 5Lv    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@sta = (readparam(bSta)/15);
+      .@wis = (readparam(bWis)/15);
+      bonus bMRes,50+10*.@wis;
+      bonus bRes,50+10*.@sta;
+      bonus bDef,20*.@sta;
+      bonus bMdef,10*.@wis;
+  - Id: 313059
+    AegisName: aegis_313059
+    Name: Dragon Knight Stone (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@val = getskilllv("DK_HACKANDSLASHER");
+      bonus2 bAddRace,RC_All,(.@val/2);
+      bonus2 bAddRace,RC_Player_Human,-(.@val/2);
+      bonus2 bAddRace,RC_Player_Doram,-(.@val/2);
+  - Id: 313060
+    AegisName: aegis_313060
+    Name: Imperial Guard Stone (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",10*(getskilllv("IG_CROSS_RAIN")/2);
+  - Id: 313061
+    AegisName: aegis_313061
+    Name: Nightwatch Stone (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_All,(getskilllv("NW_HIDDEN_CARD")/2);
+  - Id: 313111
+    AegisName: FuriousMaterial_Not
+    Name: Crystal of Wrath (Neutral)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Neutral,5;
+      bonus2 bAddEle,Ele_Neutral,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Neutral,5;
+         bonus2 bAddEle,Ele_Neutral,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Neutral,5;
+            bonus2 bAddEle,Ele_Neutral,5;
+         }
+      }
+  - Id: 313112
+    AegisName: FuriousMaterial_Wat
+    Name: Crystal of Wrath (Water)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Water,5;
+      bonus2 bAddEle,Ele_Water,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Water,5;
+         bonus2 bAddEle,Ele_Water,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Water,5;
+            bonus2 bAddEle,Ele_Water,5;
+         }
+      }
+  - Id: 313113
+    AegisName: FuriousMaterial_Win
+    Name: Crystal of Wrath (Wind)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Wind,5;
+      bonus2 bAddEle,Ele_Wind,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Wind,5;
+         bonus2 bAddEle,Ele_Wind,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Wind,5;
+            bonus2 bAddEle,Ele_Wind,5;
+         }
+      }
+  - Id: 313114
+    AegisName: FuriousMaterial_Fir
+    Name: Crystal of Wrath (Fire)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Fire,5;
+      bonus2 bAddEle,Ele_Fire,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Fire,5;
+         bonus2 bAddEle,Ele_Fire,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Fire,5;
+            bonus2 bAddEle,Ele_Fire,5;
+         }
+      }
+  - Id: 313115
+    AegisName: FuriousMaterial_Gro
+    Name: Crystal of Wrath (Earth)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Earth,5;
+      bonus2 bAddEle,Ele_Earth,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Earth,5;
+         bonus2 bAddEle,Ele_Earth,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Earth,5;
+            bonus2 bAddEle,Ele_Earth,5;
+         }
+      }
+  - Id: 313116
+    AegisName: FuriousMaterial_Und
+    Name: Crystal of Wrath (Undead)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Undead,5;
+      bonus2 bAddEle,Ele_Undead,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Undead,5;
+         bonus2 bAddEle,Ele_Undead,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Undead,5;
+            bonus2 bAddEle,Ele_Undead,5;
+         }
+      }
+  - Id: 313117
+    AegisName: FuriousMaterial_Dar
+    Name: Crystal of Wrath (Dark)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Dark,5;
+      bonus2 bAddEle,Ele_Dark,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Dark,5;
+         bonus2 bAddEle,Ele_Dark,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Dark,5;
+            bonus2 bAddEle,Ele_Dark,5;
+         }
+      }
+  - Id: 313118
+    AegisName: FuriousMaterial_Tel
+    Name: Crystal of Wrath (Ghost)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Ghost,5;
+      bonus2 bAddEle,Ele_Ghost,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Ghost,5;
+         bonus2 bAddEle,Ele_Ghost,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Ghost,5;
+            bonus2 bAddEle,Ele_Ghost,5;
+         }
+      }
+  - Id: 313119
+    AegisName: FuriousMaterial_Sai
+    Name: Crystal of Wrath (Holy)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Holy,5;
+      bonus2 bAddEle,Ele_Holy,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Holy,5;
+         bonus2 bAddEle,Ele_Holy,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Holy,5;
+            bonus2 bAddEle,Ele_Holy,5;
+         }
+      }
+  - Id: 313120
+    AegisName: FuriousMaterial_Poi
+    Name: Crystal of Wrath (Poison)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Poison,5;
+      bonus2 bAddEle,Ele_Poison,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bMagicAddEle,Ele_Poison,5;
+         bonus2 bAddEle,Ele_Poison,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bMagicAddEle,Ele_Poison,5;
+            bonus2 bAddEle,Ele_Poison,5;
+         }
+      }
+  - Id: 313121
+    AegisName: FuriousEnergy_Not
+    Name: Energy of Wrath (Formless)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Formless,5;
+      bonus2 bMagicAddRace,RC_Formless,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Formless,5;
+         bonus2 bMagicAddRace,RC_Formless,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Formless,5;
+            bonus2 bMagicAddRace,RC_Formless,5;
+         }
+      }
+  - Id: 313122
+    AegisName: FuriousEnergy_Hum
+    Name: Energy of Wrath (Human)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_DemiHuman,5;
+      bonus2 bMagicAddRace,RC_DemiHuman,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_DemiHuman,5;
+         bonus2 bMagicAddRace,RC_DemiHuman,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_DemiHuman,5;
+            bonus2 bMagicAddRace,RC_DemiHuman,5;
+         }
+      }
+  - Id: 313123
+    AegisName: FuriousEnergy_Dra
+    Name: Energy of Wrath (Dragon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Dragon,5;
+      bonus2 bMagicAddRace,RC_Dragon,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Dragon,5;
+         bonus2 bMagicAddRace,RC_Dragon,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Dragon,5;
+            bonus2 bMagicAddRace,RC_Dragon,5;
+         }
+      }
+  - Id: 313124
+    AegisName: FuriousEnergy_Pla
+    Name: Energy of Wrath (Plant)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Plant,5;
+      bonus2 bMagicAddRace,RC_Plant,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Plant,5;
+         bonus2 bMagicAddRace,RC_Plant,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Plant,5;
+            bonus2 bMagicAddRace,RC_Plant,5;
+         }
+      }
+  - Id: 313125
+    AegisName: FuriousEnergy_Ins
+    Name: Energy of Wrath (Insect)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Insect,5;
+      bonus2 bMagicAddRace,RC_Insect,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Insect,5;
+         bonus2 bMagicAddRace,RC_Insect,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Insect,5;
+            bonus2 bMagicAddRace,RC_Insect,5;
+         }
+      }
+  - Id: 313126
+    AegisName: FuriousEnergy_Ani
+    Name: Energy of Wrath (Brute)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Brute,5;
+      bonus2 bMagicAddRace,RC_Brute,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Brute,5;
+         bonus2 bMagicAddRace,RC_Brute,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Brute,5;
+            bonus2 bMagicAddRace,RC_Brute,5;
+         }
+      }
+  - Id: 313127
+    AegisName: FuriousEnergy_Fis
+    Name: Energy of Wrath (Fish)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Fish,5;
+      bonus2 bMagicAddRace,RC_Fish,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Fish,5;
+         bonus2 bMagicAddRace,RC_Fish,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Fish,5;
+            bonus2 bMagicAddRace,RC_Fish,5;
+         }
+      }
+  - Id: 313128
+    AegisName: FuriousEnergy_Ang
+    Name: Energy of Wrath (Angel)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Angel,5;
+      bonus2 bMagicAddRace,RC_Angel,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Angel,5;
+         bonus2 bMagicAddRace,RC_Angel,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Angel,5;
+            bonus2 bMagicAddRace,RC_Angel,5;
+         }
+      }
+  - Id: 313129
+    AegisName: FuriousEnergy_Dem
+    Name: Energy of Wrath (Demon)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Demon,5;
+      bonus2 bMagicAddRace,RC_Demon,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Demon,5;
+         bonus2 bMagicAddRace,RC_Demon,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Demon,5;
+            bonus2 bMagicAddRace,RC_Demon,5;
+         }
+      }
+  - Id: 313130
+    AegisName: FuriousEnergy_Und
+    Name: Energy of Wrath (Undead)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Undead,5;
+      bonus2 bMagicAddRace,RC_Undead,5;
+      if (.@g>=ENCHANTGRADE_B) {
+         bonus2 bAddRace,RC_Undead,5;
+         bonus2 bMagicAddRace,RC_Undead,5;
+         if (.@g>=ENCHANTGRADE_A) {
+            bonus2 bAddRace,RC_Undead,5;
+            bonus2 bMagicAddRace,RC_Undead,5;
+         }
+      }
+  - Id: 313131
+    AegisName: Pow_Assist
+    Name: POW Assistant    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bPow),100);
+         bonus bDef,3*(.@param/7);
+         bonus bRes,(.@param/7);
+      }
+  - Id: 313132
+    AegisName: Pow_Enforce
+    Name: POW Enhancement    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bPow),100);
+         bonus bLongAtkRate,(.@param/10);
+         bonus bShortAtkRate,(.@param/10);
+         bonus bAtkRate,(.@param/10);
+      }
+  - Id: 313133
+    AegisName: SPL_Assist
+    Name: SPL Assistant    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bSpl),100);
+         bonus bMdef,3*(.@param/7);
+         bonus bMRes,(.@param/7);
+      }
+  - Id: 313134
+    AegisName: SPL_Enforce
+    Name: SPL Enhancement    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bSpl),100);
+         bonus2 bMagicAtkEle,Ele_All,(.@param/10);
+         bonus bMatkRate,(.@param/10);
+      }
+  - Id: 313135
+    AegisName: STA_Assist
+    Name: STA Assistant    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         bonus bPAtk,(min(readparam(bSta),100)/7);
+      }
+  - Id: 313136
+    AegisName: STA_Enforce
+    Name: STA Enhancement    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         bonus bMaxHPrate,(min(readparam(bSta),100)/10);
+      }
+  - Id: 313137
+    AegisName: WIS_Assist
+    Name: WIS Assistant    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         bonus bSMatk,(min(readparam(bWis),100)/7);
+      }
+  - Id: 313138
+    AegisName: WIS_Enforce
+    Name: WIS Enhancement    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         bonus bMaxSPrate,(min(readparam(bWis),100)/10);
+      }
+  - Id: 313139
+    AegisName: CON_Assist
+    Name: CON Assistant    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bCon),100);
+         bonus bCRate,(.@param/7);
+         bonus bCritical,(.@param/7);
+      }
+  - Id: 313140
+    AegisName: CON_Enforce_Melee
+    Name: CON Enhancement (Physical)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bCon),100);
+         bonus bLongAtkRate,(.@param/7);
+         bonus bShortAtkRate,(.@param/7);
+         bonus bBaseAtk,5*(.@param/7);
+      }
+  - Id: 313141
+    AegisName: CON_Enforce_Magic
+    Name: CON Enhancement (Magical)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bCon),100);
+         bonus2 bMagicAtkEle,Ele_All,(.@param/7);
+         bonus bMatk,5*(.@param/7);
+      }
+  - Id: 313142
+    AegisName: CRT_Assist
+    Name: CRT Assistant    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bCrt),100);
+         bonus bHit,5*(.@param/7);
+         bonus bFlee,5*(.@param/7);
+      }
+  - Id: 313143
+    AegisName: CRT_Enforce
+    Name: CRT Enhancement    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (BaseLevel>=240) {
+         .@param = min(readparam(bCrt),100);
+         bonus bCritAtkRate,(.@param/10);
+         bonus bCritical,(.@param/10);
+      }
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -84135,6 +85275,18 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1001474
+    AegisName: VR_RING
+    Name: Ring    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001478
     AegisName: aegis_1001478
     Name: Pure Diamond    # !todo check english name
@@ -84713,6 +85865,19 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001549
+    AegisName: S_Badge
+    Name: Sonic Badge    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001550
     AegisName: Abyss_Jewel_Fragment
     Name: Abyss Jewel Fragment    # !todo check english name
@@ -84793,6 +85958,118 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+  - Id: 1001589
+    AegisName: Sp_Cor_Core
+    Name: Special Cor Core    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001590
+    AegisName: Sp_BarMeal_Ticket
+    Name: Special Barmil Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001591
+    AegisName: Sp_Amethyst_Fragment
+    Name: Special Amethyst Piece    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001592
+    AegisName: R_Core_Rune
+    Name: Concentrated Magical Rune Stone    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001593
+    AegisName: R_Outside_Rune
+    Name: Dim Magical Rune Stone    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001594
+    AegisName: R_Rune_Seal
+    Name: Rune Seal    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001595
+    AegisName: R_Sealed_Rune
+    Name: Rune stone sealed with a seal    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001596
+    AegisName: 2401_ev_YongLin
+    Name: Rammir’s Dragon    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001599
+    AegisName: Unknown_Meteorite_F
+    Name: Unknown meteorite fragment    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001600
+    AegisName: Energy_Of_Elemental
+    Name: Elemental energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001601
+    AegisName: Genesis_Of_Life
+    Name: Origin of life    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001603
+    AegisName: aegis_1001603
+    Name: Imperial Guard Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001604
+    AegisName: aegis_1001604
+    Name: Dragon Knight Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1001605
+    AegisName: aegis_1001605
+    Name: Nightwatch Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

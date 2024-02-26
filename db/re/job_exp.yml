@@ -2870,7 +2870,7 @@ Body:
   - Jobs:
       Super_Novice_E: true
       Super_Baby_E: true
-    MaxJobLevel: 50
+    MaxJobLevel: 70
     JobExp:
       - Level: 1
         Exp: 12800
@@ -2971,6 +2971,46 @@ Body:
       - Level: 49
         Exp: 81209043
       - Level: 50
+        Exp: 91847428
+      - Level: 51
+        Exp: 103879441
+      - Level: 52
+        Exp: 117487647
+      - Level: 53
+        Exp: 132878529
+      - Level: 54
+        Exp: 150285617
+      - Level: 55
+        Exp: 169973033
+      - Level: 56
+        Exp: 192239500
+      - Level: 57
+        Exp: 217422874
+      - Level: 58
+        Exp: 245905271
+      - Level: 59
+        Exp: 278118862
+      - Level: 60
+        Exp: 319836691
+      - Level: 61
+        Exp: 367812195
+      - Level: 62
+        Exp: 422984024
+      - Level: 63
+        Exp: 486431628
+      - Level: 64
+        Exp: 559396372
+      - Level: 65
+        Exp: 632361116
+      - Level: 66
+        Exp: 705325860
+      - Level: 67
+        Exp: 778290604
+      - Level: 68
+        Exp: 851255348
+      - Level: 69
+        Exp: 924220092
+      - Level: 70
         Exp: 999999999
   - Jobs:
       Super_Novice: true
@@ -3325,7 +3365,7 @@ Body:
       Night_Watch: true
       Hyper_Novice: true
       Spirit_Handler: true
-    MaxBaseLevel: 250
+    MaxBaseLevel: 260
     BaseExp:
       - Level: 1
         Exp: 658
@@ -3826,6 +3866,26 @@ Body:
       - Level: 249
         Exp: 35221511928
       - Level: 250
+        Exp: 43181573623
+      - Level: 251
+        Exp: 52940609261
+      - Level: 252
+        Exp: 64905186953
+      - Level: 253
+        Exp: 79573759204
+      - Level: 254
+        Exp: 97557428784
+      - Level: 255
+        Exp: 119605407689
+      - Level: 256
+        Exp: 146636229826
+      - Level: 257
+        Exp: 179776017766
+      - Level: 258
+        Exp: 220405397781
+      - Level: 259
+        Exp: 270217017679
+      - Level: 260
         Exp: 999999999999
   - Jobs:
       Dragon_Knight: true
@@ -3852,7 +3912,7 @@ Body:
       Night_Watch: true
       Hyper_Novice: true
       Spirit_Handler: true
-    MaxJobLevel: 50
+    MaxJobLevel: 55
     JobExp:
       - Level: 1
         Exp: 4700000
@@ -3953,4 +4013,14 @@ Body:
       - Level: 49
         Exp: 4073145058
       - Level: 50
+        Exp: 4480459564
+      - Level: 51
+        Exp: 4928505520
+      - Level: 52
+        Exp: 5421356072
+      - Level: 53
+        Exp: 5963491679
+      - Level: 54
+        Exp: 6559840847
+      - Level: 55
         Exp: 9999999999
