@@ -4817,21 +4817,6 @@ static TIMER_FUNC(skill_timerskill){
 							src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 					}
 					break;
-				case SKE_TWINKLING_GALAXY:
-				case SKE_STAR_CANNON: {
-					int area = skill_get_unit_range(skl->skill_id, skl->skill_lv);
-					int splash = skill_get_splash(skl->skill_id, skl->skill_lv);
-					short tmpx = 0, tmpy = 0;
-					int stars = 1 + (skl->skill_id == SKE_STAR_CANNON ? (skl->skill_lv+1) / 2 : 0);
-
-					for (int i = 0; i < stars; i++) {
-						tmpx = skl->x - area + rnd() % (area * 2 + 1);
-						tmpy = skl->y - area + rnd() % (area * 2 + 1);
-						map_foreachinarea(skill_area_sub, src->m, tmpx - splash, tmpy - splash, tmpx + splash, tmpy + splash, BL_CHAR,
-							src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-					}
-					}
-					break;
 			}
 		}
 	} while (0);
