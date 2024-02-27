@@ -34931,17 +34931,7 @@ Body:
         Time: 2000
       - Level: 5
         Time: 1000
-    Cooldown:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 150000
+    Cooldown: 60000
     Requires:
       SpCost:
         - Level: 1
@@ -34966,7 +34956,7 @@ Body:
       Critical: true
     Range: 1
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: 3
     Element: Weapon
     Requires:
       SpCost: 1
