@@ -5494,10 +5494,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_EXPOSION_BLASTER:
-			skillratio += -100 + 2400 * skill_lv + 10 * sstatus->pow;
+			skillratio += -100 + 450 + 2600 * skill_lv;
+			skillratio += 10 * sstatus->pow;
 
 			if( tsc != nullptr && tsc->getSCE( SC_HOLY_OIL ) ){
-				skillratio += 350 + 1050 * skill_lv;
+				skillratio += 950 * skill_lv;
 			}
 
 			RE_LVL_DMOD(100);
@@ -5519,7 +5520,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_THIRD_PUNISH:
-			skillratio += -100 + 350 + 1500 * skill_lv + 10 * sstatus->pow;
+			skillratio += -100 + 450 + 1800 * skill_lv;
+			skillratio += 10 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case IQ_THIRD_FLAME_BOMB:
