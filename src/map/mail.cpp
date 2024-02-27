@@ -7,6 +7,7 @@
 #include <common/showmsg.hpp>
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
+#include <common/utilities.hpp>
 
 #include "atcommand.hpp"
 #include "battle.hpp"
@@ -17,6 +18,8 @@
 #include "log.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
+
+using namespace rathena;
 
 void mail_clear(map_session_data *sd)
 {
