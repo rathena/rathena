@@ -2585,6 +2585,10 @@ void battle_consume_ammo(map_session_data*sd, int skill, int lv)
 {
 	int qty = 1;
 
+	if( sd == nullptr ){
+		return;
+	}
+
 	if (!battle_config.arrow_decrement)
 		return;
 
@@ -2592,7 +2596,7 @@ void battle_consume_ammo(map_session_data*sd, int skill, int lv)
 		qty = skill_get_ammo_qty(skill, lv);
 		if (!qty) qty = 1;
 
-		if( skill == NW_MAGAZINE_FOR_ONE && sd != nullptr && sd->weapontype1 == W_GATLING ){
+		if( skill == NW_MAGAZINE_FOR_ONE && sd->weapontype1 == W_GATLING ){
 			qty += 4;
 		}
 	}
@@ -3469,25 +3473,15 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 			if( sc != nullptr ){
 				if( sc->getSCE( SC_GRENADE_FRAGMENT_1 ) != nullptr ){
 					element = ELE_WATER;
-				}
-
-				if( sc->getSCE( SC_GRENADE_FRAGMENT_2 ) != nullptr ){
+				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_2 ) != nullptr ){
 					element = ELE_WIND;
-				}
-
-				if( sc->getSCE( SC_GRENADE_FRAGMENT_3 ) != nullptr ){
+				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_3 ) != nullptr ){
 					element = ELE_EARTH;
-				}
-
-				if( sc->getSCE( SC_GRENADE_FRAGMENT_4 ) != nullptr ){
+				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_4 ) != nullptr ){
 					element = ELE_FIRE;
-				}
-
-				if( sc->getSCE( SC_GRENADE_FRAGMENT_5 ) != nullptr ){
+				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_5 ) != nullptr ){
 					element = ELE_DARK;
-				}
-
-				if( sc->getSCE( SC_GRENADE_FRAGMENT_6 ) != nullptr ){
+				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_6 ) != nullptr ){
 					element = ELE_HOLY;
 				}
 			}
