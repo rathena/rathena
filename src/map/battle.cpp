@@ -5627,14 +5627,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case MT_AXE_STOMP:
-			skillratio += -100 + 400 + 950 * skill_lv + 5 * sstatus->pow;
+			skillratio += -100 + 450 + 1150 * skill_lv;
+			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_MIGHTY_SMASH:
-			skillratio += -100 + 25 + 180 * skill_lv;
+			skillratio += -100 + 80 + 240 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			if (sc && sc->getSCE(SC_AXE_STOMP)) {
-				skillratio += 25;
+				skillratio += 20;
 				skillratio += 5 * sstatus->pow;
 			}
 			RE_LVL_DMOD(100);
@@ -5650,12 +5651,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case MT_SPARK_BLASTER:
-			skillratio += -100 + 250 + 900 * skill_lv;
+			skillratio += -100 + 600 + 1400 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case MT_TRIPLE_LASER:
-			skillratio += -100 + 550 + 900 * skill_lv;
+			skillratio += -100 + 650 + 1150 * skill_lv;
 			skillratio += 12 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
