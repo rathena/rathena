@@ -106,14 +106,28 @@ bool mail_removezeny( map_session_data *sd, bool flag ){
 	if( sd->mail.zeny > 0 ){
 		//Zeny send
 		if( flag ){
-			// To avoid negative values, we need to calculate the fee before the subtraction
-			int Zeny = sd->mail.zeny + (int) ((double)sd->mail.zeny * battle_config.mail_zeny_fee / 100);
+			int64 fee;
 
-			if (Zeny < 0)
+			if( util::safe_multiplication( static_cast<decltype(fee)>( sd->mail.zeny ), static_cast<decltype(fee)>( battle_config.mail_zeny_fee ), fee ) ){
 				return false;
+			}
+
+			if( fee < 0 ){
+				return false;
+			}
+
+			fee /= 100;
+
+			if( fee > MAX_ZENY ){
+				return false;
+			}
 
 			// It's possible that we don't know what the dest_id is, so it will be 0
-			if (pc_payzeny(sd, Zeny, LOG_TYPE_MAIL, sd->mail.dest_id)) {
+			if( pc_payzeny( sd, static_cast<int32>( fee ), LOG_TYPE_MAIL, sd->mail.dest_id ) ){
+				return false;
+			}
+			// It's possible that we don't know what the dest_id is, so it will be 0
+			if( pc_payzeny( sd, static_cast<int32>( fee ), LOG_TYPE_MAIL, sd->mail.dest_id ) ){
 				return false;
 			}
 		}else{
