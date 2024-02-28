@@ -8222,10 +8222,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_TERRA_DRIVE:
-						skillratio += -100 + 400 + 1550 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 + 2400 * skill_lv;
+						skillratio += 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_TERREMOTUS ) ){
-							skillratio += 5000 + 250 * skill_lv + 5 * sstatus->spl;
+							skillratio += 7300 + 200 * skill_lv;
+							skillratio += 5 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
