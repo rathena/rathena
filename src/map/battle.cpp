@@ -8281,7 +8281,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case HN_HELLS_DRIVE:
-						skillratio += -100 + 1500 + 700 * skill_lv;
+						skillratio += -100 + 1700 + 900 * skill_lv;
 						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
 						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
