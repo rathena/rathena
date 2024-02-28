@@ -7,6 +7,7 @@
 #include <common/showmsg.hpp>
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
+#include <common/utilities.hpp>
 
 #include "atcommand.hpp"
 #include "battle.hpp"
@@ -17,6 +18,8 @@
 #include "log.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
+
+using namespace rathena;
 
 void mail_clear(map_session_data *sd)
 {
@@ -106,8 +109,36 @@ bool mail_removezeny( map_session_data *sd, bool flag ){
 	if( sd->mail.zeny > 0 ){
 		//Zeny send
 		if( flag ){
+			int64 zeny = sd->mail.zeny;
+
+			if( battle_config.mail_zeny_fee > 0 ){
+				int64 fee;
+
+				if( util::safe_multiplication( zeny, static_cast<decltype(fee)>( battle_config.mail_zeny_fee ), fee ) ){
+					return false;
+				}
+
+				if( fee < 0 ){
+					return false;
+				}
+
+				fee /= 100;
+
+				if( fee > MAX_ZENY ){
+					return false;
+				}
+
+				if( util::safe_addition( zeny, fee, zeny ) ){
+					return false;
+				}
+
+				if( zeny > MAX_ZENY ){
+					return false;
+				}
+			}
+
 			// It's possible that we don't know what the dest_id is, so it will be 0
-			if (pc_payzeny(sd, sd->mail.zeny + sd->mail.zeny * battle_config.mail_zeny_fee / 100, LOG_TYPE_MAIL, sd->mail.dest_id)) {
+			if( pc_payzeny( sd, static_cast<int32>( zeny ), LOG_TYPE_MAIL, sd->mail.dest_id ) ){
 				return false;
 			}
 		}else{
