@@ -861,6 +861,18 @@ struct map_data_other_server {
 	uint16 port;
 };
 
+/**
+ * align for packet ZC_SAY_DIALOG_ALIGN
+ **/
+enum e_say_dialog_align : uint8 {
+	DIALOG_ALIGN_LEFT   = 0,
+	DIALOG_ALIGN_RIGHT  = 1,
+	DIALOG_ALIGN_CENTER = 2,
+	DIALOG_ALIGN_TOP    = 3,
+	DIALOG_ALIGN_MIDDLE = 4,
+	DIALOG_ALIGN_BOTTOM = 5
+};
+
 struct inter_conf {
 	uint32 start_status_points;
 	bool emblem_woe_change;
