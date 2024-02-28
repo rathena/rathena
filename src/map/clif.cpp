@@ -22715,7 +22715,7 @@ void clif_parse_stylist_close( int fd, map_session_data* sd ){
 }
 
 void clif_inventory_expansion_info( map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20181219 || PACKETVER_RE_NUM >= 20181219 || PACKETVER_ZERO_NUM >= 20181212
 	nullpo_retv( sd );
 
 	struct PACKET_ZC_EXTEND_BODYITEM_SIZE p = {};
@@ -22736,7 +22736,7 @@ enum class e_inventory_expansion_response : uint8{
 };
 
 void clif_inventory_expansion_response( map_session_data* sd, e_inventory_expansion_response response ){
-#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20181219 || PACKETVER_RE_NUM >= 20181219 || PACKETVER_ZERO_NUM >= 20181212
 	nullpo_retv( sd );
 
 	struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE p = {};
@@ -22750,7 +22750,7 @@ void clif_inventory_expansion_response( map_session_data* sd, e_inventory_expans
 }
 
 void clif_parse_inventory_expansion_request( int fd, map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20181219 || PACKETVER_RE_NUM >= 20181219 || PACKETVER_ZERO_NUM >= 20181212
 	// Check if player is dead or busy with other stuff
 	if( pc_isdead( sd ) || pc_cant_act( sd ) ){
 		clif_inventory_expansion_response( sd, e_inventory_expansion_response::BUSY );
@@ -22819,7 +22819,7 @@ enum class e_inventory_expansion_result : uint8{
 };
 
 void clif_inventory_expansion_result( map_session_data* sd, e_inventory_expansion_result result ){
-#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20181219 || PACKETVER_RE_NUM >= 20181219 || PACKETVER_ZERO_NUM >= 20181212
 	nullpo_retv( sd );
 
 	struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE p = {};
@@ -22836,7 +22836,7 @@ void clif_inventory_expansion_result( map_session_data* sd, e_inventory_expansio
 }
 
 void clif_parse_inventory_expansion_confirm( int fd, map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20181219 || PACKETVER_RE_NUM >= 20181219 || PACKETVER_ZERO_NUM >= 20181212
 	if( sd->state.inventory_expansion_confirmation == 0 ){
 		return;
 	}
@@ -22887,7 +22887,7 @@ void clif_parse_inventory_expansion_confirm( int fd, map_session_data* sd ){
 }
 
 void clif_parse_inventory_expansion_reject( int fd, map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20181219 || PACKETVER_RE_NUM >= 20181219 || PACKETVER_ZERO_NUM >= 20181212
 	sd->state.inventory_expansion_confirmation = 0;
 	sd->state.inventory_expansion_amount = 0;
 #endif
