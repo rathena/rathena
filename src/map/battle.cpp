@@ -7547,7 +7547,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							if ((skill_id == MG_FIREBOLT && sc->getSCE(SC_FLAMETECHNIC_OPTION)) ||
 								(skill_id == MG_COLDBOLT && sc->getSCE(SC_COLD_FORCE_OPTION)) ||
 								(skill_id == MG_LIGHTNINGBOLT && sc->getSCE(SC_GRACE_BREEZE_OPTION)))
-								skillratio *= 2;
+								skillratio *= 5;
 
 							if (sc->getSCE(SC_SPELLFIST) && mflag & BF_SHORT) {
 								skillratio += (sc->getSCE(SC_SPELLFIST)->val3 * 100) + (sc->getSCE(SC_SPELLFIST)->val1 * 50 - 50) - 100; // val3 = used bolt level, val1 = used spellfist level. [Rytech]
