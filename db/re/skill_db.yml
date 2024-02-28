@@ -37018,7 +37018,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -10
-    Element: Holy
+    Element: Neutral
     CastCancel: true
     CastTime: 2000
     Cooldown: 5000
