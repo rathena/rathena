@@ -40909,7 +40909,7 @@ Body:
     GiveAp: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1: 3000
     Duration2: 10000
     Cooldown: 2000
