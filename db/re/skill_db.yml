@@ -38857,7 +38857,7 @@ Body:
         Time: 1500
       - Level: 5
         Time: 1000
-    Cooldown: 60000
+    Cooldown: 30000
     Requires:
       SpCost:
         - Level: 1
@@ -41241,7 +41241,7 @@ Body:
       Splash: true
     Range: 1
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: 5
     SplashArea: 4
     Requires:
       SpCost: 1
