@@ -5828,7 +5828,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 50000;
 			break;
 		case HN_SPIRAL_PIERCE_MAX:
-			skillratio += -100 + 700 + 800 * skill_lv;
+			skillratio += -100 + 1000 + 1500 * skill_lv;
 			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			switch (status_get_size(target)){
