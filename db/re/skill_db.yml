@@ -37105,7 +37105,7 @@ Body:
     HitCount: 3
     Element: Weapon
     SplashArea: 3
-    GiveAp: 3
+    GiveAp: 5
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
