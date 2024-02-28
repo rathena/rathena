@@ -38892,22 +38892,23 @@ Body:
     Status: Abyss_Slayer
   - Id: 5319
     Name: ABC_ABYSS_STRIKE
-    Description: Abyss Strike
+    Description: Omega Abyss Strike
     MaxLevel: 10
     Type: Magic
     TargetType: Ground
     Range: 9
     Hit: Single
     HitCount: 1
+    Element: Fire
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 100
-    Cooldown: 3000
+    Cooldown: 700
     FixedCastTime: 1000
     Requires:
       SpCost: 125
-      ApCost: 15
+      ApCost: 10
     Unit:
       Id: Dummyskill
       Range: 4
