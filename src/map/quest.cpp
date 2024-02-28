@@ -458,27 +458,27 @@ static int split_exact_quest_time(char* modif_p, int* week, int* day, int* hour,
 			modif_p++;
 		while (modif_p[0] >= '0' && modif_p[0] <= '9')
 			modif_p++;
-		if (modif_p[0] == 'S' && modif_p[1] == 'u' && modif_p[2] == 'n' && modif_p[3] == 'd' && modif_p[4] == 'a' && modif_p[5] == 'y') {
+		if (strncasecmp(modif_p, "SUNDAY", 6) == 0) {
 			w = 0;
-			modif_p++;
-		} else if (modif_p[0] == 'M' && modif_p[1] == 'o' && modif_p[2] == 'n' && modif_p[3] == 'd' && modif_p[4] == 'a' && modif_p[5] == 'y') {
+			modif_p = modif_p + 6;
+		} else if (strncasecmp(modif_p, "MONDAY", 6) == 0) {
 			w = 1;
-			modif_p++;
-		} else if (modif_p[0] == 'T' && modif_p[1] == 'u' && modif_p[2] == 'e' && modif_p[3] == 's' && modif_p[4] == 'd' && modif_p[5] == 'a' && modif_p[6] == 'y') {
+			modif_p = modif_p + 6;
+		} else if (strncasecmp(modif_p, "TUESDAY", 7) == 0) {
 			w = 2;
-			modif_p++;
-		} else if (modif_p[0] == 'W' && modif_p[1] == 'e' && modif_p[2] == 'd' && modif_p[3] == 'n' && modif_p[4] == 'e' && modif_p[5] == 's' && modif_p[6] == 'd' && modif_p[7] == 'a' && modif_p[8] == 'y') {
+			modif_p = modif_p + 7;
+		} else if (strncasecmp(modif_p, "WEDNESDAY", 9) == 0) {
 			w = 3;
-			modif_p++;
-		} else if (modif_p[0] == 'T' && modif_p[1] == 'h' && modif_p[2] == 'u' && modif_p[3] == 'r' && modif_p[4] == 's' && modif_p[5] == 'd' && modif_p[6] == 'a' && modif_p[7] == 'y') {
+			modif_p = modif_p + 9;
+		} else if (strncasecmp(modif_p, "THURSDAY", 8) == 0) {
 			w = 4;
-			modif_p++;
-		} else if (modif_p[0] == 'F' && modif_p[1] == 'r' && modif_p[2] == 'i' && modif_p[3] == 'd' && modif_p[4] == 'a' && modif_p[5] == 'y') {
+			modif_p = modif_p + 8;
+		} else if (strncasecmp(modif_p, "FRIDAY", 6) == 0) {
 			w = 5;
-			modif_p++;
-		} else if (modif_p[0] == 'S' && modif_p[1] == 'a' && modif_p[2] == 't' && modif_p[3] == 'u' && modif_p[4] == 'r' && modif_p[5] == 'd' && modif_p[6] == 'a' && modif_p[7] == 'y') {
+			modif_p = modif_p + 6;
+		} else if (strncasecmp(modif_p, "SATURDAY", 8) == 0) {
 			w = 6;
-			modif_p++;
+			modif_p = modif_p + 8;
 		} else if (modif_p[0] == 's') {
 			s = value;
 			modif_p++;
