@@ -8160,7 +8160,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case ABC_ABYSS_SQUARE:
-						skillratio += -100 + ( 570 + 20 * pc_checkskill( sd, ABC_MAGIC_SWORD_M ) ) * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 750 * skill_lv;
+						skillratio += 40 * pc_checkskill( sd, ABC_MAGIC_SWORD_M ) * skill_lv;
+						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case TR_METALIC_FURY:
