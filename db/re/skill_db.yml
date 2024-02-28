@@ -38888,7 +38888,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 120
     Status: Abyss_Slayer
   - Id: 5319
     Name: ABC_ABYSS_STRIKE
