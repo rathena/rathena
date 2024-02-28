@@ -7600,7 +7600,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WZ_EARTHSPIKE:
 						skillratio += 100;
 						if (sc && sc->getSCE(SC_EARTH_CARE_OPTION))
-							skillratio += skillratio * 80 / 100;
+							skillratio += skillratio * 800 / 100;
 						break;
 #endif
 					case HW_NAPALMVULCAN:
