@@ -5670,11 +5670,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_CHAIN_REACTION_SHOT:
-			skillratio += -100 + 850 * skill_lv + 15 * sstatus->con;
+			skillratio += -100 + 850 * skill_lv;
+			skillratio += 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_CHAIN_REACTION_SHOT_ATK:
-			skillratio += -100 + 600 + 2350 * skill_lv + 15 * sstatus->con;
+			skillratio += -100 + 800 + 2550 * skill_lv;
+			skillratio += 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_DEFT_STAB:
