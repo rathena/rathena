@@ -1696,10 +1696,7 @@ void send_shortlist_add_fd(int fd)
 // Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends()
 {
-	int i;
-
-	for( i = send_shortlist_count-1; i >= 0; --i )
-	{
+	for( int i = static_cast<int>( send_shortlist_count - 1 ); i >= 0; --i ){
 		int fd = send_shortlist_array[i];
 		int idx = fd/32;
 		int bit = fd%32;

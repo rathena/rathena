@@ -5736,8 +5736,7 @@ uint64 MobChatDatabase::parseBodyNode(const ryml::NodeRef& node) {
 /*==========================================
  * processes one mob_skill_db entry
  *------------------------------------------*/
-static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
-{
+static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current ){
 	static const struct {
 		char str[32];
 		enum MobSkillState id;
