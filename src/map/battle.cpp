@@ -4172,7 +4172,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			break;
 		}
 		case ABC_FRENZY_SHOT:
-			if( rnd()%100 < 5 * skill_lv ){
+			if( rnd_chance( 5 * skill_lv, 100 ) ){
 				wd->div_ = 3;
 			}
 			break;
@@ -5685,7 +5685,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_FRENZY_SHOT:
-			skillratio += -100 + 150 + 600 * skill_lv;
+			skillratio += -100 + 250 + 800 * skill_lv;
 			skillratio += 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
