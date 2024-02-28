@@ -41110,7 +41110,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
