@@ -37145,7 +37145,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 4
+    GiveAp: 6
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 150
