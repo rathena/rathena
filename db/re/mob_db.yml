@@ -114275,14 +114275,18 @@ Body:
 #    AegisName: E_HILLSRION
 #  - Id: 21865
 #    AegisName: E_BABY_LEOPARD
-#  - Id: 21866
-#    AegisName: HEROS_IN_ORB_1
-#  - Id: 21867
-#    AegisName: HEROS_IN_ORB_2
-#  - Id: 21868
-#    AegisName: HEROS_IN_ORB_3
-#  - Id: 21869
-#    AegisName: HEROS_IN_ORB_4
+  - Id: 21866
+    AegisName: HEROS_IN_ORB_1
+    Name: HEROS_IN_ORB_1
+  - Id: 21867
+    AegisName: HEROS_IN_ORB_2
+    Name: HEROS_IN_ORB_2
+  - Id: 21868
+    AegisName: HEROS_IN_ORB_3
+    Name: HEROS_IN_ORB_3
+  - Id: 21869
+    AegisName: HEROS_IN_ORB_4
+    Name: HEROS_IN_ORB_4
 #  - Id: 21870
 #    AegisName: VR_MD_DEVIL
 #  - Id: 21871
@@ -114317,8 +114321,9 @@ Body:
 #    AegisName: SEASON_MOB_175
 #  - Id: 21886
 #    AegisName: SEASON_MOB_176
-#  - Id: 21887
-#    AegisName: HEROS_OUT_ORB
+  - Id: 21887
+    AegisName: HEROS_OUT_ORB
+    Name: HEROS_OUT_ORB
 #  - Id: 21888
 #    AegisName: G_DEVILING
 #  - Id: 21889
@@ -114895,14 +114900,18 @@ Body:
 #    AegisName: MD_PRI_RIGEL_AC
 #  - Id: 22176
 #    AegisName: MD_PRI_RIGEL_ACS
-#  - Id: 22177
-#    AegisName: MD_PRI_DRAGON_1
-#  - Id: 22178
-#    AegisName: MD_PRI_DRAGON_2
-#  - Id: 22179
-#    AegisName: MD_PRI_DRAGON_3
-#  - Id: 22180
-#    AegisName: MD_PRI_DRAGON_4
+  - Id: 22177
+    AegisName: MD_PRI_DRAGON_1
+    Name: MD_PRI_DRAGON_1
+  - Id: 22178
+    AegisName: MD_PRI_DRAGON_2
+    Name: MD_PRI_DRAGON_2
+  - Id: 22179
+    AegisName: MD_PRI_DRAGON_3
+    Name: MD_PRI_DRAGON_3
+  - Id: 22180
+    AegisName: MD_PRI_DRAGON_4
+    Name: MD_PRI_DRAGON_4
 #  - Id: 22181
 #    AegisName: MD_COMMON_P
 #  - Id: 22182
@@ -114921,100 +114930,1625 @@ Body:
 #    AegisName: E_NF_SMALLRAT
 #  - Id: 22189
 #    AegisName: E_NF_BIGRAT
-#  - Id: 22192
-#    AegisName: SPIRIT_G_LAND_S
-#  - Id: 22193
-#    AegisName: SPIRIT_G_LAND_M
-#  - Id: 22194
-#    AegisName: SPIRIT_G_LAND_L
-#  - Id: 22195
-#    AegisName: SPIRIT_G_LAND_SL
-#  - Id: 22196
-#    AegisName: SPIRIT_B_FLAME_S
-#  - Id: 22197
-#    AegisName: SPIRIT_B_FLAME_M
-#  - Id: 22198
-#    AegisName: SPIRIT_B_FLAME_L
-#  - Id: 22199
-#    AegisName: SPIRIT_B_FLAME_SL
-#  - Id: 22200
-#    AegisName: SPIRIT_S_WIND_S
-#  - Id: 22201
-#    AegisName: SPIRIT_S_WIND_M
-#  - Id: 22202
-#    AegisName: SPIRIT_S_WIND_L
-#  - Id: 22203
-#    AegisName: SPIRIT_S_WIND_SL
-#  - Id: 22204
-#    AegisName: SPIRIT_I_WATER_S
-#  - Id: 22205
-#    AegisName: SPIRIT_I_WATER_M
-#  - Id: 22206
-#    AegisName: SPIRIT_I_WATER_L
-#  - Id: 22207
-#    AegisName: SPIRIT_I_WATER_SL
-#  - Id: 22208
-#    AegisName: SPIRIT_C_LAND_S
-#  - Id: 22209
-#    AegisName: SPIRIT_C_LAND_M
-#  - Id: 22210
-#    AegisName: SPIRIT_C_LAND_L
-#  - Id: 22211
-#    AegisName: SPIRIT_C_LAND_SL
-#  - Id: 22212
-#    AegisName: SPIRIT_C_FLAME_S
-#  - Id: 22213
-#    AegisName: SPIRIT_C_FLAME_M
-#  - Id: 22214
-#    AegisName: SPIRIT_C_FLAME_L
-#  - Id: 22215
-#    AegisName: SPIRIT_C_FLAME_SL
-#  - Id: 22216
-#    AegisName: SPIRIT_H_WATER_S
-#  - Id: 22217
-#    AegisName: SPIRIT_H_WATER_M
-#  - Id: 22218
-#    AegisName: SPIRIT_H_WATER_L
-#  - Id: 22219
-#    AegisName: SPIRIT_H_WATER_SL
-#  - Id: 22220
-#    AegisName: SPIRIT_D_WIND_S
-#  - Id: 22221
-#    AegisName: SPIRIT_D_WIND_M
-#  - Id: 22222
-#    AegisName: SPIRIT_D_WIND_L
-#  - Id: 22223
-#    AegisName: SPIRIT_D_WIND_SL
-#  - Id: 22224
-#    AegisName: SPIRIT_R_FLAME_S
-#  - Id: 22225
-#    AegisName: SPIRIT_R_FLAME_M
-#  - Id: 22226
-#    AegisName: SPIRIT_R_FLAME_L
-#  - Id: 22227
-#    AegisName: SPIRIT_R_FLAME_SL
-#  - Id: 22228
-#    AegisName: SPIRIT_F_LAND_S
-#  - Id: 22229
-#    AegisName: SPIRIT_F_LAND_M
-#  - Id: 22230
-#    AegisName: SPIRIT_F_LAND_L
-#  - Id: 22231
-#    AegisName: SPIRIT_F_LAND_SL
-#  - Id: 22232
-#    AegisName: SPIRIT_C_WATER_S
-#  - Id: 22233
-#    AegisName: SPIRIT_C_WATER_M
-#  - Id: 22234
-#    AegisName: SPIRIT_C_WATER_L
-#  - Id: 22235
-#    AegisName: SPIRIT_C_WATER_SL
-#  - Id: 22236
-#    AegisName: SPIRIT_C_WIND_S
-#  - Id: 22237
-#    AegisName: SPIRIT_C_WIND_M
-#  - Id: 22238
-#    AegisName: SPIRIT_C_WIND_L
+  - Id: 22192
+    AegisName: SPIRIT_G_LAND_S
+#   Name: Little Blue Earth Spirit
+    Name: L Blue Earth Spirit
+    Level: 262
+    Hp: 21176032
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 273
+    MagicDefense: 254
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 7    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 907    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22193
+    AegisName: SPIRIT_G_LAND_M
+    Name: Blue Earth Spirit
+    Level: 263
+    Hp: 21721220
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 276
+    MagicDefense: 257
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 8    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1002    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22194
+    AegisName: SPIRIT_G_LAND_L
+#   Name: Giant Blue Earth Spirit
+    Name: G Blue Earth Spirit
+    Level: 264
+    Hp: 22277336
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 278
+    MagicDefense: 260
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 8    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 999    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22195
+    AegisName: SPIRIT_G_LAND_SL
+#   Name: Mutant Blue Earth Spirit
+    Name: M Blue Earth Spirit
+    Level: 264
+    Hp: 37875440
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 296
+    MagicDefense: 278
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1114    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22196
+    AegisName: SPIRIT_B_FLAME_S
+#   Name: Little Blue Flame Spirit
+    Name: L Blue Flame Spirit
+    Level: 262
+    Hp: 23988560
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 258
+    MagicDefense: 238
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 8    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 1564    # (approximation)
+    AttackMotion: 1344
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22197
+    AegisName: SPIRIT_B_FLAME_M
+    Name: Blue Flame Spirit
+    Level: 263
+    Hp: 24572252
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 235
+    MagicDefense: 220
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 14    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1081    # (approximation)
+    AttackMotion: 960
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22198
+    AegisName: SPIRIT_B_FLAME_L
+#   Name: Giant Blue Flame Spirit
+    Name: G Blue Flame Spirit
+    Level: 264
+    Hp: 25531520
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 237
+    MagicDefense: 223
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 14    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 893    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22199
+    AegisName: SPIRIT_B_FLAME_SL
+    Name: Blue Flame Mutant Spirit
+    Level: 264
+    Hp: 39995472
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 270
+    MagicDefense: 259
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 14    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 866    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22200
+    AegisName: SPIRIT_S_WIND_S
+#   Name: Little Strong Wind Spirit
+    Name: L Strong Wind Spirit
+    Level: 262
+    Hp: 21175556
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 260
+    MagicDefense: 241
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 8    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 1114    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22201
+    AegisName: SPIRIT_S_WIND_M
+    Name: Strong Wind Spirit
+    Level: 263
+    Hp: 21719556
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 263
+    MagicDefense: 257
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 9    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 1082    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22202
+    AegisName: SPIRIT_S_WIND_L
+#   Name: Giant Strong Wind Spirit
+    Name: G Strong Wind Spirit
+    Level: 264
+    Hp: 22275936
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 265
+    MagicDefense: 260
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 9    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 973    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22203
+    AegisName: SPIRIT_S_WIND_SL
+#   Name: Mutant Strong Wind Spirit
+    Name: M Strong Wind Spirit
+    Level: 264
+    Hp: 37839992
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 281
+    MagicDefense: 278
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 10    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 954    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22204
+    AegisName: SPIRIT_I_WATER_S
+#   Name: Little Cold Water Spirit
+    Name: L Cold Water Spirit
+    Level: 262
+    Hp: 24265740
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 233
+    MagicDefense: 218
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 14    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1116    # (approximation)
+    AttackMotion: 960
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22205
+    AegisName: SPIRIT_I_WATER_M
+    Name: Cold Water Spirit
+    Level: 263
+    Hp: 24555120
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 260
+    MagicDefense: 241
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 8    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1416    # (approximation)
+    AttackMotion: 1344
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22206
+    AegisName: SPIRIT_I_WATER_L
+#   Name: Giant Cold Water Spirit
+    Name: G Cold Water Spirit
+    Level: 264
+    Hp: 25183728
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 263
+    MagicDefense: 243
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 9    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1698    # (approximation)
+    AttackMotion: 1536
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22207
+    AegisName: SPIRIT_I_WATER_SL
+#   Name: Mutant Cold Water Spirit
+    Name: M Cold Water Spirit
+    Level: 264
+    Hp: 40183012
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 278
+    MagicDefense: 259
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 11    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1640    # (approximation)
+    AttackMotion: 1536
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22208
+    AegisName: SPIRIT_C_LAND_S
+#   Name: Little Polluted Earth Spirit
+    Name: L Polluted Earth Spirit
+    Level: 263
+    Hp: 24014584
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 270
+    MagicDefense: 251
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 4    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 912    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22209
+    AegisName: SPIRIT_C_LAND_M
+    Name: Polluted Earth Spirit
+    Level: 264
+    Hp: 25391720
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 273
+    MagicDefense: 254
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 905    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22210
+    AegisName: SPIRIT_C_LAND_L
+#   Name: Giant Polluted Earth Spirit
+    Name: G Polluted Earth Spirit
+    Level: 265
+    Hp: 26039004
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 275
+    MagicDefense: 257
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 5    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1022    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22211
+    AegisName: SPIRIT_C_LAND_SL
+#   Name: Mutant Polluted Earth Spirit
+    Name: M Polluted Earth Spirit
+    Level: 265
+    Hp: 49912004
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 302
+    MagicDefense: 284
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1041    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22212
+    AegisName: SPIRIT_C_FLAME_S
+#   Name: Little Tainted Flame Spirit
+    Name: L Tainted Flame Spirit
+    Level: 263
+    Hp: 23932040
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 257
+    MagicDefense: 251
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 5    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 1744    # (approximation)
+    AttackMotion: 1344
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22213
+    AegisName: SPIRIT_C_FLAME_M
+    Name: Tainted Flame Spirit
+    Level: 264
+    Hp: 13694635
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 260
+    MagicDefense: 254
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 8    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1148    # (approximation)
+    AttackMotion: 960
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22214
+    AegisName: SPIRIT_C_FLAME_L
+#   Name: Giant Tainted Flame Spirit
+    Name: G Tainted Flame Spirit
+    Level: 265
+    Hp: 25601332
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 268
+    MagicDefense: 257
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 14    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 953    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22215
+    AegisName: SPIRIT_C_FLAME_SL
+#   Name: Mutant Tainted Flame Spirit
+    Name: M Tainted Flame Spirit
+    Level: 265
+    Hp: 40749364
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 293
+    MagicDefense: 284
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 14    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1007    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22216
+    AegisName: SPIRIT_H_WATER_S
+#   Name: Little Hot Water Spirit
+    Name: L Hot Water Spirit
+    Level: 262
+    Hp: 20815920
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 237
+    MagicDefense: 223
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 13    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1140    # (approximation)
+    AttackMotion: 960
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22217
+    AegisName: SPIRIT_H_WATER_M
+    Name: Hot Water Spirit
+    Level: 263
+    Hp: 21634616
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 265
+    MagicDefense: 246
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 9    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1502    # (approximation)
+    AttackMotion: 1344
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22218
+    AegisName: SPIRIT_H_WATER_L
+#   Name: Giant Hot Water Spirit
+    Name: G Hot Water Spirit
+    Level: 264
+    Hp: 22203156
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 241
+    MagicDefense: 227
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 12    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1658    # (approximation)
+    AttackMotion: 1536
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22219
+    AegisName: SPIRIT_H_WATER_SL
+#   Name: Mutant Hot Water Spirit
+    Name: M Hot Water Spirit
+    Level: 264
+    Hp: 37234928
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 276
+    MagicDefense: 265
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 11    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1617    # (approximation)
+    AttackMotion: 1536
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22220
+    AegisName: SPIRIT_D_WIND_S
+#   Name: Little Dry Wind Spirit
+    Name: L Dry Wind Spirit
+    Level: 262
+    Hp: 22810476
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 258
+    MagicDefense: 238
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 7    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 1177    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22221
+    AegisName: SPIRIT_D_WIND_M
+    Name: Dry Wind Spirit
+    Level: 263
+    Hp: 23889444
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 260
+    MagicDefense: 241
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 1015    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22222
+    AegisName: SPIRIT_D_WIND_L
+#   Name: Giant Dry Wind Spirit
+    Name: G Dry Wind Spirit
+    Level: 264
+    Hp: 24499424
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 263
+    MagicDefense: 243
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 7    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1071    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22223
+    AegisName: SPIRIT_D_WIND_SL
+#   Name: Mutant Dry Wind Spirit
+    Name: M Dry Wind Spirit
+    Level: 264
+    Hp: 40955240
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 278
+    MagicDefense: 259
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 9    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 942    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22224
+    AegisName: SPIRIT_R_FLAME_S
+#   Name: Little Red Flame Spirit
+    Name: L Red Flame Spirit
+    Level: 262
+    Hp: 20818044
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 263
+    MagicDefense: 244
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 1622    # (approximation)
+    AttackMotion: 1344
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22225
+    AegisName: SPIRIT_R_FLAME_M
+    Name: Red Flame Spirit
+    Level: 263
+    Hp: 21678280
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 265
+    MagicDefense: 246
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 1240    # (approximation)
+    AttackMotion: 960
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22226
+    AegisName: SPIRIT_R_FLAME_L
+#   Name: Giant Red Flame Spirit
+    Name: G Red Flame Spirit
+    Level: 264
+    Hp: 22163556
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 241
+    MagicDefense: 227
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 13    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 925    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22227
+    AegisName: SPIRIT_R_FLAME_SL
+#   Name: Mutant Red Flame Spirit
+    Name: M Red Flame Spirit
+    Level: 264
+    Hp: 37686044
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 275
+    MagicDefense: 265
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 14    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 887    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22228
+    AegisName: SPIRIT_F_LAND_S
+#   Name: Little Solid Earth Spirit
+    Name: L Solid Earth Spirit
+    Level: 262
+    Hp: 23058768
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 258
+    MagicDefense: 238
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 130
+    AttackDelay: 859    # (approximation)
+    AttackMotion: 672
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22229
+    AegisName: SPIRIT_F_LAND_M
+    Name: Solid Earth Spirit
+    Level: 263
+    Hp: 23889840
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 260
+    MagicDefense: 241
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 7    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1100    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22230
+    AegisName: SPIRIT_F_LAND_L
+#   Name: Giant Solid Earth Spirit
+    Name: G Solid Earth Spirit
+    Level: 264
+    Hp: 24501384
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 263
+    MagicDefense: 243
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 9    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1058    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22231
+    AegisName: SPIRIT_F_LAND_SL
+#   Name: Mutant Solid Earth Spirit
+    Name: M Solid Earth Spirit
+    Level: 264
+    Hp: 41655832
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 278
+    MagicDefense: 259
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 7    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1088    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22232
+    AegisName: SPIRIT_C_WATER_S
+#   Name: Little Polluted Water Spirit
+    Name: L Polluted Water Spirit
+    Level: 263
+    Hp: 24400816
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 263
+    MagicDefense: 251
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 11    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1094    # (approximation)
+    AttackMotion: 960
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22233
+    AegisName: SPIRIT_C_WATER_M
+    Name: Polluted Water Spirit
+    Level: 264
+    Hp: 25363720
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 273
+    MagicDefense: 254
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 8    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1361    # (approximation)
+    AttackMotion: 1344
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22234
+    AegisName: SPIRIT_C_WATER_L
+#   Name: Giant Polluted Water Spirit
+    Name: G Polluted Water Spirit
+    Level: 265
+    Hp: 25758488
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 267
+    MagicDefense: 257
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 10    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1603    # (approximation)
+    AttackMotion: 1536
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22235
+    AegisName: SPIRIT_C_WATER_SL
+#   Name: Mutant Polluted Water Spirit
+    Name: M Polluted Water Spirit
+    Level: 265
+    Hp: 48680579
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 293
+    MagicDefense: 284
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 11    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1548    # (approximation)
+    AttackMotion: 1536
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22236
+    AegisName: SPIRIT_C_WIND_S
+#   Name: Little Tainted Wind Spirit
+    Name: L Tainted Wind Spirit
+    Level: 263
+    Hp: 23959260
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 270
+    MagicDefense: 251
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 977    # (approximation)
+    AttackMotion: 864
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22237
+    AegisName: SPIRIT_C_WIND_M
+    Name: Tainted Wind Spirit
+    Level: 264
+    Hp: 25155968
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 273
+    MagicDefense: 254
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 925    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22238
+    AegisName: SPIRIT_C_WIND_L
+#   Name: Giant Tainted Wind Spirit
+    Name: G Tainted Wind Spirit
+    Level: 265
+    Hp: 26007004
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 275
+    MagicDefense: 257
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 7    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 989    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+  - Id: 22239
+    AegisName: SPIRIT_C_WIND_SL
+#   Name: Mutant Tainted Wind Spirit
+    Name: M Tainted Wind Spirit
+    Level: 265
+    Hp: 49852100
+#   BaseExp:
+#   JobExp:
+#   Attack:
+#   Attack2:
+    Defense: 302
+    MagicDefense: 284
+#   Resistance:
+#   MagicResistance:
+#   Str:
+#   Agi:
+#   Vit:
+#   Int:
+#   Dex:
+#   Luk:
+    AttackRange: 6    # (approximation)
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 917    # (approximation)
+    AttackMotion: 768
+    DamageMotion: 1000    # (unknown)
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
 #  - Id: 22239
 #    AegisName: SPIRIT_C_WIND_SL
 #  - Id: 22240
