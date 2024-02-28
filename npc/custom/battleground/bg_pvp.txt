@@ -14,6 +14,19 @@
 //= 1.1 Use up to date battleground script commands [AnnieRuru]
 //============================================================
 
+//= Enable applicable mapflags
+//guild_vs3	mapflag	gvg	off
+//guild_vs3	mapflag	battleground	2
+//guild_vs3	mapflag	nosave	SavePoint
+//guild_vs3	mapflag	nowarp
+//guild_vs3	mapflag	nowarpto
+//guild_vs3	mapflag	noteleport
+//guild_vs3	mapflag	nomemo
+//guild_vs3	mapflag	nopenalty
+//guild_vs3	mapflag	nobranch
+//guild_vs3	mapflag	noicewall
+//guild_vs3	mapflag	hidemobhpbar
+
 -	script	bg_pvp#control	-1,{
 OnInit:
 	.minplayer2start = 2;      // minimum players to start (ex. if 3vs3, set to 3)
@@ -107,15 +120,3 @@ OnStart:
 	waitingroom "Blue Team", getvariableofnpc( .minplayer2start, "bg_pvp#control" ) +1, "bg_pvp#control::OnStart", getvariableofnpc( .minplayer2start, "bg_pvp#control" );
 	end;
 }
-
-guild_vs3	mapflag	gvg	off
-guild_vs3	mapflag	battleground	2
-guild_vs3	mapflag	nosave	SavePoint
-guild_vs3	mapflag	nowarp
-guild_vs3	mapflag	nowarpto
-guild_vs3	mapflag	noteleport
-guild_vs3	mapflag	nomemo
-guild_vs3	mapflag	nopenalty
-guild_vs3	mapflag	nobranch
-guild_vs3	mapflag	noicewall
-guild_vs3	mapflag	hidemobhpbar

@@ -97,6 +97,16 @@ namespace rathena {
 		}
 
 		/**
+		 * Determine if a value exists in the unordered_map
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return True on success or false on failure
+		 */
+		template <typename K, typename V> bool umap_exists(std::unordered_map<K, V> &map, K key) {
+			return map.find(key) != map.end();
+		}
+
+		/**
 		 * Find a key-value pair and return the key value as a reference
 		 * @param map: Unordered Map to search through
 		 * @param key: Key wanted
@@ -220,8 +230,9 @@ namespace rathena {
 		 * This will only erase the first occurrence of the value
 		 * @param vector: Vector to erase value from
 		 * @param value: Value to remove
+		 * @return True on removal or false otherwise
 		 */
-		template <typename K, typename V> void vector_erase_if_exists(std::vector<K> &vector, V value) {
+		template <typename K, typename V> bool vector_erase_if_exists(std::vector<K> &vector, V value) {
 			auto it = std::find(vector.begin(), vector.end(), value);
 
 			if (it != vector.end()) {
@@ -230,7 +241,11 @@ namespace rathena {
 					vector.shrink_to_fit();
 				} else
 					vector.erase(it);
+
+				return true;
 			}
+
+			return false;
 		}
 
 #if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
