@@ -42,7 +42,7 @@ Examples:
     TimeLimit: 3d 4h
   - Id: 5965
     Title: "[Standby] Devil's Special"
-    # The quest expires every Monday at 4am.
+    # The quest expires Monday at 4am.
     TimeLimit: Monday 4h
 
 ---------------------------------------
