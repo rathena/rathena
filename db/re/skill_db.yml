@@ -37058,7 +37058,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
-    GiveAp: 3
+    GiveAp: 5
     SplashArea:
       - Level: 1
         Area: 2
