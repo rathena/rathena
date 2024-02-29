@@ -15418,8 +15418,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc)
  * @param current: Current row being read into SCDisabled array
  * @return True - Successfully stored, False - Invalid SC
  */
-static bool status_readdb_status_disabled(char **str, int columns, int current)
-{
+static bool status_readdb_status_disabled( char **str, size_t columns, size_t current ){
 	int64 type = SC_NONE;
 
 	if (ISDIGIT(str[0][0]))
