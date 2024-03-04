@@ -58329,12 +58329,12 @@ Body:
           - Index: 14
             Item: C_Slurp_Slurp_Hat
             Rate: 150
-  - Group: COMP_AID_BUFF_BOX
-    SubGroups:
-      - SubGroup: 0
-        List:
-          - Index: 0
-            Item: Premium_Box
+#  - Group: COMP_AID_BUFF_BOX
+#    SubGroups:
+#      - SubGroup: 0
+#        List:
+#          - Index: 0
+#            Item: Premium_Box
   - Group: COMP_BOX
     SubGroups:
       - SubGroup: 0

@@ -54614,21 +54614,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_NEW_HAT_BOX2);
-  - Id: 23207
-    AegisName: Premium_Box
-    Name: "[30Day] Premium Subscription Box"
-    Type: Usable
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      /* TODO */
+#  - Id: 23207
+#    AegisName: Premium_Box
+#    Name: "[30Day] Premium Subscription Box"
+#    Type: Usable
+#    Weight: 10
+#    Trade:
+#      NoDrop: true
+#      NoTrade: true
+#      NoSell: true
+#      NoCart: true
+#      NoGuildStorage: true
+#      NoMail: true
+#      NoAuction: true
+#    Script: |
+#      /* TODO */
   - Id: 23213
     AegisName: Premium_Box_5d7
     Name: "[7Day] Premium Subscription Box"
