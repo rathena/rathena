@@ -1,0 +1,444 @@
+//= Function Script Premium Service By [SPY]
+//= 28/11/2023
+
+-	script	Premium_Service	-1,{
+	end;
+OnPCLoginEvent:
+	if(#PREMIUM_SERVICE_TIME > gettimetick(2)){
+		sc_end SC_AID_PERIOD_ADDSTOREITEMCOUNT;
+		sc_end SC_AID_PERIOD_PLUSEXP_2ND;
+		sc_end SC_AID_PERIOD_RECEIVEITEM_2ND;
+		sc_start SC_AID_PERIOD_ADDSTOREITEMCOUNT,((#PREMIUM_SERVICE_TIME-gettimetick(2))*1000),0;
+		sc_start SC_AID_PERIOD_PLUSEXP_2ND,((#PREMIUM_SERVICE_TIME-gettimetick(2))*1000),20;
+		sc_start SC_AID_PERIOD_RECEIVEITEM_2ND,((#PREMIUM_SERVICE_TIME-gettimetick(2))*1000),30;
+	}
+
+	if(#PREMIUM_SERVICE_TIME <= gettimetick(2)){
+		sc_end SC_AID_PERIOD_ADDSTOREITEMCOUNT; 
+		sc_end SC_AID_PERIOD_PLUSEXP_2ND; 
+		sc_end SC_AID_PERIOD_RECEIVEITEM_2ND;
+	}
+
+	if(#PREMIUM_SERVICE_EXP > gettimetick(2)){
+		sc_end SC_AID_PERIOD_PLUSEXP;
+		sc_start SC_AID_PERIOD_PLUSEXP,((#PREMIUM_SERVICE_EXP-gettimetick(2))*1000),30;
+	}
+
+	if(#PREMIUM_SERVICE_EXP <= gettimetick(2)){
+		sc_end SC_AID_PERIOD_PLUSEXP;
+	}
+
+	if(#PREMIUM_SERVICE_ITEM > gettimetick(2)){
+		sc_end SC_AID_PERIOD_RECEIVEITEM;
+		sc_start SC_AID_PERIOD_RECEIVEITEM,((#PREMIUM_SERVICE_ITEM-gettimetick(2))*1000),30;
+	}
+
+	if(#PREMIUM_SERVICE_ITEM <= gettimetick(2)){
+		sc_end SC_AID_PERIOD_RECEIVEITEM;
+	}
+
+	if(#PREMIUM_SERVICE_DEAD > gettimetick(2)){
+		sc_end SC_AID_PERIOD_DEADPENALTY;
+		sc_start SC_AID_PERIOD_DEADPENALTY,((#PREMIUM_SERVICE_DEAD-gettimetick(2))*1000),50;
+	}
+
+	if(#PREMIUM_SERVICE_DEAD <= gettimetick(2)){
+		sc_end SC_AID_PERIOD_DEADPENALTY;
+	}
+	end;
+}
+
+//= Premium Service 30 Day
+function	script	Premium_Service_Box	{
+	if(vip_status(VIP_STATUS_ACTIVE)){
+		dispbottom "มีเอฟเฟกต์ซ้อนทับกันอยู่ ไม่สามารถใช้งานได้",0x000000;
+		end;
+	}
+	delitem 23207,1;
+	rentitem 23165,2592000;
+    #PREMIUM_SERVICE_TIME = gettimetick(2)+2592000;
+    sc_start SC_AID_PERIOD_ADDSTOREITEMCOUNT,2592000000,0;
+    sc_start SC_AID_PERIOD_PLUSEXP_2ND,2592000000,20;
+    sc_start SC_AID_PERIOD_RECEIVEITEM_2ND,2592000000,30;
+	vip_time(60*24*30);
+	end;
+}
+
+prontera,0,0,4	script	Premi	4_F_PREMI,{
+	cutin "prm_3",2;
+	mes "[Premi]";
+	mes "สวัสดี เมี้ยว~";
+	mes "ข้าคือ ^00CC00Premi^000000เอง!";
+	mes "ยินดีที่ได้รู้จักนะ~";
+	next;
+	cutin "prm_2",2;
+	mes "[Premi]";
+	mes "เอาล่ะ ถ้าอย่างนั้น วันนี้ให้ Premi";
+	mes "ช่วยบริการอะไรดีเจ้าคะ?";
+	next;
+	setarray .@items[0],4,2,1,6;
+	for(.@i = 0; .@i < 4; .@i++) {
+		if (countitem(6417) < .@items[.@i]) {
+			switch(.@i) {
+				case 0:
+					if (getstatus(SC_AID_PERIOD_PLUSEXP)){
+						.@exp$[.@i] = "^999999เพิ่มค่าประสบการณ์ (กำลังใช้งาน)^000000";
+					} else {
+						.@exp$[.@i] = "^999999เพิ่มค่าประสบการณ์ (วัตถุดิบไม่พอ)^000000";
+					}
+					break;
+				case 1:
+					if (getstatus(SC_AID_PERIOD_RECEIVEITEM)){
+						.@drop$[.@i] = "^999999เพิ่มอัตราการดรอป (กำลังใช้งาน)^000000";
+					} else {
+						.@drop$[.@i] = "^999999เพิ่มอัตราการดรอป (วัตถุดิบไม่พอ)^000000";
+					}
+					break;
+				case 2:
+					if (getstatus(SC_AID_PERIOD_DEADPENALTY)){
+						.@deadpenalty$[.@i] = "^999999ลดบทลงโทษตอนตาย (กำลังใช้งาน)^000000";
+					} else {
+						.@deadpenalty$[.@i] = "^999999ลดบทลงโทษตอนตาย (วัตถุดิบไม่พอ)^000000";
+					}
+					break;
+				case 3:
+					if (getstatus(SC_AID_PERIOD_PLUSEXP) ||  getstatus(SC_AID_PERIOD_RECEIVEITEM) || getstatus(SC_AID_PERIOD_DEADPENALTY )){
+						.@allbuff$[.@i] = "^999999บริการ Buff (กำลังใช้งาน)^000000";
+					} else {
+						.@allbuff$[.@i] = "^999999รับบริการทั้งหมดครั้งเดียว (วัตถุดิบไม่พอ)^000000";
+					}
+					break;
+			}
+		} else {
+			switch(.@i) {
+				case 0:
+					if (getstatus(SC_AID_PERIOD_PLUSEXP)){
+						.@exp$[.@i] = "^999999เพิ่มค่าประสบการณ์ (กำลังใช้งาน)^000000";
+					} else {
+						.@exp$[.@i] = "เพิ่มค่าประสบการณ์ (1 วัน)";
+					}
+					break;
+				case 1:
+					if (getstatus(SC_AID_PERIOD_RECEIVEITEM)){
+						.@drop$[.@i] = "^999999เพิ่มอัตราการดรอป (กำลังใช้งาน)^000000";
+					} else {
+						.@drop$[.@i] = "เพิ่มอัตราการดรอป (1 วัน)";
+					}
+					break;
+				case 2:
+					if (getstatus(SC_AID_PERIOD_DEADPENALTY)){
+						.@deadpenalty$[.@i] = "^999999ลดบทลงโทษตอนตาย (กำลังใช้งาน)^000000";
+					} else {
+						.@deadpenalty$[.@i] = "ลดบทลงโทษตอนตาย (1 วัน)";
+					}
+					break;
+				case 3:
+					if (getstatus(SC_AID_PERIOD_PLUSEXP) ||  getstatus(SC_AID_PERIOD_RECEIVEITEM) || getstatus(SC_AID_PERIOD_DEADPENALTY )){
+						.@allbuff$[.@i] = "^999999บริการ Buff (กำลังใช้งาน)^000000";
+					} else {
+						.@allbuff$[.@i] = "รับบริการทั้งหมดครั้งเดียว (1 วัน)";
+					}
+					break;
+			}
+		}
+	}
+	switch(select(.@exp$[0], .@drop$[1], .@deadpenalty$[2], .@allbuff$[3], "Buff Service (1,500 Zeny)", "Buff All + 7 (5,000 Zeny)", "ไม่ทำสิ่งใด")) {
+	case 1:
+		if (getstatus(SC_AID_PERIOD_PLUSEXP)){
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "อืม~ คุณ "+strcharinfo(0)+"";
+			mes "มีเวทย์มนต์ของ Premi";
+			mes "ใช้งานอยู่แล้วนะคะ?";
+			mes "^00CC00ไม่สามารถเสกเวทย์มนต์เดียวกัน^000000";
+			mes "^00CC00ในระหว่างใช้งานเวทย์มนต์อยู่ได้ค่ะ!^000000";
+			close3;
+		}
+		if (countitem(6417) < 4) {
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "สำหรับ เพิ่มค่าประสบการณ์ (1 วัน)";
+			mes "ต้องใช้ Silverine 4 ea";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "^00CC00หากต้องการใช้เวทมนต์^000000";
+		mes "^00CC00[เพิ่มค่าประสบการณ์]  ต้องใช้^000000";
+		mes "^00CC00Silverine 4 ea ในการเสกค่ะ~^000000";
+		mes "คุณ "+strcharinfo(0)+"! ให้ Silverine เพื่อ Premi ได้ไหมเจ้าคะ?";
+		next;
+		mes "^FF0000* คำเตือน *^000000";
+		mes "^FF0000ให้ Silverine 4 ea จะสามารถรับ Buff^000000";
+		mes "^FF0000เพิ่มค่าประสบการณ์(1 วัน) ได้^000000";
+		mes "^FF0000ไอเท็มที่ได้รับ^000000";
+		mes "^FF0000ไม่สามารถถอดสิทธิ์ออกจากตัวได้^000000";
+		next;
+		if(select("รับ Buff:ยกเลิก") == 2) {
+			cutin "prm_3",2;
+			mes "[Premi]";
+			mes "อ่าา!";
+			mes "วันนี้ช่างอากาศดี ไม่ต้องทำอะไร!";
+			next;
+			cutin "prm_2",2;
+			mes "[Premi]";
+			mes "สำหรับ Premi, วันแบบนี้ถ้าได้กิน";
+			mes getitemname(6417)+" คงจะดีที่สุดเลย!";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "อาฮ่า!";
+		mes "เรามาลองดูความสามารถกันหน่อยไหม!!!";
+		next;
+		mes "[Premi]";
+		mes "เป็นอย่างไรบ้าง คุณ "+strcharinfo(0)+"!";
+		mes "ยังไม่รู้สึกถึงค่าประสบการณ์ที่ไหล";
+		mes "เข้ามาเรื่อยๆหรือเจ้าคะ?";
+		mes "n!!! จะมาเป็นแบบนี้ไม่ได้นะ!";
+		mes "ลองออกไปเก็บค่าประสบการณ์กันเถอะค่ะ!";
+		delitem 6417,4;
+		sc_start SC_AID_PERIOD_PLUSEXP,86400000,30;
+		#PREMIUM_SERVICE_EXP = gettimetick(2)+86400;
+		close3;
+	case 2:
+		if (getstatus(SC_AID_PERIOD_RECEIVEITEM)){
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "อืม~ คุณ "+strcharinfo(0)+"";
+			mes "มีเวทย์มนต์ของ Premi";
+			mes "ใช้งานอยู่แล้วนะคะ?";
+			mes "^00CC00ไม่สามารถเสกเวทย์มนต์เดียวกัน^000000";
+			mes "^00CC00ในระหว่างใช้งานเวทย์มนต์อยู่ได้ค่ะ!^000000";
+			close3;
+		}
+		if (countitem(6417) < 2) {
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "สำหรับ เพิ่มอัตราการดรอป (1 วัน)";
+			mes "ต้องใช้ Silverine 2 ea";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "^00CC00หากต้องการใช้เวทมนต์^000000";
+		mes "^00CC00[เพิ่มอัตราการดรอป]  ต้องใช้^000000";
+		mes "^00CC00Silverine 2 ea ในการเสกค่ะ~^000000";
+		mes "คุณ "+strcharinfo(0)+"! ให้ Silverine เพื่อ Premi ได้ไหมเจ้าคะ?";
+		next;
+		mes "^FF0000* คำเตือน *^000000";
+		mes "^FF0000ให้ Silverine 2 ea จะสามารถรับ Buff^000000";
+		mes "^FF0000เพิ่มอัตราการดรอป(1 วัน) ได้^000000";
+		mes "^FF0000ไอเท็มที่ได้รับ^000000";
+		mes "^FF0000ไม่สามารถถอดสิทธิ์ออกจากตัวได้^000000";
+		next;
+		if(select("รับ Buff:ยกเลิก") == 2) {
+			cutin "prm_3",2;
+			mes "[Premi]";
+			mes "อ่าา!";
+			mes "วันนี้ช่างอากาศดี ไม่ต้องทำอะไร!";
+			next;
+			cutin "prm_2",2;
+			mes "[Premi]";
+			mes "สำหรับ Premi, วันแบบนี้ถ้าได้กิน";
+			mes getitemname(6417)+" คงจะดีที่สุดเลย!";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "อาฮ่า!";
+		mes "เรามาลองดูความสามารถกันหน่อยไหม!!!";
+		next;
+		mes "[Premi]";
+		mes "เป็นอย่างไรบ้าง คุณ "+strcharinfo(0)+"!";
+		mes "ยังไม่รู้สึกถึงไอเท็มดรอปที่เพิ่มขึ้นหรือเจ้าคะ?";
+		mes "n!!! จะมาเป็นแบบนี้ไม่ได้นะ!";
+		mes "รีบไปลองตีมอนสเตอร์เอาไอเทมสิคะ!";
+		delitem 6417,2;
+		sc_start SC_AID_PERIOD_RECEIVEITEM,86400000,30;
+		#PREMIUM_SERVICE_ITEM = gettimetick(2)+86400;
+		close3;
+	case 3:
+		if (getstatus(SC_AID_PERIOD_DEADPENALTY)){
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "อืม~ คุณ "+strcharinfo(0)+"";
+			mes "มีเวทย์มนต์ของ Premi";
+			mes "ใช้งานอยู่แล้วนะคะ?";
+			mes "^00CC00ไม่สามารถเสกเวทย์มนต์เดียวกัน^000000";
+			mes "^00CC00ในระหว่างใช้งานเวทย์มนต์อยู่ได้ค่ะ!^000000";
+			close3;
+		}
+		if (countitem(6417) < 1) {
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "สำหรับ ลดบทลงโทษตอนตาย (1 วัน)";
+			mes "ต้องใช้ Silverine 1 ea";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "^00CC00หากต้องการใช้เวทมนต์^000000";
+		mes "^00CC00[ลดบทลงโทษตอนตาย]  ต้องใช้^000000";
+		mes "^00CC00Silverine 1 ea ในการเสกค่ะ~^000000";
+		mes "คุณ "+strcharinfo(0)+"! ให้ Silverine เพื่อ Premi ได้ไหมเจ้าคะ?";
+		next;
+		mes "^FF0000* คำเตือน *^000000";
+		mes "^FF0000ให้ Silverine 1 ea จะสามารถรับ Buff^000000";
+		mes "^FF0000ลดบทลงโทษตอนตาย(1 วัน) ได้^000000";
+		mes "^FF0000ไอเท็มที่ได้รับ^000000";
+		mes "^FF0000ไม่สามารถถอดสิทธิ์ออกจากตัวได้^000000";
+		next;
+		if(select("รับ Buff:ยกเลิก") == 2) {
+			cutin "prm_3",2;
+			mes "[Premi]";
+			mes "อ่าา!";
+			mes "วันนี้ช่างอากาศดี ไม่ต้องทำอะไร!";
+			next;
+			cutin "prm_2",2;
+			mes "[Premi]";
+			mes "สำหรับ Premi, วันแบบนี้ถ้าได้กิน";
+			mes getitemname(6417)+" คงจะดีที่สุดเลย!";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "อาฮ่า!";
+		mes "เรามาลองดูความสามารถกันหน่อยไหม!!!";
+		next;
+		mes "[Premi]";
+		mes "เป็นอย่างไรบ้าง คุณ "+strcharinfo(0)+"!";
+		mes "ยังไม่รู้สึกถึงเวทมนต์หรือเจ้าคะ?";
+		mes "n!!! จะมาเป็นแบบนี้ไม่ได้นะ!";
+		mes "รีบออกไปลองต่อสู้ดูค่ะ!";
+		delitem 6417,1;
+		sc_start SC_AID_PERIOD_DEADPENALTY,86400000,50;
+		#PREMIUM_SERVICE_DEAD = gettimetick(2)+86400;
+		close3;
+	case 4:
+		if (getstatus(SC_AID_PERIOD_PLUSEXP) ||  getstatus(SC_AID_PERIOD_RECEIVEITEM) || getstatus(SC_AID_PERIOD_DEADPENALTY )){
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "อืม~ คุณ "+strcharinfo(0)+"";
+			mes "มีเวทย์มนต์ของ Premi";
+			mes "ใช้งานอยู่แล้วนะคะ?";
+			mes "^00CC00ไม่สามารถเสกเวทย์มนต์เดียวกัน^000000";
+			mes "^00CC00ในระหว่างใช้งานเวทย์มนต์อยู่ได้ค่ะ!^000000";
+			close3;
+		}
+		if (countitem(6417) < 6) {
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "สำหรับ เพิ่มค่าประสบการณ์, เพิ่มอัตราการดรอป, ลดบทลงโทษตอนตาย (1 วัน)";
+			mes "ต้องใช้ Silverine 6 ea";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "^00CC00หากต้องการใช้เวทมนต์^000000";
+		mes "^00CC00เพิ่ม [ค่าประสบการณ์], [อัตราการดรอป], [ลดบทลงโทษตอนตาย]  ต้องใช้^000000";
+		mes "^00CC00Silverine 6 ea ในการเสกค่ะ~^000000";
+		mes "คุณ "+strcharinfo(0)+"! ให้ Silverine เพื่อ Premi ได้ไหมเจ้าคะ?";
+		next;
+		mes "^FF0000* คำเตือน *^000000";
+		mes "^FF0000ให้ Silverine 6 ea จะสามารถรับ Buff^000000";
+		mes "^FF0000เพิ่ม ค่าประสบการณ์, อัตราการดรอป, ลดบทลงโทษตอนตาย(1 วัน) ได้^000000";
+		mes "^FF0000ไอเท็มที่ได้รับ^000000";
+		mes "^FF0000ไม่สามารถถอดสิทธิ์ออกจากตัวได้^000000";
+		next;
+		if(select("รับ Buff:ยกเลิก") == 2) {
+			cutin "prm_3",2;
+			mes "[Premi]";
+			mes "อ่าา!";
+			mes "วันนี้ช่างอากาศดี ไม่ต้องทำอะไร!";
+			next;
+			cutin "prm_2",2;
+			mes "[Premi]";
+			mes "สำหรับ Premi, วันแบบนี้ถ้าได้กิน";
+			mes getitemname(6417)+" คงจะดีที่สุดเลย!";
+			close3;
+		}
+		cutin "prm_1",2;
+		mes "[Premi]";
+		mes "อาฮ่า!";
+		mes "เรามาลองดูความสามารถกันหน่อยไหม!!!";
+		next;
+		mes "[Premi]";
+		mes "เป็นอย่างไรบ้าง คุณ "+strcharinfo(0)+"!";
+		mes "ยังไม่รู้สึกถึงเวทมนต์หรือเจ้าคะ?";
+		mes "n!!! จะมาเป็นแบบนี้ไม่ได้นะ!";
+		mes "รีบออกไปลองต่อสู้ดูค่ะ!";
+		delitem 6417,6;
+		sc_start SC_AID_PERIOD_PLUSEXP,86400000,30;
+		sc_start SC_AID_PERIOD_RECEIVEITEM,86400000,30;
+		sc_start SC_AID_PERIOD_DEADPENALTY,86400000,50;
+		#PREMIUM_SERVICE_EXP = gettimetick(2)+86400;
+		#PREMIUM_SERVICE_ITEM = gettimetick(2)+86400;
+		#PREMIUM_SERVICE_DEAD = gettimetick(2)+86400;
+		close3;
+	case 5:
+		cutin "prm_4",2;
+		mes "[Premi]";
+		mes "ขอคิดค่าบริการ 1,500 Zeny ละนะ";
+		next;
+		if (Zeny < 1500) {
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "อืม~ คุณ "+strcharinfo(0)+"";
+			mes "มีเงินไม่พอนะเจ้าคะ?";
+			close3;
+		}
+		cutin "prm_5",2;
+		mes "[Premi]";
+		mes "ยินดีให้บริการ";
+		mes "แล้วพบกันใหม่อีกครั้ง...";
+		sc_start SC_BLESSING,900000,7;
+		sc_start SC_INCREASEAGI,900000,7;
+		sc_start SC_ANGELUS,900000,7;
+		sc_start SC_GLORIA,900000,5;
+		sc_start SC_MAGNIFICAT,900000,5;
+		specialeffect2 EF_INCAGILITY;
+		specialeffect2 EF_BLESSING;
+		specialeffect2 EF_GLORIA;
+		specialeffect2 EF_MAGNIFICAT;
+		specialeffect2 EF_ANGELUS;
+		Zeny -= 1500;
+		close3;
+	case 6:
+		cutin "prm_2",2;
+		mes "[Premi]";
+		mes "ฉีดยา All Status+7 5,000 Zeny นะ";
+		next;
+		if (Zeny < 5000) {
+			cutin "prm_4",2;
+			mes "[Premi]";
+			mes "อืม~ คุณ "+strcharinfo(0)+"";
+			mes "มีเงินไม่พอนะเจ้าคะ?";
+			close3;
+		}
+		cutin "prm_2",2;
+		mes "[Premi]";
+		mes "ยินดีให้บริการ";
+		mes "แล้วพบกันใหม่อีกครั้ง...";
+		sc_start SC_STRFood,1800000,7;
+		sc_start SC_AGIFood,1800000,7;
+		sc_start SC_VITFood,1800000,7;
+		sc_start SC_INTFood,1800000,7;
+		sc_start SC_DEXFood,1800000,7;
+		sc_start SC_LUKFood,1800000,7;
+		Zeny -= 5000;
+		close3;
+	case 7:
+		cutin "prm_3",2;
+		mes "[Premi]";
+		mes "อ่าา!";
+		mes "วันนี้ช่างอากาศดี ไม่ต้องทำอะไร!";
+		next;
+		cutin "prm_2",2;
+		mes "[Premi]";
+		mes "สำหรับ Premi, วันแบบนี้ถ้าได้กิน";
+		mes getitemname(6417)+" คงจะดีที่สุดเลย!";
+		close3;
+	}
+	end;
+}

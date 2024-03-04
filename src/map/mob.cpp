@@ -2493,6 +2493,12 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 			if (sd->sc.getSCE(SC_ITEMBOOST))
 				drop_rate_bonus += sd->sc.getSCE(SC_ITEMBOOST)->val1;
 
+			if (sd->sc.getSCE(SC_AID_PERIOD_RECEIVEITEM))
+				drop_rate_bonus += sd->sc.getSCE(SC_AID_PERIOD_RECEIVEITEM)->val1;
+
+			if (sd->sc.getSCE(SC_AID_PERIOD_RECEIVEITEM_2ND))
+				drop_rate_bonus += sd->sc.getSCE(SC_AID_PERIOD_RECEIVEITEM_2ND)->val1;
+
 			int cap;
 
 			if (pc_isvip(sd)) { // Increase item drop rate for VIP.

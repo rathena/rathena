@@ -1893,6 +1893,14 @@
 	export_constant(SC_RELIEVE_OFF);
 	export_constant(SC_RUSH_QUAKE1);
 	export_constant(SC_RUSH_QUAKE2);
+	export_constant(SC_AID_PERIOD_ADDSTOREITEMCOUNT);
+	export_constant(SC_AID_PERIOD_DEADPENALTY);
+	export_constant(SC_AID_PERIOD_PLUSEXP);
+	export_constant(SC_AID_PERIOD_PLUSJOBEXP);
+	export_constant(SC_AID_PERIOD_RECEIVEITEM);
+	export_constant(SC_AID_PERIOD_PLUSEXP_2ND);
+	export_constant(SC_AID_PERIOD_PLUSJOBEXP_2ND);
+	export_constant(SC_AID_PERIOD_RECEIVEITEM_2ND);
 	export_constant(SC_G_LIFEPOTION);
 	export_constant(SC_HNNOWEAPON);
 	export_constant(SC_SHIELDCHAINRUSH);
