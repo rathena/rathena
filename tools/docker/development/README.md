@@ -11,7 +11,7 @@ Note that this Dockerized environment **is not suitable** for production deploym
 
 #### Tips & tricks :beginner:
 
-- Ensure you don't have a database running locally and listening on port `3306` this will cause the database container to fail starting up.
+- Ensure you don't have a database running locally and listening on port `3306` as this will cause the database container to fail to start up.
 - All file edits within the repository are reflected inside the container, so you can develop in your preferred text editor or IDE.
     - Files into ./asset take precedence over conf/import/ counterpart
 - Connect to the local database with following credentials:
