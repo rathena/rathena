@@ -1,0 +1,1138 @@
+//===== rAthena Script ======================================= 
+//= Soul reaper job change quest
+//===== By: ==================================================
+//= By Envoy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Soul reaper job change quest base on iRo gude
+// https://irowiki.org/wiki/Soul_Reaper_Job_Change_Guide
+// https://www.youtube.com/watch?v=k61x5A_Z-O8
+//===== Additional Comments: ================================= 
+// since the guide is summarise and the video doesn´t show all the dialogs, some of this is created by me.
+// This is a very raw script and since im not an expert in this, im very sure this can be done better.
+// Feel free to critices and edit this quest to make it better.
+
+// Functions
+function	script	DispLink	{	// this function is for the item reference in npc dialog for the part where you are requested for 44 nine tails.
+	.@id = getarg(0);				// (not created by me. But i forget where i get it. somewhere in rathena forums)
+	.@showslot = getarg(1,0);
+	.@slot = getitemslots(.@id);
+	return "<ITEM>"+(.@slot&&.@showslot?getitemname(.@id)+" ["+.@slot+"]":getitemname(.@id))+"<INFO>"+.@id+"</INFO></ITEM>";
+}
+
+// Banyak the soul reaper
+pay_fild08,51,82,6	script	Banyak#banyak01	10295,10,10,{
+	if(checkquest(12443) == 1){
+		mes "[Banyak]";
+		mes "let´s go to the tavern";
+		close;
+	}
+
+	if((checkquest(12444) == 1) || (checkquest(12445) == 1) || (checkquest(12446) == 1) || (checkquest(12447) == 1) || (checkquest(12448) == 1) || (checkquest(12449) == 1) || (checkquest(12450) == 1) || (checkquest(12451) == 1)){
+		//i dont know if thers an efficient way to filter the quest so players cant get the first part again while in other phase.
+		mes "[Banyak]";
+		mes "You are not suposed to be here.";
+		close;
+	}
+
+	if((Class == Job_Soul_Linker) && (BaseLevel == 99) && (JobLevel == 50)){
+		cutin "soul_van03",2;
+		mes "[Banyak]";
+		mes "What? Do you want my money, too? i don´t think i saw you at the tavern i stayed at.";
+		cutin "soul_van03",2;
+		next;
+		switch(select("What do you mean, Your money?:I´m just passing.")){
+
+			case 1:
+				next;
+				mes "[Banyak]";
+				mes "If you didn´t come from the tavern, then why don´t you just go on your way?";
+				mes "As you can see, i´m in a bit of a pickle right now";
+				next;
+				cutin "",255;
+				mes "[Duteli]";
+				mes "You look like a traveler. We´re only here to collect our money. We want no trouble, so please go on your way.";
+				switch(select("Alright.:What´s his story?")){
+					case 1:
+						next;
+						cutin "",255;
+						mes "[Jangjagi]";
+						mes "Good thinking! Innocent adveturers like you shouldn´t get involved with a vagrant like him.";
+						close;
+					case 2:
+						if (checkquest(12442) == -1){
+							setquest 12442;
+							close;
+						}
+						next;
+						cutin "",255;
+						mes "[Madangi]";
+						mes "There´s no story. He´s a Soul Reaper called ^0027FFBanyak^000000, and he stayed at our tavern for a fortnight without paying us.";
+						mes "Today we caught him trying to sneak out of his window.";
+						next;
+						cutin "soul_van03",2;
+						mes "[Banyak]";
+						mes "I wasn´t sneaking out. I was trying to catch the thief who ran away with my bag!";
+						next;
+						cutin "",255;
+						mes "[Jangjagi]";
+						mes "Yeah, right. That´s what thieves like you say all the time.";
+						next;
+						cutin "soul_van03",2;
+						mes "[Banyak]";
+						mes "I swear! I wasn´t trying to take your money!";
+						next;
+						cutin "",255;
+						mes "[Agungi]";
+						mes "Alright, then why don´t we go back to the tavern and talk about how you´re going to pay us?";
+						mes "Working at the tavern isn´t as bad as you think.";
+						next;
+						mes "[Duteli]";
+						mes "Jangjagi overe there also got caught trying the same trick, Now, he´s one of us.";
+						next;
+						mes "[Jangjagi]";
+						mes "Ugh, can we not talk about me anymore, Brother?";
+						next;
+						cutin "soul_van03",2;
+						mes "[Banyak]";
+						mes "I´m really sorry, but i´ll pay you when i get my bag back. The thief can´t have gone too far!";
+						next;
+						cutin "",255;
+						mes "[Madangi]";
+						mes "Enough. We know you´re only trying to run away again. Just follow us when we ask nicely.";
+						hideonnpc "Banyak#banyak01";
+						hideonnpc "Duteli#duteli01";
+						hideonnpc "Jangjagi#jangjagi01";
+						hideonnpc "Madangi#madangi01";
+						hideonnpc "Agungi#agungi01";
+						changequest 12442,12443;
+						navigateto "payon",192,99;
+						set .npcst,1;
+						close2;
+						sleep 20000;
+						hideoffnpc "Banyak#banyak01";
+						hideoffnpc "Duteli#duteli01";
+						hideoffnpc "Jangjagi#jangjagi01";
+						hideoffnpc "Madangi#madangi01";
+						hideoffnpc "Agungi#agungi01";
+						set .npcst,2;
+						end;
+				}
+			case 2:
+				mes "[Banyak]";
+				mes "On your way.";
+				cutin "",255;
+				close;
+				
+		}
+
+	}
+
+mes "[Banyak]";
+mes "This is none of your business, go away!";
+close;
+
+OnTouch:
+	if ( .npcst == 1 ){end;}
+	if((checkquest(12442) == 1) || (checkquest(12443) == 1) || (checkquest(12444) == 1) || (checkquest(12445) == 1) || (checkquest(12446) == 1) || (checkquest(12447) == 1) || (checkquest(12448) == 1) || (checkquest(12449) == 1) || (checkquest(12450) == 1) || (checkquest(12451) == 1)){
+		end;}
+	if(Class == Job_Soul_Linker) && (BaseLevel == 99) && (JobLevel == 50){
+	npctalk "I wasn´t running away! I must catch the thief! My bag!", "", bc_self;
+	end;
+	}
+}
+
+payon,192,92,3	script	Banyak#banyal02	10295,{
+
+	if(checkquest(12447) == 1){
+		mes "[Banyak]";
+		mes "I´ll meet you there.";
+		close;
+	}
+
+	if(checkquest(12444) == 1){
+		mes "[Banyak]";
+		mes "I gotta go back inside.";
+		hideonnpc "Banyak#banyal02";
+		hideoffnpc "Girl#srgirl01";
+		close;
+
+	}
+
+	if(checkquest(12443) == 1){
+		cutin "soul_van03",2;
+		mes "[Banyak]";
+		mes "Welcome--";
+		next;
+		switch(select("Hey, you tried to dine and dash before!")){case 1:}
+		next;
+		cutin "soul_van01",2;
+		mes "[Banyak]";
+		mes "Hah hah. I thought you looked familiar. You just left then, didn´t you? Are you going to leave of stay this time?";
+		switch(select("Leave.:Stay.")){
+			case 1:
+				next;
+				mes "[Banyak]";
+				mes "I see, then see you around...";
+				close2;
+				cutin "",255;
+				end;
+			case 2:
+			next;
+			mes "[Banyak]";
+			mes "You´re going to stay. *Sigh...* so, a customer. Alright, then please take off your shoes and follow me.";
+			next;
+			switch(select("Are you really working off your debt right now?")){case 1:}
+			next;
+			mes "[Banyak]";
+			mes "Well, yes. I thought about running away, but they said they´d put an APB out on me across the eastern continent if i did.";
+			next;
+			switch(select("Did you catch the thief?")){case 1:}
+			next;
+			mes "[Banyak]";
+			mes "Just thought of him gets me angry. I bet he was familiar with the structure of my room.";
+			next;
+			mes "[Banyak]";
+			mes "By the time i felt something and woke up, he was already out of the window with my bag. Judging by his speed, he cant have been an ordinary thief.";
+			next;
+			switch(select("Did you have anything important in your bag?")){case 1:}
+			next;
+			mes "[banyak]";
+			mes "My travel money and the spiritual objects that i use for my trade. Money´s one thing, but those objects can´t fall into the wrong hands.";
+			next;
+			hideoffnpc "Jumagi#jumagi01";
+			cutin "",255;
+			mes "[Jumagi]";
+			mes "Hey, Banyak. What are you doing here? I told you to clean out the house.";
+			npctalk "Hey, Banyak. What are you doing here? I told you to clean out the house.", "Jumagi#jumagi01", bc_self;
+			next;
+			cutin "soul_van01",2;
+			mes "[Banyak]";
+			mes "I have to go. I´m sorry I took up your time.";
+			next;
+			cutin "",255;
+			hideonnpc "Jumagi#jumagi01";
+			close2;
+			hideonnpc "Banyak#banyal02";
+			hideoffnpc "Girl#srgirl01";
+			npctalk "I know who stole it. They´re bad people.", "Girl#srgirl01", bc_self;
+			end;
+
+		}
+		close;
+	}
+	if(checkquest(12445) == 1){
+		mes "[Banyak]";
+		mes "Welcome--";
+		next;
+		switch(select("No need for that.")){case 1:}
+		next;
+		switch(select("Check if this is your bag.")){case 1:}
+		next;
+		mes "[Banyak]";
+		mes "Ah, this...! My thaumaturgic ingredients and spirit fan. This is my bag! Where did you find it?";
+		next;
+		switch(select("Don´t you want to know who stole it?.")){case 1:}
+		next;
+		mes "[Banyak]";
+		mes "Yes, I do. Who dared steal it from me?";
+		next;
+		mes "[Jumangi]";
+		mes "Banyak. Playing hooky again? Did you do everything I asked?";
+		hideoffnpc "Jumagi#jumagi01";
+		npctalk "Banyak. Playing hooky again? Did you do everything I asked?", "Jumagi#jumagi01", bc_self;
+		next;
+		switch(select("Speak of the devil.")){case 1:}
+		next;
+		mes "[Jumangi]";
+		mes "What? What are you talking about?";
+		next;
+		cutin "soul_van03",2;
+		mes "[Banyak]";
+		mes "He´s the thief?";
+		next;
+		cutin "",255;
+		mes "Jumangi";
+		mes "Do you have proof? because, if you don´t, you´ll have to work for my tavern like everyone else who´s lied to me. Heh heh.";
+		next;
+		hideoffnpc "Girl#srgirl01";
+		npctalk "I saw them! He and Jangjagi stole his bag and buried it!", "Girl#srgirl01", bc_self;
+		mes "[Girl]";
+		mes "I saw them! He and Jangjagi stole his bag and buried it!";
+		next;
+		mes "[Jumangi]";
+		mes "Girl, are you sure about that?";
+		next;
+		mes "[Girl]";
+		mes "I don´t lie. I saw you!";
+		next;
+		cutin "soul_van03",2;
+		specialeffect2 334,AREA;
+		mes "[Banyak]";
+		mes "Thank you, little lady. Don´t worry now. I have my spirit fan back, which measn i can ask him for the truth my self.";
+		next;
+		cutin "",255;
+		mes "[Jumangi]";
+		mes "Wh-what are you trying to do to me?";
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "As the owner of this spirit fan, i demand your soul to speak the truth. If you speak the truth, i won´t take away your sou.";
+		next;
+		cutin "",255;
+		mes "[Jumangi]";
+		mes "Urgh... Aww! What are you doing to me?";
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "Did you try to steal this spirit fan?";
+		next;
+		cutin "",255;
+		mes "[Jumangi]";
+		mes "Aww... Awww! Stop!";
+		next;
+		cutin "soul_van02",2;
+		mes "[Banyak]";
+		mes "This spirit fan is nibbling at your soul, even as we speak. Stop resisting, or you´ll continue to lose your life.";
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "If you want to live, answer me, human.";
+		next;
+		cutin "",255;
+		mes "Jumangi";
+		mes "Aww... Awww!!-!..!";
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "if you´re going to lie, go ahead. It´s too late for you to enjoy a long life anyway.";
+		next;
+		mes "[Banyak]";
+		mes "At this rate, you´re going to die an untimely death, too.";
+		next;
+		cutin "",255;
+		mes "[Jumangi]";
+		mes "Boohoo! Yes, we stole your bag! We wanted the tresures in it. Please, that´s the truth! Please don´t kill me!";
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "Why did you force me to work here?";
+		next;
+		cutin "",255;
+		mes "[Jumangi]";
+		mes "When we saw the spiritual objects inside your bag, we got scared. We were trying to bury them when you came after us. We decide to keep you with us, so you wouldn´t look for them.";
+		next;
+		mes "[Jumangi]";
+		mes "We were going to get rid of your bag when the time was right, but that time never came...";
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "Did you catch the other workers the same way?";
+		next;
+		cutin "",255;
+		mes "[Jumangi]";
+		mes "All the other work here because they have nowhere else to go. Please, don´t kill me. I´ll give you all my money and everything else you want!";
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "Alright, then we´ll talk about my monetary compensation later.";
+		next;
+		cutin "soul_van01",2;
+		mes "[Banyak]";
+		mes "Little lady. Traveler. Thank you for your help. Traveler, i´d like to talk to you in private";
+		next;
+		mes "[Banyak]";
+		mes "Mind if we meet again at the corner of the road to the dungeon north of this village?";
+		next;
+		switch(select("Oh, well...")){case 1:}
+		next;
+		cutin "soul_van04",2;
+		mes "[Banyak]";
+		mes "Oh, so you mind.";
+		next;
+		switch(select("No.")){case 1:}
+		next;
+		cutin "soul_van02",2;
+		mes "[Banyak]";
+		mes "We speak the same language! Now, If you´ll excuse me, i need to go settle things with this fellow here. I´ll see you later";
+		removespecialeffect2 334,AREA;
+		changequest 12445,12447;
+		navigateto "payon",241,294;
+		hideonnpc "Jumagi#jumagi01";
+		hideonnpc "Girl#srgirl01";
+		close3;
+
+	}
+	else{
+		mes "[Banyak]";
+		mes "On your way adventurer.";
+		close;
+	}
+
+}
+
+payon,241,294,3	script	Banyak#banyal03	10295,{
+
+if(class == job_soul_reaper){
+	mes "[Banyak]";
+	mes "Thak you for your help. I have to go now.";
+	close;
+}
+
+if(checkquest(12451) == 1){
+
+	cutin "soul_van04",2;
+	mes "[Banyak]";
+	mes "My brother´s soul...";
+	next;
+	switch(select("[Replay what happend inside]")){case 1:}
+	cutin "soul_van01",2;
+	mes "[Banyak]";
+	mes "I see. That´s so like Soha.";
+	next;
+	switch(select("What are you going to do now?")){case 1:}
+	next;
+	mes "[Banyak]";
+	mes "I´ll have to live for both of us. I have a long way to go before I master my art.";
+	next;
+	mes "[Banyak]";
+	mes "So i think, i will leave this place now.";
+	next;
+	mes "[Banyak]";
+	cutin "soul_van02",2;
+	mes "But before I leave, I should lift the geas on your soul in retourn for your help.";
+	next;
+	switch(select("What geas?")){case 1:}
+	next;
+	mes "[Banyak]";
+	mes "Haven´t you reached your peak in training yet?";
+	next;
+	mes "[Banyak]";
+	mes "Since the soul-calling ritual, you´ve  spiritually grown enough to move on to the next level in your journey.";
+	next;
+	mes "[Banyak]";
+	mes "The Soul Reaper transcends the ability of the Soul Linker to connect our souls. Let me open a path to this new state for you.";
+	next;
+	if(skillpoint != 0){
+			mes "[Banyak]";
+			mes "But firs, you need to use all you skill points.";
+			close3;
+	}
+	mes "[Banyak]";
+	mes "Now, close your eyes and let your body follow my hands´ guidance.";
+	next;
+	cutin "soul_van04",2;
+	mes "^0000FF(Banyak chants a mysterious spell.)^000000";
+	next;
+	mes "[Banyak]";
+	mes "Now, may the wall of the geas come down.";
+	specialeffect2 1068,AREA;
+	specialeffect2 158,AREA;
+	jobchange 4240;
+	erasequest 12451;
+	next;
+	mes "[Banyak]";
+	mes "I can´t repay you for everything you´ve done for me, but I can at least do this for you.";
+	next;
+	mes "[Banyak]";
+	mes "Now, may Nature bless you on your journey ahead.";
+	close3;
+
+
+}
+
+if(checkquest(12447) == 1){
+
+cutin "soul_van01",2;
+mes "[Banyak]";
+mes "Thank you for coming. I´m glad I wasn´t wrong about you.";
+next;
+switch(select("What do you mean?")){case 1:}
+next;
+mes "[Banyak]";
+mes "You saw the talking cat that transformed into a gil, didn´t you?";
+next;
+switch(select("I did.")){case 1:}
+next;
+mes "[Banyak]";
+mes "She´s an intelligent creature following me around just fot the fun of it. Ordinary people can´t see her when she´s in her cat form.";
+next;
+mes "[Banyak]";
+mes "I needed someone who wouldn´t covet the spiritual objects in my bag.";
+next;
+mes "[Banyak]";
+mes "Who would return them back to me.";
+switch(select("I´m glad you have them back.")){case 1:}
+next;
+switch(select("Now, can i go now?")){case 1:}
+next;
+cutin "soul_van03",2;
+mes "[Banyak]";
+mes "Wait!";
+next;
+mes "[Banyak]";
+mes "Traveler, i´ve benn looking for someone like you. Someone so honest and strong-willed.";
+next;
+switch(select("You´re not saying.")){case 1:}
+next;
+switch(select("You need my help. Are you?")){case 1:}
+next;
+cutin "soul_van02",2;
+mes "[Banyak]";
+mes "I´m sorry, but could you help me with my long-cherished wish, which is to succeed in a soul-calling ritual?";
+next;
+mes "[Banyak]";
+mes "Only a Soul Linker with a pure soul, only someone with a pure heart and the right job like you, can help me.";
+next;
+mes "[Banyak]";
+mes "I´m about to perform a soul-calling ritual that i cannot fail, and i can´t do it alone.";
+next;
+switch(select("i know nothing about rituals.")){case 1:}
+next;
+mes "[Banyak]";
+mes "If you help me, i won´t forget the favor. it´ll also be a good experience for you, having your soul reach a higher state.";
+next;
+mes "[Banyak]";
+mes "Could you help me?";
+next;
+switch(select("i didn´t come this far...")){case 1:}
+next;
+switch(select("Just to ignore you:To do more work")){
+	
+	case 1:
+		next;
+		mes "[Banyak]";
+		mes "What a shame! Please let me know if you change your mind.";
+		close3;
+	case 2:
+		next;
+		mes "[Banyak]";
+		mes "Thank you so much.";
+		next;
+		cutin "",255;
+		hideoffnpc "Yaong#yaong03";
+		npctalk "There are things to prepare. We need them.", "Yaong#yaong03", bc_self;
+		mes "[Yaong]";
+		mes "Human, need your help. I can´t do this.";
+		next;
+		switch(select("What is she saying?")){case 1:}
+		next;
+		cutin "soul_van02",2;
+		mes "[Banyak]";
+		mes "Ah... I need a few things for the ritual, but Yaong can´t help me get them.";
+		next;
+		mes "[Banyak]";
+		mes "She can´t bring herself to hurt other intelligent creatures.";
+		next;
+		switch(select("Other intelligent creatures?")){case 1:}
+		next;
+		mes "[Banyak]";
+		mes "I need " +DispLink(1022)+ " from the Nine Tails living deep inside the payon cave, ^0027FF44^000000, precisely";
+		next;
+		cutin "",255;
+		npctalk "Mew--!", "Yaong#yaong03", bc_self;
+		mes "[Yaong]";
+		mes "Yaong can never do it... She wants to help, but she can´t...";
+		next;
+		cutin "soul_van02",2;
+		mes "[Banyak]";
+		mes "Please help me, traveler. I´ll be here preparing the ritual. Yaong will show you the way.";
+		next;
+		mes "[Banyak]";
+		mes "She´ll see you again in front of the Buddha statue in the middle of the 4th floor in the payon dungeon.";
+		next;
+		cutin "",255;
+		mes "[Yaong]";
+		mes "I can take you there. You just need to follow my traces.";
+		changequest 12447,12448;
+		navigateto "pay_dun04",120,116;
+		hideonnpc "Yaong#yaong03";
+		close;
+	}
+
+}
+
+if(checkquest(12449) == 1){
+
+	cutin "soul_van02",2;
+	mes "[Banyak]";
+	mes "I recived your fox tails throught Yaong. They´ve been prepared for the ritual.";
+	next;
+	switch(select("This ritual.")){case 1:}
+	next;
+	switch(select("What kind of ritual it is?")){case 1:}
+	next;
+	mes "[Banyak]";
+	mes "Since I need your help again, I might as well be honest with you.";
+	next;
+	cutin "soul_van03",2;
+	mes "[Banyak]";
+	mes "My brother and I... When we were young, we found an ancient document about reaching a state known as the ^df00cbSoul Reaper^000000.";
+	mes "We followed it and performed a ritual that had never been tried before.";
+	next;
+	mes "[Banyak]";
+	mes "Being promising future Soul Linkers, we were pretty arrogant.";
+	mes "The ritual was a debacle";
+	next;
+	switch(select("Something happened to your brother.")){case 1:}
+	next;
+	cutin "soul_van02",2;
+	mes "[Banyak]";
+	mes "You´re half-right.";
+	next;
+	mes "[Banyak]";
+	mes "Something terrible happened to my brother´s soul and my body.";
+	next;
+	mes "[Banyak]";
+	mes "A massive storm of twisted energy shatterd my body and pushes my spirit into my brother´s body.";
+	next;
+	mes "[Banyak]";
+	mes "This body standing in front of you belongs to my brother, and his soul is sealed somewhere inside this spiritual world that i currently occupy.";
+	next;
+	switch(select("That´s...")){case 1:}
+	next;
+	mes "[Banyak]";
+	mes "My brother sacrificed himself to stop his sister´s soul from being ripped apart.";
+	next;
+	cutin "soul_van03",2;
+	mes "[Banyak]";
+	mes "Traveler, i can´t enter this body´s spiritual world, but you have a noble soul. You can enter it through a soul-calling ritual.";
+	next;
+	mes "[Banyak]";
+	mes "Please, my brother´s soul is wandering somewhere inside this body. Please bring it back to where it belongs.";
+	next;
+	switch(select("I´ll help you.:But you´ll die.")){
+		case 1:
+			mes "[Banyak]";
+			mes "Thank you. I´d like to start the ritual soon. Please talk to me again when you´re redy.";
+			changequest 12449,12450;
+			close3;
+		case 2:
+			mes "[Banyak]";
+			mes "From the begining, I should have died anyway.";
+			close;
+	}
+
+}
+
+// pre-checks for instance creation, including the quest id, the party created and the party members (set to 1 obviously)
+
+if(checkquest(12450) == 1){
+
+	getpartymember getcharid(1), 1; //this part gets info about the party of the atached char to this script
+	getpartymember getcharid(1), 2;
+
+	if(getcharid(1) == 0){
+		mes "[Banyak]";
+		mes "You need to create a party to start the ritual.";
+		close;
+	}
+	if($@partymembercount != 1){
+		mes "[Banyak]";
+		mes "You need to be alone in the party to start the ritual";
+		close;
+	}
+
+	if((instance_id(IM_PARTY) != 0) && (soulentrance == 1)){ // this makes you start the instance again if you, for some reason leave.
+
+		mes "[Banyak]";
+		mes "We need to start all over again";
+		instance_destroy instance_id(IM_PARTY);
+		set soulentrance,0;
+		close;	
+
+	}
+
+	mes "^FF0000Please note that you can´t clear this dungeon if you try to tame monster or perfom any other monster-related activities.^000000";
+	next;
+	cutin "soul_van03",2;
+	mes "[Banyak]";
+	mes "Please create a soul gate to start the soul-calling ritual";
+	next;
+	cutin "",255;
+	switch(select("Create soul gate:Start Soul-calling Ritual:Cancel")){
+
+		case 1: 
+				mes "[Banyak]";
+				mes "It seems you need a little more time.";
+				instance_create("Soul Reaper job change"); //create the instance
+				end;
+		case 2: 
+				if (instance_id(IM_PARTY) == 0){
+					mes "[Banyak]";
+					mes "You need to create the soul gate first.";
+					close;
+				}
+				mes "[Banyak]";
+				mes "Thak you, let´s go.";
+				next;
+				instance_enter("Soul Reaper job change"); //start the instance
+				set soulentrance,1;
+				end;
+		case 3:
+				mes "[Banyak]";
+				mes "Please, hurry up.";
+				close;
+
+	}
+
+}
+
+}
+
+// the girl (yaong human form)
+
+payon,185,98,6	script	Girl#srgirl01	96,{
+	if (checkquest(12443) == 1){
+	addtimer 50000, strnpcinfo(3) + "::On50secs";
+	mes "[Girl]";
+	mes "I know who stole it. They´re bad people.";
+	next;
+	switch(select("Girl, what did you just say?")){case 1:}
+		next;
+		mes "[Girl]";
+		mes "I know the people who stole her bag.";
+		next;
+		switch(select("People? Not just one person?:Did you see them?")){
+			case 1:
+				mes "[Girl]";
+				mes "Not just one person. While she was sleeping, Jumagi and Jangjagi stole her bag and buried it.";
+				next;
+				goto dialog1;
+			case 2:
+				mes "[Girl]";
+				mes "yes, i see them. While she was sleeping, Jumagi and Jangjagi stole her bag and buried it.";
+				next;
+				goto dialog1;
+		}
+
+On50secs:
+	goto restore2;
+
+dialog1:
+	switch(select("The tavern workers did it?")){case 1:}
+	next;
+	mes "[Girl]";
+	mes "Agungi laced her food with sleeping pills and Duteli kept watch. Somebody should help her.";
+	next;
+	switch(select("Where is his bag?:That´s none of my business")){
+		case 1:
+			next;
+			mes "[Girl]";
+			mes "I saw everything. I can show you where it is if you want.";
+			next;
+			switch(select("Could you?:This really is none of my business.")){
+				case 1:
+					hideonnpc "Girl#srgirl01";
+					hideoffnpc "Yaong#yaong01";
+					close;
+				case 2:
+					goto restore;
+			}
+			close;
+		case 2:
+			goto restore;
+	}
+	close;
+
+restore: //this is set here to prevent the script to ve stuck if the player press the cancel" button in a dialog, so it can reset to start over again.
+	next;
+	mes "[Girl]";
+	mes "But she need help...";
+	close2;
+	hideonnpc "Girl#srgirl01";
+	sleep 10000;
+	hideoffnpc "Banyak#banyal02";
+
+restore2:
+	hideonnpc "Girl#srgirl01"; //same as above
+	hideoffnpc "Banyak#banyal02";
+
+	}
+
+	else{ //default dialog for no quest chars
+		mes "[Girl]";
+		mes "She needs help!";
+		close;
+	}
+}
+
+// yaong the cat
+
+payon,185,98,6	script	Yaong#yaong01	876,{
+
+addtimer 60000, strnpcinfo(3) + "::On60secs";
+if(checkquest(12443)==1){
+	mes "[Yaong]";
+	mes "I can take you there. You just need to follow my traces.";
+	next;
+	switch(select("That girl tuned into a cat!")){case 1:}
+	next;
+	mes "[Yaong]";
+	mes "This is not that surprising. You just follow me.";
+	hideonnpc "Yaong#yaong01";
+	navigateto "pay_fild08",57,126;
+	changequest 12443,12444;
+	Close;
+
+}
+
+else {
+	mes "Nyaaaa--";
+	close;
+}
+
+On60secs:
+	hideonnpc "Yaong#yaong01";
+	hideoffnpc "Banyak#banyal02";
+
+}
+
+pay_fild08,57,126,1	script	Yaong#yaong02	876,{
+	if(checkquest(12445) == 1){
+		mes "[Yaong]";
+		mes "Hurry up!.";
+		end;
+
+	}
+	if((checkquest(12444) == 1)) && (dighole == 0){
+		mes "[Yaong]";
+		mes "Here. Right here.";
+		next;
+		mes "[Yaong]";
+		mes "Dig in front of me";
+		set dighole,1; // this variable is created to manipulate the dialogs and check if the player has already dig the hole (i don´t know if thers a more eficient way to do it)
+		close;
+	}
+	
+	if((dighole == 2) && (checkquest(12444) == 1)){
+		switch(select("How do you know this man, Banyak?")){case 1: }
+		mes "[Yaong]";
+		mes "Banyak? Banyak isn´t a man. She´s a woman.";
+		next;
+		switch(select("What are you talking about? He´s a man!")){case 1: }
+		next;
+		mes "[Yaong]";
+		mes "He´s... He´s a man... but she´s a woman...";
+		next;
+		mes "[Yaong]";
+		mes "She saved me when i almost died. I only wanted to repay her.";
+		next;
+		switch(select("Well, you´re just cofused. Anyway")){case 1: }
+		next;
+		switch(select("Are the tavern workers the thieves?:Who buried it here?")){
+			case 1:
+				next;
+				mes "[Yaong]";
+				mes "They set up Banyak";
+				goto catend;
+			case 2:
+				next;
+				mes "[Yaong]";
+				mes "The workers, they set up Banyak";
+				close;
+				goto catend;
+		}
+
+		catend: //since i don know if both options bring you to the disire path, i just did both to make you go on with the quest. thats the reason for this label
+			next;
+			mes "[Yaong]";
+			mes "You´ll have to ask them why. I don´t know why.";
+			changequest 12444,12445;
+			navigateto "payon",192,92;
+			close;
+
+	}
+
+}
+
+payon,242,290,3	script	Yaong#yaong03	876,{}
+
+pay_dun04,120,116,3	script	Yaong#yaong04	876,{
+
+	if((checkquest(12448)== 1) && (countitem(1022) >= 44)){
+		mes "[Yaong]";
+		mes "This should do. We should leave now.";
+		next;
+		switch(select("Let´s stay:Take them and get me out of here.")){
+
+			case 1:
+				mes "[Yaong]";
+				mes "Hurry up, this is getting dangerous!";
+				close;
+			case 2:
+				mes "[Yaong]";
+				mes "Yaong can get you out of here. Hold onto my tail.";
+				next;
+				delitem 1022,44;
+				changequest 12448,12449;
+				warp "pay_arche",44,129;
+				close;
+		}
+	}	
+
+	if((checkquest(12448)== 1) && (countitem(1022) != 44)){
+		mes "[Yaong]";
+		mes "Hurry up, bring the 44 " +DispLink(1022)+ ".";
+		close;
+
+	}
+
+}
+
+// Other quest npcs
+
+pay_fild08,55,129,3	script	 #dig01	10043,{ //the aura to dig in pay_fild08
+
+	if(dighole == 1){
+		set dighole,2;
+		progressbar "008000", 8;
+	}
+
+
+}
+
+pay_fild08,48,80,7	script	Duteli#duteli01	88,{}
+pay_fild08,54,80,1	script	Jangjagi#jangjagi01	88,{} //the 4 employes around Bayank
+pay_fild08,54,86,3	script	Madangi#madangi01	88,{}
+pay_fild08,48,86,6	script	Agungi#agungi01	88,{}
+payon,189,98,6	script	Jumagi#jumagi01	88,{ // jumangi in payon, i add the hide npc on load here cus is izi
+	OnInit: hideonnpc "Jumagi#jumagi01"; hideonnpc "Girl#srgirl01"; hideonnpc "Yaong#yaong01"; hideonnpc "Yaong#yaong03";
+	}
+
+//instance
+
+1@soul,79,74,3	script	controller#c1	-1,2,2,{
+
+OnInstanceInit:
+	set .soul_status,0;
+	hideonnpc instance_npcname("Soha#s1");
+	hideonnpc instance_npcname("Soha#s2");
+	end;
+
+OnTouch_:
+	if(.soul_status == 0){
+	set .soul_status,1;
+	sleep 5000;
+	mapannounce instance_mapname("1@soul"), "Banyak: Good job enter my brother´s spiritual world.",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: I´m sharing your vision to at least feel the place.",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: This is strange. Why am I not seeing anything?",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "???: Who´s there? Who´s there with me?",0,0xFF0000;
+	sleep 7000;
+	mapannounce instance_mapname("1@soul"), "Banyak: This voice!",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: Soha! Soha, is that you?",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "???: That voice! Sister!, is that you?",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: Soha, it´s you! Soha, listen to me. The traveler who entered the spiritual path will get our souls out of there.",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: It´s over, Soha. Finally, I can return your body to you.",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: When our ritual failed, an army of wandering ghosts and pretas entered this world.",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: I chose to stay with them in here, to keep them from eating away the spiritual path.",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: Don´t try to release me. I must protect the path, or your life will be in danger.",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: Oh, no... But the soul-calling ritual already has begun.",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: Ugh...! The pretas and ghosts are breaking out of my ward. Sister stop the ritual!",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: You know I can´t do that. It´ll close all the spiritual paths.",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: Traveler on the path, be carefull! The wandering ghosts are heading your way!",0,0xB9B3FC;
+	
+//fist wave
+// since i dont have acces to a precise info, i made this to control the summon of mob
+// by now, the loop is counting till 20 mob spawn at the first 3 waves and 15 at the forth.
+
+	while(.@i < 20){//number of mobs for the wave
+		set .@j,rand(1,3);//number of mobs to spawn
+		monster instance_mapname("1@soul"),0,0,"Wandering Ghost",1423,.@j;//the spawn it sefl
+		set .@i,.@i+.@j;// simple count to make the wile count the spawned mobs
+		sleep rand(10000,15000);//random sleep between 1 and 5 secs (for this specific wave) between mob spawns
+	}
+	set .@i,0;//reset variable for the next wave
+	set .@j,0;//reset variable for the next wave
+	set .@mc,mobcount(instance_mapname("1@soul"),"all");//set variable for the mobcount loop to prevent the script to conitue if thers 1 mob present in the map
+	
+	freeloop(1);
+	while(.@mc != 0){ //this loop checks the mob count, is in loop til is 0. in order to prevent the waves to overlap
+		set .@mc,mobcount(instance_mapname("1@soul"),"all");//update variable to check the mobcount
+		sleep 1000;//this prevent the loop to be infinite and make it check only 1 per sec
+	}
+	freeloop(0);
+
+	mapannounce instance_mapname("1@soul"), "Banyak: Traveler, are you ok?",0,0xFFFF00;
+	sleep 4000;
+	mapannounce instance_mapname("1@soul"), "Soha: You´re pretty strong. Some of the wandering ghosts perished, freeing me from my burden!",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: But there still many wandering ghosts and pretas trying to get out of here.",0,0xB9B3FC;
+	sleep 7000;
+	mapannounce instance_mapname("1@soul"), "Banyak: I´m sensing something else has been released, Soha.",0,0xFFFF00;
+	sleep 7000;
+	mapannounce instance_mapname("1@soul"), "Soha: Yes. This time, stronger ones are rushing towards the spiritual path. Watch out, traveler!",0,0xB9B3FC;
+	sleep 2000;
+
+//second wave
+	while(.@i < 20){
+		set .@j,rand(0,1);
+		set .@k,rand(1,3);
+		monster instance_mapname("1@soul"),0,0,"Wandering Ghost",1420,.@j;
+		monster instance_mapname("1@soul"),0,0,"Wandering Ghost",1472,.@k;
+		set .@i,.@i+.@j+.@k;
+		sleep rand(10000,15000);
+	}
+	set .@i,0;
+	set .@j,0;
+	set .@k,0;
+	set .@mc,mobcount(instance_mapname("1@soul"),"all");
+
+	freeloop(1);
+	while(.@mc != 0){		
+		set .@mc,mobcount(instance_mapname("1@soul"),"all");
+		sleep 1000;
+	}
+	freeloop(0);
+
+	mapannounce instance_mapname("1@soul"), "Soha: More than half of the wandering ghosts that used to be here with me have perished.",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: Now, the Pretas will break out in earnest. Please be carefull.",0,0xB9B3FC;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Banyak: Ugh... I can feel the energy filling the spiritual path.",0,0xFFFF00;
+	sleep 6000;
+	mapannounce instance_mapname("1@soul"), "Soha: Of the Pretas. They´re wildly rampinging, having broken out of my spiritual ward.",0,0xB9B3FC;
+
+//third wave
+	while(.@i < 15){
+		set .@j,rand(0,2);
+		set .@k,rand(1,3);
+		monster instance_mapname("1@soul"),0,0,"Pretas",1471,.@j;
+		monster instance_mapname("1@soul"),0,0,"Pretas",1564,.@k;
+		set .@i,.@i+.@j+.@k;
+		sleep rand(15000,20000);
+	}
+	set .@i,0;
+	set .@j,0;
+	set .@k,0;
+	set .@mc,mobcount(instance_mapname("1@soul"),"all");
+
+	freeloop(1);
+	while(.@mc != 0){		
+		set .@mc,mobcount(instance_mapname("1@soul"),"all");
+		sleep 1000;
+	}
+	freeloop(0);
+
+	mapannounce instance_mapname("1@soul"), "Soha: My soul is materializing itself in the spiritual path.",0,0xB9B3FC;
+	sleep 5000;
+	mapannounce instance_mapname("1@soul"), "Banyak: You´re being released, Soha!",0,0xFFFF00;
+	sleep 5000;
+	hideoffnpc instance_npcname("Soha#s1");
+	mapannounce instance_mapname("1@soul"), "Soha: Come to me when you´re in danger. I´m weak, but i can help you, traveler.",0,0xB9B3FC;
+
+	sleep 5000;
+
+//fourth wave
+
+	while(.@i < 10){
+		set .@j,rand(1,2);
+		set .@k,rand(0,1);
+		monster instance_mapname("1@soul"),0,0,"Pretas",1475,.@j;
+		monster instance_mapname("1@soul"),0,0,"Pretas",1490,.@k;
+		set .@i,.@i+.@j+.@k;
+		sleep rand(20000,25000);
+	}
+	set .@i,0;
+	set .@j,0;
+	set .@k,0;
+	set .@mc,mobcount(instance_mapname("1@soul"),"all");
+
+	freeloop(1);
+	while(.@mc != 0){		
+		set .@mc,mobcount(instance_mapname("1@soul"),"all");
+		sleep 1000;
+	}
+	freeloop(0);
+
+	sleep 5000;
+	hideonnpc instance_npcname("Soha#s1");
+	hideoffnpc instance_npcname("Soha#s2");
+	mapannounce instance_mapname("1@soul"), "Soha: Ah... I´ve never fully materialized in a spiritual path before.",0,0xB9B3FC;
+	sleep 3000;
+	mapannounce instance_mapname("1@soul"), "Banyak: Soha. Is that really you, Soha?",0,0xFFFF00;
+
+
+	}
+	end;
+}
+
+1@soul,76,71,6	script	Soha#s1	10428,{ //helper soha
+
+	percentheal 100,100;
+	specialeffect2 EF_INCAGILITY;
+	sc_start SC_INCREASEAGI,240000,10;
+	specialeffect2 EF_BLESSING;
+	sc_start SC_BLESSING,240000,10;
+	hideonnpc instance_npcname("Soha#s1"); // bout what i see in the video, this npc hides after interact
+	end;
+
+}
+
+1@soul,76,71,6	script	Soha#s2	10295,{ //soul materialized Soha
+
+	cutin "soul_van02",2;
+	mes "[Soha]";
+	mes "Than you so much for helping my sister with nothing in retourn";
+	next;
+	mes "[Soha]";
+	mes "It seems my sister wants to bring me back even if it kills her, but i don´t want that.";
+	next;
+	mes "[Soha]";
+	mes "I stopped caring about the outside world years ago. I´d rather go to Heaven and study the new spiritual world.";
+	next;
+	switch(select("What happens now?:You look just like your sister.")){
+		case 1:
+			goto d1;
+
+		case 2:
+			goto d1;
+		}
+d1:
+	mes "[Soha]";
+	mes "Geez, She´s as stubborn as i remember. She knows my body wouldn´t last longer than a few years if we switched places.";
+	next;
+	switch(select("She loves you so much")){case 1:}
+	next;
+	mes "[Soha]";
+	mes "I want her to continue training as a Soul reaper. I have my own things to do.";
+	next;
+	mes "[Soha]";
+	mes "By the way, you´ve jumped over a big hurdle this time. My sister can help you find enlightenment when you go back.";
+	next;
+	mes "[Soha]";
+	mes "So... I think is time for you to go back now. I´ll send you back there and close the spiritual path.";
+	next;
+	mes "[Soha]";
+	mes "Pleas explain everything to my sister.";
+	next;
+	switch(select("I understand...")){
+
+		case 1:
+			changequest 12450,12451;
+			mes "[Soha]";
+			mes "Thank you so much for what you have done.";
+			next;
+			warp "payon",236,293;
+			instance_destroy;
+			end;
+	}
+
+}
