@@ -242,16 +242,9 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
  * @param fd: fd to parse from (client fd)
  * @return 0 not enough info transmitted, 1 success
  */
-static int logclif_parse_keepalive(int fd){
-	PACKET_CA_CONNECT_INFO_CHANGED* p = (PACKET_CA_CONNECT_INFO_CHANGED*)RFIFOP( fd, 0 );
-
-	if( RFIFOREST( fd ) < sizeof( *p ) ){
-		return 0;
-	}
-
-	RFIFOSKIP( fd,  sizeof( *p ) );
-
-	return 1;
+static bool logclif_parse_keepalive( int fd, struct login_session_data& ){
+	// Do nothing
+	return true;
 }
 
 /**
@@ -260,28 +253,22 @@ static int logclif_parse_keepalive(int fd){
  * @param fd: fd to parse from (client fd)
  * @return 0 not enough info transmitted, 1 success
  */
-static int logclif_parse_updclhash(int fd, struct login_session_data *sd){
+static bool logclif_parse_updclhash( int fd, struct login_session_data& sd ){
 	PACKET_CA_EXE_HASHCHECK* p = (PACKET_CA_EXE_HASHCHECK*)RFIFOP( fd, 0 );
 
-	if( RFIFOREST( fd ) < sizeof( *p ) ){
-		return 0;
-	}
+	sd.has_client_hash = 1;
+	memcpy( sd.client_hash, p->hash, sizeof( sd.client_hash ) );
 
-	sd->has_client_hash = 1;
-	memcpy( sd->client_hash, p->hash, sizeof( sd->client_hash ) );
-
-	RFIFOSKIP( fd,  sizeof( *p ) );
-
-	return 1;
+	return true;
 }
 
 template <typename P>
-int logclif_parse_reqauth_raw( int fd, login_session_data& sd, char* ip ){
+static bool logclif_parse_reqauth_raw( int fd, login_session_data& sd ){
 	P* p = (P*)RFIFOP( fd, 0 );
 
-	if( RFIFOREST( fd ) < sizeof( *p ) ){
-		return 0;
-	}
+	char ip[16];
+	uint32 ipl = session[fd]->client_addr;
+	ip2str( ipl, ip );
 
 	safestrncpy( sd.userid, p->username, sizeof( sd.userid ) );
 	sd.clienttype = p->clienttype;
@@ -295,8 +282,6 @@ int logclif_parse_reqauth_raw( int fd, login_session_data& sd, char* ip ){
 
 	sd.passwdenc = 0;
 
-	RFIFOSKIP( fd, sizeof( *p ) );
-
 	int result = login_mmo_auth( &sd, false );
 
 	if( result == -1 ){
@@ -305,16 +290,16 @@ int logclif_parse_reqauth_raw( int fd, login_session_data& sd, char* ip ){
 		logclif_auth_failed( &sd, result );
 	}
 
-	return 1;
+	return true;
 }
 
 template <typename P>
-int logclif_parse_reqauth_md5( int fd, login_session_data& sd, char* ip ){
+static bool logclif_parse_reqauth_md5( int fd, login_session_data& sd ){
 	P* p = (P*)RFIFOP( fd, 0 );
 
-	if( RFIFOREST( fd ) < sizeof( *p ) ){
-		return 0;
-	}
+	char ip[16];
+	uint32 ipl = session[fd]->client_addr;
+	ip2str( ipl, ip );
 
 	safestrncpy( sd.userid, p->username, sizeof( sd.userid ) );
 	sd.clienttype = p->clienttype;
@@ -324,11 +309,9 @@ int logclif_parse_reqauth_md5( int fd, login_session_data& sd, char* ip ){
 
 	sd.passwdenc = PASSWORDENC;
 
-	RFIFOSKIP( fd, sizeof( *p ) );
-
 	if( login_config.use_md5_passwds ){
 		logclif_auth_failed( &sd, 3 ); // send "rejected from server"
-		return 0;
+		return false;
 	}
 
 	int result = login_mmo_auth( &sd, false );
@@ -339,20 +322,16 @@ int logclif_parse_reqauth_md5( int fd, login_session_data& sd, char* ip ){
 		logclif_auth_failed( &sd, result );
 	}
 
-	return 1;
+	return true;
 }
 
 template <typename P>
-int logclif_parse_reqauth_sso( int fd, login_session_data& sd, char* ip ){
+static bool logclif_parse_reqauth_sso( int fd, login_session_data& sd ){
 	P* p = (P*)RFIFOP( fd, 0 );
 
-	if( RFIFOREST( fd ) < sizeof( *p ) ){
-		return 0;
-	}
-
-	if( RFIFOREST( fd ) < p->packetLength ){
-		return 0;
-	}
+	char ip[16];
+	uint32 ipl = session[fd]->client_addr;
+	ip2str( ipl, ip );
 
 	size_t token_length = p->packetLength - sizeof( *p );
 
@@ -369,8 +348,6 @@ int logclif_parse_reqauth_sso( int fd, login_session_data& sd, char* ip ){
 
 	sd.passwdenc = 0;
 
-	RFIFOSKIP( fd, p->packetLength );
-
 	int result = login_mmo_auth( &sd, false );
 
 	if( result == -1 ){
@@ -379,7 +356,17 @@ int logclif_parse_reqauth_sso( int fd, login_session_data& sd, char* ip ){
 		logclif_auth_failed( &sd, result );
 	}
 
-	return 1;
+	return true;
+}
+
+static void logclif_reqkey_result( int fd, struct login_session_data& sd ){
+	PACKET_AC_ACK_HASH* p = (PACKET_AC_ACK_HASH*)packet_buffer;
+
+	p->packetType = HEADER_AC_ACK_HASH;
+	p->packetLength = sizeof( *p ) + sd.md5keylen;
+	strncpy( p->salt, sd.md5key, sd.md5keylen );
+
+	socket_send( fd, p );
 }
 
 /**
@@ -388,25 +375,13 @@ int logclif_parse_reqauth_sso( int fd, login_session_data& sd, char* ip ){
  * @param sd: client session
  * @return 1 success
  */
-static int logclif_parse_reqkey(int fd, struct login_session_data *sd){
+static bool logclif_parse_reqkey( int fd, struct login_session_data& sd ){
 	PACKET_CA_REQ_HASH* p_in = (PACKET_CA_REQ_HASH*)RFIFOP( fd, 0 );
 
-	if( RFIFOREST( fd ) < sizeof( *p_in ) ){
-		return 0;
-	}
+	sd.md5keylen = sizeof( sd.md5key );
+	MD5_Salt( sd.md5keylen, sd.md5key );
 
-	RFIFOSKIP( fd,  sizeof( *p_in ) );
-
-	sd->md5keylen = sizeof( sd->md5key );
-	MD5_Salt( sd->md5keylen, sd->md5key );
-
-	PACKET_AC_ACK_HASH* p_out = (PACKET_AC_ACK_HASH*)packet_buffer;
-
-	p_out->packetType = HEADER_AC_ACK_HASH;
-	p_out->packetLength = sizeof( *p_out ) + sd->md5keylen;
-	strncpy( p_out->salt, sd->md5key, sd->md5keylen );
-
-	socket_send( fd, p_out );
+	logclif_reqkey_result( fd, sd );
 
 	return 1;
 }
@@ -485,27 +460,42 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 	return 1;
 }
 
-int logclif_parse_otp_login( int fd, struct login_session_data* sd ){
-	PACKET_CT_AUTH* p_in = (PACKET_CT_AUTH*)RFIFOP( fd, 0 );
+static void logclif_otp_result( int fd ){
+	PACKET_TC_RESULT p = {};
 
-	if( RFIFOREST( fd ) < sizeof( *p_in ) ){
-		return 0;
-	}
+	p.packetType = HEADER_TC_RESULT;
+	p.packetLength = sizeof( p );
+	p.type = 0; // normal login
+	safestrncpy( p.unknown1, "S1000", sizeof( p.unknown1 ) );
+	safestrncpy( p.unknown2, "token", sizeof( p.unknown2 ) );
 
-	RFIFOSKIP( fd,  sizeof( *p_in ) );
+	socket_send( fd, p );
+}
 
-	PACKET_TC_RESULT p_out = {};
+static bool logclif_parse_otp_login( int fd, struct login_session_data& ){
+	PACKET_CT_AUTH* p = (PACKET_CT_AUTH*)RFIFOP( fd, 0 );
 
-	p_out.packetType = HEADER_TC_RESULT;
-	p_out.packetLength = sizeof( p_out );
-	p_out.type = 0; // normal login
-	safestrncpy( p_out.unknown1, "S1000", sizeof( p_out.unknown1 ) );
-	safestrncpy( p_out.unknown2, "token", sizeof( p_out.unknown2 ) );
-
-	socket_send( fd, p_out );
+	logclif_otp_result( fd );
 
 	return 1;
 }
+
+class LoginPacketDatabase : public PacketDatabase<login_session_data>{
+public:
+	LoginPacketDatabase(){
+		this->add( HEADER_CA_CONNECT_INFO_CHANGED, true, sizeof( PACKET_CA_CONNECT_INFO_CHANGED ), logclif_parse_keepalive );
+		this->add( HEADER_CA_EXE_HASHCHECK, true, sizeof( PACKET_CA_EXE_HASHCHECK ), logclif_parse_updclhash );
+		this->add( HEADER_CA_LOGIN, true, sizeof( PACKET_CA_LOGIN ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN> );
+		this->add( HEADER_CA_LOGIN_PCBANG, true, sizeof( PACKET_CA_LOGIN_PCBANG ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN_PCBANG> );
+		this->add( HEADER_CA_LOGIN_CHANNEL, true, sizeof( PACKET_CA_LOGIN_CHANNEL ), logclif_parse_reqauth_raw<PACKET_CA_LOGIN_CHANNEL> );
+		this->add( HEADER_CA_LOGIN2, true, sizeof( PACKET_CA_LOGIN2 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN2> );
+		this->add( HEADER_CA_LOGIN3, true, sizeof( PACKET_CA_LOGIN3 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN3> );
+		this->add( HEADER_CA_LOGIN4, true, sizeof( PACKET_CA_LOGIN4 ), logclif_parse_reqauth_md5<PACKET_CA_LOGIN4> );
+		this->add( HEADER_CA_SSO_LOGIN_REQ, false, sizeof( PACKET_CA_SSO_LOGIN_REQ ), logclif_parse_reqauth_sso<PACKET_CA_SSO_LOGIN_REQ> );
+		this->add( HEADER_CA_REQ_HASH, true, sizeof( PACKET_CA_REQ_HASH ), logclif_parse_reqkey );
+		this->add( HEADER_CT_AUTH, true, sizeof( PACKET_CT_AUTH ), logclif_parse_otp_login );
+	}
+} login_packet_db;
 
 /**
  * Entry point from client to log-server.
@@ -548,69 +538,20 @@ int logclif_parse(int fd) {
 	while( RFIFOREST(fd) >= 2 )
 	{
 		uint16 command = RFIFOW(fd,0);
-		int next=1;
 
 		switch( command ){
-			// New alive packet: used to verify if client is always alive.
-			case HEADER_CA_CONNECT_INFO_CHANGED:
-				next = logclif_parse_keepalive( fd );
-				break;
-			// client md5 hash (binary)
-			case HEADER_CA_EXE_HASHCHECK:
-				next = logclif_parse_updclhash( fd, sd );
-				break;
-			// request client login (raw password)
-			case HEADER_CA_LOGIN:
-				// S 0064 <version>.L <username>.24B <password>.24B <clienttype>.B
-				next = logclif_parse_reqauth_raw<PACKET_CA_LOGIN>( fd, *sd, ip );
-				break;
-			case HEADER_CA_LOGIN_PCBANG:
-				// S 0277 <version>.L <username>.24B <password>.24B <clienttype>.B <ip address>.16B <adapter address>.13B
-				next = logclif_parse_reqauth_raw<PACKET_CA_LOGIN_PCBANG>( fd, *sd, ip );
-				break;
-			case HEADER_CA_LOGIN_CHANNEL:
-				// S 02b0 <version>.L <username>.24B <password>.24B <clienttype>.B <ip address>.16B <adapter address>.13B <g_isGravityID>.B
-				next = logclif_parse_reqauth_raw<PACKET_CA_LOGIN_CHANNEL>( fd, *sd, ip );
-				break;
-			// request client login (md5-hashed password)
-			case HEADER_CA_LOGIN2:
-				// S 01dd <version>.L <username>.24B <password hash>.16B <clienttype>.B
-				next = logclif_parse_reqauth_md5<PACKET_CA_LOGIN2>( fd, *sd, ip );
-				break;
-			case HEADER_CA_LOGIN3:
-				// S 01fa <version>.L <username>.24B <password hash>.16B <clienttype>.B <?>.B(index of the connection in the clientinfo file (+10 if the command-line contains "pc"))
-				next = logclif_parse_reqauth_md5<PACKET_CA_LOGIN3>( fd, *sd, ip );
-				break;
-			case HEADER_CA_LOGIN4:
-				// S 027c <version>.L <username>.24B <password hash>.16B <clienttype>.B <adapter address>.13B
-				next = logclif_parse_reqauth_md5<PACKET_CA_LOGIN4>( fd, *sd, ip );
-				break;
-			case HEADER_CA_SSO_LOGIN_REQ:
-				// S 0825 <packetsize>.W <version>.L <clienttype>.B <userid>.24B <password>.27B <mac>.17B <ip>.15B <token>.?B
-				next = logclif_parse_reqauth_sso<PACKET_CA_SSO_LOGIN_REQ>( fd, *sd, ip );
-				break;
-			// Sending request of the coding key
-			case HEADER_CA_REQ_HASH:
-				next = logclif_parse_reqkey( fd, sd );
-				break;
-			// OTP token login
-			case HEADER_CT_AUTH:
-				next = logclif_parse_otp_login( fd, sd );
-				break;
 			// Connection request of a char-server
 			case 0x2710: logclif_parse_reqcharconnec(fd,sd, ip); return 0; // processing will continue elsewhere
 			default:
-				ShowNotice("Abnormal end of connection (ip: %s): Unknown packet 0x%x\n", ip, command);
-				set_eof(fd);
-				return 0;
+				if( !login_packet_db.handle( fd, *sd ) ){
+					return 0;
+				}
+				break;
 		}
-		if(next==0) return 0; // avoid processing of followup packets (prev was probably incomplete)
 	}
 
 	return 0;
 }
-
-
 
 /// Constructor destructor
 
