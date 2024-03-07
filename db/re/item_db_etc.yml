@@ -86070,6 +86070,20 @@ Body:
     Name: Nightwatch Stone (Garment)    # !todo check english name
     Type: Etc
     Weight: 100
+  - Id: 1001668
+    AegisName: aegis_1001668
+    Name: Sweet Coin    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+  - Id: 1001684
+    AegisName: aegis_1001684
+    Name: Flower branch    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
