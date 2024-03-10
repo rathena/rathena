@@ -41439,7 +41439,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 1000
     Cooldown: 500
     CastCancel: true
