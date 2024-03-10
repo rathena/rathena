@@ -5974,12 +5974,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_SPIRAL_SHOOTING:
-			skillratio += -100 + 1000 + 1500 * skill_lv;
+			skillratio += -100 + 1200 + 1700 * skill_lv;
 			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 150 * skill_lv;
 			if (sd && sd->weapontype1 == W_RIFLE) 
-				skillratio += 200 + 200 * skill_lv;
+				skillratio += 200 + 1100 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_ONLY_ONE_BULLET:
