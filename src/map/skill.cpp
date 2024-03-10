@@ -7150,9 +7150,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SOA_TALISMAN_OF_BLUE_DRAGON:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		if (!(sc && (sc->getSCE(SC_T_SECOND_GOD) || sc->getSCE(SC_T_THIRD_GOD) || sc->getSCE(SC_T_FOURTH_GOD) || sc->getSCE(SC_T_FIFTH_GOD) ))){
-			sc_start(src,src,SC_T_FIRST_GOD,100,1,skill_get_time(skill_id,skill_lv));
-		}
+		sc_start(src,src,skill_get_sc(skill_id), 100, 1, skill_get_time(skill_id, skill_lv));
 		break;
 
 	case SOA_TALISMAN_OF_SOUL_STEALING:

@@ -8914,6 +8914,11 @@ Body:
   - Status: T_First_God
     Icon: EFST_T_FIRST_GOD
     DurationLookup: SOA_TALISMAN_OF_BLUE_DRAGON
+    Fail:
+      T_Second_God: true
+      T_Third_God: true
+      T_Fourth_God: true
+      T_Fifth_God: true
   - Status: T_Second_God
     Icon: EFST_T_SECOND_GOD
     DurationLookup: SOA_TALISMAN_OF_WHITE_TIGER
