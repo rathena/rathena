@@ -61,7 +61,7 @@ char console_log_filepath[32] = "./log/unknown.log";
 		char s_[SBUF_SIZE];		\
 		StringBuf *d_;			\
 		char *v_;				\
-		int l_;					\
+		size_t l_;					\
 	} buf ={"",NULL,NULL,0};	\
 //define NEWBUF
 
@@ -210,7 +210,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 	if( !is_console(handle) && stdout_with_ansisequence )
 	{
-		WriteFile(handle, BUFVAL(tempbuf), BUFLEN(tempbuf), &written, 0);
+		WriteFile( handle, BUFVAL( tempbuf ), (DWORD)BUFLEN( tempbuf ), &written, 0 );
 		return 0;
 	}
 

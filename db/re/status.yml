@@ -8796,6 +8796,10 @@ Body:
     DurationLookup: MT_RUSH_QUAKE
     CalcFlags:
       All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: G_LIFEPOTION
     Icon: EFST_G_LIFEPOTION
     Flags:
@@ -8855,11 +8859,6 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
-  - Status: Hidden_Card
-    Icon: EFST_HIDDEN_CARD
-    DurationLookup: NW_HIDDEN_CARD
-    CalcFlags:
-      All: true
   - Status: Grenade_Fragment_1
     Icon: EFST_GRENADE_FRAGMENT_1
     DurationLookup: NW_GRENADE_FRAGMENT
@@ -8919,6 +8918,11 @@ Body:
     DurationLookup: NW_AUTO_FIRING_LAUNCHER
     Flags:
       SendVal1: true
+  - Status: Hidden_Card
+    Icon: EFST_HIDDEN_CARD
+    DurationLookup: NW_HIDDEN_CARD
+    CalcFlags:
+      All: true
   - Status: Hogogong
     Icon: EFST_HOGOGONG
     DurationLookup: SH_HOWLING_OF_CHUL_HO

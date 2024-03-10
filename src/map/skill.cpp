@@ -5357,23 +5357,17 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case ABR_INFINITY_BUSTER:
 	case MT_TRIPLE_LASER:
 	case NW_MISSION_BOMBARD:
+	case NW_HASTY_FIRE_IN_THE_HOLE:
+	case NW_BASIC_GRENADE:
+	case NW_WILD_FIRE:
 	case SS_FUUMAKOUCHIKU_BLASTING:
 	case BO_FAIRY_DUSTY:
 	case BO_WOODEN_ATTACK:
 	case BO_WOODEN_THROWROCK:
-	case NW_HASTY_FIRE_IN_THE_HOLE:
-	case NW_BASIC_GRENADE:
-	case NW_WILD_FIRE:
 	case SKE_MIDNIGHT_KICK:
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-	case NW_MAGAZINE_FOR_ONE:
-	case NW_ONLY_ONE_BULLET:
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 		break;
 	case DK_DRAGONIC_AURA:
 	case DK_STORMSLASH:
@@ -6093,6 +6087,25 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 		}
 		break;
+	case NW_THE_VIGILANTE_AT_NIGHT:
+		if (flag & 1)
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		break;
+	case NW_SPIRAL_SHOOTING:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			int splash = skill_get_splash(skill_id, skill_lv);
+
+			if (sd && sd->weapontype1 == W_GRENADE)
+				splash += 2;
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+				status_change_end(src, SC_INTENSIVE_AIM_COUNT);
+		}
+		break;
+
 	case SKE_RISING_SUN:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
@@ -6107,7 +6120,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			sc_start(src, src, SC_RISING_SUN, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		break;
-	case NW_THE_VIGILANTE_AT_NIGHT:
 	case SH_HOWLING_OF_CHUL_HO:
 	case SKE_TWINKLING_GALAXY:
 	case SKE_STAR_CANNON:
@@ -6231,20 +6243,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			clif_snap(src, src->x, src->y);
 		}
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-	case NW_SPIRAL_SHOOTING:
-		if (flag & 1) {
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		} else {
-			int splash = skill_get_splash(skill_id, skill_lv);
-
-			if (sd && sd->weapontype1 == W_GRENADE)
-				splash += 2;
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-				status_change_end(src, SC_INTENSIVE_AIM_COUNT);
-		}
 		break;
 
 	//Place units around target
@@ -7407,6 +7405,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 
+	case NW_MAGAZINE_FOR_ONE:
+	case NW_ONLY_ONE_BULLET:
+ 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
+ 		break;
+
 	case SOA_TALISMAN_OF_BLUE_DRAGON:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
@@ -7646,8 +7651,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	type = skill_get_sc(skill_id);
 	tsc = status_get_sc(bl);
-
-	status_change *sc = status_get_sc(src);
+	status_change* sc = status_get_sc(src);
 	tsce = (tsc && type != SC_NONE)?tsc->getSCE(type):NULL;
 
 	if (src!=bl && type > SC_NONE &&
@@ -8001,8 +8005,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				map_freeblock_unlock();
 				return 1;
 			}
-
-			status_change* sc = status_get_sc(src);
 
 			if( sc && tsc )
 			{
@@ -8381,7 +8383,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		} else {
 			uint16 climax_lv = 0, splash_size = skill_get_splash(skill_id, skill_lv);
-			status_change *sc = status_get_sc(src);
 
 			if (sc && sc->getSCE(SC_CLIMAX))
 				climax_lv = sc->getSCE(SC_CLIMAX)->val1;
@@ -8939,7 +8940,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
 	{
-		status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;
 
 		if (skill_id == LG_OVERBRAND)
@@ -11723,8 +11723,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WL_SUMMONWB:
 	case WL_SUMMONSTONE:
 		{
-			status_change *sc = status_get_sc(src);
-
 			if (sc == nullptr)
 				break;
 
@@ -12234,7 +12232,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WM_LERADS_DEW:
 	case WM_UNLIMITED_HUMMING_VOICE:
 		if( flag&1 ) {	// These affect to to all party members near the caster.
-			status_change *sc = status_get_sc(src);
 			if( sc && sc->getSCE(type) ) {
 				sc_start2(src,bl,type,100,skill_lv,pc_checkskill(sd, WM_LESSON),skill_get_time(skill_id,skill_lv));
 			}
@@ -12641,9 +12638,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			s_elemental_data *ele = BL_CAST(BL_ELEM, src);
 			if( ele ) {
 				sc_type type2 = (sc_type)(type-1);
-				status_change *sc = status_get_sc(&ele->bl);
+				status_change *esc = status_get_sc(&ele->bl);
 
-				if( (sc && sc->getSCE(type2)) || (tsc && tsc->getSCE(type)) ) {
+				if( (esc && esc->getSCE(type2)) || (tsc && tsc->getSCE(type)) ) {
 					status_change_end(src,type);
 					status_change_end(bl,type2);
 				} else {
@@ -12668,11 +12665,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case EL_WATER_SCREEN: {
 			s_elemental_data *ele = BL_CAST(BL_ELEM, src);
 			if( ele ) {
-				status_change *sc = status_get_sc(&ele->bl);
+				status_change *esc = status_get_sc(&ele->bl);
 				sc_type type2 = (sc_type)(type-1);
 
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
-				if( (sc && sc->getSCE(type2)) || (tsc && tsc->getSCE(type)) ) {
+				if( (esc && esc->getSCE(type2)) || (tsc && tsc->getSCE(type)) ) {
 					status_change_end(bl,type);
 					status_change_end(src,type2);
 				} else {
@@ -13383,6 +13380,42 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 		}
 		break;
+
+#ifdef RENEWAL
+	case CG_HERMODE:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+#endif
+
+	case NPC_LEASH:
+		clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
+
+		if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
+			return 0;
+		}
+
+		clif_blown( bl );
+		break;
+
+	case NPC_WIDELEASH:
+		if( flag & 1 ){
+			if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
+				return 0;
+			}
+
+			clif_blown( bl );
+		}else{
+			skill_area_temp[2] = 0; // For SD_PREAMBLE
+			clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
+			map_foreachinallrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | 1, skill_castend_nodamage_id );
+		}
+		break;
+
+	case HN_HELLS_DRIVE:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+		break;
+
 	case NW_THE_VIGILANTE_AT_NIGHT:
 		i = skill_get_splash(skill_id, skill_lv);
 		skill_area_temp[0] = 0;
@@ -13431,41 +13464,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		break;
 
-#ifdef RENEWAL
-	case CG_HERMODE:
-		skill_castend_song(src, skill_id, skill_lv, tick);
-		break;
-#endif
-
-	case NPC_LEASH:
-		clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
-
-		if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
-			return 0;
-		}
-
-		clif_blown( bl );
-		break;
-
-	case NPC_WIDELEASH:
-		if( flag & 1 ){
-			if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
-				return 0;
-			}
-
-			clif_blown( bl );
-		}else{
-			skill_area_temp[2] = 0; // For SD_PREAMBLE
-			clif_skill_nodamage( src, bl, skill_id, skill_lv, 1 );
-			map_foreachinallrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | 1, skill_castend_nodamage_id );
-		}
-		break;
-
-	case HN_HELLS_DRIVE:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
-		break;
-
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
@@ -13476,8 +13474,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	}
 
 	if (skill_id != SR_CURSEDCIRCLE && skill_id != NPC_SR_CURSEDCIRCLE) {
-		status_change *sc = status_get_sc(src);
-
 		if (sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER)) // Should only remove after the skill had been casted.
 			status_change_end(src,SC_CURSEDCIRCLE_ATKER);
 	}
@@ -14319,6 +14315,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case SR_RIDEINLIGHTNING:
+	case NW_BASIC_GRENADE:
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
@@ -15297,24 +15294,16 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			skill_addtimerskill(src, tick + 600, 0, x, y, skill_id, skill_lv, 0, flag | 3 | SKILL_NOCONSUME_REQ);
 		}
 		break;
-	case NW_BASIC_GRENADE:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_area_sub,
-			src->m, x - i, y - i, x + i, y + i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
-			skill_castend_damage_id);
-		break;
 	case NW_GRENADES_DROPPING: {
-			int area = skill_get_splash(skill_id, skill_lv);
-			short tmpx = 0, tmpy = 0;
-			tmpx = x - area + rnd() % (area * 2 + 1);
-			tmpy = y - area + rnd() % (area * 2 + 1);
+			uint16 splash = skill_get_splash(skill_id, skill_lv);
+			uint16 tmpx = rnd_value( x - splash, x + splash );
+			uint16 tmpy = rnd_value( y - splash, y + splash );
 			skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag);
 			for (i = 0; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
 				skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 			}
 		} break;
-	case NW_MISSION_BOMBARD: {
+	case NW_MISSION_BOMBARD:
 		i = skill_get_splash(skill_id,skill_lv);
 		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SKILL_ALTDMG_FLAG|1,skill_castend_damage_id);
 		skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
@@ -15322,8 +15311,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
 			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
-	}
-    	break;
+		break;
+
 	case SS_RAIDENPOU:
 	case SS_SEKIENHOU:
 		skill_area_temp[1] = 0;
@@ -15743,9 +15732,6 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case NPC_EVILLAND:
 		val1=skill_lv+3;
 		break;
-	case NW_GRENADES_DROPPING:
-		limit = skill_get_time2(skill_id,skill_lv);
-		break;
 	case WZ_METEOR:
 	case SU_CN_METEOR:
 	case SU_CN_METEOR2:
@@ -16070,6 +16056,10 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 		flag = 0;
 		if (skill_id == AG_VIOLENT_QUAKE_ATK && sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 2)
 			range = 4; // Rising rocks splash is increased to 9x9.
+		break;
+		
+	case NW_GRENADES_DROPPING:
+		limit = skill_get_time2(skill_id,skill_lv);
 		break;
 	}
 
@@ -25766,8 +25756,7 @@ uint64 MagicMushroomDatabase::parseBodyNode(const ryml::NodeRef& node) {
 /** Reads skill no cast db
  * Structure: SkillID,Flag
  */
-static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_nocastdb( char* split[], size_t columns, size_t current ){
 	std::shared_ptr<s_skill_db> skill = skill_db.find(atoi(split[0]));
 
 	if (!skill)
@@ -25781,8 +25770,7 @@ static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
 /** Reads Produce db
  * Structure: ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,...
  */
-static bool skill_parse_row_producedb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_producedb( char* split[], size_t columns, size_t current ){
 	unsigned short x, y;
 	unsigned short id = atoi(split[0]);
 	t_itemid nameid = 0;
@@ -25971,8 +25959,7 @@ uint64 AbraDatabase::parseBodyNode(const ryml::NodeRef& node) {
 /** Reads change material db
  * Structure: ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
  */
-static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_changematerialdb( char* split[], size_t columns, size_t current ){
 	uint16 id = atoi(split[0]);
 	t_itemid nameid = strtoul(split[1], nullptr, 10);
 	short rate = atoi(split[2]);
@@ -26028,8 +26015,7 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  * Reads skill damage adjustment
  * @author [Lilith]
  */
-static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
-{
+static bool skill_parse_row_skilldamage( char* split[], size_t columns, size_t current ){
 	int64 caster_tmp;
 	uint16 id;
 	int caster, value;
