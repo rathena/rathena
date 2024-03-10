@@ -23938,18 +23938,28 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
+		if( name.length() > SKILL_NAME_LENGTH ){
+			this->invalidWarning( node["Name"], "Name \"%s\" exceeds maximum length of %d.\n", name.c_str(), SKILL_NAME_LENGTH );
+			return 0;
+		}
+
 		name.resize(SKILL_NAME_LENGTH);
 		memcpy(skill->name, name.c_str(), sizeof(skill->name));
 	}
 
 	if (this->nodeExists(node, "Description")) {
-		std::string name;
+		std::string desc;
 
-		if (!this->asString(node, "Description", name))
+		if (!this->asString(node, "Description", desc))
 			return 0;
 
-		name.resize(SKILL_DESC_LENGTH);
-		memcpy(skill->desc, name.c_str(), sizeof(skill->desc));
+		if( desc.length() > SKILL_DESC_LENGTH ){
+			this->invalidWarning( node["Description"], "Description \"%s\" exceeds maximum length of %d.\n", desc.c_str(), SKILL_DESC_LENGTH );
+			return 0;
+		}
+
+		desc.resize(SKILL_DESC_LENGTH);
+		memcpy(skill->desc, desc.c_str(), sizeof(skill->desc));
 	}
 
 	if (this->nodeExists(node, "MaxLevel")) {
