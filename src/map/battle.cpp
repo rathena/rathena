@@ -5938,7 +5938,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_HASTY_FIRE_IN_THE_HOLE:
-			skillratio += -100 + 1500 + 1050 * skill_lv;
+			skillratio += -100 + 1500 + 1500 * skill_lv;
 			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 20;
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
