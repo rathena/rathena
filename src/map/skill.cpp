@@ -5940,7 +5940,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-					sc_start(src,src,SC_T_FIFTH_GOD,100,skill_lv,skill_get_time(skill_id,skill_lv));
+					sc_start(src,src,skill_get_sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
 					break;
 			}
 
