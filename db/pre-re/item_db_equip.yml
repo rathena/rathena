@@ -29809,7 +29809,7 @@ Body:
     Locations:
       Head_Top: true
     ArmorLevel: 1
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     View: 314
     Trade:
       NoDrop: true

@@ -764,3 +764,139 @@ function	script	F_IsCharm	{
 	.@id = getarg(0);
 	return ((.@id >= 4700 && .@id <= 4999) || (.@id >= 29000 && .@id <= 29689) || (.@id >= 310000 && .@id <= 311091 ));
 }
+
+
+function	script	F_Bounty_Board	{
+	if (BaseLevel < getarg(0) || (BaseLevel > getarg(1) && getarg(1))){
+		for (.@i = 5; .@i < getargcount(); .@i += 4){
+			if (checkquest(getarg(.@i)) != -1){
+				mes "[ ^0000FFÔng GiaÌ^000000 ]";
+				mes "Xong nhiêòm vuò rôÌi ğuìng không.";
+				mes "Muôìn nhâòn thıõÒng hen?";
+				next;
+				switch(select("Nhâòn thıõÒng môòt", "Nhâòn thıõÒng tâìt caÒ", "HuÒy nhiêòm vuò", "HuÒy")){
+					case 1: goto L_BountyOne;
+					case 2: goto L_BountyAll;
+					case 3: goto L_BountyDel;
+					case 4: close;
+				}
+			}
+		}
+		switch(getarg(3)){
+			case 1: mes "NhıŞng nhiêòm vuò naÌy chiÒ khaÒ duòng cho ngıõÌi chõi coì level "+getarg(0)+"-"+getarg(1)+"."; break;
+			case 2: mes "NhıŞng nhiêòm vuò naÌy chiÒ khaÒ duòng cho ngıõÌi chõi coì level "+getarg(0)+" vaÌ "+getarg(1)+"."; break;
+			case 3: mes "NhıŞng nhiêòm vuò naÌy chiÒ khaÒ duòng cho ngıõÌi chõi trên level "+getarg(0)+"."; break;
+			case 4: mes "NhıŞng nhiêòm vuò naÌy chiÒ khaÒ duòng cho ngıõÌi chõi trên level "+getarg(0)+"."; break;
+			case 5: mes "Hmm, chaÒ coì giÌ thuì viò caÒ."; break;
+		}
+		close;
+	}
+	switch(select("- KiêÒm tra nhiêòm vuò", "- Nhâòn phâÌn thıõÒng", "- HuÒy nhiêòm vuò")) {
+	case 1:	// KiêÒm tra nhiêòm vuò
+		mes "[ ^0000FFÔng GiaÌ^000000 ]";
+		mes "Ğây laÌ danh saìch nhiêòm vuò.";
+		mes "Xem rôÌi choòn môòt ği chaìu.";
+
+		for (.@i = 4; .@i < getargcount(); .@i += 4)
+			.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + " (Level " + getmonsterinfo(getarg(.@i),MOB_LV) + " | Base EXP ^0000FF" + getmonsterinfo(getarg(.@i),MOB_BASEEXP) + "^000000)" + ":";
+		.@menu$ = .@menu$ + "Sãn tâìt caÒ";
+
+		.@bounty = (select(.@menu$) * 4) + 1;
+		if (.@bounty == getargcount()+1){
+			for (.@i = 5; .@i < getargcount(); .@i += 4){
+				if (checkquest(getarg(.@i)) == -1)
+					setquest getarg(.@i);
+				.@HuntAllList$ = .@HuntAllList$ + (.@i+4 > getargcount()?" vaÌ ":(.@i > 5?", ":"")) + getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			}
+			mes "[ ^0000FFÔng GiaÌ^000000 ]";
+			mes "SeŞ coì phâÌn thıõÒng khi chaìu sãn 75 " + .@HuntAllList$ + " tâìt caÒ quaìi vâòt.";
+			close;
+		}
+		.@monster$ = getmonsterinfo(getarg(.@bounty-1),MOB_NAME);
+		mes "[ ^0000FFÔng GiaÌ^000000 ]";
+		mes "SeŞ coì phâÌn thıõÒng khi chaìu sãn 75 " + .@monster$ + ".";
+		next;
+		if (select("Nhâòn thôi.", "AÌ thôi chaìu xin ruìt.") == 1){
+			if (checkquest(getarg(.@bounty),HUNTING) == -1)
+				setquest getarg(.@bounty);
+			mes "[ ^0000FFÔng GiaÌ^000000 ]";
+			mes "Chaìu ğaŞ nhâòn nhiêòm vuò sãn "+.@monster$+".";
+		}
+		close;
+	case 2:	// Nhâòn phâÌn thıõÒng
+		mes "[ ^0000FFÔng GiaÌ^000000 ]";
+		mes "Xong nhiêòm vuò rôÌi ğuìng không.";
+		mes "Muôìn nhâòn thıõÒng không chaìu?";
+		next;
+		switch(select("Nhâòn thıõÒng môòt", "Nhâòn thıõÒng tâìt caÒ", "HuÒy")){
+			case 1: goto L_BountyOne;
+			case 2: goto L_BountyAll;
+			case 3: close;
+		}
+	case 3:	// HuÒy nhiêòm vuò
+		goto L_BountyDel;
+	}
+
+L_BountyOne:
+	for (.@i = 4; .@i < getargcount(); .@i += 4)
+		.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + ":";
+
+	.@bounty = (select(.@menu$) * 4) + 1;
+	if (.@bounty > getargcount()){
+		mes "^000000[ ^0000FFÔng GiaÌ^000000 ]^000000";
+		mes "Khi naÌo xong nhiêòm vuò rôÌi haŞy quay laòi nha chaìu.";
+		close;
+	}
+	if (checkquest(getarg(.@bounty),HUNTING) == 2){
+		erasequest getarg(.@bounty);
+		.@BaseExp = getarg(.@bounty+1);
+		.@JobExp = getarg(.@bounty+2);
+		getexp .@BaseExp,.@JobExp;
+	} else {
+		mes "^000000[ ^0000FFÔng GiaÌ^000000 ]^000000";
+		mes "Nhiêòm vuò sãn "+getmonsterinfo(getarg(.@bounty-1),MOB_NAME)+" vâŞn chıa hoaÌn thaÌnh.";
+	}
+	close;
+
+L_BountyAll:
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) < 2){
+			mes "[ ^0000FFÔng GiaÌ^000000 ]";
+			mes "Nhiêòm vuò sãn tâìt caÒ vâŞn chıa hoaÌn thaÌnh.";
+			mes "Xaòo choì khoì kiêìm viêòc lãìm nha chaìu.";
+			close;
+		}
+	}
+	for (.@i = 5; .@i < getargcount(); .@i += 4)
+		erasequest getarg(.@i);
+	for (.@i = 6; .@i < getargcount(); .@i += 4){
+		.@BaseExp = getarg(.@i);
+		.@JobExp = getarg(.@i+1);
+		getexp .@BaseExp,.@JobExp;
+	}
+	mes "[ ^0000FFÔng GiaÌ^000000 ]";
+	mes "Ğây, phâÌn thıõÒng cuÒa chaìu.";
+	close;
+
+L_BountyDel:
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) == 1){
+			.@monster$ = getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			mes "[ ^0000FFÔng GiaÌ^000000 ]";
+			mes "Chaìu CHİA hoaÌn thaÌnh nhiêòm vuò sãn " + .@monster$ + ".";
+			mes "Chaìu coì chãìc laÌ muôìn huÒy không?";
+			next;
+			if (select("Tiêìp tuòc sãn "+.@monster$, "^FF0000Xoìa nhiêòm vuò naÌy giuÌm chaìu.^000000") == 2){
+				erasequest getarg(.@i);
+				mes "[ ^0000FFÔng GiaÌ^000000 ]";
+				mes "ĞaŞ huÒy rôÌi nha chaìu.";
+				close2;
+				.@questerased = 1;
+			}
+		}
+	}
+	if (!.@questerased)
+		close;
+	else
+		end;
+}

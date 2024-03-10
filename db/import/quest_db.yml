@@ -48,3 +48,685 @@
 Header:
   Type: QUEST_DB
   Version: 3
+
+Body:
+  - Id: 64000
+    Title: Muka Hunting
+    Targets:
+      - Mob: MUKA
+        Count: 75
+  - Id: 64001
+    Title: Spore Hunting
+    Targets:
+      - Mob: SPORE
+        Count: 75
+  - Id: 64002
+    Title: Wolf Hunting
+    Targets:
+      - Mob: WOLF
+        Count: 75
+  - Id: 64003
+    Title: Thief Bug Hunting
+    Targets:
+      - Mob: THIEF_BUG
+        Count: 75
+  - Id: 64004
+    Title: Mandragora Hunting
+    Targets:
+      - Mob: MANDRAGORA
+        Count: 75
+  - Id: 64005
+    Title: Peco Peco Hunting
+    Targets:
+      - Mob: PECOPECO
+        Count: 75
+  - Id: 64006
+    Title: Zombie Hunting
+    Targets:
+      - Mob: ZOMBIE
+        Count: 75
+  - Id: 64007
+    Title: Skeleton Hunting
+    Targets:
+      - Mob: SKELETON
+        Count: 75
+  - Id: 64008
+    Title: Bigfoot Hunting
+    Targets:
+      - Mob: BIGFOOT
+        Count: 75
+  - Id: 64009
+    Title: Ant Egg Hunting
+    Targets:
+      - Mob: ANT_EGG
+        Count: 75
+  - Id: 64010
+    Title: Thara Frog Hunting
+    Targets:
+      - Mob: THARA_FROG
+        Count: 75
+  - Id: 64011
+    Title: Holden Hunting
+    Targets:
+      - Mob: MOLE
+        Count: 75
+  - Id: 64012
+    Title: Pirate Skeleton Hunting
+    Targets:
+      - Mob: PIRATE_SKEL
+        Count: 75
+  - Id: 64013
+    Title: Stapo Hunting
+    Targets:
+      - Mob: STAPO
+        Count: 75
+  - Id: 64014
+    Title: Thief Bug Male Hunting
+    Targets:
+      - Mob: THIEF_BUG__
+        Count: 75
+  - Id: 64015
+    Title: Obeaune Hunting
+    Targets:
+      - Mob: OBEAUNE
+        Count: 75
+  - Id: 64016
+    Title: Orc Lady Hunting
+    Targets:
+      - Mob: ORC_LADY
+        Count: 75
+  - Id: 64017
+    Title: Orc Warrior Hunting
+    Targets:
+      - Mob: ORK_WARRIOR
+        Count: 75
+  - Id: 64018
+    Title: Orc Zombie Hunting
+    Targets:
+      - Mob: ORC_ZOMBIE
+        Count: 75
+  - Id: 64019
+    Title: Orc Skeleton Hunting
+    Targets:
+      - Mob: ORC_SKELETON
+        Count: 75
+  - Id: 64020
+    Title: Soldier Skeleton Hunting
+    Targets:
+      - Mob: SOLDIER_SKELETON
+        Count: 75
+  - Id: 64021
+    Title: Archer Skeleton Hunting
+    Targets:
+      - Mob: ARCHER_SKELETON
+        Count: 75
+  - Id: 64022
+    Title: Munak Hunting
+    Targets:
+      - Mob: MUNAK
+        Count: 75
+  - Id: 64023
+    Title: Bongun Hunting
+    Targets:
+      - Mob: BON_GUN
+        Count: 75
+  - Id: 64024
+    Title: Myst Case Hunting
+    Targets:
+      - Mob: MYSTCASE
+        Count: 75
+  - Id: 64025
+    Title: Cruiser Hunting
+    Targets:
+      - Mob: CRUISER
+        Count: 75
+  - Id: 64026
+    Title: Mummy Hunting
+    Targets:
+      - Mob: MUMMY
+        Count: 75
+  - Id: 64027
+    Title: Porcellio Hunting
+    Targets:
+      - Mob: PORCELLIO
+        Count: 75
+  - Id: 64028
+    Title: Seal Hunting
+    Targets:
+      - Mob: FUR_SEAL
+        Count: 75
+  - Id: 64029
+    Title: Sea Otter Hunting
+    Targets:
+      - Mob: SEE_OTTER
+        Count: 75
+  - Id: 64030
+    Title: Alligator Hunting
+    Targets:
+      - Mob: ALLIGATOR
+        Count: 75
+  - Id: 64031
+    Title: Grove Hunting
+    Targets:
+      - Mob: GREEN_IGUANA
+        Count: 75
+  - Id: 64032
+    Title: Firelock Soldier Hunting
+    Targets:
+      - Mob: ANTIQUE_FIRELOCK
+        Count: 75
+  - Id: 64033
+    Title: Mantis Hunting
+    Targets:
+      - Mob: MANTIS
+        Count: 75
+  - Id: 64034
+    Title: Mi Gao Hunting
+    Targets:
+      - Mob: INCREASE_SOIL
+        Count: 75
+  - Id: 64035
+    Title: Poison Spore Hunting
+    Targets:
+      - Mob: POISON_SPORE
+        Count: 75
+  - Id: 64036
+    Title: Skeleton Worker Hunting
+    Targets:
+      - Mob: SKEL_WORKER
+        Count: 75
+  - Id: 64037
+    Title: Zombie Prisoner Hunting
+    Targets:
+      - Mob: ZOMBIE_PRISONER
+        Count: 75
+  - Id: 64038
+    Title: Skeleton Prisoner Hunting
+    Targets:
+      - Mob: SKEL_PRISONER
+        Count: 75
+  - Id: 64039
+    Title: Andre Hunting
+    Targets:
+      - Mob: ANDRE
+        Count: 75
+  - Id: 64040
+    Title: Deniro Hunting
+    Targets:
+      - Mob: DENIRO
+        Count: 75
+  - Id: 64041
+    Title: Piere Hunting
+    Targets:
+      - Mob: PIERE
+        Count: 75
+  - Id: 64042
+    Title: Vitata Hunting
+    Targets:
+      - Mob: VITATA
+        Count: 75
+  - Id: 64043
+    Title: Hode Hunting
+    Targets:
+      - Mob: HODE
+        Count: 75
+  - Id: 64044
+    Title: Marduk Hunting
+    Targets:
+      - Mob: MARDUK
+        Count: 75
+  - Id: 64045
+    Title: Roween Hunting
+    Targets:
+      - Mob: ROWEEN
+        Count: 75
+  - Id: 64046
+    Title: Hill Wind Hunting
+    Targets:
+      - Mob: HILL_WIND_1
+        Count: 75
+  - Id: 64047
+    Title: Vanberk Hunting
+    Targets:
+      - Mob: VANBERK
+        Count: 75
+  - Id: 64048
+    Title: Isilla Hunting
+    Targets:
+      - Mob: ISILLA
+        Count: 75
+  - Id: 64049
+    Title: Strouf Hunting
+    Targets:
+      - Mob: STROUF
+        Count: 75
+  - Id: 64050
+    Title: Merman Hunting
+    Targets:
+      - Mob: MERMAN
+        Count: 75
+  - Id: 64051
+    Title: Siroma Hunting
+    Targets:
+      - Mob: SIROMA
+        Count: 75
+  - Id: 64052
+    Title: Isis Hunting
+    Targets:
+      - Mob: ISIS
+        Count: 75
+  - Id: 64053
+    Title: Clock Hunting
+    Targets:
+      - Mob: CLOCK
+        Count: 75
+  - Id: 64054
+    Title: Alarm Hunting
+    Targets:
+      - Mob: ALARM
+        Count: 75
+  - Id: 64055
+    Title: High Orc Hunting
+    Targets:
+      - Mob: HIGH_ORC
+        Count: 75
+  - Id: 64056
+    Title: Nightmare Hunting
+    Targets:
+      - Mob: NIGHTMARE
+        Count: 75
+  - Id: 64057
+    Title: Marionette Hunting
+    Targets:
+      - Mob: MARIONETTE
+        Count: 75
+  - Id: 64058
+    Title: Deviruchi Hunting
+    Targets:
+      - Mob: DEVIRUCHI
+        Count: 75
+  - Id: 64059
+    Title: Pasana Hunting
+    Targets:
+      - Mob: PASANA
+        Count: 75
+  - Id: 64060
+    Title: Minorous Hunting
+    Targets:
+      - Mob: MINOROUS
+        Count: 75
+  - Id: 64061
+    Title: Disguise Hunting
+    Targets:
+      - Mob: DISGUISE
+        Count: 75
+  - Id: 64062
+    Title: Dullahan Hunting
+    Targets:
+      - Mob: DULLAHAN
+        Count: 75
+  - Id: 64063
+    Title: Heirozoist Hunting
+    Targets:
+      - Mob: HYLOZOIST
+        Count: 75
+  - Id: 64064
+    Title: Nine Tail Hunting
+    Targets:
+      - Mob: NINE_TAIL
+        Count: 75
+  - Id: 64065
+    Title: Dragon Tail Hunting
+    Targets:
+      - Mob: DRAGON_TAIL
+        Count: 75
+  - Id: 64066
+    Title: Shinobi Hunting
+    Targets:
+      - Mob: SHINOBI
+        Count: 75
+  - Id: 64067
+    Title: Tengu Hunting
+    Targets:
+      - Mob: TENGU
+        Count: 75
+  - Id: 64068
+    Title: The Paper Hunting
+    Targets:
+      - Mob: THE_PAPER
+        Count: 75
+  - Id: 64069
+    Title: Raydric Hunting
+    Targets:
+      - Mob: RAYDRIC
+        Count: 75
+  - Id: 64070
+    Title: Raydric Archer Hunting
+    Targets:
+      - Mob: RAYDRIC_ARCHER
+        Count: 75
+  - Id: 64071
+    Title: Khalitzburg Hunting
+    Targets:
+      - Mob: KHALITZBURG
+        Count: 75
+  - Id: 64072
+    Title: Old Stove Hunting
+    Targets:
+      - Mob: WASTE_STOVE
+        Count: 75
+  - Id: 64073
+    Title: Teddy Bear Hunting
+    Targets:
+      - Mob: TEDDY_BEAR
+        Count: 75
+  - Id: 64074
+    Title: Mineral Hunting
+    Targets:
+      - Mob: MINERAL
+        Count: 75
+  - Id: 64075
+    Title: Kaho Hunting
+    Targets:
+      - Mob: KAHO
+        Count: 75
+  - Id: 64076
+    Title: Explosion Hunting
+    Targets:
+      - Mob: EXPLOSION
+        Count: 75
+  - Id: 64077
+    Title: Blazer Hunting
+    Targets:
+      - Mob: BLAZZER
+        Count: 75
+  - Id: 64078
+    Title: Spring Rabbit Hunting
+    Targets:
+      - Mob: SPRING_RABBIT
+        Count: 75
+  - Id: 64079
+    Title: Solider Hunting
+    Targets:
+      - Mob: SOLIDER
+        Count: 75
+  - Id: 64080
+    Title: Permeter Hunting
+    Targets:
+      - Mob: PERMETER
+        Count: 75
+  - Id: 64081
+    Title: Snowier Hunting
+    Targets:
+      - Mob: SNOWIER
+        Count: 75
+  - Id: 64082
+    Title: Yao Jun Hunting
+    Targets:
+      - Mob: HYEGUN
+        Count: 75
+  - Id: 64083
+    Title: Mao Guai Hunting
+    Targets:
+      - Mob: CIVIL_SERVANT
+        Count: 75
+  - Id: 64084
+    Title: Zhu Po Long Hunting
+    Targets:
+      - Mob: DANCING_DRAGON
+        Count: 75
+  - Id: 64085
+    Title: Harpy Hunting
+    Targets:
+      - Mob: HARPY
+        Count: 75
+  - Id: 64086
+    Title: Owl Duke Hunting
+    Targets:
+      - Mob: OWL_DUKE
+        Count: 75
+  - Id: 64087
+    Title: Ice Titan Hunting
+    Targets:
+      - Mob: ICE_TITAN
+        Count: 75
+  - Id: 64088
+    Title: Kavach Icarus Hunting
+    Targets:
+      - Mob: KAVAC
+        Count: 75
+  - Id: 64089
+    Title: Armeyer Dinze Hunting
+    Targets:
+      - Mob: ARMAIA
+        Count: 75
+  - Id: 64090
+    Title: Egnigem Cenia Hunting
+    Targets:
+      - Mob: YGNIZEM
+        Count: 75
+  - Id: 64091
+    Title: Errende Ebecee Hunting
+    Targets:
+      - Mob: EREND
+        Count: 75
+  - Id: 64092
+    Title: Wickebine Tres Hunting
+    Targets:
+      - Mob: WHIKEBAIN
+        Count: 75
+  - Id: 64093
+    Title: Laurell Weinder Hunting
+    Targets:
+      - Mob: RAWREL
+        Count: 75
+  - Id: 64094
+    Title: Cecil Damon Hunting
+    Targets:
+      - Mob: SHECIL
+        Count: 75
+  - Id: 64095
+    Title: Eremes Guile Hunting
+    Targets:
+      - Mob: EREMES
+        Count: 75
+  - Id: 64096
+    Title: Margaretha Sorin Hunting
+    Targets:
+      - Mob: MAGALETA
+        Count: 75
+  - Id: 64097
+    Title: Howard Alt-Eisen Hunting
+    Targets:
+      - Mob: HARWORD
+        Count: 75
+  - Id: 64098
+    Title: Seyren Windsor Hunting
+    Targets:
+      - Mob: SEYREN
+        Count: 75
+  - Id: 64099
+    Title: Kathryne Keyron Hunting
+    Targets:
+      - Mob: KATRINN
+        Count: 75
+  - Id: 64100
+    Title: Dimik Hunting
+    Targets:
+      - Mob: DIMIK_2
+        Count: 75
+  - Id: 64101
+    Title: Dimik Hunting
+    Targets:
+      - Mob: DIMIK_4
+        Count: 75
+  - Id: 64102
+    Title: Dimik Hunting
+    Targets:
+      - Mob: DIMIK_1
+        Count: 75
+  - Id: 64103
+    Title: Dimik Hunting
+    Targets:
+      - Mob: DIMIK_3
+        Count: 75
+  - Id: 64104
+    Title: Archdam Hunting
+    Targets:
+      - Mob: ARCHDAM
+        Count: 75
+  - Id: 64105
+    Title: Frus Hunting
+    Targets:
+      - Mob: FRUS
+        Count: 75
+  - Id: 64106
+    Title: Skogul Hunting
+    Targets:
+      - Mob: SKOGUL
+        Count: 75
+  - Id: 64107
+    Title: Skeggiold Hunting
+    Targets:
+      - Mob: SKEGGIOLD_
+        Count: 75
+  - Id: 64108
+    Title: Skeggiold Hunting
+    Targets:
+      - Mob: SKEGGIOLD
+        Count: 75
+  - Id: 64109
+    Title: Aliza Hunting
+    Targets:
+      - Mob: ALIZA
+        Count: 75
+  - Id: 64110
+    Title: Aliot Hunting
+    Targets:
+      - Mob: ALIOT
+        Count: 75
+  - Id: 64111
+    Title: Alicel Hunting
+    Targets:
+      - Mob: ALICEL
+        Count: 75
+  - Id: 64112
+    Title: Owl Baron Hunting
+    Targets:
+      - Mob: OWL_BARON
+        Count: 75
+  - Id: 64113
+    Title: Baroness of Retribution Hunting
+    Targets:
+      - Mob: RETRIBUTION
+        Count: 75
+  - Id: 64114
+    Title: Mistress of Shelter Hunting
+    Targets:
+      - Mob: SHELTER
+        Count: 75
+  - Id: 64115
+    Title: Lady Solace Hunting
+    Targets:
+      - Mob: SOLACE
+        Count: 75
+  - Id: 64120
+    Title: Nightmare Terror Hunting
+    Targets:
+      - Mob: NIGHTMARE_TERROR
+        Count: 75
+  - Id: 64121
+    Title: Stalactic Golem Hunting
+    Targets:
+      - Mob: STALACTIC_GOLEM
+        Count: 75
+  - Id: 64122
+    Title: Medusa Hunting
+    Targets:
+      - Mob: MEDUSA
+        Count: 75
+  - Id: 64123
+    Title: Acidus Hunting
+    Targets:
+      - Mob: ACIDUS_
+        Count: 75
+  - Id: 64124
+    Title: Acidus Hunting
+    Targets:
+      - Mob: ACIDUS
+        Count: 75
+  - Id: 64125
+    Title: Agav Hunting
+    Targets:
+      - Mob: AGAV
+        Count: 75
+  - Id: 64126
+    Title: Echio Hunting
+    Targets:
+      - Mob: ECHIO
+        Count: 75
+  - Id: 64127
+    Title: Heater Hunting
+    Targets:
+      - Mob: HEATER
+        Count: 75
+  - Id: 64128
+    Title: Assaulter Hunting
+    Targets:
+      - Mob: ASSULTER
+        Count: 75
+  - Id: 64129
+    Title: Freezer Hunting
+    Targets:
+      - Mob: FREEZER
+        Count: 75
+  - Id: 64130
+    Title: Majoruros Hunting
+    Targets:
+      - Mob: MAJORUROS
+        Count: 75
+  - Id: 64131
+    Title: Necromancer Hunting
+    Targets:
+      - Mob: NECROMANCER
+        Count: 75
+  - Id: 64132
+    Title: Banshee Hunting
+    Targets:
+      - Mob: BANSHEE
+        Count: 75
+  - Id: 64133
+    Title: Zombie Slaughter Hunting
+    Targets:
+      - Mob: ZOMBIE_SLAUGHTER
+        Count: 75
+  - Id: 64134
+    Title: Incarnation of Morocc Hunting
+    Targets:
+      - Mob: MOROCC_1
+        Count: 75
+  - Id: 64135
+    Title: Incarnation of Morocc Hunting
+    Targets:
+      - Mob: MOROCC_2
+        Count: 75
+  - Id: 64136
+    Title: Incarnation of Morocc Hunting
+    Targets:
+      - Mob: MOROCC_3
+        Count: 75
+  - Id: 64137
+    Title: Incarnation of Morocc Hunting
+    Targets:
+      - Mob: MOROCC_4
+        Count: 75
+  - Id: 64138
+    Title: Kasa Hunting
+    Targets:
+      - Mob: KASA
+        Count: 75
+  - Id: 64139
+    Title: Salamander Hunting
+    Targets:
+      - Mob: SALAMANDER
+        Count: 75
