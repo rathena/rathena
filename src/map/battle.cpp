@@ -5965,12 +5965,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_MAGAZINE_FOR_ONE:
-			skillratio += -100 + 100 + 450 * ( skill_lv - 1 );
+			skillratio += -100 + 250 + 500 * skill_lv;
 			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
 			if (sd && sd->weapontype1 == W_REVOLVER)
-				skillratio += 50 + 100 * (skill_lv-1);
+				skillratio += 50 + 300 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_SPIRAL_SHOOTING:
