@@ -12919,7 +12919,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		skill_area_temp[2] = 0;
 
 		if (sd && sd->weapontype1 == W_GATLING) {
-			i += 2;	// 11x11
+			i = 5; // 11x11
 			clif_skill_nodamage(src, bl, NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING, skill_lv, 1);
 		} else
 			clif_skill_nodamage(src, bl, NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN, skill_lv, 1);
