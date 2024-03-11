@@ -5933,7 +5933,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SOA_TALISMAN_OF_RED_PHOENIX:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-					if (sc && (sc->getSCE(SC_T_SECOND_GOD) && !sc->getSCE(SC_T_THIRD_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))){
+					if (sc && sc->getSCE(SC_T_SECOND_GOD)){
 						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					}
 					break;
@@ -8691,7 +8691,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			case SOA_TALISMAN_OF_WHITE_TIGER:
-				if (sc && (sc->getSCE(SC_T_FIRST_GOD) && !sc->getSCE(SC_T_SECOND_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))) {
+				if (sc && sc->getSCE(SC_T_FIRST_GOD)) {
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 				}
 				break;
@@ -14788,7 +14788,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case SOA_TALISMAN_OF_BLACK_TORTOISE:
-		if (sc && (sc->getSCE(SC_T_THIRD_GOD) && !sc->getSCE(SC_T_FOURTH_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))){
+		if (sc && sc->getSCE(SC_T_THIRD_GOD)){
 			sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		}
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
@@ -16796,9 +16796,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					int sp = 0;
 
 					sp += 50 * sg->skill_lv;
-					sp += 5 * pc_checkskill( tsd, SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+					sp += 5 * pc_checkskill( BL_CAST( BL_PC, ss ), SOA_TALISMAN_MASTERY ) * sg->skill_lv;
 					sp += 5 * tstatus->crt * sg->skill_lv;
-					sp *= 100 + status_get_lv( bl );
+					sp *= 100 + status_get_lv( ss );
 					sp /= 150;
 
 					status_heal( bl, hp, sp, 0, 2 );
@@ -18220,7 +18220,7 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 			}
 			break;
 		case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
-			if (!(sc && sc->getSCE(SC_T_FOURTH_GOD))) {
+			if (!(sc && (sc->getSCE(SC_T_FOURTH_GOD) || sc->getSCE(SC_T_FIFTH_GOD)))) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
 				return false;
 			}
