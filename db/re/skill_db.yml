@@ -36847,16 +36847,16 @@ Body:
       Toggleable: true
     Hit: Single
     HitCount: 1
-    GiveAp: 15
     SplashArea: 10
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 15000
+    AfterCastActDelay: 300
+    Duration1: 40000
+    Cooldown: 25000
     FixedCastTime: 1000
     Requires:
       SpCost: 60
+      ApCost: 35
       Status:
         Guard_Stance: true
     Status: Guardian_S
@@ -37018,7 +37018,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -10
-    Element: Holy
+    Element: Neutral
     CastCancel: true
     CastTime: 2000
     Cooldown: 5000
@@ -37058,7 +37058,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
-    GiveAp: 3
+    GiveAp: 5
     SplashArea:
       - Level: 1
         Area: 2
@@ -37105,7 +37105,7 @@ Body:
     HitCount: 3
     Element: Weapon
     SplashArea: 3
-    GiveAp: 3
+    GiveAp: 5
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
@@ -37145,7 +37145,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 4
+    GiveAp: 6
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 150
