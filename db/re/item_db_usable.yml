@@ -67108,7 +67108,7 @@ Body:
       NoAuction: true
   - Id: 102668
     AegisName: Dimen_W_Refine
-    Name: Dimensions Weapon Enhancement Device    # !todo check english name
+    Name: Dimensions Weapon Refinement Device
     Type: DelayConsume
     Weight: 200
     EquipLevelMin: 250
@@ -67119,7 +67119,7 @@ Body:
       item_reform();
   - Id: 102676
     AegisName: Loki_Coin_4
-    Name: Loki's Golden Coin    # !todo check english name
+    Name: Loki's Golden Coin
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -67128,7 +67128,7 @@ Body:
       laphine_upgrade();
   - Id: 102677
     AegisName: Loki_Advice_4
-    Name: Loki's Advice (Defense)    # !todo check english name
+    Name: Loki's Advice (Defense)
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -67137,31 +67137,31 @@ Body:
       laphine_upgrade();
   - Id: 102732
     AegisName: IsgardCrown_Box
-    Name: Isgard Crown Selection Box    # !todo check english name
+    Name: Issgard Crown Selection Box
     Type: DelayConsume
     Flags:
       BuyingStore: true
   - Id: 102733
     AegisName: AceCard_Box
-    Name: Ace card selection box    # !todo check english name
+    Name: Ace Card in Mouth Selection Box
     Type: DelayConsume
     Flags:
       BuyingStore: true
   - Id: 102734
     AegisName: Loki_Coin_Box
-    Name: Loki’s Coin Selection Box    # !todo check english name
+    Name: Loki's Coin Selection Box
     Type: DelayConsume
     Flags:
       BuyingStore: true
   - Id: 102735
     AegisName: Loki_Advice_Box
-    Name: Loki’s Advice Selection Box    # !todo check english name
+    Name: Loki's Advice Selection Box
     Type: DelayConsume
     Flags:
       BuyingStore: true
   - Id: 102771
     AegisName: 2023_Xmas_Costume
-    Name: Christmas Costume Selection Package    # !todo check english name
+    Name: Christmas Costume Selection Package
     Type: DelayConsume
     Trade:
       NoDrop: true
@@ -67172,21 +67172,21 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 102812
-    AegisName: aegis_102812
-    Name: +10 Almighty Shadow Selection Box    # !todo check english name
+    AegisName: 10AllMighty_Select_Box
+    Name: +10 Almighty Shadow Selection Box
     Type: DelayConsume
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 102815
     AegisName: R_Sealed_Card
-    Name: Sealed Card Converter    # !todo check english name
+    Name: Sealed Card Converter
     Type: DelayConsume
     Script: |
       laphine_synthesis();
   - Id: 102900
     AegisName: Refine_Furious
-    Name: Wrath Enhancement Stone    # !todo check english name
+    Name: Furious Refine Stone
     Type: DelayConsume
     Weight: 10
     Flags:
