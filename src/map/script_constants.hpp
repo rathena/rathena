@@ -1910,8 +1910,6 @@
 	export_constant(SC_GRENADE_FRAGMENT_6);
 	export_constant(SC_AUTO_FIRING_LAUNCHER);
 	export_constant(SC_HIDDEN_CARD);
-
-	// Soul Ascetic
 	export_constant(SC_TALISMAN_OF_PROTECTION);
 	export_constant(SC_TALISMAN_OF_WARRIOR);
 	export_constant(SC_TALISMAN_OF_MAGICIAN);
