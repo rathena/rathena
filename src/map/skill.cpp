@@ -16796,9 +16796,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					int sp = 0;
 
 					sp += 50 * sg->skill_lv;
-					sp += 5 * pc_checkskill( tsd, SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+					sp += 5 * pc_checkskill( BL_CAST( BL_PC, ss ), SOA_TALISMAN_MASTERY ) * sg->skill_lv;
 					sp += 5 * tstatus->crt * sg->skill_lv;
-					sp *= 100 + status_get_lv( bl );
+					sp *= 100 + status_get_lv( ss );
 					sp /= 150;
 
 					status_heal( bl, hp, sp, 0, 2 );
