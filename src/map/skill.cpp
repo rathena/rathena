@@ -570,6 +570,13 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp_bonus += skill * 2;
 #endif
 			break;
+
+		case SOA_TALISMAN_OF_PROTECTION:
+			hp = 500 * skill_lv;
+			hp += pc_checkskill( sd, SOA_TALISMAN_MASTERY ) * 50 * skill_lv;
+			hp += ( status_get_lv( src ) + status_get_crt( src ) ) * 20;
+			break;
+
 		default:
 			if (skill_lv >= battle_config.max_heal_lv)
 				return battle_config.max_heal;
@@ -8091,6 +8098,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case DK_SERVANTWEAPON:
 	case ABC_FROM_THE_ABYSS:
+	case SOA_TALISMAN_OF_PROTECTION:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
 		break;
 
@@ -13030,17 +13038,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				pc_addsoulball(sd,limit);
 		}
 		break;
-	case SOA_TALISMAN_OF_PROTECTION:
-		if (flag&1)	{
-			int heal_amount = 500 * skill_lv;
 
-			heal_amount += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 50 * skill_lv;
-			heal_amount += (status_get_lv(src) + status_get_crt(src)) * 20;
-
-			status_heal(bl, heal_amount, 0, 0, 2);
-		} else
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
 	case SOA_TALISMAN_OF_WARRIOR:
 	case SOA_TALISMAN_OF_MAGICIAN:
 	case SOA_TALISMAN_OF_FIVE_ELEMENTS:

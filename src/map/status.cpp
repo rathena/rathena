@@ -12800,7 +12800,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 10 * val1;
 			break;
 		case SC_TALISMAN_OF_PROTECTION:
-			val2 = 2 * val1;
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
 			break;
@@ -14978,7 +14977,20 @@ TIMER_FUNC(status_change_timer){
 		return 0;
 	case SC_TALISMAN_OF_PROTECTION:
 		if( sce->val4 >= 0 ){
-			skill_castend_nodamage_id( bl, bl, SOA_TALISMAN_OF_PROTECTION, sce->val1, tick, 1 );
+			// Get the original caster
+			map_session_data* ssd = map_id2sd( sce->val2 );
+
+			// If the caster is offline, dead, on another map or
+			// if the target is not a player or is in another party
+			if( ssd == nullptr || status_isdead( &ssd->bl ) || ssd->bl.m != bl->m || sd == nullptr || ssd->status.party_id != sd->status.party_id ){
+				// End the status change
+				sce->val4 = 0;
+				break;
+			}
+
+			int hp = skill_calc_heal( &ssd->bl, bl, SOA_TALISMAN_OF_PROTECTION, sce->val1, true );
+
+			status_heal( bl, hp, 0, 0, 2 );
 		}
 		break;
 	}
