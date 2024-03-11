@@ -41440,7 +41440,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 1000
     Cooldown: 500
     CastCancel: true
@@ -41475,7 +41475,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 500
     Cooldown: 350
     CastCancel: true
@@ -41522,7 +41522,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 1000
     Cooldown: 500
     CastCancel: true
@@ -41557,7 +41557,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 6
     Element: Weapon
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 1000
     Cooldown: 500
     CastCancel: true
@@ -41603,7 +41603,7 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    GiveAp: 1
+    GiveAp: 2
     AfterCastActDelay: 1000
     Cooldown: 500
     CastCancel: true
