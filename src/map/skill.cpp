@@ -10966,44 +10966,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case SOA_SOUL_GATHERING:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-
-		if( sd != nullptr ){
-			int limit = 5 + pc_checkskill(sd, SP_SOULENERGY) * 3;
-			
-			for (i = 0; i < limit; i++)
-				pc_addsoulball(sd,limit);
-		}
-		break;
-	case SOA_TALISMAN_OF_PROTECTION:
-		if (flag&1)	{
-			int heal_amount = 500 * skill_lv;
-
-			heal_amount += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 50 * skill_lv;
-			heal_amount += (status_get_lv(src) + status_get_crt(src)) * 20;
-
-			status_heal(bl, heal_amount, 0, 0, 2);
-		} else
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
-	case SOA_TALISMAN_OF_WARRIOR:
-	case SOA_TALISMAN_OF_MAGICIAN:
-	case SOA_TALISMAN_OF_FIVE_ELEMENTS:
-		if( dstsd != nullptr ){
-			short index = dstsd->equip_index[EQI_HAND_R];
-
-			if (index >= 0 && dstsd->inventory_data[index] && dstsd->inventory_data[index]->type == IT_WEAPON) {
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-				break;
-			}
-		}
-
-		if( sd != nullptr ){
-			clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_WEAPON, 0);
-		}
-		break;
-
 	case GC_WEAPONBLOCKING:
 		if( tsc && tsc->getSCE(SC_WEAPONBLOCKING) )
 			status_change_end(bl, SC_WEAPONBLOCKING);
@@ -13056,6 +13018,44 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(src, SC_GRENADE_FRAGMENT_6);
 		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		break;
+
+	case SOA_SOUL_GATHERING:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+
+		if( sd != nullptr ){
+			int limit = 5 + pc_checkskill(sd, SP_SOULENERGY) * 3;
+			
+			for (i = 0; i < limit; i++)
+				pc_addsoulball(sd,limit);
+		}
+		break;
+	case SOA_TALISMAN_OF_PROTECTION:
+		if (flag&1)	{
+			int heal_amount = 500 * skill_lv;
+
+			heal_amount += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 50 * skill_lv;
+			heal_amount += (status_get_lv(src) + status_get_crt(src)) * 20;
+
+			status_heal(bl, heal_amount, 0, 0, 2);
+		} else
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		break;
+	case SOA_TALISMAN_OF_WARRIOR:
+	case SOA_TALISMAN_OF_MAGICIAN:
+	case SOA_TALISMAN_OF_FIVE_ELEMENTS:
+		if( dstsd != nullptr ){
+			short index = dstsd->equip_index[EQI_HAND_R];
+
+			if (index >= 0 && dstsd->inventory_data[index] && dstsd->inventory_data[index]->type == IT_WEAPON) {
+				clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+				break;
+			}
+		}
+
+		if( sd != nullptr ){
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_WEAPON, 0);
+		}
 		break;
 
 	default: {
