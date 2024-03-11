@@ -9474,6 +9474,7 @@ static int status_get_sc_interval(enum sc_type type)
 			return 1000;
 		case SC_BURNING:
 		case SC_PYREXIA:
+		case SC_TALISMAN_OF_PROTECTION:
 			return 3000;
 		case SC_MAGICMUSHROOM:
 			return 4000;
@@ -12800,8 +12801,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_TALISMAN_OF_PROTECTION:
 			val2 = 2 * val1;
-			val4 = tick / 3000;
-			tick_time = 3000;
+			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_TALISMAN_OF_WARRIOR:
 		case SC_TALISMAN_OF_MAGICIAN:
@@ -14976,10 +14977,8 @@ TIMER_FUNC(status_change_timer){
 		sc_timer_next(500 + tick);
 		return 0;
 	case SC_TALISMAN_OF_PROTECTION:
-		if (--(sce->val4) >= 0) {
-			skill_castend_nodamage_id(bl, bl, SOA_TALISMAN_OF_PROTECTION, sce->val1, tick, 1);
-			sc_timer_next(3000 + tick);
-			return 0;
+		if( sce->val4 >= 0 ){
+			skill_castend_nodamage_id( bl, bl, SOA_TALISMAN_OF_PROTECTION, sce->val1, tick, 1 );
 		}
 		break;
 	}
