@@ -7158,8 +7158,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if( bl->type != BL_SKILL ){
 			int64 sp = 100 * skill_lv + status_get_lv(src);
 
-			status_heal(src, 0, sp, 0, 0);
-			clif_skill_nodamage(src, src, MG_SRECOVERY, (int)sp, 1);
+			status_heal(src, 0, sp, 0, 2);
 		}
 		break;
 
