@@ -8879,3 +8879,7 @@ Body:
     DurationLookup: NW_HIDDEN_CARD
     CalcFlags:
       All: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
