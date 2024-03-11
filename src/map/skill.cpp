@@ -16786,15 +16786,25 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			++sg->val1;
 			if( bl->type == BL_PC ) {
 				if (sg->val1 % 3 == 0) {
-					int hp = (500 + (500 + 50 * pc_checkskill(tsd, SOA_TALISMAN_MASTERY) + 50 * status_get_crt(ss)) * sg->skill_lv) * status_get_lv(ss)/100,
-					sp = (50 + 5 * tstatus->crt + 5 * pc_checkskill(tsd, SOA_TALISMAN_MASTERY)) * sg->skill_lv * (100+status_get_lv(bl))/150 ;
+					int hp = 500;
 
-					clif_skill_nodamage(&unit->bl, bl, AL_HEAL, hp, 1);
-					clif_skill_nodamage(&unit->bl, bl, MG_SRECOVERY, sp, 1);
+					hp += 500 * sg->skill_lv;
+					hp += 50 * pc_checkskill( tsd, SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+					hp += 50 * status_get_crt( ss ) * sg->skill_lv;
+					hp *= status_get_lv( ss ) / 100;
 
-					status_heal(bl, hp, sp, 0, 0);
+					int sp = 0;
+
+					sp += 50 * sg->skill_lv;
+					sp += 5 * pc_checkskill( tsd, SOA_TALISMAN_MASTERY ) * sg->skill_lv;
+					sp += 5 * tstatus->crt * sg->skill_lv;
+					sp *= 100 + status_get_lv( bl );
+					sp /= 150;
+
+					status_heal( bl, hp, sp, 0, 2 );
 				}
-				sc_start(ss, bl, SC_TOTEM_OF_TUTELARY, 100, sg->skill_lv, sg->interval + 100);
+
+				sc_start( ss, bl, skill_get_sc( sg->skill_id ), 100, sg->skill_lv, sg->interval + 100 );
 			} 
 			break;
 	}
