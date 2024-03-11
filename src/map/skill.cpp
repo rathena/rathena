@@ -8690,11 +8690,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				}
 				break;
 
-		}
-		if (skill_id == SOA_TALISMAN_OF_WHITE_TIGER ) {
-			if (sc && (sc->getSCE(SC_T_FIRST_GOD) && !sc->getSCE(SC_T_SECOND_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))){
-				sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			}
+			case SOA_TALISMAN_OF_WHITE_TIGER:
+				if (sc && (sc->getSCE(SC_T_FIRST_GOD) && !sc->getSCE(SC_T_SECOND_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))) {
+					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				}
+				break;
 		}
 
 		skill_area_temp[1] = 0;
