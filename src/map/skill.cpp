@@ -14004,24 +14004,17 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
-	case SOA_TOTEM_OF_TUTELARY:
 	case EM_DIAMOND_STORM:
 	case EM_LIGHTNING_LAND:
 	case EM_VENOM_SWAMP:
 	case EM_CONFLAGRATION:
 	case EM_TERRA_DRIVE:
+	case SOA_TOTEM_OF_TUTELARY:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		[[fallthrough]];
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 	case GN_WALLOFTHORN:
 	case GN_DEMONIC_FIRE:
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		break;
-
-	case SOA_TALISMAN_OF_BLACK_TORTOISE:
-		if (sc && (sc->getSCE(SC_T_THIRD_GOD) && !sc->getSCE(SC_T_FOURTH_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))){
-			sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		}
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 
@@ -14792,6 +14785,13 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
 			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
+		break;
+
+	case SOA_TALISMAN_OF_BLACK_TORTOISE:
+		if (sc && (sc->getSCE(SC_T_THIRD_GOD) && !sc->getSCE(SC_T_FOURTH_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))){
+			sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		}
+		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 
 	default:
