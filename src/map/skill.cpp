@@ -8678,12 +8678,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);
 		}
-		if (skill_id == SOA_EXORCISM_OF_MALICIOUS_SOUL ) {
-			if (sd) {
-				// Remove old souls if any exist.
-				sd->soulball_old = sd->soulball;
-				pc_delsoulball(sd, sd->soulball, 0);
-			}
+
+		// TODO: refactor the ifs above into the switch below
+
+		switch( skill_id ){
+			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+				if( sd != nullptr ){
+					// Remove old souls if any exist.
+					sd->soulball_old = sd->soulball;
+					pc_delsoulball( sd, sd->soulball, 0 );
+				}
+				break;
+
 		}
 		if (skill_id == SOA_TALISMAN_OF_WHITE_TIGER ) {
 			if (sc && (sc->getSCE(SC_T_FIRST_GOD) && !sc->getSCE(SC_T_SECOND_GOD) && !sc->getSCE(SC_T_FIFTH_GOD))){
