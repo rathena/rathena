@@ -10978,9 +10978,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SOA_TALISMAN_OF_PROTECTION:
 		if (flag&1)	{
-			int heal_amount = (500 + pc_checkskill(sd,SOA_TALISMAN_MASTERY) * 50) * skill_lv + (status_get_lv(src) + status_get_crt(src)) * 20;
-			clif_skill_nodamage(nullptr, bl, AL_HEAL, heal_amount, 1);
-			status_heal(bl, heal_amount, 0, 0, 0);
+			int heal_amount = 500 * skill_lv;
+
+			heal_amount += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 50 * skill_lv;
+			heal_amount += (status_get_lv(src) + status_get_crt(src)) * 20;
+
+			status_heal(bl, heal_amount, 0, 0, 2);
 		} else
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
