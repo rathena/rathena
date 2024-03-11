@@ -40909,7 +40909,7 @@ Body:
     GiveAp: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1: 3000
     Duration2: 10000
     Cooldown: 2000
@@ -40948,7 +40948,7 @@ Body:
     GiveAp: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1: 3000
     Duration2: 20000
     Cooldown: 2000
@@ -40987,7 +40987,7 @@ Body:
     GiveAp: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1: 3000
     Duration2: 20000
     Cooldown: 2000
@@ -41068,7 +41068,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41089,7 +41089,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41110,7 +41110,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41131,7 +41131,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41152,7 +41152,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41171,11 +41171,11 @@ Body:
     CastCancel: true
     CastTime: 8000
     AfterCastActDelay: 500
-    Cooldown: 5000
+    Cooldown: 2000
     FixedCastTime: 1500
     Requires:
       SpCost: 140
-      ApCost: 30
+      ApCost: 15
   - Id: 5381
     Name: EM_ELEMENTAL_VEIL
     Description: Elemental Veil

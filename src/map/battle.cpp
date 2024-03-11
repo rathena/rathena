@@ -7701,7 +7701,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							if ((skill_id == MG_FIREBOLT && sc->getSCE(SC_FLAMETECHNIC_OPTION)) ||
 								(skill_id == MG_COLDBOLT && sc->getSCE(SC_COLD_FORCE_OPTION)) ||
 								(skill_id == MG_LIGHTNINGBOLT && sc->getSCE(SC_GRACE_BREEZE_OPTION)))
-								skillratio *= 2;
+								skillratio *= 5;
 
 							if (sc->getSCE(SC_SPELLFIST) && mflag & BF_SHORT) {
 								skillratio += (sc->getSCE(SC_SPELLFIST)->val3 * 100) + (sc->getSCE(SC_SPELLFIST)->val1 * 50 - 50) - 100; // val3 = used bolt level, val1 = used spellfist level. [Rytech]
@@ -7754,7 +7754,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WZ_EARTHSPIKE:
 						skillratio += 100;
 						if (sc && sc->getSCE(SC_EARTH_CARE_OPTION))
-							skillratio += skillratio * 80 / 100;
+							skillratio += skillratio * 800 / 100;
 						break;
 #endif
 					case HW_NAPALMVULCAN:
@@ -8021,7 +8021,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 								skillratio += (sd ? sd->status.job_level : 0);
 
 							if (sc->getSCE(SC_DEEP_POISONING_OPTION))
-								skillratio += skillratio * 50 / 100;
+								skillratio += skillratio * 1500 / 100;
 						}
 						break;
 					case NPC_CLOUD_KILL:
@@ -8336,46 +8336,53 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						}
 						break;
 					case EM_DIAMOND_STORM:
-						skillratio += -100 + 400 + 1550 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 + 2400 * skill_lv;
+						skillratio += 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_DILUVIO ) ){
-							skillratio += 5000 + 250 * skill_lv  + 5 * sstatus->spl;
+							skillratio += 7300 + 200 * skill_lv;
+							skillratio += 5 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_LIGHTNING_LAND:
-						skillratio += -100 + 500 + 650 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 700 + 1100 * skill_lv;
+						skillratio += 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_PROCELLA ) ){
-							skillratio += 400 * skill_lv;
+							skillratio += 200 * skill_lv;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_VENOM_SWAMP:
-						skillratio += -100 + 500 + 650 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 700 + 1100 * skill_lv;
+						skillratio += 5 * sstatus->spl;
 
 						if( sc && sc->getSCE( SC_SUMMON_ELEMENTAL_SERPENS ) ){
-							skillratio += 400 * skill_lv;
+							skillratio += 200 * skill_lv;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_CONFLAGRATION:
-						skillratio += -100 + 500 + 650 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 700 + 1100 * skill_lv;
+						skillratio += 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_ARDOR ) ){
-							skillratio += 400 * skill_lv;
+							skillratio += 200 * skill_lv;
 						}
 
 						RE_LVL_DMOD(100);
 						break;
 					case EM_TERRA_DRIVE:
-						skillratio += -100 + 400 + 1550 * skill_lv + 5 * sstatus->spl;
+						skillratio += -100 + 500 + 2400 * skill_lv;
+						skillratio += 5 * sstatus->spl;
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_TERREMOTUS ) ){
-							skillratio += 5000 + 250 * skill_lv + 5 * sstatus->spl;
+							skillratio += 7300 + 200 * skill_lv;
+							skillratio += 5 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
@@ -8389,7 +8396,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case EM_ELEMENTAL_BUSTER_WIND:
 					case EM_ELEMENTAL_BUSTER_GROUND:
 					case EM_ELEMENTAL_BUSTER_POISON:
-						skillratio += -100 + 500 + 2200 * skill_lv + 10 * sstatus->spl;
+						skillratio += -100 + 550 + 2650 * skill_lv;
+						skillratio += 10 * sstatus->spl;
 						if (tstatus->race == RC_FORMLESS || tstatus->race == RC_DRAGON)
 							skillratio += 150 * skill_lv;
 						RE_LVL_DMOD(100);
