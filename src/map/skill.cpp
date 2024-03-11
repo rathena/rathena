@@ -8899,10 +8899,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (check_distance_bl(src, bl, AREA_SIZE))
 				clif_skill_nodamage(bl, bl, skill_id, skill_lv, 1);
 
-			if ( src != bl) {
-				if( skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH && tsc && tsc->getSCE(SC_TOTEM_OF_TUTELARY) ){
-						status_heal(bl, 0, 0, 3 * skill_lv, 0);
-					}
+			if( skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH ){
+				if( src != bl && tsc && tsc->getSCE(SC_TOTEM_OF_TUTELARY) ){
+					status_heal(bl, 0, 0, 3 * skill_lv, 0);
+				}
 			}
 
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
