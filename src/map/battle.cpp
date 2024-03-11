@@ -5938,13 +5938,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_HASTY_FIRE_IN_THE_HOLE:
-			skillratio += -100 + 1500 + 1050 * skill_lv;
+			skillratio += -100 + 1500 + 1500 * skill_lv;
 			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 20;
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_BASIC_GRENADE:
-			skillratio += -100 + 1000 + 950 * skill_lv;
+			skillratio += -100 + 1500 + 2100 * skill_lv;
 			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 50;
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
@@ -5956,39 +5956,39 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NW_WILD_FIRE:
-			skillratio += -100 + 1000 + 2300 * skill_lv;
+			skillratio += -100 + 1500 + 3000 * skill_lv;
 			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 500 * skill_lv;
 			if (sd && sd->weapontype1 == W_SHOTGUN)
-				skillratio += 150 * skill_lv;
+				skillratio += 200 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_MAGAZINE_FOR_ONE:
-			skillratio += -100 + 100 + 450 * ( skill_lv - 1 );
+			skillratio += -100 + 250 + 500 * skill_lv;
 			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
 			if (sd && sd->weapontype1 == W_REVOLVER)
-				skillratio += 50 + 100 * (skill_lv-1);
+				skillratio += 50 + 300 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_SPIRAL_SHOOTING:
-			skillratio += -100 + 1000 + 1500 * skill_lv;
+			skillratio += -100 + 1200 + 1700 * skill_lv;
 			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 150 * skill_lv;
 			if (sd && sd->weapontype1 == W_RIFLE) 
-				skillratio += 200 + 200 * skill_lv;
+				skillratio += 200 + 1100 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case NW_ONLY_ONE_BULLET:
-			skillratio += -100 + 800 + 1350 * skill_lv;
+			skillratio += -100 + 1200 + 3000 * skill_lv;
 			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 350 * skill_lv;
 			if (sd && sd->weapontype1 == W_REVOLVER) {
-				skillratio += 150 * skill_lv;
+				skillratio += 400 * skill_lv;
 			}
 			RE_LVL_DMOD(100);
 			break;
