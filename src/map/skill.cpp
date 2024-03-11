@@ -10990,15 +10990,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SOA_TALISMAN_OF_WARRIOR:
 	case SOA_TALISMAN_OF_MAGICIAN:
 	case SOA_TALISMAN_OF_FIVE_ELEMENTS:
-		if (dstsd) {
+		if( dstsd != nullptr ){
 			short index = dstsd->equip_index[EQI_HAND_R];
+
 			if (index >= 0 && dstsd->inventory_data[index] && dstsd->inventory_data[index]->type == IT_WEAPON) {
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+				clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 				break;
 			}
 		}
-		clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_WEAPON, 0);
+
+		if( sd != nullptr ){
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_NEED_WEAPON, 0);
+		}
 		break;
 
 	case GC_WEAPONBLOCKING:
