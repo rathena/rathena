@@ -41447,15 +41447,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 49
+          Amount: 72
         - Level: 2
-          Amount: 53
+          Amount: 76
         - Level: 3
-          Amount: 57
+          Amount: 80
         - Level: 4
-          Amount: 61
+          Amount: 84
         - Level: 5
-          Amount: 65
+          Amount: 88
       Weapon:
         Gatling: true
         Shotgun: true
@@ -41476,7 +41476,7 @@ Body:
     Element: Weapon
     GiveAp: 1
     AfterCastActDelay: 500
-    Cooldown: 300
+    Cooldown: 350
     CastCancel: true
     FixedCastTime: 1000
     Requires:
