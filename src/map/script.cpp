@@ -24056,6 +24056,7 @@ BUILDIN_FUNC(geteleminfo) {
 	switch (type) {
 		case 0: script_pushint(st, ed->elemental.elemental_id); break;
 		case 1: script_pushint(st, ed->bl.id); break;
+		case 2: script_pushint(st, ed->elemental.class_); break;
 		default:
 			ShowError("buildin_geteleminfo: Invalid type '%d'.\n", type);
 			script_pushint(st, 0);
