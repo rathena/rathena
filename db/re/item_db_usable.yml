@@ -61736,7 +61736,7 @@ Body:
       laphine_upgrade();
   - Id: 100487
     AegisName: Loki_Coin_2
-    Name: Loki's White Coin    # !todo check english name
+    Name: Tiara's Loss
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -61745,7 +61745,7 @@ Body:
       laphine_upgrade();
   - Id: 100488
     AegisName: Loki_Advice_2
-    Name: Loki's Advice (Magic)    # !todo check english name
+    Name: Condensed Tiara's Loss
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -66848,7 +66848,7 @@ Body:
       item_reform();
   - Id: 102277
     AegisName: Loki_Advice
-    Name: Loki's advice (near physics)    # !todo check english name
+    Name: Loki's Advice (Melee Physical)
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -66857,7 +66857,7 @@ Body:
       laphine_upgrade();
   - Id: 102278
     AegisName: Loki_Coin
-    Name: Loki's Coin    # !todo check english name
+    Name: Loki's Coin
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -66908,7 +66908,7 @@ Body:
       laphine_synthesis();
   - Id: 102311
     AegisName: Bs_Item_M_S_63
-    Name: Groan of Corruption Recipe    # !todo check english name
+    Name: Moan of Corruption Recipe
     Type: DelayConsume
     Weight: 10
     EquipLevelMin: 240
