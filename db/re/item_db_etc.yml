@@ -72390,7 +72390,8 @@ Body:
       bonus2 bSkillAtk,"SS_FUUMASHOUAKU",2+(getrefine()/2);
   - Id: 312267
     AegisName: SS_Soul_FK
-    Name: Shinkiro & Shiranui Soul (Huuma Shuriken - Construct)
+    # Name: Shinkiro & Shiranui Soul (Huuma Shuriken - Construct)
+    Name: Shinkiro & Shiranui Soul (Huuma Shuriken - Constr
     Type: Card
     SubType: Enchant
     Script: |
