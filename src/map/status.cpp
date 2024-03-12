@@ -9474,7 +9474,6 @@ static int status_get_sc_interval(enum sc_type type)
 			return 1000;
 		case SC_BURNING:
 		case SC_PYREXIA:
-		case SC_TALISMAN_OF_PROTECTION:
 			return 3000;
 		case SC_MAGICMUSHROOM:
 			return 4000;
@@ -12800,8 +12799,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 10 * val1;
 			break;
 		case SC_TALISMAN_OF_PROTECTION:
-			tick_time = status_get_sc_interval(type);
-			val4 = tick - tick_time; // Remaining time
+			//heal value is static per cast of skill [munkrej]
+			val3 = skill_calc_heal(src, bl, SOA_TALISMAN_OF_PROTECTION, val1, true);
+			val4 = tick / 3000;
+			//first heal tick applies on cast [munkrej]
+			tick_time = 100;
 			break;
 		case SC_TALISMAN_OF_WARRIOR:
 		case SC_TALISMAN_OF_MAGICIAN:
@@ -14976,7 +14978,7 @@ TIMER_FUNC(status_change_timer){
 		sc_timer_next(500 + tick);
 		return 0;
 	case SC_TALISMAN_OF_PROTECTION:
-		if( sce->val4 >= 0 ){
+		if(--(sce->val4) >= 0){
 			// Get the original caster
 			map_session_data* ssd = map_id2sd( sce->val2 );
 
@@ -14984,13 +14986,16 @@ TIMER_FUNC(status_change_timer){
 			// if the target is not a player or is in another party
 			if( ssd == nullptr || status_isdead( &ssd->bl ) || ssd->bl.m != bl->m || sd == nullptr || ssd->status.party_id != sd->status.party_id ){
 				// End the status change
+				ShowWarning("killsc");
 				sce->val4 = 0;
 				break;
 			}
 
-			int hp = skill_calc_heal( &ssd->bl, bl, SOA_TALISMAN_OF_PROTECTION, sce->val1, true );
+			int hp = sc->getSCE(SC_TALISMAN_OF_PROTECTION)->val3;
 
 			status_heal( bl, hp, 0, 0, 2 );
+			sc_timer_next(3000 + tick);
+			return 0;
 		}
 		break;
 	}

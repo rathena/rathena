@@ -572,9 +572,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			break;
 
 		case SOA_TALISMAN_OF_PROTECTION:
-			hp = 500 * skill_lv;
-			hp += pc_checkskill( sd, SOA_TALISMAN_MASTERY ) * 50 * skill_lv;
-			hp += ( status_get_lv( src ) + status_get_crt( src ) ) * 20;
+			hp = (500 + pc_checkskill(sd,SOA_TALISMAN_MASTERY) * 50) * skill_lv * status_get_lv(src) / 100;
+			hp += (status_get_lv(src) + status_get_int(src)) / 5 * 30 * status_get_crt(src) / 100;
 			break;
 
 		default:
@@ -711,7 +710,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	}
 
 #ifdef RENEWAL
-	if (hp_bonus)
+	if (hp_bonus && skill_id != SOA_TALISMAN_OF_PROTECTION)
 		hp += hp * hp_bonus / 100;
 
 	// MATK part of the RE heal formula [malufett]
@@ -789,7 +788,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 	// Final heal increased by HPlus.
 	// Is this the right place for this??? [Rytech]
-	if ( sd && status_get_hplus(src) > 0 )
+	if ( sd && status_get_hplus(src) > 0 && skill_id != SOA_TALISMAN_OF_PROTECTION)
 		hp += hp * status_get_hplus(src) / 100;
 
 	return (heal) ? max(1, hp) : hp;
@@ -8908,7 +8907,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_nodamage(bl, bl, skill_id, skill_lv, 1);
 
 			if( skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH ){
-				if( src != bl && tsc && tsc->getSCE(SC_TOTEM_OF_TUTELARY) ){
+				status_percent_heal(bl, 0, 100);
+				if( src != bl && sc && sc->getSCE(SC_TOTEM_OF_TUTELARY) ){
 					status_heal(bl, 0, 0, 3 * skill_lv, 0);
 				}
 			}
