@@ -7937,6 +7937,9 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
   - Status: Ultimate_S
     Icon: EFST_ULTIMATE_S
     DurationLookup: IG_ULTIMATE_SACRIFICE
@@ -8787,3 +8790,96 @@ Body:
   - Status: Rulebreak
     Icon: EFST_RULEBREAK
     DurationLookup: HN_RULEBREAK
+  - Status: Intensive_Aim
+    Icon: EFST_INTENSIVE_AIM
+    States:
+      NoMove: true
+    CalcFlags:
+      Batk: true
+      Hit: true
+      Cri: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Intensive_Aim_Count
+    Icon: EFST_INTENSIVE_AIM_COUNT
+    Flags:
+      DisplayPc: true
+      SendVal1: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Grenade_Fragment_1
+    Icon: EFST_GRENADE_FRAGMENT_1
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_2
+    Icon: EFST_GRENADE_FRAGMENT_2
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_3
+    Icon: EFST_GRENADE_FRAGMENT_3
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_4
+    Icon: EFST_GRENADE_FRAGMENT_4
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_5
+    Icon: EFST_GRENADE_FRAGMENT_5
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_6
+    Icon: EFST_GRENADE_FRAGMENT_6
+    DurationLookup: NW_GRENADE_FRAGMENT
+    EndOnStart:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+  - Status: Auto_Firing_Launcher
+    Icon: EFST_AUTO_FIRING_LAUNCHEREFST
+    DurationLookup: NW_AUTO_FIRING_LAUNCHER
+    Flags:
+      SendVal1: true
+  - Status: Hidden_Card
+    Icon: EFST_HIDDEN_CARD
+    DurationLookup: NW_HIDDEN_CARD
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
