@@ -8908,6 +8908,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			if( skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH ){
 				status_percent_heal(bl, 0, 100);
+
 				if( src != bl && sc && sc->getSCE(SC_TOTEM_OF_TUTELARY) ){
 					status_heal(bl, 0, 0, 3 * skill_lv, 0);
 				}
