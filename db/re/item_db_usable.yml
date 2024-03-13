@@ -61736,7 +61736,7 @@ Body:
       laphine_upgrade();
   - Id: 100487
     AegisName: Loki_Coin_2
-    Name: Loki's White Coin    # !todo check english name
+    Name: Tiara's Loss
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -61745,7 +61745,7 @@ Body:
       laphine_upgrade();
   - Id: 100488
     AegisName: Loki_Advice_2
-    Name: Loki's Advice (Magic)    # !todo check english name
+    Name: Condensed Tiara's Loss
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -66207,12 +66207,40 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101801
+    AegisName: R_Bearers_Select_Box
+    Name: Road Bearers Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 101806
+    AegisName: Hasty_Select_Box
+    Name: Hasty Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 101816
     AegisName: Dimmen_A_Refine
     Name: Dimension Enhancer    # !todo check english name
     Type: DelayConsume
     Script: |
       item_reform();
+  - Id: 101856
+    AegisName: MAutoSpell_Select_Box
+    Name: Major Auto Spell Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 101862
+    AegisName: Infinity_Select_Box
+    Name: Infinity Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 101876
     AegisName: aegis_101876
     Name: Costume Enchant Stone Box 29
@@ -66222,6 +66250,20 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box29);
+  - Id: 101919
+    AegisName: EXP_Select_Box
+    Name: Experience Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 101922
+    AegisName: M_Blitz_Select_Box
+    Name: Mega Blitz Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 101933
     AegisName: Barmund_Soul_Reform
     Name: Soul Rune Upgrade    # !todo check english name
@@ -66672,6 +66714,11 @@ Body:
       BuyingStore: true
     Script: |
       item_reform();
+  - Id: 102084
+    AegisName: GoodnEvil_Circlet_Box
+    Name: Crown of Good and Evil (Night Watch) Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
   - Id: 102121
     AegisName: aegis_102121
     Name: "[Scroll] AGI Biscuit Stick"
@@ -66705,6 +66752,61 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box30);
+  - Id: 102213
+    AegisName: Hero_Weapon_Up_S_Box
+    Name: Hero's Weapon Mod Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102214
+    AegisName: Hero_Weapon_Hammer_S
+    Name: Modified Hero's Weapon Refining Hammer S    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102215
+    AegisName: aegis_102215
+    Name: 12 refine selection cube    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102216
+    AegisName: aegis_102216
+    Name: 11 refine selection cube    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102217
+    AegisName: Hero_Weapon_S_Box_1
+    Name: Ancient Hero's Weapon Selector I    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102218
+    AegisName: Hero_Weapon_S_Box_2
+    Name: Ancient Hero's Weapon Selector II    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102219
+    AegisName: Hero_Weapon_S_Box_3
+    Name: Ancient Hero's Weapon Selector III    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102220
+    AegisName: Hero_Weapon_S_Box_4
+    Name: Ancient Hero's Weapon Selector IV    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102221
+    AegisName: Hero_Weapon_S_Box_5
+    Name: Ancient Hero's Weapon Selection Box V    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102222
+    AegisName: Hero_Weapon_S_Box_6
+    Name: Ancient Hero's Weapon Selection Box VI    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+  - Id: 102223
+    AegisName: Hero_Weapon_S_Box_7
+    Name: Ancient Hero's Weapon Selection Box VII    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
   - Id: 102224
     AegisName: Hero_Up_Cube_11
     Name: +11 Ancient Hero Armor Opening Cube    # !todo check english name
@@ -66746,7 +66848,7 @@ Body:
       item_reform();
   - Id: 102277
     AegisName: Loki_Advice
-    Name: Loki's advice (near physics)    # !todo check english name
+    Name: Loki's Advice (Melee Physical)
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -66755,7 +66857,7 @@ Body:
       laphine_upgrade();
   - Id: 102278
     AegisName: Loki_Coin
-    Name: Loki's Coin    # !todo check english name
+    Name: Loki's Coin
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -66772,6 +66874,18 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 102306
+    AegisName: 2023_Spring_Select
+    Name: 2023 Spring Reward Outfit Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 102308
     AegisName: Bs_Item_M_S_61
     Name: Beelzebub's Crown Recipe
@@ -66794,7 +66908,7 @@ Body:
       laphine_synthesis();
   - Id: 102311
     AegisName: Bs_Item_M_S_63
-    Name: Groan of Corruption Recipe    # !todo check english name
+    Name: Moan of Corruption Recipe
     Type: DelayConsume
     Weight: 10
     EquipLevelMin: 240
@@ -66820,6 +66934,18 @@ Body:
       Container: true
     Script: |
       /* TODO getgroupitem(IG_THIRD_JOB_STONE_GARMENT_BOX3); */
+  - Id: 102338
+    AegisName: RO_Concert_Scroll2
+    Name: RO Concert Costume Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 102342
     AegisName: Loki_Advice_3
     Name: Loki's advice (distance physics)    # !todo check english name
@@ -66913,6 +67039,18 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box32);
+  - Id: 102467
+    AegisName: 21th_Costume_Select
+    Name: 21st Anniversary Costume Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 102482
     AegisName: FateSin_Boots_Hammer
     Name: Boots of Good and Evil Smelting Hammer    # !todo check english name
@@ -66920,6 +67058,21 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 102514
+    AegisName: Season_H_Upgrade
+    Name: Granting the truth of the Circulation of life
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       item_reform();
   - Id: 102580
@@ -66940,6 +67093,118 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box33);
+  - Id: 102631
+    AegisName: Cinnamon_Costume_Box
+    Name: Cinnamoroll Costume Selection Box
+    Type: DelayConsume
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 102668
+    AegisName: Dimen_W_Refine
+    Name: Dimensions Weapon Refinement Device
+    Type: DelayConsume
+    Weight: 200
+    EquipLevelMin: 250
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 102676
+    AegisName: Loki_Coin_4
+    Name: Loki's Golden Coin
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102677
+    AegisName: Loki_Advice_4
+    Name: Loki's Advice (Defense)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 102732
+    AegisName: IsgardCrown_Box
+    Name: Issgard Crown Selection Box
+    Type: DelayConsume
+    Flags:
+      BuyingStore: true
+  - Id: 102733
+    AegisName: AceCard_Box
+    Name: Ace Card in Mouth Selection Box
+    Type: DelayConsume
+    Flags:
+      BuyingStore: true
+  - Id: 102734
+    AegisName: Loki_Coin_Box
+    Name: Loki's Coin Selection Box
+    Type: DelayConsume
+    Flags:
+      BuyingStore: true
+  - Id: 102735
+    AegisName: Loki_Advice_Box
+    Name: Loki's Advice Selection Box
+    Type: DelayConsume
+    Flags:
+      BuyingStore: true
+  - Id: 102771
+    AegisName: 2023_Xmas_Costume
+    Name: Christmas Costume Selection Package
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 102812
+    AegisName: 10AllMighty_Select_Box
+    Name: +10 Almighty Shadow Selection Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 102815
+    AegisName: R_Sealed_Card
+    Name: Sealed Card Converter
+    Type: DelayConsume
+    Script: |
+      laphine_synthesis();
+  - Id: 102900
+    AegisName: Refine_Furious
+    Name: Furious Refine Stone
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 102949
+    AegisName: Sonic_Costume_Pack
+    Name: Sonic Costume Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)
