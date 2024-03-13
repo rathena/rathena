@@ -4875,7 +4875,7 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			int bonus = sc->getSCE(SC_TALISMAN_OF_FIVE_ELEMENTS)->val2;
 
 			for( const auto &element : elements ){
-				sd->indexed_bonus.magic_atk_ele[element] += bonus;
+				sd->indexed_bonus.magic_addele[element] += bonus;
 				sd->right_weapon.addele[element] += bonus;
 				if( !battle_config.left_cardfix_to_right ){
 					sd->left_weapon.addele[element] += bonus;
@@ -4884,10 +4884,6 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		}
 		if( sc->getSCE(SC_HEAVEN_AND_EARTH) ) {
 			i = sc->getSCE(SC_HEAVEN_AND_EARTH)->val2;
-			sd->right_weapon.addele[ELE_ALL] += i;
-			if( !battle_config.left_cardfix_to_right ){
-				sd->left_weapon.addele[ELE_ALL] += i;
-			}
 			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += i;
 			sd->bonus.short_attack_atk_rate += i;
 			sd->bonus.long_attack_atk_rate += i;
