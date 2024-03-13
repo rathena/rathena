@@ -796,9 +796,10 @@ function	script	F_Bounty_Board	{
 		mes "[ ^0000FFÔng GiaÌ^000000 ]";
 		mes "Ğây laÌ danh saìch nhiêòm vuò.";
 		mes "Xem rôÌi choòn môòt ği chaìu.";
+		next;
 
 		for (.@i = 4; .@i < getargcount(); .@i += 4)
-			.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + " (Level " + getmonsterinfo(getarg(.@i),MOB_LV) + " | Base EXP ^0000FF" + getmonsterinfo(getarg(.@i),MOB_BASEEXP) + "^000000)" + ":";
+			.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + " (Lv " + getmonsterinfo(getarg(.@i),MOB_LV) + ")" + ":";
 		.@menu$ = .@menu$ + "Sãn tâìt caÒ";
 
 		.@bounty = (select(.@menu$) * 4) + 1;
@@ -886,10 +887,8 @@ L_BountyDel:
 			mes "Chaìu CHİA hoaÌn thaÌnh nhiêòm vuò sãn " + .@monster$ + ".";
 			mes "Chaìu coì chãìc laÌ muôìn huÒy không?";
 			next;
-			if (select("Tiêìp tuòc sãn "+.@monster$, "^FF0000Xoìa nhiêòm vuò naÌy giuÌm chaìu.^000000") == 2){
+			if (select("^FF0000Xoìa nhiêòm vuò naÌy giuÌm chaìu.^000000","Tiêìp tuòc sãn "+.@monster$) == 1){
 				erasequest getarg(.@i);
-				mes "[ ^0000FFÔng GiaÌ^000000 ]";
-				mes "ĞaŞ huÒy rôÌi nha chaìu.";
 				close2;
 				.@questerased = 1;
 			}
