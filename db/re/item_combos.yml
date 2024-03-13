@@ -48623,3 +48623,80 @@ Body:
           - FuriousBoots   # 470265
     Script: |
       bonus bDelayrate,-10;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_DK   # 400628
+          - Slayer_Furious   # 600059
+    Script: |
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_DK   # 400628
+          - Trident_Furious   # 630045
+    Script: |
+      bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_ABC   # 400629
+          - Demonius_Furious   # 510150
+    Script: |
+      bonus2 bSkillAtk,"ABC_DEFT_STAB",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_ABC   # 400629
+          - Demonsword_Furious   # 510151
+    Script: |
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_SH   # 400630
+          - Foxtail_Furious   # 550143
+    Script: |
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",15;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_SH   # 400630
+          - Setaria_Furious   # 550144
+    Script: |
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",15;
+  - Combos:
+      - Combo:
+          - Demonius_Furious   # 510150
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"ABC_DEFT_STAB",.@sum;
+  - Combos:
+      - Combo:
+          - Demonsword_Furious   # 510151
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",.@sum;
+  - Combos:
+      - Combo:
+          - Foxtail_Furious   # 550143
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",.@sum;
+  - Combos:
+      - Combo:
+          - Setaria_Furious   # 550144
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",.@sum;
+  - Combos:
+      - Combo:
+          - Slayer_Furious   # 600059
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",15;
+  - Combos:
+      - Combo:
+          - Trident_Furious   # 630045
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",.@sum;

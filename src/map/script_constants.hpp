@@ -1900,6 +1900,16 @@
 	export_constant(SC_GROUNDGRAVITY);
 	export_constant(SC_BREAKINGLIMIT);
 	export_constant(SC_RULEBREAK);
+	export_constant(SC_INTENSIVE_AIM);
+	export_constant(SC_INTENSIVE_AIM_COUNT);
+	export_constant(SC_GRENADE_FRAGMENT_1);
+	export_constant(SC_GRENADE_FRAGMENT_2);
+	export_constant(SC_GRENADE_FRAGMENT_3);
+	export_constant(SC_GRENADE_FRAGMENT_4);
+	export_constant(SC_GRENADE_FRAGMENT_5);
+	export_constant(SC_GRENADE_FRAGMENT_6);
+	export_constant(SC_AUTO_FIRING_LAUNCHER);
+	export_constant(SC_HIDDEN_CARD);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -8265,6 +8275,30 @@
 	export_constant_npc(JT_4_LARVA_VIOLET);
 	export_constant_npc(JT_4_HERO_SAUSAGE);
 	export_constant_npc(JT_4_PRINCESS_SAUSAGE);
+	export_constant_npc(JT_4_EP20_LASGAND);
+	export_constant_npc(JT_4_EP20_NYAR);
+	export_constant_npc(JT_4_EP20_DEVICE_BLUE);
+	export_constant_npc(JT_4_EP20_DEVICE_RED);
+	export_constant_npc(JT_4_EP20_DEVICE_BLACK);
+	export_constant_npc(JT_4_GACHA_MACHINE);
+	export_constant_npc(JT_4_VR_CHAO);
+	export_constant_npc(JT_4_RUNESTONE);
+	export_constant_npc(JT_4_EM_ARDOR);
+	export_constant_npc(JT_4_EM_DILUVIO);
+	export_constant_npc(JT_4_EM_PROCELLA);
+	export_constant_npc(JT_4_EM_TERREMOTUS);
+	export_constant_npc(JT_4_EM_SERPENS);
+	export_constant_npc(JT_4_SNOWDOG);
+	export_constant_npc(JT_1_SHADOW_RED);
+	export_constant_npc(JT_1_SHADOW_ORANGE);
+	export_constant_npc(JT_1_SHADOW_YELLOW);
+	export_constant_npc(JT_1_SHADOW_GREEN);
+	export_constant_npc(JT_1_SHADOW_BLUE);
+	export_constant_npc(JT_1_SHADOW_INDIGO);
+	export_constant_npc(JT_1_SHADOW_VIOLET);
+	export_constant_npc(JT_4_EVT_LAMMIR);
+	export_constant_npc(JT_4_EVT_SULKI);
+	export_constant_npc(JT_4_EVT_KKAT);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);

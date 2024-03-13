@@ -34931,17 +34931,7 @@ Body:
         Time: 2000
       - Level: 5
         Time: 1000
-    Cooldown:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 150000
+    Cooldown: 60000
     Requires:
       SpCost:
         - Level: 1
@@ -34966,7 +34956,7 @@ Body:
       Critical: true
     Range: 1
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: 3
     Element: Weapon
     Requires:
       SpCost: 1
@@ -36718,7 +36708,8 @@ Body:
     SplashArea: 3
     CastCancel: true
     Duration1: 600000
-    Cooldown: 1000
+    AfterCastActDelay: 500
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
@@ -36745,6 +36736,7 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastCancel: true
+    AfterCastActDelay: 700
     Cooldown: 1000
     Requires:
       SpCost:
@@ -36855,16 +36847,16 @@ Body:
       Toggleable: true
     Hit: Single
     HitCount: 1
-    GiveAp: 15
     SplashArea: 10
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 15000
+    AfterCastActDelay: 300
+    Duration1: 40000
+    Cooldown: 25000
     FixedCastTime: 1000
     Requires:
       SpCost: 60
+      ApCost: 35
       Status:
         Guard_Stance: true
     Status: Guardian_S
@@ -37026,7 +37018,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -10
-    Element: Holy
+    Element: Neutral
     CastCancel: true
     CastTime: 2000
     Cooldown: 5000
@@ -37066,7 +37058,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
-    GiveAp: 3
+    GiveAp: 5
     SplashArea:
       - Level: 1
         Area: 2
@@ -37113,7 +37105,7 @@ Body:
     HitCount: 3
     Element: Weapon
     SplashArea: 3
-    GiveAp: 3
+    GiveAp: 5
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
@@ -37153,7 +37145,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
-    GiveAp: 4
+    GiveAp: 6
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 150
@@ -38192,7 +38184,7 @@ Body:
         Area: 3
     GiveAp: 3
     CastCancel: true
-    AfterCastActDelay: 250
+    AfterCastActDelay: 700
     Duration1:
       - Level: 1
         Time: 10000
@@ -38865,7 +38857,7 @@ Body:
         Time: 1500
       - Level: 5
         Time: 1000
-    Cooldown: 60000
+    Cooldown: 30000
     Requires:
       SpCost:
         - Level: 1
@@ -38896,26 +38888,27 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 100
-      ApCost: 150
+      ApCost: 120
     Status: Abyss_Slayer
   - Id: 5319
     Name: ABC_ABYSS_STRIKE
-    Description: Abyss Strike
+    Description: Omega Abyss Strike
     MaxLevel: 10
     Type: Magic
     TargetType: Ground
     Range: 9
     Hit: Single
     HitCount: 1
+    Element: Fire
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 100
-    Cooldown: 3000
+    Cooldown: 700
     FixedCastTime: 1000
     Requires:
       SpCost: 125
-      ApCost: 15
+      ApCost: 10
     Unit:
       Id: Dummyskill
       Range: 4
@@ -39030,7 +39023,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 2
     Element: Weapon
-    GiveAp: 1
+    GiveAp: 3
     CastCancel: true
     AfterCastActDelay: 500
     Cooldown: 350
@@ -40917,7 +40910,7 @@ Body:
     GiveAp: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1: 3000
     Duration2: 10000
     Cooldown: 2000
@@ -40956,7 +40949,7 @@ Body:
     GiveAp: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1: 3000
     Duration2: 20000
     Cooldown: 2000
@@ -40995,7 +40988,7 @@ Body:
     GiveAp: 5
     CastCancel: true
     CastTime: 4000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1: 3000
     Duration2: 20000
     Cooldown: 2000
@@ -41076,7 +41069,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41097,7 +41090,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41118,7 +41111,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41139,7 +41132,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41160,7 +41153,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 1500000
-    Cooldown: 900000
+    Cooldown: 60000
     FixedCastTime: 2000
     Requires:
       SpCost: 100
@@ -41179,11 +41172,11 @@ Body:
     CastCancel: true
     CastTime: 8000
     AfterCastActDelay: 500
-    Cooldown: 5000
+    Cooldown: 2000
     FixedCastTime: 1500
     Requires:
       SpCost: 140
-      ApCost: 30
+      ApCost: 15
   - Id: 5381
     Name: EM_ELEMENTAL_VEIL
     Description: Elemental Veil
@@ -41248,7 +41241,7 @@ Body:
       Splash: true
     Range: 1
     Hit: Multi_Hit
-    HitCount: 2
+    HitCount: 5
     SplashArea: 4
     Requires:
       SpCost: 1
@@ -41387,6 +41380,473 @@ Body:
     SplashArea: 6
     Requires:
       SpCost: 1
+  - Id: 5401
+    Name: NW_P_F_I
+    Description: P.F.I
+    MaxLevel: 10
+  - Id: 5402
+    Name: NW_GRENADE_MASTERY
+    Description: Grenade Mastery
+    MaxLevel: 10
+  - Id: 5403
+    Name: NW_INTENSIVE_AIM
+    Description: Intensive Aim
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Duration1: -1
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 10
+    Status: Intensive_Aim
+  - Id: 5404
+    Name: NW_GRENADE_FRAGMENT
+    Description: Grenade Fragment
+    MaxLevel: 7
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Duration1: 300000
+    Cooldown: 2000
+    Requires:
+      SpCost: 50
+  - Id: 5405
+    Name: NW_THE_VIGILANTE_AT_NIGHT
+    Description: The Vigilante at Night
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Multi_Hit
+    HitCount: 4
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    AfterCastActDelay: 1000
+    Cooldown: 500
+    CastCancel: true
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 72
+        - Level: 2
+          Amount: 76
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 84
+        - Level: 5
+          Amount: 88
+      Weapon:
+        Gatling: true
+        Shotgun: true
+      Ammo:
+        Bullet: true
+      AmmoAmount: 10
+  - Id: 5406
+    Name: NW_ONLY_ONE_BULLET
+    Description: Only One Bullet
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: -9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    GiveAp: 2
+    AfterCastActDelay: 500
+    Cooldown: 350
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 39
+        - Level: 2
+          Amount: 43
+        - Level: 3
+          Amount: 47
+        - Level: 4
+          Amount: 51
+        - Level: 5
+          Amount: 55
+      Weapon:
+        Revolver: true
+        Rifle: true
+      Ammo:
+        Bullet: true
+      AmmoAmount: 1
+  - Id: 5407
+    Name: NW_SPIRAL_SHOOTING
+    Description: Spiral Shooting
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+      Splash: true
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    AfterCastActDelay: 1000
+    Cooldown: 500
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 48
+        - Level: 2
+          Amount: 53
+        - Level: 3
+          Amount: 58
+        - Level: 4
+          Amount: 63
+        - Level: 5
+          Amount: 68
+      Weapon:
+        Grenade: true
+        Rifle: true
+      Ammo:
+        Bullet: true
+      AmmoAmount: 6
+  - Id: 5408
+    Name: NW_MAGAZINE_FOR_ONE
+    Description: Magazine for One
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: 6
+    Element: Weapon
+    GiveAp: 2
+    AfterCastActDelay: 1000
+    Cooldown: 500
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 42
+        - Level: 2
+          Amount: 46
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 54
+        - Level: 5
+          Amount: 58
+      Weapon:
+        Revolver: true
+        Gatling: true
+      Ammo:
+        Bullet: true
+      AmmoAmount: 6
+  - Id: 5409
+    Name: NW_WILD_FIRE
+    Description: Wild Fire
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    Range: -9
+    Hit: Single
+    HitCount: -3
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    AfterCastActDelay: 1000
+    Cooldown: 500
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 51
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 59
+        - Level: 4
+          Amount: 63
+        - Level: 5
+          Amount: 67
+      Weapon:
+        Shotgun: true
+        Grenade: true
+      Ammo:
+        Bullet: true
+      AmmoAmount: 5
+  - Id: 5410
+    Name: NW_BASIC_GRENADE
+    Description: Basic Grenade
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    Range: -9
+    Hit: Single
+    HitCount: -2
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+    GiveAp: 2
+    Cooldown: 300
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 36
+        - Level: 2
+          Amount: 42
+        - Level: 3
+          Amount: 48
+        - Level: 4
+          Amount: 54
+        - Level: 5
+          Amount: 60
+      ItemCost:
+        - Item: Nw_Grenade
+          Amount: 1
+  - Id: 5411
+    Name: NW_HASTY_FIRE_IN_THE_HOLE
+    Description: Hasty Fire in the Hole
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+    SplashArea: 2
+    GiveAp: 3
+    Cooldown: 1000
+    CastCancel: true
+    FixedCastTime: 1000
+    AfterCastActDelay: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 50
+        - Level: 2
+          Amount: 53
+        - Level: 3
+          Amount: 56
+        - Level: 4
+          Amount: 59
+        - Level: 5
+          Amount: 62
+      ItemCost:
+        - Item: Nw_Grenade
+          Amount: 3
+  - Id: 5412
+    Name: NW_GRENADES_DROPPING
+    Description: Grenades Dropping
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 5
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 4
+    GiveAp: 5
+    Cooldown: 4500
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 66
+        - Level: 3
+          Amount: 72
+        - Level: 4
+          Amount: 78
+        - Level: 5
+          Amount: 84
+      ItemCost:
+        - Item: Nw_Grenade
+          Amount: 15
+    Duration1: 4000
+    Duration2: 100
+    Unit:
+      Id: Grenades_Dropping
+      Layout: 0
+      Range:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 1
+        - Level: 3
+          Size: 1
+        - Level: 4
+          Size: 2
+        - Level: 5
+          Size: 2
+      Interval: 250
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5413
+    Name: NW_AUTO_FIRING_LAUNCHER
+    Description: Auto Firing Launcher
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 30000
+    CastCancel: true
+    FixedCastTime: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 90
+        - Level: 2
+          Amount: 100
+        - Level: 3
+          Amount: 110
+        - Level: 4
+          Amount: 120
+        - Level: 5
+          Amount: 130
+    Status: Auto_Firing_Launcher
+  - Id: 5414
+    Name: NW_HIDDEN_CARD
+    Description: Hidden Card
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Duration1: 300000
+    Cooldown: 60000
+    CastCancel: true
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+    Status: Hidden_Card
+  - Id: 5415
+    Name: NW_MISSION_BOMBARD
+    Description: Mission Bombard
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Ground
+    Range: -9
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Weapon
+    DamageFlags:
+      Splash: true
+    SplashArea: 4
+    Cooldown: 10000
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 100
+      ApCost: 35
+      ItemCost:
+        - Item: Nw_Grenade
+          Amount: 15
+    Duration1: 10000
+    Unit:
+      Id: Mission_Bombard
+      Layout: 0
+      Range: 2
+      Interval: 250
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
   - Id: 5449
     Name: HN_SELFSTUDY_TATICS
     Description: Self Study Tactics
@@ -42167,6 +42627,16 @@ Body:
       SpCost: 150
       ApCost: 150
     Status: Rulebreak
+  - Id: 5496
+    Name: NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING
+    Description: The Vigilante At Night Gun Gatling
+    MaxLevel: 5
+    CastCancel: true
+  - Id: 5497
+    Name: NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN
+    Description: The Vigilante At Night Gun Shotgun
+    MaxLevel: 5
+    CastCancel: true
   - Id: 6001
     Name: DK_DRAGONIC_BREATH
     Description: Dragonic Breath
@@ -42379,7 +42849,7 @@ Body:
       - Level: 10
         Area: 3
     CastCancel: true
-    AfterCastActDelay: 250
+    AfterCastActDelay: 700
     Cooldown: 500
     Requires:
       SpCost:
