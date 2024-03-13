@@ -100897,6 +100897,8 @@ Body:
       - Item: Plasma_R2_Card
         Rate: 1
         StealProtected: true
+#  - Id: 20695
+#    AegisName: E_GARLING
   - Id: 20696
     AegisName: EP17_2_CHILD_ADMIN1
     Name: Child Admin Beta
@@ -106578,12 +106580,204 @@ Body:
 #    AegisName: VR_MD_TILBY2
 #  - Id: 22164
 #    AegisName: VR_MD_RAINBOW
+#  - Id: 22166
+#    AegisName: HEADSTONE1
+#  - Id: 22167
+#    AegisName: HEADSTONE2
+#  - Id: 22168
+#    AegisName: HEADSTONE3
+#  - Id: 22169
+#    AegisName: HEADSTONE4
+#  - Id: 22170
+#    AegisName: HEADSTONE0
 #  - Id: 22171
 #    AegisName: MD_COMMON_BOSS
 #  - Id: 22172
 #    AegisName: E_MANANANGGAL
 #  - Id: 22173
 #    AegisName: E_WAKWAK
+#  - Id: 22174
+#    AegisName: MD_PRI_RIGEL
+#  - Id: 22175
+#    AegisName: MD_PRI_RIGEL_AC
+#  - Id: 22176
+#    AegisName: MD_PRI_RIGEL_ACS
+#  - Id: 22177
+#    AegisName: MD_PRI_DRAGON_1
+#  - Id: 22178
+#    AegisName: MD_PRI_DRAGON_2
+#  - Id: 22179
+#    AegisName: MD_PRI_DRAGON_3
+#  - Id: 22180
+#    AegisName: MD_PRI_DRAGON_4
+#  - Id: 22181
+#    AegisName: MD_COMMON_P
+#  - Id: 22182
+#    AegisName: MD_COMMON_SG
+#  - Id: 22183
+#    AegisName: MD_MANASTORM
+#  - Id: 22184
+#    AegisName: MD_MANABARRIER
+#  - Id: 22185
+#    AegisName: DARK_LORD2
+#  - Id: 22186
+#    AegisName: E_NF_BUG
+#  - Id: 22187
+#    AegisName: E_NF_FLY
+#  - Id: 22188
+#    AegisName: E_NF_SMALLRAT
+#  - Id: 22189
+#    AegisName: E_NF_BIGRAT
+#  - Id: 22192
+#    AegisName: SPIRIT_G_LAND_S
+#  - Id: 22193
+#    AegisName: SPIRIT_G_LAND_M
+#  - Id: 22194
+#    AegisName: SPIRIT_G_LAND_L
+#  - Id: 22195
+#    AegisName: SPIRIT_G_LAND_SL
+#  - Id: 22196
+#    AegisName: SPIRIT_B_FLAME_S
+#  - Id: 22197
+#    AegisName: SPIRIT_B_FLAME_M
+#  - Id: 22198
+#    AegisName: SPIRIT_B_FLAME_L
+#  - Id: 22199
+#    AegisName: SPIRIT_B_FLAME_SL
+#  - Id: 22200
+#    AegisName: SPIRIT_S_WIND_S
+#  - Id: 22201
+#    AegisName: SPIRIT_S_WIND_M
+#  - Id: 22202
+#    AegisName: SPIRIT_S_WIND_L
+#  - Id: 22203
+#    AegisName: SPIRIT_S_WIND_SL
+#  - Id: 22204
+#    AegisName: SPIRIT_I_WATER_S
+#  - Id: 22205
+#    AegisName: SPIRIT_I_WATER_M
+#  - Id: 22206
+#    AegisName: SPIRIT_I_WATER_L
+#  - Id: 22207
+#    AegisName: SPIRIT_I_WATER_SL
+#  - Id: 22208
+#    AegisName: SPIRIT_C_LAND_S
+#  - Id: 22209
+#    AegisName: SPIRIT_C_LAND_M
+#  - Id: 22210
+#    AegisName: SPIRIT_C_LAND_L
+#  - Id: 22211
+#    AegisName: SPIRIT_C_LAND_SL
+#  - Id: 22212
+#    AegisName: SPIRIT_C_FLAME_S
+#  - Id: 22213
+#    AegisName: SPIRIT_C_FLAME_M
+#  - Id: 22214
+#    AegisName: SPIRIT_C_FLAME_L
+#  - Id: 22215
+#    AegisName: SPIRIT_C_FLAME_SL
+#  - Id: 22216
+#    AegisName: SPIRIT_H_WATER_S
+#  - Id: 22217
+#    AegisName: SPIRIT_H_WATER_M
+#  - Id: 22218
+#    AegisName: SPIRIT_H_WATER_L
+#  - Id: 22219
+#    AegisName: SPIRIT_H_WATER_SL
+#  - Id: 22220
+#    AegisName: SPIRIT_D_WIND_S
+#  - Id: 22221
+#    AegisName: SPIRIT_D_WIND_M
+#  - Id: 22222
+#    AegisName: SPIRIT_D_WIND_L
+#  - Id: 22223
+#    AegisName: SPIRIT_D_WIND_SL
+#  - Id: 22224
+#    AegisName: SPIRIT_R_FLAME_S
+#  - Id: 22225
+#    AegisName: SPIRIT_R_FLAME_M
+#  - Id: 22226
+#    AegisName: SPIRIT_R_FLAME_L
+#  - Id: 22227
+#    AegisName: SPIRIT_R_FLAME_SL
+#  - Id: 22228
+#    AegisName: SPIRIT_F_LAND_S
+#  - Id: 22229
+#    AegisName: SPIRIT_F_LAND_M
+#  - Id: 22230
+#    AegisName: SPIRIT_F_LAND_L
+#  - Id: 22231
+#    AegisName: SPIRIT_F_LAND_SL
+#  - Id: 22232
+#    AegisName: SPIRIT_C_WATER_S
+#  - Id: 22233
+#    AegisName: SPIRIT_C_WATER_M
+#  - Id: 22234
+#    AegisName: SPIRIT_C_WATER_L
+#  - Id: 22235
+#    AegisName: SPIRIT_C_WATER_SL
+#  - Id: 22236
+#    AegisName: SPIRIT_C_WIND_S
+#  - Id: 22237
+#    AegisName: SPIRIT_C_WIND_M
+#  - Id: 22238
+#    AegisName: SPIRIT_C_WIND_L
+#  - Id: 22239
+#    AegisName: SPIRIT_C_WIND_SL
+#  - Id: 22240
+#    AegisName: VR_SONIC_WALK
+#  - Id: 22241
+#    AegisName: VR_SONIC_SPIN
+#  - Id: 22242
+#    AegisName: VR_TALES
+#  - Id: 22243
+#    AegisName: VR_MD_METALSONIC
+#  - Id: 22244
+#    AegisName: VR_MD_KNUCKLES
+#  - Id: 22245
+#    AegisName: VR_MD_DREGG1
+#  - Id: 22246
+#    AegisName: VR_MD_DREGG2
+#  - Id: 22247
+#    AegisName: VR_MD_MEGALITH_SONIC
+#  - Id: 22248
+#    AegisName: VR_MD_SPORE_SONIC
+#  - Id: 22249
+#    AegisName: VR_MD_SAVAGE_SONIC
+#  - Id: 22250
+#    AegisName: VR_MD_ANGELING_SONIC
+#  - Id: 22251
+#    AegisName: VR_MD_HEATER_SONIC
+#  - Id: 22252
+#    AegisName: BIO_DUNEYRR
+#  - Id: 22253
+#    AegisName: BIO_NAGA
+#  - Id: 22254
+#    AegisName: BIO_ANCIENT_TREE
+#  - Id: 22255
+#    AegisName: BIO_DOLLOCARIS
+#  - Id: 22256
+#    AegisName: BIO_ICE_GARGOYLE
+#  - Id: 22257
+#    AegisName: BIO_FLAME_GHOST
+#  - Id: 22258
+#    AegisName: BIO_ACIDUS_
+#  - Id: 22259
+#    AegisName: BIO_MOROCC_1
+#  - Id: 22260
+#    AegisName: BIO_SALAMANDER
+#  - Id: 22261
+#    AegisName: BIO_MOSKILLO
+#  - Id: 22262
+#    AegisName: 2311_EV_BLACK_BEAR
+#  - Id: 22263
+#    AegisName: 2311_EV_GOLD_PIG
+#  - Id: 22297
+#    AegisName: 2401_EV_DRAGORING
+#  - Id: 22298
+#    AegisName: 2401_EV_IMOOGI
+#  - Id: 22299
+#    AegisName: VR_CHAO
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329
