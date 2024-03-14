@@ -46814,7 +46814,8 @@ Body:
          bonus2 bSkillAtk,"EM_ELEMENTAL_BUSTER_WIND",2*.@sum;
          bonus2 bSkillAtk,"EM_ELEMENTAL_BUSTER_POISON",2*.@sum;
          bonus2 bSkillAtk,"EM_ELEMENTAL_BUSTER_GROUND",2*.@sum;
-         if (getskilllv("EM_ELEMENTAL_BUSTER") > 0) {
+         .@class_ = geteleminfo(ELEMINFO_CLASS);
+         if (getskilllv("EM_ELEMENTAL_BUSTER") > 0 && .@class_ >= 20816 && .@class_ <= 20820) {
             bonus4 bAutoSpellOnSkill,"EM_DIAMOND_STORM","EM_ELEMENTAL_BUSTER",getskilllv("EM_ELEMENTAL_BUSTER"),1000;
          }
       }
@@ -46835,7 +46836,8 @@ Body:
          bonus2 bSkillAtk,"EM_ELEMENTAL_BUSTER_WIND",2*.@sum;
          bonus2 bSkillAtk,"EM_ELEMENTAL_BUSTER_POISON",2*.@sum;
          bonus2 bSkillAtk,"EM_ELEMENTAL_BUSTER_GROUND",2*.@sum;
-         if (getskilllv("EM_ELEMENTAL_BUSTER") > 0 && geteleminfo(0) > 0) {
+         .@class_ = geteleminfo(ELEMINFO_CLASS);
+         if (getskilllv("EM_ELEMENTAL_BUSTER") > 0 && .@class_ >= 20816 && .@class_ <= 20820) {
             bonus4 bAutoSpellOnSkill,"EM_TERRA_DRIVE","EM_ELEMENTAL_BUSTER",getskilllv("EM_ELEMENTAL_BUSTER"),1000;
          }
       }

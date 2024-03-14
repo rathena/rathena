@@ -24038,24 +24038,32 @@ BUILDIN_FUNC(ignoretimeout)
  * geteleminfo <type>{,<char_id>};
  **/
 BUILDIN_FUNC(geteleminfo) {
-	TBL_ELEM *ed = NULL;
-	TBL_PC *sd = NULL;
-	int type = script_getnum(st,2);
+	map_session_data *sd = nullptr;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
+	s_elemental_data *ed = nullptr;
+
 	if (!(ed = sd->ed)) {
-		//ShowDebug("buildin_geteleminfo: Player doesn't have Elemental.\n");
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	int type = script_getnum(st,2);
+
 	switch (type) {
-		case 0: script_pushint(st, ed->elemental.elemental_id); break;
-		case 1: script_pushint(st, ed->bl.id); break;
+		case ELEMINFO_ID:
+			script_pushint(st, ed->elemental.elemental_id);
+			break;
+		case ELEMINFO_GAMEID:
+			script_pushint(st, ed->bl.id);
+			break;
+		case ELEMINFO_CLASS:
+			script_pushint(st, ed->elemental.class_);
+			break;
 		default:
 			ShowError("buildin_geteleminfo: Invalid type '%d'.\n", type);
 			script_pushint(st, 0);

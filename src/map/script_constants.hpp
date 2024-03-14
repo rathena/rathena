@@ -10196,6 +10196,11 @@
 	export_constant(ITEMINFO_ARMORLEVEL);
 	export_constant(ITEMINFO_SUBTYPE);
 
+	/* geteleminfo script command */
+	export_constant(ELEMINFO_ID);
+	export_constant(ELEMINFO_GAMEID);
+	export_constant(ELEMINFO_CLASS);
+
 	/* refine types */
 	export_constant(REFINE_TYPE_ARMOR);
 	export_constant(REFINE_TYPE_WEAPON);
