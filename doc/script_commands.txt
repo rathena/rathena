@@ -8966,8 +8966,9 @@ Get info of elemental of attached player or player by char_id.
 Other info can be obtained by 'getunitdata' command.
 
 Valid types are:
-   0: Elemental ID
-   1: Elemental Game ID
+   ELEMINFO_ID        Elemental ID (ID unique to elementals unit type)
+   ELEMINFO_GAMEID    Elemental Game ID
+   ELEMINFO_CLASS     Elemental Class (ID defined in elemental_db.yml)
 
 ---------------------------------------
 \\
