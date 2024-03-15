@@ -18,92 +18,92 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 		if (ADVJOB == Job_High_Priest || ADVJOB == Job_Champion) {
 			if (Class == Job_Novice_High) {
 				mes "[Father Mareusis]";
-				mes "Ah, I sense you have endured";
-				mes "a past life experience. You must have learned many things before entering Valhalla.";
+				mes "อ่า, ข้ารู้สึกได้ว่าเจ้าต้องอดทน";
+				mes "ประสบการณ์ชีวิตที่ผ่านมา เจ้าต้องได้เรียนรู้หลายสิ่งหลายอย่างก่อนจะเข้าสู่ Valhalla.";
 				next;
 				if (!callfunc("F_CanChangeJob")) {
 					mes "[Father Mareusis]";
-					mes "Unfortunately, I don't think you're ready to become an Acolyte yet. Please finish learning all of the Basic Skills first.";
+					mes "น่าเสียดาย, ข้าไม่คิดว่าเจ้าพร้อมที่จะเป็น Acolyte ในขณะนี้ โปรดเรียนรู้ทักษะสกิลพื้นฐานทั้งหมดให้เสร็จก่อน.";
 					next;
 					mes "[Father Mareusis]";
-					mes "In the meantime,";
-					mes "I will wait until";
-					mes "you are ready.";
-					mes "May God be";
-					mes "with you.";
+					mes "ในระหว่างนี้,";
+					mes "ข้าจะรอจนกว่า";
+					mes "เจ้าจะพร้อม.";
+					mes "ขอพระเจ้าจงสถิต";
+					mes "อยู่กับเจ้า.";
 					close;
 				}
 				mes "[Father Mareusis]";
-				mes "Well, I welcome you";
-				mes "back from Valhalla and";
-				mes "wish you luck on your";
-				mes "new life's journey.";
+				mes "เอาล่ะ, ข้ายินดีต้อนรับเจ้า";
+				mes "กลับมาจาก Valhalla และ";
+				mes "ขอให้โชคดีในการเดินทาง";
+				mes "ในชีวิตใหม่ของเจ้า.";
 				next;
 				skill "NV_TRICKDEAD",0,SKILL_PERM;
 				jobchange Job_Acolyte_High;
 				skill "AL_HOLYLIGHT",1,SKILL_PERM;
 				mes "[Father Mareusis]";
-				mes "Now, venture forth and seek those who need your help. May God light your path.";
+				mes "บัดนี้, จงออกไปและแสวงหาผู้ที่ต้องการความช่วยเหลือ ขอพระเจ้าให้แสงสว่างแก่เส้นทางของเจ้า.";
 				close;
 			}else{
 				mes "[Father Mareusis]";
-				mes "Now, venture forth to seek people who need your help. May God enlighten your way.";
+				mes "บัดนี้, จงออกไปตามหาคนที่ต้องการความช่วยเหลือจากเจ้า ขอพระเจ้าให้ความสว่างแก่ทางของเจ้า.";
 				close;
 			}
 		}else{
 			mes "[Father Mareusis]";
-			mes "I sense that you have endured a past life experience. You must have learned many things before entering Valhalla.";
+			mes "ข้ารู้สึกว่าท่านต้องอดทนกับประสบการณ์ชีวิตที่ผ่านมา ท่านต้องได้เรียนรู้หลายสิ่งหลายอย่างก่อนที่จะเข้าสู่ Valhalla.";
 			next;
 			mes "[Father Mareusis]";
-			mes "However, I can tell that you are not suited to be an Acolyte. Please remember who you were in your past life and find your path.";
+			mes "อย่างไรก็ตาม, ข้าบอกได้เลยว่าเจ้าไม่เหมาะที่จะเป็น Acolyte. โปรดจำไว้ว่าเจ้าเป็นใครในชาติก่อนและค้นหาเส้นทางของเจ้า.";
 			close;
 		}
 	}
 	mes "[Father Mareusis]";
-	mes "What is it that you seek?";
+	mes "อะไรคือสิ่งที่เจ้าแสวงหา?";
 	next;
-	switch(select("Change your job to acolyte.:Ask the requirements to be an acolyte.:Quit it.")) {
+	switch(select("เปลี่ยนอาชีพเป็น acolyte:ถามข้อกำหนดในการเป็น acolyte:ยกเลิก")) {
 	case 1:
 		mes "[Father Mareusis]";
 		if(BaseJob != Job_Novice) {
 			if(BaseJob == Job_Acolyte)
-				mes "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?";
+				mes "วันนี้เจ้ารู้สึกสบายดีไหม? ข้าสามารถบอกได้จากชุดของเจ้าว่าเจ้าเป็น Acolyte อยู่แล้ว เจ้าไม่ได้ล้อข้าเล่นใช่ไหม?";
 			else
-				mes "I'm sorry but it seems you already have your own job, aren't you?";
+				mes "ข้าขอโทษ แต่ดูเหมือนว่าเจ้าจะมีอาชีพของตัวเองอยู่แล้วใช่ไหม?";
 			close;
 		}else{
-			mes "Do you truly wish to become a servant of God?";
-			mes "Let's see whether you are ready for it or not... Hmm...";
+			mes "เจ้าปรารถนาที่จะเป็นผู้รับใช้ของพระเจ้าอย่างแท้จริงหรือไม่?";
+			mes "มาดูกันว่าเจ้าจะพร้อมหรือไม่... หืมม...";
 			next;
 			if (!callfunc("F_CanChangeJob")) {
 				mes "[Father Mareusis]";
-				mes "Oh my?! You haven't accomplished the basic practice yet?! You have a long way to go! Come again after increasing your job level!";
+				mes "โอ้พระเจ้า! เจ้ายังฝึกฝนขั้นพื้นฐานไม่สำเร็จเลยเหรอ?! เจ้ายังมีหนทางอีกยาวไกล! กลับมาอีกครั้งหลังจากเพิ่มระดับ job level แล้ว!";
 				close;
 			}
 			mes "[Father Mareusis]";
-			mes "Hmm... your job level is enough...";
-			mes "Good. Now I will give you the qualification to become an Acolyte.";
+			mes "หืมม... ระดับ job level ของเจ้าก็เพียงพอแล้ว...";
+			mes "ดี ตอนนี้ข้าจะให้คุณสมบัติแก่เจ้าในการเป็น Acolyte.";
 			next;
 			mes "[Father Mareusis]";
-			mes "Always remember to be thankful to God, who takes care of us all the time. In chaos and times of difficulty, face your hardships with unwavering faith.";
+			mes "จงจำไว้เสมอว่าต้องขอบพระคุณพระเจ้า, ผู้ทรงดูแลเราตลอดเวลา. ในความสับสนวุ่นวายและช่วงเวลาที่ยากลำบาก, จงเผชิญความยากลำบากด้วยศรัทธาอันแน่วแน่.";
 			callfunc "Job_Change",Job_Acolyte;
 			getitem 1545,1;	// N_Mace
 			next;
 			mes "[Father Mareusis]";
-			mes "Lastly, I want to sincerely congratulate you on persevering through your trial of penance.";
+			mes "สุดท้ายนี้, ข้าขอแสดงความยินดีอย่างจริงใจต่อเจ้าที่อดทนผ่านการทดลองปลงอาบัติ.";
 			close;
 		}
 	case 2:
 		mes "[Father Mareusis]";
-		mes "Do you wish to become an Acolyte?";
-		mes "Then, you must fulfill the following requirements thinking those are the practices given by God.";
+		mes "เจ้าต้องการที่จะเป็น Acolyte หรือไม่?";
+		mes "ถ้าอย่างนั้น, เจ้าจะต้องปฏิบัติตามข้อกำหนดต่อไปนี้โดยคิดว่านั่นเป็นแนวทางปฏิบัติที่พระเจ้ามอบให้.";
 		next;
 		mes "[Father Mareusis]";
-		mes "First, you have to reach at least Novice Job Level 9 and learn all of the Basic Skills.";
-		mes "This is the most basic thing to do, so you need to regard it as the way of training yourself.";
+		mes "ขั้นแรก, เจ้าต้องไปถึงระดับ Novice Job ระดับ 9 เป็นอย่างน้อยและเรียนรู้ทักษะพื้นฐานทั้งหมด.";
+		mes "นี่เป็นสิ่งพื้นฐานที่สุดที่ต้องทำ, ดังนั้นเจ้าต้องคิดว่ามันเป็นหนทางในการฝึกฝนตัวเอง.";
 		next;
 		mes "[Father Mareusis]";
-		mes "When you think you fulfilled this requirement, then come back to me again. Then you will have a holy job in which you can spread God's will.";
+		mes "เมื่อเจ้าคิดว่าเจ้าได้ปฏิบัติตามข้อกำหนดนี้แล้ว, กลับมาหาข้าอีกครั้ง แล้วเจ้าจะมีงานศักดิ์สิทธิ์ที่เจ้าสามารถเผยแพร่พระประสงค์ของพระเจ้าได้.";
 		close;
 	case 3:
 		close;
