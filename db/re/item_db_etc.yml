@@ -52363,7 +52363,7 @@ Body:
          }
       }
   - Id: 300457
-    AegisName: aegis_300457
+    AegisName: Grey_Icewind_Card
     Name: Gray Icewind Card
     Type: Card
     Weight: 10
@@ -52382,7 +52382,7 @@ Body:
          bonus bCon,3;
       }
   - Id: 300458
-    AegisName: aegis_300458
+    AegisName: Icewind_Card
     Name: Icewind Card
     Type: Card
     Weight: 10
@@ -82114,7 +82114,7 @@ Body:
     Type: Etc
     Weight: 1
   - Id: 1000889
-    AegisName: aegis_1000889
+    AegisName: Mixed_Fruits_Juice
     Name: Compound Fruit Juice
     Type: Etc
     Weight: 10
@@ -83802,7 +83802,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001244
-    AegisName: aegis_1001244
+    AegisName: Ep20_Huge_Feather_G
     Name: Large Gray Feather    # !todo check english name
     Type: Etc
     Buy: 1260
@@ -83810,7 +83810,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001245
-    AegisName: aegis_1001245
+    AegisName: Ep20_Huge_Feather_W
     Name: Large White Feather    # !todo check english name
     Type: Etc
     Buy: 1710
@@ -83818,7 +83818,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001246
-    AegisName: aegis_1001246
+    AegisName: Ep20_Copo_Head_F
     Name: Copo's Head Feather    # !todo check english name
     Type: Etc
     Buy: 1170
@@ -83826,7 +83826,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001247
-    AegisName: aegis_1001247
+    AegisName: Ep20_Copo_Egg_Shell
     Name: Kkopo Eggshell Fragment    # !todo check english name
     Type: Etc
     Buy: 945

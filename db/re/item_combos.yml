@@ -35943,14 +35943,14 @@ Body:
       bonus bVariableCastrate,-5;
   - Combos:
       - Combo:
-          - aegis_300457   # 300457
+          - Grey_Icewind_Card
           - aegis_300455   # 300455
     Script: |
       .@r_shoes = getequiprefinerycnt(EQI_SHOES);
       bonus2 bAddSize,Size_Large,10+3*(.@r_shoes/2);
   - Combos:
       - Combo:
-          - aegis_300458   # 300458
+          - Icewind_Card
           - aegis_300455   # 300455
     Script: |
       .@r_shoes = getequiprefinerycnt(EQI_SHOES);
