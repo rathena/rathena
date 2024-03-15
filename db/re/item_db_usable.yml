@@ -8992,7 +8992,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      pet 1519;
+      pet 1631;
   - Id: 12396
     AegisName: Fools_Day_Box
     Name: Gift Box?
@@ -65315,6 +65315,15 @@ Body:
     Type: Healing
     Script: |
       percentheal 30,30;
+  - Id: 101331
+    AegisName: Fruits_Set_Trap
+    Name: Fruit Set Trap
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      pet 1005;
   - Id: 101336
     AegisName: aegis_101336
     Name: "[Scroll] DEX Biscuit Stick"
@@ -66752,6 +66761,20 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box30);
+  - Id: 102202
+    AegisName: Ep20_Fatty_Icegangu
+    Name: Chubby Ice Steel Ball    # !todo check english name
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      pet 21965;
   - Id: 102213
     AegisName: Hero_Weapon_Up_S_Box
     Name: Hero's Weapon Mod Selection Box    # !todo check english name
