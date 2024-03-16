@@ -43,8 +43,6 @@ enum e_battle_flag : uint16 {
 	BF_SKILL	= 0x0100, /// Skill attack
 	BF_NORMAL	= 0x0200, /// Normal attack
 
-	BF_PLAYER	= 0x1000, /// Only apply battle flags when source is player
-
 	BF_WEAPONMASK	= BF_WEAPON|BF_MAGIC|BF_MISC, /// Weapon attack mask
 	BF_RANGEMASK	= BF_SHORT|BF_LONG, /// Range attack mask
 	BF_SKILLMASK	= BF_SKILL|BF_NORMAL, /// Skill attack mask

@@ -20587,7 +20587,7 @@ Body:
     EquipLevelMin: 94
     Script: |
       bonus bMdef,5;
-      bonus3 bSubEle,Ele_All,30,BF_WEAPON|BF_PLAYER;
+      bonus3 bSubEle,Ele_All,30,BF_WEAPON;
       bonus bFlee,30;
       skill "AL_TELEPORT",1;
       bonus bUnbreakableGarment;

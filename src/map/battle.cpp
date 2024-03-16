@@ -727,8 +727,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					for (const auto &it : tsd->subele2) {
 						if (it.ele != ELE_ALL && it.ele != rh_ele)
 							continue;
-						if ((sd || !(it.flag&BF_PLAYER)) &&
-							!(((it.flag)&flag)&BF_WEAPONMASK &&
+						if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 							((it.flag)&flag)&BF_RANGEMASK &&
 							((it.flag)&flag)&BF_SKILLMASK))
 							continue;
@@ -750,8 +749,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				for (const auto &it : tsd->subrace3) {
 					if (it.race != RC_ALL && it.race != sstatus->race)
 						continue;
-					if ((sd || !(it.flag&BF_PLAYER)) &&
-						!(((it.flag)&flag)&BF_WEAPONMASK &&
+					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 						((it.flag)&flag)&BF_RANGEMASK &&
 						((it.flag)&flag)&BF_SKILLMASK))
 						continue;

@@ -4304,7 +4304,6 @@
 	export_constant(BF_LONG);
 	export_constant(BF_SKILL);
 	export_constant(BF_NORMAL);
-	export_constant(BF_PLAYER);
 
 	/* auto trigger flags */
 	export_constant(ATF_SELF);
