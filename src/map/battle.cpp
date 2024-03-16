@@ -689,6 +689,12 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	t_race2 = status_get_race2(target);
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
 
+	// When the attacker is a monster, then all bonuses on BF_WEAPON will work and no bonuses on BF_MAGIC
+	if (src->type == BL_MOB) {
+		flag |= BF_WEAPON;
+		flag &= ~BF_MAGIC;
+	}
+
 //Official servers apply the cardfix value on a base of 1000 and round down the reduction/increase
 #define APPLY_CARDFIX(damage, fix) { (damage) = (damage) - (int64)(((damage) * (1000 - max(0, fix))) / 1000); }
 
