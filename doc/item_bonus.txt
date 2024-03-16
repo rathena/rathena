@@ -53,6 +53,9 @@ This list contains all available constants referenced in the 'bonus' commands.
 	BF_SKILL	= Trigger on skills
 	(Default: BF_SKILL if type is BF_MISC or BF_MAGIC, BF_NORMAL if type is BF_WEAPON)
 
+	BF_PLAYER	= Apply above battle flags only if source of damage is a player
+	(Only applies to bSubEle and bSubRace.)
+
 * Trigger criteria (atf)
 	Effect target: (Default: Attacked target)
 	ATF_SELF	= Trigger effect on self
