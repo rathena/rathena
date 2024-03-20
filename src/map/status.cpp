@@ -2017,11 +2017,24 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 		if (sc->getSCE(SC_BLADESTOP)) {
 			switch (sc->getSCE(SC_BLADESTOP)->val1) {
-				case 5: if (skill_id == MO_EXTREMITYFIST) break;
-				case 4: if (skill_id == MO_CHAINCOMBO) break;
-				case 3: if (skill_id == MO_INVESTIGATE) break;
-				case 2: if (skill_id == MO_FINGEROFFENSIVE) break;
-				default: return false;
+				case 5:
+					if (skill_id == MO_EXTREMITYFIST)
+						break;
+					[[fallthrough]];
+				case 4:
+					if (skill_id == MO_CHAINCOMBO)
+						break;
+					[[fallthrough]];
+				case 3:
+					if (skill_id == MO_INVESTIGATE)
+						break;
+					[[fallthrough]];
+				case 2:
+					if (skill_id == MO_FINGEROFFENSIVE)
+						break;
+					[[fallthrough]];
+				default:
+					return false;
 			}
 		}
 
@@ -2157,6 +2170,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				return false; // Can't use Potion Pitcher on Mercenaries
 			if (tsc && tsc->getSCE(SC_ELEMENTAL_VEIL) && !(src && status_get_class_(src) == CLASS_BOSS) && !status_has_mode(status, MD_DETECTOR))
 				return false;
+			[[fallthrough]];
 		default:
 			// Check for chase-walk/hiding/cloaking opponents.
 			if( tsc ) {
@@ -4155,6 +4169,10 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->mdef++;
 	}
 
+// ----- CONCENTRATION CALCULATION -----
+	if ((skill = pc_checkskill(sd, NW_GRENADE_MASTERY)) > 0)
+		base_status->con += skill;
+
 // ------ ATTACK CALCULATION ------
 
 	// Base batk value is set in status_calc_misc
@@ -4365,6 +4383,12 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
+	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_TATICS)) > 0)
+		base_status->patk += skill;
+	if ((skill = pc_checkskill(sd, HN_SELFSTUDY_SOCERY)) > 0)
+		base_status->smatk += skill;
+	if ((skill = pc_checkskill(sd, NW_P_F_I)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
+		base_status->patk += skill + 2;
 
 	// 2-Handed Staff Mastery
 	if( sd->status.weapon == W_2HSTAFF && ( skill = pc_checkskill( sd, AG_TWOHANDSTAFF ) ) > 0 ){
@@ -4489,15 +4513,19 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		skill = skill * 4;
 
 		sd->right_weapon.addrace[RC_DRAGON]+=skill;
-		sd->left_weapon.addrace[RC_DRAGON]+=skill;
+		if( !battle_config.left_cardfix_to_right ){
+			sd->left_weapon.addrace[RC_DRAGON] += skill;
+		}
 		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=dragon_matk;
 		sd->indexed_bonus.subrace[RC_DRAGON]+=skill;
 	}
 	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addrace[RC_DEMON] += skill;
 		sd->right_weapon.addele[ELE_DARK] += skill;
-		sd->left_weapon.addrace[RC_DEMON] += skill;
-		sd->left_weapon.addele[ELE_DARK] += skill;
+		if( !battle_config.left_cardfix_to_right ){
+			sd->left_weapon.addrace[RC_DEMON] += skill;
+			sd->left_weapon.addele[ELE_DARK] += skill;
+		}
 		sd->indexed_bonus.magic_addrace[RC_DEMON] += skill;
 		sd->indexed_bonus.magic_addele[ELE_DARK] += skill;
 		sd->indexed_bonus.subrace[RC_DEMON] += skill;
@@ -4521,8 +4549,10 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 		sd->right_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
 		sd->right_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
-		sd->left_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
-		sd->left_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
+		if( !battle_config.left_cardfix_to_right ){
+			sd->left_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
+			sd->left_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
+		}
 		sd->indexed_bonus.subrace[RC_UNDEAD] += race_def[skill - 1];
 		sd->indexed_bonus.subrace[RC_DEMON] += race_def[skill - 1];
 	}
@@ -4536,7 +4566,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
 			sd->right_weapon.addsize[size] += attack_bonus[size][skill - 1];
-			sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			}
 		}
 	}
 	if ((skill = pc_checkskill(sd, CD_FIDUS_ANIMUS)) > 0) {
@@ -4566,7 +4598,9 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
 			sd->right_weapon.addsize[size] += attack_bonus[size][skill - 1];
-			sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			}
 		}
 	}
 	if ((skill = pc_checkskill(sd, ABC_MAGIC_SWORD_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_SS || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA || sd->status.weapon == W_DOUBLE_SA)) {
@@ -4613,8 +4647,10 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			i = sc->getSCE(SC_BASILICA)->val1 * 5;
 			sd->right_weapon.addele[ELE_DARK] += i;
 			sd->right_weapon.addele[ELE_UNDEAD] += i;
-			sd->left_weapon.addele[ELE_DARK] += i;
-			sd->left_weapon.addele[ELE_UNDEAD] += i;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addele[ELE_DARK] += i;
+				sd->left_weapon.addele[ELE_UNDEAD] += i;
+			}
 			sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += sc->getSCE(SC_BASILICA)->val1 * 3;
 		}
 		if (sc->getSCE(SC_FIREWEAPON))
@@ -4630,20 +4666,22 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->indexed_bonus.subele[ELE_HOLY] += sc->getSCE(SC_PROVIDENCE)->val2;
 			sd->indexed_bonus.subrace[RC_DEMON] += sc->getSCE(SC_PROVIDENCE)->val2;
 		}
-        if (sc->getSCE(SC_GEFFEN_MAGIC1)) {
-            sd->right_weapon.addrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
-            sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
-            sd->left_weapon.addrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
-            sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
-        }
-        if (sc->getSCE(SC_GEFFEN_MAGIC2)) {
-            sd->indexed_bonus.magic_addrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC2)->val1;
-            sd->indexed_bonus.magic_addrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC2)->val1;
-        }
-        if(sc->getSCE(SC_GEFFEN_MAGIC3)) {
-            sd->indexed_bonus.subrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC3)->val1;
-            sd->indexed_bonus.subrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC3)->val1;
-        }
+		if (sc->getSCE(SC_GEFFEN_MAGIC1)) {
+			sd->right_weapon.addrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
+			sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC1)->val1;
+			if( !battle_config.left_cardfix_to_right ){
+				sd->left_weapon.addrace[RC_PLAYER_HUMAN] += sc->getSCE( SC_GEFFEN_MAGIC1 )->val1;
+				sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->getSCE( SC_GEFFEN_MAGIC1 )->val1;
+			}
+		}
+		if (sc->getSCE(SC_GEFFEN_MAGIC2)) {
+			sd->indexed_bonus.magic_addrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC2)->val1;
+			sd->indexed_bonus.magic_addrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC2)->val1;
+		}
+		if(sc->getSCE(SC_GEFFEN_MAGIC3)) {
+			sd->indexed_bonus.subrace[RC_PLAYER_HUMAN] += sc->getSCE(SC_GEFFEN_MAGIC3)->val1;
+			sd->indexed_bonus.subrace[RC_DEMIHUMAN] += sc->getSCE(SC_GEFFEN_MAGIC3)->val1;
+		}
 		if(sc->getSCE(SC_ARMOR_ELEMENT_WATER)) {	// This status change should grant card-type elemental resist.
 			sd->indexed_bonus.subele[ELE_WATER] += sc->getSCE(SC_ARMOR_ELEMENT_WATER)->val1;
 			sd->indexed_bonus.subele[ELE_EARTH] += sc->getSCE(SC_ARMOR_ELEMENT_WATER)->val2;
@@ -4727,6 +4765,8 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 			sd->bonus.short_attack_atk_rate += 5 * sc->getSCE( SC_RUSH_QUAKE2 )->val1;
 			sd->bonus.long_attack_atk_rate += 5 * sc->getSCE( SC_RUSH_QUAKE2 )->val1;
 		}
+		if (sc->getSCE(SC_HIDDEN_CARD))
+			sd->bonus.long_attack_atk_rate += sc->getSCE(SC_HIDDEN_CARD)->val3;
 		if (sc->getSCE(SC_DEADLY_DEFEASANCE))
 			sd->special_state.no_magic_damage = 0;
 		if (sc->getSCE(SC_CLIMAX_DES_HU))
@@ -7038,6 +7078,8 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 		batk += 20;
 	if(sc->getSCE(SC_SKF_ATK))
 		batk += sc->getSCE(SC_SKF_ATK)->val1;
+	if (sc->getSCE(SC_INTENSIVE_AIM))
+		batk += 150;
 
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
@@ -7354,6 +7396,8 @@ static signed short status_calc_critical(struct block_list *bl, status_change *s
 		critical += sc->getSCE(SC_MTF_HITFLEE)->val1;
 	if (sc->getSCE(SC_PACKING_ENVELOPE9))
 		critical += sc->getSCE(SC_PACKING_ENVELOPE9)->val1 * 10;
+	if (sc->getSCE(SC_INTENSIVE_AIM))
+		critical += 300;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
@@ -7430,6 +7474,8 @@ static signed short status_calc_hit(struct block_list *bl, status_change *sc, in
 		hit += sc->getSCE(SC_LIMIT_POWER_BOOSTER)->val1;
 	if (sc->getSCE(SC_ACARAJE))
 		hit += 5;
+	if (sc->getSCE(SC_INTENSIVE_AIM))
+		hit += 250;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
@@ -7984,6 +8030,10 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 				val = max(val, sc->getSCE(SC_SP_SHA)->val2);
 			if (sc->getSCE(SC_CREATINGSTAR))
 				val = max(val, 90);
+			if (sc->getSCE(SC_SHIELDCHAINRUSH))
+				val = max(val, 20);
+			if (sc->getSCE(SC_GROUNDGRAVITY))
+				val = max(val, 20);
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -8482,6 +8532,8 @@ static signed short status_calc_patk(struct block_list *bl, status_change *sc, i
 	if( sc->getSCE( SC_ATTACK_STANCE ) ){
 		patk += sc->getSCE( SC_ATTACK_STANCE )->val3;
 	}
+	if (sc->getSCE(SC_HIDDEN_CARD))
+		patk += sc->getSCE(SC_HIDDEN_CARD)->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -9384,6 +9436,7 @@ static int status_get_sc_interval(enum sc_type type)
 		case SC_DEATHHURT:
 		case SC_GRADUAL_GRAVITY:
 		case SC_KILLING_AURA:
+		case SC_BOSSMAPINFO:
 			return 1000;
 		case SC_BURNING:
 		case SC_PYREXIA:
@@ -10398,6 +10451,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					case SC_BERSERK:
 					case SC_SATURDAYNIGHTFEVER:
 						sc->getSCE(rem_sc)->val2 = 0; // Mark to not lose hp
+						[[fallthrough]];
 					default:
 						status_change_end(bl, rem_sc);
 						break;
@@ -10502,6 +10556,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sc && sc->getSCE(type)->val2 & BREAK_NECK)
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
+				[[fallthrough]];
 			default:
 				if (scdb->flag[SCF_OVERLAPIGNORELEVEL])
 					break;
@@ -10868,7 +10923,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					diff = status->hp - (status->max_hp / 4);
 				status_zap(bl, diff, 0);
 			}
-			// Fall through
+			[[fallthrough]];
 		case SC_STONE:
 		case SC_POISON:
 		case SC_BLEEDING:
@@ -10889,6 +10944,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				break;
 			tick_time = status_get_sc_interval(type);
 			val4 = tick - tick_time; // Remaining time
+			break;
 		case SC_LEECHESEND:
 			if (val3 == 0)
 				break;
@@ -10960,16 +11016,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_BOSSMAPINFO:
-			if( sd != NULL ) {
-				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
+			if( sd == nullptr ){
+				return 0;
+			}else{
+				// Search for Boss on this Map
+				mob_data* boss_md = map_getmob_boss( bl->m );
 
-				if( boss_md == NULL ) { // No MVP on this map
-					clif_bossmapinfo(sd, NULL, BOSS_INFO_NOT);
+				// No MVP on this map
+				if( boss_md == nullptr ){
+					clif_bossmapinfo( *sd, nullptr, BOSS_INFO_NOT );
 					return 0;
 				}
+
 				val1 = boss_md->bl.id;
-				tick_time = 1000; // [GodLesZ] tick time
-				val4 = tick / tick_time;
+				tick_time = status_get_sc_interval( type );
+				val4 = tick - tick_time; // Remaining time
 			}
 			break;
 		case SC_HIDING:
@@ -11227,6 +11288,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			switch (val1) {
 				case 3: // 33*3 + 1 -> 100%
 					val2++;
+					[[fallthrough]];
 				case 1:
 				case 2: // 33, 66%
 					val2 += 33*val1;
@@ -11454,6 +11516,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Level 1 ~ 5 & 6 ~ 10 has different duration
 			// Level 6 ~ 10 use effect of level 1 ~ 5
 			val1 = 1 + ((val1-1)%5);
+			[[fallthrough]];
 		case SC_SLOWCAST:
 			val2 = 20*val1; // Magic reflection/cast rate
 			break;
@@ -11975,17 +12038,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WILD_STORM:
 		case SC_UPHEAVAL:
 			val2 += 10;
+			[[fallthrough]];
 		case SC_HEATER:
 		case SC_COOLER:
 		case SC_BLAST:
 		case SC_CURSED_SOIL:
 			val2 += 10;
+			[[fallthrough]];
 		case SC_PYROTECHNIC:
 		case SC_AQUAPLAY:
 		case SC_GUST:
 		case SC_PETROLOGY:
 			val2 += 5;
 			val3 += 9000;
+			[[fallthrough]];
 		case SC_CIRCLE_OF_FIRE:
 		case SC_FIRE_CLOAK:
 		case SC_WATER_DROP:
@@ -12550,7 +12616,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 		case SC_GUARDIAN_S:
-			val2 = ( status->max_hp / 2 ) * ( 50 * val1 ) / 100 + 15 * status->sta; // Barrier HP
+			val2 = ( status->max_hp * 30 / 100 ) * ( 25 * val1 ) / 100 + 15 * status->sta; // Barrier HP
 			break;
 		case SC_REBOUND_S:
 			val2 = 10 * val1;// Reduced Damage From Devotion
@@ -12691,6 +12757,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WEAPONBREAKER:
 			val2 = val1 * 2 * 100; // Chance to break weapon
 			break;
+		case SC_INTENSIVE_AIM:
+			tick = 500;
+			break;
+		case SC_HIDDEN_CARD:
+			val2 = 3 * val1;
+			val3 = 10 * val1;
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->endonstart.empty() && scdb->endreturn.empty() && scdb->fail.empty() && scdb->endonend.empty()) {
@@ -12729,6 +12802,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					break;
 				tick_time = tick;
 				tick = tick_time + max(val4, 0);
+				[[fallthrough]];
 			case SC_MAGICMUSHROOM:
 			case SC_PYREXIA:
 			case SC_LEECHESEND:
@@ -12824,7 +12898,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (battle_config.sc_castcancel&bl->type && scdb->flag[SCF_STOPCASTING])
 		unit_skillcastcancel(bl,0);
 
-	sc->opt1 = scdb->opt1;
+	if(scdb->opt1 != OPT1_NONE) sc->opt1 = scdb->opt1;
 	sc->opt2 |= scdb->opt2;
 	sc->opt3 |= scdb->opt3;
 	sc->option |= scdb->look;
@@ -12951,8 +13025,28 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_BOSSMAPINFO:
-			if (sd)
-				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
+			if( sd == nullptr ){
+				return 0;
+			}else{
+				mob_data* boss_md = map_id2boss( sce->val1 );
+
+				if( boss_md == nullptr ){
+					return 0;
+				}
+
+				// Not on same map anymore
+				if( sd->bl.m != boss_md->bl.m ){
+					return 0;
+				// Boss is alive
+				}else if( boss_md->bl.prev != nullptr ){
+					sce->val2 = 0;
+					clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE_WITHMSG );
+				// Boss is dead
+				}else if( boss_md->spawn_timer != INVALID_TIMER ){
+					sce->val2 = 1;
+					clif_bossmapinfo( *sd, boss_md, BOSS_INFO_DEAD );
+				}
+			}
 			break;
 		case SC_FULL_THROTTLE:
 		case SC_MERC_HPUP:
@@ -13332,16 +13426,18 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
 			}
 			break;
-		case SC_CLOSECONFINE2:{
-			struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
-			status_change *sc2 = src?status_get_sc(src):NULL;
-			if (src && sc2 && sc2->getSCE(SC_CLOSECONFINE)) {
-				// If status was already ended, do nothing.
-				// Decrease count
-				if (--(sc2->getSCE(SC_CLOSECONFINE)->val1) <= 0) // No more holds, free him up.
-					status_change_end(src, SC_CLOSECONFINE);
+		case SC_CLOSECONFINE2:
+			{
+				struct block_list *src = sce->val2?map_id2bl(sce->val2):nullptr;
+				status_change *sc2 = src?status_get_sc(src):nullptr;
+				if (src && sc2 && sc2->getSCE(SC_CLOSECONFINE)) {
+					// If status was already ended, do nothing.
+					// Decrease count
+					if (--(sc2->getSCE(SC_CLOSECONFINE)->val1) <= 0) // No more holds, free him up.
+						status_change_end(src, SC_CLOSECONFINE);
+				}
 			}
-		}
+			[[fallthrough]];
 		case SC_CLOSECONFINE:
 			if (sce->val2 > 0) {
 				// Caster has been unlocked... nearby chars need to be unlocked.
@@ -14043,22 +14139,27 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_BOSSMAPINFO:
-		if( sd && --(sce->val4) >= 0 ) {
-			struct mob_data *boss_md = map_id2boss(sce->val1);
+		if( sd && sce->val4 >= 0 ){
+			mob_data* boss_md = map_id2boss( sce->val1 );
 
-			if (boss_md) {
-				if (sd->bl.m != boss_md->bl.m) // Not on same map anymore
-					return 0;
-				else if (boss_md->bl.prev != NULL) { // Boss is alive - Update X, Y on minimap
-					sce->val2 = 0;
-					clif_bossmapinfo(sd, boss_md, BOSS_INFO_ALIVE);
-				} else if (boss_md->spawn_timer != INVALID_TIMER && !sce->val2) { // Boss is dead
-					sce->val2 = 1;
-					clif_bossmapinfo(sd, boss_md, BOSS_INFO_DEAD);
-				}
+			if( boss_md == nullptr ){
+				sce->val4 = 0;
+				break;
 			}
-			sc_timer_next(1000 + tick);
-			return 0;
+
+			// Not on same map anymore
+			if( sd->bl.m != boss_md->bl.m ){
+				sce->val4 = 0;
+				break;
+			// Boss is alive - Update X, Y on minimap
+			}else if( boss_md->bl.prev != nullptr ){
+				sce->val2 = 0;
+				clif_bossmapinfo( *sd, boss_md, BOSS_INFO_ALIVE );
+			// Boss is dead
+			}else if( boss_md->spawn_timer != INVALID_TIMER && sce->val2 == 0 ){
+				sce->val2 = 1;
+				clif_bossmapinfo( *sd, boss_md, BOSS_INFO_DEAD );
+			}
 		}
 		break;
 
@@ -14102,6 +14203,7 @@ TIMER_FUNC(status_change_timer){
 					sp= 4*(sce->val1>>16);
 					// Upkeep is also every 10 secs.
 #ifndef RENEWAL
+				[[fallthrough]];
 				case DC_DONTFORGETME:
 #endif
 					s=10;
@@ -14812,6 +14914,15 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4 >= 0)
 			skill_castend_damage_id( bl, bl, NPC_KILLING_AURA, sce->val1, tick, 0 );
 		break;
+	case SC_INTENSIVE_AIM:
+		if (!sc || !sc->getSCE(SC_INTENSIVE_AIM_COUNT))
+			sce->val4 = 0;
+		if (sce->val4 < 10) {
+			sce->val4++;
+			sc_start(bl, bl, SC_INTENSIVE_AIM_COUNT, 100, sce->val4, INFINITE_TICK);
+		}
+		sc_timer_next(500 + tick);
+		return 0;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval
@@ -15339,8 +15450,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc)
  * @param current: Current row being read into SCDisabled array
  * @return True - Successfully stored, False - Invalid SC
  */
-static bool status_readdb_status_disabled(char **str, int columns, int current)
-{
+static bool status_readdb_status_disabled( char **str, size_t columns, size_t current ){
 	int64 type = SC_NONE;
 
 	if (ISDIGIT(str[0][0]))

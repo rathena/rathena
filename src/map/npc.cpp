@@ -5159,10 +5159,7 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 		struct script_code *oldscript = (struct script_code*)db_data2ptr(&old_data);
 
 		ShowInfo("npc_parse_function: Overwriting user function [%s] (%s:%d)\n", w3, filepath, strline(buffer,start-buffer));
-		script_stop_scriptinstances(oldscript);
-		script_free_vars(oldscript->local.vars);
-		aFree(oldscript->script_buf);
-		aFree(oldscript);
+		script_free_code( oldscript );
 	}
 
 	return end;
@@ -5624,13 +5621,14 @@ int npc_parsesrcfile(const char* filepath)
 
 	// parse buffer
 	for ( const char* p = skip_space(buffer); p && *p ; p = skip_space(p) ) {
-		int pos[9];
+		size_t pos[9];
 		lines++;
 
 		// w1<TAB>w2<TAB>w3<TAB>w4
-		int count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
+		bool error;
+		size_t count = sv_parse( p, len + buffer - p, 0, '\t', pos, ARRAYLENGTH( pos ), SV_TERMINATE_LF|SV_TERMINATE_CRLF, error );
 
-		if (count < 0) {
+		if( error ){
 			ShowError("npc_parsesrcfile: Parse error in file '%s', line '%d'. Stopping...\n", filepath, strline(buffer,p-buffer));
 			break;
 		}

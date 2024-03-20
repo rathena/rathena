@@ -2954,11 +2954,11 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 		if( itemdb_isequip( data->nameid ) ){
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
-				tmp.refine = rnd_value( data->refineMinimum, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, data->refineMaximum ) );
 			}else if( data->refineMinimum > 0 ){
-				tmp.refine = rnd_value<uint16>( data->refineMinimum, MAX_REFINE );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( data->refineMinimum, MAX_REFINE ) );
 			}else if( data->refineMaximum > 0 ){
-				tmp.refine = rnd_value<uint16>( 1, data->refineMaximum );
+				tmp.refine = static_cast<uint8>( rnd_value<uint16>( 1, data->refineMaximum ) );
 			}else{
 				tmp.refine = 0;
 			}
@@ -3553,7 +3553,7 @@ void ItemGroupDatabase::loadingFinished() {
 /** Read item forbidden by mapflag (can't equip item)
 * Structure: <nameid>,<mode>
 */
-static bool itemdb_read_noequip(char* str[], int columns, int current) {
+static bool itemdb_read_noequip( char* str[], size_t columns, size_t current ){
 	t_itemid nameid;
 	int flag;
 
@@ -4290,7 +4290,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (randopt->script) {
-			aFree(randopt->script);
+			script_free_code( randopt->script );
 			randopt->script = nullptr;
 		}
 
