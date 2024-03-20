@@ -292,7 +292,6 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	struct mmo_account acc;
-	int len;
 
 	char ip[16];
 	ip2str(session[sd->fd]->client_addr, ip);
@@ -316,7 +315,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	}
 
-	len = strnlen(sd->userid, NAME_LENGTH);
+	size_t len = strnlen(sd->userid, NAME_LENGTH);
 
 	// Account creation with _M/_F
 	if( login_config.new_account_flag ) {

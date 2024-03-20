@@ -593,7 +593,7 @@ void ItemDatabase::loadingFinished() {
 
 ItemDatabase item_db;
 
-static bool parse_mob_constants_txt(char *split[], int columns, int current) {
+static bool parse_mob_constants_txt( char *split[], size_t columns, size_t current ){
 	uint16 mob_id = atoi(split[0]);
 	char *name = trim(split[1]);
 
@@ -602,7 +602,7 @@ static bool parse_mob_constants_txt(char *split[], int columns, int current) {
 	return true;
 }
 
-static bool parse_skill_constants_txt(char *split[], int columns, int current) {
+static bool parse_skill_constants_txt( char *split[], size_t columns, size_t current ){
 	uint16 skill_id = atoi(split[0]);
 	char *name = trim(split[16]);
 
