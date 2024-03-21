@@ -91886,7 +91886,7 @@ Body:
             Item: EXP_Drop_Up_7days
             Amount: 4
           - Index: 1
-            Item: Premium_Box
+            Item: Premium_Box_5d7
           - Index: 2
             Item: Nyangvine_Fruit
             Amount: 106
@@ -93136,7 +93136,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 6
           - Index: 1
-            Item: Premium_Box
+            Item: Premium_Box_5d7
           - Index: 2
             Item: EXP_Drop_Up_7days
           - Index: 3
@@ -109898,7 +109898,7 @@ Body:
           - Index: 0
             Item: Sonic_Costume_Pack
           - Index: 1
-            Item: Premium_Box
+            Item: Premium_Box_5d7
           - Index: 2
             Item: EXP_Drop_Up_7days
           - Index: 3
