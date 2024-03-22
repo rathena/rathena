@@ -33544,38 +33544,6 @@ Body:
     AegisName: Muscles_Story_J_Box
     Name: Muscle Knights Summertime Guide Box
     Type: Etc
-  - Id: 17438
-    AegisName: 3_Life_Potion_pack2
-    Name: Three Master Package II
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      /* TODO */
-  - Id: 17439
-    AegisName: 3_Life_Potion_10pack2
-    Name: Three Master Package II(10)
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      /* TODO */
   - Id: 18000
     AegisName: Cannon_Ball
     Name: Cannon Ball
@@ -33810,12 +33778,6 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-  - Id: 22654
-    AegisName: Golden_Card
-    Name: Golden Seal Card
-    Type: Etc
-    Buy: 20
-    Weight: 50
   - Id: 22717
     AegisName: Ball_Wanderer
     Name: Wanderer Ball
