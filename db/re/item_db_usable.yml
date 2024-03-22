@@ -67087,6 +67087,7 @@ Body:
   - Id: 101185
     AegisName: Snow_F_Enchant
     Name: Snowflower Armor Enchant (Armor)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -67097,10 +67098,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(26);
   - Id: 101186
     AegisName: Glacier_W_Enchant
     Name: Glacier Weapon Enchantment
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -67111,7 +67113,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(31);
   - Id: 101187
     AegisName: Snow_F_Refine
     Name: Snow Flower Armor +9 Refinement Cube
@@ -67179,6 +67181,7 @@ Body:
   - Id: 101217
     AegisName: Snow_F_Enchant2
     Name: Snowflower Armor Enchant (Garment)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -67189,10 +67192,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(27);
   - Id: 101218
     AegisName: Snow_F_Enchant3
     Name: Snowflower Armor Enchant (Shoes)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -67203,10 +67207,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(28);
   - Id: 101219
     AegisName: Snow_F_Enchant4
     Name: Snowflower Armor Enchant (Accessory A)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -67217,10 +67222,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(29);
   - Id: 101220
     AegisName: Snow_F_Enchant5
     Name: Snowflower Armor Enchant (Accessory B)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -67231,7 +67237,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(30);
   - Id: 101234
     AegisName: Booster_Pack_120
     Name: Booster Pack(120)    # !todo check english name
