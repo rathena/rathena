@@ -4656,6 +4656,8 @@ Body:
     Name: Lotto Box 01
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getrandgroupitem(IG_LottoBox1,1);
   - Id: 12036
@@ -4663,6 +4665,8 @@ Body:
     Name: Lotto Box 02
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getrandgroupitem(IG_LottoBox2,1);
   - Id: 12037
@@ -4670,6 +4674,8 @@ Body:
     Name: Lotto Box 03
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getrandgroupitem(IG_LottoBox3,1);
   - Id: 12038
@@ -4686,6 +4692,8 @@ Body:
     Name: Lotto Box 05
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getrandgroupitem(IG_LottoBox5,1);
   - Id: 12040
@@ -7738,6 +7746,8 @@ Body:
     Name: PC-Room Coin Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -7754,6 +7764,8 @@ Body:
     Name: PC-Room Coin Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -7788,6 +7800,8 @@ Body:
     Name: PC-Room Coin Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -8050,6 +8064,8 @@ Body:
     Name: Adventurer Returns Support Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -10618,6 +10634,7 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getgroupitem(IG_Splendid_Box);
   - Id: 12540
@@ -10755,6 +10772,8 @@ Body:
     AegisName: Poison_Bottle_Box2
     Name: Deadly Poison Box
     Type: Usable
+    Flags:
+      BuyingStore: true
     Script: |
       getitem 678,30;
   - Id: 12551
@@ -11445,6 +11464,7 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getgroupitem(IG_Old_Ore_Box);
   - Id: 12610
@@ -11870,6 +11890,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 30
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Ink_Ball);
   - Id: 12648
@@ -12251,6 +12273,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 500
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_God_Material_Box);
   - Id: 12675
@@ -13116,6 +13140,14 @@ Body:
     Name: Chinese Pastel
     Type: Usable
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       percentheal 50,50;
   - Id: 12755
@@ -13759,6 +13791,8 @@ Body:
     Name: Old Card Album
     Type: Usable
     EquipLevelMin: 80
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -13776,6 +13810,8 @@ Body:
     Name: High Weapon Box
     Type: Usable
     EquipLevelMin: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -14069,6 +14105,12 @@ Body:
     Name: Falcon Flute
     Type: DelayConsume
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
     Script: |
       if (getskilllv("HT_FALCON")) {
          if (!checkoption(Option_Wug) && !checkoption(Option_Wugrider))
@@ -19495,6 +19537,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -19549,6 +19592,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -19567,6 +19611,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -21387,6 +21432,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -21405,6 +21451,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -21603,6 +21650,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -21765,6 +21813,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -21783,6 +21832,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -21801,6 +21851,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22027,6 +22078,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22045,6 +22097,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22677,6 +22730,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22695,6 +22749,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22713,6 +22768,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22954,6 +23010,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22972,6 +23029,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -22990,6 +23048,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23008,6 +23067,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23026,6 +23086,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23277,6 +23338,7 @@ Body:
     Type: Cash
     Buy: 20
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23643,6 +23705,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23661,6 +23724,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23679,6 +23743,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23841,6 +23906,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23859,6 +23925,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23877,6 +23944,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23895,6 +23963,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23913,6 +23982,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -23931,6 +24001,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24129,6 +24200,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24147,6 +24219,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24165,6 +24238,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24291,6 +24365,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24309,6 +24384,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24346,6 +24422,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24364,6 +24441,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24382,6 +24460,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24400,6 +24479,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24418,6 +24498,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24436,6 +24517,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24598,6 +24680,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24724,6 +24807,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24742,6 +24826,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24760,6 +24845,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24778,6 +24864,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24796,6 +24883,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24814,6 +24902,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24832,6 +24921,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24850,6 +24940,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24868,6 +24959,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24886,6 +24978,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24904,6 +24997,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -24922,6 +25016,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25340,6 +25435,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25358,6 +25454,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25376,6 +25473,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25394,6 +25492,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25412,6 +25511,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25430,6 +25530,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25448,6 +25549,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25484,6 +25586,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25502,6 +25605,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25520,6 +25624,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25538,6 +25643,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25556,6 +25662,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25592,6 +25699,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25844,6 +25952,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25862,6 +25971,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25880,6 +25990,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -25898,6 +26009,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26168,6 +26280,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26186,6 +26299,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26204,6 +26318,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26222,6 +26337,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26240,6 +26356,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26258,6 +26375,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26276,6 +26394,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26294,6 +26413,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26312,6 +26432,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26330,6 +26451,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26348,6 +26470,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26366,6 +26489,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26384,6 +26508,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26402,6 +26527,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26420,6 +26546,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26438,6 +26565,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26456,6 +26584,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26474,6 +26603,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -26492,6 +26622,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27248,6 +27379,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27266,6 +27398,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27284,6 +27417,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27302,6 +27436,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27320,6 +27455,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27338,6 +27474,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27356,6 +27493,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27374,6 +27512,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27392,6 +27531,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27410,6 +27550,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27428,6 +27569,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27446,6 +27588,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27464,6 +27607,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27482,6 +27626,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27500,6 +27645,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27518,6 +27664,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27536,6 +27683,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27554,6 +27702,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27572,6 +27721,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27590,6 +27740,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27608,6 +27759,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27626,6 +27778,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27644,6 +27797,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27662,6 +27816,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27680,6 +27835,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27698,6 +27854,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27716,6 +27873,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27734,6 +27892,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27752,6 +27911,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27770,6 +27930,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27788,6 +27949,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27842,6 +28004,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27860,6 +28023,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27878,6 +28042,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27896,6 +28061,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27914,6 +28080,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27932,6 +28099,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27950,6 +28118,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -27968,6 +28137,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -28256,6 +28426,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -28760,6 +28931,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -28778,6 +28950,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -29264,6 +29437,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -29282,6 +29456,7 @@ Body:
     Buy: 20
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -30887,6 +31062,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -30904,6 +31081,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -30921,6 +31100,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -30938,6 +31119,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -30955,6 +31138,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -30972,6 +31157,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -30989,6 +31176,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31006,6 +31195,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31023,6 +31214,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31040,6 +31233,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31057,6 +31252,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31547,6 +31744,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31563,6 +31762,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31579,6 +31780,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31595,6 +31798,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31611,6 +31816,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31627,6 +31834,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31643,6 +31852,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31659,6 +31870,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31675,6 +31888,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31691,6 +31906,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31743,6 +31960,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31759,6 +31978,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31775,6 +31996,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31791,6 +32014,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31807,6 +32032,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31823,6 +32050,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31839,6 +32068,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31855,6 +32086,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31871,6 +32104,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -31887,6 +32122,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -32280,6 +32517,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 2000
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -32296,6 +32535,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 2000
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -34804,6 +35045,8 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35151,6 +35394,8 @@ Body:
     Name: Soul Plunger Scroll
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35166,6 +35411,8 @@ Body:
     Name: Happy Balloon Scroll
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35571,6 +35818,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35587,6 +35836,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35603,6 +35854,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35619,6 +35872,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35635,6 +35890,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35651,6 +35908,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35667,6 +35926,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35683,6 +35944,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35699,6 +35962,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35715,6 +35980,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35731,6 +35998,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35747,6 +36016,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35763,6 +36034,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35779,6 +36052,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35795,6 +36070,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35811,6 +36088,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35827,6 +36106,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35843,6 +36124,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35859,6 +36142,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35875,6 +36160,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35891,6 +36178,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35907,6 +36196,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35923,6 +36214,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35939,6 +36232,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35955,6 +36250,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35971,6 +36268,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -35987,6 +36286,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36003,6 +36304,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36019,6 +36322,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36035,6 +36340,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36051,6 +36358,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36193,6 +36502,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36271,6 +36582,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36287,6 +36600,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36303,6 +36618,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36319,6 +36636,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36335,6 +36654,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36351,6 +36672,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36721,6 +37044,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36737,6 +37062,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
     Script: |
@@ -36939,6 +37266,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 50
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36956,6 +37285,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 35
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36972,6 +37303,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -36988,6 +37321,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37004,6 +37339,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37020,6 +37357,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37036,6 +37375,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37052,6 +37393,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37068,6 +37411,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37084,6 +37429,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37100,6 +37447,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37116,6 +37465,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37132,6 +37483,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37149,6 +37502,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37166,6 +37521,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37183,6 +37540,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37200,6 +37559,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37217,6 +37578,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37233,6 +37596,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37249,6 +37614,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37265,6 +37632,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37281,6 +37650,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37297,6 +37668,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37313,6 +37686,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37329,6 +37704,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37345,6 +37722,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37361,6 +37740,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37377,6 +37758,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37393,6 +37776,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37409,6 +37794,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37425,6 +37812,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37441,6 +37830,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -37457,6 +37848,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38163,6 +38556,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38179,6 +38574,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38195,6 +38592,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38211,6 +38610,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38227,6 +38628,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38243,6 +38646,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38259,6 +38664,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38275,6 +38682,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38291,6 +38700,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38307,6 +38718,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38323,6 +38736,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38339,6 +38754,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_7TH_ANNI_RANDOM_BOX);
   - Id: 16360
@@ -38433,6 +38850,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38449,6 +38868,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38493,6 +38914,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38528,6 +38951,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38662,6 +39087,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38678,6 +39105,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38732,6 +39161,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38748,6 +39179,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38924,6 +39357,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -38940,6 +39375,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39138,6 +39575,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39154,6 +39593,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39170,6 +39611,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39186,6 +39629,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39378,6 +39823,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39394,6 +39841,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39410,6 +39859,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39426,6 +39877,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -39473,6 +39926,8 @@ Body:
     Name: Bunny Band Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_E_BUNNY_BAND_BOX);
   - Id: 16503
@@ -39940,6 +40395,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_THOUGHTFUL_HAT_BOX);
   - Id: 16589
@@ -39948,6 +40405,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_F_THOUGHTFUL_HAT_BOX);
   - Id: 16590
@@ -39956,6 +40415,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_E_THOUGHTFUL_HAT_BOX);
   - Id: 16591
@@ -39964,6 +40425,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 100
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_SUMMER_SCROLL2);
   - Id: 16598
@@ -39990,6 +40453,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40109,6 +40574,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 47
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40126,6 +40593,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 47
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40179,6 +40648,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40195,6 +40666,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40211,6 +40684,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40227,6 +40702,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40297,6 +40774,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40313,6 +40792,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40329,6 +40810,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40345,6 +40828,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40361,6 +40846,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40377,6 +40864,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40393,6 +40882,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40409,6 +40900,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -40425,6 +40918,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41543,6 +42038,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41735,6 +42232,8 @@ Body:
     Type: Cash
     Sell: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41817,6 +42316,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41833,6 +42334,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41897,6 +42400,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41945,6 +42450,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41979,6 +42486,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -41995,6 +42504,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42011,6 +42522,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42027,6 +42540,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42043,6 +42558,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42059,6 +42576,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42075,6 +42594,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42091,6 +42612,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42107,6 +42630,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42123,6 +42648,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42139,6 +42666,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42155,6 +42684,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42171,6 +42702,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42187,6 +42720,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42203,6 +42738,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42237,6 +42774,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42253,6 +42792,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42269,6 +42810,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42285,6 +42828,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42302,6 +42847,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 50
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42319,6 +42866,8 @@ Body:
     Buy: 20
     Weight: 10
     EquipLevelMin: 35
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42335,6 +42884,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42351,6 +42902,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42367,6 +42920,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42383,6 +42938,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42399,6 +42956,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42415,6 +42974,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42431,6 +42992,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42447,6 +43010,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42463,6 +43028,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42479,6 +43046,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42495,6 +43064,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42511,6 +43082,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42527,6 +43100,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42543,6 +43118,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42559,6 +43136,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42575,6 +43154,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42591,6 +43172,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42607,6 +43190,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42623,6 +43208,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42639,6 +43226,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42655,6 +43244,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42671,6 +43262,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42687,6 +43280,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42703,6 +43298,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42719,6 +43316,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42735,6 +43334,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42751,6 +43352,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42767,6 +43370,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42783,6 +43388,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42799,6 +43406,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42815,6 +43424,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42831,6 +43442,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42847,6 +43460,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42863,6 +43478,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42879,6 +43496,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42895,6 +43514,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42911,6 +43532,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42927,6 +43550,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42943,6 +43568,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42959,6 +43586,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42975,6 +43604,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -42991,6 +43622,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43007,6 +43640,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43023,6 +43658,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43039,6 +43676,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43055,6 +43694,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43071,6 +43712,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43087,6 +43730,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43103,6 +43748,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43119,6 +43766,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43135,6 +43784,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43151,6 +43802,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -43167,6 +43820,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -44915,6 +45570,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -44931,6 +45588,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
     Script: |
@@ -44971,6 +45630,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45064,6 +45725,7 @@ Body:
     Type: Cash
     Weight: 10
     Flags:
+      Container: true
       UniqueId: true
     Trade:
       NoDrop: true
@@ -45081,6 +45743,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45108,6 +45772,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45124,6 +45790,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45140,6 +45808,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45156,6 +45826,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45172,6 +45844,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45206,6 +45880,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45222,6 +45898,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45238,6 +45916,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45270,6 +45950,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45285,6 +45967,8 @@ Body:
     Name: RG Red Potion Box
     Type: Cash
     Weight: 400
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45300,6 +45984,8 @@ Body:
     Name: RG Blue Potion Box
     Type: Cash
     Weight: 900
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45315,6 +46001,8 @@ Body:
     Name: RG Golden Apple Slice Box
     Type: Cash
     Weight: 3000
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45330,6 +46018,8 @@ Body:
     Name: RG Golden Apple Box
     Type: Cash
     Weight: 3000
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45345,6 +46035,8 @@ Body:
     Name: RG Golden Potion Box
     Type: Cash
     Weight: 300
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45388,6 +46080,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45403,6 +46097,8 @@ Body:
     Name: Battle Manual Limit Box
     Type: Cash
     Buy: 20
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46040,6 +46736,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46074,6 +46772,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46161,6 +46861,8 @@ Body:
     Name: Customization Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46209,6 +46911,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46225,6 +46929,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46241,6 +46947,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46257,6 +46965,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46273,6 +46983,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46499,6 +47211,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46515,6 +47229,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47101,6 +47817,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47117,6 +47835,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47273,6 +47993,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47289,6 +48011,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47339,6 +48063,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47355,6 +48081,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47408,6 +48136,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47424,6 +48154,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47513,6 +48245,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -47529,6 +48263,8 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48105,6 +48841,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48121,6 +48859,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48146,6 +48886,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48162,6 +48904,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48178,6 +48922,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48194,6 +48940,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48210,6 +48958,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48226,6 +48976,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48250,6 +49002,8 @@ Body:
     Name: Smelting Ore Box X
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48265,6 +49019,8 @@ Body:
     Name: Smelting Ore Box X (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48289,6 +49045,8 @@ Body:
     Name: Edward Zonda Service Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48304,6 +49062,8 @@ Body:
     Name: Elysee Zonda Owner EX Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48319,6 +49079,8 @@ Body:
     Name: Cheer Up Package V
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48334,6 +49096,8 @@ Body:
     Name: Cheer Up Package V (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48358,6 +49122,8 @@ Body:
     Name: Endless Greed Scroll Box (1h)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48373,6 +49139,8 @@ Body:
     Name: Infinite Cat's Hand Ticket Box(1 day)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_C_CATPAW_1DAY_BOX);
   - Id: 17601
@@ -48380,6 +49148,8 @@ Body:
     Name: Unlimited Box IV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48395,6 +49165,8 @@ Body:
     Name: Unlimited Box IV (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48419,6 +49191,8 @@ Body:
     Name: Infinite Giant Fly Wing Box 1Day
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_C_GIANT_FLY_1DAY_BOX);
   - Id: 17609
@@ -48426,6 +49200,8 @@ Body:
     Name: Refine Ore Box XI
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48441,6 +49217,8 @@ Body:
     Name: Refine Ore Box XI(10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48465,6 +49243,8 @@ Body:
     Name: Three Master Package VII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48480,6 +49260,8 @@ Body:
     Name: Three Master Package VII (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48504,6 +49286,8 @@ Body:
     Name: Almighty Plus Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48519,6 +49303,8 @@ Body:
     Name: Almighty Plus Box(10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48543,6 +49329,8 @@ Body:
     Name: Limited Power Booster Box 2
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48558,6 +49346,8 @@ Body:
     Name: Limited Power Booster Box 2 (100)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48573,6 +49363,8 @@ Body:
     Name: Halter Lead Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48605,6 +49397,8 @@ Body:
     Name: Refining Ore Box XII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48620,6 +49414,8 @@ Body:
     Name: Refining Ore Box XII (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48652,6 +49448,8 @@ Body:
     Name: Cheer Up Plus Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48667,6 +49465,8 @@ Body:
     Name: Cheer Up Plus Package (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48699,6 +49499,8 @@ Body:
     Name: Three Master Package VIII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48714,6 +49516,8 @@ Body:
     Name: Three Master Package VIII (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48746,6 +49550,8 @@ Body:
     Name: Unlimited Box V
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48761,6 +49567,8 @@ Body:
     Name: Ultimate Box V (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48793,6 +49601,8 @@ Body:
     Name: Refining Ore Box XIII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48808,6 +49618,8 @@ Body:
     Name: Refining Ore Box XIII (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48823,6 +49635,8 @@ Body:
     Name: HD Refining Ore Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48855,6 +49669,8 @@ Body:
     Name: Lucky Silvervine Cat Fruit Box II (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48870,6 +49686,8 @@ Body:
     Name: Lucky Silvervine Cat Fruit Box II (100)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48885,6 +49703,8 @@ Body:
     Name: Cheer Up Plus Package II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48900,6 +49720,8 @@ Body:
     Name: Cheer Up Plus Package II (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48932,6 +49754,8 @@ Body:
     Name: Three Master Package IX
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48947,6 +49771,8 @@ Body:
     Name: Three Master Package IX (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48962,6 +49788,8 @@ Body:
     Name: Refining Ore Box XIV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48977,6 +49805,8 @@ Body:
     Name: Refining Ore Box XIV (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -48992,6 +49822,8 @@ Body:
     Name: HD Refining Ore Box II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49007,6 +49839,8 @@ Body:
     Name: Almighty Plus Box II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49022,6 +49856,8 @@ Body:
     Name: Almighty Plus Box II (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49037,6 +49873,8 @@ Body:
     Name: Defense Scroll Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49052,6 +49890,8 @@ Body:
     Name: Defense Scroll Box(10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49067,6 +49907,8 @@ Body:
     Name: Limited Power Booster 3
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49082,6 +49924,8 @@ Body:
     Name: Limited Power Booster 3 (100)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49097,6 +49941,8 @@ Body:
     Name: HD Refine Ore Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49112,6 +49958,8 @@ Body:
     Name: Refine Ore XV Box(10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49127,6 +49975,8 @@ Body:
     Name: Refine Ore XV Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49142,6 +49992,8 @@ Body:
     Name: HD Refine Ore Box III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49157,6 +50009,8 @@ Body:
     Name: Cheer Up Plus Package III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49172,6 +50026,8 @@ Body:
     Name: Cheer Up Plus Package III (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49187,6 +50043,8 @@ Body:
     Name: Infinite Cat's Hand Ticket Box(7 days)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_C_CATPAW_7DAY_BOX);
   - Id: 17774
@@ -49194,6 +50052,8 @@ Body:
     Name: Almighty Plus Box III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49209,6 +50069,8 @@ Body:
     Name: Almighty Plus Box III (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49224,6 +50086,8 @@ Body:
     Name: Three Master Package X
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49239,6 +50103,8 @@ Body:
     Name: Three Master Package X (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49269,6 +50135,8 @@ Body:
     Name: Unlimited Box VI (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49284,6 +50152,8 @@ Body:
     Name: Unlimited Box VI
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49299,6 +50169,8 @@ Body:
     Name: Refining Ore Box XVI
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49314,6 +50186,8 @@ Body:
     Name: Refining Ore Box XVI (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49329,6 +50203,8 @@ Body:
     Name: HD Refining Ore Box IV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49344,6 +50220,8 @@ Body:
     Name: HD Refine Ore Box II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49359,6 +50237,8 @@ Body:
     Name: Defense Scroll Box II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49374,6 +50254,8 @@ Body:
     Name: Defense Scroll Box II (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49389,6 +50271,8 @@ Body:
     Name: Three Master Package XI
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49404,6 +50288,8 @@ Body:
     Name: Three Master Package XI (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49419,6 +50305,8 @@ Body:
     Name: 2017 Ragnarok RTC Participaton Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49435,6 +50323,8 @@ Body:
     Name: Refining Ore Box XVII (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49450,6 +50340,8 @@ Body:
     Name: Refining Ore Box XVII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49465,6 +50357,8 @@ Body:
     Name: HD Refining Ore Box V
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49480,6 +50374,8 @@ Body:
     Name: HD Refine Ore Box III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49495,6 +50391,8 @@ Body:
     Name: Infinity Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49510,6 +50408,8 @@ Body:
     Name: Infinity Box(10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49532,6 +50432,8 @@ Body:
     Name: New Cheer Up Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49547,6 +50449,8 @@ Body:
     Name: New Cheer Up Package (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49562,6 +50466,8 @@ Body:
     Name: Limited Power Booster IV (100)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49577,6 +50483,8 @@ Body:
     Name: Limited Power Booster IV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49592,6 +50500,8 @@ Body:
     Name: G-STAR 2017 Ragnarok Memorial Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49606,6 +50516,8 @@ Body:
     AegisName: Zero_Merchant_Bell_Box
     Name: Tool Dealer Bell Box
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49620,6 +50532,8 @@ Body:
     AegisName: Zero_Kafra_Bell_Box
     Name: Kafra Storage Bell Box
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49635,6 +50549,8 @@ Body:
     Name: Refining Ore Box XVIII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49650,6 +50566,8 @@ Body:
     Name: Refining Ore Box XVIII (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49665,6 +50583,8 @@ Body:
     Name: HD Refining Ore Box VI
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49680,6 +50600,8 @@ Body:
     Name: HD Refine Ore Box IV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49695,6 +50617,8 @@ Body:
     Name: New Three Master Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49710,6 +50634,8 @@ Body:
     Name: New Three Master Package (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49725,6 +50651,8 @@ Body:
     Name: Lucky Silvervine Cat Fruit Box III (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49740,6 +50668,8 @@ Body:
     Name: Lucky Silvervine Cat Fruit Box III (100)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49755,6 +50685,8 @@ Body:
     Name: Almighty Plus Box IV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49770,6 +50702,8 @@ Body:
     Name: Almighty Plus Box IV (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49785,6 +50719,8 @@ Body:
     Name: Refining Ore Box XIX (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49800,6 +50736,8 @@ Body:
     Name: Refining Ore Box XIX
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49815,6 +50753,8 @@ Body:
     Name: HD Refining Ore Box VII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49830,6 +50770,8 @@ Body:
     Name: HD Refine Ore Box V
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49845,6 +50787,8 @@ Body:
     Name: Defense Scroll Box III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49860,6 +50804,8 @@ Body:
     Name: Defense Scroll Box III (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49875,6 +50821,8 @@ Body:
     Name: Three Master Package XII
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49890,6 +50838,8 @@ Body:
     Name: Three Master Package XII (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49905,6 +50855,8 @@ Body:
     Name: Infinity Box II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49920,6 +50872,8 @@ Body:
     Name: Infinity Box II 10 sets    # !todo check english name
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49935,6 +50889,8 @@ Body:
     Name: Cheer Up Package (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49950,6 +50906,8 @@ Body:
     Name: Cheer Up Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49965,6 +50923,8 @@ Body:
     Name: Life Potion Sampler 10 Crate
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49980,6 +50940,8 @@ Body:
     Name: Life Potion Sampler Crate
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -49995,6 +50957,8 @@ Body:
     Name: Almighty package 10set
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50010,6 +50974,8 @@ Body:
     Name: Almighty package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50025,6 +50991,8 @@ Body:
     Name: Enriched ore package 10 set
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50040,6 +51008,8 @@ Body:
     Name: Enriched ore package set
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50055,6 +51025,8 @@ Body:
     Name: HD ore package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50070,6 +51042,8 @@ Body:
     Name: High density ore package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50085,6 +51059,8 @@ Body:
     Name: Limit Power Booster Package 10 set
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50100,6 +51076,8 @@ Body:
     Name: LimitPowerBooster package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50115,6 +51093,8 @@ Body:
     Name: Infinity Drink 200 Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50130,6 +51110,8 @@ Body:
     Name: Infinity Drink 20 Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50145,6 +51127,8 @@ Body:
     Name: Defense Scroll Box(10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50160,6 +51144,8 @@ Body:
     Name: Defense Scroll Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50175,6 +51161,8 @@ Body:
     Name: Unlimited Box(10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50190,6 +51178,8 @@ Body:
     Name: Unlimited Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50356,6 +51346,8 @@ Body:
     Type: Cash
     Buy: 10
     EquipLevelMin: 100
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50373,6 +51365,8 @@ Body:
     Type: Cash
     Buy: 10
     EquipLevelMin: 120
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50390,6 +51384,8 @@ Body:
     Type: Cash
     Buy: 10
     EquipLevelMin: 130
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50407,6 +51403,8 @@ Body:
     Type: Cash
     Buy: 10
     EquipLevelMin: 140
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50424,6 +51422,8 @@ Body:
     Type: Cash
     Buy: 10
     EquipLevelMin: 150
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50441,6 +51441,8 @@ Body:
     Type: Cash
     Buy: 10
     EquipLevelMin: 160
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50530,6 +51532,7 @@ Body:
     EquipLevelMin: 1
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getgroupitem(IG_CLOSEDMIND_BOX);
   - Id: 22535
@@ -50867,6 +51870,8 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 200
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50947,9 +51952,8 @@ Body:
     Type: Usable
     Buy: 5000
     Weight: 100
-    Trade:
-      NoMail: true
-      NoAuction: true
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Squad_Prize1);
       getgroupitem(IG_Squad_Prize2);
@@ -51436,6 +52440,8 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 100
+    Flags:
+      BuyingStore: true
     Script: |
       specialeffect2 EF_ENHANCE;
       sc_start SC_BEEF_RIB_STEW,180000,0;
@@ -52187,6 +53193,8 @@ Body:
     Buy: 10
     Weight: 100
     EquipLevelMin: 1
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52326,7 +53334,6 @@ Body:
     Type: Usable
     Buy: 2
     Weight: 10
-    Trade:
     Script: |
       callfunc "F_CashStore";
   - Id: 22816
@@ -52334,6 +53341,8 @@ Body:
     Name: True Mysterious Life Potion
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -52345,6 +53354,8 @@ Body:
     Name: True Small Life Potion
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -52356,6 +53367,8 @@ Body:
     Name: True Medium Life Potion
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -52367,6 +53380,8 @@ Body:
     Name: True Almighty
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       specialeffect2 EF_BASH3D;
       sc_start SC_ALMIGHTY,3600000,10;
@@ -52382,6 +53397,8 @@ Body:
     Name: True Enhanced ASPD Potion
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -52392,6 +53409,8 @@ Body:
     Name: True Red Booster
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -52456,6 +53475,8 @@ Body:
     Buy: 10
     Weight: 10
     EquipLevelMin: 1
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52508,6 +53529,8 @@ Body:
     Buy: 10
     Weight: 10
     EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Something_Candy_Holder);
   - Id: 22839
@@ -53108,6 +54131,8 @@ Body:
     Name: Mysterious Blue Box
     Type: Usable
     Buy: 20
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -53397,6 +54422,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_SHADOW_CUBE_WEAPON);
@@ -53406,6 +54432,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_SHADOW_CUBE_ARMOR);
@@ -53415,6 +54442,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_SHADOW_CUBE_SHIELD);
@@ -53424,6 +54452,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_SHADOW_CUBE_SHOES);
@@ -53433,6 +54462,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_SHADOW_CUBE_PENDANT);
@@ -53442,6 +54472,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_SHADOW_CUBE_EARING);
@@ -53691,6 +54722,7 @@ Body:
     Buy: 1
     Weight: 1
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       callfunc("F_Cursed_Fragment");
@@ -54296,6 +55328,9 @@ Body:
     Type: Usable
     Buy: 1
     Weight: 500
+    Flags:
+      BuyingStore: true
+      Container: true
     Script: |
       getgroupitem(IG_CRYSTAL_OF_GRUDGE);
   - Id: 23081
@@ -54497,6 +55532,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_CLASS_SHADOW_CUBE);
@@ -54672,6 +55708,8 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 20
+    Flags:
+      BuyingStore: true
     Script: |
       getitem 12507,3;
       getitem 12508,3;
@@ -54733,8 +55771,6 @@ Body:
     Type: Usable
     Buy: 2
     Weight: 10
-    Flags:
-      Container: true
     Script: |
       getitem 23142,5;
   - Id: 23145
@@ -54743,8 +55779,6 @@ Body:
     Type: Usable
     Buy: 2
     Weight: 10
-    Flags:
-      Container: true
     Script: |
       getitem 23143,5;
   - Id: 23150
@@ -54768,6 +55802,8 @@ Body:
     Name: Collectibles SynthesisBox
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23153
@@ -54870,6 +55906,7 @@ Body:
     Type: Usable
     Weight: 10
     Flags:
+      BuyingStore: true
       Container: true
     Script: |
       getgroupitem(IG_ALCHEMIST_BOX);
@@ -55217,7 +56254,8 @@ Body:
     Name: "[Not For Sale] DEX Biscuit Stick"
     Type: Usable
     Weight: 10
-    Trade:
+    Flags:
+      BuyingStore: true
     Script: |
       sc_start SC_FOOD_DEX_CASH,1800000,15;
       sc_start SC_HITFOOD,600000,rand(11,33);
@@ -55226,7 +56264,8 @@ Body:
     Name: "[Not For Sale] LUK Biscuit Stick"
     Type: Usable
     Weight: 10
-    Trade:
+    Flags:
+      BuyingStore: true
     Script: |
       sc_start SC_FOOD_LUK_CASH,1800000,15;
       sc_start SC_CRIFOOD,600000,rand(11,33);
@@ -55235,7 +56274,8 @@ Body:
     Name: "[Not For Sale] STR Biscuit Stick"
     Type: Usable
     Weight: 10
-    Trade:
+    Flags:
+      BuyingStore: true
     Script: |
       sc_start SC_FOOD_STR_CASH,1800000,15;
       sc_start SC_ATKPOTION,600000,rand(11,111);
@@ -55244,7 +56284,8 @@ Body:
     Name: "[Not For Sale] VIT Biscuit Stick"
     Type: Usable
     Weight: 10
-    Trade:
+    Flags:
+      BuyingStore: true
     Script: |
       sc_start SC_FOOD_VIT_CASH,1800000,15;
       bonus_script "{ bonus bHPRecovRate,rand(11,33); }",1800,1;
@@ -55253,7 +56294,8 @@ Body:
     Name: "[Not For Sale] AGI Biscuit Stick"
     Type: Usable
     Weight: 10
-    Trade:
+    Flags:
+      BuyingStore: true
     Script: |
       sc_start SC_FOOD_AGI_CASH,1800000,15;
       sc_start SC_FLEEFOOD,600000,rand(11,33);
@@ -55262,7 +56304,8 @@ Body:
     Name: "[Not For Sale] INT Biscuit Stick"
     Type: Usable
     Weight: 10
-    Trade:
+    Flags:
+      BuyingStore: true
     Script: |
       sc_start SC_FOOD_INT_CASH,1800000,15;
       sc_start SC_MATKPOTION,600000,rand(11,111);
@@ -55390,6 +56433,8 @@ Body:
     Name: StatusShadow Mix
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23248
@@ -55994,6 +57039,8 @@ Body:
     Name: Infinite Cat Hand Ticket Box(1 Day)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_C_CATPAW_1DAY_PARA);
   - Id: 23304
@@ -56001,6 +57048,8 @@ Body:
     Name: Infinite Fly Wing Box(1 Day)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_C_WING_OF_FLY_1DAY_PARA);
   - Id: 23305
@@ -56126,6 +57175,8 @@ Body:
     Name: Unlimited Wing Of Fly 3D Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_C_WING_OF_FLY_3DAY_BOX_);
   - Id: 23324
@@ -56160,6 +57211,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getgroupitem(IG_C_WING_OF_FLY_5DAY_BOX_);
   - Id: 23330
@@ -56169,6 +57221,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getgroupitem(IG_C_GIANT_FLY_1DAY_BOX_);
   - Id: 23331
@@ -56176,6 +57229,8 @@ Body:
     Name: Infinite Fly Wing Box(1 Week)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_C_WING_OF_FLY_BOX_);
   - Id: 23332
@@ -56563,14 +57618,6 @@ Body:
     Name: Fire Armor Scroll
     Type: Usable
     Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_FIREHIT;
       sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Fire,1,0;
@@ -56579,14 +57626,6 @@ Body:
     Name: Water Armor Scroll
     Type: Usable
     Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_COLDHIT;
       sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Water,1,0;
@@ -56595,14 +57634,6 @@ Body:
     Name: Wind Armor Scroll
     Type: Usable
     Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_WINDHIT;
       sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Wind,1,0;
@@ -56611,14 +57642,6 @@ Body:
     Name: Earth Armor Scroll
     Type: Usable
     Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       specialeffect2 EF_EARTHHIT;
       sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Earth,1,0;
@@ -56676,6 +57699,8 @@ Body:
     Name: Shadow Refine Hammer
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23438
@@ -57237,14 +58262,6 @@ Body:
     Name: Snow Cookie
     Type: Usable
     Weight: 50
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       percentheal 5,0;
       sc_start SC_HITFOOD,600000,30;
@@ -57253,14 +58270,6 @@ Body:
     Name: Winter Cookie
     Type: Usable
     Weight: 50
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       percentheal 5,0;
       sc_start SC_ATKPOTION,600000,3;
@@ -57269,14 +58278,6 @@ Body:
     Name: Festi Cookie
     Type: Usable
     Weight: 50
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       percentheal 5,0;
       sc_start SC_ASPDPOTION0,600000,10;
@@ -57285,14 +58286,6 @@ Body:
     Name: Flora Cookie
     Type: Usable
     Weight: 50
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       percentheal 5,0;
       sc_start SC_MATKPOTION,600000,3;
@@ -57701,8 +58694,6 @@ Body:
     Name: Dogly Bottle Z
     Type: Healing
     Weight: 180
-    Flags:
-      BuyingStore: true
     Script: |
       percentheal 18,18;
   - Id: 23661
@@ -57973,6 +58964,8 @@ Body:
     Name: Shadow Random Mix
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23724
@@ -59370,6 +60363,8 @@ Body:
     Name: Shadow 9 Refine Hammer
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23949
@@ -59471,6 +60466,8 @@ Body:
     Name: IDTest Special
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 100002
@@ -59498,6 +60495,8 @@ Body:
     Name: True Small Mana Potion
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -59509,6 +60508,8 @@ Body:
     Name: True Shining Defense Scroll
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -59520,6 +60521,8 @@ Body:
     Name: True Limited Power Booster
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -59531,6 +60534,8 @@ Body:
     Name: True Infinity Drink
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -59599,6 +60604,8 @@ Body:
     Name: Ancient Hero Bravery
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100025
@@ -59606,6 +60613,8 @@ Body:
     Name: Ancient Hero Wisdom
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100029
@@ -60245,6 +61254,8 @@ Body:
     AegisName: Boarding_Halter_Box30_Z
     Name: "[NotForSale] Boarding Halter (30 Days)"
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -60522,6 +61533,14 @@ Body:
     Name: Bath Foam A
     Type: Usable
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,5; }",900,1,0,EFST_BATH_FOAM_A;
   - Id: 100148
@@ -60529,6 +61548,14 @@ Body:
     Name: Bath Foam B
     Type: Usable
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,10; }",900,1,0,EFST_BATH_FOAM_B;
   - Id: 100149
@@ -60536,6 +61563,14 @@ Body:
     Name: Bath Foam C
     Type: Usable
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,15; }",900,1,0,EFST_BATH_FOAM_C;
   - Id: 100151
@@ -60594,24 +61629,68 @@ Body:
     AegisName: Auto_M_Box
     Name: Automatic Module Box
     Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       getrandgroupitem(IG_AUTOMATIC_MODULE_MIX,1);
   - Id: 100161
     AegisName: Epic_M_Box
     Name: Epic Module Box
     Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       getrandgroupitem(IG_EPIC_MODULE_MIX,1);
   - Id: 100162
     AegisName: Auto_M_I_Box_A
     Name: Automatic Improvement Device Physical
     Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       getrandgroupitem(IG_AUTO_M_I_BOX_A,1);
   - Id: 100163
     AegisName: Auto_M_I_Box_B
     Name: Automatic Improvement Device Magical
     Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
     Script: |
       getrandgroupitem(IG_AUTO_M_I_BOX_B,1);
   - Id: 100164
@@ -61173,6 +62252,8 @@ Body:
     Name: True Tyr's Blessing
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -61186,6 +62267,8 @@ Body:
     Name: True Mental Potion
     Type: Usable
     Weight: 10
+    Flags:
+      BuyingStore: true
     NoUse:
       Sitting: true
     Script: |
@@ -61931,6 +63014,8 @@ Body:
     Name: Great Hero's Bravery
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100413
@@ -61938,6 +63023,8 @@ Body:
     Name: Great Hero's Wisdom
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100414
@@ -62296,6 +63383,8 @@ Body:
     Name: Sakrai's Wraith
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100480
@@ -62303,6 +63392,8 @@ Body:
     Name: Condensed Sakrai's Wrath
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100481
@@ -62317,6 +63408,8 @@ Body:
     Name: Sakrai's Regret
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100486
@@ -62324,6 +63417,8 @@ Body:
     Name: Condensed Sakrai's Regret
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100487
@@ -63113,6 +64208,8 @@ Body:
     Name: Hero's Weapon Modifier(Physical)
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100745
@@ -63120,6 +64217,8 @@ Body:
     Name: Hero's Weapon Modifier(Magical)
     Type: DelayConsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 100746
@@ -63400,6 +64499,8 @@ Body:
     Name: Infinite Giant Fly Wings Daily Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -63416,6 +64517,8 @@ Body:
     Name: ?nfinite Fly Wings Box (3 Days)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65984,6 +67087,7 @@ Body:
   - Id: 101185
     AegisName: Snow_F_Enchant
     Name: Snowflower Armor Enchant (Armor)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -65994,10 +67098,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(26);
   - Id: 101186
     AegisName: Glacier_W_Enchant
     Name: Glacier Weapon Enchantment
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66008,7 +67113,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(31);
   - Id: 101187
     AegisName: Snow_F_Refine
     Name: Snow Flower Armor +9 Refinement Cube
@@ -66076,6 +67181,7 @@ Body:
   - Id: 101217
     AegisName: Snow_F_Enchant2
     Name: Snowflower Armor Enchant (Garment)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66086,10 +67192,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(27);
   - Id: 101218
     AegisName: Snow_F_Enchant3
     Name: Snowflower Armor Enchant (Shoes)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66100,10 +67207,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(28);
   - Id: 101219
     AegisName: Snow_F_Enchant4
     Name: Snowflower Armor Enchant (Accessory A)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66114,10 +67222,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(29);
   - Id: 101220
     AegisName: Snow_F_Enchant5
     Name: Snowflower Armor Enchant (Accessory B)
+    Type: DelayConsume
     Trade:
       NoDrop: true
       NoTrade: true
@@ -66128,7 +67237,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* Missing description */
+      item_enchant(30);
   - Id: 101234
     AegisName: Booster_Pack_120
     Name: Booster Pack(120)    # !todo check english name
@@ -70629,6 +71738,8 @@ Body:
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70644,6 +71755,8 @@ Body:
     Name: (Limited) HD Elunium Box(Blacksmith)(30)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70659,6 +71772,8 @@ Body:
     Name: (Limited) HD Bradium Box(Blacksmith)(30)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70674,6 +71789,8 @@ Body:
     Name: (Limited) HD Carnium Box(Blacksmith)(30)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70689,6 +71806,8 @@ Body:
     Name: (Limited) Silvervine Cat Fruit Package I
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70704,6 +71823,8 @@ Body:
     Name: (Limited) Three Master Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70718,6 +71839,8 @@ Body:
     AegisName: Stone_Coin_PackageI
     Name: Stoin Coin Package I
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70732,6 +71855,8 @@ Body:
     AegisName: Stone_Coin_PackageII
     Name: Stoin Coin Package II
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70746,6 +71871,8 @@ Body:
     AegisName: Stone_Coin_PackageIII
     Name: Stoin Coin Package III
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70806,6 +71933,8 @@ Body:
     Name: HD Elunium Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70821,6 +71950,8 @@ Body:
     Name: HD Oridecon Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70836,6 +71967,8 @@ Body:
     Name: HD Carnium Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70851,6 +71984,8 @@ Body:
     Name: HD Bradium Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70866,6 +72001,8 @@ Body:
     Name: (Limited) Battle Manual Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70881,6 +72018,8 @@ Body:
     Name: (Limited) Mana Potion Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70896,6 +72035,8 @@ Body:
     Name: (Limited) Silvervine Cat Fruit Package II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70911,6 +72052,8 @@ Body:
     Name: (Limited) Silvervine Cat Fruit Package III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70926,6 +72069,8 @@ Body:
     Name: (Limited) HD Oridecon Box(Hollgrehenn)(30)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70941,6 +72086,8 @@ Body:
     Name: (Limited) HD Elunium Box(Hollgrehenn)(30)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70957,6 +72104,8 @@ Body:
     Name: (Limited) Silvervine Cat Fruit Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70972,6 +72121,8 @@ Body:
     Name: Limited Refinement Ore Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -70987,6 +72138,8 @@ Body:
     Name: Limited HD Elunium Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71002,6 +72155,8 @@ Body:
     Name: Limited HD Oridecon Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71017,6 +72172,8 @@ Body:
     Name: Limited HD Carnium Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71032,6 +72189,8 @@ Body:
     Name: Limited HD Bradium Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71047,6 +72206,8 @@ Body:
     Name: Thanos Upgrade Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71062,6 +72223,8 @@ Body:
     Name: Hero's Weapon Modification Package I
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71077,6 +72240,8 @@ Body:
     Name: Hero's Weapon Modification Package II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71092,6 +72257,8 @@ Body:
     Name: Modified Hero's Weapon Refine Hammer Package I
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71107,6 +72274,8 @@ Body:
     Name: Modified Hero's Weapon Refine Hammer Package II
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71122,6 +72291,8 @@ Body:
     Name: Hero's Weapon Modification Package III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71137,6 +72308,8 @@ Body:
     Name: Modified Hero's Weapon Refine Hammer Package III
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71151,6 +72324,8 @@ Body:
     AegisName: EXP_Drop_Up_Box
     Name: Kafra Buff Box (7 Days)
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71166,6 +72341,8 @@ Body:
     Name: Modified Hero's Weapon Refine Hammer Package IV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71181,6 +72358,8 @@ Body:
     Name: Hero's Weapon Modification Package IV
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71197,6 +72376,8 @@ Body:
     Name: (Limited) Silvervine Cat Fruit Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71212,6 +72393,8 @@ Body:
     Name: Hero's Weapon Modification Package V
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71226,6 +72409,8 @@ Body:
     AegisName: CostumeMileage_Package1
     Name: Silvervine Costume Mileage Package I
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71240,6 +72425,8 @@ Body:
     AegisName: CostumeMileage_Package2
     Name: Silvervine Costume Mileage Package II
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -71254,6 +72441,8 @@ Body:
     AegisName: CostumeMileage_Package3
     Name: Silvervine Costume Mileage Package III
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true

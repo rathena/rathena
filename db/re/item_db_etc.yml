@@ -2619,7 +2619,7 @@ Body:
       Thief: true
     Locations:
       Ammo: true
-    EquipLevelMin: 130
+    EquipLevelMin: 95
   - Id: 1776
     AegisName: Siege_Arrow_A
     Name: Siege Arrow A
@@ -12688,6 +12688,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBreakArmorRate,5000;
@@ -12701,6 +12702,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",30+((getrefine() >= 10)*30);
@@ -12713,6 +12715,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"NC_ARMSCANNON",20+((getrefine()>=10)*20);
@@ -12722,7 +12725,6 @@ Body:
     Type: Card
     SubType: Enchant
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,1;
   - Id: 4701
@@ -13899,7 +13901,6 @@ Body:
     Type: Card
     SubType: Enchant
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,10;
       bonus bMatk,10;
@@ -13909,7 +13910,6 @@ Body:
     Type: Card
     SubType: Enchant
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,10;
       bonus bMatk,10;
@@ -21108,13 +21108,6 @@ Body:
     Buy: 10
     Flags:
       BuyingStore: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 6672
     AegisName: Gray_Shard
     Name: Gray Shard
@@ -21123,13 +21116,6 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 6673
     AegisName: Bossnia_Ticket
     Name: Bossnia Tickets
@@ -21853,13 +21839,6 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 6753
     AegisName: Sign_Of_Destruction
     Name: Token Of Destruction
@@ -21892,34 +21871,18 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6756
     AegisName: Condensed_Energy
     Name: Cohesive Energy
     Type: Etc
     Buy: 20
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 6757
     AegisName: Memory_Record
     Name: The Memory Recorder
     Type: Etc
     Buy: 20
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 6762
     AegisName: Banana_Can
     Name: Banana Can
@@ -23169,9 +23132,6 @@ Body:
     Buy: 2
     Flags:
       BuyingStore: true
-    Trade:
-      NoMail: true
-      NoAuction: true
   - Id: 6906
     AegisName: LI_HD_Carnium
     Name: (Limited)High Density Kalunium
@@ -23658,8 +23618,6 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-    Script: |
-      /*Refine succeed guarantee until +9 for item 2598 only*/
   - Id: 6954
     AegisName: Dog_Soul_Piece
     Name: Piece Of Soul Dog
@@ -25868,6 +25826,15 @@ Body:
     Name: Golden Korean Flag
     Type: Etc
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 7254
     AegisName: Digital_Print_Ticket
     Name: Digital Picture Printing Coupon
@@ -30701,6 +30668,14 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 7869
     AegisName: RicePouch
     Name: Rice Pouch
@@ -31245,6 +31220,8 @@ Body:
     Name: Essence of a Powerful Dimension
     Type: Etc
     Buy: 20
+    Flags:
+      BuyingStore: true
   - Id: 7926
     AegisName: Break_Box_CN
     Name: Incense
@@ -33567,38 +33544,6 @@ Body:
     AegisName: Muscles_Story_J_Box
     Name: Muscle Knights Summertime Guide Box
     Type: Etc
-  - Id: 17438
-    AegisName: 3_Life_Potion_pack2
-    Name: Three Master Package II
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      /* TODO */
-  - Id: 17439
-    AegisName: 3_Life_Potion_10pack2
-    Name: Three Master Package II(10)
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      /* TODO */
   - Id: 18000
     AegisName: Cannon_Ball
     Name: Cannon Ball
@@ -33833,12 +33778,6 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-  - Id: 22654
-    AegisName: Golden_Card
-    Name: Golden Seal Card
-    Type: Etc
-    Buy: 20
-    Weight: 50
   - Id: 22717
     AegisName: Ball_Wanderer
     Name: Wanderer Ball
@@ -33915,8 +33854,6 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
-    Flags:
-      DropEffect: CLIENT
     Trade:
       NoDrop: true
       NoTrade: true
@@ -34579,22 +34516,32 @@ Body:
     AegisName: Particles_Of_Energy1
     Name: Silent Energy Particle
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25128
     AegisName: Particles_Of_Energy2
     Name: Weak Energy Particle
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25129
     AegisName: Particles_Of_Energy3
     Name: Unstable Energy Particle
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25130
     AegisName: Particles_Of_Energy4
     Name: Sinister Energy Particle
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25131
     AegisName: Particles_Of_Energy5
     Name: Fallen Energy Particle
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25132
     AegisName: Pumpkin_Decorations
     Name: Pumpkin Deco
@@ -35475,42 +35422,56 @@ Body:
     Type: Etc
     Buy: 900
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25262
     AegisName: Dried_Clover
     Name: Well-dried Clover
     Type: Etc
     Buy: 1200
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25263
     AegisName: Short_Bat_Fur
     Name: Short Bat Hair
     Type: Etc
     Buy: 790
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25264
     AegisName: NightmareOfLump
     Name: Cluster of Nightmares
     Type: Etc
     Buy: 822
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25265
     AegisName: Shining_Spore
     Name: Shining Spore
     Type: Etc
     Buy: 342
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25266
     AegisName: Dried_Leaf_Of_Ygg
     Name: Dried Yggdrasil Leaf
     Type: Etc
     Buy: 450
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25267
     AegisName: SuspiciousMagicCircle
     Name: Suspicious Pentacle
     Type: Etc
     Buy: 970
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25268
     AegisName: Sticky_Blood
     Name: Sticky Blood
@@ -35554,7 +35515,6 @@ Body:
     Buy: 10
     Flags:
       BuyingStore: true
-      DropEffect: CLIENT
   - Id: 25272
     AegisName: IllusoryStone
     Name: Illusion Gemstone
@@ -35585,60 +35545,80 @@ Body:
     Type: Etc
     Buy: 348
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25277
     AegisName: DeadlyPoisonPowder
     Name: Deadly Poison Powder
     Type: Etc
     Buy: 644
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25278
     AegisName: BanditsScarf
     Name: Bandit's Scarf
     Type: Etc
     Buy: 330
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25279
     AegisName: CrudeAmmo
     Name: Crude Ammo
     Type: Etc
     Buy: 300
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25280
     AegisName: BrokenShotgun
     Name: Broken Shotgun
     Type: Etc
     Buy: 910
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25281
     AegisName: CrudeScimiter
     Name: Crude Scimitar
     Type: Etc
     Buy: 970
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25282
     AegisName: WornRevolver
     Name: Worn Revolver
     Type: Etc
     Buy: 820
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25283
     AegisName: BrownMuffler
     Name: Brown Muffler
     Type: Etc
     Buy: 420
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25284
     AegisName: SwampBugPeelings
     Name: Swamp Bug Shell
     Type: Etc
     Buy: 230
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25285
     AegisName: BrownRatTail
     Name: Brown Rat Tail
     Type: Etc
     Buy: 210
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25286
     AegisName: Octo_Octo_Fluid
     Name: Octopus Octopus Liquid
@@ -35659,6 +35639,8 @@ Body:
     AegisName: Sweets_Coin
     Name: Sweets Festival Coin
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25291
     AegisName: Fac_Choco
     Name: Product Chocolate
@@ -35708,21 +35690,29 @@ Body:
     Name: Frozen Stone Fragment
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25298
     AegisName: SpritJewel
     Name: Spirit Jewel
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25299
     AegisName: Snowball
     Name: Snowball
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25300
     AegisName: KTULLANUXsEye
     Name: Ktullanux Eye
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25302
     AegisName: DoubleAttack_Stone
     Name: Double Attack Stone (Garment)
@@ -35809,16 +35799,22 @@ Body:
     Name: Piece of Black Horn
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25312
     AegisName: OldDoll
     Name: Fine Old Doll
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25313
     AegisName: OldShell
     Name: Old Shell
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25314
     AegisName: ShipsLog
     Name: Logbooks
@@ -35979,6 +35975,8 @@ Body:
     AegisName: Mightysoul_Essence
     Name: Powerful Soul Essence
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25376
     AegisName: Pet_Coin
     Name: Cupet Coin
@@ -36392,6 +36390,8 @@ Body:
     Name: World Tour Ticket
     Type: Etc
     Buy: 20
+    Flags:
+      BuyingStore: true
   - Id: 25479
     AegisName: Dogly_Bottle
     Name: Dogly Bottle
@@ -36899,391 +36899,183 @@ Body:
   - Id: 25670
     AegisName: EP17_1_EVT03
     Name: Modification Module (Defense)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      .@def = 25;
-      if (.@r >= 9) {
-         .@def += 20;
-      } else if (.@r >= 7) {
-         .@def += 10;
-      }
-      bonus bDef,.@def;
   - Id: 25671
     AegisName: EP17_1_EVT04
     Name: Modification Module (Magic Defense)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      .@mdef = 2;
-      if (.@r >= 9) {
-         .@mdef += 6;
-      } else if (.@r >= 7) {
-         .@mdef += 3;
-      }
-      bonus bMdef,.@mdef;
   - Id: 25672
     AegisName: EP17_1_EVT05
     Name: Modification Module (Vit)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bVit,3;
   - Id: 25673
     AegisName: EP17_1_EVT06
     Name: Modification Module (Luk)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bLuk,3;
   - Id: 25674
     AegisName: EP17_1_EVT07
     Name: Modification Module (Str)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bStr,3;
   - Id: 25675
     AegisName: EP17_1_EVT08
     Name: Modification Module (Agi)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bAgi,3;
   - Id: 25676
     AegisName: EP17_1_EVT09
     Name: Modification Module (Int)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bInt,3;
   - Id: 25677
     AegisName: EP17_1_EVT10
     Name: Modification Module (Dex)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bDex,3;
   - Id: 25678
     AegisName: EP17_1_EVT11
     Name: Modification Module (HP recovery)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bHPrecovRate,20;
   - Id: 25679
     AegisName: EP17_1_EVT12
     Name: Modification Module (SP recovery)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bSPrecovRate,20;
   - Id: 25680
     AegisName: EP17_1_EVT13
     Name: Modification Module (Spell)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bMatk,18;
-      bonus bVariableCastrate,-10;
   - Id: 25681
     AegisName: EP17_1_EVT14
     Name: Modification Module (Attack Speed)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bAspdRate,10;
   - Id: 25682
     AegisName: EP17_1_EVT15
     Name: Modification Module (Fatal)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bCritAtkRate,10;
-      bonus bCritical,4;
   - Id: 25683
     AegisName: EP17_1_EVT16
     Name: Modification Module (Expert Archer)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus bLongAtkRate,10;
   - Id: 25684
     AegisName: EP17_1_EVT17
     Name: Modification Module (Vital)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      bonus bMaxHPrate,5;
-      if (.@r >= 9) {
-         bonus bMaxHP,1250;
-      } else if (.@r >= 7) {
-         bonus bMaxHP,500;
-      }
   - Id: 25685
     AegisName: EP17_1_EVT18
     Name: Modification Module (Mental)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      bonus bMaxSPrate,5;
-      if (.@r >= 9) {
-         bonus bMaxSP,250;
-      } else if (.@r >= 7) {
-         bonus bMaxSP,100;
-      }
   - Id: 25686
     AegisName: EP17_1_EVT19
     Name: Modification Module (Heal)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      .@val = 5;
-      if (.@r >= 9) {
-         .@val += 10;
-      } else if (.@r >= 7) {
-         .@val += 5;
-      }
-      bonus bHealPower,.@val;
   - Id: 25687
     AegisName: EP17_1_EVT20
     Name: Modification Module (Power)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
-      if (.@r >= 9) {
-         bonus bBaseAtk,50;
-      } else if (.@r >= 7) {
-         bonus bBaseAtk,25;
-      }
   - Id: 25688
     AegisName: EP17_1_EVT21
     Name: Modification Module (Magic)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      bonus bMatkRate,5;
-      if (.@r >= 9) {
-         bonus bMatk,50;
-      } else if (.@r >= 7) {
-         bonus bMatk,25;
-      }
   - Id: 25689
     AegisName: EP17_1_EVT22
     Name: Modification Module (Shooter)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      .@val = 3;
-      if (.@r >= 9) {
-         .@val += 4;
-      } else if (.@r >= 7) {
-         .@val += 2;
-      }
-      bonus bLongAtkRate,.@val;
   - Id: 25690
     AegisName: EP17_1_EVT23
     Name: Modification Module (Fast)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      bonus bAspd,1;
-      if (.@r >= 9) {
-         bonus bAspdRate,6;
-      } else if (.@r >= 7) {
-         bonus bAspdRate,3;
-      }
   - Id: 25691
     AegisName: EP17_1_EVT24
     Name: Modification Module (Caster)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      .@val = -5;
-      if (.@r >= 9) {
-         .@val -= 6;
-      } else if (.@r >= 7) {
-         .@val -= 3;
-      }
-      bonus bVariableCastrate,.@val;
   - Id: 25692
     AegisName: EP17_1_EVT25
     Name: Modification Module (Critical)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      bonus bCritical,5;
-      if (.@r >= 9) {
-         bonus bCritAtkRate,10;
-      } else if (.@r >= 7) {
-         bonus bCritAtkRate,5;
-      }
   - Id: 25693
     AegisName: EP17_1_EVT26
     Name: Modification Module (Delay after skill)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      .@val = -5;
-      if (.@r >= 9) {
-         .@val -= 10;
-      } else if (.@r >= 7) {
-         .@val -= 5;
-      }
-      bonus bDelayrate,.@val;
   - Id: 25694
     AegisName: EP17_1_EVT27
     Name: Modification Module (Fixed Casting)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      .@val = -300;
-      if (.@r >= 9) {
-         .@val -= 400;
-      } else if (.@r >= 7) {
-         .@val -= 200;
-      }
-      bonus bFixedCast,.@val;
   - Id: 25695
     AegisName: EP17_1_EVT28
     Name: Modification Module (Above All)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      .@r = getrefine();
-      bonus2 bSubEle,Ele_All,5;
-      if (.@r >= 7) {
-         bonus2 bSubSize,Size_All,5;
-      if (.@r >= 9) {
-         bonus2 bSubRace,RC_All,5;
-      bonus2 bSubRace,RC_Player_Human,-5;
-      } }
   - Id: 25696
     AegisName: EP17_1_EVT29
     Name: Modification Module (Drain Life)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus2 bHPDrainRate,20,2;
   - Id: 25697
     AegisName: EP17_1_EVT30
     Name: Modification Module (Drain Soul)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      bonus2 bSPDrainRate,10,1;
   - Id: 25698
     AegisName: EP17_1_EVT31
     Name: Modification Module (Magic Healing)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus "{ bonus2 bHPRegenRate,400,500; }",20,10000,BF_MAGIC;
   - Id: 25699
     AegisName: EP17_1_EVT32
     Name: Modification Module (Magic Soul)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus "{ bonus2 bSPRegenRate,80,500; }",10,10000,BF_MAGIC;
   - Id: 25700
     AegisName: EP17_1_EVT33
     Name: Modification Module (Unlimited Vital)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus2 "{ bonus bVit,50; bonus2 bHPRegenRate,400,500; bonus2 bSPLossRate,20,1000; }",10,10000,BF_WEAPON|BF_MAGIC;
-      /* unknown rate */
   - Id: 25701
     AegisName: EP17_1_EVT34
     Name: Modification Module (Spell Buster)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus "{ bonus bInt,50; bonus bMatkRate,15; bonus bAtkRate,-15; }",20,10000,BF_MAGIC;
-      /* unknown rate */
   - Id: 25702
     AegisName: EP17_1_EVT35
     Name: Modification Module (Firing Shot)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus "{ bonus bDex,50; bonus bLongAtkRate,10; bonus2 bSPLossRate,20,1000; }",20,10000,BF_WEAPON;
-      /* unknown rate */
   - Id: 25703
     AegisName: EP17_1_EVT36
     Name: Modification Module (Overpower)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus "{ bonus bStr,50; bonus bAtkRate,15; bonus bMatkRate,-15; }",20,10000,BF_WEAPON;
-      /* unknown rate */
   - Id: 25704
     AegisName: EP17_1_EVT37
     Name: Modification Module (Fatal Flash)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus "{ bonus bStr,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_WEAPON;
-      /* unknown rate */
   - Id: 25705
     AegisName: EP17_1_EVT38
     Name: Modification Module (Lucky Strike)
-    Type: Card
-    SubType: Enchant
+    Type: Etc
     Weight: 10
-    Script: |
-      autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC;
-      /* unknown rate */
   - Id: 25706
     AegisName: HighpriestStone_Top
     Name: High Priest Stone (Upper)
@@ -37356,6 +37148,7 @@ Body:
     Type: Etc
     Weight: 10
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 25729
     AegisName: Shadowdecon
@@ -37363,6 +37156,7 @@ Body:
     Type: Etc
     Weight: 20
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 25730
     AegisName: Zelunium_Ore
@@ -37370,6 +37164,7 @@ Body:
     Type: Etc
     Weight: 10
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 25731
     AegisName: Zelunium
@@ -37377,6 +37172,7 @@ Body:
     Type: Etc
     Weight: 20
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 25733
     AegisName: EP17_1_Open_Event
@@ -38130,6 +37926,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,8;
@@ -38145,6 +37942,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"NC_VULCANARM",10+((getrefine()>=10)*20);
@@ -38157,6 +37955,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,2;
@@ -38172,6 +37971,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bHPrecovRate,25;
@@ -38188,6 +37988,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bCriticalAddRace,RC_Formless,30;
@@ -38200,6 +38001,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<7)
@@ -38220,6 +38022,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAspdRate,-(1+(BaseLevel>=90)+(BaseLevel>=120));
@@ -38232,6 +38035,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bHit,1+(BaseLevel>=90)+(BaseLevel>=120);
@@ -38244,6 +38048,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddClass,Class_All,10;
@@ -38271,6 +38076,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bVariableCastrate,"MG_FIREBALL",-50;
@@ -38284,6 +38090,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bDef,50;
@@ -38297,6 +38104,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -38310,6 +38118,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Fire,20;
@@ -38325,6 +38134,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;
@@ -38791,6 +38601,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       skill "PA_PRESSURE",4;
@@ -38803,6 +38614,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 5;
@@ -38820,6 +38632,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
@@ -38833,6 +38646,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,10;
@@ -38848,6 +38662,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,15;
@@ -38861,6 +38676,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_BOW) {
@@ -38878,6 +38694,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,25;
@@ -38893,6 +38710,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAtkRate,2;
@@ -38936,6 +38754,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,20;
@@ -38951,6 +38770,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bResEff,Eff_Burning,10000;
@@ -38963,6 +38783,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
@@ -38977,6 +38798,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       skill "PF_HPCONVERSION",1;
@@ -38989,6 +38811,7 @@ Body:
     Locations:
       Right_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       skill "HW_NAPALMVULCAN",4;
@@ -39001,6 +38824,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (BaseJob == Job_Bard || BaseJob == Job_Dancer) {
@@ -39015,6 +38839,7 @@ Body:
     Locations:
       Right_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddEle,Ele_Neutral,20;
@@ -39027,6 +38852,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddEle,Ele_Neutral,20;
@@ -39041,6 +38867,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,10;
@@ -39054,6 +38881,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bLongAtkDef,20;
@@ -39066,6 +38894,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddItemHealRate,11522,50;
@@ -39080,6 +38909,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bDef,(5*(1+getrefine()));
@@ -39092,6 +38922,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Water,(20+(3*getrefine()));
@@ -39104,6 +38935,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,(10+(getrefine()/3));
@@ -39124,6 +38956,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -39141,6 +38974,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bCritical,3;
@@ -39154,6 +38988,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
@@ -39172,6 +39007,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,10;
@@ -39195,6 +39031,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bDef,30;
@@ -39209,6 +39046,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       skill "PR_STRECOVERY",1;
@@ -39221,6 +39059,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 10;
@@ -39238,6 +39077,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 3;
@@ -39260,6 +39100,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 10;
@@ -39278,6 +39119,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 10;
@@ -39295,6 +39137,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Water,20;
@@ -39308,6 +39151,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddEle,Ele_Wind,40;
@@ -39664,6 +39508,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bHit,(BaseLevel >= 90 ? 15 : 5);
@@ -39676,6 +39521,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bFlee,(BaseLevel >= 90 ? 20 : 10);
@@ -39688,6 +39534,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
@@ -39704,6 +39551,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHP,1000;
@@ -39721,6 +39569,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddEffWhenHit,Eff_Freezing,3000 + (readparam(bInt) >= 110 ? 1000 : 0);
@@ -39734,6 +39583,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,10;
@@ -39749,6 +39599,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -39765,6 +39616,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Wind,30;
@@ -39779,6 +39631,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Demon,(getrefine() >= 9 ? 15 : 10);
@@ -39791,6 +39644,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bFlee,getrefine()*2;
@@ -39803,6 +39657,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Fire,20;
@@ -39818,6 +39673,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bSPDrainValue,5;
@@ -39831,6 +39687,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAgi,-1;
@@ -39845,6 +39702,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,-10;
@@ -39860,6 +39718,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bVit,-1;
@@ -39874,6 +39733,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -39888,6 +39748,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,15;
@@ -39901,6 +39762,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bHit,10 + 5 * (getrefine()/3);
@@ -39913,6 +39775,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@atk = 5;
@@ -39935,6 +39798,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAgi,7;
@@ -39948,6 +39812,7 @@ Body:
     Locations:
       Right_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bStr,4;
@@ -39961,6 +39826,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@bonus = 5;
@@ -39985,6 +39851,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@bonus = 10;
@@ -40005,6 +39872,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@bonus = 10;
@@ -40025,6 +39893,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddSize,Size_Small,10;
@@ -40038,6 +39907,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@str = readparam(bStr);
@@ -40056,6 +39926,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@int = readparam(bInt);
@@ -40074,6 +39945,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubClass,Class_Normal,25;
@@ -40087,6 +39959,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bNoCastCancel;
@@ -40107,6 +39980,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBreakWeaponRate,1000;
@@ -40120,6 +39994,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -40134,6 +40009,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,30;
@@ -40149,6 +40025,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
@@ -40165,6 +40042,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
@@ -40192,6 +40070,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddSize,Size_Small,15;
@@ -40204,6 +40083,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddSize,Size_Small,15;
@@ -40216,6 +40096,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Brute,15;
@@ -40229,6 +40110,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Brute,15;
@@ -40241,6 +40123,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 27201
     AegisName: Agnes_Card
@@ -40250,6 +40133,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 27202
     AegisName: Jurgen_Card
@@ -40259,6 +40143,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 27203
     AegisName: Spica_Card
@@ -40268,6 +40153,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 27209
     AegisName: SLD_Q_Scaraba_Card
@@ -40277,6 +40163,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddMonsterDropItem,12806,30;
@@ -40309,6 +40196,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bSplashRange,1;
@@ -40326,6 +40214,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()>=15) {
@@ -40342,6 +40231,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()>=15) {
@@ -40364,6 +40254,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40382,6 +40273,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40400,6 +40292,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40418,6 +40311,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40435,6 +40329,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40453,6 +40348,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40475,6 +40371,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40495,6 +40392,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40515,6 +40413,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40533,6 +40432,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Holy,-100;
@@ -40561,6 +40461,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
@@ -40658,6 +40559,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,3;
@@ -40672,6 +40574,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bCritAtkRate,3;
@@ -40685,6 +40588,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bCritAtkRate,5;
@@ -40698,6 +40602,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,3;
@@ -40712,6 +40617,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bSPrecovRate,10;
@@ -40725,6 +40631,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,3;
@@ -40739,6 +40646,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAtkRate,3;
@@ -40752,6 +40660,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bVariableCastrate,-3;
@@ -40768,6 +40677,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAtkRate,3;
@@ -40781,6 +40691,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,3;
@@ -40795,6 +40706,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAspdRate,3;
@@ -40808,6 +40720,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@rate = 10 + (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOOK ? 20 : 0) + (getrefine() >= 14 ? 20 : 0);
@@ -40823,6 +40736,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Dark,20;
@@ -40836,6 +40750,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       autobonus "{ bonus bDef,300; }",20,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; active_transform 1040,10000; }";
@@ -40848,6 +40763,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Dark,30;
@@ -40863,6 +40779,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddEle,Ele_Dark,30;
@@ -40882,6 +40799,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,5;
@@ -40895,6 +40813,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bUseSPrate,10;
@@ -40908,6 +40827,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 10;
@@ -40925,6 +40845,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,5;
@@ -40938,6 +40859,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@agi = readparam(bAgi);
@@ -40957,6 +40879,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,30;
@@ -40970,6 +40893,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@vit = readparam(bVit);
@@ -40989,6 +40913,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,30;
@@ -41004,6 +40929,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 30;
@@ -41020,6 +40946,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@luk = readparam(bLuk);
@@ -41038,6 +40965,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@dex = readparam(bDex);
@@ -41057,6 +40985,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bCritical,5;
@@ -41070,6 +40999,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@val = 30;
@@ -41098,6 +41028,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bHPrecovRate,50;
@@ -41110,6 +41041,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus4 bAutoSpell,"WL_HELLINFERNO",3,20,1;
@@ -41122,6 +41054,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_REVOLVER) {
@@ -41141,6 +41074,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_GATLING) {
@@ -41160,6 +41094,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -41182,6 +41117,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,10;
@@ -41201,6 +41137,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,10;
@@ -41218,6 +41155,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_KNUCKLE) {
@@ -41238,6 +41176,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Demon,5;
@@ -41250,6 +41189,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_KATAR) {
@@ -41270,6 +41210,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Brute,15;
@@ -41283,6 +41224,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Brute,15;
@@ -41296,6 +41238,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bDef,50;
@@ -41309,6 +41252,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Formless,5;
@@ -41321,6 +41265,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bCritAtkRate,20;
@@ -41334,6 +41279,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddEle,Ele_Poison,40;
@@ -41346,6 +41292,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -41366,6 +41313,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAtkRate,10;
@@ -41384,6 +41332,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxSPrate,5;
@@ -41396,6 +41345,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,5;
@@ -41408,6 +41358,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Water,15;
@@ -41420,6 +41371,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Fire,30;
@@ -41432,6 +41384,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,100;
@@ -41448,6 +41401,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -41466,6 +41420,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHP,500;
@@ -41490,6 +41445,9 @@ Body:
     Weight: 10
     Locations:
       Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 27331
     AegisName: S_Kronecker_Card
     Name: Kronecker G. Heine Card
@@ -41499,6 +41457,7 @@ Body:
     Locations:
       Right_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bVariableCastrate,-5;
@@ -41510,6 +41469,9 @@ Body:
     Weight: 10
     Locations:
       Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 27333
     AegisName: S_Skia_Card
     Name: Skia Nerius Card
@@ -41519,6 +41481,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAspdRate,5;
@@ -42387,6 +42350,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 27394
     AegisName: S_Kathryn_Card
@@ -42398,6 +42362,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bVariableCastrate,-5;
@@ -42411,6 +42376,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 27396
     AegisName: S_Issac_Card
@@ -42422,6 +42388,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bDelayrate,-5;
@@ -47032,6 +46999,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHP,1000;
@@ -47046,6 +47014,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine()/2;
@@ -47061,6 +47030,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHP,-1225;
@@ -47074,6 +47044,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,-13;
@@ -47087,6 +47058,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,-13;
@@ -47100,6 +47072,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAspdRate,10;
@@ -47113,6 +47086,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxSPrate,20;
@@ -47126,6 +47100,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,10;
@@ -47210,6 +47185,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
     Script: |
       bonus bAgi,1;
   - Id: 300001
@@ -48326,6 +48302,9 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 300128
     AegisName: S_Wolf_Card
     Name: Wolf Lugenburg Card
@@ -48334,6 +48313,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Insect,15;
@@ -48345,6 +48325,9 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 300130
     AegisName: S_Poe_Card
     Name: Poe Richard Card
@@ -48352,6 +48335,9 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Plant,15;
       bonus2 bMagicAddRace,RC_Plant,15;
@@ -48869,6 +48855,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bHPrecovRate,100;
@@ -48882,6 +48869,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSTAFF) {
@@ -48899,6 +48887,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,-15;
@@ -48912,6 +48901,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bVariableCastrate,-7;
@@ -48926,6 +48916,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,10;
@@ -48945,6 +48936,7 @@ Body:
     Locations:
       Right_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Poison,30;
@@ -48958,6 +48950,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSWORD) {
@@ -49380,6 +49373,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Earth,35;
@@ -49392,6 +49386,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Dark,10;
@@ -49404,6 +49399,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,5;
@@ -49418,6 +49414,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_KATAR) {
@@ -49431,6 +49428,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -49444,6 +49442,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Fire,35;
@@ -49456,6 +49455,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_All,-15;
@@ -49468,6 +49468,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,35;
@@ -49480,6 +49481,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -49500,6 +49502,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bShortAtkRate,6;
@@ -49511,6 +49514,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -49524,6 +49528,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Wind,35;
@@ -49536,6 +49541,7 @@ Body:
     Locations:
       Right_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bShortAtkRate,6;
@@ -49587,6 +49593,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Angel,75;
@@ -49599,6 +49606,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Demon,75;
@@ -49620,6 +49628,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubRace,RC_Insect,20;
@@ -49632,6 +49641,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddSize,Size_Small,20;
@@ -49657,6 +49667,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubRace,RC_Insect,20;
@@ -49669,6 +49680,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bIgnoreDefRaceRate,RC_Plant,15;
@@ -49681,6 +49693,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxSPrate,10;
@@ -49695,6 +49708,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bResEff,Eff_Confusion,10000;
@@ -49708,6 +49722,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bIgnoreMdefRaceRate,RC_Brute,15;
@@ -49722,6 +49737,7 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Poison,5;
@@ -49737,6 +49753,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Brute,50;
@@ -49751,6 +49768,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,15;
@@ -49766,6 +49784,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,15;
@@ -49781,6 +49800,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (BaseJob == JOB_NOVICE) {
@@ -49795,6 +49815,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       if (BaseJob == JOB_NOVICE) {
@@ -49811,6 +49832,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -49831,6 +49853,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -49851,6 +49874,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -49872,6 +49896,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -49890,6 +49915,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bUseSPrate,50;
@@ -49904,6 +49930,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Formless,5;
@@ -49918,6 +49945,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Demon,5;
@@ -49934,6 +49962,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -49949,6 +49978,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -49964,6 +49994,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -49977,6 +50008,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,10;
@@ -49993,6 +50025,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -50008,6 +50041,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -50023,6 +50057,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -50038,6 +50073,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -50053,6 +50089,7 @@ Body:
       Head_Mid: true
       Head_Low: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,15;
@@ -50066,6 +50103,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatk,5*(readparam(bInt)/10);
@@ -50080,6 +50118,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bCritical,2*(readparam(bLuk)/10);
@@ -50094,6 +50133,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bUseSPrate,50;
@@ -50108,6 +50148,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50126,6 +50167,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50144,6 +50186,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50162,6 +50205,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,15;
@@ -50173,6 +50217,7 @@ Body:
     Locations:
       Left_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAspdRate,5;
@@ -50188,6 +50233,7 @@ Body:
     Locations:
       Right_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,5;
@@ -50203,6 +50249,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Ghost,10;
@@ -50215,6 +50262,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bLongAtkRate,10;
@@ -50227,6 +50275,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bShortAtkRate,10;
@@ -50239,6 +50288,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,10;
@@ -50251,6 +50301,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -50263,6 +50314,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50278,6 +50330,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50293,6 +50346,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAddRace,RC_Angel,10;
@@ -50307,6 +50361,7 @@ Body:
     Locations:
       Left_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bShortWeaponDamageReturn,15;
@@ -50318,6 +50373,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bCritAtkRate,15;
@@ -50329,6 +50385,7 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"WL_SOULEXPANSION",30;
@@ -50340,6 +50397,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Demon,40;
@@ -50354,6 +50412,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bUseSPrate,50;
@@ -50561,6 +50620,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50577,6 +50637,7 @@ Body:
     Locations:
       Garment: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,15;
@@ -50589,6 +50650,7 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus2 bMagicAtkEle,Ele_Poison,20;
@@ -50601,6 +50663,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50619,6 +50682,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -50635,6 +50699,7 @@ Body:
     Locations:
       Shoes: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bAtkRate,10;
@@ -50656,6 +50721,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 300308
     AegisName: S_Meyer_Card
@@ -50666,6 +50732,7 @@ Body:
       Armor: true
     Refineable: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       bonus bUseSPrate,10;
@@ -50678,6 +50745,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 300310
     AegisName: S_Helmut_Card
@@ -50687,6 +50755,7 @@ Body:
     Locations:
       Armor: true
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
@@ -52310,8 +52379,6 @@ Body:
     Name: Glacier Flower Meow Power (Vital)
     Type: Card
     SubType: Enchant
-    Flags:
-      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMaxHP,2500;
@@ -67407,7 +67474,6 @@ Body:
     Name: Spell Stone (Dual)
     Type: Card
     SubType: Enchant
-    Weight: 10
     Script: |
       bonus bSpl,5;
   - Id: 311426
@@ -77643,28 +77709,28 @@ Body:
       bonus bPerfectHitAddRate,3;
   - Id: 312911
     AegisName: Z_Bijou_MDamage_1
-    Name: Intelligence Ⅰ
+    Name: Intelligence I
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,4;
   - Id: 312912
     AegisName: Z_Bijou_MDamage_2
-    Name: Intelligence ⅠI
+    Name: Intelligence II
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,7;
   - Id: 312913
     AegisName: Z_Bijou_MDamage_3
-    Name: Intelligence ⅠII
+    Name: Intelligence III
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,10;
   - Id: 312914
     AegisName: Z_Bijou_MDamage_4
-    Name: Intelligence ⅠV
+    Name: Intelligence IV
     Type: Card
     SubType: Enchant
     Script: |
@@ -79730,6 +79796,8 @@ Body:
     AegisName: Elite_Hunter_Token
     Name: Elite Hunter Token
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000243
     AegisName: Sin_Shard_A
     Name: Fragment of Anger
@@ -79993,6 +80061,14 @@ Body:
     AegisName: EpisodClear18
     Name: Episode 18 Clear Ticket
     Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1000289
     AegisName: Device_Capsule
     Name: Device Capsule
@@ -80158,6 +80234,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000325
     AegisName: Etel_Skyblue_Jewel
     Name: Etel Aquamarine
@@ -80165,6 +80242,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000326
     AegisName: Etel_Topaz
     Name: Etel Topaz
@@ -80172,6 +80250,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000327
     AegisName: Etel_Violet_Jewel
     Name: Etel Amethyst
@@ -80179,6 +80258,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000328
     AegisName: Etel_Amber
     Name: Etel Amber
@@ -80186,6 +80266,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000331
     AegisName: Ethernium
     Name: Etherium
@@ -80256,6 +80337,8 @@ Body:
     Name: Ymir Fragment
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000364
     AegisName: MD_Airboat_Ore
     Name: Ymir Ore
@@ -80329,11 +80412,15 @@ Body:
     Name: Meteorite Powder
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000373
     AegisName: Meteorite_Fragment
     Name: Meteorite Fragment
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000374
     AegisName: Brilliant_Soda
     Name: Ultra-Low Carbonated Soda
@@ -80380,44 +80467,62 @@ Body:
     AegisName: Naght_Sieger_Soul
     Name: Naght Sieger Soul
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000397
     AegisName: Betelgeuse_Soul
     Name: Beteleuse Soul
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000398
     AegisName: Pow_Meteorite_Dust
     Name: Power Meteorite Powder
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000399
     AegisName: Sta_Meteorite_Dust
     Name: Stamina Meteorite Powder
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000400
     AegisName: Con_Meteorite_Dust
     Name: Agile Meteorite Powder
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000401
     AegisName: Crt_Meteorite_Dust
     Name: Lucky Meteorite Powder
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000402
     AegisName: Spl_Meteorite_Dust
     Name: Meteorite Powder of Spell
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000403
     AegisName: Wis_Meteorite_Dust
     Name: Meteorite Powder of Wisdom
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000405
     AegisName: Ep18_Amethyst_Fragment
     Name: Amethyst Fragment
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000406
     AegisName: Ep18_Very_Ddan_Crystal
     Name: Very Unusual Crystal
@@ -80531,290 +80636,385 @@ Body:
     Name: Weapon Enhancement Ore(Lower)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000420
     AegisName: Weapon_Ore_2
     Name: Weapon Enhancement Ore(Intermediate)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000421
     AegisName: Weapon_Ore_3
     Name: Weapon Enhancement Ore(High)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000422
     AegisName: Weapon_Ore_4
     Name: Weapon Enhancement Ore(Superior)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000423
     AegisName: Armor_Ore_1
     Name: Armor Enhancement Ore(Lower)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000424
     AegisName: Armor_Ore_2
     Name: Armor Enhancement Ore(Intermediate)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000425
     AegisName: Armor_Ore_4
     Name: Armor Enhancement Ore(Superior)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000426
     AegisName: Acc_Ore_1
     Name: Accessory Enhancement Ore(Lower)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000427
     AegisName: Acc_Ore_2
     Name: Accessory Enhancement Ore(Intermediate)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000428
     AegisName: Acc_Ore_3
     Name: Accessory Enhancement Ore(High)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000429
     AegisName: Acc_Ore_4
     Name: Accessory Enhancement Ore(Superior)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000430
     AegisName: Weapon_Stone_1
     Name: Weapon Upgrade Stone(Lower)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000431
     AegisName: Weapon_Stone_2
     Name: Weapon Upgrade Stone(Intermediate)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000432
     AegisName: Weapon_Stone_3
     Name: Weapon Upgrade Stone(High)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000433
     AegisName: Weapon_Stone_4
     Name: Weapon Upgrade Stone(Superior)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000434
     AegisName: Armor_Stone_1
     Name: Armor Upgrade Stone(Lower)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000435
     AegisName: Armor_Stone_2
     Name: Armor Upgrade Stone(Intermediate)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000436
     AegisName: Armor_Stone_3
     Name: Armor Upgrade Stone(High)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000437
     AegisName: Armor_Stone_4
     Name: Armor Upgrade Stone(Superior)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000438
     AegisName: Acc_Stone_1
     Name: Accessory Upgrade Stone(Lower)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000439
     AegisName: Acc_Stone_2
     Name: Accessory Upgrade Stone(Intermediate)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000440
     AegisName: Acc_Stone_3
     Name: Accessory Upgrade Stone(High)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000441
     AegisName: Acc_Stone_4
     Name: Accessory Upgrade Stone(Superior)
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000442
     AegisName: Pow_Meteorite_Fragment
     Name: Power Meteorite Fragment
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000443
     AegisName: Sta_Meteorite_Fragment
     Name: Stamina Meteorite Fragment
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000444
     AegisName: Con_Meteorite_Fragment
     Name: Agile Meteorite Fragment
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000445
     AegisName: Crt_Meteorite_Fragment
     Name: Lucky Meteorite Fragment
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000446
     AegisName: Spl_Meteorite_Fragment
     Name: Meteorite Fragment of Spell
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000447
     AegisName: Wis_Meteorite_Fragment
     Name: Meteorite Fragment of Wisdom
     Type: Etc
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 1000471
     AegisName: Vila_Basement_Key
     Name: Villa Basement Key
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000475
     AegisName: Conse_F_T_Sword
     Name: Fides Two-Handed Sword Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000476
     AegisName: Conse_F_Lance
     Name: Fides Lance Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000477
     AegisName: Conse_F_G_Sword
     Name: Fides Guardian Sword Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000478
     AegisName: Conse_F_G_Spear
     Name: Fides Guardian Spear Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000479
     AegisName: Conse_F_Axe
     Name: Fides Axe Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000480
     AegisName: Conse_F_Mace
     Name: Fides Mace Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000481
     AegisName: Conse_F_Lapier
     Name: Fides Rapier Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000482
     AegisName: Conse_F_Hall
     Name: Fides Hall Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000483
     AegisName: Conse_F_Cakram
     Name: Fides Chakram Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000484
     AegisName: Conse_F_Katar
     Name: Fides Katar Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000485
     AegisName: Conse_F_Dagger
     Name: Fides Dagger Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000486
     AegisName: Conse_F_C_Bow
     Name: Fides Crossbow Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000487
     AegisName: Conse_F_T_Staff
     Name: Fides Two-Handed Staff Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000488
     AegisName: Conse_F_Rod
     Name: Fides Rod Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000489
     AegisName: Conse_F_M_Book
     Name: Fides Magic Book Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000490
     AegisName: Conse_F_P_Book
     Name: Fides Poison Book Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000491
     AegisName: Conse_F_Bible
     Name: Fides Bible Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000492
     AegisName: Conse_F_Wand
     Name: Fides Wand Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000493
     AegisName: Conse_F_Knuckle
     Name: Fides Knuckle Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000494
     AegisName: Conse_F_Claw
     Name: Fides Claw Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000495
     AegisName: Conse_F_Ballista
     Name: Fides Ballista Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000496
     AegisName: Conse_F_A_Bow
     Name: Fides Aiming Bow Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000497
     AegisName: Conse_F_Violin
     Name: Fides Violin Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000498
     AegisName: Conse_F_C_Rope
     Name: Fides Chain Rope Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000499
     AegisName: Conse_F_Harp
     Name: Fides Harp Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000500
     AegisName: Conse_F_Ribbon
     Name: Fides Ribbon Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000501
     AegisName: Purificatory_Holy_O
     Name: Holy Oil of Purification
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000502
     AegisName: Purificatory_Holy_W
     Name: Holy Water of Purification
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000503
     AegisName: Sanctuary_Sudarium
     Name: Sabbatical Handkerchief
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000504
     AegisName: Dry_Sand
     Name: Dry Sand
@@ -80958,6 +81158,8 @@ Body:
     Name: Evil Water
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000563
     AegisName: Soa_Charm
     Name: Soa Charm
@@ -81003,10 +81205,26 @@ Body:
     AegisName: Noodle_Fes_Ticket
     Name: Noodle Festival Development Fund Certificate
     Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1000571
     AegisName: E_Star_Button
     Name: Is it a star button?!
     Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1000604
     AegisName: Ep19_Juncea_Tube
     Name: Juncea Test Tube
@@ -81067,6 +81285,8 @@ Body:
     AegisName: Mad_Bunny_Ticket
     Name: Mad Bunny-LT Enchantment Ticket
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000610
     AegisName: RuneknightStone_Top3
     Name: Rune Knight Stone (Upper)
@@ -81124,12 +81344,21 @@ Body:
     AegisName: 19th_Anniv_Invitation
     Name: 19th Anniversary Thank You Letter
     Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1000636
     AegisName: Plain_Barmund_Rune
     Name: Glade Rune Fragment
     Type: Etc
     Weight: 1
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000637
     AegisName: Flame_Barmund_Rune
@@ -81137,6 +81366,7 @@ Body:
     Type: Etc
     Weight: 1
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000638
     AegisName: Ice_Barmund_Rune
@@ -81144,6 +81374,7 @@ Body:
     Type: Etc
     Weight: 1
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000639
     AegisName: Death_Barmund_Rune
@@ -81151,6 +81382,7 @@ Body:
     Type: Etc
     Weight: 1
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000640
     AegisName: Plain_Barmund_Rune2
@@ -81158,6 +81390,7 @@ Body:
     Type: Etc
     Weight: 10
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000641
     AegisName: Flame_Barmund_Rune2
@@ -81165,6 +81398,7 @@ Body:
     Type: Etc
     Weight: 10
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000642
     AegisName: Ice_Barmund_Rune2
@@ -81172,6 +81406,7 @@ Body:
     Type: Etc
     Weight: 10
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000643
     AegisName: Death_Barmund_Rune2
@@ -81179,6 +81414,7 @@ Body:
     Type: Etc
     Weight: 10
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000644
     AegisName: Evt_RagFes_Stamp
@@ -81196,10 +81432,20 @@ Body:
     AegisName: Hero_Enchant_Ticket
     Name: Hero's Enchantment Ticket
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000657
     AegisName: Evt_Soul_Skein
     Name: Soul Thread
     Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1000666
     AegisName: WanderMinsStone_Top3
     Name: Wander Mins Stone (Upper)
@@ -81260,12 +81506,14 @@ Body:
     Name: Lead
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000681
     AegisName: ClockTower_Gear
     Name: Clock Gear
     Type: Etc
     Flags:
+      BuyingStore: true
       DropEffect: CLIENT
   - Id: 1000682
     AegisName: ClockTower_key
@@ -81279,54 +81527,80 @@ Body:
     AegisName: Conse_F_Humma
     Name: Fides Huuma Shuriken Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000686
     AegisName: Conse_F_C_Humma
     Name: Fides Cross-Shaped Huuma Shuriken Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000687
     AegisName: Conse_F_Revolver
     Name: Fides Revolver Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000688
     AegisName: Conse_F_Shotgun
     Name: Fides Shotgun Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000689
     AegisName: Conse_F_Rifle
     Name: Fides Rifle Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000690
     AegisName: Conse_F_Gatling
     Name: Fides Gatling Gun Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000691
     AegisName: Conse_F_Launcher
     Name: Fides Launcher Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000692
     AegisName: Conse_F_Moon_B
     Name: Fides Moon Book Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000693
     AegisName: Conse_F_Star_B
     Name: Fides Stardust Book Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000694
     AegisName: Conse_F_S_Stick
     Name: Fides Soul Stick Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000695
     AegisName: Conse_F_D_Wand
     Name: Fides Dark Wand Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000696
     AegisName: Conse_F_F_Wand
     Name: Fides Foxtail Wand Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000697
     AegisName: Conse_F_F_model
     Name: Fides Foxtail Model Blueprint
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000705
     AegisName: Ep19_Rgan_Core
     Name: Rgan Magic Core
@@ -81789,28 +82063,24 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
-      DropEffect: CLIENT
   - Id: 1000812
     AegisName: Snow_F_Stone1
     Name: Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
-      DropEffect: CLIENT
   - Id: 1000813
     AegisName: Snow_F_Stone2
     Name: Shining Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
-      DropEffect: CLIENT
   - Id: 1000814
     AegisName: Snow_F_Stone3
     Name: Brilliant Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
-      DropEffect: CLIENT
   - Id: 1000822
     AegisName: EP19_Shell_Of_Rgan
     Name: Rgan Shell
@@ -81903,10 +82173,14 @@ Body:
     AegisName: EP19_Luminant
     Name: Mysterious Luminant
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000834
     AegisName: EP19_Sharp_Bone
     Name: Long Sharp Bone
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1000842
     AegisName: Ep19_HS_FEELER
     Name: High-sensitivity Feeler
@@ -82259,6 +82533,8 @@ Body:
     AegisName: VR_Reading_Card
     Name: Fantasy Book Completion Card
     Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000926
     AegisName: VR_Navi_Sticker
     Name: Butterfly Sticker
@@ -82690,6 +82966,14 @@ Body:
     Name: Fresh CREAM    # !todo check english name
     Type: Etc
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoMail: true
+      NoAuction: true
+      NoGuildStorage: true
   - Id: 1001023
     AegisName: aegis_1001023
     Name: "[Event] Shard of Infinity Star"
