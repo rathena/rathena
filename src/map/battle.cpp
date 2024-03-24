@@ -689,6 +689,13 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	t_race2 = status_get_race2(target);
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
 
+	// When the attacker is a monster, then all bonuses on BF_WEAPON will work and no bonuses on BF_MAGIC
+	// Does not impact the attack type
+	if (src && src->type == BL_MOB && battle_config.cardfix_monster_physical) {
+		flag |= BF_WEAPON;
+		flag &= ~BF_MAGIC;
+	}
+
 //Official servers apply the cardfix value on a base of 1000 and round down the reduction/increase
 #define APPLY_CARDFIX(damage, fix) { (damage) = (damage) - (int64)(((damage) * (1000 - max(0, fix))) / 1000); }
 
@@ -10569,6 +10576,7 @@ static const struct _battle_data {
 	{ "delay_dependon_agi",                 &battle_config.delay_dependon_agi,              0,      0,      1,              },
 	{ "skill_delay_attack_enable",          &battle_config.sdelay_attack_enable,            0,      0,      1,              },
 	{ "left_cardfix_to_right",              &battle_config.left_cardfix_to_right,           0,      0,      1,              },
+	{ "cardfix_monster_physical",           &battle_config.cardfix_monster_physical,        1,      0,      1,              },
 	{ "skill_add_range",                    &battle_config.skill_add_range,                 0,      0,      INT_MAX,        },
 	{ "skill_out_range_consume",            &battle_config.skill_out_range_consume,         1,      0,      1,              },
 	{ "skillrange_by_distance",             &battle_config.skillrange_by_distance,          ~BL_PC, BL_NUL, BL_ALL,         },

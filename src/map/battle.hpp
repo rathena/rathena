@@ -150,6 +150,7 @@ struct Battle_Config
 	int delay_dependon_dex, delay_dependon_agi;
 	int sdelay_attack_enable;
 	int left_cardfix_to_right;
+	int cardfix_monster_physical;
 	int skill_add_range;
 	int skill_out_range_consume;
 	int skill_amotion_leniency;
