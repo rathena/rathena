@@ -11279,9 +11279,7 @@ Body:
           BIO_WOOD_GOBLIN: true
   - Id: 16738
     Title: Deep 1st floor sample deepening study - Standby
-    # TODO
-    # TimeLimit: Monday 4h
-    TimeLimit: 4h
+    TimeLimit: Monday 4h
   - Id: 16739
     Title: Deep 1st floor Fire sample study I
     Targets:
