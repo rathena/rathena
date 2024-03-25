@@ -414,7 +414,7 @@ function	script	Func_Socket2	{
 	mes "นอกจากนี้, จำไว้ว่าหาก "+ ((getiteminfo(.@item_id, ITEMINFO_LOCATIONS)&EQP_HAND_R) ? "weapon(อาวุธ)" : "armor(ชุดเกราะ)") +" ได้ถูกอัพเกรด, และถูกใส่การ์ดแล้ว,";
 	mes "เจ้าจะสูญเสียมันไปแม้ว่าเจ้าจะสร้าง slot สำเร็จก็ตาม.";
 	next;
-	switch(select("ขอสร้าง slot:ไว้ลองใหม่ครั้งหน้า"))
+	switch(select("ยืนยันการสร้าง slot:ไว้ลองใหม่ครั้งหน้า"))
 	{
 		case 1:
 			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no .@req_amount[0] and .@req_amount[1] provided, check itemcount against 0 (we still need a valid item ID though)

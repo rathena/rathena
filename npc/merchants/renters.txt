@@ -35,35 +35,35 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 
 	mes "[Peco Peco Breeder]";
 	if (BaseJob == Job_Knight && Class < Job_Rune_Knight) {
-		mes "Welcome.";
-		mes "Honorable Knight,";
-		mes "would you like to rent";
-		mes "a Peco Peco? The rental";
-		mes "fee is "+.@price+" zeny.";
+		mes "ยินดีต้อนรับ.";
+		mes "อัศวินผู้ทรงเกียรติ,";
+		mes "ท่านต้องการเช่า";
+		mes "Peco Peco ใช่หรือไหม?";
+		mes "ค่าธรรมเนียมคือ "+.@price+" zeny.";
 		next;
-		switch(select("Rent Peco Peco:Cancel")) {
+		switch(select("เช่า Peco Peco:ยกเลิก")) {
 		case 1:
 			if (Zeny < .@price) {
 				mes "[Peco Peco Breeder]";
-				mes "You do not";
-				mes "have enough zeny.";
-				mes "Are you...";
-				mes "bankrupt?";
+				mes "ดูเหมือนว่า";
+				mes "ท่านมี zeny ไม่เพียงพอ.";
+				mes "ท่าน...";
+				mes "ล้มละลายหรือเปล่า?";
 				close;
 			}
 			else if(getskilllv("KN_RIDING") == 0) {
 				mes "[Peco Peco Breeder]";
-				mes "I'm sorry, but you're";
-				mes "not eligible for this";
-				mes "service. Please go learn";
-				mes "the Peco Peco Ride skill first.";
+				mes "ข้าขอโทษด้วย,";
+				mes "แต่ท่านไม่มีสิทธิ์";
+				mes "ในการใช้บริการนี้. โปรดไปเรียนรู้";
+				mes "ทักษะสกิล Peco Peco Ride เสียก่อน.";
 				close;
 			}
 			else if(checkriding()) {
 				mes "[Peco Peco Breeder]";
-				mes "You're already";
-				mes "mounted on a";
-				mes "Peco Peco.";
+				mes "ท่านอยู่ในระหว่าง";
+				mes "ใช้บริการเช่า";
+				mes "Peco Peco อยู่แล้ว.";
 				close;
 			}
 			else if(ismounting()) {
@@ -76,16 +76,16 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 			close;
 		case 2:
 			mes "[Peco Peco Breeder]";
-			mes "I see.";
-			mes "Well then,";
-			mes "have a good day.";
+			mes "ข้าเข้าใจแล้ว.";
+			mes "เอาล่ะ, ถ้าอย่างนั้น";
+			mes "ขอให้ท่านมีวันที่ดีนะ.";
 			close;
 		}
 	} else {
-		mes "I'm sorry, but these";
-		mes "Peco Pecos are only";
-		mes "available for Knights";
-		mes "and Lord Knights.";
+		mes "ข้าขอโทษ,";
+		mes "แต่ Peco Pecos เหล่านี้";
+		mes "มีไว้เฉพาะสำหรับ Knights";
+		mes "และ Lord Knights เท่านั้น.";
 		close;
 	}
 }

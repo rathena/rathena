@@ -33,35 +33,35 @@
 -	script	Seiyablem#dummy::SocketEnchant	-1,{
 	if (checkweight(1201,1) == 0)
 	{
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you lose some weight. -";
+		mes "- รอสักครู่ !! -";
+		mes "- ตอนนี้คุณกำลัง -";
+		mes "- พกพาสิ่งของมากเกินไป. -";
+		mes "- โปรดลองอีกครั้ง -";
+		mes "- หลังจากที่คุณลดน้ำหนักลง. -";
 		close;
 	}
 	mes "[Seiyablem]";
-	mes "I'm an engineer that specializes in adding Slots to normal Weapons and Armor.";
-	mes "My service fee, the required materials and the chance of success all depend on the specific item I'm working on.";
+	mes "ข้าเป็นวิศวกรที่เชี่ยวชาญในการเพิ่ม Slots ให้กับ Weapons(อาวุธ) และ Armor(ชุดเกราะ) ปกติ.";
+	mes "ค่าบริการของข้า, วัสดุที่ต้องใช้ และโอกาสในการสำเร็จทั้งหมดขึ้นอยู่กับอุปกรณ์เฉพาะที่ข้ากำลังทำงานอยู่.";
 	next;
 	mes "[Seiyablem]";
-	mes "Adding Slots may seem simple, but it's far more complicated than it looks.";
-	mes "If you're interested in my service, let me know.";
+	mes "การเพิ่ม Slots อาจจะดูเหมือนง่าย, แต่มันซับซ้อนกว่าที่คิดและเห็นมาก.";
+	mes "หากเจ้าสนใจในบริการของข้า, โปรดบอกข้า.";
 	next;
-	switch(select("Add Slot to Weapon:Add Slot to Armor:Slot Attempt Info:Cancel"))
+	switch(select("เพิ่ม Slot ให้ Weapon (อาวุธ):เพิ่ม Slot ให้ Armor (ชุดเกราะ):ข้อมูลเพิ่มเติ่มในการเพิ่ม Slot:ยกเลิก"))
 	{
 		case 1:
 			mes "[Seiyablem]";
-			mes "You want to add a Slot to a weapon?";
-			mes "I categorize weapons by their difficulty in adding a Slot, C Class being easiest and S Class the most difficult.";
-			mes "Which class would you like to try?";
+			mes "เจ้าต้องการเพิ่ม Slot ให้ Weapon(อาวุธ) หรือไม่?";
+			mes "ข้าจะแบ่งประเภทอาวุธตามความยากในการเพิ่ม Slot, โดยมี C Class นั้นง่ายที่สุด และ S Class นั้นยากที่สุด.";
+			mes "เจ้าต้องการลองคลาสไหน?";
 			next;
-			switch(select("C Class:B Class:A Class:S Class"))
+			switch(select("C Class (โอกาสสำเร็จ 25%):B Class (โอกาสสำเร็จ 20%):A Class (โอกาสสำเร็จ 15%):S Class (โอกาสสำเร็จ 10%)"))
 			{
 				case 1:
 					mes "[Seiyablem]";
-					mes "C Class, eh?";
-					mes "Now, I can only upgrade certain equipment in that class, so please choose one of the following items, so we can try to add a Slot to it.";
+					mes "เอ๊ะ C Class, ใช่ไหม?";
+					mes "ตอนนี้, ข้าสามารถอัพเกรดอุปกรณ์บางอย่างในคลาสนั้นได้เท่านั้น, ดังนั้นโปรดเลือกรายการใดรายการหนึ่ง, เพื่อที่เราจะลองเพิ่ม Slot ให้กับมัน.";
 					next;
 					switch(select("Trident:Rope:Violin"))
 					{
@@ -71,9 +71,9 @@
 					}
 				case 2:
 					mes "[Seiyablem]";
-					mes "B Class?";
-					mes "Alright, this is the average equipment category.";
-					mes "Please choose the weapon to which you'd like me to try to add a Slot.";
+					mes "B Class เหรอ?";
+					mes "เอาล่ะ, นี่คือหมวดหมู่อุปกรณ์ระดับปานกลาง.";
+					mes "โปรดเลือกอาวุธที่เจ้าต้องการให้ข้าลองเพิ่ม Slot.";
 					next;
 					switch(select("Chain:Gladius:Gakkung Bow:Pike:Haedonggum:Lute:Wire:Waghnakh:Arbalest Bow"))
 					{
@@ -89,9 +89,9 @@
 					}
 				case 3:
 					mes "[Seiyablem]";
-					mes "Ooh, A Class.";
-					mes "This is some high risk territory!";
-					mes "Alright, which weapon would you like me to try adding a Slot?";
+					mes "โอ้ว, A Class นะ.";
+					mes "เป็นพื้นที่ที่มีความเสี่ยงสูง!";
+					mes "เอาล่ะ, แล้วอาวุธชิ้นไหนที่เจ้าอยากให้ข้าลองเพิ่ม Slot?";
 					next;
 					switch(select("Hunter Bow:Survivor's Rod(INT):Zweihander:Flamberge:Infiltrator:Ballista:Stunner:Berserk:Claymore"))
 					{
@@ -107,10 +107,10 @@
 					}
 				case 4:
 					mes "[Seiyablem]";
-					mes "Whoa, whoa, whoa...";
-					mes "S class? Alright...";
-					mes "It'd be a near miracle if I can actually pull this off.";
-					mes "Okay... Which weapon shall we try adding a Slot to?";
+					mes "ว้าว, ว้าว, ว้าว...";
+					mes "S class เลยเหรอ? เอาล่ะ...";
+					mes "คงจะเป็นเรื่องมหัศจรรย์มากหากข้าสามารถดึงสิ่งนี้ออกมาได้จริง.";
+					mes "โอเค... เราจะลองเพิ่ม Slot เข้าไปในอาวุธไหนล่ะ?";
 					next;
 					switch(select("Gungnir:Poison Knife:Ice Pick:Sucsamad:Ginnungagap:Cutlas:Crescent Scythe:Survivor's Rod(DEX)"))
 					{
@@ -126,19 +126,19 @@
 			}
 		case 2:
 			mes "[Seiyablem]";
-			mes "Armor, you said?";
-			mes "Sure, no problem.";
-			mes "Armor is divided into 4 different classes, depending on the work difficulty.";
-			mes "C Class is the easiest one, and S Class he hardest one.";
-			mes "Which class would you like to try?";
+			mes "เจ้าบอกว่า, ชุดเกราะใช่ไหม?";
+			mes "แน่นอน, ไม่มีปัญหา.";
+			mes "ชุดเกราะถูกแบ่งออกเป็น 4 คลาสที่แตกต่างกัน, ขึ้นอยู่กับความยากในการทำงาน.";
+			mes "C Class นั้นง่ายที่สุด, และ S Class คือคลาสที่ยากที่สุด.";
+			mes "เจ้าต้องการลองคลาสไหน?";
 			next;
-			switch(select("C Class:B Class:A Class:S Class"))
+			switch(select("C Class (โอกาสสำเร็จ 25%):B Class (โอกาสสำเร็จ 20%):A Class (โอกาสสำเร็จ 15%):S Class (โอกาสสำเร็จ 10%)"))
 			{
 				case 1:
 					mes "[Seiyablem]";
-					mes "C Class Armor, eh?";
-					mes "Sounds reasonable.";
-					mes "Which armor would you like to try adding a Slot?";
+					mes "เอ๊ะ C Class, ใช่ไหม?";
+					mes "ฟังดูสมเหตุสมผลนะ.";
+					mes "เจ้าต้องการให้ข้าลองเพิ่ม Slot ให้กับเกราะชิ้นไหน?";
 					next;
 					switch(select("Mantle:Coat:Circlet:Biretta"))
 					{
@@ -149,8 +149,8 @@
 					}
 				case 2:
 					mes "[Seiyablem]";
-					mes "You have chosen average B Class.";
-					mes "So, what kind of armor do you have?";
+					mes "เจ้าได้เลือก B Class ระดับปานกลาง.";
+					mes "แล้ว, เจ้ามีชุดเกราะแบบไหนล่ะ?";
 					next;
 					switch(select("Mirror Shield:Chain Mail:Saint Robe:Silk Robe:Boots:Shoes:Muffler:Guard:Buckler:Shield:Bongun Hat"))
 					{
@@ -168,9 +168,9 @@
 					}
 				case 3:
 					mes "[Seiyablem]";
-					mes "Ooh, A Class.";
-					mes "This is some high risk territory!";
-					mes "Alright, which armor would you like me to try adding a Slot?";
+					mes "โอ้ว, A Class นะ.";
+					mes "เป็นพื้นที่ที่มีความเสี่ยงสูง!";
+					mes "เอาล่ะ, แล้วชุดเกราะชิ้นไหนที่เจ้าอยากให้ข้าลองเพิ่ม Slot?";
 					next;
 					switch(select("Gemmed Sallet:Bucket Hat:Memory Book:Tights:Legion Plate Armor:Full Plate:Thief Clothes:Greaves:Coif:Manteau:Helm:Ninja Suit:Orc Helm:Ancient Cape:Monk Hat:Golden Gear:Brooch:Munak Hat"))
 					{
@@ -195,9 +195,9 @@
 					}
 				case 4:
 					mes "[Seiyablem]";
-					mes "Um... S Class?";
-					mes "You sure about this?";
-					mes "Alright... Let me know the Armor to which you'd like to add a Slot, and I'll tell what I need to try it.";
+					mes "อืม... S Class?";
+					mes "เจ้าแน่ใจเกี่ยวกับเรื่องนี้หรือเปล่า?";
+					mes "เอาล่ะ... บอกชุดเกราะที่เจ้าต้องการเพิ่ม Slot มาให้ข้า, แล้วข้าจะบอกว่าต้องใช้อะไรบ้างเพื่อลองทำมัน.";
 					next;
 					switch(select("Majestic Goat:Spiky Band:Bone Helm:Corsair:Crown:Tiara:Sphinx Hat:Robe of Cast:Earring:Ring:Bow Thimble"))
 					{
@@ -216,32 +216,32 @@
 			}
 		case 3:
 			mes "[Seiyablem]";
-			mes "Well, I haven't really refined the art of Slot Addition.";
-			mes "It's so complicated that I'd be lying if I told you that I knew every factor that affected the process.";
-			mes "Still, I do notice a few trends...";
+			mes "เอาล่ะ, ข้ายังไม่ได้ขัดเกลาศิลปะของ Slot Addition เลย.";
+			mes "มันซับซ้อนมากจนข้าต้องโกหกถ้าข้าบอกเจ้าว่าข้ารู้ทุกปัจจัยที่ส่งผลต่อกระบวนการนี้.";
+			mes "ถึงกระนั้น, ข้าสังเกตเห็นแนวโน้มบางอย่าง...";
 			next;
 			mes "[Seiyablem]";
-			mes "In some towns, Slot addition attempts are more successful for equipment with fewer upgrades.";
-			mes "In other towns, the opposite is true.";
-			mes "isn't that really peculiar?";
+			mes "ในบางเมือง, การเพิ่ม Slot จะประสบความสำเร็จมากกว่าสำหรับอุปกรณ์ที่มีการอัพเกรดน้อยกว่า.";
+			mes "ในเมืองอื่น ๆ, สิ่งที่ตรงกันข้ามคือความจริง.";
+			mes "มันไม่ใช่เรื่องแปลกจริงๆเหรอ?";
 			next;
 			mes "[Seiyablem]";
-			mes "Oh, there's also something really important that you should know.";
-			mes "If you ask me to add a Slot to something, make sure that you don't have multiples of it in your inventory.";
+			mes "โอ้, ยังมีบางสิ่งที่สำคัญมากที่เจ้าควรรู้.";
+			mes "ถ้าเจ้าขอให้ข้าเพิ่ม Slot เสริมให้กับอะไรสักอย่าง, ตรวจสอบให้แน่ใจว่าเจ้าไม่ได้มีสิ่งนั้นหลายรายการในกระเป๋าของเจ้า.";
 			next;
 			mes "[Seiyablem]";
-			mes "Here's an example: if you have a +7 Manteau and a normal Manteau in your inventory, then I will randomly pick one of them for my Slot Addition attempt.";
-			mes "Just remember to be careful.";
+			mes "นี่คือตัวอย่าง: หากเจ้ามี +7 Manteau และ Manteau ปกติอยู่ในกระเป๋าของเจ้า, ข้าจะสุ่มเลือกหนึ่งในนั้นเพื่อทำการเพิ่ม Slot ให้.";
+			mes "แค่จำไว้ว่าต้องระวัง.";
 			next;
 			mes "[Seiyablem]";
-			mes "Again, ^FF0000only carry one of the equipment to which you want me to add a Slot^000000.";
-			mes "All other equipment with the same name should be placed in your Kafra Storage, got it?";
+			mes "ย้ำอีกครั้ง, ^FF0000ให้พกเพียงอุปกรณ์ชิ้นเดียวที่เจ้าต้องการให้ข้าเพิ่ม Slot^000000.";
+			mes "อุปกรณ์อื่นๆ ทั้งหมดที่มีชื่อเดียวกัน ควรถูกเก็บไว้ใน Kafra Storage ของเจ้า, เข้าใจไหม?";
 			close;
 		case 4:
 			mes "[Seiyablem]";
-			mes "Take it easy, adventurer.";
-			mes "If you ever want to try adding a Slot to some of your equipment, come back and let me know.";
-			mes "Seeya~";
+			mes "ใจเย็นๆ นะ, นักผจญภัย.";
+			mes "ถ้าเจ้าต้องการที่จะลองเพิ่ม Slot ให้กับอุปกรณ์ของเจ้า, กลับมาบอกข้าได้เลย.";
+			mes "แล้วเจอกันนะ~";
 			close;
 	}
 }
@@ -254,46 +254,46 @@ function	script	Func_Socket	{
 
 	disable_items;
 	mes "[Seiyablem]";
-	mes "You want to add a Slot to a "+ getitemname(.@item_id) +"?";
-	mes "Alright, please bring me ^FF0000"+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +"^000000, "+ (.@item_req[1] != 0 && .@req_amount[1] != 0 ? ("^FF0000"+ .@req_amount[1] +" "+ getitemname(.@item_req[1]) + (.@req_amount[1] > 1 && .@item_req[1] != 999 ? "s":"") + "^000000 ") : "") + "and my ^FF0000" + (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny^000000 service fee.";
-	mes "Ah, and don't forget to bring that "+ getitemname(.@item_id) +"!";
+	mes "เจ้าต้องการเพิ่ม Slot ให้กับ "+ getitemname(.@item_id) +" ใช่ไหม?";
+	mes "เอาล่ะ, โปรดนำ ^FF0000"+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +"^000000, "+ (.@item_req[1] != 0 && .@req_amount[1] != 0 ? ("^FF0000"+ .@req_amount[1] +" "+ getitemname(.@item_req[1]) + (.@req_amount[1] > 1 && .@item_req[1] != 999 ? "s":"") + "^000000 ") : "") + "และ ค่าบริการ ^FF0000" + (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny^000000 มาให้ข้า.";
+	mes "อ๊า, และอย่าลืมนำ "+ getitemname(.@item_id) +" มาด้วยนะ!";
 	next;
 	mes "[Seiyablem]";
 	if (getiteminfo(.@item_id, ITEMINFO_LOCATIONS) & EQP_HAND_R) // weapon
 	{
-		mes "I can try to add a slot now if you have the required items and zeny.";
-		mes "However, you should know that there's a chance that I might fail.";
-		mes "Therefore, I need to give you a fair warning...";
+		mes "ข้าสามารถลองเพิ่ม Slot ได้ตอนนี้ถ้าเจ้ามีไอเทมที่ต้องการและ zeny.";
+		mes "อย่างไรก็ตาม, เจ้าควรรู้ว่ามีโอกาสที่ข้าจะล้มเหลวได้.";
+		mes "ดังนั้น, ข้าจึงต้องแจ้งเตือนเจ้าไว้ด้วย...";
 		next;
 		mes "[Seiyablem]";
-		mes "If this attempt to add a Slot to your Weapon fails, then the ^FF0000Weapon^000000, ^FF0000and any Cards compounded to it will be destroyed^000000.";
+		mes "หากความพยายามในการเพิ่ม Slot ให้กับอาวุธของเจ้าล้มเหลว, นั้นหมายความว่า ^FF0000Weapon(อาวุธ)^000000, ^FF0000และ Cards ใดๆ ที่ประกอบเข้าด้วยกันจะถูกทำลาย^000000.";
 	}
 	else // armor
 	{
-		mes "If you have all the required materials, my zeny service fee and the Armor, then we can go ahead with the Slot Addition attempt.";
-		mes "But before that, I must warn you of the risk.";
+		mes "ถ้าเจ้ามีวัตถุดิบที่จำเป็นทั้งหมด, ค่าบริการ zeny ของข้า และชุดเกราะ, เราก็สามารถดำเนินการเพิ่ม Slot ได้เลย.";
+		mes "แต่ก่อนหน้านั้น, ข้าต้องเตือนเจ้าถึงความเสี่ยง.";
 		next;
 		mes "[Seiyablem]";
-		mes "If this attempt to add a Slot to your Armor fails, then the ^FF0000Armor^000000, ^FF0000it's upgrades^000000 ^FF0000and any Cards compounded to it will be destroyed^000000.";
+		mes "หากความพยายามในการเพิ่ม Slot ให้กับชุดเกราะของเจ้าล้มเหลว, นั้นหมายความว่า ^FF0000Armor(ชุดเกราะ)^000000, ^FF0000การอัพเกรดของมัน^000000 ^FF0000และ Cards ใดๆ ที่ประกอบเข้าด้วยกันจะถูกทำลาย^000000.";
 	}
-	mes "Do you still want to try to add a Slot?";
+	mes "เจ้ายังต้องการลองเพิ่ม Slot อยู่หรือเปล่า?";
 	next;
-	switch(select("Attempt Slot Addition:Cancel"))
+	switch(select("ยืนยันการสร้าง Slot:ยกเลิก"))
 	{
 		case 1:
 			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no getarg(7) and getarg(8) provided, check itemcount against 0 (we still need a valid item ID though)
 			{
 				mes "[Seiyablem]";
-				mes "Alright then, let the work begin!";
-				mes "You'd better pray for a successful result.";
+				mes "เอาล่ะ, ถ้างั้นเริ่มงานได้เลย!";
+				mes "เจ้าควรอธิษฐานขอให้ประสบความสำเร็จ.";
 				next;
 				set .@a, rand(1,100);
 				if ((.@a > getarg(2)) && (.@a < getarg(3)))
 				{
 					specialeffect getarg(3) == 51 ? EF_LORD : EF_SANCTUARY; // only S Class items have Lord of Vermillion effect
 					mes "[Seiyablem]";
-					mes "Great, it seems to be successful.";
-					mes "It looks pretty well done. Congratulations!";
+					mes "เยี่ยมมาก, ดูเหมือนว่าจะประสบความสำเร็จ.";
+					mes "ดูเหมือนจะทำได้อย่างดีเยี่ยม. ยินดีด้วย!";
 					delitem .@item_id,1;
 					delitem .@item_req[0],.@req_amount[0];
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
@@ -302,17 +302,17 @@ function	script	Func_Socket	{
 					getitem getarg(1),1;
 					next;
 					mes "[Seiyablem]";
-					mes "See you again, buddy!";
+					mes "แล้วพบกันใหม่, นะเพื่อน!";
 					close;
 				}
 				else
 				{
 					specialeffect EF_SUI_EXPLOSION;
 					mes "[Seiyablem]";
-					mes "Wah! ...I am so sorry, it failed.";
-					mes "However, I am completely innocent.";
-					mes "This is your luck, and it is destined by god, okay?";
-					mes "Don't be so disappointed, and try next time.";
+					mes "ว้าาา! ...ข้าขอโทษ, มันล้มเหลว.";
+					mes "อย่างไรก็ตาม, ข้าไม่ได้ทำผิดพลาดใดๆ เลย.";
+					mes "นี่คือโชคของเจ้า, และมันถูกลิขิตโดยพระเจ้า, โอเคไหม?";
+					mes "อย่าผิดหวังมากนัก, และลองครั้งต่อไป.";
 					delitem .@item_id,1;
 					delitem .@item_req[0],.@req_amount[0];
 					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
@@ -320,22 +320,22 @@ function	script	Func_Socket	{
 					Zeny = Zeny - .@zeny_req *1000;
 					next;
 					mes "[Seiyablem]";
-					mes "I wish you good luck next time!";
+					mes "ข้าขอให้เจ้าโชคดีในครั้งต่อไป!";
 					close;
 				}
 			}
 			else
 			{
 				mes "[Seiyablem]";
-				mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
-				mes "You sure that you have the equipment, required materials and the zeny?";
+				mes "ข้าอยากจะดำเนินการต่อด้วยการเพิ่ม Slot นี้, แต่เจ้ายังขาดบางสิ่งบางอย่างไป.";
+				mes "เจ้าแน่ใจว่าไหมว่าเจ้ามีอุปกรณ์, วัตถุดิบที่จำเป็น และ zeny ครบแล้วใช่ไหม?";
 				close;
 			}
 		case 2:
 			mes "[Seiyablem]";
-			mes "Need some time to think about it, huh?";
-			mes "Alright, I can understand.";
-			mes "Just remember that life's no fun if you're always playing it safe~";
+			mes "ต้องการเวลาคิดเกี่ยวกับมัน, ใช่ไหม?";
+			mes "เอาล่ะ, ข้าเข้าใจแล้ว.";
+			mes "แค่จำไว้ว่าชีวิตมันไม่สนุกเลย ถ้าเจ้าใช้ชีวิตอย่างปลอดภัยอยู่เสมอ~";
 			close;
 	}
 }
@@ -347,18 +347,18 @@ morocc,51,41,4	duplicate(SocketEnchant)	Seiyablem#moc	84
 
 -	script	Young Man#dummy::SocketMan	-1,{
 	mes "[Young Man]";
-	mes "I'm considering becoming a Slotting Engineer.";
-	mes "It's a new field where you can add Slots to equipment, and it'd be cool if I can work in such a lucrative career.";
+	mes "ข้ากำลังพิจารณาที่จะเป็นช่างเทคนิค Slotting.";
+	mes "มันเป็นสาขาใหม่ที่เจ้าสามารถเพิ่ม Slots ให้กับอุปกรณ์ได้, และมันน่าสนใจมากถ้าข้าสามารถทำงานในอาชีพที่มีรายได้ดีอย่างนี้ได้.";
 	next;
 	mes "[Young Man]";
-	mes "There's a huge element of luck involved in successfully adding Slots from what I can understand.";
-	mes "You fail sometimes, but if you're super lucky, you can add two Slots.";
-	mes "Crazy. Huh?";
+	mes "มีองค์ประกอบใหญ่ของโชคที่เกี่ยวข้องกับการเพิ่ม Slots ได้สำเร็จจากสิ่งที่ข้าเข้าใจ.";
+	mes "บางครั้งเจ้าอาจล้มเหลว, แต่ถ้าเจ้าโชคดีมาก, เจ้าอาจเพิ่ม Slots ได้สองช่อง.";
+	mes "บ้าไปแล้ว. ใช่ไหมล่ะ?";
 	next;
 	mes "[Young Man]";
-	mes "But don't get too excited.";
-	mes "Only certain equipment can handle the addition of two extra Slots.";
-	mes "There's so much more I have to learn before I can even be an apprentice...";
+	mes "แต่อย่าตื่นเต้นมากเกินไป.";
+	mes "มีเพียงอุปกรณ์บางอย่างเท่านั้นที่สามารถรองรับการเพิ่ม Slots พิเศษสองช่องได้.";
+	mes "ยังมีอีกมากที่ข้าต้องเรียนรู้ก่อนที่จะสามารถเป็นเด็กฝึกงานได้...";
 	close;
 }
 
