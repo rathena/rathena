@@ -34,7 +34,6 @@ static DBMap* party_booking_db; // uint32 char_id -> struct party_booking_ad_inf
 static unsigned long party_booking_nextid = 1;
 
 TIMER_FUNC(party_send_xy_timer);
-int party_create_byscript;
 
 /*==========================================
  * Fills the given party_member structure according to the sd provided.
@@ -185,12 +184,26 @@ void party_created(uint32 account_id,uint32 char_id,int fail,int party_id,char *
 		achievement_update_objective(sd, AG_PARTY, 1, 1);
 
 		// We don't do any further work here because the char-server sends a party info packet right after creating the party
-		if(party_create_byscript) {	// returns party id in $@party_create_id if party is created by script
+		if(sd->party_create_byscript) {	// returns party id in $@party_create_id if party is created by script
 			mapreg_setreg(add_str("$@party_create_id"),party_id);
-			party_create_byscript = 0;
+			sd->party_create_byscript_result = 1;
+
+			if (sd->st) {
+				run_script_main(sd->st);
+			} else {
+				sd->party_create_byscript = 0;
+			}
 		}
-	} else
+	} else {
 		clif_party_created( *sd, 1 ); // "party name already exists"
+		sd->party_create_byscript_result = -3;
+
+		if (sd->st) {
+			run_script_main(sd->st);
+		} else {
+			sd->party_create_byscript = 0;
+		}
+	}
 }
 
 int party_request_info(int party_id, uint32 char_id)
