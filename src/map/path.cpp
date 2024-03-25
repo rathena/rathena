@@ -48,7 +48,7 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 /// Comparator for binary heap of path nodes (minimum cost at top)
 #define NODE_MINTOPCMP(i,j) ((i)->f_cost - (j)->f_cost)
 
-#define calc_index(x,y) (((x)+(y)*MAX_WALKPATH) & (MAX_WALKPATH*MAX_WALKPATH-1))
+#define calc_index(x,y) ((((MAX_WALKPATH)+(x))+((MAX_WALKPATH)+(y))*((MAX_WALKPATH)*2+1)) % (((MAX_WALKPATH)*2+1)*((MAX_WALKPATH)*2+1)))
 
 /// Estimates the cost from (x0,y0) to (x1,y1).
 /// This is inadmissible (overestimating) heuristic used by game client.
@@ -327,7 +327,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		// FIXME: This array is too small to ensure all paths shorter than MAX_WALKPATH
 		// can be found without node collision: calc_index(node1) = calc_index(node2).
 		// Figure out more proper size or another way to keep track of known nodes.
-		struct path_node tp[MAX_WALKPATH * MAX_WALKPATH];
+		struct path_node tp[(2 * MAX_WALKPATH + 1) * (2 * MAX_WALKPATH + 1)];
 		struct path_node *current, *it;
 		int xs = mapdata->xs - 1;
 		int ys = mapdata->ys - 1;
