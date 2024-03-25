@@ -2605,7 +2605,7 @@ void battle_consume_ammo(map_session_data*sd, int skill, int lv)
 
 		if( skill == NW_MAGAZINE_FOR_ONE && sd->weapontype1 == W_GATLING ){
 			qty += 4;
-	}
+		}
 	}
 
 	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
@@ -3319,7 +3319,7 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 		switch( skill_id ){
 			case RK_WINDCUTTER:
 				if( sd->status.weapon == W_2HSWORD ){
-		return true;
+					return true;
 				}
 				break;
 			case NW_THE_VIGILANTE_AT_NIGHT:
@@ -3495,7 +3495,7 @@ int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct 
 					element = ELE_DARK;
 				}else if( sc->getSCE( SC_GRENADE_FRAGMENT_6 ) != nullptr ){
 					element = ELE_HOLY;
-	}
+				}
 			}
 			break;
 	}

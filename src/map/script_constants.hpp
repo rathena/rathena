@@ -1933,18 +1933,6 @@
 	export_constant(SC_T_FOURTH_GOD);
 	export_constant(SC_T_FIFTH_GOD);
 	export_constant(SC_HEAVEN_AND_EARTH);
-	
-	// Night Watch
-	export_constant(SC_INTENSIVE_AIM);
-	export_constant(SC_INTENSIVE_AIM_COUNT);
-	export_constant(SC_GRENADE_FRAGMENT_1);
-	export_constant(SC_GRENADE_FRAGMENT_2);
-	export_constant(SC_GRENADE_FRAGMENT_3);
-	export_constant(SC_GRENADE_FRAGMENT_4);
-	export_constant(SC_GRENADE_FRAGMENT_5);
-	export_constant(SC_GRENADE_FRAGMENT_6);
-	export_constant(SC_AUTO_FIRING_LAUNCHER);
-	export_constant(SC_HIDDEN_CARD);
 
 	// Shinkiro/Shiranui
 	export_constant(SC_SHADOW_CLOCK);

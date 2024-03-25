@@ -14970,7 +14970,6 @@ TIMER_FUNC(status_change_timer){
 
 		sc_timer_next(500 + tick);
 		return 0;
-
 	case SC_KI_SUL_RAMPAGE:
 		if (sce->val4-- > 0) {
 			int i = skill_get_splash(SH_KI_SUL_RAMPAGE, sce->val1);

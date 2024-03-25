@@ -4809,7 +4809,7 @@ static TIMER_FUNC(skill_timerskill){
 						tmpx = skl->x - area + rnd() % (area * 2 + 1);
 						tmpy = skl->y - area + rnd() % (area * 2 + 1);
 						skill_unitsetting(src, skl->skill_id, skl->skill_lv, tmpx, tmpy, skl->flag);
-			}
+					}
 					break;
 				case NW_MISSION_BOMBARD:  {
 						int area = skill_get_unit_range(skl->skill_id, skl->skill_lv);
@@ -4820,7 +4820,7 @@ static TIMER_FUNC(skill_timerskill){
 						tmpy = skl->y - range + rnd() % (range * 2 + 1);
 						map_foreachinarea(skill_area_sub, src->m, tmpx - range, tmpy - range, tmpx + range, tmpy + range, BL_CHAR,
 							src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-		}
+					}
 					break;
 			}
 		}
@@ -7173,7 +7173,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 		// perform skill requirement consumption
 		if (!(flag&SKILL_NOCONSUME_REQ))
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
@@ -13099,7 +13099,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		skill_onskillusage(sd, bl, skill_id, tick);
 		// perform skill requirement consumption
 		if (!(flag&SKILL_NOCONSUME_REQ))
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	map_freeblock_unlock();
@@ -14825,7 +14825,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		skill_onskillusage(sd, NULL, skill_id, tick);
 		// perform skill requirement consumption
 		if (!(flag&SKILL_NOCONSUME_REQ))
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
