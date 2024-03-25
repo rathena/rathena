@@ -1269,7 +1269,6 @@ bool pc_can_give_bounded_items(map_session_data *sd)
 	return (pc_has_permission(sd, PC_PERM_TRADE_BOUNDED) || pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL));
 }
 
-
 /**
  * Determine if an item in a player's inventory is tradeable based on several merits.
  * Checks for item_trade, bound, and rental restrictions.
@@ -11158,11 +11157,13 @@ bool pc_candrop(map_session_data *sd, struct item *item)
 {
 	if (sd->sc.cant.drop)
 		return false;
+	if( item && itemdb_ishatched_egg(item) )
+		return false;
 	if (pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL))	// no restriction
 		return true;
 	if( !pc_can_give_items(sd) )
 		return false;
-	if( item && ((item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) || (itemdb_ishatched_egg(item))) )
+	if( item && (item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) )
 		return false;
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
 }
