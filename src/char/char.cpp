@@ -630,31 +630,24 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 			if( items[i].nameid == 0 || flag[i] )
 				continue;
 
-			if( items[i].nameid == item.nameid
-			&&  items[i].card[0] == item.card[0]
-			&&  items[i].card[2] == item.card[2]
-			&&  items[i].card[3] == item.card[3]
-			&&  items[i].unique_id == item.unique_id
+			if( items[i].nameid == item.nameid &&
+			   items[i].amount == item.amount &&
+			   items[i].equip == item.equip &&
+			   items[i].identify == item.identify &&
+			   items[i].refine == item.refine &&
+			   items[i].attribute == item.attribute &&
+			   items[i].expire_time == item.expire_time &&
+			   items[i].bound == item.bound &&
+			   items[i].enchantgrade == item.enchantgrade &&
+			   (tableswitch != TABLE_INVENTORY || (items[i].favorite == item.favorite && items[i].equipSwitch == item.equipSwitch)) &&
+			   items[i].unique_id == item.unique_id
 			) {	//They are the same item.
 				int k;
 				
 				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
 				ARR_FIND( 0, MAX_ITEM_RDM_OPT, k, items[i].option[k].id != item.option[k].id || items[i].option[k].value != item.option[k].value || items[i].option[k].param != item.option[k].param );
 				
-				if( j == MAX_SLOTS &&
-					k == MAX_ITEM_RDM_OPT &&
-					items[i].amount == item.amount &&
-					items[i].equip == item.equip &&
-					items[i].identify == item.identify &&
-					items[i].refine == item.refine &&
-					items[i].attribute == item.attribute &&
-					items[i].expire_time == item.expire_time &&
-					items[i].bound == item.bound &&
-					items[i].enchantgrade == item.enchantgrade &&
-					(tableswitch != TABLE_INVENTORY || (items[i].favorite == item.favorite && items[i].equipSwitch == item.equipSwitch)) )
-				;	//Do nothing.
-				else
-				{
+				if( j != MAX_SLOTS && k != MAX_ITEM_RDM_OPT) {
 					// update all fields.
 					StringBuf_Clear(&buf);
 					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%u', `identify`='%d', `refine`='%d',`attribute`='%d', `expire_time`='%u', `bound`='%d', `unique_id`='%" PRIu64 "', `enchantgrade`='%d'",
