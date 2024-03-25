@@ -67,7 +67,7 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 			mes "It looks like you have";
 			mes "enough experience.";
 			next;
-			if (VIP_SCRIPT) {
+			if (vip_is_enabled(CHK_VIP_SCRIPT)) {
 				callfunc "VIP_Third_Class";
 				set job_ranger01,1;
 				setquest 8254;
