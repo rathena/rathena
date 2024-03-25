@@ -20,6 +20,11 @@
 #   HitCount:                 Skill hit count. (Default: 0)
 #     - Level                 Skill level.
 #       Count                 Number of hits at specific skill level.
+#   HitRate                   Skill hit rate.
+#     Rates:                  Hit rate. (Default: 100)
+#       - Level               Skill level.
+#         Rate                Rate is a percentage of the caster's hit rate added to hit rate.
+#     Skills:                 Skill flagged as a requirement (players only). (Optional)
 #   Element:                  Skill element. (Default: Neutral)
 #     - Level                 Skill level.
 #       Element               Element at specific skill level.

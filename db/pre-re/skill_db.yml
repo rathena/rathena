@@ -37,6 +37,11 @@
 #   HitCount:                 Skill hit count. (Default: 0)
 #     - Level                 Skill level.
 #       Count                 Number of hits at specific skill level.
+#   HitRate                   Skill hit rate.
+#     Rates:                  Hit rate. (Default: 100)
+#       - Level               Skill level.
+#         Rate                Rate is a percentage of the caster's hit rate added to hit rate.
+#     Skills:                 Skill flagged as a requirement (players only). (Optional)
 #   Element:                  Skill element. (Default: Neutral)
 #     - Level                 Skill level.
 #       Element               Element at specific skill level.
@@ -140,7 +145,7 @@
 
 Header:
   Type: SKILL_DB
-  Version: 3
+  Version: 4
 
 Body:
   - Id: 1
@@ -170,6 +175,28 @@ Body:
     Range: -1
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates:
+        - Level: 1
+          Rate: 105
+        - Level: 2
+          Rate: 110
+        - Level: 3
+          Rate: 115
+        - Level: 4
+          Rate: 120
+        - Level: 5
+          Rate: 125
+        - Level: 6
+          Rate: 130
+        - Level: 7
+          Rate: 135
+        - Level: 8
+          Rate: 140
+        - Level: 9
+          Rate: 145
+        - Level: 10
+          Rate: 150
     Element: Weapon
     CopyFlags:
       Skill:
@@ -269,6 +296,28 @@ Body:
       TargetTrap: true
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates:
+        - Level: 1
+          Rate: 110
+        - Level: 2
+          Rate: 120
+        - Level: 3
+          Rate: 130
+        - Level: 4
+          Rate: 140
+        - Level: 5
+          Rate: 150
+        - Level: 6
+          Rate: 160
+        - Level: 7
+          Rate: 170
+        - Level: 8
+          Rate: 180
+        - Level: 9
+          Rate: 190
+        - Level: 10
+          Rate: 200
     Element: Fire
     SplashArea:
       - Level: 1
@@ -2088,6 +2137,28 @@ Body:
     Range: -2
     Hit: Multi_Hit
     HitCount: 3
+    HitRate:
+      Rates:
+        - Level: 1
+          Rate: 105
+        - Level: 2
+          Rate: 110
+        - Level: 3
+          Rate: 115
+        - Level: 4
+          Rate: 120
+        - Level: 5
+          Rate: 125
+        - Level: 6
+          Rate: 130
+        - Level: 7
+          Rate: 135
+        - Level: 8
+          Rate: 140
+        - Level: 9
+          Rate: 145
+        - Level: 10
+          Rate: 150
     Element: Weapon
     Requires:
       SpCost: 7
@@ -2232,6 +2303,8 @@ Body:
       Critical: true
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration1:
       - Level: 1
@@ -4768,6 +4841,30 @@ Body:
     Range: 1
     Hit: Multi_Hit
     HitCount: -8
+    HitRate:
+      Rates:
+        - Level: 1
+          Rate: 50
+        - Level: 2
+          Rate: 50
+        - Level: 3
+          Rate: 50
+        - Level: 4
+          Rate: 50
+        - Level: 5
+          Rate: 50
+        - Level: 6
+          Rate: 50
+        - Level: 7
+          Rate: 50
+        - Level: 8
+          Rate: 50
+        - Level: 9
+          Rate: 50
+        - Level: 10
+          Rate: 50
+      Skills:
+        AS_SONICACCEL: 1
     Element: Weapon
     AfterCastActDelay: 2000
     AfterCastWalkDelay: 2000
@@ -5605,6 +5702,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration2: 60000
     Status: Poison
@@ -5619,6 +5718,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration2: 30000
     Status: Blind
@@ -5633,6 +5734,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration2: 30000
     Status: Silence
@@ -5647,6 +5750,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration2: 5000
     Status: Stun
@@ -5661,6 +5766,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration1: 100
     Duration2: 20000
@@ -5676,6 +5783,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Dark
     Duration2: 30000
     Status: Curse
@@ -5690,6 +5799,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration2: 30000
     Status: Sleep
@@ -5716,6 +5827,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Water
   - Id: 185
     Name: NPC_GROUNDATTACK
@@ -5729,6 +5842,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Earth
   - Id: 186
     Name: NPC_FIREATTACK
@@ -5741,6 +5856,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Fire
   - Id: 187
     Name: NPC_WINDATTACK
@@ -5753,6 +5870,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Wind
   - Id: 188
     Name: NPC_POISONATTACK
@@ -5765,6 +5884,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Poison
     Status: Poison
   - Id: 189
@@ -5778,6 +5899,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Holy
   - Id: 190
     Name: NPC_DARKNESSATTACK
@@ -5790,6 +5913,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Dark
   - Id: 191
     Name: NPC_TELEKINESISATTACK
@@ -5802,6 +5927,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Ghost
   - Id: 192
     Name: NPC_MAGICALATTACK
@@ -9380,6 +9507,8 @@ Body:
     Range: -7
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Undead
   - Id: 348
     Name: NPC_CHANGEUNDEAD
@@ -9392,6 +9521,8 @@ Body:
     Range: -2
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Undead
     Duration2: 60000
     Status: ChangeUndead
@@ -13089,6 +13220,8 @@ Body:
     Range: 4
     Hit: Multi_Hit
     HitCount: 5
+    HitRate:
+      Rates: 120
     CastTime: 1000
     AfterCastActDelay: 1000
     Requires:
@@ -15599,6 +15732,8 @@ Body:
       IgnoreLandProtector: true
     Hit: Multi_Hit
     HitCount: 1
+    HitRate:
+      Rates: 120
     SplashArea:
       - Level: 1
         Area: 5
@@ -15659,6 +15794,8 @@ Body:
     Range: 6
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 200
     Element: Fire
     SplashArea: 3
     ActiveInstance: 14
@@ -15673,6 +15810,8 @@ Body:
     Range: 6
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 200
     Element: Water
     SplashArea: 3
     ActiveInstance: 14
@@ -15689,6 +15828,8 @@ Body:
     Range: 6
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 200
     Element: Wind
     SplashArea: 3
     ActiveInstance: 14
@@ -15703,6 +15844,8 @@ Body:
     Range: 6
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 200
     Element: Poison
     SplashArea: 3
     ActiveInstance: 14
@@ -15719,6 +15862,8 @@ Body:
     Range: 6
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 200
     Element: Dark
     SplashArea: 3
     ActiveInstance: 14
@@ -15766,6 +15911,8 @@ Body:
     Range: -9
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates: 120
     Element: Weapon
     Duration2: 120000
     Status: Bleeding
@@ -32261,6 +32408,28 @@ Body:
     Range: -1
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates:
+        - Level: 1
+          Rate: 105
+        - Level: 2
+          Rate: 110
+        - Level: 3
+          Rate: 115
+        - Level: 4
+          Rate: 120
+        - Level: 5
+          Rate: 125
+        - Level: 6
+          Rate: 130
+        - Level: 7
+          Rate: 135
+        - Level: 8
+          Rate: 140
+        - Level: 9
+          Rate: 145
+        - Level: 10
+          Rate: 150
     Element: Weapon
     Requires:
       SpCost:
@@ -32319,6 +32488,28 @@ Body:
       TargetTrap: true
     Hit: Single
     HitCount: 1
+    HitRate:
+      Rates:
+        - Level: 1
+          Rate: 110
+        - Level: 2
+          Rate: 120
+        - Level: 3
+          Rate: 130
+        - Level: 4
+          Rate: 140
+        - Level: 5
+          Rate: 150
+        - Level: 6
+          Rate: 160
+        - Level: 7
+          Rate: 170
+        - Level: 8
+          Rate: 180
+        - Level: 9
+          Rate: 190
+        - Level: 10
+          Rate: 200
     Element: Fire
     SplashArea: 2
     Knockback: 2
@@ -32780,6 +32971,28 @@ Body:
     Range: -2
     Hit: Multi_Hit
     HitCount: 3
+    HitRate:
+      Rates:
+        - Level: 1
+          Rate: 105
+        - Level: 2
+          Rate: 110
+        - Level: 3
+          Rate: 115
+        - Level: 4
+          Rate: 120
+        - Level: 5
+          Rate: 125
+        - Level: 6
+          Rate: 130
+        - Level: 7
+          Rate: 135
+        - Level: 8
+          Rate: 140
+        - Level: 9
+          Rate: 145
+        - Level: 10
+          Rate: 150
     Element: Weapon
     Requires:
       SpCost: 7

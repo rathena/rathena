@@ -172,6 +172,7 @@ static bool skill_check(uint16 id) {
 
 // Skill DB
 e_damage_type skill_get_hit( uint16 skill_id )                     { if (!skill_check(skill_id)) return DMG_NORMAL; return skill_db.find(skill_id)->hit; }
+int skill_get_hitrate( uint16 skill_id, uint16 skill_lv )          { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->hitrate.rate); }
 int skill_get_inf( uint16 skill_id )                               { skill_get(skill_id, skill_db.find(skill_id)->inf); }
 int skill_get_ele( uint16 skill_id , uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->element); }
 int skill_get_max( uint16 skill_id )                               { skill_get(skill_id, skill_db.find(skill_id)->max); }
@@ -23969,6 +23970,45 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	} else {
 		if (!exists)
 			memset(skill->num, 0, sizeof(skill->num));
+	}
+
+	if (this->nodeExists(node, "HitRate")) {
+		if (!this->parseNode("Rates", "Rate", node["HitRate"], skill->hitrate.rate))
+			return 0;
+
+		const auto &hitrateNode = node["HitRate"];
+
+		if (this->nodeExists(hitrateNode, "Skills")) {
+			const auto &skillsNode = hitrateNode["Skills"];
+
+			for (const auto &it : skillsNode) {
+				std::string req_skill_name;
+				c4::from_chars(it.key(), &req_skill_name);
+				uint16 req_skill_id = skill_name2id(req_skill_name.c_str());
+
+				if (skill_id == 0) {
+					this->invalidWarning(skillsNode, "HitRate requires skill %s is invalid.\n", req_skill_name.c_str());
+					return 0;
+				}
+
+				uint16 req_skill_lv;
+
+				if (!this->asUInt16(skillsNode, req_skill_name, req_skill_lv))
+					return 0;
+
+				if (req_skill_lv > 0)
+					skill->hitrate.skills.insert({ req_skill_id, req_skill_lv });
+				else {
+					auto req_exists = util::umap_find(skill->hitrate.skills, req_skill_id);
+
+					if (req_exists)
+						skill->hitrate.skills.erase(req_skill_id);
+				}
+			}
+		}
+	} else {
+		if (!exists)
+			memset(skill->hitrate.rate, 100, sizeof(skill->hitrate.rate));
 	}
 
 	if (this->nodeExists(node, "Element")) {

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220126
+//= 20230803
 //===== Description: =========================================
 //= Explanation of the skill_db.yml file and structure.
 //============================================================
@@ -154,6 +154,41 @@ Sequence Map Form
       Count: 8
     - Level: 5
       Count: 10
+
+---------------------------------------
+
+HitRate: Skill hit rate.
+
+Rates - Adjust the hit rate of the skill. Rate is 100% by default.
+
+Can be defined in scalar form or sequence map form:
+Scalar Form
+  HitRate:
+    Rates: 120 # Skill HitRate is increased by 20%.
+
+  HitRate:
+    Rates: 60 # Skill HitRate is decreased by 40%.
+
+Sequence Map Form
+  HitRate:
+    Rates:
+      - Level: 1
+        Rate: 120
+      - Level: 2
+        Rate: 140
+      - Level: 3
+        Rate: 160
+      - Level: 4
+        Rate: 180
+      - Level: 5
+        Rate: 200
+
+Skills - List of skills required to be learned before hit rate is adjusted. Set skill level to 0 to disable.
+
+Skills: # Requires both NV_BASIC and SM_BASH to be learned. If skill check fails then default (100) value is used.
+  NV_BASIC: 9 # Requires level 9 of Novice's Basic Skill to be learned.
+  SM_BASH: 5 # Requires level 5 of Bash to be learned.
+  SM_MAGNUM: 0 # Remove Magnum Break from requirements. Useful for import.
 
 ---------------------------------------
 
