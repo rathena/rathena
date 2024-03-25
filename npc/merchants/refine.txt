@@ -23,10 +23,10 @@
 //============================================================
 geffen_in,110,172,0	script	Christopher#1	63,{
 	mes "[Christopher Guillenrow]";
-	mes "Welcome to Christopher's Workshop. Ye can get all yer stuff for forging here. What business";
-	mes "brings ye to me?";
+	mes "ยินดีต้อนรับสู่ Christopher's Workshop. เจ้าสามารถหาสิ่งของที่ต้องการสำหรับการตีเหล็กได้ที่นี่.";
+	mes "มีอะไรให้ข้าช่วยเหลือหรือไม่?";
 	next;
-	switch(select("Purchase Anvil:Purchase Forging Item:Purchase Metal:Purify Rough Ores:Cancel")) {
+	switch(select("Purchase Anvil:Purchase Forging Item:Purchase Metal:Purify Rough Ores:ยกเลิก")) {
 	case 1:
 		mes "[Christopher Guillenrow]";
 		mes "A better Anvil gives ye a greeeater chance to make better weapons, ye know? But they'll cost ye more zeny. Just get it off yer chest and buy what fits your purposes best, laddy.";

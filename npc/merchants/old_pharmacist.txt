@@ -26,33 +26,33 @@
 
 alberta_in,16,28,4	script	Pharmacist	61,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a moment! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please come back later -";
-		mes "- after you put some items into kafra storage. -";
+		mes "- รอสักครู่! -";
+		mes "- ตอนนี้คุณกำลัง -";
+		mes "- พกพาสิ่งของมากเกินไป. -";
+		mes "- โปรดกลับมาใหม่อีกครั้ง -";
+		mes "- หลังจากที่คุณเก็บบางรายการไว้ใน kafra storage. -";
 		close;
 	}
 	mes "[Old Pharmacist]";
-	mes "Ummmm...";
-	mes "What brings you here...?";
+	mes "อืมมมม...";
+	mes "อะไรทำให้เจ้ามาที่นี่...?";
 	next;
-	switch(select("Make Potion:Talk.:Mixing Information:Cancel")) {
+	switch(select("ทำ Potion:พูดคุย:ข้อมูลของส่วนผสม:ยกเลิก")) {
 	case 1:
 		if (MaxWeight - Weight < 5000) {
 			mes "[Old Pharmacist]";
-			mes "Why are you carrying these so many!";
-			mes "Don't be greedy, carry only as much you need!";
+			mes "ทำไมเจ้าถึงแบกของพวกนี้ไปเยอะขนาดนี้!";
+			mes "อย่าโลภ, พกไปเท่าที่จำเป็นเท่านั้น!";
 			next;
 			mes "[Old Pharmacist]";
-			mes "You are too heavy to receive potions from me...";
-			mes "Go store some items in your storage first!";
+			mes "เ้จาหนักเกินไปที่จะรับยาจากข้าได้...";
+			mes "ไปเก็บของบางรายการไว้ในคลังของเจ้าก่อน!";
 			close;
 		} else {
 			mes "[Old Pharmacist]";
-			mes "You have all the stuff ready, right? Which one would you like?";
+			mes "เจ้ามีวัสดุทั้งหมดพร้อมแล้ว, ใช่ไหม? เจ้าต้องการอันไหน?";
 			next;
-			switch(select("Red Potion.:Orange Potion.:Yellow Potion.:White Potion.:Blue Potion.:Green Potion.:Actually, I don't want anything.")) {
+			switch(select("Red Potion.:Orange Potion.:Yellow Potion.:White Potion.:Blue Potion.:Green Potion.:จริงๆแล้ว, ข้าไม่ต้องการสิ่งใดเลย")) {
 			case 1:
 				callsub L_Making,507,3,501;
 			case 2:
@@ -67,22 +67,22 @@ alberta_in,16,28,4	script	Pharmacist	61,{
 					set .@max,countitem(713);
 				}
 				if ((countitem(507) < 1) || (countitem(508) < 1) || (countitem(713) == 0)) {
-					mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
-					mes "Get lost!";
+					mes "เจ้าเด็กบ้า! เจ้าคาดหวังอะไรอยู่?! มาที่นี่โดยไม่มีอะไรเลย. Tsk!";
+					mes "ไปให้พ้น!";
 					close;
 				}
 				if (Zeny < 3) {
-					mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
-					mes "Get lost!";
+					mes "เจ้าเด็กบ้า! เจ้าคาดหวังอะไรอยู่?! มาที่นี่โดยไม่มีอะไรเลย. Tsk!";
+					mes "ไปให้พ้น!";
 					close;
 				}
-				mes "How many?";
+				mes "เท่าไหร่?";
 				next;
-				switch(select("Make as many as I can.:I want to choose an amount.:Actually, I don't want anything.")) {
+				switch(select("ทํามากที่สุดเท่าที่จะทําได้:ข้าต้องการเลือกจำนวน:จริงๆแล้ว, ข้าไม่ต้องการสิ่งใดเลย")) {
 				case 1:
 					if ((countitem(507) < .@max) || (countitem(508) < .@max) || (countitem(713) < .@max) || (Zeny < .@max*3)) {
 						mes "[Old Pharmacist]";
-						mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
+						mes "เจ้าเด็กบ้า! เจ้ามีวัตถุดิบไม่ครบทั้งหมดและเจ้ายังต้องการให้ข้าทำยาอีกให้เหรอ?!";
 						close;
 					}
 					set Zeny,Zeny-(.@max*5);
@@ -93,22 +93,22 @@ alberta_in,16,28,4	script	Pharmacist	61,{
 					break;
 				case 2:
 					mes "[Old Pharmacist]";
-					mes "Then pick a number below 100. If you don't want any, just enter '0'. With the materials you have, you can make about "+.@max+" potions.";
+					mes "จากนั้นเลือกตัวเลขที่ต่ำกว่า 100. ถ้าเจ้าไม่ต้องการมัน, เพียงแค่ใส่ '0'. ด้วยวัสดุที่เจ้ามี, เจ้าสามารถทำยาได้ประมาณ "+.@max+" ขวด.";
 					next;
 					input .@amount,0,101;
 					if (.@amount == 0) {
 						mes "[Old Pharmacist]";
-						mes "Make up your mind, will you?!";
+						mes "เจ้าช่วย, ตัดสินใจสิ?!";
 						close;
 					}
 					if (.@amount > 100) {
 						mes "[Old Pharmacist]";
-						mes "Are you deaf? I said less than 100!";
+						mes "เจ้าหูหนวกหรือเปล่า? ข้าบอกว่าน้อยกว่า 100!";
 						close;
 					}
 					if ((countitem(507) < .@amount) || (countitem(508) < .@amount) || (countitem(713) < .@amount) || (Zeny < .@amount*3)) {
 						mes "[Old Pharmacist]";
-						mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
+						mes "เจ้าเด็กบ้า! เจ้ามีวัตถุดิบไม่ครบทั้งหมดและเจ้ายังต้องการให้ข้าทำยาอีกให้เหรอ?!";
 						close;
 					}
 					next;
@@ -120,14 +120,14 @@ alberta_in,16,28,4	script	Pharmacist	61,{
 					break;
 				case 3:
 					mes "[Old Pharmacist]";
-					mes "What?!";
+					mes "อะไรนะ?!";
 					mes "Grrr...";
 					mes "Bleh!";
-					mes "Get lost!";
+					mes "ไปให้พ้น!";
 					close;
 				}
 				mes "[Old Pharmacist]";
-				mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+				mes "นี่เจ้าเอาไปสิ. ทุกอย่างเสร็จแล้ว เจ้าสามารถเอามันไปได้เลย. แต่จำไว้! การใช้ยาในทางที่ผิดนั้นไม่ดี.";
 				close;
 			case 3:
 				callsub L_Making,508,10,503;
@@ -139,44 +139,44 @@ alberta_in,16,28,4	script	Pharmacist	61,{
 				callsub L_Making,511,3,506;
 			case 7:
 				mes "[Old Pharmacist]";
-				mes "What?!";
+				mes "อะไรนะ?!";
 				mes "Grrr...";
 				mes "Bleh!";
-				mes "Get lost!";
+				mes "ไปให้พ้น!";
 				close;
 			}
 		}
 	case 2:
 		mes "[Old Pharmacist]";
-		mes "With medicine, you can increase a person's ability to regenerate. But, they're only good up to a point. *Sigh* I'm starting to think of the days when I was young. I must be getting old.";
+		mes "ด้วยยา, เจ้าสามารถเพิ่มความสามารถในการฟื้นฟูของบุคคลได้. แต่, พวกมันดีในระดับหนึ่งเท่านั้น. *Sigh* ข้าเริ่มคิดถึงสมัยที่ข้ายังเป็นเด็ก. ข้าคงจะแก่แล้วสินะ.";
 		next;
 		mes "[Old Pharmacist]";
-		mes "Anyways, a potion is merely a potion. Nothing more and nothing less.";
+		mes "อย่างไรก็ตาม, ยาก็เป็นเพียงยา. ไม่มีอะไรมากหรือน้อยไปกว่านั้น.";
 		close;
 	case 3:
 		mes "[Old Pharmacist]";
-		mes "Hrrrmm...";
-		mes "You young ones can be quite annoying. But, since you asked, I'll explain.";
+		mes "ฮึ่มมมมม...";
+		mes "พวกเจ้าอาจจะค่อนข้างน่ารำคาญ. แต่, ในเมื่อเจ้าถาม, ข้าจะอธิบายให้.";
 		next;
 		mes "[Old Pharmacist]";
-		mes "Herbs work well by themselves, but if you use my special techniques and skills to make potions out of them, the effect is much much greater.";
+		mes "สมุนไพรใช้ได้ผลดีในตัวของมันเอง, แต่ถ้าเจ้าใช้เทคนิคและทักษะพิเศษของข้าในการทำยาจากสมุนไพรเหล่านั้น, ผลลัพธ์ก็จะดีขึ้นมากมาย.";
 		next;
 		mes "[Old Pharmacist]";
-		mes "If you ask eagerly and politely, I will make them for you. But, not for free... Don't worry though, I only charge a small fee, so it's not that expensive.";
+		mes "ถ้าเจ้าถามอย่างกระตือรือร้นและสุภาพ, ข้าก็จะทำให้เจ้าได้. แต่, จะไม่ได้ฟรีนะ... อย่ากังวลไป, ข้าคิดค่าบริการเพียงเล็กน้อยเท่านั้น, ดังนั้นมันจึงไม่แพงขนาดนั้น.";
 		next;
 		mes "[Old Pharmacist]";
-		mes "Red Potion - ^0098E52 Red Herbs, 1 Empty Bottle, 2 zeny fee.^000000";
-		mes "Orange Potion - ^0098E51 Red Herb, 1 Yellow Herb, 1 Empty Bottle, 5 zeny fee.^000000";
-		mes "Yellow Potion - ^0098E52 Yellow Herbs, 1 Empty Bottle, 10 zeny.^000000";
+		mes "Red Potion - ^0098E52 Red Herbs, 1 Empty Bottle, ค่าบริการ 2 zeny.^000000";
+		mes "Orange Potion - ^0098E51 Red Herb, 1 Yellow Herb, 1 Empty Bottle, ค่าบริการ 5 zeny.^000000";
+		mes "Yellow Potion - ^0098E52 Yellow Herbs, 1 Empty Bottle, ค่าบริการ 10 zeny.^000000";
 		next;
 		mes "[Old Pharmacist]";
-		mes "White Potion - ^0098E52 White Herbs, 1 Empty Bottle, 20 zeny fee.^000000";
-		mes "Blue Potion - ^0098E52 Blue Herbs, 1 Empty Bottle, 30 zeny fee.^000000";
-		mes "Green Potion - ^0098E52 Green Herbs, 1 Empty Bottle, 3 zeny fee.^000000";
+		mes "White Potion - ^0098E52 White Herbs, 1 Empty Bottle, ค่าบริการ 20 zeny.^000000";
+		mes "Blue Potion - ^0098E52 Blue Herbs, 1 Empty Bottle, ค่าบริการ 30 zeny.^000000";
+		mes "Green Potion - ^0098E52 Green Herbs, 1 Empty Bottle, ค่าบริการ 3 zeny.^000000";
 		close;
 	case 4:
 		mes "[Old Pharmacist]";
-		mes "What a boring person. If you have something to say, why don't you say it?!";
+		mes "ช่างเป็นคนน่าเบื่อจริงๆ. หากเจ้ามีอะไรจะพูด, ทำไมไม่พูดมันออกมาล่ะ?!";
 		close;
 	}
 	
@@ -191,22 +191,22 @@ L_Making:
 		.@max = countitem(713);
 	}
 	if (countitem(.@item_req) < 2 || countitem(713) == 0) {
-		mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
-		mes "Get lost!";
+		mes "เจ้าเด็กบ้า! เจ้าคาดหวังอะไรอยู่?! มาที่นี่โดยไม่มีอะไรเลย. Tsk!";
+		mes "ไปให้พ้น!";
 		close;
 	}
 	if (Zeny < 3) {
-		mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
-		mes "Get lost!";
+		mes "เจ้าเด็กบ้า! เจ้าคาดหวังอะไรอยู่?! มาที่นี่โดยไม่มีอะไรเลย. Tsk!";
+		mes "ไปให้พ้น!";
 		close;
 	}
-	mes "How many?";
+	mes "เท่าไหร่?";
 	next;
-	switch(select("Make as many as I can.:I want to choose an amount.:Actually, I don't want anything.")) {
+	switch(select("ทํามากที่สุดเท่าที่จะทําได้:ข้าต้องการเลือกจำนวน:จริงๆแล้ว, ข้าไม่ต้องการสิ่งใดเลย")) {
 	case 1:
 		if ((countitem(.@item_req) < .@max*2) || countitem(713) < .@max || (Zeny < .@max*.@req_amount)) {
 			mes "[Old Pharmacist]";
-			mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
+			mes "เจ้าเด็กบ้า! เจ้ามีวัตถุดิบไม่ครบทั้งหมดและเจ้ายังต้องการให้ข้าทำยาอีกให้เหรอ?!";
 			close;
 		}
 		Zeny = Zeny - (.@max*.@req_amount);
@@ -216,22 +216,22 @@ L_Making:
 		break;
 	case 2:
 		mes "[Old Pharmacist]";
-		mes "Then pick a number below 100. If you don't want any, just enter '0'. With the materials you have, you can make about "+.@max+" potions.";
+		mes "จากนั้นเลือกตัวเลขที่ต่ำกว่า 100. ถ้าเจ้าไม่ต้องการมัน, เพียงแค่ใส่ '0'. ด้วยวัสดุที่เจ้ามี, เจ้าสามารถทำยาได้ประมาณ "+.@max+" ขวด.";
 		next;
 		input .@amount;
 		if (.@amount == 0) {
 			mes "[Old Pharmacist]";
-			mes "Make up your mind, will you?!";
+			mes "เจ้าช่วย, ตัดสินใจสิ?!";
 			close;
 		}
 		if (.@amount > 100) {
 			mes "[Old Pharmacist]";
-			mes "Are you deaf? I said less than 100!";
+			mes "เจ้าหูหนวกหรือเปล่า? ข้าบอกว่าน้อยกว่า 100!";
 			close;
 		}
 		if ((countitem(.@item_req) < .@amount*2) || countitem(713) < .@amount || (Zeny < .@amount*.@req_amount)) {
 			mes "[Old Pharmacist]";
-			mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
+			mes "เจ้าเด็กบ้า! เจ้ามีวัตถุดิบไม่ครบทั้งหมดและเจ้ายังต้องการให้ข้าทำยาอีกให้เหรอ?!";
 			close;
 		}
 		Zeny = Zeny - (.@max*.@req_amount);
@@ -241,13 +241,13 @@ L_Making:
 		break;
 	case 3:
 		mes "[Old Pharmacist]";
-		mes "What?!";
+		mes "อะไรนะ?!";
 		mes "Grrr...";
 		mes "Bleh!";
-		mes "Get lost!";
+		mes "ไปให้พ้น!";
 		close;
 	}
 	mes "[Old Pharmacist]";
-	mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+	mes "นี่เจ้าเอาไปสิ. ทุกอย่างเสร็จแล้ว เจ้าสามารถเอามันไปได้เลย. แต่จำไว้! การใช้ยาในทางที่ผิดนั้นไม่ดี.";
 	close;
 }

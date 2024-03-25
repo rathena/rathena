@@ -99,35 +99,35 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 
 	mes "[PecoPeco Breeder]";
 	if (BaseJob == Job_Crusader && Class < Job_Rune_Knight) {
-		if(Upper != 1 ) mes "Welcome, Crusader.";
-		else mes "Welcome, Paladin.";
-		mes "We have a special";
-		mes "Peco Peco prepared";
-		mes "for you. To rent one";
-		mes "will cost "+.@price+" zeny.";
+		if(Upper != 1 ) mes "ยินดีต้อนรับ, Crusader.";
+		else mes "ยินดีต้อนรับ, Paladin.";
+		mes "เรามี Peco Peco";
+		mes "พิเศษที่เตรียมไว้";
+		mes "สำหรับท่าน. ค่าเช่า 1 ตัว";
+		mes "คิดเป็นเงิน "+.@price+" zeny.";
 		next;
-		switch(select("Rent a PecoPeco:Quit")) {
+		switch(select("เช่า PecoPeco:ยกเลิก")) {
 		case 1:
 			if (Zeny < .@price) {
 				mes "[Peco Peco Breeder]";
-				mes "You do not";
-				mes "have enough zeny.";
-				mes "If you would like";
-				mes "a Peco Peco please";
-				mes "bring "+.@price+" zeny...";
+				mes "ดูเหมือนว่า";
+				mes "ท่านมี zeny ไม่เพียงพอ.";
+				mes "หากท่านต้องการ";
+				mes "Peco Peco โปรดนำ";
+				mes " "+.@price+" zeny มา...";
 				close;
 			}
 			else if(getskilllv("KN_RIDING") == 0) {
 				mes "[Peco Peco Breeder]";
-				mes "You must first learn";
-				mes "to ride a PecoPeco before";
-				mes "I can rent one to you.";
+				mes "ท่านต้องเรียนรู้ทักษะ";
+				mes "การขี่ PecoPeco มาก่อน";
+				mes "ก่อนที่ข้าจะให้ท่านเช่าได้.";
 				close;
 			}
 			else if(checkriding()) {
 				mes "[Peco Peco Breeder]";
-				mes "You are already";
-				mes "mounted on a Peco Peco.";
+				mes "ท่านอยู่ในระหว่าง";
+				mes "เช่า Peco Peco อยู่แล้ว.";
 				close;
 			}
 			else if(ismounting()) {
@@ -140,15 +140,15 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 			close;
 		case 2:
 			mes "[PecoPeco Breeder]";
-			mes "See you around.";
+			mes "แล้วพบกันใหม่.";
 			close;
 		}
 	} else {
-		mes "What can I do for you?";
-		mes "Please be aware that";
-		mes "this Peco Peco rental";
-		mes "service is strictly for";
-		mes "Crusaders and Paladins.";
+		mes "มีอะไรให้ข้าช่วยท่านหรือเปล่า?";
+		mes "โปรดทราบด้วยว่า";
+		mes "บริการเช่า Peco Peco นี้";
+		mes "มีไว้ให้สำหรับ";
+		mes "Crusaders และ Paladins เท่านั้น.";
 		close;
 	}
 }
@@ -163,51 +163,51 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 	mes "[Falcon Breeder]";
 	if (BaseJob == Job_Hunter) {
 		if (checkwug()) {
-			mes "Um...";
-			mes "You can't rent a Falcon";
-			mes "until you dismiss your warg first!";
+			mes "อืม...";
+			mes "เจ้าไม่สามารถเช่า Falcon ได้";
+			mes "จนกว่าเจ้าจะปลด warg ของเจ้าออกก่อน!";
 			close;
 		}
-		mes "Do you need a Falcon?";
-		mes "You can rent your own";
-		mes "trusty bird of prey for a";
-		mes "fee of just "+.@price+" zeny~";
+		mes "เจ้าต้องการ Falcon หรือไม่?";
+		mes "เจ้าสามารถเช่านกเหยี่ยว";
+		mes "ของเจ้าเองได้";
+		mes "ในราคาเพียง "+.@price+" zeny เท่านั้น~";
 		next;
-		switch(select("Rent Falcon:Cancel")) {
+		switch(select("เช่า Falcon:ยกเลิก")) {
 		case 1:
 			if (checkwug()) {
 				mes "[Falcon Breeder]";
-				mes "Um...";
-				mes "You can't rent a Falcon";
-				mes "until you dismiss your warg first!";
+				mes "อืม...";
+				mes "เจ้าไม่สามารถเช่า Falcon ได้";
+				mes "จนกว่าเจ้าจะปลด warg ของเจ้าออกก่อน!";
 				close;
 			}
 			if (Zeny < .@price) {
 				mes "[Falcon Breeder]";
-				mes "What is this?";
-				mes "You don't have";
-				mes "enough zeny?!";
-				mes "You better start";
-				mes "hunting money";
-				mes "instead of monsters~";
+				mes "นี่คืออะไร?";
+				mes "เจ้ามี zeny";
+				mes "ไม่เพียงพอหรือเปล่า?!";
+				mes "เจ้าควรเริ่ม";
+				mes "ตามล่าหาเงิน";
+				mes "แทนที่จะเป็นมอนสเตอร์นะ~";
 				close;
 			}
 			else if(getskilllv("HT_FALCON") == 0) {
 				mes "[Falcon Breeder]";
-				mes "Gosh~";
-				mes "Go learn how to";
-				mes "manage a Falcon";
-				mes "first! I can't rent one";
-				mes "to you if you can't";
-				mes "handle it, you know.";
+				mes "ให้ตายสิ~";
+				mes "ไปเรียนรู้วิธีการ";
+				mes "จัดการกับ Falcon";
+				mes "ก่อนนะ! ข้าไม่สามารถ";
+				mes "ให้เจ้าเช่าได้";
+				mes "ถ้าเจ้าไม่สามารถจัดการกับมันได้, เจ้ารู้ใช่ไหม.";
 				close;
 			}
 			else if(checkfalcon()) {
 				mes "[Falcon Breeder]";
-				mes "Um...";
-				mes "You already have";
-				mes "a Falcon. It's right";
-				mes "there, can't you see it?";
+				mes "อืม...";
+				mes "เจ้ามี Falcon";
+				mes "อยู่แล้ว. มันอยู่นั่น";
+				mes "ตรงนั้น, เจ้าไม่เห็นมันหรอ?";
 				close;
 			}
 			set Zeny, Zeny-.@price;
@@ -215,18 +215,18 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 			close;
 		case 2:
 			mes "[Falcon Breeder]";
-			mes "W-wait, where're";
-			mes "you goin'? These";
-			mes "Falcons are top notch,";
-			mes "I guarantee it! C'mon, yo~";
+			mes "ระ-รอเดี๋ยวก่อน, เจ้ากำลัง";
+			mes "จะไปไหน?";
+			mes "Falcons พวกนี้เป็นระดับสุดยอด,";
+			mes "ข้ารับประกันมันได้เลย! เอาน่า, โย่~";
 			close;
 		}
 	} else {
-		mes "Young fool!";
-		mes "Falcons can only";
-		mes "be used by Hunters";
-		mes "and Snipers, capish?";
-		mes "...Heh heh, jealous?";
+		mes "เจ้าเด็กโง่!";
+		mes "Falcons สามารถ";
+		mes "ใช้ได้เฉพาะ Hunters";
+		mes "และ Snipers เท่านั้นนะ, เข้าใจมั้ย?";
+		mes "...เฮ้ เฮ้, อิจฉาหรือเปล่า?";
 		close;
 	}
 }
