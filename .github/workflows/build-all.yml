@@ -1,0 +1,62 @@
+name: Build and publish all images to Docker Hub
+on:
+    workflow_dispatch:
+        inputs:
+            image_name_prefix:
+                description: "Image Name Prefix"
+                required: true
+                default: "rathena"
+            image_tag:
+                description: "Image TAG"
+                required: true
+                default: "latest"
+            ref:
+                description: "Branch/Tag/Commit reference"
+                required: true
+                default: "master"
+jobs:
+    build-renewal:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Invoke workflow for renewal
+              uses: benc-uk/workflow-dispatch@v1
+              with:
+                  workflow: Build and publish image to Docker Hub
+                  token: ${{ secrets.PERSONAL_TOKEN }}
+                  inputs: '{ "image_name": "${{ github.event.inputs.image_name_prefix }}-renewal", "image_tag": "${{ github.event.inputs.image_tag }}", "ref" : "${{ github.event.inputs.ref }}", "prere" : "no", "vip" : "no" }'
+    build-prere:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Invoke workflow for prere
+              uses: benc-uk/workflow-dispatch@v1
+              with:
+                  workflow: Build and publish image to Docker Hub
+                  token: ${{ secrets.PERSONAL_TOKEN }}
+                  inputs: '{ "image_name": "${{ github.event.inputs.image_name_prefix }}-prere", "image_tag": "${{ github.event.inputs.image_tag }}", "ref" : "${{ github.event.inputs.ref }}", "prere" : "yes", "vip" : "no" }'
+    build-renewal-vip:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Invoke workflow for renewal-vip
+              uses: benc-uk/workflow-dispatch@v1
+              with:
+                  workflow: Build and publish image to Docker Hub
+                  token: ${{ secrets.PERSONAL_TOKEN }}
+                  inputs: '{ "image_name": "${{ github.event.inputs.image_name_prefix }}-renewal-vip", "image_tag": "${{ github.event.inputs.image_tag }}", "ref" : "${{ github.event.inputs.ref }}", "prere" : "no", "vip" : "yes" }'
+    build-prere-vip:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Invoke workflow for prere-vip
+              uses: benc-uk/workflow-dispatch@v1
+              with:
+                  workflow: Build and publish image to Docker Hub
+                  token: ${{ secrets.PERSONAL_TOKEN }}
+                  inputs: '{ "image_name": "${{ github.event.inputs.image_name_prefix }}-prere-vip", "image_tag": "${{ github.event.inputs.image_tag }}", "ref" : "${{ github.event.inputs.ref }}", "prere" : "yes", "vip" : "yes" }'
+    build-flyway:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Invoke workflow for flyway
+              uses: benc-uk/workflow-dispatch@v1
+              with:
+                  workflow: Build and publish flyway image to Docker Hub
+                  token: ${{ secrets.PERSONAL_TOKEN }}
+                  inputs: '{ "image_name": "${{ github.event.inputs.image_name_prefix }}-flyway", "image_tag": "${{ github.event.inputs.image_tag }}", "ref" : "${{ github.event.inputs.ref }}" }'
