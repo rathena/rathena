@@ -54,6 +54,7 @@ Footer:
   - Path: npc/re/merchants/barters/quests_17_1.yml
   - Path: npc/re/merchants/barters/quests_17_2.yml
   - Path: npc/re/merchants/barters/refine.yml
+  - Path: npc/re/merchants/barters/eden_market.yml
   - Path: npc/re/merchants/barters/enchantgrade.yml
   - Path: npc/re/merchants/barters/cashmall.yml
   - Path: npc/re/merchants/barters/rgsr_in.yml
