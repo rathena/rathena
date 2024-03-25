@@ -12,6 +12,7 @@ static bool upgrade_status_db(std::string file, const uint32 source_version);
 static bool upgrade_map_drops_db(std::string file, const uint32 source_version);
 static bool upgrade_enchantgrade_db( std::string file, const uint32 source_version );
 static bool upgrade_item_group_db( std::string file, const uint32 source_version );
+static bool upgrade_laphine_upgrade( std::string file, const uint32 source_version );
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -147,6 +148,11 @@ bool YamlUpgradeTool::initialize( int argc, char* argv[] ){
 	}
 	if( !process( "ITEM_GROUP_DB", 3, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
 		return upgrade_item_group_db( path + name_ext, source_version );
+		} ) ){
+		return false;
+	}
+	if( !process( "LAPHINE_UPGRADE_DB", 2, root_paths, "laphine_upgrade", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+		return upgrade_laphine_upgrade( path + name_ext, source_version );
 		} ) ){
 		return false;
 	}
@@ -512,6 +518,63 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 	}
 
 	ShowStatus( "Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str() );
+
+	return true;
+}
+
+static bool upgrade_laphine_upgrade(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		if (source_version < 2) {
+			if (input["ResultRefine"].IsDefined()) {
+				// Convert ResultRefine to a ResultRefine array
+				uint16 refine_level = input["ResultRefine"].as<uint16>();
+
+				// Remove the existing Refine entry
+				input.remove("ResultRefine");
+
+				// Add the ResultRefine array
+				auto RatesNode = input["ResultRefine"];
+				auto RateNode = RatesNode[0];
+
+				RateNode["Level"] = refine_level;
+			}
+
+			// Convert the values between ResultRefineMinimum and ResultRefineMaximum to a ResultRefine array
+			if (input["ResultRefineMinimum"].IsDefined() || input["ResultRefineMaximum"].IsDefined()) {
+				uint16 refine_level_min = 0, refine_level_max = MAX_REFINE;
+
+				// Save data and remove the existing ResultRefineMinimum/ResultRefineMaximum entry
+				if (input["ResultRefineMinimum"].IsDefined()) {
+					refine_level_min = input["ResultRefineMinimum"].as<uint16>();
+					input.remove("ResultRefineMinimum");
+				}
+				if (input["ResultRefineMaximum"].IsDefined()) {
+					refine_level_max = input["ResultRefineMaximum"].as<uint16>();
+					input.remove("ResultRefineMaximum");
+				}
+
+				// Remove existing ResultRefine entry (shouldn't happen)
+				if (input["ResultRefine"].IsDefined())
+					input.remove("ResultRefine");
+
+				// Add the ResultRefine array
+				auto RatesNode = input["ResultRefine"];
+
+				for (int i = refine_level_min, j = 0; i <= refine_level_max; i++, j++) {
+					auto RateNode = RatesNode[j];
+
+					RateNode["Level"] = i;
+				}
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
