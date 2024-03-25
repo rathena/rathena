@@ -5261,16 +5261,16 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			regen->sp = cap_value(val, 1, SHRT_MAX);
 		}
 	} else if( bl->type == BL_MER ) {
-		val = (status->max_hp * status->vit / 10000 + 1) * 6;
+		val = (status->max_hp * status->vit / 10000.0 + 1.0) * 6.0;
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = (status->max_sp * (status->int_ + 10) / 750) + 1;
+		val = (status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0;
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	} else if( bl->type == BL_ELEM ) {
-		val = (status->max_hp * status->vit / 10000 + 1) * 6;
+		val = (status->max_hp * status->vit / 10000.0 + 1.0) * 6.0;
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = (status->max_sp * (status->int_ + 10) / 750) + 1;
+		val = (status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0;
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	}
 }
@@ -15239,7 +15239,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	if (flag&(RGN_HP|RGN_SHP|RGN_SSP) && ud && ud->walktimer != INVALID_TIMER) {
 		flag &= ~(RGN_SHP|RGN_SSP);
-		if(!regen->state.walk)
+		if(sd && !regen->state.walk)
 			flag &= ~RGN_HP;
 	}
 
