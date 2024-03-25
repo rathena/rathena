@@ -1,0 +1,27 @@
+-	shop	nshop	-1,512:-1,513:-1
+-	marketshop	mshop	-1,512:-1:10,513:-1:10
+prontera,155,173,3	script	Sample	94,{
+
+	setarray .@itemarr[0],501,502,503,504,505;
+	setarray .@costarr[0],50,200,550,1200,5000;
+	switch(select("Normal Shop:Market Shop:Update Normal Shop:Update Market Shop")){
+		case 1:
+			callshop "nshop",1;
+			end;
+		case 2:
+			callshop "mshop",1;
+			end;
+		case 3:
+			.@flag = npcshopchange "nshop",.@itemarr,.@costarr;
+			break;
+		case 4:
+			setarray .@amountarr[0],20,25,15,35,10;
+			.@flag = npcshopchange "mshop",.@itemarr,.@costarr,.@amountarr;
+			break;
+	}
+	if(.@flag)
+		message strcharinfo(0),"Update Successful! Check the shop!";
+	else
+		message strcharinfo(0),"Update Failed! Check your console";
+end;
+}
