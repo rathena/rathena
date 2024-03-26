@@ -75,7 +75,9 @@ struct Damage {
 	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2, percentAtk, percentAtk2;
 #endif
 	int64 damage, /// Right hand damage
-		damage2; /// Left hand damage
+		damage2, /// Left hand damage
+		basedamage, /// Right hand base damage after def reduction
+		basedamage2; /// Left hand base damage after def reduction
 	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,

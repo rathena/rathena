@@ -3660,11 +3660,11 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		if (sd == nullptr) { // Only monsters have a single ATK for element, in pre-renewal we also apply element to entire ATK on players [helvetica]
 #endif
 			if (sc && sc->getSCE(SC_WATK_ELEMENT)) { // Descriptions indicate this means adding a percent of a normal attack in another element [Skotlex]
-				int64 damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, (is_skill_using_arrow(src, skill_id) ? 2 : 0)) * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
+				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
 
 				wd->damage += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
 				if (is_attack_left_handed(src, skill_id)) {
-					damage = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, (is_skill_using_arrow(src, skill_id) ? 2 : 0)) * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
+					damage = wd->basedamage2 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
 					wd->damage2 += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
 				}
 			}
@@ -3718,11 +3718,13 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 		uint16 skill;
 
 		wd->damage = battle_addmastery(sd,target,wd->damage,0);
+		wd->basedamage = battle_addmastery(sd, target, wd->basedamage, 0);
 #ifdef RENEWAL
 		wd->masteryAtk = battle_addmastery(sd,target,wd->weaponAtk,0);
 #endif
 		if (is_attack_left_handed(src, skill_id)) {
 			wd->damage2 = battle_addmastery(sd,target,wd->damage2,1);
+			wd->basedamage2 = battle_addmastery(sd, target, wd->basedamage2, 1);
 #ifdef RENEWAL
 			wd->masteryAtk2 = battle_addmastery(sd,target,wd->weaponAtk2,1);
 #endif
@@ -3737,6 +3739,9 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 		if (skill_id != CR_SHIELDBOOMERANG)
 			ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->right_weapon.star, ((wd->div_ < 1) ? 1 : wd->div_) * sd->left_weapon.star);
 		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
+#else
+		if (skill_id == TF_POISON)
+			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
 #endif
 
 		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
@@ -6129,8 +6134,10 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 		if (sc->getSCE(SC_GATLINGFEVER))
 			ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->getSCE(SC_GATLINGFEVER)->val3);
 #else
-		if (sc->getSCE(SC_TRUESIGHT))
+		if (sc->getSCE(SC_TRUESIGHT)) {
 			ATK_ADDRATE(wd->damage, wd->damage2, 2 * sc->getSCE(SC_TRUESIGHT)->val1);
+			ATK_ADDRATE(wd->basedamage, wd->basedamage2, 2 * sc->getSCE(SC_TRUESIGHT)->val1);
+		}
 #endif
 		if (sc->getSCE(SC_SPIRIT)) {
 			if (skill_id == AS_SONICBLOW && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN) {
@@ -6143,22 +6150,16 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 		}
 		if (sc->getSCE(SC_GT_CHANGE))
 			ATK_ADDRATE(wd->damage, wd->damage2, sc->getSCE(SC_GT_CHANGE)->val1);
+#ifdef RENEWAL
 		if (sc->getSCE(SC_EDP)) {
 			switch(skill_id) {
+				// Renewal: Venom Splasher, Meteor Assault, Grimtooth and Venom Knife ignore EDP
 				case AS_SPLASHER:
 				case ASC_METEORASSAULT:
-				// Pre-Renewal only: Soul Breaker ignores EDP
-				// Renewal only: Grimtooth and Venom Knife ignore EDP
-				// Both: Venom Splasher and Meteor Assault ignore EDP [helvetica]
-#ifndef RENEWAL
-				case ASC_BREAKER:
-#else
 				case AS_GRIMTOOTH:
 				case AS_VENOMKNIFE:
-#endif
 					break; // skills above have no effect with EDP
 
-#ifdef RENEWAL
 				default: // fall through to apply EDP bonuses
 					// Renewal EDP formula [helvetica]
 					// weapon atk * (2.5 + (edp level * .3))
@@ -6166,13 +6167,9 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 					ATK_RATE(wd->weaponAtk, wd->weaponAtk2, 250 + (sc->getSCE(SC_EDP)->val1 * 30));
 					ATK_RATE(wd->equipAtk, wd->equipAtk2, 250 + (sc->getSCE(SC_EDP)->val1 * 30));
 					break;
-#else
-				default:
-					ATK_ADDRATE(wd->damage, wd->damage2, sc->getSCE(SC_EDP)->val3);
-
-#endif
 			}
 		}
+#endif
 		if (sc->getSCE(SC_DANCEWITHWUG)) {
 			if (skill_get_inf2(skill_id, INF2_INCREASEDANCEWITHWUGDAMAGE)) {
 				ATK_ADDRATE(wd->damage, wd->damage2, sc->getSCE(SC_DANCEWITHWUG)->val1 * 10 * battle_calc_chorusbonus(sd));
@@ -6452,9 +6449,17 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R)*(def1+vit_def) : (100-def1)),
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L)*(def1+vit_def) : (100-def1))
 		);
+		ATK_RATE2(wd->basedamage, wd->basedamage2,
+			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? 100 : (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) * (def1 + vit_def) : (100 - def1)),
+			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? 100 : (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) * (def1 + vit_def) : (100 - def1))
+		);
 		ATK_ADD2(wd->damage, wd->damage2,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?0:-vit_def,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?0:-vit_def
+		);
+		ATK_ADD2(wd->basedamage, wd->basedamage2,
+			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? 0 : -vit_def,
+			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? 0 : -vit_def
 		);
 #endif
 }
@@ -6474,12 +6479,40 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	struct status_data *sstatus = status_get_status_data(src);
 
 	// Post skill/vit reduction damage increases
-	if( sc ) { // SC skill damages
-		if(sc->getSCE(SC_AURABLADE)
 #ifndef RENEWAL
-				&& skill_id != LK_SPIRALPIERCE && skill_id != ML_SPIRALPIERCE
+	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
+
+	//Refine bonus
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST) { // Counts refine bonus multiple times
+		if (skill_id == MO_FINGEROFFENSIVE) {
+			ATK_ADD2(wd->damage, wd->damage2, wd->div_*sstatus->rhw.atk2, wd->div_*sstatus->lhw.atk2);
+			ATK_ADD2(wd->basedamage, wd->basedamage2, wd->div_*sstatus->rhw.atk2, wd->div_*sstatus->lhw.atk2);
+		} else {
+			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+			ATK_ADD2(wd->basedamage, wd->basedamage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+		}
+	}
 #endif
-		) {
+	if (sc) { // SC skill damages
+#ifndef RENEWAL
+		if (sc->getSCE(SC_EDP)) {
+			switch (skill_id) {
+				// Pre-Renewal: Soul Breaker, Venom Splasher, Meteor Assault and Soul Breaker ignore EDP
+			case AS_SPLASHER:
+			case ASC_METEORASSAULT:
+			case ASC_BREAKER:
+				break; // skills above have no effect with EDP
+			default:
+				ATK_ADDRATE(wd->damage, wd->damage2, sc->getSCE(SC_EDP)->val3);
+				break;
+			}
+		}
+#endif
+		if (sc->getSCE(SC_AURABLADE)
+#ifndef RENEWAL
+			&& skill_id != LK_SPIRALPIERCE && skill_id != ML_SPIRALPIERCE
+#endif
+			) {
 #ifdef RENEWAL
 			ATK_ADD(wd->damage, wd->damage2, (3 + sc->getSCE(SC_AURABLADE)->val1) * status_get_lv(src)); // !TODO: Confirm formula
 #else
@@ -6488,18 +6521,6 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 		}
 	}
 
-#ifndef RENEWAL
-	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
-
-	//Refine bonus
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST) { // Counts refine bonus multiple times
-		if (skill_id == MO_FINGEROFFENSIVE) {
-			ATK_ADD2(wd->damage, wd->damage2, wd->div_*sstatus->rhw.atk2, wd->div_*sstatus->lhw.atk2);
-		} else {
-			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
-		}
-	}
-#endif
 	//Set to min of 1
 	if (is_attack_right_handed(src, skill_id) && wd->damage < 1) wd->damage = 1;
 	if (is_attack_left_handed(src, skill_id) && wd->damage2 < 1) wd->damage2 = 1;
@@ -6850,7 +6871,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.flag = BF_WEAPON; //Initial Flag
 	wd.flag |= (skill_id||wd.miscflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
 	wd.isspdamage = false;
-	wd.damage = wd.damage2 =
+	wd.damage = wd.damage2 = wd.basedamage = wd.basedamage2 =
 #ifdef RENEWAL
 	wd.statusAtk = wd.statusAtk2 = wd.equipAtk = wd.equipAtk2 = wd.weaponAtk = wd.weaponAtk2 = wd.masteryAtk = wd.masteryAtk2 =
 	wd.percentAtk = wd.percentAtk2 =
@@ -7132,6 +7153,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	else if(!(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
 
 		battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
+		wd.basedamage = wd.damage;
+		wd.basedamage2 = wd.damage2;
 
 		int64 ratio = 0;
 
@@ -7392,8 +7415,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		if ((skill = pc_checkskill(sd, BS_WEAPONRESEARCH)) > 0)
 			ATK_ADD(wd.damage, wd.damage2, skill * 2);
-		if (skill_id == TF_POISON)
-			ATK_ADD(wd.damage, wd.damage2, 15 * skill_lv);
 		if (skill_id == GS_GROUNDDRIFT)
 			ATK_ADD(wd.damage, wd.damage2, 50 * skill_lv);
 		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
