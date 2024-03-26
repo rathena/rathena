@@ -10233,17 +10233,7 @@ Body:
         Time: 55000
       - Level: 5
         Time: 60000
-    Duration2:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 30000
-      - Level: 3
-        Time: 40000
-      - Level: 4
-        Time: 50000
-      - Level: 5
-        Time: 60000
+    Duration2: 60000
     Requires:
       SpCost:
         - Level: 1

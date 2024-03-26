@@ -2444,8 +2444,7 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 #endif
 
 /*==========================================
- * Calculates the standard damage of a normal attack assuming it hits,
- * it calculates nothing extra fancy, is needed for magnum break's WATK_ELEMENT bonus. [Skotlex]
+ * Calculates the standard damage of a normal attack assuming it hits
  * This applies to pre-renewal and non-sd in renewal
  *------------------------------------------
  * Pass damage2 as NULL to not calc it.
@@ -3656,19 +3655,27 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				break;
 		}
 
-#ifdef RENEWAL
-		if (sd == nullptr) { // Only monsters have a single ATK for element, in pre-renewal we also apply element to entire ATK on players [helvetica]
-#endif
+#ifndef RENEWAL
+		if (sd) { // Applies only to player damage, monsters and mercenaries don't get this damage boost
 			if (sc && sc->getSCE(SC_WATK_ELEMENT)) { // Descriptions indicate this means adding a percent of a normal attack in another element [Skotlex]
 				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
-
 				wd->damage += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
+				//Spirit Sphere bonus damage is not affected by element
+				if (skill_id == MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
+					wd->damage += (sd->spiritball_old * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+				}
+				else
+					wd->damage += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
 				if (is_attack_left_handed(src, skill_id)) {
 					damage = wd->basedamage2 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
 					wd->damage2 += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
+					if (skill_id == MO_FINGEROFFENSIVE) {
+						wd->damage2 += (sd->spiritball_old * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+					}
+					else
+						wd->damage2 += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
 				}
 			}
-#ifdef RENEWAL
 		}
 #endif
 	}
@@ -6524,6 +6531,8 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	//Set to min of 1
 	if (is_attack_right_handed(src, skill_id) && wd->damage < 1) wd->damage = 1;
 	if (is_attack_left_handed(src, skill_id) && wd->damage2 < 1) wd->damage2 = 1;
+	if (is_attack_right_handed(src, skill_id) && wd->basedamage < 1) wd->basedamage = 1;
+	if (is_attack_left_handed(src, skill_id) && wd->basedamage2 < 1) wd->basedamage2 = 1;
 
 	switch (skill_id) {
 		case AS_SONICBLOW:
