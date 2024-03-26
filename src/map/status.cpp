@@ -5261,16 +5261,16 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			regen->sp = cap_value(val, 1, SHRT_MAX);
 		}
 	} else if( bl->type == BL_MER ) {
-		val = (status->max_hp * status->vit / 10000.0 + 1.0) * 6.0;
+		val = static_cast<int>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = (status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0;
+		val = static_cast<int>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	} else if( bl->type == BL_ELEM ) {
-		val = (status->max_hp * status->vit / 10000.0 + 1.0) * 6.0;
+		val = static_cast<int>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = (status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0;
+		val = static_cast<int>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	}
 }
@@ -15237,10 +15237,14 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	ud = unit_bl2ud(bl);
 
-	if (flag&(RGN_HP|RGN_SHP|RGN_SSP) && ud && ud->walktimer != INVALID_TIMER) {
+	if (ud && ud->walktimer != INVALID_TIMER) {
 		flag &= ~(RGN_SHP|RGN_SSP);
-		if(sd && !regen->state.walk)
+		//Mercenaries recover HP even while walking
+		if(bl->type != BL_MER && !regen->state.walk)
 			flag &= ~RGN_HP;
+		//Homunculus don't recover SP while walking
+		if (bl->type == BL_HOM && !regen->state.walk)
+			flag &= ~RGN_SP;
 	}
 
 	if (flag&(RGN_HP|RGN_SP)) {
@@ -15256,11 +15260,15 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if (flag&RGN_HP) {
 		// Interval to next recovery tick
 		rate = (int)(battle_config.natural_healhp_interval / (regen->rate.hp/100. * multi));
-		if (ud && ud->walktimer != INVALID_TIMER)
+		// Half recovery while moving only applies to players with certain traits
+		if (sd && ud && ud->walktimer != INVALID_TIMER)
 			rate *= 2;
-		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
+		// Homun HP regen fix (2 seconds instead of 6 seconds)
 		if(bl->type == BL_HOM)
-			rate /= 2;
+			rate /= 3;
+		// Mercenary HP regen fix (8 seconds instead of 6 seconds)
+		if (bl->type == BL_MER)
+			rate = (rate * 4) / 3;
 
 		// Our timer system isn't 100% accurate so make sure we use the closest interval
 		rate -= NATURAL_HEAL_INTERVAL / 2;
@@ -15281,9 +15289,12 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if(flag&RGN_SP) {
 		// Interval to next recovery tick
 		rate = (int)(battle_config.natural_healsp_interval / (regen->rate.sp/100. * multi));
-		// Homun SP regen fix (they should regen as if they were sitting (twice as fast)
+		// Homun SP regen fix (4 seconds instead of 8 seconds)
 		if(bl->type==BL_HOM)
 			rate /= 2;
+		// Mercenary SP regen fix (6 seconds instead of 8 seconds)
+		if (bl->type == BL_MER)
+			rate = (rate * 3) / 4;
 #ifdef RENEWAL
 		if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			sc && sc->getSCE(SC_EXPLOSIONSPIRITS) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK))
