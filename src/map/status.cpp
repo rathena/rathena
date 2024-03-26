@@ -5261,16 +5261,16 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			regen->sp = cap_value(val, 1, SHRT_MAX);
 		}
 	} else if( bl->type == BL_MER ) {
-		val = static_cast<int>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
+		val = static_cast<decltype(val)>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = static_cast<int>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
+		val = static_cast<decltype(val)>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	} else if( bl->type == BL_ELEM ) {
-		val = static_cast<int>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
+		val = static_cast<decltype(val)>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = static_cast<int>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
+		val = static_cast<decltype(val)>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	}
 }
