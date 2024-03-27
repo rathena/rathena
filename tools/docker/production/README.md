@@ -1,6 +1,6 @@
 # Docker
 
-Note that this Dockerized environment **is not suitable** for production deployments, see [Installations](https://github.com/rathena/rathena/wiki/installations) instead.
+Note that this Dockerized environment **is suitable** for production deployments.
 
 ### How to setup a local development environment :computer:
 
@@ -10,7 +10,7 @@ Note that this Dockerized environment **is not suitable** for production deploym
 4. `docker-compose down` outside the dev container when done to close database and free resources
 5. All commands expect you to have change directory to this directory, `$projectRoot/tools/docker`.
 6. Change the value of `BUILDER_CONFIGURE` environment variable of the `builder` service in order to change the parameters sent to the `./configure` command
-> If you have already compiled the project once, you might want to connect directly to the builder service (see 2.) and run commands from there (see 3.). 
+> If you have already compiled the project once, you might want to connect directly to the builder service (see 2.) and run commands from there (see 3.).
 7. If you want the builder to build your project on each start change line 8 from
 ```bash
   export runBuild=0;
