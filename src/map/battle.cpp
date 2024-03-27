@@ -3661,8 +3661,8 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
 				wd->damage += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
 				//Spirit Sphere bonus damage is not affected by element
-				if (skill_id == MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
-					wd->damage += (sd->spiritball_old * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+				if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
+					wd->damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
 				}
 				else
 					wd->damage += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
@@ -3670,7 +3670,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 					damage = wd->basedamage2 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
 					wd->damage2 += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
 					if (skill_id == MO_FINGEROFFENSIVE) {
-						wd->damage2 += (sd->spiritball_old * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+						wd->damage2 += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
 					}
 					else
 						wd->damage2 += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
@@ -6487,8 +6487,6 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 
 	// Post skill/vit reduction damage increases
 #ifndef RENEWAL
-	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
-
 	//Refine bonus
 	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST) { // Counts refine bonus multiple times
 		if (skill_id == MO_FINGEROFFENSIVE) {
@@ -6499,6 +6497,15 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 			ATK_ADD2(wd->basedamage, wd->basedamage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 		}
 	}
+
+	//After DEF reduction, damage can be negative, refine bonus works against that value
+	//After refinement bonus was applied, damage is capped to 1, then masteries are applied
+	if (is_attack_right_handed(src, skill_id) && wd->damage < 1) wd->damage = 1;
+	if (is_attack_left_handed(src, skill_id) && wd->damage2 < 1) wd->damage2 = 1;
+	if (is_attack_right_handed(src, skill_id) && wd->basedamage < 1) wd->basedamage = 1;
+	if (is_attack_left_handed(src, skill_id) && wd->basedamage2 < 1) wd->basedamage2 = 1;
+
+	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
 #endif
 	if (sc) { // SC skill damages
 #ifndef RENEWAL
@@ -7430,8 +7437,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADD2(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->right_weapon.star, ((wd.div_ < 1) ? 1 : wd.div_) * sd->left_weapon.star);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd.damage, wd.damage2, 4);
-		if (skill_id == MO_FINGEROFFENSIVE) { //The finger offensive spheres on moment of attack do count. [Skotlex]
-			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball_old * 3);
+		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
+			ATK_ADD(wd.damage, wd.damage2, (wd.div_ + sd->spiritball) * 3);
 		} else
 			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball * 3);
 #endif
