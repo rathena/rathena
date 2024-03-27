@@ -2712,6 +2712,7 @@ Body:
     CalcFlags:
       Flee: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2720,6 +2721,7 @@ Body:
     CalcFlags:
       Watk: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2728,6 +2730,7 @@ Body:
     CalcFlags:
       MaxHp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2736,6 +2739,7 @@ Body:
     CalcFlags:
       MaxSp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2744,6 +2748,7 @@ Body:
     CalcFlags:
       Hit: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true

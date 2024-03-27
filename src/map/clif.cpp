@@ -6579,7 +6579,8 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 
 	sd = BL_CAST(BL_PC, bl);
 
-	if (!(status_efst_get_bl_type((efst_type)type)&bl->type)) // only send status changes that actually matter to the client
+	// Check if current bl type is in the returned bitmask and only send status changes that actually matter to the client
+	if (!(status_efst_get_bl_type(static_cast<efst_type>(type)) & bl->type))
 		return;
 
 	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));

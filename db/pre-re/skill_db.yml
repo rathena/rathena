@@ -9641,7 +9641,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
@@ -32467,9 +32467,9 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
-      SpCost: 100
+      SpCost: 200
     Status: Berserk
   - Id: 8207
     Name: MA_DOUBLE
@@ -33068,9 +33068,10 @@ Body:
     Type: Weapon
     TargetType: Attack
     Range: 1
-    Hit: Multi_Hit
-    HitCount: 3
+    Hit: Single
+    HitCount: 1
     Element: Weapon
+    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration2: 5000
