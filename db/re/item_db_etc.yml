@@ -20711,6 +20711,19 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 6586
+    AegisName: CapturedBook
+    Name: Captured Book
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6592
     AegisName: Small_Wooden_Chest
     Name: Small Wooden Chest
@@ -81501,6 +81514,12 @@ Body:
     Name: Creative Stone (Dual)
     Type: Etc
     Weight: 100
+  - Id: 1000678
+    AegisName: Poring_Enchant_Ticket
+    Name: Poring Ballon Enchantment Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000680
     AegisName: ClockTower_Lead
     Name: Lead
@@ -81598,6 +81617,12 @@ Body:
   - Id: 1000697
     AegisName: Conse_F_F_model
     Name: Fides Foxtail Model Blueprint
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000698
+    AegisName: Tree_Enchant_Ticket
+    Name: Young Leaf of World Tree Enchantment Ticket
     Type: Etc
     Flags:
       BuyingStore: true
@@ -82217,6 +82242,12 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000850
+    AegisName: VivaAdul_Enchant_Ticket
+    Name: Helm of Faith Enchantment Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000851
     AegisName: Mini_Brush
     Name: Small Brush
@@ -86369,6 +86400,39 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+  - Id: 1200000
+    AegisName: IDTest_arrow
+    Name: IDTest arrow
+    Type: Ammo
+    SubType: Arrow
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true
+  - Id: 1210000
+    AegisName: IDTest_canon
+    Name: IDTest canon
+    Type: Ammo
+    SubType: CannonBall
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true
+  - Id: 1220000
+    AegisName: IDTest_throw
+    Name: IDTest throw
+    Type: Ammo
+    SubType: CannonBall
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
@@ -86431,3 +86495,14 @@ Body:
     EquipLevelMin: 1
     Script: |
       bonus bAtkEle,Ele_Holy;
+  - Id: 1230000
+    AegisName: IDTest_ammo
+    Name: IDTest ammo
+    Type: Ammo
+    SubType: Dagger
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true
