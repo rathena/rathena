@@ -42,6 +42,7 @@
     <ClInclude Include="strlib.hpp" />
     <ClInclude Include="timer.hpp" />
     <ClInclude Include="utils.hpp" />
+    <ClInclude Include="wepoll.hpp" />
     <ClInclude Include="winapi.hpp" />
     <ClInclude Include="utilities.hpp" />
   </ItemGroup>
@@ -66,6 +67,7 @@
     <ClCompile Include="strlib.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="wepoll.cpp" />
     <ClCompile Include="winapi.cpp" />
     <ClCompile Include="utilities.cpp" />
   </ItemGroup>
