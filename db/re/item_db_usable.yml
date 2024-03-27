@@ -4006,6 +4006,36 @@ Body:
     Script: |
       itemheal rand(36,40),0;
       specialeffect2 EF_HEAL3;
+  - Id: 11603
+    AegisName: Fruit_Of_Mastela_
+    Name: "[Gift] Mastela Fruit"
+    Type: Healing
+    Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 11604
+    AegisName: Royal_Jelly_
+    Name: "[Gift] Royal Jelly"
+    Type: Healing
+    Weight: 150
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 11605
     AegisName: Cookies_Bat
     Name: Cookie Bat
@@ -4014,6 +4044,21 @@ Body:
     Script: |
       itemheal rand(50,100),0;
       /*TODO*/
+  - Id: 11606
+    AegisName: Light_White_Pot_
+    Name: "[Not for Sale] Light White Potion"
+    Type: Healing
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 325,0; /* average value */
   - Id: 11607
     AegisName: Crepe
     Name: Sweet Crepe
@@ -4055,6 +4100,13 @@ Body:
     Weight: 30
     Script: |
       itemheal 235,0; /* average value */
+  - Id: 11612
+    AegisName: Aromatic_Pop_Corn
+    Name: Aromatic Popcorn
+    Type: Healing
+    Weight: 50
+    Script: |
+      itemheal 800,0; /* average value */
   - Id: 11613
     AegisName: Harvest_Cookie
     Name: Harvest Biscuit
@@ -4101,6 +4153,23 @@ Body:
     Weight: 50
     Script: |
       itemheal rand(100,150),0;
+  - Id: 11617
+    AegisName: Silvervine_Choco
+    Name: Silvervine Chocoball
+    Type: Healing
+    Weight: 50
+#   Script: |
+#     /* TODO */
+  - Id: 11620
+    AegisName: Bearopy
+    Name: Bear Rope
+    Type: Healing
+    Buy: 420
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 11621
     AegisName: High_RedPotion
     Name: Red Syrup
@@ -4172,6 +4241,119 @@ Body:
       sc_end SC_DPOISON;
       sc_end SC_FEAR;
       sc_end SC_DECAGI;
+  - Id: 11627
+    AegisName: High_Q_Beef_Jerky
+    Name: High Quality Beef Jerky
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 60
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 1500,0; /* average value */
+  - Id: 11628
+    AegisName: Fleshy_Larva
+    Name: Fleshy Larva
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 60
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 0,140; /* average value */
+  - Id: 11629
+    AegisName: Acorn_Chocoball
+    Name: Acorn Chocolate Ball
+    Type: Healing
+    Weight: 30
+  - Id: 11630
+    AegisName: Pignic_Lunch
+    Name: Lunch Box
+    Type: Healing
+    Weight: 150
+    Script: |
+      percentheal 50,50;
+  - Id: 11631
+    AegisName: 2401_ev_Rainbow
+    Name: New Year Rainbow Rice Cake
+    Type: Healing
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 100,100;
+  - Id: 11632
+    AegisName: 2401_ev_Sesamepastry
+    Name: New Year Dasik
+    Type: Healing
+    Weight: 20
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 20,20;
+  - Id: 11633
+    AegisName: 2401_ev_WindTteok
+    Name: New Year Wind Rice Cake
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 60
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 1500,0; /* average value */
+  - Id: 11634
+    AegisName: 2401_ev_Yugwa
+    Name: New Year Yugwa
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 60
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 0,140; /* average value */
+  - Id: 11635
+    AegisName: 2401_ev_RedLin
+    Name: Red Inverse Scale
+    Type: Healing
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 11701
     AegisName: Girl_Bunch_Of_Flower
     Name: Girl's Bouquet
@@ -6900,6 +7082,18 @@ Body:
     Script: |
       input .@megaphone$;
       announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
+  - Id: 12223
+    AegisName: Sweets_Macacake
+    Name: Sweets Macaron Cake
+    Type: Usable
+#   Script: |
+#     /* TODO */
+  - Id: 12224
+    AegisName: Sweets_Sparfait
+    Name: Sweets Strawberry Parfait
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 12225
     AegisName: Sweet_Candy_Striper
     Name: Sweet Candy Cane
@@ -13938,6 +14132,23 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Earth_Type_Scroll);
+  - Id: 12830
+    AegisName: Dead_Tree_Box
+    Name: Ancient Tree Wooden Box
+    Type: Usable
+    Buy: 20
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 604,50; /* Dead Branch */
+      getitem 12103,2; /* Bloody Branch */
   - Id: 12831
     AegisName: Potion_Box
     Name: Potion Box
@@ -14167,6 +14378,20 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Patron_Scroll);
+  - Id: 12854
+    AegisName: Full_Spray_Of_Flowers
+    Name: Voluminous Spray of Flowers
+    Type: Usable
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 12855
     AegisName: Pope_Scroll
     Name: Pope Scroll
@@ -30695,6 +30920,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Surprise_Scroll);
+  - Id: 14299
+    AegisName: Evolved_Leaf_Box
+    Name: Leaves of Grass Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5419,1; /* Leaves Of Grass */
   - Id: 14300
     AegisName: Mask_Of_Ifrit_Box
     Name: Mask Of Ifrit Box
@@ -30731,6 +30972,38 @@ Body:
       NoAuction: true
     Script: |
       getitem 5421,1;
+  - Id: 14302
+    AegisName: Filr_Hat_Box
+    Name: Filir Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5405,1; /* Filir Hat */
+  - Id: 14303
+    AegisName: Angel_Spirit_Box
+    Name: Angel Spirit Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5389,1; /* Angel Spirit */
   - Id: 14304
     AegisName: Scuba_Mask_Box
     Name: Scuba Mask Box
@@ -30749,6 +31022,22 @@ Body:
       NoAuction: true
     Script: |
       getitem 5397,1;
+  - Id: 14305
+    AegisName: Neko_Mimi_Kafra_Box
+    Name: Neko Mimi Kafra Band Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5387,1; /* Neko Mimi Kafra */
   - Id: 14306
     AegisName: RWC_Special_Scroll
     Name: RWC Special Scroll
@@ -30803,6 +31092,86 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_ARDOR_SCROLL);
+  - Id: 14309
+    AegisName: Gang_Scarf_Box
+    Name: Gangster Scarf Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5361,1; /* Gangster Scarf */
+  - Id: 14310
+    AegisName: Ninja_Scroll_Box
+    Name: Ninja's Scroll Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5362,1; /* Ninja Scroll */
+  - Id: 14311
+    AegisName: FAngel_Spirit_Box
+    Name: Angel Spirit Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5389,1; /* Angel Spirit */
+  - Id: 14312
+    AegisName: FGang_Scarf_Box
+    Name: Gangster Scarf Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5361,1; /* Gangster Scarf */
+  - Id: 14313
+    AegisName: FNinja_Scroll_Box
+    Name: Ninja's Scroll Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5362,1; /* Ninja Scroll */
   - Id: 14314
     AegisName: PhreeoniS_Box
     Name: Phreeoni Scroll Box
@@ -30875,6 +31244,54 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Bacsojin_Scroll);
+  - Id: 14318
+    AegisName: Radio_Antenna_Box
+    Name: Antenna Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5333,1; /* Radio Antenna */
+  - Id: 14319
+    AegisName: Tiraya_Bonnet_Box
+    Name: Tiraya Bonnet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5395,1; /* Striped Hat */
+  - Id: 14320
+    AegisName: Balloon_Hat_Box
+    Name: Balloon Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5379,1; /* Tam */
   - Id: 14321
     AegisName: Holy_Saber_Box
     Name: Holy Sabre Box
@@ -31264,6 +31681,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_FGF_RECRUITER_HAT_BOX);
+  - Id: 14342
+    AegisName: FMarcher_Hat_Box
+    Name: Holy Marcher Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 14343
     AegisName: Spiked_Scarf_Box
     Name: Spiked Scarf Box
@@ -31318,6 +31751,54 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Animal_Scroll);
+  - Id: 14346
+    AegisName: Bro_Flag_Box
+    Name: Brazilian Flag Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5477,1; /* Brazilian Flag Hat */
+  - Id: 14347
+    AegisName: Greed_Scroll_C20Box
+    Name: Greed Scroll Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14529,20; /* Greed Scroll */
+  - Id: 14348
+    AegisName: Greed_Scroll_C50Box
+    Name: Greed Scroll Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14529,50; /* Greed Scroll */
   - Id: 14349
     AegisName: Mental_Potion20_Box
     Name: Mental Potion 20 Box
@@ -31390,6 +31871,134 @@ Body:
       NoAuction: true
     Script: |
       getitem 14601,50;
+  - Id: 14353
+    AegisName: F_Greed_Scroll_C20Box
+    Name: Greed Scroll Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14529,20; /* Greed Scroll */
+  - Id: 14354
+    AegisName: F_Greed_Scroll_C50Box
+    Name: Greed Scroll Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14529,50; /* Greed Scroll */
+  - Id: 14355
+    AegisName: F_Mental_Potion20_Box
+    Name: Mental Potion Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14600,20; /* Mental Potion */
+  - Id: 14356
+    AegisName: F_Mental_Potion50_Box
+    Name: Mental Potion Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14600,50; /* Mental Potion */
+  - Id: 14357
+    AegisName: F_Tyr_Blessing_Box20
+    Name: Tyr's Blessing Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14601,20; /* Tyr's Blessing */
+  - Id: 14358
+    AegisName: F_Tyr_Blessing_Box50
+    Name: Tyr's Blessing Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14601,50; /* Tyr's Blessing */
+  - Id: 14359
+    AegisName: TaogunkaS_Box
+    Name: Tao Gunka Scroll Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14602,10; /* Tao Gunka Scroll */
+  - Id: 14360
+    AegisName: MistressS_Box
+    Name: Mistress Scroll Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14603,10; /* Mistress Scroll */
   - Id: 14361
     AegisName: Orc_HeroS_Box
     Name: Orc HeroS Box
@@ -31444,6 +32053,118 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Heart_Scroll);
+  - Id: 14364
+    AegisName: Job_Manual25_Box1
+    Name: JOB Battle Manual Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,1; /* JOB Battle Manual */
+  - Id: 14365
+    AegisName: Job_Manual25_Box5
+    Name: JOB Battle Manual Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,5; /* JOB Battle Manual */
+  - Id: 14366
+    AegisName: Job_Manual25_Box10
+    Name: JOB Battle Manual Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,10; /* JOB Battle Manual */
+  - Id: 14367
+    AegisName: F_Job_Manual25_Box1
+    Name: JOB Battle Manual Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,1; /* JOB Battle Manual */
+  - Id: 14368
+    AegisName: F_Job_Manual25_Box5
+    Name: JOB Battle Manual Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,5; /* JOB Battle Manual */
+  - Id: 14369
+    AegisName: F_Job_Manual25_Box10
+    Name: JOB Battle Manual Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,10; /* JOB Battle Manual */
+  - Id: 14370
+    AegisName: Goddess_Bless_Box
+    Name: Goddess of Blessing Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 12315,1; /* Goddess Of Blessing */
+  - Id: 14371
+    AegisName: Angel_Bless_Box
+    Name: Angel of Blessing Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5207,1; /* Angel Blessing */
   - Id: 14372
     AegisName: Powder_Snow_Box
     Name: Powder Snow Box
@@ -31454,6 +32175,22 @@ Body:
       UniqueId: true
     Script: |
       getitem 12317,1;
+  - Id: 14373
+    AegisName: Little_Heart_Box
+    Name: Small Hearts Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 12318,1; /* Small Hearts */
+  - Id: 14374
+    AegisName: J_Firecracker_Box
+    Name: Extravagant Firework Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 12326,1; /* Large Firecracker */
   - Id: 14375
     AegisName: Holy_Celestial_Axe_Box
     Name: Celestial Axe Box
@@ -31484,6 +32221,14 @@ Body:
       UniqueId: true
     Script: |
       getitem 12351,1;
+  - Id: 14378
+    AegisName: Dun_Tele_Scroll3_Box_fr
+    Name: Dungeon Teleport Scroll 3 Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 12352,1; /* Dungeon Teleport Scroll 3 */
   - Id: 14379
     AegisName: Love_Daddy_Box
     Name: Love Daddy Box
@@ -31738,6 +32483,54 @@ Body:
       NoAuction: true
     Script: |
       getitem 7945,1;
+  - Id: 14394
+    AegisName: Santa_Hat_1_Box
+    Name: Cute Santa Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5384,1; /* Twin Pompom By JB */
+  - Id: 14395
+    AegisName: J_Captain_Hat_Box
+    Name: Master's Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5359,1; /* Ship Captain Hat */
+  - Id: 14396
+    AegisName: Coke_Hat_Box
+    Name: Red Minstrel Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5435,1; /* Red Minstrel Hat */
   - Id: 14397
     AegisName: Bonus_Box01
     Name: Bonus Box 01
@@ -31954,6 +32747,54 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_New_Year_Scroll);
+  - Id: 14409
+    AegisName: F_Santa_Hat_1_Box
+    Name: Twin Pompom By JB Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5384,1; /* Twin Pompom By JB */
+  - Id: 14410
+    AegisName: F_Captain_Hat_Box
+    Name: Ship Captain Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5359,1; /* Ship Captain Hat */
+  - Id: 14411
+    AegisName: F_Coke_Hat_Box
+    Name: Red Minstrel Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5435,1; /* Red Minstrel Hat */
   - Id: 14412
     AegisName: F_Bonus_Box01
     Name: Bonus Box 01
@@ -32134,6 +32975,54 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_F_BONUS_BOX10);
+  - Id: 14422
+    AegisName: Shaman's_Old_Paper_Box
+    Name: Shaman's Document Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6070,1; /* Shaman's Document */
+  - Id: 14423
+    AegisName: Broken_Sword_Box
+    Name: Broken Sword Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14424
+    AegisName: Wing_Of_Bizofnil_Box
+    Name: Bijofnil Feather Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6072,1; /* Bijofnil Feather */
   - Id: 14426
     AegisName: Fortune_Sword_Box_I
     Name: Fortune Sword Box
@@ -32547,6 +33436,62 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_FUGIN_EGG02);
+  - Id: 14451
+    AegisName: Fugin_Egg03
+    Name: Huginn's Third Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
+  - Id: 14452
+    AegisName: Fugin_Egg04
+    Name: Huginn's Fourth Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
+  - Id: 14453
+    AegisName: Fugin_Egg05
+    Name: Huginn's Fifth Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
+  - Id: 14454
+    AegisName: Fugin_Egg06
+    Name: Huginn's Sixth Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
+  - Id: 14455
+    AegisName: Munin_Egg01
+    Name: Munin's First Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
+  - Id: 14456
+    AegisName: Munin_Egg02
+    Name: Munin's Second Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
+  - Id: 14457
+    AegisName: Munin_Egg03
+    Name: Munin's Third Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
+  - Id: 14458
+    AegisName: Munin_Egg04
+    Name: Munin's Fourth Egg
+    Type: Cash
+    Buy: 10
+#   Script: |
+#     /* TODO */
   - Id: 14459
     AegisName: Rabbit_Magic_Hat_Box
     Name: Magic Rabbit Hat Box
@@ -32601,6 +33546,70 @@ Body:
       NoAuction: true
     Script: |
       getitem 5505,1;
+  - Id: 14462
+    AegisName: Darkness_Helm_Box2
+    Name: Dark Randgris Helm Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5373,1; /* Dark Randgris Helm */
+  - Id: 14463
+    AegisName: New_Cowboy_Hat_Box
+    Name: Purple Cowboy Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5409,1; /* Purple Cowboy Hat */
+  - Id: 14464
+    AegisName: F_Darkness_Helm_Box2
+    Name: Dark Randgris Helm Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5373,1; /* Dark Randgris Helm */
+  - Id: 14465
+    AegisName: F_New_Cowboy_Hat_Box
+    Name: Purple Cowboy Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5409,1; /* Purple Cowboy Hat */
   - Id: 14466
     AegisName: Valentine_Pledge_Box
     Name: Valentine's Emblem Box
@@ -32609,6 +33618,36 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_VALENTINE_PLEDGE_BOX);
+  - Id: 14467
+    AegisName: Carnival_Hat_Box
+    Name: Carnival Hat Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14468
+    AegisName: Carnival_Circlet_Box
+    Name: Carnival Circlet Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 14469
     AegisName: Ox_Tail_Scroll
     Name: Ox Tail Egg
@@ -32619,6 +33658,246 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Ox_Tail_Scroll);
+  - Id: 14470
+    AegisName: T_Nightmare_Box
+    Name: Nightmare Terror Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14471
+    AegisName: T_Loli_Ruri_Box
+    Name: Loli Ruri Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14472
+    AegisName: T_Goblin_Leader_Box
+    Name: Goblin Leader Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14473
+    AegisName: T_Incubus_Box
+    Name: Incubus Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14474
+    AegisName: T_Miyabi_Ningyo_Box
+    Name: Miyabi Doll Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14475
+    AegisName: T_Whisper_Box
+    Name: Giant Whisper Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14476
+    AegisName: T_Wicked_Nymph_Box
+    Name: Evil Nymph Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14477
+    AegisName: T_Medusa_Box
+    Name: Medusa Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14478
+    AegisName: T_Stoneshooter_Box
+    Name: Stone Shooter Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14479
+    AegisName: T_Marionette_Box
+    Name: Marionette Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14480
+    AegisName: T_Leafcat_Box
+    Name: Leaf Cat Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14481
+    AegisName: T_Dullahan_Box
+    Name: Dullahan Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14482
+    AegisName: T_Shinobi_Box
+    Name: Shinobi Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14483
+    AegisName: T_Golem_Box
+    Name: Golem Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 14484
+    AegisName: T_Civil_Servant_Box
+    Name: Civil Servant Exchange Coupon Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 14485
     AegisName: Academy_Badge_Box
     Name: Academy Badge Box
@@ -32703,6 +33982,54 @@ Body:
       NoAuction: true
     Script: |
       getitem 5508,1;
+  - Id: 14491
+    AegisName: Sting_Hat_Box
+    Name: Sting Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5509,1; /* Sting hat */
+  - Id: 14492
+    AegisName: FShark_Hat_Box
+    Name: Shark Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5508,1; /* Shark Hat */
+  - Id: 14493
+    AegisName: FSting_Hat_Box
+    Name: Sting Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5509,1; /* Sting hat */
   - Id: 14494
     AegisName: Samambaia_Box
     Name: Samambaia Box
@@ -35423,6 +36750,23 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_HAPPY_BALLOON_SCROLL);
+  - Id: 14799
+    AegisName: AID_Manual_Bubble_7d
+    Name: "[7Day] Battle Manual & Bubble Gum"
+    Type: Cash
+    Buy: 10000
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 14805
     AegisName: July_Lucky_Scroll
     Name: Almighty Lucky Egg
@@ -35440,6 +36784,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_July_Lucky_Scroll);
+  - Id: 14826
+    AegisName: Dungeon_Ticket
+    Name: Dungeon Teleport Ticket
+    Type: Healing
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 14840
     AegisName: DF_Megaphone
     Name: "[Sale] Megaphone"
@@ -36460,6 +37819,732 @@ Body:
       NoAuction: true
     Script: |
       getitem 5529,1;
+  - Id: 16136
+    AegisName: Goddess_Bless10_Box
+    Name: Goddess of Blessing Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12315,10; /* Goddess Of Blessing */
+  - Id: 16137
+    AegisName: Angel_Bless10_Box
+    Name: Angel of Blessing Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5207,10; /* Angel Blessing */
+  - Id: 16138
+    AegisName: Powder_Snow10_Box
+    Name: Snow Powder Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12317,10; /* Snow Powder */
+  - Id: 16139
+    AegisName: Little_Heart10_Box
+    Name: Small Hearts Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12318,10; /* Small Hearts */
+  - Id: 16140
+    AegisName: J_Firecracker10_Box
+    Name: Extravagant Firework Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12326,10; /* Large Firecracker */
+  - Id: 16141
+    AegisName: Golden_Earing_Box
+    Name: Gold Earring Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10022,1; /* Gold Earring */
+  - Id: 16142
+    AegisName: Green_Lucky_Bag_Box
+    Name: Green Jewel Bag Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23683,1; /* Lucky Bag */
+  - Id: 16143
+    AegisName: F_Glasses_Box
+    Name: Fashion Glasses Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10024,1; /* Fashion Glasses */
+  - Id: 16144
+    AegisName: Star_Hairband_Box
+    Name: Hairband of Stars Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10025,1; /* Hairband Of Stars */
+  - Id: 16145
+    AegisName: Wine_On_Sleeve_Box
+    Name: Tassel for Durumagi Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10026,1; /* Tassel for Durumagi */
+  - Id: 16146
+    AegisName: Spirit_Chain_Box
+    Name: Pet Soul Ring Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10027,1; /* Pet Soul Ring */
+  - Id: 16147
+    AegisName: Nice_Badge_Box
+    Name: Beautiful Badges Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10028,1; /* Beautiful Badges */
+  - Id: 16148
+    AegisName: Jade_Trinket_Box
+    Name: Jade Trinket Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10029,1; /* Jade Trinket */
+  - Id: 16149
+    AegisName: Summer_Fan_Box
+    Name: Summer Fan Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10030,1; /* Summer Fan */
+  - Id: 16150
+    AegisName: Death_Coil_Box
+    Name: Ring of Death Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2732,1; /* Death Loop */
+  - Id: 16151
+    AegisName: Queen's_Coronet_Box
+    Name: Queen's Coronet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10032,1; /* Queen's Coronet */
+  - Id: 16152
+    AegisName: Apro_Hair_Box
+    Name: Afro Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10033,1; /* Afro */
+  - Id: 16153
+    AegisName: Ball_Mask_Box
+    Name: Masked Ball Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10034,1; /* Masked Ball */
+  - Id: 16154
+    AegisName: Windup_Spring_Box
+    Name: Spring Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10035,1; /* Spring */
+  - Id: 16155
+    AegisName: Hell_Horn_Box
+    Name: Horn of Hell Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 10036,1; /* Horn Of Hell */
+  - Id: 16156
+    AegisName: Poring_Tck_Box
+    Name: Poring Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6157,1; /* Poring Exchange Ticket */
+  - Id: 16157
+    AegisName: Drops_Tck_Box
+    Name: Drops Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6158,1; /* Drops Exchange Ticket */
+  - Id: 16158
+    AegisName: Poporing_Tck_Box
+    Name: Poporing Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6159,1; /* Poporing Exchange Ticket */
+  - Id: 16159
+    AegisName: Lunatic_Tck_Box
+    Name: Lunatic Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6160,1; /* Lunatic Exchange Ticket */
+  - Id: 16160
+    AegisName: Picky_Tck_Box
+    Name: Picky Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6161,1; /* Picky Exchange Ticket */
+  - Id: 16161
+    AegisName: Pecopeco_Tck_Box
+    Name: Peco Peco Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6162,1; /* Peco Peco Exchange Ticket */
+  - Id: 16162
+    AegisName: Savage_Baby_Tck_Box
+    Name: Savage Babe Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6163,1; /* Savage Babe Exchange Ticket */
+  - Id: 16163
+    AegisName: Spore_Tck_Box
+    Name: Spore Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6164,1; /* Spore Exchange Ticket */
+  - Id: 16164
+    AegisName: Poison_Spore_Tck_Box
+    Name: Poison Spore Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6165,1; /* Poison Spore Exchange Ticket */
+  - Id: 16165
+    AegisName: Chonchon_Tck_Box
+    Name: Chonchon Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6166,1; /* Chonchon Exchange Ticket */
+  - Id: 16166
+    AegisName: Steel_Chonchon_Tck_Box
+    Name: Steel Chonchon Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6167,1; /* Steel Chonchon Exchange Ticket */
+  - Id: 16167
+    AegisName: Petit_Tck_Box
+    Name: Sky Petite Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6168,1; /* Sky Petite Exchange Ticket */
+  - Id: 16168
+    AegisName: Deviruchi_Tck_Box
+    Name: Deviruchi Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6169,1; /* Deviruchi Exchange Ticket */
+  - Id: 16169
+    AegisName: Isis_Tck_Box
+    Name: Isis Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6170,1; /* Isis Exchange Ticket */
+  - Id: 16170
+    AegisName: Smokie_Tck_Box
+    Name: Smokie Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6171,1; /* Smokie Exchange Ticket */
+  - Id: 16171
+    AegisName: Dokebi_Tck_Box
+    Name: Dokkaebi Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6172,1; /* Dokebi Exchange Ticket */
+  - Id: 16172
+    AegisName: Desert_Wolf_B_Tck_Box
+    Name: Baby Desert Wolf Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6173,1; /* Baby Desert Wolf Exchange Ticket */
+  - Id: 16173
+    AegisName: Yoyo_Tck_Box
+    Name: Yoyo Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6174,1; /* Yoyo Exchange Ticket */
+  - Id: 16174
+    AegisName: Sohee_Tck_Box
+    Name: Sohee Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6175,1; /* Sohee Exchange Ticket */
+  - Id: 16175
+    AegisName: Rocker_Tck_Box
+    Name: Rocker Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6176,1; /* Rocker Exchange Ticket */
+  - Id: 16176
+    AegisName: Hunter_Fly_Tck_Box
+    Name: Hunter Fly Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6177,1; /* Hunter Fly Exchange Ticket */
+  - Id: 16177
+    AegisName: Orc_Warrior_Tck_Box
+    Name: Orc Warrior Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6178,1; /* Orc Warrior Exchange Ticket */
+  - Id: 16178
+    AegisName: Bapho_Jr_Tck_Box
+    Name: Bapho Jr. Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6179,1; /* Bapho Jr. Exchange Ticket */
+  - Id: 16179
+    AegisName: Munak_Tck_Box
+    Name: Munak Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16180
+    AegisName: Bongun_Tck_Box
+    Name: Bongun Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6181,1; /* Bongun Exchange Ticket */
+  - Id: 16181
+    AegisName: Goblin_Tck_Box
+    Name: Christmas Goblin Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6182,1; /* Christmas Goblin Exchange Ticket */
+  - Id: 16182
+    AegisName: Hardtack_Tck_Box
+    Name: Rice Cake Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 9028,1; /* Hard Rice Cake */
+  - Id: 16183
+    AegisName: Zherlthsh_Tck_Box
+    Name: Zherlthsh Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16184
+    AegisName: Alice_Tck_Box
+    Name: Alice Exchange Ticket Box
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6185,1; /* Alice Exchange Ticket */
   - Id: 16185
     AegisName: Raven_Cap_Box
     Name: Raven Cap Box
@@ -36514,6 +38599,70 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_F_ANGRY_MOUTH_C_BOX);
+  - Id: 16188
+    AegisName: Bunny_Magic_Hat_Box
+    Name: Magic Rabbit Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5503,1; /* Rabbit Magic Hat */
+  - Id: 16189
+    AegisName: Side_Cap_Box
+    Name: Side Cap Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5535,1; /* Side Cap */
+  - Id: 16190
+    AegisName: F_Rabbit_Magic_Hat_Box
+    Name: Magic Rabbit Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5503,1; /* Rabbit Magic Hat */
+  - Id: 16191
+    AegisName: F_Side_Cap_Box
+    Name: Side Cap Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5535,1; /* Side Cap */
   - Id: 16192
     AegisName: Quati_Hat_Box
     Name: Kwati Hat Box
@@ -36576,6 +38725,198 @@ Body:
     Weight: 10
     Flags:
       UniqueId: true
+  - Id: 16196
+    AegisName: Freyja_Shield_Box7
+    Name: Freya's Spiritual Shield Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2141,604800; /* Freyja Spirit Shield */
+  - Id: 16197
+    AegisName: Freyja_Shield_Box30
+    Name: Freya's Spiritual Shield Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2141,2592000; /* Freyja Spirit Shield */
+  - Id: 16198
+    AegisName: Freyja_Shield_Box60
+    Name: Freya's Spiritual Shield Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2141,5184000; /* Freyja Spirit Shield */
+  - Id: 16199
+    AegisName: Freyja_Shield_Box90
+    Name: Freya's Spiritual Shield Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2141,7776000; /* Freyja Spirit Shield */
+  - Id: 16200
+    AegisName: Freyja_Robe_Box7
+    Name: Freya's Spiritual Robe Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 15003,604800; /* Freyja Soul Robe7 */
+  - Id: 16201
+    AegisName: Freyja_Robe_Box30
+    Name: Freya's Spiritual Robe Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 15003,2592000; /* Freyja Soul Robe7 */
+  - Id: 16202
+    AegisName: Freyja_Robe_Box60
+    Name: Freya's Spiritual Robe Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 15003,5184000; /* Freyja Soul Robe7 */
+  - Id: 16203
+    AegisName: Freyja_Robe_Box90
+    Name: Freya's Spiritual Robe Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 15003,7776000; /* Freyja Soul Robe7 */
+  - Id: 16204
+    AegisName: Freyja_Scarf_Box7
+    Name: Freya's Spiritual Scarf Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2555,604800; /* Freyja Soul Scarf */
+  - Id: 16205
+    AegisName: Freyja_Scarf_Box30
+    Name: Freya's Spiritual Scarf Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2555,2592000; /* Freyja Soul Scarf */
+  - Id: 16206
+    AegisName: Freyja_Scarf_Box60
+    Name: Freya's Spiritual Scarf Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2555,5184000; /* Freyja Soul Scarf */
+  - Id: 16207
+    AegisName: Freyja_Scarf_Box90
+    Name: Freya's Spiritual Scarf Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2555,7776000; /* Freyja Soul Scarf */
+  - Id: 16208
+    AegisName: Freyja_Sandal_Box7
+    Name: Freya's Spiritual Sandals Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2451,604800; /* Freyja Sprit Sandals */
+  - Id: 16209
+    AegisName: Freyja_Sandal_Box30
+    Name: Freya's Spiritual Sandals Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2451,2592000; /* Freyja Sprit Sandals */
+  - Id: 16210
+    AegisName: Freyja_Sandal_Box60
+    Name: Freya's Spiritual Sandals Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2451,5184000; /* Freyja Sprit Sandals */
+  - Id: 16211
+    AegisName: Freyja_Sandal_Box90
+    Name: Freya's Spiritual Sandals Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2451,7776000; /* Freyja Sprit Sandals */
+  - Id: 16212
+    AegisName: Freyja_Circlet_Box7
+    Name: Freya's Spiritual Circlet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 5540,604800; /* Freyja SCirclet7 */
+  - Id: 16213
+    AegisName: Freyja_Circlet_Box30
+    Name: Freya's Spiritual Circlet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 5540,2592000; /* Freyja SCirclet7 */
+  - Id: 16214
+    AegisName: Freyja_Circlet_Box60
+    Name: Freya's Spiritual Circlet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 5540,5184000; /* Freyja SCirclet7 */
+  - Id: 16215
+    AegisName: Freyja_Circlet_Box90
+    Name: Freya's Spiritual Circlet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 5540,7776000; /* Freyja SCirclet7 */
+  - Id: 16216
+    AegisName: Freyja_Bracelet_Box7
+    Name: Freya's Spiritual Bracelet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2811,604800; /* Freyja's Spirit Bracelet */
+  - Id: 16217
+    AegisName: Freyja_Bracelet_Box30
+    Name: Freya's Spiritual Bracelet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2811,2592000; /* Freyja's Spirit Bracelet */
+  - Id: 16218
+    AegisName: Freyja_Bracelet_Box60
+    Name: Freya's Spiritual Bracelet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2811,5184000; /* Freyja's Spirit Bracelet */
+  - Id: 16219
+    AegisName: Freyja_Bracelet_Box90
+    Name: Freya's Spiritual Bracelet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2811,7776000; /* Freyja's Spirit Bracelet */
   - Id: 16220
     AegisName: Marionette_C_Box
     Name: Marionette Accessory Box
@@ -36806,6 +39147,22 @@ Body:
       NoCart: true
     Script: |
       getitem 5471,1;
+  - Id: 16233
+    AegisName: Fest_Lord_Circlet_Box
+    Name: Festival Grand Circlet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5552,1; /* Festival Grand Circlet */
+  - Id: 16234
+    AegisName: Fest_Bunny_Band_Box
+    Name: Festival Bunny Band Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5553,1; /* Festival Bunny Band */
   - Id: 16235
     AegisName: Octopus_Hat_Box
     Name: Octopus Hat Box
@@ -36888,6 +39245,70 @@ Body:
       UniqueId: true
     Script: |
       getitem 5558,1;
+  - Id: 16240
+    AegisName: Whikebain_Ears_Box
+    Name: Whikebain's Black Ears Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5360,1; /* Hyuke's Black Cat Ears */
+  - Id: 16241
+    AegisName: Chicken_Hat_Box
+    Name: Chicken Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5431,1; /* Chicken Hat */
+  - Id: 16242
+    AegisName: F_Whikebain_Ears_Box
+    Name: Whikebine's Black Cat Ears Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5360,1; /* Hyuke's Black Cat Ears */
+  - Id: 16243
+    AegisName: F_Chicken_Hat_Box
+    Name: Chicken Hat Box Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5431,1; /* Chicken Hat */
   - Id: 16244
     AegisName: Dolor_Hat_Box
     Name: Dolor Hat Box
@@ -38238,6 +40659,38 @@ Body:
       NoAuction: true
     Script: |
       getitem 2828,1;
+  - Id: 16325
+    AegisName: Rune_Hairband_Box
+    Name: Rune Hairband Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5585,1; /* Rune Cloth Circlet */
+  - Id: 16326
+    AegisName: F_Rune_Hairband_Box
+    Name: Rune Cloth Circlet Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5585,1; /* Rune Cloth Circlet */
   - Id: 16327
     AegisName: Upg_Adv_Suit_Box
     Name: Upg Adv Suit Box
@@ -38730,6 +41183,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_F_A_DEMON_SHIELD_C_BOX);
+  - Id: 16357
+    AegisName: F_Evils_Bone_Hat_Box
+    Name: Satanic Bone Helm Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5529,1; /* Satanic Bone Helm */
   - Id: 16358
     AegisName: Mbl_Pet_Random_Box
     Name: Mobile Pet Random Box
@@ -38826,6 +41295,38 @@ Body:
       NoAuction: true
     Script: |
       getitem 5592,1;
+  - Id: 16364
+    AegisName: Sleipnir_Box
+    Name: Sleipnir R Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2410,86400; /* Sleipnir */
+  - Id: 16365
+    AegisName: Magingiorde_Box
+    Name: Megingjord R Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2629,86400; /* Megingjard */
+  - Id: 16366
+    AegisName: Brysinggamen_Box
+    Name: Brisingamen R Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2630,86400; /* Brisingamen */
+  - Id: 16367
+    AegisName: Mjolnir_Box
+    Name: Mjolnir R Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 1530,86400; /* Mjolnir */
   - Id: 16368
     AegisName: Virgo_Crown_Box
     Name: Virgo Crown Box
@@ -38963,6 +41464,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_F_BGUM_BOX_IN_MOUTH);
+  - Id: 16376
+    AegisName: Odin's_Recall7
+    Name: Odin's Recall 7days Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2833,86400; /* Odin's Recall */
+  - Id: 16377
+    AegisName: Odin's_Recall30
+    Name: Odin's Recall 30days Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      rentitem 2833,2592000; /* Odin's Recall */
   - Id: 16378
     AegisName: Siege_Scroll_Box30
     Name: Siege Teleport Scroll 30 Box
@@ -39045,6 +41562,38 @@ Body:
       NoAuction: true
     Script: |
       getitem 12444,30;
+  - Id: 16383
+    AegisName: F_Siege_Scroll_Box2_10
+    Name: Siege Map Teleport Scroll II(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14591,10; /* WoE Teleport Scroll */
+  - Id: 16384
+    AegisName: F_Siege_Scroll_Box2_30
+    Name: Siege Map Teleport Scroll II(30)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14591,30; /* WoE Teleport Scroll */
   - Id: 16385
     AegisName: Clover_Box_Mouth2
     Name: Clover Box Mouth2
@@ -39313,6 +41862,70 @@ Body:
       NoAuction: true
     Script: |
       getitem 5599,1;
+  - Id: 16400
+    AegisName: F_HD_Ori_Box5
+    Name: Purified Oridecon Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6240,5; /* HD Oridecon */
+  - Id: 16401
+    AegisName: F_HD_Ori_Box10
+    Name: Purified Oridecon Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6240,10; /* HD Oridecon */
+  - Id: 16402
+    AegisName: F_HD_Elu_Box5
+    Name: Purified Eluminium Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6241,5; /* HD Elunium */
+  - Id: 16403
+    AegisName: F_HD_Elu_Box10
+    Name: Purified Eluminium Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6241,10; /* HD Elunium */
   - Id: 16405
     AegisName: Midgard_Coin_Box
     Name: Midgard Coin Box
@@ -39687,6 +42300,78 @@ Body:
       UniqueId: true
     Script: |
       getitem 5664,1;
+  - Id: 16441
+    AegisName: FFilir_Wing_Box
+    Name: Filir Wings Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5664,1; /* Filir's Pinions */
+  - Id: 16442
+    AegisName: Shaman_Hat_Box
+    Name: Shaman Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5665,1; /* Shaman Hat */
+  - Id: 16443
+    AegisName: F_Shaman_Hat_Box
+    Name: Shaman Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5665,1; /* Shaman Hat */
+  - Id: 16444
+    AegisName: Golden_Crown_Box
+    Name: Crown Cap Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5666,1; /* Golden Crown */
+  - Id: 16445
+    AegisName: F_Golden_Crown_Box
+    Name: Crown Cap Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5666,1; /* Golden Crown */
   - Id: 16446
     AegisName: Tw_October_Scroll
     Name: Tw October Scroll
@@ -39767,6 +42452,78 @@ Body:
       NoAuction: true
     Script: |
       getitem 5677,1;
+  - Id: 16451
+    AegisName: F_Raven_Cap_Box
+    Name: Crow Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5530,1; /* Raven Cap */
+  - Id: 16452
+    AegisName: Bright_Fury_Box
+    Name: Rage of Luster Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5567,1; /* Bright Fury */
+  - Id: 16453
+    AegisName: Triangle_Rune_Cap_Box
+    Name: Triangle Rune Cap Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5682,1; /* Triangle Rune Cap */
+  - Id: 16454
+    AegisName: F_Bright_Fury_Box
+    Name: Rage of Luster Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5567,1; /* Bright Fury */
+  - Id: 16455
+    AegisName: F_Triangle_Rune_Cap_Box
+    Name: Triangle Rune Cap Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5682,1; /* Triangle Rune Cap */
   - Id: 16456
     AegisName: My_Scroll1
     Name: My Scroll1
@@ -39787,6 +42544,30 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Tw_Nov_Scroll);
+  - Id: 16458
+    AegisName: 2009Love_Daddy_Box
+    Name: Love Dad Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5489,1; /* Love Daddy Hat */
+  - Id: 16459
+    AegisName: Queen_Ant_Diadem_Box
+    Name: Ant Queen Crown Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5689,1; /* Queen Ant Diadem */
+  - Id: 16460
+    AegisName: FQueen_Ant_Diadem_Box
+    Name: Ant Queen Crown Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5689,1; /* Queen Ant Diadem */
   - Id: 16461
     AegisName: Redwing_Hat_Box
     Name: Red Wing Hat Box
@@ -40321,6 +43102,38 @@ Body:
     EquipLevelMin: 1
     Script: |
       getitem 5575,1;
+  - Id: 16573
+    AegisName: Skull_Hood_Box
+    Name: Skull Hood Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5667,1; /* Skull Hood */
+  - Id: 16574
+    AegisName: F_Skull_Hood_Box
+    Name: Skull Hood Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5667,1; /* Skull Hood */
   - Id: 16576
     AegisName: Illusion_Nothing
     Name: Illusion Nothing
@@ -40339,6 +43152,38 @@ Body:
     Weight: 10
     Flags:
       UniqueId: true
+  - Id: 16580
+    AegisName: Lacma_Box
+    Name: Lacma Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 13049,1; /* Lacma */
+  - Id: 16581
+    AegisName: F_Lacma_Box
+    Name: Lacma Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 13049,1; /* Lacma */
   - Id: 16582
     AegisName: Red_Bunny_Band_Box
     Name: Red Bunny Band Box
@@ -40429,6 +43274,54 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_SUMMER_SCROLL2);
+  - Id: 16592
+    AegisName: Family_Hat_Box
+    Name: Family Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5771,1; /* Family Hat */
+  - Id: 16593
+    AegisName: F_Family_Hat_Box
+    Name: Family Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5771,1; /* Family Hat */
+  - Id: 16596
+    AegisName: Helm_Of_Abyss_Box
+    Name: Helm of Abyss Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5363,1; /* Helm Of Abyss */
+  - Id: 16597
+    AegisName: F_Helm_Of_Abyss_Box
+    Name: Helm of Abyss Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5363,1; /* Helm Of Abyss */
   - Id: 16598
     AegisName: Acti_Potion_Box2
     Name: Energizing Potion Box II
@@ -40507,6 +43400,14 @@ Body:
     Buy: 10
     Script: |
       /* getitem drooping votto hat[1],1; */
+  - Id: 16605
+    AegisName: Tendrilion_Hat_Box
+    Name: Tendrilion Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 5780,1; /* Tendrilion Hat */
   - Id: 16606
     AegisName: F_Tendrilion_Hat_Box
     Name: Tendrilrion Hat Box
@@ -40533,6 +43434,14 @@ Body:
     Weight: 10
     Script: |
       getitem 5783,1;
+  - Id: 16621
+    AegisName: Pink_Bunnyband_Box
+    Name: Pink Bunny Band Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 2214,1; /* Bunny Band */
   - Id: 16622
     AegisName: F_Pink_Bunnyband_Box
     Name: Pink Bunny Band Box
@@ -40548,6 +43457,14 @@ Body:
     Buy: 10
     Script: |
       getitem 5785,1;
+  - Id: 16624
+    AegisName: F_Green_Bunnyrband_Box
+    Name: Green Bunnyband Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Script: |
+      getitem 2214,1; /* Bunny Band */
   - Id: 16625
     AegisName: Half_Asprika_Box
     Name: Half Asprika Box 7days
@@ -40624,6 +43541,38 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_HALF_BRYNHILD_BOX);
+  - Id: 16629
+    AegisName: Granpeco_Hairband_Box
+    Name: Grand Peco Headdress Box
+    Type: Cash
+    Buy: 20
+    Weight: 800
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5476,1; /* Grand Peco Hairband */
+  - Id: 16630
+    AegisName: F_Granpeco_Hairband_Box
+    Name: Grand Peco Headdress Box
+    Type: Cash
+    Buy: 20
+    Weight: 800
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5476,1; /* Grand Peco Hairband */
   - Id: 16631
     AegisName: Aributa_Scroll
     Name: Aributa Scroll
@@ -40632,6 +43581,12 @@ Body:
     Weight: 10
     Flags:
       UniqueId: true
+  - Id: 16632
+    AegisName: test_3
+    Name: Closed Mind Box
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 16633
     AegisName: Bubble_Gum_Plus_10Box
     Name: Bubble Gum Plus Box
@@ -40930,6 +43885,38 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_F_RIBBON_OF_LIFE_BOX3);
+  - Id: 16650
+    AegisName: F_Gemini_Diadem_Box
+    Name: Gemini Diadem Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5569,1; /* Gemini Diadem */
+  - Id: 16651
+    AegisName: F_Gemini_Crown_Box
+    Name: Gemini Crown Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5570,1; /* Gemini Crown */
   - Id: 16652
     AegisName: Flame_Light
     Name: Flame Light
@@ -40994,6 +43981,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_F_RAPID_LIFE_WATER_BOX);
+  - Id: 16657
+    AegisName: Rapid_Life_Water_Box2
+    Name: Rapid Life Water Box10
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12578,10; /* Rapid Life Water */
   - Id: 16658
     AegisName: F_Rapid_Life_Water_Box2
     Name: Rapid Water Box(10)
@@ -41018,6 +44021,70 @@ Body:
     Weight: 1
     Script: |
       getgroupitem(IG_ZODIAC_DIADEM_PACK);
+  - Id: 16660
+    AegisName: Auger_Of_Spirit_Box
+    Name: Spiritual Auger Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6396,1; /* Auger Of Spirit */
+  - Id: 16661
+    AegisName: F_Auger_Of_Spirit_Box
+    Name: Spiritual Auger Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6396,1; /* Auger Of Spirit */
+  - Id: 16662
+    AegisName: F_Aries_Diadem_Box
+    Name: Aries Diadem Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5545,1; /* Aries Diadem */
+  - Id: 16663
+    AegisName: F_Aries_Crown_Box
+    Name: Aries Crown Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5546,1; /* Aries Crown */
   - Id: 16664
     AegisName: Leo_Scroll
     Name: Leo Scroll
@@ -41090,6 +44157,37 @@ Body:
       getitem 14532,10;
       if (!rand(10))
          getitem callfunc("F_Rand",603,617),1;
+  - Id: 16671
+    AegisName: Magic_Candy_Box10_2
+    Name: Magic Candy Box(10)
+    Type: Usable
+    Buy: 20
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16672
+    AegisName: F_Magic_Candy_Box10_2
+    Name: Magic Candy Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 16673
     AegisName: Libra_Scroll
     Name: Libra Scroll
@@ -41278,6 +44376,38 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_RWC2010_SuitcaseB);
+  - Id: 16689
+    AegisName: Garuda_Hat_Box
+    Name: Garuda Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 18508,1; /* Garuda Hat */
+  - Id: 16690
+    AegisName: F_Garuda_Hat_Box
+    Name: Garuda Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 18508,1; /* Garuda Hat */
   - Id: 16691
     AegisName: Scorpio_Scroll
     Name: Scorpius Scroll
@@ -42226,6 +45356,262 @@ Body:
       NoAuction: true
     Script: |
       getitem 12581,50;
+  - Id: 16778
+    AegisName: C_Str_Dish_Box
+    Name: Steamed Tongue Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16779
+    AegisName: C_Str_Dish_Box50
+    Name: Steamed Tongue Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16780
+    AegisName: C_Agi_Dish_Box
+    Name: Steamed Desert Scorpions Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16781
+    AegisName: C_Agi_Dish_Box50
+    Name: Steamed Desert Scorpions Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16782
+    AegisName: C_Vit_Dish_Box
+    Name: Stew of Immortality Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16783
+    AegisName: C_Vit_Dish_Box50
+    Name: Stew of Immortality Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16784
+    AegisName: C_Int_Dish_Box
+    Name: Dragon Breath Cocktail Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16785
+    AegisName: C_Int_Dish_Box50
+    Name: Dragon Breath Cocktail Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16786
+    AegisName: C_Dex_Dish_Box
+    Name: Hwergelmir's Tonic Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16787
+    AegisName: C_Dex_Dish_Box50
+    Name: Hwergelmir's Tonic Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16788
+    AegisName: C_Luk_Dish_Box
+    Name: Cooked Nine Tail's Tails Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16789
+    AegisName: C_Luk_Dish_Box50
+    Name: Cooked Nine Tail's Tails Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16790
+    AegisName: C_Insurance_Package
+    Name: Life Insurrance Certificate Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16791
+    AegisName: C_Insurance_Package50
+    Name: Life Insurrance Certificate Box(50)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16792
+    AegisName: C_Kafra_Card_Box
+    Name: Kafra Card Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16793
+    AegisName: C_Kafra_Card_Box50
+    Name: Kafra Card Box(50)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 16794
     AegisName: C_Giant_Fly_Wing_Box
     Name: Giant Flywing 500 Box
@@ -42244,6 +45630,422 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_C_GIANT_FLY_WING_BOX);
+  - Id: 16795
+    AegisName: C_Giant_Fly_Wing_Box100
+    Name: Giant Fly Wing Box(100)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16796
+    AegisName: C_Siegfried_Box5
+    Name: Token of Siegfried Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7621,5; /* Token Of Siegfried */
+  - Id: 16797
+    AegisName: C_Siegfried_Box20
+    Name: Token of Siegfried Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7621,20; /* Token Of Siegfried */
+  - Id: 16798
+    AegisName: C_Convex_Mirror_Box5
+    Name: Convex Mirror Box 5
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12214,5; /* Convex Mirror */
+  - Id: 16799
+    AegisName: C_Convex_Mirror_Box30
+    Name: Convex Mirror Box(30)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12214,30; /* Convex Mirror */
+  - Id: 16800
+    AegisName: C_Blessing_10_Box
+    Name: Blessing Scroll Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16801
+    AegisName: C_Blessing_10_Box50
+    Name: Blessing Scroll Box(50)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16802
+    AegisName: C_Inc_Agi_10_Scroll_Box
+    Name: Increase Agility Scroll Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16803
+    AegisName: C_Inc_Agi_10_Box50
+    Name: Increase Agility Scroll Box(50)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16804
+    AegisName: C_Adrenaline_5_box
+    Name: Adrenaline Rush Scroll Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16805
+    AegisName: C_Adrenaline_5_box50
+    Name: Adrenaline Rush Scroll Box(50)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16806
+    AegisName: C_Aspersio_5_Scroll_Box
+    Name: Aspersio Scroll Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16807
+    AegisName: C_Aspersio_5_Box50
+    Name: Aspersio Scroll Box(50)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16808
+    AegisName: C_Battle_Manual_Box
+    Name: Battle Manual Box
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16809
+    AegisName: C_Battle_Manual_Box10
+    Name: Battle Manual Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16810
+    AegisName: C_Bubble_Gum_Box
+    Name: Bubble Gum Box
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16811
+    AegisName: C_Bubble_Gum_Box10
+    Name: Bubble Gum Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16812
+    AegisName: C_Megaphone_Box
+    Name: Megaphone Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7040,1; /* Megaphone */
+  - Id: 16813
+    AegisName: C_Megaphone_Box10
+    Name: Megaphone Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7040,10; /* Megaphone */
+  - Id: 16814
+    AegisName: C_Enriched_Elunium_Box
+    Name: Enriched Elunium Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7619,10; /* Enriched Elunium */
+  - Id: 16815
+    AegisName: C_Enriched_Elunium_Box5
+    Name: Enriched Elunium Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7619,5; /* Enriched Elunium */
+  - Id: 16816
+    AegisName: C_Enriched_Oridecon_Box
+    Name: Enriched Oridecon Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7620,10; /* Enriched Oridecon */
+  - Id: 16817
+    AegisName: C_Enc_Oridecon_Box5
+    Name: Enriched Oridecon Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7620,5; /* Enriched Oridecon */
+  - Id: 16818
+    AegisName: C_Neuralizer_Box
+    Name: Neuralizer Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12213,1; /* Neuralizer */
+  - Id: 16819
+    AegisName: C_Abrasive_Box5
+    Name: Abrasive Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14536,5; /* Abrasive */
+  - Id: 16820
+    AegisName: C_Abrasive_Box10
+    Name: Abrasive Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14536,10; /* Abrasive */
   - Id: 16821
     AegisName: C_Dun_Tele_Scroll_Box5
     Name: Dungeon Teleport Scroll Box(5)
@@ -42272,6 +46074,54 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 16823
+    AegisName: C_Max_Weight_Up_Box
+    Name: Gym Pass Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7776,1; /* Gym Pass */
+  - Id: 16824
+    AegisName: C_Regeneration_Box5
+    Name: Regeneration Potion Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14537,5; /* Regeneration Potion */
+  - Id: 16825
+    AegisName: C_Regeneration_Box10
+    Name: Regeneration Potion Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14537,10; /* Regeneration Potion */
   - Id: 16826
     AegisName: Sagittarius_Scr_Box
     Name: Sagittarius Scr Box
@@ -42282,6 +46132,166 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Sagittarius_Scr_Box);
+  - Id: 16827
+    AegisName: C_Small_Life_Potion_Box
+    Name: Small Life Potion Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14534,10; /* Small Life Potion */
+  - Id: 16828
+    AegisName: C_S_Life_Potion_Box50
+    Name: Small Life Potion Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14534,50; /* Small Life Potion */
+  - Id: 16829
+    AegisName: C_Med_Life_Potion_Box
+    Name: Medium Life Potion Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14535,10; /* Medium Life Potion */
+  - Id: 16830
+    AegisName: C_Med_Life_Potion_Box50
+    Name: Medium Life Potion Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14535,50; /* Medium Life Potion */
+  - Id: 16831
+    AegisName: C_G_Illusion_Box5
+    Name: Glass of Illusion Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14538,5; /* Glass of Illusion */
+  - Id: 16832
+    AegisName: C_G_Illusion_Box10
+    Name: Glass of Illusion Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14538,10; /* Glass of Illusion */
+  - Id: 16833
+    AegisName: C_S_ArmorBox5
+    Name: Shadow Armor Scroll Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14539,5; /* Shadow Armor Scroll */
+  - Id: 16834
+    AegisName: C_S_ArmorBox10
+    Name: Shadow Armor Scroll Box(30)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14539,30; /* Shadow Armor Scroll */
+  - Id: 16835
+    AegisName: C_Holy_Armor_S_Box5
+    Name: Holy Armor Scroll Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14540,5; /* Holy Armor Scroll */
+  - Id: 16836
+    AegisName: C_Holy_Armor_S_Box30
+    Name: Holy Armor Scroll Box(30)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14540,30; /* Holy Armor Scroll */
   - Id: 16837
     AegisName: C_Dun_Tele_Scroll2_Box5
     Name: Dungeon Teleport Scroll II Box(5)
@@ -42310,6 +46320,38 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 16839
+    AegisName: C_Spark_Candy_Box5
+    Name: Toktok Candy Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 529,5; /* Candy */
+  - Id: 16840
+    AegisName: C_Spark_Candy_Box10
+    Name: Toktok Candy Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 529,10; /* Candy */
   - Id: 16841
     AegisName: C_Repair_Scroll_Box
     Name: Weapon Repair Scroll Box(5)
@@ -42362,6 +46404,166 @@ Body:
       NoAuction: true
     Script: |
       getitem 7622,1;
+  - Id: 16844
+    AegisName: C_Alice_Scroll_Box5
+    Name: Alice Summon Book Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16845
+    AegisName: C_Alice_Scroll_Box10
+    Name: Alice Summon Book Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16846
+    AegisName: C_Mimic_Scroll_Box5
+    Name: Mimic Summon Book Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16847
+    AegisName: C_Mimic_Scroll_Box10
+    Name: Mimic Summon Book Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16848
+    AegisName: C_Disguise_Croll_Box5
+    Name: Disguise Summon Book Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16849
+    AegisName: C_Disguise_Croll_Box10
+    Name: Disguise Summon Book Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16850
+    AegisName: C_MP_Scroll_Box
+    Name: Mystical Amplification Scroll Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16851
+    AegisName: C_MP_Scroll_Box50
+    Name: Mystical Amplification Scroll Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16852
+    AegisName: C_Quagmire_Scroll_Box
+    Name: Quake Scroll Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16853
+    AegisName: C_Quagmire_Scroll_Box50
+    Name: Quake Scroll Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 16854
     AegisName: CCloth_Dye_Coupon_Box
     Name: Clothing Dye Box
@@ -42394,6 +46596,134 @@ Body:
       NoAuction: true
     Script: |
       getitem 6047,1;
+  - Id: 16856
+    AegisName: C_Greed_Scroll_C20Box
+    Name: Greed Scroll Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14529,20; /* Greed Scroll */
+  - Id: 16857
+    AegisName: C_Greed_Scroll_C50Box
+    Name: Greed Scroll Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14529,50; /* Greed Scroll */
+  - Id: 16858
+    AegisName: C_Mental_Potion20_Box
+    Name: Mental Potion Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14600,20; /* Mental Potion */
+  - Id: 16859
+    AegisName: C_Mental_Potion50_Box
+    Name: Mental Potion Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14600,50; /* Mental Potion */
+  - Id: 16860
+    AegisName: C_Tyr_Blessing_Box20
+    Name: Tyr's Blessing Box(20)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14601,20; /* Tyr's Blessing */
+  - Id: 16861
+    AegisName: C_Tyr_Blessing_Box50
+    Name: Tyr's Blessing Box(50)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14601,50; /* Tyr's Blessing */
+  - Id: 16862
+    AegisName: C_Job_Manual25_Box1
+    Name: JOB Battle Manual Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,1; /* JOB Battle Manual */
+  - Id: 16863
+    AegisName: C_Job_Manual25_Box10
+    Name: JOB Battle Manual Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14592,10; /* JOB Battle Manual */
   - Id: 16864
     AegisName: C_Siege_Scroll_Box1_10
     Name: Siege Map Teleport Scroll Box(10)
@@ -42462,6 +46792,166 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_C_SIEGE_SCROLL_BOX2_30);
+  - Id: 16868
+    AegisName: C_HD_Bradium_Box5
+    Name: HD Bradium Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6226,5; /* HD Bradium */
+  - Id: 16869
+    AegisName: C_HD_Bradium_Box10
+    Name: HD Bradium Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6226,10; /* HD Bradium */
+  - Id: 16870
+    AegisName: C_HD_Carnium_Box5
+    Name: HD Cranium Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6225,5; /* HD Carnium */
+  - Id: 16871
+    AegisName: C_HD_Carnium_Box10
+    Name: HD Cranium Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6225,10; /* HD Carnium */
+  - Id: 16872
+    AegisName: C_HD_Ori_Box5
+    Name: HD Oridecon Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6240,5; /* HD Oridecon */
+  - Id: 16873
+    AegisName: C_HD_Ori_Box10
+    Name: HD Oridecon Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6240,10; /* HD Oridecon */
+  - Id: 16874
+    AegisName: C_HD_Elu_Box5
+    Name: HD Elunium Box(5)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6241,5; /* HD Elunium */
+  - Id: 16875
+    AegisName: C_HD_Elu_Box10
+    Name: HD Elunium Box(10)
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6241,10; /* HD Elunium */
+  - Id: 16876
+    AegisName: C_Rapid_Life_Water_Box2
+    Name: Rapid Life Potion Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12578,10; /* Rapid Life Water */
+  - Id: 16877
+    AegisName: C_Magic_Candy_Box102
+    Name: Magic Candy Box(10)
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 16878
     AegisName: C_Umbala_Spirit_Box2
     Name: Umbala Spirit Box
@@ -43220,6 +47710,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_C_STUNNER_C_BOX);
+  - Id: 16920
+    AegisName: C_Marriage_Covenant_Box
+    Name: Written Oath of Marriage Box
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 16921
     AegisName: C_Shooting_Star_C_Box
     Name: Shooting Star Box
@@ -43832,6 +48338,278 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_C_BULGING_HEAD_BOX_1M);
+  - Id: 16955
+    AegisName: P_Upg_Guard_Box
+    Name: Upgrade Guard Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2149,1; /* Upg Guard */
+  - Id: 16956
+    AegisName: C_Upg_Buckler_Box
+    Name: Upgrade Buckler Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2150,1; /* Upg Buckler */
+  - Id: 16957
+    AegisName: C_Upg_Shield_Box
+    Name: Upgrade Shield Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2151,1; /* Upg Shield */
+  - Id: 16958
+    AegisName: C_Upg_Shoes_Box
+    Name: Upgrade Shoes Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2459,1; /* Upg Shoes */
+  - Id: 16959
+    AegisName: C_Upg_Boots_Box
+    Name: Upgrade Boots Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2460,1; /* Upg Boots */
+  - Id: 16960
+    AegisName: C_Upg_Greave_Box
+    Name: Upgrade Greaves Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2460,1; /* Upg Boots */
+  - Id: 16961
+    AegisName: C_Upg_Hood_Box
+    Name: Upgrade Hood Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2561,1; /* Upg Hood */
+  - Id: 16962
+    AegisName: C_Upg_Muffler_Box
+    Name: Upgrade Muffler Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2562,1; /* Upg Muffler */
+  - Id: 16963
+    AegisName: C_Upg_Manteau_Box
+    Name: Upgrade Manteau Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2563,1; /* Upg Manteau */
+  - Id: 16964
+    AegisName: C_Upg_Clip_Box
+    Name: Upgrade Clip Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2828,1; /* Upg Clip */
+  - Id: 16965
+    AegisName: C_Upg_Adv_Suit_Box
+    Name: Upgrade Adventure Suit Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 16966
+    AegisName: C_Upg_Coat_Box
+    Name: Upgrade Coat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 15016,1; /* Upg Coat */
+  - Id: 16967
+    AegisName: C_Upg_Saint_Robe_Box
+    Name: Upgrade Saint Robe Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 15017,1; /* Upg Saint Robe */
+  - Id: 16968
+    AegisName: C_Upg_Tights_Box
+    Name: Upgrade Tight Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 15018,1; /* Upg Tights */
+  - Id: 16969
+    AegisName: C_Upg_Thief_Cloth_Box
+    Name: Upgrade Thief Clothes Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 15019,1; /* Upg Thief Cloth */
+  - Id: 16970
+    AegisName: C_Upg_Mail_Box
+    Name: Upgrade Mail Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 15020,1; /* Upg Mail */
+  - Id: 16971
+    AegisName: C_Upg_Formal_Dress_Box
+    Name: Upgrade Formal Suit Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 15021,1; /* Upg Formal Dress */
   - Id: 16972
     AegisName: Weather_Report_Box
     Name: Weather Report Box
@@ -43940,6 +48718,22 @@ Body:
       NoAuction: true
     Script: |
       getitem 19522,1;
+  - Id: 16978
+    AegisName: C_Green_FoxtailBox
+    Name: Foxtail Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 18536,1; /* Foxtail */
   - Id: 16979
     AegisName: Silvervine_Fruit_Box4
     Name: Silvervine 4 Box
@@ -44540,6 +49334,38 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_TRANS_BOX_GOLEM);
+  - Id: 17044
+    AegisName: Donation_Ribbon_Box
+    Name: Green Ribbon Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5193,1; /* Green Ribbon */
+  - Id: 17045
+    AegisName: Korean_Judge_Hat_Box
+    Name: Judge Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5371,1; /* Judge Hat */
   - Id: 17046
     AegisName: Attend_C_Box
     Name: Attendance Costume Box
@@ -44664,6 +49490,22 @@ Body:
     Weight: 10
     Flags:
       UniqueId: true
+  - Id: 17065
+    AegisName: Mbl_Taurus_Crown_Box
+    Name: Taurus Crown Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 17066
     AegisName: Poison_Bottle_Box50
     Name: Poison Bottle Box50
@@ -45624,6 +50466,22 @@ Body:
       UniqueId: true
     Script: |
       getitem 18636,1;
+  - Id: 17153
+    AegisName: Red_Booster_Box20
+    Name: Red Booster Box20
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12796,20; /* Red Booster */
   - Id: 17154
     AegisName: Red_Booster_Box20_2
     Name: Red Booster Box
@@ -45737,6 +50595,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_BOARDING_HALTER_BOX7);
+  - Id: 17163
+    AegisName: Mystic_Powder_Box30
+    Name: Mystic Powder Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12805,1; /* Mystic Powder */
   - Id: 17164
     AegisName: Mystic_Powder_Box30_2
     Name: Mystic Powder Box
@@ -45766,6 +50640,22 @@ Body:
     Script: |
       getgroupitem(IG_Challenge_Kit);
       /*getitem Blessing_10_Scroll,20; getitem Inc_Agi_10_Scroll,20;*/
+  - Id: 17166
+    AegisName: Hellomother_Hat_Box
+    Name: Arc Angeling Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5319,1; /* Hello Mother Hat */
   - Id: 17171
     AegisName: EC_Battle_Manual_Box
     Name: Battle Manual Box(10)
@@ -45910,6 +50800,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_MYSTERIOUS_WATER_BOX50);
+  - Id: 17179
+    AegisName: C_Myst_Water_Box50
+    Name: Mysterious Water Box50
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12832,50; /* Mysterious Water */
   - Id: 17180
     AegisName: Mysterious_Water_Box50_
     Name: Mysterious Life Potion Box(Girl)
@@ -45936,6 +50842,22 @@ Body:
     Weight: 10
     Flags:
       UniqueId: true
+  - Id: 17182
+    AegisName: Fallen_Angel_Wing_Box
+    Name: Fallen Angel Wings Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2589,1; /* Fallen Angel Wing */
   - Id: 17184
     AegisName: 3rd_Test_Pass_Box
     Name: 3rd Test Pass Box
@@ -46047,6 +50969,52 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_GOLDEN_POTION_RG_BOX);
+  - Id: 17200
+    AegisName: RG_Noble_Hat_Box
+    Name: RG Noble Hat Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 5469,1; /* Musketeer Hat */
+  - Id: 17201
+    AegisName: RG_Soft_Sheep_Hat_Box
+    Name: RG Soft Sheep Hat Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 18569,1; /* Soft Sheep Hat */
+  - Id: 17202
+    AegisName: Baksojin_Hat_Box
+    Name: Baksojin Hat Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 17203
     AegisName: Free_Pass_Box
     Name: Free Pass Box
@@ -46159,6 +51127,22 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Tw_Yellow_Scroll);
+  - Id: 17224
+    AegisName: Almighty_Box
+    Name: Almighty Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12883,10; /* Almighty */
   - Id: 17226
     AegisName: C_Center_Pot_Box
     Name: Infinite Concentration Potion
@@ -46838,6 +51822,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_REFINE_ORE_BOX4_SET20);
+  - Id: 17284
+    AegisName: E_Change_Name_Card_Box
+    Name: "Event: Change the name box"
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 17285
     AegisName: E_New_Style_Box
     Name: Events Beauty Gift Box
@@ -46856,6 +51855,36 @@ Body:
       NoAuction: true
     Script: |
       /*TODO*/
+  - Id: 17286
+    AegisName: E_Cloth_Dye_Coupon_Box
+    Name: "Event: Clothes Dye Coupon Box"
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6046,1; /* Clothing Dye Coupon */
+  - Id: 17287
+    AegisName: E_Cloth_Dye_Coupon_Box2
+    Name: "Event: Clothes Dye Coupon Box II"
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 17288
     AegisName: Customizing_Box
     Name: Customization Box
@@ -49698,6 +54727,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_NYANGVINE_BOX100_2);
+  - Id: 17689
+    AegisName: AID_Buff_Box
+    Name: Premium Buff Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23207,1; /* [30Day] Premium Subscription Box */
   - Id: 17690
     AegisName: Vigorgra_Plus_Package2
     Name: Cheer Up Plus Package II
@@ -51190,6 +56234,21 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_A_UNLIMITED_BOX);
+  - Id: 17999
+    AegisName: Inventory_Ex_Box
+    Name: Inventory Expansion Voucher Box(1)
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 22507
     AegisName: ShabbyOldScroll
     Name: Old Scroll
@@ -52736,6 +57795,13 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_JUMPING_KIT_BOX);
+  - Id: 22701
+    AegisName: Pegasus_Cotton_Candy
+    Name: Pegasus Cotton Candy
+    Type: Usable
+    Weight: 50
+    Script: |
+      percentheal 40,40;
   - Id: 22702
     AegisName: Minus_Str
     Name: STR Reduction Potion
@@ -54216,6 +59282,20 @@ Body:
       NoAuction: true
     Script: |
       /* TODO dynamic NPC */
+  - Id: 22909
+    AegisName: Weapon_5Up_Box
+    Name: +5 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6456,1; /* +5 Weapon Refine Ticket */
+  - Id: 22910
+    AegisName: Weapon_6Up_Box
+    Name: +6 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6231,1; /* +6 Weapon Refine Ticket */
   - Id: 22911
     AegisName: Weapon_7Up_Box
     Name: Weapon +7 Refine Ticket
@@ -54223,6 +59303,13 @@ Body:
     Weight: 10
     Script: |
       getitem 6230,1; /* Safe to 7 Weapon Certificate */
+  - Id: 22912
+    AegisName: Weapon_8Up_Box
+    Name: Weapon +8 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6229,1; /* +8 Weapon Refine Ticket */
   - Id: 22913
     AegisName: Weapon_9Up_Box
     Name: Weapon +9 Refine Ticket
@@ -54230,6 +59317,21 @@ Body:
     Weight: 10
     Script: |
       getitem 6228,1; /* +9 Weapon refine deed */
+  - Id: 22914
+    AegisName: Bubble_Gum_24h
+    Name: Bubble Gum 24h
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 22915
     AegisName: Weapon_11Up_Box
     Name: Weapon +11 Refine Ticket
@@ -54237,6 +59339,76 @@ Body:
     Weight: 10
     Script: |
       getitem 6238,1; /* +11 Weapon refine deed */
+  - Id: 22916
+    AegisName: Weapon_12Up_Box
+    Name: Weapon +12 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6584,1; /* +12 Weapon Certificate */
+  - Id: 22917
+    AegisName: Weapon_13Up_Box
+    Name: +13 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6870,1; /* Safe to 13 Weapon Certificate */
+  - Id: 22918
+    AegisName: Weapon_14Up_Box
+    Name: +14 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6871,1; /* Safe to 14 Weapon Certificate */
+  - Id: 22919
+    AegisName: Weapon_15Up_Box
+    Name: +15 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6872,1; /* Safe to 15 Weapon Certificate */
+  - Id: 22920
+    AegisName: Weapon_16Up_Box
+    Name: +16 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6873,1; /* Safe to 16 Weapon Certificate */
+  - Id: 22921
+    AegisName: Weapon_17Up_Box
+    Name: +17 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6874,1; /* Safe to 17 Weapon Certificate */
+  - Id: 22922
+    AegisName: Weapon_18Up_Box
+    Name: +18 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6875,1; /* Safe to 18 Weapon Certificate */
+  - Id: 22923
+    AegisName: Weapon_19Up_Box
+    Name: +19 Weapon Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6864,1; /* Safe to 19 Weapon Certificate */
+  - Id: 22924
+    AegisName: Armor_5Up_Box
+    Name: +5 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6457,1; /* +5 Armor Refine Ticket */
+  - Id: 22925
+    AegisName: Armor_6Up_Box
+    Name: +6 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6235,1; /* +6 Armor Refine Ticket */
   - Id: 22926
     AegisName: Armor_7Up_Box
     Name: Armor +7 Refine Ticket
@@ -54244,6 +59416,13 @@ Body:
     Weight: 10
     Script: |
       getitem 6234,1; /* Safe to 7 Body Armor Certificate */
+  - Id: 22927
+    AegisName: Armor_8Up_Box
+    Name: Armor +8 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6233,1; /* +8 Armor Refine Ticket */
   - Id: 22928
     AegisName: Armor_9Up_Box
     Name: Armor +9 Refine Ticket
@@ -54251,6 +59430,21 @@ Body:
     Weight: 10
     Script: |
       getitem 6232,1; /* +9 Armor refine deed */
+  - Id: 22929
+    AegisName: Job_Manual25_24h
+    Name: Job Battle Manual 24h
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 22930
     AegisName: Armor_11Up_Box
     Name: Armor +11 Refine Ticket
@@ -54258,6 +59452,76 @@ Body:
     Weight: 10
     Script: |
       getitem 6239,1; /* +11 Armor refine deed */
+  - Id: 22931
+    AegisName: Armor_12Up_Box
+    Name: Armor +12 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6585,1; /* +12 Armor Certificate */
+  - Id: 22932
+    AegisName: Armor_13Up_Box
+    Name: +13 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6876,1; /* Safe to 13 Armor Certificate */
+  - Id: 22933
+    AegisName: Armor_14Up_Box
+    Name: +14 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6877,1; /* Safe to 14 Armor Certificate */
+  - Id: 22934
+    AegisName: Armor_15Up_Box
+    Name: +15 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6878,1; /* Safe to 15 Armor Certificate */
+  - Id: 22935
+    AegisName: Armor_16Up_Box
+    Name: +16 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6879,1; /* Safe to 16 Armor Certificate */
+  - Id: 22936
+    AegisName: Armor_17Up_Box
+    Name: +17 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6880,1; /* Safe to 17 Armor Certificate */
+  - Id: 22937
+    AegisName: Armor_18Up_Box
+    Name: +18 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6881,1; /* Safe to 18 Armor Certificate */
+  - Id: 22938
+    AegisName: Armor_19Up_Box
+    Name: +19 Armor Upgrade Certificate
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6865,1; /* Safe to 19 Armor Certificate */
+  - Id: 22943
+    AegisName: Armor_10Up_Box
+    Name: Armor +10 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6994,1; /* +10 Armor Certificate */
+  - Id: 22944
+    AegisName: Weapon_10Up_Box
+    Name: Weapon +10 Refine Ticket
+    Type: Usable
+    Weight: 10
+    Script: |
+      getitem 6993,1; /* +10 Weapon Certificate */
   - Id: 22945
     AegisName: Cherry_Blossom_Cake
     Name: Cherry Blossom Rice Cake
@@ -54665,6 +59929,52 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_IMPROVED_WOODENBOX);
+  - Id: 23008
+    AegisName: AID_Bubble_Gum_24h
+    Name: "[24H] Bubble Gum"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23010
+    AegisName: AID_Manual_24h
+    Name: "[24H] Battle Manual"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23011
+    AegisName: AID_Insurance_24h
+    Name: "[24H] Life Insurance"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23012
     AegisName: Comp_Small_Mana_Potion
     Name: "[Not For Sale] Small Mana Potion"
@@ -54715,6 +60025,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_IMPROVED_PLATINUMBOX);
+  - Id: 23015
+    AegisName: Red_Slim_Pot_Box
+    Name: Red Slim Potion Box
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23016
     AegisName: Pieces_Of_Grudge
     Name: Cursed Fragment
@@ -54794,6 +60118,36 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_PIAMETTE_SCROLL);
+  - Id: 23025
+    AegisName: Pope_Merc_Scroll
+    Name: Pope Mercenary Scroll
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23026
+    AegisName: CasualPope_Merc_Scroll
+    Name: Casual Pope Mercenary Scroll
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23027
     AegisName: Dandelion_Ring
     Name: Dandelion Ring
@@ -54811,6 +60165,20 @@ Body:
       NoAuction: true
     Script: |
       warp "rachel",120,125;
+  - Id: 23028
+    AegisName: Capture_Rope
+    Name: Capture Rope
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23029
     AegisName: Cowlick_Box
     Name: Ponytail Gift Box
@@ -55148,6 +60516,14 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box9);
+  - Id: 23061
+    AegisName: Incisive_Arrow_Cntr
+    Name: Sharp Arrow Quiver
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem 1764,500; /* Sharp Arrow */
   - Id: 23062
     AegisName: CokingOpenBox
     Name: Cooking Open Memorial Box
@@ -55781,6 +61157,36 @@ Body:
     Weight: 10
     Script: |
       getitem 23143,5;
+  - Id: 23148
+    AegisName: Premium_Box_2d
+    Name: "[2Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23149
+    AegisName: Premium_Box_3d
+    Name: "[3Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23150
     AegisName: Lapine_DdukddakBox
     Name: Lapine Big Box
@@ -55873,6 +61279,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_GUNSLINGER_SCROLL);
+  - Id: 23165
+    AegisName: Service30_AID_Buff
+    Name: Premium Service Personnel
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23167
     AegisName: Green_Scroll_K
     Name: July Green Scroll
@@ -55917,6 +61337,48 @@ Body:
     Weight: 10
     Script: |
       laphine_synthesis();
+  - Id: 23171
+    AegisName: Sealed_Gloom_Card_
+    Name: Sealed Gloom Under Night Card
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23172
+    AegisName: Sealed_Pharaoh_Card_
+    Name: Sealed Pharaoh Card
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23173
+    AegisName: Sealed_Kiel_Card_
+    Name: Sealed Kiel-D-01 Card
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23174
     AegisName: Enchant_Stone_Box11
     Name: Costume Enchant Stone Box 11
@@ -56125,6 +61587,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_PREMIUMNOMALBOX);
+  - Id: 23202
+    AegisName: Vin_Chaud
+    Name: Mulled Wine
+    Type: Usable
+    Weight: 40
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23203
     AegisName: Small_Mana_Potion
     Name: Small Mana Potion
@@ -56200,6 +61676,66 @@ Body:
       NoAuction: true
     Script: |
       /* TODO */
+  - Id: 23209
+    AegisName: Premium_Box_1d
+    Name: "[1Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23210
+    AegisName: Premium_Box_4d
+    Name: "[4Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23211
+    AegisName: Premium_Box_5d
+    Name: "[5Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23212
+    AegisName: Premium_Box_6d
+    Name: "[6Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23213
     AegisName: Premium_Box_5d7
     Name: "[7Day] Premium Subscription Box"
@@ -56215,6 +61751,51 @@ Body:
       NoAuction: true
     Script: |
       /* TODO */
+  - Id: 23214
+    AegisName: Premium_Box_8d
+    Name: "[8Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23215
+    AegisName: Premium_Box_9d
+    Name: "[9Day] Premium Subscription Box"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 23216
+    AegisName: Premium_Box_10d
+    Name: "[10Day] Premium Subscription"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23217
     AegisName: 2016_Special_Scroll
     Name: 2016 Special Scroll
@@ -56402,6 +61983,20 @@ Body:
     Weight: 10
     Script: |
       laphine_synthesis();
+  - Id: 23242
+    AegisName: Fried_Chicken
+    Name: Assorted Fried Chicken
+    Type: Usable
+    Weight: 100
+#   Script: |
+#     /* TODO */
+  - Id: 23243
+    AegisName: Fried_Chicken_1
+    Name: Deep-fried Chicken
+    Type: Usable
+    Weight: 100
+#   Script: |
+#     /* TODO */
   - Id: 23245
     AegisName: Lapine_Scroll
     Name: Lapine Scroll
@@ -57007,6 +62602,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_LIAN_BUNDLE_B);
+  - Id: 23296
+    AegisName: D_Buger
+    Name: D.Burger
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23297
     AegisName: Lovely_Egg_Box
     Name: Lovely Egg Box
@@ -57127,6 +62736,20 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_CHEMICALS_BAG);
+  - Id: 23317
+    AegisName: Comp_Cherryblossom_C
+    Name: "[NotForSale] Cherry Blossom Cake"
+    Type: Usable
+    Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 30,30;
   - Id: 23318
     AegisName: Shadow_Scroll2
     Name: Shadow Scroll II
@@ -57204,6 +62827,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_MOBILE_NOVICE_BOX);
+  - Id: 23328
+    AegisName: Asha_Vahishta
+    Name: Asha Bahishta
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23329
     AegisName: C_Wing_Of_Fly_5Day_Box_
     Name: Infinite Fly Wing Box(5 Days)
@@ -57613,6 +63250,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_CRYPTURA_GIFTBOX);
+  - Id: 23367
+    AegisName: Tamato_Noodle
+    Name: Spaghetti and Sauce
+    Type: Usable
+    Weight: 100
+    Script: |
+      percentheal 30,30;
+  - Id: 23368
+    AegisName: Store_Search1
+    Name: Special Shopper Catalog
+    Type: Usable
+    Weight: 10
+#   Script: |
+#     /* TODO */
   - Id: 23374
     AegisName: Fire_Armor_S
     Name: Fire Armor Scroll
@@ -57754,6 +63405,20 @@ Body:
     Weight: 100
     Script: |
       percentheal 20,20;
+  - Id: 23446
+    AegisName: Savage_Trap
+    Name: Savage Trap
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23473
     AegisName: Infinity_Scroll
     Name: Infinity Scroll
@@ -58201,6 +63866,14 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box13);
+  - Id: 23533
+    AegisName: Vote_Rose
+    Name: Rose of Choice
+    Type: Usable
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 23537
     AegisName: Bloody_Scroll
     Name: Bloody Scroll
@@ -58307,6 +63980,12 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_SNOW_FESTA_CARDPACK);
+  - Id: 23556
+    AegisName: Hunter_Food
+    Name: Dinner for Hunter
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 23575
     AegisName: Adventurer_Box_1
     Name: Adventurer Box (1)
@@ -58968,6 +64647,13 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 23723
+    AegisName: Melon_Bread
+    Name: Melon Bread
+    Type: Usable
+    Weight: 50
+#   Script: |
+#     /* TODO */
   - Id: 23724
     AegisName: Celebrate_Egg
     Name: Memorial Egg
@@ -59072,6 +64758,13 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_NOODLE_FESTA_CAN);
+  - Id: 23744
+    AegisName: Cream_Noodle
+    Name: Cream Noodles
+    Type: Usable
+    Weight: 40
+#   Script: |
+#     /* TODO */
   - Id: 23751
     AegisName: Comp_AID_Buff_Box
     Name: "[NotForSale] Premium Buff Box"
@@ -60386,6 +66079,21 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_SILLIT_PONG_BOX);
+  - Id: 23962
+    AegisName: Malang_Cat_Can2
+    Name: Upgraded Malangdo Cat Can
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 23967
     AegisName: EnchantStone_Recipe_9m
     Name: Enchant Stone Recipe 9m
@@ -60608,6 +66316,12 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 100024
+    AegisName: TimeExtension1
+    Name: Time Extension (Account)
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 100025
     AegisName: Ancient_Hero_Wisdom
     Name: Ancient Hero Wisdom
@@ -60617,6 +66331,12 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 100026
+    AegisName: TimeExtension2
+    Name: Time Extension(Character)
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 100029
     AegisName: Booster_Pack_1
     Name: Booster Pack(1)
@@ -61573,6 +67293,21 @@ Body:
       NoGuildStorage: true
     Script: |
       bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,15; }",900,1,0,EFST_BATH_FOAM_C;
+  - Id: 100150
+    AegisName: Aroma_Oil
+    Name: Aromatherapy Oil
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 100151
     AegisName: Skill_Sha_M_S_Weapon
     Name: Skill Shadow Weapon Recipe
@@ -62607,6 +68342,24 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_2020_GOAL_GIFT_BOX);
+  - Id: 100351
+    AegisName: Core_Battle_Manual
+    Name: Core Combat Manual
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 100352
+    AegisName: Real_Battle_Manual
+    Name: Real Combat Manual
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 100354
     AegisName: Auto_Armor_Refine_Cube
     Name: Automatic Armor +11 Refinement Cube
@@ -63511,6 +69264,69 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box22);
+  - Id: 100508
+    AegisName: Exp_Up_1_S
+    Name: Special Growth Potion (Lower)
+    Type: Usable
+    EquipLevelMin: 35
+    EquipLevelMax: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 100509
+    AegisName: Exp_Up_2_S
+    Name: Special Growth Potion (Intermediate)
+    Type: Usable
+    EquipLevelMin: 85
+    EquipLevelMax: 99
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 100510
+    AegisName: Exp_Up_3_S
+    Name: Special Growth Potion (Advanced)
+    Type: Usable
+    EquipLevelMin: 130
+    EquipLevelMax: 160
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 100511
+    AegisName: Exp_Up_4_S
+    Name: Special Growth Potion (Superior)
+    Type: Usable
+    EquipLevelMin: 175
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 100512
     AegisName: Ex_Skill_Shadow_Cube
     Name: Extended Class Skill Shadow Cube
@@ -63758,6 +69574,62 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_RAG_INVEN_BOX);
+  - Id: 100574
+    AegisName: AID_Manual_1h
+    Name: Premium Expierence Pass (1 Hour)
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 100575
+    AegisName: AID_Bubble_Gum_1h
+    Name: Premium Drop Rate Pass (1 Hour)
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 100576
+    AegisName: AID_Insurance_1h
+    Name: Premium Death Penalty Reduction Pass (1 Hour)
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 100577
+    AegisName: AID_Special_1h
+    Name: Premium Special Offer Pass (1 Hour)
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 100579
     AegisName: PendantStoneForWork
     Name: Pendant Gemstone of Force
@@ -64140,6 +70012,12 @@ Body:
       NoAuction: true
     Script: |
       laphine_upgrade();
+  - Id: 100724
+    AegisName: Spring_Energy
+    Name: Spring Energy
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 100726
     AegisName: Booster_Pack_215
     Name: Booster Pack(215)
@@ -64327,6 +70205,15 @@ Body:
     Type: DelayConsume
     Script: |
       item_reform();
+  - Id: 100796
+    AegisName: Darkness_Bible
+    Name: Dark Bible
+    Type: Usable
+    Weight: 50
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 100810
     AegisName: BroadcastBox_
     Name: Broadcast Box
@@ -64344,6 +70231,20 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_BROADCASTBOX_);
+  - Id: 100816
+    AegisName: Summer_Energy
+    Name: Summer Vibes
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 100817
     AegisName: Thanos_Upgrade_Box
     Name: Thanos Upgrade Box
@@ -64732,6 +70633,20 @@ Body:
       NoAuction: true
     Script: |
       /* TODO */
+  - Id: 100914
+    AegisName: EXP_Drop_Up_1Hours
+    Name: Kafra Buff(1 Hour)
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 100917
     AegisName: Hero_Weapon_Hammer_4
     Name: Modified Hero's Weapon Refinement Hammer IV
@@ -66583,6 +72498,13 @@ Body:
     Script: |
       specialeffect2 EF_POTION_BERSERK;
       sc_start SC_INFINITY_DRINK,1800000,0;
+  - Id: 101099
+    AegisName: ClockTower_Regulator
+    Name: Spring Regulator
+    Type: Usable
+    Weight: 10
+#   Script: |
+#     /* TODO */
   - Id: 101100
     AegisName: Poenetentia_Box3
     Name: Poenitentia Two Swords Set Box
@@ -67303,6 +73225,12 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_SEASON_EVT_REWARD_1);
+  - Id: 101241
+    AegisName: Strange_Tteokguk
+    Name: Hyul's Special Rice Cake Soup
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 101243
     AegisName: Shadow_Changer_NPC
     Name: Shadow Changer
@@ -67730,6 +73658,21 @@ Body:
       BuyingStore: true
     Script: |
       item_reform();
+  - Id: 101391
+    AegisName: VR_Books001
+    Name: Scientist's Escape Log
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101393
     AegisName: aegis_101393
     Name: Mugwort Rice Cake
@@ -67756,6 +73699,42 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_ENCHANT_TICKET_3);
+  - Id: 101404
+    AegisName: aegis_101404
+    Name: Fantasy Growth Potion
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 101406
+    AegisName: aegis_101406
+    Name: Fantasy Job Growth Potion
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 101407
+    AegisName: aegis_101407
+    Name: Move Scroll(Convenience)
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 101408
+    AegisName: aegis_101408
+    Name: Move Scroll(Danger Areas)
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 101416
     AegisName: aegis_101416
     Name: Costume Enchant Stone Box 27
@@ -67937,6 +73916,21 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 101473
+    AegisName: P_Booster_Call
+    Name: Premium Booster Call    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101474
     AegisName: Booster_B_M_1
     Name: Booster Combat Manual    # !todo check english name
@@ -68271,6 +74265,66 @@ Body:
     Script: |
       sc_start SC_FOOD_INT_CASH,1800000,15;
       sc_start SC_MATKPOTION,600000,rand(11,111);
+  - Id: 101522
+    AegisName: F_VR_Book001
+    Name: Fantasy Series 001
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101523
+    AegisName: F_VR_Book002
+    Name: Fantasy Series 002
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101524
+    AegisName: F_VR_Book003
+    Name: Fantasy Series 003
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101525
+    AegisName: F_VR_Book004
+    Name: Fantasy Series 004
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101538
     AegisName: Booster_Call_Package
     Name: Booster box    # !todo check english name
@@ -68480,6 +74534,34 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_E_BOARDING_HALTER_BOX2);
+  - Id: 101596
+    AegisName: Evt_20th_Shield
+    Name: Kingdom Shield    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101597
+    AegisName: Evt_20th_Protector
+    Name: Guardians of the Kingdom    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101599
     AegisName: Evt_Makingmaterials_Box
     Name: "[Event] Equipment Crafting Material Box"    # !todo check english name
@@ -68615,6 +74697,21 @@ Body:
       DropEffect: CLIENT
     Script: |
       item_reform();
+  - Id: 101638
+    AegisName: D_Glacier_W_Enchant
+    Name: Dim Glacia Weapon Enhancement    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101639
     AegisName: D_Gw_Extractor
     Name: Dim Glacier Extractor    # !todo check english name
@@ -68639,6 +74736,12 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101649
+    AegisName: Mjo_Ein_Enchant
+    Name: Upgrade Mining Equipment Enchantments    # !todo check english name
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 101653
     AegisName: Viva_Adul_Hat_Box_11
     Name: +11 Helm of Face Chest    # !todo check english name
@@ -68770,6 +74873,36 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box28);
+  - Id: 101705
+    AegisName: F_VR_Book006
+    Name: Fantasy Series 006    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101706
+    AegisName: F_VR_Book007
+    Name: Fantasy Series 007    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101717
     AegisName: Mammoth_Earring_Box
     Name: Maximum Mammoth Shadow Earring Box    # !todo check english name
@@ -68903,6 +75036,12 @@ Body:
     Type: DelayConsume
     Script: |
       item_reform();
+  - Id: 101746
+    AegisName: Dimmen_A_Enchant
+    Name: Dimensional Enchantment Box    # !todo check english name
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 101750
     AegisName: Herosria_Gift
     Name: Heroria's Gift    # !todo check english name
@@ -68929,6 +75068,51 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_RO_FESTIVAL_BOX);
+  - Id: 101753
+    AegisName: Heros_Purple_H_Jam
+    Name: Heroria Purple Herb Jam    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 101754
+    AegisName: Heros_Red_H_Jam
+    Name: Heroria Red Herb Jam    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 101755
+    AegisName: Heros_Blue_H_Jam
+    Name: Heroria Blue Herb Jam    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 101756
+    AegisName: Heros_Yellow_H_Jam
+    Name: Heroria Yellow Herb Jam    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 101757
+    AegisName: Heros_White_H_Jam
+    Name: Heroria White Herb Jam    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 101759
     AegisName: Plain_Rune_Box5
     Name: Plain Rune 5ea Box
@@ -68993,6 +75177,66 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_DEATH_RUNE_BOX5);
+  - Id: 101765
+    AegisName: Barmund_P_Enchant
+    Name: Meadow Rune Enchantment    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101766
+    AegisName: Barmund_D_Enchant
+    Name: Death Rune Enchantment    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101767
+    AegisName: Barmund_F_Enchant
+    Name: Fire Rune Enchantment    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101768
+    AegisName: Barmund_I_Enchant
+    Name: Ice Rune Enchantment    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101769
     AegisName: Barmund_Plain_Reform
     Name: Grassland Rune Upgrade    # !todo check english name
@@ -69402,6 +75646,51 @@ Body:
     Type: DelayConsume
     Script: |
       item_reform();
+  - Id: 101834
+    AegisName: F_VR_Book009
+    Name: Fantasy Series 009    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101835
+    AegisName: F_VR_Book005
+    Name: Fantasy Series 005    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 101837
+    AegisName: F_VR_Book008
+    Name: Fantasy Series 008    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 101839
     AegisName: RO_Arena_Box
     Name: Ragnarok Arena Pre-Order Reward Box    # !todo check english name
@@ -69645,6 +75934,24 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_CVT_WING_BOX,true);
+  - Id: 101930
+    AegisName: Barmund_S_Enchant
+    Name: Soul Rune Enchantment    # !todo check english name
+    Type: Usable
+#   Script: |
+#     /* TODO */
+  - Id: 101931
+    AegisName: Barmund_V_Enchant
+    Name: Poison Rune Enchantment    # !todo check english name
+    Type: Usable
+#   Script: |
+#     /* TODO */
+  - Id: 101932
+    AegisName: Barmund_T_Enchant
+    Name: Crusade Rune Enchantment    # !todo check english name
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 101933
     AegisName: Barmund_Soul_Reform
     Name: Soul Rune Upgrade    # !todo check english name
@@ -69777,6 +76084,12 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Intake_Hair_Box);
+  - Id: 102015
+    AegisName: Mocadas_Enchant_Box
+    Name: Mocadas Equipment Enchantment    # !todo check english name
+    Type: Usable
+#   Script: |
+#     /* TODO */
   - Id: 102016
     AegisName: F_Ein_1HDAGGER_Box
     Name: Metal Detector Box    # !todo check english name
@@ -70231,6 +76544,24 @@ Body:
     Weight: 1250
     Script: |
       item_reform();
+  - Id: 102128
+    AegisName: aegis_102128
+    Name: All-in-One Buff Potion    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 102129
+    AegisName: aegis_102129
+    Name: All-in-one Healing Potion    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 102193
     AegisName: aegis_102193
     Name: Costume Enchant Stone Box 30
@@ -70673,6 +77004,13 @@ Body:
     AegisName: Melody_Card_191
     Name: Special Melody Card    # !todo check english name
     Type: Usable
+  - Id: 102420
+    AegisName: Music_Box_191
+    Name: Dimensional Crystal Music Box    # !todo check english name
+    Type: Usable
+    Weight: 50
+#   Script: |
+#     /* TODO */
   - Id: 102421
     AegisName: Season_Evt_Reward_8
     Name: Night Market Blue Box    # !todo check english name
@@ -70681,6 +77019,24 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_SEASON_EVT_REWARD_8);
+  - Id: 102433
+    AegisName: Unsealing_Scroll
+    Name: Unsealing Scroll
+    Type: Usable
+    Weight: 100
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
+  - Id: 102434
+    AegisName: Warm_Shield_Scroll
+    Name: Warm Shield Scroll
+    Type: Usable
+    Weight: 100
+    Flags:
+      BuyingStore: true
+#   Script: |
+#     /* TODO */
   - Id: 102440
     AegisName: R_Ep17_Box
     Name: Rune Tablet Engraving    # !todo check english name
@@ -71153,6 +77509,20 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Ponytail_Hair_Box);
+  - Id: 102593
+    AegisName: Honey_Songpyun_E
+    Name: "[Event] Honey Songpyeon"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 102605
     AegisName: aegis_102605
     Name: Costume Enchant Stone Box 33
@@ -71603,6 +77973,34 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_2401_EV_LUNCH_BOX);
+  - Id: 102795
+    AegisName: Forgotten_Crystal_1
+    Name: Crystal of Forgotten Time (Area 1)
+    Type: Usable
+    Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 102796
+    AegisName: Forgotten_Crystal_2
+    Name: Crystal of Forgotten Time (Area 2)
+    Type: Usable
+    Weight: 30
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 102797
     AegisName: Super_Sonic_pack
     Name: Super Sonic Package
@@ -71637,6 +78035,34 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_CHAOS_EMERALD_PACK);
+  - Id: 102800
+    AegisName: VR_High_Speed
+    Name: High Speed
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 102801
+    AegisName: VR_1UP
+    Name: 1UP
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 102803
     AegisName: Force_Booster
     Name: Force Booster
@@ -71721,6 +78147,125 @@ Body:
       BuyingStore: true
     Script: |
       item_reform();
+  - Id: 102908
+    AegisName: 2403_ev_Parfait
+    Name: Fruit Parfait    # !todo check english name
+    Type: Usable
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 20,20;
+  - Id: 102910
+    AegisName: 2403_ev_Berry_Cake
+    Name: Strawberry Cream Cake    # !todo check english name
+    Type: Usable
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 50,50;
+  - Id: 102911
+    AegisName: 2403_ev_Mont_Blanc
+    Name: Mont Blanc Cake    # !todo check english name
+    Type: Usable
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 102912
+    AegisName: 2403_ev_Cherry_Blossom
+    Name: Cherry Blossom Rice Cake    # !todo check english name
+    Type: Usable
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 102913
+    AegisName: 2403_ev_Spray_1
+    Name: Abundant flower branches    # !todo check english name
+    Type: Usable
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 102924
+    AegisName: 2403_ev_Crepe
+    Name: Sweet Crepe    # !todo check english name
+    Type: Usable
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 102925
+    AegisName: 2403_ev_Melon_Parfait
+    Name: Melon Parfait    # !todo check english name
+    Type: Usable
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 100,100;
   - Id: 102949
     AegisName: Sonic_Costume_Pack
     Name: Sonic Costume Selection Box    # !todo check english name
@@ -71733,6 +78278,43 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 200000
+    AegisName: IDTest_Cash
+    Name: IDTest Cash
+    Type: Cash
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 200001
+    AegisName: Inventory_Ex_10Box
+    Name: Inventory Expansion Voucher Box (10)
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 200002
+    AegisName: Inventory_Ex_Dis_10Box
+    Name: (Limited) Inventory Expansion Voucher Box (10)
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 25793,10; /* Inventory Expansion Coupon */
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box(Blacksmith)(30)
@@ -73765,6 +80347,58 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_CHAOS_EMERALD_PACK_);
+  - Id: 200385
+    AegisName: CostumeMilePack_34_1
+#   Name: Nyandarae Costume Mileage Package I (Stone Box 34)
+    Name: Nyandarae Costume Mileage Package I (Stone Box 34    # !todo check english name
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 200386
+    AegisName: CostumeMilePack_34_2
+#   Name: Nyandarae Costume Mileage Package II (Stone Box 34)
+    Name: Nyandarae Costume Mileage Package II (Stone Box 3    # !todo check english name
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 200387
+    AegisName: CostumeMilePack_34_3
+#   Name: Nyandarae Costume Mileage Package III (Stone Box 34)
+    Name: Nyandarae Costume Mileage Package III (Stone Box     # !todo check english name
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
+  - Id: 1100000
+    AegisName: IDTest_heal
+    Name: IDTest heal
+    Type: Healing
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion
@@ -73801,6 +80435,27 @@ Body:
     EquipLevelMin: 200
     Script: |
       itemheal 1925,0;
+  - Id: 1100007
+    AegisName: Fried_Sausage
+    Name: Roasted sausages    # !todo check english name
+    Type: Healing
+    Weight: 50
+#   Script: |
+#     /* TODO */
+  - Id: 1100008
+    AegisName: Juicy_Sausage
+    Name: Juicy Pang Pang Sausage    # !todo check english name
+    Type: Healing
+    Weight: 300
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+#   Script: |
+#     /* TODO */
   - Id: 1100009
     AegisName: South_Pork_Ricebowl
     Name: Southern Style Roast Pork with Rice Bowl
@@ -73982,3 +80637,38 @@ Body:
       NoAuction: true
     Script: |
       itemheal 0,120; /* average value */
+  - Id: 1100021
+    AegisName: 2403_ev_Berry_Cup
+    Name: Strawberry whipped cream cupcake    # !todo check english name
+    Type: Healing
+    Weight: 1
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 0,200; /* average value */
+  - Id: 1100022
+    AegisName: 2403_ev_Macaron
+    Name: Moist Macaron    # !todo check english name
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 60
+    Flags:
+      BuyingStore: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 2000,0; /* average value */
