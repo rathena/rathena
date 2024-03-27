@@ -3658,22 +3658,25 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 #ifndef RENEWAL
 		if (sd) { // Applies only to player damage, monsters and mercenaries don't get this damage boost
 			if (sc && sc->getSCE(SC_WATK_ELEMENT)) { // Descriptions indicate this means adding a percent of a normal attack in another element [Skotlex]
-				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
-				wd->damage += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
+				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2;
+				damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
 				//Spirit Sphere bonus damage is not affected by element
 				if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
-					wd->damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+					damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
 				}
 				else
-					wd->damage += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+					damage += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
+				//Division needs to happen at the end to prevent data loss due to rounding
+				wd->damage += (damage / 100);
 				if (is_attack_left_handed(src, skill_id)) {
-					damage = wd->basedamage2 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100;
-					wd->damage2 += battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
+					damage = wd->basedamage2 * sc->getSCE(SC_WATK_ELEMENT)->val2;
+					damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
 					if (skill_id == MO_FINGEROFFENSIVE) {
-						wd->damage2 += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+						damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
 					}
 					else
-						wd->damage2 += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2 / 100);
+						damage += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
+					wd->damage2 += (damage / 100);
 				}
 			}
 		}
@@ -6489,13 +6492,8 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 #ifndef RENEWAL
 	//Refine bonus
 	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST) { // Counts refine bonus multiple times
-		if (skill_id == MO_FINGEROFFENSIVE) {
-			ATK_ADD2(wd->damage, wd->damage2, wd->div_*sstatus->rhw.atk2, wd->div_*sstatus->lhw.atk2);
-			ATK_ADD2(wd->basedamage, wd->basedamage2, wd->div_*sstatus->rhw.atk2, wd->div_*sstatus->lhw.atk2);
-		} else {
-			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
-			ATK_ADD2(wd->basedamage, wd->basedamage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
-		}
+		ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+		ATK_ADD2(wd->basedamage, wd->basedamage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 	}
 
 	//After DEF reduction, damage can be negative, refine bonus works against that value
