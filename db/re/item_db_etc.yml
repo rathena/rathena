@@ -20711,6 +20711,19 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 6586
+    AegisName: CapturedBook
+    Name: Captured Book
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6592
     AegisName: Small_Wooden_Chest
     Name: Small Wooden Chest
@@ -86387,6 +86400,39 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+  - Id: 1200000
+    AegisName: IDTest_arrow
+    Name: IDTest arrow
+    Type: Ammo
+    SubType: Arrow
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true
+  - Id: 1210000
+    AegisName: IDTest_canon
+    Name: IDTest canon
+    Type: Ammo
+    SubType: CannonBall
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true
+  - Id: 1220000
+    AegisName: IDTest_throw
+    Name: IDTest throw
+    Type: Ammo
+    SubType: CannonBall
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
@@ -86449,3 +86495,14 @@ Body:
     EquipLevelMin: 1
     Script: |
       bonus bAtkEle,Ele_Holy;
+  - Id: 1230000
+    AegisName: IDTest_ammo
+    Name: IDTest ammo
+    Type: Ammo
+    SubType: Dagger
+    Weight: 10
+    Attack: 10
+    Locations:
+      Ammo: true
+    Flags:
+      BuyingStore: true

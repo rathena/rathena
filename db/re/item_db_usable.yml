@@ -78278,6 +78278,13 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 200000
+    AegisName: IDTest_Cash
+    Name: IDTest Cash
+    Type: Cash
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 200001
     AegisName: Inventory_Ex_10Box
     Name: Inventory Expansion Voucher Box (10)
@@ -80385,6 +80392,13 @@ Body:
       NoAuction: true
 #   Script: |
 #     /* TODO */
+  - Id: 1100000
+    AegisName: IDTest_heal
+    Name: IDTest heal
+    Type: Healing
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion
