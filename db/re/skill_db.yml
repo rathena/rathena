@@ -9940,7 +9940,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
@@ -45857,7 +45857,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
