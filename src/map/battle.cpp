@@ -6486,16 +6486,12 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
  */
 static void battle_min_damage(struct Damage* wd, struct block_list* src, uint16 skill_id, int64 min) {
 	if (is_attack_right_handed(src, skill_id)) {
-		if (wd->damage < min)
-			wd->damage = min;
-		if (wd->basedamage < min)
-			wd->basedamage = min;
+		cap_value(wd->damage, min, INT64_MAX);
+		cap_value(wd->basedamage, min, INT64_MAX);
 	}
 	if (is_attack_left_handed(src, skill_id)) {
-		if (wd->damage2 < min)
-			wd->damage2 = min;
-		if (wd->basedamage2 < min)
-			wd->basedamage2 = min;
+		cap_value(wd->damage2, min, INT64_MAX);
+		cap_value(wd->basedamage2, min, INT64_MAX);
 	}
 }
 
