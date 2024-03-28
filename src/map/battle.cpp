@@ -421,10 +421,10 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
  * @param atk_elem
  * @param def_type
  * @param def_lv
- * @param flag
+ * @param flag 0x1 = allow to return negative values even if config for healing through negative resist is disabled
  * @return damage
  */
-int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv)
+int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv, int flag)
 {
 	status_change *sc = NULL, *tsc = NULL;
 	int ratio;
@@ -631,7 +631,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #endif
 	}
 
-	if (battle_config.attr_recover == 0 && ratio < 0)
+	if (battle_config.attr_recover == 0 && !(flag & 1) && ratio < 0)
 		ratio = 0;
 
 #ifdef RENEWAL
@@ -3656,10 +3656,10 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		}
 
 #ifndef RENEWAL
-		if (sd) { // Applies only to player damage, monsters and mercenaries don't get this damage boost
+		if (sd && (wd->damage > 0 || wd->damage2 > 0)) { // Applies only to player damage, monsters and mercenaries don't get this damage boost
 			if (sc && sc->getSCE(SC_WATK_ELEMENT)) { // Descriptions indicate this means adding a percent of a normal attack in another element [Skotlex]
 				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2;
-				damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
+				damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
 				//Spirit Sphere bonus damage is not affected by element
 				if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
 					damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
@@ -3670,7 +3670,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				wd->damage += (damage / 100);
 				if (is_attack_left_handed(src, skill_id)) {
 					damage = wd->basedamage2 * sc->getSCE(SC_WATK_ELEMENT)->val2;
-					damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv);
+					damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
 					if (skill_id == MO_FINGEROFFENSIVE) {
 						damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
 					}
@@ -4438,7 +4438,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (tstatus->hp < (tstatus->max_hp / 2))
 				skillratio += skillratio / 2;
 #else
-			skillratio += 300 + 40 * skill_lv;
+			skillratio += 200 + 50 * skill_lv;
+			if (sd && pc_checkskill(sd, AS_SONICACCEL) > 0)
+				skillratio += skillratio / 10;
 #endif
 			break;
 		case TF_SPRINKLESAND:
@@ -6539,16 +6541,14 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	if (is_attack_right_handed(src, skill_id) && wd->basedamage < 1) wd->basedamage = 1;
 	if (is_attack_left_handed(src, skill_id) && wd->basedamage2 < 1) wd->basedamage2 = 1;
 
+#ifdef RENEWAL
 	switch (skill_id) {
 		case AS_SONICBLOW:
 			if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
-#ifdef RENEWAL
 				ATK_ADDRATE(wd->damage, wd->damage2, 90);
-#else
-				ATK_ADDRATE(wd->damage, wd->damage2, 10);
-#endif
 			break;
 	}
+#endif
 }
 
 /*=================================================================================
