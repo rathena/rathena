@@ -82,12 +82,23 @@ ra_fild08,0,0	monster	Anopheles	1627,15,5000
 //==================================================
 
 //==================================================
-// ra_fild10 - Disabled on Renewal
+// ra_fild10
 //==================================================
+ra_fild10	monster	Drosera	1781,5
+ra_fild10	monster	Magmaring	1836,5
+ra_fild10	monster	Grey Baby Wolf	21324,50
+ra_fild10	monster	Grey Goat	21323,60
+ra_fild10	monster	Rake Hand	21296,5
 
 //==================================================
-// ra_fild11 - Disabled on Renewal
+// ra_fild11
 //==================================================
+ra_fild11	monster	Red Plant	1078,5
+ra_fild11	monster	Yellow Plant	1081,15
+ra_fild11	monster	Drosera	1781,10
+ra_fild11	monster	Grey Baby Wolf	21324,50
+ra_fild11	monster	Grey Goat	21323,70
+ra_fild11	monster	Rake Hand	21296,5
 
 //==================================================
 // ra_fild12 - The Plain of Ida
