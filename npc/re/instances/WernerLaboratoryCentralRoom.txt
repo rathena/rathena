@@ -10,6 +10,7 @@
 //  KRO added Seyren boss fight in the next updates.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Added YSF Battle. [Rukio]
 //============================================================
 
 slabw01,232,91,5	duplicate(dummy_cloaked_npc)	Skia#ep162_06	4_EP16_SKIA
@@ -243,6 +244,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("Seyren Windsor#seiren");
 	disablenpc instance_npcname("Pet child#boss_master");
 	disablenpc instance_npcname("#boss_master_dummy");
+	disablenpc instance_npcname("Mana Mass#seyren_battle_starter");
 	end;
 }
 
@@ -1038,11 +1040,118 @@ OnTouch:
 	if (is_party_leader() == true)
 		'event_final = 0;
 	mapannounce 'map_slw$, "The setting of the central room has been initialized.", bc_map,0xFF99;
-	warpparty 'map_slw$,54,134,getcharid(1),'map_slw$,2,2;
+	// warpparty 'map_slw$,54,134,getcharid(1),'map_slw$,2,2;
 	disablenpc .@seyren$;
+	enablenpc instance_npcname("Mana Mass#seyren_battle_starter");
+	removespecialeffect2 EF_DEVIL3;
+	removespecialeffect2 EF_DEVIL4;
+	removespecialeffect2 EF_DEVIL5;
+	removespecialeffect2 EF_DEVIL6;
+	removespecialeffect2 EF_DEVIL7;
+	removespecialeffect2 EF_DEVIL8;
+	removespecialeffect2 EF_DEVIL9;
 	end;
 }
 
+// Seyren Battle
+1@slw,56,171,3	script	Mana Mass#seyren_battle_starter	4_ENERGY_WHITE	,{
+	mes "A misterious mana mass is forming where Seyren has scattered.";
+	next;
+	mes "This event is an additional battle, and Level 170 or above is recommended.";
+	mes "Please decide what to do.";
+	switch(select("Quit:Continue")){
+		case 1:
+			close;
+			end;
+		case 2:
+			next;
+			mes "You've decided to continue";
+			initnpctimer strnpcinfo(3);
+			close;
+	}
+end;
+
+OnTimer500:
+	mapannounce 'map_slw$, "Test No..YBF01. Identifier: Seyren. Subject's incomplete destruction detected.", bc_map,0xFF99;
+	end;
+OnTimer3500:
+	mapannounce 'map_slw$, "Executing the designated protocol, Return...", bc_map,0xFF99;
+	end;
+OnTimer8000:
+	specialeffect 895;
+	end;
+OnTimer11500:
+	specialeffect 896;
+	end;
+OnTimer12500:
+	specialeffect 897;
+	specialeffect 897;
+	end;
+OnTimer18000:
+	specialeffect 897;
+	end;
+OnTimer23000:
+	cloakonnpc strnpcinfo(3);
+	enablenpc instance_npcname("Seyren Windsor#seiren");
+	end;
+OnTimer23200:
+	specialeffect 518;
+	end;
+OnTimer24000:
+	specialeffect 897;
+	specialeffect 898;
+	end;
+OnTimer25000:
+	cloakoffnpc strnpcinfo(3);
+	cloakonnpc instance_npcname("Seyren Windsor#seiren");
+	end;
+OnTimer27000:
+	cloakonnpc strnpcinfo(3);
+	cloakoffnpc instance_npcname("Seyren Windsor#seiren");
+	end;
+OnTimer27200:
+	specialeffect 518;
+	end;
+OnTimer27500:
+	specialeffect 897;
+	specialeffect 898;
+	end;
+OnTimer28000:
+	cloakoffnpc strnpcinfo(3);
+	cloakonnpc instance_npcname("Seyren Windsor#seiren");
+	end;
+OnTimer31000:
+	specialeffect 903;
+	end;
+OnTimer31100:
+	cloakonnpc strnpcinfo(3);
+	cloakoffnpc instance_npcname("Seyren Windsor#seiren");
+	end;
+OnTimer31300:
+	specialeffect 518;
+	end;
+OnTimer31700:
+	cloakoffnpc strnpcinfo(3);
+	cloakonnpc instance_npcname("Seyren Windsor#seiren");
+	end;
+OnTimer32100:
+	cloakonnpc strnpcinfo(3);
+	cloakoffnpc instance_npcname("Seyren Windsor#seiren");
+	end;
+OnTimer32300:
+	specialeffect 518;
+	end;
+OnTimer33000:
+	specialeffect 518;
+	end;
+OnTimer35000:
+	removespecialeffect 898;
+	disablenpc instance_npcname("Seyren Windsor#seiren");
+	monster 'map_slw$,55,170, "YSF01 Seyren", 3826, 1, instance_npcname("#boss_master_lab") + "::OnMobDead";	// EP16_2_MM_CUTIE
+	
+	end;
+
+}
 // * Battle
 1@slw,55,170,3	duplicate(dummy_npc)	Pet child#boss_master	3621
 
@@ -1073,6 +1182,8 @@ OnTouch:
 	cloakonnpc instance_npcname("Pet child#boss_master");
 	end;
 }
+
+
 
 1@slw,1,1,3	script	#boss_master_lab	HIDDEN_WARP_NPC,5,5,{
 	end;
