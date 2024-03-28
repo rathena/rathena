@@ -10486,11 +10486,11 @@ Body:
       - Level: 1
         Time: 40000
       - Level: 2
-        Time: 45000
+        Time: 60000
       - Level: 3
-        Time: 50000
+        Time: 80000
       - Level: 4
-        Time: 55000
+        Time: 100000
       - Level: 5
         Time: 120000
     Duration2:

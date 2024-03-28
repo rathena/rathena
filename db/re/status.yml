@@ -165,6 +165,7 @@ Body:
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -261,6 +262,7 @@ Body:
   - Status: Dpoison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -1139,6 +1141,10 @@ Body:
       NoClearance: true
   - Status: Watk_Element
     DurationLookup: MS_MAGNUM
+    Flags:
+      NoSave: true
+    EndOnStart:
+      Watk_Element: true
   - Status: Armor
     DurationLookup: NPC_DEFENDER
   - Status: Armor_Element_Water

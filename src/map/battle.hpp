@@ -75,7 +75,9 @@ struct Damage {
 	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2, percentAtk, percentAtk2;
 #endif
 	int64 damage, /// Right hand damage
-		damage2; /// Left hand damage
+		damage2, /// Left hand damage
+		basedamage, /// Right hand base damage after def reduction
+		basedamage2; /// Left hand base damage after def reduction
 	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,
@@ -95,7 +97,7 @@ int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, i
 
 void battle_drain(map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
 
-int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
+int64 battle_attr_fix(struct block_list* src, struct block_list* target, int64 damage, int atk_elem, int def_type, int def_lv, int flag = 0);
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
 
 // Final calculation Damage
