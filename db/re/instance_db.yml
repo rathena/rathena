@@ -576,3 +576,9 @@ Body:
       Map: 1@jorlab
       X: 57
       Y: 45
+  - Id: 79
+    Name: Soul Reaper job change
+    Enter:
+      Map: 1@soul
+      X: 77
+      Y: 77
