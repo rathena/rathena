@@ -6476,6 +6476,29 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 #endif
 }
 
+
+/**
+ * Cap both damage and basedamage of damage struct to a minimum value
+ * @param wd: Weapon damage structure
+ * @param src: Source of the attack
+ * @param skill_id: Skill ID of the skill used by source
+ * @param min: Minimum value to which damage should be capped
+ */
+static void battle_min_damage(struct Damage* wd, struct block_list* src, uint16 skill_id, int64 min) {
+	if (is_attack_right_handed(src, skill_id)) {
+		if (wd->damage < min)
+			wd->damage = min;
+		if (wd->basedamage < min)
+			wd->basedamage = min;
+	}
+	if (is_attack_left_handed(src, skill_id)) {
+		if (wd->damage2 < min)
+			wd->damage2 = min;
+		if (wd->basedamage2 < min)
+			wd->basedamage2 = min;
+	}
+}
+
 /*====================================
  * Modifiers ignoring DEF
  *------------------------------------
@@ -6500,10 +6523,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 
 	//After DEF reduction, damage can be negative, refine bonus works against that value
 	//After refinement bonus was applied, damage is capped to 1, then masteries are applied
-	if (is_attack_right_handed(src, skill_id) && wd->damage < 1) wd->damage = 1;
-	if (is_attack_left_handed(src, skill_id) && wd->damage2 < 1) wd->damage2 = 1;
-	if (is_attack_right_handed(src, skill_id) && wd->basedamage < 1) wd->basedamage = 1;
-	if (is_attack_left_handed(src, skill_id) && wd->basedamage2 < 1) wd->basedamage2 = 1;
+	battle_min_damage(wd, src, skill_id, 1);
 
 	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
 #endif
@@ -6536,10 +6556,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	}
 
 	//Set to min of 1
-	if (is_attack_right_handed(src, skill_id) && wd->damage < 1) wd->damage = 1;
-	if (is_attack_left_handed(src, skill_id) && wd->damage2 < 1) wd->damage2 = 1;
-	if (is_attack_right_handed(src, skill_id) && wd->basedamage < 1) wd->basedamage = 1;
-	if (is_attack_left_handed(src, skill_id) && wd->basedamage2 < 1) wd->basedamage2 = 1;
+	battle_min_damage(wd, src, skill_id, 1);
 
 #ifdef RENEWAL
 	switch (skill_id) {
