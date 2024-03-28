@@ -40,6 +40,10 @@
 #include "core.hpp" //[Ind] - For SERVER_TYPE
 #include "strlib.hpp" // StringBuf
 
+#ifdef ENABLE_ASYNC_YAML
+#include <mutex>
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////
 /// behavioral parameter.
 /// when redirecting output:
@@ -817,31 +821,49 @@ void ShowMessage(const char *string, ...) {
 	_vShowMessage(MSG_NONE, string, ap);
 	va_end(ap);
 }
+#ifdef ENABLE_ASYNC_YAML
+std::mutex MutexDoor;
+#endif
 void ShowStatus(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_STATUS, string, ap);
 	va_end(ap);
 }
 void ShowSQL(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_SQL, string, ap);
 	va_end(ap);
 }
 void ShowInfo(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_INFORMATION, string, ap);
 	va_end(ap);
 }
 void ShowNotice(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_NOTICE, string, ap);
 	va_end(ap);
 }
 void ShowWarning(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_WARNING, string, ap);
@@ -849,6 +871,9 @@ void ShowWarning(const char *string, ...) {
 }
 void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	StringBuf buf;
 	va_list ap;
 	StringBuf_Init(&buf);
@@ -860,18 +885,27 @@ void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 	StringBuf_Destroy(&buf);
 }
 void ShowDebug(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_DEBUG, string, ap);
 	va_end(ap);
 }
 void ShowError(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_ERROR, string, ap);
 	va_end(ap);
 }
 void ShowFatalError(const char *string, ...) {
+#ifdef ENABLE_ASYNC_YAML
+	std::lock_guard<std::mutex> lock(MutexDoor);
+#endif
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_FATALERROR, string, ap);
