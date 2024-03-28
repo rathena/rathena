@@ -1910,6 +1910,8 @@
 	export_constant(SC_GRENADE_FRAGMENT_6);
 	export_constant(SC_AUTO_FIRING_LAUNCHER);
 	export_constant(SC_HIDDEN_CARD);
+	export_constant(SC_PERIOD_RECEIVEITEM_2ND);
+	export_constant(SC_PERIOD_PLUSEXP_2ND);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);

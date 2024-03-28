@@ -11538,6 +11538,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_EXPBOOST:
 		case SC_JEXPBOOST:
 		case SC_JP_EVENT04:
+		case SC_PERIOD_PLUSEXP_2ND:
 			if (val1 < 0)
 				val1 = 0;
 			break;
