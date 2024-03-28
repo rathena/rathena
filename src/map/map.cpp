@@ -2201,12 +2201,12 @@ struct s_elemental_data* map_id2ed(int id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }
-
-struct chat_data* map_id2cd(int id){
+namespace chats{
+ChatData* map_id2cd(int id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_CHAT, bl);
 }
-
+}
 /// Returns the nick of the target charid or NULL if unknown (requests the nick to the char server).
 const char* map_charid2nick(int charid)
 {

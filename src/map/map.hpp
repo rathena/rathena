@@ -1157,7 +1157,7 @@ struct homun_data* map_id2hd(int id);
 struct s_mercenary_data* map_id2mc(int id);
 struct pet_data* map_id2pd(int id);
 struct s_elemental_data* map_id2ed(int id);
-struct chat_data* map_id2cd(int id);
+namespace chats{class ChatData* map_id2cd(int id);}
 struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
 
@@ -1258,12 +1258,12 @@ typedef map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
 typedef struct mob_data         TBL_MOB;
 typedef struct flooritem_data   TBL_ITEM;
-typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
 typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
+using TBL_CHAT = chats::ChatData;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )

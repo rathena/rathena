@@ -3024,8 +3024,8 @@ int pc_disguise(map_session_data *sd, int class_)
 			clif_updatestatus(sd,SP_CARTINFO);
 		}
 		if (sd->chatID) {
-			struct chat_data* cd;
-			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != NULL)
+			chats::ChatData* cd;
+			if ((cd = (chats::ChatData*)map_id2bl(sd->chatID)) != NULL)
 				clif_dispchat(cd,0);
 		}
 	}

@@ -4370,7 +4370,7 @@ ACMD_FUNC(partysharelvl) {
 ACMD_FUNC(mapinfo) {
 	map_session_data* pl_sd;
 	struct s_mapiterator* iter;
-	struct chat_data *cd = NULL;
+	chats::ChatData *cd = nullptr;
 	char direction[12];
 	int i, m_id, chat_num = 0, list = 0, vend_num = 0;
 	unsigned short m_index;
@@ -4411,7 +4411,7 @@ ACMD_FUNC(mapinfo) {
 		if( pl_sd->mapindex == m_index ) {
 			if( pl_sd->state.vending )
 				vend_num++;
-			else if( (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != NULL && cd->usersd[0] == pl_sd )
+			else if( (cd = (chats::ChatData*)map_id2bl(pl_sd->chatID)) != NULL && cd->usersd[0] == pl_sd )
 				chat_num++;
 		}
 	}
@@ -4674,7 +4674,7 @@ ACMD_FUNC(mapinfo) {
 		iter = mapit_getallusers();
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
 		{
-			if ((cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != NULL &&
+			if ((cd = (chats::ChatData*)map_id2bl(pl_sd->chatID)) != NULL &&
 			    pl_sd->mapindex == m_index &&
 			    cd->usersd[0] == pl_sd)
 			{

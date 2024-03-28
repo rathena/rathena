@@ -12932,7 +12932,7 @@ BUILDIN_FUNC(waitingroom)
 
 	nd = (struct npc_data *)map_id2bl(st->oid);
 	if( nd != NULL )
-		chat_createnpcchat(nd, title, limit, 1, trigger, ev, zeny, minLvl, maxLvl);
+		chats::CreateNpcChat(nd, title, limit, 1, trigger, ev, zeny, minLvl, maxLvl);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12949,7 +12949,7 @@ BUILDIN_FUNC(delwaitingroom)
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 	if( nd != NULL )
-		chat_deletenpcchat(nd);
+		chats::DeleteNpcChat(nd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12959,14 +12959,14 @@ BUILDIN_FUNC(delwaitingroom)
 BUILDIN_FUNC(waitingroomkick)
 {
 	struct npc_data* nd;
-	struct chat_data* cd;
+	chats::ChatData* cd;
 	const char* kickusername;
 	
 	nd = npc_name2id(script_getstr(st,2));
 	kickusername = script_getstr(st,3);
 
-	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
-		chat_npckickchat(cd, kickusername);
+	if( nd != NULL && (cd=(chats::ChatData *)map_id2bl(nd->chat_id)) != NULL )
+		cd->NpcKickChat(kickusername);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12977,7 +12977,7 @@ BUILDIN_FUNC(waitingroomkick)
 BUILDIN_FUNC(getwaitingroomusers)
 {
 	struct npc_data* nd;
-	struct chat_data* cd;
+	chats::ChatData* cd;
 
 	int i, j=0;
 
@@ -12986,7 +12986,7 @@ BUILDIN_FUNC(getwaitingroomusers)
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 	
-	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL ) {
+	if( nd != NULL && (cd=(chats::ChatData *)map_id2bl(nd->chat_id)) != NULL ) {
 		for(i = 0; i < cd->users; ++i) {
 			setd_sub_num( st, NULL, ".@waitingroom_users", j, cd->usersd[i]->status.account_id, NULL );
 			j++;
@@ -13003,15 +13003,15 @@ BUILDIN_FUNC(getwaitingroomusers)
 BUILDIN_FUNC(waitingroomkickall)
 {
 	struct npc_data* nd;
-	struct chat_data* cd;
+	chats::ChatData* cd;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st,2));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
-		chat_npckickall(cd);
+	if( nd != NULL && (cd=(chats::ChatData *)map_id2bl(nd->chat_id)) != NULL )
+		cd->NpcKickAll();
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13022,15 +13022,15 @@ BUILDIN_FUNC(waitingroomkickall)
 BUILDIN_FUNC(enablewaitingroomevent)
 {
 	struct npc_data* nd;
-	struct chat_data* cd;
+	chats::ChatData* cd;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st, 2));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
-		chat_enableevent(cd);
+	if( nd != NULL && (cd=(chats::ChatData *)map_id2bl(nd->chat_id)) != NULL )
+		cd->EnableEvent();
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13041,15 +13041,15 @@ BUILDIN_FUNC(enablewaitingroomevent)
 BUILDIN_FUNC(disablewaitingroomevent)
 {
 	struct npc_data *nd;
-	struct chat_data *cd;
+	chats::ChatData *cd;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st, 2));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
-		chat_disableevent(cd);
+	if( nd != NULL && (cd=(chats::ChatData *)map_id2bl(nd->chat_id)) != NULL )
+		cd->DisableEvent();
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13070,7 +13070,7 @@ BUILDIN_FUNC(disablewaitingroomevent)
 BUILDIN_FUNC(getwaitingroomstate)
 {
 	struct npc_data *nd;
-	struct chat_data *cd;
+	chats::ChatData *cd;
 	int type;
 
 	type = script_getnum(st,2);
@@ -13079,7 +13079,7 @@ BUILDIN_FUNC(getwaitingroomstate)
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if( nd == NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
+	if( nd == NULL || (cd=(chats::ChatData *)map_id2bl(nd->chat_id)) == NULL )
 	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
@@ -13121,10 +13121,10 @@ BUILDIN_FUNC(warpwaitingpc)
 	int n;
 	const char* map_name;
 	struct npc_data* nd;
-	struct chat_data* cd;
+	chats::ChatData* cd;
 
 	nd = (struct npc_data *)map_id2bl(st->oid);
-	if( nd == NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
+	if( nd == NULL || (cd=(chats::ChatData *)map_id2bl(nd->chat_id)) == NULL )
 		return SCRIPT_CMD_SUCCESS;
 
 	map_name = script_getstr(st,2);
@@ -20939,10 +20939,9 @@ BUILDIN_FUNC(showevent)
 BUILDIN_FUNC(waitingroom2bg)
 {
 	struct npc_data *nd;
-	struct chat_data *cd;
+	chats::ChatData *cd;
 	const char *map_name;
 	int mapindex = 0, bg_id;
-	unsigned char i,c=0;
 	struct s_battleground_team team;
 
 	if( script_hasdata(st,7) )
@@ -20950,7 +20949,7 @@ BUILDIN_FUNC(waitingroom2bg)
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
+	if( nd == NULL || (cd = (chats::ChatData *)map_id2bl(nd->chat_id)) == NULL )
 	{
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
@@ -20982,7 +20981,8 @@ BUILDIN_FUNC(waitingroom2bg)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
+	uint32 c = 0;
+	for (uint32 i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd, false) ){
 			mapreg_setreg(reference_uid(add_str("$@arenamembers"), c), sd->bl.id);
@@ -20999,7 +20999,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 {
 	const char* map_name;
 	struct npc_data *nd;
-	struct chat_data *cd;
+	chats::ChatData *cd;
 	map_session_data *sd;
 	int x, y, mapindex, bg_id = script_getnum(st,2);
 	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
@@ -21030,7 +21030,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 
 	nd = npc_name2id(script_getstr(st,6));
 
-	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL || cd->users <= 0 )
+	if( nd == NULL || (cd = (chats::ChatData *)map_id2bl(nd->chat_id)) == NULL || cd->users <= 0 )
 		return SCRIPT_CMD_SUCCESS;
 
 	if( (sd = cd->usersd[0]) == NULL )
