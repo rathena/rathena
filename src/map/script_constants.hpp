@@ -1910,6 +1910,17 @@
 	export_constant(SC_GRENADE_FRAGMENT_6);
 	export_constant(SC_AUTO_FIRING_LAUNCHER);
 	export_constant(SC_HIDDEN_CARD);
+	export_constant(SC_TALISMAN_OF_PROTECTION);
+	export_constant(SC_TALISMAN_OF_WARRIOR);
+	export_constant(SC_TALISMAN_OF_MAGICIAN);
+	export_constant(SC_TALISMAN_OF_FIVE_ELEMENTS);
+	export_constant(SC_TOTEM_OF_TUTELARY);
+	export_constant(SC_T_FIRST_GOD);
+	export_constant(SC_T_SECOND_GOD);
+	export_constant(SC_T_THIRD_GOD);
+	export_constant(SC_T_FOURTH_GOD);
+	export_constant(SC_T_FIFTH_GOD);
+	export_constant(SC_HEAVEN_AND_EARTH);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
