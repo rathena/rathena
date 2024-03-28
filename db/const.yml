@@ -45,6 +45,8 @@ Body:
     Value: 4
   - Name: JUMPINGCLAN
     Value: 5
+  - Name: REPU_BIO_DEEP1
+    Value: 6
 
 Footer:
   Imports:

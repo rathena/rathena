@@ -56,3 +56,5 @@ que_swat	mapflag	nowarp
 //============================================================
 un_myst	mapflag	nowarp
 rockmi2	mapflag	nowarp
+
+bl_depth1	mapflag	nowarp
