@@ -23,41 +23,41 @@
 //============================================================
 geffen_in,110,172,0	script	Christopher#1	63,{
 	mes "[Christopher Guillenrow]";
-	mes "ยินดีต้อนรับสู่ Christopher's Workshop. เจ้าสามารถหาสิ่งของที่ต้องการสำหรับการตีเหล็กได้ที่นี่.";
-	mes "มีอะไรให้ข้าช่วยเหลือหรือไม่?";
+	mes "ยินดีต้อนรับสู่โรงงานของ Christopher. เจ้าสามารถหาสิ่งของที่ต้องการสำหรับการตีเหล็กได้ที่นี่.";
+	mes "แล้ว...เจ้ามาที่นี่เพื่อสิ่งใดหรือ?";
 	next;
-	switch(select("Purchase Anvil:Purchase Forging Item:Purchase Metal:Purify Rough Ores:ยกเลิก")) {
+	switch(select("ซื้อทั่งตีเหล็ก:ซื้ออุปกรณ์ตีเหล็ก:ซื้อเหล็ก:ถลุงแร่:ยกเลิก")) {
 	case 1:
 		mes "[Christopher Guillenrow]";
-		mes "A better Anvil gives ye a greeeater chance to make better weapons, ye know? But they'll cost ye more zeny. Just get it off yer chest and buy what fits your purposes best, laddy.";
+		mes "ทั่งตีเหล็กที่ดีกว่าจะทำให้เจ้ามีโอกาสสร้างอาวุธที่ดีขึ้นได้นะ, เจ้ารู้มั้ย? แต่พวกมันจะทำให้เจ้าเสียเงินมากขึ้น. แค่ทำใจแล้วเลือกซื้อสิ่งที่เหมาะสมกับวัตถุประสงค์ของเจ้าที่สุด, นะที่รัก.";
 		next;
-		switch(select("Anvil - 30,000 zeny:Oridecon Anvil - 120,000 zeny:Golden Anvil - 300,000 zeny:Better Anvil than the others.:Cancel.")) {
+		switch(select("Anvil - 30,000 zeny:Oridecon Anvil - 120,000 zeny:Golden Anvil - 300,000 zeny:ทั่งตีเหล็กที่ดีกว่านี้:ยกเลิก")) {
 		case 1:
 			if (Zeny < 30000) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			getitem 986,1; // Anvil
 			Zeny = Zeny-30000;
 			mes "[Christopher Guillenrow]";
-			mes "This is the cheapest one, but efficient enough to forge most items. Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
+			mes "นี่เป็นสินค้าราคาถูกที่สุด, แต่มีประสิทธิภาพเพียงพอที่จะหล่อหลอมไอเท็มส่วนใหญ่. ขอบคุณที่เข้ามาอุดหนุนที่ร้านของข้า. อย่าลังเลที่จะมาที่นี่, เมื่อไหร่ก็ตามที่เจ้าต้องการ.";
 			close;
 		case 2:
 			if (Zeny < 120000) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			getitem 987,1; // Oridecon_Anvil
 			Zeny = Zeny-120000;
 			mes "[Christopher Guillenrow]";
-			mes "Aye, friend ye have an eye for the anvil. This must be the proper anvil for a Blacksmith, eh? Thank ye fer shopping at me workshop.  Feel free to come anytime, whenever ye need.";
+			mes "ใช่แล้ว, สหาย ท่านมีสายตาที่ดีในการเลือกทั่งตีเหล็ก. นี่คงเป็นทั่งตีเหล็กที่เหมาะสมสำหรับช่างตีเหล็ก, ใช่ไหม? ขอบคุณที่เข้ามาอุดหนุนที่ร้านของข้า.  อย่าลังเลที่จะมาที่นี่, เมื่อไหร่ก็ตามที่เจ้าต้องการ.";
 			close;
 		case 3:
 			if (Zeny < 300000) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			getitem 988,1; // Golden_Anvil
@@ -105,7 +105,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 			.@sell = .@input * 150;
 			if (Zeny < .@sell) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			if (checkweight(612,.@input) == 0) {
@@ -121,7 +121,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 		case 2:
 			if (Zeny < 1000) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			getitem 613,1; // Iron_Hammer
@@ -132,7 +132,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 		case 3:
 			if (Zeny < 3000) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			getitem 614,1; // Golden_Hammer
@@ -143,7 +143,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 		case 4:
 			if (Zeny < 5000) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			getitem 615,1; // Oridecon_Hammer
@@ -224,7 +224,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 			.@sell = .@input * 1000;
 			if (Zeny < .@sell) {
 				mes "[Christopher Guillenrow]";
-				mes "I don't think I can let ye have this with the zeny ye have. I can't lose me money because of ye.";
+				mes "เจ้ามีเงินไม่พอ ข้าไม่คิดว่าข้าจะให้เจ้าได้สิ่งนี้ด้วยเงิน zeny ที่เจ้ามี. ข้าไม่สามารถทำให้เงินของข้าหายไปเพราะเจ้าได้.";
 				close;
 			}
 			if (checkweight(1011,.@input) == 0) {
@@ -244,43 +244,43 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 		}
 	case 4:
 		mes "[Christopher Guillenrow]";
-		mes "I can purify yer Oridecon and Elunium. I make a refined Ore out of 5 o'each rough ones. Well... Which one do ye want to make?";
+		mes "ข้าสามารถถลุงแร่ Oridecon และ Elunium. ข้าต้องใช้แร่ดิบ 5 ชิ้นในขั้นตอนผลิตแร่ที่ถลุงแล้ว 1ชิ้น. แล้ว... เจ้าต้องการอะไรล่ะ?";
 		next;
-		switch(select("Make Oridecon:Make Elunium:Cancel.")) {
+		switch(select("ข้าต้องการทำ Oridecon:ข้าต้องการทำ Elunium:ยกเลิก")) {
 		case 1:
 			if (countitem(756) < 5) {
 				mes "[Christopher Guillenrow]";
-				mes "I told ye, I need 5 o'the rough Oridecons fer one Oridecon.";
+				mes "ข้าบอกไปแล้วว่า, ข้าต้องการแร่ดิบ Rough Oridecons 5 ชิ้น สำหรับทำ 1 Oridecon.";
 				close;
 			}
 			else {
 				delitem 756,5;  //Oridecon_Stone
 				getitem 984,1; // Oridecon
 				mes "[Christopher Guillenrow]";
-				mes "Here's an Oridecon fer ye. Ye will be always welcome here, I'll be waitin' for ye.";
+				mes "นี่คือ Oridecon สำหรับเจ้า. เจ้าจะได้รับการต้อนรับที่นี่เสมอ, ข้าจะรอพวกเจ้าอยู่.";
 				close;
 			}
 		case 2:
 			if (countitem(757) < 5) {
 				mes "[Christopher Guillenrow]";
-				mes "I told ye, I need 5 rough Eluniums fer one Elunium.";
+				mes "ข้าบอกไปแล้วว่า, ข้าต้องการแร่ดิบ Rough Eluniums 5 ชิ้น สำหรับทำ 1 Elunium.";
 				close;
 			}
 			else {
 				delitem 757,5;  //Elunium_Stone
 				getitem 985,1; // Elunium
 				mes "[Christopher Guillenrow]";
-				mes "Arrr, here's yer Elunium. Yer business is always welcome here, so feel free to come again.";
+				mes "อ่าาา, นี่คือ Elunium ของเจ้า. การค้าขายของคุณที่นี่ยินดีต้อนรับเสมอ, ดังนั้นอย่าลังเลที่จะกลับมาใหม่อีกครั้ง.";
 				close;
 			}
 		case 3:
 			mes "[Christopher Guillenrow]";
-			mes "Feel free to come anytime, whenever ye need. Fare ye well.";
+			mes "อย่าลังเลที่จะมาที่นี่, เมื่อไหร่ก็ตามที่คุณต้องการ. ขอให้เจ้าโชคดี.";
 			close;
 		}
 	case 5:
 		mes "[Christopher Guillenrow]";
-		mes "Feel free to come anytime, whenever ye need and whenever ye want. Fare ye well.";
+		mes "ยินดีต้อนรับเสมอ, ไม่ว่าเมื่อไหร่ที่เจ้าต้องการหรืออยากมา. ขอให้เจ้าโชคดี.";
 		close;
 	}
 }
