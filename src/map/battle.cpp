@@ -2476,7 +2476,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 		if (sc != nullptr && sc->getSCE(SC_CHANGE) != nullptr)
 			return status->matk_max; // [Aegis] simply uses raw max matk for base damage when Mental Charge active
 #endif
-		if(flag&4) {
+		if(flag&BDMG_MAGIC) {
 			atkmin = status->matk_min;
 			atkmax = status->matk_max;
 		} else {
@@ -2489,7 +2489,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 		atkmax = wa->atk;
 		type = (wa == &status->lhw)?EQI_HAND_L:EQI_HAND_R;
 
-		if (!(flag&1) || (flag&2)) { //Normal attacks
+		if (!(flag&BDMG_CRIT) || (flag&BDMG_ARROW)) { //Normal attacks
 			atkmin = status->dex;
 
 			if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]] && sd->inventory_data[sd->equip_index[type]]->type == IT_WEAPON)
@@ -2498,7 +2498,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 			if (atkmin > atkmax)
 				atkmin = atkmax;
 
-			if(flag&2 && !(flag&16)) { //Bows
+			if(flag&BDMG_ARROW && !(flag&BDMG_THROW)) { //Bows
 				atkmin = atkmin*atkmax/100;
 				if (atkmin > atkmax)
 					atkmax = atkmin;
@@ -2510,18 +2510,18 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 		atkmin = atkmax;
 
 	//Weapon Damage calculation
-	if (!(flag&1))
+	if (!(flag&BDMG_CRIT))
 		damage = (atkmax>atkmin? rnd()%(atkmax-atkmin):0)+atkmin;
 	else
 		damage = atkmax;
 
 	if (sd) {
 		//rodatazone says the range is 0~arrow_atk-1 for non crit
-		if (flag&2 && sd->bonus.arrow_atk)
-			damage += ( (flag&1) ? sd->bonus.arrow_atk : rnd()%sd->bonus.arrow_atk );
+		if (flag&BDMG_ARROW && sd->bonus.arrow_atk)
+			damage += ( (flag&BDMG_CRIT) ? sd->bonus.arrow_atk : rnd()%sd->bonus.arrow_atk );
 
 		// Size fix only for players
-		if (!(sd->special_state.no_sizefix || (flag&8)))
+		if (!(sd->special_state.no_sizefix || (flag&BDMG_NOSIZE)))
 			damage = damage * (type == EQI_HAND_L ? sd->left_weapon.atkmods[t_size] : sd->right_weapon.atkmods[t_size]) / 100;
 	} else if (src->type == BL_ELEM) {
 		status_change *ele_sc = status_get_sc(src);
@@ -2563,7 +2563,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 	}
 
 	//Finally, add baseatk
-	if(flag&4)
+	if(flag&BDMG_MAGIC)
 		damage += status->matk_min;
 	else
 		damage += status->batk;
@@ -2572,7 +2572,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 		battle_add_weapon_damage(sd, &damage, type);
 
 #ifdef RENEWAL
-	if (flag&1)
+	if (flag&BDMG_CRIT)
 		damage = (damage * 14) / 10;
 #endif
 
@@ -3892,7 +3892,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 
-	uint16 i;
+	uint16 i, bflag = BDMG_NONE;
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
 	switch (skill_id) {	//Calc base damage according to skill
@@ -4039,41 +4039,46 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			break;
 
 		default:
+			// Flags that apply to both pre-renewal and renewal
+			bflag = (is_attack_critical(wd, src, target, skill_id, skill_lv, false) ? BDMG_CRIT : BDMG_NONE) |
+				(!skill_id && sc && sc->getSCE(SC_CHANGE) ? BDMG_MAGIC : BDMG_NONE);
 #ifdef RENEWAL
 			if (sd)
 				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
 			else {
-				i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false)?1:0)|
-					(!skill_id && sc && sc->getSCE(SC_CHANGE)?4:0);
-
-				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
+				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, bflag);
 				if (is_attack_left_handed(src, skill_id))
-					wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
+					wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, bflag);
 			}
 #else
-			i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false)?1:0)|
-				(is_skill_using_arrow(src, skill_id)?2:0)|
-				(skill_id == HW_MAGICCRASHER?4:0)|
-				(!skill_id && sc && sc->getSCE(SC_CHANGE)?4:0)|
-				(skill_id == MO_EXTREMITYFIST?8:0)|
-				(sc && sc->getSCE(SC_WEAPONPERFECTION)?8:0);
+			// Pre-renewal exclusive flags
+			if (is_skill_using_arrow(src, skill_id)) bflag |= BDMG_ARROW;
+			if (skill_id == HW_MAGICCRASHER) bflag |= BDMG_MAGIC;
+			if (skill_id == MO_EXTREMITYFIST) bflag |= BDMG_NOSIZE;
+			if (sc && sc->getSCE(SC_WEAPONPERFECTION)) bflag |= BDMG_NOSIZE;
 			if (is_skill_using_arrow(src, skill_id) && sd) {
 				switch(sd->status.weapon) {
 					case W_BOW:
+						break;
 					case W_REVOLVER:
 					case W_RIFLE:
 					case W_GATLING:
 					case W_SHOTGUN:
 					case W_GRENADE:
+						if (bflag & BDMG_CRIT) {
+							bflag &= ~(BDMG_ARROW); // Criticals with any guns are calculated like melee criticals
+						}
 						break;
 					default:
-						i |= 16; // for ex. shuriken must not be influenced by DEX
+						bflag |= BDMG_THROW; // for ex. shuriken must not be influenced by DEX
 						break;
 				}
 			}
-			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
+			if (skill_id == SN_SHARPSHOOTING || skill_id == MA_SHARPSHOOTING)
+				bflag &= ~(BDMG_CRIT); // Sharpshooting just ignores DEF/FLEE but damage is like a normal attack
+			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, bflag);
 			if (is_attack_left_handed(src, skill_id))
-				wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
+				wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, bflag);
 #endif
 			if (nk[NK_SPLASHSPLIT]){ // Divide ATK among targets
 				if(wd->miscflag > 0) {
@@ -4093,7 +4098,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				int skill;
 
 #ifndef RENEWAL
-				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
+				if (sd->bonus.crit_atk_rate && (bflag & BDMG_CRIT)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 				}
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
@@ -4111,7 +4116,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 #endif
 			}
 #ifndef RENEWAL
-			if(tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
+			if (tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && (bflag & BDMG_CRIT)) {
 				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.crit_def_rate);
 			}
 #endif

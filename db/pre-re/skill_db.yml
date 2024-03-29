@@ -13856,8 +13856,6 @@ Body:
     Description: Chain Action
     MaxLevel: 10
     Type: Weapon
-    DamageFlags:
-      Critical: true
     Range: -9
     Hit: Multi_Hit
     HitCount: 2
