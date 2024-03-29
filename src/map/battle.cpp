@@ -4071,6 +4071,14 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 						break;
 				}
 			}
+			if (skill_id == SN_SHARPSHOOTING || skill_id == MA_SHARPSHOOTING)
+				i &= ~(1); //Sharpshooting just ignores DEF but does not deal max damage
+			if ((i&1) && sd) {
+				short index = sd->equip_index[EQI_AMMO];
+				if (sd->inventory_data[index] && sd->inventory_data[index]->subtype != AMMO_ARROW) {
+					i &= ~(2); //Criticals do not consider non-arrow ATK in their base damage
+				}
+			}
 			wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
 			if (is_attack_left_handed(src, skill_id))
 				wd->damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
