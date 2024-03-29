@@ -1435,7 +1435,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 
 	case AS_SONICBLOW:
 	case HN_MEGA_SONIC_BLOW:
-		if (!map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN)
+		if (!map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN)
 			sc_start(src, bl, SC_STUN, (4 * skill_lv + 20), skill_lv, skill_get_time2(skill_id, skill_lv)); //Link gives double stun chance outside GVG/BG
 		else
 			sc_start(src, bl, SC_STUN, (2 * skill_lv + 10), skill_lv, skill_get_time2(skill_id, skill_lv));
