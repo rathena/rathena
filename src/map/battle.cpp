@@ -4052,10 +4052,10 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			}
 #else
 			// Pre-renewal exclusive flags
-			bflag |= (is_skill_using_arrow(src, skill_id) ? BDMG_ARROW : BDMG_NONE);
-			bflag |= (skill_id == HW_MAGICCRASHER ? BDMG_MAGIC : BDMG_NONE);
-			bflag |= (skill_id == MO_EXTREMITYFIST ? BDMG_NOSIZE : BDMG_NONE);
-			bflag |= (sc && sc->getSCE(SC_WEAPONPERFECTION) ? BDMG_NOSIZE : BDMG_NONE);
+			if (is_skill_using_arrow(src, skill_id)) bflag |= BDMG_ARROW;
+			if (skill_id == HW_MAGICCRASHER) bflag |= BDMG_MAGIC;
+			if (skill_id == MO_EXTREMITYFIST) bflag |= BDMG_NOSIZE;
+			if (sc && sc->getSCE(SC_WEAPONPERFECTION)) bflag |= BDMG_NOSIZE;
 			if (is_skill_using_arrow(src, skill_id) && sd) {
 				switch(sd->status.weapon) {
 					case W_BOW:
