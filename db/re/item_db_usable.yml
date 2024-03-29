@@ -7785,7 +7785,7 @@ Body:
     Flags:
       Container: true
     Script: |
-      getgroupitem(IG_Tresure_Box_WoE_);
+      getgroupitem(IG_TRESURE_BOX_WOE);
   - Id: 12282
     AegisName: Internet_Cafe1
     Name: Internet Cafe1
