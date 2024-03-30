@@ -7027,27 +7027,6 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 		batk += sc->getSCE(SC_ANGRIFFS_MODUS)->val2;
 	if(sc->getSCE(SC_2011RWC_SCROLL))
 		batk += 30;
-	if(sc->getSCE(SC_INCATKRATE))
-		batk += batk * sc->getSCE(SC_INCATKRATE)->val1/100;
-	if(sc->getSCE(SC_PROVOKE))
-		batk += batk * sc->getSCE(SC_PROVOKE)->val2/100;
-#ifndef RENEWAL
-	if(sc->getSCE(SC_CONCENTRATION))
-		batk += batk * sc->getSCE(SC_CONCENTRATION)->val2/100;
-#endif
-	if(sc->getSCE(SC_SKE))
-		batk += batk * 3;
-	if(sc->getSCE(SC_BLOODLUST))
-		batk += batk * sc->getSCE(SC_BLOODLUST)->val2/100;
-	if(sc->getSCE(SC_JOINTBEAT) && sc->getSCE(SC_JOINTBEAT)->val2&BREAK_WAIST)
-		batk -= batk * 25/100;
-	if(sc->getSCE(SC_CURSE))
-		batk -= batk * 25/100;
-	/* Curse shouldn't effect on this? <- Curse OR Bleeding??
-	if(sc->getSCE(SC_BLEEDING))
-		batk -= batk * 25 / 100; */
-	if(sc->getSCE(SC_FLEET))
-		batk += batk * sc->getSCE(SC_FLEET)->val3/100;
 	if(sc->getSCE(SC__ENERVATION))
 		batk -= batk * sc->getSCE(SC__ENERVATION)->val2 / 100;
 	if( sc->getSCE(SC_ZANGETSU) )
@@ -7122,21 +7101,7 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 				watk += sc->getSCE(SC_NIBELUNGEN)->val2;
 		}
 	}
-	if(sc->getSCE(SC_CONCENTRATION))
-		watk += watk * sc->getSCE(SC_CONCENTRATION)->val2 / 100;
 #endif
-	if(sc->getSCE(SC_INCATKRATE))
-		watk += watk * sc->getSCE(SC_INCATKRATE)->val1/100;
-	if(sc->getSCE(SC_PROVOKE))
-		watk += watk * sc->getSCE(SC_PROVOKE)->val2/100;
-	if(sc->getSCE(SC_SKE))
-		watk += watk * 3;
-	if(sc->getSCE(SC_FLEET))
-		watk += watk * sc->getSCE(SC_FLEET)->val3/100;
-	if(sc->getSCE(SC_CURSE))
-		watk -= watk * 25/100;
-	if(sc->getSCE(SC_STRIPWEAPON) && bl->type != BL_PC)
-		watk -= watk * sc->getSCE(SC_STRIPWEAPON)->val2/100;
 	if(sc->getSCE(SC_FIGHTINGSPIRIT))
 		watk += sc->getSCE(SC_FIGHTINGSPIRIT)->val1;
 	if (sc->getSCE(SC_SHIELDSPELL_ATK))
@@ -12228,7 +12193,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ASH:
 			val2 = 0; // hit % reduc
 			val3 = 0; // def % reduc
-			val4 = 0; // atk flee & reduc
+			val4 = 0; // atk flee % reduc
 			if (!status_bl_has_mode(bl,MD_STATUSIMMUNE)) {
 				val2 = 50;
 				if (status_get_race(bl) == RC_PLANT) // plant type

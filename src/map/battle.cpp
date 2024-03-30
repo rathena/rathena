@@ -3366,6 +3366,7 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
 #ifndef RENEWAL
 		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG ||
 #endif
+		skill_id == MO_INVESTIGATE || skill_id == MO_EXTREMITYFIST ||
 		skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER || skill_id == NC_SELFDESTRUCTION ||
 		skill_id == LG_SHIELDPRESS || skill_id == LG_EARTHDRIVE)
 			return false;
@@ -3661,7 +3662,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2;
 				damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
 				//Spirit Sphere bonus damage is not affected by element
-				if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
+				if (skill_id == MO_FINGEROFFENSIVE || skill_id == MO_INVESTIGATE) { //Need to calculate number of Spirit Balls you had before cast
 					damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
 				}
 				else
@@ -3720,21 +3721,23 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 	struct status_data *sstatus = status_get_status_data(src);
 	int t_class = status_get_class(target);
 
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id) &&
-		skill_id != MO_INVESTIGATE &&
-		skill_id != MO_EXTREMITYFIST &&
-		skill_id != CR_GRANDCROSS)
+	if (sd) {
+		wd->basedamage = battle_addmastery(sd, target, wd->basedamage, 0);
+		if (is_attack_left_handed(src, skill_id)) {
+			wd->basedamage2 = battle_addmastery(sd, target, wd->basedamage2, 1);
+		}
+	}
+
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != CR_GRANDCROSS)
 	{	//Add mastery damage
 		uint16 skill;
 
 		wd->damage = battle_addmastery(sd,target,wd->damage,0);
-		wd->basedamage = battle_addmastery(sd, target, wd->basedamage, 0);
 #ifdef RENEWAL
 		wd->masteryAtk = battle_addmastery(sd,target,wd->weaponAtk,0);
 #endif
 		if (is_attack_left_handed(src, skill_id)) {
 			wd->damage2 = battle_addmastery(sd,target,wd->damage2,1);
-			wd->basedamage2 = battle_addmastery(sd, target, wd->basedamage2, 1);
 #ifdef RENEWAL
 			wd->masteryAtk2 = battle_addmastery(sd,target,wd->weaponAtk2,1);
 #endif
@@ -4287,6 +4290,71 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 	}
 }
 
+/**
+ * Calculates the percentual attack modificator (ATKpercent) based on status changes
+ * These bonuses are added together and the percent is applied to the damage before the defense reduction in pre-renewal
+ * In renewal this simply sets the base skillratio before the actual skill ratio of the skill used is added
+ * This bonus works as a separate unit to the rest (e.g., if one of these is not applied to a skill, then we know none are)
+ * Do not add additional status changes here unless they are confirmed to use ATKpercent
+ * @param bl: Object to calc atkpercent for
+ * @param skill_id: Skill used by object
+ * @param sc: Object's status change information
+ * @return atkpercent with cap_value(watk,0,USHRT_MAX)
+ */
+static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_id, status_change* sc)
+{
+	int atkpercent = 100;
+
+	//These skills are not affected by ATKpercent
+	switch (skill_id) {
+	case HT_FREEZINGTRAP:
+	case MA_FREEZINGTRAP:
+	case AM_ACIDTERROR:
+	case CR_GRANDCROSS:
+	case NPC_GRANDDARKNESS:
+	case MO_INVESTIGATE:
+	case MO_EXTREMITYFIST:
+	case PA_SACRIFICE:
+	case NPC_DRAGONBREATH:
+	case RK_DRAGONBREATH:
+	case RK_DRAGONBREATH_WATER:
+		return 100;
+	}
+
+	if (sc->getSCE(SC_CURSE))
+		atkpercent -= 25;
+	if (sc->getSCE(SC_PROVOKE))
+		atkpercent += sc->getSCE(SC_PROVOKE)->val2;
+	if (sc->getSCE(SC_STRIPWEAPON) && bl->type != BL_PC)
+		atkpercent -= sc->getSCE(SC_STRIPWEAPON)->val2;
+	if (sc->getSCE(SC_CONCENTRATION))
+		atkpercent += sc->getSCE(SC_CONCENTRATION)->val2;
+	if (sc->getSCE(SC_TRUESIGHT))
+		atkpercent += 2 * sc->getSCE(SC_TRUESIGHT)->val1;
+	if (sc->getSCE(SC_JOINTBEAT) && sc->getSCE(SC_JOINTBEAT)->val2 & BREAK_WAIST)
+		atkpercent -= 25;
+	if (sc->getSCE(SC_INCATKRATE))
+		atkpercent += sc->getSCE(SC_INCATKRATE)->val1;
+	if (sc->getSCE(SC_SKE))
+		atkpercent += 300;
+	if (sc->getSCE(SC_BLOODLUST))
+		atkpercent += sc->getSCE(SC_BLOODLUST)->val2;
+	if (sc->getSCE(SC_FLEET))
+		atkpercent += sc->getSCE(SC_FLEET)->val3;
+
+	/* Only few selected skills should use this function, DO NOT ADD any that are not caused by the skills listed below
+	* TODO:
+	* NPC_INVINCIBLE (+100) <--- need to verify, this currently increases all damage by 75%
+	* GD_GUARDUP (2*skLevel+8)
+	* EL_WATERBARRIER (-3)
+	* SC_ENERVATION (-30/-40/-50)
+	* MH_EQC (skLevel*5)
+	* MH_VOLCANIC_ASH (-50)
+	*/
+
+	return (unsigned short)cap_value(atkpercent, 0, USHRT_MAX);
+}
+
 /*======================================================
  * Calculate skill level ratios for weapon-based skills
  *------------------------------------------------------
@@ -4308,6 +4376,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 
 	//Skill damage modifiers that stack linearly
 	if(sc && skill_id != PA_SACRIFICE) {
+#ifdef RENEWAL
+		//ATK percent modifier (in renewal, it's applied before the skillratio)
+		skillratio = battle_get_atkpercent(src, skill_id, sc);
+#endif
 		if(sc->getSCE(SC_OVERTHRUST))
 			skillratio += sc->getSCE(SC_OVERTHRUST)->val3;
 		if(sc->getSCE(SC_MAXOVERTHRUST))
@@ -4317,10 +4389,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 100;
 #else
 			skillratio += 200;
-		if (sc && sc->getSCE(SC_TRUESIGHT))
-			skillratio += 2 * sc->getSCE(SC_TRUESIGHT)->val1;
-		if (sc->getSCE(SC_CONCENTRATION) && (skill_id != RK_DRAGONBREATH && skill_id != RK_DRAGONBREATH_WATER && skill_id != NPC_DRAGONBREATH))
-			skillratio += sc->getSCE(SC_CONCENTRATION)->val2;
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
 			if (sc->getSCE(SC_CRUSHSTRIKE)) {
@@ -6151,10 +6219,9 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 		if (sc->getSCE(SC_GATLINGFEVER))
 			ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->getSCE(SC_GATLINGFEVER)->val3);
 #else
-		if (sc->getSCE(SC_TRUESIGHT)) {
-			ATK_ADDRATE(wd->damage, wd->damage2, 2 * sc->getSCE(SC_TRUESIGHT)->val1);
-			ATK_ADDRATE(wd->basedamage, wd->basedamage2, 2 * sc->getSCE(SC_TRUESIGHT)->val1);
-		}
+		//ATK percent modifier (in pre-renewal, it's applied multiplicatively after the skill ratio)
+		ATK_RATE(wd->damage, wd->damage2, battle_get_atkpercent(src, skill_id, sc));
+		ATK_RATE(wd->basedamage, wd->basedamage2, battle_get_atkpercent(src, 0, sc));
 #endif
 		if (sc->getSCE(SC_SPIRIT)) {
 			if (skill_id == AS_SONICBLOW && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN) {
@@ -6466,18 +6533,12 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R)*(def1+vit_def) : (100-def1)),
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L)*(def1+vit_def) : (100-def1))
 		);
-		ATK_RATE2(wd->basedamage, wd->basedamage2,
-			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? 100 : (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) * (def1 + vit_def) : (100 - def1)),
-			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? 100 : (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) * (def1 + vit_def) : (100 - def1))
-		);
+		ATK_RATE(wd->basedamage, wd->basedamage2, 100 - def1);
 		ATK_ADD2(wd->damage, wd->damage2,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?0:-vit_def,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?0:-vit_def
 		);
-		ATK_ADD2(wd->basedamage, wd->basedamage2,
-			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? 0 : -vit_def,
-			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? 0 : -vit_def
-		);
+		ATK_ADD(wd->basedamage, wd->basedamage2, -vit_def);
 #endif
 }
 
@@ -6517,8 +6578,10 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	// Post skill/vit reduction damage increases
 #ifndef RENEWAL
 	//Refine bonus
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != MO_INVESTIGATE && skill_id != MO_EXTREMITYFIST) { // Counts refine bonus multiple times
-		ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+	if (sd) {
+		if (battle_skill_stacks_masteries_vvs(skill_id)) {
+			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+		}
 		ATK_ADD2(wd->basedamage, wd->basedamage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 	}
 
@@ -7455,7 +7518,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADD(wd.damage, wd.damage2, 4);
 		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
 			ATK_ADD(wd.damage, wd.damage2, (wd.div_ + sd->spiritball) * 3);
-		} else
+		} else if (skill_id != MO_INVESTIGATE)
 			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball * 3);
 #endif
 		if( skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN ) { //Refine bonus applies after cards and elements.
