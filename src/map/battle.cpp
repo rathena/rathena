@@ -3364,7 +3364,7 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
 {
 	if (
 #ifndef RENEWAL
-		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG ||
+		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG || skill_id == AM_ACIDTERROR ||
 #endif
 		skill_id == MO_INVESTIGATE || skill_id == MO_EXTREMITYFIST ||
 		skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER || skill_id == NC_SELFDESTRUCTION ||
@@ -3658,7 +3658,9 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 
 #ifndef RENEWAL
 		if (sd && (wd->damage > 0 || wd->damage2 > 0)) { // Applies only to player damage, monsters and mercenaries don't get this damage boost
-			if (sc && sc->getSCE(SC_WATK_ELEMENT)) { // Descriptions indicate this means adding a percent of a normal attack in another element [Skotlex]
+			// This adds a percentual damage bonus based on the damage you would deal with a normal attack
+			// Does not apply to unit skills or skills that have their own base damage formula such as AM_ACIDTERROR
+			if (sc && sc->getSCE(SC_WATK_ELEMENT) && !skill_get_unit_id(skill_id) && skill_id != AM_ACIDTERROR) {
 				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2;
 				damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
 				//Spirit Sphere bonus damage is not affected by element
@@ -4122,6 +4124,9 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			if (tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && (bflag & BDMG_CRIT)) {
 				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.crit_def_rate);
 			}
+			//Acid Terror ignores DEF but will substract VIT from base attack value instead
+			if (skill_id == AM_ACIDTERROR)
+				ATK_ADD(wd->damage, wd->damage2, -tstatus->def2);
 #endif
 			break;
 	} //End switch(skill_id)
@@ -4307,8 +4312,6 @@ static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_
 
 	//These skills are not affected by ATKpercent
 	switch (skill_id) {
-	case HT_FREEZINGTRAP:
-	case MA_FREEZINGTRAP:
 	case AM_ACIDTERROR:
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
@@ -4446,12 +4449,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case MA_CHARGEARROW:
 			skillratio += 50;
 			break;
-#ifndef RENEWAL
-		case HT_FREEZINGTRAP:
-		case MA_FREEZINGTRAP:
-			skillratio += -50 + 10 * skill_lv;
-			break;
-#endif
 		case KN_PIERCE:
 			skillratio += 10 * skill_lv;
 			if (sc && sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
@@ -4601,7 +4598,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if (sd && pc_checkskill(sd, AM_LEARNINGPOTION))
 				skillratio += 100; // !TODO: What's this bonus increase?
 #else
-			skillratio += 40 * skill_lv;
+			skillratio += -50 + 50 * skill_lv;
 #endif
 			break;
 		case MO_FINGEROFFENSIVE:
@@ -6444,15 +6441,14 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 				def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 			}
 		}
-		if (skill_id == AM_ACIDTERROR)
-#ifdef RENEWAL
-			def2 = 0; //Ignore only status defense. [FatalEror]
-#else
-			def1 = 0; //Ignores only armor defense. [Skotlex]
-#endif
 		if(def2 < 1)
 			def2 = 1;
 	}
+
+#ifdef RENEWAL
+	if (skill_id == AM_ACIDTERROR)
+		def2 = 0; // Ignore only status defense.
+#endif
 
 	//Damage reduction based on vitality
 	if (tsd) {	//Sd vit-eq
