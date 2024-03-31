@@ -5923,7 +5923,7 @@ Body:
             Duration: 30240
   - Group: CARDALBUM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Poring_Card
@@ -8171,7 +8171,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM_ACC
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Spore_Card
@@ -8610,7 +8610,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM_ARMOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Poring_Card
@@ -8917,7 +8917,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM_GARMENT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Condor_Card
@@ -9146,7 +9146,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM_HELM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Wilow_Card
@@ -9417,7 +9417,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM_SHIELD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Thief_Bug_Egg_Card
@@ -9619,7 +9619,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM_SHOES
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Chonchon_Card
@@ -9866,7 +9866,7 @@ Body:
             Rate: 1
   - Group: CARDALBUM_WEAPON
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Fabre_Card
@@ -12105,7 +12105,7 @@ Body:
             Rate: 37
   - Group: ENCHANT_STONE_BOX14
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -12232,7 +12232,7 @@ Body:
             Rate: 37
   - Group: ENCHANT_STONE_BOX15
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -12359,7 +12359,7 @@ Body:
             Rate: 37
   - Group: ENCHANT_STONE_BOX16
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -12613,7 +12613,7 @@ Body:
             Rate: 37
   - Group: ENCHANT_STONE_BOX18
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: DoubleAttack_Stone
@@ -20939,7 +20939,7 @@ Body:
             UniqueId: true
   - Group: MAGICCARDALBUM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ghostring_Card
@@ -35167,7 +35167,7 @@ Body:
             Rate: 130
   - Group: CLASS_SHADOW_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Swordman_earring
@@ -35556,7 +35556,7 @@ Body:
             Amount: 5
   - Group: ENCHANT_STONE_BOX26
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: CriticalStone_Robe_D
@@ -35767,7 +35767,7 @@ Body:
             Rate: 36
   - Group: THIRD_JOB_STONE_GARMENT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: ArchbishopStone_Robe
@@ -35819,7 +35819,7 @@ Body:
             Rate: 10
   - Group: THIRD_JOB_STONE_GARMENT_BOX2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: SuraStone_Robe2
@@ -35865,7 +35865,7 @@ Body:
             Rate: 10
   - Group: THIRD_JOB_STONE_TOP_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: HighpriestStone_Top
@@ -35914,7 +35914,7 @@ Body:
             Rate: 10
   - Group: THIRD_JOB_STONE_TOP_BOX2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: SuraStone_Top2
@@ -35960,7 +35960,7 @@ Body:
             Rate: 10
   - Group: THIRD_JOB_STONE_MIDDLE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: HighpriestStone_Middle
@@ -36009,7 +36009,7 @@ Body:
             Rate: 10
   - Group: THIRD_JOB_STONE_MIDDLE_BOX2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: SuraStone_Middle2
@@ -36055,7 +36055,7 @@ Body:
             Rate: 10
   - Group: THIRD_JOB_STONE_BOTTOM_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: HighpriestStone_Bottom
@@ -36104,7 +36104,7 @@ Body:
             Rate: 10
   - Group: THIRD_JOB_STONE_BOTTOM_BOX2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: SuraStone_Bottom2
@@ -41377,7 +41377,7 @@ Body:
             Rate: 15
   - Group: HELM_OF_FAITH_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Viva_Adul_Hat_WL1
@@ -41562,7 +41562,7 @@ Body:
             Amount: 10
   - Group: EP17_1_SPC01
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Cannon_Rapier_OS
@@ -41640,7 +41640,7 @@ Body:
             Rate: 50
   - Group: EP17_1_SPC04
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: EP17_1_EVT38
@@ -43295,7 +43295,7 @@ Body:
             Rate: 5
   - Group: EPIC_MODULE_MIX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Magical_Igni_Stone
@@ -43471,7 +43471,7 @@ Body:
             Rate: 10
   - Group: AUTOMATIC_MODULE_MIX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: EP17_2_NO1
@@ -43869,7 +43869,7 @@ Body:
             Rate: 38
   - Group: ENCHANT_STONE_BOX23
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Melee_Stone_Robe_D
@@ -44045,7 +44045,7 @@ Body:
             Rate: 36
   - Group: ENCHANT_STONE_BOX24
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -44256,7 +44256,7 @@ Body:
             Rate: 36
   - Group: ENCHANT_STONE_BOX25
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: ReloadStone_Robe_D
@@ -44467,7 +44467,7 @@ Body:
             Rate: 36
   - Group: ENCHANT_STONE_BOX27
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: SmatkStone_Robe
@@ -44793,7 +44793,7 @@ Body:
             Amount: 2
   - Group: ENCHANT_STONE_BOX28
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: M_PATKStone_Robe
@@ -44990,7 +44990,7 @@ Body:
             Rate: 36
   - Group: S_FULLPENE_EARRING
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullPene_Earring
@@ -45014,7 +45014,7 @@ Body:
             RefineMaximum: 10
   - Group: S_FULLPENE_PENDANT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullPene_Pendant
@@ -45038,7 +45038,7 @@ Body:
             RefineMaximum: 10
   - Group: S_FULLPENE_ARMOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullPene_Armor
@@ -45062,7 +45062,7 @@ Body:
             RefineMaximum: 10
   - Group: S_FULLPENE_SHOES
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullPene_Shoes
@@ -45086,7 +45086,7 @@ Body:
             RefineMaximum: 10
   - Group: S_FULLTEMP_EARRING
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullTemp_Earring
@@ -45110,7 +45110,7 @@ Body:
             RefineMaximum: 10
   - Group: S_FULLTEMP_PENDANT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullTemp_Pendant
@@ -45134,7 +45134,7 @@ Body:
             RefineMaximum: 10
   - Group: S_FULLTEMP_ARMOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullTemp_Armor
@@ -45158,7 +45158,7 @@ Body:
             RefineMaximum: 10
   - Group: S_FULLTEMP_SHOES
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_FullTemp_Shoes
@@ -45182,7 +45182,7 @@ Body:
             RefineMaximum: 10
   - Group: S_DURABLE_WEAPON
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Durable_Weapon
@@ -45206,7 +45206,7 @@ Body:
             RefineMaximum: 10
   - Group: S_DURABLE_SHIELD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Durable_Shield
@@ -45230,7 +45230,7 @@ Body:
             RefineMaximum: 10
   - Group: S_CLEVER_WEAPON
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Clever_Weapon
@@ -45254,7 +45254,7 @@ Body:
             RefineMaximum: 10
   - Group: S_CLEVER_SHIELD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Clever_Shield
@@ -45278,7 +45278,7 @@ Body:
             RefineMaximum: 10
   - Group: S_ALLMIGHTY_EARRING
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_AllMighty_Earring
@@ -45302,7 +45302,7 @@ Body:
             RefineMaximum: 10
   - Group: S_ALLMIGHTY_PENDANT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_AllMighty_Pendant
@@ -45326,7 +45326,7 @@ Body:
             RefineMaximum: 10
   - Group: S_TRUEGEM_EARRING
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_TrueGem_Earring
@@ -45350,7 +45350,7 @@ Body:
             RefineMaximum: 10
   - Group: S_TRUEGEM_PENDANT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_TrueGem_Pendant
@@ -45374,7 +45374,7 @@ Body:
             RefineMaximum: 10
   - Group: S_TRUEGEM_SHOES
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_TrueGem_Shoes
@@ -45398,7 +45398,7 @@ Body:
             RefineMaximum: 10
   - Group: S_TRUEGEM_ARMOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_TrueGem_Armor
@@ -45422,7 +45422,7 @@ Body:
             RefineMaximum: 10
   - Group: S_PERFECTSIZE_WEAPON
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_PerfectSize_Weapon
@@ -45446,7 +45446,7 @@ Body:
             RefineMaximum: 10
   - Group: S_PERFECTSIZE_ARMOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_PerfectSize_Armor
@@ -45470,7 +45470,7 @@ Body:
             RefineMaximum: 10
   - Group: S_M_MAMMOTH_EARRING
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_Mammoth_Earring
@@ -45494,7 +45494,7 @@ Body:
             RefineMaximum: 10
   - Group: S_M_MAMMOTH_PENDANT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_Mammoth_Pendant
@@ -45518,7 +45518,7 @@ Body:
             RefineMaximum: 10
   - Group: S_M_MAMMOTH_ARMOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_Mammoth_Armor
@@ -45542,7 +45542,7 @@ Body:
             RefineMaximum: 10
   - Group: S_M_MAMMOTH_SHOES
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_Mammoth_Shoes
@@ -45566,7 +45566,7 @@ Body:
             RefineMaximum: 10
   - Group: S_SPELLCASTER_EARRING
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_SpellCaster_Earring
@@ -45590,7 +45590,7 @@ Body:
             RefineMaximum: 10
   - Group: S_SPELLCASTER_PENDANT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_SpellCaster_Pendant
@@ -45614,7 +45614,7 @@ Body:
             RefineMaximum: 10
   - Group: S_SPELLCASTER_ARMOR
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_SpellCaster_Armor
@@ -45638,7 +45638,7 @@ Body:
             RefineMaximum: 10
   - Group: S_SPELLCASTER_SHOES
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_SpellCaster_Shoes
@@ -45662,7 +45662,7 @@ Body:
             RefineMaximum: 10
   - Group: S_ABSORB_WEAPON
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Absorb_Weapon
@@ -45686,7 +45686,7 @@ Body:
             RefineMaximum: 10
   - Group: S_ABSORB_SHIELD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Absorb_Shield
@@ -45726,7 +45726,7 @@ Body:
             Amount: 5
   - Group: ENCHANT_STONE_BOX29
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: SmatkStone_Robe
@@ -45923,7 +45923,7 @@ Body:
             Rate: 36
   - Group: EIN_1HITEMBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ein_1HKNUCK
@@ -45981,7 +45981,7 @@ Body:
             Rate: 555
   - Group: EIN_UNDIUM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ein_REDIUM
@@ -46010,7 +46010,7 @@ Body:
             Amount: 50
   - Group: WET_SEALED_CARD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Sealed_Card
@@ -46020,7 +46020,7 @@ Body:
             Rate: 3000
   - Group: 2019_SSTARR_TBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: 2019_SStarR_Ticket
@@ -46097,7 +46097,7 @@ Body:
             Amount: 10
   - Group: ROYAL_SECRET_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Mightysoul_Essence
@@ -46367,7 +46367,7 @@ Body:
             Amount: 3
   - Group: SEASON_EVT_REWARD_2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Crepe
@@ -50879,7 +50879,7 @@ Body:
             UniqueId: true
   - Group: RTC_ANNIV_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 7
         List:
           - Index: 0
             Item: Guarantee_Weapon_13Up
@@ -51062,7 +51062,7 @@ Body:
             UniqueId: true
   - Group: 2017_GSTAR_COSTUMEBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Vampire_Familiar
@@ -51756,7 +51756,7 @@ Body:
         List:
           - Index: 0
             Item: Evt_Cos_Coin
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Blink_Eyes_Frozen
@@ -52813,7 +52813,7 @@ Body:
             Amount: 3
   - Group: COWLICK_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 7
         List:
           - Index: 0
             Item: C_Cowlick_GN
@@ -52841,7 +52841,7 @@ Body:
             Rate: 1
   - Group: STRAIGHT_PONY_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 7
         List:
           - Index: 0
             Item: C_Straight_Pony_GN
@@ -52869,7 +52869,7 @@ Body:
             Rate: 1
   - Group: LOOSE_WAVE_TWIN_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 7
         List:
           - Index: 0
             Item: C_Loose_Wave_Twin_GN
@@ -53963,7 +53963,7 @@ Body:
             Rate: 1
   - Group: CACHUA_WEAPON
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: God_Material_Box
@@ -54718,7 +54718,7 @@ Body:
             Rate: 40000
   - Group: CACHUA_ROBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: God_Material_Box
@@ -54983,7 +54983,7 @@ Body:
             Rate: 12969
   - Group: CACHUA_MAIL
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: God_Material_Box
@@ -55305,7 +55305,7 @@ Body:
             Rate: 4573
   - Group: CACHUA_SHOES
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: God_Material_Box
@@ -55564,7 +55564,7 @@ Body:
             Rate: 8000
   - Group: CACHUA_SHIELD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: God_Material_Box
@@ -55811,7 +55811,7 @@ Body:
             Rate: 17500
   - Group: CACHUA_HELM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: God_Material_Box
@@ -57800,7 +57800,7 @@ Body:
             Amount: 10
   - Group: LI_LAPINE_DDUKDDAKBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -57941,7 +57941,7 @@ Body:
             Amount: 3
   - Group: HAIR_BUN_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 7
         List:
           - Index: 0
             Item: C_Hair_Bun_BU
@@ -57969,7 +57969,7 @@ Body:
             Rate: 1
   - Group: ROLL_TWIN_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 7
         List:
           - Index: 0
             Item: C_Roll_Twin_BU
@@ -57997,7 +57997,7 @@ Body:
             Rate: 1
   - Group: LONG_PONY_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 7
         List:
           - Index: 0
             Item: C_Long_Pony_BU
@@ -58964,7 +58964,7 @@ Body:
             Rate: 1
   - Group: EXSHADOW_DDUKDDAKBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: RaceShadow_Mix
@@ -61429,7 +61429,7 @@ Body:
             Rate: 1
   - Group: 2018_LAPINE_DDUKDDAKBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -61594,7 +61594,7 @@ Body:
             Amount: 3
   - Group: SWEETS_EVT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Crepe
@@ -61685,7 +61685,7 @@ Body:
             Rate: 300
   - Group: 2018_VISIONARY_CARD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Golden_Bug_Card
@@ -62462,7 +62462,7 @@ Body:
             Announced: true
   - Group: CELEBRATE_EGG
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Guarantee_Weapon_7Up
@@ -62594,7 +62594,7 @@ Body:
             Amount: 5
   - Group: NOODLE_FESTA_CAN
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Magic_Card_Album
@@ -63181,7 +63181,7 @@ Body:
             Rate: 1
   - Group: HERO_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Royal_Bow_K
@@ -63498,7 +63498,7 @@ Body:
             Item: 120LVUP
   - Group: SEASON_EVT_REWARD_3
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Yummy_Cookie_Egg
@@ -63607,7 +63607,7 @@ Body:
             Rate: 50
   - Group: SEASON_EVT_REWARD_4
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Cherry_Blossom_Cake
@@ -63665,7 +63665,7 @@ Body:
             Rate: 200
   - Group: SEASON_EVT_REWARD_5
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Magic_Card_Album
@@ -63750,7 +63750,7 @@ Body:
             Rate: 1
   - Group: JOB_ENCHANT_STONE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: ArchbishopStone_Robe
@@ -63902,7 +63902,7 @@ Body:
         List:
           - Index: 0
             Item: Cachua_Coupon
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Sillit_Pong_Box
@@ -64100,7 +64100,7 @@ Body:
             Amount: 5
   - Group: SEASON_EVT_REWARD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: K_Secret_Key
@@ -64154,7 +64154,7 @@ Body:
             Rate: 2400
   - Group: CANDY_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Candy_Box_Melee
@@ -64167,7 +64167,7 @@ Body:
             Rate: 1
   - Group: PORING_SUNGLASSES_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Poring_Sunglasses_K
@@ -64177,7 +64177,7 @@ Body:
             Rate: 1
   - Group: SIGRUN_SHADOW_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Sigrun_Shield
@@ -64187,7 +64187,7 @@ Body:
             Rate: 3
   - Group: MAD_BUNNY_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Mad_Bunny_K
@@ -64209,7 +64209,7 @@ Body:
             Item: Enchant_Stone_Box16
   - Group: ABYSS_ITEMBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Drabone_L
@@ -64268,7 +64268,7 @@ Body:
             Rate: 70
   - Group: ODIN_ITEMBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: CassockA_STR
@@ -64308,7 +64308,7 @@ Body:
             Amount: 5
   - Group: BIO_W_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Volar
@@ -64429,7 +64429,7 @@ Body:
             Rate: 10
   - Group: BIO_DOCU_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Bio_Test_Fragment
@@ -64463,7 +64463,7 @@ Body:
             Rate: 50
   - Group: BIO_REACTANT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Soul_Of_Swordman
@@ -64494,7 +64494,7 @@ Body:
             Rate: 60
   - Group: PAYPROMOTION_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Fairy_Long_BD
@@ -64519,7 +64519,7 @@ Body:
             Rate: 5
   - Group: E_BCRYSTAL_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_PoringBeret_TW
@@ -64556,7 +64556,7 @@ Body:
             Amount: 5
   - Group: E_MCRYSTAL_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Heart_Hair_Pin
@@ -64590,7 +64590,7 @@ Body:
             Amount: 4
   - Group: E_SCRYSTAL_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Heart_Hair_Pin
@@ -65139,7 +65139,7 @@ Body:
             Duration: 43200
   - Group: TEMPORAL_MANTEAU_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Temporal_M_Luk
@@ -65161,7 +65161,7 @@ Body:
             Rate: 1
   - Group: LAPINE_DDUKDDAKBOX2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -65235,16 +65235,18 @@ Body:
             Item: JobShadow_Mix_Earing
             Rate: 1
             Announced: true
-          - Index: 19
+      - SubGroup: 1
+        List:
+          - Index: 0
             Item: Shadow_Mix_Recipe
             Rate: 250
-          - Index: 20
+          - Index: 1
             Item: EnchantStone_Recipe
             Rate: 250
-          - Index: 21
+          - Index: 2
             Item: PetEgg_Recipe
             Rate: 100
-          - Index: 22
+          - Index: 3
             Item: Nyang_Costume_Recipe
             Rate: 100
   - Group: KR_B_SPECIAL02
@@ -65263,7 +65265,7 @@ Body:
             Item: Evt_Cos_Coin
   - Group: GOLDPCBANG_SHIELDBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Sharel_Shield
@@ -65872,7 +65874,7 @@ Body:
             Rate: 10
   - Group: GOLDPCBANG_MILEAGEBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Over_Protector
@@ -65930,7 +65932,7 @@ Body:
             Rate: 1
   - Group: SKILL_SHADOW_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Sonic_Armor
@@ -66366,7 +66368,7 @@ Body:
             Rate: 15
   - Group: SHADOWDECON_ORE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Shadowdecon_Ore
@@ -66402,7 +66404,7 @@ Body:
             Amount: 10
   - Group: ZELUNIUM_ORE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Zelunium_Ore
@@ -66451,7 +66453,7 @@ Body:
             Amount: 30
   - Group: EXOTIC_BOB_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Exotic_Bob_R_BW
@@ -66728,7 +66730,7 @@ Body:
             Item: Booster_Pack_210
   - Group: 2020_GOAL_GIFT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Seraphim_Wing_TW
@@ -66750,7 +66752,7 @@ Body:
             Rate: 2500
   - Group: RANGER_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Cluster_Armor
@@ -66790,7 +66792,7 @@ Body:
             Rate: 15
   - Group: WARLOCK_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Jack_Armor
@@ -66830,7 +66832,7 @@ Body:
             Rate: 15
   - Group: SORCERER_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Dust_Armor
@@ -66870,7 +66872,7 @@ Body:
             Rate: 15
   - Group: WANDERMINS_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Rainstorm_Armor
@@ -66910,7 +66912,7 @@ Body:
             Rate: 15
   - Group: ROYALGUARD_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Brand_Armor
@@ -66950,7 +66952,7 @@ Body:
             Rate: 15
   - Group: SHADOWCHASER_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Triangle_Armor
@@ -66990,7 +66992,7 @@ Body:
             Rate: 15
   - Group: MECHANIC_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Tornado_Armor
@@ -67030,7 +67032,7 @@ Body:
             Rate: 15
   - Group: GENETIC_S_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Cart_Tornado_Armor
@@ -67070,7 +67072,7 @@ Body:
             Rate: 15
   - Group: SIGNON_PRIN_WAVE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Signon_Princ_Wave_BU
@@ -67098,7 +67100,7 @@ Body:
             Rate: 3
   - Group: HERO_WEAPON_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Barb_Wire_K_Cube
@@ -67384,7 +67386,7 @@ Body:
             Rate: 10
   - Group: MD_AIRBOAT_REWARD
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: MD_Airboat_Card
@@ -67409,7 +67411,7 @@ Body:
             Rate: 15
   - Group: OS_HELM_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ignis_CapK
@@ -67434,7 +67436,7 @@ Body:
             Rate: 1
   - Group: FAMOUS_HAT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: New_Wave_Sunglasses
@@ -67502,7 +67504,7 @@ Body:
             Item: Poenetentia_Aegis
   - Group: EX_SKILL_SHADOW_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Tail_Dragon_Weapon
@@ -67686,7 +67688,7 @@ Body:
             Rate: 15
   - Group: CACHUA_COSTUME_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Cons_Of_Water
@@ -67793,7 +67795,7 @@ Body:
             Amount: 10
   - Group: BIOWEAPON_HELM_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: BioWeapon_Helm_RK
@@ -67833,7 +67835,7 @@ Body:
             Rate: 1
   - Group: TREE_OF_SPROUT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Tree_Of_Sprout_DEX
@@ -67855,7 +67857,7 @@ Body:
             Rate: 10
   - Group: SPECIAL_COSTUME_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Over_Protector
@@ -67949,7 +67951,7 @@ Body:
             Rate: 1
   - Group: SPECIAL_COSTUME_BOX_
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Cons_Of_Water
@@ -68060,165 +68062,167 @@ Body:
           - Index: 6
             Item: Illusion_Module_Mix
             Rate: 14
-          - Index: 7
+      - SubGroup: 6
+        List:
+          - Index: 0
             Item: EnchantStone_Recipe
             Rate: 3500
-          - Index: 8
+          - Index: 1
             Item: PetEgg_Recipe
             Rate: 1250
-          - Index: 9
+          - Index: 2
             Item: Nyang_Costume_Recipe
             Rate: 1250
-          - Index: 10
+          - Index: 3
             Item: EventItem_Recipe
             Rate: 1250
-          - Index: 11
+          - Index: 4
             Item: Automatic_Module_Mix
             Rate: 850
-          - Index: 12
+          - Index: 5
             Item: Illusion_Module_Mix
             Rate: 1540
-          - Index: 13
+          - Index: 6
             Item: StatusShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 14
+          - Index: 7
             Item: StabilityShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 15
+          - Index: 8
             Item: GemstoneShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 16
+          - Index: 9
             Item: RaceShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 17
+          - Index: 10
             Item: BearersShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 18
+          - Index: 11
             Item: ComposeShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 19
+          - Index: 12
             Item: JobShadow_Mix_Weapon
             Rate: 10
             Announced: true
-          - Index: 20
+          - Index: 13
             Item: JobShadow_Mix_Armor
             Rate: 10
             Announced: true
-          - Index: 21
+          - Index: 14
             Item: JobShadow_Mix_Shoes
             Rate: 10
             Announced: true
-          - Index: 22
+          - Index: 15
             Item: JobShadow_Mix_Shield
             Rate: 10
             Announced: true
-          - Index: 23
+          - Index: 16
             Item: JobShadow_Mix_Pendant
             Rate: 10
             Announced: true
-          - Index: 24
+          - Index: 17
             Item: JobShadow_Mix_Earing
             Rate: 10
             Announced: true
-          - Index: 25
+          - Index: 18
             Item: CriticalHit_Mix
             Rate: 10
             Announced: true
-          - Index: 26
+          - Index: 19
             Item: PhysicalMagical_Mix
             Rate: 10
             Announced: true
-          - Index: 27
+          - Index: 20
             Item: HardChamption_Mix
             Rate: 10
             Announced: true
-          - Index: 28
+          - Index: 21
             Item: ImmunedAthena_Mix
             Rate: 10
             Announced: true
-          - Index: 29
+          - Index: 22
             Item: KingbirdAncient_Mix
             Rate: 10
             Announced: true
-          - Index: 30
+          - Index: 23
             Item: Hasty_Mix
             Rate: 10
             Announced: true
-          - Index: 31
+          - Index: 24
             Item: PerfectSize_Mix
             Rate: 10
             Announced: true
-          - Index: 32
+          - Index: 25
             Item: MagicPiercing_Mix
             Rate: 10
             Announced: true
-          - Index: 33
+          - Index: 26
             Item: Piercing_Mix
             Rate: 10
             Announced: true
-          - Index: 34
+          - Index: 27
             Item: InfinityShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 35
+          - Index: 28
             Item: FullPeneShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 36
+          - Index: 29
             Item: FullTempShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 37
+          - Index: 30
             Item: True_GemShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 38
+          - Index: 31
             Item: Mammoth_Mix
             Rate: 10
             Announced: true
-          - Index: 39
+          - Index: 32
             Item: EXPShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 40
+          - Index: 33
             Item: AbsorbShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 41
+          - Index: 34
             Item: MajorAutoSpell_Mix
             Rate: 10
             Announced: true
-          - Index: 42
+          - Index: 35
             Item: MagicalShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 43
+          - Index: 36
             Item: PhysicalShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 44
+          - Index: 37
             Item: ReloadShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 45
+          - Index: 38
             Item: SpellCasterShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 46
+          - Index: 39
             Item: R_BearersShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 47
+          - Index: 40
             Item: M_BlitzShadow_Mix
             Rate: 10
             Announced: true
-          - Index: 48
+          - Index: 41
             Item: EXPShadow_Mix2
             Rate: 10
             Announced: true
@@ -69069,7 +69073,7 @@ Body:
             Rate: 10
   - Group: ANCIENT_HERO_WILL
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ancient_Hero_Wisdom
@@ -69085,7 +69089,7 @@ Body:
             Rate: 5
   - Group: MAMMOTH_SHADOW_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Mammoth_Armor
@@ -69107,7 +69111,7 @@ Body:
             Rate: 1
   - Group: SHADOW_R_M_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Class_Sha_R_M_Melee
@@ -69123,7 +69127,7 @@ Body:
             Rate: 3
   - Group: ALL_SHADOW_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Physical_Earring
@@ -71260,7 +71264,7 @@ Body:
             Announced: true
   - Group: FLUFFY_SEMI_LONG_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Fluffy_Semi_Long
@@ -71367,7 +71371,7 @@ Body:
             Item: AngelPoring_Clear
   - Group: UP_HERO_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Up_Royal_Bow_K
@@ -71482,7 +71486,7 @@ Body:
             Rate: 1
   - Group: HIGH_REFINE_GUARANTEE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Guarantee_Weapon_11Up
@@ -71510,7 +71514,7 @@ Body:
             Announced: true
   - Group: REFINE_GUARANTEE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Guarantee_Weapon_7Up
@@ -71542,7 +71546,7 @@ Body:
             Announced: true
   - Group: SPECIAL_REFINE_CUBE
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Temporal_Refine_Cube
@@ -71582,7 +71586,7 @@ Body:
             Announced: true
   - Group: AUTOSPELL_SHADOW_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_AutoSpell_Armor
@@ -71618,7 +71622,7 @@ Body:
             Amount: 20
   - Group: S_ENCHANT_STONE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Melee_Stone_Robe_D
@@ -72154,7 +72158,7 @@ Body:
             UniqueId: true
   - Group: PHYMAG_SHADOW_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Physical_Earring
@@ -72176,7 +72180,7 @@ Body:
             Rate: 1
   - Group: S_DUAL_STONE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Melee_Stone_Robe_D
@@ -72207,7 +72211,7 @@ Body:
             Item: C_Demons_Familiar_K
   - Group: GM_LOST_BAGPACK
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Exotic_Bob_Box
@@ -72269,7 +72273,7 @@ Body:
             Amount: 10
   - Group: SEASON_EVT_REWARD_9
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Comp_Small_Mana_Potion
@@ -74476,7 +74480,7 @@ Body:
             Rate: 1667
   - Group: ENCHANT_STONE_BOX30
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -74827,7 +74831,7 @@ Body:
             Rate: 40
   - Group: ENCHANT_STONE_BOX31
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -75042,7 +75046,7 @@ Body:
             Rate: 40
   - Group: ENCHANT_STONE_BOX32
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -76030,7 +76034,7 @@ Body:
             Item: Rafini_Staff
   - Group: CLOSEDMIND_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Hurt_Mind
@@ -78711,7 +78715,7 @@ Body:
             Rate: 1
   - Group: ENCHANT_STONE_BOX33
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -78947,7 +78951,7 @@ Body:
             Rate: 40
   - Group: LUXURIOUS_BLUE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Queen_Wing_Piece
@@ -79045,105 +79049,107 @@ Body:
           - Index: 31
             Item: EP20_D_Scale
             Rate: 313
-          - Index: 32
+      - SubGroup: 1
+        List:
+          - Index: 0
             Item: Queen_Wing_Piece
             Rate: 312
-          - Index: 33
+          - Index: 1
             Item: Rojerta_Piece
             Rate: 312
-          - Index: 34
+          - Index: 2
             Item: Will_Of_Darkness_
             Rate: 312
-          - Index: 35
+          - Index: 3
             Item: Broken_Horn
             Rate: 312
-          - Index: 36
+          - Index: 4
             Item: Voucher_Of_Orcish_Hero
             Rate: 312
-          - Index: 37
+          - Index: 5
             Item: Token_of_OrcGeneral
             Rate: 312
-          - Index: 38
+          - Index: 6
             Item: Valhalla_Flower
             Rate: 312
-          - Index: 39
+          - Index: 7
             Item: Broken_Crown
             Rate: 312
-          - Index: 40
+          - Index: 8
             Item: Mother's_Nightmare
             Rate: 312
-          - Index: 41
+          - Index: 9
             Item: Piece_Of_Bone_Armor
             Rate: 312
-          - Index: 42
+          - Index: 10
             Item: Shine_Spear_Blade
             Rate: 312
-          - Index: 43
+          - Index: 11
             Item: Osiris_Doll
             Rate: 312
-          - Index: 44
+          - Index: 12
             Item: Fang_Of_Garm
             Rate: 312
-          - Index: 45
+          - Index: 13
             Item: Pocket_Watch
             Rate: 312
-          - Index: 46
+          - Index: 14
             Item: Baphomet_Doll
             Rate: 312
-          - Index: 47
+          - Index: 15
             Item: Loki's_Whispers
             Rate: 312
-          - Index: 48
+          - Index: 16
             Item: Tiger_Footskin
             Rate: 313
-          - Index: 49
+          - Index: 17
             Item: White_Snake_Tear
             Rate: 313
-          - Index: 50
+          - Index: 18
             Item: Gemstone
             Rate: 313
-          - Index: 51
+          - Index: 19
             Item: Young_Twig
             Rate: 313
-          - Index: 52
+          - Index: 20
             Item: Taegeuk_Plate
             Rate: 313
-          - Index: 53
+          - Index: 21
             Item: Ice_Scale
             Rate: 313
-          - Index: 54
+          - Index: 22
             Item: Dark_Red_Scale
             Rate: 313
-          - Index: 55
+          - Index: 23
             Item: Tutankhamen's_Mask
             Rate: 313
-          - Index: 56
+          - Index: 24
             Item: Broken_Pharaoh_Symbol
             Rate: 313
-          - Index: 57
+          - Index: 25
             Item: Scale_Of_Red_Dragon
             Rate: 313
-          - Index: 58
+          - Index: 26
             Item: Konts_Letter
             Rate: 313
-          - Index: 59
+          - Index: 27
             Item: Boroken_Shiled_Piece
             Rate: 313
-          - Index: 60
+          - Index: 28
             Item: Tiger's_Skin
             Rate: 313
-          - Index: 61
+          - Index: 29
             Item: EP19_D_P_Stone
             Rate: 313
-          - Index: 62
+          - Index: 30
             Item: EP19_Luminant
             Rate: 313
-          - Index: 63
+          - Index: 31
             Item: EP20_D_Scale
             Rate: 313
   - Group: C_BRAID_HALF_UP_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Braid_Half_Up_BL_K
@@ -79171,7 +79177,7 @@ Body:
             Rate: 3
   - Group: SLD_BOSS_CARD_ALBUM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Sealed_D_Lord_Card
@@ -79351,7 +79357,7 @@ Body:
             Announced: true
   - Group: M_ARMOR_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_IG_Armor
@@ -79409,7 +79415,7 @@ Body:
             Rate: 10
   - Group: M_SHOES_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_IG_Shoes
@@ -79467,7 +79473,7 @@ Body:
             Rate: 10
   - Group: M_PENDANT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_IG_Pendant
@@ -79525,7 +79531,7 @@ Body:
             Rate: 10
   - Group: M_EARRING_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_IG_Earring
@@ -79590,7 +79596,7 @@ Body:
             Amount: 3
   - Group: SHADOW_UP_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: AllMighty_Up
@@ -79645,7 +79651,7 @@ Body:
             Rate: 10
   - Group: EIN_ORE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ein_WHIDIUM
@@ -80052,7 +80058,7 @@ Body:
             Amount: 5
   - Group: FATE_FRAGMENT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Fate_Shard_A
@@ -80395,7 +80401,7 @@ Body:
             Amount: 5
   - Group: SIN_FRAGMENT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Sin_Shard_A
@@ -80738,7 +80744,7 @@ Body:
             Amount: 5
   - Group: AMETHYST_FRAGMENT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ep18_Amethyst_Fragment
@@ -80846,7 +80852,7 @@ Body:
             Amount: 30
   - Group: SNOW_F_ORE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Snow_F_Ore
@@ -80940,7 +80946,7 @@ Body:
             Amount: 2
   - Group: BROWN_DIA_BOX_3_7
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001480
@@ -90449,7 +90455,7 @@ Body:
             Amount: 20
   - Group: LAPINE_DDUKDDAKBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Shadow_Mix_Recipe
@@ -90754,7 +90760,7 @@ Body:
             Rate: 1
   - Group: MYSTERIOUS_PLASTIC
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Comp_M_DEFScroll
@@ -90890,7 +90896,7 @@ Body:
             Item: Time_Overload_Box
   - Group: MAIN_LUCKY_BOX_
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Sillit_Pong_Box
@@ -91437,7 +91443,7 @@ Body:
             Amount: 10
   - Group: SEALED_CARD3
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Sealed_D_Lord_Card
@@ -91615,7 +91621,7 @@ Body:
             Amount: 20
   - Group: SEASON_EVT_REWARD_11
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Royal_Secret_Box
@@ -91852,7 +91858,7 @@ Body:
             Amount: 500
   - Group: PAYMENT_COSTUME_BOX1
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_B_EarWitchHat
@@ -91955,7 +91961,7 @@ Body:
             Amount: 10
   - Group: EVT_RAGFES_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Blacksmith_Blessing
@@ -92080,7 +92086,7 @@ Body:
             Item: C_Mechanical_Plant_Hat
   - Group: SEASON_EVT_REWARD_12
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Shadow_Refine_Hammer
@@ -92198,7 +92204,7 @@ Body:
             Item: Hero_Weapon_Up_Box_6
   - Group: HERO_TOKEN_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Hero_Token_AG
@@ -92374,7 +92380,7 @@ Body:
             Amount: 10
   - Group: SEASON_EVT_REWARD_1
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_bullhead
@@ -92428,7 +92434,7 @@ Body:
             Rate: 100
   - Group: 2021_WINTER_EVENT_BOX1
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Filir_Bag
@@ -92451,7 +92457,7 @@ Body:
             Item: C_Full_Bloom_Hp_Blue
   - Group: ICE_F_STONE_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Ice_F_Stone_Str
@@ -92755,7 +92761,7 @@ Body:
             Rate: 50
   - Group: BS_MAKING_S
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Bs_Item_M_S_2
@@ -93159,7 +93165,7 @@ Body:
             Amount: 10
   - Group: MD_AIRBOAT_EXPBOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: MD_Airboat_Bexp
@@ -93236,7 +93242,7 @@ Body:
             Amount: 10
   - Group: P_BOOSTER230_GIFT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Cons_Of_Light_Dark
@@ -93385,7 +93391,7 @@ Body:
             Item: Boarding_Halter
   - Group: VIVA_ADUL_HAT_BOX_11
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Viva_Adul_Hat_WL1
@@ -93559,7 +93565,7 @@ Body:
             RefineMaximum: 11
   - Group: EVT_MAKINGMATERIALS_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Death_Barmund_Rune
@@ -93894,7 +93900,7 @@ Body:
             Duration: 14400
   - Group: R_BEARERS_EARRING_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_R_Bearers_Earring
@@ -93918,7 +93924,7 @@ Body:
             RefineMaximum: 10
   - Group: R_BEARERS_PENDANT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_R_Bearers_Pendant
@@ -93942,7 +93948,7 @@ Body:
             RefineMaximum: 10
   - Group: R_BEARERS_ARMOR_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_R_Bearers_Armor
@@ -93966,7 +93972,7 @@ Body:
             RefineMaximum: 10
   - Group: R_BEARERS_SHOES_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_R_Bearers_Shoes
@@ -93990,7 +93996,7 @@ Body:
             RefineMaximum: 10
   - Group: HASTY_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Hasty_Weapon
@@ -94014,7 +94020,7 @@ Body:
             RefineMaximum: 10
   - Group: HASTY_SHIELD_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Hasty_Shield
@@ -94038,7 +94044,7 @@ Body:
             RefineMaximum: 10
   - Group: S_RELOAD_SHIELD_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_S_Reload_Shield
@@ -94108,7 +94114,7 @@ Body:
             Amount: 3
   - Group: HEROSRIA_GIFT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Fire_Giant_Gold
@@ -94241,70 +94247,72 @@ Body:
           - Index: 36
             Item: Gold_Bullion
             Rate: 800
-          - Index: 37
+      - SubGroup: 1
+        List:
+          - Index: 0
             Item: Heros_Gold_Bar
             Rate: 30
-          - Index: 38
+          - Index: 1
             Item: Heros_Silver_Bar
             Rate: 30
-          - Index: 39
+          - Index: 2
             Item: Heros_Copper_Bar
             Rate: 30
-          - Index: 40
+          - Index: 3
             Item: Heros_Iron_Bar
             Rate: 30
-          - Index: 41
+          - Index: 4
             Item: Heros_Gold_Ore
             Rate: 150
             Amount: 7
-          - Index: 42
+          - Index: 5
             Item: Heros_Silver_Ore
             Rate: 200
             Amount: 7
-          - Index: 43
+          - Index: 6
             Item: Heros_Copper_Ore
             Rate: 250
             Amount: 7
-          - Index: 44
+          - Index: 7
             Item: Heros_Iron_Ore
             Rate: 350
             Amount: 7
-          - Index: 45
+          - Index: 8
             Item: Heros_Gold_Ore
             Rate: 200
             Amount: 5
-          - Index: 46
+          - Index: 9
             Item: Heros_Silver_Ore
             Rate: 300
             Amount: 5
-          - Index: 47
+          - Index: 10
             Item: Heros_Copper_Ore
             Rate: 400
             Amount: 5
-          - Index: 48
+          - Index: 11
             Item: Heros_Iron_Ore
             Rate: 600
             Amount: 5
-          - Index: 49
+          - Index: 12
             Item: Heros_Gold_Ore
             Rate: 800
             Amount: 3
-          - Index: 50
+          - Index: 13
             Item: Heros_Silver_Ore
             Rate: 1100
             Amount: 3
-          - Index: 51
+          - Index: 14
             Item: Heros_Copper_Ore
             Rate: 1400
             Amount: 3
-          - Index: 52
+          - Index: 15
             Item: Heros_Iron_Ore
             Rate: 2900
             Amount: 3
-          - Index: 53
+          - Index: 16
             Item: White_Gold_Bullion
             Rate: 415
-          - Index: 54
+          - Index: 17
             Item: Gold_Bullion
             Rate: 815
       - SubGroup: 2
@@ -94412,7 +94420,7 @@ Body:
             Rate: 800
   - Group: MAUTOSPELL_EARRING_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_AutoSpell_Earring
@@ -94436,7 +94444,7 @@ Body:
             RefineMaximum: 10
   - Group: MAUTOSPELL_PENDANT_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_AutoSpell_Pendant
@@ -94460,7 +94468,7 @@ Body:
             RefineMaximum: 10
   - Group: MAUTOSPELL_ARMOR_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_AutoSpell_Armor
@@ -94484,7 +94492,7 @@ Body:
             RefineMaximum: 10
   - Group: MAUTOSPELL_SHOES_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_M_AutoSpell_Shoes
@@ -94508,7 +94516,7 @@ Body:
             RefineMaximum: 10
   - Group: INFINITY_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Infinity_Weapon
@@ -94532,7 +94540,7 @@ Body:
             RefineMaximum: 10
   - Group: INFINITY_SHIELD_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Infinity_Shield
@@ -94556,7 +94564,7 @@ Body:
             RefineMaximum: 10
   - Group: VR_BOOK_EVENT
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: VR_Reading_Card
@@ -94698,7 +94706,7 @@ Body:
             Amount: 10
   - Group: EXP_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_EXP_Weapon
@@ -94722,7 +94730,7 @@ Body:
             RefineMaximum: 10
   - Group: EXP_SHIELD_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_EXP_Shield
@@ -94746,7 +94754,7 @@ Body:
             RefineMaximum: 10
   - Group: M_BLITZ_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Mega_Blitz_Weapon
@@ -94770,7 +94778,7 @@ Body:
             RefineMaximum: 10
   - Group: M_BLITZ_SHIELD_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: S_Mega_Blitz_Shield
@@ -94794,7 +94802,7 @@ Body:
             RefineMaximum: 10
   - Group: CVT_WING_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Cvt_Magical_Wing
@@ -95012,7 +95020,7 @@ Body:
             RefineMaximum: 9
   - Group: JUSTICE_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Punish_Hall
@@ -95085,7 +95093,7 @@ Body:
             Rate: 10
   - Group: INJUSTICE_WEAPON_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Demonic_Claw
@@ -95158,7 +95166,7 @@ Body:
             Rate: 10
   - Group: GOODNEVIL_HELM_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: GoodnEvil_Circlet_DK
@@ -95216,12 +95224,14 @@ Body:
             Rate: 10
   - Group: F_EIN_1HDAGGER_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: F_Ein_1HDAGGER
             Rate: 10000
-          - Index: 1
+      - SubGroup: 1
+        List:
+          - Index: 0
             Item: F_Ein_1HDAGGER2
             Rate: 10000
   - Group: LI_NYANGVINE_BOX1_30
@@ -95401,7 +95411,7 @@ Body:
             Amount: 10
   - Group: STONE_ROBE3_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: SuraStone_Robe2
@@ -95599,7 +95609,7 @@ Body:
             Amount: 10
   - Group: SEASON_EVT_REWARD_8
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: C_Indomitable_Crown
@@ -95781,7 +95791,7 @@ Body:
             Amount: 10
   - Group: SCHMIDT_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -96017,7 +96027,7 @@ Body:
             Amount: 25
   - Group: SCHMIDT_ANTIQUITY2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -96215,7 +96225,7 @@ Body:
             Amount: 25
   - Group: AMDARAIS_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -96539,7 +96549,7 @@ Body:
             Amount: 25
   - Group: AMDARAIS_ANTIQUITY2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -96887,7 +96897,7 @@ Body:
             Amount: 15
   - Group: C_AMDARAIS_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -97331,7 +97341,7 @@ Body:
             Amount: 15
   - Group: C_HIMEL_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -97775,7 +97785,7 @@ Body:
             Amount: 20
   - Group: UNKNOWN_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -98979,7 +98989,7 @@ Body:
             Amount: 40
   - Group: SAKRAY_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001480
@@ -100032,7 +100042,7 @@ Body:
             Amount: 4
   - Group: AIRBOAT_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001480
@@ -100253,7 +100263,7 @@ Body:
             Amount: 3
   - Group: CELINE_KIMI_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -100399,7 +100409,7 @@ Body:
             Amount: 45
   - Group: MIGUEL_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -100597,7 +100607,7 @@ Body:
             Amount: 20
   - Group: EL_A17T_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -100945,7 +100955,7 @@ Body:
             Amount: 20
   - Group: PITAYA_BOSS_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -101122,7 +101132,7 @@ Body:
             Amount: 20
   - Group: SWEETY_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -101847,7 +101857,7 @@ Body:
             Amount: 20
   - Group: REDPEPPER_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -102719,7 +102729,7 @@ Body:
             Amount: 25
   - Group: REDPEPPER_ANTIQUITY2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001479
@@ -103275,7 +103285,7 @@ Body:
             Amount: 35
   - Group: DEMI_FREYJA_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001478
@@ -105813,7 +105823,7 @@ Body:
             Amount: 53
   - Group: JUNCEA_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001479
@@ -106567,7 +106577,7 @@ Body:
             Amount: 5
   - Group: AQUILA_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001479
@@ -106913,7 +106923,7 @@ Body:
             Amount: 5
   - Group: AQUILA_ANTIQUITY2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001479
@@ -108023,7 +108033,7 @@ Body:
             Amount: 7
   - Group: F_ICESLUG_ANTIQUIY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001480
@@ -108296,7 +108306,7 @@ Body:
             Amount: 5
   - Group: LASGAND_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001480
@@ -108674,7 +108684,7 @@ Body:
             Amount: 6
   - Group: LASGAND_ANTIQUITY2
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001480
@@ -108998,7 +109008,7 @@ Body:
             Amount: 9
   - Group: THANATOS_ANTIQUITY
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: aegis_1001479
@@ -109338,7 +109348,7 @@ Body:
             Item: Cinnamon_Pack3
   - Group: BL_DEPTH_EV_1
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Bar_D_Fl_Rune
@@ -109699,7 +109709,7 @@ Body:
             Duration: 40320
   - Group: R_EP17_ALBUM
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Bellare_Card
@@ -109957,7 +109967,7 @@ Body:
             Item: Boarding_Halter
   - Group: SHADOW_SELECT_BOX_SET
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: M_Blitz_Select_Box
@@ -110012,7 +110022,7 @@ Body:
             Rate: 10
   - Group: REFINE_HAMMER_BOX
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Helm_Of_Faith_Hammer
@@ -110088,181 +110098,145 @@ Body:
             Item: HPdrainStone_Robe_D
             Rate: 116
           - Index: 11
-            Item: RuneknightStone_Top3
-            Rate: 105
+            Item: Magic_Stone_Robe_D
+            Rate: 116
           - Index: 12
-            Item: WarlockStone_Top3
-            Rate: 105
+            Item: ReloadStone_Robe_D
+            Rate: 116
           - Index: 13
-            Item: RoyalguardStone_Top3
-            Rate: 105
+            Item: CrtStone_Robe_D
+            Rate: 116
           - Index: 14
-            Item: WanderMinsStone_Top3
-            Rate: 105
+            Item: CriticalStone_Robe_D
+            Rate: 116
           - Index: 15
-            Item: GeneticStone_Top3
-            Rate: 105
+            Item: ConStone_Robe_D
+            Rate: 116
           - Index: 16
-            Item: SorcererStone_Top3
-            Rate: 105
+            Item: SplStone_Robe_D
+            Rate: 116
           - Index: 17
-            Item: ArchbishopStone_Top3
-            Rate: 105
+            Item: POWStone_Robe_D
+            Rate: 116
           - Index: 18
-            Item: RangerStone_Top3
-            Rate: 105
+            Item: StaminaWISStone_Robe_D
+            Rate: 116
           - Index: 19
-            Item: ShadowchasStone_Top3
-            Rate: 105
+            Item: RuneknightStone_Robe2
+            Rate: 200
           - Index: 20
-            Item: SuraStone_Top3
-            Rate: 105
+            Item: GeneticStone_Robe2
+            Rate: 200
           - Index: 21
-            Item: MechanicStone_Top3
-            Rate: 105
+            Item: WanderMinsStone_Robe2
+            Rate: 200
           - Index: 22
-            Item: GuillcrossStone_Top3
-            Rate: 105
+            Item: WarlockStone_Robe2
+            Rate: 200
           - Index: 23
-            Item: StarStone_Top3
-            Rate: 105
+            Item: RoyalguardStone_Robe2
+            Rate: 200
           - Index: 24
-            Item: RebelStone_Top3
-            Rate: 105
+            Item: GuillcrossStone_Robe2
+            Rate: 200
           - Index: 25
-            Item: ReaperStone_Top3
-            Rate: 106
+            Item: RangerStone_Robe2
+            Rate: 200
           - Index: 26
-            Item: KagerouStone_Top3
-            Rate: 106
+            Item: MechanicStone_Robe2
+            Rate: 200
           - Index: 27
-            Item: OboroStone_Top3
-            Rate: 106
+            Item: ArchbishopStone_Robe2
+            Rate: 200
           - Index: 28
-            Item: DoramStone_Top3
-            Rate: 106
+            Item: SoulreaperStone_Robe
+            Rate: 200
           - Index: 29
-            Item: SuNoviceStone_Top
-            Rate: 106
+            Item: StaremperorStone_Robe
+            Rate: 200
           - Index: 30
-            Item: Magic_Stone_Top
+            Item: KagerouStone_Robe
             Rate: 200
           - Index: 31
-            Item: Range_Stone_Top
+            Item: OboroStone_Robe
             Rate: 200
           - Index: 32
-            Item: Melee_Stone_Top
+            Item: RebellionStone_Robe
             Rate: 200
           - Index: 33
-            Item: RuneknightStone_Top2
+            Item: DoramStone_Robe
             Rate: 200
           - Index: 34
-            Item: GeneticStone_Top2
+            Item: SuraStone_Robe2
             Rate: 200
           - Index: 35
-            Item: WanderMinsStone_Top2
+            Item: SorcererStone_Robe2
             Rate: 200
           - Index: 36
-            Item: WarlockStone_Top2
+            Item: ShadowchaserStone_Robe2
             Rate: 200
           - Index: 37
-            Item: PaladinStone_Top2
+            Item: ArchbishopStone_Robe
             Rate: 200
           - Index: 38
-            Item: AssacrossStone_Top2
+            Item: RoyalguardStone_Robe
             Rate: 200
           - Index: 39
-            Item: RangerStone_Top2
+            Item: GuillcrossStone_Robe
             Rate: 200
           - Index: 40
-            Item: MechanicStone_Top2
+            Item: ShadowchaserStone_Robe
             Rate: 200
           - Index: 41
-            Item: HighpriestStone_Top2
+            Item: MechanicStone_Robe
             Rate: 200
           - Index: 42
-            Item: SoullinkerStone_Top
+            Item: WanderMinstreStone_Robe
             Rate: 200
           - Index: 43
-            Item: GladiatorStone_Top
+            Item: RuneknightStone_Robe
             Rate: 200
           - Index: 44
-            Item: NinjaStone_Top
+            Item: GeneticStone_Robe
             Rate: 200
           - Index: 45
-            Item: GunslingerStone_Top
+            Item: WarlockStone_Robe
             Rate: 200
           - Index: 46
-            Item: DoramStone_Top
+            Item: SuraStone_Robe
             Rate: 200
           - Index: 47
-            Item: SuraStone_Top2
+            Item: RangerStone_Robe
             Rate: 200
           - Index: 48
-            Item: SorcererStone_Top2
+            Item: SorcererStone_Robe
             Rate: 200
           - Index: 49
-            Item: ShadowchaserStone_Top2
+            Item: DoubleAttack_Stone
             Rate: 200
           - Index: 50
-            Item: HighpriestStone_Top
+            Item: Critical_Stone_Robe
             Rate: 200
           - Index: 51
-            Item: PaladinStone_Top
+            Item: CastStone_Robe
             Rate: 200
           - Index: 52
-            Item: AssacrossStone_Top
+            Item: MinorCastingStone_Robe
             Rate: 200
           - Index: 53
-            Item: ShadowchaserStone_Top
+            Item: CastingStone_Robe
             Rate: 200
           - Index: 54
-            Item: MechanicStone_Top
+            Item: HPdrainStone_Robe
             Rate: 200
           - Index: 55
-            Item: WanderMinstrelStone_Top
+            Item: SPdrainStone_Robe
             Rate: 200
           - Index: 56
-            Item: RuneknightStone_Top
+            Item: ASPDStone_Robe
             Rate: 200
           - Index: 57
-            Item: GeneticStone_Top
-            Rate: 200
-          - Index: 58
-            Item: WarlockStone_Top
-            Rate: 200
-          - Index: 59
-            Item: SuraStone_Top
-            Rate: 200
-          - Index: 60
-            Item: RangerStone_Top
-            Rate: 200
-          - Index: 61
-            Item: SorcererStone_Top
-            Rate: 200
-          - Index: 62
-            Item: Critical_Stone_Top
-            Rate: 200
-          - Index: 63
-            Item: EXPStone_Top
-            Rate: 200
-          - Index: 64
-            Item: CastingStone_Top
-            Rate: 200
-          - Index: 65
-            Item: ASPDStone_Top
-            Rate: 200
-          - Index: 66
-            Item: ReloadStone_Top
-            Rate: 200
-          - Index: 67
-            Item: HPdrainStone_Top
-            Rate: 200
-          - Index: 68
-            Item: SPdrainStone_Top
-            Rate: 200
-          - Index: 69
-            Item: DefenseStone_Top
+            Item: SuNoviceStone_Robe
             Rate: 200
       - SubGroup: 2
         List:
@@ -110299,6 +110273,185 @@ Body:
           - Index: 10
             Item: TwinkleEffect_Top
             Rate: 909
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: RuneknightStone_Top3
+            Rate: 105
+          - Index: 1
+            Item: WarlockStone_Top3
+            Rate: 105
+          - Index: 2
+            Item: RoyalguardStone_Top3
+            Rate: 105
+          - Index: 3
+            Item: WanderMinsStone_Top3
+            Rate: 105
+          - Index: 4
+            Item: GeneticStone_Top3
+            Rate: 105
+          - Index: 5
+            Item: SorcererStone_Top3
+            Rate: 105
+          - Index: 6
+            Item: ArchbishopStone_Top3
+            Rate: 105
+          - Index: 7
+            Item: RangerStone_Top3
+            Rate: 105
+          - Index: 8
+            Item: ShadowchasStone_Top3
+            Rate: 105
+          - Index: 9
+            Item: SuraStone_Top3
+            Rate: 105
+          - Index: 10
+            Item: MechanicStone_Top3
+            Rate: 105
+          - Index: 11
+            Item: GuillcrossStone_Top3
+            Rate: 105
+          - Index: 12
+            Item: StarStone_Top3
+            Rate: 105
+          - Index: 13
+            Item: RebelStone_Top3
+            Rate: 105
+          - Index: 14
+            Item: ReaperStone_Top3
+            Rate: 106
+          - Index: 15
+            Item: KagerouStone_Top3
+            Rate: 106
+          - Index: 16
+            Item: OboroStone_Top3
+            Rate: 106
+          - Index: 17
+            Item: DoramStone_Top3
+            Rate: 106
+          - Index: 18
+            Item: SuNoviceStone_Top
+            Rate: 106
+          - Index: 19
+            Item: Magic_Stone_Top
+            Rate: 200
+          - Index: 20
+            Item: Range_Stone_Top
+            Rate: 200
+          - Index: 21
+            Item: Melee_Stone_Top
+            Rate: 200
+          - Index: 22
+            Item: RuneknightStone_Top2
+            Rate: 200
+          - Index: 23
+            Item: GeneticStone_Top2
+            Rate: 200
+          - Index: 24
+            Item: WanderMinsStone_Top2
+            Rate: 200
+          - Index: 25
+            Item: WarlockStone_Top2
+            Rate: 200
+          - Index: 26
+            Item: PaladinStone_Top2
+            Rate: 200
+          - Index: 27
+            Item: AssacrossStone_Top2
+            Rate: 200
+          - Index: 28
+            Item: RangerStone_Top2
+            Rate: 200
+          - Index: 29
+            Item: MechanicStone_Top2
+            Rate: 200
+          - Index: 30
+            Item: HighpriestStone_Top2
+            Rate: 200
+          - Index: 31
+            Item: SoullinkerStone_Top
+            Rate: 200
+          - Index: 32
+            Item: GladiatorStone_Top
+            Rate: 200
+          - Index: 33
+            Item: NinjaStone_Top
+            Rate: 200
+          - Index: 34
+            Item: GunslingerStone_Top
+            Rate: 200
+          - Index: 35
+            Item: DoramStone_Top
+            Rate: 200
+          - Index: 36
+            Item: SuraStone_Top2
+            Rate: 200
+          - Index: 37
+            Item: SorcererStone_Top2
+            Rate: 200
+          - Index: 38
+            Item: ShadowchaserStone_Top2
+            Rate: 200
+          - Index: 39
+            Item: HighpriestStone_Top
+            Rate: 200
+          - Index: 40
+            Item: PaladinStone_Top
+            Rate: 200
+          - Index: 41
+            Item: AssacrossStone_Top
+            Rate: 200
+          - Index: 42
+            Item: ShadowchaserStone_Top
+            Rate: 200
+          - Index: 43
+            Item: MechanicStone_Top
+            Rate: 200
+          - Index: 44
+            Item: WanderMinstrelStone_Top
+            Rate: 200
+          - Index: 45
+            Item: RuneknightStone_Top
+            Rate: 200
+          - Index: 46
+            Item: GeneticStone_Top
+            Rate: 200
+          - Index: 47
+            Item: WarlockStone_Top
+            Rate: 200
+          - Index: 48
+            Item: SuraStone_Top
+            Rate: 200
+          - Index: 49
+            Item: RangerStone_Top
+            Rate: 200
+          - Index: 50
+            Item: SorcererStone_Top
+            Rate: 200
+          - Index: 51
+            Item: Critical_Stone_Top
+            Rate: 200
+          - Index: 52
+            Item: EXPStone_Top
+            Rate: 200
+          - Index: 53
+            Item: CastingStone_Top
+            Rate: 200
+          - Index: 54
+            Item: ASPDStone_Top
+            Rate: 200
+          - Index: 55
+            Item: ReloadStone_Top
+            Rate: 200
+          - Index: 56
+            Item: HPdrainStone_Top
+            Rate: 200
+          - Index: 57
+            Item: SPdrainStone_Top
+            Rate: 200
+          - Index: 58
+            Item: DefenseStone_Top
+            Rate: 200
   - Group: COS_ENCHANTSTONE_BOX2
     SubGroups:
       - SubGroup: 1
@@ -110337,176 +110490,146 @@ Body:
             Item: HPdrainStone_Robe_D
             Rate: 116
           - Index: 11
-            Item: RuneknightStone_Middle3
-            Rate: 105
+            Item: Magic_Stone_Robe_D
+            Rate: 116
           - Index: 12
-            Item: WarlockStone_Middle3
-            Rate: 105
+            Item: ReloadStone_Robe_D
+            Rate: 116
           - Index: 13
-            Item: RoyalguardStone_Middle3
-            Rate: 105
+            Item: CrtStone_Robe_D
+            Rate: 116
           - Index: 14
-            Item: WanderMinsStone_Middle3
-            Rate: 105
+            Item: CriticalStone_Robe_D
+            Rate: 116
           - Index: 15
-            Item: GeneticStone_Middle3
-            Rate: 105
+            Item: ConStone_Robe_D
+            Rate: 116
           - Index: 16
-            Item: SorcererStone_Middle3
-            Rate: 105
+            Item: SplStone_Robe_D
+            Rate: 116
           - Index: 17
-            Item: ArchbishopStone_Middle3
-            Rate: 105
+            Item: POWStone_Robe_D
+            Rate: 116
           - Index: 18
-            Item: RangerStone_Middle3
-            Rate: 105
+            Item: StaminaWISStone_Robe_D
+            Rate: 116
           - Index: 19
-            Item: ShadowchasStone_Middle3
-            Rate: 105
+            Item: RuneknightStone_Robe2
+            Rate: 200
           - Index: 20
-            Item: SuraStone_Middle3
-            Rate: 105
+            Item: GeneticStone_Robe2
+            Rate: 200
           - Index: 21
-            Item: MechanicStone_Middle3
-            Rate: 105
+            Item: WanderMinsStone_Robe2
+            Rate: 200
           - Index: 22
-            Item: GuillcrossStone_Middle3
-            Rate: 105
+            Item: WarlockStone_Robe2
+            Rate: 200
           - Index: 23
-            Item: StarStone_Middle3
-            Rate: 105
+            Item: RoyalguardStone_Robe2
+            Rate: 200
           - Index: 24
-            Item: RebelStone_Middle3
-            Rate: 105
+            Item: GuillcrossStone_Robe2
+            Rate: 200
           - Index: 25
-            Item: ReaperStone_Middle3
-            Rate: 106
+            Item: RangerStone_Robe2
+            Rate: 200
           - Index: 26
-            Item: KagerouStone_Middle3
-            Rate: 106
+            Item: MechanicStone_Robe2
+            Rate: 200
           - Index: 27
-            Item: OboroStone_Middle3
-            Rate: 106
+            Item: ArchbishopStone_Robe2
+            Rate: 200
           - Index: 28
-            Item: DoramStone_Middle3
-            Rate: 106
+            Item: SoulreaperStone_Robe
+            Rate: 200
           - Index: 29
-            Item: SuNoviceStone_Middle
-            Rate: 106
+            Item: StaremperorStone_Robe
+            Rate: 200
           - Index: 30
-            Item: Magic_Stone_Middle
-            Rate: 210
+            Item: KagerouStone_Robe
+            Rate: 200
           - Index: 31
-            Item: Melee_Stone_Middle
-            Rate: 210
+            Item: OboroStone_Robe
+            Rate: 200
           - Index: 32
-            Item: RuneknightStone_Middle2
-            Rate: 210
+            Item: RebellionStone_Robe
+            Rate: 200
           - Index: 33
-            Item: GeneticStone_Middle2
-            Rate: 210
+            Item: DoramStone_Robe
+            Rate: 200
           - Index: 34
-            Item: WanderMinsStone_Middle2
-            Rate: 210
+            Item: SuraStone_Robe2
+            Rate: 200
           - Index: 35
-            Item: WarlockStone_Middle2
-            Rate: 210
+            Item: SorcererStone_Robe2
+            Rate: 200
           - Index: 36
-            Item: PaladinStone_Middle2
-            Rate: 210
+            Item: ShadowchaserStone_Robe2
+            Rate: 200
           - Index: 37
-            Item: AssacrossStone_Middle2
-            Rate: 210
+            Item: ArchbishopStone_Robe
+            Rate: 200
           - Index: 38
-            Item: RangerStone_Middle2
-            Rate: 210
+            Item: RoyalguardStone_Robe
+            Rate: 200
           - Index: 39
-            Item: MechanicStone_Middle2
-            Rate: 210
+            Item: GuillcrossStone_Robe
+            Rate: 200
           - Index: 40
-            Item: HighpriestStone_Middle2
-            Rate: 210
+            Item: ShadowchaserStone_Robe
+            Rate: 200
           - Index: 41
-            Item: SoullinkerStone_Middle
-            Rate: 210
+            Item: MechanicStone_Robe
+            Rate: 200
           - Index: 42
-            Item: GladiatorStone_Middle
-            Rate: 210
+            Item: WanderMinstreStone_Robe
+            Rate: 200
           - Index: 43
-            Item: NinjaStone_Middle
-            Rate: 210
+            Item: RuneknightStone_Robe
+            Rate: 200
           - Index: 44
-            Item: GunslingerStone_Middle
-            Rate: 210
+            Item: GeneticStone_Robe
+            Rate: 200
           - Index: 45
-            Item: DoramStone_Middle
-            Rate: 210
+            Item: WarlockStone_Robe
+            Rate: 200
           - Index: 46
-            Item: SuraStone_Middle2
-            Rate: 210
+            Item: SuraStone_Robe
+            Rate: 200
           - Index: 47
-            Item: SorcererStone_Middle2
-            Rate: 210
+            Item: RangerStone_Robe
+            Rate: 200
           - Index: 48
-            Item: ShadowchasStone_Middle2
-            Rate: 211
+            Item: SorcererStone_Robe
+            Rate: 200
           - Index: 49
-            Item: HighpriestStone_Middle
-            Rate: 211
+            Item: DoubleAttack_Stone
+            Rate: 200
           - Index: 50
-            Item: PaladinStone_Middle
-            Rate: 211
+            Item: Critical_Stone_Robe
+            Rate: 200
           - Index: 51
-            Item: AssacrossStone_Middle
-            Rate: 211
+            Item: CastStone_Robe
+            Rate: 200
           - Index: 52
-            Item: ShadowchaseStone_Middle
-            Rate: 211
+            Item: MinorCastingStone_Robe
+            Rate: 200
           - Index: 53
-            Item: MechanicStone_Middle
-            Rate: 211
+            Item: CastingStone_Robe
+            Rate: 200
           - Index: 54
-            Item: WanderMinstStone_Middle
-            Rate: 211
+            Item: HPdrainStone_Robe
+            Rate: 200
           - Index: 55
-            Item: RuneknightStone_Middle
-            Rate: 211
+            Item: SPdrainStone_Robe
+            Rate: 200
           - Index: 56
-            Item: GeneticStone_Middle
-            Rate: 211
+            Item: ASPDStone_Robe
+            Rate: 200
           - Index: 57
-            Item: WarlockStone_Middle
-            Rate: 211
-          - Index: 58
-            Item: SuraStone_Middle
-            Rate: 211
-          - Index: 59
-            Item: RangerStone_Middle
-            Rate: 211
-          - Index: 60
-            Item: SorcererStone_Middle
-            Rate: 211
-          - Index: 61
-            Item: CastingStone_Middle
-            Rate: 211
-          - Index: 62
-            Item: LexAeternaStone_Middle
-            Rate: 211
-          - Index: 63
-            Item: EXPStone_Middle
-            Rate: 211
-          - Index: 64
-            Item: Critical_Stone
-            Rate: 211
-          - Index: 65
-            Item: Range_Stone
-            Rate: 211
-          - Index: 66
-            Item: ReloadStone_Middle
-            Rate: 211
-          - Index: 67
-            Item: DefenseStone_Middle
-            Rate: 211
+            Item: SuNoviceStone_Robe
+            Rate: 200
       - SubGroup: 2
         List:
           - Index: 0
@@ -110542,6 +110665,179 @@ Body:
           - Index: 10
             Item: TwinkleEffect_Top
             Rate: 909
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: RuneknightStone_Middle3
+            Rate: 105
+          - Index: 1
+            Item: WarlockStone_Middle3
+            Rate: 105
+          - Index: 2
+            Item: RoyalguardStone_Middle3
+            Rate: 105
+          - Index: 3
+            Item: WanderMinsStone_Middle3
+            Rate: 105
+          - Index: 4
+            Item: GeneticStone_Middle3
+            Rate: 105
+          - Index: 5
+            Item: SorcererStone_Middle3
+            Rate: 105
+          - Index: 6
+            Item: ArchbishopStone_Middle3
+            Rate: 105
+          - Index: 7
+            Item: RangerStone_Middle3
+            Rate: 105
+          - Index: 8
+            Item: ShadowchasStone_Middle3
+            Rate: 105
+          - Index: 9
+            Item: SuraStone_Middle3
+            Rate: 105
+          - Index: 10
+            Item: MechanicStone_Middle3
+            Rate: 105
+          - Index: 11
+            Item: GuillcrossStone_Middle3
+            Rate: 105
+          - Index: 12
+            Item: StarStone_Middle3
+            Rate: 105
+          - Index: 13
+            Item: RebelStone_Middle3
+            Rate: 105
+          - Index: 14
+            Item: ReaperStone_Middle3
+            Rate: 106
+          - Index: 15
+            Item: KagerouStone_Middle3
+            Rate: 106
+          - Index: 16
+            Item: OboroStone_Middle3
+            Rate: 106
+          - Index: 17
+            Item: DoramStone_Middle3
+            Rate: 106
+          - Index: 18
+            Item: SuNoviceStone_Middle
+            Rate: 106
+          - Index: 19
+            Item: Magic_Stone_Middle
+            Rate: 210
+          - Index: 20
+            Item: Melee_Stone_Middle
+            Rate: 210
+          - Index: 21
+            Item: RuneknightStone_Middle2
+            Rate: 210
+          - Index: 22
+            Item: GeneticStone_Middle2
+            Rate: 210
+          - Index: 23
+            Item: WanderMinsStone_Middle2
+            Rate: 210
+          - Index: 24
+            Item: WarlockStone_Middle2
+            Rate: 210
+          - Index: 25
+            Item: PaladinStone_Middle2
+            Rate: 210
+          - Index: 26
+            Item: AssacrossStone_Middle2
+            Rate: 210
+          - Index: 27
+            Item: RangerStone_Middle2
+            Rate: 210
+          - Index: 28
+            Item: MechanicStone_Middle2
+            Rate: 210
+          - Index: 29
+            Item: HighpriestStone_Middle2
+            Rate: 210
+          - Index: 30
+            Item: SoullinkerStone_Middle
+            Rate: 210
+          - Index: 31
+            Item: GladiatorStone_Middle
+            Rate: 210
+          - Index: 32
+            Item: NinjaStone_Middle
+            Rate: 210
+          - Index: 33
+            Item: GunslingerStone_Middle
+            Rate: 210
+          - Index: 34
+            Item: DoramStone_Middle
+            Rate: 210
+          - Index: 35
+            Item: SuraStone_Middle2
+            Rate: 210
+          - Index: 36
+            Item: SorcererStone_Middle2
+            Rate: 210
+          - Index: 37
+            Item: ShadowchasStone_Middle2
+            Rate: 211
+          - Index: 38
+            Item: HighpriestStone_Middle
+            Rate: 211
+          - Index: 39
+            Item: PaladinStone_Middle
+            Rate: 211
+          - Index: 40
+            Item: AssacrossStone_Middle
+            Rate: 211
+          - Index: 41
+            Item: ShadowchaseStone_Middle
+            Rate: 211
+          - Index: 42
+            Item: MechanicStone_Middle
+            Rate: 211
+          - Index: 43
+            Item: WanderMinstStone_Middle
+            Rate: 211
+          - Index: 44
+            Item: RuneknightStone_Middle
+            Rate: 211
+          - Index: 45
+            Item: GeneticStone_Middle
+            Rate: 211
+          - Index: 46
+            Item: WarlockStone_Middle
+            Rate: 211
+          - Index: 47
+            Item: SuraStone_Middle
+            Rate: 211
+          - Index: 48
+            Item: RangerStone_Middle
+            Rate: 211
+          - Index: 49
+            Item: SorcererStone_Middle
+            Rate: 211
+          - Index: 50
+            Item: CastingStone_Middle
+            Rate: 211
+          - Index: 51
+            Item: LexAeternaStone_Middle
+            Rate: 211
+          - Index: 52
+            Item: EXPStone_Middle
+            Rate: 211
+          - Index: 53
+            Item: Critical_Stone
+            Rate: 211
+          - Index: 54
+            Item: Range_Stone
+            Rate: 211
+          - Index: 55
+            Item: ReloadStone_Middle
+            Rate: 211
+          - Index: 56
+            Item: DefenseStone_Middle
+            Rate: 211
   - Group: COS_ENCHANTSTONE_BOX3
     SubGroups:
       - SubGroup: 1
@@ -110580,173 +110876,146 @@ Body:
             Item: HPdrainStone_Robe_D
             Rate: 116
           - Index: 11
-            Item: RuneknightStone_Bottom3
-            Rate: 105
+            Item: Magic_Stone_Robe_D
+            Rate: 116
           - Index: 12
-            Item: WarlockStone_Bottom3
-            Rate: 105
+            Item: ReloadStone_Robe_D
+            Rate: 116
           - Index: 13
-            Item: RoyalguardStone_Bottom3
-            Rate: 105
+            Item: CrtStone_Robe_D
+            Rate: 116
           - Index: 14
-            Item: WanderMinsStone_Bottom3
-            Rate: 105
+            Item: CriticalStone_Robe_D
+            Rate: 116
           - Index: 15
-            Item: GeneticStone_Bottom3
-            Rate: 105
+            Item: ConStone_Robe_D
+            Rate: 116
           - Index: 16
-            Item: SorcererStone_Bottom3
-            Rate: 105
+            Item: SplStone_Robe_D
+            Rate: 116
           - Index: 17
-            Item: ArchbishopStone_Bottom3
-            Rate: 105
+            Item: POWStone_Robe_D
+            Rate: 116
           - Index: 18
-            Item: RangerStone_Bottom3
-            Rate: 105
+            Item: StaminaWISStone_Robe_D
+            Rate: 116
           - Index: 19
-            Item: ShadowchasStone_Bottom3
-            Rate: 105
+            Item: RuneknightStone_Robe2
+            Rate: 200
           - Index: 20
-            Item: SuraStone_Bottom3
-            Rate: 105
+            Item: GeneticStone_Robe2
+            Rate: 200
           - Index: 21
-            Item: MechanicStone_Bottom3
-            Rate: 105
+            Item: WanderMinsStone_Robe2
+            Rate: 200
           - Index: 22
-            Item: GuillcrossStone_Bottom3
-            Rate: 105
+            Item: WarlockStone_Robe2
+            Rate: 200
           - Index: 23
-            Item: StarStone_Bottom3
-            Rate: 105
+            Item: RoyalguardStone_Robe2
+            Rate: 200
           - Index: 24
-            Item: RebelStone_Bottom3
-            Rate: 105
+            Item: GuillcrossStone_Robe2
+            Rate: 200
           - Index: 25
-            Item: ReaperStone_Bottom3
-            Rate: 106
+            Item: RangerStone_Robe2
+            Rate: 200
           - Index: 26
-            Item: KagerouStone_Bottom3
-            Rate: 106
+            Item: MechanicStone_Robe2
+            Rate: 200
           - Index: 27
-            Item: OboroStone_Bottom3
-            Rate: 106
+            Item: ArchbishopStone_Robe2
+            Rate: 200
           - Index: 28
-            Item: DoramStone_Bottom3
-            Rate: 106
+            Item: SoulreaperStone_Robe
+            Rate: 200
           - Index: 29
-            Item: SuNoviceStone_Bottom
-            Rate: 106
+            Item: StaremperorStone_Robe
+            Rate: 200
           - Index: 30
-            Item: Magic_Stone_Bottom
-            Rate: 216
+            Item: KagerouStone_Robe
+            Rate: 200
           - Index: 31
-            Item: Range_Stone_Bottom
-            Rate: 216
+            Item: OboroStone_Robe
+            Rate: 200
           - Index: 32
-            Item: Melee_Stone_Bottom
-            Rate: 216
+            Item: RebellionStone_Robe
+            Rate: 200
           - Index: 33
-            Item: RuneknightStone_Bottom2
-            Rate: 216
+            Item: DoramStone_Robe
+            Rate: 200
           - Index: 34
-            Item: GeneticStone_Bottom2
-            Rate: 216
+            Item: SuraStone_Robe2
+            Rate: 200
           - Index: 35
-            Item: WanderMinsStone_Bottom2
-            Rate: 216
+            Item: SorcererStone_Robe2
+            Rate: 200
           - Index: 36
-            Item: WarlockStone_Bottom2
-            Rate: 216
+            Item: ShadowchaserStone_Robe2
+            Rate: 200
           - Index: 37
-            Item: PaladinStone_Bottom2
-            Rate: 216
+            Item: ArchbishopStone_Robe
+            Rate: 200
           - Index: 38
-            Item: AssacrossStone_Bottom2
-            Rate: 216
+            Item: RoyalguardStone_Robe
+            Rate: 200
           - Index: 39
-            Item: RangerStone_Bottom2
-            Rate: 216
+            Item: GuillcrossStone_Robe
+            Rate: 200
           - Index: 40
-            Item: MechanicStone_Bottom2
-            Rate: 216
+            Item: ShadowchaserStone_Robe
+            Rate: 200
           - Index: 41
-            Item: HighpriestStone_Bottom2
-            Rate: 216
+            Item: MechanicStone_Robe
+            Rate: 200
           - Index: 42
-            Item: SoullinkerStone_Bottom
-            Rate: 216
+            Item: WanderMinstreStone_Robe
+            Rate: 200
           - Index: 43
-            Item: GladiatorStone_Bottom
-            Rate: 216
+            Item: RuneknightStone_Robe
+            Rate: 200
           - Index: 44
-            Item: NinjaStone_Bottom
-            Rate: 216
+            Item: GeneticStone_Robe
+            Rate: 200
           - Index: 45
-            Item: GunslingerStone_Bottom
-            Rate: 216
+            Item: WarlockStone_Robe
+            Rate: 200
           - Index: 46
-            Item: DoramStone_Bottom
-            Rate: 216
+            Item: SuraStone_Robe
+            Rate: 200
           - Index: 47
-            Item: SuraStone_Bottom2
-            Rate: 216
+            Item: RangerStone_Robe
+            Rate: 200
           - Index: 48
-            Item: SorcererStone_Bottom2
-            Rate: 216
+            Item: SorcererStone_Robe
+            Rate: 200
           - Index: 49
-            Item: ShadowchasStone_Bottom2
-            Rate: 216
+            Item: DoubleAttack_Stone
+            Rate: 200
           - Index: 50
-            Item: HighpriestStone_Bottom
-            Rate: 216
+            Item: Critical_Stone_Robe
+            Rate: 200
           - Index: 51
-            Item: PaladinStone_Bottom
-            Rate: 216
+            Item: CastStone_Robe
+            Rate: 200
           - Index: 52
-            Item: AssacrossStone_Bottom
-            Rate: 216
+            Item: MinorCastingStone_Robe
+            Rate: 200
           - Index: 53
-            Item: ShadowchaseStone_Bottom
-            Rate: 216
+            Item: CastingStone_Robe
+            Rate: 200
           - Index: 54
-            Item: MechanicStone_Bottom
-            Rate: 216
+            Item: HPdrainStone_Robe
+            Rate: 200
           - Index: 55
-            Item: WanderMinstStone_Bottom
-            Rate: 216
+            Item: SPdrainStone_Robe
+            Rate: 200
           - Index: 56
-            Item: RuneknightStone_Bottom
-            Rate: 216
+            Item: ASPDStone_Robe
+            Rate: 200
           - Index: 57
-            Item: GeneticStone_Bottom
-            Rate: 216
-          - Index: 58
-            Item: WarlockStone_Bottom
-            Rate: 216
-          - Index: 59
-            Item: SuraStone_Bottom
-            Rate: 217
-          - Index: 60
-            Item: RangerStone_Bottom
-            Rate: 217
-          - Index: 61
-            Item: SorcererStone_Bottom
-            Rate: 217
-          - Index: 62
-            Item: Critical_Stone_Bottom
-            Rate: 217
-          - Index: 63
-            Item: CastingStone_Bottom
-            Rate: 217
-          - Index: 64
-            Item: ReloadStone_Bottom
-            Rate: 217
-          - Index: 65
-            Item: EXPStone_Bottom
-            Rate: 217
-          - Index: 66
-            Item: DefenseStone_Bottom
-            Rate: 217
+            Item: SuNoviceStone_Robe
+            Rate: 200
       - SubGroup: 2
         List:
           - Index: 0
@@ -110782,9 +111051,179 @@ Body:
           - Index: 10
             Item: TwinkleEffect_Top
             Rate: 909
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: RuneknightStone_Bottom3
+            Rate: 105
+          - Index: 1
+            Item: WarlockStone_Bottom3
+            Rate: 105
+          - Index: 2
+            Item: RoyalguardStone_Bottom3
+            Rate: 105
+          - Index: 3
+            Item: WanderMinsStone_Bottom3
+            Rate: 105
+          - Index: 4
+            Item: GeneticStone_Bottom3
+            Rate: 105
+          - Index: 5
+            Item: SorcererStone_Bottom3
+            Rate: 105
+          - Index: 6
+            Item: ArchbishopStone_Bottom3
+            Rate: 105
+          - Index: 7
+            Item: RangerStone_Bottom3
+            Rate: 105
+          - Index: 8
+            Item: ShadowchasStone_Bottom3
+            Rate: 105
+          - Index: 9
+            Item: SuraStone_Bottom3
+            Rate: 105
+          - Index: 10
+            Item: MechanicStone_Bottom3
+            Rate: 105
+          - Index: 11
+            Item: GuillcrossStone_Bottom3
+            Rate: 105
+          - Index: 12
+            Item: StarStone_Bottom3
+            Rate: 105
+          - Index: 13
+            Item: RebelStone_Bottom3
+            Rate: 105
+          - Index: 14
+            Item: ReaperStone_Bottom3
+            Rate: 106
+          - Index: 15
+            Item: KagerouStone_Bottom3
+            Rate: 106
+          - Index: 16
+            Item: OboroStone_Bottom3
+            Rate: 106
+          - Index: 17
+            Item: DoramStone_Bottom3
+            Rate: 106
+          - Index: 18
+            Item: SuNoviceStone_Bottom
+            Rate: 106
+          - Index: 19
+            Item: Magic_Stone_Bottom
+            Rate: 216
+          - Index: 20
+            Item: Range_Stone_Bottom
+            Rate: 216
+          - Index: 21
+            Item: Melee_Stone_Bottom
+            Rate: 216
+          - Index: 22
+            Item: RuneknightStone_Bottom2
+            Rate: 216
+          - Index: 23
+            Item: GeneticStone_Bottom2
+            Rate: 216
+          - Index: 24
+            Item: WanderMinsStone_Bottom2
+            Rate: 216
+          - Index: 25
+            Item: WarlockStone_Bottom2
+            Rate: 216
+          - Index: 26
+            Item: PaladinStone_Bottom2
+            Rate: 216
+          - Index: 27
+            Item: AssacrossStone_Bottom2
+            Rate: 216
+          - Index: 28
+            Item: RangerStone_Bottom2
+            Rate: 216
+          - Index: 29
+            Item: MechanicStone_Bottom2
+            Rate: 216
+          - Index: 30
+            Item: HighpriestStone_Bottom2
+            Rate: 216
+          - Index: 31
+            Item: SoullinkerStone_Bottom
+            Rate: 216
+          - Index: 32
+            Item: GladiatorStone_Bottom
+            Rate: 216
+          - Index: 33
+            Item: NinjaStone_Bottom
+            Rate: 216
+          - Index: 34
+            Item: GunslingerStone_Bottom
+            Rate: 216
+          - Index: 35
+            Item: DoramStone_Bottom
+            Rate: 216
+          - Index: 36
+            Item: SuraStone_Bottom2
+            Rate: 216
+          - Index: 37
+            Item: SorcererStone_Bottom2
+            Rate: 216
+          - Index: 38
+            Item: ShadowchasStone_Bottom2
+            Rate: 216
+          - Index: 39
+            Item: HighpriestStone_Bottom
+            Rate: 216
+          - Index: 40
+            Item: PaladinStone_Bottom
+            Rate: 216
+          - Index: 41
+            Item: AssacrossStone_Bottom
+            Rate: 216
+          - Index: 42
+            Item: ShadowchaseStone_Bottom
+            Rate: 216
+          - Index: 43
+            Item: MechanicStone_Bottom
+            Rate: 216
+          - Index: 44
+            Item: WanderMinstStone_Bottom
+            Rate: 216
+          - Index: 45
+            Item: RuneknightStone_Bottom
+            Rate: 216
+          - Index: 46
+            Item: GeneticStone_Bottom
+            Rate: 216
+          - Index: 47
+            Item: WarlockStone_Bottom
+            Rate: 216
+          - Index: 48
+            Item: SuraStone_Bottom
+            Rate: 217
+          - Index: 49
+            Item: RangerStone_Bottom
+            Rate: 217
+          - Index: 50
+            Item: SorcererStone_Bottom
+            Rate: 217
+          - Index: 51
+            Item: Critical_Stone_Bottom
+            Rate: 217
+          - Index: 52
+            Item: CastingStone_Bottom
+            Rate: 217
+          - Index: 53
+            Item: ReloadStone_Bottom
+            Rate: 217
+          - Index: 54
+            Item: EXPStone_Bottom
+            Rate: 217
+          - Index: 55
+            Item: DefenseStone_Bottom
+            Rate: 217
   - Group: ENCHANT_STONE_BOX34
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: Range_Stone_Robe_D
@@ -111020,7 +111459,7 @@ Body:
             Rate: 40
   - Group: R_EP178_BOSS
     SubGroups:
-      - SubGroup: 1
+      - SubGroup: 6
         List:
           - Index: 0
             Item: R48_85_Bestia_Card
@@ -111066,3 +111505,855 @@ Body:
             Item: EP18_Schulang_Card
             Rate: 909
             Announced: true
+  - Group: C_INSURANCE_PACKAGE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Insurance
+            Amount: 10
+  - Group: C_INSURANCE_PACKAGE50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Insurance
+            Amount: 50
+  - Group: C_GIANT_FLY_WING_BOX100
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Giant_Fly_Wing
+            Amount: 100
+  - Group: C_SIEGFRIED_BOX5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Token_Of_Siegfried
+            Amount: 5
+  - Group: C_SIEGFRIED_BOX20
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Token_Of_Siegfried
+            Amount: 20
+  - Group: C_CONVEX_MIRROR_BOX30
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Convex_Mirror
+            Amount: 30
+  - Group: C_BLESSING_10_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Blessing_10_Scroll
+            Amount: 50
+  - Group: C_INC_AGI_10_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Inc_Agi_10_Scroll
+            Amount: 50
+  - Group: C_ASPERSIO_5_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: J_Aspersio_5_Scroll_C
+            Amount: 50
+  - Group: C_BATTLE_MANUAL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Battle_Manual
+  - Group: C_BATTLE_MANUAL_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Battle_Manual
+            Amount: 10
+  - Group: C_BUBBLE_GUM_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Bubble_Gum
+  - Group: C_BUBBLE_GUM_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Bubble_Gum
+            Amount: 10
+  - Group: C_MEGAPHONE_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Megaphone_
+            Amount: 10
+  - Group: C_ENRICHED_ELUNIUM_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Enriched_Elunium
+            Amount: 10
+  - Group: C_ENRICHED_ELUNIUM_BOX5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Enriched_Elunium
+            Amount: 5
+  - Group: C_ENRICHED_ORIDECON_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Enriched_Oridecon
+            Amount: 10
+  - Group: C_ENC_ORIDECON_BOX5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Enriched_Oridecon
+            Amount: 5
+  - Group: C_NEURALIZER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Neuralizer
+  - Group: C_ABRASIVE_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Abrasive
+            Amount: 10
+  - Group: C_MAX_WEIGHT_UP_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Max_Weight_Up_Scroll
+  - Group: C_REGENERATION_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Regeneration_Potion
+            Amount: 10
+  - Group: C_S_LIFE_POTION_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Small_Life_Potion
+            Amount: 50
+  - Group: C_MED_LIFE_POTION_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Med_Life_Potion
+            Amount: 50
+  - Group: C_S_ARMORBOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Shadow_Armor_S
+            Amount: 10
+  - Group: C_HOLY_ARMOR_S_BOX30
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Holy_Armor_S
+            Amount: 30
+  - Group: C_NEW_STYLE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: New_Style_Coupon
+  - Group: C_ALICE_SCROLL_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Alice_Scroll
+            Amount: 10
+  - Group: C_MIMIC_SCROLL_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Mimic_Scroll
+            Amount: 10
+  - Group: C_DISGUISE_CROLL_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Disguise_Scroll
+            Amount: 10
+  - Group: C_MP_SCROLL_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Magic_Power_Scroll
+            Amount: 50
+  - Group: CCLOTH_DYE_COUPON_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Clothing_Dye_Coupon
+  - Group: CCLOTH_DYE_COUPON2_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Clothing_Dye_Coupon2
+  - Group: C_MENTAL_POTION50_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Mental_Potion
+            Amount: 50
+  - Group: C_JOB_MANUAL25_BOX1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Job_Manual25
+  - Group: C_JOB_MANUAL25_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Job_Manual25
+            Amount: 10
+  - Group: C_SIEGE_SCROLL_BOX1_30
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Siege_Teleport_Scroll
+            Amount: 30
+  - Group: C_HD_BRADIUM_BOX5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Bradium
+            Amount: 5
+  - Group: C_HD_BRADIUM_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Bradium
+            Amount: 10
+  - Group: C_HD_CARNIUM_BOX5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Carnium
+            Amount: 5
+  - Group: C_HD_CARNIUM_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Carnium
+            Amount: 10
+  - Group: C_HD_ORI_BOX5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Oridecon
+            Amount: 5
+  - Group: C_HD_ORI_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Oridecon
+            Amount: 10
+  - Group: C_HD_ELU_BOX5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Elunium
+            Amount: 5
+  - Group: C_HD_ELU_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: HD_Elunium
+            Amount: 10
+  - Group: C_RAPID_LIFE_WATER_BOX2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Rapid_Life_Water
+            Amount: 10
+  - Group: CHANGE_NAME_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Change_Name_Card
+  - Group: C_MYST_WATER_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Mysterious_Water
+            Amount: 50
+  - Group: STATUS_RESET_COUPON_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Status_Reset_Coupon
+  - Group: AID_BUFF_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Premium_Box
+  - Group: INVENTORY_EX_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Inventory_Ex
+  - Group: PETTRADETICKET_BOX
+    SubGroups:
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: Succu_Pet_Coupon
+            Rate: 10
+          - Index: 1
+            Item: Imp_Pet_Coupon
+            Rate: 10
+          - Index: 2
+            Item: Chung_E_Pet_Coupon
+            Rate: 10
+          - Index: 3
+            Item: Ticket_Nightmare
+            Rate: 10
+          - Index: 4
+            Item: Ticket_Loli_Ruri
+            Rate: 10
+          - Index: 5
+            Item: Ticket_Goblin_Leader
+            Rate: 10
+          - Index: 6
+            Item: Ticket_Incubus
+            Rate: 10
+          - Index: 7
+            Item: Ticket_Whisper
+            Rate: 10
+          - Index: 8
+            Item: Ticket_Wicked_Nymph
+            Rate: 10
+          - Index: 9
+            Item: Ticket_Marionette
+            Rate: 10
+          - Index: 10
+            Item: Ticket_Dullahan
+            Rate: 10
+          - Index: 11
+            Item: Ticket_Shinobi
+            Rate: 10
+          - Index: 12
+            Item: Ticket_Golem
+            Rate: 10
+          - Index: 13
+            Item: Poring_Ticket
+            Rate: 10
+          - Index: 14
+            Item: Drops_Ticket
+            Rate: 10
+          - Index: 15
+            Item: Poporing_Ticket
+            Rate: 10
+          - Index: 16
+            Item: Lunatic_Ticket
+            Rate: 10
+          - Index: 17
+            Item: Picky_Ticket
+            Rate: 10
+          - Index: 18
+            Item: Pecopeco_Ticket
+            Rate: 10
+          - Index: 19
+            Item: Savage_Baby_Ticket
+            Rate: 10
+          - Index: 20
+            Item: Spore_Ticket
+            Rate: 10
+          - Index: 21
+            Item: Poison_Spore_Ticket
+            Rate: 10
+          - Index: 22
+            Item: Chonchon_Ticket
+            Rate: 10
+          - Index: 23
+            Item: Steel_Chonchon_Ticket
+            Rate: 10
+          - Index: 24
+            Item: Petit_Ticket
+            Rate: 10
+          - Index: 25
+            Item: Deviruchi_Ticket
+            Rate: 10
+          - Index: 26
+            Item: Isis_Ticket
+            Rate: 10
+          - Index: 27
+            Item: Smokie_Ticket
+            Rate: 10
+          - Index: 28
+            Item: Dokebi_Ticket
+            Rate: 10
+          - Index: 29
+            Item: Desert_Wolf_B_Ticket
+            Rate: 10
+          - Index: 30
+            Item: Yoyo_Ticket
+            Rate: 10
+          - Index: 31
+            Item: Sohee_Ticket
+            Rate: 10
+          - Index: 32
+            Item: Rocker_Ticket
+            Rate: 10
+          - Index: 33
+            Item: Hunter_Fly_Ticket
+            Rate: 10
+          - Index: 34
+            Item: Orc_Warrior_Ticket
+            Rate: 10
+          - Index: 35
+            Item: Bapho_Jr_Ticket
+            Rate: 10
+          - Index: 36
+            Item: Munak_Ticket
+            Rate: 10
+          - Index: 37
+            Item: Bongun_Ticket
+            Rate: 10
+          - Index: 38
+            Item: Goblin_Ticket
+            Rate: 10
+          - Index: 39
+            Item: Hardtack_Ticket
+            Rate: 10
+          - Index: 40
+            Item: Zherlthsh_Ticket
+            Rate: 10
+          - Index: 41
+            Item: Alice_Ticket
+            Rate: 10
+          - Index: 42
+            Item: Pet_Exchange
+            Rate: 10
+          - Index: 43
+            Item: Snow_Rabbit_Ticket
+            Rate: 10
+          - Index: 44
+            Item: Tikbalang_Ticket
+            Rate: 10
+  - Group: ADVANCED_TAIMING_ITEM
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: No_Recipient
+            Rate: 1
+          - Index: 1
+            Item: Heart_Of_Her
+            Rate: 1
+          - Index: 2
+            Item: Tantanmen
+            Rate: 1
+          - Index: 3
+            Item: Silver_Knife_Of_Chaste
+            Rate: 1
+          - Index: 4
+            Item: Flaming_Ice
+            Rate: 1
+          - Index: 5
+            Item: Fit_Pipe
+            Rate: 1
+          - Index: 6
+            Item: Sway_Apron
+            Rate: 1
+          - Index: 7
+            Item: Tikbalang_Belt
+            Rate: 1
+          - Index: 8
+            Item: Sap_Jelly
+            Rate: 1
+          - Index: 9
+            Item: Airship_Part
+            Rate: 1
+          - Index: 10
+            Item: Little_Dall_Needle
+            Rate: 1
+          - Index: 11
+            Item: Luxury_Whisky_Bottle
+            Rate: 2
+          - Index: 12
+            Item: Boy's_Naivety
+            Rate: 2
+          - Index: 13
+            Item: Gril's_Naivety
+            Rate: 2
+          - Index: 14
+            Item: Monster_Juice
+            Rate: 1
+          - Index: 15
+            Item: Skull_Of_Vagabond
+            Rate: 1
+          - Index: 16
+            Item: Delicious_Shaved_Ice
+            Rate: 1
+          - Index: 17
+            Item: Staff_Of_Leader
+            Rate: 1
+      - SubGroup: 2
+        List:
+          - Index: 0
+            Item: No_Recipient
+            Rate: 1
+          - Index: 1
+            Item: Heart_Of_Her
+            Rate: 1
+          - Index: 2
+            Item: Tantanmen
+            Rate: 1
+          - Index: 3
+            Item: Silver_Knife_Of_Chaste
+            Rate: 1
+          - Index: 4
+            Item: Flaming_Ice
+            Rate: 1
+          - Index: 5
+            Item: Fit_Pipe
+            Rate: 1
+          - Index: 6
+            Item: Sway_Apron
+            Rate: 1
+          - Index: 7
+            Item: Tikbalang_Belt
+            Rate: 1
+          - Index: 8
+            Item: Sap_Jelly
+            Rate: 1
+          - Index: 9
+            Item: Airship_Part
+            Rate: 1
+          - Index: 10
+            Item: Little_Dall_Needle
+            Rate: 1
+          - Index: 11
+            Item: Luxury_Whisky_Bottle
+            Rate: 2
+          - Index: 12
+            Item: Boy's_Naivety
+            Rate: 2
+          - Index: 13
+            Item: Gril's_Naivety
+            Rate: 2
+          - Index: 14
+            Item: Monster_Juice
+            Rate: 1
+          - Index: 15
+            Item: Skull_Of_Vagabond
+            Rate: 1
+          - Index: 16
+            Item: Delicious_Shaved_Ice
+            Rate: 1
+          - Index: 17
+            Item: Staff_Of_Leader
+            Rate: 1
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: No_Recipient
+            Rate: 1
+          - Index: 1
+            Item: Heart_Of_Her
+            Rate: 1
+          - Index: 2
+            Item: Tantanmen
+            Rate: 1
+          - Index: 3
+            Item: Silver_Knife_Of_Chaste
+            Rate: 1
+          - Index: 4
+            Item: Flaming_Ice
+            Rate: 1
+          - Index: 5
+            Item: Fit_Pipe
+            Rate: 1
+          - Index: 6
+            Item: Sway_Apron
+            Rate: 1
+          - Index: 7
+            Item: Tikbalang_Belt
+            Rate: 1
+          - Index: 8
+            Item: Sap_Jelly
+            Rate: 1
+          - Index: 9
+            Item: Airship_Part
+            Rate: 1
+          - Index: 10
+            Item: Little_Dall_Needle
+            Rate: 1
+          - Index: 11
+            Item: Luxury_Whisky_Bottle
+            Rate: 2
+          - Index: 12
+            Item: Boy's_Naivety
+            Rate: 2
+          - Index: 13
+            Item: Gril's_Naivety
+            Rate: 2
+          - Index: 14
+            Item: Monster_Juice
+            Rate: 1
+          - Index: 15
+            Item: Skull_Of_Vagabond
+            Rate: 1
+          - Index: 16
+            Item: Delicious_Shaved_Ice
+            Rate: 1
+          - Index: 17
+            Item: Staff_Of_Leader
+            Rate: 1
+  - Group: ADVANCED_TAIMING_ITEM2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: Very_Red_Juice
+            Rate: 3
+          - Index: 1
+            Item: Prohibition_Red_Candle
+            Rate: 3
+          - Index: 2
+            Item: Armlet_Of_Obedience
+            Rate: 3
+          - Index: 3
+            Item: Shining_Stone
+            Rate: 3
+          - Index: 4
+            Item: Contracts_In_Shadow
+            Rate: 3
+          - Index: 5
+            Item: Book_Of_Devil
+            Rate: 3
+          - Index: 6
+            Item: Fan_Of_Wind
+            Rate: 3
+          - Index: 7
+            Item: Magical_Lithography
+            Rate: 3
+          - Index: 8
+            Item: Hell_Contract
+            Rate: 3
+          - Index: 9
+            Item: Gril_Doll
+            Rate: 3
+          - Index: 10
+            Item: Oilpalm_Coconut
+            Rate: 3
+          - Index: 11
+            Item: Summer_Fan
+            Rate: 1
+          - Index: 12
+            Item: Ball_Mask
+            Rate: 1
+          - Index: 13
+            Item: Black_Butterfly_Mask
+            Rate: 1
+          - Index: 14
+            Item: Death_Coil
+            Rate: 1
+          - Index: 15
+            Item: Hell_Horn
+            Rate: 1
+      - SubGroup: 2
+        List:
+          - Index: 0
+            Item: Very_Red_Juice
+            Rate: 3
+          - Index: 1
+            Item: Prohibition_Red_Candle
+            Rate: 3
+          - Index: 2
+            Item: Armlet_Of_Obedience
+            Rate: 3
+          - Index: 3
+            Item: Shining_Stone
+            Rate: 3
+          - Index: 4
+            Item: Contracts_In_Shadow
+            Rate: 3
+          - Index: 5
+            Item: Book_Of_Devil
+            Rate: 3
+          - Index: 6
+            Item: Fan_Of_Wind
+            Rate: 3
+          - Index: 7
+            Item: Magical_Lithography
+            Rate: 3
+          - Index: 8
+            Item: Hell_Contract
+            Rate: 3
+          - Index: 9
+            Item: Gril_Doll
+            Rate: 3
+          - Index: 10
+            Item: Oilpalm_Coconut
+            Rate: 3
+          - Index: 11
+            Item: Summer_Fan
+            Rate: 1
+          - Index: 12
+            Item: Ball_Mask
+            Rate: 1
+          - Index: 13
+            Item: Black_Butterfly_Mask
+            Rate: 1
+          - Index: 14
+            Item: Death_Coil
+            Rate: 1
+          - Index: 15
+            Item: Hell_Horn
+            Rate: 1
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: Very_Red_Juice
+            Rate: 3
+          - Index: 1
+            Item: Prohibition_Red_Candle
+            Rate: 3
+          - Index: 2
+            Item: Armlet_Of_Obedience
+            Rate: 3
+          - Index: 3
+            Item: Shining_Stone
+            Rate: 3
+          - Index: 4
+            Item: Contracts_In_Shadow
+            Rate: 3
+          - Index: 5
+            Item: Book_Of_Devil
+            Rate: 3
+          - Index: 6
+            Item: Fan_Of_Wind
+            Rate: 3
+          - Index: 7
+            Item: Magical_Lithography
+            Rate: 3
+          - Index: 8
+            Item: Hell_Contract
+            Rate: 3
+          - Index: 9
+            Item: Gril_Doll
+            Rate: 3
+          - Index: 10
+            Item: Oilpalm_Coconut
+            Rate: 3
+          - Index: 11
+            Item: Summer_Fan
+            Rate: 1
+          - Index: 12
+            Item: Ball_Mask
+            Rate: 1
+          - Index: 13
+            Item: Black_Butterfly_Mask
+            Rate: 1
+          - Index: 14
+            Item: Death_Coil
+            Rate: 1
+          - Index: 15
+            Item: Hell_Horn
+            Rate: 1
+  - Group: INVENTORY_EX_10BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Inventory_Ex
+            Amount: 10
+  - Group: COSTUMEMILEPACK_34_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 100
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 12
+          - Index: 2
+            Item: Enchant_Stone_Box34
+            Amount: 3
+  - Group: COSTUMEMILEPACK_34_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 200
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 25
+          - Index: 2
+            Item: Enchant_Stone_Box34
+            Amount: 5
+  - Group: COSTUMEMILEPACK_34_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 400
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 50
+          - Index: 2
+            Item: Enchant_Stone_Box34
+            Amount: 10

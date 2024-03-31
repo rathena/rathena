@@ -7785,7 +7785,7 @@ Body:
     Flags:
       Container: true
     Script: |
-      getgroupitem(IG_Tresure_Box_WoE_);
+      getgroupitem(IG_TRESURE_BOX_WOE);
   - Id: 12282
     AegisName: Internet_Cafe1
     Name: Internet Cafe1
@@ -45554,6 +45554,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45562,14 +45564,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_INSURANCE_PACKAGE);
   - Id: 16791
     AegisName: C_Insurance_Package50
     Name: Life Insurrance Certificate Box(50)
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45578,8 +45582,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_INSURANCE_PACKAGE50);
   - Id: 16792
     AegisName: C_Kafra_Card_Box
     Name: Kafra Card Box(10)
@@ -45636,6 +45640,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45644,14 +45650,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_GIANT_FLY_WING_BOX100);
   - Id: 16796
     AegisName: C_Siegfried_Box5
     Name: Token of Siegfried Box(5)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45661,13 +45669,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7621,5; /* Token Of Siegfried */
+      getgroupitem(IG_C_SIEGFRIED_BOX5);
   - Id: 16797
     AegisName: C_Siegfried_Box20
     Name: Token of Siegfried Box(20)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45677,7 +45687,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7621,20; /* Token Of Siegfried */
+      getgroupitem(IG_C_SIEGFRIED_BOX20);
   - Id: 16798
     AegisName: C_Convex_Mirror_Box5
     Name: Convex Mirror Box 5
@@ -45700,6 +45710,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45709,7 +45721,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12214,30; /* Convex Mirror */
+      getgroupitem(IG_C_CONVEX_MIRROR_BOX30);
   - Id: 16800
     AegisName: C_Blessing_10_Box
     Name: Blessing Scroll Box(10)
@@ -45732,6 +45744,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45740,8 +45754,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_BLESSING_10_BOX50);
   - Id: 16802
     AegisName: C_Inc_Agi_10_Scroll_Box
     Name: Increase Agility Scroll Box(10)
@@ -45764,6 +45778,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45772,8 +45788,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_INC_AGI_10_BOX50);
   - Id: 16804
     AegisName: C_Adrenaline_5_box
     Name: Adrenaline Rush Scroll Box(10)
@@ -45828,6 +45844,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45836,14 +45854,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_ASPERSIO_5_BOX50);
   - Id: 16808
     AegisName: C_Battle_Manual_Box
     Name: Battle Manual Box
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45852,14 +45872,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_BATTLE_MANUAL_BOX);
   - Id: 16809
     AegisName: C_Battle_Manual_Box10
     Name: Battle Manual Box(10)
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45868,14 +45890,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_BATTLE_MANUAL_BOX10);
   - Id: 16810
     AegisName: C_Bubble_Gum_Box
     Name: Bubble Gum Box
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45884,14 +45908,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_BUBBLE_GUM_BOX);
   - Id: 16811
     AegisName: C_Bubble_Gum_Box10
     Name: Bubble Gum Box(10)
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45900,8 +45926,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_BUBBLE_GUM_BOX10);
   - Id: 16812
     AegisName: C_Megaphone_Box
     Name: Megaphone Box
@@ -45924,6 +45950,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45933,13 +45961,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7040,10; /* Megaphone */
+      getgroupitem(IG_C_MEGAPHONE_BOX10);
   - Id: 16814
     AegisName: C_Enriched_Elunium_Box
     Name: Enriched Elunium Box(10)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45949,13 +45979,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7619,10; /* Enriched Elunium */
+      getgroupitem(IG_C_ENRICHED_ELUNIUM_BOX);
   - Id: 16815
     AegisName: C_Enriched_Elunium_Box5
     Name: Enriched Elunium Box(5)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45965,13 +45997,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7619,5; /* Enriched Elunium */
+      getgroupitem(IG_C_ENRICHED_ELUNIUM_BOX5);
   - Id: 16816
     AegisName: C_Enriched_Oridecon_Box
     Name: Enriched Oridecon Box(10)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45981,13 +46015,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7620,10; /* Enriched Oridecon */
+      getgroupitem(IG_C_ENRICHED_ORIDECON_BOX);
   - Id: 16817
     AegisName: C_Enc_Oridecon_Box5
     Name: Enriched Oridecon Box(5)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -45997,13 +46033,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7620,5; /* Enriched Oridecon */
+      getgroupitem(IG_C_ENC_ORIDECON_BOX5);
   - Id: 16818
     AegisName: C_Neuralizer_Box
     Name: Neuralizer Box
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46013,7 +46051,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12213,1; /* Neuralizer */
+      getgroupitem(IG_C_NEURALIZER_BOX);
   - Id: 16819
     AegisName: C_Abrasive_Box5
     Name: Abrasive Box(5)
@@ -46036,6 +46074,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46045,7 +46085,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14536,10; /* Abrasive */
+      getgroupitem(IG_C_ABRASIVE_BOX10);
   - Id: 16821
     AegisName: C_Dun_Tele_Scroll_Box5
     Name: Dungeon Teleport Scroll Box(5)
@@ -46080,6 +46120,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46089,7 +46131,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7776,1; /* Gym Pass */
+      getgroupitem(IG_C_MAX_WEIGHT_UP_BOX);
   - Id: 16824
     AegisName: C_Regeneration_Box5
     Name: Regeneration Potion Box(5)
@@ -46112,6 +46154,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46121,7 +46165,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14537,10; /* Regeneration Potion */
+      getgroupitem(IG_C_REGENERATION_BOX10);
   - Id: 16826
     AegisName: Sagittarius_Scr_Box
     Name: Sagittarius Scr Box
@@ -46154,6 +46198,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46163,7 +46209,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14534,50; /* Small Life Potion */
+      getgroupitem(IG_C_S_LIFE_POTION_BOX50);
   - Id: 16829
     AegisName: C_Med_Life_Potion_Box
     Name: Medium Life Potion Box(10)
@@ -46186,6 +46232,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46195,7 +46243,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14535,50; /* Medium Life Potion */
+      getgroupitem(IG_C_MED_LIFE_POTION_BOX50);
   - Id: 16831
     AegisName: C_G_Illusion_Box5
     Name: Glass of Illusion Box(5)
@@ -46250,6 +46298,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46259,7 +46309,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14539,30; /* Shadow Armor Scroll */
+      getgroupitem(IG_C_S_ARMORBOX10);
   - Id: 16835
     AegisName: C_Holy_Armor_S_Box5
     Name: Holy Armor Scroll Box(5)
@@ -46282,6 +46332,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46291,7 +46343,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14540,30; /* Holy Armor Scroll */
+      getgroupitem(IG_C_HOLY_ARMOR_S_BOX30);
   - Id: 16837
     AegisName: C_Dun_Tele_Scroll2_Box5
     Name: Dungeon Teleport Scroll II Box(5)
@@ -46390,10 +46442,12 @@ Body:
       getgroupitem(IG_C_REPAIR_SCROLL_BOX10);
   - Id: 16843
     AegisName: C_New_Style_Box
-    Name: Beauty Gift Box
+    Name: Hairstyle Coupon Box
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46403,7 +46457,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7622,1;
+      getgroupitem(IG_C_NEW_STYLE_BOX);
   - Id: 16844
     AegisName: C_Alice_Scroll_Box5
     Name: Alice Summon Book Box(5)
@@ -46426,6 +46480,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46434,8 +46490,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_ALICE_SCROLL_BOX10);
   - Id: 16846
     AegisName: C_Mimic_Scroll_Box5
     Name: Mimic Summon Book Box(5)
@@ -46458,6 +46514,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46466,8 +46524,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_MIMIC_SCROLL_BOX10);
   - Id: 16848
     AegisName: C_Disguise_Croll_Box5
     Name: Disguise Summon Book Box(5)
@@ -46490,6 +46548,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46498,8 +46558,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_DISGUISE_CROLL_BOX10);
   - Id: 16850
     AegisName: C_MP_Scroll_Box
     Name: Mystical Amplification Scroll Box(10)
@@ -46522,6 +46582,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46530,8 +46592,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_C_MP_SCROLL_BOX50);
   - Id: 16852
     AegisName: C_Quagmire_Scroll_Box
     Name: Quake Scroll Box(10)
@@ -46567,9 +46629,11 @@ Body:
   - Id: 16854
     AegisName: CCloth_Dye_Coupon_Box
     Name: Clothing Dye Box
-    Type: Cash
+    Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46579,13 +46643,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6046,1;
+      getgroupitem(IG_CCLOTH_DYE_COUPON_BOX);
   - Id: 16855
     AegisName: CCloth_Dye_Coupon2_Box
     Name: Clothing Dye Orig Box
-    Type: Cash
+    Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46595,7 +46661,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6047,1;
+      getgroupitem(IG_CCLOTH_DYE_COUPON2_BOX);
   - Id: 16856
     AegisName: C_Greed_Scroll_C20Box
     Name: Greed Scroll Box(20)
@@ -46650,6 +46716,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46659,7 +46727,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14600,50; /* Mental Potion */
+      getgroupitem(IG_C_MENTAL_POTION50_BOX);
   - Id: 16860
     AegisName: C_Tyr_Blessing_Box20
     Name: Tyr's Blessing Box(20)
@@ -46698,6 +46766,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46707,13 +46777,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14592,1; /* JOB Battle Manual */
+      getgroupitem(IG_C_JOB_MANUAL25_BOX1);
   - Id: 16863
     AegisName: C_Job_Manual25_Box10
     Name: JOB Battle Manual Box(10)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46723,7 +46795,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14592,10; /* JOB Battle Manual */
+      getgroupitem(IG_C_JOB_MANUAL25_BOX10);
   - Id: 16864
     AegisName: C_Siege_Scroll_Box1_10
     Name: Siege Map Teleport Scroll Box(10)
@@ -46744,10 +46816,12 @@ Body:
       getgroupitem(IG_C_SIEGE_SCROLL_BOX1_10);
   - Id: 16865
     AegisName: C_Siege_Scroll_Box1_30
-    Name: Siege Map Teleport Scroll Box(30)
+    Name: Siege Map Teleport Box(30)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46757,7 +46831,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14591,30;
+      getgroupitem(IG_C_SIEGE_SCROLL_BOX1_30);
   - Id: 16866
     AegisName: C_Siege_Scroll_Box2_10
     Name: Siege Map Teleport Scroll II Box(10)
@@ -46798,6 +46872,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46807,13 +46883,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6226,5; /* HD Bradium */
+      getgroupitem(IG_C_HD_BRADIUM_BOX5);
   - Id: 16869
     AegisName: C_HD_Bradium_Box10
     Name: HD Bradium Box(10)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46823,13 +46901,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6226,10; /* HD Bradium */
+      getgroupitem(IG_C_HD_BRADIUM_BOX10);
   - Id: 16870
     AegisName: C_HD_Carnium_Box5
     Name: HD Cranium Box(5)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46839,13 +46919,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6225,5; /* HD Carnium */
+      getgroupitem(IG_C_HD_CARNIUM_BOX5);
   - Id: 16871
     AegisName: C_HD_Carnium_Box10
     Name: HD Cranium Box(10)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46855,13 +46937,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6225,10; /* HD Carnium */
+      getgroupitem(IG_C_HD_CARNIUM_BOX10);
   - Id: 16872
     AegisName: C_HD_Ori_Box5
     Name: HD Oridecon Box(5)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46871,13 +46955,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6240,5; /* HD Oridecon */
+      getgroupitem(IG_C_HD_ORI_BOX5);
   - Id: 16873
     AegisName: C_HD_Ori_Box10
     Name: HD Oridecon Box(10)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46887,13 +46973,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6240,10; /* HD Oridecon */
+      getgroupitem(IG_C_HD_ORI_BOX10);
   - Id: 16874
     AegisName: C_HD_Elu_Box5
     Name: HD Elunium Box(5)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46903,13 +46991,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6241,5; /* HD Elunium */
+      getgroupitem(IG_C_HD_ELU_BOX5);
   - Id: 16875
     AegisName: C_HD_Elu_Box10
     Name: HD Elunium Box(10)
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46919,13 +47009,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 6241,10; /* HD Elunium */
+      getgroupitem(IG_C_HD_ELU_BOX10);
   - Id: 16876
     AegisName: C_Rapid_Life_Water_Box2
     Name: Rapid Life Potion Box(10)
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -46935,7 +47027,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12578,10; /* Rapid Life Water */
+      getgroupitem(IG_C_RAPID_LIFE_WATER_BOX2);
   - Id: 16877
     AegisName: C_Magic_Candy_Box102
     Name: Magic Candy Box(10)
@@ -50551,6 +50643,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50559,6 +50653,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      getgroupitem(IG_CHANGE_NAME_CARD_BOX);
   - Id: 17160
     AegisName: Change_Name_Card_Box2
     Name: Name Change Card Box
@@ -50806,6 +50902,8 @@ Body:
     Type: Cash
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -50815,7 +50913,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12832,50; /* Mysterious Water */
+      getgroupitem(IG_C_MYST_WATER_BOX50);
   - Id: 17180
     AegisName: Mysterious_Water_Box50_
     Name: Mysterious Life Potion Box(Girl)
@@ -52072,8 +52170,9 @@ Body:
     AegisName: Status_Reset_Coupon_Box
     Name: Status Reset Coupon Box
     Type: Cash
-    Buy: 10
-    EquipLevelMin: 1
+    Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52083,7 +52182,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem callfunc("F_Rand",6720,6721),1;
+      getgroupitem(IG_STATUS_RESET_COUPON_BOX);
   - Id: 17307
     AegisName: Midgard_Scroll
     Name: Midgard Egg
@@ -54732,6 +54831,8 @@ Body:
     Name: Premium Buff Box
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -54741,7 +54842,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 23207,1; /* [30Day] Premium Subscription Box */
+      getgroupitem(IG_AID_BUFF_BOX);
   - Id: 17690
     AegisName: Vigorgra_Plus_Package2
     Name: Cheer Up Plus Package II
@@ -56239,6 +56340,8 @@ Body:
     Name: Inventory Expansion Voucher Box(1)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -56247,8 +56350,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_INVENTORY_EX_BOX);
   - Id: 22507
     AegisName: ShabbyOldScroll
     Name: Old Scroll
@@ -58167,10 +58270,10 @@ Body:
   - Id: 22764
     AegisName: PetTradeTicket_Box
     Name: Pet Exchange Ticket Box
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -58180,8 +58283,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the allowed pet_id and chance*/
-      getitem callfunc("F_Rand",6116,6117,6118,6129,6130,6130,6132,6133,6134,6135,6136,6137,6138,6139,6140,6141,6142,6143),1;
+      getgroupitem(IG_PETTRADETICKET_BOX);
   - Id: 22770
     AegisName: Shark_Skewered
     Name: Shark Skewer
@@ -62512,8 +62614,10 @@ Body:
     Name: Premium Taming Gift Set
     Type: Usable
     Weight: 200
+    Flags:
+      Container: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_ADVANCED_TAIMING_ITEM);
   - Id: 23285
     AegisName: Candy_Box_Melee
     Name: Candy Pouch Box(Physical)
@@ -64818,8 +64922,10 @@ Body:
     Name: Premium Taming Gift Set II
     Type: Usable
     Weight: 200
+    Flags:
+      Container: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_ADVANCED_TAIMING_ITEM2);
   - Id: 23763
     AegisName: Mysterious_Egg3
     Name: Mysterious Egg III
@@ -78290,6 +78396,8 @@ Body:
     Name: Inventory Expansion Voucher Box (10)
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -78298,8 +78406,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_INVENTORY_EX_10BOX);
   - Id: 200002
     AegisName: Inventory_Ex_Dis_10Box
     Name: (Limited) Inventory Expansion Voucher Box (10)
@@ -80352,6 +80460,8 @@ Body:
 #   Name: Nyandarae Costume Mileage Package I (Stone Box 34)
     Name: Nyandarae Costume Mileage Package I (Stone Box 34    # !todo check english name
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80360,13 +80470,15 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_34_1);
   - Id: 200386
     AegisName: CostumeMilePack_34_2
 #   Name: Nyandarae Costume Mileage Package II (Stone Box 34)
     Name: Nyandarae Costume Mileage Package II (Stone Box 3    # !todo check english name
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80375,13 +80487,15 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_34_2);
   - Id: 200387
     AegisName: CostumeMilePack_34_3
 #   Name: Nyandarae Costume Mileage Package III (Stone Box 34)
     Name: Nyandarae Costume Mileage Package III (Stone Box     # !todo check english name
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80390,8 +80504,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_34_3);
   - Id: 1100000
     AegisName: IDTest_heal
     Name: IDTest heal
