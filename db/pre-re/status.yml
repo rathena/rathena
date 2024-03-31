@@ -162,6 +162,7 @@ Body:
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -252,6 +253,7 @@ Body:
   - Status: Dpoison
     DurationLookup: NPC_POISON
     CalcFlags:
+      Def: true
       Def2: true
       Regen: true
     Opt2:
@@ -1121,6 +1123,10 @@ Body:
       NoClearance: true
   - Status: Watk_Element
     DurationLookup: MS_MAGNUM
+    Flags:
+      NoSave: true
+    EndOnStart:
+      Watk_Element: true
   - Status: Armor
     DurationLookup: NPC_DEFENDER
   - Status: Armor_Element_Water
@@ -2712,6 +2718,7 @@ Body:
     CalcFlags:
       Flee: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2720,6 +2727,7 @@ Body:
     CalcFlags:
       Watk: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2728,6 +2736,7 @@ Body:
     CalcFlags:
       MaxHp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2736,6 +2745,7 @@ Body:
     CalcFlags:
       MaxSp: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -2744,6 +2754,7 @@ Body:
     CalcFlags:
       Hit: true
     Flags:
+      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true

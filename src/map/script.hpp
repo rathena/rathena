@@ -2185,6 +2185,13 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_SUBTYPE,
 };
 
+/* geteleminfo script command */
+enum e_eleminfo : uint8 {
+	ELEMINFO_ID = 0,
+	ELEMINFO_GAMEID,
+	ELEMINFO_CLASS,
+};
+
 class ConstantDatabase : public YamlDatabase {
 public:
 	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
