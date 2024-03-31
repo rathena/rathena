@@ -3364,7 +3364,8 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
 {
 	if (
 #ifndef RENEWAL
-		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG || skill_id == AM_ACIDTERROR ||
+		skill_id == PA_SHIELDCHAIN || skill_id == PA_SACRIFICE ||
+		skill_id == CR_SHIELDBOOMERANG || skill_id == AM_ACIDTERROR ||
 #endif
 		skill_id == MO_INVESTIGATE || skill_id == MO_EXTREMITYFIST ||
 		skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER || skill_id == NC_SELFDESTRUCTION ||
@@ -7243,9 +7244,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		wd.dmg_lv = ATK_FLEE;
 	else if(!(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
 
-		battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
+		// First call function with skill_id 0 to get base damage of a normal attack
+		battle_calc_skill_base_damage(&wd, src, target, 0, 0); // base damage
 		wd.basedamage = wd.damage;
 		wd.basedamage2 = wd.damage2;
+		// Now get actual skill damage
+		if (skill_id != 0)
+			battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
 
 		int64 ratio = 0;
 
@@ -7406,8 +7411,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		battle_attack_sc_bonus(&wd, src, target, skill_id, skill_lv);
 #endif
 
-		if (wd.damage + wd.damage2) { //Check if attack ignores DEF
+		if (wd.damage + wd.damage2) {
+#ifdef RENEWAL
+			//Check if attack ignores DEF (in pre-renewal we need to update base damage even when the skill ignores DEF)
 			if(!attack_ignores_def(&wd, src, target, skill_id, skill_lv, EQI_HAND_L) || !attack_ignores_def(&wd, src, target, skill_id, skill_lv, EQI_HAND_R))
+#endif
 				battle_calc_defense_reduction(&wd, src, target, skill_id, skill_lv);
 
 			battle_calc_attack_post_defense(&wd, src, target, skill_id, skill_lv);
