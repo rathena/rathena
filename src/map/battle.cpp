@@ -2455,11 +2455,11 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
  * This applies to pre-renewal and non-sd in renewal
  *------------------------------------------
  * Pass damage2 as NULL to not calc it.
- * Flag values:
+ * Flag values (see e_base_damage_flag):
  * &1 : Critical hit
  * &2 : Arrow attack
  * &4 : Skill is Magic Crasher
- * &8 : Skip target size adjustment (Extremity Fist?)
+ * &8 : Skip target size adjustment (Weapon Perfection)
  * &16: Arrow attack but BOW, REVOLVER, RIFLE, SHOTGUN, GATLING or GRENADE type weapon not equipped (i.e. shuriken, kunai and venom knives not affected by DEX)
  *
  * Credits:
@@ -4084,7 +4084,6 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			// Pre-renewal exclusive flags
 			if (is_skill_using_arrow(src, skill_id)) bflag |= BDMG_ARROW;
 			if (skill_id == HW_MAGICCRASHER) bflag |= BDMG_MAGIC;
-			if (skill_id == MO_EXTREMITYFIST) bflag |= BDMG_NOSIZE;
 			if (sc && sc->getSCE(SC_WEAPONPERFECTION)) bflag |= BDMG_NOSIZE;
 			if (is_skill_using_arrow(src, skill_id) && sd) {
 				switch(sd->status.weapon) {
@@ -4634,7 +4633,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 		case MO_EXTREMITYFIST:
-			skillratio += 100 * (7 + sstatus->sp / 10);			
+			skillratio += 700 + sstatus->sp * 10;
 #ifdef RENEWAL
 			if (wd->miscflag&1)
 				skillratio *= 2; // More than 5 spirit balls active
