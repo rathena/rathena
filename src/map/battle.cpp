@@ -2263,10 +2263,16 @@ int64 battle_addmastery(map_session_data *sd,struct block_list *target,int64 dmg
 			damage += damage * 30 / 100;
 	}
 
-	if(type == 0)
+	if (type == 0) {
 		weapon = sd->weapontype1;
-	else
+		//Star Crumb Bonus (right hand)
+		damage += sd->right_weapon.star;
+	}
+	else {
 		weapon = sd->weapontype2;
+		//Star Crumb Bonus (left hand)
+		damage += sd->left_weapon.star;
+	}
 
 	switch(weapon) {
 		case W_1HSWORD:
@@ -3353,25 +3359,36 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 	return nk[NK_IGNOREDEFENSE] != 0;
 }
 
-/*================================================
- * Should skill attack consider VVS and masteries?
- *------------------------------------------------
- * Credits:
- *	Original coder Skotlex
- *	Initial refactoring by Baalberith
- *	Refined and optimized by helvetica
+/**
+ * This function lists which skills are unaffected by refine bonus, masteries and Star Crumbs
+ * This function is also used to determine if atkpercent applies
+ * @param skill_id: Skill being used
+ * @param isrefine: Are you checking if weapon refine bonus applies?
+ * @return true = bonus applies; false = bonus does not apply 
  */
-static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
+static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, bool isrefine)
 {
-	if (
-#ifndef RENEWAL
-		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG ||
-		skill_id == PA_SACRIFICE || skill_id == AM_ACIDTERROR ||
-#endif
-		skill_id == MO_INVESTIGATE || skill_id == MO_EXTREMITYFIST ||
-		skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER || skill_id == NC_SELFDESTRUCTION ||
-		skill_id == LG_SHIELDPRESS || skill_id == LG_EARTHDRIVE)
+	switch (skill_id) {
+	case PA_SHIELDCHAIN:
+	case CR_SHIELDBOOMERANG:
+	case AM_ACIDTERROR:
+	case MO_INVESTIGATE:
+	case MO_EXTREMITYFIST:
+	case PA_SACRIFICE:
+	case NPC_DRAGONBREATH:
+	case RK_DRAGONBREATH:
+	case RK_DRAGONBREATH_WATER:
+	case NC_SELFDESTRUCTION:
+	case LG_SHIELDPRESS:
+	case LG_EARTHDRIVE:
+		return false;
+	case CR_GRANDCROSS:
+	case NPC_GRANDDARKNESS:
+		// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs
+		if (!isrefine)
 			return false;
+		break;
+	}
 
 	return true;
 }
@@ -3733,7 +3750,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 	}
 
 	// Grand Cross is confirmed to be affected by refine bonus but not masteries
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != CR_GRANDCROSS)
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, false))
 	{	//Add mastery damage
 		uint16 skill;
 
@@ -3754,8 +3771,6 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 15 * skill_lv);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 4);
-		if (skill_id != CR_SHIELDBOOMERANG)
-			ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->right_weapon.star, ((wd->div_ < 1) ? 1 : wd->div_) * sd->left_weapon.star);
 		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
 #else
 		if (skill_id == TF_POISON)
@@ -4318,24 +4333,8 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  */
 static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_id, status_change* sc)
 {
-	//These skills are not affected by ATKpercent
-	switch (skill_id) {
-#ifndef RENEWAL
-	// Need to be confirmed for renewal as masteries have been coded to apply to those two in renewal
-	case PA_SHIELDCHAIN:
-	case CR_SHIELDBOOMERANG:
-#endif
-	case AM_ACIDTERROR:
-	case CR_GRANDCROSS:
-	case NPC_GRANDDARKNESS:
-	case MO_INVESTIGATE:
-	case MO_EXTREMITYFIST:
-	case PA_SACRIFICE:
-	case NPC_DRAGONBREATH:
-	case RK_DRAGONBREATH:
-	case RK_DRAGONBREATH_WATER:
+	if (!battle_skill_stacks_masteries_vvs(skill_id, false))
 		return 100;
-	}
 
 	int atkpercent = 100;
 
@@ -6590,7 +6589,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 #ifndef RENEWAL
 	//Refine bonus
 	if (sd) {
-		if (battle_skill_stacks_masteries_vvs(skill_id)) {
+		if (battle_skill_stacks_masteries_vvs(skill_id, true)) {
 			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 		}
 		ATK_ADD2(wd->basedamage, wd->basedamage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
@@ -7533,8 +7532,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADD(wd.damage, wd.damage2, skill * 2);
 		if (skill_id == GS_GROUNDDRIFT)
 			ATK_ADD(wd.damage, wd.damage2, 50 * skill_lv);
-		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
-			ATK_ADD2(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->right_weapon.star, ((wd.div_ < 1) ? 1 : wd.div_) * sd->left_weapon.star);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd.damage, wd.damage2, 4);
 		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
