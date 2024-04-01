@@ -41,6 +41,7 @@ static struct eri *delay_damage_ers; //For battle delay damage structures.
 int battle_get_weapon_element(struct Damage *wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only);
 int battle_get_magic_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int mflag);
 int battle_get_misc_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int mflag);
+static void battle_calc_defense_reduction(struct Damage* wd, struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv);
 
 /**
  * Returns the current/list skill used by the bl
@@ -3364,8 +3365,8 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
 {
 	if (
 #ifndef RENEWAL
-		skill_id == PA_SHIELDCHAIN || skill_id == PA_SACRIFICE ||
-		skill_id == CR_SHIELDBOOMERANG || skill_id == AM_ACIDTERROR ||
+		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG ||
+		skill_id == PA_SACRIFICE || skill_id == AM_ACIDTERROR ||
 #endif
 		skill_id == MO_INVESTIGATE || skill_id == MO_EXTREMITYFIST ||
 		skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER || skill_id == NC_SELFDESTRUCTION ||
@@ -3731,6 +3732,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 		}
 	}
 
+	// Grand Cross is confirmed to be affected by refine bonus but not masteries
 	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != CR_GRANDCROSS)
 	{	//Add mastery damage
 		uint16 skill;
@@ -3978,12 +3980,19 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			if (sd) {
 				short index = sd->equip_index[EQI_HAND_L];
 
+				//Base damage of shield skills is [batk + 4*refine + weight]
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
+					ATK_ADD(wd->damage, wd->damage2, 4 * sd->inventory.u.items_inventory[index].refine);
 					ATK_ADD(wd->damage, wd->damage2, sd->inventory_data[index]->weight / 10);
 #ifdef RENEWAL
+					ATK_ADD(wd->weaponAtk, wd->weaponAtk2, 4 * sd->inventory.u.items_inventory[index].refine);
 					ATK_ADD(wd->weaponAtk, wd->weaponAtk2, sd->inventory_data[index]->weight / 10);
 #endif
 				}
+#ifndef RENEWAL
+				// Shield Boomerang and Rapid Smiting calculate DEF before the skill ratio
+				battle_calc_defense_reduction(wd, src, target, skill_id, skill_lv);
+#endif
 			} else
 				ATK_ADD(wd->damage, wd->damage2, sstatus->rhw.atk2); //Else use Atk2
 			break;
@@ -4309,10 +4318,13 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  */
 static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_id, status_change* sc)
 {
-	int atkpercent = 100;
-
 	//These skills are not affected by ATKpercent
 	switch (skill_id) {
+#ifndef RENEWAL
+	// Need to be confirmed for renewal as masteries have been coded to apply to those two in renewal
+	case PA_SHIELDCHAIN:
+	case CR_SHIELDBOOMERANG:
+#endif
 	case AM_ACIDTERROR:
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
@@ -4324,6 +4336,8 @@ static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_
 	case RK_DRAGONBREATH_WATER:
 		return 100;
 	}
+
+	int atkpercent = 100;
 
 	if (sc->getSCE(SC_CURSE))
 		atkpercent -= 25;
@@ -4348,7 +4362,7 @@ static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_
 
 	/* Only few selected skills should use this function, DO NOT ADD any that are not caused by the skills listed below
 	* TODO:
-	* NPC_INVINCIBLE (+100) <--- need to verify, this currently increases all damage by 75%
+	* NPC_INVINCIBLE (+100)
 	* GD_GUARDUP (2*skLevel+8)
 	* EL_WATERBARRIER (-3)
 	* SC_ENERVATION (-30/-40/-50)
@@ -7413,8 +7427,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		if (wd.damage + wd.damage2) {
 #ifdef RENEWAL
-			//Check if attack ignores DEF (in pre-renewal we need to update base damage even when the skill ignores DEF)
+			// Check if attack ignores DEF (in pre-renewal we need to update base damage even when the skill ignores DEF)
 			if(!attack_ignores_def(&wd, src, target, skill_id, skill_lv, EQI_HAND_L) || !attack_ignores_def(&wd, src, target, skill_id, skill_lv, EQI_HAND_R))
+#else
+			// Shield Boomerang and Rapid Smiting already calculated the defense before the skill ratio was applied
+			if(skill_id != PA_SHIELDCHAIN && skill_id != CR_SHIELDBOOMERANG)
 #endif
 				battle_calc_defense_reduction(&wd, src, target, skill_id, skill_lv);
 
@@ -7525,11 +7542,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		} else if (skill_id != MO_INVESTIGATE)
 			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball * 3);
 #endif
-		if( skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN ) { //Refine bonus applies after cards and elements.
+		if (sd && skill_id == PA_SHIELDCHAIN) { //Rapid Smiting has a unique mastery bonus
 			short index = sd->equip_index[EQI_HAND_L];
-
-			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR )
-				ATK_ADD(wd.damage, wd.damage2, 10*sd->inventory.u.items_inventory[index].refine);
+			//The bonus is [max(100, Random(100, 0.7*weight + pow(skill level + refine)))]
+			if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
+				//First calculate the random part of the bonus
+				int bonus = (7 * sd->inventory_data[index]->weight) / 100;
+				bonus += pow(skill_lv + sd->inventory.u.items_inventory[index].refine, 2);
+				//Now get a random value between 100 and the random part
+				bonus = max(100, rnd_value(100, bonus));
+				ATK_ADD(wd.damage, wd.damage2, bonus);
+			}
 		}
 #ifndef RENEWAL
 		//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
