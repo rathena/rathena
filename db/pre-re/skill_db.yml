@@ -4408,7 +4408,6 @@ Body:
     TargetType: Ground
     DamageFlags:
       Splash: true
-      IgnoreFlee: true
     Flags:
       IsTrap: true
       AlterRangeResearchTrap: true
@@ -6461,6 +6460,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       IgnoreAtkCard: true
+      IgnoreDefense: true
       IgnoreFlee: true
     Flags:
       IgnoreAutoGuard: true
@@ -32636,7 +32636,6 @@ Body:
     TargetType: Ground
     DamageFlags:
       Splash: true
-      IgnoreFlee: true
     Flags:
       IsTrap: true
       AlterRangeResearchTrap: true
