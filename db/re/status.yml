@@ -1118,6 +1118,7 @@ Body:
     DurationLookup: SA_VOLCANO
     CalcFlags:
       Batk: true
+      Watk: true
       Matk: true
     Flags:
       NoSave: true

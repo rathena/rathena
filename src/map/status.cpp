@@ -7085,6 +7085,8 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 		watk += sc->getSCE(SC_IMPOSITIO)->val2;
 	if(sc->getSCE(SC_WATKFOOD))
 		watk += sc->getSCE(SC_WATKFOOD)->val1;
+	if (sc->getSCE(SC_VOLCANO) && bl->type == BL_MOB)
+		watk += sc->getSCE(SC_VOLCANO)->val2;
 	if(sc->getSCE(SC_MERC_ATKUP))
 		watk += sc->getSCE(SC_MERC_ATKUP)->val2;
 	if(sc->getSCE(SC_WATER_BARRIER))
