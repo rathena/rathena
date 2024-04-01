@@ -6563,12 +6563,12 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
  */
 static void battle_min_damage(struct Damage* wd, struct block_list* src, uint16 skill_id, int64 min) {
 	if (is_attack_right_handed(src, skill_id)) {
-		cap_value(wd->damage, min, INT64_MAX);
-		cap_value(wd->basedamage, min, INT64_MAX);
+		wd->damage = cap_value(wd->damage, min, INT64_MAX);
+		wd->basedamage = cap_value(wd->basedamage, min, INT64_MAX);
 	}
 	if (is_attack_left_handed(src, skill_id)) {
-		cap_value(wd->damage2, min, INT64_MAX);
-		cap_value(wd->basedamage2, min, INT64_MAX);
+		wd->damage2 = cap_value(wd->damage2, min, INT64_MAX);
+		wd->basedamage2 = cap_value(wd->basedamage2, min, INT64_MAX);
 	}
 }
 
@@ -7548,7 +7548,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
 				//First calculate the random part of the bonus
 				int bonus = (7 * sd->inventory_data[index]->weight) / 100;
-				bonus += pow(skill_lv + sd->inventory.u.items_inventory[index].refine, 2);
+				bonus += static_cast<decltype(bonus)>(pow(skill_lv + sd->inventory.u.items_inventory[index].refine, 2));
 				//Now get a random value between 100 and the random part
 				bonus = max(100, rnd_value(100, bonus));
 				ATK_ADD(wd.damage, wd.damage2, bonus);
