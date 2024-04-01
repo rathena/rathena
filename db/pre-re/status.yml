@@ -1100,7 +1100,7 @@ Body:
     Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
     CalcFlags:
-      Watk: true
+      Batk: true
     Flags:
       NoSave: true
       NoClearance: true
