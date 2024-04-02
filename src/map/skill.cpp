@@ -9810,7 +9810,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if (sd) {
 			sd->state.workinprogress = WIP_DISABLE_ALL;
-			clif_autospell(sd,skill_lv);
+			clif_autospell( *sd, skill_lv );
 		} else {
 			int maxlv=1,spellid=0;
 			static const int spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
