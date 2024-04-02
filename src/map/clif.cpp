@@ -86,6 +86,7 @@ unsigned long color_table[COLOR_MAX];
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(map_session_data *sd);
 static void clif_loadConfirm( map_session_data *sd );
+static void clif_favorite_item( map_session_data& sd, uint16 index );
 
 #if PACKETVER >= 20150513
 enum mail_type {
@@ -3007,7 +3008,6 @@ static void clif_inventoryEnd( map_session_data *sd, e_inventory_type type ){
 #endif
 }
 
-void clif_favorite_item(map_session_data* sd, unsigned short index);
 //Unified inventory function which sends all of the inventory (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
 void clif_inventorylist( map_session_data *sd ){
 	nullpo_retv( sd );
@@ -3093,7 +3093,7 @@ void clif_inventorylist( map_session_data *sd ){
 			continue;
 
 		if ( sd->inventory.u.items_inventory[i].favorite )
-			clif_favorite_item(sd, i);
+			clif_favorite_item( *sd, i );
 	}
 #endif
 }
@@ -19728,49 +19728,52 @@ void clif_spiritcharm(map_session_data *sd) {
 }
 
 
-/// Move Item from or to Personal Tab (CZ_WHATSOEVER) [FE]
-/// 0907 <index>.W
-///
-/// R 0908 <index>.w <type>.b
+/// Move Item from or to Personal Tab
+/// 0907 <index>.W <type>.B (CZ_INVENTORY_TAB)
 /// type:
 /// 	0 = move item to personal tab
 /// 	1 = move item to normal tab
-void clif_parse_MoveItem(int fd, map_session_data *sd) {
-#if PACKETVER >= 20111122
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int index = RFIFOW(fd,info->pos[0]) - 2;
-	int type = RFIFOB(fd, info->pos[1]);
-
+void clif_parse_MoveItem( int fd, map_session_data* sd ){
+// TODO: Check for correct packet version
+#if PACKETVER >= 20120410
 	/* can't move while dead. */
 	if(pc_isdead(sd)) {
 		return;
 	}
 
-	if (index < 0 || index >= MAX_INVENTORY)
-		return;
+	PACKET_CZ_INVENTORY_TAB* p = (PACKET_CZ_INVENTORY_TAB*)RFIFOP( fd, 0 );
 
-	if ( sd->inventory.u.items_inventory[index].favorite && type == 1 )
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if ( sd->inventory.u.items_inventory[index].favorite && p->favorite == true )
 		sd->inventory.u.items_inventory[index].favorite = 0;
-	else if( type == 0 )
+	else if( p->favorite == false )
 		sd->inventory.u.items_inventory[index].favorite = 1;
 	else
 		return;/* nothing to do. */
 
-	clif_favorite_item(sd, index);
+	clif_favorite_item( *sd, index );
 #endif
 }
 
 
-/// Items that are in favorite tab of inventory (ZC_ITEM_FAVORITE).
-/// 0900 <index>.W <favorite>.B
-void clif_favorite_item(map_session_data* sd, unsigned short index) {
-	int fd = sd->fd;
+/// Items that are in favorite tab of inventory.
+/// 0908 <index>.W <favorite>.B (ZC_INVENTORY_TAB)
+static void clif_favorite_item( map_session_data& sd, uint16 index ){
+// TODO: Check for correct packet version
+#if PACKETVER >= 20111122
+	PACKET_ZC_INVENTORY_TAB p = {};
 
-	WFIFOHEAD(fd,packet_len(0x908));
-	WFIFOW(fd,0) = 0x908;
-	WFIFOW(fd,2) = index+2;
-	WFIFOL(fd,4) = (sd->inventory.u.items_inventory[index].favorite == 1) ? 0 : 1;
-	WFIFOSET(fd,packet_len(0x908));
+	p.packetType = HEADER_ZC_INVENTORY_TAB;
+	p.index = client_index( index );
+	p.favorite = ( sd.inventory.u.items_inventory[index].favorite == 1 ) ? 0 : 1;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 
