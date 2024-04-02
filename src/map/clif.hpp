@@ -965,7 +965,6 @@ void clif_hom_food(map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(map_session_data *sd, int state, int param);	//[orn]
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
-void clif_partytickack(map_session_data* sd, bool flag);
 void clif_viewequip_ack(map_session_data* sd, map_session_data* tsd);
 void clif_equipcheckbox(map_session_data* sd);
 

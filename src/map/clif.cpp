@@ -8044,7 +8044,7 @@ void clif_partyinvitationstate( map_session_data& sd ){
 	struct PACKET_ZC_PARTY_CONFIG p = {};
 
 	p.packetType = HEADER_ZC_PARTY_CONFIG;
-	p.denyPartyInvites = 0; // TODO: not implemented
+	p.denyPartyInvites = sd.status.disable_partyinvite;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
@@ -17624,13 +17624,14 @@ void clif_parse_configuration( int fd, map_session_data* sd ){
 
 /// Request to change party invitation tick.
 /// value:
-///	 0 = disabled
-///	 1 = enabled
-void clif_parse_PartyTick(int fd, map_session_data* sd)
-{
-	bool flag = RFIFOB(fd,6) ? true : false;
-	sd->status.allow_party = flag;
-	clif_partytickack(sd, flag);
+///	 0 = disabled (triggered by /accept)
+///	 1 = enabled (triggered by /refuse)
+void clif_parse_PartyTick( int fd, map_session_data* sd ){
+	PACKET_CZ_PARTY_CONFIG* p = (PACKET_CZ_PARTY_CONFIG*)RFIFOP( fd, 0 );
+
+	sd->status.disable_partyinvite = p->refuseInvite;
+
+	clif_partyinvitationstate( *sd );
 }
 
 /// Questlog System [Kevin] [Inkfish]
@@ -19809,13 +19810,6 @@ void clif_monster_hp_bar( struct mob_data* md, int fd ) {
 /* [Ind] placeholder for unsupported incoming packets (avoids server disconnecting client) */
 void __attribute__ ((unused)) clif_parse_dull(int fd, map_session_data *sd) {
 	return;
-}
-
-void clif_partytickack(map_session_data* sd, bool flag) {
-	WFIFOHEAD(sd->fd, packet_len(0x2c9));
-	WFIFOW(sd->fd,0) = 0x2c9; 
-	WFIFOB(sd->fd,2) = flag;
-	WFIFOSET(sd->fd, packet_len(0x2c9)); 
 }
 
 /// Ack world info (ZC_ACK_BEFORE_WORLD_INFO)
