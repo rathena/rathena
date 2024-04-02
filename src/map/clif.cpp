@@ -8518,75 +8518,76 @@ void clif_pet_autofeed_status(map_session_data* sd, bool force) {
 #endif
 }
 
-/// Presents a list of skills that can be auto-spelled (ZC_AUTOSPELLLIST).
-/// 01cd { <skill id>.L }*7
-void clif_autospell(map_session_data *sd,uint16 skill_lv)
-{
-	nullpo_retv(sd);
-
-	int fd = sd->fd;
-
-#ifdef RENEWAL
-	uint16 autospell_skill[][2] = { 
-		{ MG_FIREBOLT, 0 }, { MG_COLDBOLT, 0 }, { MG_LIGHTNINGBOLT, 0 },
-		{ MG_SOULSTRIKE, 3 }, { MG_FIREBALL, 3 },
-		{ WZ_EARTHSPIKE, 6 }, { MG_FROSTDIVER, 6 },
-		{ MG_THUNDERSTORM, 9 }, { WZ_HEAVENDRIVE, 9 }
+/// Presents a list of skills that can be auto-spelled.
+/// 01cd { <skill id>.L }*7 (ZC_AUTOSPELLLIST)
+void clif_autospell( map_session_data& sd, uint16 skill_lv ){
+	struct s_autospell_requirement{
+		uint16 skill_id;
+		uint16 required_autospell_skill_lv;
 	};
-	int count = 0;
 
-	WFIFOHEAD(fd, 2 * 6 + 4);
-	WFIFOW(fd, 0) = 0x442;
+#ifndef RENEWAL
+	 const std::vector<s_autospell_requirement> autospell_skills = {
+		{ MG_FIREBOLT, 0 },
+		{ MG_COLDBOLT, 0 },
+		{ MG_LIGHTNINGBOLT, 0 },
+		{ MG_SOULSTRIKE, 3 },
+		{ MG_FIREBALL, 3 },
+		{ WZ_EARTHSPIKE, 6 },
+		{ MG_FROSTDIVER, 6 },
+		{ MG_THUNDERSTORM, 9 },
+		{ WZ_HEAVENDRIVE, 9 }
+	};
+#else
+	const std::vector<s_autospell_requirement> autospell_skills = {
+		{ MG_NAPALMBEAT, 0 },
+		{ MG_COLDBOLT, 1 },
+		{ MG_FIREBOLT, 1 },
+		{ MG_LIGHTNINGBOLT, 1 },
+		{ MG_SOULSTRIKE, 4 },
+		{ MG_FIREBALL, 7 },
+		{ MG_FROSTDIVER, 9 },
+	};
+#endif
 
-	for (int i = 0; i < ARRAYLENGTH(autospell_skill); i++) {
-		if (skill_lv > autospell_skill[i][1] && pc_checkskill(sd, autospell_skill[i][0])) {
-			WFIFOW(fd, 8 + count * 2) = autospell_skill[i][0];
-			count++;
+#if PACKETVER_MAIN_NUM >= 20181128 || PACKETVER_RE_NUM >= 20181031
+	PACKET_ZC_AUTOSPELLLIST* p = (PACKET_ZC_AUTOSPELLLIST*)packet_buffer;
+
+	p->packetType = HEADER_ZC_AUTOSPELLLIST;
+	p->packetLength = sizeof( *p );
+
+	size_t count = 0;
+	for( const s_autospell_requirement& requirement : autospell_skills ){
+		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
+			p->skills[count] = requirement.skill_id;
+			p->packetLength += sizeof( p->skills[0] );
 		}
 	}
 
-	WFIFOW(fd, 2) = 8 + count * 2;
-	WFIFOL(fd, 4) = count;
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#elif PACKETVER_MAIN_NUM >= 20090406 || defined(PACKETVER_RE) || defined(PACKETVER_ZERO) || PACKETVER_SAK_NUM >= 20080618
+	PACKET_ZC_AUTOSPELLLIST p = {};
 
-	WFIFOSET(fd, WFIFOW(fd, 2));
-#else
-	WFIFOHEAD(fd,packet_len(0x1cd));
-	WFIFOW(fd, 0)=0x1cd;
+	p.packetType = HEADER_ZC_AUTOSPELLLIST;
 
-	if(skill_lv>0 && pc_checkskill(sd,MG_NAPALMBEAT)>0)
-		WFIFOL(fd,2)= MG_NAPALMBEAT;
-	else
-		WFIFOL(fd,2)= 0x00000000;
-	if(skill_lv>1 && pc_checkskill(sd,MG_COLDBOLT)>0)
-		WFIFOL(fd,6)= MG_COLDBOLT;
-	else
-		WFIFOL(fd,6)= 0x00000000;
-	if(skill_lv>1 && pc_checkskill(sd,MG_FIREBOLT)>0)
-		WFIFOL(fd,10)= MG_FIREBOLT;
-	else
-		WFIFOL(fd,10)= 0x00000000;
-	if(skill_lv>1 && pc_checkskill(sd,MG_LIGHTNINGBOLT)>0)
-		WFIFOL(fd,14)= MG_LIGHTNINGBOLT;
-	else
-		WFIFOL(fd,14)= 0x00000000;
-	if(skill_lv>4 && pc_checkskill(sd,MG_SOULSTRIKE)>0)
-		WFIFOL(fd,18)= MG_SOULSTRIKE;
-	else
-		WFIFOL(fd,18)= 0x00000000;
-	if(skill_lv>7 && pc_checkskill(sd,MG_FIREBALL)>0)
-		WFIFOL(fd,22)= MG_FIREBALL;
-	else
-		WFIFOL(fd,22)= 0x00000000;
-	if(skill_lv>9 && pc_checkskill(sd,MG_FROSTDIVER)>0)
-		WFIFOL(fd,26)= MG_FROSTDIVER;
-	else
-		WFIFOL(fd,26)= 0x00000000;
+	size_t count = 0;
+	for( const s_autospell_requirement& requirement : autospell_skills ){
+		if( count == ARRAYLENGTH( p.skills ) ){
+			break;
+		}
 
-	WFIFOSET(fd,packet_len(0x1cd));
+		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
+			p.skills[count] = requirement.skill_id;
+		}else{
+			p.skills[count] = 0;
+		}
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
 
-	sd->menuskill_id = SA_AUTOSPELL;
-	sd->menuskill_val = skill_lv;
+	sd.menuskill_id = SA_AUTOSPELL;
+	sd.menuskill_val = skill_lv;
 }
 
 

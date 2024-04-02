@@ -760,7 +760,7 @@ void clif_skillunit_update(struct block_list* bl);
 
 void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv);
 
-void clif_autospell(map_session_data *sd,uint16 skill_lv);
+void clif_autospell( map_session_data& sd, uint16 skill_lv );
 void clif_devotion(struct block_list *src, map_session_data *tsd);
 void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_soulball( map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
