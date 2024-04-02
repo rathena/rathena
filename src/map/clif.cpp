@@ -8559,7 +8559,7 @@ void clif_autospell( map_session_data& sd, uint16 skill_lv ){
 	size_t count = 0;
 	for( const s_autospell_requirement& requirement : autospell_skills ){
 		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
-			p->skills[count] = requirement.skill_id;
+			p->skills[count++] = requirement.skill_id;
 			p->packetLength += sizeof( p->skills[0] );
 		}
 	}
@@ -8577,9 +8577,9 @@ void clif_autospell( map_session_data& sd, uint16 skill_lv ){
 		}
 
 		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
-			p.skills[count] = requirement.skill_id;
+			p.skills[count++] = requirement.skill_id;
 		}else{
-			p.skills[count] = 0;
+			p.skills[count++] = 0;
 		}
 	}
 
