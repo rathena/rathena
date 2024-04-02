@@ -3775,6 +3775,11 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 #else
 		if (skill_id == TF_POISON)
 			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
+			ATK_ADD(wd->damage, wd->damage2, (wd->div_ + sd->spiritball) * 3);
+		}
+		else
+			ATK_ADD(wd->damage, wd->damage2, sd->spiritball * 3);
 #endif
 
 		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
@@ -3915,7 +3920,10 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 
-	uint16 i, bflag = BDMG_NONE;
+	uint16 bflag = BDMG_NONE;
+#ifndef RENEWAL
+	uint16 i;
+#endif
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
 	switch (skill_id) {	//Calc base damage according to skill
@@ -7533,10 +7541,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADD(wd.damage, wd.damage2, 50 * skill_lv);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd.damage, wd.damage2, 4);
-		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
-			ATK_ADD(wd.damage, wd.damage2, (wd.div_ + sd->spiritball) * 3);
-		} else if (skill_id != MO_INVESTIGATE)
-			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball * 3);
 #endif
 		if (sd && skill_id == PA_SHIELDCHAIN) { //Rapid Smiting has a unique mastery bonus
 			short index = sd->equip_index[EQI_HAND_L];
