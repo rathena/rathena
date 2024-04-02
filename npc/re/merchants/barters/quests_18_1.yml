@@ -45,19 +45,88 @@ Header:
   Type: BARTER_DB
   Version: 1
 
-Footer:
-  Imports:
-  - Path: npc/re/merchants/barters/Extended_Ammunition.yml
-  - Path: npc/re/merchants/barters/Gemstone_Bagger.yml
-  - Path: npc/re/merchants/barters/quests_16_1.yml
-  - Path: npc/re/merchants/barters/quests_16_2.yml
-  - Path: npc/re/merchants/barters/quests_17_1.yml
-  - Path: npc/re/merchants/barters/quests_17_2.yml
-  - Path: npc/re/merchants/barters/refine.yml
-  - Path: npc/re/merchants/barters/enchantgrade.yml
-  - Path: npc/re/merchants/barters/cashmall.yml
-  - Path: npc/re/merchants/barters/rgsr_in.yml
-  - Path: npc/re/merchants/barters/enchan_illusion_dungeons.yml
-  - Path: npc/re/merchants/barters/quests_exp_175.yml
-  - Path: npc/re/merchants/barters/mysterious_cookie_shop.yml
-  - Path: npc/re/merchants/barters/quests_18_1.yml
+Body:
+  - Name: barter_ep18_1
+    Items:
+      - Index: 0
+        Item: Gray_W_Suits
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 1
+        Item: Gray_W_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 2
+        Item: Gray_W_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 3
+        Item: Gray_W_Muffler
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 4
+        Item: Gray_W_Boots
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 5
+        Item: Gray_W_Shoes
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 6
+        Item: Gray_W_Pendant
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 7
+        Item: Gray_W_Robe
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 8
+        Item: Gray_W_Ring
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+      - Index: 9
+        Item: Gray_W_Earing
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 350
+  - Name: barter_ep18_2
+    Items:
+      - Index: 0
+        Item: GrayWolf_7_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 1050
+  - Name: barter_ep18_3
+    Items:
+      - Index: 0
+        Item: GrayWolf_7_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 1050
+      - Index: 1
+        Item: GrayWolf_9_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: Ep18_Amethyst_Fragment
+            Amount: 2250

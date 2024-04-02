@@ -1,0 +1,17 @@
+//===== rAthena Script =======================================
+//= oz_dun Monsters Spawn Script
+//===== Current Version: =====================================
+//= 1.0
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+oz_dun01	monster	Rake Hand	21296,70
+oz_dun01	monster	Ash Toad	21295,65
+oz_dun01	monster	Spark	21297,10
+
+oz_dun02	monster	Spark	21297,25
+oz_dun02	monster	Volcaring	21299,35
+oz_dun02	monster	Lava Toad	21300,25
+oz_dun02	monster	Hot Molar	21298,60
+oz_dun02	boss_monster	Burning Fang	21301,1,21600000,600000,0
