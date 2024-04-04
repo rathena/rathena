@@ -86,8 +86,7 @@ struct Damage {
 #endif
 	int64 damage, /// Right hand damage
 		damage2, /// Left hand damage
-		basedamage, /// Right hand base damage after def reduction
-		basedamage2; /// Left hand base damage after def reduction
+		basedamage; /// Right hand damage that a normal attack would deal
 	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,
