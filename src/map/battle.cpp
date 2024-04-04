@@ -3676,6 +3676,44 @@ static void battle_min_damage(struct Damage* wd, struct block_list* src, uint16 
 	}
 }
 
+/**
+ * Returns the bonus damage granted by Spirit Spheres
+ * As we delete the spheres before calculating the damage, we need some kind of logic to figure out how many were available
+ * Each skill handles this in its own way, this function handles the different cases
+ * @param wd: Weapon damage structure
+ * @param src: Source of the attack
+ * @param skill_id: Skill ID of the skill used by source
+ * @param min: Minimum value to which damage should be capped
+ */
+static int battle_get_spiritball_damage(struct Damage* wd, struct block_list* src, uint16 skill_id) {
+
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	nullpo_ret(sd); // Returns 0 for non-players
+
+	int damage = 0;
+
+	switch (skill_id) {
+	case MO_INVESTIGATE:
+#ifndef RENEWAL
+	case MO_FINGEROFFENSIVE:
+#endif
+		// These skills used as many spheres as they do hits
+		damage = (wd->div_ + sd->spiritball) * 3;
+		break;
+	case MO_EXTREMITYFIST:
+		// These skills store the number of spheres the player had before cast
+		damage = sd->spiritball_old * 3;
+		break;
+	default:
+		// Any skills that do not consume spheres or do not care
+		damage = sd->spiritball * 3;
+		break;
+	}
+
+	return damage;
+}
+
 /*========================================
  * Do element damage modifier calculation
  *----------------------------------------
@@ -3751,13 +3789,9 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		// Star Crumb bonus damage
 		ATK_ADD2(wd->damage, wd->damage2, sd->right_weapon.star, sd->left_weapon.star);
 	}
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 0)) {
+	if (battle_skill_stacks_masteries_vvs(skill_id, 0)) {
 		// Spirit Sphere bonus damage
-		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
-			ATK_ADD(wd->damage, wd->damage2, (wd->div_ + sd->spiritball) * 3);
-		}
-		else
-			ATK_ADD(wd->damage, wd->damage2, sd->spiritball * 3);
+		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(wd, src, skill_id));
 
 		// Skill-specific bonuses
 		if (skill_id == TF_POISON)
@@ -3782,11 +3816,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 			// Star Crumb bonus damage
 			wd->basedamage += sd->right_weapon.star;
 			// Spirit Sphere bonus damage
-			if (skill_id == MO_FINGEROFFENSIVE || skill_id == MO_INVESTIGATE) { //Need to calculate number of Spirit Balls you had before cast
-				wd->basedamage += (wd->div_ + sd->spiritball) * 3;
-			}
-			else
-				wd->basedamage += sd->spiritball * 3;
+			wd->basedamage += battle_get_spiritball_damage(wd, src, skill_id);
 			// Add percent of the base damage to the damage
 			wd->damage += (wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2) / 100;
 		}
@@ -3838,9 +3868,10 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 15 * skill_lv);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 4);
-		if (skill_id != CR_SHIELDBOOMERANG)
-			ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->right_weapon.star, ((wd->div_ < 1) ? 1 : wd->div_) * sd->left_weapon.star);
-		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
+		// Star Crumb bonus damage
+		ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, sd->right_weapon.star, sd->left_weapon.star);
+		// Spirit Sphere bonus damage
+		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_get_spiritball_damage(wd, src, skill_id));
 #endif
 
 		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
