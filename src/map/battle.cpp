@@ -3357,13 +3357,13 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 }
 
 /**
- * This function lists which skills are unaffected by refine bonus, masteries and Star Crumbs
+ * This function lists which skills are unaffected by refine bonus, masteries, Star Crumbs and Spirit Spheres
  * This function is also used to determine if atkpercent applies
  * @param skill_id: Skill being used
- * @param isrefine: Are you checking if weapon refine bonus applies?
- * @return true = bonus applies; false = bonus does not apply 
+ * @param type 1 - Checking refine bonus; 2 - Checking Star Crumb bonus
+ * @return true = bonus applies; false = bonus does not apply
  */
-static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, bool isrefine)
+static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
 {
 	switch (skill_id) {
 	case PA_SHIELDCHAIN:
@@ -3381,8 +3381,13 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, bool isrefine)
 		return false;
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
-		// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs
-		if (!isrefine)
+		// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs / Spirit Spheres
+		if (type != 1)
+			return false;
+		break;
+	case LK_SPIRALPIERCE:
+		// Spiral Pierce is influenced only by refine bonus and Star Crumbs
+		if (type != 1 && type != 2)
 			return false;
 		break;
 	}
@@ -3742,9 +3747,11 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	// These mastery bonuses are non-elemental and should apply even if the attack misses
 	// They are still increased by the EDP/Magnum Break bonus damage (WATK_ELEMENT)
 	// In renewal these bonuses do not apply when the attack misses
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, false)) {
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 2)) {
 		// Star Crumb bonus damage
 		ATK_ADD2(wd->damage, wd->damage2, sd->right_weapon.star, sd->left_weapon.star);
+	}
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 0)) {
 		// Spirit Sphere bonus damage
 		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
 			ATK_ADD(wd->damage, wd->damage2, (wd->div_ + sd->spiritball) * 3);
@@ -3810,7 +3817,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 	}
 
 	// Check if mastery damage applies to current skill
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, false))
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 0))
 	{	//Add mastery damage
 		uint16 skill;
 
@@ -4394,7 +4401,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  */
 static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_id, status_change* sc)
 {
-	if (!battle_skill_stacks_masteries_vvs(skill_id, false))
+	if (!battle_skill_stacks_masteries_vvs(skill_id, 0))
 		return 100;
 
 	int atkpercent = 100;
@@ -6645,7 +6652,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 #ifndef RENEWAL
 	//Refine bonus
 	if (sd) {
-		if (battle_skill_stacks_masteries_vvs(skill_id, true)) {
+		if (battle_skill_stacks_masteries_vvs(skill_id, 1)) {
 			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 		}
 		wd->basedamage += sstatus->rhw.atk2;
