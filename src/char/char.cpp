@@ -4,14 +4,13 @@
 #pragma warning(disable:4800)
 #include "char.hpp"
 
+#include <cstdarg>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
 #include <memory>
 #include <unordered_map>
-
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/cli.hpp>

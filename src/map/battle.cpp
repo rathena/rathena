@@ -3,8 +3,8 @@
 
 #include "battle.hpp"
 
-#include <math.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/ers.hpp>

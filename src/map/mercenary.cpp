@@ -3,9 +3,9 @@
 
 #include "mercenary.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <map>
-#include <math.h>
-#include <stdlib.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>

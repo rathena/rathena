@@ -4,7 +4,7 @@
 #ifndef MMO_HPP
 #define MMO_HPP
 
-#include <time.h>
+#include <ctime>
 
 #include <config/core.hpp>
 

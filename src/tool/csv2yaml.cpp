@@ -3,7 +3,7 @@
 
 #include "csv2yaml.hpp"
 
-#include <math.h>
+#include <cmath>
 
 using namespace rathena::tool_csv2yaml;
 

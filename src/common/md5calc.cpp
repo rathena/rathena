@@ -11,8 +11,8 @@
 
 #include "md5calc.hpp"
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 
 #include "random.hpp"
 
