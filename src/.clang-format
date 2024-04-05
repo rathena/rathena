@@ -28,6 +28,7 @@ SpaceBeforeParens: Custom
 SpaceBeforeParensOptions:
   AfterControlStatements: false
   AfterForeachMacros: false
+  AfterFunctionDeclarationName: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3
