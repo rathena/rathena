@@ -53,17 +53,15 @@ typedef long in_addr_t;
 #define WFIFOSPACE(fd) (session[fd]->max_wdata - session[fd]->wdata_size)
 
 #define RFIFOREST(fd) (session[fd]->flag.eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
-#define RFIFOFLUSH(fd)                                            \
-	do {                                                          \
-		if (session[fd]->rdata_size == session[fd]->rdata_pos) {  \
-			session[fd]->rdata_size = session[fd]->rdata_pos = 0; \
-		} else {                                                  \
-			session[fd]->rdata_size -= session[fd]->rdata_pos;    \
-			memmove(session[fd]->rdata,                           \
-					session[fd]->rdata + session[fd]->rdata_pos,  \
-					session[fd]->rdata_size);                     \
-			session[fd]->rdata_pos = 0;                           \
-		}                                                         \
+#define RFIFOFLUSH(fd)                                                                                         \
+	do {                                                                                                       \
+		if (session[fd]->rdata_size == session[fd]->rdata_pos) {                                               \
+			session[fd]->rdata_size = session[fd]->rdata_pos = 0;                                              \
+		} else {                                                                                               \
+			session[fd]->rdata_size -= session[fd]->rdata_pos;                                                 \
+			memmove(session[fd]->rdata, session[fd]->rdata + session[fd]->rdata_pos, session[fd]->rdata_size); \
+			session[fd]->rdata_pos = 0;                                                                        \
+		}                                                                                                      \
 	} while (0)
 
 // buffer I/O macros
@@ -132,15 +130,9 @@ extern bool session_isActive(int fd);
 
 int make_listen_bind(uint32 ip, uint16 port);
 int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
-#define realloc_fifo(fd, rfifo_size, wfifo_size) \
-	_realloc_fifo((fd), (rfifo_size), (wfifo_size), ALC_MARK)
+#define realloc_fifo(fd, rfifo_size, wfifo_size) _realloc_fifo((fd), (rfifo_size), (wfifo_size), ALC_MARK)
 #define realloc_writefifo(fd, addition) _realloc_writefifo((fd), (addition), ALC_MARK)
-int _realloc_fifo(int fd,
-				  unsigned int rfifo_size,
-				  unsigned int wfifo_size,
-				  const char* file,
-				  int line,
-				  const char* func);
+int _realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func);
 int _realloc_writefifo(int fd, size_t addition, const char* file, int line, const char* func);
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
@@ -177,9 +169,7 @@ uint32 host2ip(const char* hostname);
 const char* ip2str(uint32 ip, char ip_str[16]);
 uint32 str2ip(const char* ip_str);
 #define CONVIP(ip) ((ip) >> 24) & 0xFF, ((ip) >> 16) & 0xFF, ((ip) >> 8) & 0xFF, ((ip) >> 0) & 0xFF
-#define MAKEIP(a, b, c, d)                                                       \
-	(uint32)((((a) & 0xFF) << 24) | (((b) & 0xFF) << 16) | (((c) & 0xFF) << 8) | \
-			 (((d) & 0xFF) << 0))
+#define MAKEIP(a, b, c, d) (uint32)((((a) & 0xFF) << 24) | (((b) & 0xFF) << 16) | (((c) & 0xFF) << 8) | (((d) & 0xFF) << 0))
 uint16 ntows(uint16 netshort);
 
 int socket_getips(uint32* ips, int max);

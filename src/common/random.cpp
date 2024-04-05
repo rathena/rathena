@@ -3,8 +3,7 @@
 
 #include "random.hpp"
 
-std::uniform_int_distribution<int32> int31_distribution =
-	std::uniform_int_distribution<int32>(0, SINT32_MAX);
+std::uniform_int_distribution<int32> int31_distribution = std::uniform_int_distribution<int32>(0, SINT32_MAX);
 
 /// Generates a random number in the interval [0, SINT32_MAX]
 int32 rnd(void) {

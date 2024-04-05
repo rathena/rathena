@@ -214,11 +214,9 @@ int e_mail_check(char* email) {
 // on/off, english, fran�ais, deutsch, espa�ol, portuguese
 //--------------------------------------------------
 int config_switch(const char* str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 ||
-		strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0 || strcmpi(str, "sim") == 0)
+	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0 || strcmpi(str, "sim") == 0)
 		return 1;
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 ||
-		strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0)
+	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0)
 		return 0;
 
 	return (int)strtol(str, NULL, 0);
@@ -351,9 +349,8 @@ int sv_parse_next(struct s_svstate* sv) {
 
 #define IS_END() (i >= len)
 #define IS_DELIM() (str[i] == delim)
-#define IS_TERMINATOR()                                                                            \
-	(((opt & SV_TERMINATE_LF) && str[i] == '\n') || ((opt & SV_TERMINATE_CR) && str[i] == '\r') || \
-	 ((opt & SV_TERMINATE_CRLF) && i + 1 < len && str[i] == '\r' && str[i + 1] == '\n'))
+#define IS_TERMINATOR() \
+	(((opt & SV_TERMINATE_LF) && str[i] == '\n') || ((opt & SV_TERMINATE_CR) && str[i] == '\r') || ((opt & SV_TERMINATE_CRLF) && i + 1 < len && str[i] == '\r' && str[i + 1] == '\n'))
 #define IS_C_ESCAPE() ((opt & SV_ESCAPE_C) && str[i] == '\\')
 #define SET_FIELD_START() sv->start = i
 #define SET_FIELD_END() sv->end = i
@@ -466,8 +463,7 @@ int sv_parse_next(struct s_svstate* sv) {
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_parse(
-	const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt) {
+int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt) {
 	struct s_svstate sv;
 	int count;
 
@@ -520,13 +516,7 @@ int sv_parse(
 /// @param nfields Size of the field array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_split(char* str,
-			 int len,
-			 int startoff,
-			 char delim,
-			 char** out_fields,
-			 size_t nfields,
-			 enum e_svopt opt) {
+int sv_split(char* str, int len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt) {
 	int pos[1024];
 	int done;
 	char* end;
@@ -714,8 +704,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 					++i;
 				} while (i < len && ISXDIGIT(src[i]));
 				out_dest[j++] = (char)c;
-			} else if (src[i] == '0' || src[i] == '1' || src[i] == '2' ||
-					   src[i] == '3') { // octal escape sequence (255=0377)
+			} else if (src[i] == '0' || src[i] == '1' || src[i] == '2' || src[i] == '3') { // octal escape sequence (255=0377)
 				unsigned char c = src[i] - '0';
 				++i; // '0', '1', '2' or '3'
 				if (i < len && src[i] >= '0' && src[i] <= '7') {
@@ -811,14 +800,7 @@ const char* skip_escaped_c(const char* p) {
  * @param silent : should we display error if file not found ?
  * @return true on success, false if file could not be opened
  */
-bool sv_readdb(const char* directory,
-			   const char* filename,
-			   char delim,
-			   int mincols,
-			   int maxcols,
-			   int maxrows,
-			   bool (*parseproc)(char* fields[], int columns, int current),
-			   bool silent) {
+bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current), bool silent) {
 	FILE* fp;
 	int lines = 0;
 	int entries = 0;
@@ -856,13 +838,7 @@ bool sv_readdb(const char* directory,
 		if (line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
 
-		columns = sv_split(line,
-						   strlen(line),
-						   0,
-						   delim,
-						   fields,
-						   nb_cols,
-						   (e_svopt)(SV_TERMINATE_LF | SV_TERMINATE_CRLF));
+		columns = sv_split(line, strlen(line), 0, delim, fields, nb_cols, (e_svopt)(SV_TERMINATE_LF | SV_TERMINATE_CRLF));
 
 		if (columns < mincols) {
 			ShowError(
@@ -875,12 +851,7 @@ bool sv_readdb(const char* directory,
 			continue; // not enough columns
 		}
 		if (columns > maxcols) {
-			ShowError(
-				"sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n",
-				lines,
-				path,
-				columns,
-				maxcols);
+			ShowError("sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n", lines, path, columns, maxcols);
 			continue; // too many columns
 		}
 		if (entries == maxrows) {
@@ -907,10 +878,7 @@ bool sv_readdb(const char* directory,
 	aFree(fields);
 	aFree(line);
 	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET
-			   "'.\n",
-			   entries,
-			   path);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path);
 
 	return true;
 }
@@ -935,8 +903,7 @@ void _StringBuf_Init(const char* file, int line, const char* func, StringBuf* se
 }
 
 /// Appends the result of printf to the StringBuf
-int _StringBuf_Printf(
-	const char* file, int line, const char* func, StringBuf* self, const char* fmt, ...) {
+int _StringBuf_Printf(const char* file, int line, const char* func, StringBuf* self, const char* fmt, ...) {
 	int len;
 	va_list ap;
 
@@ -948,8 +915,7 @@ int _StringBuf_Printf(
 }
 
 /// Appends the result of vprintf to the StringBuf
-int _StringBuf_Vprintf(
-	const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list ap) {
+int _StringBuf_Vprintf(const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list ap) {
 	for (;;) {
 		int n, size, off;
 		va_list apcopy;
@@ -972,8 +938,7 @@ int _StringBuf_Vprintf(
 }
 
 /// Appends the contents of another StringBuf to the StringBuf
-int _StringBuf_Append(
-	const char* file, int line, const char* func, StringBuf* self, const StringBuf* sbuf) {
+int _StringBuf_Append(const char* file, int line, const char* func, StringBuf* self, const StringBuf* sbuf) {
 	int available = self->max_ - (self->ptr_ - self->buf_);
 	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
 
@@ -990,8 +955,7 @@ int _StringBuf_Append(
 }
 
 // Appends str to the StringBuf
-int _StringBuf_AppendStr(
-	const char* file, int line, const char* func, StringBuf* self, const char* str) {
+int _StringBuf_AppendStr(const char* file, int line, const char* func, StringBuf* self, const char* str) {
 	int available = self->max_ - (self->ptr_ - self->buf_);
 	int needed = (int)strlen(str);
 

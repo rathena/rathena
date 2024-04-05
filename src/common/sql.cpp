@@ -19,8 +19,7 @@
 // MySQL 8.0 or later removed my_bool typedef.
 // Reintroduce it as a bandaid fix.
 // See https://bugs.mysql.com/?id=87337
-#if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 80001 && \
-	MYSQL_VERSION_ID != 80002
+#if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 80001 && MYSQL_VERSION_ID != 80002
 	#define my_bool bool
 #endif
 
@@ -102,12 +101,7 @@ static int Sql_P_Keepalive(Sql* self);
  * @param db : schema name
  * @return
  */
-int Sql_Connect(Sql* self,
-				const char* user,
-				const char* passwd,
-				const char* host,
-				uint16 port,
-				const char* db) {
+int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db) {
 	if (self == NULL)
 		return SQL_ERROR;
 
@@ -124,14 +118,7 @@ int Sql_Connect(Sql* self,
 	}
 #endif
 
-	if (!mysql_real_connect(&self->handle,
-							host,
-							user,
-							passwd,
-							db,
-							(unsigned int)port,
-							NULL /*unix_socket*/,
-							0 /*clientflag*/)) {
+	if (!mysql_real_connect(&self->handle, host, user, passwd, db, (unsigned int)port, NULL /*unix_socket*/, 0 /*clientflag*/)) {
 		ShowSQL("%s\n", mysql_error(&self->handle));
 		return SQL_ERROR;
 	}
@@ -147,8 +134,7 @@ int Sql_Connect(Sql* self,
 
 /// Retrieves the timeout of the connection.
 int Sql_GetTimeout(Sql* self, uint32* out_timeout) {
-	if (self && out_timeout &&
-		SQL_SUCCESS == Sql_Query(self, "SHOW VARIABLES LIKE 'wait_timeout'")) {
+	if (self && out_timeout && SQL_SUCCESS == Sql_Query(self, "SHOW VARIABLES LIKE 'wait_timeout'")) {
 		char* data;
 		size_t len;
 		if (SQL_SUCCESS == Sql_NextRow(self) && SQL_SUCCESS == Sql_GetData(self, 1, &data, &len)) {
@@ -230,18 +216,13 @@ static int Sql_P_Keepalive(Sql* self) {
 	// establish keepalive
 	ping_interval = timeout - 30; // 30-second reserve
 	// add_timer_func_list(Sql_P_KeepaliveTimer, "Sql_P_KeepaliveTimer");
-	return add_timer_interval(gettick() + ping_interval * 1000,
-							  Sql_P_KeepaliveTimer,
-							  0,
-							  (intptr_t)self,
-							  ping_interval * 1000);
+	return add_timer_interval(gettick() + ping_interval * 1000, Sql_P_KeepaliveTimer, 0, (intptr_t)self, ping_interval * 1000);
 }
 
 /// Escapes a string.
 size_t Sql_EscapeString(Sql* self, char* out_to, const char* from) {
 	if (self)
-		return (size_t)mysql_real_escape_string(
-			&self->handle, out_to, from, (unsigned long)strlen(from));
+		return (size_t)mysql_real_escape_string(&self->handle, out_to, from, (unsigned long)strlen(from));
 	else
 		return (size_t)mysql_escape_string(out_to, from, (unsigned long)strlen(from));
 }
@@ -249,8 +230,7 @@ size_t Sql_EscapeString(Sql* self, char* out_to, const char* from) {
 /// Escapes a string.
 size_t Sql_EscapeStringLen(Sql* self, char* out_to, const char* from, size_t from_len) {
 	if (self)
-		return (size_t)mysql_real_escape_string(
-			&self->handle, out_to, from, (unsigned long)from_len);
+		return (size_t)mysql_real_escape_string(&self->handle, out_to, from, (unsigned long)from_len);
 	else
 		return (size_t)mysql_escape_string(out_to, from, (unsigned long)from_len);
 }
@@ -275,9 +255,7 @@ int Sql_QueryV(Sql* self, const char* query, va_list args) {
 	Sql_FreeResult(self);
 	StringBuf_Clear(&self->buf);
 	StringBuf_Vprintf(&self->buf, query, args);
-	if (mysql_real_query(&self->handle,
-						 StringBuf_Value(&self->buf),
-						 (unsigned long)StringBuf_Length(&self->buf))) {
+	if (mysql_real_query(&self->handle, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf))) {
 		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
 		ra_mysql_error_handler(mysql_errno(&self->handle));
 		return SQL_ERROR;
@@ -299,9 +277,7 @@ int Sql_QueryStr(Sql* self, const char* query) {
 	Sql_FreeResult(self);
 	StringBuf_Clear(&self->buf);
 	StringBuf_AppendStr(&self->buf, query);
-	if (mysql_real_query(&self->handle,
-						 StringBuf_Value(&self->buf),
-						 (unsigned long)StringBuf_Length(&self->buf))) {
+	if (mysql_real_query(&self->handle, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf))) {
 		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
 		ra_mysql_error_handler(mysql_errno(&self->handle));
 		return SQL_ERROR;
@@ -443,12 +419,7 @@ static enum enum_field_types Sql_P_SizeToMysqlIntType(int sz) {
 /// Binds a parameter/result.
 ///
 /// @private
-static int Sql_P_BindSqlDataType(MYSQL_BIND* bind,
-								 enum SqlDataType buffer_type,
-								 void* buffer,
-								 size_t buffer_len,
-								 unsigned long* out_length,
-								 int8* out_is_null) {
+static int Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, unsigned long* out_length, int8* out_is_null) {
 	memset(bind, 0, sizeof(MYSQL_BIND));
 	switch (buffer_type) {
 		case SQLDT_NULL:
@@ -551,11 +522,7 @@ static int Sql_P_BindSqlDataType(MYSQL_BIND* bind,
 /// Prints debug information about a field (type and length).
 ///
 /// @private
-static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix,
-										  enum enum_field_types type,
-										  int is_unsigned,
-										  unsigned long length,
-										  const char* length_postfix) {
+static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_types type, int is_unsigned, unsigned long length, const char* length_postfix) {
 	const char* sign = (is_unsigned ? "UNSIGNED " : "");
 	const char* type_string;
 	switch (type) {
@@ -602,18 +569,12 @@ static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i) {
 	field = mysql_fetch_field_direct(meta, (unsigned int)i);
 	ShowSQL("DB error - data of field '%s' was truncated.\n", field->name);
 	ShowDebug("column - %lu\n", (unsigned long)i);
-	Sql_P_ShowDebugMysqlFieldInfo(
-		"data   - ", field->type, field->flags & UNSIGNED_FLAG, self->column_lengths[i].length, "");
+	Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags & UNSIGNED_FLAG, self->column_lengths[i].length, "");
 	column = &self->columns[i];
 	if (column->buffer_type == MYSQL_TYPE_STRING)
-		Sql_P_ShowDebugMysqlFieldInfo("buffer - ",
-									  column->buffer_type,
-									  column->is_unsigned,
-									  column->buffer_length,
-									  "+1(nul-terminator)");
+		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "+1(nul-terminator)");
 	else
-		Sql_P_ShowDebugMysqlFieldInfo(
-			"buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "");
+		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "");
 	mysql_free_result(meta);
 }
 
@@ -664,8 +625,7 @@ int SqlStmt_PrepareV(SqlStmt* self, const char* query, va_list args) {
 	SqlStmt_FreeResult(self);
 	StringBuf_Clear(&self->buf);
 	StringBuf_Vprintf(&self->buf, query, args);
-	if (mysql_stmt_prepare(
-			self->stmt, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf))) {
+	if (mysql_stmt_prepare(self->stmt, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf))) {
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
 		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
@@ -683,8 +643,7 @@ int SqlStmt_PrepareStr(SqlStmt* self, const char* query) {
 	SqlStmt_FreeResult(self);
 	StringBuf_Clear(&self->buf);
 	StringBuf_AppendStr(&self->buf, query);
-	if (mysql_stmt_prepare(
-			self->stmt, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf))) {
+	if (mysql_stmt_prepare(self->stmt, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf))) {
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
 		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
@@ -703,8 +662,7 @@ size_t SqlStmt_NumParams(SqlStmt* self) {
 }
 
 /// Binds a parameter to a buffer.
-int SqlStmt_BindParam(
-	SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len) {
+int SqlStmt_BindParam(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len) {
 	if (self == NULL)
 		return SQL_ERROR;
 
@@ -723,8 +681,7 @@ int SqlStmt_BindParam(
 		self->bind_params = true;
 	}
 	if (idx < self->max_params)
-		return Sql_P_BindSqlDataType(
-			self->params + idx, buffer_type, buffer, buffer_len, NULL, NULL);
+		return Sql_P_BindSqlDataType(self->params + idx, buffer_type, buffer, buffer_len, NULL, NULL);
 	else
 		return SQL_SUCCESS; // out of range - ignore
 }
@@ -735,8 +692,7 @@ int SqlStmt_Execute(SqlStmt* self) {
 		return SQL_ERROR;
 
 	SqlStmt_FreeResult(self);
-	if ((self->bind_params && mysql_stmt_bind_param(self->stmt, self->params)) ||
-		mysql_stmt_execute(self->stmt)) {
+	if ((self->bind_params && mysql_stmt_bind_param(self->stmt, self->params)) || mysql_stmt_execute(self->stmt)) {
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
 		ra_mysql_error_handler(mysql_stmt_errno(self->stmt));
 		return SQL_ERROR;
@@ -769,21 +725,13 @@ size_t SqlStmt_NumColumns(SqlStmt* self) {
 }
 
 /// Binds the result of a column to a buffer.
-int SqlStmt_BindColumn(SqlStmt* self,
-					   size_t idx,
-					   enum SqlDataType buffer_type,
-					   void* buffer,
-					   size_t buffer_len,
-					   uint32* out_length,
-					   int8* out_is_null) {
+int SqlStmt_BindColumn(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null) {
 	if (self == NULL)
 		return SQL_ERROR;
 
 	if (buffer_type == SQLDT_STRING || buffer_type == SQLDT_ENUM) {
 		if (buffer_len < 1) {
-			ShowDebug("SqlStmt_BindColumn: buffer_len(%" PRIuPTR
-					  ") is too small, no room for the nul-terminator\n",
-					  buffer_len);
+			ShowDebug("SqlStmt_BindColumn: buffer_len(%" PRIuPTR ") is too small, no room for the nul-terminator\n", buffer_len);
 			return SQL_ERROR;
 		}
 		--buffer_len; // nul-terminator
@@ -806,12 +754,7 @@ int SqlStmt_BindColumn(SqlStmt* self,
 	}
 	if (idx < self->max_columns) {
 		self->column_lengths[idx].out_length = out_length;
-		return Sql_P_BindSqlDataType(self->columns + idx,
-									 buffer_type,
-									 buffer,
-									 buffer_len,
-									 &self->column_lengths[idx].length,
-									 out_is_null);
+		return Sql_P_BindSqlDataType(self->columns + idx, buffer_type, buffer, buffer_len, &self->column_lengths[idx].length, out_is_null);
 	} else {
 		return SQL_SUCCESS; // out of range - ignore
 	}
@@ -884,8 +827,7 @@ int SqlStmt_NextRow(SqlStmt* self) {
 		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation
 		// manually [FlavioJS]
 		if (column->buffer_length < length) { // report truncated column
-			if (column->buffer_type == MYSQL_TYPE_STRING ||
-				column->buffer_type == MYSQL_TYPE_BLOB) { // string/enum/blob column
+			if (column->buffer_type == MYSQL_TYPE_STRING || column->buffer_type == MYSQL_TYPE_BLOB) { // string/enum/blob column
 				SqlStmt_P_ShowDebugTruncatedColumn(self, i);
 				return SQL_ERROR;
 			}
@@ -894,11 +836,9 @@ int SqlStmt_NextRow(SqlStmt* self) {
 #endif
 		if (self->column_lengths[i].out_length)
 			*self->column_lengths[i].out_length = (uint32)length;
-		if (column->buffer_type ==
-			MYSQL_TYPE_STRING) { // clear unused part of the string/enum buffer (and nul-terminate)
+		if (column->buffer_type == MYSQL_TYPE_STRING) { // clear unused part of the string/enum buffer (and nul-terminate)
 			memset((char*)column->buffer + length, 0, column->buffer_length - length + 1);
-		} else if (column->buffer_type == MYSQL_TYPE_BLOB &&
-				   length < column->buffer_length) { // clear unused part of the blob buffer
+		} else if (column->buffer_type == MYSQL_TYPE_BLOB && length < column->buffer_length) { // clear unused part of the blob buffer
 			memset((char*)column->buffer + length, 0, column->buffer_length - length);
 		}
 	}

@@ -23,8 +23,7 @@ struct cScopeTimer::sPimpl {
 
 	~sPimpl() {
 		end = std::chrono::steady_clock::now();
-		std::chrono::microseconds diff =
-			std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+		std::chrono::microseconds diff = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 		std::cout << " took=" << diff.count() << "ms !\n";
 	}
 };
@@ -54,8 +53,7 @@ int levenshtein(const std::string& s1, const std::string& s2) {
 		auto last_diagonal = x - column_start;
 		for (auto y = column_start; y <= s1len; y++) {
 			auto old_diagonal = column[y];
-			auto possibilities = {
-				column[y] + 1, column[y - 1] + 1, last_diagonal + (s1[y - 1] == s2[x - 1] ? 0 : 1)};
+			auto possibilities = {column[y] + 1, column[y - 1] + 1, last_diagonal + (s1[y - 1] == s2[x - 1] ? 0 : 1)};
 			column[y] = std::min(possibilities);
 			last_diagonal = old_diagonal;
 		}
@@ -66,8 +64,7 @@ int levenshtein(const std::string& s1, const std::string& s2) {
 }
 
 bool rathena::util::safe_substraction(int64 a, int64 b, int64& result) {
-#if __has_builtin(__builtin_sub_overflow) || \
-	(defined(__GNUC__) && !defined(__clang__) && defined(GCC_VERSION) && GCC_VERSION >= 50100)
+#if __has_builtin(__builtin_sub_overflow) || (defined(__GNUC__) && !defined(__clang__) && defined(GCC_VERSION) && GCC_VERSION >= 50100)
 	return __builtin_sub_overflow(a, b, &result);
 #else
 	bool overflow = false;
@@ -89,8 +86,7 @@ bool rathena::util::safe_substraction(int64 a, int64 b, int64& result) {
 }
 
 bool rathena::util::safe_multiplication(int64 a, int64 b, int64& result) {
-#if __has_builtin(__builtin_mul_overflow) || \
-	(defined(__GNUC__) && !defined(__clang__) && defined(GCC_VERSION) && GCC_VERSION >= 50100)
+#if __has_builtin(__builtin_mul_overflow) || (defined(__GNUC__) && !defined(__clang__) && defined(GCC_VERSION) && GCC_VERSION >= 50100)
 	return __builtin_mul_overflow(a, b, &result);
 #else
 	result = a * b;
@@ -121,11 +117,8 @@ std::string rathena::util::string_left_pad(const std::string& original, char pad
 	return std::string(num - min(num, original.length()), padding) + original;
 }
 
-constexpr char base62_dictionary[] = {
-	'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
-	'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-	'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-	'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+constexpr char base62_dictionary[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+									  'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
 std::string rathena::util::base62_encode(uint32 val) {
 	std::string result = "";

@@ -27,9 +27,7 @@ const char* mapindex_getmapname(const char* string, char* output) {
 
 	size_t len = strnlen(string, MAP_NAME_LENGTH_EXT);
 	if (len == MAP_NAME_LENGTH_EXT) {
-		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n",
-					2 * MAP_NAME_LENGTH_EXT,
-					string);
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2 * MAP_NAME_LENGTH_EXT, string);
 		len--;
 	}
 	if (len >= 4 && stricmp(&string[len - 4], ".gat") == 0)
@@ -56,8 +54,7 @@ const char* mapindex_getmapname_ext(const char* string, char* output) {
 	len = safestrnlen(buf, MAP_NAME_LENGTH);
 
 	if (len == MAP_NAME_LENGTH) {
-		ShowWarning(
-			"(mapindex_normalize_name) Map name '%*s' is too long!\n", 2 * MAP_NAME_LENGTH, buf);
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2 * MAP_NAME_LENGTH, buf);
 		len--;
 	}
 	safestrncpy(dest, buf, len + 1);
@@ -81,10 +78,7 @@ int mapindex_addmap(int index, const char* name) {
 	}
 
 	if (index < 0 || index >= MAX_MAPINDEX) {
-		ShowError("(mapindex_add) Map index (%d) for \"%s\" out of range (max is %d)\n",
-				  index,
-				  name,
-				  MAX_MAPINDEX);
+		ShowError("(mapindex_add) Map index (%d) for \"%s\" out of range (max is %d)\n", index, name, MAX_MAPINDEX);
 		return 0;
 	}
 
@@ -96,17 +90,12 @@ int mapindex_addmap(int index, const char* name) {
 	}
 
 	if (strlen(map_name) >= MAP_NAME_LENGTH) {
-		ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n",
-				  map_name,
-				  MAP_NAME_LENGTH);
+		ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
 		return 0;
 	}
 
 	if (mapindex_exists(index)) {
-		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n",
-					index,
-					indexes[index].name,
-					map_name);
+		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
 		strdb_remove(mapindex_db, indexes[index].name);
 	}
 
@@ -133,10 +122,7 @@ unsigned short mapindex_name2idx(const char* name, const char* func) {
 
 const char* mapindex_idx2name(unsigned short id, const char* func) {
 	if (id >= MAX_MAPINDEX || !mapindex_exists(id)) {
-		ShowDebug(
-			"(%s) mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n",
-			func,
-			id);
+		ShowDebug("(%s) mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n", func, id);
 		return indexes[0].name; // dummy empty string so that the callee doesn't crash
 	}
 	return indexes[id].name;

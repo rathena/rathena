@@ -16,8 +16,7 @@
  * (read in table msg_table, with specified lenght table in size)
  */
 const char* _msg_txt(int msg_number, int size, char** msg_table) {
-	if (msg_number >= 0 && msg_number < size && msg_table[msg_number] != NULL &&
-		msg_table[msg_number][0] != '\0')
+	if (msg_number >= 0 && msg_number < size && msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
 		return msg_table[msg_number];
 
 	return "??";
@@ -59,16 +58,12 @@ int _msg_config_read(const char* cfgName, int size, char** msg_table) {
 				safestrncpy(msg_table[msg_number], w2, len);
 				msg_count++;
 			} else
-				ShowWarning(
-					"Invalid message ID '%s' at line %d from '%s' file.\n", w1, line_num, cfgName);
+				ShowWarning("Invalid message ID '%s' at line %d from '%s' file.\n", w1, line_num, cfgName);
 		}
 	}
 
 	fclose(fp);
-	ShowInfo("Done reading " CL_WHITE "'%d'" CL_RESET " messages in " CL_WHITE "'%s'" CL_RESET
-			 ".\n",
-			 msg_count,
-			 cfgName);
+	ShowInfo("Done reading " CL_WHITE "'%d'" CL_RESET " messages in " CL_WHITE "'%s'" CL_RESET ".\n", msg_count, cfgName);
 
 	return 0;
 }

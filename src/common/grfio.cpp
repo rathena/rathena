@@ -221,10 +221,7 @@ static void grf_decode(unsigned char* buf, size_t len, char entry_type, int entr
 		// choose size of gap between two encrypted blocks
 		// digits:  0  1  2  3  4  5  6  7  8  9 ...
 		//  cycle:  1  1  1  4  5 14 15 22 23 24 ...
-		cycle = (digits < 3)   ? 1
-				: (digits < 5) ? digits + 1
-				: (digits < 7) ? digits + 9
-							   : digits + 15;
+		cycle = (digits < 3) ? 1 : (digits < 5) ? digits + 1 : (digits < 7) ? digits + 9 : digits + 15;
 
 		grf_decode_full(buf, len, cycle);
 	} else if (entry_type & FILELIST_TYPE_ENCRYPT_HEADER) { // header encrypted
@@ -306,8 +303,7 @@ static FILELIST* filelist_add(FILELIST* entry) {
 #define FILELIST_ADDS 1024 // number increment of file lists `
 
 	if (filelist_entrys >= filelist_maxentry) {
-		filelist =
-			(FILELIST*)aRealloc(filelist, (filelist_maxentry + FILELIST_ADDS) * sizeof(FILELIST));
+		filelist = (FILELIST*)aRealloc(filelist, (filelist_maxentry + FILELIST_ADDS) * sizeof(FILELIST));
 		memset(filelist + filelist_maxentry, '\0', FILELIST_ADDS * sizeof(FILELIST));
 		filelist_maxentry += FILELIST_ADDS;
 	}
@@ -413,8 +409,7 @@ void* grfio_reads(const char* fname, int* size) {
 				ShowError("An error occured in fread in grfio_reads, grfname=%s\n", grfname);
 			fclose(in);
 
-			buf2 =
-				(unsigned char*)aMalloc(entry->declen + 1); // +1 for resnametable zero-termination
+			buf2 = (unsigned char*)aMalloc(entry->declen + 1); // +1 for resnametable zero-termination
 			if (entry->type & FILELIST_TYPE_FILE) { // file
 				uLongf len;
 				grf_decode(buf, fsize, entry->type, entry->srclen);
@@ -460,9 +455,7 @@ int32 grfio_read_rsw_water_level(const char* fname) {
 	uint16 version = (rsw[4] << 8) | rsw[5];
 
 	if (version < 0x104 || version > 0x205) {
-		ShowError("grfio_read_rsw_water_level: Unsupported RSW version 0x%04x in file %s\n",
-				  version,
-				  fname);
+		ShowError("grfio_read_rsw_water_level: Unsupported RSW version 0x%04x in file %s\n", version, fname);
 		aFree(rsw);
 		return RSW_NO_WATER;
 	}
@@ -529,8 +522,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 	if (fread(grf_header, 1, 0x2e, fp) != 0x2e) {
 		ShowError("Couldn't read all grf_header element of %s \n", grfname);
 	}
-	if (strcmp((const char*)grf_header, "Master of Magic") != 0 ||
-		fseek(fp, getlong(grf_header + 0x1e), SEEK_CUR) != 0) {
+	if (strcmp((const char*)grf_header, "Master of Magic") != 0 || fseek(fp, getlong(grf_header + 0x1e), SEEK_CUR) != 0) {
 		fclose(fp);
 		ShowError("GRF %s read error\n", grfname);
 		ShowError("GRF possibly over 2GB in size.\n");
@@ -557,8 +549,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 			unsigned char type = grf_filelist[ofs2 + 12];
 			if (type & FILELIST_TYPE_FILE) {
 				char* fname = decode_filename(grf_filelist + ofs + 6, grf_filelist[ofs] - 6);
-				int srclen =
-					getlong(grf_filelist + ofs2 + 0) - getlong(grf_filelist + ofs2 + 8) - 715;
+				int srclen = getlong(grf_filelist + ofs2 + 0) - getlong(grf_filelist + ofs2 + 8) - 715;
 
 				if (strlen(fname) > sizeof(aentry.fn) - 1) {
 					ShowFatalError("GRF file name %s is too long\n", fname);
@@ -566,8 +557,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 					exit(EXIT_FAILURE);
 				}
 
-				type |= (isFullEncrypt(fname)) ? FILELIST_TYPE_ENCRYPT_MIXED
-											   : FILELIST_TYPE_ENCRYPT_HEADER;
+				type |= (isFullEncrypt(fname)) ? FILELIST_TYPE_ENCRYPT_MIXED : FILELIST_TYPE_ENCRYPT_HEADER;
 
 				aentry.srclen = srclen;
 				aentry.srclen_aligned = getlong(grf_filelist + ofs2 + 4) - 37579;
@@ -719,10 +709,7 @@ static void grfio_resourcecheck(void) {
 		}
 
 		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET
-				   "'.\n",
-				   i,
-				   "resnametable.txt");
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", i, "resnametable.txt");
 		return; // we're done here!
 	}
 
@@ -744,10 +731,7 @@ static void grfio_resourcecheck(void) {
 		}
 
 		aFree(buf);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET
-				   "'.\n",
-				   i,
-				   "data\\resnametable.txt");
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", i, "data\\resnametable.txt");
 		return;
 	}
 }

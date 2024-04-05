@@ -55,14 +55,8 @@ protected:
 	bool asFloat(const ryml::NodeRef& node, const std::string& name, float& out);
 	bool asDouble(const ryml::NodeRef& node, const std::string& name, double& out);
 	bool asString(const ryml::NodeRef& node, const std::string& name, std::string& out);
-	bool asUInt16Rate(const ryml::NodeRef& node,
-					  const std::string& name,
-					  uint16& out,
-					  uint16 maximum = 10000);
-	bool asUInt32Rate(const ryml::NodeRef& node,
-					  const std::string& name,
-					  uint32& out,
-					  uint32 maximum = 10000);
+	bool asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum = 10000);
+	bool asUInt32Rate(const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum = 10000);
 
 	void setGenerator(bool shouldLoad);
 
@@ -75,8 +69,7 @@ public:
 		this->minimumVersion = minimumVersion_;
 	}
 
-	YamlDatabase(const std::string& type_, uint16 version_)
-		: YamlDatabase(type_, version_, version_) {
+	YamlDatabase(const std::string& type_, uint16 version_) : YamlDatabase(type_, version_, version_) {
 		// Empty since everything is handled by the real constructor
 	}
 
@@ -95,12 +88,10 @@ protected:
 	std::unordered_map<keytype, std::shared_ptr<datatype>> data;
 
 public:
-	TypesafeYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_)
-		: YamlDatabase(type_, version_, minimumVersion_) {
+	TypesafeYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_) : YamlDatabase(type_, version_, minimumVersion_) {
 	}
 
-	TypesafeYamlDatabase(const std::string& type_, uint16 version_)
-		: YamlDatabase(type_, version_, version_) {
+	TypesafeYamlDatabase(const std::string& type_, uint16 version_) : YamlDatabase(type_, version_, version_) {
 	}
 
 	void clear() override {
@@ -161,13 +152,11 @@ private:
 	bool loaded;
 
 public:
-	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_)
-		: TypesafeYamlDatabase<keytype, datatype>(type_, version_, minimumVersion_) {
+	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_) : TypesafeYamlDatabase<keytype, datatype>(type_, version_, minimumVersion_) {
 		this->loaded = false;
 	}
 
-	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_)
-		: TypesafeYamlDatabase<keytype, datatype>(type_, version_, version_) {
+	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_) : TypesafeYamlDatabase<keytype, datatype>(type_, version_, version_) {
 		this->loaded = false;
 	}
 

@@ -9,15 +9,13 @@
 
 #include "showmsg.hpp"
 
-static void nullpo_info_core(
-	const char *file, int line, const char *func, const char *fmt, va_list ap);
+static void nullpo_info_core(const char *file, int line, const char *func, const char *fmt, va_list ap);
 static void nullpo_info_core_(const char *file, int line, const char *func);
 
 /*======================================
  * Null Information output and check
  *--------------------------------------*/
-int nullpo_chk_f(
-	const char *file, int line, const char *func, const void *target, const char *fmt, ...) {
+int nullpo_chk_f(const char *file, int line, const char *func, const void *target, const char *fmt, ...) {
 	va_list ap;
 
 	if (target != NULL)
@@ -64,8 +62,7 @@ static void nullpo_info_core_(const char *file, int line, const char *func) {
 /*======================================
  * nullpo intelligence Output (Main)
  *--------------------------------------*/
-static void nullpo_info_core(
-	const char *file, int line, const char *func, const char *fmt, va_list ap) {
+static void nullpo_info_core(const char *file, int line, const char *func, const char *fmt, va_list ap) {
 	nullpo_info_core_(file, line, func);
 	if (fmt != NULL) {
 		if (fmt[0] != '\0') {

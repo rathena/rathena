@@ -77,9 +77,8 @@ enum ERSOptions {
 	ERS_OPT_FREE_NAME = 0x04, /* name is dynamic memory, and should be freed */
 	ERS_OPT_CLEAN = 0x08, /* clears used memory upon ers_free so that its all new to be reused on
 							 the next alloc */
-	ERS_OPT_FLEX_CHUNK =
-		0x10, /* signs that it should look for its own cache given it'll have a dynamic chunk size,
-				 so that it doesn't affect the other ERS it'd otherwise be sharing */
+	ERS_OPT_FLEX_CHUNK = 0x10, /* signs that it should look for its own cache given it'll have a dynamic chunk size,
+								  so that it doesn't affect the other ERS it'd otherwise be sharing */
 
 	/* Compound, is used to determine whether it should be looking for a cache of matching options
 	 */

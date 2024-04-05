@@ -8,10 +8,7 @@
 int conf_read_file(config_t *config, const char *config_filename) {
 	config_init(config);
 	if (!config_read_file(config, config_filename)) {
-		ShowError("%s:%d - %s\n",
-				  config_error_file(config),
-				  config_error_line(config),
-				  config_error_text(config));
+		ShowError("%s:%d - %s\n", config_error_file(config), config_error_line(config), config_error_text(config));
 		config_destroy(config);
 		return 1;
 	}
@@ -30,8 +27,7 @@ void config_setting_copy_simple(config_setting_t *parent, const config_setting_t
 	if (config_setting_is_aggregate(src)) {
 		config_setting_copy_aggregate(parent, src);
 	} else {
-		config_setting_t *set =
-			config_setting_add(parent, config_setting_name(src), config_setting_type(src));
+		config_setting_t *set = config_setting_add(parent, config_setting_name(src), config_setting_type(src));
 
 		if (set == NULL)
 			return;

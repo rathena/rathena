@@ -30,8 +30,7 @@
 
 #ifndef DEPRECATED_COMPILER_SUPPORT
 	#if defined(_MSC_VER) && _MSC_VER < 1914
-		#error \
-			"Visual Studio versions older than Visual Studio 2017 are not officially supported anymore"
+		#error "Visual Studio versions older than Visual Studio 2017 are not officially supported anymore"
 	#elif defined(__clang__) && __clang_major__ < 6
 		#error "clang versions older than clang 6.0 are not officially supported anymore"
 	#elif !defined(__clang__) && defined(__GNUC__) && __GNUC__ < 6
@@ -177,16 +176,14 @@ const char *get_svn_revision(void) {
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist
-	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL ||
-		(fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL) {
+	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL) {
 	#ifndef SVNNODEPATH
 			// not sure how to handle branches, so i'll leave this overridable define until a better
 			// solution comes up
 		#define SVNNODEPATH trunk
 	#endif
 		const char *prefix = "!svn/ver/";
-		const char *postfix =
-			"/" EXPAND_AND_QUOTE(SVNNODEPATH) ")"; // there should exist only 1 entry like this
+		const char *postfix = "/" EXPAND_AND_QUOTE(SVNNODEPATH) ")"; // there should exist only 1 entry like this
 		size_t prefix_len = strlen(prefix);
 		size_t postfix_len = strlen(postfix);
 		size_t i, j, len;
@@ -299,36 +296,16 @@ static void display_title(void) {
 	const char *git = get_git_hash();
 
 	ShowMessage("\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"                                                                 " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "       " CL_BT_WHITE
-				"            rAthena Development Team presents                  " CL_PASS "" CL_CLL
-				"" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"                 ___   __  __                                    " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"           _____/   | / /_/ /_  ___  ____  ____ _                " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"          / ___/ /| |/ __/ __ \\/ _ \\/ __ \\/ __ `/                " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"         / /  / ___ / /_/ / / /  __/ / / / /_/ /                 " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"        /_/  /_/  |_\\__/_/ /_/\\___/_/ /_/\\__,_/                  " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"                                                                 " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "       " CL_GREEN
-				"              http://rathena.org/board/                        " CL_PASS "" CL_CLL
-				"" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BOLD
-				"                                                                 " CL_PASS
-				"" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "       " CL_BT_WHITE "            rAthena Development Team presents                  " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                 ___   __  __                                    " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "           _____/   | / /_/ /_  ___  ____  ____ _                " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "          / ___/ /| |/ __/ __ \\/ _ \\/ __ \\/ __ `/                " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "         / /  / ___ / /_/ / / /  __/ / / / /_/ /                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "        /_/  /_/  |_\\__/_/ /_/\\___/_/ /_/\\__,_/                  " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "       " CL_GREEN "              http://rathena.org/board/                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 
 	if (svn[0] != UNKNOWN_VERSION)
 		ShowInfo("SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
@@ -368,10 +345,7 @@ int Core::start(int argc, char **argv) {
 			n = p1 - argv[0]; // calc dir name len
 			pwd = safestrncpy((char *)malloc(n + 1), argv[0], n);
 			if (chdir(pwd) != 0)
-				ShowError(
-					"Couldn't change working directory to %s for %s, runtime will probably fail",
-					pwd,
-					SERVER_NAME);
+				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME);
 			free(pwd);
 		} else {
 			// On Windows the .bat files have the executeable names as parameters without any path

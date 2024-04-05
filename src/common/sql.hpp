@@ -70,8 +70,7 @@ unsigned int Sql_GetError(Sql* self);
 /// Establishes a connection.
 ///
 /// @return SQL_SUCCESS or SQL_ERROR
-int Sql_Connect(
-	Sql* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db);
+int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db);
 
 /// Retrieves the timeout of the connection.
 ///
@@ -223,8 +222,7 @@ size_t SqlStmt_NumParams(SqlStmt* self);
 /// All parameters should have bindings.
 ///
 /// @return SQL_SUCCESS or SQL_ERROR
-int SqlStmt_BindParam(
-	SqlStmt* self, size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len);
+int SqlStmt_BindParam(SqlStmt* self, size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len);
 
 /// Executes the prepared statement.
 /// Any previous result is freed and all column bindings are removed.
@@ -248,13 +246,7 @@ size_t SqlStmt_NumColumns(SqlStmt* self);
 /// and the nul-terminator (an extra byte).
 ///
 /// @return SQL_SUCCESS or SQL_ERROR
-int SqlStmt_BindColumn(SqlStmt* self,
-					   size_t idx,
-					   SqlDataType buffer_type,
-					   void* buffer,
-					   size_t buffer_len,
-					   uint32* out_length,
-					   int8* out_is_null);
+int SqlStmt_BindColumn(SqlStmt* self, size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null);
 
 /// Returns the number of rows in the result.
 ///

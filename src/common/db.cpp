@@ -316,9 +316,8 @@ static struct db_stats {
 	uint32 db_data2ptr;
 	uint32 db_init;
 	uint32 db_final;
-} stats = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+} stats = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	#define DB_COUNTSTAT(token)              \
 		do {                                 \
 			if ((stats.token) != UINT32_MAX) \
@@ -562,8 +561,7 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 					db_rotate_left(x_parent, root);
 					w = x_parent->right;
 				}
-				if ((w->left == NULL || w->left->color == BLACK) &&
-					(w->right == NULL || w->right->color == BLACK)) {
+				if ((w->left == NULL || w->left->color == BLACK) && (w->right == NULL || w->right->color == BLACK)) {
 					w->color = RED;
 					x = x_parent;
 					x_parent = x_parent->parent;
@@ -590,8 +588,7 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 					db_rotate_right(x_parent, root);
 					w = x_parent->left;
 				}
-				if ((w->right == NULL || w->right->color == BLACK) &&
-					(w->left == NULL || w->left->color == BLACK)) {
+				if ((w->right == NULL || w->right->color == BLACK) && (w->left == NULL || w->left->color == BLACK)) {
 					w->color = RED;
 					x = x_parent;
 					x_parent = x_parent->parent;
@@ -764,17 +761,14 @@ static void db_free_remove(DBMap_impl *db, DBNode *node) {
 	for (i = 0; i < db->free_count; i++) {
 		if (db->free_list[i].node == node) {
 			if (i < db->free_count - 1) // copy the last item to where the removed one was
-				memcpy(
-					&db->free_list[i], &db->free_list[db->free_count - 1], sizeof(struct db_free));
+				memcpy(&db->free_list[i], &db->free_list[db->free_count - 1], sizeof(struct db_free));
 			db_dup_key_free(db, node->key);
 			break;
 		}
 	}
 	node->deleted = 0;
 	if (i == db->free_count) {
-		ShowWarning("db_free_remove: node was not found - database allocated at %s:%d\n",
-					db->alloc_file,
-					db->alloc_line);
+		ShowWarning("db_free_remove: node was not found - database allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 	} else {
 		db->free_count--;
 	}
@@ -1546,9 +1540,7 @@ static DBData *db_obj_get(DBMap *self, DBKey key) {
 	if (db == NULL)
 		return NULL; // nullpo candidate
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_get: Attempted to retrieve non-allowed NULL key for db allocated at %s:%d\n",
-				  db->alloc_file,
-				  db->alloc_line);
+		ShowError("db_get: Attempted to retrieve non-allowed NULL key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 		return NULL; // nullpo candidate
 	}
 
@@ -1598,8 +1590,7 @@ static DBData *db_obj_get(DBMap *self, DBKey key) {
  * @protected
  * @see DBMap#vgetall
  */
-static unsigned int db_obj_vgetall(
-	DBMap *self, DBData **buf, unsigned int max, DBMatcher match, va_list args) {
+static unsigned int db_obj_vgetall(DBMap *self, DBData **buf, unsigned int max, DBMatcher match, va_list args) {
 	DBMap_impl *db = (DBMap_impl *)self;
 	unsigned int i;
 	DBNode *node;
@@ -1670,8 +1661,7 @@ static unsigned int db_obj_vgetall(
  * @see DBMap#vgetall
  * @see DBMap#getall
  */
-static unsigned int db_obj_getall(
-	DBMap *self, DBData **buf, unsigned int max, DBMatcher match, ...) {
+static unsigned int db_obj_getall(DBMap *self, DBData **buf, unsigned int max, DBMatcher match, ...) {
 	va_list args;
 	unsigned int ret;
 
@@ -1709,15 +1699,11 @@ static DBData *db_obj_vensure(DBMap *self, DBKey key, DBCreateData create, va_li
 	if (db == NULL)
 		return NULL; // nullpo candidate
 	if (create == NULL) {
-		ShowError("db_ensure: Create function is NULL for db allocated at %s:%d\n",
-				  db->alloc_file,
-				  db->alloc_line);
+		ShowError("db_ensure: Create function is NULL for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 		return NULL; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_ensure: Attempted to use non-allowed NULL key for db allocated at %s:%d\n",
-				  db->alloc_file,
-				  db->alloc_line);
+		ShowError("db_ensure: Attempted to use non-allowed NULL key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 		return NULL; // nullpo candidate
 	}
 
@@ -1851,16 +1837,11 @@ static int db_obj_put(DBMap *self, DBKey key, DBData data, DBData *out_data) {
 		return 0; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_put: Attempted to use non-allowed NULL key for db allocated at %s:%d\n",
-				  db->alloc_file,
-				  db->alloc_line);
+		ShowError("db_put: Attempted to use non-allowed NULL key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 		return 0; // nullpo candidate
 	}
-	if (!(db->options & DB_OPT_ALLOW_NULL_DATA) &&
-		(data.type == DB_DATA_PTR && data.u.ptr == NULL)) {
-		ShowError("db_put: Attempted to use non-allowed NULL data for db allocated at %s:%d\n",
-				  db->alloc_file,
-				  db->alloc_line);
+	if (!(db->options & DB_OPT_ALLOW_NULL_DATA) && (data.type == DB_DATA_PTR && data.u.ptr == NULL)) {
+		ShowError("db_put: Attempted to use non-allowed NULL data for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 		return 0; // nullpo candidate
 	}
 
@@ -1965,9 +1946,7 @@ static int db_obj_remove(DBMap *self, DBKey key, DBData *out_data) {
 		return 0; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_remove: Attempted to use non-allowed NULL key for db allocated at %s:%d\n",
-				  db->alloc_file,
-				  db->alloc_line);
+		ShowError("db_remove: Attempted to use non-allowed NULL key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 		return 0; // nullpo candidate
 	}
 
@@ -2017,9 +1996,7 @@ static int db_obj_vforeach(DBMap *self, DBApply func, va_list args) {
 	if (db == NULL)
 		return 0; // nullpo candidate
 	if (func == NULL) {
-		ShowError("db_foreach: Passed function is NULL for db allocated at %s:%d\n",
-				  db->alloc_file,
-				  db->alloc_line);
+		ShowError("db_foreach: Passed function is NULL for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 		return 0; // nullpo candidate
 	}
 
@@ -2541,12 +2518,7 @@ DBReleaser db_custom_release(DBRelease which) {
  * @see #DBMap_impl
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap *db_alloc(const char *file,
-				const char *func,
-				int line,
-				DBType type,
-				DBOptions options,
-				unsigned short maxlen) {
+DBMap *db_alloc(const char *file, const char *func, int line, DBType type, DBOptions options, unsigned short maxlen) {
 	DBMap_impl *db;
 	unsigned int i;
 	char ers_name[50];
@@ -2817,8 +2789,7 @@ int64 db_data2i64(DBData *data) {
  * @see #db_final(void)
  */
 void db_init(void) {
-	db_iterator_ers =
-		ers_new(sizeof(struct DBIterator_impl), "db.cpp::db_iterator_ers", ERS_CACHE_OPTIONS);
+	db_iterator_ers = ers_new(sizeof(struct DBIterator_impl), "db.cpp::db_iterator_ers", ERS_CACHE_OPTIONS);
 	db_alloc_ers = ers_new(sizeof(struct DBMap_impl), "db.cpp::db_alloc_ers", ERS_CACHE_OPTIONS);
 	ers_chunk_size(db_alloc_ers, 50);
 	ers_chunk_size(db_iterator_ers, 10);

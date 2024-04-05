@@ -60,57 +60,24 @@ static unsigned int I(unsigned int X, unsigned int Y, unsigned int Z) {
 	return Y ^ (X | ~Z);
 }
 
-static unsigned int Round(unsigned int a,
-						  unsigned int b,
-						  unsigned int FGHI,
-						  unsigned int k,
-						  unsigned int s,
-						  unsigned int i) {
+static unsigned int Round(unsigned int a, unsigned int b, unsigned int FGHI, unsigned int k, unsigned int s, unsigned int i) {
 	return b + ROTATE_LEFT(a + FGHI + pX[k] + T[i], s);
 }
 
-static void Round1(unsigned int *a,
-				   unsigned int b,
-				   unsigned int c,
-				   unsigned int d,
-				   unsigned int k,
-				   unsigned int s,
-				   unsigned int i) {
+static void Round1(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, F(b, c, d), k, s, i);
 }
-static void Round2(unsigned int *a,
-				   unsigned int b,
-				   unsigned int c,
-				   unsigned int d,
-				   unsigned int k,
-				   unsigned int s,
-				   unsigned int i) {
+static void Round2(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, G(b, c, d), k, s, i);
 }
-static void Round3(unsigned int *a,
-				   unsigned int b,
-				   unsigned int c,
-				   unsigned int d,
-				   unsigned int k,
-				   unsigned int s,
-				   unsigned int i) {
+static void Round3(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, H(b, c, d), k, s, i);
 }
-static void Round4(unsigned int *a,
-				   unsigned int b,
-				   unsigned int c,
-				   unsigned int d,
-				   unsigned int k,
-				   unsigned int s,
-				   unsigned int i) {
+static void Round4(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, I(b, c, d), k, s, i);
 }
 
-static void MD5_Round_Calculate(const unsigned char *block,
-								unsigned int *A2,
-								unsigned int *B2,
-								unsigned int *C2,
-								unsigned int *D2) {
+static void MD5_Round_Calculate(const unsigned char *block, unsigned int *A2, unsigned int *B2, unsigned int *C2, unsigned int *D2) {
 	// create X It is since it is required.
 	unsigned int X[16]; // 512bit 64byte
 	int j, k;
@@ -126,8 +93,7 @@ static void MD5_Round_Calculate(const unsigned char *block,
 	// Copy block(padding_message) i into X
 	for (j = 0, k = 0; j < 64; j += 4, k++)
 		X[k] = ((unsigned int)block[j]) // 8byte*4 -> 32byte conversion
-			   | (((unsigned int)block[j + 1])
-				  << 8) // A function called Decode as used in the field of RFC
+			   | (((unsigned int)block[j + 1]) << 8) // A function called Decode as used in the field of RFC
 			   | (((unsigned int)block[j + 2]) << 16) | (((unsigned int)block[j + 3]) << 24);
 
 	// Round 1
@@ -237,8 +203,7 @@ static void MD5_String2binary(const char *string, unsigned char *output) {
 
 	// Step 1.Append Padding Bits (extension of a mark bit)
 	// 1-1
-	string_byte_len =
-		(unsigned int)strlen(string); // The byte chief of a character sequence is acquired.
+	string_byte_len = (unsigned int)strlen(string); // The byte chief of a character sequence is acquired.
 	pstring = (unsigned char *)string; // The position of the present character sequence is set.
 
 	// 1-2  Repeat calculation until length becomes less than 64 bytes.
@@ -247,11 +212,9 @@ static void MD5_String2binary(const char *string, unsigned char *output) {
 
 	// 1-3
 	copy_len = string_byte_len % 64; // The number of bytes which remained is computed.
-	strncpy((char *)padding_message,
-			(char *)pstring,
+	strncpy((char *)padding_message, (char *)pstring,
 			copy_len); // A message is copied to an extended bit sequence.
-	memset(padding_message + copy_len,
-		   0,
+	memset(padding_message + copy_len, 0,
 		   64 - copy_len); // It buries by 0 until it becomes extended bit length.
 	padding_message[copy_len] |= 0x80; // The next of a message is 1.
 

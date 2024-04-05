@@ -46,19 +46,15 @@
 #endif
 
 #ifndef INVENTORY_EXPANSION_SIZE
-	#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || \
-		PACKETVER_ZERO_NUM >= 20181114
-		#define INVENTORY_EXPANSION_SIZE \
-			100 // Amount of additional inventory slots a player can have
+	#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+		#define INVENTORY_EXPANSION_SIZE 100 // Amount of additional inventory slots a player can have
 	#else
 		#define INVENTORY_EXPANSION_SIZE 0
 	#endif
 #endif
 
 #ifndef MAX_INVENTORY
-	#define MAX_INVENTORY      \
-		(INVENTORY_BASE_SIZE + \
-		 INVENTORY_EXPANSION_SIZE) // Maximum items in player inventory (in total)
+	#define MAX_INVENTORY (INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE) // Maximum items in player inventory (in total)
 #else
 	#if MAX_INVENTORY < (INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE)
 		#error Your custom MAX_INVENTORY define is too low
@@ -105,8 +101,7 @@ typedef uint32 t_itemid;
 #define MAX_GUILD_STORAGE 600 /// Max number of storage slots a guild
 #define MAX_PARTY 12 /// Max party member
 #define MAX_GUILD 16 + 10 * 6 /// Increased max guild members +6 per 1 extension levels [Lupus]
-#define MAX_GUILDPOSITION \
-	20 /// Increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
+#define MAX_GUILDPOSITION 20 /// Increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
 #define MAX_GUILDEXPULSION 32 /// Max Guild expulsion
 #define MAX_GUILDALLIANCE 16 /// Max Guild alliance
 #ifdef RENEWAL
@@ -119,8 +114,7 @@ typedef uint32 t_itemid;
 	8 /// Local max per castle. If this value is increased, need to add more fields on MySQL
 	  /// `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 /// Max quest objectives for a quest
-#define MAX_PC_BONUS_SCRIPT \
-	50 /// Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
+#define MAX_PC_BONUS_SCRIPT 50 /// Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5 /// Max item random option [Napster]
 #define DB_NAME_LEN 256 // max len of dbs
 #define MAX_CLAN 500
@@ -132,13 +126,7 @@ typedef uint32 t_itemid;
 	#define WEB_AUTH_TOKEN_LENGTH 16 + 1
 #endif
 
-enum e_enchantgrade : uint16 {
-	ENCHANTGRADE_NONE = 0,
-	ENCHANTGRADE_D,
-	ENCHANTGRADE_C,
-	ENCHANTGRADE_B,
-	ENCHANTGRADE_A
-};
+enum e_enchantgrade : uint16 { ENCHANTGRADE_NONE = 0, ENCHANTGRADE_D, ENCHANTGRADE_C, ENCHANTGRADE_B, ENCHANTGRADE_A };
 
 #ifdef RENEWAL
 	#define MAX_WEAPON_LEVEL 5
@@ -332,8 +320,7 @@ struct item {
 	char refine;
 	char attribute;
 	t_itemid card[MAX_SLOTS];
-	struct s_item_randomoption
-		option[MAX_ITEM_RDM_OPT]; // max of 5 random options can be supported.
+	struct s_item_randomoption option[MAX_ITEM_RDM_OPT]; // max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
@@ -413,11 +400,9 @@ struct s_skill {
 };
 
 struct script_reg_state {
-	unsigned int
-		type : 1; // because I'm a memory hoarder and having them in the same struct would be a
-				  // 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
-	unsigned int
-		update : 1; // whether it needs to be sent to char server for insertion/update/delete
+	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a
+						   // 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
+	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
 struct script_reg_num {
@@ -657,12 +642,7 @@ typedef enum mail_status {
 
 enum mail_inbox_type { MAIL_INBOX_NORMAL = 0, MAIL_INBOX_ACCOUNT, MAIL_INBOX_RETURNED };
 
-enum mail_attachment_type {
-	MAIL_ATT_NONE = 0,
-	MAIL_ATT_ZENY = 1,
-	MAIL_ATT_ITEM = 2,
-	MAIL_ATT_ALL = MAIL_ATT_ZENY | MAIL_ATT_ITEM
-};
+enum mail_attachment_type { MAIL_ATT_NONE = 0, MAIL_ATT_ZENY = 1, MAIL_ATT_ITEM = 2, MAIL_ATT_ALL = MAIL_ATT_ZENY | MAIL_ATT_ITEM };
 
 struct mail_message {
 	int id;
@@ -1162,8 +1142,7 @@ struct clan {
 #endif
 
 #ifndef MIN_CHARS
-	#define MIN_CHARS \
-		(MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING) // Default number of characters per account.
+	#define MIN_CHARS (MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING) // Default number of characters per account.
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS

@@ -73,17 +73,7 @@ extern int console_msg_log; // Specifies what error messages to log. [Ind]
 extern char console_log_filepath[32]; ///< Filepath to save console_msg_log. [Cydh]
 extern char timestamp_format[20]; // For displaying Timestamps [Skotlex]
 
-enum msg_type {
-	MSG_NONE,
-	MSG_STATUS,
-	MSG_SQL,
-	MSG_INFORMATION,
-	MSG_NOTICE,
-	MSG_WARNING,
-	MSG_DEBUG,
-	MSG_ERROR,
-	MSG_FATALERROR
-};
+enum msg_type { MSG_NONE, MSG_STATUS, MSG_SQL, MSG_INFORMATION, MSG_NOTICE, MSG_WARNING, MSG_DEBUG, MSG_ERROR, MSG_FATALERROR };
 
 extern void ClearScreen(void);
 extern int _vShowMessage(enum msg_type flag, const char *string, va_list ap);

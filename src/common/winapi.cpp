@@ -82,17 +82,7 @@ bool IsCurrentUserLocalAdministrator(void) {
 		After that, perform the access check.  This will determine whether
 		the current user is a local admin.
 		*/
-		if (!AllocateAndInitializeSid(&SystemSidAuthority,
-									  2,
-									  SECURITY_BUILTIN_DOMAIN_RID,
-									  DOMAIN_ALIAS_RID_ADMINS,
-									  0,
-									  0,
-									  0,
-									  0,
-									  0,
-									  0,
-									  &psidAdmin))
+		if (!AllocateAndInitializeSid(&SystemSidAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &psidAdmin))
 			__leave;
 
 		psdAdmin = LocalAlloc(LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH);
@@ -105,8 +95,7 @@ bool IsCurrentUserLocalAdministrator(void) {
 			__leave;
 
 		// Compute size needed for the ACL.
-		dwACLSize =
-			sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(psidAdmin) - sizeof(DWORD);
+		dwACLSize = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(psidAdmin) - sizeof(DWORD);
 
 		pACL = (PACL)LocalAlloc(LPTR, dwACLSize);
 		if (pACL == NULL)
@@ -149,14 +138,7 @@ bool IsCurrentUserLocalAdministrator(void) {
 		GenericMapping.GenericExecute = 0;
 		GenericMapping.GenericAll = ACCESS_READ | ACCESS_WRITE;
 
-		if (!AccessCheck(psdAdmin,
-						 hImpersonationToken,
-						 dwAccessDesired,
-						 &GenericMapping,
-						 &ps,
-						 &dwStructureSize,
-						 &dwStatus,
-						 &fReturn)) {
+		if (!AccessCheck(psdAdmin, hImpersonationToken, dwAccessDesired, &GenericMapping, &ps, &dwStructureSize, &dwStatus, &fReturn)) {
 			fReturn = FALSE;
 			__leave;
 		}

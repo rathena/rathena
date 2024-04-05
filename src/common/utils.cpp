@@ -312,8 +312,7 @@ uint16 GetUShort(const unsigned char* buf) {
 
 // Reads an uint32 in little-endian from the buffer
 uint32 GetULong(const unsigned char* buf) {
-	return (((uint32)(buf[0]))) | (((uint32)(buf[1])) << 0x08) | (((uint32)(buf[2])) << 0x10) |
-		   (((uint32)(buf[3])) << 0x18);
+	return (((uint32)(buf[0]))) | (((uint32)(buf[1])) << 0x08) | (((uint32)(buf[2])) << 0x10) | (((uint32)(buf[3])) << 0x18);
 }
 
 // Reads an int32 in little-endian from the buffer
@@ -339,8 +338,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B) {
 	result = 100 * ((double)A / (double)B);
 
 	if (result > UINT_MAX) {
-		ShowError(
-			"get_percentage: result percentage too high! (A=%u,B=%u,result=%g)\n", A, B, result);
+		ShowError("get_percentage: result percentage too high! (A=%u,B=%u,result=%g)\n", A, B, result);
 		return UINT_MAX;
 	}
 
@@ -358,11 +356,7 @@ uint32 get_percentage_exp(const uint64 a, const uint64 b) {
 	result = 100.0 * ((double)a / (double)b);
 
 	if (result > UINT32_MAX) {
-		ShowError("get_percentage_exp: result percentage too high! (a=%" PRIu64 ",b=%" PRIu64
-				  ",result=%g)\n",
-				  a,
-				  b,
-				  result);
+		ShowError("get_percentage_exp: result percentage too high! (a=%" PRIu64 ",b=%" PRIu64 ",result=%g)\n", a, b, result);
 		return UINT32_MAX;
 	}
 

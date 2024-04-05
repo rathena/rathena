@@ -151,13 +151,7 @@ int sSocket(int af, int type, int protocol) {
 char* sErr(int code) {
 	static char sbuf[512];
 	// strerror does not handle socket codes
-	if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-					  NULL,
-					  code,
-					  MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT),
-					  (LPTSTR)&sbuf,
-					  sizeof(sbuf),
-					  NULL) == 0)
+	if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), (LPTSTR)&sbuf, sizeof(sbuf), NULL) == 0)
 		snprintf(sbuf, sizeof(sbuf), "unknown error");
 	return sbuf;
 }
@@ -169,8 +163,7 @@ char* sErr(int code) {
 	#define sRecv(fd, buf, len, flags) recv(fd2sock(fd), buf, len, flags)
 	#define sSelect select
 	#define sSend(fd, buf, len, flags) send(fd2sock(fd), buf, len, flags)
-	#define sSetsockopt(fd, level, optname, optval, optlen) \
-		setsockopt(fd2sock(fd), level, optname, optval, optlen)
+	#define sSetsockopt(fd, level, optname, optval, optlen) setsockopt(fd2sock(fd), level, optname, optval, optlen)
 	#define sShutdown(fd, how) shutdown(fd2sock(fd), how)
 	#define sFD_SET(fd, set) FD_SET(fd2sock(fd), set)
 	#define sFD_CLR(fd, set) FD_CLR(fd2sock(fd), set)
@@ -266,8 +259,7 @@ struct socket_data* session[MAXCONN];
 #ifdef SEND_SHORTLIST
 int send_shortlist_array[MAXCONN]; // we only support MAXCONN sockets, limit the array to that
 size_t send_shortlist_count = 0; // how many fd's are in the shortlist
-uint32 send_shortlist_set[(MAXCONN + 31) /
-						  32]; // to know if specific fd's are already in the shortlist
+uint32 send_shortlist_set[(MAXCONN + 31) / 32]; // to know if specific fd's are already in the shortlist
 #endif
 
 static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
@@ -512,10 +504,7 @@ int connect_client(int listen_fd) {
 	epevent.events = EPOLLIN;
 
 	if (epoll_ctl(epfd, EPOLL_CTL_ADD, fd, &epevent) == SOCKET_ERROR) {
-		ShowError(
-			"connect_client: Failed to add to epoll event dispatcher for new socket #%d: %s\n",
-			fd,
-			error_msg());
+		ShowError("connect_client: Failed to add to epoll event dispatcher for new socket #%d: %s\n", fd, error_msg());
 		sClose(fd);
 		return -1;
 	}
@@ -583,10 +572,7 @@ int make_listen_bind(uint32 ip, uint16 port) {
 	epevent.events = EPOLLIN;
 
 	if (epoll_ctl(epfd, EPOLL_CTL_ADD, fd, &epevent) == SOCKET_ERROR) {
-		ShowError(
-			"make_listen_bind: failed to add listener socket #%d to epoll event dispatcher: %s\n",
-			fd,
-			error_msg());
+		ShowError("make_listen_bind: failed to add listener socket #%d to epoll event dispatcher: %s\n", fd, error_msg());
 		sClose(fd);
 		exit(EXIT_FAILURE);
 	}
@@ -666,10 +652,7 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 				if (!silent) {
 					// Needs special handling, because it does not set an error code and therefore
 					// does not provide an error message from the API
-					ShowError(
-						"make_connection: connection failed (socket #%d, timeout after %ds)!\n",
-						fd,
-						timeout);
+					ShowError("make_connection: connection failed (socket #%d, timeout after %ds)!\n", fd, timeout);
 				}
 
 				do_close(fd);
@@ -685,8 +668,7 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 				if (!silent) {
 					// Needs special handling, because it does not set an error code and therefore
 					// does not provide an error message from the API
-					ShowError("make_connection: connection failed (socket #%d, not writeable)!\n",
-							  fd);
+					ShowError("make_connection: connection failed (socket #%d, not writeable)!\n", fd);
 				}
 
 				do_close(fd);
@@ -725,9 +707,7 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 	epevent.events = EPOLLIN;
 
 	if (epoll_ctl(epfd, EPOLL_CTL_ADD, fd, &epevent) == SOCKET_ERROR) {
-		ShowError("make_connection: failed to add socket #%d to epoll event dispatcher: %s\n",
-				  fd,
-				  error_msg());
+		ShowError("make_connection: failed to add socket #%d to epoll event dispatcher: %s\n", fd, error_msg());
 		sClose(fd);
 		return -1;
 	}
@@ -770,12 +750,7 @@ static void delete_session(int fd) {
 	}
 }
 
-int _realloc_fifo(int fd,
-				  unsigned int rfifo_size,
-				  unsigned int wfifo_size,
-				  const char* file,
-				  int line,
-				  const char* func) {
+int _realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func) {
 	if (!session_isValid(fd))
 		return 0;
 
@@ -797,16 +772,13 @@ int _realloc_writefifo(int fd, size_t addition, const char* file, int line, cons
 	if (!session_isValid(fd)) // might not happen
 		return 0;
 
-	if (session[fd]->wdata_size + addition >
-		session[fd]->max_wdata) { // grow rule; grow in multiples of WFIFO_SIZE
+	if (session[fd]->wdata_size + addition > session[fd]->max_wdata) { // grow rule; grow in multiples of WFIFO_SIZE
 		newsize = WFIFO_SIZE;
 		while (session[fd]->wdata_size + addition > newsize)
 			newsize += WFIFO_SIZE;
-	} else if (session[fd]->max_wdata >=
-				   (size_t)2 * (session[fd]->flag.server ? FIFOSIZE_SERVERLINK : WFIFO_SIZE) &&
-			   (session[fd]->wdata_size + addition) * 4 <
-				   session[fd]->max_wdata) { // shrink rule, shrink by 2 when only a quarter of the
-											 // fifo is used, don't shrink below nominal size.
+	} else if (session[fd]->max_wdata >= (size_t)2 * (session[fd]->flag.server ? FIFOSIZE_SERVERLINK : WFIFO_SIZE) &&
+			   (session[fd]->wdata_size + addition) * 4 < session[fd]->max_wdata) { // shrink rule, shrink by 2 when only a quarter of the
+																					// fifo is used, don't shrink below nominal size.
 		newsize = session[fd]->max_wdata / 2;
 	} else // no change
 		return 0;
@@ -827,11 +799,7 @@ int RFIFOSKIP(int fd, size_t len) {
 	s = session[fd];
 
 	if (s->rdata_size < s->rdata_pos + len) {
-		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %" PRIuPTR
-				  " to %d (session #%d)\n",
-				  len,
-				  RFIFOREST(fd),
-				  fd);
+		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %" PRIuPTR " to %d (session #%d)\n", len, RFIFOREST(fd), fd);
 		len = RFIFOREST(fd);
 	}
 
@@ -869,10 +837,7 @@ int WFIFOSET(int fd, size_t len) {
 	if (len > 0xFFFF) {
 		// dynamic packets allow up to UINT16_MAX bytes (<packet_id>.W <packet_len>.W ...)
 		// all known fixed-size packets are within this limit, so use the same limit
-		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n",
-					   (*(uint16*)(s->wdata + s->wdata_size)),
-					   (unsigned int)len,
-					   0xFFFF);
+		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (unsigned int)len, 0xFFFF);
 		exit(EXIT_FAILURE);
 	} else if (len == 0) {
 		// abuses the fact, that the code that did WFIFOHEAD(fd,0), already wrote
@@ -887,13 +852,8 @@ int WFIFOSET(int fd, size_t len) {
 	}
 
 	if (!s->flag.server) {
-		if (len >
-			socket_max_client_packet) { // see declaration of socket_max_client_packet for details
-			ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%" PRIuPTR
-					  ", max=%" PRIuPTR ").\n",
-					  WFIFOW(fd, 0),
-					  len,
-					  socket_max_client_packet);
+		if (len > socket_max_client_packet) { // see declaration of socket_max_client_packet for details
+			ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%" PRIuPTR ", max=%" PRIuPTR ").\n", WFIFOW(fd, 0), len, socket_max_client_packet);
 			return 0;
 		}
 
@@ -1049,8 +1009,7 @@ int do_sockets(t_tick next) {
 
 		if (session[i]->rdata_tick && DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time) {
 			if (session[i]->flag.server) { /* server is special */
-				if (session[i]->flag.ping !=
-					2) /* only update if necessary otherwise it'd resend the ping unnecessarily */
+				if (session[i]->flag.ping != 2) /* only update if necessary otherwise it'd resend the ping unnecessarily */
 					session[i]->flag.ping = 1;
 			} else {
 				ShowInfo("Session #%d timed out\n", i);
@@ -1140,9 +1099,7 @@ static int connect_check_(uint32 ip);
 static int connect_check(uint32 ip) {
 	int result = connect_check_(ip);
 	if (access_debug) {
-		ShowInfo("connect_check: Connection from %d.%d.%d.%d %s\n",
-				 CONVIP(ip),
-				 result ? "allowed." : "denied!");
+		ShowInfo("connect_check: Connection from %d.%d.%d.%d %s\n", CONVIP(ip), result ? "allowed." : "denied!");
 	}
 	return result;
 }
@@ -1222,13 +1179,11 @@ static int connect_check_(uint32 ip) {
 		if (ip == hist->ip) { // IP found
 			if (hist->ddos) { // flagged as DDoS
 				return (connect_ok == 2 ? 1 : 0);
-			} else if (DIFF_TICK(gettick(), hist->tick) <
-					   ddos_interval) { // connection within ddos_interval
+			} else if (DIFF_TICK(gettick(), hist->tick) < ddos_interval) { // connection within ddos_interval
 				hist->tick = gettick();
 				if (hist->count++ >= ddos_count) { // DDoS attack detected
 					hist->ddos = 1;
-					ShowWarning("connect_check: DDoS Attack detected from %d.%d.%d.%d!\n",
-								CONVIP(ip));
+					ShowWarning("connect_check: DDoS Attack detected from %d.%d.%d.%d!\n", CONVIP(ip));
 					return (connect_ok == 2 ? 1 : 0);
 				}
 				return connect_ok;
@@ -1264,9 +1219,7 @@ static TIMER_FUNC(connect_check_clear) {
 		prev_hist = &root;
 		root.next = hist = connect_history[i];
 		while (hist) {
-			if ((!hist->ddos && DIFF_TICK(tick, hist->tick) > ddos_interval * 3) ||
-				(hist->ddos &&
-				 DIFF_TICK(tick, hist->tick) > ddos_autoreset)) { // Remove connection history
+			if ((!hist->ddos && DIFF_TICK(tick, hist->tick) > ddos_interval * 3) || (hist->ddos && DIFF_TICK(tick, hist->tick) > ddos_autoreset)) { // Remove connection history
 				prev_hist->next = hist->next;
 				aFree(hist);
 				hist = prev_hist->next;
@@ -1308,13 +1261,11 @@ int access_ipmask(const char* str, AccessControl* acc) {
 						 m + 1,
 						 m + 2,
 						 m + 3)) != 8 && // not an ip + standard mask
-			 (n = sscanf(str, "%3u.%3u.%3u.%3u/%3u", a, a + 1, a + 2, a + 3, m)) !=
-				 5 && // not an ip + bit mask
+			 (n = sscanf(str, "%3u.%3u.%3u.%3u/%3u", a, a + 1, a + 2, a + 3, m)) != 5 && // not an ip + bit mask
 			 (n = sscanf(str, "%3u.%3u.%3u.%3u", a, a + 1, a + 2, a + 3)) != 4) || // not an ip
 			a[0] > 255 ||
 			a[1] > 255 || a[2] > 255 || a[3] > 255 || // invalid ip
-			(n == 8 &&
-			 (m[0] > 255 || m[1] > 255 || m[2] > 255 || m[3] > 255)) || // invalid standard mask
+			(n == 8 && (m[0] > 255 || m[1] > 255 || m[2] > 255 || m[3] > 255)) || // invalid standard mask
 			(n == 5 && m[0] > 32)) { // invalid bit mask
 			return 0;
 		}
@@ -1332,8 +1283,7 @@ int access_ipmask(const char* str, AccessControl* acc) {
 		}
 	}
 	if (access_debug) {
-		ShowInfo(
-			"access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n", CONVIP(ip), CONVIP(mask));
+		ShowInfo("access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n", CONVIP(ip), CONVIP(mask));
 	}
 	acc->ip = ip;
 	acc->mask = mask;
@@ -1400,8 +1350,7 @@ int socket_config_read(const char* cfgName) {
 
 			// minimum that seems to be useful
 			if (epoll_maxevents < 16) {
-				ShowWarning(
-					"socket_config_read: epoll_maxevents is set too low. Defaulting to 16...\n");
+				ShowWarning("socket_config_read: epoll_maxevents is set too low. Defaulting to 16...\n");
 				epoll_maxevents = 16;
 			}
 		}
@@ -1594,9 +1543,8 @@ void socket_init(void) {
 		struct rlimit rlp;
 		if (0 == getrlimit(RLIMIT_NOFILE, &rlp)) {
 			rlp.rlim_cur = MAXCONN;
-			if (0 !=
-				setrlimit(RLIMIT_NOFILE, &rlp)) { // failed, try setting the maximum too (permission
-												  // to change system limits is required)
+			if (0 != setrlimit(RLIMIT_NOFILE, &rlp)) { // failed, try setting the maximum too (permission
+													   // to change system limits is required)
 				rlp.rlim_max = MAXCONN;
 				if (0 != setrlimit(RLIMIT_NOFILE, &rlp)) { // failed
 					const char* errmsg = error_msg();
@@ -1642,9 +1590,7 @@ void socket_init(void) {
 	memset(&epevent, 0x00, sizeof(struct epoll_event));
 	epevents = (struct epoll_event*)aCalloc(epoll_maxevents, sizeof(struct epoll_event));
 
-	ShowInfo("Server uses '" CL_WHITE "epoll" CL_RESET "' with up to " CL_WHITE "%d" CL_RESET
-			 " events per cycle as event dispatcher\n",
-			 epoll_maxevents);
+	ShowInfo("Server uses '" CL_WHITE "epoll" CL_RESET "' with up to " CL_WHITE "%d" CL_RESET " events per cycle as event dispatcher\n", epoll_maxevents);
 #endif
 
 #if defined(SEND_SHORTLIST)
@@ -1667,8 +1613,7 @@ void socket_init(void) {
 	add_timer_interval(gettick() + 1000, connect_check_clear, 0, 0, 5 * 60 * 1000);
 #endif
 
-	ShowInfo("Server supports up to '" CL_WHITE "%u" CL_RESET "' concurrent connections.\n",
-			 rlim_cur);
+	ShowInfo("Server supports up to '" CL_WHITE "%u" CL_RESET "' concurrent connections.\n", rlim_cur);
 }
 
 bool session_isValid(int fd) {
@@ -1722,12 +1667,7 @@ void send_shortlist_add_fd(int fd) {
 		return; // already in the list
 
 	if (send_shortlist_count >= ARRAYLENGTH(send_shortlist_array)) {
-		ShowDebug(
-			"send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%" PRIuPTR
-			" shortlist.length=%d)\n",
-			fd,
-			send_shortlist_count,
-			ARRAYLENGTH(send_shortlist_array));
+		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%" PRIuPTR " shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
 		return;
 	}
 
@@ -1752,14 +1692,11 @@ void send_shortlist_do_sends() {
 		send_shortlist_array[send_shortlist_count] = 0;
 
 		if (fd <= 0 || fd >= MAXCONN) {
-			ShowDebug("send_shortlist_do_sends: fd is out of range, corrupted memory? (fd=%d)\n",
-					  fd);
+			ShowDebug("send_shortlist_do_sends: fd is out of range, corrupted memory? (fd=%d)\n", fd);
 			continue;
 		}
 		if (((send_shortlist_set[idx] >> bit) & 1) == 0) {
-			ShowDebug(
-				"send_shortlist_do_sends: fd is not set, why is it in the shortlist? (fd=%d)\n",
-				fd);
+			ShowDebug("send_shortlist_do_sends: fd is not set, why is it in the shortlist? (fd=%d)\n", fd);
 			continue;
 		}
 		send_shortlist_set[idx] &= ~(1 << bit); // unset fd
