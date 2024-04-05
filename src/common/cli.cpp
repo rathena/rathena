@@ -45,9 +45,9 @@ const char* MSG_CONF_NAME_EN; // all
  *   false : no other args found, and throw a warning
  *   true : something following us
  */
-bool opt_has_next_value(const char* option, int i, int argc) {
-	if(i >= argc - 1) {
-		ShowWarning("Missing value for option '%s'.\n", option);
+bool opt_has_next_value( const char* option, int i, int argc ) {
+	if( i >= argc - 1 ) {
+		ShowWarning( "Missing value for option '%s'.\n", option );
 		return false;
 	}
 
@@ -61,20 +61,20 @@ bool opt_has_next_value(const char* option, int i, int argc) {
  *   irc hangout
  * @param do_exit: terminate execution ?
  */
-void display_versionscreen(bool do_exit) {
+void display_versionscreen( bool do_exit ) {
 	const char* svn = get_svn_revision();
-	if(svn[0] != UNKNOWN_VERSION) {
-		ShowInfo("rAthena SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
+	if( svn[0] != UNKNOWN_VERSION ) {
+		ShowInfo( "rAthena SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn );
 	} else {
 		const char* git = get_git_hash();
-		if(git[0] != UNKNOWN_VERSION) {
-			ShowInfo("rAthena Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git);
+		if( git[0] != UNKNOWN_VERSION ) {
+			ShowInfo( "rAthena Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git );
 		}
 	}
-	ShowInfo(CL_GREEN "Website/Forum:" CL_RESET "\thttp://rathena.org/\n");
-	ShowInfo("Open " CL_WHITE "README.md" CL_RESET " for more information.\n");
-	if(do_exit) {
-		exit(EXIT_SUCCESS);
+	ShowInfo( CL_GREEN "Website/Forum:" CL_RESET "\thttp://rathena.org/\n" );
+	ShowInfo( "Open " CL_WHITE "README.md" CL_RESET " for more information.\n" );
+	if( do_exit ) {
+		exit( EXIT_SUCCESS );
 	}
 }
 
@@ -86,102 +86,102 @@ void display_versionscreen(bool do_exit) {
  * @param argv: arguments values (from main)
  * @return true or exit on failure
  */
-int cli_get_options(int argc, char** argv) {
+int cli_get_options( int argc, char** argv ) {
 	int i = 0;
-	for(i = 1; i < argc; i++) {
+	for( i = 1; i < argc; i++ ) {
 		const char* arg = argv[i];
 
 		// to temporarily support mapgenerator options
-		if(!arg) {
+		if( !arg ) {
 			continue;
 		}
 
-		if(arg[0] != '-' && (arg[0] != '/' || arg[1] == '-')) { // -, -- and /
-			ShowError("Unknown option '%s'.\n", argv[i]);
-			exit(EXIT_FAILURE);
-		} else if((++arg)[0] == '-') { // long option
+		if( arg[0] != '-' && ( arg[0] != '/' || arg[1] == '-' ) ) { // -, -- and /
+			ShowError( "Unknown option '%s'.\n", argv[i] );
+			exit( EXIT_FAILURE );
+		} else if( ( ++arg )[0] == '-' ) { // long option
 			arg++;
 
-			if(strcmp(arg, "help") == 0) {
-				display_helpscreen(true);
-			} else if(strcmp(arg, "version") == 0) {
-				display_versionscreen(true);
-			} else if(strcmp(arg, "msg-config") == 0) {
-				if(opt_has_next_value(arg, i, argc)) {
+			if( strcmp( arg, "help" ) == 0 ) {
+				display_helpscreen( true );
+			} else if( strcmp( arg, "version" ) == 0 ) {
+				display_versionscreen( true );
+			} else if( strcmp( arg, "msg-config" ) == 0 ) {
+				if( opt_has_next_value( arg, i, argc ) ) {
 					MSG_CONF_NAME_EN = argv[++i];
 				}
-			} else if(strcmp(arg, "run-once") == 0) { // close the map-server as soon as its done.. for testing [Celest]
-				global_core->set_run_once(true);
-			} else if(global_core->get_type() == e_core_type::LOGIN || global_core->get_type() == e_core_type::CHARACTER) {
-				if(strcmp(arg, "lan-config") == 0) {
-					if(opt_has_next_value(arg, i, argc)) {
+			} else if( strcmp( arg, "run-once" ) == 0 ) { // close the map-server as soon as its done.. for testing [Celest]
+				global_core->set_run_once( true );
+			} else if( global_core->get_type() == e_core_type::LOGIN || global_core->get_type() == e_core_type::CHARACTER ) {
+				if( strcmp( arg, "lan-config" ) == 0 ) {
+					if( opt_has_next_value( arg, i, argc ) ) {
 						LAN_CONF_NAME = argv[++i];
 					}
-				} else if(global_core->get_type() == e_core_type::LOGIN) {
-					if(strcmp(arg, "login-config") == 0) {
-						if(opt_has_next_value(arg, i, argc)) {
+				} else if( global_core->get_type() == e_core_type::LOGIN ) {
+					if( strcmp( arg, "login-config" ) == 0 ) {
+						if( opt_has_next_value( arg, i, argc ) ) {
 							LOGIN_CONF_NAME = argv[++i];
 						}
 					} else {
-						ShowError("Unknown option '%s'.\n", argv[i]);
-						exit(EXIT_FAILURE);
+						ShowError( "Unknown option '%s'.\n", argv[i] );
+						exit( EXIT_FAILURE );
 					}
-				} else if(global_core->get_type() == e_core_type::CHARACTER) {
-					if(strcmp(arg, "char-config") == 0) {
-						if(opt_has_next_value(arg, i, argc)) {
+				} else if( global_core->get_type() == e_core_type::CHARACTER ) {
+					if( strcmp( arg, "char-config" ) == 0 ) {
+						if( opt_has_next_value( arg, i, argc ) ) {
 							CHAR_CONF_NAME = argv[++i];
 						}
-					} else if(strcmp(arg, "inter-config") == 0) {
-						if(opt_has_next_value(arg, i, argc)) {
+					} else if( strcmp( arg, "inter-config" ) == 0 ) {
+						if( opt_has_next_value( arg, i, argc ) ) {
 							INTER_CONF_NAME = argv[++i];
 						}
 					} else {
-						ShowError("Unknown option '%s'.\n", argv[i]);
-						exit(EXIT_FAILURE);
+						ShowError( "Unknown option '%s'.\n", argv[i] );
+						exit( EXIT_FAILURE );
 					}
 				}
-			} else if(global_core->get_type() == e_core_type::MAP) {
-				if(strcmp(arg, "map-config") == 0) {
-					if(opt_has_next_value(arg, i, argc)) {
+			} else if( global_core->get_type() == e_core_type::MAP ) {
+				if( strcmp( arg, "map-config" ) == 0 ) {
+					if( opt_has_next_value( arg, i, argc ) ) {
 						MAP_CONF_NAME = argv[++i];
 					}
-				} else if(strcmp(arg, "battle-config") == 0) {
-					if(opt_has_next_value(arg, i, argc)) {
+				} else if( strcmp( arg, "battle-config" ) == 0 ) {
+					if( opt_has_next_value( arg, i, argc ) ) {
 						BATTLE_CONF_FILENAME = argv[++i];
 					}
-				} else if(strcmp(arg, "script-config") == 0) {
-					if(opt_has_next_value(arg, i, argc)) {
+				} else if( strcmp( arg, "script-config" ) == 0 ) {
+					if( opt_has_next_value( arg, i, argc ) ) {
 						SCRIPT_CONF_NAME = argv[++i];
 					}
-				} else if(strcmp(arg, "grf-path-file") == 0) {
-					if(opt_has_next_value(arg, i, argc)) {
+				} else if( strcmp( arg, "grf-path-file" ) == 0 ) {
+					if( opt_has_next_value( arg, i, argc ) ) {
 						GRF_PATH_FILENAME = argv[++i];
 					}
-				} else if(strcmp(arg, "inter-config") == 0) {
-					if(opt_has_next_value(arg, i, argc)) {
+				} else if( strcmp( arg, "inter-config" ) == 0 ) {
+					if( opt_has_next_value( arg, i, argc ) ) {
 						INTER_CONF_NAME = argv[++i];
 					}
-				} else if(strcmp(arg, "log-config") == 0) {
-					if(opt_has_next_value(arg, i, argc)) {
+				} else if( strcmp( arg, "log-config" ) == 0 ) {
+					if( opt_has_next_value( arg, i, argc ) ) {
 						LOG_CONF_NAME = argv[++i];
 					}
 				} else {
-					ShowError("Unknown option '%s'.\n", argv[i]);
-					exit(EXIT_FAILURE);
+					ShowError( "Unknown option '%s'.\n", argv[i] );
+					exit( EXIT_FAILURE );
 				}
 			}
 		} else {
-			switch(arg[0]) { // short option
+			switch( arg[0] ) { // short option
 				case '?':
 				case 'h':
-					display_helpscreen(true);
+					display_helpscreen( true );
 					break;
 				case 'v':
-					display_versionscreen(true);
+					display_versionscreen( true );
 					break;
 				default:
-					ShowError("Unknown option '%s'.\n", argv[i]);
-					exit(EXIT_FAILURE);
+					ShowError( "Unknown option '%s'.\n", argv[i] );
+					exit( EXIT_FAILURE );
 			}
 		}
 	}
@@ -194,12 +194,12 @@ int cli_get_options(int argc, char** argv) {
  */
 bool cli_hasevent() {
 #ifdef WIN32
-	return (_kbhit() != 0);
+	return ( _kbhit() != 0 );
 #else
 	struct pollfd fds;
 	fds.fd = 0; /* this is STDIN */
 	fds.events = POLLIN;
-	return (poll(&fds, 1, 0) > 0);
+	return ( poll( &fds, 1, 0 ) > 0 );
 #endif
 }
 
@@ -211,16 +211,16 @@ bool cli_hasevent() {
  * @param data: unused
  * @return 0
  */
-TIMER_FUNC(parse_console_timer) {
+TIMER_FUNC( parse_console_timer ) {
 	char buf[MAX_CONSOLE_IN]; // max cmd atm is 63+63+63+3+3
 
-	memset(buf, 0, MAX_CONSOLE_IN); // clear out buf
+	memset( buf, 0, MAX_CONSOLE_IN ); // clear out buf
 
-	if(cli_hasevent()) {
-		if(fgets(buf, MAX_CONSOLE_IN, stdin) == NULL) {
+	if( cli_hasevent() ) {
+		if( fgets( buf, MAX_CONSOLE_IN, stdin ) == NULL ) {
 			return -1;
-		} else if(strlen(buf) > MIN_CONSOLE_IN) {
-			parse_console(buf);
+		} else if( strlen( buf ) > MIN_CONSOLE_IN ) {
+			parse_console( buf );
 		}
 	}
 	return 0;

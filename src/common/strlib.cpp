@@ -10,12 +10,12 @@
 #include "showmsg.hpp"
 
 // Function to suppress control characters in a string.
-int remove_control_chars(char* str) {
+int remove_control_chars( char* str ) {
 	int i;
 	int change = 0;
 
-	for(i = 0; str[i]; i++) {
-		if(ISCNTRL(str[i])) {
+	for( i = 0; str[i]; i++ ) {
+		if( ISCNTRL( str[i] ) ) {
 			str[i] = '_';
 			change = 1;
 		}
@@ -26,26 +26,26 @@ int remove_control_chars(char* str) {
 
 // Removes characters identified by ISSPACE from the start and end of the string
 // NOTE: make sure the string is not const!!
-char* trim(char* str) {
+char* trim( char* str ) {
 	size_t start;
 	size_t end;
 
-	if(str == NULL) {
+	if( str == NULL ) {
 		return str;
 	}
 
 	// get start position
-	for(start = 0; str[start] && ISSPACE(str[start]); ++start)
+	for( start = 0; str[start] && ISSPACE( str[start] ); ++start )
 		;
 	// get end position
-	for(end = strlen(str); start < end && str[end - 1] && ISSPACE(str[end - 1]); --end)
+	for( end = strlen( str ); start < end && str[end - 1] && ISSPACE( str[end - 1] ); --end )
 		;
 	// trim
-	if(start == end) {
+	if( start == end ) {
 		*str = '\0'; // empty string
 	} else { // move string with nul terminator
 		str[end] = '\0';
-		memmove(str, str + start, end - start + 1);
+		memmove( str, str + start, end - start + 1 );
 	}
 	return str;
 }
@@ -53,32 +53,32 @@ char* trim(char* str) {
 // Converts one or more consecutive occurences of the delimiters into a single space
 // and removes such occurences from the beginning and end of string
 // NOTE: make sure the string is not const!!
-char* normalize_name(char* str, const char* delims) {
+char* normalize_name( char* str, const char* delims ) {
 	char* in = str;
 	char* out = str;
 	int put_space = 0;
 
-	if(str == NULL || delims == NULL) {
+	if( str == NULL || delims == NULL ) {
 		return str;
 	}
 
 	// trim start of string
-	while(*in && strchr(delims, *in)) {
+	while( *in && strchr( delims, *in ) ) {
 		++in;
 	}
-	while(*in) {
-		if(put_space) { // replace trim characters with a single space
+	while( *in ) {
+		if( put_space ) { // replace trim characters with a single space
 			*out = ' ';
 			++out;
 		}
 		// copy non trim characters
-		while(*in && !strchr(delims, *in)) {
+		while( *in && !strchr( delims, *in ) ) {
 			*out = *in;
 			++out;
 			++in;
 		}
 		// skip trim characters
-		while(*in && strchr(delims, *in)) {
+		while( *in && strchr( delims, *in ) ) {
 			++in;
 		}
 		put_space = 1;
@@ -90,20 +90,20 @@ char* normalize_name(char* str, const char* delims) {
 // stristr: Case insensitive version of strstr, code taken from
 // http://www.daniweb.com/code/snippet313.html, Dave Sinkula
 //
-const char* stristr(const char* haystack, const char* needle) {
-	if(!*needle) {
+const char* stristr( const char* haystack, const char* needle ) {
+	if( !*needle ) {
 		return haystack;
 	}
-	for(; *haystack; ++haystack) {
-		if(TOUPPER(*haystack) == TOUPPER(*needle)) {
+	for( ; *haystack; ++haystack ) {
+		if( TOUPPER( *haystack ) == TOUPPER( *needle ) ) {
 			// matched starting char -- loop through remaining chars
 			const char *h, *n;
-			for(h = haystack, n = needle; *h && *n; ++h, ++n) {
-				if(TOUPPER(*h) != TOUPPER(*n)) {
+			for( h = haystack, n = needle; *h && *n; ++h, ++n ) {
+				if( TOUPPER( *h ) != TOUPPER( *n ) ) {
 					break;
 				}
 			}
-			if(!*n) // matched all of 'needle' to null termination
+			if( !*n ) // matched all of 'needle' to null termination
 			{
 				return haystack; // return the start of the match
 			}
@@ -113,23 +113,23 @@ const char* stristr(const char* haystack, const char* needle) {
 }
 
 #ifdef __WIN32
-char* _strtok_r(char* s1, const char* s2, char** lasts) {
+char* _strtok_r( char* s1, const char* s2, char** lasts ) {
 	char* ret;
 
-	if(s1 == NULL) {
+	if( s1 == NULL ) {
 		s1 = *lasts;
 	}
-	while(*s1 && strchr(s2, *s1)) {
+	while( *s1 && strchr( s2, *s1 ) ) {
 		++s1;
 	}
-	if(*s1 == '\0') {
+	if( *s1 == '\0' ) {
 		return NULL;
 	}
 	ret = s1;
-	while(*s1 && !strchr(s2, *s1)) {
+	while( *s1 && !strchr( s2, *s1 ) ) {
 		++s1;
 	}
-	if(*s1) {
+	if( *s1 ) {
 		*s1++ = '\0';
 	}
 	*lasts = s1;
@@ -137,48 +137,48 @@ char* _strtok_r(char* s1, const char* s2, char** lasts) {
 }
 #endif
 
-#if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)
+#if !( defined( WIN32 ) && defined( _MSC_VER ) && _MSC_VER >= 1400 ) && !defined( HAVE_STRNLEN )
 /* Find the length of STRING, but scan at most MAXLEN characters.
    If no '\0' terminator is found in that many characters, return MAXLEN.  */
-size_t strnlen(const char* string, size_t maxlen) {
-	const char* end = (const char*)memchr(string, '\0', maxlen);
-	return end ? (size_t)(end - string) : maxlen;
+size_t strnlen( const char* string, size_t maxlen ) {
+	const char* end = (const char*)memchr( string, '\0', maxlen );
+	return end ? (size_t)( end - string ) : maxlen;
 }
 #endif
 
-#if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
-uint64 strtoull(const char* str, char** endptr, int base) {
+#if defined( WIN32 ) && defined( _MSC_VER ) && _MSC_VER <= 1200
+uint64 strtoull( const char* str, char** endptr, int base ) {
 	uint64 result;
 	int count;
 	int n;
 
-	if(base == 0) {
-		if(str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
+	if( base == 0 ) {
+		if( str[0] == '0' && ( str[1] == 'x' || str[1] == 'X' ) ) {
 			base = 16;
-		} else if(str[0] == '0') {
+		} else if( str[0] == '0' ) {
 			base = 8;
 		} else {
 			base = 10;
 		}
 	}
 
-	if(base == 8) {
-		count = sscanf(str, "%I64o%n", &result, &n);
-	} else if(base == 10) {
-		count = sscanf(str, "%I64u%n", &result, &n);
-	} else if(base == 16) {
-		count = sscanf(str, "%I64x%n", &result, &n);
+	if( base == 8 ) {
+		count = sscanf( str, "%I64o%n", &result, &n );
+	} else if( base == 10 ) {
+		count = sscanf( str, "%I64u%n", &result, &n );
+	} else if( base == 16 ) {
+		count = sscanf( str, "%I64x%n", &result, &n );
 	} else {
 		count = 0; // fail
 	}
 
-	if(count < 1) {
+	if( count < 1 ) {
 		errno = EINVAL;
 		result = 0;
 		n = 0;
 	}
 
-	if(endptr) {
+	if( endptr ) {
 		*endptr = (char*)str + n;
 	}
 
@@ -189,38 +189,38 @@ uint64 strtoull(const char* str, char** endptr, int base) {
 //----------------------------------------------------
 // E-mail check: return 0 (not correct) or 1 (valid).
 //----------------------------------------------------
-int e_mail_check(char* email) {
+int e_mail_check( char* email ) {
 	char ch;
 	char* last_arobas;
-	size_t len = strlen(email);
+	size_t len = strlen( email );
 
 	// athena limits
-	if(len < 3 || len > 39) {
+	if( len < 3 || len > 39 ) {
 		return 0;
 	}
 
 	// part of RFC limits (official reference of e-mail description)
-	if(strchr(email, '@') == NULL || email[len - 1] == '@') {
+	if( strchr( email, '@' ) == NULL || email[len - 1] == '@' ) {
 		return 0;
 	}
 
-	if(email[len - 1] == '.') {
+	if( email[len - 1] == '.' ) {
 		return 0;
 	}
 
-	last_arobas = strrchr(email, '@');
+	last_arobas = strrchr( email, '@' );
 
-	if(strstr(last_arobas, "@.") != NULL || strstr(last_arobas, "..") != NULL) {
+	if( strstr( last_arobas, "@." ) != NULL || strstr( last_arobas, ".." ) != NULL ) {
 		return 0;
 	}
 
-	for(ch = 1; ch < 32; ch++) {
-		if(strchr(last_arobas, ch) != NULL) {
+	for( ch = 1; ch < 32; ch++ ) {
+		if( strchr( last_arobas, ch ) != NULL ) {
 			return 0;
 		}
 	}
 
-	if(strchr(last_arobas, ' ') != NULL || strchr(last_arobas, ';') != NULL) {
+	if( strchr( last_arobas, ' ' ) != NULL || strchr( last_arobas, ';' ) != NULL ) {
 		return 0;
 	}
 
@@ -232,26 +232,26 @@ int e_mail_check(char* email) {
 // Return numerical value of a switch configuration
 // on/off, english, fran�ais, deutsch, espa�ol, portuguese
 //--------------------------------------------------
-int config_switch(const char* str) {
-	if(strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0 || strcmpi(str, "sim") == 0) {
+int config_switch( const char* str ) {
+	if( strcmpi( str, "on" ) == 0 || strcmpi( str, "yes" ) == 0 || strcmpi( str, "oui" ) == 0 || strcmpi( str, "ja" ) == 0 || strcmpi( str, "si" ) == 0 || strcmpi( str, "sim" ) == 0 ) {
 		return 1;
 	}
-	if(strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0) {
+	if( strcmpi( str, "off" ) == 0 || strcmpi( str, "no" ) == 0 || strcmpi( str, "non" ) == 0 || strcmpi( str, "nein" ) == 0 || strcmpi( str, "nao" ) == 0 ) {
 		return 0;
 	}
 
-	return (int)strtol(str, NULL, 0);
+	return (int)strtol( str, NULL, 0 );
 }
 
 /// strncpy that always nul-terminates the string
-char* safestrncpy(char* dst, const char* src, size_t n) {
-	if(n > 0) {
+char* safestrncpy( char* dst, const char* src, size_t n ) {
+	if( n > 0 ) {
 		char* d = dst;
 		const char* s = src;
 		d[--n] = '\0'; /* nul-terminate string */
-		for(; n > 0; --n) {
-			if((*d++ = *s++) == '\0') { /* nul-pad remaining bytes */
-				while(--n > 0) {
+		for( ; n > 0; --n ) {
+			if( ( *d++ = *s++ ) == '\0' ) { /* nul-pad remaining bytes */
+				while( --n > 0 ) {
 					*d++ = '\0';
 				}
 				break;
@@ -262,8 +262,8 @@ char* safestrncpy(char* dst, const char* src, size_t n) {
 }
 
 /// doesn't crash on null pointer
-size_t safestrnlen(const char* string, size_t maxlen) {
-	return (string != NULL) ? strnlen(string, maxlen) : 0;
+size_t safestrnlen( const char* string, size_t maxlen ) {
+	return ( string != NULL ) ? strnlen( string, maxlen ) : 0;
 }
 
 /// Works like snprintf, but always nul-terminates the buffer.
@@ -275,14 +275,14 @@ size_t safestrnlen(const char* string, size_t maxlen) {
 /// @param fmt Format string
 /// @param ... Format arguments
 /// @return The size of the string or -1 if the buffer is too small
-int safesnprintf(char* buf, size_t sz, const char* fmt, ...) {
+int safesnprintf( char* buf, size_t sz, const char* fmt, ... ) {
 	va_list ap;
 	int ret;
 
-	va_start(ap, fmt);
-	ret = vsnprintf(buf, sz, fmt, ap);
-	va_end(ap);
-	if(ret < 0 || (size_t)ret >= sz) { // overflow
+	va_start( ap, fmt );
+	ret = vsnprintf( buf, sz, fmt, ap );
+	va_end( ap );
+	if( ret < 0 || (size_t)ret >= sz ) { // overflow
 		buf[sz - 1] = '\0'; // always nul-terminate
 		return -1;
 	}
@@ -291,18 +291,18 @@ int safesnprintf(char* buf, size_t sz, const char* fmt, ...) {
 
 /// Returns the line of the target position in the string.
 /// Lines start at 1.
-int strline(const char* str, size_t pos) {
+int strline( const char* str, size_t pos ) {
 	const char* target;
 	int line;
 
-	if(str == NULL || pos == 0) {
+	if( str == NULL || pos == 0 ) {
 		return 1;
 	}
 
 	target = str + pos;
-	for(line = 1;; ++line) {
-		str = strchr(str, '\n');
-		if(str == NULL || target <= str) {
+	for( line = 1;; ++line ) {
+		str = strchr( str, '\n' );
+		if( str == NULL || target <= str ) {
 			break; // found target line
 		}
 		++str; // skip newline
@@ -317,13 +317,13 @@ int strline(const char* str, size_t pos) {
 /// @param output Output string
 /// @param input Binary input buffer
 /// @param count Number of bytes to convert
-bool bin2hex(char* output, unsigned char* input, size_t count) {
+bool bin2hex( char* output, unsigned char* input, size_t count ) {
 	char toHex[] = "0123456789abcdef";
 	size_t i;
 
-	for(i = 0; i < count; ++i) {
-		*output++ = toHex[(*input & 0xF0) >> 4];
-		*output++ = toHex[(*input & 0x0F) >> 0];
+	for( i = 0; i < count; ++i ) {
+		*output++ = toHex[( *input & 0xF0 ) >> 4];
+		*output++ = toHex[( *input & 0x0F ) >> 0];
 		++input;
 	}
 	*output = '\0';
@@ -336,7 +336,7 @@ bool bin2hex(char* output, unsigned char* input, size_t count) {
 ///
 /// @param sv Parse state
 /// @return 1 if a field was parsed, 0 if already done, -1 on error.
-int sv_parse_next(struct s_svstate* sv) {
+int sv_parse_next( struct s_svstate* sv ) {
 	enum {
 		START_OF_FIELD,
 		PARSING_FIELD,
@@ -351,7 +351,7 @@ int sv_parse_next(struct s_svstate* sv) {
 	char delim;
 	int i;
 
-	if(sv == NULL) {
+	if( sv == NULL ) {
 		return -1; // error
 	}
 
@@ -361,45 +361,45 @@ int sv_parse_next(struct s_svstate* sv) {
 	delim = sv->delim;
 
 	// check opt
-	if(delim == '\n' && (opt & (SV_TERMINATE_CRLF | SV_TERMINATE_LF))) {
+	if( delim == '\n' && ( opt & ( SV_TERMINATE_CRLF | SV_TERMINATE_LF ) ) ) {
 		ShowError(
 			"sv_parse_next: delimiter '\\n' is not compatible with options SV_TERMINATE_LF or "
-			"SV_TERMINATE_CRLF.\n");
+			"SV_TERMINATE_CRLF.\n" );
 		return -1; // error
 	}
-	if(delim == '\r' && (opt & (SV_TERMINATE_CRLF | SV_TERMINATE_CR))) {
+	if( delim == '\r' && ( opt & ( SV_TERMINATE_CRLF | SV_TERMINATE_CR ) ) ) {
 		ShowError(
 			"sv_parse_next: delimiter '\\r' is not compatible with options SV_TERMINATE_CR or "
-			"SV_TERMINATE_CRLF.\n");
+			"SV_TERMINATE_CRLF.\n" );
 		return -1; // error
 	}
 
-	if(sv->done || str == NULL) {
+	if( sv->done || str == NULL ) {
 		sv->done = true;
 		return 0; // nothing to parse
 	}
 
-#define IS_END() (i >= len)
-#define IS_DELIM() (str[i] == delim)
+#define IS_END() ( i >= len )
+#define IS_DELIM() ( str[i] == delim )
 #define IS_TERMINATOR() \
-	(((opt & SV_TERMINATE_LF) && str[i] == '\n') || ((opt & SV_TERMINATE_CR) && str[i] == '\r') || ((opt & SV_TERMINATE_CRLF) && i + 1 < len && str[i] == '\r' && str[i + 1] == '\n'))
-#define IS_C_ESCAPE() ((opt & SV_ESCAPE_C) && str[i] == '\\')
+	( ( ( opt & SV_TERMINATE_LF ) && str[i] == '\n' ) || ( ( opt & SV_TERMINATE_CR ) && str[i] == '\r' ) || ( ( opt & SV_TERMINATE_CRLF ) && i + 1 < len && str[i] == '\r' && str[i + 1] == '\n' ) )
+#define IS_C_ESCAPE() ( ( opt & SV_ESCAPE_C ) && str[i] == '\\' )
 #define SET_FIELD_START() sv->start = i
 #define SET_FIELD_END() sv->end = i
 
 	i = sv->off;
 	state = START_OF_FIELD;
-	while(state != END) {
-		switch(state) {
+	while( state != END ) {
+		switch( state ) {
 			case START_OF_FIELD: // record start of field and start parsing it
 				SET_FIELD_START();
 				state = PARSING_FIELD;
 				break;
 
 			case PARSING_FIELD: // skip field character
-				if(IS_END() || IS_DELIM() || IS_TERMINATOR()) {
+				if( IS_END() || IS_DELIM() || IS_TERMINATOR() ) {
 					state = END_OF_FIELD;
-				} else if(IS_C_ESCAPE()) {
+				} else if( IS_C_ESCAPE() ) {
 					state = PARSING_C_ESCAPE;
 				} else {
 					++i; // normal character
@@ -409,31 +409,31 @@ int sv_parse_next(struct s_svstate* sv) {
 			case PARSING_C_ESCAPE: // skip escape sequence (validates it too)
 			{
 				++i; // '\\'
-				if(IS_END()) {
-					ShowError("sv_parse_next: empty escape sequence\n");
+				if( IS_END() ) {
+					ShowError( "sv_parse_next: empty escape sequence\n" );
 					return -1;
 				}
-				if(str[i] == 'x') { // hex escape
+				if( str[i] == 'x' ) { // hex escape
 					++i; // 'x'
-					if(IS_END() || !ISXDIGIT(str[i])) {
-						ShowError("sv_parse_next: \\x with no following hex digits\n");
+					if( IS_END() || !ISXDIGIT( str[i] ) ) {
+						ShowError( "sv_parse_next: \\x with no following hex digits\n" );
 						return -1;
 					}
 					do {
 						++i; // hex digit
-					} while(!IS_END() && ISXDIGIT(str[i]));
-				} else if(str[i] == '0' || str[i] == '1' || str[i] == '2') { // octal escape
+					} while( !IS_END() && ISXDIGIT( str[i] ) );
+				} else if( str[i] == '0' || str[i] == '1' || str[i] == '2' ) { // octal escape
 					++i; // octal digit
-					if(!IS_END() && str[i] >= '0' && str[i] <= '7') {
+					if( !IS_END() && str[i] >= '0' && str[i] <= '7' ) {
 						++i; // octal digit
 					}
-					if(!IS_END() && str[i] >= '0' && str[i] <= '7') {
+					if( !IS_END() && str[i] >= '0' && str[i] <= '7' ) {
 						++i; // octal digit
 					}
-				} else if(strchr(SV_ESCAPE_C_SUPPORTED, str[i])) { // supported escape character
+				} else if( strchr( SV_ESCAPE_C_SUPPORTED, str[i] ) ) { // supported escape character
 					++i;
 				} else {
-					ShowError("sv_parse_next: unknown escape sequence \\%c\n", str[i]);
+					ShowError( "sv_parse_next: unknown escape sequence \\%c\n", str[i] );
 					return -1;
 				}
 				state = PARSING_FIELD;
@@ -443,11 +443,11 @@ int sv_parse_next(struct s_svstate* sv) {
 			case END_OF_FIELD: // record end of field and stop
 				SET_FIELD_END();
 				state = END;
-				if(IS_END())
+				if( IS_END() )
 					; // nothing else
-				else if(IS_DELIM()) {
+				else if( IS_DELIM() ) {
 					++i; // delim
-				} else if(IS_TERMINATOR()) {
+				} else if( IS_TERMINATOR() ) {
 					state = TERMINATE;
 				}
 				break;
@@ -465,7 +465,7 @@ int sv_parse_next(struct s_svstate* sv) {
 				break;
 		}
 	}
-	if(IS_END()) {
+	if( IS_END() ) {
 		sv->done = true;
 	}
 	sv->off = i;
@@ -500,15 +500,15 @@ int sv_parse_next(struct s_svstate* sv) {
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt) {
+int sv_parse( const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt ) {
 	struct s_svstate sv;
 	int count;
 
 	// initialize
-	if(out_pos == NULL) {
+	if( out_pos == NULL ) {
 		npos = 0;
 	}
-	for(count = 0; count < npos; ++count) {
+	for( count = 0; count < npos; ++count ) {
 		out_pos[count] = -1;
 	}
 	sv.str = str;
@@ -520,22 +520,22 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 
 	// parse
 	count = 0;
-	if(npos > 0) {
+	if( npos > 0 ) {
 		out_pos[0] = startoff;
 	}
-	while(!sv.done) {
+	while( !sv.done ) {
 		++count;
-		if(sv_parse_next(&sv) <= 0) {
+		if( sv_parse_next( &sv ) <= 0 ) {
 			return -1; // error
 		}
-		if(npos > count * 2) {
+		if( npos > count * 2 ) {
 			out_pos[count * 2] = sv.start;
 		}
-		if(npos > count * 2 + 1) {
+		if( npos > count * 2 + 1 ) {
 			out_pos[count * 2 + 1] = sv.end;
 		}
 	}
-	if(npos > 1) {
+	if( npos > 1 ) {
 		out_pos[1] = sv.off;
 	}
 	return count;
@@ -560,37 +560,37 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// @param nfields Size of the field array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_split(char* str, int len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt) {
+int sv_split( char* str, int len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt ) {
 	int pos[1024];
 	int done;
 	char* end;
-	int ret = sv_parse(str, len, startoff, delim, pos, ARRAYLENGTH(pos), opt);
+	int ret = sv_parse( str, len, startoff, delim, pos, ARRAYLENGTH( pos ), opt );
 
-	if(ret == -1 || out_fields == NULL || nfields <= 0) {
+	if( ret == -1 || out_fields == NULL || nfields <= 0 ) {
 		return ret; // nothing to do
 	}
 
 	// next line
 	end = str + pos[1];
-	if(end[0] == '\0') {
+	if( end[0] == '\0' ) {
 		*out_fields = end;
-	} else if((opt & SV_TERMINATE_LF) && end[0] == '\n') {
-		if(!(opt & SV_KEEP_TERMINATOR)) {
+	} else if( ( opt & SV_TERMINATE_LF ) && end[0] == '\n' ) {
+		if( !( opt & SV_KEEP_TERMINATOR ) ) {
 			end[0] = '\0';
 		}
 		*out_fields = end + 1;
-	} else if((opt & SV_TERMINATE_CRLF) && end[0] == '\r' && end[1] == '\n') {
-		if(!(opt & SV_KEEP_TERMINATOR)) {
+	} else if( ( opt & SV_TERMINATE_CRLF ) && end[0] == '\r' && end[1] == '\n' ) {
+		if( !( opt & SV_KEEP_TERMINATOR ) ) {
 			end[0] = end[1] = '\0';
 		}
 		*out_fields = end + 2;
-	} else if((opt & SV_TERMINATE_CR) && end[0] == '\r') {
-		if(!(opt & SV_KEEP_TERMINATOR)) {
+	} else if( ( opt & SV_TERMINATE_CR ) && end[0] == '\r' ) {
+		if( !( opt & SV_KEEP_TERMINATOR ) ) {
 			end[0] = '\0';
 		}
 		*out_fields = end + 1;
 	} else {
-		ShowError("sv_split: unknown line delimiter 0x02%x.\n", (unsigned char)end[0]);
+		ShowError( "sv_split: unknown line delimiter 0x02%x.\n", (unsigned char)end[0] );
 		return -1; // error
 	}
 	++out_fields;
@@ -599,8 +599,8 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, si
 	// fields
 	size_t i = 2;
 	done = 0;
-	while(done < ret && nfields > 0) {
-		if(i < ARRAYLENGTH(pos)) { // split field
+	while( done < ret && nfields > 0 ) {
+		if( i < ARRAYLENGTH( pos ) ) { // split field
 			*out_fields = str + pos[i];
 			end = str + pos[i + 1];
 			*end = '\0';
@@ -610,12 +610,12 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, si
 			++out_fields;
 			--nfields;
 		} else { // get more fields
-			sv_parse(str, len, pos[i - 1] + 1, delim, pos, ARRAYLENGTH(pos), opt);
+			sv_parse( str, len, pos[i - 1] + 1, delim, pos, ARRAYLENGTH( pos ), opt );
 			i = 2;
 		}
 	}
 	// remaining fields
-	for(i = 0; i < nfields; ++i) {
+	for( i = 0; i < nfields; ++i ) {
 		out_fields[i] = end;
 	}
 	return ret;
@@ -630,23 +630,23 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, si
 /// @param len Length of the source string
 /// @param escapes Extra characters to be escaped
 /// @return Length of the escaped string
-size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* escapes) {
+size_t sv_escape_c( char* out_dest, const char* src, size_t len, const char* escapes ) {
 	size_t i;
 	size_t j;
 
-	if(out_dest == NULL) {
+	if( out_dest == NULL ) {
 		return 0; // nothing to do
 	}
-	if(src == NULL) { // nothing to escape
+	if( src == NULL ) { // nothing to escape
 		*out_dest = 0;
 		return 0;
 	}
-	if(escapes == NULL) {
+	if( escapes == NULL ) {
 		escapes = "";
 	}
 
-	for(i = 0, j = 0; i < len; ++i) {
-		switch(src[i]) {
+	for( i = 0, j = 0; i < len; ++i ) {
+		switch( src[i] ) {
 			case '\0': // octal 0
 				out_dest[j++] = '\\';
 				out_dest[j++] = '0';
@@ -666,9 +666,9 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 				out_dest[j++] = '\\';
 				break;
 			default:
-				if(strchr(escapes, src[i])) { // escape
+				if( strchr( escapes, src[i] ) ) { // escape
 					out_dest[j++] = '\\';
-					switch(src[i]) {
+					switch( src[i] ) {
 						case '\a':
 							out_dest[j++] = 'a';
 							break;
@@ -688,9 +688,9 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 							out_dest[j++] = '?';
 							break;
 						default: // to octal
-							out_dest[j++] = '0' + ((char)(((unsigned char)src[i] & 0700) >> 6));
-							out_dest[j++] = '0' + ((char)(((unsigned char)src[i] & 0070) >> 3));
-							out_dest[j++] = '0' + ((char)(((unsigned char)src[i] & 0007)));
+							out_dest[j++] = '0' + ( (char)( ( (unsigned char)src[i] & 0700 ) >> 6 ) );
+							out_dest[j++] = '0' + ( (char)( ( (unsigned char)src[i] & 0070 ) >> 3 ) );
+							out_dest[j++] = '0' + ( (char)( ( (unsigned char)src[i] & 0007 ) ) );
 							break;
 					}
 				} else {
@@ -711,7 +711,7 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 /// @param src Source string
 /// @param len Length of the source string
 /// @return Length of the escaped string
-size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
+size_t sv_unescape_c( char* out_dest, const char* src, size_t len ) {
 	static unsigned char low2hex[256] = {
 		0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x0?
 		0, 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x1?
@@ -733,46 +733,46 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 	size_t i;
 	size_t j;
 
-	for(i = 0, j = 0; i < len;) {
-		if(src[i] == '\\') {
+	for( i = 0, j = 0; i < len; ) {
+		if( src[i] == '\\' ) {
 			++i; // '\\'
-			if(i >= len) {
-				ShowWarning("sv_unescape_c: empty escape sequence\n");
-			} else if(src[i] == 'x') { // hex escape sequence
+			if( i >= len ) {
+				ShowWarning( "sv_unescape_c: empty escape sequence\n" );
+			} else if( src[i] == 'x' ) { // hex escape sequence
 				unsigned char c = 0;
 				unsigned char inrange = 1;
 
 				++i; // 'x'
-				if(i >= len || !ISXDIGIT(src[i])) {
-					ShowWarning("sv_unescape_c: \\x with no following hex digits\n");
+				if( i >= len || !ISXDIGIT( src[i] ) ) {
+					ShowWarning( "sv_unescape_c: \\x with no following hex digits\n" );
 					continue;
 				}
 				do {
-					if(c > 0x0F && inrange) {
-						ShowWarning("sv_unescape_c: hex escape sequence out of range\n");
+					if( c > 0x0F && inrange ) {
+						ShowWarning( "sv_unescape_c: hex escape sequence out of range\n" );
 						inrange = 0;
 					}
-					c = (c << 4) | low2hex[(unsigned char)src[i]]; // hex digit
+					c = ( c << 4 ) | low2hex[(unsigned char)src[i]]; // hex digit
 					++i;
-				} while(i < len && ISXDIGIT(src[i]));
+				} while( i < len && ISXDIGIT( src[i] ) );
 				out_dest[j++] = (char)c;
-			} else if(src[i] == '0' || src[i] == '1' || src[i] == '2' || src[i] == '3') { // octal escape sequence (255=0377)
+			} else if( src[i] == '0' || src[i] == '1' || src[i] == '2' || src[i] == '3' ) { // octal escape sequence (255=0377)
 				unsigned char c = src[i] - '0';
 				++i; // '0', '1', '2' or '3'
-				if(i < len && src[i] >= '0' && src[i] <= '7') {
-					c = (c << 3) | (src[i] - '0');
+				if( i < len && src[i] >= '0' && src[i] <= '7' ) {
+					c = ( c << 3 ) | ( src[i] - '0' );
 					++i; // octal digit
 				}
-				if(i < len && src[i] >= '0' && src[i] <= '7') {
-					c = (c << 3) | (src[i] - '0');
+				if( i < len && src[i] >= '0' && src[i] <= '7' ) {
+					c = ( c << 3 ) | ( src[i] - '0' );
 					++i; // octal digit
 				}
 				out_dest[j++] = (char)c;
 			} else { // other escape sequence
-				if(strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL) {
-					ShowWarning("sv_unescape_c: unknown escape sequence \\%c\n", src[i]);
+				if( strchr( SV_ESCAPE_C_SUPPORTED, src[i] ) == NULL ) {
+					ShowWarning( "sv_unescape_c: unknown escape sequence \\%c\n", src[i] );
 				}
-				switch(src[i]) {
+				switch( src[i] ) {
 					case 'a':
 						out_dest[j++] = '\a';
 						break;
@@ -812,13 +812,13 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 }
 
 /// Skips a C escape sequence (starting with '\\').
-const char* skip_escaped_c(const char* p) {
-	if(p && *p == '\\') {
+const char* skip_escaped_c( const char* p ) {
+	if( p && *p == '\\' ) {
 		++p;
-		switch(*p) {
+		switch( *p ) {
 			case 'x': // hexadecimal
 				++p;
-				while(ISXDIGIT(*p)) {
+				while( ISXDIGIT( *p ) ) {
 					++p;
 				}
 				break;
@@ -827,15 +827,15 @@ const char* skip_escaped_c(const char* p) {
 			case '2':
 			case '3': // octal
 				++p;
-				if(*p >= '0' && *p <= '7') {
+				if( *p >= '0' && *p <= '7' ) {
 					++p;
 				}
-				if(*p >= '0' && *p <= '7') {
+				if( *p >= '0' && *p <= '7' ) {
 					++p;
 				}
 				break;
 			default:
-				if(*p && strchr(SV_ESCAPE_C_SUPPORTED, *p)) {
+				if( *p && strchr( SV_ESCAPE_C_SUPPORTED, *p ) ) {
 					++p;
 				}
 		}
@@ -858,7 +858,7 @@ const char* skip_escaped_c(const char* p) {
  * @param silent : should we display error if file not found ?
  * @return true on success, false if file could not be opened
  */
-bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current), bool silent) {
+bool sv_readdb( const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool ( *parseproc )( char* fields[], int columns, int current ), bool silent ) {
 	FILE* fp;
 	int lines = 0;
 	int entries = 0;
@@ -867,65 +867,65 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	char path[1024], *line;
 	const short colsize = 512;
 
-	snprintf(path, sizeof(path), "%s/%s", directory, filename);
+	snprintf( path, sizeof( path ), "%s/%s", directory, filename );
 
 	// open file
-	fp = fopen(path, "r");
-	if(fp == NULL) {
-		if(silent == 0) {
-			ShowError("sv_readdb: can't read %s\n", path);
+	fp = fopen( path, "r" );
+	if( fp == NULL ) {
+		if( silent == 0 ) {
+			ShowError( "sv_readdb: can't read %s\n", path );
 		}
 		return false;
 	}
 
 	// allocate enough memory for the maximum requested amount of columns plus the reserved one
 	nb_cols = maxcols + 1;
-	fields = (char**)aMalloc(nb_cols * sizeof(char*));
-	line = (char*)aMalloc(nb_cols * colsize);
+	fields = (char**)aMalloc( nb_cols * sizeof( char* ) );
+	line = (char*)aMalloc( nb_cols * colsize );
 
 	// process rows one by one
-	while(fgets(line, maxcols * colsize, fp)) {
+	while( fgets( line, maxcols * colsize, fp ) ) {
 		char* match;
 		lines++;
 
-		if((match = strstr(line, "//")) != NULL) { // strip comments
+		if( ( match = strstr( line, "//" ) ) != NULL ) { // strip comments
 			match[0] = 0;
 		}
 
 		// trim(line); //TODO: strip trailing whitespace
 		// trim2(line,1); //removing trailing actually break mob_skill_db
-		if(line[0] == '\0' || line[0] == '\n' || line[0] == '\r') {
+		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r' ) {
 			continue;
 		}
 
-		columns = sv_split(line, strlen(line), 0, delim, fields, nb_cols, (e_svopt)(SV_TERMINATE_LF | SV_TERMINATE_CRLF));
+		columns = sv_split( line, strlen( line ), 0, delim, fields, nb_cols, (e_svopt)( SV_TERMINATE_LF | SV_TERMINATE_CRLF ) );
 
-		if(columns < mincols) {
+		if( columns < mincols ) {
 			ShowError(
 				"sv_readdb: Insufficient columns in line %d of \"%s\" (found %d, need at least "
 				"%d).\n",
 				lines,
 				path,
 				columns,
-				mincols);
+				mincols );
 			continue; // not enough columns
 		}
-		if(columns > maxcols) {
-			ShowError("sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n", lines, path, columns, maxcols);
+		if( columns > maxcols ) {
+			ShowError( "sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n", lines, path, columns, maxcols );
 			continue; // too many columns
 		}
-		if(entries == maxrows) {
+		if( entries == maxrows ) {
 			ShowError(
 				"sv_readdb: Reached the maximum allowed number of entries (%d) when parsing file "
 				"\"%s\".\n",
 				maxrows,
-				path);
+				path );
 			break;
 		}
 
 		// parse this row
-		if(!parseproc(fields + 1, columns, entries)) {
-			ShowError("sv_readdb: Could not process contents of line %d of \"%s\".\n", lines, path);
+		if( !parseproc( fields + 1, columns, entries ) ) {
+			ShowError( "sv_readdb: Could not process contents of line %d of \"%s\".\n", lines, path );
 			// perhaps call a provided function to clean entries if we have fail
 			// clearproc(fields+1, columns, entries)
 			continue; // invalid row contents
@@ -935,10 +935,10 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		entries++;
 	}
 
-	aFree(fields);
-	aFree(line);
-	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path);
+	aFree( fields );
+	aFree( line );
+	fclose( fp );
+	ShowStatus( "Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path );
 
 	return true;
 }
@@ -949,113 +949,113 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 // @author MouseJstr (original)
 
 /// Allocates a StringBuf
-StringBuf* _StringBuf_Malloc(const char* file, int line, const char* func) {
+StringBuf* _StringBuf_Malloc( const char* file, int line, const char* func ) {
 	StringBuf* self;
-	self = (StringBuf*)aCalloc2(1, sizeof(StringBuf), file, line, func);
-	_StringBuf_Init(file, line, func, self);
+	self = (StringBuf*)aCalloc2( 1, sizeof( StringBuf ), file, line, func );
+	_StringBuf_Init( file, line, func, self );
 	return self;
 }
 
 /// Initializes a previously allocated StringBuf
-void _StringBuf_Init(const char* file, int line, const char* func, StringBuf* self) {
+void _StringBuf_Init( const char* file, int line, const char* func, StringBuf* self ) {
 	self->max_ = 1024;
-	self->ptr_ = self->buf_ = (char*)aMalloc2(self->max_ + 1, file, line, func);
+	self->ptr_ = self->buf_ = (char*)aMalloc2( self->max_ + 1, file, line, func );
 }
 
 /// Appends the result of printf to the StringBuf
-int _StringBuf_Printf(const char* file, int line, const char* func, StringBuf* self, const char* fmt, ...) {
+int _StringBuf_Printf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, ... ) {
 	int len;
 	va_list ap;
 
-	va_start(ap, fmt);
-	len = _StringBuf_Vprintf(file, line, func, self, fmt, ap);
-	va_end(ap);
+	va_start( ap, fmt );
+	len = _StringBuf_Vprintf( file, line, func, self, fmt, ap );
+	va_end( ap );
 
 	return len;
 }
 
 /// Appends the result of vprintf to the StringBuf
-int _StringBuf_Vprintf(const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list ap) {
-	for(;;) {
+int _StringBuf_Vprintf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list ap ) {
+	for( ;; ) {
 		int n, size, off;
 		va_list apcopy;
 		/* Try to print in the allocated space. */
-		size = self->max_ - (self->ptr_ - self->buf_);
-		va_copy(apcopy, ap);
-		n = vsnprintf(self->ptr_, size, fmt, apcopy);
-		va_end(apcopy);
+		size = self->max_ - ( self->ptr_ - self->buf_ );
+		va_copy( apcopy, ap );
+		n = vsnprintf( self->ptr_, size, fmt, apcopy );
+		va_end( apcopy );
 		/* If that worked, return the length. */
-		if(n > -1 && n < size) {
+		if( n > -1 && n < size ) {
 			self->ptr_ += n;
-			return (int)(self->ptr_ - self->buf_);
+			return (int)( self->ptr_ - self->buf_ );
 		}
 		/* Else try again with more space. */
 		self->max_ *= 2; // twice the old size
-		off = (int)(self->ptr_ - self->buf_);
-		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
+		off = (int)( self->ptr_ - self->buf_ );
+		self->buf_ = (char*)aRealloc2( self->buf_, self->max_ + 1, file, line, func );
 		self->ptr_ = self->buf_ + off;
 	}
 }
 
 /// Appends the contents of another StringBuf to the StringBuf
-int _StringBuf_Append(const char* file, int line, const char* func, StringBuf* self, const StringBuf* sbuf) {
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
+int _StringBuf_Append( const char* file, int line, const char* func, StringBuf* self, const StringBuf* sbuf ) {
+	int available = self->max_ - ( self->ptr_ - self->buf_ );
+	int needed = (int)( sbuf->ptr_ - sbuf->buf_ );
 
-	if(needed >= available) {
-		int off = (int)(self->ptr_ - self->buf_);
+	if( needed >= available ) {
+		int off = (int)( self->ptr_ - self->buf_ );
 		self->max_ += needed;
-		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
+		self->buf_ = (char*)aRealloc2( self->buf_, self->max_ + 1, file, line, func );
 		self->ptr_ = self->buf_ + off;
 	}
 
-	memcpy(self->ptr_, sbuf->buf_, needed);
+	memcpy( self->ptr_, sbuf->buf_, needed );
 	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
+	return (int)( self->ptr_ - self->buf_ );
 }
 
 // Appends str to the StringBuf
-int _StringBuf_AppendStr(const char* file, int line, const char* func, StringBuf* self, const char* str) {
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)strlen(str);
+int _StringBuf_AppendStr( const char* file, int line, const char* func, StringBuf* self, const char* str ) {
+	int available = self->max_ - ( self->ptr_ - self->buf_ );
+	int needed = (int)strlen( str );
 
-	if(needed >= available) { // not enough space, expand the buffer (minimum expansion = 1024)
-		int off = (int)(self->ptr_ - self->buf_);
-		self->max_ += max(needed, 1024);
-		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
+	if( needed >= available ) { // not enough space, expand the buffer (minimum expansion = 1024)
+		int off = (int)( self->ptr_ - self->buf_ );
+		self->max_ += max( needed, 1024 );
+		self->buf_ = (char*)aRealloc2( self->buf_, self->max_ + 1, file, line, func );
 		self->ptr_ = self->buf_ + off;
 	}
 
-	memcpy(self->ptr_, str, needed);
+	memcpy( self->ptr_, str, needed );
 	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
+	return (int)( self->ptr_ - self->buf_ );
 }
 
 // Returns the length of the data in the Stringbuf
-int StringBuf_Length(StringBuf* self) {
-	return (int)(self->ptr_ - self->buf_);
+int StringBuf_Length( StringBuf* self ) {
+	return (int)( self->ptr_ - self->buf_ );
 }
 
 /// Returns the data in the StringBuf
-char* StringBuf_Value(StringBuf* self) {
+char* StringBuf_Value( StringBuf* self ) {
 	*self->ptr_ = '\0';
 	return self->buf_;
 }
 
 /// Clears the contents of the StringBuf
-void StringBuf_Clear(StringBuf* self) {
+void StringBuf_Clear( StringBuf* self ) {
 	self->ptr_ = self->buf_;
 }
 
 /// Destroys the StringBuf
-void StringBuf_Destroy(StringBuf* self) {
-	aFree(self->buf_);
+void StringBuf_Destroy( StringBuf* self ) {
+	aFree( self->buf_ );
 	self->ptr_ = self->buf_ = 0;
 	self->max_ = 0;
 }
 
 // Frees a StringBuf returned by StringBuf_Malloc
-void StringBuf_Free(StringBuf* self) {
-	StringBuf_Destroy(self);
-	aFree(self);
+void StringBuf_Free( StringBuf* self ) {
+	StringBuf_Destroy( self );
+	aFree( self );
 }

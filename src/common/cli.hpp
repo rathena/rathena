@@ -26,12 +26,12 @@ extern const char* LOGIN_CONF_NAME;
 extern const char* LAN_CONF_NAME; // char-login
 extern const char* MSG_CONF_NAME_EN; // all
 
-extern void display_helpscreen(bool exit);
+extern void display_helpscreen( bool exit );
 bool cli_hasevent();
-void display_versionscreen(bool do_exit);
-bool opt_has_next_value(const char* option, int i, int argc);
-int cli_get_options(int argc, char** argv);
-TIMER_FUNC(parse_console_timer);
-extern int parse_console(const char* buf); // particular for each serv
+void display_versionscreen( bool do_exit );
+bool opt_has_next_value( const char* option, int i, int argc );
+int cli_get_options( int argc, char** argv );
+TIMER_FUNC( parse_console_timer );
+extern int parse_console( const char* buf ); // particular for each serv
 
 #endif /* CLI_HPP */

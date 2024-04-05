@@ -62,6 +62,6 @@
 
 #include "cbasetypes.hpp"
 
-bool IsCurrentUserLocalAdministrator(void);
+bool IsCurrentUserLocalAdministrator( void );
 
 #endif /* WINAPI_HPP */
