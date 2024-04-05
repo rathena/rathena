@@ -27,6 +27,7 @@ InsertBraces: true
 SpaceBeforeParens: Custom
 SpaceBeforeParensOptions:
   AfterControlStatements: false
+  AfterForeachMacros: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3
