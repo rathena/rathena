@@ -21,11 +21,13 @@ IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3
   - Regex: '<(common|char|login|map)/.*h.*>'
+    Priority: 5
+  - Regex: '<(httplib.h|libconfig.h|mysql.h|nlohmann/json.hpp|pcre.h|ryml.hpp|ryml_std.hpp|yaml-cpp/yaml.h|zlib.h)>'
     Priority: 4
   - Regex: '<.*\.(h|hpp)>'
     Priority: 2
   - Regex: '<.*'
     Priority: 1
   - Regex: '"(common|char|login|map)/.*hpp"'
-    Priority: 5
+    Priority: 6
 ...

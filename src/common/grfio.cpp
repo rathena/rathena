@@ -4,6 +4,7 @@
 #include "grfio.hpp"
 
 #include <stdlib.h>
+
 #include <zlib.h>
 
 #include "cbasetypes.hpp"

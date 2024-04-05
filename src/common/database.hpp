@@ -7,10 +7,10 @@
 #include <unordered_map>
 #include <vector>
 
+#include <config/core.hpp>
+
 #include <ryml.hpp>
 #include <ryml_std.hpp>
-
-#include <config/core.hpp>
 
 #include "cbasetypes.hpp"
 #include "core.hpp"

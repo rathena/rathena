@@ -7,8 +7,9 @@
 	#include "winapi.hpp"
 #endif
 
-#include <mysql.h>
 #include <stdlib.h> // strtoul
+
+#include <mysql.h>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
