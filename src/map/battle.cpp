@@ -2263,7 +2263,7 @@ int64 battle_addmastery(map_session_data *sd,struct block_list *target,int64 dmg
 			damage += damage * 30 / 100;
 	}
 
-	if (type == 0)
+	if(type == 0)
 		weapon = sd->weapontype1;
 	else
 		weapon = sd->weapontype2;
