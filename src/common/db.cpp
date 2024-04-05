@@ -101,7 +101,7 @@
  * @see #stats
  * @see #db_final(void)
  */
-//#define DB_ENABLE_STATS
+// #define DB_ENABLE_STATS
 
 /**
  * Size of the hashtable in the database.

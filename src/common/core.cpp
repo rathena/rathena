@@ -180,8 +180,8 @@ const char *get_svn_revision(void) {
 	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL ||
 		(fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL) {
 	#ifndef SVNNODEPATH
-		// not sure how to handle branches, so i'll leave this overridable define until a better
-		// solution comes up
+			// not sure how to handle branches, so i'll leave this overridable define until a better
+			// solution comes up
 		#define SVNNODEPATH trunk
 	#endif
 		const char *prefix = "!svn/ver/";

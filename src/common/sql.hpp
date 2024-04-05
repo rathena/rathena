@@ -16,7 +16,7 @@
 // macro definition to determine whether the mySQL engine is running on InnoDB (rather than MyISAM)
 // uncomment this line if the your mySQL tables have been changed to run on InnoDB
 // this macro will adjust how logs are recorded in the database to accommodate the change
-//#define SQL_INNODB
+// #define SQL_INNODB
 
 /// Data type identifier.
 /// String, enum and blob data types need the buffer length specified.

@@ -180,7 +180,7 @@ typedef unsigned long int ppuint32;
 // integer with exact processor width (and best speed)
 //////////////////////////////
 #include <stddef.h> // size_t
-//#include <stdbool.h> //boolean
+// #include <stdbool.h> //boolean
 
 //////////////////////////////////////////////////////////////////////////
 // pointer sized integers

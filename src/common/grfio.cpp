@@ -40,7 +40,7 @@ typedef struct _FILELIST {
 //                  inside a grf) (NOTE: this case is only used once (during startup) and only if
 //                  GRFIO_LOCAL is enabled) (NOTE: probably meant to be used to override grf
 //                  contents by files in the data directory)
-//#define GRFIO_LOCAL
+// #define GRFIO_LOCAL
 
 // stores info about every loaded file
 FILELIST* filelist = NULL;
