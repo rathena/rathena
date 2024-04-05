@@ -8,6 +8,7 @@ IndentWidth: 4
 Language: Cpp
 TabWidth: 4
 UseTab: ForContinuationAndIndentation
+# Replaces any whitespaces between the code and a trailing comment by a single space
 SpacesBeforeTrailingComments: 1
 BinPackArguments: false
 BinPackParameters: false
