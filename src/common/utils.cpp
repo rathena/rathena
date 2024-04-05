@@ -77,14 +77,16 @@ void ShowDump(const void* buffer, size_t length) {
 static char* checkpath(char* path,
 					   const char* srcpath) { // just make sure the char*path is not const
 	char* p = path;
-	if (NULL != path && NULL != srcpath)
+	if (NULL != path && NULL != srcpath) {
 		while (*srcpath) {
 			if (*srcpath == '/') {
 				*p++ = '\\';
 				srcpath++;
-			} else
+			} else {
 				*p++ = *srcpath++;
+			}
 		}
+	}
 	*p = *srcpath; // EOS
 	return path;
 }
@@ -98,18 +100,21 @@ void findfile(const char* p, const char* pat, void(func)(const char*)) {
 	const char* pattern = (pat == NULL) ? "" : pat;
 
 	checkpath(tmppath, path);
-	if (PATHSEP != tmppath[strlen(tmppath) - 1])
+	if (PATHSEP != tmppath[strlen(tmppath) - 1]) {
 		strcat(tmppath, "\\*");
-	else
+	} else {
 		strcat(tmppath, "*");
+	}
 
 	hFind = FindFirstFileA(tmppath, &FindFileData);
 	if (hFind != INVALID_HANDLE_VALUE) {
 		do {
-			if (strcmp(FindFileData.cFileName, ".") == 0)
+			if (strcmp(FindFileData.cFileName, ".") == 0) {
 				continue;
-			if (strcmp(FindFileData.cFileName, "..") == 0)
+			}
+			if (strcmp(FindFileData.cFileName, "..") == 0) {
 				continue;
+			}
 
 			sprintf(tmppath, "%s%c%s", path, PATHSEP, FindFileData.cFileName);
 
@@ -141,10 +146,11 @@ int check_filepath(const char* filepath) {
 		if ((Attribute & INVALID_FILE_ATTRIBUTES) && GetLastError() == ERROR_FILE_NOT_FOUND) {
 			SetLastError(0);
 			return 3;
-		} else if (Attribute & FILE_ATTRIBUTE_DIRECTORY)
+		} else if (Attribute & FILE_ATTRIBUTE_DIRECTORY) {
 			return 1;
-		else
+		} else {
 			return 2;
+		}
 	}
 
 	return 0;
@@ -166,12 +172,13 @@ int check_filepath(const char* filepath) {
 	struct stat s;
 
 	if (stat(filepath, &s) == 0) {
-		if (s.st_mode & S_IFDIR)
+		if (s.st_mode & S_IFDIR) {
 			return 1;
-		else if (s.st_mode & S_IFREG)
+		} else if (s.st_mode & S_IFREG) {
 			return 2;
-		else
+		} else {
 			return 3;
+		}
 	}
 
 	return 0;
@@ -180,14 +187,16 @@ int check_filepath(const char* filepath) {
 static char* checkpath(char* path,
 					   const char* srcpath) { // just make sure the char*path is not const
 	char* p = path;
-	if (NULL != path && NULL != srcpath)
+	if (NULL != path && NULL != srcpath) {
 		while (*srcpath) {
 			if (*srcpath == '\\') {
 				*p++ = '/';
 				srcpath++;
-			} else
+			} else {
 				*p++ = *srcpath++;
+			}
 		}
+	}
 	*p = *srcpath; // EOS
 	return path;
 }
@@ -199,8 +208,9 @@ void findfile(const char* p, const char* pat, void(func)(const char*)) {
 	char tmppath[MAX_DIR_PATH * 2];
 	char path[MAX_DIR_PATH + 1] = ".";
 	const char* pattern = (pat == NULL) ? "" : pat;
-	if (p != NULL)
+	if (p != NULL) {
 		strcpy(path, p);
+	}
 
 	// open the directory for reading
 	dir = opendir(checkpath(path, path));
@@ -213,10 +223,12 @@ void findfile(const char* p, const char* pat, void(func)(const char*)) {
 	// matching the pattern for each file name.
 	while ((entry = readdir(dir))) {
 		// skip the "." and ".." entries.
-		if (strcmp(entry->d_name, ".") == 0)
+		if (strcmp(entry->d_name, ".") == 0) {
 			continue;
-		if (strcmp(entry->d_name, "..") == 0)
+		}
+		if (strcmp(entry->d_name, "..") == 0) {
 			continue;
+		}
 
 		sprintf(tmppath, "%s%c%s", path, PATHSEP, entry->d_name);
 

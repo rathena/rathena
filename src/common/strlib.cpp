@@ -30,8 +30,9 @@ char* trim(char* str) {
 	size_t start;
 	size_t end;
 
-	if (str == NULL)
+	if (str == NULL) {
 		return str;
+	}
 
 	// get start position
 	for (start = 0; str[start] && ISSPACE(str[start]); ++start)
@@ -40,9 +41,9 @@ char* trim(char* str) {
 	for (end = strlen(str); start < end && str[end - 1] && ISSPACE(str[end - 1]); --end)
 		;
 	// trim
-	if (start == end)
+	if (start == end) {
 		*str = '\0'; // empty string
-	else { // move string with nul terminator
+	} else { // move string with nul terminator
 		str[end] = '\0';
 		memmove(str, str + start, end - start + 1);
 	}
@@ -57,12 +58,14 @@ char* normalize_name(char* str, const char* delims) {
 	char* out = str;
 	int put_space = 0;
 
-	if (str == NULL || delims == NULL)
+	if (str == NULL || delims == NULL) {
 		return str;
+	}
 
 	// trim start of string
-	while (*in && strchr(delims, *in))
+	while (*in && strchr(delims, *in)) {
 		++in;
+	}
 	while (*in) {
 		if (put_space) { // replace trim characters with a single space
 			*out = ' ';
@@ -75,8 +78,9 @@ char* normalize_name(char* str, const char* delims) {
 			++in;
 		}
 		// skip trim characters
-		while (*in && strchr(delims, *in))
+		while (*in && strchr(delims, *in)) {
 			++in;
+		}
 		put_space = 1;
 	}
 	*out = '\0';
@@ -112,17 +116,22 @@ const char* stristr(const char* haystack, const char* needle) {
 char* _strtok_r(char* s1, const char* s2, char** lasts) {
 	char* ret;
 
-	if (s1 == NULL)
+	if (s1 == NULL) {
 		s1 = *lasts;
-	while (*s1 && strchr(s2, *s1))
+	}
+	while (*s1 && strchr(s2, *s1)) {
 		++s1;
-	if (*s1 == '\0')
+	}
+	if (*s1 == '\0') {
 		return NULL;
+	}
 	ret = s1;
-	while (*s1 && !strchr(s2, *s1))
+	while (*s1 && !strchr(s2, *s1)) {
 		++s1;
-	if (*s1)
+	}
+	if (*s1) {
 		*s1++ = '\0';
+	}
 	*lasts = s1;
 	return ret;
 }
@@ -144,22 +153,24 @@ uint64 strtoull(const char* str, char** endptr, int base) {
 	int n;
 
 	if (base == 0) {
-		if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X'))
+		if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
 			base = 16;
-		else if (str[0] == '0')
+		} else if (str[0] == '0') {
 			base = 8;
-		else
+		} else {
 			base = 10;
+		}
 	}
 
-	if (base == 8)
+	if (base == 8) {
 		count = sscanf(str, "%I64o%n", &result, &n);
-	else if (base == 10)
+	} else if (base == 10) {
 		count = sscanf(str, "%I64u%n", &result, &n);
-	else if (base == 16)
+	} else if (base == 16) {
 		count = sscanf(str, "%I64x%n", &result, &n);
-	else
+	} else {
 		count = 0; // fail
+	}
 
 	if (count < 1) {
 		errno = EINVAL;
@@ -167,8 +178,9 @@ uint64 strtoull(const char* str, char** endptr, int base) {
 		n = 0;
 	}
 
-	if (endptr)
+	if (endptr) {
 		*endptr = (char*)str + n;
+	}
 
 	return result;
 }
@@ -183,27 +195,34 @@ int e_mail_check(char* email) {
 	size_t len = strlen(email);
 
 	// athena limits
-	if (len < 3 || len > 39)
+	if (len < 3 || len > 39) {
 		return 0;
+	}
 
 	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[len - 1] == '@')
+	if (strchr(email, '@') == NULL || email[len - 1] == '@') {
 		return 0;
+	}
 
-	if (email[len - 1] == '.')
+	if (email[len - 1] == '.') {
 		return 0;
+	}
 
 	last_arobas = strrchr(email, '@');
 
-	if (strstr(last_arobas, "@.") != NULL || strstr(last_arobas, "..") != NULL)
+	if (strstr(last_arobas, "@.") != NULL || strstr(last_arobas, "..") != NULL) {
 		return 0;
+	}
 
-	for (ch = 1; ch < 32; ch++)
-		if (strchr(last_arobas, ch) != NULL)
+	for (ch = 1; ch < 32; ch++) {
+		if (strchr(last_arobas, ch) != NULL) {
 			return 0;
+		}
+	}
 
-	if (strchr(last_arobas, ' ') != NULL || strchr(last_arobas, ';') != NULL)
+	if (strchr(last_arobas, ' ') != NULL || strchr(last_arobas, ';') != NULL) {
 		return 0;
+	}
 
 	// all correct
 	return 1;
@@ -214,10 +233,12 @@ int e_mail_check(char* email) {
 // on/off, english, fran�ais, deutsch, espa�ol, portuguese
 //--------------------------------------------------
 int config_switch(const char* str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0 || strcmpi(str, "sim") == 0)
+	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0 || strcmpi(str, "sim") == 0) {
 		return 1;
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0)
+	}
+	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0) {
 		return 0;
+	}
 
 	return (int)strtol(str, NULL, 0);
 }
@@ -230,8 +251,9 @@ char* safestrncpy(char* dst, const char* src, size_t n) {
 		d[--n] = '\0'; /* nul-terminate string */
 		for (; n > 0; --n) {
 			if ((*d++ = *s++) == '\0') { /* nul-pad remaining bytes */
-				while (--n > 0)
+				while (--n > 0) {
 					*d++ = '\0';
+				}
 				break;
 			}
 		}
@@ -273,14 +295,16 @@ int strline(const char* str, size_t pos) {
 	const char* target;
 	int line;
 
-	if (str == NULL || pos == 0)
+	if (str == NULL || pos == 0) {
 		return 1;
+	}
 
 	target = str + pos;
 	for (line = 1;; ++line) {
 		str = strchr(str, '\n');
-		if (str == NULL || target <= str)
+		if (str == NULL || target <= str) {
 			break; // found target line
+		}
 		++str; // skip newline
 	}
 	return line;
@@ -327,8 +351,9 @@ int sv_parse_next(struct s_svstate* sv) {
 	char delim;
 	int i;
 
-	if (sv == NULL)
+	if (sv == NULL) {
 		return -1; // error
+	}
 
 	str = sv->str;
 	len = sv->len;
@@ -372,12 +397,13 @@ int sv_parse_next(struct s_svstate* sv) {
 				break;
 
 			case PARSING_FIELD: // skip field character
-				if (IS_END() || IS_DELIM() || IS_TERMINATOR())
+				if (IS_END() || IS_DELIM() || IS_TERMINATOR()) {
 					state = END_OF_FIELD;
-				else if (IS_C_ESCAPE())
+				} else if (IS_C_ESCAPE()) {
 					state = PARSING_C_ESCAPE;
-				else
+				} else {
 					++i; // normal character
+				}
 				break;
 
 			case PARSING_C_ESCAPE: // skip escape sequence (validates it too)
@@ -398,10 +424,12 @@ int sv_parse_next(struct s_svstate* sv) {
 					} while (!IS_END() && ISXDIGIT(str[i]));
 				} else if (str[i] == '0' || str[i] == '1' || str[i] == '2') { // octal escape
 					++i; // octal digit
-					if (!IS_END() && str[i] >= '0' && str[i] <= '7')
+					if (!IS_END() && str[i] >= '0' && str[i] <= '7') {
 						++i; // octal digit
-					if (!IS_END() && str[i] >= '0' && str[i] <= '7')
+					}
+					if (!IS_END() && str[i] >= '0' && str[i] <= '7') {
 						++i; // octal digit
+					}
 				} else if (strchr(SV_ESCAPE_C_SUPPORTED, str[i])) { // supported escape character
 					++i;
 				} else {
@@ -417,10 +445,11 @@ int sv_parse_next(struct s_svstate* sv) {
 				state = END;
 				if (IS_END())
 					; // nothing else
-				else if (IS_DELIM())
+				else if (IS_DELIM()) {
 					++i; // delim
-				else if (IS_TERMINATOR())
+				} else if (IS_TERMINATOR()) {
 					state = TERMINATE;
+				}
 				break;
 
 			case TERMINATE:
@@ -436,8 +465,9 @@ int sv_parse_next(struct s_svstate* sv) {
 				break;
 		}
 	}
-	if (IS_END())
+	if (IS_END()) {
 		sv->done = true;
+	}
 	sv->off = i;
 
 #undef IS_END
@@ -475,10 +505,12 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 	int count;
 
 	// initialize
-	if (out_pos == NULL)
+	if (out_pos == NULL) {
 		npos = 0;
-	for (count = 0; count < npos; ++count)
+	}
+	for (count = 0; count < npos; ++count) {
 		out_pos[count] = -1;
+	}
 	sv.str = str;
 	sv.len = len;
 	sv.off = startoff;
@@ -488,19 +520,24 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 
 	// parse
 	count = 0;
-	if (npos > 0)
+	if (npos > 0) {
 		out_pos[0] = startoff;
+	}
 	while (!sv.done) {
 		++count;
-		if (sv_parse_next(&sv) <= 0)
+		if (sv_parse_next(&sv) <= 0) {
 			return -1; // error
-		if (npos > count * 2)
+		}
+		if (npos > count * 2) {
 			out_pos[count * 2] = sv.start;
-		if (npos > count * 2 + 1)
+		}
+		if (npos > count * 2 + 1) {
 			out_pos[count * 2 + 1] = sv.end;
+		}
 	}
-	if (npos > 1)
+	if (npos > 1) {
 		out_pos[1] = sv.off;
+	}
 	return count;
 }
 
@@ -529,24 +566,28 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, si
 	char* end;
 	int ret = sv_parse(str, len, startoff, delim, pos, ARRAYLENGTH(pos), opt);
 
-	if (ret == -1 || out_fields == NULL || nfields <= 0)
+	if (ret == -1 || out_fields == NULL || nfields <= 0) {
 		return ret; // nothing to do
+	}
 
 	// next line
 	end = str + pos[1];
 	if (end[0] == '\0') {
 		*out_fields = end;
 	} else if ((opt & SV_TERMINATE_LF) && end[0] == '\n') {
-		if (!(opt & SV_KEEP_TERMINATOR))
+		if (!(opt & SV_KEEP_TERMINATOR)) {
 			end[0] = '\0';
+		}
 		*out_fields = end + 1;
 	} else if ((opt & SV_TERMINATE_CRLF) && end[0] == '\r' && end[1] == '\n') {
-		if (!(opt & SV_KEEP_TERMINATOR))
+		if (!(opt & SV_KEEP_TERMINATOR)) {
 			end[0] = end[1] = '\0';
+		}
 		*out_fields = end + 2;
 	} else if ((opt & SV_TERMINATE_CR) && end[0] == '\r') {
-		if (!(opt & SV_KEEP_TERMINATOR))
+		if (!(opt & SV_KEEP_TERMINATOR)) {
 			end[0] = '\0';
+		}
 		*out_fields = end + 1;
 	} else {
 		ShowError("sv_split: unknown line delimiter 0x02%x.\n", (unsigned char)end[0]);
@@ -574,8 +615,9 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, si
 		}
 	}
 	// remaining fields
-	for (i = 0; i < nfields; ++i)
+	for (i = 0; i < nfields; ++i) {
 		out_fields[i] = end;
+	}
 	return ret;
 }
 
@@ -592,14 +634,16 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 	size_t i;
 	size_t j;
 
-	if (out_dest == NULL)
+	if (out_dest == NULL) {
 		return 0; // nothing to do
+	}
 	if (src == NULL) { // nothing to escape
 		*out_dest = 0;
 		return 0;
 	}
-	if (escapes == NULL)
+	if (escapes == NULL) {
 		escapes = "";
+	}
 
 	for (i = 0, j = 0; i < len; ++i) {
 		switch (src[i]) {
@@ -649,8 +693,9 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 							out_dest[j++] = '0' + ((char)(((unsigned char)src[i] & 0007)));
 							break;
 					}
-				} else
+				} else {
 					out_dest[j++] = src[i];
+				}
 				break;
 		}
 	}
@@ -691,9 +736,9 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 	for (i = 0, j = 0; i < len;) {
 		if (src[i] == '\\') {
 			++i; // '\\'
-			if (i >= len)
+			if (i >= len) {
 				ShowWarning("sv_unescape_c: empty escape sequence\n");
-			else if (src[i] == 'x') { // hex escape sequence
+			} else if (src[i] == 'x') { // hex escape sequence
 				unsigned char c = 0;
 				unsigned char inrange = 1;
 
@@ -724,8 +769,9 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 				}
 				out_dest[j++] = (char)c;
 			} else { // other escape sequence
-				if (strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL)
+				if (strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL) {
 					ShowWarning("sv_unescape_c: unknown escape sequence \\%c\n", src[i]);
+				}
 				switch (src[i]) {
 					case 'a':
 						out_dest[j++] = '\a';
@@ -757,8 +803,9 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 				}
 				++i; // escaped character
 			}
-		} else
+		} else {
 			out_dest[j++] = src[i++]; // normal character
+		}
 	}
 	out_dest[j] = 0;
 	return j;
@@ -771,22 +818,26 @@ const char* skip_escaped_c(const char* p) {
 		switch (*p) {
 			case 'x': // hexadecimal
 				++p;
-				while (ISXDIGIT(*p))
+				while (ISXDIGIT(*p)) {
 					++p;
+				}
 				break;
 			case '0':
 			case '1':
 			case '2':
 			case '3': // octal
 				++p;
-				if (*p >= '0' && *p <= '7')
+				if (*p >= '0' && *p <= '7') {
 					++p;
-				if (*p >= '0' && *p <= '7')
+				}
+				if (*p >= '0' && *p <= '7') {
 					++p;
+				}
 				break;
 			default:
-				if (*p && strchr(SV_ESCAPE_C_SUPPORTED, *p))
+				if (*p && strchr(SV_ESCAPE_C_SUPPORTED, *p)) {
 					++p;
+				}
 		}
 	}
 	return p;
@@ -821,8 +872,9 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	// open file
 	fp = fopen(path, "r");
 	if (fp == NULL) {
-		if (silent == 0)
+		if (silent == 0) {
 			ShowError("sv_readdb: can't read %s\n", path);
+		}
 		return false;
 	}
 
@@ -842,8 +894,9 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 
 		// trim(line); //TODO: strip trailing whitespace
 		// trim2(line,1); //removing trailing actually break mob_skill_db
-		if (line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
+		if (line[0] == '\0' || line[0] == '\n' || line[0] == '\r') {
 			continue;
+		}
 
 		columns = sv_split(line, strlen(line), 0, delim, fields, nb_cols, (e_svopt)(SV_TERMINATE_LF | SV_TERMINATE_CRLF));
 

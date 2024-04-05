@@ -66,10 +66,11 @@ int add_timer_func_list(TimerFunc func, const char* name) {
 
 	if (name) {
 		for (tfl = tfl_root; tfl != NULL; tfl = tfl->next) { // check suspicious cases
-			if (func == tfl->func)
+			if (func == tfl->func) {
 				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n", tfl->func, tfl->name, name);
-			else if (strcmp(name, tfl->name) == 0)
+			} else if (strcmp(name, tfl->name) == 0) {
 				ShowWarning("add_timer_func_list: function %p has the same name as %p(%s)\n", func, tfl->func, tfl->name);
+			}
 		}
 		CREATE(tfl, struct timer_func_list, 1);
 		tfl->next = tfl_root;
@@ -84,9 +85,11 @@ int add_timer_func_list(TimerFunc func, const char* name) {
 const char* search_timer_func_list(TimerFunc func) {
 	struct timer_func_list* tfl;
 
-	for (tfl = tfl_root; tfl != NULL; tfl = tfl->next)
-		if (func == tfl->func)
+	for (tfl = tfl_root; tfl != NULL; tfl = tfl->next) {
+		if (func == tfl->func) {
 			return tfl->name;
+		}
+	}
 
 	return "unknown timer function";
 }
@@ -209,24 +212,28 @@ static int acquire_timer(void) {
 		do {
 			tid = free_timer_list[--free_timer_list_pos];
 		} while (tid >= timer_data_num && free_timer_list_pos > 0);
-	} else
+	} else {
 		tid = timer_data_num;
+	}
 
 	// check available space
-	if (tid >= timer_data_num)
+	if (tid >= timer_data_num) {
 		for (tid = timer_data_num; tid < timer_data_max && timer_data[tid].type; tid++)
 			;
+	}
 	if (tid >= timer_data_num && tid >= timer_data_max) { // expand timer array
 		timer_data_max += 256;
-		if (timer_data)
+		if (timer_data) {
 			RECREATE(timer_data, struct TimerData, timer_data_max);
-		else
+		} else {
 			CREATE(timer_data, struct TimerData, timer_data_max);
+		}
 		memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
 	}
 
-	if (tid >= timer_data_num)
+	if (tid >= timer_data_num) {
 		timer_data_num = tid + 1;
+	}
 
 	return tid;
 }
@@ -313,11 +320,13 @@ t_tick settick_timer(int tid, t_tick tick) {
 		return -1;
 	}
 
-	if (tick == -1)
+	if (tick == -1) {
 		tick = 0; // add 1ms to avoid the error value -1
+	}
 
-	if (timer_data[tid].tick == tick)
+	if (timer_data[tid].tick == tick) {
 		return tick; // nothing to do, already in propper position
+	}
 
 	// pop and push adjusted timer
 	BHEAP_POPINDEX(timer_heap, i, DIFFTICK_MINTOPCMP);
@@ -336,19 +345,21 @@ t_tick do_timer(t_tick tick) {
 		int tid = BHEAP_PEEK(timer_heap); // top element in heap (smallest tick)
 
 		diff = DIFF_TICK(timer_data[tid].tick, tick);
-		if (diff > 0)
+		if (diff > 0) {
 			break; // no more expired timers to process
+		}
 
 		// remove timer
 		BHEAP_POP(timer_heap, DIFFTICK_MINTOPCMP);
 		timer_data[tid].type |= TIMER_REMOVE_HEAP;
 
 		if (timer_data[tid].func) {
-			if (diff < -1000)
+			if (diff < -1000) {
 				// timer was delayed for more than 1 second, use current tick instead
 				timer_data[tid].func(tid, tick, timer_data[tid].id, timer_data[tid].data);
-			else
+			} else {
 				timer_data[tid].func(tid, timer_data[tid].tick, timer_data[tid].id, timer_data[tid].data);
+			}
 		}
 
 		// in the case the function didn't change anything...
@@ -367,10 +378,11 @@ t_tick do_timer(t_tick tick) {
 					free_timer_list[free_timer_list_pos++] = tid;
 					break;
 				case TIMER_INTERVAL:
-					if (DIFF_TICK(timer_data[tid].tick, tick) < -1000)
+					if (DIFF_TICK(timer_data[tid].tick, tick) < -1000) {
 						timer_data[tid].tick = tick + timer_data[tid].interval;
-					else
+					} else {
 						timer_data[tid].tick += timer_data[tid].interval;
+					}
 					push_timer_heap(tid);
 					break;
 			}
@@ -443,13 +455,15 @@ double solve_time(char* modif_p) {
 
 	while (modif_p[0] != '\0') {
 		int value = atoi(modif_p);
-		if (value == 0)
+		if (value == 0) {
 			modif_p++;
-		else {
-			if (modif_p[0] == '-' || modif_p[0] == '+')
+		} else {
+			if (modif_p[0] == '-' || modif_p[0] == '+') {
 				modif_p++;
-			while (modif_p[0] >= '0' && modif_p[0] <= '9')
+			}
+			while (modif_p[0] >= '0' && modif_p[0] <= '9') {
 				modif_p++;
+			}
 			if (modif_p[0] == 's') {
 				then_tm.tm_sec += value;
 				modif_p++;
@@ -500,9 +514,11 @@ void timer_final(void) {
 		aFree(tfl);
 	}
 
-	if (timer_data)
+	if (timer_data) {
 		aFree(timer_data);
+	}
 	BHEAP_CLEAR(timer_heap);
-	if (free_timer_list)
+	if (free_timer_list) {
 		aFree(free_timer_list);
+	}
 }

@@ -29,8 +29,9 @@ void config_setting_copy_simple(config_setting_t *parent, const config_setting_t
 	} else {
 		config_setting_t *set = config_setting_add(parent, config_setting_name(src), config_setting_type(src));
 
-		if (set == NULL)
+		if (set == NULL) {
 			return;
+		}
 
 		if (CONFIG_TYPE_INT == config_setting_type(src)) {
 			config_setting_set_int(set, config_setting_get_int(src));
@@ -51,9 +52,9 @@ void config_setting_copy_simple(config_setting_t *parent, const config_setting_t
 void config_setting_copy_elem(config_setting_t *parent, const config_setting_t *src) {
 	config_setting_t *set = NULL;
 
-	if (config_setting_is_aggregate(src))
+	if (config_setting_is_aggregate(src)) {
 		config_setting_copy_aggregate(parent, src);
-	else if (CONFIG_TYPE_INT == config_setting_type(src)) {
+	} else if (CONFIG_TYPE_INT == config_setting_type(src)) {
 		set = config_setting_set_int_elem(parent, -1, config_setting_get_int(src));
 		config_setting_set_format(set, src->format);
 	} else if (CONFIG_TYPE_INT64 == config_setting_type(src)) {
@@ -74,8 +75,9 @@ void config_setting_copy_aggregate(config_setting_t *parent, const config_settin
 
 	newAgg = config_setting_add(parent, config_setting_name(src), config_setting_type(src));
 
-	if (newAgg == NULL)
+	if (newAgg == NULL) {
 		return;
+	}
 
 	n = config_setting_length(src);
 
@@ -89,8 +91,9 @@ void config_setting_copy_aggregate(config_setting_t *parent, const config_settin
 }
 
 int config_setting_copy(config_setting_t *parent, const config_setting_t *src) {
-	if (!config_setting_is_group(parent) && !config_setting_is_list(parent))
+	if (!config_setting_is_group(parent) && !config_setting_is_list(parent)) {
 		return CONFIG_FALSE;
+	}
 
 	if (config_setting_is_aggregate(src)) {
 		config_setting_copy_aggregate(parent, src);

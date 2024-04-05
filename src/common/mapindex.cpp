@@ -30,8 +30,9 @@ const char* mapindex_getmapname(const char* string, char* output) {
 		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2 * MAP_NAME_LENGTH_EXT, string);
 		len--;
 	}
-	if (len >= 4 && stricmp(&string[len - 4], ".gat") == 0)
+	if (len >= 4 && stricmp(&string[len - 4], ".gat") == 0) {
 		len -= 4; // strip .gat extension
+	}
 
 	len = zmin(len, MAP_NAME_LENGTH - 1);
 	safestrncpy(dest, string, len + 1);
@@ -101,8 +102,9 @@ int mapindex_addmap(int index, const char* name) {
 
 	safestrncpy(indexes[index].name, map_name, MAP_NAME_LENGTH);
 	strdb_iput(mapindex_db, map_name, index);
-	if (max_index <= index)
+	if (max_index <= index) {
 		max_index = index + 1;
+	}
 
 	return index;
 }
@@ -112,11 +114,13 @@ unsigned short mapindex_name2idx(const char* name, const char* func) {
 	char map_name[MAP_NAME_LENGTH];
 	mapindex_getmapname(name, map_name);
 
-	if ((i = strdb_iget(mapindex_db, map_name)))
+	if ((i = strdb_iget(mapindex_db, map_name))) {
 		return i;
+	}
 
-	if (func)
+	if (func) {
 		ShowDebug("(%s) mapindex_name2id: Map \"%s\" not found in index list!\n", func, map_name);
+	}
 	return 0;
 }
 
@@ -155,8 +159,9 @@ void mapindex_init(void) {
 		}
 
 		while (fgets(line, sizeof(line), fp)) {
-			if (line[0] == '/' && line[1] == '/')
+			if (line[0] == '/' && line[1] == '/') {
 				continue;
+			}
 
 			switch (sscanf(line, "%11s\t%d", map_name, &index)) {
 				case 1: // Map with no ID given, auto-assign

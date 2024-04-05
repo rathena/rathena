@@ -18,8 +18,9 @@ static void nullpo_info_core_(const char *file, int line, const char *func);
 int nullpo_chk_f(const char *file, int line, const char *func, const void *target, const char *fmt, ...) {
 	va_list ap;
 
-	if (target != NULL)
+	if (target != NULL) {
 		return 0;
+	}
 
 	va_start(ap, fmt);
 	nullpo_info_core(file, line, func, fmt, ap);
@@ -28,8 +29,9 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
 }
 
 int nullpo_chk(const char *file, int line, const char *func, const void *target) {
-	if (target != NULL)
+	if (target != NULL) {
 		return 0;
+	}
 	nullpo_info_core_(file, line, func);
 	return 1;
 }
@@ -50,8 +52,9 @@ void nullpo_info(const char *file, int line, const char *func) {
 }
 
 static void nullpo_info_core_(const char *file, int line, const char *func) {
-	if (file == NULL)
+	if (file == NULL) {
 		file = "??";
+	}
 
 	func = func == NULL ? "unknown" : func[0] == '\0' ? "unknown" : func;
 
@@ -69,8 +72,9 @@ static void nullpo_info_core(const char *file, int line, const char *func, const
 			vprintf(fmt, ap);
 
 			// Check whether the new line at the end
-			if (fmt[strlen(fmt) - 1] != '\n')
+			if (fmt[strlen(fmt) - 1] != '\n') {
 				ShowMessage("\n");
+			}
 		}
 	}
 	ShowMessage("--- end nullpo info ----------------------------------------\n");

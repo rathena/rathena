@@ -55,21 +55,24 @@ bool IsCurrentUserLocalAdministrator(void) {
 
 							 TRUE,
 							 &hToken)) {
-			if (GetLastError() != ERROR_NO_TOKEN)
+			if (GetLastError() != ERROR_NO_TOKEN) {
 				__leave;
+			}
 
 			if (!OpenProcessToken(GetCurrentProcess(),
 
 								  TOKEN_DUPLICATE | TOKEN_QUERY,
-								  &hToken))
+								  &hToken)) {
 				__leave;
+			}
 		}
 
 		if (!DuplicateToken(hToken,
 							SecurityImpersonation,
 
-							&hImpersonationToken))
+							&hImpersonationToken)) {
 			__leave;
+		}
 
 		/*
 		Create the binary representation of the well-known SID that
@@ -82,27 +85,32 @@ bool IsCurrentUserLocalAdministrator(void) {
 		After that, perform the access check.  This will determine whether
 		the current user is a local admin.
 		*/
-		if (!AllocateAndInitializeSid(&SystemSidAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &psidAdmin))
+		if (!AllocateAndInitializeSid(&SystemSidAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &psidAdmin)) {
 			__leave;
+		}
 
 		psdAdmin = LocalAlloc(LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH);
-		if (psdAdmin == NULL)
+		if (psdAdmin == NULL) {
 			__leave;
+		}
 
 		if (!InitializeSecurityDescriptor(psdAdmin,
 
-										  SECURITY_DESCRIPTOR_REVISION))
+										  SECURITY_DESCRIPTOR_REVISION)) {
 			__leave;
+		}
 
 		// Compute size needed for the ACL.
 		dwACLSize = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(psidAdmin) - sizeof(DWORD);
 
 		pACL = (PACL)LocalAlloc(LPTR, dwACLSize);
-		if (pACL == NULL)
+		if (pACL == NULL) {
 			__leave;
+		}
 
-		if (!InitializeAcl(pACL, dwACLSize, ACL_REVISION2))
+		if (!InitializeAcl(pACL, dwACLSize, ACL_REVISION2)) {
 			__leave;
+		}
 
 		dwAccessMask = ACCESS_READ | ACCESS_WRITE;
 
@@ -110,11 +118,13 @@ bool IsCurrentUserLocalAdministrator(void) {
 								 ACL_REVISION2,
 								 dwAccessMask,
 
-								 psidAdmin))
+								 psidAdmin)) {
 			__leave;
+		}
 
-		if (!SetSecurityDescriptorDacl(psdAdmin, TRUE, pACL, FALSE))
+		if (!SetSecurityDescriptorDacl(psdAdmin, TRUE, pACL, FALSE)) {
 			__leave;
+		}
 
 		/*
 		AccessCheck validates a security descriptor somewhat;
@@ -124,8 +134,9 @@ bool IsCurrentUserLocalAdministrator(void) {
 		SetSecurityDescriptorGroup(psdAdmin, psidAdmin, FALSE);
 		SetSecurityDescriptorOwner(psdAdmin, psidAdmin, FALSE);
 
-		if (!IsValidSecurityDescriptor(psdAdmin))
+		if (!IsValidSecurityDescriptor(psdAdmin)) {
 			__leave;
+		}
 
 		dwAccessDesired = ACCESS_READ;
 
@@ -144,16 +155,21 @@ bool IsCurrentUserLocalAdministrator(void) {
 		}
 	} __finally {
 		// Clean up.
-		if (pACL)
+		if (pACL) {
 			LocalFree(pACL);
-		if (psdAdmin)
+		}
+		if (psdAdmin) {
 			LocalFree(psdAdmin);
-		if (psidAdmin)
+		}
+		if (psidAdmin) {
 			FreeSid(psidAdmin);
-		if (hImpersonationToken)
+		}
+		if (hImpersonationToken) {
 			CloseHandle(hImpersonationToken);
-		if (hToken)
+		}
+		if (hToken) {
 			CloseHandle(hToken);
+		}
 	}
 
 	return fReturn == TRUE;

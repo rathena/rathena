@@ -199,8 +199,9 @@ void YamlDatabase::parseImports(const ryml::Tree& rootNode) {
 
 					// RENEWAL mode with RENEWAL_ASPD off, load pre-re ASPD
 	#ifndef RENEWAL_ASPD
-					if (importFile.find("job_aspd.yml") != std::string::npos)
+					if (importFile.find("job_aspd.yml") != std::string::npos) {
 						compiledMode = "Prerenewal";
+					}
 	#endif
 #else
 					std::string compiledMode = "Prerenewal";
@@ -217,8 +218,9 @@ void YamlDatabase::parseImports(const ryml::Tree& rootNode) {
 					if (!this->asBool(node, "Generator", isGenerator)) {
 						continue;
 					}
-					if (!(shouldLoadGenerator && isGenerator))
+					if (!(shouldLoadGenerator && isGenerator)) {
 						continue; // skip import
+					}
 				}
 
 				this->load(importFile);

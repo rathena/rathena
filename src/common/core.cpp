@@ -75,8 +75,9 @@ sigfunc *compat_signal(int signo, sigfunc *func) {
 	sact.sa_flags |= SA_INTERRUPT; /* SunOS */
 		#endif
 
-	if (sigaction(signo, &sact, &oact) < 0)
+	if (sigaction(signo, &sact, &oact) < 0) {
 		return (SIG_ERR);
+	}
 
 	return (oact.sa_handler);
 }
@@ -102,8 +103,9 @@ static BOOL WINAPI console_handler(DWORD c_event) {
 }
 
 static void cevents_init() {
-	if (SetConsoleCtrlHandler(console_handler, TRUE) == FALSE)
+	if (SetConsoleCtrlHandler(console_handler, TRUE) == FALSE) {
 		ShowWarning("Unable to install the console handler!\n");
+	}
 }
 	#endif
 
@@ -116,8 +118,9 @@ static void sig_proc(int sn) {
 	switch (sn) {
 		case SIGINT:
 		case SIGTERM:
-			if (++is_called > 3)
+			if (++is_called > 3) {
 				exit(EXIT_SUCCESS);
+			}
 			if (global_core != nullptr) {
 				global_core->signal_shutdown();
 			}
@@ -168,8 +171,9 @@ const char *get_svn_revision(void) {
 	static char svn_version_buffer[16] = "";
 	FILE *fp;
 
-	if (svn_version_buffer[0] != '\0')
+	if (svn_version_buffer[0] != '\0') {
 		return svn_version_buffer;
+	}
 
 	// subversion 1.7 uses a sqlite3 database
 	// FIXME this is hackish at best...
@@ -200,22 +204,26 @@ const char *get_svn_revision(void) {
 
 		// parse buffer
 		for (i = prefix_len + 1; i + postfix_len <= len; ++i) {
-			if (buffer[i] != postfix[0] || memcmp(buffer + i, postfix, postfix_len) != 0)
+			if (buffer[i] != postfix[0] || memcmp(buffer + i, postfix, postfix_len) != 0) {
 				continue; // postfix missmatch
-			for (j = i; j > 0; --j) { // skip digits
-				if (!ISDIGIT(buffer[j - 1]))
-					break;
 			}
-			if (memcmp(buffer + j - prefix_len, prefix, prefix_len) != 0)
+			for (j = i; j > 0; --j) { // skip digits
+				if (!ISDIGIT(buffer[j - 1])) {
+					break;
+				}
+			}
+			if (memcmp(buffer + j - prefix_len, prefix, prefix_len) != 0) {
 				continue; // prefix missmatch
+			}
 			// done
 			snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", atoi(buffer + j));
 			break;
 		}
 		aFree(buffer);
 
-		if (svn_version_buffer[0] != '\0')
+		if (svn_version_buffer[0] != '\0') {
 			return svn_version_buffer;
+		}
 	}
 
 	// subversion 1.6 and older?
@@ -226,9 +234,11 @@ const char *get_svn_revision(void) {
 		if (fgets(line, sizeof(line), fp)) {
 			if (!ISDIGIT(line[0])) {
 				// XML File format
-				while (fgets(line, sizeof(line), fp))
-					if (strstr(line, "revision="))
+				while (fgets(line, sizeof(line), fp)) {
+					if (strstr(line, "revision=")) {
 						break;
+					}
+				}
 				if (sscanf(line, " %*[^\"]\"%11d%*[^\n]", &rev) == 1) {
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", rev);
 				}
@@ -248,8 +258,9 @@ const char *get_svn_revision(void) {
 		}
 		fclose(fp);
 
-		if (svn_version_buffer[0] != '\0')
+		if (svn_version_buffer[0] != '\0') {
 			return svn_version_buffer;
+		}
 	}
 
 	// fallback
@@ -263,16 +274,18 @@ const char *get_git_hash(void) {
 	static char GitHash[41] = ""; // Sha(40) + 1
 	FILE *fp;
 
-	if (GitHash[0] != '\0')
+	if (GitHash[0] != '\0') {
 		return GitHash;
+	}
 
 	if ((fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
 		(fp = fopen(".git/refs/heads/master", "r")) != NULL) { // Cloned only
 		char line[64];
 		char *rev = (char *)malloc(sizeof(char) * 50);
 
-		if (fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev) == 1)
+		if (fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev) == 1) {
 			snprintf(GitHash, sizeof(GitHash), "%s", rev);
+		}
 
 		free(rev);
 		fclose(fp);
@@ -307,10 +320,11 @@ static void display_title(void) {
 	ShowMessage("" CL_PASS "       " CL_GREEN "              http://rathena.org/board/                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 
-	if (svn[0] != UNKNOWN_VERSION)
+	if (svn[0] != UNKNOWN_VERSION) {
 		ShowInfo("SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
-	else if (git[0] != UNKNOWN_VERSION)
+	} else if (git[0] != UNKNOWN_VERSION) {
 		ShowInfo("Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git);
+	}
 }
 
 // Warning if executed as superuser (root)
@@ -344,8 +358,9 @@ int Core::start(int argc, char **argv) {
 			SERVER_NAME = ++p1;
 			n = p1 - argv[0]; // calc dir name len
 			pwd = safestrncpy((char *)malloc(n + 1), argv[0], n);
-			if (chdir(pwd) != 0)
+			if (chdir(pwd) != 0) {
 				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME);
+			}
 			free(pwd);
 		} else {
 			// On Windows the .bat files have the executeable names as parameters without any path

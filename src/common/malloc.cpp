@@ -116,8 +116,9 @@ char *aStrdup_(const char *p, const char *file, int line, const char *func) {
 }
 void aFree_(void *p, const char *file, int line, const char *func) {
 	// ShowMessage("%s:%d: in func %s: aFree %p\n",file,line,func,p);
-	if (p)
+	if (p) {
 		FREE(p, file, line, func);
+	}
 }
 
 #ifdef USE_MEMMGR
@@ -249,9 +250,9 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 			p->unit_head.file = file;
 			p->unit_head.line = line;
 			p->prev = NULL;
-			if (unit_head_large_first == NULL)
+			if (unit_head_large_first == NULL) {
 				p->next = NULL;
-			else {
+			} else {
 				unit_head_large_first->prev = p;
 				p->next = unit_head_large_first;
 			}
@@ -366,8 +367,9 @@ char *_mstrdup(const char *p, const char *file, int line, const char *func) {
 void _mfree(void *ptr, const char *file, int line, const char *func) {
 	struct unit_head *head;
 
-	if (ptr == NULL)
+	if (ptr == NULL) {
 		return;
+	}
 
 	head = (struct unit_head *)((char *)ptr - sizeof(struct unit_head) + sizeof(long));
 	if (head->size == 0) {
@@ -518,8 +520,9 @@ static void memmgr_log(char *buf) {
 		struct tm *t;
 
 		log_fp = fopen(memmer_logfile, "at");
-		if (!log_fp)
+		if (!log_fp) {
 			log_fp = stdout;
+		}
 
 		time(&raw);
 		t = localtime(&raw);
@@ -572,8 +575,9 @@ bool memmgr_verify(void *ptr) {
 	struct block *block = block_first;
 	struct unit_head_large *large = unit_head_large_first;
 
-	if (ptr == NULL)
+	if (ptr == NULL) {
 		return false; // never valid
+	}
 
 	// search small blocks
 	while (block) {

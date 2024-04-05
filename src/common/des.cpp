@@ -23,8 +23,9 @@ static void IP(BIT64* src) {
 	size_t i;
 	for (i = 0; i < ARRAYLENGTH(ip_table); ++i) {
 		uint8_t j = ip_table[i] - 1;
-		if (src->b[(j >> 3) & 7] & mask[j & 7])
+		if (src->b[(j >> 3) & 7] & mask[j & 7]) {
 			tmp.b[(i >> 3) & 7] |= mask[i & 7];
+		}
 	}
 
 	*src = tmp;
@@ -42,8 +43,9 @@ static void FP(BIT64* src) {
 	size_t i;
 	for (i = 0; i < ARRAYLENGTH(fp_table); ++i) {
 		uint8_t j = fp_table[i] - 1;
-		if (src->b[(j >> 3) & 7] & mask[j & 7])
+		if (src->b[(j >> 3) & 7] & mask[j & 7]) {
 			tmp.b[(i >> 3) & 7] |= mask[i & 7];
+		}
 	}
 
 	*src = tmp;
@@ -62,8 +64,9 @@ static void E(BIT64* src) {
 		size_t i;
 		for (i = 0; i < ARRAYLENGTH(expand_table); ++i) {
 			uint8_t j = expand_table[i] - 1;
-			if (src->b[j / 8 + 4] & mask[j % 8])
+			if (src->b[j / 8 + 4] & mask[j % 8]) {
 				tmp.b[i / 6 + 0] |= mask[i % 6];
+			}
 		}
 	} else { // optimized
 		tmp.b[0] = ((src->b[7] << 5) | (src->b[4] >> 3)) & 0x3f; // ..0 vutsr
@@ -90,8 +93,9 @@ static void TP(BIT64* src) {
 	size_t i;
 	for (i = 0; i < ARRAYLENGTH(tp_table); ++i) {
 		uint8_t j = tp_table[i] - 1;
-		if (src->b[(j >> 3) + 0] & mask[j & 7])
+		if (src->b[(j >> 3) + 0] & mask[j & 7]) {
 			tmp.b[(i >> 3) + 4] |= mask[i & 7];
+		}
 	}
 
 	*src = tmp;
@@ -155,6 +159,7 @@ void des_decrypt(unsigned char* data, size_t size) {
 	BIT64* p = (BIT64*)data;
 	size_t i;
 
-	for (i = 0; i * 8 < size; i += 8)
+	for (i = 0; i * 8 < size; i += 8) {
 		des_decrypt_block(p);
+	}
 }

@@ -125,9 +125,11 @@ static struct ers_instance_t *InstanceList = NULL;
 static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	ers_cache_t *cache;
 
-	for (cache = CacheList; cache; cache = cache->Next)
-		if (cache->ObjectSize == size && cache->Options == (Options & ERS_CACHE_OPTIONS))
+	for (cache = CacheList; cache; cache = cache->Next) {
+		if (cache->ObjectSize == size && cache->Options == (Options & ERS_CACHE_OPTIONS)) {
 			return cache;
+		}
+	}
 
 	CREATE(cache, ers_cache_t, 1);
 	cache->ObjectSize = size;
@@ -156,16 +158,19 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 static void ers_free_cache(ers_cache_t *cache, bool remove) {
 	unsigned int i;
 
-	for (i = 0; i < cache->Used; i++)
+	for (i = 0; i < cache->Used; i++) {
 		aFree(cache->Blocks[i]);
+	}
 
-	if (cache->Next)
+	if (cache->Next) {
 		cache->Next->Prev = cache->Prev;
+	}
 
-	if (cache->Prev)
+	if (cache->Prev) {
 		cache->Prev->Next = cache->Next;
-	else
+	} else {
 		CacheList = cache->Next;
+	}
 
 	aFree(cache->Blocks);
 
@@ -218,8 +223,9 @@ static void ers_obj_free_entry(ERS *self, void *entry) {
 		return;
 	}
 
-	if (instance->Cache->Options & ERS_OPT_CLEAN)
+	if (instance->Cache->Options & ERS_OPT_CLEAN) {
 		memset((unsigned char *)reuse + sizeof(struct ers_list), 0, instance->Cache->ObjectSize - sizeof(struct ers_list));
+	}
 
 	reuse->Next = instance->Cache->ReuseList;
 	instance->Cache->ReuseList = reuse;
@@ -246,23 +252,29 @@ static void ers_obj_destroy(ERS *self) {
 		return;
 	}
 
-	if (instance->Count > 0)
-		if (!(instance->Options & ERS_OPT_CLEAR))
+	if (instance->Count > 0) {
+		if (!(instance->Options & ERS_OPT_CLEAR)) {
 			ShowWarning("Memory leak detected at ERS '%s', %d objects not freed.\n", instance->Name, instance->Count);
+		}
+	}
 
-	if (--instance->Cache->ReferenceCount <= 0)
+	if (--instance->Cache->ReferenceCount <= 0) {
 		ers_free_cache(instance->Cache, true);
+	}
 
-	if (instance->Next)
+	if (instance->Next) {
 		instance->Next->Prev = instance->Prev;
+	}
 
-	if (instance->Prev)
+	if (instance->Prev) {
 		instance->Prev->Next = instance->Next;
-	else
+	} else {
 		InstanceList = instance->Next;
+	}
 
-	if (instance->Options & ERS_OPT_FREE_NAME)
+	if (instance->Options & ERS_OPT_FREE_NAME) {
 		aFree(instance->Name);
+	}
 
 	aFree(instance);
 }
@@ -290,8 +302,9 @@ ERS *ers_new(uint32 size, const char *name, enum ERSOptions options) {
 	size += sizeof(struct ers_list);
 
 	#if ERS_ALIGNED > 1 // If it's aligned to 1-byte boundaries, no need to bother.
-	if (size % ERS_ALIGNED)
+	if (size % ERS_ALIGNED) {
 		size += ERS_ALIGNED - size % ERS_ALIGNED;
+	}
 	#endif
 
 	instance->VTable.alloc = ers_obj_alloc_entry;

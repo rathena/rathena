@@ -81,10 +81,11 @@ template <typename K, typename V>
 V map_get(std::map<K, V>& map, K key, V defaultValue) {
 	auto it = map.find(key);
 
-	if (it != map.end())
+	if (it != map.end()) {
 		return it->second;
-	else
+	} else {
 		return defaultValue;
+	}
 }
 
 /**
@@ -111,10 +112,11 @@ template <typename K, typename V>
 V* umap_find(std::unordered_map<K, V>& map, K key) {
 	auto it = map.find(key);
 
-	if (it != map.end())
+	if (it != map.end()) {
 		return &it->second;
-	else
+	} else {
 		return nullptr;
+	}
 }
 
 /**
@@ -127,10 +129,11 @@ template <typename K, typename V>
 std::shared_ptr<V> umap_find(std::unordered_map<K, std::shared_ptr<V>>& map, K key) {
 	auto it = map.find(key);
 
-	if (it != map.end())
+	if (it != map.end()) {
 		return it->second;
-	else
+	} else {
 		return nullptr;
+	}
 }
 
 /**
@@ -144,10 +147,11 @@ template <typename K, typename V>
 V umap_get(std::unordered_map<K, V>& map, K key, V defaultValue) {
 	auto it = map.find(key);
 
-	if (it != map.end())
+	if (it != map.end()) {
 		return it->second;
-	else
+	} else {
 		return defaultValue;
+	}
 }
 
 /**
@@ -209,10 +213,11 @@ template <typename K, typename V>
 bool vector_exists(const std::vector<K>& vec, V value) {
 	auto it = std::find(vec.begin(), vec.end(), value);
 
-	if (it != vec.end())
+	if (it != vec.end()) {
 		return true;
-	else
+	} else {
 		return false;
+	}
 }
 
 /**
@@ -225,8 +230,9 @@ void erase_at(std::vector<K>& vector, size_t index) {
 	if (vector.size() == 1) {
 		vector.clear();
 		vector.shrink_to_fit();
-	} else
+	} else {
 		vector.erase(vector.begin() + index);
+	}
 }
 
 /**
@@ -243,8 +249,9 @@ void vector_erase_if_exists(std::vector<K>& vector, V value) {
 		if (vector.size() == 1) {
 			vector.clear();
 			vector.shrink_to_fit();
-		} else
+		} else {
 			vector.erase(it);
+		}
 	}
 }
 

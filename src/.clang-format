@@ -22,6 +22,8 @@ IndentPPDirectives: BeforeHash
 AllowShortEnumsOnASingleLine: false
 # Prevent newline alignment in Macros
 AlignEscapedNewlines: DontAlign
+# Add missing curly braces
+InsertBraces: true
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3

@@ -88,11 +88,14 @@ int sock2fd(SOCKET s) {
 	int fd;
 
 	// search for the socket
-	for (fd = 1; fd < sock_arr_len; ++fd)
-		if (sock_arr[fd] == s)
+	for (fd = 1; fd < sock_arr_len; ++fd) {
+		if (sock_arr[fd] == s) {
 			break; // found the socket
-	if (fd == sock_arr_len)
+		}
+	}
+	if (fd == sock_arr_len) {
 		return -1; // not found
+	}
 	return fd;
 }
 
@@ -108,17 +111,20 @@ int sock2newfd(SOCKET s) {
 	int fd;
 
 	// find an empty position
-	for (fd = 1; fd < sock_arr_len; ++fd)
-		if (sock_arr[fd] == INVALID_SOCKET)
+	for (fd = 1; fd < sock_arr_len; ++fd) {
+		if (sock_arr[fd] == INVALID_SOCKET) {
 			break; // empty position
+		}
+	}
 	if (fd == ARRAYLENGTH(sock_arr)) { // too many sockets
 		closesocket(s);
 		WSASetLastError(WSAEMFILE);
 		return -1;
 	}
 	sock_arr[fd] = s;
-	if (sock_arr_len <= fd)
+	if (sock_arr_len <= fd) {
 		sock_arr_len = fd + 1;
+	}
 	return fd;
 }
 
@@ -127,8 +133,9 @@ int sAccept(int fd, struct sockaddr* addr, int* addrlen) {
 
 	// accept connection
 	s = accept(fd2sock(fd), addr, addrlen);
-	if (s == INVALID_SOCKET)
+	if (s == INVALID_SOCKET) {
 		return -1; // error
+	}
 	return sock2newfd(s);
 }
 
@@ -143,16 +150,18 @@ int sSocket(int af, int type, int protocol) {
 
 	// create socket
 	s = socket(af, type, protocol);
-	if (s == INVALID_SOCKET)
+	if (s == INVALID_SOCKET) {
 		return -1; // error
+	}
 	return sock2newfd(s);
 }
 
 char* sErr(int code) {
 	static char sbuf[512];
 	// strerror does not handle socket codes
-	if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), (LPTSTR)&sbuf, sizeof(sbuf), NULL) == 0)
+	if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), (LPTSTR)&sbuf, sizeof(sbuf), NULL) == 0) {
 		snprintf(sbuf, sizeof(sbuf), "unknown error");
+	}
 	return sbuf;
 }
 
@@ -301,12 +310,13 @@ void set_defaultparse(ParseFunc defaultparse) {
 void set_nonblocking(int fd, unsigned long yes) {
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s.
 	// The argp parameter is zero if nonblocking is to be disabled.
-	if (sIoctl(fd, FIONBIO, &yes) != 0)
+	if (sIoctl(fd, FIONBIO, &yes) != 0) {
 		ShowError(
 			"set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report "
 			"this!!!\n",
 			fd,
 			error_msg());
+	}
 }
 
 void setsocketopts(int fd, int delay_timeout) {
@@ -334,8 +344,9 @@ void setsocketopts(int fd, int delay_timeout) {
 		struct linger opt;
 		opt.l_onoff = 0; // SO_DONTLINGER
 		opt.l_linger = 0; // Do not care
-		if (sSetsockopt(fd, SOL_SOCKET, SO_LINGER, (char*)&opt, sizeof(opt)))
+		if (sSetsockopt(fd, SOL_SOCKET, SO_LINGER, (char*)&opt, sizeof(opt))) {
 			ShowWarning("setsocketopts: Unable to set SO_LINGER mode for connection #%d!\n", fd);
+		}
 	}
 	if (delay_timeout) {
 #if defined(WIN32)
@@ -346,10 +357,12 @@ void setsocketopts(int fd, int delay_timeout) {
 		timeout.tv_usec = 0;
 #endif
 
-		if (sSetsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout, sizeof(timeout)) < 0)
+		if (sSetsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeout, sizeof(timeout)) < 0) {
 			ShowError("setsocketopts: Unable to set SO_RCVTIMEO timeout for connection #%d!\n", fd);
-		if (sSetsockopt(fd, SOL_SOCKET, SO_SNDTIMEO, (char*)&timeout, sizeof(timeout)) < 0)
+		}
+		if (sSetsockopt(fd, SOL_SOCKET, SO_SNDTIMEO, (char*)&timeout, sizeof(timeout)) < 0) {
 			ShowError("setsocketopts: Unable to set SO_SNDTIMEO timeout for connection #%d!\n", fd);
+		}
 	}
 }
 
@@ -369,8 +382,9 @@ void set_eof(int fd) {
 int recv_to_fifo(int fd) {
 	int len;
 
-	if (!session_isActive(fd))
+	if (!session_isActive(fd)) {
 		return -1;
+	}
 
 	len = sRecv(fd, (char*)session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
 
@@ -402,11 +416,13 @@ int recv_to_fifo(int fd) {
 int send_from_fifo(int fd) {
 	int len;
 
-	if (!session_isValid(fd))
+	if (!session_isValid(fd)) {
 		return -1;
+	}
 
-	if (session[fd]->wdata_size == 0)
+	if (session[fd]->wdata_size == 0) {
 		return 0; // nothing to send
+	}
 
 	len = sSend(fd, (const char*)session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
 
@@ -427,8 +443,9 @@ int send_from_fifo(int fd) {
 
 		// some data could not be transferred?
 		// shift unsent data to the beginning of the queue
-		if ((size_t)len < session[fd]->wdata_size)
+		if ((size_t)len < session[fd]->wdata_size) {
 			memmove(session[fd]->wdata, session[fd]->wdata + len, session[fd]->wdata_size - len);
+		}
 
 		session[fd]->wdata_size -= len;
 #ifdef SHOW_SERVER_STATS
@@ -445,14 +462,16 @@ int send_from_fifo(int fd) {
 
 /// Best effort - there's no warranty that the data will be sent.
 void flush_fifo(int fd) {
-	if (session[fd] != NULL)
+	if (session[fd] != NULL) {
 		session[fd]->func_send(fd);
+	}
 }
 
 void flush_fifos(void) {
 	int i;
-	for (i = 1; i < fd_max; i++)
+	for (i = 1; i < fd_max; i++) {
 		flush_fifo(i);
+	}
 }
 
 /*======================================
@@ -510,8 +529,9 @@ int connect_client(int listen_fd) {
 	}
 #endif
 
-	if (fd_max <= fd)
+	if (fd_max <= fd) {
 		fd_max = fd + 1;
+	}
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(client_address.sin_addr.s_addr);
@@ -578,8 +598,9 @@ int make_listen_bind(uint32 ip, uint16 port) {
 	}
 #endif
 
-	if (fd_max <= fd)
+	if (fd_max <= fd) {
 		fd_max = fd + 1;
+	}
 
 	create_session(fd, connect_client, null_send, null_parse);
 	session[fd]->client_addr = 0; // just listens
@@ -621,8 +642,9 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 	remote_address.sin_addr.s_addr = htonl(ip);
 	remote_address.sin_port = htons(port);
 
-	if (!silent)
+	if (!silent) {
 		ShowStatus("Connecting to %d.%d.%d.%d:%i\n", CONVIP(ip), port);
+	}
 #ifdef WIN32
 	// On Windows we have to set the socket non-blocking before the connection to make timeout work.
 	// [Lemongrass]
@@ -677,8 +699,9 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 			// The select operation failed
 		}
 
-		if (!silent)
+		if (!silent) {
 			ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
+		}
 
 		do_close(fd);
 		return -1;
@@ -688,8 +711,9 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 #else
 	result = sConnect(fd, (struct sockaddr*)(&remote_address), sizeof(struct sockaddr_in));
 	if (result == SOCKET_ERROR) {
-		if (!silent)
+		if (!silent) {
 			ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
+		}
 		do_close(fd);
 		return -1;
 	}
@@ -713,8 +737,9 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 	}
 #endif
 
-	if (fd_max <= fd)
+	if (fd_max <= fd) {
 		fd_max = fd + 1;
+	}
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
@@ -751,8 +776,9 @@ static void delete_session(int fd) {
 }
 
 int _realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func) {
-	if (!session_isValid(fd))
+	if (!session_isValid(fd)) {
 		return 0;
+	}
 
 	if (session[fd]->max_rdata != rfifo_size && session[fd]->rdata_size < rfifo_size) {
 		RECREATE2(session[fd]->rdata, unsigned char, rfifo_size, file, line, func);
@@ -769,19 +795,22 @@ int _realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size, cons
 int _realloc_writefifo(int fd, size_t addition, const char* file, int line, const char* func) {
 	size_t newsize;
 
-	if (!session_isValid(fd)) // might not happen
+	if (!session_isValid(fd)) { // might not happen
 		return 0;
+	}
 
 	if (session[fd]->wdata_size + addition > session[fd]->max_wdata) { // grow rule; grow in multiples of WFIFO_SIZE
 		newsize = WFIFO_SIZE;
-		while (session[fd]->wdata_size + addition > newsize)
+		while (session[fd]->wdata_size + addition > newsize) {
 			newsize += WFIFO_SIZE;
+		}
 	} else if (session[fd]->max_wdata >= (size_t)2 * (session[fd]->flag.server ? FIFOSIZE_SERVERLINK : WFIFO_SIZE) &&
 			   (session[fd]->wdata_size + addition) * 4 < session[fd]->max_wdata) { // shrink rule, shrink by 2 when only a quarter of the
 																					// fifo is used, don't shrink below nominal size.
 		newsize = session[fd]->max_wdata / 2;
-	} else // no change
+	} else { // no change
 		return 0;
+	}
 
 	RECREATE2(session[fd]->wdata, unsigned char, newsize, file, line, func);
 	session[fd]->max_wdata = newsize;
@@ -793,8 +822,9 @@ int _realloc_writefifo(int fd, size_t addition, const char* file, int line, cons
 int RFIFOSKIP(int fd, size_t len) {
 	struct socket_data* s;
 
-	if (!session_isActive(fd))
+	if (!session_isActive(fd)) {
 		return 0;
+	}
 
 	s = session[fd];
 
@@ -815,8 +845,9 @@ int WFIFOSET(int fd, size_t len) {
 	size_t newreserve;
 	struct socket_data* s = session[fd];
 
-	if (!session_isValid(fd) || s->wdata == NULL)
+	if (!session_isValid(fd) || s->wdata == NULL) {
 		return 0;
+	}
 
 	// we have written len bytes to the buffer already before calling WFIFOSET
 	if (s->wdata_size + len > s->max_wdata) { // actually there was a buffer overflow already
@@ -874,8 +905,9 @@ int WFIFOSET(int fd, size_t len) {
 	socket_data_qo += len;
 #endif
 	// If the interserver has 200% of its normal size full, flush the data.
-	if (s->flag.server && s->wdata_size >= 2 * FIFOSIZE_SERVERLINK)
+	if (s->flag.server && s->wdata_size >= 2 * FIFOSIZE_SERVERLINK) {
 		flush_fifo(fd);
+	}
 
 	// always keep a WFIFO_SIZE reserve in the buffer
 	// For inter-server connections, let the reserve be 1/4th of the link size.
@@ -904,11 +936,13 @@ int do_sockets(t_tick next) {
 	send_shortlist_do_sends();
 #else
 	for (i = 1; i < fd_max; i++) {
-		if (!session[i])
+		if (!session[i]) {
 			continue;
+		}
 
-		if (session[i]->wdata_size)
+		if (session[i]->wdata_size) {
 			session[i]->func_send(i);
+		}
 	}
 #endif
 
@@ -950,8 +984,9 @@ int do_sockets(t_tick next) {
 	// on windows, enumerating all members of the fd_set is way faster if we access the internals
 	for (i = 0; i < (int)rfd.fd_count; ++i) {
 		int fd = sock2fd(rfd.fd_array[i]);
-		if (session[fd])
+		if (session[fd]) {
 			session[fd]->func_recv(fd);
+		}
 	}
 #elif defined(SOCKET_EPOLL)
 	// epoll based selection
@@ -988,11 +1023,13 @@ int do_sockets(t_tick next) {
 	send_shortlist_do_sends();
 #else
 	for (i = 1; i < fd_max; i++) {
-		if (!session[i])
+		if (!session[i]) {
 			continue;
+		}
 
-		if (session[i]->wdata_size)
+		if (session[i]->wdata_size) {
 			session[i]->func_send(i);
+		}
 
 		if (session[i]->flag.eof) // func_send can't free a session, this is safe.
 		{ // Finally, even if there is no data to parse, connections signalled eof should be closed,
@@ -1004,13 +1041,15 @@ int do_sockets(t_tick next) {
 
 	// parse input data on each socket
 	for (i = 1; i < fd_max; i++) {
-		if (!session[i])
+		if (!session[i]) {
 			continue;
+		}
 
 		if (session[i]->rdata_tick && DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time) {
 			if (session[i]->flag.server) { /* server is special */
-				if (session[i]->flag.ping != 2) /* only update if necessary otherwise it'd resend the ping unnecessarily */
+				if (session[i]->flag.ping != 2) { /* only update if necessary otherwise it'd resend the ping unnecessarily */
 					session[i]->flag.ping = 1;
+				}
 			} else {
 				ShowInfo("Session #%d timed out\n", i);
 				set_eof(i);
@@ -1019,8 +1058,9 @@ int do_sockets(t_tick next) {
 
 		session[i]->func_parse(i);
 
-		if (!session[i])
+		if (!session[i]) {
 			continue;
+		}
 
 		// after parse, check client's RFIFO size to know if there is an invalid packet (too big and
 		// not parsed)
@@ -1155,26 +1195,29 @@ static int connect_check_(uint32 ip) {
 	switch (access_order) {
 		case ACO_DENY_ALLOW:
 		default:
-			if (is_denyip)
+			if (is_denyip) {
 				connect_ok = 0; // Reject
-			else if (is_allowip)
+			} else if (is_allowip) {
 				connect_ok = 2; // Unconditional Accept
-			else
+			} else {
 				connect_ok = 1; // Accept
+			}
 			break;
 		case ACO_ALLOW_DENY:
-			if (is_allowip)
+			if (is_allowip) {
 				connect_ok = 2; // Unconditional Accept
-			else if (is_denyip)
+			} else if (is_denyip) {
 				connect_ok = 0; // Reject
-			else
+			} else {
 				connect_ok = 1; // Accept
+			}
 			break;
 		case ACO_MUTUAL_FAILURE:
-			if (is_allowip && !is_denyip)
+			if (is_allowip && !is_denyip) {
 				connect_ok = 2; // Unconditional Accept
-			else
+			} else {
 				connect_ok = 0; // Reject
+			}
 			break;
 	}
 
@@ -1308,46 +1351,53 @@ int socket_config_read(const char* cfgName) {
 	}
 
 	while (fgets(line, sizeof(line), fp)) {
-		if (line[0] == '/' && line[1] == '/')
+		if (line[0] == '/' && line[1] == '/') {
 			continue;
-		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2)
+		}
+		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2) {
 			continue;
+		}
 
 		if (!strcmpi(w1, "stall_time")) {
 			stall_time = atoi(w2);
-			if (stall_time < 3)
+			if (stall_time < 3) {
 				stall_time = 3; /* a minimum is required to refrain it from killing itself */
+			}
 		}
 #ifndef MINICORE
 		else if (!strcmpi(w1, "enable_ip_rules")) {
 			ip_rules = config_switch(w2);
 		} else if (!strcmpi(w1, "order")) {
-			if (!strcmpi(w2, "deny,allow"))
+			if (!strcmpi(w2, "deny,allow")) {
 				access_order = ACO_DENY_ALLOW;
-			else if (!strcmpi(w2, "allow,deny"))
+			} else if (!strcmpi(w2, "allow,deny")) {
 				access_order = ACO_ALLOW_DENY;
-			else if (!strcmpi(w2, "mutual-failure"))
+			} else if (!strcmpi(w2, "mutual-failure")) {
 				access_order = ACO_MUTUAL_FAILURE;
+			}
 		} else if (!strcmpi(w1, "allow")) {
 			RECREATE(access_allow, AccessControl, access_allownum + 1);
-			if (access_ipmask(w2, &access_allow[access_allownum]))
+			if (access_ipmask(w2, &access_allow[access_allownum])) {
 				++access_allownum;
-			else
+			} else {
 				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
+			}
 		} else if (!strcmpi(w1, "deny")) {
 			RECREATE(access_deny, AccessControl, access_denynum + 1);
-			if (access_ipmask(w2, &access_deny[access_denynum]))
+			if (access_ipmask(w2, &access_deny[access_denynum])) {
 				++access_denynum;
-			else
+			} else {
 				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
-		} else if (!strcmpi(w1, "ddos_interval"))
+			}
+		} else if (!strcmpi(w1, "ddos_interval")) {
 			ddos_interval = atoi(w2);
-		else if (!strcmpi(w1, "ddos_count"))
+		} else if (!strcmpi(w1, "ddos_count")) {
 			ddos_count = atoi(w2);
-		else if (!strcmpi(w1, "ddos_autoreset"))
+		} else if (!strcmpi(w1, "ddos_autoreset")) {
 			ddos_autoreset = atoi(w2);
-		else if (!strcmpi(w1, "debug"))
+		} else if (!strcmpi(w1, "debug")) {
 			access_debug = config_switch(w2);
+		}
 	#ifdef SOCKET_EPOLL
 		else if (!strcmpi(w1, "epoll_maxevents")) {
 			epoll_maxevents = atoi(w2);
@@ -1360,10 +1410,11 @@ int socket_config_read(const char* cfgName) {
 		}
 	#endif
 #endif
-		else if (!strcmpi(w1, "import"))
+		else if (!strcmpi(w1, "import")) {
 			socket_config_read(w2);
-		else
+		} else {
 			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
+		}
 	}
 
 	fclose(fp);
@@ -1384,15 +1435,19 @@ void socket_final(void) {
 			hist = next_hist;
 		}
 	}
-	if (access_allow)
+	if (access_allow) {
 		aFree(access_allow);
-	if (access_deny)
+	}
+	if (access_deny) {
 		aFree(access_deny);
+	}
 #endif
 
-	for (i = 1; i < fd_max; i++)
-		if (session[i])
+	for (i = 1; i < fd_max; i++) {
+		if (session[i]) {
 			do_close(i);
+		}
+	}
 
 	// session[0]
 	aFree(session[0]->rdata);
@@ -1421,8 +1476,9 @@ void socket_final(void) {
 
 /// Closes a socket.
 void do_close(int fd) {
-	if (fd <= 0 || fd >= MAXCONN)
+	if (fd <= 0 || fd >= MAXCONN) {
 		return; // invalid
+	}
 
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a
 					// nonblocking socket)
@@ -1441,8 +1497,9 @@ void do_close(int fd) {
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
 	sClose(fd); // We don't really care if these closing functions return an error, we are just
 				// shutting down and not reusing this socket.
-	if (session[fd])
+	if (session[fd]) {
 		delete_session(fd);
+	}
 }
 
 /// Retrieve local ips in host byte order.
@@ -1450,8 +1507,9 @@ void do_close(int fd) {
 int socket_getips(uint32* ips, int max) {
 	int num = 0;
 
-	if (ips == NULL || max <= 0)
+	if (ips == NULL || max <= 0) {
 		return 0;
+	}
 
 #ifdef WIN32
 	{
@@ -1473,8 +1531,9 @@ int socket_getips(uint32* ips, int max) {
 				return 0;
 			}
 			a = (u_long**)hent->h_addr_list;
-			for (; num < max && a[num] != NULL; ++num)
+			for (; num < max && a[num] != NULL; ++num) {
 				ips[num] = (uint32)ntohl(*a[num]);
+			}
 		}
 	}
 #else // not WIN32
@@ -1502,8 +1561,9 @@ int socket_getips(uint32* ips, int max) {
 				struct sockaddr_in* a = (struct sockaddr_in*)&(ir->ifr_addr);
 				if (a->sin_family == AF_INET) {
 					ad = ntohl(a->sin_addr.s_addr);
-					if (ad != INADDR_LOOPBACK && ad != INADDR_ANY)
+					if (ad != INADDR_LOOPBACK && ad != INADDR_ANY) {
 						ips[num++] = (uint32)ad;
+					}
 				}
 	#if (defined(BSD) && BSD >= 199103) || defined(_AIX) || defined(__APPLE__)
 				pos += ir->ifr_addr.sa_len + sizeof(ir->ifr_name);
@@ -1517,8 +1577,9 @@ int socket_getips(uint32* ips, int max) {
 #endif // not W32
 
 	// Use loopback if no ips are found
-	if (num == 0)
+	if (num == 0) {
 		ips[num++] = (uint32)INADDR_LOOPBACK;
+	}
 
 	return num;
 }
@@ -1661,14 +1722,16 @@ void send_shortlist_add_fd(int fd) {
 	int i;
 	int bit;
 
-	if (!session_isValid(fd))
+	if (!session_isValid(fd)) {
 		return; // out of range
+	}
 
 	i = fd / 32;
 	bit = fd % 32;
 
-	if ((send_shortlist_set[i] >> bit) & 1)
+	if ((send_shortlist_set[i] >> bit) & 1) {
 		return; // already in the list
+	}
 
 	if (send_shortlist_count >= ARRAYLENGTH(send_shortlist_array)) {
 		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%" PRIuPTR " shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
@@ -1708,18 +1771,21 @@ void send_shortlist_do_sends() {
 		// check for the eof state.
 		if (session[fd]) {
 			// Send data
-			if (session[fd]->wdata_size)
+			if (session[fd]->wdata_size) {
 				session[fd]->func_send(fd);
+			}
 
 			// If it's been marked as eof, call the parse func on it so that
 			// the socket will be immediately closed.
-			if (session[fd]->flag.eof)
+			if (session[fd]->flag.eof) {
 				session[fd]->func_parse(fd);
+			}
 
 			// If the session still exists, is not eof and has things left to
 			// be sent from it we'll re-add it to the shortlist.
-			if (session_isActive(fd) && session[fd]->wdata_size)
+			if (session_isActive(fd) && session[fd]->wdata_size) {
 				send_shortlist_add_fd(fd);
+			}
 		}
 	}
 }
