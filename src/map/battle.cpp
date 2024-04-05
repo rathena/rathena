@@ -3665,14 +3665,14 @@ int battle_get_misc_element(struct block_list* src, struct block_list* target, u
  * @param skill_id: Skill ID of the skill used by source
  * @param min: Minimum value to which damage should be capped
  */
-static void battle_min_damage(struct Damage* wd, struct block_list* src, uint16 skill_id, int64 min) {
-	if (is_attack_right_handed(src, skill_id)) {
-		wd->damage = cap_value(wd->damage, min, INT64_MAX);
-		wd->basedamage = cap_value(wd->basedamage, min, INT64_MAX);
+static void battle_min_damage(struct Damage &wd, struct block_list &src, uint16 skill_id, int64 min) {
+	if (is_attack_right_handed(&src, skill_id)) {
+		wd.damage = cap_value(wd.damage, min, INT64_MAX);
+		wd.basedamage = cap_value(wd.basedamage, min, INT64_MAX);
 	}
 	// Left-hand damage is always capped to 0
-	if (is_attack_left_handed(src, skill_id)) {
-		wd->damage2 = cap_value(wd->damage2, 0, INT64_MAX);
+	if (is_attack_left_handed(&src, skill_id)) {
+		wd.damage2 = cap_value(wd.damage2, 0, INT64_MAX);
 	}
 }
 
@@ -3685,11 +3685,13 @@ static void battle_min_damage(struct Damage* wd, struct block_list* src, uint16 
  * @param skill_id: Skill ID of the skill used by source
  * @param min: Minimum value to which damage should be capped
  */
-static int battle_get_spiritball_damage(struct Damage* wd, struct block_list* src, uint16 skill_id) {
+static int battle_get_spiritball_damage(struct Damage& wd, struct block_list& src, uint16 skill_id) {
 
-	map_session_data* sd = BL_CAST(BL_PC, src);
+	map_session_data* sd = BL_CAST(BL_PC, &src);
 
-	nullpo_ret(sd); // Returns 0 for non-players
+	// Return 0 for non-players
+	if (!sd)
+		return 0;
 
 	int damage = 0;
 
@@ -3699,7 +3701,7 @@ static int battle_get_spiritball_damage(struct Damage* wd, struct block_list* sr
 	case MO_FINGEROFFENSIVE:
 #endif
 		// These skills used as many spheres as they do hits
-		damage = (wd->div_ + sd->spiritball) * 3;
+		damage = (wd.div_ + sd->spiritball) * 3;
 		break;
 	case MO_EXTREMITYFIST:
 		// These skills store the number of spheres the player had before cast
@@ -3791,7 +3793,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	}
 	if (battle_skill_stacks_masteries_vvs(skill_id, 0)) {
 		// Spirit Sphere bonus damage
-		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(wd, src, skill_id));
+		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
 
 		// Skill-specific bonuses
 		if (skill_id == TF_POISON)
@@ -3816,7 +3818,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 			// Star Crumb bonus damage
 			wd->basedamage += sd->right_weapon.star;
 			// Spirit Sphere bonus damage
-			wd->basedamage += battle_get_spiritball_damage(wd, src, skill_id);
+			wd->basedamage += battle_get_spiritball_damage(*wd, *src, skill_id);
 			// Add percent of the base damage to the damage
 			wd->damage += (wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2) / 100;
 		}
@@ -3824,7 +3826,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 #endif
 	// Cap damage to 0
 	if (battle_config.attr_recover == 0)
-		battle_min_damage(wd, src, skill_id, 0);
+		battle_min_damage(*wd, *src, skill_id, 0);
 }
 
 /*==================================
@@ -3871,7 +3873,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 		// Star Crumb bonus damage
 		ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, sd->right_weapon.star, sd->left_weapon.star);
 		// Spirit Sphere bonus damage
-		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_get_spiritball_damage(wd, src, skill_id));
+		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_get_spiritball_damage(*wd, *src, skill_id));
 #endif
 
 		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
@@ -4430,33 +4432,33 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  * @param sc: Object's status change information
  * @return atkpercent with cap_value(watk,0,USHRT_MAX)
  */
-static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_id, status_change* sc)
+static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
 {
 	if (!battle_skill_stacks_masteries_vvs(skill_id, 0))
 		return 100;
 
 	int atkpercent = 100;
 
-	if (sc->getSCE(SC_CURSE))
+	if (sc.getSCE(SC_CURSE))
 		atkpercent -= 25;
-	if (sc->getSCE(SC_PROVOKE))
-		atkpercent += sc->getSCE(SC_PROVOKE)->val2;
-	if (sc->getSCE(SC_STRIPWEAPON) && bl->type != BL_PC)
-		atkpercent -= sc->getSCE(SC_STRIPWEAPON)->val2;
-	if (sc->getSCE(SC_CONCENTRATION))
-		atkpercent += sc->getSCE(SC_CONCENTRATION)->val2;
-	if (sc->getSCE(SC_TRUESIGHT))
-		atkpercent += 2 * sc->getSCE(SC_TRUESIGHT)->val1;
-	if (sc->getSCE(SC_JOINTBEAT) && sc->getSCE(SC_JOINTBEAT)->val2 & BREAK_WAIST)
+	if (sc.getSCE(SC_PROVOKE))
+		atkpercent += sc.getSCE(SC_PROVOKE)->val2;
+	if (sc.getSCE(SC_STRIPWEAPON) && bl.type != BL_PC)
+		atkpercent -= sc.getSCE(SC_STRIPWEAPON)->val2;
+	if (sc.getSCE(SC_CONCENTRATION))
+		atkpercent += sc.getSCE(SC_CONCENTRATION)->val2;
+	if (sc.getSCE(SC_TRUESIGHT))
+		atkpercent += 2 * sc.getSCE(SC_TRUESIGHT)->val1;
+	if (sc.getSCE(SC_JOINTBEAT) && sc.getSCE(SC_JOINTBEAT)->val2 & BREAK_WAIST)
 		atkpercent -= 25;
-	if (sc->getSCE(SC_INCATKRATE))
-		atkpercent += sc->getSCE(SC_INCATKRATE)->val1;
-	if (sc->getSCE(SC_SKE))
+	if (sc.getSCE(SC_INCATKRATE))
+		atkpercent += sc.getSCE(SC_INCATKRATE)->val1;
+	if (sc.getSCE(SC_SKE))
 		atkpercent += 300;
-	if (sc->getSCE(SC_BLOODLUST))
-		atkpercent += sc->getSCE(SC_BLOODLUST)->val2;
-	if (sc->getSCE(SC_FLEET))
-		atkpercent += sc->getSCE(SC_FLEET)->val3;
+	if (sc.getSCE(SC_BLOODLUST))
+		atkpercent += sc.getSCE(SC_BLOODLUST)->val2;
+	if (sc.getSCE(SC_FLEET))
+		atkpercent += sc.getSCE(SC_FLEET)->val3;
 
 	/* Only few selected skills should use this function, DO NOT ADD any that are not caused by the skills listed below
 	* TODO:
@@ -4494,7 +4496,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 	if(sc && skill_id != PA_SACRIFICE) {
 #ifdef RENEWAL
 		//ATK percent modifier (in renewal, it's applied before the skillratio)
-		skillratio = battle_get_atkpercent(src, skill_id, sc);
+		skillratio = battle_get_atkpercent(*src, skill_id, *sc);
 #endif
 		if(sc->getSCE(SC_OVERTHRUST))
 			skillratio += sc->getSCE(SC_OVERTHRUST)->val3;
@@ -6343,8 +6345,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->getSCE(SC_GATLINGFEVER)->val3);
 #else
 		//ATK percent modifier (in pre-renewal, it's applied multiplicatively after the skill ratio)
-		ATK_RATE(wd->damage, wd->damage2, battle_get_atkpercent(src, skill_id, sc));
-		ATK_RATER(wd->basedamage, battle_get_atkpercent(src, 0, sc));
+		ATK_RATE(wd->damage, wd->damage2, battle_get_atkpercent(*src, skill_id, *sc));
+		ATK_RATER(wd->basedamage, battle_get_atkpercent(*src, 0, *sc));
 #endif
 		if (sc->getSCE(SC_SPIRIT)) {
 			if (skill_id == AS_SONICBLOW && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN) {
@@ -6691,7 +6693,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 
 	//After DEF reduction, damage can be negative, refine bonus works against that value
 	//After refinement bonus was applied, damage is capped to 1, then masteries are applied
-	battle_min_damage(wd, src, skill_id, 1);
+	battle_min_damage(*wd, *src, skill_id, 1);
 
 	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
 #endif
@@ -6710,7 +6712,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	}
 
 	//Set to min of 1
-	battle_min_damage(wd, src, skill_id, 1);
+	battle_min_damage(*wd, *src, skill_id, 1);
 
 #ifdef RENEWAL
 	switch (skill_id) {
