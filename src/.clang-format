@@ -34,6 +34,7 @@ SpaceBeforeParensOptions:
   AfterOverloadedOperator: false
   AfterRequiresInClause: false
   AfterRequiresInExpression: false
+  BeforeNonEmptyParentheses: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3
