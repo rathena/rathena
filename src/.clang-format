@@ -30,6 +30,7 @@ SpaceBeforeParensOptions:
   AfterForeachMacros: false
   AfterFunctionDeclarationName: false
   AfterFunctionDefinitionName: false
+  AfterIfMacros: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3
