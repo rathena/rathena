@@ -30,10 +30,10 @@ typedef long in_addr_t;
 #define RFIFOHEAD(fd)
 #define WFIFOHEAD(fd, size) \
 	do { \
-		if ((fd) && session[(fd)]->wdata_size + (size) > session[(fd)]->max_wdata) { \
+		if((fd) && session[(fd)]->wdata_size + (size) > session[(fd)]->max_wdata) { \
 			_realloc_writefifo((fd), (size), ALC_MARK); \
 		} \
-	} while (false)
+	} while(false)
 #define RFIFOP(fd, pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd, pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
@@ -55,14 +55,14 @@ typedef long in_addr_t;
 #define RFIFOREST(fd) (session[fd]->flag.eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
 #define RFIFOFLUSH(fd) \
 	do { \
-		if (session[fd]->rdata_size == session[fd]->rdata_pos) { \
+		if(session[fd]->rdata_size == session[fd]->rdata_pos) { \
 			session[fd]->rdata_size = session[fd]->rdata_pos = 0; \
 		} else { \
 			session[fd]->rdata_size -= session[fd]->rdata_pos; \
 			memmove(session[fd]->rdata, session[fd]->rdata + session[fd]->rdata_pos, session[fd]->rdata_size); \
 			session[fd]->rdata_pos = 0; \
 		} \
-	} while (0)
+	} while(0)
 
 // buffer I/O macros
 #define RBUFP(p, pos) (((uint8*)(p)) + (pos))
@@ -200,7 +200,7 @@ extern int8 packet_buffer[UINT16_MAX];
 
 template <typename P>
 bool socket_send(int fd, P& packet) {
-	if (!session_isActive(fd)) {
+	if(!session_isActive(fd)) {
 		return false;
 	}
 
@@ -213,7 +213,7 @@ bool socket_send(int fd, P& packet) {
 
 template <typename P>
 bool socket_send(int fd, P* packet) {
-	if (!session_isActive(fd)) {
+	if(!session_isActive(fd)) {
 		return false;
 	}
 

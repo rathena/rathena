@@ -1175,7 +1175,7 @@ struct clan {
 	#define MIN_CHARS (MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING) // Default number of characters per account.
 #endif
 
-#if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
+#if(MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
 	#error Config of MAX_CHARS is invalid
 #endif
 

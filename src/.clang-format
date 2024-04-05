@@ -24,6 +24,9 @@ AllowShortEnumsOnASingleLine: false
 AlignEscapedNewlines: DontAlign
 # Add missing curly braces
 InsertBraces: true
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3

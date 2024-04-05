@@ -64,11 +64,11 @@ struct timer_func_list {
 int add_timer_func_list(TimerFunc func, const char* name) {
 	struct timer_func_list* tfl;
 
-	if (name) {
-		for (tfl = tfl_root; tfl != NULL; tfl = tfl->next) { // check suspicious cases
-			if (func == tfl->func) {
+	if(name) {
+		for(tfl = tfl_root; tfl != NULL; tfl = tfl->next) { // check suspicious cases
+			if(func == tfl->func) {
 				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n", tfl->func, tfl->name, name);
-			} else if (strcmp(name, tfl->name) == 0) {
+			} else if(strcmp(name, tfl->name) == 0) {
 				ShowWarning("add_timer_func_list: function %p has the same name as %p(%s)\n", func, tfl->func, tfl->name);
 			}
 		}
@@ -85,8 +85,8 @@ int add_timer_func_list(TimerFunc func, const char* name) {
 const char* search_timer_func_list(TimerFunc func) {
 	struct timer_func_list* tfl;
 
-	for (tfl = tfl_root; tfl != NULL; tfl = tfl->next) {
-		if (func == tfl->func) {
+	for(tfl = tfl_root; tfl != NULL; tfl = tfl->next) {
+		if(func == tfl->func) {
 			return tfl->name;
 		}
 	}
@@ -120,7 +120,7 @@ static void rdtsc_calibrate() {
 
 	RDTSC_CLOCK = 0;
 
-	for (i = 0; i < 5; i++) {
+	for(i = 0; i < 5; i++) {
 		t1 = _rdtsc();
 		usleep(1000000); // 1000 MS
 		t2 = _rdtsc();
@@ -208,22 +208,22 @@ static int acquire_timer(void) {
 	int tid;
 
 	// select a free timer
-	if (free_timer_list_pos) {
+	if(free_timer_list_pos) {
 		do {
 			tid = free_timer_list[--free_timer_list_pos];
-		} while (tid >= timer_data_num && free_timer_list_pos > 0);
+		} while(tid >= timer_data_num && free_timer_list_pos > 0);
 	} else {
 		tid = timer_data_num;
 	}
 
 	// check available space
-	if (tid >= timer_data_num) {
-		for (tid = timer_data_num; tid < timer_data_max && timer_data[tid].type; tid++)
+	if(tid >= timer_data_num) {
+		for(tid = timer_data_num; tid < timer_data_max && timer_data[tid].type; tid++)
 			;
 	}
-	if (tid >= timer_data_num && tid >= timer_data_max) { // expand timer array
+	if(tid >= timer_data_num && tid >= timer_data_max) { // expand timer array
 		timer_data_max += 256;
-		if (timer_data) {
+		if(timer_data) {
 			RECREATE(timer_data, struct TimerData, timer_data_max);
 		} else {
 			CREATE(timer_data, struct TimerData, timer_data_max);
@@ -231,7 +231,7 @@ static int acquire_timer(void) {
 		memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
 	}
 
-	if (tid >= timer_data_num) {
+	if(tid >= timer_data_num) {
 		timer_data_num = tid + 1;
 	}
 
@@ -260,7 +260,7 @@ int add_timer(t_tick tick, TimerFunc func, int id, intptr_t data) {
 int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int interval) {
 	int tid;
 
-	if (interval < 1) {
+	if(interval < 1) {
 		ShowError(
 			"add_timer_interval: invalid interval (tick=%" PRtf " %p[%s] id=%d data=%" PRIdPTR " diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
@@ -287,11 +287,11 @@ const struct TimerData* get_timer(int tid) {
 /// Param 'func' is used for debug/verification purposes.
 /// Returns 0 on success, < 0 on failure.
 int delete_timer(int tid, TimerFunc func) {
-	if (tid < 0 || tid >= timer_data_num) {
+	if(tid < 0 || tid >= timer_data_num) {
 		ShowError("delete_timer error : no such timer %d (%p(%s))\n", tid, func, search_timer_func_list(func));
 		return -1;
 	}
-	if (timer_data[tid].func != func) {
+	if(timer_data[tid].func != func) {
 		ShowError("delete_timer error : function mismatch %p(%s) != %p(%s)\n", timer_data[tid].func, search_timer_func_list(timer_data[tid].func), func, search_timer_func_list(func));
 		return -2;
 	}
@@ -315,16 +315,16 @@ t_tick settick_timer(int tid, t_tick tick) {
 
 	// search timer position
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
-	if (i == BHEAP_LENGTH(timer_heap)) {
+	if(i == BHEAP_LENGTH(timer_heap)) {
 		ShowError("settick_timer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 		return -1;
 	}
 
-	if (tick == -1) {
+	if(tick == -1) {
 		tick = 0; // add 1ms to avoid the error value -1
 	}
 
-	if (timer_data[tid].tick == tick) {
+	if(timer_data[tid].tick == tick) {
 		return tick; // nothing to do, already in propper position
 	}
 
@@ -341,11 +341,11 @@ t_tick do_timer(t_tick tick) {
 	t_tick diff = TIMER_MAX_INTERVAL; // return value
 
 	// process all timers one by one
-	while (BHEAP_LENGTH(timer_heap)) {
+	while(BHEAP_LENGTH(timer_heap)) {
 		int tid = BHEAP_PEEK(timer_heap); // top element in heap (smallest tick)
 
 		diff = DIFF_TICK(timer_data[tid].tick, tick);
-		if (diff > 0) {
+		if(diff > 0) {
 			break; // no more expired timers to process
 		}
 
@@ -353,8 +353,8 @@ t_tick do_timer(t_tick tick) {
 		BHEAP_POP(timer_heap, DIFFTICK_MINTOPCMP);
 		timer_data[tid].type |= TIMER_REMOVE_HEAP;
 
-		if (timer_data[tid].func) {
-			if (diff < -1000) {
+		if(timer_data[tid].func) {
+			if(diff < -1000) {
 				// timer was delayed for more than 1 second, use current tick instead
 				timer_data[tid].func(tid, tick, timer_data[tid].id, timer_data[tid].data);
 			} else {
@@ -363,14 +363,14 @@ t_tick do_timer(t_tick tick) {
 		}
 
 		// in the case the function didn't change anything...
-		if (timer_data[tid].type & TIMER_REMOVE_HEAP) {
+		if(timer_data[tid].type & TIMER_REMOVE_HEAP) {
 			timer_data[tid].type &= ~TIMER_REMOVE_HEAP;
 
-			switch (timer_data[tid].type) {
+			switch(timer_data[tid].type) {
 				default:
 				case TIMER_ONCE_AUTODEL:
 					timer_data[tid].type = 0;
-					if (free_timer_list_pos >= free_timer_list_max) {
+					if(free_timer_list_pos >= free_timer_list_max) {
 						free_timer_list_max += 256;
 						RECREATE(free_timer_list, int, free_timer_list_max);
 						memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
@@ -378,7 +378,7 @@ t_tick do_timer(t_tick tick) {
 					free_timer_list[free_timer_list_pos++] = tid;
 					break;
 				case TIMER_INTERVAL:
-					if (DIFF_TICK(timer_data[tid].tick, tick) < -1000) {
+					if(DIFF_TICK(timer_data[tid].tick, tick) < -1000) {
 						timer_data[tid].tick = tick + timer_data[tid].interval;
 					} else {
 						timer_data[tid].tick += timer_data[tid].interval;
@@ -453,39 +453,39 @@ double solve_time(char* modif_p) {
 
 	nullpo_retr(0, modif_p);
 
-	while (modif_p[0] != '\0') {
+	while(modif_p[0] != '\0') {
 		int value = atoi(modif_p);
-		if (value == 0) {
+		if(value == 0) {
 			modif_p++;
 		} else {
-			if (modif_p[0] == '-' || modif_p[0] == '+') {
+			if(modif_p[0] == '-' || modif_p[0] == '+') {
 				modif_p++;
 			}
-			while (modif_p[0] >= '0' && modif_p[0] <= '9') {
+			while(modif_p[0] >= '0' && modif_p[0] <= '9') {
 				modif_p++;
 			}
-			if (modif_p[0] == 's') {
+			if(modif_p[0] == 's') {
 				then_tm.tm_sec += value;
 				modif_p++;
-			} else if (modif_p[0] == 'n') {
+			} else if(modif_p[0] == 'n') {
 				then_tm.tm_min += value;
 				modif_p++;
-			} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
+			} else if(modif_p[0] == 'm' && modif_p[1] == 'n') {
 				then_tm.tm_min += value;
 				modif_p = modif_p + 2;
-			} else if (modif_p[0] == 'h') {
+			} else if(modif_p[0] == 'h') {
 				then_tm.tm_hour += value;
 				modif_p++;
-			} else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
+			} else if(modif_p[0] == 'd' || modif_p[0] == 'j') {
 				then_tm.tm_mday += value;
 				modif_p++;
-			} else if (modif_p[0] == 'm') {
+			} else if(modif_p[0] == 'm') {
 				then_tm.tm_mon += value;
 				modif_p++;
-			} else if (modif_p[0] == 'y' || modif_p[0] == 'a') {
+			} else if(modif_p[0] == 'y' || modif_p[0] == 'a') {
 				then_tm.tm_year += value;
 				modif_p++;
-			} else if (modif_p[0] != '\0') {
+			} else if(modif_p[0] != '\0') {
 				modif_p++;
 			}
 		}
@@ -508,17 +508,17 @@ void timer_final(void) {
 	struct timer_func_list* tfl;
 	struct timer_func_list* next;
 
-	for (tfl = tfl_root; tfl != NULL; tfl = next) {
+	for(tfl = tfl_root; tfl != NULL; tfl = next) {
 		next = tfl->next; // copy next pointer
 		aFree(tfl->name); // free structures
 		aFree(tfl);
 	}
 
-	if (timer_data) {
+	if(timer_data) {
 		aFree(timer_data);
 	}
 	BHEAP_CLEAR(timer_heap);
-	if (free_timer_list) {
+	if(free_timer_list) {
 		aFree(free_timer_list);
 	}
 }
