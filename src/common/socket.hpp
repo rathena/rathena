@@ -28,11 +28,11 @@ typedef long in_addr_t;
 
 // socket I/O macros
 #define RFIFOHEAD(fd)
-#define WFIFOHEAD(fd, size)                                                          \
-	do {                                                                             \
+#define WFIFOHEAD(fd, size) \
+	do { \
 		if ((fd) && session[(fd)]->wdata_size + (size) > session[(fd)]->max_wdata) { \
-			_realloc_writefifo((fd), (size), ALC_MARK);                              \
-		}                                                                            \
+			_realloc_writefifo((fd), (size), ALC_MARK); \
+		} \
 	} while (false)
 #define RFIFOP(fd, pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd, pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
@@ -53,15 +53,15 @@ typedef long in_addr_t;
 #define WFIFOSPACE(fd) (session[fd]->max_wdata - session[fd]->wdata_size)
 
 #define RFIFOREST(fd) (session[fd]->flag.eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
-#define RFIFOFLUSH(fd)                                                                                         \
-	do {                                                                                                       \
-		if (session[fd]->rdata_size == session[fd]->rdata_pos) {                                               \
-			session[fd]->rdata_size = session[fd]->rdata_pos = 0;                                              \
-		} else {                                                                                               \
-			session[fd]->rdata_size -= session[fd]->rdata_pos;                                                 \
+#define RFIFOFLUSH(fd) \
+	do { \
+		if (session[fd]->rdata_size == session[fd]->rdata_pos) { \
+			session[fd]->rdata_size = session[fd]->rdata_pos = 0; \
+		} else { \
+			session[fd]->rdata_size -= session[fd]->rdata_pos; \
 			memmove(session[fd]->rdata, session[fd]->rdata + session[fd]->rdata_pos, session[fd]->rdata_size); \
-			session[fd]->rdata_pos = 0;                                                                        \
-		}                                                                                                      \
+			session[fd]->rdata_pos = 0; \
+		} \
 	} while (0)
 
 // buffer I/O macros

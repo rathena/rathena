@@ -20,6 +20,8 @@ AlignTrailingComments: false
 IndentPPDirectives: BeforeHash
 # Put each enum entry into a separate line
 AllowShortEnumsOnASingleLine: false
+# Prevent newline alignment in Macros
+AlignEscapedNewlines: DontAlign
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3

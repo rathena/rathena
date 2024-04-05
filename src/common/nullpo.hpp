@@ -24,9 +24,9 @@
 	 * @param t: Pointer to check
 	 * @return 0 if t is NULL
 	 */
-	#define nullpo_ret(t)                        \
+	#define nullpo_ret(t) \
 		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
-			return (0);                          \
+			return (0); \
 		}
 
 	/**
@@ -34,9 +34,9 @@
 	 * @param t: Pointer to check
 	 * @return void if t is NULL
 	 */
-	#define nullpo_retv(t)                       \
+	#define nullpo_retv(t) \
 		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
-			return;                              \
+			return; \
 		}
 
 	/**
@@ -45,18 +45,18 @@
 	 * @param t: Pointer to check
 	 * @return ret value
 	 */
-	#define nullpo_retr(ret, t)                  \
+	#define nullpo_retr(ret, t) \
 		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
-			return (ret);                        \
+			return (ret); \
 		}
 
 	/**
 	 * Break out of the loop/switch if pointer is not found.
 	 * @param t: Pointer to check
 	 */
-	#define nullpo_retb(t)                       \
+	#define nullpo_retb(t) \
 		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
-			break;                               \
+			break; \
 		}
 
 	// Different C compilers uses different argument formats
@@ -68,9 +68,9 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 * @return 0 if t is NULL
 		 */
-		#define nullpo_ret_f(t, fmt, ...)                                  \
+		#define nullpo_ret_f(t, fmt, ...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
-				return (0);                                                \
+				return (0); \
 			}
 
 		/**
@@ -79,9 +79,9 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 * @return void if t is NULL
 		 */
-		#define nullpo_retv_f(t, fmt, ...)                                 \
+		#define nullpo_retv_f(t, fmt, ...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
-				return;                                                    \
+				return; \
 			}
 
 		/**
@@ -90,9 +90,9 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 * @return ret value
 		 */
-		#define nullpo_retr_f(ret, t, fmt, ...)                            \
+		#define nullpo_retr_f(ret, t, fmt, ...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
-				return (ret);                                              \
+				return (ret); \
 			}
 
 		/**
@@ -100,9 +100,9 @@
 		 * @param t: Pointer to check
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 */
-		#define nullpo_retb_f(t, fmt, ...)                                 \
+		#define nullpo_retb_f(t, fmt, ...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
-				break;                                                     \
+				break; \
 			}
 
 	#elif __GNUC__ >= 2
@@ -113,9 +113,9 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 * @return 0 if t is NULL
 		 */
-		#define nullpo_ret_f(t, fmt, args...)                         \
+		#define nullpo_ret_f(t, fmt, args...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
-				return (0);                                           \
+				return (0); \
 			}
 
 		/**
@@ -124,9 +124,9 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 * @return void if t is NULL
 		 */
-		#define nullpo_retv_f(t, fmt, args...)                        \
+		#define nullpo_retv_f(t, fmt, args...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
-				return;                                               \
+				return; \
 			}
 
 		/**
@@ -135,9 +135,9 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 * @return ret value
 		 */
-		#define nullpo_retr_f(ret, t, fmt, args...)                   \
+		#define nullpo_retr_f(ret, t, fmt, args...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
-				return (ret);                                         \
+				return (ret); \
 			}
 
 		/**
@@ -145,9 +145,9 @@
 		 * @param t: Pointer to check
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 */
-		#define nullpo_retb_f(t, fmt, args...)                        \
+		#define nullpo_retb_f(t, fmt, args...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
-				break;                                                \
+				break; \
 			}
 
 	#else

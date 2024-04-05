@@ -43,7 +43,7 @@
 	#define FREE(p, file, line, func) free(p)
 	#define MEMORY_USAGE() dmalloc_memory_allocated()
 	#define MEMORY_VERIFY(ptr) (dmalloc_verify(ptr) == DMALLOC_VERIFY_NOERROR)
-	#define MEMORY_CHECK()   \
+	#define MEMORY_CHECK() \
 		dmalloc_log_stats(); \
 		dmalloc_log_unfreed()
 
@@ -201,11 +201,11 @@ static void block_free(struct block *p);
 static size_t memmgr_usage_bytes;
 
 	#define block2unit(p, n) ((struct unit_head *)(&(p)->data[p->unit_size * (n)]))
-	#define memmgr_assert(v)                                               \
-		do {                                                               \
-			if (!(v)) {                                                    \
+	#define memmgr_assert(v) \
+		do { \
+			if (!(v)) { \
 				ShowError("Memory manager: assertion '" #v "' failed!\n"); \
-			}                                                              \
+			} \
 		} while (0)
 
 static unsigned short size2hash(size_t size) {

@@ -530,8 +530,8 @@ static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_ty
 		default:
 			ShowDebug("%stype=%s%u, length=%lu\n", prefix, sign, type, length);
 			return;
-#define SHOW_DEBUG_OF(x)  \
-	case x:               \
+#define SHOW_DEBUG_OF(x) \
+	case x: \
 		type_string = #x; \
 		break
 			SHOW_DEBUG_OF(MYSQL_TYPE_TINY);

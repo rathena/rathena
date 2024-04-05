@@ -56,36 +56,36 @@ char console_log_filepath[32] = "./log/unknown.log";
 
 #define SBUF_SIZE 2054 // never put less that what's required for the debug message
 
-#define NEWBUF(buf)              \
-	struct {                     \
-		char s_[SBUF_SIZE];      \
-		StringBuf *d_;           \
-		char *v_;                \
-		int l_;                  \
+#define NEWBUF(buf) \
+	struct { \
+		char s_[SBUF_SIZE]; \
+		StringBuf *d_; \
+		char *v_; \
+		int l_; \
 	} buf = {"", NULL, NULL, 0}; \
 	// define NEWBUF
 
-#define BUFVPRINTF(buf, fmt, args)                                                                               \
-	buf.l_ = vsnprintf(buf.s_, SBUF_SIZE, fmt, args);                                                            \
-	if (buf.l_ >= 0 && buf.l_ < SBUF_SIZE) { /* static buffer */                                                 \
-		buf.v_ = buf.s_;                                                                                         \
-	} else { /* dynamic buffer */                                                                                \
-		buf.d_ = StringBuf_Malloc();                                                                             \
-		buf.l_ = StringBuf_Vprintf(buf.d_, fmt, args);                                                           \
-		buf.v_ = StringBuf_Value(buf.d_);                                                                        \
+#define BUFVPRINTF(buf, fmt, args) \
+	buf.l_ = vsnprintf(buf.s_, SBUF_SIZE, fmt, args); \
+	if (buf.l_ >= 0 && buf.l_ < SBUF_SIZE) { /* static buffer */ \
+		buf.v_ = buf.s_; \
+	} else { /* dynamic buffer */ \
+		buf.d_ = StringBuf_Malloc(); \
+		buf.l_ = StringBuf_Vprintf(buf.d_, fmt, args); \
+		buf.v_ = StringBuf_Value(buf.d_); \
 		ShowDebug("showmsg: dynamic buffer used, increase the static buffer size to %d or more.\n", buf.l_ + 1); \
-	}                                                                                                            \
+	} \
 	// define BUFVPRINTF
 
 #define BUFVAL(buf) buf.v_
 #define BUFLEN(buf) buf.l_
 
-#define FREEBUF(buf)            \
-	if (buf.d_) {               \
+#define FREEBUF(buf) \
+	if (buf.d_) { \
 		StringBuf_Free(buf.d_); \
-		buf.d_ = NULL;          \
-	}                           \
-	buf.v_ = NULL;              \
+		buf.d_ = NULL; \
+	} \
+	buf.v_ = NULL; \
 // define FREEBUF
 
 ///////////////////////////////////////////////////////////////////////////////

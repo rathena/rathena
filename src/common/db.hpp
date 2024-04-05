@@ -969,11 +969,11 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __end     End index (ex: size of the array)
 /// @param __var     Index variable
 /// @param __cmp     Expression that returns true when the target entry is found
-#define ARR_FIND(__start, __end, __var, __cmp)                  \
-	do {                                                        \
+#define ARR_FIND(__start, __end, __var, __cmp) \
+	do { \
 		for ((__var) = (__start); (__var) < (__end); ++(__var)) \
-			if (__cmp)                                          \
-				break;                                          \
+			if (__cmp) \
+				break; \
 	} while (0)
 
 /// Moves an entry of the array.
@@ -985,17 +985,17 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __to     Target index of the entry
 /// @param __arr    Array
 /// @param __type   Type of entry
-#define ARR_MOVE(__from, __to, __arr, __type)                                                              \
-	do {                                                                                                   \
-		if ((__from) != (__to)) {                                                                          \
-			__type __backup__;                                                                             \
-			memmove(&__backup__, (__arr) + (__from), sizeof(__type));                                      \
-			if ((__from) < (__to))                                                                         \
+#define ARR_MOVE(__from, __to, __arr, __type) \
+	do { \
+		if ((__from) != (__to)) { \
+			__type __backup__; \
+			memmove(&__backup__, (__arr) + (__from), sizeof(__type)); \
+			if ((__from) < (__to)) \
 				memmove((__arr) + (__from), (__arr) + (__from) + 1, ((__to) - (__from)) * sizeof(__type)); \
-			else if ((__from) > (__to))                                                                    \
-				memmove((__arr) + (__to) + 1, (__arr) + (__to), ((__from) - (__to)) * sizeof(__type));     \
-			memmove((__arr) + (__to), &__backup__, sizeof(__type));                                        \
-		}                                                                                                  \
+			else if ((__from) > (__to)) \
+				memmove((__arr) + (__to) + 1, (__arr) + (__to), ((__from) - (__to)) * sizeof(__type)); \
+			memmove((__arr) + (__to), &__backup__, sizeof(__type)); \
+		} \
 	} while (0)
 
 /// Moves an entry of the array to the right.
@@ -1005,12 +1005,12 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __to     Target index of the entry
 /// @param __arr    Array
 /// @param __type   Type of entry
-#define ARR_MOVERIGHT(__from, __to, __arr, __type)                                                 \
-	do {                                                                                           \
-		__type __backup__;                                                                         \
-		memmove(&__backup__, (__arr) + (__from), sizeof(__type));                                  \
+#define ARR_MOVERIGHT(__from, __to, __arr, __type) \
+	do { \
+		__type __backup__; \
+		memmove(&__backup__, (__arr) + (__from), sizeof(__type)); \
 		memmove((__arr) + (__from), (__arr) + (__from) + 1, ((__to) - (__from)) * sizeof(__type)); \
-		memmove((__arr) + (__to), &__backup__, sizeof(__type));                                    \
+		memmove((__arr) + (__to), &__backup__, sizeof(__type)); \
 	} while (0)
 
 /// Moves an entry of the array to the left.
@@ -1020,12 +1020,12 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __end    Target index of the entry
 /// @param __arr    Array
 /// @param __type   Type of entry
-#define ARR_MOVELEFT(__from, __to, __arr, __type)                                              \
-	do {                                                                                       \
-		__type __backup__;                                                                     \
-		memmove(&__backup__, (__arr) + (__from), sizeof(__type));                              \
+#define ARR_MOVELEFT(__from, __to, __arr, __type) \
+	do { \
+		__type __backup__; \
+		memmove(&__backup__, (__arr) + (__from), sizeof(__type)); \
 		memmove((__arr) + (__to) + 1, (__arr) + (__to), ((__from) - (__to)) * sizeof(__type)); \
-		memmove((__arr) + (__to), &__backup__, sizeof(__type));                                \
+		memmove((__arr) + (__to), &__backup__, sizeof(__type)); \
 	} while (0)
 
 /////////////////////////////////////////////////////////////////////
@@ -1036,10 +1036,10 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __type Type of data
 #define VECTOR_DECL(__type) \
-	struct {                \
-		size_t _max_;       \
-		size_t _len_;       \
-		__type* _data_;     \
+	struct { \
+		size_t _max_; \
+		size_t _len_; \
+		__type* _data_; \
 	}
 
 /// Declares a named vector struct.
@@ -1047,10 +1047,10 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __name Structure name
 /// @param __type Type of data
 #define VECTOR_STRUCT_DECL(__name, __type) \
-	struct __name {                        \
-		size_t _max_;                      \
-		size_t _len_;                      \
-		__type* _data_;                    \
+	struct __name { \
+		size_t _max_; \
+		size_t _len_; \
+		__type* _data_; \
 	}
 
 /// Declares and initializes an anonymous vector variable.
@@ -1115,26 +1115,26 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __vec Vector
 /// @param __n Size
-#define VECTOR_RESIZE(__vec, __n, __cast)                                                                                                                             \
-	do {                                                                                                                                                              \
-		if ((__n) > VECTOR_CAPACITY(__vec)) { /* increase size */                                                                                                     \
-			if (VECTOR_CAPACITY(__vec) == 0)                                                                                                                          \
-				VECTOR_DATA(__vec) = (__cast)(aMalloc((__n) * sizeof(VECTOR_FIRST(__vec)))); /* allocate new */                                                       \
-			else                                                                                                                                                      \
-				VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */                                    \
+#define VECTOR_RESIZE(__vec, __n, __cast) \
+	do { \
+		if ((__n) > VECTOR_CAPACITY(__vec)) { /* increase size */ \
+			if (VECTOR_CAPACITY(__vec) == 0) \
+				VECTOR_DATA(__vec) = (__cast)(aMalloc((__n) * sizeof(VECTOR_FIRST(__vec)))); /* allocate new */ \
+			else \
+				VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
 			memset(VECTOR_DATA(__vec) + VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec) - VECTOR_LENGTH(__vec)) * sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
-			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */                                                                                                     \
-		} else if ((__n) == 0 && VECTOR_CAPACITY(__vec)) { /* clear vector */                                                                                         \
-			aFree(VECTOR_DATA(__vec));                                                                                                                                \
-			VECTOR_DATA(__vec) = NULL; /* free data */                                                                                                                \
-			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */                                                                                                          \
-			VECTOR_LENGTH(__vec) = 0; /* clear length */                                                                                                              \
-		} else if ((__n) < VECTOR_CAPACITY(__vec)) { /* reduce size */                                                                                                \
-			VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */                                        \
-			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */                                                                                                     \
-			if (VECTOR_LENGTH(__vec) > (__n))                                                                                                                         \
-				VECTOR_LENGTH(__vec) = (__n); /* update length */                                                                                                     \
-		}                                                                                                                                                             \
+			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
+		} else if ((__n) == 0 && VECTOR_CAPACITY(__vec)) { /* clear vector */ \
+			aFree(VECTOR_DATA(__vec)); \
+			VECTOR_DATA(__vec) = NULL; /* free data */ \
+			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
+			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
+		} else if ((__n) < VECTOR_CAPACITY(__vec)) { /* reduce size */ \
+			VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
+			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
+			if (VECTOR_LENGTH(__vec) > (__n)) \
+				VECTOR_LENGTH(__vec) = (__n); /* update length */ \
+		} \
 	} while (0)
 
 /// Ensures that the array has the target number of empty positions.
@@ -1143,14 +1143,14 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __vec Vector
 /// @param __n Empty positions
 /// @param __step Increase
-#define VECTOR_ENSURE2(__vec, __n, __step, __cast)                        \
-	do {                                                                  \
-		size_t _empty_ = VECTOR_CAPACITY(__vec) - VECTOR_LENGTH(__vec);   \
-		if ((__n) > _empty_) {                                            \
-			while ((__n) > _empty_)                                       \
-				_empty_ += (__step);                                      \
+#define VECTOR_ENSURE2(__vec, __n, __step, __cast) \
+	do { \
+		size_t _empty_ = VECTOR_CAPACITY(__vec) - VECTOR_LENGTH(__vec); \
+		if ((__n) > _empty_) { \
+			while ((__n) > _empty_) \
+				_empty_ += (__step); \
 			VECTOR_RESIZE(__vec, _empty_ + VECTOR_LENGTH(__vec), __cast); \
-		}                                                                 \
+		} \
 	} while (0)
 #define VECTOR_ENSURE(__vec, __n, __step) VECTOR_ENSURE2(__vec, __n, __step, int*)
 
@@ -1159,12 +1159,12 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __vec Vector
 /// @param __idx Index
-#define VECTOR_INSERTZEROED(__vec, __idx)                                                                                                            \
-	do {                                                                                                                                             \
-		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */                                                                                          \
+#define VECTOR_INSERTZEROED(__vec, __idx) \
+	do { \
+		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */ \
 			memmove(&VECTOR_INDEX(__vec, (__idx) + 1), &VECTOR_INDEX(__vec, __idx), (VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
-		memset(&VECTOR_INDEX(__vec, __idx), 0, sizeof(VECTOR_INDEX(__vec, __idx))); /* set zeroed value */                                           \
-		++VECTOR_LENGTH(__vec); /* increase length */                                                                                                \
+		memset(&VECTOR_INDEX(__vec, __idx), 0, sizeof(VECTOR_INDEX(__vec, __idx))); /* set zeroed value */ \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
 	} while (0)
 
 /// Inserts a value in the target index. (using the '=' operator)
@@ -1173,12 +1173,12 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __vec Vector
 /// @param __idx Index
 /// @param __val Value
-#define VECTOR_INSERT(__vec, __idx, __val)                                                                                                           \
-	do {                                                                                                                                             \
-		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */                                                                                          \
+#define VECTOR_INSERT(__vec, __idx, __val) \
+	do { \
+		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */ \
 			memmove(&VECTOR_INDEX(__vec, (__idx) + 1), &VECTOR_INDEX(__vec, __idx), (VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
-		VECTOR_INDEX(__vec, __idx) = (__val); /* set value */                                                                                        \
-		++VECTOR_LENGTH(__vec); /* increase length */                                                                                                \
+		VECTOR_INDEX(__vec, __idx) = (__val); /* set value */ \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
 	} while (0)
 
 /// Inserts a value in the target index. (using memcpy)
@@ -1196,22 +1196,22 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __idx Index
 /// @param __pval Array of values
 /// @param __n Number of values
-#define VECTOR_INSERTARRAY(__vec, __idx, __pval, __n)                                                                                                    \
-	do {                                                                                                                                                 \
-		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */                                                                                              \
+#define VECTOR_INSERTARRAY(__vec, __idx, __pval, __n) \
+	do { \
+		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */ \
 			memmove(&VECTOR_INDEX(__vec, (__idx) + (__n)), &VECTOR_INDEX(__vec, __idx), (VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
-		memcpy(&VECTOR_INDEX(__vec, __idx), (__pval), (__n) * sizeof(VECTOR_FIRST(__vec))); /* set values */                                             \
-		VECTOR_LENGTH(__vec) += (__n); /* increase length */                                                                                             \
+		memcpy(&VECTOR_INDEX(__vec, __idx), (__pval), (__n) * sizeof(VECTOR_FIRST(__vec))); /* set values */ \
+		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
 	} while (0)
 
 /// Inserts a zeroed value in the end of the vector.
 /// Assumes there is enough capacity.
 ///
 /// @param __vec Vector
-#define VECTOR_PUSHZEROED(__vec)                                                                                                         \
-	do {                                                                                                                                 \
+#define VECTOR_PUSHZEROED(__vec) \
+	do { \
 		memset(&VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)), 0, sizeof(VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)))); /* set zeroed value */ \
-		++VECTOR_LENGTH(__vec); /* increase length */                                                                                    \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
 	} while (0)
 
 /// Inserts a value in the end of the vector. (using the '=' operator)
@@ -1219,10 +1219,10 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __vec Vector
 /// @param __val Value
-#define VECTOR_PUSH(__vec, __val)                                            \
-	do {                                                                     \
+#define VECTOR_PUSH(__vec, __val) \
+	do { \
 		VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)) = (__val); /* set value */ \
-		++VECTOR_LENGTH(__vec); /* increase length */                        \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
 	} while (0)
 
 /// Inserts a value in the end of the vector. (using memcpy)
@@ -1238,10 +1238,10 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __vec Vector
 /// @param __pval Array of values
 /// @param __n Number of values
-#define VECTOR_PUSHARRAY(__vec, __pval, __n)                                                                                \
-	do {                                                                                                                    \
+#define VECTOR_PUSHARRAY(__vec, __pval, __n) \
+	do { \
 		memcpy(&VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)), (__pval), (__n) * sizeof(VECTOR_FIRST(__vec))); /* set values */ \
-		VECTOR_LENGTH(__vec) += (__n); /* increase length */                                                                \
+		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
 	} while (0)
 
 /// Removes and returns the last value of the vector.
@@ -1272,33 +1272,33 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __vec Vector
 /// @param __idx Index
 /// @param __n Number of values
-#define VECTOR_ERASEN(__vec, __idx, __n)                                                                                                                           \
-	do {                                                                                                                                                           \
-		if ((__idx) < VECTOR_LENGTH(__vec) - (__n)) /* move data */                                                                                                \
+#define VECTOR_ERASEN(__vec, __idx, __n) \
+	do { \
+		if ((__idx) < VECTOR_LENGTH(__vec) - (__n)) /* move data */ \
 			memmove(&VECTOR_INDEX(__vec, __idx), &VECTOR_INDEX(__vec, (__idx) + (__n)), (VECTOR_LENGTH(__vec) - ((__idx) + (__n))) * sizeof(VECTOR_FIRST(__vec))); \
-		VECTOR_LENGTH(__vec) -= (__n); /* decrease length */                                                                                                       \
+		VECTOR_LENGTH(__vec) -= (__n); /* decrease length */ \
 	} while (0)
 
 /// Clears the vector, freeing allocated data.
 ///
 /// @param __vec Vector
-#define VECTOR_CLEAR(__vec)                                        \
-	do {                                                           \
-		if (VECTOR_CAPACITY(__vec)) {                              \
-			aFree(VECTOR_DATA(__vec));                             \
+#define VECTOR_CLEAR(__vec) \
+	do { \
+		if (VECTOR_CAPACITY(__vec)) { \
+			aFree(VECTOR_DATA(__vec)); \
 			VECTOR_DATA(__vec) = NULL; /* clear allocated array */ \
-			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */       \
-			VECTOR_LENGTH(__vec) = 0; /* clear length */           \
-		}                                                          \
+			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
+			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
+		} \
 	} while (0)
 
 /// Resets the length and clears content, so the vector is empty
 ///
 /// @param __vec Vector
-#define VECTOR_RESET(__vec)                                                                                   \
-	if (VECTOR_LENGTH(__vec) > 0) {                                                                           \
+#define VECTOR_RESET(__vec) \
+	if (VECTOR_LENGTH(__vec) > 0) { \
 		memset(VECTOR_DATA(__vec), 0, (VECTOR_LENGTH(__vec) * sizeof(VECTOR_FIRST(__vec)))); /* clear data */ \
-	}                                                                                                         \
+	} \
 	VECTOR_LENGTH(__vec) = 0; /* clear current length */
 
 /////////////////////////////////////////////////////////////////////
@@ -1379,17 +1379,17 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __val Value
 /// @param __topcmp Comparator
-#define BHEAP_PUSH(__heap, __val, __topcmp)                                              \
-	do {                                                                                 \
-		size_t _i_ = VECTOR_LENGTH(__heap);                                              \
-		VECTOR_PUSH(__heap, __val); /* insert at end */                                  \
-		while (_i_) { /* restore heap property in parents */                             \
-			size_t _parent_ = (_i_ - 1) / 2;                                             \
+#define BHEAP_PUSH(__heap, __val, __topcmp) \
+	do { \
+		size_t _i_ = VECTOR_LENGTH(__heap); \
+		VECTOR_PUSH(__heap, __val); /* insert at end */ \
+		while (_i_) { /* restore heap property in parents */ \
+			size_t _parent_ = (_i_ - 1) / 2; \
 			if (__topcmp(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i_)) < 0) \
-				break; /* done */                                                        \
-			std::swap(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i_));        \
-			_i_ = _parent_;                                                              \
-		}                                                                                \
+				break; /* done */ \
+			std::swap(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i_)); \
+			_i_ = _parent_; \
+		} \
 	} while (0)
 
 /// See BHEAP_PUSH. Version used by A* implementation, matching client bheap.
@@ -1397,11 +1397,11 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __val Value
 /// @param __topcmp Comparator
-#define BHEAP_PUSH2(__heap, __val, __topcmp)            \
-	do {                                                \
-		size_t _i_ = VECTOR_LENGTH(__heap);             \
+#define BHEAP_PUSH2(__heap, __val, __topcmp) \
+	do { \
+		size_t _i_ = VECTOR_LENGTH(__heap); \
 		VECTOR_PUSH(__heap, __val); /* insert at end */ \
-		BHEAP_SIFTDOWN(__heap, 0, _i_, __topcmp);       \
+		BHEAP_SIFTDOWN(__heap, 0, _i_, __topcmp); \
 	} while (0)
 
 /// Removes the top value of the heap. (using the '=' operator)
@@ -1420,12 +1420,12 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 ///
 /// @param __heap Binary heap
 /// @param __topcmp Comparator
-#define BHEAP_POP2(__heap, __topcmp)                                          \
-	do {                                                                      \
+#define BHEAP_POP2(__heap, __topcmp) \
+	do { \
 		VECTOR_INDEX(__heap, 0) = VECTOR_POP(__heap); /* put last at index */ \
-		if (!VECTOR_LENGTH(__heap)) /* removed last, nothing to do */         \
-			break;                                                            \
-		BHEAP_SIFTUP(__heap, 0, __topcmp);                                    \
+		if (!VECTOR_LENGTH(__heap)) /* removed last, nothing to do */ \
+			break; \
+		BHEAP_SIFTUP(__heap, 0, __topcmp); \
 	} while (0)
 
 /// Removes the target value of the heap. (using the '=' operator)
@@ -1439,33 +1439,33 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __idx Index
 /// @param __topcmp Comparator
-#define BHEAP_POPINDEX(__heap, __idx, __topcmp)                                                                                                             \
-	do {                                                                                                                                                    \
-		size_t _i_ = __idx;                                                                                                                                 \
-		VECTOR_INDEX(__heap, __idx) = VECTOR_POP(__heap); /* put last at index */                                                                           \
-		if (_i_ >= VECTOR_LENGTH(__heap)) /* removed last, nothing to do */                                                                                 \
-			break;                                                                                                                                          \
-		while (_i_) { /* restore heap property in parents */                                                                                                \
-			size_t _parent_ = (_i_ - 1) / 2;                                                                                                                \
-			if (__topcmp(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i_)) < 0)                                                                    \
-				break; /* done */                                                                                                                           \
-			std::swap(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i_));                                                                           \
-			_i_ = _parent_;                                                                                                                                 \
-		}                                                                                                                                                   \
-		while (_i_ < VECTOR_LENGTH(__heap)) { /* restore heap property in childs */                                                                         \
-			size_t _lchild_ = _i_ * 2 + 1;                                                                                                                  \
-			size_t _rchild_ = _i_ * 2 + 2;                                                                                                                  \
-			if ((_lchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)) <= 0) &&                          \
-				(_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)) <= 0))                            \
-				break; /* done */                                                                                                                           \
+#define BHEAP_POPINDEX(__heap, __idx, __topcmp) \
+	do { \
+		size_t _i_ = __idx; \
+		VECTOR_INDEX(__heap, __idx) = VECTOR_POP(__heap); /* put last at index */ \
+		if (_i_ >= VECTOR_LENGTH(__heap)) /* removed last, nothing to do */ \
+			break; \
+		while (_i_) { /* restore heap property in parents */ \
+			size_t _parent_ = (_i_ - 1) / 2; \
+			if (__topcmp(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i_)) < 0) \
+				break; /* done */ \
+			std::swap(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i_)); \
+			_i_ = _parent_; \
+		} \
+		while (_i_ < VECTOR_LENGTH(__heap)) { /* restore heap property in childs */ \
+			size_t _lchild_ = _i_ * 2 + 1; \
+			size_t _rchild_ = _i_ * 2 + 2; \
+			if ((_lchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)) <= 0) && \
+				(_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)) <= 0)) \
+				break; /* done */ \
 			else if (_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) <= 0) { /* left child */ \
-				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_));                                                                       \
-				_i_ = _lchild_;                                                                                                                             \
-			} else { /* right child */                                                                                                                      \
-				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_));                                                                       \
-				_i_ = _rchild_;                                                                                                                             \
-			}                                                                                                                                               \
-		}                                                                                                                                                   \
+				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)); \
+				_i_ = _lchild_; \
+			} else { /* right child */ \
+				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)); \
+				_i_ = _rchild_; \
+			} \
+		} \
 	} while (0)
 
 /// Follow path up towards (but not all the way to) the root, swapping nodes until finding
@@ -1476,16 +1476,16 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __startidx Index of an ancestor of __idx
 /// @param __idx Index of an inserted element
 /// @param __topcmp Comparator
-#define BHEAP_SIFTDOWN(__heap, __startidx, __idx, __topcmp)                                \
-	do {                                                                                   \
-		size_t _i2_ = __idx;                                                               \
-		while (_i2_ > __startidx) { /* restore heap property in parents */                 \
-			size_t _parent_ = (_i2_ - 1) / 2;                                              \
+#define BHEAP_SIFTDOWN(__heap, __startidx, __idx, __topcmp) \
+	do { \
+		size_t _i2_ = __idx; \
+		while (_i2_ > __startidx) { /* restore heap property in parents */ \
+			size_t _parent_ = (_i2_ - 1) / 2; \
 			if (__topcmp(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i2_)) <= 0) \
-				break; /* done */                                                          \
-			std::swap(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i2_));         \
-			_i2_ = _parent_;                                                               \
-		}                                                                                  \
+				break; /* done */ \
+			std::swap(VECTOR_INDEX(__heap, _parent_), VECTOR_INDEX(__heap, _i2_)); \
+			_i2_ = _parent_; \
+		} \
 	} while (0)
 
 /// Repeatedly swap the smaller child with parent, after placing a new item at __idx.
@@ -1493,22 +1493,22 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __idx Index of an inserted element
 /// @param __topcmp Comparator
-#define BHEAP_SIFTUP(__heap, __idx, __topcmp)                                                                                                         \
-	do {                                                                                                                                              \
-		size_t _i_ = __idx;                                                                                                                           \
-		size_t _lchild_ = _i_ * 2 + 1;                                                                                                                \
-		while (_lchild_ < VECTOR_LENGTH(__heap)) { /* restore heap property in childs */                                                              \
-			size_t _rchild_ = _i_ * 2 + 2;                                                                                                            \
+#define BHEAP_SIFTUP(__heap, __idx, __topcmp) \
+	do { \
+		size_t _i_ = __idx; \
+		size_t _lchild_ = _i_ * 2 + 1; \
+		while (_lchild_ < VECTOR_LENGTH(__heap)) { /* restore heap property in childs */ \
+			size_t _rchild_ = _i_ * 2 + 2; \
 			if (_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) < 0) { /* left child */ \
-				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_));                                                                 \
-				_i_ = _lchild_;                                                                                                                       \
-			} else { /* right child */                                                                                                                \
-				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_));                                                                 \
-				_i_ = _rchild_;                                                                                                                       \
-			}                                                                                                                                         \
-			_lchild_ = _i_ * 2 + 1;                                                                                                                   \
-		}                                                                                                                                             \
-		BHEAP_SIFTDOWN(__heap, __idx, _i_, __topcmp);                                                                                                 \
+				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)); \
+				_i_ = _lchild_; \
+			} else { /* right child */ \
+				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)); \
+				_i_ = _rchild_; \
+			} \
+			_lchild_ = _i_ * 2 + 1; \
+		} \
+		BHEAP_SIFTDOWN(__heap, __idx, _i_, __topcmp); \
 	} while (0)
 
 /// Call this after modifying the item at __idx__ to restore the heap
@@ -1516,10 +1516,10 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __heap Binary heap
 /// @param __idx Index
 /// @param __topcmp Comparator
-#define BHEAP_UPDATE(__heap, __idx, __topcmp)       \
-	do {                                            \
+#define BHEAP_UPDATE(__heap, __idx, __topcmp) \
+	do { \
 		BHEAP_SIFTDOWN(__heap, 0, __idx, __topcmp); \
-		BHEAP_SIFTUP(__heap, __idx, __topcmp);      \
+		BHEAP_SIFTUP(__heap, __idx, __topcmp); \
 	} while (0)
 
 /// Clears the binary heap, freeing allocated data.

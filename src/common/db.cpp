@@ -321,10 +321,10 @@ static struct db_stats {
 	uint32 db_final;
 } stats = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-	#define DB_COUNTSTAT(token)              \
-		do {                                 \
+	#define DB_COUNTSTAT(token) \
+		do { \
 			if ((stats.token) != UINT32_MAX) \
-				++(stats.token);             \
+				++(stats.token); \
 		} while (0)
 #else /* !defined(DB_ENABLE_STATS) */
 	#define DB_COUNTSTAT(token)
