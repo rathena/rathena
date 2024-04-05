@@ -33,6 +33,7 @@ SpaceBeforeParensOptions:
   AfterIfMacros: false
   AfterOverloadedOperator: false
   AfterRequiresInClause: false
+  AfterRequiresInExpression: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3
