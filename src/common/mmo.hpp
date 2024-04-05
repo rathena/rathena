@@ -126,7 +126,13 @@ typedef uint32 t_itemid;
 	#define WEB_AUTH_TOKEN_LENGTH 16 + 1
 #endif
 
-enum e_enchantgrade : uint16 { ENCHANTGRADE_NONE = 0, ENCHANTGRADE_D, ENCHANTGRADE_C, ENCHANTGRADE_B, ENCHANTGRADE_A };
+enum e_enchantgrade : uint16 {
+	ENCHANTGRADE_NONE = 0,
+	ENCHANTGRADE_D,
+	ENCHANTGRADE_C,
+	ENCHANTGRADE_B,
+	ENCHANTGRADE_A
+};
 
 #ifdef RENEWAL
 	#define MAX_WEAPON_LEVEL 5
@@ -640,9 +646,18 @@ typedef enum mail_status {
 	MAIL_READ,
 } mail_status;
 
-enum mail_inbox_type { MAIL_INBOX_NORMAL = 0, MAIL_INBOX_ACCOUNT, MAIL_INBOX_RETURNED };
+enum mail_inbox_type {
+	MAIL_INBOX_NORMAL = 0,
+	MAIL_INBOX_ACCOUNT,
+	MAIL_INBOX_RETURNED
+};
 
-enum mail_attachment_type { MAIL_ATT_NONE = 0, MAIL_ATT_ZENY = 1, MAIL_ATT_ITEM = 2, MAIL_ATT_ALL = MAIL_ATT_ZENY | MAIL_ATT_ITEM };
+enum mail_attachment_type {
+	MAIL_ATT_NONE = 0,
+	MAIL_ATT_ZENY = 1,
+	MAIL_ATT_ITEM = 2,
+	MAIL_ATT_ALL = MAIL_ATT_ZENY | MAIL_ATT_ITEM
+};
 
 struct mail_message {
 	int id;
@@ -760,7 +775,12 @@ struct mmo_guild {
 	time_t last_leader_change;
 };
 
-enum e_woe_type { WOE_FIRST_EDITION = 1, WOE_SECOND_EDITION, WOE_THIRD_EDITION, WOE_MAX };
+enum e_woe_type {
+	WOE_FIRST_EDITION = 1,
+	WOE_SECOND_EDITION,
+	WOE_THIRD_EDITION,
+	WOE_MAX
+};
 
 struct guild_castle {
 	int castle_id;
@@ -1082,7 +1102,12 @@ enum e_job {
 	JOB_MAX,
 };
 
-enum e_sex : uint8 { SEX_FEMALE = 0, SEX_MALE, SEX_BOTH, SEX_SERVER };
+enum e_sex : uint8 {
+	SEX_FEMALE = 0,
+	SEX_MALE,
+	SEX_BOTH,
+	SEX_SERVER
+};
 
 /// Item Bound Type
 enum bound_type {
@@ -1112,7 +1137,12 @@ enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
 };
 
-enum e_rank { RANK_BLACKSMITH = 0, RANK_ALCHEMIST = 1, RANK_TAEKWON = 2, RANK_KILLER = 3 };
+enum e_rank {
+	RANK_BLACKSMITH = 0,
+	RANK_ALCHEMIST = 1,
+	RANK_TAEKWON = 2,
+	RANK_KILLER = 3
+};
 
 struct clan_alliance {
 	int opposition;

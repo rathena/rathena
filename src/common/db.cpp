@@ -115,7 +115,10 @@
  * @private
  * @see struct dbn
  */
-typedef enum node_color { RED, BLACK } node_color;
+typedef enum node_color {
+	RED,
+	BLACK
+} node_color;
 
 /**
  * A node in a RED-BLACK tree of the database.

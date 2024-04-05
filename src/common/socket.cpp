@@ -1077,7 +1077,11 @@ typedef struct _access_control {
 	uint32 mask;
 } AccessControl;
 
-enum _aco { ACO_DENY_ALLOW, ACO_ALLOW_DENY, ACO_MUTUAL_FAILURE };
+enum _aco {
+	ACO_DENY_ALLOW,
+	ACO_ALLOW_DENY,
+	ACO_MUTUAL_FAILURE
+};
 
 static AccessControl* access_allow = NULL;
 static AccessControl* access_deny = NULL;

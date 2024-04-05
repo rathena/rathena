@@ -17,6 +17,8 @@ PointerAlignment: Left
 SortIncludes: true
 AlignTrailingComments: false
 IndentPPDirectives: BeforeHash
+# Put each enum entry into a separate line
+AllowShortEnumsOnASingleLine: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3

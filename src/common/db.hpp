@@ -165,7 +165,12 @@ typedef union DBKey {
  * @public
  * @see #DBData
  */
-typedef enum DBDataType { DB_DATA_INT, DB_DATA_UINT, DB_DATA_PTR, DB_DATA_I64 } DBDataType;
+typedef enum DBDataType {
+	DB_DATA_INT,
+	DB_DATA_UINT,
+	DB_DATA_PTR,
+	DB_DATA_I64
+} DBDataType;
 
 /**
  * Struct for data types used by the database.

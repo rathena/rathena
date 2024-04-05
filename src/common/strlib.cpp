@@ -313,7 +313,14 @@ bool bin2hex(char* output, unsigned char* input, size_t count) {
 /// @param sv Parse state
 /// @return 1 if a field was parsed, 0 if already done, -1 on error.
 int sv_parse_next(struct s_svstate* sv) {
-	enum { START_OF_FIELD, PARSING_FIELD, PARSING_C_ESCAPE, END_OF_FIELD, TERMINATE, END } state;
+	enum {
+		START_OF_FIELD,
+		PARSING_FIELD,
+		PARSING_C_ESCAPE,
+		END_OF_FIELD,
+		TERMINATE,
+		END
+	} state;
 	const char* str;
 	int len;
 	enum e_svopt opt;

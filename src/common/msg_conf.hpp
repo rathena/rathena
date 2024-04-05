@@ -6,7 +6,18 @@
 
 #include <config/core.hpp>
 
-enum lang_types { LANG_RUS = 0x01, LANG_SPN = 0x02, LANG_GRM = 0x04, LANG_CHN = 0x08, LANG_MAL = 0x10, LANG_IDN = 0x20, LANG_FRN = 0x40, LANG_POR = 0x80, LANG_THA = 0x100, LANG_MAX };
+enum lang_types {
+	LANG_RUS = 0x01,
+	LANG_SPN = 0x02,
+	LANG_GRM = 0x04,
+	LANG_CHN = 0x08,
+	LANG_MAL = 0x10,
+	LANG_IDN = 0x20,
+	LANG_FRN = 0x40,
+	LANG_POR = 0x80,
+	LANG_THA = 0x100,
+	LANG_MAX
+};
 
 #ifndef LANG_ENABLE
 	// Multilanguage System.
