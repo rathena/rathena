@@ -3366,30 +3366,30 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
 {
 	switch (skill_id) {
-	case PA_SHIELDCHAIN:
-	case CR_SHIELDBOOMERANG:
-	case AM_ACIDTERROR:
-	case MO_INVESTIGATE:
-	case MO_EXTREMITYFIST:
-	case PA_SACRIFICE:
-	case NPC_DRAGONBREATH:
-	case RK_DRAGONBREATH:
-	case RK_DRAGONBREATH_WATER:
-	case NC_SELFDESTRUCTION:
-	case LG_SHIELDPRESS:
-	case LG_EARTHDRIVE:
-		return false;
-	case CR_GRANDCROSS:
-	case NPC_GRANDDARKNESS:
-		// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs / Spirit Spheres
-		if (type != 1)
+		case PA_SHIELDCHAIN:
+		case CR_SHIELDBOOMERANG:
+		case AM_ACIDTERROR:
+		case MO_INVESTIGATE:
+		case MO_EXTREMITYFIST:
+		case PA_SACRIFICE:
+		case NPC_DRAGONBREATH:
+		case RK_DRAGONBREATH:
+		case RK_DRAGONBREATH_WATER:
+		case NC_SELFDESTRUCTION:
+		case LG_SHIELDPRESS:
+		case LG_EARTHDRIVE:
 			return false;
-		break;
-	case LK_SPIRALPIERCE:
-		// Spiral Pierce is influenced only by refine bonus and Star Crumbs
-		if (type != 1 && type != 2)
-			return false;
-		break;
+		case CR_GRANDCROSS:
+		case NPC_GRANDDARKNESS:
+			// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs / Spirit Spheres
+			if (type != 1)
+				return false;
+			break;
+		case LK_SPIRALPIERCE:
+			// Spiral Pierce is influenced only by refine bonus and Star Crumbs
+			if (type != 1 && type != 2)
+				return false;
+			break;
 	}
 
 	return true;
@@ -3404,18 +3404,18 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
 static bool battle_skill_stacks_edp_element(uint16 skill_id)
 {
 	switch (skill_id) {
-	case TF_SPRINKLESAND:
-	case AS_SPLASHER:
-	case ASC_METEORASSAULT:
-	case ASC_BREAKER:
-	case AS_VENOMKNIFE:
-	case AM_ACIDTERROR:
-		return false;
-	default:
-		//Unit skills
-		if (skill_get_unit_id(skill_id))
+		case TF_SPRINKLESAND:
+		case AS_SPLASHER:
+		case ASC_METEORASSAULT:
+		case ASC_BREAKER:
+		case AS_VENOMKNIFE:
+		case AM_ACIDTERROR:
 			return false;
-		break;
+		default:
+			//Unit skills
+			if (skill_get_unit_id(skill_id))
+				return false;
+			break;
 	}
 
 	return true;
@@ -3696,21 +3696,21 @@ static int battle_get_spiritball_damage(struct Damage& wd, struct block_list& sr
 	int damage = 0;
 
 	switch (skill_id) {
-	case MO_INVESTIGATE:
+		case MO_INVESTIGATE:
 #ifndef RENEWAL
-	case MO_FINGEROFFENSIVE:
+		case MO_FINGEROFFENSIVE:
 #endif
-		// These skills used as many spheres as they do hits
-		damage = (wd.div_ + sd->spiritball) * 3;
-		break;
-	case MO_EXTREMITYFIST:
-		// These skills store the number of spheres the player had before cast
-		damage = sd->spiritball_old * 3;
-		break;
-	default:
-		// Any skills that do not consume spheres or do not care
-		damage = sd->spiritball * 3;
-		break;
+			// These skills used as many spheres as they do hits
+			damage = (wd.div_ + sd->spiritball) * 3;
+			break;
+		case MO_EXTREMITYFIST:
+			// These skills store the number of spheres the player had before cast
+			damage = sd->spiritball_old * 3;
+			break;
+		default:
+			// Any skills that do not consume spheres or do not care
+			damage = sd->spiritball * 3;
+			break;
 	}
 
 	return damage;
@@ -3791,6 +3791,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		// Star Crumb bonus damage
 		ATK_ADD2(wd->damage, wd->damage2, sd->right_weapon.star, sd->left_weapon.star);
 	}
+	// Check if general mastery bonuses apply (above check is only for Star Crumb)
 	if (battle_skill_stacks_masteries_vvs(skill_id, 0)) {
 		// Spirit Sphere bonus damage
 		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
