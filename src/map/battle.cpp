@@ -2862,7 +2862,8 @@ static bool is_skill_using_arrow(struct block_list *src, int skill_id)
 		struct status_data *sstatus = status_get_status_data(src);
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
-		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3)) || (skill_id == HT_PHANTASMIC) || (skill_id == GS_GROUNDDRIFT));
+		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3))
+			|| skill_id == HT_FREEZINGTRAP || (skill_id == HT_PHANTASMIC) || (skill_id == GS_GROUNDDRIFT));
 	} else
 		return false;
 }
@@ -8960,13 +8961,13 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 #else
 		case HT_LANDMINE:
 		case MA_LANDMINE:
-			md.damage = skill_lv * (sstatus->dex + 75) * (100 + sstatus->int_) / 100;
+			md.damage = static_cast<decltype(md.damage)>(skill_lv * (sstatus->dex + 75.0) * (100.0 + sstatus->int_) / 100.0);
 			break;
 		case HT_BLASTMINE:
-			md.damage = skill_lv * (sstatus->dex / 2 + 50) * (100 + sstatus->int_) / 100;
+			md.damage = static_cast<decltype(md.damage)>(skill_lv * (sstatus->dex / 2.0 + 50.0) * (100.0 + sstatus->int_) / 100.0);
 			break;
 		case HT_CLAYMORETRAP:
-			md.damage = skill_lv * (sstatus->dex / 2 + 75) * (100 + sstatus->int_) / 100;
+			md.damage = static_cast<decltype(md.damage)>(skill_lv * (sstatus->dex / 2.0 + 75.0) * (100.0 + sstatus->int_) / 100.0);
 			break;
 #endif
 		case HT_BLITZBEAT:
