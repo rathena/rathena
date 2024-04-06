@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# So we know what clang-format version CI is using
+clang-format --version
+
 SHOULD_EXIT=0
 
 # only check files in common for now
