@@ -4408,7 +4408,6 @@ Body:
     TargetType: Ground
     DamageFlags:
       Splash: true
-      IgnoreFlee: true
     Flags:
       IsTrap: true
       AlterRangeResearchTrap: true
@@ -6461,6 +6460,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       IgnoreAtkCard: true
+      IgnoreDefense: true
       IgnoreFlee: true
     Flags:
       IgnoreAutoGuard: true
@@ -9641,7 +9641,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
@@ -10233,17 +10233,7 @@ Body:
         Time: 55000
       - Level: 5
         Time: 60000
-    Duration2:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 30000
-      - Level: 3
-        Time: 40000
-      - Level: 4
-        Time: 50000
-      - Level: 5
-        Time: 60000
+    Duration2: 60000
     Requires:
       SpCost:
         - Level: 1
@@ -13866,8 +13856,6 @@ Body:
     Description: Chain Action
     MaxLevel: 10
     Type: Weapon
-    DamageFlags:
-      Critical: true
     Range: -9
     Hit: Multi_Hit
     HitCount: 2
@@ -32467,9 +32455,9 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
-      SpCost: 100
+      SpCost: 200
     Status: Berserk
   - Id: 8207
     Name: MA_DOUBLE
@@ -32648,7 +32636,6 @@ Body:
     TargetType: Ground
     DamageFlags:
       Splash: true
-      IgnoreFlee: true
     Flags:
       IsTrap: true
       AlterRangeResearchTrap: true
@@ -33068,9 +33055,10 @@ Body:
     Type: Weapon
     TargetType: Attack
     Range: 1
-    Hit: Multi_Hit
-    HitCount: 3
+    Hit: Single
+    HitCount: 1
     Element: Weapon
+    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration2: 5000

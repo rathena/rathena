@@ -61,8 +61,8 @@
 	#endif
 #endif
 
-/** Max number of characters per account. Note that changing this setting alone is not enough if the
- * client is not hexed to support more characters as well. Max value tested was 265 */
+/** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
+ * Max value tested was 265 */
 #ifndef MAX_CHARS
 	#if PACKETVER >= 20180124
 		#define MAX_CHARS 15
@@ -75,10 +75,8 @@
 
 typedef uint32 t_itemid;
 
-/** Number of slots carded equipment can have. Never set to less than 4 as they are also used to
- * keep the data of forged items/equipment. [Skotlex]
- * Note: The client seems unable to receive data for more than 4 slots due to all related packets
- * having a fixed size. */
+/** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
+ * Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
 #define MAX_SLOTS 4
 #define MAX_AMOUNT 30000 ////Max amount of a single stacked item
 #define MAX_ZENY INT_MAX /// Max zeny
@@ -91,9 +89,7 @@ typedef uint32 t_itemid;
 #endif
 #define MAX_FAME 1000000000 /// Max fame points
 #define MAX_CART 100 /// Maximum item in cart
-#define MAX_SKILL \
-	1623 /// Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db
-		 /// limit
+#define MAX_SKILL 1623 /// Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 /// Default walk speed
 #define MIN_WALK_SPEED 20 /// Min walk speed
 #define MAX_WALK_SPEED 1000 /// Max walk speed
@@ -110,9 +106,7 @@ typedef uint32 t_itemid;
 	#define MAX_GUILDSKILL 15 /// Max Guild skills
 #endif
 #define MAX_GUILDLEVEL 50 /// Max Guild level
-#define MAX_GUARDIANS \
-	8 /// Local max per castle. If this value is increased, need to add more fields on MySQL
-	  /// `guild_castle` table [Skotlex]
+#define MAX_GUARDIANS 8 /// Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 /// Max quest objectives for a quest
 #define MAX_PC_BONUS_SCRIPT 50 /// Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5 /// Max item random option [Napster]
@@ -244,39 +238,37 @@ enum item_types {
 };
 
 /// Monster mode definitions to clear up code reading. [Skotlex]
-// clang-format off
 enum e_mode {
-	MD_NONE                 = 0x0000000,
-	MD_CANMOVE              = 0x0000001,
-	MD_LOOTER               = 0x0000002,
-	MD_AGGRESSIVE           = 0x0000004,
-	MD_ASSIST               = 0x0000008,
-	MD_CASTSENSORIDLE       = 0x0000010,
-	MD_NORANDOMWALK         = 0x0000020,
-	MD_NOCAST               = 0x0000040,
-	MD_CANATTACK            = 0x0000080,
-	// FREE                 = 0x0000100,
-	MD_CASTSENSORCHASE      = 0x0000200,
-	MD_CHANGECHASE          = 0x0000400,
-	MD_ANGRY                = 0x0000800,
-	MD_CHANGETARGETMELEE    = 0x0001000,
-	MD_CHANGETARGETCHASE    = 0x0002000,
-	MD_TARGETWEAK           = 0x0004000,
-	MD_RANDOMTARGET         = 0x0008000,
-	MD_IGNOREMELEE          = 0x0010000,
-	MD_IGNOREMAGIC          = 0x0020000,
-	MD_IGNORERANGED         = 0x0040000,
-	MD_MVP                  = 0x0080000,
-	MD_IGNOREMISC           = 0x0100000,
-	MD_KNOCKBACKIMMUNE      = 0x0200000,
-	MD_TELEPORTBLOCK        = 0x0400000,
-	// FREE                 = 0x0800000,
-	MD_FIXEDITEMDROP        = 0x1000000,
-	MD_DETECTOR             = 0x2000000,
-	MD_STATUSIMMUNE         = 0x4000000,
-	MD_SKILLIMMUNE          = 0x8000000,
+	MD_NONE = 0x0000000,
+	MD_CANMOVE = 0x0000001,
+	MD_LOOTER = 0x0000002,
+	MD_AGGRESSIVE = 0x0000004,
+	MD_ASSIST = 0x0000008,
+	MD_CASTSENSORIDLE = 0x0000010,
+	MD_NORANDOMWALK = 0x0000020,
+	MD_NOCAST = 0x0000040,
+	MD_CANATTACK = 0x0000080,
+	// FREE					= 0x0000100,
+	MD_CASTSENSORCHASE = 0x0000200,
+	MD_CHANGECHASE = 0x0000400,
+	MD_ANGRY = 0x0000800,
+	MD_CHANGETARGETMELEE = 0x0001000,
+	MD_CHANGETARGETCHASE = 0x0002000,
+	MD_TARGETWEAK = 0x0004000,
+	MD_RANDOMTARGET = 0x0008000,
+	MD_IGNOREMELEE = 0x0010000,
+	MD_IGNOREMAGIC = 0x0020000,
+	MD_IGNORERANGED = 0x0040000,
+	MD_MVP = 0x0080000,
+	MD_IGNOREMISC = 0x0100000,
+	MD_KNOCKBACKIMMUNE = 0x0200000,
+	MD_TELEPORTBLOCK = 0x0400000,
+	// FREE					= 0x0800000,
+	MD_FIXEDITEMDROP = 0x1000000,
+	MD_DETECTOR = 0x2000000,
+	MD_STATUSIMMUNE = 0x4000000,
+	MD_SKILLIMMUNE = 0x8000000,
 };
-// clang-format on
 
 #define MD_MASK 0x000FFFF
 #define ATR_MASK 0x0FF0000
@@ -330,8 +322,7 @@ struct item {
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
-	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum
-							  // equip_pos for bitmasking)
+	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
 } __attribute__( ( packed ) );
 
@@ -395,8 +386,7 @@ enum e_skill_flag : int8 {
 	SKILL_FLAG_TMP_COMBO, //@FIXME for homunculus combo atm
 
 	//! NOTE: This flag be the last flag, and don't change the value if not needed!
-	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N -
-								   // SKILL_FLAG_REPLACED_LV_0',
+	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
 };
 
 struct s_skill {
@@ -406,8 +396,7 @@ struct s_skill {
 };
 
 struct script_reg_state {
-	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a
-						   // 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
+	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
 	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
@@ -469,8 +458,7 @@ struct s_storage {
 		unsigned get : 1;
 		unsigned put : 1;
 	} state;
-	union { // Max for inventory, storage, cart, and guild storage are 818 each without changing
-			// this struct and struct item [2016/08/14]
+	union { // Max for inventory, storage, cart, and guild storage are 818 each without changing this struct and struct item [2016/08/14]
 		struct item items_inventory[MAX_INVENTORY];
 		struct item items_storage[MAX_STORAGE];
 		struct item items_cart[MAX_CART];
@@ -582,8 +570,7 @@ struct mmo_charstatus {
 	unsigned int status_point, skill_point, trait_point;
 	int hp, max_hp, sp, max_sp, ap, max_ap;
 	unsigned int option;
-	short manner; // Defines how many minutes a char will be muted, each negative point is
-				  // equivalent to a minute.
+	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
 	short hair, hair_color, clothes_color, body;
 	int party_id, guild_id, pet_id, hom_id, mer_id, ele_id, clan_id;
@@ -619,7 +606,8 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip, allow_party, disable_call;
+	bool show_equip, disable_call;
+	bool disable_partyinvite;
 	short rename;
 
 	time_t delete_date;

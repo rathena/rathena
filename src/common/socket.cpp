@@ -253,8 +253,7 @@ static time_t socket_data_last_tick = 0;
 #endif
 
 // initial recv buffer size (this will also be the max. size)
-// biggest known packet: S 0153 <len>.w <emblem data>.?B -> 24x24 256 color .bmp (0153 + len.w +
-// 1618/1654/1756 bytes)
+// biggest known packet: S 0153 <len>.w <emblem data>.?B -> 24x24 256 color .bmp (0153 + len.w + 1618/1654/1756 bytes)
 #define RFIFO_SIZE ( 2 * 1024 )
 // initial send buffer size (will be resized as needed)
 #define WFIFO_SIZE ( 16 * 1024 )
@@ -311,11 +310,7 @@ void set_nonblocking( int fd, unsigned long yes ) {
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s.
 	// The argp parameter is zero if nonblocking is to be disabled.
 	if( sIoctl( fd, FIONBIO, &yes ) != 0 ) {
-		ShowError(
-			"set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report "
-			"this!!!\n",
-			fd,
-			error_msg() );
+		ShowError( "set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report this!!!\n", fd, error_msg() );
 	}
 }
 
@@ -332,13 +327,11 @@ void setsocketopts( int fd, int delay_timeout ) {
 	#endif
 #endif
 
-	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely
-	// creating server-side lag. The RO protocol is mainly single-packet request/response, plus the
-	// FIFO model already does packet grouping anyway.
+	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely creating server-side lag.
+	// The RO protocol is mainly single-packet request/response, plus the FIFO model already does packet grouping anyway.
 	sSetsockopt( fd, IPPROTO_TCP, TCP_NODELAY, (char*)&yes, sizeof( yes ) );
 
-	// force the socket into no-wait, graceful-close mode (should be the default, but better make
-	// sure)
+	// force the socket into no-wait, graceful-close mode (should be the default, but better make sure)
 	//(https://msdn.microsoft.com/en-us/library/windows/desktop/ms737582%28v=vs.85%29.aspx)
 	{
 		struct linger opt;
@@ -495,11 +488,7 @@ int connect_client( int listen_fd ) {
 		return -1;
 	}
 	if( fd >= MAXCONN ) { // socket number too big
-		ShowError(
-			"connect_client: New socket #%d is greater than can we handle! Increase the value of "
-			"MAXCONN (currently %d) for your OS to fix this!\n",
-			fd,
-			MAXCONN );
+		ShowError( "connect_client: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN );
 		sClose( fd );
 		return -1;
 	}
@@ -556,11 +545,7 @@ int make_listen_bind( uint32 ip, uint16 port ) {
 		return -1;
 	}
 	if( fd >= MAXCONN ) { // socket number too big
-		ShowError(
-			"make_listen_bind: New socket #%d is greater than can we handle! Increase the value of "
-			"MAXCONN (currently %d) for your OS to fix this!\n",
-			fd,
-			MAXCONN );
+		ShowError( "make_listen_bind: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN );
 		sClose( fd );
 		return -1;
 	}
@@ -627,11 +612,7 @@ int make_connection( uint32 ip, uint16 port, bool silent, int timeout ) {
 		return -1;
 	}
 	if( fd >= MAXCONN ) { // socket number too big
-		ShowError(
-			"make_connection: New socket #%d is greater than can we handle! Increase the value of "
-			"MAXCONN (currently %d) for your OS to fix this!\n",
-			fd,
-			MAXCONN );
+		ShowError( "make_connection: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN );
 		sClose( fd );
 		return -1;
 	}
@@ -646,8 +627,7 @@ int make_connection( uint32 ip, uint16 port, bool silent, int timeout ) {
 		ShowStatus( "Connecting to %d.%d.%d.%d:%i\n", CONVIP( ip ), port );
 	}
 #ifdef WIN32
-	// On Windows we have to set the socket non-blocking before the connection to make timeout work.
-	// [Lemongrass]
+	// On Windows we have to set the socket non-blocking before the connection to make timeout work. [Lemongrass]
 	set_nonblocking( fd, 1 );
 
 	result = sConnect( fd, (struct sockaddr*)( &remote_address ), sizeof( struct sockaddr_in ) );
@@ -655,8 +635,7 @@ int make_connection( uint32 ip, uint16 port, bool silent, int timeout ) {
 	// Only enter if a socket error occurred
 	// Create a pseudo scope to be able to break out in case of successful connection
 	while( result == SOCKET_ERROR ) {
-		// Specially handle the error number for connection attempts that would block, because we
-		// want to use a timeout
+		// Specially handle the error number for connection attempts that would block, because we want to use a timeout
 		if( sErrno == S_EWOULDBLOCK ) {
 			fd_set writeSet;
 			struct timeval tv;
@@ -672,8 +651,7 @@ int make_connection( uint32 ip, uint16 port, bool silent, int timeout ) {
 			// Connection attempt timed out
 			if( result == 0 ) {
 				if( !silent ) {
-					// Needs special handling, because it does not set an error code and therefore
-					// does not provide an error message from the API
+					// Needs special handling, because it does not set an error code and therefore does not provide an error message from the API
 					ShowError( "make_connection: connection failed (socket #%d, timeout after %ds)!\n", fd, timeout );
 				}
 
@@ -688,8 +666,7 @@ int make_connection( uint32 ip, uint16 port, bool silent, int timeout ) {
 				}
 
 				if( !silent ) {
-					// Needs special handling, because it does not set an error code and therefore
-					// does not provide an error message from the API
+					// Needs special handling, because it does not set an error code and therefore does not provide an error message from the API
 					ShowError( "make_connection: connection failed (socket #%d, not writeable)!\n", fd );
 				}
 
@@ -706,8 +683,7 @@ int make_connection( uint32 ip, uint16 port, bool silent, int timeout ) {
 		do_close( fd );
 		return -1;
 	}
-	// Keep the socket in non-blocking mode, since we would set it to non-blocking here on unix.
-	// [Lemongrass]
+	// Keep the socket in non-blocking mode, since we would set it to non-blocking here on unix. [Lemongrass]
 #else
 	result = sConnect( fd, (struct sockaddr*)( &remote_address ), sizeof( struct sockaddr_in ) );
 	if( result == SOCKET_ERROR ) {
@@ -805,8 +781,7 @@ int _realloc_writefifo( int fd, size_t addition, const char* file, int line, con
 			newsize += WFIFO_SIZE;
 		}
 	} else if( session[fd]->max_wdata >= (size_t)2 * ( session[fd]->flag.server ? FIFOSIZE_SERVERLINK : WFIFO_SIZE ) &&
-			   ( session[fd]->wdata_size + addition ) * 4 < session[fd]->max_wdata ) { // shrink rule, shrink by 2 when only a quarter of the
-																					   // fifo is used, don't shrink below nominal size.
+			   ( session[fd]->wdata_size + addition ) * 4 < session[fd]->max_wdata ) { // shrink rule, shrink by 2 when only a quarter of the fifo is used, don't shrink below nominal size.
 		newsize = session[fd]->max_wdata / 2;
 	} else { // no change
 		return 0;
@@ -852,14 +827,12 @@ int WFIFOSET( int fd, size_t len ) {
 	// we have written len bytes to the buffer already before calling WFIFOSET
 	if( s->wdata_size + len > s->max_wdata ) { // actually there was a buffer overflow already
 		uint32 ip = s->client_addr;
-		ShowFatalError(
-			"WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on "
-			"a %u/%u bytes buffer.\n",
-			fd,
-			CONVIP( ip ),
-			(unsigned int)len,
-			(unsigned int)s->wdata_size,
-			(unsigned int)s->max_wdata );
+		ShowFatalError( "WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n",
+						fd,
+						CONVIP( ip ),
+						(unsigned int)len,
+						(unsigned int)s->wdata_size,
+						(unsigned int)s->max_wdata );
 		ShowDebug( "Likely command that caused it: 0x%x\n", ( *(uint16*)( s->wdata + s->wdata_size ) ) );
 		// no other chance, make a better fifo model
 		exit( EXIT_FAILURE );
@@ -873,12 +846,8 @@ int WFIFOSET( int fd, size_t len ) {
 	} else if( len == 0 ) {
 		// abuses the fact, that the code that did WFIFOHEAD(fd,0), already wrote
 		// the packet type into memory, even if it could have overwritten vital data
-		// this can happen when a new packet was added on map-server, but packet len table was not
-		// updated
-		ShowWarning(
-			"WFIFOSET: Attempted to send zero-length packet, most likely 0x%04x (please report "
-			"this).\n",
-			WFIFOW( fd, 0 ) );
+		// this can happen when a new packet was added on map-server, but packet len table was not updated
+		ShowWarning( "WFIFOSET: Attempted to send zero-length packet, most likely 0x%04x (please report this).\n", WFIFOW( fd, 0 ) );
 		return 0;
 	}
 
@@ -889,13 +858,11 @@ int WFIFOSET( int fd, size_t len ) {
 		}
 
 		if( s->wdata_size + len > WFIFO_MAX ) { // reached maximum write fifo size
-			ShowError(
-				"WFIFOSET: Maximum write buffer size for client connection %d exceeded, most "
-				"likely caused by packet 0x%04x (len=%" PRIuPTR ", ip=%lu.%lu.%lu.%lu).\n",
-				fd,
-				WFIFOW( fd, 0 ),
-				len,
-				CONVIP( s->client_addr ) );
+			ShowError( "WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%" PRIuPTR ", ip=%lu.%lu.%lu.%lu).\n",
+					   fd,
+					   WFIFOW( fd, 0 ),
+					   len,
+					   CONVIP( s->client_addr ) );
 			set_eof( fd );
 			return 0;
 		}
@@ -930,8 +897,8 @@ int do_sockets( t_tick next ) {
 #endif
 	int ret, i;
 
-	// PRESEND Timers are executed before do_sendrecv and can send packets and/or set sessions to
-	// eof. Send remaining data and process client-side disconnects here.
+	// PRESEND Timers are executed before do_sendrecv and can send packets and/or set sessions to eof.
+	// Send remaining data and process client-side disconnects here.
 #ifdef SEND_SHORTLIST
 	send_shortlist_do_sends();
 #else
@@ -1032,8 +999,7 @@ int do_sockets( t_tick next ) {
 		}
 
 		if( session[i]->flag.eof ) // func_send can't free a session, this is safe.
-		{ // Finally, even if there is no data to parse, connections signalled eof should be closed,
-		  // so we call parse_func [Skotlex]
+		{ // Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
 			session[i]->func_parse( i ); // This should close the session immediately.
 		}
 	}
@@ -1062,8 +1028,7 @@ int do_sockets( t_tick next ) {
 			continue;
 		}
 
-		// after parse, check client's RFIFO size to know if there is an invalid packet (too big and
-		// not parsed)
+		// after parse, check client's RFIFO size to know if there is an invalid packet (too big and not parsed)
 		if( session[i]->rdata_size == RFIFO_SIZE && session[i]->max_rdata == RFIFO_SIZE ) {
 			set_eof( i );
 			continue;
@@ -1076,8 +1041,7 @@ int do_sockets( t_tick next ) {
 		char buf[1024];
 
 		sprintf( buf,
-				 "In: %.03f kB/s (%.03f kB/s, Q: %.03f kB) | Out: %.03f kB/s (%.03f kB/s, Q: %.03f "
-				 "kB) | RAM: %.03f MB",
+				 "In: %.03f kB/s (%.03f kB/s, Q: %.03f kB) | Out: %.03f kB/s (%.03f kB/s, Q: %.03f kB) | RAM: %.03f MB",
 				 socket_data_i / 1024.,
 				 socket_data_ci / 1024.,
 				 socket_data_qi / 1024.,
@@ -1162,12 +1126,7 @@ static int connect_check_( uint32 ip ) {
 	for( i = 0; i < access_allownum; ++i ) {
 		if( ( ip & access_allow[i].mask ) == ( access_allow[i].ip & access_allow[i].mask ) ) {
 			if( access_debug ) {
-				ShowInfo(
-					"connect_check: Found match from allow list:%d.%d.%d.%d IP:%d.%d.%d.%d "
-					"Mask:%d.%d.%d.%d\n",
-					CONVIP( ip ),
-					CONVIP( access_allow[i].ip ),
-					CONVIP( access_allow[i].mask ) );
+				ShowInfo( "connect_check: Found match from allow list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n", CONVIP( ip ), CONVIP( access_allow[i].ip ), CONVIP( access_allow[i].mask ) );
 			}
 			is_allowip = 1;
 			break;
@@ -1177,12 +1136,7 @@ static int connect_check_( uint32 ip ) {
 	for( i = 0; i < access_denynum; ++i ) {
 		if( ( ip & access_deny[i].mask ) == ( access_deny[i].ip & access_deny[i].mask ) ) {
 			if( access_debug ) {
-				ShowInfo(
-					"connect_check: Found match from deny list:%d.%d.%d.%d IP:%d.%d.%d.%d "
-					"Mask:%d.%d.%d.%d\n",
-					CONVIP( ip ),
-					CONVIP( access_deny[i].ip ),
-					CONVIP( access_deny[i].mask ) );
+				ShowInfo( "connect_check: Found match from deny list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n", CONVIP( ip ), CONVIP( access_deny[i].ip ), CONVIP( access_deny[i].mask ) );
 			}
 			is_denyip = 1;
 			break;
@@ -1298,16 +1252,7 @@ int access_ipmask( const char* str, AccessControl* acc ) {
 		unsigned int a[4];
 		unsigned int m[4];
 		int n;
-		if( ( ( n = sscanf( str,
-							"%3u.%3u.%3u.%3u/%3u.%3u.%3u.%3u",
-							a,
-							a + 1,
-							a + 2,
-							a + 3,
-							m,
-							m + 1,
-							m + 2,
-							m + 3 ) ) != 8 && // not an ip + standard mask
+		if( ( ( n = sscanf( str, "%3u.%3u.%3u.%3u/%3u.%3u.%3u.%3u", a, a + 1, a + 2, a + 3, m, m + 1, m + 2, m + 3 ) ) != 8 && // not an ip + standard mask
 			  ( n = sscanf( str, "%3u.%3u.%3u.%3u/%3u", a, a + 1, a + 2, a + 3, m ) ) != 5 && // not an ip + bit mask
 			  ( n = sscanf( str, "%3u.%3u.%3u.%3u", a, a + 1, a + 2, a + 3 ) ) != 4 ) || // not an ip
 			a[0] > 255 ||
@@ -1480,8 +1425,7 @@ void do_close( int fd ) {
 		return; // invalid
 	}
 
-	flush_fifo( fd ); // Try to send what's left (although it might not succeed since it's a
-					  // nonblocking socket)
+	flush_fifo( fd ); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
 
 #ifndef SOCKET_EPOLL
 	// Select based Event Dispatcher
@@ -1490,13 +1434,11 @@ void do_close( int fd ) {
 	// Epoll based Event Dispatcher
 	epevent.data.fd = fd;
 	epevent.events = EPOLLIN;
-	epoll_ctl( epfd, EPOLL_CTL_DEL, fd, &epevent ); // removing the socket from epoll when it's being
-													// closed is not required but recommended
+	epoll_ctl( epfd, EPOLL_CTL_DEL, fd, &epevent ); // removing the socket from epoll when it's being closed is not required but recommended
 #endif
 
 	sShutdown( fd, SHUT_RDWR ); // Disallow further reads/writes
-	sClose( fd ); // We don't really care if these closing functions return an error, we are just
-				  // shutting down and not reusing this socket.
+	sClose( fd ); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if( session[fd] ) {
 		delete_session( fd );
 	}
@@ -1608,8 +1550,7 @@ void socket_init( void ) {
 		struct rlimit rlp;
 		if( 0 == getrlimit( RLIMIT_NOFILE, &rlp ) ) {
 			rlp.rlim_cur = MAXCONN;
-			if( 0 != setrlimit( RLIMIT_NOFILE, &rlp ) ) { // failed, try setting the maximum too (permission
-														  // to change system limits is required)
+			if( 0 != setrlimit( RLIMIT_NOFILE, &rlp ) ) { // failed, try setting the maximum too (permission to change system limits is required)
 				rlp.rlim_max = MAXCONN;
 				if( 0 != setrlimit( RLIMIT_NOFILE, &rlp ) ) { // failed
 					const char* errmsg = error_msg();
@@ -1622,14 +1563,12 @@ void socket_init( void ) {
 					// report limit
 					getrlimit( RLIMIT_NOFILE, &rlp );
 					rlim_cur = rlp.rlim_cur;
-					ShowWarning(
-						"socket_init: failed to set socket limit to %d, setting to maximum allowed "
-						"(original limit=%d, current limit=%d, maximum allowed=%d, %s).\n",
-						MAXCONN,
-						rlim_ori,
-						(int)rlp.rlim_cur,
-						(int)rlp.rlim_max,
-						errmsg );
+					ShowWarning( "socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n",
+								 MAXCONN,
+								 rlim_ori,
+								 (int)rlp.rlim_cur,
+								 (int)rlp.rlim_max,
+								 errmsg );
 				}
 			}
 		}
@@ -1709,8 +1648,7 @@ uint32 str2ip( const char* ip_str ) {
 }
 
 // Reorders bytes from network to little endian (Windows).
-// Neccessary for sending port numbers to the RO client until Gravity notices that they forgot
-// ntohs() calls.
+// Neccessary for sending port numbers to the RO client until Gravity notices that they forgot ntohs() calls.
 uint16 ntows( uint16 netshort ) {
 	return ( ( netshort & 0xFF ) << 8 ) | ( ( netshort & 0xFF00 ) >> 8 );
 }
@@ -1746,9 +1684,7 @@ void send_shortlist_add_fd( int fd ) {
 
 // Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends() {
-	int i;
-
-	for( i = send_shortlist_count - 1; i >= 0; --i ) {
+	for( int i = static_cast<int>( send_shortlist_count - 1 ); i >= 0; --i ) {
 		int fd = send_shortlist_array[i];
 		int idx = fd / 32;
 		int bit = fd % 32;

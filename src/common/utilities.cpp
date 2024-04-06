@@ -33,8 +33,7 @@ cScopeTimer::cScopeTimer() : aPimpl( new sPimpl() ) {
 
 /**
  * Calculates the Levenshtein distance of two strings.
- * @author
- * http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C.2B.2B
+ * @author http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C.2B.2B
  * comparison test was done here http://cpp.sh/2o7w
  */
 int levenshtein( const std::string& s1, const std::string& s2 ) {
@@ -110,11 +109,11 @@ bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ) {
 }
 
 void rathena::util::string_left_pad_inplace( std::string& str, char padding, size_t num ) {
-	str.insert( 0, min( 0, num - str.length() ), padding );
+	str.insert( 0, std::min( static_cast<size_t>( 0 ), num - str.length() ), padding );
 }
 
 std::string rathena::util::string_left_pad( const std::string& original, char padding, size_t num ) {
-	return std::string( num - min( num, original.length() ), padding ) + original;
+	return std::string( num - std::min( num, original.length() ), padding ) + original;
 }
 
 constexpr char base62_dictionary[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',

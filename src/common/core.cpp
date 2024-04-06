@@ -182,8 +182,7 @@ const char *get_svn_revision( void ) {
 	// - since it's a cache column, the data might not even exist
 	if( ( fp = fopen( ".svn" PATHSEP_STR "wc.db", "rb" ) ) != NULL || ( fp = fopen( ".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb" ) ) != NULL ) {
 	#ifndef SVNNODEPATH
-			// not sure how to handle branches, so i'll leave this overridable define until a better
-			// solution comes up
+			// not sure how to handle branches, so i'll leave this overridable define until a better solution comes up
 		#define SVNNODEPATH trunk
 	#endif
 		const char *prefix = "!svn/ver/";
@@ -283,7 +282,7 @@ const char *get_git_hash( void ) {
 		char line[64];
 		char *rev = (char *)malloc( sizeof( char ) * 50 );
 
-		if( fgets( line, sizeof( line ), fp ) && sscanf( line, "%40s", rev ) == 1 ) {
+		if( fgets( line, sizeof( line ), fp ) && sscanf( line, "%40s", rev ) ) {
 			snprintf( GitHash, sizeof( GitHash ), "%s", rev );
 		}
 
@@ -354,17 +353,15 @@ int Core::start( int argc, char **argv ) {
 		char *p1;
 		if( ( p1 = strrchr( argv[0], '/' ) ) != NULL || ( p1 = strrchr( argv[0], '\\' ) ) != NULL ) {
 			char *pwd = NULL; // path working directory
-			int n = 0;
 			SERVER_NAME = ++p1;
-			n = p1 - argv[0]; // calc dir name len
+			size_t n = p1 - argv[0]; // calc dir name len
 			pwd = safestrncpy( (char *)malloc( n + 1 ), argv[0], n );
 			if( chdir( pwd ) != 0 ) {
 				ShowError( "Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME );
 			}
 			free( pwd );
 		} else {
-			// On Windows the .bat files have the executeable names as parameters without any path
-			// seperator [Lemongrass]
+			// On Windows the .bat files have the executeable names as parameters without any path seperator [Lemongrass]
 			SERVER_NAME = argv[0];
 		}
 	}

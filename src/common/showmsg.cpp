@@ -61,7 +61,7 @@ char console_log_filepath[32] = "./log/unknown.log";
 		char s_[SBUF_SIZE]; \
 		StringBuf *d_; \
 		char *v_; \
-		int l_; \
+		size_t l_; \
 	} buf = { "", NULL, NULL, 0 }; \
 	// define NEWBUF
 
@@ -116,23 +116,19 @@ char console_log_filepath[32] = "./log/unknown.log";
 //
 // \033[#A - Cursor Up (CUU)
 //    Moves the cursor up by the specified number of lines without changing columns.
-//    If the cursor is already on the top line, this sequence is ignored. \e[A is equivalent to
-//    \e[1A.
+//    If the cursor is already on the top line, this sequence is ignored. \e[A is equivalent to \e[1A.
 //
 // \033[#B - Cursor Down (CUD)
 //    Moves the cursor down by the specified number of lines without changing columns.
-//    If the cursor is already on the bottom line, this sequence is ignored. \e[B is equivalent to
-//    \e[1B.
+//    If the cursor is already on the bottom line, this sequence is ignored. \e[B is equivalent to \e[1B.
 //
 // \033[#C - Cursor Forward (CUF)
 //    Moves the cursor forward by the specified number of columns without changing lines.
-//    If the cursor is already in the rightmost column, this sequence is ignored. \e[C is equivalent
-//    to \e[1C.
+//    If the cursor is already in the rightmost column, this sequence is ignored. \e[C is equivalent to \e[1C.
 //
 // \033[#D - Cursor Backward (CUB)
 //    Moves the cursor back by the specified number of columns without changing lines.
-//    If the cursor is already in the leftmost column, this sequence is ignored. \e[D is equivalent
-//    to \e[1D.
+//    If the cursor is already in the leftmost column, this sequence is ignored. \e[D is equivalent to \e[1D.
 //
 // \033[#E - Cursor Next Line (CNL)
 //    Moves the cursor down the indicated # of rows, to column 1. \e[E is equivalent to \e[1E.
@@ -145,8 +141,8 @@ char console_log_filepath[32] = "./log/unknown.log";
 //
 // \033[#;#H - Cursor Position (CUP)
 //    Moves the cursor to the specified position. The first # specifies the line number,
-//    the second # specifies the column. If you do not specify a position, the cursor moves to the
-//    home position: the upper-left corner of the screen (line 1, column 1).
+//    the second # specifies the column. If you do not specify a position, the cursor moves to the home position:
+//    the upper-left corner of the screen (line 1, column 1).
 //
 // \033[#;#f - Horizontal & Vertical Position
 //    (same as \033[#;#H)
@@ -161,32 +157,26 @@ char console_log_filepath[32] = "./log/unknown.log";
 
 // \033[#J - Erase Display (ED)
 //    Clears the screen and moves to the home position
-//    \033[0J - Clears the screen from cursor to end of display. The cursor position is unchanged.
-//    (default) \033[1J - Clears the screen from start to cursor. The cursor position is unchanged.
+//    \033[0J - Clears the screen from cursor to end of display. The cursor position is unchanged. (default)
+//    \033[1J - Clears the screen from start to cursor. The cursor position is unchanged.
 //    \033[2J - Clears the screen and moves the cursor to the home position (line 1, column 1).
 //
 // \033[#K - Erase Line (EL)
 //    Clears the current line from the cursor position
-//    \033[0K - Clears all characters from the cursor position to the end of the line (including the
-//    character at the cursor position). The cursor position is unchanged. (default) \033[1K -
-//    Clears all characters from start of line to the cursor position. (including the character at
-//    the cursor position). The cursor position is unchanged. \033[2K - Clears all characters of the
-//    whole line. The cursor position is unchanged.
+//    \033[0K - Clears all characters from the cursor position to the end of the line (including the character at the cursor position). The cursor position is unchanged. (default)
+//    \033[1K - Clears all characters from start of line to the cursor position. (including the character at the cursor position). The cursor position is unchanged.
+//    \033[2K - Clears all characters of the whole line. The cursor position is unchanged.
 
 /*
 not implemented
 
 \033[#L
-IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The
-cursor position is unchanged. The bottommost # lines are lost. \e[L is equivalent to \e[1L. \033[#M
-DL: Delete Line: The block of # lines at and below the cursor are deleted; all lines below them move
-up # lines to fill in the gap, leaving # blank lines at the bottom of the screen. The cursor
-position is unchanged. \e[M is equivalent to \e[1M. \033[#\@ ICH: Insert CHaracter: The cursor
-character and all characters to the right of it move right # columns, leaving behind blank space.
-The cursor position is unchanged. The rightmost # characters on the line are lost. \e[\@ is
-equivalent to \e[1\@. \033[#P DCH: Delete CHaracter: The block of # characters at and to the right
-of the cursor are deleted; all characters to the right of it move left # columns, leaving behind
-blank space. The cursor position is unchanged. \e[P is equivalent to \e[1P.
+IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The cursor position is unchanged. The bottommost # lines are lost. \e[L is equivalent to \e[1L.
+\033[#M
+DL: Delete Line: The block of # lines at and below the cursor are deleted; all lines below them move up # lines to fill in the gap, leaving # blank lines at the bottom of the screen. The cursor
+position is unchanged. \e[M is equivalent to \e[1M. \033[#\@ ICH: Insert CHaracter: The cursor character and all characters to the right of it move right # columns, leaving behind blank space. The
+cursor position is unchanged. The rightmost # characters on the line are lost. \e[\@ is equivalent to \e[1\@. \033[#P DCH: Delete CHaracter: The block of # characters at and to the right of the cursor
+are deleted; all characters to the right of it move left # columns, leaving behind blank space. The cursor position is unchanged. \e[P is equivalent to \e[1P.
 
 Escape sequences for Select Character Set
 */
@@ -213,7 +203,7 @@ int VFPRINTF( HANDLE handle, const char *fmt, va_list argptr ) {
 	BUFVPRINTF( tempbuf, fmt, argptr );
 
 	if( !is_console( handle ) && stdout_with_ansisequence ) {
-		WriteFile( handle, BUFVAL( tempbuf ), BUFLEN( tempbuf ), &written, 0 );
+		WriteFile( handle, BUFVAL( tempbuf ), (DWORD)BUFLEN( tempbuf ), &written, 0 );
 		return 0;
 	}
 
@@ -242,8 +232,7 @@ int VFPRINTF( HANDLE handle, const char *fmt, va_list argptr ) {
 			// skip escape and bracket
 			q = q + 2;
 			for( ;; ) {
-				if( ISDIGIT( *q ) ) { // add number to number array, only accept 2digits, shift out the
-									  // rest
+				if( ISDIGIT( *q ) ) { // add number to number array, only accept 2digits, shift out the rest
 					// so // \033[123456789m will become \033[89m
 					numbers[numpoint] = ( numbers[numpoint] << 4 ) | ( *q - '0' );
 					++q;
@@ -328,10 +317,9 @@ int VFPRINTF( HANDLE handle, const char *fmt, va_list argptr ) {
 					// set the attributes
 					SetConsoleTextAttribute( handle, info.wAttributes );
 				} else if( *q == 'J' ) { // \033[#J - Erase Display (ED)
-					//    \033[0J - Clears the screen from cursor to end of display. The cursor
-					//    position is unchanged. \033[1J - Clears the screen from start to cursor.
-					//    The cursor position is unchanged. \033[2J - Clears the screen and moves
-					//    the cursor to the home position (line 1, column 1).
+					//    \033[0J - Clears the screen from cursor to end of display. The cursor position is unchanged.
+					//    \033[1J - Clears the screen from start to cursor. The cursor position is unchanged.
+					//    \033[2J - Clears the screen and moves the cursor to the home position (line 1, column 1).
 					uint8 num = ( numbers[numpoint] >> 4 ) * 10 + ( numbers[numpoint] & 0x0F );
 					int cnt;
 					DWORD tmp;
@@ -349,9 +337,9 @@ int VFPRINTF( HANDLE handle, const char *fmt, va_list argptr ) {
 					FillConsoleOutputAttribute( handle, info.wAttributes, cnt, origin, &tmp );
 					FillConsoleOutputCharacter( handle, ' ', cnt, origin, &tmp );
 				} else if( *q == 'K' ) { // \033[K  : clear line from actual position to end of the line
-					//    \033[0K - Clears all characters from the cursor position to the end of the
-					//    line. \033[1K - Clears all characters from start of line to the cursor
-					//    position. \033[2K - Clears all characters of the whole line.
+					//    \033[0K - Clears all characters from the cursor position to the end of the line.
+					//    \033[1K - Clears all characters from start of line to the cursor position.
+					//    \033[2K - Clears all characters of the whole line.
 
 					uint8 num = ( numbers[numpoint] >> 4 ) * 10 + ( numbers[numpoint] & 0x0F );
 					COORD origin = { 0, info.dwCursorPosition.Y }; // warning C4204
@@ -635,9 +623,8 @@ int _vShowMessage( enum msg_type flag, const char *string, va_list ap ) {
 		case MSG_STATUS: // Bright Green (To inform about good things)
 			strcat( prefix, CL_GREEN "[Status]" CL_RESET ":" CL_CLL );
 			break;
-		case MSG_SQL: // Bright Violet (For dumping out anything related with SQL) <- Actually, this
-					  // is mostly used for SQL errors with the database, as successes can as well
-					  // just be anything else... [Skotlex]
+		case MSG_SQL: // Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database, as successes can as well just be anything else...
+					  // [Skotlex]
 			strcat( prefix, CL_MAGENTA "[SQL]" CL_RESET ":" CL_CLL );
 			break;
 		case MSG_INFORMATION: // Bright White (Variable information)

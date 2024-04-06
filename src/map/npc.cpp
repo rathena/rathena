@@ -5621,13 +5621,14 @@ int npc_parsesrcfile(const char* filepath)
 
 	// parse buffer
 	for ( const char* p = skip_space(buffer); p && *p ; p = skip_space(p) ) {
-		int pos[9];
+		size_t pos[9];
 		lines++;
 
 		// w1<TAB>w2<TAB>w3<TAB>w4
-		int count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
+		bool error;
+		size_t count = sv_parse( p, len + buffer - p, 0, '\t', pos, ARRAYLENGTH( pos ), SV_TERMINATE_LF|SV_TERMINATE_CRLF, error );
 
-		if (count < 0) {
+		if( error ){
 			ShowError("npc_parsesrcfile: Parse error in file '%s', line '%d'. Stopping...\n", filepath, strline(buffer,p-buffer));
 			break;
 		}
