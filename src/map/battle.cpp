@@ -2449,11 +2449,11 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
  * This applies to pre-renewal and non-sd in renewal
  *------------------------------------------
  * Pass damage2 as NULL to not calc it.
- * Flag values:
+ * Flag values (see e_base_damage_flag):
  * &1 : Critical hit
  * &2 : Arrow attack
  * &4 : Skill is Magic Crasher
- * &8 : Skip target size adjustment (Extremity Fist?)
+ * &8 : Skip target size adjustment (Weapon Perfection)
  * &16: Arrow attack but BOW, REVOLVER, RIFLE, SHOTGUN, GATLING or GRENADE type weapon not equipped (i.e. shuriken, kunai and venom knives not affected by DEX)
  *
  * Credits:
@@ -3180,7 +3180,6 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				hitrate += hitrate * 10 * skill_lv / 100;
 				break;
 			case KN_AUTOCOUNTER:
-			case PA_SHIELDCHAIN:
 			case NPC_WATERATTACK:
 			case NPC_GROUNDATTACK:
 			case NPC_FIREATTACK:
@@ -3284,6 +3283,10 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 	}
 
 	hitrate = cap_value(hitrate, battle_config.min_hitrate, battle_config.max_hitrate);
+
+	if(skill_id == PA_SHIELDCHAIN)
+		hitrate += 20; //Rapid Smiting gives a flat +20 hit after the hitrate was capped
+
 	return (rnd()%100 < hitrate);
 }
 
@@ -3353,25 +3356,67 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 	return nk[NK_IGNOREDEFENSE] != 0;
 }
 
-/*================================================
- * Should skill attack consider VVS and masteries?
- *------------------------------------------------
- * Credits:
- *	Original coder Skotlex
- *	Initial refactoring by Baalberith
- *	Refined and optimized by helvetica
+/**
+ * This function lists which skills are unaffected by refine bonus, masteries, Star Crumbs and Spirit Spheres
+ * This function is also used to determine if atkpercent applies
+ * @param skill_id: Skill being used
+ * @param type 1 - Checking refine bonus; 2 - Checking Star Crumb bonus
+ * @return true = bonus applies; false = bonus does not apply
  */
-static bool battle_skill_stacks_masteries_vvs(uint16 skill_id)
+static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
 {
-	if (
-#ifndef RENEWAL
-		skill_id == PA_SHIELDCHAIN || skill_id == CR_SHIELDBOOMERANG ||
-		skill_id == PA_SACRIFICE || skill_id == AM_ACIDTERROR ||
-#endif
-		skill_id == MO_INVESTIGATE || skill_id == MO_EXTREMITYFIST ||
-		skill_id == RK_DRAGONBREATH || skill_id == RK_DRAGONBREATH_WATER || skill_id == NC_SELFDESTRUCTION ||
-		skill_id == LG_SHIELDPRESS || skill_id == LG_EARTHDRIVE)
+	switch (skill_id) {
+		case PA_SHIELDCHAIN:
+		case CR_SHIELDBOOMERANG:
+		case AM_ACIDTERROR:
+		case MO_INVESTIGATE:
+		case MO_EXTREMITYFIST:
+		case PA_SACRIFICE:
+		case NPC_DRAGONBREATH:
+		case RK_DRAGONBREATH:
+		case RK_DRAGONBREATH_WATER:
+		case NC_SELFDESTRUCTION:
+		case LG_SHIELDPRESS:
+		case LG_EARTHDRIVE:
 			return false;
+		case CR_GRANDCROSS:
+		case NPC_GRANDDARKNESS:
+			// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs / Spirit Spheres
+			if (type != 1)
+				return false;
+			break;
+		case LK_SPIRALPIERCE:
+			// Spiral Pierce is influenced only by refine bonus and Star Crumbs
+			if (type != 1 && type != 2)
+				return false;
+			break;
+	}
+
+	return true;
+}
+
+/**
+ * This function lists which skills are unaffected by EDP and the elemental bonus from Magnum Break / EDP
+ * Unit skills (e.g. Bomb and Freezing Trap) are never affected.
+ * @param skill_id: Skill being used
+ * @return true = bonus applies; false = bonus does not apply
+ */
+static bool battle_skill_stacks_edp_element(uint16 skill_id)
+{
+	switch (skill_id) {
+		case TF_SPRINKLESAND:
+		case AS_SPLASHER:
+		case ASC_METEORASSAULT:
+		case ASC_BREAKER:
+		case AS_VENOMKNIFE:
+		case AM_ACIDTERROR:
+			return false;
+		default:
+			//Unit skills
+			if (skill_get_unit_id(skill_id))
+				return false;
+			break;
+	}
 
 	return true;
 }
@@ -3592,103 +3637,6 @@ int battle_get_misc_element(struct block_list* src, struct block_list* target, u
 	return element;
 }
 
-/*========================================
- * Do element damage modifier calculation
- *----------------------------------------
- * Credits:
- *	Original coder Skotlex
- *	Initial refactoring by Baalberith
- *	Refined and optimized by helvetica
- */
-static void battle_calc_element_damage(struct Damage* wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv)
-{
-	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
-
-	// Elemental attribute fix
-	if(!nk[NK_IGNOREELEMENT] && (wd->damage > 0 || wd->damage2 > 0)) {
-		map_session_data *sd = BL_CAST(BL_PC, src);
-		status_change *sc = status_get_sc(src);
-		struct status_data *sstatus = status_get_status_data(src);
-		struct status_data *tstatus = status_get_status_data(target);
-		int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, true);
-		int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
-
-		switch (skill_id) {
-			case PA_SACRIFICE:
-			case RK_DRAGONBREATH:
-			case RK_DRAGONBREATH_WATER:
-			case NC_SELFDESTRUCTION:
-			case HFLI_SBR44:
-				wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv);
-				if (is_attack_left_handed(src, skill_id))
-					wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element, tstatus->def_ele, tstatus->ele_lv);
-				break;
-			default:
-				if (skill_id == 0 && (battle_config.attack_attr_none & src->type))
-					return; // Non-player basic attacks are non-elemental, they deal 100% against all defense elements
-#ifdef RENEWAL
-				if (sd == nullptr) { // Renewal player's elemental damage calculation is already done before this point, only calculate for everything else
-#endif
-					wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv);
-					if (is_attack_left_handed(src, skill_id))
-						wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element, tstatus->def_ele, tstatus->ele_lv);
-#ifdef RENEWAL
-				}
-#endif
-				break;
-		}
-
-		// Forced to neutral skills [helvetica]
-		// Skills forced to neutral gain benefits from weapon element but final damage is considered "neutral" and resistances are applied again
-		switch (skill_id) {
-#ifdef RENEWAL
-			case MO_INVESTIGATE:
-			case CR_SHIELDBOOMERANG:
-			case PA_SHIELDCHAIN:
-#endif
-			case MC_CARTREVOLUTION:
-			case HW_MAGICCRASHER:
-			case SR_FALLENEMPIRE:
-			case SR_CRESCENTELBOW_AUTOSPELL:
-			case SR_GATEOFHELL:
-			case GN_FIRE_EXPANSION_ACID:
-				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-				if (is_attack_left_handed(src, skill_id))
-					wd->damage2 = battle_attr_fix(src, target, wd->damage2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
-				break;
-		}
-
-#ifndef RENEWAL
-		if (sd && (wd->damage > 0 || wd->damage2 > 0)) { // Applies only to player damage, monsters and mercenaries don't get this damage boost
-			// This adds a percentual damage bonus based on the damage you would deal with a normal attack
-			// Does not apply to unit skills or skills that have their own base damage formula such as AM_ACIDTERROR
-			if (sc && sc->getSCE(SC_WATK_ELEMENT) && !skill_get_unit_id(skill_id) && skill_id != AM_ACIDTERROR) {
-				int64 damage = wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2;
-				damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
-				//Spirit Sphere bonus damage is not affected by element
-				if (skill_id == MO_FINGEROFFENSIVE || skill_id == MO_INVESTIGATE) { //Need to calculate number of Spirit Balls you had before cast
-					damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
-				}
-				else
-					damage += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
-				//Division needs to happen at the end to prevent data loss due to rounding
-				wd->damage += (damage / 100);
-				if (is_attack_left_handed(src, skill_id)) {
-					damage = wd->basedamage2 * sc->getSCE(SC_WATK_ELEMENT)->val2;
-					damage = battle_attr_fix(src, target, damage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
-					if (skill_id == MO_FINGEROFFENSIVE) {
-						damage += ((wd->div_ + sd->spiritball) * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
-					}
-					else
-						damage += (sd->spiritball * 3 * sc->getSCE(SC_WATK_ELEMENT)->val2);
-					wd->damage2 += (damage / 100);
-				}
-			}
-		}
-#endif
-	}
-}
-
 #define ATK_RATE(damage, damage2, a) do { int64 rate_ = (a); (damage) = (damage) * rate_ / 100; if(is_attack_left_handed(src, skill_id)) (damage2) = (damage2) * rate_ / 100; } while(0);
 #define ATK_RATE2(damage, damage2, a , b) do { int64 rate_ = (a), rate2_ = (b); (damage) = (damage) *rate_ / 100; if(is_attack_left_handed(src, skill_id)) (damage2) = (damage2) * rate2_ / 100; } while(0);
 #define ATK_RATER(damage, a) { (damage) = (damage) * (a) / 100; }
@@ -3710,6 +3658,178 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	#define RE_ALLATK_ADDRATE(wd, a) {;}
 #endif
 
+/**
+ * Cap both damage and basedamage of damage struct to a minimum value
+ * @param wd: Weapon damage structure
+ * @param src: Source of the attack
+ * @param skill_id: Skill ID of the skill used by source
+ * @param min: Minimum value to which damage should be capped
+ */
+static void battle_min_damage(struct Damage &wd, struct block_list &src, uint16 skill_id, int64 min) {
+	if (is_attack_right_handed(&src, skill_id)) {
+		wd.damage = cap_value(wd.damage, min, INT64_MAX);
+		wd.basedamage = cap_value(wd.basedamage, min, INT64_MAX);
+	}
+	// Left-hand damage is always capped to 0
+	if (is_attack_left_handed(&src, skill_id)) {
+		wd.damage2 = cap_value(wd.damage2, 0, INT64_MAX);
+	}
+}
+
+/**
+ * Returns the bonus damage granted by Spirit Spheres
+ * As we delete the spheres before calculating the damage, we need some kind of logic to figure out how many were available
+ * Each skill handles this in its own way, this function handles the different cases
+ * @param wd: Weapon damage structure
+ * @param src: Source of the attack
+ * @param skill_id: Skill ID of the skill used by source
+ * @param min: Minimum value to which damage should be capped
+ */
+static int battle_get_spiritball_damage(struct Damage& wd, struct block_list& src, uint16 skill_id) {
+
+	map_session_data* sd = BL_CAST(BL_PC, &src);
+
+	// Return 0 for non-players
+	if (!sd)
+		return 0;
+
+	int damage = 0;
+
+	switch (skill_id) {
+		case MO_INVESTIGATE:
+#ifndef RENEWAL
+		case MO_FINGEROFFENSIVE:
+#endif
+			// These skills used as many spheres as they do hits
+			damage = (wd.div_ + sd->spiritball) * 3;
+			break;
+		case MO_EXTREMITYFIST:
+			// These skills store the number of spheres the player had before cast
+			damage = sd->spiritball_old * 3;
+			break;
+		default:
+			// Any skills that do not consume spheres or do not care
+			damage = sd->spiritball * 3;
+			break;
+	}
+
+	return damage;
+}
+
+/*========================================
+ * Do element damage modifier calculation
+ *----------------------------------------
+ * Credits:
+ *	Original coder Skotlex
+ *	Initial refactoring by Baalberith
+ *	Refined and optimized by helvetica
+ */
+static void battle_calc_element_damage(struct Damage* wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv)
+{
+	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
+	map_session_data* sd = BL_CAST(BL_PC, src);
+	status_change* sc = status_get_sc(src);
+	struct status_data* sstatus = status_get_status_data(src);
+	struct status_data* tstatus = status_get_status_data(target);
+
+	// Elemental attribute fix
+	if(!nk[NK_IGNOREELEMENT] && (wd->damage > 0 || wd->damage2 > 0)) {
+		int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, true);
+		int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
+
+		switch (skill_id) {
+			case PA_SACRIFICE:
+			case RK_DRAGONBREATH:
+			case RK_DRAGONBREATH_WATER:
+			case NC_SELFDESTRUCTION:
+			case HFLI_SBR44:
+				wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+				if (is_attack_left_handed(src, skill_id))
+					wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
+			default:
+				if (skill_id == 0 && (battle_config.attack_attr_none & src->type))
+					return; // Non-player basic attacks are non-elemental, they deal 100% against all defense elements
+#ifdef RENEWAL
+				if (sd == nullptr) { // Renewal player's elemental damage calculation is already done before this point, only calculate for everything else
+#endif
+					wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+					if (is_attack_left_handed(src, skill_id))
+						wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element, tstatus->def_ele, tstatus->ele_lv, 1);
+#ifdef RENEWAL
+				}
+#endif
+				break;
+		}
+
+		// Forced to neutral skills [helvetica]
+		// Skills forced to neutral gain benefits from weapon element but final damage is considered "neutral" and resistances are applied again
+		switch (skill_id) {
+#ifdef RENEWAL
+			case MO_INVESTIGATE:
+			case CR_SHIELDBOOMERANG:
+			case PA_SHIELDCHAIN:
+#endif
+			case MC_CARTREVOLUTION:
+			case HW_MAGICCRASHER:
+			case SR_FALLENEMPIRE:
+			case SR_CRESCENTELBOW_AUTOSPELL:
+			case SR_GATEOFHELL:
+			case GN_FIRE_EXPANSION_ACID:
+				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
+				if (is_attack_left_handed(src, skill_id))
+					wd->damage2 = battle_attr_fix(src, target, wd->damage2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
+		}
+	}
+
+#ifndef RENEWAL
+	// These mastery bonuses are non-elemental and should apply even if the attack misses
+	// They are still increased by the EDP/Magnum Break bonus damage (WATK_ELEMENT)
+	// In renewal these bonuses do not apply when the attack misses
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 2)) {
+		// Star Crumb bonus damage
+		ATK_ADD2(wd->damage, wd->damage2, sd->right_weapon.star, sd->left_weapon.star);
+	}
+	// Check if general mastery bonuses apply (above check is only for Star Crumb)
+	if (battle_skill_stacks_masteries_vvs(skill_id, 0)) {
+		// Spirit Sphere bonus damage
+		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
+
+		// Skill-specific bonuses
+		if (skill_id == TF_POISON)
+			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+	}
+
+	// These bonuses do not apply to skills that ignore element, unit skills and skills that have their own base damage formula
+	// If damage was reduced below 0 and was not increased again to a positive value through mastery bonuses, these bonuses are ignored
+	// Any of these are only applied to your right hand weapon in pre-renewal
+	if (!nk[NK_IGNOREELEMENT] && (wd->damage > 0 || wd->damage2 > 0) && sc && battle_skill_stacks_edp_element(skill_id)) {
+
+		// EDP bonus damage
+		// This has to be applied after mastery bonuses but still before the elemental extra damage
+		if (sc->getSCE(SC_EDP))
+			wd->damage += (wd->damage * sc->getSCE(SC_EDP)->val3) / 100;
+
+		// This adds a percentual damage bonus based on the damage you would deal with a normal attack
+		// Applies only to player damage; monsters and mercenaries don't get this damage boost
+		if (sd && sc->getSCE(SC_WATK_ELEMENT)) {
+			// Pretend the normal attack was of the element stored in the status change
+			wd->basedamage = battle_attr_fix(src, target, wd->basedamage, sc->getSCE(SC_WATK_ELEMENT)->val1, tstatus->def_ele, tstatus->ele_lv, 1);
+			// Star Crumb bonus damage
+			wd->basedamage += sd->right_weapon.star;
+			// Spirit Sphere bonus damage
+			wd->basedamage += battle_get_spiritball_damage(*wd, *src, skill_id);
+			// Add percent of the base damage to the damage
+			wd->damage += (wd->basedamage * sc->getSCE(SC_WATK_ELEMENT)->val2) / 100;
+		}
+	}
+#endif
+	// Cap damage to 0
+	if (battle_config.attr_recover == 0)
+		battle_min_damage(*wd, *src, skill_id, 0);
+}
+
 /*==================================
  * Calculate weapon mastery damages
  *----------------------------------
@@ -3727,13 +3847,10 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 
 	if (sd) {
 		wd->basedamage = battle_addmastery(sd, target, wd->basedamage, 0);
-		if (is_attack_left_handed(src, skill_id)) {
-			wd->basedamage2 = battle_addmastery(sd, target, wd->basedamage2, 1);
-		}
 	}
 
-	// Grand Cross is confirmed to be affected by refine bonus but not masteries
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id) && skill_id != CR_GRANDCROSS)
+	// Check if mastery damage applies to current skill
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 0))
 	{	//Add mastery damage
 		uint16 skill;
 
@@ -3754,12 +3871,10 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 15 * skill_lv);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 4);
-		if (skill_id != CR_SHIELDBOOMERANG)
-			ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->right_weapon.star, ((wd->div_ < 1) ? 1 : wd->div_) * sd->left_weapon.star);
-		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
-#else
-		if (skill_id == TF_POISON)
-			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+		// Star Crumb bonus damage
+		ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, sd->right_weapon.star, sd->left_weapon.star);
+		// Spirit Sphere bonus damage
+		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_get_spiritball_damage(*wd, *src, skill_id));
 #endif
 
 		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
@@ -3900,7 +4015,10 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 
-	uint16 i, bflag = BDMG_NONE;
+	uint16 bflag = BDMG_NONE;
+#ifndef RENEWAL
+	uint16 i;
+#endif
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
 	switch (skill_id) {	//Calc base damage according to skill
@@ -4069,7 +4187,6 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			// Pre-renewal exclusive flags
 			if (is_skill_using_arrow(src, skill_id)) bflag |= BDMG_ARROW;
 			if (skill_id == HW_MAGICCRASHER) bflag |= BDMG_MAGIC;
-			if (skill_id == MO_EXTREMITYFIST) bflag |= BDMG_NOSIZE;
 			if (sc && sc->getSCE(SC_WEAPONPERFECTION)) bflag |= BDMG_NOSIZE;
 			if (is_skill_using_arrow(src, skill_id) && sd) {
 				switch(sd->status.weapon) {
@@ -4316,49 +4433,33 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  * @param sc: Object's status change information
  * @return atkpercent with cap_value(watk,0,USHRT_MAX)
  */
-static unsigned short battle_get_atkpercent(struct block_list* bl, uint16 skill_id, status_change* sc)
+static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
 {
-	//These skills are not affected by ATKpercent
-	switch (skill_id) {
-#ifndef RENEWAL
-	// Need to be confirmed for renewal as masteries have been coded to apply to those two in renewal
-	case PA_SHIELDCHAIN:
-	case CR_SHIELDBOOMERANG:
-#endif
-	case AM_ACIDTERROR:
-	case CR_GRANDCROSS:
-	case NPC_GRANDDARKNESS:
-	case MO_INVESTIGATE:
-	case MO_EXTREMITYFIST:
-	case PA_SACRIFICE:
-	case NPC_DRAGONBREATH:
-	case RK_DRAGONBREATH:
-	case RK_DRAGONBREATH_WATER:
+	if (!battle_skill_stacks_masteries_vvs(skill_id, 0))
 		return 100;
-	}
 
 	int atkpercent = 100;
 
-	if (sc->getSCE(SC_CURSE))
+	if (sc.getSCE(SC_CURSE))
 		atkpercent -= 25;
-	if (sc->getSCE(SC_PROVOKE))
-		atkpercent += sc->getSCE(SC_PROVOKE)->val2;
-	if (sc->getSCE(SC_STRIPWEAPON) && bl->type != BL_PC)
-		atkpercent -= sc->getSCE(SC_STRIPWEAPON)->val2;
-	if (sc->getSCE(SC_CONCENTRATION))
-		atkpercent += sc->getSCE(SC_CONCENTRATION)->val2;
-	if (sc->getSCE(SC_TRUESIGHT))
-		atkpercent += 2 * sc->getSCE(SC_TRUESIGHT)->val1;
-	if (sc->getSCE(SC_JOINTBEAT) && sc->getSCE(SC_JOINTBEAT)->val2 & BREAK_WAIST)
+	if (sc.getSCE(SC_PROVOKE))
+		atkpercent += sc.getSCE(SC_PROVOKE)->val2;
+	if (sc.getSCE(SC_STRIPWEAPON) && bl.type != BL_PC)
+		atkpercent -= sc.getSCE(SC_STRIPWEAPON)->val2;
+	if (sc.getSCE(SC_CONCENTRATION))
+		atkpercent += sc.getSCE(SC_CONCENTRATION)->val2;
+	if (sc.getSCE(SC_TRUESIGHT))
+		atkpercent += 2 * sc.getSCE(SC_TRUESIGHT)->val1;
+	if (sc.getSCE(SC_JOINTBEAT) && sc.getSCE(SC_JOINTBEAT)->val2 & BREAK_WAIST)
 		atkpercent -= 25;
-	if (sc->getSCE(SC_INCATKRATE))
-		atkpercent += sc->getSCE(SC_INCATKRATE)->val1;
-	if (sc->getSCE(SC_SKE))
+	if (sc.getSCE(SC_INCATKRATE))
+		atkpercent += sc.getSCE(SC_INCATKRATE)->val1;
+	if (sc.getSCE(SC_SKE))
 		atkpercent += 300;
-	if (sc->getSCE(SC_BLOODLUST))
-		atkpercent += sc->getSCE(SC_BLOODLUST)->val2;
-	if (sc->getSCE(SC_FLEET))
-		atkpercent += sc->getSCE(SC_FLEET)->val3;
+	if (sc.getSCE(SC_BLOODLUST))
+		atkpercent += sc.getSCE(SC_BLOODLUST)->val2;
+	if (sc.getSCE(SC_FLEET))
+		atkpercent += sc.getSCE(SC_FLEET)->val3;
 
 	/* Only few selected skills should use this function, DO NOT ADD any that are not caused by the skills listed below
 	* TODO:
@@ -4396,7 +4497,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 	if(sc && skill_id != PA_SACRIFICE) {
 #ifdef RENEWAL
 		//ATK percent modifier (in renewal, it's applied before the skillratio)
-		skillratio = battle_get_atkpercent(src, skill_id, sc);
+		skillratio = battle_get_atkpercent(*src, skill_id, *sc);
 #endif
 		if(sc->getSCE(SC_OVERTHRUST))
 			skillratio += sc->getSCE(SC_OVERTHRUST)->val3;
@@ -4635,7 +4736,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 		case MO_EXTREMITYFIST:
-			skillratio += 100 * (7 + sstatus->sp / 10);			
+			skillratio += 700 + sstatus->sp * 10;
 #ifdef RENEWAL
 			if (wd->miscflag&1)
 				skillratio *= 2; // More than 5 spirit balls active
@@ -6152,6 +6253,19 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 		case MO_EXTREMITYFIST:
 			atk = 250 + 150 * skill_lv;
 			break;
+		case PA_SHIELDCHAIN:
+			if (sd) {
+				short index = sd->equip_index[EQI_HAND_L];
+				// Bonus damage: [max(100, Random(100, 0.7*weight + pow(skill level + refine)))]
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
+					// First calculate the random part of the bonus
+					int bonus = (7 * sd->inventory_data[index]->weight) / 100;
+					bonus += static_cast<decltype(bonus)>(pow(skill_lv + sd->inventory.u.items_inventory[index].refine, 2));
+					// Now get a random value between 100 and the random part
+					atk = max(100, rnd_value(100, bonus));
+				}
+			}
+			break;
 #ifndef RENEWAL
 		case GS_MAGICALBULLET:
 			if (sstatus->matk_max > sstatus->matk_min)
@@ -6232,8 +6346,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->getSCE(SC_GATLINGFEVER)->val3);
 #else
 		//ATK percent modifier (in pre-renewal, it's applied multiplicatively after the skill ratio)
-		ATK_RATE(wd->damage, wd->damage2, battle_get_atkpercent(src, skill_id, sc));
-		ATK_RATE(wd->basedamage, wd->basedamage2, battle_get_atkpercent(src, 0, sc));
+		ATK_RATE(wd->damage, wd->damage2, battle_get_atkpercent(*src, skill_id, *sc));
+		ATK_RATER(wd->basedamage, battle_get_atkpercent(*src, 0, *sc));
 #endif
 		if (sc->getSCE(SC_SPIRIT)) {
 			if (skill_id == AS_SONICBLOW && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN) {
@@ -6250,6 +6364,7 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 		if (sc->getSCE(SC_EDP)) {
 			switch(skill_id) {
 				// Renewal: Venom Splasher, Meteor Assault, Grimtooth and Venom Knife ignore EDP
+				case TF_SPRINKLESAND:
 				case AS_SPLASHER:
 				case ASC_METEORASSAULT:
 				case AS_GRIMTOOTH:
@@ -6544,32 +6659,13 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R)*(def1+vit_def) : (100-def1)),
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?100:(is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (int64)is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L)*(def1+vit_def) : (100-def1))
 		);
-		ATK_RATE(wd->basedamage, wd->basedamage2, 100 - def1);
+		ATK_RATER(wd->basedamage, 100 - def1);
 		ATK_ADD2(wd->damage, wd->damage2,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ?0:-vit_def,
 			attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ?0:-vit_def
 		);
-		ATK_ADD(wd->basedamage, wd->basedamage2, -vit_def);
+		wd->basedamage -= vit_def;
 #endif
-}
-
-
-/**
- * Cap both damage and basedamage of damage struct to a minimum value
- * @param wd: Weapon damage structure
- * @param src: Source of the attack
- * @param skill_id: Skill ID of the skill used by source
- * @param min: Minimum value to which damage should be capped
- */
-static void battle_min_damage(struct Damage* wd, struct block_list* src, uint16 skill_id, int64 min) {
-	if (is_attack_right_handed(src, skill_id)) {
-		wd->damage = cap_value(wd->damage, min, INT64_MAX);
-		wd->basedamage = cap_value(wd->basedamage, min, INT64_MAX);
-	}
-	if (is_attack_left_handed(src, skill_id)) {
-		wd->damage2 = cap_value(wd->damage2, min, INT64_MAX);
-		wd->basedamage2 = cap_value(wd->basedamage2, min, INT64_MAX);
-	}
 }
 
 /*====================================
@@ -6590,33 +6686,19 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 #ifndef RENEWAL
 	//Refine bonus
 	if (sd) {
-		if (battle_skill_stacks_masteries_vvs(skill_id)) {
+		if (battle_skill_stacks_masteries_vvs(skill_id, 1)) {
 			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 		}
-		ATK_ADD2(wd->basedamage, wd->basedamage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
+		wd->basedamage += sstatus->rhw.atk2;
 	}
 
 	//After DEF reduction, damage can be negative, refine bonus works against that value
 	//After refinement bonus was applied, damage is capped to 1, then masteries are applied
-	battle_min_damage(wd, src, skill_id, 1);
+	battle_min_damage(*wd, *src, skill_id, 1);
 
 	battle_calc_attack_masteries(wd, src, target, skill_id, skill_lv);
 #endif
 	if (sc) { // SC skill damages
-#ifndef RENEWAL
-		if (sc->getSCE(SC_EDP)) {
-			switch (skill_id) {
-				// Pre-Renewal: Soul Breaker, Venom Splasher, Meteor Assault and Soul Breaker ignore EDP
-			case AS_SPLASHER:
-			case ASC_METEORASSAULT:
-			case ASC_BREAKER:
-				break; // skills above have no effect with EDP
-			default:
-				ATK_ADDRATE(wd->damage, wd->damage2, sc->getSCE(SC_EDP)->val3);
-				break;
-			}
-		}
-#endif
 		if (sc->getSCE(SC_AURABLADE)
 #ifndef RENEWAL
 			&& skill_id != LK_SPIRALPIERCE && skill_id != ML_SPIRALPIERCE
@@ -6631,7 +6713,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	}
 
 	//Set to min of 1
-	battle_min_damage(wd, src, skill_id, 1);
+	battle_min_damage(*wd, *src, skill_id, 1);
 
 #ifdef RENEWAL
 	switch (skill_id) {
@@ -6977,7 +7059,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.flag = BF_WEAPON; //Initial Flag
 	wd.flag |= (skill_id||wd.miscflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
 	wd.isspdamage = false;
-	wd.damage = wd.damage2 = wd.basedamage = wd.basedamage2 =
+	wd.damage = wd.damage2 = wd.basedamage =
 #ifdef RENEWAL
 	wd.statusAtk = wd.statusAtk2 = wd.equipAtk = wd.equipAtk2 = wd.weaponAtk = wd.weaponAtk2 = wd.masteryAtk = wd.masteryAtk2 =
 	wd.percentAtk = wd.percentAtk2 =
@@ -7261,7 +7343,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		// First call function with skill_id 0 to get base damage of a normal attack
 		battle_calc_skill_base_damage(&wd, src, target, 0, 0); // base damage
 		wd.basedamage = wd.damage;
-		wd.basedamage2 = wd.damage2;
 		// Now get actual skill damage
 		if (skill_id != 0)
 			battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
@@ -7533,28 +7614,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADD(wd.damage, wd.damage2, skill * 2);
 		if (skill_id == GS_GROUNDDRIFT)
 			ATK_ADD(wd.damage, wd.damage2, 50 * skill_lv);
-		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
-			ATK_ADD2(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->right_weapon.star, ((wd.div_ < 1) ? 1 : wd.div_) * sd->left_weapon.star);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
 			ATK_ADD(wd.damage, wd.damage2, 4);
-		if (skill_id == MO_FINGEROFFENSIVE) { //Need to calculate number of Spirit Balls you had before cast
-			ATK_ADD(wd.damage, wd.damage2, (wd.div_ + sd->spiritball) * 3);
-		} else if (skill_id != MO_INVESTIGATE)
-			ATK_ADD(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->spiritball * 3);
-#endif
-		if (sd && skill_id == PA_SHIELDCHAIN) { //Rapid Smiting has a unique mastery bonus
-			short index = sd->equip_index[EQI_HAND_L];
-			//The bonus is [max(100, Random(100, 0.7*weight + pow(skill level + refine)))]
-			if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
-				//First calculate the random part of the bonus
-				int bonus = (7 * sd->inventory_data[index]->weight) / 100;
-				bonus += static_cast<decltype(bonus)>(pow(skill_lv + sd->inventory.u.items_inventory[index].refine, 2));
-				//Now get a random value between 100 and the random part
-				bonus = max(100, rnd_value(100, bonus));
-				ATK_ADD(wd.damage, wd.damage2, bonus);
-			}
-		}
-#ifndef RENEWAL
+
 		//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
 		switch(skill_id) {
 			case RK_DRAGONBREATH:
