@@ -3,10 +3,9 @@
 
 #include "char_logif.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/showmsg.hpp>
 #include <common/socket.hpp>

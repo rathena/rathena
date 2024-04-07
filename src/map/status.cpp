@@ -3,9 +3,9 @@
 
 #include "status.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <functional>
-#include <math.h>
-#include <stdlib.h>
 #include <string>
 
 #include <common/cbasetypes.hpp>
