@@ -4,20 +4,19 @@
 #ifndef STRLIB_HPP
 #define STRLIB_HPP
 
-#include <stdarg.h>
-
-#include "cbasetypes.hpp"
-#include "malloc.hpp"
-
+#include <cstdarg>
 #if !defined(__USE_GNU)
 #define __USE_GNU  // required to enable strnlen on some platforms
 #define __USED_GNU
 #endif
-#include <string.h>
+#include <cstring>
 #if defined(__USED_GNU)
 #undef __USE_GNU
 #undef __USED_GNU
 #endif
+
+#include "cbasetypes.hpp"
+#include "malloc.hpp"
 
 int remove_control_chars(char* str);
 char* trim(char* str);

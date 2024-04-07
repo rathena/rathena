@@ -4,7 +4,7 @@
 #ifndef SQL_HPP
 #define SQL_HPP
 
-#include <stdarg.h>// va_list
+#include <cstdarg>// va_list
 
 #include "cbasetypes.hpp"
 
