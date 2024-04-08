@@ -4,11 +4,11 @@
 #include "itemdb.hpp"
 
 #include <chrono>
+#include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <stdlib.h>
-#include <math.h>
 #include <unordered_map>
 
 #include <common/nullpo.hpp>
@@ -3553,7 +3553,7 @@ void ItemGroupDatabase::loadingFinished() {
 /** Read item forbidden by mapflag (can't equip item)
 * Structure: <nameid>,<mode>
 */
-static bool itemdb_read_noequip(char* str[], int columns, int current) {
+static bool itemdb_read_noequip( char* str[], size_t columns, size_t current ){
 	t_itemid nameid;
 	int flag;
 
@@ -4290,7 +4290,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (randopt->script) {
-			aFree(randopt->script);
+			script_free_code( randopt->script );
 			randopt->script = nullptr;
 		}
 

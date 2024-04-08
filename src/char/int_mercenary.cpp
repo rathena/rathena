@@ -3,8 +3,8 @@
 
 #include "int_mercenary.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/mmo.hpp>
 #include <common/showmsg.hpp>
