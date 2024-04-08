@@ -5805,8 +5805,8 @@ Body:
   - Id: 192
     Name: NPC_MAGICALATTACK
     Description: Demon Shock Attack
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 1
+    Type: Magic
     TargetType: Attack
     Flags:
       IsNpc: true
@@ -5912,34 +5912,13 @@ Body:
     Name: NPC_KEEPING
     Description: Keeping
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 30000
     Status: Keeping
   - Id: 202
     Name: NPC_DARKBREATH
@@ -5979,60 +5958,19 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Barrier
   - Id: 205
     Name: NPC_DEFENDER
     Description: Defender
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Armor
   - Id: 206
     Name: NPC_LICK
@@ -9398,8 +9336,7 @@ Body:
   - Id: 349
     Name: NPC_POWERUP
     Description: Power Up
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 5
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -9421,7 +9358,7 @@ Body:
   - Id: 350
     Name: NPC_AGIUP
     Description: Agility UP
-    MaxLevel: 10
+    MaxLevel: 5
     TargetType: Self
     DamageFlags:
       NoDamage: true

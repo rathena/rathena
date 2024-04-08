@@ -8081,6 +8081,8 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 		speed = 200;
 	if( sc->getSCE(SC_DEFENDER) )
 		speed = max(speed, 200);
+	if (sc->getSCE(SC_ARMOR))
+		speed = max(speed, 200);
 	if( sc->getSCE(SC_WALKSPEED) && sc->getSCE(SC_WALKSPEED)->val1 > 0 ) // ChangeSpeed
 		speed = speed * 100 / sc->getSCE(SC_WALKSPEED)->val1;
 
@@ -11467,7 +11469,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ARMOR:
 			// NPC_DEFENDER:
-			val2 = 80; // Damage reduction
+			val2 = 8; // Damage will be divided by this value
 			// Attack requirements to be blocked:
 			val3 = BF_LONG; // Range
 			val4 = BF_WEAPON|BF_MISC; // Type

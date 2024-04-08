@@ -1148,6 +1148,8 @@ Body:
       Watk_Element: true
   - Status: Armor
     DurationLookup: NPC_DEFENDER
+    CalcFlags:
+      Speed: true
   - Status: Armor_Element_Water
     Icon: EFST_RESIST_PROPERTY_WATER
     CalcFlags:
