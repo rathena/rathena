@@ -3739,11 +3739,11 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	status_change* sc = status_get_sc(src);
 	struct status_data* sstatus = status_get_status_data(src);
 	struct status_data* tstatus = status_get_status_data(target);
+	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
 
 	// Elemental attribute fix
 	if(!nk[NK_IGNOREELEMENT] && (wd->damage > 0 || wd->damage2 > 0)) {
 		int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, true);
-		int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
 
 		switch (skill_id) {
 			case PA_SACRIFICE:
@@ -3805,8 +3805,11 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
 
 		// Skill-specific bonuses
-		if (skill_id == TF_POISON)
+		if (skill_id == TF_POISON) {
 			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+			// Envenom applies the attribute table to the base damage and then again to the final damage
+			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+		}
 	}
 
 	// These bonuses do not apply to skills that ignore element, unit skills and skills that have their own base damage formula
