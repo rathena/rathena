@@ -14819,7 +14819,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, 1000, 350, 2);
+			status_heal(bl, 1000, 350, 0);	// Heal amount not displayed
 			sc_timer_next(1000 + tick);
 			return 0;
 		}
