@@ -2059,7 +2059,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Inchitrate
-    DurationLookup: NPC_POWERUP
     CalcFlags:
       Hit: true
     Flags:
@@ -2078,7 +2077,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Incfleerate
-    DurationLookup: NPC_AGIUP
     CalcFlags:
       Flee: true
     Flags:
@@ -7062,3 +7060,25 @@ Body:
       NoClearbuff: true
   - Status: WeaponBreaker
     DurationLookup: NPC_WEAPONBRAKER
+  - Status: Powerup
+    Icon: EFST_POWERUP
+    DurationLookup: NPC_POWERUP
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Agiup
+    Icon: EFST_AGIUP
+    DurationLookup: NPC_AGIUP
+    CalcFlags:
+      Speed: true
+      Flee: true
+    Flags:
+      NoClearbuff: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Decreaseagi: true
