@@ -13964,7 +13964,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			return 0;
 		} else { // Create Basilica. Start SC on caster. Unit timer start SC on others.
 			if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
+				if(sd)
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
 				return 0;
 			}
 			skill_clear_unitgroup(src);
