@@ -2832,3 +2832,13 @@ SC_WEAPONBREAKER
 	desc: Bonus given when using NPC_WEAPONBRAKER skill
 	val1: Skill level
 	val2: val1 * 2 weapon break chance
+
+SC_POWERUP
+	desc: Increases ATKpercent and Hit.
+	val1: + ATKpercent
+	val2: +% Hit
+
+SC_AGIUP
+	desc: Increase Speed and Flee.
+	val1: +% Walkspeed
+	val2: +% Flee
