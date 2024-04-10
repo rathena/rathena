@@ -34,7 +34,7 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
-	#define MAX_HOTKEYS_DB ( ( MAX_HOTKEYS ) * 2 )
+	#define MAX_HOTKEYS_DB ((MAX_HOTKEYS) * 2)
 #else
 	#define MAX_HOTKEYS_DB MAX_HOTKEYS
 #endif
@@ -54,9 +54,9 @@
 #endif
 
 #ifndef MAX_INVENTORY
-	#define MAX_INVENTORY ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE ) // Maximum items in player inventory (in total)
+	#define MAX_INVENTORY (INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE) // Maximum items in player inventory (in total)
 #else
-	#if MAX_INVENTORY < ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE )
+	#if MAX_INVENTORY < (INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE)
 		#error Your custom MAX_INVENTORY define is too low
 	#endif
 #endif
@@ -150,17 +150,17 @@ const t_itemid WEDDING_RING_F = 2635;
 
 // For character names, title names, guilds, maps, etc.
 // Includes null-terminator as it is the length of the array.
-#define NAME_LENGTH ( 23 + 1 )
-#define PASSWD_LENGTH ( 32 + 1 )
+#define NAME_LENGTH (23 + 1)
+#define PASSWD_LENGTH (32 + 1)
 // NPC names can be longer than it's displayed on client (NAME_LENGTH).
 #define NPC_NAME_LENGTH 50
 // <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
-#define EVENT_NAME_LENGTH ( NPC_NAME_LENGTH + 2 + NAME_LENGTH + 1 )
+#define EVENT_NAME_LENGTH (NPC_NAME_LENGTH + 2 + NAME_LENGTH + 1)
 // For item names, which tend to have much longer names.
 #define ITEM_NAME_LENGTH 50
 // For Map Names, which the client considers to be 16 in length including the .gat extension
-#define MAP_NAME_LENGTH ( 11 + 1 )
-#define MAP_NAME_LENGTH_EXT ( MAP_NAME_LENGTH + 4 )
+#define MAP_NAME_LENGTH (11 + 1)
+#define MAP_NAME_LENGTH_EXT (MAP_NAME_LENGTH + 4)
 // Pincode Length
 #define PINCODE_LENGTH 4
 
@@ -185,7 +185,7 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_HOMUNSKILL 59
 #define MAX_HOMUNCULUS_CLASS 52 //[orn], Increased to 60 from 16 to allow new Homun-S.
 #define HM_CLASS_BASE 6001
-#define HM_CLASS_MAX ( HM_CLASS_BASE + MAX_HOMUNCULUS_CLASS - 1 )
+#define HM_CLASS_MAX (HM_CLASS_BASE + MAX_HOMUNCULUS_CLASS - 1)
 
 // Mail System
 #define MAIL_MAX_INBOX 30
@@ -299,15 +299,15 @@ struct achievement {
 };
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
-	#pragma pack( push, 1 )
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000)
+	#pragma pack(push, 1)
 #endif
 
 struct s_item_randomoption {
 	short id;
 	short value;
 	char param;
-} __attribute__( ( packed ) );
+} __attribute__((packed));
 
 struct item {
 	int id;
@@ -324,11 +324,11 @@ struct item {
 	uint64 unique_id;
 	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
-} __attribute__( ( packed ) );
+} __attribute__((packed));
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
-	#pragma pack( pop )
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000)
+	#pragma pack(pop)
 #endif
 
 // Equip position constants
@@ -1160,10 +1160,10 @@ struct clan {
 #endif
 
 #ifndef MIN_CHARS
-	#define MIN_CHARS ( MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING ) // Default number of characters per account.
+	#define MIN_CHARS (MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING) // Default number of characters per account.
 #endif
 
-#if( MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING ) > MAX_CHARS
+#if(MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
 	#error Config of MAX_CHARS is invalid
 #endif
 

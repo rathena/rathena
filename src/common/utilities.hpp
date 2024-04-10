@@ -16,7 +16,7 @@
 #include "random.hpp"
 
 #ifndef __has_builtin
-	#define __has_builtin( x ) 0
+	#define __has_builtin(x) 0
 #endif
 
 // Class used to perform time measurement
@@ -27,13 +27,13 @@ class cScopeTimer {
 	cScopeTimer();
 };
 
-int levenshtein( const std::string& s1, const std::string& s2 );
+int levenshtein(const std::string& s1, const std::string& s2);
 
 namespace rathena {
 namespace util {
 template <typename K, typename V>
-bool map_exists( std::map<K, V>& map, K key ) {
-	return map.find( key ) != map.end();
+bool map_exists(std::map<K, V>& map, K key) {
+	return map.find(key) != map.end();
 }
 
 /**
@@ -43,10 +43,10 @@ bool map_exists( std::map<K, V>& map, K key ) {
  * @return Key value on success or nullptr on failure
  */
 template <typename K, typename V>
-V* map_find( std::map<K, V>& map, K key ) {
-	auto it = map.find( key );
+V* map_find(std::map<K, V>& map, K key) {
+	auto it = map.find(key);
 
-	if( it != map.end() ) {
+	if(it != map.end()) {
 		return &it->second;
 	} else {
 		return nullptr;
@@ -60,10 +60,10 @@ V* map_find( std::map<K, V>& map, K key ) {
  * @return Key value on success or nullptr on failure
  */
 template <typename K, typename V>
-std::shared_ptr<V> map_find( std::map<K, std::shared_ptr<V>>& map, K key ) {
-	auto it = map.find( key );
+std::shared_ptr<V> map_find(std::map<K, std::shared_ptr<V>>& map, K key) {
+	auto it = map.find(key);
 
-	if( it != map.end() ) {
+	if(it != map.end()) {
 		return it->second;
 	} else {
 		return nullptr;
@@ -78,10 +78,10 @@ std::shared_ptr<V> map_find( std::map<K, std::shared_ptr<V>>& map, K key ) {
  * @return Key value on success or defaultValue on failure
  */
 template <typename K, typename V>
-V map_get( std::map<K, V>& map, K key, V defaultValue ) {
-	auto it = map.find( key );
+V map_get(std::map<K, V>& map, K key, V defaultValue) {
+	auto it = map.find(key);
 
-	if( it != map.end() ) {
+	if(it != map.end()) {
 		return it->second;
 	} else {
 		return defaultValue;
@@ -94,12 +94,12 @@ V map_get( std::map<K, V>& map, K key, V defaultValue ) {
  * @param size: Size to set map to
  */
 template <typename K, typename V, typename S>
-void map_resize( std::map<K, V>& map, S size ) {
+void map_resize(std::map<K, V>& map, S size) {
 	auto it = map.begin();
 
-	std::advance( it, size );
+	std::advance(it, size);
 
-	map.erase( it, map.end() );
+	map.erase(it, map.end());
 }
 
 /**
@@ -109,10 +109,10 @@ void map_resize( std::map<K, V>& map, S size ) {
  * @return Key value on success or nullptr on failure
  */
 template <typename K, typename V>
-V* umap_find( std::unordered_map<K, V>& map, K key ) {
-	auto it = map.find( key );
+V* umap_find(std::unordered_map<K, V>& map, K key) {
+	auto it = map.find(key);
 
-	if( it != map.end() ) {
+	if(it != map.end()) {
 		return &it->second;
 	} else {
 		return nullptr;
@@ -126,10 +126,10 @@ V* umap_find( std::unordered_map<K, V>& map, K key ) {
  * @return Key value on success or nullptr on failure
  */
 template <typename K, typename V>
-std::shared_ptr<V> umap_find( std::unordered_map<K, std::shared_ptr<V>>& map, K key ) {
-	auto it = map.find( key );
+std::shared_ptr<V> umap_find(std::unordered_map<K, std::shared_ptr<V>>& map, K key) {
+	auto it = map.find(key);
 
-	if( it != map.end() ) {
+	if(it != map.end()) {
 		return it->second;
 	} else {
 		return nullptr;
@@ -144,10 +144,10 @@ std::shared_ptr<V> umap_find( std::unordered_map<K, std::shared_ptr<V>>& map, K 
  * @return Key value on success or defaultValue on failure
  */
 template <typename K, typename V>
-V umap_get( std::unordered_map<K, V>& map, K key, V defaultValue ) {
-	auto it = map.find( key );
+V umap_get(std::unordered_map<K, V>& map, K key, V defaultValue) {
+	auto it = map.find(key);
 
-	if( it != map.end() ) {
+	if(it != map.end()) {
 		return it->second;
 	} else {
 		return defaultValue;
@@ -160,8 +160,8 @@ V umap_get( std::unordered_map<K, V>& map, K key, V defaultValue ) {
  * @param size: Size to set unordered map to
  */
 template <typename K, typename V, typename S>
-void umap_resize( std::unordered_map<K, V>& map, S size ) {
-	map.erase( std::advance( map.begin(), map.min( size, map.size() ) ), map.end() );
+void umap_resize(std::unordered_map<K, V>& map, S size) {
+	map.erase(std::advance(map.begin(), map.min(size, map.size())), map.end());
 }
 
 /**
@@ -170,10 +170,10 @@ void umap_resize( std::unordered_map<K, V>& map, S size ) {
  * @return A random value by reference
  */
 template <typename K, typename V>
-V& umap_random( std::unordered_map<K, V>& map ) {
+V& umap_random(std::unordered_map<K, V>& map) {
 	auto it = map.begin();
 
-	std::advance( it, rnd_value<size_t>( 0, map.size() - 1 ) );
+	std::advance(it, rnd_value<size_t>(0, map.size() - 1));
 
 	return it->second;
 }
@@ -184,10 +184,10 @@ V& umap_random( std::unordered_map<K, V>& map ) {
  * @return A random value by reference
  */
 template <typename K>
-K& vector_random( std::vector<K>& vec ) {
+K& vector_random(std::vector<K>& vec) {
 	auto it = vec.begin();
 
-	std::advance( it, rnd_value<size_t>( 0, vec.size() - 1 ) );
+	std::advance(it, rnd_value<size_t>(0, vec.size() - 1));
 
 	return *it;
 }
@@ -199,8 +199,8 @@ K& vector_random( std::vector<K>& vec ) {
  * @return Key value iterator on success or vector end iterator on failure
  */
 template <typename K, typename V>
-typename std::vector<K>::iterator vector_get( std::vector<K>& vec, V key ) {
-	return std::find( vec.begin(), vec.end(), key );
+typename std::vector<K>::iterator vector_get(std::vector<K>& vec, V key) {
+	return std::find(vec.begin(), vec.end(), key);
 }
 
 /**
@@ -210,10 +210,10 @@ typename std::vector<K>::iterator vector_get( std::vector<K>& vec, V key ) {
  * @return True on success or false on failure
  */
 template <typename K, typename V>
-bool vector_exists( const std::vector<K>& vec, V value ) {
-	auto it = std::find( vec.begin(), vec.end(), value );
+bool vector_exists(const std::vector<K>& vec, V value) {
+	auto it = std::find(vec.begin(), vec.end(), value);
 
-	if( it != vec.end() ) {
+	if(it != vec.end()) {
 		return true;
 	} else {
 		return false;
@@ -226,12 +226,12 @@ bool vector_exists( const std::vector<K>& vec, V value ) {
  * @param index: Index value to remove
  */
 template <typename K>
-void erase_at( std::vector<K>& vector, size_t index ) {
-	if( vector.size() == 1 ) {
+void erase_at(std::vector<K>& vector, size_t index) {
+	if(vector.size() == 1) {
 		vector.clear();
 		vector.shrink_to_fit();
 	} else {
-		vector.erase( vector.begin() + index );
+		vector.erase(vector.begin() + index);
 	}
 }
 
@@ -242,41 +242,41 @@ void erase_at( std::vector<K>& vector, size_t index ) {
  * @param value: Value to remove
  */
 template <typename K, typename V>
-void vector_erase_if_exists( std::vector<K>& vector, V value ) {
-	auto it = std::find( vector.begin(), vector.end(), value );
+void vector_erase_if_exists(std::vector<K>& vector, V value) {
+	auto it = std::find(vector.begin(), vector.end(), value);
 
-	if( it != vector.end() ) {
-		if( vector.size() == 1 ) {
+	if(it != vector.end()) {
+		if(vector.size() == 1) {
 			vector.clear();
 			vector.shrink_to_fit();
 		} else {
-			vector.erase( it );
+			vector.erase(it);
 		}
 	}
 }
 
-#if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION ) && GCC_VERSION >= 50100 )
+#if __has_builtin(__builtin_add_overflow) || (defined(__GNUC__) && !defined(__clang__) && defined(GCC_VERSION) && GCC_VERSION >= 50100)
 template <typename T>
-bool safe_addition( T a, T b, T& result ) {
-	return __builtin_add_overflow( a, b, &result );
+bool safe_addition(T a, T b, T& result) {
+	return __builtin_add_overflow(a, b, &result);
 }
 #else
 template <typename T>
-bool safe_addition( T a, T b, T& result ) {
+bool safe_addition(T a, T b, T& result) {
 	bool overflow = false;
 
-	if( std::numeric_limits<T>::is_signed ) {
-		if( b < 0 ) {
-			if( a < ( ( std::numeric_limits<T>::min )() - b ) ) {
+	if(std::numeric_limits<T>::is_signed) {
+		if(b < 0) {
+			if(a < ((std::numeric_limits<T>::min)() - b)) {
 				overflow = true;
 			}
 		} else {
-			if( a > ( ( std::numeric_limits<T>::max )() - b ) ) {
+			if(a > ((std::numeric_limits<T>::max)() - b)) {
 				overflow = true;
 			}
 		}
 	} else {
-		if( a > ( ( std::numeric_limits<T>::max )() - b ) ) {
+		if(a > ((std::numeric_limits<T>::max)() - b)) {
 			overflow = true;
 		}
 	}
@@ -287,8 +287,8 @@ bool safe_addition( T a, T b, T& result ) {
 }
 #endif
 
-bool safe_substraction( int64 a, int64 b, int64& result );
-bool safe_multiplication( int64 a, int64 b, int64& result );
+bool safe_substraction(int64 a, int64 b, int64& result);
+bool safe_multiplication(int64 a, int64 b, int64& result);
 
 /**
  * Safely add values without overflowing.
@@ -298,10 +298,10 @@ bool safe_multiplication( int64 a, int64 b, int64& result );
  * @return Result of a + b
  */
 template <typename T>
-T safe_addition_cap( T a, T b, T cap ) {
+T safe_addition_cap(T a, T b, T cap) {
 	T result;
 
-	if( rathena::util::safe_addition( a, b, result ) ) {
+	if(rathena::util::safe_addition(a, b, result)) {
 		return cap;
 	} else {
 		return result;
@@ -309,8 +309,8 @@ T safe_addition_cap( T a, T b, T cap ) {
 }
 
 template <typename T>
-void tolower( T& string ) {
-	std::transform( string.begin(), string.end(), string.begin(), ::tolower );
+void tolower(T& string) {
+	std::transform(string.begin(), string.end(), string.begin(), ::tolower);
 }
 
 /**
@@ -319,7 +319,7 @@ void tolower( T& string ) {
  * @param padding: Padding character
  * @param num: Maximum length of padding
  */
-void string_left_pad_inplace( std::string& str, char padding, size_t num );
+void string_left_pad_inplace(std::string& str, char padding, size_t num);
 
 /**
  * Pad string with arbitrary character
@@ -329,14 +329,14 @@ void string_left_pad_inplace( std::string& str, char padding, size_t num );
  *
  * @return A copy of original string with padding added
  */
-std::string string_left_pad( const std::string& original, char padding, size_t num );
+std::string string_left_pad(const std::string& original, char padding, size_t num);
 
 /**
  * Encode base10 number to base62. Originally by lututui
  * @param val: Base10 Number
  * @return Base62 string
  **/
-std::string base62_encode( uint32 val );
+std::string base62_encode(uint32 val);
 } // namespace util
 } // namespace rathena
 

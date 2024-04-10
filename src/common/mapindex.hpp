@@ -54,21 +54,21 @@
 #define MAP_GLASTHEIM "glast_01"
 #define MAP_THANATOS "hu_fild01"
 
-const char* mapindex_getmapname( const char* string, char* output );
-const char* mapindex_getmapname_ext( const char* string, char* output );
+const char* mapindex_getmapname(const char* string, char* output);
+const char* mapindex_getmapname_ext(const char* string, char* output);
 
-unsigned short mapindex_name2idx( const char* name, const char* func );
-#define mapindex_name2id( mapname ) mapindex_name2idx( ( mapname ), __FUNCTION__ )
+unsigned short mapindex_name2idx(const char* name, const char* func);
+#define mapindex_name2id(mapname) mapindex_name2idx((mapname), __FUNCTION__)
 
-const char* mapindex_idx2name( unsigned short id, const char* func );
-#define mapindex_id2name( mapindex ) mapindex_idx2name( ( mapindex ), __FUNCTION__ )
+const char* mapindex_idx2name(unsigned short id, const char* func);
+#define mapindex_id2name(mapindex) mapindex_idx2name((mapindex), __FUNCTION__)
 
-int mapindex_addmap( int index, const char* name );
-int mapindex_removemap( int index );
+int mapindex_addmap(int index, const char* name);
+int mapindex_removemap(int index);
 
-void mapindex_check_mapdefault( const char* mapname );
+void mapindex_check_mapdefault(const char* mapname);
 
-void mapindex_init( void );
-void mapindex_final( void );
+void mapindex_init(void);
+void mapindex_final(void);
 
 #endif /* MAPINDEX_HPP */

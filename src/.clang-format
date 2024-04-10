@@ -35,9 +35,6 @@ SpaceBeforeParensOptions:
   AfterRequiresInClause: false
   AfterRequiresInExpression: false
   BeforeNonEmptyParentheses: false
-SpacesInParens: Custom
-SpacesInParensOptions:
-  Other: true
 IncludeCategories:
   - Regex: '<config/.*h.*>'
     Priority: 3

@@ -101,7 +101,7 @@ typedef struct eri {
 	 * @param self Interface of the entry manager
 	 * @return An entry
 	 */
-	void *( *alloc )( struct eri *self );
+	void *(*alloc)(struct eri *self);
 
 	/**
 	 * Free an entry allocated from this manager.
@@ -110,14 +110,14 @@ typedef struct eri {
 	 * @param self Interface of the entry manager
 	 * @param entry Entry to be freed
 	 */
-	void ( *free )( struct eri *self, void *entry );
+	void (*free)(struct eri *self, void *entry);
 
 	/**
 	 * Return the size of the entries allocated from this manager.
 	 * @param self Interface of the entry manager
 	 * @return Size of the entries of this manager in bytes
 	 */
-	size_t ( *entry_size )( struct eri *self );
+	size_t (*entry_size)(struct eri *self);
 
 	/**
 	 * Destroy this instance of the manager.
@@ -126,31 +126,31 @@ typedef struct eri {
 	 * missing/extra entries.
 	 * @param self Interface of the entry manager
 	 */
-	void ( *destroy )( struct eri *self );
+	void (*destroy)(struct eri *self);
 
 	/* */
-	void ( *chunk_size )( struct eri *self, unsigned int new_size );
+	void (*chunk_size)(struct eri *self, unsigned int new_size);
 } ERS;
 
 #ifdef DISABLE_ERS
 	// Use memory manager to allocate/free and disable other interface functions
-	#define ers_alloc( obj, type ) (type *)aMalloc( sizeof( type ) )
-	#define ers_free( obj, entry ) aFree( entry )
-	#define ers_entry_size( obj ) (size_t)0
-	#define ers_destroy( obj )
-	#define ers_chunk_size( obj, size )
+	#define ers_alloc(obj, type) (type *)aMalloc(sizeof(type))
+	#define ers_free(obj, entry) aFree(entry)
+	#define ers_entry_size(obj) (size_t)0
+	#define ers_destroy(obj)
+	#define ers_chunk_size(obj, size)
 	// Disable the public functions
-	#define ers_new( size, name, options ) NULL
+	#define ers_new(size, name, options) NULL
 	#define ers_report()
 	#define ers_final()
 #else /* not DISABLE_ERS */
 	// These defines should be used to allow the code to keep working whenever
 	// the system is disabled
-	#define ers_alloc( obj, type ) ( (type *)( obj )->alloc( obj ) )
-	#define ers_free( obj, entry ) ( ( obj )->free( ( obj ), ( entry ) ) )
-	#define ers_entry_size( obj ) ( ( obj )->entry_size( obj ) )
-	#define ers_destroy( obj ) ( ( obj )->destroy( obj ) )
-	#define ers_chunk_size( obj, size ) ( ( obj )->chunk_size( ( obj ), ( size ) ) )
+	#define ers_alloc(obj, type) ((type *)(obj)->alloc(obj))
+	#define ers_free(obj, entry) ((obj)->free((obj), (entry)))
+	#define ers_entry_size(obj) ((obj)->entry_size(obj))
+	#define ers_destroy(obj) ((obj)->destroy(obj))
+	#define ers_chunk_size(obj, size) ((obj)->chunk_size((obj), (size)))
 
 /**
  * Get a new instance of the manager that handles the specified entry size.
@@ -162,7 +162,7 @@ typedef struct eri {
  * @param The requested size of the entry in bytes
  * @return Interface of the object
  */
-ERS *ers_new( uint32 size, const char *name, enum ERSOptions options );
+ERS *ers_new(uint32 size, const char *name, enum ERSOptions options);
 
 /**
  * Print a report about the current state of the Entry Reusage System.
@@ -171,12 +171,12 @@ ERS *ers_new( uint32 size, const char *name, enum ERSOptions options );
  * entries are found.
  * The extra entries are included in the count of reusable entries.
  */
-void ers_report( void );
+void ers_report(void);
 
 /**
  * Clears the remainder of the managers
  **/
-void ers_final( void );
+void ers_final(void);
 #endif /* DISABLE_ERS / not DISABLE_ERS */
 
 #endif /* ERS_HPP */

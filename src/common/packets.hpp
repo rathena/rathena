@@ -13,20 +13,20 @@
 #include <common/socket.hpp>
 #include <common/utilities.hpp>
 
-#pragma warning( push )
-#pragma warning( disable : 4200 )
+#pragma warning(push)
+#pragma warning(disable : 4200)
 
-#define DEFINE_PACKET_HEADER( name, id ) const int16 HEADER_##name = id
+#define DEFINE_PACKET_HEADER(name, id) const int16 HEADER_##name = id
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
-	#pragma pack( push, 1 )
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000)
+	#pragma pack(push, 1)
 #endif
 
 struct PACKET {
 	int16 packetType;
 	int16 packetLength;
-} __attribute__( ( packed ) );
+} __attribute__((packed));
 
 struct PACKET_CA_LOGIN {
 	int16 packetType;
@@ -34,8 +34,8 @@ struct PACKET_CA_LOGIN {
 	char username[NAME_LENGTH];
 	char password[NAME_LENGTH];
 	uint8 clienttype;
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_LOGIN, 0x64 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_LOGIN, 0x64);
 
 #if PACKETVER >= 20170315
 struct PACKET_AC_ACCEPT_LOGIN_sub {
@@ -46,7 +46,7 @@ struct PACKET_AC_ACCEPT_LOGIN_sub {
 	uint16 type;
 	uint16 new_;
 	uint8 unknown[128];
-} __attribute__( ( packed ) );
+} __attribute__((packed));
 
 struct PACKET_AC_ACCEPT_LOGIN {
 	int16 packetType;
@@ -59,8 +59,8 @@ struct PACKET_AC_ACCEPT_LOGIN {
 	uint8 sex;
 	char token[WEB_AUTH_TOKEN_LENGTH];
 	PACKET_AC_ACCEPT_LOGIN_sub char_servers[];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( AC_ACCEPT_LOGIN, 0xac4 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(AC_ACCEPT_LOGIN, 0xac4);
 #else
 struct PACKET_AC_ACCEPT_LOGIN_sub {
 	uint32 ip;
@@ -69,7 +69,7 @@ struct PACKET_AC_ACCEPT_LOGIN_sub {
 	uint16 users;
 	uint16 type;
 	uint16 new_;
-} __attribute__( ( packed ) );
+} __attribute__((packed));
 
 struct PACKET_AC_ACCEPT_LOGIN {
 	int16 packetType;
@@ -81,8 +81,8 @@ struct PACKET_AC_ACCEPT_LOGIN {
 	char last_login[26];
 	uint8 sex;
 	PACKET_AC_ACCEPT_LOGIN_sub char_servers[];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( AC_ACCEPT_LOGIN, 0x69 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(AC_ACCEPT_LOGIN, 0x69);
 #endif
 
 // not sure when this started
@@ -91,34 +91,34 @@ struct PACKET_AC_REFUSE_LOGIN {
 	int16 packetType;
 	uint32 error;
 	char unblock_time[20];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( AC_REFUSE_LOGIN, 0x83e );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(AC_REFUSE_LOGIN, 0x83e);
 #else
 struct PACKET_AC_REFUSE_LOGIN {
 	int16 packetType;
 	uint8 error;
 	char unblock_time[20];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( AC_REFUSE_LOGIN, 0x6a );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(AC_REFUSE_LOGIN, 0x6a);
 #endif
 
 struct PACKET_SC_NOTIFY_BAN {
 	int16 packetType;
 	uint8 result;
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( SC_NOTIFY_BAN, 0x81 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(SC_NOTIFY_BAN, 0x81);
 
 struct PACKET_CA_REQ_HASH {
 	int16 packetType;
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_REQ_HASH, 0x1db );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_REQ_HASH, 0x1db);
 
 struct PACKET_AC_ACK_HASH {
 	int16 packetType;
 	int16 packetLength;
 	char salt[];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( AC_ACK_HASH, 0x1dc );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(AC_ACK_HASH, 0x1dc);
 
 struct PACKET_CA_LOGIN2 {
 	int16 packetType;
@@ -126,8 +126,8 @@ struct PACKET_CA_LOGIN2 {
 	char username[NAME_LENGTH];
 	uint8 passwordMD5[16];
 	uint8 clienttype;
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_LOGIN2, 0x1dd );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_LOGIN2, 0x1dd);
 
 struct PACKET_CA_LOGIN3 {
 	int16 packetType;
@@ -136,20 +136,20 @@ struct PACKET_CA_LOGIN3 {
 	uint8 passwordMD5[16];
 	uint8 clienttype;
 	uint8 clientinfo;
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_LOGIN3, 0x1fa );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_LOGIN3, 0x1fa);
 
 struct PACKET_CA_CONNECT_INFO_CHANGED {
 	int16 packetType;
 	char name[NAME_LENGTH];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_CONNECT_INFO_CHANGED, 0x200 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_CONNECT_INFO_CHANGED, 0x200);
 
 struct PACKET_CA_EXE_HASHCHECK {
 	int16 packetType;
 	char hash[16];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_EXE_HASHCHECK, 0x204 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_EXE_HASHCHECK, 0x204);
 
 struct PACKET_CA_LOGIN_PCBANG {
 	int16 packetType;
@@ -159,8 +159,8 @@ struct PACKET_CA_LOGIN_PCBANG {
 	uint8 clienttype;
 	char ip[16];
 	char mac[13];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_LOGIN_PCBANG, 0x277 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_LOGIN_PCBANG, 0x277);
 
 struct PACKET_CA_LOGIN4 {
 	int16 packetType;
@@ -169,8 +169,8 @@ struct PACKET_CA_LOGIN4 {
 	uint8 passwordMD5[16];
 	uint8 clienttype;
 	char mac[13];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_LOGIN4, 0x27c );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_LOGIN4, 0x27c);
 
 struct PACKET_CA_LOGIN_CHANNEL {
 	int16 packetType;
@@ -181,8 +181,8 @@ struct PACKET_CA_LOGIN_CHANNEL {
 	char ip[16];
 	char mac[13];
 	uint8 is_gravity;
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_LOGIN_CHANNEL, 0x2b0 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_LOGIN_CHANNEL, 0x2b0);
 
 struct PACKET_CA_SSO_LOGIN_REQ {
 	int16 packetType;
@@ -194,14 +194,14 @@ struct PACKET_CA_SSO_LOGIN_REQ {
 	char mac[17];
 	char ip[15];
 	char token[];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CA_SSO_LOGIN_REQ, 0x825 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CA_SSO_LOGIN_REQ, 0x825);
 
 struct PACKET_CT_AUTH {
 	int16 packetType;
 	uint8 unknown[66];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( CT_AUTH, 0xacf );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CT_AUTH, 0xacf);
 
 struct PACKET_TC_RESULT {
 	int16 packetType;
@@ -209,15 +209,15 @@ struct PACKET_TC_RESULT {
 	uint32 type;
 	char unknown1[20];
 	char unknown2[6];
-} __attribute__( ( packed ) );
-DEFINE_PACKET_HEADER( TC_RESULT, 0xae3 );
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(TC_RESULT, 0xae3);
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
-	#pragma pack( pop )
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000)
+	#pragma pack(pop)
 #endif
 
-#pragma warning( pop )
+#pragma warning(pop)
 
 template <typename sessiontype>
 class PacketDatabase {
@@ -225,21 +225,21 @@ private:
 	struct s_packet_info {
 		bool fixed;
 		int16 size;
-		std::function<bool( int fd, sessiontype& sd )> func;
+		std::function<bool(int fd, sessiontype& sd)> func;
 	};
 
 	std::unordered_map<int16, s_packet_info> infos;
 
 public:
-	void add( int16 packetType, bool fixed, int16 size, std::function<bool( int fd, sessiontype& sd )> func ) {
-		if( fixed ) {
-			if( size < 2 ) {
-				ShowError( "Definition for packet 0x%04x is invalid. Minimum size for a fixed length packet is 2 bytes.\n", packetType );
+	void add(int16 packetType, bool fixed, int16 size, std::function<bool(int fd, sessiontype& sd)> func) {
+		if(fixed) {
+			if(size < 2) {
+				ShowError("Definition for packet 0x%04x is invalid. Minimum size for a fixed length packet is 2 bytes.\n", packetType);
 				return;
 			}
 		} else {
-			if( size < 4 ) {
-				ShowError( "Definition for packet 0x%04x is invalid. Minimum size for a dynamic length packet is 2 bytes.\n", packetType );
+			if(size < 4) {
+				ShowError("Definition for packet 0x%04x is invalid. Minimum size for a dynamic length packet is 2 bytes.\n", packetType);
 				return;
 			}
 		}
@@ -251,53 +251,53 @@ public:
 		info.func = func;
 	}
 
-	bool handle( int fd, sessiontype& sd ) {
-		int16 remaining = static_cast<int16>( RFIFOREST( fd ) );
+	bool handle(int fd, sessiontype& sd) {
+		int16 remaining = static_cast<int16>(RFIFOREST(fd));
 
-		if( remaining < 2 ) {
-			ShowError( "Did not receive enough bytes to process a packet\n" );
-			set_eof( fd );
+		if(remaining < 2) {
+			ShowError("Did not receive enough bytes to process a packet\n");
+			set_eof(fd);
 			return false;
 		}
 
-		PACKET* p = (PACKET*)RFIFOP( fd, 0 );
+		PACKET* p = (PACKET*)RFIFOP(fd, 0);
 
-		s_packet_info* info = rathena::util::umap_find( this->infos, p->packetType );
+		s_packet_info* info = rathena::util::umap_find(this->infos, p->packetType);
 
-		if( info == nullptr ) {
-			ShowError( "Received unknown packet 0x%04x\n", p->packetType );
-			set_eof( fd );
+		if(info == nullptr) {
+			ShowError("Received unknown packet 0x%04x\n", p->packetType);
+			set_eof(fd);
 			return false;
 		}
 
-		if( info->fixed ) {
-			if( remaining < info->size ) {
-				ShowError( "Invalid size %hd for packet 0x%04x with fixed size of %hd\n", remaining, p->packetType, info->size );
-				set_eof( fd );
+		if(info->fixed) {
+			if(remaining < info->size) {
+				ShowError("Invalid size %hd for packet 0x%04x with fixed size of %hd\n", remaining, p->packetType, info->size);
+				set_eof(fd);
 				return false;
 			}
 
-			bool ret = info->func( fd, sd );
+			bool ret = info->func(fd, sd);
 
-			RFIFOSKIP( fd, info->size );
+			RFIFOSKIP(fd, info->size);
 
 			return ret;
 		} else {
-			if( remaining < info->size ) {
-				ShowError( "Invalid size %hd for packet 0x%04x with dynamic minimum size of %hd\n", remaining, p->packetType, info->size );
-				set_eof( fd );
+			if(remaining < info->size) {
+				ShowError("Invalid size %hd for packet 0x%04x with dynamic minimum size of %hd\n", remaining, p->packetType, info->size);
+				set_eof(fd);
 				return false;
 			}
 
-			if( remaining < p->packetLength ) {
-				ShowError( "Invalid size %hd for packet 0x%04x with dynamic size of %hd\n", remaining, p->packetType, p->packetLength );
-				set_eof( fd );
+			if(remaining < p->packetLength) {
+				ShowError("Invalid size %hd for packet 0x%04x with dynamic size of %hd\n", remaining, p->packetType, p->packetLength);
+				set_eof(fd);
 				return false;
 			}
 
-			bool ret = info->func( fd, sd );
+			bool ret = info->func(fd, sd);
 
-			RFIFOSKIP( fd, p->packetLength );
+			RFIFOSKIP(fd, p->packetLength);
 
 			return ret;
 		}
