@@ -79,6 +79,13 @@ enum e_battle_check_target : uint32 {
 	BCT_FRIEND		= BCT_NOENEMY,
 };
 
+/// State of a single attack attempt; used in flee/def penalty calculations when mobbed
+enum e_bonus_chk_flag : uint8 {
+	BCHK_ALL,    /// General stack checking
+	BCHK_REFINE, /// Check if refine bonus is applied
+	BCHK_STAR,   /// Check if Star Crumb bonus is applied
+};
+
 /// Damage structure
 struct Damage {
 #ifdef RENEWAL
