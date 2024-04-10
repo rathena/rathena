@@ -1762,7 +1762,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if((sce=tsc->getSCE(SC_ARMOR)) && //NPC_DEFENDER
 			sce->val3&flag && sce->val4&flag)
-			damage -= damage * tsc->getSCE(SC_ARMOR)->val2 / 100;
+			damage /= tsc->getSCE(SC_ARMOR)->val2;
 
 		if( tsc->getSCE(SC_ENERGYCOAT) && (skill_id == GN_HELLS_PLANT_ATK ||
 #ifdef RENEWAL
@@ -2932,10 +2932,9 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
-#ifdef RENEWAL
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
-#endif
+
 	if( skill_id && !skill_get_nk(skill_id,NK_CRITICAL) )
 		return false;
 
@@ -3367,18 +3366,26 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
 {
 	switch (skill_id) {
+		// PC skills that are unaffected
 		case PA_SHIELDCHAIN:
 		case CR_SHIELDBOOMERANG:
 		case AM_ACIDTERROR:
 		case MO_INVESTIGATE:
 		case MO_EXTREMITYFIST:
 		case PA_SACRIFICE:
-		case NPC_DRAGONBREATH:
 		case RK_DRAGONBREATH:
 		case RK_DRAGONBREATH_WATER:
 		case NC_SELFDESTRUCTION:
 		case LG_SHIELDPRESS:
 		case LG_EARTHDRIVE:
+		// NPC skills that are unaffected
+		case NPC_FIREBREATH:
+		case NPC_ICEBREATH:
+		case NPC_THUNDERBREATH:
+		case NPC_ACIDBREATH:
+		case NPC_DARKNESSBREATH:
+		case NPC_VAMPIRE_GIFT:
+		case NPC_DRAGONBREATH:
 			return false;
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
@@ -3732,11 +3739,11 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	status_change* sc = status_get_sc(src);
 	struct status_data* sstatus = status_get_status_data(src);
 	struct status_data* tstatus = status_get_status_data(target);
+	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
 
 	// Elemental attribute fix
 	if(!nk[NK_IGNOREELEMENT] && (wd->damage > 0 || wd->damage2 > 0)) {
 		int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, true);
-		int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, true);
 
 		switch (skill_id) {
 			case PA_SACRIFICE:
@@ -3798,8 +3805,11 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
 
 		// Skill-specific bonuses
-		if (skill_id == TF_POISON)
+		if (skill_id == TF_POISON) {
 			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+			// Envenom applies the attribute table to the base damage and then again to the final damage
+			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+		}
 	}
 
 	// These bonuses do not apply to skills that ignore element, unit skills and skills that have their own base damage formula
