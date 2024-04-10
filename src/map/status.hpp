@@ -1304,6 +1304,8 @@ enum sc_type : int16 {
 	SC_GRENADE_FRAGMENT_6,
 	SC_AUTO_FIRING_LAUNCHER,
 	SC_HIDDEN_CARD,
+	SC_PERIOD_RECEIVEITEM_2ND,
+	SC_PERIOD_PLUSEXP_2ND,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
