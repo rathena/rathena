@@ -21,5 +21,12 @@ jobs:
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
+      - name: Update & Install packages
+        # Ubuntu runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md
+        run: |
+          sudo apt update
+          sudo apt install clang-format-15
+          mv /usr/bin/clang-format-15 /usr/bin/clang-format
       - name: Check format
         run: ./tools/ci/check-format.sh
