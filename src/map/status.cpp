@@ -3,9 +3,9 @@
 
 #include "status.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <functional>
-#include <math.h>
-#include <stdlib.h>
 #include <string>
 
 #include <common/cbasetypes.hpp>
@@ -7403,6 +7403,8 @@ static signed short status_calc_hit(struct block_list *bl, status_change *sc, in
 		hit += sc->getSCE(SC_MTF_HITFLEE)->val1;
 	if(sc->getSCE(SC_INCHITRATE))
 		hit += hit * sc->getSCE(SC_INCHITRATE)->val1/100;
+	if (sc->getSCE(SC_POWERUP))
+		hit += hit * sc->getSCE(SC_POWERUP)->val2 / 100;
 	if(sc->getSCE(SC_BLIND))
 		hit -= hit * 25/100;
 	if(sc->getSCE(SC_HEAT_BARREL))
@@ -7519,6 +7521,8 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 	// Rate value
 	if(sc->getSCE(SC_INCFLEERATE))
 		flee += flee * sc->getSCE(SC_INCFLEERATE)->val1/100;
+	if (sc->getSCE(SC_AGIUP))
+		flee += flee * sc->getSCE(SC_AGIUP)->val2 / 100;
 	if(sc->getSCE(SC_SPIDERWEB) || sc->getSCE(SC_WIDEWEB))
 		flee -= flee * 50/100;
 	if(sc->getSCE(SC_BERSERK))
@@ -8012,8 +8016,10 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 			speed_rate = 150;
 
 		// GetMoveHasteValue1()
-		if( sc->getSCE(SC_SPEEDUP1) ) // !FIXME: used both by NPC_AGIUP and Speed Potion script
+		if( sc->getSCE(SC_SPEEDUP1) )
 			val = max( val, sc->getSCE(SC_SPEEDUP1)->val1 );
+		if (sc->getSCE(SC_AGIUP))
+			val = max(val, sc->getSCE(SC_AGIUP)->val1);
 		if( sc->getSCE(SC_INCREASEAGI) )
 			val = max( val, 25 );
 		if( sc->getSCE(SC_WINDWALK) )
@@ -8080,6 +8086,8 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 	if( sc->getSCE(SC_STEELBODY) )
 		speed = 200;
 	if( sc->getSCE(SC_DEFENDER) )
+		speed = max(speed, 200);
+	if (sc->getSCE(SC_ARMOR))
 		speed = max(speed, 200);
 	if( sc->getSCE(SC_WALKSPEED) && sc->getSCE(SC_WALKSPEED)->val1 > 0 ) // ChangeSpeed
 		speed = speed * 100 / sc->getSCE(SC_WALKSPEED)->val1;
@@ -11467,7 +11475,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ARMOR:
 			// NPC_DEFENDER:
-			val2 = 80; // Damage reduction
+			val2 = 8; // Damage will be divided by this value
 			// Attack requirements to be blocked:
 			val3 = BF_LONG; // Range
 			val4 = BF_WEAPON|BF_MISC; // Type
@@ -11511,8 +11519,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_EXPBOOST:
 		case SC_JEXPBOOST:
 		case SC_JP_EVENT04:
-			if (val1 < 0)
-				val1 = 0;
+		case SC_PERIOD_RECEIVEITEM_2ND:
+		case SC_PERIOD_PLUSEXP_2ND:
+			if (val1 < 1)
+				return 0;
 			break;
 		case SC_INCFLEE2:
 		case SC_INCCRI:
@@ -12883,13 +12893,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DANCING:
 			if ((val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 |= OPT3_MOONLIT;
-			break;
-		case SC_INCATKRATE:
-			// Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
-			if (bl->type != BL_MOB) {
-				disable_opt_flag = true;
-				break;
-			}
 			break;
 	}
 
@@ -14819,7 +14822,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, 1000, 350, 2);
+			status_heal(bl, 1000, 350, 0);	// Heal amount not displayed
 			sc_timer_next(1000 + tick);
 			return 0;
 		}

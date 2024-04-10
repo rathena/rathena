@@ -3,7 +3,7 @@
 
 #include "grfio.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <zlib.h>
 
@@ -36,11 +36,10 @@ typedef struct _FILELIST {
 // gentry ... > 0  : data read from a grf file (gentry_table[gentry-1])
 // gentry ... 0    : data read from a local file (data directory)
 // gentry ... < 0  : entry "-(gentry)" is marked for a local file check
-//                  - if local file exists, gentry will be set to 0 (thus using the local file)
-//                  - if local file doesn't exist, sign is inverted (thus using the original file
-//                  inside a grf) (NOTE: this case is only used once (during startup) and only if
-//                  GRFIO_LOCAL is enabled) (NOTE: probably meant to be used to override grf
-//                  contents by files in the data directory)
+//                   - if local file exists, gentry will be set to 0 (thus using the local file)
+//                   - if local file doesn't exist, sign is inverted (thus using the original file inside a grf)
+//                   (NOTE: this case is only used once (during startup) and only if GRFIO_LOCAL is enabled)
+//                   (NOTE: probably meant to be used to override grf contents by files in the data directory)
 // #define GRFIO_LOCAL
 
 // stores info about every loaded file
@@ -139,7 +138,7 @@ static uint8_t grf_substitution(uint8_t in) {
 //	out.b[7] = grf_substitution(src->b[7]);
 //
 //	*src = out;
-//}
+// }
 
 static void grf_shuffle_dec(BIT64* src) {
 	BIT64 out;
@@ -183,8 +182,7 @@ static void grf_decode_full(unsigned char* buf, size_t len, int cycle) {
 	// after that only one of every 'dcycle' blocks is des-encrypted
 	dcycle = cycle;
 
-	// and one of every 'scycle' plaintext blocks is shuffled (starting from the 0th but skipping
-	// the 0th)
+	// and one of every 'scycle' plaintext blocks is shuffled (starting from the 0th but skipping the 0th)
 	scycle = 7;
 
 	// so decrypt/de-shuffle periodically
@@ -586,8 +584,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
 				aentry.fnd = NULL;
 #ifdef GRFIO_LOCAL
-				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying
-											   // out the first time LocalFileCheck
+				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
 				aentry.gentry = gentry + 1; // With no first time LocalFileCheck
 #endif
@@ -649,8 +646,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
 				aentry.fnd = NULL;
 #ifdef GRFIO_LOCAL
-				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying
-											   // out the first time LocalFileCheck
+				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
 				aentry.gentry = gentry + 1; // With no first time LocalFileCheck
 #endif

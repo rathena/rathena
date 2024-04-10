@@ -4,7 +4,7 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#include <stdio.h> // FILE*
+#include <cstdio> // FILE*
 
 #include "cbasetypes.hpp"
 

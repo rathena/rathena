@@ -7,7 +7,7 @@
 	#include "winapi.hpp"
 #endif
 
-#include <stdlib.h> // strtoul
+#include <cstdlib> // strtoul
 
 #include <mysql.h>
 
@@ -113,10 +113,7 @@ int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* hos
 	unsigned int md = SSL_MODE_DISABLED;
 
 	if(mysql_options(&self->handle, MYSQL_OPT_SSL_MODE, &md)) {
-		ShowSQL(
-			"Your MySQL version does not understand \"MYSQL_OPT_SSL_MODE\" yet. Please consider "
-			"upgrading - especially if you encounter SSL related error messages from your MySQL "
-			"server.\n");
+		ShowSQL("Your MySQL version does not understand \"MYSQL_OPT_SSL_MODE\" yet. Please consider upgrading - especially if you encounter SSL related error messages from your MySQL server.\n");
 	}
 #endif
 
@@ -862,8 +859,7 @@ int SqlStmt_NextRow(SqlStmt* self) {
 		unsigned long length = self->column_lengths[i].length;
 		MYSQL_BIND* column = &self->columns[i];
 #if !defined(MYSQL_DATA_TRUNCATED)
-		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation
-		// manually [FlavioJS]
+		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation manually [FlavioJS]
 		if(column->buffer_length < length) { // report truncated column
 			if(column->buffer_type == MYSQL_TYPE_STRING || column->buffer_type == MYSQL_TYPE_BLOB) { // string/enum/blob column
 				SqlStmt_P_ShowDebugTruncatedColumn(self, i);
@@ -923,15 +919,11 @@ void SqlStmt_Free(SqlStmt* self) {
 /// Receives MySQL error codes during runtime (not on first-time-connects).
 void ra_mysql_error_handler(unsigned int ecode) {
 	switch(ecode) {
-		case 2003: // Can't connect to MySQL (this error only happens here when failing to
-				   // reconnect)
+		case 2003: // Can't connect to MySQL (this error only happens here when failing to reconnect)
 			if(mysql_reconnect_type == 1) {
 				static unsigned int retry = 1;
 				if(++retry > mysql_reconnect_count) {
-					ShowFatalError(
-						"MySQL has been unreachable for too long, %d reconnects were attempted. "
-						"Shutting Down\n",
-						retry);
+					ShowFatalError("MySQL has been unreachable for too long, %d reconnects were attempted. Shutting Down\n", retry);
 					exit(EXIT_FAILURE);
 				}
 			}
@@ -967,11 +959,7 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 				case 2:
 					break;
 				default:
-					ShowError(
-						"%s::mysql_reconnect_type is set to %d which is not valid, defaulting to "
-						"1...\n",
-						cfgName,
-						mysql_reconnect_type);
+					ShowError("%s::mysql_reconnect_type is set to %d which is not valid, defaulting to 1...\n", cfgName, mysql_reconnect_type);
 					mysql_reconnect_type = 1;
 					break;
 			}

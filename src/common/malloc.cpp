@@ -3,9 +3,9 @@
 
 #include "malloc.hpp"
 
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
 
 #include "core.hpp"
 #include "showmsg.hpp"
@@ -20,7 +20,6 @@
 
 #if defined(MEMWATCH)
 
-	#include <string.h>
 	#include "memwatch.h"
 	#define MALLOC(n, file, line, func) mwMalloc((n), (file), (line))
 	#define CALLOC(m, n, file, line, func) mwCalloc((m), (n), (file), (line))
@@ -33,8 +32,6 @@
 
 #elif defined(DMALLOC)
 
-	#include <string.h>
-	#include <stdlib.h>
 	#include "dmalloc.hpp"
 	#define MALLOC(n, file, line, func) dmalloc_malloc((file), (line), (n), DMALLOC_FUNC_MALLOC, 0, 0)
 	#define CALLOC(m, n, file, line, func) dmalloc_malloc((file), (line), (m) * (n), DMALLOC_FUNC_CALLOC, 0, 0)
@@ -136,10 +133,10 @@ void aFree_(void *p, const char *file, int line, const char *func) {
 	 *
 	 * (I'm sorry for the poor description ^ ^;) such as data structures
 	 *		Divided into "blocks" of a plurality of memory, "unit" of a plurality of blocks further
-	 *      I have to divide. Size of the unit, a plurality of distribution equal to the capacity of
-	 *one block That's what you have. For example, if one unit of 32KB, one block 1 Yu 32Byte Knit,
-	 *or are able to gather 1024, gathered 512 units 64Byte I can be or have. (Excluding padding,
-	 *the unit_head)
+	 *      I have to divide. Size of the unit, a plurality of distribution equal to the capacity of one block
+	 *      That's what you have. For example, if one unit of 32KB, one block 1 Yu 32Byte
+	 *      Knit, or are able to gather 1024, gathered 512 units 64Byte
+	 *      I can be or have. (Excluding padding, the unit_head)
 	 *
 	 *     Lead-linked list (block_prev, block_next) in each other is the same size block
 	 *       Linked list (hash_prev, hash_nect) even among such one in the block with the figure
@@ -529,8 +526,7 @@ static void memmgr_log(char *buf) {
 
 		if((version = get_git_hash()) && version[0] != UNKNOWN_VERSION) {
 			fprintf(log_fp,
-					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Git "
-					"Hash %s).\n",
+					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Git Hash %s).\n",
 					(t->tm_year + 1900),
 					(t->tm_mon + 1),
 					t->tm_mday,
@@ -540,8 +536,7 @@ static void memmgr_log(char *buf) {
 					version);
 		} else if((version = get_svn_revision()) && version[0] != UNKNOWN_VERSION) {
 			fprintf(log_fp,
-					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (SVN "
-					"Revision %s).\n",
+					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (SVN Revision %s).\n",
 					(t->tm_year + 1900),
 					(t->tm_mon + 1),
 					t->tm_mday,
@@ -551,8 +546,7 @@ static void memmgr_log(char *buf) {
 					version);
 		} else {
 			fprintf(log_fp,
-					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Unknown "
-					"version).\n",
+					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Unknown version).\n",
 					(t->tm_year + 1900),
 					(t->tm_mon + 1),
 					t->tm_mday,

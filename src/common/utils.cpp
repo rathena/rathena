@@ -3,9 +3,9 @@
 
 #include "utils.hpp"
 
-#include <math.h> // floor()
-#include <stdlib.h>
-#include <string.h>
+#include <cmath> // floor()
+#include <cstdlib>
+#include <cstring>
 
 #ifdef WIN32
 	#include "winapi.hpp"

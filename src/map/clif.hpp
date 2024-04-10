@@ -4,9 +4,8 @@
 #ifndef CLIF_HPP
 #define CLIF_HPP
 
+#include <cstdarg>
 #include <vector>
-
-#include <stdarg.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp> //dbmap

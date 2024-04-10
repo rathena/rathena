@@ -4,8 +4,7 @@
 #include "strlib.hpp"
 
 #include <algorithm>
-
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"

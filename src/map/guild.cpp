@@ -3,7 +3,7 @@
 
 #include "guild.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <memory>
 
 #include <common/cbasetypes.hpp>

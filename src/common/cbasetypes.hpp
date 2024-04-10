@@ -85,8 +85,7 @@
 #endif
 
 #include <cinttypes>
-
-#include <limits.h>
+#include <climits>
 
 // temporary fix for bugreport:4961 (unintended conversion from signed to unsigned)
 // (-20 >= UCHAR_MAX) returns true
@@ -176,8 +175,7 @@ typedef unsigned long int ppuint32;
 //////////////////////////////////////////////////////////////////////////
 // integer with exact processor width (and best speed)
 //////////////////////////////
-#include <stddef.h> // size_t
-// #include <stdbool.h> //boolean
+#include <cstddef> // size_t
 
 //////////////////////////////////////////////////////////////////////////
 // pointer sized integers
@@ -295,7 +293,7 @@ typedef char bool;
 		#define Assert(EX)
 	#else
 		// extern "C" {
-		#include <assert.h>
+		#include <cassert>
 		// }
 		#if !defined(DEFCPP) && defined(WIN32) && !defined(MINGW)
 			#include <crtdbg.h>
@@ -306,9 +304,8 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Has to be unsigned to avoid problems in some systems
-// Problems arise when these functions expect an argument in the range [0,256[ and are fed a signed
-// char.
-#include <ctype.h>
+// Problems arise when these functions expect an argument in the range [0,256[ and are fed a signed char.
+#include <cctype>
 #define ISALNUM(c) (isalnum((unsigned char)(c)))
 #define ISALPHA(c) (isalpha((unsigned char)(c)))
 #define ISCNTRL(c) (iscntrl((unsigned char)(c)))
@@ -330,7 +327,7 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Make sure va_copy exists
-#include <stdarg.h> // va_list, va_copy(?)
+#include <cstdarg> // va_list, va_copy(?)
 #if !defined(va_copy)
 	#if defined(__va_copy)
 		#define va_copy __va_copy
@@ -359,9 +356,10 @@ void SET_POINTER(T1*&var, T2* p)
 template <typename T1, typename T2>
 void SET_FUNCPOINTER(T1& var, T2 p)
 {
-	char ASSERT_POINTERSIZE[sizeof(T1) == sizeof(void*) && sizeof(T2) == sizeof(void*)?1:-1];// 1 if
-true, -1 if false union{ T1 out; T2 in; } tmp;// /!\ WARNING casting a pointer to a function pointer
-is against the C++ standard tmp.in = p; var = tmp.out;
+	char ASSERT_POINTERSIZE[sizeof(T1) == sizeof(void*) && sizeof(T2) == sizeof(void*)?1:-1];// 1 if true, -1 if false
+	union{ T1 out; T2 in; } tmp;// /!\ WARNING casting a pointer to a function pointer is against the C++ standard
+	tmp.in = p;
+	var = tmp.out;
 }
 #else
 #define SET_POINTER(var,p) (var) = (p)

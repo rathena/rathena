@@ -3,8 +3,8 @@
 
 #include "showmsg.hpp"
 
-#include <stdlib.h> // atexit
-#include <time.h>
+#include <cstdlib> // atexit
+#include <ctime>
 
 #ifdef WIN32
 	#include "winapi.hpp"

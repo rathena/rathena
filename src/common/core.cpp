@@ -3,6 +3,9 @@
 
 #include "core.hpp"
 
+#include <csignal>
+#include <cstdlib>
+
 #include <config/core.hpp>
 
 #ifndef MINICORE
@@ -12,8 +15,7 @@
 	#include "sql.hpp"
 	#include "timer.hpp"
 #endif
-#include <signal.h>
-#include <stdlib.h>
+
 #ifndef _WIN32
 	#include <unistd.h>
 #else

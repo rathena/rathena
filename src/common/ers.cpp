@@ -42,8 +42,8 @@
 
 #include "ers.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp" // CREATE, RECREATE, aMalloc, aFree

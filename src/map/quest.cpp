@@ -3,7 +3,7 @@
 
 #include "quest.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>

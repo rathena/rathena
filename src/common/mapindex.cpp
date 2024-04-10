@@ -3,7 +3,7 @@
 
 #include "mapindex.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "core.hpp"
 #include "mmo.hpp"
