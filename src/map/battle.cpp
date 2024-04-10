@@ -3364,7 +3364,7 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
  * @param chk_flag: The bonus that is currently being checked for, see e_bonus_chk_flag
  * @return true = bonus applies; false = bonus does not apply
  */
-static bool battle_skill_stacks_masteries_vvs(struct block_list &src, uint16 skill_id, int chk_flag)
+static bool battle_skill_stacks_masteries_vvs(struct block_list &src, uint16 skill_id, e_bonus_chk_flag chk_flag)
 {
 	switch (skill_id) {
 		// PC skills that are unaffected
