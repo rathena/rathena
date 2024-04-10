@@ -32,8 +32,9 @@ SpaceBeforeParensOptions:
   AfterFunctionDefinitionName: false
   AfterIfMacros: false
   AfterOverloadedOperator: false
-  AfterRequiresInClause: false
-  AfterRequiresInExpression: false
+# Only supported by clang-format >= 15.0.0
+#  AfterRequiresInClause: false
+#  AfterRequiresInExpression: false
   BeforeNonEmptyParentheses: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
