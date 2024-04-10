@@ -8222,6 +8222,9 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 			bonus += (sd->sc.getSCE(SC_EXPBOOST)->val1 / battle_config.vip_bm_increase);
 	}
 
+	if (sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND))
+		bonus += sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND)->val1;
+
 	if (*base_exp) {
 		t_exp exp = (t_exp)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
 		*base_exp = cap_value(exp, 1, MAX_EXP);
@@ -8230,6 +8233,9 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 	// Give JEXPBOOST for quests even if src is NULL.
 	if (sd->sc.getSCE(SC_JEXPBOOST))
 		bonus += sd->sc.getSCE(SC_JEXPBOOST)->val1;
+
+	if (sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND))	// Increase Jexp as well
+		bonus += sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND)->val1;
 
 	if (*job_exp) {
 		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
