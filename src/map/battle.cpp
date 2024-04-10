@@ -4466,7 +4466,7 @@ static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_
 	if (sc.getSCE(SC_INCATKRATE))
 		atkpercent += sc.getSCE(SC_INCATKRATE)->val1;
 	if (sc.getSCE(SC_POWERUP))
-		atkpercent += 200;
+		atkpercent += sc.getSCE(SC_POWERUP)->val1;
 	if (sc.getSCE(SC_SKE))
 		atkpercent += 300;
 	if (sc.getSCE(SC_BLOODLUST))

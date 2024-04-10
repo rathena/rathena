@@ -9648,9 +9648,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(status_isimmune(bl))
 				break;
 
-			// Remove bonus_script by Dispell
+			//Remove bonus_script by Dispell
 			if (dstsd)
-				pc_bonus_script_clear(dstsd, BSF_REM_ON_DISPELL);
+				pc_bonus_script_clear(dstsd,BSF_REM_ON_DISPELL);
 			// Monsters will unlock their target instead
 			else if (dstmd)
 				mob_unlocktarget(dstmd, tick);
@@ -10001,12 +10001,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_POWERUP:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,100,skill_get_time(skill_id, skill_lv)));
+			sc_start2(src,bl,type,100,200,100,skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case NPC_AGIUP:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,100,skill_get_time(skill_id, skill_lv)));
+			sc_start2(src,bl,type,100,50,100,skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case NPC_INVISIBLE:

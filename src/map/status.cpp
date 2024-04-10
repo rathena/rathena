@@ -7404,7 +7404,7 @@ static signed short status_calc_hit(struct block_list *bl, status_change *sc, in
 	if(sc->getSCE(SC_INCHITRATE))
 		hit += hit * sc->getSCE(SC_INCHITRATE)->val1/100;
 	if (sc->getSCE(SC_POWERUP))
-		hit *= 2; // +100%
+		hit *= hit * sc->getSCE(SC_POWERUP)->val2 / 100;
 	if(sc->getSCE(SC_BLIND))
 		hit -= hit * 25/100;
 	if(sc->getSCE(SC_HEAT_BARREL))
@@ -7522,7 +7522,7 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 	if(sc->getSCE(SC_INCFLEERATE))
 		flee += flee * sc->getSCE(SC_INCFLEERATE)->val1/100;
 	if (sc->getSCE(SC_AGIUP))
-		flee *= 2; // +100%
+		flee *= flee * sc->getSCE(SC_AGIUP)->val2 / 100;
 	if(sc->getSCE(SC_SPIDERWEB) || sc->getSCE(SC_WIDEWEB))
 		flee -= flee * 50/100;
 	if(sc->getSCE(SC_BERSERK))
@@ -8019,7 +8019,7 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 		if( sc->getSCE(SC_SPEEDUP1) )
 			val = max( val, sc->getSCE(SC_SPEEDUP1)->val1 );
 		if (sc->getSCE(SC_AGIUP))
-			val = max(val, 50);
+			val = max(val, sc->getSCE(SC_AGIUP)->val1);
 		if( sc->getSCE(SC_INCREASEAGI) )
 			val = max( val, 25 );
 		if( sc->getSCE(SC_WINDWALK) )
