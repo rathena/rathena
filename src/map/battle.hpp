@@ -79,6 +79,13 @@ enum e_battle_check_target : uint32 {
 	BCT_FRIEND		= BCT_NOENEMY,
 };
 
+/// Check flag for common damage bonuses such as: ATKpercent, Refine, Passive Mastery, Spirit Spheres and Star Crumbs
+enum e_bonus_chk_flag : uint8 {
+	BCHK_ALL,    /// Check if all of the common damage bonuses apply to this skill
+	BCHK_REFINE, /// Check if refine bonus is applied (pre-renewal only currently)
+	BCHK_STAR,   /// Check if Star Crumb bonus is applied (pre-renewal only currently)
+};
+
 /// Damage structure
 struct Damage {
 #ifdef RENEWAL
