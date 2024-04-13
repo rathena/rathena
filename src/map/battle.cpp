@@ -3811,11 +3811,15 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 					ATK_ADD(wd->damage, wd->damage2, 3 * pc_checkskill(sd, NJ_TOBIDOUGU));
 					ATK_ADD(wd->damage, wd->damage2, sd->bonus.arrow_atk);
 				}
+				// Applies attribute table on neutral element to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
 				break;
 			case NJ_KUNAI:
 				if (sd) {
 					ATK_ADD(wd->damage, wd->damage2, 3 * sd->bonus.arrow_atk);
 				}
+				// Applies attribute table on neutral element to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
 				break;
 		}
 	}
