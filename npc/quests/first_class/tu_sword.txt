@@ -340,7 +340,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			set tu_swordman, 11;
 			changequest 8220,8221;
 			close;
-		} else if((.@chk_endure > 0) && (.@chk_endure < 2)){
+		} else if(.@chk_endure == 1){
 			mes "[Shurank]";
 			mes "I see that you";
 			mes "know how to use the";
