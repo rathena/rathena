@@ -14473,7 +14473,7 @@ Body:
     Flags:
       IgnoreBgReduction: true
       IgnoreGvgReduction: true
-    Range: 9
+    Range: 7
     Hit: Single
     HitCount: 1
     CopyFlags:
