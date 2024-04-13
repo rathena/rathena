@@ -3359,11 +3359,12 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 /**
  * This function lists which skills are unaffected by refine bonus, masteries, Star Crumbs and Spirit Spheres
  * This function is also used to determine if atkpercent applies
+ * @param src: Source of the attack
  * @param skill_id: Skill being used
- * @param type 1 - Checking refine bonus; 2 - Checking Star Crumb bonus
+ * @param chk_flag: The bonus that is currently being checked for, see e_bonus_chk_flag
  * @return true = bonus applies; false = bonus does not apply
  */
-static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
+static bool battle_skill_stacks_masteries_vvs(struct block_list &src, uint16 skill_id, e_bonus_chk_flag chk_flag)
 {
 	switch (skill_id) {
 		// PC skills that are unaffected
@@ -3378,24 +3379,17 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
 		case NC_SELFDESTRUCTION:
 		case LG_SHIELDPRESS:
 		case LG_EARTHDRIVE:
-		// NPC skills that are unaffected
-		case NPC_FIREBREATH:
-		case NPC_ICEBREATH:
-		case NPC_THUNDERBREATH:
-		case NPC_ACIDBREATH:
-		case NPC_DARKNESSBREATH:
-		case NPC_VAMPIRE_GIFT:
 		case NPC_DRAGONBREATH:
 			return false;
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
 			// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs / Spirit Spheres
-			if (type != 1)
+			if (chk_flag != BCHK_REFINE)
 				return false;
 			break;
 		case LK_SPIRALPIERCE:
-			// Spiral Pierce is influenced only by refine bonus and Star Crumbs
-			if (type != 1 && type != 2)
+			// Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
+			if (src.type == BL_PC && chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
 				return false;
 			break;
 	}
@@ -3795,12 +3789,12 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	// These mastery bonuses are non-elemental and should apply even if the attack misses
 	// They are still increased by the EDP/Magnum Break bonus damage (WATK_ELEMENT)
 	// In renewal these bonuses do not apply when the attack misses
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 2)) {
+	if (sd && battle_skill_stacks_masteries_vvs(*src, skill_id, BCHK_STAR)) {
 		// Star Crumb bonus damage
 		ATK_ADD2(wd->damage, wd->damage2, sd->right_weapon.star, sd->left_weapon.star);
 	}
 	// Check if general mastery bonuses apply (above check is only for Star Crumb)
-	if (battle_skill_stacks_masteries_vvs(skill_id, 0)) {
+	if (battle_skill_stacks_masteries_vvs(*src, skill_id, BCHK_ALL)) {
 		// Spirit Sphere bonus damage
 		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
 
@@ -3861,7 +3855,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 	}
 
 	// Check if mastery damage applies to current skill
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 0))
+	if (sd && battle_skill_stacks_masteries_vvs(*src, skill_id, BCHK_ALL))
 	{	//Add mastery damage
 		uint16 skill;
 
@@ -4446,7 +4440,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  */
 static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
 {
-	if (!battle_skill_stacks_masteries_vvs(skill_id, 0))
+	if (!battle_skill_stacks_masteries_vvs(bl, skill_id, BCHK_ALL))
 		return 100;
 
 	int atkpercent = 100;
@@ -4465,6 +4459,8 @@ static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_
 		atkpercent -= 25;
 	if (sc.getSCE(SC_INCATKRATE))
 		atkpercent += sc.getSCE(SC_INCATKRATE)->val1;
+	if (sc.getSCE(SC_POWERUP))
+		atkpercent += sc.getSCE(SC_POWERUP)->val1;
 	if (sc.getSCE(SC_SKE))
 		atkpercent += 300;
 	if (sc.getSCE(SC_BLOODLUST))
@@ -6697,7 +6693,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 #ifndef RENEWAL
 	//Refine bonus
 	if (sd) {
-		if (battle_skill_stacks_masteries_vvs(skill_id, 1)) {
+		if (battle_skill_stacks_masteries_vvs(*src, skill_id, BCHK_REFINE)) {
 			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 		}
 		wd->basedamage += sstatus->rhw.atk2;
