@@ -5243,7 +5243,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-      IgnoreElement: true
+      IgnoreAtkCard: true
       IgnoreFlee: true
     Range: 1
     Hit: Single
@@ -5277,7 +5277,7 @@ Body:
         Time: 3000
       - Level: 10
         Time: 2000
-    Duration2: 20000
+    Duration2: 18000
     Cooldown:
       - Level: 1
         Time: 7500
@@ -9655,20 +9655,20 @@ Body:
     Hit: Single
     Duration1:
       - Level: 1
-        Time: 10000
+        Time: 5000
       - Level: 2
-        Time: 15000
+        Time: 10000
       - Level: 3
-        Time: 20000
+        Time: 15000
       - Level: 4
-        Time: 25000
+        Time: 20000
       - Level: 5
-        Time: 30000
-    Status: IncHitRate
+        Time: 25000
+    Status: Powerup
   - Id: 350
     Name: NPC_AGIUP
-    Description: Agility UP
-    MaxLevel: 5
+    Description: Agility Up
+    MaxLevel: 10
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -9679,14 +9679,24 @@ Body:
       - Level: 1
         Time: 10000
       - Level: 2
-        Time: 15000
-      - Level: 3
         Time: 20000
-      - Level: 4
-        Time: 25000
-      - Level: 5
+      - Level: 3
         Time: 30000
-    Status: IncFleeRate
+      - Level: 4
+        Time: 40000
+      - Level: 5
+        Time: 50000
+      - Level: 6
+        Time: 60000
+      - Level: 7
+        Time: 70000
+      - Level: 8
+        Time: 80000
+      - Level: 9
+        Time: 90000
+      - Level: 10
+        Time: 100000
+    Status: Agiup
   - Id: 351
     Name: NPC_SIEGEMODE
     Description: Siege Mode
@@ -18497,32 +18507,13 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration2:
-      - Level: 1
-        Time: 15000
-      - Level: 2
-        Time: 20000
-      - Level: 3
-        Time: 25000
-      - Level: 4
-        Time: 30000
-      - Level: 5
-        Time: 35000
-      - Level: 6
-        Time: 40000
-      - Level: 7
-        Time: 45000
-      - Level: 8
-        Time: 50000
-      - Level: 9
-        Time: 55000
-      - Level: 10
-        Time: 60000
+    Duration2: 18000
     Requires:
       SpCost: 35
       Ammo:
         Dagger: true
       AmmoAmount: 1
+    Status: Poison
   - Id: 1005
     Name: RG_CLOSECONFINE
     Description: Close Confine
