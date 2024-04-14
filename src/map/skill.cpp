@@ -1431,7 +1431,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 
 	case TF_POISON:
 		if (!sc_start2(src, bl, SC_POISON, (4 * skill_lv + 10), skill_lv, src->id, skill_get_time2(skill_id, skill_lv)) && sd)
-			clif_skill_fail( sd, skill_id );
+			clif_skill_fail( *sd, skill_id );
 		break;
 
 	case AS_SONICBLOW:
