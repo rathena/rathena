@@ -7517,18 +7517,17 @@ void clif_bank_close( map_session_data& sd ){
 
 /*
  * Request to close the banking system
- * 09B8 <aid>L ??? (dunno just wild guess checkme)
+ * 09B8 <aid>L (CZ_REQ_CLOSE_BANKING)
  */
 void clif_parse_BankClose(int fd, map_session_data* sd) {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
+	PACKET_CZ_REQ_CLOSE_BANKING* p = (PACKET_CZ_REQ_CLOSE_BANKING*)RFIFOP( fd, 0 );
 
 	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
 		//still allow to go trough to not stuck player if we have disable it while they was in
 	}
-	if(sd->status.account_id == aid){
+	if(sd->status.account_id == p->AID){
 		sd->state.banking = 0;
 		clif_bank_close( *sd );
 	}
