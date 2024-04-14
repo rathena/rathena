@@ -442,6 +442,12 @@ struct PACKET_CZ_REQ_BANKING_CHECK{
 	uint32 AID;
 } __attribute__((packed));
 
+struct PACKET_CZ_REQ_BANKING_DEPOSIT{
+	int16 packetType;
+	uint32 AID;
+	int32 zeny;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -484,6 +490,7 @@ DEFINE_PACKET_HEADER(ZC_INVENTORY_TAB, 0x908)
 DEFINE_PACKET_HEADER(ZC_ENTRY_QUEUE_INIT, 0x90e)
 DEFINE_PACKET_HEADER(CZ_REQ_MERGE_ITEM, 0x96e)
 DEFINE_PACKET_HEADER(ZC_BANKING_CHECK, 0x9a6)
+DEFINE_PACKET_HEADER(CZ_REQ_BANKING_DEPOSIT, 0x9a7)
 DEFINE_PACKET_HEADER(ZC_ACK_BANKING_DEPOSIT, 0x9a8)
 DEFINE_PACKET_HEADER(ZC_ACK_BANKING_WITHDRAW, 0x9aa)
 DEFINE_PACKET_HEADER(CZ_REQ_BANKING_CHECK, 0x9ab)
