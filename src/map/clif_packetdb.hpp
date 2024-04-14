@@ -2043,7 +2043,7 @@
 #if PACKETVER >= 20130717
 	parseable_packet(0x09A7,10,clif_parse_BankDeposit,2,6);
 	parseable_packet(0x09A9,10,clif_parse_BankWithdraw,2,6);
-	parseable_packet(0x09AB,6,clif_parse_BankCheck,2);
+	parseable_packet( HEADER_CZ_REQ_BANKING_CHECK, sizeof( PACKET_CZ_REQ_BANKING_CHECK ), clif_parse_BankCheck, 0 );
 	parseable_packet( HEADER_CZ_REQ_OPEN_BANKING, sizeof( PACKET_CZ_REQ_OPEN_BANKING ), clif_parse_BankOpen, 0 );
 	parseable_packet( HEADER_CZ_REQ_CLOSE_BANKING, sizeof( PACKET_CZ_REQ_CLOSE_BANKING ), clif_parse_BankClose, 0 );
 #endif

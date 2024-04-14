@@ -7551,9 +7551,11 @@ void clif_Bank_Check( map_session_data& sd ){
 
 /*
  * Requesting the data in bank
- * 09AB <aid>L (PACKET_CZ_REQ_BANKING_CHECK)
+ * 09AB <aid>L (CZ_REQ_BANKING_CHECK)
  */
 void clif_parse_BankCheck(int fd, map_session_data* sd) {
+	PACKET_CZ_REQ_BANKING_CHECK* p = (PACKET_CZ_REQ_BANKING_CHECK*)RFIFOP( fd, 0 );
+
 	nullpo_retv(sd);
 
 	if( !battle_config.feature_banking ) {
@@ -7565,9 +7567,7 @@ void clif_parse_BankCheck(int fd, map_session_data* sd) {
 		return;
 	}
 	else {
-		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
-		if(sd->status.account_id == aid) //since we have it let check it for extra security
+		if(sd->status.account_id == p->AID) //since we have it let check it for extra security
 			clif_Bank_Check( *sd );
 	}
 }
