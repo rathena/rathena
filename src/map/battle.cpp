@@ -3359,7 +3359,6 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 /**
  * This function lists which skills are unaffected by refine bonus, masteries, Star Crumbs and Spirit Spheres
  * This function is also used to determine if atkpercent applies
- * @param src: Source of the attack
  * @param skill_id: Skill being used
  * @param chk_flag: The bonus that is currently being checked for, see e_bonus_chk_flag
  * @return true = bonus applies; false = bonus does not apply
