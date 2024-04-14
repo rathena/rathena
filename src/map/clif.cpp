@@ -7476,9 +7476,11 @@ void clif_bank_open( map_session_data& sd ){
 
 /*
  * Request to Open the banking system
- * 09B6 <aid>L ??? (dunno just wild guess checkme)
+ * 09B6 <aid>L (CZ_REQ_OPEN_BANKING)
  */
 void clif_parse_BankOpen(int fd, map_session_data* sd) {
+	PACKET_CZ_REQ_OPEN_BANKING* p = (PACKET_CZ_REQ_OPEN_BANKING*)RFIFOP( fd, 0 );
+
 	//TODO check if preventing trade or stuff like that
 	//also mark something in case char ain't available for saving, should we check now ?
 	nullpo_retv(sd);
@@ -7491,9 +7493,7 @@ void clif_parse_BankOpen(int fd, map_session_data* sd) {
 		return;
 	}
 	else {
-		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
-		if(sd->status.account_id == aid){
+		if(sd->status.account_id == p->AID){
 			sd->state.banking = 1;
 			//request save ?
 			//chrif_bankdata_request(sd->status.account_id, sd->status.char_id);
