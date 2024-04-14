@@ -1483,11 +1483,15 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2) {
  *---------------------------------------------------*/
 bool guild_check_emblem_change_condition(map_session_data *sd)
 {
-	nullpo_ret(sd);
+	// TODO: Change sd to reference
+	if( sd == nullptr ){
+		return false;
+	}
+
 	auto &g = sd->guild;
 
 	if (battle_config.require_glory_guild && g != nullptr && guild_checkskill(g->guild, GD_GLORYGUILD) > 0) {
-		clif_skill_fail(sd, GD_GLORYGUILD, USESKILL_FAIL_LEVEL, 0);
+		clif_skill_fail( *sd, GD_GLORYGUILD );
 		return false;
 	}
 

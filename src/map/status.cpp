@@ -1983,7 +1983,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			(sc->getSCE(SC_KYOMU) && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
 		)) {
 			if (src->type == BL_PC)
-				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif_skill_fail( *((map_session_data*)src), skill_id );
 			return false;
 		}
 
