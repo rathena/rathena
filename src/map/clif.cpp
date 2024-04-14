@@ -7479,6 +7479,7 @@ void clif_bank_open( map_session_data& sd ){
  * 09B6 <aid>L (CZ_REQ_OPEN_BANKING)
  */
 void clif_parse_BankOpen(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
 	PACKET_CZ_REQ_OPEN_BANKING* p = (PACKET_CZ_REQ_OPEN_BANKING*)RFIFOP( fd, 0 );
 
 	//TODO check if preventing trade or stuff like that
@@ -7501,6 +7502,7 @@ void clif_parse_BankOpen(int fd, map_session_data* sd) {
 			clif_bank_open( *sd );
 		}
 	}
+#endif
 }
 
 // 09B9 <unknow data> (ZC_ACK_CLOSE_BANKING)
@@ -7520,6 +7522,7 @@ void clif_bank_close( map_session_data& sd ){
  * 09B8 <aid>L (CZ_REQ_CLOSE_BANKING)
  */
 void clif_parse_BankClose(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
 	PACKET_CZ_REQ_CLOSE_BANKING* p = (PACKET_CZ_REQ_CLOSE_BANKING*)RFIFOP( fd, 0 );
 
 	nullpo_retv(sd);
@@ -7531,6 +7534,7 @@ void clif_parse_BankClose(int fd, map_session_data* sd) {
 		sd->state.banking = 0;
 		clif_bank_close( *sd );
 	}
+#endif
 }
 
 /*
@@ -7554,6 +7558,7 @@ void clif_Bank_Check( map_session_data& sd ){
  * 09AB <aid>L (CZ_REQ_BANKING_CHECK)
  */
 void clif_parse_BankCheck(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
 	PACKET_CZ_REQ_BANKING_CHECK* p = (PACKET_CZ_REQ_BANKING_CHECK*)RFIFOP( fd, 0 );
 
 	nullpo_retv(sd);
@@ -7570,11 +7575,12 @@ void clif_parse_BankCheck(int fd, map_session_data* sd) {
 		if(sd->status.account_id == p->AID) //since we have it let check it for extra security
 			clif_Bank_Check( *sd );
 	}
+#endif
 }
 
 /*
  * Acknowledge of deposit some money in bank
-  09A8 <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_DEPOSIT)
+  09A8 <Reason>W <Money>Q <balance>L (ZC_ACK_BANKING_DEPOSIT)
  */
 void clif_bank_deposit( map_session_data& sd, enum e_BANKING_DEPOSIT_ACK reason ){
 #if PACKETVER >= 20130717
@@ -7595,6 +7601,7 @@ void clif_bank_deposit( map_session_data& sd, enum e_BANKING_DEPOSIT_ACK reason 
  * 09A7 <AID>L <Money>L (CZ_REQ_BANKING_DEPOSIT)
  */
 void clif_parse_BankDeposit(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
 	PACKET_CZ_REQ_BANKING_DEPOSIT* p = (PACKET_CZ_REQ_BANKING_DEPOSIT*)RFIFOP( fd, 0 );
 
 	nullpo_retv(sd);
@@ -7612,11 +7619,12 @@ void clif_parse_BankDeposit(int fd, map_session_data* sd) {
 			clif_bank_deposit( *sd, reason );
 		}
 	}
+#endif
 }
 
 /*
  * Acknowledge of withdrawing some money from bank
-  09AA <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_WITHDRAW)
+ * 09AA <Reason>W <Money>Q <balance>L (ZC_ACK_BANKING_WITHDRAW)
  */
 void clif_bank_withdraw( map_session_data& sd, enum e_BANKING_WITHDRAW_ACK reason ){
 #if PACKETVER >= 20130717
@@ -7636,6 +7644,7 @@ void clif_bank_withdraw( map_session_data& sd, enum e_BANKING_WITHDRAW_ACK reaso
  * 09A9 <AID>L <Money>L (CZ_REQ_BANKING_WITHDRAW)
  */
 void clif_parse_BankWithdraw(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
 	PACKET_CZ_REQ_BANKING_WITHDRAW* p = (PACKET_CZ_REQ_BANKING_WITHDRAW*)RFIFOP( fd, 0 );
 
 	nullpo_retv(sd);
@@ -7653,6 +7662,7 @@ void clif_parse_BankWithdraw(int fd, map_session_data* sd) {
 			clif_bank_withdraw( *sd, reason );
 		}
 	}
+#endif
 }
 
 /// Deletes an item from character's cart (ZC_DELETE_ITEM_FROM_CART).
