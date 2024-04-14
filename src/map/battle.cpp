@@ -3396,32 +3396,6 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag 
 	return true;
 }
 
-/**
- * This function lists which skills are unaffected by EDP and the elemental bonus from Magnum Break / EDP
- * Unit skills (e.g. Bomb and Freezing Trap) are never affected.
- * @param skill_id: Skill being used
- * @return true = bonus applies; false = bonus does not apply
- */
-static bool battle_skill_stacks_edp_element(uint16 skill_id)
-{
-	switch (skill_id) {
-		case TF_SPRINKLESAND:
-		case AS_SPLASHER:
-		case ASC_METEORASSAULT:
-		case ASC_BREAKER:
-		case AS_VENOMKNIFE:
-		case AM_ACIDTERROR:
-			return false;
-		default:
-			//Unit skills
-			if (skill_get_unit_id(skill_id))
-				return false;
-			break;
-	}
-
-	return true;
-}
-
 #ifdef RENEWAL
 /*========================================
  * Calculate equipment ATK for renewal ATK
