@@ -2499,7 +2499,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 			if (atkmin > atkmax)
 				atkmin = atkmax;
 
-			if(flag&BDMG_ARROW && !(flag&BDMG_THROW)) { //Bows
+			if(flag&BDMG_ARROW) { //Bows
 				atkmin = atkmin*atkmax/100;
 				if (atkmin > atkmax)
 					atkmax = atkmin;
@@ -3799,10 +3799,28 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
 
 		// Skill-specific bonuses
-		if (skill_id == TF_POISON) {
-			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
-			// Envenom applies the attribute table to the base damage and then again to the final damage
-			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+		switch(skill_id) {
+			case TF_POISON:
+				ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+				// Envenom applies the attribute table to the base damage and then again to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
+			case NJ_SYURIKEN:
+				ATK_ADD(wd->damage, wd->damage2, 4 * skill_lv);
+				if (sd) {
+					ATK_ADD(wd->damage, wd->damage2, 3 * pc_checkskill(sd, NJ_TOBIDOUGU));
+					ATK_ADD(wd->damage, wd->damage2, sd->bonus.arrow_atk);
+				}
+				// Applies attribute table on neutral element to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
+			case NJ_KUNAI:
+				if (sd) {
+					ATK_ADD(wd->damage, wd->damage2, 3 * sd->bonus.arrow_atk);
+				}
+				// Applies attribute table on neutral element to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
 		}
 	}
 
@@ -3880,14 +3898,12 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 		ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, sd->right_weapon.star, sd->left_weapon.star);
 		// Spirit Sphere bonus damage
 		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_get_spiritball_damage(*wd, *src, skill_id));
-#endif
 
-		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
+		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
 			ATK_ADD(wd->damage, wd->damage2, 3 * skill);
-#ifdef RENEWAL
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 3 * skill);
-#endif
 		}
+#endif
 
 		switch(skill_id) {
 			case RA_WUGDASH:
@@ -4178,8 +4194,9 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 
 		default:
 			// Flags that apply to both pre-renewal and renewal
-			bflag = (is_attack_critical(wd, src, target, skill_id, skill_lv, false) ? BDMG_CRIT : BDMG_NONE) |
-				(!skill_id && sc && sc->getSCE(SC_CHANGE) ? BDMG_MAGIC : BDMG_NONE);
+			bflag = BDMG_NONE;
+			if (is_attack_critical(wd, src, target, skill_id, skill_lv, false)) bflag |= BDMG_CRIT;
+			if (!skill_id && sc && sc->getSCE(SC_CHANGE)) bflag |= BDMG_MAGIC;
 #ifdef RENEWAL
 			if (sd)
 				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
@@ -4190,24 +4207,26 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			}
 #else
 			// Pre-renewal exclusive flags
-			if (is_skill_using_arrow(src, skill_id)) bflag |= BDMG_ARROW;
 			if (skill_id == HW_MAGICCRASHER) bflag |= BDMG_MAGIC;
 			if (sc && sc->getSCE(SC_WEAPONPERFECTION)) bflag |= BDMG_NOSIZE;
 			if (is_skill_using_arrow(src, skill_id) && sd) {
 				switch(sd->status.weapon) {
 					case W_BOW:
+						bflag |= BDMG_ARROW;
 						break;
 					case W_REVOLVER:
 					case W_RIFLE:
 					case W_GATLING:
 					case W_SHOTGUN:
 					case W_GRENADE:
-						if (bflag & BDMG_CRIT) {
-							bflag &= ~(BDMG_ARROW); // Criticals with any guns are calculated like melee criticals
+						// Criticals with any guns are calculated like melee criticals
+						if (!(bflag & BDMG_CRIT)) {
+							bflag |= BDMG_ARROW;
 						}
 						break;
 					default:
-						bflag |= BDMG_THROW; // for ex. shuriken must not be influenced by DEX
+						// Attacks that use ammo are calculated like melee attacks as long as no ranged weapon is equipped
+						// Some skills manually add arrow_atk as mastery bonus later (e.g. Throw Shuriken, Throw Kunai)
 						break;
 				}
 			}
@@ -6280,9 +6299,6 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 			else
 				atk = sstatus->matk_min;
 			break;
-		case NJ_SYURIKEN:
-			atk = 4 * skill_lv;
-			break;
 #endif
 #ifdef RENEWAL
 		case HT_FREEZINGTRAP:
@@ -7559,11 +7575,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 
 	switch (skill_id) {
-#ifndef RENEWAL
-		case NJ_KUNAI:
-			ATK_ADD(wd.damage, wd.damage2, 90);
-			break;
-#endif
 		case TK_DOWNKICK:
 		case TK_STORMKICK:
 		case TK_TURNKICK:
