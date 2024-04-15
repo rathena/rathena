@@ -102,7 +102,7 @@ static int skill_check_unit_range (struct block_list *bl, int x, int y, uint16 s
 static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv, bool isNearNPC);
 static int skill_destroy_trap( struct block_list *bl, va_list ap );
 static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list ap);
-static bool skill_check_condition_sc_required(map_session_data *sd, unsigned short skill_id, struct s_skill_condition *require);
+static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skill_id, s_skill_condition& require );
 static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
 
 // Use this function for splash skills that can't hit icewall when cast by players
@@ -17281,23 +17281,19 @@ int skill_isammotype(map_session_data *sd, unsigned short skill_id)
 * @param skill_id
 * @return True if condition is met, False otherwise
 **/
-static bool skill_check_condition_sc_required(map_session_data *sd, unsigned short skill_id, struct s_skill_condition *require) {
-	if (require == nullptr || require->status.empty())
+static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skill_id, s_skill_condition& require ){
+	if (require.status.empty())
 		return true;
 
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return false;
-	}
-	status_change *sc = &sd->sc;
+	status_change *sc = &sd.sc;
 
 	if (sc == nullptr) {
-		clif_skill_fail( *sd, skill_id );
+		clif_skill_fail( sd, skill_id );
 		return false;
 	}
 
 	// May have multiple requirements
-	for (const auto &reqStatus : require->status) {
+	for (const auto &reqStatus : require.status) {
 		if (reqStatus == SC_NONE)
 			continue;
 
@@ -17320,7 +17316,7 @@ static bool skill_check_condition_sc_required(map_session_data *sd, unsigned sho
 		}
 
 		if (!sc->getSCE(reqStatus)) {
-			clif_skill_fail( *sd, skill_id, cause );
+			clif_skill_fail( sd, skill_id, cause );
 			return false;
 		}
 	}
@@ -18240,7 +18236,7 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 			case WZ_SIGHTRASHER:
 				break;
 			default:
-				if (!skill_check_condition_sc_required(sd, skill_id, &require))
+				if (!skill_check_condition_sc_required(*sd, skill_id, require))
 					return false;
 				break;
 		}
@@ -18636,7 +18632,7 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 	if (!require.status.empty()) {
 		switch (skill_id) {
 			case WZ_SIGHTRASHER:
-				if (!skill_check_condition_sc_required(sd, skill_id, &require))
+				if (!skill_check_condition_sc_required(*sd, skill_id, require))
 					return false;
 				break;
 			default:
