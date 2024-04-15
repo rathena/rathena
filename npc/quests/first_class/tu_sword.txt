@@ -1102,7 +1102,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			mes "victkleyundncem";
 			mes "hekdlfiDrindkelsd";
 			next;
-		} else if(tu_swordman == 18){
+		} else {
 			mes "hekdlfiDrindkelsd";
 			mes "TheisWesomeof";
 			mes "ConBanfoevidehi";
@@ -1114,17 +1114,9 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "This is a complex transposition cipher in which we remove one person's code from the rest of them. So who do you think is";
 		mes "the murderer?";
 		next;
-		switch(select("Hans:Bankley:Geil:Muetro")) {
-		case 1:
-			mes "[Dequ'ee]";
-			mes "Hans...?";
-			mes "That can't be right.";
-			mes "It doesn't match with";
-			mes "this algorithm I just";
-			mes "made up. You've got";
-			mes "to try it again!";
-			close;
-		case 2:
+		setarray .@menu$[0],"Hans","Bankley","Geil","Muetro";
+		.@select = select(implode(.@menu$, ":")) - 1;
+		if(.@select == 1) {
 			mes "[Dequ'ee]";
 			mes "Bankley...?";
 			mes "Hey, you might be";
@@ -1147,18 +1139,10 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			close2;
 			warp "moc_fild07",359,201;
 			end;
-		case 3:
+		}
+		else {
 			mes "[Dequ'ee]";
-			mes "Geil...?";
-			mes "That can't be right.";
-			mes "It doesn't match with";
-			mes "this algorithm I just";
-			mes "made up. You've got";
-			mes "to try it again!";
-			close;
-		case 4:
-			mes "[Dequ'ee]";
-			mes "Muetro...?";
+			mes .@menu$[.@select] + "...?";
 			mes "That can't be right.";
 			mes "It doesn't match with";
 			mes "this algorithm I just";
@@ -1174,688 +1158,67 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "[Dequ'ee]";
 		mes "Hm, you guess the order and I'll try to formulate a cryptanalysis based on your guess.";
 		next;
-		switch(select("Muetro:Hans:Geil:Bankley")) {
-		case 1:
-			mes "[Dequ'ee]";
-			mes "Okay, Muetro's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
+		setarray .@names_array$[0],"Muetro","Hans","Geil","Bankley";
+		setarray .@codes_array$[0],"ConBanfoevidehi","victkleyundncem","TheisWesomeof","hekdlfiDrindkelsd";
+		copyarray .@menu$[0], .@names_array$[0], 4;
+		.@code[0]$ = select(implode(.@menu$, ":")) - 1;
+		deletearray .@menu$[.@code[0]$], 1;
+		mes "[Dequ'ee]";
+		mes "Okay, "+ .@names_array$[.@code[0]$] +"'s";
+		mes "code is what we'll";
+		mes "use first. Now, whose";
+		mes "code do you think";
+		mes "should go second?";
+		next;
+		.@select = select(implode(.@menu$, ":")) - 1;
+		.@code[1]$ = inarray(.@names_array$, .@menu$[.@select]);
+		deletearray .@menu$[.@select], 1;
+		mes "[Dequ'ee]";
+		mes .@names_array$[.@code[1]$] +"'s...?";
+		mes "Alright, then";
+		mes "the person with";
+		mes "the third code";
+		mes "would be...?";
+		next;
+		.@select = select(implode(.@menu$, ":")) - 1;
+		.@code[2]$ = inarray(.@names_array$, .@menu$[.@select]);
+		deletearray .@menu$[.@select], 1;
+		.@code[3]$ = inarray(.@names_array$, .@menu$[0]);
+		mes "[Dequ'ee]";
+		mes .@names_array$[.@code[0]$] +", "+ .@names_array$[.@code[1]$] +",";
+		mes .@names_array$[.@code[2]$] +" and "+ .@names_array$[.@code[3]$] +".";
+		mes "So then the full";
+		mes "code would be...";
+		next;
+		mes "[Dequ'ee]";
+		mes " ";
+		mes .@names_array$[.@code[0]$];
+		mes .@codes_array$[.@code[1]$];
+		mes .@codes_array$[.@code[2]$];
+		mes .@codes_array$[.@code[3]$];
+		next;
+		mes "[Dequ'ee]";
+		mes "No...";
+		mes "There's no way";
+		mes "I can decode it the";
+		mes "way it is now. Let's";
+		.@fullcode$ == implode(.@code$, "");
+		if(.@fullcode$ == "2013" || .@fullcode$ == "3201") {
+			mes "try... Wait!";
 			next;
-			switch(select("Hans:Geil:Bankley")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Hans...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Geil:Bankley") == 1) {
-					mes "[Dequ'ee]";
-					mes "Muetro, Hans,";
-					mes "Geil and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Muetro, Hans,";
-					mes "Geil and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Geil's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Hans:Bankley") == 1) {
-					mes "[Dequ'ee]";
-					mes "Muetro, Geil,";
-					mes "Hans and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Muetro, Geil,";
-					mes "Bankley and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Bankley's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Hans:Geil") == 1) {
-					mes "[Dequ'ee]";
-					mes "Muetro, Bankley,";
-					mes "Hans and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Muetro, Bankley,";
-					mes "Geil and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			}
-			break;
-		case 2:
 			mes "[Dequ'ee]";
-			mes "Okay, Hans's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
-			next;
-			switch(select("Muetro:Geil:Bankley")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Muestro's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Geil:Bankley") == 1) {
-					mes "[Dequ'ee]";
-					mes "Hans, Muetro,";
-					mes "Geil and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Hans, Muetro,";
-					mes "Bankley and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Geil's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Muetro:Bankley") == 1) {
-					mes "[Dequ'ee]";
-					mes "Hans, Geil,";
-					mes "Muetro and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Hans, Geil,";
-					mes "Bankley and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Bankley's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Muetro:Geil") == 1) {
-					mes "[Dequ'ee]";
-					mes "Hans, Bankley,";
-					mes "Muetro and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Hans, Bankley,";
-					mes "Geil and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			}
-			break;
-		case 3:
-			mes "[Dequ'ee]";
-			mes "Okay, Geil's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
-			next;
-			switch(select("Muetro:Hans:Bankley")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Muestro's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Hans:Bankley") == 1) {
-					mes "[Dequ'ee]";
-					mes "Geil, Muetro,";
-					mes "Hans and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try... Wait!";
-					next;
-					mes "[Dequ'ee]";
-					mes "I think that we";
-					mes "can make sense of this";
-					mes "thing! Give me a while";
-					mes "to formulate an algorithm!";
-					tu_swordman = 17;
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Geil, Muetro,";
-					mes "Bankley and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Han's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Muetro:Bankley") == 1) {:
-					mes "[Dequ'ee]";
-					mes "Geil, Hans,";
-					mes "Muetro and Bankley.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "hekdlfiDrindkelsd";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Geil, Hans,";
-					mes "Bankley and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Bankley's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Muetro:Hans") == 1) {
-					mes "[Dequ'ee]";
-					mes "Geil, Bankley,";
-					mes "Muetro and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Geil, Bankley,";
-					mes "Hans and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "TheisWesomeof";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			}
-			break;
-		case 4:
-			mes "[Dequ'ee]";
-			mes "Okay, Bankley's";
-			mes "code is what we'll";
-			mes "use first. Now, whose";
-			mes "code do you think";
-			mes "should go second?";
-			next;
-			switch(select("Muetro:Hans:Geil")) {
-			case 1:
-				mes "[Dequ'ee]";
-				mes "Muestro's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Hans:Geil") == 1) {
-					mes "[Dequ'ee]";
-					mes "Bankley, Muetro,";
-					mes "Hans and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Bankley, Muetro,";
-					mes "Geil and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 2:
-				mes "[Dequ'ee]";
-				mes "Hans's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Muetro:Geil") == 1) {
-					mes "[Dequ'ee]";
-					mes "Bankley, Hans,";
-					mes "Muetro and Geil.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					mes "TheisWesomeof";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Bankley, Hans,";
-					mes "Geil and Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "victkleyundncem";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			case 3:
-				mes "[Dequ'ee]";
-				mes "Geil's...?";
-				mes "Alright, then";
-				mes "the person with";
-				mes "the third code";
-				mes "would be...?";
-				next;
-				if(select("Muetro:Hans") == 1) {
-					mes "[Dequ'ee]";
-					mes "Bankley, Geil,";
-					mes "Muetro, and Hans.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "ConBanfoevidehi";
-					mes "victkleyundncem";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try... Wait!";
-					next;
-					mes "[Dequ'ee]";
-					mes "I think that we";
-					mes "can make sense of this";
-					mes "thing! Give me a while";
-					mes "to formulate an algorithm!";
-					tu_swordman = 18;
-					close;
-				}
-				else {
-					mes "[Dequ'ee]";
-					mes "Bankley, Geil,";
-					mes "Hans, Muetro.";
-					mes "So then the full";
-					mes "code would be...";
-					next;
-					mes "[Dequ'ee]";
-					mes " ";
-					mes "hekdlfiDrindkelsd";
-					mes "TheisWesomeof";
-					mes "victkleyundncem";
-					mes "ConBanfoevidehi";
-					next;
-					mes "[Dequ'ee]";
-					mes "No...";
-					mes "There's no way";
-					mes "I can decode it the";
-					mes "way it is now. Let's";
-					mes "try another combination.";
-					close;
-				}
-			}
-			break;
+			mes "I think that we";
+			mes "can make sense of this";
+			mes "thing! Give me a while";
+			mes "to formulate an algorithm!";
+			if(.@fullcode$ == "2013")
+				tu_swordman = 17;
+			else
+				tu_swordman = 18;
 		}
+		else
+			mes "try another combination.";
+		close;
 	}
 	if(tu_swordman == 15){
 		.@hans$ = "victkleyundncem";
