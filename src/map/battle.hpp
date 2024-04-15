@@ -37,7 +37,6 @@ enum e_base_damage_flag : uint16 {
 	BDMG_ARROW  = 0x0002, /// Add arrow attack and use ranged damage formula
 	BDMG_MAGIC  = 0x0004, /// Use MATK for base damage (e.g. Magic Crasher)
 	BDMG_NOSIZE = 0x0008, /// Skip target size adjustment (e.g. Weapon Perfection)
-	BDMG_THROW  = 0x0010, /// Arrow attack should use melee damage formula (e.g., shuriken, kunai and venom knives)
 };
 
 /// Flag of the final calculation
