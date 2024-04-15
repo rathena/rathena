@@ -22565,16 +22565,10 @@ bool skill_arrow_create(map_session_data *sd, t_itemid nameid)
  * @param sd Player
  * @nameid Item ID of poison type
  */
-int skill_poisoningweapon(map_session_data *sd, t_itemid nameid)
-{
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return 0;
-	}
-
-	if( !nameid || pc_delitem(sd,pc_search_inventory(sd,nameid),1,0,0,LOG_TYPE_CONSUME) ) {
-		clif_skill_fail( *sd, GC_POISONINGWEAPON );
-		return 0;
+void skill_poisoningweapon( map_session_data& sd, t_itemid nameid ){
+	if( !nameid || pc_delitem(&sd,pc_search_inventory(&sd,nameid),1,0,0,LOG_TYPE_CONSUME) ) {
+		clif_skill_fail( sd, GC_POISONINGWEAPON );
+		return;
 	}
 
 	sc_type type;
@@ -22593,23 +22587,22 @@ int skill_poisoningweapon(map_session_data *sd, t_itemid nameid)
 		case ITEMID_MAGICMUSHROOM: type = SC_MAGICMUSHROOM; /*msg = 1446;*/ msg = "Magic Mushroom"; break;
 		case ITEMID_OBLIVIONCURSE: type = SC_OBLIVIONCURSE; /*msg = 1449;*/ msg = "Oblivion Curse"; break;
 		default:
-			clif_skill_fail( *sd, GC_POISONINGWEAPON );
-			return 0;
+			clif_skill_fail( sd, GC_POISONINGWEAPON );
+			return;
 	}
 
-	status_change_end(&sd->bl, SC_POISONINGWEAPON); // End the status so a new poison can be applied (if changed)
-	chance = 2 + 2 * sd->menuskill_val; // 2 + 2 * skill_lv
-	sc_start4(&sd->bl,&sd->bl, SC_POISONINGWEAPON, 100, pc_checkskill(sd, GC_RESEARCHNEWPOISON), //in Aegis it store the level of GC_RESEARCHNEWPOISON in val1
-		type, chance, 0, skill_get_time(GC_POISONINGWEAPON, sd->menuskill_val));
-	status_change_start(&sd->bl, &sd->bl, type, 10000, sd->menuskill_val, 0, 0, 0, skill_get_time(GC_POISONINGWEAPON, sd->menuskill_val), SCSTART_NOAVOID | SCSTART_NOICON); // Apply bonus to caster
+	status_change_end(&sd.bl, SC_POISONINGWEAPON); // End the status so a new poison can be applied (if changed)
+	chance = 2 + 2 * sd.menuskill_val; // 2 + 2 * skill_lv
+	sc_start4(&sd.bl,&sd.bl, SC_POISONINGWEAPON, 100, pc_checkskill(&sd, GC_RESEARCHNEWPOISON), //in Aegis it store the level of GC_RESEARCHNEWPOISON in val1
+		type, chance, 0, skill_get_time(GC_POISONINGWEAPON, sd.menuskill_val));
+	status_change_start(&sd.bl, &sd.bl, type, 10000, sd.menuskill_val, 0, 0, 0, skill_get_time(GC_POISONINGWEAPON, sd.menuskill_val), SCSTART_NOAVOID | SCSTART_NOICON); // Apply bonus to caster
 
-	sprintf(output, msg_txt(sd,721), msg);
-	clif_messagecolor(&sd->bl,color_table[COLOR_WHITE],output,false,SELF);
+	sprintf(output, msg_txt(&sd,721), msg);
+	clif_messagecolor(&sd.bl,color_table[COLOR_WHITE],output,false,SELF);
 
 /*#if PACKETVER >= 20110208 //! TODO: Check the correct PACKVETVER
-	clif_msg(sd,msg);
+	clif_msg(&sd,msg);
 #endif*/
-	return 0;
 }
 
 /**

@@ -2780,7 +2780,7 @@ int skill_magicdecoy(map_session_data *sd, t_itemid nameid);
 /**
  * Guiltoine Cross
  **/
-int skill_poisoningweapon( map_session_data *sd, t_itemid nameid);
+void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
 
 /**
  * Auto Shadow Spell (Shadow Chaser)

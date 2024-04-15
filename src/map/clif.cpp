@@ -13475,7 +13475,7 @@ void clif_parse_SelectArrow(int fd,map_session_data *sd) {
 			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
 			break;
 		case GC_POISONINGWEAPON:
-			skill_poisoningweapon(sd,p->itemId);
+			skill_poisoningweapon(*sd,p->itemId);
 			break;
 		case NC_MAGICDECOY:
 			skill_magicdecoy(sd,p->itemId);
