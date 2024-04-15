@@ -11727,114 +11727,108 @@ void clif_parse_HowManyConnections(int fd, map_session_data *sd)
 	clif_user_count(sd, map_getusers());
 }
 
-void clif_parse_ActionRequest_sub(map_session_data *sd, int action_type, int target_id, t_tick tick)
-{
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return;
-	}
-
-	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, CLR_DEAD);
+void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick ){
+	if (pc_isdead(&sd)) {
+		clif_clearunit_area(&sd.bl, CLR_DEAD);
 		return;
 	}
 
 	// Statuses that don't let the player sit / stand / talk with NPCs (targeted)
 	if (action_type != 0x00 && action_type != 0x07) {
-		if (sd->sc.cant.interact)
+		if (sd.sc.cant.interact)
 			return;
-		pc_stop_walking(sd, 1);
+		pc_stop_walking(&sd, 1);
 	}
-	pc_stop_attack(sd);
+	pc_stop_attack(&sd);
 
-	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
-		target_id = sd->bl.id;
+	if(target_id<0 && -target_id == sd.bl.id) // for disguises [Valaris]
+		target_id = sd.bl.id;
 
 	switch(action_type)
 	{
 	case 0x00: // once attack
 	case 0x07: // continuous attack
 
-		if( pc_cant_act(sd) )
+		if( pc_cant_act(&sd) )
 			return;
 
-		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
-			if (DIFF_TICK(tick, sd->ud.canact_tick) < 0) {
-				clif_skill_fail( *sd, 1, USESKILL_FAIL_SKILLINTERVAL );
+		if (!battle_config.sdelay_attack_enable && pc_checkskill(&sd, SA_FREECAST) <= 0) {
+			if (DIFF_TICK(tick, sd.ud.canact_tick) < 0) {
+				clif_skill_fail( sd, 1, USESKILL_FAIL_SKILLINTERVAL );
 				return;
 			}
 		}
 
-		pc_delinvincibletimer(sd);
+		pc_delinvincibletimer(&sd);
 		if (battle_config.idletime_option&IDLE_ATTACK)
-			sd->idletime = last_tick;
-		if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_ATTACK)
-			sd->idletime_hom = last_tick;
-		if (battle_config.mer_idle_no_share && sd->md && battle_config.idletime_mer_option&IDLE_ATTACK)
-			sd->idletime_mer = last_tick;
-		unit_attack(&sd->bl, target_id, action_type != 0);
+			sd.idletime = last_tick;
+		if (battle_config.hom_idle_no_share && sd.hd && battle_config.idletime_hom_option&IDLE_ATTACK)
+			sd.idletime_hom = last_tick;
+		if (battle_config.mer_idle_no_share && sd.md && battle_config.idletime_mer_option&IDLE_ATTACK)
+			sd.idletime_mer = last_tick;
+		unit_attack(&sd.bl, target_id, action_type != 0);
 		break;
 	case 0x02: // sitdown
-		if (battle_config.basic_skill_check && pc_checkskill(sd, NV_BASIC) < 3 && pc_checkskill(sd, SU_BASIC_SKILL) < 1) {
-			clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 2 );
+		if (battle_config.basic_skill_check && pc_checkskill(&sd, NV_BASIC) < 3 && pc_checkskill(&sd, SU_BASIC_SKILL) < 1) {
+			clif_skill_fail( sd, 1, USESKILL_FAIL_LEVEL, 2 );
 			break;
 		}
 
-		if(pc_issit(sd)) {
+		if(pc_issit(&sd)) {
 			//Bugged client? Just refresh them.
-			clif_sitting(&sd->bl);
+			clif_sitting(&sd.bl);
 			return;
 		}
 
-		if (sd->ud.skilltimer != INVALID_TIMER || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING))
+		if (sd.ud.skilltimer != INVALID_TIMER || (sd.sc.opt1 && sd.sc.opt1 != OPT1_STONEWAIT && sd.sc.opt1 != OPT1_BURNING))
 			break;
 
-		if (sd->sc.count && (
-			sd->sc.getSCE(SC_DANCING) ||
-			(sd->sc.getSCE(SC_GRAVITATION) && sd->sc.getSCE(SC_GRAVITATION)->val3 == BCT_SELF)
+		if (sd.sc.count && (
+			sd.sc.getSCE(SC_DANCING) ||
+			(sd.sc.getSCE(SC_GRAVITATION) && sd.sc.getSCE(SC_GRAVITATION)->val3 == BCT_SELF)
 		)) //No sitting during these states either.
 			break;
 
-		if (sd->state.block_action & PCBLOCK_SITSTAND) {
-			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+		if (sd.state.block_action & PCBLOCK_SITSTAND) {
+			clif_displaymessage(sd.fd, msg_txt(&sd,794)); // This action is currently blocked.
 			break;
 		}
 
 		if (battle_config.idletime_option&IDLE_SIT)
-			sd->idletime = last_tick;
-		if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_SIT)
-			sd->idletime_hom = last_tick;
-		if (battle_config.mer_idle_no_share && sd->md && battle_config.idletime_mer_option&IDLE_SIT)
-			sd->idletime_mer = last_tick;
+			sd.idletime = last_tick;
+		if (battle_config.hom_idle_no_share && sd.hd && battle_config.idletime_hom_option&IDLE_SIT)
+			sd.idletime_hom = last_tick;
+		if (battle_config.mer_idle_no_share && sd.md && battle_config.idletime_mer_option&IDLE_SIT)
+			sd.idletime_mer = last_tick;
 
-		pc_setsit(sd);
-		skill_sit(sd, true);
-		clif_sitting(&sd->bl);
+		pc_setsit(&sd);
+		skill_sit(&sd, true);
+		clif_sitting(&sd.bl);
 		break;
 	case 0x03: // standup
-		if (!pc_issit(sd)) {
+		if (!pc_issit(&sd)) {
 			//Bugged client? Just refresh them.
-			clif_standing(&sd->bl);
+			clif_standing(&sd.bl);
 			return;
 		}
 
-		if (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
+		if (sd.sc.opt1 && sd.sc.opt1 != OPT1_STONEWAIT && sd.sc.opt1 != OPT1_BURNING)
 			break;
 
-		if (sd->state.block_action & PCBLOCK_SITSTAND) {
-			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+		if (sd.state.block_action & PCBLOCK_SITSTAND) {
+			clif_displaymessage(sd.fd, msg_txt(&sd,794)); // This action is currently blocked.
 			break;
 		}
 
-		if (pc_setstand(sd, false)) {
+		if (pc_setstand(&sd, false)) {
 			if (battle_config.idletime_option&IDLE_SIT)
-				sd->idletime = last_tick;
-			if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_SIT)
-				sd->idletime_hom = last_tick;
-			if (battle_config.mer_idle_no_share && sd->md && battle_config.idletime_mer_option&IDLE_SIT)
-				sd->idletime_mer = last_tick;
-			skill_sit(sd, false);
-			clif_standing(&sd->bl);
+				sd.idletime = last_tick;
+			if (battle_config.hom_idle_no_share && sd.hd && battle_config.idletime_hom_option&IDLE_SIT)
+				sd.idletime_hom = last_tick;
+			if (battle_config.mer_idle_no_share && sd.md && battle_config.idletime_mer_option&IDLE_SIT)
+				sd.idletime_mer = last_tick;
+			skill_sit(&sd, false);
+			clif_standing(&sd.bl);
 		}
 		break;
 	}
@@ -11854,8 +11848,12 @@ void clif_parse_ActionRequest_sub(map_session_data *sd, int action_type, int tar
 /// There are various variants of this packet, some of them have padding between fields.
 void clif_parse_ActionRequest(int fd, map_session_data *sd)
 {
+	if( sd == nullptr ){
+		return;
+	}
+
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	clif_parse_ActionRequest_sub(sd,
+	clif_parse_ActionRequest_sub( *sd,
 		RFIFOB(fd,info->pos[1]),
 		RFIFOL(fd,info->pos[0]),
 		gettick()
@@ -12231,6 +12229,10 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 ///     1 = click
 void clif_parse_NpcClicked(int fd,map_session_data *sd)
 {
+	if( sd == nullptr ){
+		return;
+	}
+
 	struct block_list *bl;
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
@@ -12255,7 +12257,7 @@ void clif_parse_NpcClicked(int fd,map_session_data *sd)
 	switch (bl->type) {
 		case BL_MOB:
 		case BL_PC:
-			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
+			clif_parse_ActionRequest_sub( *sd, 0x07, bl->id, gettick() );
 			break;
 		case BL_NPC:
 #ifdef RENEWAL
