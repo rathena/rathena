@@ -612,7 +612,7 @@ void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 int skill_sit(map_session_data *sd, bool sitting);
 void skill_repairweapon( map_session_data& sd, int idx );
 void skill_identify(map_session_data *sd,int idx);
-void skill_weaponrefine(map_session_data *sd,int idx); // [Celest]
+void skill_weaponrefine( map_session_data& sd, int idx ); // [Celest]
 int skill_autospell(map_session_data *md,uint16 skill_id);
 
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal);

@@ -19620,8 +19620,7 @@ void skill_identify(map_session_data *sd, int idx)
 /*==========================================
  * Weapon Refine [Celest]
  *------------------------------------------*/
-void skill_weaponrefine(map_session_data *sd, int idx)
-{
+void skill_weaponrefine( map_session_data& sd, int idx ){
 	static const t_itemid material[MAX_WEAPON_LEVEL] = {
 		ITEMID_PHRACON,
 		ITEMID_EMVERETARCON,
@@ -19632,106 +19631,100 @@ void skill_weaponrefine(map_session_data *sd, int idx)
 #endif
 	};
 
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return;
-	}
-
 	if (idx >= 0 && idx < MAX_INVENTORY)
 	{
-		struct item *item;
-		struct item_data *ditem = sd->inventory_data[idx];
-		item = &sd->inventory.u.items_inventory[idx];
+		struct item_data *ditem = sd.inventory_data[idx];
+		struct item* item = &sd.inventory.u.items_inventory[idx];
 
 		if(item->nameid > 0 && ditem->type == IT_WEAPON) {
 			if( ditem->flag.no_refine || ditem->weapon_level < 1 ) { 	// if the item isn't refinable
-				clif_skill_fail( *sd, sd->menuskill_id );
+				clif_skill_fail( sd, sd.menuskill_id );
 				return;
 			}
-			if( item->refine >= sd->menuskill_val || item->refine >= 10 ) {
-				clif_upgrademessage(sd, 2, item->nameid);
+			if( item->refine >= sd.menuskill_val || item->refine >= 10 ) {
+				clif_upgrademessage(&sd, 2, item->nameid);
 				return;
 			}
 
-			int i = pc_search_inventory( sd, material[ditem->weapon_level - 1] );
+			int i = pc_search_inventory( &sd, material[ditem->weapon_level - 1] );
 
 			if( i < 0 ) {
-				clif_upgrademessage( sd, 3, material[ditem->weapon_level - 1] );
+				clif_upgrademessage( &sd, 3, material[ditem->weapon_level - 1] );
 				return;
 			}
 
 			std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *ditem, *item );
 
 			if( info == nullptr ){
-				clif_skill_fail( *sd, sd->menuskill_id );
+				clif_skill_fail( sd, sd.menuskill_id );
 				return;
 			}
 
 			std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, (uint16)REFINE_COST_NORMAL );
 
 			if( cost == nullptr ){
-				clif_skill_fail( *sd, sd->menuskill_id );
+				clif_skill_fail( sd, sd.menuskill_id );
 				return;
 			}
 
 			if( cost->nameid != material[ditem->weapon_level - 1] ){
 				ShowDebug( "skill_weaponrefine: The hardcoded refine requirement %d for weapon level %d does not match %d from the refine database.\n", material[ditem->weapon_level - 1], ditem->weapon_level, cost->nameid );
-				clif_skill_fail( *sd, sd->menuskill_id );
+				clif_skill_fail( sd, sd.menuskill_id );
 				return;
 			}
 
 			int per = ( cost->chance / 100 );
-			if( sd->class_&JOBL_THIRD )
+			if( sd.class_&JOBL_THIRD )
 				per += 10;
 			else
-				per += (((signed int)sd->status.job_level)-50)/2; //Updated per the new kro descriptions. [Skotlex]
+				per += (((signed int)sd.status.job_level)-50)/2; //Updated per the new kro descriptions. [Skotlex]
 
-			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
+			pc_delitem(&sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 			if (per > rnd() % 100) {
 				int ep=0;
-				log_pick_pc(sd, LOG_TYPE_OTHER, -1, item);
+				log_pick_pc(&sd, LOG_TYPE_OTHER, -1, item);
 				item->refine++;
-				log_pick_pc(sd, LOG_TYPE_OTHER,  1, item);
+				log_pick_pc(&sd, LOG_TYPE_OTHER,  1, item);
 				if(item->equip) {
 					ep = item->equip;
-					pc_unequipitem(sd,idx,3);
+					pc_unequipitem(&sd,idx,3);
 				}
-				clif_delitem(sd,idx,1,3);
-				clif_upgrademessage(sd, 0, item->nameid);
-				clif_inventorylist(sd);
-				clif_refine(sd->fd,0,idx,item->refine);
+				clif_delitem(&sd,idx,1,3);
+				clif_upgrademessage(&sd, 0, item->nameid);
+				clif_inventorylist(&sd);
+				clif_refine(sd.fd,0,idx,item->refine);
 				if( ditem->type == IT_WEAPON ){
-					achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, ditem->weapon_level, item->refine);
+					achievement_update_objective(&sd, AG_ENCHANT_SUCCESS, 2, ditem->weapon_level, item->refine);
 				}
 				if (ep)
-					pc_equipitem(sd,idx,ep);
-				clif_misceffect(&sd->bl,3);
+					pc_equipitem(&sd,idx,ep);
+				clif_misceffect(&sd.bl,3);
 				if(item->refine == 10 &&
 					item->card[0] == CARD0_FORGE &&
-					(int)MakeDWord(item->card[2],item->card[3]) == sd->status.char_id)
+					(int)MakeDWord(item->card[2],item->card[3]) == sd.status.char_id)
 				{ // Fame point system [DracoRPG]
 					switch(ditem->weapon_level){
 						case 1:
-							pc_addfame(*sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 							break;
 						case 2:
-							pc_addfame(*sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
 							break;
 						case 3:
-							pc_addfame(*sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
+							pc_addfame(sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 							break;
 					}
 				}
 			} else {
 				item->refine = 0;
 				if(item->equip)
-					pc_unequipitem(sd,idx,3);
-				clif_upgrademessage(sd, 1, item->nameid);
-				clif_refine(sd->fd,1,idx,item->refine);
-				achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, 1);
-				pc_delitem(sd,idx,1,0,2, LOG_TYPE_OTHER);
-				clif_misceffect(&sd->bl,2);
-				clif_emotion(&sd->bl, ET_HUK);
+					pc_unequipitem(&sd,idx,3);
+				clif_upgrademessage(&sd, 1, item->nameid);
+				clif_refine(sd.fd,1,idx,item->refine);
+				achievement_update_objective(&sd, AG_ENCHANT_FAIL, 1, 1);
+				pc_delitem(&sd,idx,1,0,2, LOG_TYPE_OTHER);
+				clif_misceffect(&sd.bl,2);
+				clif_emotion(&sd.bl, ET_HUK);
 			}
 		}
 	}

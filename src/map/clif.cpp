@@ -13316,7 +13316,7 @@ void clif_parse_WeaponRefine( int fd, map_session_data *sd ){
 		clif_menuskill_clear(sd);
 		return;
 	}
-	skill_weaponrefine( sd, server_index( RFIFOL( fd, 2 ) ) );
+	skill_weaponrefine( *sd, server_index( RFIFOL( fd, 2 ) ) );
 	clif_menuskill_clear(sd);
 }
 
