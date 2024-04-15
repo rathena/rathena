@@ -3,10 +3,9 @@
 
 #include "pc.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <map>
-
-#include <math.h>
-#include <stdlib.h>
 
 #ifdef MAP_GENERATOR
 #include <fstream>
@@ -1258,7 +1257,7 @@ bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype 
  */
 bool pc_can_give_items(map_session_data *sd)
 {
-	return pc_has_permission(sd, PC_PERM_TRADE);
+	return (pc_has_permission(sd, PC_PERM_TRADE) || pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL));
 }
 
 /**
@@ -1266,7 +1265,7 @@ bool pc_can_give_items(map_session_data *sd)
  */
 bool pc_can_give_bounded_items(map_session_data *sd)
 {
-	return pc_has_permission(sd, PC_PERM_TRADE_BOUNDED);
+	return (pc_has_permission(sd, PC_PERM_TRADE_BOUNDED) || pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL));
 }
 
 /**
@@ -8107,7 +8106,7 @@ int pc_checkbaselevelup(map_session_data *sd) {
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
 		for (const auto &status : status_db) {
 			if (status.second->flag[SCF_SUPERNOVICEANGEL])
-				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 1, skill_get_time(status.second->skill_id, 1));
+				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 1, 120000); //All buffs with super novice flag for 2 minutes
 		}
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
@@ -8223,6 +8222,9 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 			bonus += (sd->sc.getSCE(SC_EXPBOOST)->val1 / battle_config.vip_bm_increase);
 	}
 
+	if (sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND))
+		bonus += sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND)->val1;
+
 	if (*base_exp) {
 		t_exp exp = (t_exp)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
 		*base_exp = cap_value(exp, 1, MAX_EXP);
@@ -8231,6 +8233,9 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 	// Give JEXPBOOST for quests even if src is NULL.
 	if (sd->sc.getSCE(SC_JEXPBOOST))
 		bonus += sd->sc.getSCE(SC_JEXPBOOST)->val1;
+
+	if (sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND))	// Increase Jexp as well
+		bonus += sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND)->val1;
 
 	if (*job_exp) {
 		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
@@ -11156,9 +11161,15 @@ void pc_setmadogear(map_session_data *sd, bool flag, e_mado_type type)
  *------------------------------------------*/
 bool pc_candrop(map_session_data *sd, struct item *item)
 {
-	if( item && ((item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) || (itemdb_ishatched_egg(item))) )
+	if (sd->sc.cant.drop)
 		return false;
-	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
+	if( item && itemdb_ishatched_egg(item) )
+		return false;
+	if (pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL))	// no restriction
+		return true;
+	if( !pc_can_give_items(sd) )
+		return false;
+	if( item && (item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) )
 		return false;
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
 }

@@ -4,8 +4,8 @@
 #pragma warning(disable:4800) //forcing value to bool
 #include "int_storage.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/malloc.hpp>
 #include <common/mmo.hpp>
