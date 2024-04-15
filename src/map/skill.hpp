@@ -2785,7 +2785,7 @@ void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
 /**
  * Auto Shadow Spell (Shadow Chaser)
  **/
-int skill_select_menu(map_session_data *sd,uint16 skill_id);
+void skill_select_menu( map_session_data& sd, uint16 skill_id );
 
 int skill_elementalanalysis(map_session_data *sd, int n, uint16 skill_lv, unsigned short *item_list); // Sorcerer Four Elemental Analisys.
 int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.

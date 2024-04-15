@@ -22735,33 +22735,27 @@ void skill_spellbook(map_session_data &sd, t_itemid nameid) {
 	status_zap(&sd.bl, 0, skill_get_sp(skill_id, skill_lv));
 }
 
-int skill_select_menu(map_session_data *sd,uint16 skill_id) {
+void skill_select_menu( map_session_data& sd, uint16 skill_id ){
 	int lv, prob, aslvl = 0;
 	uint16 id, sk_idx = 0;
 
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return 0;
-	}
-
-	if (sd->sc.getSCE(SC_STOP)) {
-		aslvl = sd->sc.getSCE(SC_STOP)->val1;
-		status_change_end(&sd->bl,SC_STOP);
+	if (sd.sc.getSCE(SC_STOP)) {
+		aslvl = sd.sc.getSCE(SC_STOP)->val1;
+		status_change_end(&sd.bl,SC_STOP);
 	}
 
 	if (!skill_id || !(sk_idx = skill_get_index(skill_id)))
-		return 0;
+		return;
 
-	if( !skill_get_inf2(skill_id, INF2_ISAUTOSHADOWSPELL) || (id = sd->status.skill[sk_idx].id) == 0 || sd->status.skill[sk_idx].flag != SKILL_FLAG_PLAGIARIZED ) {
-		clif_skill_fail( *sd, SC_AUTOSHADOWSPELL );
-		return 0;
+	if( !skill_get_inf2(skill_id, INF2_ISAUTOSHADOWSPELL) || (id = sd.status.skill[sk_idx].id) == 0 || sd.status.skill[sk_idx].flag != SKILL_FLAG_PLAGIARIZED ) {
+		clif_skill_fail( sd, SC_AUTOSHADOWSPELL );
+		return;
 	}
 
 	lv = (aslvl + 5) / 2; // The level the skill will be autocasted
-	lv = min(lv,sd->status.skill[sk_idx].lv);
+	lv = min(lv,sd.status.skill[sk_idx].lv);
 	prob = (aslvl >= 10) ? 15 : (30 - 2 * aslvl); // Probability at level 10 was increased to 15.
-	sc_start4(&sd->bl,&sd->bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,aslvl,skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
-	return 0;
+	sc_start4(&sd.bl,&sd.bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,aslvl,skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
 }
 
 int skill_elementalanalysis(map_session_data* sd, int n, uint16 skill_lv, unsigned short* item_list) {

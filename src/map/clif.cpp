@@ -19729,7 +19729,7 @@ void clif_parse_SkillSelectMenu(int fd, map_session_data *sd) {
 			return;
 		}
 
-		skill_select_menu(sd, RFIFOW(fd, info->pos[1]));
+		skill_select_menu(*sd, RFIFOW(fd, info->pos[1]));
 	} else
 		return;
 
