@@ -2775,7 +2775,7 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 /**
  * Mechanic
  **/
-int skill_magicdecoy(map_session_data *sd, t_itemid nameid);
+void skill_magicdecoy( map_session_data& sd, t_itemid nameid );
 
 /**
  * Guiltoine Cross

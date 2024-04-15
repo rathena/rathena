@@ -22632,29 +22632,24 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 	}
 }
 
-int skill_magicdecoy(map_session_data *sd, t_itemid nameid) {
+void skill_magicdecoy( map_session_data& sd, t_itemid nameid ){
 	int x, y, i, class_, skill;
 	struct mob_data *md;
 
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return 0;
-	}
+	skill = sd.menuskill_val;
 
-	skill = sd->menuskill_val;
-
-	if( !nameid || !itemdb_group.item_exists(IG_ELEMENT, nameid) || (i = pc_search_inventory(sd,nameid)) < 0 || !skill || pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
-		clif_skill_fail( *sd, NC_MAGICDECOY );
-		return 0;
+	if( !nameid || !itemdb_group.item_exists(IG_ELEMENT, nameid) || (i = pc_search_inventory(&sd,nameid)) < 0 || !skill || pc_delitem(&sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
+		clif_skill_fail( sd, NC_MAGICDECOY );
+		return;
 	}
 
 	// Spawn Position
-	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
-	x = sd->sc.comet_x;
-	y = sd->sc.comet_y;
-	sd->sc.comet_x = 0;
-	sd->sc.comet_y = 0;
-	sd->menuskill_val = 0;
+	pc_delitem(&sd,i,1,0,0,LOG_TYPE_CONSUME);
+	x = sd.sc.comet_x;
+	y = sd.sc.comet_y;
+	sd.sc.comet_x = 0;
+	sd.sc.comet_y = 0;
+	sd.menuskill_val = 0;
 
 	// Item picked decides the mob class
 	switch(nameid) {
@@ -22663,14 +22658,14 @@ int skill_magicdecoy(map_session_data *sd, t_itemid nameid) {
 		case ITEMID_YELLOW_WISH_PTS:	class_ = MOBID_MAGICDECOY_WIND;		break;
 		case ITEMID_LIME_GREEN_PTS:		class_ = MOBID_MAGICDECOY_EARTH;	break;
 		default:
-			clif_skill_fail( *sd, NC_MAGICDECOY );
-			return 0;
+			clif_skill_fail( sd, NC_MAGICDECOY );
+			return;
 	}
 
-	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, x, y, sd->status.name, class_, "", SZ_SMALL, AI_NONE);
+	md = mob_once_spawn_sub(&sd.bl, sd.bl.m, x, y, sd.status.name, class_, "", SZ_SMALL, AI_NONE);
 	if( md ) {
 		struct unit_data *ud = unit_bl2ud(&md->bl);
-		md->master_id = sd->bl.id;
+		md->master_id = sd.bl.id;
 		md->special_state.ai = AI_FAW;
 		if(ud) {
 			ud->skill_id = NC_MAGICDECOY;
@@ -22681,8 +22676,6 @@ int skill_magicdecoy(map_session_data *sd, t_itemid nameid) {
 		md->deletetimer = add_timer (gettick() + skill_get_time(NC_MAGICDECOY,skill), mob_timer_delete, md->bl.id, 0);
 		mob_spawn(md);
 	}
-
-	return 0;
 }
 
 /**

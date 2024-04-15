@@ -13478,7 +13478,7 @@ void clif_parse_SelectArrow(int fd,map_session_data *sd) {
 			skill_poisoningweapon(*sd,p->itemId);
 			break;
 		case NC_MAGICDECOY:
-			skill_magicdecoy(sd,p->itemId);
+			skill_magicdecoy(*sd,p->itemId);
 			break;
 	}
 
