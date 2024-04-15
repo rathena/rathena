@@ -11449,7 +11449,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				(sd->cloneskill_idx > 0 && sd->status.skill[sd->cloneskill_idx].id) )
 			{
 				sc_start(src,src,SC_STOP,100,skill_lv,INFINITE_TICK);// The skill_lv is stored in val1 used in skill_select_menu to determine the used skill lvl [Xazax]
-				clif_autoshadowspell_list(sd);
+				clif_autoshadowspell_list( *sd );
 				clif_skill_nodamage(src,bl,skill_id,1,1);
 			}
 			else

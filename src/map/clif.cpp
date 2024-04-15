@@ -19635,47 +19635,39 @@ void clif_poison_list( map_session_data& sd, uint16 skill_lv ){
 	}
 }
 
-/// 0442 <Length>.W <count>.L <Skill_list>.W (ZC_SKILL_SELECT_REQUEST).
-int clif_autoshadowspell_list(map_session_data *sd) {
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return 0;
-	}
+/// 0442 <Length>.W <why>.L { <Skill_Id>.W }* (ZC_SKILL_SELECT_REQUEST).
+void clif_autoshadowspell_list( map_session_data& sd ){
+#if PACKETVER >= 20081210
+	if( sd.menuskill_id == SC_AUTOSHADOWSPELL )
+		return;
 
-	int fd, i, c;
+	PACKET_ZC_SKILL_SELECT_REQUEST* p = (PACKET_ZC_SKILL_SELECT_REQUEST*)packet_buffer;
 
-	fd = sd->fd;
-
-	if( !session_isActive(fd) ) 
-		return 0;
-
-	if( sd->menuskill_id == SC_AUTOSHADOWSPELL )
-		return 0;
-
-	WFIFOHEAD(fd, 2 * 6 + 4);
-	WFIFOW(fd,0) = 0x442;
+	p->packetType = HEADER_ZC_SKILL_SELECT_REQUEST;
+	p->packetLength = sizeof( *p );
+	p->why = 1; // enum PACKET_ZC_SKILL_SELECT_REQUEST::enumWHY::WHY_SC_AUTOSHADOWSPELL =  0x1
 	
-	//AEGIS listed the specified skills that available for SC_AUTOSHADOWSPELL
-	for( i = 0, c = 0; i < MAX_SKILL; i++ )
-		if( sd->status.skill[i].flag == SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].id > 0 &&
-			skill_get_inf2(sd->status.skill[i].id, INF2_ISAUTOSHADOWSPELL))
+	size_t count = 0;
+	for( size_t i = 0; i < MAX_SKILL; i++ ){
+		if( sd.status.skill[i].flag == SKILL_FLAG_PLAGIARIZED && sd.status.skill[i].id > 0 &&
+			skill_get_inf2(sd.status.skill[i].id, INF2_ISAUTOSHADOWSPELL))
 		{
-			WFIFOW(fd,8+c*2) = sd->status.skill[i].id;
-			c++;
+			p->skills[count].skill_id = sd.status.skill[i].id;
+			p->packetLength += sizeof( p->skills[0] );
+			count++;
 		}
-
-	if( c > 0 ) {
-		WFIFOW(fd,2) = 8 + c * 2;
-		WFIFOL(fd,4) = c;
-		WFIFOSET(fd,WFIFOW(fd,2));
-		sd->menuskill_id = SC_AUTOSHADOWSPELL;
-		sd->menuskill_val = c;
-	} else {
-		status_change_end(&sd->bl,SC_STOP);
-		clif_skill_fail( *sd, SC_AUTOSHADOWSPELL, USESKILL_FAIL_IMITATION_SKILL_NONE );
 	}
 
-	return 1;
+	if( count > 0 ) {
+		clif_send( p, p->packetLength, &sd.bl, SELF );
+
+		sd.menuskill_id = SC_AUTOSHADOWSPELL;
+		sd.menuskill_val = count;
+	} else {
+		status_change_end( &sd.bl, SC_STOP );
+		clif_skill_fail( sd, SC_AUTOSHADOWSPELL, USESKILL_FAIL_IMITATION_SKILL_NONE );
+	}
+#endif
 }
 
 /*===========================================

@@ -1334,7 +1334,6 @@
 
 // 2008-12-10aSakexe
 #if PACKETVER >= 20081210
-	packet(0x0442,-1);
 	parseable_packet(0x0443,8,clif_parse_SkillSelectMenu,2,6);
 #endif
 
@@ -1412,7 +1411,6 @@
 	packet(0x01a2,37);
 	//packet(0x0440,10);
 	//packet(0x0441,4);
-	//packet(0x0442,8);
 	//packet(0x0443,8);
 #endif
 
