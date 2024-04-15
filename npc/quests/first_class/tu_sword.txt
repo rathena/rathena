@@ -1202,7 +1202,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "There's no way";
 		mes "I can decode it the";
 		mes "way it is now. Let's";
-		.@fullcode$ == implode(.@code$, "");
+		.@fullcode$ = implode(.@code$, "");
 		if(.@fullcode$ == "2013" || .@fullcode$ == "3201") {
 			mes "try... Wait!";
 			next;
