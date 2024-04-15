@@ -1646,7 +1646,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if (sc && sc->getSCE(SC_COMBO) &&
 		skill_is_combo(skill_id) &&
 		(sc->getSCE(SC_COMBO)->val1 == skill_id ||
-		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) )) {
+		(sd?skill_check_condition_castbegin(*sd,skill_id,skill_lv):0) )) {
 		if (skill_is_combo(skill_id) == 2 && target_id == src->id && ud->target > 0)
 			target_id = ud->target;
 		else if (sc->getSCE(SC_COMBO)->val2)
@@ -1848,7 +1848,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				break;
 		}
 
-		if (!skill_check_condition_castbegin(sd, skill_id, skill_lv))
+		if (!skill_check_condition_castbegin(*sd, skill_id, skill_lv))
 			return 0;
 	}
 
@@ -2161,7 +2161,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		return 0;
 
 	if( sd ) {
-		if( skill_isNotOk(skill_id, *sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
+		if( skill_isNotOk(skill_id, *sd) || !skill_check_condition_castbegin(*sd, skill_id, skill_lv) )
 			return 0;
 		if (skill_id == MG_FIREWALL && !skill_pos_maxcount_check(src, skill_x, skill_y, skill_id, skill_lv, BL_PC, true))
 			return 0; // Special check for Firewall only
