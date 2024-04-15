@@ -1488,7 +1488,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					close;
 				}
 			}
-			break;
 		}
 		else {
 			mes "[" + strcharinfo(0) + "]";
@@ -1614,7 +1613,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					close;
 				}
 			}
-			break;
 		}
 	}
 	
