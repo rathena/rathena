@@ -597,7 +597,7 @@ int skill_check_bl_sc(struct block_list *target, va_list ap);
 
 // Skill conditions check and remove [Inkfish]
 bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
-bool skill_check_condition_castend(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
 int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
 void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct s_skill_condition skill_get_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv);

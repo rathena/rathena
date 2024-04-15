@@ -13332,7 +13332,7 @@ TIMER_FUNC(skill_castend_id){
 #endif
 		if( sd )
 		{
-			if( !skill_check_condition_castend(sd, ud->skill_id, ud->skill_lv) )
+			if( !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
 				break;
 			else {
 				skill_consume_requirement(sd,ud->skill_id,ud->skill_lv,1);
@@ -13584,7 +13584,7 @@ TIMER_FUNC(skill_castend_pos){
 
 		if( sd )
 		{
-			if( ud->skill_id != AL_WARP && !skill_check_condition_castend(sd, ud->skill_id, ud->skill_lv) )
+			if( ud->skill_id != AL_WARP && !skill_check_condition_castend(*sd, ud->skill_id, ud->skill_lv) )
 				break;
 			else {
 				skill_consume_requirement(sd, ud->skill_id, ud->skill_lv, 1);
@@ -14836,7 +14836,7 @@ int skill_castend_map (map_session_data *sd, uint16 skill_id, const char *mapnam
 				return 0;
 			}
 
-			if(!skill_check_condition_castend(sd, sd->menuskill_id, lv))
+			if(!skill_check_condition_castend(*sd, sd->menuskill_id, lv))
 			{  // This checks versus skill_id/skill_lv...
 				skill_failed(sd);
 				return 0;
@@ -18393,32 +18393,26 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
  * @param skill_lv Level of used skill
  * @return true: All condition passed, false: Failed
  */
-bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16 skill_lv)
-{
+bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint16 skill_lv ){
 	struct s_skill_condition require;
 	struct status_data *status;
 	int i;
 	short index[MAX_SKILL_ITEM_REQUIRE];
 
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return false;
-	}
-
-	if( sd->chatID )
+	if( sd.chatID )
 		return false;
 
-	if( pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL) && sd->skillitem != skill_id ) {
+	if( pc_has_permission(&sd, PC_PERM_SKILL_UNCONDITIONAL) && sd.skillitem != skill_id ) {
 		//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
-		sd->state.arrow_atk = skill_get_ammotype(skill_id)?1:0; //Need to do arrow state check.
-		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
-		sd->soulball_old = sd->soulball; //Need to do Soulball check.
-		sd->servantball_old = sd->servantball; //Need to do Servantball check.
-		sd->abyssball_old = sd->abyssball; //Need to do Abyssball check.
+		sd.state.arrow_atk = skill_get_ammotype(skill_id)?1:0; //Need to do arrow state check.
+		sd.spiritball_old = sd.spiritball; //Need to do Spiritball check.
+		sd.soulball_old = sd.soulball; //Need to do Soulball check.
+		sd.servantball_old = sd.servantball; //Need to do Servantball check.
+		sd.abyssball_old = sd.abyssball; //Need to do Abyssball check.
 		return true;
 	}
 
-	switch( sd->menuskill_id ) { // Cast start or cast end??
+	switch( sd.menuskill_id ) { // Cast start or cast end??
 		case AM_PHARMACY:
 			switch( skill_id ) {
 				case AM_PHARMACY:
@@ -18436,23 +18430,23 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 		case GN_CHANGEMATERIAL:
 		case MT_M_MACHINE:
 		case BO_BIONIC_PHARMACY:
-			if( sd->menuskill_id != skill_id )
+			if( sd.menuskill_id != skill_id )
 				return false;
 			break;
 	}
 
-	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement ) // Casting finished (Item skill or Hocus-Pocus)
+	if( sd.skillitem == skill_id && !sd.skillitem_keep_requirement ) // Casting finished (Item skill or Hocus-Pocus)
 		return true;
 
-	if( pc_is90overweight(sd) ) {
-		clif_skill_fail( *sd, skill_id, USESKILL_FAIL_WEIGHTOVER );
+	if( pc_is90overweight(&sd) ) {
+		clif_skill_fail( sd, skill_id, USESKILL_FAIL_WEIGHTOVER );
 		return false;
 	}
 
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
 		case PR_BENEDICTIO:
-			skill_check_pc_partner(sd, skill_id, &skill_lv, 1, 1);
+			skill_check_pc_partner(&sd, skill_id, &skill_lv, 1, 1);
 			break;
 		case AM_CANNIBALIZE:
 		case AM_SPHEREMINE: {
@@ -18461,11 +18455,11 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 			int maxcount = (skill_id==AM_CANNIBALIZE)? 6-skill_lv : skill_get_maxcount(skill_id,skill_lv);
 			int mob_class = (skill_id==AM_CANNIBALIZE)? summons[skill_lv-1] :MOBID_MARINE_SPHERE;
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
-				i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill_id, &c);
+				i = map_foreachinmap(skill_check_condition_mob_master_sub, sd.bl.m, BL_MOB, sd.bl.id, mob_class, skill_id, &c);
 				if(c >= maxcount ||
 					(skill_id==AM_CANNIBALIZE && c != i && battle_config.summon_flora&2))
 				{	//Fails when: exceed max limit. There are other plant types already out.
-					clif_skill_fail( *sd, skill_id );
+					clif_skill_fail( sd, skill_id );
 					return false;
 				}
 			}
@@ -18481,11 +18475,11 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 					if( skill_id == NC_MAGICDECOY ) {
 						int j;
 						for( j = mob_class; j <= MOBID_MAGICDECOY_WIND; j++ )
-							map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, j, skill_id, &c);
+							map_foreachinmap(skill_check_condition_mob_master_sub, sd.bl.m, BL_MOB, sd.bl.id, j, skill_id, &c);
 					} else
-						map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill_id, &c);
+						map_foreachinmap(skill_check_condition_mob_master_sub, sd.bl.m, BL_MOB, sd.bl.id, mob_class, skill_id, &c);
 					if( c >= maxcount ) {
-						clif_skill_fail( *sd, skill_id );
+						clif_skill_fail( sd, skill_id );
 						return false;
 					}
 				}
@@ -18494,9 +18488,9 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 		case KO_ZANZOU: {
 				int c = 0;
 
-				i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, MOBID_ZANZOU, skill_id, &c);
+				i = map_foreachinmap(skill_check_condition_mob_master_sub, sd.bl.m, BL_MOB, sd.bl.id, MOBID_ZANZOU, skill_id, &c);
 				if( c >= skill_get_maxcount(skill_id,skill_lv) || c != i) {
-					clif_skill_fail( *sd , skill_id );
+					clif_skill_fail( sd , skill_id );
 					return false;
 				}
 			}
@@ -18509,9 +18503,9 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 			int maxcount = skill_get_maxcount(skill_id, skill_lv), c = 0;
 
 			if (battle_config.land_skill_limit && maxcount > 0 && (battle_config.land_skill_limit & BL_PC)) {
-				map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], skill_id, &c);
+				map_foreachinmap(skill_check_condition_mob_master_sub, sd.bl.m, BL_MOB, sd.bl.id, abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], skill_id, &c);
 				if (c >= maxcount) {
-					clif_skill_fail( *sd, skill_id );
+					clif_skill_fail( sd, skill_id );
 					return false;
 				}
 			}
@@ -18525,9 +18519,9 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 			int maxcount = skill_get_maxcount(skill_id, skill_lv), c = 0;
 
 			if (battle_config.land_skill_limit && maxcount > 0 && (battle_config.land_skill_limit & BL_PC)) {
-				map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, bionics[4 - (BO_HELLTREE - skill_id)], skill_id, &c);
+				map_foreachinmap(skill_check_condition_mob_master_sub, sd.bl.m, BL_MOB, sd.bl.id, bionics[4 - (BO_HELLTREE - skill_id)], skill_id, &c);
 				if (c >= maxcount) {
-					clif_skill_fail( *sd, skill_id );
+					clif_skill_fail( sd, skill_id );
 					return false;
 				}
 			}
@@ -18535,27 +18529,27 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 		}
 #ifdef RENEWAL
 		case ASC_EDP:
-			int16 item_edp = itemdb_group.item_exists_pc(sd, IG_EDP);
+			int16 item_edp = itemdb_group.item_exists_pc(&sd, IG_EDP);
 			if (item_edp < 0) {
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_NEED_ITEM, 1, ITEMID_POISON_BOTTLE ); // [%s] required '%d' amount.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, 1, ITEMID_POISON_BOTTLE ); // [%s] required '%d' amount.
 				return false;
 			} else
-				pc_delitem(sd, item_edp, 1, 0, 1, LOG_TYPE_CONSUME);
+				pc_delitem(&sd, item_edp, 1, 0, 1, LOG_TYPE_CONSUME);
 			break;
 #endif
 	}
 
-	status = &sd->battle_status;
+	status = &sd.battle_status;
 
-	require = skill_get_requirement(sd,skill_id,skill_lv);
+	require = skill_get_requirement(&sd,skill_id,skill_lv);
 
 	if( require.hp > 0 && status->hp <= (unsigned int)require.hp) {
-		clif_skill_fail( *sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT );
+		clif_skill_fail( sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT );
 		return false;
 	}
 
-	if( require.weapon && !pc_check_weapontype(sd,require.weapon) ) {
-		clif_skill_fail( *sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
+	if( require.weapon && !pc_check_weapontype(&sd,require.weapon) ) {
+		clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
 		return false;
 	}
 
@@ -18574,30 +18568,30 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 				break;
 		}
 #endif
-		if((i=sd->equip_index[EQI_AMMO]) < 0 || !sd->inventory_data[i] ) {
-			clif_arrow_fail(sd,0);
+		if((i=sd.equip_index[EQI_AMMO]) < 0 || !sd.inventory_data[i] ) {
+			clif_arrow_fail(&sd,0);
 			return false;
-		} else if( sd->inventory.u.items_inventory[i].amount < require.ammo_qty + extra_ammo ) {
+		} else if( sd.inventory.u.items_inventory[i].amount < require.ammo_qty + extra_ammo ) {
 			char e_msg[100];
 			if (require.ammo&(1<<AMMO_BULLET|1<<AMMO_GRENADE|1<<AMMO_SHELL)) {
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_NEED_MORE_BULLET );
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_MORE_BULLET );
 				return false;
 			}
 			else if (require.ammo&(1<<AMMO_KUNAI)) {
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_NEED_EQUIPMENT_KUNAI );
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_EQUIPMENT_KUNAI );
 				return false;
 			}
-			sprintf(e_msg,msg_txt(sd,381), //Skill Failed. [%s] requires %dx %s.
+			sprintf(e_msg,msg_txt(&sd,381), //Skill Failed. [%s] requires %dx %s.
 						skill_get_desc(skill_id),
 						require.ammo_qty,
-						itemdb_ename(sd->inventory.u.items_inventory[i].nameid));
-			clif_messagecolor(&sd->bl,color_table[COLOR_RED],e_msg,false,SELF);
+						itemdb_ename(sd.inventory.u.items_inventory[i].nameid));
+			clif_messagecolor(&sd.bl,color_table[COLOR_RED],e_msg,false,SELF);
 			return false;
 		}
-		if (!(require.ammo&1<<sd->inventory_data[i]->subtype)) { //Ammo type check. Send the "wrong weapon type" message
+		if (!(require.ammo&1<<sd.inventory_data[i]->subtype)) { //Ammo type check. Send the "wrong weapon type" message
 			//which is the closest we have to wrong ammo type. [Skotlex]
-			clif_arrow_fail(sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
-			//clif_skill_fail( *sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
+			clif_arrow_fail(&sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
+			//clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
 			return false;
 		}
 	}
@@ -18605,20 +18599,20 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i ) {
 		if( !require.itemid[i] )
 			continue;
-		index[i] = pc_search_inventory(sd,require.itemid[i]);
-		if( index[i] < 0 || sd->inventory.u.items_inventory[index[i]].amount < require.amount[i] ) {
+		index[i] = pc_search_inventory(&sd,require.itemid[i]);
+		if( index[i] < 0 || sd.inventory.u.items_inventory[index[i]].amount < require.amount[i] ) {
 			if( require.itemid[i] == ITEMID_HOLY_WATER )
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_HOLYWATER ); //Holy water is required.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_HOLYWATER ); //Holy water is required.
 			else if( require.itemid[i] == ITEMID_RED_GEMSTONE )
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_REDJAMSTONE ); //Red gemstone is required.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_REDJAMSTONE ); //Red gemstone is required.
 			else if( require.itemid[i] == ITEMID_BLUE_GEMSTONE )
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_BLUEJAMSTONE ); //Blue gemstone is required.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_BLUEJAMSTONE ); //Blue gemstone is required.
 			else if( require.itemid[i] == ITEMID_PAINT_BRUSH )
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_PAINTBRUSH ); //Paint brush is required.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_PAINTBRUSH ); //Paint brush is required.
 			else if( require.itemid[i] == ITEMID_ANCILLA )
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_ANCILLA ); //Ancilla is required.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_ANCILLA ); //Ancilla is required.
 			else
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_NEED_ITEM, require.amount[i], require.itemid[i] ); // [%s] required '%d' amount.
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, require.amount[i], require.itemid[i] ); // [%s] required '%d' amount.
 			return false;
 		}
 	}
@@ -18627,7 +18621,7 @@ bool skill_check_condition_castend(map_session_data* sd, uint16 skill_id, uint16
 	if (!require.status.empty()) {
 		switch (skill_id) {
 			case WZ_SIGHTRASHER:
-				if (!skill_check_condition_sc_required(*sd, skill_id, require))
+				if (!skill_check_condition_sc_required(sd, skill_id, require))
 					return false;
 				break;
 			default:
