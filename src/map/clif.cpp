@@ -19806,7 +19806,7 @@ static void clif_favorite_item( map_session_data& sd, uint16 index ){
 
 	p.packetType = HEADER_ZC_INVENTORY_TAB;
 	p.index = client_index( index );
-	p.favorite = ( sd.inventory.u.items_inventory[index].favorite == true ) ? false : true;
+	p.favorite = ( sd.inventory.u.items_inventory[index].favorite == 1 ) ? false : true;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
