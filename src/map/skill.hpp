@@ -610,7 +610,7 @@ void skill_unit_move_unit_group( std::shared_ptr<s_skill_unit_group> group, int1
 void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 
 int skill_sit(map_session_data *sd, bool sitting);
-void skill_repairweapon(map_session_data *sd, int idx);
+void skill_repairweapon( map_session_data& sd, int idx );
 void skill_identify(map_session_data *sd,int idx);
 void skill_weaponrefine(map_session_data *sd,int idx); // [Celest]
 int skill_autospell(map_session_data *md,uint16 skill_id);

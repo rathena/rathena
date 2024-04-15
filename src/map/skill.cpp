@@ -19532,7 +19532,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 /*==========================================
  * Weapon Repair [Celest/DracoRPG]
  *------------------------------------------*/
-void skill_repairweapon(map_session_data *sd, int idx) {
+void skill_repairweapon( map_session_data& sd, int idx ){
 	static const t_itemid weapon_materials[MAX_WEAPON_LEVEL] = {
 		ITEMID_IRON_ORE,
 		ITEMID_IRON,
@@ -19552,12 +19552,7 @@ void skill_repairweapon(map_session_data *sd, int idx) {
 	struct item *item;
 	map_session_data *target_sd;
 
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return;
-	}
-
-	if ( !( target_sd = map_id2sd(sd->menuskill_val) ) ) //Failed....
+	if ( !( target_sd = map_id2sd(sd.menuskill_val) ) ) //Failed....
 		return;
 
 	if( idx == 0xFFFF ) // No item selected ('Cancel' clicked)
@@ -19572,8 +19567,8 @@ void skill_repairweapon(map_session_data *sd, int idx) {
 	if (itemdb_ishatched_egg(item))
 		return;
 
-	if (sd != target_sd && !battle_check_range(&sd->bl, &target_sd->bl, skill_get_range2(&sd->bl, sd->menuskill_id, sd->menuskill_val2, true))) {
-		clif_item_repaireffect(sd, idx, 1);
+	if (sd.status.char_id != target_sd->status.char_id && !battle_check_range(&sd.bl, &target_sd->bl, skill_get_range2(&sd.bl, sd.menuskill_id, sd.menuskill_val2, true))) {
+		clif_item_repaireffect(&sd, idx, 1);
 		return;
 	}
 
@@ -19583,22 +19578,22 @@ void skill_repairweapon(map_session_data *sd, int idx) {
 		material = armor_materials[target_sd->inventory_data[idx]->armor_level - 1];
 	}
 
-	if( material == 0 || pc_search_inventory( sd, material ) < 0 ){
-		clif_skill_fail( *sd, sd->menuskill_id );
+	if( material == 0 || pc_search_inventory( &sd, material ) < 0 ){
+		clif_skill_fail( sd, sd.menuskill_id );
 		return;
 	}
 
-	clif_skill_nodamage(&sd->bl,&target_sd->bl,sd->menuskill_id,1,1);
+	clif_skill_nodamage(&sd.bl,&target_sd->bl,sd.menuskill_id,1,1);
 
 	item->attribute = 0;/* clear broken state */
 
 	clif_equiplist(target_sd);
 
-	pc_delitem(sd,pc_search_inventory(sd,material),1,0,0,LOG_TYPE_CONSUME);
+	pc_delitem(&sd,pc_search_inventory(&sd,material),1,0,0,LOG_TYPE_CONSUME);
 
-	clif_item_repaireffect(sd,idx,0);
+	clif_item_repaireffect(&sd,idx,0);
 
-	if( sd != target_sd )
+	if( sd.status.char_id != target_sd->status.char_id )
 		clif_item_repaireffect(target_sd,idx,0);
 }
 

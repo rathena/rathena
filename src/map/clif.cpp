@@ -13296,7 +13296,7 @@ void clif_parse_RepairItem( int fd, map_session_data *sd ){
 		clif_menuskill_clear(sd);
 		return;
 	}
-	skill_repairweapon( sd, p->item.index );
+	skill_repairweapon( *sd, p->item.index );
 	clif_menuskill_clear(sd);
 }
 
