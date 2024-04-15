@@ -18942,6 +18942,10 @@ void clif_parse_LessEffect(int fd, map_session_data* sd){
 
 /// 07e4 <length>.w <option>.l <val>.l {<index>.w <amount>.w).4b* (CZ_ITEMLISTWIN_RES)
 void clif_parse_ItemListWindowSelected(int fd, map_session_data* sd) {
+	if( sd == nullptr ){
+		return;
+	}
+
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	int n = (RFIFOW(fd,info->pos[0])-12) / 4;
 	int type = RFIFOL(fd,info->pos[1]);
@@ -18967,7 +18971,7 @@ void clif_parse_ItemListWindowSelected(int fd, map_session_data* sd) {
 			break;
 		case 1:	// Level 1: Pure to Rough
 		case 2:	// Level 2: Rough to Pure
-			skill_elementalanalysis(sd,n,type,item_list);
+			skill_elementalanalysis(*sd,n,type,item_list);
 			break;
 	}
 	clif_menuskill_clear(sd);

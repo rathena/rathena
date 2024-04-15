@@ -22758,12 +22758,7 @@ void skill_select_menu( map_session_data& sd, uint16 skill_id ){
 	sc_start4(&sd.bl,&sd.bl,SC__AUTOSHADOWSPELL,100,id,lv,prob,aslvl,skill_get_time(SC_AUTOSHADOWSPELL,aslvl));
 }
 
-int skill_elementalanalysis(map_session_data* sd, int n, uint16 skill_lv, unsigned short* item_list) {
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return 0;
-	}
-
+int skill_elementalanalysis( map_session_data& sd, int n, uint16 skill_lv, unsigned short* item_list ){
 	nullpo_ret(item_list);
 
 	if( n <= 0 )
@@ -22786,8 +22781,8 @@ int skill_elementalanalysis(map_session_data* sd, int n, uint16 skill_lv, unsign
 			del_amount -= (del_amount % 10);
 		add_amount = (skill_lv == 1) ? del_amount * (5 + rnd()%5) : del_amount / 10 ;
 
-		if( (nameid = sd->inventory.u.items_inventory[idx].nameid) <= 0 || del_amount > sd->inventory.u.items_inventory[idx].amount ) {
-			clif_skill_fail( *sd, SO_EL_ANALYSIS );
+		if( (nameid = sd.inventory.u.items_inventory[idx].nameid) <= 0 || del_amount > sd.inventory.u.items_inventory[idx].amount ) {
+			clif_skill_fail( sd, SO_EL_ANALYSIS );
 			return 1;
 		}
 
@@ -22803,17 +22798,17 @@ int skill_elementalanalysis(map_session_data* sd, int n, uint16 skill_lv, unsign
 			case ITEMID_WIND_OF_VERDURE:	product = ITEMID_ROUGH_WIND;		break;
 			case ITEMID_YELLOW_LIVE:		product = ITEMID_GREAT_NATURE;		break;
 			default:
-				clif_skill_fail( *sd, SO_EL_ANALYSIS );
+				clif_skill_fail( sd, SO_EL_ANALYSIS );
 				return 1;
 		}
 
-		if( pc_delitem(sd,idx,del_amount,0,1,LOG_TYPE_CONSUME) ) {
-			clif_skill_fail( *sd, SO_EL_ANALYSIS );
+		if( pc_delitem(&sd,idx,del_amount,0,1,LOG_TYPE_CONSUME) ) {
+			clif_skill_fail( sd, SO_EL_ANALYSIS );
 			return 1;
 		}
 
 		if( skill_lv == 2 && rnd()%100 < 25 ) {	// At level 2 have a fail chance. You loose your items if it fails.
-			clif_skill_fail( *sd, SO_EL_ANALYSIS );
+			clif_skill_fail( sd, SO_EL_ANALYSIS );
 			return 1;
 		}
 
@@ -22823,10 +22818,10 @@ int skill_elementalanalysis(map_session_data* sd, int n, uint16 skill_lv, unsign
 		tmp_item.identify = 1;
 
 		if( tmp_item.amount ) {
-			unsigned char flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
+			unsigned char flag = pc_additem(&sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
 			if( flag != 0 ) {
-				clif_additem(sd,0,0,flag);
-				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				clif_additem(&sd,0,0,flag);
+				map_addflooritem(&tmp_item,tmp_item.amount,sd.bl.m,sd.bl.x,sd.bl.y,0,0,0,0,0);
 			}
 		}
 

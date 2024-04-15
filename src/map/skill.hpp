@@ -2787,7 +2787,7 @@ void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
  **/
 void skill_select_menu( map_session_data& sd, uint16 skill_id );
 
-int skill_elementalanalysis(map_session_data *sd, int n, uint16 skill_lv, unsigned short *item_list); // Sorcerer Four Elemental Analisys.
+int skill_elementalanalysis( map_session_data& sd, int n, uint16 skill_lv, unsigned short *item_list ); // Sorcerer Four Elemental Analisys.
 int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
