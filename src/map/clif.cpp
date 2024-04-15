@@ -12844,7 +12844,7 @@ static void clif_parse_UseSkillToId_mercenary(s_mercenary_data *md, map_session_
 
 	if( !md )
 		return;
-	if( skill_isNotOk_mercenary(skill_id, md) )
+	if( skill_isNotOk_mercenary(skill_id, *md) )
 		return;
 	if( md->bl.id != target_id && skill_get_inf(skill_id)&INF_SELF_SKILL )
 		target_id = md->bl.id;
@@ -12867,7 +12867,7 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 	int lv;
 	if( !md )
 		return;
-	if( skill_isNotOk_mercenary(skill_id, md) )
+	if( skill_isNotOk_mercenary(skill_id, *md) )
 		return;
 	if( md->ud.skilltimer != INVALID_TIMER )
 		return;
@@ -12892,6 +12892,10 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 }
 
 void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id ){
+	if( sd == nullptr ){
+		return;
+	}
+
 	t_tick tick = gettick();
 
 	if( skill_lv < 1 ) skill_lv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
@@ -12942,7 +12946,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 	if( pc_issit(sd) )
 		return;
 
-	if( skill_isNotOk(skill_id, sd) )
+	if( skill_isNotOk(skill_id, *sd) )
 		return;
 
 	if( sd->bl.id != target_id && inf&INF_SELF_SKILL )
@@ -13055,7 +13059,7 @@ static void clif_parse_UseSkillToPosSub( int fd, map_session_data& sd, uint16 sk
 	if (battle_config.mer_idle_no_share && sd.md && battle_config.idletime_mer_option&IDLE_USESKILLTOPOS)
 		sd.idletime_mer = last_tick;
 
-	if( skill_isNotOk(skill_id, &sd) )
+	if( skill_isNotOk(skill_id, sd) )
 		return;
 	if( skillmoreinfo != -1 ) {
 		if( pc_issit(&sd) ) {

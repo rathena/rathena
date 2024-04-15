@@ -830,36 +830,30 @@ int8 skill_isCopyable(map_session_data *sd, uint16 skill_id) {
  * @return true: Skill cannot be used, false: otherwise
  * @author [MouseJstr]
  */
-bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
-{
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return true;
-	}
-
-	if (pc_has_permission(sd,PC_PERM_SKILL_UNCONDITIONAL))
+bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
+	if (pc_has_permission(&sd,PC_PERM_SKILL_UNCONDITIONAL))
 		return false; // can do any damn thing they want
 
-	if (skill_id == AL_TELEPORT && sd->skillitem == skill_id && sd->skillitemlv > 2)
+	if (skill_id == AL_TELEPORT && sd.skillitem == skill_id && sd.skillitemlv > 2)
 		return false; // Teleport lv 3 bypasses this check.[Inkfish]
 
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	struct map_data *mapdata = map_getmapdata(sd.bl.m);
 
-	if (mapdata->getMapFlag(MF_NOSKILL) && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
+	if (mapdata->getMapFlag(MF_NOSKILL) && skill_id != ALL_EQSWITCH && !sd.skillitem) //Item skills bypass noskill
 		return true;
 
 	// Epoque:
 	// This code will compare the player's attack motion value which is influenced by ASPD before
 	// allowing a skill to be cast. This is to prevent no-delay ACT files from spamming skills such as
 	// AC_DOUBLE which do not have a skill delay and are not regarded in terms of attack motion.
-	if (!sd->state.autocast && sd->skillitem != skill_id && sd->canskill_tick &&
-		DIFF_TICK(gettick(),sd->canskill_tick) < (sd->battle_status.amotion * (battle_config.skill_amotion_leniency) / 100))
+	if (!sd.state.autocast && sd.skillitem != skill_id && sd.canskill_tick &&
+		DIFF_TICK(gettick(),sd.canskill_tick) < (sd.battle_status.amotion * (battle_config.skill_amotion_leniency) / 100))
 	{// attempted to cast a skill before the attack motion has finished
 		return true;
 	}
 
-	if (skill_blockpc_get(sd, skill_id) != -1){
-		clif_skill_fail( *sd, skill_id, USESKILL_FAIL_SKILLINTERVAL );
+	if (skill_blockpc_get(&sd, skill_id) != -1){
+		clif_skill_fail( sd, skill_id, USESKILL_FAIL_SKILLINTERVAL );
 		return true;
 	}
 
@@ -867,7 +861,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all mapflag restrictions
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
 	 */
-	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement && !sd->state.abra_flag)
+	if( sd.skillitem == skill_id && !sd.skillitem_keep_requirement && !sd.state.abra_flag)
 		return false;
 
 	uint32 skill_nocast = skill_get_nocast(skill_id);
@@ -878,11 +872,11 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		(skill_nocast&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
 		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
 		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) ){
-			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
+			clif_msg(&sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
 
-	if( sd->sc.getSCE(SC_ALL_RIDING) )
+	if( sd.sc.getSCE(SC_ALL_RIDING) )
 		return true; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
 	switch (skill_id) {
@@ -895,7 +889,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case ALL_THANATOS_RECALL:
 		case ALL_LIGHTHALZEN_RECALL:
 			if(mapdata->getMapFlag(MF_NOWARP)) {
-				clif_skill_teleportmessage(sd,0);
+				clif_skill_teleportmessage(&sd,0);
 				return true;
 			}
 			return false;
@@ -905,7 +899,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
 			if(mapdata->getMapFlag(MF_NOTELEPORT)) {
-				clif_skill_teleportmessage(sd,0);
+				clif_skill_teleportmessage(&sd,0);
 				return true;
 			}
 			return false; // gonna be checked in 'skill_castend_nodamage_id'
@@ -913,47 +907,47 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
 			if (mapdata->getMapFlag(MF_NOMEMO)) {
-				clif_skill_teleportmessage(sd,1);
+				clif_skill_teleportmessage(&sd,1);
 				return true;
 			}
 			break;
 		case MC_VENDING:
-			if (map_getmapflag(sd->bl.m, MF_NOVENDING)) {
-				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
-				clif_skill_fail( *sd, skill_id );
+			if (map_getmapflag(sd.bl.m, MF_NOVENDING)) {
+				clif_displaymessage(sd.fd, msg_txt(&sd, 276)); // "You can't open a shop on this map"
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
-			if (map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING)) {
-				clif_displaymessage(sd->fd, msg_txt(sd, 204)); // "You can't open a shop on this cell."
-				clif_skill_fail( *sd, skill_id );
+			if (map_getcell(sd.bl.m, sd.bl.x, sd.bl.y, CELL_CHKNOVENDING)) {
+				clif_displaymessage(sd.fd, msg_txt(&sd, 204)); // "You can't open a shop on this cell."
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
-			if (npc_isnear(&sd->bl)) {
+			if (npc_isnear(&sd.bl)) {
 				// uncomment to send msg_txt.
 				//char output[150];
 				//sprintf(output, msg_txt(662), battle_config.min_npc_vendchat_distance);
-				//clif_displaymessage(sd->fd, output);
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_THERE_ARE_NPC_AROUND );
+				//clif_displaymessage(sd.fd, output);
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_THERE_ARE_NPC_AROUND );
 				return true;
 			}
 			break;
 		case ALL_BUYING_STORE:
-			if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) ) {
-				clif_displaymessage (sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
-				clif_skill_fail( *sd, skill_id );
+			if( map_getmapflag(sd.bl.m, MF_NOBUYINGSTORE) ) {
+				clif_displaymessage (sd.fd, msg_txt(&sd,276)); // "You can't open a shop on this map"
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
-			if( map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNOBUYINGSTORE) ) {
-				clif_displaymessage (sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
-				clif_skill_fail( *sd, skill_id );
+			if( map_getcell(sd.bl.m,sd.bl.x,sd.bl.y,CELL_CHKNOBUYINGSTORE) ) {
+				clif_displaymessage (sd.fd, msg_txt(&sd,204)); // "You can't open a shop on this cell."
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
-			if( npc_isnear(&sd->bl) ) {
+			if( npc_isnear(&sd.bl) ) {
 				// uncomment to send msg_txt.
 				//char output[150];
 				//sprintf(output, msg_txt(662), battle_config.min_npc_vendchat_distance);
-				//clif_displaymessage(sd->fd, output);
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_THERE_ARE_NPC_AROUND );
+				//clif_displaymessage(sd.fd, output);
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_THERE_ARE_NPC_AROUND );
 				return true;
 			}
 			break;
@@ -962,13 +956,13 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]
 			if (mapdata->getMapFlag(MF_NOICEWALL)) {
-				clif_skill_fail( *sd, skill_id );
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
 			break;
 		case GC_DARKILLUSION:
 			if( mapdata_flag_gvg2(mapdata) ) {
-				clif_skill_fail( *sd, skill_id );
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
 			break;
@@ -979,7 +973,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 				!(battle_config.emergency_call&(mapdata_flag_gvg2(mapdata)?8:4)) ||
 				(battle_config.emergency_call&16 && mapdata->getMapFlag(MF_NOWARPTO) && !(mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE)))
 			)	{
-				clif_skill_fail( *sd, skill_id );
+				clif_skill_fail( sd, skill_id );
 				return true;
 			}
 			break;
@@ -989,7 +983,7 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
 		case WM_GLOOMYDAY:
 		case WM_SATURDAY_NIGHT_FEVER:
 			if( !mapdata_flag_vs(mapdata) ) {
-				clif_skill_teleportmessage(sd,2); // This skill uses this msg instead of skill fails.
+				clif_skill_teleportmessage(&sd,2); // This skill uses this msg instead of skill fails.
 				return true;
 			}
 			break;
@@ -1008,21 +1002,17 @@ bool skill_isNotOk(uint16 skill_id, map_session_data *sd)
  */
 bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 {
-	map_session_data *sd = NULL;
-	status_change *sc;
-	int8 spiritball = 0;
-
 	nullpo_retr(true, hd);
 
-	spiritball = skill_get_spiritball(skill_id, skill_lv);
-	sd = hd->master;
-	sc = status_get_sc(&hd->bl);
+	int8 spiritball = skill_get_spiritball(skill_id, skill_lv);
+	map_session_data* sd = hd->master;
+	status_change* sc = status_get_sc(&hd->bl);
 
 	if (!sd)
 		return true;
 
 	if (sc && !sc->count)
-		sc = NULL;
+		sc = nullptr;
 
 	if (util::vector_exists(hd->blockskill, skill_id))
 		return true;
@@ -1119,7 +1109,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 	}
 
 	//Use master's criteria.
-	return skill_isNotOk(skill_id, hd->master);
+	return skill_isNotOk( skill_id, *sd );
 }
 
 /**
@@ -1129,14 +1119,15 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
  * @param md: Mercenary who casted
  * @return true: Skill cannot be used, false: otherwise
  */
-bool skill_isNotOk_mercenary(uint16 skill_id, s_mercenary_data *md)
-{
-	nullpo_retr(1, md);
-
-	if (util::vector_exists(md->blockskill, skill_id))
+bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md ){
+	if (util::vector_exists(md.blockskill, skill_id))
 		return true;
 
-	return skill_isNotOk(skill_id, md->master);
+	if( md.master != nullptr ){
+		return skill_isNotOk( skill_id, *md.master );
+	}else{
+		return true;
+	}
 }
 
 /**
@@ -2336,7 +2327,7 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 			int skill = it.id;
 
 			sd->state.autocast = 1;
-			if ( skill_isNotOk(skill, sd) ) {
+			if ( skill_isNotOk(skill, *sd) ) {
 				sd->state.autocast = 0;
 				continue;
 			}
@@ -2472,7 +2463,7 @@ int skill_onskillusage(map_session_data *sd, struct block_list *bl, uint16 skill
 
 		sd->state.autocast = 1; //set this to bypass sd->canskill_tick check
 
-		if( skill_isNotOk(skill, sd) ) {
+		if( skill_isNotOk(skill, *sd) ) {
 			sd->state.autocast = 0;
 			continue;
 		}
@@ -2721,7 +2712,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				 autospl_rate /= 2;
 
 			dstsd->state.autocast = 1;
-			if ( skill_isNotOk(autospl_skill_id, dstsd) ) {
+			if ( skill_isNotOk(autospl_skill_id, *dstsd) ) {
 				dstsd->state.autocast = 0;
 				continue;
 			}
@@ -13448,7 +13439,7 @@ TIMER_FUNC(skill_castend_id){
 		else
 			skill_castend_damage_id(src,target,ud->skill_id,ud->skill_lv,tick,flag);
 
-		if( sd && sd->skill_keep_using.tid == INVALID_TIMER && sd->skill_keep_using.skill_id > 0 && sd->skill_keep_using.skill_id == ud->skill_id && !skill_isNotOk(ud->skill_id, sd) && skill_check_condition_castbegin(sd, ud->skill_id, ud->skill_lv) ){
+		if( sd && sd->skill_keep_using.tid == INVALID_TIMER && sd->skill_keep_using.skill_id > 0 && sd->skill_keep_using.skill_id == ud->skill_id && !skill_isNotOk(ud->skill_id, *sd) && skill_check_condition_castbegin(sd, ud->skill_id, ud->skill_lv) ){
 			sd->skill_keep_using.tid = add_timer( sd->ud.canact_tick + 100, skill_keep_using, sd->bl.id, 0 );
 		}
 

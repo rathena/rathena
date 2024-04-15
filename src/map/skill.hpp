@@ -621,9 +621,9 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 int8 skill_isCopyable(map_session_data *sd, uint16 skill_id);
 
 // Abnormal status
-bool skill_isNotOk(uint16 skill_id, map_session_data *sd);
+bool skill_isNotOk( uint16 skill_id, map_session_data& sd );
 bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv);
-bool skill_isNotOk_mercenary(uint16 skill_id, s_mercenary_data *md);
+bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
