@@ -7243,56 +7243,33 @@ void clif_item_identified(map_session_data *sd,int idx,int flag)
 
 /// Presents a list of items that can be repaired.
 /// 01fc <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }* (ZC_REPAIRITEMLIST)
-void clif_item_repair_list( map_session_data *sd,map_session_data *dstsd, int lv ){
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return;
-	}
+void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint16 lv ){
+	PACKET_ZC_REPAIRITEMLIST* p = (PACKET_ZC_REPAIRITEMLIST*)packet_buffer;
 
-	// TODO: Change dstsd to reference
-	if( dstsd == nullptr ){
-		return;
-	}
+	p->packetType = HEADER_ZC_REPAIRITEMLIST;
+	p->packetLength = sizeof( *p );
 
-	int fd = sd->fd;
+	size_t c = 0;
 
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	int len = MAX_INVENTORY * sizeof( struct REPAIRITEM_INFO ) + sizeof( struct PACKET_ZC_REPAIRITEMLIST );
-
-	// Preallocate the maximum size
-	WFIFOHEAD( fd, len );
-
-	struct PACKET_ZC_REPAIRITEMLIST *p = (struct PACKET_ZC_REPAIRITEMLIST *)WFIFOP( fd, 0 );
-
-	int c = 0;
-
-	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		if( dstsd->inventory.u.items_inventory[i].nameid > 0 && dstsd->inventory.u.items_inventory[i].attribute != 0 && !itemdb_ishatched_egg( &dstsd->inventory.u.items_inventory[i] ) ){ // && skill_can_repair(sd,nameid)){
-			p->items[c].index = i;
-			p->items[c].itemId = client_nameid( dstsd->inventory.u.items_inventory[i].nameid );
-			p->items[c].refine = dstsd->inventory.u.items_inventory[i].refine;
-			clif_addcards( &p->items[c].slot, &dstsd->inventory.u.items_inventory[i] );
+	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+		if( dstsd.inventory.u.items_inventory[i].nameid > 0 && dstsd.inventory.u.items_inventory[i].attribute != 0 && !itemdb_ishatched_egg( &dstsd.inventory.u.items_inventory[i] ) ){ // && skill_can_repair(sd,nameid)){
+			p->items[c].index = static_cast<decltype( p->items[0].index )>( i );
+			p->items[c].itemId = client_nameid( dstsd.inventory.u.items_inventory[i].nameid );
+			p->items[c].refine = dstsd.inventory.u.items_inventory[i].refine;
+			clif_addcards( &p->items[c].slot, &dstsd.inventory.u.items_inventory[i] );
+			p->packetLength += sizeof( p->items[0] );
 			c++;
 		}
 	}
 
 	if( c > 0 ){
-		p->packetType = HEADER_ZC_REPAIRITEMLIST;
+		clif_send( p, p->packetLength, &sd.bl, SELF );
 
-		// Recalculate real length
-		len = c * sizeof( struct REPAIRITEM_INFO ) + sizeof( struct PACKET_ZC_REPAIRITEMLIST );
-		p->packetLength = len;
-
-		WFIFOSET( fd, len );
-
-		sd->menuskill_id = BS_REPAIRWEAPON;
-		sd->menuskill_val = dstsd->bl.id;
-		sd->menuskill_val2 = lv;
+		sd.menuskill_id = BS_REPAIRWEAPON;
+		sd.menuskill_val = dstsd.bl.id;
+		sd.menuskill_val2 = lv;
 	}else{
-		clif_skill_fail( *sd, sd->ud.skill_id );
+		clif_skill_fail( sd, sd.ud.skill_id );
 	}
 }
 

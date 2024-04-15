@@ -9290,7 +9290,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case BS_REPAIRWEAPON:
 		if(sd && dstsd)
-			clif_item_repair_list(sd,dstsd,skill_lv);
+			clif_item_repair_list( *sd, *dstsd, skill_lv );
 		break;
 
 	case MC_IDENTIFY:
