@@ -9700,7 +9700,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			short index = sd->equip_index[EQI_AMMO];
 			if (index < 0) {
 				if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
-					clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+					clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
 				else
 					clif_arrow_fail(sd,0);
 				return ATK_NONE;
@@ -9719,7 +9719,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					case W_GATLING:
 					case W_SHOTGUN:
 						if (sd->inventory_data[index]->subtype != AMMO_BULLET) {
-							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+							clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
 							return ATK_NONE;
 						}
 						break;
@@ -9730,7 +9730,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 #else
 							AMMO_GRENADE) {
 #endif
-							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+							clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
 							return ATK_NONE;
 						}
 						break;
@@ -10065,7 +10065,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					}
 
 					if( type != CAST_GROUND ){
-						clif_skill_fail(sd,r_skill,USESKILL_FAIL_LEVEL,0);
+						clif_skill_fail( *sd, r_skill );
 						map_freeblock_unlock();
 						return wd.dmg_lv;
 					}

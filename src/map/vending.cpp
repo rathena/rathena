@@ -301,8 +301,11 @@ int8 vending_openvending(map_session_data* sd, const char* message, const uint8*
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
-	
-	nullpo_retr(false,sd);
+
+	// TODO: Change sd to reference
+	if( sd == nullptr ){
+		return 0;
+	}
 
 	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd)) {
 		return 1; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
@@ -312,13 +315,13 @@ int8 vending_openvending(map_session_data* sd, const char* message, const uint8*
 	
 	// skill level and cart check
 	if( !vending_skill_lvl || !pc_iscarton(sd) ) {
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+		clif_skill_fail( *sd, MC_VENDING );
 		return 2;
 	}
 
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl ) { // invalid item count
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+		clif_skill_fail( *sd, MC_VENDING );
 		return 3;
 	}
 
@@ -352,12 +355,12 @@ int8 vending_openvending(map_session_data* sd, const char* message, const uint8*
 
 	if (i != j) {
 		clif_displaymessage(sd->fd, msg_txt(sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
+		clif_skill_fail( *sd, MC_VENDING ); // custom reply packet
 		return 5;
 	}
 
 	if( i == 0 ) { // no valid item found
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
+		clif_skill_fail( *sd, MC_VENDING ); // custom reply packet
 		return 5;
 	}
 
