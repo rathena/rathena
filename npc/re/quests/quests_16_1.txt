@@ -4629,7 +4629,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16wal	4_M_1STPRIN1,{
 		mes "Adventurer, how did your meeting with the Guardian Knight in Alberta go? Not that I expect too much...";
 		next;
 		mes "[Isenhonor]";
-		mes "However, still, I have hoped to hear a good news from you...";
+		mes "However, still, I have hoped to hear good news from you...";
 		close;
 	}
 	if (ep16_wal == 6) {

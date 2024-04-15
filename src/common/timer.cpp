@@ -3,13 +3,9 @@
 
 #include "timer.hpp"
 
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef WIN32
-#include "winapi.hpp" // GetTickCount()
-#else
-#endif
+#include <cstdlib>
+#include <cstring>
+#include <utility>
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
@@ -17,6 +13,9 @@
 #include "nullpo.hpp"
 #include "showmsg.hpp"
 #include "utils.hpp"
+#ifdef WIN32
+#include "winapi.hpp" // GetTickCount()
+#endif
 
 // If the server can't handle processing thousands of monsters
 // or many connected clients, please increase TIMER_MIN_INTERVAL.
@@ -203,7 +202,7 @@ t_tick gettick(void)
 static void push_timer_heap(int tid)
 {
 	BHEAP_ENSURE(timer_heap, 1, 256);
-	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, SWAP);
+	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP);
 }
 
 /*==========================
@@ -340,9 +339,9 @@ t_tick settick_timer(int tid, t_tick tick)
 		return tick;// nothing to do, already in propper position
 
 	// pop and push adjusted timer
-	BHEAP_POPINDEX(timer_heap, i, DIFFTICK_MINTOPCMP, SWAP);
+	BHEAP_POPINDEX(timer_heap, i, DIFFTICK_MINTOPCMP);
 	timer_data[tid].tick = tick;
-	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, SWAP);
+	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP);
 	return tick;
 }
 
@@ -362,7 +361,7 @@ t_tick do_timer(t_tick tick)
 			break; // no more expired timers to process
 
 		// remove timer
-		BHEAP_POP(timer_heap, DIFFTICK_MINTOPCMP, SWAP);
+		BHEAP_POP(timer_heap, DIFFTICK_MINTOPCMP);
 		timer_data[tid].type |= TIMER_REMOVE_HEAP;
 
 		if( timer_data[tid].func )

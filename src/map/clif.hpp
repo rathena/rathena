@@ -4,9 +4,8 @@
 #ifndef CLIF_HPP
 #define CLIF_HPP
 
+#include <cstdarg>
 #include <vector>
-
-#include <stdarg.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp> //dbmap
@@ -760,7 +759,7 @@ void clif_skillunit_update(struct block_list* bl);
 
 void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv);
 
-void clif_autospell(map_session_data *sd,uint16 skill_lv);
+void clif_autospell( map_session_data& sd, uint16 skill_lv );
 void clif_devotion(struct block_list *src, map_session_data *tsd);
 void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_soulball( map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
@@ -965,7 +964,6 @@ void clif_hom_food(map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(map_session_data *sd, int state, int param);	//[orn]
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
-void clif_partytickack(map_session_data* sd, bool flag);
 void clif_viewequip_ack(map_session_data* sd, map_session_data* tsd);
 void clif_equipcheckbox(map_session_data* sd);
 
@@ -1015,7 +1013,7 @@ void clif_Auction_message(int fd, unsigned char flag);
 void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, map_session_data *sd);
 
-void clif_bossmapinfo(map_session_data *sd, struct mob_data *md, enum e_bossmap_info flag);
+void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag );
 void clif_cashshop_show(map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION
@@ -1181,7 +1179,8 @@ enum out_ui_type : int8 {
 	OUT_UI_STYLIST,
 	OUT_UI_CAPTCHA,
 	OUT_UI_MACRO,
-	OUT_UI_QUEST = 6,
+	OUT_UI_TIP = 5,
+	OUT_UI_QUEST,
 	OUT_UI_ATTENDANCE,
 	OUT_UI_ENCHANTGRADE,
 	OUT_UI_ENCHANT = 10,
@@ -1252,5 +1251,10 @@ void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> 
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
+
+void clif_set_dialog_align(map_session_data& sd, int npcid, e_say_dialog_align align);
+void clif_set_npc_window_size(map_session_data& sd, int width, int height);
+void clif_set_npc_window_pos(map_session_data& sd, int x, int y);
+void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y);
 
 #endif /* CLIF_HPP */

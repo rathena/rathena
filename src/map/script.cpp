@@ -9,10 +9,10 @@
 
 #include "script.hpp"
 
-#include <errno.h>
-#include <math.h>
-#include <setjmp.h>
-#include <stdlib.h> // atoi, strtol, strtoll, exit
+#include <cerrno>
+#include <cmath>
+#include <csetjmp>
+#include <cstdlib> // atoi, strtol, strtoll, exit
 
 #ifdef PCRE_SUPPORT
 #include <pcre.h> // preg_match
@@ -2472,8 +2472,7 @@ void script_warning(const char* src, const char* file, int start_line, const cha
 /*==========================================
  * Analysis of the script
  *------------------------------------------*/
-struct script_code* parse_script(const char *src,const char *file,int line,int options)
-{
+struct script_code* parse_script_( const char *src, const char *file, int line, int options, const char* src_file, int src_line, const char* src_func ){
 	const char *p,*tmpp;
 	int i;
 	struct script_code* code = NULL;
@@ -2653,7 +2652,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	}
 #endif
 
-	CREATE(code,struct script_code,1);
+	CREATE2( code, struct script_code, 1, src_file, src_line, src_func );
 	code->script_buf  = script_buf;
 	code->script_size = script_size;
 	code->local.vars = NULL;
@@ -5566,33 +5565,51 @@ BUILDIN_FUNC(return)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Returns a random number from 0 to <range>-1.
-/// Or returns a random number from <min> to <max>.
-/// If <min> is greater than <max>, their numbers are switched.
-/// rand(<range>) -> <int>
-/// rand(<min>,<max>) -> <int>
+/// Returns a random number.
+/// rand(<range>) -> <int64> in the mathematical range [0, <range - 1>]
+/// rand(<min>,<max>) -> <int64> in the mathematical range [<min>, <max>]
 BUILDIN_FUNC(rand)
 {
-	int range;
-	int min;
+	int64 minimum;
+	int64 maximum;
 
-	if( script_hasdata(st,3) )
-	{// min,max
-		int max = script_getnum(st,3);
-		min = script_getnum(st,2);
-		if( max < min )
-			SWAP(min, max);
-		range = max - min + 1;
+	// min,max
+	if( script_hasdata( st, 3 ) ){
+		minimum = script_getnum64( st, 2 );
+		maximum = script_getnum64( st, 3 );
+
+		if( minimum > maximum ){
+			ShowWarning( "buildin_rand: minimum (%" PRId64 ") is bigger than maximum (%" PRId64 ").\n", minimum, maximum );
+			// rnd_value already fixes this by swapping minimum and maximum automatically
+		}
+	// range
+	}else{
+		minimum = 0;
+		maximum = script_getnum64( st, 2 );
+
+		if( maximum < 0 ){
+			ShowError( "buildin_rand: range (%" PRId64 ") is negative.\n", maximum );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		// The range version is exclusive maximum
+		maximum -= 1;
+
+		if( maximum < 1 ){
+			ShowError( "buildin_rand: range (%" PRId64 ") is too small. No randomness possible.\n", maximum );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
-	else
-	{// range
-		min = 0;
-		range = script_getnum(st,2);
+
+	if( minimum == maximum ){
+		ShowError( "buildin_rand: minimum (%" PRId64 ") and maximum (%" PRId64 ") are equal. No randomness possible.\n", minimum, maximum );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
 	}
-	if( range <= 1 )
-		script_pushint(st, min);
-	else
-		script_pushint(st, rnd()%range + min);
+
+	script_pushint64( st, rnd_value( minimum, maximum ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -5656,8 +5673,8 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 
 		// find a suitable map cell
 		do {
-			tx = rnd()%(x3-x2+1)+x2;
-			ty = rnd()%(y3-y2+1)+y2;
+			tx = rnd_value(x2, x3);
+			ty = rnd_value(y2, y3);
 			j++;
 		} while( map_getcell(m,tx,ty,CELL_CHKNOPASS) && j < max );
 
@@ -5690,8 +5707,8 @@ BUILDIN_FUNC(areawarp)
 			y3 = 0;
 		} else if( x3 && y3 ) {
 			// normalize x3/y3 coordinates
-			if( x3 < x2 ) SWAP(x3,x2);
-			if( y3 < y2 ) SWAP(y3,y2);
+			if( x3 < x2 ) std::swap(x3,x2);
+			if( y3 < y2 ) std::swap(y3,y2);
 		}
 	}
 
@@ -5815,8 +5832,8 @@ BUILDIN_FUNC(warpparty)
 
 			i = 0;
 			do {
-				x = rnd()%(mapdata->xs - 2) + 1;
-				y = rnd()%(mapdata->ys - 2) + 1;
+				x = rnd_value(1, mapdata->xs - 1);
+				y = rnd_value(1, mapdata->ys - 1);
 			} while ((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
 
 			if (i >= 1000) {
@@ -5865,13 +5882,13 @@ BUILDIN_FUNC(warpparty)
 		case WARPPARTY_LEADER:
 			if (p->party.member[i].leader)
 				continue;
-			// Fall through
+			[[fallthrough]];
 		case WARPPARTY_RANDOMALL:
 			if (pl_sd == sd) {
 				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
 				break;
 			}
-			// Fall through
+			[[fallthrough]];
 		case WARPPARTY_RANDOMALLAREA:
 			if(!mapdata->getMapFlag(MF_NORETURN) && !mapdata->getMapFlag(MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))){
 				if (rx || ry) {
@@ -5881,8 +5898,8 @@ BUILDIN_FUNC(warpparty)
 					uint8 attempts = 10;
 
 					do {
-						nx = x0 + rnd()%(x1 - x0 + 1);
-						ny = y0 + rnd()%(y1 - y0 + 1);
+						nx = x0 + rnd_value(x0, x1);
+						ny = y0 + rnd_value(y0, y1);
 					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
 
 					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
@@ -10693,8 +10710,8 @@ BUILDIN_FUNC(savepoint)
 			x0 = x - dx, y0 = y - dy;
 		uint8 n = 10;
 		do {
-			x = x0 + rnd()%(x1-x0+1);
-			y = y0 + rnd()%(y1-y0+1);
+			x = rnd_value(x0, x1);
+			y = rnd_value(y0, y1);
 		} while (m != -1 && (--n) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
 	}
 
@@ -12536,7 +12553,7 @@ BUILDIN_FUNC(homunculus_evolution)
  *------------------------------------------*/
 BUILDIN_FUNC(homunculus_mutate)
 {
-	int homun_id;
+	uint16 homun_id;
 	TBL_PC *sd;
 
 	if( !script_rid2sd(sd) || sd->hd == NULL )
@@ -12545,7 +12562,7 @@ BUILDIN_FUNC(homunculus_mutate)
 	if(script_hasdata(st,2))
 		homun_id = script_getnum(st,2);
 	else
-		homun_id = 6048 + (rnd() % 4);
+		homun_id = rnd_value<uint16>(MER_EIRA, MER_ELEANOR);
 
 	if( sd->hd->homunculus.vaporize == HOM_ST_MORPH ) {
 		int m_class = hom_class2mapid(sd->hd->homunculus.class_);
@@ -13179,6 +13196,10 @@ void script_detach_rid(struct script_state* st)
  *	    [ Parameters: <x0>,<y0>,<x1>,<y1> ]
  *	5 : All players in the map.
  *	    [ Parameters: "<map name>" ]
+ *	6 : Battleground members of a specified battleground ID.
+ *	    [ Parameters: <battleground id> ]
+ *	7 : Clan members of a specified clan ID.
+ *	    [ Parameters: <clan id> ]
  *	Account ID: The specified account ID.
  * <flag>:
  *	0 : Players are always attached. (default)
@@ -13271,6 +13292,30 @@ BUILDIN_FUNC(addrid)
 				return SCRIPT_CMD_FAILURE;
 			}
 			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
+			break;
+		case 6:
+			if (script_getnum(st, 4) == 0) {
+				script_pushint(st, 0);
+				mapit_free(iter);
+				return SCRIPT_CMD_FAILURE;
+			}
+			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
+				if (!forceflag || !sd->st)
+					if ((sd->status.account_id != st->rid) && (sd->bg_id == script_getnum(st, 4))) //attached player already runs.
+						run_script(st->script, st->pos, sd->status.account_id, st->oid);
+			}
+			break;
+		case 7:
+			if (script_getnum(st, 4) == 0) {
+				script_pushint(st, 0);
+				mapit_free(iter);
+				return SCRIPT_CMD_FAILURE;
+			}
+			for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
+				if (!forceflag || !sd->st)
+					if ((sd->status.account_id != st->rid) && (sd->status.clan_id == script_getnum(st, 4))) //attached player already runs.
+						run_script(st->script, st->pos, sd->status.account_id, st->oid);
+			}
 			break;
 		default:
 			mapit_free(iter);
@@ -15685,6 +15730,7 @@ BUILDIN_FUNC(recovery)
 				map_idx = sd->bl.m;
 			if(map_idx < 1)
 				return SCRIPT_CMD_FAILURE; //No sd and no map given - return
+			[[fallthrough]];
 		case 4:
 		{
 			struct s_mapiterator *iter;
@@ -17912,15 +17958,25 @@ BUILDIN_FUNC(npcshopitem)
 	nd->u.shop.count = 0;
 	for (n = 0, i = 3; n < amount; n++, i+=offs) {
 		t_itemid nameid = script_getnum( st, i );
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
-		if( !item_db.exists( nameid ) ){
+		if( !id ){
 			ShowError( "builtin_npcshopitem: Item ID %u does not exist.\n", nameid );
 			script_pushint( st, 0 );
 			return SCRIPT_CMD_FAILURE;
 		}
+		int32 price = script_getnum(st, i + 1);
+		if (price < 0) {
+			if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+				ShowError("builtin_npcshopitem: Invalid price in shop '%s'.\n", nd->exname);
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			price = id->value_buy;
+		}
 
 		nd->u.shop.shop_item[n].nameid = nameid;
-		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		nd->u.shop.shop_item[n].value = price;
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
 			nd->u.shop.shop_item[n].qty = script_getnum(st,i+2);
@@ -17957,8 +18013,9 @@ BUILDIN_FUNC(npcshopadditem)
 		for (int n = 0, i = 3; n < amount; n++, i += offs) {
 			t_itemid nameid = script_getnum(st,i);
 			uint16 j;
+			std::shared_ptr<item_data> id = item_db.find(nameid);
 
-			if( !item_db.exists( nameid ) ){
+			if( !id ){
 				ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
 				script_pushint( st, 0 );
 				return SCRIPT_CMD_FAILURE;
@@ -17973,8 +18030,12 @@ BUILDIN_FUNC(npcshopadditem)
 				nd->u.shop.count++;
 			}
 
-			int32 stock = script_getnum( st, i + 2 );
+			int32 price = script_getnum(st, i + 1);
+			if (price < 0) {
+				price = id->value_buy;
+			}
 
+			int32 stock = script_getnum(st, i + 2);
 			if( stock < -1 ){
 				ShowError( "builtin_npcshopadditem: Invalid stock amount in marketshop '%s'.\n", nd->exname );
 				script_pushint( st, 0 );
@@ -17982,7 +18043,7 @@ BUILDIN_FUNC(npcshopadditem)
 			}
 
 			nd->u.shop.shop_item[j].nameid = nameid;
-			nd->u.shop.shop_item[j].value = script_getnum(st,i+1);
+			nd->u.shop.shop_item[j].value = price;
 			nd->u.shop.shop_item[j].qty = stock;
 
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
@@ -17997,15 +18058,24 @@ BUILDIN_FUNC(npcshopadditem)
 	for (int n = nd->u.shop.count, i = 3, j = 0; j < amount; n++, i+=offs, j++)
 	{
 		t_itemid nameid = script_getnum( st, i );
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
-		if( !item_db.exists( nameid ) ){
+		if( !id ){
 			ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
 			script_pushint( st, 0 );
 			return SCRIPT_CMD_FAILURE;
 		}
-
+		int32 price = script_getnum(st, i + 1);
+		if (price < 0) {
+			if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+				ShowError("builtin_npcshopadditem: Invalid price in shop '%s'.\n", nd->exname);
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			price = id->value_buy;
+		}
 		nd->u.shop.shop_item[n].nameid = nameid;
-		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		nd->u.shop.shop_item[n].value = price;
 		nd->u.shop.count++;
 	}
 
@@ -20298,8 +20368,8 @@ BUILDIN_FUNC(setcell)
 
 	int x,y;
 
-	if( x1 > x2 ) SWAP(x1,x2);
-	if( y1 > y2 ) SWAP(y1,y2);
+	if( x1 > x2 ) std::swap(x1,x2);
+	if( y1 > y2 ) std::swap(y1,y2);
 
 	for( y = y1; y <= y2; ++y )
 		for( x = x1; x <= x2; ++x )
@@ -23774,9 +23844,23 @@ BUILDIN_FUNC(npcshopupdate) {
 
 	for (i = 0; i < nd->u.shop.count; i++) {
 		if (nd->u.shop.shop_item[i].nameid == nameid) {
-
-			if (price != 0)
+			if (price != 0) {
+				if (price < 0) {
+					if (nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_ITEMSHOP) {
+						ShowError("builtin_npcshopupdate: Invalid price in shop '%s'.\n", nd->exname);
+						script_pushint(st, 0);
+						return SCRIPT_CMD_FAILURE;
+					}
+					std::shared_ptr<item_data> id = item_db.find(nameid);
+					if (!id) {
+						ShowError("buildin_npcshopupdate: Item ID %u does not exist.\n", nameid);
+						script_pushint(st, 0);
+						return SCRIPT_CMD_FAILURE;
+					}
+					price = id->value_buy;
+				}
 				nd->u.shop.shop_item[i].value = price;
+			}
 #if PACKETVER >= 20131223
 			if (nd->subtype == NPCTYPE_MARKETSHOP) {
 				nd->u.shop.shop_item[i].qty = stock;
@@ -23954,24 +24038,32 @@ BUILDIN_FUNC(ignoretimeout)
  * geteleminfo <type>{,<char_id>};
  **/
 BUILDIN_FUNC(geteleminfo) {
-	TBL_ELEM *ed = NULL;
-	TBL_PC *sd = NULL;
-	int type = script_getnum(st,2);
+	map_session_data *sd = nullptr;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
+	s_elemental_data *ed = nullptr;
+
 	if (!(ed = sd->ed)) {
-		//ShowDebug("buildin_geteleminfo: Player doesn't have Elemental.\n");
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	int type = script_getnum(st,2);
+
 	switch (type) {
-		case 0: script_pushint(st, ed->elemental.elemental_id); break;
-		case 1: script_pushint(st, ed->bl.id); break;
+		case ELEMINFO_ID:
+			script_pushint(st, ed->elemental.elemental_id);
+			break;
+		case ELEMINFO_GAMEID:
+			script_pushint(st, ed->bl.id);
+			break;
+		case ELEMINFO_CLASS:
+			script_pushint(st, ed->elemental.class_);
+			break;
 		default:
 			ShowError("buildin_geteleminfo: Invalid type '%d'.\n", type);
 			script_pushint(st, 0);
@@ -24653,6 +24745,37 @@ BUILDIN_FUNC(channel_create) {
 	if (tmp_chan.char_id)
 		channel_join(ch, sd);
 	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+// ===================================
+// *channel_join "<channel_name>"{, <char_id>};
+// Join an existing channel.
+// The command returns 0 upon success, and these values upon failure:
+// -1 : Invalid channel or player
+// -2 : Player already in channel
+// -3 : Player banned
+// -4 : Reached max limit
+// ===================================
+BUILDIN_FUNC(channel_join) {
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct Channel *channel = nullptr;
+	const char *chname = script_getstr(st, 2);
+
+	if (!(channel = channel_name2channel((char *)chname, nullptr, 0))) {
+		ShowError("buildin_channel_join: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, channel_join(channel, sd));
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -26939,6 +27062,175 @@ BUILDIN_FUNC(macro_detector) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// ===================================
+// *has_autoloot({<char_id>});
+// This command checks whether a player configured autoloot.
+// Returns current autoloot value on success.
+// ===================================
+BUILDIN_FUNC(has_autoloot) {
+	map_session_data *sd;
+
+	if (!script_charid2sd(2, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->state.autoloot);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+// ===================================
+// *autoloot({<rate>{, <char_id>}});
+// This command sets the rate of autoloot.
+// If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+// if the user has autoloot enabled it will default to 0 = 0% (disabled).
+// Returns true on success and false on failure.
+// ===================================
+BUILDIN_FUNC(autoloot) {
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int rate;
+
+	if (script_hasdata(st, 2)) {
+		rate = script_getnum(st, 2);
+
+		if (rate < 0 || rate > 10000) {
+			ShowWarning("buildin_autoloot: Invalid rate value %d, should be between 0 ~ 10000.\n", rate);		
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		rate = (sd->state.autoloot > 0 ? 0 : 10000);
+	}
+
+	sd->state.autoloot = rate;
+	script_pushint(st, true);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(opentips){
+#if PACKETVER < 20171122
+	ShowError( "buildin_opentips: This command requires PACKETVER 20171122 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	map_session_data* sd;
+
+	if (!script_charid2sd(3, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( *sd, OUT_UI_TIP, script_getnum(st, 2) );
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
+BUILDIN_FUNC(setdialogalign){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 align = script_getnum( st, 2 );
+	
+	if( align < DIALOG_ALIGN_LEFT || align > DIALOG_ALIGN_BOTTOM ){
+		ShowError( "buildin_setdialogalign: Unknown align value %d\n", align );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_dialog_align( *sd, st->oid, static_cast<e_say_dialog_align>( align ) );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setdialogsize){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 x = script_getnum( st, 2 );
+	
+	if( x < 0 || x > INT16_MAX ){
+		ShowError( "buildin_setdialogsize: x size %d is out of range [0,%d]\n", x, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int32 y = script_getnum( st, 3 );
+	
+	if( y < 0 || y > INT16_MAX ){
+		ShowError( "buildin_setdialogsize: y size %d is out of range [0,%d]\n", y, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_npc_window_size( *sd, x, y );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setdialogpos){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 x = script_getnum( st, 2 );
+	
+	if( x < 0 || x > INT16_MAX ){
+		ShowError( "buildin_setdialogpos: x position %d is out of range [0,%d]\n", x, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int32 y = script_getnum( st, 3 );
+	
+	if( y < 0 || y > INT16_MAX ){
+		ShowError( "buildin_setdialogpos: y position %d is out of range [0,%d]\n", y, INT16_MAX );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_set_npc_window_pos( *sd, x, y );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setdialogpospercent){
+	map_session_data *sd;
+
+	if ( !script_rid2sd(sd) ) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 x = script_getnum( st, 2 );
+	
+	if( x < 0 || x > 100 ){
+		ShowError( "buildin_setdialogpospercent: x rate %d is out of range [0,100]\n", x );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int32 y = script_getnum( st, 3 );
+	
+	if( y < 0 || y > 100 ){
+		ShowError( "buildin_setdialogpospercent: y rate %d is out of range [0,100]\n", y );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	clif_set_npc_window_pos_percent( *sd, x, y );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27600,6 +27892,7 @@ struct script_function buildin_func[] = {
 
 	// Channel System
 	BUILDIN_DEF(channel_create,"ss?????"),
+	BUILDIN_DEF(channel_join, "s?"),
 	BUILDIN_DEF(channel_setopt,"sii"),
 	BUILDIN_DEF(channel_getopt,"si"),
 	BUILDIN_DEF(channel_setcolor,"si"),
@@ -27694,6 +27987,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
 	BUILDIN_DEF(macro_detector, "?"),
+	BUILDIN_DEF(has_autoloot,"?"),
+	BUILDIN_DEF(autoloot,"??"),
+	BUILDIN_DEF(opentips, "i?"),
+
+	BUILDIN_DEF(setdialogalign, "i"),
+	BUILDIN_DEF(setdialogsize, "ii"),
+	BUILDIN_DEF(setdialogpos, "ii"),
+	BUILDIN_DEF(setdialogpospercent, "ii"),
 
 #include <custom/script_def.inc>
 

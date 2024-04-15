@@ -5,7 +5,7 @@
 #define MAP_HPP
 
 #include <algorithm>
-#include <stdarg.h>
+#include <cstdarg>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -66,7 +66,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 250
+#define MAX_LEVEL 260
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -365,6 +365,7 @@ enum e_race2 : uint8{
 	RC2_EP172BATH,
 	RC2_ILLUSION_TURTLE,
 	RC2_RACHEL_SANCTUARY,
+	RC2_ILLUSION_LUANDA,
 	RC2_MAX
 };
 
@@ -858,6 +859,18 @@ struct map_data_other_server {
 	struct mapcell* cell; // If this is NULL, the map is not on this map-server
 	uint32 ip;
 	uint16 port;
+};
+
+/**
+ * align for packet ZC_SAY_DIALOG_ALIGN
+ **/
+enum e_say_dialog_align : uint8 {
+	DIALOG_ALIGN_LEFT   = 0,
+	DIALOG_ALIGN_RIGHT  = 1,
+	DIALOG_ALIGN_CENTER = 2,
+	DIALOG_ALIGN_TOP    = 3,
+	DIALOG_ALIGN_MIDDLE = 4,
+	DIALOG_ALIGN_BOTTOM = 5
 };
 
 struct inter_conf {

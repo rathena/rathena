@@ -3,12 +3,11 @@
 
 #include "char_clif.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/malloc.hpp>
 #include <common/mapindex.hpp>
@@ -29,10 +28,6 @@
 #include "packets.hpp"
 
 using namespace rathena;
-
-// Reuseable global packet buffer to prevent too many allocations
-// Take socket.cpp::socket_max_client_packet into consideration
-static int8 packet_buffer[UINT16_MAX];
 
 std::vector<struct s_point_str> accessible_maps{
 	s_point_str{ MAP_PRONTERA, 273, 354 },

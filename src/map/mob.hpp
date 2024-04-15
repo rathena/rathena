@@ -253,22 +253,23 @@ struct s_mob_drop {
 };
 
 struct s_mob_db {
-	uint32 id;
-	std::string sprite, name, jname;
-	t_exp base_exp;
-	t_exp job_exp;
-	t_exp mexp;
-	uint16 range2, range3;
-	std::vector<e_race2> race2;	// celest
-	uint16 lv;
-	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
-	status_data status;
-	view_data vd;
-	uint32 option;
-	std::vector<std::shared_ptr<s_mob_skill>> skill;
-	uint16 damagetaken;
+	uint32 id{};
+	std::string sprite{}, name{}, jname{};
+	t_exp base_exp{};
+	t_exp job_exp{};
+	t_exp mexp{};
+	uint16 range2{}, range3{};
+	std::vector<e_race2> race2{};	// celest
+	uint16 lv{ 1 };
+	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL]{}, mvpitem[MAX_MVP_DROP_TOTAL]{};
+	status_data status{};
+	view_data vd{};
+	uint32 option{};
+	std::vector<std::shared_ptr<s_mob_skill>> skill{};
+	uint16 damagetaken{ 100 };
 
 	e_mob_bosstype get_bosstype();
+	s_mob_db();
 };
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {

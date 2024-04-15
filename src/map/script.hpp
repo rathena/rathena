@@ -10,6 +10,7 @@
 #include <common/database.hpp>
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
+#include <common/malloc.hpp>
 #include <common/mmo.hpp>
 #include <common/timer.hpp>
 
@@ -2088,6 +2089,45 @@ enum e_hat_effects : int16{
 	HAT_EF_ALICE_TEA,
 	HAT_EF_C_DARK_LORD_CLOAK,
 	HAT_EF_C_SAKURA_FUBUKI,
+	HAT_EF_C_DARK_LORD_MANTEAU,
+	HAT_EF_DECORATION_OF_MUSIC,
+	HAT_EF_2023RTC_S_ROBE1,
+	HAT_EF_2023RTC_S_ROBE2,
+	HAT_EF_2023RTC_S_ROBE3,
+	HAT_EF_C_CONSECRATE_F_AUREOLA,
+	HAT_EF_C_BULB_WREATH,
+	HAT_EF_MD_HOL_BARRIER1,
+	HAT_EF_MD_HOL_BARRIER2,
+	HAT_EF_MD_HOL_BARRIER3,
+	HAT_EF_MD_HOL_BARRIER4,
+	HAT_EF_MD_HOL_BARRIER5,
+	HAT_EF_MD_HOL_BARRIER6,
+	HAT_EF_MD_HOL_BARRIER7,
+	HAT_EF_MD_HOL_BARRIER8,
+	HAT_EF_MD_HOL_BARRIER9,
+	HAT_EF_MD_HOL_BARRIER10,
+	HAT_EF_MD_HOL_BARRIER11,
+	HAT_EF_MD_HOL_BARRIER12,
+	HAT_EF_MD_HOL_BARRIER13,
+	HAT_EF_MD_HOL_BARRIER14,
+	HAT_EF_MD_HOL_BARRIER15,
+	HAT_EF_MD_HOL_BARRIER16,
+	HAT_EF_MD_HOL_BARRIER17,
+	HAT_EF_MD_HOL_BARRIER18,
+	HAT_EF_MD_HOL_BARRIER19,
+	HAT_EF_MD_HOL_BARRIER20,
+	HAT_EF_C_FLUTTERING_HAZE,
+	HAT_EF_EFST_CINNAMON,
+	HAT_EF_AUTUMN_FULL_MOON,
+	HAT_EF_NIFLHEIM_NIGHT_SKY,
+	HAT_EF_C_ROS2023_CAPE_1,
+	HAT_EF_BLACK_THUNDER_,
+	HAT_EF_C_ROS2023_CAPE_2,
+	HAT_EF_C_15TH_NOV_HELMET,
+	HAT_EF_COSMIC_CONNECTION,
+	HAT_EF_C_BABY_GLOOM,
+	HAT_EF_WINTERNIGHTBELLS,
+	HAT_EF_NIGHTSKYOFRUTIE,
 	HAT_EF_MAX
 };
 
@@ -2145,6 +2185,13 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_SUBTYPE,
 };
 
+/* geteleminfo script command */
+enum e_eleminfo : uint8 {
+	ELEMINFO_ID = 0,
+	ELEMINFO_GAMEID,
+	ELEMINFO_CLASS,
+};
+
 class ConstantDatabase : public YamlDatabase {
 public:
 	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
@@ -2171,7 +2218,8 @@ void script_error(const char* src, const char* file, int start_line, const char*
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
 bool is_number(const char *p);
-struct script_code* parse_script(const char* src,const char* file,int line,int options);
+struct script_code* parse_script_( const char *src, const char *file, int line, int options, const char* src_file, int src_line, const char* src_func );
+#define parse_script( src, file, line, options ) parse_script_( ( src ), ( file ), ( line ), ( options ), ALC_MARK )
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
 bool set_reg_num(struct script_state* st, map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);

@@ -3,8 +3,8 @@
 
 #include "cashshop.hpp"
 
-#include <stdlib.h> // atoi
-#include <string.h> // memset
+#include <cstdlib> // atoi
+#include <cstring> // memset
 
 #include <common/cbasetypes.hpp> // uint16, uint32
 #include <common/malloc.hpp> // CREATE, RECREATE, aFree

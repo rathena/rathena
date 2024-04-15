@@ -3,10 +3,9 @@
 
 #include "pc.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <map>
-
-#include <math.h>
-#include <stdlib.h>
 
 #ifdef MAP_GENERATOR
 #include <fstream>
@@ -1258,7 +1257,7 @@ bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype 
  */
 bool pc_can_give_items(map_session_data *sd)
 {
-	return pc_has_permission(sd, PC_PERM_TRADE);
+	return (pc_has_permission(sd, PC_PERM_TRADE) || pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL));
 }
 
 /**
@@ -1266,7 +1265,7 @@ bool pc_can_give_items(map_session_data *sd)
  */
 bool pc_can_give_bounded_items(map_session_data *sd)
 {
-	return pc_has_permission(sd, PC_PERM_TRADE_BOUNDED);
+	return (pc_has_permission(sd, PC_PERM_TRADE_BOUNDED) || pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL));
 }
 
 /**
@@ -1924,6 +1923,11 @@ bool pc_lastpoint_special( map_session_data& sd ){
 	if( mapdata == nullptr ){
 		// Return the player to his savepoint
 		return true;
+	}
+
+	if (strcmpi(sd.status.last_point.map, MAP_JAIL) == 0) {
+		// Don't return jailed player to save point.
+		return false;
 	}
 
 	// Maybe since the player's logout the nosave mapflag was added to the map
@@ -4283,6 +4287,7 @@ void pc_bonus(map_session_data *sd,int type,int val)
 		case SP_LONG_SP_GAIN_VALUE:
 			if(!sd->state.lr_flag)
 				sd->bonus.long_sp_gain_value += val;
+			break;
 		case SP_LONG_HP_GAIN_VALUE:
 			if(!sd->state.lr_flag)
 				sd->bonus.long_hp_gain_value += val;
@@ -6562,17 +6567,17 @@ int pc_cartitem_amount(map_session_data* sd, int idx, int amount)
 /*==========================================
  * Retrieve an item at index idx from cart.
  *------------------------------------------*/
-void pc_getitemfromcart(map_session_data *sd,int idx,int amount)
+bool pc_getitemfromcart(map_session_data *sd,int idx,int amount)
 {
-	nullpo_retv(sd);
+	nullpo_retr(1, sd);
 
 	if (idx < 0 || idx >= MAX_CART) //Invalid index check [Skotlex]
-		return;
+		return false;
 
 	struct item *item_data=&sd->cart.u.items_cart[idx];
 
 	if (item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->state.vending || sd->state.prevend)
-		return;
+		return false;
 
 	enum e_additem_result flag = pc_additem(sd, item_data, amount, LOG_TYPE_NONE);
 
@@ -6583,6 +6588,7 @@ void pc_getitemfromcart(map_session_data *sd,int idx,int amount)
 		clif_additem(sd, idx, amount, flag);
 		clif_cart_additem(sd, idx, amount);
 	}
+	return true;
 }
 
 /*==========================================
@@ -6835,8 +6841,9 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 		}
 		for(int i = 0; i < EQI_MAX; i++ ) {
 			if( sd->equip_index[i] >= 0 )
-				if( pc_isequip(sd,sd->equip_index[i]) )
+				if( pc_isequip( sd, sd->equip_index[i] ) != ITEM_EQUIP_ACK_OK ){
 					pc_unequipitem(sd,sd->equip_index[i],2);
+				}
 		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);
@@ -8099,7 +8106,7 @@ int pc_checkbaselevelup(map_session_data *sd) {
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
 		for (const auto &status : status_db) {
 			if (status.second->flag[SCF_SUPERNOVICEANGEL])
-				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 1, skill_get_time(status.second->skill_id, 1));
+				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 1, 120000); //All buffs with super novice flag for 2 minutes
 		}
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
@@ -8215,6 +8222,9 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 			bonus += (sd->sc.getSCE(SC_EXPBOOST)->val1 / battle_config.vip_bm_increase);
 	}
 
+	if (sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND))
+		bonus += sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND)->val1;
+
 	if (*base_exp) {
 		t_exp exp = (t_exp)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
 		*base_exp = cap_value(exp, 1, MAX_EXP);
@@ -8223,6 +8233,9 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 	// Give JEXPBOOST for quests even if src is NULL.
 	if (sd->sc.getSCE(SC_JEXPBOOST))
 		bonus += sd->sc.getSCE(SC_JEXPBOOST)->val1;
+
+	if (sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND))	// Increase Jexp as well
+		bonus += sd->sc.getSCE(SC_PERIOD_PLUSEXP_2ND)->val1;
 
 	if (*job_exp) {
 		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
@@ -8635,7 +8648,7 @@ int pc_need_status_point(map_session_data* sd, int type, int val)
 	high = low + val;
 
 	if ( val < 0 )
-		SWAP(low, high);
+		std::swap(low, high);
 
 	for ( ; low < high; low++ )
 		sp += PC_STATUS_POINT_COST(low);
@@ -8793,7 +8806,7 @@ int pc_need_trait_point(map_session_data* sd, int type, int val)
 	int high = low + val, sp = 0;
 
 	if (val < 0)
-		SWAP(low, high);
+		std::swap(low, high);
 
 	for (; low < high; low++)
 		sp += 1;
@@ -9142,8 +9155,9 @@ int pc_resetlvl(map_session_data* sd,int type)
 
 	for(i=0;i<EQI_MAX;i++) { // unequip items that can't be equipped by base 1 [Valaris]
 		if(sd->equip_index[i] >= 0)
-			if(pc_isequip(sd,sd->equip_index[i]))
+			if( pc_isequip( sd, sd->equip_index[i] ) != ITEM_EQUIP_ACK_OK ){
 				pc_unequipitem(sd,sd->equip_index[i],2);
+			}
 	}
 
 	if ((type == 1 || type == 2 || type == 3) && sd->status.party_id)
@@ -10778,8 +10792,9 @@ bool pc_jobchange(map_session_data *sd,int job, char upper)
 
 	for(i=0;i<EQI_MAX;i++) {
 		if(sd->equip_index[i] >= 0)
-			if(pc_isequip(sd,sd->equip_index[i]))
+			if( pc_isequip( sd, sd->equip_index[i] ) != ITEM_EQUIP_ACK_OK ){
 				pc_unequipitem(sd,sd->equip_index[i],2);	// unequip invalid item for class
+			}
 	}
 
 	//Change look, if disguised, you need to undisguise
@@ -11146,9 +11161,15 @@ void pc_setmadogear(map_session_data *sd, bool flag, e_mado_type type)
  *------------------------------------------*/
 bool pc_candrop(map_session_data *sd, struct item *item)
 {
-	if( item && ((item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) || (itemdb_ishatched_egg(item))) )
+	if (sd->sc.cant.drop)
 		return false;
-	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
+	if( item && itemdb_ishatched_egg(item) )
+		return false;
+	if (pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL))	// no restriction
+		return true;
+	if( !pc_can_give_items(sd) )
+		return false;
+	if( item && (item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) )
 		return false;
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
 }
@@ -11805,7 +11826,6 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 {
 	int i, pos, flag = 0, iflag;
 	struct item_data *id;
-	uint8 res = ITEM_EQUIP_ACK_OK;
 	short* equip_index;
 
 	nullpo_retr(false,sd);
@@ -11835,7 +11855,9 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 	if(battle_config.battle_log && !equipswitch)
 		ShowInfo("equip %u (%d) %x:%x\n",sd->inventory.u.items_inventory[n].nameid,n,id?id->equip:0,req_pos);
 
-	if((res = pc_isequip(sd,n))) {
+	uint8 res = pc_isequip( sd, n );
+
+	if( res != ITEM_EQUIP_ACK_OK ){
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, res );
 		}else{
@@ -14058,7 +14080,7 @@ void JobDatabase::loadingFinished() {
 /**
  * Read job_noenter_map.txt
  **/
-static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
+static bool pc_readdb_job_noenter_map( char *str[], size_t columns, size_t current ){
 	int class_ = -1;
 	int64 class_tmp;
 
@@ -14094,19 +14116,11 @@ const std::string PlayerStatPointDatabase::getDefaultLocation() {
 }
 
 uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
-	if (!this->nodesExist(node, { "Level", "Points" })) {
-		return 0;
-	}
 
 	uint16 level;
 
 	if (!this->asUInt16(node, "Level", level))
-		return 0;
-
-	uint32 point;
-
-	if (!this->asUInt32(node, "Points", point))
-		return 0;
+	    return 0;
 
 	if (level == 0) {
 		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
@@ -14122,19 +14136,32 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	bool exists = entry != nullptr;
 
 	if( !exists ){
-		entry = std::make_shared<s_statpoint_entry>();
-		entry->level = level;
-		entry->statpoints = point;
+	    if( !this->nodesExist( node, { "Points" } ) ){
+			return 0;
+	    }
+
+	    entry = std::make_shared<s_statpoint_entry>();
+	    entry->level = level;
 	}
 
-	if( this->nodeExists( node, "TraitPoints" ) ){
-		uint32 traitpoints;
+	if( this->nodeExists( node, "Points" ) ){
+	    uint32 points;
 
-		if( !this->asUInt32( node, "TraitPoints", traitpoints ) ){
+		if( !this->asUInt32( node, "Points", points ) ){
 			return 0;
 		}
 
-		entry->traitpoints = traitpoints;
+	    entry->statpoints = points;
+	}
+
+	if( this->nodeExists( node, "TraitPoints" ) ){
+	    uint32 traitpoints;
+
+	    if( !this->asUInt32( node, "TraitPoints", traitpoints ) ){
+	        return 0;
+	    }
+
+	    entry->traitpoints = traitpoints;
 	}else{
 		if( !exists ){
 			entry->traitpoints = 0;
