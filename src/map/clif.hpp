@@ -1096,7 +1096,7 @@ void clif_millenniumshield(struct block_list *bl, short shields);
 
 void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, short x, short y );
 
-void clif_poison_list(map_session_data *sd, uint16 skill_lv);
+void clif_poison_list( map_session_data& sd, uint16 skill_lv );
 
 int clif_autoshadowspell_list(map_session_data *sd);
 

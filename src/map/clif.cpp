@@ -19591,7 +19591,7 @@ void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, short x, short
 	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
 		if( itemdb_group.item_exists( IG_ELEMENT, sd.inventory.u.items_inventory[i].nameid ) ){
 			p->items[count].itemId = client_nameid( sd.inventory.u.items_inventory[i].nameid );
-			p->packetLength += sizeof( p->items[0].itemId );
+			p->packetLength += sizeof( p->items[0] );
 			count++;
 		}
 	}
@@ -19610,37 +19610,28 @@ void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, short x, short
 /*==========================================
  * Guillotine Cross Poisons List
  *------------------------------------------*/
-void clif_poison_list( map_session_data *sd, uint16 skill_lv ){
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return;
-	}
+void clif_poison_list( map_session_data& sd, uint16 skill_lv ){
+	PACKET_ZC_MAKINGARROW_LIST* p = (PACKET_ZC_MAKINGARROW_LIST*)packet_buffer;
 
-	int fd = sd->fd;
-
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + MAX_INVENTORY * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
-	struct PACKET_ZC_MAKINGARROW_LIST *p = (struct PACKET_ZC_MAKINGARROW_LIST *)WFIFOP( fd, 0 );
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
+	p->packetLength = sizeof( *p );
 
-	int count = 0;
-	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		if( itemdb_group.item_exists( IG_POISON, sd->inventory.u.items_inventory[i].nameid ) ){
-			p->items[count].itemId = client_nameid( sd->inventory.u.items_inventory[i].nameid );
+	size_t count = 0;
+	for( size_t i = 0; i < MAX_INVENTORY; i++ ){
+		if( itemdb_group.item_exists( IG_POISON, sd.inventory.u.items_inventory[i].nameid ) ){
+			p->items[count].itemId = client_nameid( sd.inventory.u.items_inventory[i].nameid );
+			p->packetLength += sizeof( p->items[0] );
 			count++;
 		}
 	}
 
 	if( count > 0 ){
-		p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
-		WFIFOSET( fd, p->packetLength );
-		sd->menuskill_id = GC_POISONINGWEAPON;
-		sd->menuskill_val = skill_lv;
+		clif_send( p, p->packetLength, &sd.bl, SELF );
+
+		sd.menuskill_id = GC_POISONINGWEAPON;
+		sd.menuskill_val = skill_lv;
 	}else{
-		clif_skill_fail( *sd, GC_POISONINGWEAPON, USESKILL_FAIL_GUILLONTINE_POISON );
+		clif_skill_fail( sd, GC_POISONINGWEAPON, USESKILL_FAIL_GUILLONTINE_POISON );
 	}
 }
 

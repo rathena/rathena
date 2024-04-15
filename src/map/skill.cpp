@@ -10953,7 +10953,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case GC_POISONINGWEAPON:
 		if( sd ) {
-			clif_poison_list(sd,skill_lv);
+			clif_poison_list( *sd, skill_lv );
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
