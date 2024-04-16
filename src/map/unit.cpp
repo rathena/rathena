@@ -3,8 +3,8 @@
 
 #include "unit.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/db.hpp>
 #include <common/ers.hpp>  // ers_destroy
@@ -1700,7 +1700,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				target = (struct block_list*)map_charid2sd(sd->status.partner_id);
 
 				if (!target) {
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					clif_skill_fail( *sd, skill_id );
 					return 0;
 				}
 				break;
@@ -1757,7 +1757,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	// Fail if the targetted skill is near NPC [Cydh]
 	if(skill->inf2[INF2_DISABLENEARNPC] && !ignore_range && skill_isNotOk_npcRange(src,skill_id,skill_lv,target->x,target->y)) {
 		if (sd)
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			clif_skill_fail( *sd, skill_id );
 
 		return 0;
 	}
@@ -1776,7 +1776,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			case BD_ENCORE:
 				// Prevent using the dance skill if you no longer have the skill in your tree.
 				if(!sd->skill_id_dance || pc_checkskill(sd,sd->skill_id_dance)<=0) {
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+					clif_skill_fail( *sd, skill_id );
 					return 0;
 				}
 
@@ -1784,7 +1784,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				break;
 			case WL_WHITEIMPRISON:
 				if( battle_check_target(src,target,BCT_SELF|BCT_ENEMY) < 0 ) {
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_TOTARGET,0);
+					clif_skill_fail( *sd, skill_id, USESKILL_FAIL_TOTARGET );
 					return 0;
 				}
 				break;
@@ -1802,7 +1802,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 					if (i == count) {
 						ARR_FIND(0, count, i, sd->devotion[i] == 0);
 						if (i == count) { // No free slots, skill Fail
-							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+							clif_skill_fail( *sd, skill_id );
 							return 0;
 						}
 					}
@@ -1815,7 +1815,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 					if (i == MAX_SKILL_CRIMSON_MARKER) {
 						ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == 0);
 						if (i == MAX_SKILL_CRIMSON_MARKER) { // No free slots, skill Fail
-							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+							clif_skill_fail( *sd, skill_id );
 							return 0;
 						}
 					}
@@ -1835,7 +1835,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 					// No free slots
 					if( i == count ){
-						clif_skill_fail( sd, skill_id, USESKILL_FAIL_LEVEL, 0 );
+						clif_skill_fail( *sd, skill_id );
 						return 0;
 					}
 				}
@@ -1843,7 +1843,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			case TR_RETROSPECTION:
 				// Prevent using the song skill if you no longer have the skill in your tree.
 				if (!sd->skill_id_song || pc_checkskill(sd, sd->skill_id_song) <= 0) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+					clif_skill_fail( *sd, skill_id );
 					return 0;
 				}
 
@@ -1971,7 +1971,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 				// Only allow to attack if the enemy has a sign mark given by the caster.
 				if( tsc == nullptr || tsc->getSCE(SC_SERVANT_SIGN) == nullptr || tsc->getSCE(SC_SERVANT_SIGN)->val1 != src->id ){
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+					if (sd)
+						clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
 					return 0;
 				}
 			}
@@ -2170,7 +2171,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	}
 
 	if( (skill_id >= SC_MANHOLE && skill_id <= SC_FEINTBOMB) && map_getcell(src->m, skill_x, skill_y, CELL_CHKMAELSTROM) ) {
-		clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		if (sd)
+			clif_skill_fail( *sd, skill_id );
 		return 0;
 	}
 
@@ -2180,7 +2182,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	// Fail if the targetted skill is near NPC [Cydh]
 	if(skill_get_inf2(skill_id, INF2_DISABLENEARNPC) && !ignore_range && skill_isNotOk_npcRange(src,skill_id,skill_lv,skill_x,skill_y)) {
 		if (sd)
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			clif_skill_fail( *sd, skill_id );
 
 		return 0;
 	}
@@ -2727,7 +2729,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 		// Attacking when under cast delay has restrictions:
 		if( tid == INVALID_TIMER ) { // Requested attack.
 			if(sd)
-				clif_skill_fail(sd,1,USESKILL_FAIL_SKILLINTERVAL,0);
+				clif_skill_fail( *sd, 1, USESKILL_FAIL_SKILLINTERVAL );
 
 			return 0;
 		}

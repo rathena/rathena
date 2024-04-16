@@ -4,11 +4,11 @@
 #include "itemdb.hpp"
 
 #include <chrono>
+#include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <stdlib.h>
-#include <math.h>
 #include <unordered_map>
 
 #include <common/nullpo.hpp>
@@ -4259,7 +4259,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		if (randopt->script) {
-			aFree(randopt->script);
+			script_free_code( randopt->script );
 			randopt->script = nullptr;
 		}
 

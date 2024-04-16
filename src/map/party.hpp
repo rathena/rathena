@@ -4,7 +4,7 @@
 #ifndef PARTY_HPP
 #define PARTY_HPP
 
-#include <stdarg.h>
+#include <cstdarg>
 
 #include <common/mmo.hpp> // struct party
 
