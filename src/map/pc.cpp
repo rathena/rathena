@@ -14598,7 +14598,7 @@ TIMER_FUNC(pc_autotrade_timer){
 	sd->autotrade_tid = INVALID_TIMER;
 
 	if (sd->state.autotrade&2)
-		vending_reopen(sd);
+		vending_reopen(*sd);
 	if (sd->state.autotrade&4)
 		buyingstore_reopen(sd);
 

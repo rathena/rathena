@@ -14162,6 +14162,10 @@ void clif_parse_PurchaseReq2(int fd, map_session_data* sd){
 ///     0 = canceled
 ///     1 = open
 void clif_parse_OpenVending(int fd, map_session_data* sd){
+	if( sd == nullptr ){
+		return;
+	}
+
 	int cmd = RFIFOW(fd,0);
 	struct s_packet_db* info = &packet_db[cmd];
 	short len = (short)RFIFOW(fd,info->pos[0]);
@@ -14196,7 +14200,7 @@ void clif_parse_OpenVending(int fd, map_session_data* sd){
 	if( message[0] == '\0' ) // invalid input
 		return;
 
-	vending_openvending(sd, message, data, len/8, NULL);
+	vending_openvending(*sd, message, data, len/8, NULL);
 }
 
 
