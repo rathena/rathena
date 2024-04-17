@@ -8031,7 +8031,7 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 		if( sc->getSCE(SC_AVOID) )
 			val = max( val, 10 * sc->getSCE(SC_AVOID)->val1 );
 		if (sc->getSCE(SC_INVINCIBLE))
-			val = max(val, 50);
+			val = max(val, sc->getSCE(SC_INVINCIBLE)->val3);
 		if( sc->getSCE(SC_CLOAKINGEXCEED) )
 			val = max( val, sc->getSCE(SC_CLOAKINGEXCEED)->val3);
 		if (sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 0)
@@ -8340,8 +8340,8 @@ static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 		max = sc->getSCE(SC_FLEET)->val2;
 
 	if (sc->getSCE(SC_INVINCIBLE) &&
-		max < 700)
-		max = 700;
+		max < sc->getSCE(SC_INVINCIBLE)->val4)
+		max = sc->getSCE(SC_INVINCIBLE)->val4;
 
 	if (sc->getSCE(SC_ASSNCROS) && max < sc->getSCE(SC_ASSNCROS)->val2) {
 		if (bl->type != BL_PC)
@@ -11565,6 +11565,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_REBIRTH:
 			val2 = 20*val1; // % of life to be revived with
+			break;
+		case SC_INVINCIBLE:
+			val2 = 100; // ATKpercent increase
+			val3 = 50; // Speed increase
+			val4 = 700; // ASPD increase
 			break;
 
 		case SC_MANU_DEF:

@@ -4458,7 +4458,7 @@ static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_
 	if (sc.getSCE(SC_FLEET))
 		atkpercent += sc.getSCE(SC_FLEET)->val3;
 	if (sc.getSCE(SC_INVINCIBLE))
-		atkpercent += 100;
+		atkpercent += sc.getSCE(SC_INVINCIBLE)->val2;
 
 	/* Only few selected skills should use this function, DO NOT ADD any that are not caused by the skills listed below
 	* TODO:
