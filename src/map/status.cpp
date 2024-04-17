@@ -1475,7 +1475,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		flag |= 8;
 
 	sc = status_get_sc(target);
-	if( hp && battle_config.invincible_nodamage && src && sc && sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
+	if (hp && battle_config.invincible_nodamage && src && sc && sc->getSCE(SC_INVINCIBLE))
 		hp = 1;
 
 	if( hp && !(flag&1) ) {
@@ -1983,7 +1983,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			(sc->getSCE(SC_KYOMU) && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
 		)) {
 			if (src->type == BL_PC)
-				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif_skill_fail( *((map_session_data*)src), skill_id );
 			return false;
 		}
 
@@ -2110,12 +2110,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		return true;
 
 	if (tsc && tsc->count) {
-		/**
-		* Attacks in invincible are capped to 1 damage and handled in battle.cpp.
-		* Allow spell break and eske for sealed shrine GDB when in INVINCIBLE state.
-		**/
-		if( tsc->getSCE(SC_INVINCIBLE) && !tsc->getSCE(SC_INVINCIBLEOFF) && skill_id && !(skill_id&(SA_SPELLBREAKER|SL_SKE)) )
-			return false;
 		if(!skill_id && tsc->getSCE(SC_TRICKDEAD))
 			return false;
 		if((skill_id == WZ_STORMGUST || skill_id == WZ_FROSTNOVA || skill_id == NJ_HYOUSYOURAKU || skill_id == NPC_STORMGUST2)
@@ -8036,8 +8030,8 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 			val = max( val, 55 );
 		if( sc->getSCE(SC_AVOID) )
 			val = max( val, 10 * sc->getSCE(SC_AVOID)->val1 );
-		if( sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
-			val = max( val, 75 );
+		if (sc->getSCE(SC_INVINCIBLE))
+			val = max(val, sc->getSCE(SC_INVINCIBLE)->val3);
 		if( sc->getSCE(SC_CLOAKINGEXCEED) )
 			val = max( val, sc->getSCE(SC_CLOAKINGEXCEED)->val3);
 		if (sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 0)
@@ -8309,66 +8303,68 @@ static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 	if(!sc || !sc->count)
 		return cap_value(aspd_rate,0,SHRT_MAX);
 
-	if( !sc->getSCE(SC_QUAGMIRE) ) {
-		int max = 0;
-		if(sc->getSCE(SC_STAR_COMFORT))
-			max = sc->getSCE(SC_STAR_COMFORT)->val2;
+	int max = 0;
+	if (sc->getSCE(SC_STAR_COMFORT))
+		max = sc->getSCE(SC_STAR_COMFORT)->val2;
 
-		if(sc->getSCE(SC_TWOHANDQUICKEN) &&
-			max < sc->getSCE(SC_TWOHANDQUICKEN)->val2)
-			max = sc->getSCE(SC_TWOHANDQUICKEN)->val2;
+	if (sc->getSCE(SC_TWOHANDQUICKEN) &&
+		max < sc->getSCE(SC_TWOHANDQUICKEN)->val2)
+		max = sc->getSCE(SC_TWOHANDQUICKEN)->val2;
 
-		if(sc->getSCE(SC_ONEHAND) &&
-			max < sc->getSCE(SC_ONEHAND)->val2)
-			max = sc->getSCE(SC_ONEHAND)->val2;
+	if (sc->getSCE(SC_ONEHAND) &&
+		max < sc->getSCE(SC_ONEHAND)->val2)
+		max = sc->getSCE(SC_ONEHAND)->val2;
 
-		if(sc->getSCE(SC_MERC_QUICKEN) &&
-			max < sc->getSCE(SC_MERC_QUICKEN)->val2)
-			max = sc->getSCE(SC_MERC_QUICKEN)->val2;
+	if (sc->getSCE(SC_MERC_QUICKEN) &&
+		max < sc->getSCE(SC_MERC_QUICKEN)->val2)
+		max = sc->getSCE(SC_MERC_QUICKEN)->val2;
 
-		if(sc->getSCE(SC_ADRENALINE2) &&
-			max < sc->getSCE(SC_ADRENALINE2)->val3)
-			max = sc->getSCE(SC_ADRENALINE2)->val3;
+	if (sc->getSCE(SC_ADRENALINE2) &&
+		max < sc->getSCE(SC_ADRENALINE2)->val3)
+		max = sc->getSCE(SC_ADRENALINE2)->val3;
 
-		if(sc->getSCE(SC_ADRENALINE) &&
-			max < sc->getSCE(SC_ADRENALINE)->val3)
-			max = sc->getSCE(SC_ADRENALINE)->val3;
+	if (sc->getSCE(SC_ADRENALINE) &&
+		max < sc->getSCE(SC_ADRENALINE)->val3)
+		max = sc->getSCE(SC_ADRENALINE)->val3;
 
-		if(sc->getSCE(SC_SPEARQUICKEN) &&
-			max < sc->getSCE(SC_SPEARQUICKEN)->val2)
-			max = sc->getSCE(SC_SPEARQUICKEN)->val2;
+	if (sc->getSCE(SC_SPEARQUICKEN) &&
+		max < sc->getSCE(SC_SPEARQUICKEN)->val2)
+		max = sc->getSCE(SC_SPEARQUICKEN)->val2;
 
-		if(sc->getSCE(SC_GATLINGFEVER) &&
-			max < sc->getSCE(SC_GATLINGFEVER)->val2)
-			max = sc->getSCE(SC_GATLINGFEVER)->val2;
+	if (sc->getSCE(SC_GATLINGFEVER) &&
+		max < sc->getSCE(SC_GATLINGFEVER)->val2)
+		max = sc->getSCE(SC_GATLINGFEVER)->val2;
 
-		if(sc->getSCE(SC_FLEET) &&
-			max < sc->getSCE(SC_FLEET)->val2)
-			max = sc->getSCE(SC_FLEET)->val2;
+	if (sc->getSCE(SC_FLEET) &&
+		max < sc->getSCE(SC_FLEET)->val2)
+		max = sc->getSCE(SC_FLEET)->val2;
 
-		if(sc->getSCE(SC_ASSNCROS) && max < sc->getSCE(SC_ASSNCROS)->val2) {
-			if (bl->type!=BL_PC)
-				max = sc->getSCE(SC_ASSNCROS)->val2;
-			else
-				switch(((TBL_PC*)bl)->status.weapon) {
-					case W_BOW:
-					case W_REVOLVER:
-					case W_RIFLE:
-					case W_GATLING:
-					case W_SHOTGUN:
-					case W_GRENADE:
-						break;
-					default:
-						max = sc->getSCE(SC_ASSNCROS)->val2;
+	if (sc->getSCE(SC_INVINCIBLE) &&
+		max < sc->getSCE(SC_INVINCIBLE)->val4)
+		max = sc->getSCE(SC_INVINCIBLE)->val4;
+
+	if (sc->getSCE(SC_ASSNCROS) && max < sc->getSCE(SC_ASSNCROS)->val2) {
+		if (bl->type != BL_PC)
+			max = sc->getSCE(SC_ASSNCROS)->val2;
+		else
+			switch (((TBL_PC*)bl)->status.weapon) {
+				case W_BOW:
+				case W_REVOLVER:
+				case W_RIFLE:
+				case W_GATLING:
+				case W_SHOTGUN:
+				case W_GRENADE:
+					break;
+				default:
+					max = sc->getSCE(SC_ASSNCROS)->val2;
 			}
-		}
-		aspd_rate -= max;
-
-		if(sc->getSCE(SC_BERSERK))
-			aspd_rate -= 300;
-		else if(sc->getSCE(SC_MADNESSCANCEL))
-			aspd_rate -= 200;
 	}
+	aspd_rate -= max;
+
+	if (sc->getSCE(SC_BERSERK))
+		aspd_rate -= 300;
+	else if (sc->getSCE(SC_MADNESSCANCEL))
+		aspd_rate -= 200;
 
 	if( sc->getSCE(i=SC_ASPDPOTION3) ||
 		sc->getSCE(i=SC_ASPDPOTION2) ||
@@ -11569,6 +11565,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_REBIRTH:
 			val2 = 20*val1; // % of life to be revived with
+			break;
+		case SC_INVINCIBLE:
+			val2 = 100; // ATKpercent increase
+			val3 = 50; // Speed increase
+			val4 = 700; // ASPD increase
 			break;
 
 		case SC_MANU_DEF:
