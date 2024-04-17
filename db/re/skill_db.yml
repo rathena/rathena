@@ -16709,7 +16709,7 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: -1
+    Duration1: 300000
     Status: Invincible
   - Id: 686
     Name: NPC_INVINCIBLEOFF
@@ -16721,8 +16721,6 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: 60000
-    Status: InvincibleOff
   - Id: 687
     Name: NPC_ALLHEAL
     Description: Full Heal
@@ -46959,9 +46957,7 @@ Body:
     Range: 2
     Hit: Single
     HitCount: 1
-    Duration1: 10000
     Cooldown: 30000
-    Status: InvincibleOff
   - Id: 8401
     Name: EL_CIRCLE_OF_FIRE
     Description: Circle of Fire
