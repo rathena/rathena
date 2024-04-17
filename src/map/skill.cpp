@@ -9772,13 +9772,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			else {
 				struct unit_data* ud = unit_bl2ud(bl);
-				int bl_skill_id = 0, bl_skill_lv = 0, hp = 0;
 				if (!ud || ud->skilltimer == INVALID_TIMER)
 					break; //Nothing to cancel.
-				bl_skill_id = ud->skill_id;
-				bl_skill_lv = ud->skill_lv;
+				int hp = 0;
 				if (status_has_mode(tstatus, MD_STATUSIMMUNE)) { //Only 10% success chance against status immune. [Skotlex]
-					if (rnd() % 100 < 90)
+					if (rnd_chance(90, 100))
 					{
 						if (sd) clif_skill_fail( *sd, skill_id );
 						break;
@@ -9792,7 +9790,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 				unit_skillcastcancel(bl, 0);
-				sp = skill_get_sp(bl_skill_id, bl_skill_lv);
+				sp = skill_get_sp(ud->skill_id, ud->skill_lv);
 				status_zap(bl, 0, sp);
 				// Recover some of the SP used
 				status_heal(src, 0, sp * (25 * (skill_lv - 1)) / 100, 2);
