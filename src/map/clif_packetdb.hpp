@@ -349,7 +349,6 @@
 	//packet(0x01ca,-1);
 	packet(0x01cb,9);
 	packet(0x01cc,9);
-	packet(0x01cd,30);
 	parseable_packet(0x01ce,6,clif_parse_AutoSpell,2);
 	packet(0x01cf,28);
 	packet(0x01d0,8);
@@ -1070,7 +1069,7 @@
 	parseable_packet(0x02c4,26,clif_parse_PartyInvite2,2);
 	packet(0x02c5,30);
 	parseable_packet(0x02c7,7,clif_parse_ReplyPartyInvite2,2,6);
-	parseable_packet(0x02c8,3,clif_parse_PartyTick,2);
+	parseable_packet( HEADER_CZ_PARTY_CONFIG, sizeof( PACKET_CZ_PARTY_CONFIG ), clif_parse_PartyTick, 0 );
 	packet(0x02ca,3);
 	packet(0x02cb,20);
 	packet(0x02cc,4);
@@ -1897,8 +1896,7 @@
 	packet(0x08f9,6);
 	packet(0x08fa,6);
 	parseable_packet(0x08fb,6,NULL,2);
-	parseable_packet(0x0907,5,clif_parse_MoveItem,2,4);
-	packet(0x0908,5);
+	parseable_packet( HEADER_CZ_INVENTORY_TAB, sizeof( PACKET_CZ_INVENTORY_TAB ), clif_parse_MoveItem, 0 );
 	parseable_packet(0x08D7,28,clif_parse_bg_queue_apply_request,2,4);
 	packet(0x08D8,27);
 	packet(0x08D9,30);
@@ -2006,8 +2004,6 @@
 	parseable_packet(0x08c9,2,clif_parse_cashshop_list_request,0);
 	packet(0x08cf,10); //Amulet spirits
 	packet(0x08d2,10);
-	parseable_packet(0x0907,5,clif_parse_MoveItem,2,4);
-	packet(0x0908,5);
 	parseable_packet(0x0922,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	//parseable_packet(0x092e,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x0933,6,clif_parse_TakeItem,2);

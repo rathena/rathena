@@ -3,10 +3,9 @@
 
 #include "int_mail.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/mmo.hpp>
 #include <common/showmsg.hpp>

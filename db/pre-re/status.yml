@@ -1100,6 +1100,7 @@ Body:
     Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
     CalcFlags:
+      Batk: true
       Watk: true
     Flags:
       NoSave: true
@@ -1129,6 +1130,8 @@ Body:
       Watk_Element: true
   - Status: Armor
     DurationLookup: NPC_DEFENDER
+    CalcFlags:
+      Speed: true
   - Status: Armor_Element_Water
     Icon: EFST_RESIST_PROPERTY_WATER
     CalcFlags:
@@ -2056,7 +2059,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Inchitrate
-    DurationLookup: NPC_POWERUP
     CalcFlags:
       Hit: true
     Flags:
@@ -2075,7 +2077,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Incfleerate
-    DurationLookup: NPC_AGIUP
     CalcFlags:
       Flee: true
     Flags:
@@ -2823,23 +2824,12 @@ Body:
     Icon: EFST_INVINCIBLE
     DurationLookup: NPC_INVINCIBLE
     CalcFlags:
+      Aspd: true
       Speed: true
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    EndOnStart:
-      Invincibleoff: true
-  - Status: Invincibleoff
-    DurationLookup: NPC_INVINCIBLEOFF
-    CalcFlags:
-      Speed: true
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-    EndOnStart:
-      Invincible: true
   - Status: Manu_Atk
     Icon: EFST_MANU_ATK
     Flags:
@@ -7059,3 +7049,25 @@ Body:
       NoClearbuff: true
   - Status: WeaponBreaker
     DurationLookup: NPC_WEAPONBRAKER
+  - Status: Powerup
+    Icon: EFST_POWERUP
+    DurationLookup: NPC_POWERUP
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Agiup
+    Icon: EFST_AGIUP
+    DurationLookup: NPC_AGIUP
+    CalcFlags:
+      Speed: true
+      Flee: true
+    Flags:
+      NoClearbuff: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Decreaseagi: true

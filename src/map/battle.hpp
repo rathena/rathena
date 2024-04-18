@@ -36,8 +36,7 @@ enum e_base_damage_flag : uint16 {
 	BDMG_CRIT	= 0x0001, /// Critical hit damage
 	BDMG_ARROW  = 0x0002, /// Add arrow attack and use ranged damage formula
 	BDMG_MAGIC  = 0x0004, /// Use MATK for base damage (e.g. Magic Crasher)
-	BDMG_NOSIZE = 0x0008, /// Skip target size adjustment (e.g. Weapon Perfection, Extremity Fist)
-	BDMG_THROW  = 0x0010, /// Arrow attack should use melee damage formula (e.g., shuriken, kunai and venom knives)
+	BDMG_NOSIZE = 0x0008, /// Skip target size adjustment (e.g. Weapon Perfection)
 };
 
 /// Flag of the final calculation
@@ -79,6 +78,13 @@ enum e_battle_check_target : uint32 {
 	BCT_FRIEND		= BCT_NOENEMY,
 };
 
+/// Check flag for common damage bonuses such as: ATKpercent, Refine, Passive Mastery, Spirit Spheres and Star Crumbs
+enum e_bonus_chk_flag : uint8 {
+	BCHK_ALL,    /// Check if all of the common damage bonuses apply to this skill
+	BCHK_REFINE, /// Check if refine bonus is applied (pre-renewal only currently)
+	BCHK_STAR,   /// Check if Star Crumb bonus is applied (pre-renewal only currently)
+};
+
 /// Damage structure
 struct Damage {
 #ifdef RENEWAL
@@ -86,8 +92,7 @@ struct Damage {
 #endif
 	int64 damage, /// Right hand damage
 		damage2, /// Left hand damage
-		basedamage, /// Right hand base damage after def reduction
-		basedamage2; /// Left hand base damage after def reduction
+		basedamage; /// Right hand damage that a normal attack would deal
 	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,

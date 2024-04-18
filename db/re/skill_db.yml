@@ -5243,7 +5243,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-      IgnoreElement: true
+      IgnoreAtkCard: true
       IgnoreFlee: true
     Range: 1
     Hit: Single
@@ -5277,7 +5277,7 @@ Body:
         Time: 3000
       - Level: 10
         Time: 2000
-    Duration2: 20000
+    Duration2: 18000
     Cooldown:
       - Level: 1
         Time: 7500
@@ -6076,8 +6076,8 @@ Body:
   - Id: 192
     Name: NPC_MAGICALATTACK
     Description: Demon Shock Attack
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 1
+    Type: Magic
     TargetType: Attack
     Flags:
       IsNpc: true
@@ -6183,34 +6183,13 @@ Body:
     Name: NPC_KEEPING
     Description: Keeping
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 30000
     Status: Keeping
   - Id: 202
     Name: NPC_DARKBREATH
@@ -6250,60 +6229,19 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Barrier
   - Id: 205
     Name: NPC_DEFENDER
     Description: Defender
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Armor
   - Id: 206
     Name: NPC_LICK
@@ -9708,8 +9646,7 @@ Body:
   - Id: 349
     Name: NPC_POWERUP
     Description: Power Up
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 5
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -9718,19 +9655,19 @@ Body:
     Hit: Single
     Duration1:
       - Level: 1
-        Time: 10000
+        Time: 5000
       - Level: 2
-        Time: 15000
+        Time: 10000
       - Level: 3
-        Time: 20000
+        Time: 15000
       - Level: 4
-        Time: 25000
+        Time: 20000
       - Level: 5
-        Time: 30000
-    Status: IncHitRate
+        Time: 25000
+    Status: Powerup
   - Id: 350
     Name: NPC_AGIUP
-    Description: Agility UP
+    Description: Agility Up
     MaxLevel: 10
     TargetType: Self
     DamageFlags:
@@ -9742,14 +9679,24 @@ Body:
       - Level: 1
         Time: 10000
       - Level: 2
-        Time: 15000
-      - Level: 3
         Time: 20000
-      - Level: 4
-        Time: 25000
-      - Level: 5
+      - Level: 3
         Time: 30000
-    Status: IncFleeRate
+      - Level: 4
+        Time: 40000
+      - Level: 5
+        Time: 50000
+      - Level: 6
+        Time: 60000
+      - Level: 7
+        Time: 70000
+      - Level: 8
+        Time: 80000
+      - Level: 9
+        Time: 90000
+      - Level: 10
+        Time: 100000
+    Status: Agiup
   - Id: 351
     Name: NPC_SIEGEMODE
     Description: Siege Mode
@@ -16762,7 +16709,7 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: -1
+    Duration1: 300000
     Status: Invincible
   - Id: 686
     Name: NPC_INVINCIBLEOFF
@@ -16774,8 +16721,6 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: 60000
-    Status: InvincibleOff
   - Id: 687
     Name: NPC_ALLHEAL
     Description: Full Heal
@@ -18417,6 +18362,68 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 780
+    Name: NPC_CANE_OF_EVIL_EYE
+    Description: Cane of evil eye
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Ground
+    DamageFlags:
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+    Hit: Single
+    Range: 11  # unknown
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 2
+      - Level: 3
+        Count: 3
+      - Level: 4
+        Count: 4
+      - Level: 5
+        Count: 5
+      - Level: 6
+        Count: 6
+      - Level: 7
+        Count: 7
+      - Level: 8
+        Count: 8
+      - Level: 9
+        Count: 9
+      - Level: 10
+        Count: 10
+    CastTime: 500
+    Duration1:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 2000
+      - Level: 3
+        Time: 3000
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 5000
+      - Level: 6
+        Time: 6000
+      - Level: 7
+        Time: 7000
+      - Level: 8
+        Time: 8000
+      - Level: 9
+        Time: 9000
+      - Level: 10
+        Time: 10000
+    Unit:
+      Id: Cane_of_evil_eye
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
   - Id: 783
     Name: NPC_KILLING_AURA
     Description: Killing Aura
@@ -18498,32 +18505,13 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration2:
-      - Level: 1
-        Time: 15000
-      - Level: 2
-        Time: 20000
-      - Level: 3
-        Time: 25000
-      - Level: 4
-        Time: 30000
-      - Level: 5
-        Time: 35000
-      - Level: 6
-        Time: 40000
-      - Level: 7
-        Time: 45000
-      - Level: 8
-        Time: 50000
-      - Level: 9
-        Time: 55000
-      - Level: 10
-        Time: 60000
+    Duration2: 18000
     Requires:
       SpCost: 35
       Ammo:
         Dagger: true
       AmmoAmount: 1
+    Status: Poison
   - Id: 1005
     Name: RG_CLOSECONFINE
     Description: Close Confine
@@ -46969,9 +46957,7 @@ Body:
     Range: 2
     Hit: Single
     HitCount: 1
-    Duration1: 10000
     Cooldown: 30000
-    Status: InvincibleOff
   - Id: 8401
     Name: EL_CIRCLE_OF_FIRE
     Description: Circle of Fire
