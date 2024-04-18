@@ -56781,7 +56781,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      itemskill "RK_LUXANIMA",1;
+      if (strcharinfo(3) == "job3_rune02") {
+         itemskill "RK_LUXANIMA",1;
+      }
   - Id: 22541
     AegisName: PCBang_Coupon_Box6
     Name: PC Room Coupon Box VI
