@@ -3641,7 +3641,9 @@ int battle_get_misc_element(struct block_list* src, struct block_list* target, u
 static void battle_min_damage(struct Damage &wd, struct block_list &src, uint16 skill_id, int64 min) {
 	if (is_attack_right_handed(&src, skill_id)) {
 		wd.damage = cap_value(wd.damage, min, INT64_MAX);
+#ifndef RENEWAL
 		wd.basedamage = cap_value(wd.basedamage, min, INT64_MAX);
+#endif
 	}
 	// Left-hand damage is always capped to 0
 	if (is_attack_left_handed(&src, skill_id)) {
@@ -3839,9 +3841,11 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 	struct status_data *sstatus = status_get_status_data(src);
 	int t_class = status_get_class(target);
 
+#ifndef RENEWAL
 	if (sd) {
 		wd->basedamage = battle_addmastery(sd, target, wd->basedamage, 0);
 	}
+#endif
 
 	// Check if mastery damage applies to current skill
 	if (sd && battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL))
@@ -7054,10 +7058,12 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.flag = BF_WEAPON; //Initial Flag
 	wd.flag |= (skill_id||wd.miscflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
 	wd.isspdamage = false;
-	wd.damage = wd.damage2 = wd.basedamage =
+	wd.damage = wd.damage2 =
 #ifdef RENEWAL
 	wd.statusAtk = wd.statusAtk2 = wd.equipAtk = wd.equipAtk2 = wd.weaponAtk = wd.weaponAtk2 = wd.masteryAtk = wd.masteryAtk2 =
 	wd.percentAtk = wd.percentAtk2 =
+#else
+	wd.basedamage =
 #endif
 	0;
 
