@@ -10002,15 +10002,15 @@ Body:
     Element: Weapon
     Duration1:
       - Level: 1
-        Time: 4000
+        Time: 2000
       - Level: 2
-        Time: 8000
+        Time: 4000
       - Level: 3
-        Time: 12000
+        Time: 6000
       - Level: 4
-        Time: 16000
+        Time: 8000
       - Level: 5
-        Time: 24000
+        Time: 10000
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -10026,7 +10026,7 @@ Body:
         - Level: 5
           Amount: 12
       SpiritSphereCost: 1
-    Status: Stop
+    Status: Ankle
   - Id: 372
     Name: CH_CHAINCRUSH
     Description: Chain Crush Combo
@@ -10847,7 +10847,7 @@ Body:
       Weapon:
         1hSpear: true
         2hSpear: true
-    Status: Stop
+    Status: Ankle
   - Id: 398
     Name: LK_HEADCRUSH
     Description: Traumatic Blow
@@ -32799,7 +32799,7 @@ Body:
           Amount: 27
         - Level: 5
           Amount: 30
-    Status: Stop
+    Status: Ankle
   - Id: 8219
     Name: ML_DEFENDER
     Description: Defending_Aura
