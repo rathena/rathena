@@ -703,6 +703,7 @@ void do_init_buyingstore_autotrade( void ) {
 
 				// initialize player
 				CREATE(at->sd, map_session_data, 1); // TODO: Dont use Memory Manager allocation anymore and rely on the C++ container
+				new (at->sd) map_session_data();
 				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
 				at->sd->state.autotrade = 1|4;
 				if (battle_config.autotrade_monsterignore)
