@@ -1548,11 +1548,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 	}
 
-	status_change* tsc = status_get_sc(bl); //check target status
-
-	if( tsc && tsc->getSCE(SC_INVINCIBLE) && !tsc->getSCE(SC_INVINCIBLEOFF) )
-		return 1;
-
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
@@ -1565,6 +1560,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 			return damage; //These skills bypass everything else.
 	}
+
+	status_change* tsc = status_get_sc(bl); //check target status
 
 	// Nothing can reduce the damage, but Safety Wall and Millennium Shield can block it completely.
 	// So can defense sphere's but what the heck is that??? [Rytech]
@@ -1879,9 +1876,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 					break;
 			}
 		}
-
-		if( sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
-			damage += damage * 75 / 100;
 
 		if ((sce = sc->getSCE(SC_BLOODLUST)) && flag&BF_WEAPON && damage > 0 && rnd()%100 < sce->val3)
 			status_heal(src, damage * sce->val4 / 100, 0, 3);
@@ -2499,7 +2493,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 			if (atkmin > atkmax)
 				atkmin = atkmax;
 
-			if(flag&BDMG_ARROW && !(flag&BDMG_THROW)) { //Bows
+			if(flag&BDMG_ARROW) { //Bows
 				atkmin = atkmin*atkmax/100;
 				if (atkmin > atkmax)
 					atkmax = atkmin;
@@ -2843,6 +2837,10 @@ bool is_infinite_defense(struct block_list *target, int flag)
 	if(status_has_mode(tstatus,MD_IGNORERANGED) && (flag&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) )
 		return true;
 	if(status_has_mode(tstatus,MD_IGNOREMISC) && flag&(BF_MISC) )
+		return true;
+
+	status_change* tsc = status_get_sc(target);
+	if (tsc && tsc->getSCE(SC_INVINCIBLE))
 		return true;
 
 	return false;
@@ -3360,10 +3358,10 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
  * This function lists which skills are unaffected by refine bonus, masteries, Star Crumbs and Spirit Spheres
  * This function is also used to determine if atkpercent applies
  * @param skill_id: Skill being used
- * @param type 1 - Checking refine bonus; 2 - Checking Star Crumb bonus
+ * @param chk_flag: The bonus that is currently being checked for, see e_bonus_chk_flag
  * @return true = bonus applies; false = bonus does not apply
  */
-static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
+static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag chk_flag)
 {
 	switch (skill_id) {
 		// PC skills that are unaffected
@@ -3378,50 +3376,17 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, int type)
 		case NC_SELFDESTRUCTION:
 		case LG_SHIELDPRESS:
 		case LG_EARTHDRIVE:
-		// NPC skills that are unaffected
-		case NPC_FIREBREATH:
-		case NPC_ICEBREATH:
-		case NPC_THUNDERBREATH:
-		case NPC_ACIDBREATH:
-		case NPC_DARKNESSBREATH:
-		case NPC_VAMPIRE_GIFT:
 		case NPC_DRAGONBREATH:
 			return false;
 		case CR_GRANDCROSS:
 		case NPC_GRANDDARKNESS:
 			// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs / Spirit Spheres
-			if (type != 1)
+			if (chk_flag != BCHK_REFINE)
 				return false;
 			break;
 		case LK_SPIRALPIERCE:
-			// Spiral Pierce is influenced only by refine bonus and Star Crumbs
-			if (type != 1 && type != 2)
-				return false;
-			break;
-	}
-
-	return true;
-}
-
-/**
- * This function lists which skills are unaffected by EDP and the elemental bonus from Magnum Break / EDP
- * Unit skills (e.g. Bomb and Freezing Trap) are never affected.
- * @param skill_id: Skill being used
- * @return true = bonus applies; false = bonus does not apply
- */
-static bool battle_skill_stacks_edp_element(uint16 skill_id)
-{
-	switch (skill_id) {
-		case TF_SPRINKLESAND:
-		case AS_SPLASHER:
-		case ASC_METEORASSAULT:
-		case ASC_BREAKER:
-		case AS_VENOMKNIFE:
-		case AM_ACIDTERROR:
-			return false;
-		default:
-			//Unit skills
-			if (skill_get_unit_id(skill_id))
+			// Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
+			if (chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
 				return false;
 			break;
 	}
@@ -3676,7 +3641,9 @@ int battle_get_misc_element(struct block_list* src, struct block_list* target, u
 static void battle_min_damage(struct Damage &wd, struct block_list &src, uint16 skill_id, int64 min) {
 	if (is_attack_right_handed(&src, skill_id)) {
 		wd.damage = cap_value(wd.damage, min, INT64_MAX);
+#ifndef RENEWAL
 		wd.basedamage = cap_value(wd.basedamage, min, INT64_MAX);
+#endif
 	}
 	// Left-hand damage is always capped to 0
 	if (is_attack_left_handed(&src, skill_id)) {
@@ -3795,27 +3762,45 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 	// These mastery bonuses are non-elemental and should apply even if the attack misses
 	// They are still increased by the EDP/Magnum Break bonus damage (WATK_ELEMENT)
 	// In renewal these bonuses do not apply when the attack misses
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 2)) {
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, BCHK_STAR)) {
 		// Star Crumb bonus damage
 		ATK_ADD2(wd->damage, wd->damage2, sd->right_weapon.star, sd->left_weapon.star);
 	}
 	// Check if general mastery bonuses apply (above check is only for Star Crumb)
-	if (battle_skill_stacks_masteries_vvs(skill_id, 0)) {
+	if (battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL)) {
 		// Spirit Sphere bonus damage
 		ATK_ADD(wd->damage, wd->damage2, battle_get_spiritball_damage(*wd, *src, skill_id));
 
 		// Skill-specific bonuses
-		if (skill_id == TF_POISON) {
-			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
-			// Envenom applies the attribute table to the base damage and then again to the final damage
-			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+		switch(skill_id) {
+			case TF_POISON:
+				ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv);
+				// Envenom applies the attribute table to the base damage and then again to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
+			case NJ_SYURIKEN:
+				ATK_ADD(wd->damage, wd->damage2, 4 * skill_lv);
+				if (sd) {
+					ATK_ADD(wd->damage, wd->damage2, 3 * pc_checkskill(sd, NJ_TOBIDOUGU));
+					ATK_ADD(wd->damage, wd->damage2, sd->bonus.arrow_atk);
+				}
+				// Applies attribute table on neutral element to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
+			case NJ_KUNAI:
+				if (sd) {
+					ATK_ADD(wd->damage, wd->damage2, 3 * sd->bonus.arrow_atk);
+				}
+				// Applies attribute table on neutral element to the final damage
+				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, 1);
+				break;
 		}
 	}
 
-	// These bonuses do not apply to skills that ignore element, unit skills and skills that have their own base damage formula
+	// These bonuses do not apply to skills that ignore +% damage cards
 	// If damage was reduced below 0 and was not increased again to a positive value through mastery bonuses, these bonuses are ignored
 	// Any of these are only applied to your right hand weapon in pre-renewal
-	if (!nk[NK_IGNOREELEMENT] && (wd->damage > 0 || wd->damage2 > 0) && sc && battle_skill_stacks_edp_element(skill_id)) {
+	if (!nk[NK_IGNOREELEMENT] && !nk[NK_IGNOREATKCARD] && (wd->damage > 0 || wd->damage2 > 0) && sc) {
 
 		// EDP bonus damage
 		// This has to be applied after mastery bonuses but still before the elemental extra damage
@@ -3856,12 +3841,14 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 	struct status_data *sstatus = status_get_status_data(src);
 	int t_class = status_get_class(target);
 
+#ifndef RENEWAL
 	if (sd) {
 		wd->basedamage = battle_addmastery(sd, target, wd->basedamage, 0);
 	}
+#endif
 
 	// Check if mastery damage applies to current skill
-	if (sd && battle_skill_stacks_masteries_vvs(skill_id, 0))
+	if (sd && battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL))
 	{	//Add mastery damage
 		uint16 skill;
 
@@ -3886,14 +3873,12 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 		ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, sd->right_weapon.star, sd->left_weapon.star);
 		// Spirit Sphere bonus damage
 		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_get_spiritball_damage(*wd, *src, skill_id));
-#endif
 
-		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
+		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
 			ATK_ADD(wd->damage, wd->damage2, 3 * skill);
-#ifdef RENEWAL
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 3 * skill);
-#endif
 		}
+#endif
 
 		switch(skill_id) {
 			case RA_WUGDASH:
@@ -4184,8 +4169,9 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 
 		default:
 			// Flags that apply to both pre-renewal and renewal
-			bflag = (is_attack_critical(wd, src, target, skill_id, skill_lv, false) ? BDMG_CRIT : BDMG_NONE) |
-				(!skill_id && sc && sc->getSCE(SC_CHANGE) ? BDMG_MAGIC : BDMG_NONE);
+			bflag = BDMG_NONE;
+			if (is_attack_critical(wd, src, target, skill_id, skill_lv, false)) bflag |= BDMG_CRIT;
+			if (!skill_id && sc && sc->getSCE(SC_CHANGE)) bflag |= BDMG_MAGIC;
 #ifdef RENEWAL
 			if (sd)
 				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
@@ -4196,24 +4182,26 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			}
 #else
 			// Pre-renewal exclusive flags
-			if (is_skill_using_arrow(src, skill_id)) bflag |= BDMG_ARROW;
 			if (skill_id == HW_MAGICCRASHER) bflag |= BDMG_MAGIC;
 			if (sc && sc->getSCE(SC_WEAPONPERFECTION)) bflag |= BDMG_NOSIZE;
 			if (is_skill_using_arrow(src, skill_id) && sd) {
 				switch(sd->status.weapon) {
 					case W_BOW:
+						bflag |= BDMG_ARROW;
 						break;
 					case W_REVOLVER:
 					case W_RIFLE:
 					case W_GATLING:
 					case W_SHOTGUN:
 					case W_GRENADE:
-						if (bflag & BDMG_CRIT) {
-							bflag &= ~(BDMG_ARROW); // Criticals with any guns are calculated like melee criticals
+						// Criticals with any guns are calculated like melee criticals
+						if (!(bflag & BDMG_CRIT)) {
+							bflag |= BDMG_ARROW;
 						}
 						break;
 					default:
-						bflag |= BDMG_THROW; // for ex. shuriken must not be influenced by DEX
+						// Attacks that use ammo are calculated like melee attacks as long as no ranged weapon is equipped
+						// Some skills manually add arrow_atk as mastery bonus later (e.g. Throw Shuriken, Throw Kunai)
 						break;
 				}
 			}
@@ -4446,7 +4434,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
  */
 static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_id, status_change& sc)
 {
-	if (!battle_skill_stacks_masteries_vvs(skill_id, 0))
+	if (bl.type == BL_PC && !battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL))
 		return 100;
 
 	int atkpercent = 100;
@@ -4473,10 +4461,11 @@ static unsigned short battle_get_atkpercent(struct block_list& bl, uint16 skill_
 		atkpercent += sc.getSCE(SC_BLOODLUST)->val2;
 	if (sc.getSCE(SC_FLEET))
 		atkpercent += sc.getSCE(SC_FLEET)->val3;
+	if (sc.getSCE(SC_INVINCIBLE))
+		atkpercent += sc.getSCE(SC_INVINCIBLE)->val2;
 
 	/* Only few selected skills should use this function, DO NOT ADD any that are not caused by the skills listed below
 	* TODO:
-	* NPC_INVINCIBLE (+100)
 	* GD_GUARDUP (2*skLevel+8)
 	* EL_WATERBARRIER (-3)
 	* SC_ENERVATION (-30/-40/-50)
@@ -6286,9 +6275,6 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 			else
 				atk = sstatus->matk_min;
 			break;
-		case NJ_SYURIKEN:
-			atk = 4 * skill_lv;
-			break;
 #endif
 #ifdef RENEWAL
 		case HT_FREEZINGTRAP:
@@ -6699,7 +6685,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 #ifndef RENEWAL
 	//Refine bonus
 	if (sd) {
-		if (battle_skill_stacks_masteries_vvs(skill_id, 1)) {
+		if (battle_skill_stacks_masteries_vvs(skill_id, BCHK_REFINE)) {
 			ATK_ADD2(wd->damage, wd->damage2, sstatus->rhw.atk2, sstatus->lhw.atk2);
 		}
 		wd->basedamage += sstatus->rhw.atk2;
@@ -7072,10 +7058,12 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.flag = BF_WEAPON; //Initial Flag
 	wd.flag |= (skill_id||wd.miscflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
 	wd.isspdamage = false;
-	wd.damage = wd.damage2 = wd.basedamage =
+	wd.damage = wd.damage2 =
 #ifdef RENEWAL
 	wd.statusAtk = wd.statusAtk2 = wd.equipAtk = wd.equipAtk2 = wd.weaponAtk = wd.weaponAtk2 = wd.masteryAtk = wd.masteryAtk2 =
 	wd.percentAtk = wd.percentAtk2 =
+#else
+	wd.basedamage =
 #endif
 	0;
 
@@ -7353,11 +7341,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		wd.dmg_lv = ATK_FLEE;
 	else if(!(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
 
+#ifndef RENEWAL
 		// First call function with skill_id 0 to get base damage of a normal attack
 		battle_calc_skill_base_damage(&wd, src, target, 0, 0); // base damage
 		wd.basedamage = wd.damage;
 		// Now get actual skill damage
 		if (skill_id != 0)
+#endif
 			battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
 
 		int64 ratio = 0;
@@ -7565,11 +7555,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 
 	switch (skill_id) {
-#ifndef RENEWAL
-		case NJ_KUNAI:
-			ATK_ADD(wd.damage, wd.damage2, 90);
-			break;
-#endif
 		case TK_DOWNKICK:
 		case TK_STORMKICK:
 		case TK_TURNKICK:
@@ -9722,7 +9707,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			short index = sd->equip_index[EQI_AMMO];
 			if (index < 0) {
 				if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
-					clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+					clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
 				else
 					clif_arrow_fail(sd,0);
 				return ATK_NONE;
@@ -9741,7 +9726,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					case W_GATLING:
 					case W_SHOTGUN:
 						if (sd->inventory_data[index]->subtype != AMMO_BULLET) {
-							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+							clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
 							return ATK_NONE;
 						}
 						break;
@@ -9752,7 +9737,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 #else
 							AMMO_GRENADE) {
 #endif
-							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+							clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
 							return ATK_NONE;
 						}
 						break;
@@ -10087,7 +10072,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					}
 
 					if( type != CAST_GROUND ){
-						clif_skill_fail(sd,r_skill,USESKILL_FAIL_LEVEL,0);
+						clif_skill_fail( *sd, r_skill );
 						map_freeblock_unlock();
 						return wd.dmg_lv;
 					}

@@ -303,9 +303,8 @@ T safe_addition_cap(T a, T b, T cap) {
 
 	if (rathena::util::safe_addition(a, b, result)) {
 		return cap;
-	} else {
-		return result;
 	}
+	return std::min(result, cap);
 }
 
 template <typename T>
