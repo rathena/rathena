@@ -8940,7 +8940,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	switch (skill_id) {
 		case TF_THROWSTONE:
-			md.damage = 50;
+			if (sd)
+				md.damage = 50;
+			else
+				md.damage = 30;
 			md.flag |= BF_WEAPON;
 			break;
 		case NPC_KILLING_AURA:
@@ -11126,8 +11129,8 @@ static const struct _battle_data {
 	{ "day_duration",                       &battle_config.day_duration,                    0,      0,      INT_MAX,        },
 	{ "night_duration",                     &battle_config.night_duration,                  0,      0,      INT_MAX,        },
 	{ "mob_remove_delay",                   &battle_config.mob_remove_delay,                60000,  1000,   INT_MAX,        },
-	{ "mob_active_time",                    &battle_config.mob_active_time,                 0,      0,      INT_MAX,        },
-	{ "boss_active_time",                   &battle_config.boss_active_time,                0,      0,      INT_MAX,        },
+	{ "mob_active_time",                    &battle_config.mob_active_time,                 5000,   0,      INT_MAX,        },
+	{ "boss_active_time",                   &battle_config.boss_active_time,                5000,   0,      INT_MAX,        },
 	{ "sg_miracle_skill_duration",          &battle_config.sg_miracle_skill_duration,       3600000, 0,     INT_MAX,        },
 	{ "hvan_explosion_intimate",            &battle_config.hvan_explosion_intimate,         45000,  0,      100000,         },
 	{ "quest_exp_rate",                     &battle_config.quest_exp_rate,                  100,    0,      INT_MAX,        },
@@ -11377,6 +11380,7 @@ static const struct _battle_data {
 	{ "feature.dynamicnpc_direction",       &battle_config.feature_dynamicnpc_direction,    0,      0,      1,              },
 
 	{ "mob_respawn_time",                   &battle_config.mob_respawn_time,                1000,   1000,   INT_MAX,        },
+	{ "mob_unlock_time",                    &battle_config.mob_unlock_time,                 2000,   0,      INT_MAX,        },
 
 	{ "feature.stylist",                    &battle_config.feature_stylist,                 1,      0,      1,              },
 	{ "feature.banking_state_enforce",      &battle_config.feature_banking_state_enforce,   0,      0,      1,              },

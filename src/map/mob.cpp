@@ -1164,6 +1164,7 @@ int mob_spawn (struct mob_data *md)
 	md->last_linktime = tick;
 	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
+	md->last_canmove = tick;
 
 	t_tick c = tick - MOB_MAX_DELAY;
 
@@ -1720,6 +1721,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	mode = status_get_mode(&md->bl);
 
 	can_move = (mode&MD_CANMOVE) && unit_can_move(&md->bl);
+	if (can_move)
+		md->last_canmove = tick;
 
 	if (md->target_id)
 	{	//Check validity of current target. [Skotlex]
@@ -1956,13 +1959,21 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		&& mob_is_chasing(md->state.skillstate))
 		return true;
 
-	//Out of range...
-	if (!(mode&MD_CANMOVE) || (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0))
-	{	//Can't chase. Immobile and trapped mobs should unlock target and use an idle skill.
+	// Out of range
+	if (!(mode&MD_CANMOVE) || (!can_move && (md->sc.cant.move || DIFF_TICK(tick, md->ud.canmove_tick) > 0)))
+	{	// Can't chase. Immobile and trapped mobs will use idle skills and unlock their target after a while
 		if (md->ud.attacktimer == INVALID_TIMER)
-		{ //Only unlock target if no more attack delay left
-			//This handles triggering idle/walk skill.
-			mob_unlocktarget(md,tick);
+		{ // Only switch mode if no more attack delay left
+			if (DIFF_TICK(tick, md->last_canmove) > battle_config.mob_unlock_time) {
+				// Unlock target or use idle/walk skill
+				mob_unlocktarget(md, tick);
+			}
+			else {
+				// Use idle skill but keep target for now
+				md->state.skillstate = MSS_IDLE;
+				if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+					mobskill_use(md, tick, -1);
+			}
 		}
 		return true;
 	}
