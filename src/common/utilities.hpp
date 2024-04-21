@@ -278,9 +278,8 @@ namespace rathena {
 
 			if( rathena::util::safe_addition( a, b, result ) ){
 				return cap;
-			}else{
-				return result;
 			}
+			return std::min(result, cap);
 		}
 
 		template <typename T> void tolower( T& string ){
