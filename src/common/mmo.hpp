@@ -34,7 +34,7 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
-	#define MAX_HOTKEYS_DB ((MAX_HOTKEYS) * 2)
+	#define MAX_HOTKEYS_DB ((MAX_HOTKEYS)*2)
 #else
 	#define MAX_HOTKEYS_DB MAX_HOTKEYS
 #endif
@@ -1163,7 +1163,7 @@ struct clan {
 	#define MIN_CHARS (MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING) // Default number of characters per account.
 #endif
 
-#if(MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
+#if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
 	#error Config of MAX_CHARS is invalid
 #endif
 

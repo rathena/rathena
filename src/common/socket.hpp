@@ -31,10 +31,10 @@ typedef long in_addr_t;
 #define RFIFOHEAD(fd)
 #define WFIFOHEAD(fd, size) \
 	do { \
-		if((fd) && session[(fd)]->wdata_size + (size) > session[(fd)]->max_wdata) { \
+		if ((fd) && session[(fd)]->wdata_size + (size) > session[(fd)]->max_wdata) { \
 			_realloc_writefifo((fd), (size), ALC_MARK); \
 		} \
-	} while(false)
+	} while (false)
 #define RFIFOP(fd, pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd, pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
@@ -56,14 +56,14 @@ typedef long in_addr_t;
 #define RFIFOREST(fd) (session[fd]->flag.eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
 #define RFIFOFLUSH(fd) \
 	do { \
-		if(session[fd]->rdata_size == session[fd]->rdata_pos) { \
+		if (session[fd]->rdata_size == session[fd]->rdata_pos) { \
 			session[fd]->rdata_size = session[fd]->rdata_pos = 0; \
 		} else { \
 			session[fd]->rdata_size -= session[fd]->rdata_pos; \
 			memmove(session[fd]->rdata, session[fd]->rdata + session[fd]->rdata_pos, session[fd]->rdata_size); \
 			session[fd]->rdata_pos = 0; \
 		} \
-	} while(0)
+	} while (0)
 
 // buffer I/O macros
 #define RBUFP(p, pos) (((uint8*)(p)) + (pos))
@@ -80,9 +80,9 @@ typedef long in_addr_t;
 #define WBUFL(p, pos) (*(uint32*)WBUFP((p), (pos)))
 #define WBUFQ(p, pos) (*(uint64*)WBUFP((p), (pos)))
 
-#define TOB(n) ((uint8)((n) & UINT8_MAX))
-#define TOW(n) ((uint16)((n) & UINT16_MAX))
-#define TOL(n) ((uint32)((n) & UINT32_MAX))
+#define TOB(n) ((uint8)((n)&UINT8_MAX))
+#define TOW(n) ((uint16)((n)&UINT16_MAX))
+#define TOL(n) ((uint32)((n)&UINT32_MAX))
 
 // Struct declaration
 typedef int (*RecvFunc)(int fd);
@@ -170,7 +170,7 @@ uint32 host2ip(const char* hostname);
 const char* ip2str(uint32 ip, char ip_str[16]);
 uint32 str2ip(const char* ip_str);
 #define CONVIP(ip) ((ip) >> 24) & 0xFF, ((ip) >> 16) & 0xFF, ((ip) >> 8) & 0xFF, ((ip) >> 0) & 0xFF
-#define MAKEIP(a, b, c, d) (uint32)((((a) & 0xFF) << 24) | (((b) & 0xFF) << 16) | (((c) & 0xFF) << 8) | (((d) & 0xFF) << 0))
+#define MAKEIP(a, b, c, d) (uint32)((((a)&0xFF) << 24) | (((b)&0xFF) << 16) | (((c)&0xFF) << 8) | (((d)&0xFF) << 0))
 uint16 ntows(uint16 netshort);
 
 int socket_getips(uint32* ips, int max);
@@ -201,7 +201,7 @@ extern int8 packet_buffer[UINT16_MAX];
 
 template <typename P>
 bool socket_send(int fd, P& packet) {
-	if(!session_isActive(fd)) {
+	if (!session_isActive(fd)) {
 		return false;
 	}
 
@@ -214,7 +214,7 @@ bool socket_send(int fd, P& packet) {
 
 template <typename P>
 bool socket_send(int fd, P* packet) {
-	if(!session_isActive(fd)) {
+	if (!session_isActive(fd)) {
 		return false;
 	}
 

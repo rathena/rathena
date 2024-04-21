@@ -27,7 +27,7 @@
 //////////////////////////////////////////////////////////////////////////
 // setting some defines on platforms
 //////////////////////////////////////////////////////////////////////////
-#if(defined(__WIN32__) || defined(__WIN32) || defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER) || defined(__BORLANDC__)) && !defined(WIN32)
+#if (defined(__WIN32__) || defined(__WIN32) || defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER) || defined(__BORLANDC__)) && !defined(WIN32)
 	#define WIN32
 #endif
 
@@ -35,7 +35,7 @@
 	#define MINGW
 #endif
 
-#if(defined(__CYGWIN__) || defined(__CYGWIN32__)) && !defined(CYGWIN)
+#if (defined(__CYGWIN__) || defined(__CYGWIN32__)) && !defined(CYGWIN)
 	#define CYGWIN
 #endif
 

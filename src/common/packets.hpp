@@ -232,13 +232,13 @@ private:
 
 public:
 	void add(int16 packetType, bool fixed, int16 size, std::function<bool(int fd, sessiontype& sd)> func) {
-		if(fixed) {
-			if(size < 2) {
+		if (fixed) {
+			if (size < 2) {
 				ShowError("Definition for packet 0x%04x is invalid. Minimum size for a fixed length packet is 2 bytes.\n", packetType);
 				return;
 			}
 		} else {
-			if(size < 4) {
+			if (size < 4) {
 				ShowError("Definition for packet 0x%04x is invalid. Minimum size for a dynamic length packet is 2 bytes.\n", packetType);
 				return;
 			}
@@ -254,7 +254,7 @@ public:
 	bool handle(int fd, sessiontype& sd) {
 		int16 remaining = static_cast<int16>(RFIFOREST(fd));
 
-		if(remaining < 2) {
+		if (remaining < 2) {
 			ShowError("Did not receive enough bytes to process a packet\n");
 			set_eof(fd);
 			return false;
@@ -264,14 +264,14 @@ public:
 
 		s_packet_info* info = rathena::util::umap_find(this->infos, p->packetType);
 
-		if(info == nullptr) {
+		if (info == nullptr) {
 			ShowError("Received unknown packet 0x%04x\n", p->packetType);
 			set_eof(fd);
 			return false;
 		}
 
-		if(info->fixed) {
-			if(remaining < info->size) {
+		if (info->fixed) {
+			if (remaining < info->size) {
 				ShowError("Invalid size %hd for packet 0x%04x with fixed size of %hd\n", remaining, p->packetType, info->size);
 				set_eof(fd);
 				return false;
@@ -283,13 +283,13 @@ public:
 
 			return ret;
 		} else {
-			if(remaining < info->size) {
+			if (remaining < info->size) {
 				ShowError("Invalid size %hd for packet 0x%04x with dynamic minimum size of %hd\n", remaining, p->packetType, info->size);
 				set_eof(fd);
 				return false;
 			}
 
-			if(remaining < p->packetLength) {
+			if (remaining < p->packetLength) {
 				ShowError("Invalid size %hd for packet 0x%04x with dynamic size of %hd\n", remaining, p->packetType, p->packetLength);
 				set_eof(fd);
 				return false;

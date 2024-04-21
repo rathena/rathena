@@ -19,14 +19,14 @@ bool YamlDatabase::nodeExists(const ryml::NodeRef& node, const std::string& name
 bool YamlDatabase::nodesExist(const ryml::NodeRef& node, std::initializer_list<const std::string> names) {
 	bool missing = false;
 
-	for(const std::string& name : names) {
-		if(!this->nodeExists(node, name)) {
+	for (const std::string& name : names) {
+		if (!this->nodeExists(node, name)) {
 			ShowError("Missing mandatory node \"%s\".\n", name.c_str());
 			missing = true;
 		}
 	}
 
-	if(missing) {
+	if (missing) {
 		this->invalidWarning(node, "At least one mandatory node did not exist.\n");
 		return false;
 	}
@@ -35,7 +35,7 @@ bool YamlDatabase::nodesExist(const ryml::NodeRef& node, std::initializer_list<c
 }
 
 bool YamlDatabase::verifyCompatibility(const ryml::Tree& tree) {
-	if(!this->nodeExists(tree.rootref(), "Header")) {
+	if (!this->nodeExists(tree.rootref(), "Header")) {
 		ShowError("No database \"Header\" was found.\n");
 		return false;
 	}
@@ -44,26 +44,26 @@ bool YamlDatabase::verifyCompatibility(const ryml::Tree& tree) {
 
 	std::string tmpType;
 
-	if(!this->asString(headerNode, "Type", tmpType)) {
+	if (!this->asString(headerNode, "Type", tmpType)) {
 		return false;
 	}
 
-	if(this->type != tmpType) {
+	if (this->type != tmpType) {
 		ShowError("Database type mismatch: %s != %s.\n", this->type.c_str(), tmpType.c_str());
 		return false;
 	}
 
 	uint16 tmpVersion;
 
-	if(!this->asUInt16(headerNode, "Version", tmpVersion)) {
+	if (!this->asUInt16(headerNode, "Version", tmpVersion)) {
 		return false;
 	}
 
-	if(tmpVersion != this->version) {
-		if(tmpVersion > this->version) {
+	if (tmpVersion != this->version) {
+		if (tmpVersion > this->version) {
 			ShowError("Database version %hu is not supported. Maximum version is: %hu\n", tmpVersion, this->version);
 			return false;
-		} else if(tmpVersion >= this->minimumVersion) {
+		} else if (tmpVersion >= this->minimumVersion) {
 			ShowWarning("Database version %hu is outdated and should be updated. Current version is: %hu\n", tmpVersion, this->version);
 			ShowWarning("Reduced compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
 		} else {
@@ -92,7 +92,7 @@ bool YamlDatabase::reload() {
 bool YamlDatabase::load(const std::string& path) {
 	ShowStatus("Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str());
 	FILE* f = fopen(path.c_str(), "r");
-	if(f == nullptr) {
+	if (f == nullptr) {
 		ShowError("Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		return false;
 	}
@@ -110,7 +110,7 @@ bool YamlDatabase::load(const std::string& path) {
 
 	try {
 		tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
-	} catch(const std::runtime_error& e) {
+	} catch (const std::runtime_error& e) {
 		ShowError("Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		ShowError("There is likely a syntax error in the file.\n");
 		ShowError("Error message: %s\n", e.what());
@@ -121,7 +121,7 @@ bool YamlDatabase::load(const std::string& path) {
 	// Required here already for header error reporting
 	this->currentFile = path;
 
-	if(!this->verifyCompatibility(tree)) {
+	if (!this->verifyCompatibility(tree)) {
 		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
 		aFree(buf);
 		return false;
@@ -129,10 +129,10 @@ bool YamlDatabase::load(const std::string& path) {
 
 	const ryml::NodeRef& header = tree["Header"];
 
-	if(this->nodeExists(header, "Clear")) {
+	if (this->nodeExists(header, "Clear")) {
 		bool clear;
 
-		if(this->asBool(header, "Clear", clear) && clear) {
+		if (this->asBool(header, "Clear", clear) && clear) {
 			this->clear();
 		}
 	}
@@ -152,7 +152,7 @@ void YamlDatabase::loadingFinished() {
 void YamlDatabase::parse(const ryml::Tree& tree) {
 	uint64 count = 0;
 
-	if(this->nodeExists(tree.rootref(), "Body")) {
+	if (this->nodeExists(tree.rootref(), "Body")) {
 		const ryml::NodeRef& bodyNode = tree["Body"];
 		size_t childNodesCount = bodyNode.num_children();
 		const char* fileName = this->currentFile.c_str();
@@ -162,7 +162,7 @@ void YamlDatabase::parse(const ryml::Tree& tree) {
 
 		ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
 
-		for(const ryml::NodeRef& node : bodyNode) {
+		for (const ryml::NodeRef& node : bodyNode) {
 			count += this->parseBodyNode(node);
 #ifdef DETAILED_LOADING_OUTPUT
 			ShowStatus("Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName);
@@ -174,23 +174,23 @@ void YamlDatabase::parse(const ryml::Tree& tree) {
 }
 
 void YamlDatabase::parseImports(const ryml::Tree& rootNode) {
-	if(this->nodeExists(rootNode.rootref(), "Footer")) {
+	if (this->nodeExists(rootNode.rootref(), "Footer")) {
 		const ryml::NodeRef& footerNode = rootNode["Footer"];
 
-		if(this->nodeExists(footerNode, "Imports")) {
+		if (this->nodeExists(footerNode, "Imports")) {
 			const ryml::NodeRef& importsNode = footerNode["Imports"];
 
-			for(const ryml::NodeRef& node : importsNode) {
+			for (const ryml::NodeRef& node : importsNode) {
 				std::string importFile;
 
-				if(!this->asString(node, "Path", importFile)) {
+				if (!this->asString(node, "Path", importFile)) {
 					continue;
 				}
 
-				if(this->nodeExists(node, "Mode")) {
+				if (this->nodeExists(node, "Mode")) {
 					std::string mode;
 
-					if(!this->asString(node, "Mode", mode)) {
+					if (!this->asString(node, "Mode", mode)) {
 						continue;
 					}
 
@@ -199,7 +199,7 @@ void YamlDatabase::parseImports(const ryml::Tree& rootNode) {
 
 					// RENEWAL mode with RENEWAL_ASPD off, load pre-re ASPD
 	#ifndef RENEWAL_ASPD
-					if(importFile.find("job_aspd.yml") != std::string::npos) {
+					if (importFile.find("job_aspd.yml") != std::string::npos) {
 						compiledMode = "Prerenewal";
 					}
 	#endif
@@ -207,18 +207,18 @@ void YamlDatabase::parseImports(const ryml::Tree& rootNode) {
 					std::string compiledMode = "Prerenewal";
 #endif
 
-					if(compiledMode != mode) {
+					if (compiledMode != mode) {
 						// Skip this import
 						continue;
 					}
 				}
 
-				if(this->nodeExists(node, "Generator")) {
+				if (this->nodeExists(node, "Generator")) {
 					bool isGenerator;
-					if(!this->asBool(node, "Generator", isGenerator)) {
+					if (!this->asBool(node, "Generator", isGenerator)) {
 						continue;
 					}
-					if(!(shouldLoadGenerator && isGenerator)) {
+					if (!(shouldLoadGenerator && isGenerator)) {
 						continue; // skip import
 					}
 				}
@@ -231,17 +231,17 @@ void YamlDatabase::parseImports(const ryml::Tree& rootNode) {
 
 template <typename R>
 bool YamlDatabase::asType(const ryml::NodeRef& node, const std::string& name, R& out) {
-	if(this->nodeExists(node, name)) {
+	if (this->nodeExists(node, name)) {
 		const ryml::NodeRef& dataNode = node[c4::to_csubstr(name)];
 
-		if(dataNode.val_is_null()) {
+		if (dataNode.val_is_null()) {
 			this->invalidWarning(node, "Node \"%s\" is missing a value.\n", name.c_str());
 			return false;
 		}
 
 		try {
 			dataNode >> out;
-		} catch(std::runtime_error const&) {
+		} catch (std::runtime_error const&) {
 			this->invalidWarning(node, "Node \"%s\" cannot be parsed as %s.\n", name.c_str(), typeid(R).name());
 			return false;
 		}
@@ -256,7 +256,7 @@ bool YamlDatabase::asType(const ryml::NodeRef& node, const std::string& name, R&
 bool YamlDatabase::asBool(const ryml::NodeRef& node, const std::string& name, bool& out) {
 	const ryml::NodeRef& targetNode = node[c4::to_csubstr(name)];
 
-	if(targetNode.val_is_null()) {
+	if (targetNode.val_is_null()) {
 		this->invalidWarning(node, "Node \"%s\" is missing a value.\n", name.c_str());
 		return false;
 	}
@@ -267,10 +267,10 @@ bool YamlDatabase::asBool(const ryml::NodeRef& node, const std::string& name, bo
 
 	util::tolower(str);
 
-	if(str == "true") {
+	if (str == "true") {
 		out = true;
 		return true;
-	} else if(str == "false") {
+	} else if (str == "false") {
 		out = false;
 		return true;
 	} else {
@@ -316,12 +316,12 @@ bool YamlDatabase::asString(const ryml::NodeRef& node, const std::string& name, 
 }
 
 bool YamlDatabase::asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum) {
-	if(this->asUInt16(node, name, out)) {
-		if(out > maximum) {
+	if (this->asUInt16(node, name, out)) {
+		if (out > maximum) {
 			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" with value %" PRIu16 " exceeds maximum of %" PRIu16 ".\n", name.c_str(), out, maximum);
 
 			return false;
-		} else if(out == 0) {
+		} else if (out == 0) {
 			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" needs to be at least 1.\n", name.c_str());
 
 			return false;
@@ -334,12 +334,12 @@ bool YamlDatabase::asUInt16Rate(const ryml::NodeRef& node, const std::string& na
 }
 
 bool YamlDatabase::asUInt32Rate(const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum) {
-	if(this->asUInt32(node, name, out)) {
-		if(out > maximum) {
+	if (this->asUInt32(node, name, out)) {
+		if (out > maximum) {
 			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" with value %" PRIu32 " exceeds maximum of %" PRIu32 ".\n", name.c_str(), out, maximum);
 
 			return false;
-		} else if(out == 0) {
+		} else if (out == 0) {
 			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" needs to be at least 1.\n", name.c_str());
 
 			return false;

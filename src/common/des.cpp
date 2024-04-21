@@ -21,9 +21,9 @@ static void IP(BIT64* src) {
 	};
 
 	size_t i;
-	for(i = 0; i < ARRAYLENGTH(ip_table); ++i) {
+	for (i = 0; i < ARRAYLENGTH(ip_table); ++i) {
 		uint8_t j = ip_table[i] - 1;
-		if(src->b[(j >> 3) & 7] & mask[j & 7]) {
+		if (src->b[(j >> 3) & 7] & mask[j & 7]) {
 			tmp.b[(i >> 3) & 7] |= mask[i & 7];
 		}
 	}
@@ -41,9 +41,9 @@ static void FP(BIT64* src) {
 	};
 
 	size_t i;
-	for(i = 0; i < ARRAYLENGTH(fp_table); ++i) {
+	for (i = 0; i < ARRAYLENGTH(fp_table); ++i) {
 		uint8_t j = fp_table[i] - 1;
-		if(src->b[(j >> 3) & 7] & mask[j & 7]) {
+		if (src->b[(j >> 3) & 7] & mask[j & 7]) {
 			tmp.b[(i >> 3) & 7] |= mask[i & 7];
 		}
 	}
@@ -56,15 +56,15 @@ static void FP(BIT64* src) {
 static void E(BIT64* src) {
 	BIT64 tmp = {{0}};
 
-	if(false) { // original
+	if (false) { // original
 		static const uint8_t expand_table[48] = {
 			32, 1, 2, 3, 4, 5, 4, 5, 6, 7, 8, 9, 8, 9, 10, 11, 12, 13, 12, 13, 14, 15, 16, 17, 16, 17, 18, 19, 20, 21, 20, 21, 22, 23, 24, 25, 24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32, 1,
 		};
 
 		size_t i;
-		for(i = 0; i < ARRAYLENGTH(expand_table); ++i) {
+		for (i = 0; i < ARRAYLENGTH(expand_table); ++i) {
 			uint8_t j = expand_table[i] - 1;
-			if(src->b[j / 8 + 4] & mask[j % 8]) {
+			if (src->b[j / 8 + 4] & mask[j % 8]) {
 				tmp.b[i / 6 + 0] |= mask[i % 6];
 			}
 		}
@@ -91,9 +91,9 @@ static void TP(BIT64* src) {
 	};
 
 	size_t i;
-	for(i = 0; i < ARRAYLENGTH(tp_table); ++i) {
+	for (i = 0; i < ARRAYLENGTH(tp_table); ++i) {
 		uint8_t j = tp_table[i] - 1;
-		if(src->b[(j >> 3) + 0] & mask[j & 7]) {
+		if (src->b[(j >> 3) + 0] & mask[j & 7]) {
 			tmp.b[(i >> 3) + 4] |= mask[i & 7];
 		}
 	}
@@ -128,7 +128,7 @@ static void SBOX(BIT64* src) {
 										   }};
 
 	size_t i;
-	for(i = 0; i < ARRAYLENGTH(s_table); ++i) {
+	for (i = 0; i < ARRAYLENGTH(s_table); ++i) {
 		tmp.b[i] = (s_table[i][src->b[i * 2 + 0]] & 0xf0) | (s_table[i][src->b[i * 2 + 1]] & 0x0f);
 	}
 
@@ -159,7 +159,7 @@ void des_decrypt(unsigned char* data, size_t size) {
 	BIT64* p = (BIT64*)data;
 	size_t i;
 
-	for(i = 0; i * 8 < size; i += 8) {
+	for (i = 0; i * 8 < size; i += 8) {
 		des_decrypt_block(p);
 	}
 }

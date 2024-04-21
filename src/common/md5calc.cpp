@@ -91,7 +91,7 @@ static void MD5_Round_Calculate(const unsigned char *block, unsigned int *A2, un
 	pX = X;
 
 	// Copy block(padding_message) i into X
-	for(j = 0, k = 0; j < 64; j += 4, k++) {
+	for (j = 0, k = 0; j < 64; j += 4, k++) {
 		X[k] = ((unsigned int)block[j]) // 8byte*4 -> 32byte conversion
 			   | (((unsigned int)block[j + 1]) << 8) // A function called Decode as used in the field of RFC
 			   | (((unsigned int)block[j + 2]) << 16) | (((unsigned int)block[j + 3]) << 24);
@@ -208,7 +208,7 @@ static void MD5_String2binary(const char *string, unsigned char *output) {
 	pstring = (unsigned char *)string; // The position of the present character sequence is set.
 
 	// 1-2  Repeat calculation until length becomes less than 64 bytes.
-	for(i = string_byte_len; 64 <= i; i -= 64, pstring += 64) {
+	for (i = string_byte_len; 64 <= i; i -= 64, pstring += 64) {
 		MD5_Round_Calculate(pstring, A, B, C, D);
 	}
 
@@ -223,7 +223,7 @@ static void MD5_String2binary(const char *string, unsigned char *output) {
 	// 1-4
 	// If 56 bytes or more (less than 64 bytes) of remainder becomes, it will calculate by extending
 	// to 64 bytes.
-	if(56 <= copy_len) {
+	if (56 <= copy_len) {
 		MD5_Round_Calculate(padding_message, A, B, C, D);
 		memset(padding_message, 0, 56); // 56 bytes is newly fill uped with 0.
 	}
@@ -235,7 +235,7 @@ static void MD5_String2binary(const char *string, unsigned char *output) {
 
 	// When bit length cannot be expressed in 32 bytes of low rank, it is a beam raising to a higher
 	// rank.
-	if(UINT_MAX / 8 < string_byte_len) {
+	if (UINT_MAX / 8 < string_byte_len) {
 		unsigned int high = (string_byte_len - UINT_MAX / 8) * 8;
 		memcpy(&padding_message[60], &high, 4);
 	} else {
@@ -284,7 +284,7 @@ void MD5_String(const char *string, char *output) {
 
 /** output is a sequence of non-zero characters to be used as password salt. */
 void MD5_Salt(size_t len, char *output) {
-	for(size_t i = 0; i < len; ++i) {
+	for (size_t i = 0; i < len; ++i) {
 		output[i] = static_cast<char>(rnd_value(1, 255));
 	}
 }

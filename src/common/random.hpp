@@ -20,7 +20,7 @@ int32 rnd(void); // [0, SINT32_MAX]
  */
 template <typename T>
 typename std::enable_if<std::is_integral<T>::value, T>::type rnd_value(T min, T max) {
-	if(min > max) {
+	if (min > max) {
 		std::swap(min, max);
 	}
 	std::uniform_int_distribution<T> dist(min, max);

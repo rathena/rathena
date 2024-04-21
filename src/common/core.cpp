@@ -77,7 +77,7 @@ sigfunc *compat_signal(int signo, sigfunc *func) {
 	sact.sa_flags |= SA_INTERRUPT; /* SunOS */
 		#endif
 
-	if(sigaction(signo, &sact, &oact) < 0) {
+	if (sigaction(signo, &sact, &oact) < 0) {
 		return (SIG_ERR);
 	}
 
@@ -90,11 +90,11 @@ sigfunc *compat_signal(int signo, sigfunc *func) {
 	 *--------------------------------------*/
 	#ifdef _WIN32
 static BOOL WINAPI console_handler(DWORD c_event) {
-	switch(c_event) {
+	switch (c_event) {
 		case CTRL_CLOSE_EVENT:
 		case CTRL_LOGOFF_EVENT:
 		case CTRL_SHUTDOWN_EVENT:
-			if(global_core != nullptr) {
+			if (global_core != nullptr) {
 				global_core->signal_shutdown();
 			}
 			break;
@@ -105,7 +105,7 @@ static BOOL WINAPI console_handler(DWORD c_event) {
 }
 
 static void cevents_init() {
-	if(SetConsoleCtrlHandler(console_handler, TRUE) == FALSE) {
+	if (SetConsoleCtrlHandler(console_handler, TRUE) == FALSE) {
 		ShowWarning("Unable to install the console handler!\n");
 	}
 }
@@ -117,19 +117,19 @@ static void cevents_init() {
 static void sig_proc(int sn) {
 	static int is_called = 0;
 
-	switch(sn) {
+	switch (sn) {
 		case SIGINT:
 		case SIGTERM:
-			if(++is_called > 3) {
+			if (++is_called > 3) {
 				exit(EXIT_SUCCESS);
 			}
-			if(global_core != nullptr) {
+			if (global_core != nullptr) {
 				global_core->signal_shutdown();
 			}
 			break;
 		case SIGSEGV:
 		case SIGFPE:
-			if(global_core != nullptr) {
+			if (global_core != nullptr) {
 				global_core->signal_crash();
 			}
 			// Pass the signal to the system's default handler
@@ -173,7 +173,7 @@ const char *get_svn_revision(void) {
 	static char svn_version_buffer[16] = "";
 	FILE *fp;
 
-	if(svn_version_buffer[0] != '\0') {
+	if (svn_version_buffer[0] != '\0') {
 		return svn_version_buffer;
 	}
 
@@ -182,7 +182,7 @@ const char *get_svn_revision(void) {
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist
-	if((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL) {
+	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL) {
 	#ifndef SVNNODEPATH
 			// not sure how to handle branches, so i'll leave this overridable define until a better solution comes up
 		#define SVNNODEPATH trunk
@@ -204,16 +204,16 @@ const char *get_svn_revision(void) {
 		fclose(fp);
 
 		// parse buffer
-		for(i = prefix_len + 1; i + postfix_len <= len; ++i) {
-			if(buffer[i] != postfix[0] || memcmp(buffer + i, postfix, postfix_len) != 0) {
+		for (i = prefix_len + 1; i + postfix_len <= len; ++i) {
+			if (buffer[i] != postfix[0] || memcmp(buffer + i, postfix, postfix_len) != 0) {
 				continue; // postfix missmatch
 			}
-			for(j = i; j > 0; --j) { // skip digits
-				if(!ISDIGIT(buffer[j - 1])) {
+			for (j = i; j > 0; --j) { // skip digits
+				if (!ISDIGIT(buffer[j - 1])) {
 					break;
 				}
 			}
-			if(memcmp(buffer + j - prefix_len, prefix, prefix_len) != 0) {
+			if (memcmp(buffer + j - prefix_len, prefix, prefix_len) != 0) {
 				continue; // prefix missmatch
 			}
 			// done
@@ -222,36 +222,36 @@ const char *get_svn_revision(void) {
 		}
 		aFree(buffer);
 
-		if(svn_version_buffer[0] != '\0') {
+		if (svn_version_buffer[0] != '\0') {
 			return svn_version_buffer;
 		}
 	}
 
 	// subversion 1.6 and older?
-	if((fp = fopen(".svn/entries", "r")) != NULL) {
+	if ((fp = fopen(".svn/entries", "r")) != NULL) {
 		char line[1024];
 		int rev;
 		// Check the version
-		if(fgets(line, sizeof(line), fp)) {
-			if(!ISDIGIT(line[0])) {
+		if (fgets(line, sizeof(line), fp)) {
+			if (!ISDIGIT(line[0])) {
 				// XML File format
-				while(fgets(line, sizeof(line), fp)) {
-					if(strstr(line, "revision=")) {
+				while (fgets(line, sizeof(line), fp)) {
+					if (strstr(line, "revision=")) {
 						break;
 					}
 				}
-				if(sscanf(line, " %*[^\"]\"%11d%*[^\n]", &rev) == 1) {
+				if (sscanf(line, " %*[^\"]\"%11d%*[^\n]", &rev) == 1) {
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", rev);
 				}
 			} else {
 				// Bin File format
-				if(fgets(line, sizeof(line), fp) == NULL) {
+				if (fgets(line, sizeof(line), fp) == NULL) {
 					printf("Can't get bin name\n");
 				} // Get the name
-				if(fgets(line, sizeof(line), fp) == NULL) {
+				if (fgets(line, sizeof(line), fp) == NULL) {
 					printf("Can't get entries kind\n");
 				} // Get the entries kind
-				if(fgets(line, sizeof(line), fp)) // Get the rev numver
+				if (fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", atoi(line));
 				}
@@ -259,7 +259,7 @@ const char *get_svn_revision(void) {
 		}
 		fclose(fp);
 
-		if(svn_version_buffer[0] != '\0') {
+		if (svn_version_buffer[0] != '\0') {
 			return svn_version_buffer;
 		}
 	}
@@ -275,16 +275,16 @@ const char *get_git_hash(void) {
 	static char GitHash[41] = ""; // Sha(40) + 1
 	FILE *fp;
 
-	if(GitHash[0] != '\0') {
+	if (GitHash[0] != '\0') {
 		return GitHash;
 	}
 
-	if((fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
-	   (fp = fopen(".git/refs/heads/master", "r")) != NULL) { // Cloned only
+	if ((fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
+		(fp = fopen(".git/refs/heads/master", "r")) != NULL) { // Cloned only
 		char line[64];
 		char *rev = (char *)malloc(sizeof(char) * 50);
 
-		if(fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev)) {
+		if (fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev)) {
 			snprintf(GitHash, sizeof(GitHash), "%s", rev);
 		}
 
@@ -294,7 +294,7 @@ const char *get_git_hash(void) {
 		GitHash[0] = UNKNOWN_VERSION;
 	}
 
-	if(!(*GitHash)) {
+	if (!(*GitHash)) {
 		GitHash[0] = UNKNOWN_VERSION;
 	}
 
@@ -321,9 +321,9 @@ static void display_title(void) {
 	ShowMessage("" CL_PASS "       " CL_GREEN "              http://rathena.org/board/                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 
-	if(svn[0] != UNKNOWN_VERSION) {
+	if (svn[0] != UNKNOWN_VERSION) {
 		ShowInfo("SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
-	} else if(git[0] != UNKNOWN_VERSION) {
+	} else if (git[0] != UNKNOWN_VERSION) {
 		ShowInfo("Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git);
 	}
 }
@@ -332,11 +332,11 @@ static void display_title(void) {
 void usercheck(void) {
 #if !defined(BUILDBOT)
 	#ifdef _WIN32
-	if(IsCurrentUserLocalAdministrator()) {
+	if (IsCurrentUserLocalAdministrator()) {
 		ShowWarning("You are running rAthena with admin privileges, it is not necessary.\n");
 	}
 	#else
-	if(geteuid() == 0) {
+	if (geteuid() == 0) {
 		ShowWarning("You are running rAthena with root privileges, it is not necessary.\n");
 	}
 	#endif
@@ -344,7 +344,7 @@ void usercheck(void) {
 }
 
 int Core::start(int argc, char **argv) {
-	if(this->get_status() != e_core_status::NOT_STARTED) {
+	if (this->get_status() != e_core_status::NOT_STARTED) {
 		ShowFatalError("Core was already started and cannot be started again!\n");
 		return EXIT_FAILURE;
 	}
@@ -353,12 +353,12 @@ int Core::start(int argc, char **argv) {
 
 	{ // initialize program arguments
 		char *p1;
-		if((p1 = strrchr(argv[0], '/')) != NULL || (p1 = strrchr(argv[0], '\\')) != NULL) {
+		if ((p1 = strrchr(argv[0], '/')) != NULL || (p1 = strrchr(argv[0], '\\')) != NULL) {
 			char *pwd = NULL; // path working directory
 			SERVER_NAME = ++p1;
 			size_t n = p1 - argv[0]; // calc dir name len
 			pwd = safestrncpy((char *)malloc(n + 1), argv[0], n);
-			if(chdir(pwd) != 0) {
+			if (chdir(pwd) != 0) {
 				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME);
 			}
 			free(pwd);
@@ -387,19 +387,19 @@ int Core::start(int argc, char **argv) {
 	this->set_status(e_core_status::CORE_INITIALIZED);
 
 	this->set_status(e_core_status::SERVER_INITIALIZING);
-	if(!this->initialize(argc, argv)) {
+	if (!this->initialize(argc, argv)) {
 		return EXIT_FAILURE;
 	}
 
 	// If initialization did not trigger shutdown
-	if(this->m_status != e_core_status::STOPPING) {
+	if (this->m_status != e_core_status::STOPPING) {
 		this->set_status(e_core_status::SERVER_INITIALIZED);
 
 		this->set_status(e_core_status::RUNNING);
 #ifndef MINICORE
-		if(!this->m_run_once) {
+		if (!this->m_run_once) {
 			// Main runtime cycle
-			while(this->get_status() == e_core_status::RUNNING) {
+			while (this->get_status() == e_core_status::RUNNING) {
 				t_tick next = do_timer(gettick_nocache());
 
 				this->handle_main(next);
@@ -425,7 +425,7 @@ int Core::start(int argc, char **argv) {
 	this->set_status(e_core_status::CORE_FINALIZED);
 
 #if defined(BUILDBOT)
-	if(buildbotflag) {
+	if (buildbotflag) {
 		exit(EXIT_FAILURE);
 	}
 #endif
@@ -482,7 +482,7 @@ void Core::set_run_once(bool run_once) {
 void Core::signal_crash() {
 	this->set_status(e_core_status::STOPPING);
 
-	if(this->m_crashed) {
+	if (this->m_crashed) {
 		ShowFatalError("Received another crash signal, while trying to handle the last crash!\n");
 	} else {
 		ShowFatalError("Received a crash signal, trying to handle it as good as possible!\n");

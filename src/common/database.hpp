@@ -109,7 +109,7 @@ public:
 	virtual std::shared_ptr<datatype> find(keytype key) {
 		auto it = this->data.find(key);
 
-		if(it != this->data.end()) {
+		if (it != this->data.end()) {
 			return it->second;
 		} else {
 			return nullptr;
@@ -133,7 +133,7 @@ public:
 	}
 
 	std::shared_ptr<datatype> random() {
-		if(this->empty()) {
+		if (this->empty()) {
 			return nullptr;
 		}
 
@@ -168,7 +168,7 @@ public:
 	}
 
 	std::shared_ptr<datatype> find(keytype key) override {
-		if(this->cache.empty() || key >= this->cache.size()) {
+		if (this->cache.empty() || key >= this->cache.size()) {
 			return TypesafeYamlDatabase<keytype, datatype>::find(key);
 		} else {
 			return cache[this->calculateCacheKey(key)];
@@ -186,11 +186,11 @@ public:
 	void loadingFinished() override {
 		size_t max_key = 0;
 		// Cache all known values
-		for(auto& pair : *this) {
+		for (auto& pair : *this) {
 			// Calculate the key that should be used
 			size_t key = this->calculateCacheKey(pair.first);
 			// Check if the key fits into the current cache size
-			if(this->cache.capacity() <= key) {
+			if (this->cache.capacity() <= key) {
 				// Some keys compute to 0, so we allocate a minimum of 500 (250*2) entries
 				const static size_t minimum = 250;
 				// Double the current size, so we do not have to resize that often
@@ -218,9 +218,9 @@ public:
 		TypesafeYamlDatabase<keytype, datatype>::erase(key);
 
 		// Prevent excessive usage during loading
-		if(this->loaded) {
+		if (this->loaded) {
 			size_t cache_key = this->calculateCacheKey(key);
-			if(this->cache.size() <= cache_key) {
+			if (this->cache.size() <= cache_key) {
 				return;
 			}
 			this->cache[cache_key] = nullptr;
@@ -231,9 +231,9 @@ public:
 		TypesafeYamlDatabase<keytype, datatype>::put(key, ptr);
 
 		// Prevent excessive usage during loading
-		if(this->loaded) {
+		if (this->loaded) {
 			size_t cache_key = this->calculateCacheKey(key);
-			if(this->cache.size() <= cache_key) {
+			if (this->cache.size() <= cache_key) {
 				this->cache.resize(cache_key + 1, nullptr);
 			}
 			this->cache[cache_key] = ptr;

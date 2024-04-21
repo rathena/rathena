@@ -26,7 +26,7 @@ AlignEscapedNewlines: DontAlign
 InsertBraces: true
 SpaceBeforeParens: Custom
 SpaceBeforeParensOptions:
-  AfterControlStatements: false
+  AfterControlStatements: true
   AfterForeachMacros: false
   AfterFunctionDeclarationName: false
   AfterFunctionDefinitionName: false

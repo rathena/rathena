@@ -25,7 +25,7 @@
 	 * @return 0 if t is NULL
 	 */
 	#define nullpo_ret(t) \
-		if(nullpo_chk(NLP_MARK, (void *)(t))) { \
+		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
 			return (0); \
 		}
 
@@ -35,7 +35,7 @@
 	 * @return void if t is NULL
 	 */
 	#define nullpo_retv(t) \
-		if(nullpo_chk(NLP_MARK, (void *)(t))) { \
+		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
 			return; \
 		}
 
@@ -46,7 +46,7 @@
 	 * @return ret value
 	 */
 	#define nullpo_retr(ret, t) \
-		if(nullpo_chk(NLP_MARK, (void *)(t))) { \
+		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
 			return (ret); \
 		}
 
@@ -55,7 +55,7 @@
 	 * @param t: Pointer to check
 	 */
 	#define nullpo_retb(t) \
-		if(nullpo_chk(NLP_MARK, (void *)(t))) { \
+		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
 			break; \
 		}
 
@@ -69,7 +69,7 @@
 		 * @return 0 if t is NULL
 		 */
 		#define nullpo_ret_f(t, fmt, ...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
 				return (0); \
 			}
 
@@ -80,7 +80,7 @@
 		 * @return void if t is NULL
 		 */
 		#define nullpo_retv_f(t, fmt, ...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
 				return; \
 			}
 
@@ -91,7 +91,7 @@
 		 * @return ret value
 		 */
 		#define nullpo_retr_f(ret, t, fmt, ...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
 				return (ret); \
 			}
 
@@ -101,7 +101,7 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 */
 		#define nullpo_retb_f(t, fmt, ...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
 				break; \
 			}
 
@@ -114,7 +114,7 @@
 		 * @return 0 if t is NULL
 		 */
 		#define nullpo_ret_f(t, fmt, args...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
 				return (0); \
 			}
 
@@ -125,7 +125,7 @@
 		 * @return void if t is NULL
 		 */
 		#define nullpo_retv_f(t, fmt, args...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
 				return; \
 			}
 
@@ -136,7 +136,7 @@
 		 * @return ret value
 		 */
 		#define nullpo_retr_f(ret, t, fmt, args...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
 				return (ret); \
 			}
 
@@ -146,7 +146,7 @@
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
 		 */
 		#define nullpo_retb_f(t, fmt, args...) \
-			if(nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
+			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
 				break; \
 			}
 

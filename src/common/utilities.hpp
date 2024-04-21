@@ -46,7 +46,7 @@ template <typename K, typename V>
 V* map_find(std::map<K, V>& map, K key) {
 	auto it = map.find(key);
 
-	if(it != map.end()) {
+	if (it != map.end()) {
 		return &it->second;
 	} else {
 		return nullptr;
@@ -63,7 +63,7 @@ template <typename K, typename V>
 std::shared_ptr<V> map_find(std::map<K, std::shared_ptr<V>>& map, K key) {
 	auto it = map.find(key);
 
-	if(it != map.end()) {
+	if (it != map.end()) {
 		return it->second;
 	} else {
 		return nullptr;
@@ -81,7 +81,7 @@ template <typename K, typename V>
 V map_get(std::map<K, V>& map, K key, V defaultValue) {
 	auto it = map.find(key);
 
-	if(it != map.end()) {
+	if (it != map.end()) {
 		return it->second;
 	} else {
 		return defaultValue;
@@ -112,7 +112,7 @@ template <typename K, typename V>
 V* umap_find(std::unordered_map<K, V>& map, K key) {
 	auto it = map.find(key);
 
-	if(it != map.end()) {
+	if (it != map.end()) {
 		return &it->second;
 	} else {
 		return nullptr;
@@ -129,7 +129,7 @@ template <typename K, typename V>
 std::shared_ptr<V> umap_find(std::unordered_map<K, std::shared_ptr<V>>& map, K key) {
 	auto it = map.find(key);
 
-	if(it != map.end()) {
+	if (it != map.end()) {
 		return it->second;
 	} else {
 		return nullptr;
@@ -147,7 +147,7 @@ template <typename K, typename V>
 V umap_get(std::unordered_map<K, V>& map, K key, V defaultValue) {
 	auto it = map.find(key);
 
-	if(it != map.end()) {
+	if (it != map.end()) {
 		return it->second;
 	} else {
 		return defaultValue;
@@ -213,7 +213,7 @@ template <typename K, typename V>
 bool vector_exists(const std::vector<K>& vec, V value) {
 	auto it = std::find(vec.begin(), vec.end(), value);
 
-	if(it != vec.end()) {
+	if (it != vec.end()) {
 		return true;
 	} else {
 		return false;
@@ -227,7 +227,7 @@ bool vector_exists(const std::vector<K>& vec, V value) {
  */
 template <typename K>
 void erase_at(std::vector<K>& vector, size_t index) {
-	if(vector.size() == 1) {
+	if (vector.size() == 1) {
 		vector.clear();
 		vector.shrink_to_fit();
 	} else {
@@ -245,8 +245,8 @@ template <typename K, typename V>
 void vector_erase_if_exists(std::vector<K>& vector, V value) {
 	auto it = std::find(vector.begin(), vector.end(), value);
 
-	if(it != vector.end()) {
-		if(vector.size() == 1) {
+	if (it != vector.end()) {
+		if (vector.size() == 1) {
 			vector.clear();
 			vector.shrink_to_fit();
 		} else {
@@ -265,18 +265,18 @@ template <typename T>
 bool safe_addition(T a, T b, T& result) {
 	bool overflow = false;
 
-	if(std::numeric_limits<T>::is_signed) {
-		if(b < 0) {
-			if(a < ((std::numeric_limits<T>::min)() - b)) {
+	if (std::numeric_limits<T>::is_signed) {
+		if (b < 0) {
+			if (a < ((std::numeric_limits<T>::min)() - b)) {
 				overflow = true;
 			}
 		} else {
-			if(a > ((std::numeric_limits<T>::max)() - b)) {
+			if (a > ((std::numeric_limits<T>::max)() - b)) {
 				overflow = true;
 			}
 		}
 	} else {
-		if(a > ((std::numeric_limits<T>::max)() - b)) {
+		if (a > ((std::numeric_limits<T>::max)() - b)) {
 			overflow = true;
 		}
 	}
@@ -301,7 +301,7 @@ template <typename T>
 T safe_addition_cap(T a, T b, T cap) {
 	T result;
 
-	if(rathena::util::safe_addition(a, b, result)) {
+	if (rathena::util::safe_addition(a, b, result)) {
 		return cap;
 	} else {
 		return result;

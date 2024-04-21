@@ -50,27 +50,27 @@ bool IsCurrentUserLocalAdministrator(void) {
 		thread was impersonating already, this function uses that impersonation
 		context.
 		*/
-		if(!OpenThreadToken(GetCurrentThread(),
-							TOKEN_DUPLICATE | TOKEN_QUERY,
+		if (!OpenThreadToken(GetCurrentThread(),
+							 TOKEN_DUPLICATE | TOKEN_QUERY,
 
-							TRUE,
-							&hToken)) {
-			if(GetLastError() != ERROR_NO_TOKEN) {
+							 TRUE,
+							 &hToken)) {
+			if (GetLastError() != ERROR_NO_TOKEN) {
 				__leave;
 			}
 
-			if(!OpenProcessToken(GetCurrentProcess(),
+			if (!OpenProcessToken(GetCurrentProcess(),
 
-								 TOKEN_DUPLICATE | TOKEN_QUERY,
-								 &hToken)) {
+								  TOKEN_DUPLICATE | TOKEN_QUERY,
+								  &hToken)) {
 				__leave;
 			}
 		}
 
-		if(!DuplicateToken(hToken,
-						   SecurityImpersonation,
+		if (!DuplicateToken(hToken,
+							SecurityImpersonation,
 
-						   &hImpersonationToken)) {
+							&hImpersonationToken)) {
 			__leave;
 		}
 
@@ -85,18 +85,18 @@ bool IsCurrentUserLocalAdministrator(void) {
 		After that, perform the access check.  This will determine whether
 		the current user is a local admin.
 		*/
-		if(!AllocateAndInitializeSid(&SystemSidAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &psidAdmin)) {
+		if (!AllocateAndInitializeSid(&SystemSidAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &psidAdmin)) {
 			__leave;
 		}
 
 		psdAdmin = LocalAlloc(LPTR, SECURITY_DESCRIPTOR_MIN_LENGTH);
-		if(psdAdmin == NULL) {
+		if (psdAdmin == NULL) {
 			__leave;
 		}
 
-		if(!InitializeSecurityDescriptor(psdAdmin,
+		if (!InitializeSecurityDescriptor(psdAdmin,
 
-										 SECURITY_DESCRIPTOR_REVISION)) {
+										  SECURITY_DESCRIPTOR_REVISION)) {
 			__leave;
 		}
 
@@ -104,25 +104,25 @@ bool IsCurrentUserLocalAdministrator(void) {
 		dwACLSize = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(psidAdmin) - sizeof(DWORD);
 
 		pACL = (PACL)LocalAlloc(LPTR, dwACLSize);
-		if(pACL == NULL) {
+		if (pACL == NULL) {
 			__leave;
 		}
 
-		if(!InitializeAcl(pACL, dwACLSize, ACL_REVISION2)) {
+		if (!InitializeAcl(pACL, dwACLSize, ACL_REVISION2)) {
 			__leave;
 		}
 
 		dwAccessMask = ACCESS_READ | ACCESS_WRITE;
 
-		if(!AddAccessAllowedAce(pACL,
-								ACL_REVISION2,
-								dwAccessMask,
+		if (!AddAccessAllowedAce(pACL,
+								 ACL_REVISION2,
+								 dwAccessMask,
 
-								psidAdmin)) {
+								 psidAdmin)) {
 			__leave;
 		}
 
-		if(!SetSecurityDescriptorDacl(psdAdmin, TRUE, pACL, FALSE)) {
+		if (!SetSecurityDescriptorDacl(psdAdmin, TRUE, pACL, FALSE)) {
 			__leave;
 		}
 
@@ -134,7 +134,7 @@ bool IsCurrentUserLocalAdministrator(void) {
 		SetSecurityDescriptorGroup(psdAdmin, psidAdmin, FALSE);
 		SetSecurityDescriptorOwner(psdAdmin, psidAdmin, FALSE);
 
-		if(!IsValidSecurityDescriptor(psdAdmin)) {
+		if (!IsValidSecurityDescriptor(psdAdmin)) {
 			__leave;
 		}
 
@@ -149,25 +149,25 @@ bool IsCurrentUserLocalAdministrator(void) {
 		GenericMapping.GenericExecute = 0;
 		GenericMapping.GenericAll = ACCESS_READ | ACCESS_WRITE;
 
-		if(!AccessCheck(psdAdmin, hImpersonationToken, dwAccessDesired, &GenericMapping, &ps, &dwStructureSize, &dwStatus, &fReturn)) {
+		if (!AccessCheck(psdAdmin, hImpersonationToken, dwAccessDesired, &GenericMapping, &ps, &dwStructureSize, &dwStatus, &fReturn)) {
 			fReturn = FALSE;
 			__leave;
 		}
 	} __finally {
 		// Clean up.
-		if(pACL) {
+		if (pACL) {
 			LocalFree(pACL);
 		}
-		if(psdAdmin) {
+		if (psdAdmin) {
 			LocalFree(psdAdmin);
 		}
-		if(psidAdmin) {
+		if (psidAdmin) {
 			FreeSid(psidAdmin);
 		}
-		if(hImpersonationToken) {
+		if (hImpersonationToken) {
 			CloseHandle(hImpersonationToken);
 		}
-		if(hToken) {
+		if (hToken) {
 			CloseHandle(hToken);
 		}
 	}
