@@ -17486,8 +17486,10 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 	//Can only update state when weapon/arrow info is checked.
 	sd->state.arrow_atk = require.ammo?1:0;
 	
-	if (sd->state.autocast)
+	if (sd->state.autocast) {
 		require.sp = 0;
+		require.ap = 0;
+	}
 
 	// perform skill-group checks
 	if(skill_id != WM_GREAT_ECHO && inf2[INF2_ISCHORUS]) {
