@@ -52,7 +52,7 @@ endif()
 #
 # Prevent building in the source directory by default
 #
-if( CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR )
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
     message( FATAL_ERROR
         "Do not use the source directory to build your files, instead delete CMakeCache.txt, create a separate folder and build there.\n"
         "Example: (build in subdir 'build' and install to source dir)\n"

@@ -4,9 +4,8 @@
 #ifndef CLIF_HPP
 #define CLIF_HPP
 
+#include <cstdarg>
 #include <vector>
-
-#include <stdarg.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp> //dbmap
@@ -739,7 +738,7 @@ void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock = 
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
-void clif_skill_fail(map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype, t_itemid itemId = 0);
+void clif_skill_fail( map_session_data& sd, uint16 skill_id, enum useskill_fail_cause cause = USESKILL_FAIL_LEVEL, int btype = 0, t_itemid itemId = 0 );
 void clif_skill_cooldown(map_session_data *sd, uint16 skill_id, t_tick tick);
 int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
@@ -760,7 +759,7 @@ void clif_skillunit_update(struct block_list* bl);
 
 void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv);
 
-void clif_autospell(map_session_data *sd,uint16 skill_lv);
+void clif_autospell( map_session_data& sd, uint16 skill_lv );
 void clif_devotion(struct block_list *src, map_session_data *tsd);
 void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_soulball( map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
@@ -965,7 +964,6 @@ void clif_hom_food(map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(map_session_data *sd, int state, int param);	//[orn]
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
-void clif_partytickack(map_session_data* sd, bool flag);
 void clif_viewequip_ack(map_session_data* sd, map_session_data* tsd);
 void clif_equipcheckbox(map_session_data* sd);
 
@@ -1253,5 +1251,10 @@ void clif_macro_reporter_select(map_session_data &sd, const std::vector<uint32> 
 void clif_macro_reporter_status(map_session_data &sd, e_macro_report_status stype);
 
 void clif_dynamicnpc_result( map_session_data& sd, e_dynamicnpc_result result );
+
+void clif_set_dialog_align(map_session_data& sd, int npcid, e_say_dialog_align align);
+void clif_set_npc_window_size(map_session_data& sd, int width, int height);
+void clif_set_npc_window_pos(map_session_data& sd, int x, int y);
+void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y);
 
 #endif /* CLIF_HPP */

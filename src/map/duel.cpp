@@ -3,8 +3,8 @@
 
 #include "duel.hpp"
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <unordered_map>
 
 #include <common/cbasetypes.hpp>

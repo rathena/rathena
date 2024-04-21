@@ -5,7 +5,7 @@
 #define MAP_HPP
 
 #include <algorithm>
-#include <stdarg.h>
+#include <cstdarg>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -859,6 +859,18 @@ struct map_data_other_server {
 	struct mapcell* cell; // If this is NULL, the map is not on this map-server
 	uint32 ip;
 	uint16 port;
+};
+
+/**
+ * align for packet ZC_SAY_DIALOG_ALIGN
+ **/
+enum e_say_dialog_align : uint8 {
+	DIALOG_ALIGN_LEFT   = 0,
+	DIALOG_ALIGN_RIGHT  = 1,
+	DIALOG_ALIGN_CENTER = 2,
+	DIALOG_ALIGN_TOP    = 3,
+	DIALOG_ALIGN_MIDDLE = 4,
+	DIALOG_ALIGN_BOTTOM = 5
 };
 
 struct inter_conf {

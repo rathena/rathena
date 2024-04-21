@@ -4,9 +4,9 @@
 #include "mob.hpp"
 
 #include <algorithm>
+#include <cmath>
+#include <cstdlib>
 #include <map>
-#include <math.h>
-#include <stdlib.h>
 #include <unordered_map>
 #include <vector>
 
@@ -2492,6 +2492,8 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 
 			if (sd->sc.getSCE(SC_ITEMBOOST))
 				drop_rate_bonus += sd->sc.getSCE(SC_ITEMBOOST)->val1;
+			if (sd->sc.getSCE(SC_PERIOD_RECEIVEITEM_2ND))
+				drop_rate_bonus += sd->sc.getSCE(SC_PERIOD_RECEIVEITEM_2ND)->val1;
 
 			int cap;
 
@@ -3109,8 +3111,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
 			}
 
-			// The master or Mercenary can increase the kill count
-			if (sd->md && src && (src->type == BL_PC || src->type == BL_MER) && mob->lv > sd->status.base_level / 2)
+			// The master or Mercenary can increase the kill count, if the monster level is greater or equal than half the baselevel of the master
+			if (sd->md && src && (src->type == BL_PC || src->type == BL_MER) && mob->lv >= sd->status.base_level / 2)
 				mercenary_kills(sd->md);
 		}
 
@@ -5736,8 +5738,7 @@ uint64 MobChatDatabase::parseBodyNode(const ryml::NodeRef& node) {
 /*==========================================
  * processes one mob_skill_db entry
  *------------------------------------------*/
-static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
-{
+static bool mob_parse_row_mobskilldb( char** str, size_t columns, size_t current ){
 	static const struct {
 		char str[32];
 		enum MobSkillState id;

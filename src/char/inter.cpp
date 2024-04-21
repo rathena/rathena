@@ -3,13 +3,13 @@
 
 #include "inter.hpp"
 
+#include <cstdlib>
+#include <cstring>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
 #include <vector>
 
-#include <stdlib.h>
-#include <string.h>
-#include <string>
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 
 #include <common/cbasetypes.hpp>
