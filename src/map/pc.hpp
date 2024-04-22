@@ -1438,7 +1438,7 @@ int pc_getcash( map_session_data *sd, int cash, int points, e_log_pick_type type
 enum e_additem_result pc_cart_additem(map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
 void pc_cart_delitem(map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
 void pc_putitemtocart(map_session_data *sd,int idx,int amount);
-void pc_getitemfromcart(map_session_data *sd,int idx,int amount);
+bool pc_getitemfromcart(map_session_data *sd,int idx,int amount);
 int pc_cartitem_amount(map_session_data *sd,int idx,int amount);
 
 bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem);

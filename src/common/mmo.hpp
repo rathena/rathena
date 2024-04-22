@@ -4,7 +4,7 @@
 #ifndef MMO_HPP
 #define MMO_HPP
 
-#include <time.h>
+#include <ctime>
 
 #include <config/core.hpp>
 
@@ -89,7 +89,7 @@ typedef uint32 t_itemid;
 #endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1500 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1623 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -115,6 +115,9 @@ typedef uint32 t_itemid;
 #define MAX_CLANALLIANCE 6
 #ifndef MAX_BARTER_REQUIREMENTS
 	#define MAX_BARTER_REQUIREMENTS 5
+#endif
+#ifndef WEB_AUTH_TOKEN_LENGTH
+	#define WEB_AUTH_TOKEN_LENGTH 16+1
 #endif
 
 enum e_enchantgrade : uint16{
@@ -604,7 +607,8 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip,allow_party, disable_call;
+	bool show_equip, disable_call;
+	bool disable_partyinvite;
 	short rename;
 
 	time_t delete_date;

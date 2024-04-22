@@ -4,14 +4,13 @@
 #pragma warning(disable:4800)
 #include "char.hpp"
 
+#include <cstdarg>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
 #include <memory>
 #include <unordered_map>
-
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/cli.hpp>
@@ -2831,9 +2830,10 @@ void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_poin
 	lineitem = strtok(w2_value, ":");
 
 	while (lineitem != NULL && (*count) < MAX_STARTPOINT) {
-		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+		bool error;
+		size_t n = sv_split( lineitem, strlen( lineitem ), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE, error );
 
-		if (n + 1 < fields_length) {
+		if( error || ( n + 1 ) < fields_length ){
 			ShowDebug("%s: not enough arguments for %s! Skipping...\n", w1_value, lineitem);
 			lineitem = strtok(NULL, ":"); //next lineitem
 			continue;
@@ -2867,9 +2867,10 @@ void char_config_split_startitem(char *w1_value, char *w2_value, struct startite
 	lineitem = strtok(w2_value, ":");
 
 	while (lineitem != NULL && i < MAX_STARTITEM) {
-		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+		bool error;
+		size_t n = sv_split( lineitem, strlen( lineitem ), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE, error );
 
-		if (n + 1 < fields_length) {
+		if( error || ( n + 1 ) < fields_length ){
 			ShowDebug("%s: not enough arguments for %s! Skipping...\n", w1_value, lineitem);
 			lineitem = strtok(NULL, ":"); //next lineitem
 			continue;

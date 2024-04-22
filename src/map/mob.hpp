@@ -253,22 +253,23 @@ struct s_mob_drop {
 };
 
 struct s_mob_db {
-	uint32 id;
-	std::string sprite, name, jname;
-	t_exp base_exp;
-	t_exp job_exp;
-	t_exp mexp;
-	uint16 range2, range3;
-	std::vector<e_race2> race2;	// celest
-	uint16 lv;
-	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
-	status_data status;
-	view_data vd;
-	uint32 option;
-	std::vector<std::shared_ptr<s_mob_skill>> skill;
-	uint16 damagetaken;
+	uint32 id{};
+	std::string sprite{}, name{}, jname{};
+	t_exp base_exp{};
+	t_exp job_exp{};
+	t_exp mexp{};
+	uint16 range2{}, range3{};
+	std::vector<e_race2> race2{};	// celest
+	uint16 lv{ 1 };
+	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL]{}, mvpitem[MAX_MVP_DROP_TOTAL]{};
+	status_data status{};
+	view_data vd{};
+	uint32 option{};
+	std::vector<std::shared_ptr<s_mob_skill>> skill{};
+	uint16 damagetaken{ 100 };
 
 	e_mob_bosstype get_bosstype();
+	s_mob_db();
 };
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
@@ -358,7 +359,7 @@ struct mob_data {
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int bg_id; // BattleGround System
 
-	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick;
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;

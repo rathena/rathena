@@ -39,6 +39,11 @@ class status_change;
 /// Used with tracking the hitcount of Earthquake for skills that can avoid the first attack
 #define NPC_EARTHQUAKE_FLAG 0x800
 
+/// To control alternative skill scalings
+#define SKILL_ALTDMG_FLAG 0x10
+/// Make skill ignore requirement consumption [Muh]
+#define SKILL_NOCONSUME_REQ 0x20
+
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
 /// when determining skill castend function to invoke.
@@ -2330,6 +2335,13 @@ enum e_skill {
 	NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING,
 	NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN,
 	SS_FUUMAKOUCHIKU_BLASTING,
+
+	DK_DRAGONIC_BREATH = 6001,
+	MT_SPARK_BLASTER,
+	MT_TRIPLE_LASER,
+	MT_MIGHTY_SMASH,
+	BO_EXPLOSIVE_POWDER,
+	BO_MAYHEMIC_THORNS,
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,

@@ -3388,7 +3388,7 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 		mes "[Lazy]";
 		mes "No? Well that's alright with me.";
 		mes "I'm fine.";
-		mes "I'm not blind. Even in my position, I've noticed the the Enterprise is hiding something from us!";
+		mes "I'm not blind. Even in my position, I've noticed the Enterprise is hiding something from us!";
 		next;
 		cutin "16lei_03",0;
 		mes "[Lazy]";
@@ -4092,7 +4092,7 @@ sp_rudus,193,284,0	script	Rookie#171_rudus	4_M_ROOKIE,{
 	}
 	cutin "16loo_01",2;
 	mes "[Rookie]";
-	mes "It's nice to suddenly have so much work to do... But I won't be able to to do everything on own...";
+	mes "It's nice to suddenly have so much work to do... But I won't be able to do everything on my own...";
 	close3;
 
 OnInit:

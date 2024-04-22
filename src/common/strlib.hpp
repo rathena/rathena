@@ -4,20 +4,19 @@
 #ifndef STRLIB_HPP
 #define STRLIB_HPP
 
-#include <stdarg.h>
-
-#include "cbasetypes.hpp"
-#include "malloc.hpp"
-
+#include <cstdarg>
 #if !defined(__USE_GNU)
 #define __USE_GNU  // required to enable strnlen on some platforms
 #define __USED_GNU
 #endif
-#include <string.h>
+#include <cstring>
 #if defined(__USED_GNU)
 #undef __USE_GNU
 #undef __USED_GNU
 #endif
+
+#include "cbasetypes.hpp"
+#include "malloc.hpp"
 
 int remove_control_chars(char* str);
 char* trim(char* str);
@@ -85,11 +84,11 @@ typedef enum e_svopt
 struct s_svstate
 {
 	const char* str; //< string to parse
-	int len; //< string length
-	int off; //< current offset in the string
-	int start; //< where the field starts
-	int end; //< where the field ends
-	enum e_svopt opt; //< parse options
+	size_t len; //< string length
+	size_t off; //< current offset in the string
+	size_t start; //< where the field starts
+	size_t end; //< where the field ends
+	int opt; //< parse options
 	char delim; //< field delimiter
 	bool done; //< if all the text has been parsed
 };
@@ -99,14 +98,14 @@ struct s_svstate
 ///
 /// @param sv Parse state
 /// @return 1 if a field was parsed, 0 if done, -1 on error.
-int sv_parse_next(struct s_svstate* sv);
+int sv_parse_next( s_svstate& sv );
 
 /// Parses a delim-separated string.
 /// Starts parsing at startoff and fills the pos array with position pairs.
 /// out_pos[0] and out_pos[1] are the start and end of line.
 /// Other position pairs are the start and end of fields.
 /// Returns the number of fields found or -1 if an error occurs.
-int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt);
+size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error );
 
 /// Splits a delim-separated string.
 /// WARNING: this function modifies the input string
@@ -114,7 +113,7 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// out_fields[0] is the start of the next line.
 /// Other entries are the start of fields (nul-teminated).
 /// Returns the number of fields found or -1 if an error occurs.
-int sv_split(char* str, int len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt);
+size_t sv_split( char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error );
 
 /// Escapes src to out_dest according to the format of the C compiler.
 /// Returns the length of the escaped string.
@@ -132,7 +131,7 @@ const char* skip_escaped_c(const char* p);
 /// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
 /// Tracks the progress of the operation (current line number, number of successfully processed rows).
 /// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
-bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current), bool silent);
+bool sv_readdb( const char* directory, const char* filename, char delim, size_t mincols, size_t maxcols, size_t maxrows, bool (*parseproc)( char* fields[], size_t columns, size_t current ), bool silent );
 
 
 /// StringBuf - dynamic string
@@ -140,7 +139,7 @@ struct StringBuf
 {
 	char *buf_;
 	char *ptr_;
-	unsigned int max_;
+	size_t max_;
 };
 typedef struct StringBuf StringBuf;
 
@@ -148,13 +147,13 @@ StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func);
 #define StringBuf_Malloc() _StringBuf_Malloc(ALC_MARK)
 void _StringBuf_Init(const char *file, int line, const char *func, StringBuf* self);
 #define StringBuf_Init(self) _StringBuf_Init(ALC_MARK,self)
-int _StringBuf_Printf(const char *file, int line, const char *func, StringBuf* self, const char* fmt, ...);
+size_t _StringBuf_Printf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, ... );
 #define StringBuf_Printf(self,fmt,...) _StringBuf_Printf(ALC_MARK,self,fmt, ## __VA_ARGS__)
-int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, va_list args);
+size_t _StringBuf_Vprintf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list args );
 #define StringBuf_Vprintf(self,fmt,args) _StringBuf_Vprintf(ALC_MARK,self,fmt,args)
-int _StringBuf_Append(const char *file, int line, const char *func, StringBuf* self, const StringBuf *sbuf);
+size_t _StringBuf_Append(const char *file, int line, const char *func, StringBuf* self, const StringBuf *sbuf);
 #define StringBuf_Append(self,sbuf) _StringBuf_Append(ALC_MARK,self,sbuf)
-int _StringBuf_AppendStr(const char *file, int line, const char *func, StringBuf* self, const char* str);
+size_t _StringBuf_AppendStr(const char *file, int line, const char *func, StringBuf* self, const char* str);
 #define StringBuf_AppendStr(self,str) _StringBuf_AppendStr(ALC_MARK,self,str)
 int StringBuf_Length(StringBuf* self);
 char* StringBuf_Value(StringBuf* self);
