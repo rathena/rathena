@@ -16192,8 +16192,15 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				sg->unit_id = UNT_USED_TRAPS;
 				clif_changetraplook(&unit->bl, UNT_USED_TRAPS);
 				sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-				//Target will be stopped for 3 seconds
+#ifdef RENEWAL
+				// In renewal, target will be stopped for 3 seconds
 				sc_start(ss,bl,SC_STOP,100,0,skill_get_time2(sg->skill_id,sg->skill_lv));
+#else
+				// In pre-renewal, if target was a monster, it will unlock target and become idle
+				struct mob_data* md = BL_CAST(BL_MOB, bl);
+				if (md)
+					mob_unlocktarget(md, tick);
+#endif
 			}
 			break;
 
@@ -21256,8 +21263,8 @@ int skill_unit_timer_sub_onplace(struct block_list* bl, va_list ap)
 		return 0; //AoE skills are ineffective. [Skotlex]
 
 #ifdef RENEWAL
-	// Ankle Snare can no longer trap bosses in renewal
-	if (group->unit_id == UNT_ANKLESNARE && status_bl_has_mode(bl, MD_STATUSIMMUNE))
+	// Ankle Snare and Skid Trap can no longer trap bosses in renewal
+	if ((group->unit_id == UNT_ANKLESNARE || group->unit_id == UNT_SKIDTRAP) && status_bl_has_mode(bl, MD_STATUSIMMUNE))
 		return 0;
 #endif
 

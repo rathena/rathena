@@ -89,10 +89,11 @@ enum e_bonus_chk_flag : uint8 {
 struct Damage {
 #ifdef RENEWAL
 	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2, percentAtk, percentAtk2;
+#else
+	int64 basedamage; /// Right hand damage that a normal attack would deal
 #endif
 	int64 damage, /// Right hand damage
-		damage2, /// Left hand damage
-		basedamage; /// Right hand damage that a normal attack would deal
+		damage2; /// Left hand damage
 	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,
@@ -745,6 +746,7 @@ struct Battle_Config
 	int feature_dynamicnpc_direction;
 
 	int mob_respawn_time;
+	int mob_unlock_time;
 
 	int feature_stylist;
 	int feature_banking_state_enforce;
