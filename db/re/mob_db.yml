@@ -78188,11 +78188,8 @@ Body:
     AttackDelay: 1020
     AttackMotion: 500
     DamageMotion: 768
-    Ai: 10
+    Ai: 21
     Class: Boss
-    Modes:
-      CanMove: true
-      Detector: true
     Drops:
       - Item: Brinaranea_Card
         Rate: 1
@@ -78223,11 +78220,8 @@ Body:
     AttackDelay: 608
     AttackMotion: 408
     DamageMotion: 336
-    Ai: 10
+    Ai: 21
     Class: Boss
-    Modes:
-      CanMove: true
-      Detector: true
     Drops:
       - Item: Muspellskoll_Card
         Rate: 1
@@ -78368,11 +78362,8 @@ Body:
     AttackDelay: 750
     AttackMotion: 510
     DamageMotion: 500
-    Ai: 10
+    Ai: 21
     Class: Boss
-    Modes:
-      CanMove: true
-      Detector: true
     Drops:
       - Item: M_Morocc_Card
         Rate: 1
