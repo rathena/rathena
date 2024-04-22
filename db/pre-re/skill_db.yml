@@ -4153,7 +4153,6 @@ Body:
         Time: 120000
       - Level: 5
         Time: 60000
-    Duration2: 3000
     Requires:
       SpCost: 10
       ItemCost:
@@ -10805,7 +10804,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -32756,7 +32755,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon

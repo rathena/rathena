@@ -11048,7 +11048,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -46222,7 +46222,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon

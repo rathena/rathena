@@ -746,6 +746,7 @@ struct Battle_Config
 	int feature_dynamicnpc_direction;
 
 	int mob_respawn_time;
+	int mob_unlock_time;
 
 	int feature_stylist;
 	int feature_banking_state_enforce;
