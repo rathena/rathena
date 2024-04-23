@@ -1,0 +1,345 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Battleground Queue Database
+###########################################################################
+#
+# Battleground Queue Settings
+#
+###########################################################################
+# - Id                Unique ID for the battleground type.
+#   Name              Name of the battleground. Must be the exact same as in the client for players to be able to join.
+#   MinPlayers        Minimum number of players required on each team. (Default: 1)
+#   MaxPlayers        Maximum number of players on each team. (Default: MAX_BG_MEMBERS / 2)
+#   MinLevel          Minimum level required to join the battleground. (Default: 1)
+#   MaxLevel          Maximum level to join the battleground. (Default: MAX_LEVEL value)
+#   Deserter          Amount of time in seconds a player is marked deserter. (Default: 600)
+#   StartDelay        Amount of time in seconds once a queue is filled before players are warped. (Default: 0)
+#   Join:             Which application type is accepted. The entryqueuelist.lub can visually disable these options.
+#     Solo            Able to join a queue as an individual. (Default: true)
+#     Party           Able to join a queue as a party. (Default: true)
+#     Guild           Able to join a queue as a guild. (Default: true)
+#   JobRestrictions   List of jobs that are unable to join the battleground.
+#   Locations:        Battleground location settings.
+#     - Map           The map on which the battleground will be played.
+#       StartEvent    NPC event triggered when the battleground starts.
+#       TeamA:        TeamA settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
+#         Variable    Name of BG ID variable used in the battleground script.
+#       TeamB:        TeamB settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
+#         Variable    Name of BG ID variable used in the battleground script.
+###########################################################################
+
+Header:
+  Type: BATTLEGROUND_DB
+  Version: 1
+
+Body:
+  - Id: 6
+    Name: Conquest
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: schg_cas06
+        StartEvent: Conquest::OnStart
+        TeamA:
+          RespawnX: 264
+          RespawnY: 379
+          QuitEvent: Conquest::OnTeam1Quit
+          ActiveEvent: Conquest::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 295
+          RespawnY: 379
+          QuitEvent: Conquest::OnTeam2Quit
+          ActiveEvent: Conquest::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: schg_cas07
+        StartEvent: Conquest::OnStart
+        TeamA:
+          RespawnX: 90
+          RespawnY: 311
+          QuitEvent: Conquest::OnTeam1Quit
+          ActiveEvent: Conquest::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 113
+          RespawnY: 311
+          QuitEvent: Conquest::OnTeam2Quit
+          ActiveEvent: Conquest::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: schg_cas08
+        StartEvent: Conquest::OnStart
+        TeamA:
+          RespawnX: 28
+          RespawnY: 50
+          QuitEvent: Conquest::OnTeam1Quit
+          ActiveEvent: Conquest::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 87
+          RespawnY: 50
+          QuitEvent: Conquest::OnTeam2Quit
+          ActiveEvent: Conquest::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: arug_cas06
+        StartEvent: Conquest::OnStart
+        TeamA:
+          RespawnX: 30
+          RespawnY: 381
+          QuitEvent: Conquest::OnTeam1Quit
+          ActiveEvent: Conquest::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 126
+          RespawnY: 357
+          QuitEvent: Conquest::OnTeam2Quit
+          ActiveEvent: Conquest::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: arug_cas07
+        StartEvent: Conquest::OnStart
+        TeamA:
+          RespawnX: 298
+          RespawnY: 339
+          QuitEvent: Conquest::OnTeam1Quit
+          ActiveEvent: Conquest::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 298
+          RespawnY: 308
+          QuitEvent: Conquest::OnTeam2Quit
+          ActiveEvent: Conquest::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: arug_cas08
+        StartEvent: Conquest::OnStart
+        TeamA:
+          RespawnX: 313
+          RespawnY: 154
+          QuitEvent: Conquest::OnTeam1Quit
+          ActiveEvent: Conquest::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 330
+          RespawnY: 154
+          QuitEvent: Conquest::OnTeam2Quit
+          ActiveEvent: Conquest::OnTeam2Active
+          Variable: $@BG_Team2
+  - Id: 7
+    Name: Capture The Flag
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: bat_b02
+        StartEvent: Flavius_CTF::OnStart
+        TeamA:
+          RespawnX: 390
+          RespawnY: 10
+          DeathEvent: Flavius_CTF::OnTeam1Die
+          QuitEvent: Flavius_CTF::OnTeam1Quit
+          ActiveEvent: Flavius_CTF::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 10
+          RespawnY: 290
+          DeathEvent: Flavius_CTF::OnTeam2Die
+          QuitEvent: Flavius_CTF::OnTeam2Quit
+          ActiveEvent: Flavius_CTF::OnTeam2Active
+          Variable: $@BG_Team2
+  - Id: 8
+    Name: Stone Control
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: bat_b04
+        StartEvent: Flavius_SC::OnStart
+        TeamA:
+          RespawnX: 390
+          RespawnY: 10
+          DeathEvent: Flavius_SC::OnTeam1Die
+          QuitEvent: Flavius_SC::OnTeam1Quit
+          ActiveEvent: Flavius_SC::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 10
+          RespawnY: 290
+          DeathEvent: Flavius_SC::OnTeam2Die
+          QuitEvent: Flavius_SC::OnTeam2Quit
+          ActiveEvent: Flavius_SC::OnTeam2Active
+          Variable: $@BG_Team2
+  - Id: 9
+    Name: Team DeathMatch
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: bat_cc
+        StartEvent: Flavius_TD::OnStart
+        TeamA:
+          RespawnX: 88
+          RespawnY: 139
+          DeathEvent: Flavius_TD::OnTeam1Die
+          QuitEvent: Flavius_TD::OnTeam1Quit
+          ActiveEvent: Flavius_TD::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 96
+          RespawnY: 139
+          DeathEvent: Flavius_TD::OnTeam2Die
+          QuitEvent: Flavius_TD::OnTeam2Quit
+          ActiveEvent: Flavius_TD::OnTeam2Active
+          Variable: $@BG_Team2
+  - Id: 10
+    Name: Bossnia
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: bat_cc2
+        StartEvent: Tierra_Boss::OnStart
+        TeamA:
+          RespawnX: 88
+          RespawnY: 139
+          DeathEvent: Tierra_Boss::OnTeam1Die
+          QuitEvent: Tierra_Boss::OnTeam1Quit
+          ActiveEvent: Tierra_Boss::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 96
+          RespawnY: 139
+          DeathEvent: Tierra_Boss::OnTeam2Die
+          QuitEvent: Tierra_Boss::OnTeam2Quit
+          ActiveEvent: Tierra_Boss::OnTeam2Active
+          Variable: $@BG_Team2
+  - Id: 11
+    Name: Rush
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: rush_cas01
+        StartEvent: Rush::OnStart
+        TeamA:
+          RespawnX: 202
+          RespawnY: 230
+          DeathEvent: Rush::OnTeam1Die
+          QuitEvent: Rush::OnTeam1Quit
+          ActiveEvent: Rush::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 202
+          RespawnY: 226
+          DeathEvent: Rush::OnTeam2Die
+          QuitEvent: Rush::OnTeam2Quit
+          ActiveEvent: Rush::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: rush_cas02
+        StartEvent: Rush::OnReady
+        TeamA:
+          RespawnX: 146
+          RespawnY: 50
+          DeathEvent: Rush::OnTeam1Die
+          QuitEvent: Rush::OnTeam1Quit
+          ActiveEvent: Rush::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 146
+          RespawnY: 46
+          DeathEvent: Rush::OnTeam2Die
+          QuitEvent: Rush::OnTeam2Quit
+          ActiveEvent: Rush::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: rush_cas03
+        StartEvent: Rush::OnReady
+        TeamA:
+          RespawnX: 60
+          RespawnY: 13
+          DeathEvent: Rush::OnTeam1Die
+          QuitEvent: Rush::OnTeam1Quit
+          ActiveEvent: Rush::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 64
+          RespawnY: 13
+          DeathEvent: Rush::OnTeam2Die
+          QuitEvent: Rush::OnTeam2Quit
+          ActiveEvent: Rush::OnTeam2Active
+          Variable: $@BG_Team2
+      - Map: rush_cas04
+        StartEvent: Rush::OnReady
+        TeamA:
+          RespawnX: 270
+          RespawnY: 292
+          DeathEvent: Rush::OnTeam1Die
+          QuitEvent: Rush::OnTeam1Quit
+          ActiveEvent: Rush::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 270
+          RespawnY: 288
+          DeathEvent: Rush::OnTeam2Die
+          QuitEvent: Rush::OnTeam2Quit
+          ActiveEvent: Rush::OnTeam2Active
+          Variable: $@BG_Team2
+  - Id: 12
+    Name: Domination
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: bat_a04
+        StartEvent: Tierra_DOM::OnStart
+        TeamA:
+          RespawnX: 50
+          RespawnY: 374
+          DeathEvent: Tierra_DOM::OnTeamDie
+          QuitEvent: Tierra_DOM::OnTeam1Quit
+          ActiveEvent: Tierra_DOM::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 42
+          RespawnY: 16
+          DeathEvent: Tierra_DOM::OnTeamDie
+          QuitEvent: Tierra_DOM::OnTeam2Quit
+          ActiveEvent: Tierra_DOM::OnTeam2Active
+          Variable: $@BG_Team2
+  - Id: 13
+    Name: Double Inferno
+    MinPlayers: 1
+    MinLevel: 80
+    Locations:
+      - Map: region_8
+        StartEvent: Tierra_TI::OnStart
+        TeamA:
+          RespawnX: 10
+          RespawnY: 49
+          DeathEvent: Tierra_TI::OnTeamDie
+          QuitEvent: Tierra_TI::OnTeam1Quit
+          ActiveEvent: Tierra_TI::OnTeam1Active
+          Variable: $@BG_Team1
+        TeamB:
+          RespawnX: 89
+          RespawnY: 49
+          DeathEvent: Tierra_TI::OnTeamDie
+          QuitEvent: Tierra_TI::OnTeam2Quit
+          ActiveEvent: Tierra_TI::OnTeam2Active
+          Variable: $@BG_Team2

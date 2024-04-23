@@ -1,0 +1,11 @@
+// Change Material Database
+//
+// Structure of Database:
+// ID,ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
+//
+// NOTE:
+// - ID is used to identify item order that will be used for overwriting on db/import.
+//   Value is started from 0 until 74 (MAX_SKILL_CHANGEMATERIAL_DB-1). Use same ID on import file to overwrite original result & requirements
+// - Up to 5 ID/Amount pairs can be specified.
+// - Rate = n/10%
+
