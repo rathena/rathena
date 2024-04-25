@@ -394,27 +394,28 @@ void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int
 	// job modification
 	switch (class_)
 	{
-		case JOB_BARD:
-		case JOB_DANCER:
-		case JOB_CLOWN:
-		case JOB_GYPSY:
-		case JOB_BABY_BARD:
-		case JOB_BABY_DANCER:
-		case JOB_MINSTREL:
-		case JOB_WANDERER:
-		case JOB_MINSTREL_T:
-		case JOB_WANDERER_T:
-		case JOB_BABY_MINSTREL:
-		case JOB_BABY_WANDERER:
-		case JOB_KAGEROU:
-		case JOB_OBORO:
-		case JOB_BABY_KAGEROU:
-		case JOB_BABY_OBORO:
-		case JOB_TROUBADOUR:
-		case JOB_TROUVERE:
-		case JOB_SHINKIRO:
-		case JOB_SHIRANUI:
-			class_ = (sex == SEX_MALE ? class_++ : class_--);
+	case JOB_BARD:
+	case JOB_DANCER:
+	case JOB_CLOWN:
+	case JOB_GYPSY:
+	case JOB_BABY_BARD:
+	case JOB_BABY_DANCER:
+	case JOB_MINSTREL:
+	case JOB_WANDERER:
+	case JOB_MINSTREL_T:
+	case JOB_WANDERER_T:
+	case JOB_BABY_MINSTREL:
+	case JOB_BABY_WANDERER:
+	case JOB_KAGEROU:
+	case JOB_OBORO:
+	case JOB_BABY_KAGEROU:
+	case JOB_BABY_OBORO:
+	case JOB_TROUBADOUR:
+	case JOB_TROUVERE:
+	case JOB_SHINKIRO:
+	case JOB_SHIRANUI:
+		class_ = (sex == SEX_MALE ? class_++ : class_--);
+		break;
 	}
 
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
