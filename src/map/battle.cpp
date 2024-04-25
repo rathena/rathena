@@ -3378,12 +3378,6 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag 
 		case LG_EARTHDRIVE:
 		case NPC_DRAGONBREATH:
 			return false;
-		case CR_GRANDCROSS:
-		case NPC_GRANDDARKNESS:
-			// Grand Cross is influenced by refine bonus but not by atkpercent / masteries / Star Crumbs / Spirit Spheres
-			if (chk_flag != BCHK_REFINE)
-				return false;
-			break;
 		case LK_SPIRALPIERCE:
 			// Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
 			if (chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
@@ -7537,9 +7531,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	battle_calc_element_damage(&wd, src, target, skill_id, skill_lv);
 
-	if(skill_id == CR_GRANDCROSS || skill_id == NPC_GRANDDARKNESS)
-		return wd; //Enough, rest is not needed.
-
 #ifdef RENEWAL
 	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
@@ -8812,6 +8803,24 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				ad.damage = ad.damage * (100-mdef)/100 - mdef2;
 #endif
 		}
+
+		//Apply the physical part of the skill's damage. [Skotlex]
+		switch (skill_id) {
+			case CR_GRANDCROSS:
+			case NPC_GRANDDARKNESS: {
+				// Grand Cross just takes atk, applies def reduction and adds refine bonus
+				// No need to go through the whole physical damage code
+				struct Damage wd;
+				battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv);
+				battle_calc_defense_reduction(&wd, src, target, skill_id, skill_lv);
+				if (sd) {
+					wd.damage += sstatus->rhw.atk2;
+				}
+				ad.damage = std::max((int64)1, wd.damage + ad.damage) * (100 + 40 * skill_lv) / 100;
+			}
+			break;
+		}
+
 		if(ad.damage<1)
 			ad.damage=1;
 		else if(sc) { //only applies when hit
@@ -8842,26 +8851,26 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		if (!nk[NK_IGNOREELEMENT])
 			ad.damage = battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
-		//Apply the physical part of the skill's damage. [Skotlex]
-		switch(skill_id) {
-			case CR_GRANDCROSS:
-			case NPC_GRANDDARKNESS: {
-					struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
-
-					ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv) * (100 + 40 * skill_lv) / 100;
-					if(src == target) {
-						if(src->type == BL_PC)
-							ad.damage = ad.damage / 2;
-						else
-							ad.damage = 0;
-					}
-				}
-				break;
-		}
-
 #ifndef RENEWAL
 		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
 #endif
+
+		switch (skill_id) {
+			case CR_GRANDCROSS:
+			case NPC_GRANDDARKNESS:
+				if (src == target) {
+					// Grand Cross on self first applies attr_fix, then cardfix and finally halves the damage
+					if (src->type == BL_PC)
+						ad.damage = ad.damage / 2;
+					else
+						ad.damage = 0;
+				}
+				else
+					// Grand Cross on target applies attr_fix, then cardfix and then attr_fix a second time
+					ad.damage = battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
+				break;
+		}
+
 	} //Hint: Against plants damage will still be 1 at this point
 
 	//Apply DAMAGE_DIV_FIX and check for min damage

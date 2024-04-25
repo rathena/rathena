@@ -6892,7 +6892,7 @@ Body:
       IgnoreFlee: true
     Flags:
       TargetSelf: true
-    Range: 5
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Holy

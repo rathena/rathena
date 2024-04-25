@@ -1540,14 +1540,12 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 
 	case NPC_GRANDDARKNESS:
 		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		attack_type |= BF_WEAPON;
 		break;
 
 	case CR_GRANDCROSS:
 		//Chance to cause blind status vs demon and undead element, but not against players
 		if(!dstsd && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		attack_type |= BF_WEAPON;
 		break;
 
 	case AM_ACIDTERROR:
@@ -2626,8 +2624,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		}
 		break;
 	case CR_GRANDCROSS:
-	case NPC_GRANDDARKNESS:
-		attack_type |= BF_WEAPON;
+		if (src == bl) {
+			// Grand Cross on self specifically only triggers "When hit by physical attack" autospells and ignores everything else
+			attack_type |= BF_WEAPON;
+			attack_type &= ~BF_MAGIC;
+		}
 		break;
 	case LG_HESPERUSLIT:
 		{
@@ -4110,9 +4111,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			skill_addtimerskill(bl,tick + 800,bl->id,x,y,skill_id,skill_lv,0,flag);
 		}
 	}
-
-	if(skill_id == CR_GRANDCROSS || skill_id == NPC_GRANDDARKNESS)
-		dmg.flag |= BF_WEAPON;
 
 	if( sd && src != bl && damage > 0 && ( dmg.flag&BF_WEAPON ||
 		(dmg.flag&BF_MISC && (skill_id == RA_CLUSTERBOMB || skill_id == RA_FIRINGTRAP || skill_id == RA_ICEBOUNDTRAP)) ) )
