@@ -6621,7 +6621,9 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 				return;
 			if (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
 				return;
-
+			[[fallthrough]];
+		case CR_GRANDCROSS: // Grand Cross is marked as "IgnoreDefense" in renewal as it's applied at the end after already combining ATK and MATK
+		case NPC_GRANDDARKNESS:
 			// Defense reduction by flat value.
 			// This completely bypasses the normal RE DEF Reduction formula.
 			wd->damage -= (def1 + vit_def);
@@ -8808,15 +8810,37 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		switch (skill_id) {
 			case CR_GRANDCROSS:
 			case NPC_GRANDDARKNESS: {
-				// Grand Cross just takes atk, applies def reduction and adds refine bonus
+				// Pre-re ATK = Take atk, apply def reduction and add refine bonus
+				// Final Damage = (ATK+MATK)*RATIO
+				// Renewal ATK = Take total atk
+				// Final Damage = ((ATK+MATK)/2)*RATIO - (tDEF + tMDEF)
 				// No need to go through the whole physical damage code
-				struct Damage wd;
+				struct Damage wd = initialize_weapon_data(src, target, skill_id, skill_lv, mflag);
 				battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv);
+				// Calculate ATK
+#ifdef RENEWAL
+				if (sd)
+					wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.percentAtk;
+#else
 				battle_calc_defense_reduction(&wd, src, target, skill_id, skill_lv);
 				if (sd) {
 					wd.damage += sstatus->rhw.atk2;
 				}
-				ad.damage = std::max((int64)1, wd.damage + ad.damage) * (100 + 40 * skill_lv) / 100;
+#endif
+				// Combine ATK and MATK
+#ifdef RENEWAL
+				ad.damage = (wd.damage + ad.damage) / 2;
+#else
+				ad.damage = std::max((int64)1, wd.damage + ad.damage);
+#endif
+				// Ratio
+				skillratio += 40 * skill_lv;
+				MATK_RATE(skillratio);
+#ifdef RENEWAL
+				// Total defense reduction (renewal only)
+				battle_calc_defense_reduction(&ad, src, target, skill_id, skill_lv);
+				ad.damage -= (tstatus->mdef + tstatus->mdef2);
+#endif
 			}
 			break;
 		}
