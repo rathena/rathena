@@ -241,6 +241,9 @@ bool Csv2YamlTool::initialize( int argc, char* argv[] ){
 	#define export_constant_npc(a) export_constant(a)
 	init_random_option_constants();
 	#include <map/script_constants.hpp>
+	// Constants that are deprecated but still needed for conversion
+	script_set_constant(QUOTE(RC2_GUARDIAN), RC2_GUARDIAN, false, false);
+	script_set_constant(QUOTE(RC2_BATTLEFIELD), RC2_BATTLEFIELD, false, false);
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -3367,17 +3370,17 @@ static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 		body << YAML::Key << "Defense" << YAML::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[13], nullptr, 10) > 0)
 		body << YAML::Key << "MagicDefense" << YAML::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
-	if (strtol(fields[14], nullptr, 10) > 1)
+	if (strtol(fields[14], nullptr, 10) != 1)
 		body << YAML::Key << "Str" << YAML::Value << fields[14];
-	if (strtol(fields[15], nullptr, 10) > 1)
+	if (strtol(fields[15], nullptr, 10) != 1)
 		body << YAML::Key << "Agi" << YAML::Value << fields[15];
-	if (strtol(fields[16], nullptr, 10) > 1)
+	if (strtol(fields[16], nullptr, 10) != 1)
 		body << YAML::Key << "Vit" << YAML::Value << fields[16];
-	if (strtol(fields[17], nullptr, 10) > 1)
+	if (strtol(fields[17], nullptr, 10) != 1)
 		body << YAML::Key << "Int" << YAML::Value << fields[17];
-	if (strtol(fields[18], nullptr, 10) > 1)
+	if (strtol(fields[18], nullptr, 10) != 1)
 		body << YAML::Key << "Dex" << YAML::Value << fields[18];
-	if (strtol(fields[19], nullptr, 10) > 1)
+	if (strtol(fields[19], nullptr, 10) != 1)
 		body << YAML::Key << "Luk" << YAML::Value << fields[19];
 	if (strtol(fields[9], nullptr, 10) > 0)
 		body << YAML::Key << "AttackRange" << YAML::Value << fields[9];
