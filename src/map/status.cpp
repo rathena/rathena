@@ -9417,7 +9417,7 @@ void status_change_init(struct block_list *bl)
 {
 	status_change *sc = status_get_sc(bl);
 	nullpo_retv(sc);
-	new (sc) status_change;
+	new (sc) status_change();
 }
 
 /*========================================== [Playtester]
