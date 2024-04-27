@@ -7234,9 +7234,8 @@ Body:
     Type: Magic
     TargetType: Self
     DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreFlee: true
-    Range: 5
+      IgnoreDefense: true
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Holy
