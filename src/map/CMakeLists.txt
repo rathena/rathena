@@ -1,45 +1,144 @@
-#
-# setup
-#
-set( MAP_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
+set(MAP_SOURCES
+	"achievement.cpp"
+	"atcommand.cpp"
+	"battle.cpp"
+	"battleground.cpp"
+	"buyingstore.cpp"
+	"cashshop.cpp"
+	"channel.cpp"
+	"chat.cpp"
+	"chrif.cpp"
+	"clan.cpp"
+	"clif.cpp"
+	"date.cpp"
+	"duel.cpp"
+	"elemental.cpp"
+	"guild.cpp"
+	"homunculus.cpp"
+	"instance.cpp"
+	"intif.cpp"
+	"itemdb.cpp"
+	"log.cpp"
+	"mail.cpp"
+	"map.cpp"
+	"mapreg.cpp"
+	"mercenary.cpp"
+	"mob.cpp"
+	"navi.cpp"
+	"npc.cpp"
+	"npc_chat.cpp"
+	"party.cpp"
+	"path.cpp"
+	"pc.cpp"
+	"pc_groups.cpp"
+	"pet.cpp"
+	"quest.cpp"
+	"script.cpp"
+	"searchstore.cpp"
+	"skill.cpp"
+	"status.cpp"
+	"storage.cpp"
+	"trade.cpp"
+	"unit.cpp"
+	"vending.cpp"
+)
 
+set(MAP_HEADERS
+	"achievement.hpp"
+	"atcommand.hpp"
+	"battleground.hpp"
+	"battle.hpp"
+	"buyingstore.hpp"
+	"cashshop.hpp"
+	"channel.hpp"
+	"chat.hpp"
+	"chrif.hpp"
+	"clan.hpp"
+	"clif.hpp"
+	"clif_obfuscation.hpp"
+	"clif_packetdb.hpp"
+	"clif_shuffle.hpp"
+	"date.hpp"
+	"duel.hpp"
+	"elemental.hpp"
+	"guild.hpp"
+	"homunculus.hpp"
+	"instance.hpp"
+	"intif.hpp"
+	"itemdb.hpp"
+	"log.hpp"
+	"mail.hpp"
+	"map.hpp"
+	"mapreg.hpp"
+	"mercenary.hpp"
+	"mob.hpp"
+	"navi.hpp"
+	"npc.hpp"
+	"packets.hpp"
+	"packets_struct.hpp"
+	"party.hpp"
+	"path.hpp"
+	"pc_groups.hpp"
+	"pc.hpp"
+	"pet.hpp"
+	"quest.hpp"
+	"script_constants.hpp"
+	"script.hpp"
+	"searchstore.hpp"
+	"skill.hpp"
+	"status.hpp"
+	"storage.hpp"
+	"trade.hpp"
+	"unit.hpp"
+	"vending.hpp"
+)
 
-#
-# map server
-#
-if( BUILD_SERVERS )
-message( STATUS "Creating target map-server" )
-file(GLOB MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
-file(GLOB MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
-set( DEPENDENCIES common ryml)
-set( LIBRARIES ${GLOBAL_LIBRARIES})
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} )
-set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
-if( WITH_PCRE )
-	message( STATUS "Enabled PCRE code" )
-	set( LIBRARIES ${LIBRARIES} ${PCRE_LIBRARIES} )
-	set( INCLUDE_DIRS ${INCLUDE_DIRS} ${PCRE_INCLUDE_DIRS} )
-	set( DEFINITIONS "${DEFINITIONS} -DPCRE_SUPPORT" )
-else()
-	message( STATUS "Disabled PCRE code" )
+add_executable(map-server)
+
+target_sources(map-server PRIVATE ${MAP_SOURCES})
+
+if(WIN32)
+	target_sources(map-server PRIVATE ${MAP_HEADERS})
+	set_target_properties(map-server PROPERTIES FOLDER "Servers")
 endif()
-set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${MAP_HEADERS} ${MAP_SOURCES} )
-source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
-source_group( map FILES ${MAP_HEADERS} ${MAP_SOURCES} )
-include_directories( ${INCLUDE_DIRS} )
 
-#message( STATUS "map-server SOURCE_FILES=${SOURCE_FILES}")
-add_executable( map-server ${SOURCE_FILES} )
-#message( STATUS "map-server LIBRARIES=${LIBRARIES}, DEPENDENCIES=${DEPENDENCIES} DEFINITIONS=${DEFINITIONS}")
-add_dependencies( map-server ${DEPENDENCIES} )
-target_link_libraries( map-server ${LIBRARIES} ${DEPENDENCIES} )
-set_target_properties( map-server PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
-if( INSTALL_COMPONENT_RUNTIME )
-	cpack_add_component( Runtime_mapserver DESCRIPTION "map-server" DISPLAY_NAME "map-server" GROUP Runtime )
-	install( TARGETS map-server
-		DESTINATION "."
-		COMPONENT Runtime_mapserver )
-endif( INSTALL_COMPONENT_RUNTIME )
-set( TARGET_LIST ${TARGET_LIST} map-server  CACHE INTERNAL "" )
-message( STATUS "Creating target map-server - done" )
-endif( BUILD_SERVERS )
+target_link_libraries(map-server PUBLIC
+	common
+	${PCRE_LIBRARIES}
+)
+
+target_include_directories(map-server PUBLIC
+	${PCRE_INCLUDE_DIRS}
+)
+
+if(WITH_PCRE)
+	target_compile_definitions(map-server PUBLIC "-DPCRE_SUPPORT")
+endif()
+
+# map-server-generator
+add_executable(map-server-generator)
+
+target_sources(map-server-generator PRIVATE ${MAP_SOURCES})
+
+if(WIN32)
+	target_sources(map-server-generator PRIVATE ${MAP_HEADERS})
+	set_target_properties(map-server-generator PROPERTIES FOLDER "Tools")
+endif()
+
+set_target_properties(map-server-generator PROPERTIES EXCLUDE_FROM_ALL TRUE)
+
+target_compile_definitions(map-server-generator PUBLIC "-DMAP_GENERATOR")
+
+target_link_libraries(map-server-generator PUBLIC
+	common
+	json
+	${PCRE_LIBRARIES}
+)
+
+target_include_directories(map-server-generator PUBLIC
+	${PCRE_INCLUDE_DIRS}
+)
+
+if(PCRE_FOUND)
+	target_compile_definitions(map-server-generator PUBLIC "-DPCRE_SUPPORT")
+endif()
