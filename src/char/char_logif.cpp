@@ -395,26 +395,64 @@ void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int
 	switch (class_)
 	{
 	case JOB_BARD:
+		class_ = JOB_DANCER;
+		break;
 	case JOB_DANCER:
+		class_ = JOB_BARD;
+		break;
 	case JOB_CLOWN:
+		class_ = JOB_GYPSY;
+		break;
 	case JOB_GYPSY:
+		class_ = JOB_CLOWN;
+		break;
 	case JOB_BABY_BARD:
+		class_ = JOB_BABY_DANCER;
+		break;
 	case JOB_BABY_DANCER:
+		class_ = JOB_BABY_BARD;
+		break;
 	case JOB_MINSTREL:
+		class_ = JOB_WANDERER;
+		break;
 	case JOB_WANDERER:
+		class_ = JOB_MINSTREL;
+		break;
 	case JOB_MINSTREL_T:
+		class_ = JOB_WANDERER_T;
+		break;
 	case JOB_WANDERER_T:
+		class_ = JOB_MINSTREL_T;
+		break;
 	case JOB_BABY_MINSTREL:
+		class_ = JOB_BABY_WANDERER;
+		break;
 	case JOB_BABY_WANDERER:
+		class_ = JOB_BABY_MINSTREL;
+		break;
 	case JOB_KAGEROU:
+		class_ = JOB_OBORO;
+		break;
 	case JOB_OBORO:
+		class_ = JOB_KAGEROU;
+		break;
 	case JOB_BABY_KAGEROU:
+		class_ = JOB_BABY_OBORO;
+		break;
 	case JOB_BABY_OBORO:
+		class_ = JOB_BABY_KAGEROU;
+		break;
 	case JOB_TROUBADOUR:
+		class_ = JOB_TROUVERE;
+		break;
 	case JOB_TROUVERE:
+		class_ = JOB_TROUBADOUR;
+		break;
 	case JOB_SHINKIRO:
+		class_ = JOB_SHIRANUI;
+		break;
 	case JOB_SHIRANUI:
-		class_ = (sex == SEX_MALE ? class_++ : class_--);
+		class_ = JOB_SHINKIRO;
 		break;
 	}
 
