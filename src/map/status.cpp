@@ -1564,7 +1564,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
 		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp,ap); break;
-		case BL_MOB: mob_damage((TBL_MOB*)target, src, dhp); break;
+		case BL_MOB: mob_damage((TBL_MOB*)target, src, (int)dhp); break;
 		case BL_HOM: hom_damage((TBL_HOM*)target); break;
 		case BL_MER: mercenary_heal((TBL_MER*)target,hp,sp); break;
 		case BL_ELEM: elemental_heal((TBL_ELEM*)target,hp,sp); break;
