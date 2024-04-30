@@ -9537,14 +9537,17 @@ bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle
 	mob_data* dstmd = BL_CAST(BL_MOB, &target);
 
 	// Coma
-	if (sd.special_state.bonus_coma && (!dstmd || util::vector_exists(status_get_race2(&dstmd->bl), RC2_GVG) || status_get_class(&dstmd->bl) != CLASS_BATTLEFIELD)) {
+	if (sd.special_state.bonus_coma && (!dstmd || (!util::vector_exists(status_get_race2(&dstmd->bl), RC2_GVG) && status_get_class(&dstmd->bl) != CLASS_BATTLEFIELD))) {
 		int rate = 0;
 		rate += sd.indexed_bonus.coma_class[tstatus->class_] + sd.indexed_bonus.coma_class[CLASS_ALL];
-		rate += sd.indexed_bonus.coma_race[tstatus->race] + sd.indexed_bonus.coma_race[RC_ALL];
+		if(!status_bl_has_mode(&target, MD_STATUSIMMUNE))
+			rate += sd.indexed_bonus.coma_race[tstatus->race] + sd.indexed_bonus.coma_race[RC_ALL];
 		if (attack_type&BF_WEAPON) {
-			rate += sd.indexed_bonus.weapon_coma_ele[tstatus->def_ele] + sd.indexed_bonus.weapon_coma_ele[ELE_ALL];
-			rate += sd.indexed_bonus.weapon_coma_race[tstatus->race] + sd.indexed_bonus.weapon_coma_race[RC_ALL];
 			rate += sd.indexed_bonus.weapon_coma_class[tstatus->class_] + sd.indexed_bonus.weapon_coma_class[CLASS_ALL];
+			if (!status_bl_has_mode(&target, MD_STATUSIMMUNE)) {
+				rate += sd.indexed_bonus.weapon_coma_ele[tstatus->def_ele] + sd.indexed_bonus.weapon_coma_ele[ELE_ALL];
+				rate += sd.indexed_bonus.weapon_coma_race[tstatus->race] + sd.indexed_bonus.weapon_coma_race[RC_ALL];
+			}
 		}
 		if (rate > 0 && rnd_chance(rate, 10000))
 			return true;
