@@ -15,7 +15,7 @@
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //============================================================
 
-prontera,153,194,6	script	TýÌ Khuyêìt	123,{
+prontera,153,193,6	script	TýÌ Khuyêìt-Job Master	86,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
@@ -24,14 +24,14 @@ function	Require_Level	{
 		.@blvl = getarg(0) - BaseLevel;
 		.@jlvl = getarg(1) - JobLevel;
 		mes "Câìp yêu câÌu:";
-		mes ((getarg(0)>1)? 
+		mes ((getarg(0)>1)?
 			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
 			getarg(1)+"^000000 (^00bb00Job^000000)";
 		mes "CâÌn thêm " +
-			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 base level nýÞa " + 
+			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 base level nýÞa " +
 				((.@jlvl > 0) ? "and " : "") : "") +
 			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 job level nýÞa " : "") +
-			"to continue.";
+			"ðêÒ tiêìp tuòc.";
 		close;
 	}
 	return;
@@ -137,11 +137,11 @@ function	Job_Options	{
 	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
 	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
 	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
-		
+
 	// From here on the jobmaster checks the current class
 	// and fills the the array `.@job_opt` with possible
 	// job options for the player.
-	
+
 	if( .@rebirth_possible ) {
 		// Rebirth option (displayed on the top of the menu)
 		Require_Level(.Req_Rebirth[0], .Req_Rebirth[1]);
@@ -152,8 +152,8 @@ function	Job_Options	{
 		Require_Level(.Req_Third[0], .Req_Third[1]);
 		Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
 	}
-	 
-	if (.SecondExpanded && 
+
+	if (.SecondExpanded &&
 	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
@@ -163,8 +163,8 @@ function	Job_Options	{
 			Job_Options(.@job_opt,roclass(.@eac|EAJL_THIRD)); // Expanded SN is "third" cls
 		}
 	}
-	
-	if (.SecondExpanded && 
+
+	if (.SecondExpanded &&
 		((.@eac&(~EAJL_BABY)) == EAJ_NINJA || 		// is (Baby) Ninja
 		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
 		// (Baby) Ninja to (Baby) Kagerou / Oboro
@@ -176,7 +176,7 @@ function	Job_Options	{
 			Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
 		}
 	}
-	
+
 	// Player is Job_Novice, Job_Novice_High or Job_Baby
 	if (.@first_eac == EAJ_NOVICE && .@second_eac != EAJ_SUPER_NOVICE) {
 		// MAPID_NOVICE, MAPID_SUPER_NOVICE, MAPID_NOVICE_HIGH, MAPID_BABY
@@ -196,7 +196,7 @@ function	Job_Options	{
 					Job_Options(.@job_opt,
 						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
 				else
-					Job_Options(.@job_opt, 
+					Job_Options(.@job_opt,
 						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
 						Job_Acolyte_High, Job_Merchant_High, Job_Thief_High);
 				break;
@@ -241,7 +241,7 @@ function	Job_Options	{
 			}
 		}
 	}
-	
+
 	// Displaying the Job Menu defined by .@job_opt.
 	// .@job_opt should not be changed below this line.
 	function Job_Menu;
@@ -255,7 +255,7 @@ function	Job_Menu	{
 	while(true) {
 		.@opt_cnt =  getarraysize(getarg(0));
 		if( .@opt_cnt <= 0 ) {
-			mes "Không coÌn nghêÌ naÌo khaÒ duòng nýÞa.";
+			mes "- không coÌn nghêÌ naÌo khaÒ duòng nýÞa -";
 			close;
 		}
 
@@ -339,8 +339,8 @@ function	Confirm_Change	{
 	.@job_option$ = " ~ Ta muôìn trõÒ thaÌnh ^0055FF"+jobname(.@class)+"^000000 class!";
 	if( .@class == Job_Novice_High)
 		.@job_option$ = " ~ ^0055FFRebirth^000000";
-	
-	if (select(.@job_option$+": ~ ^777777" + 
+
+	if (select(.@job_option$+": ~ ^777777" +
 			((.@back) ?"Quay laòi" : "HuÒy boÒ") + "^000000") == 1) {
 		Job_Change(.@class);
 	}
@@ -534,20 +534,20 @@ function	Get_Job_Equip	{
 OnInit:
 	// Initialisation, do not edit these
 	.NPCName$ = "[ ^0000DETýÌ Khuyêìt^000000 ]";
-	
+
 	// Settings
-	.ThirdClass = true;			// Enable third classes?
-	.RebirthClass = true;			// Enable rebirth classes?
-	.SecondExpanded = true;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
+	.ThirdClass = false;			// Enable third classes?
+	.RebirthClass = false;			// Enable rebirth classes?
+	.SecondExpanded = false;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
 	.BabyNovice = true;	// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
 	.BabyClass = true;				// Enable Baby classes?
-	.BabyThird = true;				// Enable Baby third classes?
-	.BabyExpanded = true;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
-	.BabySummoner = true;			// Enable Baby Summoner?
+	.BabyThird = false;				// Enable Baby third classes?
+	.BabyExpanded = false;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
+	.BabySummoner = false;			// Enable Baby Summoner?
 	.LastJob = true;				// Enforce linear class changes?
 	.SkillPointCheck = true;		// Force player to use up all skill points?
 	.Platinum = true;				// Get platinum skills automatically?
-	.GetJobEquip = true;			// Get job equipment (mostly weapons) on job change?
+	.GetJobEquip = false;			// Get job equipment (mostly weapons) on job change?
 
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
@@ -557,7 +557,7 @@ OnInit:
 	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
 	setarray .Req_Exp_SNOVI[0],99,99; 	// Minimum base level, job level to turn into Expanded Super Novice
 	.SNovice = 45;						// Minimum base level to turn into Super Novice
-	
+
 	// Setting adjustments by PACKETVER
 	if( PACKETVER < 20161207 ) {
 		if( .BabyExpanded )

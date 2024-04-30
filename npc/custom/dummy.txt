@@ -1,36 +1,11 @@
 -	script	Punching Bag	-1,{
 
 OnInit:
-
   monster "prontera",162,176,"Punching Bag",1905,1,"Punching Bag::OnDummyKill";
-
-// monster "isahollm",256,104,"Punching Bag",1905,1,"Punching Bag::OnDummyKill3";
-
-// monster "isahollm",240,104,"Punching Bag",1905,1,"Punching Bag::OnDummyKill2";
-
   setmapflag( "prontera",mf_monster_noteleport );
-
 end;
 
 OnDummyKill:
   monster "prontera",162,176,"Punching Bag",1905,1,"Punching Bag::OnDummyKill";
 end;
-
-// OnDummyKill2:
-
-// monster "isahollm",240,104,"Punching Bag",1905,1,"Punching Bag::OnDummyKill2";
-
-// end;
-
-// OnDummyKill3:
-
-// monster "isahollm",256,104,"Punching Bag",1905,1,"Punching Bag::OnDummyKill3";
-
-// end;
-
-OnPCAttackEvent:
-  if ( !@test_punch ) end;
-  @dps_damage += @damage;
-end;
-
 }

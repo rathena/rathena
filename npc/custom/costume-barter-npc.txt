@@ -1,0 +1,57 @@
+moc_para01,24,35,4	script	TiÍ“u H„Ïc#moc_para01_barter_tieuhac	4_TARUTUPI,{
+	if ((MaxWeight - Weight) < 10000) {
+		mes "ThiÏm mang giÃ n„Úng quaÏ, gia“m n„Úng i rÙÃi miÃnh noÏi chuyÍÚn tiÍÏp.";
+		close;
+	}
+	mes "[TiÍ“u H„Ïc]";
+	mes "ChaÃo ÙÃng chiÏ, muÙÏn Ù“i costume giÃ neÃ?";
+	next;
+	switch( select(
+		"~ ^0000FF1 - Costume Exchange^000000",
+		"~ ^0000FF2 - Costume Exchange^000000",
+    "~ ^0000FF3 - Costume Exchange^000000",
+    "~ ^0000FF4 - Costume Exchange^000000",
+    "~ ^0000FF5 - Costume Exchange^000000",
+    "~ ^0000FF6 - Costume Exchange^000000"
+    // "~ ^0000FF7 - Costume Exchange^000000",
+    // "~ ^0000FF8 - Costume Exchange^000000",
+    // "~ ^0000FF9 - Costume Exchange^000000"
+	) ) {
+		case 1:
+			close2;
+			callshop "costume_barters_1", 1;
+			end;
+		case 2:
+			close2;
+			callshop "costume_barters_2", 1;
+			end;
+		case 3:
+			close2;
+			callshop "costume_barters_3", 1;
+			end;
+		case 4:
+			close2;
+			callshop "costume_barters_4", 1;
+			end;
+		case 5:
+			close2;
+			callshop "costume_barters_5", 1;
+			end;
+		case 6:
+			close2;
+			callshop "costume_barters_6", 1;
+			end;
+    // case 7:
+		// 	close2;
+		// 	callshop "costume_barters_7", 1;
+		// 	end;
+		// case 8:
+		// 	close2;
+		// 	callshop "costume_barters_8", 1;
+		// 	end;
+		// case 9:
+		// 	close2;
+		// 	callshop "costume_barters_9", 1;
+		// 	end;
+	}
+}

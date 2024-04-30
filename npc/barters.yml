@@ -50,3 +50,12 @@ Footer:
   # - Path: npc/re/merchants/barters.yml
   #   Mode: Renewal
   - Path: npc/custom/barters.yml
+  - Path: npc/custom/barters/costume_barters_1.yml
+  - Path: npc/custom/barters/costume_barters_2.yml
+  - Path: npc/custom/barters/costume_barters_3.yml
+  - Path: npc/custom/barters/costume_barters_4.yml
+  - Path: npc/custom/barters/costume_barters_5.yml
+  - Path: npc/custom/barters/costume_barters_6.yml
+  # - Path: npc/custom/barters/costume_barters_7.yml
+  # - Path: npc/custom/barters/costume_barters_8.yml
+  # - Path: npc/custom/barters/costume_barters_9.yml
