@@ -499,8 +499,8 @@ enum sc_type : int16 {
 	//SC_IGNOREDEF,
 	SC_HELLPOWER = 294,
 	SC_INVINCIBLE, //295
-	SC_INVINCIBLEOFF,
-	SC_MANU_ATK,
+	//SC_INVINCIBLEOFF,
+	SC_MANU_ATK = 297,
 	SC_MANU_DEF,
 	SC_SPL_ATK,
 	SC_SPL_DEF, //300
@@ -1059,7 +1059,7 @@ enum sc_type : int16 {
 	SC_EP16_2_BUFF_SS,
 	SC_EP16_2_BUFF_SC,
 	SC_EP16_2_BUFF_AC,
-	
+
 	// Job Improvement Bundle
 	SC_OVERBRANDREADY,
 	SC_POISON_MIST,
@@ -1282,7 +1282,7 @@ enum sc_type : int16 {
 
 	SC_RUSH_QUAKE1,
 	SC_RUSH_QUAKE2,
-	
+
 	SC_G_LIFEPOTION,
 
 	// Hyper Novice
@@ -1293,14 +1293,34 @@ enum sc_type : int16 {
 	SC_BREAKINGLIMIT,
 	SC_RULEBREAK,
 
-#ifdef RENEWAL
-	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
-#endif
+	// Night Watch
+	SC_INTENSIVE_AIM,
+	SC_INTENSIVE_AIM_COUNT,
+	SC_GRENADE_FRAGMENT_1,
+	SC_GRENADE_FRAGMENT_2,
+	SC_GRENADE_FRAGMENT_3,
+	SC_GRENADE_FRAGMENT_4,
+	SC_GRENADE_FRAGMENT_5,
+	SC_GRENADE_FRAGMENT_6,
+	SC_AUTO_FIRING_LAUNCHER,
+	SC_HIDDEN_CARD,
+	SC_PERIOD_RECEIVEITEM_2ND,
+	SC_PERIOD_PLUSEXP_2ND,
+
+	SC_EXTREMITYFIST2,
+	SC_POWERUP,
+	SC_AGIUP,
+
+	SC_TB_CUSTOM = 960,
 
 	SC_CARTEFFICIENCY,
 	SC_ALCHEMYEFFICIENCY_ACID,
 	SC_ALCHEMYEFFICIENCY_FIRE,
 	SC_ALCHEMYEFFICIENCY_BOTH,
+
+#ifdef RENEWAL
+	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
+#endif
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
