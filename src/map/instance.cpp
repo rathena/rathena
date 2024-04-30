@@ -3,8 +3,8 @@
 
 #include "instance.hpp"
 
-#include <stdlib.h>
-#include <math.h>
+#include <cstdlib>
+#include <cmath>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>

@@ -3,12 +3,11 @@
 
 #include "char_clif.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/malloc.hpp>
 #include <common/mapindex.hpp>

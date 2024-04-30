@@ -42,9 +42,8 @@
 #ifndef DB_HPP
 #define DB_HPP
 
+#include <cstdarg>
 #include <utility>
-
-#include <stdarg.h>
 
 #include "cbasetypes.hpp"
 

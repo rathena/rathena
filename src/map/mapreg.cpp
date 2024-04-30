@@ -3,7 +3,7 @@
 
 #include "mapreg.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>

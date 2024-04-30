@@ -3,7 +3,7 @@
 
 #include "intif.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/malloc.hpp>
 #include <common/mmo.hpp>

@@ -1571,8 +1571,32 @@ Body:
   - Id: 3492
     Title: (Skilled) Dragon Monster Hunting - Standby
     TimeLimit: 4h
+  - Id: 3493
+    Title: Conversation with Jarad
+  - Id: 3494
+    Title: Conversation with Rohi
+  - Id: 3495
+    Title: Conversation with Jeojin
+  - Id: 3496
+    Title: Conversation with Squain
+  - Id: 3497
+    Title: Conversation with Senado
+  - Id: 3498
+    Title: Conversation with Japer
+  - Id: 3499
+    Title: Conversation with Shirouan
+  - Id: 3500
+    Title: Conversation with Ishira
+  - Id: 3501
+    Title: Conversation with Gina
+  - Id: 3502
+    Title: Conversation with Hari
+  - Id: 3503
+    Title: Examine the Sky
   - Id: 3504
     Title: Look at the Sky - Standby
+  - Id: 3505
+    Title: Report to Junok
     TimeLimit: 4h
   - Id: 3507
     Title: Illusion Investigation Team - Sheshin
@@ -3209,6 +3233,27 @@ Body:
   - Id: 5931
     Title: "[Standby] Subjugation-Yanggeochon"
     TimeLimit: 4h
+  - Id: 5932
+    Title: The Abused Child
+  - Id: 5933
+    Title: Business Plan Presentation
+  - Id: 5934
+    Title: Gathering Training (1)
+  - Id: 5935
+    Title: Gathering Training (2)
+  - Id: 5936
+    Title: Gathering Training (3)
+  - Id: 5937
+    Title: "[Standby] Flower Room's work"
+    TimeLimit: 4h
+  - Id: 5938
+    Title: Gathering Half Flower
+  - Id: 5939
+    Title: Gathering Half Flower
+  - Id: 5940
+    Title: Gathering Half Flower
+  - Id: 5941
+    Title: Gathering Half Flower
   - Id: 6000
     Title: Job Change to Taekwon
   - Id: 6001
@@ -6270,6 +6315,56 @@ Body:
           MAGMARING: true
           DROSERA: true
           MUSCIPULAR: true
+  - Id: 8681
+    Title: To Rachel (1)
+  - Id: 8682
+    Title: To Rachel (2)
+  - Id: 8683
+    Title: Please stop fighting
+  - Id: 8684
+    Title: It's over
+  - Id: 8685
+    Title: A suspicious movement detected in the temple
+  - Id: 8686
+    Title: The Intruder of the Temple
+  - Id: 8687
+    Title: Did you break it?
+  - Id: 8688
+    Title: Thanks for today's daily food
+  - Id: 8689
+    Title: Today's Daily food - Standby
+    TimeLimit: 4h
+  - Id: 8690
+    Title: Thanks for today's daily food
+  - Id: 8691
+    Title: Sacred Relics for Essence (1)
+  - Id: 8692
+    Title: Sacred Relics for Essence (2)
+  - Id: 8693
+    Title: Sacred Relics for Essence (3)
+  - Id: 8694
+    Title: Clean Water Procurement - Standby
+    TimeLimit: 4h
+  - Id: 8695
+    Title: Procurement of clean water (1)
+  - Id: 8696
+    Title: Procurement of clean water (2)
+  - Id: 8697
+    Title: Procurement of clean water (3)
+  - Id: 8698
+    Title: Late migration
+  - Id: 8699
+    Title: First Step Out of the City
+  - Id: 8700
+    Title: I couldn't even come halfway
+  - Id: 8701
+    Title: Scenery I've Seen for the First Time
+  - Id: 8702
+    Title: Smell of Volcanic Ash
+  - Id: 8703
+    Title: The easy way to go
+  - Id: 8718
+    Title: My friend's regards
   - Id: 8719
     Title: A new area somewhere in the anthill
   - Id: 8720
@@ -8040,6 +8135,106 @@ Body:
   - Id: 11667
     Title: Squirrels are rats, too? Standby
     TimeLimit: 4h
+  - Id: 11696
+    Title: Niren's Request
+  - Id: 11697
+    Title: Niren's Request
+  - Id: 11698
+    Title: Niren's Request
+  - Id: 11699
+    Title: Niren's Request
+  - Id: 11700
+    Title: Niren's Request
+  - Id: 11701
+    Title: Niren's Request
+  - Id: 11702
+    Title: Niren's Request
+  - Id: 11703
+    Title: Niren's Request
+  - Id: 11704
+    Title: Niren's Request
+  - Id: 11705
+    Title: Children of Grey
+  - Id: 11706
+    Title: Children of Grey
+  - Id: 11707
+    Title: Children of Grey
+  - Id: 11708
+    Title: Children of Grey
+  - Id: 11709
+    Title: Children of Grey
+  - Id: 11710
+    Title: Children of Grey
+  - Id: 11711
+    Title: Children of Grey
+  - Id: 11712
+    Title: Children of Grey
+  - Id: 11713
+    Title: Children of Grey
+  - Id: 11714
+    Title: Children of Grey
+  - Id: 11715
+    Title: Children of Grey
+  - Id: 11716
+    Title: Children of Grey
+  - Id: 11717
+    Title: Children of Grey
+  - Id: 11718
+    Title: Children of Grey
+  - Id: 11719
+    Title: Children of Grey
+  - Id: 11720
+    Title: Children of Grey
+  - Id: 11721
+    Title: Children of Grey
+  - Id: 11722
+    Title: Children of Grey
+  - Id: 11723
+    Title: Children of Grey
+  - Id: 11724
+    Title: Children of Grey
+  - Id: 11725
+    Title: Investigation of Oz Labyrinth
+  - Id: 11726
+    Title: Investigation of Oz Labyrinth
+  - Id: 11727
+    Title: Investigation of Oz Labyrinth
+  - Id: 11728
+    Title: Investigation of Oz Labyrinth
+  - Id: 11729
+    Title: Investigation of Oz Labyrinth
+  - Id: 11730
+    Title: Investigation of Oz Labyrinth
+    Targets:
+      - Id: 1
+        Location: oz_dun01
+        Count: 10
+  - Id: 11731
+    Title: Investigation of Oz Labyrinth
+  - Id: 11732
+    Title: Investigation of Oz Labyrinth
+  - Id: 11733
+    Title: Investigation of Oz Labyrinth
+  - Id: 11734
+    Title: Investigation of Oz Labyrinth
+  - Id: 11735
+    Title: Investigation of Oz Labyrinth
+  - Id: 11736
+    Title: Maze of Oz 1st Floor (170lv)
+    Targets:
+      - Mob: EP18_ASH_TOAD
+        Count: 20
+  - Id: 11737
+    Title: Maze of Oz Level 1 - Standby
+    TimeLimit: 4h
+  - Id: 11738
+    Title: Maze of Oz Level 2 (200lv)
+    Targets:
+      - Mob: EP18_HOT_MOLAR
+        Count: 20
+  - Id: 11739
+    Title: Maze of Oz Level 2 (200lv)
+    TimeLimit: 4h
   - Id: 12000
     Title: An old friend
   - Id: 12001
@@ -9079,6 +9274,31 @@ Body:
   - Id: 12506
     Title: Let's try again to seal the crack
     TimeLimit: 4h
+  - Id: 12520
+    Title: Villa of Deception
+  - Id: 12521
+    Title: Villa of Deception Hard
+  - Id: 12522
+    Title: Cooldown: Villa of Deception
+    TimeLimit: 4h
+  - Id: 12531
+    Title: Future General Candidate
+  - Id: 12532
+    Title: Trouble at the Top
+  - Id: 12533
+    Title: The Hidden Helper
+  - Id: 12534
+    Title: The Missing Camille
+  - Id: 12535
+    Title: The Governor's Decision
+  - Id: 12536
+    Title: The Scattered Luggage (North)
+  - Id: 12537
+    Title: Scattered Luggage (West)
+  - Id: 12538
+    Title: The Scattered Luggage (East)
+  - Id: 12539
+    Title: Scattered Luggage (South)
   - Id: 13000
     Title: RWC2011Card Gathering
   - Id: 13001
@@ -11226,6 +11446,90 @@ Body:
     Title: Farm Worker
   - Id: 16547
     Title: Juno Monster Society
+  - Id: 16548
+    Title: I can't sleep
+    Targets:
+      - Mob: EP18_FIREWIND_KITE
+        Count: 30
+  - Id: 16549
+    Title: I can't sleep
+    Targets:
+      - Mob: EP18_FIREWIND_KITE
+        Count: 30
+  - Id: 16550
+    Title: I Can't Sleep - Wait
+    TimeLimit: 4h
+  - Id: 16551
+    Title: The Story of Dinar
+  - Id: 16552
+    Title: Amira's Story
+  - Id: 16553
+    Title: Shanina's Grandma's Story
+  - Id: 16554
+    Title: Please collect the stories
+  - Id: 16555
+    Title: The Story of Dinar
+  - Id: 16556
+    Title: Amira's Story
+  - Id: 16557
+    Title: Shanina's Grandma's Story
+  - Id: 16558
+    Title: Please collect the stories
+  - Id: 16559
+    Title: Please collect the stories - Standby
+    TimeLimit: 4h
+  - Id: 16560
+    Title: This is not the place
+  - Id: 16561
+    Title: This is not the place
+  - Id: 16562
+    Title: This is not the place
+  - Id: 16563
+    Title: This is not the place
+  - Id: 16564
+    Title: This is not the place
+  - Id: 16565
+    Title: This is not the place
+  - Id: 16566
+    Title: This is not the place
+  - Id: 16567
+    Title: The Contest of the Grey Wolf Forest
+  - Id: 16568
+    Title: Everyone's Opinion
+  - Id: 16569
+    Title: Everyone's Opinion
+  - Id: 16570
+    Title: Everyone's Opinion
+  - Id: 16571
+    Title: Everyone's Opinion
+  - Id: 16572
+    Title: The Contest of the Grey Wolf Forest
+  - Id: 16573
+    Title: Source of Weapon
+  - Id: 16574
+    Title: Source of Weapon
+  - Id: 16575
+    Title: Source of Weapon
+  - Id: 16576
+    Title: Source of Weapon
+  - Id: 16577
+    Title: Source of Weapon
+  - Id: 16578
+    Title: Source of Weapon
+  - Id: 16579
+    Title: Source of Weapon
+  - Id: 16580
+    Title: Source of Weapon
+  - Id: 16581
+    Title: Children Know It
+  - Id: 16582
+    Title: Children Know It
+  - Id: 16583
+    Title: Children Know It
+  - Id: 16584
+    Title: The Price of Labor
+  - Id: 16585
+    Title: The Price of Labor
   - Id: 17000
     Title: Meet with Father Bamph
   - Id: 17001
@@ -11487,12 +11791,61 @@ Body:
   - Id: 17425
     Title: (Standby) Thanatos Tower, 12th floor
     TimeLimit: 4h
+  - Id: 17504
+    Title: Where's My Home
+  - Id: 17505
+    Title: Where's My Home
+  - Id: 17506
+    Title: Where's My Home
+  - Id: 17507
+    Title: Where's My Home
+  - Id: 17508
+    Title: Lack of Supplies
+    Drops:
+      - Mob: EP18_GREY_WOLF
+        Item: Ep18_Very_Ddan_Crystal
+        Rate: 5000
   - Id: 17509
     Title: (Standby) Lack of supplies
     TimeLimit: 4h
+  - Id: 17510
+    Title: There are no bad beasts in the world
+  - Id: 17511
+    Title: There are no bad beasts in the world
+  - Id: 17512
+    Title: There are no bad beasts in the world
+  - Id: 17513
+    Title: The Unexpected Shepherd
+  - Id: 17514
+    Title: The Unexpected Shepherd
+    Targets:
+      - Mob: EP18_ASHRING
+        Count: 20
+  - Id: 17515
+    Title: The Unexpected Shepherd
   - Id: 17516
     Title: (Standby) Unexpected shepherd
     TimeLimit: 4h
+  - Id: 17517
+    Title: The Rebels
+  - Id: 17518
+    Title: The Rebels
+  - Id: 17519
+    Title: The Rebels
+  - Id: 17520
+    Title: Wolf in the Sheep
+  - Id: 17521
+    Title: When you need a conversation
+  - Id: 17522
+    Title: Cleaning the Traitors
+  - Id: 17523
+    Title: Purification of the Sanctuary
+  - Id: 17524
+    Title: Cleaning the Traitors
+  - Id: 17525
+    Title: When you need a conversation
+  - Id: 17526
+    Title: Purification of the Sanctuary
   - Id: 17527
     Title: (Standby) Cleaning strategy
     TimeLimit: 4h
@@ -11620,6 +11973,23 @@ Body:
     Title: Winter is Banished
   - Id: 18080
     Title: Goseong dungeon 1st floor attack
+    TimeLimit: 4h
+  - Id: 18082
+    Title: Eligibility to Participate in the Competition
+  - Id: 18083
+    Title: Investigation of Daishinkan's Villa
+  - Id: 18084
+    Title: Fact Investigation
+  - Id: 18085
+    Title: The Direction of Prayer
+  - Id: 18086
+    Title: Make the Grey Wolf Forest Safer
+    Targets:
+      - Id: 1
+        Location: gw_fild01
+        Count: 30
+  - Id: 18087
+    Title: Safer in the Gray Wolf Forest - Standby
     TimeLimit: 4h
   - Id: 18100
     Title: Legends from Moscovia
