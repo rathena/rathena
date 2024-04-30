@@ -5490,7 +5490,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					if(pc_steal_item(sd,bl,pc_checkskill(sd,TF_STEAL)))
 						clif_skill_nodamage(src,bl,TF_STEAL,snatcher_skill,1);
 					else
-						clif_skill_fail(sd,RG_SNATCHER,USESKILL_FAIL_LEVEL,0);
+						clif_skill_fail( *sd, RG_SNATCHER );
 				}
 				// skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			} else if (sd) {
@@ -9659,7 +9659,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			if (!skill_produce_mix(sd, skill_id, ITEMID_BLUE_POTION, 0, 0, 0, 200, -1))
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif_skill_fail( *sd, skill_id );
 		}
 		break;
 	case AM_TWILIGHT5:
@@ -9673,7 +9673,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 200)) //200 Flame Bottle
 				|| ebottle < 400 //400 empty bottle are required at total.
 			) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif_skill_fail( *sd, skill_id );
 				break;
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -9686,7 +9686,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			//Prepare 200 Slim White Potions.
 			if (!skill_produce_mix(sd, skill_id, ITEMID_COATING_BOTTLE, 0, 0, 0, 200, -1))
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				clif_skill_fail( *sd, skill_id );
 		}
 		break;
 	case SA_DISPELL:
