@@ -2674,7 +2674,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (!tmpsd[i]) continue;
 
-			if (battle_config.exp_calc_type == 1 && md->tdmg) {
+			if (battle_config.exp_calc_type == 1 || md->tdmg == 0) {
 				// eAthena's exp formula based on max hp
 				per = (double)md->dmglog[i].dmg / (double)status->max_hp;
 			}
