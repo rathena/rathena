@@ -1260,6 +1260,11 @@ Body:
             Level: 5
       - Name: RG_CLOSECONFINE
         MaxLevel: 1
+      - Name: ST_PRESERVE
+        MaxLevel: 1
+        Requires:
+          - Name: RG_PLAGIARISM
+            Level: 10
   - Job: Alchemist
     Inherit:
       Novice: true
