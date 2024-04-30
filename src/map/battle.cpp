@@ -5895,7 +5895,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case SHC_SHADOW_STAB:
 			skillratio += -100 + 550 * skill_lv + 5 * sstatus->pow;
 
-			if( sc && sc->getSCE( SC_CLOAKINGEXCEED ) ){
+			if (wd->miscflag == 2) {
 				skillratio += 100 * skill_lv + 2 * sstatus->pow;
 			}
 
