@@ -199,6 +199,17 @@ Body:
     Commands:
       rates: true
       # who: true
+  - Id: 6
+    Name: Tester
+    # Can do everything Players can
+    Inherit:
+      VIP: true
+    Level: 1
+    Commands:
+      # rates: true
+      # who: true
+      warp: true
+      # job: true
   - Id: 10
     Name: Law Enforcement
     Inherit:
