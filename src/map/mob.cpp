@@ -1164,6 +1164,7 @@ int mob_spawn (struct mob_data *md)
 	md->last_linktime = tick;
 	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
+	md->last_canmove = tick;
 
 	t_tick c = tick - MOB_MAX_DELAY;
 
@@ -1720,6 +1721,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	mode = status_get_mode(&md->bl);
 
 	can_move = (mode&MD_CANMOVE) && unit_can_move(&md->bl);
+	if (can_move)
+		md->last_canmove = tick;
 
 	if (md->target_id)
 	{	//Check validity of current target. [Skotlex]
@@ -1956,13 +1959,21 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		&& mob_is_chasing(md->state.skillstate))
 		return true;
 
-	//Out of range...
-	if (!(mode&MD_CANMOVE) || (!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0))
-	{	//Can't chase. Immobile and trapped mobs should unlock target and use an idle skill.
+	// Out of range
+	if (!(mode&MD_CANMOVE) || (!can_move && (md->sc.cant.move || DIFF_TICK(tick, md->ud.canmove_tick) > 0)))
+	{	// Can't chase. Immobile and trapped mobs will use idle skills and unlock their target after a while
 		if (md->ud.attacktimer == INVALID_TIMER)
-		{ //Only unlock target if no more attack delay left
-			//This handles triggering idle/walk skill.
-			mob_unlocktarget(md,tick);
+		{ // Only switch mode if no more attack delay left
+			if (DIFF_TICK(tick, md->last_canmove) > battle_config.mob_unlock_time) {
+				// Unlock target or use idle/walk skill
+				mob_unlocktarget(md, tick);
+			}
+			else {
+				// Use idle skill but keep target for now
+				md->state.skillstate = MSS_IDLE;
+				if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+					mobskill_use(md, tick, -1);
+			}
 		}
 		return true;
 	}
@@ -2620,8 +2631,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	// determines if the monster was killed by mercenary damage only
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
 
-	if(!battle_config.exp_calc_type && count > 1) {	//Apply first-attacker 200% exp share bonus
-		//TODO: Determine if this should go before calculating the MVP player instead of after.
+	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		if (UINT_MAX - md->dmglog[0].dmg > md->tdmg) {
 			md->tdmg += md->dmglog[0].dmg;
 			md->dmglog[0].dmg *= 2;
@@ -2664,14 +2674,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (!tmpsd[i]) continue;
 
-			if (!battle_config.exp_calc_type && md->tdmg)
-				//jAthena's exp formula based on total damage.
-				per = (double)md->dmglog[i].dmg/(double)md->tdmg;
-			else {
-				//eAthena's exp formula based on max hp.
-				per = (double)md->dmglog[i].dmg/(double)status->max_hp;
-				if (per > 2) per = 2; // prevents unlimited exp gain
+			if (battle_config.exp_calc_type == 1 || md->tdmg == 0) {
+				// eAthena's exp formula based on max hp
+				per = (double)md->dmglog[i].dmg / (double)status->max_hp;
 			}
+			else {
+				// Aegis's exp formula based on total damage
+				per = (double)md->dmglog[i].dmg / (double)md->tdmg;
+			}
+			// To prevent exploits
+			if (per > 1) per = 1;
 
 			//Exclude rebirth tap from this calculation
 			count -= md->state.rebirth;
@@ -4581,7 +4593,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "Str", stat))
 			return 0;
 
-		mob->status.str = max(1, stat);
+		mob->status.str = max(0, stat);
 	}
 
 	if (this->nodeExists(node, "Agi")) {
@@ -4590,7 +4602,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "Agi", stat))
 			return 0;
 
-		mob->status.agi = max(1, stat);
+		mob->status.agi = max(0, stat);
 	}
 
 	if (this->nodeExists(node, "Vit")) {
@@ -4599,7 +4611,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "Vit", stat))
 			return 0;
 
-		mob->status.vit = max(1, stat);
+		mob->status.vit = max(0, stat);
 	}
 
 	if (this->nodeExists(node, "Int")) {
@@ -4608,7 +4620,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "Int", stat))
 			return 0;
 
-		mob->status.int_ = max(1, stat);
+		mob->status.int_ = max(0, stat);
 	}
 
 	if (this->nodeExists(node, "Dex")) {
@@ -4617,7 +4629,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "Dex", stat))
 			return 0;
 
-		mob->status.dex = max(1, stat);
+		mob->status.dex = max(0, stat);
 	}
 
 	if (this->nodeExists(node, "Luk")) {
@@ -4626,7 +4638,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "Luk", stat))
 			return 0;
 
-		mob->status.luk = max(1, stat);
+		mob->status.luk = max(0, stat);
 	}
 
 	if (this->nodeExists(node, "AttackRange")) {

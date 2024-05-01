@@ -1408,6 +1408,7 @@ int64 status_charge(struct block_list* bl, int64 hp, int64 sp)
  *		flag&2: Fail if there is not enough to subtract
  *		flag&4: Mob does not give EXP/Loot if killed
  *		flag&8: Used to damage SP of a dead character
+ *		flag&16: Coma damage - Log it as normal damage, but actually set HP/SP to 1
  * @return hp+sp+ap
  * Note: HP/SP/AP are integer values, not percentages. Values should be
  *	 calculated either within function call or before
@@ -1527,9 +1528,24 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_skillcastcancel(target, 2);
 	}
 
+	// We need to log the real damage on exp_calc_type 1
+	if (battle_config.exp_calc_type == 1) {
+		dhp = hp;
+		// Coma real damage
+		if (flag&16)
+			dhp = status->hp - 1;
+	}
+
 	status->hp-= hp;
 	status->sp-= sp;
 	status->ap-= ap;
+
+	// Coma
+	if (flag&16) {
+		status->hp = 1;
+		status->sp = 1;
+		if (!sp) sp = 1; // To make sure the status bar is updated
+	}
 
 	if (sc && hp && status->hp) {
 		if (sc->getSCE(SC_AUTOBERSERK) &&
@@ -1544,9 +1560,11 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_change_end(target, SC_SATURDAYNIGHTFEVER);
 	}
 
+	// Need to pass original HP damage for the mob damage log
+	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
 		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp,ap); break;
-		case BL_MOB: mob_damage((TBL_MOB*)target, src, hp); break;
+		case BL_MOB: mob_damage((TBL_MOB*)target, src, (int)dhp); break;
 		case BL_HOM: hom_damage((TBL_HOM*)target); break;
 		case BL_MER: mercenary_heal((TBL_MER*)target,hp,sp); break;
 		case BL_ELEM: elemental_heal((TBL_ELEM*)target,hp,sp); break;
@@ -9605,11 +9623,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				tick /= 2; // Half duration for players.
 			sc_def2 = status->mdef*100;
 			break;
-		case SC_ANKLE:
-			if(status_has_mode(status,MD_STATUSIMMUNE)) // Lasts 5 times less on bosses
-				tick /= 5;
-			sc_def = status->agi*50;
-			break;
 		case SC_JOINTBEAT:
 			tick_def2 = 1000 * ((status->luk / 2 + status->agi / 5) / 2); // (50 * LUK / 100 + 20 * AGI / 100) / 2
 			break;
@@ -11231,7 +11244,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 
 		case SC_COMA: // Coma. Sends a char to 1HP. If val2, do not zap sp
-			status_zap(bl, status->hp-1, val2?0:status->sp);
+			status_zap(bl, status->hp-1, val2?0:status->sp-1);
 			return 1;
 			break;
 		case SC_CLOSECONFINE2:
@@ -11585,7 +11598,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		/* General */
 		case SC_FEAR:
-			status_change_start(src,bl,SC_ANKLE,10000,val1,0,0,0,2000,SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
+			sc_start(src, bl, SC_ANKLE, 100, 0, 2000);
 			break;
 
 		/* Rune Knight */
@@ -12849,10 +12862,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	//SC that make stop walking
 	if (scdb->flag[SCF_STOPWALKING]) {
 		switch (type) {
-			case SC_ANKLE:
-				if (battle_config.skill_trap_type || !map_flag_gvg(bl->m))
-					unit_stop_walking(bl, 1);
-				break;
 			case SC__MANHOLE:
 				if (bl->type == BL_PC || !unit_blown_immune(bl,0x1))
 					unit_stop_walking(bl,1);
