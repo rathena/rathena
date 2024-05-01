@@ -2631,8 +2631,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	// determines if the monster was killed by mercenary damage only
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
 
-	if(!battle_config.exp_calc_type && count > 1) {	//Apply first-attacker 200% exp share bonus
-		//TODO: Determine if this should go before calculating the MVP player instead of after.
+	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		if (UINT_MAX - md->dmglog[0].dmg > md->tdmg) {
 			md->tdmg += md->dmglog[0].dmg;
 			md->dmglog[0].dmg *= 2;
@@ -2675,14 +2674,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if (!tmpsd[i]) continue;
 
-			if (!battle_config.exp_calc_type && md->tdmg)
-				//jAthena's exp formula based on total damage.
-				per = (double)md->dmglog[i].dmg/(double)md->tdmg;
-			else {
-				//eAthena's exp formula based on max hp.
-				per = (double)md->dmglog[i].dmg/(double)status->max_hp;
-				if (per > 2) per = 2; // prevents unlimited exp gain
+			if (battle_config.exp_calc_type == 1 || md->tdmg == 0) {
+				// eAthena's exp formula based on max hp
+				per = (double)md->dmglog[i].dmg / (double)status->max_hp;
 			}
+			else {
+				// Aegis's exp formula based on total damage
+				per = (double)md->dmglog[i].dmg / (double)md->tdmg;
+			}
+			// To prevent exploits
+			if (per > 1) per = 1;
 
 			//Exclude rebirth tap from this calculation
 			count -= md->state.rebirth;
