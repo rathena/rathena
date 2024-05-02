@@ -3172,7 +3172,7 @@ struct status_data {
 #endif
 		matk_min, matk_max,
 		speed,
-		amotion, adelay, dmotion;
+		amotion, clientamotion, adelay, dmotion;
 	int mode;
 	short
 		hit, flee, cri, flee2,

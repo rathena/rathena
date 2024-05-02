@@ -4811,6 +4811,18 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		mob->status.amotion = cap_value(speed, battle_config.monster_max_aspd, 2000);
 	}
 
+	if (this->nodeExists(node, "ClientAttackMotion")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "ClientAttackMotion", speed))
+			return 0;
+
+		mob->status.clientamotion = speed;
+	} else {
+		if (!exists)
+			mob->status.clientamotion = 432;
+	}
+
 	if (this->nodeExists(node, "DamageMotion")) {
 		uint16 speed;
 

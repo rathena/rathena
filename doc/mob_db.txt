@@ -204,6 +204,14 @@ AttackMotion: Attack animation motion. Low value means monster's attack will be 
 
 ---------------------------------------
 
+ClientAttackMotion: When a clif_damage packet is sent to the client it will also send "sdelay" (AttackMotion) as value.
+
+The client will ignore all values above 432, and 432 stands for 1.0x animation speed. 216 for example means play the animation at double the speed.
+Each monster has an attack animation and can define the frame in the attack animation on which it displays the damage and makes the target flinch / stop.
+If the damage frame is undefined, it instead displays the damage / flinch / stop at the very end of the animation.
+
+---------------------------------------
+
 DamageMotion: Damage animation motion, same as aMotion but used to display the "I am hit" animation. Coincidentally, this same value is used to determine how long it is before the monster/player can move again. Endure is dMotion = 0, obviously.
 
 ---------------------------------------
