@@ -422,6 +422,10 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	return 0;
 }
 
+int battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id) {
+	return battle_damage(src, target, damage, walkdelay, 0, skill_id, ATK_DEF, BF_MISC, false, gettick(), false);
+}
+
 /**
  * Does attribute fix modifiers.
  * Added passing of the chars so that the status changes can affect it. [Skotlex]
