@@ -4153,7 +4153,6 @@ Body:
         Time: 120000
       - Level: 5
         Time: 60000
-    Duration2: 3000
     Requires:
       SpCost: 10
       ItemCost:
@@ -6888,12 +6887,9 @@ Body:
     MaxLevel: 10
     Type: Magic
     TargetType: Self
-    DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreFlee: true
     Flags:
       TargetSelf: true
-    Range: 5
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Holy
@@ -10002,15 +9998,15 @@ Body:
     Element: Weapon
     Duration1:
       - Level: 1
-        Time: 4000
+        Time: 2000
       - Level: 2
-        Time: 8000
+        Time: 4000
       - Level: 3
-        Time: 12000
+        Time: 6000
       - Level: 4
-        Time: 16000
+        Time: 8000
       - Level: 5
-        Time: 24000
+        Time: 10000
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -10026,7 +10022,7 @@ Body:
         - Level: 5
           Amount: 12
       SpiritSphereCost: 1
-    Status: Stop
+    Status: Ankle
   - Id: 372
     Name: CH_CHAINCRUSH
     Description: Chain Crush Combo
@@ -10805,7 +10801,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -10847,7 +10843,7 @@ Body:
       Weapon:
         1hSpear: true
         2hSpear: true
-    Status: Stop
+    Status: Ankle
   - Id: 398
     Name: LK_HEADCRUSH
     Description: Traumatic Blow
@@ -11066,7 +11062,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Range: 7
+    Range: 9
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
@@ -16336,7 +16332,7 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: -1
+    Duration1: 300000
     Status: Invincible
   - Id: 686
     Name: NPC_INVINCIBLEOFF
@@ -16348,8 +16344,6 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1: 60000
-    Status: InvincibleOff
   - Id: 687
     Name: NPC_ALLHEAL
     Description: Full Heal
@@ -32758,7 +32752,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -32801,7 +32795,7 @@ Body:
           Amount: 27
         - Level: 5
           Amount: 30
-    Status: Stop
+    Status: Ankle
   - Id: 8219
     Name: ML_DEFENDER
     Description: Defending_Aura

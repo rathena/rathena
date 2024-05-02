@@ -78188,7 +78188,7 @@ Body:
     AttackDelay: 1020
     AttackMotion: 500
     DamageMotion: 768
-    Ai: 10
+    Ai: 21
     Class: Boss
     Drops:
       - Item: Brinaranea_Card
@@ -78220,7 +78220,7 @@ Body:
     AttackDelay: 608
     AttackMotion: 408
     DamageMotion: 336
-    Ai: 10
+    Ai: 21
     Class: Boss
     Drops:
       - Item: Muspellskoll_Card
@@ -78362,7 +78362,7 @@ Body:
     AttackDelay: 750
     AttackMotion: 510
     DamageMotion: 500
-    Ai: 10
+    Ai: 21
     Class: Boss
     Drops:
       - Item: M_Morocc_Card
