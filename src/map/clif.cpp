@@ -2810,7 +2810,7 @@ void clif_additem( map_session_data *sd, int n, int amount, unsigned char fail )
 #if PACKETVER >= 20150226
 		clif_add_random_options( p.option_data, sd->inventory.u.items_inventory[n] );
 #if PACKETVER >= 20160921
-		p.favorite = sd->inventory.u.items_inventory[n].favorite;
+		p.favorite = ( sd->inventory.u.items_inventory[n].favorite != 0 ) ? 1 : 0;
 		p.look = sd->inventory_data[n]->look;
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p.grade = sd->inventory.u.items_inventory[n].enchantgrade;
@@ -2961,7 +2961,7 @@ static void clif_item_normal( short idx, struct NORMALITEM_INFO *p, struct item 
 
 #if PACKETVER >= 20120925
 	p->Flag.IsIdentified = i->identify ? 1 : 0;
-	p->Flag.PlaceETCTab  = i->favorite ? 1 : 0;
+	p->Flag.PlaceETCTab  = ( i->favorite != 0 ) ? 1 : 0;
 	p->Flag.SpareBits    = 0;
 #endif
 }
@@ -3091,7 +3091,7 @@ void clif_inventorylist( map_session_data *sd ){
 		if( sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == NULL )
 			continue;
 
-		if ( sd->inventory.u.items_inventory[i].favorite )
+		if ( sd->inventory.u.items_inventory[i].favorite != 0 )
 			clif_favorite_item( *sd, i );
 	}
 #endif
@@ -15832,7 +15832,7 @@ void clif_Mail_setattachment( map_session_data* sd, int index, int amount, uint8
 
 			p.weight += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
 		}
-		p.favorite = item->favorite;
+		p.favorite = ( item->favorite != 0 ) ? 1 : 0;
 		p.location = pc_equippoint( sd, server_index( index ) );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p.grade = item->enchantgrade;
@@ -19808,7 +19808,7 @@ void clif_parse_MoveItem( int fd, map_session_data* sd ){
 		return;
 	}
 
-	if ( sd->inventory.u.items_inventory[index].favorite && p->favorite == true )
+	if ( sd->inventory.u.items_inventory[index].favorite != 0 && p->favorite == true )
 		sd->inventory.u.items_inventory[index].favorite = 0;
 	else if( p->favorite == false )
 		sd->inventory.u.items_inventory[index].favorite = 1;
@@ -19829,7 +19829,7 @@ static void clif_favorite_item( map_session_data& sd, uint16 index ){
 
 	p.packetType = HEADER_ZC_INVENTORY_TAB;
 	p.index = client_index( index );
-	p.favorite = ( sd.inventory.u.items_inventory[index].favorite == true ) ? false : true;
+	p.favorite = ( sd.inventory.u.items_inventory[index].favorite == 1 ) ? false : true;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
