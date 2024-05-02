@@ -34,6 +34,8 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 
+using namespace rathena;
+
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
@@ -254,33 +256,42 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 	return bl_list[rnd()%c];
 }
 
-/*========================================== [Playtester]
+/**
 * Deals damage without delay, applies additional effects and triggers monster events
 * This function is called from battle_delay_damage or battle_delay_damage_sub
+* All other instances of battle damage should also go through this function (i.e. anything that displays a damage number)
+* Consider calling this function or battle_fix_damage instead status_fix_damage directly
 * @param src: Source of damage
 * @param target: Target of damage
 * @param damage: Damage to be dealt
 * @param delay: Damage delay
 * @param skill_lv: Level of skill used
-* @param skill_id: ID o skill used
+* @param skill_id: ID of skill used
 * @param dmg_lv: State of the attack (miss, etc.)
 * @param attack_type: Type of the attack (BF_NORMAL|BF_SKILL|BF_SHORT|BF_LONG|BF_WEAPON|BF_MAGIC|BF_MISC)
-* @param additional_effects: Whether additional effect should be applied
+* @param additional_effects: Whether additional effects should be applied (otherwise it's just damage+coma)
 * @param isspdamage: If the damage is done to SP
 * @param tick: Current tick
-*------------------------------------------*/
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+* @return HP+SP+AP (0 if HP/SP/AP remained unchanged)
+*/
+int battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
+	int dmg_change;
+	map_session_data* sd = nullptr;
+	if (src)
+		sd = BL_CAST(BL_PC, src);
 	map_freeblock_lock();
 	if (isspdamage)
-		status_fix_spdamage(src, target, damage, delay, skill_id);
+		dmg_change = status_fix_spdamage(src, target, damage, delay, skill_id);
+	else if (sd && battle_check_coma(*sd, *target, (e_battle_flag)attack_type))
+		dmg_change = status_damage(src, target, damage, 0, delay, 16, skill_id); // Coma attack
 	else
-		status_fix_damage(src, target, damage, delay, skill_id); // We have to separate here between reflect damage and others [icescope]
+		dmg_change = status_fix_damage(src, target, damage, delay, skill_id);
 	if (attack_type && !status_isdead(target) && additional_effects)
 		skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, tick);
-	if (dmg_lv > ATK_BLOCK && attack_type)
+	if (dmg_lv > ATK_BLOCK && attack_type && additional_effects)
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
-	if (target->type == BL_MOB) {
+	if (target->type == BL_MOB && additional_effects) {
 		mob_data *md = BL_CAST(BL_MOB, target);
 
 		if (md != nullptr) {
@@ -298,6 +309,7 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 		}
 	}
 	map_freeblock_unlock();
+	return dmg_change;
 }
 
 /// Damage Delayed Structure
@@ -331,9 +343,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 				//Deal damage
 				battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
 			} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
-				map_freeblock_lock();
-				status_fix_damage(target, target, dat->damage, dat->delay, dat->skill_id);
-				map_freeblock_unlock();
+				battle_fix_damage(target, target, dat->damage, dat->delay, dat->skill_id);
 			}
 		}
 
@@ -410,6 +420,10 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	add_timer(tick+amotion, battle_delay_damage_sub, 0, (intptr_t)dat);
 
 	return 0;
+}
+
+int battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id) {
+	return battle_damage(src, target, damage, walkdelay, 0, skill_id, ATK_DEF, BF_MISC, false, gettick(), false);
 }
 
 /**
@@ -6969,7 +6983,7 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 	{
 		ATK_RATER(wd->damage, 50)
 		clif_skill_nodamage(target,target,ST_REJECTSWORD, tsc->getSCE(SC_REJECTSWORD)->val1,1);
-		status_fix_damage(target,src,wd->damage,clif_damage(target,src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false),ST_REJECTSWORD);
+		battle_fix_damage(target,src,wd->damage,clif_damage(target,src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false),ST_REJECTSWORD);
 		if (status_isdead(target))
 			return;
 		if( --(tsc->getSCE(SC_REJECTSWORD)->val3) <= 0 )
@@ -6987,7 +7001,7 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
 			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->getSCE(SC_CRESCENTELBOW)->val1, DMG_SINGLE); // This is how official does
 		clif_damage(src, target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, DMG_NORMAL, 0, false);
-		status_damage(target, src, rdamage, 0, 0, 0, 0);
+		battle_fix_damage(target, src, rdamage, 0, SR_CRESCENTELBOW);
 		status_damage(src, target, rdamage/10, 0, 0, 1, 0);
 		status_change_end(target, SC_CRESCENTELBOW);
 	}
@@ -9539,6 +9553,36 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 		return cap_value(rdamage, 1, status_get_max_hp(tbl));
 }
 
+/** Check for Coma damage
+ * @param sd: Source player
+ * @param bl: Target
+ * @param attack_type: Attack type
+ * @return True if Coma applies, false if Coma does not apply
+ */
+bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle_flag attack_type)
+{
+	struct status_data* tstatus = status_get_status_data(&target);
+	mob_data* dstmd = BL_CAST(BL_MOB, &target);
+
+	// Coma
+	if (sd.special_state.bonus_coma && (!dstmd || (!util::vector_exists(status_get_race2(&dstmd->bl), RC2_GVG) && status_get_class(&dstmd->bl) != CLASS_BATTLEFIELD))) {
+		int rate = 0;
+		rate += sd.indexed_bonus.coma_class[tstatus->class_] + sd.indexed_bonus.coma_class[CLASS_ALL];
+		if(!status_bl_has_mode(&target, MD_STATUSIMMUNE))
+			rate += sd.indexed_bonus.coma_race[tstatus->race] + sd.indexed_bonus.coma_race[RC_ALL];
+		if (attack_type&BF_WEAPON) {
+			rate += sd.indexed_bonus.weapon_coma_class[tstatus->class_] + sd.indexed_bonus.weapon_coma_class[CLASS_ALL];
+			if (!status_bl_has_mode(&target, MD_STATUSIMMUNE)) {
+				rate += sd.indexed_bonus.weapon_coma_ele[tstatus->def_ele] + sd.indexed_bonus.weapon_coma_ele[ELE_ALL];
+				rate += sd.indexed_bonus.weapon_coma_race[tstatus->race] + sd.indexed_bonus.weapon_coma_race[RC_ALL];
+			}
+		}
+		if (rate > 0 && rnd_chance(rate, 10000))
+			return true;
+	}
+	return false;
+}
+
 /**
  * Calculate Vellum damage on a target
  * @param sd: Player with vanish item
@@ -9673,7 +9717,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 		if( amotion )
 			battle_delay_damage(tick, amotion,src,bl,0,CR_REFLECTSHIELD,0,damage,ATK_DEF,0,true,false);
 		else
-			status_fix_damage(src,bl,damage,0,LG_REFLECTDAMAGE);
+			battle_fix_damage(src,bl,damage,0,LG_REFLECTDAMAGE);
 		clif_damage(bl,bl,tick,amotion,dmotion,damage,1,DMG_ENDURE,0,false);
 		skill_additional_effect(src, bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
 		map_freeblock_unlock();
@@ -10041,7 +10085,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 						devotion_damage -= devotion_damage * d_sc->getSCE(SC_REBOUND_S)->val2 / 100;
 
 					clif_damage(d_bl, d_bl, gettick(), wd.amotion, wd.dmotion, devotion_damage, 1, DMG_NORMAL, 0, false);
-					status_fix_damage(NULL, d_bl, devotion_damage, 0, CR_DEVOTION);
+					battle_fix_damage(src, d_bl, devotion_damage, 0, CR_DEVOTION);
 				}
 			}
 			else
@@ -10060,7 +10104,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 			if (e_bl && !status_isdead(e_bl)) {
 				clif_damage(e_bl, e_bl, tick, 0, 0, damage, wd.div_, DMG_NORMAL, 0, false);
-				status_fix_damage(NULL, e_bl, damage, 0, EL_WATER_SCREEN);
+				battle_fix_damage(src, e_bl, damage, 0, EL_WATER_SCREEN);
 			}
 		}
 	}
@@ -11128,7 +11172,7 @@ static const struct _battle_data {
 	{ "skill_steal_random_options",         &battle_config.skill_steal_random_options,      0,      0,      1,              },
 	{ "motd_type",                          &battle_config.motd_type,                       0,      0,      1,              },
 	{ "finding_ore_rate",                   &battle_config.finding_ore_rate,                100,    0,      INT_MAX,        },
-	{ "exp_calc_type",                      &battle_config.exp_calc_type,                   0,      0,      1,              },
+	{ "exp_calc_type",                      &battle_config.exp_calc_type,                   0,      0,      2,              },
 	{ "exp_bonus_attacker",                 &battle_config.exp_bonus_attacker,              25,     0,      INT_MAX,        },
 	{ "exp_bonus_max_attacker",             &battle_config.exp_bonus_max_attacker,          12,     2,      INT_MAX,        },
 	{ "min_skill_delay_limit",              &battle_config.min_skill_delay_limit,           100,    10,     INT_MAX,        },
