@@ -29,7 +29,7 @@ int intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, u
 int intif_broadcast_obtain_special_item_npc(map_session_data *sd, t_itemid nameid);
 int intif_main_message(map_session_data* sd, const char* message);
 
-int intif_wis_message(map_session_data *sd,char *nick,char *mes,int mes_len);
+int intif_wis_message(map_session_data *sd, char *nick, char *mes, size_t mes_len);
 int intif_wis_message_to_gm(char *Wisp_name, int permission, char *mes);
 
 int intif_saveregistry(map_session_data *sd);
@@ -46,7 +46,7 @@ int intif_party_changeoption(int party_id, uint32 account_id, int exp, int item)
 int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, const char *name, enum e_party_member_withdraw type);
 int intif_party_changemap(map_session_data *sd, int online);
 int intif_break_party(int party_id);
-int intif_party_message(int party_id, uint32 account_id, const char *mes,int len);
+int intif_party_message(int party_id, uint32 account_id, const char *mes, size_t len);
 int intif_party_leaderchange(int party_id,uint32 account_id,uint32 char_id);
 int intif_party_sharelvlupdate(unsigned int share_lvl);
 
@@ -56,7 +56,7 @@ int intif_guild_addmember(int guild_id, struct guild_member *m);
 int intif_guild_leave(int guild_id, uint32 account_id, uint32 char_id, int flag, const char *mes);
 int intif_guild_memberinfoshort(int guild_id, uint32 account_id, uint32 char_id, int online, int lv, int class_);
 int intif_guild_break(int guild_id);
-int intif_guild_message(int guild_id, uint32 account_id, const char *mes, int len);
+int intif_guild_message(int guild_id, uint32 account_id, const char *mes, size_t len);
 int intif_guild_change_gm(int guild_id, const char* name, int len);
 int intif_guild_change_basicinfo(int guild_id, int type, const void *data, int len);
 int intif_guild_change_memberinfo(int guild_id, uint32 account_id, uint32 char_id, int type, const void *data, int len);

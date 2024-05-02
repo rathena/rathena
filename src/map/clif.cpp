@@ -2238,7 +2238,7 @@ void clif_buylist( map_session_data *sd, struct npc_data *nd ){
 		count++;
 	}
 
-	p->packetLength = sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST ) + count * sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub );
+	p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST ) + count * sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub ) );
 	WFIFOSET( fd, p->packetLength );
 }
 
@@ -2333,7 +2333,7 @@ void clif_npc_market_open(map_session_data *sd, struct npc_data *nd) {
 		count++;
 	}
 
-	p->packetLength = sizeof( struct PACKET_ZC_NPC_MARKET_OPEN ) + count * sizeof( struct PACKET_ZC_NPC_MARKET_OPEN_sub );
+	p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_NPC_MARKET_OPEN ) + count * sizeof( struct PACKET_ZC_NPC_MARKET_OPEN_sub ) );
 	WFIFOSET( fd, p->packetLength );
 
 	sd->state.trading = 1;
@@ -2559,7 +2559,7 @@ void clif_sendfakenpc(map_session_data *sd, int npcid) {
 void clif_scriptmenu(map_session_data* sd, int npcid, const char* mes)
 {
 	int fd = sd->fd;
-	int slen = strlen(mes) + 9;
+	int16 slen = static_cast<int16>( strlen(mes) + 9 );
 	struct block_list *bl = NULL;
 
 	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
@@ -3032,7 +3032,7 @@ void clif_inventorylist( map_session_data *sd ){
 
 			if( equip == MAX_INVENTORY_ITEM_PACKET_NORMAL ){
 				itemlist_equip.PacketType  = inventorylistequipType;
-				itemlist_equip.PacketLength = ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+				itemlist_equip.PacketLength = static_cast<int16>( ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 				itemlist_equip.invType = type;
 #endif
@@ -3047,7 +3047,7 @@ void clif_inventorylist( map_session_data *sd ){
 
 			if( normal == MAX_INVENTORY_ITEM_PACKET_NORMAL ){
 				itemlist_normal.PacketType = inventorylistnormalType;
-				itemlist_normal.PacketLength = ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+				itemlist_normal.PacketLength = static_cast<int16>( ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 				itemlist_normal.invType = type;
 #endif
@@ -3061,7 +3061,7 @@ void clif_inventorylist( map_session_data *sd ){
 
 	if( normal ){
 		itemlist_normal.PacketType = inventorylistnormalType;
-		itemlist_normal.PacketLength = ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+		itemlist_normal.PacketLength = static_cast<int16>( ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		itemlist_normal.invType = type;
 #endif
@@ -3074,7 +3074,7 @@ void clif_inventorylist( map_session_data *sd ){
 
 	if( equip ) {
 		itemlist_equip.PacketType  = inventorylistequipType;
-		itemlist_equip.PacketLength = ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+		itemlist_equip.PacketLength = static_cast<int16>( ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		itemlist_equip.invType = type;
 #endif
@@ -3127,7 +3127,7 @@ void clif_storagelist(map_session_data* sd, struct item* items, int items_length
 
 			if( equip == MAX_STORAGE_ITEM_PACKET_EQUIP ){
 				storage_itemlist_equip.PacketType  = storageListEquipType;
-				storage_itemlist_equip.PacketLength = ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+				storage_itemlist_equip.PacketLength = static_cast<int16>( ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 				storage_itemlist_equip.invType = type;
 #elif PACKETVER >= 20120925
@@ -3144,7 +3144,7 @@ void clif_storagelist(map_session_data* sd, struct item* items, int items_length
 
 			if( normal == MAX_STORAGE_ITEM_PACKET_NORMAL ){
 				storage_itemlist_normal.PacketType = storageListNormalType;
-				storage_itemlist_normal.PacketLength = ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+				storage_itemlist_normal.PacketLength = static_cast<int16>( ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 				storage_itemlist_normal.invType = type;
 #elif PACKETVER >= 20120925
@@ -3160,7 +3160,7 @@ void clif_storagelist(map_session_data* sd, struct item* items, int items_length
 
 	if( normal ){
 		storage_itemlist_normal.PacketType = storageListNormalType;
-		storage_itemlist_normal.PacketLength = ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+		storage_itemlist_normal.PacketLength = static_cast<int16>( ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		storage_itemlist_normal.invType = type;
 #elif PACKETVER >= 20120925
@@ -3172,7 +3172,7 @@ void clif_storagelist(map_session_data* sd, struct item* items, int items_length
 
 	if( equip ) {
 		storage_itemlist_equip.PacketType  = storageListEquipType;
-		storage_itemlist_equip.PacketLength = ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+		storage_itemlist_equip.PacketLength = static_cast<int16>( ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		storage_itemlist_equip.invType = type;
 #elif PACKETVER >= 20120925
@@ -3218,7 +3218,7 @@ void clif_cartlist( map_session_data *sd ){
 
 	if( normal ){
 		itemlist_normal.PacketType = cartlistnormalType;
-		itemlist_normal.PacketLength = ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+		itemlist_normal.PacketLength = static_cast<int16>( ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		itemlist_normal.invType = type;
 #endif
@@ -3228,7 +3228,7 @@ void clif_cartlist( map_session_data *sd ){
 
 	if( equip ){
 		itemlist_equip.PacketType = cartlistequipType;
-		itemlist_equip.PacketLength = ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+		itemlist_equip.PacketLength = static_cast<int16>( ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip ) );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		itemlist_equip.invType = type;
 #endif
@@ -4229,7 +4229,7 @@ void clif_arrow_create_list( map_session_data *sd ){
 		count++;
 	}
 
-	p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
+	p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
 
 	clif_send( p, p->packetLength, &sd->bl, SELF );
 
@@ -6402,7 +6402,7 @@ void clif_skill_produce_mix_list( map_session_data *sd, int skill_id, int trigge
 		}
 	}
 
-	p->packetLength = sizeof( struct PACKET_ZC_MAKABLEITEMLIST ) + count * sizeof( struct PACKET_ZC_MAKABLEITEMLIST_sub );
+	p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_MAKABLEITEMLIST ) + count * sizeof( struct PACKET_ZC_MAKABLEITEMLIST_sub ) );
 	WFIFOSET( fd, p->packetLength );
 
 	if( count > 0 ){
@@ -6455,7 +6455,7 @@ void clif_cooking_list( map_session_data *sd, int trigger, uint16 skill_id, int 
 	}
 
 	if( count > 0 || skill_id == AM_PHARMACY ){
-		p->packetLength = sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub );
+		p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub ) );
 		WFIFOSET( fd, p->packetLength );
 
 		sd->menuskill_id = skill_id;
@@ -6716,7 +6716,7 @@ void clif_displaymessage(const int fd, const char* mes)
 			}
 #else
 			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
-			int len = strnlen(line, CHAT_SIZE_MAX);
+			int16 len = static_cast<int16>( strnlen(line, CHAT_SIZE_MAX) );
 
 			if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
 				WFIFOHEAD(fd, 5 + len);
@@ -6734,7 +6734,7 @@ void clif_displaymessage(const int fd, const char* mes)
 
 /// Send broadcast message in yellow or blue without font formatting (ZC_BROADCAST).
 /// 009a <packet len>.W <message>.?B
-void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
+void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target)
 {
 	nullpo_retv(mes);
 	if (len < 2)
@@ -6743,7 +6743,7 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 	struct PACKET_ZC_BROADCAST* p = (struct PACKET_ZC_BROADCAST*)packet_buffer;
 
 	p->packetType = HEADER_ZC_BROADCAST;
-	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_BROADCAST ) + len );
+	p->PacketLength = static_cast<int16>( sizeof( struct PACKET_ZC_BROADCAST ) + len );
 
 	if( ( type&BC_BLUE ) != 0 ){
 		const char* color = "blue";
@@ -6798,7 +6798,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 
 /// Send broadcast message with font formatting.
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B (ZC_BROADCAST2)
-void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
+void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
 	nullpo_retv(mes);
 	if (len < 2)
@@ -6807,7 +6807,7 @@ void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned l
 	struct PACKET_ZC_BROADCAST2* p = (struct PACKET_ZC_BROADCAST2*)packet_buffer;
 
 	p->packetType = HEADER_ZC_BROADCAST2;
-	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_BROADCAST2 ) + len );
+	p->PacketLength = static_cast<int16>( sizeof( struct PACKET_ZC_BROADCAST2 ) + len );
 	p->fontColor = fontColor;
 	p->fontType = fontType;
 	p->fontSize = fontSize;
@@ -7032,35 +7032,31 @@ void clif_upgrademessage( map_session_data* sd, int result, t_itemid item_id ){
 /// Whisper is transmitted to the destination player (ZC_WHISPER).
 /// 0097 <packet len>.W <nick>.24B <message>.?B
 /// 0097 <packet len>.W <nick>.24B <isAdmin>.L <message>.?B (PACKETVER >= 20091104)
-void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, int mes_len, int gmlvl){
-	int fd;
+void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int gmlvl){
 
-	nullpo_retv(sd);
+	int fd = sd->fd;
 
-	fd = sd->fd;
+	struct PACKET_ZC_WHISPER p;
 
-#if PACKETVER < 20091104
-	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 4);
-	WFIFOW(fd,0) = 0x97;
-	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 4;
-	safestrncpy(WFIFOCP(fd,4), nick, NAME_LENGTH);
-	safestrncpy(WFIFOCP(fd,28), mes, mes_len);
-	WFIFOSET(fd,WFIFOW(fd,2));
-#else
-	map_session_data *ssd = map_nick2sd(nick,false);
+	p.PacketType = HEADER_ZC_WHISPER;
+	p.PacketLength = static_cast<int16>( mes_len );
+	safestrncpy(p.sender, nick, NAME_LENGTH);
+	safestrncpy(p.message, mes, mes_len);
 
-	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 8);
-	WFIFOW(fd,0) = 0x97;
-	WFIFOW(fd,2) = mes_len + NAME_LENGTH + 8;
-	safestrncpy(WFIFOCP(fd,4), nick, NAME_LENGTH);
+#if PACKETVER >= 20091104
+	map_session_data* ssd = map_nick2sd(nick, false);
 	// If it is not a message from the server or a player from another map-server
-	if( ssd ){
+	if (ssd) {
 		gmlvl = pc_get_group_level(ssd);
 	}
-	WFIFOL(fd, 28) = (gmlvl == 99) ? 1 : 0; // isAdmin; if nonzero, also displays text above char
-	safestrncpy(WFIFOCP(fd,32), mes, mes_len);
-	WFIFOSET(fd,WFIFOW(fd,2));
+	p.isAdmin = (gmlvl == 99) ? 1 : 0;
 #endif
+
+#if PACKETVER_MAIN_NUM >= 20131204 || PACKETVER_RE_NUM >= 20131120 || defined(PACKETVER_ZERO)
+	p.senderGID = ssd->bl.id;
+#endif
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
 
@@ -7370,7 +7366,7 @@ void clif_item_refine_list( map_session_data *sd ){
 		}
 	}
 
-	p->packetLength = sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST ) + sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub ) * count;
+	p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST ) + sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub ) * count );
 
 	clif_send( p, p->packetLength, &sd->bl, SELF );
 
@@ -8164,7 +8160,7 @@ void clif_party_withdraw( map_session_data& sd, uint32 account_id, const char* n
 
 /// Party chat message (ZC_NOTIFY_CHAT_PARTY).
 /// 0109 <packet len>.W <account id>.L <message>.?B
-void clif_party_message( struct party_data& party, uint32 account_id, const char* mes, int len ){
+void clif_party_message( struct party_data& party, uint32 account_id, const char* mes, size_t len ){
 	map_session_data* sd = party_getavailablesd( &party );
 
 	if( sd == nullptr ){
@@ -8179,7 +8175,7 @@ void clif_party_message( struct party_data& party, uint32 account_id, const char
 	struct PACKET_ZC_NOTIFY_CHAT_PARTY* p = (struct PACKET_ZC_NOTIFY_CHAT_PARTY*)packet_buffer;
 
 	p->PacketType = HEADER_ZC_NOTIFY_CHAT_PARTY;
-	p->PacketLength = sizeof( *p ) + len;
+	p->PacketLength = static_cast<int16>( sizeof( *p ) + len );
 	p->AID = account_id;
 	safestrncpy( p->chatMsg, mes, len );
 
@@ -9605,7 +9601,7 @@ void clif_marriage_proposal(int fd, map_session_data *sd, map_session_data* ssd)
 /*==========================================
  * Displays a message using the guild-chat colors to the specified targets. [Skotlex]
  *------------------------------------------*/
-void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target)
+void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum send_target target)
 {
 	unsigned char buf[256];
 
@@ -9617,7 +9613,7 @@ void clif_disp_message(struct block_list* src, const char* mes, int len, enum se
 	}
 
 	WBUFW(buf, 0) = 0x17f;
-	WBUFW(buf, 2) = len + 5;
+	WBUFW(buf, 2) = static_cast<int16>( len + 5 );
 	safestrncpy(WBUFCP(buf,4), mes, len+1);
 	clif_send(buf, WBUFW(buf,2), src, target);
 }
@@ -10226,7 +10222,7 @@ void clif_slide(struct block_list *bl, int x, int y)
 void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag)
 {
 	unsigned char buf[256]; //This should be more than sufficient, the theorical max is CHAT_SIZE + 8 (pads and extra inserted crap)
-	int len_mes = strlen(mes)+1; //Account for \0
+	int16 len_mes = static_cast<int16>( strlen(mes) + 1 ); //Account for \0
 
 	if (len_mes > sizeof(buf)-8) {
 		ShowError("clif_disp_overhead: Message too long (length %d)\n", len_mes);
@@ -10452,7 +10448,7 @@ void clif_viewequip_ack( map_session_data* sd, map_session_data* tsd ){
 	}
 
 	p->PacketType = HEADER_ZC_EQUIPWIN_MICROSCOPE;
-	p->PacketLength = sizeof( *p ) + sizeof( struct EQUIPITEM_INFO ) * equip;
+	p->PacketLength = static_cast<int16>( sizeof( *p ) + sizeof( struct EQUIPITEM_INFO ) * equip );
 
 	safestrncpy( p->characterName, tsd->status.name, NAME_LENGTH );
 
@@ -10715,12 +10711,11 @@ inline void clif_pk_mode_message(map_session_data * sd)
 // Only the first 'invalid' error that appears is used.
 static int clif_parse_WantToConnection_sub(int fd)
 {
-	int packet_len, value; //Value is used to temporarily store account/char_id/sex
-	unsigned short cmd;
+	uint32 value; //Value is used to temporarily store account/char_id/sex
 
 	//By default, start searching on the default one.
-	cmd = RFIFOW(fd, 0);
-	packet_len = RFIFOREST(fd);
+	unsigned short cmd = RFIFOW(fd, 0);
+	size_t packet_len = RFIFOREST(fd);
 
 	// FIXME: If the packet is not received at once, this will FAIL.
 	// Figure out, when it happens, that only part of the packet is
@@ -16269,17 +16264,17 @@ void clif_Mail_read( map_session_data *sd, int mail_id ){
 	} else {
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 		struct item *item;
-		int msg_len = strlen(msg->body);
+		int16 msg_len = static_cast<int16>( strlen(msg->body) );
 
 		if( msg_len == 0 ) {
 			strcpy(msg->body, "(no message)"); // TODO: confirm for RODEX
-			msg_len = strlen(msg->body);
+			msg_len = static_cast<int16>( strlen(msg->body) );
 		}
 
 #if PACKETVER < 20150513
 		item = &msg->item[0];
 
-		int len = 101 + msg_len;
+		int16 len = 101 + msg_len;
 
 		WFIFOHEAD(fd,len);
 		WFIFOW(fd,0) = 0x242;
@@ -16318,7 +16313,7 @@ void clif_Mail_read( map_session_data *sd, int mail_id ){
 		p->PacketLength = sizeof( struct PACKET_ZC_ACK_READ_RODEX );
 		p->opentype = msg->type;
 		p->MailID = msg->id;
-		p->TextcontentsLength = msg_len;
+		p->TextcontentsLength = static_cast<int16>( msg_len );
 		p->zeny = msg->zeny;
 
 		safestrncpy( WBUFCP( p, p->PacketLength ), msg->body, msg_len );
@@ -17977,7 +17972,7 @@ void clif_quest_add(map_session_data *sd, struct quest *qd)
 	WFIFOSET(fd, packet_len(cmd));
 
 #if PACKETVER >= 20150513
-	int len = 4 + qi->objectives.size() * 12;
+	int16 len = static_cast<int16>( 4 + qi->objectives.size() * 12 );
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x8fe;
@@ -18017,7 +18012,7 @@ void clif_quest_update_objective(map_session_data *sd, struct quest *qd)
 	int fd = sd->fd;
 	int offset = 6;
 	std::shared_ptr<s_quest_db> qi = quest_search(qd->quest_id);
-	int len = qi->objectives.size() * 12 + 6;
+	int16 len = static_cast<int16>( qi->objectives.size() * 12 + 6 );
 #if PACKETVER >= 20150513
 	int cmd = 0x9fa;
 #else
@@ -18394,7 +18389,7 @@ void clif_bg_xy_remove(map_session_data *sd)
 
 /// Notifies clients of a battleground message.
 /// 02DC <packet len>.W <account id>.L <name>.24B <message>.?B (ZC_BATTLEFIELD_CHAT)
-void clif_bg_message( struct s_battleground_data *bg, int src_id, const char *name, const char *mes, int len ){
+void clif_bg_message( struct s_battleground_data *bg, int src_id, const char *name, const char *mes, size_t len ){
 	map_session_data *sd = bg_getavailablesd( bg );
 
 	if( sd == nullptr ){
@@ -18402,12 +18397,12 @@ void clif_bg_message( struct s_battleground_data *bg, int src_id, const char *na
 	}
 
 	// limit length
-	len = min( len + 1, CHAT_SIZE_MAX );
+	len = zmin( len + 1, CHAT_SIZE_MAX );
 
 	unsigned char buf[8 + NAME_LENGTH + CHAT_SIZE_MAX];
 
 	WBUFW(buf,0) = 0x2dc;
-	WBUFW(buf,2) = len + NAME_LENGTH + 8;
+	WBUFW(buf,2) = static_cast<int16>( len + NAME_LENGTH + 8 );
 	WBUFL(buf,4) = src_id;
 	safestrncpy(WBUFCP(buf,8), name, NAME_LENGTH);
 	safestrncpy(WBUFCP(buf,8+NAME_LENGTH), mes, len );
@@ -18554,7 +18549,7 @@ void clif_bg_queue_apply_notify(const char *name, map_session_data *sd)
 	WFIFOHEAD(fd, packet_len(0x8d9));
 	WFIFOW(fd,0) = 0x8d9;
 	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOL(fd,2+NAME_LENGTH) = queue->teama_members.size() + queue->teamb_members.size();
+	WFIFOL(fd,2+NAME_LENGTH) = static_cast<int32>( queue->teama_members.size() + queue->teamb_members.size() );
 	WFIFOSET(fd, packet_len(0x8d9));
 }
 
@@ -19397,7 +19392,7 @@ void clif_search_store_info_ack( map_session_data* sd ){
 	}
 
 	unsigned int start = sd->searchstore.pages * SEARCHSTORE_RESULTS_PER_PAGE ;
-	unsigned int end   = umin( sd->searchstore.items.size(), start + SEARCHSTORE_RESULTS_PER_PAGE );
+	unsigned int end   = umin( static_cast<uint32>( sd->searchstore.items.size() ), start + SEARCHSTORE_RESULTS_PER_PAGE );
 	int len = sizeof( struct PACKET_ZC_SEARCH_STORE_INFO_ACK ) + ( end - start ) * sizeof( struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub );
 
 	WFIFOHEAD( fd, len );
@@ -19525,17 +19520,17 @@ void clif_search_store_info_click_ack(map_session_data* sd, short x, short y)
 /// Parse function for packet debugging.
 void clif_parse_debug(int fd,map_session_data *sd)
 {
-	int cmd, packet_len;
+	int16 packet_len;
 
 	// clif_parse ensures, that there is at least 2 bytes of data
-	cmd = RFIFOW(fd,0);
+	int cmd = RFIFOW(fd,0);
 
 	if( sd ) {
 		packet_len = packet_db[cmd].len;
 
 		if( packet_len == 0 )
 		{// unknown
-			packet_len = RFIFOREST(fd);
+			packet_len = static_cast<int16>( RFIFOREST(fd) );
 		}
 		else if( packet_len == -1 )
 		{// variable length
@@ -19545,7 +19540,7 @@ void clif_parse_debug(int fd,map_session_data *sd)
 	}
 	else
 	{
-		packet_len = RFIFOREST(fd);
+		packet_len = static_cast<int16>( RFIFOREST(fd) );
 		ShowDebug("Packet debug of 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
 	}
 
@@ -19569,7 +19564,7 @@ void clif_elementalconverter_list( map_session_data *sd ){
 		}
 	}
 
-	p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
+	p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
 
 	clif_send( p, p->packetLength, &sd->bl, SELF );
 
@@ -19625,7 +19620,7 @@ void clif_magicdecoy_list( map_session_data *sd, uint16 skill_lv, short x, short
 	}
 
 	if( count > 0 ) {
-		p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
+		p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
 		WFIFOSET( fd, p->packetLength );
 		sd->menuskill_id = NC_MAGICDECOY;
 		sd->menuskill_val = skill_lv;
@@ -19663,7 +19658,7 @@ void clif_poison_list( map_session_data *sd, uint16 skill_lv ){
 	}
 
 	if( count > 0 ){
-		p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
+		p->packetLength = static_cast<int16>( sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
 		WFIFOSET( fd, p->packetLength );
 		sd->menuskill_id = GC_POISONINGWEAPON;
 		sd->menuskill_val = skill_lv;
@@ -21093,7 +21088,7 @@ void clif_parse_merge_item_cancel(int fd, map_session_data* sd) {
 static std::string clif_hide_name(const char* original_name)
 {
 	std::string censored(original_name);
-	int hide = min(battle_config.broadcast_hide_name, censored.length() - 1);
+	size_t hide = zmin(battle_config.broadcast_hide_name, censored.length() - 1);
 	censored.replace(censored.length() - hide, hide, hide, '*');
 	return censored;
 }
