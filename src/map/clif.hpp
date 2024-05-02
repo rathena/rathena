@@ -958,7 +958,7 @@ void clif_feel_hate_reset(map_session_data *sd);
 
 // [blackhole89]
 void clif_hominfo(map_session_data *sd, struct homun_data *hd, int flag);
-int clif_homskillinfoblock(map_session_data *sd);
+void clif_homskillinfoblock(map_session_data *sd);
 void clif_homskillup(map_session_data *sd, uint16 skill_id);	//[orn]
 void clif_hom_food(map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(map_session_data *sd, int state, int param);	//[orn]
