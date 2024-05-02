@@ -316,7 +316,7 @@ int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
 	uint16 skill_id = skill->id;
 	uint16 skill_lv = skill->lv;
 
-	if( elemental_skillnotok(skill_id, ed) )
+	if( elemental_skillnotok(skill_id, *ed) )
 		return 0;
 
 	if( ed->ud.skilltimer != INVALID_TIMER )
@@ -389,7 +389,7 @@ int elemental_change_mode_ack(s_elemental_data *ed, e_elemental_skillmode skill_
 	uint16 skill_id = skill->id;
 	uint16 skill_lv = skill->lv;
 
-	if( elemental_skillnotok(skill_id, ed) )
+	if( elemental_skillnotok(skill_id, *ed) )
 		return 0;
 
 	if( ed->ud.skilltimer != INVALID_TIMER )
@@ -460,10 +460,19 @@ int elemental_unlocktarget(s_elemental_data *ed) {
 	return 0;
 }
 
-bool elemental_skillnotok(uint16 skill_id, s_elemental_data *ed) {
+bool elemental_skillnotok( uint16 skill_id, s_elemental_data& ed ){
 	uint16 idx = skill_get_index(skill_id);
-	nullpo_retr(1,ed);
-	return idx == 0 ? false : skill_isNotOk(skill_id,ed->master); // return false or check if it,s ok for master as well
+
+	if( idx == 0 ){
+		return false;
+	}
+
+	// Check if it's ok for master as well
+	if( ed.master != nullptr ){
+		return skill_isNotOk( skill_id, *ed.master );
+	}else{
+		return true;
+	}
 }
 
 struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){
