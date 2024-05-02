@@ -4118,7 +4118,7 @@ int mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char 
 			/**
 			 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
 			 **/
-			if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+			if( !skill_check_condition_castbegin(*sd,skill_id,sd->status.skill[sk_idx].lv) )
 				continue;
 
 			std::shared_ptr<s_mob_skill> ms = std::make_shared<s_mob_skill>();

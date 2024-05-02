@@ -702,7 +702,7 @@ void clif_divorced(map_session_data* sd, const char* name);
 void clif_callpartner(map_session_data& sd);
 void clif_playBGM( map_session_data& sd, const char* name );
 void clif_soundeffect( struct block_list& bl, const char* name, int type, enum send_target target );
-void clif_parse_ActionRequest_sub(map_session_data *sd, int action_type, int target_id, t_tick tick);
+void clif_parse_ActionRequest_sub( map_session_data& sd, int action_type, int target_id, t_tick tick );
 void clif_parse_LoadEndAck(int fd,map_session_data *sd);
 void clif_hotkeys_send(map_session_data *sd, int tab);
 
@@ -796,7 +796,7 @@ void clif_clearcart(int fd);
 
 void clif_item_identify_list(map_session_data *sd);
 void clif_item_identified(map_session_data *sd,int idx,int flag);
-void clif_item_repair_list(map_session_data *sd, map_session_data *dstsd, int lv);
+void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint16 lv );
 void clif_item_repaireffect(map_session_data *sd, int idx, int flag);
 void clif_item_damaged(map_session_data* sd, unsigned short position);
 void clif_item_refine_list(map_session_data *sd);
@@ -1094,11 +1094,11 @@ void clif_elementalconverter_list(map_session_data *sd);
 
 void clif_millenniumshield(struct block_list *bl, short shields);
 
-void clif_magicdecoy_list(map_session_data *sd, uint16 skill_lv, short x, short y);
+void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, short x, short y );
 
-void clif_poison_list(map_session_data *sd, uint16 skill_lv);
+void clif_poison_list( map_session_data& sd, uint16 skill_lv );
 
-int clif_autoshadowspell_list(map_session_data *sd);
+void clif_autoshadowspell_list( map_session_data& sd );
 
 int clif_skill_itemlistwindow( map_session_data *sd, uint16 skill_id, uint16 skill_lv );
 void clif_elemental_info(map_session_data *sd);

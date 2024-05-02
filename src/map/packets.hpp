@@ -427,6 +427,17 @@ struct PACKET_ZC_INVENTORY_TAB{
 	bool favorite;
 } __attribute__((packed));
 
+struct PACKET_ZC_SKILL_SELECT_REQUEST_sub{
+	int16 skill_id;
+} __attribute__((packed));
+
+struct PACKET_ZC_SKILL_SELECT_REQUEST{
+	int16 packetType;
+	int16 packetLength;
+	int32 why;
+	struct PACKET_ZC_SKILL_SELECT_REQUEST_sub skills[];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -458,6 +469,7 @@ DEFINE_PACKET_HEADER(ZC_BOSS_INFO, 0x293)
 DEFINE_PACKET_HEADER(ZC_CASH_TIME_COUNTER, 0x298)
 DEFINE_PACKET_HEADER(ZC_CASH_ITEM_DELETE, 0x299)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_BIND_ON_EQUIP, 0x2d3)
+DEFINE_PACKET_HEADER(ZC_SKILL_SELECT_REQUEST, 0x442)
 DEFINE_PACKET_HEADER(ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, 0x824)
 DEFINE_PACKET_HEADER(CZ_SSILIST_ITEM_CLICK, 0x83c)
 DEFINE_PACKET_HEADER(CZ_REQ_SE_CASH_TAB_CODE, 0x846)
