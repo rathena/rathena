@@ -639,6 +639,7 @@ struct Battle_Config
 	int monster_loot_search_type;
 	int feature_roulette;
 	int feature_roulette_bonus_reward;
+	int feature_roulette_spin_tick;
 	int monster_hp_bars_info;
 	int min_body_style;
 	int max_body_style;

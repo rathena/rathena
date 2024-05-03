@@ -3750,17 +3750,20 @@ bool itemdb_parse_roulette_db(void)
 
 	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
 		int k, limit = MAX_ROULETTE_COLUMNS - i;
+		std::vector<int8> chance_table = {};
 
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
 			t_itemid item_id;
 			unsigned short amount;
 			int level, flag;
+			int8 chance;
 
 			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
 			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = strtoul(data, nullptr, 10);
 			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
 			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
+			Sql_GetData(mmysql_handle, 5, &data, NULL); chance = static_cast<int8>(atoi(data));
 
 			if (!item_db.exists(item_id)) {
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
@@ -3774,6 +3777,10 @@ bool itemdb_parse_roulette_db(void)
 				ShowWarning("itemdb_parse_roulette_db: Unsupported flag '%d' for item ID '%u' in level '%d'\n", flag, item_id, level);
 				continue;
 			}
+			if (chance < 1) {
+				ShowWarning("itemdb_parse_roulette_db: Сhance rate '%d' not allowed for item ID '%u' in level '%d', changed to 1\n", chance, item_id, level);
+				chance = 1;
+			}
 
 			j = rd.items[i];
 			RECREATE(rd.nameid[i], t_itemid, ++rd.items[i]);
@@ -3784,8 +3791,13 @@ bool itemdb_parse_roulette_db(void)
 			rd.qty[i][j] = amount;
 			rd.flag[i][j] = flag;
 
+			// Fill chance table
+			for (int v = 0; v < chance; v++)
+				chance_table.push_back(j);
+
 			++count;
 		}
+		rd.chance_table[i] = chance_table;
 	}
 
 	// free the query result
