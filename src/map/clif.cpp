@@ -1582,16 +1582,23 @@ static void clif_millenniumshield_single( map_session_data& sd, map_session_data
 /*==========================================
  * Kagerou/Oboro amulet spirit
  *------------------------------------------*/
-static void clif_spiritcharm_single(int fd, map_session_data *sd)
-{
+static void clif_spiritcharm_single( map_session_data& sd, map_session_data& tsd ){
+	if( sd.spiritcharm_type == CHARM_TYPE_NONE ){
+		return;
+	}
+
+	if( sd.spiritcharm <= 0 ){
+		return;
+	}
+
 	PACKET_ZC_SPIRITS_ATTRIBUTE packet{};
 
 	packet.packetType = HEADER_ZC_SPIRITS_ATTRIBUTE;
-	packet.aid = static_cast<uint32>(sd->bl.id);
-	packet.spiritsType = static_cast<int16>(sd->spiritcharm_type);
-	packet.num = static_cast<int16>(sd->spiritcharm);
+	packet.aid = sd.bl.id;
+	packet.spiritsType = static_cast<decltype(packet.spiritsType)>(sd.spiritcharm_type);
+	packet.num = static_cast<decltype(packet.num)>(sd.spiritcharm);
 
-	socket_send<PACKET_ZC_SPIRITS_ATTRIBUTE>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &tsd.bl, SELF );
 }
 
 /*==========================================
@@ -5102,8 +5109,7 @@ static void clif_getareachar_pc(map_session_data* sd,map_session_data* dstsd)
 	if(dstsd->spiritball > 0)
 		clif_spiritball( &dstsd->bl, &sd->bl, SELF );
 	clif_millenniumshield_single( *dstsd, *sd );
-	if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0)
-		clif_spiritcharm_single(sd->fd, dstsd);
+	clif_spiritcharm_single( *dstsd, *sd );
 	if (dstsd->soulball > 0)
 		clif_soulball( dstsd, &sd->bl, SELF );
 	if (dstsd->servantball > 0)
@@ -10041,8 +10047,7 @@ void clif_refresh(map_session_data *sd)
 	if (sd->spiritball)
 		clif_spiritball( &sd->bl, &sd->bl, SELF );
 	clif_millenniumshield_single( *sd, *sd );
-	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
-		clif_spiritcharm_single(sd->fd, sd);
+	clif_spiritcharm_single( *sd, *sd );
 	if (sd->soulball)
 		clif_soulball( sd, &sd->bl, SELF );
 	if (sd->servantball)
