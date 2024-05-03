@@ -57,7 +57,6 @@
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
-	packet(0x0097,-1);
 	packet(0x0098,3);
 	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
 	packet(0x009a,-1);

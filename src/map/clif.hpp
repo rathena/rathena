@@ -774,7 +774,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3);
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
-void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, int mes_len, int gmlvl);
+void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int gmlvl);
 void clif_wis_end(int fd, int result);
 
 void clif_solved_charname(int fd, int charid, const char* name);
@@ -830,7 +830,7 @@ void clif_party_invite( map_session_data& sd, map_session_data& tsd );
 void clif_party_invite_reply( map_session_data& sd, const char* nick, enum e_party_invite_reply reply );
 void clif_party_option(struct party_data *p,map_session_data *sd,int flag);
 void clif_party_withdraw( map_session_data& sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target );
-void clif_party_message( struct party_data& party, uint32 account_id, const char* mes, int len );
+void clif_party_message( struct party_data& party, uint32 account_id, const char* mes, size_t len );
 void clif_party_xy( map_session_data& sd );
 void clif_party_xy_single( map_session_data& sd, map_session_data& tsd );
 void clif_party_hp( map_session_data& sd );
@@ -874,7 +874,7 @@ void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_
 void clif_bg_hp(map_session_data *sd);
 void clif_bg_xy(map_session_data *sd);
 void clif_bg_xy_remove(map_session_data *sd);
-void clif_bg_message(struct s_battleground_data *bg, int src_id, const char *name, const char *mes, int len);
+void clif_bg_message(struct s_battleground_data *bg, int src_id, const char *name, const char *mes, size_t len);
 void clif_bg_updatescore(int16 m);
 void clif_bg_updatescore_single(map_session_data *sd);
 void clif_sendbgemblem_area(map_session_data *sd);
@@ -900,9 +900,9 @@ void clif_font(map_session_data *sd);
 
 // atcommand
 void clif_displaymessage(const int fd, const char* mes);
-void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
-void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target);
-void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
+void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum send_target target);
+void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
+void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 void clif_heal(int fd,int type,int val);
 void clif_resurrection(struct block_list *bl,int type);
 void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);

@@ -1370,7 +1370,7 @@ int guild_recv_memberinfoshort(int guild_id,uint32 account_id,uint32 char_id,int
 /*====================================================
  * Send a message to whole guild
  *---------------------------------------------------*/
-int guild_send_message(map_session_data *sd,const char *mes,int len) {
+int guild_send_message(map_session_data *sd, const char *mes, size_t len) {
 	nullpo_ret(sd);
 
 	if(sd->status.guild_id==0)

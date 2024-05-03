@@ -310,7 +310,7 @@ int intif_main_message(map_session_data* sd, const char* message)
  * @param mes_len : Size of message
  * @return 0=Message not send, 1=Message send
  */
-int intif_wis_message(map_session_data *sd, char *nick, char *mes, int mes_len)
+int intif_wis_message(map_session_data *sd, char *nick, char *mes, size_t mes_len)
 {
 	int headersize = 8 + 2 * NAME_LENGTH;
 
@@ -326,7 +326,7 @@ int intif_wis_message(map_session_data *sd, char *nick, char *mes, int mes_len)
 
 	WFIFOHEAD(inter_fd,mes_len + headersize);
 	WFIFOW(inter_fd,0) = 0x3001;
-	WFIFOW(inter_fd,2) = mes_len + headersize;
+	WFIFOW(inter_fd,2) = static_cast<int16>( mes_len + headersize);
 	WFIFOL(inter_fd,4) = pc_get_group_level(sd);
 	safestrncpy(WFIFOCP(inter_fd,8), sd->status.name, NAME_LENGTH);
 	safestrncpy(WFIFOCP(inter_fd,8+NAME_LENGTH), nick, NAME_LENGTH);
@@ -748,7 +748,7 @@ int intif_break_party(int party_id)
  * @param len : Size of the message
  * @return 0=error, 1=msg sent
  */
-int intif_party_message(int party_id,uint32 account_id,const char *mes,int len)
+int intif_party_message(int party_id, uint32 account_id, const char *mes, size_t len)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -758,7 +758,7 @@ int intif_party_message(int party_id,uint32 account_id,const char *mes,int len)
 
 	WFIFOHEAD(inter_fd,len + 12);
 	WFIFOW(inter_fd,0)=0x3027;
-	WFIFOW(inter_fd,2)=len+12;
+	WFIFOW(inter_fd,2)=static_cast<int16>( len + 12 );
 	WFIFOL(inter_fd,4)=party_id;
 	WFIFOL(inter_fd,8)=account_id;
 	safestrncpy(WFIFOCP(inter_fd,12),mes,len);
@@ -954,7 +954,7 @@ int intif_guild_break(int guild_id)
  * @param len : Size of the message
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_message(int guild_id,uint32 account_id,const char *mes,int len)
+int intif_guild_message(int guild_id, uint32 account_id, const char *mes, size_t len)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -964,7 +964,7 @@ int intif_guild_message(int guild_id,uint32 account_id,const char *mes,int len)
 
 	WFIFOHEAD(inter_fd, len + 12);
 	WFIFOW(inter_fd,0)=0x3037;
-	WFIFOW(inter_fd,2)=len+12;
+	WFIFOW(inter_fd,2)=static_cast<int16>( len + 12 );
 	WFIFOL(inter_fd,4)=guild_id;
 	WFIFOL(inter_fd,8)=account_id;
 	safestrncpy(WFIFOCP(inter_fd,12),mes,len);
