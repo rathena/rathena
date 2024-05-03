@@ -62,7 +62,7 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
 			}
 		}else{
 			if( !(charserv_config.pincode_config.pincode_changetime)
-			|| ( sd->pincode_change + charserv_config.pincode_config.pincode_changetime ) > time(NULL) ){
+			|| ( sd->pincode_change + charserv_config.pincode_config.pincode_changetime ) > time(nullptr) ){
 				std::shared_ptr<struct online_char_data> node = util::umap_find( char_get_onlinedb(), sd->account_id );
 
 				if( node != nullptr && node->pincode_success ){
@@ -491,9 +491,9 @@ int chlogif_parse_ackchangesex(int fd)
 				SqlStmt_Free(stmt);
 			}
 
-			SqlStmt_BindColumn(stmt, 0, SQLDT_INT,   &char_id,  0, NULL, NULL);
-			SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT, &class_,   0, NULL, NULL);
-			SqlStmt_BindColumn(stmt, 2, SQLDT_INT,   &guild_id, 0, NULL, NULL);
+			SqlStmt_BindColumn(stmt, 0, SQLDT_INT,   &char_id,  0, nullptr, nullptr);
+			SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT, &class_,   0, nullptr, nullptr);
+			SqlStmt_BindColumn(stmt, 2, SQLDT_INT,   &guild_id, 0, nullptr, nullptr);
 
 			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i) {
 				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);
@@ -536,9 +536,9 @@ int chlogif_parse_ackchangecharsex(int char_id, int sex)
 		return 1;
 	}
 
-	Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
-	Sql_GetData(sql_handle, 1, &data, NULL); class_ = atoi(data);
-	Sql_GetData(sql_handle, 2, &data, NULL); guild_id = atoi(data);
+	Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
+	Sql_GetData(sql_handle, 1, &data, nullptr); class_ = atoi(data);
+	Sql_GetData(sql_handle, 2, &data, nullptr); guild_id = atoi(data);
 	Sql_FreeResult(sql_handle);
 
 	chlogif_parse_change_sex_sub(sex, account_id, char_id, class_, guild_id);
@@ -722,7 +722,7 @@ int chlogif_parse_AccInfoAck(int fd) {
 	else {
 		int8 type = RFIFOB(fd, 18);
 		if (type == 0 || RFIFOREST(fd) < 122+NAME_LENGTH) {
-			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, NULL, NULL, NULL, NULL, NULL);
+			mapif_accinfo_ack(false, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), 0, -1, 0, 0, nullptr, nullptr, nullptr, nullptr, nullptr);
 			RFIFOSKIP(fd,19);
 			return 1;
 		}

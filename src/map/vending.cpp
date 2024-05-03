@@ -82,7 +82,7 @@ void vending_vendinglistreq(map_session_data* sd, int id)
 	map_session_data* vsd;
 	nullpo_retv(sd);
 
-	if( (vsd = map_id2sd(id)) == NULL )
+	if( (vsd = map_id2sd(id)) == nullptr )
 		return;
 	if( !vsd->state.vending )
 		return; // not vending
@@ -128,7 +128,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 	map_session_data* vsd = map_id2sd(aid);
 
 	nullpo_retv(sd);
-	if( vsd == NULL || !vsd->state.vending || vsd->bl.id == sd->bl.id )
+	if( vsd == nullptr || !vsd->state.vending || vsd->bl.id == sd->bl.id )
 		return; // invalid shop
 
 	if( vsd->vender_id != uid ) { // shop has changed
@@ -292,7 +292,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
  * @param data : itemlist data
  *	data := {<index>.w <amount>.w <value>.l}[count]
  * @param count : number of different items
- * @param at Autotrader info, or NULL if requetsed not from autotrade persistance
+ * @param at Autotrader info, or nullptr if requetsed not from autotrade persistance
  * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found
  */
 int8 vending_openvending( map_session_data& sd, const char* message, const uint8* data, int count, struct s_autotrader *at ){
@@ -493,7 +493,7 @@ bool vending_searchall(map_session_data* sd, const struct s_search_store_search*
 */
 void vending_reopen( map_session_data& sd )
 {
-	struct s_autotrader *at = NULL;
+	struct s_autotrader *at = nullptr;
 	int8 fail = -1;
 
 	// Open vending for this autotrader
@@ -583,24 +583,24 @@ void do_init_vending_autotrade(void)
 
 		if( Sql_NumRows(mmysql_handle) > 0 ) {
 			uint16 items = 0;
-			DBIterator *iter = NULL;
-			struct s_autotrader *at = NULL;
+			DBIterator *iter = nullptr;
+			struct s_autotrader *at = nullptr;
 
 			// Init each autotrader data
 			while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
 				size_t len;
 				char* data;
 
-				at = NULL;
+				at = nullptr;
 				CREATE(at, struct s_autotrader, 1);
-				Sql_GetData(mmysql_handle, 0, &data, NULL); at->id = atoi(data);
-				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
-				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
-				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
+				Sql_GetData(mmysql_handle, 0, &data, nullptr); at->id = atoi(data);
+				Sql_GetData(mmysql_handle, 1, &data, nullptr); at->account_id = atoi(data);
+				Sql_GetData(mmysql_handle, 2, &data, nullptr); at->char_id = atoi(data);
+				Sql_GetData(mmysql_handle, 3, &data, nullptr); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
 				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
-				Sql_GetData(mmysql_handle, 5, &data, NULL); at->dir = atoi(data);
-				Sql_GetData(mmysql_handle, 6, &data, NULL); at->head_dir = atoi(data);
-				Sql_GetData(mmysql_handle, 7, &data, NULL); at->sit = atoi(data);
+				Sql_GetData(mmysql_handle, 5, &data, nullptr); at->dir = atoi(data);
+				Sql_GetData(mmysql_handle, 6, &data, nullptr); at->head_dir = atoi(data);
+				Sql_GetData(mmysql_handle, 7, &data, nullptr); at->sit = atoi(data);
 				at->count = 0;
 
 				if (battle_config.feature_autotrade_direction >= 0)
@@ -653,9 +653,9 @@ void do_init_vending_autotrade(void)
 				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
 					char *data;
 					CREATE(at->entries[j], struct s_autotrade_entry, 1);
-					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->cartinventory_id = atoi(data);
-					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
-					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
+					Sql_GetData(mmysql_handle, 0, &data, nullptr); at->entries[j]->cartinventory_id = atoi(data);
+					Sql_GetData(mmysql_handle, 1, &data, nullptr); at->entries[j]->amount = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, nullptr); at->entries[j]->price = atoi(data);
 					j++;
 				}
 				items += j;

@@ -23,7 +23,7 @@ int max_index = 0;
 /// Result gets placed either into 'buf' or in a static local buffer.
 const char* mapindex_getmapname(const char* string, char* output) {
 	static char buf[MAP_NAME_LENGTH];
-	char* dest = (output != NULL) ? output : buf;
+	char* dest = (output != nullptr) ? output : buf;
 
 	size_t len = strnlen(string, MAP_NAME_LENGTH_EXT);
 	if (len == MAP_NAME_LENGTH_EXT) {
@@ -44,7 +44,7 @@ const char* mapindex_getmapname(const char* string, char* output) {
 /// Result gets placed either into 'buf' or in a static local buffer.
 const char* mapindex_getmapname_ext(const char* string, char* output) {
 	static char buf[MAP_NAME_LENGTH_EXT];
-	char* dest = (output != NULL) ? output : buf;
+	char* dest = (output != nullptr) ? output : buf;
 
 	size_t len;
 
@@ -146,7 +146,7 @@ void mapindex_init(void) {
 	for( size_t i = 0; i < ARRAYLENGTH(mapindex_cfgfile); i++ ){
 		sprintf( path, "%s/%s", db_path, mapindex_cfgfile[i] );
 
-		if( ( fp = fopen( path, "r" ) ) == NULL ){
+		if( ( fp = fopen( path, "r" ) ) == nullptr ){
 			// It is only fatal if it is the main file
 			if( i == 0 ){
 				ShowFatalError("Unable to read mapindex config file %s!\n", path );
@@ -182,7 +182,7 @@ void mapindex_init(void) {
  * @param mapname
  **/
 void mapindex_check_mapdefault(const char *mapname) {
-	mapname = mapindex_getmapname(mapname, NULL);
+	mapname = mapindex_getmapname(mapname, nullptr);
 	if( !strdb_iget(mapindex_db, mapname) ) {
 		ShowError("mapindex_init: Default map '%s' not found in cache! Please change in (by default in) char_athena.conf!\n", mapname);
 	}

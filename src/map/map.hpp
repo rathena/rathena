@@ -826,7 +826,7 @@ struct s_map_zone_data {
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	uint16 index; // The map index used by the mapindex* functions.
-	struct mapcell* cell; // Holds the information of each map cell (NULL if the map is not on this map-server).
+	struct mapcell* cell; // Holds the information of each map cell (nullptr if the map is not on this map-server).
 	struct block_list **block;
 	struct block_list **block_mob;
 	int16 m;
@@ -914,7 +914,7 @@ extern MapZoneDatabase map_zone_db;
 struct map_data_other_server {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; //Index is the map index used by the mapindex* functions.
-	struct mapcell* cell; // If this is NULL, the map is not on this map-server
+	struct mapcell* cell; // If this is nullptr, the map is not on this map-server
 	uint32 ip;
 	uint16 port;
 };
@@ -1291,8 +1291,8 @@ enum e_mapflag map_getmapflag_by_name(char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
 int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
-#define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, NULL)
-#define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, NULL)
+#define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, nullptr)
+#define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, nullptr)
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
@@ -1324,7 +1324,7 @@ typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
+	( ((bl) == (struct block_list*)nullptr || (bl)->type != (type_)) ? (T ## type_ *)nullptr : (T ## type_ *)(bl) )
 
 #include <common/sql.hpp>
 

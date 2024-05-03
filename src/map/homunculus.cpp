@@ -130,7 +130,7 @@ struct view_data* hom_get_viewdata(int class_)
 {	//Returns the viewdata for homunculus
 	if (homdb_checkid(class_))
 		return &hom_viewdb[class_-HM_CLASS_BASE];
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -840,7 +840,7 @@ void hom_save(struct homun_data *hd)
 void hom_menu(map_session_data *sd, int type)
 {
 	nullpo_retv(sd);
-	if (sd->hd == NULL)
+	if (sd->hd == nullptr)
 		return;
 
 	switch(type) {
@@ -1124,7 +1124,7 @@ bool hom_call(map_session_data *sd)
 
 	hom_init_timers(hd);
 	hd->homunculus.vaporize = HOM_ST_ACTIVE;
-	if (hd->bl.prev == NULL)
+	if (hd->bl.prev == nullptr)
 	{	//Spawn him
 		hd->bl.x = sd->bl.x;
 		hd->bl.y = sd->bl.y;
@@ -1191,7 +1191,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 	if (created)
 		status_percent_heal(&hd->bl, 100, 100);
 
-	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && sd->bl.prev != NULL)
+	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == nullptr && sd->bl.prev != nullptr)
 	{
 		if(map_addblock(&hd->bl))
 			return 0;
