@@ -3003,7 +3003,7 @@ int pc_disguise(map_session_data *sd, int class_)
 
 	if (sd->bl.prev != NULL) {
 		pc_stop_walking(sd, 0);
-		clif_clearunit_area(&sd->bl, CLR_OUTSIGHT);
+		clif_clearunit_area( sd->bl, CLR_OUTSIGHT );
 	}
 
 	if (!class_) {

@@ -974,23 +974,18 @@ void clif_clearunit_single( uint32 GID, clr_type type, map_session_data& tsd ){
 ///     2 = logged out
 ///     3 = teleport
 ///     4 = trickdead
-void clif_clearunit_area(struct block_list* bl, clr_type type)
-{
-	// TODO: Convert bl to reference
-	if (bl == nullptr) {
-		return;
-	}
-
+void clif_clearunit_area( block_list& bl, clr_type type ){
 	PACKET_ZC_NOTIFY_VANISH packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_VANISH;
-	packet.gid = static_cast<uint32>(bl->id);
+	packet.gid = bl.id;
 	packet.type = static_cast<uint8>(type);
 
-	clif_send(&packet, sizeof(PACKET_ZC_NOTIFY_VANISH), bl, type == CLR_DEAD ? AREA : AREA_WOS);
+	clif_send(&packet, sizeof(PACKET_ZC_NOTIFY_VANISH), &bl, type == CLR_DEAD ? AREA : AREA_WOS);
 
-	if(disguised(bl)) {
-		packet.gid = disguised_bl_id( bl->id );
-		clif_send(&packet, sizeof(PACKET_ZC_NOTIFY_VANISH), bl, SELF);
+	if(disguised(&bl)) {
+		packet.gid = disguised_bl_id( bl.id );
+		clif_send(&packet, sizeof(PACKET_ZC_NOTIFY_VANISH), &bl, SELF);
 	}
 }
 
@@ -1000,8 +995,12 @@ void clif_clearunit_area(struct block_list* bl, clr_type type)
 /// automatically.
 static TIMER_FUNC(clif_clearunit_delayed_sub){
 	struct block_list *bl = (struct block_list *)data;
-	clif_clearunit_area(bl, (clr_type) id);
-	ers_free(delay_clearunit_ers,bl);
+
+	if( bl != nullptr ){
+		clif_clearunit_area( *bl, (clr_type)id );
+		ers_free( delay_clearunit_ers, bl );
+	}
+
 	return 0;
 }
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
@@ -11310,7 +11309,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 
 	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
-		clif_clearunit_area(&sd->bl, CLR_DEAD);
+		clif_clearunit_area( sd->bl, CLR_DEAD );
 	else {
 		skill_usave_trigger(sd);
 		if (battle_config.spawn_direction)
@@ -11532,7 +11531,7 @@ void clif_parse_WalkToXY(int fd, map_session_data *sd)
 	short x, y;
 
 	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, CLR_DEAD);
+		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
 
@@ -11839,7 +11838,7 @@ void clif_parse_ActionRequest_sub(map_session_data *sd, int action_type, int tar
 	}
 
 	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, CLR_DEAD);
+		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
 
@@ -12146,7 +12145,7 @@ void clif_parse_TakeItem(int fd, map_session_data *sd)
 
 	do {
 		if (pc_isdead(sd)) {
-			clif_clearunit_area(&sd->bl, CLR_DEAD);
+			clif_clearunit_area( sd->bl, CLR_DEAD );
 			break;
 		}
 
@@ -12212,7 +12211,7 @@ void clif_parse_UseItem(int fd, map_session_data *sd)
 	int n;
 
 	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, CLR_DEAD);
+		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
 
@@ -12246,7 +12245,7 @@ void clif_parse_EquipItem(int fd,map_session_data *sd)
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	if(pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl,CLR_DEAD);
+		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
 	index = RFIFOW(fd,info->pos[0])-2;
@@ -12304,7 +12303,7 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 	int index;
 
 	if(pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl,CLR_DEAD);
+		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
 
@@ -12339,7 +12338,7 @@ void clif_parse_NpcClicked(int fd,map_session_data *sd)
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	if(pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl,CLR_DEAD);
+		clif_clearunit_area( sd->bl, CLR_DEAD );
 		return;
 	}
 

@@ -1053,11 +1053,11 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG) {	//Client won't display option changes for these classes [Toms]
 			clif_changeoption(&nd.bl);
 			if (nd.is_invisible)
-				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+				clif_clearunit_area( nd.bl, CLR_OUTSIGHT );  // Hack to trick maya purple card [Xazax]
 		}
 		else {
 			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
-				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);
+				clif_clearunit_area( nd.bl, CLR_OUTSIGHT );
 			else
 				clif_spawn(&nd.bl);
 		}
@@ -3381,7 +3381,7 @@ int npc_remove_map(struct npc_data* nd)
 
 	if (nd->subtype == NPCTYPE_SCRIPT)
 		skill_clear_unitgroup(&nd->bl);
-	clif_clearunit_area(&nd->bl,CLR_RESPAWN);
+	clif_clearunit_area( nd->bl, CLR_RESPAWN );
 	npc_unsetcells(nd);
 	map_delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]

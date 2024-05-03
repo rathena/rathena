@@ -1665,7 +1665,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);
 		unit_skillcastcancel(target,0);
-		clif_clearunit_area(target,CLR_DEAD);
+		clif_clearunit_area( *target, CLR_DEAD );
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
 	}

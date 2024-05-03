@@ -632,7 +632,7 @@ void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect);
 void clif_clearflooritem( flooritem_data& fitem, map_session_data* tsd = nullptr );
 
 void clif_clearunit_single( uint32 GID, clr_type type, map_session_data& tsd );
-void clif_clearunit_area(struct block_list* bl, clr_type type);
+void clif_clearunit_area( block_list& bl, clr_type type );
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick);
 int clif_spawn(struct block_list *bl, bool walking = false);	//area
 void clif_walkok(map_session_data *sd);	// self

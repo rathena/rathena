@@ -3213,7 +3213,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3230,7 +3230,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
 				clif_emotion(bl, ET_CRY);
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3245,7 +3245,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			ud->canact_tick = ud->canmove_tick;
 
 			if( mercenary_get_lifetime(md) <= 0 && !(md->master && !md->master->state.active) ) {
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3260,7 +3260,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			ud->canact_tick = ud->canmove_tick;
 
 			if( elemental_get_lifetime(ed) <= 0 && !(ed->master && !ed->master->state.active) ) {
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3294,7 +3294,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			}
 			[[fallthrough]];
 		default:
-			clif_clearunit_area(bl, clrtype);
+			clif_clearunit_area( *bl, clrtype );
 			map_delblock(bl);
 			break;
 	}
@@ -3319,7 +3319,7 @@ void unit_refresh(struct block_list *bl, bool walking) {
 	// Using CLR_TRICKDEAD because other flags show effects
 	// Probably need to use another flag or other way to refresh it
 	if (mapdata->users) {
-		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
+		clif_clearunit_area( *bl, CLR_TRICKDEAD ); // Fade out
 		clif_spawn(bl,walking); // Fade in
 	}
 }
