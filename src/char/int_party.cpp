@@ -265,7 +265,7 @@ int inter_party_sql_init(void)
 	// Remove parties with no members on startup from party_db. [Skotlex]
 	if (charserv_config.clear_parties) {
 		ShowStatus("Cleaning party table...\n");
-		if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` USING `%s` LEFT JOIN `%s` ON `%s`.leader_id =`%s`.account_id AND `%s`.leader_char = `%s`.char_id WHERE `%s`.account_id IS nullptr",
+		if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` USING `%s` LEFT JOIN `%s` ON `%s`.leader_id =`%s`.account_id AND `%s`.leader_char = `%s`.char_id WHERE `%s`.account_id IS NULL",
 								   schema_config.party_db, schema_config.party_db, schema_config.char_db, schema_config.party_db, schema_config.char_db, schema_config.party_db, schema_config.char_db, schema_config.char_db))
 			Sql_ShowDebug(sql_handle);
 	}
