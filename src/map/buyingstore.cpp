@@ -110,7 +110,7 @@ int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 * @param storename
 * @param *itemlist { <nameid>.W, <amount>.W, <price>.L }*
 * @param count Number of item on the itemlist
-* @param at Autotrader info, or NULL if requetsed not from autotrade persistance
+* @param at Autotrader info, or nullptr if requetsed not from autotrade persistance
 * @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction, 5 - Invalid count/result, 6 - Cannot give item, 7 - Will be overweight
 */
 int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, unsigned int count, struct s_autotrader *at ){
@@ -302,7 +302,7 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore )
+	if( ( pl_sd = map_id2sd(account_id) ) == nullptr || !pl_sd->state.buyingstore )
 	{// not online or not buying
 		return;
 	}
@@ -348,7 +348,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore || pl_sd->buyer_id != buyer_id )
+	if( ( pl_sd = map_id2sd(account_id) ) == nullptr || !pl_sd->state.buyingstore || pl_sd->buyer_id != buyer_id )
 	{// not online, not buying or not same store
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
@@ -385,7 +385,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int bu
 		int index = item->index - 2; // TODO: clif::server_index
 
 		// invalid input
-		if( index < 0 || index >= ARRAYLENGTH( sd->inventory.u.items_inventory ) || sd->inventory_data[index] == NULL || sd->inventory.u.items_inventory[index].nameid != item->itemId || sd->inventory.u.items_inventory[index].amount < item->amount ){
+		if( index < 0 || index >= ARRAYLENGTH( sd->inventory.u.items_inventory ) || sd->inventory_data[index] == nullptr || sd->inventory.u.items_inventory[index].nameid != item->itemId || sd->inventory.u.items_inventory[index].amount < item->amount ){
 			clif_buyingstore_trade_failed_seller( sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId );
 			return;
 		}
@@ -597,7 +597,7 @@ bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_sea
 * @param sd Player as autotrader
 */
 void buyingstore_reopen( map_session_data* sd ){
-	struct s_autotrader *at = NULL;
+	struct s_autotrader *at = nullptr;
 	int8 fail = -1;
 
 	nullpo_retv(sd);
@@ -673,25 +673,25 @@ void do_init_buyingstore_autotrade( void ) {
 
 		if( Sql_NumRows(mmysql_handle) > 0 ) {
 			uint16 items = 0;
-			DBIterator *iter = NULL;
-			struct s_autotrader *at = NULL;
+			DBIterator *iter = nullptr;
+			struct s_autotrader *at = nullptr;
 
 			// Init each autotrader data
 			while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
 				size_t len;
 				char* data;
 
-				at = NULL;
+				at = nullptr;
 				CREATE(at, struct s_autotrader, 1);
-				Sql_GetData(mmysql_handle, 0, &data, NULL); at->id = atoi(data);
-				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
-				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
-				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
+				Sql_GetData(mmysql_handle, 0, &data, nullptr); at->id = atoi(data);
+				Sql_GetData(mmysql_handle, 1, &data, nullptr); at->account_id = atoi(data);
+				Sql_GetData(mmysql_handle, 2, &data, nullptr); at->char_id = atoi(data);
+				Sql_GetData(mmysql_handle, 3, &data, nullptr); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
 				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
-				Sql_GetData(mmysql_handle, 5, &data, NULL); at->limit = atoi(data);
-				Sql_GetData(mmysql_handle, 6, &data, NULL); at->dir = atoi(data);
-				Sql_GetData(mmysql_handle, 7, &data, NULL); at->head_dir = atoi(data);
-				Sql_GetData(mmysql_handle, 8, &data, NULL); at->sit = atoi(data);
+				Sql_GetData(mmysql_handle, 5, &data, nullptr); at->limit = atoi(data);
+				Sql_GetData(mmysql_handle, 6, &data, nullptr); at->dir = atoi(data);
+				Sql_GetData(mmysql_handle, 7, &data, nullptr); at->head_dir = atoi(data);
+				Sql_GetData(mmysql_handle, 8, &data, nullptr); at->sit = atoi(data);
 				at->count = 0;
 
 				if (battle_config.feature_autotrade_direction >= 0)
@@ -744,9 +744,9 @@ void do_init_buyingstore_autotrade( void ) {
 				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
 					char *data;
 					CREATE(at->entries[j], struct s_autotrade_entry, 1);
-					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = strtoul(data, nullptr, 10);
-					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
-					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
+					Sql_GetData(mmysql_handle, 0, &data, nullptr); at->entries[j]->item_id = strtoul(data, nullptr, 10);
+					Sql_GetData(mmysql_handle, 1, &data, nullptr); at->entries[j]->amount = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, nullptr); at->entries[j]->price = atoi(data);
 					j++;
 				}
 				items += j;
