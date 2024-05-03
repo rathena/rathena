@@ -1622,7 +1622,7 @@ TIMER_FUNC(map_clearflooritem_timer){
 	if (pet_db_search(fitem->item.nameid, PET_EGG))
 		intif_delete_petdata(MakeDWord(fitem->item.card[1], fitem->item.card[2]));
 
-	clif_clearflooritem(fitem, 0);
+	clif_clearflooritem( *fitem );
 	map_deliddb(&fitem->bl);
 	map_delblock(&fitem->bl);
 	map_freeblock(&fitem->bl);
@@ -1638,7 +1638,7 @@ void map_clearflooritem(struct block_list *bl) {
 	if( fitem->cleartimer != INVALID_TIMER )
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
 
-	clif_clearflooritem(fitem, 0);
+	clif_clearflooritem( *fitem );
 	map_deliddb(&fitem->bl);
 	map_delblock(&fitem->bl);
 	map_freeblock(&fitem->bl);

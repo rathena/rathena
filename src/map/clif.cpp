@@ -934,22 +934,16 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 
 /// Makes an item disappear from the ground.
 /// 00a1 <id>.L (ZC_ITEM_DISAPPEAR)
-void clif_clearflooritem(struct flooritem_data *fitem, int fd)
-{
-	// TODO: Convert fitem to reference
-	if (fitem == nullptr) {
-		return;
-	}
-
+void clif_clearflooritem( flooritem_data& fitem, map_session_data* tsd ){
 	PACKET_ZC_ITEM_DISAPPEAR packet{};
 
 	packet.packetType = HEADER_ZC_ITEM_DISAPPEAR;
-	packet.itemAid = static_cast<uint32>(fitem->bl.id);
+	packet.itemAid = fitem.bl.id;
 
-	if ( !session_isActive( fd ) ){
-		clif_send(&packet, sizeof(PACKET_ZC_ITEM_DISAPPEAR), &fitem->bl, AREA);
+	if( tsd == nullptr ){
+		clif_send(&packet, sizeof(PACKET_ZC_ITEM_DISAPPEAR), &fitem.bl, AREA);
 	} else {
-		socket_send<PACKET_ZC_ITEM_DISAPPEAR>(fd, packet);
+		clif_send(&packet, sizeof(PACKET_ZC_ITEM_DISAPPEAR), &tsd->bl, SELF );
 	}
 }
 
@@ -5731,7 +5725,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 				clif_buyingstore_disappear_entry( *sd, &tsd->bl );
 			break;
 		case BL_ITEM:
-			clif_clearflooritem((struct flooritem_data*)bl,tsd->fd);
+			clif_clearflooritem( *reinterpret_cast<flooritem_data*>( bl ), tsd );
 			break;
 		case BL_SKILL:
 			clif_clearchar_skillunit((struct skill_unit *)bl,tsd->fd);
