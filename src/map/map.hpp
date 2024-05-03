@@ -808,7 +808,8 @@ struct iwall_data {
 	bool shootable;
 };
 
-struct s_map_zone_data {
+class c_map_zone_data {
+public:
 	uint16 id;
 	std::unordered_map<std::string, uint16> disabled_commands;
 	std::unordered_map<uint16, std::pair<uint16, uint16>> disabled_skills;
@@ -846,7 +847,7 @@ struct map_data {
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
 
-	std::shared_ptr<s_map_zone_data> zone;
+	std::shared_ptr<c_map_zone_data> zone;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -881,18 +882,13 @@ private:
 	std::vector<int> flags;
 };
 
-struct s_map_zone {
-	uint16 id;
-	std::unordered_map<std::string, uint16> disabled_commands;
-	std::unordered_map<uint16, std::pair<uint16, uint16>> disabled_skills;
-	std::unordered_map<t_itemid, uint16> disabled_items;
-	std::unordered_map<sc_type, uint16> disabled_statuses;
-	std::unordered_map<int32, uint16> restricted_jobs;
+class c_map_zone : public c_map_zone_data {
+public:
 	std::vector<int16> maps;
 	std::multimap<int16, std::string> mapflags;
 };
 
-class MapZoneDatabase : public TypesafeYamlDatabase<uint16, s_map_zone> {
+class MapZoneDatabase : public TypesafeYamlDatabase<uint16, c_map_zone> {
 public:
 	MapZoneDatabase() : TypesafeYamlDatabase("MAP_ZONES", 1) {
 

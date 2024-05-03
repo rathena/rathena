@@ -218,11 +218,11 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	uint16 zone_id = static_cast<uint16>(zone_id_const);
-	std::shared_ptr<s_map_zone> zone = this->find(zone_id);
+	std::shared_ptr<c_map_zone> zone = this->find(zone_id);
 	bool exists = zone != nullptr;
 
 	if (!exists) {
-		zone = std::make_shared<s_map_zone>();
+		zone = std::make_shared<c_map_zone>();
 		zone->id = zone_id;
 	}
 
@@ -564,7 +564,7 @@ bool MapZoneDatabase::setZone(int16 map_id, e_map_type zone) {
 		return false;
 	}
 
-	mapdata->zone = std::make_shared<s_map_zone_data>();
+	mapdata->zone = std::make_shared<c_map_zone_data>();
 	mapdata->zone->id = zonedata->id;
 	mapdata->zone->disabled_commands = zonedata->disabled_commands;
 	mapdata->zone->disabled_items = zonedata->disabled_items;
@@ -594,7 +594,7 @@ MapZoneDatabase map_zone_db;
  * @param group_lv: Group level
  * @return True when command is disabled or false otherwise
  */
-bool s_map_zone_data::isCommandDisabled(std::string name, uint16 group_lv) {
+bool c_map_zone_data::isCommandDisabled(std::string name, uint16 group_lv) {
 	if (this->disabled_commands.empty())
 		return false;
 
@@ -616,7 +616,7 @@ bool s_map_zone_data::isCommandDisabled(std::string name, uint16 group_lv) {
  * @param group_lv: Group level
  * @return True when skill is disabled or false otherwise
  */
-bool s_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv) {
+bool c_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv) {
 	if (this->disabled_skills.empty())
 		return false;
 
@@ -637,7 +637,7 @@ bool s_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, uint16 group
  * @param group_lv: Group level
  * @return True when item is disabled or false otherwise
  */
-bool s_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
+bool c_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
 	if (this->disabled_items.empty())
 		return false;
 
@@ -659,7 +659,7 @@ bool s_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
  * @param group_lv: Group level
  * @return True when status is disabled or false otherwise
  */
-bool s_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv) {
+bool c_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv) {
 	if (this->disabled_statuses.empty())
 		return false;
 
@@ -680,7 +680,7 @@ bool s_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv)
  * @param group_lv: Group level
  * @return True when job is restricted or false otherwise
  */
-bool s_map_zone_data::isJobRestricted(int32 job_id, uint16 group_lv) {
+bool c_map_zone_data::isJobRestricted(int32 job_id, uint16 group_lv) {
 	if (this->restricted_jobs.empty())
 		return false;
 
