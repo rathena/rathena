@@ -738,20 +738,6 @@ struct PACKET_ZC_COMPASS {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_COMPASS, 0x144)
 
-struct PACKET_ZC_SHOW_IMAGE {
-	int16 packetType;
-	char imageName[16];
-	uint8 type;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_SHOW_IMAGE, 0x145)
-
-struct PACKET_ZC_SHOW_IMAGE2 {
-	int16 packetType;
-	char imageName[64];
-	uint8 type;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_SHOW_IMAGE2, 0x1b3)
-
 struct PACKET_ZC_ITEM_THROW_ACK {
 	int16 packetType;
 	uint16 index;

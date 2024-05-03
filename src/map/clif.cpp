@@ -2739,10 +2739,10 @@ void clif_cutin(map_session_data* sd, const char* image, int type)
 		return;
 	}
 
-	PACKET_ZC_SHOW_IMAGE2 packet{};
+	PACKET_ZC_SHOW_IMAGE packet{};
 
-	packet.packetType = HEADER_ZC_SHOW_IMAGE2;
-	safestrncpy(packet.imageName, image, sizeof(packet.imageName));
+	packet.packetType = HEADER_ZC_SHOW_IMAGE;
+	safestrncpy(packet.image, image, sizeof(packet.image));
 	packet.type = type;
 
 	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
