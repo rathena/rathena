@@ -2,7 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #ifndef MSG_CONF_HPP
-#define	MSG_CONF_HPP
+#define MSG_CONF_HPP
 
 #include <config/core.hpp>
 
@@ -26,16 +26,16 @@ enum lang_types {
 	#define LANG_ENABLE 0x000
 #endif
 
-//read msg in table
-const char* _msg_txt(int msg_number,int size, char ** msg_table);
-//store msg from txtfile into msg_table
-int _msg_config_read(const char* cfgName,int size, char ** msg_table);
-//clear msg_table
-void _do_final_msg(int size, char ** msg_table);
-//Lookups
-int msg_langstr2langtype(char * langtype);
+// read msg in table
+const char* _msg_txt(int msg_number, int size, char** msg_table);
+// store msg from txtfile into msg_table
+int _msg_config_read(const char* cfgName, int size, char** msg_table);
+// clear msg_table
+void _do_final_msg(int size, char** msg_table);
+// Lookups
+int msg_langstr2langtype(char* langtype);
 const char* msg_langtype2langstr(int langtype);
 // Verify that the choosen langtype is enabled.
 int msg_checklangtype(int lang, bool display);
 
-#endif	/* MSG_CONF_HPP */
+#endif /* MSG_CONF_HPP */

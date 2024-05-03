@@ -13,9 +13,9 @@ void grfio_final(void);
 void* grfio_reads(const char* fname, int* size);
 char* grfio_find_file(const char* fname);
 #define grfio_read(fn) grfio_reads(fn, NULL)
-int32 grfio_read_rsw_water_level( const char* fname );
+int32 grfio_read_rsw_water_level(const char* fname);
 
-unsigned long grfio_crc32(const unsigned char *buf, unsigned int len);
+unsigned long grfio_crc32(const unsigned char* buf, unsigned int len);
 int decode_zip(void* dest, unsigned long* destLen, const void* source, unsigned long sourceLen);
 int encode_zip(void* dest, unsigned long* destLen, const void* source, unsigned long sourceLen);
 
