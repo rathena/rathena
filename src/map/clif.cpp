@@ -7449,9 +7449,12 @@ void clif_bank_open( map_session_data& sd ){
 
 /*
  * Request to Open the banking system
- * 09B6 <aid>L ??? (dunno just wild guess checkme)
+ * 09B6 <aid>L (CZ_REQ_OPEN_BANKING)
  */
 void clif_parse_BankOpen(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
+	PACKET_CZ_REQ_OPEN_BANKING* p = (PACKET_CZ_REQ_OPEN_BANKING*)RFIFOP( fd, 0 );
+
 	//TODO check if preventing trade or stuff like that
 	//also mark something in case char ain't available for saving, should we check now ?
 	nullpo_retv(sd);
@@ -7464,9 +7467,7 @@ void clif_parse_BankOpen(int fd, map_session_data* sd) {
 		return;
 	}
 	else {
-		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
-		if(sd->status.account_id == aid){
+		if(sd->status.account_id == p->AID){
 			sd->state.banking = 1;
 			//request save ?
 			//chrif_bankdata_request(sd->status.account_id, sd->status.char_id);
@@ -7474,6 +7475,7 @@ void clif_parse_BankOpen(int fd, map_session_data* sd) {
 			clif_bank_open( *sd );
 		}
 	}
+#endif
 }
 
 // 09B9 <unknow data> (ZC_ACK_CLOSE_BANKING)
@@ -7490,21 +7492,22 @@ void clif_bank_close( map_session_data& sd ){
 
 /*
  * Request to close the banking system
- * 09B8 <aid>L ??? (dunno just wild guess checkme)
+ * 09B8 <aid>L (CZ_REQ_CLOSE_BANKING)
  */
 void clif_parse_BankClose(int fd, map_session_data* sd) {
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
+#if PACKETVER >= 20130717
+	PACKET_CZ_REQ_CLOSE_BANKING* p = (PACKET_CZ_REQ_CLOSE_BANKING*)RFIFOP( fd, 0 );
 
 	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
 		//still allow to go trough to not stuck player if we have disable it while they was in
 	}
-	if(sd->status.account_id == aid){
+	if(sd->status.account_id == p->AID){
 		sd->state.banking = 0;
 		clif_bank_close( *sd );
 	}
+#endif
 }
 
 /*
@@ -7525,9 +7528,12 @@ void clif_Bank_Check( map_session_data& sd ){
 
 /*
  * Requesting the data in bank
- * 09AB <aid>L (PACKET_CZ_REQ_BANKING_CHECK)
+ * 09AB <aid>L (CZ_REQ_BANKING_CHECK)
  */
 void clif_parse_BankCheck(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
+	PACKET_CZ_REQ_BANKING_CHECK* p = (PACKET_CZ_REQ_BANKING_CHECK*)RFIFOP( fd, 0 );
+
 	nullpo_retv(sd);
 
 	if( !battle_config.feature_banking ) {
@@ -7539,16 +7545,15 @@ void clif_parse_BankCheck(int fd, map_session_data* sd) {
 		return;
 	}
 	else {
-		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
-		if(sd->status.account_id == aid) //since we have it let check it for extra security
+		if(sd->status.account_id == p->AID) //since we have it let check it for extra security
 			clif_Bank_Check( *sd );
 	}
+#endif
 }
 
 /*
  * Acknowledge of deposit some money in bank
-  09A8 <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_DEPOSIT)
+  09A8 <Reason>W <Money>Q <balance>L (ZC_ACK_BANKING_DEPOSIT)
  */
 void clif_bank_deposit( map_session_data& sd, enum e_BANKING_DEPOSIT_ACK reason ){
 #if PACKETVER >= 20130717
@@ -7566,9 +7571,12 @@ void clif_bank_deposit( map_session_data& sd, enum e_BANKING_DEPOSIT_ACK reason 
 /*
  * Request saving some money in bank
  * @author : original [Yommy/Hercules]
- * 09A7 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_DEPOSIT)
+ * 09A7 <AID>L <Money>L (CZ_REQ_BANKING_DEPOSIT)
  */
 void clif_parse_BankDeposit(int fd, map_session_data* sd) {
+#if PACKETVER >= 20130717
+	PACKET_CZ_REQ_BANKING_DEPOSIT* p = (PACKET_CZ_REQ_BANKING_DEPOSIT*)RFIFOP( fd, 0 );
+
 	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
@@ -7579,20 +7587,17 @@ void clif_parse_BankDeposit(int fd, map_session_data* sd) {
 		return;
 	}
 	else {
-		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
-		int money = RFIFOL(fd,info->pos[1]);
-
-		if(sd->status.account_id == aid){
-			enum e_BANKING_DEPOSIT_ACK reason = pc_bank_deposit(sd,max(0,money));
+		if(sd->status.account_id == p->AID){
+			enum e_BANKING_DEPOSIT_ACK reason = pc_bank_deposit(sd,max(0,p->zeny));
 			clif_bank_deposit( *sd, reason );
 		}
 	}
+#endif
 }
 
 /*
  * Acknowledge of withdrawing some money from bank
-  09AA <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_WITHDRAW)
+ * 09AA <Reason>W <Money>Q <balance>L (ZC_ACK_BANKING_WITHDRAW)
  */
 void clif_bank_withdraw( map_session_data& sd, enum e_BANKING_WITHDRAW_ACK reason ){
 #if PACKETVER >= 20130717
@@ -7609,10 +7614,13 @@ void clif_bank_withdraw( map_session_data& sd, enum e_BANKING_WITHDRAW_ACK reaso
 
 /*
  * Request Withdrawing some money from bank
- * 09A9 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_WITHDRAW)
+ * 09A9 <AID>L <Money>L (CZ_REQ_BANKING_WITHDRAW)
  */
 void clif_parse_BankWithdraw(int fd, map_session_data* sd) {
-        nullpo_retv(sd);
+#if PACKETVER >= 20130717
+	PACKET_CZ_REQ_BANKING_WITHDRAW* p = (PACKET_CZ_REQ_BANKING_WITHDRAW*)RFIFOP( fd, 0 );
+
+	nullpo_retv(sd);
 	if( !battle_config.feature_banking ) {
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1496),false,SELF); //Banking is disabled
 		return;
@@ -7622,14 +7630,12 @@ void clif_parse_BankWithdraw(int fd, map_session_data* sd) {
 		return;
 	}
 	else {
-		struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-		int aid = RFIFOL(fd,info->pos[0]); //unused should we check vs fd ?
-		int money = RFIFOL(fd,info->pos[1]);
-		if(sd->status.account_id == aid){
-			enum e_BANKING_WITHDRAW_ACK reason = pc_bank_withdraw(sd,max(0,money));
+		if(sd->status.account_id == p->AID){
+			enum e_BANKING_WITHDRAW_ACK reason = pc_bank_withdraw(sd,max(0,p->zeny));
 			clif_bank_withdraw( *sd, reason );
 		}
 	}
+#endif
 }
 
 /// Deletes an item from character's cart (ZC_DELETE_ITEM_FROM_CART).
@@ -11497,7 +11503,6 @@ void clif_disconnect_ack(map_session_data* sd, short result)
 void clif_parse_QuitGame(int fd, map_session_data *sd)
 {
 	/*	Rovert's prevent logout option fixed [Valaris]	*/
-	//int type = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 	if( !sd->sc.getSCE(SC_CLOAKING) && !sd->sc.getSCE(SC_HIDING) && !sd->sc.getSCE(SC_CHASEWALK) && !sd->sc.getSCE(SC_CLOAKINGEXCEED) && !sd->sc.getSCE(SC_SUHIDE) && !sd->sc.getSCE(SC_NEWMOON) &&
 		(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 	{
