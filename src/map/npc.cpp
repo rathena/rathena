@@ -1026,7 +1026,7 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 			clif_changeoption_target(&nd.bl, &sd->bl);
 		else {
 			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
-				clif_clearunit_single(nd.bl.id, CLR_OUTSIGHT, sd->fd);
+				clif_clearunit_single( nd.bl.id, CLR_OUTSIGHT, *sd );
 			else
 				clif_spawn(&nd.bl);
 		}
@@ -1146,7 +1146,7 @@ int npc_event_dequeue(map_session_data* sd,bool free_script_stack)
 	if(sd->npc_id)
 	{	//Current script is aborted.
 		if(sd->state.using_fake_npc){
-			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 			sd->state.using_fake_npc = 0;
 		}
 		if (free_script_stack&&sd->st) {

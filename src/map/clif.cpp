@@ -956,15 +956,14 @@ void clif_clearflooritem( flooritem_data& fitem, map_session_data* tsd ){
 ///     2 = logged out
 ///     3 = teleport
 ///     4 = trickdead
-void clif_clearunit_single(int id, clr_type type, int fd)
-{
+void clif_clearunit_single( uint32 GID, clr_type type, map_session_data& tsd ){
 	PACKET_ZC_NOTIFY_VANISH packet{};
 
 	packet.packetType = HEADER_ZC_NOTIFY_VANISH;
-	packet.gid = static_cast<uint32>(id);
-	packet.type = static_cast<uint8>(type);
+	packet.gid = GID;
+	packet.type = static_cast<decltype(packet.type)>(type);
 
-	socket_send<PACKET_ZC_NOTIFY_VANISH>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &tsd.bl, SELF );
 }
 
 /// Makes a unit (char, npc, mob, homun) disappear to all clients in area (ZC_NOTIFY_VANISH).
@@ -5712,7 +5711,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		switch(bl->type){
 		case BL_PC:
 			if(sd->vd.class_ != JT_INVISIBLE)
-				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
+				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
 			if(sd->chatID){
 				struct chat_data *cd;
 				cd=(struct chat_data*)map_id2bl(sd->chatID);
@@ -5732,11 +5731,11 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			break;
 		case BL_NPC:
 			if(!(((TBL_NPC*)bl)->is_invisible))
-				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
+				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
 			break;
 		default:
 			if((vd=status_get_viewdata(bl)) && vd->class_ != JT_INVISIBLE)
-				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
+				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
 			break;
 		}
 	}
@@ -5746,7 +5745,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
 		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
 			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->is_invisible)))
-			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
+			clif_clearunit_single( tbl->id, CLR_OUTSIGHT, *sd );
 	}
 	return 0;
 }
@@ -10077,7 +10076,7 @@ void clif_refresh(map_session_data *sd)
 	if( pc_issit(sd) )
 		clif_sitting(&sd->bl); // FIXME: just send to self, not area
 	if( pc_isdead(sd) ) // When you refresh, resend the death packet.
-		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
+		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
 		clif_changed_dir(&sd->bl, SELF);
 	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);

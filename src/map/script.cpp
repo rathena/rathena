@@ -3674,7 +3674,7 @@ void script_free_state(struct script_state* st)
 
 		if (sd && sd->st == st) { // Current script is aborted.
 			if(sd->state.using_fake_npc) {
-				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+				clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 				sd->state.using_fake_npc = 0;
 			}
 			sd->st = NULL;
@@ -4306,7 +4306,7 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 
 	if(st->rid && (sd = map_id2sd(st->rid))!=NULL) {
 		if( sd->state.using_fake_npc ){
-			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, sd->fd );
+			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 			sd->state.using_fake_npc = 0;
 		}
 
@@ -4511,7 +4511,7 @@ void run_script_main(struct script_state *st)
 		if ((sd = map_id2sd(st->rid))!=NULL)
 		{	//Restore previous stack and save char.
 			if(sd->state.using_fake_npc){
-				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+				clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 				sd->state.using_fake_npc = 0;
 			}
 			//Restore previous script if any.
