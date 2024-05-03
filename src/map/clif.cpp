@@ -3590,7 +3590,7 @@ static void clif_longlongpar_change(map_session_data *sd, uint16 varId, int64 am
 static void clif_couplestatus(map_session_data *sd, uint32 status_type, int32 defaultStatus, int32 plusStatus) {
 	PACKET_ZC_COUPLESTATUS packet{};
 
-	packet.packetType = HEADER_ZC_COUPLESTATUS;
+	packet.PacketType = HEADER_ZC_COUPLESTATUS;
 	packet.statusType = status_type;
 	packet.defaultStatus = defaultStatus;
 	packet.plusStatus = plusStatus;

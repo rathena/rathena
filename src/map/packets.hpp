@@ -554,14 +554,6 @@ struct PACKET_ZC_SPIRITS_ATTRIBUTE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SPIRITS_ATTRIBUTE, 0x8cf)
 
-struct PACKET_ZC_COUPLESTATUS {
-	int16 packetType;
-	uint32 statusType;
-	int32 defaultStatus;
-	int32 plusStatus;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_COUPLESTATUS, 0x141)
-
 struct PACKET_ZC_CHANGESTATE_MER {
 	int16 packetType;
 	uint8 type;
