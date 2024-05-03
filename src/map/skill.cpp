@@ -5321,7 +5321,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case SHC_SHADOW_STAB:
 		if (sc && sc->getSCE(SC_CLOAKINGEXCEED))
-			flag |= 2;
+			flag |= SKILL_ALTDMG_FLAG;
 
 		status_change_end(src, SC_CLOAKING);
 		status_change_end(src, SC_CLOAKINGEXCEED);
