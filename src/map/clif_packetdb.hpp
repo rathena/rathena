@@ -2413,7 +2413,7 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	parseable_packet( HEADER_CZ_UNCONFIRMED_TSTATUS_UP, sizeof( PACKET_CZ_UNCONFIRMED_TSTATUS_UP ), clif_parse_traitstatus_up, 0 );
+	parseable_packet( HEADER_CZ_ADVANCED_STATUS_CHANGE, sizeof( PACKET_CZ_ADVANCED_STATUS_CHANGE ), clif_parse_traitstatus_up, 0 );
 	parseable_packet( HEADER_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT, sizeof( struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT ), clif_parse_enchantgrade_add, 0 );
 	parseable_packet( HEADER_CZ_GRADE_ENCHANT_REQUEST, sizeof( struct PACKET_CZ_GRADE_ENCHANT_REQUEST ), clif_parse_enchantgrade_start, 0 );
 	parseable_packet( HEADER_CZ_GRADE_ENCHANT_CLOSE_UI, sizeof( struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI ), clif_parse_enchantgrade_close, 0 );
