@@ -8498,7 +8498,7 @@ void clif_autospell( map_session_data& sd, uint16 skill_lv ){
 		uint16 required_autospell_skill_lv;
 	};
 
-#ifndef RENEWAL
+#ifdef RENEWAL
 	 const std::vector<s_autospell_requirement> autospell_skills = {
 		{ MG_FIREBOLT, 0 },
 		{ MG_COLDBOLT, 0 },
