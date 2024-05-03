@@ -1905,7 +1905,7 @@ void clif_homskillinfoblock(map_session_data *sd)
 	int fd = sd->fd;
 	int i, len=4;
 
-	nullpo_ret(sd);
+	nullpo_retv(sd);
 
 	hd = sd->hd;
 	if ( !hd )
