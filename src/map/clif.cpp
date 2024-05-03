@@ -16709,7 +16709,7 @@ void clif_parse_Mail_delete(int fd, map_session_data *sd){
 /// 0273 <mail id>.L <receive name>.24B
 void clif_parse_Mail_return(int fd, map_session_data *sd){
 #if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
-	struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN* p = (struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_RODEX_RETURN* p = (struct PACKET_CZ_RODEX_RETURN*)RFIFOP( fd, 0 );
 
 	//ShowDump( p, sizeof( p ) );
 
