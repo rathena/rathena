@@ -1218,7 +1218,7 @@ bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype 
 	if (item->equip > 0 || item->amount < 0)
 		return false;
 
-	if (battle_config.hide_fav_sell && item->favorite)
+	if (battle_config.hide_fav_sell && item->favorite != 0)
 		return false; //Cannot sell favs (optional config)
 
 	if (!battle_config.rental_transaction && item->expire_time)
@@ -5945,7 +5945,7 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int amou
 		// clear equip and favorite fields first, just in case
 		if( item->equip )
 			sd->inventory.u.items_inventory[i].equip = 0;
-		if( item->favorite )
+		if( item->favorite != 0 )
 			sd->inventory.u.items_inventory[i].favorite = 0;
 		if( item->equipSwitch )
 			sd->inventory.u.items_inventory[i].equipSwitch = 0;
@@ -14546,7 +14546,7 @@ TIMER_FUNC(pc_autotrade_timer){
 	sd->autotrade_tid = INVALID_TIMER;
 
 	if (sd->state.autotrade&2)
-		vending_reopen(sd);
+		vending_reopen(*sd);
 	if (sd->state.autotrade&4)
 		buyingstore_reopen(sd);
 

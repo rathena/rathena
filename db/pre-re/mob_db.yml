@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2021 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -137,6 +137,7 @@ Body:
     Attack: 7
     Attack2: 10
     MagicDefense: 5
+    Int: 0
     Dex: 6
     Luk: 30
     AttackRange: 1
@@ -248,6 +249,7 @@ Body:
     Vit: 8
     Int: 5
     Dex: 28
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -303,6 +305,7 @@ Body:
     Attack2: 11
     Agi: 2
     Vit: 4
+    Int: 0
     Dex: 7
     Luk: 5
     AttackRange: 1
@@ -347,6 +350,7 @@ Body:
     Attack: 1
     Attack2: 2
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -389,6 +393,7 @@ Body:
     Attack2: 14
     Agi: 13
     Vit: 5
+    Int: 0
     Dex: 13
     Luk: 10
     AttackRange: 1
@@ -656,7 +661,9 @@ Body:
     MagicDefense: 10
     Agi: 8
     Vit: 7
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -879,6 +886,7 @@ Body:
     MagicDefense: 25
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 4
@@ -1371,6 +1379,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 19
     Luk: 15
     AttackRange: 1
@@ -1415,6 +1424,7 @@ Body:
     MagicDefense: 5
     Agi: 19
     Vit: 38
+    Int: 0
     Dex: 38
     Luk: 20
     AttackRange: 1
@@ -1598,6 +1608,7 @@ Body:
     MagicDefense: 20
     Agi: 20
     Vit: 29
+    Int: 0
     Dex: 45
     Luk: 20
     AttackRange: 1
@@ -1803,7 +1814,9 @@ Body:
     Defense: 40
     Agi: 15
     Vit: 25
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -1849,6 +1862,7 @@ Body:
     Str: 28
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -2112,6 +2126,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -2153,6 +2168,7 @@ Body:
     Defense: 20
     Agi: 6
     Vit: 4
+    Int: 0
     Dex: 14
     Luk: 20
     SkillRange: 10
@@ -2284,7 +2300,9 @@ Body:
     Defense: 5
     Agi: 6
     Vit: 6
+    Int: 0
     Dex: 11
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -2426,6 +2444,7 @@ Body:
     Vit: 16
     Int: 5
     Dex: 36
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -2891,6 +2910,7 @@ Body:
     MagicDefense: 15
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 26
     Luk: 5
     AttackRange: 1
@@ -3071,6 +3091,7 @@ Body:
     MagicDefense: 40
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 40
     Luk: 2
     AttackRange: 7
@@ -3300,6 +3321,7 @@ Body:
     Str: 18
     Agi: 20
     Vit: 15
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 1
@@ -3340,6 +3362,7 @@ Body:
     Defense: 35
     Agi: 12
     Vit: 8
+    Int: 0
     Dex: 32
     Luk: 5
     AttackRange: 1
@@ -3403,7 +3426,9 @@ Body:
     MagicDefense: 10
     Agi: 5
     Vit: 10
+    Int: 0
     Dex: 12
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -3443,7 +3468,9 @@ Body:
     Attack2: 101
     Agi: 19
     Vit: 25
+    Int: 0
     Dex: 24
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -3483,6 +3510,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3526,6 +3559,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3569,6 +3608,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3612,6 +3657,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3655,6 +3706,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3698,6 +3755,11 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 90
     AttackRange: 1
     SkillRange: 7
@@ -3742,6 +3804,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3785,6 +3853,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -4038,6 +4112,7 @@ Body:
     MagicDefense: 10
     Agi: 2
     Vit: 2
+    Int: 0
     Dex: 17
     Luk: 60
     AttackRange: 1
@@ -4176,6 +4251,7 @@ Body:
     MagicDefense: 40
     Agi: 36
     Vit: 6
+    Int: 0
     Dex: 11
     Luk: 80
     AttackRange: 1
@@ -4360,6 +4436,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -4999,7 +5076,9 @@ Body:
     Attack2: 84
     Agi: 36
     Vit: 24
+    Int: 0
     Dex: 78
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -5097,6 +5176,7 @@ Body:
     Attack2: 13
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 12
     Luk: 15
     AttackRange: 1
@@ -5141,6 +5221,7 @@ Body:
     MagicDefense: 10
     Agi: 53
     Vit: 17
+    Int: 0
     Dex: 38
     Luk: 5
     AttackRange: 1
@@ -5244,7 +5325,9 @@ Body:
     MagicDefense: 25
     Agi: 36
     Vit: 24
+    Int: 0
     Dex: 32
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -5851,7 +5934,9 @@ Body:
     MagicDefense: 50
     Agi: 34
     Vit: 10
+    Int: 0
     Dex: 50
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -6268,6 +6353,7 @@ Body:
     MagicDefense: 30
     Agi: 26
     Vit: 26
+    Int: 0
     Dex: 39
     Luk: 5
     AttackRange: 1
@@ -6406,6 +6492,7 @@ Body:
     MagicDefense: 5
     Agi: 21
     Vit: 21
+    Int: 0
     Dex: 36
     Luk: 10
     AttackRange: 1
@@ -6448,6 +6535,7 @@ Body:
     MagicDefense: 40
     Agi: 28
     Vit: 28
+    Int: 0
     Dex: 33
     Luk: 50
     AttackRange: 1
@@ -6880,6 +6968,7 @@ Body:
     MagicDefense: 40
     Agi: 38
     Vit: 18
+    Int: 0
     Dex: 53
     Luk: 10
     AttackRange: 1
@@ -6925,6 +7014,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 18
+    Int: 0
     Dex: 30
     Luk: 15
     AttackRange: 1
@@ -6970,6 +7060,7 @@ Body:
     MagicDefense: 10
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 24
     Luk: 5
     AttackRange: 1
@@ -7201,6 +7292,7 @@ Body:
     MagicDefense: 15
     Agi: 26
     Vit: 26
+    Int: 0
     Dex: 88
     Luk: 75
     AttackRange: 1
@@ -7347,7 +7439,9 @@ Body:
     MagicDefense: 5
     Agi: 10
     Vit: 10
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -8065,6 +8159,7 @@ Body:
     MagicDefense: 15
     Agi: 77
     Vit: 15
+    Int: 0
     Dex: 76
     Luk: 10
     AttackRange: 1
@@ -8109,6 +8204,7 @@ Body:
     Vit: 23
     Int: 5
     Dex: 42
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -8151,7 +8247,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -8261,6 +8359,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -8379,7 +8483,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -8410,7 +8516,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -8446,6 +8554,8 @@ Body:
     JobExp: 1
     Attack: 1
     Attack2: 2
+    Int: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 1
     ChaseRange: 12
@@ -8855,6 +8965,7 @@ Body:
     Str: 55
     Agi: 20
     Vit: 36
+    Int: 0
     Dex: 76
     Luk: 25
     AttackRange: 1
@@ -8900,6 +9011,7 @@ Body:
     MagicDefense: 20
     Agi: 24
     Vit: 39
+    Int: 0
     Dex: 72
     Luk: 25
     AttackRange: 1
@@ -10277,6 +10389,7 @@ Body:
     Attack2: 11
     Agi: 2
     Vit: 4
+    Int: 0
     Dex: 7
     Luk: 5
     AttackRange: 1
@@ -10322,6 +10435,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -10409,6 +10523,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -10539,6 +10654,7 @@ Body:
     Vit: 48
     Int: 20
     Dex: 34
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -10580,6 +10696,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -10759,6 +10876,7 @@ Body:
     Attack2: 12
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 10
     Luk: 30
     AttackRange: 1
@@ -10801,6 +10919,7 @@ Body:
     Defense: 20
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 11
     Luk: 20
     AttackRange: 1
@@ -11553,6 +11672,7 @@ Body:
     Str: 84
     Agi: 42
     Vit: 39
+    Int: 0
     Dex: 71
     Luk: 35
     AttackRange: 1
@@ -11970,6 +12090,7 @@ Body:
     MagicDefense: 10
     Agi: 19
     Vit: 15
+    Int: 0
     Dex: 34
     Luk: 5
     AttackRange: 1
@@ -14661,7 +14782,12 @@ Body:
     AegisName: TREASURE_BOX1
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14691,7 +14817,12 @@ Body:
     AegisName: TREASURE_BOX2
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14721,7 +14852,12 @@ Body:
     AegisName: TREASURE_BOX3
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14751,7 +14887,12 @@ Body:
     AegisName: TREASURE_BOX4
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14781,7 +14922,12 @@ Body:
     AegisName: TREASURE_BOX5
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14811,7 +14957,12 @@ Body:
     AegisName: TREASURE_BOX6
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14841,7 +14992,12 @@ Body:
     AegisName: TREASURE_BOX7
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14871,7 +15027,12 @@ Body:
     AegisName: TREASURE_BOX8
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14901,7 +15062,12 @@ Body:
     AegisName: TREASURE_BOX9
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14931,7 +15097,12 @@ Body:
     AegisName: TREASURE_BOX10
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14961,7 +15132,12 @@ Body:
     AegisName: TREASURE_BOX11
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14991,7 +15167,12 @@ Body:
     AegisName: TREASURE_BOX12
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15021,7 +15202,12 @@ Body:
     AegisName: TREASURE_BOX13
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15051,7 +15237,12 @@ Body:
     AegisName: TREASURE_BOX14
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15081,7 +15272,12 @@ Body:
     AegisName: TREASURE_BOX15
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15111,7 +15307,12 @@ Body:
     AegisName: TREASURE_BOX16
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15141,7 +15342,12 @@ Body:
     AegisName: TREASURE_BOX17
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15171,7 +15377,12 @@ Body:
     AegisName: TREASURE_BOX18
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15201,7 +15412,12 @@ Body:
     AegisName: TREASURE_BOX19
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15231,7 +15447,12 @@ Body:
     AegisName: TREASURE_BOX20
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15261,7 +15482,12 @@ Body:
     AegisName: TREASURE_BOX21
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15291,7 +15517,12 @@ Body:
     AegisName: TREASURE_BOX22
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15321,7 +15552,12 @@ Body:
     AegisName: TREASURE_BOX23
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15351,7 +15587,12 @@ Body:
     AegisName: TREASURE_BOX24
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15381,7 +15622,12 @@ Body:
     AegisName: TREASURE_BOX25
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15411,7 +15657,12 @@ Body:
     AegisName: TREASURE_BOX26
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15441,7 +15692,12 @@ Body:
     AegisName: TREASURE_BOX27
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15471,7 +15727,12 @@ Body:
     AegisName: TREASURE_BOX28
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15501,7 +15762,12 @@ Body:
     AegisName: TREASURE_BOX29
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15531,7 +15797,12 @@ Body:
     AegisName: TREASURE_BOX30
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15561,7 +15832,12 @@ Body:
     AegisName: TREASURE_BOX31
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15591,7 +15867,12 @@ Body:
     AegisName: TREASURE_BOX32
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15621,7 +15902,12 @@ Body:
     AegisName: TREASURE_BOX33
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15651,7 +15937,12 @@ Body:
     AegisName: TREASURE_BOX34
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15681,7 +15972,12 @@ Body:
     AegisName: TREASURE_BOX35
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15711,7 +16007,12 @@ Body:
     AegisName: TREASURE_BOX36
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15741,7 +16042,12 @@ Body:
     AegisName: TREASURE_BOX37
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15771,7 +16077,12 @@ Body:
     AegisName: TREASURE_BOX38
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15801,7 +16112,12 @@ Body:
     AegisName: TREASURE_BOX39
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15831,7 +16147,12 @@ Body:
     AegisName: TREASURE_BOX40
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -17156,6 +17477,7 @@ Body:
     Str: 28
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -17180,7 +17502,9 @@ Body:
     MagicDefense: 10
     Agi: 8
     Vit: 7
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -18195,6 +18519,7 @@ Body:
     Vit: 8
     Int: 5
     Dex: 28
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -18300,6 +18625,7 @@ Body:
     MagicDefense: 20
     Agi: 20
     Vit: 29
+    Int: 0
     Dex: 33
     Luk: 20
     AttackRange: 1
@@ -18428,7 +18754,9 @@ Body:
     Attack2: 101
     Agi: 19
     Vit: 25
+    Int: 0
     Dex: 24
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -18585,7 +18913,9 @@ Body:
     Attack2: 84
     Agi: 36
     Vit: 24
+    Int: 0
     Dex: 78
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -18895,6 +19225,7 @@ Body:
     Str: 84
     Agi: 42
     Vit: 39
+    Int: 0
     Dex: 71
     Luk: 35
     AttackRange: 1
@@ -19327,6 +19658,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 18
+    Int: 0
     Dex: 30
     Luk: 15
     AttackRange: 1
@@ -19352,6 +19684,7 @@ Body:
     MagicDefense: 10
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 24
     Luk: 5
     AttackRange: 1
@@ -19533,6 +19866,7 @@ Body:
     Vit: 23
     Int: 5
     Dex: 42
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -19767,6 +20101,7 @@ Body:
     Str: 55
     Agi: 20
     Vit: 36
+    Int: 0
     Dex: 76
     Luk: 25
     AttackRange: 1
@@ -19792,6 +20127,7 @@ Body:
     MagicDefense: 20
     Agi: 24
     Vit: 39
+    Int: 0
     Dex: 72
     Luk: 25
     AttackRange: 1
@@ -20225,7 +20561,9 @@ Body:
     MagicDefense: 12
     Agi: 34
     Vit: 10
+    Int: 0
     Dex: 40
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -20569,6 +20907,7 @@ Body:
     Attack2: 656
     Defense: 28
     MagicDefense: 31
+    Str: 0
     Agi: 42
     Vit: 42
     Int: 27
@@ -20615,6 +20954,7 @@ Body:
     Attack2: 1065
     Defense: 47
     MagicDefense: 38
+    Str: 0
     Agi: 30
     Vit: 5
     Int: 45
@@ -20657,6 +20997,7 @@ Body:
     Attack2: 2317
     Defense: 39
     MagicDefense: 44
+    Str: 0
     Agi: 66
     Vit: 54
     Int: 74
@@ -20704,6 +21045,7 @@ Body:
     Attack2: 546
     Defense: 18
     MagicDefense: 29
+    Str: 0
     Agi: 72
     Vit: 45
     Int: 35
@@ -20752,6 +21094,7 @@ Body:
     Attack2: 1081
     Defense: 37
     MagicDefense: 41
+    Str: 0
     Agi: 30
     Vit: 90
     Int: 15
@@ -20798,6 +21141,7 @@ Body:
     Attack2: 469
     Defense: 12
     MagicDefense: 12
+    Str: 0
     Agi: 61
     Vit: 24
     Int: 19
@@ -20840,6 +21184,7 @@ Body:
     Attack2: 451
     Defense: 14
     MagicDefense: 10
+    Str: 0
     Agi: 59
     Vit: 21
     Int: 18
@@ -20885,6 +21230,7 @@ Body:
     Attack2: 498
     Defense: 16
     MagicDefense: 51
+    Str: 0
     Agi: 28
     Vit: 26
     Int: 47
@@ -20934,6 +21280,7 @@ Body:
     Attack2: 2576
     Defense: 26
     MagicDefense: 52
+    Str: 0
     Vit: 90
     Int: 124
     Dex: 74
@@ -21344,6 +21691,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 19
     Luk: 15
     AttackRange: 1
@@ -21884,7 +22232,9 @@ Body:
     Defense: 40
     Agi: 15
     Vit: 25
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -22226,6 +22576,7 @@ Body:
     MagicDefense: 40
     Agi: 38
     Vit: 18
+    Int: 0
     Dex: 53
     Luk: 10
     AttackRange: 1
@@ -22737,6 +23088,7 @@ Body:
     Attack2: 13
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 12
     Luk: 15
     AttackRange: 1
@@ -22892,7 +23244,9 @@ Body:
     MagicDefense: 50
     Agi: 34
     Vit: 10
+    Int: 0
     Dex: 50
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -22915,6 +23269,7 @@ Body:
     MagicDefense: 40
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 40
     Luk: 2
     AttackRange: 7
@@ -23328,6 +23683,7 @@ Body:
     MagicDefense: 25
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 4
@@ -23620,7 +23976,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -23865,6 +24223,7 @@ Body:
     Vit: 16
     Int: 5
     Dex: 36
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -24180,6 +24539,7 @@ Body:
     Attack2: 486
     Defense: 22
     MagicDefense: 26
+    Str: 0
     Agi: 15
     Vit: 5
     Int: 5
@@ -24322,6 +24682,7 @@ Body:
     Attack: 82
     Attack2: 247
     MagicDefense: 8
+    Str: 0
     Agi: 31
     Vit: 21
     Int: 50
@@ -24584,6 +24945,7 @@ Body:
     Attack: 164
     Attack2: 494
     MagicDefense: 8
+    Str: 0
     Agi: 31
     Vit: 21
     Int: 50
@@ -26709,6 +27071,7 @@ Body:
     Attack2: 3000
     Defense: 54
     MagicDefense: 25
+    Str: 0
     Vit: 90
     Int: 24
     Dex: 144
@@ -28894,6 +29257,7 @@ Body:
     Attack: 7
     Attack2: 10
     MagicDefense: 5
+    Int: 0
     Dex: 6
     Luk: 30
     AttackRange: 1
@@ -29074,7 +29438,12 @@ Body:
     AegisName: G_TREASURE_BOX
     Name: Treasure Chest
     Level: 98
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -29674,6 +30043,11 @@ Body:
     Attack2: 200
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 100
     AttackRange: 1
     SkillRange: 7
@@ -31338,6 +31712,12 @@ Body:
     Hp: 1000
     Defense: 127
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -31537,7 +31917,12 @@ Body:
     AegisName: TREASURE_BOX_
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -32442,6 +32827,7 @@ Body:
     MagicDefense: 40
     Agi: 38
     Vit: 18
+    Int: 0
     Dex: 53
     Luk: 10
     AttackRange: 1
@@ -32499,6 +32885,7 @@ Body:
     MagicDefense: 99
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 19
     Luk: 15
     AttackRange: 1
@@ -33015,6 +33402,7 @@ Body:
     Attack2: 700
     Defense: 100
     MagicDefense: 99
+    Str: 0
     Int: 50
     Dex: 120
     AttackRange: 1
@@ -33202,7 +33590,12 @@ Body:
     AegisName: G_TREASURE_BOX_
     Name: Treasure Box
     Level: 98
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -33509,7 +33902,9 @@ Body:
     Attack2: 101
     Agi: 19
     Vit: 25
+    Int: 0
     Dex: 24
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -33553,6 +33948,7 @@ Body:
     MagicDefense: 30
     Agi: 26
     Vit: 26
+    Int: 0
     Dex: 39
     Luk: 5
     AttackRange: 1
@@ -33644,7 +34040,9 @@ Body:
     MagicDefense: 5
     Agi: 10
     Vit: 10
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -33687,6 +34085,7 @@ Body:
     MagicDefense: 25
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 4
@@ -34452,6 +34851,11 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 90
     AttackRange: 1
     SkillRange: 7
@@ -34493,6 +34897,7 @@ Body:
     MagicDefense: 40
     Agi: 36
     Vit: 6
+    Int: 0
     Dex: 11
     Luk: 80
     AttackRange: 1
@@ -34969,6 +35374,7 @@ Body:
     Attack2: 2317
     Defense: 39
     MagicDefense: 44
+    Str: 0
     Agi: 66
     Vit: 54
     Int: 74
@@ -35246,7 +35652,12 @@ Body:
     Level: 99
     Hp: 49
     Defense: 100
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Holy
@@ -35261,7 +35672,12 @@ Body:
     Level: 99
     Hp: 49
     Defense: 100
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Holy
@@ -35283,6 +35699,7 @@ Body:
     MagicDefense: 99
     Agi: 28
     Vit: 28
+    Int: 0
     Dex: 33
     Luk: 50
     AttackRange: 1
@@ -35983,7 +36400,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -36306,7 +36725,12 @@ Body:
     AegisName: TREASURE_BOX41
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36336,7 +36760,12 @@ Body:
     AegisName: TREASURE_BOX42
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36366,7 +36795,12 @@ Body:
     AegisName: TREASURE_BOX43
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36396,7 +36830,12 @@ Body:
     AegisName: TREASURE_BOX44
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36426,7 +36865,12 @@ Body:
     AegisName: TREASURE_BOX45
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36456,7 +36900,12 @@ Body:
     AegisName: TREASURE_BOX46
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36486,7 +36935,12 @@ Body:
     AegisName: TREASURE_BOX47
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36516,7 +36970,12 @@ Body:
     AegisName: TREASURE_BOX48
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36546,7 +37005,12 @@ Body:
     AegisName: TREASURE_BOX49
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36829,7 +37293,12 @@ Body:
     AegisName: TREASURE_BOX_I
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -37127,6 +37596,7 @@ Body:
     Attack: 100
     Attack2: 145
     MagicDefense: 15
+    Str: 0
     Agi: 85
     Vit: 15
     Int: 35
@@ -37154,6 +37624,7 @@ Body:
     Attack2: 250
     Defense: 30
     MagicDefense: 20
+    Str: 0
     Agi: 38
     Vit: 30
     Int: 35
@@ -37182,6 +37653,7 @@ Body:
     Attack2: 250
     Defense: 30
     MagicDefense: 20
+    Str: 0
     Agi: 38
     Vit: 30
     Int: 35
@@ -37393,6 +37865,7 @@ Body:
     MagicDefense: 5
     Agi: 21
     Vit: 21
+    Int: 0
     Dex: 36
     Luk: 10
     AttackRange: 1
@@ -37433,6 +37906,7 @@ Body:
     Attack: 7
     Attack2: 10
     MagicDefense: 5
+    Int: 0
     Dex: 6
     Luk: 30
     AttackRange: 1
@@ -37905,6 +38379,7 @@ Body:
     Str: 28
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -39427,6 +39902,7 @@ Body:
     Attack2: 13000
     Defense: 78
     MagicDefense: 22
+    Str: 0
     Agi: 10
     Vit: 82
     Int: 25
@@ -39688,6 +40164,7 @@ Body:
     MagicDefense: 10
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -40184,6 +40661,7 @@ Body:
     Attack2: 886
     Defense: 125
     MagicDefense: 18
+    Str: 0
     Agi: 10
     Vit: 82
     Int: 2
@@ -41140,99 +41618,3 @@ Body:
     AttackMotion: 480
     DamageMotion: 864
     Ai: 20
-  - Id: 2158
-    AegisName: S_HORNET
-    Name: Hornet
-    Level: 1
-    Hp: 60
-    BaseExp: 27
-    JobExp: 20
-    Attack: 8
-    Attack2: 9
-    Defense: 2
-    MagicDefense: 5
-    Str: 6
-    Dex: 6
-    Luk: 5
-    AttackRange: 1
-    SkillRange: 10
-    ChaseRange: 12
-    Size: Medium
-    Race: Plant
-    Element: Water
-    ElementLevel: 1
-    WalkSpeed: 400
-    AttackDelay: 1872
-    AttackMotion: 672
-    DamageMotion: 480
-    Ai: 02
-  - Id: 2159
-    AegisName: S_GIANT_HORNET
-    Name: Giant Hornet
-    Level: 1
-    Hp: 60
-    BaseExp: 27
-    JobExp: 20
-    Attack: 8
-    Attack2: 9
-    Defense: 2
-    MagicDefense: 5
-    Str: 6
-    Dex: 6
-    Luk: 5
-    AttackRange: 1
-    SkillRange: 10
-    ChaseRange: 12
-    Size: Medium
-    Race: Plant
-    Element: Water
-    ElementLevel: 1
-    WalkSpeed: 400
-    AttackDelay: 1872
-    AttackMotion: 672
-    DamageMotion: 480
-    Ai: 02
-  - Id: 2160
-    AegisName: S_LUCIOLA_VESPA
-    Name: Luciola Vespa
-    Level: 1
-    Hp: 60
-    BaseExp: 27
-    JobExp: 20
-    Attack: 8
-    Attack2: 9
-    Defense: 2
-    MagicDefense: 5
-    Str: 6
-    Dex: 6
-    Luk: 5
-    AttackRange: 1
-    SkillRange: 10
-    ChaseRange: 12
-    Size: Medium
-    Race: Plant
-    Element: Water
-    ElementLevel: 1
-    WalkSpeed: 400
-    AttackDelay: 1872
-    AttackMotion: 672
-    DamageMotion: 480
-    Ai: 02
-  - Id: 2308
-    AegisName: KO_ZANZOU
-    Name: Zanzou
-    Level: 1
-    Hp: 50
-    Attack: 1
-    Attack2: 1
-    AttackRange: 1
-    SkillRange: 1
-    ChaseRange: 1
-    Size: Medium
-    Race: Demihuman
-    Element: Neutral
-    ElementLevel: 1
-    WalkSpeed: 400
-    AttackDelay: 1872
-    AttackMotion: 672
-    DamageMotion: 480

@@ -87,10 +87,10 @@ int guild_change_position(int guild_id,int idx,int mode,int exp_mode,const char 
 int guild_position_changed(int guild_id,int idx,struct guild_position *p);
 int guild_change_notice(map_session_data *sd,int guild_id,const char *mes1,const char *mes2);
 int guild_notice_changed(int guild_id,const char *mes1,const char *mes2);
-int guild_change_emblem(map_session_data *sd,int len,const char *data);
-int guild_change_emblem_version(map_session_data* sd, int version);
+int guild_change_emblem( map_session_data& sd, int len, const char* data );
+int guild_change_emblem_version( map_session_data& sd, int version );
 int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data);
-int guild_send_message(map_session_data *sd,const char *mes,int len);
+int guild_send_message(map_session_data *sd, const char *mes, size_t len);
 int guild_recv_message(int guild_id,uint32 account_id,const char *mes,int len);
 int guild_send_dot_remove(map_session_data *sd);
 int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id);

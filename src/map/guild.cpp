@@ -1370,7 +1370,7 @@ int guild_recv_memberinfoshort(int guild_id,uint32 account_id,uint32 char_id,int
 /*====================================================
  * Send a message to whole guild
  *---------------------------------------------------*/
-int guild_send_message(map_session_data *sd,const char *mes,int len) {
+int guild_send_message(map_session_data *sd, const char *mes, size_t len) {
 	nullpo_ret(sd);
 
 	if(sd->status.guild_id==0)
@@ -1481,17 +1481,11 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2) {
 /*====================================================
  * Check condition for changing guild emblem
  *---------------------------------------------------*/
-bool guild_check_emblem_change_condition(map_session_data *sd)
-{
-	// TODO: Change sd to reference
-	if( sd == nullptr ){
-		return false;
-	}
-
-	auto &g = sd->guild;
+bool guild_check_emblem_change_condition( map_session_data& sd ){
+	auto &g = sd.guild;
 
 	if (battle_config.require_glory_guild && g != nullptr && guild_checkskill(g->guild, GD_GLORYGUILD) > 0) {
-		clif_skill_fail( *sd, GD_GLORYGUILD );
+		clif_skill_fail( sd, GD_GLORYGUILD );
 		return false;
 	}
 
@@ -1501,28 +1495,23 @@ bool guild_check_emblem_change_condition(map_session_data *sd)
 /*====================================================
  * Change guild emblem
  *---------------------------------------------------*/
-int guild_change_emblem(map_session_data *sd,int len,const char *data) {
-	nullpo_ret(sd);
-
+int guild_change_emblem( map_session_data& sd, int len, const char* data ){
 	if (!guild_check_emblem_change_condition(sd)) {
 		return 0;
 	}
 
-	return intif_guild_emblem(sd->status.guild_id,len,data);
+	return intif_guild_emblem( sd.status.guild_id, len, data );
 }
 
 /*====================================================
  * Change guild emblem version
  *---------------------------------------------------*/
-int guild_change_emblem_version(map_session_data* sd, int version)
-{
-	nullpo_ret(sd);
-
+int guild_change_emblem_version( map_session_data& sd, int version ){
 	if (!guild_check_emblem_change_condition(sd)) {
 		return 0;
 	}
 
-	return intif_guild_emblem_version(sd->status.guild_id, version);
+	return intif_guild_emblem_version( sd.status.guild_id, version );
 }
 
 /*====================================================

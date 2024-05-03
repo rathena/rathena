@@ -359,7 +359,7 @@ struct mob_data {
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int bg_id; // BattleGround System
 
-	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick;
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;

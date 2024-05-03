@@ -3161,7 +3161,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 						}
 
 						// Server is configured to hide favorite items on selling
-						if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite ){
+						if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite != 0 ){
 							continue;
 						}
 
@@ -3205,7 +3205,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 							}
 
 							// Server is configured to hide favorite items on selling
-							if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite ){
+							if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite != 0 ){
 								continue;
 							}
 
@@ -3250,7 +3250,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 										}
 
 										// Server is configured to hide favorite items on selling
-										if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite ){
+										if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite != 0 ){
 											continue;
 										}
 

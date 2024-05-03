@@ -89,10 +89,11 @@ enum e_bonus_chk_flag : uint8 {
 struct Damage {
 #ifdef RENEWAL
 	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2, percentAtk, percentAtk2;
+#else
+	int64 basedamage; /// Right hand damage that a normal attack would deal
 #endif
 	int64 damage, /// Right hand damage
-		damage2, /// Left hand damage
-		basedamage; /// Right hand damage that a normal attack would deal
+		damage2; /// Left hand damage
 	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,
@@ -121,8 +122,9 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int flag);
 
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
+int battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
 int battle_delay_damage (t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
+int battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id);
 
 int battle_calc_chorusbonus(map_session_data *sd);
 
@@ -139,6 +141,7 @@ uint16 battle_getcurrentskill(struct block_list *bl);
 int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
 bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
+bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle_flag attack_type);
 
 void battle_consume_ammo(map_session_data* sd, int skill, int lv);
 
@@ -727,6 +730,7 @@ struct Battle_Config
 	int feature_dynamicnpc_direction;
 
 	int mob_respawn_time;
+	int mob_unlock_time;
 
 	int feature_stylist;
 	int feature_banking_state_enforce;

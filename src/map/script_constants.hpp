@@ -1266,7 +1266,7 @@
 	//export_constant(SC_IGNOREDEF);
 	export_constant(SC_HELLPOWER);
 	export_constant(SC_INVINCIBLE);
-	export_constant(SC_INVINCIBLEOFF);
+	//export_constant(SC_INVINCIBLEOFF);
 	export_constant(SC_MANU_ATK);
 	export_constant(SC_MANU_DEF);
 	export_constant(SC_SPL_ATK);

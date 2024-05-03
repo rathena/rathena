@@ -1403,6 +1403,7 @@ int64 status_charge(struct block_list* bl, int64 hp, int64 sp)
  *		flag&2: Fail if there is not enough to subtract
  *		flag&4: Mob does not give EXP/Loot if killed
  *		flag&8: Used to damage SP of a dead character
+ *		flag&16: Coma damage - Log it as normal damage, but actually set HP/SP to 1
  * @return hp+sp+ap
  * Note: HP/SP/AP are integer values, not percentages. Values should be
  *	 calculated either within function call or before
@@ -1470,7 +1471,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		flag |= 8;
 
 	sc = status_get_sc(target);
-	if( hp && battle_config.invincible_nodamage && src && sc && sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
+	if (hp && battle_config.invincible_nodamage && src && sc && sc->getSCE(SC_INVINCIBLE))
 		hp = 1;
 
 	if( hp && !(flag&1) ) {
@@ -1522,9 +1523,24 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_skillcastcancel(target, 2);
 	}
 
+	// We need to log the real damage on exp_calc_type 1
+	if (battle_config.exp_calc_type == 1) {
+		dhp = hp;
+		// Coma real damage
+		if (flag&16)
+			dhp = status->hp - 1;
+	}
+
 	status->hp-= hp;
 	status->sp-= sp;
 	status->ap-= ap;
+
+	// Coma
+	if (flag&16) {
+		status->hp = 1;
+		status->sp = 1;
+		if (!sp) sp = 1; // To make sure the status bar is updated
+	}
 
 	if (sc && hp && status->hp) {
 		if (sc->getSCE(SC_AUTOBERSERK) &&
@@ -1539,9 +1555,11 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_change_end(target, SC_SATURDAYNIGHTFEVER);
 	}
 
+	// Need to pass original HP damage for the mob damage log
+	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
 		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp,ap); break;
-		case BL_MOB: mob_damage((TBL_MOB*)target, src, hp); break;
+		case BL_MOB: mob_damage((TBL_MOB*)target, src, (int)dhp); break;
 		case BL_HOM: hom_damage((TBL_HOM*)target); break;
 		case BL_MER: mercenary_heal((TBL_MER*)target,hp,sp); break;
 		case BL_ELEM: elemental_heal((TBL_ELEM*)target,hp,sp); break;
@@ -2114,12 +2132,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		return true;
 
 	if (tsc && tsc->count) {
-		/**
-		* Attacks in invincible are capped to 1 damage and handled in battle.cpp.
-		* Allow spell break and eske for sealed shrine GDB when in INVINCIBLE state.
-		**/
-		if( tsc->getSCE(SC_INVINCIBLE) && !tsc->getSCE(SC_INVINCIBLEOFF) && skill_id && !(skill_id&(SA_SPELLBREAKER|SL_SKE)) )
-			return false;
 		if(!skill_id && tsc->getSCE(SC_TRICKDEAD))
 			return false;
 		if((skill_id == WZ_STORMGUST || skill_id == WZ_FROSTNOVA || skill_id == NJ_HYOUSYOURAKU || skill_id == NPC_STORMGUST2)
@@ -8037,8 +8049,8 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 			val = max( val, 55 );
 		if( sc->getSCE(SC_AVOID) )
 			val = max( val, 10 * sc->getSCE(SC_AVOID)->val1 );
-		if( sc->getSCE(SC_INVINCIBLE) && !sc->getSCE(SC_INVINCIBLEOFF) )
-			val = max( val, 75 );
+		if (sc->getSCE(SC_INVINCIBLE))
+			val = max(val, sc->getSCE(SC_INVINCIBLE)->val3);
 		if( sc->getSCE(SC_CLOAKINGEXCEED) )
 			val = max( val, sc->getSCE(SC_CLOAKINGEXCEED)->val3);
 		if (sc->getSCE(SC_PARALYSE) && sc->getSCE(SC_PARALYSE)->val3 == 0)
@@ -8310,66 +8322,68 @@ static short status_calc_aspd_rate(struct block_list *bl, status_change *sc, int
 	if(!sc || !sc->count)
 		return cap_value(aspd_rate,0,SHRT_MAX);
 
-	if( !sc->getSCE(SC_QUAGMIRE) ) {
-		int max = 0;
-		if(sc->getSCE(SC_STAR_COMFORT))
-			max = sc->getSCE(SC_STAR_COMFORT)->val2;
+	int max = 0;
+	if (sc->getSCE(SC_STAR_COMFORT))
+		max = sc->getSCE(SC_STAR_COMFORT)->val2;
 
-		if(sc->getSCE(SC_TWOHANDQUICKEN) &&
-			max < sc->getSCE(SC_TWOHANDQUICKEN)->val2)
-			max = sc->getSCE(SC_TWOHANDQUICKEN)->val2;
+	if (sc->getSCE(SC_TWOHANDQUICKEN) &&
+		max < sc->getSCE(SC_TWOHANDQUICKEN)->val2)
+		max = sc->getSCE(SC_TWOHANDQUICKEN)->val2;
 
-		if(sc->getSCE(SC_ONEHAND) &&
-			max < sc->getSCE(SC_ONEHAND)->val2)
-			max = sc->getSCE(SC_ONEHAND)->val2;
+	if (sc->getSCE(SC_ONEHAND) &&
+		max < sc->getSCE(SC_ONEHAND)->val2)
+		max = sc->getSCE(SC_ONEHAND)->val2;
 
-		if(sc->getSCE(SC_MERC_QUICKEN) &&
-			max < sc->getSCE(SC_MERC_QUICKEN)->val2)
-			max = sc->getSCE(SC_MERC_QUICKEN)->val2;
+	if (sc->getSCE(SC_MERC_QUICKEN) &&
+		max < sc->getSCE(SC_MERC_QUICKEN)->val2)
+		max = sc->getSCE(SC_MERC_QUICKEN)->val2;
 
-		if(sc->getSCE(SC_ADRENALINE2) &&
-			max < sc->getSCE(SC_ADRENALINE2)->val3)
-			max = sc->getSCE(SC_ADRENALINE2)->val3;
+	if (sc->getSCE(SC_ADRENALINE2) &&
+		max < sc->getSCE(SC_ADRENALINE2)->val3)
+		max = sc->getSCE(SC_ADRENALINE2)->val3;
 
-		if(sc->getSCE(SC_ADRENALINE) &&
-			max < sc->getSCE(SC_ADRENALINE)->val3)
-			max = sc->getSCE(SC_ADRENALINE)->val3;
+	if (sc->getSCE(SC_ADRENALINE) &&
+		max < sc->getSCE(SC_ADRENALINE)->val3)
+		max = sc->getSCE(SC_ADRENALINE)->val3;
 
-		if(sc->getSCE(SC_SPEARQUICKEN) &&
-			max < sc->getSCE(SC_SPEARQUICKEN)->val2)
-			max = sc->getSCE(SC_SPEARQUICKEN)->val2;
+	if (sc->getSCE(SC_SPEARQUICKEN) &&
+		max < sc->getSCE(SC_SPEARQUICKEN)->val2)
+		max = sc->getSCE(SC_SPEARQUICKEN)->val2;
 
-		if(sc->getSCE(SC_GATLINGFEVER) &&
-			max < sc->getSCE(SC_GATLINGFEVER)->val2)
-			max = sc->getSCE(SC_GATLINGFEVER)->val2;
+	if (sc->getSCE(SC_GATLINGFEVER) &&
+		max < sc->getSCE(SC_GATLINGFEVER)->val2)
+		max = sc->getSCE(SC_GATLINGFEVER)->val2;
 
-		if(sc->getSCE(SC_FLEET) &&
-			max < sc->getSCE(SC_FLEET)->val2)
-			max = sc->getSCE(SC_FLEET)->val2;
+	if (sc->getSCE(SC_FLEET) &&
+		max < sc->getSCE(SC_FLEET)->val2)
+		max = sc->getSCE(SC_FLEET)->val2;
 
-		if(sc->getSCE(SC_ASSNCROS) && max < sc->getSCE(SC_ASSNCROS)->val2) {
-			if (bl->type!=BL_PC)
-				max = sc->getSCE(SC_ASSNCROS)->val2;
-			else
-				switch(((TBL_PC*)bl)->status.weapon) {
-					case W_BOW:
-					case W_REVOLVER:
-					case W_RIFLE:
-					case W_GATLING:
-					case W_SHOTGUN:
-					case W_GRENADE:
-						break;
-					default:
-						max = sc->getSCE(SC_ASSNCROS)->val2;
+	if (sc->getSCE(SC_INVINCIBLE) &&
+		max < sc->getSCE(SC_INVINCIBLE)->val4)
+		max = sc->getSCE(SC_INVINCIBLE)->val4;
+
+	if (sc->getSCE(SC_ASSNCROS) && max < sc->getSCE(SC_ASSNCROS)->val2) {
+		if (bl->type != BL_PC)
+			max = sc->getSCE(SC_ASSNCROS)->val2;
+		else
+			switch (((TBL_PC*)bl)->status.weapon) {
+				case W_BOW:
+				case W_REVOLVER:
+				case W_RIFLE:
+				case W_GATLING:
+				case W_SHOTGUN:
+				case W_GRENADE:
+					break;
+				default:
+					max = sc->getSCE(SC_ASSNCROS)->val2;
 			}
-		}
-		aspd_rate -= max;
-
-		if(sc->getSCE(SC_BERSERK))
-			aspd_rate -= 300;
-		else if(sc->getSCE(SC_MADNESSCANCEL))
-			aspd_rate -= 200;
 	}
+	aspd_rate -= max;
+
+	if (sc->getSCE(SC_BERSERK))
+		aspd_rate -= 300;
+	else if (sc->getSCE(SC_MADNESSCANCEL))
+		aspd_rate -= 200;
 
 	if( sc->getSCE(i=SC_ASPDPOTION3) ||
 		sc->getSCE(i=SC_ASPDPOTION2) ||
@@ -9609,11 +9623,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			if (sd)
 				tick /= 2; // Half duration for players.
 			sc_def2 = status->mdef*100;
-			break;
-		case SC_ANKLE:
-			if(status_has_mode(status,MD_STATUSIMMUNE)) // Lasts 5 times less on bosses
-				tick /= 5;
-			sc_def = status->agi*50;
 			break;
 		case SC_JOINTBEAT:
 			tick_def2 = 1000 * ((status->luk / 2 + status->agi / 5) / 2); // (50 * LUK / 100 + 20 * AGI / 100) / 2
@@ -11237,7 +11246,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 
 		case SC_COMA: // Coma. Sends a char to 1HP. If val2, do not zap sp
-			status_zap(bl, status->hp-1, val2?0:status->sp);
+			status_zap(bl, status->hp-1, val2?0:status->sp-1);
 			return 1;
 			break;
 		case SC_CLOSECONFINE2:
@@ -11572,6 +11581,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_REBIRTH:
 			val2 = 20*val1; // % of life to be revived with
 			break;
+		case SC_INVINCIBLE:
+			val2 = 100; // ATKpercent increase
+			val3 = 50; // Speed increase
+			val4 = 700; // ASPD increase
+			break;
 
 		case SC_MANU_DEF:
 		case SC_MANU_ATK:
@@ -11586,7 +11600,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		/* General */
 		case SC_FEAR:
-			status_change_start(src,bl,SC_ANKLE,10000,val1,0,0,0,2000,SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
+			sc_start(src, bl, SC_ANKLE, 100, 0, 2000);
 			break;
 
 		/* Rune Knight */
@@ -12850,10 +12864,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	//SC that make stop walking
 	if (scdb->flag[SCF_STOPWALKING]) {
 		switch (type) {
-			case SC_ANKLE:
-				if (battle_config.skill_trap_type || !map_flag_gvg(bl->m))
-					unit_stop_walking(bl, 1);
-				break;
 			case SC__MANHOLE:
 				if (bl->type == BL_PC || !unit_blown_immune(bl,0x1))
 					unit_stop_walking(bl,1);

@@ -2820,7 +2820,8 @@ void char_set_defaults(){
  */
 void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_point_str start_point[MAX_STARTPOINT], short* count ){
 	char *lineitem, **fields;
-	int i = 0, fields_length = 3 + 1;
+	int i = 0;
+	size_t fields_length = 3 + 1;
 
 	(*count) = 0; // Reset to begin reading
 
@@ -2859,7 +2860,8 @@ void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_poin
 void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
 {
 	char *lineitem, **fields;
-	int i = 0, fields_length = 3 + 1;
+	int i = 0;
+	size_t fields_length = 3 + 1;
 
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
 	if (fields == NULL)
