@@ -3,10 +3,9 @@
 
 #include "char_mapif.hpp"
 
+#include <cstdlib>
+#include <cstring> //memcpy
 #include <memory>
-
-#include <stdlib.h>
-#include <string.h> //memcpy
 
 #include <common/malloc.hpp>
 #include <common/showmsg.hpp>

@@ -3,12 +3,11 @@
 
 #include "int_clan.hpp"
 
+#include <cstdlib>
+#include <cstring> //memset
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
-#include <stdlib.h>
-#include <string.h> //memset
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>

@@ -3,9 +3,9 @@
 
 #include "malloc.hpp"
 
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
 
 #include "core.hpp"
 #include "showmsg.hpp"
@@ -20,7 +20,6 @@
 
 #if defined(MEMWATCH)
 
-#	include <string.h> 
 #	include "memwatch.h"
 #	define MALLOC(n,file,line,func)	mwMalloc((n),(file),(line))
 #	define CALLOC(m,n,file,line,func)	mwCalloc((m),(n),(file),(line))
@@ -33,8 +32,6 @@
 
 #elif defined(DMALLOC)
 
-#	include <string.h>
-#	include <stdlib.h>
 #	include "dmalloc.hpp"
 #	define MALLOC(n,file,line,func)	dmalloc_malloc((file),(line),(n),DMALLOC_FUNC_MALLOC,0,0)
 #	define CALLOC(m,n,file,line,func)	dmalloc_malloc((file),(line),(m)*(n),DMALLOC_FUNC_CALLOC,0,0)
@@ -234,14 +231,11 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 	short size_hash = size2hash( size );
 	struct unit_head *head;
 
-	if (((long) size) < 0) {
-		ShowError("_mmalloc: %" PRIuPTR "\n", size);
-		return NULL;
+	if( static_cast<long>( size ) < 0 || size == 0 ){
+		ShowError( "_mmalloc: Invalid allocation size %" PRIuPTR " bytes at %s:%d\n", size, file, line );
+		return nullptr;
 	}
-	
-	if(size == 0) {
-		return NULL;
-	}
+
 	memmgr_usage_bytes += size;
 
 	/* To ensure the area that exceeds the length of the block, using malloc () to */

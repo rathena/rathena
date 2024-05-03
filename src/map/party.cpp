@@ -3,7 +3,7 @@
 
 #include "party.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -1039,7 +1039,7 @@ int party_send_logout(map_session_data *sd)
 	return 1;
 }
 
-int party_send_message(map_session_data *sd,const char *mes,int len)
+int party_send_message(map_session_data *sd,const char *mes, size_t len)
 {
 	if(sd->status.party_id == 0)
 		return 0;
@@ -1278,7 +1278,7 @@ int party_share_loot(struct party_data* p, map_session_data* sd, struct item* it
 			}
 
 			while (count > 0) { //Pick a random member.
-				i = rnd()%count;
+				i = rnd_value(0, count-1);
 
 				if (pc_additem(psd[i],item,item->amount,LOG_TYPE_PICKDROP_PLAYER)) { // Discard this receiver.
 					psd[i] = psd[count-1];

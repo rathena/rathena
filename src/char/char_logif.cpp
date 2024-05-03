@@ -3,10 +3,9 @@
 
 #include "char_logif.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/showmsg.hpp>
 #include <common/socket.hpp>
@@ -92,7 +91,7 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
  * @param tick : Scheduled tick
  * @param id : GID linked to that timered call
  * @param data : data transmited for delayed function
- * @return 
+ * @return
  */
 TIMER_FUNC(chlogif_send_acc_tologin){
 	if ( chlogif_isconnected() ){
@@ -392,27 +391,70 @@ int chlogif_parse_keepalive(int fd){
  */
 void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int guild_id)
 {
-	// job modification //@TODO switch would be faster
-	if (class_ == JOB_BARD || class_ == JOB_DANCER)
-		class_ = (sex == SEX_MALE ? JOB_BARD : JOB_DANCER);
-	else if (class_ == JOB_CLOWN || class_ == JOB_GYPSY)
-		class_ = (sex == SEX_MALE ? JOB_CLOWN : JOB_GYPSY);
-	else if (class_ == JOB_BABY_BARD || class_ == JOB_BABY_DANCER)
-		class_ = (sex == SEX_MALE ? JOB_BABY_BARD : JOB_BABY_DANCER);
-	else if (class_ == JOB_MINSTREL || class_ == JOB_WANDERER)
-		class_ = (sex == SEX_MALE ? JOB_MINSTREL : JOB_WANDERER);
-	else if (class_ == JOB_MINSTREL_T || class_ == JOB_WANDERER_T)
-		class_ = (sex == SEX_MALE ? JOB_MINSTREL_T : JOB_WANDERER_T);
-	else if (class_ == JOB_BABY_MINSTREL || class_ == JOB_BABY_WANDERER)
-		class_ = (sex == SEX_MALE ? JOB_BABY_MINSTREL : JOB_BABY_WANDERER);
-	else if (class_ == JOB_KAGEROU || class_ == JOB_OBORO)
-		class_ = (sex == SEX_MALE ? JOB_KAGEROU : JOB_OBORO);
-	else if (class_ == JOB_BABY_KAGEROU || class_ == JOB_BABY_OBORO)
-		class_ = (sex == SEX_MALE ? JOB_BABY_KAGEROU : JOB_BABY_OBORO);
-	else if (class_ == JOB_TROUBADOUR || class_ == JOB_TROUVERE)
-		class_ = (sex == SEX_MALE ? JOB_TROUBADOUR : JOB_TROUVERE);
-	else if (class_ == JOB_SHINKIRO || class_ == JOB_SHIRANUI)
-		class_ = (sex == SEX_MALE ? JOB_SHINKIRO : JOB_SHIRANUI);
+	// job modification
+	switch (class_)
+	{
+	case JOB_BARD:
+		class_ = JOB_DANCER;
+		break;
+	case JOB_DANCER:
+		class_ = JOB_BARD;
+		break;
+	case JOB_CLOWN:
+		class_ = JOB_GYPSY;
+		break;
+	case JOB_GYPSY:
+		class_ = JOB_CLOWN;
+		break;
+	case JOB_BABY_BARD:
+		class_ = JOB_BABY_DANCER;
+		break;
+	case JOB_BABY_DANCER:
+		class_ = JOB_BABY_BARD;
+		break;
+	case JOB_MINSTREL:
+		class_ = JOB_WANDERER;
+		break;
+	case JOB_WANDERER:
+		class_ = JOB_MINSTREL;
+		break;
+	case JOB_MINSTREL_T:
+		class_ = JOB_WANDERER_T;
+		break;
+	case JOB_WANDERER_T:
+		class_ = JOB_MINSTREL_T;
+		break;
+	case JOB_BABY_MINSTREL:
+		class_ = JOB_BABY_WANDERER;
+		break;
+	case JOB_BABY_WANDERER:
+		class_ = JOB_BABY_MINSTREL;
+		break;
+	case JOB_KAGEROU:
+		class_ = JOB_OBORO;
+		break;
+	case JOB_OBORO:
+		class_ = JOB_KAGEROU;
+		break;
+	case JOB_BABY_KAGEROU:
+		class_ = JOB_BABY_OBORO;
+		break;
+	case JOB_BABY_OBORO:
+		class_ = JOB_BABY_KAGEROU;
+		break;
+	case JOB_TROUBADOUR:
+		class_ = JOB_TROUVERE;
+		break;
+	case JOB_TROUVERE:
+		class_ = JOB_TROUBADOUR;
+		break;
+	case JOB_SHINKIRO:
+		class_ = JOB_SHIRANUI;
+		break;
+	case JOB_SHIRANUI:
+		class_ = JOB_SHINKIRO;
+		break;
+	}
 
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
 		Sql_ShowDebug(sql_handle);

@@ -3,6 +3,9 @@
 
 #include "core.hpp"
 
+#include <cstdlib>
+#include <csignal>
+
 #include <config/core.hpp>
 
 #ifndef MINICORE
@@ -12,8 +15,7 @@
 #include "timer.hpp"
 #include "sql.hpp"
 #endif
-#include <stdlib.h>
-#include <signal.h>
+
 #ifndef _WIN32
 #include <unistd.h>
 #else
@@ -28,12 +30,12 @@
 #include "strlib.hpp"
 
 #ifndef DEPRECATED_COMPILER_SUPPORT
-	#if defined( _MSC_VER ) && _MSC_VER < 1910
+	#if defined( _MSC_VER ) && _MSC_VER < 1914
 		#error "Visual Studio versions older than Visual Studio 2017 are not officially supported anymore"
 	#elif defined( __clang__ ) && __clang_major__ < 6
 		#error "clang versions older than clang 6.0 are not officially supported anymore"
-	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 5
-		#error "GCC versions older than GCC 5 are not officially supported anymore"
+	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 6
+		#error "GCC versions older than GCC 6 are not officially supported anymore"
 	#endif
 #endif
 
@@ -340,9 +342,8 @@ int Core::start( int argc, char **argv ){
 		char *p1;
 		if((p1 = strrchr(argv[0], '/')) != NULL ||  (p1 = strrchr(argv[0], '\\')) != NULL ){
 			char *pwd = NULL; //path working directory
-			int n=0;
 			SERVER_NAME = ++p1;
-			n = p1-argv[0]; //calc dir name len
+			size_t n = p1-argv[0]; //calc dir name len
 			pwd = safestrncpy((char*)malloc(n + 1), argv[0], n);
 			if(chdir(pwd) != 0)
 				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail",pwd,SERVER_NAME);
@@ -475,8 +476,6 @@ void Core::signal_crash(){
 		this->handle_crash();
 	}
 
-	// Now stop the process
-	exit( EXIT_FAILURE );
 }
 
 void Core::signal_shutdown(){

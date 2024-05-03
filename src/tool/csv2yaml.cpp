@@ -3,7 +3,7 @@
 
 #include "csv2yaml.hpp"
 
-#include <math.h>
+#include <cmath>
 
 using namespace rathena::tool_csv2yaml;
 
@@ -251,6 +251,9 @@ bool Csv2YamlTool::initialize( int argc, char* argv[] ){
 	#define export_constant_npc(a) export_constant(a)
 	init_random_option_constants();
 	#include <map/script_constants.hpp>
+	// Constants that are deprecated but still needed for conversion
+	script_set_constant(QUOTE(RC2_GUARDIAN), RC2_GUARDIAN, false, false);
+	script_set_constant(QUOTE(RC2_BATTLEFIELD), RC2_BATTLEFIELD, false, false);
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -602,7 +605,7 @@ bool Csv2YamlTool::initialize( int argc, char* argv[] ){
 
 // Copied and adjusted from guild.cpp
 // <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
-static bool guild_read_guildskill_tree_db( char* split[], int columns, int current ){
+static bool guild_read_guildskill_tree_db( char* split[], size_t columns, size_t current ){
 	uint16 skill_id = (uint16)atoi(split[0]);
 	std::string* name = util::umap_find( aegis_skillnames, skill_id );
 
@@ -827,8 +830,7 @@ static bool pet_read_db( const char* file ){
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current)
-{
+static bool skill_parse_row_magicmushroomdb( char *split[], size_t column, size_t current ){
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
@@ -845,8 +847,7 @@ static bool skill_parse_row_magicmushroomdb(char *split[], int column, int curre
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_abradb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_abradb( char* split[], size_t columns, size_t current ){
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
@@ -886,8 +887,7 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_spellbookdb( char* split[], size_t columns, size_t current ){
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
@@ -914,7 +914,7 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 }
 
 // Copied and adjusted from mob.cpp
-static bool mob_readdb_mobavail(char* str[], int columns, int current) {
+static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current ){
 	uint16 mob_id = atoi(str[0]);
 	std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
 
@@ -1146,8 +1146,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 
 // skill_db.yml function
 //----------------------
-static bool skill_parse_row_requiredb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_requiredb( char* split[], size_t columns, size_t current ){
 	s_skill_require entry = {};
 
 	skill_split_atoi(split[1], entry.hp);
@@ -1261,8 +1260,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 
 // skill_db.yml function
 //----------------------
-static bool skill_parse_row_castdb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_castdb( char* split[], size_t columns, size_t current ){
 	s_skill_db entry = {};
 
 	skill_split_atoi(split[1], entry.cast);
@@ -1282,8 +1280,7 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current)
 
 // skill_db.yml function
 //----------------------
-static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_castnodexdb( char* split[], size_t columns, size_t current ){
 	s_skill_db entry = {};
 
 	entry.castnodex = atoi(split[1]);
@@ -1297,8 +1294,7 @@ static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
 
 // skill_db.yml function
 //----------------------
-static bool skill_parse_row_unitdb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_unitdb( char* split[], size_t columns, size_t current ){
 	s_skill_unit_csv entry = {};
 
 	entry.unit_id = (uint16)strtol(split[1], NULL, 16);
@@ -1316,8 +1312,7 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current)
 
 // skill_db.yml function
 //----------------------
-static bool skill_parse_row_copyabledb(char* split[], int column, int current)
-{
+static bool skill_parse_row_copyabledb( char* split[], size_t column, size_t current ){
 	s_skill_copyable entry = {};
 	int skill_id = -1;
 
@@ -1346,8 +1341,7 @@ static bool skill_parse_row_copyabledb(char* split[], int column, int current)
 
 // skill_db.yml function
 //----------------------
-static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int current)
-{
+static bool skill_parse_row_nonearnpcrangedb( char* split[], size_t column, size_t current ){
 	s_skill_db entry = {};
 	int skill_id = -1;
 
@@ -1375,7 +1369,7 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
+static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t current ){
 	int arr[MAX_SKILL_LEVEL], arr_size, skill_id = atoi(split[0]);
 
 	body << YAML::BeginMap;
@@ -2348,7 +2342,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 }
 
 // Copied and adjusted from quest.cpp
-static bool quest_read_db(char *split[], int columns, int current) {
+static bool quest_read_db( char *split[], size_t columns, size_t current ){
 	int quest_id = atoi(split[0]);
 
 	if (quest_id < 0 || quest_id >= INT_MAX) {
@@ -2484,7 +2478,7 @@ static bool quest_read_db(char *split[], int columns, int current) {
 }
 
 // Copied and adjusted from instance.cpp
-static bool instance_readdb_sub(char* str[], int columns, int current) {
+static bool instance_readdb_sub( char* str[], size_t columns, size_t current ){
 	body << YAML::BeginMap;
 	body << YAML::Key << "Id" << YAML::Value << atoi(str[0]);
 	body << YAML::Key << "Name" << YAML::Value << str[1];
@@ -2523,21 +2517,21 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 
 // item_db.yml function
 //---------------------
-static bool itemdb_read_itemavail(char *str[], int columns, int current) {
+static bool itemdb_read_itemavail( char *str[], size_t columns, size_t current ){
 	item_avail.insert({ strtoul(str[0], nullptr, 10), strtoul(str[1], nullptr, 10) });
 	return true;
 }
 
 // item_db.yml function
 //---------------------
-static bool itemdb_read_buyingstore(char* fields[], int columns, int current) {
+static bool itemdb_read_buyingstore( char* fields[], size_t columns, size_t current ){
 	item_buyingstore.insert({ strtoul(fields[0], nullptr, 10), true });
 	return true;
 }
 
 // item_db.yml function
 //---------------------
-static bool itemdb_read_flag(char* fields[], int columns, int current) {
+static bool itemdb_read_flag( char* fields[], size_t columns, size_t current ){
 	s_item_flag_csv2yaml item = { 0 };
 	uint16 flag = abs(atoi(fields[1]));
 
@@ -2572,7 +2566,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 
 // item_db.yml function
 //---------------------
-static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
+static bool itemdb_read_itemdelay( char* str[], size_t columns, size_t current ){
 	s_item_delay_csv2yaml item = { 0 };
 
 	item.delay = atoi(str[1]);
@@ -2586,7 +2580,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 // item_db.yml function
 //---------------------
-static bool itemdb_read_stack(char* fields[], int columns, int current) {
+static bool itemdb_read_stack( char* fields[], size_t columns, size_t current ){
 	s_item_stack_csv2yaml item = { 0 };
 
 	item.amount = atoi(fields[1]);
@@ -2608,7 +2602,7 @@ static bool itemdb_read_stack(char* fields[], int columns, int current) {
 
 // item_db.yml function
 //---------------------
-static bool itemdb_read_nouse(char* fields[], int columns, int current) {
+static bool itemdb_read_nouse( char* fields[], size_t columns, size_t current ){
 	s_item_nouse_csv2yaml item = { 0 };
 
 	item.sitting = "true";
@@ -2620,7 +2614,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 
 // item_db.yml function
 //---------------------
-static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
+static bool itemdb_read_itemtrade( char* str[], size_t columns, size_t current ){
 	s_item_trade_csv2yaml item = { 0 };
 	int flag = atoi(str[1]);
 
@@ -3128,7 +3122,7 @@ static bool itemdb_read_randomopt(const char* file) {
 }
 
 // Copied and adjusted from itemdb.cpp
-static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
+static bool itemdb_read_randomopt_group( char* str[], size_t columns, size_t current ){
 	if ((columns - 2) % 3 != 0) {
 		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
 		return false;
@@ -3230,7 +3224,7 @@ static bool itemdb_randomopt_group_yaml(void) {
 	return true;
 }
 
-static bool pc_readdb_levelpenalty( char* fields[], int columns, int current ){
+static bool pc_readdb_levelpenalty( char* fields[], size_t columns, size_t current ){
 	// 1=experience, 2=item drop
 	int type = atoi( fields[0] );
 
@@ -3294,7 +3288,7 @@ bool pc_levelpenalty_yaml(){
 
 // mob_db.yml function
 //--------------------
-static bool mob_readdb_race2(char *fields[], int columns, int current) {
+static bool mob_readdb_race2( char *fields[], size_t columns, size_t current ){
 	int64 race;
 
 	if (ISDIGIT(fields[0][0]))
@@ -3325,7 +3319,7 @@ static bool mob_readdb_race2(char *fields[], int columns, int current) {
 
 // mob_db.yml function
 //--------------------
-static bool mob_readdb_drop(char *str[], int columns, int current) {
+static bool mob_readdb_drop( char *str[], size_t columns, size_t current ){
 	uint32 mob_id = strtoul(str[0], nullptr, 10);
 	std::string *mob_name = util::umap_find(aegis_mobnames, static_cast<uint16>(mob_id));
 
@@ -3372,7 +3366,7 @@ static bool mob_readdb_drop(char *str[], int columns, int current) {
 }
 
 // Copied and adjusted from mob.cpp
-static bool mob_readdb_sub(char *fields[], int columns, int current) {
+static bool mob_readdb_sub( char *fields[], size_t columns, size_t current ){
 	uint32 mob_id = strtoul(fields[0], nullptr, 10);
 
 	body << YAML::BeginMap;
@@ -3401,17 +3395,17 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		body << YAML::Key << "Defense" << YAML::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[13], nullptr, 10) > 0)
 		body << YAML::Key << "MagicDefense" << YAML::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
-	if (strtol(fields[14], nullptr, 10) > 1)
+	if (strtol(fields[14], nullptr, 10) != 1)
 		body << YAML::Key << "Str" << YAML::Value << fields[14];
-	if (strtol(fields[15], nullptr, 10) > 1)
+	if (strtol(fields[15], nullptr, 10) != 1)
 		body << YAML::Key << "Agi" << YAML::Value << fields[15];
-	if (strtol(fields[16], nullptr, 10) > 1)
+	if (strtol(fields[16], nullptr, 10) != 1)
 		body << YAML::Key << "Vit" << YAML::Value << fields[16];
-	if (strtol(fields[17], nullptr, 10) > 1)
+	if (strtol(fields[17], nullptr, 10) != 1)
 		body << YAML::Key << "Int" << YAML::Value << fields[17];
-	if (strtol(fields[18], nullptr, 10) > 1)
+	if (strtol(fields[18], nullptr, 10) != 1)
 		body << YAML::Key << "Dex" << YAML::Value << fields[18];
-	if (strtol(fields[19], nullptr, 10) > 1)
+	if (strtol(fields[19], nullptr, 10) != 1)
 		body << YAML::Key << "Luk" << YAML::Value << fields[19];
 	if (strtol(fields[9], nullptr, 10) > 0)
 		body << YAML::Key << "AttackRange" << YAML::Value << fields[9];
@@ -3736,7 +3730,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 }
 
 // Copied and adjusted from mob.cpp
-static bool mob_parse_row_chatdb(char* fields[], int columns, int current) {
+static bool mob_parse_row_chatdb( char* fields[], size_t columns, size_t current ){
 	int msg_id = atoi(fields[0]);
 
 	if (msg_id <= 0){
@@ -3808,7 +3802,7 @@ static bool read_homunculus_expdb(const char* file) {
 }
 
 // Copied and adjusted from mob.cpp
-static bool mob_readdb_group(char* str[], int columns, int current) {
+static bool mob_readdb_group( char* str[], size_t columns, size_t current ){
 	if (strncasecmp(str[0], "MOBG_", 5) != 0) {
 		ShowError("The group %s must start with 'MOBG_'.\n", str[0]);
 		return false;
@@ -3884,8 +3878,7 @@ static bool mob_readdb_group_yaml(void) {
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
-{
+static bool skill_parse_row_createarrowdb( char* split[], size_t columns, size_t current ){
 	t_itemid nameid = static_cast<t_itemid>(strtoul(split[0], nullptr, 10));
 
 	if (nameid == 0)
@@ -3969,7 +3962,7 @@ static bool pc_read_statsdb(const char* file) {
 }
 
 // Copied and adjusted from guild.cpp
-static bool guild_read_castledb(char* str[], int columns, int current) {
+static bool guild_read_castledb( char* str[], size_t columns, size_t current ){
 	body << YAML::BeginMap;
 	body << YAML::Key << "Id" << YAML::Value << str[0];
 	body << YAML::Key << "Map" << YAML::Value << str[1];
@@ -3980,7 +3973,7 @@ static bool guild_read_castledb(char* str[], int columns, int current) {
 }
 
 // Copied and adjusted from int_guild.cpp
-static bool exp_guild_parse_row(char* split[], int column, int current) {
+static bool exp_guild_parse_row( char* split[], size_t column, size_t current ){
 	t_exp exp = strtoull(split[0], nullptr, 10);
 
 	if (exp > MAX_GUILD_EXP) {
@@ -3997,7 +3990,7 @@ static bool exp_guild_parse_row(char* split[], int column, int current) {
 }
 
 // Copied and adjusted from itemdb.cpp
-static bool itemdb_read_group(char* str[], int columns, int current) {
+static bool itemdb_read_group( char* str[], size_t columns, size_t current ){
 	if (strncasecmp(str[0], "IG_", 3) != 0) {
 		ShowError("The group %s must start with 'IG_'.\n", str[0]);
 		return false;
@@ -4147,7 +4140,7 @@ static bool itemdb_read_group_yaml(void) {
 }
 
 // Copied and adjusted from mob.cpp
-static bool mob_readdb_itemratio(char* str[], int columns, int current) {
+static bool mob_readdb_itemratio( char* str[], size_t columns, size_t current ){
 	t_itemid nameid = strtoul(str[0], nullptr, 10);
 
 	std::string *item_name = util::umap_find(aegis_itemnames, nameid);
@@ -4247,7 +4240,7 @@ static bool status_readdb_attrfix(const char* file) {
 }
 
 // Copied and adjusted from script.cpp
-static bool read_constdb(char* fields[], int columns, int current) {
+static bool read_constdb( char* fields[], size_t columns, size_t current ){
 	char name[1024], val[1024];
 	int type = 0;
 
@@ -4277,7 +4270,7 @@ static bool read_constdb(char* fields[], int columns, int current) {
 
 // job_db.yml function
 //----------------------
-static bool pc_readdb_job2(char* fields[], int columns, int current) {
+static bool pc_readdb_job2( char* fields[], size_t columns, size_t current ){
 	std::vector<int> stats;
 
 	stats.resize(MAX_LEVEL);
@@ -4292,7 +4285,7 @@ static bool pc_readdb_job2(char* fields[], int columns, int current) {
 
 // job_db.yml function
 //----------------------
-static bool pc_readdb_job_param(char* fields[], int columns, int current) {
+static bool pc_readdb_job_param( char* fields[], size_t columns, size_t current ){
 	int job_id = atoi(fields[0]);
 	s_job_param entry = {};
 
@@ -4310,7 +4303,7 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current) {
 
 // job_basehpsp_db.yml function
 //----------------------
-static bool pc_readdb_job_exp_sub(char* fields[], int columns, int current) {
+static bool pc_readdb_job_exp_sub( char* fields[], size_t columns, size_t current ){
 	int level = atoi(fields[0]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[1], jobs, CLASS_COUNT), type = atoi(fields[2]);
 
 	for (int i = 0; i < job_count; i++) {
@@ -4324,7 +4317,7 @@ static bool pc_readdb_job_exp_sub(char* fields[], int columns, int current) {
 }
 
 // Copied and adjusted from pc.cpp
-static bool pc_readdb_job_exp(char* fields[], int columns, int current) {
+static bool pc_readdb_job_exp( char* fields[], size_t columns, size_t current ){
 	int level = atoi(fields[0]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[1], jobs, CLASS_COUNT), type = atoi(fields[2]);
 
 	body << YAML::BeginMap;
@@ -4362,7 +4355,7 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current) {
 }
 
 // Copied and adjusted from pc.cpp
-static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current) {
+static bool pc_readdb_job_basehpsp( char* fields[], size_t columns, size_t current ){
 	int type = atoi(fields[3]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[2], jobs, CLASS_COUNT);
 
 	body << YAML::BeginMap;
@@ -4426,7 +4419,7 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current) {
 }
 
 // Copied and adjusted from pc.cpp
-static bool pc_readdb_job1(char* fields[], int columns, int current) {
+static bool pc_readdb_job1( char* fields[], size_t columns, size_t current ){
 	int job_id = atoi(fields[0]);
 
 	if (job_id == JOB_WEDDING)
@@ -4524,7 +4517,7 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 
 // elemental_db.yml function
 //---------------------------
-static bool read_elemental_skilldb(char* str[], int columns, int current) {
+static bool read_elemental_skilldb( char* str[], size_t columns, size_t current ){
 	uint16 skill_id = atoi(str[1]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
@@ -4558,7 +4551,7 @@ static bool read_elemental_skilldb(char* str[], int columns, int current) {
 }
 
 // Copied and adjusted from elemental.cpp
-static bool read_elementaldb(char* str[], int columns, int current) {
+static bool read_elementaldb( char* str[], size_t columns, size_t current ){
 	body << YAML::BeginMap;
 	body << YAML::Key << "Id" << YAML::Value << str[0];
 	body << YAML::Key << "AegisName" << YAML::Value << str[1];
@@ -4634,7 +4627,7 @@ static bool read_elementaldb(char* str[], int columns, int current) {
 
 // mercenary_db.yml function
 //---------------------------
-static bool mercenary_read_skilldb(char* str[], int columns, int current) {
+static bool mercenary_read_skilldb( char* str[], size_t columns, size_t current ){
 	uint16 skill_id = atoi(str[1]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
@@ -4661,7 +4654,7 @@ static bool mercenary_read_skilldb(char* str[], int columns, int current) {
 }
 
 // Copied and adjusted from mercenary.cpp
-static bool mercenary_readdb(char* str[], int columns, int current) {
+static bool mercenary_readdb( char* str[], size_t columns, size_t current ){
 	body << YAML::BeginMap;
 	body << YAML::Key << "Id" << YAML::Value << str[0];
 	body << YAML::Key << "AegisName" << YAML::Value << str[1];
@@ -4741,7 +4734,7 @@ static bool mercenary_readdb(char* str[], int columns, int current) {
 }
 
 // Copied and adjusted from pc.cpp
-static bool pc_readdb_skilltree(char* fields[], int columns, int current) {
+static bool pc_readdb_skilltree( char* fields[], size_t columns, size_t current ){
 	uint16 baselv, joblv, offset;
 	uint16 class_  = (uint16)atoi(fields[0]);
 	uint16 skill_id = (uint16)atoi(fields[1]);
@@ -4972,7 +4965,7 @@ static bool itemdb_read_combos(const char* file) {
 }
 
 // Copied and adjusted from cashshop.cpp
-static bool cashshop_parse_dbrow( char* fields[], int columns, int current ){
+static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current ){
 	uint16 tab = atoi( fields[0] );
 	t_itemid nameid = strtoul( fields[1], nullptr, 10 );
 	uint32 price = atoi( fields[2] );
@@ -5019,7 +5012,7 @@ static bool cashshop_parse_dbrow( char* fields[], int columns, int current ){
 
 // homunculus_db.yml function
 //---------------------------
-static bool read_homunculus_skilldb(char* split[], int columns, int current) {
+static bool read_homunculus_skilldb( char* split[], size_t columns, size_t current ){
 	s_homun_skill_tree_entry entry = {};
 
 	entry.id = atoi(split[1]);
@@ -5047,7 +5040,7 @@ static bool compareHomSkillId(const s_homun_skill_tree_entry &a, const s_homun_s
 }
 
 // Copied and adjusted from homunculus.cpp
-static bool read_homunculusdb(char* str[], int columns, int current) {
+static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 	bool has_evo = false;
 
 	body << YAML::BeginMap;

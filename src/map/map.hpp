@@ -5,7 +5,7 @@
 #define MAP_HPP
 
 #include <algorithm>
-#include <stdarg.h>
+#include <cstdarg>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -66,7 +66,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 250
+#define MAX_LEVEL 260
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -363,6 +363,9 @@ enum e_race2 : uint8{
 	RC2_EP172ALPHA,
 	RC2_EP172BETA,
 	RC2_EP172BATH,
+	RC2_ILLUSION_TURTLE,
+	RC2_RACHEL_SANCTUARY,
+	RC2_ILLUSION_LUANDA,
 	RC2_MAX
 };
 
@@ -669,6 +672,7 @@ enum e_mapflag : int16 {
 	MF_NOPETCAPTURE,
 	MF_NOBUYINGSTORE,
 	MF_NODYNAMICNPC,
+	MF_NOBANK,
 	MF_MAX
 };
 
@@ -807,7 +811,6 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::vector<int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
@@ -838,6 +841,14 @@ struct map_data {
 		std::vector<const struct navi_link *> warps_outof;
 	} navi;
 #endif
+
+	int getMapFlag(int flag) const;
+	void setMapFlag(int flag, int value);
+	void initMapFlags();
+	void copyFlags(const map_data& other);
+
+private:
+	std::vector<int> flags;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
@@ -848,6 +859,18 @@ struct map_data_other_server {
 	struct mapcell* cell; // If this is NULL, the map is not on this map-server
 	uint32 ip;
 	uint16 port;
+};
+
+/**
+ * align for packet ZC_SAY_DIALOG_ALIGN
+ **/
+enum e_say_dialog_align : uint8 {
+	DIALOG_ALIGN_LEFT   = 0,
+	DIALOG_ALIGN_RIGHT  = 1,
+	DIALOG_ALIGN_CENTER = 2,
+	DIALOG_ALIGN_TOP    = 3,
+	DIALOG_ALIGN_MIDDLE = 4,
+	DIALOG_ALIGN_BOTTOM = 5
 };
 
 struct inter_conf {
@@ -887,7 +910,7 @@ inline bool mapdata_flag_vs(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG_DUNGEON) || mapdata->getMapFlag(MF_GVG) || ((agit_flag || agit2_flag) && mapdata->getMapFlag(MF_GVG_CASTLE)) || mapdata->getMapFlag(MF_GVG_TE) || (agit3_flag && mapdata->getMapFlag(MF_GVG_TE_CASTLE)) || mapdata->getMapFlag(MF_BATTLEGROUND))
 		return true;
 
 	return false;
@@ -902,7 +925,7 @@ inline bool mapdata_flag_vs2(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG_DUNGEON) || mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE) || mapdata->getMapFlag(MF_BATTLEGROUND))
 		return true;
 
 	return false;
@@ -917,7 +940,7 @@ inline bool mapdata_flag_gvg(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]))
+	if (mapdata->getMapFlag(MF_GVG) || ((agit_flag || agit2_flag) && mapdata->getMapFlag(MF_GVG_CASTLE)) || mapdata->getMapFlag(MF_GVG_TE) || (agit3_flag && mapdata->getMapFlag(MF_GVG_TE_CASTLE)))
 		return true;
 
 	return false;
@@ -932,7 +955,7 @@ inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE])
+	if (mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE))
 		return true;
 
 	return false;
@@ -947,7 +970,7 @@ inline bool mapdata_flag_ks(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->getMapFlag(MF_TOWN) || mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_BATTLEGROUND))
 		return true;
 
 	return false;
@@ -963,7 +986,7 @@ inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE])
+	if (mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE))
 		return true;
 
 	return false;
@@ -979,7 +1002,7 @@ inline bool mapdata_flag_gvg2_no_te(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE])
+	if (mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_CASTLE))
 		return true;
 
 	return false;

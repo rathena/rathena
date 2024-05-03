@@ -15,7 +15,7 @@
 
 /* so that developers with --enable-debug can raise signals from any section of the code they'd like */
 #ifdef DEBUG
-	#include <signal.h>
+	#include <csignal>
 #endif
 
 #if defined(BUILDBOT)

@@ -3,8 +3,8 @@
 
 #include "char_cnslif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cli.hpp>
 #include <common/ers.hpp>

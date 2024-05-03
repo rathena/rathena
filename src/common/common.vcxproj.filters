@@ -56,6 +56,9 @@
     <ClInclude Include="nullpo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="packets.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
