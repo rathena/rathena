@@ -2292,24 +2292,27 @@ tha_t04,81,36,0	warp	to 5th Floor	1,1,tha_t05,62,8
 tha_t06,119,120,0	script	to 7th Floor	45,1,1,{
 	end;
 OnTouch:
-	if ((eaclass()&(EAJL_2|EAJL_UPPER)) || (eaclass()&EAJL_THIRD) || ((Class == Job_Super_Novice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger || Class == Job_Summoner) && BaseLevel > 94)) {
-		if (countitem(7425) > 0) {
-			mes "The shadow of a Black Key is gleaming in the center of the portal.";
-			mes "To pass this way, looks like I need something.";
-			next;
-			mes "The Black Key reacts to the portal and floats in the air.";
-			next;
-			mes "The key seems to separate into many particles and suddenly collapses into a ball.";
-			mes "The barricade is removed through the power from newly formed black magic gem.";
-			close2;
-			delitem 7425,1; //Key_Black
-			getitem 7430,1; //Magic_Gem_Black
-			warp "thana_step",69,369;
-			end;
-		}
-		mes "The shadow of a Black Key is gleaming in the center of the portal.";
-		mes "To pass this way, looks like I need something.";
-		close;
+	// if ((eaclass()&(EAJL_2|EAJL_UPPER)) || (eaclass()&EAJL_THIRD) || ((Class == Job_Super_Novice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger || Class == Job_Summoner) && BaseLevel > 94)) {
+	if ((eaclass()&(EAJL_2)) || (eaclass()&EAJL_THIRD) || ((Class == Job_Super_Novice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger || Class == Job_Summoner) && BaseLevel > 79)) {
+		// if (countitem(7425) > 0) {
+		// 	mes "The shadow of a Black Key is gleaming in the center of the portal.";
+		// 	mes "To pass this way, looks like I need something.";
+		// 	next;
+		// 	mes "The Black Key reacts to the portal and floats in the air.";
+		// 	next;
+		// 	mes "The key seems to separate into many particles and suddenly collapses into a ball.";
+		// 	mes "The barricade is removed through the power from newly formed black magic gem.";
+		// 	close2;
+		// 	delitem 7425,1; //Key_Black
+		// 	getitem 7430,1; //Magic_Gem_Black
+		// 	warp "thana_step",69,369;
+		// 	end;
+		// }
+		warp "thana_step",69,369;
+		end;
+		// mes "The shadow of a Black Key is gleaming in the center of the portal.";
+		// mes "To pass this way, looks like I need something.";
+		// close;
 	}
 	mes "A mysterious power is blocking my path.";
 	close;

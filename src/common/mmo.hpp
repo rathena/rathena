@@ -4,7 +4,7 @@
 #ifndef MMO_HPP
 #define MMO_HPP
 
-#include <time.h>
+#include <ctime>
 
 #include <config/core.hpp>
 
@@ -115,6 +115,9 @@ typedef uint32 t_itemid;
 #define MAX_CLANALLIANCE 6
 #ifndef MAX_BARTER_REQUIREMENTS
 	#define MAX_BARTER_REQUIREMENTS 5
+#endif
+#ifndef WEB_AUTH_TOKEN_LENGTH
+	#define WEB_AUTH_TOKEN_LENGTH 16+1
 #endif
 
 enum e_enchantgrade : uint16{
@@ -604,7 +607,8 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip,allow_party, disable_call;
+	bool show_equip, disable_call;
+	bool disable_partyinvite;
 	short rename;
 
 	time_t delete_date;

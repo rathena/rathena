@@ -3,12 +3,12 @@
 
 #include "socket.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #ifdef WIN32
 	#include "winapi.hpp"
 #else
-	#include <errno.h>
+	#include <cerrno>
 	#include <arpa/inet.h>
 	#include <net/if.h>
 	#include <netdb.h>
@@ -46,6 +46,10 @@
 #include "showmsg.hpp"
 #include "strlib.hpp"
 #include "timer.hpp"
+
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+int8 packet_buffer[UINT16_MAX];
 
 /////////////////////////////////////////////////////////////////////
 #if defined(WIN32)
@@ -1692,10 +1696,7 @@ void send_shortlist_add_fd(int fd)
 // Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends()
 {
-	int i;
-
-	for( i = send_shortlist_count-1; i >= 0; --i )
-	{
+	for( int i = static_cast<int>( send_shortlist_count - 1 ); i >= 0; --i ){
 		int fd = send_shortlist_array[i];
 		int idx = fd/32;
 		int bit = fd%32;

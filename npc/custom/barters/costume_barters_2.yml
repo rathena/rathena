@@ -1,0 +1,1806 @@
+Header:
+  Type: BARTER_DB
+  Version: 1
+Body:
+  - Name: costume_barters_2
+    Items:
+      - Index: 0
+        Item: C_Corsair_K
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 1
+        Item: C_Detective_Hat_K
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 2
+        Item: C_Sleeping_Kitty_Cat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 3
+        Item: C_Guildsman_Recruiter
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 4
+        Item: C_Majestic_Evil_Horn
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 5
+        Item: Little_Golden_Wing
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 6
+        Item: C_Anubis_Helm_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 7
+        Item: C_Black_Tail_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 8
+        Item: C_Holy_Marching_Hat_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 9
+        Item: C_Cap_Of_Blindness
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 10
+        Item: C_Tha_Despero_Mask_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 11
+        Item: C_Diadem
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 12
+        Item: C_Gold_Spirit_Chain
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 13
+        Item: C_Saint_Frill_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 14
+        Item: C_Light_Darkness_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 15
+        Item: C_Shelter_Wing_Ears
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 16
+        Item: C_Celestial_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 17
+        Item: C_Good_Wedding_Veil
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 18
+        Item: C_YinYang_Earring
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 19
+        Item: C_Holy_Mom_Love
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 20
+        Item: C_Water_Lily_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 21
+        Item: C_King_Frog_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 22
+        Item: C_Umbrella_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 23
+        Item: C_Rainbow_Veil
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 24
+        Item: C_White_Lily
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 25
+        Item: C_Happy_Peace_Proof
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 26
+        Item: C_Leaf_Cat_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 27
+        Item: C_Card_In_The_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 28
+        Item: C_Ear_Of_Angel's_Wing
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 29
+        Item: C_Yggdrasil_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 30
+        Item: C_Home_Cherry_Blossom
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 31
+        Item: C_Sakura_Coronet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 32
+        Item: C_Mischievous_Fairy
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 33
+        Item: C_Japan_Winecup
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 34
+        Item: C_Butterfly_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 35
+        Item: C_Honeybee_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 36
+        Item: C_Angeling_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 37
+        Item: C_Emperor_Wreath_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 38
+        Item: C_Marvelous_Wig
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 39
+        Item: C_Tomboy_Fairy
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 40
+        Item: C_Twinkle_Little_Star
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 41
+        Item: C_King_Berry
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 42
+        Item: C_Persika
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 43
+        Item: C_Rabbit_Ear_Knit_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 44
+        Item: C_Ear_Of_Angel's_Wing_
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 45
+        Item: C_Drooping_Kitty
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 46
+        Item: C_Granpa_Beard
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 47
+        Item: C_Morrigane's_Helm
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 48
+        Item: C_Well_Baked_Toast
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 49
+        Item: C_Mistress_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 50
+        Item: C_Devoted_Eyes
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 51
+        Item: C_Heart_Eyepatch
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 52
+        Item: C_Sweet_Gents
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 53
+        Item: C_Wedding_Veil
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 54
+        Item: C_Alarm_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 55
+        Item: C_Goblin_Mask_01
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 56
+        Item: C_Goblin_Mask_02
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 57
+        Item: C_Goblin_Mask_03
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 58
+        Item: C_Lord_Circlet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 59
+        Item: C_Bone_Helm
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 60
+        Item: C_Apple_Of_Archer
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 61
+        Item: C_Angry_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 62
+        Item: C_Golden_Gear
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 63
+        Item: C_Carnation_Hairband
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 64
+        Item: C_Fox_Hat_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 65
+        Item: C_Drooping_Nine_Tail
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 66
+        Item: C_Pinwheel_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 67
+        Item: C_Red_Vane_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 68
+        Item: C_Taboo_Curse_Scroll
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 69
+        Item: C_Full_Bloom_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 70
+        Item: C_Majestic_Helmet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 71
+        Item: C_Blazing_Sun
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 72
+        Item: C_Cowboy_Hat_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 73
+        Item: C_Ifrit's_Ear
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 74
+        Item: C_Beer_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 75
+        Item: C_Large_Hibiscus
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 76
+        Item: C_Icecream_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 77
+        Item: C_Shiny_Wig
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 78
+        Item: C_Lolita_Ten_Gallon_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 79
+        Item: C_Pecopeco_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 80
+        Item: C_Ifrits_Breath
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 81
+        Item: C_Droop_Morocc_Minion
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 82
+        Item: C_Necromencer_Hood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 83
+        Item: C_Bone_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 84
+        Item: C_Hyegun_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 85
+        Item: C_Yellow_Bandana
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 86
+        Item: C_White_Cat_Hood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 87
+        Item: C_Evil_Druid_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 88
+        Item: C_Vicious_Stop_Bandage
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 89
+        Item: C_Ice_Wing_Ear
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 90
+        Item: C_Amistr_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 91
+        Item: C_Fedora
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 92
+        Item: C_Straw_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 93
+        Item: C_Sunglasses
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 94
+        Item: C_Filir_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 95
+        Item: C_Poring_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 96
+        Item: C_Fillet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 97
+        Item: C_Baseball_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 98
+        Item: C_Lif_Doll_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 99
+        Item: C_L_Magestic_Goat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 100
+        Item: C_Asara_Fairy_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 101
+        Item: C_Fox_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 102
+        Item: C_Vanilmirth_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 103
+        Item: C_Helm_Of_Sun
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 104
+        Item: C_Dragonhelm_Copper
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 105
+        Item: C_Puppy_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 106
+        Item: C_Cat_Hairband
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 107
+        Item: C_Turban
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 108
+        Item: C_Hair_Protector
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 109
+        Item: C_Opera_Ghost_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 110
+        Item: C_Big_Sis_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 111
+        Item: C_Angeling_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 112
+        Item: C_Munak_Turban
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 113
+        Item: C_Bongun_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 114
+        Item: C_Brown_Bear_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 115
+        Item: C_Galapago_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 116
+        Item: C_Filir_Wing_Ears
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 117
+        Item: C_Ear_Of_Black_Cat_
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 118
+        Item: C_Happy_Summer_Wig
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 119
+        Item: C_Iceflake_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 120
+        Item: C_King_Prawn_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 121
+        Item: C_Leaf_Headgear
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 122
+        Item: C_Flying_Angel
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 123
+        Item: C_Cryptura_Hair_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 124
+        Item: C_Heart_Hair_Pin
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 125
+        Item: C_Horn_Of_Succubus
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 126
+        Item: C_Inccubus_Horn
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 127
+        Item: C_Afro_Wig
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 128
+        Item: C_Joker_Jester
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 129
+        Item: C_Blue_Pajamas_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 130
+        Item: C_Pink_Pajamas_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 131
+        Item: aegis_19868
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 132
+        Item: C_Ancient_Civil_Man
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 133
+        Item: C_Black_Rabbit_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 134
+        Item: C_Music_Decoration
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 135
+        Item: C_Phantom_Of_Opera
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 136
+        Item: C_Carnival_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 137
+        Item: C_Carnival_Circlet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 138
+        Item: C_Love_Rabbit_Hood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 139
+        Item: C_Rabbit_Ear_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 140
+        Item: C_Eyes_Of_Darkness
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 141
+        Item: C_Drooping_Bunny
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 142
+        Item: C_Black_Bunny_Band
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 143
+        Item: C_Gold_Tiara
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 144
+        Item: C_Pretty_Rabbit_Hood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 145
+        Item: C_Flowerpot_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 146
+        Item: C_Piamette_Hood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 147
+        Item: C_Vanargandr_Helm
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 148
+        Item: C_Blinker
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 149
+        Item: C_Luxury_Sunglasses
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 150
+        Item: C_One_Eyed_Glass
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 151
+        Item: C_Glasses
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 152
+        Item: C_Pair_Of_Red_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 153
+        Item: C_Wizardry_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 154
+        Item: C_Fried_Egg_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 155
+        Item: C_Night_Sparrow_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 156
+        Item: C_Black_Mage_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 157
+        Item: C_Shrine_Maiden_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 158
+        Item: C_Sorc_Night_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 159
+        Item: C_Ph_Ro_10th_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 160
+        Item: RPC13_1ST_Wreath
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 161
+        Item: RPC13_2ND_Wreath
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 162
+        Item: RPC13_3RD_Wreath
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 163
+        Item: Special_Eyepatch
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 164
+        Item: C_Viking_Helm
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 165
+        Item: C_Cigar
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 166
+        Item: C_Witchs_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 167
+        Item: C_Skull_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 168
+        Item: C_Secret_Society_Hood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 169
+        Item: C_24_Bolt
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 170
+        Item: C_Fancy_Phantom_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 171
+        Item: C_Joker_Jester_
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 172
+        Item: C_White_Deviruchi_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 173
+        Item: C_Halloween_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 174
+        Item: C_Triangular_Roof_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 175
+        Item: C_Cat_Eye
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 176
+        Item: C_Poo_Poo_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 177
+        Item: Felock_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 178
+        Item: C_Little_Devil_S_Horn
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 179
+        Item: C_Black_Cat_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 180
+        Item: C_Gloomy_Pumpkin_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 181
+        Item: C_Lude_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 182
+        Item: C_Cube_Mask_
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 183
+        Item: C_Adv_Whisper_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 184
+        Item: C_Drooping_Wild_Rose
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 185
+        Item: C_Noah_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 186
+        Item: C_Dark_Age
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 187
+        Item: C_Odin_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 188
+        Item: C_One_Eyed_Glasses
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 189
+        Item: C_Ribbon_Black
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 190
+        Item: C_Gray_Drooping_Kitty
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 191
+        Item: C_Gothic_Heart_Wing
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 192
+        Item: C_Classical_Ribbon
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 193
+        Item: C_Angel_Mini_Silk_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 194
+        Item: C_Lazy_Raccoon
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 195
+        Item: C_Cap_Of_Concentration
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 196
+        Item: C_711_Headphone
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 197
+        Item: C_10Gallon_Hat_Of_Flame
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 198
+        Item: C_Hunting_Cap_Of_Gust
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 199
+        Item: C_Knit_Cap_Of_Water
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 200
+        Item: C_Silk_Hat_Of_Earth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 201
+        Item: LI_C_Love_Rabbit_Hood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 202
+        Item: C_Antler
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 203
+        Item: C_Event_Pierrot_Nose
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 204
+        Item: C_Ear_Mufs
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 205
+        Item: C_Orchid_Hairband
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 206
+        Item: C_Hat_Of_Judge
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 207
+        Item: C_RTC_Third_Best
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 208
+        Item: C_RTC_Third
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 209
+        Item: C_Rocket_Helm_RWC
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 210
+        Item: C_Rainbow_Scarf
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 211
+        Item: C_Globe_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 212
+        Item: C_RWC_2013_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 213
+        Item: C_RWC_Champ_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 214
+        Item: C_Solo_Play_Box2
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 215
+        Item: C_Bubble_Gum_In_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 216
+        Item: C_Parade_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 217
+        Item: C_3D_Glasses
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 218
+        Item: C_Mini_Tree_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 219
+        Item: C_Soldier_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 220
+        Item: C_Scooter_Hat_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 221
+        Item: C_Choir_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 222
+        Item: C_Drooping_Argiope
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 223
+        Item: C_Chain_Puppet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 224
+        Item: C_Rune_Circlet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 225
+        Item: C_Mitra
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 226
+        Item: C_Driver_Band_R
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 227
+        Item: C_Driver_Band_Y
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 228
+        Item: C_Shadow_Handicraft
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 229
+        Item: C_Minstrel_Song_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 230
+        Item: C_Midas_Whisper
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 231
+        Item: C_Magic_Stone_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 232
+        Item: C_Blazing_Soul
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 233
+        Item: C_Wind_Whisper
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 234
+        Item: C_Dying_Swan
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 235
+        Item: C_Protect_Of_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 236
+        Item: C_Circlet_Of_Bone
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 237
+        Item: C_Camouflage_RabbitHood
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 238
+        Item: C_Boss_Beret
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 239
+        Item: C_Cat_Santa_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 240
+        Item: C_Golden_Exclamation
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 241
+        Item: C_Silver_Exclamation
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 242
+        Item: C_Golden_Question
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 243
+        Item: C_Silver_Question
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 244
+        Item: C_Santa_Beard
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 245
+        Item: C_Santa's_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 246
+        Item: C_Flower_Hairpin
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 247
+        Item: C_Winter_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 248
+        Item: C_Aura_Quartz_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 249
+        Item: C_Lunatic_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 250
+        Item: C_Blue_Fur_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 251
+        Item: C_Elder_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 252
+        Item: C_Mouton_Life
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 253
+        Item: C_Snow_Rabbit_Knit_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 254
+        Item: C_Galanthus_Guard
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 255
+        Item: C_Chilly_Breath
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 256
+        Item: C_Onigiri_In_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 257
+        Item: C_saLUsalo_Cap
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 258
+        Item: Flower_Blossom
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 259
+        Item: Horse_King
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 260
+        Item: C_Bomb_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 261
+        Item: C_Dragon_Turtle_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 262
+        Item: C_Mouse_Hat1
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 263
+        Item: C_Mouse_Hat2
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 264
+        Item: C_Mouse_Hat3
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 265
+        Item: C_Mouse_Hat4
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 266
+        Item: C_Mouse_Hat5
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 267
+        Item: C_Big_Golden_Bell
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 268
+        Item: C_Pegasus_Wing_Ears
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 269
+        Item: C_Dark_Knight_Mask
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 270
+        Item: C_Bullock_Helm_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 271
+        Item: C_General_Helmet
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 272
+        Item: C_Dragon_Skull
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 273
+        Item: C_Rainbow_Wing_Ears
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 274
+        Item: C_Lightning_Speed
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 275
+        Item: C_Double_Horn_Helm
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 276
+        Item: C_Hat_Of_Cook
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 277
+        Item: Lincoln_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 278
+        Item: Lincoln_Beard
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 279
+        Item: Lobster_Hat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 280
+        Item: C_Marionette_Doll
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 281
+        Item: Horo_Ears
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 282
+        Item: Beret_Of_Artist
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 283
+        Item: C_Zaha_Doll_Hat_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 284
+        Item: C_Heart_Ribbon_Band
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 285
+        Item: C_Love_Piece
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 286
+        Item: C_Red_Beret
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 287
+        Item: C_Ribbon_Orange
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 288
+        Item: C_Cow_Hat1
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 289
+        Item: C_Cow_Hat2
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 290
+        Item: C_Cow_Hat3
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 291
+        Item: C_Cow_Hat4
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 292
+        Item: C_Donut_In_Mouth_J
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 293
+        Item: C_Choco_Donut_In_Mouth
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 294
+        Item: C_Bunny_Head_Dress
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 295
+        Item: C_Firinto_Scarf
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 296
+        Item: C_Buddhist_Priest_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 297
+        Item: C_Jack_Castle_Bat
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 298
+        Item: C_Miracle_Blue_Rose
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50
+      - Index: 299
+        Item: C_Sword_Master_Crown
+        RequiredItems:
+          - Index: 0
+            Item: 3te_Coin
+            Amount: 50

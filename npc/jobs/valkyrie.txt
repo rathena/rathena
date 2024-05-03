@@ -213,46 +213,46 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 }
 
 yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
-	if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
-		if (valkyrie_Q == 0) {
-			mes "[Metheus Sylphe]";
-			mes "Welcome to the Library of the Schweicherbil Magic Academy.";
-			mes "I assume you have come here";
-			mes "to read the 'Book of Ymir.'";
-			next;
-			mes "[Metheus Sylphe]";
-			mes "Unfortunately, the original copy of the book has been damaged over time. We currently only allow the public to view a copy of the book.";
-			next;
-			mes "[Metheus Sylphe]";
-			mes "Also, in order to preserve the original 'Book of Ymir,' we have decided to accept donations from people who wish to read the copy we have provided.";
-			next;
-			mes "[Metheus Sylphe]";
-			mes "The suggested";
-			mes "donation amount is";
-			mes "1,285,000 zeny.";
-			next;
-			if (select("Donate.:Cancel.") == 1) {
-				if (Zeny >= 1285000) {
-					set Zeny, Zeny-1285000;
-					set valkyrie_Q,1;
-					mes "[Metheus Sylphe]";
-					mes "Thank you, your donation will be used for a good cause. You may";
-					mes "now go in and read the book.";
-					close;
-				}
-				mes "[Metheus Sylphe]";
-				mes "Unfortunately, you don't seem to possess enough zeny at the moment. Please check your funds and come back again.";
-				close;
-			}
-			mes "[Metheus Sylphe]";
-			mes "Take your time, and";
-			mes "enjoy your travels.";
-			close;
-		}
-		mes "[Metheus Sylphe]";
-		mes "Once again, thank you for your generous donation. Feel free to read a carbon copy of the 'Book of Ymir' at your leisure.";
-		close;
-	}
+	// if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	// 	if (valkyrie_Q == 0) {
+	// 		mes "[Metheus Sylphe]";
+	// 		mes "Welcome to the Library of the Schweicherbil Magic Academy.";
+	// 		mes "I assume you have come here";
+	// 		mes "to read the 'Book of Ymir.'";
+	// 		next;
+	// 		mes "[Metheus Sylphe]";
+	// 		mes "Unfortunately, the original copy of the book has been damaged over time. We currently only allow the public to view a copy of the book.";
+	// 		next;
+	// 		mes "[Metheus Sylphe]";
+	// 		mes "Also, in order to preserve the original 'Book of Ymir,' we have decided to accept donations from people who wish to read the copy we have provided.";
+	// 		next;
+	// 		mes "[Metheus Sylphe]";
+	// 		mes "The suggested";
+	// 		mes "donation amount is";
+	// 		mes "1,285,000 zeny.";
+	// 		next;
+	// 		if (select("Donate.:Cancel.") == 1) {
+	// 			if (Zeny >= 1285000) {
+	// 				set Zeny, Zeny-1285000;
+	// 				set valkyrie_Q,1;
+	// 				mes "[Metheus Sylphe]";
+	// 				mes "Thank you, your donation will be used for a good cause. You may";
+	// 				mes "now go in and read the book.";
+	// 				close;
+	// 			}
+	// 			mes "[Metheus Sylphe]";
+	// 			mes "Unfortunately, you don't seem to possess enough zeny at the moment. Please check your funds and come back again.";
+	// 			close;
+	// 		}
+	// 		mes "[Metheus Sylphe]";
+	// 		mes "Take your time, and";
+	// 		mes "enjoy your travels.";
+	// 		close;
+	// 	}
+	// 	mes "[Metheus Sylphe]";
+	// 	mes "Once again, thank you for your generous donation. Feel free to read a carbon copy of the 'Book of Ymir' at your leisure.";
+	// 	close;
+	// }
 	mes "[Metheus Sylphe]";
 	mes "Welcome to the Library of the Schweicherbil Magic Academy.";
 	mes "Here, we have a countless number of books. Please take your time and look around.";
@@ -260,89 +260,92 @@ yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
 }
 
 yuno_in02,93,207,1	script	Book of Ymir	111,{
-	if (ADVJOB != 0 || Upper == 1) {
-		mes "[The Book of Ymir]";
-		mes "...The entrance to the Hall of Honor is open to anyone who has moved forward into their next life. It is there to help heroes decide what they want to do, and can lead them to anywhere in this world.";
-		next;
-		mes "[The Book of Ymir]";
-		mes "In the Hall of Honor, everything is prepared for heroes. It is rumored that any wish that cannot be fulfilled in our reality can be realized in the Hall of Honor.";
-		next;
-		if (select("Stop reading.:Continue reading.") == 1) {
-			mes "[The Book of Ymir]";
-			mes ".....";
-			close;
-		}
-		mes "[The Book of Ymir]";
-		mes "There is a forgotten path which leads to the Hall of Honor, the closest place to the heavens. The ordinary will never discover this place...";
-		close2;
-		warp "valkyrie",48,8;
-		end;
-	}
-	else if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
-		if (valkyrie_Q != 0) {
-			mes "[The Book of Ymir]";
-			mes "...Therefore, ancient heroes were";
-			mes "always in anguish, knowing that";
-			mes "eventually, they were mortal and";
-			mes "would pass from this realm...";
-			next;
-			mes "[The Book of Ymir]";
-			mes "There were no documents,";
-			mes "songs, or remaining folklore that had any information on life after death. However, I recently uncovered an old scroll";
-			mes "about Valkyrie...";
-			next;
-			mes "[The Book of Ymir]";
-			mes "Valkyrie...";
-			mes "The legendary";
-			mes "guardian angel.";
-			mes "Angel of Ragnarok.";
-			next;
-			mes "[The Book of Ymir]";
-			mes "Adventurers of great strength";
-			mes "and bravery will be lead by";
-			mes "Valkyrie to Valhalla, the Hall";
-			mes "of Honor. There, they will be";
-			mes "given a new life.";
-			next;
-			mes "[The Book of Ymir]";
-			mes "Reborn, they will live again as";
-			mes "even greater heroes that will";
-			mes "brighten the world. Bodies that";
-			mes "were exhausted will be filled";
-			mes "with energy...";
-			next;
-			mes "[The Book of Ymir]";
-			mes "And their souls will be given abilities with the heart of Ymir. However, the heart of Ymir was totally destroyed and scattered all over the world after the battle for Rune-Midgarts.";
-			next;
-			mes "[The Book of Ymir]";
-			mes "I have found a small amount of";
-			mes "Ymir heart pieces over a long";
-			mes "long period of time. But I can't";
-			mes "confirm if the story of Valkyrie";
-			mes "and Valhalla is true just";
-			mes "through scientific tests.";
-			next;
-			mes "[The Book of Ymir]";
-			mes "So, I am leaving this record in hope that someone in the future";
-			mes "can confirm that Valkyrie and Valhalla actually exist...";
-			next;
-			set valkyrie_Q,2;
-			if(checkquest(1000) == -1) {
-				setquest 1000;
-			}
-			mes "[The Book of Ymir]";
-			mes "Let the heroes live new lives";
-			mes "so they can protect the world";
-			mes "from danger. And then...";
-			close;
-		}
-		mes "[The Book of Ymir]";
-		mes "...";
-		close;
-	}
 	mes "[The Book of Ymir]";
 	mes "...";
 	close;
+	// if (ADVJOB != 0 || Upper == 1) {
+	// 	mes "[The Book of Ymir]";
+	// 	mes "...The entrance to the Hall of Honor is open to anyone who has moved forward into their next life. It is there to help heroes decide what they want to do, and can lead them to anywhere in this world.";
+	// 	next;
+	// 	mes "[The Book of Ymir]";
+	// 	mes "In the Hall of Honor, everything is prepared for heroes. It is rumored that any wish that cannot be fulfilled in our reality can be realized in the Hall of Honor.";
+	// 	next;
+	// 	if (select("Stop reading.:Continue reading.") == 1) {
+	// 		mes "[The Book of Ymir]";
+	// 		mes ".....";
+	// 		close;
+	// 	}
+	// 	mes "[The Book of Ymir]";
+	// 	mes "There is a forgotten path which leads to the Hall of Honor, the closest place to the heavens. The ordinary will never discover this place...";
+	// 	close2;
+	// 	warp "valkyrie",48,8;
+	// 	end;
+	// }
+	// else if (BaseLevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
+	// 	if (valkyrie_Q != 0) {
+	// 		mes "[The Book of Ymir]";
+	// 		mes "...Therefore, ancient heroes were";
+	// 		mes "always in anguish, knowing that";
+	// 		mes "eventually, they were mortal and";
+	// 		mes "would pass from this realm...";
+	// 		next;
+	// 		mes "[The Book of Ymir]";
+	// 		mes "There were no documents,";
+	// 		mes "songs, or remaining folklore that had any information on life after death. However, I recently uncovered an old scroll";
+	// 		mes "about Valkyrie...";
+	// 		next;
+	// 		mes "[The Book of Ymir]";
+	// 		mes "Valkyrie...";
+	// 		mes "The legendary";
+	// 		mes "guardian angel.";
+	// 		mes "Angel of Ragnarok.";
+	// 		next;
+	// 		mes "[The Book of Ymir]";
+	// 		mes "Adventurers of great strength";
+	// 		mes "and bravery will be lead by";
+	// 		mes "Valkyrie to Valhalla, the Hall";
+	// 		mes "of Honor. There, they will be";
+	// 		mes "given a new life.";
+	// 		next;
+	// 		mes "[The Book of Ymir]";
+	// 		mes "Reborn, they will live again as";
+	// 		mes "even greater heroes that will";
+	// 		mes "brighten the world. Bodies that";
+	// 		mes "were exhausted will be filled";
+	// 		mes "with energy...";
+	// 		next;
+	// 		mes "[The Book of Ymir]";
+	// 		mes "And their souls will be given abilities with the heart of Ymir. However, the heart of Ymir was totally destroyed and scattered all over the world after the battle for Rune-Midgarts.";
+	// 		next;
+	// 		mes "[The Book of Ymir]";
+	// 		mes "I have found a small amount of";
+	// 		mes "Ymir heart pieces over a long";
+	// 		mes "long period of time. But I can't";
+	// 		mes "confirm if the story of Valkyrie";
+	// 		mes "and Valhalla is true just";
+	// 		mes "through scientific tests.";
+	// 		next;
+	// 		mes "[The Book of Ymir]";
+	// 		mes "So, I am leaving this record in hope that someone in the future";
+	// 		mes "can confirm that Valkyrie and Valhalla actually exist...";
+	// 		next;
+	// 		set valkyrie_Q,2;
+	// 		if(checkquest(1000) == -1) {
+	// 			setquest 1000;
+	// 		}
+	// 		mes "[The Book of Ymir]";
+	// 		mes "Let the heroes live new lives";
+	// 		mes "so they can protect the world";
+	// 		mes "from danger. And then...";
+	// 		close;
+	// 	}
+	// 	mes "[The Book of Ymir]";
+	// 	mes "...";
+	// 	close;
+	// }
+	// mes "[The Book of Ymir]";
+	// mes "...";
+	// close;
 }
 
 yuno_in05,49,43,1	script	Heart of Ymir	111,{

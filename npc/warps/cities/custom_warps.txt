@@ -1,0 +1,5 @@
+// Head Office
+prontera,133,183,0	warp	headoffice	2,2,moc_para01,31,14
+moc_para01,31,11,0	warp	prtoffice	2,2,prontera,136,186
+moc_para01,48,17,0	warp	headoffice_l2	2,2,moc_para01,48,165
+moc_para01,48,161,0	warp	headoffice_l1	2,2,moc_para01,48,21

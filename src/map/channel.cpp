@@ -3,7 +3,7 @@
 
 #include "channel.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/conf.hpp> //libconfig

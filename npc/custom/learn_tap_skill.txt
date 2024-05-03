@@ -1,0 +1,41 @@
+new_1-1,59,115,6	script	Loi Choi	4_F_CACTUSCHILD2,{
+  mes "[ ^0000FFLoi Choi^000000 ]";
+	mes "Xin lôŞi, miÌnh hõi tãng ğôòng môòt tiì.";
+	mes "MiÌnh coì thêÒ giuìp baòn hoòc kyŞ nãng ^0000FFChoòt^000000.";
+	mes "Môòt kyŞ nãng ğãòc biêòt maÌ chiÒ coì miÌnh mõìi coì thêÒ daòy ğıõòc.";
+	next;
+
+	mes "[ ^0000FFLoi Choi^000000 ]";
+  mes "^0000FFChoòt^000000 laÌ môòt kyŞ nãng ğãòc biêòt giuìp baòn taìc ğôòng tõìi tâìt caÒ quaìi vâòt trên toaÌn maÌn hiÌnh. (15x15)";
+  mes "Taìc ğôòng tõìi quaìi vâòt giuìp ^0000FF+50% kinh nghiêòm^000000 nhâòn ğıõòc nên khaì laÌ hıŞu duòng.";
+	next;
+
+	mes "[ ^0000FFLoi Choi^000000 ]";
+	mes "Baòn coì muôìn hoòc không?";
+	next;
+
+  if (select("- Ok luôn") == 2) {
+		mes "[ ^0000FFLoi Choi^000000 ]";
+		mes "ÔÌ vâòy thiÌ ği thong thaÒ ~";
+		close;
+	}
+
+	specialeffect2 234;
+  skill "NV_TAP",1,SKILL_PERM;
+
+	mes "[ ^0000FFLoi Choi^000000 ]";
+	mes "Xong rôÌi!";
+	mes "HaŞy nhõì ^0000FFChoòt^000000 thıõÌng xuyên nheì!";
+	close;
+
+	OnInit:
+		npcspeed 200;
+		initnpctimer;
+	OnTimer2000:
+		set $valk_walkx,rand(56,62);
+		set $valk_walky,rand(113,119);
+		npcwalkto $valk_walkx, $valk_walky;
+		stopnpctimer;
+		initnpctimer;
+		end;
+}

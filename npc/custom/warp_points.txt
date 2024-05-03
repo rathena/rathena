@@ -1,13 +1,15 @@
 //========================Function=&=Script========================
 
 function	script	Q_Warpra	{
-	mes "[Warp Point]";
-	mes "Hello,";
-	mes "I can warp you to any town or dungeon, but you need to unlock them first by visiting us.";
-	mes "What do you need?";
+	mes "- Ğây laÌ ^0000FFCôÒng diòch chuyêÒn^000000 ğiêÒm giuìp ^0000FFdiòch chuyêÒn^000000 tõìi nhıŞng viò triì khaìc, ğiêÌu kiêòn laÌ câÌn mõÒ khoìa ^0000FFCôÒng diòch chuyêÒn^000000 õÒ ğoì trıõìc.";
+	mes "SıÒ duòng môŞi lâÌn câÌn 1 " + mesitemlink(717, false) + " -";
 
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
+
+	if (countitem(717) < 1) {
+		close;
+	}
 
 	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11]);
 
@@ -259,6 +261,7 @@ L_town:
 	if(Zeny<@pTprice[@Tmenuref[@TWMenu-1]]) callsub L_Short_on_zeny,0;
 	set Zeny, Zeny-@pTprice[@Tmenuref[@TWMenu-1]];
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@pTprice[@Tmenuref[@TWMenu-1]]/16);
+	delitem(717, 1);
 	warp @pTmap$[@Tmenuref[@TWMenu-1]],@pTXcoords[@Tmenuref[@TWMenu-1]],@pTYcoords[@Tmenuref[@TWMenu-1]];
 	close2;
 	set Zeny, Zeny+@pTprice[@Tmenuref[@TWMenu-1]];
@@ -280,7 +283,7 @@ L_dungeon:
 	callfunc "QWS_DLarray";
 
 	// next;
-	// mes "[Warp Point]";
+	// mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	// mes "Please select where you want to go:";
 	// freeloop(1);
 	// set .@menu$,"";
@@ -300,6 +303,7 @@ L_dungeon:
 	if(Zeny<@warpprice) callsub L_Short_on_zeny,1;
 	set Zeny, Zeny-(@warpprice);
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@warpprice/16);
+	delitem(717, 1);
 	warp @DGat$[@Darrayref],@DXcoords[@Darrayref],@DYcoords[@Darrayref];
 	close2;
 	set Zeny, Zeny+@pTprice[@Tmenuref[@DWMenu-1]];
@@ -313,7 +317,7 @@ L_heal_Full:
 	set Zeny, Zeny-@healfee;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@healfee/500);
 	next;
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	mes "Close this window and I will heal you.";
 	close2;
 	percentheal 100,100;
@@ -332,7 +336,7 @@ PHeal:
 	set @Sp, MaxSp-Sp;
 	set @HpPrice, @hp*$QW_HP_H_PRICE;
 	set @SpPrice, @sp*$QW_HP_S_PRICE;
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	if(getarg(0) == 1) mes ""+@HpPrice+" Zeny for "+@Hp+" health points";
 	if(getarg(1) == 1) mes ""+@SpPrice+" Zeny for "+@Sp+" skill points";
 	set @total, @HpPrice+@SpPrice;
@@ -353,14 +357,14 @@ PHeal:
 	end;
 
 Zeny_Short_Both:
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	mes "Choose another option, you can afford both.";
 	mes "I can heal as much as you can afford, too.";
 	if (select("OK","Exit") == 2) goto L_end;
 	goto PHeal;
 
 Zeny_short_HP:
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	mes "Do you want me to partly heal your HP?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Hp, Zeny/$QW_HP_H_PRICE;
@@ -373,7 +377,7 @@ Zeny_short_HP:
 	end;
 
 Zeny_short_SP:
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	mes "Do you want me to partly heal your SP?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Sp, Zeny/$QW_HP_S_PRICE;
@@ -397,7 +401,7 @@ L_Storage:
 	set Zeny, Zeny-@fee;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);
 
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	if(#kafra_code) {
 		mes "Enter your storage password:";
 		set @code_,0;
@@ -415,14 +419,14 @@ L_Storage:
 	end;
 
 L_StorageJBlow:
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	mes "I am sorry but you have to be at least Novice level 6 if you want to use the storage.";
 	return;
 
 L_GStorage:
 	if (!@GID) {
 		next;
-		mes "[Warp Point]";
+		mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 		mes "You are not a part of a guild I can't help you.";
 		close;
 		end;
@@ -431,7 +435,7 @@ L_GStorage:
 	set Zeny, Zeny-$QW_GS_PRICE;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + ($QW_GS_PRICE/5);
 	next;
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	mes "Close this window and I will open the ^5533FF" + GetGuildName(@GID) + "^000000 storage.";
 	close2;
 	guildopenstorage;
@@ -444,19 +448,19 @@ L_end:
 //============================Few=Warp=============================
 L_FewWarps:
 	next;
-	mes "[Warp Point]";
-	mes "You need to unlock locations before they come available to you.";
-	mes "To unlock a location talk to my colleagues all over the world.";
-	mes "Each account has its own stamp card.";
-	mes "Want me to check what stamps you have collected so far?";
-	if (select("Yes","No")==1) callsub stampcard;
-	close;
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
+	mes "Iìt ğiòa ğiêÒm quaì thiÌ ği mõÒ khoìa thêm ği thiìm, haha.";
+	// mes "To unlock a location talk to my colleagues all over the world.";
+	// mes "Each account has its own stamp card.";
+	// mes "Want me to check what stamps you have collected so far?";
+	// if (select("Yes","No")==1) callsub stampcard;
+	// close;
 	end;
 
 //============================No=Unlock============================
 L_NoUnlock:
 	next;
-	mes "[Warp Point]";
+	mes "[ ^0000FFCôÒng diòch chuyêÒn^000000 ]";
 	mes "I don't unlock this location, my assistant deeper in the dungeon will unlock this place.";
 	close;
 	end;
@@ -525,7 +529,7 @@ function	script	QWS_DungeonStamps	{
 function	script	QWS_MMarray	{
 
 	// Currently 9 items
-	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Why so few warps?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
+	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, " ^0000DE~ ThaÌnh phôì / (Non-Kafra) Towns^000000", " ^DE0000~ HâÌm nguòc / Dungeons^000000", "Sao iìt ğiêÒm thêì?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
 	set @Mi,0; // loop counter
 	set @Mj,0; // menu line counter
 
@@ -733,8 +737,8 @@ function	script	QWS_Tarray	{
 	setarray @pTmenuitems$[@Ti], "Niflheim";
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
-	setarray @pTmap$[@Ti], "niflheim";
-	setarray @pTXcoords[@Ti], 17;
+	setarray @pTmap$[@Ti], "nif_in";
+	setarray @pTXcoords[@Ti], 19;
 	setarray @pTYcoords[@Ti], 15;
 
 	QWS_Make_Town_Menu 10;
@@ -765,6 +769,15 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 127;
 
 	QWS_Make_Town_Menu 13;
+
+	setarray @pTmenuitems$[@Ti], "Gonryun";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "gonryun";
+	setarray @pTXcoords[@Ti], 158;
+	setarray @pTYcoords[@Ti], 116;
+
+	QWS_Make_Town_Menu 14;
 
 //----------------Cancel
 	setarray @pTmenuitems$[@Ti], "Cancel";
@@ -877,10 +890,15 @@ function	script	QWS_Darray	{
 	setarray @pDfee$[@Di], "$QW_AW_FEE";
 	setarray @DLevels[@Di], 1;
 
-	setarray @DGat$[@Dref], "moc_fild04";
+	// setarray @DGat$[@Dref], "moc_fild04";
+	// setarray @DLevelName$[@Dref], "Level 1";
+	// setarray @DXcoords[@Dref], 207;
+	// setarray @DYcoords[@Dref], 329;
+	// setarray @DDepth[@Dref], 0;
+	setarray @DGat$[@Dref], "cmd_fild08";
 	setarray @DLevelName$[@Dref], "Level 1";
-	setarray @DXcoords[@Dref], 207;
-	setarray @DYcoords[@Dref], 329;
+	setarray @DXcoords[@Dref], 327;
+	setarray @DYcoords[@Dref], 354;
 	setarray @DDepth[@Dref], 0;
 
 	QWS_Make_Dungeon_Menu 3;
@@ -1542,18 +1560,14 @@ function	script	QWS_Dungeon_Warpra	{
 	function QWS_D_setbin;
 	
 	if ((QWS_D_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
-		// mes "[Warp Point]";
-		// mes getarg(1)+" unlocked!";
-		showscript "Baòn ğaŞ mõÒ khoìa môòt viò triì mõìi";
+		showscript "Baòn ğaŞ mõÒ khoìa môòt côÒng diòch chuyêÒn";
 		specialeffect2 234;
 		QWS_D_setbin(getarg(0));
 		return;
-	} else if (QWS_D_getbin(getarg(0)) == 1) {
-		// mes "[Warp Point]";
-		// mes "Sorry, I can only unlock this location.";
 	} else
-		debugmes "QWS_Dungeon_Warpra error, improper syntax?";
-	return;
+		return;
+	// } else
+	// 	debugmes "QWS_Dungeon_Warpra error, improper syntax?";
 
 
 function	QWS_D_setbin	{
@@ -1590,17 +1604,16 @@ function	script	QWS_Town_Warpra	{
 	function QWS_T_setbin;
 	
 	if ((QWS_T_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
-		// mes "[Warp Point]";
-		// mes getarg(1)+" unlocked!";
-		showscript "Baòn ğaŞ mõÒ khoìa môòt viò triì mõìi";
+		showscript "Baòn ğaŞ mõÒ khoìa môòt côÒng diòch chuyêÒn";
 		specialeffect2 234;
 		QWS_T_setbin(getarg(0));
 		return;
 	} else if (QWS_T_getbin(getarg(0)) == 1) {
 		callfunc "Q_Warpra",0;
 		return;
-	} else
-		debugmes "QWS_Town_Warpra error, improper syntax ?";
+	}
+	// } else
+	// 	debugmes "QWS_Town_Warpra error, improper syntax ?";
 	return;
 
 function	QWS_T_setbin	{
@@ -1647,79 +1660,94 @@ binget:
 // valkyrie,48,35,8	duplicate(Warpra#0)	Warpra#13	113
 // yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
 
-amatsu,100,154,4	script	Warp Point#15	4_ED_ORB,{ callfunc "QWS_Town_Warpra",0,"Amatsu Town"; close; }
-ayothaya,207,169,4	script	Warp Point#16	4_ED_ORB,{ callfunc "QWS_Town_Warpra",1,"Ayothaya Town"; close; }
-brasilis,200,225,5	script	Warp Point#17	4_ED_ORB,{ callfunc "QWS_Town_Warpra",2,"Brasilis Town"; close; }
-einbroch,229,208,1	script	Warp Point#18	4_ED_ORB,{ callfunc "QWS_Town_Warpra",3,"Einbroch Town"; close; }
-hugel,97,167,4	script	Warp Point#19	4_ED_ORB,{ callfunc "QWS_Town_Warpra",4,"Hugel Town"; close; }
-jawaii,217,199,5	script	Warp Point#20	4_ED_ORB,{ callfunc "QWS_Town_Warpra",5,"Jawaii Town"; close; }
-lighthalzen,152,100,4	script	Warp Point#22	4_ED_ORB,{ callfunc "QWS_Town_Warpra",6,"Lighthalzen Town"; close; }
-louyang,205,103,4	script	Warp Point#23	4_ED_ORB,{ callfunc "QWS_Town_Warpra",7,"Louyang Town"; close; }
-manuk,231,164,5	script	Warp Point#24	4_ED_ORB,{ callfunc "QWS_Town_Warpra",8,"Manuk Town"; close; }
-moscovia,226,191,5	script	Warp Point#25	4_ED_ORB,{ callfunc "QWS_Town_Warpra",9,"Moscovia Town"; close; }
-nif_in,17,16,4	script	Warp Point#26	4_ED_ORB,{ callfunc "QWS_Town_Warpra",10,"Niflheim Town"; close; }
-rachel,122,147,5	script	Warp Point#27	4_ED_ORB,{ callfunc "QWS_Town_Warpra",11,"Rachel Town"; close; }
-splendide,203,185,4	script	Warp Point#28	4_ED_ORB,{ callfunc "QWS_Town_Warpra",12,"Splendide Town"; close; }
-veins,211,132,4	script	Warp Point#29	4_ED_ORB,{ callfunc "QWS_Town_Warpra",13,"Veins Town"; close; }
+prontera,159,193,4	script	CôÒng diòch chuyêÒn#warpoints_town_1	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+alberta,28,240,4	script	CôÒng diòch chuyêÒn#warpoints_town_2	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+aldebaran,145,118,4	script	CôÒng diòch chuyêÒn#warpoints_town_3	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+comodo,194,158,4	script	CôÒng diòch chuyêÒn#warpoints_town_4	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+geffen,124,72,4	script	CôÒng diòch chuyêÒn#warpoints_town_5	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+izlude,132,120,4	script	CôÒng diòch chuyêÒn#warpoints_town_6	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+morocc,159,97,4	script	CôÒng diòch chuyêÒn#warpoints_town_7	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+umbala,106,150,3	script	CôÒng diòch chuyêÒn#warpoints_town_8	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+payon,182,108,4	script	CôÒng diòch chuyêÒn#warpoints_town_9	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+yuno,162,47,4	script	CôÒng diòch chuyêÒn#warpoints_town_10	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+xmas,150,136,6	script	CôÒng diòch chuyêÒn#warpoints_town_11	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+// gonryun,162,122,4	script	CôÒng diòch chuyêÒn#warpoints_town_12	4_ED_ORB,{ callfunc "Q_Warpra",0; close; }
+
+amatsu,100,154,4	script	CôÒng diòch chuyêÒn#warpoints_town_15	4_ED_ORB,{ callfunc "QWS_Town_Warpra",0,"Amatsu Town"; close; }
+ayothaya,207,169,4	script	CôÒng diòch chuyêÒn#warpoints_town_16	4_ED_ORB,{ callfunc "QWS_Town_Warpra",1,"Ayothaya Town"; close; }
+brasilis,200,225,5	script	CôÒng diòch chuyêÒn#warpoints_town_17	4_ED_ORB,{ callfunc "QWS_Town_Warpra",2,"Brasilis Town"; close; }
+einbroch,229,208,1	script	CôÒng diòch chuyêÒn#warpoints_town_18	4_ED_ORB,{ callfunc "QWS_Town_Warpra",3,"Einbroch Town"; close; }
+hugel,97,167,4	script	CôÒng diòch chuyêÒn#warpoints_town_19	4_ED_ORB,{ callfunc "QWS_Town_Warpra",4,"Hugel Town"; close; }
+jawaii,217,199,5	script	CôÒng diòch chuyêÒn#warpoints_town_20	4_ED_ORB,{ callfunc "QWS_Town_Warpra",5,"Jawaii Town"; close; }
+lighthalzen,152,100,4	script	CôÒng diòch chuyêÒn#warpoints_town_22	4_ED_ORB,{ callfunc "QWS_Town_Warpra",6,"Lighthalzen Town"; close; }
+louyang,205,103,4	script	CôÒng diòch chuyêÒn#warpoints_town_23	4_ED_ORB,{ callfunc "QWS_Town_Warpra",7,"Louyang Town"; close; }
+manuk,231,164,5	script	CôÒng diòch chuyêÒn#warpoints_town_24	4_ED_ORB,{ callfunc "QWS_Town_Warpra",8,"Manuk Town"; close; }
+moscovia,226,191,5	script	CôÒng diòch chuyêÒn#warpoints_town_25	4_ED_ORB,{ callfunc "QWS_Town_Warpra",9,"Moscovia Town"; close; }
+nif_in,17,16,4	script	CôÒng diòch chuyêÒn#warpoints_town_26	4_ED_ORB,{ callfunc "QWS_Town_Warpra",10,"Niflheim Town"; close; }
+rachel,122,147,5	script	CôÒng diòch chuyêÒn#warpoints_town_27	4_ED_ORB,{ callfunc "QWS_Town_Warpra",11,"Rachel Town"; close; }
+splendide,203,185,4	script	CôÒng diòch chuyêÒn#warpoints_town_28	4_ED_ORB,{ callfunc "QWS_Town_Warpra",12,"Splendide Town"; close; }
+veins,211,132,4	script	CôÒng diòch chuyêÒn#warpoints_town_29	4_ED_ORB,{ callfunc "QWS_Town_Warpra",13,"Veins Town"; close; }
+gonryun,162,122,4	script	CôÒng diòch chuyêÒn#warpoints_town_30	4_ED_ORB,{ callfunc "QWS_Town_Warpra",14,"Gonryun Town"; close; }
 // lasagna,202,189,5	script	Warpra#21	4_ED_ORB,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
 
-hu_fild05,176,304,1	script	Warp Point#0	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
-hugel,211,167,5	script	Warp Point#1	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",1,"Airship Assault"; close; }
-ama_in02,115,184,3	script	Warp Point#2	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",2,"Amatsu Dungeon"; close; }
-moc_fild04,207,331,5	script	Warp Point#3	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",3,"Ant Hell"; close; }
-ayo_fild02,283,144,1	script	Warp Point#4	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",4,"Ayothaya Dungeon"; close; }
-comodo,32,218,2	script	Warp Point#5	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",5,"Beach Dungeon 1 (Medusa)"; close; }
-comodo,172,354,4	script	Warp Point#6	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",6,"Beach Dungeon 1 (Stalatic Golem)"; close; }
-comodo,325,178,4	script	Warp Point#7	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",7,"Beach Dungeon 1 (Thara Frog)"; close; }
-lhz_in01,36,220,3	script	Warp Point#8	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",8,"Bio Labs 1"; close; }
-lighthalzen,312,293,0	script	Warp Point#9	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",9,"Bio Labs 2"; close; }
-bra_in01,209,183,2	script	Warp Point#10	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",10,"Brasilis Dungeon"; close; }
-izlu2dun,102,83,3	script	Warp Point#11	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",11,"Byalan Dungeon"; close; }
-iz_dun03,264,240,4	script	Warp Point#12	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",12,"Byalan Dungeon F4"; close; }
-alde_dun03,260,19,5	script	Warp Point#13	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",13,"Clock Tower B3"; close; }
-ve_fild07,132,132,3	script	Warp Point#14	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",14,"Cursed Abbey"; close; }
-einbech,132,249,3	script	Warp Point#15	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",15,"Einbech Mines"; close; }
-gef_tower,157,35,3	script	Warp Point#16	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",16,"Geffen Dungeon"; close; }
-glast_01,194,291,3	script	Warp Point#17	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",17,"Glast Heim Castle"; close; }
-glast_01,79,186,3	script	Warp Point#18	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",18,"Glast Heim Chivalry"; close; }
-glast_01,204,136,3	script	Warp Point#19	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",19,"Glast Heim Church"; close; }
-gl_dun02,231,268,1	script	Warp Point#20	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",20,"Glast Heim Lowest Cave"; close; }
-gl_sew03,179,286,3	script	Warp Point#21	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",21,"Glast Heim Sewers"; close; }
-glast_01,48,112,3	script	Warp Point#22	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",22,"Glast Heim Staircase"; close; }
-gonryun,167,192,3	script	Warp Point#23	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",23,"Gonryun Dungeon"; close; }
-mjolnir_12,39,21,3	script	Warp Point#24	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",24,"Hidden Labrynth Alde"; close; }
-prt_fild01,140,367,3	script	Warp Point#25	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",25,"Hidden Labrynth Prontera"; close; }
-ra_fild01,226,325,4	script	Warp Point#26	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",26,"Ice Dungeon"; close; }
-jupe_cave,33,56,3	script	Warp Point#27	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",27,"Juperos"; close; }
-yuno_fild08,81,175,3	script	Warp Point#28	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
-louyang,37,277,3	script	Warp Point#29	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",29,"Louyang Dungeon"; close; }
-yuno_fild03,36,135,3	script	Warp Point#30	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",30,"Magma Dungeon"; close; }
-mjolnir_02,88,357,3	script	Warp Point#31	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",31,"Mjolnir Dead Pit"; close; }
-mosk_fild02,183,252,1	script	Warp Point#32	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",32,"Moscovia Dungeon"; close; }
-nyd_dun02,104,192,3	script	Warp Point#33	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",33,"Nidhoggur's Nest"; close; }
-niflheim,154,119,3	script	Warp Point#34	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",34,"Niflheim Dungeon"; close; }
-hugel,203,110,3	script	Warp Point#35	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",35,"Odin Temple"; close; }
-in_orcs01,23,174,3	script	Warp Point#36	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",36,"Orc Dungeon"; close; }
-pay_arche,41,136,3	script	Warp Point#37	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",37,"Payon Cave"; close; }
-prt_fild05,273,216,3	script	Warp Point#38	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",38,"Prontera Culverts"; close; }
-moc_ruins,56,156,1	script	Warp Point#39	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",39,"Pyramid"; close; }
-ra_temin,21,318,3	script	Warp Point#40	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",40,"Rachel Sanctuary"; close; }
-moc_fild19,107,96,3	script	Warp Point#41	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",41,"Sphinx"; close; }
-alb2trea,94,106,3	script	Warp Point#42	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",42,"Sunken Ship"; close; }
-hu_fild01,145,159,3	script	Warp Point#43	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",43,"Thanatos Tower"; close; }
-ve_fild03,176,239,3	script	Warp Point#44	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",44,"Thor Volcano"; close; }
-xmas,150,312,4	script	Warp Point#45	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",45,"Toy Factory"; close; }
-tur_dun01,160,242,3	script	Warp Point#46	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",46,"Turtle Island"; close; }
-umbala,112,279,4	script	Warp Point#47	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",47,"Umbala Dungeon"; close; }
+hu_fild05,176,304,1	script	CôÒng diòch chuyêÒn#0	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; }
+hugel,211,167,5	script	CôÒng diòch chuyêÒn#1	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",1,"Airship Assault"; }
+ama_in02,115,184,3	script	CôÒng diòch chuyêÒn#2	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",2,"Amatsu Dungeon"; }
+// moc_fild04,207,331,5	script	CôÒng diòch chuyêÒn#3	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",3,"Ant Hell"; }
+cmd_fild08,336,363,5	script	CôÒng diòch chuyêÒn#3	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",3,"Ant Hell"; }
+ayo_fild02,283,144,1	script	CôÒng diòch chuyêÒn#4	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",4,"Ayothaya Dungeon"; }
+comodo,32,218,2	script	CôÒng diòch chuyêÒn#5	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",5,"Beach Dungeon 1 (Medusa)"; }
+comodo,172,354,4	script	CôÒng diòch chuyêÒn#6	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",6,"Beach Dungeon 1 (Stalatic Golem)"; }
+comodo,325,178,4	script	CôÒng diòch chuyêÒn#7	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",7,"Beach Dungeon 1 (Thara Frog)"; }
+lhz_in01,36,220,3	script	CôÒng diòch chuyêÒn#8	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",8,"Bio Labs 1"; }
+lighthalzen,312,293,0	script	CôÒng diòch chuyêÒn#9	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",9,"Bio Labs 2"; }
+bra_in01,209,183,2	script	CôÒng diòch chuyêÒn#10	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",10,"Brasilis Dungeon"; }
+izlu2dun,102,83,3	script	CôÒng diòch chuyêÒn#11	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",11,"Byalan Dungeon"; }
+iz_dun03,264,240,4	script	CôÒng diòch chuyêÒn#12	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",12,"Byalan Dungeon F4"; }
+alde_dun03,260,19,5	script	CôÒng diòch chuyêÒn#13	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",13,"Clock Tower B3"; }
+ve_fild07,132,132,3	script	CôÒng diòch chuyêÒn#14	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",14,"Cursed Abbey"; }
+einbech,132,249,3	script	CôÒng diòch chuyêÒn#15	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",15,"Einbech Mines"; }
+gef_tower,157,35,3	script	CôÒng diòch chuyêÒn#16	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",16,"Geffen Dungeon"; }
+glast_01,194,291,3	script	CôÒng diòch chuyêÒn#17	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",17,"Glast Heim Castle"; }
+glast_01,79,186,3	script	CôÒng diòch chuyêÒn#18	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",18,"Glast Heim Chivalry"; }
+glast_01,204,136,3	script	CôÒng diòch chuyêÒn#19	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",19,"Glast Heim Church"; }
+gl_dun02,231,268,1	script	CôÒng diòch chuyêÒn#20	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",20,"Glast Heim Lowest Cave"; }
+gl_sew03,179,286,3	script	CôÒng diòch chuyêÒn#21	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",21,"Glast Heim Sewers"; }
+glast_01,48,112,3	script	CôÒng diòch chuyêÒn#22	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",22,"Glast Heim Staircase"; }
+gonryun,167,192,3	script	CôÒng diòch chuyêÒn#23	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",23,"Gonryun Dungeon"; }
+mjolnir_12,39,21,3	script	CôÒng diòch chuyêÒn#24	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",24,"Hidden Labrynth Alde"; }
+prt_fild01,140,367,3	script	CôÒng diòch chuyêÒn#25	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",25,"Hidden Labrynth Prontera"; }
+ra_fild01,226,325,4	script	CôÒng diòch chuyêÒn#26	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",26,"Ice Dungeon"; }
+jupe_cave,33,56,3	script	CôÒng diòch chuyêÒn#27	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",27,"Juperos"; }
+yuno_fild08,81,175,3	script	CôÒng diòch chuyêÒn#28	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; }
+louyang,37,277,3	script	CôÒng diòch chuyêÒn#29	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",29,"Louyang Dungeon"; }
+yuno_fild03,36,135,3	script	CôÒng diòch chuyêÒn#30	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",30,"Magma Dungeon"; }
+mjolnir_02,88,357,3	script	CôÒng diòch chuyêÒn#31	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",31,"Mjolnir Dead Pit"; }
+mosk_fild02,183,252,1	script	CôÒng diòch chuyêÒn#32	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",32,"Moscovia Dungeon"; }
+nyd_dun02,104,192,3	script	CôÒng diòch chuyêÒn#33	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",33,"Nidhoggur's Nest"; }
+niflheim,154,119,3	script	CôÒng diòch chuyêÒn#34	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",34,"Niflheim Dungeon"; }
+hugel,203,110,3	script	CôÒng diòch chuyêÒn#35	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",35,"Odin Temple"; }
+in_orcs01,23,174,3	script	CôÒng diòch chuyêÒn#36	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",36,"Orc Dungeon"; }
+pay_arche,41,136,3	script	CôÒng diòch chuyêÒn#37	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",37,"Payon Cave"; }
+prt_fild05,273,216,3	script	CôÒng diòch chuyêÒn#38	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",38,"Prontera Culverts"; }
+moc_ruins,56,156,1	script	CôÒng diòch chuyêÒn#39	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",39,"Pyramid"; }
+ra_temin,21,318,3	script	CôÒng diòch chuyêÒn#40	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",40,"Rachel Sanctuary"; }
+moc_fild19,107,96,3	script	CôÒng diòch chuyêÒn#41	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",41,"Sphinx"; }
+alb2trea,94,106,3	script	CôÒng diòch chuyêÒn#42	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",42,"Sunken Ship"; }
+hu_fild01,145,159,3	script	CôÒng diòch chuyêÒn#43	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",43,"Thanatos Tower"; }
+ve_fild03,176,239,3	script	CôÒng diòch chuyêÒn#44	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",44,"Thor Volcano"; }
+xmas,150,312,4	script	CôÒng diòch chuyêÒn#45	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",45,"Toy Factory"; }
+tur_dun01,160,242,3	script	CôÒng diòch chuyêÒn#46	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",46,"Turtle Island"; }
+umbala,112,279,4	script	CôÒng diòch chuyêÒn#47	4_ED_ORB,{ callfunc "QWS_Dungeon_Warpra",47,"Umbala Dungeon"; }
 
-// morroc_des,295,211,5	script	Warp Point#15	112,{ callfunc "QWS_Dungeon_Warpra",15,"Dimensional Gorge"; close; }
-// lasa_fild02,347,238,4	script	Warp Point#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Dragon's Nest"; close; }
+// morroc_des,295,211,5	script	CôÒng diòch chuyêÒn#15	112,{ callfunc "QWS_Dungeon_Warpra",15,"Dimensional Gorge"; close; }
+// lasa_fild02,347,238,4	script	CôÒng diòch chuyêÒn#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Dragon's Nest"; close; }
 // Old Glast Heim
-// glast_02,140,367,3	script	Warp Point#27	112,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
-// glast_02,226,325,4	script	Warp Point#28	112,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
-// glast_02,33,56,3	script	Warp Point#17	112,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
-// glast_02,81,175,3	script	Warp Point#18	112,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
-// ogh_prison1,37,277,3	script	Warp Point#19	112,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }
-// ogh_sew,36,135,3	script	Warp Point#20	112,{ callfunc "QWS_Dungeon_Warpra",20,"Payon Dungeon"; close; }
-// glast_02,88,357,3	script	Warp Point#21	112,{ callfunc "QWS_Dungeon_Warpra",21,"Pyramides Dungeon"; close; }
-// und_sanc03,183,252,1	script	Warp Point#22	112,{ callfunc "QWS_Dungeon_Warpra",22,"Sphinx Dungeon"; close; }
+// glast_02,140,367,3	script	CôÒng diòch chuyêÒn#27	112,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
+// glast_02,226,325,4	script	CôÒng diòch chuyêÒn#28	112,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
+// glast_02,33,56,3	script	CôÒng diòch chuyêÒn#17	112,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
+// glast_02,81,175,3	script	CôÒng diòch chuyêÒn#18	112,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
+// ogh_prison1,37,277,3	script	CôÒng diòch chuyêÒn#19	112,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }
+// ogh_sew,36,135,3	script	CôÒng diòch chuyêÒn#20	112,{ callfunc "QWS_Dungeon_Warpra",20,"Payon Dungeon"; close; }
+// glast_02,88,357,3	script	CôÒng diòch chuyêÒn#21	112,{ callfunc "QWS_Dungeon_Warpra",21,"Pyramides Dungeon"; close; }
+// und_sanc03,183,252,1	script	CôÒng diòch chuyêÒn#22	112,{ callfunc "QWS_Dungeon_Warpra",22,"Sphinx Dungeon"; close; }

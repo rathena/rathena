@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2021 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -127,6 +127,8 @@ Body:
       - Item: Scorpion_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1002
     AegisName: PORING
     Name: Poring
@@ -137,6 +139,7 @@ Body:
     Attack: 7
     Attack2: 10
     MagicDefense: 5
+    Int: 0
     Dex: 6
     Luk: 30
     AttackRange: 1
@@ -170,6 +173,8 @@ Body:
       - Item: Poring_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1004
     AegisName: HORNET
     Name: Hornet
@@ -218,6 +223,8 @@ Body:
       - Item: Hornet_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1005
     AegisName: FARMILIAR
     Name: Familiar
@@ -231,6 +238,7 @@ Body:
     Vit: 8
     Int: 5
     Dex: 28
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -262,6 +270,8 @@ Body:
       - Item: Farmiliar_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1007
     AegisName: FABRE
     Name: Fabre
@@ -273,6 +283,7 @@ Body:
     Attack2: 11
     Agi: 2
     Vit: 4
+    Int: 0
     Dex: 7
     Luk: 5
     AttackRange: 1
@@ -309,6 +320,8 @@ Body:
       - Item: Fabre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1008
     AegisName: PUPA
     Name: Pupa
@@ -319,6 +332,7 @@ Body:
     Attack: 1
     Attack2: 2
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -350,6 +364,8 @@ Body:
       - Item: Pupa_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1009
     AegisName: CONDOR
     Name: Condor
@@ -361,6 +377,7 @@ Body:
     Attack2: 14
     Agi: 13
     Vit: 5
+    Int: 0
     Dex: 13
     Luk: 10
     AttackRange: 1
@@ -394,6 +411,8 @@ Body:
       - Item: Condor_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1010
     AegisName: WILOW
     Name: Willow
@@ -440,6 +459,8 @@ Body:
       - Item: Wilow_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1011
     AegisName: CHONCHON
     Name: Chonchon
@@ -488,6 +509,8 @@ Body:
       - Item: Chonchon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1012
     AegisName: RODA_FROG
     Name: Roda Frog
@@ -529,6 +552,8 @@ Body:
       - Item: Roda_Frog_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1013
     AegisName: WOLF
     Name: Wolf
@@ -574,6 +599,8 @@ Body:
       - Item: Wolf_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1014
     AegisName: SPORE
     Name: Spore
@@ -619,6 +646,8 @@ Body:
       - Item: Spore_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1015
     AegisName: ZOMBIE
     Name: Zombie
@@ -631,7 +660,9 @@ Body:
     MagicDefense: 10
     Agi: 8
     Vit: 7
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -658,6 +689,8 @@ Body:
       - Item: Zombie_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1016
     AegisName: ARCHER_SKELETON
     Name: Archer Skeleton
@@ -704,6 +737,8 @@ Body:
       - Item: Archer_Skeleton_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1018
     AegisName: CREAMY
     Name: Creamy
@@ -752,6 +787,8 @@ Body:
       - Item: Creamy_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1019
     AegisName: PECOPECO
     Name: Peco Peco
@@ -796,6 +833,8 @@ Body:
       - Item: Pecopeco_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1020
     AegisName: MANDRAGORA
     Name: Mandragora
@@ -808,6 +847,7 @@ Body:
     MagicDefense: 25
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 4
@@ -842,6 +882,8 @@ Body:
       - Item: Mandragora_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1023
     AegisName: ORK_WARRIOR
     Name: Orc Warrior
@@ -893,6 +935,8 @@ Body:
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1024
     AegisName: WORM_TAIL
     Name: Wormtail
@@ -939,6 +983,8 @@ Body:
       - Item: Worm_Tail_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1025
     AegisName: SNAKE
     Name: Boa
@@ -985,6 +1031,8 @@ Body:
       - Item: Snake_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1026
     AegisName: MUNAK
     Name: Munak
@@ -1033,6 +1081,8 @@ Body:
       - Item: Munak_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1028
     AegisName: SOLDIER_SKELETON
     Name: Soldier Skeleton
@@ -1082,6 +1132,8 @@ Body:
       - Item: Soldier_Skeleton_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1029
     AegisName: ISIS
     Name: Isis
@@ -1131,6 +1183,8 @@ Body:
       - Item: Isis_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1030
     AegisName: ANACONDAQ
     Name: Anacondaq
@@ -1176,6 +1230,8 @@ Body:
       - Item: Anacondaq_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1031
     AegisName: POPORING
     Name: Poporing
@@ -1188,6 +1244,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 19
     Luk: 15
     AttackRange: 1
@@ -1221,6 +1278,8 @@ Body:
       - Item: Poporing_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1032
     AegisName: VERIT
     Name: Verit
@@ -1233,6 +1292,7 @@ Body:
     MagicDefense: 5
     Agi: 19
     Vit: 38
+    Int: 0
     Dex: 38
     Luk: 20
     AttackRange: 1
@@ -1265,6 +1325,8 @@ Body:
       - Item: Verit_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1033
     AegisName: ELDER_WILOW
     Name: Elder Willow
@@ -1312,6 +1374,8 @@ Body:
       - Item: Elder_Wilow_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1034
     AegisName: THARA_FROG
     Name: Thara Frog
@@ -1355,6 +1419,8 @@ Body:
       - Item: Thara_Frog_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1035
     AegisName: HUNTER_FLY
     Name: Hunter Fly
@@ -1405,6 +1471,8 @@ Body:
       - Item: Hunter_Fly_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1036
     AegisName: GHOUL
     Name: Ghoul
@@ -1418,6 +1486,7 @@ Body:
     MagicDefense: 20
     Agi: 20
     Vit: 29
+    Int: 0
     Dex: 45
     Luk: 20
     AttackRange: 1
@@ -1451,6 +1520,8 @@ Body:
       - Item: Ghoul_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1037
     AegisName: SIDE_WINDER
     Name: Side Winder
@@ -1499,6 +1570,8 @@ Body:
       - Item: Side_Winder_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1038
     AegisName: OSIRIS
     Name: Osiris
@@ -1559,6 +1632,8 @@ Body:
       - Item: Osiris_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1039
     AegisName: BAPHOMET
     Name: Baphomet
@@ -1618,6 +1693,8 @@ Body:
       - Item: Baphomet_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1040
     AegisName: GOLEM
     Name: Golem
@@ -1630,7 +1707,9 @@ Body:
     Defense: 40
     Agi: 15
     Vit: 25
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -1663,6 +1742,8 @@ Body:
       - Item: Golem_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1041
     AegisName: MUMMY
     Name: Mummy
@@ -1676,6 +1757,7 @@ Body:
     Str: 28
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -1708,6 +1790,8 @@ Body:
       - Item: Mummy_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1042
     AegisName: STEEL_CHONCHON
     Name: Steel Chonchon
@@ -1755,6 +1839,8 @@ Body:
       - Item: Steel_Chonchon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1044
     AegisName: OBEAUNE
     Name: Obeaune
@@ -1801,6 +1887,8 @@ Body:
       - Item: Obeaune_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1045
     AegisName: MARC
     Name: Marc
@@ -1847,6 +1935,8 @@ Body:
       - Item: Marc_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1046
     AegisName: DOPPELGANGER
     Name: Doppelganger
@@ -1907,6 +1997,8 @@ Body:
       - Item: Doppelganger_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1047
     AegisName: PECOPECO_EGG
     Name: Peco Peco Egg
@@ -1918,6 +2010,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -1947,6 +2040,8 @@ Body:
       - Item: Pecopeco_Egg_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1048
     AegisName: THIEF_BUG_EGG
     Name: Thief Bug Egg
@@ -1959,6 +2054,7 @@ Body:
     Defense: 20
     Agi: 6
     Vit: 4
+    Int: 0
     Dex: 14
     Luk: 20
     SkillRange: 10
@@ -1991,6 +2087,8 @@ Body:
       - Item: Thief_Bug_Egg_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1049
     AegisName: PICKY
     Name: Picky
@@ -2034,6 +2132,8 @@ Body:
       - Item: Picky_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1050
     AegisName: PICKY_
     Name: Picky
@@ -2079,6 +2179,8 @@ Body:
       - Item: Picky__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1051
     AegisName: THIEF_BUG
     Name: Thief Bug
@@ -2091,7 +2193,9 @@ Body:
     Defense: 5
     Agi: 6
     Vit: 6
+    Int: 0
     Dex: 11
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -2124,6 +2228,8 @@ Body:
       - Item: Thief_Bug_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1052
     AegisName: ROCKER
     Name: Rocker
@@ -2174,6 +2280,8 @@ Body:
       - Item: Rocker_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1053
     AegisName: THIEF_BUG_
     Name: Thief Bug Female
@@ -2223,6 +2331,8 @@ Body:
       - Item: Thief_Bug_Female_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1054
     AegisName: THIEF_BUG__
     Name: Thief Bug Male
@@ -2238,6 +2348,7 @@ Body:
     Vit: 16
     Int: 5
     Dex: 36
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -2272,6 +2383,8 @@ Body:
       - Item: Thief_Bug_Male_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1055
     AegisName: MUKA
     Name: Muka
@@ -2320,6 +2433,8 @@ Body:
       - Item: Muka_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1056
     AegisName: SMOKIE
     Name: Smokie
@@ -2365,6 +2480,8 @@ Body:
       - Item: Smokie_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1057
     AegisName: YOYO
     Name: Yoyo
@@ -2409,6 +2526,8 @@ Body:
       - Item: Yoyo_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1058
     AegisName: METALLER
     Name: Metaller
@@ -2458,6 +2577,8 @@ Body:
       - Item: Metaller_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1059
     AegisName: MISTRESS
     Name: Mistress
@@ -2518,6 +2639,8 @@ Body:
       - Item: Mistress_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1060
     AegisName: BIGFOOT
     Name: Bigfoot
@@ -2563,6 +2686,8 @@ Body:
       - Item: BigFoot_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1061
     AegisName: NIGHTMARE
     Name: Nightmare
@@ -2605,12 +2730,14 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Oridecon
         Rate: 60
       - Item: Nightmare_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1062
     AegisName: PORING_
     Name: Santa Poring
@@ -2653,6 +2780,8 @@ Body:
       - Item: Poring__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1063
     AegisName: LUNATIC
     Name: Lunatic
@@ -2698,6 +2827,8 @@ Body:
       - Item: Lunatic_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1064
     AegisName: MEGALODON
     Name: Megalodon
@@ -2710,6 +2841,7 @@ Body:
     MagicDefense: 15
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 26
     Luk: 5
     AttackRange: 1
@@ -2742,6 +2874,8 @@ Body:
       - Item: Megalodon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1065
     AegisName: STROUF
     Name: Strouf
@@ -2789,6 +2923,8 @@ Body:
       - Item: Strouf_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1066
     AegisName: VADON
     Name: Vadon
@@ -2835,6 +2971,8 @@ Body:
       - Item: Vadon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1067
     AegisName: CORNUTUS
     Name: Cornutus
@@ -2880,6 +3018,8 @@ Body:
       - Item: Cornutus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1068
     AegisName: HYDRA
     Name: Hydra
@@ -2892,6 +3032,7 @@ Body:
     MagicDefense: 40
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 40
     Luk: 2
     AttackRange: 7
@@ -2922,6 +3063,8 @@ Body:
       - Item: Hydra_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1069
     AegisName: SWORD_FISH
     Name: Swordfish
@@ -2969,6 +3112,8 @@ Body:
       - Item: Sword_Fish_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1070
     AegisName: KUKRE
     Name: Kukre
@@ -3014,6 +3159,8 @@ Body:
       - Item: Kukre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1071
     AegisName: PIRATE_SKEL
     Name: Pirate Skeleton
@@ -3062,6 +3209,8 @@ Body:
       - Item: Pirate_Skel_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1072
     AegisName: KAHO
     Name: Kaho
@@ -3110,6 +3259,8 @@ Body:
       - Item: Kaho_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1073
     AegisName: CRAB
     Name: Crab
@@ -3123,6 +3274,7 @@ Body:
     Str: 18
     Agi: 20
     Vit: 15
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 1
@@ -3151,6 +3303,8 @@ Body:
       - Item: Crab_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1074
     AegisName: SHELLFISH
     Name: Shellfish
@@ -3163,6 +3317,7 @@ Body:
     Defense: 35
     Agi: 12
     Vit: 8
+    Int: 0
     Dex: 32
     Luk: 5
     AttackRange: 1
@@ -3193,6 +3348,8 @@ Body:
       - Item: Shellfish_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1076
     AegisName: SKELETON
     Name: Skeleton
@@ -3206,7 +3363,9 @@ Body:
     MagicDefense: 10
     Agi: 5
     Vit: 10
+    Int: 0
     Dex: 12
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -3236,6 +3395,8 @@ Body:
       - Item: Skeleton_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1077
     AegisName: POISON_SPORE
     Name: Poison Spore
@@ -3247,7 +3408,9 @@ Body:
     Attack2: 101
     Agi: 19
     Vit: 25
+    Int: 0
     Dex: 24
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -3278,6 +3441,8 @@ Body:
       - Item: Poison_Spore_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1078
     AegisName: RED_PLANT
     Name: Red Plant
@@ -3287,6 +3452,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3321,6 +3492,8 @@ Body:
       - Item: Centimental_Flower
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1079
     AegisName: BLUE_PLANT
     Name: Blue Plant
@@ -3330,6 +3503,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3364,6 +3543,8 @@ Body:
       - Item: Centimental_Leaf
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1080
     AegisName: GREEN_PLANT
     Name: Green Plant
@@ -3373,6 +3554,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3407,6 +3594,8 @@ Body:
       - Item: Centimental_Leaf
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1081
     AegisName: YELLOW_PLANT
     Name: Yellow Plant
@@ -3416,6 +3605,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3450,6 +3645,8 @@ Body:
       - Item: Centimental_Flower
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1082
     AegisName: WHITE_PLANT
     Name: White Plant
@@ -3459,6 +3656,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3493,6 +3696,8 @@ Body:
       - Item: Centimental_Flower
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1083
     AegisName: SHINING_PLANT
     Name: Shining Plant
@@ -3502,6 +3707,11 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 90
     AttackRange: 1
     SkillRange: 7
@@ -3537,6 +3747,8 @@ Body:
       - Item: Emperium
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1084
     AegisName: BLACK_MUSHROOM
     Name: Black Mushroom
@@ -3546,6 +3758,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3580,6 +3798,8 @@ Body:
       - Item: Poison_Spore
         Rate: 5500
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1085
     AegisName: RED_MUSHROOM
     Name: Red Mushroom
@@ -3589,6 +3809,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -3623,6 +3849,8 @@ Body:
       - Item: Poison_Spore
         Rate: 5500
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1086
     AegisName: GOLDEN_BUG
     Name: Golden Thief Bug
@@ -3680,6 +3908,8 @@ Body:
       - Item: Golden_Bug_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1087
     AegisName: ORK_HERO
     Name: Orc Hero
@@ -3740,6 +3970,8 @@ Body:
       - Item: Orc_Hero_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1088
     AegisName: VOCAL
     Name: Vocal
@@ -3791,6 +4023,8 @@ Body:
       - Item: Vocal_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1089
     AegisName: TOAD
     Name: Toad
@@ -3836,6 +4070,8 @@ Body:
       - Item: Toad_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1090
     AegisName: MASTERING
     Name: Mastering
@@ -3848,6 +4084,7 @@ Body:
     MagicDefense: 10
     Agi: 2
     Vit: 2
+    Int: 0
     Dex: 17
     Luk: 60
     AttackRange: 1
@@ -3881,6 +4118,8 @@ Body:
       - Item: Mastering_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1091
     AegisName: DRAGON_FLY
     Name: Dragon Fly
@@ -3927,6 +4166,8 @@ Body:
       - Item: Dragon_Fly_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1092
     AegisName: VAGABOND_WOLF
     Name: Vagabond Wolf
@@ -3976,6 +4217,8 @@ Body:
       - Item: Vagabond_Wolf_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1093
     AegisName: ECLIPSE
     Name: Eclipse
@@ -3988,6 +4231,7 @@ Body:
     MagicDefense: 40
     Agi: 36
     Vit: 6
+    Int: 0
     Dex: 11
     Luk: 80
     AttackRange: 1
@@ -4022,6 +4266,8 @@ Body:
       - Item: Eclipse_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1094
     AegisName: AMBERNITE
     Name: Ambernite
@@ -4069,6 +4315,8 @@ Body:
       - Item: Ambernite_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1095
     AegisName: ANDRE
     Name: Andre
@@ -4116,6 +4364,8 @@ Body:
       - Item: Andre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1096
     AegisName: ANGELING
     Name: Angeling
@@ -4163,6 +4413,8 @@ Body:
       - Item: Angeling_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1097
     AegisName: ANT_EGG
     Name: Ant Egg
@@ -4174,6 +4426,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -4201,6 +4454,8 @@ Body:
       - Item: Andre_Egg_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1098
     AegisName: ANUBIS
     Name: Anubis
@@ -4250,6 +4505,8 @@ Body:
       - Item: Anubis_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1099
     AegisName: ARGIOPE
     Name: Argiope
@@ -4296,6 +4553,8 @@ Body:
       - Item: Argiope_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1100
     AegisName: ARGOS
     Name: Argos
@@ -4343,6 +4602,8 @@ Body:
       - Item: Argos_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1101
     AegisName: BAPHOMET_
     Name: Baphomet Jr.
@@ -4392,6 +4653,8 @@ Body:
       - Item: Baphomet__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1102
     AegisName: BATHORY
     Name: Bathory
@@ -4438,6 +4701,8 @@ Body:
       - Item: Bathory_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1103
     AegisName: CARAMEL
     Name: Caramel
@@ -4487,6 +4752,8 @@ Body:
       - Item: Caramel_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1104
     AegisName: COCO
     Name: Coco
@@ -4534,6 +4801,8 @@ Body:
       - Item: Coco_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1105
     AegisName: DENIRO
     Name: Deniro
@@ -4581,6 +4850,8 @@ Body:
       - Item: Andre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1106
     AegisName: DESERT_WOLF
     Name: Desert Wolf
@@ -4630,6 +4901,8 @@ Body:
       - Item: Desert_Wolf_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1107
     AegisName: DESERT_WOLF_B
     Name: Baby Desert Wolf
@@ -4678,6 +4951,8 @@ Body:
       - Item: Desert_Wolf_Babe_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1108
     AegisName: DEVIACE
     Name: Deviace
@@ -4725,6 +5000,8 @@ Body:
       - Item: Deviace_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1109
     AegisName: DEVIRUCHI
     Name: Deviruchi
@@ -4774,6 +5051,8 @@ Body:
       - Item: Deviruchi_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1110
     AegisName: DOKEBI
     Name: Dokebi
@@ -4825,6 +5104,8 @@ Body:
       - Item: Dokebi_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1111
     AegisName: DRAINLIAR
     Name: Drainliar
@@ -4836,7 +5117,9 @@ Body:
     Attack2: 84
     Agi: 36
     Vit: 24
+    Int: 0
     Dex: 78
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -4867,6 +5150,8 @@ Body:
       - Item: Drainliar_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1112
     AegisName: DRAKE
     Name: Drake
@@ -4928,6 +5213,8 @@ Body:
       - Item: Drake_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1113
     AegisName: DROPS
     Name: Drops
@@ -4939,6 +5226,7 @@ Body:
     Attack2: 13
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 12
     Luk: 15
     AttackRange: 1
@@ -4972,6 +5260,8 @@ Body:
       - Item: Drops_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1114
     AegisName: DUSTINESS
     Name: Dustiness
@@ -4984,6 +5274,7 @@ Body:
     MagicDefense: 10
     Agi: 53
     Vit: 17
+    Int: 0
     Dex: 38
     Luk: 5
     AttackRange: 1
@@ -5016,6 +5307,8 @@ Body:
       - Item: Dustiness_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1115
     AegisName: EDDGA
     Name: Eddga
@@ -5077,6 +5370,8 @@ Body:
       - Item: Eddga_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1116
     AegisName: EGGYRA
     Name: Eggyra
@@ -5090,7 +5385,9 @@ Body:
     MagicDefense: 25
     Agi: 36
     Vit: 24
+    Int: 0
     Dex: 32
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -5121,6 +5418,8 @@ Body:
       - Item: Eggyra_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1117
     AegisName: EVIL_DRUID
     Name: Evil Druid
@@ -5170,6 +5469,8 @@ Body:
       - Item: Evil_Druid_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1118
     AegisName: FLORA
     Name: Flora
@@ -5216,6 +5517,8 @@ Body:
       - Item: Flora_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1119
     AegisName: FRILLDORA
     Name: Frilldora
@@ -5262,6 +5565,8 @@ Body:
       - Item: Frilldora_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1120
     AegisName: GHOSTRING
     Name: Ghostring
@@ -5310,6 +5615,8 @@ Body:
       - Item: Ghostring_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1121
     AegisName: GIEARTH
     Name: Giearth
@@ -5357,6 +5664,8 @@ Body:
       - Item: Giearth_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1122
     AegisName: GOBLIN_1
     Name: Goblin
@@ -5406,6 +5715,8 @@ Body:
       - Item: Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1123
     AegisName: GOBLIN_2
     Name: Goblin
@@ -5455,6 +5766,8 @@ Body:
       - Item: Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1124
     AegisName: GOBLIN_3
     Name: Goblin
@@ -5503,6 +5816,8 @@ Body:
       - Item: Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1125
     AegisName: GOBLIN_4
     Name: Goblin
@@ -5552,6 +5867,8 @@ Body:
       - Item: Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1126
     AegisName: GOBLIN_5
     Name: Goblin
@@ -5601,6 +5918,8 @@ Body:
       - Item: Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1127
     AegisName: HODE
     Name: Hode
@@ -5647,6 +5966,8 @@ Body:
       - Item: Hode_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1128
     AegisName: HORN
     Name: Horn
@@ -5694,6 +6015,8 @@ Body:
       - Item: Horn_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1129
     AegisName: HORONG
     Name: Horong
@@ -5707,7 +6030,9 @@ Body:
     MagicDefense: 50
     Agi: 34
     Vit: 10
+    Int: 0
     Dex: 50
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -5738,6 +6063,8 @@ Body:
       - Item: Horong_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1130
     AegisName: JAKK
     Name: Jakk
@@ -5783,6 +6110,8 @@ Body:
       - Item: Jakk_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1131
     AegisName: JOKER
     Name: Joker
@@ -5830,6 +6159,8 @@ Body:
       - Item: Joker_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1132
     AegisName: KHALITZBURG
     Name: Khalitzburg
@@ -5878,6 +6209,8 @@ Body:
       - Item: Khalitzburg_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1133
     AegisName: KOBOLD_1
     Name: Kobold
@@ -5925,6 +6258,8 @@ Body:
       - Item: Kobold_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1134
     AegisName: KOBOLD_2
     Name: Kobold
@@ -5971,6 +6306,8 @@ Body:
       - Item: Kobold_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1135
     AegisName: KOBOLD_3
     Name: Kobold
@@ -6020,6 +6357,8 @@ Body:
       - Item: Kobold_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1138
     AegisName: MAGNOLIA
     Name: Magnolia
@@ -6033,6 +6372,7 @@ Body:
     MagicDefense: 30
     Agi: 26
     Vit: 26
+    Int: 0
     Dex: 39
     Luk: 5
     AttackRange: 1
@@ -6067,6 +6407,8 @@ Body:
       - Item: Magnolia_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1139
     AegisName: MANTIS
     Name: Mantis
@@ -6114,6 +6456,8 @@ Body:
       - Item: Mantis_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1140
     AegisName: MARDUK
     Name: Marduk
@@ -6161,6 +6505,8 @@ Body:
       - Item: Marduk_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1141
     AegisName: MARINA
     Name: Marina
@@ -6173,6 +6519,7 @@ Body:
     MagicDefense: 5
     Agi: 21
     Vit: 21
+    Int: 0
     Dex: 36
     Luk: 10
     AttackRange: 1
@@ -6203,6 +6550,8 @@ Body:
       - Item: Marina_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1142
     AegisName: MARINE_SPHERE
     Name: Marine Sphere
@@ -6215,6 +6564,7 @@ Body:
     MagicDefense: 40
     Agi: 28
     Vit: 28
+    Int: 0
     Dex: 33
     Luk: 50
     AttackRange: 1
@@ -6245,6 +6595,8 @@ Body:
       - Item: Marine_Sphere_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1143
     AegisName: MARIONETTE
     Name: Marionette
@@ -6294,6 +6646,8 @@ Body:
       - Item: Marionette_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1144
     AegisName: MARSE
     Name: Marse
@@ -6339,6 +6693,8 @@ Body:
       - Item: Marse_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1145
     AegisName: MARTIN
     Name: Martin
@@ -6386,6 +6742,8 @@ Body:
       - Item: Martin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1146
     AegisName: MATYR
     Name: Matyr
@@ -6428,6 +6786,8 @@ Body:
       - Item: Matyr_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1147
     AegisName: MAYA
     Name: Maya
@@ -6487,6 +6847,8 @@ Body:
       - Item: Maya_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1148
     AegisName: MEDUSA
     Name: Medusa
@@ -6537,6 +6899,8 @@ Body:
       - Item: Medusa_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1149
     AegisName: MINOROUS
     Name: Minorous
@@ -6586,6 +6950,8 @@ Body:
       - Item: Minorous_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1150
     AegisName: MOONLIGHT
     Name: Moonlight Flower
@@ -6648,6 +7014,8 @@ Body:
       - Item: Moonlight_Flower_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1151
     AegisName: MYST
     Name: Myst
@@ -6660,6 +7028,7 @@ Body:
     MagicDefense: 40
     Agi: 38
     Vit: 18
+    Int: 0
     Dex: 53
     Luk: 10
     AttackRange: 1
@@ -6692,6 +7061,8 @@ Body:
       - Item: Myst_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1152
     AegisName: ORC_SKELETON
     Name: Orc Skeleton
@@ -6705,6 +7076,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 18
+    Int: 0
     Dex: 30
     Luk: 15
     AttackRange: 1
@@ -6738,6 +7110,8 @@ Body:
       - Item: Orc_Skeleton_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1153
     AegisName: ORC_ZOMBIE
     Name: Orc Zombie
@@ -6751,6 +7125,7 @@ Body:
     MagicDefense: 10
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 24
     Luk: 5
     AttackRange: 1
@@ -6777,6 +7152,8 @@ Body:
       - Item: Orc_Zombie_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1154
     AegisName: PASANA
     Name: Pasana
@@ -6824,6 +7201,8 @@ Body:
       - Item: Pasana_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1155
     AegisName: PETIT
     Name: Petite
@@ -6871,6 +7250,8 @@ Body:
       - Item: Petit_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1156
     AegisName: PETIT_
     Name: Petite
@@ -6918,6 +7299,8 @@ Body:
       - Item: Petit__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1157
     AegisName: PHARAOH
     Name: Pharaoh
@@ -6979,6 +7362,8 @@ Body:
       - Item: Pharaoh_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1158
     AegisName: PHEN
     Name: Phen
@@ -6991,6 +7376,7 @@ Body:
     MagicDefense: 15
     Agi: 26
     Vit: 26
+    Int: 0
     Dex: 88
     Luk: 75
     AttackRange: 1
@@ -7021,6 +7407,8 @@ Body:
       - Item: Phen_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1159
     AegisName: PHREEONI
     Name: Phreeoni
@@ -7081,6 +7469,8 @@ Body:
       - Item: Phreeoni_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1160
     AegisName: PIERE
     Name: Piere
@@ -7128,6 +7518,8 @@ Body:
       - Item: Andre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1161
     AegisName: PLANKTON
     Name: Plankton
@@ -7140,7 +7532,9 @@ Body:
     MagicDefense: 5
     Agi: 10
     Vit: 10
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -7171,6 +7565,8 @@ Body:
       - Item: Plankton_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1162
     AegisName: RAFFLESIA
     Name: Rafflesia
@@ -7216,6 +7612,8 @@ Body:
       - Item: Rafflesia_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1163
     AegisName: RAYDRIC
     Name: Raydric
@@ -7266,6 +7664,8 @@ Body:
       - Item: Daydric_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1164
     AegisName: REQUIEM
     Name: Requiem
@@ -7312,6 +7712,8 @@ Body:
       - Item: Requiem_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1165
     AegisName: SAND_MAN
     Name: Sandman
@@ -7361,6 +7763,8 @@ Body:
       - Item: Sand_Man_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1166
     AegisName: SAVAGE
     Name: Savage
@@ -7407,6 +7811,8 @@ Body:
       - Item: Savage_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1167
     AegisName: SAVAGE_BABE
     Name: Savage Babe
@@ -7452,6 +7858,8 @@ Body:
       - Item: Savage_Babe_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1169
     AegisName: SKEL_WORKER
     Name: Skeleton Worker
@@ -7497,6 +7905,8 @@ Body:
       - Item: Skel_Worker_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1170
     AegisName: SOHEE
     Name: Sohee
@@ -7546,6 +7956,8 @@ Body:
       - Item: Sohee_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1174
     AegisName: STAINER
     Name: Stainer
@@ -7593,6 +8005,8 @@ Body:
       - Item: Stainer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1175
     AegisName: TAROU
     Name: Tarou
@@ -7633,6 +8047,8 @@ Body:
       - Item: Tarou_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1176
     AegisName: VITATA
     Name: Vitata
@@ -7681,6 +8097,8 @@ Body:
       - Item: Vitata_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1177
     AegisName: ZENORC
     Name: Zenorc
@@ -7693,6 +8111,7 @@ Body:
     MagicDefense: 15
     Agi: 77
     Vit: 15
+    Int: 0
     Dex: 76
     Luk: 10
     AttackRange: 1
@@ -7723,6 +8142,8 @@ Body:
       - Item: Zenorc_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1178
     AegisName: ZEROM
     Name: Zerom
@@ -7737,6 +8158,7 @@ Body:
     Vit: 23
     Int: 5
     Dex: 42
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -7769,6 +8191,8 @@ Body:
       - Item: Zerom_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1179
     AegisName: WHISPER
     Name: Whisper
@@ -7781,7 +8205,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -7809,6 +8235,8 @@ Body:
       - Item: Whisper_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1180
     AegisName: NINE_TAIL
     Name: Nine Tail
@@ -7854,6 +8282,8 @@ Body:
       - Item: Nine_Tail_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1182
     AegisName: THIEF_MUSHROOM
     Name: Thief Mushroom
@@ -7863,6 +8293,12 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 7
     ChaseRange: 12
@@ -7884,6 +8320,8 @@ Body:
         Rate: 1500
       - Item: Mushroom_Of_Thief_2
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1183
     AegisName: CHONCHON_
     Name: Chonchon
@@ -7930,6 +8368,8 @@ Body:
       - Item: Chonchon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1184
     AegisName: FABRE_
     Name: Fabre
@@ -7972,6 +8412,8 @@ Body:
       - Item: Club
         Rate: 200
         RandomOptionGroup: TBRO_Melee_Weapon_Level_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1185
     AegisName: WHISPER_
     Name: Whisper
@@ -7984,7 +8426,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -8004,6 +8448,8 @@ Body:
       - Item: Silver_Robe_
         Rate: 1
         RandomOptionGroup: TBRO_Armor_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1186
     AegisName: WHISPER_BOSS
     Name: Giant Whisper
@@ -8016,7 +8462,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -8044,6 +8492,8 @@ Body:
       - Item: Whisper_Boss_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1187
     AegisName: SWITCH
     Name: Switch
@@ -8053,6 +8503,8 @@ Body:
     JobExp: 1
     Attack: 1
     Attack2: 2
+    Int: 0
+    Luk: 0
     AttackRange: 1
     SkillRange: 1
     ChaseRange: 12
@@ -8109,6 +8561,8 @@ Body:
       - Item: Bon_Gun_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1189
     AegisName: ORC_ARCHER
     Name: Orc Archer
@@ -8150,7 +8604,7 @@ Body:
         Rate: 2500
       - Item: Orc_Archer_Bow
         Rate: 2
-        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Red_Herb
         Rate: 1400
       - Item: White_Herb
@@ -8158,6 +8612,8 @@ Body:
       - Item: Orc_Archer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1190
     AegisName: ORC_LORD
     Name: Orc Lord
@@ -8217,6 +8673,8 @@ Body:
       - Item: Orc_Load_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1191
     AegisName: MIMIC
     Name: Mimic
@@ -8264,6 +8722,8 @@ Body:
       - Item: Mimic_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1192
     AegisName: WRAITH
     Name: Wraith
@@ -8312,6 +8772,8 @@ Body:
       - Item: Wraith_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1193
     AegisName: ALARM
     Name: Alarm
@@ -8358,6 +8820,8 @@ Body:
       - Item: Alarm_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1194
     AegisName: ARCLOUSE
     Name: Arclouze
@@ -8407,6 +8871,8 @@ Body:
       - Item: Arclouse_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1195
     AegisName: RIDEWORD
     Name: Rideword
@@ -8458,6 +8924,8 @@ Body:
       - Item: Rideword_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1196
     AegisName: SKEL_PRISONER
     Name: Skeleton Prisoner
@@ -8472,6 +8940,7 @@ Body:
     Str: 55
     Agi: 20
     Vit: 36
+    Int: 0
     Dex: 76
     Luk: 25
     AttackRange: 1
@@ -8506,6 +8975,8 @@ Body:
       - Item: Skel_Prisoner_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1197
     AegisName: ZOMBIE_PRISONER
     Name: Zombie Prisoner
@@ -8519,6 +8990,7 @@ Body:
     MagicDefense: 20
     Agi: 24
     Vit: 39
+    Int: 0
     Dex: 72
     Luk: 25
     AttackRange: 1
@@ -8552,6 +9024,8 @@ Body:
       - Item: Zombie_Prisoner_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1198
     AegisName: DARK_PRIEST
     Name: Dark Priest
@@ -8603,6 +9077,8 @@ Body:
       - Item: Dark_Priest_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1199
     AegisName: PUNK
     Name: Punk
@@ -8649,6 +9125,8 @@ Body:
       - Item: Punk_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1200
     AegisName: ZHERLTHSH
     Name: Zealotus
@@ -8699,6 +9177,8 @@ Body:
       - Item: Zherlthsh_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1201
     AegisName: RYBIO
     Name: Rybio
@@ -8747,6 +9227,8 @@ Body:
       - Item: Rybio_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1202
     AegisName: PHENDARK
     Name: Phendark
@@ -8790,6 +9272,8 @@ Body:
       - Item: Phendark_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1203
     AegisName: MYSTELTAINN
     Name: Mysteltainn
@@ -8841,6 +9325,8 @@ Body:
       - Item: Mysteltainn_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1204
     AegisName: TIRFING
     Name: Ogretooth
@@ -8892,6 +9378,8 @@ Body:
       - Item: Tirfing_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1205
     AegisName: EXECUTIONER
     Name: Executioner
@@ -8943,6 +9431,8 @@ Body:
       - Item: Executioner_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1206
     AegisName: ANOLIAN
     Name: Anolian
@@ -8989,6 +9479,8 @@ Body:
       - Item: Anolian_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1207
     AegisName: STING
     Name: Sting
@@ -9036,6 +9528,8 @@ Body:
       - Item: Sting_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1208
     AegisName: WANDER_MAN
     Name: Wanderer
@@ -9087,6 +9581,8 @@ Body:
       - Item: Wander_Man_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1209
     AegisName: CRAMP
     Name: Cramp
@@ -9132,6 +9628,8 @@ Body:
       - Item: Cramp_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1211
     AegisName: BRILIGHT
     Name: Brilight
@@ -9180,6 +9678,8 @@ Body:
       - Item: Brilight_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1212
     AegisName: IRON_FIST
     Name: Iron Fist
@@ -9226,6 +9726,8 @@ Body:
       - Item: Iron_Fist_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1213
     AegisName: HIGH_ORC
     Name: High Orc
@@ -9276,6 +9778,8 @@ Body:
       - Item: High_Orc_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1214
     AegisName: CHOCO
     Name: Choco
@@ -9323,6 +9827,8 @@ Body:
       - Item: Choco_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1215
     AegisName: STEM_WORM
     Name: Stem Worm
@@ -9371,6 +9877,8 @@ Body:
       - Item: Stem_Worm_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1216
     AegisName: PENOMENA
     Name: Penomena
@@ -9418,6 +9926,8 @@ Body:
       - Item: Penomena_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1219
     AegisName: KNIGHT_OF_ABYSS
     Name: Abysmal Knight
@@ -9469,6 +9979,8 @@ Body:
       - Item: Knight_Of_Abyss_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1220
     AegisName: M_DESERT_WOLF
     Name: Desert Wolf
@@ -9514,6 +10026,8 @@ Body:
       - Item: Desert_Wolf_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1221
     AegisName: M_SAVAGE
     Name: Savage
@@ -9558,6 +10072,8 @@ Body:
       - Item: Savage_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1229
     AegisName: META_FABRE
     Name: Fabre
@@ -9569,6 +10085,7 @@ Body:
     Attack2: 11
     Agi: 2
     Vit: 4
+    Int: 0
     Dex: 7
     Luk: 5
     AttackRange: 1
@@ -9605,6 +10122,8 @@ Body:
       - Item: Fabre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1230
     AegisName: META_PUPA
     Name: Pupa
@@ -9616,6 +10135,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -9647,6 +10167,8 @@ Body:
       - Item: Pupa_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1231
     AegisName: META_CREAMY
     Name: Creamy
@@ -9693,6 +10215,8 @@ Body:
       - Item: Creamy_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1232
     AegisName: META_PECOPECO_EGG
     Name: Peco Peco Egg
@@ -9704,6 +10228,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -9733,6 +10258,8 @@ Body:
       - Item: Pecopeco_Egg_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1234
     AegisName: PROVOKE_YOYO
     Name: Yoyo
@@ -9777,6 +10304,8 @@ Body:
       - Item: Yoyo_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1235
     AegisName: SMOKING_ORC
     Name: Smoking Orc
@@ -9792,6 +10321,7 @@ Body:
     Vit: 48
     Int: 20
     Dex: 34
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -9825,6 +10355,8 @@ Body:
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1236
     AegisName: META_ANT_EGG
     Name: Ant Egg
@@ -9836,6 +10368,7 @@ Body:
     Attack2: 2
     Defense: 20
     MagicDefense: 20
+    Int: 0
     Luk: 20
     SkillRange: 10
     ChaseRange: 12
@@ -9863,6 +10396,8 @@ Body:
       - Item: Andre_Egg_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1237
     AegisName: META_ANDRE
     Name: Andre
@@ -9910,6 +10445,8 @@ Body:
       - Item: Andre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1238
     AegisName: META_PIERE
     Name: Piere
@@ -9957,6 +10494,8 @@ Body:
       - Item: Andre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1239
     AegisName: META_DENIRO
     Name: Deniro
@@ -10004,6 +10543,8 @@ Body:
       - Item: Andre_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1240
     AegisName: META_PICKY
     Name: Picky
@@ -10015,6 +10556,7 @@ Body:
     Attack2: 12
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 10
     Luk: 30
     AttackRange: 1
@@ -10046,6 +10588,8 @@ Body:
       - Item: Picky_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1241
     AegisName: META_PICKY_
     Name: Picky
@@ -10058,6 +10602,7 @@ Body:
     Defense: 20
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 11
     Luk: 20
     AttackRange: 1
@@ -10088,6 +10633,8 @@ Body:
       - Item: Picky__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1242
     AegisName: MARIN
     Name: Marin
@@ -10133,6 +10680,8 @@ Body:
       - Item: Marin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1243
     AegisName: SASQUATCH
     Name: Sasquatch
@@ -10179,6 +10728,8 @@ Body:
       - Item: Sasquatch_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1244
     AegisName: JAKK_XMAS
     Name: Christmas Jakk
@@ -10226,6 +10777,8 @@ Body:
       - Item: Jakk_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1245
     AegisName: GOBLINE_XMAS
     Name: Christmas Goblin
@@ -10273,6 +10826,8 @@ Body:
       - Item: Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1246
     AegisName: COOKIE_XMAS
     Name: Christmas Cookie
@@ -10319,6 +10874,8 @@ Body:
       - Item: Cookie_XMAS_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1247
     AegisName: ANTONIO
     Name: Antonio
@@ -10367,6 +10924,8 @@ Body:
       - Item: Antonio_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1248
     AegisName: CRUISER
     Name: Cruiser
@@ -10414,6 +10973,8 @@ Body:
       - Item: Cruiser_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1249
     AegisName: MYSTCASE
     Name: Myst Case
@@ -10461,6 +11022,8 @@ Body:
       - Item: Mystcase_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1250
     AegisName: CHEPET
     Name: Chepet
@@ -10507,6 +11070,8 @@ Body:
       - Item: Chepet_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1251
     AegisName: KNIGHT_OF_WINDSTORM
     Name: Stormy Knight
@@ -10551,7 +11116,7 @@ Body:
     Drops:
       - Item: Zephyrus
         Rate: 150
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Old_Blue_Box
         Rate: 3000
       - Item: Old_Violet_Box
@@ -10568,6 +11133,8 @@ Body:
       - Item: Knight_Windstorm_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1252
     AegisName: GARM
     Name: Hatii
@@ -10628,6 +11195,8 @@ Body:
       - Item: Garm_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1253
     AegisName: GARGOYLE
     Name: Gargoyle
@@ -10673,6 +11242,8 @@ Body:
       - Item: Gargoyle_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1254
     AegisName: RAGGLER
     Name: Raggler
@@ -10719,6 +11290,8 @@ Body:
       - Item: Raggler_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1255
     AegisName: NERAID
     Name: Nereid
@@ -10766,6 +11339,8 @@ Body:
       - Item: Neraid_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1256
     AegisName: PEST
     Name: Pest
@@ -10809,6 +11384,8 @@ Body:
       - Item: Pest_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1257
     AegisName: INJUSTICE
     Name: Injustice
@@ -10821,6 +11398,7 @@ Body:
     Str: 84
     Agi: 42
     Vit: 39
+    Int: 0
     Dex: 71
     Luk: 35
     AttackRange: 1
@@ -10856,6 +11434,8 @@ Body:
       - Item: Injustice_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1258
     AegisName: GOBLIN_ARCHER
     Name: Goblin Archer
@@ -10904,6 +11484,8 @@ Body:
       - Item: Goblin_Archer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1259
     AegisName: GRYPHON
     Name: Gryphon
@@ -10954,6 +11536,8 @@ Body:
       - Item: Gryphon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1260
     AegisName: DARK_FRAME
     Name: Dark Frame
@@ -10999,6 +11583,8 @@ Body:
       - Item: Dark_Frame_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1261
     AegisName: WILD_ROSE
     Name: Wild Rose
@@ -11045,6 +11631,8 @@ Body:
       - Item: Wild_Rose_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1262
     AegisName: MUTANT_DRAGON
     Name: Mutant Dragonoid
@@ -11096,6 +11684,8 @@ Body:
       - Item: Mutant_Dragon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1263
     AegisName: WIND_GHOST
     Name: Wind Ghost
@@ -11145,6 +11735,8 @@ Body:
       - Item: Wind_Ghost_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1264
     AegisName: MERMAN
     Name: Merman
@@ -11193,6 +11785,8 @@ Body:
       - Item: Merman_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1265
     AegisName: COOKIE
     Name: Cookie
@@ -11239,6 +11833,8 @@ Body:
       - Item: Cookie_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1266
     AegisName: ASTER
     Name: Aster
@@ -11251,6 +11847,7 @@ Body:
     MagicDefense: 10
     Agi: 19
     Vit: 15
+    Int: 0
     Dex: 34
     Luk: 5
     AttackRange: 1
@@ -11281,6 +11878,8 @@ Body:
       - Item: Aster_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1267
     AegisName: CARAT
     Name: Carat
@@ -11325,6 +11924,8 @@ Body:
       - Item: Carat_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1268
     AegisName: BLOODY_KNIGHT
     Name: Bloody Knight
@@ -11375,6 +11976,8 @@ Body:
       - Item: Bloody_Knight_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1269
     AegisName: CLOCK
     Name: Clock
@@ -11421,6 +12024,8 @@ Body:
       - Item: Clock_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1270
     AegisName: C_TOWER_MANAGER
     Name: Clock Tower Manager
@@ -11467,6 +12072,8 @@ Body:
       - Item: C_Tower_Manager_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1271
     AegisName: ALLIGATOR
     Name: Alligator
@@ -11509,6 +12116,8 @@ Body:
       - Item: Alligator_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1272
     AegisName: DARK_LORD
     Name: Dark Lord
@@ -11571,6 +12180,8 @@ Body:
       - Item: Dark_Lord_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1273
     AegisName: ORC_LADY
     Name: Orc Lady
@@ -11621,6 +12232,8 @@ Body:
       - Item: Orc_Lady_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1274
     AegisName: MEGALITH
     Name: Megalith
@@ -11663,6 +12276,8 @@ Body:
       - Item: Megalith_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1275
     AegisName: ALICE
     Name: Alice
@@ -11712,6 +12327,8 @@ Body:
       - Item: Alice_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1276
     AegisName: RAYDRIC_ARCHER
     Name: Raydric Archer
@@ -11762,6 +12379,8 @@ Body:
       - Item: Raydric_Archer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1277
     AegisName: GREATEST_GENERAL
     Name: Greatest General
@@ -11809,6 +12428,8 @@ Body:
       - Item: Greatest_General_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1278
     AegisName: STALACTIC_GOLEM
     Name: Stalactic Golem
@@ -11856,6 +12477,8 @@ Body:
       - Item: Stalactic_Golem_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1279
     AegisName: TRI_JOINT
     Name: Tri Joint
@@ -11902,6 +12525,8 @@ Body:
       - Item: Tri_Joint_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1280
     AegisName: STEAM_GOBLIN
     Name: Goblin Steamrider
@@ -11951,6 +12576,8 @@ Body:
       - Item: Steam_Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1281
     AegisName: SAGEWORM
     Name: Sage Worm
@@ -11996,6 +12623,8 @@ Body:
       - Item: Sageworm_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1282
     AegisName: KOBOLD_ARCHER
     Name: Kobold Archer
@@ -12046,6 +12675,8 @@ Body:
       - Item: Kobold_Archer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1283
     AegisName: CHIMERA
     Name: Chimera
@@ -12095,6 +12726,8 @@ Body:
       - Item: Chimera_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1285
     AegisName: ARCHER_GUARDIAN
     Name: Archer Guardian
@@ -12279,6 +12912,8 @@ Body:
       - Item: Maya_Puple_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1290
     AegisName: SKELETON_GENERAL
     Name: Skeleton General
@@ -12329,6 +12964,8 @@ Body:
       - Item: Skeleton_General_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1291
     AegisName: WRAITH_DEAD
     Name: Wraith Dead
@@ -12377,6 +13014,8 @@ Body:
       - Item: Wraith_Dead_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1292
     AegisName: MINI_DEMON
     Name: Mini Demon
@@ -12427,6 +13066,8 @@ Body:
       - Item: Mini_Demon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1293
     AegisName: CREMY_FEAR
     Name: Creamy Fear
@@ -12478,6 +13119,8 @@ Body:
       - Item: Cremy_Fear_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1294
     AegisName: KILLER_MANTIS
     Name: Killer Mantis
@@ -12528,6 +13171,8 @@ Body:
       - Item: Killer_Mantis_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1295
     AegisName: OWL_BARON
     Name: Owl Baron
@@ -12579,6 +13224,8 @@ Body:
       - Item: Owl_Baron_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1296
     AegisName: KOBOLD_LEADER
     Name: Kobold Leader
@@ -12630,6 +13277,8 @@ Body:
       - Item: Kobold_Leader_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1297
     AegisName: ANCIENT_MUMMY
     Name: Ancient Mummy
@@ -12677,6 +13326,8 @@ Body:
       - Item: Ancient_Mummy_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1298
     AegisName: ZOMBIE_MASTER
     Name: Zombie Master
@@ -12726,6 +13377,8 @@ Body:
       - Item: Zombie_Master_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1299
     AegisName: GOBLIN_LEADER
     Name: Goblin Leader
@@ -12775,6 +13428,8 @@ Body:
       - Item: Goblin_Leader_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1300
     AegisName: CATERPILLAR
     Name: Caterpillar
@@ -12825,6 +13480,8 @@ Body:
       - Item: Caterpillar_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1301
     AegisName: AM_MUT
     Name: Am Mut
@@ -12875,6 +13532,8 @@ Body:
       - Item: Am_Mut_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1302
     AegisName: DARK_ILLUSION
     Name: Dark Illusion
@@ -12926,6 +13585,8 @@ Body:
       - Item: Dark_Illusion_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1303
     AegisName: GIANT_HONET
     Name: Giant Hornet
@@ -12977,6 +13638,8 @@ Body:
       - Item: Giant_Honet_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1304
     AegisName: GIANT_SPIDER
     Name: Giant Spider
@@ -13026,6 +13689,8 @@ Body:
       - Item: Giant_Spider_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1305
     AegisName: ANCIENT_WORM
     Name: Ancient Worm
@@ -13076,6 +13741,8 @@ Body:
       - Item: Ancient_Worm_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1306
     AegisName: LEIB_OLMAI
     Name: Leib Olmai
@@ -13123,6 +13790,8 @@ Body:
       - Item: Leib_Olmai_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1307
     AegisName: CAT_O_NINE_TAIL
     Name: Cat o' Nine Tails
@@ -13171,6 +13840,8 @@ Body:
       - Item: Cat_O_Nine_Tail_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1308
     AegisName: PANZER_GOBLIN
     Name: Panzer Goblin
@@ -13219,6 +13890,8 @@ Body:
       - Item: Panzer_Goblin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1309
     AegisName: GAJOMART
     Name: Gajomart
@@ -13266,6 +13939,8 @@ Body:
       - Item: Gajomart_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1310
     AegisName: MAJORUROS
     Name: Majoruros
@@ -13314,6 +13989,8 @@ Body:
       - Item: Majoruros_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1311
     AegisName: GULLINBURSTI
     Name: Gullinbursti
@@ -13361,6 +14038,8 @@ Body:
       - Item: Gullinbursti_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1312
     AegisName: TURTLE_GENERAL
     Name: Turtle General
@@ -13423,6 +14102,8 @@ Body:
       - Item: Turtle_General_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1313
     AegisName: MOBSTER
     Name: Mobster
@@ -13471,6 +14152,8 @@ Body:
       - Item: Mobster_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1314
     AegisName: PERMETER
     Name: Permeter
@@ -13518,6 +14201,8 @@ Body:
       - Item: Permeter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1315
     AegisName: ASSULTER
     Name: Assaulter
@@ -13568,6 +14253,8 @@ Body:
       - Item: Assulter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1316
     AegisName: SOLIDER
     Name: Solider
@@ -13616,6 +14303,8 @@ Body:
       - Item: Solider_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1317
     AegisName: FUR_SEAL
     Name: Seal
@@ -13666,6 +14355,8 @@ Body:
       - Item: Fur_Seal_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1318
     AegisName: HEATER
     Name: Heater
@@ -13713,6 +14404,8 @@ Body:
       - Item: Heater_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1319
     AegisName: FREEZER
     Name: Freezer
@@ -13760,6 +14453,8 @@ Body:
       - Item: Freezer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1320
     AegisName: OWL_DUKE
     Name: Owl Duke
@@ -13810,6 +14505,8 @@ Body:
       - Item: Owl_Duke_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1321
     AegisName: DRAGON_TAIL
     Name: Dragon Tail
@@ -13859,6 +14556,8 @@ Body:
       - Item: Dragon_Tail_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1322
     AegisName: SPRING_RABBIT
     Name: Spring Rabbit
@@ -13906,6 +14605,8 @@ Body:
       - Item: Spring_Rabbit_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1323
     AegisName: SEE_OTTER
     Name: Sea Otter
@@ -13953,11 +14654,18 @@ Body:
       - Item: See_Otter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1324
     AegisName: TREASURE_BOX1
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -13986,11 +14694,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1325
     AegisName: TREASURE_BOX2
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14018,11 +14733,18 @@ Body:
         Rate: 8
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1326
     AegisName: TREASURE_BOX3
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14051,11 +14773,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1327
     AegisName: TREASURE_BOX4
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14082,11 +14811,18 @@ Body:
       - Item: Helm_Of_Sun
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1328
     AegisName: TREASURE_BOX5
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14115,11 +14851,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1329
     AegisName: TREASURE_BOX6
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14145,11 +14888,18 @@ Body:
       - Item: Gemmed_Crown
         Rate: 9
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1330
     AegisName: TREASURE_BOX7
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14178,11 +14928,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1331
     AegisName: TREASURE_BOX8
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14209,11 +14966,18 @@ Body:
       - Item: Earring_
         Rate: 9
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1332
     AegisName: TREASURE_BOX9
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14242,11 +15006,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1333
     AegisName: TREASURE_BOX10
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14273,11 +15044,18 @@ Body:
       - Item: Necklace_
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1334
     AegisName: TREASURE_BOX11
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14306,11 +15084,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1335
     AegisName: TREASURE_BOX12
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14337,11 +15122,18 @@ Body:
       - Item: Magestic_Goat
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1336
     AegisName: TREASURE_BOX13
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14370,11 +15162,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1337
     AegisName: TREASURE_BOX14
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14403,11 +15202,18 @@ Body:
         Rate: 10
         StealProtected: true
         RandomOptionGroup: TBRO_Armor_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1338
     AegisName: TREASURE_BOX15
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14436,11 +15242,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1339
     AegisName: TREASURE_BOX16
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14468,11 +15281,18 @@ Body:
         Rate: 10
         StealProtected: true
         RandomOptionGroup: TBRO_Armor_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1340
     AegisName: TREASURE_BOX17
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14501,11 +15321,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1341
     AegisName: TREASURE_BOX18
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14533,11 +15360,18 @@ Body:
       - Item: Crown
         Rate: 12
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1342
     AegisName: TREASURE_BOX19
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14566,11 +15400,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1343
     AegisName: TREASURE_BOX20
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14597,11 +15438,18 @@ Body:
       - Item: Loard_Circlet
         Rate: 19
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1344
     AegisName: TREASURE_BOX21
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14630,11 +15478,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1345
     AegisName: TREASURE_BOX22
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14662,11 +15517,18 @@ Body:
       - Item: Ring_
         Rate: 20
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1346
     AegisName: TREASURE_BOX23
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14695,11 +15557,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1347
     AegisName: TREASURE_BOX24
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14726,11 +15595,18 @@ Body:
       - Item: Helm_Of_Angel
         Rate: 24
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1348
     AegisName: TREASURE_BOX25
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14759,11 +15635,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1349
     AegisName: TREASURE_BOX26
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14789,11 +15672,18 @@ Body:
       - Item: Elven_Ears
         Rate: 25
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1350
     AegisName: TREASURE_BOX27
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14822,11 +15712,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1351
     AegisName: TREASURE_BOX28
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14852,11 +15749,18 @@ Body:
       - Item: Tiara
         Rate: 32
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1352
     AegisName: TREASURE_BOX29
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14885,11 +15789,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1353
     AegisName: TREASURE_BOX30
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14916,11 +15827,18 @@ Body:
       - Item: Magician_Hat
         Rate: 34
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1354
     AegisName: TREASURE_BOX31
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14949,11 +15867,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1355
     AegisName: TREASURE_BOX32
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -14981,11 +15906,18 @@ Body:
         Rate: 35
         StealProtected: true
         RandomOptionGroup: TBRO_Armor_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1356
     AegisName: TREASURE_BOX33
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15014,11 +15946,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1357
     AegisName: TREASURE_BOX34
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15045,11 +15984,18 @@ Body:
       - Item: Sharp_Gear
         Rate: 38
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1358
     AegisName: TREASURE_BOX35
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15078,11 +16024,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1359
     AegisName: TREASURE_BOX36
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15109,11 +16062,18 @@ Body:
       - Item: Bone_Helm
         Rate: 38
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1360
     AegisName: TREASURE_BOX37
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15142,11 +16102,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1361
     AegisName: TREASURE_BOX38
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15173,11 +16140,18 @@ Body:
       - Item: Helm_
         Rate: 50
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1362
     AegisName: TREASURE_BOX39
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15206,11 +16180,18 @@ Body:
       - Item: Old_Card_Album
         Rate: 1000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1363
     AegisName: TREASURE_BOX40
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -15238,6 +16219,8 @@ Body:
         Rate: 38
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1364
     AegisName: G_ASSULTER
     Name: Assaulter
@@ -15272,6 +16255,8 @@ Body:
     Drops:
       - Item: Wooden_Block
         Rate: 9000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1365
     AegisName: APOCALIPS
     Name: Apocalypse
@@ -15320,6 +16305,8 @@ Body:
       - Item: Apocalips_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1366
     AegisName: LAVA_GOLEM
     Name: Lava Golem
@@ -15369,6 +16356,8 @@ Body:
       - Item: Lava_Golem_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1367
     AegisName: BLAZZER
     Name: Blazer
@@ -15409,6 +16398,8 @@ Body:
       - Item: Blazzer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1368
     AegisName: GEOGRAPHER
     Name: Geographer
@@ -15451,6 +16442,8 @@ Body:
       - Item: Geographer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1369
     AegisName: GRAND_PECO
     Name: Grand Peco
@@ -15493,6 +16486,8 @@ Body:
       - Item: Grand_Peco_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1370
     AegisName: SUCCUBUS
     Name: Succubus
@@ -15543,6 +16538,8 @@ Body:
       - Item: Succubus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1371
     AegisName: FAKE_ANGEL
     Name: False Angel
@@ -15587,6 +16584,8 @@ Body:
       - Item: Fake_Angel_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1372
     AegisName: GOAT
     Name: Goat
@@ -15633,6 +16632,8 @@ Body:
       - Item: Goat_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1373
     AegisName: LORD_OF_DEATH
     Name: Lord of the Dead
@@ -15681,7 +16682,7 @@ Body:
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: House_Auger
         Rate: 10
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Ring_
         Rate: 2
       - Item: Shine_Spear_Blade
@@ -15695,6 +16696,8 @@ Body:
       - Item: Lord_Of_Death_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1374
     AegisName: INCUBUS
     Name: Incubus
@@ -15743,6 +16746,8 @@ Body:
       - Item: Incubus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1375
     AegisName: THE_PAPER
     Name: The Paper
@@ -15786,6 +16791,8 @@ Body:
       - Item: The_Paper_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1376
     AegisName: HARPY
     Name: Harpy
@@ -15833,6 +16840,8 @@ Body:
       - Item: Harpy_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1377
     AegisName: ELDER
     Name: Elder
@@ -15881,6 +16890,8 @@ Body:
       - Item: Elder_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1378
     AegisName: DEMON_PUNGUS
     Name: Demon Pungus
@@ -15923,6 +16934,8 @@ Body:
       - Item: Demon_Pungus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1379
     AegisName: NIGHTMARE_TERROR
     Name: Nightmare Terror
@@ -15968,10 +16981,12 @@ Body:
         Rate: 100
       - Item: Infiltrator
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Nightmare_Terror_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1380
     AegisName: DRILLER
     Name: Driller
@@ -16010,6 +17025,8 @@ Body:
       - Item: Driller_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1381
     AegisName: GRIZZLY
     Name: Grizzly
@@ -16048,6 +17065,8 @@ Body:
       - Item: Grizzly_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1382
     AegisName: DIABOLIC
     Name: Diabolic
@@ -16093,6 +17112,8 @@ Body:
       - Item: Diabolic_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1383
     AegisName: EXPLOSION
     Name: Explosion
@@ -16135,6 +17156,8 @@ Body:
       - Item: Explosion_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1384
     AegisName: DELETER
     Name: Deleter
@@ -16175,6 +17198,8 @@ Body:
       - Item: Flying_Deleter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1385
     AegisName: DELETER_
     Name: Deleter
@@ -16215,6 +17240,8 @@ Body:
       - Item: Deleter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1386
     AegisName: SLEEPER
     Name: Sleeper
@@ -16263,6 +17290,8 @@ Body:
       - Item: Sleeper_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1387
     AegisName: GIG
     Name: Gig
@@ -16305,6 +17334,8 @@ Body:
       - Item: Gig_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1388
     AegisName: ARCHANGELING
     Name: Arc Angeling
@@ -16354,6 +17385,8 @@ Body:
       - Item: Archangeling_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1389
     AegisName: DRACULA
     Name: Dracula
@@ -16413,6 +17446,8 @@ Body:
       - Item: Dracula_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1390
     AegisName: VIOLY
     Name: Violy
@@ -16461,6 +17496,8 @@ Body:
       - Item: Violy_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1391
     AegisName: GALAPAGO
     Name: Galapago
@@ -16507,6 +17544,8 @@ Body:
       - Item: Galapago_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1392
     AegisName: ROTAR_ZAIRO
     Name: Rotar Zairo
@@ -16554,6 +17593,8 @@ Body:
       - Item: Rotar_Zairo_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1393
     AegisName: G_MUMMY
     Name: Mummy
@@ -16565,6 +17606,7 @@ Body:
     Str: 28
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -16589,7 +17631,9 @@ Body:
     MagicDefense: 10
     Agi: 8
     Vit: 7
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -16640,6 +17684,8 @@ Body:
       - Item: Yggdrasilberry
         Rate: 200
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1396
     AegisName: CRYSTAL_2
     Name: Earth Crystal
@@ -16678,6 +17724,8 @@ Body:
       - Item: Seed_Of_Yggdrasil
         Rate: 250
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1397
     AegisName: CRYSTAL_3
     Name: Fire Crystal
@@ -16716,6 +17764,8 @@ Body:
       - Item: Branch_Of_Dead_Tree
         Rate: 300
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1398
     AegisName: CRYSTAL_4
     Name: Water Crystal
@@ -16754,6 +17804,8 @@ Body:
       - Item: Old_Blue_Box
         Rate: 100
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1399
     AegisName: EVENT_BAPHO
     Name: Baphomet
@@ -16815,6 +17867,8 @@ Body:
       - Item: Magestic_Goat
         Rate: 1550
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1400
     AegisName: KARAKASA
     Name: Karakasa
@@ -16862,6 +17916,8 @@ Body:
       - Item: Karakasa_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1401
     AegisName: SHINOBI
     Name: Shinobi
@@ -16914,6 +17970,8 @@ Body:
       - Item: Shinobi_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1402
     AegisName: POISON_TOAD
     Name: Poison Toad
@@ -16962,6 +18020,8 @@ Body:
       - Item: Poison_Toad_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1403
     AegisName: ANTIQUE_FIRELOCK
     Name: Firelock Soldier
@@ -17011,6 +18071,8 @@ Body:
       - Item: Antique_Firelock_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1404
     AegisName: MIYABI_NINGYO
     Name: Miyabi Doll
@@ -17062,6 +18124,8 @@ Body:
       - Item: Miyabi_Ningyo_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1405
     AegisName: TENGU
     Name: Tengu
@@ -17113,6 +18177,8 @@ Body:
       - Item: Tengu_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1406
     AegisName: KAPHA
     Name: Kapha
@@ -17162,6 +18228,8 @@ Body:
       - Item: Kapha_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1408
     AegisName: BLOOD_BUTTERFLY
     Name: Bloody Butterfly
@@ -17210,6 +18278,8 @@ Body:
       - Item: Blood_Butterfly_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1409
     AegisName: RICE_CAKE_BOY
     Name: Dumpling Child
@@ -17255,6 +18325,8 @@ Body:
       - Item: Rice_Cake_Boy_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1410
     AegisName: LIVE_PEACH_TREE
     Name: Enchanted Peach Tree
@@ -17299,6 +18371,8 @@ Body:
       - Item: Live_Peach_Tree_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1412
     AegisName: EVIL_CLOUD_HERMIT
     Name: Taoist Hermit
@@ -17347,6 +18421,8 @@ Body:
       - Item: Evil_Cloud_Hermit_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1413
     AegisName: WILD_GINSENG
     Name: Hermit Plant
@@ -17396,6 +18472,8 @@ Body:
       - Item: Wild_Ginseng_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1415
     AegisName: BABY_LEOPARD
     Name: Baby Leopard
@@ -17441,6 +18519,8 @@ Body:
       - Item: Baby_Leopard_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1416
     AegisName: WICKED_NYMPH
     Name: Evil Nymph
@@ -17493,6 +18573,8 @@ Body:
       - Item: Wicked_Nymph_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1417
     AegisName: ZIPPER_BEAR
     Name: Zipper Bear
@@ -17536,6 +18618,8 @@ Body:
       - Item: Zipper_Bear_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1418
     AegisName: DARK_SNAKE_LORD
     Name: Evil Snake Lord
@@ -17596,6 +18680,8 @@ Body:
       - Item: Dark_Snake_Lord_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1419
     AegisName: G_FARMILIAR
     Name: Familiar
@@ -17607,6 +18693,7 @@ Body:
     Vit: 8
     Int: 5
     Dex: 28
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -17712,6 +18799,7 @@ Body:
     MagicDefense: 20
     Agi: 20
     Vit: 29
+    Int: 0
     Dex: 33
     Luk: 20
     AttackRange: 1
@@ -17840,7 +18928,9 @@ Body:
     Attack2: 101
     Agi: 19
     Vit: 25
+    Int: 0
     Dex: 24
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -17997,7 +19087,9 @@ Body:
     Attack2: 84
     Agi: 36
     Vit: 24
+    Int: 0
     Dex: 78
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -18307,6 +19399,7 @@ Body:
     Str: 84
     Agi: 42
     Vit: 39
+    Int: 0
     Dex: 71
     Luk: 35
     AttackRange: 1
@@ -18739,6 +19832,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 18
+    Int: 0
     Dex: 30
     Luk: 15
     AttackRange: 1
@@ -18764,6 +19858,7 @@ Body:
     MagicDefense: 10
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 24
     Luk: 5
     AttackRange: 1
@@ -18945,6 +20040,7 @@ Body:
     Vit: 23
     Int: 5
     Dex: 42
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -19179,6 +20275,7 @@ Body:
     Str: 55
     Agi: 20
     Vit: 36
+    Int: 0
     Dex: 76
     Luk: 25
     AttackRange: 1
@@ -19204,6 +20301,7 @@ Body:
     MagicDefense: 20
     Agi: 24
     Vit: 39
+    Int: 0
     Dex: 72
     Luk: 25
     AttackRange: 1
@@ -19582,6 +20680,8 @@ Body:
       - Item: Incant_Samurai_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1493
     AegisName: DRYAD
     Name: Dryad
@@ -19629,6 +20729,8 @@ Body:
       - Item: Dryad_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1494
     AegisName: KIND_OF_BEETLE
     Name: Beetle King
@@ -19642,7 +20744,9 @@ Body:
     MagicDefense: 12
     Agi: 34
     Vit: 10
+    Int: 0
     Dex: 40
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -19671,6 +20775,8 @@ Body:
       - Item: Kind_Of_Beetle_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1495
     AegisName: STONE_SHOOTER
     Name: Stone Shooter
@@ -19715,6 +20821,8 @@ Body:
       - Item: Stone_Shooter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1497
     AegisName: WOODEN_GOLEM
     Name: Wooden Golem
@@ -19763,6 +20871,8 @@ Body:
       - Item: Wooden_Golem_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1498
     AegisName: WOOTAN_SHOOTER
     Name: Wootan Shooter
@@ -19810,6 +20920,8 @@ Body:
       - Item: Wootan_Shooter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1499
     AegisName: WOOTAN_FIGHTER
     Name: Wootan Fighter
@@ -19858,6 +20970,8 @@ Body:
       - Item: Wootan_Fighter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1500
     AegisName: PARASITE
     Name: Parasite
@@ -19906,6 +21020,8 @@ Body:
       - Item: Parasite_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1502
     AegisName: PORING_V
     Name: Bring it on!
@@ -19968,6 +21084,8 @@ Body:
       - Item: Holy_Guard
         Rate: 4500
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1503
     AegisName: GIBBET
     Name: Gibbet
@@ -19979,6 +21097,7 @@ Body:
     Attack2: 656
     Defense: 28
     MagicDefense: 31
+    Str: 0
     Agi: 42
     Vit: 42
     Int: 27
@@ -20014,6 +21133,8 @@ Body:
       - Item: Gibbet_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1504
     AegisName: DULLAHAN
     Name: Dullahan
@@ -20025,6 +21146,7 @@ Body:
     Attack2: 1065
     Defense: 47
     MagicDefense: 38
+    Str: 0
     Agi: 30
     Vit: 5
     Int: 45
@@ -20058,6 +21180,8 @@ Body:
       - Item: Dullahan_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1505
     AegisName: LOLI_RURI
     Name: Loli Ruri
@@ -20069,6 +21193,7 @@ Body:
     Attack2: 2317
     Defense: 39
     MagicDefense: 44
+    Str: 0
     Agi: 66
     Vit: 54
     Int: 74
@@ -20104,6 +21229,8 @@ Body:
       - Item: Loli_Ruri_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1506
     AegisName: DISGUISE
     Name: Disguise
@@ -20116,6 +21243,7 @@ Body:
     Attack2: 546
     Defense: 18
     MagicDefense: 29
+    Str: 0
     Agi: 72
     Vit: 45
     Int: 35
@@ -20157,6 +21285,8 @@ Body:
       - Item: Disguise_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1507
     AegisName: BLOODY_MURDERER
     Name: Bloody Murderer
@@ -20168,6 +21298,7 @@ Body:
     Attack2: 1081
     Defense: 37
     MagicDefense: 41
+    Str: 0
     Agi: 30
     Vit: 90
     Int: 15
@@ -20205,6 +21336,8 @@ Body:
       - Item: Bloody_Murderer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1508
     AegisName: QUVE
     Name: Quve
@@ -20216,6 +21349,7 @@ Body:
     Attack2: 469
     Defense: 12
     MagicDefense: 12
+    Str: 0
     Agi: 61
     Vit: 24
     Int: 19
@@ -20247,6 +21381,8 @@ Body:
       - Item: Quve_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1509
     AegisName: LUDE
     Name: Lude
@@ -20258,6 +21394,7 @@ Body:
     Attack2: 451
     Defense: 14
     MagicDefense: 10
+    Str: 0
     Agi: 59
     Vit: 21
     Int: 18
@@ -20291,6 +21428,8 @@ Body:
       - Item: Lude_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1510
     AegisName: HYLOZOIST
     Name: Heirozoist
@@ -20303,6 +21442,7 @@ Body:
     Attack2: 498
     Defense: 16
     MagicDefense: 51
+    Str: 0
     Agi: 28
     Vit: 26
     Int: 47
@@ -20340,6 +21480,8 @@ Body:
       - Item: Hylozoist_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1511
     AegisName: AMON_RA
     Name: Amon Ra
@@ -20352,6 +21494,7 @@ Body:
     Attack2: 2576
     Defense: 26
     MagicDefense: 52
+    Str: 0
     Vit: 90
     Int: 124
     Dex: 74
@@ -20397,6 +21540,8 @@ Body:
       - Item: Amon_Ra_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1512
     AegisName: HYEGUN
     Name: Yao Jun
@@ -20442,6 +21587,8 @@ Body:
       - Item: Hyegun_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1513
     AegisName: CIVIL_SERVANT
     Name: Mao Guai
@@ -20486,6 +21633,8 @@ Body:
       - Item: Civil_Servant_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1514
     AegisName: DANCING_DRAGON
     Name: Zhu Po Long
@@ -20530,6 +21679,8 @@ Body:
       - Item: Dancing_Dragon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1515
     AegisName: GARM_BABY
     Name: Baby Hatii
@@ -20574,6 +21725,8 @@ Body:
       - Item: Garm_Baby_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1516
     AegisName: INCREASE_SOIL
     Name: Mi Gao
@@ -20616,6 +21769,8 @@ Body:
       - Item: Increase_Soil_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1517
     AegisName: LI_ME_MANG_RYANG
     Name: Jing Guai
@@ -20662,6 +21817,8 @@ Body:
       - Item: Li_Me_Mang_Ryang_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1518
     AegisName: BACSOJIN
     Name: White Lady
@@ -20708,6 +21865,8 @@ Body:
       - Item: Tiara
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1519
     AegisName: CHUNG_E
     Name: Green Maiden
@@ -20755,6 +21914,8 @@ Body:
       - Item: Hair_Protector
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1520
     AegisName: BOILED_RICE
     Name: Boiled Rice
@@ -20767,6 +21928,7 @@ Body:
     MagicDefense: 10
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 19
     Luk: 15
     AttackRange: 1
@@ -20790,6 +21952,8 @@ Body:
         Rate: 1000
       - Item: Great_Leaf
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1521
     AegisName: G_ALICE
     Name: Alice
@@ -21307,7 +22471,9 @@ Body:
     Defense: 40
     Agi: 15
     Vit: 25
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -21649,6 +22815,7 @@ Body:
     MagicDefense: 40
     Agi: 38
     Vit: 18
+    Int: 0
     Dex: 53
     Luk: 10
     AttackRange: 1
@@ -22160,6 +23327,7 @@ Body:
     Attack2: 13
     Agi: 3
     Vit: 3
+    Int: 0
     Dex: 12
     Luk: 15
     AttackRange: 1
@@ -22315,7 +23483,9 @@ Body:
     MagicDefense: 50
     Agi: 34
     Vit: 10
+    Int: 0
     Dex: 50
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -22338,6 +23508,7 @@ Body:
     MagicDefense: 40
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 40
     Luk: 2
     AttackRange: 7
@@ -22457,6 +23628,8 @@ Body:
       - Item: Deviling_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1583
     AegisName: TAO_GUNKA
     Name: Tao Gunka
@@ -22514,6 +23687,8 @@ Body:
       - Item: Tao_Gunka_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1584
     AegisName: TAMRUAN
     Name: Tamruan
@@ -22562,6 +23737,8 @@ Body:
       - Item: Tamruan_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1585
     AegisName: MIME_MONKEY
     Name: Mime Monkey
@@ -22606,6 +23783,8 @@ Body:
         Rate: 5
       - Item: Unripe_Apple
         Rate: 20
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1586
     AegisName: LEAF_CAT
     Name: Leaf Cat
@@ -22653,6 +23832,8 @@ Body:
       - Item: Leaf_Cat_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1587
     AegisName: KRABEN
     Name: Kraben
@@ -22699,6 +23880,8 @@ Body:
       - Item: Kraben_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1588
     AegisName: ORC_XMAS
     Name: Christmas Orc
@@ -22746,6 +23929,8 @@ Body:
       - Item: Orc_Warrior_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1589
     AegisName: G_MANDRAGORA
     Name: Mandragora
@@ -22756,6 +23941,7 @@ Body:
     MagicDefense: 25
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 4
@@ -22828,6 +24014,8 @@ Body:
     Drops:
       - Item: Orange_Potion
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1592
     AegisName: A_MOBSTER
     Name: Gangster
@@ -22867,6 +24055,8 @@ Body:
         Rate: 1000
       - Item: Popped_Rice
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1593
     AegisName: A_ANCIENT_MUMMY
     Name: Ancient Mummy
@@ -22901,6 +24091,8 @@ Body:
     Drops:
       - Item: Orange_Potion
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1594
     AegisName: G_FREEZER
     Name: Freezer
@@ -23049,7 +24241,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -23294,6 +24488,7 @@ Body:
     Vit: 16
     Int: 5
     Dex: 36
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -23355,6 +24550,8 @@ Body:
       - Item: Handsei
         Rate: 100
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1610
     AegisName: A_MUNAK
     Name: Munak
@@ -23388,6 +24585,8 @@ Body:
       - Item: Speed_Up_Potion
         Rate: 100
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1611
     AegisName: A_BON_GUN
     Name: Bongun
@@ -23422,6 +24621,8 @@ Body:
       - Item: Speed_Up_Potion
         Rate: 100
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1612
     AegisName: A_HYEGUN
     Name: Yao Jun
@@ -23459,6 +24660,8 @@ Body:
       - Item: Speed_Up_Potion
         Rate: 100
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1613
     AegisName: METALING
     Name: Metaling
@@ -23507,6 +24710,8 @@ Body:
       - Item: Metaling_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1614
     AegisName: MINERAL
     Name: Mineral
@@ -23554,6 +24759,8 @@ Body:
       - Item: Mineral_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1615
     AegisName: OBSIDIAN
     Name: Obsidian
@@ -23600,6 +24807,8 @@ Body:
       - Item: Obsidian_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1616
     AegisName: PITMAN
     Name: Pitman
@@ -23611,6 +24820,7 @@ Body:
     Attack2: 486
     Defense: 22
     MagicDefense: 26
+    Str: 0
     Agi: 15
     Vit: 5
     Int: 5
@@ -23646,6 +24856,8 @@ Body:
       - Item: Pitman_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1617
     AegisName: WASTE_STOVE
     Name: Old Stove
@@ -23694,6 +24906,8 @@ Body:
       - Item: Waste_Stove_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1618
     AegisName: UNGOLIANT
     Name: Ungoliant
@@ -23744,6 +24958,8 @@ Body:
       - Item: Ungoliant_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1619
     AegisName: PORCELLIO
     Name: Porcellio
@@ -23754,6 +24970,7 @@ Body:
     Attack: 82
     Attack2: 247
     MagicDefense: 8
+    Str: 0
     Agi: 31
     Vit: 21
     Int: 50
@@ -23790,6 +25007,8 @@ Body:
       - Item: Porcellio_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1620
     AegisName: NOXIOUS
     Name: Noxious
@@ -23832,6 +25051,8 @@ Body:
       - Item: Noxious_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1621
     AegisName: VENOMOUS
     Name: Venomous
@@ -23873,6 +25094,8 @@ Body:
       - Item: Venomous_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1622
     AegisName: TEDDY_BEAR
     Name: Teddy Bear
@@ -23921,6 +25144,8 @@ Body:
       - Item: Teddy_Bear_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1623
     AegisName: RSX_0806
     Name: RSX-0806
@@ -23967,10 +25192,10 @@ Body:
         Rate: 6000
       - Item: House_Auger
         Rate: 10
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: House_Auger_
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Old_Violet_Box
         Rate: 1000
       - Item: Headlamp
@@ -23984,6 +25209,8 @@ Body:
       - Item: Rsx_0806_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1624
     AegisName: G_WASTE_STOVE
     Name: Old Stove
@@ -24022,6 +25249,7 @@ Body:
     Attack: 164
     Attack2: 494
     MagicDefense: 8
+    Str: 0
     Agi: 31
     Vit: 21
     Int: 50
@@ -24083,6 +25311,8 @@ Body:
         Rate: 500
       - Item: Eye_Of_Hellion
         Rate: 100
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1627
     AegisName: ANOPHELES
     Name: Anopheles
@@ -24120,6 +25350,8 @@ Body:
       - Item: Anopheles_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1628
     AegisName: MOLE
     Name: Holden
@@ -24162,6 +25394,8 @@ Body:
       - Item: Mole_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1629
     AegisName: HILL_WIND
     Name: Hill Wind
@@ -24199,6 +25433,8 @@ Body:
       - Item: Hill_Wind_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1630
     AegisName: BACSOJIN_
     Name: White Lady
@@ -24238,8 +25474,8 @@ Body:
         Rate: 5500
       - Item: Celestial_Robe
         Rate: 2000
-      - Item: Old_Violet_Box
-        Rate: 5000
+      # - Item: Old_Violet_Box
+      #   Rate: 5000
     Drops:
       - Item: Long_Hair
         Rate: 5500
@@ -24258,6 +25494,8 @@ Body:
       - Item: Bacsojin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1631
     AegisName: CHUNG_E_
     Name: Green Maiden
@@ -24305,6 +25543,8 @@ Body:
       - Item: Chung_E_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1632
     AegisName: GREMLIN
     Name: Gremlin
@@ -24354,6 +25594,8 @@ Body:
       - Item: Gremlin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1633
     AegisName: BEHOLDER
     Name: Beholder
@@ -24397,6 +25639,8 @@ Body:
       - Item: Beholder_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1634
     AegisName: SEYREN
     Name: Seyren Windsor
@@ -24451,6 +25695,8 @@ Body:
       - Item: Seyren_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1635
     AegisName: EREMES
     Name: Eremes Guile
@@ -24506,6 +25752,8 @@ Body:
       - Item: Eremes_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1636
     AegisName: HARWORD
     Name: Howard Alt-Eisen
@@ -24558,6 +25806,8 @@ Body:
       - Item: Harword_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1637
     AegisName: MAGALETA
     Name: Margaretha Sorin
@@ -24610,6 +25860,8 @@ Body:
       - Item: Magaleta_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1638
     AegisName: SHECIL
     Name: Cecil Damon
@@ -24660,6 +25912,8 @@ Body:
       - Item: Shecil_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1639
     AegisName: KATRINN
     Name: Kathryne Keyron
@@ -24710,6 +25964,8 @@ Body:
       - Item: Katrinn_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1640
     AegisName: G_SEYREN
     Name: Lord Knight Seyren
@@ -24744,6 +26000,8 @@ Body:
       - Item: Old_Violet_Box
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1641
     AegisName: G_EREMES
     Name: Assassin Cross Eremes
@@ -24778,6 +26036,8 @@ Body:
       - Item: Old_Violet_Box
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1642
     AegisName: G_HARWORD
     Name: Whitesmith Howard
@@ -24813,6 +26073,8 @@ Body:
       - Item: Old_Violet_Box
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1643
     AegisName: G_MAGALETA
     Name: High Priest Margaretha
@@ -24847,6 +26109,8 @@ Body:
       - Item: Old_Violet_Box
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1644
     AegisName: G_SHECIL
     Name: Sniper Cecil
@@ -24881,6 +26145,8 @@ Body:
       - Item: Old_Violet_Box
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1645
     AegisName: G_KATRINN
     Name: High Wizard Kathryne
@@ -24915,6 +26181,8 @@ Body:
       - Item: Old_Violet_Box
         Rate: 10
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1646
     AegisName: B_SEYREN
     Name: Lord Knight Seyren
@@ -24980,6 +26248,8 @@ Body:
       - Item: B_Seyren_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1647
     AegisName: B_EREMES
     Name: Assassin Cross Eremes
@@ -25026,7 +26296,7 @@ Body:
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: House_Auger
         Rate: 1500
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_2
       - Item: Glittering_Clothes
         Rate: 9000
         RandomOptionGroup: TBRO_Armor_Group_1
@@ -25045,6 +26315,8 @@ Body:
       - Item: B_Eremes_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1648
     AegisName: B_HARWORD
     Name: Whitesmith Howard
@@ -25111,6 +26383,8 @@ Body:
       - Item: B_Harword_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1649
     AegisName: B_MAGALETA
     Name: High Priest Margaretha
@@ -25175,6 +26449,8 @@ Body:
       - Item: B_Magaleta_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1650
     AegisName: B_SHECIL
     Name: Sniper Cecil
@@ -25239,6 +26515,8 @@ Body:
       - Item: B_Shecil_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1651
     AegisName: B_KATRINN
     Name: High Wizard Kathryne
@@ -25303,6 +26581,8 @@ Body:
       - Item: B_Katrinn_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1652
     AegisName: YGNIZEM
     Name: Egnigem Cenia
@@ -25357,6 +26637,8 @@ Body:
       - Item: Ygnizem_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1653
     AegisName: WHIKEBAIN
     Name: Wickebine Tres
@@ -25409,6 +26691,8 @@ Body:
       - Item: Whikebain_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1654
     AegisName: ARMAIA
     Name: Armeyer Dinze
@@ -25463,6 +26747,8 @@ Body:
       - Item: Armaia_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1655
     AegisName: EREND
     Name: Errende Ebecee
@@ -25515,6 +26801,8 @@ Body:
       - Item: Erend_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1656
     AegisName: KAVAC
     Name: Kavach Icarus
@@ -25568,6 +26856,8 @@ Body:
       - Item: Kavac_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1657
     AegisName: RAWREL
     Name: Laurell Weinder
@@ -25619,6 +26909,8 @@ Body:
       - Item: Rawrel_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1658
     AegisName: B_YGNIZEM
     Name: Egnigem Cenia
@@ -25683,6 +26975,8 @@ Body:
       - Item: B_Ygnizem_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1659
     AegisName: G_WHIKEBAIN
     Name: Wickebine Tres
@@ -25713,6 +27007,8 @@ Body:
     Drops:
       - Item: Gift_Box
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1660
     AegisName: G_ARMAIA
     Name: Armeyer Dinze
@@ -25744,6 +27040,8 @@ Body:
     Drops:
       - Item: Gift_Box
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1661
     AegisName: G_EREND
     Name: Errende Ebecee
@@ -25774,6 +27072,8 @@ Body:
     Drops:
       - Item: Gift_Box
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1662
     AegisName: G_KAVAC
     Name: Kavach Icarus
@@ -25805,6 +27105,8 @@ Body:
     Drops:
       - Item: Gift_Box
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1663
     AegisName: G_RAWREL
     Name: Laurell Weinder
@@ -25835,6 +27137,8 @@ Body:
     Drops:
       - Item: Gift_Box
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1664
     AegisName: POTON_CANON
     Name: Photon Cannon
@@ -25870,6 +27174,8 @@ Body:
         Rate: 1000
       - Item: Sticky_Mucus
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1665
     AegisName: POTON_CANON_1
     Name: Photon Cannon
@@ -25908,6 +27214,8 @@ Body:
       - Item: Destroyer
         Rate: 5
         RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1666
     AegisName: POTON_CANON_2
     Name: Photon Cannon
@@ -25943,6 +27251,8 @@ Body:
         Rate: 1000
       - Item: Sticky_Mucus
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1667
     AegisName: POTON_CANON_3
     Name: Photon Cannon
@@ -25978,6 +27288,8 @@ Body:
         Rate: 1000
       - Item: Sticky_Mucus
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1668
     AegisName: ARCHDAM
     Name: Archdam
@@ -26025,6 +27337,8 @@ Body:
       - Item: Archdam_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1669
     AegisName: DIMIK
     Name: Dimik
@@ -26056,6 +27370,8 @@ Body:
       - Item: Dimik_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1670
     AegisName: DIMIK_1
     Name: Dimik
@@ -26104,6 +27420,8 @@ Body:
       - Item: Dimik_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1671
     AegisName: DIMIK_2
     Name: Dimik
@@ -26152,6 +27470,8 @@ Body:
       - Item: Dimik_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1672
     AegisName: DIMIK_3
     Name: Dimik
@@ -26199,6 +27519,8 @@ Body:
       - Item: Dimik_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1673
     AegisName: DIMIK_4
     Name: Dimik
@@ -26246,6 +27568,8 @@ Body:
       - Item: Dimik_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1674
     AegisName: MONEMUS
     Name: Monemus
@@ -26255,6 +27579,7 @@ Body:
     Attack2: 3000
     Defense: 54
     MagicDefense: 25
+    Str: 0
     Vit: 90
     Int: 24
     Dex: 144
@@ -26277,6 +27602,8 @@ Body:
         Rate: 2000
       - Item: Stone_Heart
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1675
     AegisName: VENATU
     Name: Venatu
@@ -26308,6 +27635,8 @@ Body:
       - Item: Venatu_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1676
     AegisName: VENATU_1
     Name: Venatu
@@ -26356,6 +27685,8 @@ Body:
       - Item: Venatu_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1677
     AegisName: VENATU_2
     Name: Venatu
@@ -26404,6 +27735,8 @@ Body:
       - Item: Venatu_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1678
     AegisName: VENATU_3
     Name: Venatu
@@ -26451,6 +27784,8 @@ Body:
       - Item: Venatu_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1679
     AegisName: VENATU_4
     Name: Venatu
@@ -26498,6 +27833,8 @@ Body:
       - Item: Venatu_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1680
     AegisName: HILL_WIND_1
     Name: Hill Wind
@@ -26539,6 +27876,8 @@ Body:
       - Item: Hill_Wind_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1681
     AegisName: GEMINI
     Name: Gemini-S58
@@ -26588,6 +27927,8 @@ Body:
       - Item: Gemini_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1682
     AegisName: REMOVAL
     Name: Remover
@@ -26635,6 +27976,8 @@ Body:
       - Item: Removal_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1683
     AegisName: G_POTON_CANON
     Name: Photon Cannon
@@ -26746,6 +28089,8 @@ Body:
       - Item: Apocalips_H_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1686
     AegisName: ORC_BABY
     Name: Orc Baby
@@ -26791,6 +28136,8 @@ Body:
       - Item: Orc_Baby_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1687
     AegisName: GREEN_IGUANA
     Name: Grove
@@ -26837,6 +28184,8 @@ Body:
       - Item: Green_Iguana_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1688
     AegisName: LADY_TANEE
     Name: Lady Tanee
@@ -26895,6 +28244,8 @@ Body:
       - Item: Lady_Tanee_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1689
     AegisName: G_BACSOJIN
     Name: White Lady
@@ -26959,6 +28310,8 @@ Body:
         Rate: 300
       - Item: Bag_Of_Nuts
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1691
     AegisName: G_KRABEN
     Name: Kraben
@@ -27000,6 +28353,8 @@ Body:
         Rate: 1
       - Item: Leaflet_Of_Aloe
         Rate: 1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1692
     AegisName: BREEZE
     Name: Breeze
@@ -27047,6 +28402,8 @@ Body:
       - Item: Breeze_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1693
     AegisName: PLASMA_Y
     Name: Plasma
@@ -27088,6 +28445,8 @@ Body:
       - Item: Plasma_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1694
     AegisName: PLASMA_R
     Name: Plasma
@@ -27129,6 +28488,8 @@ Body:
       - Item: Plasma_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1695
     AegisName: PLASMA_G
     Name: Plasma
@@ -27170,6 +28531,8 @@ Body:
       - Item: Plasma_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1696
     AegisName: PLASMA_P
     Name: Plasma
@@ -27211,6 +28574,8 @@ Body:
       - Item: Plasma_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1697
     AegisName: PLASMA_B
     Name: Plasma
@@ -27252,6 +28617,8 @@ Body:
       - Item: Plasma_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1698
     AegisName: DEATHWORD
     Name: Death Word
@@ -27301,6 +28668,8 @@ Body:
       - Item: Deathword_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1699
     AegisName: ANCIENT_MIMIC
     Name: Ancient Mimic
@@ -27351,6 +28720,8 @@ Body:
       - Item: Ancient_Mimic_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1700
     AegisName: OBSERVATION
     Name: Dame of Sentinel
@@ -27400,6 +28771,8 @@ Body:
       - Item: Observation_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1701
     AegisName: SHELTER
     Name: Mistress of Shelter
@@ -27447,6 +28820,8 @@ Body:
       - Item: Shelter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1702
     AegisName: RETRIBUTION
     Name: Baroness of Retribution
@@ -27498,6 +28873,8 @@ Body:
       - Item: Retribution_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1703
     AegisName: SOLACE
     Name: Lady Solace
@@ -27549,6 +28926,8 @@ Body:
       - Item: Solace_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1704
     AegisName: THA_ODIUM
     Name: Odium of Thanatos
@@ -27597,6 +28976,8 @@ Body:
       - Item: Tha_Odium_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1705
     AegisName: THA_DESPERO
     Name: Despero of Thanatos
@@ -27645,6 +29026,8 @@ Body:
       - Item: Tha_Despero_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1706
     AegisName: THA_MAERO
     Name: Maero of Thanatos
@@ -27693,6 +29076,8 @@ Body:
       - Item: Tha_Maero_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1707
     AegisName: THA_DOLOR
     Name: Dolor of Thanatos
@@ -27740,6 +29125,8 @@ Body:
       - Item: Tha_Dolor_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1708
     AegisName: THANATOS
     Name: Memory of Thanatos
@@ -27803,6 +29190,8 @@ Body:
       - Item: Thanatos_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1709
     AegisName: G_THA_ODIUM
     Name: Odium of Thanatos
@@ -27841,6 +29230,8 @@ Body:
         Rate: 500
       - Item: Crystal_Jewel__
         Rate: 100
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1710
     AegisName: G_THA_DESPERO
     Name: Despero of Thanatos
@@ -27879,6 +29270,8 @@ Body:
         Rate: 500
       - Item: Crystal_Jewel__
         Rate: 100
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1711
     AegisName: G_THA_MAERO
     Name: Maero of Thanatos
@@ -27917,6 +29310,8 @@ Body:
         Rate: 500
       - Item: Crystal_Jewel__
         Rate: 100
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1712
     AegisName: G_THA_DOLOR
     Name: Dolor of Thanatos
@@ -27955,6 +29350,8 @@ Body:
         Rate: 500
       - Item: Crystal_Jewel__
         Rate: 100
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1713
     AegisName: ACIDUS
     Name: Acidus
@@ -28002,6 +29399,8 @@ Body:
       - Item: Acidus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1714
     AegisName: FERUS
     Name: Ferus
@@ -28048,6 +29447,8 @@ Body:
       - Item: Ferus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1715
     AegisName: NOVUS
     Name: Novus
@@ -28086,6 +29487,8 @@ Body:
       - Item: Novus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1716
     AegisName: ACIDUS_
     Name: Acidus
@@ -28132,6 +29535,8 @@ Body:
       - Item: Acidus__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1717
     AegisName: FERUS_
     Name: Ferus
@@ -28176,6 +29581,8 @@ Body:
       - Item: Ferus__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1718
     AegisName: NOVUS_
     Name: Novus
@@ -28214,6 +29621,8 @@ Body:
       - Item: Novus__Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1719
     AegisName: DETALE
     Name: Detardeurus
@@ -28274,6 +29683,8 @@ Body:
       - Item: Detale_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1720
     AegisName: HYDRO
     Name: Hydrolancer
@@ -28322,6 +29733,8 @@ Body:
       - Item: Hydro_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1721
     AegisName: DRAGON_EGG
     Name: Dragon Egg
@@ -28363,6 +29776,8 @@ Body:
       - Item: Dragon_Egg_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1722
     AegisName: EVENT_JAKK
     Name: Jakk
@@ -28401,6 +29816,8 @@ Body:
       - Item: Pumpkin_Hat
         Rate: 10000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1723
     AegisName: A_SHECIL
     Name: Cecil Damon
@@ -28462,6 +29879,7 @@ Body:
     Attack: 7
     Attack2: 10
     MagicDefense: 5
+    Int: 0
     Dex: 6
     Luk: 30
     AttackRange: 1
@@ -28638,11 +30056,18 @@ Body:
     Drops:
       - Item: Warrior_Symbol
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1732
     AegisName: G_TREASURE_BOX
     Name: Treasure Chest
     Level: 98
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -28651,6 +30076,8 @@ Body:
     Drops:
       - Item: 3rd_Floor_Pass
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1733
     AegisName: KIEL
     Name: Kiehl
@@ -28743,6 +30170,8 @@ Body:
       - Item: Kiel_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1735
     AegisName: ALICEL
     Name: Alicel
@@ -28794,6 +30223,8 @@ Body:
       - Item: Alicel_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1736
     AegisName: ALIOT
     Name: Aliot
@@ -28846,6 +30277,8 @@ Body:
       - Item: Aliot_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1737
     AegisName: ALIZA
     Name: Aliza
@@ -28894,6 +30327,8 @@ Body:
       - Item: Aliza_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1738
     AegisName: CONSTANT
     Name: Constant
@@ -28934,6 +30369,8 @@ Body:
         Rate: 10
       - Item: Elunium_Stone
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1739
     AegisName: G_ALICEL
     Name: Alicel
@@ -28966,6 +30403,8 @@ Body:
     Drops:
       - Item: Sturdy_Iron_Piece
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1740
     AegisName: G_ALIOT
     Name: Aliot
@@ -28998,6 +30437,8 @@ Body:
     Drops:
       - Item: Sturdy_Iron_Piece
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1741
     AegisName: G_COOKIE_XMAS
     Name: Christmas Cookie
@@ -29135,6 +30576,8 @@ Body:
     Drops:
       - Item: Sturdy_Iron_Piece
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1746
     AegisName: G_ALIZA
     Name: Aliza
@@ -29165,6 +30608,8 @@ Body:
     Drops:
       - Item: Sturdy_Iron_Piece
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1747
     AegisName: G_SNAKE
     Name: Boa
@@ -29251,6 +30696,11 @@ Body:
     Attack2: 200
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 100
     AttackRange: 1
     SkillRange: 7
@@ -29327,6 +30777,8 @@ Body:
       - Item: Randgris_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1752
     AegisName: SKOGUL
     Name: Skogul
@@ -29376,6 +30828,8 @@ Body:
       - Item: Skogul_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1753
     AegisName: FRUS
     Name: Frus
@@ -29423,6 +30877,8 @@ Body:
       - Item: Frus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1754
     AegisName: SKEGGIOLD
     Name: Skeggiold
@@ -29474,6 +30930,8 @@ Body:
       - Item: Skeggiold_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1755
     AegisName: SKEGGIOLD_
     Name: Skeggiold
@@ -29525,6 +30983,8 @@ Body:
       - Item: Skeggiold_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1756
     AegisName: G_HYDRO
     Name: Hydrolancer
@@ -29688,6 +31148,8 @@ Body:
     Drops:
       - Item: Rune_Of_Darkness
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1762
     AegisName: G_FRUS
     Name: Frus
@@ -29719,6 +31181,8 @@ Body:
     Drops:
       - Item: Rune_Of_Darkness
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1763
     AegisName: G_SKEGGIOLD
     Name: Skeggiold
@@ -29750,6 +31214,8 @@ Body:
     Drops:
       - Item: Rune_Of_Darkness
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1764
     AegisName: G_SKEGGIOLD_
     Name: Skeggiold
@@ -29781,6 +31247,8 @@ Body:
     Drops:
       - Item: Rune_Of_Darkness
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1765
     AegisName: G_RANDGRIS
     Name: Valkyrie
@@ -29818,6 +31286,8 @@ Body:
         Rate: 100
       - Item: Valkyrja's_Shield
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1766
     AegisName: EM_ANGELING
     Name: Angeling
@@ -29952,6 +31422,8 @@ Body:
       - Item: Gloom_Under_Night_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1769
     AegisName: AGAV
     Name: Agav
@@ -29997,6 +31469,8 @@ Body:
       - Item: Agav_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1770
     AegisName: ECHIO
     Name: Echio
@@ -30045,6 +31519,8 @@ Body:
       - Item: Echio_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1771
     AegisName: VANBERK
     Name: Vanberk
@@ -30085,12 +31561,14 @@ Body:
         Rate: 10
       - Item: Scalpel
         Rate: 5
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Bloody_Rune
         Rate: 100
       - Item: Vanberk_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1772
     AegisName: ISILLA
     Name: Isilla
@@ -30136,6 +31614,8 @@ Body:
       - Item: Isilla_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1773
     AegisName: HODREMLIN
     Name: Hodremlin
@@ -30187,6 +31667,8 @@ Body:
       - Item: Hodremlin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1774
     AegisName: SEEKER
     Name: Seeker
@@ -30233,6 +31715,8 @@ Body:
       - Item: Seeker_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1775
     AegisName: SNOWIER
     Name: Snowier
@@ -30281,6 +31765,8 @@ Body:
       - Item: Snowier_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1776
     AegisName: SIROMA
     Name: Siroma
@@ -30322,6 +31808,8 @@ Body:
       - Item: Siroma_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1777
     AegisName: ICE_TITAN
     Name: Ice Titan
@@ -30367,6 +31855,8 @@ Body:
       - Item: Ice_Titan_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1778
     AegisName: GAZETI
     Name: Gazeti
@@ -30410,6 +31900,8 @@ Body:
       - Item: Gazeti_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1779
     AegisName: KTULLANUX
     Name: Ktullanux
@@ -30467,6 +31959,8 @@ Body:
       - Item: Ktullanux_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1780
     AegisName: MUSCIPULAR
     Name: Muscipular
@@ -30511,6 +32005,8 @@ Body:
       - Item: Muscipular_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1781
     AegisName: DROSERA
     Name: Drosera
@@ -30555,6 +32051,8 @@ Body:
       - Item: Drosera_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1782
     AegisName: ROWEEN
     Name: Roween
@@ -30596,6 +32094,8 @@ Body:
       - Item: Roween_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1783
     AegisName: GALION
     Name: Galion
@@ -30639,6 +32139,8 @@ Body:
       - Item: Galion_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1784
     AegisName: STAPO
     Name: Stapo
@@ -30684,6 +32186,8 @@ Body:
       - Item: Stapo_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1785
     AegisName: ATROCE
     Name: Atroce
@@ -30743,6 +32247,8 @@ Body:
       - Item: Atroce_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1786
     AegisName: G_AGAV
     Name: Agav
@@ -30772,6 +32278,8 @@ Body:
     Drops:
       - Item: Suspicious_Hat
         Rate: 1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1787
     AegisName: G_ECHIO
     Name: Echio
@@ -30802,6 +32310,8 @@ Body:
     Drops:
       - Item: Suspicious_Hat
         Rate: 1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1788
     AegisName: G_ICE_TITAN
     Name: Ice Titan
@@ -30832,6 +32342,8 @@ Body:
     Drops:
       - Item: Ice_Heart
         Rate: 1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1789
     AegisName: ICEICLE
     Name: Iceicle
@@ -30875,6 +32387,8 @@ Body:
       - Item: Ice_Piece
         Rate: 500
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1790
     AegisName: G_RAFFLESIA
     Name: Rafflesia
@@ -30907,6 +32421,8 @@ Body:
         Rate: 4000
       - Item: Blue_Jewel_
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1791
     AegisName: G_GALION
     Name: Galion
@@ -30942,6 +32458,12 @@ Body:
     Hp: 1000
     Defense: 127
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -31059,6 +32581,8 @@ Body:
       - Item: Anti_Spell_Bead
         Rate: 10000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1796
     AegisName: AUNOE
     Name: Aunoe
@@ -31104,6 +32628,8 @@ Body:
       - Item: Musika
         Rate: 5
         RandomOptionGroup: TBRO_Garment_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1797
     AegisName: FANAT
     Name: Fanat
@@ -31147,11 +32673,18 @@ Body:
         Rate: 50
       - Item: White_Mask
         Rate: 2500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1798
     AegisName: TREASURE_BOX_
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -31164,6 +32697,8 @@ Body:
     Drops:
       - Item: Gem_Of_Ruin
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1799
     AegisName: G_SEYREN_
     Name: Lord Knight Seyren
@@ -31197,6 +32732,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 300
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1800
     AegisName: G_EREMES_
     Name: Assassin Cross Eremes
@@ -31230,6 +32767,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 300
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1801
     AegisName: G_HARWORD_
     Name: Mastersmith Howard
@@ -31264,6 +32803,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 300
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1802
     AegisName: G_MAGALETA_
     Name: High Priest Margaretha
@@ -31297,6 +32838,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 300
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1803
     AegisName: G_SHECIL_
     Name: Sniper Cecil
@@ -31330,6 +32873,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 300
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1804
     AegisName: G_KATRINN_
     Name: High Wizard Kathryne
@@ -31363,6 +32908,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 300
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1805
     AegisName: B_SEYREN_
     Name: Lord Knight Seyren
@@ -31396,6 +32943,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1806
     AegisName: B_EREMES_
     Name: Assassin Cross Eremes
@@ -31429,6 +32978,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1807
     AegisName: B_HARWORD_
     Name: Mastersmith Howard
@@ -31463,6 +33014,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1808
     AegisName: B_MAGALETA_
     Name: High Priest Margaretha
@@ -31496,6 +33049,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1809
     AegisName: B_SHECIL_
     Name: Sniper Cecil
@@ -31529,6 +33084,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1810
     AegisName: B_KATRINN_
     Name: High Wizard Kathryne
@@ -31562,6 +33119,8 @@ Body:
     Drops:
       - Item: Evil_Mind
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1811
     AegisName: G_SMOKIE_
     Name: Bandit
@@ -31599,6 +33158,8 @@ Body:
         Rate: 2000
       - Item: Bamboo_Basket
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1812
     AegisName: EVENT_LUDE
     Name: Delightful Lude
@@ -31630,6 +33191,8 @@ Body:
         Rate: 5000
       - Item: Pumpkin_Mojo
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1813
     AegisName: EVENT_HYDRO
     Name: Hydrolancer
@@ -31675,6 +33238,8 @@ Body:
         Rate: 1500
       - Item: Treasure_Box
         Rate: 5500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1814
     AegisName: EVENT_MOON
     Name: Moonlight Flower
@@ -31744,6 +33309,8 @@ Body:
       - Item: Small_Rice_Dough
         Rate: 3000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1816
     AegisName: EVENT_GOURD
     Name: Gourd
@@ -31770,6 +33337,8 @@ Body:
     Drops:
       - Item: Apple
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1817
     AegisName: EVENT_DETALE
     Name: Detarderous
@@ -31816,6 +33385,8 @@ Body:
         Rate: 1500
       - Item: Luk_Dish10
         Rate: 1500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1818
     AegisName: EVENT_ALARM
     Name: Alarm
@@ -31845,6 +33416,8 @@ Body:
       - Item: Piece_Of_Cogwheel
         Rate: 7000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1819
     AegisName: EVENT_BATHORY
     Name: Bathory
@@ -31873,6 +33446,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1820
     AegisName: EVENT_BIGFOOT
     Name: Bigfoot
@@ -31901,6 +33476,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1821
     AegisName: EVENT_DESERT_WOLF
     Name: Desert Wolf
@@ -31930,6 +33507,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1822
     AegisName: EVENT_DEVIRUCHI
     Name: Deviruchi
@@ -31961,6 +33540,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1823
     AegisName: EVENT_FREEZER
     Name: Freezer
@@ -31991,6 +33572,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1824
     AegisName: EVENT_GARM_BABY
     Name: Baby Hatii
@@ -32022,6 +33605,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1825
     AegisName: EVENT_GOBLINE_XMAS
     Name: Christmas Goblin
@@ -32051,6 +33636,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1826
     AegisName: EVENT_MYST
     Name: Myst
@@ -32061,6 +33648,7 @@ Body:
     MagicDefense: 40
     Agi: 38
     Vit: 18
+    Int: 0
     Dex: 53
     Luk: 10
     AttackRange: 1
@@ -32078,6 +33666,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1827
     AegisName: EVENT_SASQUATCH
     Name: Sasquatch
@@ -32107,6 +33697,8 @@ Body:
     Drops:
       - Item: Wooden_Block_
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1828
     AegisName: EVENT_GULLINBURSTI
     Name: Gullinbrusti
@@ -32118,6 +33710,7 @@ Body:
     MagicDefense: 99
     Agi: 14
     Vit: 14
+    Int: 0
     Dex: 19
     Luk: 15
     AttackRange: 1
@@ -32139,6 +33732,8 @@ Body:
         Rate: 9000
       - Item: Lucky_Candy_Cane
         Rate: 8000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1829
     AegisName: SWORD_GUARDIAN
     Name: Sword Master
@@ -32190,6 +33785,8 @@ Body:
       - Item: Sword_Guardian_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1830
     AegisName: BOW_GUARDIAN
     Name: Bow Master
@@ -32238,6 +33835,8 @@ Body:
       - Item: Bow_Guardian_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1831
     AegisName: SALAMANDER
     Name: Salamander
@@ -32288,6 +33887,8 @@ Body:
       - Item: Salamander_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1832
     AegisName: IFRIT
     Name: Ifrit
@@ -32322,10 +33923,10 @@ Body:
     Modes:
       Mvp: true
     MvpDrops:
-      - Item: Old_Violet_Box
-        Rate: 5500
-      - Item: Old_Blue_Box
-        Rate: 5000
+      # - Item: Old_Violet_Box
+      #   Rate: 5500
+      # - Item: Old_Blue_Box
+      #   Rate: 5000
       - Item: Old_Card_Album
         Rate: 2000
     Drops:
@@ -32349,6 +33950,8 @@ Body:
       - Item: Ifrit_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1833
     AegisName: KASA
     Name: Kasa
@@ -32400,6 +34003,8 @@ Body:
       - Item: Kasa_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1834
     AegisName: G_SALAMANDER
     Name: Salamander
@@ -32493,6 +34098,8 @@ Body:
       - Item: Magmaring_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1837
     AegisName: IMP
     Name: Fire Imp
@@ -32544,6 +34151,8 @@ Body:
       - Item: Imp_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1838
     AegisName: KNOCKER
     Name: Knocker
@@ -32594,6 +34203,8 @@ Body:
       - Item: Knocker_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1839
     AegisName: BYORGUE
     Name: Byorgue
@@ -32632,7 +34243,7 @@ Body:
         Rate: 3
       - Item: Scalpel
         Rate: 150
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Agi_Dish07
         Rate: 500
       - Item: Old_Blue_Box
@@ -32645,6 +34256,8 @@ Body:
       - Item: Byorgue_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1840
     AegisName: GOLDEN_SAVAGE
     Name: Golden Savage
@@ -32656,6 +34269,7 @@ Body:
     Attack2: 700
     Defense: 100
     MagicDefense: 99
+    Str: 0
     Int: 50
     Dex: 120
     AttackRange: 1
@@ -32695,6 +34309,8 @@ Body:
       - Item: New_Year_Rice_Cake_2
         Rate: 3000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1841
     AegisName: G_SNAKE_
     Name: Snake Lord's Minion
@@ -32730,6 +34346,8 @@ Body:
         Rate: 200
       - Item: Treasure_Box_
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1842
     AegisName: G_ANACONDAQ_
     Name: Snake Lord's Minion
@@ -32765,6 +34383,8 @@ Body:
         Rate: 400
       - Item: Treasure_Box_
         Rate: 20
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1843
     AegisName: G_SIDE_WINDER_
     Name: Snake Lord's Minion
@@ -32801,6 +34421,8 @@ Body:
         Rate: 600
       - Item: Treasure_Box_
         Rate: 30
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1844
     AegisName: G_ISIS_
     Name: Snake Lord's Minion
@@ -32839,11 +34461,18 @@ Body:
         Rate: 800
       - Item: Treasure_Box_
         Rate: 50
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1845
     AegisName: G_TREASURE_BOX_
     Name: Treasure Box
     Level: 98
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -32867,6 +34496,8 @@ Body:
       - Item: Green_Ale_US
         Rate: 2500
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1846
     AegisName: DREAMMETAL
     Name: Dream Metal
@@ -32893,6 +34524,8 @@ Body:
     Drops:
       - Item: Dragonball_Yellow_
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1847
     AegisName: EVENT_PORING
     Name: Poring
@@ -33140,6 +34773,8 @@ Body:
       - Item: Muka_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1855
     AegisName: E_POISONSPORE
     Name: Poison Spore
@@ -33151,7 +34786,9 @@ Body:
     Attack2: 101
     Agi: 19
     Vit: 25
+    Int: 0
     Dex: 24
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -33182,6 +34819,8 @@ Body:
       - Item: Poison_Spore_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1856
     AegisName: E_MAGNOLIA
     Name: Magnolia
@@ -33195,6 +34834,7 @@ Body:
     MagicDefense: 30
     Agi: 26
     Vit: 26
+    Int: 0
     Dex: 39
     Luk: 5
     AttackRange: 1
@@ -33229,6 +34869,8 @@ Body:
       - Item: Magnolia_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1857
     AegisName: E_MARIN
     Name: Marin
@@ -33274,6 +34916,8 @@ Body:
       - Item: Marin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1858
     AegisName: E_PLANKTON
     Name: Plankton
@@ -33286,7 +34930,9 @@ Body:
     MagicDefense: 5
     Agi: 10
     Vit: 10
+    Int: 0
     Dex: 15
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -33317,6 +34963,8 @@ Body:
       - Item: Plankton_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1859
     AegisName: E_MANDRAGORA
     Name: Mandragora
@@ -33329,6 +34977,7 @@ Body:
     MagicDefense: 25
     Agi: 12
     Vit: 24
+    Int: 0
     Dex: 36
     Luk: 15
     AttackRange: 4
@@ -33363,6 +35012,8 @@ Body:
       - Item: Mandragora_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1860
     AegisName: E_COCO
     Name: Coco
@@ -33410,6 +35061,8 @@ Body:
       - Item: Coco_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1861
     AegisName: E_CHOCO
     Name: Choco
@@ -33457,6 +35110,8 @@ Body:
       - Item: Choco_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1862
     AegisName: E_MARTIN
     Name: Martin
@@ -33504,6 +35159,8 @@ Body:
       - Item: Martin_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1863
     AegisName: E_SPRING_RABBIT
     Name: Spring Rabbit
@@ -33538,6 +35195,8 @@ Body:
         Rate: 5000
       - Item: Marshmallow
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1864
     AegisName: ZOMBIE_SLAUGHTER
     Name: Zombie Slaughter
@@ -33580,6 +35239,8 @@ Body:
       - Item: Zombie_Slaughter_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1865
     AegisName: RAGGED_ZOMBIE
     Name: Ragged Zombie
@@ -33626,6 +35287,8 @@ Body:
       - Item: Ragged_Zombie_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1866
     AegisName: HELL_POODLE
     Name: Hell Poodle
@@ -33677,6 +35340,8 @@ Body:
       - Item: Hell_Poodle_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1867
     AegisName: BANSHEE
     Name: Banshee
@@ -33714,7 +35379,7 @@ Body:
         RandomOptionGroup: TBRO_Armor_Group_1
       - Item: Scalpel
         Rate: 10
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Wool_Scarf
         Rate: 10
         RandomOptionGroup: TBRO_Garment_Group_1
@@ -33725,6 +35390,8 @@ Body:
       - Item: Banshee_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1868
     AegisName: G_BANSHEE
     Name: Banshee
@@ -33797,6 +35464,8 @@ Body:
       - Item: Flame_Skull_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1870
     AegisName: NECROMANCER
     Name: Necromancer
@@ -33844,6 +35513,8 @@ Body:
       - Item: Necromancer_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1871
     AegisName: FALLINGBISHOP
     Name: Fallen Bishop Hibram
@@ -33902,6 +35573,8 @@ Body:
       - Item: Fallen_Bishop_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1872
     AegisName: BEELZEBUB_FLY
     Name: Hell Fly
@@ -34019,6 +35692,8 @@ Body:
       - Item: Berzebub_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1875
     AegisName: TRISTAN_3RD
     Name: Dead King
@@ -34053,6 +35728,8 @@ Body:
         Rate: 9000
       - Item: Sticky_Mucus
         Rate: 9000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1876
     AegisName: E_LORD_OF_DEATH
     Name: Lord of the Dead
@@ -34108,6 +35785,8 @@ Body:
         Rate: 10
       - Item: Gift_Box
         Rate: 100
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1878
     AegisName: E_SHINING_PLANT
     Name: Shining Plant
@@ -34117,6 +35796,11 @@ Body:
     Attack2: 2
     Defense: 100
     MagicDefense: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
     Luk: 90
     AttackRange: 1
     SkillRange: 7
@@ -34147,6 +35831,8 @@ Body:
         Rate: 1500
       - Item: Fluff
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1879
     AegisName: ECLIPSE_P
     Name: Eclipse
@@ -34158,6 +35844,7 @@ Body:
     MagicDefense: 40
     Agi: 36
     Vit: 6
+    Int: 0
     Dex: 11
     Luk: 80
     AttackRange: 1
@@ -34216,6 +35903,8 @@ Body:
         Rate: 500
       - Item: Egg
         Rate: 50
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1881
     AegisName: LES
     Name: Les
@@ -34258,6 +35947,8 @@ Body:
         Rate: 500
       - Item: Blue_Herb
         Rate: 50
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1882
     AegisName: VAVAYAGA
     Name: Baba Yaga
@@ -34302,6 +35993,8 @@ Body:
         Rate: 1500
       - Item: Bread
         Rate: 1500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1883
     AegisName: UZHAS
     Name: Uzhas
@@ -34346,6 +36039,8 @@ Body:
         Rate: 1500
       - Item: Old_Blue_Box
         Rate: 3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1884
     AegisName: MAVKA
     Name: Mavka
@@ -34390,6 +36085,8 @@ Body:
         Rate: 300
       - Item: Blue_Herb
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1885
     AegisName: GOPINICH
     Name: Gopinich
@@ -34447,6 +36144,8 @@ Body:
         Rate: 5000
       - Item: Loard_Circlet
         Rate: 1
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1886
     AegisName: G_MAVKA
     Name: Mavka
@@ -34505,6 +36204,8 @@ Body:
         Rate: 2000
       - Item: Ice_Piece
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1888
     AegisName: GARM_BABY_R
     Name: Baby Hatii
@@ -34538,6 +36239,8 @@ Body:
     Drops:
       - Item: Ice_Piece
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1889
     AegisName: GARM_R
     Name: Marozka's Guard
@@ -34573,6 +36276,8 @@ Body:
         Rate: 2000
       - Item: Ice_Piece
         Rate: 2000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1890
     AegisName: GOPINICH_R
     Name: The Immortal Koshei
@@ -34639,6 +36344,7 @@ Body:
     Attack2: 2317
     Defense: 39
     MagicDefense: 44
+    Str: 0
     Agi: 66
     Vit: 54
     Int: 74
@@ -34715,6 +36421,8 @@ Body:
     Drops:
       - Item: Cold_Medicine
         Rate: 8335
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1895
     AegisName: EVENT_SEYREN
     Name: Seyren Windsor
@@ -34820,6 +36528,8 @@ Body:
     Drops:
       - Item: Jade_Plate
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1899
     AegisName: SWORD_GUARDIAN_
     Name: Sword Guardian
@@ -34881,13 +36591,20 @@ Body:
     Drops:
       - Item: Heart_Box
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1902
     AegisName: E_TREASURE1
     Name: Treasure Box
     Level: 99
     Hp: 49
     Defense: 100
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Holy
@@ -34896,13 +36613,20 @@ Body:
     Drops:
       - Item: Gold_Key77
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1903
     AegisName: E_TREASURE2
     Name: Treasure Box
     Level: 99
     Hp: 49
     Defense: 100
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Holy
@@ -34911,6 +36635,8 @@ Body:
     Drops:
       - Item: Silver_Key77
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1904
     AegisName: BOMBPORING
     Name: Bomb Poring
@@ -34924,6 +36650,7 @@ Body:
     MagicDefense: 99
     Agi: 28
     Vit: 28
+    Int: 0
     Dex: 33
     Luk: 50
     AttackRange: 1
@@ -35292,6 +37019,8 @@ Body:
         Rate: 9000
       - Item: Dark_Debris
         Rate: 9000
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1918
     AegisName: MOROCC_1
     Name: Incarnation of Morocc
@@ -35339,6 +37068,8 @@ Body:
       - Item: Nemesis
         Rate: 20
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1919
     AegisName: MOROCC_2
     Name: Incarnation of Morocc
@@ -35383,6 +37114,8 @@ Body:
         Rate: 3500
       - Item: Cross_Shield
         Rate: 15
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1920
     AegisName: MOROCC_3
     Name: Incarnation of Morocc
@@ -35430,6 +37163,8 @@ Body:
       - Item: Bloody_Eater
         Rate: 15
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1921
     AegisName: MOROCC_4
     Name: Incarnation of Morocc
@@ -35473,6 +37208,8 @@ Body:
         Rate: 3500
       - Item: Exorcism_Bible
         Rate: 20
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1922
     AegisName: G_MOROCC_1
     Name: Incarnation of Morocc
@@ -35622,6 +37359,8 @@ Body:
         Rate: 3000
       - Item: Pumpkin
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1927
     AegisName: WHISPER_H
     Name: Whisper
@@ -35632,7 +37371,9 @@ Body:
     MagicDefense: 45
     Agi: 51
     Vit: 14
+    Int: 0
     Dex: 60
+    Luk: 0
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -35652,6 +37393,8 @@ Body:
         Rate: 5000
       - Item: Transparent_Cloth
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1928
     AegisName: DEVIRUCHI_H
     Name: Deviruchi
@@ -35685,6 +37428,8 @@ Body:
         Rate: 3000
       - Item: Petite_DiablOfs_Wing
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1929
     AegisName: BAPHOMET_I
     Name: Great Demon Baphomet
@@ -35737,6 +37482,8 @@ Body:
       - Item: Baphomet_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1930
     AegisName: PIAMETTE
     Name: Piamette
@@ -35823,6 +37570,8 @@ Body:
     Drops:
       - Item: Crystal_Key
         Rate: 9000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1933
     AegisName: GARDEN_WATCHER
     Name: Garden Watcher
@@ -35960,7 +37709,12 @@ Body:
     AegisName: TREASURE_BOX41
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -35989,11 +37743,18 @@ Body:
         Rate: 150
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1939
     AegisName: TREASURE_BOX42
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36022,11 +37783,18 @@ Body:
         Rate: 150
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1940
     AegisName: TREASURE_BOX43
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36047,7 +37815,7 @@ Body:
         Rate: 7275
       - Item: Scalpel
         Rate: 150
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Heart_Breaker
         Rate: 150
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
@@ -36055,11 +37823,18 @@ Body:
         Rate: 150
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1941
     AegisName: TREASURE_BOX44
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36088,11 +37863,18 @@ Body:
         Rate: 50
         StealProtected: true
         RandomOptionGroup: TBRO_Magic_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1942
     AegisName: TREASURE_BOX45
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36116,16 +37898,23 @@ Body:
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
       - Item: Orc_Archer_Bow
         Rate: 150
-        RandomOptionGroup: TBRO_Ranged_Weapon_Level_3
+        RandomOptionGroup: TBRO_Ranged_Weapon_Level_2
       - Item: Icicle_Fist
         Rate: 150
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1943
     AegisName: TREASURE_BOX46
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36154,11 +37943,18 @@ Body:
         Rate: 150
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1944
     AegisName: TREASURE_BOX47
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36187,11 +37983,18 @@ Body:
         Rate: 50
         StealProtected: true
         RandomOptionGroup: TBRO_Garment_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1945
     AegisName: TREASURE_BOX48
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36220,11 +38023,18 @@ Body:
         Rate: 150
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1946
     AegisName: TREASURE_BOX49
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     RaceGroups:
@@ -36253,6 +38063,8 @@ Body:
         Rate: 50
         StealProtected: true
         RandomOptionGroup: TBRO_Garment_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1947
     AegisName: PIAMETTE_
     Name: Piamette
@@ -36398,6 +38210,8 @@ Body:
       - Item: Yggdrasilberry
         Rate: 200
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1952
     AegisName: CRYSTAL_7
     Name: Crystal
@@ -36434,6 +38248,8 @@ Body:
       - Item: Seed_Of_Yggdrasil
         Rate: 250
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1953
     AegisName: CRYSTAL_8
     Name: Crystal
@@ -36470,6 +38286,8 @@ Body:
       - Item: Branch_Of_Dead_Tree
         Rate: 300
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1954
     AegisName: CRYSTAL_9
     Name: Crystal
@@ -36506,11 +38324,18 @@ Body:
       - Item: Old_Blue_Box
         Rate: 100
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1955
     AegisName: TREASURE_BOX_I
     Name: Treasure Chest
     Level: 99
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
     Dex: 999
+    Luk: 0
     Size: Small
     Race: Formless
     Element: Neutral
@@ -36521,6 +38346,8 @@ Body:
         Rate: 3000
       - Item: Soul_Crystal
         Rate: 4000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1956
     AegisName: NAGHT_SIEGER
     Name: Naght Sieger
@@ -36569,6 +38396,8 @@ Body:
         RandomOptionGroup: TBRO_Garment_Group_1
       - Item: Turquoise
         Rate: 9000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1957
     AegisName: ENTWEIHEN
     Name: Entweihen Crothen
@@ -36620,6 +38449,8 @@ Body:
       - Item: Ant_Buyanne_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1958
     AegisName: G_ENTWEIHEN_R
     Name: Thorny Skeleton
@@ -36808,6 +38639,8 @@ Body:
         Rate: 3000
       - Item: Test_Certificate
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1965
     AegisName: M_WILD_ROSE
     Name: Wild Rose
@@ -36817,6 +38650,7 @@ Body:
     Attack: 100
     Attack2: 145
     MagicDefense: 15
+    Str: 0
     Agi: 85
     Vit: 15
     Int: 35
@@ -36844,6 +38678,7 @@ Body:
     Attack2: 250
     Defense: 30
     MagicDefense: 20
+    Str: 0
     Agi: 38
     Vit: 30
     Int: 35
@@ -36872,6 +38707,7 @@ Body:
     Attack2: 250
     Defense: 30
     MagicDefense: 20
+    Str: 0
     Agi: 38
     Vit: 30
     Int: 35
@@ -36936,6 +38772,8 @@ Body:
       - Item: Strouf_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1969
     AegisName: E_MARC
     Name: Marc
@@ -36982,6 +38820,8 @@ Body:
       - Item: Marc_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1970
     AegisName: E_OBEAUNE
     Name: Obeune
@@ -37028,6 +38868,8 @@ Body:
       - Item: Obeaune_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1971
     AegisName: E_VADON
     Name: Vadon
@@ -37074,6 +38916,8 @@ Body:
       - Item: Vadon_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1972
     AegisName: E_MARINA
     Name: Marina
@@ -37086,6 +38930,7 @@ Body:
     MagicDefense: 5
     Agi: 21
     Vit: 21
+    Int: 0
     Dex: 36
     Luk: 10
     AttackRange: 1
@@ -37116,6 +38961,8 @@ Body:
       - Item: Marina_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1973
     AegisName: E_PORING
     Name: Poring
@@ -37126,6 +38973,7 @@ Body:
     Attack: 7
     Attack2: 10
     MagicDefense: 5
+    Int: 0
     Dex: 6
     Luk: 30
     AttackRange: 1
@@ -37151,6 +38999,8 @@ Body:
         Rate: 1500
       - Item: Water_Of_Blessing
         Rate: 3000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1974
     AegisName: BANSHEE_MASTER
     Name: Banshee Master
@@ -37200,6 +39050,8 @@ Body:
       - Item: Banshee_Master_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1975
     AegisName: BEHOLDER_MASTER
     Name: Beholder master
@@ -37246,6 +39098,8 @@ Body:
         Rate: 2
       - Item: Linen_Glove
         Rate: 2
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1976
     AegisName: COBALT_MINERAL
     Name: Cobalt Mineral
@@ -37294,6 +39148,8 @@ Body:
       - Item: Emperium
         Rate: 2
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1977
     AegisName: HEAVY_METALING
     Name: Heavy Metaling
@@ -37339,6 +39195,8 @@ Body:
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Jubilee
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1978
     AegisName: HELL_APOCALIPS
     Name: Hell Apocalypse
@@ -37389,6 +39247,8 @@ Body:
         Rate: 1
         StealProtected: true
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1979
     AegisName: ZAKUDAM
     Name: Zakudam
@@ -37437,6 +39297,8 @@ Body:
       - Item: Improved_Tights
         Rate: 10
         RandomOptionGroup: TBRO_Armor_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1980
     AegisName: KUBLIN
     Name: Kublin
@@ -37484,6 +39346,8 @@ Body:
         Rate: 3
       - Item: Red_Herb
         Rate: 1800
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 1981
     AegisName: I_HIGH_ORC
     Name: Safeguard Chief
@@ -37609,6 +39473,7 @@ Body:
     Str: 28
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -37672,6 +39537,8 @@ Body:
       - Item: Tatacho_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1987
     AegisName: CENTIPEDE
     Name: Centipede
@@ -37724,6 +39591,8 @@ Body:
       - Item: Centipede_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1988
     AegisName: NEPENTHES
     Name: Nepenthes
@@ -37773,6 +39642,8 @@ Body:
         Rate: 50
       - Item: Stem
         Rate: 9000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1989
     AegisName: HILLSRION
     Name: Hillslion
@@ -37825,6 +39696,8 @@ Body:
       - Item: Hilsrion_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1990
     AegisName: HARDROCK_MOMMOTH
     Name: Hardrock Mammoth
@@ -37873,6 +39746,8 @@ Body:
         Rate: 20
       - Item: Elunium
         Rate: 9000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1991
     AegisName: TENDRILRION
     Name: Tendrilion
@@ -37923,6 +39798,8 @@ Body:
         Rate: 5335
       - Item: Stiff_Horn
         Rate: 4850
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1992
     AegisName: CORNUS
     Name: Cornus
@@ -37974,6 +39851,8 @@ Body:
       - Item: Cornus_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1993
     AegisName: NAGA
     Name: Naga
@@ -38023,6 +39902,8 @@ Body:
       - Item: Pike_
         Rate: 20
         RandomOptionGroup: TBRO_Melee_Weapon_Level_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1994
     AegisName: LUCIOLA_VESPA
     Name: Luciola Vespa
@@ -38074,6 +39955,8 @@ Body:
       - Item: Luciola_Vespa_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1995
     AegisName: PINGUICULA
     Name: Pinguicula
@@ -38121,6 +40004,8 @@ Body:
         Rate: 3000
       - Item: Flower
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 1997
     AegisName: G_TATACHO
     Name: Tatacho
@@ -38229,6 +40114,8 @@ Body:
       - Item: Centipede_Larva_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2008
     AegisName: WOOMAWANG
     Name: Woomawang
@@ -38290,6 +40177,8 @@ Body:
     Drops:
       - Item: Cowking's_Nose_Ring
         Rate: 10000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2010
     AegisName: G_MAJORUROS
     Name: Ox
@@ -38363,6 +40252,8 @@ Body:
       - Item: Draco_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2014
     AegisName: DRACO_EGG
     Name: Draco Egg
@@ -38392,6 +40283,8 @@ Body:
         Rate: 5000
       - Item: Egg_Shell
         Rate: 20
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2015
     AegisName: PINGUICULA_D
     Name: Dark Pinguicula
@@ -38431,6 +40324,8 @@ Body:
         Rate: 10
       - Item: Withered_Flower
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2016
     AegisName: AQUA_ELEMENTAL
     Name: Aqua Elemental
@@ -38469,6 +40364,8 @@ Body:
       - Item: Aqua_Elemental_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2017
     AegisName: RATA
     Name: Rata
@@ -38507,6 +40404,8 @@ Body:
       - Item: Veteran_Hammer
         Rate: 100
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2018
     AegisName: DUNEYRR
     Name: Duneyrr
@@ -38550,6 +40449,8 @@ Body:
       - Item: Veteran_Axe
         Rate: 100
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2019
     AegisName: ANCIENT_TREE
     Name: Ancient Tree
@@ -38591,6 +40492,8 @@ Body:
       - Item: Vital_Tree_Shoes
         Rate: 30
         RandomOptionGroup: TBRO_Footgear_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2020
     AegisName: RHYNCHO
     Name: Rhyncho
@@ -38626,6 +40529,8 @@ Body:
         Rate: 5
       - Item: Crystal_Of_Soul_01
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2021
     AegisName: PHYLLA
     Name: Phylla
@@ -38661,6 +40566,8 @@ Body:
         Rate: 5
       - Item: Crystal_Of_Soul_02
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2022
     AegisName: S_NYDHOG
     Name: Nidhoggr's Shadow
@@ -38719,6 +40626,8 @@ Body:
       - Item: Piece_Of_Angent_Skin
         Rate: 2000
         RandomOptionGroup: TBRO_Garment_Group_1
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 2023
     AegisName: DARK_SHADOW
     Name: Dark Shadow
@@ -38767,6 +40676,8 @@ Body:
       - Item: Dark_Shadow_Card
         Rate: 1
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2024
     AegisName: BRADIUM_GOLEM
     Name: Bradium Golem
@@ -38778,6 +40689,7 @@ Body:
     Attack2: 13000
     Defense: 78
     MagicDefense: 22
+    Str: 0
     Agi: 10
     Vit: 82
     Int: 25
@@ -38806,6 +40718,8 @@ Body:
         Rate: 500
       - Item: Bradium_Shield
         Rate: 10
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2026
     AegisName: DANDELION_
     Name: Runaway Dandelion Member
@@ -38852,6 +40766,8 @@ Body:
       - Item: Tree_Root
         Rate: 2000
         StealProtected: true
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2027
     AegisName: G_DARK_SHADOW
     Name: Dark Shadow
@@ -38909,6 +40825,8 @@ Body:
     Drops:
       - Item: Pope's_Cookie
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2031
     AegisName: DANDELION_H
     Name: Dandelion
@@ -38919,6 +40837,7 @@ Body:
     MagicDefense: 10
     Agi: 19
     Vit: 32
+    Int: 0
     Dex: 63
     Luk: 20
     AttackRange: 1
@@ -38937,6 +40856,8 @@ Body:
     Drops:
       - Item: Pope's_Cookie
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2042
     AegisName: SILVERSNIPER
     Name: Silver Sniper
@@ -38967,6 +40888,8 @@ Body:
     Drops:
       - Item: Steel
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2043
     AegisName: MAGICDECOY_FIRE
     Name: Magic Decoy
@@ -38997,6 +40920,8 @@ Body:
     Drops:
       - Item: Steel
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2044
     AegisName: MAGICDECOY_WATER
     Name: Magic Decoy
@@ -39027,6 +40952,8 @@ Body:
     Drops:
       - Item: Steel
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2045
     AegisName: MAGICDECOY_EARTH
     Name: Magic Decoy
@@ -39057,6 +40984,8 @@ Body:
     Drops:
       - Item: Steel
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2046
     AegisName: MAGICDECOY_WIND
     Name: Magic Decoy
@@ -39087,6 +41016,8 @@ Body:
     Drops:
       - Item: Steel
         Rate: 1000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2047
     AegisName: W_NAGA
     Name: Naga
@@ -39117,6 +41048,8 @@ Body:
     Drops:
       - Item: Scale_Of_Snakes
         Rate: 5000
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2049
     AegisName: W_BRADIUM_GOLEM
     Name: Bradium Golem
@@ -39126,6 +41059,7 @@ Body:
     Attack2: 886
     Defense: 125
     MagicDefense: 18
+    Str: 0
     Agi: 10
     Vit: 82
     Int: 2
@@ -39148,6 +41082,8 @@ Body:
     Drops:
       - Item: Purified_Bradium
         Rate: 500
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2057
     AegisName: E_CRAMP
     Name: Cramp
@@ -39228,6 +41164,8 @@ Body:
       - Item: Hell_Fire
         Rate: 100
         RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+      - Item: 3te_Coin
+        Rate: 1000
   - Id: 2069
     AegisName: IARA
     Name: Iara
@@ -39272,6 +41210,8 @@ Body:
       - Item: Mage_Coat
         Rate: 1
         RandomOptionGroup: TBRO_Armor_Group_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2070
     AegisName: PIRANHA
     Name: Piranha
@@ -39314,10 +41254,12 @@ Body:
         Rate: 500
       - Item: Scalpel
         Rate: 1
-        RandomOptionGroup: TBRO_Melee_Weapon_Level_4
+        RandomOptionGroup: TBRO_Melee_Weapon_Level_3
       - Item: Fisherman's_Dagger
         Rate: 5
         RandomOptionGroup: TBRO_Melee_Weapon_Level_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2071
     AegisName: HEADLESS_MULE
     Name: Headless Mule
@@ -39368,6 +41310,8 @@ Body:
       - Item: Jamadhar_
         Rate: 2
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2072
     AegisName: JAGUAR
     Name: Jaguar
@@ -39409,6 +41353,8 @@ Body:
       - Item: Claw_
         Rate: 1
         RandomOptionGroup: TBRO_Melee_Weapon_Level_3
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2073
     AegisName: TOUCAN
     Name: Toucan
@@ -39449,6 +41395,8 @@ Body:
         Rate: 100
       - Item: Flower_Ring
         Rate: 200
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2074
     AegisName: CURUPIRA
     Name: Curupira
@@ -39490,6 +41438,8 @@ Body:
       - Item: Mace_
         Rate: 100
         RandomOptionGroup: TBRO_Melee_Weapon_Level_1
+      - Item: 3te_Coin
+        Rate: 5
   - Id: 2076
     AegisName: S_WIND_GHOST
     Name: Shadow of Deception
@@ -39642,6 +41592,7 @@ Body:
     Defense: 2
     MagicDefense: 5
     Str: 6
+    Int: 0
     Dex: 6
     Luk: 5
     AttackRange: 1
@@ -39668,6 +41619,7 @@ Body:
     Defense: 2
     MagicDefense: 5
     Str: 6
+    Int: 0
     Dex: 6
     Luk: 5
     AttackRange: 1
@@ -39694,6 +41646,7 @@ Body:
     Defense: 2
     MagicDefense: 5
     Str: 6
+    Int: 0
     Dex: 6
     Luk: 5
     AttackRange: 1

@@ -1,0 +1,211 @@
+moc_para01,45,36,3	script	Item Captor#item_captor_NPC	RATA,{
+  .icNPCName$ = "[^0000FF NhiÞ thýÒ ^000000]";
+  .icSessionDuration = 604800; // 604800s = 7d
+  .requireKillCount = 1000;
+
+  icRequiredZeny = 100000;
+  icRequiredCoin = 3;
+
+  bindatcmd("captorinfo", strnpcinfo(3) + "::OnCaptorInfo");
+
+  if (icSessionRegistered && gettimetick(2) > icSessionStop) {
+    goto OnResetSession;
+  }
+
+  if (icSessionRegistered == 1) {
+    goto L_ItemCaptorMain;
+  }
+
+  mes .icNPCName$;
+  mes "Xin chaÌo, tôi laÌ NhiÞ thýÒ. Tôi coì thêÒ cho baòn môòt vâòt phâÒm bâìt kyÌ cuÒa quaìi vâòt. MiêÞn laÌ baòn ðaÞ ^0000FFðãng kyì nhiêòm vuò^000000 vaÌ ^0000FFgiêìt ðuÒ sôì lýõòng quaìi vâòt^000000. Baòn coì hýìng thuì không?";
+  next;
+
+  if (select("- Coì:- Không") != 1) {
+    mes .icNPCName$;
+    mes "ÔÌ, heòn gãòp laòi sau.";
+    close;
+  }
+
+  mes .icNPCName$;
+  mes "Trýõìc hêìt ðêÒ tôi giaÒi thiìch cho baòn luâòt ðaÞ nheì. ÐâÌu tiên baòn câÌn phaÒi ðãng kyì môòt ^0000FFchu kyÌ^000000.";
+  mes "Chu kyÌ keìo daÌi ^0000FF7 ngaÌy^000000, vaÌ bãìt ðâÌu týÌ luìc baòn ðãng kyì.";
+  next;
+
+  mes .icNPCName$;
+  mes "Trong chu kyÌ, baòn seÞ ðãng kyì nhiêòm vuò ðêÒ laÌm. Ðãng kyì nhiêòm vuò seÞ tôìn vâòt phâÒm ^FF0000(vâòt phâÒm không hoaÌn traÒ nêìu huÒy nhiêòm vuò)^000000. Sau khi hoaÌn thaÌnh nhiêòm vuò, baòn seÞ nhâòn ðýõòc vâòt phâÒm ðaÞ ðãng kyì.";
+  next;
+
+  mes .icNPCName$;
+  mes "Tuy nhiên coì môòt ðiêÌu câÌn lýu yì, trong chu kyÌ, khi ðãng kyì nhiêòm vuò kêì tiêìp, ^0000FFsôì lýõòng vâòt phâÒm câÌn ðêÒ ðãng kyì seÞ tãng lên,^000000 qua hêìt chu kyÌ, sôì lýõòng vâòt phâÒm câÌn thiêìt seÞ ^0000FFreset vêÌ laòi 1.^000000";
+  next;
+
+  mes .icNPCName$;
+  mes "Baòn coì muôìn ðãng kyì môòt chu kyÌ không?";
+  next;
+
+  if(select("- Ðãng kyì môòt chu kyÌ") == 1) {
+    icSessionRegistered = 1;
+    icQuestDone = 0;
+
+    // gettimetick(2) use seconds
+    icSessionStart = gettimetick(2);
+    icSessionStop = gettimetick(2) + .icSessionDuration;
+
+    // addtimer need to use miliseconds
+    addtimer (.icSessionDuration * 1000), strnpcinfo(3) + "::OnResetSession";
+
+    mes .icNPCName$;
+    mes "Ðãng kyì thaÌnh công.";
+    mes "Chu kyÌ cuÒa baòn keìo daÌi týÌ: ^0000FF" + gettimestr("%d/%m/%Y %H:%M:%S %Z", 25, icSessionStart) + "^000000";
+    mes "VaÌ kêìt thuìc luìc: ^0000FF" + gettimestr("%d/%m/%Y %H:%M:%S %Z", 25, icSessionStop) + "^000000";
+    close;
+  };
+
+OnResetSession:
+  icSessionRegistered = 0;
+  icQuestDone = 0;
+  goto L_ItemCaptorReset;
+  end;
+
+OnCaptorInfo:
+  if (icQuestRegistered != 1) {
+    dispbottom "-- hêò thôìng item captor chýa ðýõòc ðãng kyì --";
+    end;
+  }
+  dispbottom "=========== Captor Details ============";
+  dispbottom "- Quaìi vâòt ðaÞ ðãng kyì: " + getmonsterinfo(icMobId, MOB_NAME) + " (" + icMobId + ")";
+  dispbottom "- Vâòt phâÒm ðaÞ ðãng kyì: " + getitemname(icItemId) + " (" + icItemId + ")";
+  dispbottom "- Tiêìn triÌnh hiêòn taòi: " + icMobKilled + "/" + .requireKillCount + " quaìi vâòt";
+  dispbottom "- Sôì lâÌn ðaÞ hoaÌn thaÌnh: " + icQuestDone;
+  dispbottom "===================================";
+  end;
+
+L_ItemCaptorMain:
+  setarray .@bossIds[0],1038,1039,1046,1059,1086,1087,1089,1090,1091,1092,1093,1096,1112,1115,1120,1147,1150,1157,1159,1190,1198,1203,1204,1205,1251,1252,1259,1262,1272,1283,1288,1289,1295,1302,1307,1312,1320,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344,1345,1346,1347,1348,1349,1350,1351,1352,1353,1354,1355,1356,1357,1358,1359,1360,1361,1362,1363,1373,1388,1389,1395,1396,1397,1398,1399,1418,1447,1449,1456,1485,1486,1487,1492,1502,1511,1529,1530,1542,1568,1576,1582,1583,1592,1605,1610,1611,1612,1623,1626,1630,1640,1641,1642,1643,1644,1645,1646,1647,1648,1649,1650,1651,1658,1674,1681,1685,1688,1689,1700,1701,1702,1703,1704,1705,1706,1707,1708,1709,1710,1711,1712,1719,1720,1731,1732,1733,1734,1751,1754,1755,1756,1763,1764,1765,1768,1779,1783,1785,1791,1795,1799,1800,1801,1802,1803,1804,1805,1806,1807,1808,1809,1810,1813,1814,1817,1829,1830,1831,1832,1833,1834,1835,1839,1845,1846,1847,1848,1849,1850,1852,1853,1870,1871,1872,1873,1874,1876,1877,1879,1885,1889,1891,1894,1897,1902,1903,1905,1907,1908,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1929,1930,1931,1933,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1951,1952,1953,1954,1956,1957,1958,1959,1960,1961,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1980,1990,1991,2010,2022,2030,2031,2057,2068;
+
+  mes .icNPCName$;
+  mes "Chu kyÌ hiêòn taòi:";
+  mes "Bãìt ðâÌu: ^0000FF" + gettimestr("%d/%m/%Y %H:%M:%S %Z", 25, icSessionStart) + "^000000";
+  mes "Kêìt thuìc: ^0000FF" + gettimestr("%d/%m/%Y %H:%M:%S %Z", 25, icSessionStop) + "^000000";
+  mes "(xaÌi ^0000FF@time^000000 ðêÒ biêìt giõÌ server nêìu timezone laÌ UTC)";
+  next;
+
+  if (icQuestRegistered == 1) {
+    goto L_ICQuestRegistered;
+  } else {
+    goto L_ICRegisterQuest;
+  }
+
+	close;
+  end;
+
+L_ItemCaptorReset:
+  icQuestRegistered = 0;
+  icItemId = 0;
+  icMobId = 0;
+  icMobKilled = 0;
+  end;
+
+L_ICRegisterQuest:
+  .@zenyCost = icRequiredZeny + (icRequiredZeny * icQuestDone);
+  .@itemCost = icRequiredCoin + icQuestDone;
+
+  mes .icNPCName$;
+  mes "Baòn chýa ðãng kyì nhiêòm vuò.";
+  mes "Nhiêòm vuò hoaÌn thaÌnh: " + icQuestDone;
+  mes "Vâòt phâÒm câÌn ðêÒ ðãng kyì:";
+  mes "- " + (Zeny>(.@zenyCost)?"^00CF00":"^FF0000") + callfunc("F_InsertComma",Zeny) + "^000000 / " + callfunc("F_InsertComma",.@zenyCost) + " zeny";
+  mes "- " + (countitem(88888)<.@itemCost?"^FF0000":"^00DF00") + countitem(88888) + "^000000 / " + .@itemCost + " " + mesitemlink(88888, false);
+  next;
+
+  if (Zeny < .zenyCost || countitem(88888) < .@itemCost) {
+    mes "-- baòn không ðuÒ ðiêÌu kiêòn ðêÒ ðãng kyì --";
+    end;
+  }
+
+  mes .icNPCName$;
+  mes "Vui loÌng nhâòp ID quaìi vâòt:";
+  mes "-- coì thêÒ duÌng ^00AB00@mi <tên quaìi>^000000 ðêÒ tiÌm ID --";
+  input .@mobId;
+  next;
+
+  if (getmonsterinfo(.@mobId, MOB_NAME) == "null") {
+    mes "-- không tiÌm thâìy quaìi vâòt coì ID: " + .@mobId + " --";
+    close;
+  }
+
+  for (.@i = 0; .@i < getarraysize(.@bossIds); .@i++) {
+    if (.@mobId == .@bossIds[.@i]) {
+      mes "-- tiình nãng không khaÒ duòng cho quaìi vâòt daòng Boss --";
+      mes "Found: " + getmonsterinfo(.@mobId, MOB_NAME) + " (" + .@mobId + ")";
+      close;
+    }
+  }
+
+  mes .icNPCName$;
+  mes "Quaìi vâòt: ";
+  mes "- " + getmonsterinfo(.@mobId, MOB_NAME) + " (" + .@mobId + ")";
+
+  if (getmobdrops(.@mobId) == 0) {	// 'getmobdrops' returns 1 on success
+		mes "Không tiÌm thâìy quaìi vâòt coì ID naÌy.";
+    close;
+	}
+
+  .@count = $@MobDrop_count;
+  copyarray .@item[0],$@MobDrop_item[0],.@count;
+
+  for( .@i = 0; .@i < .@count; .@i++ ) {
+    .@itemList$[.@i] = getitemname(.@item[.@i]) + " (" + .@item[.@i] + ") ";
+  }
+
+  mes "Vui loÌng choòn vâòt phâÒm:";
+  .@itemIdx = select(implode(.@itemList$, ":"));
+  .@selectedId = .@item[.@itemIdx - 1];
+  next;
+
+  mes .icNPCName$;
+  mes "Baòn coì chãìc chãìn muôìn choòn vâòt phâÒm: ";
+  mes mesitemlink(.@selectedId);
+  next;
+  if (select("- Xaìc nhâòn","- HuÒy") == 2) {
+    close;
+  }
+
+  set Zeny, Zeny - .@zenyCost;
+  delitem 88888,.@itemCost;
+
+  icQuestRegistered = 1;
+  icItemId = .@selectedId;
+  icMobId = .@mobId;
+  icMobKilled = 0;
+
+  mes .icNPCName$;
+  mes "ÐaÞ ðãng kyì thaÌnh công.";
+  mes "Vui loÌng sýÒ duòng @captorinfo ðêÒ theo doÞi quaì triÌnh.";
+  mes "Xin caÒm õn.";
+
+  end;
+
+L_ICQuestRegistered:
+  mes .icNPCName$;
+  mes "- Quaìi vâòt ðaÞ ðãng kyì: " + getmonsterinfo(icMobId, MOB_NAME) + " (" + icMobId + ")";
+  mes "- Vâòt phâÒm ðaÞ ðãng kyì: " + mesitemlink(icItemId, false);
+  mes "- Tiêìn triÌnh hiêòn taòi: " + icMobKilled + "/" + .requireKillCount + " quaìi vâòt";
+  mes "- Sôì lâÌn ðaÞ hoaÌn thaÌnh: " + icQuestDone;
+  end;
+
+OnNPCKillEvent:
+  if (icQuestRegistered != 1) {
+    end;
+  }
+  if (killedrid == icMobId) {
+    icMobKilled += 1;
+  }
+  if (icMobKilled >= .requireKillCount) {
+    // Give item and reset variables
+    getitem icItemId, 1;
+    icQuestDone += 1;
+    goto L_ItemCaptorReset;
+  }
+  end;
+}

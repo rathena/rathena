@@ -89,14 +89,14 @@ gl_in01,153,44,36,33	monster	Sage Worm	1281,3
 // gl_prison - Glast Heim Underprison F1
 //==================================================
 gl_prison,0,0	monster	Injustice	1257,20
-gl_prison,0,0	monster	Hunter Fly	1035,10
-gl_prison,0,0	monster	Zombie Prisoner	1197,30
-gl_prison,0,0	monster	Rybio	1201,15
+gl_prison,0,0	monster	Hunter Fly	1035,5
+gl_prison,0,0	monster	Zombie Prisoner	1197,50
+gl_prison,0,0	monster	Rybio	1201,10
 
 //==================================================
 // gl_prison1 - Glast Heim Underprison F2
 //==================================================
-gl_prison1,0,0	monster	Skeleton Prisoner	1196,30
+gl_prison1,0,0	monster	Skeleton Prisoner	1196,50
 gl_prison1,0,0	monster	Cramp	1209,5
 gl_prison1,0,0	monster	Hunter Fly	1035,10
 gl_prison1,0,0	monster	Injustice	1257,40
@@ -228,5 +228,5 @@ gl_dun01,0,0	monster	Sting	1207,40
 //==================================================
 // gl_dun02 - The Lowest Cave in Glast Heim F2
 //==================================================
-gl_dun02,0,0	monster	Majoruros	1310,45
+gl_dun02,0,0	monster	Majoruros	1310,60
 gl_dun02,0,0	monster	Gargoyle	1253,15

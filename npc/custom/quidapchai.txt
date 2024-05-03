@@ -1,16 +1,4 @@
 -	script	Quidapchai	-1,{
-  debugmes strcharinfo(0) + " has clicked me!";
-
-  .@qstring$ = "SELECT id FROM achievement WHERE char_id=" + getcharid(0) + ";";
-	.@esc_qstring$ = escape_sql(.@qstring$);
-
-  .@nb = query_sql(.@esc_qstring$, .@ids);
-  debugmes "1." + .@ids[0];
-	debugmes "2." + .@ids[1];
-	debugmes "3." + .@ids[2];
-	debugmes "4." + .@ids[3];
-	debugmes "5." + .@ids[4];
-  debugmes "Debugmes: " + .@nb;
+	
 }
 
-prontera,162,187,4	duplicate(Quidapchai)	Quidapchai#prt	811

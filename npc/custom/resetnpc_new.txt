@@ -1,4 +1,4 @@
-moc_para01,52,34,4	script	–‚Ãu N‚Ïm	4_M_FAIRYKID,{
+moc_para01,52,34,4	script	Stats/Skill Reseter	4_M_FAIRYKID,{
 	.statzenycost = 5000000;
 	.statitem = 88888;
 	.statitemcost = 25;

@@ -46,8 +46,25 @@ Body:
     Name: Player
     Level: 0
     Commands:
-      changedress: true
-      resurrect: true
+      commands: true
+      help: true
+      rates: true
+      uptime: true
+      mobinfo: true
+      iteminfo: true
+      whodrops: true
+      time: true
+      hominfo: true
+      homstats: true
+      showexp: true
+      refresh: true
+      noask: true
+      noks: true
+      autoloot: true
+      alootid: true
+      autoloottype: true
+      autotrade: true
+      channel: true
     Permissions:
       # without this basic permissions regular players could not trade or party
       can_trade: true
@@ -181,7 +198,18 @@ Body:
     Level: 0
     Commands:
       rates: true
-      who: true
+      # who: true
+  - Id: 6
+    Name: Tester
+    # Can do everything Players can
+    Inherit:
+      VIP: true
+    Level: 1
+    Commands:
+      # rates: true
+      # who: true
+      warp: true
+      # job: true
   - Id: 10
     Name: Law Enforcement
     Inherit:
@@ -240,6 +268,7 @@ Body:
       bypass_stat_onclone: true
       bypass_max_stat: true
       macro_register: true
+      trade_unconditional: true
       #all_permission: true
 
 Footer:

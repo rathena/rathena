@@ -177,6 +177,20 @@ Body:
     Script: |
       bonus2 bHPRegenRate,1,10000;
       bonus bMaxHP,100;
+  - Id: 5611
+    AegisName: Turtle_Hat
+    Name: Turtle Hat
+    Type: Armor
+    Weight: 300
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    Refineable: true
+    View: 585
+    Script: |
+      bonus bAgi,1;
+      bonus3 bAutoSpellWhenHit,"AL_DECAGI",3,5;
   - Id: 6443
     AegisName: Sillit_Pong_Bottle
     Name: Sillit Pong Bottle
@@ -655,6 +669,23 @@ Body:
       bonus bMaxHPrate,1;
       bonus2 bAddMonsterDropItem,517,500;
       bonus2 bAddItemHealRate,517,25;
+  - Id: 18642
+    AegisName: Scissorhand_Model
+    Name: Scissorhand Model
+    Type: Armor
+    Buy: 20
+    Weight: 200
+    Jobs:
+      All: true
+      Novice: false
+      SuperNovice: false
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 20
+    View: 795
+    Script: |
+      bonus bAgi,1;
   - Id: 18666
     AegisName: CD_In_Mouth
     Name: CD In Mouth
@@ -975,3 +1006,76 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 10
+  - Id: 1230
+    AegisName: House_Auger
+    Attack: 90
+    WeaponLevel: 2
+  - Id: 13017
+    AegisName: House_Auger_
+    Attack: 80
+    WeaponLevel: 2
+  - Id: 13044
+    AegisName: House_Auger_I
+    Attack: 115
+    WeaponLevel: 2
+  - Id: 1734
+    AegisName: Orc_Archer_Bow
+    Attack: 130
+    WeaponLevel: 2
+  - Id: 13027
+    AegisName: Scalpel
+    Attack: 130
+    WeaponLevel: 3
+  - Id: 1261
+    AegisName: Infiltrator
+    Attack: 160
+    WeaponLevel: 3
+  - Id: 1266
+    AegisName: Infiltrator_
+    Attack: 150
+    WeaponLevel: 3
+  - Id: 1267
+    AegisName: Infiltrator_C
+    Attack: 199
+    WeaponLevel: 3
+  - Id: 1468
+    AegisName: Zephyrus
+    Attack: 180
+    WeaponLevel: 3
+  - Id: 1481
+    AegisName: Zephyrus_
+    Attack: 180
+    WeaponLevel: 3
+  - Id: 1224
+    AegisName: Sword_Breaker
+    Attack: 80
+    WeaponLevel: 3
+  - Id: 13024
+    AegisName: Sword_Breaker_C
+    Attack: 115
+    WeaponLevel: 3
+  - Id: 13031
+    AegisName: Sword_Breaker_
+    Attack: 80
+    WeaponLevel: 3
+  - Id: 1225
+    AegisName: Mail_Breaker
+    Attack: 80
+    WeaponLevel: 3
+  - Id: 13025
+    AegisName: Mail_Breaker_C
+    Attack: 115
+    WeaponLevel: 3
+  - Id: 13032
+    AegisName: Mail_Breaker_
+    Attack: 80
+    WeaponLevel: 3
+  - Id: 1185
+    AegisName: Violet_Fear
+    Attack: 240
+  - Id: 13412
+    AegisName: Twin_Edge_B
+    Attack: 140
+  - Id: 13413
+    AegisName: Twin_Edge_R
+    Attack: 140

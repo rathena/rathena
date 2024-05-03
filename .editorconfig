@@ -19,7 +19,7 @@ indent_style = tab
 # YAML does not support hard tabs.
 [*.{yml,yaml}]
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 # Use tabs in Makefiles
 [Makefile*]

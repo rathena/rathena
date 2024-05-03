@@ -3,13 +3,14 @@
 
 #include "loginchrif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/showmsg.hpp> //show notice
 #include <common/socket.hpp> //wfifo session
 #include <common/strlib.hpp> //safeprint
 #include <common/timer.hpp> //difftick
+#include <common/utils.hpp>
 
 #include "account.hpp"
 #include "login.hpp"
@@ -182,7 +183,10 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 		char_vip = login_config.vip_sys.char_increase;
 		if( acc.vip_time > time(NULL) ) {
 			isvip = true;
-			char_slots += char_vip;
+			// char_slots += char_vip;
+			if (char_slots < MAX_CHARS) {
+				char_slots = cap_value(char_slots + char_vip, MIN_CHARS, MAX_CHARS);
+			}
 		}
 #endif
 	}
