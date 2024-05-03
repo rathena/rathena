@@ -2176,7 +2176,7 @@ void clif_changemapserver(map_session_data* sd, const char* map, int x, int y, u
 #ifdef DEBUG
 	ShowDebug(
 		"Sending the client (%d %d.%d.%d.%d) to map-server with ip %d.%d.%d.%d and port %hu\n",
-		sd->status.account_id, CONVIP(session[fd]->client_addr), CONVIP(ip), port);
+		sd->status.account_id, CONVIP(session[sd->fd]->client_addr), CONVIP(ip), port);
 #endif
 
 #if PACKETVER >= 20170315
