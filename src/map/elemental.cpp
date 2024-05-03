@@ -139,11 +139,11 @@ int elemental_create(map_session_data *sd, int class_, unsigned int lifetime) {
 }
 
 t_tick elemental_get_lifetime(s_elemental_data *ed) {
-	if( ed == NULL || ed->summon_timer == INVALID_TIMER )
+	if( ed == nullptr || ed->summon_timer == INVALID_TIMER )
 		return 0;
 
 	const struct TimerData * td = get_timer(ed->summon_timer);
-	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
+	return (td != nullptr) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
 int elemental_save(s_elemental_data *ed) {
@@ -167,12 +167,12 @@ int elemental_save(s_elemental_data *ed) {
 static TIMER_FUNC(elemental_summon_end){
 	map_session_data *sd;
 
-	if( (sd = map_id2sd(id)) == NULL )
+	if( (sd = map_id2sd(id)) == nullptr )
 		return 1;
 
 	s_elemental_data *ed;
 
-	if( (ed = sd->ed) == NULL )
+	if( (ed = sd->ed) == nullptr )
 		return 1;
 
 	if( ed->summon_timer != tid ) {
@@ -205,7 +205,7 @@ int elemental_delete(s_elemental_data *ed) {
 	if( !sd )
 		return unit_free(&ed->bl, CLR_OUTSIGHT);
 
-	sd->ed = NULL;
+	sd->ed = nullptr;
 	sd->status.ele_id = 0;
 
 	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);
@@ -228,7 +228,7 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 	map_session_data *sd;
 	t_tick tick = gettick();
 
-	if( (sd = map_charid2sd(ele->char_id)) == NULL )
+	if( (sd = map_charid2sd(ele->char_id)) == nullptr )
 		return 0;
 
 	std::shared_ptr<s_elemental_db> db = elemental_db.find(ele->class_);
@@ -277,7 +277,7 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 
 	sd->status.ele_id = ele->elemental_id;
 
-	if( ed->bl.prev == NULL && sd->bl.prev != NULL ) {
+	if( ed->bl.prev == nullptr && sd->bl.prev != nullptr ) {
 		if(map_addblock(&ed->bl))
 			return 0;
 		clif_spawn(&ed->bl);
@@ -438,7 +438,7 @@ int elemental_change_mode(s_elemental_data *ed, int mode) {
 }
 
 void elemental_heal(s_elemental_data *ed, int hp, int sp) {
-	if (ed->master == NULL)
+	if (ed->master == nullptr)
 		return;
 	if( hp )
 		clif_elemental_updatestatus(ed->master, SP_HP);
@@ -541,7 +541,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 	nullpo_ret(ed);
 	nullpo_ret(sd);
 
-	if( ed->bl.prev == NULL || sd == NULL || sd->bl.prev == NULL )
+	if( ed->bl.prev == nullptr || sd == nullptr || sd->bl.prev == nullptr )
 		return 0;
 
 	// Check if caster can sustain the summoned elemental
@@ -611,7 +611,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 			return 0;
 	}
 
-	block_list *target = NULL;
+	block_list *target = nullptr;
 
 	if( mode == EL_MODE_AGGRESSIVE ) {
 		target = map_id2bl(ed->ud.target);

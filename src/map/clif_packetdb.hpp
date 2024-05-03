@@ -4,7 +4,7 @@
 #ifndef CLIF_PACKETDB_HPP
 #define CLIF_PACKETDB_HPP
 
-	#define packet(cmd,length) packetdb_addpacket(cmd,length,NULL,0)
+	#define packet(cmd,length) packetdb_addpacket(cmd,length,nullptr,0)
 	#define parseable_packet(cmd,length,func,...) packetdb_addpacket(cmd,length,func,__VA_ARGS__,0)
 
 	packet(0x0064,55);
@@ -1880,19 +1880,19 @@
 	packet(0x08ec,73);
 	packet(0x08ed,43);
 	packet(0x08ee,6);
-	parseable_packet(0x08ef,6,NULL,2);
+	parseable_packet(0x08ef,6,nullptr,2);
 	packet(0x08f0,6);
-	parseable_packet(0x08f1,6,NULL,2);
+	parseable_packet(0x08f1,6,nullptr,2);
 	packet(0x08f2,36);
 	packet(0x08f3,-1);
 	packet(0x08f4,6);
-	parseable_packet(0x08f5,-1,NULL,2,4);
+	parseable_packet(0x08f5,-1,nullptr,2,4);
 	packet(0x08f6,22);
 	packet(0x08f7,3);
 	packet(0x08f8,7);
 	packet(0x08f9,6);
 	packet(0x08fa,6);
-	parseable_packet(0x08fb,6,NULL,2);
+	parseable_packet(0x08fb,6,nullptr,2);
 	parseable_packet( HEADER_CZ_INVENTORY_TAB, sizeof( PACKET_CZ_INVENTORY_TAB ), clif_parse_MoveItem, 0 );
 	parseable_packet(0x08D7,28,clif_parse_bg_queue_apply_request,2,4);
 	packet(0x08D8,27);

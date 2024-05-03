@@ -1174,7 +1174,7 @@ static bool pc_cant_act( map_session_data* sd ){
 #define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progress) {
-	return sd == NULL || (sd->state.workinprogress&progress) == progress;
+	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
 }
 
 uint16 pc_maxparameter(map_session_data *sd, e_params param);
