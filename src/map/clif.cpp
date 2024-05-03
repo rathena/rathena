@@ -1562,24 +1562,21 @@ void clif_abyssball( map_session_data& sd, struct block_list* target, enum send_
 }
 
 /// Notifies the client of an object's Millenium Shields.
-static void clif_millenniumshield_single(int fd, map_session_data *sd)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
+static void clif_millenniumshield_single( map_session_data& sd, map_session_data& tsd ){
+	status_change_entry* sce = sd.sc.getSCE( SC_MILLENNIUMSHIELD );
+
+	if( sce == nullptr ){
 		return;
 	}
-
-	if (sd->sc.getSCE(SC_MILLENNIUMSHIELD) == nullptr)
-		return;
 
 	PACKET_ZC_MILLENNIUMSHIELD packet{};
 
 	packet.packetType = HEADER_ZC_MILLENNIUMSHIELD;
-	packet.aid = static_cast<uint32>(sd->bl.id);
-	packet.num = sd->sc.getSCE(SC_MILLENNIUMSHIELD)->val2;
+	packet.aid = sd.bl.id;
+	packet.num = sce->val2;
 	packet.state = 0;
 
-	socket_send<PACKET_ZC_MILLENNIUMSHIELD>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &tsd.bl, SELF );
 }
 
 /*==========================================
@@ -5104,8 +5101,7 @@ static void clif_getareachar_pc(map_session_data* sd,map_session_data* dstsd)
 
 	if(dstsd->spiritball > 0)
 		clif_spiritball( &dstsd->bl, &sd->bl, SELF );
-	if (dstsd->sc.getSCE(SC_MILLENNIUMSHIELD))
-		clif_millenniumshield_single(sd->fd, dstsd);
+	clif_millenniumshield_single( *dstsd, *sd );
 	if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, dstsd);
 	if (dstsd->soulball > 0)
@@ -10044,8 +10040,7 @@ void clif_refresh(map_session_data *sd)
 #endif
 	if (sd->spiritball)
 		clif_spiritball( &sd->bl, &sd->bl, SELF );
-	if (sd->sc.getSCE(SC_MILLENNIUMSHIELD))
-		clif_millenniumshield_single(sd->fd, sd);
+	clif_millenniumshield_single( *sd, *sd );
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, sd);
 	if (sd->soulball)
