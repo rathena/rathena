@@ -905,8 +905,8 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 	log_feeding(sd, LOG_FEED_HOMUNCULUS, foodID);
 
 	clif_emotion(&hd->bl,emotion);
-	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
-	clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
+	clif_send_homdata( *hd, SP_HUNGRY );
+	clif_send_homdata( *hd, SP_INTIMATE );
 	clif_hom_food(sd,foodID,1);
 
 	// Too much food :/
@@ -955,10 +955,10 @@ static TIMER_FUNC(hom_hungry){
 		// Delete the homunculus if intimacy <= 100
 		if (!hom_decrease_intimacy(hd, 100))
 			return hom_delete(hd, ET_HUK);
-		clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
+		clif_send_homdata( *hd, SP_INTIMATE );
 	}
 
-	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
+	clif_send_homdata( *hd, SP_HUNGRY );
 
 	int hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
 
@@ -1132,7 +1132,7 @@ bool hom_call(map_session_data *sd)
 		if(map_addblock(&hd->bl))
 			return false;
 		clif_spawn(&hd->bl);
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata( *hd, SP_ACK );
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
@@ -1196,7 +1196,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		if(map_addblock(&hd->bl))
 			return 0;
 		clif_spawn(&hd->bl);
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata( *hd, SP_ACK );
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
@@ -1314,7 +1314,7 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	hd->homunculus.hp = hd->battle_status.hp;
 	if (!sd)
 		return;
-	clif_send_homdata(sd,SP_ACK,0);
+	clif_send_homdata( *hd, SP_ACK );
 	clif_hominfo(sd,hd,1);
 	clif_hominfo(sd,hd,0);
 	clif_homskillinfoblock(sd);

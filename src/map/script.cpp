@@ -15846,7 +15846,9 @@ BUILDIN_FUNC(addhomintimacy)
 		hom_increase_intimacy(hd, (uint32)value);
 	else
 		hom_decrease_intimacy(hd, (uint32)abs(value));
-	clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy / 100);
+
+	clif_send_homdata( *hd, SP_INTIMATE );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19273,8 +19275,8 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UHOM_X: if (!unit_walktoxy(bl, (short)value, hd->bl.y, 2)) unit_movepos(bl, (short)value, hd->bl.y, 0, 0); break;
 			case UHOM_Y: if (!unit_walktoxy(bl, hd->bl.x, (short)value, 2)) unit_movepos(bl, hd->bl.x, (short)value, 0, 0); break;
-			case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif_send_homdata(map_charid2sd(hd->homunculus.char_id), SP_HUNGRY, hd->homunculus.hunger); break;
-			case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif_send_homdata(map_charid2sd(hd->homunculus.char_id), SP_INTIMATE, hd->homunculus.intimacy / 100); break;
+			case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif_send_homdata(*hd, SP_HUNGRY); break;
+			case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif_send_homdata(*hd, SP_INTIMATE); break;
 			case UHOM_SPEED: hd->base_status.speed = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UHOM_CANMOVETICK: hd->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
@@ -19570,7 +19572,7 @@ BUILDIN_FUNC(setunitdata)
 	// Client information updates
 	switch (bl->type) {
 		case BL_HOM:
-			clif_send_homdata(hd->master, SP_ACK, 0);
+			clif_send_homdata( *hd, SP_ACK );
 			break;
 		case BL_PET:
 			clif_send_petstatus(pd->master);

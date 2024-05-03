@@ -49,6 +49,7 @@ struct s_laphine_upgrade;
 struct s_captcha_data;
 enum e_macro_detect_status : uint8;
 enum e_macro_report_status : uint8;
+enum e_hom_state2 : uint8;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -961,7 +962,7 @@ void clif_hominfo(map_session_data *sd, struct homun_data *hd, int flag);
 void clif_homskillinfoblock(map_session_data *sd);
 void clif_homskillup(map_session_data *sd, uint16 skill_id);	//[orn]
 void clif_hom_food(map_session_data *sd,int foodid,int fail);	//[orn]
-void clif_send_homdata(map_session_data *sd, int state, int param);	//[orn]
+void clif_send_homdata( homun_data& hd, e_hom_state2 state );
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
 void clif_viewequip_ack(map_session_data* sd, map_session_data* tsd);

@@ -1866,8 +1866,8 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 }
 
 
-/// Notification about a change in homunuculus' state (ZC_CHANGESTATE_MER).
-/// 0230 <type>.B <state>.B <id>.L <data>.L
+/// Notification about a change in homunuculus' state.
+/// 0230 <type>.B <state>.B <id>.L <data>.L (ZC_CHANGESTATE_MER)
 /// type:
 ///     unused
 /// state:
@@ -1876,22 +1876,41 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 ///     2 = hunger
 ///     3 = accessory?
 ///     ? = ignored
-void clif_send_homdata(map_session_data *sd, int state, int param)
-{	//[orn]
-	int fd = sd->fd;
+void clif_send_homdata( homun_data& hd, e_hom_state2 state ){
+	if( hd.master == nullptr ){
+		return;
+	}
 
-	if ( (state == SP_INTIMATE) && (param >= 910) && (sd->hd->homunculus.class_ == sd->hd->homunculusDB->evo_class) )
-		hom_calc_skilltree(sd->hd);
+	uint32 param;
+
+	switch( state ){
+		case SP_ACK:
+			param = 0;
+			break;
+		case SP_INTIMATE:
+			// TODO: Why is something like this here? [Lemongrass]
+			if( hd.homunculus.class_ == hd.homunculusDB->evo_class && hom_intimacy_intimacy2grade( hd.homunculus.intimacy ) >= HOMGRADE_LOYAL ){
+				hom_calc_skilltree( &hd );
+			}
+
+			param = hd.homunculus.intimacy / 100;
+			break;
+		case SP_HUNGRY:
+			param = hd.homunculus.hunger;
+			break;
+		default:
+			return;
+	}
 	
 	PACKET_ZC_CHANGESTATE_MER packet{};
 
 	packet.packetType = HEADER_ZC_CHANGESTATE_MER;
 	packet.type = 0;
 	packet.state = state;
-	packet.gid = sd->hd->bl.id;
+	packet.gid = hd.bl.id;
 	packet.data = param;
 
-	socket_send<PACKET_ZC_CHANGESTATE_MER>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &hd.master->bl, SELF );
 }
 
 
@@ -10059,7 +10078,7 @@ void clif_refresh(map_session_data *sd)
 	if (sd->vd.body_style)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BODY2,sd->vd.body_style,SELF);
 	if(hom_is_active(sd->hd))
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata( *sd->hd, SP_ACK );
 	if( sd->md ) {
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
@@ -11056,7 +11075,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		if(map_addblock(&sd->hd->bl))
 			return;
 		clif_spawn(&sd->hd->bl);
-		clif_send_homdata(sd,SP_ACK,0);
+		clif_send_homdata( *sd->hd, SP_ACK );
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
 		clif_homskillinfoblock(sd);

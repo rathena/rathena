@@ -8084,7 +8084,7 @@ ACMD_FUNC(homfriendly)
 	friendly = cap_value(friendly, 0, 1000);
 
 	sd->hd->homunculus.intimacy = friendly * 100 ;
-	clif_send_homdata(sd,SP_INTIMATE,friendly);
+	clif_send_homdata( *sd->hd, SP_INTIMATE );
 	return 0;
 }
 
@@ -8111,7 +8111,7 @@ ACMD_FUNC(homhungry)
 	hungry = cap_value(hungry, 0, 100);
 
 	sd->hd->homunculus.hunger = hungry;
-	clif_send_homdata(sd,SP_HUNGRY,hungry);
+	clif_send_homdata( *sd->hd, SP_HUNGRY );
 	return 0;
 }
 

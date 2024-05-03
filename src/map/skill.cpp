@@ -2598,12 +2598,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		break;
 	case HFLI_SBR44:	//[orn]
 		if(src->type == BL_HOM){
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
+			homun_data& hd = reinterpret_cast<homun_data&>( *src );
+
+			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+
+			clif_send_homdata( hd, SP_INTIMATE );
 		}
 		break;
 	case CR_GRANDCROSS:
@@ -8838,12 +8837,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		status_damage(src, src, sstatus->max_hp,0,0,1, skill_id);
 		if(skill_id == HVAN_EXPLOSION && src->type == BL_HOM) {
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
+			homun_data& hd = reinterpret_cast<homun_data&>( *src );
+
+			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+
+			clif_send_homdata( hd, SP_INTIMATE );
 		}
 		break;
 	case AL_ANGELUS:
