@@ -817,10 +817,10 @@ public:
 	std::unordered_map<sc_type, uint16> disabled_statuses;
 	std::unordered_map<int32, uint16> restricted_jobs;
 
-	bool isCommandDisabled(std::string name, uint16 group_lv);
-	bool isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv);
-	bool isItemDisabled(t_itemid nameid, uint16 group_lv);
-	bool isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv);
+	bool isCommandDisabled(std::string name, map_session_data &sd);
+	bool isSkillDisabled(uint16 skill_id, uint16 type, map_session_data &sd);
+	bool isItemDisabled(t_itemid nameid, map_session_data &sd);
+	bool isStatusDisabled(sc_type sc, uint16 type, map_session_data &sd);
 	bool isJobRestricted(int32 job_id, uint16 group_lv);
 };
 

@@ -1962,7 +1962,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		map_data *mapdata = map_getmapdata(src->m);
 		map_session_data *sd = (TBL_PC *)src;
 
-		if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, src->type, (sd != nullptr) ? pc_get_group_level(sd) : 0 )) {
+		if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, src->type, *sd )) {
 			if (sd != nullptr)
 				clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return false;
@@ -9995,7 +9995,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	map_data *mapdata = map_getmapdata(bl->m);
 	map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	if (mapdata != nullptr && mapdata->zone->isStatusDisabled(type, bl->type, (sd != nullptr) ? pc_get_group_level(sd) : 0))
+	if (mapdata != nullptr && mapdata->zone->isStatusDisabled(type, bl->type, *sd))
 		return 0;
 
 	if (sc->getSCE(SC_GRAVITYCONTROL))
@@ -15409,7 +15409,7 @@ void status_change_clear_onChangeMap(block_list *bl)
 
 			map_session_data *sd = (TBL_PC *)bl;
 
-			if (mapdata->zone->isStatusDisabled(type, bl->type, (sd != nullptr) ? pc_get_group_level(sd) : 0))
+			if (mapdata->zone->isStatusDisabled(type, bl->type, *sd))
 				status_change_end(bl, type);
 		}
 	}

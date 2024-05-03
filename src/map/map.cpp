@@ -591,10 +591,10 @@ MapZoneDatabase map_zone_db;
 /**
  * Check if a command is disabled on a map based on group level.
  * @param name: Command name
- * @param group_lv: Group level
+ * @param sd: Player session data
  * @return True when command is disabled or false otherwise
  */
-bool c_map_zone_data::isCommandDisabled(std::string name, uint16 group_lv) {
+bool c_map_zone_data::isCommandDisabled(std::string name, map_session_data &sd) {
 	if (this->disabled_commands.empty())
 		return false;
 
@@ -603,7 +603,7 @@ bool c_map_zone_data::isCommandDisabled(std::string name, uint16 group_lv) {
 	if (cmd_lv == nullptr)
 		return false;
 
-	if (*cmd_lv < group_lv)
+	if (*cmd_lv < sd.group->level)
 		return false;
 	else
 		return true;
@@ -613,10 +613,10 @@ bool c_map_zone_data::isCommandDisabled(std::string name, uint16 group_lv) {
  * Check if a skill is disabled on a map based on group level.
  * @param skill_id: Skill ID
  * @param type: Object type
- * @param group_lv: Group level
+ * @param sd: Player session data
  * @return True when skill is disabled or false otherwise
  */
-bool c_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, uint16 group_lv) {
+bool c_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, map_session_data &sd) {
 	if (this->disabled_skills.empty())
 		return false;
 
@@ -625,7 +625,7 @@ bool c_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, uint16 group
 	if (skill_lv == nullptr)
 		return false;
 
-	if ((!(type & BL_PC) && skill_lv->second > 0) || (skill_lv->second < group_lv))
+	if ((!(type & BL_PC) && skill_lv->second > 0) || (skill_lv->second < sd.group->level))
 		return false;
 	else
 		return true;
@@ -634,10 +634,10 @@ bool c_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, uint16 group
 /**
  * Check if an item is disabled on a map based on group level.
  * @param nameid: Item ID
- * @param group_lv: Group level
+ * @param sd: Player session data
  * @return True when item is disabled or false otherwise
  */
-bool c_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
+bool c_map_zone_data::isItemDisabled(t_itemid nameid, map_session_data &sd) {
 	if (this->disabled_items.empty())
 		return false;
 
@@ -646,7 +646,7 @@ bool c_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
 	if (item_lv == nullptr)
 		return false;
 
-	if (*item_lv < group_lv)
+	if (*item_lv < sd.group->level)
 		return false;
 	else
 		return true;
@@ -656,10 +656,10 @@ bool c_map_zone_data::isItemDisabled(t_itemid nameid, uint16 group_lv) {
  * Check if a status is disabled on a map based on group level.
  * @param sc: Status type
  * @param type: Object type
- * @param group_lv: Group level
+ * @param sd: Player session data
  * @return True when status is disabled or false otherwise
  */
-bool c_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv) {
+bool c_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, map_session_data &sd) {
 	if (this->disabled_statuses.empty())
 		return false;
 
@@ -668,7 +668,7 @@ bool c_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, uint16 group_lv)
 	if (status_lv == nullptr)
 		return false;
 
-	if ((!(type & BL_PC) && *status_lv > 0) || (*status_lv < group_lv))
+	if ((!(type & BL_PC) && *status_lv > 0) || (*status_lv < sd.group->level))
 		return false;
 	else
 		return true;

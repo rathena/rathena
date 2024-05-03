@@ -4207,7 +4207,7 @@ bool itemdb_isNoEquip(map_session_data &sd, t_itemid nameid) {
 	if (!mapdata)
 		return true;
 
-	if (mapdata->zone->isItemDisabled(nameid, pc_get_group_level(&sd)))
+	if (mapdata->zone->isItemDisabled(nameid, sd))
 		return true;
 	return false;
 }

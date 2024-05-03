@@ -11574,7 +11574,7 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if (mapdata->zone->isCommandDisabled(info->command, pc_get_group_level(sd))) {
+	if (mapdata->zone->isCommandDisabled(info->command, *sd)) {
 		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 832), false, SELF); // This command is disabled on this map.
 		return true;
 	}
