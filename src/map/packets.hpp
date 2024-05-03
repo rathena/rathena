@@ -536,7 +536,7 @@ struct PACKET_ZC_ITEM_DISAPPEAR {
 	int16 packetType;
 	uint32 itemAid;
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_ITEM_DISPPEAR, 0xa1)
+DEFINE_PACKET_HEADER(ZC_ITEM_DISAPPEAR, 0xa1)
 
 struct PACKET_ZC_MILLENNIUMSHIELD {
 	int16 packetType;

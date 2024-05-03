@@ -1918,7 +1918,7 @@
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
 	parseable_packet(0x0844,2,clif_parse_cashshop_open_request,0);
 	packet(0x0849,16); //clif_cashshop_result
-	parseable_packet(HEADER_CZ_SE_PC_BUY_CASHITEM_LIST,-1,clif_parse_cashshop_buy,2,6,4,10);
+	parseable_packet(HEADER_CZ_SE_PC_BUY_CASHITEM_LIST,-1,clif_parse_cashshop_buy,0);
 	parseable_packet(0x084a,2,clif_parse_cashshop_close,0);
 	parseable_packet(0x08c9,2,clif_parse_cashshop_list_request,0);
 #endif

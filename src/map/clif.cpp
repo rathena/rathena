@@ -773,6 +773,7 @@ void clif_authok(map_session_data *sd)
 #if PACKETVER >= 20141016 && PACKETVER < 20160330
 	packet.sex = sd->status.sex;
 #endif
+
 	clif_send(&packet, sizeof(packet), &sd->bl, SELF);
 }
 
@@ -788,8 +789,10 @@ void clif_authok(map_session_data *sd)
 void clif_authrefuse(int fd, uint8 error_code)
 {
 	PACKET_ZC_REFUSE_ENTER packet{};
+
 	packet.packetType = HEADER_ZC_REFUSE_ENTER;
 	packet.errorCode = error_code;
+
 	socket_send<PACKET_ZC_REFUSE_ENTER>(fd, packet);
 }
 
@@ -832,9 +835,12 @@ void clif_authfail_fd(int fd, int type)
 		return;
 	
 	PACKET_SC_NOTIFY_BAN packet{};
+
 	packet.packetType = HEADER_SC_NOTIFY_BAN;
 	packet.errorCode = static_cast<uint8>(type);
+
 	socket_send<PACKET_SC_NOTIFY_BAN>(fd, packet);
+
 	set_eof(fd);
 }
 
@@ -846,16 +852,17 @@ void clif_authfail_fd(int fd, int type)
 ///     ? = nothing
 void clif_charselectok(int id, uint8 ok)
 {
-	map_session_data* sd;
+	map_session_data* sd = map_id2sd(id);
 
-	if ((sd = map_id2sd(id)) == NULL)
+	if (sd == nullptr)
 		return;
 
 	PACKET_ZC_RESTART_ACK packet{};
+
 	packet.packetType = HEADER_ZC_RESTART_ACK;
 	packet.type = ok;
 
-	socket_send<PACKET_ZC_RESTART_ACK>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 /// Makes an item appear on the ground.
@@ -929,12 +936,14 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 /// 00a1 <id>.L (ZC_ITEM_DISAPPEAR)
 void clif_clearflooritem(struct flooritem_data *fitem, int fd)
 {
+	// TODO: Convert fitem to reference
 	if (fitem == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_ITEM_DISAPPEAR packet{};
-	packet.packetType = HEADER_ZC_ITEM_DISPPEAR;
+
+	packet.packetType = HEADER_ZC_ITEM_DISAPPEAR;
 	packet.itemAid = static_cast<uint32>(fitem->bl.id);
 
 	if ( !session_isActive( fd ) ){
@@ -956,6 +965,7 @@ void clif_clearflooritem(struct flooritem_data *fitem, int fd)
 void clif_clearunit_single(int id, clr_type type, int fd)
 {
 	PACKET_ZC_NOTIFY_VANISH packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_VANISH;
 	packet.gid = static_cast<uint32>(id);
 	packet.type = static_cast<uint8>(type);
@@ -973,6 +983,7 @@ void clif_clearunit_single(int id, clr_type type, int fd)
 ///     4 = trickdead
 void clif_clearunit_area(struct block_list* bl, clr_type type)
 {
+	// TODO: Convert bl to reference
 	if (bl == nullptr) {
 		return;
 	}
@@ -1561,6 +1572,7 @@ void clif_abyssball( map_session_data& sd, struct block_list* target, enum send_
 /// Notifies the client of an object's Millenium Shields.
 static void clif_millenniumshield_single(int fd, map_session_data *sd)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
@@ -1569,6 +1581,7 @@ static void clif_millenniumshield_single(int fd, map_session_data *sd)
 		return;
 
 	PACKET_ZC_MILLENNIUMSHIELD packet{};
+
 	packet.packetType = HEADER_ZC_MILLENNIUMSHIELD;
 	packet.aid = static_cast<uint32>(sd->bl.id);
 	packet.num = sd->sc.getSCE(SC_MILLENNIUMSHIELD)->val2;
@@ -1583,6 +1596,7 @@ static void clif_millenniumshield_single(int fd, map_session_data *sd)
 static void clif_spiritcharm_single(int fd, map_session_data *sd)
 {
 	PACKET_ZC_SPIRITS_ATTRIBUTE packet{};
+
 	packet.packetType = HEADER_ZC_SPIRITS_ATTRIBUTE;
 	packet.aid = static_cast<uint32>(sd->bl.id);
 	packet.spiritsType = static_cast<int16>(sd->spiritcharm_type);
@@ -1874,6 +1888,7 @@ void clif_send_homdata(map_session_data *sd, int state, int param)
 		hom_calc_skilltree(sd->hd);
 	
 	PACKET_ZC_CHANGESTATE_MER packet{};
+
 	packet.packetType = HEADER_ZC_CHANGESTATE_MER;
 	packet.type = 0;
 	packet.state = state;
@@ -1897,29 +1912,31 @@ void clif_homskillinfoblock(map_session_data *sd)
 		return;
 	
 	PACKET_ZC_HOSKILLINFO_LIST *packet = reinterpret_cast<PACKET_ZC_HOSKILLINFO_LIST*>(packet_buffer);
+
 	packet->packetType = HEADER_ZC_HOSKILLINFO_LIST;
-	for(i = 0; i < MAX_HOMUNSKILL; i++) {
+	packet->packetLength = sizeof( *packet );
+
+	for(int i = 0, count = 0; i < MAX_HOMUNSKILL; i++) {
 		int id = hd->homunculus.hskill[i].id;
 		if (id != 0) {
 			int combo = (hd->homunculus.hskill[i].flag)&SKILL_FLAG_TMP_COMBO;
 			short idx = hom_skill_get_index(id);
 			if (idx == -1)
 				continue;
-			packet->skills[i].id = id;
-			packet->skills[i].inf = (combo) ? INF_SELF_SKILL : skill_get_inf(id);
-			packet->skills[i].unknown = 0;
-			packet->skills[i].level = hd->homunculus.hskill[idx].lv;
-			packet->skills[i].sp = skill_get_sp(id,hd->homunculus.hskill[idx].lv);
-			packet->skills[i].range = skill_get_range2(&sd->hd->bl,id,hd->homunculus.hskill[idx].lv,false);
-			safestrncpy(packet->skills[i].name, skill_get_name(id), NAME_LENGTH);
-			packet->skills[i].upgradable = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, id) || hd->homunculus.hskill[idx].lv >= hom_skill_tree_get_max(id, hd->homunculus.class_)) ? 0 : 1;
+			packet->skills[count].id = id;
+			packet->skills[count].inf = (combo) ? INF_SELF_SKILL : skill_get_inf(id);
+			packet->skills[count].unknown = 0;
+			packet->skills[count].level = hd->homunculus.hskill[idx].lv;
+			packet->skills[count].sp = skill_get_sp(id,hd->homunculus.hskill[idx].lv);
+			packet->skills[count].range = skill_get_range2(&sd->hd->bl,id,hd->homunculus.hskill[idx].lv,false);
+			safestrncpy(packet->skills[count].name, skill_get_name(id), NAME_LENGTH);
+			packet->skills[count].upgradable = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, id) || hd->homunculus.hskill[idx].lv >= hom_skill_tree_get_max(id, hd->homunculus.class_)) ? 0 : 1;
+			packet->packetLength += sizeof( packet->skills[0] );
+			count++;
 		}
 	}
-	packet->packetLength = sizeof(PACKET_ZC_HOSKILLINFO_LIST) + (i * sizeof(PACKET_ZC_HOSKILLINFO_LIST_sub));
 
-	socket_send<PACKET_ZC_HOSKILLINFO_LIST>(fd, packet);
-
-	return;
+	clif_send( packet, packet->packetLength, &sd->bl, SELF );
 }
 
 void clif_homskillup(map_session_data *sd, uint16 skill_id)
@@ -1936,6 +1953,7 @@ void clif_homskillup(map_session_data *sd, uint16 skill_id)
 	hd = sd->hd;
 
 	PACKET_ZC_HOSKILLINFO_UPDATE packet{};
+
 	packet.packetType = HEADER_ZC_HOSKILLINFO_UPDATE;
 	packet.skill_id = skill_id;
 	packet.Level = hd->homunculus.hskill[idx].lv;
@@ -1969,6 +1987,7 @@ void clif_hom_food( map_session_data *sd, int foodid, int fail ){
 void clif_walkok(map_session_data *sd)
 {
 	PACKET_ZC_NOTIFY_PLAYERMOVE packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_PLAYERMOVE;
 	packet.moveStartTime = client_tick(gettick());
 	WBUFPOS2(packet.moveData, 0, sd->bl.x, sd->bl.y, sd->ud.to_x, sd->ud.to_y, 8, 8);
@@ -2030,6 +2049,7 @@ void clif_move(struct unit_data *ud)
 	struct block_list* bl = ud->bl;
 	status_change *sc = NULL;
 	PACKET_ZC_NOTIFY_MOVE packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_MOVE;
 
 	vd = status_get_viewdata(bl);
@@ -2042,6 +2062,7 @@ void clif_move(struct unit_data *ud)
 			packet.gid = disguised_bl_id(bl->id);
 			WBUFPOS2(packet.moveData, 0, bl->x, bl->y, ud->to_x, ud->to_y, 8, 8);
 			packet.moveStartTime = client_tick(gettick());
+
 			clif_send(&packet, sizeof(packet), bl, SELF);
 		}
 		return;
@@ -2065,10 +2086,13 @@ void clif_move(struct unit_data *ud)
 	packet.gid = bl->id;
 	WBUFPOS2(packet.moveData,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	packet.moveStartTime = client_tick(gettick());
+
 	clif_send(&packet, sizeof(PACKET_ZC_NOTIFY_MOVE), bl, AREA_WOS);
+
 	if (disguised(bl)) {
 		packet.gid = disguised_bl_id(bl->id);
-		clif_send(&packet, sizeof(PACKET_ZC_NOTIFY_MOVE), bl, SELF);
+
+		clif_send(&packet, sizeof(packet), bl, SELF);
 	}
 	clif_ally_only = false;
 }
@@ -2107,17 +2131,19 @@ void clif_quitsave(int fd,map_session_data *sd) {
 /// 0091 <map name>.16B <x>.W <y>.W
 void clif_changemap(map_session_data *sd, short m, int x, int y)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_NPCACK_MAPMOVE packet{};
+
 	packet.packetType = HEADER_ZC_NPCACK_MAPMOVE;
 	mapindex_getmapname_ext(map_mapid2mapname(m), packet.mapName);
 	packet.xPos = x;
 	packet.yPos = y;
 
-	socket_send<PACKET_ZC_NPCACK_MAPMOVE>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 
@@ -2134,6 +2160,7 @@ void clif_changemapserver(map_session_data* sd, const char* map, int x, int y, u
 	packet.packetType = HEADER_ZC_NPCACK_SERVERMOVE;
 #endif
 
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
@@ -2175,20 +2202,22 @@ void clif_blown(struct block_list *bl)
 /// 0088 <id>.L <x>.W <y>.W
 void clif_fixpos(struct block_list *bl)
 {
+	// TODO: Convert bl to reference
 	if (bl == nullptr) {
 		return;
 	}
 	
 	PACKET_ZC_STOPMOVE *packet = reinterpret_cast<PACKET_ZC_STOPMOVE*>(packet_buffer);
+
 	packet->packetType = HEADER_ZC_STOPMOVE;
 	packet->AID = bl->id;
 	packet->xPos = bl->x;
 	packet->yPos = bl->y;
-	clif_send(packet, sizeof(PACKET_ZC_STOPMOVE), bl, AREA);
+	clif_send(packet, sizeof(*packet), bl, AREA);
 
 	if(disguised(bl)) {
 		packet->AID = disguised_bl_id(bl->id);
-		clif_send(packet, sizeof(PACKET_ZC_STOPMOVE), bl, SELF);
+		clif_send(packet, sizeof(*packet), bl, SELF);
 	}
 }
 
@@ -2197,14 +2226,17 @@ void clif_fixpos(struct block_list *bl)
 /// 00c4 <shop id>.L
 void clif_npcbuysell(map_session_data* sd, int id)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_SELECT_DEALTYPE packet{};
+
 	packet.packetType = HEADER_ZC_SELECT_DEALTYPE;
 	packet.npcId = id;
-	socket_send<PACKET_ZC_SELECT_DEALTYPE>(sd->fd, packet);
+
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 
@@ -2259,8 +2291,11 @@ void clif_selllist(map_session_data *sd)
 		return;
 
 	PACKET_ZC_PC_SELL_ITEMLIST *packet = reinterpret_cast<PACKET_ZC_PC_SELL_ITEMLIST*>(packet_buffer);
+
 	packet->packetType = HEADER_ZC_PC_SELL_ITEMLIST;
-	for(i = 0; i < MAX_INVENTORY; i++) {
+	packet->packetLength = sizeof( *packet );
+
+	for(i = 0, c = 0; i < MAX_INVENTORY; i++) {
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory_data[i] )
 		{
 			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
@@ -2273,15 +2308,15 @@ void clif_selllist(map_session_data *sd)
 				if( val < 0 )
 					continue;
 			}
-			packet->items[i].index = client_index(i);
-			packet->items[i].price = val;
-			packet->items[i].overcharge = pc_modifysellvalue(sd,val);
+			packet->items[c].index = client_index(i);
+			packet->items[c].price = val;
+			packet->items[c].overcharge = pc_modifysellvalue(sd,val);
+			packet->packetLength += sizeof( packet->items[0] );
 			c++;
 		}
 	}
-	packet->packetLength = sizeof(PACKET_ZC_PC_SELL_ITEMLIST) + c * sizeof(PACKET_ZC_PC_SELL_ITEMLIST_sub);
 	
-	socket_send<PACKET_ZC_PC_SELL_ITEMLIST>(sd->fd, packet);
+	clif_send( packet, packet->packetLength, &sd->bl, SELF );
 }
 
 /// Closes shop (CZ_NPC_TRADE_QUIT).
@@ -2487,14 +2522,17 @@ void clif_scriptnext( map_session_data& sd, uint32 npcid ){
 /// - 0146 <npcid of dialog window>.L
 void clif_scriptclose(map_session_data *sd, int npcid)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_CLOSE_DIALOG packet{};
+
 	packet.packetType = HEADER_ZC_CLOSE_DIALOG;
 	packet.npcId = npcid;
-	socket_send<PACKET_ZC_CLOSE_DIALOG>(sd->fd, packet);
+
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 /**
@@ -2515,6 +2553,7 @@ void clif_scriptclear( map_session_data& sd, int npcid ){
 
 
 void clif_sendfakenpc(map_session_data *sd, int npcid) {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
@@ -2524,6 +2563,7 @@ void clif_sendfakenpc(map_session_data *sd, int npcid) {
 	sd->state.using_fake_npc = 1;
 
 	PACKET_ZC_NOTIFY_STANDENTRY packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_STANDENTRY;
 #if PACKETVER >= 20071106
 	packet.objecttype = 0;
@@ -2534,7 +2574,7 @@ void clif_sendfakenpc(map_session_data *sd, int npcid) {
 	packet.xSize = 5;
 	packet.ySize = 5;
 
-	socket_send<PACKET_ZC_NOTIFY_STANDENTRY>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 
@@ -2562,6 +2602,7 @@ void clif_scriptmenu(map_session_data* sd, int npcid, const char* mes)
 {
 	struct block_list *bl = NULL;
 
+	// Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
@@ -2572,13 +2613,14 @@ void clif_scriptmenu(map_session_data* sd, int npcid, const char* mes)
 	   clif_sendfakenpc(sd, npcid);
 
 	PACKET_ZC_MENU_LIST *packet = reinterpret_cast<PACKET_ZC_MENU_LIST*>(packet_buffer);
+
 	size_t mes_length = strlen(mes);
 	packet->packetType = HEADER_ZC_MENU_LIST;
 	packet->npcId = npcid;
 	packet->packetLength = sizeof(PACKET_ZC_MENU_LIST) + mes_length;
 	memcpy(packet->menu, mes, mes_length);
 
-	socket_send<PACKET_ZC_MENU_LIST>(sd->fd, packet);
+	clif_send( packet, packet->packetLength, &sd->bl, SELF );
 }
 
 
@@ -2597,6 +2639,7 @@ void clif_scriptinput(map_session_data *sd, int npcid)
 {
 	struct block_list *bl = nullptr;
 
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
@@ -2607,9 +2650,11 @@ void clif_scriptinput(map_session_data *sd, int npcid)
 	   clif_sendfakenpc(sd, npcid);
 
 	PACKET_ZC_OPEN_EDITDLG packet{};
+
 	packet.packetType = HEADER_ZC_OPEN_EDITDLG;
 	packet.npcId = npcid;
-	socket_send<PACKET_ZC_OPEN_EDITDLG>(sd->fd, packet);
+
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 
@@ -2628,6 +2673,7 @@ void clif_scriptinputstr(map_session_data *sd, int npcid)
 {
 	struct block_list *bl = NULL;
 
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
@@ -2638,9 +2684,11 @@ void clif_scriptinputstr(map_session_data *sd, int npcid)
 	   clif_sendfakenpc(sd, npcid);
 
 	PACKET_ZC_OPEN_EDITDLGSTR packet{};
+
 	packet.packetType = HEADER_ZC_OPEN_EDITDLGSTR;
 	packet.npcId = npcid;
-	socket_send<PACKET_ZC_OPEN_EDITDLGSTR>(sd->fd, packet);
+
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 
@@ -2656,20 +2704,22 @@ void clif_scriptinputstr(map_session_data *sd, int npcid)
 ///     0x00RRGGBB
 void clif_viewpoint(map_session_data *sd, int npc_id, int type, int x, int y, int id, int color)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_COMPASS packet{};
+
 	packet.packetType = HEADER_ZC_COMPASS;
 	packet.npcId = npc_id;
 	packet.type = type;
-	packet.xPos	= x;
-	packet.yPos	= y;
+	packet.xPos = x;
+	packet.yPos = y;
 	packet.id = id;
 	packet.color = color;
 
-	socket_send<PACKET_ZC_COMPASS>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 /// Displays an illustration image.
@@ -2684,16 +2734,18 @@ void clif_viewpoint(map_session_data *sd, int npc_id, int type, int x, int y, in
 ///   255 = clear all displayed cutins
 void clif_cutin(map_session_data* sd, const char* image, int type)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_SHOW_IMAGE2 packet{};
+
 	packet.packetType = HEADER_ZC_SHOW_IMAGE2;
 	safestrncpy(packet.imageName, image, sizeof(packet.imageName));
 	packet.type = type;
 
-	socket_send<PACKET_ZC_SHOW_IMAGE2>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 
@@ -2840,16 +2892,18 @@ void clif_additem( map_session_data *sd, int n, int amount, unsigned char fail )
 /// 00af <index>.W <amount>.W
 void clif_dropitem(map_session_data *sd,int n,int amount)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_ITEM_THROW_ACK packet{};
+
 	packet.packetType = HEADER_ZC_ITEM_THROW_ACK;
 	packet.index = client_index(n);
 	packet.count = amount;
 
-	socket_send<PACKET_ZC_ITEM_THROW_ACK>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 
@@ -2866,6 +2920,7 @@ void clif_dropitem(map_session_data *sd,int n,int amount)
 ///     7 = Consumed by Four Spirit Analysis (SO_EL_ANALYSIS) skill
 void clif_delitem(map_session_data *sd,int n,int amount, short reason)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
@@ -2875,12 +2930,13 @@ void clif_delitem(map_session_data *sd,int n,int amount, short reason)
 #else
 
 	PACKET_ZC_DELETE_ITEM_FROM_BODY packet{};
+
 	packet.packetType = HEADER_ZC_DELETE_ITEM_FROM_BODY;
 	packet.deleteType = reason;
 	packet.index = client_index(n);
 	packet.count = amount;
 
-	socket_send<PACKET_ZC_DELETE_ITEM_FROM_BODY>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 #endif
 }
 
@@ -3256,6 +3312,7 @@ void clif_cartlist( map_session_data *sd ){
 void clif_clearcart(int fd)
 {
 	PACKET_ZC_CARTOFF packet{};
+
 	packet.packetType = HEADER_ZC_CARTOFF;
 
 	socket_send<PACKET_ZC_CARTOFF>(fd, packet);
@@ -3266,11 +3323,13 @@ void clif_clearcart(int fd)
 /// 01eb <account id>.L <x>.W <y>.W
 void clif_guild_xy(map_session_data *sd)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_NOTIFY_POSITION_TO_GUILDM packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_POSITION_TO_GUILDM;
 	packet.aid = sd->status.account_id;
 	packet.xPos = sd->bl.x;
@@ -3284,10 +3343,12 @@ void clif_guild_xy(map_session_data *sd)
  *------------------------------------------*/
 void clif_guild_xy_single(int fd, map_session_data *sd)
 {
+	// TODO: Convert sd to reference
 	if( sd == nullptr || sd->bg_id )
 		return;
 
 	PACKET_ZC_NOTIFY_POSITION_TO_GUILDM packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_POSITION_TO_GUILDM;
 	packet.aid = sd->status.account_id;
 	packet.xPos = sd->bl.x;
@@ -3299,11 +3360,13 @@ void clif_guild_xy_single(int fd, map_session_data *sd)
 // Guild XY locators [Valaris]
 void clif_guild_xy_remove(map_session_data *sd)
 {
+	// TODO: Convert sd to reference
 	if (sd == nullptr) {
 		return;
 	}
 
 	PACKET_ZC_NOTIFY_POSITION_TO_GUILDM packet{};
+
 	packet.packetType = HEADER_ZC_NOTIFY_POSITION_TO_GUILDM;
 	packet.aid = sd->status.account_id;
 	packet.xPos = -1;
@@ -3496,49 +3559,54 @@ void clif_update_hp(map_session_data &sd) {
 
 static void clif_par_change(map_session_data *sd, uint16 varId, int count) {
 	PACKET_ZC_PAR_CHANGE packet{};
+
 	packet.PacketType = HEADER_ZC_PAR_CHANGE;
 	packet.varID = varId;
 	packet.count = count;
 
-	socket_send<PACKET_ZC_PAR_CHANGE>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 static void clif_longpar_change(map_session_data *sd, uint16 varId, int amount) {
 	PACKET_ZC_LONGPAR_CHANGE packet{};
+
 	packet.PacketType = HEADER_ZC_LONGPAR_CHANGE;
 	packet.varID = varId;
 	packet.amount = amount;
 
-	socket_send<PACKET_ZC_LONGPAR_CHANGE>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 static void clif_longlongpar_change(map_session_data *sd, uint16 varId, int64 amount) {
 	PACKET_ZC_LONGLONGPAR_CHANGE packet{};
+
 	packet.PacketType = HEADER_ZC_LONGPAR_CHANGE;
 	packet.varID = varId;
 	packet.amount = amount;
 
-	socket_send<PACKET_ZC_LONGLONGPAR_CHANGE>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 static void clif_couplestatus(map_session_data *sd, uint32 status_type, int32 defaultStatus, int32 plusStatus) {
 	PACKET_ZC_COUPLESTATUS packet{};
+
 	packet.packetType = HEADER_ZC_COUPLESTATUS;
 	packet.statusType = status_type;
 	packet.defaultStatus = defaultStatus;
 	packet.plusStatus = plusStatus;
 
-	socket_send<PACKET_ZC_COUPLESTATUS>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 // Name conflict with clif_status_change
 static void clif_zc_status_change(map_session_data *sd, uint16 status_id, uint8 value) {
 	PACKET_ZC_STATUS_CHANGE packet{};
+
 	packet.PacketType = HEADER_ZC_STATUS_CHANGE;
 	packet.statusID = status_id;
 	packet.value = value;
 
-	socket_send<PACKET_ZC_STATUS_CHANGE>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 /// Notifies client of a character parameter change.
@@ -3706,9 +3774,11 @@ void clif_updatestatus(map_session_data *sd,int type)
 	 **/
 	case SP_ATTACKRANGE: {
 		PACKET_ZC_ATTACK_RANGE packet{};
+
 		packet.PacketType = HEADER_ZC_ATTACK_RANGE;
 		packet.currentAttRange = sd->battle_status.rhw.range;
-		socket_send<PACKET_ZC_ATTACK_RANGE>(sd->fd, packet);
+
+		clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 		break;
 	}
 
