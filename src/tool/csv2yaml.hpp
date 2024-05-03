@@ -560,5 +560,9 @@ static bool itemdb_read_combos(const char* file);
 static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current );
 static bool read_homunculus_skilldb( char* split[], size_t columns, size_t current );
 static bool read_homunculusdb( char* str[], size_t columns, size_t current );
+static bool skill_parse_row_producedb(char* fields[], size_t columns, size_t current);
+static bool skill_producedb_yaml();
+static bool skill_parse_row_producedb(char *split[], size_t columns, size_t current);
+static bool skill_parse_row_changematerialdb(char* fields[], size_t columns, size_t current);
 
 #endif /* CSV2YAML_HPP */

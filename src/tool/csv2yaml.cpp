@@ -161,9 +161,9 @@ static void produce_txt_data(const std::string &modePath, const std::string &fix
 	skill_produce.clear();
 
 	if (fileExists(modePath + "/produce_db.txt"))
-		sv_readdb(modePath.c_str(), "produce_db.txt", ',', 5, 5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, false);
+		sv_readdb(modePath.c_str(), "produce_db.txt", ',', 5, 5 + 2 * MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, false);
 	if (fileExists(fixedPath + "/skill_changematerial_db.txt"))
-		sv_readdb(fixedPath.c_str(), "skill_changematerial_db.txt", ',', 5, 5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, false);
+		sv_readdb(fixedPath.c_str(), "skill_changematerial_db.txt", ',', 5, 5 + 2 * MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, false);
 }
 
 template<typename Func>
@@ -5302,12 +5302,8 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 	return true;
 }
 
-int32 main( int32 argc, char *argv[] ){
-	return main_core<Csv2YamlTool>( argc, argv );
-}
-
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_producedb(char* split[], int columns, int current) {
+static bool skill_parse_row_producedb(char* split[], size_t columns, size_t current) {
 	t_itemid nameid = static_cast<t_itemid>(strtoul(split[1], nullptr, 10));
 
 	if (nameid == 0) {
@@ -5341,7 +5337,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current) {
 		entry.req_skill_lv = skill_lv;
 	}
 
-	for (uint8 x = 5; x+1 < columns && split[x] && split[x+1]; x += 2) {
+	for (size_t x = 5; x+1 < columns && split[x] && split[x+1]; x += 2) {
 		nameid = static_cast<t_itemid>(strtoul(split[x], nullptr, 10));
 		item_name = util::umap_find(aegis_itemnames, nameid);
 
@@ -5372,7 +5368,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current) {
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
+static bool skill_parse_row_changematerialdb(char* split[], size_t columns, size_t current)
 {
 	t_itemid nameid = static_cast<t_itemid>(strtoul(split[1], nullptr, 10));
 
@@ -5393,7 +5389,7 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 	s_skill_changematerial_db_csv item = {};
 
 	item.baserate = static_cast<uint16>(strtoul(split[2], nullptr, 10));
-	for (uint16 x = 3; x+1 < columns && split[x] && split[x+1]; x += 2) {
+	for (size_t x = 3; x+1 < columns && split[x] && split[x+1]; x += 2) {
 		item.qty.insert({ static_cast<uint16>(strtoul(split[x], nullptr, 10)), static_cast<uint16>(strtoul(split[x+1], nullptr, 10)) });
 	}
 
@@ -5467,4 +5463,8 @@ static bool skill_producedb_yaml(void) {
 		body << YAML::EndMap;
 	}
 	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<Csv2YamlTool>( argc, argv );
 }
