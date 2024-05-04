@@ -10,6 +10,7 @@ list(APPEND CMAKE_MODULE_PATH
 
 # options
 set(PACKETVER 20211103 CACHE STRING "Sets the PACKETVER define of the servers (see src/common/mmo.hpp)")
+set(MAXCONN CACHE STRING "Sets the MAXCONN define of the servers. (see src/common/socket.hpp)")
 option(ENABLE_PRERENEWAL "Whether or not to enable Pre-renewal (default=OFF)" OFF)
 option(ENABLE_WEB_SERVER "Build web-server (default=ON)" ON)
 option(ENABLE_RDTSC "Enable RDTSC instruction as a timing source (default=OFF)" OFF)
@@ -79,6 +80,19 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${suffixInsta
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib/${suffixInstallStr})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
+if(WIN32)
+    set(RuntimeOutputDir "${CMAKE_BINARY_DIR}/..")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${RuntimeOutputDir})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL ${RuntimeOutputDir})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RuntimeOutputDir})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${RuntimeOutputDir})
+
+    if (MSVC AND NOT MSVC_VERSION VERSION_LESS 142)
+        add_link_options($<$<CONFIG:Debug>:/INCREMENTAL>)
+        add_compile_options($<$<CONFIG:Debug>:/ZI>)
+    endif()
+    add_compile_definitions($<$<CONFIG:DEBUG>:_ITERATOR_DEBUG_LEVEL=0>)
+endif()
 
 add_subdirectory(db)
 add_subdirectory(conf)
