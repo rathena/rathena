@@ -2370,9 +2370,13 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 			sd->state.autocast = 1;
 			int flag = SKILL_NOCONSUME_REQ;
 			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
-				if (!skill_check_condition_castbegin(sd, skill, autospl_skill_lv) || !skill_check_condition_castend(sd, skill, autospl_skill_lv)) {
-					sd->state.autocast = 0;
-					continue;
+				struct s_skill_condition require;
+				require = skill_get_requirement(sd, skill, autospl_skill_lv);
+				for (int i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i) {
+					if(pc_search_inventory(sd,require.itemid[i]) < require.amount[i] ) {
+						sd->state.autocast = 0;
+						continue;
+					}
 				}
 				skill_consume_requirement(sd, skill, autospl_skill_lv,1);
 				flag = 0;
@@ -2512,9 +2516,13 @@ int skill_onskillusage(map_session_data *sd, struct block_list *bl, uint16 skill
 		it.lock = true;
 		int flag = SKILL_NOCONSUME_REQ;
 		if (it.flag & AUTOSPELL_FORCE_CONSUME) {
-			if (!skill_check_condition_castbegin(sd, skill, skill_lv) || !skill_check_condition_castend(sd, skill, skill_lv)) {
-				sd->state.autocast = 0;
-				continue;
+			struct s_skill_condition require;
+			require = skill_get_requirement(sd, skill, skill_lv);
+			for (int i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i) {
+				if(pc_search_inventory(sd,require.itemid[i]) < require.amount[i] ) {
+					sd->state.autocast = 0;
+					continue;
+				}
 			}
 			skill_consume_requirement(sd, skill, skill_lv,1);
 			flag = 0;
@@ -2755,11 +2763,15 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			dstsd->state.autocast = 1;
 			int flag = SKILL_NOCONSUME_REQ;
 			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
-				if (!skill_check_condition_castbegin(sd, autospl_skill_id, autospl_skill_lv) || !skill_check_condition_castend(sd, autospl_skill_id, autospl_skill_lv)) {
-					sd->state.autocast = 0;
-					continue;
+				struct s_skill_condition require;
+				require = skill_get_requirement(dstsd, autospl_skill_id, autospl_skill_lv);
+				for (int i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i) {
+					if(pc_search_inventory(dstsd,require.itemid[i]) < require.amount[i] ) {
+						dstsd->state.autocast = 0;
+						continue;
+					}
 				}
-				skill_consume_requirement(sd, autospl_skill_id, autospl_skill_lv,1);
+				skill_consume_requirement(dstsd, autospl_skill_id, autospl_skill_lv,1);
 				flag = 0;
 			}
 			switch (type) {
