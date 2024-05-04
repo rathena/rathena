@@ -24,11 +24,11 @@
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
 /// Initializes a chatroom object (common functionality for both pc and npc chatrooms).
-/// Returns a chatroom object on success, or NULL on failure.
+/// Returns a chatroom object on success, or nullptr on failure.
 static struct chat_data* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev, int zeny, int minLvl, int maxLvl)
 {
 	struct chat_data* cd;
-	nullpo_retr(NULL, bl);
+	nullpo_retr(nullptr, bl);
 
 	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
 
@@ -50,11 +50,11 @@ static struct chat_data* chat_createchat(struct block_list* bl, const char* titl
 	cd->bl.x    = bl->x;
 	cd->bl.y    = bl->y;
 	cd->bl.type = BL_CHAT;
-	cd->bl.next = cd->bl.prev = NULL;
+	cd->bl.next = cd->bl.prev = nullptr;
 
 	if( cd->bl.id == 0 ) {
 		aFree(cd);
-		cd = NULL;
+		cd = nullptr;
 	}
 
 	map_addiddb(&cd->bl);
@@ -133,7 +133,7 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 
 	cd = (struct chat_data*)map_id2bl(chatid);
 
-	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || ((cd->owner->type == BL_NPC) ? cd->users+1 : cd->users) >= cd->limit ) {
+	if( cd == nullptr || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || ((cd->owner->type == BL_NPC) ? cd->users+1 : cd->users) >= cd->limit ) {
 		clif_joinchatfail(sd,0);
 		return 0;
 	}
@@ -196,7 +196,7 @@ int chat_leavechat(map_session_data* sd, bool kicked)
 
 	cd = (struct chat_data*)map_id2bl(sd->chatID);
 
-	if( cd == NULL ) {
+	if( cd == nullptr ) {
 		pc_setchatid(sd, 0);
 		return 1;
 	}
@@ -267,7 +267,7 @@ int chat_changechatowner(map_session_data* sd, const char* nextownername)
 
 	cd = (struct chat_data*)map_id2bl(sd->chatID);
 
-	if( cd == NULL || (struct block_list*) sd != cd->owner )
+	if( cd == nullptr || (struct block_list*) sd != cd->owner )
 		return 1;
 
 	ARR_FIND( 1, cd->users, i, strncmp(cd->usersd[i]->status.name, nextownername, NAME_LENGTH) == 0 );
@@ -317,7 +317,7 @@ int chat_changechatstatus(map_session_data* sd, const char* title, const char* p
 
 	cd = (struct chat_data*)map_id2bl(sd->chatID);
 
-	if( cd == NULL || (struct block_list *)sd != cd->owner )
+	if( cd == nullptr || (struct block_list *)sd != cd->owner )
 		return 1;
 
 	safestrncpy(cd->title, title, CHATROOM_TITLE_SIZE);
@@ -364,7 +364,7 @@ int chat_kickchat(map_session_data* sd, const char* kickusername)
 
 	cd = (struct chat_data *)map_id2bl(sd->chatID);
 
-	if( cd == NULL || (struct block_list *)sd != cd->owner )
+	if( cd == nullptr || (struct block_list *)sd != cd->owner )
 		return -1;
 
 	ARR_FIND( 0, cd->users, i, strncmp(cd->usersd[i]->status.name, kickusername, NAME_LENGTH) == 0 );
@@ -432,7 +432,7 @@ int chat_deletenpcchat(struct npc_data* nd)
 
 	cd = (struct chat_data*)map_id2bl(nd->chat_id);
 
-	if( cd == NULL )
+	if( cd == nullptr )
 		return 0;
 
 	chat_npckickall(cd);
