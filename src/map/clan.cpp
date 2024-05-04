@@ -40,7 +40,7 @@ void clan_load_clandata( int count, struct clan* clans ){
 
 		clanCopy = (struct clan*)aMalloc( sizeof( struct clan ) );
 
-		if( clanCopy == NULL ){
+		if( clanCopy == nullptr ){
 			ShowError("Memory could not be allocated for a clan.\n");
 			break;
 		}
@@ -76,10 +76,10 @@ struct clan* clan_searchname( const char* name ){
 map_session_data* clan_getavailablesd( struct clan* clan ){
 	int i;
 
-	nullpo_retr(NULL, clan);
+	nullpo_retr(nullptr, clan);
 
-	ARR_FIND( 0, clan->max_member, i, clan->members[i] != NULL );
-	return ( i < clan->max_member ) ? clan->members[i] : NULL;
+	ARR_FIND( 0, clan->max_member, i, clan->members[i] != nullptr );
+	return ( i < clan->max_member ) ? clan->members[i] : nullptr;
 }
 
 int clan_getMemberIndex( struct clan* clan, uint32 account_id ){
@@ -87,7 +87,7 @@ int clan_getMemberIndex( struct clan* clan, uint32 account_id ){
 
 	nullpo_retr(-1,clan);
 
-	ARR_FIND( 0, clan->max_member, i, clan->members[i] != NULL && clan->members[i]->status.account_id == account_id );
+	ARR_FIND( 0, clan->max_member, i, clan->members[i] != nullptr && clan->members[i]->status.account_id == account_id );
 
 	if( i == clan->max_member ){
 		return -1;
@@ -101,7 +101,7 @@ int clan_getNextFreeMemberIndex( struct clan* clan ){
 
 	nullpo_retr(-1,clan);
 
-	ARR_FIND( 0, clan->max_member, i, clan->members[i] == NULL );
+	ARR_FIND( 0, clan->max_member, i, clan->members[i] == nullptr );
 
 	if( i == clan->max_member ){
 		return -1;
@@ -144,7 +144,7 @@ void clan_member_left( map_session_data* sd ){
 	nullpo_retv(clan = sd->clan);
 
 	if( ( index = clan_getMemberIndex(clan,sd->status.account_id) ) >= 0 ){
-		clan->members[index] = NULL;
+		clan->members[index] = nullptr;
 		clan->connect_member--;
 
 		intif_clan_member_left(clan->id);
@@ -157,7 +157,7 @@ bool clan_member_join( map_session_data *sd, int clan_id, uint32 account_id, uin
 
 	nullpo_ret(sd);
 
-	if( ( clan = clan_search( clan_id ) ) == NULL ){
+	if( ( clan = clan_search( clan_id ) ) == nullptr ){
 		return false;
 	}
 
@@ -177,13 +177,13 @@ bool clan_member_leave( map_session_data* sd, int clan_id, uint32 account_id, ui
 
 	nullpo_ret(sd);
 
-	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != clan_id || ( clan = sd->clan ) == NULL ){
+	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != clan_id || ( clan = sd->clan ) == nullptr ){
 		return false;
 	}
 
 	clan_member_left(sd);
 
-	sd->clan = NULL;
+	sd->clan = nullptr;
 	sd->status.clan_id = 0;
 
 	clif_clan_leave(sd);
@@ -205,7 +205,7 @@ void clan_send_message( map_session_data *sd, const char *mes, int len ){
 
 	intif_clan_message(sd->status.clan_id,sd->status.account_id,mes,len);
 	clan_recv_message(sd->status.clan_id,sd->status.account_id,mes,len);
-	log_chat( LOG_CHAT_CLAN, sd->status.clan_id, sd->status.char_id, sd->status.account_id, mapindex_id2name( sd->mapindex ), sd->bl.x, sd->bl.y, NULL, mes );
+	log_chat( LOG_CHAT_CLAN, sd->status.clan_id, sd->status.char_id, sd->status.account_id, mapindex_id2name( sd->mapindex ), sd->bl.x, sd->bl.y, nullptr, mes );
 }
 
 int clan_get_alliance_count( struct clan *clan, int flag ){
