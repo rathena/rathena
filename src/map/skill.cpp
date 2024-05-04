@@ -19172,6 +19172,7 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 	}
 	
 	if (sd && sd->state.autocast) {
+		req.sp = 0;
 		req.state = ST_NONE;
 		req.weapon = 0;
 		req.status.clear();
