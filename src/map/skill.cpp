@@ -2345,13 +2345,9 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 			sd->state.autocast = 1;
 			int flag = SKILL_NOCONSUME_REQ;
 			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
-				struct s_skill_condition require;
-				require = skill_get_requirement(sd, skill, autospl_skill_lv);
-				for (int i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i) {
-					if(pc_search_inventory(sd,require.itemid[i]) < require.amount[i] ) {
-						sd->state.autocast = 0;
-						continue;
-					}
+				if (!skill_check_condition_castbegin(*sd, skill, autospl_skill_lv) || !skill_check_condition_castend(*sd, skill, autospl_skill_lv)) {
+					sd->state.autocast = 0;
+					continue;
 				}
 				skill_consume_requirement(sd, skill, autospl_skill_lv,1);
 				flag = 0;
@@ -2491,13 +2487,9 @@ int skill_onskillusage(map_session_data *sd, struct block_list *bl, uint16 skill
 		it.lock = true;
 		int flag = SKILL_NOCONSUME_REQ;
 		if (it.flag & AUTOSPELL_FORCE_CONSUME) {
-			struct s_skill_condition require;
-			require = skill_get_requirement(sd, skill, skill_lv);
-			for (int i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i) {
-				if(pc_search_inventory(sd,require.itemid[i]) < require.amount[i] ) {
-					sd->state.autocast = 0;
-					continue;
-				}
+			if (!skill_check_condition_castbegin(*sd, skill, skill_lv) || !skill_check_condition_castend(*sd, skill, skill_lv)) {
+				sd->state.autocast = 0;
+				continue;
 			}
 			skill_consume_requirement(sd, skill, skill_lv,1);
 			flag = 0;
@@ -2741,13 +2733,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			dstsd->state.autocast = 1;
 			int flag = SKILL_NOCONSUME_REQ;
 			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
-				struct s_skill_condition require;
-				require = skill_get_requirement(dstsd, autospl_skill_id, autospl_skill_lv);
-				for (int i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i) {
-					if(pc_search_inventory(dstsd,require.itemid[i]) < require.amount[i] ) {
-						dstsd->state.autocast = 0;
-						continue;
-					}
+				if (!skill_check_condition_castbegin(*dstsd, autospl_skill_id, autospl_skill_lv) || !skill_check_condition_castend(*dstsd, autospl_skill_id, autospl_skill_lv)) {
+					dstsd->state.autocast = 0;
+					continue;
 				}
 				skill_consume_requirement(dstsd, autospl_skill_id, autospl_skill_lv,1);
 				flag = 0;
@@ -18702,9 +18690,6 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone
 				require.spiritball = 0;
 				[[fallthrough]];
-			default:
-				if(sd->state.autocast)
-					require.sp = 0;
 			break;
 		}
 		if(require.hp || require.sp || require.ap)
@@ -19184,6 +19169,15 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 			req.ap = 0;
 		if (req_opt & SKILL_REQ_APRATECOST)
 			req.ap_rate = 0;
+	}
+	
+	if (sd && sd->state.autocast) {
+		req.state = ST_NONE;
+		req.weapon = 0;
+		req.status.clear();
+		req.status.shrink_to_fit();
+		req.eqItem.clear();
+		req.eqItem.shrink_to_fit();
 	}
 
 	return req;
