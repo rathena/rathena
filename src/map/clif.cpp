@@ -10450,7 +10450,7 @@ void clif_viewequip_ack( map_session_data* sd, map_session_data* tsd ){
 
 			clif_item_equip( client_index( k ), &p->list[equip], &tsd->inventory.u.items_inventory[k], tsd->inventory_data[k], pc_equippoint( tsd, k ) );
 
-			p->PacketLength = sizeof( p->list[0] );
+			p->PacketLength += sizeof( p->list[0] );
 			equip++;
 		}
 	}
