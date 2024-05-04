@@ -2345,13 +2345,14 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 			sd->state.autocast = 1;
 			int flag = SKILL_NOCONSUME_REQ;
 			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
+				sd->state.autocast = 2;
 				if (!skill_check_condition_castbegin(*sd, skill, autospl_skill_lv) || !skill_check_condition_castend(*sd, skill, autospl_skill_lv)) {
 					sd->state.autocast = 0;
 					continue;
 				}
-				skill_consume_requirement(sd, skill, autospl_skill_lv,1);
 				flag = 0;
 			}
+			skill_consume_requirement(sd, skill, autospl_skill_lv,1);
 #ifndef RENEWAL
 			skill_toggle_magicpower(src, skill);
 #endif
@@ -2487,13 +2488,14 @@ int skill_onskillusage(map_session_data *sd, struct block_list *bl, uint16 skill
 		it.lock = true;
 		int flag = SKILL_NOCONSUME_REQ;
 		if (it.flag & AUTOSPELL_FORCE_CONSUME) {
+			sd->state.autocast = 2;
 			if (!skill_check_condition_castbegin(*sd, skill, skill_lv) || !skill_check_condition_castend(*sd, skill, skill_lv)) {
 				sd->state.autocast = 0;
 				continue;
 			}
-			skill_consume_requirement(sd, skill, skill_lv,1);
 			flag = 0;
 		}
+		skill_consume_requirement(sd, skill, skill_lv,1);
 		switch( type ) {
 			case CAST_GROUND:
 				skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skill_lv, tick, flag);
@@ -2733,13 +2735,14 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			dstsd->state.autocast = 1;
 			int flag = SKILL_NOCONSUME_REQ;
 			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
+				sd->state.autocast = 2;
 				if (!skill_check_condition_castbegin(*dstsd, autospl_skill_id, autospl_skill_lv) || !skill_check_condition_castend(*dstsd, autospl_skill_id, autospl_skill_lv)) {
 					dstsd->state.autocast = 0;
 					continue;
 				}
-				skill_consume_requirement(dstsd, autospl_skill_id, autospl_skill_lv,1);
 				flag = 0;
 			}
+			skill_consume_requirement(dstsd, autospl_skill_id, autospl_skill_lv,1);
 			switch (type) {
 				case CAST_GROUND:
 					skill_castend_pos2(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, tick, flag);
@@ -19171,7 +19174,14 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 			req.ap_rate = 0;
 	}
 	
-	if (sd->state.autocast) {
+	short autostate = sd->state.autocast;
+	if (autostate) {
+		if (autostate == 1) {
+			req.hp = 0;
+			req.zeny = 0;
+			req.spiritball = 0;
+			req.ap = 0;
+		}
 		req.sp = 0;
 		req.state = ST_NONE;
 		req.weapon = 0;
