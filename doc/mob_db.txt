@@ -204,11 +204,16 @@ AttackMotion: Attack animation motion. Low value means monster's attack will be 
 
 ---------------------------------------
 
-ClientAttackMotion: When a clif_damage packet is sent to the client it will also send "sdelay" (AttackMotion) as value.
+ClientAttackMotion: The time from the start of a normal attack until the damage frame shows on client. At the same time you also get stopped on the client.
+This value is only needed if you use the "synchronize_damage" feature (battle/client.conf).
+If you created a custom sprite, you want to set this value to the timing of the damage frame in your *.act file.
 
+Background:
+When a clif_damage packet is sent to the client it will also send "sdelay" (AttackMotion) as value.
 The client will ignore all values above 432, and 432 stands for 1.0x animation speed. 216 for example means play the animation at double the speed.
 Each monster has an attack animation and can define the frame in the attack animation on which it displays the damage and makes the target flinch / stop.
 If the damage frame is undefined, it instead displays the damage / flinch / stop at the very end of the animation.
+Knowing when the damage frame happens in the animation allows us to synchronize the timing between client and server.
 
 ---------------------------------------
 

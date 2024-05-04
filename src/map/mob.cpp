@@ -4817,10 +4817,10 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "ClientAttackMotion", speed))
 			return 0;
 
-		mob->status.clientamotion = speed;
+		mob->status.clientamotion = cap_value(speed, 1, USHRT_MAX);
 	} else {
 		if (!exists)
-			mob->status.clientamotion = 432;
+			mob->status.clientamotion = cap_value(mob->status.amotion, 1, USHRT_MAX);
 	}
 
 	if (this->nodeExists(node, "DamageMotion")) {
