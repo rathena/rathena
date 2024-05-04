@@ -182,10 +182,6 @@ enum e_skill_unit_flag : uint8 {
 	UF_MAX,
 };
 
-/// Walk intervals at which chase-skills are attempted to be triggered.
-/// If you change this, make sure it's an odd value (for icewall block behavior).
-#define WALK_SKILL_INTERVAL 5
-
 /// Time that's added to canact delay on castbegin and substracted on castend
 /// This is to prevent hackers from sending a skill packet after cast but before a timer triggers castend
 const t_tick SECURITY_CASTTIME = 100;

@@ -9934,7 +9934,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (tbl) {
 				md->state.can_escape = 1;
 				mob_unlocktarget(md, tick);
-				unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2); // Send distance in skill level > 1
+				t_tick time = unit_escape(src, tbl, skill_lv > 1 ? skill_lv : 7, 2); // Official distance is 7, if level > 1, distance = level
+				if (time) {
+					md->state.skillstate = MSS_WALK; // Need to set state here as it's not set otherwise
+					md->last_thinktime = tick + time; // Set AI to inactive for the duration of this movement
+				}
 			}
 		}
 		break;
