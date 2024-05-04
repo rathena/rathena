@@ -11062,7 +11062,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Range: 7
+    Range: 9
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
