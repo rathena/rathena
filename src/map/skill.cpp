@@ -18692,8 +18692,6 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			case MO_KITRANSLATION:
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone
 				require.spiritball = 0;
-				[[fallthrough]];
-			break;
 		}
 		if(require.hp || require.sp || require.ap)
 			skill_consume_hpspap(&sd->bl, skill_id, require.hp, require.sp, require.ap);
