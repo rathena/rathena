@@ -222,7 +222,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1292
     AttackMotion: 792
-    ClientAttackMotion: 576
+    ClientAttackMotion: 792
     DamageMotion: 216
     Ai: 03
     Modes:
@@ -271,7 +271,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1276
     AttackMotion: 576
-    ClientAttackMotion: 144
+    ClientAttackMotion: 576
     DamageMotion: 384
     Ai: 04
     Drops:
@@ -429,7 +429,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1148
     AttackMotion: 648
-    ClientAttackMotion: 360
+    ClientAttackMotion: 648
     DamageMotion: 480
     Ai: 03
     Drops:
@@ -661,7 +661,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1872
     AttackMotion: 672
-    ClientAttackMotion: 528
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 01
     Drops:
@@ -707,7 +707,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 2612
     AttackMotion: 912
-    ClientAttackMotion: 816
+    ClientAttackMotion: 912
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -1090,7 +1090,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1864
     AttackMotion: 864
-    ClientAttackMotion: 576
+    ClientAttackMotion: 864
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -1507,7 +1507,6 @@ Body:
     WalkSpeed: 250
     AttackDelay: 2468
     AttackMotion: 768
-    ClientAttackMotion: 480
     DamageMotion: 480
     Ai: 02
     Drops:
@@ -1855,7 +1854,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 768
     AttackMotion: 768
-    ClientAttackMotion: 384
+    ClientAttackMotion: 600
     DamageMotion: 576
     DamageTaken: 10
     Ai: 21
@@ -2235,7 +2234,6 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 1001
     AttackMotion: 1
-    ClientAttackMotion: 864
     DamageMotion: 1
     Drops:
       - Item: Phracon
@@ -2325,7 +2323,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 988
     AttackMotion: 288
-    ClientAttackMotion: 144
+    ClientAttackMotion: 288
     DamageMotion: 168
     Ai: 01
     Drops:
@@ -2420,7 +2418,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1288
     AttackMotion: 288
-    ClientAttackMotion: 480
+    ClientAttackMotion: 768
     DamageMotion: 768
     Ai: 07
     Modes:
@@ -2470,7 +2468,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1864
     AttackMotion: 864
-    ClientAttackMotion: 576
+    ClientAttackMotion: 864
     DamageMotion: 540
     Ai: 01
     Modes:
@@ -2520,7 +2518,6 @@ Body:
     WalkSpeed: 200
     AttackDelay: 988
     AttackMotion: 288
-    ClientAttackMotion: 768
     DamageMotion: 768
     Ai: 07
     Modes:
@@ -2570,7 +2567,6 @@ Body:
     WalkSpeed: 300
     AttackDelay: 988
     AttackMotion: 288
-    ClientAttackMotion: 768
     DamageMotion: 768
     Ai: 13
     Modes:
@@ -2666,7 +2662,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1576
     AttackMotion: 576
-    ClientAttackMotion: 432
+    ClientAttackMotion: 576
     DamageMotion: 420
     Ai: 17
     Drops:
@@ -2713,7 +2709,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1054
     AttackMotion: 54
-    ClientAttackMotion: 360
+    ClientAttackMotion: 504
     DamageMotion: 384
     Ai: 07
     Drops:
@@ -2760,7 +2756,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1708
     AttackMotion: 1008
-    ClientAttackMotion: 432
+    ClientAttackMotion: 504
     DamageMotion: 540
     Ai: 07
     Modes:
@@ -2811,7 +2807,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 1148
     AttackMotion: 648
-    ClientAttackMotion: 288
+    ClientAttackMotion: 648
     DamageMotion: 300
     DamageTaken: 10
     Ai: 21
@@ -2868,7 +2864,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1260
     AttackMotion: 192
-    ClientAttackMotion: 1092
+    ClientAttackMotion: 1260
     DamageMotion: 192
     Ai: 17
     Drops:
@@ -3654,7 +3650,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1672
     AttackMotion: 672
-    ClientAttackMotion: 528
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -4116,7 +4112,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1678
     AttackMotion: 780
-    ClientAttackMotion: 480
+    ClientAttackMotion: 780
     DamageMotion: 648
     DamageTaken: 10
     Ai: 21
@@ -4519,7 +4515,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1288
     AttackMotion: 288
-    ClientAttackMotion: 144
+    ClientAttackMotion: 180
     DamageMotion: 384
     Ai: 07
     Modes:
@@ -4614,7 +4610,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 1001
     AttackMotion: 1
-    ClientAttackMotion: 1536
+    ClientAttackMotion: 768
     DamageMotion: 1
     Drops:
       - Item: Phracon
@@ -4657,7 +4653,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1250
     AttackMotion: 720
-    ClientAttackMotion: 288
+    ClientAttackMotion: 480
     DamageMotion: 576
     Ai: 21
     Drops:
@@ -5296,7 +5292,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1276
     AttackMotion: 576
-    ClientAttackMotion: 144
+    ClientAttackMotion: 288
     DamageMotion: 384
     Ai: 19
     Drops:
@@ -7564,7 +7560,7 @@ Body:
     WalkSpeed: 125
     AttackDelay: 868
     AttackMotion: 768
-    ClientAttackMotion: 288
+    ClientAttackMotion: 576
     DamageMotion: 288
     DamageTaken: 10
     Ai: 21
@@ -7829,7 +7825,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 512
     AttackMotion: 528
-    ClientAttackMotion: 2652
+    ClientAttackMotion: 432
     DamageMotion: 240
     Ai: 05
     Drops:
@@ -7973,7 +7969,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1672
     AttackMotion: 720
-    ClientAttackMotion: 432
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -8897,7 +8893,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 2536
     AttackMotion: 1536
-    ClientAttackMotion: 1152
+    ClientAttackMotion: 1536
     DamageMotion: 672
     Ai: 21
     Modes:
@@ -9587,7 +9583,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1790
     AttackMotion: 1440
-    ClientAttackMotion: 288
+    ClientAttackMotion: 900
     DamageMotion: 540
     Ai: 13
     Modes:
@@ -9637,7 +9633,7 @@ Body:
     WalkSpeed: 175
     AttackDelay: 1744
     AttackMotion: 1344
-    ClientAttackMotion: 288
+    ClientAttackMotion: 960
     DamageMotion: 600
     Ai: 13
     Drops:
@@ -9940,7 +9936,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 672
     AttackMotion: 500
-    ClientAttackMotion: 336
+    ClientAttackMotion: 672
     DamageMotion: 192
     Ai: 21
     Modes:
@@ -10187,7 +10183,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1500
     AttackMotion: 500
-    ClientAttackMotion: 192
+    ClientAttackMotion: 432
     DamageMotion: 1000
     Ai: 21
     Drops:
@@ -10235,7 +10231,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1028
     AttackMotion: 528
-    ClientAttackMotion: 360
+    ClientAttackMotion: 504
     DamageMotion: 360
     Ai: 19
     Drops:
@@ -80406,7 +80402,6 @@ Body:
     WalkSpeed: 150
     AttackDelay: 500
     AttackMotion: 360
-    ClientAttackMotion: 360
     DamageMotion: 360
     Drops:
       - Item: White_Slim_Potion
