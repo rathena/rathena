@@ -393,7 +393,8 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 		damage = 0;
 	}
 
-	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
+	// If the synchronize damage feature is activated then disabling delay battle damage should only affect skills
+	if ((!battle_config.delay_battle_damage && (!battle_config.synchronize_damage || skill_id != 0)) || amotion <= 1) {
 		//Deal damage
 		battle_damage(src, target, damage, ddelay, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
 		return 0;
