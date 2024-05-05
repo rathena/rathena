@@ -2636,26 +2636,20 @@ void clif_scriptinput( map_session_data& sd, uint32 npcid ){
 ///   - if npcid is 0 or npcid exists in the client:
 ///     - 01d5 <packetlen>.W <npcid of inputstr window>.L <text>.?B
 ///   - close inputstr window
-void clif_scriptinputstr(map_session_data *sd, int npcid)
-{
+void clif_scriptinputstr( map_session_data& sd, uint32 npcid ){
 	struct block_list *bl = NULL;
 
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
-	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
-	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
-	   clif_sendfakenpc( *sd, npcid );
+	if (!sd.state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd.bl.m ||
+	   bl->x<sd.bl.x-AREA_SIZE-1 || bl->x>sd.bl.x+AREA_SIZE+1 ||
+	   bl->y<sd.bl.y-AREA_SIZE-1 || bl->y>sd.bl.y+AREA_SIZE+1))))
+	   clif_sendfakenpc( sd, npcid );
 
 	PACKET_ZC_OPEN_EDITDLGSTR packet{};
 
 	packet.packetType = HEADER_ZC_OPEN_EDITDLGSTR;
 	packet.npcId = npcid;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

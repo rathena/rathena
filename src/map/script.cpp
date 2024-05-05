@@ -6163,7 +6163,7 @@ BUILDIN_FUNC(input)
 		sd->state.menu_or_input = 1;
 		st->state = RERUNLINE;
 		if( is_string_variable(name) )
-			clif_scriptinputstr(sd,st->oid);
+			clif_scriptinputstr( *sd, st->oid );
 		else
 			clif_scriptinput( *sd, st->oid );
 	}

@@ -655,7 +655,7 @@ void clif_scriptclose( map_session_data& sd, uint32 npcid );
 void clif_scriptclear( map_session_data& sd, int npcid ); //self
 void clif_scriptmenu( map_session_data& sd, uint32 npcid, const char* mes );
 void clif_scriptinput( map_session_data& sd, uint32 npcid );
-void clif_scriptinputstr(map_session_data *sd, int npcid);	// self
+void clif_scriptinputstr( map_session_data& sd, uint32 npcid );
 void clif_cutin(map_session_data* sd, const char* image, int type);	//self
 void clif_viewpoint(map_session_data *sd, int npc_id, int type, int x, int y, int id, int color);	//self
 void clif_additem(map_session_data *sd, int n, int amount, unsigned char fail); // self
