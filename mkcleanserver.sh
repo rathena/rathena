@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-make clean server
+make -j6 clean server
