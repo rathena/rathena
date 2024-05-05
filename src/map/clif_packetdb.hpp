@@ -46,7 +46,6 @@
 	packet(0x008e,-1);
 	//packet(0x008f,-1);
 	parseable_packet(0x0090,7,clif_parse_NpcClicked,2,6);
-	packet(0x0091,22);
 	packet(0x0092,28);
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
