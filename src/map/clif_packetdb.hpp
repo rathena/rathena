@@ -197,7 +197,6 @@
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet(0x0140,22,clif_parse_MapMove,2,18,20);
 	packet(0x0141,14);
-	packet(0x0142,6);
 	parseable_packet(0x0143,10,clif_parse_NpcAmountInput,2,6);
 	packet(0x0144,23);
 	packet(0x0145,19);
