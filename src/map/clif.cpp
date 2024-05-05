@@ -1881,6 +1881,7 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 ///     3 = accessory?
 ///     ? = ignored
 void clif_send_homdata( homun_data& hd, e_hom_state2 state ){
+#if PACKETVER >= 20050523
 	if( hd.master == nullptr ){
 		return;
 	}
@@ -1915,6 +1916,7 @@ void clif_send_homdata( homun_data& hd, e_hom_state2 state ){
 	packet.data = param;
 
 	clif_send( &packet, sizeof( packet ), &hd.master->bl, SELF );
+#endif
 }
 
 
