@@ -6165,7 +6165,7 @@ BUILDIN_FUNC(input)
 		if( is_string_variable(name) )
 			clif_scriptinputstr(sd,st->oid);
 		else
-			clif_scriptinput(sd,st->oid);
+			clif_scriptinput( *sd, st->oid );
 	}
 	else
 	{	// take received text/value and store it in the designated variable
