@@ -2567,8 +2567,8 @@ void clif_sendfakenpc( map_session_data& sd, uint32 npcid ){
 }
 
 
-/// Displays an NPC dialog menu (ZC_MENU_LIST).
-/// 00b7 <packet len>.W <npc id>.L <menu items>.?B
+/// Displays an NPC dialog menu.
+/// 00b7 <packet len>.W <npc id>.L <menu items>.?B (ZC_MENU_LIST)
 /// Client behavior:
 /// - disable mouse targeting
 /// - close the menu window
