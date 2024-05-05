@@ -6934,7 +6934,7 @@ BUILDIN_FUNC(viewpoint)
 	id=script_getnum(st,5);
 	color=script_getnum(st,6);
 
-	clif_viewpoint(sd,st->oid,type,x,y,id,color);
+	clif_viewpoint( *sd, st->oid, type, x, y, id, color );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -6949,7 +6949,8 @@ static int buildin_viewpointmap_sub(block_list *bl, va_list ap) {
 	id = va_arg(ap, int);
 	color = va_arg(ap, int);
 
-	clif_viewpoint((map_session_data *)bl, oid, type, x, y, id, color);
+	clif_viewpoint( *reinterpret_cast<map_session_data*>( bl ), oid, type, x, y, id, color );
+
 	return 0;
 }
 

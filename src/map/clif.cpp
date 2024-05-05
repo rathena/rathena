@@ -2597,8 +2597,8 @@ void clif_scriptmenu( map_session_data& sd, uint32 npcid, const char* mes ){
 }
 
 
-/// Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLG).
-/// 0142 <npc id>.L
+/// Displays an NPC dialog input box for numbers.
+/// 0142 <npc id>.L (ZC_OPEN_EDITDLG)
 /// Client behavior (inputnum window):
 /// - if npcid exists in the client:
 ///   - open the inputnum window
@@ -2625,8 +2625,8 @@ void clif_scriptinput( map_session_data& sd, uint32 npcid ){
 }
 
 
-/// Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLGSTR).
-/// 01d4 <npc id>.L
+/// Displays an NPC dialog input box for strings.
+/// 01d4 <npc id>.L (ZC_OPEN_EDITDLGSTR)
 /// Client behavior (inputstr window):
 /// - if npcid is 0 or npcid exists in the client:
 ///   - open the inputstr window
@@ -2653,8 +2653,8 @@ void clif_scriptinputstr( map_session_data& sd, uint32 npcid ){
 }
 
 
-/// Marks a position on client's minimap (ZC_COMPASS).
-/// 0144 <npc id>.L <type>.L <x>.L <y>.L <id>.B <color>.L
+/// Marks a position on client's minimap.
+/// 0144 <npc id>.L <type>.L <x>.L <y>.L <id>.B <color>.L (ZC_COMPASS)
 /// npc id:
 ///     is ignored in the client
 /// type:
@@ -2663,13 +2663,7 @@ void clif_scriptinputstr( map_session_data& sd, uint32 npcid ){
 ///     2 = remove mark
 /// color:
 ///     0x00RRGGBB
-void clif_viewpoint(map_session_data *sd, int npc_id, int type, int x, int y, int id, int color)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+void clif_viewpoint( map_session_data& sd, uint32 npc_id, int type, uint16 x, uint16 y, int id, uint32 color ){
 	PACKET_ZC_COMPASS packet{};
 
 	packet.packetType = HEADER_ZC_COMPASS;
@@ -2680,7 +2674,7 @@ void clif_viewpoint(map_session_data *sd, int npc_id, int type, int x, int y, in
 	packet.id = id;
 	packet.color = color;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Displays an illustration image.

@@ -7943,7 +7943,7 @@ ACMD_FUNC(showmobs)
 			continue; // hide mobs waiting for respawn
 
 		++number;
-		clif_viewpoint(sd, 1, 0, md->bl.x, md->bl.y, number, 0xFFFFFF);
+		clif_viewpoint( *sd, 1, 0, md->bl.x, md->bl.y, number, 0xFFFFFF );
 	}
 	mapit_free(it);
 
