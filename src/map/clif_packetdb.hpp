@@ -68,8 +68,6 @@
 	packet(0x00ac,7);
 	//packet(0x00ad,-1);
 	packet(0x00ae,-1);
-	packet(0x00b0,8);
-	packet(0x00b1,8);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
 	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);
 	parseable_packet(0x00b9,6,clif_parse_NpcNextClicked,2);
@@ -77,7 +75,6 @@
 	parseable_packet(0x00bb,5,clif_parse_StatusUp,2,4);
 	packet(0x00bc,6);
 	packet(0x00bd,44);
-	packet(0x00be,5);
 	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
 	packet(0x00c0,7);
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
@@ -167,7 +164,6 @@
 	packet(0x011e,3);
 	packet(0x011f,16);
 	packet(0x0120,6);
-	packet(0x0121,14);
 	packet( cartlistequipType, -1 );
 	packet( cartlistnormalType, -1 );
 	packet(0x0125,8);
@@ -187,14 +183,12 @@
 	packet(0x0137,6);
 	packet(0x0138,3);
 	packet(0x0139,16);
-	packet(0x013a,4);
 	packet(0x013b,4);
 	packet(0x013c,4);
 	packet(0x013d,6);
 	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet(0x0140,22,clif_parse_MapMove,2,18,20);
-	packet(0x0141,14);
 	parseable_packet(0x0143,10,clif_parse_NpcAmountInput,2,6);
 	packet(0x0145,19);
 	parseable_packet(0x0146,6,clif_parse_NpcCloseClicked,2);
@@ -2262,7 +2256,6 @@
 
 // 2017-08-30bRagexeRE
 #if PACKETVER >= 20170830
-	packet(0x0ACB,12);
 	packet(0x0ACC,18);
 #endif
 

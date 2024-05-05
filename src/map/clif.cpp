@@ -3581,252 +3581,252 @@ static void clif_longlongpar_change(map_session_data& sd, uint16 varId, int64 am
 /// Notifies client of a character parameter change.
 void clif_updatestatus( map_session_data& sd, enum _sp type ){
 	switch(type){
-	case SP_WEIGHT:
-		pc_updateweightstatus(&sd);
-		clif_par_change(sd, type, sd.weight);
-		break;
-	case SP_MAXWEIGHT:
-		clif_par_change(sd, type, sd.max_weight);
-		break;
-	case SP_SPEED:
-		clif_par_change(sd, type, sd.battle_status.speed);
-		break;
-	case SP_BASELEVEL:
-		clif_par_change(sd, type, sd.status.base_level);
-		break;
-	case SP_JOBLEVEL:
-		clif_par_change(sd, type, sd.status.job_level);
-		break;
-	case SP_KARMA:
-		// Adding this back, I wonder if the client intercepts this - [Lance]
-		clif_par_change(sd, type, sd.status.karma);
-		break;
-	case SP_MANNER:
-		clif_par_change(sd, type, sd.status.manner);
-		break;
-	case SP_STATUSPOINT:
-		clif_par_change(sd, type, sd.status.status_point);
-		break;
-	case SP_SKILLPOINT:
-		clif_par_change(sd, type, sd.status.skill_point);
-		break;
-	case SP_HIT:
-		clif_par_change(sd, type, sd.battle_status.hit);
-		break;
-	case SP_FLEE1:
-		clif_par_change(sd, type, sd.battle_status.flee);
-		break;
-	case SP_FLEE2:
-		clif_par_change(sd, type, sd.battle_status.flee2/10);
-		break;
-	case SP_MAXHP:
-		clif_par_change(sd, type, sd.battle_status.max_hp);
-		break;
-	case SP_MAXSP:
-		clif_par_change(sd, type, sd.battle_status.max_sp);
-		break;
-	case SP_HP:
-		// On officials the HP never go below 1, even if you die [Lemongrass]
-		// On officials the HP Novice class never go below 50%, even if you die [Napster]
-		if (sd.battle_status.hp == 0) {
-			clif_par_change(sd, type, (sd.class_&MAPID_UPPERMASK) != MAPID_NOVICE ? 1 : sd.battle_status.max_hp/2);
-		} else {
-			clif_par_change(sd, type, sd.battle_status.hp);
-		}
-		break;
-	case SP_SP:
-		clif_par_change(sd, type, sd.battle_status.sp);
-		break;
-	case SP_ASPD:
-		clif_par_change(sd, type, sd.battle_status.amotion);
-		break;
-	case SP_ATK1:
-		clif_par_change(sd, type, pc_leftside_atk(&sd));
-		break;
-	case SP_DEF1:
-		clif_par_change(sd, type, pc_leftside_def(&sd));
-		break;
-	case SP_MDEF1:
-		clif_par_change(sd, type, pc_leftside_mdef(&sd));
-		break;
-	case SP_ATK2:
-		clif_par_change(sd, type, pc_rightside_atk(&sd));
-		break;
-	case SP_DEF2:
-		clif_par_change(sd, type, pc_rightside_def(&sd));
-		break;
-	case SP_MDEF2: {
-			//negative check (in case you have something like Berserk active)
-			int mdef2 = pc_rightside_mdef(&sd);
+		case SP_WEIGHT:
+			pc_updateweightstatus(&sd);
+			clif_par_change(sd, type, sd.weight);
+			break;
+		case SP_MAXWEIGHT:
+			clif_par_change(sd, type, sd.max_weight);
+			break;
+		case SP_SPEED:
+			clif_par_change(sd, type, sd.battle_status.speed);
+			break;
+		case SP_BASELEVEL:
+			clif_par_change(sd, type, sd.status.base_level);
+			break;
+		case SP_JOBLEVEL:
+			clif_par_change(sd, type, sd.status.job_level);
+			break;
+		case SP_KARMA:
+			// Adding this back, I wonder if the client intercepts this - [Lance]
+			clif_par_change(sd, type, sd.status.karma);
+			break;
+		case SP_MANNER:
+			clif_par_change(sd, type, sd.status.manner);
+			break;
+		case SP_STATUSPOINT:
+			clif_par_change(sd, type, sd.status.status_point);
+			break;
+		case SP_SKILLPOINT:
+			clif_par_change(sd, type, sd.status.skill_point);
+			break;
+		case SP_HIT:
+			clif_par_change(sd, type, sd.battle_status.hit);
+			break;
+		case SP_FLEE1:
+			clif_par_change(sd, type, sd.battle_status.flee);
+			break;
+		case SP_FLEE2:
+			clif_par_change(sd, type, sd.battle_status.flee2/10);
+			break;
+		case SP_MAXHP:
+			clif_par_change(sd, type, sd.battle_status.max_hp);
+			break;
+		case SP_MAXSP:
+			clif_par_change(sd, type, sd.battle_status.max_sp);
+			break;
+		case SP_HP:
+			// On officials the HP never go below 1, even if you die [Lemongrass]
+			// On officials the HP Novice class never go below 50%, even if you die [Napster]
+			if (sd.battle_status.hp == 0) {
+				clif_par_change(sd, type, (sd.class_&MAPID_UPPERMASK) != MAPID_NOVICE ? 1 : sd.battle_status.max_hp/2);
+			} else {
+				clif_par_change(sd, type, sd.battle_status.hp);
+			}
+			break;
+		case SP_SP:
+			clif_par_change(sd, type, sd.battle_status.sp);
+			break;
+		case SP_ASPD:
+			clif_par_change(sd, type, sd.battle_status.amotion);
+			break;
+		case SP_ATK1:
+			clif_par_change(sd, type, pc_leftside_atk(&sd));
+			break;
+		case SP_DEF1:
+			clif_par_change(sd, type, pc_leftside_def(&sd));
+			break;
+		case SP_MDEF1:
+			clif_par_change(sd, type, pc_leftside_mdef(&sd));
+			break;
+		case SP_ATK2:
+			clif_par_change(sd, type, pc_rightside_atk(&sd));
+			break;
+		case SP_DEF2:
+			clif_par_change(sd, type, pc_rightside_def(&sd));
+			break;
+		case SP_MDEF2: {
+				//negative check (in case you have something like Berserk active)
+				int mdef2 = pc_rightside_mdef(&sd);
 
 #ifndef RENEWAL
-			clif_par_change(sd, type, mdef2 < 0 ? 0 : mdef2);
+				clif_par_change(sd, type, mdef2 < 0 ? 0 : mdef2);
 #else
-			clif_par_change(sd, type, mdef2);
+				clif_par_change(sd, type, mdef2);
 #endif
-		}
-		break;
-	case SP_CRITICAL:
-		clif_par_change(sd, type, sd.battle_status.cri/10);
-		break;
-	case SP_MATK1:
-		clif_par_change(sd, type, pc_rightside_matk(&sd));
-		break;
-	case SP_MATK2:
-		clif_par_change(sd, type, pc_leftside_matk(&sd));
-		break;
+			}
+			break;
+		case SP_CRITICAL:
+			clif_par_change(sd, type, sd.battle_status.cri/10);
+			break;
+		case SP_MATK1:
+			clif_par_change(sd, type, pc_rightside_matk(&sd));
+			break;
+		case SP_MATK2:
+			clif_par_change(sd, type, pc_leftside_matk(&sd));
+			break;
 
-	case SP_ZENY:
-		clif_longpar_change(sd, type, sd.status.zeny);
-		break;
+		case SP_ZENY:
+			clif_longpar_change(sd, type, sd.status.zeny);
+			break;
 #if PACKETVER >= 20170830
-	case SP_BASEEXP:
-		clif_longlongpar_change(sd, type, client_exp(sd.status.base_exp));
-		break;
-	case SP_JOBEXP:
-		clif_longlongpar_change(sd, type, client_exp(sd.status.job_exp));
-		break;
-	case SP_NEXTBASEEXP:
-		clif_longlongpar_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
-		break;
-	case SP_NEXTJOBEXP:
-		clif_longlongpar_change(sd, type, client_exp(pc_nextjobexp(&sd)));
-		break;
+		case SP_BASEEXP:
+			clif_longlongpar_change(sd, type, client_exp(sd.status.base_exp));
+			break;
+		case SP_JOBEXP:
+			clif_longlongpar_change(sd, type, client_exp(sd.status.job_exp));
+			break;
+		case SP_NEXTBASEEXP:
+			clif_longlongpar_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
+			break;
+		case SP_NEXTJOBEXP:
+			clif_longlongpar_change(sd, type, client_exp(pc_nextjobexp(&sd)));
+			break;
 #else
-	case SP_BASEEXP:
-		clif_par_change(sd, type, client_exp(sd.status.base_exp))
-		break;
-	case SP_JOBEXP:
-		clif_par_change(sd, type, client_exp(sd.status.job_exp))
-		break;
-	case SP_NEXTBASEEXP:
-		clif_par_change(sd, type, client_exp(pc_nextbaseexp(&sd)))
-		break;
-	case SP_NEXTJOBEXP:
-		clif_par_change(sd, type, client_exp(pc_nextjobexp(&sd)))
-		break;
+		case SP_BASEEXP:
+			clif_par_change(sd, type, client_exp(sd.status.base_exp))
+			break;
+		case SP_JOBEXP:
+			clif_par_change(sd, type, client_exp(sd.status.job_exp))
+			break;
+		case SP_NEXTBASEEXP:
+			clif_par_change(sd, type, client_exp(pc_nextbaseexp(&sd)))
+			break;
+		case SP_NEXTJOBEXP:
+			clif_par_change(sd, type, client_exp(pc_nextjobexp(&sd)))
+			break;
 #endif
 
-	/**
-	 * SP_U<STAT> are used to update the amount of points necessary to increase that stat
-	 **/
-	case SP_USTR:
-	case SP_UAGI:
-	case SP_UVIT:
-	case SP_UINT:
-	case SP_UDEX:
-	case SP_ULUK:
-		clif_zc_status_change(sd, static_cast<uint16>(type), static_cast<uint8>(pc_need_status_point(&sd, type-SP_USTR+SP_STR, 1)));
-		break;
+		/**
+		 * SP_U<STAT> are used to update the amount of points necessary to increase that stat
+		 **/
+		case SP_USTR:
+		case SP_UAGI:
+		case SP_UVIT:
+		case SP_UINT:
+		case SP_UDEX:
+		case SP_ULUK:
+			clif_zc_status_change(sd, static_cast<uint16>(type), static_cast<uint8>(pc_need_status_point(&sd, type-SP_USTR+SP_STR, 1)));
+			break;
 
-	case SP_ATTACKRANGE:
-		clif_attackrange( sd, sd.battle_status.rhw.range );
-		break;
+		case SP_ATTACKRANGE:
+			clif_attackrange( sd, sd.battle_status.rhw.range );
+			break;
 
-	case SP_STR:
-		clif_couplestatus(sd, type, sd.status.str, sd.battle_status.str - sd.status.str);
-		break;
-	case SP_AGI:
-		clif_couplestatus(sd, type, sd.status.agi, sd.battle_status.agi - sd.status.agi);
-		break;
-	case SP_VIT:
-		clif_couplestatus(sd, type, sd.status.vit, sd.battle_status.vit - sd.status.vit);
-		break;
-	case SP_INT:
-		clif_couplestatus(sd, type, sd.status.int_, sd.battle_status.int_ - sd.status.int_);
-		break;
-	case SP_DEX:
-		clif_couplestatus(sd, type, sd.status.dex, sd.battle_status.dex - sd.status.dex);
-		break;
-	case SP_LUK:
-		clif_couplestatus(sd, type, sd.status.luk, sd.battle_status.luk - sd.status.luk);
-		break;
+		case SP_STR:
+			clif_couplestatus(sd, type, sd.status.str, sd.battle_status.str - sd.status.str);
+			break;
+		case SP_AGI:
+			clif_couplestatus(sd, type, sd.status.agi, sd.battle_status.agi - sd.status.agi);
+			break;
+		case SP_VIT:
+			clif_couplestatus(sd, type, sd.status.vit, sd.battle_status.vit - sd.status.vit);
+			break;
+		case SP_INT:
+			clif_couplestatus(sd, type, sd.status.int_, sd.battle_status.int_ - sd.status.int_);
+			break;
+		case SP_DEX:
+			clif_couplestatus(sd, type, sd.status.dex, sd.battle_status.dex - sd.status.dex);
+			break;
+		case SP_LUK:
+			clif_couplestatus(sd, type, sd.status.luk, sd.battle_status.luk - sd.status.luk);
+			break;
 
-	case SP_CARTINFO:
-		clif_cartcount( sd );
-		break;
+		case SP_CARTINFO:
+			clif_cartcount( sd );
+			break;
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	case SP_AP:
-		clif_par_change( sd, SP_AP, sd.battle_status.ap );
-		break;
-	case SP_TRAITPOINT:
-		clif_par_change( sd, SP_TRAITPOINT, sd.status.trait_point );
-		break;
-	case SP_MAXAP:
-		clif_par_change( sd, SP_MAXAP, sd.battle_status.max_ap );
-		break;
+		case SP_AP:
+			clif_par_change( sd, SP_AP, sd.battle_status.ap );
+			break;
+		case SP_TRAITPOINT:
+			clif_par_change( sd, SP_TRAITPOINT, sd.status.trait_point );
+			break;
+		case SP_MAXAP:
+			clif_par_change( sd, SP_MAXAP, sd.battle_status.max_ap );
+			break;
 
-	case SP_POW:
-		clif_couplestatus( sd, SP_POW, sd.status.pow, sd.battle_status.pow - sd.status.pow );
-		break;
-	case SP_STA:
-		clif_couplestatus( sd, SP_STA, sd.status.sta, sd.battle_status.sta - sd.status.sta );
-		break;
-	case SP_WIS:
-		clif_couplestatus( sd, SP_WIS, sd.status.wis, sd.battle_status.wis - sd.status.wis );
-		break;
-	case SP_SPL:
-		clif_couplestatus( sd, SP_SPL, sd.status.spl, sd.battle_status.spl - sd.status.spl );
-		break;
-	case SP_CON:
-		clif_couplestatus( sd, SP_CON, sd.status.con, sd.battle_status.con - sd.status.con );
-		break;
-	case SP_CRT:
-		clif_couplestatus( sd, SP_CRT, sd.status.crt, sd.battle_status.crt - sd.status.crt );
-		break;
+		case SP_POW:
+			clif_couplestatus( sd, SP_POW, sd.status.pow, sd.battle_status.pow - sd.status.pow );
+			break;
+		case SP_STA:
+			clif_couplestatus( sd, SP_STA, sd.status.sta, sd.battle_status.sta - sd.status.sta );
+			break;
+		case SP_WIS:
+			clif_couplestatus( sd, SP_WIS, sd.status.wis, sd.battle_status.wis - sd.status.wis );
+			break;
+		case SP_SPL:
+			clif_couplestatus( sd, SP_SPL, sd.status.spl, sd.battle_status.spl - sd.status.spl );
+			break;
+		case SP_CON:
+			clif_couplestatus( sd, SP_CON, sd.status.con, sd.battle_status.con - sd.status.con );
+			break;
+		case SP_CRT:
+			clif_couplestatus( sd, SP_CRT, sd.status.crt, sd.battle_status.crt - sd.status.crt );
+			break;
 
-	case SP_UPOW:
-	case SP_USTA:
-	case SP_UWIS:
-	case SP_USPL:
-	case SP_UCON:
-	case SP_UCRT:
-		clif_zc_status_change( sd, static_cast<uint16>( type ), static_cast<uint8>( pc_need_trait_point( &sd, type - SP_UPOW + SP_POW, 1 ) ) );
-		break;
+		case SP_UPOW:
+		case SP_USTA:
+		case SP_UWIS:
+		case SP_USPL:
+		case SP_UCON:
+		case SP_UCRT:
+			clif_zc_status_change( sd, static_cast<uint16>( type ), static_cast<uint8>( pc_need_trait_point( &sd, type - SP_UPOW + SP_POW, 1 ) ) );
+			break;
 
-	case SP_PATK:
-		clif_par_change( sd, SP_PATK, sd.battle_status.patk );
-		break;
-	case SP_SMATK:
-		clif_par_change( sd, SP_SMATK, sd.battle_status.smatk );
-		break;
-	case SP_RES:
-		clif_par_change( sd, SP_RES, sd.battle_status.res );
-		break;
-	case SP_MRES:
-		clif_par_change( sd, SP_MRES, sd.battle_status.mres );
-		break;
-	case SP_HPLUS:
-		clif_par_change( sd, SP_HPLUS, sd.battle_status.hplus );
-		break;
-	case SP_CRATE:
-		clif_par_change( sd, SP_CRATE, sd.battle_status.crate );
-		break;
+		case SP_PATK:
+			clif_par_change( sd, SP_PATK, sd.battle_status.patk );
+			break;
+		case SP_SMATK:
+			clif_par_change( sd, SP_SMATK, sd.battle_status.smatk );
+			break;
+		case SP_RES:
+			clif_par_change( sd, SP_RES, sd.battle_status.res );
+			break;
+		case SP_MRES:
+			clif_par_change( sd, SP_MRES, sd.battle_status.mres );
+			break;
+		case SP_HPLUS:
+			clif_par_change( sd, SP_HPLUS, sd.battle_status.hplus );
+			break;
+		case SP_CRATE:
+			clif_par_change( sd, SP_CRATE, sd.battle_status.crate );
+			break;
 #else
-	case SP_AP:
-	case SP_TRAITPOINT:
-	case SP_MAXAP:
-	case SP_POW:
-	case SP_STA:
-	case SP_WIS:
-	case SP_SPL:
-	case SP_CON:
-	case SP_CRT:
-	case SP_UPOW:
-	case SP_USTA:
-	case SP_UWIS:
-	case SP_USPL:
-	case SP_UCON:
-	case SP_UCRT:
-	case SP_PATK:
-	case SP_SMATK:
-	case SP_RES:
-	case SP_MRES:
-	case SP_HPLUS:
-	case SP_CRATE:
-		// 4th job status are not supported by older clients
-		return;
+		case SP_AP:
+		case SP_TRAITPOINT:
+		case SP_MAXAP:
+		case SP_POW:
+		case SP_STA:
+		case SP_WIS:
+		case SP_SPL:
+		case SP_CON:
+		case SP_CRT:
+		case SP_UPOW:
+		case SP_USTA:
+		case SP_UWIS:
+		case SP_USPL:
+		case SP_UCON:
+		case SP_UCRT:
+		case SP_PATK:
+		case SP_SMATK:
+		case SP_RES:
+		case SP_MRES:
+		case SP_HPLUS:
+		case SP_CRATE:
+			// 4th job status are not supported by older clients
+			return;
 #endif
 
 	default:
