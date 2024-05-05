@@ -38,7 +38,6 @@
 	packet(0x0084,2);
 	parseable_packet(0x0085,5,clif_parse_WalkToXY,2);
 	packet(0x0086,16);
-	packet(0x0087,12);
 	packet(0x0088,10);
 	parseable_packet(0x0089,7,clif_parse_ActionRequest,2,6);
 	packet(0x008a,29);

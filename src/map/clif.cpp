@@ -2003,8 +2003,8 @@ void clif_hom_food( map_session_data *sd, int foodid, int fail ){
 }
 
 
-/// Notifies the client, that it is walking (ZC_NOTIFY_PLAYERMOVE).
-/// 0087 <walk start time>.L <walk data>.6B
+/// Notifies the client, that it is walking.
+/// 0087 <walk start time>.L <walk data>.6B (ZC_NOTIFY_PLAYERMOVE)
 void clif_walkok( map_session_data& sd ){
 	PACKET_ZC_NOTIFY_PLAYERMOVE packet{};
 
