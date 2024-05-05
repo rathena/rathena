@@ -22,7 +22,6 @@
 	packet(0x0070,6);
 	packet(0x0071,28);
 	parseable_packet(0x0072,19,clif_parse_WantToConnection,2,6,10,14,18);
-	packet(0x0073,11);
 	packet(0x0074,3);
 	packet(0x0075,-1);
 	packet(0x0076,9);
@@ -1126,7 +1125,6 @@
 // 2008-01-02aSakexe
 #if PACKETVER >= 20080102
 	parseable_packet(0x01df,6,clif_parse_GMReqAccountName,2);
-	packet(0x02eb,13);
 	packet(0x02ec,67);
 	packet(0x02ed,59);
 	packet(0x02ee,60);
@@ -2141,7 +2139,6 @@
 	packet(0x006d,149);
 	packet(0x08e3,149);
 	// New Packet
-	packet(0x0A18,14); // ZC_ACCEPT_ENTER3
 	packet(0x0A27,8);
 	packet(0x0A28,3); // ZC_ACK_OPENSTORE2
 	packet(0x09FD,-1); // ZC_NOTIFY_MOVEENTRY11
