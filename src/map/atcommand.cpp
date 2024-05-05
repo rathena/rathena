@@ -8001,7 +8001,9 @@ ACMD_FUNC(homevolution)
 		clif_displaymessage(fd, msg_txt(sd,1255)); // Your homunculus doesn't evolve.
 		return -1;
 	}
-	clif_homskillinfoblock(sd);
+
+	clif_homskillinfoblock( *sd->hd );
+
 	return 0;
 }
 

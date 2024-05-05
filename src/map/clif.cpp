@@ -1914,38 +1914,34 @@ void clif_send_homdata( homun_data& hd, e_hom_state2 state ){
 }
 
 
-void clif_homskillinfoblock(map_session_data *sd)
-{	//[orn]
-	struct homun_data *hd;
-	int fd = sd->fd;
-	int i, len=4;
+void clif_homskillinfoblock( homun_data& hd ){
+	map_session_data* sd = hd.master;
 
-	nullpo_retv(sd);
-
-	hd = sd->hd;
-	if ( !hd )
+	if( sd == nullptr ){
 		return;
+	}
 	
-	PACKET_ZC_HOSKILLINFO_LIST *packet = reinterpret_cast<PACKET_ZC_HOSKILLINFO_LIST*>(packet_buffer);
+	PACKET_ZC_HOSKILLINFO_LIST* packet = reinterpret_cast<PACKET_ZC_HOSKILLINFO_LIST*>(packet_buffer);
 
 	packet->packetType = HEADER_ZC_HOSKILLINFO_LIST;
 	packet->packetLength = sizeof( *packet );
 
 	for(int i = 0, count = 0; i < MAX_HOMUNSKILL; i++) {
-		int id = hd->homunculus.hskill[i].id;
+		int id = hd.homunculus.hskill[i].id;
+
 		if (id != 0) {
-			int combo = (hd->homunculus.hskill[i].flag)&SKILL_FLAG_TMP_COMBO;
+			int combo = (hd.homunculus.hskill[i].flag)&SKILL_FLAG_TMP_COMBO;
 			short idx = hom_skill_get_index(id);
 			if (idx == -1)
 				continue;
 			packet->skills[count].id = id;
 			packet->skills[count].inf = (combo) ? INF_SELF_SKILL : skill_get_inf(id);
 			packet->skills[count].unknown = 0;
-			packet->skills[count].level = hd->homunculus.hskill[idx].lv;
-			packet->skills[count].sp = skill_get_sp(id,hd->homunculus.hskill[idx].lv);
-			packet->skills[count].range = skill_get_range2(&sd->hd->bl,id,hd->homunculus.hskill[idx].lv,false);
+			packet->skills[count].level = hd.homunculus.hskill[idx].lv;
+			packet->skills[count].sp = skill_get_sp(id,hd.homunculus.hskill[idx].lv);
+			packet->skills[count].range = skill_get_range2(&hd.bl,id,hd.homunculus.hskill[idx].lv,false);
 			safestrncpy(packet->skills[count].name, skill_get_name(id), NAME_LENGTH);
-			packet->skills[count].upgradable = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, id) || hd->homunculus.hskill[idx].lv >= hom_skill_tree_get_max(id, hd->homunculus.class_)) ? 0 : 1;
+			packet->skills[count].upgradable = (hd.homunculus.level < hom_skill_get_min_level(hd.homunculus.class_, id) || hd.homunculus.hskill[idx].lv >= hom_skill_tree_get_max(id, hd.homunculus.class_)) ? 0 : 1;
 			packet->packetLength += sizeof( packet->skills[0] );
 			count++;
 		}
@@ -11078,7 +11074,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		clif_send_homdata( *sd->hd, SP_ACK );
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
-		clif_homskillinfoblock(sd);
+		clif_homskillinfoblock( *sd->hd );
 		if( battle_config.hom_setting&HOMSET_COPY_SPEED )
 			status_calc_bl(&sd->hd->bl, { SCB_SPEED }); //Homunc mimic their master's speed on each map change
 		if( !(battle_config.hom_setting&HOMSET_NO_INSTANT_LAND_SKILL) )

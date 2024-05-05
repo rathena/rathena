@@ -3219,9 +3219,8 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
 				TBL_HOM *hd = BL_CAST(BL_HOM, bl);
 				if (idx == -1)
 					break;
-				sd = hd->master;
 				hd->homunculus.hskill[idx].flag= flag;
-				if(sd) clif_homskillinfoblock(sd); //refresh info //@FIXME we only want to refresh one skill
+				clif_homskillinfoblock( *hd ); //refresh info //@FIXME we only want to refresh one skill
 			}
 			break;
 		case MO_COMBOFINISH:
