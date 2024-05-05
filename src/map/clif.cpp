@@ -2577,19 +2577,13 @@ void clif_sendfakenpc( map_session_data& sd, uint32 npcid ){
 /// WARNING: the 'cancel' button closes other windows besides the dialog window and the menu window.
 ///    Which suggests their have intertwined behavior. (probably the mouse targeting)
 /// TODO investigate behavior of other windows [FlavioJS]
-void clif_scriptmenu(map_session_data* sd, int npcid, const char* mes)
-{
+void clif_scriptmenu( map_session_data& sd, uint32 npcid, const char* mes ){
 	struct block_list *bl = NULL;
-
-	// Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
 	
-	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
-	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
-	   clif_sendfakenpc( *sd, npcid );
+	if (!sd.state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd.bl.m ||
+	   bl->x<sd.bl.x-AREA_SIZE-1 || bl->x>sd.bl.x+AREA_SIZE+1 ||
+	   bl->y<sd.bl.y-AREA_SIZE-1 || bl->y>sd.bl.y+AREA_SIZE+1))))
+	   clif_sendfakenpc( sd, npcid );
 
 	PACKET_ZC_MENU_LIST *packet = reinterpret_cast<PACKET_ZC_MENU_LIST*>(packet_buffer);
 
@@ -2599,7 +2593,7 @@ void clif_scriptmenu(map_session_data* sd, int npcid, const char* mes)
 	packet->packetLength = sizeof(PACKET_ZC_MENU_LIST) + mes_length;
 	memcpy(packet->menu, mes, mes_length);
 
-	clif_send( packet, packet->packetLength, &sd->bl, SELF );
+	clif_send( packet, packet->packetLength, &sd.bl, SELF );
 }
 
 

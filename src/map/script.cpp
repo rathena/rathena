@@ -5150,10 +5150,10 @@ BUILDIN_FUNC(menu)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_menu: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif_scriptmenu( *sd, st->oid, menu );
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
 
 		StringBuf_Destroy(&buf);
 
@@ -5254,10 +5254,10 @@ BUILDIN_FUNC(select)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_select: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif_scriptmenu( *sd, st->oid, menu );
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff ) {
@@ -5332,10 +5332,10 @@ BUILDIN_FUNC(prompt)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_prompt: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif_scriptmenu( *sd, st->oid, menu );
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff )
