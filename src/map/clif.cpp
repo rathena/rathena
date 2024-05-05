@@ -1950,29 +1950,29 @@ void clif_homskillinfoblock( homun_data& hd ){
 	clif_send( packet, packet->packetLength, &sd->bl, SELF );
 }
 
-void clif_homskillup(map_session_data *sd, uint16 skill_id)
-{	//[orn]
-	struct homun_data *hd;
-	int fd;
-	short idx = -1;
-	nullpo_retv(sd);
+void clif_homskillup( homun_data& hd, uint16 skill_id ){
+	short idx = hom_skill_get_index( skill_id );
 
-	if ((idx = hom_skill_get_index(skill_id)) == -1)
+	if( idx == -1 ){
 		return;
+	}
 
-	fd = sd->fd;
-	hd = sd->hd;
+	map_session_data* sd = hd.master;
+
+	if( sd == nullptr ){
+		return;
+	}
 
 	PACKET_ZC_HOSKILLINFO_UPDATE packet{};
 
 	packet.packetType = HEADER_ZC_HOSKILLINFO_UPDATE;
 	packet.skill_id = skill_id;
-	packet.Level = hd->homunculus.hskill[idx].lv;
-	packet.SP = skill_get_sp(skill_id,hd->homunculus.hskill[idx].lv);
-	packet.AttackRange = skill_get_range2(&hd->bl,skill_id,hd->homunculus.hskill[idx].lv,false);
-	packet.upgradable = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, skill_id) || hd->homunculus.hskill[idx].lv >= hom_skill_tree_get_max(skill_id, hd->homunculus.class_)) ? 0 : 1;
+	packet.Level = hd.homunculus.hskill[idx].lv;
+	packet.SP = skill_get_sp(skill_id,hd.homunculus.hskill[idx].lv);
+	packet.AttackRange = skill_get_range2(&hd.bl,skill_id,hd.homunculus.hskill[idx].lv,false);
+	packet.upgradable = (hd.homunculus.level < hom_skill_get_min_level(hd.homunculus.class_, skill_id) || hd.homunculus.hskill[idx].lv >= hom_skill_tree_get_max(skill_id, hd.homunculus.class_)) ? 0 : 1;
 
-	socket_send<PACKET_ZC_HOSKILLINFO_UPDATE>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
 /// Result of request to feed a homun/merc.

@@ -483,8 +483,10 @@ void hom_skillup(struct homun_data *hd, uint16 skill_id)
 		hd->homunculus.hskill[idx].lv++;
 		hd->homunculus.skillpts-- ;
 		status_calc_homunculus(hd, SCO_NONE);
+
+		clif_homskillup( *hd, skill_id );
+
 		if (hd->master) {
-			clif_homskillup(hd->master, skill_id);
 			clif_hominfo(hd->master,hd,0);
 		}
 
