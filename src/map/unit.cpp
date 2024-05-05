@@ -131,7 +131,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		map_session_data *sd = BL_CAST(BL_PC, bl);
 
 		sd->head_dir = DIR_NORTH;
-		clif_walkok(sd);
+		clif_walkok(*sd);
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
@@ -1530,7 +1530,7 @@ TIMER_FUNC(unit_resume_running){
 		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_RUN,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 
 	if (sd)
-		clif_walkok(sd);
+		clif_walkok(*sd);
 
 	return 0;
 }

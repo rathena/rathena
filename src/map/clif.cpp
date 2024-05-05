@@ -1995,15 +1995,14 @@ void clif_hom_food( map_session_data *sd, int foodid, int fail ){
 
 /// Notifies the client, that it is walking (ZC_NOTIFY_PLAYERMOVE).
 /// 0087 <walk start time>.L <walk data>.6B
-void clif_walkok(map_session_data *sd)
-{
+void clif_walkok( map_session_data& sd ){
 	PACKET_ZC_NOTIFY_PLAYERMOVE packet{};
 
 	packet.packetType = HEADER_ZC_NOTIFY_PLAYERMOVE;
 	packet.moveStartTime = client_tick(gettick());
-	WBUFPOS2(packet.moveData, 0, sd->bl.x, sd->bl.y, sd->ud.to_x, sd->ud.to_y, 8, 8);
+	WBUFPOS2(packet.moveData, 0, sd.bl.x, sd.bl.y, sd.ud.to_x, sd.ud.to_y, 8, 8);
 
-	socket_send<PACKET_ZC_NOTIFY_PLAYERMOVE>(sd->fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

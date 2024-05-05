@@ -9003,7 +9003,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
 		if (sd) // If the client receives a skill-use packet inmediately before a walkok packet, it will discard the walk packet! [Skotlex]
-			clif_walkok(sd); // So aegis has to resend the walk ok.
+			clif_walkok(*sd); // So aegis has to resend the walk ok.
 		break;
 
 	case AS_CLOAKING:
@@ -11337,7 +11337,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		if( sd && pc_isridingwug(sd) ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
-			clif_walkok(sd);
+			clif_walkok(*sd);
 		}
 		break;
 
