@@ -664,7 +664,7 @@ int guild_send_xy_timer_sub(const struct mmo_guild& g) {
 	for (int i = 0; i < g.max_member; i++) {
 		map_session_data* sd = g.member[i].sd;
 		if( sd != NULL && sd->fd && (sd->guild_x != sd->bl.x || sd->guild_y != sd->bl.y) && !sd->bg_id ) {
-			clif_guild_xy(sd);
+			clif_guild_xy( *sd );
 			sd->guild_x = sd->bl.x;
 			sd->guild_y = sd->bl.y;
 		}

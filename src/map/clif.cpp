@@ -3255,23 +3255,17 @@ void clif_clearcart(int fd)
 }
 
 
-/// Guild XY locators (ZC_NOTIFY_POSITION_TO_GUILDM) [Valaris]
-/// 01eb <account id>.L <x>.W <y>.W
-void clif_guild_xy(map_session_data *sd)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+/// Guild XY locators
+/// 01eb <account id>.L <x>.W <y>.W (ZC_NOTIFY_POSITION_TO_GUILDM)
+void clif_guild_xy( map_session_data& sd ){
 	PACKET_ZC_NOTIFY_POSITION_TO_GUILDM packet{};
 
 	packet.packetType = HEADER_ZC_NOTIFY_POSITION_TO_GUILDM;
-	packet.aid = sd->status.account_id;
-	packet.xPos = sd->bl.x;
-	packet.yPos = sd->bl.y;
+	packet.aid = sd.status.account_id;
+	packet.xPos = sd.bl.x;
+	packet.yPos = sd.bl.y;
 
-	clif_send(&packet, sizeof(packet), &sd->bl, GUILD_SAMEMAP_WOS);
+	clif_send(&packet, sizeof(packet), &sd.bl, GUILD_SAMEMAP_WOS);
 }
 
 /*==========================================
