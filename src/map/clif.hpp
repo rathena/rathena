@@ -645,7 +645,7 @@ void clif_slide(struct block_list *bl, int x, int y); // area
 void clif_fixpos( block_list& bl );
 void clif_npcbuysell( map_session_data& sd, npc_data& nd );
 void clif_buylist(map_session_data *sd, struct npc_data *nd);	//self
-void clif_selllist(map_session_data *sd);	//self
+void clif_selllist( map_session_data& sd );
 void clif_npc_market_open(map_session_data *sd, struct npc_data *nd);
 void clif_parse_NPCMarketClosed(int fd, map_session_data *sd);
 void clif_parse_NPCMarketPurchase(int fd, map_session_data *sd);

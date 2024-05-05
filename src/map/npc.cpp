@@ -2377,8 +2377,9 @@ int npc_buysellsel(map_session_data* sd, int id, int type)
 	if (type == 0) {
 		clif_buylist(sd,nd);
 	} else {
-		clif_selllist(sd);
+		clif_selllist( *sd );
 	}
+
 	return 0;
 }
 

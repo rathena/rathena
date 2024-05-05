@@ -2259,42 +2259,56 @@ void clif_buylist( map_session_data *sd, struct npc_data *nd ){
 
 /// Presents list of items, that can be sold to an NPC shop (ZC_PC_SELL_ITEMLIST).
 /// 00c7 <packet len>.W { <index>.W <price>.L <overcharge price>.L }*
-void clif_selllist(map_session_data *sd)
-{
-	int fd,i,c=0,val;
-	struct npc_data *nd;
-
-	nullpo_retv(sd);
-	if (!sd->npc_shopid || (nd = map_id2nd(sd->npc_shopid)) == NULL)
+void clif_selllist( map_session_data& sd){
+	if( !sd.npc_shopid ){
 		return;
+	}
+
+	npc_data* nd = map_id2nd( sd.npc_shopid );
+
+	if( nd == nullptr ){
+		return;
+	}
 
 	PACKET_ZC_PC_SELL_ITEMLIST *packet = reinterpret_cast<PACKET_ZC_PC_SELL_ITEMLIST*>(packet_buffer);
 
 	packet->packetType = HEADER_ZC_PC_SELL_ITEMLIST;
 	packet->packetLength = sizeof( *packet );
 
-	for(i = 0, c = 0; i < MAX_INVENTORY; i++) {
-		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory_data[i] )
-		{
-			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
-				continue;
-
-			if (battle_config.rental_item_novalue && sd->inventory.u.items_inventory[i].expire_time)
-				val = 0;
-			else {
-				val = sd->inventory_data[i]->value_sell;
-				if( val < 0 )
-					continue;
-			}
-			packet->items[c].index = client_index(i);
-			packet->items[c].price = val;
-			packet->items[c].overcharge = pc_modifysellvalue(sd,val);
-			packet->packetLength += sizeof( packet->items[0] );
-			c++;
+	for( int i = 0, c = 0; i < MAX_INVENTORY; i++ ){
+		if( sd.inventory.u.items_inventory[i].nameid <= 0 ){
+			continue;
 		}
+
+		if( sd.inventory_data[i] == nullptr ){
+			continue;
+		}
+
+		if( !pc_can_sell_item( &sd, &sd.inventory.u.items_inventory[i], nd->subtype ) ){
+			continue;
+		}
+
+		int price;
+
+		if( battle_config.rental_item_novalue && sd.inventory.u.items_inventory[i].expire_time ){
+			price = 0;
+		}else{
+			price = sd.inventory_data[i]->value_sell;
+
+			if( price < 0 ){
+				continue;
+			}
+		}
+
+		packet->items[c].index = client_index(i);
+		packet->items[c].price = price;
+		packet->items[c].overcharge = pc_modifysellvalue( &sd, price );
+
+		packet->packetLength += sizeof( packet->items[0] );
+		c++;
 	}
 	
-	clif_send( packet, packet->packetLength, &sd->bl, SELF );
+	clif_send( packet, packet->packetLength, &sd.bl, SELF );
 }
 
 /// Closes shop (CZ_NPC_TRADE_QUIT).
