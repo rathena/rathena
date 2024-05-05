@@ -606,11 +606,6 @@ struct PACKET_ZC_NOTIFY_PLAYERMOVE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_PLAYERMOVE, 0x87);
 
-struct ZSERVER_ADDR {
-	uint32 ip;
-	uint16 port;
-} __attribute__((packed));
-
 struct PACKET_ZC_NPCACK_MAPMOVE {
 	int16 packetType;
 	char mapName[MAP_NAME_LENGTH_EXT];
@@ -619,24 +614,29 @@ struct PACKET_ZC_NPCACK_MAPMOVE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPCACK_MAPMOVE, 0x91)
 
+#if PACKETVER >= 20170315
+// Actually ZC_NPCACK_SERVERMOVE_DOMAIN
 struct PACKET_ZC_NPCACK_SERVERMOVE {
 	int16 packetType;
 	char mapName[MAP_NAME_LENGTH_EXT];
 	uint16 xPos;
 	uint16 yPos;
-	ZSERVER_ADDR addr;
+	uint32 ip;
+	uint16 port;
+	char domain[128];
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE, 0x92)
-
-struct PACKET_ZC_NPCACK_SERVERMOVE_DOMAIN {
+DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE, 0xac7)
+#else
+struct PACKET_ZC_NPCACK_SERVERMOVE {
 	int16 packetType;
 	char mapName[MAP_NAME_LENGTH_EXT];
 	uint16 xPos;
 	uint16 yPos;
-	ZSERVER_ADDR addr;
-	char domain[128];
+	uint32 ip;
+	uint16 port;
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE_DOMAIN, 0xac7)
+DEFINE_PACKET_HEADER(ZC_NPCACK_SERVERMOVE, 0x92)
+#endif
 
 struct PACKET_ZC_STOPMOVE {
 	int16 packetType;

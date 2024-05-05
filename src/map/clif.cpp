@@ -2154,40 +2154,25 @@ void clif_changemap( map_session_data& sd, short m, uint16 x, uint16 y ){
 /// Notifies the client of a position change to coordinates on given map, which is on another map-server.
 /// 0092 <map name>.16B <x>.W <y>.W <ip>.L <port>.W (ZC_NPCACK_SERVERMOVE)
 /// 0ac7 <map name>.16B <x>.W <y>.W <ip>.L <port>.W <unknown>.128B (ZC_NPCACK_SERVERMOVE_DOMAIN)
-void clif_changemapserver(map_session_data* sd, const char* map, int x, int y, uint32 ip, uint16 port)
-{
-#if PACKETVER >= 20170315
-	PACKET_ZC_NPCACK_SERVERMOVE_DOMAIN packet{};
-	packet.packetType = HEADER_ZC_NPCACK_SERVERMOVE_DOMAIN;
-#else
+void clif_changemapserver( map_session_data& sd, const char* map, uint16 x, uint16 y, uint32 ip, uint16 port ){
 	PACKET_ZC_NPCACK_SERVERMOVE packet{};
-	packet.packetType = HEADER_ZC_NPCACK_SERVERMOVE;
-#endif
 
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
+	packet.packetType = HEADER_ZC_NPCACK_SERVERMOVE;
 
 	mapindex_getmapname_ext(map, packet.mapName);
 	packet.xPos = x;
 	packet.yPos = y;
-	packet.addr.ip = htonl(ip);
-	packet.addr.port = ntows(htons(port)); // [!] LE byte order here [!]
+	packet.ip = htonl(ip);
+	packet.port = ntows(htons(port)); // [!] LE byte order here [!]
 #if PACKETVER >= 20170315
-	memset(packet.domain, 0, 128);
-#endif
-#ifdef DEBUG
-	ShowDebug(
-		"Sending the client (%d %d.%d.%d.%d) to map-server with ip %d.%d.%d.%d and port %hu\n",
-		sd->status.account_id, CONVIP(session[sd->fd]->client_addr), CONVIP(ip), port);
+	safestrncpy( packet.domain, "", sizeof( packet.domain ) );
 #endif
 
-#if PACKETVER >= 20170315
-	socket_send<PACKET_ZC_NPCACK_SERVERMOVE_DOMAIN>(sd->fd, packet);
-#else
-	socket_send<PACKET_ZC_NPCACK_SERVERMOVE>(sd->fd, packet);
+#ifdef DEBUG
+	ShowDebug( "Sending the client (%d %d.%d.%d.%d) to map-server with ip %d.%d.%d.%d and port %hu\n", sd.status.account_id, CONVIP(session[sd.fd]->client_addr), CONVIP(ip), port );
 #endif
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

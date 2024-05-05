@@ -463,7 +463,7 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
 		clif_authfail_fd(node->fd, 0);
 		chrif_char_offline(node->sd);
 	} else
-		clif_changemapserver(node->sd, map, x, y, ntohl(ip), ntohs(port));
+		clif_changemapserver( *node->sd, map, x, y, ntohl(ip), ntohs(port) );
 
 	//Player has been saved already, remove him from memory. [Skotlex]
 	chrif_auth_delete(account_id, char_id, ST_MAPCHANGE);
