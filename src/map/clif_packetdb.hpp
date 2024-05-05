@@ -25,7 +25,6 @@
 	packet(0x0075,-1);
 	packet(0x0076,9);
 	packet(0x0077,5);
-	packet(0x0078,54);
 	packet(0x0079,53);
 	packet(0x007a,58);
 	packet(0x007b,60);
@@ -1080,7 +1079,6 @@
 
 // 2007-11-06aSakexe
 #if PACKETVER >= 20071106
-	packet(0x0078,55);
 	packet(0x007c,42);
 	packet(0x022c,65);
 	packet(0x029b,80);
