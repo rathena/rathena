@@ -2538,15 +2538,8 @@ void clif_scriptclear( map_session_data& sd, int npcid ){
  }
 
 
-void clif_sendfakenpc(map_session_data *sd, int npcid) {
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-	
-	unsigned char *buf;
-	int fd = sd->fd;
-	sd->state.using_fake_npc = 1;
+void clif_sendfakenpc( map_session_data& sd, uint32 npcid ){
+	sd.state.using_fake_npc = 1;
 
 	PACKET_ZC_NOTIFY_STANDENTRY packet{};
 
@@ -2556,11 +2549,11 @@ void clif_sendfakenpc(map_session_data *sd, int npcid) {
 #endif
 	packet.GID = npcid;
 	packet.job = JT_HIDDEN_NPC;
-	WBUFPOS(packet.PosDir,0,sd->bl.x,sd->bl.y,sd->ud.dir);
+	WBUFPOS(packet.PosDir,0,sd.bl.x,sd.bl.y,sd.ud.dir);
 	packet.xSize = 5;
 	packet.ySize = 5;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -2596,7 +2589,7 @@ void clif_scriptmenu(map_session_data* sd, int npcid, const char* mes)
 	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
-	   clif_sendfakenpc(sd, npcid);
+	   clif_sendfakenpc( *sd, npcid );
 
 	PACKET_ZC_MENU_LIST *packet = reinterpret_cast<PACKET_ZC_MENU_LIST*>(packet_buffer);
 
@@ -2633,7 +2626,7 @@ void clif_scriptinput(map_session_data *sd, int npcid)
 	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
-	   clif_sendfakenpc(sd, npcid);
+	   clif_sendfakenpc( *sd, npcid );
 
 	PACKET_ZC_OPEN_EDITDLG packet{};
 
@@ -2667,7 +2660,7 @@ void clif_scriptinputstr(map_session_data *sd, int npcid)
 	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
 	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
 	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1))))
-	   clif_sendfakenpc(sd, npcid);
+	   clif_sendfakenpc( *sd, npcid );
 
 	PACKET_ZC_OPEN_EDITDLGSTR packet{};
 
