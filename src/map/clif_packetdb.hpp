@@ -87,7 +87,6 @@
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
 	packet(0x00c2,6);
 	packet(0x00c3,8);
-	packet(0x00c4,6);
 	parseable_packet(0x00c5,7,clif_parse_NpcBuySellSelected,2,6);
 	packet(0x00c6,-1);
 	packet(0x00c7,-1);
