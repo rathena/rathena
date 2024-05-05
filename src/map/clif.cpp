@@ -2197,8 +2197,8 @@ void clif_blown(struct block_list *bl)
 
 /// Visually moves(slides) a character to x,y. If the target cell
 /// isn't walkable, the char doesn't move at all. If the char is
-/// sitting it will stand up (ZC_STOPMOVE).
-/// 0088 <id>.L <x>.W <y>.W
+/// sitting it will stand up.
+/// 0088 <id>.L <x>.W <y>.W (ZC_STOPMOVE)
 void clif_fixpos( block_list& bl ){	
 	PACKET_ZC_STOPMOVE packet = {};
 
