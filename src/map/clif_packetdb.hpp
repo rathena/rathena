@@ -46,7 +46,6 @@
 	packet(0x008e,-1);
 	//packet(0x008f,-1);
 	parseable_packet(0x0090,7,clif_parse_NpcClicked,2,6);
-	packet(0x0092,28);
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
@@ -2259,11 +2258,6 @@
 	packet(0x0A9B,-1);
 	parseable_packet(0x0A9C,2,clif_parse_equipswitch_request,0);
 	packet(0x0A9D,4);
-#endif
-
-// 2017-03-15cRagexeRE
-#if PACKETVER >= 20170315
-	packet(0xac7,156);
 #endif
 
 // 2017-04-19bRagexeRE
