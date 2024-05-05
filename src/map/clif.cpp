@@ -1585,6 +1585,7 @@ static void clif_millenniumshield_single( map_session_data& sd, map_session_data
  * Kagerou/Oboro amulet spirit
  *------------------------------------------*/
 static void clif_spiritcharm_single( map_session_data& sd, map_session_data& tsd ){
+#if PACKETVER >= 20111102
 	if( sd.spiritcharm_type == CHARM_TYPE_NONE ){
 		return;
 	}
@@ -1601,6 +1602,7 @@ static void clif_spiritcharm_single( map_session_data& sd, map_session_data& tsd
 	packet.num = static_cast<decltype(packet.num)>(sd.spiritcharm);
 
 	clif_send( &packet, sizeof( packet ), &tsd.bl, SELF );
+#endif
 }
 
 /*==========================================

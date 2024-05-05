@@ -1795,7 +1795,6 @@
 	parseable_packet(0x08ab,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x088b,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x08a2,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,2,6,10);
-	packet(0x08cf,10); //Amulet spirits
 #endif
 
 // 2012-03-07fRagexeRE
@@ -1992,7 +1991,6 @@
 	parseable_packet(0x089b,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x08ac,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x08c9,2,clif_parse_cashshop_list_request,0);
-	packet(0x08cf,10); //Amulet spirits
 	packet(0x08d2,10);
 	parseable_packet(0x0922,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	//parseable_packet(0x092e,2,clif_parse_SearchStoreInfoNextPage,0);
