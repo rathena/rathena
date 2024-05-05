@@ -672,38 +672,38 @@ struct PACKET_ZC_CLOSE_DIALOG {
 DEFINE_PACKET_HEADER(ZC_CLOSE_DIALOG, 0xb6)
 
 struct	PACKET_ZC_NOTIFY_STANDENTRY {
-    int16 packetType;
+	int16 packetType;
 #if PACKETVER >= 20071106
-    uint8 objecttype;
+	uint8 objecttype;
 #endif
-    uint32    GID;
-    int16    speed;
-    int16    bodyState;
-    int16    effectState;
-    int16    job;
-    int16    head;
-    int16    weapon;
-    int16    accessory;
-    int16    shield;
-    int16    accessory2;
-    int16    accessory3;
-    int16    headpalette;
-    int16    bodypalette;
-    int16    headDir;
-    uint32    GUID;
-    int16    GEmblemVer;
-    int16    honor;
-    int16    virtue;
-    bool    isPKModeON;
-    uint8    sex;
-    uint8    PosDir[3];
-    uint8    xSize;
-    uint8    ySize;
-    uint8    state;
-    int16    clevel;
-    uint16 spr_idx;
-    uint16 effect_idx;
-    unsigned char scale;
+	uint32 GID;
+	int16 speed;
+	int16 bodyState;
+	int16 effectState;
+	int16 job;
+	int16 head;
+	int16 weapon;
+	int16 accessory;
+	int16 shield;
+	int16 accessory2;
+	int16 accessory3;
+	int16 headpalette;
+	int16 bodypalette;
+	int16 headDir;
+	uint32 GUID;
+	int16 GEmblemVer;
+	int16 honor;
+	int16 virtue;
+	bool isPKModeON;
+	uint8 sex;
+	uint8 PosDir[3];
+	uint8 xSize;
+	uint8 ySize;
+	uint8 state;
+	int16 clevel;
+	uint16 spr_idx;
+	uint16 effect_idx;
+	unsigned char scale;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_STANDENTRY, 0x78)
 
@@ -768,21 +768,33 @@ DEFINE_PACKET_HEADER(ZC_NOTIFY_POSITION_TO_GUILDM, 0x1eb)
 
 struct PACKET_ZC_STATUS {
 	int16 packetType;
-	uint16	point;
-	uint8	str, standardStr;
-	uint8	agi, standardAgi;
-	uint8	vit, standardVit;
-	uint8	Int, standardInt;
-	uint8	dex, standardDex;
-	uint8	luk, standardLuk;
-	int16	attPower, refiningPower;
-	int16	max_mattPower, min_mattPower;
-	int16	itemdefPower, plusdefPower;
-	int16	mdefPower, plusmdefPower;
-	int16	hitSuccessValue;
-	int16	avoidSuccessValue, plusAvoidSuccessValue;
-	int16	criticalSuccessValue;
-	int16	ASPD, plusASPD;	
+	uint16 point;
+	uint8 str;
+	uint8 standardStr;
+	uint8 agi;
+	uint8 standardAgi;
+	uint8 vit;
+	uint8 standardVit;
+	uint8 int_;
+	uint8 standardInt;
+	uint8 dex;
+	uint8 standardDex;
+	uint8 luk;
+	uint8 standardLuk;
+	int16 attPower;
+	int16 refiningPower;
+	int16 max_mattPower;
+	int16 min_mattPower;
+	int16 itemdefPower;
+	int16 plusdefPower;
+	int16 mdefPower;
+	int16 plusmdefPower;
+	int16 hitSuccessValue;
+	int16 avoidSuccessValue;
+	int16 plusAvoidSuccessValue;
+	int16 criticalSuccessValue;
+	int16 ASPD;
+	int16 plusASPD;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_STATUS, 0xbd)
 

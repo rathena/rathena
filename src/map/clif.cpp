@@ -3480,6 +3480,8 @@ void clif_update_hp(map_session_data &sd) {
 		clif_bg_hp(&sd);
 }
 
+/// Notifies client of a character parameter change.
+/// 00b0 <var id>.W <value>.L (ZC_PAR_CHANGE)
 static void clif_par_change(map_session_data *sd, uint16 varId, int count) {
 	PACKET_ZC_PAR_CHANGE packet{};
 
@@ -3490,6 +3492,8 @@ static void clif_par_change(map_session_data *sd, uint16 varId, int count) {
 	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
+/// Notifies client of a character parameter change.
+/// 00b1 <var id>.W <value>.L (ZC_LONGPAR_CHANGE)
 static void clif_longpar_change(map_session_data *sd, uint16 varId, int amount) {
 	PACKET_ZC_LONGPAR_CHANGE packet{};
 
@@ -3500,28 +3504,8 @@ static void clif_longpar_change(map_session_data *sd, uint16 varId, int amount) 
 	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 }
 
-static void clif_longlongpar_change(map_session_data *sd, uint16 varId, int64 amount) {
-	PACKET_ZC_LONGLONGPAR_CHANGE packet{};
-
-	packet.PacketType = HEADER_ZC_LONGPAR_CHANGE;
-	packet.varID = varId;
-	packet.amount = amount;
-
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
-}
-
-static void clif_couplestatus(map_session_data *sd, uint32 status_type, int32 defaultStatus, int32 plusStatus) {
-	PACKET_ZC_COUPLESTATUS packet{};
-
-	packet.PacketType = HEADER_ZC_COUPLESTATUS;
-	packet.statusType = status_type;
-	packet.defaultStatus = defaultStatus;
-	packet.plusStatus = plusStatus;
-
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
-}
-
-// Name conflict with clif_status_change
+/// Notifies client of a character parameter change.
+/// 00be <status id>.W <value>.B (ZC_STATUS_CHANGE)
 static void clif_zc_status_change(map_session_data *sd, uint16 status_id, uint8 value) {
 	PACKET_ZC_STATUS_CHANGE packet{};
 
@@ -3533,28 +3517,60 @@ static void clif_zc_status_change(map_session_data *sd, uint16 status_id, uint8 
 }
 
 /// Notifies client of a character parameter change.
-/// 00b0 <var id>.W <value>.L (ZC_PAR_CHANGE)
-/// 00b1 <var id>.W <value>.L (ZC_LONGPAR_CHANGE)
-/// 00be <status id>.W <value>.B (ZC_STATUS_CHANGE)
 /// 0121 <current count>.W <max count>.W <current weight>.L <max weight>.L (ZC_NOTIFY_CARTITEM_COUNTINFO)
+static void clif_cartcount( map_session_data* sd ){
+	PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO packet{};
+
+	packet.PacketType = HEADER_ZC_NOTIFY_CARTITEM_COUNTINFO;
+	packet.curCount = sd->cart_num;
+	packet.maxCount = MAX_CART;
+	packet.curWeight = sd->cart_weight;
+	packet.maxWeight = sd->cart_weight_max;
+
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+}
+
+/// Tells the client how far it is allowed to attack (weapon range)
 /// 013a <atk range>.W (ZC_ATTACK_RANGE)
+static void clif_attackrange( map_session_data* sd, int16 range ){
+	PACKET_ZC_ATTACK_RANGE packet{};
+
+	packet.PacketType = HEADER_ZC_ATTACK_RANGE;
+	packet.currentAttRange = range;
+
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+}
+
+/// Notifies client of a character parameter change.
 /// 0141 <status id>.L <base status>.L <plus status>.L (ZC_COUPLESTATUS)
+static void clif_couplestatus(map_session_data* sd, uint32 status_type, int32 defaultStatus, int32 plusStatus) {
+	PACKET_ZC_COUPLESTATUS packet{};
+
+	packet.PacketType = HEADER_ZC_COUPLESTATUS;
+	packet.statusType = status_type;
+	packet.defaultStatus = defaultStatus;
+	packet.plusStatus = plusStatus;
+
+	clif_send(&packet, sizeof(packet), &sd->bl, SELF);
+}
+
+/// Notifies client of a character parameter change.
 /// 0acb <var id>.W <value>.Q (ZC_LONGLONGPAR_CHANGE)
-/// TODO: Extract individual packets.
-/// FIXME: Packet lengths from packet_len(cmd)
-void clif_updatestatus(map_session_data *sd,int type)
-{
-	int fd,len=8;
+static void clif_longlongpar_change(map_session_data *sd, uint16 varId, int64 amount) {
+#if PACKETVER_MAIN_NUM >= 20170906 || PACKETVER_RE_NUM >= 20170830 || defined(PACKETVER_ZERO)
+	PACKET_ZC_LONGLONGPAR_CHANGE packet{};
 
-	nullpo_retv(sd);
+	packet.PacketType = HEADER_ZC_LONGLONGPAR_CHANGE;
+	packet.varID = varId;
+	packet.amount = amount;
 
-	fd=sd->fd;
+	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+#endif
+}
 
-	if ( !session_isActive(fd) ) // Invalid pointer fix, by sasuke [Kevin]
-		return;
-
+/// Notifies client of a character parameter change.
+void clif_updatestatus( map_session_data *sd, int type ){
 	switch(type){
-		// 00b0
 	case SP_WEIGHT:
 		pc_updateweightstatus(sd);
 		clif_par_change(sd, type, sd->weight);
@@ -3571,7 +3587,8 @@ void clif_updatestatus(map_session_data *sd,int type)
 	case SP_JOBLEVEL:
 		clif_par_change(sd, type, sd->status.job_level);
 		break;
-	case SP_KARMA: // Adding this back, I wonder if the client intercepts this - [Lance]
+	case SP_KARMA:
+		// Adding this back, I wonder if the client intercepts this - [Lance]
 		clif_par_change(sd, type, sd->status.karma);
 		break;
 	case SP_MANNER:
@@ -3692,18 +3709,9 @@ void clif_updatestatus(map_session_data *sd,int type)
 		clif_zc_status_change(sd, static_cast<uint16>(type), static_cast<uint8>(pc_need_status_point(sd, type-SP_USTR+SP_STR, 1)));
 		break;
 
-	/**
-	 * Tells the client how far it is allowed to attack (weapon range)
-	 **/
-	case SP_ATTACKRANGE: {
-		PACKET_ZC_ATTACK_RANGE packet{};
-
-		packet.PacketType = HEADER_ZC_ATTACK_RANGE;
-		packet.currentAttRange = sd->battle_status.rhw.range;
-
-		clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	case SP_ATTACKRANGE:
+		clif_attackrange( sd, sd->battle_status.rhw.range );
 		break;
-	}
 
 	case SP_STR:
 		clif_couplestatus(sd, type, sd->status.str, sd->battle_status.str - sd->status.str);
@@ -3725,66 +3733,37 @@ void clif_updatestatus(map_session_data *sd,int type)
 		break;
 
 	case SP_CARTINFO:
-		WFIFOW(fd,0)=0x121;
-		WFIFOW(fd,2)=sd->cart_num;
-		WFIFOW(fd,4)=MAX_CART;
-		WFIFOL(fd,6)=sd->cart_weight;
-		WFIFOL(fd,10)=sd->cart_weight_max;
-		len=14;
+		clif_cartcount( sd );
 		break;
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	case SP_AP:
-		WFIFOL(fd, 4) = sd->battle_status.ap;
+		clif_par_change( sd, SP_AP, sd->battle_status.ap );
 		break;
 	case SP_TRAITPOINT:
-		WFIFOL(fd, 4) = sd->status.trait_point;
+		clif_par_change( sd, SP_TRAITPOINT, sd->status.trait_point );
 		break;
 	case SP_MAXAP:
-		WFIFOL(fd, 4) = sd->battle_status.max_ap;
+		clif_par_change( sd, SP_MAXAP, sd->battle_status.max_ap );
 		break;
 
 	case SP_POW:
-		WFIFOW(fd, 0) = 0x141;
-		WFIFOL(fd, 2) = type;
-		WFIFOL(fd, 6) = sd->status.pow;
-		WFIFOL(fd, 10) = sd->battle_status.pow - sd->status.pow;
-		len = 14;
+		clif_couplestatus( sd, SP_POW, sd->status.pow, sd->battle_status.pow - sd->status.pow );
 		break;
 	case SP_STA:
-		WFIFOW(fd, 0) = 0x141;
-		WFIFOL(fd, 2) = type;
-		WFIFOL(fd, 6) = sd->status.sta;
-		WFIFOL(fd, 10) = sd->battle_status.sta - sd->status.sta;
-		len = 14;
+		clif_couplestatus( sd, SP_STA, sd->status.sta, sd->battle_status.sta - sd->status.sta );
 		break;
 	case SP_WIS:
-		WFIFOW(fd, 0) = 0x141;
-		WFIFOL(fd, 2) = type;
-		WFIFOL(fd, 6) = sd->status.wis;
-		WFIFOL(fd, 10) = sd->battle_status.wis - sd->status.wis;
-		len = 14;
+		clif_couplestatus( sd, SP_WIS, sd->status.wis, sd->battle_status.wis - sd->status.wis );
 		break;
 	case SP_SPL:
-		WFIFOW(fd, 0) = 0x141;
-		WFIFOL(fd, 2) = type;
-		WFIFOL(fd, 6) = sd->status.spl;
-		WFIFOL(fd, 10) = sd->battle_status.spl - sd->status.spl;
-		len = 14;
+		clif_couplestatus( sd, SP_SPL, sd->status.spl, sd->battle_status.spl - sd->status.spl );
 		break;
 	case SP_CON:
-		WFIFOW(fd, 0) = 0x141;
-		WFIFOL(fd, 2) = type;
-		WFIFOL(fd, 6) = sd->status.con;
-		WFIFOL(fd, 10) = sd->battle_status.con - sd->status.con;
-		len = 14;
+		clif_couplestatus( sd, SP_CON, sd->status.con, sd->battle_status.con - sd->status.con );
 		break;
 	case SP_CRT:
-		WFIFOW(fd, 0) = 0x141;
-		WFIFOL(fd, 2) = type;
-		WFIFOL(fd, 6) = sd->status.crt;
-		WFIFOL(fd, 10) = sd->battle_status.crt - sd->status.crt;
-		len = 14;
+		clif_couplestatus( sd, SP_CRT, sd->status.crt, sd->battle_status.crt - sd->status.crt );
 		break;
 
 	case SP_UPOW:
@@ -3793,28 +3772,26 @@ void clif_updatestatus(map_session_data *sd,int type)
 	case SP_USPL:
 	case SP_UCON:
 	case SP_UCRT:
-		WFIFOW(fd, 0) = 0xbe;
-		WFIFOB(fd, 4) = pc_need_trait_point(sd,type-SP_UPOW+SP_POW, 1);
-		len = 5;
+		clif_zc_status_change( sd, static_cast<uint16>( type ), static_cast<uint8>( pc_need_trait_point( sd, type - SP_UPOW + SP_POW, 1 ) ) );
 		break;
 
 	case SP_PATK:
-		WFIFOL(fd, 4) = sd->battle_status.patk;
+		clif_par_change( sd, SP_PATK, sd->battle_status.patk );
 		break;
 	case SP_SMATK:
-		WFIFOL(fd, 4) = sd->battle_status.smatk;
+		clif_par_change( sd, SP_SMATK, sd->battle_status.smatk );
 		break;
 	case SP_RES:
-		WFIFOL(fd, 4) = sd->battle_status.res;
+		clif_par_change( sd, SP_RES, sd->battle_status.res );
 		break;
 	case SP_MRES:
-		WFIFOL(fd, 4) = sd->battle_status.mres;
+		clif_par_change( sd, SP_MRES, sd->battle_status.mres );
 		break;
 	case SP_HPLUS:
-		WFIFOL(fd, 4) = sd->battle_status.hplus;
+		clif_par_change( sd, SP_HPLUS, sd->battle_status.hplus );
 		break;
 	case SP_CRATE:
-		WFIFOL(fd, 4) = sd->battle_status.crate;
+		clif_par_change( sd, SP_CRATE, sd->battle_status.crate );
 		break;
 #else
 	case SP_AP:
@@ -3846,7 +3823,6 @@ void clif_updatestatus(map_session_data *sd,int type)
 		ShowError("clif_updatestatus : unrecognized type %d\n",type);
 		return;
 	}
-	WFIFOSET(fd,len);
 
 	// Additional update packets that should be sent right after
 	switch( type ){
