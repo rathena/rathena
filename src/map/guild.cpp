@@ -683,7 +683,7 @@ static TIMER_FUNC(guild_send_xy_timer){
 
 int guild_send_dot_remove(map_session_data *sd) {
 	if (sd->status.guild_id)
-		clif_guild_xy_remove(sd);
+		clif_guild_xy_remove( *sd );
 	return 0;
 }
 //------------------------------------------------------------------------

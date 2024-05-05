@@ -3285,22 +3285,17 @@ void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd ){
 	clif_send( &packet, sizeof( packet ), &tsd.bl, SELF );
 }
 
-// Guild XY locators [Valaris]
-void clif_guild_xy_remove(map_session_data *sd)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+/// Removes XY location from all other guild members
+/// 01eb <account id>.L <x>.W <y>.W (ZC_NOTIFY_POSITION_TO_GUILDM)
+void clif_guild_xy_remove( map_session_data& sd ){
 	PACKET_ZC_NOTIFY_POSITION_TO_GUILDM packet{};
 
 	packet.packetType = HEADER_ZC_NOTIFY_POSITION_TO_GUILDM;
-	packet.aid = sd->status.account_id;
+	packet.aid = sd.status.account_id;
 	packet.xPos = -1;
 	packet.yPos = -1;
 
-	clif_send(&packet, sizeof(packet), &sd->bl, GUILD_SAMEMAP_WOS);
+	clif_send( &packet, sizeof( packet ), &sd.bl, GUILD_SAMEMAP_WOS );
 }
 
 /*==========================================
