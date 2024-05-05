@@ -68,7 +68,6 @@
 	packet(0x00ac,7);
 	//packet(0x00ad,-1);
 	packet(0x00ae,-1);
-	packet(0x00af,6);
 	packet(0x00b0,8);
 	packet(0x00b1,8);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
