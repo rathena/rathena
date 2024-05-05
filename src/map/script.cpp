@@ -17892,7 +17892,7 @@ BUILDIN_FUNC(callshop)
 		switch (flag) {
 			case 1: npc_buysellsel(sd,nd->bl.id,0); break; //Buy window
 			case 2: npc_buysellsel(sd,nd->bl.id,1); break; //Sell window
-			default: clif_npcbuysell(sd,nd->bl.id); break; //Show menu
+			default: clif_npcbuysell( *sd, *nd ); break; //Show menu
 		}
 	}
 #if PACKETVER >= 20131223

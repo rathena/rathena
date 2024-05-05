@@ -2206,7 +2206,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
-			clif_npcbuysell(sd,nd->bl.id);
+			clif_npcbuysell( *sd, *nd );
 			break;
 		case NPCTYPE_CASHSHOP:
 		case NPCTYPE_ITEMSHOP:

@@ -2206,21 +2206,15 @@ void clif_fixpos( block_list& bl ){
 }
 
 
-/// Displays the buy/sell dialog of an NPC shop (ZC_SELECT_DEALTYPE).
-/// 00c4 <shop id>.L
-void clif_npcbuysell(map_session_data* sd, int id)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+/// Displays the buy/sell dialog of an NPC shop.
+/// 00c4 <shop id>.L (ZC_SELECT_DEALTYPE)
+void clif_npcbuysell( map_session_data& sd, npc_data& nd ){
 	PACKET_ZC_SELECT_DEALTYPE packet{};
 
 	packet.packetType = HEADER_ZC_SELECT_DEALTYPE;
-	packet.npcId = id;
+	packet.npcId = nd.bl.id;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
