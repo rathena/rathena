@@ -994,7 +994,7 @@ int chrif_changedsex(int fd) {
 				}
 			}
 
-			clif_updatestatus(sd, SP_SKILLPOINT);
+			clif_updatestatus(*sd, SP_SKILLPOINT);
 			// Change to other gender version of the job if needed.
 			if (sd->status.sex)// Changed from female version of job.
 				sd->status.class_ -= 1;

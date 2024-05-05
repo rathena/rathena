@@ -1640,11 +1640,11 @@ ACMD_FUNC(baselevelup)
 		level*=-1;
 	}
 	sd->status.base_exp = 0;
-	clif_updatestatus(sd, SP_STATUSPOINT);
-	clif_updatestatus(sd, SP_TRAITPOINT);
-	clif_updatestatus(sd, SP_BASELEVEL);
-	clif_updatestatus(sd, SP_BASEEXP);
-	clif_updatestatus(sd, SP_NEXTBASEEXP);
+	clif_updatestatus(*sd, SP_STATUSPOINT);
+	clif_updatestatus(*sd, SP_TRAITPOINT);
+	clif_updatestatus(*sd, SP_BASELEVEL);
+	clif_updatestatus(*sd, SP_BASEEXP);
+	clif_updatestatus(*sd, SP_NEXTBASEEXP);
 	pc_baselevelchanged(sd);
 	if(sd->status.party_id)
 		party_send_levelup(sd);
@@ -1701,10 +1701,10 @@ ACMD_FUNC(joblevelup)
 		level *=-1;
 	}
 	sd->status.job_exp = 0;
-	clif_updatestatus(sd, SP_JOBLEVEL);
-	clif_updatestatus(sd, SP_JOBEXP);
-	clif_updatestatus(sd, SP_NEXTJOBEXP);
-	clif_updatestatus(sd, SP_SKILLPOINT);
+	clif_updatestatus(*sd, SP_JOBLEVEL);
+	clif_updatestatus(*sd, SP_JOBEXP);
+	clif_updatestatus(*sd, SP_NEXTJOBEXP);
+	clif_updatestatus(*sd, SP_SKILLPOINT);
 	status_calc_pc(sd, SCO_FORCE);
 
 	if( level > 0 && battle_config.atcommand_levelup_events )
@@ -2689,7 +2689,7 @@ ACMD_FUNC(statuspoint)
 
 	if (new_status_point != sd->status.status_point) {
 		sd->status.status_point = new_status_point;
-		clif_updatestatus(sd, SP_STATUSPOINT);
+		clif_updatestatus(*sd, SP_STATUSPOINT);
 		clif_displaymessage(fd, msg_txt(sd,174)); // Number of status points changed.
 	} else {
 		if (point < 0)
@@ -2737,7 +2737,7 @@ ACMD_FUNC(traitpoint)
 
 	if (new_trait_point != sd->status.trait_point) {
 		sd->status.trait_point = new_trait_point;
-		clif_updatestatus(sd, SP_TRAITPOINT);
+		clif_updatestatus(*sd, SP_TRAITPOINT);
 		clif_displaymessage(fd, msg_txt(sd, 174)); // Number of status points changed.
 	}
 	else {
@@ -2787,7 +2787,7 @@ ACMD_FUNC(skillpoint)
 
 	if (new_skill_point != sd->status.skill_point) {
 		sd->status.skill_point = new_skill_point;
-		clif_updatestatus(sd, SP_SKILLPOINT);
+		clif_updatestatus(*sd, SP_SKILLPOINT);
 		clif_displaymessage(fd, msg_txt(sd,175)); // Number of skill points changed.
 	} else {
 		if (point < 0)
@@ -2883,12 +2883,12 @@ ACMD_FUNC(param)
 	if( new_value != status ){
 		if (stat < PARAM_POW) {
 			pc_setstat( sd, SP_STR + stat - PARAM_STR, new_value );
-			clif_updatestatus(sd, SP_STR + stat);
-			clif_updatestatus(sd, SP_USTR + stat);
+			clif_updatestatus(*sd, static_cast<_sp>( SP_STR + stat ) );
+			clif_updatestatus(*sd, static_cast<_sp>( SP_USTR + stat ) );
 		} else {
 			pc_setstat( sd, SP_POW + stat - PARAM_POW, new_value );
-			clif_updatestatus(sd, SP_POW + stat - PARAM_POW);
-			clif_updatestatus(sd, SP_UPOW + stat - PARAM_POW);
+			clif_updatestatus(*sd, static_cast<_sp>( SP_POW + stat - PARAM_POW ) );
+			clif_updatestatus(*sd, static_cast<_sp>( SP_UPOW + stat - PARAM_POW ) );
 		}
 		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,42)); // Stat changed.
@@ -2946,8 +2946,8 @@ ACMD_FUNC(stat_all)
 
 		if (new_value != status[i]) {
 			pc_setstat( sd, SP_STR + i, new_value );
-			clif_updatestatus(sd, SP_STR + i);
-			clif_updatestatus(sd, SP_USTR + i);
+			clif_updatestatus(*sd, static_cast<_sp>( SP_STR + i ) );
+			clif_updatestatus(*sd, static_cast<_sp>( SP_USTR + i ) );
 			count++;
 		}
 	}
@@ -3020,8 +3020,8 @@ ACMD_FUNC(trait_all) {
 
 		if (new_value != status[i]) {
 			pc_setstat( sd, SP_POW + i - PARAM_POW, new_value );
-			clif_updatestatus(sd, SP_POW + i - PARAM_POW);
-			clif_updatestatus(sd, SP_UPOW + i - PARAM_POW);
+			clif_updatestatus(*sd, static_cast<_sp>( SP_POW + i - PARAM_POW ) );
+			clif_updatestatus(*sd, static_cast<_sp>( SP_UPOW + i - PARAM_POW ) );
 			count++;
 		}
 	}
@@ -3656,7 +3656,7 @@ ACMD_FUNC(allskill)
 	nullpo_retr(-1, sd);
 	pc_allskillup(sd); // all skills
 	sd->status.skill_point = 0; // 0 skill points
-	clif_updatestatus(sd, SP_SKILLPOINT); // update
+	clif_updatestatus(*sd, SP_SKILLPOINT); // update
 	clif_displaymessage(fd, msg_txt(sd,76)); // All skills have been added to your skill tree.
 
 	return 0;
@@ -6137,7 +6137,7 @@ ACMD_FUNC(clearcart)
 	}
 
 	clif_clearcart(fd);
-	clif_updatestatus(sd,SP_CARTINFO);
+	clif_updatestatus(*sd,SP_CARTINFO);
 
 	clif_displaymessage(fd, msg_txt(sd,1397)); // Your cart was cleaned.
 	return 0;
@@ -10592,8 +10592,8 @@ ACMD_FUNC(clonestat) {
 		clonestat_check(luk, PARAM_LUK);
 
 		for (i = PARAM_STR; i < PARAM_POW; i++) {
-			clif_updatestatus(sd, SP_STR + i);
-			clif_updatestatus(sd, SP_USTR + i);
+			clif_updatestatus(*sd, static_cast<_sp>( SP_STR + i ) );
+			clif_updatestatus(*sd, static_cast<_sp>( SP_USTR + i ) );
 		}
 
 		if (sd->class_ & JOBL_FOURTH) {
@@ -10605,8 +10605,8 @@ ACMD_FUNC(clonestat) {
 			clonestat_check(crt, PARAM_CRT);
 
 			for (i = PARAM_POW; i < PARAM_MAX; i++) {
-				clif_updatestatus(sd, SP_POW + i - PARAM_POW);
-				clif_updatestatus(sd, SP_UPOW + i - PARAM_POW);
+				clif_updatestatus(*sd, static_cast<_sp>( SP_POW + i - PARAM_POW ) );
+				clif_updatestatus(*sd, static_cast<_sp>( SP_UPOW + i - PARAM_POW ) );
 			}
 
 		}

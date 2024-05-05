@@ -3482,68 +3482,68 @@ void clif_update_hp(map_session_data &sd) {
 
 /// Notifies client of a character parameter change.
 /// 00b0 <var id>.W <value>.L (ZC_PAR_CHANGE)
-static void clif_par_change(map_session_data *sd, uint16 varId, int count) {
+static void clif_par_change(map_session_data& sd, uint16 varId, int count) {
 	PACKET_ZC_PAR_CHANGE packet{};
 
 	packet.PacketType = HEADER_ZC_PAR_CHANGE;
 	packet.varID = varId;
 	packet.count = count;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Notifies client of a character parameter change.
 /// 00b1 <var id>.W <value>.L (ZC_LONGPAR_CHANGE)
-static void clif_longpar_change(map_session_data *sd, uint16 varId, int amount) {
+static void clif_longpar_change(map_session_data& sd, uint16 varId, int amount) {
 	PACKET_ZC_LONGPAR_CHANGE packet{};
 
 	packet.PacketType = HEADER_ZC_LONGPAR_CHANGE;
 	packet.varID = varId;
 	packet.amount = amount;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Notifies client of a character parameter change.
 /// 00be <status id>.W <value>.B (ZC_STATUS_CHANGE)
-static void clif_zc_status_change(map_session_data *sd, uint16 status_id, uint8 value) {
+static void clif_zc_status_change(map_session_data& sd, uint16 status_id, uint8 value) {
 	PACKET_ZC_STATUS_CHANGE packet{};
 
 	packet.PacketType = HEADER_ZC_STATUS_CHANGE;
 	packet.statusID = status_id;
 	packet.value = value;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Notifies client of a character parameter change.
 /// 0121 <current count>.W <max count>.W <current weight>.L <max weight>.L (ZC_NOTIFY_CARTITEM_COUNTINFO)
-static void clif_cartcount( map_session_data* sd ){
+static void clif_cartcount( map_session_data& sd ){
 	PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO packet{};
 
 	packet.PacketType = HEADER_ZC_NOTIFY_CARTITEM_COUNTINFO;
-	packet.curCount = sd->cart_num;
+	packet.curCount = sd.cart_num;
 	packet.maxCount = MAX_CART;
-	packet.curWeight = sd->cart_weight;
-	packet.maxWeight = sd->cart_weight_max;
+	packet.curWeight = sd.cart_weight;
+	packet.maxWeight = sd.cart_weight_max;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Tells the client how far it is allowed to attack (weapon range)
 /// 013a <atk range>.W (ZC_ATTACK_RANGE)
-static void clif_attackrange( map_session_data* sd, int16 range ){
+static void clif_attackrange( map_session_data& sd, int16 range ){
 	PACKET_ZC_ATTACK_RANGE packet{};
 
 	packet.PacketType = HEADER_ZC_ATTACK_RANGE;
 	packet.currentAttRange = range;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Notifies client of a character parameter change.
 /// 0141 <status id>.L <base status>.L <plus status>.L (ZC_COUPLESTATUS)
-static void clif_couplestatus(map_session_data* sd, uint32 status_type, int32 defaultStatus, int32 plusStatus) {
+static void clif_couplestatus(map_session_data& sd, uint32 status_type, int32 defaultStatus, int32 plusStatus) {
 	PACKET_ZC_COUPLESTATUS packet{};
 
 	packet.PacketType = HEADER_ZC_COUPLESTATUS;
@@ -3551,12 +3551,12 @@ static void clif_couplestatus(map_session_data* sd, uint32 status_type, int32 de
 	packet.defaultStatus = defaultStatus;
 	packet.plusStatus = plusStatus;
 
-	clif_send(&packet, sizeof(packet), &sd->bl, SELF);
+	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
 }
 
 /// Notifies client of a character parameter change.
 /// 0acb <var id>.W <value>.Q (ZC_LONGLONGPAR_CHANGE)
-static void clif_longlongpar_change(map_session_data *sd, uint16 varId, int64 amount) {
+static void clif_longlongpar_change(map_session_data& sd, uint16 varId, int64 amount) {
 #if PACKETVER_MAIN_NUM >= 20170906 || PACKETVER_RE_NUM >= 20170830 || defined(PACKETVER_ZERO)
 	PACKET_ZC_LONGLONGPAR_CHANGE packet{};
 
@@ -3564,90 +3564,90 @@ static void clif_longlongpar_change(map_session_data *sd, uint16 varId, int64 am
 	packet.varID = varId;
 	packet.amount = amount;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 #endif
 }
 
 /// Notifies client of a character parameter change.
-void clif_updatestatus( map_session_data *sd, int type ){
+void clif_updatestatus( map_session_data& sd, enum _sp type ){
 	switch(type){
 	case SP_WEIGHT:
-		pc_updateweightstatus(sd);
-		clif_par_change(sd, type, sd->weight);
+		pc_updateweightstatus(&sd);
+		clif_par_change(sd, type, sd.weight);
 		break;
 	case SP_MAXWEIGHT:
-		clif_par_change(sd, type, sd->max_weight);
+		clif_par_change(sd, type, sd.max_weight);
 		break;
 	case SP_SPEED:
-		clif_par_change(sd, type, sd->battle_status.speed);
+		clif_par_change(sd, type, sd.battle_status.speed);
 		break;
 	case SP_BASELEVEL:
-		clif_par_change(sd, type, sd->status.base_level);
+		clif_par_change(sd, type, sd.status.base_level);
 		break;
 	case SP_JOBLEVEL:
-		clif_par_change(sd, type, sd->status.job_level);
+		clif_par_change(sd, type, sd.status.job_level);
 		break;
 	case SP_KARMA:
 		// Adding this back, I wonder if the client intercepts this - [Lance]
-		clif_par_change(sd, type, sd->status.karma);
+		clif_par_change(sd, type, sd.status.karma);
 		break;
 	case SP_MANNER:
-		clif_par_change(sd, type, sd->status.manner);
+		clif_par_change(sd, type, sd.status.manner);
 		break;
 	case SP_STATUSPOINT:
-		clif_par_change(sd, type, sd->status.status_point);
+		clif_par_change(sd, type, sd.status.status_point);
 		break;
 	case SP_SKILLPOINT:
-		clif_par_change(sd, type, sd->status.skill_point);
+		clif_par_change(sd, type, sd.status.skill_point);
 		break;
 	case SP_HIT:
-		clif_par_change(sd, type, sd->battle_status.hit);
+		clif_par_change(sd, type, sd.battle_status.hit);
 		break;
 	case SP_FLEE1:
-		clif_par_change(sd, type, sd->battle_status.flee);
+		clif_par_change(sd, type, sd.battle_status.flee);
 		break;
 	case SP_FLEE2:
-		clif_par_change(sd, type, sd->battle_status.flee2/10);
+		clif_par_change(sd, type, sd.battle_status.flee2/10);
 		break;
 	case SP_MAXHP:
-		clif_par_change(sd, type, sd->battle_status.max_hp);
+		clif_par_change(sd, type, sd.battle_status.max_hp);
 		break;
 	case SP_MAXSP:
-		clif_par_change(sd, type, sd->battle_status.max_sp);
+		clif_par_change(sd, type, sd.battle_status.max_sp);
 		break;
 	case SP_HP:
 		// On officials the HP never go below 1, even if you die [Lemongrass]
 		// On officials the HP Novice class never go below 50%, even if you die [Napster]
-		if (sd->battle_status.hp == 0) {
-			clif_par_change(sd, type, (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE ? 1 : sd->battle_status.max_hp/2);
+		if (sd.battle_status.hp == 0) {
+			clif_par_change(sd, type, (sd.class_&MAPID_UPPERMASK) != MAPID_NOVICE ? 1 : sd.battle_status.max_hp/2);
 		} else {
-			clif_par_change(sd, type, sd->battle_status.hp);
+			clif_par_change(sd, type, sd.battle_status.hp);
 		}
 		break;
 	case SP_SP:
-		clif_par_change(sd, type, sd->battle_status.sp);
+		clif_par_change(sd, type, sd.battle_status.sp);
 		break;
 	case SP_ASPD:
-		clif_par_change(sd, type, sd->battle_status.amotion);
+		clif_par_change(sd, type, sd.battle_status.amotion);
 		break;
 	case SP_ATK1:
-		clif_par_change(sd, type, pc_leftside_atk(sd));
+		clif_par_change(sd, type, pc_leftside_atk(&sd));
 		break;
 	case SP_DEF1:
-		clif_par_change(sd, type, pc_leftside_def(sd));
+		clif_par_change(sd, type, pc_leftside_def(&sd));
 		break;
 	case SP_MDEF1:
-		clif_par_change(sd, type, pc_leftside_mdef(sd));
+		clif_par_change(sd, type, pc_leftside_mdef(&sd));
 		break;
 	case SP_ATK2:
-		clif_par_change(sd, type, pc_rightside_atk(sd));
+		clif_par_change(sd, type, pc_rightside_atk(&sd));
 		break;
 	case SP_DEF2:
-		clif_par_change(sd, type, pc_rightside_def(sd));
+		clif_par_change(sd, type, pc_rightside_def(&sd));
 		break;
 	case SP_MDEF2: {
 			//negative check (in case you have something like Berserk active)
-			int mdef2 = pc_rightside_mdef(sd);
+			int mdef2 = pc_rightside_mdef(&sd);
 
 #ifndef RENEWAL
 			clif_par_change(sd, type, mdef2 < 0 ? 0 : mdef2);
@@ -3657,43 +3657,43 @@ void clif_updatestatus( map_session_data *sd, int type ){
 		}
 		break;
 	case SP_CRITICAL:
-		clif_par_change(sd, type, sd->battle_status.cri/10);
+		clif_par_change(sd, type, sd.battle_status.cri/10);
 		break;
 	case SP_MATK1:
-		clif_par_change(sd, type, pc_rightside_matk(sd));
+		clif_par_change(sd, type, pc_rightside_matk(&sd));
 		break;
 	case SP_MATK2:
-		clif_par_change(sd, type, pc_leftside_matk(sd));
+		clif_par_change(sd, type, pc_leftside_matk(&sd));
 		break;
 
 	case SP_ZENY:
-		clif_longpar_change(sd, type, sd->status.zeny);
+		clif_longpar_change(sd, type, sd.status.zeny);
 		break;
 #if PACKETVER >= 20170830
 	case SP_BASEEXP:
-		clif_longlongpar_change(sd, type, client_exp(sd->status.base_exp));
+		clif_longlongpar_change(sd, type, client_exp(sd.status.base_exp));
 		break;
 	case SP_JOBEXP:
-		clif_longlongpar_change(sd, type, client_exp(sd->status.job_exp));
+		clif_longlongpar_change(sd, type, client_exp(sd.status.job_exp));
 		break;
 	case SP_NEXTBASEEXP:
-		clif_longlongpar_change(sd, type, client_exp(pc_nextbaseexp(sd)));
+		clif_longlongpar_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
 		break;
 	case SP_NEXTJOBEXP:
-		clif_longlongpar_change(sd, type, client_exp(pc_nextjobexp(sd)));
+		clif_longlongpar_change(sd, type, client_exp(pc_nextjobexp(&sd)));
 		break;
 #else
 	case SP_BASEEXP:
-		clif_par_change(sd, type, client_exp(sd->status.base_exp))
+		clif_par_change(sd, type, client_exp(sd.status.base_exp))
 		break;
 	case SP_JOBEXP:
-		clif_par_change(sd, type, client_exp(sd->status.job_exp))
+		clif_par_change(sd, type, client_exp(sd.status.job_exp))
 		break;
 	case SP_NEXTBASEEXP:
-		clif_par_change(sd, type, client_exp(pc_nextbaseexp(sd)))
+		clif_par_change(sd, type, client_exp(pc_nextbaseexp(&sd)))
 		break;
 	case SP_NEXTJOBEXP:
-		clif_par_change(sd, type, client_exp(pc_nextjobexp(sd)))
+		clif_par_change(sd, type, client_exp(pc_nextjobexp(&sd)))
 		break;
 #endif
 
@@ -3706,30 +3706,30 @@ void clif_updatestatus( map_session_data *sd, int type ){
 	case SP_UINT:
 	case SP_UDEX:
 	case SP_ULUK:
-		clif_zc_status_change(sd, static_cast<uint16>(type), static_cast<uint8>(pc_need_status_point(sd, type-SP_USTR+SP_STR, 1)));
+		clif_zc_status_change(sd, static_cast<uint16>(type), static_cast<uint8>(pc_need_status_point(&sd, type-SP_USTR+SP_STR, 1)));
 		break;
 
 	case SP_ATTACKRANGE:
-		clif_attackrange( sd, sd->battle_status.rhw.range );
+		clif_attackrange( sd, sd.battle_status.rhw.range );
 		break;
 
 	case SP_STR:
-		clif_couplestatus(sd, type, sd->status.str, sd->battle_status.str - sd->status.str);
+		clif_couplestatus(sd, type, sd.status.str, sd.battle_status.str - sd.status.str);
 		break;
 	case SP_AGI:
-		clif_couplestatus(sd, type, sd->status.agi, sd->battle_status.agi - sd->status.agi);
+		clif_couplestatus(sd, type, sd.status.agi, sd.battle_status.agi - sd.status.agi);
 		break;
 	case SP_VIT:
-		clif_couplestatus(sd, type, sd->status.vit, sd->battle_status.vit - sd->status.vit);
+		clif_couplestatus(sd, type, sd.status.vit, sd.battle_status.vit - sd.status.vit);
 		break;
 	case SP_INT:
-		clif_couplestatus(sd, type, sd->status.int_, sd->battle_status.int_ - sd->status.int_);
+		clif_couplestatus(sd, type, sd.status.int_, sd.battle_status.int_ - sd.status.int_);
 		break;
 	case SP_DEX:
-		clif_couplestatus(sd, type, sd->status.dex, sd->battle_status.dex - sd->status.dex);
+		clif_couplestatus(sd, type, sd.status.dex, sd.battle_status.dex - sd.status.dex);
 		break;
 	case SP_LUK:
-		clif_couplestatus(sd, type, sd->status.luk, sd->battle_status.luk - sd->status.luk);
+		clif_couplestatus(sd, type, sd.status.luk, sd.battle_status.luk - sd.status.luk);
 		break;
 
 	case SP_CARTINFO:
@@ -3738,32 +3738,32 @@ void clif_updatestatus( map_session_data *sd, int type ){
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	case SP_AP:
-		clif_par_change( sd, SP_AP, sd->battle_status.ap );
+		clif_par_change( sd, SP_AP, sd.battle_status.ap );
 		break;
 	case SP_TRAITPOINT:
-		clif_par_change( sd, SP_TRAITPOINT, sd->status.trait_point );
+		clif_par_change( sd, SP_TRAITPOINT, sd.status.trait_point );
 		break;
 	case SP_MAXAP:
-		clif_par_change( sd, SP_MAXAP, sd->battle_status.max_ap );
+		clif_par_change( sd, SP_MAXAP, sd.battle_status.max_ap );
 		break;
 
 	case SP_POW:
-		clif_couplestatus( sd, SP_POW, sd->status.pow, sd->battle_status.pow - sd->status.pow );
+		clif_couplestatus( sd, SP_POW, sd.status.pow, sd.battle_status.pow - sd.status.pow );
 		break;
 	case SP_STA:
-		clif_couplestatus( sd, SP_STA, sd->status.sta, sd->battle_status.sta - sd->status.sta );
+		clif_couplestatus( sd, SP_STA, sd.status.sta, sd.battle_status.sta - sd.status.sta );
 		break;
 	case SP_WIS:
-		clif_couplestatus( sd, SP_WIS, sd->status.wis, sd->battle_status.wis - sd->status.wis );
+		clif_couplestatus( sd, SP_WIS, sd.status.wis, sd.battle_status.wis - sd.status.wis );
 		break;
 	case SP_SPL:
-		clif_couplestatus( sd, SP_SPL, sd->status.spl, sd->battle_status.spl - sd->status.spl );
+		clif_couplestatus( sd, SP_SPL, sd.status.spl, sd.battle_status.spl - sd.status.spl );
 		break;
 	case SP_CON:
-		clif_couplestatus( sd, SP_CON, sd->status.con, sd->battle_status.con - sd->status.con );
+		clif_couplestatus( sd, SP_CON, sd.status.con, sd.battle_status.con - sd.status.con );
 		break;
 	case SP_CRT:
-		clif_couplestatus( sd, SP_CRT, sd->status.crt, sd->battle_status.crt - sd->status.crt );
+		clif_couplestatus( sd, SP_CRT, sd.status.crt, sd.battle_status.crt - sd.status.crt );
 		break;
 
 	case SP_UPOW:
@@ -3772,26 +3772,26 @@ void clif_updatestatus( map_session_data *sd, int type ){
 	case SP_USPL:
 	case SP_UCON:
 	case SP_UCRT:
-		clif_zc_status_change( sd, static_cast<uint16>( type ), static_cast<uint8>( pc_need_trait_point( sd, type - SP_UPOW + SP_POW, 1 ) ) );
+		clif_zc_status_change( sd, static_cast<uint16>( type ), static_cast<uint8>( pc_need_trait_point( &sd, type - SP_UPOW + SP_POW, 1 ) ) );
 		break;
 
 	case SP_PATK:
-		clif_par_change( sd, SP_PATK, sd->battle_status.patk );
+		clif_par_change( sd, SP_PATK, sd.battle_status.patk );
 		break;
 	case SP_SMATK:
-		clif_par_change( sd, SP_SMATK, sd->battle_status.smatk );
+		clif_par_change( sd, SP_SMATK, sd.battle_status.smatk );
 		break;
 	case SP_RES:
-		clif_par_change( sd, SP_RES, sd->battle_status.res );
+		clif_par_change( sd, SP_RES, sd.battle_status.res );
 		break;
 	case SP_MRES:
-		clif_par_change( sd, SP_MRES, sd->battle_status.mres );
+		clif_par_change( sd, SP_MRES, sd.battle_status.mres );
 		break;
 	case SP_HPLUS:
-		clif_par_change( sd, SP_HPLUS, sd->battle_status.hplus );
+		clif_par_change( sd, SP_HPLUS, sd.battle_status.hplus );
 		break;
 	case SP_CRATE:
-		clif_par_change( sd, SP_CRATE, sd->battle_status.crate );
+		clif_par_change( sd, SP_CRATE, sd.battle_status.crate );
 		break;
 #else
 	case SP_AP:
@@ -3827,22 +3827,22 @@ void clif_updatestatus( map_session_data *sd, int type ){
 	// Additional update packets that should be sent right after
 	switch( type ){
 		case SP_BASELEVEL:
-			if( sd->status.party_id ){
+			if( sd.status.party_id ){
 				struct party_data* p;
 				int i;
 		
-				if( ( p = party_search( sd->status.party_id ) ) != NULL ){
-					ARR_FIND(0, MAX_PARTY, i, p->party.member[i].char_id == sd->status.char_id);
+				if( ( p = party_search( sd.status.party_id ) ) != NULL ){
+					ARR_FIND(0, MAX_PARTY, i, p->party.member[i].char_id == sd.status.char_id);
 
 					if( i < MAX_PARTY ){
-						p->party.member[i].lv = sd->status.base_level;
-						clif_party_job_and_level( *sd );
+						p->party.member[i].lv = sd.status.base_level;
+						clif_party_job_and_level( sd );
 					}
 				}
 			}
 			break;
 		case SP_HP:
-			clif_update_hp(*sd);
+			clif_update_hp( sd );
 			break;
 	}
 }
@@ -4105,38 +4105,38 @@ void clif_initialstatus(map_session_data *sd) {
 
 	WFIFOSET(fd, packet_len(0xbd));
 
-	clif_updatestatus(sd, SP_STR);
-	clif_updatestatus(sd, SP_AGI);
-	clif_updatestatus(sd, SP_VIT);
-	clif_updatestatus(sd, SP_INT);
-	clif_updatestatus(sd, SP_DEX);
-	clif_updatestatus(sd, SP_LUK);
+	clif_updatestatus(*sd, SP_STR);
+	clif_updatestatus(*sd, SP_AGI);
+	clif_updatestatus(*sd, SP_VIT);
+	clif_updatestatus(*sd, SP_INT);
+	clif_updatestatus(*sd, SP_DEX);
+	clif_updatestatus(*sd, SP_LUK);
 
-	clif_updatestatus(sd, SP_ATTACKRANGE);
-	clif_updatestatus(sd, SP_ASPD);
+	clif_updatestatus(*sd, SP_ATTACKRANGE);
+	clif_updatestatus(*sd, SP_ASPD);
 
 #ifdef RENEWAL
-	clif_updatestatus(sd, SP_POW);
-	clif_updatestatus(sd, SP_STA);
-	clif_updatestatus(sd, SP_WIS);
-	clif_updatestatus(sd, SP_SPL);
-	clif_updatestatus(sd, SP_CON);
-	clif_updatestatus(sd, SP_CRT);
-	clif_updatestatus(sd, SP_PATK);
-	clif_updatestatus(sd, SP_SMATK);
-	clif_updatestatus(sd, SP_RES);
-	clif_updatestatus(sd, SP_MRES);
-	clif_updatestatus(sd, SP_HPLUS);
-	clif_updatestatus(sd, SP_CRATE);
-	clif_updatestatus(sd, SP_TRAITPOINT);
-	clif_updatestatus(sd, SP_AP);
-	clif_updatestatus(sd, SP_MAXAP);
-	clif_updatestatus(sd, SP_UPOW);
-	clif_updatestatus(sd, SP_USTA);
-	clif_updatestatus(sd, SP_UWIS);
-	clif_updatestatus(sd, SP_USPL);
-	clif_updatestatus(sd, SP_UCON);
-	clif_updatestatus(sd, SP_UCRT);
+	clif_updatestatus(*sd, SP_POW);
+	clif_updatestatus(*sd, SP_STA);
+	clif_updatestatus(*sd, SP_WIS);
+	clif_updatestatus(*sd, SP_SPL);
+	clif_updatestatus(*sd, SP_CON);
+	clif_updatestatus(*sd, SP_CRT);
+	clif_updatestatus(*sd, SP_PATK);
+	clif_updatestatus(*sd, SP_SMATK);
+	clif_updatestatus(*sd, SP_RES);
+	clif_updatestatus(*sd, SP_MRES);
+	clif_updatestatus(*sd, SP_HPLUS);
+	clif_updatestatus(*sd, SP_CRATE);
+	clif_updatestatus(*sd, SP_TRAITPOINT);
+	clif_updatestatus(*sd, SP_AP);
+	clif_updatestatus(*sd, SP_MAXAP);
+	clif_updatestatus(*sd, SP_UPOW);
+	clif_updatestatus(*sd, SP_USTA);
+	clif_updatestatus(*sd, SP_UWIS);
+	clif_updatestatus(*sd, SP_USPL);
+	clif_updatestatus(*sd, SP_UCON);
+	clif_updatestatus(*sd, SP_UCRT);
 #endif
 }
 
@@ -9929,23 +9929,23 @@ void clif_refresh(map_session_data *sd)
 	clif_equipswitch_list(sd);
 	if(pc_iscarton(sd)) {
 		clif_cartlist(sd);
-		clif_updatestatus(sd,SP_CARTINFO);
+		clif_updatestatus(*sd,SP_CARTINFO);
 	}
-	clif_updatestatus(sd,SP_WEIGHT);
-	clif_updatestatus(sd,SP_MAXWEIGHT);
-	clif_updatestatus(sd,SP_STR);
-	clif_updatestatus(sd,SP_AGI);
-	clif_updatestatus(sd,SP_VIT);
-	clif_updatestatus(sd,SP_INT);
-	clif_updatestatus(sd,SP_DEX);
-	clif_updatestatus(sd,SP_LUK);
+	clif_updatestatus(*sd,SP_WEIGHT);
+	clif_updatestatus(*sd,SP_MAXWEIGHT);
+	clif_updatestatus(*sd,SP_STR);
+	clif_updatestatus(*sd,SP_AGI);
+	clif_updatestatus(*sd,SP_VIT);
+	clif_updatestatus(*sd,SP_INT);
+	clif_updatestatus(*sd,SP_DEX);
+	clif_updatestatus(*sd,SP_LUK);
 #ifdef RENEWAL
-	clif_updatestatus(sd,SP_POW);
-	clif_updatestatus(sd,SP_STA);
-	clif_updatestatus(sd,SP_WIS);
-	clif_updatestatus(sd,SP_SPL);
-	clif_updatestatus(sd,SP_CON);
-	clif_updatestatus(sd,SP_CRT);
+	clif_updatestatus(*sd,SP_POW);
+	clif_updatestatus(*sd,SP_STA);
+	clif_updatestatus(*sd,SP_WIS);
+	clif_updatestatus(*sd,SP_SPL);
+	clif_updatestatus(*sd,SP_CON);
+	clif_updatestatus(*sd,SP_CRT);
 #endif
 	if (sd->spiritball)
 		clif_spiritball( &sd->bl, &sd->bl, SELF );
@@ -10871,12 +10871,12 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 	// cart
 	if(pc_iscarton(sd)) {
 		clif_cartlist(sd);
-		clif_updatestatus(sd,SP_CARTINFO);
+		clif_updatestatus(*sd,SP_CARTINFO);
 	}
 
 	// weight
-	clif_updatestatus(sd,SP_WEIGHT);
-	clif_updatestatus(sd,SP_MAXWEIGHT);
+	clif_updatestatus(*sd,SP_WEIGHT);
+	clif_updatestatus(*sd,SP_MAXWEIGHT);
 
 	// guild
 	// (needs to go before clif_spawn() to show guild emblems correctly)
@@ -10997,11 +10997,11 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
 		clif_hotkeys_send(sd,1);
 #endif
-		clif_updatestatus(sd,SP_BASEEXP);
-		clif_updatestatus(sd,SP_NEXTBASEEXP);
-		clif_updatestatus(sd,SP_JOBEXP);
-		clif_updatestatus(sd,SP_NEXTJOBEXP);
-		clif_updatestatus(sd,SP_SKILLPOINT);
+		clif_updatestatus(*sd,SP_BASEEXP);
+		clif_updatestatus(*sd,SP_NEXTBASEEXP);
+		clif_updatestatus(*sd,SP_JOBEXP);
+		clif_updatestatus(*sd,SP_NEXTJOBEXP);
+		clif_updatestatus(*sd,SP_SKILLPOINT);
 		clif_initialstatus(sd);
 
 		if (sd->sc.option&OPTION_FALCON)
@@ -11048,19 +11048,19 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 			unit_setdir(&sd->bl, sd->status.body_direction, false);
 	} else {
 		//For some reason the client "loses" these on warp/map-change.
-		clif_updatestatus(sd,SP_STR);
-		clif_updatestatus(sd,SP_AGI);
-		clif_updatestatus(sd,SP_VIT);
-		clif_updatestatus(sd,SP_INT);
-		clif_updatestatus(sd,SP_DEX);
-		clif_updatestatus(sd,SP_LUK);
+		clif_updatestatus(*sd,SP_STR);
+		clif_updatestatus(*sd,SP_AGI);
+		clif_updatestatus(*sd,SP_VIT);
+		clif_updatestatus(*sd,SP_INT);
+		clif_updatestatus(*sd,SP_DEX);
+		clif_updatestatus(*sd,SP_LUK);
 #ifdef RENEWAL
-		clif_updatestatus(sd,SP_POW);
-		clif_updatestatus(sd,SP_STA);
-		clif_updatestatus(sd,SP_WIS);
-		clif_updatestatus(sd,SP_SPL);
-		clif_updatestatus(sd,SP_CON);
-		clif_updatestatus(sd,SP_CRT);
+		clif_updatestatus(*sd,SP_POW);
+		clif_updatestatus(*sd,SP_STA);
+		clif_updatestatus(*sd,SP_WIS);
+		clif_updatestatus(*sd,SP_SPL);
+		clif_updatestatus(*sd,SP_CON);
+		clif_updatestatus(*sd,SP_CRT);
 #endif
 
 		// abort currently running script
