@@ -37,7 +37,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 		return; //Can't trade in notrade mapflag maps.
 	}
 
-	if (target_sd == NULL || sd == target_sd) {
+	if (target_sd == nullptr || sd == target_sd) {
 		clif_tradestart(sd, 1); // character does not exist
 		return;
 	}
@@ -110,7 +110,7 @@ void trade_tradeack(map_session_data *sd, int type)
 	if (sd->state.trading || !sd->trade_partner)
 		return; // Already trading or no partner set.
 
-	if ((tsd = map_id2sd(sd->trade_partner)) == NULL) {
+	if ((tsd = map_id2sd(sd->trade_partner)) == nullptr) {
 		clif_tradestart(sd, 1); // Character does not exist
 		sd->trade_partner=0;
 		return;
@@ -356,7 +356,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 	if( !sd->state.trading || sd->state.deal_locked > 0 )
 		return; // Can't add stuff.
 
-	if( (target_sd = map_id2sd(sd->trade_partner)) == NULL ) {
+	if( (target_sd = map_id2sd(sd->trade_partner)) == nullptr ) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -453,7 +453,7 @@ void trade_tradeaddzeny(map_session_data* sd, int amount)
 	if( !sd->state.trading || sd->state.deal_locked > 0 )
 		return; //Can't add stuff.
 
-	if( (target_sd = map_id2sd(sd->trade_partner)) == NULL ) {
+	if( (target_sd = map_id2sd(sd->trade_partner)) == nullptr ) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -478,7 +478,7 @@ void trade_tradeok(map_session_data *sd)
 	if(sd->state.deal_locked || !sd->state.trading)
 		return;
 
-	if ((target_sd = map_id2sd(sd->trade_partner)) == NULL) {
+	if ((target_sd = map_id2sd(sd->trade_partner)) == nullptr) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -569,7 +569,7 @@ void trade_tradecommit(map_session_data *sd)
 	if (!sd->state.trading || !sd->state.deal_locked) //Locked should be 1 (pressed ok) before you can press trade.
 		return;
 
-	if ((tsd = map_id2sd(sd->trade_partner)) == NULL) {
+	if ((tsd = map_id2sd(sd->trade_partner)) == nullptr) {
 		trade_tradecancel(sd);
 		return;
 	}

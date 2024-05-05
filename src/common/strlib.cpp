@@ -33,7 +33,7 @@ char* trim(char* str)
 	size_t start;
 	size_t end;
 
-	if( str == NULL )
+	if( str == nullptr )
 		return str;
 
 	// get start position
@@ -62,7 +62,7 @@ char* normalize_name(char* str,const char* delims)
 	char* out = str;
 	int put_space = 0;
 
-	if( str == NULL || delims == NULL )
+	if( str == nullptr || delims == nullptr )
 		return str;
 
 	// trim start of string
@@ -127,12 +127,12 @@ char* _strtok_r(char *s1, const char *s2, char **lasts)
 {
 	char *ret;
 
-	if (s1 == NULL)
+	if (s1 == nullptr)
 		s1 = *lasts;
 	while(*s1 && strchr(s2, *s1))
 		++s1;
 	if(*s1 == '\0')
-		return NULL;
+		return nullptr;
 	ret = s1;
 	while(*s1 && !strchr(s2, *s1))
 		++s1;
@@ -210,7 +210,7 @@ int e_mail_check(char* email)
 		return 0;
 
 	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[len-1] == '@')
+	if (strchr(email, '@') == nullptr || email[len-1] == '@')
 		return 0;
 
 	if (email[len-1] == '.')
@@ -218,14 +218,14 @@ int e_mail_check(char* email)
 
 	last_arobas = strrchr(email, '@');
 
-	if (strstr(last_arobas, "@.") != NULL || strstr(last_arobas, "..") != NULL)
+	if (strstr(last_arobas, "@.") != nullptr || strstr(last_arobas, "..") != nullptr)
 		return 0;
 
 	for(ch = 1; ch < 32; ch++)
-		if (strchr(last_arobas, ch) != NULL)
+		if (strchr(last_arobas, ch) != nullptr)
 			return 0;
 
-	if (strchr(last_arobas, ' ') != NULL || strchr(last_arobas, ';') != NULL)
+	if (strchr(last_arobas, ' ') != nullptr || strchr(last_arobas, ';') != nullptr)
 		return 0;
 
 	// all correct
@@ -243,7 +243,7 @@ int config_switch(const char* str)
 	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0)
 		return 0;
 
-	return (int)strtol(str, NULL, 0);
+	return (int)strtol(str, nullptr, 0);
 }
 
 /// strncpy that always nul-terminates the string
@@ -270,7 +270,7 @@ char* safestrncpy(char* dst, const char* src, size_t n)
 /// doesn't crash on null pointer
 size_t safestrnlen(const char* string, size_t maxlen)
 {
-	return ( string != NULL ) ? strnlen(string, maxlen) : 0;
+	return ( string != nullptr ) ? strnlen(string, maxlen) : 0;
 }
 
 /// Works like snprintf, but always nul-terminates the buffer.
@@ -305,14 +305,14 @@ int strline(const char* str, size_t pos)
 	const char* target;
 	int line;
 
-	if( str == NULL || pos == 0 )
+	if( str == nullptr || pos == 0 )
 		return 1;
 
 	target = str+pos;
 	for( line = 1; ; ++line )
 	{
 		str = strchr(str, '\n');
-		if( str == NULL || target <= str )
+		if( str == nullptr || target <= str )
 			break;// found target line
 		++str;// skip newline
 	}
@@ -376,7 +376,7 @@ int sv_parse_next( s_svstate& sv ){
 		return -1;// error
 	}
 
-	if( sv.done || str == NULL )
+	if( sv.done || str == nullptr )
 	{
 		sv.done = true;
 		return 0;// nothing to parse
@@ -498,7 +498,7 @@ int sv_parse_next( s_svstate& sv ){
 /// Other position pairs are the start and end of fields.
 /// Returns the number of fields found or -1 if an error occurs.
 ///
-/// out_pos can be NULL.
+/// out_pos can be nullptr.
 /// If a line terminator is found, the end position is placed there.
 /// out_pos[2] and out_pos[3] for the first field, out_pos[4] and out_pos[5]
 /// for the seconds field and so on.
@@ -571,7 +571,7 @@ size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_
 /// Other entries are the start of fields (nul-teminated).
 /// Returns the number of fields found or -1 if an error occurs.
 ///
-/// out_fields can be NULL.
+/// out_fields can be nullptr.
 /// Fields that don't fit in out_fields are not nul-terminated.
 /// Extra entries in out_fields are filled with the end of the last field (empty string).
 ///
@@ -676,14 +676,14 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 	size_t i;
 	size_t j;
 
-	if( out_dest == NULL )
+	if( out_dest == nullptr )
 		return 0;// nothing to do
-	if( src == NULL )
+	if( src == nullptr )
 	{// nothing to escape
 		*out_dest = 0;
 		return 0;
 	}
-	if( escapes == NULL )
+	if( escapes == nullptr )
 		escapes = "";
 
 	for( i = 0, j = 0; i < len; ++i )
@@ -814,7 +814,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 			}
 			else
 			{// other escape sequence
-				if( strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL )
+				if( strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == nullptr )
 					ShowWarning("sv_unescape_c: unknown escape sequence \\%c\n", src[i]);
 				switch( src[i] )
 				{
@@ -896,7 +896,7 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 
 	// open file
 	fp = fopen(path, "r");
-	if( fp == NULL )
+	if( fp == nullptr )
 	{
 		if(silent == 0) ShowError("sv_readdb: can't read %s\n", path);
 		return false;
@@ -912,7 +912,7 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 		char *match;
 		lines++;
 
-		if( ( match = strstr(line, "//") ) != NULL )
+		if( ( match = strstr(line, "//") ) != nullptr )
 		{// strip comments
 			match[0] = 0;
 		}
