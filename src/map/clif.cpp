@@ -2267,8 +2267,8 @@ void clif_buylist( map_session_data *sd, struct npc_data *nd ){
 }
 
 
-/// Presents list of items, that can be sold to an NPC shop (ZC_PC_SELL_ITEMLIST).
-/// 00c7 <packet len>.W { <index>.W <price>.L <overcharge price>.L }*
+/// Presents list of items, that can be sold to an NPC shop.
+/// 00c7 <packet len>.W { <index>.W <price>.L <overcharge price>.L }* (ZC_PC_SELL_ITEMLIST)
 void clif_selllist( map_session_data& sd){
 	if( !sd.npc_shopid ){
 		return;

@@ -89,7 +89,6 @@
 	packet(0x00c3,8);
 	parseable_packet(0x00c5,7,clif_parse_NpcBuySellSelected,2,6);
 	packet(0x00c6,-1);
-	packet(0x00c7,-1);
 	parseable_packet(0x00c8,-1,clif_parse_NpcBuyListSend,2,4);
 	parseable_packet(HEADER_CZ_PC_SELL_ITEMLIST,-1,clif_parse_NpcSellListSend,2,4);
 	packet(0x00ca,3);
