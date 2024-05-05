@@ -6911,7 +6911,8 @@ BUILDIN_FUNC(cutin)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
-	clif_cutin(sd,script_getstr(st,2),script_getnum(st,3));
+	clif_cutin( *sd, script_getstr( st, 2 ), script_getnum( st, 3 ) );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 

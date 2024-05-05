@@ -2687,20 +2687,14 @@ void clif_viewpoint( map_session_data& sd, uint32 npc_id, int type, uint16 x, ui
 ///     3 = middle of screen, inside a movable window
 ///     4 = middle of screen, movable with a close button, chrome-less
 ///   255 = clear all displayed cutins
-void clif_cutin(map_session_data* sd, const char* image, int type)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+void clif_cutin( map_session_data& sd, const char* image, int type ){
 	PACKET_ZC_SHOW_IMAGE packet{};
 
 	packet.packetType = HEADER_ZC_SHOW_IMAGE;
 	safestrncpy(packet.image, image, sizeof(packet.image));
 	packet.type = type;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

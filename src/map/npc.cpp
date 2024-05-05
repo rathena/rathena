@@ -2306,7 +2306,7 @@ bool npc_scriptcont(map_session_data* sd, int id, bool closing){
 			case CLOSE:
 				sd->st->state = END;
 				if (sd->st->clear_cutin)
-					clif_cutin(sd,"",255);
+					clif_cutin( *sd, "", 255 );
 				break;
 			// close2
 			case STOP:
