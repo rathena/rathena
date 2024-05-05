@@ -22101,3 +22101,7 @@ Body:
       Third_Upper: true
       Third_Baby: true
     EquipLevelMin: 1
+
+Footer:
+  Imports:
+    - Path: db/import/item_db_usable.yml

@@ -1,0 +1,33 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 27029
+    AegisName: Fire_Golem_Card
+    Name: Fire Golem Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Fire,20;
+      bonus2 bAddEle,Ele_Fire,5;
+  - Id: 1000552
+    AegisName: Evil_Water
+    Name: Evil Water
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000889
+    AegisName: Mixed_Fruits_Juice
+    Name: Compound Fruit Juice
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true

@@ -1,0 +1,922 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 9001
+    AegisName: Poring_Egg
+    Name: Poring Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9002
+    AegisName: Drops_Egg
+    Name: Drops Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9003
+    AegisName: Poporing_Egg
+    Name: Poporing Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9004
+    AegisName: Lunatic_Egg
+    Name: Lunatic Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9005
+    AegisName: Picky_Egg
+    Name: Picky Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9006
+    AegisName: Chonchon_Egg
+    Name: Chonchon Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9007
+    AegisName: Steel_Chonchon_Egg
+    Name: Steel Chonchon Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9008
+    AegisName: Hunter_Fly_Egg
+    Name: Hunter Fly Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9009
+    AegisName: Savage_Bebe_Egg
+    Name: Savage Babe Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9010
+    AegisName: Baby_Desert_Wolf_Egg
+    Name: Baby Desert Wolf Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9011
+    AegisName: Rocker_Egg
+    Name: Rocker Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9012
+    AegisName: Spore_Egg
+    Name: Spore Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9013
+    AegisName: Poison_Spore_Egg
+    Name: Poison Spore Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9014
+    AegisName: PecoPeco_Egg
+    Name: Peco Peco Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9015
+    AegisName: Smokie_Egg
+    Name: Smokie Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9016
+    AegisName: Yoyo_Egg
+    Name: Yoyo Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9017
+    AegisName: Orc_Warrior_Egg
+    Name: Orc Warrior Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9018
+    AegisName: Munak_Egg
+    Name: Munak Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9019
+    AegisName: Dokkaebi_Egg
+    Name: Dokebi Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9020
+    AegisName: Sohee_Egg
+    Name: Sohee Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9021
+    AegisName: Isis_Egg
+    Name: Isis Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9022
+    AegisName: Green_Petite_Egg
+    Name: Green Petite Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9023
+    AegisName: Deviruchi_Egg
+    Name: Deviruchi Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9024
+    AegisName: Bapho_Jr._Egg
+    Name: Bapho Jr. Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9025
+    AegisName: Bongun_Egg
+    Name: Bongun Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9026
+    AegisName: Zherlthsh_Egg
+    Name: Zealotus Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9027
+    AegisName: Alice_Egg
+    Name: Alice Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9028
+    AegisName: Rice_Cake_Egg
+    Name: Hard Rice Cake
+    Type: Petegg
+    Buy: 20
+    Trade:
+      NoDrop: true
+  - Id: 9029
+    AegisName: Santa_Goblin_Egg
+    Name: Christmas Goblin's Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9030
+    AegisName: Chung_E_Egg
+    Name: Green Maiden Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9031
+    AegisName: Spring_Rabbit_Egg
+    Name: Spring Rabbit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9032
+    AegisName: Knife_Goblin_Egg
+    Name: Knife Goblin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9033
+    AegisName: Flail_Goblin_Egg
+    Name: Flail Goblin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9034
+    AegisName: Hammer_Goblin_Egg
+    Name: Hammer Goblin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9035
+    AegisName: Red_Deleter_Egg
+    Name: Red Deleter Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9036
+    AegisName: Diabolic_Egg
+    Name: Diabolic Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9037
+    AegisName: Wanderer_Egg
+    Name: Wanderer Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9038
+    AegisName: New_Year_Doll_Egg
+    Name: New Year Doll Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9039
+    AegisName: Bacsojin_Egg
+    Name: Bacsojin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9040
+    AegisName: Civil_Servant_Egg
+    Name: Civil Servant Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9041
+    AegisName: Leaf_Cat_Egg
+    Name: Leaf Cat Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9042
+    AegisName: Loli_Ruri_Egg
+    Name: Loli Ruri Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9043
+    AegisName: Marionette_Egg
+    Name: Marionette Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9044
+    AegisName: Shinobi_Egg
+    Name: Shinobi Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9045
+    AegisName: Whisper_Egg
+    Name: Whisper Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9046
+    AegisName: Goblin_Leader_Egg
+    Name: Goblin Leader Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9047
+    AegisName: Wicked_Nymph_Egg
+    Name: Wicked Nymph Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9048
+    AegisName: Miyabi_Ningyo_Egg
+    Name: Miyabi Ningyo Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9049
+    AegisName: Dullahan_Egg
+    Name: Dullahan Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9050
+    AegisName: Medusa_Egg
+    Name: Medusa Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9051
+    AegisName: Stone_Shooter_Egg
+    Name: Stone Shooter Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9052
+    AegisName: Incubus_Egg
+    Name: Incubus Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9053
+    AegisName: Golem_Egg
+    Name: Golem Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9054
+    AegisName: Nightmare_Terror_Egg
+    Name: Nightmare Terror Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9055
+    AegisName: Succubus_Egg
+    Name: Succubus Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9056
+    AegisName: Imp_Egg
+    Name: Imp Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9057
+    AegisName: Egg_Of_Tiny
+    Name: Egg Of Tiny
+    Type: Petegg
+    Buy: 20
+  - Id: 9058
+    AegisName: Snow_Rabbit_Egg
+    Name: Christmas Snow Rabbit Egg
+    Type: Petegg
+    Buy: 20
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 9059
+    AegisName: Tikbalang_Pet
+    Name: Tikbalang Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9060
+    AegisName: Brownie_Egg
+    Name: Domovoi Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9061
+    AegisName: Marin_Egg
+    Name: Marin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9062
+    AegisName: Novice_Poring_Egg
+    Name: Novice Poring Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9063
+    AegisName: Woodie_Egg
+    Name: Woodie Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9064
+    AegisName: Elephant_Egg
+    Name: Elephant Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9065
+    AegisName: Gorilla_Egg
+    Name: Gorilla Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9066
+    AegisName: Lion_Egg
+    Name: Lion Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9067
+    AegisName: Rhino_Egg
+    Name: Rhino Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9068
+    AegisName: Blue_Unicorn_Egg
+    Name: Blue Unicorn Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9069
+    AegisName: Mastering_Egg
+    Name: Mastering Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9070
+    AegisName: Savage_Egg
+    Name: Savage Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9071
+    AegisName: Grand_Peco_Egg
+    Name: Grand Peco Peco Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9072
+    AegisName: Orc_Hero_Egg
+    Name: Orc Hero Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9073
+    AegisName: Orc_Lord_Egg
+    Name: Orc Lord Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9074
+    AegisName: Rubylit_Egg
+    Name: Rubylit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9075
+    AegisName: Sapphilit_Egg
+    Name: Sapphilit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9076
+    AegisName: Emelit_Egg
+    Name: Emelit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9077
+    AegisName: Topalit_Egg
+    Name: Topalit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9078
+    AegisName: Amelit_Egg
+    Name: Amelit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9079
+    AegisName: Mythlit_Egg
+    Name: Mythlit Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9080
+    AegisName: Tamadora_Egg
+    Name: Tamadora Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9087
+    AegisName: High_Orc_Egg
+    Name: High Orc Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9088
+    AegisName: Angeling_Egg
+    Name: Angeling Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9089
+    AegisName: Ammut_Egg
+    Name: Am Mut Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9090
+    AegisName: Littleisis_Egg
+    Name: Little Isis Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9091
+    AegisName: Choco_Egg
+    Name: Choco Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9092
+    AegisName: Eggring_Egg
+    Name: Eggring Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9093
+    AegisName: Hyegun_Egg
+    Name: Hyegun Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9094
+    AegisName: Leaf_Lunatic_Egg
+    Name: Leaf Lunatic Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9095
+    AegisName: Nine_Tail_Egg
+    Name: Nine Tail Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9096
+    AegisName: Cat_O_Nine_Tail_Egg
+    Name: Cat o Nine Tail Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9097
+    AegisName: Diabolic_Egg2
+    Name: Diabolic Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9098
+    AegisName: Red_Deleter_Egg2
+    Name: Fire Deleter Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9099
+    AegisName: Teddy_Bear_Egg
+    Name: Teddy Bear Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9100
+    AegisName: Gremlin_Egg
+    Name: Gremlin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9101
+    AegisName: Scatletoncarrier
+    Name: Scatleton's Cage
+    Type: Petegg
+    Buy: 20
+  - Id: 9102
+    AegisName: Mummy_Egg
+    Name: Mummy Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9103
+    AegisName: Wilow_Egg
+    Name: Willow Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9104
+    AegisName: Roween_Egg
+    Name: Roween Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9105
+    AegisName: Hodremlin_Egg
+    Name: Hodremlin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9106
+    AegisName: Metaller_Egg
+    Name: Metaller Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9107
+    AegisName: Ancient_Mummy_Egg
+    Name: Ancient Mummy Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9108
+    AegisName: Xm_Teddybear_Egg
+    Name: Xmas Teddy Bear Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9109
+    AegisName: Sweets_Drops_Egg
+    Name: Sweet Drops Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9111
+    AegisName: Phreeoni_Egg
+    Name: Phreeoni Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9112
+    AegisName: Moonlight_Egg
+    Name: Moonlight Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9113
+    AegisName: Roost_Of_Skelion
+    Name: Roost Of Skelion
+    Type: Petegg
+    Buy: 20
+  - Id: 9114
+    AegisName: Pouring_Egg
+    Name: Pouring Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9115
+    AegisName: Bacsojin_Egg2
+    Name: Bacsojin Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9116
+    AegisName: Nightmare_TerrorH_EGG
+    Name: Rigid Nightmare Terror Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9117
+    AegisName: Wanderer_H_EGG
+    Name: Contaminated Wanderer Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9118
+    AegisName: Aliot_EGG
+    Name: Aliot Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9119
+    AegisName: Alicel_EGG
+    Name: Alicel Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9120
+    AegisName: Aliza_EGG
+    Name: Aliza Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9121
+    AegisName: Ork_Hero_EGG
+    Name: Orc Hero Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9122
+    AegisName: Gloom_Under_Egg
+    Name: Gloom Under Night Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9123
+    AegisName: Ep17_2_C_Admin1_Egg
+    Name: Child Admin Beta Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9124
+    AegisName: Ep17_2_C_Admin2_Egg
+    Name: Child Admin Alpha Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9125
+    AegisName: E_Duckling_Egg
+    Name: Wandering Duck Doll Egg
+    Type: PetEgg
+  - Id: 9126
+    AegisName: Kiel_Egg
+    Name: Kiel-D-01 Egg
+    Type: PetEgg
+    Buy: 20
+  - Id: 9128
+    AegisName: Dark_Priest_Egg
+    Name: Dark Priest Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9129
+    AegisName: Desert_Wolf_Egg
+    Name: Desert Wolf Egg
+    Type: PetEgg
+  - Id: 9130
+    AegisName: Chaos_Bapho_Jr_Egg
+    Name: Chaotic Baphomet Junior Egg
+    Type: PetEgg
+  - Id: 9131
+    AegisName: Fire_Golem_Egg
+    Name: Fire Golem Egg
+    Type: PetEgg
+  - Id: 9132
+    AegisName: Abyss_Knight_Egg
+    Name: Abysmal Knight Egg
+    Type: PetEgg
+  - Id: 9133
+    AegisName: Change_W_Knight_Egg
+    Name: Mutated White Knight Egg
+    Type: PetEgg
+  - Id: 9134
+    AegisName: White_Knight_Egg
+    Name: White Knight Egg
+    Type: PetEgg
+  - Id: 9137
+    AegisName: Baphomet_Egg
+    Name: Baphomet Egg
+    Type: PetEgg
+  - Id: 9138
+    AegisName: Farmiliar_Egg
+    Name: Familiar Egg
+    Type: PetEgg
+  - Id: 9139
+    AegisName: Dark_Illusion_Egg
+    Name: Dark Illusion Egg
+    Type: PetEgg
+  - Id: 9140
+    AegisName: Blue_Moon_Loli_Ruri_Egg
+    Name: Blue Moon Loli Ruri Egg
+    Type: PetEgg
+  - Id: 9141
+    AegisName: Wild_Rose_Egg2
+    Name: Wild Rose Egg
+    Type: PetEgg
+  - Id: 9142
+    AegisName: Eddga_Egg2
+    Name: Eddga Egg
+    Type: PetEgg
+  - Id: 9144
+    AegisName: Larva_Violet_Egg
+    Name: Violet Egg
+    Type: PetEgg
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 9145
+    AegisName: Copo_Egg
+    Name: Copo Egg
+    Type: PetEgg
+  - Id: 9146
+    AegisName: Grey_Icewind_Egg
+    Name: Gray Icewind Egg
+    Type: PetEgg
+  - Id: 9147
+    AegisName: Icewind_Egg
+    Name: Icewind Egg
+    Type: PetEgg
+  - Id: 9148
+    AegisName: Dark_Lord_Egg
+    Name: Dark Lord Egg
+    Type: PetEgg
+  - Id: 9156
+    AegisName: Sonic_Chao_Egg
+    Name: Chao Egg
+    Type: PetEgg
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 10001
+    AegisName: Skull_Helm
+    Name: Skull Helm
+    Type: Petarmor
+    Buy: 20
+  - Id: 10002
+    AegisName: Monster_Oxygen_Mask
+    Name: Monster Oxygen Mask
+    Type: Petarmor
+    Buy: 20
+  - Id: 10003
+    AegisName: Transparent_Headgear
+    Name: Transparent Head Protector
+    Type: Petarmor
+    Buy: 20
+  - Id: 10004
+    AegisName: Pacifier
+    Name: Pacifier
+    Type: Petarmor
+    Buy: 20
+  - Id: 10005
+    AegisName: Wig
+    Name: Wig
+    Type: Petarmor
+    Buy: 20
+  - Id: 10006
+    AegisName: Queen's_Hair_Ornament
+    Name: Queen's Hair Ornament
+    Type: Petarmor
+    Buy: 20
+  - Id: 10007
+    AegisName: Silk_Ribbon
+    Name: Silk Ribbon
+    Type: Petarmor
+    Buy: 20
+  - Id: 10008
+    AegisName: Punisher
+    Name: Punisher
+    Type: Petarmor
+    Buy: 20
+  - Id: 10009
+    AegisName: Wild_Flower
+    Name: Wild Flower
+    Type: Petarmor
+    Buy: 20
+  - Id: 10010
+    AegisName: Battered_Pot
+    Name: Battered Pot
+    Type: Petarmor
+    Buy: 20
+  - Id: 10011
+    AegisName: Stellar_Hairpin
+    Name: Stellar Hairpin
+    Type: Petarmor
+    Buy: 20
+  - Id: 10012
+    AegisName: Tiny_Egg_Shell
+    Name: Tiny Egg Shell
+    Type: Petarmor
+    Buy: 20
+  - Id: 10013
+    AegisName: Backpack
+    Name: Backpack
+    Type: Petarmor
+    Buy: 1500
+  - Id: 10014
+    AegisName: Rocker_Glasses
+    Name: Rocker Glasses
+    Type: Petarmor
+    Buy: 2000
+  - Id: 10015
+    AegisName: Green_Lace
+    Name: Green Lace
+    Type: Petarmor
+    Buy: 20
+  - Id: 10016
+    AegisName: Golden_Bell
+    Name: Golden Bell
+    Type: Petarmor
+    Buy: 20
+  - Id: 10017
+    AegisName: Bark_Shorts
+    Name: Bark Shorts
+    Type: Petarmor
+    Buy: 20
+  - Id: 10018
+    AegisName: Monkey_Circlet
+    Name: Monkey Circlet
+    Type: Petarmor
+    Buy: 20
+  - Id: 10019
+    AegisName: Red_Muffler
+    Name: Red Scarf
+    Type: Petarmor
+    Buy: 20
+  - Id: 10020
+    AegisName: Sword_Of_Grave_Keeper
+    Name: Grave Keeper's Sword
+    Type: Petarmor
+    Buy: 20
+  - Id: 10021
+    AegisName: Round_Hair_Ornament
+    Name: Circular Headgear
+    Type: Petarmor
+    Buy: 20
+  - Id: 10022
+    AegisName: Golden_Earing
+    Name: Gold Earring
+    Type: Petarmor
+    Buy: 20
+  - Id: 10023
+    AegisName: Green_Lucky_Bag
+    Name: Green Jewel Bag
+    Type: Petarmor
+    Buy: 20
+  - Id: 10024
+    AegisName: Fashionable_Glasses
+    Name: Fashion Glasses
+    Type: Petarmor
+    Buy: 20
+  - Id: 10025
+    AegisName: Star_Hairband
+    Name: Hairband Of Stars
+    Type: Petarmor
+    Buy: 20
+  - Id: 10026
+    AegisName: Wine_On_Sleeve
+    Name: Tassel for Durumagi
+    Type: Petarmor
+    Buy: 20
+  - Id: 10027
+    AegisName: Spirit_Chain_
+    Name: Pet Soul Ring
+    Type: Petarmor
+    Buy: 20
+  - Id: 10028
+    AegisName: Nice_Badge
+    Name: Beautiful Badges
+    Type: Petarmor
+    Buy: 20
+  - Id: 10029
+    AegisName: Jade_Trinket
+    Name: Jade Trinket
+    Type: Petarmor
+    Buy: 20
+  - Id: 10030
+    AegisName: Summer_Fan
+    Name: Summer Fan
+    Type: Petarmor
+    Buy: 20
+  - Id: 10031
+    AegisName: Death_Coil
+    Name: Ring Of Death
+    Type: Petarmor
+    Buy: 20
+  - Id: 10032
+    AegisName: Queen's_Coronet
+    Name: Queen's Coronet
+    Type: Petarmor
+    Buy: 20
+  - Id: 10033
+    AegisName: Apro_Hair
+    Name: Afro
+    Type: Petarmor
+    Buy: 20
+  - Id: 10034
+    AegisName: Ball_Mask
+    Name: Masked Ball
+    Type: Petarmor
+    Buy: 20
+  - Id: 10035
+    AegisName: Windup_Spring
+    Name: Spring
+    Type: Petarmor
+    Buy: 20
+  - Id: 10036
+    AegisName: Hell_Horn
+    Name: Horn Of Hell
+    Type: Petarmor
+    Buy: 20
+  - Id: 10037
+    AegisName: Black_Butterfly_Mask
+    Name: Black Butterfly Mask
+    Type: Petarmor
+    Buy: 20
+  - Id: 10038
+    AegisName: Horn_Protector
+    Name: Horn Barrier
+    Type: Petarmor
+    Buy: 20
+  - Id: 10039
+    AegisName: Tw_Backpack
+    Name: Tw Backpack
+    Type: Petarmor
+    Buy: 20
+  - Id: 10040
+    AegisName: Red_Chorker_Bell
+    Name: Red Bell Necklace
+    Type: Petarmor
+    Buy: 20
+  - Id: 10041
+    AegisName: Twinkle_Star_Button
+    Name: Shiny Star Button
+    Type: Petarmor
+    Buy: 20
+  - Id: 10042
+    AegisName: Dark_Mane
+    Name: Dark Mane
+    Type: Petarmor
+    Buy: 20
+  - Id: 10043
+    AegisName: Ep_17_2_C_Admin1_Acc
+    Name: Little Headdress Beta
+    Type: PetArmor
+  - Id: 10044
+    AegisName: Ep_17_2_C_Admin2_Acc
+    Name: Little Headdress Alpha
+    Type: PetArmor
+  - Id: 10045
+    AegisName: C_Twinkle_Star_Button
+    Name: Duck Doll's Star Button
+    Type: PetArmor
+    Weight: 10

@@ -1,0 +1,14 @@
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  - Id: 101331
+    AegisName: Fruits_Set_Trap
+    Name: Fruit Set Trap
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      pet 1005;

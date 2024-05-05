@@ -203,6 +203,458 @@ Body:
     Drops:
       - Item: Tooth_Of_
         Rate: 5500
+  - Id: 2200
+    AegisName: J_TAINI
+    Name: Taini
+    Level: 1
+    Hp: 1
+    AttackRange: 1
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    AttackDelay: 432
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 02
+  - Id: 2210
+    AegisName: XMAS_LUNATIC
+    Name: Christmas Snow Rabbit
+    JapaneseName: Xmas Lunatic
+    Level: 3
+    Hp: 48
+    Attack: 1
+    Attack2: 1
+    Defense: 18
+    Str: 10
+    Agi: 3
+    Vit: 3
+    Dex: 8
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1456
+    AttackMotion: 456
+    DamageMotion: 336
+    Ai: 02
+    Drops:
+      - Item: Well_Baked_Cookie
+        Rate: 5000
+      - Item: Buche_De_Noel
+        Rate: 2000
+      - Item: Event_Cake
+        Rate: 2000
+      - Item: Mushroom_Pancake
+        Rate: 1000
+      - Item: Red_Bag
+        Rate: 500
+      - Item: Snow_Flower
+        Rate: 500
+      - Item: J_Firecracker
+        Rate: 2000
+      - Item: C_Cat_Santa_Hat
+        Rate: 10
+        StealProtected: true
+  - Id: 2313
+    AegisName: TIKBALANG
+    Name: Tikbalang
+    Level: 115
+    Hp: 22131
+    BaseExp: 2246
+    JobExp: 2150
+    Attack: 781
+    Attack2: 115
+    Defense: 84
+    MagicDefense: 34
+    Str: 71
+    Agi: 52
+    Vit: 84
+    Int: 44
+    Dex: 64
+    Luk: 46
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 1064
+    AttackMotion: 936
+    DamageMotion: 360
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Tikbalang_Thick_Spine
+        Rate: 500
+      - Item: Oridecon
+        Rate: 10
+      - Item: Insideout_Shirt
+        Rate: 100
+      - Item: Tikbalang_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 2398
+    AegisName: LITTLE_PORING
+    Name: Little Poring
+    Level: 1
+    Hp: 40
+    BaseExp: 18
+    JobExp: 10
+    Attack: 8
+    Attack2: 1
+    Defense: 2
+    MagicDefense: 5
+    Str: 6
+    Dex: 6
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 9000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Apple
+        Rate: 5000
+      - Item: Red_Herb
+        Rate: 1000
+      - Item: Apple
+        Rate: 500
+      - Item: Red_Herb
+        Rate: 1000
+      - Item: Novice_Poring_Card
+        Rate: 100
+        StealProtected: true
+  - Id: 2995
+    AegisName: XM_TEDDY_BEAR
+    Name: Abandoned Teddy Bear
+    Level: 148
+    Hp: 180000
+    BaseExp: 6666
+    JobExp: 7332
+    Attack: 1444
+    Attack2: 1444
+    Defense: 106
+    MagicDefense: 44
+    Str: 44
+    Agi: 166
+    Vit: 44
+    Int: 44
+    Dex: 166
+    Luk: 44
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 20
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Screw
+        Rate: 1900
+      - Item: Oridecon_Hammer
+        Rate: 150
+      - Item: Str_Dish09
+        Rate: 100
+      - Item: Runstone_Quality
+        Rate: 1000
+      - Item: Runstone_Rare
+        Rate: 100
+      - Item: XM_Teddy_Bear_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3495
+    AegisName: DR_EGGRING
+    Name: Eggring
+    Level: 1
+    Hp: 50
+    BaseExp: 50
+    JobExp: 35
+    Attack: 1
+    Attack2: 1
+    Defense: 2
+    MagicDefense: 4
+    Str: 6
+    Dex: 6
+    Luk: 4
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Apple
+        Rate: 1000
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Phracon
+        Rate: 30
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Apple
+        Rate: 150
+      - Item: Apple
+        Rate: 20
+      - Item: Eggring_Card
+        Rate: 20
+        StealProtected: true
+  - Id: 3496
+    AegisName: DR_LUNATIC
+    Name: Leaf Lunatic
+    Level: 3
+    Hp: 44
+    BaseExp: 50
+    JobExp: 35
+    Attack: 1
+    Attack2: 1
+    Defense: 16
+    Str: 9
+    Vit: 2
+    Dex: 7
+    Luk: 4
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1456
+    AttackMotion: 456
+    DamageMotion: 336
+    Ai: 01
+    Drops:
+      - Item: Clover
+        Rate: 7000
+      - Item: Feather
+        Rate: 3000
+      - Item: Pierrot_Nose
+        Rate: 4
+      - Item: Apple
+        Rate: 1000
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Carrot
+        Rate: 3000
+      - Item: Phracon
+        Rate: 30
+      - Item: Leaf_Lunatic_Card
+        Rate: 10
+        StealProtected: true
+  - Id: 3636
+    AegisName: LITTLE_ISIS
+    Name: Little Isis
+    Level: 59
+    Hp: 2092
+    BaseExp: 279
+    JobExp: 298
+    Attack: 202
+    Attack2: 37
+    Defense: 83
+    MagicDefense: 5
+    Str: 58
+    Agi: 43
+    Vit: 22
+    Int: 5
+    Dex: 43
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1384
+    AttackMotion: 768
+    DamageMotion: 336
+    Ai: 09
+    Modes:
+      Detector: true
+  - Id: 3669
+    AegisName: DIABOLIC2
+    Name: Diabolic2
+    Level: 104
+    Hp: 10572
+    BaseExp: 1086
+    JobExp: 1073
+    Attack: 707
+    Attack2: 200
+    Defense: 68
+    MagicDefense: 61
+    Str: 103
+    Agi: 80
+    Vit: 53
+    Int: 65
+    Dex: 94
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+    Ai: 04
+    Modes:
+      Detector: true
+  - Id: 3670
+    AegisName: DELETER_2
+    Name: Deleter 2
+    Level: 105
+    Hp: 10000
+    BaseExp: 1049
+    JobExp: 1038
+    Attack: 663
+    Attack2: 211
+    Defense: 114
+    MagicDefense: 53
+    Str: 98
+    Agi: 72
+    Vit: 65
+    Int: 49
+    Dex: 68
+    Luk: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1024
+    AttackMotion: 624
+    DamageMotion: 336
+    Ai: 13
+  - Id: 3790
+    AegisName: SWEETS_DROPS
+    Name: Sweets Drops
+    Level: 1
+    Hp: 20
+    Attack: 12
+    Attack2: 13
+    Defense: 16
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 440
+    AttackDelay: 1372
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Stolen_Cacao
+        Rate: 10000
+      - Item: Stolen_Cacao
+        Rate: 7000
+  - Id: 20696
+    AegisName: EP17_2_CHILD_ADMIN1
+    Name: Child Admin Beta
+    Level: 130
+    Hp: 130
+    Attack: 10
+    Attack2: 10
+    Defense: 10
+    MagicDefense: 10
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1152
+    AttackMotion: 1344
+    DamageMotion: 480
+    Ai: 01
+  - Id: 20697
+    AegisName: EP17_2_CHILD_ADMIN2
+    Name: Child Admin Alpha
+    Level: 180
+    Hp: 180
+    Attack: 10
+    Attack2: 10
+    Defense: 10
+    MagicDefense: 10
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1152
+    AttackMotion: 1344
+    DamageMotion: 480
+    Ai: 01
+# CUSTOM: ================================ Custom Dropping Mobs ================================ #
   - Id: 1734
     AegisName: KIEL_
     Name: Kiel D-01
@@ -424,3 +876,135 @@ Body:
     Name: Skogul
     BaseExp: 27620
     JobExp: 13810
+# CUSTOM: ========================= PET DB ========================== #
+  - Id: 3023
+    AegisName: FIRE_GOLEM
+    Name: Fire Golem
+    Level: 148
+    Hp: 180213
+    BaseExp: 8912
+    JobExp: 9464
+    Attack: 1478
+    Attack2: 1321
+    Defense: 50
+    MagicDefense: 50
+    Str: 70
+    Agi: 78
+    Vit: 267
+    Int: 25
+    Dex: 84
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1608
+    AttackMotion: 816
+    DamageMotion: 396
+    Ai: 04
+    Drops:
+      # - Item: Stone_Of_Blessing
+      #   Rate: 2000
+      # - Item: ToothOfFlameGolem
+      #   Rate: 1500
+      - Item: Fire_Golem_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20420
+    AegisName: WANDER_MAN_H
+    Name: Corrupted Wanderer
+    Level: 187
+    Hp: 2387582
+    BaseExp: 170542
+    JobExp: 119379
+    Attack: 4114
+    Attack2: 835
+    Defense: 50
+    MagicDefense: 50
+    Str: 176
+    Agi: 121
+    Vit: 34
+    Int: 67
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 672
+    AttackMotion: 500
+    DamageMotion: 192
+    Ai: 21
+    Drops:
+      # - Item: Skull
+      #   Rate: 2425
+      # - Item: Centimental_Leaf
+      #   Rate: 3
+      # - Item: Oridecon
+      #   Rate: 57
+      # - Item: Zelunium_Ore
+      #   Rate: 120
+      # - Item: T_Sword_Of_Kingdom
+      #   Rate: 50
+      #   RandomOptionGroup: AGW1
+      # - Item: Shadowdecon_Ore
+      #   Rate: 120
+      # - Item: Polluted_W_Man_Card
+      #   Rate: 1
+      #   StealProtected: true
+  - Id: 20373
+    AegisName: NIGHTMARE_TERROR_H
+    Name: Rigid Nightmare Terror
+    Level: 179
+    Hp: 1218702
+    BaseExp: 110791
+    JobExp: 77554
+    Attack: 1812
+    Attack2: 2220
+    Defense: 50
+    MagicDefense: 50
+    Str: 81
+    Agi: 149
+    Vit: 21
+    Int: 186
+    Dex: 129
+    Luk: 61
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 1216
+    AttackMotion: 816
+    DamageMotion: 432
+    Ai: 21
+    Drops:
+      # - Item: Burning_Horse_Shoe
+      #   Rate: 2100
+      # - Item: Blue_Potion
+      #   Rate: 15
+      # - Item: Blue_Herb
+      #   Rate: 25
+      # - Item: Shadowdecon_Ore
+      #   Rate: 80
+      # - Item: Lava_Leather_Manteau
+      #   Rate: 50
+      #   RandomOptionGroup: MAGMA3
+      # - Item: Magma_Essence
+      #   Rate: 5
+      # - Item: Zelunium_Ore
+      #   Rate: 80
+      # - Item: Firm_Nightmare_T_Card
+      #   Rate: 1
+      #   StealProtected: true
