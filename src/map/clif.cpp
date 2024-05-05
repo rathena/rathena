@@ -2181,7 +2181,7 @@ void clif_changemapserver( map_session_data& sd, const char* map, uint16 x, uint
 void clif_blown(struct block_list *bl)
 {
 	clif_slide(bl, bl->x, bl->y);
-	clif_fixpos(bl);
+	clif_fixpos( *bl );
 }
 
 
@@ -2189,24 +2189,19 @@ void clif_blown(struct block_list *bl)
 /// isn't walkable, the char doesn't move at all. If the char is
 /// sitting it will stand up (ZC_STOPMOVE).
 /// 0088 <id>.L <x>.W <y>.W
-void clif_fixpos(struct block_list *bl)
-{
-	// TODO: Convert bl to reference
-	if (bl == nullptr) {
-		return;
-	}
-	
-	PACKET_ZC_STOPMOVE *packet = reinterpret_cast<PACKET_ZC_STOPMOVE*>(packet_buffer);
+void clif_fixpos( block_list& bl ){	
+	PACKET_ZC_STOPMOVE packet = {};
 
-	packet->packetType = HEADER_ZC_STOPMOVE;
-	packet->AID = bl->id;
-	packet->xPos = bl->x;
-	packet->yPos = bl->y;
-	clif_send(packet, sizeof(*packet), bl, AREA);
+	packet.packetType = HEADER_ZC_STOPMOVE;
+	packet.AID = bl.id;
+	packet.xPos = bl.x;
+	packet.yPos = bl.y;
 
-	if(disguised(bl)) {
-		packet->AID = disguised_bl_id(bl->id);
-		clif_send(packet, sizeof(*packet), bl, SELF);
+	clif_send( &packet, sizeof( packet ), &bl, AREA);
+
+	if( disguised( &bl ) ){
+		packet.AID = disguised_bl_id( bl.id );
+		clif_send( &packet, sizeof( packet ), &bl, SELF );
 	}
 }
 

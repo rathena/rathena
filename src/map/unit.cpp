@@ -447,7 +447,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if(md && !ud->state.force_walk && md->walktoxy_fail_count < icewall_walk_block && map_getcell(bl->m,x,y,CELL_CHKICEWALL) && (dx > 0 || dy > 0)) {
 		//Needs to be done here so that rudeattack skills are invoked
 		md->walktoxy_fail_count++;
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 		//Monsters in this situation first use a chase skill, then unlock target and then use an idle skill
 		if (!(++ud->walk_count%WALK_SKILL_INTERVAL))
 			mobskill_use(md, tick, -1);
@@ -550,7 +550,8 @@ static TIMER_FUNC(unit_walktoxy_timer)
 					&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
 					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
 				{ // Skill used, abort walking
-					clif_fixpos(bl); // Fix position as walk has been cancelled.
+					// Fix position as walk has been cancelled.
+					clif_fixpos( *bl );
 					return 0;
 				}
 				// Resend walk packet for proper Self Destruction display.
@@ -601,7 +602,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		if(unit_walktoxy_sub(bl)) {
 			return 1;	
 		} else {
-			clif_fixpos(bl);
+			clif_fixpos( *bl );
 			return 0;
 		}
 	}
@@ -641,7 +642,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 				// Aegis uses one before every attack, we should
 				// only need this one for syncing purposes. [Skotlex]
 				ud->target_to = 0;
-				clif_fixpos(bl);
+				clif_fixpos( *bl );
 				unit_attack(bl, tbl->id, ud->state.attack_continue);
 			}
 		} else { // Update chase-path
@@ -931,7 +932,7 @@ void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
 		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
 	}
 	return;
@@ -1412,7 +1413,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	}
 
 	if(type&USW_FIXPOS)
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 
 	ud->walkpath.path_len = 0;
 	ud->walkpath.path_pos = 0;
@@ -2774,7 +2775,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 	// Sync packet only for players.
 	// Non-players use the sync packet on the walk timer. [Skotlex]
 	if (tid == INVALID_TIMER && sd)
-		clif_fixpos(src);
+		clif_fixpos( *src );
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))

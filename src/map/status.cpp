@@ -14708,7 +14708,7 @@ TIMER_FUNC(status_change_timer){
 
 				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(SO_VACUUM_EXTREME, sce->val1) && unit_movepos(bl, x, y, 0, false)) {
 					clif_slide(bl, x, y);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 				}
 			}
 			sc_timer_next(tick + sce->val4);

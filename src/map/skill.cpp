@@ -3505,7 +3505,8 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 			}
 			break;
 	}
-	clif_fixpos(target);
+
+	clif_fixpos( *target );
 }
 
 /*
@@ -15668,7 +15669,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 						if (td)
 							sec = DIFF_TICK(td->tick, tick);
 						map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 					}
 					else
 						sec = 3000; //Couldn't trap it?
@@ -16209,7 +16210,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 						|| !unit_blown_immune(bl,0x1) )
 					{
 						unit_movepos(bl, unit->bl.x, unit->bl.y, 0, 0);
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 					}
 					sg->val2 = bl->id;
 				} else
@@ -16238,7 +16239,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			if( bl->id != ss->id ) {
 				if( status_change_start(ss, bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NORATEDEF) ) {
 					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 				}
 				map_foreachinallrange(skill_trap_splash, &unit->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &unit->bl, tick);
 				sg->unit_id = UNT_USED_TRAPS; //Changed ID so it does not invoke a for each in area again.
@@ -16550,7 +16551,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 						if( td )
 							sec = DIFF_TICK(td->tick, tick);
 						///map_moveblock(bl, src->bl.x, src->bl.y, tick); // in official server it doesn't behave like this. [malufett]
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 						sg->val2 = bl->id;
 					} else
 						sec = 3000;	// Couldn't trap it?
@@ -20465,7 +20466,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 					break;
 				if (status_change_start(ss, bl, SC_ELECTRICSHOCKER, 10000, sg->skill_lv, sg->group_id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NORATEDEF)) {
 					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 					clif_skill_damage(src, bl, tick, 0, 0, -30000, 1, sg->skill_id, sg->skill_lv, DMG_SPLASH);
 				}
 			}
