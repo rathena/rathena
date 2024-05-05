@@ -9575,7 +9575,7 @@ void pc_close_npc(map_session_data *sd,int flag)
 #endif
 		if (sd->st) {
 			if (sd->st->state == CLOSE) {
-				clif_scriptclose(sd, sd->npc_id);
+				clif_scriptclose( *sd, sd->npc_id );
 				clif_scriptclear( *sd, sd->npc_id ); // [Ind/Hercules]
 				sd->st->state = END; // Force to end now
 			}

@@ -651,7 +651,7 @@ void clif_parse_NPCMarketClosed(int fd, map_session_data *sd);
 void clif_parse_NPCMarketPurchase(int fd, map_session_data *sd);
 void clif_scriptmes( map_session_data& sd, uint32 npcid, const char *mes );
 void clif_scriptnext( map_session_data& sd, uint32 npcid );
-void clif_scriptclose(map_session_data *sd, int npcid);	//self
+void clif_scriptclose( map_session_data& sd, uint32 npcid );
 void clif_scriptclear( map_session_data& sd, int npcid ); //self
 void clif_scriptmenu(map_session_data* sd, int npcid, const char* mes);	//self
 void clif_scriptinput(map_session_data *sd, int npcid);	//self

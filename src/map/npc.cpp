@@ -2168,7 +2168,7 @@ void run_tomb(map_session_data* sd, struct npc_data* nd)
 	snprintf( buffer, sizeof( buffer ), msg_txt( sd, 661 ), nd->u.tomb.killer_name[0] ? nd->u.tomb.killer_name : "Unknown" ); // [^EE0000%s^000000]
 	clif_scriptmes( *sd, nd->bl.id, buffer );
 
-	clif_scriptclose(sd, nd->bl.id);
+	clif_scriptclose( *sd, nd->bl.id );
 }
 
 /*==========================================

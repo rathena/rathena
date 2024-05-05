@@ -5008,7 +5008,8 @@ BUILDIN_FUNC(close)
 		st->clear_cutin = true;
 	}
 
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5028,7 +5029,8 @@ BUILDIN_FUNC(close2)
 	if( st->mes_active )
 		st->mes_active = 0;
 
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -8588,7 +8590,8 @@ BUILDIN_FUNC(delitem)
 	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%u).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_FAILURE;
 }
 
@@ -8712,7 +8715,8 @@ BUILDIN_FUNC(delitem2)
 	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%u).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_FAILURE;
 }
 
@@ -10381,9 +10385,10 @@ BUILDIN_FUNC(end)
 		st->mes_active = 0;
 
 	if (sd){
-		if (sd->state.callshop == 0)
-			clif_scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
-		else 
+		if (sd->state.callshop == 0){
+			// If a menu/select/prompt is active, close it.
+			clif_scriptclose( *sd, st->oid );
+		}else
 			sd->state.callshop = 0;
 	}
 

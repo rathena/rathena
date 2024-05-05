@@ -2512,19 +2512,13 @@ void clif_scriptnext( map_session_data& sd, uint32 npcid ){
 /// - close the dialog window
 /// - close the menu window
 /// - 0146 <npcid of dialog window>.L
-void clif_scriptclose(map_session_data *sd, int npcid)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+void clif_scriptclose( map_session_data& sd, uint32 npcid ){
 	PACKET_ZC_CLOSE_DIALOG packet{};
 
 	packet.packetType = HEADER_ZC_CLOSE_DIALOG;
 	packet.npcId = npcid;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /**
@@ -11482,7 +11476,7 @@ void clif_parse_progressbar(int fd, map_session_data * sd){
 
 		// If a message window was open, offer a close button to the user
 		if( sd->st->mes_active ){
-			clif_scriptclose( sd, npc_id );
+			clif_scriptclose( *sd, npc_id );
 		}
 	}
 
