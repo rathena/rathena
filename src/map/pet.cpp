@@ -941,10 +941,7 @@ static int pet_performance(map_session_data *sd, struct pet_data *pd)
 		val = 1;
 
 	pet_stop_walking(pd,2000<<8);
-	// Prevent performance when pet is loyal to avoid client crashing
-	if (pd->pet.intimate < PET_INTIMATE_LOYAL) {
-		clif_pet_performance(pd, rnd_value(1, val));
-	}
+	clif_pet_performance(pd, rnd_value(1, val));
 	pet_lootitem_drop(pd,NULL);
 
 	return 1;
@@ -964,7 +961,7 @@ bool pet_return_egg( map_session_data *sd, struct pet_data *pd ){
 	if( i == -1 ){
 		return false;
  	}
- 
+
 	sd->inventory.u.items_inventory[i].attribute = 0;
 	sd->inventory.dirty = true;
 	pd->pet.incubate = 1;
@@ -1103,7 +1100,7 @@ int pet_birth_process(map_session_data *sd, struct s_pet *pet)
 	}
 
 	intif_save_petdata(sd->status.account_id,pet);
-	
+
 	if (save_settings&CHARSAVE_PET)
 		chrif_save(sd, CSAVE_INVENTORY); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
@@ -2217,7 +2214,7 @@ bool pet_evolution_requirements_check(map_session_data *sd, short pet_id) {
 		if (count < requirement.second)
 			return false;
 	}
-	
+
 	return true;
 }
 
@@ -2274,7 +2271,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 			}
 		}
 	}
-	
+
 	std::shared_ptr<s_pet_db> new_data = pet_db.find(pet_id);
 
 	if( new_data == nullptr ){

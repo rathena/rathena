@@ -654,6 +654,7 @@ Body:
     AttackMotion: 1344
     DamageMotion: 480
     Ai: 01
+# CUSTOM: ================================ Custom Dropping Mobs ================================ #
   - Id: 1734
     AegisName: KIEL_
     Name: Kiel D-01
@@ -875,3 +876,135 @@ Body:
     Name: Skogul
     BaseExp: 27620
     JobExp: 13810
+# CUSTOM: ========================= PET DB ========================== #
+  - Id: 3023
+    AegisName: FIRE_GOLEM
+    Name: Fire Golem
+    Level: 148
+    Hp: 180213
+    BaseExp: 8912
+    JobExp: 9464
+    Attack: 1478
+    Attack2: 1321
+    Defense: 50
+    MagicDefense: 50
+    Str: 70
+    Agi: 78
+    Vit: 267
+    Int: 25
+    Dex: 84
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1608
+    AttackMotion: 816
+    DamageMotion: 396
+    Ai: 04
+    Drops:
+      # - Item: Stone_Of_Blessing
+      #   Rate: 2000
+      # - Item: ToothOfFlameGolem
+      #   Rate: 1500
+      - Item: Fire_Golem_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20420
+    AegisName: WANDER_MAN_H
+    Name: Corrupted Wanderer
+    Level: 187
+    Hp: 2387582
+    BaseExp: 170542
+    JobExp: 119379
+    Attack: 4114
+    Attack2: 835
+    Defense: 50
+    MagicDefense: 50
+    Str: 176
+    Agi: 121
+    Vit: 34
+    Int: 67
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 672
+    AttackMotion: 500
+    DamageMotion: 192
+    Ai: 21
+    Drops:
+      # - Item: Skull
+      #   Rate: 2425
+      # - Item: Centimental_Leaf
+      #   Rate: 3
+      # - Item: Oridecon
+      #   Rate: 57
+      # - Item: Zelunium_Ore
+      #   Rate: 120
+      # - Item: T_Sword_Of_Kingdom
+      #   Rate: 50
+      #   RandomOptionGroup: AGW1
+      # - Item: Shadowdecon_Ore
+      #   Rate: 120
+      # - Item: Polluted_W_Man_Card
+      #   Rate: 1
+      #   StealProtected: true
+  - Id: 20373
+    AegisName: NIGHTMARE_TERROR_H
+    Name: Rigid Nightmare Terror
+    Level: 179
+    Hp: 1218702
+    BaseExp: 110791
+    JobExp: 77554
+    Attack: 1812
+    Attack2: 2220
+    Defense: 50
+    MagicDefense: 50
+    Str: 81
+    Agi: 149
+    Vit: 21
+    Int: 186
+    Dex: 129
+    Luk: 61
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 1216
+    AttackMotion: 816
+    DamageMotion: 432
+    Ai: 21
+    Drops:
+      # - Item: Burning_Horse_Shoe
+      #   Rate: 2100
+      # - Item: Blue_Potion
+      #   Rate: 15
+      # - Item: Blue_Herb
+      #   Rate: 25
+      # - Item: Shadowdecon_Ore
+      #   Rate: 80
+      # - Item: Lava_Leather_Manteau
+      #   Rate: 50
+      #   RandomOptionGroup: MAGMA3
+      # - Item: Magma_Essence
+      #   Rate: 5
+      # - Item: Zelunium_Ore
+      #   Rate: 80
+      # - Item: Firm_Nightmare_T_Card
+      #   Rate: 1
+      #   StealProtected: true

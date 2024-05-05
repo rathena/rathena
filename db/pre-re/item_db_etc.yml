@@ -21160,3 +21160,7 @@ Body:
     Locations:
       Ammo: true
     EquipLevelMin: 99
+
+Footer:
+  Imports:
+    - Path: db/import/item_db_etc.yml
