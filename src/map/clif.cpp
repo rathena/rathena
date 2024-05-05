@@ -3250,8 +3250,8 @@ void clif_cartlist( map_session_data *sd ){
 }
 
 
-/// Removes cart (ZC_CARTOFF).
-/// 012b
+/// Removes cart.
+/// 012b (ZC_CARTOFF)
 /// Client behaviour:
 /// Closes the cart storage and removes all it's items from memory.
 /// The Num & Weight values of the cart are left untouched and the cart is NOT removed.
