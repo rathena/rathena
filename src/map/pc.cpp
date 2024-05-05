@@ -6003,7 +6003,7 @@ char pc_delitem(map_session_data *sd,int n,int amount,int type, short reason, e_
 		sd->inventory_data[n] = NULL;
 	}
 	if(!(type&1))
-		clif_delitem(sd,n,amount,reason);
+		clif_delitem( *sd, n, amount, reason );
 	if(!(type&2))
 		clif_updatestatus(sd,SP_WEIGHT);
 
@@ -6542,7 +6542,7 @@ void pc_putitemtocart(map_session_data *sd,int idx,int amount)
 	else {
 		clif_cart_additem_ack(sd, (flag == ADDITEM_OVERAMOUNT) ? ADDITEM_TO_CART_FAIL_COUNT : ADDITEM_TO_CART_FAIL_WEIGHT);
 		clif_additem(sd, idx, amount, 0);
-		clif_delitem(sd, idx, amount, 0);
+		clif_delitem( *sd, idx, amount, 0 );
 	}
 }
 

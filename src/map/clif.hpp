@@ -660,7 +660,7 @@ void clif_cutin( map_session_data& sd, const char* image, int type );
 void clif_viewpoint( map_session_data& sd, uint32 npc_id, int type, uint16 x, uint16 y, int id, uint32 color );
 void clif_additem(map_session_data *sd, int n, int amount, unsigned char fail); // self
 void clif_dropitem( map_session_data& sd, int index, int amount );
-void clif_delitem(map_session_data *sd,int n,int amount, short reason); //self
+void clif_delitem( map_session_data& sd, int index, int amount, short reason );
 void clif_update_hp(map_session_data &sd);
 void clif_updatestatus(map_session_data *sd,int type);	//self
 void clif_changestatus(map_session_data* sd,int type,int val);	//area

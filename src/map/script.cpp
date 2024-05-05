@@ -9635,7 +9635,7 @@ BUILDIN_FUNC(successrefitem) {
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->inventory.u.items_inventory[i].refine);
-		clif_delitem(sd,i,1,3);
+		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->inventory.u.items_inventory[i]);
@@ -9737,7 +9737,7 @@ BUILDIN_FUNC(downrefitem) {
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 
 		clif_refine(sd->fd,2,i,sd->inventory.u.items_inventory[i].refine);
-		clif_delitem(sd,i,1,3);
+		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->inventory.u.items_inventory[i]);
@@ -24530,7 +24530,7 @@ BUILDIN_FUNC(setrandomoption) {
 		sd->inventory.u.items_inventory[i].option[index].id = id;
 		sd->inventory.u.items_inventory[i].option[index].value = value;
 		sd->inventory.u.items_inventory[i].option[index].param = param;
-		clif_delitem(sd, i, 1, 3);
+		clif_delitem( *sd, i, 1, 3 );
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
 		clif_additem(sd, i, 1, 0);
 		pc_equipitem(sd, i, ep);

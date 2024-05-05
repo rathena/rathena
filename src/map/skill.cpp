@@ -19731,7 +19731,7 @@ void skill_weaponrefine(map_session_data *sd, int idx)
 					ep = item->equip;
 					pc_unequipitem(sd,idx,3);
 				}
-				clif_delitem(sd,idx,1,3);
+				clif_delitem( *sd, idx, 1, 3 );
 				clif_upgrademessage(sd, 0, item->nameid);
 				clif_inventorylist(sd);
 				clif_refine(sd->fd,0,idx,item->refine);

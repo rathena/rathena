@@ -2850,8 +2850,8 @@ void clif_dropitem( map_session_data& sd, int index, int amount ){
 }
 
 
-/// Notifies the client, that an inventory item was deleted (ZC_DELETE_ITEM_FROM_BODY).
-/// 07fa <delete type>.W <index>.W <amount>.W
+/// Notifies the client, that an inventory item was deleted.
+/// 07fa <delete type>.W <index>.W <amount>.W (ZC_DELETE_ITEM_FROM_BODY)
 /// delete type:
 ///     0 = Normal
 ///     1 = Item used for a skill
@@ -2861,25 +2861,18 @@ void clif_dropitem( map_session_data& sd, int index, int amount ){
 ///     5 = Moved to cart
 ///     6 = Item sold
 ///     7 = Consumed by Four Spirit Analysis (SO_EL_ANALYSIS) skill
-void clif_delitem(map_session_data *sd,int n,int amount, short reason)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
-#if PACKETVER < 20091117
-	clif_dropitem(sd,n,amount);
-#else
-
+void clif_delitem( map_session_data& sd, int index, int amount, short reason ){
+#if PACKETVER >= 20091117
 	PACKET_ZC_DELETE_ITEM_FROM_BODY packet{};
 
 	packet.packetType = HEADER_ZC_DELETE_ITEM_FROM_BODY;
 	packet.deleteType = reason;
-	packet.index = client_index(n);
+	packet.index = client_index( index );
 	packet.count = amount;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
+#else
+	clif_dropitem( sd, index, amount );
 #endif
 }
 
@@ -21099,7 +21092,7 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 		log_pick_pc( sd, LOG_TYPE_MERGE_ITEM, -amount, &sd->inventory.u.items_inventory[idx] );
 		memset( &sd->inventory.u.items_inventory[idx], 0, sizeof( sd->inventory.u.items_inventory[0] ) );
 		sd->inventory_data[idx] = nullptr;
-		clif_delitem( sd, idx, amount, 0 );
+		clif_delitem( *sd, idx, amount, 0 );
 	}
 
 	sd->inventory.u.items_inventory[idx_main].amount = total_amount;
@@ -23643,7 +23636,7 @@ void clif_parse_laphine_upgrade( int fd, map_session_data* sd ){
 	log_pick_pc( sd, LOG_TYPE_LAPHINE, -1, item );
 
 	// Visually remove it from the client
-	clif_delitem( sd, index, 1, 0 );
+	clif_delitem( *sd, index, 1, 0 );
 
 	// Apply the random options
 	if( upgrade->randomOptionGroup != nullptr ){
@@ -24208,7 +24201,7 @@ void clif_parse_item_reform_start( int fd, map_session_data* sd ){
 	log_pick_pc( sd, LOG_TYPE_REFORM, -1, &selected_item );
 
 	// Visually remove it from the client
-	clif_delitem( sd, index, 1, 0 );
+	clif_delitem( *sd, index, 1, 0 );
 
 	// Apply the random options
 	if( base->randomOptionGroup != nullptr ){

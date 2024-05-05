@@ -2416,7 +2416,7 @@ ACMD_FUNC(refine)
 			current_position = sd->inventory.u.items_inventory[i].equip;
 			pc_unequipitem(sd, i, 3);
 			clif_refine(fd, 0, i, sd->inventory.u.items_inventory[i].refine);
-			clif_delitem(sd, i, 1, 3);
+			clif_delitem( *sd, i, 1, 3 );
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);
 			clif_misceffect(&sd->bl, 3);
@@ -2495,7 +2495,7 @@ ACMD_FUNC(grade)
 			sd->inventory.u.items_inventory[i].enchantgrade = final_grade;
 			current_position = sd->inventory.u.items_inventory[i].equip;
 			pc_unequipitem(sd, i, 3);
-			clif_delitem(sd, i, 1, 3);
+			clif_delitem( *sd, i, 1, 3 );
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);
 			clif_misceffect(&sd->bl, 3);
@@ -10952,7 +10952,7 @@ ACMD_FUNC(setcard)
 	log_pick_pc( sd, LOG_TYPE_COMMAND, -1, &sd->inventory.u.items_inventory[i] );
 	sd->inventory.u.items_inventory[i].card[slot] = card_id;
 	log_pick_pc( sd, LOG_TYPE_COMMAND, 1, &sd->inventory.u.items_inventory[i] );
-	clif_delitem(sd, i, 1, 0);
+	clif_delitem( *sd, i, 1, 0 );
 	clif_additem(sd, i, 1, 0);
 	pc_equipitem(sd, i, current_position);
 	return 0;

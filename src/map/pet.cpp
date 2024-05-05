@@ -2287,7 +2287,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 
 	// Virtually delete the old egg
 	log_pick_pc(sd, LOG_TYPE_OTHER, -1, &sd->inventory.u.items_inventory[idx]);
-	clif_delitem(sd, idx, 1, 0);
+	clif_delitem( *sd, idx, 1, 0 );
 
 	// Change the old egg to the new one
 	sd->inventory.u.items_inventory[idx].nameid = new_data->EggID;
