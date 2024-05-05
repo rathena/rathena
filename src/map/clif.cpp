@@ -778,8 +778,8 @@ void clif_authok(map_session_data *sd)
 }
 
 
-/// Notifies the client, that it's connection attempt was refused (ZC_REFUSE_ENTER).
-/// 0074 <error code>.B
+/// Notifies the client, that it's connection attempt was refused.
+/// 0074 <error code>.B (ZC_REFUSE_ENTER)
 /// error code:
 ///     0 = client type mismatch
 ///     1 = ID mismatch

@@ -22,7 +22,6 @@
 	packet(0x0070,6);
 	packet(0x0071,28);
 	parseable_packet(0x0072,19,clif_parse_WantToConnection,2,6,10,14,18);
-	packet(0x0074,3);
 	packet(0x0075,-1);
 	packet(0x0076,9);
 	packet(0x0077,5);
