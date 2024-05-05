@@ -2837,22 +2837,16 @@ void clif_additem( map_session_data *sd, int n, int amount, unsigned char fail )
 }
 
 
-/// Notifies the client, that an inventory item was deleted or dropped (ZC_ITEM_THROW_ACK).
-/// 00af <index>.W <amount>.W
-void clif_dropitem(map_session_data *sd,int n,int amount)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+/// Notifies the client, that an inventory item was deleted or dropped.
+/// 00af <index>.W <amount>.W (ZC_ITEM_THROW_ACK)
+void clif_dropitem( map_session_data& sd, int index, int amount ){
 	PACKET_ZC_ITEM_THROW_ACK packet{};
 
 	packet.packetType = HEADER_ZC_ITEM_THROW_ACK;
-	packet.index = client_index(n);
+	packet.index = client_index( index );
 	packet.count = amount;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -12151,7 +12145,7 @@ void clif_parse_DropItem(int fd, map_session_data *sd){
 	}
 
 	//Because the client does not like being ignored.
-	clif_dropitem(sd, item_index,0);
+	clif_dropitem( *sd, item_index, 0 );
 }
 
 

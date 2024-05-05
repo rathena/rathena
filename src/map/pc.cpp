@@ -6057,7 +6057,8 @@ bool pc_dropitem(map_session_data *sd,int n,int amount)
 		return false;
 
 	pc_delitem(sd, n, amount, 1, 0, LOG_TYPE_PICKDROP_PLAYER);
-	clif_dropitem(sd, n, amount);
+	clif_dropitem( *sd, n, amount );
+
 	return true;
 }
 

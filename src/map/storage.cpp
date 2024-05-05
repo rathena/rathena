@@ -354,7 +354,7 @@ void storage_storageadd(map_session_data* sd, struct s_storage *stor, int index,
 	}
 
 	clif_storageitemremoved(sd,index,0);
-	clif_dropitem(sd,index,0);
+	clif_dropitem( *sd, index, 0 );
 }
 
 /**
@@ -417,7 +417,7 @@ void storage_storageaddfromcart(map_session_data *sd, struct s_storage *stor, in
 	}
 
 	clif_storageitemremoved(sd,index,0);
-	clif_dropitem(sd,index,0);
+	clif_dropitem( *sd, index, 0 );
 }
 
 /**
@@ -900,7 +900,7 @@ void storage_guild_storageadd(map_session_data* sd, int index, int amount)
 		pc_delitem(sd,index,amount,0,4,LOG_TYPE_GSTORAGE);
 	else {
 		clif_storageitemremoved(sd,index,0);
-		clif_dropitem(sd,index,0);
+		clif_dropitem( *sd, index, 0 );
 	}
 }
 
@@ -973,7 +973,7 @@ void storage_guild_storageaddfromcart(map_session_data* sd, int index, int amoun
 		pc_cart_delitem(sd,index,amount,0,LOG_TYPE_GSTORAGE);
 	else {
 		clif_storageitemremoved(sd,index,0);
-		clif_dropitem(sd,index,0);
+		clif_dropitem( *sd, index, 0 );
 	}
 }
 
