@@ -84,7 +84,7 @@ SkillTreeDatabase skill_tree_db;
 int day_timer_tid = INVALID_TIMER;
 int night_timer_tid = INVALID_TIMER;
 
-struct eri *pc_sc_display_ers = NULL;
+struct eri *pc_sc_display_ers = nullptr;
 struct eri *num_reg_ers;
 struct eri *str_reg_ers;
 int pc_expiration_tid = INVALID_TIMER;
@@ -669,7 +669,7 @@ void pc_set_reg_load( bool val ){
  * to keep cooldowns in memory between player log-ins.
  * All cooldowns are reset when server is restarted.
  **/
-DBMap* itemcd_db = NULL; // char_id -> struct item_cd
+DBMap* itemcd_db = nullptr; // char_id -> struct item_cd
 struct item_cd {
 	t_tick tick[MAX_ITEMDELAYS]; //tick
 	t_itemid nameid[MAX_ITEMDELAYS]; //item id
@@ -756,7 +756,7 @@ void pc_delete_bg_queue_timer(map_session_data *sd) {
 static TIMER_FUNC(pc_invincible_timer){
 	map_session_data *sd;
 
-	if( (sd=(map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if( (sd=(map_session_data *)map_id2sd(id)) == nullptr || sd->bl.type!=BL_PC )
 		return 1;
 
 	if(sd->invincible_timer != tid){
@@ -793,7 +793,7 @@ static TIMER_FUNC(pc_spiritball_timer){
 	map_session_data *sd;
 	int i;
 
-	if( (sd=(map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if( (sd=(map_session_data *)map_id2sd(id)) == nullptr || sd->bl.type!=BL_PC )
 		return 1;
 
 	if( sd->spiritball <= 0 )
@@ -1109,7 +1109,7 @@ void pc_setrestartvalue(map_session_data *sd, char type) {
 TIMER_FUNC(pc_inventory_rental_end){
 	map_session_data *sd = map_id2sd(id);
 
-	if( sd == NULL )
+	if( sd == nullptr )
 		return 0;
 	if( tid != sd->rental_timer ) {
 		ShowError("pc_inventory_rental_end: invalid timer id.\n");
@@ -1146,13 +1146,13 @@ void pc_inventory_rentals(map_session_data *sd)
 			continue; // Nothing here
 		if( sd->inventory.u.items_inventory[i].expire_time == 0 )
 			continue;
-		if( sd->inventory.u.items_inventory[i].expire_time <= time(NULL) ) {
+		if( sd->inventory.u.items_inventory[i].expire_time <= time(nullptr) ) {
 			if (sd->inventory_data[i]->unequip_script)
 				run_script(sd->inventory_data[i]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
 			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
-			unsigned int expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(NULL));
+			unsigned int expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(nullptr));
 
 			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
 			next_tick = umin(expire_tick * 1000U, next_tick);
@@ -1175,7 +1175,7 @@ void pc_inventory_rental_add(map_session_data *sd, unsigned int seconds)
 {
 	t_tick tick = seconds * 1000;
 
-	if( sd == NULL )
+	if( sd == nullptr )
 		return;
 
 	if( sd->rental_timer != INVALID_TIMER ) {
@@ -1198,7 +1198,7 @@ void pc_inventory_rental_add(map_session_data *sd, unsigned int seconds)
  * @return bool 'true' is sellable, 'false' otherwise
  */
 bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype shoptype) {
-	if (sd == NULL || item == NULL)
+	if (sd == nullptr || item == nullptr)
 		return false;
 
 	if (!pc_can_give_items(sd))
@@ -1207,7 +1207,7 @@ bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype 
 	if (item->equip > 0 || item->amount < 0)
 		return false;
 
-	if (battle_config.hide_fav_sell && item->favorite)
+	if (battle_config.hide_fav_sell && item->favorite != 0)
 		return false; //Cannot sell favs (optional config)
 
 	if (!battle_config.rental_transaction && item->expire_time)
@@ -1446,7 +1446,7 @@ void pc_setinventorydata(map_session_data *sd)
 
 	for(i = 0; i < MAX_INVENTORY; i++) {
 		t_itemid id = sd->inventory.u.items_inventory[i].nameid;
-		sd->inventory_data[i] = id?itemdb_search(id):NULL;
+		sd->inventory_data[i] = id?itemdb_search(id):nullptr;
 	}
 }
 
@@ -1559,7 +1559,7 @@ void pc_setequipindex(map_session_data *sd)
 //	if( item->card[MAX_SLOTS - 1] && s < MAX_SLOTS - 1 )
 //		s = MAX_SLOTS - 1;
 //
-//	ARR_FIND( 0, s, i, item->card[i] && (data = item_db.find(item->card[i])) != NULL && data->flag.no_equip&flag );
+//	ARR_FIND( 0, s, i, item->card[i] && (data = item_db.find(item->card[i])) != nullptr && data->flag.no_equip&flag );
 //	return( i < s ) ? 0 : 1;
 //}
 
@@ -1799,7 +1799,7 @@ uint8 pc_isequip(map_session_data *sd,int n)
 	if(pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT))
 		return ITEM_EQUIP_ACK_OK;
 
-	if(item == NULL)
+	if(item == nullptr)
 		return ITEM_EQUIP_ACK_FAIL;
 	if(item->elv && sd->status.base_level < (unsigned int)item->elv)
 		return ITEM_EQUIP_ACK_FAILLEVEL;
@@ -2133,7 +2133,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	for( int i = 0; i < 3; i++ )
 		sd->hate_mob[i] = -1;
 
-	sd->quest_log = NULL;
+	sd->quest_log = nullptr;
 	sd->num_quests = 0;
 	sd->avail_quests = 0;
 	sd->save_quest = false;
@@ -2143,7 +2143,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->mail.pending_slots = 0;
 
 	sd->regs.vars = i64db_alloc(DB_OPT_BASE);
-	sd->regs.arrays = NULL;
+	sd->regs.arrays = nullptr;
 	sd->vars_dirty = false;
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
@@ -2210,7 +2210,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	pc_validate_skill(sd);
 
 	/* [Ind] */
-	sd->sc_display = NULL;
+	sd->sc_display = nullptr;
 	sd->sc_display_count = 0;
 
 	// Player has not yet received the CashShop list
@@ -2218,7 +2218,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 
 	sd->last_addeditem_index = -1;
 	
-	sd->bonus_script.head = NULL;
+	sd->bonus_script.head = nullptr;
 	sd->bonus_script.count = 0;
 
 	// Initialize BG queue
@@ -2427,7 +2427,7 @@ void pc_reg_received(map_session_data *sd)
 		sd->achievement_data.save = false;
 		sd->achievement_data.count = 0;
 		sd->achievement_data.incompleteCount = 0;
-		sd->achievement_data.achievements = NULL;
+		sd->achievement_data.achievements = nullptr;
 		intif_request_achievements(sd->status.char_id);
 	}
 
@@ -3001,7 +3001,7 @@ int pc_disguise(map_session_data *sd, int class_)
 		return 2;
 	}
 
-	if (sd->bl.prev != NULL) {
+	if (sd->bl.prev != nullptr) {
 		pc_stop_walking(sd, 0);
 		clif_clearunit_area(&sd->bl, CLR_OUTSIGHT);
 	}
@@ -3015,7 +3015,7 @@ int pc_disguise(map_session_data *sd, int class_)
 	status_set_viewdata(&sd->bl, class_);
 	clif_changeoption(&sd->bl);
 
-	if (sd->bl.prev != NULL) {
+	if (sd->bl.prev != nullptr) {
 		clif_spawn(&sd->bl);
 		if (class_ == sd->status.class_ && pc_iscarton(sd))
 		{	//It seems the cart info is lost on undisguise.
@@ -3024,7 +3024,7 @@ int pc_disguise(map_session_data *sd, int class_)
 		}
 		if (sd->chatID) {
 			struct chat_data* cd;
-			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != NULL)
+			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != nullptr)
 				clif_dispchat(cd,0);
 		}
 	}
@@ -3349,7 +3349,7 @@ bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const cha
 	entry->atk_type = flag;
 	entry->pos = pos;
 	entry->bonus_script = aStrdup(script);
-	entry->other_script = (other_script ? aStrdup(other_script) : NULL);
+	entry->other_script = (other_script ? aStrdup(other_script) : nullptr);
 
 	bonus.push_back(entry);
 
@@ -5934,7 +5934,7 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int amou
 		// clear equip and favorite fields first, just in case
 		if( item->equip )
 			sd->inventory.u.items_inventory[i].equip = 0;
-		if( item->favorite )
+		if( item->favorite != 0 )
 			sd->inventory.u.items_inventory[i].favorite = 0;
 		if( item->equipSwitch )
 			sd->inventory.u.items_inventory[i].equipSwitch = 0;
@@ -5959,11 +5959,11 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int amou
 
 	/* rental item check */
 	if( item->expire_time ) {
-		if( time(NULL) > item->expire_time ) {
+		if( time(nullptr) > item->expire_time ) {
 			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
-			unsigned int seconds = (unsigned int)( item->expire_time - time(NULL) );
+			unsigned int seconds = (unsigned int)( item->expire_time - time(nullptr) );
 			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}
@@ -5989,7 +5989,7 @@ char pc_delitem(map_session_data *sd,int n,int amount,int type, short reason, e_
 {
 	nullpo_retr(1, sd);
 
-	if(n < 0 || sd->inventory.u.items_inventory[n].nameid == 0 || amount <= 0 || sd->inventory.u.items_inventory[n].amount<amount || sd->inventory_data[n] == NULL)
+	if(n < 0 || sd->inventory.u.items_inventory[n].nameid == 0 || amount <= 0 || sd->inventory.u.items_inventory[n].amount<amount || sd->inventory_data[n] == nullptr)
 		return 1;
 
 	log_pick_pc(sd, log_type, -amount, &sd->inventory.u.items_inventory[n]);
@@ -6000,7 +6000,7 @@ char pc_delitem(map_session_data *sd,int n,int amount,int type, short reason, e_
 		if(sd->inventory.u.items_inventory[n].equip)
 			pc_unequipitem(sd,n,2|(!(type&4) ? 1 : 0));
 		memset(&sd->inventory.u.items_inventory[n],0,sizeof(sd->inventory.u.items_inventory[0]));
-		sd->inventory_data[n] = NULL;
+		sd->inventory_data[n] = nullptr;
 	}
 	if(!(type&1))
 		clif_delitem(sd,n,amount,reason);
@@ -6071,7 +6071,7 @@ bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
 {
 	int flag = 0;
 	t_tick tick = gettick();
-	struct party_data *p = NULL;
+	struct party_data *p = nullptr;
 
 	nullpo_ret(sd);
 	nullpo_ret(fitem);
@@ -6152,7 +6152,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 	item = sd->inventory_data[n];
 	nameid = sd->inventory.u.items_inventory[n].nameid;
 
-	if( item == NULL )
+	if( item == nullptr )
 		return false;
 	//Not consumable item
 	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
@@ -6239,7 +6239,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		case ITEMID_M_CENTER_POTION:
 		case ITEMID_M_AWAKENING_POTION:
 		case ITEMID_M_BERSERK_POTION:
-			if( sd->md == NULL || sd->md->db == NULL )
+			if( sd->md == nullptr || sd->md->db == nullptr )
 				return false;
 			if( sd->md->sc.cant.consume )
 				return false;
@@ -6255,7 +6255,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 			break;
 	}
 
-	if( itemdb_group.item_exists(IG_MERCENARY, nameid) && sd->md != NULL )
+	if( itemdb_group.item_exists(IG_MERCENARY, nameid) && sd->md != nullptr )
 		return false; // Mercenary Scrolls
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
@@ -6951,7 +6951,7 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 		buyingstore_close(sd);
 	}
 
-	if(sd->bl.prev != NULL){
+	if(sd->bl.prev != nullptr){
 		unit_remove_map_pc(sd,clrtype);
 		clif_changemap(sd,m,x,y); // [MouseJstr]
 	} else if(sd->state.active) //Tag player for rewarping after map-loading is done. [Skotlex]
@@ -7153,7 +7153,7 @@ int pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv)
 uint8 pc_checkskill(map_session_data *sd, uint16 skill_id)
 {
 	uint16 idx = 0;
-	if (sd == NULL)
+	if (sd == nullptr)
 		return 0;
 
 #ifdef RENEWAL
@@ -7708,7 +7708,7 @@ const char* job_name(int class_)
 	case JOB_ACOLYTE:
 	case JOB_MERCHANT:
 	case JOB_THIEF:
-		return msg_txt(NULL,550 - JOB_NOVICE+class_);
+		return msg_txt(nullptr,550 - JOB_NOVICE+class_);
 
 	case JOB_KNIGHT:
 	case JOB_PRIEST:
@@ -7716,10 +7716,10 @@ const char* job_name(int class_)
 	case JOB_BLACKSMITH:
 	case JOB_HUNTER:
 	case JOB_ASSASSIN:
-		return msg_txt(NULL,557 - JOB_KNIGHT+class_);
+		return msg_txt(nullptr,557 - JOB_KNIGHT+class_);
 
 	case JOB_KNIGHT2:
-		return msg_txt(NULL,557);
+		return msg_txt(nullptr,557);
 
 	case JOB_CRUSADER:
 	case JOB_MONK:
@@ -7728,27 +7728,27 @@ const char* job_name(int class_)
 	case JOB_ALCHEMIST:
 	case JOB_BARD:
 	case JOB_DANCER:
-		return msg_txt(NULL,563 - JOB_CRUSADER+class_);
+		return msg_txt(nullptr,563 - JOB_CRUSADER+class_);
 
 	case JOB_CRUSADER2:
-		return msg_txt(NULL,563);
+		return msg_txt(nullptr,563);
 
 	case JOB_WEDDING:
 	case JOB_SUPER_NOVICE:
 	case JOB_GUNSLINGER:
 	case JOB_NINJA:
 	case JOB_XMAS:
-		return msg_txt(NULL,570 - JOB_WEDDING+class_);
+		return msg_txt(nullptr,570 - JOB_WEDDING+class_);
 
 	case JOB_SUMMER:
 	case JOB_SUMMER2:
-		return msg_txt(NULL,621);
+		return msg_txt(nullptr,621);
 
 	case JOB_HANBOK:
-		return msg_txt(NULL,694);
+		return msg_txt(nullptr,694);
 
 	case JOB_OKTOBERFEST:
-		return msg_txt(NULL,696);
+		return msg_txt(nullptr,696);
 
 	case JOB_NOVICE_HIGH:
 	case JOB_SWORDMAN_HIGH:
@@ -7757,7 +7757,7 @@ const char* job_name(int class_)
 	case JOB_ACOLYTE_HIGH:
 	case JOB_MERCHANT_HIGH:
 	case JOB_THIEF_HIGH:
-		return msg_txt(NULL,575 - JOB_NOVICE_HIGH+class_);
+		return msg_txt(nullptr,575 - JOB_NOVICE_HIGH+class_);
 
 	case JOB_LORD_KNIGHT:
 	case JOB_HIGH_PRIEST:
@@ -7765,10 +7765,10 @@ const char* job_name(int class_)
 	case JOB_WHITESMITH:
 	case JOB_SNIPER:
 	case JOB_ASSASSIN_CROSS:
-		return msg_txt(NULL,582 - JOB_LORD_KNIGHT+class_);
+		return msg_txt(nullptr,582 - JOB_LORD_KNIGHT+class_);
 
 	case JOB_LORD_KNIGHT2:
-		return msg_txt(NULL,582);
+		return msg_txt(nullptr,582);
 
 	case JOB_PALADIN:
 	case JOB_CHAMPION:
@@ -7777,10 +7777,10 @@ const char* job_name(int class_)
 	case JOB_CREATOR:
 	case JOB_CLOWN:
 	case JOB_GYPSY:
-		return msg_txt(NULL,588 - JOB_PALADIN + class_);
+		return msg_txt(nullptr,588 - JOB_PALADIN + class_);
 
 	case JOB_PALADIN2:
-		return msg_txt(NULL,588);
+		return msg_txt(nullptr,588);
 
 	case JOB_BABY:
 	case JOB_BABY_SWORDMAN:
@@ -7789,7 +7789,7 @@ const char* job_name(int class_)
 	case JOB_BABY_ACOLYTE:
 	case JOB_BABY_MERCHANT:
 	case JOB_BABY_THIEF:
-		return msg_txt(NULL,595 - JOB_BABY + class_);
+		return msg_txt(nullptr,595 - JOB_BABY + class_);
 
 	case JOB_BABY_KNIGHT:
 	case JOB_BABY_PRIEST:
@@ -7797,10 +7797,10 @@ const char* job_name(int class_)
 	case JOB_BABY_BLACKSMITH:
 	case JOB_BABY_HUNTER:
 	case JOB_BABY_ASSASSIN:
-		return msg_txt(NULL,602 - JOB_BABY_KNIGHT + class_);
+		return msg_txt(nullptr,602 - JOB_BABY_KNIGHT + class_);
 
 	case JOB_BABY_KNIGHT2:
-		return msg_txt(NULL,602);
+		return msg_txt(nullptr,602);
 
 	case JOB_BABY_CRUSADER:
 	case JOB_BABY_MONK:
@@ -7809,26 +7809,26 @@ const char* job_name(int class_)
 	case JOB_BABY_ALCHEMIST:
 	case JOB_BABY_BARD:
 	case JOB_BABY_DANCER:
-		return msg_txt(NULL,608 - JOB_BABY_CRUSADER + class_);
+		return msg_txt(nullptr,608 - JOB_BABY_CRUSADER + class_);
 
 	case JOB_BABY_CRUSADER2:
-		return msg_txt(NULL,608);
+		return msg_txt(nullptr,608);
 
 	case JOB_SUPER_BABY:
-		return msg_txt(NULL,615);
+		return msg_txt(nullptr,615);
 
 	case JOB_TAEKWON:
-		return msg_txt(NULL,616);
+		return msg_txt(nullptr,616);
 	case JOB_STAR_GLADIATOR:
 	case JOB_STAR_GLADIATOR2:
-		return msg_txt(NULL,617);
+		return msg_txt(nullptr,617);
 	case JOB_SOUL_LINKER:
-		return msg_txt(NULL,618);
+		return msg_txt(nullptr,618);
 
 	case JOB_GANGSI:
 	case JOB_DEATH_KNIGHT:
 	case JOB_DARK_COLLECTOR:
-		return msg_txt(NULL,622 - JOB_GANGSI+class_);
+		return msg_txt(nullptr,622 - JOB_GANGSI+class_);
 
 	case JOB_RUNE_KNIGHT:
 	case JOB_WARLOCK:
@@ -7836,7 +7836,7 @@ const char* job_name(int class_)
 	case JOB_ARCH_BISHOP:
 	case JOB_MECHANIC:
 	case JOB_GUILLOTINE_CROSS:
-		return msg_txt(NULL,625 - JOB_RUNE_KNIGHT+class_);
+		return msg_txt(nullptr,625 - JOB_RUNE_KNIGHT+class_);
 
 	case JOB_RUNE_KNIGHT_T:
 	case JOB_WARLOCK_T:
@@ -7844,7 +7844,7 @@ const char* job_name(int class_)
 	case JOB_ARCH_BISHOP_T:
 	case JOB_MECHANIC_T:
 	case JOB_GUILLOTINE_CROSS_T:
-		return msg_txt(NULL,681 - JOB_RUNE_KNIGHT_T+class_);
+		return msg_txt(nullptr,681 - JOB_RUNE_KNIGHT_T+class_);
 
 	case JOB_ROYAL_GUARD:
 	case JOB_SORCERER:
@@ -7853,7 +7853,7 @@ const char* job_name(int class_)
 	case JOB_SURA:
 	case JOB_GENETIC:
 	case JOB_SHADOW_CHASER:
-		return msg_txt(NULL,631 - JOB_ROYAL_GUARD+class_);
+		return msg_txt(nullptr,631 - JOB_ROYAL_GUARD+class_);
 
 	case JOB_ROYAL_GUARD_T:
 	case JOB_SORCERER_T:
@@ -7862,23 +7862,23 @@ const char* job_name(int class_)
 	case JOB_SURA_T:
 	case JOB_GENETIC_T:
 	case JOB_SHADOW_CHASER_T:
-		return msg_txt(NULL,687 - JOB_ROYAL_GUARD_T+class_);
+		return msg_txt(nullptr,687 - JOB_ROYAL_GUARD_T+class_);
 
 	case JOB_RUNE_KNIGHT2:
 	case JOB_RUNE_KNIGHT_T2:
-		return msg_txt(NULL,625);
+		return msg_txt(nullptr,625);
 
 	case JOB_ROYAL_GUARD2:
 	case JOB_ROYAL_GUARD_T2:
-		return msg_txt(NULL,631);
+		return msg_txt(nullptr,631);
 
 	case JOB_RANGER2:
 	case JOB_RANGER_T2:
-		return msg_txt(NULL,627);
+		return msg_txt(nullptr,627);
 
 	case JOB_MECHANIC2:
 	case JOB_MECHANIC_T2:
-		return msg_txt(NULL,629);
+		return msg_txt(nullptr,629);
 
 	case JOB_BABY_RUNE_KNIGHT:
 	case JOB_BABY_WARLOCK:
@@ -7893,37 +7893,37 @@ const char* job_name(int class_)
 	case JOB_BABY_SURA:
 	case JOB_BABY_GENETIC:
 	case JOB_BABY_SHADOW_CHASER:
-		return msg_txt(NULL,638 - JOB_BABY_RUNE_KNIGHT+class_);
+		return msg_txt(nullptr,638 - JOB_BABY_RUNE_KNIGHT+class_);
 
 	case JOB_BABY_RUNE_KNIGHT2:
-		return msg_txt(NULL,638);
+		return msg_txt(nullptr,638);
 
 	case JOB_BABY_ROYAL_GUARD2:
-		return msg_txt(NULL,644);
+		return msg_txt(nullptr,644);
 
 	case JOB_BABY_RANGER2:
-		return msg_txt(NULL,640);
+		return msg_txt(nullptr,640);
 
 	case JOB_BABY_MECHANIC2:
-		return msg_txt(NULL,642);
+		return msg_txt(nullptr,642);
 
 	case JOB_SUPER_NOVICE_E:
 	case JOB_SUPER_BABY_E:
-		return msg_txt(NULL,651 - JOB_SUPER_NOVICE_E+class_);
+		return msg_txt(nullptr,651 - JOB_SUPER_NOVICE_E+class_);
 
 	case JOB_KAGEROU:
 	case JOB_OBORO:
-		return msg_txt(NULL,653 - JOB_KAGEROU+class_);
+		return msg_txt(nullptr,653 - JOB_KAGEROU+class_);
 
 	case JOB_REBELLION:
-		return msg_txt(NULL,695);
+		return msg_txt(nullptr,695);
 
 	case JOB_SUMMONER:
-		return msg_txt(NULL,697);
+		return msg_txt(nullptr,697);
 	case JOB_BABY_SUMMONER:
-		return msg_txt(NULL,698);
+		return msg_txt(nullptr,698);
 	case JOB_BABY_NINJA:
-		return msg_txt(NULL,699);
+		return msg_txt(nullptr,699);
 
 	case JOB_BABY_KAGEROU:
 	case JOB_BABY_OBORO:
@@ -7932,22 +7932,22 @@ const char* job_name(int class_)
 	case JOB_BABY_SOUL_LINKER:
 	case JOB_BABY_GUNSLINGER:
 	case JOB_BABY_REBELLION:
-		return msg_txt(NULL,753 - JOB_BABY_KAGEROU+class_);
+		return msg_txt(nullptr,753 - JOB_BABY_KAGEROU+class_);
 
 	case JOB_BABY_STAR_GLADIATOR2:
-		return msg_txt(NULL,756);
+		return msg_txt(nullptr,756);
 
 	case JOB_STAR_EMPEROR:
 	case JOB_SOUL_REAPER:
 	case JOB_BABY_STAR_EMPEROR:
 	case JOB_BABY_SOUL_REAPER:
-		return msg_txt(NULL,782 - JOB_STAR_EMPEROR + class_);
+		return msg_txt(nullptr,782 - JOB_STAR_EMPEROR + class_);
 
 	case JOB_STAR_EMPEROR2:
-		return msg_txt(NULL,782);
+		return msg_txt(nullptr,782);
 
 	case JOB_BABY_STAR_EMPEROR2:
-		return msg_txt(NULL,784);
+		return msg_txt(nullptr,784);
 
 	case JOB_DRAGON_KNIGHT:
 	case JOB_MEISTER:
@@ -7989,7 +7989,7 @@ const char* job_name(int class_)
 		return msg_txt( nullptr, 813 );
 
 	default:
-		return msg_txt(NULL,655);
+		return msg_txt(nullptr,655);
 	}
 }
 
@@ -8015,7 +8015,7 @@ TIMER_FUNC(pc_follow_timer){
 	sd->followtimer = INVALID_TIMER;
 	tbl = map_id2bl(sd->followtarget);
 
-	if (tbl == NULL || pc_isdead(sd))
+	if (tbl == nullptr || pc_isdead(sd))
 	{
 		pc_stop_following(sd);
 		return 0;
@@ -8023,10 +8023,10 @@ TIMER_FUNC(pc_follow_timer){
 
 	// either player or target is currently detached from map blocks (could be teleporting),
 	// but still connected to this map, so we'll just increment the timer and check back later
-	if (sd->bl.prev != NULL && tbl->prev != NULL &&
+	if (sd->bl.prev != nullptr && tbl->prev != nullptr &&
 		sd->ud.skilltimer == INVALID_TIMER && sd->ud.attacktimer == INVALID_TIMER && sd->ud.walktimer == INVALID_TIMER)
 	{
-		if((sd->bl.m == tbl->m) && unit_can_reach_bl(&sd->bl,tbl, AREA_SIZE, 0, NULL, NULL)) {
+		if((sd->bl.m == tbl->m) && unit_can_reach_bl(&sd->bl,tbl, AREA_SIZE, 0, nullptr, nullptr)) {
 			if (!check_distance_bl(&sd->bl, tbl, 5))
 				unit_walktobl(&sd->bl, tbl, 5, 0);
 		} else
@@ -8057,7 +8057,7 @@ int pc_stop_following (map_session_data *sd)
 int pc_follow(map_session_data *sd,int target_id)
 {
 	struct block_list *bl = map_id2bl(target_id);
-	if (bl == NULL /*|| bl->type != BL_PC*/)
+	if (bl == nullptr /*|| bl->type != BL_PC*/)
 		return 1;
 	if (sd->followtimer != INVALID_TIMER)
 		pc_stop_following(sd);
@@ -8215,7 +8215,7 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 		}
 	}
 
-	// Give EXPBOOST for quests even if src is NULL.
+	// Give EXPBOOST for quests even if src is nullptr.
 	if (sd->sc.getSCE(SC_EXPBOOST)) {
 		bonus += sd->sc.getSCE(SC_EXPBOOST)->val1;
 		if (battle_config.vip_bm_increase && pc_isvip(sd)) // Increase Battle Manual EXP rate for VIP
@@ -8230,7 +8230,7 @@ static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, st
 		*base_exp = cap_value(exp, 1, MAX_EXP);
 	}
 
-	// Give JEXPBOOST for quests even if src is NULL.
+	// Give JEXPBOOST for quests even if src is nullptr.
 	if (sd->sc.getSCE(SC_JEXPBOOST))
 		bonus += sd->sc.getSCE(SC_JEXPBOOST)->val1;
 
@@ -8282,7 +8282,7 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 
 	nullpo_retv(sd);
 
-	if(sd->bl.prev == NULL || pc_isdead(sd))
+	if(sd->bl.prev == nullptr || pc_isdead(sd))
 		return;
 
 	if (!(exp_flag&2)) {
@@ -9493,7 +9493,7 @@ void pc_respawn(map_session_data* sd, clr_type clrtype)
 
 static TIMER_FUNC(pc_respawn_timer){
 	map_session_data *sd = map_id2sd(id);
-	if( sd != NULL )
+	if( sd != nullptr )
 	{
 		sd->pvp_point=0;
 		sd->respawn_tid = INVALID_TIMER;
@@ -9581,7 +9581,7 @@ void pc_close_npc(map_session_data *sd,int flag)
 			}
 			if (sd->st->state == END) { // free attached scripts that are waiting
 				script_free_state(sd->st);
-				sd->st = NULL;
+				sd->st = nullptr;
 				sd->npc_id = 0;
 			}
 		}
@@ -10272,14 +10272,14 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 		if (val_tmp < sd->status.base_exp) // Lost
 			pc_lostexp(sd, sd->status.base_exp - val_tmp, 0);
 		else // Gained
-			pc_gainexp(sd, NULL, val_tmp - sd->status.base_exp, 0, 2);
+			pc_gainexp(sd, nullptr, val_tmp - sd->status.base_exp, 0, 2);
 		return true;
 	case SP_JOBEXP:
 		val_tmp = cap_value(val_tmp, 0, pc_is_maxjoblv(sd) ? MAX_LEVEL_JOB_EXP : MAX_EXP);
 		if (val_tmp < sd->status.job_exp) // Lost
 			pc_lostexp(sd, 0, sd->status.job_exp - val_tmp);
 		else // Gained
-			pc_gainexp(sd, NULL, 0, val_tmp - sd->status.job_exp, 2);
+			pc_gainexp(sd, nullptr, 0, val_tmp - sd->status.job_exp, 2);
 		return true;
 	case SP_SEX:
 		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;
@@ -10372,7 +10372,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_MANNER:
 		sd->status.manner = val;
 		if( val < 0 )
-			sc_start(NULL, &sd->bl, SC_NOCHAT, 100, 0, 0);
+			sc_start(nullptr, &sd->bl, SC_NOCHAT, 100, 0, 0);
 		else {
 			status_change_end(&sd->bl, SC_NOCHAT);
 			clif_manner_message(sd, 5);
@@ -10616,21 +10616,21 @@ int pc_percentheal(map_session_data *sd,int hp,int sp)
 		return status_percent_heal(&sd->bl, hp, sp);
 
 	if(hp <= 0 && sp <= 0) //Damage (negative rates indicate % of max rather than current), and only kill target IF the specified amount is 100%
-		return status_percent_damage(NULL, &sd->bl, hp, sp, hp==-100);
+		return status_percent_damage(nullptr, &sd->bl, hp, sp, hp==-100);
 
 	//Crossed signs
 	if(hp) {
 		if(hp > 0)
 			status_percent_heal(&sd->bl, hp, 0);
 		else
-			status_percent_damage(NULL, &sd->bl, hp, 0, hp==-100);
+			status_percent_damage(nullptr, &sd->bl, hp, 0, hp==-100);
 	}
 
 	if(sp) {
 		if(sp > 0)
 			status_percent_heal(&sd->bl, 0, sp);
 		else
-			status_percent_damage(NULL, &sd->bl, 0, sp, false);
+			status_percent_damage(nullptr, &sd->bl, 0, sp, false);
 	}
 	return 0;
 }
@@ -10872,7 +10872,7 @@ bool pc_jobchange(map_session_data *sd,int job, char upper)
 	if( sd->status.party_id ){
 		struct party_data* p;
 		
-		if( ( p = party_search( sd->status.party_id ) ) != NULL ){
+		if( ( p = party_search( sd->status.party_id ) ) != nullptr ){
 			ARR_FIND(0, MAX_PARTY, i, p->party.member[i].char_id == sd->status.char_id);
 
 			if( i < MAX_PARTY ){
@@ -11209,11 +11209,11 @@ bool pc_setreg(map_session_data* sd, int64 reg, int64 val)
  *------------------------------------------*/
 char* pc_readregstr(map_session_data* sd, int64 reg)
 {
-	struct script_reg_str *p = NULL;
+	struct script_reg_str *p = nullptr;
 
 	p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg);
 
-	return p ? p->value : NULL;
+	return p ? p->value : nullptr;
 }
 
 /*==========================================
@@ -11221,7 +11221,7 @@ char* pc_readregstr(map_session_data* sd, int64 reg)
  *------------------------------------------*/
 bool pc_setregstr(map_session_data* sd, int64 reg, const char* str)
 {
-	struct script_reg_str *p = NULL;
+	struct script_reg_str *p = nullptr;
 	unsigned int index = script_getvaridx(reg);
 	DBData prev;
 
@@ -11264,7 +11264,7 @@ bool pc_setregstr(map_session_data* sd, int64 reg, const char* str)
  **/
 int64 pc_readregistry(map_session_data *sd, int64 reg)
 {
-	struct script_reg_num *p = NULL;
+	struct script_reg_num *p = nullptr;
 
 	if (!sd->vars_ok) {
 		ShowError("pc_readregistry: Trying to read reg %s before it's been loaded!\n", get_str(script_getvarid(reg)));
@@ -11287,19 +11287,19 @@ int64 pc_readregistry(map_session_data *sd, int64 reg)
  **/
 char* pc_readregistry_str(map_session_data *sd, int64 reg)
 {
-	struct script_reg_str *p = NULL;
+	struct script_reg_str *p = nullptr;
 
 	if (!sd->vars_ok) {
 		ShowError("pc_readregistry_str: Trying to read reg %s before it's been loaded!\n", get_str(script_getvarid(reg)));
 		//This really shouldn't happen, so it's possible the data was lost somewhere, we should request it again.
 		//intif->request_registry(sd,type==3?4:type);
 		set_eof(sd->fd);
-		return NULL;
+		return nullptr;
 	}
 
 	p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg);
 
-	return p ? p->value : NULL;
+	return p ? p->value : nullptr;
 }
 
 /**
@@ -11310,7 +11310,7 @@ char* pc_readregistry_str(map_session_data *sd, int64 reg)
  **/
 bool pc_setregistry(map_session_data *sd, int64 reg, int64 val)
 {
-	struct script_reg_num *p = NULL;
+	struct script_reg_num *p = nullptr;
 	const char *regname = get_str(script_getvarid(reg));
 	uint32 index = script_getvaridx(reg);
 
@@ -11363,7 +11363,7 @@ bool pc_setregistry(map_session_data *sd, int64 reg, int64 val)
  **/
 bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
 {
-	struct script_reg_str *p = NULL;
+	struct script_reg_str *p = nullptr;
 	const char *regname = get_str(script_getvarid(reg));
 	unsigned int index = script_getvaridx(reg);
 	size_t vlen = 0;
@@ -11389,7 +11389,7 @@ bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
 		} else {
 			if (p->value)
 				aFree(p->value);
-			p->value = NULL;
+			p->value = nullptr;
 			if( index )
 				script_array_update(&sd->regs, reg, true);
 		}
@@ -11498,7 +11498,7 @@ static TIMER_FUNC(pc_eventtimer){
 	map_session_data *sd=map_id2sd(id);
 	char *p = (char *)data;
 	int i;
-	if(sd==NULL)
+	if(sd==nullptr)
 		return 0;
 
 	ARR_FIND( 0, MAX_EVENTTIMER, i, sd->eventtimer[i] == tid );
@@ -11538,7 +11538,7 @@ bool pc_addeventtimer(map_session_data *sd,int tick,const char *name)
  *------------------------------------------*/
 bool pc_deleventtimer(map_session_data *sd,const char *name)
 {
-	char* p = NULL;
+	char* p = nullptr;
 	int i;
 
 	nullpo_retr(false,sd);
@@ -11548,7 +11548,7 @@ bool pc_deleventtimer(map_session_data *sd,const char *name)
 	// find the named event timer
 	ARR_FIND( 0, MAX_EVENTTIMER, i,
 		sd->eventtimer[i] != INVALID_TIMER &&
-		(p = (char *)(get_timer(sd->eventtimer[i])->data)) != NULL &&
+		(p = (char *)(get_timer(sd->eventtimer[i])->data)) != nullptr &&
 		strcmp(p, name) == 0
 	);
 	if( i == MAX_EVENTTIMER )
@@ -12590,7 +12590,7 @@ TIMER_FUNC(pc_calc_pvprank_timer){
 	map_session_data *sd;
 
 	sd=map_id2sd(id);
-	if(sd==NULL)
+	if(sd==nullptr)
 		return 0;
 	sd->pvp_timer = INVALID_TIMER;
 
@@ -12612,7 +12612,7 @@ TIMER_FUNC(pc_calc_pvprank_timer){
  *------------------------------------------*/
 int pc_ismarried(map_session_data *sd)
 {
-	if(sd == NULL)
+	if(sd == nullptr)
 		return -1;
 	if(sd->status.partner_id > 0)
 		return sd->status.partner_id;
@@ -12627,7 +12627,7 @@ int pc_ismarried(map_session_data *sd)
  *------------------------------------------*/
 bool pc_marriage(map_session_data *sd,map_session_data *dstsd)
 {
-	if(sd == NULL || dstsd == NULL ||
+	if(sd == nullptr || dstsd == nullptr ||
 		sd->status.partner_id > 0 || dstsd->status.partner_id > 0 ||
 		(sd->class_&JOBL_BABY) || (dstsd->class_&JOBL_BABY))
 		return false;
@@ -12651,13 +12651,13 @@ bool pc_divorce(map_session_data *sd)
 	map_session_data *p_sd;
 	int i;
 
-	if( sd == NULL || !pc_ismarried(sd) )
+	if( sd == nullptr || !pc_ismarried(sd) )
 		return false;
 
 	if( !sd->status.partner_id )
 		return false; // Char is not married
 
-	if( (p_sd = map_charid2sd(sd->status.partner_id)) == NULL )
+	if( (p_sd = map_charid2sd(sd->status.partner_id)) == nullptr )
 	{ // Lets char server do the divorce
 		if( chrif_divorce(sd->status.char_id, sd->status.partner_id) )
 			return false; // No char server connected
@@ -12685,33 +12685,33 @@ bool pc_divorce(map_session_data *sd)
 /**
  * Get the partner map_session_data of a player
  * @param sd : the husband|wife session
- * @return partner session or NULL
+ * @return partner session or nullptr
  */
 map_session_data *pc_get_partner(map_session_data *sd){
 	if (!sd || !pc_ismarried(sd))
-		return NULL;
+		return nullptr;
 	return map_charid2sd(sd->status.partner_id);
 }
 
 /**
  * Get the father map_session_data of a player
  * @param sd : the baby session
- * @return father session or NULL
+ * @return father session or nullptr
  */
 map_session_data *pc_get_father (map_session_data *sd){
 	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.father)
-		return NULL;
+		return nullptr;
 	return map_charid2sd(sd->status.father);
 }
 
 /**
  * Get the mother map_session_data of a player
  * @param sd : the baby session
- * @return mother session or NULL
+ * @return mother session or nullptr
  */
 map_session_data *pc_get_mother (map_session_data *sd){
 	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.mother)
-		return NULL;
+		return nullptr;
 	return map_charid2sd(sd->status.mother);
 }
 
@@ -12721,8 +12721,8 @@ map_session_data *pc_get_mother (map_session_data *sd){
 map_session_data *pc_get_child (map_session_data *sd)
 {
 	if (!sd || !pc_ismarried(sd) || !sd->status.child)
-		// charid2sd returns NULL if not found
-		return NULL;
+		// charid2sd returns nullptr if not found
+		return nullptr;
 	return map_charid2sd(sd->status.child);
 }
 
@@ -12883,7 +12883,7 @@ TIMER_FUNC(map_day_timer){
 
 	night_flag = 0; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
-	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,502) : msg_txt(NULL,60)); // The day has arrived!
+	strcpy(tmp_soutput, (data == 0) ? msg_txt(nullptr,502) : msg_txt(nullptr,60)); // The day has arrived!
 	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
 }
@@ -12903,7 +12903,7 @@ TIMER_FUNC(map_night_timer){
 
 	night_flag = 1; // 0=day, 1=night [Yor]
 	map_foreachpc(pc_daynight_timer_sub);
-	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,503) : msg_txt(NULL,59)); // The night has fallen...
+	strcpy(tmp_soutput, (data == 0) ? msg_txt(nullptr,503) : msg_txt(nullptr,59)); // The night has fallen...
 	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
 }
@@ -13006,7 +13006,7 @@ static TIMER_FUNC(pc_spiritcharm_timer){
 	map_session_data *sd;
 	int i;
 
-	if ((sd = (map_session_data *)map_id2sd(id)) == NULL || sd->bl.type != BL_PC)
+	if ((sd = (map_session_data *)map_id2sd(id)) == nullptr || sd->bl.type != BL_PC)
 		return 1;
 
 	if (sd->spiritcharm <= 0) {
@@ -14304,7 +14304,7 @@ int pc_read_motd(void)
 	memset(motd_text, 0, sizeof(motd_text));
 
 	// read current MOTD
-	if( ( fp = fopen(motd_txt, "r") ) != NULL )
+	if( ( fp = fopen(motd_txt, "r") ) != nullptr )
 	{
 		unsigned int entries = 0;
 		char buf[CHAT_SIZE_MAX];
@@ -14322,7 +14322,7 @@ int pc_read_motd(void)
 			if( len ) {
 				char * ptr;
 				buf[len] = 0;
-				if( ( ptr = strstr(buf, " :") ) != NULL && ptr-buf >= NAME_LENGTH ) // crashes newer clients
+				if( ( ptr = strstr(buf, " :") ) != nullptr && ptr-buf >= NAME_LENGTH ) // crashes newer clients
 					ShowWarning("Found sequence '" CL_WHITE " :" CL_RESET "' on line '" CL_WHITE "%u" CL_RESET "' in '" CL_WHITE "%s" CL_RESET "'. This can cause newer clients to crash.\n", lines, motd_txt);
 			}
 			else {// empty line
@@ -14343,7 +14343,7 @@ int pc_read_motd(void)
 
 void pc_itemcd_do(map_session_data *sd, bool load) {
 	int i,cursor = 0;
-	struct item_cd* cd = NULL;
+	struct item_cd* cd = nullptr;
 
 	if( load ) {
 		if( !(cd = (struct item_cd*)idb_get(itemcd_db, sd->status.char_id)) ) {
@@ -14431,7 +14431,7 @@ uint8 pc_itemcd_add(map_session_data *sd, struct item_data *id, t_tick tick, uns
  *         1: Has delay, cancel consumption.
  **/
 uint8 pc_itemcd_check(map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
-	status_change *sc = NULL;
+	status_change *sc = nullptr;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, id);
@@ -14500,7 +14500,7 @@ void pc_damage_log_add(map_session_data *sd, int id)
 void pc_damage_log_clear(map_session_data *sd, int id)
 {
 	uint8 i;
-	struct mob_data *md = NULL;
+	struct mob_data *md = nullptr;
 
 	if (!sd)
 		return;
@@ -14598,7 +14598,7 @@ TIMER_FUNC(pc_autotrade_timer){
 	sd->autotrade_tid = INVALID_TIMER;
 
 	if (sd->state.autotrade&2)
-		vending_reopen(sd);
+		vending_reopen(*sd);
 	if (sd->state.autotrade&4)
 		buyingstore_reopen(sd);
 
@@ -14633,7 +14633,7 @@ void pc_expire_check(map_session_data *sd) {
 		return;
 
 	/* not within the next 24h, enable the global check */
-	if( sd->expiration_time > (time(NULL) + ((60 * 60) * 24)) ) {
+	if( sd->expiration_time > (time(nullptr) + ((60 * 60) * 24)) ) {
 
 		/* global check not running, enable */
 		if( pc_expiration_tid == INVALID_TIMER ) /* Starts in 1h, repeats every hour */
@@ -14642,7 +14642,7 @@ void pc_expire_check(map_session_data *sd) {
 		return;
 	}
 
-	sd->expiration_tid = add_timer(gettick() + (unsigned int)(sd->expiration_time - time(NULL)) * 1000, pc_expiration_timer, sd->bl.id, 0);
+	sd->expiration_tid = add_timer(gettick() + (unsigned int)(sd->expiration_time - time(nullptr)) * 1000, pc_expiration_timer, sd->bl.id, 0);
 }
 
 /**
@@ -14714,7 +14714,7 @@ void pc_crimson_marker_clear(map_session_data *sd) {
 		return;
 
 	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
-		struct block_list *bl = NULL;
+		struct block_list *bl = nullptr;
 		if (sd->c_marker[i] && (bl = map_id2bl(sd->c_marker[i])))
 			status_change_end(bl,SC_C_MARKER);
 		sd->c_marker[i] = 0;
@@ -14748,13 +14748,13 @@ void pc_show_version(map_session_data *sd) {
  **/
 void pc_bonus_script(map_session_data *sd) {
 	t_tick now = gettick();
-	struct linkdb_node *node = NULL, *next = NULL;
+	struct linkdb_node *node = nullptr, *next = nullptr;
 
 	if (!sd || !(node = sd->bonus_script.head))
 		return;
 
 	while (node) {
-		struct s_bonus_script_entry *entry = NULL;
+		struct s_bonus_script_entry *entry = nullptr;
 		next = node->next;
 
 		if ((entry = (struct s_bonus_script_entry *)node->data)) {
@@ -14785,20 +14785,20 @@ void pc_bonus_script(map_session_data *sd) {
  * @param icon EFST
  * @param flag Flags @see enum e_bonus_script_flags
  * @param type 0 - None, 1 - Buff, 2 - Debuff
- * @return New created entry pointer or NULL if failed or NULL if duplicate fail
+ * @return New created entry pointer or nullptr if failed or nullptr if duplicate fail
  * @author [Cydh]
  **/
 struct s_bonus_script_entry *pc_bonus_script_add(map_session_data *sd, const char *script_str, t_tick dur, enum efst_type icon, uint16 flag, uint8 type) {
-	struct script_code *script = NULL;
-	struct linkdb_node *node = NULL;
-	struct s_bonus_script_entry *entry = NULL;
+	struct script_code *script = nullptr;
+	struct linkdb_node *node = nullptr;
+	struct s_bonus_script_entry *entry = nullptr;
 
 	if (!sd)
-		return NULL;
+		return nullptr;
 	
 	if (!(script = parse_script(script_str, "bonus_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 		ShowError("pc_bonus_script_add: Failed to parse script '%s' (CID:%d).\n", script_str, sd->status.char_id);
-		return NULL;
+		return nullptr;
 	}
 
 	// Duplication checks
@@ -14810,13 +14810,13 @@ struct s_bonus_script_entry *pc_bonus_script_add(map_session_data *sd, const cha
 				if (flag&BSF_FORCE_REPLACE && entry->tick < newdur) { // Change duration
 					settick_timer(entry->tid, newdur);
 					script_free_code(script);
-					return NULL;
+					return nullptr;
 				}
 				else if (flag&BSF_FORCE_DUPLICATE) // Allow duplicate
 					break;
 				else { // No duplicate bonus
 					script_free_code(script);
-					return NULL;
+					return nullptr;
 				}
 			}
 			node = node->next;
@@ -14895,7 +14895,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 	if (tid == INVALID_TIMER)
 		return 0;
 
-	if (!sd->bonus_script.head || entry == NULL) {
+	if (!sd->bonus_script.head || entry == nullptr) {
 		ShowError("pc_bonus_script_timer: Invalid entry pointer %p!\n", entry);
 		return 0;
 	}
@@ -14914,7 +14914,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 * @author [Cydh]
 **/
 void pc_bonus_script_clear(map_session_data *sd, uint32 flag) {
-	struct linkdb_node *node = NULL;
+	struct linkdb_node *node = nullptr;
 	uint16 count = 0;
 
 	if (!sd || !(node = sd->bonus_script.head))
@@ -15232,7 +15232,7 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
  **/
 void pc_set_costume_view(map_session_data *sd) {
 	int i = -1, head_low = 0, head_mid = 0, head_top = 0, robe = 0;
-	struct item_data *id = NULL;
+	struct item_data *id = nullptr;
 
 	nullpo_retv(sd);
 
@@ -15405,7 +15405,7 @@ void pc_attendance_claim_reward( map_session_data* sd ){
 
 	msg.status = MAIL_NEW;
 	msg.type = MAIL_INBOX_NORMAL;
-	msg.timestamp = time(NULL);
+	msg.timestamp = time(nullptr);
 
 	intif_Mail_send(0, &msg);
 

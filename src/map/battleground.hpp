@@ -153,7 +153,7 @@ bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> q
 void bg_queue_on_accept_invite(map_session_data *sd);
 void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue);
 bool bg_member_respawn(map_session_data *sd);
-void bg_send_message(map_session_data *sd, const char *mes, int len);
+void bg_send_message(map_session_data *sd, const char *mes, size_t len);
 
 void do_init_battleground(void);
 void do_final_battleground(void);

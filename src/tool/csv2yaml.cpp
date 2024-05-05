@@ -660,14 +660,14 @@ static bool pet_read_db( const char* file ){
 			str[k] = p;
 			p = strchr(p,',');
 
-			if( p == NULL )
+			if( p == nullptr )
 				break; // comma not found
 
 			*p = '\0';
 			++p;
 		}
 
-		if( p == NULL ) {
+		if( p == nullptr ) {
 			ShowError("read_petdb: Insufficient columns in line %d, skipping.\n", lines);
 			continue;
 		}
@@ -681,7 +681,7 @@ static bool pet_read_db( const char* file ){
 		str[20] = p;
 		p = strstr(p+1,"},");
 
-		if( p == NULL ) {
+		if( p == nullptr ) {
 			ShowError("read_petdb: Invalid format (Pet Script column) in line %d, skipping.\n", lines);
 			continue;
 		}
@@ -1272,13 +1272,13 @@ static bool skill_parse_row_castnodexdb( char* split[], size_t columns, size_t c
 static bool skill_parse_row_unitdb( char* split[], size_t columns, size_t current ){
 	s_skill_unit_csv entry = {};
 
-	entry.unit_id = (uint16)strtol(split[1], NULL, 16);
-	entry.unit_id2 = (uint16)strtol(split[2], NULL, 16);
+	entry.unit_id = (uint16)strtol(split[1], nullptr, 16);
+	entry.unit_id2 = (uint16)strtol(split[2], nullptr, 16);
 	skill_split_atoi(split[3], entry.unit_layout_type);
 	skill_split_atoi(split[4], entry.unit_range);
 	entry.unit_interval = atoi(split[5]);
 	entry.target_str = trim(split[6]);
-	entry.unit_flag_csv = strtol(split[7], NULL, 16);
+	entry.unit_flag_csv = strtol(split[7], nullptr, 16);
 
 	skill_unit.insert({ atoi(split[0]), entry });
 
@@ -1369,7 +1369,7 @@ static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t curre
 		body << YAML::Key << "TargetType" << YAML::Value << name2Upper(constant);
 	}
 
-	uint64 nk_val = strtol(split[5], NULL, 0);
+	uint64 nk_val = strtol(split[5], nullptr, 0);
 
 	if (nk_val) {
 		body << YAML::Key << "DamageFlags";
@@ -2342,7 +2342,7 @@ static bool quest_read_db( char *split[], size_t columns, size_t current ){
 	title.erase(std::remove(title.begin(), title.end(), '"'), title.end()); // Strip double quotes out
 	body << YAML::Key << "Title" << YAML::Value << title;
 
-	if (strchr(split[1], ':') == NULL) {
+	if (strchr(split[1], ':') == nullptr) {
 		uint32 time = atoi(split[1]);
 
 		if (time > 0) {
@@ -2560,7 +2560,7 @@ static bool itemdb_read_stack( char* fields[], size_t columns, size_t current ){
 
 	item.amount = atoi(fields[1]);
 
-	int type = strtoul(fields[2], NULL, 10);
+	int type = strtoul(fields[2], nullptr, 10);
 
 	if (type & 1)
 		item.inventory = true;
@@ -2656,13 +2656,13 @@ static bool itemdb_read_db(const char* file) {
 		for (i = 0; i < 19; ++i) {
 			str[i] = p;
 			p = strchr(p, ',');
-			if (p == NULL)
+			if (p == nullptr)
 				break;// comma not found
 			*p = '\0';
 			++p;
 		}
 
-		if (p == NULL) {
+		if (p == nullptr) {
 			ShowError("itemdb_read_db: Insufficient columns in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
@@ -2674,7 +2674,7 @@ static bool itemdb_read_db(const char* file) {
 		}
 		str[19] = p + 1;
 		p = strstr(p + 1, "},");
-		if (p == NULL) {
+		if (p == nullptr) {
 			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
@@ -2688,7 +2688,7 @@ static bool itemdb_read_db(const char* file) {
 		}
 		str[20] = p + 1;
 		p = strstr(p + 1, "},");
-		if (p == NULL) {
+		if (p == nullptr) {
 			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
@@ -2792,7 +2792,7 @@ static bool itemdb_read_db(const char* file) {
 		bool equippable = type == IT_UNKNOWN ? false : type == IT_ETC ? false : type == IT_CARD ? false : type == IT_PETEGG ? false : type == IT_PETARMOR ? false : type == IT_UNKNOWN2 ? false : true;
 
 		if (equippable) {
-			uint64 temp_mask = strtoull(str[11], NULL, 0);
+			uint64 temp_mask = strtoull(str[11], nullptr, 0);
 
 			if (temp_mask == 0) {
 				//body << YAML::Key << "Jobs";

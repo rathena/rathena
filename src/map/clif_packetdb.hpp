@@ -4,7 +4,7 @@
 #ifndef CLIF_PACKETDB_HPP
 #define CLIF_PACKETDB_HPP
 
-	#define packet(cmd,length) packetdb_addpacket(cmd,length,NULL,0)
+	#define packet(cmd,length) packetdb_addpacket(cmd,length,nullptr,0)
 	#define parseable_packet(cmd,length,func,...) packetdb_addpacket(cmd,length,func,__VA_ARGS__,0)
 
 	packet(0x0064,55);
@@ -57,7 +57,6 @@
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
-	packet(0x0097,-1);
 	packet(0x0098,3);
 	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
 	packet(0x009a,-1);
@@ -1334,7 +1333,6 @@
 
 // 2008-12-10aSakexe
 #if PACKETVER >= 20081210
-	packet(0x0442,-1);
 	parseable_packet(0x0443,8,clif_parse_SkillSelectMenu,2,6);
 #endif
 
@@ -1412,7 +1410,6 @@
 	packet(0x01a2,37);
 	//packet(0x0440,10);
 	//packet(0x0441,4);
-	//packet(0x0442,8);
 	//packet(0x0443,8);
 #endif
 
@@ -1883,19 +1880,19 @@
 	packet(0x08ec,73);
 	packet(0x08ed,43);
 	packet(0x08ee,6);
-	parseable_packet(0x08ef,6,NULL,2);
+	parseable_packet(0x08ef,6,nullptr,2);
 	packet(0x08f0,6);
-	parseable_packet(0x08f1,6,NULL,2);
+	parseable_packet(0x08f1,6,nullptr,2);
 	packet(0x08f2,36);
 	packet(0x08f3,-1);
 	packet(0x08f4,6);
-	parseable_packet(0x08f5,-1,NULL,2,4);
+	parseable_packet(0x08f5,-1,nullptr,2,4);
 	packet(0x08f6,22);
 	packet(0x08f7,3);
 	packet(0x08f8,7);
 	packet(0x08f9,6);
 	packet(0x08fa,6);
-	parseable_packet(0x08fb,6,NULL,2);
+	parseable_packet(0x08fb,6,nullptr,2);
 	parseable_packet( HEADER_CZ_INVENTORY_TAB, sizeof( PACKET_CZ_INVENTORY_TAB ), clif_parse_MoveItem, 0 );
 	parseable_packet(0x08D7,28,clif_parse_bg_queue_apply_request,2,4);
 	packet(0x08D8,27);
@@ -2041,11 +2038,11 @@
 
 // 2013-07-17Ragexe
 #if PACKETVER >= 20130717
-	parseable_packet(0x09A7,10,clif_parse_BankDeposit,2,6);
-	parseable_packet(0x09A9,10,clif_parse_BankWithdraw,2,6);
-	parseable_packet(0x09AB,6,clif_parse_BankCheck,2);
-	parseable_packet(0x09B6,6,clif_parse_BankOpen,2);
-	parseable_packet(0x09B8,6,clif_parse_BankClose,2);
+	parseable_packet( HEADER_CZ_REQ_BANKING_DEPOSIT, sizeof( PACKET_CZ_REQ_BANKING_DEPOSIT ), clif_parse_BankDeposit, 0 );
+	parseable_packet( HEADER_CZ_REQ_BANKING_WITHDRAW, sizeof( PACKET_CZ_REQ_BANKING_WITHDRAW ), clif_parse_BankWithdraw, 0 );
+	parseable_packet( HEADER_CZ_REQ_BANKING_CHECK, sizeof( PACKET_CZ_REQ_BANKING_CHECK ), clif_parse_BankCheck, 0 );
+	parseable_packet( HEADER_CZ_REQ_OPEN_BANKING, sizeof( PACKET_CZ_REQ_OPEN_BANKING ), clif_parse_BankOpen, 0 );
+	parseable_packet( HEADER_CZ_REQ_CLOSE_BANKING, sizeof( PACKET_CZ_REQ_CLOSE_BANKING ), clif_parse_BankClose, 0 );
 #endif
 
 // 2013-07-31cRagexe
