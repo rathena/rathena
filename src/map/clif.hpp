@@ -865,7 +865,7 @@ void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag);
 void clif_guild_oppositionack(map_session_data *sd,int flag);
 void clif_guild_broken(map_session_data *sd,int flag);
 void clif_guild_xy( map_session_data& sd );
-void clif_guild_xy_single(int fd, map_session_data *sd);
+void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd );
 void clif_guild_xy_remove(map_session_data *sd);
 void clif_guild_castle_list(map_session_data& sd);
 void clif_guild_castle_info(map_session_data& sd, std::shared_ptr<guild_castle> castle );

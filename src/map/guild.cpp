@@ -1360,8 +1360,8 @@ int guild_recv_memberinfoshort(int guild_id,uint32 account_id,uint32 char_id,int
 			g->guild.member[i].sd->bl.m != g->guild.member[idx].sd->bl.m)
 			continue;
 
-		clif_guild_xy_single(g->guild.member[idx].sd->fd, g->guild.member[i].sd);
-		clif_guild_xy_single(g->guild.member[i].sd->fd, g->guild.member[idx].sd);
+		clif_guild_xy_single( *g->guild.member[idx].sd, *g->guild.member[i].sd );
+		clif_guild_xy_single( *g->guild.member[i].sd, *g->guild.member[idx].sd );
 	}
 
 	return 0;
