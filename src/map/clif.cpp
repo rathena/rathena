@@ -1921,6 +1921,7 @@ void clif_send_homdata( homun_data& hd, e_hom_state2 state ){
 
 
 void clif_homskillinfoblock( homun_data& hd ){
+#if PACKETVER >= 20050530
 	map_session_data* sd = hd.master;
 
 	if( sd == nullptr ){
@@ -1954,6 +1955,7 @@ void clif_homskillinfoblock( homun_data& hd ){
 	}
 
 	clif_send( packet, packet->packetLength, &sd->bl, SELF );
+#endif
 }
 
 void clif_homskillup( homun_data& hd, uint16 skill_id ){

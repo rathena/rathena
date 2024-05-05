@@ -693,7 +693,6 @@
 // 2005-05-30aSakexe
 #if PACKETVER >= 20050530
 	packet(0x022e,71);
-	packet(0x0235,-1);
 	packet(0x0236,10);
 	parseable_packet(0x0237,2,clif_parse_RankingPk,0);
 	packet(0x0238,282);
