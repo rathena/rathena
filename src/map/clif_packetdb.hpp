@@ -198,7 +198,6 @@
 	parseable_packet(0x0140,22,clif_parse_MapMove,2,18,20);
 	packet(0x0141,14);
 	parseable_packet(0x0143,10,clif_parse_NpcAmountInput,2,6);
-	packet(0x0144,23);
 	packet(0x0145,19);
 	parseable_packet(0x0146,6,clif_parse_NpcCloseClicked,2);
 	packet(0x0147,39);
