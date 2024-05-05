@@ -797,8 +797,8 @@ void clif_authrefuse(int fd, uint8 error_code)
 }
 
 
-/// Notifies the client of a ban or forced disconnect (SC_NOTIFY_BAN).
-/// 0081 <error code>.B
+/// Notifies the client of a ban or forced disconnect.
+/// 0081 <error code>.B (SC_NOTIFY_BAN)
 /// error code:
 ///     0 = BAN_UNFAIR
 ///     1 = server closed -> MsgStringTable[4]
