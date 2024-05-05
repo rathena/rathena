@@ -63,7 +63,6 @@
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
 	packet(0x009e,17);
 	parseable_packet(0x009f,6,clif_parse_TakeItem,2);
-	packet(0x00a1,6);
 	parseable_packet(0x00a2,6,clif_parse_DropItem,2,4);
 	packet( inventorylistnormalType, -1 );
 	packet( inventorylistequipType, -1 );
