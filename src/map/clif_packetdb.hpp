@@ -33,7 +33,6 @@
 	parseable_packet(0x007d,2,clif_parse_LoadEndAck,0);
 	parseable_packet(0x007e,6,clif_parse_TickSend,2);
 	packet(0x007f,6);
-	packet(0x0080,7);
 	packet(0x0082,2);
 	packet(0x0083,2);
 	packet(0x0084,2);

@@ -948,8 +948,8 @@ void clif_clearflooritem( flooritem_data& fitem, map_session_data* tsd ){
 }
 
 
-/// Makes a unit (char, npc, mob, homun) disappear to one client (ZC_NOTIFY_VANISH).
-/// 0080 <id>.L <type>.B
+/// Makes a unit (char, npc, mob, homun) disappear to one client.
+/// 0080 <id>.L <type>.B (ZC_NOTIFY_VANISH)
 /// type:
 ///     0 = out of sight
 ///     1 = died
@@ -966,8 +966,8 @@ void clif_clearunit_single( uint32 GID, clr_type type, map_session_data& tsd ){
 	clif_send( &packet, sizeof( packet ), &tsd.bl, SELF );
 }
 
-/// Makes a unit (char, npc, mob, homun) disappear to all clients in area (ZC_NOTIFY_VANISH).
-/// 0080 <id>.L <type>.B
+/// Makes a unit (char, npc, mob, homun) disappear to all clients in area.
+/// 0080 <id>.L <type>.B (ZC_NOTIFY_VANISH)
 /// type:
 ///     0 = out of sight
 ///     1 = died
