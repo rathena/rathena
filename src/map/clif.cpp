@@ -2507,8 +2507,8 @@ void clif_scriptnext( map_session_data& sd, uint32 npcid ){
 }
 
 
-/// Adds a 'close' button to an NPC dialog (ZC_CLOSE_DIALOG).
-/// 00b6 <npc id>.L
+/// Adds a 'close' button to an NPC dialog.
+/// 00b6 <npc id>.L (ZC_CLOSE_DIALOG)
 /// Client behavior:
 /// - if dialog window is open:
 ///   - remove 'next' button
