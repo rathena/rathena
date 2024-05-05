@@ -308,7 +308,6 @@
 	packet(0x01b0,11);
 	packet(0x01b1,7);
 	parseable_packet(0x01b2,-1,clif_parse_OpenVending,2,4,84,85);
-	packet(0x01b3,67);
 	packet(0x01b4,12);
 	packet(0x01b5,18);
 	packet(0x01b6,114);
