@@ -1563,6 +1563,7 @@ void clif_abyssball( map_session_data& sd, struct block_list* target, enum send_
 
 /// Notifies the client of an object's Millenium Shields.
 static void clif_millenniumshield_single( map_session_data& sd, map_session_data& tsd ){
+#if PACKETVER >= 20081126
 	status_change_entry* sce = sd.sc.getSCE( SC_MILLENNIUMSHIELD );
 
 	if( sce == nullptr ){
@@ -1577,6 +1578,7 @@ static void clif_millenniumshield_single( map_session_data& sd, map_session_data
 	packet.state = 0;
 
 	clif_send( &packet, sizeof( packet ), &tsd.bl, SELF );
+#endif
 }
 
 /*==========================================
