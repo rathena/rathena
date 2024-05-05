@@ -845,8 +845,8 @@ void clif_authfail_fd(int fd, int type)
 }
 
 
-/// Notifies the client, whether it can disconnect and change servers (ZC_RESTART_ACK).
-/// 00b3 <type>.B
+/// Notifies the client, whether it can disconnect and change servers.
+/// 00b3 <type>.B (ZC_RESTART_ACK)
 /// type:
 ///     1 = disconnect, char-select
 ///     ? = nothing

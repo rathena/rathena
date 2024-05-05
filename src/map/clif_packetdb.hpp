@@ -80,7 +80,6 @@
 	packet(0x00b0,8);
 	packet(0x00b1,8);
 	parseable_packet(0x00b2,3,clif_parse_Restart,2);
-	packet(0x00b3,3);
 	packet(0x00b6,6);
 	packet(0x00b7,-1);
 	parseable_packet(0x00b8,7,clif_parse_NpcSelectMenu,2,6);
