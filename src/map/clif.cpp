@@ -1959,6 +1959,7 @@ void clif_homskillinfoblock( homun_data& hd ){
 }
 
 void clif_homskillup( homun_data& hd, uint16 skill_id ){
+#if PACKETVER >= 20050531
 	short idx = hom_skill_get_index( skill_id );
 
 	if( idx == -1 ){
@@ -1981,6 +1982,7 @@ void clif_homskillup( homun_data& hd, uint16 skill_id ){
 	packet.upgradable = (hd.homunculus.level < hom_skill_get_min_level(hd.homunculus.class_, skill_id) || hd.homunculus.hskill[idx].lv >= hom_skill_tree_get_max(skill_id, hd.homunculus.class_)) ? 0 : 1;
 
 	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+#endif
 }
 
 /// Result of request to feed a homun/merc.

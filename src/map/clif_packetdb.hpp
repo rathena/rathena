@@ -701,7 +701,6 @@
 // 2005-05-31aSakexe
 #if PACKETVER >= 20050531
 	packet(0x0216,2);
-	packet(0x0239,11);
 #endif
 
 // 2005-06-08aSakexe
