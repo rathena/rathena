@@ -2204,7 +2204,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		/**
 		 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
 		 **/
-		clif_changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
+		clif_changemap( *sd, sd->bl.m, sd->bl.x, sd->bl.y );
 	}
 
 	pc_validate_skill(sd);
@@ -6953,7 +6953,7 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 
 	if(sd->bl.prev != NULL){
 		unit_remove_map_pc(sd,clrtype);
-		clif_changemap(sd,m,x,y); // [MouseJstr]
+		clif_changemap( *sd, m, x, y );
 	} else if(sd->state.active) //Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
 

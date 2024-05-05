@@ -2050,8 +2050,8 @@ static void clif_move2( struct block_list *bl, struct view_data *vd, struct unit
 }
 
 
-/// Notifies clients in an area, that an other visible object is walking (ZC_NOTIFY_MOVE).
-/// 0086 <id>.L <walk data>.6B <walk start time>.L
+/// Notifies clients in an area, that an other visible object is walking.
+/// 0086 <id>.L <walk data>.6B <walk start time>.L (ZC_NOTIFY_MOVE)
 /// Note: unit must not be self
 void clif_move(struct unit_data *ud)
 {
@@ -2139,13 +2139,7 @@ void clif_quitsave(int fd,map_session_data *sd) {
 
 /// Notifies the client of a position change to coordinates on given map (ZC_NPCACK_MAPMOVE).
 /// 0091 <map name>.16B <x>.W <y>.W
-void clif_changemap(map_session_data *sd, short m, int x, int y)
-{
-	// TODO: Convert sd to reference
-	if (sd == nullptr) {
-		return;
-	}
-
+void clif_changemap( map_session_data& sd, short m, uint16 x, uint16 y ){
 	PACKET_ZC_NPCACK_MAPMOVE packet{};
 
 	packet.packetType = HEADER_ZC_NPCACK_MAPMOVE;
@@ -2153,7 +2147,7 @@ void clif_changemap(map_session_data *sd, short m, int x, int y)
 	packet.xPos = x;
 	packet.yPos = y;
 
-	clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -10035,7 +10029,7 @@ void clif_refresh(map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	clif_changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
+	clif_changemap( *sd, sd->bl.m, sd->bl.x, sd->bl.y );
 	clif_inventorylist(sd);
 	clif_equipswitch_list(sd);
 	if(pc_iscarton(sd)) {
@@ -10954,7 +10948,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 
 	if (sd->state.rewarp) { //Rewarp player.
 		sd->state.rewarp = 0;
-		clif_changemap(sd, sd->bl.m, sd->bl.x, sd->bl.y);
+		clif_changemap( *sd, sd->bl.m, sd->bl.x, sd->bl.y );
 		return;
 	}
 
