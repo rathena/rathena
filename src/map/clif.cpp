@@ -5246,7 +5246,8 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	if (src->type == BL_MOB && battle_config.synchronize_damage) {
 		mob_data* md = BL_CAST(BL_MOB, src);
 		// The client only accepts values between 0 and 432; 432 stands for 1x animation speed
-		sdelay = sdelay * 432 / md->status.clientamotion;
+		if (md != nullptr && md->status.clientamotion != 0)
+			sdelay = sdelay * 432 / md->status.clientamotion;
 	}
 
 	WBUFW(buf,0) = cmd;

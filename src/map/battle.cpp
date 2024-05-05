@@ -416,7 +416,7 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 		mob_data* md = BL_CAST(BL_MOB, src);
 		// The client refuses to display animations slower than 1x speed
 		// So we need to shorten AttackMotion to be in-sync with the client in this case
-		if (amotion > md->status.clientamotion)
+		if (md != nullptr && amotion > md->status.clientamotion)
 			amotion = md->status.clientamotion;
 	}
 	else if (src->type != BL_PC && amotion > 1000)
