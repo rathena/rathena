@@ -7037,27 +7037,30 @@ void clif_upgrademessage( map_session_data* sd, int result, t_itemid item_id ){
 /// 0097 <packet len>.W <nick>.24B <message>.?B
 /// 0097 <packet len>.W <nick>.24B <isAdmin>.L <message>.?B (PACKETVER >= 20091104)
 void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int gmlvl){
-	PACKET_ZC_WHISPER p;
+	PACKET_ZC_WHISPER* p = reinterpret_cast<PACKET_ZC_WHISPER*>( packet_buffer );
 
-	p.PacketType = HEADER_ZC_WHISPER;
-	p.PacketLength = static_cast<decltype(p.PacketLength)>( mes_len );
-	safestrncpy(p.sender, nick, NAME_LENGTH);
-	safestrncpy(p.message, mes, mes_len);
+	p->PacketType = HEADER_ZC_WHISPER;
+	p->PacketLength = sizeof( *p );
+	safestrncpy( p->sender, nick, NAME_LENGTH );
+	safestrncpy( p->message, mes, mes_len );
+	p->PacketLength += static_cast<decltype( p->PacketLength )>( mes_len );
 
 #if PACKETVER >= 20091104
 	map_session_data* ssd = map_nick2sd(nick, false);
+
 	// If it is not a message from the server or a player from another map-server
 	if (ssd) {
 		gmlvl = pc_get_group_level(ssd);
 	}
-	p.isAdmin = (gmlvl == 99) ? 1 : 0;
+
+	p->isAdmin = (gmlvl == 99) ? 1 : 0;
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20131204 || PACKETVER_RE_NUM >= 20131120 || defined(PACKETVER_ZERO)
-	p.senderGID = ssd->bl.id;
+	p->senderGID = ssd->bl.id;
 #endif
 
-	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+	clif_send( p, p->PacketLength, &sd->bl, SELF );
 }
 
 
@@ -10450,7 +10453,7 @@ void clif_viewequip_ack( map_session_data* sd, map_session_data* tsd ){
 
 			clif_item_equip( client_index( k ), &p->list[equip], &tsd->inventory.u.items_inventory[k], tsd->inventory_data[k], pc_equippoint( tsd, k ) );
 
-			p->PacketLength = sizeof( p->list[0] );
+			p->PacketLength += sizeof( p->list[0] );
 			equip++;
 		}
 	}
