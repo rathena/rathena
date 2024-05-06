@@ -168,7 +168,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 				case 3:
 					mes "[Alberta Guide]";
 					mes "You can use the "+F_Navi("Southern Dock","alberta,245,86");
-					mes "to go to ^0000FFTurtle Island^000000, ^0000FFBrasilis^000000, ^0000FFAmatsu^000000, ^0000FFKunlun^000000, ^0000FFMoscovia^000000, ^0000FFLouyang^000000, or ^0000FFAyothaya^000000.";
+					mes "to go to ^0000FFTurtle Island^000000, ^0000FFBrasilis^000000, ^0000FFAmatsu^000000, ^0000FFKunlun^000000, ^0000FFMoscovia^000000, ^0000FFLuoyang^000000, or ^0000FFAyothaya^000000.";
 					mes .@str$;
 					viewpoint 1,245,86,15,0xFF0000;
 					next;

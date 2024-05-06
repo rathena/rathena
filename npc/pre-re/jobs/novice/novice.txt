@@ -583,7 +583,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 			mes "When you attend the Skill Information class, you'll gain a better understanding of the use of skills.";
 			next;
 			mes "[Kris]";
-			mes "Since the use of skills is integral to survival in Rune-Midgard, I strongly suggest that you attend the class. Come, I shall guide you there.";
+			mes "Since the use of skills is integral to survival in Midgard, I strongly suggest that you attend the class. Come, I shall guide you there.";
 			close2;
 			warp "new_1-2",84,107;
 			end;
@@ -1288,13 +1288,13 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 	if ( select("Teleport Service","About Kafra services") == 1 ) {
 		if (nov_get_item02 < 10 && nov_get_item03 < 10 && nov_get_item04 < 10) {
 			mes "[Kafra Employee]";
-			mes "I see, you must want to teleport to a town in Rune-Midgard imediately. First, let me briefly inform you about the different towns and cities in Ragnarok.";
+			mes "I see, you must want to teleport to a town in Rune-Midgarts imediately. First, let me briefly inform you about the different towns and cities in Ragnarok.";
 			next;
 			mes "[Kafra Employee]";
 			mes "Prontera is the capital of the Rune-Midgarts kingdom, and its satellite, Izlude, is closeby.";
 			next;
 			mes "[Kafra Employee]";
-			mes "^996633Morroc^000000 is in the desert. It's the town where you can change your job to the Thief and Assassin classes.";
+			mes "^996633Morocc^000000 is in the desert. It's the town where you can change your job to the Thief and Assassin classes.";
 			next;
 			mes "[Kafra Employee]";
 			mes "^006600Payon^000000 is in the mountains, and is famous for its Archer Village, where Novices can change their jobs to Archers.";
@@ -1309,7 +1309,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			mes "Please choose";
 			mes "your destination.";
 			next;
-			switch(select("Prontera:Morroc:Payon:Alberta:Geffen")) {
+			switch(select("Prontera:Morocc:Payon:Alberta:Geffen")) {
 			case 1:
 				set .@dest$,"Prontera";
 				set .@mapn$,"prontera";
@@ -1317,7 +1317,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				set .@warpX,150; set .@warpY,50;
 				break;
 			case 2:
-				set .@dest$,"Morroc";
+				set .@dest$,"Morocc";
 				set .@mapn$,"morocc";
 				set .@saveX,150; set .@saveY,99;
 				set .@warpX,155; set .@warpY,110;
@@ -1372,7 +1372,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			end;
 		}
 		else {
-			switch(select("Field Combat Course:Prontera:Morroc:Payon:Alberta:Geffen")) {
+			switch(select("Field Combat Course:Prontera:Morocc:Payon:Alberta:Geffen")) {
 			case 1:
 				mes "[Kafra Employee]";
 				mes "Thank you, let";
@@ -1388,7 +1388,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				set .@warpX,150; set .@warpY,50;
 				break;
 			case 3:
-				set .@dest$,"Morroc";
+				set .@dest$,"Morocc";
 				set .@mapn$,"morocc";
 				set .@saveX,150; set .@saveY,99;
 				set .@warpX,155; set .@warpY,110;
@@ -1474,7 +1474,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				break;
 			case 2:
 				mes "[Kafra Employee]";
-				mes "The Kafra Corporation is the world's largest company with a long and distinguished history on the Rune-Midgard continent.";
+				mes "The Kafra Corporation is the world's largest company with a long and distinguished history on the Midgard continent.";
 				next;
 				mes "[Kafra Employee]";
 				mes "You can store and retrieve";
@@ -1522,7 +1522,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				mes "traveling time.";
 				next;
 				mes "[Kafra Employee]";
-				mes "Our Teleport Service is safe and comfortable, and will allow you to fully explore the various lands of the Rune-Midgard continent.";
+				mes "Our Teleport Service is safe and comfortable, and will allow you to fully explore the various lands of the Midgard continent.";
 				next;
 				mes "[Kafra Employee]";
 				mes "We thank our valued customers for their great support and continue to provide them with the best";
@@ -1614,7 +1614,7 @@ new_1-2,161,182,5	script	Instructor#nv	92,{
 			mes "If you carry over 50 % of your maximum weight limit, your HP and SP will not be restored by resting, so be careful.";
 			next;
 			mes "[Edwin]";
-			mes "The numerical value next to the weight limit shows the current amount of Zeny, the currency of Rune-Midgard, that you possess.";
+			mes "The numerical value next to the weight limit shows the current amount of Zeny, the currency of Midgard, that you possess.";
 			next;
 			mes "[Edwin]";
 			mes "On the right side of the";
@@ -2487,7 +2487,7 @@ new_1-2,38,182,3	script	Entrance Guard#nv	92,{
 	}
 	else if (nov_2nd_cos > 0 && nov_2nd_cos < 21) {
 		mes "[Muriel]";
-		mes "Field Combat Training is an actual fight class where you can gain basic fighting skills that you can use to defend yourself in Rune-Midgard.";
+		mes "Field Combat Training is an actual fight class where you can gain basic fighting skills that you can use to defend yourself in Midgard.";
 		next;
 		mes "[Muriel]";
 		mes "Please kill as many monsters as you can to increase your base level at least 2 times.";
@@ -3349,7 +3349,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Falchion' is a weapon that will be very useful once you become a Swordman.";
+					mes "'Zeny' is the currency of Midgard. 'Falchion' is a weapon that will be very useful once you become a Swordman.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Falchion with this Phracon, please visit a forge in one of the towns.";
@@ -3420,7 +3420,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. That 'Cutter' has been given to you so that you can fight monsters before you become a Mage.";
+					mes "'Zeny' is the currency of Midgard. That 'Cutter' has been given to you so that you can fight monsters before you become a Mage.";
 					next;
 					mes "[Hanson]";
 					mes "Once you become a Mage, you can use the 'Rod' that has been given to you. It will be very useful during your early days as a Mage.";
@@ -3492,7 +3492,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Battle Axe' will come in handy once you become a Merchant.";
+					mes "'Zeny' is the currency of Midgard. 'Battle Axe' will come in handy once you become a Merchant.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Battle Axe with this Phracon, please visit a forge in one of the towns.";
@@ -3568,13 +3568,13 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Main Gauche' is a weapon that will be very useful once you become a Thief.";
+					mes "'Zeny' is the currency of Midgard. 'Main Gauche' is a weapon that will be very useful once you become a Thief.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Main Gauche with this Phracon, please visit a forge in one of the towns.";
 					next;
 					mes "[Hanson]";
-					mes "The town you will be sent to is named Morroc. The Thief Guild is in the first underground floor of the pyramid NorthWest of Morroc. Remember this.";
+					mes "The town you will be sent to is named Morocc. The Thief Guild is in the first underground floor of the pyramid NorthWest of Morocc. Remember this.";
 					next;
 					mes "[Hanson]";
 					mes "You will now";
@@ -3629,7 +3629,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Composite Bow' is a weapon that will be very useful once you become an Archer.";
+					mes "'Zeny' is the currency of Midgard. 'Composite Bow' is a weapon that will be very useful once you become an Archer.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Composite Bow with this Phracon, please visit a forge in one of the towns.";
@@ -3701,7 +3701,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Mace' is a weapon that will be very useful once you become an Acolyte.";
+					mes "'Zeny' is the currency of Midgard. 'Mace' is a weapon that will be very useful once you become an Acolyte.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Mace with this Phracon, please visit a forge in one of the towns.";
@@ -3741,7 +3741,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			mes "immediately.";
 			next;
 			mes "[Hanson]";
-			mes "For more information and knowledge, I hope you will obtain your own experiences in Rune-Midgard.";
+			mes "For more information and knowledge, I hope you will obtain your own experiences in Midgard.";
 			next;
 			mes "[Hanson]";
 			mes "Lastly...";
@@ -3800,7 +3800,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 		mes "[Hanson]";
 		mes "The only thing";
 		mes "left to do is to lead";
-		mes "you to Rune-Midgard~";
+		mes "you to Midgard~";
 		next;
 		set nov_1st_cos,0;
 		set nov_2nd_cos,0;
@@ -3892,7 +3892,7 @@ S_UserJobchoice:
 	else if (@menu == 4) {
 		mes "to become a Thief.";
 		mes "You will be sent to";
-		mes "the town of Morroc.";
+		mes "the town of Morocc.";
 		next;
 		mes "[Hanson]";
 		mes "The Thief guild is in the underground 1st floor of a pyramid which is NorthWest of town. Please remember this.";
@@ -3941,7 +3941,7 @@ S_UserJobchoice:
 	mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 	next;
 	mes "[Hanson]";
-	mes "'Zeny' is the currency of Rune-Midgard. The 'Adventurer's Suit' will come in handy once you become a " + .@Jobs$[@menu] + ".";
+	mes "'Zeny' is the currency of Midgard. The 'Adventurer's Suit' will come in handy once you become a " + .@Jobs$[@menu] + ".";
 	next;
 	mes "[Hanson]";
 	mes "You will now";
@@ -4087,7 +4087,7 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					break;
 				case 6:
 					mes "[Bruce]";
-					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgard. They possess skills that support their allies, as well as the life saving Heal ability.";
+					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgarts. They possess skills that support their allies, as well as the life saving Heal ability.";
 					next;
 					mes "[Bruce]";
 					mes "The Acolyte's support abilities make them a welcome addition to any party. In difficult situations, the Acolyte's skills will ensure the survival of the party, allowing other members to focus on offense.";
@@ -4244,7 +4244,7 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					break;
 				case 6:
 					mes "[Bruce]";
-					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgard. They possess skills that support their allies, as well as the life saving Heal ability.";
+					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgarts. They possess skills that support their allies, as well as the life saving Heal ability.";
 					next;
 					mes "[Bruce]";
 					mes "The Acolyte's support abilities make them a welcome addition to any party. In difficult situations, the Acolyte's skills will ensure the survival of the party, allowing other members to focus on offense.";

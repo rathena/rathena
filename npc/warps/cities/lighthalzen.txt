@@ -86,6 +86,8 @@ lighthalzen,345,231,0	warp	lhz_pub1-1	1,1,lhz_in03,188,15
 lhz_in03,188,11,0	warp	lhz_pub1-2	1,1,lighthalzen,344,227
 lhz_in03,191,35,0	warp	lhz_pub2-1	1,1,lhz_in03,191,103
 lhz_in03,190,100,0	warp	lhz_pub2-2	1,1,lhz_in03,190,31
+lighthalzen,340,240,0	warp	lhz_pub3-1	1,1,lhz_in03,180,86
+lhz_in03,180,90,0	warp	lhz_pub3-2	1,1,lighthalzen,339,245
 lighthalzen,50,86,0	warp	lhz_house2_1-1	1,1,lhz_in03,45,31
 lhz_in03,50,31,0	warp	lhz_house2_1-2	1,1,lighthalzen,55,86
 lhz_in03,13,31,0	warp	lhz_house2_2-1	1,1,lhz_in03,15,99

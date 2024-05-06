@@ -36,10 +36,10 @@ PING -n 15 127.0.0.1 > NUL
 :START_RA
 %1
 ECHO.
-REM Return value > 1 is exception&~0xC0000000
-IF ERRORLEVEL 2 GOTO CRASHED
 REM Return value 1 is EXIT_FAILURE
 IF ERRORLEVEL 1 GOTO EXIT1
+REM Return value is not 0 the process has crashed
+IF NOT ERRORLEVEL 0 GOTO CRASHED
 REM Return value 0 is EXIT_SUCCESS
 ECHO %2 has shutdown successfully.
 GOTO RESTART_NT

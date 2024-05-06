@@ -2165,7 +2165,7 @@ monk_test,319,139,1	script	Tomoon#mk	52,{
 		mes "My name is Tomoon, I am in charge of the last test of spiritual training!";
 		next;
 		mes "[Tomoon]";
-		mes "Now you don't need to be instructed any more then this:";
+		mes "Now you don't need to be instructed any more than this:";
 		mes "^990000Terminate every living thing in your way!^000000 That's all!";
 		next;
 		mes "[Tomoon]";

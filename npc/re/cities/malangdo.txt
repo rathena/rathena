@@ -35,10 +35,10 @@
 			case 2: mes "Why don't you go to ^A2314BMalangdo^000000? That place is better than Geffen, where there are only crowds of simple honest wizards."; break;
 			case 3: mes "The fresh air of Payon is not bad, but why don't you go better place like the heaven of the cats, ^A2314BMalangdo^000000?"; break;
 			case 4: mes .@s$+"The beautiful and quiet place is better than Aldebaran, where it's so noisy with the tick-tock sound of the clock."; break;
-			case 5: mes .@s$+"The beautiful and quiet place is better than Morroc, with its heat and sandstorms."; break;
-			case 6: mes .@s$+"The beautiful place is better than Yuno, which is full of books and headaches."; break;
+			case 5: mes .@s$+"The beautiful and quiet place is better than Morocc, with its heat and sandstorms."; break;
+			case 6: mes .@s$+"The beautiful place is better than Juno, which is full of books and headaches."; break;
 			case 7: mes .@s$+"The complex place is better than Rachel, where it's too horribly quiet."; break;
-			case 8: mes .@s$+"The safe place is better than Lighthanlzen, which is too dangerous."; break;
+			case 8: mes .@s$+"The safe place is better than Lighthalzen, which is too dangerous."; break;
 			case 9: mes .@s$+"The smell of this sea place is better than Mora, which is full of a grassy smell."; break;
 		}
 		next;

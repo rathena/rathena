@@ -1,0 +1,57 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Abracadabra Database
+###########################################################################
+#
+# Abracadabra Settings
+#
+###########################################################################
+# - Skill             Skill to be casted by Abracadabra.
+#   Probability:      Probability of skill compared to others in database (1 = 0.01%, 10000 = 100%). (Default: 500)
+#     - Level         Skill level.
+#       Probability   Probability at specific skill level (1 = 0.01%, 10000 = 100%). (Default: 0)
+###########################################################################
+
+Header:
+  Type: ABRA_DB
+  Version: 1
+
+Body:
+  - Skill: SA_TAMINGMONSTER
+    Probability:
+      - Level: 1
+        Probability: 50
+      - Level: 2
+        Probability: 100
+      - Level: 3
+        Probability: 150
+      - Level: 4
+        Probability: 200
+      - Level: 5
+        Probability: 250
+      - Level: 6
+        Probability: 300
+      - Level: 7
+        Probability: 350
+      - Level: 8
+        Probability: 400
+      - Level: 9
+        Probability: 450
+      - Level: 10
+        Probability: 500

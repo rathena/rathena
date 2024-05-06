@@ -179,7 +179,7 @@ prt_church,111,112,1	script	Sister Linus	79,{
 			mes "Well, a few months ago,";
 			mes "she went on a mission to";
 			mes "^3131FFLighthalzen^000000, a city in the";
-			mes "Schwaltzvalt Republic. I was";
+			mes "Schwarzwald Republic. I was";
 			mes "just worried since I haven't";
 			mes "heard from her in a while.";
 			next;

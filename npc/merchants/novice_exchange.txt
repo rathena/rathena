@@ -73,7 +73,7 @@ prontera,123,102,5	script	Merchant#pron	85,{
 	}
 }
 
-morocc,180,259,3	script	Merchant#morroc	85,{
+morocc,180,259,3	script	Merchant#Morocc	85,{
 	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
 		mes "[Merchant]";
 		mes "Haha!";

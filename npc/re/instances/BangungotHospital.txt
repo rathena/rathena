@@ -452,7 +452,7 @@ OnEnable2:
 OnEnable3:
 	.@i = atoi(charat(strnpcinfo(2),4))+1;
 	donpcevent instance_npcname("#Ward" + .@i + " Entry") + "::OnEnable1";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnMyMobDead:
 	initnpctimer;
@@ -473,7 +473,7 @@ OnTimer1000:
 	stopnpctimer;
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 1@ma_h,57,147,0	duplicate(#Ward1 Entry)	#Ward2 Entry	HIDDEN_WARP_NPC //3,3
@@ -915,7 +915,7 @@ OnTouch:
 	donpcevent instance_npcname("#Boss Room Entry_time") + "::OnEnable";
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 1@ma_h,132,171,0	duplicate(#Boss Room Entry_a)	#Boss Room Entry_b	HIDDEN_WARP_NPC,10,10

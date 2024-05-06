@@ -22,7 +22,7 @@
 moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 	mes "[Aperture]";
 	mes "Hello there, adventurer.";
-	mes "I've been studying magic from all over Rune-Midgard to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
+	mes "I've been studying magic from all over Midgard to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
 	next;
 
 	if (is_function("VIP_iRO_Acolyte"))
@@ -48,7 +48,7 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 		mes "I wish you goodluck on your journey.";
 		next;
 
-		setarray .@towns$[0], "Prontera", "Izlude", "Geffen", "Payon", "Morroc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno", "Einbroch", "Lighthalzen", "Hugel", "Rachel";
+		setarray .@towns$[0], "Prontera", "Izlude", "Geffen", "Payon", "Morocc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno", "Einbroch", "Lighthalzen", "Hugel", "Rachel";
 		setarray .@cost[0],          600,      600,     1200,    1200,     1200,      1800,          2200,     2200,     2200,   1800,       2200,          2200,    2200,     2200;
 
 		set .@size, getarraysize(.@towns$);
@@ -1063,7 +1063,7 @@ moc_para01,29,35,4	script	Gramps#huntquests	866,{
 	mes "When you get to being my";
 	mes "age, you become bitter.";
 	mes "Too long I've done nothing about the monsters that roam around";
-	mes "Rune Midgard.";
+	mes "Midgard.";
 	next;
 	mes "[Gramps]";
 	mes "That's why I'm asking you wippersnappers to help";

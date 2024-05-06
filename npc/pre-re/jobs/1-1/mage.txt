@@ -294,7 +294,7 @@ geffen_in,164,112,4	script	Mixing Machine	111,{
 		mes "Solvent for";
 		mes "the Solution.";
 		next;
-		switch(select("Payon Solution.:Morroc Solution.:No Solvent.")) {
+		switch(select("Payon Solution.:Morocc Solution.:No Solvent.")) {
 		case 1:
 			if (countitem(1089) == 0) {
 				mes "[Mixing Machine]";
@@ -329,7 +329,7 @@ geffen_in,164,112,4	script	Mixing Machine	111,{
 				if (.@mixitem1_3 != 0) mes "Milk: " + .@mixitem1_3 + " ea.";
 				if (.@mixitem2 == 0) mes "Solvent: None.";
 				if (.@mixitem2 == 1) mes "Solvent: Payon Solution.";
-				if (.@mixitem2 == 2) mes "Solvent: Morroc Solution.";
+				if (.@mixitem2 == 2) mes "Solvent: Morocc Solution.";
 				next;
 				mes "[Mixing Machine]";
 				mes "Please choose if you wish to begin mixing, or to re-enter the number of items to be mixed.";
@@ -594,7 +594,7 @@ geffen_in,164,112,4	script	Mixing Machine	111,{
 	close;
 }
 
-// The Morroc Solution and Payon Solution traders
+// The Morocc Solution and Payon Solution traders
 // are also used in the Sage skill quests, and have
 // been moved to npc/quests/mage_solution.txt.
 //
@@ -680,9 +680,9 @@ geffen_in,177,112,4	script	Bookshelf	111,{
 		next;
 		mes "[Mage Test Solution No. 4]";
 		mes "* Solvent Agent *";
-		mes "Morroc Solution";
+		mes "Morocc Solution";
 		mes "Where to Find:";
-		mes "A small spring near entrance of pyramid in Morroc.";
+		mes "A small spring near entrance of pyramid in Morocc.";
 		next;
 		mes "[Mage Test Solution No. 4]";
 		mes "* Magic Power Serial Code *";

@@ -628,16 +628,16 @@ que_lhz,140,231,1	script	Human Guinea pig#01	2224,{
 	end;
 
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnDisable:
 	specialeffect EF_FLASHER;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 que_lhz,147,231,0	duplicate(Human Guinea pig#01)	Human Guinea pig#02	2224
@@ -1530,7 +1530,7 @@ OnMyMobDead:
 		progressbar "0xffff00", 20;
 		stopnpctimer;
 		donpcevent instance_npcname("Lab2#2_2")+"::OnDisableValve1";
-		disablenpc instance_npcname(strnpcinfo(0));
+		disablenpc();
 		end;
 	} else {
 		mes "Let your party leader handle the valve.";
@@ -1538,11 +1538,11 @@ OnMyMobDead:
 	}
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	initnpctimer;
 	end;
 
@@ -1991,7 +1991,7 @@ OnEnable:
 
 OnDisable:
 	killmonster instance_mapname("1@lhz"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnMyMobDead:

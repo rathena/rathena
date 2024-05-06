@@ -341,7 +341,7 @@ OnTouch_:
 			mes "[Maia]";
 			mes "Hm? How did you come";
 			mes "here? You're not qualified";
-			mes "for this ceremony yet. Come,I will bring you back to Morroc...";
+			mes "for this ceremony yet. Come,I will bring you back to Morocc...";
 			close2;
 			warp "morocc",157,47;
 			end;
@@ -466,7 +466,7 @@ OnTouch_:
 		mes "The time for you";
 		mes "to be here has not";
 		mes "arrived. Let's go";
-		mes "back to Morroc...";
+		mes "back to Morocc...";
 		close2;
 		warp "morocc",157,47;
 		end;
@@ -484,7 +484,7 @@ OnTouch_:
 		mes "That's strange...";
 		mes "You're not supposed to";
 		mes "be here. Let me guide";
-		mes "you back to Morroc...";
+		mes "you back to Morocc...";
 	}
 	close2;
 	warp "morocc",157,47;

@@ -708,7 +708,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "[Raulel]";
 			mes "4. Which town is the home of Mages?";
 			next;
-			if (select("Prontera:Morroc:Alberta:Geffen") == 4)
+			if (select("Prontera:Morocc:Alberta:Geffen") == 4)
 				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "5. Which of the following cards has nothing to do with INT?";

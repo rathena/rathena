@@ -388,7 +388,7 @@ prt_castle,175,146,4	script	Nursing Instructor	50,{
 			mes "Do you even know how we get these";
 			mes "precious bandages ?";
 			mes "They come from a powerful monster";
-			mes "that is found in the pyramids of Morroc.";
+			mes "that is found in the pyramids of Morocc.";
 			next;
 			mes "[Dread Lord]";
 			mes "The monster is some sort of mummy.";

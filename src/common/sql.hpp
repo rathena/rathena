@@ -4,7 +4,7 @@
 #ifndef SQL_HPP
 #define SQL_HPP
 
-#include <stdarg.h>// va_list
+#include <cstdarg>// va_list
 
 #include "cbasetypes.hpp"
 
@@ -65,6 +65,11 @@ typedef struct SqlStmt SqlStmt;
 
 /// Allocates and initializes a new Sql handle.
 struct Sql* Sql_Malloc(void);
+
+
+
+/// Retrieves the last error number.
+unsigned int Sql_GetError( Sql* self );
 
 
 
@@ -232,7 +237,7 @@ void Sql_Free(Sql* self);
 /// It uses the connection of the parent Sql handle.
 /// Queries in Sql and SqlStmt are independent and don't affect each other.
 ///
-/// @return SqlStmt handle or NULL if an error occured
+/// @return SqlStmt handle or nullptr if an error occured
 struct SqlStmt* SqlStmt_Malloc(Sql* sql);
 
 

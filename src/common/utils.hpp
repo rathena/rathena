@@ -4,7 +4,7 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#include <stdio.h> // FILE*
+#include <cstdio> // FILE*
 
 #include "cbasetypes.hpp"
 
@@ -27,6 +27,7 @@ bool exists(const char* filename);
 
 /// calculates the value of A / B, in percent (rounded down)
 unsigned int get_percentage(const unsigned int A, const unsigned int B);
+uint32 get_percentage_exp(const uint64 a, const uint64 b);
 
 //////////////////////////////////////////////////////////////////////////
 // byte word dword access [Shinomori]

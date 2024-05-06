@@ -8,9 +8,9 @@
 #include <string>
 #include <unordered_map>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/sql.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/sql.hpp>
 
 struct s_storage_table;
 
@@ -20,8 +20,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 };
 
 extern InterServerDatabase interServerDb;
@@ -42,7 +42,6 @@ extern unsigned int party_share_level;
 extern Sql* sql_handle;
 extern Sql* lsql_handle;
 
-void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string);
 int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type);
 
 #endif /* INTER_HPP */

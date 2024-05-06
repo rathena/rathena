@@ -1,0 +1,82 @@
+name: Build servers in Pre-Renewal and Renewal
+# build_servers_modes.yml
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      # Always trigger all Github Actions if an action or something CI related was changed
+      - '.github/workflows/**'
+      - 'tools/ci/**'
+      # This workflow should run when a file in a source directory has been modified.
+      - 'src/**'
+      - '3rdparty/**'
+
+jobs:
+  build:
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
+    # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          # The ubuntu-latest label currently points to ubuntu-22.04.
+          # Available: ubuntu-22.04, ubuntu-20.04
+          os: [ubuntu-latest]
+          # Older versions of GCC are not available via unaltered aptitude repo lists.
+          gcc: ['11']
+          # We run build checks for both Renewal and PRE-Renewal
+          mode: ['PRE','RE']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
+      - name: Variable Parsing - PRE
+        if: ${{ matrix.mode == 'PRE' }} 
+        run: |
+          echo "PRERE=yes" >> $GITHUB_ENV
+      - name: Variable Parsing - RE
+        if: ${{ matrix.mode == 'RE' }} 
+        run: |
+          echo "PRERE=no" >> $GITHUB_ENV
+
+      - name: Update & Install packages
+        # Ubuntu runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        run: |
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+
+      - name: Start MySQL
+        run: sudo systemctl start mysql.service
+
+      - name: Setup Database and import table data
+        run: ./tools/ci/sql.sh
+
+      - name: Command - configure
+        env:
+            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
+        run: ./configure $CONFIGURE_FLAGS
+
+      - name: Command - make clean
+        run: make clean
+
+      - name: Command - make server
+        run: make server
+
+      - name: Run Once - login-server
+        run: ./login-server --run-once
+
+      - name: Run Once - char-server
+        run: ./char-server --run-once
+
+      - name: Run Once - map-server
+        run: ./map-server --run-once

@@ -71,7 +71,7 @@ valkyrie,44,50,5	script	MasterSmith#Valkyrie	731,{
 		mes "As a MasterSmith,";
 		mes "I hope you will forge";
 		mes "a path towards a brighter";
-		mes "future for Rune-Midgard.";
+		mes "future for Midgard.";
 		close;
 	}
 	mes "[MasterSmith]";

@@ -179,7 +179,7 @@ hugel,187,172,6	script	Guide Rich King#hugel	414,{
 	next;
 	mes "[Rich King]";
 	mes "This is ^8B4513Hugel^000000";
-	mes "in the Schwaltzvalt Republic.";
+	mes "in the Schwarzwald Republic.";
 	mes "You are very honored to receive guidance from a great person like me.";
 	F_Navi("[Rich King]");
 	next;

@@ -30,7 +30,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	switch(rand(1,2)) {
 	case 1:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune-Midgarts. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
 		mes "those young people...so noisy.... I was standing but none of them offered me a seat..and they were just talking loudly which bothered everyone.";
@@ -50,7 +50,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 		break;
 	case 2:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune-Midgarts. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
 		mes "those young people...so noisy.... I was standing but none of them offered me a seat..and they were just talking loudly which bothered everyone.";
@@ -489,10 +489,10 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		next;
 		mes "[Pudding]";
 		mes "Let me see.. the equipments discovered until now are....";
-		mes "6 Armors, 14 Weapons.";
+		mes "7 Armors, 14 Weapons.";
 		next;
 		while(1) {
-			switch(select("Ok, I don't have to know more.", "6 Armors", "14 Weapons")) {
+			switch(select("Ok, I don't have to know more.", "7 Armors", "14 Weapons")) {
 			case 1:
 				mes "[Pudding]";
 				mes "If you obtain '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', and obtain also equipment which is capable to accept their power, bring them to me. I will be waiting.";

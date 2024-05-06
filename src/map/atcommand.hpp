@@ -4,16 +4,10 @@
 #ifndef ATCOMMAND_HPP
 #define ATCOMMAND_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
 
-struct map_session_data;
-
-//This is the distance at which @autoloot works,
-//if the item drops farther from the player than this,
-//it will not be autolooted. [Skotlex]
-//Note: The range is unlimited unless this define is set.
-//#define AUTOLOOT_DISTANCE AREA_SIZE
+class map_session_data;
 
 //global var
 extern char atcommand_symbol;
@@ -25,13 +19,13 @@ enum AtCommandType : uint8 {
 	COMMAND_CHARCOMMAND = 2,
 } ;
 
-typedef int (*AtCommandFunc)(const int fd, struct map_session_data* sd, const char* command, const char* message);
+typedef int (*AtCommandFunc)(const int fd, map_session_data* sd, const char* command, const char* message);
 
-bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type);
+bool is_atcommand(const int fd, map_session_data* sd, const char* message, int type);
 
 void do_init_atcommand(void);
 void do_final_atcommand(void);
-void atcommand_db_load_groups(int* group_ids);
+void atcommand_db_load_groups();
 
 bool atcommand_exists(const char* name);
 

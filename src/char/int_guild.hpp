@@ -4,7 +4,11 @@
 #ifndef INT_GUILD_HPP
 #define INT_GUILD_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <string>
+
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/mmo.hpp>
 
 enum e_guild_action : uint32 {
 	GS_BASIC = 0x0001,
@@ -22,11 +26,36 @@ enum e_guild_action : uint32 {
 	GS_REMOVE = 0x8000,
 };
 
-struct guild;
+struct mmo_guild;
 struct guild_castle;
 
+struct s_guild_exp_db {
+	uint16 level;
+	t_exp exp;
+};
+
+class GuildExpDatabase : public TypesafeYamlDatabase<uint16, s_guild_exp_db> {
+public:
+	GuildExpDatabase() : TypesafeYamlDatabase("GUILD_EXP_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void loadingFinished() override;
+
+	// Additional
+	t_exp get_nextexp(uint16 level);
+};
+
+class CharGuild {
+public:
+	struct mmo_guild guild;
+	unsigned short save_flag;
+};
+
 int inter_guild_parse_frommap(int fd);
-int inter_guild_sql_init(void);
+void inter_guild_sql_init(void);
 void inter_guild_sql_final(void);
 int inter_guild_leave(int guild_id,uint32 account_id,uint32 char_id);
 int mapif_parse_BreakGuild(int fd,int guild_id);

@@ -4,7 +4,7 @@
 //= kobra_k88
 //= added some dialogs for Morgenstein by Komurka
 //===== Current Version: ===================================== 
-//= 2.2b
+//= 2.2c
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.2a A few minor fixes. (bugreport:1122) [L0ne_W0lf]
 //= 2.2b Follow up fixes to bugreport:1122 [L0ne_W0lf]
+//= 2.2c NPC name typo fix [Everade]
 //============================================================ 
 
 alberta_in,133,55,3	script	Louitz#cm	84,{
@@ -24,7 +25,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 		mes "that nutcase scientist";
 		mes "who lives over in Geffen?";
 		next;
-		if (select("Talk About Molgenstein:Cancel") == 1) {
+		if (select("Talk About Morgenstein:Cancel") == 1) {
 			mes "[Merchant Louitz]";
 			mes "You know where he lives";
 			mes "but didn't check it out? Hey,";
@@ -103,7 +104,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "I don't remember exactly";
 			mes "where he lives, but I know";
 			mes "he's in Geffen and that his";
-			mes "name is ^0000FFMolgenstein^000000.";
+			mes "name is ^0000FFMorgenstein^000000.";
 			next;
 			mes "[Merchant Louitz]";
 			mes "Hmm... You better";
@@ -111,7 +112,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "around first. I know for";
 			mes "ask around first. I know for";
 			mes "sure that somebody knows";
-			mes "where you can find Molgenstein.";
+			mes "where you can find Morgenstein.";
 			close;
 		case 3:
 			mes "[Merchant Louitz]";
@@ -173,7 +174,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "I don't remember exactly";
 			mes "where he lives, but I know";
 			mes "he's in Geffen and that his";
-			mes "name is ^0000FFMolgenstein^000000.";
+			mes "name is ^0000FFMorgenstein^000000.";
 			next;
 			mes "[Merchant Louitz]";
 			mes "Hmm... You better";
@@ -181,7 +182,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "around first. I know for";
 			mes "ask around first. I know for";
 			mes "sure that somebody knows";
-			mes "where you can find Molgenstein.";
+			mes "where you can find Morgenstein.";
 			close;
 		case 3:
 			mes "[Merchant Louitz]";
@@ -243,7 +244,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "I don't remember exactly";
 			mes "where he lives, but I know";
 			mes "he's in Geffen and that his";
-			mes "name is ^0000FFMolgenstein^000000.";
+			mes "name is ^0000FFMorgenstein^000000.";
 			next;
 			mes "[Merchant Louitz]";
 			mes "Hmm... You better";
@@ -251,7 +252,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "around first. I know for";
 			mes "ask around first. I know for";
 			mes "sure that somebody knows";
-			mes "where you can find Molgenstein.";
+			mes "where you can find Morgenstein.";
 			close;
 		case 3:
 			mes "[Merchant Louitz]";
@@ -313,10 +314,10 @@ geffen,181,114,3	script	Aure Dupon#cm	82,{
 		mes "Coincidence? It's more";
 		mes "than that. This is ^0000FFfate^000000.";
 		next;
-		if (select("Talk About Molgenstein:Cancel") == 1) {
+		if (select("Talk About Morgenstein:Cancel") == 1) {
 			mes "[Aure Dupon]";
 			mes "Have you not met";
-			mes "Molgenstein yet? He";
+			mes "Morgenstein yet? He";
 			mes "lives on the second floor";
 			mes "of the Forge. Although we've";
 			mes "just met, I must warn you not";
@@ -339,7 +340,7 @@ geffen,181,114,3	script	Aure Dupon#cm	82,{
 	mes "mote in the grand scheme.";
 	next;
 	if (molgenstain > 0) {
-		switch(select("Talk:Ask About Molgenstein:Cancel")) {
+		switch(select("Talk:Ask About Morgenstein:Cancel")) {
 		case 1:
 			mes "[Aure Dupon]";
 			mes "To have goals and focus";
@@ -352,7 +353,7 @@ geffen,181,114,3	script	Aure Dupon#cm	82,{
 		case 2:
 			set molgenstain,2;
 			mes "[Aure Dupon]";
-			mes "Molgenstein...?";
+			mes "Morgenstein...?";
 			mes "The man is obsessed";
 			mes "with conquering the forces";
 			mes "that control our world. But";
@@ -361,7 +362,7 @@ geffen,181,114,3	script	Aure Dupon#cm	82,{
 			next;
 			mes "[Aure Dupon]";
 			mes "It would be best if you";
-			mes "were to see Molgenstein";
+			mes "were to see Morgenstein";
 			mes "and judge his character for";
 			mes "yourself. You may find him in";
 			mes "the second floor of the Geffen";
@@ -394,17 +395,17 @@ geffen,181,114,3	script	Aure Dupon#cm	82,{
 	close;
 }
 
-geffen_in,141,140,3	script	Molgenstein#cm	121,{
+geffen_in,141,140,3	script	Morgenstein#cm	121,{
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	if (MISC_QUEST & 4) {
-		mes "[Chemist Molgenstein]";
+		mes "[Chemist Morgenstein]";
 		mes ".....";
 		mes "Welcome.";
 		mes "Hehehehe....";
@@ -412,59 +413,59 @@ geffen_in,141,140,3	script	Molgenstein#cm	121,{
 		next;
 		switch(select("Ask about his research:Ask him to make a new solution.:Cancel")) {
 		case 1:
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Heeheeheeheee...";
 			mes "You must have heard the rumors about my research. Yes! But since you probably know already, I'll tell you without hiding, I mean, there's nothing to hide.";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Actually, you can say my research is complete! Nothing's impossible for my genius! Bwahaha, it's just a matter of time!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Are you still here? Right, you wanted to know about my research. It's actually very simple. I was just trying to invent a super liquid that can melt everything!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Isn't it interesting? No matter how strong you are, you can't break apart stone or steel, but with my new liquid, you can melt those things, making them soft like puddy!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "It can't melt everything yet, but I did find that you could combine things that you could never mix before with my invention. Heeheeheehee~!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "You can make a whole lot of things that you'd never would have imagined possible! I can make you a lot of new things you never would have imagined using this method... as long as you want it!!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "The endorphins are rushing to my face at least 2.1 times faster than the usual rate! Ah! I'm so excited! I... I just can't hide it!";
 			close;
 		case 2:
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "So...";
 			mes "You want me to make something totally new, huh? Hehhehheh! I love your sense of scientific adventure!";
 			next;
 			switch(select("Counteragent:Mixture")) {
 			case 1:
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Ooh...!";
 				mes "You want to make a Counteragent? Hohohohoho, let's see what we'll need...";
 				next;
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Oh, I remember, yes, Alcohol, and um, er, Detrimindexta and an Empty Bottle to put it it all in. Just these three items and 3000 zeny.";
 				next;
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Bwahahahah!";
 				mes "Oh, I just can't wait to make this! Are you ready to begin?";
 				next;
 				if (select("Make:Cancel") == 1) {
 					if (countitem(970) == 0 || countitem(971) == 0 || countitem(713) == 0 || Zeny < 3000) {
-						mes "[Chemist Molgenstein]";
+						mes "[Chemist Morgenstein]";
 						mes "Heuheuheuheuh.... not enough... not enough.. Haah...Haah... Go..... get the rest of the materials!";
 						mes "We'll postpone the fun until then... Heuheuheuheuheuh.";
 						close;
 					}
-					mes "[Chemist Molgenstein]";
+					mes "[Chemist Morgenstein]";
 					mes "Ooooooooh...... heeheeheeheehee...... yes... like that...... yes... more... more........ heeheeheehee.";
 					mes ".... Aaah.... ahah... ha....ahahooooooooohoh!";
 					next;
 					if (countitem(970) < 1 || countitem(971) < 1 || countitem(713) < 1) {
-						mes "[Chemist Molgenstein]";
+						mes "[Chemist Morgenstein]";
 						mes "Hohohoho.... not enough... not enough... haah...haah... go..... go get the rest of the materials!!";
 						close;
 					}
@@ -473,42 +474,42 @@ geffen_in,141,140,3	script	Molgenstein#cm	121,{
 					delitem 713,1; //Empty_Bottle
 					set Zeny, Zeny-3000;
 					getitem 973,1; //Counteragent
-					mes "[Chemist Molgenstein]";
+					mes "[Chemist Morgenstein]";
 					mes "Hee hee hee...";
 					mes "Haaaaah......";
 					mes "Oh? We're done already?!";
 					close;
 				}
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Hee hee hee...!";
 				mes "Come back when";
 				mes "you're ready~";
 				close;
 			case 2:
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Ooh...!";
 				mes "You want to make a Mixture? Hohohohoho, let's see what we'll need...";
 				next;
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Ooh, I remember now, yes, Alcohol, and um, er, Karvodailnirol and an empty bottle to put all of it in. Just these three items and 4000 zeny.";
 				next;
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Bwahahahah!";
 				mes "Oh, I just can't wait to make this! Are you ready to begin?";
 				next;
 				if (select("Make:Cancel") == 1) {
 					if (countitem(970) == 0 || countitem(972) == 0 || countitem(713) == 0 || Zeny < 4000) {
-						mes "[Chemist Molgenstein]";
+						mes "[Chemist Morgenstein]";
 						mes "Hohohoho.... not enough... not enough... haah...haah... go..... go get the rest of the materials!!";
 						mes "We'll have to postpone the fun for later... Hehehehe";
 						close;
 					}
-					mes "[Chemist Molgenstein]";
+					mes "[Chemist Morgenstein]";
 					mes "Ooooooooh... heehee...... yes... like that...... yes... more... more........ heeheeheehee";
 					mes ".... Aaah.... ahah... ha....ahah...oooooooooooooooooh!!!...!!!!!!";
 					next;
 					if (countitem(970) < 1 || countitem(972) < 1 || countitem(713) < 1) {
-						mes "[Chemist Molgenstein]";
+						mes "[Chemist Morgenstein]";
 						mes "Hohohoho.... not enough... not enough... haah...haah... go..... go get the rest of the materials!!";
 						close;
 					}
@@ -517,14 +518,13 @@ geffen_in,141,140,3	script	Molgenstein#cm	121,{
 					delitem 713,1; //Empty_Bottle
 					set Zeny, Zeny-4000;
 					getitem 974,1; //Mixture
-					mes "[Chemist Molgenstein]";
+					mes "[Chemist Morgenstein]";
 					mes "Hee hee hee...";
 					mes "Haaaaah......";
 					mes "Oh? We're done already?!";
 					close;
 				}
-				mes "[Chemist Molgenstein]";
-				mes "[Chemist Molgenstein]";
+				mes "[Chemist Morgenstein]";
 				mes "Hee hee hee...!";
 				mes "Come back when";
 				mes "you're ready~";
@@ -532,7 +532,7 @@ geffen_in,141,140,3	script	Molgenstein#cm	121,{
 				close;
 			}
 		case 3:
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Heehee....heheheheh....";
 			close;
 		}
@@ -540,40 +540,40 @@ geffen_in,141,140,3	script	Molgenstein#cm	121,{
 	if (molgenstain == 2) {
 		set MISC_QUEST,MISC_QUEST | 4;
 		set molgenstain,0;
-		mes "[Chemist Molgenstein]";
+		mes "[Chemist Morgenstein]";
 		mes "Heeheeheehee.... welcome. Hehehehe.... heeheeheeheehee....";
 		next;
-		mes "[Chemist Molgenstein]";
+		mes "[Chemist Morgenstein]";
 		mes "Ah...?!";
 		mes "So sorry if I weirded you out. It's just... I haven't seen a living person in soooo long. So, er, what can I do for you??";
 		next;
 		if (select("Ask about his research.:Cancel.") == 1) {
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Heeheeheeheee...";
 			mes "You must have heard the rumors about my research. Yes! But since you probably know already, I'll tell you without hiding, I mean, there's nothing to hide.";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Actually, you can say my research is complete! Nothing's impossible for my genius! Bwahaha, it's just a matter of time!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Are you still here? Right, you wanted to know about my research. It's actually very simple. I was just trying to invent a super liquid that can melt everything!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "Isn't it interesting? No matter how strong you are, you can't break apart stone or steel, but with my new liquid, you can melt those things, making them soft like puddy!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "It can't melt everything yet, but I did find that you could combine things that you could never mix before with my invention.";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "I can make you a lot of new things you never would have imagined using this method... as long as you want it!!";
 			next;
-			mes "[Chemist Molgenstein]";
+			mes "[Chemist Morgenstein]";
 			mes "The endorphins are rushing to my face at least 2.1 times faster than the usual rate! Ah! I'm so excited! I... I just can't hide it!";
 			close;
 		}
 		close;
 	}
-	mes "[Chemist Molgenstein]";
+	mes "[Chemist Morgenstein]";
 	mes "Heeheeheehee...";
 	mes "You're not here to be a test subject, are you? Probably not though. Not since my little 'accident.' Heeheeheeee~!";
 	close;

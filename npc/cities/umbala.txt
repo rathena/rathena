@@ -265,7 +265,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "You look pretty well off...";
 		mes "Can donate some money for";
 		mes "re-constructing my parents' house?";
-		mes "You Rune-Midgardians are all";
+		mes "You Rune-Midgartsians are all";
 		mes "richer than Utans! I beg you!";
 		emotion ET_SMILE;
 		next;
@@ -443,7 +443,7 @@ umbala,177,153,3	script	Pasto#um	97,{
 	mes "[Pasto]";
 	emotion ET_SURPRISE;
 	mes "Oh my god~! Finally,";
-	mes "another Rune-Midgardian!";
+	mes "another Rune-Midgartsian!";
 	mes "I've never seen anyone from";
 	mes "home in this place before!";
 	mes "Nice to meet you, my name is Pasto!";
@@ -534,7 +534,7 @@ umbala,80,146,4	script	Yuwooki#um	753,{
 	mes "I eventually realized that their";
 	mes "courtship rituals are actually";
 	mes "more advanced than anything the";
-	mes "Rune-Midgard culture has to offer.";
+	mes "Rune-Midgarts culture has to offer.";
 	next;
 	mes "[Yuwooki]";
 	mes "It's really quite fascinating.";
@@ -615,7 +615,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 		next;
 		mes "[Bertan]";
 		mes "What's the matter,";
-		mes "ya big Rune-Midgardian?!?!";
+		mes "ya big Rune-Midgartsian?!?!";
 		mes "I just called you a 'loser!'";
 		mes "I guess you're too stupid";
 		mes "to understand!!";
@@ -640,7 +640,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 		switch(rand(1,6)) {
 		case 1:
 			mes "[Bertan]";
-			mes "What did the Rune-Midgardian";
+			mes "What did the Rune-Midgartsian";
 			mes "say to the Savage?";
 			mes "...";
 			next;
@@ -695,7 +695,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 			close;
 		case 4:
 			mes "[Bertan]";
-			mes "Why are Rune-Midgardians";
+			mes "Why are Rune-Midgartsians";
 			mes "SOOoOOoo...";
 			mes "Um, hmmmmm.";
 			mes "Maybe that joke";
@@ -807,7 +807,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 umbala,194,104,4	script	Utan Kid#2	787,{
 	if (event_umbala >= 3) {
 		mes "[Boorkatan]";
-		mes "Huh? You're from Rune-Midgard,";
+		mes "Huh? You're from Rune-Midgarts,";
 		mes "aren't you? Have you ever been bungee jumping?";
 		next;
 		if (select("Yeah:No") == 1) {
@@ -879,7 +879,7 @@ umbala,139,205,4	script	Utan Man#5	785,{
 	if (event_umbala >= 3) {
 		mes "[Jooltan]";
 		mes "It's been a long time since I last";
-		mes "saw a Rune-Midgardian~!";
+		mes "saw a Rune-Midgartsian~!";
 		mes "Welcome, stranger.";
 		next;
 		mes "[Jooltan]";

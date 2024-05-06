@@ -3,16 +3,16 @@
 
 #include "int_pet.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utils.hpp"
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
+#include <common/utils.hpp>
 
 #include "char.hpp"
 #include "inter.hpp"
@@ -34,7 +34,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	{// New pet.
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`,`autofeed`) "
-			"VALUES ('%d', '%s', '%d', '%d', '%d', '%hu', '%hu', '%d', '%d', '%d', '%d', '%d')",
+			"VALUES ('%d', '%s', '%d', '%d', '%d', '%u', '%u', '%d', '%d', '%d', '%d', '%d')",
 			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate, p->autofeed) )
 		{
@@ -45,7 +45,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	}
 	else
 	{// Update pet.
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%hu',`equip`='%hu',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incubate`='%d',`autofeed`='%d' WHERE `pet_id`='%d'",
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%u',`equip`='%u',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incubate`='%d',`autofeed`='%d' WHERE `pet_id`='%d'",
 			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate, p->autofeed, p->pet_id) )
 		{
@@ -80,18 +80,18 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
 		p->pet_id = pet_id;
-		Sql_GetData(sql_handle,  1, &data, NULL); p->class_ = atoi(data);
+		Sql_GetData(sql_handle,  1, &data, nullptr); p->class_ = atoi(data);
 		Sql_GetData(sql_handle,  2, &data, &len); memcpy(p->name, data, zmin(len, NAME_LENGTH));
-		Sql_GetData(sql_handle,  3, &data, NULL); p->account_id = atoi(data);
-		Sql_GetData(sql_handle,  4, &data, NULL); p->char_id = atoi(data);
-		Sql_GetData(sql_handle,  5, &data, NULL); p->level = atoi(data);
-		Sql_GetData(sql_handle,  6, &data, NULL); p->egg_id = atoi(data);
-		Sql_GetData(sql_handle,  7, &data, NULL); p->equip = atoi(data);
-		Sql_GetData(sql_handle,  8, &data, NULL); p->intimate = atoi(data);
-		Sql_GetData(sql_handle,  9, &data, NULL); p->hungry = atoi(data);
-		Sql_GetData(sql_handle, 10, &data, NULL); p->rename_flag = atoi(data);
-		Sql_GetData(sql_handle, 11, &data, NULL); p->incubate = atoi(data);
-		Sql_GetData(sql_handle, 12, &data, NULL); p->autofeed = atoi(data) != 0;
+		Sql_GetData(sql_handle,  3, &data, nullptr); p->account_id = atoi(data);
+		Sql_GetData(sql_handle,  4, &data, nullptr); p->char_id = atoi(data);
+		Sql_GetData(sql_handle,  5, &data, nullptr); p->level = atoi(data);
+		Sql_GetData(sql_handle,  6, &data, nullptr); p->egg_id = strtoul(data, nullptr, 10);
+		Sql_GetData(sql_handle,  7, &data, nullptr); p->equip = strtoul(data, nullptr, 10);
+		Sql_GetData(sql_handle,  8, &data, nullptr); p->intimate = atoi(data);
+		Sql_GetData(sql_handle,  9, &data, nullptr); p->hungry = atoi(data);
+		Sql_GetData(sql_handle, 10, &data, nullptr); p->rename_flag = atoi(data);
+		Sql_GetData(sql_handle, 11, &data, nullptr); p->incubate = atoi(data);
+		Sql_GetData(sql_handle, 12, &data, nullptr); p->autofeed = atoi(data) != 0;
 
 		Sql_FreeResult(sql_handle);
 
@@ -128,7 +128,7 @@ int mapif_pet_created(int fd, uint32 account_id, struct s_pet *p)
 	WFIFOHEAD(fd, 12);
 	WFIFOW(fd, 0) = 0x3880;
 	WFIFOL(fd, 2) = account_id;
-	if(p!=NULL){
+	if(p!=nullptr){
 		WFIFOW(fd, 6) = p->class_;
 		WFIFOL(fd, 8) = p->pet_id;
 		ShowInfo("int_pet: created pet %d - %s\n", p->pet_id, p->name);
@@ -184,7 +184,7 @@ int mapif_delete_pet_ack(int fd, int flag){
 	return 0;
 }
 
-int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, unsigned short pet_egg_id, unsigned short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
+int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
 {
 	memset(pet_pt, 0, sizeof(struct s_pet));
 	safestrncpy(pet_pt->name, pet_name, NAME_LENGTH);
@@ -221,7 +221,7 @@ int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class,
 			mapif_load_pet(fd, account_id, char_id, pet_pt->pet_id);
 		}
 	}else	//Failed...
-		mapif_pet_created(fd, account_id, NULL);
+		mapif_pet_created(fd, account_id, nullptr);
 
 	return 0;
 }
@@ -231,7 +231,7 @@ int mapif_load_pet(int fd, uint32 account_id, uint32 char_id, int pet_id){
 
 	inter_pet_fromsql(pet_id, pet_pt);
 
-	if(pet_pt!=NULL) {
+	if(pet_pt!=nullptr) {
 		if(pet_pt->incubate == 1) {
 			pet_pt->account_id = pet_pt->char_id = 0;
 			mapif_pet_info(fd, account_id, pet_pt);
@@ -280,8 +280,8 @@ int mapif_delete_pet(int fd, int pet_id){
 
 int mapif_parse_CreatePet(int fd){
 	RFIFOHEAD(fd);
-	mapif_create_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOW(fd, 10), RFIFOW(fd, 12), RFIFOW(fd, 14), RFIFOW(fd, 16), RFIFOW(fd, 18),
-		RFIFOW(fd, 20), RFIFOB(fd, 22), RFIFOB(fd, 23), RFIFOCP(fd, 24));
+	mapif_create_pet(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOW(fd, 10), RFIFOW(fd, 12), RFIFOL(fd, 14), RFIFOL(fd, 18), RFIFOW(fd, 22),
+		RFIFOW(fd, 24), RFIFOB(fd, 26), RFIFOB(fd, 27), RFIFOCP(fd, 28));
 	return 0;
 }
 

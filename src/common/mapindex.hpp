@@ -4,11 +4,11 @@
 #ifndef MAPINDEX_HPP
 #define MAPINDEX_HPP
 
-#include "../common/mmo.hpp"
+#include "mmo.hpp"
 
 #define MAX_MAPINDEX 2000
 
-//Some definitions for the mayor city maps.
+//Some definitions for the major city maps.
 #define MAP_PRONTERA "prontera"
 #define MAP_GEFFEN "geffen"
 #define MAP_MORROC "morocc"
@@ -51,6 +51,8 @@
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
 #define MAP_LASAGNA "lasagna"
+#define MAP_GLASTHEIM "glast_01"
+#define MAP_THANATOS "hu_fild01"
 
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);

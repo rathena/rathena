@@ -4,9 +4,9 @@
 #ifndef ACCOUNT_HPP
 #define ACCOUNT_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp> // ACCOUNT_REG2_NUM, WEB_AUTH_TOKEN_LENGTH
+#include <config/core.hpp>
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
@@ -32,6 +32,7 @@ struct mmo_account {
 	char birthdate[10+1];   // assigned birth date (format: YYYY-MM-DD)
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
+	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; // web authentication token (randomized on each login)
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;
@@ -101,13 +102,23 @@ struct AccountDB {
 	/// @return true if successful
 	bool (*remove)(AccountDB* self, const uint32 account_id);
 
+	/// Enables the web auth token for the given account id
+	bool (*enable_webtoken)(AccountDB* self, const uint32 account_id);
+
+	/// Disables the web auth token for the given account id
+	bool (*disable_webtoken)(AccountDB* self, const uint32 account_id);
+
+	/// Removes the web auth token for all accounts
+	bool (*remove_webtokens)(AccountDB* self);
+
 	/// Modifies the data of an existing account.
 	/// Uses acc->account_id to identify the account.
 	///
 	/// @param self Database
 	/// @param acc Account data
+	/// @param refresh_token Whether or not to refresh the web auth token
 	/// @return true if successful
-	bool (*save)(AccountDB* self, const struct mmo_account* acc);
+	bool (*save)(AccountDB* self, const struct mmo_account* acc, bool refresh_token);
 
 	/// Finds an account with account_id and copies it to acc.
 	///
@@ -132,7 +143,7 @@ struct AccountDB {
 	AccountDBIterator* (*iterator)(AccountDB* self);
 };
 
-void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
-void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
+void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id);
+void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id);
 
 #endif /* ACCOUNT_HPP */

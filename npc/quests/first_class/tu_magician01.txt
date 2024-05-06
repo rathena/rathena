@@ -681,7 +681,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "Let me tell you about";
 		mes "your mission. Recently,";
 		mes "something has happened in";
-		mes "Morroc and the Thief Guild";
+		mes "Morocc and the Thief Guild";
 		mes "is requesting our assistance.";
 		next;
 		mes "[Mana]";
@@ -697,9 +697,9 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 			mes "[Mana]";
 			mes "Great! Alright,";
 			mes "I'll send you straight";
-			mes "to Morroc, then. Once you";
+			mes "to Morocc, then. Once you";
 			mes "get there, go to the front";
-			mes "of the Morroc Pyramid and";
+			mes "of the Morocc Pyramid and";
 			mes "speak to Yierhan. Thanks~";
 			next;
 			mes "[Mana]";

@@ -2272,7 +2272,7 @@ kh_vila,44,126,0	script	Map#khp1	111,{
 	if ((KHCottagePoem1 < 2) && (KielHyreQuest < 30)) {
 		mes "^3355FFA magnificent world map,";
 		mes "detailing the Rune-Midgarts";
-		mes "Kingdom, Schwaltzvalt Republic,";
+		mes "Kingdom, Schwarzwald Republic,";
 		mes "as well as another country to the";
 		mes "west whose name is unfamiliar";
 		mes "to you, is pasted to this wall.^000000";
@@ -4887,7 +4887,7 @@ OnTouch:
 		mes "[??????]";
 		mes "All you need to know it";
 		mes "that I'm a secret agent for";
-		mes "the Schwaltzvalt Republic";
+		mes "the Schwarzwald Republic";
 		mes "government. We're investigating";
 		mes "abnormal activity between Kiel";
 		mes "Hyre and the Rekenber Corporation.";
@@ -5043,7 +5043,7 @@ OnTouch:
 				mes "Great.";
 				mes "I'm Agent Mitchell Layla.";
 				mes "From here on, you're working";
-				mes "for the Schwaltzvalt Republic!";
+				mes "for the Schwarzwald Republic!";
 				set KielHyreQuest,52;
 				close;
 			}
@@ -6686,7 +6686,7 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 		set getvariableofnpc(.KHKilledBoss,"KiehlRoom"),0;
 		cutin "kh_kiel01",2;
 		mes "[Kiehl]";
-		mes "Ah, Schwaltzvalt Republic";
+		mes "Ah, Schwarzwald Republic";
 		mes "agents. Heh. I haven't had";
 		mes "this many guests before.";
 		mes "Well, I guess this means";

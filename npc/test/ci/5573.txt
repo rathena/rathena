@@ -1,0 +1,9 @@
+-	script	Issue5573	-1,{
+OnInit:
+	.i = 0;
+	.@i = min( .i, 200 );
+	
+	if( .@i == 200 ){
+		errormes "Issue 5573 is happening again.";
+	}
+}

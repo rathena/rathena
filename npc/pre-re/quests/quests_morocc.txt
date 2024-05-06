@@ -1,8 +1,8 @@
 //===== rAthena Script =======================================
-//= Morroc Quest NPCs
+//= Morocc Quest NPCs
 //===== Description: =========================================
 //= [Official Conversion]
-//= Quest NPCs related to Morroc.
+//= Quest NPCs related to Morocc.
 //===== Changelogs: ==========================================
 //= 1.0 Succession of the Prince removed in ep16.1 [Capuche]
 //= 1.1 Moved renewal specific npcs [zackdreaver]
@@ -16,7 +16,7 @@ moc_ruins,113,181,4	duplicate(William)	William#moc	89
 // ============================================================
 moc_ruins,118,176,4	duplicate(Alchemist)	Alchemist#moc	64
 
-// Resurrection of Satan Morroc
+// Resurrection of Satan Morocc
 // ============================================================
 
 morocc,176,103,3	duplicate(Continental Official)	Continental Official#mor	754
@@ -34,7 +34,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 				mes "It might have brought national disorder, but people are all wary about the rebirth of the devil. We are in the perfect times to process this issue without making any additional fuss.";
 				next;
 				mes "[Messenger]";
-				mes "Oh, I don't want you to panic too much... Hmm... what I want to say is, Tristan the third, the ruler of Rune Midgarts...";
+				mes "Oh, I don't want you to panic too much... Hmm... what I want to say is, Tristan the third, the ruler of Rune-Midgarts...";
 				next;
 				switch(select("Passed away?:Came for a celebration again?")) {
 				case 1:
@@ -47,7 +47,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 					mes "[Messenger]";
 					mes "The King's position cannot";
 					mes "be empty for too long.";
-					mes "Now, the debate over selecting our next King is actively in progress. Please give us a hand with this, for the tomorrow of Rune Midgarts.";
+					mes "Now, the debate over selecting our next King is actively in progress. Please give us a hand with this, for the tomorrow of Rune-Midgarts.";
 					set nk_prince,1;
 					setquest 10000;
 					close;
@@ -64,7 +64,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 					mes "It's quite natural for you to expect nothing. I still don't know how to express this to you. Don't be too perplexed.";
 					next;
 					mes "[Messenger]";
-					mes "Tristan the 3rd, the ruler of Rune Midgarts...";
+					mes "Tristan the 3rd, the ruler of Rune-Midgarts...";
 					next;
 					mes "[Messenger]";
 					mes "...";
@@ -79,7 +79,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 					mes "[Messenger]";
 					mes "Please...Please...";
 					mes "Lend a hand for the future";
-					mes "of the Rune Midgarts kingdom.";
+					mes "of the Rune-Midgarts kingdom.";
 					set nk_prince,1;
 					setquest 10000;
 					close;
@@ -114,7 +114,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 				mes "They will let you know what";
 				mes "you have to do in court.";
 				mes "I hope you will help bring";
-				mes "peace to Rune Midgarts.";
+				mes "peace to Rune-Midgarts.";
 				set nk_prince,1;
 				setquest 10000;
 				close;
@@ -122,7 +122,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 		}
 		else {
 			mes "[Messenger]";
-			mes "I am a messenger of Rune Midgarts.";
+			mes "I am a messenger of Rune-Midgarts.";
 			mes "Is there something special";
 			mes "in this country?";
 			next;
@@ -136,7 +136,7 @@ prontera,153,353,4	script	Messenger#prince1	105,{
 		mes "I want you to go to the Prontera Royal Court to help in the next King's selection.";
 		next;
 		mes "[Messenger]";
-		mes "I will stay here to find other adventurers. May your heart bring great glory to Rune Midgarts!";
+		mes "I will stay here to find other adventurers. May your heart bring great glory to Rune-Midgarts!";
 		close;
 	}
 	else {
@@ -402,7 +402,7 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 				}
 				mes "[Inspector]";
 				mes "What has to be done first when";
-				mes "ruling the Rune Midgarts kingdom?";
+				mes "ruling the Rune-Midgarts kingdom?";
 				next;
 				switch(select("Dominate countries by reinforcing militia.:Advancement of economy and technology.:Keep public security firm.")) {
 				case 1:
@@ -740,7 +740,7 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 		}
 		mes "[Inspector]";
 		mes "What has to be done first when";
-		mes "ruling the Rune Midgarts kingdom?";
+		mes "ruling the Rune-Midgarts kingdom?";
 		next;
 		switch(select("Dominate countries by reinforcing militia.:Advancement of economy and technology.:Keep public security firm.")) {
 		case 1:
@@ -862,10 +862,10 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 				mes "The original rule is that the quality of princes has to be appraised by royal families for a long time, and one has to be elected by internal ordinance.";
 				next;
 				mes "[Inspector]";
-				mes "Because of the resurrection of the devil Satan Morroc, people are too uneasy to follow regular announcements, and the atmosphere of the kingdom is not stable.";
+				mes "Because of the resurrection of the devil Satan Morocc, people are too uneasy to follow regular announcements, and the atmosphere of the kingdom is not stable.";
 				next;
 				mes "[Inspector]";
-				mes "Each kingdom is busy preventing the interference of Satan Morroc too.";
+				mes "Each kingdom is busy preventing the interference of Satan Morocc too.";
 				next;
 				mes "[Inspector]";
 				mes "So this time, the Court decided to change its ways, giving the opportunity to appraise the candidates to famous and devoted adventurers like yourself. That's why you are here.";
@@ -904,7 +904,7 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 					mes "Behind the soldier, you can find a secret door. If you talk to the soldier, the soldier will allow you to get in.";
 					next;
 					mes "[Inspector]";
-					mes "As I have expressed, this is a very important issue for the Rune Midgarts kingdom. Although I've stressed this point repeateadly, I cannot stress it enough.";
+					mes "As I have expressed, this is a very important issue for the Rune-Midgarts kingdom. Although I've stressed this point repeateadly, I cannot stress it enough.";
 					next;
 					mes "[Inspector]";
 					mes "Please behave accordingly.";
@@ -961,7 +961,7 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 			next;
 			mes "[Inspector]";
 			mes "So, keep up the good work.";
-			mes "For the Kingdom of Rune Midgarts!";
+			mes "For the Kingdom of Rune-Midgarts!";
 			if (checkre(3)) {
 				if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 40000,0;
 				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 45000,0;
@@ -990,7 +990,7 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 	else if ((nk_prince == 8) || (nk_prince == 9)) {
 		mes "[Inspector]";
 		mes "All for the glory";
-		mes "of Rune Midgarts!";
+		mes "of Rune-Midgarts!";
 		close;
 	}
 	else {
@@ -1952,12 +1952,12 @@ prt_castle,314,373,4	script	Prince#eisen	983,{
 		else if (nkprince_eisen == 4) {
 			mes "[Ahrum]";
 			mes "I am Eigen Ahrum,";
-			mes "I will be the light of Rune Midgarts.";
+			mes "I will be the light of Rune-Midgarts.";
 			close;
 		}
 		else if (nkprince_eisen == 5) {
 			mes "[Ahrum]";
-			mes "Whoever be the king, let's make Rune Midgarts... the best country in the world, by helping each other.";
+			mes "Whoever be the king, let's make Rune-Midgarts... the best country in the world, by helping each other.";
 			next;
 			mes "[Ernst]";
 			mes "We can make it.";
@@ -2643,7 +2643,7 @@ OnTouch:
 		next;
 		mes "[A man of Riehart Family]";
 		mes "Never mind...";
-		donpcevent "YoungNoble#valter::OnDisable";
+		donpcevent "Young Noble#valter::OnDisable";
 		donpcevent "Aged Noble#rihart::OnDisable";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -2769,7 +2769,7 @@ prt_castle,314,371,0	script	Prince#another_ern	985,{
 	if (nkprince_eisen == 5) {
 		mes "[Ahrum]";
 		mes "Whoever be the king,";
-		mes "let's make Rune Midgarts...";
+		mes "let's make Rune-Midgarts...";
 		mes "the best country in the world, by helping each other.";
 		next;
 		mes "[Ernst]";
