@@ -13682,22 +13682,24 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			}
 			break;
 		case SC_H_MINE:
-			{
-				// Drop the material from target if expired
-				struct item it;
+			// Only drop the material from target if expired naturally
+			if( tid != INVALID_TIMER ){
 				map_session_data *caster = nullptr;
 
-				if (sce->val3 || status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
+				if (status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
 					break;
 
 				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
 
 				if (!item_db.exists(skill->require.itemid[0]))
 					break;
-				memset(&it, 0, sizeof(it));
+
+				struct item it = {};
+
 				it.nameid = skill->require.itemid[0];
 				it.amount = max(skill->require.amount[0],1);
 				it.identify = 1;
+
 				map_addflooritem(&it, it.amount, bl->m,bl->x, bl->y, caster->status.char_id, 0, 0, 4, 0);
 			}
 			break;
