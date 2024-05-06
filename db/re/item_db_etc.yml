@@ -51613,7 +51613,7 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,20;
       .@r = getrefine();
-      .@rate = ((getrefine() < 12) ? 25 : -25);
+      .@rate = ((getrefine() < 12) ? -25 : 25);
       if (getequiparmorlv() == 2) {
         .@rate += 8;
       }
@@ -53136,6 +53136,501 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bCritical,100;
+  - Id: 300505
+    AegisName: aegis_300505
+    Name: Seawind Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Brute,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Brute,8;
+         }
+      }
+  - Id: 300506
+    AegisName: aegis_300506
+    Name: Scalleg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddSize,Size_Small,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddSize,Size_Small,10;
+      }
+  - Id: 300507
+    AegisName: aegis_300507
+    Name: Velelling Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAddSize,Size_Small,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bMagicAddSize,Size_Small,10;
+      }
+  - Id: 300508
+    AegisName: aegis_300508
+    Name: Skipskipper Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Undead,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_Undead,7;
+         }
+      }
+  - Id: 300509
+    AegisName: aegis_300509
+    Name: Letterster Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Insect,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Insect,8;
+         }
+      }
+  - Id: 300510
+    AegisName: aegis_300510
+    Name: Cliolima Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Demon,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Demon,8;
+         }
+      }
+  - Id: 300511
+    AegisName: aegis_300511
+    Name: Rockstriker Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Undead,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Undead,8;
+         }
+      }
+  - Id: 300512
+    AegisName: aegis_300512
+    Name: Ice Seahorse Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Formless,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_Formless,7;
+         }
+      }
+  - Id: 300513
+    AegisName: aegis_300513
+    Name: Icehorn Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bUseSPrate,10;
+      bonus2 bMagicAtkEle,Ele_Water,3*getrefine();
+  - Id: 300514
+    AegisName: aegis_300514
+    Name: Yoster Cleaner Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Dragon,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Dragon,8;
+         }
+      }
+  - Id: 300515
+    AegisName: aegis_300515
+    Name: Yoster Fixer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical,-15;
+      bonus bFlee,30;
+      bonus bShortAtkRate,10+7*(getrefine()/3);
+  - Id: 300516
+    AegisName: aegis_300516
+    Name: Yoster Collector Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Formless,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Formless,8;
+         }
+      }
+  - Id: 300517
+    AegisName: aegis_300517
+    Name: Yoster Negotiator Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCritical,-15;
+      bonus bFlee,30;
+      bonus bLongAtkRate,10+7*(getrefine()/3);
+  - Id: 300518
+    AegisName: aegis_300518
+    Name: Yoster Cooker Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Dragon,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_Dragon,7;
+         }
+      }
+  - Id: 300519
+    AegisName: aegis_300519
+    Name: Yormi Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddSize,Size_Medium,10;
+      bonus2 bAddSize,Size_Large,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bAddSize,Size_Large,10;
+      }
+  - Id: 300520
+    AegisName: aegis_300520
+    Name: Yormi Missionary Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAddSize,Size_Medium,10;
+      bonus2 bMagicAddSize,Size_Large,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bMagicAddSize,Size_Medium,10;
+         bonus2 bMagicAddSize,Size_Large,10;
+      }
+  - Id: 300521
+    AegisName: aegis_300521
+    Name: Yordos Investigator Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,15;
+      bonus bFlee,30;
+      bonus2 bMagicAtkEle,Ele_Ghost,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Fire,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Holy,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Dark,10+7*(.@r/3);
+  - Id: 300522
+    AegisName: aegis_300522
+    Name: Yordos Judge Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,15;
+      bonus bFlee,30;
+      bonus2 bMagicAtkEle,Ele_Undead,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Earth,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Water,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Wind,10+7*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Poison,10+7*(.@r/3);
+  - Id: 300523
+    AegisName: aegis_300523
+    Name: Yordos Executor Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,12;
+      bonus bCritical,5;
+      if (.@r>=9) {
+         bonus bCritical,5;
+         if (.@r>=11) {
+            bonus bCritical,6;
+         }
+      }
+  - Id: 300524
+    AegisName: aegis_300524
+    Name: Yoscopus Guardian Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,10;
+      bonus bMaxHPrate,-7;
+      bonus bFlee,30;
+      bonus bAtkRate,2*(readparam(bStr)/10);
+      bonus bCritical,-3*(readparam(bLuk)/10);
+  - Id: 300525
+    AegisName: aegis_300525
+    Name: Yoscopus Warlock Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,10;
+      bonus bMaxHPrate,-7;
+      bonus bFlee,30;
+      bonus bAtkRate,2*(readparam(bDex)/10);
+      bonus bCritical,-3*(readparam(bLuk)/10);
+  - Id: 300526
+    AegisName: aegis_300526
+    Name: Yorker Worker Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-7;
+      bonus bCritical,5;
+  - Id: 300527
+    AegisName: aegis_300527
+    Name: Yorker Trader Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-7;
+      bonus bCritical,5;
+  - Id: 300528
+    AegisName: aegis_300528
+    Name: Yortus Bishop Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,7;
+      if (.@r>=10) {
+         bonus bMaxHPrate,3;
+         if (.@r>=14) {
+            bonus bMaxHPrate,2;
+         }
+      }
+  - Id: 300529
+    AegisName: aegis_300529
+    Name: Yortus Warlock Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,10;
+      bonus bMaxHPrate,-7;
+      bonus bFlee,30;
+      bonus bMatkRate,2*(readparam(bInt)/10);
+      bonus bUseSPrate,3*(readparam(bDex)/10);
+  - Id: 300530
+    AegisName: aegis_300530
+    Name: Yortus Arbiter Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCRate,5;
+      bonus bCritical,25;
+      bonus bMaxSPrate,-15;
+      if (readparam(bLuk)>=120) {
+         bonus bCritical,10;
+      }
+      if (readparam(bCrt)>=100) {
+         bonus bCritAtkRate,50;
+         bonus bCRate,5;
+      }
+  - Id: 300531
+    AegisName: aegis_300531
+    Name: Yortus Bailiff Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bUseSPrate,10;
+      bonus2 bMagicAtkEle,Ele_Ghost,3*getrefine();
+  - Id: 300532
+    AegisName: aegis_300532
+    Name: Ghost Ship Captain Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddClass,Class_Boss,20;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddClass,Class_Boss,10;
+      }
+  - Id: 300533
+    AegisName: aegis_300533
+    Name: Devouring Tan Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_Normal,30;
+      bonus2 bAddClass,Class_Boss,30;
+      bonus bMaxHPrate,-15;
+      bonus bPAtk,.@r;
+      bonus bAtkRate,.@r;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -75653,7 +76148,7 @@ Body:
     AegisName: aegis_312474
     Name: Latent Release (Dragon Knight IV)
     Type: Card
-    SubType: Enchant    
+    SubType: Enchant
   - Id: 312475
     AegisName: aegis_312475
     Name: No Thoughts
@@ -79765,6 +80260,777 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bAddEle,Ele_All,(getskilllv("NW_HIDDEN_CARD")/2);
+  - Id: 313065
+    AegisName: aegis_313065
+    Name: Footprint Effect
+    Type: Card
+    SubType: Enchant
+  - Id: 313070
+    AegisName: Ep21_4_Def
+    Name: Forest Magic Orb (Physical Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDef,125;
+      bonus bRes,15;
+      if (.@r>=7) {
+         bonus bDef,25;
+         bonus bRes,5;
+         if (.@r>=9) {
+            bonus bDef,25;
+            bonus bRes,5;
+            if (.@r>=11) {
+               bonus bDef,50;
+               bonus bRes,10;
+            }
+         }
+      }
+  - Id: 313071
+    AegisName: Ep21_4_Mdef
+    Name: Forest Magic Orb (Magical Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,30;
+      bonus bMRes,15;
+      if (.@r>=7) {
+         bonus bMdef,5;
+         bonus bMRes,3;
+         if (.@r>=9) {
+            bonus bMdef,5;
+            bonus bMRes,3;
+            if (.@r>=11) {
+               bonus bMdef,10;
+               bonus bMRes,6;
+            }
+         }
+      }
+  - Id: 313072
+    AegisName: Ep21_4_Warrior
+    Name: Forest Magic Orb (Warrior)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5;
+      bonus bBaseAtk,30;
+      if (.@r>=7) {
+         bonus bShortAtkRate,3;
+         if (.@r>=9) {
+            bonus bShortAtkRate,4;
+            if (.@r>=11) {
+               bonus bShortAtkRate,5;
+            }
+         }
+      }
+  - Id: 313073
+    AegisName: Ep21_4_Archer
+    Name: Forest Magic Orb (Archer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5;
+      bonus bBaseAtk,30;
+      if (.@r>=7) {
+         bonus bLongAtkRate,3;
+         if (.@r>=9) {
+            bonus bLongAtkRate,4;
+            if (.@r>=11) {
+               bonus bLongAtkRate,5;
+            }
+         }
+      }
+  - Id: 313074
+    AegisName: Ep21_4_Assassin
+    Name: Forest Magic Orb (Assassin)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,5;
+      bonus bCritical,2;
+      bonus bBaseAtk,20;
+      if (.@r>=7) {
+         bonus bCritAtkRate,3;
+         if (.@r>=9) {
+            bonus bCritAtkRate,4;
+            if (.@r>=11) {
+               bonus bCritAtkRate,5;
+            }
+         }
+      }
+  - Id: 313075
+    AegisName: Ep21_4_Magician
+    Name: Forest Magic Orb (Magician)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,5;
+      bonus bMatk,30;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,4;
+            if (.@r>=11) {
+               bonus2 bMagicAtkEle,Ele_All,5;
+            }
+         }
+      }
+  - Id: 313076
+    AegisName: Ep21_3_Berserker
+    Name: Forest Magic Orb (Berserker)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,7;
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         bonus bShortAtkRate,5;
+         if (.@r>=9) {
+            bonus bShortAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bShortAtkRate,5;
+               }
+            }
+         }
+      }
+  - Id: 313077
+    AegisName: Ep21_3_Marksman
+    Name: Forest Magic Orb (Marksman)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,7;
+      bonus bAtkRate,5;
+      bonus bBaseAtk,50;
+      if (.@r>=7) {
+         bonus bLongAtkRate,5;
+         if (.@r>=9) {
+            bonus bLongAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bLongAtkRate,5;
+               }
+            }
+         }
+      }
+  - Id: 313078
+    AegisName: Ep21_3_Executioner
+    Name: Forest Magic Orb (Executioner)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,7;
+      bonus bCritical,5;
+      bonus bAtkRate,3;
+      bonus bBaseAtk,30;
+      if (.@r>=7) {
+         bonus bCritAtkRate,5;
+         if (.@r>=9) {
+            bonus bCritAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCritAtkRate,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCritAtkRate,5;
+               }
+            }
+         }
+      }
+  - Id: 313079
+    AegisName: Ep21_3_Wizard
+    Name: Forest Magic Orb (Wizard)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSMatk,7;
+      bonus bMatkRate,5;
+      bonus bMatk,50;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAtkEle,Ele_All,5;
+               }
+            }
+         }
+      }
+  - Id: 313080
+    AegisName: Ep21_2_P_Force
+    Name: Forest Magic Orb (Power Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bAtkRate,2;
+      if (.@r>=7) {
+         bonus bAtkRate,3;
+         if (.@r>=9) {
+            bonus bAtkRate,4;
+            if (.@r>=11) {
+               bonus bPAtk,3;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bAtkRate,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bAtkRate,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bAtkRate,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,5;
+               }
+            }
+         }
+      }
+  - Id: 313081
+    AegisName: Ep21_2_M_Force
+    Name: Forest Magic Orb (Magic Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatkRate,2;
+      if (.@r>=7) {
+         bonus bMatkRate,3;
+         if (.@r>=9) {
+            bonus bMatkRate,4;
+            if (.@r>=11) {
+               bonus bSMatk,3;
+            }
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMatkRate,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bMatkRate,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bMatkRate,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,5;
+               }
+            }
+         }
+      }
+  - Id: 313082
+    AegisName: Ep21_2_G_Cooldown
+    Name: Forest Magic Orb (Global Cooldown)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDelayrate,-3;
+      if (.@r>=7) {
+         bonus bDelayrate,-3;
+         if (.@r>=9) {
+            bonus bDelayrate,-2;
+            if (.@r>=11) {
+               bonus bDelayrate,-2;
+            }
+         }
+      }
+  - Id: 313083
+    AegisName: Ep21_3_Speed
+    Name: Forest Magic Orb (Speed)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,5;
+      if (.@r>=7) {
+         bonus bAspdRate,5;
+         if (.@r>=9) {
+            bonus bAspdRate,5;
+            if (.@r>=11) {
+               bonus bAspdRate,10;
+            }
+         }
+      }
+  - Id: 313084
+    AegisName: Ep21_3_Caster
+    Name: Forest Magic Orb (Caster)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-5;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-5;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-5;
+            if (.@r>=11) {
+               bonus bVariableCastrate,-10;
+            }
+         }
+      }
+  - Id: 313085
+    AegisName: Ep21_2_Melee
+    Name: Forest Magic Orb (Melee)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bShortAtkRate,3;
+      if (.@r>=7) {
+         bonus bShortAtkRate,3;
+         if (.@r>=9) {
+            bonus bShortAtkRate,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,3;
+         bonus bPerfectHitAddRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,3;
+            bonus bPerfectHitAddRate,6;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bShortAtkRate,5;
+               bonus bPerfectHitAddRate,7;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bShortAtkRate,5;
+                  bonus bPerfectHitAddRate,8;
+               }
+            }
+         }
+      }
+  - Id: 313086
+    AegisName: Ep21_2_Range
+    Name: Forest Magic Orb (Range)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bLongAtkRate,3;
+      if (.@r>=7) {
+         bonus bLongAtkRate,3;
+         if (.@r>=9) {
+            bonus bLongAtkRate,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,3;
+         bonus bPerfectHitAddRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,3;
+            bonus bPerfectHitAddRate,6;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bLongAtkRate,5;
+               bonus bPerfectHitAddRate,7;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bLongAtkRate,5;
+                  bonus bPerfectHitAddRate,8;
+               }
+            }
+         }
+      }
+  - Id: 313087
+    AegisName: Ep21_2_Critical
+    Name: Forest Magic Orb (Critical)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCritAtkRate,3;
+      if (.@r>=7) {
+         bonus bCritAtkRate,3;
+         if (.@r>=9) {
+            bonus bCritAtkRate,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,3;
+         bonus bCritical,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,3;
+            bonus bCritical,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCritAtkRate,5;
+               bonus bCritical,5;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCritAtkRate,5;
+                  bonus bCRate,5;
+               }
+            }
+         }
+      }
+  - Id: 313088
+    AegisName: Ep21_2_Spell
+    Name: Forest Magic Orb (Spell)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,3;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+         bonus bMaxSPrate,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,3;
+            bonus bMaxSPrate,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAtkEle,Ele_All,5;
+               bonus bMaxSPrate,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAtkEle,Ele_All,5;
+                  bonus bMaxSPrate,5;
+               }
+            }
+         }
+      }
+  - Id: 313089
+    AegisName: Ep21_2_Ab_All
+    Name: Forest Magic Orb (Above All)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubSize,Size_All,3;
+      bonus2 bSubEle,Ele_All,3;
+      if (.@r>=7) {
+         bonus2 bSubEle,Ele_All,4;
+         if (.@r>=9) {
+            bonus2 bSubSize,Size_All,4;
+            if (.@r>=11) {
+               bonus2 bSubRace,RC_Formless,7;
+               bonus2 bSubRace,RC_Dragon,7;
+               bonus2 bSubRace,RC_Brute,7;
+               bonus2 bSubRace,RC_DemiHuman,7;
+               bonus2 bSubRace,RC_Insect,7;
+               bonus2 bSubRace,RC_Fish,7;
+               bonus2 bSubRace,RC_Demon,7;
+               bonus2 bSubRace,RC_Plant,7;
+               bonus2 bSubRace,RC_Angel,7;
+               bonus2 bSubRace,RC_Undead,7;
+            }
+         }
+      }
+  - Id: 313090
+    AegisName: Ep21_4_Hp
+    Name: Forest Magic Orb (HP)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,4000;
+      if (.@r>=7) {
+         bonus bMaxHPrate,3;
+         if (.@r>=9) {
+            bonus bMaxHPrate,5;
+            if (.@r>=11) {
+               bonus bMaxHPrate,7;
+            }
+         }
+      }
+  - Id: 313091
+    AegisName: Ep21_4_Sp
+    Name: Forest Magic Orb (SP)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSP,600;
+      if (.@r>=7) {
+         bonus bMaxSPrate,3;
+         if (.@r>=9) {
+            bonus bMaxSPrate,5;
+            if (.@r>=11) {
+               bonus bMaxSPrate,7;
+            }
+         }
+      }
+  - Id: 313092
+    AegisName: Ep21_4_Phy_Force
+    Name: Forest Magic Orb (Physical Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,10;
+      if (.@r>=7) {
+         bonus bBaseAtk,10;
+         if (.@r>=9) {
+            bonus bBaseAtk,10;
+            if (.@r>=11) {
+               bonus bAtkRate,5;
+               bonus bBaseAtk,20;
+            }
+         }
+      }
+  - Id: 313093
+    AegisName: Ep21_4_Mag_Force
+    Name: Forest Magic Orb (Magical Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,10;
+      if (.@r>=7) {
+         bonus bMatk,10;
+         if (.@r>=9) {
+            bonus bMatk,10;
+            if (.@r>=11) {
+               bonus bMatkRate,5;
+               bonus bMatk,20;
+            }
+         }
+      }
+  - Id: 313094
+    AegisName: Ep21_3_Size_Atk
+    Name: Forest Magic Orb (Size Attack)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,5;
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,3;
+         if (.@r>=9) {
+            bonus2 bAddSize,Size_All,2;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,10;
+            }
+         }
+      }
+  - Id: 313095
+    AegisName: Ep21_3_Size_Matk
+    Name: Forest Magic Orb (Size Spell)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAddSize,Size_All,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddSize,Size_All,3;
+         if (.@r>=9) {
+            bonus2 bMagicAddSize,Size_All,2;
+            if (.@r>=11) {
+               bonus2 bMagicAddSize,Size_All,10;
+            }
+         }
+      }
+  - Id: 313096
+    AegisName: Ep21_2_Ov_Power
+    Name: Forest Magic Orb (Over Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bPAtk,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,5;
+               bonus bAtkRate,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,5;
+                  bonus bAtkRate,3;
+               }
+            }
+         }
+      }
+  - Id: 313097
+    AegisName: Ep21_2_Fi_Shot
+    Name: Forest Magic Orb (Firing Shot)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bPAtk,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPAtk,5;
+               bonus bAtkRate,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPAtk,5;
+                  bonus bAtkRate,3;
+               }
+            }
+         }
+      }
+  - Id: 313098
+    AegisName: Ep21_2_Luk_Strike
+    Name: Forest Magic Orb (Lucky Strike)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bPAtk,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCRate,3;
+               bonus bAtkRate,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCRate,5;
+                  bonus bAtkRate,3;
+               }
+            }
+         }
+      }
+  - Id: 313099
+    AegisName: Ep21_2_Spl_Buster
+    Name: Forest Magic Orb (Spell Buster)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bSMatk,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_All,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_All,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSMatk,5;
+               bonus bMatkRate,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSMatk,5;
+                  bonus bMatkRate,3;
+               }
+            }
+         }
+      }
+  - Id: 313100
+    AegisName: Ep21_4_F_Spirit
+    Name: Forest Magic Orb (Fighting Spirit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+      bonus bBaseAtk,25;
+  - Id: 313101
+    AegisName: Ep21_4_E_Archer
+    Name: Forest Magic Orb (Expert Archer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,12;
+      bonus bBaseAtk,25;
+  - Id: 313102
+    AegisName: Ep21_4_Fatal
+    Name: Forest Magic Orb (Fatal)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,12;
+      bonus bCritical,8;
+  - Id: 313103
+    AegisName: Ep21_4_Sp_Power
+    Name: Forest Magic Orb (Spell Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,12;
+      bonus bMatk,25;
+  - Id: 313104
+    AegisName: Ep21_3_Tenacity
+    Name: Forest Magic Orb (Tenacity)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,15;
+      bonus bBaseAtk,35;
+  - Id: 313105
+    AegisName: Ep21_3_M_Archer
+    Name: Forest Magic Orb (Master Archer)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,35;
+  - Id: 313106
+    AegisName: Ep21_3_Acute
+    Name: Forest Magic Orb (Acute)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bCritical,12;
+  - Id: 313107
+    AegisName: Ep21_3_M_Eessence
+    Name: Forest Magic Orb (Magic Essence)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus bMatk,35;
+  - Id: 313108
+    AegisName: Ep21_2_Phy_Power
+    Name: Forest Magic Orb (Physical Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_All,5;
+      bonus bPAtk,5;
+  - Id: 313109
+    AegisName: Ep21_2_Mag_Power
+    Name: Forest Magic Orb (Magical Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_All,5;
+      bonus bSMatk,5;
   - Id: 313111
     AegisName: FuriousMaterial_Not
     Name: Furious Crystal (Neutral)
@@ -80242,6 +81508,28 @@ Body:
          bonus bCritAtkRate,(.@param/10);
          bonus bCritical,(.@param/10);
       }
+  - Id: 313324
+    AegisName: Biolo_Robe
+    Name: Biolo Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("BO_MAYHEMIC_THORNS");
+  - Id: 313325
+    AegisName: Inquisitor_Robe
+    Name: Inquisitor Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("IQ_OLEUM_SANCTUM");
+  - Id: 313326
+    AegisName: SpiritHandler_Robe
+    Name: Spirit Handler Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,getskilllv("SH_HOWLING_OF_CHUL_HO");
+      bonus bBaseAtk,4*getskilllv("SH_HOWLING_OF_CHUL_HO");
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -85292,6 +86580,18 @@ Body:
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
+  - Id: 1001214
+    AegisName: EpisodClear20
+    Name: Episode 20 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001216
     AegisName: 2301_ev_paste
     Name: Sticky dough    # !todo check english name
@@ -87733,6 +89033,376 @@ Body:
     Name: Nightwatch Stone (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001615
+    AegisName: aegis_1001615
+    Name: Footprint Effect (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001618
+    AegisName: aegis_1001618
+    Name: Wigner Premium Exchange Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1001619
+    AegisName: Ep21_Luna_Shrimp
+    Name: Lunaforma Shrimp
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001620
+    AegisName: Ep21_Luna_Calamari
+    Name: Lunaforma Calamari
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001621
+    AegisName: Ep21_Luna_Seaweed
+    Name: Lunaforma Seaweed
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001622
+    AegisName: Ep21_Luna_Fish
+    Name: Lunaforma Fish
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001623
+    AegisName: Ep21_Luna_Oyster
+    Name: Lunaforma Oyster
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001624
+    AegisName: Ep21_Luna_Grass
+    Name: Long Grass
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001625
+    AegisName: Ep21_Luna_KKatnip
+    Name: Wide Grass
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001626
+    AegisName: Ep21_Crumple_Paper
+    Name: Crumple Paper
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001627
+    AegisName: Ep21_Tab
+    Name: Heine's Tablet
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001628
+    AegisName: aegis_1001628
+    Name: Snake Shape Rosary
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001629
+    AegisName: aegis_1001629
+    Name: Jormungandr Catechism
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001630
+    AegisName: aegis_1001630
+    Name: Old Bandana
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001631
+    AegisName: aegis_1001631
+    Name: Old Apron
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001632
+    AegisName: aegis_1001632
+    Name: Old Hoe
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001633
+    AegisName: aegis_1001633
+    Name: Fanatic Mask
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001634
+    AegisName: aegis_1001634
+    Name: Fanatic Cap
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001635
+    AegisName: aegis_1001635
+    Name: Snake Shape Stick
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001636
+    AegisName: aegis_1001636
+    Name: Snake Shape Ornament
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001637
+    AegisName: aegis_1001637
+    Name: Snake Shape Dagger Piece
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001638
+    AegisName: aegis_1001638
+    Name: Glittering Snake Shape Rosary
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001639
+    AegisName: aegis_1001639
+    Name: Flashy Accessory
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001640
+    AegisName: aegis_1001640
+    Name: Scalleg Flesh
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001641
+    AegisName: aegis_1001641
+    Name: Bright Eye
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001642
+    AegisName: aegis_1001642
+    Name: Guano
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001643
+    AegisName: aegis_1001643
+    Name: Vellelopy
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001644
+    AegisName: aegis_1001644
+    Name: Skipskipper Fin
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001645
+    AegisName: aegis_1001645
+    Name: Stiff Limb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001646
+    AegisName: aegis_1001646
+    Name: Fluffy Core
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001647
+    AegisName: aegis_1001647
+    Name: Thick Flesh
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001648
+    AegisName: aegis_1001648
+    Name: Ice Star Candy
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001649
+    AegisName: aegis_1001649
+    Name: Shining Ice Coral
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001653
+    AegisName: Ep21_Armor_E_Stone1
+    Name: Turquoise Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001654
+    AegisName: Ep21_Armor_E_Stone2
+    Name: Shining Turquoise Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001655
+    AegisName: Ep21_Armor_E_Stone3
+    Name: Brilliant Turquoise Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001656
+    AegisName: Ep21_Robe_E_Stone1
+    Name: Sunset Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001657
+    AegisName: Ep21_Robe_E_Stone2
+    Name: Shining Sunset Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001658
+    AegisName: Ep21_Robe_E_Stone3
+    Name: Brilliant Sunset Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001659
+    AegisName: Ep21_Shoes_E_Stone1
+    Name: Crimson Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001660
+    AegisName: Ep21_Shoes_E_Stone2
+    Name: Shining Crimson Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001661
+    AegisName: Ep21_Shoes_E_Stone3
+    Name: Brilliant Crimson Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001662
+    AegisName: Ep21_Acc_E_Stone1
+    Name: Livid Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001663
+    AegisName: Ep21_Acc_E_Stone2
+    Name: Shining Livid Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001664
+    AegisName: Ep21_Acc_E_Stone3
+    Name: Brilliant Livid Magic Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1001668
     AegisName: 2403_ev_Dalcom
     Name: Sweet Coin    # !todo check english name
@@ -87740,6 +89410,18 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+  - Id: 1001670
+    AegisName: D_EpisodClear20
+    Name: Episode 20 Pass Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001684
     AegisName: 2403_ev_Spray_4
     Name: Flower branch    # !todo check english name
@@ -87747,6 +89429,33 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+  - Id: 1001737
+    AegisName: BioloStone_Robe
+    Name: Biolo Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001738
+    AegisName: InquisitorStone_Robe
+    Name: Inquisitor Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001739
+    AegisName: SpiritHandlerStone_Robe
+    Name: Spirit Handler Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001744
+    AegisName: Kr_B_Event04
+    Name: Sweet Strawberry Fresh Cream
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow

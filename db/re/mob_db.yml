@@ -108047,6 +108047,62 @@ Body:
 #    AegisName: 2401_EV_IMOOGI
 #  - Id: 22299
 #    AegisName: VR_CHAO
+#  - Id: 22300
+#    AegisName: EP21_NPC_SERPENT
+#  - Id: 22301
+#    AegisName: EP21_NPC_TRIS
+#  - Id: 22302
+#    AegisName: EP21_NPC_TAN
+#  - Id: 22303
+#    AegisName: EP21_NPC_NADOYO
+#  - Id: 22304
+#    AegisName: EP21_NPC_REINHARDT
+#  - Id: 22305
+#    AegisName: EP21_NPC_WILHELM
+#  - Id: 22306
+#    AegisName: EP21_NPC_MARISTELLA
+#  - Id: 22307
+#    AegisName: EP21_NPC_YOHAN
+#  - Id: 22308
+#    AegisName: EP21_NPC_RICHARD
+#  - Id: 22309
+#    AegisName: EP21_NPC_EIBA
+#  - Id: 22310
+#    AegisName: EP21_NPC_GUNTER
+#  - Id: 22311
+#    AegisName: EP21_NPC_IVAN
+#  - Id: 22312
+#    AegisName: EP21_NPC_GALAXIA
+#  - Id: 22313
+#    AegisName: EP21_SEAWIND
+#  - Id: 22314
+#    AegisName: EP21_SCALLEG
+#  - Id: 22315
+#    AegisName: EP21_VELELLING
+#  - Id: 22316
+#    AegisName: EP21_LETTERSTER
+#  - Id: 22317
+#    AegisName: EP21_ROCKSTRIKER
+#  - Id: 22318
+#    AegisName: EP21_ICESEAHORSE
+#  - Id: 22319
+#    AegisName: EP21_SKIPSKIPPER
+#  - Id: 22320
+#    AegisName: EP21_CLIOLIMA
+#  - Id: 22321
+#    AegisName: EP21_YORKER_A
+#  - Id: 22322
+#    AegisName: EP21_YORKER_B
+#  - Id: 22323
+#    AegisName: EP21_YOSTER_A
+#  - Id: 22324
+#    AegisName: EP21_YOSTER_B
+#  - Id: 22325
+#    AegisName: EP21_YOSTER_C
+#  - Id: 22326
+#    AegisName: EP21_YOSTER_D
+#  - Id: 22327
+#    AegisName: EP21_YOSTER_E
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329
@@ -108097,6 +108153,52 @@ Body:
 #    AegisName: MQ_KIND_OF_BEETLE3
 #  - Id: 22352
 #    AegisName: MQ_KIND_OF_BEETLE4
+#  - Id: 22353
+#    AegisName: EP21_YORMI_A
+#  - Id: 22354
+#    AegisName: EP21_YORMI_B
+#  - Id: 22355
+#    AegisName: EP21_YORDOS_A
+#  - Id: 22356
+#    AegisName: EP21_YORDOS_B
+#  - Id: 22357
+#    AegisName: EP21_YORDOS_C
+#  - Id: 22358
+#    AegisName: EP21_YOSCOPUS_A
+#  - Id: 22359
+#    AegisName: EP21_YOSCOPUS_B
+#  - Id: 22360
+#    AegisName: EP21_YORTUS_A
+#  - Id: 22361
+#    AegisName: EP21_YORTUS_B
+#  - Id: 22362
+#    AegisName: EP21_ICEHORN
+#  - Id: 22363
+#    AegisName: EP21_B_YORTUS_A
+#  - Id: 22364
+#    AegisName: EP21_B_YORTUS_B
+#  - Id: 22365
+#    AegisName: G_EP21_ICESEAHORSE
+#  - Id: 22366
+#    AegisName: G_EP21_YORDOS_A
+#  - Id: 22367
+#    AegisName: G_EP21_YORDOS_B
+#  - Id: 22368
+#    AegisName: G_EP21_YORDOS_C
+#  - Id: 22369
+#    AegisName: EP21_MD_SAILOR
+#  - Id: 22370
+#    AegisName: EP21_MD_CAPTAIN
+#  - Id: 22371
+#    AegisName: EP21_YOR_TAN
+#  - Id: 22372
+#    AegisName: EP21_MD_CAPTAIN_B
+#  - Id: 22373
+#    AegisName: EP21_YOR_TAN_B
+#  - Id: 22374
+#    AegisName: EP21_MD_BOX1
+#  - Id: 22378
+#    AegisName: MD_Airboat_Boss5
 #  - Id: 23000
 #    AegisName: DARK_ILLUSION2
 #  - Id: 23001
