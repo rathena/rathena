@@ -4,8 +4,8 @@
 #include "web.hpp"
 
 #include <chrono>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #include <thread>
 
@@ -70,10 +70,10 @@ std::string web_server_db = "ragnarok";
 
 std::string default_codepage = "";
 
-Sql * login_handle = NULL;
-Sql * char_handle = NULL;
-Sql * map_handle = NULL;
-Sql * web_handle = NULL;
+Sql * login_handle = nullptr;
+Sql * char_handle = nullptr;
+Sql * map_handle = nullptr;
+Sql * web_handle = nullptr;
 
 char login_table[32] = "login";
 char guild_emblems_table[32] = "guild_emblems";
@@ -112,7 +112,7 @@ void web_do_final_msg(void){
 bool web_config_read(const char* cfgName, bool normal) {
 	char line[1024], w1[32], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		ShowError("Configuration file (%s) not found.\n", cfgName);
 		return false;
 	}
@@ -167,7 +167,7 @@ int inter_config_read(const char* cfgName)
 	FILE* fp;
 
 	fp = fopen(cfgName, "r");
-	if(fp == NULL) {
+	if(fp == nullptr) {
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
@@ -348,16 +348,16 @@ int web_sql_close(void)
 {
 	ShowStatus("Close Login DB Connection....\n");
 	Sql_Free(login_handle);
-	login_handle = NULL;
+	login_handle = nullptr;
 	ShowStatus("Close Char DB Connection....\n");
 	Sql_Free(char_handle);
-	char_handle = NULL;
+	char_handle = nullptr;
 	ShowStatus("Close Map DB Connection....\n");
 	Sql_Free(map_handle);
-	map_handle = NULL;
+	map_handle = nullptr;
 	ShowStatus("Close Web DB Connection....\n");
 	Sql_Free(web_handle);
-	web_handle = NULL;
+	web_handle = nullptr;
 
 	return 0;
 }

@@ -3,8 +3,8 @@
 
 #include "showmsg.hpp"
 
-#include <stdlib.h> // atexit
-#include <time.h>
+#include <cstdlib> // atexit
+#include <ctime>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -61,8 +61,8 @@ char console_log_filepath[32] = "./log/unknown.log";
 		char s_[SBUF_SIZE];		\
 		StringBuf *d_;			\
 		char *v_;				\
-		int l_;					\
-	} buf ={"",NULL,NULL,0};	\
+		size_t l_;					\
+	} buf ={"",nullptr,nullptr,0};	\
 //define NEWBUF
 
 #define BUFVPRINTF(buf,fmt,args)						\
@@ -87,9 +87,9 @@ char console_log_filepath[32] = "./log/unknown.log";
 	if( buf.d_ )				\
 	{							\
 		StringBuf_Free(buf.d_);	\
-		buf.d_ = NULL;			\
+		buf.d_ = nullptr;			\
 	}							\
-	buf.v_ = NULL;				\
+	buf.v_ = nullptr;				\
 //define FREEBUF
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -210,13 +210,13 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 	if( !is_console(handle) && stdout_with_ansisequence )
 	{
-		WriteFile(handle, BUFVAL(tempbuf), BUFLEN(tempbuf), &written, 0);
+		WriteFile( handle, BUFVAL( tempbuf ), (DWORD)BUFLEN( tempbuf ), &written, 0 );
 		return 0;
 	}
 
 	// start with processing
 	p = BUFVAL(tempbuf);
-	while ((q = strchr(p, 0x1b)) != NULL)
+	while ((q = strchr(p, 0x1b)) != nullptr)
 	{	// find the escape character
 		if( 0==WriteConsole(handle, p, (DWORD)(q-p), &written, 0) ) // write up to the escape
 			WriteFile(handle, p, (DWORD)(q-p), &written, 0);
@@ -547,7 +547,7 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 
 	// start with processing
 	p = BUFVAL(tempbuf);
-	while ((q = strchr(p, 0x1b)) != NULL)
+	while ((q = strchr(p, 0x1b)) != nullptr)
 	{	// find the escape character
 		fprintf(file, "%.*s", (int)(q-p), p); // write up to the escape
 		if( q[1]!='[' )
@@ -688,7 +688,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		( flag == MSG_WARNING && console_msg_log&1 ) ||
 		( ( flag == MSG_ERROR || flag == MSG_SQL ) && console_msg_log&2 ) ||
 		( flag == MSG_DEBUG && console_msg_log&4 ) ) {//[Ind]
-		FILE *log = NULL;
+		FILE *log = nullptr;
 		if( (log = fopen(console_log_filepath, "a+")) ) {
 			char timestring[255];
 			time_t curtime;
@@ -720,7 +720,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 
 	if (timestamp_format[0] && flag != MSG_NONE)
 	{	//Display time format. [Skotlex]
-		time_t t = time(NULL);
+		time_t t = time(nullptr);
 		strftime(prefix, 80, timestamp_format, localtime(&t));
 	} else prefix[0]='\0';
 
@@ -775,7 +775,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	if(strlen(DEBUGLOGPATH) > 0) {
 		fp=fopen(DEBUGLOGPATH,"a");
-		if (fp == NULL)	{
+		if (fp == nullptr)	{
 			FPRINTF(STDERR, CL_RED "[ERROR]" CL_RESET ": Could not open '" CL_WHITE "%s" CL_RESET "', access denied.\n", DEBUGLOGPATH);
 			FFLUSH(STDERR);
 		} else {
