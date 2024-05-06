@@ -63,7 +63,6 @@ Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
 
 int db_use_sqldbs = 0;
-int db_use_sqlcashdbs = 0;
 char buyingstores_table[32] = "buyingstores";
 char buyingstore_items_table[32] = "buyingstore_items";
 char item_cash_table[32] = "item_cash_db";
@@ -4254,10 +4253,6 @@ int inter_config_read(const char *cfgName)
 		if(strcmpi(w1,"use_sql_db")==0) {
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
-		} else
-		if(strcmpi(w1,"use_sql_cashdb")==0) {
-			db_use_sqlcashdbs = config_switch(w2);
-			ShowStatus ("Using SQL cash dbs: %s\n",w2);
 		} else
 		if(strcmpi(w1,"log_db_ip")==0)
 			safestrncpy(log_db_ip, w2, sizeof(log_db_ip));
