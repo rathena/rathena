@@ -107,12 +107,12 @@ struct block_list* battle_gettargeted(struct block_list *target)
 {
 	struct block_list *bl_list[24];
 	int c = 0;
-	nullpo_retr(NULL, target);
+	nullpo_retr(nullptr, target);
 
 	memset(bl_list, 0, sizeof(bl_list));
 	map_foreachinallrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
 	if ( c == 0 )
-		return NULL;
+		return nullptr;
 	if( c > 24 )
 		c = 24;
 	return bl_list[rnd()%c];
@@ -189,7 +189,7 @@ struct block_list* battle_getenemy(struct block_list *target, int type, int rang
 	map_foreachinallrange(battle_getenemy_sub, target, range, type, bl_list, &c, target);
 
 	if ( c == 0 )
-		return NULL;
+		return nullptr;
 
 	if( c > 24 )
 		c = 24;
@@ -249,7 +249,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 	map_foreachinallarea(battle_getenemyarea_sub, src->m, x - range, y - range, x + range, y + range, type, bl_list, &c, src, ignore_id);
 
 	if( c == 0 )
-		return NULL;
+		return nullptr;
 	if( c >= 24 )
 		c = 23;
 
@@ -362,8 +362,8 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 {
 	struct delay_damage *dat;
 	status_change *sc;
-	struct block_list *d_tbl = NULL;
-	struct block_list *e_tbl = NULL;
+	struct block_list *d_tbl = nullptr;
+	struct block_list *e_tbl = nullptr;
 
 	nullpo_ret(src);
 	nullpo_ret(target);
@@ -422,10 +422,14 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	return 0;
 }
 
+int battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id) {
+	return battle_damage(src, target, damage, walkdelay, 0, skill_id, ATK_DEF, BF_MISC, false, gettick(), false);
+}
+
 /**
  * Does attribute fix modifiers.
  * Added passing of the chars so that the status changes can affect it. [Skotlex]
- * Note: Passing src/target == NULL is perfectly valid, it skips SC_ checks.
+ * Note: Passing src/target == nullptr is perfectly valid, it skips SC_ checks.
  * @param src
  * @param target
  * @param damage
@@ -437,7 +441,7 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
  */
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv, int flag)
 {
-	status_change *sc = NULL, *tsc = NULL;
+	status_change *sc = nullptr, *tsc = nullptr;
 	int ratio;
 
 	if (src) sc = status_get_sc(src);
@@ -491,8 +495,8 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 			std::shared_ptr<s_skill_unit_group> sg;
 			struct block_list *src2;
 
-			if( !su || !su->alive || (sg = su->group) == NULL || !sg || sg->val3 == -1 ||
-			   (src2 = map_id2bl(sg->src_id)) == NULL || status_isdead(src2) )
+			if( !su || !su->alive || (sg = su->group) == nullptr || !sg || sg->val3 == -1 ||
+			   (src2 = map_id2bl(sg->src_id)) == nullptr || status_isdead(src2) )
 				return 0;
 
 			if( sg->unit_id != UNT_FIREWALL ) {
@@ -1527,7 +1531,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
  */
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv)
 {
-	map_session_data *sd = NULL, *tsd = BL_CAST(BL_PC, src);
+	map_session_data *sd = nullptr, *tsd = BL_CAST(BL_PC, src);
 	struct status_change_entry *sce;
 	int div_ = d->div_, flag = d->flag;
 
@@ -2452,7 +2456,7 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
  * Calculates the standard damage of a normal attack assuming it hits
  * This applies to pre-renewal and non-sd in renewal
  *------------------------------------------
- * Pass damage2 as NULL to not calc it.
+ * Pass damage2 as nullptr to not calc it.
  * Flag values (see e_base_damage_flag):
  * &1 : Critical hit
  * &2 : Arrow attack
@@ -2470,7 +2474,7 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 	unsigned int atkmin = 0, atkmax = 0;
 	short type = 0;
 	int64 damage = 0;
-	map_session_data *sd = NULL;
+	map_session_data *sd = nullptr;
 
 	nullpo_retr(damage, src);
 
@@ -2866,7 +2870,7 @@ bool is_infinite_defense(struct block_list *target, int flag)
  */
 static bool is_skill_using_arrow(struct block_list *src, int skill_id)
 {
-	if(src != NULL) {
+	if(src != nullptr) {
 		struct status_data *sstatus = status_get_status_data(src);
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
@@ -2886,7 +2890,7 @@ static bool is_skill_using_arrow(struct block_list *src, int skill_id)
  */
 static bool is_attack_right_handed(struct block_list *src, int skill_id)
 {
-	if(src != NULL) {
+	if(src != nullptr) {
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
 		//Skills ALWAYS use ONLY your right-hand weapon (tested on Aegis 10.2)
@@ -2906,7 +2910,7 @@ static bool is_attack_right_handed(struct block_list *src, int skill_id)
  */
 static bool is_attack_left_handed(struct block_list *src, int skill_id)
 {
-	if(src != NULL) {
+	if(src != nullptr) {
 		//Skills ALWAYS use ONLY your right-hand weapon (tested on Aegis 10.2)
 		if(!skill_id) {
 			map_session_data *sd = BL_CAST(BL_PC, src);
@@ -3054,7 +3058,7 @@ static int is_attack_piercing(struct Damage* wd, struct block_list *src, struct 
 	if (skill_id == MO_INVESTIGATE || skill_id == RL_MASS_SPIRAL)
 		return 2;
 
-	if(src != NULL) {
+	if(src != nullptr) {
 		map_session_data *sd = BL_CAST(BL_PC, src);
 		struct status_data *tstatus = status_get_status_data(target);
 
@@ -3409,7 +3413,7 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag 
  */
 static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 {
-	if(src != NULL) {
+	if(src != nullptr) {
 		int eatk = 0;
 		struct status_data *status = status_get_status_data(src);
 		map_session_data *sd = BL_CAST(BL_PC, src);
@@ -6859,10 +6863,10 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, struct block_
 /**
 * Check if bl is devoted by someone
 * @param bl
-* @return 'd_bl' if devoted or NULL if not devoted
+* @return 'd_bl' if devoted or nullptr if not devoted
 */
 struct block_list *battle_check_devotion(struct block_list *bl) {
-	struct block_list *d_bl = NULL;
+	struct block_list *d_bl = nullptr;
 
 	if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rnd() % 100) {
 		status_change *sc = status_get_sc(bl);
@@ -7297,7 +7301,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	memset(&wd,0,sizeof(wd));
 
-	if (src == NULL || target == NULL) {
+	if (src == nullptr || target == nullptr) {
 		nullpo_info(NLP_MARK);
 		return wd;
 	}
@@ -7308,9 +7312,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	left_element = battle_get_weapon_element(&wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 
 	if (sc && !sc->count)
-		sc = NULL; //Skip checking as there are no status changes active.
+		sc = nullptr; //Skip checking as there are no status changes active.
 	if (tsc && !tsc->count)
-		tsc = NULL; //Skip checking as there are no status changes active.
+		tsc = nullptr; //Skip checking as there are no status changes active.
 
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
@@ -7707,7 +7711,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	memset(&ad,0,sizeof(ad));
 	memset(&flag,0,sizeof(flag));
 
-	if (src == NULL || target == NULL) {
+	if (src == nullptr || target == nullptr) {
 		nullpo_info(NLP_MARK);
 		return ad;
 	}
@@ -8947,7 +8951,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	memset(&md,0,sizeof(md));
 
-	if (src == NULL || target == NULL) {
+	if (src == nullptr || target == nullptr) {
 		nullpo_info(NLP_MARK);
 		return md;
 	}
@@ -9746,7 +9750,7 @@ void battle_autocast_elembuff_skill(map_session_data* sd, struct block_list* tar
  * Do a basic physical attack (call through unit_attack_timer)
  *------------------------------------------*/
 enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, t_tick tick, int flag) {
-	map_session_data *sd = NULL, *tsd = NULL;
+	map_session_data *sd = nullptr, *tsd = nullptr;
 	struct status_data *sstatus, *tstatus;
 	status_change *sc, *tsc;
 	int64 damage;
@@ -9757,7 +9761,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	nullpo_retr(ATK_NONE, src);
 	nullpo_retr(ATK_NONE, target);
 
-	if (src->prev == NULL || target->prev == NULL)
+	if (src->prev == nullptr || target->prev == nullptr)
 		return ATK_NONE;
 
 	sd = BL_CAST(BL_PC, src);
@@ -9770,9 +9774,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	tsc = status_get_sc(target);
 
 	if (sc && !sc->count) //Avoid sc checks when there's none to check for. [Skotlex]
-		sc = NULL;
+		sc = nullptr;
 	if (tsc && !tsc->count)
-		tsc = NULL;
+		tsc = nullptr;
 
 	if (sd)
 	{
@@ -9848,7 +9852,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 #ifndef RENEWAL
 		status_get_class_(src) != CLASS_BOSS &&
 #endif
-		(src->type == BL_PC || tsd == NULL || distance_bl(src, target) <= (tsd->status.weapon == W_FIST ? 1 : 2)) )
+		(src->type == BL_PC || tsd == nullptr || distance_bl(src, target) <= (tsd->status.weapon == W_FIST ? 1 : 2)) )
 	{
 		uint16 skill_lv = tsc->getSCE(SC_BLADESTOP_WAIT)->val1;
 		int duration = skill_get_time2(MO_BLADESTOP,skill_lv);
@@ -10467,7 +10471,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	int state = 0; //Initial state none
 	int strip_enemy = 1; //Flag which marks whether to remove the BCT_ENEMY status if it's also friend/ally.
 	struct block_list *s_bl = src, *t_bl = target;
-	struct unit_data *ud = NULL;
+	struct unit_data *ud = nullptr;
 
 	nullpo_ret(src);
 	nullpo_ret(target);
@@ -10477,10 +10481,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 
 	//t_bl/s_bl hold the 'master' of the attack, while src/target are the actual
 	//objects involved.
-	if( (t_bl = battle_get_master(target)) == NULL )
+	if( (t_bl = battle_get_master(target)) == nullptr )
 		t_bl = target;
 
-	if( (s_bl = battle_get_master(src)) == NULL )
+	if( (s_bl = battle_get_master(src)) == nullptr )
 		s_bl = src;
 
 	if ( s_bl->type == BL_PC ) {
@@ -10594,7 +10598,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	switch( t_bl->type ) { //Checks on target master
 		case BL_PC: {
 			map_session_data *sd;
-			status_change *sc = NULL;
+			status_change *sc = nullptr;
 
 			if( t_bl == s_bl )
 				break;
@@ -10830,7 +10834,7 @@ bool battle_check_range(struct block_list *src, struct block_list *bl, int range
 	if( d > AREA_SIZE )
 		return false; // Avoid targetting objects beyond your range of sight.
 
-	return path_search_long(NULL,src->m,src->x,src->y,bl->x,bl->y,CELL_CHKWALL);
+	return path_search_long(nullptr,src->m,src->x,src->y,bl->x,bl->y,CELL_CHKWALL);
 }
 
 /*=============================================
@@ -11710,7 +11714,7 @@ int battle_config_read(const char* cfgName)
 	count++;
 
 	fp = fopen(cfgName,"r");
-	if (fp == NULL)
+	if (fp == nullptr)
 		ShowError("File not found: %s\n", cfgName);
 	else {
 		char line[1024], w1[1024], w2[1024];

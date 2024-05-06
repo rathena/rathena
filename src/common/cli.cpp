@@ -218,7 +218,7 @@ TIMER_FUNC(parse_console_timer){
 	memset(buf,0,MAX_CONSOLE_IN); //clear out buf
 
 	if(cli_hasevent()){
-		if(fgets(buf, MAX_CONSOLE_IN, stdin)==NULL)
+		if(fgets(buf, MAX_CONSOLE_IN, stdin)==nullptr)
 			return -1;
 		else if(strlen(buf)>MIN_CONSOLE_IN)
 			parse_console(buf);
