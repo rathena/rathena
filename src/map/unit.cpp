@@ -448,10 +448,8 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		//Needs to be done here so that rudeattack skills are invoked
 		md->walktoxy_fail_count++;
 		clif_fixpos(bl);
-		// Monsters in this situation first attempt a chase skill, then unlock target and then attempt an idle skill
-		// As attempting a chase skill blocks attempting an idle skill, we should only do it to 50%
-		if (rnd()%2 && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
-			mobskill_use(md, tick, -1);
+		// Monsters in this situation will unlock target and then attempt an idle skill
+		// When they start chasing again, they will check for a chase skill before returning here
 		mob_unlocktarget(md, tick);
 		if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
 			mobskill_use(md, tick, -1);
@@ -2814,10 +2812,12 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			unit_stop_walking(src,1);
 
 		if(md) {
-			//First attack is always a normal attack
-			if(md->state.skillstate == MSS_ANGRY || md->state.skillstate == MSS_BERSERK) {
-				if (mobskill_use(md,tick,-1))
+			// Berserk skills can replace normal attacks except for the first attack (state not berserk yet)
+			if(md->state.skillstate == MSS_BERSERK) {
+				if (mobskill_use(md, tick, -1)) {
+					ud->attackabletime = tick + sstatus->adelay;
 					return 1;
+				}
 			}
 			// Set mob's ANGRY/BERSERK states.
 			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
@@ -2848,6 +2848,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			return 1;
 
 		ud->attackabletime = tick + sstatus->adelay;
+		ud->skill_id = 0;
 
 		// You can't move if you can't attack neither.
 		if (src->type&battle_config.attack_walk_delay)

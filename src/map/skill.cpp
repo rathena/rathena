@@ -13421,8 +13421,12 @@ TIMER_FUNC(skill_castend_id){
 			}
 			}
 		}
-		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE)
-			unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE) {
+			if (src->type == BL_MOB)
+				unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+			else
+				unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		}
 
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d]\n",
@@ -13636,7 +13640,10 @@ TIMER_FUNC(skill_castend_pos){
 //				break;
 //			}
 //		}
-		unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		if (src->type == BL_MOB)
+			unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+		else
+			unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,tick,0);
 

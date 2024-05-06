@@ -1528,7 +1528,10 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 			DIFF_TICK(md->next_walktime, tick) <= 0 &&
 			!mob_randomwalk(md,tick))
 			//Delay next random walk when this one failed.
-			md->next_walktime = tick+rnd()%1000;
+			if (md->next_walktime < md->ud.canmove_tick)
+				md->next_walktime = md->ud.canmove_tick;
+			else
+				md->next_walktime = tick+rnd()%1000;
 		break;
 	default:
 		mob_stop_attack(md);
@@ -1908,8 +1911,21 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return true;
 	}
 
-	//Attempt to attack.
-	//At this point we know the target is attackable, we just gotta check if the range matches.
+	// At this point we know the target is attackable, attempt to attack
+
+	// Monsters in angry state, after having used a normal attack, will always attempt a skill
+	if (md->ud.walktimer == INVALID_TIMER && md->state.skillstate == MSS_ANGRY && md->ud.skill_id == 0)
+	{
+		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
+		{ //Only use skill if able to walk on next tick and not attempted a skill the last second
+			if (mobskill_use(md, tick, -1)) {
+				md->ud.attackabletime = tick + md->status.adelay;
+				return true;
+			}
+		}
+	}
+
+	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
 	{	//Target within range and able to use normal attack, engage
 		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
@@ -1929,17 +1945,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			}
 		}
 		return true;
-	}
-
-	// Monsters in angry state, unable to use normal attacks, will always attempt a skill
-	// This does not apply to berserk state (i.e. after you hit an angry mob, it will no longer use follow-up skills)
-	if (md->ud.walktimer == INVALID_TIMER && md->state.skillstate == MSS_ANGRY)
-	{
-		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
-		{ //Only use skill if able to walk on next tick and not attempted a skill the last second
-			if (mobskill_use(md, tick, -1))
-				return true;
-		}
 	}
 
 	//Target still in attack range, no need to chase the target
@@ -2068,7 +2073,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	//Clean the spotted log
 	mob_clean_spotted(md);
 
-	if(DIFF_TICK(tick,md->last_thinktime)< 10*MIN_MOBTHINKTIME)
+	if(DIFF_TICK(tick,md->last_thinktime) < MOB_SKILL_INTERVAL)
 		return 0;
 
 	md->last_thinktime=tick;
