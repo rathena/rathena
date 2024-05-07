@@ -10051,6 +10051,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	int tick = (int)duration;
+	map_session_data *sd = BL_CAST(BL_PC, bl);
 
 	vd = status_get_viewdata(bl);
 
