@@ -78271,6 +78271,65 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_VIP_BIRTHDAY_BOX);
+  - Id: 102869
+    AegisName: Ep21_Fatty_Shrimp
+    Name: Fatty Lunaforma Shrimp
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      pet 22318;
+  - Id: 102881
+    AegisName: Gaebolg_A_Hammer_1
+    Name: +9 Gaebolg Equipment Refine Hammer
+    Type: DelayConsume
+    Weight: 100
+    EquipLevelMin: 245
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 102882
+    AegisName: Gaebolg_A_Hammer_2
+    Name: +10 Gaebolg Equipment Refine Hammer
+    Type: DelayConsume
+    Weight: 100
+    EquipLevelMin: 245
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 102883
+    AegisName: Gaebolg_A_Hammer_3
+    Name: +11 Gaebolg Equipment Refine Hammer
+    Type: DelayConsume
+    Weight: 100
+    EquipLevelMin: 245
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
   - Id: 102900
     AegisName: Refine_Furious
     Name: Furious Refine Stone
@@ -78399,10 +78458,196 @@ Body:
       NoAuction: true
     Script: |
       percentheal 100,100;
+  - Id: 102947
+    AegisName: aegis_102947
+    Name: Antiquity of Ghost Ship (Ghost Ship Captain)
+    Type: Usable
+    Weight: 200
+    Flags:
+      Container: true
+      DropEffect: CLIENT
+    Script: |
+      getgroupitem(IG_AEGIS_102947);
+  - Id: 102948
+    AegisName: aegis_102948
+    Name: Antiquity of Giant Snake (Devouring Tan)
+    Type: Usable
+    Weight: 200
+    Flags:
+      Container: true
+      DropEffect: CLIENT
+    Script: |
+      getgroupitem(IG_AEGIS_102948);
   - Id: 102949
     AegisName: Sonic_Costume_Pack
     Name: Sonic Costume Selection Box    # !todo check english name
     Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 102964
+    AegisName: Teleport_Ep21
+    Name: Lunaforma Travel Wing
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 102985
+    AegisName: Speed_Booster
+    Name: Speed Booster
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103033
+    AegisName: aegis_103033
+    Name: Furious Lance Shield Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_103033);
+  - Id: 103034
+    AegisName: aegis_103034
+    Name: Furious Dual Dagger Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_103034);
+  - Id: 103048
+    AegisName: P_Booster_Call_Package
+    Name: "[Not For Sale] Premium Booster Box"
+    Type: Usable
+    EquipLevelMax: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_P_BOOSTER_CALL_PACKAGE);
+  - Id: 103049
+    AegisName: P_Compensation_Box
+    Name: Probability Disclosure Conpensation Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_P_COMPENSATION_BOX);
+  - Id: 103050
+    AegisName: E_EXP_Drop_Up_1days
+    Name: "[Not For Sale] Kafra Buff (1 day)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103051
+    AegisName: E_EXP_Drop_Up_2days
+    Name: "[Not For Sale] Kafra Buff (2 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103052
+    AegisName: E_EXP_Drop_Up_3days
+    Name: "[Not For Sale] Kafra Buff (3 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103053
+    AegisName: E_EXP_Drop_Up_4days
+    Name: "[Not For Sale] Kafra Buff (4 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103054
+    AegisName: E_EXP_Drop_Up_5days
+    Name: "[Not For Sale] Kafra Buff (5 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103055
+    AegisName: E_EXP_Drop_Up_6days
+    Name: "[Not For Sale] Kafra Buff (6 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103063
+    AegisName: Enchant_Stone_Box35
+    Name: Costume Enchant Stone Box 35
+    Type: Usable
+    Weight: 10
+  - Id: 103095
+    AegisName: Kr_B_Special10
+    Name: Love Cake
+    Type: Usable
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80533,6 +80778,165 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_COSTUMEMILEPACK_34_3);
+  - Id: 200405
+    AegisName: LI_Nyangvine_Box1_35
+#   Name: (Limited) Nyangvine Fruit Package I (Stone Box 35)
+    Name: (Limited) Nyangvine Fruit Package I (Stone Box 35
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200406
+    AegisName: LI_Nyangvine_Box2_35
+#   Name: (Limited) Nyangvine Fruit Package II (Stone Box 35)
+    Name: (Limited) Nyangvine Fruit Package II (Stone Box 3
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200407
+    AegisName: LI_Nyangvine_Box3_35
+#   Name: (Limited) Nyangvine Fruit Package III (Stone Box 35)
+    Name: (Limited) Nyangvine Fruit Package III (Stone Box 
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200411
+    AegisName: A_Speed_Booster_Box
+    Name: Speed Booster Package
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200412
+    AegisName: A_Speed_Booster_10_Box
+    Name: Speed Booster Package 10 Sets
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200415
+    AegisName: L_Infinity_Power_Pack
+    Name: (Limited) Infinity Power Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200416
+    AegisName: L_All_Red_Pack
+    Name: (Limited) All Red Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200417
+    AegisName: L_Defense_Potion_Pack
+    Name: (Limited) Defender Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200418
+    AegisName: L_Speed_Force_Pack
+    Name: (Limited) Speed Force Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200419
+    AegisName: L_Special_Speed_Pack
+    Name: (Limited) Speed Booster Special Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200420
+    AegisName: L_Special_Force_Pack
+    Name: (Limited) Force Booster Special Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 1100000
     AegisName: IDTest_heal
     Name: IDTest heal

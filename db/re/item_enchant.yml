@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2022 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -31469,6 +31469,698 @@ Body:
 #                Chance: 500
 #              - Item: Signet_Of_Wis2
 #                Chance: 500
+  - Id: 143
+    TargetItems:
+      Gaebolg_Armor: true
+      Gaebolg_Robe: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Warrior
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Archer
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Assassin
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Magician
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Berserker
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Marksman
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Executioner
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Wizard
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_P_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_M_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_G_Cooldown
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 144
+    TargetItems:
+      Gaebolg_Manteau: true
+      Gaebolg_Muffler: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Speed
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Caster
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Melee
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Range
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Critical
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Spell
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Ab_All
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 145
+    TargetItems:
+      Gaebolg_Boots: true
+      Gaebolg_Shoes: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Hp
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Sp
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Phy_Force
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mag_Force
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Size_Atk
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Size_Matk
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Ov_Power
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Fi_Shot
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Luk_Strike
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Spl_Buster
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 146
+    TargetItems:
+      Gaebolg_Ring: true
+      Gaebolg_Earring: true
+      Gaebolg_Glove: true
+      Gaebolg_Necklace: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_F_Spirit
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_E_Archer
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_Fatal
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_Sp_Power
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Tenacity
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_M_Archer
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_Acute
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_M_Eessence
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Phy_Power
+            Price: 4500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone3
+                Amount: 20
+              - Material: EP19_S_F_1_Extract
+                Amount: 65
+              - Material: EP19_S_F_2_Extract
+                Amount: 65
+              - Material: EP19_Gla_Extract
+                Amount: 65
+              - Material: EP19_S_F_3_Extract
+                Amount: 35
+              - Material: EP20_D_P_Extract
+                Amount: 35
+          - Item: Ep21_2_Mag_Power
+            Price: 4500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone3
+                Amount: 20
+              - Material: EP19_S_F_1_Extract
+                Amount: 65
+              - Material: EP19_S_F_2_Extract
+                Amount: 65
+              - Material: EP19_Gla_Extract
+                Amount: 65
+              - Material: EP19_S_F_3_Extract
+                Amount: 35
+              - Material: EP20_D_P_Extract
+                Amount: 35
   - Id: 147
     TargetItems:
       StormBow_Furious: true
@@ -31483,6 +32175,18 @@ Body:
       Demonsword_Furious: true
       Foxtail_Furious: true
       Setaria_Furious: true
+      OverSpear_Furious: true
+      Lance_Furious: true
+      Impact_Furious: true
+      RightShape_Furious: true
+      Humma_Furious: true
+      WheelHumma_Furious: true
+      GiganticAxe_Furious: true
+      Hammer_Furious: true
+      MasterSpellBook_Furious: true
+      Grimoire_Furious: true
+      Soul_Furious: true
+      SpiritStick_Furious: true
     Reset:
       Chance: 80000
       Price: 500000
@@ -31647,6 +32351,12 @@ Body:
       FuriousCirclet_DK: true
       FuriousCirclet_ABC: true
       FuriousCirclet_SH: true
+      FuriousCirclet_IG: true
+      FuriousCirclet_SHC: true
+      FuriousCirclet_SS: true
+      FuriousCirclet_MT: true
+      FuriousCirclet_EM: true
+      FuriousCirclet_SOA: true
     Reset:
       Chance: 80000
       Price: 500000
