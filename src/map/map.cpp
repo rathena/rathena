@@ -232,6 +232,7 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		for (const auto &it : commandNode) {
 			std::string command_name;
 			c4::from_chars(it.key(), &command_name);
+			util::tolower(command_name);
 
 			if (!atcommand_exists(command_name.c_str())) {
 				this->invalidWarning(commandNode, "Atcommand %s does not exist.\n", command_name.c_str());
@@ -248,9 +249,10 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				group_lv = 100;
 			}
 
-			if (group_lv == 0)
-				zone->disabled_commands.erase(command_name);
-			else
+			if (group_lv == 0) {
+				if (zone->disabled_commands.erase(command_name) == 0)
+					this->invalidWarning(commandNode, "Attempting to remove atcommand %s that is not part of the disabled list.\n", command_name.c_str());
+			} else
 				zone->disabled_commands[command_name] = group_lv;
 		}
 	}
@@ -275,9 +277,6 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				std::string bl_name;
 				c4::from_chars(subBl.key(), &bl_name);
 
-				if (bl_name.compare("Skill") == 0)
-					continue;
-
 				std::string bl_name_constant = "BL_" + bl_name;
 				int64 type_const;
 
@@ -293,6 +292,9 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					continue;
 				}
 
+				if (type & BL_SKILL)
+					continue;
+
 				uint16 group_lv;
 
 				if (!this->asUInt16(it, bl_name, group_lv))
@@ -303,17 +305,19 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					group_lv = 100;
 				}
 
-				if (util::umap_exists(zone->disabled_skills, skill_id)) {
-					if (group_lv > 0)
+				if (group_lv > 0) {
+					if (util::umap_exists(zone->disabled_skills, skill_id)) {
 						zone->disabled_skills[skill_id].first |= type;
-					else {
-						zone->disabled_skills[skill_id].first &= ~type;
+					} else
+						zone->disabled_skills.insert({ skill_id, std::pair<uint16, uint16>(type, group_lv) });
+				} else {
+					zone->disabled_skills[skill_id].first &= ~type;
 
-						if (zone->disabled_skills[skill_id].first == BL_NUL)
-							zone->disabled_skills.erase(skill_id);
+					if (zone->disabled_skills[skill_id].first == BL_NUL) {
+						if (zone->disabled_skills.erase(skill_id) == 0)
+							this->invalidWarning(it, "Attempting to remove skill %s that is not part of the disabled list.\n", skill_name.c_str());
 					}
-				} else if (group_lv > 0)
-					zone->disabled_skills.insert({ skill_id, std::pair<uint16, uint16>(type, group_lv) });
+				}
 			}
 		}
 	}
@@ -341,9 +345,10 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				group_lv = 100;
 			}
 
-			if (group_lv == 0)
-				zone->disabled_items.erase(item->nameid);
-			else
+			if (group_lv == 0) {
+				if (zone->disabled_items.erase(item->nameid) == 0)
+					this->invalidWarning(itemNode, "Attempting to remove item %s that is not part of the disabled list.\n", item_name.c_str());
+			} else
 				zone->disabled_items[item->nameid] = group_lv;
 		}
 	}
@@ -372,9 +377,10 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				group_lv = 100;
 			}
 
-			if (group_lv == 0)
-				zone->disabled_statuses.erase(static_cast<sc_type>(status));
-			else
+			if (group_lv == 0) {
+				if (zone->disabled_statuses.erase(static_cast<sc_type>(status)) == 0)
+					this->invalidWarning(statusNode, "Attempting to remove status %s that is not part of the disabled list.\n", status_name.c_str());
+			} else
 				zone->disabled_statuses[static_cast<sc_type>(status)] = group_lv;
 		}
 	}
@@ -403,9 +409,10 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				group_lv = 100;
 			}
 
-			if (group_lv == 0)
-				zone->restricted_jobs.erase(static_cast<uint32>(job_id));
-			else
+			if (group_lv == 0) {
+				if (zone->restricted_jobs.erase(static_cast<uint32>(job_id)) == 0)
+					this->invalidWarning(jobNode, "Attempting to remove job %s that is not part of the disabled list.\n", job_name.c_str());
+			} else
 				zone->restricted_jobs[static_cast<uint32>(job_id)] = group_lv;
 		}
 	}
@@ -485,10 +492,10 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				auto mapflagit = zone->mapflags.equal_range(static_cast<int16>(flag));
 
 				// Iterate over the mapflags to get their values
-				for (std::multimap<int16, std::string>::iterator it = mapflagit.first; it != mapflagit.second; ++it) {
+				for (auto flag_it = mapflagit.first; flag_it != mapflagit.second; ++flag_it) {
 					// Compare parse value with what's already in memory
-					if (it->second.find(value) == 0) {
-						zone->mapflags.erase(it);
+					if (flag_it->second.find(value) == 0) {
+						zone->mapflags.erase(flag_it);
 						break;
 					}
 				}
@@ -506,6 +513,9 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
  * Initialize Map Zone data
  */
 void MapZoneDatabase::loadingFinished() {
+	// Intialization and configuration-dependent adjustments of mapflags
+	map_flags_init();
+
 	// Copy Map Zone DB data to the map.
 	// This allows for live modifications to the map without affecting the Map Zone DB.
 	for (const auto &zone : map_zone_db) {
@@ -518,6 +528,7 @@ void MapZoneDatabase::loadingFinished() {
 	// Check for maps with no zones
 	for (int i = 0; i < map_num; i++) {
 		if (map[i].zone == nullptr)
+			// TODO: Change to ShowWarning as soon as possible.
 			ShowNotice("MapZoneDatabase::loadingFinished: Map %s has no zone. Assigning a zone is highly encouraged.\n", map[i].name);
 	}
 }
@@ -557,7 +568,7 @@ bool MapZoneDatabase::setZone(int16 map_id, e_map_type zone) {
 		return false;
 	}
 
-	auto zonedata = map_zone_db.find(zone);
+	auto zonedata = this->find(zone);
 
 	if (zonedata == nullptr) {
 		ShowError("MapZoneDatabase::setZone: Unknown zone %d, skipping.\n", zone);
@@ -572,12 +583,9 @@ bool MapZoneDatabase::setZone(int16 map_id, e_map_type zone) {
 	mapdata->zone->disabled_statuses = zonedata->disabled_statuses;
 	mapdata->zone->restricted_jobs = zonedata->restricted_jobs;
 
-	// Intialization and configuration-dependent adjustments of mapflags
-	map_flags_init();
-
 	// Apply mapflags from Map Zone DB
 	for (const auto &flag : zonedata->mapflags) {
-		char flag_name[50] = {}, empty[1] = {};
+		char flag_name[100], *empty = const_cast<char *>("");
 
 		if (map_getmapflag_name(static_cast<e_mapflag>(flag.first), flag_name))
 			npc_parse_mapflag(mapdata->name, empty, flag_name, const_cast<char *>(flag.second.c_str()), empty, empty, "MapZoneDatabase::setZone");
@@ -612,11 +620,10 @@ bool c_map_zone_data::isCommandDisabled(std::string name, map_session_data &sd) 
 /**
  * Check if a skill is disabled on a map based on group level.
  * @param skill_id: Skill ID
- * @param type: Object type
- * @param sd: Player session data
+ * @param bl: Block list data
  * @return True when skill is disabled or false otherwise
  */
-bool c_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, map_session_data &sd) {
+bool c_map_zone_data::isSkillDisabled(uint16 skill_id, block_list &bl) {
 	if (this->disabled_skills.empty())
 		return false;
 
@@ -625,7 +632,9 @@ bool c_map_zone_data::isSkillDisabled(uint16 skill_id, uint16 type, map_session_
 	if (skill_lv == nullptr)
 		return false;
 
-	if ((!(type & BL_PC) && skill_lv->second > 0) || (skill_lv->second < sd.group->level))
+	map_session_data *sd = BL_CAST(BL_PC, &bl);
+
+	if ((sd == nullptr && skill_lv->second > 0) || (sd != nullptr && skill_lv->second < sd->group->level))
 		return false;
 	else
 		return true;
@@ -655,11 +664,10 @@ bool c_map_zone_data::isItemDisabled(t_itemid nameid, map_session_data &sd) {
 /**
  * Check if a status is disabled on a map based on group level.
  * @param sc: Status type
- * @param type: Object type
- * @param sd: Player session data
+ * @param bl: Block list data
  * @return True when status is disabled or false otherwise
  */
-bool c_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, map_session_data &sd) {
+bool c_map_zone_data::isStatusDisabled(sc_type sc, block_list &bl) {
 	if (this->disabled_statuses.empty())
 		return false;
 
@@ -668,7 +676,9 @@ bool c_map_zone_data::isStatusDisabled(sc_type sc, uint16 type, map_session_data
 	if (status_lv == nullptr)
 		return false;
 
-	if ((!(type & BL_PC) && *status_lv > 0) || (*status_lv < sd.group->level))
+	map_session_data *sd = BL_CAST(BL_PC, &bl);
+
+	if ((sd == nullptr && *status_lv > 0) || (sd != nullptr && *status_lv < sd->group->level))
 		return false;
 	else
 		return true;
@@ -693,6 +703,22 @@ bool c_map_zone_data::isJobRestricted(int32 job_id, uint16 group_lv) {
 		return false;
 	else
 		return true;
+}
+
+/**
+ * Clear all statuses that are disabled on a map.
+ * @param bl: Block list data
+ */
+void c_map_zone_data::clear_all_disabled_status(block_list &bl) {
+	if (this->disabled_statuses.empty())
+		return;
+
+	map_session_data *sd = BL_CAST(BL_PC, &bl);
+
+	for (const auto &sc : this->disabled_statuses) {
+		if (sd == nullptr || sd->group->level < sc.second)
+			status_change_end(&bl, sc.first);
+	}
 }
 
 /**
@@ -4107,6 +4133,7 @@ void map_flags_init(void){
 		args.flag_val = 100;
 
 		// additional mapflag data
+		mapdata->zone = nullptr;
 		mapdata->setMapFlag(MF_NOCOMMAND, false); // nocommand mapflag level
 		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
 		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
@@ -4119,10 +4146,6 @@ void map_flags_init(void){
 
 		if (instance_start && i >= instance_start)
 			continue;
-
-		// adjustments
-		//if( battle_config.pk_mode && !mapdata_flag_vs2(mapdata) ) // !TODO: Is this needed now that the PK zone exists?
-		//	mapdata->setMapFlag(MF_PVP, true); // make all maps pvp for pk_mode [Valaris]
 	}
 }
 
@@ -5021,6 +5044,12 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 	}
 
 	switch(mapflag) {
+		case MF_TOWN:
+			ShowWarning("MF_TOWN is not supported anymore. Please utilize the 'Village' map_zone for this mapflag.\n");
+			return -1;
+		case MF_RESTRICTED:
+			ShowWarning("MF_RESTRICTED is not supported anymore. Please utilize the map_zone database for this mapflag.\n");
+			return -1;
 		case MF_NOLOOT:
 			return mapdata->getMapFlag(MF_NOMOBLOOT) && mapdata->getMapFlag(MF_NOMVPLOOT);
 		case MF_NOPENALTY:
@@ -5069,6 +5098,12 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 	}
 
 	switch(mapflag) {
+		case MF_TOWN:
+			ShowWarning("MF_TOWN is not supported anymore. Please utilize the 'Village' map_zone for this mapflag.\n");
+			return false;
+		case MF_RESTRICTED:
+			ShowWarning("MF_RESTRICTED is not supported anymore. Please utilize the map_zone database for this mapflag.\n");
+			return false;
 		case MF_NOSAVE:
 			if (status) {
 				nullpo_retr(false, args);

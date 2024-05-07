@@ -15145,11 +15145,6 @@ void pc_show_questinfo_reinit(map_session_data *sd) {
  * @return True if job is allowed, false otherwise
  **/
 bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
-	// Map is other map server.
-	// !FIXME: Currently, a map-server doesn't recognized map's attributes on other server, so we assume it's fine to warp.
-	if (m < 0)
-		return true;
-
 	if (!pcdb_checkid(jobid))
 		return false;
 

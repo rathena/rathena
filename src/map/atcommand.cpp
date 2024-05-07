@@ -4423,6 +4423,11 @@ ACMD_FUNC(mapinfo) {
 
 	struct map_data *mapdata = map_getmapdata(m_id);
 
+	if (mapdata == nullptr) {
+		clif_displaymessage(fd, msg_txt(sd, 1)); // Map not found.
+		return -1;
+	}
+
 	sprintf(atcmd_output, msg_txt(sd,1040), mapname, script_get_constant_str("MAPTYPE_", mapdata->zone->id), mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s (Zone: %s) | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1041)); // ------ Map Flags ------

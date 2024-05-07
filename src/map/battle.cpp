@@ -9479,7 +9479,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	else if (mapdata->getMapFlag(MF_BATTLEGROUND))
 		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
 	else if (battle_config.pk_mode > 0 && mapdata->getMapFlag(MF_PVP))
-			damage = battle_calc_pk_damage(*src, *tbl, damage, skill_id, flag);
+		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
 
 	// Skill damage adjustment
 	int skill_damage = battle_skill_damage(src, tbl, skill_id);

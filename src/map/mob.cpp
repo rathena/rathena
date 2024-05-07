@@ -2643,6 +2643,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	map_data *mapdata = map_getmapdata(m);
 
+	if (mapdata == nullptr)
+		return 3;
+
 	if(!(type&2) && //No exp
 		(!mapdata->getMapFlag(MF_PVP) || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
 		(!md->master_id || !md->special_state.ai) && //Only player-summoned mobs do not give exp. [Skotlex]

@@ -1960,9 +1960,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 	} else {
 		map_data *mapdata = map_getmapdata(src->m);
-		map_session_data *sd = (TBL_PC *)src;
+		map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, src->type, *sd )) {
+		if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, sd->bl)) {
 			if (sd != nullptr)
 				clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return false;
@@ -9993,9 +9993,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		return 0;
 
 	map_data *mapdata = map_getmapdata(bl->m);
-	map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	if (mapdata != nullptr && mapdata->zone->isStatusDisabled(type, bl->type, *sd))
+	if (mapdata != nullptr && mapdata->zone->isStatusDisabled(type, *bl))
 		return 0;
 
 	if (sc->getSCE(SC_GRAVITYCONTROL))
@@ -15382,37 +15381,6 @@ TIMER_FUNC(status_clear_lastEffect_timer) {
 	}
 
 	return 0;
-}
-
-/**
- * Clear a status if it is disabled on a map.
- * @param bl: Block list data
- * @param sc: Status Change data
- */
-void status_change_clear_onChangeMap(block_list *bl)
-{
-	nullpo_retv(bl);
-
-	status_change *sc = status_get_sc(bl);
-
-	if (sc && sc->count) {
-		map_data *mapdata = map_getmapdata(bl->m);
-
-		if (mapdata == nullptr)
-			return;
-
-		for (const auto &it : status_db) {
-			sc_type type = static_cast<sc_type>(it.first);
-
-			if (sc->getSCE(type) == nullptr)
-				continue;
-
-			map_session_data *sd = (TBL_PC *)bl;
-
-			if (mapdata->zone->isStatusDisabled(type, bl->type, *sd))
-				status_change_end(bl, type);
-		}
-	}
 }
 
 const std::string AttributeDatabase::getDefaultLocation() {

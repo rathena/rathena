@@ -2107,6 +2107,7 @@ Body:
       - Flag: NoBranch
       - Flag: NoCostume
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty
@@ -2284,6 +2285,7 @@ Body:
       - Flag: Monster_NoTeleport
       - Flag: NoBranch
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty
@@ -3658,6 +3660,7 @@ Body:
       - Flag: Monster_NoTeleport
       - Flag: NoBranch
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty
@@ -3821,6 +3824,7 @@ Body:
         Value: 70
       - Flag: NoBranch
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty
@@ -5570,6 +5574,7 @@ Body:
       - Flag: GvG
       - Flag: GvG_NoParty
       - Flag: NoBranch
+      - Flag: NoKnockBack
       - Flag: PvP_NoGuild
       - Flag: PvP_NoParty
 

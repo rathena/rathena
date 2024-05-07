@@ -546,6 +546,8 @@
 	export_constant(MF_NOBONUSITEMDROP);
 	export_constant(MF_HIDEDAMAGE);
 	export_constant(MF_FLEE_PENALTY);
+	export_deprecated_constant(MF_RESTRICTED);
+	export_deprecated_constant(MF_TOWN);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

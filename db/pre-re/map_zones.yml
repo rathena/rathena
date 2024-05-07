@@ -860,6 +860,7 @@ Body:
         Value: 60
       - Flag: NoBranch
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty
@@ -968,6 +969,7 @@ Body:
       - Flag: Monster_NoTeleport
       - Flag: NoBranch
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty
@@ -1019,6 +1021,7 @@ Body:
     Mapflags:
       - Flag: GvG_Dungeon
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoMemo
       - Flag: NoSave
         Value: SavePoint
@@ -1386,6 +1389,7 @@ Body:
       - Flag: Monster_NoTeleport
       - Flag: NoBranch
       - Flag: NoCostume
+      - Flag: NoKnockBack
       - Flag: NoLockOn
       - Flag: NoMemo
       - Flag: NoPenalty

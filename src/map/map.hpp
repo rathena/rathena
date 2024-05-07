@@ -687,7 +687,9 @@ enum e_mapflag : int16 {
 	MF_NOBONUSITEMDROP,
 	MF_HIDEDAMAGE,
 	MF_FLEE_PENALTY,
-	MF_MAX
+	MF_MAX,
+	MF_RESTRICTED,
+	MF_TOWN,
 };
 
 /// Enum of damage types
@@ -818,10 +820,11 @@ public:
 	std::unordered_map<int32, uint16> restricted_jobs;
 
 	bool isCommandDisabled(std::string name, map_session_data &sd);
-	bool isSkillDisabled(uint16 skill_id, uint16 type, map_session_data &sd);
+	bool isSkillDisabled(uint16 skill_id, block_list &bl);
 	bool isItemDisabled(t_itemid nameid, map_session_data &sd);
-	bool isStatusDisabled(sc_type sc, uint16 type, map_session_data &sd);
+	bool isStatusDisabled(sc_type sc, block_list &bl);
 	bool isJobRestricted(int32 job_id, uint16 group_lv);
+	void clear_all_disabled_status(block_list &bl);
 };
 
 struct map_data {
