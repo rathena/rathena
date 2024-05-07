@@ -277,6 +277,10 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				std::string bl_name;
 				c4::from_chars(subBl.key(), &bl_name);
 
+				// Skip the skill sequence key on the second loop
+				if (bl_name.compare("Skill") == 0)
+					continue;
+
 				std::string bl_name_constant = "BL_" + bl_name;
 				int64 type_const;
 
@@ -611,10 +615,10 @@ bool c_map_zone_data::isCommandDisabled(std::string name, map_session_data &sd) 
 	if (cmd_lv == nullptr)
 		return false;
 
-	if (*cmd_lv < sd.group->level)
+	if (sd.group->level < *cmd_lv)
 		return false;
-	else
-		return true;
+
+	return true;
 }
 
 /**
@@ -634,10 +638,13 @@ bool c_map_zone_data::isSkillDisabled(uint16 skill_id, block_list &bl) {
 
 	map_session_data *sd = BL_CAST(BL_PC, &bl);
 
-	if ((sd == nullptr && skill_lv->second > 0) || (sd != nullptr && skill_lv->second < sd->group->level))
+	if (sd == nullptr)
 		return false;
-	else
-		return true;
+
+	if (sd->group->level < skill_lv->second)
+		return false;
+
+	return true;
 }
 
 /**
@@ -655,10 +662,10 @@ bool c_map_zone_data::isItemDisabled(t_itemid nameid, map_session_data &sd) {
 	if (item_lv == nullptr)
 		return false;
 
-	if (*item_lv < sd.group->level)
+	if (sd.group->level < *item_lv)
 		return false;
-	else
-		return true;
+
+	return true;
 }
 
 /**
@@ -678,10 +685,13 @@ bool c_map_zone_data::isStatusDisabled(sc_type sc, block_list &bl) {
 
 	map_session_data *sd = BL_CAST(BL_PC, &bl);
 
-	if ((sd == nullptr && *status_lv > 0) || (sd != nullptr && *status_lv < sd->group->level))
+	if (sd == nullptr)
 		return false;
-	else
-		return true;
+
+	if (sd->group->level < *status_lv)
+		return false;
+
+	return true;
 }
 
 /**
@@ -699,10 +709,10 @@ bool c_map_zone_data::isJobRestricted(int32 job_id, uint16 group_lv) {
 	if (job_lv == nullptr)
 		return false;
 
-	if (*job_lv < group_lv)
+	if (group_lv < *job_lv)
 		return false;
-	else
-		return true;
+
+	return true;
 }
 
 /**
