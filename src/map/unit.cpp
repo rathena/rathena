@@ -2813,7 +2813,8 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			unit_stop_walking(src,1);
 
 		if(md) {
-			// Berserk skills can replace normal attacks except for the first attack (state not berserk yet)
+			// Berserk skills can replace normal attacks except for the first attack
+			// If this is the first attack, the state is not Berserk yet, so the skill check is skipped
 			if(md->state.skillstate == MSS_BERSERK) {
 				if (mobskill_use(md, tick, -1)) {
 					ud->attackabletime = tick + sstatus->adelay;

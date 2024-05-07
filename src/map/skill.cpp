@@ -13426,6 +13426,8 @@ TIMER_FUNC(skill_castend_id){
 			}
 		}
 		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE) {
+			// When monsters used a skill they won't walk for amotion, this does not apply to players
+			// This is also important for monster skill usage behavior
 			if (src->type == BL_MOB)
 				unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
 			else
@@ -13644,6 +13646,8 @@ TIMER_FUNC(skill_castend_pos){
 //				break;
 //			}
 //		}
+		// When monsters used a skill they won't walk for amotion, this does not apply to players
+		// This is also important for monster skill usage behavior
 		if (src->type == BL_MOB)
 			unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
 		else
