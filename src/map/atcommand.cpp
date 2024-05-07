@@ -4215,7 +4215,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
 	} else if (strstr(command, "cashdb") || strncmp(message, "cashdb", 4) == 0) {
 		cashshop_reloaddb();
-		clif_displaymessage(fd, "Cash shop database has been reloaded.");
+		clif_displaymessage( fd, msg_txt( sd, 832 ) ); // Cash shop database has been reloaded.
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
 		pet_db.reload();
