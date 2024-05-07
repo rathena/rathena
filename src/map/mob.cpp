@@ -1916,8 +1916,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	// Monsters in angry state, after having used a normal attack, will always attempt a skill
 	if (md->ud.walktimer == INVALID_TIMER && md->state.skillstate == MSS_ANGRY && md->ud.skill_id == 0)
 	{
-		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
-		{ //Only use skill if able to walk on next tick and not attempted a skill the last second
+		// Only use skill if able to walk on next tick and not attempted a skill the last second
+		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL){
 			if (mobskill_use(md, tick, -1)) {
 				md->ud.attackabletime = tick + md->status.adelay;
 				return true;
@@ -1985,21 +1985,24 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	//Follow up if possible.
 	if (!mob_can_reach(md, tbl, md->min_chase)) {
 		mob_unlocktarget(md, tick);
+
+		return true;
 	}
-	else {
-		// Monsters can use chase skills before starting to walk
-		// So we need to change the state and check for a skill here already
-		// Skills during movement are handled in the walktobl routine
-		if (md->ud.walktimer == INVALID_TIMER
-			&& DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME
-			&& DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL) {
-			md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
-			if (mobskill_use(md, tick, -1))
-				return true;
-		}
-		if(!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
-			mob_unlocktarget(md, tick);
+	// Monsters can use chase skills before starting to walk
+	// So we need to change the state and check for a skill here already
+	// But only use skill if able to walk on next tick and not attempted a skill the last second
+	// Skills during movement are handled in the walktobl routine
+	if (md->ud.walktimer == INVALID_TIMER
+		&& DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME
+		&& DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL) {
+		md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
+		
+		if (mobskill_use(md, tick, -1))
+			return true;
 	}
+
+	if(!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
+		mob_unlocktarget(md, tick);
 
 	return true;
 }

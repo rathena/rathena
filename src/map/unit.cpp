@@ -1019,7 +1019,8 @@ t_tick unit_get_walkpath_time(struct block_list& bl)
 	unsigned short speed = status_get_speed(&bl);
 	struct unit_data* ud = unit_bl2ud(&bl);
 
-	for (uint8 i = 0; i < ud->walkpath.path_len; i++) {	// The next walk start time is calculated.
+	// The next walk start time is calculated.
+	for (uint8 i = 0; i < ud->walkpath.path_len; i++) {
 		if (direction_diagonal(ud->walkpath.path[i]))
 			time += speed * MOVE_DIAGONAL_COST / MOVE_COST;
 		else
