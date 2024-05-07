@@ -2735,7 +2735,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			dstsd->state.autocast = 1;
 			int flag = SKILL_NOCONSUME_REQ;
 			if (it.flag & AUTOSPELL_FORCE_CONSUME) {
-				sd->state.autocast = 2;
+				dstsd->state.autocast = 2;
 				if (!skill_check_condition_castbegin(*dstsd, autospl_skill_id, autospl_skill_lv) || !skill_check_condition_castend(*dstsd, autospl_skill_id, autospl_skill_lv)) {
 					dstsd->state.autocast = 0;
 					continue;
