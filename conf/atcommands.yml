@@ -919,6 +919,8 @@ Body:
     Help: |
       Reload battle settings.
   - Command: reloadcashdb
+    Aliases:
+      - reloadcashshop
     Help: |
       Reload cash shop database.
   - Command: reloadinstancedb
