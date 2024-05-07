@@ -7781,6 +7781,12 @@
 	export_constant(IG_COSTUMEMILEPACK_34_1);
 	export_constant(IG_COSTUMEMILEPACK_34_2);
 	export_constant(IG_COSTUMEMILEPACK_34_3);
+	export_constant(IG_AEGIS_102947);
+	export_constant(IG_AEGIS_102948);
+	export_constant(IG_AEGIS_103033);
+	export_constant(IG_AEGIS_103034);
+	export_constant(IG_P_BOOSTER_CALL_PACKAGE);
+	export_constant(IG_P_COMPENSATION_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
