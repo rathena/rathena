@@ -37,6 +37,7 @@
 #include "instance.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
+#include "cashshop.hpp"
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
@@ -4214,6 +4215,9 @@ ACMD_FUNC(reload) {
 	if (strstr(command, "itemdb") || strncmp(message, "itemdb", 4) == 0) {
 		itemdb_reload();
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
+	} else if (strstr(command, "cashdb") || strncmp(message, "cashdb", 4) == 0) {
+		cashshop_reloaddb();
+		clif_displaymessage( fd, msg_txt( sd, 832 ) ); // Cash shop database has been reloaded.
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
 		pet_db.reload();
@@ -4333,7 +4337,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
 	} else if (strstr(command, "zonedb") || strncmp(message, "zonedb", 4) == 0) {
 		map_zone_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 833)); // Map Zone database has been reloaded.
+		clif_displaymessage(fd, msg_txt(sd, 834)); // Map Zone database has been reloaded.
 	}
 
 	return 0;
@@ -11092,6 +11096,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(recallall),
 		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
 		ACMD_DEF2("reloaditemdb", reload),
+		ACMD_DEF2("reloadcashdb", reload),
 		ACMD_DEF2("reloadmobdb", reload),
 		ACMD_DEF2("reloadskilldb", reload),
 		ACMD_DEF2R("reloadscript", reload, ATCMD_NOSCRIPT),
@@ -11580,7 +11585,7 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 	if (mapdata->zone->isCommandDisabled(info->command, *sd)) {
-		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 832), false, SELF); // This command is disabled on this map.
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 833), false, SELF); // This command is disabled on this map.
 		return true;
 	}
 
