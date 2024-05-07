@@ -540,6 +540,8 @@ static TIMER_FUNC(unit_walktoxy_timer)
 				md->min_chase--;
 			// Walk skills are triggered regardless of target due to the idle-walk mob state.
 			// But avoid triggering on stop-walk calls.
+			// Monsters use walk/chase skills every second, but we only get here every "speed" ms
+			// To make sure we check one skill per second on average, we substract half the speed as ms
 			if(!ud->state.force_walk && tid != INVALID_TIMER &&
 				DIFF_TICK(tick, md->last_skillcheck) > MOB_SKILL_INTERVAL - md->status.speed / 2 &&
 				DIFF_TICK(tick, md->last_thinktime) > 0 &&
@@ -616,6 +618,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 	if(speed > 0) {
 		// For some reason sometimes the walk timer is not empty here
+		// TODO: Need to check why (e.g. when the monster spams NPC_RUN)
 		if (ud->walktimer != INVALID_TIMER) {
 			delete_timer(ud->walktimer, unit_walktoxy_timer);
 			ud->walktimer = INVALID_TIMER;
@@ -2817,6 +2820,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			// If this is the first attack, the state is not Berserk yet, so the skill check is skipped
 			if(md->state.skillstate == MSS_BERSERK) {
 				if (mobskill_use(md, tick, -1)) {
+					// Setting the delay here because not all monster skill use situations will cause an attack delay
 					ud->attackabletime = tick + sstatus->adelay;
 					return 1;
 				}

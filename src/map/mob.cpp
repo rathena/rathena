@@ -1919,6 +1919,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		// Only use skill if able to walk on next tick and not attempted a skill the last second
 		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL){
 			if (mobskill_use(md, tick, -1)) {
+				// After the monster used an angry skill, it will not attack for aDelay
+				// Setting the delay here because not all monster skill use situations will cause an attack delay
 				md->ud.attackabletime = tick + md->status.adelay;
 				return true;
 			}
