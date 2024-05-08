@@ -41246,7 +41246,7 @@ Body:
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
@@ -41275,7 +41275,7 @@ Body:
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
@@ -41304,7 +41304,7 @@ Body:
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
@@ -41333,7 +41333,7 @@ Body:
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
