@@ -222,7 +222,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1292
     AttackMotion: 792
-    ClientAttackMotion: 336
+    ClientAttackMotion: 648
     DamageMotion: 216
     Ai: 03
     Modes:
@@ -1555,7 +1555,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1372
     AttackMotion: 672
-    ClientAttackMotion: 720
+    ClientAttackMotion: 288
     DamageMotion: 432
     Ai: 19
     Drops:
@@ -5051,7 +5051,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1120
     AttackMotion: 420
-    ClientAttackMotion: 216
+    ClientAttackMotion: 180
     DamageMotion: 288
     Ai: 13
     Drops:
@@ -5100,7 +5100,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1600
     AttackMotion: 900
-    ClientAttackMotion: 216
+    ClientAttackMotion: 252
     DamageMotion: 240
     Ai: 03
     Drops:
@@ -6786,7 +6786,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 2280
     AttackMotion: 1080
-    ClientAttackMotion: 288
+    ClientAttackMotion: 720
     DamageMotion: 864
     Ai: 01
     Drops:
@@ -11753,7 +11753,7 @@ Body:
     WalkSpeed: 400
     AttackDelay: 1248
     AttackMotion: 1248
-    ClientAttackMotion: 336
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 17
     Drops:
@@ -13708,7 +13708,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 2276
     AttackMotion: 576
-    ClientAttackMotion: 336
+    ClientAttackMotion: 216
     DamageMotion: 432
     Ai: 21
     Drops:
@@ -14550,7 +14550,7 @@ Body:
     WalkSpeed: 155
     AttackDelay: 1276
     AttackMotion: 576
-    ClientAttackMotion: 360
+    ClientAttackMotion: 120
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -16584,7 +16584,7 @@ Body:
     WalkSpeed: 155
     AttackDelay: 1000
     AttackMotion: 900
-    ClientAttackMotion: 540
+    ClientAttackMotion: 1440
     DamageMotion: 432
     Ai: 21
     Modes:
@@ -18982,7 +18982,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 588
     AttackMotion: 816
-    ClientAttackMotion: 288
+    ClientAttackMotion: 1440
     DamageMotion: 420
     DamageTaken: 10
     Ai: 21
@@ -25908,7 +25908,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1084
     AttackMotion: 2304
-    ClientAttackMotion: 420
+    ClientAttackMotion: 384
     DamageMotion: 576
     Ai: 04
     Modes:
@@ -28356,7 +28356,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 504
     AttackMotion: 480
-    ClientAttackMotion: 360
+    ClientAttackMotion: 288
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -28791,7 +28791,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 1120
     AttackMotion: 552
-    ClientAttackMotion: 756
+    ClientAttackMotion: 2304
     DamageMotion: 511
     Ai: 02
     Class: Boss
@@ -29185,7 +29185,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 168
     AttackMotion: 480
-    ClientAttackMotion: 480
+    ClientAttackMotion: 240
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -30674,7 +30674,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1080
     AttackMotion: 480
-    ClientAttackMotion: 2112
+    ClientAttackMotion: 240
     DamageMotion: 504
     Ai: 13
     Modes:
@@ -34576,7 +34576,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1472
     AttackMotion: 384
-    ClientAttackMotion: 288
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 02
     Drops:
@@ -37440,7 +37440,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1288
     AttackMotion: 288
-    ClientAttackMotion: 288
+    ClientAttackMotion: 0
     DamageMotion: 384
     Class: Guardian
     Modes:
@@ -37574,7 +37574,7 @@ Body:
     WalkSpeed: 110
     AttackDelay: 576
     AttackMotion: 480
-    ClientAttackMotion: 336
+    ClientAttackMotion: 432
     DamageMotion: 432
     Ai: 21
     Class: Boss
@@ -37620,7 +37620,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 648
-    ClientAttackMotion: 336
+    ClientAttackMotion: 360
     DamageMotion: 300
     Ai: 21
     Class: Boss
@@ -37664,7 +37664,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 212
     AttackMotion: 432
-    ClientAttackMotion: 336
+    ClientAttackMotion: 216
     DamageMotion: 360
     Ai: 21
     Class: Boss
@@ -37710,7 +37710,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1536
     AttackMotion: 648
-    ClientAttackMotion: 336
+    ClientAttackMotion: 432
     DamageMotion: 300
     Ai: 21
     Class: Boss
@@ -37987,7 +37987,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 768
     AttackMotion: 768
-    ClientAttackMotion: 216
+    ClientAttackMotion: 384
     DamageMotion: 576
     Ai: 21
     Class: Boss
@@ -38122,7 +38122,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 432
     AttackMotion: 480
-    ClientAttackMotion: 1152
+    ClientAttackMotion: 360
     DamageMotion: 360
     Ai: 13
     Class: Boss
@@ -39565,7 +39565,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 648
     AttackMotion: 480
-    ClientAttackMotion: 300
+    ClientAttackMotion: 360
     DamageMotion: 360
     Ai: 20
     Drops:
@@ -40605,7 +40605,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 300
     AttackMotion: 384
-    ClientAttackMotion: 336
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 01
     Class: Boss
@@ -42189,7 +42189,7 @@ Body:
     AttackMotion: 1020
     ClientAttackMotion: 288
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
@@ -42219,7 +42219,7 @@ Body:
     AttackMotion: 1020
     ClientAttackMotion: 288
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
@@ -42249,7 +42249,7 @@ Body:
     AttackMotion: 1020
     ClientAttackMotion: 288
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
@@ -42279,7 +42279,7 @@ Body:
     AttackMotion: 1020
     ClientAttackMotion: 288
     DamageMotion: 360
-    Ai: 10
+    Ai: 06
     Drops:
       - Item: Steel
         Rate: 500
@@ -43201,7 +43201,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 1216
     AttackMotion: 816
-    ClientAttackMotion: 420
+    ClientAttackMotion: 288
     DamageMotion: 432
     Ai: 04
     Modes:
@@ -43955,7 +43955,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
-    ClientAttackMotion: 240
+    ClientAttackMotion: 0
     DamageMotion: 480
     Modes:
       Detector: true
@@ -43991,7 +43991,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
-    ClientAttackMotion: 480
+    ClientAttackMotion: 0
     DamageMotion: 480
     Modes:
       Detector: true
@@ -46749,7 +46749,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 504
     AttackMotion: 624
-    ClientAttackMotion: 480
+    ClientAttackMotion: 420
     DamageMotion: 360
     Ai: 20
     Class: Boss
@@ -46800,7 +46800,7 @@ Body:
     WalkSpeed: 140
     AttackDelay: 588
     AttackMotion: 768
-    ClientAttackMotion: 420
+    ClientAttackMotion: 1056
     DamageMotion: 480
     Ai: 20
     Class: Boss
@@ -46947,7 +46947,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
-    ClientAttackMotion: 240
+    ClientAttackMotion: 0
     DamageMotion: 480
     Drops:
       - Item: Piece_Of_Egg_Shell
@@ -46983,7 +46983,7 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
-    ClientAttackMotion: 480
+    ClientAttackMotion: 0
     DamageMotion: 480
     Drops:
       - Item: Piece_Of_Egg_Shell
@@ -54052,7 +54052,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 972
     AttackMotion: 500
-    ClientAttackMotion: 480
+    ClientAttackMotion: 576
     DamageMotion: 288
     Ai: 21
     Modes:
@@ -55489,7 +55489,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 432
     AttackMotion: 400
-    ClientAttackMotion: 288
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -55534,7 +55534,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 432
     AttackMotion: 400
-    ClientAttackMotion: 288
+    ClientAttackMotion: 576
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -55626,7 +55626,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 432
     AttackMotion: 400
-    ClientAttackMotion: 288
+    ClientAttackMotion: 576
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -55718,7 +55718,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 864
     AttackMotion: 400
-    ClientAttackMotion: 288
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -55810,7 +55810,7 @@ Body:
     WalkSpeed: 130
     AttackDelay: 432
     AttackMotion: 400
-    ClientAttackMotion: 288
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -55994,7 +55994,7 @@ Body:
     WalkSpeed: 160
     AttackDelay: 432
     AttackMotion: 400
-    ClientAttackMotion: 336
+    ClientAttackMotion: 672
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -56040,7 +56040,7 @@ Body:
     WalkSpeed: 140
     AttackDelay: 432
     AttackMotion: 400
-    ClientAttackMotion: 336
+    ClientAttackMotion: 576
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -59038,7 +59038,7 @@ Body:
     WalkSpeed: 170
     AttackDelay: 1276
     AttackMotion: 792
-    ClientAttackMotion: 720
+    ClientAttackMotion: 1152
     DamageMotion: 360
     Ai: 21
     Drops:
@@ -59719,7 +59719,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 800
     AttackMotion: 672
-    ClientAttackMotion: 672
+    ClientAttackMotion: 480
     DamageMotion: 480
     Ai: 10
     Modes:
@@ -75874,7 +75874,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1500
     AttackMotion: 500
-    ClientAttackMotion: 1152
+    ClientAttackMotion: 1728
     DamageMotion: 660
     Ai: 09
     Drops:
@@ -75922,7 +75922,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 1552
     AttackMotion: 1152
-    ClientAttackMotion: 720
+    ClientAttackMotion: 2112
     DamageMotion: 336
     Ai: 04
     Drops:
@@ -77510,7 +77510,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1296
     AttackMotion: 1296
-    ClientAttackMotion: 1224
+    ClientAttackMotion: 468
     DamageMotion: 432
     Ai: 05
     Modes:
@@ -78712,7 +78712,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1672
     AttackMotion: 720
-    ClientAttackMotion: 576
+    ClientAttackMotion: 432
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -79212,7 +79212,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 1
     AttackMotion: 1
-    ClientAttackMotion: 480
+    ClientAttackMotion: 240
     DamageMotion: 1
     Class: Event
     Modes:
@@ -80135,7 +80135,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1000
     AttackMotion: 460
-    ClientAttackMotion: 336
+    ClientAttackMotion: 540
     DamageMotion: 350
     Ai: 10
     Class: Boss
@@ -80171,7 +80171,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 750
     AttackMotion: 510
-    ClientAttackMotion: 336
+    ClientAttackMotion: 420
     DamageMotion: 500
     Ai: 21
     Class: Boss
@@ -80907,7 +80907,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 676
     AttackMotion: 2016
-    ClientAttackMotion: 420
+    ClientAttackMotion: 1824
     DamageMotion: 672
     Ai: 26
     Class: Boss
@@ -81001,7 +81001,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 676
     AttackMotion: 1056
-    ClientAttackMotion: 288
+    ClientAttackMotion: 864
     DamageMotion: 480
     Ai: 10
     Modes:
@@ -81048,7 +81048,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 676
     AttackMotion: 816
-    ClientAttackMotion: 288
+    ClientAttackMotion: 720
     DamageMotion: 480
     Ai: 10
     Drops:
@@ -82551,7 +82551,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 576
     AttackMotion: 384
-    ClientAttackMotion: 288
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -82703,7 +82703,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
-    ClientAttackMotion: 240
+    ClientAttackMotion: 288
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -82755,7 +82755,7 @@ Body:
     WalkSpeed: 100
     AttackDelay: 76
     AttackMotion: 384
-    ClientAttackMotion: 288
+    ClientAttackMotion: 336
     DamageMotion: 288
     Ai: 21
     Class: Boss
@@ -84373,7 +84373,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 1552
     AttackMotion: 1152
-    ClientAttackMotion: 288
+    ClientAttackMotion: 1728
     DamageMotion: 336
     Ai: 10
     Modes:
@@ -87795,7 +87795,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1152
     AttackMotion: 864
-    ClientAttackMotion: 336
+    ClientAttackMotion: 672
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -88343,7 +88343,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 2112
     AttackMotion: 1152
-    ClientAttackMotion: 720
+    ClientAttackMotion: 1920
     DamageMotion: 672
     Ai: 21
     Class: Boss
@@ -89179,7 +89179,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1292
     AttackMotion: 792
-    ClientAttackMotion: 336
+    ClientAttackMotion: 648
     DamageMotion: 216
     Ai: 01
     Modes:
@@ -89277,7 +89277,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1600
     AttackMotion: 900
-    ClientAttackMotion: 216
+    ClientAttackMotion: 252
     DamageMotion: 240
     Ai: 03
     Drops:
@@ -89603,7 +89603,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 864
     AttackMotion: 1056
-    ClientAttackMotion: 360
+    ClientAttackMotion: 672
     DamageMotion: 576
     Ai: 04
     Modes:
@@ -93328,7 +93328,7 @@ Body:
     WalkSpeed: 120
     AttackDelay: 1000
     AttackMotion: 500
-    ClientAttackMotion: 420
+    ClientAttackMotion: 576
     DamageMotion: 600
     Ai: 04
     Drops:
@@ -93376,7 +93376,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1500
     AttackMotion: 600
-    ClientAttackMotion: 300
+    ClientAttackMotion: 432
     DamageMotion: 500
     Ai: 04
     Drops:
@@ -93612,7 +93612,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1826
     AttackMotion: 816
-    ClientAttackMotion: 720
+    ClientAttackMotion: 576
     DamageMotion: 432
     Ai: 19
     Modes:
@@ -94053,7 +94053,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 2864
     AttackMotion: 864
-    ClientAttackMotion: 336
+    ClientAttackMotion: 672
     DamageMotion: 576
     Ai: 19
     Drops:
@@ -96270,7 +96270,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 632
     AttackMotion: 518
-    ClientAttackMotion: 720
+    ClientAttackMotion: 384
     DamageMotion: 288
     Ai: 04
     Drops:
@@ -96320,7 +96320,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1332
     AttackMotion: 1332
-    ClientAttackMotion: 936
+    ClientAttackMotion: 900
     DamageMotion: 672
     Ai: 10
     Drops:
@@ -99114,7 +99114,7 @@ Body:
   - Id: 20543
     AegisName: MD_ED_M_SCIENCE
     Name: MD_ED_M_SCIENCE
-    ClientAttackMotion: 1872
+    ClientAttackMotion: 1584
 #  - Id: 20544
 #    AegisName: MINERAL_R_MJ
 #  - Id: 20545
@@ -100985,7 +100985,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1200
     AttackMotion: 1200
-    ClientAttackMotion: 216
+    ClientAttackMotion: 360
     DamageMotion: 480
     Ai: 04
     Drops:
@@ -103583,7 +103583,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 936
     AttackMotion: 1155
-    ClientAttackMotion: 384
+    ClientAttackMotion: 288
     DamageMotion: 672
     Ai: 04
     Drops:
@@ -103675,7 +103675,7 @@ Body:
     WalkSpeed: 270
     AttackDelay: 1070
     AttackMotion: 1512
-    ClientAttackMotion: 468
+    ClientAttackMotion: 936
     DamageMotion: 485
     Ai: 04
     Drops:
@@ -103723,7 +103723,7 @@ Body:
     WalkSpeed: 220
     AttackDelay: 708
     AttackMotion: 1225
-    ClientAttackMotion: 384
+    ClientAttackMotion: 504
     DamageMotion: 675
     Ai: 04
     Drops:
@@ -103817,7 +103817,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 335
     AttackMotion: 1250
-    ClientAttackMotion: 192
+    ClientAttackMotion: 384
     DamageMotion: 384
     Ai: 04
     Drops:
@@ -103865,7 +103865,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 276
     AttackMotion: 672
-    ClientAttackMotion: 108
+    ClientAttackMotion: 480
     DamageMotion: 384
     Ai: 04
     Drops:
@@ -103913,7 +103913,7 @@ Body:
     WalkSpeed: 220
     AttackDelay: 168
     AttackMotion: 1154
-    ClientAttackMotion: 432
+    ClientAttackMotion: 528
     DamageMotion: 865
     Ai: 04
     Drops:
@@ -103961,7 +103961,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 480
     AttackMotion: 960
-    ClientAttackMotion: 360
+    ClientAttackMotion: 480
     DamageMotion: 970
     Ai: 04
     Drops:
@@ -104007,7 +104007,7 @@ Body:
     WalkSpeed: 180
     AttackDelay: 422
     AttackMotion: 870
-    ClientAttackMotion: 480
+    ClientAttackMotion: 384
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -104374,7 +104374,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1000
     AttackMotion: 500
-    ClientAttackMotion: 0
+    ClientAttackMotion: 600
     DamageMotion: 300
     Ai: 20
   - Id: 20851
@@ -105256,7 +105256,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1332
     AttackMotion: 2664
-    ClientAttackMotion: 528
+    ClientAttackMotion: 936
     DamageMotion: 480
     Ai: 04
     Drops:
@@ -105698,7 +105698,7 @@ Body:
     WalkSpeed: 125
     AttackDelay: 510
     AttackMotion: 1020
-    ClientAttackMotion: 1440
+    ClientAttackMotion: 720
     DamageMotion: 576
     Ai: 04
     Drops:
@@ -107571,7 +107571,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 576
-    ClientAttackMotion: 216
+    ClientAttackMotion: 360
     DamageMotion: 648
     Ai: 04
     Drops:
@@ -107697,7 +107697,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 792
     AttackMotion: 792
-    ClientAttackMotion: 216
+    ClientAttackMotion: 432
     DamageMotion: 360
     Ai: 04
     Drops:
@@ -108018,7 +108018,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 736
     AttackMotion: 1104
-    ClientAttackMotion: 576
+    ClientAttackMotion: 672
     DamageMotion: 480
     Ai: 21
     Class: Boss
@@ -108053,7 +108053,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 576
     AttackMotion: 1152
-    ClientAttackMotion: 480
+    ClientAttackMotion: 672
     DamageMotion: 720
     Ai: 04
     Drops:
@@ -108192,7 +108192,7 @@ Body:
     WalkSpeed: 165
     AttackDelay: 540
     AttackMotion: 1080
-    ClientAttackMotion: 720
+    ClientAttackMotion: 660
     DamageMotion: 336
     Ai: 04
     Drops:
@@ -108238,7 +108238,7 @@ Body:
     WalkSpeed: 150
     AttackDelay: 1600
     AttackMotion: 900
-    ClientAttackMotion: 216
+    ClientAttackMotion: 252
     DamageMotion: 240
     Ai: 04
     Drops:
@@ -108620,7 +108620,7 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1000
     AttackMotion: 792
-    ClientAttackMotion: 96
+    ClientAttackMotion: 336
     DamageMotion: 336
     Ai: 21
     Drops:
@@ -108712,7 +108712,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1288
     AttackMotion: 288
-    ClientAttackMotion: 144
+    ClientAttackMotion: 96
     DamageMotion: 576
     Ai: 21
     Drops:
@@ -108799,7 +108799,7 @@ Body:
     WalkSpeed: 250
     AttackDelay: 1848
     AttackMotion: 1296
-    ClientAttackMotion: 480
+    ClientAttackMotion: 1008
     DamageMotion: 432
     Ai: 21
     Drops:
@@ -108893,7 +108893,7 @@ Body:
     WalkSpeed: 300
     AttackDelay: 1768
     AttackMotion: 768
-    ClientAttackMotion: 576
+    ClientAttackMotion: 432
     DamageMotion: 384
     Ai: 21
     Drops:
