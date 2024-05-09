@@ -664,7 +664,7 @@ int guild_send_xy_timer_sub(const struct mmo_guild& g) {
 	for (int i = 0; i < g.max_member; i++) {
 		map_session_data* sd = g.member[i].sd;
 		if( sd != nullptr && sd->fd && (sd->guild_x != sd->bl.x || sd->guild_y != sd->bl.y) && !sd->bg_id ) {
-			clif_guild_xy(sd);
+			clif_guild_xy( *sd );
 			sd->guild_x = sd->bl.x;
 			sd->guild_y = sd->bl.y;
 		}
@@ -683,7 +683,7 @@ static TIMER_FUNC(guild_send_xy_timer){
 
 int guild_send_dot_remove(map_session_data *sd) {
 	if (sd->status.guild_id)
-		clif_guild_xy_remove(sd);
+		clif_guild_xy_remove( *sd );
 	return 0;
 }
 //------------------------------------------------------------------------
@@ -1360,8 +1360,8 @@ int guild_recv_memberinfoshort(int guild_id,uint32 account_id,uint32 char_id,int
 			g->guild.member[i].sd->bl.m != g->guild.member[idx].sd->bl.m)
 			continue;
 
-		clif_guild_xy_single(g->guild.member[idx].sd->fd, g->guild.member[i].sd);
-		clif_guild_xy_single(g->guild.member[i].sd->fd, g->guild.member[idx].sd);
+		clif_guild_xy_single( *g->guild.member[idx].sd, *g->guild.member[i].sd );
+		clif_guild_xy_single( *g->guild.member[i].sd, *g->guild.member[idx].sd );
 	}
 
 	return 0;

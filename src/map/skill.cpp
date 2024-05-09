@@ -2589,12 +2589,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		break;
 	case HFLI_SBR44:	//[orn]
 		if(src->type == BL_HOM){
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
+			homun_data& hd = reinterpret_cast<homun_data&>( *src );
+
+			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+
+			clif_send_homdata( hd, SP_INTIMATE );
 		}
 		break;
 	case CR_GRANDCROSS:
@@ -3211,9 +3210,8 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
 				TBL_HOM *hd = BL_CAST(BL_HOM, bl);
 				if (idx == -1)
 					break;
-				sd = hd->master;
 				hd->homunculus.hskill[idx].flag= flag;
-				if(sd) clif_homskillinfoblock(sd); //refresh info //@FIXME we only want to refresh one skill
+				clif_homskillinfoblock( *hd ); //refresh info //@FIXME we only want to refresh one skill
 			}
 			break;
 		case MO_COMBOFINISH:
@@ -3498,7 +3496,8 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 			}
 			break;
 	}
-	clif_fixpos(target);
+
+	clif_fixpos( *target );
 }
 
 /*
@@ -8833,12 +8832,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		status_damage(src, src, sstatus->max_hp,0,0,1, skill_id);
 		if(skill_id == HVAN_EXPLOSION && src->type == BL_HOM) {
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
+			homun_data& hd = reinterpret_cast<homun_data&>( *src );
+
+			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+
+			clif_send_homdata( hd, SP_INTIMATE );
 		}
 		break;
 	case AL_ANGELUS:
@@ -9001,7 +8999,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
 		if (sd) // If the client receives a skill-use packet inmediately before a walkok packet, it will discard the walk packet! [Skotlex]
-			clif_walkok(sd); // So aegis has to resend the walk ok.
+			clif_walkok(*sd); // So aegis has to resend the walk ok.
 		break;
 
 	case AS_CLOAKING:
@@ -11343,7 +11341,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		if( sd && pc_isridingwug(sd) ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
-			clif_walkok(sd);
+			clif_walkok(*sd);
 		}
 		break;
 
@@ -15685,7 +15683,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 						if (td)
 							sec = DIFF_TICK(td->tick, tick);
 						map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 					}
 					else
 						sec = 3000; //Couldn't trap it?
@@ -16226,7 +16224,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 						|| !unit_blown_immune(bl,0x1) )
 					{
 						unit_movepos(bl, unit->bl.x, unit->bl.y, 0, 0);
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 					}
 					sg->val2 = bl->id;
 				} else
@@ -16255,7 +16253,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			if( bl->id != ss->id ) {
 				if( status_change_start(ss, bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NORATEDEF) ) {
 					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 				}
 				map_foreachinallrange(skill_trap_splash, &unit->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &unit->bl, tick);
 				sg->unit_id = UNT_USED_TRAPS; //Changed ID so it does not invoke a for each in area again.
@@ -16567,7 +16565,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 						if( td )
 							sec = DIFF_TICK(td->tick, tick);
 						///map_moveblock(bl, src->bl.x, src->bl.y, tick); // in official server it doesn't behave like this. [malufett]
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 						sg->val2 = bl->id;
 					} else
 						sec = 3000;	// Couldn't trap it?
@@ -19720,7 +19718,7 @@ void skill_weaponrefine( map_session_data& sd, int idx ){
 					ep = item->equip;
 					pc_unequipitem(&sd,idx,3);
 				}
-				clif_delitem(&sd,idx,1,3);
+				clif_delitem(sd,idx,1,3);
 				clif_upgrademessage(&sd, 0, item->nameid);
 				clif_inventorylist(&sd);
 				clif_refine(sd.fd,0,idx,item->refine);
@@ -20455,7 +20453,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 					break;
 				if (status_change_start(ss, bl, SC_ELECTRICSHOCKER, 10000, sg->skill_lv, sg->group_id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NORATEDEF)) {
 					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 					clif_skill_damage(src, bl, tick, 0, 0, -30000, 1, sg->skill_id, sg->skill_lv, DMG_SPLASH);
 				}
 			}
@@ -22662,8 +22660,8 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 			sc->getSCE(SC_MAGICPOWER)->val4 = 1;
 			status_calc_bl_(bl, status_db.getCalcFlag(SC_MAGICPOWER));
 			if(bl->type == BL_PC){// update current display.
-				clif_updatestatus(((TBL_PC *)bl),SP_MATK1);
-				clif_updatestatus(((TBL_PC *)bl),SP_MATK2);
+				clif_updatestatus(*((map_session_data *)bl),SP_MATK1);
+				clif_updatestatus(*((map_session_data *)bl),SP_MATK2);
 			}
 		}
 	}

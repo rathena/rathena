@@ -237,7 +237,7 @@ void mvptomb_destroy(struct mob_data *md) {
 		int i;
 		struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+		clif_clearunit_area( nd->bl, CLR_OUTSIGHT );
 		map_delblock(&nd->bl);
 
 		ARR_FIND( 0, mapdata->npc_num, i, mapdata->npc[i] == nd );
@@ -3177,7 +3177,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( pcdb_checkid(md->vd->class_) ) {//Player mobs are not removed automatically by the client.
 			/* first we set them dead, then we delay the outsight effect */
-			clif_clearunit_area(&md->bl,CLR_DEAD);
+			clif_clearunit_area( md->bl, CLR_DEAD );
 			clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
 		} else
 			/**
@@ -6702,7 +6702,7 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 		// If they are spawned right now
 		if( md->bl.prev != nullptr ){
 			// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
-			clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
+			clif_clearunit_area( md->bl, CLR_OUTSIGHT );
 			clif_spawn(&md->bl);
 		}
 	}

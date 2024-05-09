@@ -131,7 +131,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		map_session_data *sd = BL_CAST(BL_PC, bl);
 
 		sd->head_dir = DIR_NORTH;
-		clif_walkok(sd);
+		clif_walkok(*sd);
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
@@ -447,7 +447,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if(md && !ud->state.force_walk && md->walktoxy_fail_count < icewall_walk_block && map_getcell(bl->m,x,y,CELL_CHKICEWALL) && (dx > 0 || dy > 0)) {
 		//Needs to be done here so that rudeattack skills are invoked
 		md->walktoxy_fail_count++;
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 		// Monsters in this situation will unlock target and then attempt an idle skill
 		// When they start chasing again, they will check for a chase skill before returning here
 		mob_unlocktarget(md, tick);
@@ -551,7 +551,8 @@ static TIMER_FUNC(unit_walktoxy_timer)
 					&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
 					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
 				{ // Skill used, abort walking
-					clif_fixpos(bl); // Fix position as walk has been cancelled.
+					// Fix position as walk has been cancelled.
+					clif_fixpos( *bl );
 					return 0;
 				}
 				// Resend walk packet for proper Self Destruction display.
@@ -602,7 +603,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		if(unit_walktoxy_sub(bl)) {
 			return 1;	
 		} else {
-			clif_fixpos(bl);
+			clif_fixpos( *bl );
 			return 0;
 		}
 	}
@@ -648,7 +649,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 				// Aegis uses one before every attack, we should
 				// only need this one for syncing purposes. [Skotlex]
 				ud->target_to = 0;
-				clif_fixpos(bl);
+				clif_fixpos( *bl );
 				unit_attack(bl, tbl->id, ud->state.attack_continue);
 			}
 		} else { // Update chase-path
@@ -938,7 +939,7 @@ void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
 		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
 	}
 	return;
@@ -1444,7 +1445,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	}
 
 	if(type&USW_FIXPOS)
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 
 	ud->walkpath.path_len = 0;
 	ud->walkpath.path_pos = 0;
@@ -1562,7 +1563,7 @@ TIMER_FUNC(unit_resume_running){
 		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_RUN,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 
 	if (sd)
-		clif_walkok(sd);
+		clif_walkok(*sd);
 
 	return 0;
 }
@@ -2806,7 +2807,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 	// Sync packet only for players.
 	// Non-players use the sync packet on the walk timer. [Skotlex]
 	if (tid == INVALID_TIMER && sd)
-		clif_fixpos(src);
+		clif_fixpos( *src );
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
@@ -3250,7 +3251,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3267,7 +3268,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
 				clif_emotion(bl, ET_CRY);
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3282,7 +3283,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			ud->canact_tick = ud->canmove_tick;
 
 			if( mercenary_get_lifetime(md) <= 0 && !(md->master && !md->master->state.active) ) {
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3297,7 +3298,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			ud->canact_tick = ud->canmove_tick;
 
 			if( elemental_get_lifetime(ed) <= 0 && !(ed->master && !ed->master->state.active) ) {
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3331,7 +3332,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			}
 			[[fallthrough]];
 		default:
-			clif_clearunit_area(bl, clrtype);
+			clif_clearunit_area( *bl, clrtype );
 			map_delblock(bl);
 			break;
 	}
@@ -3356,7 +3357,7 @@ void unit_refresh(struct block_list *bl, bool walking) {
 	// Using CLR_TRICKDEAD because other flags show effects
 	// Probably need to use another flag or other way to refresh it
 	if (mapdata->users) {
-		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
+		clif_clearunit_area( *bl, CLR_TRICKDEAD ); // Fade out
 		clif_spawn(bl,walking); // Fade in
 	}
 }

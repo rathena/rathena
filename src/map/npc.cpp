@@ -1026,7 +1026,7 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 			clif_changeoption_target(&nd.bl, &sd->bl);
 		else {
 			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
-				clif_clearunit_single(nd.bl.id, CLR_OUTSIGHT, sd->fd);
+				clif_clearunit_single( nd.bl.id, CLR_OUTSIGHT, *sd );
 			else
 				clif_spawn(&nd.bl);
 		}
@@ -1053,11 +1053,11 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG) {	//Client won't display option changes for these classes [Toms]
 			clif_changeoption(&nd.bl);
 			if (nd.is_invisible)
-				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+				clif_clearunit_area( nd.bl, CLR_OUTSIGHT );  // Hack to trick maya purple card [Xazax]
 		}
 		else {
 			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
-				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);
+				clif_clearunit_area( nd.bl, CLR_OUTSIGHT );
 			else
 				clif_spawn(&nd.bl);
 		}
@@ -1146,7 +1146,7 @@ int npc_event_dequeue(map_session_data* sd,bool free_script_stack)
 	if(sd->npc_id)
 	{	//Current script is aborted.
 		if(sd->state.using_fake_npc){
-			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 			sd->state.using_fake_npc = 0;
 		}
 		if (free_script_stack&&sd->st) {
@@ -2168,7 +2168,7 @@ void run_tomb(map_session_data* sd, struct npc_data* nd)
 	snprintf( buffer, sizeof( buffer ), msg_txt( sd, 661 ), nd->u.tomb.killer_name[0] ? nd->u.tomb.killer_name : "Unknown" ); // [^EE0000%s^000000]
 	clif_scriptmes( *sd, nd->bl.id, buffer );
 
-	clif_scriptclose(sd, nd->bl.id);
+	clif_scriptclose( *sd, nd->bl.id );
 }
 
 /*==========================================
@@ -2206,7 +2206,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
-			clif_npcbuysell(sd,nd->bl.id);
+			clif_npcbuysell( *sd, *nd );
 			break;
 		case NPCTYPE_CASHSHOP:
 		case NPCTYPE_ITEMSHOP:
@@ -2306,7 +2306,7 @@ bool npc_scriptcont(map_session_data* sd, int id, bool closing){
 			case CLOSE:
 				sd->st->state = END;
 				if (sd->st->clear_cutin)
-					clif_cutin(sd,"",255);
+					clif_cutin( *sd, "", 255 );
 				break;
 			// close2
 			case STOP:
@@ -2377,8 +2377,9 @@ int npc_buysellsel(map_session_data* sd, int id, int type)
 	if (type == 0) {
 		clif_buylist(sd,nd);
 	} else {
-		clif_selllist(sd);
+		clif_selllist( *sd );
 	}
+
 	return 0;
 }
 
@@ -3381,7 +3382,7 @@ int npc_remove_map(struct npc_data* nd)
 
 	if (nd->subtype == NPCTYPE_SCRIPT)
 		skill_clear_unitgroup(&nd->bl);
-	clif_clearunit_area(&nd->bl,CLR_RESPAWN);
+	clif_clearunit_area( nd->bl, CLR_RESPAWN );
 	npc_unsetcells(nd);
 	map_delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]

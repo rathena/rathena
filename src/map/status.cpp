@@ -1665,7 +1665,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);
 		unit_skillcastcancel(target,0);
-		clif_clearunit_area(target,CLR_DEAD);
+		clif_clearunit_area( *target, CLR_DEAD );
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
 	}
@@ -3560,9 +3560,9 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 
 	// Update the client if the new weight calculations don't match
 	if (b_weight != sd->weight)
-		clif_updatestatus(sd, SP_WEIGHT);
+		clif_updatestatus(*sd, SP_WEIGHT);
 	if (b_max_weight != sd->max_weight) {
-		clif_updatestatus(sd, SP_MAXWEIGHT);
+		clif_updatestatus(*sd, SP_MAXWEIGHT);
 		pc_updateweightstatus(sd);
 	}
 
@@ -3608,7 +3608,7 @@ bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt
 
 	// Update the client if the new weight calculations don't match
 	if (b_cart_weight_max != sd->cart_weight_max)
-		clif_updatestatus(sd, SP_CARTINFO);
+		clif_updatestatus(*sd, SP_CARTINFO);
 
 	return true;
 }
@@ -5916,7 +5916,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 		if( status->hp > status->max_hp ) { // !FIXME: Should perhaps a status_zap should be issued?
 			status->hp = status->max_hp;
-			if( sd ) clif_updatestatus(sd,SP_HP);
+			if( sd ) clif_updatestatus(*sd,SP_HP);
 		}
 	}
 
@@ -5934,7 +5934,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 		if( status->sp > status->max_sp ) {
 			status->sp = status->max_sp;
-			if( sd ) clif_updatestatus(sd,SP_SP);
+			if( sd ) clif_updatestatus(*sd,SP_SP);
 		}
 	}
 
@@ -6160,7 +6160,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 		if (status->ap > status->max_ap) {
 			status->ap = status->max_ap;
-			if (sd) clif_updatestatus(sd, SP_AP);
+			if (sd) clif_updatestatus(*sd, SP_AP);
 		}
 	}
 #endif
@@ -6230,37 +6230,37 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 		TBL_PC* sd = BL_CAST(BL_PC, bl);
 
 		if(b_status.str != status->str)
-			clif_updatestatus(sd,SP_STR);
+			clif_updatestatus(*sd,SP_STR);
 		if(b_status.agi != status->agi)
-			clif_updatestatus(sd,SP_AGI);
+			clif_updatestatus(*sd,SP_AGI);
 		if(b_status.vit != status->vit)
-			clif_updatestatus(sd,SP_VIT);
+			clif_updatestatus(*sd,SP_VIT);
 		if(b_status.int_ != status->int_)
-			clif_updatestatus(sd,SP_INT);
+			clif_updatestatus(*sd,SP_INT);
 		if(b_status.dex != status->dex)
-			clif_updatestatus(sd,SP_DEX);
+			clif_updatestatus(*sd,SP_DEX);
 		if(b_status.luk != status->luk)
-			clif_updatestatus(sd,SP_LUK);
+			clif_updatestatus(*sd,SP_LUK);
 		if(b_status.hit != status->hit)
-			clif_updatestatus(sd,SP_HIT);
+			clif_updatestatus(*sd,SP_HIT);
 		if(b_status.flee != status->flee)
-			clif_updatestatus(sd,SP_FLEE1);
+			clif_updatestatus(*sd,SP_FLEE1);
 		if(b_status.amotion != status->amotion)
-			clif_updatestatus(sd,SP_ASPD);
+			clif_updatestatus(*sd,SP_ASPD);
 		if(b_status.speed != status->speed)
-			clif_updatestatus(sd,SP_SPEED);
+			clif_updatestatus(*sd,SP_SPEED);
 
 		if(b_status.batk != status->batk
 #ifndef RENEWAL
 			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
 #endif
 			)
-			clif_updatestatus(sd,SP_ATK1);
+			clif_updatestatus(*sd,SP_ATK1);
 
 		if(b_status.def != status->def) {
-			clif_updatestatus(sd,SP_DEF1);
+			clif_updatestatus(*sd,SP_DEF1);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_DEF2);
+			clif_updatestatus(*sd,SP_DEF2);
 #endif
 		}
 
@@ -6271,80 +6271,80 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 			b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
 #endif
 			)
-			clif_updatestatus(sd,SP_ATK2);
+			clif_updatestatus(*sd,SP_ATK2);
 
 		if(b_status.def2 != status->def2) {
-			clif_updatestatus(sd,SP_DEF2);
+			clif_updatestatus(*sd,SP_DEF2);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_DEF1);
+			clif_updatestatus(*sd,SP_DEF1);
 #endif
 		}
 		if(b_status.flee2 != status->flee2)
-			clif_updatestatus(sd,SP_FLEE2);
+			clif_updatestatus(*sd,SP_FLEE2);
 		if(b_status.cri != status->cri)
-			clif_updatestatus(sd,SP_CRITICAL);
+			clif_updatestatus(*sd,SP_CRITICAL);
 #ifndef RENEWAL
 		if(b_status.matk_max != status->matk_max)
-			clif_updatestatus(sd,SP_MATK1);
+			clif_updatestatus(*sd,SP_MATK1);
 		if(b_status.matk_min != status->matk_min)
-			clif_updatestatus(sd,SP_MATK2);
+			clif_updatestatus(*sd,SP_MATK2);
 #else
 		if(b_status.matk_max != status->matk_max || b_status.matk_min != status->matk_min) {
-			clif_updatestatus(sd,SP_MATK2);
-			clif_updatestatus(sd,SP_MATK1);
+			clif_updatestatus(*sd,SP_MATK2);
+			clif_updatestatus(*sd,SP_MATK1);
 		}
 #endif
 		if(b_status.mdef != status->mdef) {
-			clif_updatestatus(sd,SP_MDEF1);
+			clif_updatestatus(*sd,SP_MDEF1);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_MDEF2);
+			clif_updatestatus(*sd,SP_MDEF2);
 #endif
 		}
 		if(b_status.mdef2 != status->mdef2) {
-			clif_updatestatus(sd,SP_MDEF2);
+			clif_updatestatus(*sd,SP_MDEF2);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_MDEF1);
+			clif_updatestatus(*sd,SP_MDEF1);
 #endif
 		}
 		if(b_status.rhw.range != status->rhw.range)
-			clif_updatestatus(sd,SP_ATTACKRANGE);
+			clif_updatestatus(*sd,SP_ATTACKRANGE);
 		if(b_status.max_hp != status->max_hp)
-			clif_updatestatus(sd,SP_MAXHP);
+			clif_updatestatus(*sd,SP_MAXHP);
 		if(b_status.max_sp != status->max_sp)
-			clif_updatestatus(sd,SP_MAXSP);
+			clif_updatestatus(*sd,SP_MAXSP);
 		if(b_status.hp != status->hp)
-			clif_updatestatus(sd,SP_HP);
+			clif_updatestatus(*sd,SP_HP);
 		if(b_status.sp != status->sp)
-			clif_updatestatus(sd,SP_SP);
+			clif_updatestatus(*sd,SP_SP);
 #ifdef RENEWAL
 		if (b_status.pow != status->pow)
-			clif_updatestatus(sd,SP_POW);
+			clif_updatestatus(*sd,SP_POW);
 		if (b_status.sta != status->sta)
-			clif_updatestatus(sd,SP_STA);
+			clif_updatestatus(*sd,SP_STA);
 		if (b_status.wis != status->wis)
-			clif_updatestatus(sd,SP_WIS);
+			clif_updatestatus(*sd,SP_WIS);
 		if (b_status.spl != status->spl)
-			clif_updatestatus(sd,SP_SPL);
+			clif_updatestatus(*sd,SP_SPL);
 		if (b_status.con != status->con)
-			clif_updatestatus(sd,SP_CON);
+			clif_updatestatus(*sd,SP_CON);
 		if (b_status.crt != status->crt)
-			clif_updatestatus(sd,SP_CRT);
+			clif_updatestatus(*sd,SP_CRT);
 		if (b_status.patk != status->patk)
-			clif_updatestatus(sd, SP_PATK);
+			clif_updatestatus(*sd, SP_PATK);
 		if (b_status.smatk != status->smatk)
-			clif_updatestatus(sd, SP_SMATK);
+			clif_updatestatus(*sd, SP_SMATK);
 		if (b_status.res != status->res)
-			clif_updatestatus(sd, SP_RES);
+			clif_updatestatus(*sd, SP_RES);
 		if (b_status.mres != status->mres)
-			clif_updatestatus(sd, SP_MRES);
+			clif_updatestatus(*sd, SP_MRES);
 		if (b_status.hplus != status->hplus)
-			clif_updatestatus(sd, SP_HPLUS);
+			clif_updatestatus(*sd, SP_HPLUS);
 		if (b_status.crate != status->crate)
-			clif_updatestatus(sd, SP_CRATE);
+			clif_updatestatus(*sd, SP_CRATE);
 		if (b_status.max_ap != status->max_ap)
-			clif_updatestatus(sd, SP_MAXAP);
+			clif_updatestatus(*sd, SP_MAXAP);
 		if (b_status.ap != status->ap)
-			clif_updatestatus(sd, SP_AP);
+			clif_updatestatus(*sd, SP_AP);
 #endif
 	} else if( bl->type == BL_HOM ) {
 		TBL_HOM* hd = BL_CAST(BL_HOM, bl);
@@ -10896,7 +10896,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val1 = battle_config.manner_system; // Mute filters.
 			if (sd) {
 				clif_changestatus(sd,SP_MANNER,sd->status.manner);
-				clif_updatestatus(sd,SP_MANNER);
+				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
 
@@ -13400,7 +13400,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				sd->status.manner = 0;
 			if (sd && tid == INVALID_TIMER) {
 				clif_changestatus(sd,SP_MANNER,sd->status.manner);
-				clif_updatestatus(sd,SP_MANNER);
+				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
 		case SC_SPLASHER:
@@ -14221,7 +14221,7 @@ TIMER_FUNC(status_change_timer){
 		if(sd) {
 			sd->status.manner++;
 			clif_changestatus(sd,SP_MANNER,sd->status.manner);
-			clif_updatestatus(sd,SP_MANNER);
+			clif_updatestatus(*sd,SP_MANNER);
 			if (sd->status.manner < 0) { // Every 60 seconds your manner goes up by 1 until it gets back to 0.
 				sc_timer_next(60000+tick);
 				return 0;
@@ -14710,7 +14710,7 @@ TIMER_FUNC(status_change_timer){
 
 				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(SO_VACUUM_EXTREME, sce->val1) && unit_movepos(bl, x, y, 0, false)) {
 					clif_slide(bl, x, y);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 				}
 			}
 			sc_timer_next(tick + sce->val4);
