@@ -9112,17 +9112,40 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 #endif
 			break;
 		case NJ_ZENYNAGE:
+			md.damage = skill_get_zeny( skill_id, skill_lv );
+
+			if( md.damage == 0 ){
+				md.damage = 2;
+			}
+
+			md.damage += rnd_value( static_cast<decltype(md.damage)>( 0 ), md.damage );
+
+			// Specific to Boss Class
+			if( status_get_class_( target ) == CLASS_BOSS ){
+				md.damage /= 3;
+			}
+
+			if( tsd != nullptr ){
+				md.damage /= 2;
+			}
+			break;
 		case KO_MUCHANAGE:
-				md.damage = skill_get_zeny(skill_id, skill_lv);
-				if (!md.damage)
-					md.damage = (skill_id == NJ_ZENYNAGE ? 2 : 10);
-				md.damage = (skill_id == NJ_ZENYNAGE ? rnd()%md.damage + md.damage : md.damage * rnd_value(50,100)) / (skill_id == NJ_ZENYNAGE ? 1 : 100);
-				if (sd && skill_id == KO_MUCHANAGE && !pc_checkskill(sd, NJ_TOBIDOUGU))
-					md.damage = md.damage / 2;
-				if (status_get_class_(target) == CLASS_BOSS) // Specific to Boss Class
-					md.damage = md.damage / (skill_id == NJ_ZENYNAGE ? 3 : 2);
-				else if (tsd && skill_id == NJ_ZENYNAGE)
-					md.damage = md.damage / 2;
+			md.damage = skill_get_zeny( skill_id, skill_lv );
+
+			if( md.damage == 0 ){
+				md.damage = 10;
+			}
+
+			md.damage = rnd_value( md.damage / 2, md.damage );
+
+			if( pc_checkskill( sd, NJ_TOBIDOUGU ) == 0 ){
+				md.damage /= 2;
+			}
+
+			// Specific to Boss Class
+			if( status_get_class_( target ) == CLASS_BOSS ){
+				md.damage /= 2;
+			}
 			break;
 #ifdef RENEWAL
 		case NJ_ISSEN:
@@ -9296,7 +9319,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			if (sd) {
 				if (md.damage > sd->status.zeny)
 					md.damage = sd->status.zeny;
-				pc_payzeny(sd,(int)cap_value(md.damage, INT_MIN, INT_MAX),LOG_TYPE_STEAL);
+				pc_payzeny( sd, static_cast<int32>( md.damage ), LOG_TYPE_CONSUME );
 			}
 			break;
 	}
