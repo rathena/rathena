@@ -195,12 +195,6 @@ static inline void WFIFOPOS(int fd, unsigned short pos, short x, short y, unsign
 	WBUFPOS(WFIFOP(fd,pos), 0, x, y, dir);
 }
 
-
-static inline void WFIFOPOS2(int fd, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0) {
-	WBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
-}
-
-
 static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* y, unsigned char* dir) {
 	p += pos;
 
@@ -2104,10 +2098,10 @@ void clif_move(struct unit_data *ud)
 		clif_ally_only = true;
 
 	packet.gid = bl->id;
-	WBUFPOS2(packet.moveData,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
+	WBUFPOS2(packet.moveData,0,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	packet.moveStartTime = client_tick(gettick());
 
-	clif_send(&packet, sizeof(PACKET_ZC_NOTIFY_MOVE), bl, AREA_WOS);
+	clif_send(&packet, sizeof(packet), bl, AREA_WOS);
 
 	if (disguised(bl)) {
 		packet.gid = disguised_bl_id(bl->id);
