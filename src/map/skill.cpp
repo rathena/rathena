@@ -5292,6 +5292,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case SHC_SHADOW_STAB:
+		if (sc && sc->getSCE(SC_CLOAKINGEXCEED))
+			flag |= SKILL_ALTDMG_FLAG;
+
 		status_change_end(src, SC_CLOAKING);
 		status_change_end(src, SC_CLOAKINGEXCEED);
 
@@ -6939,14 +6942,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				break;
 			}
 			// Triggered by RL_FLICKER
-			if (sd && sd->flicker && tsc && tsc->getSCE(SC_H_MINE) && tsc->getSCE(SC_H_MINE)->val2 == src->id) {
+			if (sd && sd->flicker) {
 				// Splash damage around it!
 				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
 					src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 				flag |= 1; // Don't consume requirement
-				tsc->getSCE(SC_H_MINE)->val3 = 1; // Mark the SC end because not expired
-				status_change_end(bl, SC_H_MINE);
-				sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id,skill_lv));
+				if (tsc &&tsc->getSCE(SC_H_MINE) && tsc->getSCE(SC_H_MINE)->val2 == src->id) {
+					status_change_end(bl, SC_H_MINE);
+					sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id,skill_lv));
+				}
 			}
 		}
 		else
@@ -9932,7 +9936,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (tbl) {
 				md->state.can_escape = 1;
 				mob_unlocktarget(md, tick);
-				unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2); // Send distance in skill level > 1
+				// Official distance is 7, if level > 1, distance = level
+				t_tick time = unit_escape(src, tbl, skill_lv > 1 ? skill_lv : 7, 2);
+
+				if (time) {
+					// Need to set state here as it's not set otherwise
+					md->state.skillstate = MSS_WALK;
+					// Set AI to inactive for the duration of this movement
+					md->last_thinktime = tick + time;
+				}
 			}
 		}
 		break;
@@ -13415,8 +13427,14 @@ TIMER_FUNC(skill_castend_id){
 			}
 			}
 		}
-		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE)
-			unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE) {
+			// When monsters used a skill they won't walk for amotion, this does not apply to players
+			// This is also important for monster skill usage behavior
+			if (src->type == BL_MOB)
+				unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+			else
+				unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		}
 
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d]\n",
@@ -13630,7 +13648,12 @@ TIMER_FUNC(skill_castend_pos){
 //				break;
 //			}
 //		}
-		unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		// When monsters used a skill they won't walk for amotion, this does not apply to players
+		// This is also important for monster skill usage behavior
+		if (src->type == BL_MOB)
+			unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+		else
+			unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,tick,0);
 

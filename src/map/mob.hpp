@@ -38,6 +38,9 @@ const t_tick MIN_MOBLINKTIME = 1000;
 //Min time between random walks
 const t_tick MIN_RANDOMWALKTIME = 4000;
 
+// How often a monster will check for using a skill on non-attack states (in ms)
+const t_tick MOB_SKILL_INTERVAL = 1000;
+
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2
 
@@ -359,7 +362,7 @@ struct mob_data {
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int bg_id; // BattleGround System
 
-	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove;
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;

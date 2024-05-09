@@ -2284,7 +2284,7 @@ Body:
       getgroupitem(IG_E_LIFE_POTION_PACK);
   - Id: 9588
     AegisName: E_DEF_Scroll_Box
-    Name: "[NotForSale] Brilliant Protection Box(20)"
+    Name: "[Not For Sale] Brilliant Protection Box (20)"
     Type: Usable
     Flags:
       Container: true
@@ -2299,7 +2299,7 @@ Body:
       getgroupitem(IG_E_DEF_SCROLL_BOX);
   - Id: 9589
     AegisName: E_Almighty_Box
-    Name: "[NotForSale] Almighty Box (10)"
+    Name: "[Not For Sale] Almighty Box (10)"
     Type: Usable
     Flags:
       Container: true
@@ -2314,7 +2314,7 @@ Body:
       getgroupitem(IG_E_ALMIGHTY_BOX);
   - Id: 9590
     AegisName: E_LimitPowerBooster
-    Name: "[NotForSale] Power Booster Box (10)"
+    Name: "[Not For Sale] Power Booster Box (10)"
     Type: Usable
     Flags:
       Container: true
@@ -2350,6 +2350,23 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 9862
+    AegisName: Comp_Job_Manual50
+    Name: "[Not For Sale] JOB Battle Manual"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Sitting: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_JEXPBOOST,1800000,50;
   - Id: 9894
     AegisName: DF_Adrenaline_Scroll
     Name: "[Scroll] Adrenaline Lv.5 Scroll"
@@ -2850,7 +2867,7 @@ Body:
       getitembound 23919,1,Bound_Account;
   - Id: 9991
     AegisName: Boarding_Halter_Box_7d
-    Name: "[Not for Sale] Boarding Halter 7D Box"
+    Name: "[Not For Sale] Boarding Halter 7D Box"
     Type: Cash
     Weight: 10
     Flags:
@@ -14675,67 +14692,67 @@ Body:
       NoAuction: true
   - Id: 12889
     AegisName: Weapon_Box_Spear
-    Name: Weapon Box(Spear)
+    Name: Weapon Box (Spear)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12890
     AegisName: Weapon_Box_Mace
-    Name: Weapon Box(Mace)
+    Name: Weapon Box (Mace)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12891
     AegisName: Weapon_Box_Dagger
-    Name: Weapon Box(Dagger)
+    Name: Weapon Box (Dagger)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12892
     AegisName: Weapon_Box_Axe
-    Name: Weapon Box(Axe)
+    Name: Weapon Box (Axe)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12893
     AegisName: Weapon_Box_Bow
-    Name: Weapon Box(Bow)
+    Name: Weapon Box (Bow)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12894
     AegisName: Weapon_Box_Sword
-    Name: Weapon Box(Sword)
+    Name: Weapon Box (Sword)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12895
     AegisName: Weapon_Box_Fist
-    Name: Weapon Box(Knuckle)
+    Name: Weapon Box (Knuckle)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12896
     AegisName: Weapon_Box_Book
-    Name: Weapon Box(Book)
+    Name: Weapon Box (Book)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12897
     AegisName: Weapon_Box_Guitar
-    Name: Weapon Box(Guitar)
+    Name: Weapon Box (Guitar)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12898
     AegisName: Weapon_Box_Whip
-    Name: Weapon Box(Whip)
+    Name: Weapon Box (Whip)
     Type: Usable
     Buy: 10
     Weight: 200
   - Id: 12899
     AegisName: Weapon_Box_Wand
-    Name: Weapon Box(Staff)
+    Name: Weapon Box (Staff)
     Type: Usable
     Buy: 10
     Weight: 200
@@ -29831,7 +29848,7 @@ Body:
       getitem 12202,20;
   - Id: 14237
     AegisName: Agi_Dish20_Box
-    Name: Steamed Desert Scorpions Box(20)
+    Name: Steamed Desert Scorpions Box (20)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -37157,7 +37174,7 @@ Body:
       sc_start SC_ULTIMATECOOK,1800000,10;
   - Id: 14908
     AegisName: Korea_Rice_Cake_B
-    Name: "[Not for Sale] Songpyeon"    # !todo check english name
+    Name: "[Not For Sale] Korean Rice Cake"
     Type: Healing
     Trade:
       NoDrop: true
@@ -42183,7 +42200,7 @@ Body:
       getgroupitem(IG_F_POLE_AXE_BOX);
   - Id: 16432
     AegisName: BM_Pack_Box_A
-    Name: Battle Manual Package Box(A)
+    Name: Battle Manual Package Box (A)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -42201,7 +42218,7 @@ Body:
       getgroupitem(IG_BM_PACK_BOX_A);
   - Id: 16433
     AegisName: F_BM_Pack_Box_A
-    Name: Battle Manual Package Box(A)
+    Name: Battle Manual Package Box (A)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -42219,7 +42236,7 @@ Body:
       getgroupitem(IG_F_BM_PACK_BOX_A);
   - Id: 16434
     AegisName: BM_Pack_Box_B
-    Name: Battle Manual Package Box(B)
+    Name: Battle Manual Package Box (B)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -42237,7 +42254,7 @@ Body:
       getgroupitem(IG_BM_PACK_BOX_B);
   - Id: 16435
     AegisName: F_BM_Pack_Box_B
-    Name: Battle Manual Package Box(B)
+    Name: Battle Manual Package Box (B)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -42722,7 +42739,7 @@ Body:
       getitem 12209,10;
   - Id: 16504
     AegisName: E_Bubble_Gum_Box
-    Name: Bubble Gum Box(10)
+    Name: Bubble Gum Box (10)
     Type: Cash
     Buy: 10
     Weight: 10
@@ -43964,7 +43981,7 @@ Body:
       getgroupitem(IG_RAPID_LIFE_WATER_BOX);
   - Id: 16656
     AegisName: F_Rapid_Life_Water_Box
-    Name: Rapid Life Potion Box(10)
+    Name: Rapid Life Potion Box (10)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -43998,7 +44015,7 @@ Body:
       getitem 12578,10; /* Rapid Life Water */
   - Id: 16658
     AegisName: F_Rapid_Life_Water_Box2
-    Name: Rapid Water Box(10)
+    Name: Rapid Water Box (10)
     Type: Cash
     Buy: 10
     Weight: 10
@@ -44121,7 +44138,7 @@ Body:
       /*getitem Magic_Candy,10;*/
   - Id: 16667
     AegisName: F_Magic_Candy_Box10
-    Name: Magic Candy Box(10)
+    Name: Magic Candy Box (10)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -46087,7 +46104,7 @@ Body:
       getgroupitem(IG_C_ABRASIVE_BOX10);
   - Id: 16821
     AegisName: C_Dun_Tele_Scroll_Box5
-    Name: Dungeon Teleport Scroll Box(5)
+    Name: Dungeon Teleport Scroll Box (5)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -46101,7 +46118,7 @@ Body:
       NoAuction: true
   - Id: 16822
     AegisName: C_Dun_Tele_Scroll_Box10
-    Name: Dungeon Teleport Scroll Box(10)
+    Name: Dungeon Teleport Scroll Box (10)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -46345,7 +46362,7 @@ Body:
       getgroupitem(IG_C_HOLY_ARMOR_S_BOX30);
   - Id: 16837
     AegisName: C_Dun_Tele_Scroll2_Box5
-    Name: Dungeon Teleport Scroll II Box(5)
+    Name: Dungeon Teleport Scroll II Box (5)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -46359,7 +46376,7 @@ Body:
       NoAuction: true
   - Id: 16838
     AegisName: C_Dun_Tele_S2_Box10
-    Name: Dungeon Teleport Scroll II Box(10)
+    Name: Dungeon Teleport Scroll II Box (10)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -46405,7 +46422,7 @@ Body:
       getitem 529,10; /* Candy */
   - Id: 16841
     AegisName: C_Repair_Scroll_Box
-    Name: Weapon Repair Scroll Box(5)
+    Name: Weapon Repair Scroll Box (5)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -46423,7 +46440,7 @@ Body:
       getgroupitem(IG_C_REPAIR_SCROLL_BOX);
   - Id: 16842
     AegisName: C_Repair_Scroll_Box10
-    Name: Weapon Repair Scroll Box(10)
+    Name: Weapon Repair Scroll Box (10)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -46797,7 +46814,7 @@ Body:
       getgroupitem(IG_C_JOB_MANUAL25_BOX10);
   - Id: 16864
     AegisName: C_Siege_Scroll_Box1_10
-    Name: Siege Map Teleport Scroll Box(10)
+    Name: Siege Map Teleport Scroll Box (10)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -46833,7 +46850,7 @@ Body:
       getgroupitem(IG_C_SIEGE_SCROLL_BOX1_30);
   - Id: 16866
     AegisName: C_Siege_Scroll_Box2_10
-    Name: Siege Map Teleport Scroll II Box(10)
+    Name: Siege Map Teleport Scroll II Box (10)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -46849,7 +46866,7 @@ Body:
       getitem 14591,10;
   - Id: 16867
     AegisName: C_Siege_Scroll_Box2_30
-    Name: Siege Map Teleport Scroll II Box(30)
+    Name: Siege Map Teleport Scroll II Box (30)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -48161,7 +48178,7 @@ Body:
       getgroupitem(IG_C_LOVE_ANGEL_BOX);
   - Id: 16940
     AegisName: C_Love_Angel_Box_1m
-    Name: Love Angel Magic Powder Box(30 days)
+    Name: Love Angel Magic Powder Box (30 days)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -48233,7 +48250,7 @@ Body:
       getgroupitem(IG_C_PICTURE_DIARY_BOX);
   - Id: 16944
     AegisName: C_Picture_Diary_Box_1m
-    Name: Diary Magic Powder Box(30 days)
+    Name: Diary Magic Powder Box (30 days)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -48269,7 +48286,7 @@ Body:
       getgroupitem(IG_C_MINI_HEART_BOX);
   - Id: 16946
     AegisName: C_Mini_Heart_Box_1m
-    Name: Mini Heart Magic Powder Box(30 days)
+    Name: Mini Heart Magic Powder Box (30 days)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -48305,7 +48322,7 @@ Body:
       getgroupitem(IG_C_NEWCOMER_BOX);
   - Id: 16948
     AegisName: C_Newcomer_Box_1m
-    Name: Freshman Powder Box(30 days)
+    Name: Freshman Powder Box (30 days)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -48341,7 +48358,7 @@ Body:
       getgroupitem(IG_C_KID_BOX);
   - Id: 16950
     AegisName: C_Kid_Box_1m
-    Name: Freshman Powder Box(30 days)
+    Name: Freshman Powder Box (30 days)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -48377,7 +48394,7 @@ Body:
       getgroupitem(IG_C_MAGIC_CASTLE_BOX);
   - Id: 16952
     AegisName: C_Magic_Castle_Box_1m
-    Name: Magic Magic Powder Box(30 days)
+    Name: Magic Magic Powder Box (30 days)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -48413,7 +48430,7 @@ Body:
       getgroupitem(IG_C_BULGING_HEAD_BOX);
   - Id: 16954
     AegisName: C_Bulging_Head_Box_1m
-    Name: JJangu Magic Powder Box(30 days)
+    Name: JJangu Magic Powder Box (30 days)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -50753,7 +50770,7 @@ Body:
       getitem 5319,1; /* Hello Mother Hat */
   - Id: 17171
     AegisName: EC_Battle_Manual_Box
-    Name: Battle Manual Box(10)
+    Name: Battle Manual Box (10)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -50771,7 +50788,7 @@ Body:
       getgroupitem(IG_EC_BATTLE_MANUAL_BOX);
   - Id: 17172
     AegisName: EC_Job_Manual25_Box10
-    Name: JOB Battle Manual Box(10)
+    Name: JOB Battle Manual Box (10)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -50879,7 +50896,7 @@ Body:
       getgroupitem(IG_MADE_DISH_BOX1);
   - Id: 17178
     AegisName: Mysterious_Water_Box50
-    Name: Mysterious Life Potion Box(Undead)
+    Name: Mysterious Life Potion Box (Undead)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -50915,7 +50932,7 @@ Body:
       getgroupitem(IG_C_MYST_WATER_BOX50);
   - Id: 17180
     AegisName: Mysterious_Water_Box50_
-    Name: Mysterious Life Potion Box(Girl)
+    Name: Mysterious Life Potion Box (Girl)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -52229,7 +52246,7 @@ Body:
       getgroupitem(IG_C_WING_OF_FLY_1DAY_BOX);
   - Id: 17315
     AegisName: Silvervine_Box10_
-    Name: Lucky Silvervine Fruit Box(10)
+    Name: Lucky Silvervine Fruit Box (10)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -52247,7 +52264,7 @@ Body:
       getgroupitem(IG_SILVERVINE_BOX10_);
   - Id: 17316
     AegisName: Silvervine_Box110
-    Name: Lucky Silvervine Fruit Box(110)
+    Name: Lucky Silvervine Fruit Box (110)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -52352,7 +52369,7 @@ Body:
       getgroupitem(IG_Event_Almighty_Box);
   - Id: 17332
     AegisName: Almighty100_Box
-    Name: Event Almighty Box(100)
+    Name: Event Almighty Box (100)
     Type: Cash
     Buy: 10
     Weight: 10
@@ -53040,7 +53057,7 @@ Body:
       getgroupitem(IG_REFINE_ORE_BOX6_SET10);
   - Id: 17467
     AegisName: C_Siegfried_Box50
-    Name: (Limited) Token of Ziegfried Box(50)
+    Name: (Limited) Token of Ziegfried Box (50)
     Type: Cash
     Buy: 10
     Weight: 10
@@ -53170,7 +53187,7 @@ Body:
       getgroupitem(IG_C_WING_OF_FLY_5DAY_BOX);
   - Id: 17475
     AegisName: LC_Max_Weight_Up_10Box
-    Name: (Limited)Gym Membership Card Box(10)
+    Name: (Limited)Gym Membership Card Box (10)
     Type: Cash
     Buy: 10
     Weight: 10
@@ -53887,7 +53904,7 @@ Body:
       getitem 22895,1;
   - Id: 17549
     AegisName: LI_HD_BradiumBox30
-    Name: (Limited)High Density Bradium Box(30)
+    Name: (Limited)High Density Bradium Box (30)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -53903,7 +53920,7 @@ Body:
       getitem 6327,30;
   - Id: 17550
     AegisName: LI_HD_CarniumBox30
-    Name: (Limited)High Density Kalunium Box(30)
+    Name: (Limited)High Density Kalunium Box (30)
     Type: Usable
     Buy: 20
     Weight: 10
@@ -53946,7 +53963,7 @@ Body:
       getgroupitem(IG_ALMIGHTY_BOX4);
   - Id: 17568
     AegisName: Almighty100_Box2
-    Name: Event Almighty Box(100)
+    Name: Event Almighty Box (100)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -54009,7 +54026,7 @@ Body:
       getgroupitem(IG_Erzulie_Lucky_Scroll);
   - Id: 17573
     AegisName: Nyangvine_Box10_
-    Name: Lucky Silvervine Cat Fruit Box(10)
+    Name: Lucky Silvervine Cat Fruit Box (10)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -54027,7 +54044,7 @@ Body:
       getgroupitem(IG_NYANGVINE_BOX10_);
   - Id: 17574
     AegisName: Nyangvine_Box100
-    Name: Lucky Silvervine Cat Fruit Box(100)
+    Name: Lucky Silvervine Cat Fruit Box (100)
     Type: Cash
     Buy: 20
     Weight: 10
@@ -54263,7 +54280,7 @@ Body:
       getgroupitem(IG_C_GREED_1HOUR_BOX);
   - Id: 17600
     AegisName: C_CatPaw_1Day_Box
-    Name: Infinite Cat's Hand Ticket Box(1 day)
+    Name: Infinite Cat's Hand Ticket Box (1 day)
     Type: Cash
     Weight: 10
     Flags:
@@ -54427,7 +54444,7 @@ Body:
       getgroupitem(IG_ALMIGHTY_PLUS_BOX);
   - Id: 17632
     AegisName: Almighty100_PlusBox
-    Name: Almighty Plus Box(10)
+    Name: Almighty Plus Box (10)
     Type: Cash
     Weight: 10
     Flags:
@@ -55031,7 +55048,7 @@ Body:
       getgroupitem(IG_DEF_SCROLL_BOX);
   - Id: 17743
     AegisName: DEF_Scroll_Box_Set
-    Name: Defense Scroll Box(10)
+    Name: Defense Scroll Box (10)
     Type: Cash
     Weight: 10
     Flags:
@@ -55099,7 +55116,7 @@ Body:
       getgroupitem(IG_HD_HIGH_REFINE_BOX);
   - Id: 17759
     AegisName: Refine_Ore_Box15_Set10
-    Name: Refine Ore XV Box(10)
+    Name: Refine Ore XV Box (10)
     Type: Cash
     Weight: 10
     Flags:
@@ -55184,7 +55201,7 @@ Body:
       getgroupitem(IG_VIGORGRA_PLUS_SET3);
   - Id: 17766
     AegisName: C_CatPaw_7Day_Box
-    Name: Infinite Cat's Hand Ticket Box(7 days)
+    Name: Infinite Cat's Hand Ticket Box (7 days)
     Type: Cash
     Weight: 10
     Flags:
@@ -55549,7 +55566,7 @@ Body:
       getgroupitem(IG_INFINITY_BOX);
   - Id: 17887
     AegisName: Infinity_10_Box
-    Name: Infinity Box(10)
+    Name: Infinity Box (10)
     Type: Cash
     Weight: 10
     Flags:
@@ -55566,7 +55583,7 @@ Body:
       getgroupitem(IG_INFINITY_10_BOX);
   - Id: 17888
     AegisName: Comp_Kafra_Card_Box
-    Name: "[NotForSale] Kafra Card Box(10)"
+    Name: "[Not For Sale] Kafra Card Box (10)"
     Type: Cash
     Weight: 10
     Script: |
@@ -56268,7 +56285,7 @@ Body:
       getgroupitem(IG_A_INFINITY_BOX);
   - Id: 17983
     AegisName: A_DEF_Scroll_Box_Set
-    Name: Defense Scroll Box(10)
+    Name: Defense Scroll Box (10)
     Type: Cash
     Weight: 10
     Flags:
@@ -56302,7 +56319,7 @@ Body:
       getgroupitem(IG_A_DEF_SCROLL_BOX);
   - Id: 17985
     AegisName: A_Unlimited_10_Box
-    Name: Unlimited Box(10)
+    Name: Unlimited Box (10)
     Type: Cash
     Weight: 10
     Flags:
@@ -56503,7 +56520,7 @@ Body:
       getgroupitem(IG_80LVUP);
   - Id: 22522
     AegisName: 100LVUP
-    Name: Level Up Box(100)
+    Name: Level Up Box (100)
     Type: Cash
     Buy: 10
     EquipLevelMin: 100
@@ -56522,7 +56539,7 @@ Body:
       getgroupitem(IG_Level_Up_Box100);
   - Id: 22523
     AegisName: 120LVUP
-    Name: Level Up Box(120)
+    Name: Level Up Box (120)
     Type: Cash
     Buy: 10
     EquipLevelMin: 120
@@ -56541,7 +56558,7 @@ Body:
       getgroupitem(IG_Level_Up_Box120);
   - Id: 22524
     AegisName: 130LVUP
-    Name: Level Up Box(130)
+    Name: Level Up Box (130)
     Type: Cash
     Buy: 10
     EquipLevelMin: 130
@@ -56560,7 +56577,7 @@ Body:
       getgroupitem(IG_Level_Up_Box130);
   - Id: 22525
     AegisName: 140LVUP
-    Name: Level Up Box(140)
+    Name: Level Up Box (140)
     Type: Cash
     Buy: 10
     EquipLevelMin: 140
@@ -56579,7 +56596,7 @@ Body:
       getgroupitem(IG_Level_Up_Box140);
   - Id: 22526
     AegisName: 150LVUP
-    Name: Level Up Box(150)
+    Name: Level Up Box (150)
     Type: Cash
     Buy: 10
     EquipLevelMin: 150
@@ -56598,7 +56615,7 @@ Body:
       getgroupitem(IG_Level_Up_Box150);
   - Id: 22527
     AegisName: 160LVUP
-    Name: Level Up Box(160)
+    Name: Level Up Box (160)
     Type: Cash
     Buy: 10
     EquipLevelMin: 160
@@ -60431,7 +60448,7 @@ Body:
       getitem 526,100; /* Royal Jelly */
   - Id: 23042
     AegisName: Seed_Of_Yggdrasil_
-    Name: "[NotForSale]Yggdrasil Seed"
+    Name: "[Not For Sale]Yggdrasil Seed"
     Type: Healing
     Weight: 300
     Delay:
@@ -60886,7 +60903,7 @@ Body:
       getitem 25185,1;
   - Id: 23094
     AegisName: Comp_Glass_Of_Illusion
-    Name: "[NotForSale] Glass of Illusion"
+    Name: "[Not For Sale] Glass of Illusion"
     Type: Usable
     Weight: 10
     Delay:
@@ -62749,7 +62766,7 @@ Body:
       getgroupitem(IG_PORINGSPRECIOUSBOX);
   - Id: 23303
     AegisName: C_CatPaw_1Day_Para
-    Name: Infinite Cat Hand Ticket Box(1 Day)
+    Name: Infinite Cat Hand Ticket Box (1 Day)
     Type: Cash
     Weight: 10
     Flags:
@@ -62758,7 +62775,7 @@ Body:
       getgroupitem(IG_C_CATPAW_1DAY_PARA);
   - Id: 23304
     AegisName: C_Wing_Of_Fly_1Day_Para
-    Name: Infinite Fly Wing Box(1 Day)
+    Name: Infinite Fly Wing Box (1 Day)
     Type: Cash
     Weight: 10
     Flags:
@@ -62784,7 +62801,7 @@ Body:
       getgroupitem(IG_CAT_SCROLL);
   - Id: 23307
     AegisName: Comp_M_DEFScroll
-    Name: "[Not for Sale] Shining Defense Scroll"
+    Name: "[Not For Sale] Shining Defense Scroll"
     Type: Usable
     Weight: 10
     Trade:
@@ -62947,7 +62964,7 @@ Body:
 #     /* TODO */
   - Id: 23329
     AegisName: C_Wing_Of_Fly_5Day_Box_
-    Name: Infinite Fly Wing Box(5 Days)
+    Name: Infinite Fly Wing Box (5 Days)
     Type: Cash
     Weight: 10
     Flags:
@@ -62957,7 +62974,7 @@ Body:
       getgroupitem(IG_C_WING_OF_FLY_5DAY_BOX_);
   - Id: 23330
     AegisName: C_Giant_Fly_1Day_Box_
-    Name: Infinite Giant Fly Wing Box(1 Day)
+    Name: Infinite Giant Fly Wing Box (1 Day)
     Type: Cash
     Weight: 10
     Flags:
@@ -62967,7 +62984,7 @@ Body:
       getgroupitem(IG_C_GIANT_FLY_1DAY_BOX_);
   - Id: 23331
     AegisName: C_Wing_Of_Fly_Box_
-    Name: Infinite Fly Wing Box(1 Week)
+    Name: Infinite Fly Wing Box (1 Week)
     Type: Cash
     Weight: 10
     Flags:
@@ -64268,7 +64285,7 @@ Body:
       getgroupitem(IG_REBEGINER_S_BOX);
   - Id: 23585
     AegisName: Rebeginer_Box_100
-    Name: Beginner Support Box(100)
+    Name: Beginner Support Box (100)
     Type: Usable
     EquipLevelMin: 100
     Trade:
@@ -64287,7 +64304,7 @@ Body:
       getitem 23586,1;
   - Id: 23586
     AegisName: Rebeginer_Box_110
-    Name: Beginner Support Box(110)
+    Name: Beginner Support Box (110)
     Type: Usable
     EquipLevelMin: 110
     Trade:
@@ -64305,7 +64322,7 @@ Body:
       getitem 23587,1;
   - Id: 23587
     AegisName: Rebeginer_Box_120
-    Name: Beginner Support Box(120)
+    Name: Beginner Support Box (120)
     Type: Usable
     EquipLevelMin: 120
     Trade:
@@ -64871,7 +64888,7 @@ Body:
 #     /* TODO */
   - Id: 23751
     AegisName: Comp_AID_Buff_Box
-    Name: "[NotForSale] Premium Buff Box"
+    Name: "[Not For Sale] Premium Buff Box"
     Type: Usable
     Flags:
       Container: true
@@ -66882,7 +66899,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      specialeffect2 EF_POTION_BERSERK;
+      sc_start SC_2011RWC_SCROLL,600000,0;
+      showscript "Oh My GOODNESS!!! I FEEL AWESOMELY STRONG!!! WOWOW";
   - Id: 100065
     AegisName: WL_MB_SG
     Name: Spell Book (Storm Gust)
@@ -67055,7 +67074,7 @@ Body:
       percentheal 10,10;
   - Id: 100081
     AegisName: Kr_B_Special01
-    Name: "[Not for Sale] Advanced Combat Manual"
+    Name: "[Not For Sale] Advanced Combat Manual"
     Type: Usable
     Trade:
       NoDrop: true
@@ -67078,7 +67097,7 @@ Body:
       getitem callfunc("F_Rand",31754,31755,31756,31757,31758,31759,31760,31761),1;
   - Id: 100087
     AegisName: Boarding_Halter_Box30_Z
-    Name: "[NotForSale] Boarding Halter (30 Days)"
+    Name: "[Not For Sale] Boarding Halter (30 Days)"
     Type: Cash
     Flags:
       Container: true
@@ -70813,7 +70832,7 @@ Body:
       getgroupitem(IG_E_POTION_BOX);
   - Id: 100934
     AegisName: Buff_Scroll_Box
-    Name: "[NotForSale] Buff Scroll Box"
+    Name: "[Not For Sale] Buff Scroll Box"
     Type: Usable
     Weight: 10
     Flags:
@@ -74365,7 +74384,7 @@ Body:
       getgroupitem(IG_Ancient_Hero_Box_1);
   - Id: 101513
     AegisName: aegis_101513
-    Name: "[Scroll] STR Biscuit Stick"    # !todo check english name
+    Name: "[Scroll] STR Biscuit Stick"
     Type: Usable
     Weight: 10
     Script: |
@@ -74373,7 +74392,7 @@ Body:
       sc_start SC_ATKPOTION,600000,rand(11,111);
   - Id: 101514
     AegisName: aegis_101514
-    Name: "[Scroll] INT Biscuit Stick"    # !todo check english name
+    Name: "[Scroll] INT Biscuit Stick"
     Type: Usable
     Weight: 10
     Script: |
@@ -78252,6 +78271,65 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_VIP_BIRTHDAY_BOX);
+  - Id: 102869
+    AegisName: Ep21_Fatty_Shrimp
+    Name: Fatty Lunaforma Shrimp
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      pet 22318;
+  - Id: 102881
+    AegisName: Gaebolg_A_Hammer_1
+    Name: +9 Gaebolg Equipment Refine Hammer
+    Type: DelayConsume
+    Weight: 100
+    EquipLevelMin: 245
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 102882
+    AegisName: Gaebolg_A_Hammer_2
+    Name: +10 Gaebolg Equipment Refine Hammer
+    Type: DelayConsume
+    Weight: 100
+    EquipLevelMin: 245
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
+  - Id: 102883
+    AegisName: Gaebolg_A_Hammer_3
+    Name: +11 Gaebolg Equipment Refine Hammer
+    Type: DelayConsume
+    Weight: 100
+    EquipLevelMin: 245
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      item_reform();
   - Id: 102900
     AegisName: Refine_Furious
     Name: Furious Refine Stone
@@ -78380,10 +78458,196 @@ Body:
       NoAuction: true
     Script: |
       percentheal 100,100;
+  - Id: 102947
+    AegisName: aegis_102947
+    Name: Antiquity of Ghost Ship (Ghost Ship Captain)
+    Type: Usable
+    Weight: 200
+    Flags:
+      Container: true
+      DropEffect: CLIENT
+    Script: |
+      getgroupitem(IG_AEGIS_102947);
+  - Id: 102948
+    AegisName: aegis_102948
+    Name: Antiquity of Giant Snake (Devouring Tan)
+    Type: Usable
+    Weight: 200
+    Flags:
+      Container: true
+      DropEffect: CLIENT
+    Script: |
+      getgroupitem(IG_AEGIS_102948);
   - Id: 102949
     AegisName: Sonic_Costume_Pack
     Name: Sonic Costume Selection Box    # !todo check english name
     Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 102964
+    AegisName: Teleport_Ep21
+    Name: Lunaforma Travel Wing
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 102985
+    AegisName: Speed_Booster
+    Name: Speed Booster
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103033
+    AegisName: aegis_103033
+    Name: Furious Lance Shield Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_103033);
+  - Id: 103034
+    AegisName: aegis_103034
+    Name: Furious Dual Dagger Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_103034);
+  - Id: 103048
+    AegisName: P_Booster_Call_Package
+    Name: "[Not For Sale] Premium Booster Box"
+    Type: Usable
+    EquipLevelMax: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_P_BOOSTER_CALL_PACKAGE);
+  - Id: 103049
+    AegisName: P_Compensation_Box
+    Name: Probability Disclosure Conpensation Box
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_P_COMPENSATION_BOX);
+  - Id: 103050
+    AegisName: E_EXP_Drop_Up_1days
+    Name: "[Not For Sale] Kafra Buff (1 day)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103051
+    AegisName: E_EXP_Drop_Up_2days
+    Name: "[Not For Sale] Kafra Buff (2 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103052
+    AegisName: E_EXP_Drop_Up_3days
+    Name: "[Not For Sale] Kafra Buff (3 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103053
+    AegisName: E_EXP_Drop_Up_4days
+    Name: "[Not For Sale] Kafra Buff (4 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103054
+    AegisName: E_EXP_Drop_Up_5days
+    Name: "[Not For Sale] Kafra Buff (5 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103055
+    AegisName: E_EXP_Drop_Up_6days
+    Name: "[Not For Sale] Kafra Buff (6 days)"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103063
+    AegisName: Enchant_Stone_Box35
+    Name: Costume Enchant Stone Box 35
+    Type: Usable
+    Weight: 10
+  - Id: 103095
+    AegisName: Kr_B_Special10
+    Name: Love Cake
+    Type: Usable
     Trade:
       NoDrop: true
       NoTrade: true
@@ -78433,7 +78697,7 @@ Body:
       getitem 25793,10; /* Inventory Expansion Coupon */
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
-    Name: (Limited) HD Oridecon Box(Blacksmith)(30)
+    Name: (Limited) HD Oridecon Box (Blacksmith)(30)
     Type: Cash
     Weight: 10
     Flags:
@@ -78450,7 +78714,7 @@ Body:
       getgroupitem(IG_LI_HD_ORIDECON_BOX2);
   - Id: 200004
     AegisName: LI_HD_Elunium_Box2
-    Name: (Limited) HD Elunium Box(Blacksmith)(30)
+    Name: (Limited) HD Elunium Box (Blacksmith)(30)
     Type: Cash
     Weight: 10
     Flags:
@@ -78467,7 +78731,7 @@ Body:
       getgroupitem(IG_LI_HD_ELUNIUM_BOX2);
   - Id: 200005
     AegisName: LI_HD_BradiumBox2
-    Name: (Limited) HD Bradium Box(Blacksmith)(30)
+    Name: (Limited) HD Bradium Box (Blacksmith)(30)
     Type: Cash
     Weight: 10
     Flags:
@@ -78484,7 +78748,7 @@ Body:
       getgroupitem(IG_LI_HD_BRADIUMBOX2);
   - Id: 200006
     AegisName: LI_HD_CarniumBox2
-    Name: (Limited) HD Carnium Box(Blacksmith)(30)
+    Name: (Limited) HD Carnium Box (Blacksmith)(30)
     Type: Cash
     Weight: 10
     Flags:
@@ -78764,7 +79028,7 @@ Body:
       getgroupitem(IG_LI_NYANGVINE_BOX_III);
   - Id: 200093
     AegisName: LI_HD_Oridecon_Box3
-    Name: (Limited) HD Oridecon Box(Hollgrehenn)(30)
+    Name: (Limited) HD Oridecon Box (Hollgrehenn)(30)
     Type: Cash
     Weight: 10
     Flags:
@@ -78781,7 +79045,7 @@ Body:
       getgroupitem(IG_LI_HD_ORIDECON_BOX3);
   - Id: 200094
     AegisName: LI_HD_Elunium_Box3
-    Name: (Limited) HD Elunium Box(Hollgrehenn)(30)
+    Name: (Limited) HD Elunium Box (Hollgrehenn)(30)
     Type: Cash
     Weight: 10
     Flags:
@@ -80514,6 +80778,165 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_COSTUMEMILEPACK_34_3);
+  - Id: 200405
+    AegisName: LI_Nyangvine_Box1_35
+#   Name: (Limited) Nyangvine Fruit Package I (Stone Box 35)
+    Name: (Limited) Nyangvine Fruit Package I (Stone Box 35
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200406
+    AegisName: LI_Nyangvine_Box2_35
+#   Name: (Limited) Nyangvine Fruit Package II (Stone Box 35)
+    Name: (Limited) Nyangvine Fruit Package II (Stone Box 3
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200407
+    AegisName: LI_Nyangvine_Box3_35
+#   Name: (Limited) Nyangvine Fruit Package III (Stone Box 35)
+    Name: (Limited) Nyangvine Fruit Package III (Stone Box 
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200411
+    AegisName: A_Speed_Booster_Box
+    Name: Speed Booster Package
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200412
+    AegisName: A_Speed_Booster_10_Box
+    Name: Speed Booster Package 10 Sets
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200415
+    AegisName: L_Infinity_Power_Pack
+    Name: (Limited) Infinity Power Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200416
+    AegisName: L_All_Red_Pack
+    Name: (Limited) All Red Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200417
+    AegisName: L_Defense_Potion_Pack
+    Name: (Limited) Defender Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200418
+    AegisName: L_Speed_Force_Pack
+    Name: (Limited) Speed Force Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200419
+    AegisName: L_Special_Speed_Pack
+    Name: (Limited) Speed Booster Special Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
+  - Id: 200420
+    AegisName: L_Special_Force_Pack
+    Name: (Limited) Force Booster Special Package
+    Type: Cash
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 1100000
     AegisName: IDTest_heal
     Name: IDTest heal
