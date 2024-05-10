@@ -2855,7 +2855,10 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			return 1;
 
 		ud->attackabletime = tick + sstatus->adelay;
-		ud->skill_id = 0;
+
+		// Only reset skill_id here if no skilltimer is currently ongoing
+		if (ud->skilltimer == INVALID_TIMER)
+			ud->skill_id = 0;
 
 		// You can't move if you can't attack neither.
 		if (src->type&battle_config.attack_walk_delay)
