@@ -7716,8 +7716,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		nullpo_info(NLP_MARK);
 		return ad;
 	}
-	//Initial Values
-	ad.damage = 0;
+	// Initial Values
+	// Set to 1 because magic damage on plants is 1 per hit; if target is not a plant this gets reinitialized to 0 later
+	ad.damage = 1;
 	ad.div_ = skill_get_num(skill_id,skill_lv);
 	ad.amotion = (skill_get_inf(skill_id)&INF_GROUND_SKILL ? 0 : sstatus->amotion); //Amotion should be 0 for ground skills.
 	ad.dmotion = tstatus->dmotion;
@@ -7798,9 +7799,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 	if (!flag.infdef) { //No need to do the math for plants
 		unsigned int skillratio = 100; //Skill dmg modifiers.
-#ifdef RENEWAL
-		ad.damage = 0; //reinitialize..
-#endif
+		//Damage was set to 1 to simulate plant damage; if not plant, need to reinitialize damage with 0
+		ad.damage = 0;
 //MATK_RATE scales the damage. 100 = no change. 50 is halved, 200 is doubled, etc
 #define MATK_RATE(a) { ad.damage = ad.damage * (a) / 100; }
 //Adds dmg%. 100 = +100% (double) damage. 10 = +10% damage
