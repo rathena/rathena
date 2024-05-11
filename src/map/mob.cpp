@@ -1119,14 +1119,24 @@ int mob_spawn (struct mob_data *md)
 		md->bl.x = md->spawn->x;
 		md->bl.y = md->spawn->y;
 
+		// Search be skipped if spawn location is fixed
 		if( (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys )
-		{	//Monster can be spawned on an area.
-			if( !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0) )
-			{ // retry again later
-				if( md->spawn_timer != INVALID_TIMER )
-					delete_timer(md->spawn_timer, mob_delayspawn);
-				md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time,mob_delayspawn,md->bl.id,0);
-				return 1;
+		{
+			// Officially the area is split into 4 squares, 4 lines and 1 dot and for each of those there is one attempt
+			// We simplify this to trying 9 times in the whole area even though that's not fully accurate
+
+			// Try to spawn monster in defined area (9 tries)
+			if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0, 9))
+			{
+				// If area search failed, try to spawn the monster anywhere on the map (50 tries)
+				if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, -1, -1, battle_config.no_spawn_on_player?4:0))
+				{
+					// Retry again later
+					if (md->spawn_timer != INVALID_TIMER)
+						delete_timer(md->spawn_timer, mob_delayspawn);
+					md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time, mob_delayspawn, md->bl.id, 0);
+					return 1;
+				}
 			}
 		}
 		else if( battle_config.no_spawn_on_player > 99 && map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
@@ -2082,6 +2092,13 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	md->last_thinktime=tick;
 
 	if (md->master_id) {
+		// Get mob data of master
+		mob_data* mmd = map_id2md(md->master_id);
+
+		// If neither master nor slave have been spotted we don't have to execute the slave AI
+		if (mmd && !mob_is_spotted(mmd) && !mob_is_spotted(md))
+			return 0;
+
 		mob_ai_sub_hard_slavemob (md,tick);
 		return 0;
 	}
