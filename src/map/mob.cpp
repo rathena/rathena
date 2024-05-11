@@ -1444,8 +1444,10 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 			}
 		}
 
-		if(md->target_id) {//Slave is busy with a target.
-			if (bl->type == BL_PC && md->master_dist > 5) {//Player's slave should come back when master's too far, even if it is doing with a target.
+		// Slave is busy with a target.
+		if(md->target_id) {
+			// Player's slave should come back when master's too far, even if it is doing with a target.
+			if (bl->type == BL_PC && md->master_dist > 5) {
 				mob_unlocktarget(md, tick);
 				unit_walktobl(&md->bl, bl, MOB_SLAVEDISTANCE, 1);
 				return 1;
@@ -3490,7 +3492,7 @@ int mob_countslave(struct block_list *bl)
  * @param ap: List of arguments
  * @return 1 on removal, otherwise 0
  */
-int mob_removeslave_sub(block_list *bl, va_list ap) {
+int mob_removeslaves_sub(block_list *bl, va_list ap) {
 	int id = va_arg(ap, int);
 	mob_data *md = (mob_data *)bl;
 
@@ -3507,8 +3509,8 @@ int mob_removeslave_sub(block_list *bl, va_list ap) {
  * @param bl: Player data
  * @return 1 on removal, otherwise 0
  */
-int mob_removeslave(block_list *bl) {
-	return map_foreachinmap(mob_removeslave_sub, bl->m, BL_MOB, bl->id);
+int mob_removeslaves(block_list *bl) {
+	return map_foreachinmap(mob_removeslaves_sub, bl->m, BL_MOB, bl->id);
 }
 
 /*==========================================
