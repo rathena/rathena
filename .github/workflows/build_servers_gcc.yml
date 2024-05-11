@@ -31,7 +31,7 @@ jobs:
           # Available: ubuntu-22.04, ubuntu-20.04
           os: [ubuntu-latest]
           # Older versions of GCC are not available via unaltered aptitude repo lists.
-          gcc: ['9', '10', '11']
+          gcc: ['9', '10', '11', '12', '13']
 
     steps:
       - uses: actions/checkout@v2

@@ -88,7 +88,7 @@ int party_changeleader(map_session_data *sd, map_session_data *t_sd, struct part
 void party_send_movemap(map_session_data *sd);
 void party_send_levelup(map_session_data *sd);
 int party_send_logout(map_session_data *sd);
-int party_send_message(map_session_data *sd,const char *mes,int len);
+int party_send_message(map_session_data *sd,const char *mes, size_t len);
 int party_recv_message(int party_id,uint32 account_id,const char *mes,int len);
 int party_skill_check(map_session_data *sd, int party_id, uint16 skill_id, uint16 skill_lv);
 int party_send_xy_clear(struct party_data *p);

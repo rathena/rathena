@@ -4153,7 +4153,6 @@ Body:
         Time: 120000
       - Level: 5
         Time: 60000
-    Duration2: 3000
     Requires:
       SpCost: 10
       ItemCost:
@@ -6888,12 +6887,9 @@ Body:
     MaxLevel: 10
     Type: Magic
     TargetType: Self
-    DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreFlee: true
     Flags:
       TargetSelf: true
-    Range: 5
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Holy
@@ -10805,7 +10801,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -11066,7 +11062,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Range: 7
+    Range: 9
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
@@ -32756,7 +32752,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
