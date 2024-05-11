@@ -1123,13 +1123,13 @@ int mob_spawn (struct mob_data *md)
 		if( (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys )
 		{
 			// Officially the area is split into 4 squares, 4 lines and 1 dot and for each of those there is one attempt
-			// We simplify this to trying 9 times in the whole area even though that's not fully accurate
+			// We simplify this to trying 8 times in the whole area and then at the center cell even though that's not fully accurate
 
-			// Try to spawn monster in defined area (9 tries)
-			if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0, 9))
+			// Try to spawn monster in defined area (8 tries)
+			if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0, 8))
 			{
-				// If area search failed, try to spawn the monster anywhere on the map (50 tries)
-				if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, -1, -1, battle_config.no_spawn_on_player?4:0))
+				// If area search failed and center cell not reachable, try to spawn the monster anywhere on the map (50 tries)
+				if (!map_getcell(md->bl.m, md->bl.x, md->bl.y, CELL_CHKREACH) && !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, -1, -1, battle_config.no_spawn_on_player?4:0))
 				{
 					// Retry again later
 					if (md->spawn_timer != INVALID_TIMER)
@@ -1139,7 +1139,7 @@ int mob_spawn (struct mob_data *md)
 				}
 			}
 		}
-		else if( battle_config.no_spawn_on_player > 99 && map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
+		if( battle_config.no_spawn_on_player > 99 && map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
 		{ // retry again later (players on sight)
 			if( md->spawn_timer != INVALID_TIMER )
 				delete_timer(md->spawn_timer, mob_delayspawn);
