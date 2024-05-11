@@ -1120,7 +1120,7 @@ int mob_spawn (struct mob_data *md)
 		md->bl.x = md->spawn->x;
 		md->bl.y = md->spawn->y;
 
-		// Search be skipped if spawn location is fixed
+		// Search can be skipped if spawn location is fixed
 		if( (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys )
 		{
 			// Officially the area is split into 4 squares, 4 lines and 1 dot and for each of those there is one attempt

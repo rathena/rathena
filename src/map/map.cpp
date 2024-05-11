@@ -1731,10 +1731,10 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 		return 0;
 	}
 
+	int16 edge = battle_config.map_edge_size;
 	// In most situations there are 50 tries officially (default value)
 	while(tries--) {
 		// For map-wide search, the cells 15 tiles from the edge are not considered
-		int16 edge = battle_config.map_edge_size;
 		*x = (rx >= 0) ? rnd_value(bx - rx, bx + rx) : rnd_value<int16>(edge, mapdata->xs - edge - 1);
 		*y = (ry >= 0) ? rnd_value(by - ry, by + ry) : rnd_value<int16>(edge, mapdata->ys - edge - 1);
 
