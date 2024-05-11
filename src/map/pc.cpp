@@ -7047,8 +7047,9 @@ char pc_randomwarp(map_session_data *sd, clr_type type, bool ignore_mapflag)
 		return 3;
 
 	do {
-		x = rnd()%(mapdata->xs-2)+1;
-		y = rnd()%(mapdata->ys-2)+1;
+		int edge = battle_config.map_edge_size;
+		x = rnd()%(mapdata->xs - edge*2) + edge;
+		y = rnd()%(mapdata->ys - edge*2) + edge;
 	} while((map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,sd->bl.m,x,y,1))) && (i++) < 1000);
 
 	if (i < 1000)
