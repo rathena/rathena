@@ -5294,12 +5294,20 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		}
 		mob.xs = 0;
 	}
+	else if (mob.xs == 0) {
+		// Both 0 and 1 result in fixed x-coordinate
+		mob.xs = 1;
+	}
 
 	if (mob.ys < 0) {
 		if (w1count > 4) {
 			ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d').\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
 		}
 		mob.ys = 0;
+	}
+	else if (mob.ys == 0) {
+		// Both 0 and 1 result in fixed y-coordinate
+		mob.ys = 1;
 	}
 
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {
