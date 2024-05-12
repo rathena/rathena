@@ -3747,8 +3747,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				dsrc = src;
 			if( src == bl)
 				dmg_type = DMG_ENDURE;
-			else
-				flag|= SD_ANIMATION;
 			break;
 		case NJ_TATAMIGAESHI: //For correct knockback.
 			dsrc = src;
