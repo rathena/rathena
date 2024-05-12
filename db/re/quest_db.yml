@@ -3254,6 +3254,58 @@ Body:
     Title: Gathering Half Flower
   - Id: 5941
     Title: Gathering Half Flower
+  - Id: 5972
+    Title: Eagle Patrol
+  - Id: 5973
+    Title: "[Standby] Patrol with Iwin"
+    TimeLimit: 4h
+  - Id: 5974
+    Title: Patrol with Iwin (1)
+  - Id: 5975
+    Title: Patrol with Iwin (2)
+  - Id: 5976
+    Title: Supplier Goror
+  - Id: 5977
+    Title: "[Standby] Do not feed"
+    TimeLimit: 4h
+  - Id: 5978
+    Title: Do not feed me (1)
+  - Id: 5979
+    Title: Do not feed me (2)
+  - Id: 5980
+    Title: Secret fun
+  - Id: 5981
+    Title: "[Standby] Secret Fun"
+    TimeLimit: 4h
+  - Id: 5982
+    Title: Secret fun
+  - Id: 5983
+    Title: Test Subject 210426 Encounter
+  - Id: 5984
+    Title: Rgan Transformation Scroll
+  - Id: 5985
+    Title: "[Standby] Lunch menu selection"
+    TimeLimit: 4h
+  - Id: 5986
+    Title: Lunch's menu selection
+  - Id: 5987
+    Title: Lunch's menu selection
+  - Id: 5988
+    Title: Lunch's menu selection
+  - Id: 5989
+    Title: Lunch's menu selection
+  - Id: 5990
+    Title: Lunch's menu selection
+  - Id: 5991
+    Title: Lunch's menu selection
+  - Id: 5992
+    Title: Lunch's menu selection
+  - Id: 5993
+    Title: Lunch's menu selection
+  - Id: 5994
+    Title: Lunch's menu selection
+  - Id: 5995
+    Title: Lunch's menu selection
   - Id: 6000
     Title: Job Change to Taekwon
   - Id: 6001
@@ -6416,6 +6468,64 @@ Body:
   - Id: 8738
     Title: Shared Memories - Standby
     TimeLimit: 4h
+  - Id: 8784
+    Title: Help Moryara Fishing
+    Targets:
+      - Mob: EP19_SHINING_SEAWEED
+        Count: 20
+  - Id: 8785
+    Title: Moryara's Fishing Help - Standby
+    TimeLimit: 4h
+  - Id: 8786
+    Title: Help Moryara Fishing
+    Targets:
+      - Mob: EP19_SHINING_SEAWEED
+        Count: 20
+  - Id: 8787
+    Title: Lunch time with Zoryara
+  - Id: 8788
+    Title: Happy Lunch with Zoryara - Standby
+    TimeLimit: 4h
+  - Id: 8789
+    Title: Lunch time with Zoryara
+  - Id: 8790
+    Title: Priest, have mercy?
+  - Id: 8791
+    Title: Priest, have mercy? - Wait
+    TimeLimit: 4h
+  - Id: 8792
+    Title: Priest, have mercy??
+  - Id: 8793
+    Title: Things to ask
+  - Id: 8794
+    Title: Old Snake
+  - Id: 8795
+    Title: Doctrine and Preaching
+  - Id: 8796
+    Title: You're the first girl I've ever seen
+    Targets:
+      - Mob: EP19_RGAN_A
+        Count: 20
+  - Id: 8797
+    Title: Rgan to work-Standby
+    TimeLimit: 4h
+  - Id: 8798
+    Title: Rgan to make work
+    Targets:
+      - Mob: EP19_RGAN_A
+        Count: 20
+  - Id: 8799
+    Title: Hatchery's Rgan (1)
+  - Id: 8800
+    Title: Hatchery's Rgan (2)
+  - Id: 8801
+    Title: Hatchery's Rgan (3)
+  - Id: 8802
+    Title: The 1st Rgan in the Hatchery
+  - Id: 8803
+    Title: Hatchery's 2nd Rgan
+  - Id: 8804
+    Title: The 3rd Rgan in the Hatchery
   - Id: 9000
     Title: Job Change to Knight
   - Id: 9001
@@ -8295,6 +8405,356 @@ Body:
   - Id: 11739
     Title: Maze of Oz Level 2 (200lv)
     TimeLimit: 4h
+  - Id: 11794
+    Title: The Lady of Purification
+  - Id: 11795
+    Title: The Lady of Purification
+  - Id: 11796
+    Title: The Lady of Purification
+  - Id: 11797
+    Title: The Lady of Purification
+  - Id: 11798
+    Title: The Lady of Purification
+  - Id: 11799
+    Title: The Lady of Purification
+  - Id: 11800
+    Title: The Lady of Purification
+  - Id: 11801
+    Title: The Lady of Purification
+  - Id: 11802
+    Title: The Lady of Purification
+  - Id: 11803
+    Title: The Lady of Purification
+  - Id: 11804
+    Title: The Lady of Purification
+  - Id: 11805
+    Title: The Lady of Purification
+  - Id: 11806
+    Title: The Lady of Purification
+  - Id: 11807
+    Title: The Lady of Purification
+  - Id: 11808
+    Title: The Lady of Purification
+  - Id: 11809
+    Title: The Lady of Purification
+  - Id: 11810
+    Title: The Lady of Purification
+  - Id: 11811
+    Title: The Lady of Purification
+  - Id: 11812
+    Title: Friederike's Day
+  - Id: 11813
+    Title: Friederike's Day
+    Targets:
+      - Mob: EP19_RGAN_A
+        Count: 10
+      - Mob: EP19_RGAN_B
+        Count: 10
+    Drops:
+      - Mob: EP19_RGAN_A
+        Item: Ep19_Rgan_Core
+        Rate: 5000
+      - Mob: EP19_RGAN_B
+        Item: Ep19_Rgan_Core
+        Rate: 5000
+  - Id: 11814
+    Title: Friederike's Day - Standby
+    TimeLimit: 4h
+  - Id: 11815
+    Title: Frozen Sea
+  - Id: 11816
+    Title: Frozen Sea
+  - Id: 11817
+    Title: Frozen Sea
+  - Id: 11818
+    Title: Frozen Sea
+  - Id: 11819
+    Title: Frozen Sea
+  - Id: 11820
+    Title: Frozen Sea
+  - Id: 11821
+    Title: Frozen Sea
+  - Id: 11822
+    Title: Frozen Sea
+    Targets:
+      - Id: 1
+        Count: 10
+        Location: jor_back2
+        MapMobTargets:
+          EP19_UNFROST_FLOWER: true
+          EP19_ICE_GANGU: true
+          EP19_ICE_STRAW: true
+          EP19_LIMACINA: true
+    Drops:
+      - Mob: EP19_UNFROST_FLOWER
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ICE_GANGU
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ICE_STRAW
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_LIMACINA
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11823
+    Title: Frozen Sea
+  - Id: 11824
+    Title: Frozen Sea
+  - Id: 11825
+    Title: Frozen Sea
+    Targets:
+      - Id: 1
+        Count: 5
+        Location: jor_ab01
+        MapMobTargets:
+          EP19_WASTED_RGAN_A: true
+          EP19_CAVE_CALMARING: true
+          EP19_CAVE_FLOWER: true
+          EP19_HALLUCIGENIA_BABY: true
+          EP19_RE_RGAN_E: true
+    Drops:
+      - Mob: EP19_WASTED_RGAN_A
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_CALMARING
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_FLOWER
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_HALLUCIGENIA_BABY
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_RE_RGAN_E
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11826
+    Title: Frozen Sea
+    Targets:
+      - Id: 1
+        Count: 5
+        Location: jor_ab01
+        MapMobTargets:
+          EP19_WASTED_RGAN_A: true
+          EP19_CAVE_CALMARING: true
+          EP19_CAVE_FLOWER: true
+          EP19_HALLUCIGENIA_BABY: true
+          EP19_RE_RGAN_E: true
+    Drops:
+      - Mob: EP19_WASTED_RGAN_A
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_CALMARING
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_FLOWER
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_HALLUCIGENIA_BABY
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_RE_RGAN_E
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11827
+    Title: Frozen Sea
+    Targets:
+      - Id: 1
+        Count: 5
+        Location: jor_ab01
+        MapMobTargets:
+          EP19_WASTED_RGAN_A: true
+          EP19_CAVE_CALMARING: true
+          EP19_CAVE_FLOWER: true
+          EP19_HALLUCIGENIA_BABY: true
+          EP19_RE_RGAN_E: true
+    Drops:
+      - Mob: EP19_WASTED_RGAN_A
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_CALMARING
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_FLOWER
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_HALLUCIGENIA_BABY
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_RE_RGAN_E
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11828
+    Title: Frozen Sea
+    Targets:
+      - Id: 1
+        Count: 10
+        Location: jor_ab02
+        MapMobTargets:
+          EP19_WASTED_RGAN_C: true
+          EP19_HALLUCIGENIA: true
+          EP19_ONE_EYE_DOLLOCARIS: true
+          EP19_DOLLOCARIS: true
+          EP19_ET_RGAN_D: true
+    Drops:
+      - Mob: EP19_WASTED_RGAN_C
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_HALLUCIGENIA
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ONE_EYE_DOLLOCARIS
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_DOLLOCARIS
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ET_RGAN_D
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11829
+    Title: Frozen Sea
+  - Id: 11830
+    Title: Abandoned Pit
+  - Id: 11831
+    Title: A place that deserves to be abandoned
+    Targets:
+      - Id: 1
+        Count: 40
+        Location: jor_ab01
+        MapMobTargets:
+          EP19_WASTED_RGAN_A: true
+          EP19_CAVE_CALMARING: true
+          EP19_CAVE_FLOWER: true
+          EP19_HALLUCIGENIA_BABY: true
+          EP19_RE_RGAN_E: true
+    Drops:
+      - Mob: EP19_WASTED_RGAN_A
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_CALMARING
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_CAVE_FLOWER
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_HALLUCIGENIA_BABY
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_RE_RGAN_E
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11832
+    Title: Place to be abandoned (1) - Standby
+    TimeLimit: 4h
+  - Id: 11833
+    Title: A place that deserves to be abandoned
+    Targets:
+      - Id: 1
+        Count: 40
+        Location: jor_ab02
+        MapMobTargets:
+          EP19_WASTED_RGAN_C: true
+          EP19_HALLUCIGENIA: true
+          EP19_ONE_EYE_DOLLOCARIS: true
+          EP19_DOLLOCARIS: true
+          EP19_ET_RGAN_D: true
+    Drops:
+      - Mob: EP19_WASTED_RGAN_C
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_HALLUCIGENIA
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ONE_EYE_DOLLOCARIS
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_DOLLOCARIS
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ET_RGAN_D
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11834
+    Title: Place to be Abandoned (2) - Standby
+    TimeLimit: 4h
+  - Id: 11835
+    Title: Digging and Digging
+  - Id: 11836
+    Title: Digging and Digging
+  - Id: 11837
+    Title: Digging and Digging
+  - Id: 11838
+    Title: Digging and Digging
+  - Id: 11839
+    Title: Digging and Digging
+  - Id: 11840
+    Title: Digging and Digging
+  - Id: 11841
+    Title: Digging and Digging
+  - Id: 11842
+    Title: Digging and Digging
+  - Id: 11843
+    Title: Digging and Digging
+  - Id: 11844
+    Title: Digging and Digging
+  - Id: 11845
+    Title: Digging and Digging
+  - Id: 11846
+    Title: Digging and Digging
+  - Id: 11847
+    Title: Digging and Digging
+  - Id: 11848
+    Title: Digging and Digging
+  - Id: 11849
+    Title: Digging and Digging
+  - Id: 11850
+    Title: Digging and Digging - Standby
+    TimeLimit: 4h
+  - Id: 11851
+    Title: Do you need a refrigerator?
+  - Id: 11852
+    Title: Do you need a refrigerator?
+    Targets:
+      - Id: 1
+        Count: 20
+        Location: jor_back2
+        MapMobTargets:
+          EP19_UNFROST_FLOWER: true
+          EP19_ICE_GANGU: true
+          EP19_ICE_STRAW: true
+          EP19_LIMACINA: true
+    Drops:
+      - Mob: EP19_UNFROST_FLOWER
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ICE_GANGU
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_ICE_STRAW
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+      - Mob: EP19_LIMACINA
+        Item: Ep19_Ice_Meat
+        Rate: 5000
+  - Id: 11853
+    Title: Do you need a refrigerator? - Standby
+    TimeLimit: 4h
+  - Id: 11854
+    Title: Crunchy Tools
+  - Id: 11855
+    Title: Crunchy Tools
+  - Id: 11856
+    Title: Crunchy Tools
+  - Id: 11857
+    Title: Crunchy Tools
+  - Id: 11858
+    Title: Crunchy Tools
+  - Id: 11859
+    Title: Crunchy Tools - Standby
+    TimeLimit: 4h
   - Id: 12000
     Title: An old friend
   - Id: 12001
@@ -9359,6 +9819,14 @@ Body:
     Title: The Scattered Luggage (East)
   - Id: 12539
     Title: Scattered Luggage (South)
+  - Id: 12560
+    Title: Standby: Neutralizing Aircraft
+    TimeLimit: 4h
+  - Id: 12561
+    Title: Disable the Core
+    Targets:
+      - Mob: EP19_MD_AQUILA
+        Count: 1
   - Id: 13000
     Title: RWC2011Card Gathering
   - Id: 13001
@@ -11590,6 +12058,69 @@ Body:
     Title: The Price of Labor
   - Id: 16585
     Title: The Price of Labor
+  - Id: 16636
+    Title: Looking for clues - Juncea's Lab
+  - Id: 16637
+    Title: Find Clues - Bagot's Lab
+  - Id: 16638
+    Title: Find Clues - Rgan Guard
+  - Id: 16639
+    Title: Juncea's Lab
+  - Id: 16640
+    Title: Juncea's Lab
+  - Id: 16641
+    Title: Laboratory of Bagot
+  - Id: 16642
+    Title: Laboratory of Bagot
+  - Id: 16643
+    Title: Rgan Guard
+  - Id: 16644
+    Title: Rgan Guard
+  - Id: 16645
+    Title: Share the clue
+  - Id: 16646
+    Title: Infiltrate without a sound
+  - Id: 16647
+    Title: Infiltrate without a sound
+  - Id: 16648
+    Title: Infiltrate without a sound
+  - Id: 16649
+    Title: Infiltrate without a sound
+  - Id: 16650
+    Title: Infiltrate without a sound
+  - Id: 16651
+    Title: Infiltrate without a sound
+  - Id: 16652
+    Title: Infiltrate without a sound
+  - Id: 16653
+    Title: The Doubts That Build Up
+  - Id: 16654
+    Title: The Doubts That Build Up
+  - Id: 16655
+    Title: Intermittent difference
+  - Id: 16656
+    Title: Intermittent difference
+  - Id: 16657
+    Title: Intermittent difference
+  - Id: 16658
+    Title: Intermittent difference
+  - Id: 16659
+    Title: Intermittent difference
+  - Id: 16660
+    Title: Intermittent difference
+    Targets:
+      - Mob: EP19_MD_JUNCEA
+        Count: 1
+  - Id: 16661
+    Title: Intermittent difference
+  - Id: 16662
+    Title: Simulation Battle
+    Targets:
+      - Mob: EP19_MD_JUNCEA_S
+        Count: 1
+  - Id: 16663
+    Title: Simulation Battle-Standby
+    TimeLimit: 4h
   - Id: 17000
     Title: Meet with Father Bamph
   - Id: 17001
@@ -11912,6 +12443,96 @@ Body:
   - Id: 17566
     Title: (Standby) Code name! Is it a star button?
     TimeLimit: 4h
+  - Id: 17619
+    Title: Lazy's Plan
+  - Id: 17620
+    Title: Infiltrating the Snake's Nest
+  - Id: 17621
+    Title: Infiltrating the Snake's Nest
+  - Id: 17622
+    Title: Infiltrating the Snake's Nest
+  - Id: 17623
+    Title: Infiltrating the Snake's Nest
+  - Id: 17624
+    Title: Infiltrating the Snake's Nest
+  - Id: 17625
+    Title: Infiltrating the Snake's Nest
+  - Id: 17626
+    Title: Infiltrating the Snake's Nest
+  - Id: 17627
+    Title: Infiltrating the Snake's Nest
+  - Id: 17628
+    Title: Infiltrating the Snake's Nest
+  - Id: 17629
+    Title: Infiltrating the Snake's Nest
+  - Id: 17630
+    Title: Infiltrating the Snake's Nest
+  - Id: 17631
+    Title: Infiltrating the Snake's Nest
+  - Id: 17632
+    Title: Interim Report of Infiltration Operation
+  - Id: 17633
+    Title: Interim Report of Infiltration Operation
+  - Id: 17634
+    Title: Interim Report of Infiltration Operation
+  - Id: 17635
+    Title: Interim Report of Infiltration Operation
+  - Id: 17636
+    Title: Interim Report of Infiltration Operation
+  - Id: 17637
+    Title: Operation of Aircraft Destruction
+  - Id: 17638
+    Title: Vulnerability Investigation
+  - Id: 17639
+    Title: Accompanying Reconnaissance Report
+  - Id: 17640
+    Title: The Confused Snake's Nest
+  - Id: 17641
+    Title: The Confused Snake's Nest
+  - Id: 17642
+    Title: The Confused Snake's Nest
+  - Id: 17643
+    Title: The Confused Snake's Nest
+  - Id: 17644
+    Title: The Confused Snake's Nest
+  - Id: 17645
+    Title: The Confused Snake's Nest
+  - Id: 17646
+    Title: The Confused Snake's Nest
+  - Id: 17647
+    Title: The Confused Snake's Nest
+  - Id: 17648
+    Title: The Confused Snake's Nest
+  - Id: 17649
+    Title: Those who disappeared
+  - Id: 17650
+    Title: Finding an underground hideout on the ground
+  - Id: 17651
+    Title: Finding an underground hideout on the ground
+  - Id: 17652
+    Title: Finding an underground hideout on the ground
+  - Id: 17653
+    Title: Finding an underground hideout on the ground
+  - Id: 17654
+    Title: Finding an underground hideout on the ground
+  - Id: 17655
+    Title: Finding an underground hideout on the ground
+  - Id: 17656
+    Title: Finding an underground hideout on the ground
+  - Id: 17657
+    Title: Finding an underground hideout on the ground
+  - Id: 17658
+    Title: Finding an underground hideout on the ground
+  - Id: 17659
+    Title: Finding an underground hideout on the ground
+  - Id: 17660
+    Title: Finding an underground hideout on the ground
+  - Id: 17661
+    Title: Standby: Finding an Underground Hideout on the Ground
+    TimeLimit: 4h
+  - Id: 17662
+    Title: Standby: Finding an Underground Hideout on the Ground
+    TimeLimit: 4h
   - Id: 18000
     Title: Ready to enter
   - Id: 18001
@@ -12090,11 +12711,72 @@ Body:
   - Id: 18118
     Title: Mysterious Musical Instrument
   - Id: 18119
-    Title: Gusli
+    Title: The Guest Who Ride the North Wind 1
   - Id: 18120
-    Title: Gusli
+    Title: Guest from the North Wind 2
   - Id: 18121
-    Title: Shafka
+    Title: Guardian's Chest and Invitation 1
+  - Id: 18122
+    Title: Guardian's Box and Invitation 2
+  - Id: 18123
+    Title: Guardian's Box and Invitation 3
+  - Id: 18124
+    Title: Guardian's Chest and Invitation 5
+  - Id: 18125
+    Title: To the Ice Castle
+  - Id: 18126
+    Title: Meeting the Ice Castle
+  - Id: 18127
+    Title: Let's meet the Iwin Scouts.
+  - Id: 18128
+    Title: Let's meet Boclind.
+  - Id: 18129
+    Title: Guardian's Chest and Invitation 4
+  - Id: 18130
+    Title: Procurement of research materials for Belgund
+  - Id: 18131
+    Title: Procurement of research materials for Belgund - Standby
+    TimeLimit: 4h
+  - Id: 18132
+    Title: I need someone.
+  - Id: 18133
+    Title: Leon's Story
+  - Id: 18134
+    Title: Search for the Displaced - Frozen Glacier
+  - Id: 18135
+    Title: Searching for the Lost - Frozen Plains
+  - Id: 18136
+    Title: Complete rescue of survivors
+  - Id: 18137
+    Title: Search for survivors - Standby
+    TimeLimit: 4h
+  - Id: 18138
+    Title: Special way to survive
+    Targets:
+      - Mob: EP19_RGAN_A
+        Count: 10
+      - Mob: EP19_RGAN_B
+        Count: 10
+  - Id: 18139
+    Title: Our precious food
+  - Id: 18140
+    Title: Our precious food - Standby
+    TimeLimit: 4h
+  - Id: 18141
+    Title: A noble hobby
+  - Id: 18142
+    Title: A noble hobby - Standby
+    TimeLimit: 4h
+  - Id: 18143
+    Title: For Safe Work
+    Targets:
+      - Mob: EP19_LIMACINA
+        Count: 20
+      - Mob: EP19_CALMARING
+        Count: 20
+  - Id: 18144
+    Title: For Safe Work - Standby
+    TimeLimit: 4h
   - Id: 19001
     Title: The earth where the flowers have blossomed - Waiting
     TimeLimit: 4h

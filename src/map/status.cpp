@@ -5913,8 +5913,11 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 	* No status changes alter these yet.
 	* if(flag[SCB_SIZE])
 	* if(flag[SCB_RACE])
-	* if(flag[SCB_RANGE])
 	**/
+
+	if (flag[SCB_RANGE]) {
+		status->rhw.range = b_status->rhw.range;
+	}
 
 	if(flag[SCB_MAXHP]) {
 		if( bl->type&BL_PC ) {

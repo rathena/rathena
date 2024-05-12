@@ -8820,7 +8820,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
 		//Except for Summoned Marine spheres on non-versus maps, where it's just enemy.
-		i = ((!md || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m))?
+		i = ((!md || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m) || md && map_getmapflag(src->m, MF_NO_NPC_SELFDESTRUCTION_ON_ALL))?
 			BCT_ENEMY:BCT_ALL;
 		clif_skill_nodamage(src, src, skill_id, -1, 1);
 		map_delblock(src); //Required to prevent chain-self-destructions hitting back.
@@ -12985,6 +12985,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(src, SC_GRENADE_FRAGMENT_6);
 		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		break;
+
+	case DE_BERSERKAIZER:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		break;
 
 	default: {

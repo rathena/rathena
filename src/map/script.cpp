@@ -27384,6 +27384,27 @@ BUILDIN_FUNC(permission_add)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(unitisforcewalk)
+{
+	block_list *bl = nullptr;
+	bool force_walk = false;
+
+	if (script_getnum(st, 2))
+		bl = map_id2bl(script_getnum(st,2));
+	else
+		bl = map_id2bl(st->rid);
+
+	if (bl != nullptr) {
+		struct unit_data *ud = unit_bl2ud(bl);
+
+		if (ud != nullptr)
+			force_walk = (ud->walktimer == INVALID_TIMER && ud->state.force_walk);
+	}
+	script_pushint(st, force_walk);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28152,6 +28173,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(permission_check, "i?"),
 	BUILDIN_DEF(permission_add, "i?"),
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
+
+	BUILDIN_DEF(unitisforcewalk, "i"),
 
 #include <custom/script_def.inc>
 

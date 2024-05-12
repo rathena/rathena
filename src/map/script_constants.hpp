@@ -538,6 +538,8 @@
 	export_constant(MF_NOBUYINGSTORE);
 	export_constant(MF_NODYNAMICNPC);
 	export_constant(MF_NOBANK);
+	export_constant(MF_NOLOOTNORMALMOB);
+	export_constant(MF_NO_NPC_SELFDESTRUCTION_ON_ALL);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -7808,6 +7810,7 @@
 	export_constant(IG_COSTUMEMILEPACK_35_1);
 	export_constant(IG_COSTUMEMILEPACK_35_2);
 	export_constant(IG_COSTUMEMILEPACK_35_3);
+	export_constant(IG_D_GW_EXTRACTOR);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

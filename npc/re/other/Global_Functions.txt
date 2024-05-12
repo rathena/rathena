@@ -65,4 +65,23 @@ function	script	F_queststatus	{
 		return 2;
 	}
 	end;
-}	
+}
+
+// Return a value referring to the state of the quests in range.
+// -1 : at least on of the quest doesn't have the same state
+//  0 : all the quests are in the state 0 (not in quest log)
+//  1 : all the quests are in the state 1 (given)
+//  2 : all the quests are in the state 2 (completed)
+function	script	F_queststatus_between	{
+	.@start = getarg(0);
+	.@end = getarg(1);
+	.@state = isbegin_quest(.@start);
+
+	for ( .@i = .@start+1; .@i <= .@end; ++.@i ) {
+		if (isbegin_quest(.@i) != .@state) {
+			.@state = -1;
+			break;
+		}
+	}
+	return .@state;
+}
