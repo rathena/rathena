@@ -3,7 +3,7 @@
 
 #include "log.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/nullpo.hpp>
@@ -196,7 +196,7 @@ void log_branch(map_session_data* sd)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_branch, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_branch, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -253,7 +253,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_pick, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_pick, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -299,7 +299,7 @@ void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 sr
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_zeny, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_zeny, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -332,7 +332,7 @@ void log_mvpdrop(map_session_data* sd, int monster_id, t_itemid nameid, t_exp ex
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_mvpdrop,"a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_mvpdrop,"a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -373,7 +373,7 @@ void log_atcommand(map_session_data* sd, const char* message)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_gm, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_gm, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -410,7 +410,7 @@ void log_npc( struct npc_data* nd, const char* message ){
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_npc, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -448,7 +448,7 @@ void log_npc(map_session_data* sd, const char* message)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_npc, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -496,7 +496,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_chat, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_chat, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -524,7 +524,7 @@ void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen( log_config.log_cash, "a" ) ) == NULL )
+		if( ( logfp = fopen( log_config.log_cash, "a" ) ) == nullptr )
 			return;
 		time( &curtime );
 		strftime( timestring, sizeof( timestring ), log_timestamp_format, localtime( &curtime ) );
@@ -577,7 +577,7 @@ void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid)
 		time_t curtime;
 		FILE* logfp;
 
-		if ((logfp = fopen(log_config.log_feeding, "a")) == NULL)
+		if ((logfp = fopen(log_config.log_feeding, "a")) == nullptr)
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -609,7 +609,7 @@ int log_config_read(const char* cfgName)
 	if( count++ == 0 )
 		log_set_defaults();
 
-	if( ( fp = fopen(cfgName, "r") ) == NULL )
+	if( ( fp = fopen(cfgName, "r") ) == nullptr )
 	{
 		ShowError("Log configuration file not found at: %s\n", cfgName);
 		return 1;

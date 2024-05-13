@@ -3,7 +3,7 @@
 
 #include "quest.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -701,7 +701,7 @@ int quest_delete(map_session_data *sd, int quest_id)
 
 	if (sd->num_quests == 0) {
 		aFree(sd->quest_log);
-		sd->quest_log = NULL;
+		sd->quest_log = nullptr;
 	} else
 		RECREATE(sd->quest_log, struct quest, sd->num_quests);
 
