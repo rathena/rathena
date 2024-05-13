@@ -4454,7 +4454,7 @@ ACMD_FUNC(mapinfo) {
 		clif_displaymessage(fd, atcmd_output);
 		if (!mapdata->skill_damage.empty()) {
 			clif_displaymessage(fd, msg_txt(sd, 1054)); // > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster
-			for (auto skilldmg : mapdata->skill_damage) {
+			for (const auto& skilldmg : mapdata->skill_damage) {
 				sprintf(atcmd_output,"     %s : %d%%, %d%%, %d%%, %d%% | %d",
 					skill_get_name(skilldmg.first),
 					skilldmg.second.rate[SKILLDMG_PC],
