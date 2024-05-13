@@ -878,7 +878,7 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 	foodID = hd->homunculusDB->foodID;
 	i = pc_search_inventory(sd,foodID);
 	if (i < 0) {
-		clif_hom_food(sd,foodID,0);
+		clif_hom_food( *sd, foodID, 0 );
 		return 1;
 	}
 	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
@@ -909,7 +909,7 @@ int hom_food(map_session_data *sd, struct homun_data *hd)
 	clif_emotion(&hd->bl,emotion);
 	clif_send_homdata( *hd, SP_HUNGRY );
 	clif_send_homdata( *hd, SP_INTIMATE );
-	clif_hom_food(sd,foodID,1);
+	clif_hom_food( *sd, foodID, 1 );
 
 	// Too much food :/
 	if(hd->homunculus.intimacy == 0)

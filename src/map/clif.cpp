@@ -1984,16 +1984,14 @@ void clif_homskillup( homun_data& hd, uint16 skill_id ){
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_hom_food( map_session_data *sd, int foodid, int fail ){
-	nullpo_retv( sd );
+void clif_hom_food( map_session_data& sd, int32 foodid, uint8 result ){
+	PACKET_ZC_FEED_MER packet{};
 
-	struct PACKET_ZC_FEED_MER p;
+	packet.packetType = HEADER_ZC_FEED_MER;
+	packet.result = result;
+	packet.itemId = client_nameid( foodid );
 
-	p.packetType = 0x22f;
-	p.result = fail;
-	p.itemId = client_nameid( foodid );
-
-	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

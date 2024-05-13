@@ -962,7 +962,7 @@ void clif_feel_hate_reset(map_session_data *sd);
 void clif_hominfo(map_session_data *sd, struct homun_data *hd, int flag);
 void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
-void clif_hom_food(map_session_data *sd,int foodid,int fail);	//[orn]
+void clif_hom_food( map_session_data& sd, int32 foodid, uint8 result );	//[orn]
 void clif_send_homdata( homun_data& hd, e_hom_state2 state );
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
