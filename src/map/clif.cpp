@@ -2594,7 +2594,7 @@ void clif_scriptmenu( map_session_data& sd, uint32 npcid, const char* mes ){
 	size_t mes_length = strlen(mes);
 	packet->packetType = HEADER_ZC_MENU_LIST;
 	packet->npcId = npcid;
-	packet->packetLength = sizeof(PACKET_ZC_MENU_LIST) + mes_length;
+	packet->packetLength = static_cast<decltype(packet->packetLength)>( sizeof(PACKET_ZC_MENU_LIST) + mes_length );
 	memcpy(packet->menu, mes, mes_length);
 
 	clif_send( packet, packet->packetLength, &sd.bl, SELF );
