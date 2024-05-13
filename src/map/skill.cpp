@@ -7377,7 +7377,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	tsc = status_get_sc(bl);
 	status_change* sc = status_get_sc(src);
 	tsce = (tsc && type != SC_NONE)?tsc->getSCE(type):nullptr;
-	status_change *sc = status_get_sc(src);
 
 	if (src!=bl && type > SC_NONE &&
 		CHK_ELEMENT((i = skill_get_ele(skill_id, skill_lv))) && i > ELE_NEUTRAL &&
@@ -18250,8 +18249,8 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			break;
 		case SH_TEMPORARY_COMMUNION:
-			if (sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) == 0 && pc_checkskill(sd, SH_COMMUNE_WITH_HYUN_ROK) == 0 && pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) == 0) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION,0);
+			if (pc_checkskill(&sd, SH_COMMUNE_WITH_CHUL_HO) == 0 && pc_checkskill(&sd, SH_COMMUNE_WITH_HYUN_ROK) == 0 && pc_checkskill(&sd, SH_COMMUNE_WITH_KI_SUL) == 0) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_CONDITION );
 				return false;
 			}
 			break;
