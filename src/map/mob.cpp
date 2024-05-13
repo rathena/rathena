@@ -1121,12 +1121,13 @@ int mob_spawn (struct mob_data *md)
 		md->bl.y = md->spawn->y;
 
 		// Search can be skipped if spawn location is fixed
-		if( (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys )
+		if ((md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs != 1 || md->spawn->ys != 1)
 		{
 			// Officially the area is split into 4 squares, 4 lines and 1 dot and for each of those there is one attempt
 			// We simplify this to trying 8 times in the whole area and then at the center cell even though that's not fully accurate
 			// The search for a spawn location is called twice, meaning the area is doubled in size but with a strong bias towards the center
 			// The center cell has a 1/(xs*ys) chance to be picked, otherwise we call the search function to get the start coordinates
+			// On this first iteration we don't care if the search succeeds or if it's visible to player as it's not the final spawn location
 			if ((md->spawn->xs > 1 || md->spawn->ys > 1) && !rnd_chance(1, md->spawn->xs * md->spawn->ys))
 				map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs-1, md->spawn->ys-1, 0, 8);
 

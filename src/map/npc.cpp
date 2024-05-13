@@ -5296,6 +5296,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	}
 	else if (mob.xs == 0) {
 		// Both 0 and 1 result in fixed x-coordinate
+		// Need to set this to 1 as we reduce it by 1 when calling the search function
 		mob.xs = 1;
 	}
 
@@ -5307,6 +5308,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	}
 	else if (mob.ys == 0) {
 		// Both 0 and 1 result in fixed y-coordinate
+		// Need to set this to 1 as we reduce it by 1 when calling the search function
 		mob.ys = 1;
 	}
 
