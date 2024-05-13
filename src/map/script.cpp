@@ -11386,11 +11386,11 @@ BUILDIN_FUNC(killmonster)
 
 static int buildin_killmonsterall_sub_strip(struct block_list *bl,va_list ap)
 { //Strips the event from the mob if it's killed the old method.
-	struct mob_data *md;
+	mob_data* md = BL_CAST(BL_MOB, bl);
 
-	md = BL_CAST(BL_MOB, bl);
-	if (md->npc_event[0])
-		md->npc_event[0] = 0;
+	if( md != nullptr ){
+		strcpy( md->npc_event, "" );
+	}
 
 	status_kill(bl);
 	return 0;
