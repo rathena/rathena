@@ -4056,85 +4056,81 @@ void clif_refreshlook(struct block_list *bl, int id, int type, int val, enum sen
 ///     <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B <atk>.W <atk2>.W
 ///     <matk min>.W <matk max>.W <def>.W <def2>.W <mdef>.W <mdef2>.W <hit>.W
 ///     <flee>.W <flee2>.W <crit>.W <aspd>.W <aspd2>.W
-void clif_initialstatus(map_session_data *sd) {
-	int fd, mdef2;
-	unsigned char *buf;
+void clif_initialstatus( map_session_data& sd ) {
+	PACKET_ZC_STATUS packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_STATUS;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len(0xbd));
-	buf = WFIFOP(fd,0);
+	packet.point = min(sd.status.status_point, INT16_MAX);
+	packet.str = min(sd.status.str, UINT8_MAX);
+	packet.standardStr = pc_need_status_point( &sd, SP_STR, 1 );
+	packet.agi = min(sd.status.agi, UINT8_MAX);
+	packet.standardAgi = pc_need_status_point( &sd, SP_AGI,1 );
+	packet.vit = min(sd.status.vit, UINT8_MAX);
+	packet.standardVit = pc_need_status_point( &sd, SP_VIT,1 );
+	packet.int_ = min(sd.status.int_, UINT8_MAX);
+	packet.standardInt = pc_need_status_point( &sd, SP_INT,1 );
+	packet.dex = min(sd.status.dex, UINT8_MAX);
+	packet.standardDex = pc_need_status_point( &sd, SP_DEX,1 );
+	packet.luk = min(sd.status.luk, UINT8_MAX);
+	packet.standardLuk = pc_need_status_point( &sd, SP_LUK,1 );
 
-	WBUFW(buf,0) = 0xbd;
-	WBUFW(buf,2) = min(sd->status.status_point, INT16_MAX);
-	WBUFB(buf,4) = min(sd->status.str, UINT8_MAX);
-	WBUFB(buf,5) = pc_need_status_point(sd,SP_STR,1);
-	WBUFB(buf,6) = min(sd->status.agi, UINT8_MAX);
-	WBUFB(buf,7) = pc_need_status_point(sd,SP_AGI,1);
-	WBUFB(buf,8) = min(sd->status.vit, UINT8_MAX);
-	WBUFB(buf,9) = pc_need_status_point(sd,SP_VIT,1);
-	WBUFB(buf,10) = min(sd->status.int_, UINT8_MAX);
-	WBUFB(buf,11) = pc_need_status_point(sd,SP_INT,1);
-	WBUFB(buf,12) = min(sd->status.dex, UINT8_MAX);
-	WBUFB(buf,13) = pc_need_status_point(sd,SP_DEX,1);
-	WBUFB(buf,14) = min(sd->status.luk, UINT8_MAX);
-	WBUFB(buf,15) = pc_need_status_point(sd,SP_LUK,1);
+	packet.attPower = pc_leftside_atk( &sd );
+	packet.refiningPower = pc_rightside_atk( &sd );
+	packet.max_mattPower = pc_rightside_matk( &sd );
+	packet.min_mattPower = pc_leftside_matk( &sd );
+	packet.itemdefPower = pc_leftside_def( &sd );
+	packet.plusdefPower = pc_rightside_def( &sd );
+	packet.mdefPower = pc_leftside_mdef( &sd );
 
-	WBUFW(buf,16) = pc_leftside_atk(sd);
-	WBUFW(buf,18) = pc_rightside_atk(sd);
-	WBUFW(buf,20) = pc_rightside_matk(sd);
-	WBUFW(buf,22) = pc_leftside_matk(sd);
-	WBUFW(buf,24) = pc_leftside_def(sd);
-	WBUFW(buf,26) = pc_rightside_def(sd);
-	WBUFW(buf,28) = pc_leftside_mdef(sd);
-	mdef2 = pc_rightside_mdef(sd);
-	WBUFW(buf,30) =
+	int32 mdef2 = pc_rightside_mdef( &sd );
+	packet.plusmdefPower = 
 #ifndef RENEWAL
 		( mdef2 < 0 ) ? 0 : //Negative check for Frenzy'ed characters.
 #endif
 		mdef2;
-	WBUFW(buf,32) = sd->battle_status.hit;
-	WBUFW(buf,34) = sd->battle_status.flee;
-	WBUFW(buf,36) = sd->battle_status.flee2/10;
-	WBUFW(buf,38) = sd->battle_status.cri/10;
-	WBUFW(buf,40) = sd->battle_status.amotion; // aspd
-	WBUFW(buf,42) = 0;  // always 0 (plusASPD)
 
-	WFIFOSET(fd, packet_len(0xbd));
+	packet.hitSuccessValue = sd.battle_status.hit;
+	packet.avoidSuccessValue = sd.battle_status.flee;
+	packet.plusAvoidSuccessValue = sd.battle_status.flee2 / 10;
+	packet.criticalSuccessValue = sd.battle_status.cri / 10;
+	packet.ASPD = sd.battle_status.amotion; // aspd
+	packet.plusASPD = 0;  // always 0 (plusASPD)
 
-	clif_updatestatus(*sd, SP_STR);
-	clif_updatestatus(*sd, SP_AGI);
-	clif_updatestatus(*sd, SP_VIT);
-	clif_updatestatus(*sd, SP_INT);
-	clif_updatestatus(*sd, SP_DEX);
-	clif_updatestatus(*sd, SP_LUK);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 
-	clif_updatestatus(*sd, SP_ATTACKRANGE);
-	clif_updatestatus(*sd, SP_ASPD);
+	clif_updatestatus(sd, SP_STR);
+	clif_updatestatus(sd, SP_AGI);
+	clif_updatestatus(sd, SP_VIT);
+	clif_updatestatus(sd, SP_INT);
+	clif_updatestatus(sd, SP_DEX);
+	clif_updatestatus(sd, SP_LUK);
+
+	clif_updatestatus(sd, SP_ATTACKRANGE);
+	clif_updatestatus(sd, SP_ASPD);
 
 #ifdef RENEWAL
-	clif_updatestatus(*sd, SP_POW);
-	clif_updatestatus(*sd, SP_STA);
-	clif_updatestatus(*sd, SP_WIS);
-	clif_updatestatus(*sd, SP_SPL);
-	clif_updatestatus(*sd, SP_CON);
-	clif_updatestatus(*sd, SP_CRT);
-	clif_updatestatus(*sd, SP_PATK);
-	clif_updatestatus(*sd, SP_SMATK);
-	clif_updatestatus(*sd, SP_RES);
-	clif_updatestatus(*sd, SP_MRES);
-	clif_updatestatus(*sd, SP_HPLUS);
-	clif_updatestatus(*sd, SP_CRATE);
-	clif_updatestatus(*sd, SP_TRAITPOINT);
-	clif_updatestatus(*sd, SP_AP);
-	clif_updatestatus(*sd, SP_MAXAP);
-	clif_updatestatus(*sd, SP_UPOW);
-	clif_updatestatus(*sd, SP_USTA);
-	clif_updatestatus(*sd, SP_UWIS);
-	clif_updatestatus(*sd, SP_USPL);
-	clif_updatestatus(*sd, SP_UCON);
-	clif_updatestatus(*sd, SP_UCRT);
+	clif_updatestatus(sd, SP_POW);
+	clif_updatestatus(sd, SP_STA);
+	clif_updatestatus(sd, SP_WIS);
+	clif_updatestatus(sd, SP_SPL);
+	clif_updatestatus(sd, SP_CON);
+	clif_updatestatus(sd, SP_CRT);
+	clif_updatestatus(sd, SP_PATK);
+	clif_updatestatus(sd, SP_SMATK);
+	clif_updatestatus(sd, SP_RES);
+	clif_updatestatus(sd, SP_MRES);
+	clif_updatestatus(sd, SP_HPLUS);
+	clif_updatestatus(sd, SP_CRATE);
+	clif_updatestatus(sd, SP_TRAITPOINT);
+	clif_updatestatus(sd, SP_AP);
+	clif_updatestatus(sd, SP_MAXAP);
+	clif_updatestatus(sd, SP_UPOW);
+	clif_updatestatus(sd, SP_USTA);
+	clif_updatestatus(sd, SP_UWIS);
+	clif_updatestatus(sd, SP_USPL);
+	clif_updatestatus(sd, SP_UCON);
+	clif_updatestatus(sd, SP_UCRT);
 #endif
 }
 
@@ -10966,7 +10962,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		clif_updatestatus(*sd,SP_JOBEXP);
 		clif_updatestatus(*sd,SP_NEXTJOBEXP);
 		clif_updatestatus(*sd,SP_SKILLPOINT);
-		clif_initialstatus(sd);
+		clif_initialstatus( *sd );
 
 		if (sd->sc.option&OPTION_FALCON)
 			clif_status_load(&sd->bl, EFST_FALCON, 1);

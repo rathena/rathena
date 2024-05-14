@@ -73,7 +73,6 @@
 	packet(0x00ba,2);
 	parseable_packet(0x00bb,5,clif_parse_StatusUp,2,4);
 	packet(0x00bc,6);
-	packet(0x00bd,44);
 	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
 	packet(0x00c0,7);
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
