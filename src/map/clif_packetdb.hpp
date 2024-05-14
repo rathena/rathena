@@ -1282,7 +1282,6 @@
 
 // 2008-11-13aSakexe
 #if PACKETVER >= 20081113
-	packet(0x043d,8);
 	packet(0x043e,-1);
 	packet(0x043f,8);
 #endif
@@ -1362,7 +1361,6 @@
 
 // 2008-11-12aRagexeRE
 #if PACKETVER >= 20081112
-	packet(0x043d,8);
 	//packet(0x043e,-1);
 	packet(0x043f,8);
 #endif
