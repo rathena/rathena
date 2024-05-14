@@ -923,7 +923,7 @@ void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int 
 #define clif_pet_equip_area(pd) clif_send_petdata(nullptr, pd, 3, (pd)->vd.head_bottom)
 #define clif_pet_performance(pd, param) clif_send_petdata(nullptr, pd, 4, param)
 void clif_pet_emotion(struct pet_data *pd,int param);
-void clif_pet_food(map_session_data *sd,int foodid,int fail);
+void clif_pet_food( map_session_data& sd, int32 foodid, uint8 result );
 void clif_pet_autofeed_status(map_session_data* sd, bool force);
 
 //friends list

@@ -8445,21 +8445,19 @@ void clif_pet_emotion(struct pet_data *pd,int param)
 }
 
 
-/// Result of request to feed a pet (ZC_FEED_PET).
-/// 01a3 <result>.B <name id>.W
+/// Result of request to feed a pet.
+/// 01a3 <result>.B <name id>.W (ZC_FEED_PET)
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_pet_food( map_session_data *sd, int foodid,int fail ){
-	nullpo_retv( sd );
+void clif_pet_food( map_session_data& sd, int32 foodid, uint8 result ){
+	PACKET_ZC_FEED_PET packet{};
 
-	struct PACKET_ZC_FEED_PET p;
+	packet.packetType = HEADER_ZC_FEED_PET;
+	packet.result = result;
+	packet.itemId = client_nameid( foodid );
 
-	p.packetType = 0x1a3;
-	p.result = fail;
-	p.itemId = client_nameid( foodid );
-
-	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Send pet auto feed info.
