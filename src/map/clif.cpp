@@ -3070,7 +3070,7 @@ void clif_inventorylist( map_session_data *sd ){
 	}
 
 	if( sd->equip_index[EQI_AMMO] >= 0 )
-		clif_arrowequip( sd, sd->equip_index[EQI_AMMO] );
+		clif_arrowequip( *sd, sd->equip_index[EQI_AMMO] );
 
 	if( equip ) {
 		itemlist_equip.PacketType  = inventorylistequipType;
@@ -4135,21 +4135,20 @@ void clif_initialstatus( map_session_data& sd ) {
 }
 
 
-/// Marks an ammunition item in inventory as equipped (ZC_EQUIP_ARROW).
-/// 013c <index>.W
-void clif_arrowequip(map_session_data *sd,int val) {
-	int fd;
-
-	nullpo_retv(sd);
+/// Marks an ammunition item in inventory as equipped.
+/// 013c <index>.W (ZC_EQUIP_ARROW)
+void clif_arrowequip( map_session_data& sd, int16 val ) {
+	PACKET_ZC_EQUIP_ARROW packet{};
 
 #if PACKETVER >= 20121128
-	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INFINITE_TICK, 0, 0, 0);
+	clif_status_change(&sd.bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INFINITE_TICK, 0, 0, 0);
 #endif
-	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len(0x013c));
-	WFIFOW(fd,0) = 0x013c;
-	WFIFOW(fd,2) = val + 2; //Item ID of the arrow
-	WFIFOSET(fd, packet_len(0x013c));
+
+	packet.packetType = HEADER_ZC_EQUIP_ARROW;
+
+	packet.index = client_index(val);	// Item ID of the arrow
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

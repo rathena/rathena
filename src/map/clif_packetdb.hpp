@@ -181,7 +181,6 @@
 	packet(0x0138,3);
 	packet(0x0139,16);
 	packet(0x013b,4);
-	packet(0x013c,4);
 	packet(0x013d,6);
 	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);

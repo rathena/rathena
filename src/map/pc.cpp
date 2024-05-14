@@ -11972,7 +11972,7 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 		pc_equipswitch_remove(sd, n);
 
 		if(pos==EQP_AMMO) {
-			clif_arrowequip(sd,n);
+			clif_arrowequip( *sd, n );
 			clif_arrow_fail(sd,3);
 		}
 		else
