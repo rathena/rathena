@@ -70,7 +70,11 @@ function	script	F_CoolDown	{
 
 -	marketshop	para_fod01	FAKE_NPC,7476:50000:10000,7477:80000:10000,7478:120000:10000,7479:160000:10000,100075:50000:100,100076:80000:100,100077:120000:100,100078:160000:100
 
--	marketshop	pmef01	FAKE_NPC,12510:30000:10000,12509:30000:10000,12508:30000:10000,12507:30000:10000
+-	marketshop	para_pmef01	FAKE_NPC,12510:30000:10000,12509:30000:10000,12508:30000:10000,12507:30000:10000
+
+-	marketshop	para_unm03	FAKE_NPC,12848:10000:100
+
+-	marketshop	para_gst05	FAKE_NPC,12112:800:-1,12113:800:-1
 
 // Update Market Shop
 -	script	Update_Shop	-1,{
@@ -258,10 +262,12 @@ OnClock0000:
 	npcshopupdate "para_mora10",11525,0,10000;
 	npcshopupdate "para_mora10",11520,0,10000;
 	npcshopupdate "para_mora10",12574,0,10000;
-	npcshopupdate "pmef01",12510,0,10000;
-	npcshopupdate "pmef01",12509,0,10000;
-	npcshopupdate "pmef01",12508,0,10000;
-	npcshopupdate "pmef01",12507,0,10000;
+	npcshopupdate "para_pmef01",12510,0,10000;
+	npcshopupdate "para_pmef01",12509,0,10000;
+	npcshopupdate "para_pmef01",12508,0,10000;
+	npcshopupdate "para_pmef01",12507,0,10000;
+	npcshopupdate "para_unm03",12112,0,800;
+	npcshopupdate "para_unm03",12113,0,800;
 	end;
 }
 
@@ -285,7 +291,7 @@ OnClock0000:
 -	shop	para_itm10	FAKE_NPC,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
 
 // Eden Market Group Hustler
-moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
+moc_para01,106,38,3	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 	mes "[Hustler]";
 	mes "Hey, adventurer.";
 	mes "I can take you to somewhere nice. Are you interested?";
@@ -298,6 +304,7 @@ moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 		warp "paramk",97,17;
 		end;
 	case 2:
+		setarray .@items[1],1137,1141,1528,1720,1231,5268,1186,616,969,709;
 		mes "[Hustler]";
 		mes "Hahaha... The Eden Market Group is a place where merchants gather around to sell various items.";
 		mes "And I don't mean common stuff like Jellopy, which you can acquire anywhere. Here, we only deal in real goods.";
@@ -326,7 +333,7 @@ moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 		next;
 		mes "[Hustler]";
 		mes "More special items are sold on weekends.";
-		mes "I have even seen an " + mesitemlink( 709, false ) + " being sold~";
+		mes "I have even seen an " + mesitemlink( .@item[rand(1, getarraysize(.@items))], false ) + " being sold~";
 		mes "It was amazing.";
 		mes "Of course it was super expensive and only a handful were up for sale.";
 		next;
@@ -347,63 +354,29 @@ paramk,101,22,3	script	Market Group Guide#info	4_F_ZONDAGIRL,{
 	mes "[Guide]";
 	mes "Hello. Welcome to Eden Market Group, the official marketplace run by the continental merchant coalition, supported by the Eden Group.";
 	next;
-	switch (select("About when we're open.:About Special Products.:About Eden Market Group.:Cancel.")) {
-	case 1:
-		mes "[Guide]";
-		mes "Eden Market Group is a marketplace that contains many different shops.";
-		next;
-		mes "[Guide]";
-		mes "Wednesday is an official holiday designated by the marketplace; most shops are closed on this day.";
-		next;
-		mes "[Guide]";
-		mes "However, depending on the owner's wishes, and the type of items being offered, some shops remain partially open even on the holiday.";
-		next;
-		mes "[Guide]";
-		mes "And, some shops offer special items on certain days of the week. Keep that in mind.";
-		close;
-	case 2:
-		mes "[Guide]";
-		mes "Some shops will sell different items on weekends, certain days of the week, or even during certain hours; these items are different than their usual daily items.";
-		next;
-		mes "[Guide]";
-		mes "'Wonderful Friends' and 'Strong Friends' will sell one rare item each weekend.";
-		mes "'Miner's Coalition' will sell the anvil for blacksmithing only on weekends.";
-		next;
-		mes "[Guide]";
-		mes "I cannot tell you what items individual shops sell, because they are all different.";
-		mes "Why don't you find out for yourself by visiting often?";
-		close;
-	case 3:
-		mes "[Guide]";
-		mes "There are many people with the soul of a merchant that would like to sell their items to people in need of such.";
-		mes "Eden Market Group has designated a place for such people to buy and sell.";
-		next;
-		mes "[Guide]";
-		mes "We provide the means for goods that would otherwise have been contraband to be bought and sold in a fair and transparent manner, working in conjunction with the merchant coalitions and adventurers.";
-		next;
-		mes "[Guide]";
-		mes "Some people mutter that Eden Market Group is a black market... Haha, what a silly idea...";
-		mes "We are merely a merchant coalition.";
-		next;
-		mes "[Guide]";
-		mes "A portion of our profits go towards running the Eden Group, an adventurer's guild.";
-		mes "You can sell the loot from your adventures here, and the profits we make go towards providing services that benefit you. We are killing two birds with one stone, really.";
-		next;
-		mes "[Guide]";
-		mes "Keep in mind that limited quantity items will never go on sale!";
-		close;
-	case 4:
-		mes "[Guide]";
-		mes "Have a good time!";
-		close;
-	}
+	mes "[Guide]";
+	mes "There are many people in the world who have the soul of a merchant who wants to resell the items they have acquired to those who need them, right?";
+	mes "Our Paramarket provides a place for such people to form a shopping mall.";
+	next;
+	mes "[Guide]";
+	mes "We provide the means for goods that would otherwise have been contraband to be bought and sold in a fair and transparent manner, working in conjunction with the merchant coalitions and adventurers.";		next;
+	mes "[Guide]";
+	mes "Some people mutter that Eden Market Group is a black market... Haha, what a silly idea...";
+	mes "We are merely a merchant coalition.";
+	next;
+	mes "[Guide]";
+	mes "A portion of our profits go towards running the Eden Group, an adventurer's guild.";
+	mes "You can sell the loot from your adventures here, and the profits we make go towards providing services that benefit you. We are killing two birds with one stone, really.";
+	next;
+	mes "[Guide]";
+	mes "By the way, we never offer discounts on products with limited quantities, so keep this in mind!";
+	next;
+	mes "[Guide]";
+	mes "Have a good time!";
+	close;
 
-OnTimer60000:
+OnTouch:
 	npctalk "Welcome. This is the Eden Market Group.";
-
-OnInit:
-	initnpctimer;
-	end;
 }
 
 // Guards
@@ -471,33 +444,23 @@ OnTouch:
 }
 
 // Cassie
-paramk,113,56,3	script	Cassie#gst05	1_F_PUBGIRL,6,6,{
+paramk,113,56,3	script	Cassie#gst05	1_F_PUBGIRL,3,3,{
 	npctalk "Welcome to the Eden Market Group~ You want a fancy drink?";
 	mes "[Cassie]";
 	mes "Do you wish to buy a drink?";
 	next;
-	switch (select("Tropical Sograt.:Vermilion on the Beach.:No.")) {
+	switch (select("Show me.:No.")) {
 	case 1:
-		.@item = 12112;
-		break;
+		mes "[Cassie]";
+        mes "bon appetite!";
+		close2;
+		callshop "para_unm03";
+		end;
 	case 2:
-		.@item = 12113;
-		break;
-	case 3:
 		mes "[Cassie]";
 		mes "Have a good time.";
 		close;
 	}
-	if (Zeny < 800) {
-		mes "[Cassie]";
-		mes "A drink costs 800z.";
-		close;
-	}
-	mes "[Cassie]";
-	mes "Enjoy it";
-	Zeny -= 800;
-	getitem(.@item, 1);
-	close;
 
 OnTouch:
 	callfunc("F_CoolDown", 4);
@@ -538,6 +501,16 @@ paramk,65,31,7	script	Miffy#wp01	4_F_LGTGIRL,{
 }
 
 // Nelsha
+paramk,73,33,0	script	[Strong Friends]#fod00	HIDDEN_NPC,3,3,{
+	mes " == Strong Friends == ";
+	mes " ";
+	mes "From ordinary weapons to invaluable illusion weapons!";
+	mes "All the weapons you want are here.";
+	close;
+OnTouch:
+	npctalk "[Strong Friends]";
+}
+
 paramk,70,31,1	script	Nelsha#wp02	4_M_SITDOWN,{
 	mes "[Nelsha]";
 	mes "Hello.";
@@ -569,6 +542,16 @@ paramk,72,33,3	script	[Reliable Friends]#arm00	HIDDEN_NPC,{
 }
 
 // Coco
+paramk,83,98,0	script	[Reliable Friends]#pmo	HIDDEN_NPC,3,3,{
+	mes " == Reliable Friends == ";
+	mes " ";
+	mes "Need some awesome, out-of-this-world armor?";
+	mes "Reliable friends make you feel fantastic and strong!";
+	close;
+OnTouch:
+	npctalk "[Reliable Friends]";
+}
+
 paramk,78,31,1	script	Coco#arm01	4_F_SITDOWN,{
 	mes "[Coco]";
 	mes "Are you looking for armor that doesn't belong to this world?";
@@ -630,6 +613,15 @@ paramk,90,31,1	script	Minho Doh#cst01	4W_M_01,{
 }
 
 // Lapelt
+paramk,97,33,0	script	[Cool Friends]#fod00	HIDDEN_NPC,3,3,{
+	mes " == Cool Friends == ";
+	mes " ";
+	mes "The one and only clothing room for you who like to dress up!";
+	close;
+OnTouch:
+	npctalk "[Cool Friends]";
+}
+
 paramk,94,32,1	script	Lapelt#hat01	4_M_LGTMAN,{
 	mes "[Lapelt]";
 	mes "Welcome! This is 'Handsome Friends', a clothier that will make you fashionable!";
@@ -667,6 +659,14 @@ paramk,96,33,3	script	[Meds for Pharma]#ptn00	HIDDEN_NPC,{
 }
 
 // Head Pharmacist
+paramk,109,33,0	script	[Pharmacist medicines]#jw	HIDDEN_NPC,3,3,{
+	mes " == Gemstone specialist  == ";
+	mes "We sell various potions.";
+	close;
+OnTouch:
+	npctalk "[Pharmacist medicines]";
+}
+
 paramk,100,30,7	script	Head Pharmacist#ptn01	4_F_SCIENCE,{
 	mes "[Head Pharmacist]";
 	mes "Potent poisons that will knock you out with one sip, meds that will protect your body and spirit, meds that will temporarily grant supernatural speed.";
@@ -697,6 +697,15 @@ paramk,108,33,3	script	[WeHaveEverything]#itm00	HIDDEN_NPC,{
 }
 
 // Parayo
+paramk,123,33,0	script	[It's all there]#fod00	HIDDEN_NPC,3,3,{
+	mes " == It's all there == ";
+	mes " ";
+	mes "Various consumables are needed anytime, anywhere. Please come. It's all here.";
+	close;
+OnTouch:
+	npctalk "Variety store [It's all there]";
+}
+
 paramk,118,31,1	script	Manager Parayo#itm02	4_F_KHELLISIA,{
 	mes "[Parayo]";
 	mes "Thank you for coming to 'We-Have-Everything'.";
@@ -749,6 +758,14 @@ paramk,126,34,7	script	Whiteberry#seed01	4_CAT_SAILOR1,{
 }
 
 // Blackphone
+paramk,133,34,3	script	[It is soft]#pmg	HIDDEN_NPC,3,3,{
+	mes "== It is soft ==";
+	mes "Malangdo specialty products sold~";
+	close;
+OnTouch:
+	npctalk "[It is soft]";
+}
+
 paramk,129,33,1	script	Blackphone#seed02	4_M_MERCAT2,{
 	mes "[Blackphone]";
 	mes "Nyaaaah, do you have any canned food?";
@@ -968,18 +985,21 @@ paramk,127,88,3	script	Sobok the Cook#fd01	4_M_CHNCOOK,{
 		.@sp = 0;
 		.@zeny = 3000;
 		.@talk$ = "Goose Soup shall detoxify and heal you.";
+		.@effect = EF_FIREPILLARBOMB;
 		break;
 	case 2:
 		.@hp = 0;
 		.@sp = 100;
 		.@zeny = 3000;
 		.@talk$ = "Maccaroni Noodles shall refresh your spirit.";
+		.@effect = EF_LIGHTBOLT;
 		break;
 	case 3:
 		.@hp = 100;
 		.@sp = 100;
 		.@zeny = 5000;
 		.@talk$ = "Ultimate combination for body and mind.";
+		.@effect = EF_SANCTUARY;
 		break;
 	case 4:
 		mes "[Sobok]";
@@ -1000,13 +1020,14 @@ paramk,127,88,3	script	Sobok the Cook#fd01	4_M_CHNCOOK,{
 	mes "Delicious, isn't it?";
 	Zeny -= .@zeny;
 	percentheal(.@hp, .@sp);
+	specialeffect2 .@effect;
 	close;
 }
 
 
 // Cafe Mora
 // Cocktail Master
-paramk,65,86,5	script	Cocktail Master#mora01	4_M_RAFLE_VI,{
+paramk,65,86,5	script	Cocktail Master#mora01	4_M_RAFLE_VI,5,5,{
 	mes "[Cocktail Master]";
 	mes "Welcome to Mora Cafe.";
 	mes "We offer fruits and drinksfrom Mora.";
@@ -1022,6 +1043,8 @@ paramk,65,86,5	script	Cocktail Master#mora01	4_M_RAFLE_VI,{
 	mes "[Cocktail Master]";
 	mes "We are thankful that you came to visit us.";
 	close;
+OnTouch:
+	npctalk "Aren’t you curious about drinks from another world?";
 }
 
 
@@ -1069,10 +1092,12 @@ paramk,53,104,3	script	Dus the Smith#ref02	2_M_OLDBLSMITH,{
 
 // Rain-of-Gems
 // sign
-paramk,63,98,3	script	[Rain-of-Gems]#jw	HIDDEN_NPC,{
-	mes "? Rain of Gems ?";
+paramk,63,98,3	script	[Rain-of-Gems]#jw	HIDDEN_NPC,3,3,{
+	mes " == Rain of Gems == ";
 	mes "We deal in gold and gemstones!";
 	close;
+OnTouch:
+	npctalk "Gemstone specialist [Gembi]";
 }
 
 // Aurora
@@ -1104,7 +1129,7 @@ paramk,69,102,3	script	Aurora#jew01	4_F_02,{
 }
 
 // Geren [제레니아]
-paramk,59,100,3	script	Geren#pmrf01	1_M_SIGNMCNT,{
+paramk,59,100,3	script	Geren#pmrf01	1_M_SIGNMCNT,3,3,{
 	mes "[Geren]";
 	mes "If you are a guest interested in smelting, take a look at the items I brought.";
 	mes "A hammer that converts refined weapons into refined tickets or exchanging.";
@@ -1127,6 +1152,8 @@ paramk,59,100,3	script	Geren#pmrf01	1_M_SIGNMCNT,{
 		mes "Come again!";
 		close;
 	}
+OnTouch:
+	npctalk "If you need various minerals, elemental stones, or anvils, come to me.";
 }
 
 // Seth Miners Union [광부연합 세스]
@@ -1152,12 +1179,14 @@ paramk,57,103,3	script	Seth Miners Union#pmc03	1_F_01,{
 
 // The Alchemical Cat
 // sign
-paramk,73,98,3	script	[Alchemical Cat]#alc00	HIDDEN_NPC,{
+paramk,73,98,3	script	[Alchemical Cat]#alc00	HIDDEN_NPC,3,3,{
 	mes " == The Alchemical Cat == ";
 	mes "Reagents for alchemy and";
 	mes "ingredients to make medication";
 	mes "All sold here~";
 	close;
+OnTouch:
+	npctalk "[Alchemical Cat]";
 }
 
 // Dye the Alchemist
@@ -1210,11 +1239,12 @@ paramk,80,103,3	script	Earl the Alchemist#alc02	4_TOWER_16,{
 
 // Manbok Groceries
 // sign
-paramk,83,98,3	script	[Manbok Groceries]#fod00	HIDDEN_NPC,{
+paramk,83,98,3	script	[Manbok Groceries]#fod00	HIDDEN_NPC,3,3,{
 	mes " == Manbok Groceries == ";
-	mes "We offer amazing cooking ingredients!";
-	mes "Wolf blood and Petite's Tails!";
+	mes "We provide easy-to-reference cookbooks and fresh dishes!";
 	close;
+OnTouch:
+	npctalk "[Manbok Groceries]";
 }
 
 // Manbok
@@ -1246,12 +1276,13 @@ paramk,87,101,3	script	Manbok#fod01	1_M_03,{
 
 // Magical Store, Ma-Ma-Ma-Ma
 // sign
-paramk,93,98,3	script	Ma-Ma-Ma-Ma#mag	HIDDEN_NPC,{
-	mes " == Ma-Ma-Ma-Ma == ";
+paramk,93,98,3	script	Ma-Ma-Ma-Ma#mag	HIDDEN_NPC,3,3,{
 	mes " == Magical Store == ";
 	mes "Ingredients and gems for magic, ";
 	mes "Specializing in magic scrolls";
 	close;
+OnTouch:
+	npctalk "Magical Store [Ma-Ma-Ma-Ma]";
 }
 
 // Madoha
@@ -1312,10 +1343,12 @@ paramk,103,98,3	script	[Yggdrasil Blessing]#00	HIDDEN_NPC,{
 
 // Exotic Plants
 // sign
-paramk,113,98,3	script	[Exotic Plants]#plt	HIDDEN_NPC,{
-	mes " == Exotic Plants == ";
-	mes "Poisonous plants sold.";
+paramk,113,98,3	script	[Dark of Darkness]#plt	HIDDEN_NPC,3,3,{
+	mes " == Dark of Darkness == ";
+	mes "There are various dungeon loot available. Please feel free to inquire.";
 	close;
+OnTouch:
+	npctalk "Trophy [Dark of Darkness]";
 }
 
 // Heimhunter
@@ -1377,7 +1410,7 @@ OnInit:
 }
 
 // Milky [밀크]
-paramk,59,18,7	script	Milky#pmef01	4_DR_KID_01,{
+paramk,59,18,7	script	Milky#pmef01	4_DR_KID_01,3,3,{
 	mes "[Milky]";
 	mes "Adventurer, adventurer!";
 	mes "Buy my butterfly wings with pretty colors!";
@@ -1388,33 +1421,38 @@ paramk,59,18,7	script	Milky#pmef01	4_DR_KID_01,{
 		mes "[Milky]";
 		mes "Hehe, I hope you buy a lot!";
 		close2;
-		callshop "pmef01";
+		callshop "para_pmef01";
 		end;
 	}
 	mes "[Milky]";
 	mes "Come again!";
 	close;
+OnTouch:
+	npctalk "Buy my wings!";
 }
 
 // You and Me
 // sign
-paramk,133,98,3	script	[You and Me]#unm00	HIDDEN_NPC,{
+paramk,133,98,3	script	[You and Me]#unm00	HIDDEN_NPC,3,3,{
 	mes " == You and Me == ";
 	mes "Specializing in items for Cute Pets";
 	mes "We introduce you to beasts you can mount, and companions you can hunt with";
 	close;
+OnTouch:
+	npctalk "[You and Me]";
 }
 
 // Gecko the Trainer
 paramk,124,97,5	script	Gecko the Trainer#unm01	4_M_DESERT,{
 	mes "[Gecko the Trainer]";
+	.@menu$ = (Zeny < 1000) ? "^aaaaaaYes - 1000z^000000:No" : "Yes - 1000z:No";
 	switch( Class ) {
 	case Job_Rune_Knight:
 	case Job_Rune_Knight_T:
 	case Job_Baby_Rune_Knight:
 		mes "Welcome. Would you like to rent a Dragon?";
 		next;
-		if (select("Yes:No") == 2) {
+		if (select(.@menu$) == 2) {
 			mes "[Gecko the Trainer]";
 			mes "I see. Then have a great day.";
 			close;
@@ -1432,7 +1470,12 @@ paramk,124,97,5	script	Gecko the Trainer#unm01	4_M_DESERT,{
 			mes "[Gecko the Trainer]";
 			mes "Please remove your cash mount.";
 			close;
+		} else if (Zeny < 1000) {
+			mes "[Gecko the Trainer]";
+			mes "We receive a referral fee of 1000z for rent a Dragon. You don't have enough zeny.";
+			close;
 		}
+		Zeny -= 1000;
 		setdragon;
 		close;
 
@@ -1441,7 +1484,7 @@ paramk,124,97,5	script	Gecko the Trainer#unm01	4_M_DESERT,{
 	case Job_Baby_Royal_Guard:
 		mes "Welcome. Would you like to rent a Gryphon?";
 		next;
-		if (select("Yes:No") == 2) {
+		if (select(.@menu$) == 2) {
 			mes "[Gecko the Trainer]";
 			mes "I see. Then have a great day.";
 			close;
@@ -1460,7 +1503,12 @@ paramk,124,97,5	script	Gecko the Trainer#unm01	4_M_DESERT,{
 			mes "[Gecko the Trainer]";
 			mes "Please remove your cash mount.";
 			close;
+		} else if (Zeny < 1000) {
+			mes "[Gecko the Trainer]";
+			mes "We receive a referral fee of 1000z for rent a Gryphon. You don't have enough zeny.";
+			close;
 		}
+		Zeny -= 1000;
 		setriding;
 		close;
 
@@ -1491,134 +1539,84 @@ paramk,126,100,3	script	Tamer Tete#unm02	4_M_DST_CHILD,{
 
 // Mist the Hunter
 paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
-	if (Upper == 0) .@price = 2500; // Normal Falcon - default price
-	if (Upper == 1) .@price = 2500; // Scarf Falcon
-	if (Upper == 2) .@price = 2500; // Baby Falcon
 	mes "[Mist, the Hunter]";
-	if (BaseJob == Job_Hunter) {
-		if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
-			mes "Um...";
-			mes "You can't rent a Falcon";
-			mes "until you dismiss your warg first!";
-			close;
-		}
-		mes "Do you need a Falcon?";
-		mes "You can rent your own";
-		mes "trusty bird of prey for a";
-		mes "fee of just " + .@price + " zeny~";
-		next;
-		switch (select("Rent Falcon.:Buy a Falcon Flute.:Cancel.")) {
-		case 1:
-			if (checkwug()) {
+	mes "Do you need a Falcon?";
+	mes "You can rent your own";
+	mes "trusty bird of prey for a";
+	mes "fee of just " + .@price + " zeny~";
+	next;
+	switch (select("Rent Falcon.:Buy a Falcon Flute.:Cancel.")) {
+	case 1:
+		switch( Class ) {
+		case JOB_HUNTER:
+		case JOB_SNIPER:
+		case JOB_RANGER:
+		case JOB_RANGER_T:
+			if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
 				mes "[Mist, the Hunter]";
-				mes "Um...";
-				mes "You can't rent a Falcon";
-				mes "until you dismiss your warg first!";
+				mes "Falcons have a strong desire to be exclusive, so they do not live with other animals.";
+				mes "Looks like we need to get rid of that furry beast first.";
 				close;
 			}
-			if (Zeny < .@price) {
+			if (Zeny < 2500) {
 				mes "[Mist, the Hunter]";
-				mes "What is this?";
-				mes "You don't have";
-				mes "enough zeny?!";
-				mes "You better start";
-				mes "hunting money";
-				mes "instead of monsters~";
+				mes "lack of money!";
+				mes "Falcon usage fee is 2500z!!";
+				mes "I didn't decide! It was decided by the Hunter Guild!";
 				close;
 			}
-			if (getskilllv("HT_FALCON") == 0) {
+			if(checkfalcon()) {
 				mes "[Mist, the Hunter]";
-				mes "Gosh~";
-				mes "Go learn how to";
-				mes "manage a Falcon";
-				mes "first! I can't rent one";
-				mes "to you if you can't";
-				mes "handle it, you know.";
+				mes "Oh no, you're not ready for the Falcon yet.";
+				mes "Why don't you start learning how to fly a falcon?";
 				close;
 			}
-			if (checkfalcon()) {
-				mes "[Mist, the Hunter]";
-				mes "Um...";
-				mes "You already have";
-				mes "a Falcon. It's right";
-				mes "there, can't you see it?";
-				close;
-			}
-			Zeny -= .@price;
+			mes "[Mist, the Hunter]";
+			mes "You already have a good guy, right?";
+			mes "Ha ha ha ha ha! That guy will be upset.";
+			close2;
+			Zeny -= 2500;
 			setfalcon;
+			end;
+		case JOB_WINDHAWK:
+			mes "[Mist, the Hunter]";
+			mes "Oh my, the one that Windhawk carries around is so fierce that I can't give it to him.";
 			close;
-		case 2:
+		default:
 			mes "[Mist, the Hunter]";
-			mes "With a magical Flute, you can call your Falcon from anywhere!";
-			next;
-			mes "[Mist, the Hunter]";
-			mes "It's marvelous, isn't it? Ha ha ha!";
-			next;
-			mes "[Mist, the Hunter]";
-			mes "Why I'm selling these Falcon Flutes?";
-			mes "It's because I have no clue how they work.";
-			mes "Ha ha ha!";
-			next;
-			mes "[Mist, the Hunter]";
-			mes "Of course, you'll need the Skill ^ff0000Falcon Mastery^000000.";
-			mes "I don't have the Skill, so I don't know how to handle Falcons.";
-			mes "As it's for now, I may never have a Falcon.";
-			next;
-			mes "[Mist, the Hunter]";
-			mes "But I can't give you one for free!";
-			mes "I have to make money since I also need to eat!";
-			next;
-			mes "[Mist, the Hunter]";
-			mes "If you need a Falcon Flute I will sell them for 12,500 zeny. Or is that too expensive?";
-			next;
-			if (eaclass()&EAJL_THIRD) {
-				mes "[Mist, the Hunter]";
-				mes "For Rangers, however, I have a special price of 10,000 zeny!";
-				.@price = 10000;
-				next;
-			} else
-				.@price = 12500;
-			if (select("Don't buy one.:Buy a Falcon Flute.") == 1) {
-				mes "[Mist, the Hunter]";
-				mes "That's too bad. If you need one, come back!";
-				close;
-			}
-			if (Zeny >= .@price) {
-				if (countitem(12848) >= 1) { // Falcon_Flute
-					mes "[Mist, the Hunter]";
-					mes "As I can see you already have a Falcon Flute!";
-					mes "Don't worry, my young friend, once you've purchased the Falcon Flute you won't need to do so again";
-					mes "since the Falcon Flute won't disappear upon usage, isn't that great?";
-					close;
-				}
-				mes "[Mist, the Hunter]";
-				mes "Here, take this flute.";
-				mes "With it you can whistle for your Falcon from anywhere.";
-				Zeny -= .@price;
-				getitem(12848, 1); // Falcon_Flute
-				next;
-				mes "[Mist, the Hunter]";
-				mes "Just a reminder.";
-				mes "You need the Skill ^ff0000Falcon Mastery^000000 in order to use it!";
-				close;
-			}
-			mes "[Mist, the Hunter]";
-			mes "I'm sorry but you don't have enough money to buy a Falcon Flute, please come back when you have more money!";
-			close;
-
-		case 3:
-			mes "[Mist the Hunter]";
-			mes "Look at other items in our store.";
-			mes "We may be offering a new Pet Items soon~";
-			mes "Hahahaha!";
+			mes "what? I'm sorry about this.";
+			mes "Falcons are only rented to officially approved hunters, snipers, and rangers.";
+			mes "I got the wrong person. Sorry.";
 			close;
 		}
-	} else {
-		mes "Young fool!";
-		mes "Falcons can only";
-		mes "be used by Hunters";
-		mes "and Snipers, capish?";
-		mes "...Heh heh, jealous?";
+	case 2:
+		switch( Class ) {
+		case JOB_HUNTER:
+		case JOB_SNIPER:
+		case JOB_RANGER:
+		case JOB_RANGER_T:
+			mes "[Mist, the Hunter]";
+			mes "<^ff0000Falconry Mastery^000000> You must have mastered the skill, right?";
+			mes "It's a useless item if you haven't learned it.";
+			mes "By the way, if nothing comes out, it's out of stock, so come back later.";
+			close2;
+			callshop "para_unm03",1;
+			end;
+		case JOB_WINDHAWK:
+			mes "[Mist, the Hunter]";
+			mes "Hmm? Don't you need a falcon flute?";
+			close;
+		default:
+			mes "[Mist, the Hunter]";
+			mes "If you are not in the Hunter class, there is no use using the flute.";
+			mes "Don't waste money for no reason.";
+			close;
+		}
+	case 3:
+		mes "[Mist, the Hunter]";
+		mes "Oh, take a look at the other things in our store.";
+		mes "I may be bringing a groundbreaking Qpet soon~";
+		mes "Ha ha ha ha ha!";
 		close;
 	}
 }
