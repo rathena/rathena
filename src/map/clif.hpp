@@ -748,7 +748,7 @@ bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 sk
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
 void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2 = "", const char* map3 = "", const char* map4 = "" );
-void clif_skill_memomessage(map_session_data* sd, int type);
+void clif_skill_memomessage( map_session_data& sd, uint8 type );
 void clif_skill_teleportmessage( map_session_data& sd, int16 type );
 void clif_skill_produce_mix_list(map_session_data *sd, int skill_id, int trigger);
 void clif_cooking_list(map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type);

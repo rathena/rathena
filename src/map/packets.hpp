@@ -842,6 +842,12 @@ struct PACKET_ZC_NOTIFY_MAPINFO {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_MAPINFO, 0x189)
 
+struct PACKET_ZC_ACK_REMEMBER_WARPPOINT {
+	int16 packetType;
+	uint8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REMEMBER_WARPPOINT, 0x11e)
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

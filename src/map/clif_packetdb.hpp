@@ -160,7 +160,6 @@
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
 	packet(0x011c,68);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
-	packet(0x011e,3);
 	packet(0x011f,16);
 	packet(0x0120,6);
 	packet( cartlistequipType, -1 );

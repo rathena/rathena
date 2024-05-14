@@ -6273,8 +6273,8 @@ void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_l
 }
 
 
-/// Memo message (ZC_ACK_REMEMBER_WARPPOINT).
-/// 011e <type>.B
+/// Memo message.
+/// 011e <type>.B (ZC_ACK_REMEMBER_WARPPOINT)
 /// type:
 ///     0 = "Saved location as a Memo Point for Warp skill." in color 0xFFFF00 (cyan)
 ///     1 = "Skill Level is not high enough." in color 0x0000FF (red)
@@ -6282,17 +6282,13 @@ void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_l
 ///
 /// @param sd Who receives the message
 /// @param type What message
-void clif_skill_memomessage(map_session_data* sd, int type)
-{
-	int fd;
+void clif_skill_memomessage( map_session_data& sd, uint8 type ){
+	PACKET_ZC_ACK_REMEMBER_WARPPOINT packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_ACK_REMEMBER_WARPPOINT;
+	packet.type = type;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x11e));
-	WFIFOW(fd,0)=0x11e;
-	WFIFOB(fd,2)=type;
-	WFIFOSET(fd,packet_len(0x11e));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
