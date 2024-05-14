@@ -452,7 +452,7 @@ paramk,113,56,3	script	Cassie#gst05	1_F_PUBGIRL,3,3,{
 	switch (select("Show me.:No.")) {
 	case 1:
 		mes "[Cassie]";
-        mes "bon appetite!";
+		mes "bon appetite!";
 		close2;
 		callshop "para_unm03";
 		end;
