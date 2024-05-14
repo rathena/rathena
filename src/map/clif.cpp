@@ -6296,25 +6296,21 @@ void clif_skill_memomessage(map_session_data* sd, int type)
 }
 
 
-/// Teleport message (ZC_NOTIFY_MAPINFO).
-/// 0189 <type>.W
+/// Teleport message.
+/// 0189 <type>.W (ZC_NOTIFY_MAPINFO)
 /// type:
 ///     0 = "Unable to Teleport in this area" in color 0xFFFF00 (cyan)
 ///     1 = "Saved point cannot be memorized." in color 0x0000FF (red)
 ///
 /// @param sd Who receives the message
 /// @param type What message
-void clif_skill_teleportmessage(map_session_data *sd, int type)
-{
-	int fd;
+void clif_skill_teleportmessage( map_session_data& sd, int16 type ){
+	PACKET_ZC_NOTIFY_MAPINFO packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_NOTIFY_MAPINFO;
+	packet.type = type;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x189));
-	WFIFOW(fd,0)=0x189;
-	WFIFOW(fd,2)=type;
-	WFIFOSET(fd,packet_len(0x189));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

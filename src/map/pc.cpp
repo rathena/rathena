@@ -6186,7 +6186,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 
 	if( itemdb_group.item_exists( IG_MF_NOTELEPORT, nameid ) ){
 		if( ( mapdata->getMapFlag(MF_NOTELEPORT) || mapdata_flag_gvg2( mapdata ) ) ){
-			clif_skill_teleportmessage( sd, 0 );
+			clif_skill_teleportmessage( *sd, 0 );
 			return false;
 		}
 
@@ -7069,7 +7069,7 @@ bool pc_memo(map_session_data* sd, int pos)
 
 	// check mapflags
 	if( sd->bl.m >= 0 && (map_getmapflag(sd->bl.m, MF_NOMEMO) || map_getmapflag(sd->bl.m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
-		clif_skill_teleportmessage(sd, 1); // "Saved point cannot be memorized."
+		clif_skill_teleportmessage( *sd, 1 ); // "Saved point cannot be memorized."
 		return false;
 	}
 

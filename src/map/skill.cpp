@@ -889,7 +889,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case ALL_THANATOS_RECALL:
 		case ALL_LIGHTHALZEN_RECALL:
 			if(mapdata->getMapFlag(MF_NOWARP)) {
-				clif_skill_teleportmessage(&sd,0);
+				clif_skill_teleportmessage( sd, 0 );
 				return true;
 			}
 			return false;
@@ -899,7 +899,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
 			if(mapdata->getMapFlag(MF_NOTELEPORT)) {
-				clif_skill_teleportmessage(&sd,0);
+				clif_skill_teleportmessage( sd, 0 );
 				return true;
 			}
 			return false; // gonna be checked in 'skill_castend_nodamage_id'
@@ -907,7 +907,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
 			if (mapdata->getMapFlag(MF_NOMEMO)) {
-				clif_skill_teleportmessage(&sd,1);
+				clif_skill_teleportmessage( sd, 1 );
 				return true;
 			}
 			break;
@@ -983,7 +983,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WM_GLOOMYDAY:
 		case WM_SATURDAY_NIGHT_FEVER:
 			if( !mapdata_flag_vs(mapdata) ) {
-				clif_skill_teleportmessage(&sd,2); // This skill uses this msg instead of skill fails.
+				clif_skill_teleportmessage( sd, 2 ); // This skill uses this msg instead of skill fails.
 				return true;
 			}
 			break;
@@ -9318,7 +9318,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sd)
 		{
 			if (map_getmapflag(bl->m, MF_NOTELEPORT) && skill_lv <= 2) {
-				clif_skill_teleportmessage(sd,0);
+				clif_skill_teleportmessage( *sd, 0 );
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skill_lv <= 2) { // duel restriction [LuzZza]
