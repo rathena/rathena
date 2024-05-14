@@ -10863,7 +10863,7 @@ bool pc_jobchange(map_session_data *sd,int job, char upper)
 	}
 
 	if(sd->status.manner < 0)
-		clif_changestatus(sd,SP_MANNER,sd->status.manner);
+		clif_changestatus( *sd, SP_MANNER, sd->status.manner );
 
 	status_calc_pc(sd,SCO_FORCE);
 	pc_checkallowskill(sd);

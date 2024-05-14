@@ -10895,7 +10895,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = 60000;
 			val1 = battle_config.manner_system; // Mute filters.
 			if (sd) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
+				clif_changestatus( *sd, SP_MANNER, sd->status.manner );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
@@ -13399,7 +13399,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sd && sd->status.manner < 0 && tid != INVALID_TIMER)
 				sd->status.manner = 0;
 			if (sd && tid == INVALID_TIMER) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
+				clif_changestatus( *sd, SP_MANNER, sd->status.manner );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
@@ -14220,7 +14220,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_NOCHAT:
 		if(sd) {
 			sd->status.manner++;
-			clif_changestatus(sd,SP_MANNER,sd->status.manner);
+			clif_changestatus( *sd, SP_MANNER, sd->status.manner );
 			clif_updatestatus(*sd,SP_MANNER);
 			if (sd->status.manner < 0) { // Every 60 seconds your manner goes up by 1 until it gets back to 0.
 				sc_timer_next(60000+tick);

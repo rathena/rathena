@@ -3850,29 +3850,25 @@ void clif_updatestatus( map_session_data& sd, enum _sp type ){
 }
 
 
-/// Notifies client of a parameter change of an another player (ZC_PAR_CHANGE_USER).
-/// 01ab <account id>.L <var id>.W <value>.L
-void clif_changestatus(map_session_data* sd,int type,int val)
-{
-	unsigned char buf[12];
+/// Notifies client of a parameter change of an another player.
+/// 01ab <account id>.L <var id>.W <value>.L (ZC_PAR_CHANGE_USER)
+void clif_changestatus( map_session_data& sd, int32 type, int32 val ) {
+	PACKET_ZC_PAR_CHANGE_USER packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_PAR_CHANGE_USER;
+	packet.gid = sd.bl.id;
+	packet.type = static_cast<decltype(packet.type)>(type);
 
-	WBUFW(buf,0)=0x1ab;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=type;
-
-	switch(type)
-	{
+	switch(type) {
 		case SP_MANNER:
-			WBUFL(buf,8)=val;
+			packet.value = val;
 			break;
 		default:
-			ShowError("clif_changestatus : unrecognized type %d.\n",type);
+			ShowError("clif_changestatus : unrecognized type %d.\n", type);
 			return;
 	}
 
-	clif_send(buf,packet_len(0x1ab),&sd->bl,AREA_WOS);
+	clif_send( &packet, sizeof( packet ), &sd.bl, AREA_WOS );
 }
 
 

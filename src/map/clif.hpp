@@ -664,7 +664,7 @@ void clif_dropitem( map_session_data& sd, int index, int amount );
 void clif_delitem( map_session_data& sd, int index, int amount, short reason );
 void clif_update_hp(map_session_data &sd);
 void clif_updatestatus( map_session_data& sd, _sp type );
-void clif_changestatus(map_session_data* sd,int type,int val);	//area
+void clif_changestatus( map_session_data& sd, int32 type, int32 val );	//area
 int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
 void clif_takeitem(struct block_list* src, struct block_list* dst);
 void clif_sitting(struct block_list* bl);
