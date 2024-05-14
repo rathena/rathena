@@ -367,7 +367,7 @@ enum map_property : uint8_t
 	MAPPROPERTY_DENYSKILLZONE = 6,
 };
 
-enum map_type : uint8_t 
+enum e_map_type : uint8_t 
 {// clif_map_type
 	MAPTYPE_VILLAGE              = 0,
 	MAPTYPE_VILLAGE_IN           = 1,

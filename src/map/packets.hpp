@@ -861,6 +861,12 @@ struct PACKET_ZC_RESURRECTION {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_RESURRECTION, 0x1b9)
 
+struct PACKET_ZC_NOTIFY_MAPPROPERTY2 {
+	int16 packetType;
+	int16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_MAPPROPERTY2, 0x1d6)
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

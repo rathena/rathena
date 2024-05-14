@@ -6908,19 +6908,15 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 	clif_send(buf,packet_len(cmd),bl,t);
 }
 
-/// Set the map type (ZC_NOTIFY_MAPPROPERTY2).
-/// 01d6 <type>.W
-void clif_map_type(map_session_data* sd, enum map_type type)
-{
-	int fd;
+/// Set the map type.
+/// 01d6 <type>.W (ZC_NOTIFY_MAPPROPERTY2)
+void clif_map_type( map_session_data& sd, e_map_type type ){
+	PACKET_ZC_NOTIFY_MAPPROPERTY2 packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_NOTIFY_MAPPROPERTY2;
+	packet.type = static_cast<decltype(packet.type)>(type);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x1D6));
-	WFIFOW(fd,0)=0x1D6;
-	WFIFOW(fd,2)=type;
-	WFIFOSET(fd,packet_len(0x1D6));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -11096,7 +11092,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 
 		if( mapdata->getMapFlag(MF_BATTLEGROUND) )
 		{
-			clif_map_type(sd, MAPTYPE_BATTLEFIELD); // Battleground Mode
+			clif_map_type( *sd, MAPTYPE_BATTLEFIELD ); // Battleground Mode
 			if( map_getmapflag(sd->bl.m, MF_BATTLEGROUND) == 2 )
 				clif_bg_updatescore_single(sd);
 		}

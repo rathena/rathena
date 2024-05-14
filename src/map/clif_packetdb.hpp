@@ -323,7 +323,6 @@
 	packet(0x01d1,14);
 	packet(0x01d2,10);
 	parseable_packet(0x01d5,-1,clif_parse_NpcStringInput,2,4,8);
-	packet(0x01d6,4);
 	packet(0x01d7,11);
 	packet(0x01d8,54);
 	packet(0x01d9,53);
