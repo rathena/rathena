@@ -2098,13 +2098,13 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	md->last_thinktime=tick;
 
 	if (md->master_id) {
-		// Get mob data of master
-		mob_data* mmd = map_id2md(md->master_id);
-
-		// If neither master nor slave have been spotted we don't have to execute the slave AI
-		if (mmd && !mob_is_spotted(mmd) && !mob_is_spotted(md))
-			return 0;
-
+		if (!mob_is_spotted(md)) {
+			// Get mob data of master
+			mob_data* mmd = map_id2md(md->master_id);
+			// If neither master nor slave have been spotted we don't have to execute the slave AI
+			if (mmd && !mob_is_spotted(mmd))
+				return 0;
+		}
 		mob_ai_sub_hard_slavemob (md,tick);
 		return 0;
 	}
