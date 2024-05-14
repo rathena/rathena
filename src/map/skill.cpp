@@ -3380,7 +3380,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 			case 1: //Copied by Plagiarism
 				{
 					if (tsd->cloneskill_idx > 0 && tsd->status.skill[tsd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id);
+						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id, true);
 						tsd->status.skill[tsd->cloneskill_idx].id = 0;
 						tsd->status.skill[tsd->cloneskill_idx].lv = 0;
 						tsd->status.skill[tsd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
@@ -3400,7 +3400,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 					//Skill level copied depends on Reproduce skill that used
 					lv = (tsc) ? tsc->getSCE(SC__REPRODUCE)->val1 : 1;
 					if( tsd->reproduceskill_idx > 0 && tsd->status.skill[tsd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id);
+						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id, true);
 						tsd->status.skill[tsd->reproduceskill_idx].id = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].lv = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
