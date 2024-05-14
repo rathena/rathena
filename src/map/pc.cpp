@@ -9488,7 +9488,7 @@ void pc_respawn(map_session_data* sd, clr_type clrtype)
 	pc_setstand(sd, true);
 	pc_setrestartvalue(sd,3);
 	if( pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, clrtype ) != SETPOS_OK ){
-		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
+		clif_resurrection( sd->bl, 1 ); //If warping fails, send a normal stand up packet.
 	}
 }
 
@@ -9607,7 +9607,7 @@ int pc_dead(map_session_data *sd,struct block_list *src)
 			sd->state.snovice_dead_flag = 1;
 			pc_setrestartvalue(sd,1);
 			status_percent_heal(&sd->bl, 100, 100);
-			clif_resurrection(&sd->bl, 1);
+			clif_resurrection( sd->bl, 1 );
 			if(battle_config.pc_invincible_time)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 			sc_start(&sd->bl,&sd->bl,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));

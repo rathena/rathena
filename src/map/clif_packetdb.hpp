@@ -191,7 +191,6 @@
 	packet(0x0145,19);
 	parseable_packet(0x0146,6,clif_parse_NpcCloseClicked,2);
 	packet(0x0147,39);
-	packet(0x0148,8);
 	parseable_packet(0x0149,9,clif_parse_GMReqNoChat,2,6,7);
 	packet(0x014a,6);
 	packet(0x014b,27);

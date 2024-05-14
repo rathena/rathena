@@ -6856,19 +6856,18 @@ void clif_heal(int fd,int type,int val) {
 /// 0148 <id>.L <type>.W
 /// type:
 ///     ignored
-void clif_resurrection(struct block_list *bl,int type)
-{
-	unsigned char buf[16];
+void clif_resurrection( block_list& bl, int16 type ){
+	PACKET_ZC_RESURRECTION packet{};
 
-	nullpo_retv(bl);
+	packet.packetType = HEADER_ZC_RESURRECTION;
+	packet.gid = bl.id;
+	packet.type = 0;
 
-	WBUFW(buf,0)=0x148;
-	WBUFL(buf,2)=bl->id;
-	WBUFW(buf,6)=0;
+	clif_send( &packet, sizeof( packet ), &bl, (type == 1 ? AREA : AREA_WOS) );
 
-	clif_send(buf,packet_len(0x148),bl,type==1 ? AREA : AREA_WOS);
-	if (disguised(bl))
-		clif_spawn(bl);
+	if (disguised(&bl)) {
+		clif_spawn(&bl);
+	}
 }
 
 
