@@ -848,6 +848,12 @@ struct PACKET_ZC_ACK_REMEMBER_WARPPOINT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_REMEMBER_WARPPOINT, 0x11e)
 
+struct PACKET_ZC_DISPEL {
+	int16 packetType;
+	uint32 gid;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DISPEL, 0x1b9)
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

@@ -5934,17 +5934,15 @@ void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x,
 }
 
 
-/// Notifies clients in area, that an object canceled casting (ZC_DISPEL).
-/// 01b9 <id>.L
-void clif_skillcastcancel(struct block_list* bl)
-{
-	unsigned char buf[16];
+/// Notifies clients in area, that an object canceled casting.
+/// 01b9 <id>.L (ZC_DISPEL)
+void clif_skillcastcancel( block_list& bl ){
+	PACKET_ZC_DISPEL packet{};
 
-	nullpo_retv(bl);
+	packet.packetType = HEADER_ZC_DISPEL;
+	packet.gid = bl.id;
 
-	WBUFW(buf,0) = 0x1b9;
-	WBUFL(buf,2) = bl->id;
-	clif_send(buf,packet_len(0x1b9), bl, AREA);
+	clif_send( &packet, sizeof(PACKET_ZC_DISPEL), &bl, AREA );
 }
 
 

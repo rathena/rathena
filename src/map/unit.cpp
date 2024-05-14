@@ -2988,7 +2988,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 	if(bl->type==BL_MOB)
 		((TBL_MOB*)bl)->skill_idx = -1;
 
-	clif_skillcastcancel(bl);
+	clif_skillcastcancel( *bl );
 
 	return 1;
 }

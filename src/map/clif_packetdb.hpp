@@ -302,7 +302,6 @@
 	packet(0x01b6,114);
 	packet(0x01b7,6);
 	packet(0x01b8,3);
-	packet(0x01b9,6);
 	parseable_packet(0x01ba,26,clif_parse_GMShift,2);
 	parseable_packet(0x01bb,26,clif_parse_GMShift,2);
 	parseable_packet(0x01bc,26,clif_parse_GMRecall,2);
