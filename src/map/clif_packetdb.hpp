@@ -254,7 +254,6 @@
 	packet(0x0185,34);
 	//packet(0x0186,-1);
 	packet(0x0187,6);
-	packet(0x0188,8);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
 	packet(0x018b,4);
 	packet(0x018c,29);

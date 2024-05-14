@@ -910,7 +910,7 @@ void clif_resurrection( block_list& bl, int16 type );
 void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);
 void clif_pvpset(map_session_data *sd, int pvprank, int pvpnum,int type);
 void clif_map_property_mapall(int map, enum map_property property);
-void clif_refine(int fd, int fail, int index, int val);
+void clif_refine( int fd, uint16 result, int32 index, int8 val );
 void clif_upgrademessage( map_session_data* sd, int result, t_itemid item_id );
 
 //petsystem
