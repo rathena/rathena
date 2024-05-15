@@ -98959,6 +98959,7 @@ Body:
     DamageMotion: 480
     DamageTaken: 10
     Ai: 21
+    Class: Boss
     Modes:
       Mvp: true
     MvpDrops:
