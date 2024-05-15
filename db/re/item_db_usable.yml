@@ -9511,6 +9511,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      callfunc "F_CashSiegeTele2";
   - Id: 12416
     AegisName: Lucky_Egg_C3
     Name: Lucky Egg C3
