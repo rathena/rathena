@@ -34,7 +34,7 @@ jobs:
           gcc: ['9', '10', '11', '12', '13']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Update & Install packages
         # Ubuntu runners already have most of the packages rAthena requires to build.

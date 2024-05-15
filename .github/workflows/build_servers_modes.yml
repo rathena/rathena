@@ -36,7 +36,7 @@ jobs:
           mode: ['PRE','RE']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
       - name: Variable Parsing - PRE
