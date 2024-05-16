@@ -5180,6 +5180,11 @@ void npc_parse_mob2(struct spawn_data* mob)
 	{
 		struct mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
+		// Determine center cell for each mob in the spawn line
+		if (mob->xs > 1)
+			md->centerX = rnd_value(mob->x - mob->xs + 1, mob->x + mob->xs - 1);
+		if (mob->ys > 1)
+			md->centerY = rnd_value(mob->y - mob->ys + 1, mob->y + mob->ys - 1);
 		md->spawn->active++;
 		mob_spawn(md);
 	}
@@ -5290,9 +5295,9 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	if (mob.xs < 0) {
 		if (w1count > 3) {
-			ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d').\n", mob.xs, mob_id, filepath, strline(buffer, start - buffer));
+			ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d'). Defaulting to map-wide.\n", mob.xs, mob_id, filepath, strline(buffer, start - buffer));
 		}
-		mob.xs = 0;
+		mob.xs = -1;
 	}
 	else if (mob.xs == 0) {
 		// Both 0 and 1 result in fixed x-coordinate
@@ -5302,9 +5307,9 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	if (mob.ys < 0) {
 		if (w1count > 4) {
-			ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d').\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
+			ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d'). Defaulting to map-wide.\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
 		}
-		mob.ys = 0;
+		mob.ys = -1;
 	}
 	else if (mob.ys == 0) {
 		// Both 0 and 1 result in fixed y-coordinate

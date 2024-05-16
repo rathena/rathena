@@ -474,6 +474,8 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->spawn_timer = INVALID_TIMER;
 	md->deletetimer = INVALID_TIMER;
 	md->skill_idx = -1;
+	md->centerX = data->x;
+	md->centerY = data->y;
 	status_set_viewdata(&md->bl, md->mob_id);
 	status_change_init(&md->bl);
 	unit_dataset(&md->bl);
@@ -1117,19 +1119,17 @@ int mob_spawn (struct mob_data *md)
 
 	if (md->spawn) { //Respawn data
 		md->bl.m = md->spawn->m;
-		md->bl.x = md->spawn->x;
-		md->bl.y = md->spawn->y;
+		md->bl.x = md->centerX;
+		md->bl.y = md->centerY;
 
-		// Search can be skipped if spawn location is fixed
-		if ((md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs != 1 || md->spawn->ys != 1)
+		// Search can be skipped for boss monster spawns if spawn location is fixed
+		// We can't skip normal monsters as they should pick a random location if the cell is blocked (e.g. Icewall)
+		// The center cell has a 1/(xs*ys) chance to be picked if free
+		if ((!md->spawn->state.boss || (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs != 1 || md->spawn->ys != 1)
+			&& (md->spawn->xs + md->spawn->ys < 1 || !rnd_chance(1, md->spawn->xs * md->spawn->ys) || !map_getcell(md->bl.m, md->bl.x, md->bl.y, CELL_CHKREACH)))
 		{
 			// Officially the area is split into 4 squares, 4 lines and 1 dot and for each of those there is one attempt
 			// We simplify this to trying 8 times in the whole area and then at the center cell even though that's not fully accurate
-			// The search for a spawn location is called twice, meaning the area is doubled in size but with a strong bias towards the center
-			// The center cell has a 1/(xs*ys) chance to be picked, otherwise we call the search function to get the start coordinates
-			// On this first iteration we don't care if the search succeeds or if it's visible to player as it's not the final spawn location
-			if ((md->spawn->xs > 1 || md->spawn->ys > 1) && !rnd_chance(1, md->spawn->xs * md->spawn->ys))
-				map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs-1, md->spawn->ys-1, 0, 8);
 
 			// Try to spawn monster in defined area (8 tries)
 			if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs-1, md->spawn->ys-1, battle_config.no_spawn_on_player?4:0, 8))
