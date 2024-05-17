@@ -14445,14 +14445,15 @@ Body:
   - Id: 12858
     AegisName: Golden_Potion_RG
     Name: RG Golden Potion
-    Type: Delayconsume
+    Type: Usable
     Weight: 30
     Delay:
       Duration: 1000
       Status: Reuse_Limit_F
     Script: |
       percentheal 100,100;
-      itemskill "PR_KYRIE",10;
+      sc_start SC_KYRIE,100000,10;
+      skilleffect "PR_KYRIE",0;
   - Id: 12860
     AegisName: Mommy_Day_Cake
     Name: Mommy Day Cake
