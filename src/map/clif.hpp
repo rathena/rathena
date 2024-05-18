@@ -664,7 +664,7 @@ void clif_dropitem( map_session_data& sd, int index, int amount );
 void clif_delitem( map_session_data& sd, int index, int amount, short reason );
 void clif_update_hp(map_session_data &sd);
 void clif_updatestatus( map_session_data& sd, _sp type );
-void clif_changestatus( map_session_data& sd, int32 type, int32 val );	//area
+void clif_changestatus( map_session_data& sd, int32 type, int32 val );
 int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
 void clif_takeitem(struct block_list* src, struct block_list* dst);
 void clif_sitting(struct block_list* bl);
@@ -673,7 +673,7 @@ void clif_sprite_change(struct block_list *bl, int id, int type, int val, int va
 void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
-void clif_arrowequip( map_session_data& sd, int16 val ); //self
+void clif_arrowequip( map_session_data& sd, int16 idx );
 void clif_arrow_fail(map_session_data *sd,int type); //self
 void clif_arrow_create_list(map_session_data *sd);	//self
 void clif_statusupack(map_session_data *sd,int type,int ok,int val);	// self
@@ -962,7 +962,7 @@ void clif_feel_hate_reset(map_session_data *sd);
 void clif_hominfo(map_session_data *sd, struct homun_data *hd, int flag);
 void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
-void clif_hom_food( map_session_data& sd, int32 foodid, uint8 result );	//[orn]
+void clif_hom_food( map_session_data& sd, int32 foodid, uint8 result );
 void clif_send_homdata( homun_data& hd, e_hom_state2 state );
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );

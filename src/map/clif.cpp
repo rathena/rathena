@@ -1984,7 +1984,7 @@ void clif_homskillup( homun_data& hd, uint16 skill_id ){
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_hom_food( map_session_data& sd, int32 foodid, uint8 result ){
+void clif_hom_food( map_session_data& sd, int32 foodid, bool success ){
 	PACKET_ZC_FEED_MER packet{};
 
 	packet.packetType = HEADER_ZC_FEED_MER;
@@ -4083,12 +4083,12 @@ void clif_initialstatus( map_session_data& sd ) {
 	packet.plusdefPower = pc_rightside_def( &sd );
 	packet.mdefPower = pc_leftside_mdef( &sd );
 
-	int32 mdef2 = pc_rightside_mdef( &sd );
-	packet.plusmdefPower = 
-#ifndef RENEWAL
-		( mdef2 < 0 ) ? 0 : //Negative check for Frenzy'ed characters.
+#ifdef RENEWAL
+	packet.plusmdefPower = pc_rightside_mdef( &sd );
+#else
+	// Negative check for Frenzy'ed characters.
+	packet.plusmdefPower = std::max( pc_rightside_mdef( &sd ), 0 );
 #endif
-		mdef2;
 
 	packet.hitSuccessValue = sd.battle_status.hit;
 	packet.avoidSuccessValue = sd.battle_status.flee;
@@ -4146,7 +4146,8 @@ void clif_arrowequip( map_session_data& sd, int16 val ) {
 
 	packet.packetType = HEADER_ZC_EQUIP_ARROW;
 
-	packet.index = client_index(val);	// Item ID of the arrow
+	// Inventory index of the arrow
+	packet.index = client_index( idx );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
@@ -5989,7 +5990,7 @@ void clif_skill_fail( map_session_data& sd, uint16 skill_id, enum useskill_fail_
 /// Skill cooldown display icon.
 /// 043d <skill ID>.W <tick>.L (ZC_SKILL_POSTDELAY)
 void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick ){
-#if PACKETVER >= 20081112
+#if PACKETVER_MAIN_NUM >= 20081112 || PACKETVER_RE_NUM >= 20081111 || defined(PACKETVER_ZERO)
 	PACKET_ZC_SKILL_POSTDELAY packet{};
 
 	packet.PacketType = HEADER_ZC_SKILL_POSTDELAY;
@@ -8422,7 +8423,7 @@ void clif_pet_emotion(struct pet_data *pd,int param)
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_pet_food( map_session_data& sd, int32 foodid, uint8 result ){
+void clif_pet_food( map_session_data& sd, int32 foodid, bool success ){
 	PACKET_ZC_FEED_PET packet{};
 
 	packet.packetType = HEADER_ZC_FEED_PET;
