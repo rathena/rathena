@@ -1988,7 +1988,7 @@ void clif_hom_food( map_session_data& sd, int32 foodid, bool success ){
 	PACKET_ZC_FEED_MER packet{};
 
 	packet.packetType = HEADER_ZC_FEED_MER;
-	packet.result = result;
+	packet.result = success;
 	packet.itemId = client_nameid( foodid );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
@@ -3070,7 +3070,7 @@ void clif_inventorylist( map_session_data *sd ){
 	}
 
 	if( sd->equip_index[EQI_AMMO] >= 0 )
-		clif_arrowequip( *sd, sd->equip_index[EQI_AMMO] );
+		clif_arrowequip( *sd );
 
 	if( equip ) {
 		itemlist_equip.PacketType  = inventorylistequipType;
@@ -3852,21 +3852,16 @@ void clif_updatestatus( map_session_data& sd, enum _sp type ){
 
 /// Notifies client of a parameter change of an another player.
 /// 01ab <account id>.L <var id>.W <value>.L (ZC_PAR_CHANGE_USER)
-void clif_changestatus( map_session_data& sd, int32 type, int32 val ) {
+/// var id:
+///     SP_MANNER
+///     ?
+void clif_changemanner( map_session_data& sd, int32 val ) {
 	PACKET_ZC_PAR_CHANGE_USER packet{};
 
 	packet.packetType = HEADER_ZC_PAR_CHANGE_USER;
 	packet.gid = sd.bl.id;
-	packet.type = static_cast<decltype(packet.type)>(type);
-
-	switch(type) {
-		case SP_MANNER:
-			packet.value = val;
-			break;
-		default:
-			ShowError("clif_changestatus : unrecognized type %d.\n", type);
-			return;
-	}
+	packet.type = static_cast<decltype(packet.type)>(SP_MANNER);
+	packet.value = val;
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, AREA_WOS );
 }
@@ -4137,17 +4132,17 @@ void clif_initialstatus( map_session_data& sd ) {
 
 /// Marks an ammunition item in inventory as equipped.
 /// 013c <index>.W (ZC_EQUIP_ARROW)
-void clif_arrowequip( map_session_data& sd, int16 val ) {
-	PACKET_ZC_EQUIP_ARROW packet{};
-
+void clif_arrowequip( map_session_data& sd ) {
 #if PACKETVER >= 20121128
 	clif_status_change(&sd.bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INFINITE_TICK, 0, 0, 0);
 #endif
 
+	PACKET_ZC_EQUIP_ARROW packet{};
+
 	packet.packetType = HEADER_ZC_EQUIP_ARROW;
 
 	// Inventory index of the arrow
-	packet.index = client_index( idx );
+	packet.index = client_index( sd.equip_index[EQI_AMMO] );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
@@ -6268,11 +6263,11 @@ void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_l
 ///
 /// @param sd Who receives the message
 /// @param type What message
-void clif_skill_memomessage( map_session_data& sd, uint8 type ){
+void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_result result ){
 	PACKET_ZC_ACK_REMEMBER_WARPPOINT packet{};
 
 	packet.packetType = HEADER_ZC_ACK_REMEMBER_WARPPOINT;
-	packet.type = type;
+	packet.type = static_cast<decltype(packet.type)>(result);
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
@@ -6283,14 +6278,15 @@ void clif_skill_memomessage( map_session_data& sd, uint8 type ){
 /// type:
 ///     0 = "Unable to Teleport in this area" in color 0xFFFF00 (cyan)
 ///     1 = "Saved point cannot be memorized." in color 0x0000FF (red)
+///     2 = ?
 ///
 /// @param sd Who receives the message
 /// @param type What message
-void clif_skill_teleportmessage( map_session_data& sd, int16 type ){
+void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result result ){
 	PACKET_ZC_NOTIFY_MAPINFO packet{};
 
 	packet.packetType = HEADER_ZC_NOTIFY_MAPINFO;
-	packet.type = type;
+	packet.type = static_cast<decltype(packet.type)>(result);
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
@@ -6844,18 +6840,18 @@ void clif_heal(int fd,int type,int val) {
 }
 
 
-/// Displays resurrection effect (ZC_RESURRECTION).
-/// 0148 <id>.L <type>.W
+/// Displays resurrection effect.
+/// 0148 <id>.L <type>.W (ZC_RESURRECTION)
 /// type:
 ///     ignored
-void clif_resurrection( block_list& bl, int16 type ){
+void clif_resurrection( block_list& bl ){
 	PACKET_ZC_RESURRECTION packet{};
 
 	packet.packetType = HEADER_ZC_RESURRECTION;
 	packet.gid = bl.id;
 	packet.type = 0;
 
-	clif_send( &packet, sizeof( packet ), &bl, (type == 1 ? AREA : AREA_WOS) );
+	clif_send( &packet, sizeof( packet ), &bl, AREA );
 
 	if (disguised(&bl)) {
 		clif_spawn(&bl);
@@ -6963,15 +6959,16 @@ void clif_map_property_mapall(int map_idx, enum map_property property)
 ///     0 = success
 ///     1 = failure
 ///     2 = downgrade
-void clif_refine( int fd, uint16 result, int32 index, int8 val ){
+///     3 = failure (?)
+void clif_refine( map_session_data& sd, uint16 index, e_ack_itemrefining result ){
 	PACKET_ZC_ACK_ITEMREFINING packet{};
 
 	packet.packetType = HEADER_ZC_ACK_ITEMREFINING;
-	packet.result = result;
+	packet.result = static_cast<decltype(packet.result)>(result);
 	packet.index = client_index( index );
-	packet.value = static_cast<decltype(packet.value)>(val);
+	packet.value = static_cast<decltype(packet.value)>( sd.inventory.u.items_inventory[index].refine );
 
-	socket_send<PACKET_ZC_ACK_ITEMREFINING>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 /// Notifies the client about the result of a weapon refine attempt (ZC_ACK_WEAPONREFINE).
@@ -8427,7 +8424,7 @@ void clif_pet_food( map_session_data& sd, int32 foodid, bool success ){
 	PACKET_ZC_FEED_PET packet{};
 
 	packet.packetType = HEADER_ZC_FEED_PET;
-	packet.result = result;
+	packet.result = success;
 	packet.itemId = client_nameid( foodid );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
@@ -22471,7 +22468,7 @@ void clif_parse_refineui_refine( int fd, map_session_data* sd ){
 		item->refine = cap_value( item->refine + 1, 0, MAX_REFINE );
 		log_pick_pc( sd, LOG_TYPE_OTHER, 1, item );
 		clif_misceffect( &sd->bl, 3 );
-		clif_refine( fd, 0, index, item->refine );
+		clif_refine( *sd, index, ITEMREFINING_SUCCESS );
 		if (info->broadcast_success) {
 			clif_broadcast_refine_result(*sd, item->nameid, item->refine, true);
 		}
@@ -22487,20 +22484,20 @@ void clif_parse_refineui_refine( int fd, map_session_data* sd ){
 		}
 		// Blacksmith blessings were used to prevent breaking and downgrading
 		if( blacksmith_amount > 0 ){
-			clif_refine( fd, 3, index, item->refine );
+			clif_refine( *sd, index, ITEMREFINING_FAILURE2 );
 			clif_refineui_info( sd, index );
 		// Delete the item if it is breakable
 		}else if( cost->breaking_rate > 0 && ( rnd() % 10000 ) < cost->breaking_rate ){
-			clif_refine( fd, 1, index, item->refine );
+			clif_refine( *sd, index, ITEMREFINING_FAILURE );
 			pc_delitem( sd, index, 1, 0, 2, LOG_TYPE_CONSUME );
 		// Downgrade the item if necessary
 		}else if( cost->downgrade_amount > 0 ){
 			item->refine = cap_value( item->refine - cost->downgrade_amount, 0, MAX_REFINE );
-			clif_refine( fd, 2, index, item->refine );
+			clif_refine( *sd, index, ITEMREFINING_DOWNGRADE );
 			clif_refineui_info(sd, index);
 		// Only show failure, but dont do anything
 		}else{
-			clif_refine( fd, 3, index, item->refine );
+			clif_refine( *sd, index, ITEMREFINING_FAILURE2 );
 			clif_refineui_info( sd, index );
 		}
 
