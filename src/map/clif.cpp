@@ -2545,19 +2545,65 @@ void clif_scriptclear( map_session_data& sd, int npcid ){
 void clif_sendfakenpc( map_session_data& sd, uint32 npcid ){
 	sd.state.using_fake_npc = 1;
 
-	PACKET_ZC_NOTIFY_STANDENTRY packet{};
+	// Code below is a copy of clif_set_unit_idle
+	struct packet_idle_unit p;
 
-	packet.packetType = HEADER_ZC_NOTIFY_STANDENTRY;
-#if PACKETVER >= 20071106
-	packet.objecttype = 0;
+	p.PacketType = idle_unitType;
+#if PACKETVER >= 20091103
+	p.PacketLength = sizeof(p);
+	p.objecttype = 0x1; // NPC_TYPE
 #endif
-	packet.GID = npcid;
-	packet.job = JT_HIDDEN_NPC;
-	WBUFPOS(packet.PosDir,0,sd.bl.x,sd.bl.y,sd.ud.dir);
-	packet.xSize = 5;
-	packet.ySize = 5;
+#if PACKETVER >= 20131223
+	p.AID = npcid;
+	p.GID = 0;
+#else
+	p.GID = npcid;
+#endif
+	p.speed = 0;
+	p.bodyState = 0;
+	p.healthState = 0;
+	p.effectState = 0;
+	p.job = JT_HIDDEN_NPC;
+	p.head = 0;
+	p.weapon = 0;
+#if PACKETVER < 7 || PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	p.shield = 0;
+#endif
+	p.accessory = 0;
+	p.accessory2 = 0;
+	p.accessory3 = 0;
+	p.headpalette = 0;
+	p.bodypalette = 0;
+	p.headDir = 0;
+#if PACKETVER >= 20101124
+	p.robe = 0;
+#endif
+	p.GUID = 0;
+	p.GEmblemVer = 0;
+	p.honor = 0;
+	p.virtue = 0;
+	p.isPKModeON = 0;
+	p.sex = SEX_FEMALE;
+	WBUFPOS( &p.PosDir[0], 0, sd.bl.x, sd.bl.y, sd.ud.dir );
+	p.xSize = p.ySize = 5;
+	p.state = 0;
+	p.clevel = 0;
+#if PACKETVER >= 20080102
+	p.font = 0;
+#endif
+#if PACKETVER >= 20120221
+	p.maxHP = -1;
+	p.HP = -1;
+#endif
+#if PACKETVER >= 20150513
+	p.body = 0;
+#endif
+/* Might be earlier, this is when the named item bug began */
+#if PACKETVER >= 20131223
+	safestrncpy( p.name, "", NAME_LENGTH);
+#endif
 
-	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -2594,7 +2640,7 @@ void clif_scriptmenu( map_session_data& sd, uint32 npcid, const char* mes ){
 	size_t mes_length = strlen(mes);
 	packet->packetType = HEADER_ZC_MENU_LIST;
 	packet->npcId = npcid;
-	packet->packetLength = sizeof(PACKET_ZC_MENU_LIST) + mes_length;
+	packet->packetLength = static_cast<decltype(packet->packetLength)>( sizeof(PACKET_ZC_MENU_LIST) + mes_length );
 	memcpy(packet->menu, mes, mes_length);
 
 	clif_send( packet, packet->packetLength, &sd.bl, SELF );

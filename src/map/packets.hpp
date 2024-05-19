@@ -709,42 +709,6 @@ struct PACKET_ZC_CLOSE_DIALOG {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_CLOSE_DIALOG, 0xb6)
 
-struct	PACKET_ZC_NOTIFY_STANDENTRY {
-	int16 packetType;
-#if PACKETVER >= 20071106
-	uint8 objecttype;
-#endif
-	uint32 GID;
-	int16 speed;
-	int16 bodyState;
-	int16 effectState;
-	int16 job;
-	int16 head;
-	int16 weapon;
-	int16 accessory;
-	int16 shield;
-	int16 accessory2;
-	int16 accessory3;
-	int16 headpalette;
-	int16 bodypalette;
-	int16 headDir;
-	uint32 GUID;
-	int16 GEmblemVer;
-	int16 honor;
-	int16 virtue;
-	bool isPKModeON;
-	uint8 sex;
-	uint8 PosDir[3];
-	uint8 xSize;
-	uint8 ySize;
-	uint8 state;
-	int16 clevel;
-	uint16 spr_idx;
-	uint16 effect_idx;
-	unsigned char scale;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_NOTIFY_STANDENTRY, 0x78)
-
 struct PACKET_ZC_MENU_LIST {
 	int16 packetType;
 	int16 packetLength;
