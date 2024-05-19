@@ -749,6 +749,8 @@ struct Battle_Config
 
 	int mob_respawn_time;
 	int mob_unlock_time;
+	int map_edge_size;
+	int randomize_center_cell;
 
 	int feature_stylist;
 	int feature_banking_state_enforce;
