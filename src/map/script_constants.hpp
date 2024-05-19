@@ -1258,7 +1258,7 @@
 	//export_constant(SC_IGNOREDEF);
 	export_constant(SC_HELLPOWER);
 	export_constant(SC_INVINCIBLE);
-	export_constant(SC_INVINCIBLEOFF);
+	//export_constant(SC_INVINCIBLEOFF);
 	export_constant(SC_MANU_ATK);
 	export_constant(SC_MANU_DEF);
 	export_constant(SC_SPL_ATK);
@@ -1910,10 +1910,11 @@
 	export_constant(SC_GRENADE_FRAGMENT_6);
 	export_constant(SC_AUTO_FIRING_LAUNCHER);
 	export_constant(SC_HIDDEN_CARD);
-
-#ifdef RENEWAL
+	export_constant(SC_PERIOD_RECEIVEITEM_2ND);
+	export_constant(SC_PERIOD_PLUSEXP_2ND);
 	export_constant(SC_EXTREMITYFIST2);
-#endif
+	export_constant(SC_POWERUP);
+	export_constant(SC_AGIUP);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
@@ -7722,6 +7723,70 @@
 	export_constant(IG_S_BADGE_PACK_);
 	export_constant(IG_SUPER_SONIC_PACK_);
 	export_constant(IG_CHAOS_EMERALD_PACK_);
+	export_constant(IG_C_INSURANCE_PACKAGE);
+	export_constant(IG_C_INSURANCE_PACKAGE50);
+	export_constant(IG_C_GIANT_FLY_WING_BOX100);
+	export_constant(IG_C_SIEGFRIED_BOX5);
+	export_constant(IG_C_SIEGFRIED_BOX20);
+	export_constant(IG_C_CONVEX_MIRROR_BOX30);
+	export_constant(IG_C_BLESSING_10_BOX50);
+	export_constant(IG_C_INC_AGI_10_BOX50);
+	export_constant(IG_C_ASPERSIO_5_BOX50);
+	export_constant(IG_C_BATTLE_MANUAL_BOX);
+	export_constant(IG_C_BATTLE_MANUAL_BOX10);
+	export_constant(IG_C_BUBBLE_GUM_BOX);
+	export_constant(IG_C_BUBBLE_GUM_BOX10);
+	export_constant(IG_C_MEGAPHONE_BOX10);
+	export_constant(IG_C_ENRICHED_ELUNIUM_BOX);
+	export_constant(IG_C_ENRICHED_ELUNIUM_BOX5);
+	export_constant(IG_C_ENRICHED_ORIDECON_BOX);
+	export_constant(IG_C_ENC_ORIDECON_BOX5);
+	export_constant(IG_C_NEURALIZER_BOX);
+	export_constant(IG_C_ABRASIVE_BOX10);
+	export_constant(IG_C_MAX_WEIGHT_UP_BOX);
+	export_constant(IG_C_REGENERATION_BOX10);
+	export_constant(IG_C_S_LIFE_POTION_BOX50);
+	export_constant(IG_C_MED_LIFE_POTION_BOX50);
+	export_constant(IG_C_S_ARMORBOX10);
+	export_constant(IG_C_HOLY_ARMOR_S_BOX30);
+	export_constant(IG_C_NEW_STYLE_BOX);
+	export_constant(IG_C_ALICE_SCROLL_BOX10);
+	export_constant(IG_C_MIMIC_SCROLL_BOX10);
+	export_constant(IG_C_DISGUISE_CROLL_BOX10);
+	export_constant(IG_C_MP_SCROLL_BOX50);
+	export_constant(IG_CCLOTH_DYE_COUPON_BOX);
+	export_constant(IG_CCLOTH_DYE_COUPON2_BOX);
+	export_constant(IG_C_MENTAL_POTION50_BOX);
+	export_constant(IG_C_JOB_MANUAL25_BOX1);
+	export_constant(IG_C_JOB_MANUAL25_BOX10);
+	export_constant(IG_C_SIEGE_SCROLL_BOX1_30);
+	export_constant(IG_C_HD_BRADIUM_BOX5);
+	export_constant(IG_C_HD_BRADIUM_BOX10);
+	export_constant(IG_C_HD_CARNIUM_BOX5);
+	export_constant(IG_C_HD_CARNIUM_BOX10);
+	export_constant(IG_C_HD_ORI_BOX5);
+	export_constant(IG_C_HD_ORI_BOX10);
+	export_constant(IG_C_HD_ELU_BOX5);
+	export_constant(IG_C_HD_ELU_BOX10);
+	export_constant(IG_C_RAPID_LIFE_WATER_BOX2);
+	export_constant(IG_CHANGE_NAME_CARD_BOX);
+	export_constant(IG_C_MYST_WATER_BOX50);
+	export_constant(IG_STATUS_RESET_COUPON_BOX);
+	export_constant(IG_AID_BUFF_BOX);
+	export_constant(IG_INVENTORY_EX_BOX);
+	export_constant(IG_PETTRADETICKET_BOX);
+	export_constant(IG_ADVANCED_TAIMING_ITEM);
+	export_constant(IG_ADVANCED_TAIMING_ITEM2);
+	export_constant(IG_INVENTORY_EX_10BOX);
+	export_constant(IG_COSTUMEMILEPACK_34_1);
+	export_constant(IG_COSTUMEMILEPACK_34_2);
+	export_constant(IG_COSTUMEMILEPACK_34_3);
+	export_constant(IG_AEGIS_102947);
+	export_constant(IG_AEGIS_102948);
+	export_constant(IG_AEGIS_103033);
+	export_constant(IG_AEGIS_103034);
+	export_constant(IG_P_BOOSTER_CALL_PACKAGE);
+	export_constant(IG_P_COMPENSATION_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -9029,6 +9094,37 @@
 	export_constant_npc(JT_4_EVT_LAMMIR);
 	export_constant_npc(JT_4_EVT_SULKI);
 	export_constant_npc(JT_4_EVT_KKAT);
+	export_constant_npc(JT_4_EP21_SOLDIER_A);
+	export_constant_npc(JT_4_EP21_SOLDIER_B);
+	export_constant_npc(JT_4_EP21_M_WORKER_A);
+	export_constant_npc(JT_4_EP21_M_WORKER_B);
+	export_constant_npc(JT_4_EP21_F_WORKER_A);
+	export_constant_npc(JT_4_EP21_F_WORKER_B);
+	export_constant_npc(JT_4_EP21_WORKER_KID_A);
+	export_constant_npc(JT_4_EP21_WORKER_KID_B);
+	export_constant_npc(JT_4_EP21_TAN);
+	export_constant_npc(JT_4_EP21_TRIS);
+	export_constant_npc(JT_4_EP21_NADOYO);
+	export_constant_npc(JT_4_EP21_REINHARDT);
+	export_constant_npc(JT_4_EP21_WILHELM);
+	export_constant_npc(JT_4_EP21_MARISTELLA);
+	export_constant_npc(JT_4_EP21_YOHAN);
+	export_constant_npc(JT_4_EP21_RICHARD);
+	export_constant_npc(JT_4_EP21_VALDARIS);
+	export_constant_npc(JT_4_EP21_GUNTER);
+	export_constant_npc(JT_4_EP21_GALAXIA_A);
+	export_constant_npc(JT_4_EP21_GALAXIA_B);
+	export_constant_npc(JT_4_EP21_IVAN);
+	export_constant_npc(JT_4_EP21_LALAILA);
+	export_constant_npc(JT_4_EP21_ILSE);
+	export_constant_npc(JT_4_EP21_HOWELL);
+	export_constant_npc(JT_4_EP21_EPESTO);
+	export_constant_npc(JT_4_EP21_HEINE_TAB);
+	export_constant_npc(JT_4_EP21_IANA);
+	export_constant_npc(JT_4_EP21_LEE);
+	export_constant_npc(JT_4_EP21_AURELIE);
+	export_constant_npc(JT_4_EP21_HOWELL_S);
+	export_constant_npc(JT_4_EP21_TAN_S);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
@@ -10859,6 +10955,7 @@
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
 	export_constant(UNT_GD_HAWKEYES);
+	export_constant(UNT_CANE_OF_EVIL_EYE);
 
 	/* battleground info types */
 	export_constant(BG_INFO_ID);
