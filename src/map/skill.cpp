@@ -6625,11 +6625,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case RA_WUGSTRIKE:
 		if( sd && pc_isridingwug(sd) ){
-			short x[8]={0,-1,-1,-1,0,1,1,1};
-			short y[8]={1,1,0,-1,-1,-1,0,1};
 			uint8 dir = map_calc_dir(bl, src->x, src->y);
 
-			if( unit_movepos(src, bl->x+x[dir], bl->y+y[dir], 1, 1) ) {
+			if( unit_movepos(src, bl->x+dirx[dir], bl->y+diry[dir], 1, 1) ) {
 				clif_blown(src);
 				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			}
@@ -17531,10 +17529,8 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		{
 			if( skill_lv < 3 && ((sd.bl.type == BL_PC && battle_config.pc_cloak_check_type&1)
 			||	(sd.bl.type != BL_PC && battle_config.monster_cloak_check_type&1) )) { //Check for walls.
-				static int dx[DIR_MAX] = { 0, 1, 0, -1, -1,  1, 1, -1};
-				static int dy[DIR_MAX] = {-1, 0, 1,  0, -1, -1, 1,  1};
 				int dir;
-				ARR_FIND( 0, DIR_MAX, dir, map_getcell(sd.bl.m, sd.bl.x+dx[dir], sd.bl.y+dy[dir], CELL_CHKNOPASS) != 0 );
+				ARR_FIND( 0, DIR_MAX, dir, map_getcell(sd.bl.m, sd.bl.x+dirx[dir], sd.bl.y+diry[dir], CELL_CHKNOPASS) != 0 );
 				if( dir == DIR_MAX ) {
 					clif_skill_fail( sd, skill_id );
 					return false;
