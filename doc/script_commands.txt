@@ -138,11 +138,11 @@ Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. Putting zeros instead of these
 coordinates will spawn the monsters randomly.
 
-If xs and ys are above 1, each monster will spawn in a radius around x,y.
-At server start, each monster will get assigned its own center cell adding or
-substracting up to (xs-1),(ys-1) from the given x,y coordinates.
-Each time a monster respawns, it will spawn in a radius around its personal
-center cell by adding or substracting up to (xs-1),(ys-1) again.
+If the coordinates are non-zero and xs and ys are above 1, each monster will
+spawn in a radius around x,y. At server start, each monster will get assigned
+its own center cell adding or substracting up to (xs-1),(ys-1) from the given
+x,y coordinates. Each time a monster respawns, it will spawn in a radius around
+its personal center cell by adding or substracting up to (xs-1),(ys-1) again.
 This results in a total possible spawn area over all monsters of the spawn line
 of (xs,ys)*4-3, but with a strong bias towards the center of that area:
 2,2 - 5x5
@@ -153,6 +153,8 @@ etc.
 
 Note this is only the initial spawn zone, as mobs random-walk, they are free
 to move away from their specified spawn region.
+You can disable the picking of a random center cell for each monster in the
+battle config. (See /conf/battle/monster.conf::randomize_center_cell.)
 
 Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which
