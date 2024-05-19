@@ -539,6 +539,7 @@ int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int f
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
+int mob_removeslaves(block_list* bl);
 
 int mob_is_clone(int mob_id);
 
