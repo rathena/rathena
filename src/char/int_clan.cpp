@@ -3,12 +3,11 @@
 
 #include "int_clan.hpp"
 
+#include <cstdlib>
+#include <cstring> //memset
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
-#include <stdlib.h>
-#include <string.h> //memset
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -64,7 +63,7 @@ std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
 	Sql_GetData(sql_handle,  0, &data, &len); memcpy(clan->name, data, min(len, NAME_LENGTH));
 	Sql_GetData(sql_handle,  1, &data, &len); memcpy(clan->master, data, min(len, NAME_LENGTH));
 	Sql_GetData(sql_handle,  2, &data, &len); memcpy(clan->map, data, min(len, MAP_NAME_LENGTH_EXT));
-	Sql_GetData(sql_handle,  3, &data, NULL); clan->max_member = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, nullptr); clan->max_member = atoi(data);
 
 	clan->connect_member = 0;
 
@@ -83,8 +82,8 @@ std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
 	for( i = 0; i < MAX_CLANALLIANCE && SQL_SUCCESS == Sql_NextRow(sql_handle); i++ ){
 		struct clan_alliance* a = &clan->alliance[i];
 
-		Sql_GetData(sql_handle, 0, &data, NULL); a->opposition = atoi(data);
-		Sql_GetData(sql_handle, 1, &data, NULL); a->clan_id = atoi(data);
+		Sql_GetData(sql_handle, 0, &data, nullptr); a->opposition = atoi(data);
+		Sql_GetData(sql_handle, 1, &data, nullptr); a->clan_id = atoi(data);
 		Sql_GetData(sql_handle, 2, &data, &len); memcpy(a->name, data, zmin(len, NAME_LENGTH));
 	}
 
