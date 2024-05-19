@@ -627,7 +627,8 @@ enum e_ack_remember_warppoint_result : uint8 {
 enum e_notify_mapinfo_result : uint8 {
 	NOTIFY_MAPINFO_CANT_TP = 0,
 	NOTIFY_MAPINFO_CANT_MEMO = 1,
-	NOTIFY_MAPINFO_UNKNOWN = 2
+	NOTIFY_MAPINFO_CANT_USE_SKILL = 2,
+	NOTIFY_MAPINFO_CANT_USE_ITEM = 3,
 };
 
 enum e_ack_itemrefining : uint8 {
