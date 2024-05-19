@@ -52029,3 +52029,9 @@ Body:
           - aegis_313317    # 313317
     Script: |
       bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200;
+  - Combos:
+      - Combo:
+          - Ifrit's_Ear    # 5421
+          - Ignis_Cap    # 18651
+    Script: |
+      bonus bAspdRate,getequiprefinerycnt(EQI_HEAD_TOP)/2;
