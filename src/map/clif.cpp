@@ -3855,13 +3855,13 @@ void clif_updatestatus( map_session_data& sd, enum _sp type ){
 /// var id:
 ///     SP_MANNER
 ///     ?
-void clif_changemanner( map_session_data& sd, int32 val ) {
+void clif_changemanner( map_session_data& sd ) {
 	PACKET_ZC_PAR_CHANGE_USER packet{};
 
 	packet.packetType = HEADER_ZC_PAR_CHANGE_USER;
 	packet.gid = sd.bl.id;
 	packet.type = static_cast<decltype(packet.type)>(SP_MANNER);
-	packet.value = val;
+	packet.value = sd.status.manner;
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, AREA_WOS );
 }
@@ -4089,8 +4089,8 @@ void clif_initialstatus( map_session_data& sd ) {
 	packet.avoidSuccessValue = sd.battle_status.flee;
 	packet.plusAvoidSuccessValue = sd.battle_status.flee2 / 10;
 	packet.criticalSuccessValue = sd.battle_status.cri / 10;
-	packet.ASPD = sd.battle_status.amotion; // aspd
-	packet.plusASPD = 0;  // always 0 (plusASPD)
+	packet.ASPD = sd.battle_status.amotion;
+	packet.plusASPD = 0;
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 
@@ -6278,7 +6278,8 @@ void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_resu
 /// type:
 ///     0 = "Unable to Teleport in this area" in color 0xFFFF00 (cyan)
 ///     1 = "Saved point cannot be memorized." in color 0x0000FF (red)
-///     2 = ?
+///     2 = "This skill cannot be used in this area"
+///     3 = "This item cannot be used in this area"
 ///
 /// @param sd Who receives the message
 /// @param type What message

@@ -10862,9 +10862,10 @@ bool pc_jobchange(map_session_data *sd,int job, char upper)
 		status_change_end( &sd->bl, SC_SPIRIT );
 	}
 
-	if(sd->status.manner < 0)
-		clif_changemanner( *sd, sd->status.manner );
-
+	if(sd->status.manner < 0){
+		clif_changemanner( *sd );
+		clif_updatestatus(*sd,SP_MANNER);
+	}
 	status_calc_pc(sd,SCO_FORCE);
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
