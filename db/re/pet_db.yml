@@ -3102,3 +3102,24 @@ Body:
 #         bonus bMaxSP,30;
 #      }
 #
+#  - Mob: EP21_ICESEAHORSE
+#    TameItem: Ep21_Fatty_Shrimp
+#    EggItem: aegis_9157
+#    FoodItem: Pet_Food
+#    Fullness: 2   # unknown
+#    HungryDelay: 120   # unknown
+#    IntimacyFed: 15   # unknown
+#    CaptureRate: 2000   # unknown
+#    SpecialPerformance: false   # unknown
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i == PET_INTIMATE_CORDIAL) {
+#         bonus bMRes,5;
+#         bonus bRes,5;
+#      }
+#      else if (.@i == PET_INTIMATE_LOYAL) {
+#         bonus bMRes,10;
+#         bonus bRes,10;
+#      }
+#

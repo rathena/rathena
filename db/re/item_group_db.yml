@@ -112357,3 +112357,621 @@ Body:
           - Index: 2
             Item: Enchant_Stone_Box34
             Amount: 10
+  - Group: AEGIS_102947
+    SubGroups:
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 1
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 2
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 3
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 4
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 5
+            Item: Gaebolg_Armor
+            Rate: 150
+          - Index: 6
+            Item: Gaebolg_Robe
+            Rate: 150
+          - Index: 7
+            Item: Gaebolg_Boots
+            Rate: 150
+          - Index: 8
+            Item: Gaebolg_Shoes
+            Rate: 150
+          - Index: 9
+            Item: Gaebolg_Manteau
+            Rate: 150
+          - Index: 10
+            Item: Gaebolg_Muffler
+            Rate: 150
+          - Index: 11
+            Item: Gaebolg_Armor
+            Rate: 100
+          - Index: 12
+            Item: Gaebolg_Robe
+            Rate: 100
+          - Index: 13
+            Item: Gaebolg_Boots
+            Rate: 100
+          - Index: 14
+            Item: Gaebolg_Shoes
+            Rate: 100
+          - Index: 15
+            Item: Gaebolg_Manteau
+            Rate: 100
+          - Index: 16
+            Item: Gaebolg_Muffler
+            Rate: 100
+          - Index: 17
+            Item: Gaebolg_Armor
+            Rate: 20
+          - Index: 18
+            Item: Gaebolg_Robe
+            Rate: 20
+          - Index: 19
+            Item: Gaebolg_Boots
+            Rate: 20
+          - Index: 20
+            Item: Gaebolg_Shoes
+            Rate: 20
+          - Index: 21
+            Item: Gaebolg_Manteau
+            Rate: 20
+          - Index: 22
+            Item: Gaebolg_Muffler
+            Rate: 20
+          - Index: 23
+            Item: Gaebolg_Glove
+            Rate: 60
+          - Index: 24
+            Item: Gaebolg_Ring
+            Rate: 60
+          - Index: 25
+            Item: Gaebolg_Earring
+            Rate: 60
+          - Index: 26
+            Item: Gaebolg_Necklace
+            Rate: 60
+          - Index: 27
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 28
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 29
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 30
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 31
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 32
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 33
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 34
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 35
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 36
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 37
+            Item: Ep21_Armor_E_Stone3
+            Rate: 20
+          - Index: 38
+            Item: Ep21_Armor_E_Stone3
+            Rate: 20
+          - Index: 39
+            Item: Ep21_Armor_E_Stone3
+            Rate: 20
+          - Index: 40
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 41
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 42
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 43
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 44
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 45
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 46
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 47
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 48
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 49
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 50
+            Item: Ep21_Robe_E_Stone3
+            Rate: 20
+          - Index: 51
+            Item: Ep21_Robe_E_Stone3
+            Rate: 20
+          - Index: 52
+            Item: Ep21_Robe_E_Stone3
+            Rate: 20
+          - Index: 53
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 54
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 55
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 56
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 57
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 58
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 59
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 60
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 61
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 62
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 63
+            Item: Ep21_Shoes_E_Stone3
+            Rate: 20
+          - Index: 64
+            Item: Ep21_Shoes_E_Stone3
+            Rate: 20
+          - Index: 65
+            Item: Ep21_Shoes_E_Stone3
+            Rate: 20
+          - Index: 66
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 67
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 68
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 69
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 70
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 71
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 72
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 73
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 74
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 75
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 76
+            Item: Ep21_Acc_E_Stone3
+            Rate: 20
+          - Index: 77
+            Item: Ep21_Acc_E_Stone3
+            Rate: 20
+          - Index: 78
+            Item: Ep21_Acc_E_Stone3
+            Rate: 20
+          - Index: 79
+            Item: EP19_Gla_Extract
+            Rate: 60
+          - Index: 80
+            Item: EP19_Gla_Extract
+            Rate: 60
+          - Index: 81
+            Item: EP19_Gla_Extract
+            Rate: 60
+          - Index: 82
+            Item: EP19_S_F_1_Extract
+            Rate: 60
+          - Index: 83
+            Item: EP19_S_F_1_Extract
+            Rate: 60
+          - Index: 84
+            Item: EP19_S_F_1_Extract
+            Rate: 60
+          - Index: 85
+            Item: EP20_D_P_Extract
+            Rate: 60
+          - Index: 86
+            Item: EP20_D_P_Extract
+            Rate: 60
+          - Index: 87
+            Item: EP20_D_P_Extract
+            Rate: 60
+          - Index: 88
+            Item: EP19_S_F_2_Extract
+            Rate: 60
+          - Index: 89
+            Item: EP19_S_F_2_Extract
+            Rate: 60
+          - Index: 90
+            Item: EP19_S_F_2_Extract
+            Rate: 60
+          - Index: 91
+            Item: EP19_S_F_3_Extract
+            Rate: 60
+          - Index: 92
+            Item: EP19_S_F_3_Extract
+            Rate: 60
+          - Index: 93
+            Item: EP19_S_F_3_Extract
+            Rate: 60
+  - Group: AEGIS_102948
+    SubGroups:
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 1
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 2
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 3
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 4
+            Item: aegis_1001480
+            Rate: 800
+          - Index: 5
+            Item: Gaebolg_Armor
+            Rate: 150
+          - Index: 6
+            Item: Gaebolg_Robe
+            Rate: 150
+          - Index: 7
+            Item: Gaebolg_Boots
+            Rate: 150
+          - Index: 8
+            Item: Gaebolg_Shoes
+            Rate: 150
+          - Index: 9
+            Item: Gaebolg_Manteau
+            Rate: 150
+          - Index: 10
+            Item: Gaebolg_Muffler
+            Rate: 150
+          - Index: 11
+            Item: Gaebolg_Armor
+            Rate: 100
+          - Index: 12
+            Item: Gaebolg_Robe
+            Rate: 100
+          - Index: 13
+            Item: Gaebolg_Boots
+            Rate: 100
+          - Index: 14
+            Item: Gaebolg_Shoes
+            Rate: 100
+          - Index: 15
+            Item: Gaebolg_Manteau
+            Rate: 100
+          - Index: 16
+            Item: Gaebolg_Muffler
+            Rate: 100
+          - Index: 17
+            Item: Gaebolg_Armor
+            Rate: 20
+          - Index: 18
+            Item: Gaebolg_Robe
+            Rate: 20
+          - Index: 19
+            Item: Gaebolg_Boots
+            Rate: 20
+          - Index: 20
+            Item: Gaebolg_Shoes
+            Rate: 20
+          - Index: 21
+            Item: Gaebolg_Manteau
+            Rate: 20
+          - Index: 22
+            Item: Gaebolg_Muffler
+            Rate: 20
+          - Index: 23
+            Item: Gaebolg_Glove
+            Rate: 60
+          - Index: 24
+            Item: Gaebolg_Ring
+            Rate: 60
+          - Index: 25
+            Item: Gaebolg_Earring
+            Rate: 60
+          - Index: 26
+            Item: Gaebolg_Necklace
+            Rate: 60
+          - Index: 27
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 28
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 29
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 30
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 31
+            Item: Ep21_Armor_E_Stone1
+            Rate: 100
+          - Index: 32
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 33
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 34
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 35
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 36
+            Item: Ep21_Armor_E_Stone2
+            Rate: 50
+          - Index: 37
+            Item: Ep21_Armor_E_Stone3
+            Rate: 20
+          - Index: 38
+            Item: Ep21_Armor_E_Stone3
+            Rate: 20
+          - Index: 39
+            Item: Ep21_Armor_E_Stone3
+            Rate: 20
+          - Index: 40
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 41
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 42
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 43
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 44
+            Item: Ep21_Robe_E_Stone1
+            Rate: 100
+          - Index: 45
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 46
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 47
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 48
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 49
+            Item: Ep21_Robe_E_Stone2
+            Rate: 50
+          - Index: 50
+            Item: Ep21_Robe_E_Stone3
+            Rate: 20
+          - Index: 51
+            Item: Ep21_Robe_E_Stone3
+            Rate: 20
+          - Index: 52
+            Item: Ep21_Robe_E_Stone3
+            Rate: 20
+          - Index: 53
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 54
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 55
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 56
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 57
+            Item: Ep21_Shoes_E_Stone1
+            Rate: 100
+          - Index: 58
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 59
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 60
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 61
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 62
+            Item: Ep21_Shoes_E_Stone2
+            Rate: 50
+          - Index: 63
+            Item: Ep21_Shoes_E_Stone3
+            Rate: 20
+          - Index: 64
+            Item: Ep21_Shoes_E_Stone3
+            Rate: 20
+          - Index: 65
+            Item: Ep21_Shoes_E_Stone3
+            Rate: 20
+          - Index: 66
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 67
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 68
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 69
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 70
+            Item: Ep21_Acc_E_Stone1
+            Rate: 100
+          - Index: 71
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 72
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 73
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 74
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 75
+            Item: Ep21_Acc_E_Stone2
+            Rate: 50
+          - Index: 76
+            Item: Ep21_Acc_E_Stone3
+            Rate: 20
+          - Index: 77
+            Item: Ep21_Acc_E_Stone3
+            Rate: 20
+          - Index: 78
+            Item: Ep21_Acc_E_Stone3
+            Rate: 20
+          - Index: 79
+            Item: EP19_Gla_Extract
+            Rate: 60
+          - Index: 80
+            Item: EP19_Gla_Extract
+            Rate: 60
+          - Index: 81
+            Item: EP19_Gla_Extract
+            Rate: 60
+          - Index: 82
+            Item: EP19_S_F_1_Extract
+            Rate: 60
+          - Index: 83
+            Item: EP19_S_F_1_Extract
+            Rate: 60
+          - Index: 84
+            Item: EP19_S_F_1_Extract
+            Rate: 60
+          - Index: 85
+            Item: EP20_D_P_Extract
+            Rate: 60
+          - Index: 86
+            Item: EP20_D_P_Extract
+            Rate: 60
+          - Index: 87
+            Item: EP20_D_P_Extract
+            Rate: 60
+          - Index: 88
+            Item: EP19_S_F_2_Extract
+            Rate: 60
+          - Index: 89
+            Item: EP19_S_F_2_Extract
+            Rate: 60
+          - Index: 90
+            Item: EP19_S_F_2_Extract
+            Rate: 60
+          - Index: 91
+            Item: EP19_S_F_3_Extract
+            Rate: 60
+          - Index: 92
+            Item: EP19_S_F_3_Extract
+            Rate: 60
+          - Index: 93
+            Item: EP19_S_F_3_Extract
+            Rate: 60
+  - Group: AEGIS_103033
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Lance_Furious
+          - Index: 1
+            Item: Shield_Furious
+  - Group: AEGIS_103034
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: RightShape_Furious
+          - Index: 1
+            Item: LeftShape_Furious
+  - Group: P_BOOSTER_CALL_PACKAGE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: P_Booster_Call
+          - Index: 1
+            Item: Booster_Pack_1
+          - Index: 2
+            Item: Booster_Hat_Box
+          - Index: 3
+            Item: Booster_Back_Box
+          - Index: 4
+            Item: Reset_Stat_Ticket
+          - Index: 5
+            Item: Reset_Skill_Ticket
+          - Index: 6
+            Item: E_Boarding_Halter_Box2
+          - Index: 7
+            Item: Boost_C_Enchant_2
+  - Group: P_COMPENSATION_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: P_Booster_Call_Package
+          - Index: 1
+            Item: E_EXP_Drop_Up_7days
+          - Index: 2
+            Item: Comp_AID_Buff_Box

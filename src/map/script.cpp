@@ -3674,7 +3674,7 @@ void script_free_state(struct script_state* st)
 
 		if (sd && sd->st == st) { // Current script is aborted.
 			if(sd->state.using_fake_npc) {
-				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+				clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 				sd->state.using_fake_npc = 0;
 			}
 			sd->st = nullptr;
@@ -4306,7 +4306,7 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 
 	if(st->rid && (sd = map_id2sd(st->rid))!=nullptr) {
 		if( sd->state.using_fake_npc ){
-			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, sd->fd );
+			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 			sd->state.using_fake_npc = 0;
 		}
 
@@ -4511,7 +4511,7 @@ void run_script_main(struct script_state *st)
 		if ((sd = map_id2sd(st->rid))!=nullptr)
 		{	//Restore previous stack and save char.
 			if(sd->state.using_fake_npc){
-				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+				clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 				sd->state.using_fake_npc = 0;
 			}
 			//Restore previous script if any.
@@ -5008,7 +5008,8 @@ BUILDIN_FUNC(close)
 		st->clear_cutin = true;
 	}
 
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5028,7 +5029,8 @@ BUILDIN_FUNC(close2)
 	if( st->mes_active )
 		st->mes_active = 0;
 
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5148,10 +5150,10 @@ BUILDIN_FUNC(menu)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_menu: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif_scriptmenu( *sd, st->oid, menu );
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
 
 		StringBuf_Destroy(&buf);
 
@@ -5252,10 +5254,10 @@ BUILDIN_FUNC(select)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_select: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif_scriptmenu( *sd, st->oid, menu );
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff ) {
@@ -5330,10 +5332,10 @@ BUILDIN_FUNC(prompt)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_prompt: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif_scriptmenu( *sd, st->oid, menu );
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff )
@@ -6161,9 +6163,9 @@ BUILDIN_FUNC(input)
 		sd->state.menu_or_input = 1;
 		st->state = RERUNLINE;
 		if( is_string_variable(name) )
-			clif_scriptinputstr(sd,st->oid);
+			clif_scriptinputstr( *sd, st->oid );
 		else
-			clif_scriptinput(sd,st->oid);
+			clif_scriptinput( *sd, st->oid );
 	}
 	else
 	{	// take received text/value and store it in the designated variable
@@ -6909,7 +6911,8 @@ BUILDIN_FUNC(cutin)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
-	clif_cutin(sd,script_getstr(st,2),script_getnum(st,3));
+	clif_cutin( *sd, script_getstr( st, 2 ), script_getnum( st, 3 ) );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6932,7 +6935,7 @@ BUILDIN_FUNC(viewpoint)
 	id=script_getnum(st,5);
 	color=script_getnum(st,6);
 
-	clif_viewpoint(sd,st->oid,type,x,y,id,color);
+	clif_viewpoint( *sd, st->oid, type, x, y, id, color );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -6947,7 +6950,8 @@ static int buildin_viewpointmap_sub(block_list *bl, va_list ap) {
 	id = va_arg(ap, int);
 	color = va_arg(ap, int);
 
-	clif_viewpoint((map_session_data *)bl, oid, type, x, y, id, color);
+	clif_viewpoint( *reinterpret_cast<map_session_data*>( bl ), oid, type, x, y, id, color );
+
 	return 0;
 }
 
@@ -8588,7 +8592,8 @@ BUILDIN_FUNC(delitem)
 	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%u).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_FAILURE;
 }
 
@@ -8712,7 +8717,8 @@ BUILDIN_FUNC(delitem2)
 	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%u).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
-	clif_scriptclose(sd, st->oid);
+	clif_scriptclose( *sd, st->oid );
+
 	return SCRIPT_CMD_FAILURE;
 }
 
@@ -9629,7 +9635,7 @@ BUILDIN_FUNC(successrefitem) {
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
 		clif_refine(sd->fd,0,i,sd->inventory.u.items_inventory[i].refine);
-		clif_delitem(sd,i,1,3);
+		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->inventory.u.items_inventory[i]);
@@ -9731,7 +9737,7 @@ BUILDIN_FUNC(downrefitem) {
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 
 		clif_refine(sd->fd,2,i,sd->inventory.u.items_inventory[i].refine);
-		clif_delitem(sd,i,1,3);
+		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->inventory.u.items_inventory[i]);
@@ -10381,9 +10387,10 @@ BUILDIN_FUNC(end)
 		st->mes_active = 0;
 
 	if (sd){
-		if (sd->state.callshop == 0)
-			clif_scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
-		else 
+		if (sd->state.callshop == 0){
+			// If a menu/select/prompt is active, close it.
+			clif_scriptclose( *sd, st->oid );
+		}else
 			sd->state.callshop = 0;
 	}
 
@@ -11379,11 +11386,11 @@ BUILDIN_FUNC(killmonster)
 
 static int buildin_killmonsterall_sub_strip(struct block_list *bl,va_list ap)
 { //Strips the event from the mob if it's killed the old method.
-	struct mob_data *md;
+	mob_data* md = BL_CAST(BL_MOB, bl);
 
-	md = BL_CAST(BL_MOB, bl);
-	if (md->npc_event[0])
-		md->npc_event[0] = 0;
+	if( md != nullptr ){
+		strcpy( md->npc_event, "" );
+	}
 
 	status_kill(bl);
 	return 0;
@@ -15846,7 +15853,9 @@ BUILDIN_FUNC(addhomintimacy)
 		hom_increase_intimacy(hd, (uint32)value);
 	else
 		hom_decrease_intimacy(hd, (uint32)abs(value));
-	clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy / 100);
+
+	clif_send_homdata( *hd, SP_INTIMATE );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17890,7 +17899,7 @@ BUILDIN_FUNC(callshop)
 		switch (flag) {
 			case 1: npc_buysellsel(sd,nd->bl.id,0); break; //Buy window
 			case 2: npc_buysellsel(sd,nd->bl.id,1); break; //Sell window
-			default: clif_npcbuysell(sd,nd->bl.id); break; //Show menu
+			default: clif_npcbuysell( *sd, *nd ); break; //Show menu
 		}
 	}
 #if PACKETVER >= 20131223
@@ -19273,8 +19282,8 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UHOM_X: if (!unit_walktoxy(bl, (short)value, hd->bl.y, 2)) unit_movepos(bl, (short)value, hd->bl.y, 0, 0); break;
 			case UHOM_Y: if (!unit_walktoxy(bl, hd->bl.x, (short)value, 2)) unit_movepos(bl, hd->bl.x, (short)value, 0, 0); break;
-			case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif_send_homdata(map_charid2sd(hd->homunculus.char_id), SP_HUNGRY, hd->homunculus.hunger); break;
-			case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif_send_homdata(map_charid2sd(hd->homunculus.char_id), SP_INTIMATE, hd->homunculus.intimacy / 100); break;
+			case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif_send_homdata(*hd, SP_HUNGRY); break;
+			case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif_send_homdata(*hd, SP_INTIMATE); break;
 			case UHOM_SPEED: hd->base_status.speed = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UHOM_CANMOVETICK: hd->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
@@ -19570,7 +19579,7 @@ BUILDIN_FUNC(setunitdata)
 	// Client information updates
 	switch (bl->type) {
 		case BL_HOM:
-			clif_send_homdata(hd->master, SP_ACK, 0);
+			clif_send_homdata( *hd, SP_ACK );
 			break;
 		case BL_PET:
 			clif_send_petstatus(pd->master);
@@ -24521,7 +24530,7 @@ BUILDIN_FUNC(setrandomoption) {
 		sd->inventory.u.items_inventory[i].option[index].id = id;
 		sd->inventory.u.items_inventory[i].option[index].value = value;
 		sd->inventory.u.items_inventory[i].option[index].param = param;
-		clif_delitem(sd, i, 1, 3);
+		clif_delitem( *sd, i, 1, 3 );
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
 		clif_additem(sd, i, 1, 0);
 		pc_equipitem(sd, i, ep);

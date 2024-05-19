@@ -45,8 +45,6 @@ using namespace rathena;
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
-#define IDLE_SKILL_INTERVAL 10	//Active idle skills should be triggered every 1 second (1000/MIN_MOBTHINKTIME)
-
 const t_tick MOB_MAX_DELAY = 24 * 3600 * 1000;
 #define RUDE_ATTACKED_COUNT 1	//After how many rude-attacks should the skill be used?
 
@@ -239,7 +237,7 @@ void mvptomb_destroy(struct mob_data *md) {
 		int i;
 		struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+		clif_clearunit_area( nd->bl, CLR_OUTSIGHT );
 		map_delblock(&nd->bl);
 
 		ARR_FIND( 0, mapdata->npc_num, i, mapdata->npc[i] == nd );
@@ -1165,6 +1163,7 @@ int mob_spawn (struct mob_data *md)
 	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
 	md->last_canmove = tick;
+	md->last_skillcheck = 0;
 
 	t_tick c = tick - MOB_MAX_DELAY;
 
@@ -1522,14 +1521,17 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 			break;
 		}
 		// Idle skill.
-		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
+		if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL && mobskill_use(md, tick, -1))
 			break;
 		//Random walk.
 		if (!md->master_id &&
 			DIFF_TICK(md->next_walktime, tick) <= 0 &&
 			!mob_randomwalk(md,tick))
 			//Delay next random walk when this one failed.
-			md->next_walktime = tick+rnd()%1000;
+			if (md->next_walktime < md->ud.canmove_tick)
+				md->next_walktime = md->ud.canmove_tick;
+			else
+				md->next_walktime = tick+rnd()%1000;
 		break;
 	default:
 		mob_stop_attack(md);
@@ -1563,8 +1565,7 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 int mob_randomwalk(struct mob_data *md,t_tick tick)
 {
 	const int d=7;
-	int i,c,r,rdir,dx,dy,max;
-	int speed;
+	int i,r,rdir,dx,dy,max;
 
 	nullpo_ret(md);
 
@@ -1648,16 +1649,9 @@ int mob_randomwalk(struct mob_data *md,t_tick tick)
 		}
 		return 0;
 	}
-	speed=status_get_speed(&md->bl);
-	for(i=c=0;i<md->ud.walkpath.path_len;i++){	// The next walk start time is calculated.
-		if( direction_diagonal( md->ud.walkpath.path[i] ) )
-			c+=speed*MOVE_DIAGONAL_COST/MOVE_COST;
-		else
-			c+=speed;
-	}
 	md->state.skillstate=MSS_WALK;
 	md->move_fail_count=0;
-	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME+c;
+	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME + unit_get_walkpath_time(md->bl);
 	return 1;
 }
 
@@ -1917,8 +1911,23 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return true;
 	}
 
-	//Attempt to attack.
-	//At this point we know the target is attackable, we just gotta check if the range matches.
+	// At this point we know the target is attackable, attempt to attack
+
+	// Monsters in angry state, after having used a normal attack, will always attempt a skill
+	if (md->ud.walktimer == INVALID_TIMER && md->state.skillstate == MSS_ANGRY && md->ud.skill_id == 0)
+	{
+		// Only use skill if able to walk on next tick and not attempted a skill the last second
+		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL){
+			if (mobskill_use(md, tick, -1)) {
+				// After the monster used an angry skill, it will not attack for aDelay
+				// Setting the delay here because not all monster skill use situations will cause an attack delay
+				md->ud.attackabletime = tick + md->status.adelay;
+				return true;
+			}
+		}
+	}
+
+	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
 	{	//Target within range and able to use normal attack, engage
 		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
@@ -1938,16 +1947,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			}
 		}
 		return true;
-	}
-
-	//Monsters in berserk state, unable to use normal attacks, will always attempt a skill
-	if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
-	{
-		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
-		{ //Only use skill if able to walk on next tick and not used a skill the last second
-			if (mobskill_use(md, tick, -1))
-				return true;
-		}
 	}
 
 	//Target still in attack range, no need to chase the target
@@ -1971,7 +1970,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			else {
 				// Use idle skill but keep target for now
 				md->state.skillstate = MSS_IDLE;
-				if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+				if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
 					mobskill_use(md, tick, -1);
 			}
 		}
@@ -1986,10 +1985,24 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return true;
 
 	//Follow up if possible.
-	//Hint: Chase skills are handled in the walktobl routine
-	if(!mob_can_reach(md, tbl, md->min_chase) ||
-		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
-		mob_unlocktarget(md,tick);
+	if (!mob_can_reach(md, tbl, md->min_chase)) {
+		mob_unlocktarget(md, tick);
+		return true;
+	}
+	// Monsters can use chase skills before starting to walk
+	// So we need to change the state and check for a skill here already
+	// But only use skill if able to walk on next tick and not attempted a skill the last second
+	// Skills during movement are handled in the walktobl routine
+	if (md->ud.walktimer == INVALID_TIMER
+		&& DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME
+		&& DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL) {
+		md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
+		if (mobskill_use(md, tick, -1))
+			return true;
+	}
+
+	if(!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
+		mob_unlocktarget(md, tick);
 
 	return true;
 }
@@ -2063,7 +2076,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	//Clean the spotted log
 	mob_clean_spotted(md);
 
-	if(DIFF_TICK(tick,md->last_thinktime)< 10*MIN_MOBTHINKTIME)
+	if(DIFF_TICK(tick,md->last_thinktime) < MOB_SKILL_INTERVAL)
 		return 0;
 
 	md->last_thinktime=tick;
@@ -3164,7 +3177,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( pcdb_checkid(md->vd->class_) ) {//Player mobs are not removed automatically by the client.
 			/* first we set them dead, then we delay the outsight effect */
-			clif_clearunit_area(&md->bl,CLR_DEAD);
+			clif_clearunit_area( md->bl, CLR_DEAD );
 			clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
 		} else
 			/**
@@ -3752,8 +3765,9 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 	if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || ms.empty() || status_has_mode(&md->status,MD_NOCAST))
 		return 0;
 
-	if (event == -1 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
-		return 0; //Skill act delay only affects non-event skills.
+	// Monsters check their non-attack-state skills once per second, but we ignore this for events for now
+	if (event == -1)
+		md->last_skillcheck = tick;
 
 	//Pick a starting position and loop from that.
 	i = battle_config.mob_ai&0x100?rnd()%ms.size():0;
@@ -6688,7 +6702,7 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 		// If they are spawned right now
 		if( md->bl.prev != nullptr ){
 			// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
-			clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
+			clif_clearunit_area( md->bl, CLR_OUTSIGHT );
 			clif_spawn(&md->bl);
 		}
 	}

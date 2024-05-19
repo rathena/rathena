@@ -34,10 +34,10 @@ jobs:
           mode: ['PRE', 'RE']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v2
 
       - name: Build solution in Debug
         if: ${{ matrix.mode == 'PRE' }}
