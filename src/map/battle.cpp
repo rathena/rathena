@@ -11482,6 +11482,7 @@ static const struct _battle_data {
 	{ "mob_respawn_time",                   &battle_config.mob_respawn_time,                1000,   1000,   INT_MAX,        },
 	{ "mob_unlock_time",                    &battle_config.mob_unlock_time,                 2000,   0,      INT_MAX,        },
 	{ "map_edge_size",                      &battle_config.map_edge_size,                   15,     1,      40,             },
+	{ "randomize_center_cell",              &battle_config.randomize_center_cell,           1,      0,      1,              },
 
 	{ "feature.stylist",                    &battle_config.feature_stylist,                 1,      0,      1,              },
 	{ "feature.banking_state_enforce",      &battle_config.feature_banking_state_enforce,   0,      0,      1,              },

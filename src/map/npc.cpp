@@ -5181,10 +5181,12 @@ void npc_parse_mob2(struct spawn_data* mob)
 		struct mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
 		// Determine center cell for each mob in the spawn line
-		if (mob->xs > 1)
-			md->centerX = rnd_value(mob->x - mob->xs + 1, mob->x + mob->xs - 1);
-		if (mob->ys > 1)
-			md->centerY = rnd_value(mob->y - mob->ys + 1, mob->y + mob->ys - 1);
+		if (battle_config.randomize_center_cell) {
+			if (mob->xs > 1)
+				md->centerX = rnd_value(mob->x - mob->xs + 1, mob->x + mob->xs - 1);
+			if (mob->ys > 1)
+				md->centerY = rnd_value(mob->y - mob->ys + 1, mob->y + mob->ys - 1);
+		}
 		md->spawn->active++;
 		mob_spawn(md);
 	}
