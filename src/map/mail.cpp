@@ -143,7 +143,7 @@ bool mail_removezeny( map_session_data *sd, bool flag ){
 			}
 		}else{
 			// Update is called by pc_payzeny, so only call it in the else condition
-			clif_updatestatus(sd, SP_ZENY);
+			clif_updatestatus(*sd, SP_ZENY);
 		}
 	}
 
@@ -176,7 +176,7 @@ enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amo
 #endif
 
 		sd->mail.zeny = amount;
-		// clif_updatestatus(sd, SP_ZENY);
+		// clif_updatestatus(*sd, SP_ZENY);
 		return MAIL_ATTACH_SUCCESS;
 	} else { // Item Transfer
 		int i;
@@ -477,7 +477,7 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 		mail_refresh_remaining_amount(sd);
 
 		// After calling mail_refresh_remaining_amount the status should always be there
-		if( sd->sc.getSCE(SC_DAILYSENDMAILCNT) == NULL || sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val2 >= battle_config.mail_daily_count ){
+		if( sd->sc.getSCE(SC_DAILYSENDMAILCNT) == nullptr || sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val2 >= battle_config.mail_daily_count ){
 			clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
 			return;
 		}else{
@@ -516,7 +516,7 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 
-	msg.timestamp = time(NULL);
+	msg.timestamp = time(nullptr);
 	if( !intif_Mail_send(sd->status.account_id, &msg) )
 		mail_deliveryfail(sd, &msg);
 
@@ -529,7 +529,7 @@ void mail_refresh_remaining_amount( map_session_data* sd ){
 	nullpo_retv(sd);
 
 	// If it was not yet started or it was started on another day
-	if( sd->sc.getSCE(SC_DAILYSENDMAILCNT) == NULL || sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val1 != doy ){
+	if( sd->sc.getSCE(SC_DAILYSENDMAILCNT) == nullptr || sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val1 != doy ){
 		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, INFINITE_TICK );
 	}
 }

@@ -3,7 +3,7 @@
 
 #include "mapreg.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
@@ -49,7 +49,7 @@ int64 mapreg_readreg(int64 uid)
 char* mapreg_readregstr(int64 uid)
 {
 	struct mapreg_save *m = (struct mapreg_save *)i64db_get(regs.vars, uid);
-	return m ? m->u.str : NULL;
+	return m ? m->u.str : nullptr;
 }
 
 /**
@@ -125,7 +125,7 @@ bool mapreg_setregstr(int64 uid, const char* str)
 	uint32 i = script_getvaridx(uid);
 	const char* name = get_str(num);
 
-	if (str == NULL || *str == 0) {
+	if (str == nullptr || *str == 0) {
 		if (i)
 			script_array_update(&regs, uid, true);
 		if (name[1] != '@') {
@@ -135,14 +135,14 @@ bool mapreg_setregstr(int64 uid, const char* str)
 				Sql_ShowDebug(mmysql_handle);
 		}
 		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
-			if (m->u.str != NULL)
+			if (m->u.str != nullptr)
 				aFree(m->u.str);
 			ers_free(mapreg_ers, m);
 		}
 		i64db_remove(regs.vars, uid);
 	} else {
 		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
-			if (m->u.str != NULL)
+			if (m->u.str != nullptr)
 				aFree(m->u.str);
 			m->u.str = aStrdup(str);
 			if (name[1] != '@') {
@@ -202,9 +202,9 @@ static void script_load_mapreg(void)
 
 	skip_insert = true;
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &varname[0], sizeof(varname), &length, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &index, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &value[0], sizeof(value), NULL, NULL);
+	SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &varname[0], sizeof(varname), &length, nullptr);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &index, 0, nullptr, nullptr);
+	SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &value[0], sizeof(value), nullptr, nullptr);
 
 	while ( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
 		int s = add_str(varname);
@@ -217,7 +217,7 @@ static void script_load_mapreg(void)
 		if( varname[length-1] == '$' ) {
 			mapreg_setregstr(uid, value);
 		} else {
-			mapreg_setreg(uid, strtoll(value,NULL,10));
+			mapreg_setreg(uid, strtoll(value,nullptr,10));
 		}
 	}
 
@@ -276,7 +276,7 @@ static TIMER_FUNC(script_autosave_mapreg){
  */
 int mapreg_destroyreg(DBKey key, DBData *data, va_list ap)
 {
-	struct mapreg_save *m = NULL;
+	struct mapreg_save *m = nullptr;
 
 	if (data->type != DB_DATA_PTR) // Sanity check
 		return 0;
@@ -306,7 +306,7 @@ void mapreg_reload(void)
 
 	if (regs.arrays) {
 		regs.arrays->destroy(regs.arrays, script_free_array_db);
-		regs.arrays = NULL;
+		regs.arrays = nullptr;
 	}
 
 	script_load_mapreg();
@@ -336,7 +336,7 @@ void mapreg_init(void)
 	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.cpp:mapreg_ers", ERS_OPT_CLEAN);
 
 	skip_insert = false;
-	regs.arrays = NULL;
+	regs.arrays = nullptr;
 
 	script_load_mapreg();
 

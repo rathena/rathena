@@ -205,7 +205,7 @@ public:
 		}
 
 		// Resize to only fit all existing non null entries
-		this->cache.resize(max_key);
+		this->cache.resize(max_key + 1);
 		// Free the memory that was allocated too much
 		this->cache.shrink_to_fit();
 		this->loaded = true;
