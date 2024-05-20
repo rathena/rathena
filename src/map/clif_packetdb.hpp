@@ -119,7 +119,6 @@
 	parseable_packet(0x00ed,2,clif_parse_TradeCancel,0);
 	packet(0x00ee,2);
 	parseable_packet(0x00ef,2,clif_parse_TradeCommit,0);
-	packet(0x00f0,3);
 	parseable_packet(0x00f3,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x00f5,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x00f7,2,clif_parse_CloseKafra,0);

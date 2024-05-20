@@ -877,6 +877,12 @@ struct PACKET_ZC_EXCHANGEITEM_UNDO {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EXCHANGEITEM_UNDO, 0xf1);
 
+struct PACKET_ZC_EXEC_EXCHANGE_ITEM {
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EXEC_EXCHANGE_ITEM, 0xf0);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

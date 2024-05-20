@@ -651,8 +651,8 @@ void trade_tradecommit(map_session_data *sd)
 	tsd->state.trading = 0;
 	tsd->state.isBoundTrading = 0;
 
-	clif_tradecompleted(sd, 0);
-	clif_tradecompleted(tsd, 0);
+	clif_tradecompleted( sd->fd );
+	clif_tradecompleted( tsd->fd );
 
 	// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players
 	if (save_settings&CHARSAVE_TRADE) {

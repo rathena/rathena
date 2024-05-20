@@ -735,7 +735,7 @@ void clif_tradeadditem(map_session_data* sd, map_session_data* tsd, int index, i
 void clif_tradeitemok(map_session_data& sd, int index, e_exitem_add_result result);
 void clif_tradedeal_lock(map_session_data* sd, int fail);
 void clif_tradecancelled(map_session_data* sd);
-void clif_tradecompleted(map_session_data* sd, int fail);
+void clif_tradecompleted( int fd );
 void clif_tradeundo( int fd );
 
 // storage
