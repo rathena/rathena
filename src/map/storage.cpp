@@ -480,7 +480,7 @@ void storage_storageclose(map_session_data *sd)
 	
 	if( sd->state.storage_flag == 1 ){
 		sd->state.storage_flag = 0;
-		clif_storageclose( sd );
+		clif_storageclose( sd->fd );
 	}
 }
 
@@ -1061,7 +1061,7 @@ void storage_guild_storageclose(map_session_data* sd)
 	nullpo_retv(sd);
 	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
 
-	clif_storageclose(sd);
+	clif_storageclose( sd->fd );
 	if (stor->status) {
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART); //This one also saves the storage. [Skotlex]
@@ -1087,7 +1087,7 @@ void storage_guild_storage_quit(map_session_data* sd, int flag)
 	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
 
 	if (flag) {	//Only during a guild break flag is 1 (don't save storage)
-		clif_storageclose(sd);
+		clif_storageclose( sd->fd );
 
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
@@ -1184,7 +1184,7 @@ void storage_premiumStorage_close(map_session_data *sd) {
 
 	if( sd->state.storage_flag == 3 ){
 		sd->state.storage_flag = 0;
-		clif_storageclose( sd );
+		clif_storageclose( sd->fd );
 	}
 }
 

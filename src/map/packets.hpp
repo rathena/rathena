@@ -853,6 +853,11 @@ struct PACKET_ZC_EQUIP_ARROW {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EQUIP_ARROW, 0x13c)
 
+struct PACKET_ZC_CLOSE_STORE {
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CLOSE_STORE, 0xf8);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
