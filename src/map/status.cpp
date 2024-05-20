@@ -13811,7 +13811,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag[SCF_NONPLAYER] ) // bugreport:681
-		clif_changeoption2(bl);
+		clif_changeoption2( *bl );
 	else if (!disable_opt_flag && (opt_flag[SCF_SENDOPTION] || opt_flag[SCF_ONTOUCH] || opt_flag[SCF_UNITMOVE] || opt_flag[SCF_NONPLAYER] || opt_flag[SCF_SENDLOOK])) {
 		clif_changeoption(bl);
 		if (sd && opt_flag[SCF_SENDLOOK]) {

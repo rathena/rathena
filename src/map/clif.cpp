@@ -4433,30 +4433,33 @@ void clif_changeoption_target( struct block_list* bl, struct block_list* target 
 }
 
 
-/// Displays status change effects on NPCs/monsters (ZC_NPC_SHOWEFST_UPDATE).
-/// 028a <id>.L <effect state>.L <level>.L <showEFST>.L
-void clif_changeoption2(struct block_list* bl)
-{
-	unsigned char buf[20];
-	status_change *sc;
+/// Displays status change effects on NPCs/monsters.
+/// 028a <id>.L <effect state>.L <level>.L <showEFST>.L (ZC_NPC_SHOWEFST_UPDATE)
+void clif_changeoption2( block_list& bl ){
+	status_change *sc = status_get_sc(&bl);
+	if (!sc)
+		return; //How can an option change if there's no sc?
 
-	sc = status_get_sc(bl);
-	if (!sc) return; //How can an option change if there's no sc?
+	PACKET_ZC_NPC_SHOWEFST_UPDATE packet{};
 
-	WBUFW(buf,0) = 0x28a;
-	WBUFL(buf,2) = bl->id;
-	WBUFL(buf,6) = sc->option;
-	WBUFL(buf,10) = clif_setlevel(bl);
-	WBUFL(buf,14) = sc->opt3;
-	if(disguised(bl)) {
-		clif_send(buf,packet_len(0x28a),bl,AREA_WOS);
-		WBUFL(buf,2) = disguised_bl_id( bl->id );
-		clif_send(buf,packet_len(0x28a),bl,SELF);
-		WBUFL(buf,2) = bl->id;
-		WBUFL(buf,6) = OPTION_INVISIBLE;
-		clif_send(buf,packet_len(0x28a),bl,SELF);
-	} else
-		clif_send(buf,packet_len(0x28a),bl,AREA);
+	packet.packetType = HEADER_ZC_NPC_SHOWEFST_UPDATE;
+	packet.gid = bl.id;
+	packet.effectState = sc->option;
+	packet.level = clif_setlevel(&bl);
+	packet.showEFST = sc->opt3;
+
+	if (disguised(&bl)) {
+		clif_send( &packet, sizeof( packet ), &bl, AREA_WOS );
+		
+		packet.gid = disguised_bl_id( bl.id );
+		clif_send( &packet, sizeof( packet ), &bl, SELF );
+		
+		packet.gid = bl.id;
+		packet.effectState = OPTION_INVISIBLE;
+		clif_send( &packet, sizeof( packet ), &bl, SELF );
+	} else {
+		clif_send( &packet, sizeof( packet ), &bl, AREA );
+	}
 }
 
 

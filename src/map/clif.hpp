@@ -719,7 +719,7 @@ void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok);	// self
 void clif_misceffect(struct block_list* bl,int type);	// area
 void clif_changeoption_target(struct block_list* bl, struct block_list* target);
 #define clif_changeoption(bl) clif_changeoption_target(bl, nullptr)	// area
-void clif_changeoption2(struct block_list* bl);	// area
+void clif_changeoption2( block_list& bl );
 void clif_useitemack(map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
 void clif_createchat( int fd, e_create_chatroom flag );

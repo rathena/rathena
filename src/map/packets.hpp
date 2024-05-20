@@ -907,6 +907,15 @@ struct PACKET_ZC_REFUSE_ENTER_ROOM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_REFUSE_ENTER_ROOM, 0xda);
 
+struct PACKET_ZC_NPC_SHOWEFST_UPDATE {
+	int16 packetType;
+	uint32 gid;
+	uint32 effectState;
+	int32 level;
+	uint32 showEFST;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NPC_SHOWEFST_UPDATE, 0x28a);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

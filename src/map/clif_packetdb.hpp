@@ -908,7 +908,6 @@
 	packet(0x0287,-1);
 	packet(0x0288,6);
 	packet(0x0289,8);
-	packet(0x028a,18);
 	packet(0x028b,-1);
 	packet(0x028c,46);
 	packet(0x028d,34);
