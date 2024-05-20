@@ -11475,7 +11475,7 @@ static const struct _battle_data {
 #else
 	{ "feature.instance_allow_reconnect",   &battle_config.instance_allow_reconnect,        0,      0,      1,              },
 #endif
-	{ "synchronize_damage",                  &battle_config.synchronize_damage,             0,      0,      1,              },
+	{ "synchronize_damage",                 &battle_config.synchronize_damage,              0,      0,      1,              },
 
 #include <custom/battle_config_init.inc>
 };
