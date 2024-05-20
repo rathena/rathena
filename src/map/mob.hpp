@@ -479,6 +479,7 @@ struct item_drop_list {
 	int16 m, x, y;                       // coordinates
 	int first_charid, second_charid, third_charid; // charid's of players with higher pickup priority
 	struct item_drop* item;            // linked list of drops
+	struct item_drop* first; // first item added to the list
 };
 
 uint16 mobdb_searchname(const char * const str);

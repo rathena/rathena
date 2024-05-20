@@ -1958,6 +1958,7 @@ int pet_lootitem_drop(struct pet_data *pd,map_session_data *sd)
 	dlist->second_charid = 0;
 	dlist->third_charid = 0;
 	dlist->item = nullptr;
+	dlist->first = nullptr; // Not used for pets
 
 	for(i = 0; i < pd->loot->count; i++) {
 		struct item *it;

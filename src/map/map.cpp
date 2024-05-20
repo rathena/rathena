@@ -1646,7 +1646,7 @@ void map_clearflooritem(struct block_list *bl) {
 
 /*==========================================
  * (m,x,y) locates a random available free cell around the given coordinates
- * to place an BL_ITEM object. Scan area is 9x9, returns 1 on success.
+ * to place an BL_ITEM object. Scan area is 3x3, returns 1 on success.
  * x and y are modified with the target cell when successful.
  *------------------------------------------*/
 int map_searchrandfreecell(int16 m,int16 *x,int16 *y,int stack) {
@@ -1863,9 +1863,10 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
  * @param mob_id: Monster ID if dropped by monster
  * @param canShowEffect: enable pillar effect on the dropped item (if set in the database)
+ * @param dir: where the item should drop around the target (DIR_MAX: random cell around center)
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect, enum directions dir)
 {
 	struct flooritem_data *fitem = nullptr;
 
@@ -1874,7 +1875,12 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 	if (!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid).trade))
 		return 0; //can't be dropped
 
-	if (!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
+	if (dir > DIR_CENTER && dir < DIR_MAX) {
+		x += dirx[dir];
+		y += diry[dir];
+	}
+	// If cell occupied and not center cell, drop item around the drop target cell
+	if (dir != DIR_CENTER && (dir == DIR_MAX || map_getcell(m, x, y, CELL_CHKNOPASS)) && !map_searchrandfreecell(m,&x,&y,flags&2?1:0))
 		return 0;
 
 	CREATE(fitem, struct flooritem_data, 1);

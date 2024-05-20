@@ -2230,16 +2230,26 @@ static TIMER_FUNC(mob_delay_item_drop){
 	struct item_drop *ditem;
 
 	list = (struct item_drop_list *)data;
-	ditem = list->item;
+	ditem = list->first;
+
+	// First regular drop always drops at center
+	enum directions dir = DIR_CENTER;
 
 	while (ditem) {
 		struct item_drop *ditem_prev;
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
-			list->first_charid,list->second_charid,list->third_charid,4,ditem->mob_id,true);
+			list->first_charid,list->second_charid,list->third_charid,4,ditem->mob_id,true,dir);
 		ditem_prev = ditem;
 		ditem = ditem->next;
 		ers_free(item_drop_ers, ditem_prev);
+		// The drop location loops between three locations: SE -> W -> N -> SE
+		if (dir <= DIR_NORTH)
+			dir = DIR_SOUTHEAST;
+		else if (dir == DIR_SOUTHEAST)
+			dir = DIR_WEST;
+		else
+			dir = DIR_NORTH;
 	}
 
 	ers_free(item_drop_list_ers, list);
@@ -2285,7 +2295,10 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 			return;
 		}
 	}
-	ditem->next = dlist->item;
+	if (dlist->item)
+		dlist->item->next = ditem;
+	else
+		dlist->first = ditem;
 	dlist->item = ditem;
 }
 
@@ -2862,6 +2875,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 		dlist->item = nullptr;
+		dlist->first = nullptr;
 
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			if (md->db->dropitem[i].nameid == 0)
@@ -2998,6 +3012,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 		dlist->item = nullptr;
+		dlist->first = nullptr;
 		for (i = 0; i < md->lootitem_count; i++)
 			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitems[i], md->mob_id), 1, 10000, homkillonly || merckillonly);
 		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr_t)dlist);
