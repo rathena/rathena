@@ -662,6 +662,19 @@ enum e_action_failure : uint8 {
 	ARROWFAIL_SUCCESS = 3
 };
 
+enum e_notify_effect : uint8 {
+	NOTIFYEFFECT_BASE_LEVEL_UP = 0,
+	NOTIFYEFFECT_JOB_LEVEL_UP = 1,
+	NOTIFYEFFECT_REFINE_FAILURE = 2,
+	NOTIFYEFFECT_REFINE_SUCCESS = 3,
+	NOTIFYEFFECT_GAME_OVER = 4,
+	NOTIFYEFFECT_PHARMACY_SUCCESS = 5,
+	NOTIFYEFFECT_PHARMACY_FAILURE = 6,
+	NOTIFYEFFECT_SUPER_NOVICE_BASE_LEVEL_UP = 7,
+	NOTIFYEFFECT_SUPER_NOVICE_JOB_LEVEL_UP = 8,
+	NOTIFYEFFECT_TAEKWON_BASE_LEVEL_UP = 9,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -723,7 +736,7 @@ void clif_arrow_create_list(map_session_data *sd);	//self
 void clif_statusupack(map_session_data *sd,int type,int ok,int val);	// self
 void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self
 void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok);	// self
-void clif_misceffect(struct block_list* bl,int type);	// area
+void clif_misceffect( block_list& bl, e_notify_effect type );
 void clif_changeoption_target(struct block_list* bl, struct block_list* target);
 #define clif_changeoption(bl) clif_changeoption_target(bl, nullptr)	// area
 void clif_changeoption2( block_list& bl );

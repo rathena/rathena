@@ -922,6 +922,13 @@ struct PACKET_ZC_ACTION_FAILURE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACTION_FAILURE, 0x13b)
 
+struct PACKET_ZC_NOTIFY_EFFECT {
+	int16 packetType;
+	uint32 aid;
+	uint32 effectId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_EFFECT, 0x19b);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
