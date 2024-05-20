@@ -889,7 +889,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case ALL_THANATOS_RECALL:
 		case ALL_LIGHTHALZEN_RECALL:
 			if(mapdata->getMapFlag(MF_NOWARP)) {
-				clif_skill_teleportmessage(&sd,0);
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_TP );
 				return true;
 			}
 			return false;
@@ -899,7 +899,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
 			if(mapdata->getMapFlag(MF_NOTELEPORT)) {
-				clif_skill_teleportmessage(&sd,0);
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_TP );
 				return true;
 			}
 			return false; // gonna be checked in 'skill_castend_nodamage_id'
@@ -907,7 +907,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
 			if (mapdata->getMapFlag(MF_NOMEMO)) {
-				clif_skill_teleportmessage(&sd,1);
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_MEMO );
 				return true;
 			}
 			break;
@@ -983,7 +983,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WM_GLOOMYDAY:
 		case WM_SATURDAY_NIGHT_FEVER:
 			if( !mapdata_flag_vs(mapdata) ) {
-				clif_skill_teleportmessage(&sd,2); // This skill uses this msg instead of skill fails.
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_USE_SKILL );	// This skill cannot be used in this area
 				return true;
 			}
 			break;
@@ -9316,7 +9316,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sd)
 		{
 			if (map_getmapflag(bl->m, MF_NOTELEPORT) && skill_lv <= 2) {
-				clif_skill_teleportmessage(sd,0);
+				clif_skill_teleportmessage( *sd, NOTIFY_MAPINFO_CANT_TP );
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skill_lv <= 2) { // duel restriction [LuzZza]
@@ -11707,7 +11707,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			tstatus->sp -= tstatus->sp * ( 60 - 10 * skill_lv ) / 100;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			pc_revive((TBL_PC*)bl,heal,0);
-			clif_resurrection(bl,1);
+			clif_resurrection( *bl );
 		}
 		break;
 
@@ -19717,7 +19717,7 @@ void skill_weaponrefine( map_session_data& sd, int idx ){
 				clif_delitem(sd,idx,1,3);
 				clif_upgrademessage(&sd, 0, item->nameid);
 				clif_inventorylist(&sd);
-				clif_refine(sd.fd,0,idx,item->refine);
+				clif_refine( sd, idx, ITEMREFINING_SUCCESS );
 				if( ditem->type == IT_WEAPON ){
 					achievement_update_objective(&sd, AG_ENCHANT_SUCCESS, 2, ditem->weapon_level, item->refine);
 				}
@@ -19745,7 +19745,7 @@ void skill_weaponrefine( map_session_data& sd, int idx ){
 				if(item->equip)
 					pc_unequipitem(&sd,idx,3);
 				clif_upgrademessage(&sd, 1, item->nameid);
-				clif_refine(sd.fd,1,idx,item->refine);
+				clif_refine( sd, idx, ITEMREFINING_FAILURE );
 				achievement_update_objective(&sd, AG_ENCHANT_FAIL, 1, 1);
 				pc_delitem(&sd,idx,1,0,2, LOG_TYPE_OTHER);
 				clif_misceffect(&sd.bl,2);
@@ -23012,7 +23012,7 @@ int skill_blockpc_start(map_session_data *sd, int skill_id, t_tick tick) {
 		sd->scd[i]->timer = add_timer(gettick() + tick, skill_blockpc_end, sd->bl.id, i);
 
 		if (battle_config.display_status_timers)
-			clif_skill_cooldown(sd, skill_id, tick);
+			clif_skill_cooldown( *sd, skill_id, tick );
 
 		return 1;
 	} else {

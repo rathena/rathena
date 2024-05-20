@@ -2416,7 +2416,7 @@ ACMD_FUNC(refine)
 			sd->inventory.u.items_inventory[i].refine = final_refine;
 			current_position = sd->inventory.u.items_inventory[i].equip;
 			pc_unequipitem(sd, i, 3);
-			clif_refine(fd, 0, i, sd->inventory.u.items_inventory[i].refine);
+			clif_refine( *sd, i, ITEMREFINING_SUCCESS );
 			clif_delitem( *sd, i, 1, 3 );
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);

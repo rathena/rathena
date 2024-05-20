@@ -367,7 +367,7 @@ enum map_property : uint8_t
 	MAPPROPERTY_DENYSKILLZONE = 6,
 };
 
-enum map_type : uint8_t 
+enum e_map_type : uint8_t 
 {// clif_map_type
 	MAPTYPE_VILLAGE              = 0,
 	MAPTYPE_VILLAGE_IN           = 1,
@@ -618,6 +618,26 @@ enum e_siege_teleport_result : uint8 {
 	SIEGE_TP_INVALID_MODE = 2
 };
 
+enum e_ack_remember_warppoint_result : uint8 {
+	WARPPOINT_SUCCESS = 0,
+	WARPPOINT_LOW_LEVEL = 1,
+	WARPPOINT_NOT_LEARNED = 2
+};
+
+enum e_notify_mapinfo_result : uint8 {
+	NOTIFY_MAPINFO_CANT_TP = 0,
+	NOTIFY_MAPINFO_CANT_MEMO = 1,
+	NOTIFY_MAPINFO_CANT_USE_SKILL = 2,
+	NOTIFY_MAPINFO_CANT_USE_ITEM = 3,
+};
+
+enum e_ack_itemrefining : uint8 {
+	ITEMREFINING_SUCCESS = 0,
+	ITEMREFINING_FAILURE = 1,
+	ITEMREFINING_DOWNGRADE = 2,
+	ITEMREFINING_FAILURE2 = 3
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -664,7 +684,7 @@ void clif_dropitem( map_session_data& sd, int index, int amount );
 void clif_delitem( map_session_data& sd, int index, int amount, short reason );
 void clif_update_hp(map_session_data &sd);
 void clif_updatestatus( map_session_data& sd, _sp type );
-void clif_changestatus(map_session_data* sd,int type,int val);	//area
+void clif_changemanner( map_session_data& sd );
 int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
 void clif_takeitem(struct block_list* src, struct block_list* dst);
 void clif_sitting(struct block_list* bl);
@@ -673,7 +693,7 @@ void clif_sprite_change(struct block_list *bl, int id, int type, int val, int va
 void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
-void clif_arrowequip(map_session_data *sd,int val); //self
+void clif_arrowequip( map_session_data& sd );
 void clif_arrow_fail(map_session_data *sd,int type); //self
 void clif_arrow_create_list(map_session_data *sd);	//self
 void clif_statusupack(map_session_data *sd,int type,int ok,int val);	// self
@@ -739,17 +759,17 @@ void clif_addskill(map_session_data *sd, int skill_id);
 void clif_deleteskill(map_session_data *sd, int skill_id, bool skip_infoblock = false);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
-void clif_skillcastcancel(struct block_list* bl);
+void clif_skillcastcancel( block_list& bl );
 void clif_skill_fail( map_session_data& sd, uint16 skill_id, enum useskill_fail_cause cause = USESKILL_FAIL_LEVEL, int btype = 0, t_itemid itemId = 0 );
-void clif_skill_cooldown(map_session_data *sd, uint16 skill_id, t_tick tick);
+void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick );
 int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
 void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
 void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2 = "", const char* map3 = "", const char* map4 = "" );
-void clif_skill_memomessage(map_session_data* sd, int type);
-void clif_skill_teleportmessage(map_session_data *sd, int type);
+void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_result result );
+void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result result );
 void clif_skill_produce_mix_list(map_session_data *sd, int skill_id, int trigger);
 void clif_cooking_list(map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type);
 
@@ -906,11 +926,11 @@ void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum
 void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
 void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 void clif_heal(int fd,int type,int val);
-void clif_resurrection(struct block_list *bl,int type);
+void clif_resurrection( block_list& bl );
 void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);
 void clif_pvpset(map_session_data *sd, int pvprank, int pvpnum,int type);
 void clif_map_property_mapall(int map, enum map_property property);
-void clif_refine(int fd, int fail, int index, int val);
+void clif_refine( map_session_data& sd, uint16 index, e_ack_itemrefining result );
 void clif_upgrademessage( map_session_data* sd, int result, t_itemid item_id );
 
 //petsystem
@@ -923,7 +943,7 @@ void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int 
 #define clif_pet_equip_area(pd) clif_send_petdata(nullptr, pd, 3, (pd)->vd.head_bottom)
 #define clif_pet_performance(pd, param) clif_send_petdata(nullptr, pd, 4, param)
 void clif_pet_emotion(struct pet_data *pd,int param);
-void clif_pet_food(map_session_data *sd,int foodid,int fail);
+void clif_pet_food( map_session_data& sd, int32 foodid, bool success );
 void clif_pet_autofeed_status(map_session_data* sd, bool force);
 
 //friends list
@@ -962,7 +982,7 @@ void clif_feel_hate_reset(map_session_data *sd);
 void clif_hominfo(map_session_data *sd, struct homun_data *hd, int flag);
 void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
-void clif_hom_food(map_session_data *sd,int foodid,int fail);	//[orn]
+void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
 void clif_send_homdata( homun_data& hd, e_hom_state2 state );
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
