@@ -736,7 +736,7 @@ void clif_tradeitemok(map_session_data& sd, int index, e_exitem_add_result resul
 void clif_tradedeal_lock(map_session_data* sd, int fail);
 void clif_tradecancelled(map_session_data* sd);
 void clif_tradecompleted(map_session_data* sd, int fail);
-void clif_tradeundo(map_session_data* sd);
+void clif_tradeundo( int fd );
 
 // storage
 void clif_storagelist(map_session_data* sd, struct item* items, int items_length, const char *storename);

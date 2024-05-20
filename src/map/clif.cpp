@@ -4905,17 +4905,16 @@ void clif_tradecompleted(map_session_data* sd, int fail)
 }
 
 
-/// Resets the trade window on the send side (ZC_EXCHANGEITEM_UNDO).
-/// 00f1
+/// Resets the trade window on the send side.
+/// 00f1 (ZC_EXCHANGEITEM_UNDO)
 /// NOTE: Unknown purpose. Items are not removed until the window is
 ///       refreshed (ex. by putting another item in there).
-void clif_tradeundo(map_session_data* sd)
-{
-	int fd = sd->fd;
+void clif_tradeundo( int fd ){
+	PACKET_ZC_EXCHANGEITEM_UNDO packet{};
 
-	WFIFOHEAD(fd,packet_len(0xf1));
-	WFIFOW(fd,0) = 0xf1;
-	WFIFOSET(fd,packet_len(0xf1));
+	packet.packetType = HEADER_ZC_EXCHANGEITEM_UNDO;
+
+	socket_send<PACKET_ZC_EXCHANGEITEM_UNDO>(fd, packet);
 }
 
 
