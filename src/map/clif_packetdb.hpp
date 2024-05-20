@@ -124,7 +124,6 @@
 	packet(0x00f2,6);
 	parseable_packet(0x00f3,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x00f5,8,clif_parse_MoveFromKafra,2,4);
-	packet(0x00f6,8);
 	parseable_packet(0x00f7,2,clif_parse_CloseKafra,0);
 	parseable_packet(0x00f9,26,clif_parse_CreateParty,2);
 	packet(0x00fb,-1);

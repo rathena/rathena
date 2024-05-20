@@ -318,7 +318,7 @@ int storage_delitem(map_session_data* sd, struct s_storage *stor, int index, int
 	}
 
 	if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
-		clif_storageitemremoved(sd,index,amount);
+		clif_storageitemremoved( *sd, index, amount );
 
 	return 0;
 }
@@ -353,7 +353,7 @@ void storage_storageadd(map_session_data* sd, struct s_storage *stor, int index,
 		}
 	}
 
-	clif_storageitemremoved(sd,index,0);
+	clif_storageitemremoved( *sd, index, 0 );
 	clif_dropitem( *sd, index, 0 );
 }
 
@@ -378,7 +378,7 @@ void storage_storageget(map_session_data *sd, struct s_storage *stor, int index,
 	if ((flag = pc_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE)) == ADDITEM_SUCCESS)
 		storage_delitem(sd,stor,index,amount);
 	else {
-		clif_storageitemremoved(sd,index,0);
+		clif_storageitemremoved( *sd, index, 0 );
 		clif_additem(sd,0,0,flag);
 	}
 }
@@ -416,7 +416,7 @@ void storage_storageaddfromcart(map_session_data *sd, struct s_storage *stor, in
 		}
 	}
 
-	clif_storageitemremoved(sd,index,0);
+	clif_storageitemremoved( *sd, index, 0 );
 	clif_dropitem( *sd, index, 0 );
 }
 
@@ -446,7 +446,7 @@ void storage_storagegettocart(map_session_data* sd, struct s_storage *stor, int 
 	if ((flag = pc_cart_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE)) == 0)
 		storage_delitem(sd,stor,index,amount);
 	else {
-		clif_storageitemremoved(sd,index,0);
+		clif_storageitemremoved( *sd, index, 0 );
 		clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
 	}
 }
@@ -859,7 +859,7 @@ bool storage_guild_delitem(map_session_data* sd, struct s_storage* stor, int n, 
 		clif_updatestorageamount(sd, stor->amount, stor->max_amount);
 	}
 
-	clif_storageitemremoved(sd,n,amount);
+	clif_storageitemremoved( *sd, n, amount );
 	stor->dirty = true;
 	return true;
 }
@@ -899,7 +899,7 @@ void storage_guild_storageadd(map_session_data* sd, int index, int amount)
 	if(storage_guild_additem(sd,stor,&sd->inventory.u.items_inventory[index],amount))
 		pc_delitem(sd,index,amount,0,4,LOG_TYPE_GSTORAGE);
 	else {
-		clif_storageitemremoved(sd,index,0);
+		clif_storageitemremoved( *sd, index, 0 );
 		clif_dropitem( *sd, index, 0 );
 	}
 }
@@ -939,7 +939,7 @@ void storage_guild_storageget(map_session_data* sd, int index, int amount)
 	if((flag = pc_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		storage_guild_delitem(sd,stor,index,amount);
 	else { // inform fail
-		clif_storageitemremoved(sd,index,0);
+		clif_storageitemremoved( *sd, index, 0 );
 		clif_additem(sd,0,0,flag);
 	}
 }
@@ -972,7 +972,7 @@ void storage_guild_storageaddfromcart(map_session_data* sd, int index, int amoun
 	if(storage_guild_additem(sd,stor,&sd->cart.u.items_cart[index],amount))
 		pc_cart_delitem(sd,index,amount,0,LOG_TYPE_GSTORAGE);
 	else {
-		clif_storageitemremoved(sd,index,0);
+		clif_storageitemremoved( *sd, index, 0 );
 		clif_dropitem( *sd, index, 0 );
 	}
 }
@@ -1007,7 +1007,7 @@ void storage_guild_storagegettocart(map_session_data* sd, int index, int amount)
 	if((flag = pc_cart_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		storage_guild_delitem(sd,stor,index,amount);
 	else {
-		clif_storageitemremoved(sd,index,0);
+		clif_storageitemremoved( *sd, index, 0 );
 		clif_cart_additem_ack(sd,(flag == 1) ? ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
 	}
 }
