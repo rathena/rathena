@@ -393,12 +393,16 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 		damage = 0;
 	}
 
-	// If the synchronize damage feature is activated then disabling delay battle damage should only affect skills (for monsters)
+	// Check for delay battle damage config
+	// If the synchronize damage feature is activated then disabling the config should only affect skills (for monsters)
+	if (!battle_config.delay_battle_damage && (!battle_config.synchronize_damage || skill_id != 0 || src->type != BL_MOB))
+		amotion = 1;
 	// If clientamotion is 1 or lower for monsters, we can apply damage directly for normal attacks and don't need to create a timer
-	// Same applies for all types, normal attacks and skills if amotion is 1 or lower
-	if ((!battle_config.delay_battle_damage && (src->type != BL_MOB || !battle_config.synchronize_damage || skill_id != 0))
-		|| (skill_id == 0 && src->type == BL_MOB && battle_config.synchronize_damage && status_get_clientamotion(src) <= 1)
-		|| amotion <= 1) {
+	else if (battle_config.synchronize_damage && skill_id == 0 && src->type == BL_MOB && status_get_clientamotion(src) <= 1)
+		amotion = 1;
+
+	// Skip creation of timer
+	if (amotion <= 1) {
 		//Deal damage
 		battle_damage(src, target, damage, ddelay, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
 		return 0;

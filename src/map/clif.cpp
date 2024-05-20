@@ -5193,6 +5193,8 @@ static int clif_hallucination_damage()
 	return (rnd() % 32767);
 }
 
+#define DEFAULT_ANIMATION_SPEED 432
+
 /// Sends a 'damage' packet (src performs action on dst)
 /// 008a <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.W <div>.W <type>.B <damage2>.W (ZC_NOTIFY_ACT)
 /// 02e1 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT2)
@@ -5245,7 +5247,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	// Calculate what sdelay to send to the client so it applies damage at the same time as the server
 	if (battle_config.synchronize_damage && src->type == BL_MOB && status_get_clientamotion(src) != 0) {
 		// The client only accepts values between 0 and 432; 432 stands for 1x animation speed
-		sdelay = sdelay * 432 / status_get_clientamotion(src);
+		sdelay = sdelay * DEFAULT_ANIMATION_SPEED / status_get_clientamotion(src);
 	}
 
 	WBUFW(buf,0) = cmd;
