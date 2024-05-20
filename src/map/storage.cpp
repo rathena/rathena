@@ -145,7 +145,7 @@ int storage_storageopen(map_session_data *sd)
 	sd->state.storage_flag = 1;
 	storage_sortitem(sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage));
 	clif_storagelist(sd, sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage), storage_getName(0));
-	clif_updatestorageamount(sd, sd->storage.amount, sd->storage.max_amount);
+	clif_updatestorageamount(*sd, sd->storage.amount, sd->storage.max_amount);
 
 	return 0;
 }
@@ -290,7 +290,7 @@ static int storage_additem(map_session_data* sd, struct s_storage *stor, struct 
 	stor->u.items_storage[i].amount = amount;
 	stor->dirty = true;
 	clif_storageitemadded(sd,&stor->u.items_storage[i],i,amount);
-	clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+	clif_updatestorageamount(*sd, stor->amount, stor->max_amount);
 
 	return 0;
 }
@@ -314,7 +314,7 @@ int storage_delitem(map_session_data* sd, struct s_storage *stor, int index, int
 		memset(&stor->u.items_storage[index],0,sizeof(stor->u.items_storage[0]));
 		stor->amount--;
 		if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
-			clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+			clif_updatestorageamount(*sd, stor->amount, stor->max_amount);
 	}
 
 	if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
@@ -600,7 +600,7 @@ char storage_guild_storageopen(map_session_data* sd)
 	sd->state.storage_flag = 2;
 	storage_sortitem(gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild));
 	clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), "Guild Storage");
-	clif_updatestorageamount(sd, gstor->amount, gstor->max_amount);
+	clif_updatestorageamount(*sd, gstor->amount, gstor->max_amount);
 
 	return GSTORAGE_OPEN;
 }
@@ -777,7 +777,7 @@ bool storage_guild_additem(map_session_data* sd, struct s_storage* stor, struct 
 	stor->u.items_guild[i].amount = amount;
 	stor->amount++;
 	clif_storageitemadded(sd,&stor->u.items_guild[i],i,amount);
-	clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+	clif_updatestorageamount(*sd, stor->amount, stor->max_amount);
 	stor->dirty = true;
 
 	storage_guild_log( sd, &stor->u.items_guild[i], amount );
@@ -856,7 +856,7 @@ bool storage_guild_delitem(map_session_data* sd, struct s_storage* stor, int n, 
 	if(!stor->u.items_guild[n].amount) {
 		memset(&stor->u.items_guild[n],0,sizeof(stor->u.items_guild[0]));
 		stor->amount--;
-		clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+		clif_updatestorageamount(*sd, stor->amount, stor->max_amount);
 	}
 
 	clif_storageitemremoved( *sd, n, amount );
@@ -1118,7 +1118,7 @@ void storage_premiumStorage_open(map_session_data *sd) {
 	sd->state.storage_flag = 3;
 	storage_sortitem(sd->premiumStorage.u.items_storage, ARRAYLENGTH(sd->premiumStorage.u.items_storage));
 	clif_storagelist(sd, sd->premiumStorage.u.items_storage, ARRAYLENGTH(sd->premiumStorage.u.items_storage), storage_getName(sd->premiumStorage.stor_id));
-	clif_updatestorageamount(sd, sd->premiumStorage.amount, sd->premiumStorage.max_amount);
+	clif_updatestorageamount(*sd, sd->premiumStorage.amount, sd->premiumStorage.max_amount);
 }
 
 /**

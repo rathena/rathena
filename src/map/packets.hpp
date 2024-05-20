@@ -865,6 +865,13 @@ struct PACKET_ZC_DELETE_ITEM_FROM_STORE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_DELETE_ITEM_FROM_STORE, 0xf6);
 
+struct PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO {
+	int16 packetType;
+	uint16 amount;
+	uint16 max_amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_STOREITEM_COUNTINFO, 0xf2);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
