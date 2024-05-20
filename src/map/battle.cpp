@@ -416,7 +416,7 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	dat->additional_effects = additional_effects;
 	dat->src_type = src->type;
 	dat->isspdamage = isspdamage;
-	if (skill_id == 0 && src->type == BL_MOB && battle_config.synchronize_damage && amotion > status_get_clientamotion(src)) {
+	if (battle_config.synchronize_damage && skill_id == 0 && src->type == BL_MOB && amotion > status_get_clientamotion(src)) {
 		// The client refuses to display animations slower than 1x speed
 		// So we need to shorten AttackMotion to be in-sync with the client in this case
 		amotion = status_get_clientamotion(src);
