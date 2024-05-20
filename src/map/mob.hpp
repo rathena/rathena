@@ -354,6 +354,7 @@ struct mob_data {
 	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
+	int16 centerX, centerY; // Spawn center of this individual monster
 	struct s_mob_lootitem *lootitems;
 	short mob_id;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
@@ -539,6 +540,7 @@ int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int f
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
+int mob_removeslaves(block_list* bl);
 
 int mob_is_clone(int mob_id);
 

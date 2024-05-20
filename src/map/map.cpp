@@ -1699,9 +1699,9 @@ static int map_count_sub(struct block_list *bl,va_list ap)
  * &2 = the target should be able to walk to the target tile.
  * &4 = there shouldn't be any players around the target tile (use the no_spawn_on_player setting)
  *------------------------------------------*/
-int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int16 rx, int16 ry, int flag)
+int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag, int32 tries)
 {
-	int tries, spawn=0;
+	int spawn=0;
 	int bx, by;
 
 	if( !src && (!(flag&1) || flag&2) )
@@ -1731,20 +1731,22 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 		return 0;
 	}
 
-	if (rx >= 0 && ry >= 0) {
-		tries = (rx * 2 + 1) * (ry * 2 + 1);
-		if (tries > 100) tries = 100;
-	} else {
-		tries = mapdata->xs*mapdata->ys;
-		if (tries > 500) tries = 500;
-	}
-
+	int16 edge = battle_config.map_edge_size;
+	int16 edge_valid = std::min(edge, (int16)5);
+	// In most situations there are 50 tries officially (default value)
 	while(tries--) {
-		*x = (rx >= 0) ? rnd_value(bx - rx, bx + rx) : rnd_value<int16>(1, mapdata->xs - 1);
-		*y = (ry >= 0) ? rnd_value(by - ry, by + ry) : rnd_value<int16>(1, mapdata->ys - 1);
+		// For map-wide search, the configured tiles from the edge are not considered (default: 15)
+		*x = (rx >= 0) ? rnd_value(bx - rx, bx + rx) : rnd_value<int16>(edge, mapdata->xs - edge - 1);
+		*y = (ry >= 0) ? rnd_value(by - ry, by + ry) : rnd_value<int16>(edge, mapdata->ys - edge - 1);
 
 		if (*x == bx && *y == by)
 			continue; //Avoid picking the same target tile.
+
+		// Cells outside the map or within 4-5 cells of the map edge are considered invalid officially
+		// Note that unlike the other edge, this isn't symmetric (NE - 4 cells, SW - 5 cells)
+		// If for some reason edge size was set to below 5 cells, we consider them as valid
+		if (*x < edge_valid || *x > mapdata->xs - edge_valid || *y < edge_valid || *y > mapdata->ys - edge_valid)
+			continue;
 
 		if (map_getcell(m,*x,*y,CELL_CHKREACH))
 		{
@@ -1754,10 +1756,11 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 				if (spawn >= 100) return 0; //Limit of retries reached.
 				if (spawn++ < battle_config.no_spawn_on_player &&
 					map_foreachinallarea(map_count_sub, m,
-						*x-AREA_SIZE, *y-AREA_SIZE,
-					  	*x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
-				)
-				continue;
+						*x - AREA_SIZE, *y - AREA_SIZE,
+						*x + AREA_SIZE, *y + AREA_SIZE, BL_PC)) {
+					tries++; // This failure should not affect the number of official tries
+					continue;
+				}
 			}
 			return 1;
 		}

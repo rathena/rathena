@@ -7037,7 +7037,7 @@ enum e_setpos pc_setpos_savepoint( map_session_data& sd, clr_type clrtype ){
  *------------------------------------------*/
 char pc_randomwarp(map_session_data *sd, clr_type type, bool ignore_mapflag)
 {
-	int x,y,i=0;
+	int16 x,y,i=0;
 
 	nullpo_ret(sd);
 
@@ -7046,9 +7046,10 @@ char pc_randomwarp(map_session_data *sd, clr_type type, bool ignore_mapflag)
 	if (mapdata->getMapFlag(MF_NOTELEPORT) && !ignore_mapflag) //Teleport forbidden
 		return 3;
 
+	int edge = battle_config.map_edge_size;
 	do {
-		x = rnd()%(mapdata->xs-2)+1;
-		y = rnd()%(mapdata->ys-2)+1;
+		x = rnd_value<int16>(edge, mapdata->xs - edge - 1);
+		y = rnd_value<int16>(edge, mapdata->ys - edge - 1);
 	} while((map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,sd->bl.m,x,y,1))) && (i++) < 1000);
 
 	if (i < 1000)

@@ -5180,6 +5180,13 @@ void npc_parse_mob2(struct spawn_data* mob)
 	{
 		struct mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
+		// Determine center cell for each mob in the spawn line
+		if (battle_config.randomize_center_cell) {
+			if (mob->xs > 1)
+				md->centerX = rnd_value(mob->x - mob->xs + 1, mob->x + mob->xs - 1);
+			if (mob->ys > 1)
+				md->centerY = rnd_value(mob->y - mob->ys + 1, mob->y + mob->ys - 1);
+		}
 		md->spawn->active++;
 		mob_spawn(md);
 	}
@@ -5188,7 +5195,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int num, mob_id, mob_lv = -1, delay = 5000, size = -1, w1count, w4count;
-	short m, x = 0, y = 0, xs = -1, ys = -1;
+	short m, x = 0, y = 0, xs = 0, ys = 0;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH], sprite[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	int ai = AI_NONE; // mob_ai
@@ -5197,7 +5204,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	mob.state.boss = !strcmpi(w2,"boss_monster");
 
-	// w1=<map name>{,<x>,<y>,<xs>{,<ys>}}
+	// w1=<map name>{,<x>,<y>{,<xs>,<ys>}}
 	// w3=<mob name>{,<mob level>}
 	// w4=<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 	if( ( w1count = sscanf(w1, "%15[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) ) < 1
@@ -5289,17 +5296,23 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		mob.state.ai = static_cast<enum mob_ai>(ai);
 
 	if (mob.xs < 0) {
-		if (w1count > 3) {
-			ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d').\n", mob.xs, mob_id, filepath, strline(buffer, start - buffer));
-		}
+		ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d'). Defaulting to map-wide.\n", mob.xs, mob_id, filepath, strline(buffer, start - buffer));
 		mob.xs = 0;
+	}
+	else if (mob.xs == 0 && mob.x > 0) {
+		// Fixed X coordinate
+		// Need to set this to 1 as we reduce it by 1 when calling the search function
+		mob.xs = 1;
 	}
 
 	if (mob.ys < 0) {
-		if (w1count > 4) {
-			ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d').\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
-		}
+		ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d'). Defaulting to map-wide.\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
 		mob.ys = 0;
+	}
+	else if (mob.ys == 0 && mob.y > 0) {
+		// Fixed Y coordinate
+		// Need to set this to 1 as we reduce it by 1 when calling the search function
+		mob.ys = 1;
 	}
 
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {
@@ -5307,10 +5320,11 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 			mob.num = 1;
 	}
 
-	if (battle_config.force_random_spawn || (mob.x == 0 && mob.y == 0))
+	if (battle_config.force_random_spawn || (mob.x == 0 && mob.y == 0)
+		|| (mob.xs == 1 && mob.ys == 1 && !map_getcell(mob.m, mob.x, mob.y, CELL_CHKREACH)))
 	{	//Force a random spawn anywhere on the map.
 		mob.x = mob.y = 0;
-		mob.xs = mob.ys = -1;
+		mob.xs = mob.ys = 0;
 	}
 
 	// Check if monsters should have variance applied to their respawn time

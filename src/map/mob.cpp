@@ -474,6 +474,8 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->spawn_timer = INVALID_TIMER;
 	md->deletetimer = INVALID_TIMER;
 	md->skill_idx = -1;
+	md->centerX = data->x;
+	md->centerY = data->y;
 	status_set_viewdata(&md->bl, md->mob_id);
 	status_change_init(&md->bl);
 	unit_dataset(&md->bl);
@@ -1084,11 +1086,12 @@ int mob_setdelayspawn(struct mob_data *md)
 int mob_count_sub(struct block_list *bl, va_list ap) {
     int mobid[10], i;
     ARR_FIND(0, 10, i, (mobid[i] = va_arg(ap, int)) == 0); //fetch till 0
-    if (mobid[0]) { //if there one let's check it otherwise go backward
-        TBL_MOB *md = BL_CAST(BL_MOB, bl);
+	mob_data* md = BL_CAST(BL_MOB, bl);
+	if (md && mobid[0]) { //if there one let's check it otherwise go backward
         ARR_FIND(0, 10, i, md->mob_id == mobid[i]);
         return (i < 10) ? 1 : 0;
     }
+	// If not counting monsters, count all
     return 1; //backward compatibility
 }
 
@@ -1116,20 +1119,33 @@ int mob_spawn (struct mob_data *md)
 
 	if (md->spawn) { //Respawn data
 		md->bl.m = md->spawn->m;
-		md->bl.x = md->spawn->x;
-		md->bl.y = md->spawn->y;
+		md->bl.x = md->centerX;
+		md->bl.y = md->centerY;
 
-		if( (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys )
-		{	//Monster can be spawned on an area.
-			if( !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0) )
-			{ // retry again later
-				if( md->spawn_timer != INVALID_TIMER )
-					delete_timer(md->spawn_timer, mob_delayspawn);
-				md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time,mob_delayspawn,md->bl.id,0);
-				return 1;
+		// Search can be skipped for boss monster spawns if spawn location is fixed
+		// We can't skip normal monsters as they should pick a random location if the cell is blocked (e.g. Icewall)
+		// The center cell has a 1/(xs*ys) chance to be picked if free
+		if ((!md->spawn->state.boss || (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs != 1 || md->spawn->ys != 1)
+			&& (md->spawn->xs + md->spawn->ys < 1 || !rnd_chance(1, md->spawn->xs * md->spawn->ys) || !map_getcell(md->bl.m, md->bl.x, md->bl.y, CELL_CHKREACH)))
+		{
+			// Officially the area is split into 4 squares, 4 lines and 1 dot and for each of those there is one attempt
+			// We simplify this to trying 8 times in the whole area and then at the center cell even though that's not fully accurate
+
+			// Try to spawn monster in defined area (8 tries)
+			if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs-1, md->spawn->ys-1, battle_config.no_spawn_on_player?4:0, 8))
+			{
+				// If area search failed and center cell not reachable, try to spawn the monster anywhere on the map (50 tries)
+				if (!map_getcell(md->bl.m, md->bl.x, md->bl.y, CELL_CHKREACH) && !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, -1, -1, battle_config.no_spawn_on_player?4:0))
+				{
+					// Retry again later
+					if (md->spawn_timer != INVALID_TIMER)
+						delete_timer(md->spawn_timer, mob_delayspawn);
+					md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time, mob_delayspawn, md->bl.id, 0);
+					return 1;
+				}
 			}
 		}
-		else if( battle_config.no_spawn_on_player > 99 && map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
+		if( battle_config.no_spawn_on_player > 99 && map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
 		{ // retry again later (players on sight)
 			if( md->spawn_timer != INVALID_TIMER )
 				delete_timer(md->spawn_timer, mob_delayspawn);
@@ -1444,8 +1460,17 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 			}
 		}
 
-		if(md->target_id) //Slave is busy with a target.
-			return 0;
+		// Slave is busy with a target.
+		if(md->target_id) {
+			// Player's slave should come back when master's too far, even if it is doing with a target.
+			if (bl->type == BL_PC && md->master_dist > 5) {
+				mob_unlocktarget(md, tick);
+				unit_walktobl(&md->bl, bl, MOB_SLAVEDISTANCE, 1);
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 
 		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
 		if ((md->master_dist > MOB_SLAVEDISTANCE || md->master_dist == 0) && unit_can_move(&md->bl)) {
@@ -2082,6 +2107,13 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	md->last_thinktime=tick;
 
 	if (md->master_id) {
+		if (!mob_is_spotted(md)) {
+			// Get mob data of master
+			mob_data* mmd = map_id2md(md->master_id);
+			// If neither master nor slave have been spotted we don't have to execute the slave AI
+			if (mmd && !mob_is_spotted(mmd))
+				return 0;
+		}
 		mob_ai_sub_hard_slavemob (md,tick);
 		return 0;
 	}
@@ -3500,6 +3532,33 @@ int mob_countslave_sub(struct block_list *bl,va_list ap)
 int mob_countslave(struct block_list *bl)
 {
 	return map_foreachinmap(mob_countslave_sub, bl->m, BL_MOB,bl->id);
+}
+
+/**
+ * Remove slaves if master logs off.
+ * @param bl: Mob data
+ * @param ap: List of arguments
+ * @return 1 on removal, otherwise 0
+ */
+int mob_removeslaves_sub(block_list *bl, va_list ap) {
+	int id = va_arg(ap, int);
+	mob_data *md = (mob_data *)bl;
+
+	if (md != nullptr && md->master_id == id) {
+		unit_free(bl, CLR_OUTSIGHT);
+		return 1;
+	}
+
+	return 0;
+}
+
+/**
+ * Remove slaves on a map.
+ * @param bl: Player data
+ * @return 1 on removal, otherwise 0
+ */
+int mob_removeslaves(block_list *bl) {
+	return map_foreachinmap(mob_removeslaves_sub, bl->m, BL_MOB, bl->id);
 }
 
 /*==========================================
