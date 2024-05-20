@@ -115,7 +115,6 @@
 	parseable_packet(0x00e8,8,clif_parse_TradeAddItem,2,4);
 	packet(0x00ea,5);
 	parseable_packet(0x00eb,2,clif_parse_TradeOk,0);
-	packet(0x00ec,3);
 	parseable_packet(0x00ed,2,clif_parse_TradeCancel,0);
 	parseable_packet(0x00ef,2,clif_parse_TradeCommit,0);
 	parseable_packet(0x00f3,8,clif_parse_MoveToKafra,2,4);

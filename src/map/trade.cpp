@@ -485,8 +485,8 @@ void trade_tradeok(map_session_data *sd)
 
 	sd->state.deal_locked = 1;
 	clif_tradeitemok(*sd, -2, EXITEM_ADD_SUCCEED); // We pass -2 which will becomes 0 in clif_tradeitemok (Official behavior)
-	clif_tradedeal_lock(sd, 0);
-	clif_tradedeal_lock(target_sd, 1);
+	clif_tradedeal_lock( sd->fd, false );
+	clif_tradedeal_lock( target_sd->fd, true );
 }
 
 /**
