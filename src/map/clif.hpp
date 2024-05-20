@@ -733,7 +733,7 @@ void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_ta
 void clif_arrowequip( map_session_data& sd );
 void clif_arrow_fail( int fd, e_action_failure type );
 void clif_arrow_create_list(map_session_data *sd);	//self
-void clif_statusupack(map_session_data *sd,int type,int ok,int val);	// self
+void clif_statusupack( int fd, int32 type, bool result, int32 val );
 void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self
 void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok);	// self
 void clif_misceffect( block_list& bl, e_notify_effect type );
