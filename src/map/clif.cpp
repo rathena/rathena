@@ -4194,8 +4194,8 @@ void clif_arrowequip( map_session_data& sd ) {
 }
 
 
-/// Ammunition action message (ZC_ACTION_FAILURE).
-/// 013b <type>.W
+/// Ammunition action message.
+/// 013b <type>.W (ZC_ACTION_FAILURE)
 /// type:
 ///     0 = MsgStringTable[242]="Please equip the proper ammunition first."
 ///     1 = MsgStringTable[243]="You can't Attack or use Skills because your Weight Limit has been exceeded."
@@ -4203,16 +4203,13 @@ void clif_arrowequip( map_session_data& sd ) {
 ///     3 = assassin, baby_assassin, assassin_cross => MsgStringTable[1040]="You have equipped throwing daggers."
 ///         gunslinger => MsgStringTable[1175]="Bullets have been equipped."
 ///         NOT ninja => MsgStringTable[245]="Ammunition has been equipped."
-void clif_arrow_fail(map_session_data *sd,int type) {
-	int fd;
+void clif_arrow_fail( int fd, e_action_failure type ) {
+	PACKET_ZC_ACTION_FAILURE packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_ACTION_FAILURE;
+	packet.type = static_cast<decltype(packet.type)>(type);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len(0x013b));
-	WFIFOW(fd,0) = 0x013b;
-	WFIFOW(fd,2) = type;
-	WFIFOSET(fd, packet_len(0x013b));
+	socket_send<PACKET_ZC_ACTION_FAILURE>(fd, packet);
 }
 
 

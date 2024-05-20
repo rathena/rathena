@@ -18594,7 +18594,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 		}
 #endif
 		if((i=sd.equip_index[EQI_AMMO]) < 0 || !sd.inventory_data[i] ) {
-			clif_arrow_fail(&sd,0);
+			clif_arrow_fail( sd.fd, ARROWFAIL_NO_AMMO );
 			return false;
 		} else if( sd.inventory.u.items_inventory[i].amount < require.ammo_qty + extra_ammo ) {
 			char e_msg[100];
@@ -18615,7 +18615,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 		}
 		if (!(require.ammo&1<<sd.inventory_data[i]->subtype)) { //Ammo type check. Send the "wrong weapon type" message
 			//which is the closest we have to wrong ammo type. [Skotlex]
-			clif_arrow_fail(&sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
+			clif_arrow_fail( sd.fd, ARROWFAIL_NO_AMMO ); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
 			//clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
 			return false;
 		}

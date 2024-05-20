@@ -916,6 +916,12 @@ struct PACKET_ZC_NPC_SHOWEFST_UPDATE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NPC_SHOWEFST_UPDATE, 0x28a);
 
+struct PACKET_ZC_ACTION_FAILURE {
+	int16 packetType;
+	uint16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACTION_FAILURE, 0x13b)
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
