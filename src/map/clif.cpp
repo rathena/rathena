@@ -4495,23 +4495,19 @@ void clif_useitemack( map_session_data *sd, int index, int amount, bool ok ){
 }
 
 
-/// Inform client whether chatroom creation was successful or not (ZC_ACK_CREATE_CHATROOM).
-/// 00d6 <flag>.B
+/// Inform client whether chatroom creation was successful or not.
+/// 00d6 <flag>.B (ZC_ACK_CREATE_CHATROOM)
 /// flag:
 ///     0 = Room has been successfully created (opens chat room)
 ///     1 = Room limit exceeded
 ///     2 = Same room already exists
-void clif_createchat(map_session_data* sd, int flag)
-{
-	int fd;
+void clif_createchat( int fd, e_create_chatroom flag ){
+	PACKET_ZC_ACK_CREATE_CHATROOM packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_ACK_CREATE_CHATROOM;
+	packet.flag = static_cast<decltype(packet.flag)>(flag);
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0xd6));
-	WFIFOW(fd,0) = 0xd6;
-	WFIFOB(fd,2) = flag;
-	WFIFOSET(fd,packet_len(0xd6));
+	socket_send<PACKET_ZC_ACK_CREATE_CHATROOM>(fd, packet);
 }
 
 

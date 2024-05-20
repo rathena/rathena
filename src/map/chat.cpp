@@ -105,7 +105,7 @@ int chat_createpcchat(map_session_data* sd, const char* title, const char* pass,
 		cd->usersd[0] = sd;
 		pc_setchatid(sd,cd->bl.id);
 		pc_stop_attack(sd);
-		clif_createchat(sd,0);
+		clif_createchat( sd->fd, CREATEROOM_SUCCESS );
 		clif_dispchat(cd,0);
 
 		if (status_isdead(&sd->bl))
@@ -113,7 +113,7 @@ int chat_createpcchat(map_session_data* sd, const char* title, const char* pass,
 		else
 			achievement_update_objective(sd, AG_CHATTING_CREATE, 1, 1);
 	} else
-		clif_createchat(sd,1);
+		clif_createchat( sd->fd, CREATEROOM_LIMIT_EXCEEDED );
 
 	return 0;
 }

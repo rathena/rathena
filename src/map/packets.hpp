@@ -892,6 +892,13 @@ struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM {
 	int16 packetType;
 	uint8 who;
 } __attribute__((packed));
+
+struct PACKET_ZC_ACK_CREATE_CHATROOM {
+	int16 packetType;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_CREATE_CHATROOM, 0xd6);
+
 DEFINE_PACKET_HEADER(ZC_CONCLUDE_EXCHANGE_ITEM, 0xec);
 
 struct PACKET_ZC_REFUSE_ENTER_ROOM {
