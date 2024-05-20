@@ -894,6 +894,12 @@ struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_CONCLUDE_EXCHANGE_ITEM, 0xec);
 
+struct PACKET_ZC_REFUSE_ENTER_ROOM {
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REFUSE_ENTER_ROOM, 0xda);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

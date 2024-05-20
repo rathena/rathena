@@ -134,31 +134,31 @@ int chat_joinchat(map_session_data* sd, int chatid, const char* pass)
 	cd = (struct chat_data*)map_id2bl(chatid);
 
 	if( cd == nullptr || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || ((cd->owner->type == BL_NPC) ? cd->users+1 : cd->users) >= cd->limit ) {
-		clif_joinchatfail(sd,0);
+		clif_joinchatfail( sd->fd, ENTERROOM_FULL );
 		return 0;
 	}
 
 	if( !cd->pub && strncmp(pass, cd->pass, sizeof(cd->pass)) != 0 && !pc_has_permission(sd, PC_PERM_JOIN_ALL_CHAT) ) {
-		clif_joinchatfail(sd,1);
+		clif_joinchatfail( sd->fd, ENTERROOM_WRONG_PASSWORD );
 		return 0;
 	}
 
 	if( sd->status.base_level < cd->minLvl || sd->status.base_level > cd->maxLvl ) {
 		if(sd->status.base_level < cd->minLvl)
-			clif_joinchatfail(sd,5);
+			clif_joinchatfail( sd->fd, ENTERROOM_TOO_LOW_LEVEL );
 		else
-			clif_joinchatfail(sd,6);
+			clif_joinchatfail( sd->fd, ENTERROOM_TOO_HIGH_LEVEL );
 
 		return 0;
 	}
 
 	if( sd->status.zeny < cd->zeny ) {
-		clif_joinchatfail(sd,4);
+		clif_joinchatfail( sd->fd, ENTERROOM_NO_ZENY );
 		return 0;
 	}
 
 	if( cd->owner->type != BL_NPC && idb_exists(cd->kick_list,sd->status.char_id) ) {
-		clif_joinchatfail(sd,2);//You have been kicked out of the room.
+		clif_joinchatfail( sd->fd, ENTERROOM_KICKED );
 		return 0;
 	}
 

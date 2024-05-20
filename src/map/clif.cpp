@@ -4605,8 +4605,8 @@ void clif_clearchat(struct chat_data *cd,int fd)
 }
 
 
-/// Displays messages regarding join chat failures (ZC_REFUSE_ENTER_ROOM).
-/// 00da <result>.B
+/// Displays messages regarding join chat failures.
+/// 00da <result>.B (ZC_REFUSE_ENTER_ROOM)
 /// result:
 ///     0 = room full
 ///     1 = wrong password
@@ -4616,18 +4616,13 @@ void clif_clearchat(struct chat_data *cd,int fd)
 ///     5 = too low level
 ///     6 = too high level
 ///     7 = unsuitable job class
-void clif_joinchatfail(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_joinchatfail( int fd, e_refuse_enter_room result ){
+	PACKET_ZC_REFUSE_ENTER_ROOM packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_REFUSE_ENTER_ROOM;
+	packet.result = static_cast<decltype(packet.result)>(result);
 
-	fd = sd->fd;
-
-	WFIFOHEAD(fd,packet_len(0xda));
-	WFIFOW(fd,0) = 0xda;
-	WFIFOB(fd,2) = flag;
-	WFIFOSET(fd,packet_len(0xda));
+	socket_send<PACKET_ZC_REFUSE_ENTER_ROOM>(fd, packet);
 }
 
 

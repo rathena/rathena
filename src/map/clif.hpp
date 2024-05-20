@@ -638,6 +638,17 @@ enum e_ack_itemrefining : uint8 {
 	ITEMREFINING_FAILURE2 = 3
 };
 
+enum e_refuse_enter_room : uint8 {
+	ENTERROOM_FULL = 0,
+	ENTERROOM_WRONG_PASSWORD = 1,
+	ENTERROOM_KICKED = 2,
+	ENTERROOM_SUCCESS = 3,
+	ENTERROOM_NO_ZENY = 4,
+	ENTERROOM_TOO_LOW_LEVEL = 5,
+	ENTERROOM_TOO_HIGH_LEVEL = 6,
+	ENTERROOM_UNSUITABLE_JOB = 7
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -707,7 +718,7 @@ void clif_useitemack(map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
 void clif_createchat(map_session_data* sd, int flag);	// self
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
-void clif_joinchatfail(map_session_data *sd,int flag);	// self
+void clif_joinchatfail( int fd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data *sd,struct chat_data* cd);	// self
 void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
