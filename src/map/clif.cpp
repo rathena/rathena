@@ -4871,13 +4871,13 @@ void clif_tradecancelled( int fd ){
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_tradecompleted( int fd ){
+void clif_tradecompleted( map_session_data& sd ){
 	PACKET_ZC_EXEC_EXCHANGE_ITEM packet{};
 
 	packet.packetType = HEADER_ZC_EXEC_EXCHANGE_ITEM;
 	packet.result = 0;
 
-	socket_send<PACKET_ZC_EXEC_EXCHANGE_ITEM>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
