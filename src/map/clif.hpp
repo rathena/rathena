@@ -638,6 +638,43 @@ enum e_ack_itemrefining : uint8 {
 	ITEMREFINING_FAILURE2 = 3
 };
 
+enum e_refuse_enter_room : uint8 {
+	ENTERROOM_FULL = 0,
+	ENTERROOM_WRONG_PASSWORD = 1,
+	ENTERROOM_KICKED = 2,
+	ENTERROOM_SUCCESS = 3,
+	ENTERROOM_NO_ZENY = 4,
+	ENTERROOM_TOO_LOW_LEVEL = 5,
+	ENTERROOM_TOO_HIGH_LEVEL = 6,
+	ENTERROOM_UNSUITABLE_JOB = 7
+};
+
+enum e_create_chatroom : uint8 {
+	CREATEROOM_SUCCESS = 0,
+	CREATEROOM_LIMIT_EXCEEDED = 1,
+	CREATEROOM_ALREADY_EXISTS = 2
+};
+
+enum e_action_failure : uint8 {
+	ARROWFAIL_NO_AMMO = 0,
+	ARROWFAIL_WEIGHT_LIMIT = 1,
+	ARROWFAIL_WEIGHT_LIMIT2 = 2,
+	ARROWFAIL_SUCCESS = 3
+};
+
+enum e_notify_effect : uint8 {
+	NOTIFYEFFECT_BASE_LEVEL_UP = 0,
+	NOTIFYEFFECT_JOB_LEVEL_UP = 1,
+	NOTIFYEFFECT_REFINE_FAILURE = 2,
+	NOTIFYEFFECT_REFINE_SUCCESS = 3,
+	NOTIFYEFFECT_GAME_OVER = 4,
+	NOTIFYEFFECT_PHARMACY_SUCCESS = 5,
+	NOTIFYEFFECT_PHARMACY_FAILURE = 6,
+	NOTIFYEFFECT_SUPER_NOVICE_BASE_LEVEL_UP = 7,
+	NOTIFYEFFECT_SUPER_NOVICE_JOB_LEVEL_UP = 8,
+	NOTIFYEFFECT_TAEKWON_BASE_LEVEL_UP = 9,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -694,20 +731,20 @@ void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
 void clif_arrowequip( map_session_data& sd );
-void clif_arrow_fail(map_session_data *sd,int type); //self
+void clif_arrow_fail( map_session_data& sd, e_action_failure type );
 void clif_arrow_create_list(map_session_data *sd);	//self
-void clif_statusupack(map_session_data *sd,int type,int ok,int val);	// self
+void clif_statusupack( map_session_data& sd, int32 type, bool success, int32 val = 0 );
 void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self
 void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok);	// self
-void clif_misceffect(struct block_list* bl,int type);	// area
+void clif_misceffect( block_list& bl, e_notify_effect type );
 void clif_changeoption_target(struct block_list* bl, struct block_list* target);
 #define clif_changeoption(bl) clif_changeoption_target(bl, nullptr)	// area
-void clif_changeoption2(struct block_list* bl);	// area
+void clif_changeoption2( block_list& bl );
 void clif_useitemack(map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
-void clif_createchat(map_session_data* sd, int flag);	// self
+void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
-void clif_joinchatfail(map_session_data *sd,int flag);	// self
+void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
 void clif_joinchatok(map_session_data *sd,struct chat_data* cd);	// self
 void clif_addchat(struct chat_data* cd,map_session_data *sd);	// chat
 void clif_changechatowner(struct chat_data* cd, map_session_data* sd);	// chat
@@ -733,17 +770,17 @@ void clif_traderequest(map_session_data* sd, const char* name);
 void clif_tradestart(map_session_data* sd, uint8 type);
 void clif_tradeadditem(map_session_data* sd, map_session_data* tsd, int index, int amount);
 void clif_tradeitemok(map_session_data& sd, int index, e_exitem_add_result result);
-void clif_tradedeal_lock(map_session_data* sd, int fail);
-void clif_tradecancelled(map_session_data* sd);
-void clif_tradecompleted(map_session_data* sd, int fail);
-void clif_tradeundo(map_session_data* sd);
+void clif_tradedeal_lock( map_session_data& sd, bool who );
+void clif_tradecancelled( map_session_data& sd );
+void clif_tradecompleted( map_session_data& sd );
+void clif_tradeundo( map_session_data& sd );
 
 // storage
 void clif_storagelist(map_session_data* sd, struct item* items, int items_length, const char *storename);
-void clif_updatestorageamount(map_session_data* sd, int amount, int max_amount);
+void clif_updatestorageamount( map_session_data& sd, uint16 amount, uint16 max_amount );
 void clif_storageitemadded(map_session_data* sd, struct item* i, int index, int amount);
-void clif_storageitemremoved(map_session_data* sd, int index, int amount);
-void clif_storageclose(map_session_data* sd);
+void clif_storageitemremoved( map_session_data& sd, uint16 index, uint32 amount );
+void clif_storageclose( map_session_data& sd );
 
 int clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 int clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback

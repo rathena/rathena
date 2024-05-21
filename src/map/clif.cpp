@@ -4194,8 +4194,8 @@ void clif_arrowequip( map_session_data& sd ) {
 }
 
 
-/// Ammunition action message (ZC_ACTION_FAILURE).
-/// 013b <type>.W
+/// Ammunition action message.
+/// 013b <type>.W (ZC_ACTION_FAILURE)
 /// type:
 ///     0 = MsgStringTable[242]="Please equip the proper ammunition first."
 ///     1 = MsgStringTable[243]="You can't Attack or use Skills because your Weight Limit has been exceeded."
@@ -4203,16 +4203,13 @@ void clif_arrowequip( map_session_data& sd ) {
 ///     3 = assassin, baby_assassin, assassin_cross => MsgStringTable[1040]="You have equipped throwing daggers."
 ///         gunslinger => MsgStringTable[1175]="Bullets have been equipped."
 ///         NOT ninja => MsgStringTable[245]="Ammunition has been equipped."
-void clif_arrow_fail(map_session_data *sd,int type) {
-	int fd;
+void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
+	PACKET_ZC_ACTION_FAILURE packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_ACTION_FAILURE;
+	packet.type = static_cast<decltype(packet.type)>(type);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len(0x013b));
-	WFIFOW(fd,0) = 0x013b;
-	WFIFOW(fd,2) = type;
-	WFIFOSET(fd, packet_len(0x013b));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -4263,25 +4260,22 @@ void clif_arrow_create_list( map_session_data *sd ){
 }
 
 
-/// Notifies the client, about the result of an status change request (ZC_STATUS_CHANGE_ACK).
-/// 00bc <status id>.W <result>.B <value>.B
+/// Notifies the client, about the result of an status change request.
+/// 00bc <status id>.W <result>.B <value>.B (ZC_STATUS_CHANGE_ACK)
 /// status id:
 ///     SP_STR ~ SP_LUK and SP_POW ~ SP_CRT
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_statusupack(map_session_data *sd,int type,int ok,int val) {
-	int fd;
+void clif_statusupack( map_session_data& sd, int32 type, bool success, int32 val ) {
+	PACKET_ZC_STATUS_CHANGE_ACK packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_STATUS_CHANGE_ACK;
+	packet.sp = static_cast<decltype(packet.sp)>(type);
+	packet.ok = success;
+	packet.value = cap_value(val, 0, UINT8_MAX);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd, packet_len(0xbc));
-	WFIFOW(fd,0) = 0xbc;
-	WFIFOW(fd,2) = type;
-	WFIFOB(fd,4) = ok;
-	WFIFOB(fd,5) = cap_value(val, 0, UINT8_MAX);
-	WFIFOSET(fd, packet_len(0xbc));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -4349,8 +4343,8 @@ void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok)
 }
 
 
-/// Notifies clients in the area about an special/visual effect (ZC_NOTIFY_EFFECT).
-/// 019b <id>.L <effect id>.L
+/// Notifies clients in the area about an special/visual effect.
+/// 019b <id>.L <effect id>.L (ZC_NOTIFY_EFFECT)
 /// effect id:
 ///     0 = base level up
 ///     1 = job level up
@@ -4362,17 +4356,14 @@ void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok)
 ///     7 = base level up (super novice)
 ///     8 = job level up (super novice)
 ///     9 = base level up (taekwon)
-void clif_misceffect(struct block_list* bl,int type)
-{
-	unsigned char buf[32];
+void clif_misceffect( block_list& bl, e_notify_effect type ){
+	PACKET_ZC_NOTIFY_EFFECT packet{};
 
-	nullpo_retv(bl);
+	packet.packetType = HEADER_ZC_NOTIFY_EFFECT;
+	packet.aid = bl.id;
+	packet.effectId = static_cast<decltype(packet.effectId)>(type);
 
-	WBUFW(buf,0) = 0x19b;
-	WBUFL(buf,2) = bl->id;
-	WBUFL(buf,6) = type;
-
-	clif_send(buf,packet_len(0x19b),bl,AREA);
+	clif_send( &packet, sizeof( packet ), &bl, AREA );
 }
 
 
@@ -4433,30 +4424,33 @@ void clif_changeoption_target( struct block_list* bl, struct block_list* target 
 }
 
 
-/// Displays status change effects on NPCs/monsters (ZC_NPC_SHOWEFST_UPDATE).
-/// 028a <id>.L <effect state>.L <level>.L <showEFST>.L
-void clif_changeoption2(struct block_list* bl)
-{
-	unsigned char buf[20];
-	status_change *sc;
+/// Displays status change effects on NPCs/monsters.
+/// 028a <id>.L <effect state>.L <level>.L <showEFST>.L (ZC_NPC_SHOWEFST_UPDATE)
+void clif_changeoption2( block_list& bl ){
+	status_change *sc = status_get_sc(&bl);
+	if (!sc)
+		return; //How can an option change if there's no sc?
 
-	sc = status_get_sc(bl);
-	if (!sc) return; //How can an option change if there's no sc?
+	PACKET_ZC_NPC_SHOWEFST_UPDATE packet{};
 
-	WBUFW(buf,0) = 0x28a;
-	WBUFL(buf,2) = bl->id;
-	WBUFL(buf,6) = sc->option;
-	WBUFL(buf,10) = clif_setlevel(bl);
-	WBUFL(buf,14) = sc->opt3;
-	if(disguised(bl)) {
-		clif_send(buf,packet_len(0x28a),bl,AREA_WOS);
-		WBUFL(buf,2) = disguised_bl_id( bl->id );
-		clif_send(buf,packet_len(0x28a),bl,SELF);
-		WBUFL(buf,2) = bl->id;
-		WBUFL(buf,6) = OPTION_INVISIBLE;
-		clif_send(buf,packet_len(0x28a),bl,SELF);
-	} else
-		clif_send(buf,packet_len(0x28a),bl,AREA);
+	packet.packetType = HEADER_ZC_NPC_SHOWEFST_UPDATE;
+	packet.gid = bl.id;
+	packet.effectState = sc->option;
+	packet.level = clif_setlevel(&bl);
+	packet.showEFST = sc->opt3;
+
+	if (disguised(&bl)) {
+		clif_send( &packet, sizeof( packet ), &bl, AREA_WOS );
+		
+		packet.gid = disguised_bl_id( bl.id );
+		clif_send( &packet, sizeof( packet ), &bl, SELF );
+		
+		packet.gid = bl.id;
+		packet.effectState = OPTION_INVISIBLE;
+		clif_send( &packet, sizeof( packet ), &bl, SELF );
+	} else {
+		clif_send( &packet, sizeof( packet ), &bl, AREA );
+	}
 }
 
 
@@ -4495,23 +4489,19 @@ void clif_useitemack( map_session_data *sd, int index, int amount, bool ok ){
 }
 
 
-/// Inform client whether chatroom creation was successful or not (ZC_ACK_CREATE_CHATROOM).
-/// 00d6 <flag>.B
+/// Inform client whether chatroom creation was successful or not.
+/// 00d6 <flag>.B (ZC_ACK_CREATE_CHATROOM)
 /// flag:
 ///     0 = Room has been successfully created (opens chat room)
 ///     1 = Room limit exceeded
 ///     2 = Same room already exists
-void clif_createchat(map_session_data* sd, int flag)
-{
-	int fd;
+void clif_createchat( map_session_data& sd, e_create_chatroom flag ){
+	PACKET_ZC_ACK_CREATE_CHATROOM packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_ACK_CREATE_CHATROOM;
+	packet.flag = static_cast<decltype(packet.flag)>(flag);
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0xd6));
-	WFIFOW(fd,0) = 0xd6;
-	WFIFOB(fd,2) = flag;
-	WFIFOSET(fd,packet_len(0xd6));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -4605,8 +4595,8 @@ void clif_clearchat(struct chat_data *cd,int fd)
 }
 
 
-/// Displays messages regarding join chat failures (ZC_REFUSE_ENTER_ROOM).
-/// 00da <result>.B
+/// Displays messages regarding join chat failures.
+/// 00da <result>.B (ZC_REFUSE_ENTER_ROOM)
 /// result:
 ///     0 = room full
 ///     1 = wrong password
@@ -4616,18 +4606,13 @@ void clif_clearchat(struct chat_data *cd,int fd)
 ///     5 = too low level
 ///     6 = too high level
 ///     7 = unsuitable job class
-void clif_joinchatfail(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
+	PACKET_ZC_REFUSE_ENTER_ROOM packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_REFUSE_ENTER_ROOM;
+	packet.result = static_cast<decltype(packet.result)>(result);
 
-	fd = sd->fd;
-
-	WFIFOHEAD(fd,packet_len(0xda));
-	WFIFOW(fd,0) = 0xda;
-	WFIFOB(fd,2) = flag;
-	WFIFOSET(fd,packet_len(0xda));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -4855,84 +4840,70 @@ void clif_tradeitemok(map_session_data& sd, int index, e_exitem_add_result resul
 }
 
 
-/// Notifies the client about finishing one side of the current trade (ZC_CONCLUDE_EXCHANGE_ITEM).
-/// 00ec <who>.B
+/// Notifies the client about finishing one side of the current trade.
+/// 00ec <who>.B (ZC_CONCLUDE_EXCHANGE_ITEM)
 /// who:
 ///     0 = self
 ///     1 = other player
-void clif_tradedeal_lock(map_session_data* sd, int fail)
-{
-	int fd;
-	nullpo_retv(sd);
+void clif_tradedeal_lock( map_session_data& sd, bool who ){
+	PACKET_ZC_CONCLUDE_EXCHANGE_ITEM packet{};
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0xec));
-	WFIFOW(fd,0) = 0xec;
-	WFIFOB(fd,2) = fail;
-	WFIFOSET(fd,packet_len(0xec));
+	packet.packetType = HEADER_ZC_CONCLUDE_EXCHANGE_ITEM;
+	packet.who = who;
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
-/// Notifies the client about the trade being canceled (ZC_CANCEL_EXCHANGE_ITEM).
-/// 00ee
-void clif_tradecancelled(map_session_data* sd)
-{
-	int fd;
-	nullpo_retv(sd);
+/// Notifies the client about the trade being canceled.
+/// 00ee (ZC_CANCEL_EXCHANGE_ITEM)
+void clif_tradecancelled( map_session_data& sd ){
+	PACKET_ZC_CANCEL_EXCHANGE_ITEM packet{};
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0xee));
-	WFIFOW(fd,0) = 0xee;
-	WFIFOSET(fd,packet_len(0xee));
+	packet.packetType = HEADER_ZC_CANCEL_EXCHANGE_ITEM;
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
-/// Result of a trade (ZC_EXEC_EXCHANGE_ITEM).
-/// 00f0 <result>.B
+/// Result of a trade.
+/// 00f0 <result>.B (ZC_EXEC_EXCHANGE_ITEM)
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_tradecompleted(map_session_data* sd, int fail)
-{
-	int fd;
-	nullpo_retv(sd);
+void clif_tradecompleted( map_session_data& sd ){
+	PACKET_ZC_EXEC_EXCHANGE_ITEM packet{};
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0xf0));
-	WFIFOW(fd,0) = 0xf0;
-	WFIFOB(fd,2) = fail;
-	WFIFOSET(fd,packet_len(0xf0));
+	packet.packetType = HEADER_ZC_EXEC_EXCHANGE_ITEM;
+	packet.result = 0;
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
-/// Resets the trade window on the send side (ZC_EXCHANGEITEM_UNDO).
-/// 00f1
+/// Resets the trade window on the send side.
+/// 00f1 (ZC_EXCHANGEITEM_UNDO)
 /// NOTE: Unknown purpose. Items are not removed until the window is
 ///       refreshed (ex. by putting another item in there).
-void clif_tradeundo(map_session_data* sd)
-{
-	int fd = sd->fd;
+void clif_tradeundo( map_session_data& sd ){
+	PACKET_ZC_EXCHANGEITEM_UNDO packet{};
 
-	WFIFOHEAD(fd,packet_len(0xf1));
-	WFIFOW(fd,0) = 0xf1;
-	WFIFOSET(fd,packet_len(0xf1));
+	packet.packetType = HEADER_ZC_EXCHANGEITEM_UNDO;
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
-/// Updates storage total amount (ZC_NOTIFY_STOREITEM_COUNTINFO).
-/// 00f2 <current count>.W <max count>.W
-void clif_updatestorageamount(map_session_data* sd, int amount, int max_amount)
-{
-	int fd;
+/// Updates storage total amount.
+/// 00f2 <current count>.W <max count>.W (ZC_NOTIFY_STOREITEM_COUNTINFO)
+void clif_updatestorageamount( map_session_data& sd, uint16 amount, uint16 max_amount ){
+	PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_NOTIFY_STOREITEM_COUNTINFO;
+	packet.amount = amount;
+	packet.max_amount = max_amount;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xf2));
-	WFIFOW(fd,0) = 0xf2;
-	WFIFOW(fd,2) = amount;
-	WFIFOW(fd,4) = max_amount;
-	WFIFOSET(fd,packet_len(0xf2));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -4974,35 +4945,27 @@ void clif_storageitemadded( map_session_data* sd, struct item* i, int index, int
 }
 
 
-/// Notifies the client of an item being deleted from the storage (ZC_DELETE_ITEM_FROM_STORE).
-/// 00f6 <index>.W <amount>.L
-void clif_storageitemremoved(map_session_data* sd, int index, int amount)
-{
-	int fd;
+/// Notifies the client of an item being deleted from the storage.
+/// 00f6 <index>.W <amount>.L (ZC_DELETE_ITEM_FROM_STORE)
+void clif_storageitemremoved( map_session_data& sd, uint16 index, uint32 amount ){
+	PACKET_ZC_DELETE_ITEM_FROM_STORE packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_DELETE_ITEM_FROM_STORE;
+	packet.index = client_storage_index(index);
+	packet.amount = amount;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xf6));
-	WFIFOW(fd,0)=0xf6; // Storage item removed
-	WFIFOW(fd,2)=client_storage_index(index);
-	WFIFOL(fd,4)=amount;
-	WFIFOSET(fd,packet_len(0xf6));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
-/// Closes storage (ZC_CLOSE_STORE).
-/// 00f8
-void clif_storageclose(map_session_data* sd)
-{
-	int fd;
+/// Closes storage.
+/// 00f8 (ZC_CLOSE_STORE)
+void clif_storageclose( map_session_data& sd ){
+	PACKET_ZC_CLOSE_STORE packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_CLOSE_STORE;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xf8));
-	WFIFOW(fd,0) = 0xf8; // Storage Closed
-	WFIFOSET(fd,packet_len(0xf8));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -9895,7 +9858,7 @@ void clif_refresh_storagewindow(map_session_data *sd) {
 	if( sd->state.storage_flag == 1 ) {
 		storage_sortitem(sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage));
 		clif_storagelist(sd, sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage), storage_getName(0));
-		clif_updatestorageamount(sd, sd->storage.amount, sd->storage.max_amount);
+		clif_updatestorageamount(*sd, sd->storage.amount, sd->storage.max_amount);
 	}
 	// Notify the client that the gstorage is open otherwise it will
 	// remain locked forever and nobody will be able to access it
@@ -9907,14 +9870,14 @@ void clif_refresh_storagewindow(map_session_data *sd) {
 		else {
 			storage_sortitem(gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild));
 			clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), "Guild Storage");
-			clif_updatestorageamount(sd, gstor->amount, gstor->max_amount);
+			clif_updatestorageamount(*sd, gstor->amount, gstor->max_amount);
 		}
 	}
 	// Notify the client that the premium storage is open
 	if (sd->state.storage_flag == 3) {
 		storage_sortitem(sd->premiumStorage.u.items_storage, ARRAYLENGTH(sd->premiumStorage.u.items_storage));
 		clif_storagelist(sd, sd->premiumStorage.u.items_storage, ARRAYLENGTH(sd->premiumStorage.u.items_storage), storage_getName(sd->premiumStorage.stor_id));
-		clif_updatestorageamount(sd, sd->premiumStorage.amount, sd->premiumStorage.max_amount);
+		clif_updatestorageamount(*sd, sd->premiumStorage.amount, sd->premiumStorage.max_amount);
 	}
 }
 
@@ -22514,7 +22477,7 @@ void clif_parse_refineui_refine( int fd, map_session_data* sd ){
 		// Success
 		item->refine = cap_value( item->refine + 1, 0, MAX_REFINE );
 		log_pick_pc( sd, LOG_TYPE_OTHER, 1, item );
-		clif_misceffect( &sd->bl, 3 );
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 		clif_refine( *sd, index, ITEMREFINING_SUCCESS );
 		if (info->broadcast_success) {
 			clif_broadcast_refine_result(*sd, item->nameid, item->refine, true);
@@ -22548,7 +22511,7 @@ void clif_parse_refineui_refine( int fd, map_session_data* sd ){
 			clif_refineui_info( sd, index );
 		}
 
-		clif_misceffect( &sd->bl, 2 );
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 		achievement_update_objective( sd, AG_ENCHANT_FAIL, 1, 1 );
 	}
 #endif
