@@ -4885,12 +4885,12 @@ void clif_tradecompleted( int fd ){
 /// 00f1 (ZC_EXCHANGEITEM_UNDO)
 /// NOTE: Unknown purpose. Items are not removed until the window is
 ///       refreshed (ex. by putting another item in there).
-void clif_tradeundo( int fd ){
+void clif_tradeundo( map_session_data& sd ){
 	PACKET_ZC_EXCHANGEITEM_UNDO packet{};
 
 	packet.packetType = HEADER_ZC_EXCHANGEITEM_UNDO;
 
-	socket_send<PACKET_ZC_EXCHANGEITEM_UNDO>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
