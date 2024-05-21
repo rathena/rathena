@@ -5245,7 +5245,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	}
 
 	// Calculate what sdelay to send to the client so it applies damage at the same time as the server
-	if (battle_config.synchronize_damage && src->type == BL_MOB && status_get_clientamotion(src) != 0) {
+	if (battle_config.synchronize_damage && src->type == BL_MOB) {
 		// The client only accepts values between 0 and 432; 432 stands for 1x animation speed
 		sdelay = sdelay * DEFAULT_ANIMATION_SPEED / status_get_clientamotion(src);
 	}
