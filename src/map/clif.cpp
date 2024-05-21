@@ -4960,12 +4960,12 @@ void clif_storageitemremoved( map_session_data& sd, uint16 index, uint32 amount 
 
 /// Closes storage.
 /// 00f8 (ZC_CLOSE_STORE)
-void clif_storageclose( int fd ){
+void clif_storageclose( map_session_data& sd ){
 	PACKET_ZC_CLOSE_STORE packet{};
 
 	packet.packetType = HEADER_ZC_CLOSE_STORE;
 
-	socket_send<PACKET_ZC_CLOSE_STORE>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

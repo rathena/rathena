@@ -780,7 +780,7 @@ void clif_storagelist(map_session_data* sd, struct item* items, int items_length
 void clif_updatestorageamount( map_session_data& sd, uint16 amount, uint16 max_amount );
 void clif_storageitemadded(map_session_data* sd, struct item* i, int index, int amount);
 void clif_storageitemremoved( map_session_data& sd, uint16 index, uint32 amount );
-void clif_storageclose( int fd );
+void clif_storageclose( map_session_data& sd );
 
 int clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 int clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
