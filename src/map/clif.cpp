@@ -4267,7 +4267,7 @@ void clif_arrow_create_list( map_session_data *sd ){
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_statusupack( int fd, int32 type, bool result, int32 val ) {
+void clif_statusupack( map_session_data& sd, int32 type, bool result, int32 val ) {
 	PACKET_ZC_STATUS_CHANGE_ACK packet{};
 
 	packet.packetType = HEADER_ZC_STATUS_CHANGE_ACK;
@@ -4275,7 +4275,7 @@ void clif_statusupack( int fd, int32 type, bool result, int32 val ) {
 	packet.ok = result;
 	packet.value = cap_value(val, 0, UINT8_MAX);
 
-	socket_send<PACKET_ZC_STATUS_CHANGE_ACK>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
