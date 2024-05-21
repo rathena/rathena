@@ -7717,6 +7717,8 @@ ACMD_FUNC(misceffect)
 		return -1;
 	if (sscanf(message, "%11d", &effect) < 1)
 		return -1;
+	if (effect < NOTIFYEFFECT_BASE_LEVEL_UP || effect > NOTIFYEFFECT_TAEKWON_BASE_LEVEL_UP)
+		return -1;
 	clif_misceffect( sd->bl, static_cast<e_notify_effect>(effect) );
 
 	return 0;
