@@ -5255,9 +5255,11 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 		// it displays the damage and makes the target flinch / stop. If the damage frame is undefined,
 		// it instead displays the damage / flinch / stop at the beginning of the second to last frame.
 		// We define the time after which the damage frame shows at 1x speed as clientamotion.
+		uint16 clientamotion = std::max((uint16)1, status_get_clientamotion(src));
+
 		// Knowing when the damage frame happens in the animation allows us to synchronize the timing
 		// between client and server using the formula below.
-		sdelay = sdelay * DEFAULT_ANIMATION_SPEED / std::max(1ui16, status_get_clientamotion(src));
+		sdelay = sdelay * DEFAULT_ANIMATION_SPEED / clientamotion;
 
 		// Hint: If amotion is larger than clientamotion this results in a value above 432 which makes the
 		// client display the attack at 1x speed. In this case we need to shorten the delay damage timer
