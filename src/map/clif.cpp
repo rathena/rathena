@@ -4606,13 +4606,13 @@ void clif_clearchat(struct chat_data *cd,int fd)
 ///     5 = too low level
 ///     6 = too high level
 ///     7 = unsuitable job class
-void clif_joinchatfail( int fd, e_refuse_enter_room result ){
+void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result ){
 	PACKET_ZC_REFUSE_ENTER_ROOM packet{};
 
 	packet.packetType = HEADER_ZC_REFUSE_ENTER_ROOM;
 	packet.result = static_cast<decltype(packet.result)>(result);
 
-	socket_send<PACKET_ZC_REFUSE_ENTER_ROOM>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
