@@ -4845,13 +4845,13 @@ void clif_tradeitemok(map_session_data& sd, int index, e_exitem_add_result resul
 /// who:
 ///     0 = self
 ///     1 = other player
-void clif_tradedeal_lock( int fd, bool who ){
+void clif_tradedeal_lock( map_session_data& sd, bool who ){
 	PACKET_ZC_CONCLUDE_EXCHANGE_ITEM packet{};
 
 	packet.packetType = HEADER_ZC_CONCLUDE_EXCHANGE_ITEM;
 	packet.who = who;
 
-	socket_send<PACKET_ZC_CONCLUDE_EXCHANGE_ITEM>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
