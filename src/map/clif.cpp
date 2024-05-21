@@ -4267,12 +4267,12 @@ void clif_arrow_create_list( map_session_data *sd ){
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_statusupack( map_session_data& sd, int32 type, bool result, int32 val ) {
+void clif_statusupack( map_session_data& sd, int32 type, bool success, int32 val ) {
 	PACKET_ZC_STATUS_CHANGE_ACK packet{};
 
 	packet.packetType = HEADER_ZC_STATUS_CHANGE_ACK;
 	packet.sp = static_cast<decltype(packet.sp)>(type);
-	packet.ok = result;
+	packet.ok = success;
 	packet.value = cap_value(val, 0, UINT8_MAX);
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );

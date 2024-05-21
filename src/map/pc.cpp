@@ -8705,7 +8705,7 @@ bool pc_statusup(map_session_data* sd, int type, int increase)
 
 	// check conditions
 	if (type < SP_STR || type > SP_LUK || increase <= 0) {
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return false;
 	}
 
@@ -8714,14 +8714,14 @@ bool pc_statusup(map_session_data* sd, int type, int increase)
 	max_increase = pc_maxparameterincrease(sd, type);
 	increase = cap_value(increase, 0, max_increase); // cap to the maximum status points available
 	if (increase <= 0 || current + increase > pc_maxparameter(sd, (enum e_params)(type-SP_STR))) {
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return false;
 	}
 
 	// check status points
 	needed_points = pc_need_status_point(sd, type, increase);
 	if (needed_points < 0 || needed_points > sd->status.status_point) { // Sanity check
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return false;
 	}
 
@@ -8766,7 +8766,7 @@ int pc_statusup2(map_session_data* sd, int type, int val)
 
 	if( type < SP_STR || type > SP_LUK )
 	{
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return 0;
 	}
 
@@ -8865,7 +8865,7 @@ bool pc_traitstatusup(map_session_data* sd, int type, int increase)
 
 	// check conditions
 	if (type < SP_POW || type > SP_CRT || increase <= 0) {
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return false;
 	}
 
@@ -8875,7 +8875,7 @@ bool pc_traitstatusup(map_session_data* sd, int type, int increase)
 
 	increase = cap_value(increase, 0, max_increase); // cap to the maximum status points available
 	if (increase <= 0 || current + increase > pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW))) {
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return false;
 	}
 
@@ -8883,7 +8883,7 @@ bool pc_traitstatusup(map_session_data* sd, int type, int increase)
 	int needed_points = pc_need_trait_point(sd, type, increase);
 
 	if (needed_points < 0 || needed_points > sd->status.trait_point) { // Sanity check
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return false;
 	}
 
@@ -8927,7 +8927,7 @@ int pc_traitstatusup2(map_session_data* sd, int type, int val)
 	nullpo_ret(sd);
 
 	if (type < SP_POW || type > SP_CRT) {
-		clif_statusupack( *sd, type, false, 0 );
+		clif_statusupack( *sd, type, false );
 		return 0;
 	}
 
