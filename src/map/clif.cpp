@@ -4857,12 +4857,12 @@ void clif_tradedeal_lock( int fd, bool who ){
 
 /// Notifies the client about the trade being canceled.
 /// 00ee (ZC_CANCEL_EXCHANGE_ITEM)
-void clif_tradecancelled( int fd ){
+void clif_tradecancelled( map_session_data& sd ){
 	PACKET_ZC_CANCEL_EXCHANGE_ITEM packet{};
 
 	packet.packetType = HEADER_ZC_CANCEL_EXCHANGE_ITEM;
 
-	socket_send<PACKET_ZC_CANCEL_EXCHANGE_ITEM>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

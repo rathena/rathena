@@ -59,10 +59,10 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 
 		if( previous_sd != nullptr ){
 			previous_sd->trade_partner = 0;
-			clif_tradecancelled( previous_sd->fd );
+			clif_tradecancelled( *previous_sd );
 		} // Once cancelled then continue to the new one.
 		sd->trade_partner = 0;
-		clif_tradecancelled( sd->fd );
+		clif_tradecancelled( *sd );
 	}
 
 	if (target_sd->trade_partner != 0) {
@@ -506,10 +506,10 @@ void trade_tradecancel(map_session_data *sd)
 	if(!sd->state.trading) { // Not trade accepted
 		if( target_sd != nullptr ) {
 			target_sd->trade_partner = 0;
-			clif_tradecancelled( target_sd->fd );
+			clif_tradecancelled( *target_sd );
 		}
 		sd->trade_partner = 0;
-		clif_tradecancelled( sd->fd );
+		clif_tradecancelled( *sd );
 		return;
 	}
 
@@ -530,7 +530,7 @@ void trade_tradecancel(map_session_data *sd)
 	sd->state.deal_locked = 0;
 	sd->state.trading = 0;
 	sd->trade_partner = 0;
-	clif_tradecancelled( sd->fd );
+	clif_tradecancelled( *sd );
 
 	if (!target_sd)
 		return;
@@ -551,7 +551,7 @@ void trade_tradecancel(map_session_data *sd)
 	target_sd->state.deal_locked = 0;
 	target_sd->trade_partner = 0;
 	target_sd->state.trading = 0;
-	clif_tradecancelled( target_sd->fd );
+	clif_tradecancelled( *target_sd );
 }
 
 /**
