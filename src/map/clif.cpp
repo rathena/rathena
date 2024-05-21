@@ -4495,13 +4495,13 @@ void clif_useitemack( map_session_data *sd, int index, int amount, bool ok ){
 ///     0 = Room has been successfully created (opens chat room)
 ///     1 = Room limit exceeded
 ///     2 = Same room already exists
-void clif_createchat( int fd, e_create_chatroom flag ){
+void clif_createchat( map_session_data& sd, e_create_chatroom flag ){
 	PACKET_ZC_ACK_CREATE_CHATROOM packet{};
 
 	packet.packetType = HEADER_ZC_ACK_CREATE_CHATROOM;
 	packet.flag = static_cast<decltype(packet.flag)>(flag);
 
-	socket_send<PACKET_ZC_ACK_CREATE_CHATROOM>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
