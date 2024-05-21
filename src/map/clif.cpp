@@ -4203,13 +4203,13 @@ void clif_arrowequip( map_session_data& sd ) {
 ///     3 = assassin, baby_assassin, assassin_cross => MsgStringTable[1040]="You have equipped throwing daggers."
 ///         gunslinger => MsgStringTable[1175]="Bullets have been equipped."
 ///         NOT ninja => MsgStringTable[245]="Ammunition has been equipped."
-void clif_arrow_fail( int fd, e_action_failure type ) {
+void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
 	PACKET_ZC_ACTION_FAILURE packet{};
 
 	packet.packetType = HEADER_ZC_ACTION_FAILURE;
 	packet.type = static_cast<decltype(packet.type)>(type);
 
-	socket_send<PACKET_ZC_ACTION_FAILURE>(fd, packet);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

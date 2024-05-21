@@ -9810,7 +9810,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
 					clif_skill_fail( *sd, 0, USESKILL_FAIL_NEED_MORE_BULLET );
 				else
-					clif_arrow_fail( sd->fd, ARROWFAIL_NO_AMMO );
+					clif_arrow_fail( *sd, ARROWFAIL_NO_AMMO );
 				return ATK_NONE;
 			}
 			//Ammo check by Ishizu-chan
@@ -9818,7 +9818,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				switch (sd->status.weapon) {
 					case W_BOW:
 						if (sd->inventory_data[index]->subtype != AMMO_ARROW) {
-							clif_arrow_fail( sd->fd, ARROWFAIL_NO_AMMO );
+							clif_arrow_fail( *sd, ARROWFAIL_NO_AMMO );
 							return ATK_NONE;
 						}
 						break;

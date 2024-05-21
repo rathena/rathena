@@ -731,7 +731,7 @@ void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
 void clif_arrowequip( map_session_data& sd );
-void clif_arrow_fail( int fd, e_action_failure type );
+void clif_arrow_fail( map_session_data& sd, e_action_failure type );
 void clif_arrow_create_list(map_session_data *sd);	//self
 void clif_statusupack( int fd, int32 type, bool result, int32 val );
 void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self

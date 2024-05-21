@@ -11975,7 +11975,7 @@ bool pc_equipitem(map_session_data *sd,short n,int req_pos,bool equipswitch)
 
 		if(pos==EQP_AMMO) {
 			clif_arrowequip( *sd );
-			clif_arrow_fail( sd->fd, ARROWFAIL_SUCCESS );
+			clif_arrow_fail( *sd, ARROWFAIL_SUCCESS );
 		}
 		else
 			clif_equipitemack( *sd, ITEM_EQUIP_ACK_OK, n, pos );
