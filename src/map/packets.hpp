@@ -991,6 +991,12 @@ struct PACKET_ZC_SKILL_DISAPPEAR {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SKILL_DISAPPEAR, 0x120);
 
+struct PACKET_ZC_SKILL_UPDATE {
+	int16 packetType;
+	uint32 id;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILL_UPDATE, 0x1ac);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
