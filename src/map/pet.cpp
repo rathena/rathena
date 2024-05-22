@@ -1226,7 +1226,7 @@ int pet_catch_process1(map_session_data *sd,int target_class)
 	}
 
 	sd->catch_target_class = target_class;
-	clif_catch_process(sd);
+	clif_catch_process( *sd );
 
 	return 0;
 }

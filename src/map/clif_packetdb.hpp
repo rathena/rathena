@@ -249,7 +249,6 @@
 	packet(0x019a,14);
 	parseable_packet(0x019c,-1,clif_parse_LocalBroadcast,2,4);
 	parseable_packet(0x019d,6,clif_parse_GMHide,2);
-	packet(0x019e,2);
 	parseable_packet(0x019f,6,clif_parse_CatchPet,2);
 	packet(0x01a0,3);
 	parseable_packet(0x01a1,3,clif_parse_PetMenu,2);

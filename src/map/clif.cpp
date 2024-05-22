@@ -8237,18 +8237,14 @@ void clif_produceeffect(map_session_data* sd,int flag, t_itemid nameid){
 }
 
 
-/// Initiates the pet taming process (ZC_START_CAPTURE).
-/// 019e
-void clif_catch_process(map_session_data *sd)
-{
-	int fd;
+/// Initiates the pet taming process.
+/// 019e (ZC_START_CAPTURE)
+void clif_catch_process( map_session_data& sd ){
+	PACKET_ZC_START_CAPTURE packet{};
 
-	nullpo_retv(sd);
+	packet.PacketType = HEADER_ZC_START_CAPTURE;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x19e));
-	WFIFOW(fd,0)=0x19e;
-	WFIFOSET(fd,packet_len(0x19e));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
