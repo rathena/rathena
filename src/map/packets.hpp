@@ -1024,6 +1024,12 @@ struct PACKET_ZC_ACK_WHISPER02 {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_WHISPER02, 0x9df);
 
+struct PACKET_ZC_ACK_ADDITEM_TO_CART {
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_ADDITEM_TO_CART, 0x12c);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

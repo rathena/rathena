@@ -492,10 +492,6 @@ enum useskill_fail_cause : uint8_t
 
 enum clif_messages : uint16_t {
 	/* Constant values */
-	// clif_cart_additem_ack flags
-	ADDITEM_TO_CART_FAIL_WEIGHT = 0x0,
-	ADDITEM_TO_CART_FAIL_COUNT = 0x1,
-
 	// clif_equipitemack flags
 #if PACKETVER_MAIN_NUM >= 20121205 || PACKETVER_RE_NUM >= 20121107 || defined(PACKETVER_ZERO)
 	ITEM_EQUIP_ACK_OK = 0,
@@ -692,6 +688,11 @@ enum e_ack_whisper : uint8 {
 	ACKWHISPER_ALL_IGNORED = 3
 };
 
+enum e_ack_additem_to_cart : uint8 {
+	ADDITEM_TO_CART_FAIL_WEIGHT = 0,
+	ADDITEM_TO_CART_FAIL_COUNT = 1
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -865,7 +866,7 @@ void clif_inventorylist(map_session_data *sd);
 void clif_equiplist(map_session_data *sd);
 
 void clif_cart_additem(map_session_data *sd,int n,int amount);
-void clif_cart_additem_ack(map_session_data *sd, uint8 flag);
+void clif_cart_additem_ack( map_session_data& sd, e_ack_additem_to_cart flag );
 void clif_cart_delitem( map_session_data& sd, int32 index, int32 amount );
 void clif_cartlist(map_session_data *sd);
 void clif_clearcart(int fd);
