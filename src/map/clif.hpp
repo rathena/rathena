@@ -897,7 +897,7 @@ void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_pu
 void clif_openvending(map_session_data* sd, int id, struct s_vending* vending);
 void clif_vendingreport( map_session_data& sd, uint16 index, uint16 amount, uint32 char_id, int32 zeny );
 
-void clif_movetoattack(map_session_data *sd,struct block_list *bl);
+void clif_movetoattack( map_session_data& sd, block_list& bl );
 
 // party
 void clif_party_created( map_session_data& sd, int result );
