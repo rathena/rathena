@@ -1608,8 +1608,7 @@ int pet_food(map_session_data *sd, struct pet_data *pd)
 	i = pc_search_inventory(sd,k);
 
 	if( i < 0 ) {
-		clif_pet_food(sd,k,0);
-
+		clif_pet_food( *sd, k, 0 );
 		return 1;
 	}
 
@@ -1646,7 +1645,7 @@ int pet_food(map_session_data *sd, struct pet_data *pd)
 
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 	clif_send_petdata(sd,pd,1,pd->pet.intimate);
-	clif_pet_food(sd, pet_db_ptr->FoodID,1);
+	clif_pet_food( *sd, pet_db_ptr->FoodID, 1 );
 
 	return 0;
 }

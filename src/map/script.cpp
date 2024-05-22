@@ -9343,7 +9343,7 @@ BUILDIN_FUNC(repair)
 					sd->inventory.u.items_inventory[i].attribute = 0;
 					clif_equiplist(sd);
 					clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
-					clif_misceffect(&sd->bl, 3);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 					break;
 				}
 		}
@@ -9374,7 +9374,7 @@ BUILDIN_FUNC(repairall)
 
 	if(repaircounter)
 	{
-		clif_misceffect(&sd->bl, 3);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 		clif_equiplist(sd);
 	}
 
@@ -9634,7 +9634,7 @@ BUILDIN_FUNC(successrefitem) {
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
-		clif_refine(sd->fd,0,i,sd->inventory.u.items_inventory[i].refine);
+		clif_refine( *sd, i, ITEMREFINING_SUCCESS );
 		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
@@ -9642,7 +9642,7 @@ BUILDIN_FUNC(successrefitem) {
 
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
-		clif_misceffect(&sd->bl,3);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 		if( sd->inventory_data[i]->type == IT_WEAPON ){
 			achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->weapon_level, sd->inventory.u.items_inventory[i].refine);
 		}
@@ -9693,9 +9693,9 @@ BUILDIN_FUNC(failedrefitem) {
 	if (i >= 0) {
 		sd->inventory.u.items_inventory[i].refine = 0;
 		pc_unequipitem(sd,i,3); //recalculate bonus
-		clif_refine(sd->fd,1,i,sd->inventory.u.items_inventory[i].refine); //notify client of failure
+		clif_refine( *sd, i, ITEMREFINING_FAILURE);
 		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
-		clif_misceffect(&sd->bl,2); 	// display failure effect
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 		achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, 1);
 		script_pushint(st, 1);
 		return SCRIPT_CMD_SUCCESS;
@@ -9736,7 +9736,7 @@ BUILDIN_FUNC(downrefitem) {
 		sd->inventory.u.items_inventory[i].refine -= down;
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 
-		clif_refine(sd->fd,2,i,sd->inventory.u.items_inventory[i].refine);
+		clif_refine( *sd, i, ITEMREFINING_DOWNGRADE );
 		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
@@ -9744,7 +9744,7 @@ BUILDIN_FUNC(downrefitem) {
 
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
-		clif_misceffect(&sd->bl,2);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 		achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, sd->inventory.u.items_inventory[i].refine);
 		script_pushint(st, sd->inventory.u.items_inventory[i].refine);
 		return SCRIPT_CMD_SUCCESS;
@@ -14050,7 +14050,7 @@ BUILDIN_FUNC(successremovecards) {
 			map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 		}
 
-		clif_misceffect(&sd->bl,3);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14137,7 +14137,7 @@ BUILDIN_FUNC(failedremovecards) {
 				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 			}
 		}
-		clif_misceffect(&sd->bl,2);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }

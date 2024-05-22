@@ -72,8 +72,6 @@
 	parseable_packet(0x00b9,6,clif_parse_NpcNextClicked,2);
 	packet(0x00ba,2);
 	parseable_packet(0x00bb,5,clif_parse_StatusUp,2,4);
-	packet(0x00bc,6);
-	packet(0x00bd,44);
 	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
 	packet(0x00c0,7);
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
@@ -95,11 +93,9 @@
 	parseable_packet(0x00d3,2,clif_parse_PMIgnoreList,0);
 	packet(0x00d4,-1);
 	parseable_packet(0x00d5,-1,clif_parse_CreateChatRoom,2,4,6,7,15);
-	packet(0x00d6,3);
 	packet(0x00d7,-1);
 	packet(0x00d8,6);
 	parseable_packet(0x00d9,14,clif_parse_ChatAddMember,2,6);
-	packet(0x00da,3);
 	packet(0x00db,-1);
 	packet(0x00dc,28);
 	packet(0x00dd,29);
@@ -116,18 +112,11 @@
 	parseable_packet(0x00e8,8,clif_parse_TradeAddItem,2,4);
 	packet(0x00ea,5);
 	parseable_packet(0x00eb,2,clif_parse_TradeOk,0);
-	packet(0x00ec,3);
 	parseable_packet(0x00ed,2,clif_parse_TradeCancel,0);
-	packet(0x00ee,2);
 	parseable_packet(0x00ef,2,clif_parse_TradeCommit,0);
-	packet(0x00f0,3);
-	packet(0x00f1,2);
-	packet(0x00f2,6);
 	parseable_packet(0x00f3,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x00f5,8,clif_parse_MoveFromKafra,2,4);
-	packet(0x00f6,8);
 	parseable_packet(0x00f7,2,clif_parse_CloseKafra,0);
-	packet(0x00f8,2);
 	parseable_packet(0x00f9,26,clif_parse_CreateParty,2);
 	packet(0x00fb,-1);
 	parseable_packet(0x00fc,6,clif_parse_PartyInvite,2);
@@ -160,7 +149,6 @@
 	parseable_packet(0x011b,20,clif_parse_UseSkillMap,2,4);
 	packet(0x011c,68);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
-	packet(0x011e,3);
 	packet(0x011f,16);
 	packet(0x0120,6);
 	packet( cartlistequipType, -1 );
@@ -182,8 +170,6 @@
 	packet(0x0137,6);
 	packet(0x0138,3);
 	packet(0x0139,16);
-	packet(0x013b,4);
-	packet(0x013c,4);
 	packet(0x013d,6);
 	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
@@ -192,7 +178,6 @@
 	packet(0x0145,19);
 	parseable_packet(0x0146,6,clif_parse_NpcCloseClicked,2);
 	packet(0x0147,39);
-	packet(0x0148,8);
 	parseable_packet(0x0149,9,clif_parse_GMReqNoChat,2,6,7);
 	packet(0x014a,6);
 	packet(0x014b,27);
@@ -256,8 +241,6 @@
 	packet(0x0185,34);
 	//packet(0x0186,-1);
 	packet(0x0187,6);
-	packet(0x0188,8);
-	packet(0x0189,4);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
 	packet(0x018b,4);
 	packet(0x018c,29);
@@ -275,7 +258,6 @@
 	parseable_packet(0x0198,8,clif_parse_GMChangeMapType,2,4,6);
 	packet(0x0199,4);
 	packet(0x019a,14);
-	packet(0x019b,10);
 	parseable_packet(0x019c,-1,clif_parse_LocalBroadcast,2,4);
 	parseable_packet(0x019d,6,clif_parse_GMHide,2);
 	packet(0x019e,2);
@@ -291,7 +273,6 @@
 	packet(0x01a8,4);
 	parseable_packet(0x01a9,6,clif_parse_SendEmotion,2);
 	packet(0x01aa,10);
-	packet(0x01ab,12);
 	packet(0x01ac,6);
 	packet(0x01ad,-1);
 	parseable_packet( HEADER_CZ_REQ_MAKINGARROW, sizeof( PACKET_CZ_REQ_MAKINGARROW ), clif_parse_SelectArrow, 0 );
@@ -304,7 +285,6 @@
 	packet(0x01b6,114);
 	packet(0x01b7,6);
 	packet(0x01b8,3);
-	packet(0x01b9,6);
 	parseable_packet(0x01ba,26,clif_parse_GMShift,2);
 	parseable_packet(0x01bb,26,clif_parse_GMShift,2);
 	parseable_packet(0x01bc,26,clif_parse_GMRecall,2);
@@ -327,7 +307,6 @@
 	packet(0x01d1,14);
 	packet(0x01d2,10);
 	parseable_packet(0x01d5,-1,clif_parse_NpcStringInput,2,4,8);
-	packet(0x01d6,4);
 	packet(0x01d7,11);
 	packet(0x01d8,54);
 	packet(0x01d9,53);
@@ -926,7 +905,6 @@
 	packet(0x0287,-1);
 	packet(0x0288,6);
 	packet(0x0289,8);
-	packet(0x028a,18);
 	packet(0x028b,-1);
 	packet(0x028c,46);
 	packet(0x028d,34);
@@ -1285,7 +1263,6 @@
 
 // 2008-11-13aSakexe
 #if PACKETVER >= 20081113
-	packet(0x043d,8);
 	packet(0x043e,-1);
 	packet(0x043f,8);
 #endif
@@ -1365,7 +1342,6 @@
 
 // 2008-11-12aRagexeRE
 #if PACKETVER >= 20081112
-	packet(0x043d,8);
 	//packet(0x043e,-1);
 	packet(0x043f,8);
 #endif
