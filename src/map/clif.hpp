@@ -685,6 +685,13 @@ enum e_pc_purchase_result_frommc : uint8 {
 	PURCHASEMC_NO_SALES_INFO = 7,
 };
 
+enum e_ack_whisper : uint8 {
+	ACKWHISPER_SUCCESS = 0,
+	ACKWHISPER_TARGET_OFFLINE = 1,
+	ACKWHISPER_IGNORED = 2,
+	ACKWHISPER_ALL_IGNORED = 3
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -844,7 +851,7 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int gmlvl);
-void clif_wis_end(int fd, int result);
+void clif_wis_end( map_session_data& sd, e_ack_whisper result );
 
 void clif_solved_charname(int fd, int charid, const char* name);
 void clif_name( struct block_list* src, struct block_list *bl, send_target target );

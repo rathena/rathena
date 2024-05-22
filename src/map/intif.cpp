@@ -320,7 +320,7 @@ int intif_wis_message(map_session_data *sd, char *nick, char *mes, size_t mes_le
 
 	if (other_mapserver_count < 1)
 	{	//Character not found.
-		clif_wis_end(sd->fd, 1);
+		clif_wis_end( *sd, ACKWHISPER_TARGET_OFFLINE );
 		return 0;
 	}
 
@@ -1328,8 +1328,10 @@ int intif_parse_WisEnd(int fd)
 	if (battle_config.etc_log)
 		ShowInfo("intif_parse_wisend: player: %s, flag: %d\n", RFIFOP(fd,2), RFIFOB(fd,26)); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 	sd = (map_session_data *)map_nick2sd(RFIFOCP(fd,2),false);
-	if (sd != nullptr)
-		clif_wis_end(sd->fd, RFIFOB(fd,26));
+	if (sd != nullptr) {
+		if (RFIFOB(fd,26) >= ACKWHISPER_SUCCESS && RFIFOB(fd,26) <= ACKWHISPER_ALL_IGNORED)
+			clif_wis_end( *sd, static_cast<e_ack_whisper>(RFIFOB(fd,26)) );
+	}
 
 	return 1;
 }
