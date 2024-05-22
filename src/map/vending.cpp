@@ -241,7 +241,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 
 		pc_cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
 		z = vending_calc_tax(sd, z);
-		clif_vendingreport(vsd, idx, amount, sd->status.char_id, (int)z);
+		clif_vendingreport( *vsd, idx, amount, sd->status.char_id, (int)z );
 
 		//print buyer's name
 		if( battle_config.buyer_name ) {

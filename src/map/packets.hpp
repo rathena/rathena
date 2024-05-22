@@ -1030,6 +1030,23 @@ struct PACKET_ZC_ACK_ADDITEM_TO_CART {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_ADDITEM_TO_CART, 0x12c);
 
+struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
+	int16 packetType;
+	uint16 index;
+	uint16 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
+
+struct PACKET_ZC_DELETEITEM_FROM_MCSTORE2 {
+	int16 packetType;
+	uint16 index;
+	uint16 amount;
+	uint32 buyerGid;
+	uint32 date;
+	int32 zeny;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE2, 0x9e5);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
