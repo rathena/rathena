@@ -1002,7 +1002,6 @@
 	packet( HEADER_ZC_ITEM_PICKUP_PARTY, sizeof( struct PACKET_ZC_ITEM_PICKUP_PARTY ) );
 	packet(0x02b9,191);
 	parseable_packet(0x02ba,11,clif_parse_Hotkey,2,4,5,9);
-	packet(0x02bb,8);
 	packet(0x02bc,6);
 	packet(0x02bf,10);
 	packet(0x02c0,2);
