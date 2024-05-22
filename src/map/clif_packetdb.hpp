@@ -164,7 +164,6 @@
 	parseable_packet(0x0130,6,clif_parse_VendingListReq,2);
 	packet(0x0132,6);
 	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, clif_parse_PurchaseReq, 0 );
-	packet(0x0135,7);
 	packet(0x0137,6);
 	packet(0x0138,3);
 	packet(0x0139,16);

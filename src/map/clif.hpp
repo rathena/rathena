@@ -675,6 +675,16 @@ enum e_notify_effect : uint8 {
 	NOTIFYEFFECT_TAEKWON_BASE_LEVEL_UP = 9,
 };
 
+enum e_pc_purchase_result_frommc : uint8 {
+	PURCHASEMC_SUCCESS = 0,
+	PURCHASEMC_NO_ZENY = 1,
+	PURCHASEMC_OVERWEIGHT = 2,
+	PURCHASEMC_OUT_OF_STOCK = 4,
+	PURCHASEMC_TRADING = 5,
+	PURCHASEMC_STORE_INCORRECT = 6,
+	PURCHASEMC_NO_SALES_INFO = 7,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -875,7 +885,7 @@ void clif_openvendingreq( map_session_data& sd, uint16 num );
 void clif_showvendingboard( map_session_data& sd, enum send_target target = AREA_WOS, struct block_list* tbl = nullptr );
 void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist( map_session_data* sd, map_session_data* vsd );
-void clif_buyvending(map_session_data* sd, int index, int amount, int fail);
+void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_purchase_result_frommc result );
 void clif_openvending(map_session_data* sd, int id, struct s_vending* vending);
 void clif_vendingreport(map_session_data* sd, int index, int amount, uint32 char_id, int zeny);
 
