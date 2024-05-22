@@ -6828,24 +6828,22 @@ void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long co
 ///     5 = HP (SP_HP)
 ///     7 = SP (SP_SP)
 ///     ? = ignored
-void clif_heal( int fd, int32 type, uint32 val ) {
+void clif_heal( map_session_data& sd, int32 type, uint32 val ) {
 #if PACKETVER < 20141022
 	PACKET_ZC_RECOVERY packet{};
 
 	packet.packetType = HEADER_ZC_RECOVERY;
 	packet.type = static_cast<decltype(packet.type)>(type);
 	packet.amount = min(val, INT16_MAX);
-
-	socket_send<PACKET_ZC_RECOVERY>(fd, packet);
 #else
 	PACKET_ZC_RECOVERY2 packet{};
 
 	packet.packetType = HEADER_ZC_RECOVERY2;
 	packet.type = static_cast<decltype(packet.type)>(type);
 	packet.amount = min(val, INT32_MAX);
-
-	socket_send<PACKET_ZC_RECOVERY2>(fd, packet);
 #endif
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

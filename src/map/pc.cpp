@@ -10475,13 +10475,13 @@ void pc_heal(map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int 
 
 	if (type&2) {
 		if (hp || type&4) {
-			clif_heal(sd->fd,SP_HP,hp);
+			clif_heal( *sd, SP_HP, hp );
 			clif_update_hp(*sd);
 		}
 		if (sp)
-			clif_heal(sd->fd,SP_SP,sp);
+			clif_heal( *sd, SP_SP, sp );
 		if (ap)
-			clif_heal(sd->fd,SP_AP,ap);
+			clif_heal( *sd, SP_AP, ap );
 	} else {
 		if(hp)
 			clif_updatestatus(*sd,SP_HP);
