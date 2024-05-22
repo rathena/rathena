@@ -972,7 +972,7 @@ void clif_displaymessage(const int fd, const char* mes);
 void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum send_target target);
 void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
 void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
-void clif_heal(int fd,int type,int val);
+void clif_heal( int fd, int32 type, uint32 val );
 void clif_resurrection( block_list& bl );
 void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);
 void clif_pvpset(map_session_data *sd, int pvprank, int pvpnum,int type);

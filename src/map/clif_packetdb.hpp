@@ -166,7 +166,6 @@
 	packet(0x0137,6);
 	packet(0x0138,3);
 	packet(0x0139,16);
-	packet(0x013d,6);
 	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet(0x0140,22,clif_parse_MapMove,2,18,20);
@@ -2063,7 +2062,6 @@
 	packet(0x006d,149);
 	packet(0x08e3,149);
 	// New Packet
-	packet(0x0A27,8);
 	packet(0x09FD,-1); // ZC_NOTIFY_MOVEENTRY11
 	packet(0x09FE,-1); // ZC_NOTIFY_NEWENTRY11
 	packet(0x09FF,-1); // ZC_NOTIFY_STANDENTRY11

@@ -6828,22 +6828,24 @@ void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long co
 ///     5 = HP (SP_HP)
 ///     7 = SP (SP_SP)
 ///     ? = ignored
-void clif_heal(int fd,int type,int val) {
+void clif_heal( int fd, int32 type, uint32 val ) {
 #if PACKETVER < 20141022
-	const int cmd = 0x13d;
-#else
-	const int cmd = 0xa27;
-#endif
+	PACKET_ZC_RECOVERY packet{};
 
-	WFIFOHEAD(fd, packet_len(cmd));
-	WFIFOW(fd,0) = cmd;
-	WFIFOW(fd,2) = type;
-#if PACKETVER < 20141022
-	WFIFOW(fd,4) = min(val, INT16_MAX);
+	packet.packetType = HEADER_ZC_RECOVERY;
+	packet.type = static_cast<decltype(packet.type)>(type);
+	packet.amount = min(val, INT16_MAX);
+
+	socket_send<PACKET_ZC_RECOVERY>(fd, packet);
 #else
-	WFIFOL(fd,4) = min(val, INT32_MAX);
+	PACKET_ZC_RECOVERY2 packet{};
+
+	packet.packetType = HEADER_ZC_RECOVERY2;
+	packet.type = static_cast<decltype(packet.type)>(type);
+	packet.amount = min(val, INT32_MAX);
+
+	socket_send<PACKET_ZC_RECOVERY2>(fd, packet);
 #endif
-	WFIFOSET(fd, packet_len(cmd));
 }
 
 
