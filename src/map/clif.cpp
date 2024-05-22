@@ -7140,13 +7140,13 @@ void clif_use_card(map_session_data *sd,int idx)
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_insert_card( map_session_data& sd, int32 idx_equip, int32 idx_card, bool success ){
+void clif_insert_card( map_session_data& sd, int32 idx_equip, int32 idx_card, bool failure ){
 	PACKET_ZC_ACK_ITEMCOMPOSITION packet{};
 
 	packet.packetType = HEADER_ZC_ACK_ITEMCOMPOSITION;
 	packet.equipIndex = client_index( idx_equip );
 	packet.cardIndex = client_index( idx_card );
-	packet.result = success;
+	packet.result = failure;
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
