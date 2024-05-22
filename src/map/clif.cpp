@@ -5562,7 +5562,6 @@ void clif_skillunit_update( block_list& bl ){
 }
 
 
-
 /*==========================================
  *
  *------------------------------------------*/
@@ -7365,7 +7364,7 @@ void clif_cart_additem( map_session_data *sd, int n, int amount ){
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
-/// [Ind/Hercules] - Data Thanks to Yommy
+/// [Ind/Hercules] - Data Thanks to Yommy.
 /// Acknowledge an item have been added to cart
 /// 012c <result>.B (ZC_ACK_ADDITEM_TO_CART)
 /// result :
@@ -7595,6 +7594,7 @@ void clif_cart_delitem( map_session_data& sd, int32 index, int32 amount ){
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
+
 /// Opens the shop creation menu.
 /// 012d <num>.W (ZC_OPENSTORE)
 /// num:
@@ -7607,6 +7607,7 @@ void clif_openvendingreq( map_session_data& sd, uint16 num ){
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
+
 
 /// Displays a vending board to target/area (ZC_STORE_ENTRY).
 /// 0131 <owner id>.L <message>.80B
@@ -7792,7 +7793,7 @@ void clif_openvending( map_session_data* sd, int id, struct s_vending* vending )
 
 /// Inform merchant that someone has bought an item.
 /// 0137 <index>.W <amount>.W (ZC_DELETEITEM_FROM_MCSTORE)
-/// 09e5 <index>.W <amount>.W <GID>.L <Date>.L <zeny>.L (ZC_DELETEITEM_FROM_MCSTORE2).
+/// 09e5 <index>.W <amount>.W <GID>.L <Date>.L <zeny>.L (ZC_DELETEITEM_FROM_MCSTORE2)
 void clif_vendingreport( map_session_data& sd, uint16 index, uint16 amount, uint32 char_id, int32 zeny ){
 #if PACKETVER < 20141016		// TODO : not sure for client date [Napster]
 	PACKET_ZC_DELETEITEM_FROM_MCSTORE packet{};
