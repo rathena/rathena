@@ -5527,14 +5527,14 @@ int pc_insert_card(map_session_data* sd, int idx_card, int idx_equip)
 
 	if( pc_delitem(sd,idx_card,1,1,0,LOG_TYPE_OTHER) == 1 )
 	{// failed
-		clif_insert_card(sd,idx_equip,idx_card,1);
+		clif_insert_card( *sd, idx_equip, idx_card, true );
 	}
 	else
 	{// success
 		log_pick_pc(sd, LOG_TYPE_OTHER, -1, &sd->inventory.u.items_inventory[idx_equip]);
 		sd->inventory.u.items_inventory[idx_equip].card[i] = nameid;
 		log_pick_pc(sd, LOG_TYPE_OTHER,  1, &sd->inventory.u.items_inventory[idx_equip]);
-		clif_insert_card(sd,idx_equip,idx_card,0);
+		clif_insert_card( *sd, idx_equip, idx_card, false );
 	}
 
 	return 0;

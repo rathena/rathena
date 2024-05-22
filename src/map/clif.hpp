@@ -842,7 +842,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 #define clif_name_area(bl) clif_name( (bl), (bl), AREA )
 
 void clif_use_card(map_session_data *sd,int idx);
-void clif_insert_card(map_session_data *sd,int idx_equip,int idx_card,int flag);
+void clif_insert_card( map_session_data& sd, int32 idx_equip, int32 idx_card, bool success );
 
 void clif_inventorylist(map_session_data *sd);
 void clif_equiplist(map_session_data *sd);

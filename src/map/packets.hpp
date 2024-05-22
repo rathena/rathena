@@ -929,6 +929,14 @@ struct PACKET_ZC_NOTIFY_EFFECT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_EFFECT, 0x19b);
 
+struct PACKET_ZC_ACK_ITEMCOMPOSITION {
+	int16 packetType;
+	uint16 equipIndex;
+	uint16 cardIndex;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_ITEMCOMPOSITION, 0x17d);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
