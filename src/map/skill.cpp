@@ -19593,7 +19593,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 		return;
 
 	if (sd.status.char_id != target_sd->status.char_id && !battle_check_range(&sd.bl, &target_sd->bl, skill_get_range2(&sd.bl, sd.menuskill_id, sd.menuskill_val2, true))) {
-		clif_item_repaireffect(&sd, idx, 1);
+		clif_item_repaireffect( sd, idx, true );
 		return;
 	}
 
@@ -19616,10 +19616,10 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 
 	pc_delitem(&sd,pc_search_inventory(&sd,material),1,0,0,LOG_TYPE_CONSUME);
 
-	clif_item_repaireffect(&sd,idx,0);
+	clif_item_repaireffect( sd, idx, false );
 
 	if( sd.status.char_id != target_sd->status.char_id )
-		clif_item_repaireffect(target_sd,idx,0);
+		clif_item_repaireffect( *target_sd, idx, false );
 }
 
 /*==========================================

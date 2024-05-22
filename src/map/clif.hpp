@@ -856,7 +856,7 @@ void clif_clearcart(int fd);
 void clif_item_identify_list(map_session_data *sd);
 void clif_item_identified( map_session_data& sd, int32 idx, bool identified );
 void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint16 lv );
-void clif_item_repaireffect(map_session_data *sd, int idx, int flag);
+void clif_item_repaireffect( map_session_data& sd, int32 idx, bool failure );
 void clif_item_damaged(map_session_data* sd, unsigned short position);
 void clif_item_refine_list(map_session_data *sd);
 void clif_hat_effects( map_session_data* sd, struct block_list* bl, enum send_target target );
