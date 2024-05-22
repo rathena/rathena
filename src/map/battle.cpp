@@ -397,9 +397,14 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	// If the synchronize damage feature is activated then disabling the config should only affect skills (for monsters)
 	if (!battle_config.delay_battle_damage && (!battle_config.synchronize_damage || skill_id != 0 || src->type != BL_MOB))
 		amotion = 1;
-	// If clientamotion is 1 or lower for monsters, we can apply damage directly for normal attacks and don't need to create a timer
-	else if (battle_config.synchronize_damage && skill_id == 0 && src->type == BL_MOB && status_get_clientamotion(src) <= 1)
-		amotion = 1;
+	// The client refuses to display animations slower than 1x speed
+	// So we need to shorten AttackMotion to be in-sync with the client in this case
+	else if (battle_config.synchronize_damage && skill_id == 0 && src->type == BL_MOB && amotion > status_get_clientamotion(src))
+		amotion = status_get_clientamotion(src);
+	// Aegis places a damage-delay cap of 1 sec to non player attacks
+	// We only want to apply this cap if damage was not synchronized
+	else if (src->type != BL_PC && amotion > 1000)
+		amotion = 1000;
 
 	// Skip creation of timer
 	if (amotion <= 1) {
@@ -420,13 +425,6 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	dat->additional_effects = additional_effects;
 	dat->src_type = src->type;
 	dat->isspdamage = isspdamage;
-	if (battle_config.synchronize_damage && skill_id == 0 && src->type == BL_MOB && amotion > status_get_clientamotion(src)) {
-		// The client refuses to display animations slower than 1x speed
-		// So we need to shorten AttackMotion to be in-sync with the client in this case
-		amotion = status_get_clientamotion(src);
-	}
-	else if (src->type != BL_PC && amotion > 1000)
-		amotion = 1000; //Aegis places a damage-delay cap of 1 sec to non player attacks. [Skotlex]
 
 	if( src->type == BL_PC )
 		((TBL_PC*)src)->delayed_damage++;
