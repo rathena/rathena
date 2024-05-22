@@ -2065,7 +2065,6 @@
 	packet(0x08e3,149);
 	// New Packet
 	packet(0x0A27,8);
-	packet(0x0A28,3); // ZC_ACK_OPENSTORE2
 	packet(0x09FD,-1); // ZC_NOTIFY_MOVEENTRY11
 	packet(0x09FE,-1); // ZC_NOTIFY_NEWENTRY11
 	packet(0x09FF,-1); // ZC_NOTIFY_STANDENTRY11
