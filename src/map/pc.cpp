@@ -5554,7 +5554,7 @@ int pc_identifyall(map_session_data *sd, bool identify_item)
 		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
 			if (identify_item == true) {
 				sd->inventory.u.items_inventory[i].identify = 1;
-				clif_item_identified(sd,i,0);
+				clif_item_identified( *sd, i, false );
 			}
 			unidentified_count++;
 		}

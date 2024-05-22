@@ -937,6 +937,13 @@ struct PACKET_ZC_ACK_ITEMCOMPOSITION {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_ITEMCOMPOSITION, 0x17d);
 
+struct PACKET_ZC_ACK_ITEMIDENTIFY {
+	int16 packetType;
+	uint16 index;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_ITEMIDENTIFY, 0x179);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

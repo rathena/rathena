@@ -7186,20 +7186,16 @@ void clif_item_identify_list(map_session_data *sd)
 }
 
 
-/// Notifies the client about the result of a item identify request (ZC_ACK_ITEMIDENTIFY).
-/// 0179 <index>.W <result>.B
-void clif_item_identified(map_session_data *sd,int idx,int flag)
-{
-	int fd;
+/// Notifies the client about the result of a item identify request.
+/// 0179 <index>.W <result>.B (ZC_ACK_ITEMIDENTIFY)
+void clif_item_identified( map_session_data& sd, int32 idx, bool identified ){
+	PACKET_ZC_ACK_ITEMIDENTIFY packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_ACK_ITEMIDENTIFY;
+	packet.index = client_index( idx );
+	packet.result = identified;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x179));
-	WFIFOW(fd, 0)=0x179;
-	WFIFOW(fd, 2)=idx+2;
-	WFIFOB(fd, 4)=flag;
-	WFIFOSET(fd,packet_len(0x179));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
