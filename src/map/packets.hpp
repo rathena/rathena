@@ -958,6 +958,13 @@ struct PACKET_ZC_EQUIPITEM_DAMAGED {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_EQUIPITEM_DAMAGED, 0x2bb);
 
+struct PACKET_ZC_DELETE_ITEM_FROM_CART {
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DELETE_ITEM_FROM_CART, 0x125);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

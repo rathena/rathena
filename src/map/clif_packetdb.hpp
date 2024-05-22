@@ -153,7 +153,6 @@
 	packet(0x0120,6);
 	packet( cartlistequipType, -1 );
 	packet( cartlistnormalType, -1 );
-	packet(0x0125,8);
 	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_BODY_TO_CART, sizeof( PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART ), clif_parse_PutItemToCart, 0 );
 	parseable_packet(0x0127,8,clif_parse_GetItemFromCart,2,4);
 	parseable_packet(0x0128,8,clif_parse_MoveFromKafraToCart,2,4);

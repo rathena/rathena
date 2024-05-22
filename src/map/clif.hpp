@@ -849,7 +849,7 @@ void clif_equiplist(map_session_data *sd);
 
 void clif_cart_additem(map_session_data *sd,int n,int amount);
 void clif_cart_additem_ack(map_session_data *sd, uint8 flag);
-void clif_cart_delitem(map_session_data *sd,int n,int amount);
+void clif_cart_delitem( map_session_data& sd, int32 index, int32 amount );
 void clif_cartlist(map_session_data *sd);
 void clif_clearcart(int fd);
 
