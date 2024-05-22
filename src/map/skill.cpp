@@ -19627,7 +19627,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
  *------------------------------------------*/
 void skill_identify(map_session_data *sd, int idx)
 {
-	bool flag = true;
+	bool no_identify = true;
 
 	nullpo_retv(sd);
 
@@ -19635,11 +19635,11 @@ void skill_identify(map_session_data *sd, int idx)
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(sd->inventory.u.items_inventory[idx].nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-			flag = false;
+			no_identify = false;
 			sd->inventory.u.items_inventory[idx].identify = 1;
 		}
 	}
-	clif_item_identified( *sd, idx, flag );
+	clif_item_identified( *sd, idx, no_identify );
 }
 
 /*==========================================

@@ -7183,12 +7183,15 @@ void clif_item_identify_list(map_session_data *sd)
 
 /// Notifies the client about the result of a item identify request.
 /// 0179 <index>.W <result>.B (ZC_ACK_ITEMIDENTIFY)
-void clif_item_identified( map_session_data& sd, int32 idx, bool identified ){
+/// result:
+///     0 = success
+///     1 = failure
+void clif_item_identified( map_session_data& sd, int32 idx, bool no_identify ){
 	PACKET_ZC_ACK_ITEMIDENTIFY packet{};
 
 	packet.packetType = HEADER_ZC_ACK_ITEMIDENTIFY;
 	packet.index = client_index( idx );
-	packet.result = identified;
+	packet.result = no_identify;
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
