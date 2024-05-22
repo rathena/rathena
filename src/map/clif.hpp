@@ -871,7 +871,7 @@ void clif_mvp_noitem(map_session_data* sd);
 void clif_changed_dir(struct block_list *bl, enum send_target target);
 
 // vending
-void clif_openvendingreq(map_session_data* sd, int num);
+void clif_openvendingreq( map_session_data& sd, uint16 num );
 void clif_showvendingboard( map_session_data& sd, enum send_target target = AREA_WOS, struct block_list* tbl = nullptr );
 void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist( map_session_data* sd, map_session_data* vsd );
