@@ -990,7 +990,7 @@ void clif_upgrademessage( map_session_data* sd, int result, t_itemid item_id );
 
 //petsystem
 void clif_catch_process( map_session_data& sd );
-void clif_pet_roulette(map_session_data *sd,int data);
+void clif_pet_roulette( map_session_data& sd, bool success );
 void clif_sendegg(map_session_data *sd);
 void clif_send_petstatus(map_session_data *sd);
 void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int param);
