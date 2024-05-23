@@ -16064,49 +16064,106 @@ BUILDIN_FUNC(chatmes)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-// change npc walkspeed [Valaris]
+/**
+ * Change npc walkspeed.
+ * npcspeed <speed value> {,"<npc name>"};
+ */
 BUILDIN_FUNC(npcspeed)
 {
-	struct npc_data* nd;
-	int speed;
+	npc_data *nd;
 
-	speed = script_getnum(st,2);
-	nd =(struct npc_data *)map_id2bl(st->oid);
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = map_id2nd(st->oid);
 
-	if( nd ) {
+	if (!nd) {
+		if (script_hasdata(st, 3))
+			ShowError("buildin_npcspeed: %s is a non-existing NPC.\n", script_getstr(st, 3));
+		else
+			ShowError("buildin_npcspeed: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int speed = script_getnum(st, 2);
+	
+	if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+		ShowError("buildin_npcspeed: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	nd->speed = speed;
+	nd->ud.state.speed_changed = 1;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Make an npc walk to a position.
+ * npcwalkto <x>,<y> {,"<speed>" {,"<npc name>"} };
+ */
+BUILDIN_FUNC(npcwalkto)
+{
+	npc_data *nd;
+
+	if (script_hasdata(st, 5))
+		nd = npc_name2id(script_getstr(st, 5));
+	else
+		nd = map_id2nd(st->oid);
+
+	if (!nd) {
+		if (script_hasdata(st, 5))
+			ShowError("buildin_npcwalkto: %s is a non-existing NPC.\n", script_getstr(st, 5));
+		else
+			ShowError("buildin_npcwalkto: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 4)) {
+		int speed = script_getnum(st, 4);
+		
+		if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+			ShowError("buildin_npcwalkto: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+			return SCRIPT_CMD_FAILURE;
+		}
 		nd->speed = speed;
 		nd->ud.state.speed_changed = 1;
 	}
 
-	return SCRIPT_CMD_SUCCESS;
-}
-// make an npc walk to a position [Valaris]
-BUILDIN_FUNC(npcwalkto)
-{
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	int x=0,y=0;
+	int x = script_getnum(st, 2);
+	int y = script_getnum(st, 3);
 
-	x=script_getnum(st,2);
-	y=script_getnum(st,3);
+	if (!nd->status.hp)
+		status_calc_npc(nd, SCO_FIRST);
+	else
+		status_calc_npc(nd, SCO_NONE);
+	unit_walktoxy(&nd->bl,x,y,0);
 
-	if(nd) {
-		if (!nd->status.hp)
-			status_calc_npc(nd, SCO_FIRST);
-		else
-			status_calc_npc(nd, SCO_NONE);
-		unit_walktoxy(&nd->bl,x,y,0);
-	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
-// stop an npc's movement [Valaris]
+/**
+ * Stop an npc's movement.
+ * npcstop {"<npc name>"} };
+ */
 BUILDIN_FUNC(npcstop)
 {
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
+	npc_data *nd;
 
-	if(nd) {
-		unit_stop_walking(&nd->bl,1|4);
+	if (script_hasdata(st, 2))
+		nd = npc_name2id(script_getstr(st, 2));
+	else
+		nd = map_id2nd(st->oid);
+
+	if (!nd) {
+		if (script_hasdata(st, 2))
+			ShowError("buildin_npcstop: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		else
+			ShowError("buildin_npcstop: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
 	}
+	unit_stop_walking( &nd->bl, USW_FIXPOS | USW_MOVE_FULL_CELL | USW_FORCE_STOP );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27584,9 +27641,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
-	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
-	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
-	BUILDIN_DEF(npcstop,""), // [Valaris]
+	BUILDIN_DEF(npcspeed,"i?"), // [Valaris]
+	BUILDIN_DEF(npcwalkto,"ii??"), // [Valaris]
+	BUILDIN_DEF(npcstop,"?"), // [Valaris]
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
 	BUILDIN_DEF(checkoption1,"i?"),
