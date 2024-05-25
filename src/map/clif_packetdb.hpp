@@ -231,7 +231,6 @@
 	packet(0x0187,6);
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
 	packet(0x018b,4);
-	packet(0x018c,29);
 	packet(0x018d,-1);
 	parseable_packet( HEADER_CZ_REQMAKINGITEM, sizeof( struct PACKET_CZ_REQMAKINGITEM ), clif_parse_ProduceMix, 0 );
 	packet( HEADER_ZC_ACK_REQMAKINGITEM, sizeof( PACKET_ZC_ACK_REQMAKINGITEM ) );

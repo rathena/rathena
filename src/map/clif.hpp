@@ -919,7 +919,7 @@ int clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sdel
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
 void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, int32 x, int32 y, t_tick tick );
-void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
+void clif_skill_estimation( map_session_data& sd, mob_data& md );
 void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2 = "", const char* map3 = "", const char* map4 = "" );
 void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_result result );
 void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result result );

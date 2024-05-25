@@ -1036,6 +1036,28 @@ struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
 DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
 #endif
 
+struct PACKET_ZC_MONSTER_INFO {
+	int16 packetType;
+	uint16 class_;
+	uint16 level;
+	uint16 size;
+	uint32 hp;
+	int16 def;
+	uint16 race;
+	int16 mdef;
+	uint16 element;
+	uint8 water;
+	uint8 earth;
+	uint8 fire;
+	uint8 wind;
+	uint8 poison;
+	uint8 holy;
+	uint8 shadow;
+	uint8 ghost;
+	uint8 undead;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MONSTER_INFO, 0x18c);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

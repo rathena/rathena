@@ -6261,39 +6261,33 @@ void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result r
 }
 
 
-/// Displays Sense (WZ_ESTIMATION) information window (ZC_MONSTER_INFO).
+/// Displays Sense (WZ_ESTIMATION) information window.
 /// 018c <class>.W <level>.W <size>.W <hp>.L <def>.W <race>.W <mdef>.W <element>.W
-///     <water%>.B <earth%>.B <fire%>.B <wind%>.B <poison%>.B <holy%>.B <shadow%>.B <ghost%>.B <undead%>.B
-void clif_skill_estimation(map_session_data *sd,struct block_list *dst)
-{
-	struct status_data *status;
-	unsigned char buf[64];
-	int i, fix;
+///     <water%>.B <earth%>.B <fire%>.B <wind%>.B <poison%>.B <holy%>.B <shadow%>.B <ghost%>.B <undead%>.B (ZC_MONSTER_INFO)
+void clif_skill_estimation( map_session_data& sd, mob_data& md ){
+	PACKET_ZC_MONSTER_INFO packet{};
 
-	nullpo_retv(sd);
-	nullpo_retv(dst);
+	packet.packetType = HEADER_ZC_MONSTER_INFO;
+	packet.class_ = md.vd->class_;
+	packet.level = static_cast<decltype(packet.level)>( md.level );
+	packet.size = md.status.size;
+	packet.hp = md.status.hp;
+	packet.def = static_cast<decltype(packet.def)>( ((battle_config.estimation_type&1) ? md.status.def : 0 ) + ((battle_config.estimation_type&2) ? md.status.def2 : 0 ) );
+	packet.race = md.status.race;
+	packet.mdef = static_cast<decltype(packet.mdef)>( ((battle_config.estimation_type&1) ? md.status.mdef : 0 ) + ((battle_config.estimation_type&2) ? md.status.mdef2 : 0 ) );
+	packet.element = md.status.def_ele;
+	// The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
+	packet.water = static_cast<decltype(packet.water)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 1, md.status.def_ele), (int16)0 ) );
+	packet.earth = static_cast<decltype(packet.earth)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 2, md.status.def_ele), (int16)0 ) );
+	packet.fire = static_cast<decltype(packet.fire)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 3, md.status.def_ele), (int16)0 ) );
+	packet.wind = static_cast<decltype(packet.wind)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 4, md.status.def_ele), (int16)0 ) );
+	packet.poison = static_cast<decltype(packet.poison)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 5, md.status.def_ele), (int16)0 ) );
+	packet.holy = static_cast<decltype(packet.holy)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 6, md.status.def_ele), (int16)0 ) );
+	packet.shadow = static_cast<decltype(packet.shadow)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 7, md.status.def_ele), (int16)0 ) );
+	packet.ghost = static_cast<decltype(packet.ghost)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 8, md.status.def_ele), (int16)0 ) );
+	packet.undead = static_cast<decltype(packet.undead)>( std::max( elemental_attribute_db.getAttribute(md.status.ele_lv, 9, md.status.def_ele), (int16)0 ) );
 
-	if( dst->type != BL_MOB )
-		return;
-
-	status = status_get_status_data(dst);
-
-	WBUFW(buf, 0)=0x18c;
-	WBUFW(buf, 2)=status_get_class(dst);
-	WBUFW(buf, 4)=status_get_lv(dst);
-	WBUFW(buf, 6)=status->size;
-	WBUFL(buf, 8)=status->hp;
-	WBUFW(buf,12)= (battle_config.estimation_type&1?status->def:0)
-		+(battle_config.estimation_type&2?status->def2:0);
-	WBUFW(buf,14)=status->race;
-	WBUFW(buf,16)= (battle_config.estimation_type&1?status->mdef:0)
-		+(battle_config.estimation_type&2?status->mdef2:0);
-	WBUFW(buf,18)= status->def_ele;
-	for(i=0;i<9;i++)
-//		The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
-		WBUFB(buf,20+i)= (unsigned char)((fix=elemental_attribute_db.getAttribute(status->ele_lv, i+1, status->def_ele))<0?0:fix);
-
-	clif_send(buf,packet_len(0x18c),&sd->bl,sd->status.party_id>0?PARTY_SAMEMAP:SELF);
+	clif_send( &packet, sizeof( packet ), &sd.bl, (sd.status.party_id > 0) ? PARTY_SAMEMAP : SELF );
 }
 
 
