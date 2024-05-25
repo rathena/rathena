@@ -7015,15 +7015,19 @@ void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, s
 	map_session_data* ssd = map_nick2sd(nick, false);
 
 	// If it is not a message from the server or a player from another map-server
-	if (ssd) {
+	if( ssd != nullptr ){
 		gmlvl = pc_get_group_level(ssd);
 	}
 
 	p->isAdmin = (gmlvl == 99) ? 1 : 0;
-#endif
 
 #if PACKETVER_MAIN_NUM >= 20131204 || PACKETVER_RE_NUM >= 20131120 || defined(PACKETVER_ZERO)
-	p->senderGID = ssd->bl.id;
+	if( ssd != nullptr ){
+		p->senderGID = ssd->bl.id;
+	}else{
+		p->senderGID = 0;
+	}
+#endif
 #endif
 
 	clif_send( p, p->PacketLength, &sd->bl, SELF );
