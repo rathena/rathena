@@ -1331,8 +1331,8 @@ int intif_parse_WisEnd(int fd)
 	if (sd != nullptr) {
 		uint8 result = RFIFOB( fd, 26 );
 
-		if ( result >= ACKWHISPER_SUCCESS && result <= ACKWHISPER_ALL_IGNORED)
-			clif_wis_end( *sd, static_cast<e_ack_whisper>(RFIFOB(fd,26)) );
+		if ( result >= ACKWHISPER_SUCCESS && result <= ACKWHISPER_ALL_IGNORED )
+			clif_wis_end( *sd, static_cast<e_ack_whisper>(result) );
 	}
 
 	return 1;
