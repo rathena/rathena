@@ -6428,7 +6428,7 @@ ACMD_FUNC(marry)
 	}
 
 	if (!pc_inventoryblank(sd)) {
-		clif_msg_color(sd, C_ITEM_EXCEED, color_table[COLOR_RED]);
+		clif_msg_color(sd, CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 		return -1;
 	}
 
@@ -6438,7 +6438,7 @@ ACMD_FUNC(marry)
 	}
 
 	if (!pc_inventoryblank(pl_sd)) {
-		clif_msg_color(pl_sd, C_ITEM_EXCEED, color_table[COLOR_RED]);
+		clif_msg_color(pl_sd, CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 		return -1;
 	}
 

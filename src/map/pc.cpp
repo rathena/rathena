@@ -6266,7 +6266,7 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		}
 		// On official servers you can't open a box item if you don't have at least 11 spaces in your inventory
 		if (pc_inventoryblank(sd) < 11) {
-			clif_msg_color(sd, C_ITEM_EXCEED, color_table[COLOR_RED]);
+			clif_msg_color(sd, CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 			return false;
 		}
 	}

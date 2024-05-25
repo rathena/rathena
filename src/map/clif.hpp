@@ -510,6 +510,7 @@ enum clif_messages : uint16_t {
 
 	//! NOTE: These values below need client version validation
 	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
+	CANT_GET_ITEM_BECAUSE_COUNT = 0xDC,
 	ITEM_NOUSE_SITTING = 0x297,
 	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
 	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
@@ -548,7 +549,6 @@ enum clif_messages : uint16_t {
 	C_ENCHANT_OVERWEIGHT = 0xEFD,
 	C_ENCHANT_SUCCESS = 0xF11,
 	C_ENCHANT_FAILURE = 0xF12,
-	C_ITEM_EXCEED = 0xDC,
 };
 
 enum e_personalinfo : uint8_t {
