@@ -6260,12 +6260,13 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		return false; // Mercenary Scrolls
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
-		if( pc_is90overweight(sd) ) {
-			clif_msg(sd, ITEM_CANT_OBTAIN_WEIGHT);
+		if (pc_is90overweight(sd)) {
+			clif_msg_color(sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
 			return false;
 		}
-		if( !pc_inventoryblank(sd) ) {
-			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 732), false, SELF); //Item cannot be open when inventory is full
+		// On official servers you can't open a box item if you don't have at least 11 spaces in your inventory
+		if (pc_inventoryblank(sd) < 11) {
+			clif_msg_color(sd, C_ITEM_EXCEED, color_table[COLOR_RED]);
 			return false;
 		}
 	}
@@ -9808,7 +9809,7 @@ int pc_dead(map_session_data *sd,struct block_list *src)
 		item_tmp.card[1]=0;
 		item_tmp.card[2]=GetWord(sd->status.char_id,0); // CharId
 		item_tmp.card[3]=GetWord(sd->status.char_id,1);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 	}
 
 	//Remove bonus_script when dead

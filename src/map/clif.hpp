@@ -548,6 +548,7 @@ enum clif_messages : uint16_t {
 	C_ENCHANT_OVERWEIGHT = 0xEFD,
 	C_ENCHANT_SUCCESS = 0xF11,
 	C_ENCHANT_FAILURE = 0xF12,
+	C_ITEM_EXCEED = 0xDC,
 };
 
 enum e_personalinfo : uint8_t {

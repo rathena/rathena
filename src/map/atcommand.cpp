@@ -6396,10 +6396,8 @@ void getring (map_session_data* sd)
 	item_tmp.card[2] = GetWord(sd->status.partner_id,0);
 	item_tmp.card[3] = GetWord(sd->status.partner_id,1);
 
-	if((flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
+	if(flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
-	}
 }
 
 /*==========================================
@@ -6421,6 +6419,26 @@ ACMD_FUNC(marry)
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name,false)) == nullptr) {
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
+		return -1;
+	}
+
+	if (pc_is90overweight(sd)) {
+		clif_msg_color(sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
+		return -1;
+	}
+
+	if (!pc_inventoryblank(sd)) {
+		clif_msg_color(sd, C_ITEM_EXCEED, color_table[COLOR_RED]);
+		return -1;
+	}
+
+	if (pc_is90overweight(pl_sd)) {
+		clif_msg_color(pl_sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
+		return -1;
+	}
+
+	if (!pc_inventoryblank(pl_sd)) {
+		clif_msg_color(pl_sd, C_ITEM_EXCEED, color_table[COLOR_RED]);
 		return -1;
 	}
 
