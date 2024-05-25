@@ -1323,13 +1323,15 @@ int intif_parse_WisMessage(int fd)
  */
 int intif_parse_WisEnd(int fd)
 {
-	map_session_data* sd;
-
 	if (battle_config.etc_log)
 		ShowInfo("intif_parse_wisend: player: %s, flag: %d\n", RFIFOP(fd,2), RFIFOB(fd,26)); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-	sd = (map_session_data *)map_nick2sd(RFIFOCP(fd,2),false);
+
+	map_session_data* sd = map_nick2sd( RFIFOCP( fd, 2 ), false );
+
 	if (sd != nullptr) {
-		if (RFIFOB(fd,26) >= ACKWHISPER_SUCCESS && RFIFOB(fd,26) <= ACKWHISPER_ALL_IGNORED)
+		uint8 result = RFIFOB( fd, 26 );
+
+		if ( result >= ACKWHISPER_SUCCESS && result <= ACKWHISPER_ALL_IGNORED)
 			clif_wis_end( *sd, static_cast<e_ack_whisper>(RFIFOB(fd,26)) );
 	}
 

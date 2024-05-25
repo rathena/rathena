@@ -5543,7 +5543,7 @@ void clif_skill_delunit( skill_unit& unit ){
 	PACKET_ZC_SKILL_DISAPPEAR packet{};
 
 	packet.packetType = HEADER_ZC_SKILL_DISAPPEAR;
-	packet.id = unit.bl.id;
+	packet.GID = unit.bl.id;
 
 	clif_send( &packet, sizeof( packet ), &unit.bl, AREA );
 }
@@ -5556,7 +5556,7 @@ void clif_skillunit_update( block_list& bl ){
 	PACKET_ZC_SKILL_UPDATE packet{};
 
 	packet.packetType = HEADER_ZC_SKILL_UPDATE;
-	packet.id = bl.id;
+	packet.GID = bl.id;
 
 	clif_send( &packet, sizeof( packet ), &bl, AREA );
 }
@@ -6828,19 +6828,11 @@ void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long co
 ///     7 = SP (SP_SP)
 ///     ? = ignored
 void clif_heal( map_session_data& sd, int32 type, uint32 val ) {
-#if PACKETVER < 20141022
 	PACKET_ZC_RECOVERY packet{};
 
 	packet.packetType = HEADER_ZC_RECOVERY;
 	packet.type = static_cast<decltype(packet.type)>(type);
-	packet.amount = min(val, INT16_MAX);
-#else
-	PACKET_ZC_RECOVERY2 packet{};
-
-	packet.packetType = HEADER_ZC_RECOVERY2;
-	packet.type = static_cast<decltype(packet.type)>(type);
-	packet.amount = min(val, INT32_MAX);
-#endif
+	packet.amount = std::min( static_cast<decltype(packet.amount)>( val ), std::numeric_limits<decltype(packet.amount)>::max() );
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
@@ -7028,24 +7020,19 @@ void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, s
 
 /// Inform the player about the result of his whisper action 
 /// 0098 <result>.B (ZC_ACK_WHISPER).
-/// 09df <result>.B <GID>.L (ZC_ACK_WHISPER02).
+/// 09df <result>.B <CID>.L (ZC_ACK_WHISPER02).
 /// result:
 ///     0 = success to send whisper
 ///     1 = target character is not loged in
 ///     2 = ignored by target
 ///     3 = everyone ignored by target
 void clif_wis_end( map_session_data& sd, e_ack_whisper result ){
-#if PACKETVER < 20131223
 	PACKET_ZC_ACK_WHISPER packet{};
 
 	packet.packetType = HEADER_ZC_ACK_WHISPER;
 	packet.result = static_cast<decltype(packet.result)>(result);
-#else
-	PACKET_ZC_ACK_WHISPER02 packet{};
-
-	packet.packetType = HEADER_ZC_ACK_WHISPER02;
-	packet.result = static_cast<decltype(packet.result)>(result);
-	packet.gid = sd.status.char_id;	// GID/CCODE
+#if PACKETVER >= 20131223
+	packet.CID = sd.status.char_id;
 #endif
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
@@ -7183,12 +7170,12 @@ void clif_item_identify_list(map_session_data *sd)
 /// result:
 ///     0 = success
 ///     1 = failure
-void clif_item_identified( map_session_data& sd, int32 idx, bool no_identify ){
+void clif_item_identified( map_session_data& sd, int32 idx, bool failure ){
 	PACKET_ZC_ACK_ITEMIDENTIFY packet{};
 
 	packet.packetType = HEADER_ZC_ACK_ITEMIDENTIFY;
 	packet.index = client_index( idx );
-	packet.result = no_identify;
+	packet.result = failure;
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
@@ -7252,8 +7239,9 @@ void clif_item_damaged( map_session_data& sd, uint16 position ){
 
 	packet.packetType = HEADER_ZC_EQUIPITEM_DAMAGED;
 	packet.equipLocation = position;
-	packet.gid = sd.bl.id;  // TODO: the packet seems to be sent to other people as well, probably party and/or guild.
+	packet.GID = sd.bl.id;
 
+	// TODO: the packet seems to be sent to other people as well, probably party and/or guild.
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
@@ -7364,10 +7352,9 @@ void clif_cart_additem( map_session_data *sd, int n, int amount ){
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
-/// [Ind/Hercules] - Data Thanks to Yommy.
 /// Acknowledge an item have been added to cart
 /// 012c <result>.B (ZC_ACK_ADDITEM_TO_CART)
-/// result :
+/// result:
 /// 0 = ADDITEM_TO_CART_FAIL_WEIGHT
 /// 1 = ADDITEM_TO_CART_FAIL_COUNT
 void clif_cart_additem_ack( map_session_data& sd, e_ack_additem_to_cart flag ){
@@ -7728,15 +7715,17 @@ void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_pu
 /// Show's vending player its list of items for sale.
 /// 0a28 <result>.B (ZC_ACK_OPENSTORE2)
 /// result:
-///     0 = Successed
+///     0 = Success
 ///     1 = Failed
 void clif_openvending_ack( map_session_data& sd, bool failure ){
+#if PACKETVER >= 20141022
 	PACKET_ZC_ACK_OPENSTORE2 packet{};
 
 	packet.packetType = HEADER_ZC_ACK_OPENSTORE2;
 	packet.result = failure;
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
+#endif
 }
 
 /// Shop creation success.
@@ -7783,11 +7772,7 @@ void clif_openvending( map_session_data* sd, int id, struct s_vending* vending )
 
 	WFIFOSET( fd, len );
 
-#if PACKETVER >= 20141022
-	///     0 = Successed
-	///     1 = Failed
 	clif_openvending_ack( *sd, false );
-#endif
 }
 
 
@@ -7795,22 +7780,19 @@ void clif_openvending( map_session_data* sd, int id, struct s_vending* vending )
 /// 0137 <index>.W <amount>.W (ZC_DELETEITEM_FROM_MCSTORE)
 /// 09e5 <index>.W <amount>.W <GID>.L <Date>.L <zeny>.L (ZC_DELETEITEM_FROM_MCSTORE2)
 void clif_vendingreport( map_session_data& sd, uint16 index, uint16 amount, uint32 char_id, int32 zeny ){
-#if PACKETVER < 20141016		// TODO : not sure for client date [Napster]
 	PACKET_ZC_DELETEITEM_FROM_MCSTORE packet{};
 
 	packet.packetType = HEADER_ZC_DELETEITEM_FROM_MCSTORE;
 	packet.index = client_index( index );
 	packet.amount = amount;
-#else
-	PACKET_ZC_DELETEITEM_FROM_MCSTORE2 packet{};
 
-	packet.packetType = HEADER_ZC_DELETEITEM_FROM_MCSTORE2;
-	packet.index = client_index( index );
-	packet.amount = amount;
-	packet.buyerGid = char_id;
+// TODO : not sure for client date [Napster]
+#if PACKETVER >= 20141016
+	packet.buyerCID = char_id;
 	packet.date = client_tick( time(nullptr) );
 	packet.zeny = zeny;
 #endif
+
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
@@ -11895,9 +11877,9 @@ void clif_parse_WisMessage(int fd, map_session_data* sd)
 	// if player ignores everyone
 	if (dstsd->state.ignoreAll && pc_get_group_level(sd) <= pc_get_group_level(dstsd)) {
 		if (pc_isinvisible(dstsd) && pc_get_group_level(sd) < pc_get_group_level(dstsd))
-			clif_wis_end( *sd, ACKWHISPER_TARGET_OFFLINE ); // 1: target character is not logged in
+			clif_wis_end( *sd, ACKWHISPER_TARGET_OFFLINE );
 		else
-			clif_wis_end( *sd, ACKWHISPER_ALL_IGNORED ); // 3: everyone ignored by target
+			clif_wis_end( *sd, ACKWHISPER_ALL_IGNORED );
 		return;
 	}
 
@@ -11912,13 +11894,13 @@ void clif_parse_WisMessage(int fd, map_session_data* sd)
 		// if player ignores the source character
 		ARR_FIND(0, MAX_IGNORE_LIST, i, dstsd->ignore[i].name[0] == '\0' || strcmp(dstsd->ignore[i].name, sd->status.name) == 0);
 		if(i < MAX_IGNORE_LIST && dstsd->ignore[i].name[0] != '\0') { // source char present in ignore list
-			clif_wis_end( *sd, ACKWHISPER_IGNORED ); // 2: ignored by target
+			clif_wis_end( *sd, ACKWHISPER_IGNORED );
 			return;
 		}
 	}
 
 	// notify sender of success
-	clif_wis_end( *sd, ACKWHISPER_SUCCESS ); // 0: success to send wisper
+	clif_wis_end( *sd, ACKWHISPER_SUCCESS );
 
 	// Normal message
 	clif_wis_message(dstsd, sd->status.name, message, strlen(message)+1, 0);
