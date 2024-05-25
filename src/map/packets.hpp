@@ -929,6 +929,131 @@ struct PACKET_ZC_NOTIFY_EFFECT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_EFFECT, 0x19b);
 
+struct PACKET_ZC_ACK_ITEMCOMPOSITION {
+	int16 packetType;
+	uint16 equipIndex;
+	uint16 cardIndex;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_ITEMCOMPOSITION, 0x17d);
+
+struct PACKET_ZC_ACK_ITEMIDENTIFY {
+	int16 packetType;
+	uint16 index;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_ITEMIDENTIFY, 0x179);
+
+struct PACKET_ZC_ACK_ITEMREPAIR {
+	int16 packetType;
+	uint16 index;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_ITEMREPAIR, 0x1fe);
+
+struct PACKET_ZC_EQUIPITEM_DAMAGED {
+	int16 packetType;
+	uint16 equipLocation;
+	uint32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EQUIPITEM_DAMAGED, 0x2bb);
+
+struct PACKET_ZC_DELETE_ITEM_FROM_CART {
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DELETE_ITEM_FROM_CART, 0x125);
+
+struct PACKET_ZC_OPENSTORE {
+	int16 packetType;
+	uint16 num;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_OPENSTORE, 0x12d);
+
+struct PACKET_ZC_PC_PURCHASE_RESULT_FROMMC {
+	int16 packetType;
+	uint16 index;
+	uint16 amount;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PC_PURCHASE_RESULT_FROMMC, 0x135);
+
+struct PACKET_ZC_ACK_OPENSTORE2 {
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_OPENSTORE2, 0xa28 );
+
+struct PACKET_ZC_SKILL_DISAPPEAR {
+	int16 packetType;
+	uint32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILL_DISAPPEAR, 0x120);
+
+struct PACKET_ZC_SKILL_UPDATE {
+	int16 packetType;
+	uint32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILL_UPDATE, 0x1ac);
+
+#if PACKETVER >= 20141022
+struct PACKET_ZC_RECOVERY {
+	int16 packetType;
+	uint16 type;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_RECOVERY, 0xa27);
+#else
+struct PACKET_ZC_RECOVERY {
+	int16 packetType;
+	uint16 type;
+	int16 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_RECOVERY, 0x13d);
+#endif
+
+#if PACKETVER >= 20131223
+struct PACKET_ZC_ACK_WHISPER {
+	int16 packetType;
+	uint8 result;
+	uint32 CID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_WHISPER, 0x9df);
+#else
+struct PACKET_ZC_ACK_WHISPER {
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_WHISPER, 0x98);
+#endif
+
+struct PACKET_ZC_ACK_ADDITEM_TO_CART {
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_ADDITEM_TO_CART, 0x12c);
+
+// TODO : not sure for client date [Napster]
+#if PACKETVER >= 20141016
+struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
+	int16 packetType;
+	uint16 index;
+	uint16 amount;
+	uint32 buyerCID;
+	uint32 date;
+	int32 zeny;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x9e5);
+#else
+struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
+	int16 packetType;
+	uint16 index;
+	uint16 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
+#endif
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
