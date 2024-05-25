@@ -238,7 +238,6 @@
 	packet( HEADER_ZC_TALKBOX_CHATCONTENTS, sizeof( struct PACKET_ZC_TALKBOX_CHATCONTENTS ) );
 	packet(0x0192,24);
 	parseable_packet(0x0193,6,clif_parse_SolveCharName,2);
-	packet(0x0194,30);
 	packet( HEADER_ZC_ACK_REQNAMEALL, sizeof( struct PACKET_ZC_ACK_REQNAMEALL ) );
 	packet(0x0196,9);
 	parseable_packet(0x0197,4,clif_parse_ResetChar,2);
@@ -2228,7 +2227,6 @@
 // 2018-02-21aRagexeRE or 2018-02-21bRagexeRE
 #if PACKETVER >= 20180221
 	packet(0x0206,35); // ZC_FRIENDS_STATE
-	packet(0x0af7,32);
 #endif
 
 // 2018-03-07bRagexeRE

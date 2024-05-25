@@ -1058,6 +1058,23 @@ struct PACKET_ZC_MONSTER_INFO {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MONSTER_INFO, 0x18c);
 
+#if PACKETVER >= 20180221
+struct PACKET_ZC_ACK_REQNAME_BYGID {
+	int16 packetType;
+	uint16 flag;
+	uint32 CID;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQNAME_BYGID, 0xaf7);
+#else
+struct PACKET_ZC_ACK_REQNAME_BYGID {
+	int16 packetType;
+	uint32 CID;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQNAME_BYGID, 0x194);
+#endif
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

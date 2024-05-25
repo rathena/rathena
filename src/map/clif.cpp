@@ -7004,25 +7004,20 @@ void clif_wis_end( map_session_data& sd, e_ack_whisper result ){
 }
 
 
-/// Returns character name requested by char_id (ZC_ACK_REQNAME_BYGID).
-/// 0194 <char id>.L <name>.24B
-/// 0af7 <flag>.W <char id>.L <name>.24B
-void clif_solved_charname(int fd, int charid, const char* name)
-{
+/// Returns character name requested by char_id.
+/// 0194 <char id>.L <name>.24B (ZC_ACK_REQNAME_BYGID)
+/// 0af7 <flag>.W <char id>.L <name>.24B (ZC_ACK_REQNAME_BYGID)
+void clif_solved_charname( map_session_data& sd, uint32 charid, const char* name ){
+	PACKET_ZC_ACK_REQNAME_BYGID packet{};
+
+	packet.packetType = HEADER_ZC_ACK_REQNAME_BYGID;
 #if PACKETVER >= 20180221
-	WFIFOHEAD(fd,packet_len(0xaf7));
-	WFIFOW(fd,0) = 0xaf7;
-	WFIFOW(fd,2) = name[0] ? 3 : 2;
-	WFIFOL(fd,4) = charid;
-	safestrncpy(WFIFOCP(fd, 8), name, NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0x0af7));
-#else
-	WFIFOHEAD(fd,packet_len(0x194));
-	WFIFOW(fd,0)=0x194;
-	WFIFOL(fd,2)=charid;
-	safestrncpy(WFIFOCP(fd,6), name, NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0x194));
+	packet.flag = name[0] ? 3 : 2;
 #endif
+	packet.CID = charid;
+	safestrncpy( packet.name, name, NAME_LENGTH );
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -8175,7 +8170,7 @@ void clif_movetoattack( map_session_data& sd, block_list& bl ){
 void clif_produceeffect(map_session_data* sd,int flag, t_itemid nameid){
 	nullpo_retv( sd );
 
-	clif_solved_charname( sd->fd, sd->status.char_id, sd->status.name );
+	clif_solved_charname( *sd, sd->status.char_id, sd->status.name );
 
 	struct PACKET_ZC_ACK_REQMAKINGITEM p;
 

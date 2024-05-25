@@ -952,7 +952,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int gmlvl);
 void clif_wis_end( map_session_data& sd, e_ack_whisper result );
 
-void clif_solved_charname(int fd, int charid, const char* name);
+void clif_solved_charname( map_session_data& sd, uint32 charid, const char* name );
 void clif_name( struct block_list* src, struct block_list *bl, send_target target );
 #define clif_name_self(bl) clif_name( (bl), (bl), SELF )
 #define clif_name_area(bl) clif_name( (bl), (bl), AREA )
