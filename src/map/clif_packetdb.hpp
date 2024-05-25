@@ -141,7 +141,6 @@
 	packet(0x0114,31);
 	packet(0x0115,35);
 	parseable_packet(0x0116,10,clif_parse_UseSkillToPos,2,4,6,8);
-	packet(0x0117,18);
 	parseable_packet(0x0118,2,clif_parse_StopAttack,0);
 	packet(0x0119,13);
 	packet(0x011a,15);

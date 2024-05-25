@@ -6274,7 +6274,7 @@ ACMD_FUNC(displayskill)
 	if (type == 0 || type == 3)
 		clif_skill_nodamage(&sd->bl, &sd->bl, skill_id, skill_lv, 1);
 	if (type == 0 || type == 4)
-		clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick);
+		clif_skill_poseffect( sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick );
 	return 0;
 }
 
@@ -7383,7 +7383,7 @@ ACMD_FUNC(summon)
 	clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
 	mob_spawn(md);
 	sc_start4(nullptr,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,md->bl.x,md->bl.y,tick);
+	clif_skill_poseffect( sd->bl, AM_CALLHOMUN, 1, md->bl.x, md->bl.y, tick );
 	clif_displaymessage(fd, msg_txt(sd,39));	// All monster summoned!
 
 	return 0;

@@ -6165,28 +6165,27 @@ bool clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 s
 	return success;
 }
 
+/// Non-damaging ground skill effect.
+/// 0117 <skill id>.W <src id>.L <level>.W <x>.W <y>.W <tick>.L (ZC_NOTIFY_GROUNDSKILL)
+void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, int32 x, int32 y, t_tick tick ){
+	PACKET_ZC_NOTIFY_GROUNDSKILL packet{};
 
-/// Non-damaging ground skill effect (ZC_NOTIFY_GROUNDSKILL).
-/// 0117 <skill id>.W <src id>.L <level>.W <x>.W <y>.W <tick>.L
-void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick)
-{
-	unsigned char buf[32];
+	packet.PacketType = HEADER_ZC_NOTIFY_GROUNDSKILL;
+	packet.SKID = skill_id;
+	packet.AID = bl.id;
+	packet.level = skill_lv;
+	packet.xPos = static_cast<decltype(packet.xPos)>( x );
+	packet.yPos = static_cast<decltype(packet.yPos)>( y );
+	packet.startTime = client_tick( tick );
 
-	nullpo_retv(src);
-
-	WBUFW(buf,0)=0x117;
-	WBUFW(buf,2)=skill_id;
-	WBUFL(buf,4)=src->id;
-	WBUFW(buf,8)=val;
-	WBUFW(buf,10)=x;
-	WBUFW(buf,12)=y;
-	WBUFL(buf,14)=client_tick(tick);
-	if(disguised(src)) {
-		clif_send(buf,packet_len(0x117),src,AREA_WOS);
-		WBUFL(buf,4)=disguised_bl_id(src->id);
-		clif_send(buf,packet_len(0x117),src,SELF);
-	} else
-		clif_send(buf,packet_len(0x117),src,AREA);
+	if (disguised(&bl)) {
+		clif_send( &packet, sizeof( packet ), &bl, AREA_WOS );
+		
+		packet.AID = disguised_bl_id( bl.id );
+		clif_send( &packet, sizeof( packet ), &bl, SELF );
+	} else {
+		clif_send( &packet, sizeof( packet ), &bl, AREA );
+	}
 }
 
 /// Presents a list of available warp destinations (ZC_WARPLIST).

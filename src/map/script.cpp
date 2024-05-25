@@ -15335,7 +15335,7 @@ static inline void script_skill_effect(block_list *bl, uint16 skill_id, uint16 s
 
 	switch (skill_get_casttype(skill_id)) {
 		case CAST_GROUND:
-			clif_skill_poseffect(bl, skill_id, skill_lv, x, y, gettick());
+			clif_skill_poseffect( *bl, skill_id, skill_lv, x, y, gettick() );
 			break;
 		case CAST_NODAMAGE:
 			clif_skill_nodamage(bl, bl, skill_id, skill_lv, 1);
@@ -16398,7 +16398,7 @@ BUILDIN_FUNC(summon)
 		check_event(st, event);
 	}
 
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
+	clif_skill_poseffect( sd->bl, AM_CALLHOMUN, 1, sd->bl.x, sd->bl.y, tick );
 
 	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, sd->bl.x, sd->bl.y, str, _class, event, SZ_SMALL, AI_NONE);
 	if (md) {

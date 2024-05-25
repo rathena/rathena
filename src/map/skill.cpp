@@ -4791,7 +4791,7 @@ static TIMER_FUNC(skill_timerskill){
 
 						int splash = skill_get_splash(skl->skill_id, skl->skill_lv);
 
-						clif_skill_poseffect(src, skl->skill_id, skl->skill_lv, tmpx, tmpy, tick);
+						clif_skill_poseffect( *src, skl->skill_id, skl->skill_lv, tmpx, tmpy, tick );
 						map_foreachinarea(skill_area_sub, src->m, tmpx - splash, tmpy - splash, tmpx + splash, tmpy + splash, BL_CHAR, src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
 						skill_unitsetting(src, skl->skill_id, skl->skill_lv, tmpx, tmpy, skill_get_unit_interval(skl->skill_id));
 					}
@@ -6918,7 +6918,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				type = SC_TINDER_BREAKER2;
 				if( unit_movepos(src, bl->x, bl->y, 1, 1) ){
 					clif_blown(src);
-					clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
+					clif_skill_poseffect( *src, skill_id, skill_lv, bl->x, bl->y, tick );
 				}
 			}else if( skill_id == MH_CBC ){
 				type = SC_CBC;
@@ -6978,7 +6978,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 
 			if (skill_id == RL_HAMMER_OF_GOD)
-				clif_skill_poseffect(src, skill_id, 1, bl->x, bl->y, gettick());
+				clif_skill_poseffect( *src, skill_id, 1, bl->x, bl->y, gettick() );
 			else
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 
@@ -13735,7 +13735,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if(skill_get_inf(skill_id)&INF_SELF_SKILL)
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 			else
-				clif_skill_poseffect(src,skill_id,skill_lv,x,y,tick);
+				clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
 	}
 
 	switch(skill_id)
@@ -13955,7 +13955,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NPC_CANE_OF_EVIL_EYE:
 		flag|=1;
 		if(skill_unitsetting(src,skill_id,skill_lv,x,y,0))
-			clif_skill_poseffect(src,skill_id,skill_lv,x,y,tick);
+			clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
 		break;
 	case RG_GRAFFITI:			/* Graffiti [Valaris] */
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
@@ -14055,7 +14055,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 #if PACKETVER >= 20111005
 			clif_snap(src, src->x, src->y);
 #else
-			clif_skill_poseffect(src,skill_id,skill_lv,src->x,src->y,tick);
+			clif_skill_poseffect( *src, skill_id, skill_lv, src->x, src->y, tick );
 #endif
 			if (sd)
 				skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
@@ -14155,7 +14155,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case HW_GANBANTEIN:
 		if (rnd()%100 < 80) {
 			int dummy = 1;
-			clif_skill_poseffect(src,skill_id,skill_lv,x,y,tick);
+			clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
 			i = skill_get_splash(skill_id, skill_lv);
 			map_foreachinallarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, &dummy, src);
 		} else {
@@ -14180,7 +14180,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				clif_skill_fail( *sd, skill_id );
 				return 1;
 			}
-			clif_skill_poseffect(src,skill_id,skill_lv,x,y,tick);
+			clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
 			if (rnd()%100 < 50) {
 				clif_skill_fail( *sd, skill_id );
 			} else {
@@ -14242,7 +14242,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if (sce)
 				status_change_end(src, type); //Was under someone else's Gospel. [Skotlex]
 			sc_start4(src,src,type,100,skill_lv,0,sg->group_id,BCT_SELF,skill_get_time(skill_id,skill_lv));
-			clif_skill_poseffect(src, skill_id, skill_lv, 0, 0, tick); // PA_GOSPEL music packet
+			clif_skill_poseffect( *src, skill_id, skill_lv, 0, 0, tick ); // PA_GOSPEL music packet
 		}
 		break;
 	case NJ_TATAMIGAESHI:
@@ -21475,9 +21475,9 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 						if (src != nullptr) {
 							if (group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2)
-								clif_skill_poseffect(src, group->skill_id, -1, bl->x, bl->y, tick); // Don't yell a blank skill name.
+								clif_skill_poseffect( *src, group->skill_id, -1, bl->x, bl->y, tick ); // Don't yell a blank skill name.
 							else
-								clif_skill_poseffect(src, group->skill_id, group->skill_lv, bl->x, bl->y, tick);
+								clif_skill_poseffect( *src, group->skill_id, group->skill_lv, bl->x, bl->y, tick );
 							group->val2 = 1;
 						}
 					}
