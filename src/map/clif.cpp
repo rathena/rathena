@@ -12149,7 +12149,7 @@ void clif_parse_EquipItem(int fd,map_session_data *sd)
 		return; //Out of bounds check.
 
 	if(sd->npc_id && !sd->npc_item_flag) {
-		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
+		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12204,7 +12204,7 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 	}
 
 	if (sd->npc_id && !sd->npc_item_flag) {
-		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
+		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -13586,7 +13586,7 @@ void clif_parse_MoveToKafra(int fd, map_session_data *sd)
 	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -13639,7 +13639,7 @@ void clif_parse_MoveToKafraFromCart(int fd, map_session_data *sd){
 	if (idx < 0 || idx >= MAX_INVENTORY || amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[idx].equipSwitch ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -16674,7 +16674,7 @@ void clif_parse_Mail_setattach(int fd, map_session_data *sd){
 	flag = mail_setitem(sd, idx, amount);
 
 	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 	}else{
 		clif_Mail_setattachment(sd,idx,amount,flag);
 	}
@@ -24204,7 +24204,7 @@ void clif_enchantwindow_open( map_session_data& sd, uint64 clientLuaIndex ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	// Hardcoded clientside check
 	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
-		clif_msg_color( &sd, C_ENCHANT_OVERWEIGHT, color_table[COLOR_RED] );
+		clif_msg_color( &sd, ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
 		sd.state.item_enchant_index = 0;
 		return;
 		
@@ -24228,9 +24228,9 @@ void clif_enchantwindow_result( map_session_data& sd, bool success, t_itemid enc
 
 	p.PacketType = HEADER_ZC_RESPONSE_ENCHANT;
 	if( success ){
-		p.msgId = C_ENCHANT_SUCCESS;
+		p.msgId = ENCHANT_SUCCESS;
 	}else{
-		p.msgId = C_ENCHANT_FAILURE;
+		p.msgId = ENCHANT_FAILED;
 	}
 	p.ITID = enchant;
 

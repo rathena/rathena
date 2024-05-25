@@ -510,6 +510,7 @@ enum clif_messages : uint16_t {
 
 	//! NOTE: These values below need client version validation
 	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
+	CAN_NOT_EQUIP_ITEM = 0x174,
 	ITEM_NOUSE_SITTING = 0x297,
 	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
 	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
@@ -540,14 +541,11 @@ enum clif_messages : uint16_t {
 	SKILL_NEED_GRENADE = 0xa01,
 	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
 	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
+	SWAP_EQUIPITEM_UNREGISTER_FIRST = 0xbc7,
 	MSG_ATTENDANCE_DISABLED = 0xd92,
-
-	// Unofficial names
-	C_ITEM_EQUIP_SWITCH = 0xbc7,
-	C_ITEM_NOEQUIP = 0x174,	/// <"You can't put this item on."
-	C_ENCHANT_OVERWEIGHT = 0xEFD,
-	C_ENCHANT_SUCCESS = 0xF11,
-	C_ENCHANT_FAILURE = 0xF12,
+	ENCHANT_FAILED_OVER_WEIGHT = 0xefd,
+	ENCHANT_SUCCESS = 0xf11,
+	ENCHANT_FAILED = 0xf12,
 };
 
 enum e_personalinfo : uint8_t {

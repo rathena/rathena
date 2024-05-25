@@ -6531,7 +6531,7 @@ void pc_putitemtocart(map_session_data *sd,int idx,int amount)
 		return;
 
 	if( item_data->equipSwitch ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
