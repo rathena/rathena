@@ -6268,9 +6268,9 @@ ACMD_FUNC(displayskill)
 	status = status_get_status_data(&sd->bl);
 	tick = gettick();
 	if (type == 0 || type == 1)
-		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE);
+		clif_skill_damage( sd->bl, sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SINGLE );
 	if (type == 0 || type == 2)
-		clif_skill_damage(&sd->bl, &sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH);
+		clif_skill_damage( sd->bl, sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH );
 	if (type == 0 || type == 3)
 		clif_skill_nodamage(&sd->bl, &sd->bl, skill_id, skill_lv, 1);
 	if (type == 0 || type == 4)
