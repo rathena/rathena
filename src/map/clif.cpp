@@ -19824,6 +19824,7 @@ void clif_parse_blocking_playcancel( int fd, map_session_data *sd ){
 	clif_loadConfirm( sd );
 	
 	int32 mf = map_getmapflag(sd->bl.m, MF_SPECIALPOPUP);
+
 	if (mf > 0) {
 		clif_specialpopup(*sd, mf);
 	}

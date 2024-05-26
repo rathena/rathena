@@ -27142,10 +27142,11 @@ BUILDIN_FUNC(opentips){
 
 BUILDIN_FUNC(specialpopup) {
 	map_session_data* sd;
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
 
-	int id = script_getnum(st,2);
+	if( !script_rid2sd(sd) )
+		return SCRIPT_CMD_FAILURE;
+
+	int32 id = script_getnum(st,2);
 	clif_specialpopup(*sd, id);
 
 	return SCRIPT_CMD_SUCCESS;
