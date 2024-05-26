@@ -12075,7 +12075,7 @@ void clif_parse_EquipItem(int fd,map_session_data *sd)
 	if (index < 0 || index >= MAX_INVENTORY)
 		return; //Out of bounds check.
 
-	if((sd->state.block_action & PCBLOCK_EQUIP) || (sd->npc_id && !sd->npc_item_flag)) {
+	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
 		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
