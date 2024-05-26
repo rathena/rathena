@@ -8508,17 +8508,15 @@ void clif_bladestop( block_list& src, uint32 target_id, bool active ){
 }
 
 
-/// MVP effect (ZC_MVP).
-/// 010c <account id>.L
-void clif_mvp_effect(map_session_data *sd)
-{
-	unsigned char buf[16];
+/// MVP effect.
+/// 010c <account id>.L (ZC_MVP)
+void clif_mvp_effect( map_session_data& sd ){
+	PACKET_ZC_MVP packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_MVP;
+	packet.AID = sd.bl.id;
 
-	WBUFW(buf,0)=0x10c;
-	WBUFL(buf,2)=sd->bl.id;
-	clif_send(buf,packet_len(0x10c),&sd->bl,AREA);
+	clif_send( &packet, sizeof( packet ), &sd.bl, AREA );
 }
 
 
@@ -8560,8 +8558,7 @@ void clif_mvp_exp(map_session_data *sd, t_exp exp) {
 /// Dropped MVP item reward message (ZC_THROW_MVPITEM).
 /// 010d
 ///
-/// "You are the MVP, but cannot obtain the reward because
-///     you are overweight."
+/// "You are the MVP, but cannot obtain the reward because you are overweight."
 void clif_mvp_noitem(map_session_data* sd)
 {
 	int fd = sd->fd;
