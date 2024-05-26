@@ -27140,6 +27140,10 @@ BUILDIN_FUNC(opentips){
 #endif
 }
 
+/**
+ * Displays a special popup.
+ * specialpopup(<popup id>);
+ */
 BUILDIN_FUNC(specialpopup) {
 	map_session_data* sd;
 
