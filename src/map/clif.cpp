@@ -25216,7 +25216,7 @@ void clif_specialpopup(map_session_data& sd, int32 id ){
 	p.PacketType = HEADER_ZC_SPECIALPOPUP;
 	p.ppId = id;
 
-	clif_send( &p, sizeof( p ), &sd->bl, SELF);
+	clif_send( &p, sizeof( p ), &sd.bl, SELF);
 #endif
 }
 
