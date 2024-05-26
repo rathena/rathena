@@ -19822,16 +19822,10 @@ static void clif_loadConfirm( map_session_data *sd ){
 /// 0447
 void clif_parse_blocking_playcancel( int fd, map_session_data *sd ){
 	clif_loadConfirm( sd );
-	clif_updateSpecialPopup(sd);
-}
-
-void clif_updateSpecialPopup(map_session_data *sd) {
-	nullpo_retv(sd);
 	
-	int m = sd->bl.m;
-
-	if (map_getmapflag(m, MF_SPECIALPOPUP) > 0) {
-		clif_specialpopup(sd, map_getmapflag(m, MF_SPECIALPOPUP));
+	int32 mf = map_getmapflag(sd->bl.m, MF_SPECIALPOPUP);
+	if (mf > 0) {
+		clif_specialpopup(*sd, mf);
 	}
 }
 
@@ -25212,16 +25206,17 @@ void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y)
 #endif  // PACKETVER_MAIN_NUM >= 20220504
 }
 
-/// Displays special popups (ZC_SPECIALPOPUP).
-/// Wokrs only if player moved map to another map.
-/// 0bbe <popup id>.L
-void clif_specialpopup(map_session_data* sd, int id ){
+/// Displays a special popup.
+/// Works only if player moved from one map to another.
+/// 0bbe <popup id>.L (ZC_SPECIALPOPUP)
+void clif_specialpopup(map_session_data& sd, int32 id ){
 #if PACKETVER >= 20221005
-	struct PACKET_ZC_SPECIALPOPUP p = { 0 };
+	PACKET_ZC_SPECIALPOPUP p = {};
 
 	p.PacketType = HEADER_ZC_SPECIALPOPUP;
 	p.ppId = id;
-	clif_send( &p, sizeof( p ), &sd->bl, AREA);
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF);
 #endif
 }
 
