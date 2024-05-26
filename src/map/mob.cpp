@@ -204,7 +204,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	safestrncpy(nd->name, msg_txt(nullptr,656), sizeof(nd->name));
 
 	nd->class_ = 565;
-	nd->speed = 200;
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
 	nd->subtype = NPCTYPE_TOMB;
 
 	nd->u.tomb.md = md;
