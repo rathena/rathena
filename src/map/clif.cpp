@@ -8291,23 +8291,18 @@ void clif_send_petstatus( map_session_data& sd, pet_data& pd ){
 }
 
 
-/// Notification about a pet's emotion/talk (ZC_PET_ACT).
-/// 01aa <id>.L <data>.L
+/// Notification about a pet's emotion/talk.
+/// 01aa <id>.L <data>.L (ZC_PET_ACT)
 /// data:
 ///     @see CZ_PET_ACT.
-void clif_pet_emotion(struct pet_data *pd,int param)
-{
-	unsigned char buf[16];
+void clif_pet_emotion( pet_data& pd, int32 param ){
+	PACKET_ZC_PET_ACT packet{};
 
-	nullpo_retv(pd);
+	packet.packetType = HEADER_ZC_PET_ACT;
+	packet.GID = pd.bl.id;
+	packet.data = param;
 
-	memset(buf,0,packet_len(0x1aa));
-
-	WBUFW(buf,0)=0x1aa;
-	WBUFL(buf,2)=pd->bl.id;
-	WBUFL(buf,6)=param;
-
-	clif_send(buf,packet_len(0x1aa),&pd->bl,AREA);
+	clif_send( &packet, sizeof( packet ), &pd.bl, AREA );
 }
 
 
@@ -10876,7 +10871,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 		}
 
 		if(sd->pd && sd->pd->pet.intimate > 900)
-			clif_pet_emotion(sd->pd,(sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd));
+			clif_pet_emotion( *sd->pd, (sd->pd->pet.class_ - 100)*100 + 50 + pet_hungry_val(sd->pd) );
 
 		if(hom_is_active(sd->hd))
 			hom_init_timers(sd->hd);
@@ -14590,7 +14585,7 @@ void clif_parse_SelectEgg(int fd, map_session_data *sd){
 void clif_parse_SendEmotion(int fd, map_session_data *sd)
 {
 	if(sd->pd)
-		clif_pet_emotion(sd->pd,RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]));
+		clif_pet_emotion( *sd->pd, RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]) );
 }
 
 
