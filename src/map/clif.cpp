@@ -12075,7 +12075,7 @@ void clif_parse_EquipItem(int fd,map_session_data *sd)
 	if (index < 0 || index >= MAX_INVENTORY)
 		return; //Out of bounds check.
 
-	if(sd->npc_id && !sd->npc_item_flag) {
+	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
 		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
@@ -12130,7 +12130,7 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 		return;
 	}
 
-	if (sd->npc_id && !sd->npc_item_flag) {
+	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
 		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
