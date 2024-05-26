@@ -1334,7 +1334,6 @@ void clif_set_npc_window_size(map_session_data& sd, int width, int height);
 void clif_set_npc_window_pos(map_session_data& sd, int x, int y);
 void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y);
 
-void clif_specialpopup(map_session_data* sd, int id);
-void clif_updateSpecialPopup(map_session_data* sd);
+void clif_specialpopup(map_session_data& sd, int32 id);
 
 #endif /* CLIF_HPP */
