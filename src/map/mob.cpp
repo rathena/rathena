@@ -4461,6 +4461,7 @@ s_mob_db::s_mob_db()
 	status.speed = DEFAULT_WALK_SPEED;
 	status.adelay = cap_value(0, battle_config.monster_max_aspd * 2, 4000);
 	status.amotion = cap_value(0, battle_config.monster_max_aspd, 2000);
+	status.clientamotion = cap_value(status.amotion, 1, USHRT_MAX);
 	status.mode = static_cast<e_mode>(MONSTER_TYPE_06);
 
 	vd.class_ = id;
@@ -4882,6 +4883,18 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		mob->status.amotion = cap_value(speed, battle_config.monster_max_aspd, 2000);
+	}
+
+	if (this->nodeExists(node, "ClientAttackMotion")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "ClientAttackMotion", speed))
+			return 0;
+
+		mob->status.clientamotion = cap_value(speed, 1, USHRT_MAX);
+	} else {
+		if (!exists)
+			mob->status.clientamotion = cap_value(mob->status.amotion, 1, USHRT_MAX);
 	}
 
 	if (this->nodeExists(node, "DamageMotion")) {

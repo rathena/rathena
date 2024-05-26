@@ -447,7 +447,10 @@ void storage_storagegettocart(map_session_data* sd, struct s_storage *stor, int 
 		storage_delitem(sd,stor,index,amount);
 	else {
 		clif_storageitemremoved( *sd, index, 0 );
-		clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+		if (flag == ADDITEM_INVALID)
+			clif_cart_additem_ack( *sd, ADDITEM_TO_CART_FAIL_WEIGHT );
+		else
+			clif_cart_additem_ack( *sd, ADDITEM_TO_CART_FAIL_COUNT );
 	}
 }
 
@@ -1008,7 +1011,10 @@ void storage_guild_storagegettocart(map_session_data* sd, int index, int amount)
 		storage_guild_delitem(sd,stor,index,amount);
 	else {
 		clif_storageitemremoved( *sd, index, 0 );
-		clif_cart_additem_ack(sd,(flag == 1) ? ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+		if (flag == ADDITEM_INVALID)
+			clif_cart_additem_ack( *sd, ADDITEM_TO_CART_FAIL_WEIGHT );
+		else
+			clif_cart_additem_ack( *sd, ADDITEM_TO_CART_FAIL_COUNT );
 	}
 }
 

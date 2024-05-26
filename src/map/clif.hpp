@@ -492,10 +492,6 @@ enum useskill_fail_cause : uint8_t
 
 enum clif_messages : uint16_t {
 	/* Constant values */
-	// clif_cart_additem_ack flags
-	ADDITEM_TO_CART_FAIL_WEIGHT = 0x0,
-	ADDITEM_TO_CART_FAIL_COUNT = 0x1,
-
 	// clif_equipitemack flags
 #if PACKETVER_MAIN_NUM >= 20121205 || PACKETVER_RE_NUM >= 20121107 || defined(PACKETVER_ZERO)
 	ITEM_EQUIP_ACK_OK = 0,
@@ -675,6 +671,28 @@ enum e_notify_effect : uint8 {
 	NOTIFYEFFECT_TAEKWON_BASE_LEVEL_UP = 9,
 };
 
+enum e_pc_purchase_result_frommc : uint8 {
+	PURCHASEMC_SUCCESS = 0,
+	PURCHASEMC_NO_ZENY = 1,
+	PURCHASEMC_OVERWEIGHT = 2,
+	PURCHASEMC_OUT_OF_STOCK = 4,
+	PURCHASEMC_TRADING = 5,
+	PURCHASEMC_STORE_INCORRECT = 6,
+	PURCHASEMC_NO_SALES_INFO = 7,
+};
+
+enum e_ack_whisper : uint8 {
+	ACKWHISPER_SUCCESS = 0,
+	ACKWHISPER_TARGET_OFFLINE = 1,
+	ACKWHISPER_IGNORED = 2,
+	ACKWHISPER_ALL_IGNORED = 3
+};
+
+enum e_ack_additem_to_cart : uint8 {
+	ADDITEM_TO_CART_FAIL_WEIGHT = 0,
+	ADDITEM_TO_CART_FAIL_COUNT = 1
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -813,8 +831,8 @@ void clif_cooking_list(map_session_data *sd, int trigger, uint16 skill_id, int q
 void clif_produceeffect(map_session_data* sd,int flag, t_itemid nameid);
 
 void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
-void clif_skill_delunit(struct skill_unit *unit);
-void clif_skillunit_update(struct block_list* bl);
+void clif_skill_delunit( skill_unit& unit );
+void clif_skillunit_update( block_list& bl);
 
 void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv);
 
@@ -834,7 +852,7 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(map_session_data* sd, const char* nick, const char* mes, size_t mes_len, int gmlvl);
-void clif_wis_end(int fd, int result);
+void clif_wis_end( map_session_data& sd, e_ack_whisper result );
 
 void clif_solved_charname(int fd, int charid, const char* name);
 void clif_name( struct block_list* src, struct block_list *bl, send_target target );
@@ -842,22 +860,22 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 #define clif_name_area(bl) clif_name( (bl), (bl), AREA )
 
 void clif_use_card(map_session_data *sd,int idx);
-void clif_insert_card(map_session_data *sd,int idx_equip,int idx_card,int flag);
+void clif_insert_card( map_session_data& sd, int32 idx_equip, int32 idx_card, bool failure );
 
 void clif_inventorylist(map_session_data *sd);
 void clif_equiplist(map_session_data *sd);
 
 void clif_cart_additem(map_session_data *sd,int n,int amount);
-void clif_cart_additem_ack(map_session_data *sd, uint8 flag);
-void clif_cart_delitem(map_session_data *sd,int n,int amount);
+void clif_cart_additem_ack( map_session_data& sd, e_ack_additem_to_cart flag );
+void clif_cart_delitem( map_session_data& sd, int32 index, int32 amount );
 void clif_cartlist(map_session_data *sd);
 void clif_clearcart(int fd);
 
 void clif_item_identify_list(map_session_data *sd);
-void clif_item_identified(map_session_data *sd,int idx,int flag);
+void clif_item_identified( map_session_data& sd, int32 idx, bool failure );
 void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint16 lv );
-void clif_item_repaireffect(map_session_data *sd, int idx, int flag);
-void clif_item_damaged(map_session_data* sd, unsigned short position);
+void clif_item_repaireffect( map_session_data& sd, int32 idx, bool failure );
+void clif_item_damaged( map_session_data& sd, uint16 position );
 void clif_item_refine_list(map_session_data *sd);
 void clif_hat_effects( map_session_data* sd, struct block_list* bl, enum send_target target );
 void clif_hat_effect_single( map_session_data* sd, uint16 effectId, bool enable );
@@ -871,15 +889,15 @@ void clif_mvp_noitem(map_session_data* sd);
 void clif_changed_dir(struct block_list *bl, enum send_target target);
 
 // vending
-void clif_openvendingreq(map_session_data* sd, int num);
+void clif_openvendingreq( map_session_data& sd, uint16 num );
 void clif_showvendingboard( map_session_data& sd, enum send_target target = AREA_WOS, struct block_list* tbl = nullptr );
 void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist( map_session_data* sd, map_session_data* vsd );
-void clif_buyvending(map_session_data* sd, int index, int amount, int fail);
+void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_purchase_result_frommc result );
 void clif_openvending(map_session_data* sd, int id, struct s_vending* vending);
-void clif_vendingreport(map_session_data* sd, int index, int amount, uint32 char_id, int zeny);
+void clif_vendingreport( map_session_data& sd, uint16 index, uint16 amount, uint32 char_id, int32 zeny );
 
-void clif_movetoattack(map_session_data *sd,struct block_list *bl);
+void clif_movetoattack( map_session_data& sd, block_list& bl );
 
 // party
 void clif_party_created( map_session_data& sd, int result );
@@ -962,7 +980,7 @@ void clif_displaymessage(const int fd, const char* mes);
 void clif_disp_message(struct block_list* src, const char* mes, size_t len, enum send_target target);
 void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
 void clif_broadcast2(struct block_list* bl, const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
-void clif_heal(int fd,int type,int val);
+void clif_heal( map_session_data& sd, int32 type, uint32 val );
 void clif_resurrection( block_list& bl );
 void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);
 void clif_pvpset(map_session_data *sd, int pvprank, int pvpnum,int type);
@@ -971,8 +989,8 @@ void clif_refine( map_session_data& sd, uint16 index, e_ack_itemrefining result 
 void clif_upgrademessage( map_session_data* sd, int result, t_itemid item_id );
 
 //petsystem
-void clif_catch_process(map_session_data *sd);
-void clif_pet_roulette(map_session_data *sd,int data);
+void clif_catch_process( map_session_data& sd );
+void clif_pet_roulette( map_session_data& sd, bool success );
 void clif_sendegg(map_session_data *sd);
 void clif_send_petstatus(map_session_data *sd);
 void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int param);
