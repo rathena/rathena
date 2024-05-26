@@ -263,6 +263,26 @@ function	script	F_CashSiegeTele	{
 	return;
 }
 
+// Siege Teleport Scroll 2 (WoE 1.5)
+//============================================================ 
+// - Warp player to selected guild castle.
+// - No arguments.
+function	script	F_CashSiegeTele2	{
+	switch(select("Mardoll (arug_cas01):Cyr (arug_cas02):Horn (arug_cas03):Gefn (arug_cas04):Badanis (arug_cas05):Himinn (schg_cas01):Andlangr (schg_cas02):Vidblainn (schg_cas03):Hljod (schg_cas04):Schatirnil (schg_cas05)")) {
+	case 1: warp "aru_gld",159,272; end;
+	case 2: warp "aru_gld",86,50; end;
+	case 3: warp "aru_gld",63,157; end;
+	case 4: warp "aru_gld",307,354; end;
+	case 5: warp "aru_gld",298,110; end;
+	case 6: warp "sch_gld",300,100; end;
+	case 7: warp "sch_gld",284,249; end;
+	case 8: warp "sch_gld",102,196; end;
+	case 9: warp "sch_gld",140,83; end;
+	case 10: warp "sch_gld",70,320; end;
+	}
+	return;
+}
+
 // Curious Snowball
 //============================================================ 
 // - You can get an effect of Restore, Endure, or Wing of Butterfly.

@@ -38,11 +38,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
            # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
            # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
@@ -74,7 +74,7 @@ jobs:
       #- name: Autobuild
       #  uses: github/codeql-action/autobuild@v2
 
-      # ✏️ If the Autobuild fails above, remove it and uncomment the following
+      # ?? If the Autobuild fails above, remove it and uncomment the following
       #    three lines and modify them (or add more) to build your code if your
       #    project uses a compiled language
       - name: Command - configure
@@ -89,4 +89,4 @@ jobs:
         run: make server
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
