@@ -1103,6 +1103,15 @@ struct PACKET_ZC_MVP {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MVP, 0x10c);
 
+// Kro remove this packet [Napster]
+#if PACKETVER < 20131223
+struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP {
+	int16 packetType;
+	uint32 exp;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MVP_GETTING_SPECIAL_EXP, 0x10b);
+#endif
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

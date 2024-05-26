@@ -129,7 +129,6 @@
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
 	packet( HEADER_ZC_MVP_GETTING_ITEM, sizeof( struct PACKET_ZC_MVP_GETTING_ITEM ) );
-	packet(0x010b,6);
 	packet(0x010d,2);
 	packet(0x010e,11);
 	packet(0x010f,-1);

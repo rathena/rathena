@@ -992,7 +992,7 @@ void clif_item_skill(map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
 void clif_mvp_effect( map_session_data& sd );
 void clif_mvp_item(map_session_data *sd, t_itemid nameid);
-void clif_mvp_exp(map_session_data *sd, t_exp exp);
+void clif_mvp_exp( map_session_data& sd, t_exp exp );
 void clif_mvp_noitem(map_session_data* sd);
 void clif_changed_dir(struct block_list *bl, enum send_target target);
 

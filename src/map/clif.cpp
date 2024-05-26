@@ -8532,25 +8532,22 @@ void clif_mvp_item( map_session_data *sd, t_itemid nameid ){
 }
 
 
-/// MVP EXP reward message (ZC_MVP_GETTING_SPECIAL_EXP).
-/// 010b <exp>.L
-void clif_mvp_exp(map_session_data *sd, t_exp exp) {
+/// MVP EXP reward message.
+/// 010b <exp>.L (ZC_MVP_GETTING_SPECIAL_EXP)
+void clif_mvp_exp( map_session_data& sd, t_exp exp ){
 #if PACKETVER >= 20131223		// Kro remove this packet [Napster]
 	if (battle_config.mvp_exp_reward_message) {
 		char e_msg[CHAT_SIZE_MAX];
-		sprintf(e_msg, msg_txt(sd, 717), exp);
-		clif_messagecolor(&sd->bl, color_table[COLOR_CYAN], e_msg, false, SELF);		// Congratulations! You are the MVP! Your reward EXP Points are %u !!
+		sprintf(e_msg, msg_txt(&sd, 717), exp);
+		clif_messagecolor( &sd.bl, color_table[COLOR_CYAN], e_msg, false, SELF );		// Congratulations! You are the MVP! Your reward EXP Points are %u !!
 	}
 #else
-	int fd;
+	PACKET_ZC_MVP_GETTING_SPECIAL_EXP packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_MVP_GETTING_SPECIAL_EXP;
+	packet.exp = std::min( static_cast<decltype(packet.exp)>( exp ), MAX_EXP );
 
-	fd = sd->fd;
-	WFIFOHEAD(fd, packet_len(0x10b));
-	WFIFOW(fd,0) = 0x10b;
-	WFIFOL(fd,2) = (uint32)u64min( exp, MAX_EXP );
-	WFIFOSET(fd, packet_len(0x10b));
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 #endif
 }
 
