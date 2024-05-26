@@ -7663,7 +7663,6 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreDefense: true
       IgnoreFlee: true
     Flags:
       TargetTrap: true

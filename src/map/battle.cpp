@@ -6641,6 +6641,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 		case RK_DRAGONBREATH_WATER:
 		case NC_ARMSCANNON:
 		case GN_CARTCANNON:
+		case MO_EXTREMITYFIST:
 			if (attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
 				return;
 			if (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
@@ -7375,11 +7376,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
 
 		ATK_RATE(wd.damage, wd.damage2, ratio);
-#endif
 
 		int64 bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
 
 		ATK_ADD(wd.damage, wd.damage2, bonus_damage);
+#endif
 
 #ifdef RENEWAL
 		if(skill_id == HW_MAGICCRASHER) { // Add weapon attack for MATK onto Magic Crasher
@@ -7452,11 +7453,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			if( is_attack_left_handed( src, skill_id ) ){
 				wd.damage2 += wd.masteryAtk2;
 			}
-			// Apply bonus damage
-			wd.damage += bonus_damage;
-			if( is_attack_left_handed( src, skill_id ) ){
-				wd.damage2 += bonus_damage;
-			}
 
 			// CritAtkRate modifier
 			if (wd.type == DMG_CRITICAL || wd.type == DMG_MULTI_HIT_CRITICAL) {
@@ -7482,6 +7478,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		ATK_RATE(wd.damage, wd.damage2, ratio);
 
+		int64 bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
+
+		ATK_ADD(wd.damage, wd.damage2, bonus_damage);
+
 		// Advance Katar Mastery
 		if (sd) {
 			uint16 katar_skill;
@@ -7493,7 +7493,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		// Res reduces physical damage by a percentage and
 		// is calculated before DEF and other reductions.
 		// This should be the official formula. [Rytech]
-		if ((wd.damage + wd.damage2) && tstatus->res > 0) {
+		if ((wd.damage + wd.damage2) && tstatus->res > 0 && skill_id != MO_EXTREMITYFIST) {
 			short res = tstatus->res;
 			short ignore_res = 0;// Value used as a percentage.
 
