@@ -3346,7 +3346,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 		if(sd && duration==1) duration = DIFF_TICK(sd->ud.canact_tick, tick); //Auto calc duration
 		duration = i64max(status_get_amotion(src),duration); //Never less than aMotion
 		sc_start4(src,src,SC_COMBO,100,skill_id,target_id,nodelay,0,duration);
-		clif_combo_delay(src, duration);
+		clif_combo_delay( *src, duration );
 	}
 }
 
@@ -11551,7 +11551,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( sc_start2(src,bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv))) {
 				if( bl->type == BL_MOB )
 					mob_unlocktarget((TBL_MOB*)bl,gettick());
-				clif_bladestop(src, bl->id, 1);
+				clif_bladestop( *src, bl->id, true );
 				map_freeblock_unlock();
 				return 1;
 			}
@@ -11573,7 +11573,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( sc_start2(src,bl, type, 50, skill_lv, src->id, skill_get_time(skill_id, skill_lv))) {
 				if( bl->type == BL_MOB )
 					mob_unlocktarget((TBL_MOB*)bl,gettick());
-				clif_bladestop(src, bl->id, 1);
+				clif_bladestop( *src, bl->id, true );
 				map_freeblock_unlock();
 				return 1;
 			}

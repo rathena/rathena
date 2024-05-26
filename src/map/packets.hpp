@@ -1082,6 +1082,21 @@ struct PACKET_ZC_PET_ACT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_PET_ACT, 0x1aa);
 
+struct PACKET_ZC_COMBODELAY {
+	int16 packetType;
+	uint32 AID;
+	uint32 delay;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_COMBODELAY, 0x1d2);
+
+struct PACKET_ZC_BLADESTOP {
+	int16 packetType;
+	uint32 srcId;
+	uint32 targetId;
+	uint32 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_BLADESTOP, 0x1d1);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

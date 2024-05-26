@@ -950,8 +950,8 @@ void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr
 void clif_soulball( map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_servantball( map_session_data& sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_abyssball( map_session_data& sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
-void clif_combo_delay(struct block_list *bl,t_tick wait);
-void clif_bladestop(struct block_list *src, int dst_id, int active);
+void clif_combo_delay( block_list& bl, t_tick wait );
+void clif_bladestop( block_list& src, uint32 target_id, bool active );
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)

@@ -8477,38 +8477,34 @@ void clif_spiritball( struct block_list *bl, struct block_list* target, enum sen
 	clif_send( &p, sizeof( p ), target == nullptr ? bl : target, send_target );
 }
 
-/// Notifies clients in area of a character's combo delay (ZC_COMBODELAY).
-/// 01d2 <account id>.L <delay>.L
-void clif_combo_delay(struct block_list *bl,t_tick wait)
-{
-	unsigned char buf[32];
 
-	nullpo_retv(bl);
+/// Notifies clients in area of a character's combo delay.
+/// 01d2 <account id>.L <delay>.L (ZC_COMBODELAY)
+void clif_combo_delay( block_list& bl, t_tick wait ){
+	PACKET_ZC_COMBODELAY packet{};
 
-	WBUFW(buf,0)=0x1d2;
-	WBUFL(buf,2)=bl->id;
-	WBUFL(buf,6)=client_tick(wait);
-	clif_send(buf,packet_len(0x1d2),bl,AREA);
+	packet.packetType = HEADER_ZC_COMBODELAY;
+	packet.AID = bl.id;
+	packet.delay = client_tick( wait );
+
+	clif_send( &packet, sizeof( packet ), &bl, AREA );
 }
 
 
-/// Notifies clients in area that a character has blade-stopped another (ZC_BLADESTOP).
-/// 01d1 <src id>.L <dst id>.L <flag>.L
+/// Notifies clients in area that a character has blade-stopped another.
+/// 01d1 <src id>.L <dst id>.L <flag>.L (ZC_BLADESTOP)
 /// flag:
 ///     0 = inactive
 ///     1 = active
-void clif_bladestop(struct block_list *src, int dst_id, int active)
-{
-	unsigned char buf[32];
+void clif_bladestop( block_list& src, uint32 target_id, bool active ){
+	PACKET_ZC_BLADESTOP packet{};
 
-	nullpo_retv(src);
+	packet.packetType = HEADER_ZC_BLADESTOP;
+	packet.srcId = src.id;
+	packet.targetId = target_id;
+	packet.flag = active;
 
-	WBUFW(buf,0)=0x1d1;
-	WBUFL(buf,2)=src->id;
-	WBUFL(buf,6)=dst_id;
-	WBUFL(buf,10)=active;
-
-	clif_send(buf,packet_len(0x1d1),src,AREA);
+	clif_send( &packet, sizeof( packet ), &src, AREA );
 }
 
 
