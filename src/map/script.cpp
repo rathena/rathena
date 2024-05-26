@@ -16070,14 +16070,14 @@ BUILDIN_FUNC(chatmes)
  */
 BUILDIN_FUNC(npcspeed)
 {
-	npc_data *nd;
+	npc_data* nd;
 
 	if (script_hasdata(st, 3))
 		nd = npc_name2id(script_getstr(st, 3));
 	else
 		nd = map_id2nd(st->oid);
 
-	if (!nd) {
+	if (nd == nullptr) {
 		if (script_hasdata(st, 3))
 			ShowError("buildin_npcspeed: %s is a non-existing NPC.\n", script_getstr(st, 3));
 		else
@@ -16104,14 +16104,14 @@ BUILDIN_FUNC(npcspeed)
  */
 BUILDIN_FUNC(npcwalkto)
 {
-	npc_data *nd;
+	npc_data* nd;
 
 	if (script_hasdata(st, 5))
 		nd = npc_name2id(script_getstr(st, 5));
 	else
 		nd = map_id2nd(st->oid);
 
-	if (!nd) {
+	if (nd == nullptr) {
 		if (script_hasdata(st, 5))
 			ShowError("buildin_npcwalkto: %s is a non-existing NPC.\n", script_getstr(st, 5));
 		else
@@ -16148,14 +16148,14 @@ BUILDIN_FUNC(npcwalkto)
  */
 BUILDIN_FUNC(npcstop)
 {
-	npc_data *nd;
+	npc_data* nd;
 
 	if (script_hasdata(st, 2))
 		nd = npc_name2id(script_getstr(st, 2));
 	else
 		nd = map_id2nd(st->oid);
 
-	if (!nd) {
+	if (nd == nullptr) {
 		if (script_hasdata(st, 2))
 			ShowError("buildin_npcstop: %s is a non-existing NPC.\n", script_getstr(st, 2));
 		else
@@ -27641,9 +27641,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
-	BUILDIN_DEF(npcspeed,"i?"), // [Valaris]
-	BUILDIN_DEF(npcwalkto,"ii??"), // [Valaris]
-	BUILDIN_DEF(npcstop,"?"), // [Valaris]
+	BUILDIN_DEF(npcspeed,"i?"),
+	BUILDIN_DEF(npcwalkto,"ii??"),
+	BUILDIN_DEF(npcstop,"?"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
 	BUILDIN_DEF(checkoption1,"i?"),
