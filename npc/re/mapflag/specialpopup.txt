@@ -43,3 +43,8 @@ ama_dun01	mapflag	specialpopup	5
 lhz_dun_n	mapflag	specialpopup	6
 
 bl_depth1	mapflag	specialpopup	7
+
+for_dun01	mapflag	specialpopup	8
+for_dun02	mapflag	specialpopup	8
+
+bl_depth2	mapflag	specialpopup	9
