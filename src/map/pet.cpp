@@ -1115,7 +1115,7 @@ int pet_birth_process(map_session_data *sd, struct s_pet *pet)
 		clif_send_petdata(sd, sd->pd, 6, 1);
 #endif
 		clif_pet_equip_area(sd->pd);
-		clif_send_petstatus(sd);
+		clif_send_petstatus( *sd, *sd->pd );
 		clif_pet_autofeed_status(sd,true);
 	}
 
@@ -1173,7 +1173,7 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 			clif_send_petdata(sd,sd->pd,0,0);
 			clif_send_petdata(sd,sd->pd,5,battle_config.pet_hair_style);
 			clif_pet_equip_area(sd->pd);
-			clif_send_petstatus(sd);
+			clif_send_petstatus( *sd, *sd->pd );
 		}
 	}
 
@@ -1406,7 +1406,7 @@ int pet_menu(map_session_data *sd,int menunum)
 
 	switch(menunum) {
 		case 0:
-			clif_send_petstatus(sd);
+			clif_send_petstatus( *sd, *sd->pd );
 			break;
 		case 1:
 			pet_food(sd, sd->pd);
@@ -1469,7 +1469,7 @@ int pet_change_name_ack(map_session_data *sd, char* name, int flag)
 
 	if ( !flag || !strlen(name) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name for your pet.
-		clif_send_petstatus(sd); //Send status so client knows pet name change got rejected.
+		clif_send_petstatus( *sd, *pd ); //Send status so client knows pet name change got rejected.
 		return 0;
 	}
 
@@ -1477,7 +1477,7 @@ int pet_change_name_ack(map_session_data *sd, char* name, int flag)
 	clif_name_area(&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 
 	int index = pet_egg_search( sd, pd->pet.pet_id );
 
@@ -2323,7 +2323,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 	clif_send_petdata(sd, sd->pd, 0, 0);
 	clif_send_petdata(sd, sd->pd, 5, battle_config.pet_hair_style);
 	clif_pet_equip_area(sd->pd);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *sd->pd );
 	clif_emotion(&sd->bl, ET_BEST);
 	clif_specialeffect(&sd->pd->bl, EF_HO_UP, AREA);
 

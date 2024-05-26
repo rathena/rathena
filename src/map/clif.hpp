@@ -1090,7 +1090,7 @@ void clif_upgrademessage( map_session_data* sd, int result, t_itemid item_id );
 void clif_catch_process( map_session_data& sd );
 void clif_pet_roulette( map_session_data& sd, bool success );
 void clif_sendegg(map_session_data *sd);
-void clif_send_petstatus(map_session_data *sd);
+void clif_send_petstatus( map_session_data& sd, pet_data& pd );
 void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int param);
 #define clif_pet_equip(sd, pd) clif_send_petdata(sd, pd, 3, (pd)->vd.head_bottom)
 #define clif_pet_equip_area(pd) clif_send_petdata(nullptr, pd, 3, (pd)->vd.head_bottom)

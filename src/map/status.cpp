@@ -3014,7 +3014,7 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 			status_calc_misc(&pd->bl, &pd->status, lv);
 
 			if (!(opt&SCO_FIRST)) // Not done the first time because the pet is not visible yet
-				clif_send_petstatus(sd);
+				clif_send_petstatus( *sd, *pd );
 		}
 	} else if (opt&SCO_FIRST) {
 		status_calc_misc(&pd->bl, &pd->status, pd->db->lv);

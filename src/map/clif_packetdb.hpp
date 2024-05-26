@@ -248,7 +248,6 @@
 	parseable_packet(0x019d,6,clif_parse_GMHide,2);
 	parseable_packet(0x019f,6,clif_parse_CatchPet,2);
 	parseable_packet(0x01a1,3,clif_parse_PetMenu,2);
-	packet(0x01a2,35);
 	packet(0x01a3,5);
 	packet(0x01a4,11);
 	parseable_packet(0x01a5,26,clif_parse_ChangePetName,2);
@@ -1251,7 +1250,6 @@
 
 // 2008-11-26aSakexe
 #if PACKETVER >= 20081126
-	packet(0x01a2,37);
 	packet(0x0441,4);
 #endif
 
@@ -1330,7 +1328,6 @@
 
 // 2008-12-17aRagexeRE
 #if PACKETVER >= 20081217
-	packet(0x01a2,37);
 	//packet(0x0441,4);
 	//packet(0x0443,8);
 #endif

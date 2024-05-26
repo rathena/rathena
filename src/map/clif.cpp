@@ -8266,30 +8266,23 @@ void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int 
 }
 
 
-/// Pet's base data (ZC_PROPERTY_PET).
-/// 01a2 <name>.24B <renamed>.B <level>.W <hunger>.W <intimacy>.W <accessory id>.W <class>.W
-void clif_send_petstatus(map_session_data *sd)
-{
-	int fd;
-	struct s_pet *pet;
+/// Pet's base data.
+/// 01a2 <name>.24B <renamed>.B <level>.W <hunger>.W <intimacy>.W <accessory id>.W <class>.W (ZC_PROPERTY_PET)
+void clif_send_petstatus( map_session_data& sd, pet_data& pd ){
+	PACKET_ZC_PROPERTY_PET packet{};
 
-	nullpo_retv(sd);
-	nullpo_retv(sd->pd);
-
-	fd=sd->fd;
-	pet = &sd->pd->pet;
-	WFIFOHEAD(fd,packet_len(0x1a2));
-	WFIFOW(fd,0)=0x1a2;
-	safestrncpy(WFIFOCP(fd,2),pet->name,NAME_LENGTH);
-	WFIFOB(fd,26)=battle_config.pet_rename?0:pet->rename_flag;
-	WFIFOW(fd,27)=pet->level;
-	WFIFOW(fd,29)=pet->hungry;
-	WFIFOW(fd,31)=pet->intimate;
-	WFIFOW(fd,33)=pet->equip;
+	packet.PacketType = HEADER_ZC_PROPERTY_PET;
+	safestrncpy( packet.szName, pd.pet.name, NAME_LENGTH );
+	packet.bModified = battle_config.pet_rename ? 0 : pd.pet.rename_flag;
+	packet.nLevel = pd.pet.level;
+	packet.nFullness = pd.pet.hungry;
+	packet.nRelationship = pd.pet.intimate;
+	packet.ITID = static_cast<decltype(packet.ITID)>( pd.pet.equip );
 #if PACKETVER >= 20081126
-	WFIFOW(fd,35)=pet->class_;
+	packet.job = pd.pet.class_;
 #endif
-	WFIFOSET(fd,packet_len(0x1a2));
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 
@@ -10802,7 +10795,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 				return;
 			clif_spawn(&sd->pd->bl);
 			clif_send_petdata(sd,sd->pd,0,0);
-			clif_send_petstatus(sd);
+			clif_send_petstatus( *sd, *sd->pd );
 //			skill_unit_move(&sd->pd->bl,gettick(),1);
 		}
 	}

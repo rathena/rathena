@@ -19582,7 +19582,7 @@ BUILDIN_FUNC(setunitdata)
 			clif_send_homdata( *hd, SP_ACK );
 			break;
 		case BL_PET:
-			clif_send_petstatus(pd->master);
+			clif_send_petstatus( *pd->master, *pd  );
 			break;
 		case BL_MER:
 			clif_mercenary_info(map_charid2sd(mc->mercenary.char_id));

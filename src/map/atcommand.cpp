@@ -3192,7 +3192,7 @@ ACMD_FUNC(petfriendly) {
 	}
 
 	pet_set_intimate(pd, friendly);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,182)); // Pet intimacy changed.
 	return 0;
 }
@@ -3226,7 +3226,7 @@ ACMD_FUNC(pethungry)
 	}
 
 	pd->pet.hungry = hungry;
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,185)); // Pet hunger changed.
 
 	return 0;
@@ -3251,7 +3251,7 @@ ACMD_FUNC(petrename)
 
 	pd->pet.rename_flag = 0;
 	intif_save_petdata(sd->status.account_id, &pd->pet);
-	clif_send_petstatus(sd);
+	clif_send_petstatus( *sd, *pd );
 	clif_displaymessage(fd, msg_txt(sd,187)); // You can now rename your pet.
 
 	return 0;
