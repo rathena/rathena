@@ -12130,7 +12130,7 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 		return;
 	}
 
-	if ((sd->state.block_action & PCBLOCK_EQUIP) || (sd->npc_id && !sd->npc_item_flag)) {
+	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
 		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
