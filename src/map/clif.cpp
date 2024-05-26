@@ -8552,17 +8552,16 @@ void clif_mvp_exp( map_session_data& sd, t_exp exp ){
 }
 
 
-/// Dropped MVP item reward message (ZC_THROW_MVPITEM).
-/// 010d
+/// Dropped MVP item reward message.
+/// 010d (ZC_THROW_MVPITEM)
 ///
 /// "You are the MVP, but cannot obtain the reward because you are overweight."
-void clif_mvp_noitem(map_session_data* sd)
-{
-	int fd = sd->fd;
+void clif_mvp_noitem( map_session_data& sd ){
+	PACKET_ZC_THROW_MVPITEM packet{};
 
-	WFIFOHEAD(fd,packet_len(0x10d));
-	WFIFOW(fd,0) = 0x10d;
-	WFIFOSET(fd,packet_len(0x10d));
+	packet.packetType = HEADER_ZC_THROW_MVPITEM;
+
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 }
 
 

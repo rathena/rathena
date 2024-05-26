@@ -1112,6 +1112,11 @@ struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP {
 DEFINE_PACKET_HEADER(ZC_MVP_GETTING_SPECIAL_EXP, 0x10b);
 #endif
 
+struct PACKET_ZC_THROW_MVPITEM {
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_THROW_MVPITEM, 0x10d);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
