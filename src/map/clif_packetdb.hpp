@@ -249,7 +249,6 @@
 	parseable_packet(0x019f,6,clif_parse_CatchPet,2);
 	parseable_packet(0x01a1,3,clif_parse_PetMenu,2);
 	packet(0x01a3,5);
-	packet(0x01a4,11);
 	parseable_packet(0x01a5,26,clif_parse_ChangePetName,2);
 	packet(0x01a6,-1);
 	parseable_packet(0x01a7,4,clif_parse_SelectEgg,2);

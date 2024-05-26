@@ -1748,8 +1748,10 @@ int clif_spawn( struct block_list *bl, bool walking ){
 		}
 		break;
 	case BL_PET:
-		if (vd->head_bottom)
-			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
+		if (vd->head_bottom) { // needed to display pet equip properly
+			pet_data* pd = BL_CAST( BL_PET, bl );
+			clif_pet_equip_area( *pd );
+		}
 		break;
 	}
 	return 0;
@@ -2027,8 +2029,10 @@ static void clif_move2( struct block_list *bl, struct view_data *vd, struct unit
 		}
 		break;
 	case BL_PET:
-		if(vd->head_bottom) // needed to display pet equip properly
-			clif_pet_equip_area((TBL_PET*)bl);
+		if (vd->head_bottom) { // needed to display pet equip properly
+			pet_data* pd = BL_CAST( BL_PET, bl );
+			clif_pet_equip_area( *pd );
+		}
 		break;
 	}
 	clif_ally_only = false;
@@ -5101,8 +5105,10 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		}
 		break;
 	case BL_PET:
-		if (vd->head_bottom)
-			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
+		if (vd->head_bottom) { // needed to display pet equip properly
+			pet_data* pd = BL_CAST( BL_PET, bl );
+			clif_pet_equip( sd, *pd );
+		}
 		break;
 	}
 }
@@ -8238,8 +8244,8 @@ void clif_sendegg(map_session_data *sd)
 }
 
 
-/// Sends a specific pet data update (ZC_CHANGESTATE_PET).
-/// 01a4 <type>.B <id>.L <data>.L
+/// Sends a specific pet data update.
+/// 01a4 <type>.B <id>.L <data>.L (ZC_CHANGESTATE_PET)
 /// type:
 ///     0 = pre-init (data = 0)
 ///     1 = intimacy (data = 0~4)
@@ -8250,19 +8256,18 @@ void clif_sendegg(map_session_data *sd)
 ///     6 = close egg selection ui and update egg in inventory (PACKETVER >= 20180704)
 ///
 /// If sd is null, the update is sent to nearby objects, otherwise it is sent only to that player.
-void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int param)
-{
-	uint8 buf[16];
-	nullpo_retv(pd);
+void clif_send_petdata( map_session_data* sd, pet_data& pd, e_changestate_pet data_type, int32 value ){
+	PACKET_ZC_CHANGESTATE_PET packet{};
 
-	WBUFW(buf,0) = 0x1a4;
-	WBUFB(buf,2) = type;
-	WBUFL(buf,3) = pd->bl.id;
-	WBUFL(buf,7) = param;
-	if (sd)
-		clif_send(buf, packet_len(0x1a4), &sd->bl, SELF);
+	packet.PacketType = HEADER_ZC_CHANGESTATE_PET;
+	packet.type = static_cast<decltype(packet.type)>( data_type );
+	packet.GID = pd.bl.id;
+	packet.data = value;
+
+	if (sd != nullptr)
+		clif_send( &packet, sizeof( packet ), &sd->bl, SELF );
 	else
-		clif_send(buf, packet_len(0x1a4), &pd->bl, AREA);
+		clif_send( &packet, sizeof( packet ), &pd.bl, AREA );
 }
 
 
@@ -10794,7 +10799,7 @@ void clif_parse_LoadEndAck(int fd,map_session_data *sd)
 			if(map_addblock(&sd->pd->bl))
 				return;
 			clif_spawn(&sd->pd->bl);
-			clif_send_petdata(sd,sd->pd,0,0);
+			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INIT, 0 );
 			clif_send_petstatus( *sd, *sd->pd );
 //			skill_unit_move(&sd->pd->bl,gettick(),1);
 		}

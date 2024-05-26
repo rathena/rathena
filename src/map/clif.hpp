@@ -791,6 +791,16 @@ enum e_ack_additem_to_cart : uint8 {
 	ADDITEM_TO_CART_FAIL_COUNT = 1
 };
 
+enum e_changestate_pet : uint8 {
+	CHANGESTATEPET_INIT = 0,
+	CHANGESTATEPET_INTIMACY = 1,
+	CHANGESTATEPET_HUNGER = 2,
+	CHANGESTATEPET_ACCESSORY = 3,
+	CHANGESTATEPET_PERFORMANCE = 4,
+	CHANGESTATEPET_HAIRSTYLE = 5,
+	CHANGESTATEPET_UPDATE_EGG = 6,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -1091,10 +1101,9 @@ void clif_catch_process( map_session_data& sd );
 void clif_pet_roulette( map_session_data& sd, bool success );
 void clif_sendegg(map_session_data *sd);
 void clif_send_petstatus( map_session_data& sd, pet_data& pd );
-void clif_send_petdata(map_session_data* sd, struct pet_data* pd, int type, int param);
-#define clif_pet_equip(sd, pd) clif_send_petdata(sd, pd, 3, (pd)->vd.head_bottom)
-#define clif_pet_equip_area(pd) clif_send_petdata(nullptr, pd, 3, (pd)->vd.head_bottom)
-#define clif_pet_performance(pd, param) clif_send_petdata(nullptr, pd, 4, param)
+void clif_send_petdata( map_session_data* sd, pet_data& pd, e_changestate_pet data_type, int32 value );
+#define clif_pet_equip(sd, pd) clif_send_petdata(sd, pd, CHANGESTATEPET_ACCESSORY, (pd).vd.head_bottom)
+#define clif_pet_equip_area(pd) clif_send_petdata(nullptr, pd, CHANGESTATEPET_ACCESSORY, (pd).vd.head_bottom)
 void clif_pet_emotion(struct pet_data *pd,int param);
 void clif_pet_food( map_session_data& sd, int32 foodid, bool success );
 void clif_pet_autofeed_status(map_session_data* sd, bool force);
