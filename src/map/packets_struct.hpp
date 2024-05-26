@@ -5967,8 +5967,7 @@ DEFINE_PACKET_HEADER(CZ_ADVENTURER_AGENCY_JOIN_RESULT, 0x0af8);
 #if PACKETVER_MAIN_NUM >= 20221005
 struct PACKET_ZC_SPECIALPOPUP {
 	int16 PacketType;
-	int16 ppId;
-	int16 val1; //ignored
+	int32 ppId;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SPECIALPOPUP, 0x0bbe);
 #endif
