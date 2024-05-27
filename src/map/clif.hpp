@@ -519,7 +519,7 @@ enum clif_messages : uint16_t {
 	MSI_USESKILL_FAIL_MADOGEAR = 0x59b,							// Item can only be used when Mado Gear is mounted.
 	MSI_USESKILL_FAIL_CART = 0x5ef,								// Only available when cart is mounted.
 	MSI_RUNESTONE_MAKEERROR_OVERCOUNT = 0x61b,					// Cannot create rune stone more than the maximum amount.
-	MSI_SKILL_INVENTORY_WEIGHT_OVER = 0x623,					// Is a very heavy weight of the Inventory.
+	MSI_SKILL_RECIPE_NOTEXIST = 0x622,							// Combination of item is not possible in conversion.
 	MSI_SKILL_INVENTORY_KINDCNT_OVER = 0x624,					// Please ensure an extra space in your inventory.
 	MSI_SKILL_SUCCESS = 0x626,									// Successful.
 	MSI_SKILL_FAIL = 0x627,										// Failed.
