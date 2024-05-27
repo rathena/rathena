@@ -505,43 +505,56 @@ enum clif_messages : uint16_t {
 	/* -end- */
 
 	//! NOTE: These values below need client version validation
-	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
-	CAN_NOT_EQUIP_ITEM = 0x174,
-	ITEM_NOUSE_SITTING = 0x297,
-	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
-	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
-	MERC_MSG_BASE = 0x4f2,
-	SKILL_CANT_USE_AREA = 0x536,
-	ITEM_CANT_USE_AREA = 0x537,
-	VIEW_EQUIP_FAIL = 0x54d,
-	ITEM_NEED_MADOGEAR = 0x59b,
-	ITEM_NEED_CART = 0x5ef,
-	RUNE_CANT_CREATE = 0x61b,
-	ITEM_CANT_COMBINE = 0x623,
-	INVENTORY_SPACE_FULL = 0x625,
-	ITEM_PRODUCE_SUCCESS = 0x627,
-	ITEM_PRODUCE_FAIL = 0x628,
-	ITEM_UNIDENTIFIED = 0x62d,
-	ITEM_NEED_BOW = 0x69b,
-	ITEM_REUSE_LIMIT = 0x746,
-	WORK_IN_PROGRESS = 0x783,
-	NEED_REINS_OF_MOUNT = 0x78c,
-	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
-	MERGE_ITEM_NOT_AVAILABLE = 0x887,
-	ITEM_BULLET_EQUIP_FAIL = 0x9bd,
-	SKILL_NEED_GATLING = 0x9fa,
-	SKILL_NEED_SHOTGUN = 0x9fb,
-	SKILL_NEED_RIFLE = 0x9fc,
-	SKILL_NEED_REVOLVER = 0x9fd,
-	SKILL_NEED_HOLY_BULLET = 0x9fe,
-	SKILL_NEED_GRENADE = 0xa01,
-	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
-	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
-	SWAP_EQUIPITEM_UNREGISTER_FIRST = 0xbc7,
-	MSG_ATTENDANCE_DISABLED = 0xd92,
-	ENCHANT_FAILED_OVER_WEIGHT = 0xefd,
-	ENCHANT_SUCCESS = 0xf11,
-	ENCHANT_FAILED = 0xf12,
+
+	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 0x34,					// You cannot carry more items because you are overweight.
+	MSI_CAN_NOT_EQUIP_ITEM = 0x174,								// You can't put this item on.
+	MSI_CANT_USE_WHEN_SITDOWN = 0x297,							// You cannot use this item while sitting.
+	MSI_CANNOT_PARTYCALL = 0x4c5,								// The party member was not summoned because you are not the party leader.
+	MSI_NO_PARTYMEM_ON_THISMAP = 0x4c6,							// There is no party member to summon in the current map.
+	MSI_MER_FINISH = 0x4f2,										// The mercenary contract has expired.
+	MSI_MER_DIE = 0x4f3,										// The mercenary has died.
+	MSI_IMPOSSIBLE_SKILL_AREA = 0x536,							// This skill cannot be used within this area.
+	MSI_IMPOSSIBLE_USEITEM_AREA = 0x537,						// This item cannot be used within this area.
+	MSI_OPEN_EQUIPEDITEM_REFUSED = 0x54d,						// This character's equipment information is not open to the public.
+	MSI_USESKILL_FAIL_MADOGEAR = 0x59b,							// Item can only be used when Mado Gear is mounted.
+	MSI_USESKILL_FAIL_CART = 0x5ef,								// Only available when cart is mounted.
+	MSI_RUNESTONE_MAKEERROR_OVERCOUNT = 0x61b,					// Cannot create rune stone more than the maximum amount.
+	MSI_SKILL_INVENTORY_WEIGHT_OVER = 0x623,					// Is a very heavy weight of the Inventory.
+	MSI_SKILL_INVENTORY_KINDCNT_OVER = 0x624,					// Please ensure an extra space in your inventory.
+	MSI_SKILL_SUCCESS = 0x626,									// Successful.
+	MSI_SKILL_FAIL = 0x627,										// Failed.
+	MSI_SKILL_FAIL_MATERIAL_IDENTITY = 0x62d,					// Items cannot be used in materials cannot be emotional.
+	MSI_FAIL_NEED_EQUIPPED_BOW = 0x69b,							// [Bow] must be equipped.
+
+#if (PACKETVER >= 20130807 && PACKETVER <= 20130814) && !defined(PACKETVER_ZERO)
+	MSI_ITEM_REUSE_LIMIT_SECOND = 0x746,						// %d seconds left until you can use
+	MSI_BUSY = 0x784,											// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
+	MSI_FAIELD_RIDING_OVERLAPPED = 0x78c,						// While boarding reins is not available for items.
+	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 0x82d,					// It is only possible to change the party leader while on the same map.#
+	MSI_NOT_EXIST_MERGE_ITEM = 0x887,							// Merge items available does not exist.
+	MSI_WRONG_BULLET = 0x9bc,									// This bullet is not suitable for the weapon you are equipping.
+#else
+	MSI_ITEM_REUSE_LIMIT_SECOND = 0x745,						// %d seconds left until you can use
+	MSI_BUSY = 0x783,											// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
+	MSI_FAIELD_RIDING_OVERLAPPED = 0x78b,						// While boarding reins is not available for items.
+	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 0x82e,					// It is only possible to change the party leader while on the same map.
+	MSI_NOT_EXIST_MERGE_ITEM = 0x886,							// Merge items available does not exist.
+	MSI_WRONG_BULLET = 0x9bd,									// This bullet is not suitable for the weapon you are equipping.
+#endif
+
+	MSI_FAIL_NEED_EQUIPPED_GUN_GATLING = 0x9fa,					// [Gatling Gun] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_SHOTGUN = 0x9fb,					// [Shotgun] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_RIFLE = 0x9fc,					// [Rifle] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_HANDGUN = 0x9fd,					// [Revolver] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_PROPERTY_SAINT_BULLET = 0x9fe,		// [Silver Bullet] must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_GRANADE = 0xa01,					// [Grenade Launcher] weapon class must be equipped.
+	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME = 0xb93,	// Currently in WoE hours, unable to delegate Guild leader
+	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME = 0xb94,		// You have to wait for one day before delegating a new Guild leader
+	MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST = 0xbc7,				// This item has been set for Swap Equipment.
+	MSI_CHECK_ATTENDANCE_NOT_EVENT = 0xd92,						// Currently there is no attendance check event.
+	MSI_ENCHANT_FAILED_OVER_WEIGHT = 0xefd,						// It weighs more than 70%. Decrease the Weight and try again.
+	MSI_ENCHANT_SUCCESS = 0xf11,								// Enchantment successful!
+	MSI_ENCHANT_FAILED = 0xf12,									// Enchantment failed!
 };
 
 enum e_personalinfo : uint8_t {
@@ -1098,7 +1111,6 @@ void clif_Adopt_request(map_session_data *sd, map_session_data *src, int p_id);
 // MERCENARIES
 void clif_mercenary_info(map_session_data *sd);
 void clif_mercenary_skillblock(map_session_data *sd);
-void clif_mercenary_message(map_session_data* sd, int message);
 void clif_mercenary_updatestatus(map_session_data *sd, int type);
 
 // RENTAL SYSTEM
