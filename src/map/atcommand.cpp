@@ -6422,18 +6422,8 @@ ACMD_FUNC(marry)
 		return -1;
 	}
 
-	if (pc_is90overweight(sd)) {
-		clif_msg_color(sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
-		return -1;
-	}
-
 	if (!pc_inventoryblank(sd)) {
 		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
-		return -1;
-	}
-
-	if (pc_is90overweight(pl_sd)) {
-		clif_msg_color(pl_sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
 		return -1;
 	}
 
