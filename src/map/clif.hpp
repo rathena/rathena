@@ -506,7 +506,7 @@ enum clif_messages : uint16_t {
 
 	//! NOTE: These values below need client version validation
 	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
-	CANT_GET_ITEM_BECAUSE_COUNT = 0xDC,
+	MSI_CANT_GET_ITEM_BECAUSE_COUNT = 0xdC,					// You can't have this item because you will exceed the weight limit.
 	CAN_NOT_EQUIP_ITEM = 0x174,
 	ITEM_NOUSE_SITTING = 0x297,
 	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
