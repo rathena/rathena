@@ -1073,6 +1073,32 @@ static int clif_setlevel(struct block_list* bl) {
 	return lv;
 }
 
+/**
+ * Used to determine if a player has damaged a monster
+ * and if the HP bar needs to be displayed or not.
+ * @param bl: Player invoking the check
+ * @param tbl: Mob to check
+ * @return True if the HP bar should be displayed or false otherwise
+ */
+static bool clif_mob_damaged_hpbar(block_list &bl, block_list &tbl) {
+	mob_data *md = BL_CAST(BL_MOB, &tbl);
+
+	if (md == nullptr)
+		return false;
+
+	map_session_data *sd = BL_CAST(BL_PC, &bl);
+
+	if (sd == nullptr)
+		return false;
+
+	for (uint16 i = 0; i < DAMAGELOG_SIZE; i++) { // Must show hp bar to all char who already hit the mob.
+		if (md->dmglog[i].id == sd->status.char_id)
+			return true;
+	}
+
+	return false;
+}
+
 /*==========================================
  * Prepares 'unit standing/spawning' packet
  *------------------------------------------*/
@@ -1200,9 +1226,14 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 	p.font = (sd) ? sd->status.font : 0;
 #endif
 #if PACKETVER >= 20120221
-	if( battle_config.monster_hp_bars_info && !map_getmapflag( bl->m, MF_HIDEMOBHPBAR ) && bl->type == BL_MOB && ( status_get_hp( bl ) < status_get_max_hp( bl ) ) ){
-		p.maxHP = status_get_max_hp(bl);
-		p.HP = status_get_hp(bl);
+	if( battle_config.monster_hp_bars_info && bl->type == BL_MOB && tbl->type == BL_PC && !map_getmapflag( bl->m, MF_HIDEMOBHPBAR ) && ( status_get_hp( bl ) < status_get_max_hp( bl ) ) ){
+		if (clif_mob_damaged_hpbar(*tbl, *bl)) { // Must show hp bar to all char who already hit the mob.
+			p.maxHP = status_get_max_hp(bl);
+			p.HP = status_get_hp(bl);
+		} else { // Player didn't attack the mob.
+			p.maxHP = -1;
+			p.HP = -1;
+		}
 	}else{
 		p.maxHP = -1;
 		p.HP = -1;
@@ -1342,8 +1373,13 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 #endif
 #if PACKETVER >= 20120221
 	if( battle_config.monster_hp_bars_info && bl->type == BL_MOB && !map_getmapflag( bl->m, MF_HIDEMOBHPBAR ) && ( status_get_hp( bl ) < status_get_max_hp( bl ) ) ){
-		p.maxHP = status_get_max_hp( bl );
-		p.HP = status_get_hp( bl );
+		if (clif_mob_damaged_hpbar(*bl, *bl)) { // Must show hp bar to all char who already hit the mob.
+			p.maxHP = status_get_max_hp(bl);
+			p.HP = status_get_hp(bl);
+		} else { // Player didn't attack the mob.
+			p.maxHP = -1;
+			p.HP = -1;
+		}
 	}else{
 		p.maxHP = -1;
 		p.HP = -1;
@@ -1449,9 +1485,14 @@ static void clif_set_unit_walking( struct block_list *bl, map_session_data *tsd,
 	p.font = (sd) ? sd->status.font : 0;
 #endif
 #if PACKETVER >= 20120221
-	if( battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp( bl ) ) ){
-		p.maxHP = status_get_max_hp(bl);
-		p.HP = status_get_hp(bl);
+	if( battle_config.monster_hp_bars_info && bl->type == BL_MOB && tsd != nullptr && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && (status_get_hp(bl) < status_get_max_hp( bl ) ) ){
+		if (clif_mob_damaged_hpbar(tsd->bl, *bl)) { // Must show hp bar to all char who already hit the mob.
+			p.maxHP = status_get_max_hp(bl);
+			p.HP = status_get_hp(bl);
+		} else { // Player didn't attack the mob.
+			p.maxHP = -1;
+			p.HP = -1;
+		}
 	} else {
 		p.maxHP = -1;
 		p.HP = -1;
@@ -5114,8 +5155,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 #if PACKETVER >= 20120404
 			if (battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR)) {
-				int i;
-				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
+				for (uint16 i = 0; i < DAMAGELOG_SIZE; i++) // Must show hp bar to all char who already hit the mob.
 					if( md->dmglog[i].id == sd->status.char_id )
 						clif_monster_hp_bar(md, sd->fd);
 			}
