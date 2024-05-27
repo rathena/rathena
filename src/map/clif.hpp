@@ -506,55 +506,56 @@ enum clif_messages : uint16_t {
 
 	//! NOTE: These values below need client version validation
 
-	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 0x34,					// You cannot carry more items because you are overweight.
-	MSI_CAN_NOT_EQUIP_ITEM = 0x174,								// You can't put this item on.
-	MSI_CANT_USE_WHEN_SITDOWN = 0x297,							// You cannot use this item while sitting.
-	MSI_CANNOT_PARTYCALL = 0x4c5,								// The party member was not summoned because you are not the party leader.
-	MSI_NO_PARTYMEM_ON_THISMAP = 0x4c6,							// There is no party member to summon in the current map.
-	MSI_MER_FINISH = 0x4f2,										// The mercenary contract has expired.
-	MSI_MER_DIE = 0x4f3,										// The mercenary has died.
-	MSI_IMPOSSIBLE_SKILL_AREA = 0x536,							// This skill cannot be used within this area.
-	MSI_IMPOSSIBLE_USEITEM_AREA = 0x537,						// This item cannot be used within this area.
-	MSI_OPEN_EQUIPEDITEM_REFUSED = 0x54d,						// This character's equipment information is not open to the public.
-	MSI_USESKILL_FAIL_MADOGEAR = 0x59b,							// Item can only be used when Mado Gear is mounted.
-	MSI_USESKILL_FAIL_CART = 0x5ef,								// Only available when cart is mounted.
-	MSI_RUNESTONE_MAKEERROR_OVERCOUNT = 0x61b,					// Cannot create rune stone more than the maximum amount.
-	MSI_SKILL_RECIPE_NOTEXIST = 0x622,							// Combination of item is not possible in conversion.
-	MSI_SKILL_INVENTORY_KINDCNT_OVER = 0x624,					// Please ensure an extra space in your inventory.
-	MSI_SKILL_SUCCESS = 0x626,									// Successful.
-	MSI_SKILL_FAIL = 0x627,										// Failed.
-	MSI_SKILL_FAIL_MATERIAL_IDENTITY = 0x62d,					// Items cannot be used in materials cannot be emotional.
-	MSI_FAIL_NEED_EQUIPPED_BOW = 0x69b,							// [Bow] must be equipped.
+	// This values correspond to the msgstringtable line number minus 1
+	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 52,						// You cannot carry more items because you are overweight.
+	MSI_CAN_NOT_EQUIP_ITEM = 372,								// You can't put this item on.
+	MSI_CANT_USE_WHEN_SITDOWN = 663,							// You cannot use this item while sitting.
+	MSI_CANNOT_PARTYCALL = 1221,								// The party member was not summoned because you are not the party leader.
+	MSI_NO_PARTYMEM_ON_THISMAP = 1222,							// There is no party member to summon in the current map.
+	MSI_MER_FINISH = 1266,										// The mercenary contract has expired.
+	MSI_MER_DIE = 1267,											// The mercenary has died.
+	MSI_IMPOSSIBLE_SKILL_AREA = 1334,							// This skill cannot be used within this area.
+	MSI_IMPOSSIBLE_USEITEM_AREA = 1335,							// This item cannot be used within this area.
+	MSI_OPEN_EQUIPEDITEM_REFUSED = 1357,						// This character's equipment information is not open to the public.
+	MSI_USESKILL_FAIL_MADOGEAR = 1435,							// Item can only be used when Mado Gear is mounted.
+	MSI_USESKILL_FAIL_CART = 1519,								// Only available when cart is mounted.
+	MSI_RUNESTONE_MAKEERROR_OVERCOUNT = 1563,					// Cannot create rune stone more than the maximum amount.
+	MSI_SKILL_RECIPE_NOTEXIST = 1570,							// Combination of item is not possible in conversion.
+	MSI_SKILL_INVENTORY_KINDCNT_OVER = 1572,					// Please ensure an extra space in your inventory.
+	MSI_SKILL_SUCCESS = 1574,									// Successful.
+	MSI_SKILL_FAIL = 1575,										// Failed.
+	MSI_SKILL_FAIL_MATERIAL_IDENTITY = 1581,					// Items cannot be used in materials cannot be emotional.
+	MSI_FAIL_NEED_EQUIPPED_BOW = 1691,							// [Bow] must be equipped.
 
 #if (PACKETVER >= 20130807 && PACKETVER <= 20130814) && !defined(PACKETVER_ZERO)
-	MSI_ITEM_REUSE_LIMIT_SECOND = 0x746,						// %d seconds left until you can use
-	MSI_BUSY = 0x784,											// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
-	MSI_FAIELD_RIDING_OVERLAPPED = 0x78c,						// While boarding reins is not available for items.
-	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 0x82d,					// It is only possible to change the party leader while on the same map.#
-	MSI_NOT_EXIST_MERGE_ITEM = 0x887,							// Merge items available does not exist.
-	MSI_WRONG_BULLET = 0x9bc,									// This bullet is not suitable for the weapon you are equipping.
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,							// %d seconds left until you can use
+	MSI_BUSY = 1924,											// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
+	MSI_FAIELD_RIDING_OVERLAPPED = 1932,						// While boarding reins is not available for items.
+	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2095,					// It is only possible to change the party leader while on the same map.#
+	MSI_NOT_EXIST_MERGE_ITEM = 2183,							// Merge items available does not exist.
+	MSI_WRONG_BULLET = 2494,									// This bullet is not suitable for the weapon you are equipping.
 #else
-	MSI_ITEM_REUSE_LIMIT_SECOND = 0x745,						// %d seconds left until you can use
-	MSI_BUSY = 0x783,											// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
-	MSI_FAIELD_RIDING_OVERLAPPED = 0x78b,						// While boarding reins is not available for items.
-	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 0x82e,					// It is only possible to change the party leader while on the same map.
-	MSI_NOT_EXIST_MERGE_ITEM = 0x886,							// Merge items available does not exist.
-	MSI_WRONG_BULLET = 0x9bd,									// This bullet is not suitable for the weapon you are equipping.
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1861,							// %d seconds left until you can use
+	MSI_BUSY = 1923,											// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
+	MSI_FAIELD_RIDING_OVERLAPPED = 1931,						// While boarding reins is not available for items.
+	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2094,					// It is only possible to change the party leader while on the same map.
+	MSI_NOT_EXIST_MERGE_ITEM = 2182,							// Merge items available does not exist.
+	MSI_WRONG_BULLET = 2493,									// This bullet is not suitable for the weapon you are equipping.
 #endif
 
-	MSI_FAIL_NEED_EQUIPPED_GUN_GATLING = 0x9fa,					// [Gatling Gun] weapon class must be equipped.
-	MSI_FAIL_NEED_EQUIPPED_GUN_SHOTGUN = 0x9fb,					// [Shotgun] weapon class must be equipped.
-	MSI_FAIL_NEED_EQUIPPED_GUN_RIFLE = 0x9fc,					// [Rifle] weapon class must be equipped.
-	MSI_FAIL_NEED_EQUIPPED_GUN_HANDGUN = 0x9fd,					// [Revolver] weapon class must be equipped.
-	MSI_FAIL_NEED_EQUIPPED_PROPERTY_SAINT_BULLET = 0x9fe,		// [Silver Bullet] must be equipped.
-	MSI_FAIL_NEED_EQUIPPED_GUN_GRANADE = 0xa01,					// [Grenade Launcher] weapon class must be equipped.
-	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME = 0xb93,	// Currently in WoE hours, unable to delegate Guild leader
-	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME = 0xb94,		// You have to wait for one day before delegating a new Guild leader
-	MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST = 0xbc7,				// This item has been set for Swap Equipment.
-	MSI_CHECK_ATTENDANCE_NOT_EVENT = 0xd92,						// Currently there is no attendance check event.
-	MSI_ENCHANT_FAILED_OVER_WEIGHT = 0xefd,						// It weighs more than 70%. Decrease the Weight and try again.
-	MSI_ENCHANT_SUCCESS = 0xf11,								// Enchantment successful!
-	MSI_ENCHANT_FAILED = 0xf12,									// Enchantment failed!
+	MSI_FAIL_NEED_EQUIPPED_GUN_GATLING = 2554,					// [Gatling Gun] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_SHOTGUN = 2555,					// [Shotgun] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_RIFLE = 2556,					// [Rifle] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_HANDGUN = 2557,					// [Revolver] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_PROPERTY_SAINT_BULLET = 2558,		// [Silver Bullet] must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_GRANADE = 2561,					// [Grenade Launcher] weapon class must be equipped.
+	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME = 2963,	// Currently in WoE hours, unable to delegate Guild leader
+	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME = 2964,			// You have to wait for one day before delegating a new Guild leader
+	MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST = 3015,					// This item has been set for Swap Equipment.
+	MSI_CHECK_ATTENDANCE_NOT_EVENT = 3474,						// Currently there is no attendance check event.
+	MSI_ENCHANT_FAILED_OVER_WEIGHT = 3837,						// It weighs more than 70%. Decrease the Weight and try again.
+	MSI_ENCHANT_SUCCESS = 3857,									// Enchantment successful!
+	MSI_ENCHANT_FAILED = 3858,									// Enchantment failed!
 };
 
 enum e_personalinfo : uint8_t {
