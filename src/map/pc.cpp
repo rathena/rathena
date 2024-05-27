@@ -5527,14 +5527,14 @@ int pc_insert_card(map_session_data* sd, int idx_card, int idx_equip)
 
 	if( pc_delitem(sd,idx_card,1,1,0,LOG_TYPE_OTHER) == 1 )
 	{// failed
-		clif_insert_card(sd,idx_equip,idx_card,1);
+		clif_insert_card( *sd, idx_equip, idx_card, true );
 	}
 	else
 	{// success
 		log_pick_pc(sd, LOG_TYPE_OTHER, -1, &sd->inventory.u.items_inventory[idx_equip]);
 		sd->inventory.u.items_inventory[idx_equip].card[i] = nameid;
 		log_pick_pc(sd, LOG_TYPE_OTHER,  1, &sd->inventory.u.items_inventory[idx_equip]);
-		clif_insert_card(sd,idx_equip,idx_card,0);
+		clif_insert_card( *sd, idx_equip, idx_card, false );
 	}
 
 	return 0;
@@ -5554,7 +5554,7 @@ int pc_identifyall(map_session_data *sd, bool identify_item)
 		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
 			if (identify_item == true) {
 				sd->inventory.u.items_inventory[i].identify = 1;
-				clif_item_identified(sd,i,0);
+				clif_item_identified( *sd, i, false );
 			}
 			unidentified_count++;
 		}
@@ -6511,7 +6511,7 @@ void pc_cart_delitem(map_session_data *sd,int n,int amount,int type,e_log_pick_t
 		sd->cart_num--;
 	}
 	if(!type) {
-		clif_cart_delitem(sd,n,amount);
+		clif_cart_delitem( *sd, n, amount );
 		clif_updatestatus(*sd,SP_CARTINFO);
 	}
 }
@@ -6532,7 +6532,7 @@ void pc_putitemtocart(map_session_data *sd,int idx,int amount)
 		return;
 
 	if( item_data->equipSwitch ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -6541,7 +6541,10 @@ void pc_putitemtocart(map_session_data *sd,int idx,int amount)
 	if (flag == ADDITEM_SUCCESS)
 		pc_delitem(sd,idx,amount,0,5,LOG_TYPE_NONE);
 	else {
-		clif_cart_additem_ack(sd, (flag == ADDITEM_OVERAMOUNT) ? ADDITEM_TO_CART_FAIL_COUNT : ADDITEM_TO_CART_FAIL_WEIGHT);
+		if (flag == ADDITEM_OVERAMOUNT)
+			clif_cart_additem_ack( *sd, ADDITEM_TO_CART_FAIL_COUNT );
+		else
+			clif_cart_additem_ack( *sd, ADDITEM_TO_CART_FAIL_WEIGHT );
 		clif_additem(sd, idx, amount, 0);
 		clif_delitem( *sd, idx, amount, 0 );
 	}
@@ -6586,7 +6589,7 @@ bool pc_getitemfromcart(map_session_data *sd,int idx,int amount)
 	if (flag == ADDITEM_SUCCESS)
 		pc_cart_delitem(sd, idx, amount, 0, LOG_TYPE_NONE);
 	else {
-		clif_cart_delitem(sd, idx, amount);
+		clif_cart_delitem( *sd, idx, amount );
 		clif_additem(sd, idx, amount, flag);
 		clif_cart_additem(sd, idx, amount);
 	}
@@ -10473,13 +10476,13 @@ void pc_heal(map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int 
 
 	if (type&2) {
 		if (hp || type&4) {
-			clif_heal(sd->fd,SP_HP,hp);
+			clif_heal( *sd, SP_HP, hp );
 			clif_update_hp(*sd);
 		}
 		if (sp)
-			clif_heal(sd->fd,SP_SP,sp);
+			clif_heal( *sd, SP_SP, sp );
 		if (ap)
-			clif_heal(sd->fd,SP_AP,ap);
+			clif_heal( *sd, SP_AP, ap );
 	} else {
 		if(hp)
 			clif_updatestatus(*sd,SP_HP);

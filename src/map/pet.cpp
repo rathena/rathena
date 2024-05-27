@@ -1226,7 +1226,7 @@ int pet_catch_process1(map_session_data *sd,int target_class)
 	}
 
 	sd->catch_target_class = target_class;
-	clif_catch_process(sd);
+	clif_catch_process( *sd );
 
 	return 0;
 }
@@ -1247,7 +1247,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 	md = (struct mob_data*)map_id2bl(target_id);
 
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == nullptr) { // Invalid inputs/state, abort capture.
-		clif_pet_roulette(sd,0);
+		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = 0;
 		sd->itemindex = -1;
@@ -1255,7 +1255,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 	}
 
 	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
-		clif_pet_roulette(sd, 0);
+		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = 0;
 		sd->itemindex = -1;
@@ -1280,14 +1280,14 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 
 	if(sd->catch_target_class != md->mob_id || !pet) {
 		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
-		clif_pet_roulette(sd,0);
+		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 
 		return 1;
 	}
 
 	if( battle_config.pet_distance_check && distance_bl( &sd->bl, &md->bl ) > battle_config.pet_distance_check ){
-		clif_pet_roulette( sd, 0 );
+		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 
 		return 1;
@@ -1296,7 +1296,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 	status_change* tsc = status_get_sc( &md->bl );
 
 	if( battle_config.pet_hide_check && tsc && ( tsc->getSCE(SC_HIDING) || tsc->getSCE(SC_CLOAKING) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_NEWMOON) || tsc->getSCE(SC_CLOAKINGEXCEED) ) ){
-		clif_pet_roulette( sd, 0 );
+		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 
 		return 1;
@@ -1318,13 +1318,13 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 		achievement_update_objective(sd, AG_TAMING, 1, md->mob_id);
 		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);
-		clif_pet_roulette(sd,1);
+		clif_pet_roulette( *sd, true );
 
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
 		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 	} else {
-		clif_pet_roulette(sd,0);
+		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 	}
 

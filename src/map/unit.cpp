@@ -2784,7 +2784,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if(sd && !check_distance_client_bl(src,target,range)) {
 		// Player tries to attack but target is too far, notify client
-		clif_movetoattack(sd,target);
+		clif_movetoattack( *sd, *target );
 		return 1;
 	} else if(md && !check_distance_bl(src,target,range)) {
 		// Monster: Chase if required

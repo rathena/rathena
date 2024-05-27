@@ -132,7 +132,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 		return; // invalid shop
 
 	if( vsd->vender_id != uid ) { // shop has changed
-		clif_buyvending(sd, 0, 0, 6);  // store information was incorrect
+		clif_buyvending( *sd, 0, 0, PURCHASEMC_STORE_INCORRECT );  // store information was incorrect
 		return;
 	}
 
@@ -172,17 +172,17 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 
 		z += ((double)vsd->vending[j].value * (double)amount);
 		if( z > (double)sd->status.zeny || z < 0. || z > (double)MAX_ZENY ) {
-			clif_buyvending(sd, idx, amount, 1); // you don't have enough zeny
+			clif_buyvending( *sd, idx, amount, PURCHASEMC_NO_ZENY ); // you don't have enough zeny
 			return;
 		}
 		if( z + (double)vsd->status.zeny > (double)MAX_ZENY && !battle_config.vending_over_max ) {
-			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // too much zeny = overflow
+			clif_buyvending( *sd, idx, vsd->vending[j].amount, PURCHASEMC_OUT_OF_STOCK ); // too much zeny = overflow
 			return;
 
 		}
 		w += itemdb_weight(vsd->cart.u.items_cart[idx].nameid) * amount;
 		if( w + sd->weight > sd->max_weight ) {
-			clif_buyvending(sd, idx, amount, 2); // you can not buy, because overweight
+			clif_buyvending( *sd, idx, amount, PURCHASEMC_OVERWEIGHT );
 			return;
 		}
 
@@ -194,7 +194,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 		// here, we check cumulative amounts
 		if( vending[j].amount < amount ) {
 			// send more quantity is not a hack (an other player can have buy items just before)
-			clif_buyvending(sd, idx, vsd->vending[j].amount, 4); // not enough quantity
+			clif_buyvending( *sd, idx, vsd->vending[j].amount, PURCHASEMC_OUT_OF_STOCK );
 			return;
 		}
 
@@ -241,7 +241,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 
 		pc_cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
 		z = vending_calc_tax(sd, z);
-		clif_vendingreport(vsd, idx, amount, sd->status.char_id, (int)z);
+		clif_vendingreport( *vsd, idx, amount, sd->status.char_id, (int)z );
 
 		//print buyer's name
 		if( battle_config.buyer_name ) {

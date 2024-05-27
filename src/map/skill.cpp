@@ -9305,7 +9305,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				else{
 					// Instantly open the vending UI
 					sd->state.pending_vending_ui = false;
-					clif_openvendingreq(sd,2+skill_lv);
+					clif_openvendingreq( *sd, 2+skill_lv );
 				}
 			}
 		}
@@ -16231,7 +16231,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				} else
 					sec = 3000; //Couldn't trap it?
 				if (sg->unit_id == UNT_ANKLESNARE) {
-					clif_skillunit_update(&unit->bl);
+					clif_skillunit_update( unit->bl );
 					/**
 					 * If you're snared from a trap that was invisible this makes the trap be
 					 * visible again -- being you stepped on it (w/o this the trap remains invisible and you go "WTF WHY I CANT MOVE")
@@ -19596,7 +19596,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 		return;
 
 	if (sd.status.char_id != target_sd->status.char_id && !battle_check_range(&sd.bl, &target_sd->bl, skill_get_range2(&sd.bl, sd.menuskill_id, sd.menuskill_val2, true))) {
-		clif_item_repaireffect(&sd, idx, 1);
+		clif_item_repaireffect( sd, idx, true );
 		return;
 	}
 
@@ -19619,10 +19619,10 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 
 	pc_delitem(&sd,pc_search_inventory(&sd,material),1,0,0,LOG_TYPE_CONSUME);
 
-	clif_item_repaireffect(&sd,idx,0);
+	clif_item_repaireffect( sd, idx, false );
 
 	if( sd.status.char_id != target_sd->status.char_id )
-		clif_item_repaireffect(target_sd,idx,0);
+		clif_item_repaireffect( *target_sd, idx, false );
 }
 
 /*==========================================
@@ -19630,7 +19630,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
  *------------------------------------------*/
 void skill_identify(map_session_data *sd, int idx)
 {
-	int flag=1;
+	bool failure = true;
 
 	nullpo_retv(sd);
 
@@ -19638,11 +19638,11 @@ void skill_identify(map_session_data *sd, int idx)
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(sd->inventory.u.items_inventory[idx].nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-			flag=0;
+			failure = false;
 			sd->inventory.u.items_inventory[idx].identify = 1;
 		}
 	}
-	clif_item_identified(sd,idx,flag);
+	clif_item_identified( *sd, idx, failure );
 }
 
 /*==========================================
@@ -20876,7 +20876,7 @@ int skill_delunit(struct skill_unit* unit)
 			break;
 	}
 
-	clif_skill_delunit(unit);
+	clif_skill_delunit( *unit );
 
 	unit->group=nullptr;
 	map_delblock(&unit->bl); // don't free yet

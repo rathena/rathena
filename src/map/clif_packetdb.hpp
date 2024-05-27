@@ -47,7 +47,6 @@
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
-	packet(0x0098,3);
 	parseable_packet(0x0099,-1,clif_parse_Broadcast,2,4);
 	packet(0x009a,-1);
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
@@ -150,27 +149,19 @@
 	packet(0x011c,68);
 	parseable_packet(0x011d,2,clif_parse_RequestMemo,0);
 	packet(0x011f,16);
-	packet(0x0120,6);
 	packet( cartlistequipType, -1 );
 	packet( cartlistnormalType, -1 );
-	packet(0x0125,8);
 	parseable_packet( HEADER_CZ_MOVE_ITEM_FROM_BODY_TO_CART, sizeof( PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART ), clif_parse_PutItemToCart, 0 );
 	parseable_packet(0x0127,8,clif_parse_GetItemFromCart,2,4);
 	parseable_packet(0x0128,8,clif_parse_MoveFromKafraToCart,2,4);
 	parseable_packet(0x0129,8,clif_parse_MoveToKafraFromCart,2,4);
 	parseable_packet(0x012a,2,clif_parse_RemoveOption,0);
-	packet(0x012c,3);
-	packet(0x012d,4);
 	parseable_packet(0x012e,2,clif_parse_CloseVending,0);
 	parseable_packet(0x012f,-1,clif_parse_OpenVending,2,4,0,84);
 	parseable_packet(0x0130,6,clif_parse_VendingListReq,2);
 	packet(0x0132,6);
 	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, clif_parse_PurchaseReq, 0 );
-	packet(0x0135,7);
-	packet(0x0137,6);
 	packet(0x0138,3);
-	packet(0x0139,16);
-	packet(0x013d,6);
 	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet(0x0140,22,clif_parse_MapMove,2,18,20);
@@ -226,11 +217,9 @@
 	packet(0x0176,106);
 	packet(0x0177,-1);
 	parseable_packet(0x0178,4,clif_parse_ItemIdentify,2);
-	packet(0x0179,5);
 	parseable_packet(0x017a,4,clif_parse_UseCard,2);
 	packet(0x017b,-1);
 	parseable_packet(0x017c,6,clif_parse_InsertCard,2,4);
-	packet(0x017d,7);
 	parseable_packet(0x017e,-1,clif_parse_GuildMessage,2,4);
 	packet(0x017f,-1);
 	parseable_packet(0x0180,6,clif_parse_GuildOpposition,2);
@@ -260,9 +249,7 @@
 	packet(0x019a,14);
 	parseable_packet(0x019c,-1,clif_parse_LocalBroadcast,2,4);
 	parseable_packet(0x019d,6,clif_parse_GMHide,2);
-	packet(0x019e,2);
 	parseable_packet(0x019f,6,clif_parse_CatchPet,2);
-	packet(0x01a0,3);
 	parseable_packet(0x01a1,3,clif_parse_PetMenu,2);
 	packet(0x01a2,35);
 	packet(0x01a3,5);
@@ -342,7 +329,6 @@
 	packet(0x01fb,56);
 	packet(0x01fc,-1);
 	parseable_packet( HEADER_CZ_REQ_ITEMREPAIR1, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR1 ), clif_parse_RepairItem, 0 );
-	packet(0x01fe,5);
 	packet(0x01ff,10);
 	packet(0x0200,26);
 	packet(0x0201,-1);
@@ -1005,7 +991,6 @@
 	packet( HEADER_ZC_ITEM_PICKUP_PARTY, sizeof( struct PACKET_ZC_ITEM_PICKUP_PARTY ) );
 	packet(0x02b9,191);
 	parseable_packet(0x02ba,11,clif_parse_Hotkey,2,4,5,9);
-	packet(0x02bb,8);
 	packet(0x02bc,6);
 	packet(0x02bf,10);
 	packet(0x02c0,2);
@@ -1275,7 +1260,7 @@
 
 // 2008-12-10aSakexe
 #if PACKETVER >= 20081210
-	parseable_packet(0x0443,8,clif_parse_SkillSelectMenu,2,6);
+	parseable_packet( HEADER_CZ_SKILL_SELECT_RESPONSE, sizeof( PACKET_CZ_SKILL_SELECT_RESPONSE ), clif_parse_SkillSelectMenu, 0 );
 #endif
 
 // 2009-01-14aSakexe
@@ -2028,7 +2013,6 @@
 	packet(0x09DB,-1); // ZC_NOTIFY_MOVEENTRY10
 	packet(0x09DC,-1); // ZC_NOTIFY_NEWENTRY10
 	packet(0x09DD,-1); // ZC_NOTIFY_STANDENTRY10
-	packet(0x09DF,7); // ZC_ACK_WHISPER02
 #endif
 
 // 2014-02-05bRagexeRE
@@ -2044,14 +2028,12 @@
 
 // 2014-10-16Ragexe
 #if PACKETVER >= 20141016
-	packet(0x09DF,7);
 	// New packet
 	packet(0x0A00,269); // ZC_SHORTCUT_KEY_LIST_V3
 	parseable_packet(0x0A01,3,clif_parse_HotkeyRowShift,2); // CZ_SHORTCUTKEYBAR_ROTATE
 	packet(0x0A02,4); // ZC_DRESSROOM_OPEN
 	packet(0x0A0E,14); // ZC_BATTLEFIELD_NOTIFY_HP2
 	packet(0x09F7,75); // ZC_PROPERTY_HOMUN_2
-	packet(0x09E5,18); // ZC_DELETEITEM_FROM_MCSTORE2
 	packet(0x09E6,22); // ZC_UPDATE_ITEM_FROM_BUYING_STORE2
 	// Roulette System [Yommy]
 	parseable_packet(0x0A19,2,clif_parse_roulette_open,0); // CZ_REQ_OPEN_ROULETTE
@@ -2071,8 +2053,6 @@
 	packet(0x006d,149);
 	packet(0x08e3,149);
 	// New Packet
-	packet(0x0A27,8);
-	packet(0x0A28,3); // ZC_ACK_OPENSTORE2
 	packet(0x09FD,-1); // ZC_NOTIFY_MOVEENTRY11
 	packet(0x09FE,-1); // ZC_NOTIFY_NEWENTRY11
 	packet(0x09FF,-1); // ZC_NOTIFY_STANDENTRY11

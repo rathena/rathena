@@ -280,7 +280,7 @@ private:
 	bool parseDropNode(std::string nodeName, const ryml::NodeRef& node, uint8 max, s_mob_drop *drops);
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 3, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 4, 1) {
 
 	}
 

@@ -393,7 +393,20 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 		damage = 0;
 	}
 
-	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
+	// The client refuses to display animations slower than 1x speed
+	// So we need to shorten AttackMotion to be in-sync with the client in this case
+	if (battle_config.synchronize_damage && skill_id == 0 && src->type == BL_MOB && amotion > status_get_clientamotion(src))
+		amotion = status_get_clientamotion(src);
+	// Check for delay battle damage config
+	else if (!battle_config.delay_battle_damage)
+		amotion = 1;
+	// Aegis places a damage-delay cap of 1 sec to non player attacks
+	// We only want to apply this cap if damage was not synchronized
+	else if (src->type != BL_PC && amotion > 1000)
+		amotion = 1000;
+
+	// Skip creation of timer
+	if (amotion <= 1) {
 		//Deal damage
 		battle_damage(src, target, damage, ddelay, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
 		return 0;
@@ -411,8 +424,6 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	dat->additional_effects = additional_effects;
 	dat->src_type = src->type;
 	dat->isspdamage = isspdamage;
-	if (src->type != BL_PC && amotion > 1000)
-		amotion = 1000; //Aegis places a damage-delay cap of 1 sec to non player attacks. [Skotlex]
 
 	if( src->type == BL_PC )
 		((TBL_PC*)src)->delayed_damage++;
@@ -11506,6 +11517,7 @@ static const struct _battle_data {
 #else
 	{ "feature.instance_allow_reconnect",   &battle_config.instance_allow_reconnect,        0,      0,      1,              },
 #endif
+	{ "synchronize_damage",                 &battle_config.synchronize_damage,              0,      0,      1,              },
 
 #include <custom/battle_config_init.inc>
 };
