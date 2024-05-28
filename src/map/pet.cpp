@@ -1269,7 +1269,7 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 		sd->itemid = 0;
 		sd->itemindex = -1;
 	} else { // Invalid taming item, abort capture.
-		clif_pet_roulette(sd, 0);
+		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = 0;
 		sd->itemindex = -1;
