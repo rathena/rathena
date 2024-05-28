@@ -1263,8 +1263,6 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 		return 1;
 	}
 
-	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume [ultramage]
-
 	std::shared_ptr<s_pet_db> pet = pet_db.find(md->mob_id);
 
 	// If the target is a valid pet, we have a few exceptions
@@ -1279,7 +1277,6 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 	}
 
 	if(sd->catch_target_class != md->mob_id || !pet) {
-		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
 		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
 
@@ -1289,6 +1286,14 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 	if( battle_config.pet_distance_check && distance_bl( &sd->bl, &md->bl ) > battle_config.pet_distance_check ){
 		clif_pet_roulette( *sd, false );
 		sd->catch_target_class = PET_CATCH_FAIL;
+
+		return 1;
+	}
+
+	if (!pc_inventoryblank(sd)) {
+		clif_pet_roulette(*sd, false);
+		sd->catch_target_class = PET_CATCH_FAIL;
+		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 
 		return 1;
 	}
