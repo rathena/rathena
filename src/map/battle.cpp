@@ -7363,16 +7363,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 			battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
 
-		int64 ratio = 0;
-
 #ifndef RENEWAL
-		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
+		// Skill ratio
+		ATK_RATE(wd.damage, wd.damage2, battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv));
 
-		ATK_RATE(wd.damage, wd.damage2, ratio);
-
-		int64 bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
-
-		ATK_ADD(wd.damage, wd.damage2, bonus_damage);
+		// Additive damage bonus
+		ATK_ADD(wd.damage, wd.damage2, battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv));
 #endif
 
 #ifdef RENEWAL
@@ -7467,13 +7463,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.long_attack_atk_rate);
 		}
 
-		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
+		// Skill ratio
+		ATK_RATE(wd.damage, wd.damage2, battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv));
 
-		ATK_RATE(wd.damage, wd.damage2, ratio);
-
-		int64 bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
-
-		ATK_ADD(wd.damage, wd.damage2, bonus_damage);
+		// Additive damage bonus
+		ATK_ADD(wd.damage, wd.damage2, battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv));
 
 		// Advance Katar Mastery
 		if (sd) {
