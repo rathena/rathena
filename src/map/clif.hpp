@@ -506,7 +506,7 @@ enum clif_messages : uint16_t {
 
 	//! NOTE: These values below need client version validation
 
-	// This values correspond to the msgstringtable line number minus 1
+	// These values correspond to the msgstringtable line number minus 1
 	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 52,						// You cannot carry more items because you are overweight.
 	MSI_CAN_NOT_EQUIP_ITEM = 372,								// You can't put this item on.
 	MSI_CANT_USE_WHEN_SITDOWN = 663,							// You cannot use this item while sitting.
