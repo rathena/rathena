@@ -15,7 +15,7 @@
 //= 2.2 Updated to new bullets. [Aleos]
 //============================================================
 
-alberta,118,157,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
+que_ng,187,149,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
 	mes "[Kenny]";
 	mes "Bullet bags will help you carry bullets much more easily.";
 	mes "Come take a look~";
@@ -167,8 +167,8 @@ S_Sphere_Exchange:
 				case 1:
 					mes "[Kenny]";
 					mes "All done.";
-					delitem .@slug_id, .@new_count * 10;
-					getitem .@new_slug_id, .@old_count;
+					delitem .@old_id, .@new_count * 10;
+					getitem .@new_id, .@new_count;
 					close;
 				case 2:
 					close;
@@ -214,8 +214,8 @@ S_Old_Sphere_Exchange:
 				case 1:
 					mes "[Kenny]";
 					mes "All done.";
-					delitem .@slug_id, .@old_count;
-					getitem .@new_slug_id, .@old_count;
+					delitem .@old_id, .@old_count;
+					getitem .@new_id, .@old_count;
 					close;
 				case 2:
 					close;
@@ -262,7 +262,7 @@ S_Slug_Exchange:
 				case 1:
 					mes "[Kenny]";
 					mes "All done.";
-					delitem .@slug_id, .@new_count * 500;
+					delitem .@slug_id, .@new_count * .@req_count;
 					getitem 25187, .@new_count;
 					close;
 				case 2:
@@ -286,5 +286,5 @@ S_Close:
 	close;
 }
 
-que_ng,187,149,3	duplicate(mdk)	Magazine Dealer Kenny#ng	83
-izlude_in,74,104,5	duplicate(mdk)	Magazine Dealer Kenny#iz	83
+alberta,118,157,3	duplicate(mdk)	Magazine Dealer Kenny#al	4_M_01
+izlude_in,74,104,5	duplicate(mdk)	Magazine Dealer Kenny#iz	4_M_01

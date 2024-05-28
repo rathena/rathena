@@ -469,7 +469,7 @@ rachel,132,117,3	script	Rhehe Ravies#gq_fes03	891,{
 			}
 			mes "[Rhehe Ravies]";
 			mes "Okay then, I'll explain a little about the summoning ritual.";
-			mes "Here in Yuno, the summoning ritual through the use of that flower will summon Valkyrie's Blessing and Valkyrie's Gift.";
+			mes "Here in Juno, the summoning ritual through the use of that flower will summon Valkyrie's Blessing and Valkyrie's Gift.";
 			mes "The effects of the summoning ritual will last approximately one hour.";
 			next;
 			mes "[Rhehe Ravies]";

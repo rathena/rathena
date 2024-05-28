@@ -1228,7 +1228,8 @@ job_cru,24,187,2	script	Waiting Room#cr1	700,{
 	end;
 
 OnInit:
-	disablenpc "Waiting Room#cr1";
+	//disablenpc  "Waiting Room#cr1";
+	hideonnpc "Waiting Room#cr1";
 	waitingroom "Waiting Room",20,"Waiting Room#cr1::OnStartArena",1;
 	enablewaitingroomevent;
 	end;

@@ -3,17 +3,17 @@
 
 #include "int_achievement.hpp"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
 
 #include "char.hpp"
 #include "inter.hpp"
@@ -27,14 +27,14 @@
  */
 struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 {
-	struct achievement *achievelog = NULL;
+	struct achievement *achievelog = nullptr;
 	struct achievement tmp_achieve;
 	SqlStmt *stmt;
 	StringBuf buf;
 	int i;
 
 	if (!count)
-		return NULL;
+		return nullptr;
 
 	memset(&tmp_achieve, 0, sizeof(tmp_achieve));
 
@@ -52,14 +52,14 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		*count = 0;
-		return NULL;
+		return nullptr;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
+	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
 	*count = (int)SqlStmt_NumRows(stmt);
 	if (*count > 0) {
@@ -112,6 +112,13 @@ bool mapif_achievement_add(uint32 char_id, struct achievement* ad)
 {
 	StringBuf buf;
 	int i;
+
+	ARR_FIND( 0, MAX_ACHIEVEMENT_OBJECTIVES, i, ad->count[i] != 0 );
+
+	if( i == MAX_ACHIEVEMENT_OBJECTIVES && ad->completed == 0 && ad->rewarded == 0 ){
+		// Do not save
+		return true;
+	}
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `id`, `completed`, `rewarded`", schema_config.achievement_table);
@@ -202,7 +209,7 @@ int mapif_parse_achievement_save(int fd)
 {
 	int i, j, k, old_n, new_n = (RFIFOW(fd, 2) - 8) / sizeof(struct achievement);
 	uint32 char_id = RFIFOL(fd, 4);
-	struct achievement *old_ad = NULL, *new_ad = NULL;
+	struct achievement *old_ad = nullptr, *new_ad = nullptr;
 	bool success = true;
 
 	if (new_n > 0)
@@ -250,7 +257,7 @@ int mapif_parse_achievement_save(int fd)
  * Sends the achievementlog of a character to the map-server.
  */
 void mapif_achievement_load( int fd, uint32 char_id ){
-	struct achievement *tmp_achievementlog = NULL;
+	struct achievement *tmp_achievementlog = nullptr;
 	int num_achievements = 0;
 
 	tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements);
@@ -298,7 +305,7 @@ void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, tim
  * @see inter_parse_frommap
  */
 int mapif_parse_achievement_reward(int fd){
-	time_t current = time(NULL);
+	time_t current = time(nullptr);
 	uint32 char_id = RFIFOL(fd, 2);
 	int32 achievement_id = RFIFOL(fd, 6);
 
@@ -313,8 +320,8 @@ int mapif_parse_achievement_reward(int fd){
 		struct item item;
 
 		memset(&item, 0, sizeof(struct item));
-		item.nameid = RFIFOW(fd, 10);
-		item.amount = RFIFOL(fd, 12);
+		item.nameid = RFIFOL(fd, 10);
+		item.amount = RFIFOW(fd, 14);
 		item.identify = 1;
 
 		safesnprintf(mail_sender, NAME_LENGTH, char_msg_txt(227)); // 227: GM

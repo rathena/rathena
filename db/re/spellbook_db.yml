@@ -1,0 +1,64 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Reading Spellbook Database
+###########################################################################
+#
+# Reading Spellbook Settings
+#
+###########################################################################
+# - Skill             Skill that is usable through a Spellbook.
+#   Book              Book item required to cast skill.
+#   PreservePoints    Amount of points required to preserve the skill into the book.
+###########################################################################
+
+Header:
+  Type: READING_SPELLBOOK_DB
+  Version: 1
+
+Body:
+  - Skill: WZ_METEOR
+    Book: WL_MB_MS
+    PreservePoints: 10
+  - Skill: WZ_VERMILION
+    Book: WL_MB_LOV
+    PreservePoints: 10
+  - Skill: WZ_STORMGUST
+    Book: WL_MB_SG
+    PreservePoints: 10
+  - Skill: WL_JACKFROST
+    Book: WL_MB_JF
+    PreservePoints: 10
+  - Skill: WL_DRAINLIFE
+    Book: WL_MB_DL
+    PreservePoints: 8
+  - Skill: WL_CRIMSONROCK
+    Book: WL_MB_CR
+    PreservePoints: 12
+  - Skill: WL_COMET
+    Book: WL_MB_CM
+    PreservePoints: 22
+  - Skill: WL_CHAINLIGHTNING
+    Book: WL_MB_CL
+    PreservePoints: 12
+  - Skill: WL_EARTHSTRAIN
+    Book: WL_MB_ES
+    PreservePoints: 12
+  - Skill: WL_TETRAVORTEX
+    Book: WL_MB_TV
+    PreservePoints: 22

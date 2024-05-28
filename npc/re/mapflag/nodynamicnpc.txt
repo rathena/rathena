@@ -1,0 +1,140 @@
+//===== rAthena Script =======================================
+//= Mapflag: No dynamic NPC map setting.
+//===== Description: ========================================= 
+//= Blocks the use of dynamic NPCs on a map.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Lemongrass]
+//============================================================
+
+// Mistwood Maze
+1@mist	mapflag	nodynamicnpc
+
+// Culvert
+1@pump	mapflag	nodynamicnpc
+2@pump	mapflag	nodynamicnpc
+
+// Octopus Cave
+1@cash	mapflag	nodynamicnpc
+
+// Bangungot Hospital 2F
+1@ma_h	mapflag	nodynamicnpc
+
+// Buwaya Cave
+1@ma_c	mapflag	nodynamicnpc
+
+// Bakonawa Lake
+1@ma_b	mapflag	nodynamicnpc
+
+// Wolfchev's Laboratory
+1@lhz	mapflag	nodynamicnpc
+
+// Old Glast Heim
+1@gl_k	mapflag	nodynamicnpc
+2@gl_k	mapflag	nodynamicnpc
+
+// Eclage Interior
+1@ecl	mapflag	nodynamicnpc
+
+// Sara's Memories
+1@sara	mapflag	nodynamicnpc
+
+// Geffen Magic Tournament
+1@gef	mapflag	nodynamicnpc
+1@gef_in	mapflag	nodynamicnpc
+1@ge_st	mapflag	nodynamicnpc
+
+// Horror Toy Factory
+1@xm_d	mapflag	nodynamicnpc
+
+// Faceworm's Nest
+1@face	mapflag	nodynamicnpc
+
+// Ghost Palace
+1@spa	mapflag	nodynamicnpc
+
+// Devil's Tower
+1@tnm1	mapflag	nodynamicnpc
+1@tnm2	mapflag	nodynamicnpc
+1@tnm3	mapflag	nodynamicnpc
+
+// Assault on the Airship
+1@air1	mapflag	nodynamicnpc
+1@air2	mapflag	nodynamicnpc
+
+// Fenrir and Sarah
+1@glast	mapflag	nodynamicnpc
+
+// Wave Mode - Forest
+1@def01	mapflag	nodynamicnpc
+
+// Wave Mode - Sky
+1@def02	mapflag	nodynamicnpc
+
+// Nightmarish Jitterbug
+1@jtb	mapflag	nodynamicnpc
+
+// Isle of Bios
+1@dth1	mapflag	nodynamicnpc
+1@dth2	mapflag	nodynamicnpc
+1@dth3	mapflag	nodynamicnpc
+
+// Morse's Cave
+1@rev	mapflag	nodynamicnpc
+
+// Temple of the Demon God
+1@eom	mapflag	nodynamicnpc
+
+// Central Laboratory
+1@lab	mapflag	nodynamicnpc
+
+// Last room
+1@uns	mapflag	nodynamicnpc
+
+// Charleston in Distress
+1@mcd	mapflag	nodynamicnpc
+
+// Ritual of Blessing
+2@mir	mapflag	nodynamicnpc
+
+// Room of Consciousness
+1@mir	mapflag	nodynamicnpc
+
+// Sky Fortress Invasion
+1@sthb	mapflag	nodynamicnpc
+1@sthc	mapflag	nodynamicnpc
+1@sthd	mapflag	nodynamicnpc
+
+// Heart Hunter War Base 1 + 2
+1@swat	mapflag	nodynamicnpc
+
+// Werner Laboratory central room#1 + 2
+1@slw	mapflag	nodynamicnpc
+
+// Infinite Space
+1@infi	mapflag	nodynamicnpc
+
+// Regenschirm
+1@rgsr	mapflag	nodynamicnpc
+
+// Sealed OS
+1@os_b	mapflag	nodynamicnpc
+
+// OS Occupation + 2nd OS Search
+1@os_a	mapflag	nodynamicnpc
+
+// Cor Memorial
+1@cor	mapflag	nodynamicnpc
+
+// Half Moon In The Daylight
+1@pop1	mapflag	nodynamicnpc
+1@pop2	mapflag	nodynamicnpc
+1@pop3	mapflag	nodynamicnpc
+
+// Weekend Dungeon
+1@md_pay	mapflag	nodynamicnpc
+
+// Friday Dungeon
+1@md_gef	mapflag	nodynamicnpc
+
+// Poring Village
+1@begi	mapflag	nodynamicnpc

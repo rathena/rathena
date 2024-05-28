@@ -14,7 +14,7 @@
 //= 1.5a Fixed a small screw up with the color codes in the Glastheim BB [MasterOfMuppets]
 //= 1.5b Fixed another small screw up with the color codes in the Glastheim BB [Kayla]
 //= 1.6 Removed Duplicates [Silent]
-//= 1.7 Updated Morroc NPCs to reflect episode 12.1 changes. [L0ne_W0lf]
+//= 1.7 Updated Morocc NPCs to reflect episode 12.1 changes. [L0ne_W0lf]
 //= 1.8 Updated Payon Cave Bulletion Board Locations. [Masao]
 //= 1.9 Moved Izlude NPC to Pre-RE path. [Euphy]
 //= 2.0 Moved some NPC to Pre-re path. [Capuche]
@@ -93,7 +93,7 @@ payon,178,108,5	script	Bulletin Board#06	837,{
 	mes "Near the Archer Village, you can find the ^2F0400Payon Cave^000000 where Undead monsters reside.";
 	next;
 	mes "[Payon: The Mountain City]";
-	mes "From Payon, ^123972Alberta^000000 is located to the Southeast, and ^866C4BMorroc^000000 is to the West. ^5E5C69Izlude^000000 and ^6D6FE0Prontera^000000 are North of Payon.";
+	mes "From Payon, ^123972Alberta^000000 is located to the Southeast, and ^866C4BMorocc^000000 is to the West. ^5E5C69Izlude^000000 and ^6D6FE0Prontera^000000 are North of Payon.";
 	mes "Enjoy your travels."; 
 	close;
 }
@@ -112,48 +112,48 @@ pay_arche,79,31,5	script	Bulletin Board#07	837,{
 
 prontera,148,49,5	script	Bulletin Board#09	837,{
 	mes "[Prontera: Capital of the]";
-	mes "[Rune-Midgards Kingdom]";
+	mes "[Rune-Midgarts Kingdom]";
 	mes "Welcome to Prontera, the capital city of Rune-Midgard.";
 	next;
 	mes "[Prontera: Capital of the]";
-	mes "[Rune-Midgards Kingdom]";
+	mes "[Rune-Midgarts Kingdom]";
 	mes "Prontera is located in the center of the Rune-Midgard continent and is very well-known as a city of flourishing commerce.";
 	next;
 	mes "[Prontera: Capital of the]";
-	mes "[Rune-Midgards Kingdom]";
+	mes "[Rune-Midgarts Kingdom]";
 	mes "In this city, you can fint the Sanctuary, where people can change their jobs to Acolyte and Priest.";
 	next;
 	mes "[Prontera: Capital of the]";
-	mes "[Rune-Midgards Kingdom]";
+	mes "[Rune-Midgarts Kingdom]";
 	mes "You can also find the Castle, where people can change their jobs to Crusader.";
 	next;
 	mes "[Prontera: Capital of the]";
-	mes "[Rune-Midgards Kingdom]";
+	mes "[Rune-Midgarts Kingdom]";
 	mes "Please feel free to explore the streets of Prontera, as there are various tourist attractions within the city.";
 	next;
 	mes "[Prontera: Capital of the]";
-	mes "[Rune-Midgards Kingdom]";
+	mes "[Rune-Midgarts Kingdom]";
 	mes "When you need to upgrade your weapons and armors, please visit the building in the 5 o'clock direction from the fountain in the center of Prontera.";
 	next;
 	mes "[Prontera: Capital of the]";
-	mes "[Rune-Midgards Kingdom]";
+	mes "[Rune-Midgarts Kingdom]";
 	mes "From Prontera, ^5E5C69Izlude^000000 is located to the Southeast, ^1F3A11Payon^000000 to the far South, ^683C1FGeffen^000000 to the far West and ^2D3832Al De Baran^000000 to the far North.";
 	mes "Enjoy your time in Prontera.";
 	close;
 }
 
 morocc,152,110,5	script	Bulletin Board#11	837,{
-	mes "[Morroc: The Frontier Town]";
-	mes "Welcome to Morroc, the City of the Desert. Morroc was built on an oasis, so this town can accomodate its many visitors and travelers.";
+	mes "[Morocc: The Frontier Town]";
+	mes "Welcome to Morocc, the City of the Desert. Morocc was built on an oasis, so this town can accomodate its many visitors and travelers.";
 	next;
-	mes "[Morroc: The Frontier Town]";
-	mes "Morroc Castle lies in the center of this city. Please feel free to explore this town, and enjoy its unique atmosphere. However, watch your pockets and beware of Rogues and Thieves.";
+	mes "[Morocc: The Frontier Town]";
+	mes "Morocc Castle lies in the center of this city. Please feel free to explore this town, and enjoy its unique atmosphere. However, watch your pockets and beware of Rogues and Thieves.";
 	next;
-	mes "[Morroc: The Frontier Town]";
-	mes "From Morroc, the ^660000Pyramid Dungeon^000000 can be found to the Northwest, and the ^660000Sphinx Dungeon^000000 can be found to the West. To the Southeast, you may find ^660000Ant Hell^000000.";
+	mes "[Morocc: The Frontier Town]";
+	mes "From Morocc, the ^660000Pyramid Dungeon^000000 can be found to the Northwest, and the ^660000Sphinx Dungeon^000000 can be found to the West. To the Southeast, you may find ^660000Ant Hell^000000.";
 	next;
-	mes "[Morroc: The Frontier Town";
-	mes "The Assassin Guild is rumored to be located to the Southeast. When you head East from Morroc, and then North, you will arrive at ^3355FFProntera^000000.";
+	mes "[Morocc: The Frontier Town";
+	mes "The Assassin Guild is rumored to be located to the Southeast. When you head East from Morocc, and then North, you will arrive at ^3355FFProntera^000000.";
 	close;
 }
 
@@ -189,7 +189,7 @@ comodo,210,148,5	script	Bulletin Board#12	837,{
 	next;
 	mes "[Comodo: The Beach City]";
 	mes "From Comodo, you can travel to";
-	mes "^866C4BMorroc^000000 through the East Cave";
+	mes "^866C4BMorocc^000000 through the East Cave";
 	mes "and to ^7D2272Umbala^000000 through the North";
 	mes "Cave.";
 	next;

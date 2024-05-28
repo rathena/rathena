@@ -62,7 +62,7 @@
 		mes "Hehe, the ^FF82FF'17 Carat Diamond'^000000 you see right now";
 		mes "is one of the highest quality 17 carat diamonds.";
 		mes "Comparing it to any pea-sized, colorless rock you may have";
-		mes "dug up from Morroc is unspeakable!";
+		mes "dug up from Morocc is unspeakable!";
 		emotion ET_HUK;
 		next;
 		

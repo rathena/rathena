@@ -1,0 +1,58 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Quest Database
+###########################################################################
+#
+# Quest Settings
+#
+###########################################################################
+# - Id                     Quest ID.
+#   Title                  Quest title.
+#   TimeLimit              Amount of time before the quest expires. (Default: 0)
+#   Targets:               Quest objective target. (Default: null)
+#     - Mob                Name of monster to kill.
+#       Count              Amount of monsters to kill. Set to 0 to skip the target on import.
+#       Id                 Unique target index for the quest Id. Requires a positive number.
+#       Race               Monster race target. (Default: All)
+#       Size               Monster size target. (Default: All)
+#       Element            Monster element target. (Default: All)
+#       MinLevel           Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
+#       MaxLevel           Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
+#       Location           Map name where kills are counted. (Default: All)
+#       MapName            Displayed map name in quest UI. (Default: empty string)
+#       MapMobTargets      List of monster names. Only names in the list will increase the kill counter. Only active when Id is used. (Default: all monsters)
+#         <name>: <bool>   Monster name and whether the monster is added or removed from the list.
+#   Drops:                 Quest item drop targets. (Default: null)
+#     - Mob                Monster to kill. 0 will apply to all monsters. (Default: 0)
+#       Item               Item to drop.
+#       Count              Amount of items that will drop. Non-stackable items default to 1. (Default: 1)
+#       Rate               Item drop rate. (10000 = 100%)
+###########################################################################
+
+Header:
+  Type: QUEST_DB
+  Version: 3
+
+Footer:
+  Imports:
+  - Path: db/pre-re/quest_db.yml
+    Mode: Prerenewal
+  - Path: db/re/quest_db.yml
+    Mode: Renewal
+  - Path: db/import/quest_db.yml

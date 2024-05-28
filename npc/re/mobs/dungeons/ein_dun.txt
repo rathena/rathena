@@ -34,3 +34,18 @@ ein_dun02,0,0	monster	Obsidian	1615,40,5000
 ein_dun02,0,0	monster	Old Stove	1617,30,5000
 ein_dun02,0,0	monster	Teddy Bear	1622,30,5000
 ein_dun02,0,0,0,0	boss_monster	RSX-0806	1623,1,7500000,600000,0
+
+//==================================================
+// ein_dun03 - Mine Dungeon
+//==================================================
+ein_dun03	monster	Poisonous	20592,35
+ein_dun03	monster	Toxious	20593,35
+ein_dun03	monster	Green Mineral	20594,40
+ein_dun03	monster	Red Mineral	20595,40
+ein_dun03	monster	White Mineral	20596,40
+ein_dun03	monster	Purple Mineral	20597,40
+ein_dun03	monster	Abyssman	20603,20
+ein_dun03	monster	White Porcellio	20602,22
+ein_dun03	monster	Jeweliant	20598,20
+ein_dun03	monster	Jewel	20600,3
+ein_dun03	boss_monster	Jungoliant	20601,1,7200000,600000,0

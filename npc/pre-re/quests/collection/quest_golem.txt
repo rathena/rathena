@@ -155,13 +155,13 @@ moc_fild11,57,138,0	script	Private Jeremy#hunt	707,{
 				case 1:
 					// Item turn in
 					mes "[Private Jeremy]";
-					mes "The Morroc Guard needs ^FF0000Stone Hearts^000000 for our training regimen.";
+					mes "The Morocc Guard needs ^FF0000Stone Hearts^000000 for our training regimen.";
 					next;
 					switch(select("I have Stone Hearts:What did you need?")) {
 					case 1:
 						if (countitem(953) > 24) {
 							mes "[Private Jeremy]";
-							mes "The Morroc Guard thanks you, citizen.";
+							mes "The Morocc Guard thanks you, citizen.";
 							delitem 953,25; //Stone_Heart
 							getexp 14000,9000;
 							close;
@@ -171,12 +171,12 @@ moc_fild11,57,138,0	script	Private Jeremy#hunt	707,{
 							mes "It doesn't look like you have enough.";
 							next;
 							mes "[Private Jeremy]";
-							mes "The Morroc Guard needs ^FF000025 Stone Hearts^000000, for our training regimen.";
+							mes "The Morocc Guard needs ^FF000025 Stone Hearts^000000, for our training regimen.";
 							close;
 						}
 					case 2:
 						mes "[Private Jeremy]";
-						mes "The Morroc Guard needs ^FF000025 Stone Hearts^000000, for our training regimen.";
+						mes "The Morocc Guard needs ^FF000025 Stone Hearts^000000, for our training regimen.";
 						close;
 					}
 				case 2:
@@ -218,7 +218,7 @@ moc_fild11,57,138,0	script	Private Jeremy#hunt	707,{
 			mes "Greetings citizen!";
 			next;
 			mes "[Private Jeremy]";
-			mes "Please do not interrupt my mission for the Morroc Guard.";
+			mes "Please do not interrupt my mission for the Morocc Guard.";
 			close;
 		}
 	}

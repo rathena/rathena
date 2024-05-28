@@ -444,7 +444,7 @@ payon,91,77,3	script	Bag Seller	99,{
 	case 0:
 		mes "[RuRumuni]";
 		mes "There is a thief guild in the";
-		mes "area of Morroc. I know one there";
+		mes "area of Morocc. I know one there";
 		mes "that sends me thieves in need";
 		mes "of items I make such as a";
 		mes "^3355FF' Leather Bag of Infinity '^000000.";

@@ -1,23 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Tierra Gorge 2
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.5
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Second Tierra Gorge Battleground.
 //= - Winning Team: 3 badges (5 if VIP)
 //= - Losing Team: 1 badge (3 if VIP)
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.2 Removed MaxLvl check in waitingrooms.
 //= 1.3 Label standardization. [Euphy]
 //= 1.4 Added GM management function. [Euphy]
 //= 1.5 Added VIP features and created a reward function. [Euphy]
+//= 1.6 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // Waiting Room NPCs
@@ -50,6 +45,8 @@ bat_room,1,151,3	script	#bat_a02_timer	844,{
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		end;
 OnEnable:
 	initnpctimer;
 	end;
@@ -60,14 +57,19 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	initnpctimer;
-	set .@chk_bat_a02,getmapusers("bat_a02");
-	if (.@chk_bat_a02 < 1) {
-		set $@TierraBG2,0; set $@TierraBG2_Victory, 0;
-		if( $@TierraBG2_id1 ) { bg_destroy $@TierraBG2_id1; set $@TierraBG2_id1, 0; }
-		if( $@TierraBG2_id2 ) { bg_destroy $@TierraBG2_id2; set $@TierraBG2_id2, 0; }
-		donpcevent "start#bat_a02::OnReadyCheck";
+	if (!bg_get_data($@TierraBG2_id1, 0) && !bg_get_data($@TierraBG2_id2, 0)) {
+		donpcevent "countdown#bat_a02::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a02", true;
+		mapwarp "bat_a02","bat_room",154,150;
+		$@TierraBG2 = 0; $@TierraBG2_Victory = 0;
+		if( $@TierraBG2_id1 ) { bg_destroy $@TierraBG2_id1; $@TierraBG2_id1 = 0; }
+		if( $@TierraBG2_id2 ) { bg_destroy $@TierraBG2_id2; $@TierraBG2_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
+			bg_unbook "bat_a02";
+		end;
 	}
+	initnpctimer;
 	end;
 }
 
@@ -96,6 +98,8 @@ bat_room,113,211,0	warp	back_bgrooma02b	1,1,bat_room,154,150
 //============================================================
 bat_a02,15,15,3	script	start#bat_a02	844,{
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_a02";
 	mapwarp "bat_a02","bat_room",154,150;
 	end;
 
@@ -121,25 +125,40 @@ OnEnable:
 	disablenpc "Croix Vintenar#a02_b";
 	end;
 
+OnGuillaumeActive:
+	warp "bat_a02",352,342;
+	end;
+
+OnCroixActive:
+	warp "bat_a02",353,52;
+	end;
+
 OnGuillaumeQuit:
 OnCroixQuit:
-	bg_leave;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+	else
+		bg_leave;
 	end;
 
 OnReadyCheck:
 	if( $@TierraBG2 )
 		end;
-	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Rundel");
-	set .@Croix, getwaitingroomstate(0,"Lieutenant Guerrit");
-	if( !.@Guillaume && !.@Croix ) {
-		donpcevent "#bat_a02_timer::OnStop";
-		end;
+	if (!getbattleflag("feature.bgqueue")) {
+		set .@Guillaume, getwaitingroomstate(0,"Lieutenant Rundel");
+		set .@Croix, getwaitingroomstate(0,"Lieutenant Guerrit");
+		if( !.@Guillaume && !.@Croix ) {
+			donpcevent "#bat_a02_timer::OnStop";
+			end;
+		}
+		else if( .@Guillaume < 10 || .@Croix < 10 )
+			end;
 	}
-	else if( .@Guillaume < 10 || .@Croix < 10 )
-		end;
 	set $@TierraBG2,1;
-	donpcevent "Lieutenant Rundel::OnEnterBG";
-	donpcevent "Lieutenant Guerrit::OnEnterBG";
+	if (!getbattleflag("feature.bgqueue")) {
+		donpcevent "Lieutenant Rundel::OnEnterBG";
+		donpcevent "Lieutenant Guerrit::OnEnterBG";
+	}
 	donpcevent "start#bat_a02::OnEnable";
 	bg_warp $@TierraBG2_id1,"bat_a02",352,342;
 	bg_warp $@TierraBG2_id2,"bat_a02",353,52;
@@ -171,6 +190,8 @@ OnMyMobDead:
 		mapannounce "bat_a02", "Croix Vintenar Swandery: We destroyed Guillaume's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
 		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a02", true;
 	}
 	end;
 }
@@ -194,6 +215,8 @@ OnMyMobDead:
 		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : We destroyed Croix's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
 		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a02", true;
 	}
 	end;
 }
@@ -352,8 +375,10 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 				mes "[Guillaume Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a02_a::OnEnable";
+				if (mobcount("bat_a02","barricade#bat_a02_a::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a02_a::OnEnable";
+				}
 				close2;
 				disablenpc "Guillaume Blacksmith#a02";
 				end;
@@ -436,8 +461,10 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 				mes "[Croix Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a02_b::OnEnable";
+				if (mobcount("bat_a02","barricade#bat_a02_b::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a02_b::OnEnable";
+				}
 				close2;
 				disablenpc "Croix Blacksmith#bat_a02";
 				end;
@@ -488,35 +515,39 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_a02_rp1_a_warp";
+	// disablenpc "bat_a02_rp1_a_warp";
 	disablenpc "Battle Therapist#a02_a";
 	stopnpctimer;
 	end;
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_a02_rp1_a_warp";
+	// enablenpc "bat_a02_rp1_a_warp";
+	areapercentheal "bat_a02",41,365,61,385,100,100;
+	areawarp "bat_a02",41,365,61,385,"bat_a02",352,342;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_a02_rp1_a_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_a02_rp1_a_warp";
+	// end;
 
 OnTimer26500:
 	donpcevent "Battle Therapist#a02_a::OnEnable";
 	end;
 }
 
+/*
 bat_a02,51,375,0	script	bat_a02_rp1_a_warp	-1,10,10,{
 OnInit:
 	disablenpc "bat_a02_rp1_a_warp";
 	end;
 
-OnTouch_:
+OnTouch:
 	percentheal 100,100;
 	warp "bat_a02",352,342;
 	end;
 }
+*/
 
 bat_a02,45,19,3	script	Battle Therapist#a02_b	95,{
 	specialeffect2 EF_HEAL;
@@ -538,25 +569,28 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_a02_rp1_b_warp";
+	// disablenpc "bat_a02_rp1_b_warp";
 	disablenpc "Battle Therapist#a02_b";
 	stopnpctimer;
 	end;
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_a02_rp1_b_warp";
+	// enablenpc "bat_a02_rp1_b_warp";
+	areapercentheal "bat_a02",33,7,53,27,100,100;
+	areawarp "bat_a02",33,7,53,27,"bat_a02",353,52;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_a02_rp1_b_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_a02_rp1_b_warp";
+	// end;
 
 OnTimer26500:
 	donpcevent "Battle Therapist#a02_b::OnEnable";
 	end;
 }
 
+/*
 bat_a02,43,17,0	script	bat_a02_rp1_b_warp	-1,10,10,{
 OnInit:
 	disablenpc "bat_a02_rp1_b_warp";
@@ -567,6 +601,7 @@ OnTouch:
 	warp "bat_a02",353,52;
 	end;
 }
+*/
 
 bat_a02,60,216,3	script	Valley Ghost#bat_a02_n	950,{
 	specialeffect2 EF_HEAL;
@@ -585,18 +620,21 @@ OnEnable:
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_a02_rp1_n_warp";
+	// enablenpc "bat_a02_rp1_n_warp";
+	areapercentheal "bat_a02",45,203,65,223,100,100;
+	areawarp "bat_a02",45,203,65,223,"bat_a02",301,209;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_a02_rp1_n_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_a02_rp1_n_warp";
+	// end;
 
 OnTimer26500:
 	donpcevent "Valley Ghost#bat_a02_n::OnEnable";
 	end;
 }
 
+/*
 bat_a02,55,213,0	script	bat_a02_rp1_n_warp	-1,10,10,{
 OnInit:
 	disablenpc "bat_a02_rp1_n_warp";
@@ -607,6 +645,7 @@ OnTouch:
 	warp "bat_a02",301,209;
 	end;
 }
+*/
 
 bat_a02,194,267,0	script	barri_warp_up#bat_a02_a	-1,7,0,{
 OnTouch:
@@ -689,7 +728,8 @@ bat_a02,53,377,3	script	Guillaume Vintenar#a02_a	419,{
 			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -711,7 +751,8 @@ bat_a02,45,19,3	script	Croix Vintenar#a02_b	415,{
 			callfunc "F_BG_Badge",1,"Croix","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -795,4 +836,22 @@ bat_a02,1,1,3	script	Release all#a02	81,{
 			close;
 		}
 	}
+}
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#tierra02	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "Lieutenant Rundel";
+		unloadnpc "Lieutenant Guerrit";
+		unloadnpc "#bat_a02_quest_a";
+		unloadnpc "#bat_a02_quest_b";
+		unloadnpc "back_bgrooma02a";
+		unloadnpc "back_bgrooma02b";
+		unloadnpc "A_CODE#bat_a02";
+		unloadnpc "B_CODE#bat_a02";
+	}
+	end;
 }

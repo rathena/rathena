@@ -296,7 +296,7 @@ function	script	F_PVP_FSRS	{
 	if (strnpcinfo(4) == "pvp_y_room") {
 		set .@base$, "pvp_y_"+strnpcinfo(2);
 		setarray .@Maps$[0],	.@base$+"-1",	.@base$+"-2",	.@base$+"-3",	.@base$+"-4",	.@base$+"-5";
-		setarray .@Name$[0],	"Prontera",		"Izlude",		"Payon",		"Alberta",		"Morroc";
+		setarray .@Name$[0],	"Prontera",		"Izlude",		"Payon",		"Alberta",		"Morocc";
 		setarray .@Limit[0],	128,			128,			128,			128,			128;
 	} else {
 		setarray .@Maps$[0],	"pvp_n_8-1",	"pvp_n_8-2",	"pvp_n_8-3",	"pvp_n_8-4",	"pvp_n_8-5";

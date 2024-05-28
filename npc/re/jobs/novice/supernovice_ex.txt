@@ -359,7 +359,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		next;
 		mes "If you don't... Remember last time you %$&*@*&%$...";
 		mes "- The letter is crumpled, so you can't read more. -";
-		mes "I'm still in the Schwaltzvalt Republic.";
+		mes "I'm still in the Schwarzwald Republic.";
 		mes "~ Nudor";
 		next;
 		mes "- You get an uneasy feeling from reading this letter. -";

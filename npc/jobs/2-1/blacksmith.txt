@@ -366,7 +366,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					mes "1. Which one of the following regions is matched incorrectly";
 					mes "with its specialty item?";
 					next;
-					if (select("Morroc - Thief Clothes:Alberta - Two Hand Axe:Comodo - Berserk Potion:Alberta - Swordmace") == 4)
+					if (select("Morocc - Thief Clothes:Alberta - Two Hand Axe:Comodo - Berserk Potion:Alberta - Swordmace") == 4)
 						set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
 					mes "2. What status can";
@@ -385,7 +385,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					mes "4. Where can you find a store";
 					mes "that sells Blue Gemstones?";
 					next;
-					if (select("Alberta:Morroc:Geffen:Prontera") == 3)
+					if (select("Alberta:Morocc:Geffen:Prontera") == 3)
 						set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
 					mes "5. Where is the";
@@ -451,12 +451,12 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					mes "change your Job to";
 					mes "become a Merchant?";
 					next;
-					if (select("Alberta:Morroc:Geffen:Prontera") == 1)
+					if (select("Alberta:Morocc:Geffen:Prontera") == 1)
 						set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
 					mes "5. Where is the";
 					mes "Weapons Dealer";
-					mes "located in Morroc?";
+					mes "located in Morocc?";
 					next;
 					if (select("7 o'clock from the town's center:11 o'clock from the town's center:6 o'clock from the town's center:5 o'clock from the town's center") == 4)
 						set .@black_q,.@black_q+10;
@@ -693,7 +693,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					mes "to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom,";
 					break;
 				case 10:
-					mes "Okay, now take this to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
+					mes "Okay, now take this to ^8E6B23Wickebine^000000 in Morocc of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
 					getitem 1219,1; //Gladius
 					if (checkquest(2004) != -1) {
 						changequest 2004,2009;
@@ -715,7 +715,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 					next;
 					mes "[Geschupenschte]";
 					mes "Anyway, take this";
-					mes "to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom,";
+					mes "to ^8E6B23Wickebine^000000 in Morocc of Rune-Midgarts Kingdom,";
 					break;
 				case 11:
 					mes "Okay, now take this to ^8E6B23Krongast^000000 in Lighthalzen. Simply deliver it and bring me the receipt.";
@@ -842,7 +842,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 			}
 			else if (BSMITH_Q == 10) {
 				mes "Find the Swordmace";
-				mes "dealer ^8E6B23Wickebine^000000 in Morroc. And don't forget the receipt.";
+				mes "dealer ^8E6B23Wickebine^000000 in Morocc. And don't forget the receipt.";
 			}
 			else if (BSMITH_Q == 11) {
 				mes "In Lighthalzen, 6 o'clock direction from the town center, you will find ^8E6B23Krongast^000000 near the weapon shop. And don't forget the receipt.";
@@ -1500,7 +1500,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 				mes "^8E6B23Crazy Uproar^000000 and";
 				mes "^8E6B23Change Cart^000000 skills?";
 				next;
-				if (select("Al De Baran:Alberta:Morroc:Izlude") == 2)
+				if (select("Al De Baran:Alberta:Morocc:Izlude") == 2)
 					set .@blackss_te,.@blackss_te+20;
 				mes "[Mitehmaeeuh]";
 				mes "3. From the center of Einbroch,";
@@ -1513,7 +1513,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 				mes "can you find the";
 				mes "most Blacksmiths?";
 				next;
-				if (select("Prontera:Morroc:Alberta:Einbroch") == 4)
+				if (select("Prontera:Morocc:Alberta:Einbroch") == 4)
 					set .@blackss_te,.@blackss_te+20;
 				mes "[Mitehmaeeuh]";
 				mes "5. Which of the";
@@ -1580,7 +1580,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 	else {
 		emotion ET_SCRATCH;
 		mes "[Mitehmaeeuh]";
-		mes "I had to deal with the heat when I was in Morroc,";
+		mes "I had to deal with the heat when I was in Morocc,";
 		mes "and now I have to deal with the smog in this Einbroch!";
 		next;
 		mes "[Mitehmaeeuh]";
@@ -1601,10 +1601,10 @@ geffen_in,109,170,3	script	Blacksmith Guildsman#gef	726,{
 	next;
 	mes "[Blacksmith Guildsman]";
 	mes "I thank you for coming this far to visit our guild. However, I regret to inform you that Blacksmith Guild has been";
-	mes "moved to ^3131FF'Einbroch' in the Schwaltzvalt Republic^000000.";
+	mes "moved to ^3131FF'Einbroch' in the Schwarzwald Republic^000000.";
 	next;
 	mes "[Blacksmith Guildsman]";
-	mes "You can travel to Schwaltzvalt Republic by using the airship.";
+	mes "You can travel to Schwarzwald Republic by using the airship.";
 	mes "I can provide you a teleport service to Izlude, where you can use the airship.";
 	mes "Would you like to move to Izlude immediately?";
 	next;
@@ -1614,10 +1614,10 @@ geffen_in,109,170,3	script	Blacksmith Guildsman#gef	726,{
 		mes "Oops, haven't you used the airship yet?";
 		next;
 		mes "[Blacksmith Guildsman]";
-		mes "Unlike Rune-Midgarts Kingdom, Schwalitzvalt Republic has 'the airship' instead of teleport services to move between towns.";
+		mes "Unlike Rune-Midgarts Kingdom, Schwarzwald Republic has 'the airship' instead of teleport services to move between towns.";
 		next;
 		mes "[Blacksmith Guildsman]";
-		mes "In ^3131FF'Izlude'^000000, you can use ^3131FF'the international airship'^000000 which travels between ^3131FFIzlude and Juno in Schwaltzvalt Republic^000000.";
+		mes "In ^3131FF'Izlude'^000000, you can use ^3131FF'the international airship'^000000 which travels between ^3131FFIzlude and Juno in Schwarzwald Republic^000000.";
 		next;
 		mes "[Blacksmith Guildsman]";
 		mes "Take the airship, and go to Juno. Then from Juno, you need to take ^3131FFthe domestic airship^000000 to go to Einbroch.";

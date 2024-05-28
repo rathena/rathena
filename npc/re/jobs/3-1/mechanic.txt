@@ -187,7 +187,7 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "and you don't need to rely on something that's uncertain and unstable as magic, so what can be better than this.";
 		next;
 		mes "[Chainheart]";
-		mes "The person who invented magic machinery is Franklson, a scholar from the Schwaltzvalt Republic.";
+		mes "The person who invented magic machinery is Franklson, a scholar from the Schwarzwald Republic.";
 		next;
 		mes "[Chainheart]";
 		mes "Franklson discovered an ancient machine in the ^FF0000Ruins of Juperos^000000 and fused it with the power of magic, and that was the beginning.";

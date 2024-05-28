@@ -36,9 +36,9 @@ OnInit:
 	setarray $locationsname$[10],"Amatsu"; 
 	setarray $locationsname$[11],"Niflheim"; 
 	setarray $locationsname$[12],"Lutie"; 
-	setarray $locationsname$[13],"Louyang"; 
-	setarray $locationsname$[14],"Gonryun"; 
-	setarray $locationsname$[15],"Yuno"; 
+	setarray $locationsname$[13],"Luoyang"; 
+	setarray $locationsname$[14],"Kunlun"; 
+	setarray $locationsname$[15],"Juno"; 
 	setarray $locationsname$[16],"Ant Hell"; 
 	setarray $locationsname$[17],"Jawaii"; 
 	setarray $locationsname$[18],"Orc Village"; 

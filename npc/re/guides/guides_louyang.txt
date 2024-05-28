@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Louyang Guide
+//= Luoyang Guide
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
@@ -8,15 +8,15 @@
 //= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
-//= Guide for the city of Louyang.
+//= Guide for the city of Luoyang.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Navigation system update. [Euphy]
 //============================================================ 
 
-louyang,224,104,4	script	Louyang Guide#01louyang	818,{
+louyang,224,104,4	script	Luoyang Guide#01louyang	818,{
 	mes "[Representative]";
-	mes "Welcome to ^8B4513Louyang^000000,";
+	mes "Welcome to ^8B4513Luoyang^000000,";
 	mes "an ancient land with";
 	mes "a history full of tales";
 	mes "of bravery.";
@@ -25,7 +25,7 @@ louyang,224,104,4	script	Louyang Guide#01louyang	818,{
 	mes "We now provide an ocean lane to accomodate foreign travelers and intercultural exchange from which all can benefit.";
 	next;
 	mes "[Representative]";
-	mes "^8B4513Louyang^000000 is famous for";
+	mes "^8B4513Luoyang^000000 is famous for";
 	mes "its elaborate history, as well as specialties that are unique to this nation. Please take your time and enjoy your stay.";
 	F_Navi("[Representative]");
 	set .@str$,"Is there anything else I can do for you?";
@@ -66,7 +66,7 @@ louyang,224,104,4	script	Louyang Guide#01louyang	818,{
 			mes "You will see";
 			mes "marvelous weapons forged";
 			mes "by the well-experienced";
-			mes "Blacksmiths of Louyang.";
+			mes "Blacksmiths of Luoyang.";
 			mes .@str$;
 			viewpoint 1,145,172,3,0xFF1493;
 			break;

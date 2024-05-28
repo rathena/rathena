@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao, Muad_Dib (translation)
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -15,6 +15,10 @@
 //= 1.1a Updated NPC name to "Master Velofos". [Euphy]
 //= 1.1b Fixed the rand part in "Mysterious Documents" to match
 //=	 Aegis & fixed a bracket issue. [Capuche]
+//= 1.2 Updates Magic Books gained from Lea. [Aleos]
+//= 1.3 Fixes checkquest calls. [Everade]
+//= 1.4 Added EAJ_WARLOCK so that jobs after Warlock such as 
+//      Arch Mage can enter. [Mazvi]
 //============================================================ 
 
 // Main Quest :: war_book
@@ -34,7 +38,7 @@ geffen_in,176,105,4	script	Master Velofos	1_M_WIZARD,{
 		mes "I'm not here to babysit. Get lost!";
 		close;
 	}
-	if ((Class != Job_Warlock) && (Class != Job_Warlock_T) && (Class != Job_Baby_Warlock)) {
+	if ((eaclass()&EAJ_THIRDMASK)!=EAJ_WARLOCK) {
 		mes "[Master Velofos]";
 		mes "Ha ha, are you also seeking new knowledge?";
 		next;
@@ -274,10 +278,7 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 		mes "You're overweight with items. Please lose some item weight first.";
 		close;
 	}
-	if (wm_book > 0 && (Class == Job_Warlock || Class == Job_Warlock_T || Class == Job_Baby_Warlock)) {
-		mes "[Lea]";
-		mes "You can only read books here. If you'd like to borrow any books, please receive an approval from 1 manager and 1 High Mage.";
-		next;
+	if (wm_book > 0 && ((eaclass()&EAJ_THIRDMASK)==EAJ_WARLOCK)) {
 		mes "[Lea]";
 		mes "How may I help you?";
 		next;
@@ -285,181 +286,77 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 		mes "[Lea]";
 		mes "Are you borrowing a book?";
 		next;
-		switch (select("Let me think.:I want the Beginner's Magic Books.:I want the Intermediate Magic Books.:I want the Superior Magic Books.:I want the Ultimate Magic Book.")) {
+		switch (select("Let me think.:I want the Intermediate Magic Books.:I want the Superior Magic Books.:I want the Ultimate Magic Books.")) {
 		case 1:
 			mes "[Lea]";
 			mes "No problem.";
 			close;
 		case 2:
 			mes "[Lea]";
-			mes "We're in trouble because so many people want to borrow our Magic Books.";
+			mes "Ah, so you want the Intermediate Magic Books. If you pay a ^4d4dffloan deposit of 100,000z^000000, we will lend you an Intermediate Magic Books.";
 			next;
 			mes "[Lea]";
-			mes "Unfortunately, many of our lent books aren't returned on time. That's why we've decided to charge a security deposit.";
+			mes "What kind of Magic Book do you want?";
 			next;
-			select("A security deposit?");
+			set .@i, select("Let me think.:Magic Book (Storm Gust):Magic Book (Lord of Vermillion):Magic Book (Meteor Storm)")-1;
 			mes "[Lea]";
-			mes "Yes. You may pay a minimum of 10,000 Rune-Midgarts zeny. Alternatively, you can bring 2 Old Magic Books or 50 Old Pages. Once you pay the deposit, I'll let you borrow some Magic Books.";
-			next;
-			set .@Payment, select("Where can I find Old Magic Books and Old Pages?:I'll pay with zeny.:I'll pay with Old Magic Books.:I'll pay with Old Pages.")-1;
-			mes "[Lea]";
-			if (!.@Payment) {
-				mes "I heard that you can find them from Ride Words, Death Words, Bathorys, and other monsters. I ask that you please don't strain yourself to find those items.";
-				next;
-				mes "[Lea]";
-				mes "Your life is more important than anything else, you know?";
+			if (!.@i) {
+				mes "No problem.";
 				close;
 			}
-			if ((.@Payment == 1 && Zeny > 10000) || (.@Payment == 2 && countitem(1006) > 1) || (.@Payment == 3 && countitem(1097) > 49)) {
-				mes "What kind of Magic Book do you want?";
+			setarray .@Books[0],100065,100066,100067;
+			if (countitem(.@Books[.@i-1])) {
+				mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
 				next;
-				set .@i, select("Let me think.:Magic Book (Fire Bolt):Magic Book (Cold Bolt):Magic Book (Lightning Bolt)")-1;
 				mes "[Lea]";
-				if (!.@i) {
-					mes "No problem.";
-					close;
-				}
-				if (countitem(6188+.@i)) {
-					mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-					next;
-					mes "[Lea]";
-					mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-					close;
-				}
-				if ((.@Payment == 1 && Zeny > 10000) || (.@Payment == 2 && countitem(1006) > 1) || (.@Payment == 3 && countitem(1097) > 49)) {
-					mes "The book's return date is written on the lending card on the back cover of the book.";
-					next;
-					mes "[Lea]";
-					mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-					if (.@Payment == 1) set Zeny, Zeny - 10000;
-					else if (.@Payment == 2) delitem 1006,2; //Old_Magic_Book
-					else delitem 1097,50; //Worn_Out_Page
-					getitem 6188+.@i,1; //Magic_Book_FB, Magic_Book_CB, Magic_Book_LB
-					close;
-				}
+				mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
+				close;
 			}
-			mes "I'm sorry, but you don't have enough funds.";
+			if (Zeny > 99999) {
+				mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
+				next;
+				mes "[Lea]";
+				mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
+				Zeny -= 100000;
+				getitem .@Books[.@i-1],1; //WL_MB_SG, WL_MB_LOV, WL_MB_MS
+				close;
+			}
+			mes "The ^4d4dffloan deposit is 100,000z^000000. The deposit has adjusted as the Magic Book has changed.";
 			close;
 		case 3:
 			mes "[Lea]";
-			mes "Ah, so you want the Intermediate Magic Books. Please pay 50,000 Rune-Midgartian zeny, or you can bring me 2 Old Blue Boxes or 9 Eluniums to borrow the Intermediate Magic Books.";
+			mes "Oh, do you want the Superior Magic Books? The policy has been changed to accept loan deposits unconditionally, instead of the existing demanding loan conditions.";
+			mes "The Superior Magic Book ^4d4dffloan deposit is 500,000z^000000.";
 			next;
-			set .@Payment, select("Where can I find Old Blue Boxes and Eluniums?:I'll pay 50,000 zeny.:I'll pay with Old Blue Boxes.:I'll pay with Eluniums.")-1;
 			mes "[Lea]";
-			if (!.@Payment) {
-				mes "Old Blue Boxes are quite rare to find, but they can be obtained from monsters everywhere in the world, including Myst Cases, Megalogons, Mimics, Nightmares, Krabens, Requiems, Nine Tails, Noxiouses, and Byorgues.";
-				mes "If you have sufficient funds, you may buy the boxes from street vendors.";
-				next;
-				mes "[Lea]";
-				mes "Eluniums can be obtained from Hyeguns, Zombie Prisoners, Teddy Bears, Obsedians, and Loli Ruris. Or you can refine Rough Eluniums to Eluniums at the Forge in town, and that may be easier.";
+			mes "What kind of Magic Book do you want?";
+			next;
+			set .@i, select("Let me think.:Magic Book (Drain Life):Magic Book (Jack Frost):Magic Book (Earth Strain):Magic Book (Crimson Rock):Magic Book (Chain Lightning)")-1;
+			mes "[Lea]";
+			if (!.@i) {
+				mes "No problem.";
 				close;
 			}
-			if ((.@Payment == 1 && Zeny > 50000) || (.@Payment == 2 && countitem(603) > 1) || (.@Payment == 3 && countitem(985) > 8)) {
-				mes "What kind of Magic Book do you want?";
+			setarray .@Books[0],100068,100069,100070,100071,100072;
+			if (countitem(.@Books[.@i-1])) {
+				mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
 				next;
-				set .@i, select("Let me think.:Magic Book (Storm Gust):Magic Book (Lord of Vermillion):Magic Book (Meteor Storm):Magic Book (Thunderstorm):Magic Book (Jupitel Thunder):Magic Book (Water Ball):Magic Book (Heaven's Drive):Magic Book (Earth Spike)")-1;
-				setarray .@Books[0],6192,6193,6194,6197,6198,6199,6200,6201;
 				mes "[Lea]";
-				if (!.@i) {
-					mes "No problem.";
-					close;
-				}
-				if (countitem(.@Books[.@i-1])) {
-					mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-					next;
-					mes "[Lea]";
-					mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-					close;
-				}
-				if ((.@Payment == 1 && Zeny > 50000) || (.@Payment == 2 && countitem(603) > 1) || (.@Payment == 3 && countitem(985) > 8)) {
-					mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-					next;
-					mes "[Lea]";
-					mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-					if (.@Payment == 1) set Zeny, Zeny - 50000;
-					else if (.@Payment == 2) delitem 603,2; //Old_Blue_Box
-					else delitem 985,9; //Elunium
-					getitem .@Books[.@i-1],1; //Magic_Book_SG, Magic_Book_LOV, Magic_Book_MS, Magic_Book_TS, Magic_Book_JT, Magic_Book_WB, Magic_Book_HD, Magic_Book_ES
-					close;
-				}
+				mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
+				close;
 			}
-			mes "I'm sorry, but you don't have enough funds.";
+			if (Zeny > 499999) {
+				mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
+				next;
+				mes "[Lea]";
+				mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
+				Zeny -= 500000;
+				getitem .@Books[.@i-1],1; //WL_MB_DL, WL_MB_JF, WL_MB_ES, WL_MB_CR, WL_MB_CL
+				close;
+			}
+			mes "The ^4d4dffloan deposit is 500,000z^000000. The deposit has adjusted as the Magic Book has changed.";
 			close;
 		case 4:
-			mes "[Lea]";
-			mes "Oh, do you want the Superior Magic Books? For your information, borrowing those Magic Books requires many conditions and restrictions. Are you sure that you want it?";
-			next;
-			select("Yes.");
-			mes "[Lea]";
-			mes "I see. If you're determined to borrow the Superior Magic Books, please choose one of the following tyes of payment for the security deposit.";
-			next;
-			mes "[Lea]";
-			mes "[12 Mystery Pieces and 100,000 zeny], [7 Oridecons and 100,000 zeny], or [1 Old Violet Box and 100,000 zeny]. Now how would you like to pay your deposit?";
-			next;
-			set .@Payment, select("Where can I find those items?:Let me think.:I'll pay with 12 Mystery Pieces and 100,000 zeny.:I'll pay with 7 Oridecons and 100,000 zeny.:I'll pay with 1 Old Violet Box and 100,000 zeny.")-1;
-			mes "[Lea]";
-			if (!.@Payment) {
-				mes "Mystery Pieces can be obtained from machine creatures in the Juperos Dungeon, and they're the fountain of knowledge from the ancient civilization. Ah, I get excited thinking about those artifacts.";
-				next;
-				mes "[Lea]";
-				mes "Oridecons can be obtained from Executioners, Gryphons, Jokers, and Abysmal Knights, but it'll be easier to collect Rough Oridecons than Oridecons.";
-				next;
-				mes "[Lea]";
-				mes "You can refine Rough Oridecons to Oridecons at the Forge in town.";
-				next;
-				mes "[Lea]";
-				mes "Old Violet Boxes can be obtained from Mimics, Megaliths, Orc Lords, Stormy Knights, and Osirises.";
-				next;
-				mes "[Lea]";
-				mes "The boxes are a subject worthy of serious study since they're used to test Schrodinger's pet cat.";
-				close;
-			}
-			if (.@Payment == 1) {
-				mes "If you're unable to collect the items for the security deposit, I can offer you an alternate payment method.";
-				next;
-				mes "[Lea]";
-				mes "How does 200,000 Rune-Midgartian zeny sound?";
-				next;
-				if(select("I'm sorry, but I can't pay that much.:Sounds good.") == 1) {
-					mes "[Lea]";
-					mes "I see.";
-					close;
-				}
-				mes "[Lea]";
-			}
-			if ((.@Payment == 1 && Zeny > 199999) || (Zeny > 99999 && ((.@Payment == 2 && countitem(7094) > 11) || (.@Payment == 3 && countitem(984) > 6) || (.@Payment == 4 && countitem(617))))) {
-				mes "What kind of Magic Book do you want?";
-				next;
-				set .@i, select("Let me think.:Magic Book (Earth Strain):Magic Book (Chain Lightning):Magic Book (Crimson Rock):Magic Book (Drain Life)")-1;
-				mes "[Lea]";
-				if (!.@i) {
-					mes "No problem.";
-					close;
-				}
-				if (countitem(6201+.@i)) {
-					mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-					next;
-					mes "[Lea]";
-					mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-					close;
-				}
-				if ((.@Payment == 1 && Zeny > 199999) || (Zeny > 99999 && ((.@Payment == 2 && countitem(7094) > 11) || (.@Payment == 3 && countitem(984) > 6) || (.@Payment == 4 && countitem(617))))) {
-					mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-					next;
-					mes "[Lea]";
-					mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-					if (.@Payment == 1) set Zeny, Zeny - 200000;
-					else if (.@Payment == 2) delitem 7094,12; //Mystery_Piece
-					else if (.@Payment == 3) delitem 984,7; //Oridecon
-					else delitem 617,1; //Old_Violet_Box
-					if (.@Payment > 1) set Zeny, Zeny - 100000;
-					getitem 6201+.@i,1; //Magic_Book_ES_, Magic_Book_CL, Magic_Book_CR, Magic_Book_DL
-					close;
-				}
-			}
-			mes "I'm sorry, but you don't have enough funds.";
-			close;
-		case 5:
 			if ((BaseLevel > 139) && (mac_book < 1) && ((getskilllv(2217) > 0) || (getskilllv(2213) > 0))) {
 				mes "[Lea]";
 				mes "Did... Did you just say the Ultimate Magic Book?";
@@ -486,7 +383,7 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 				close;
 			}
 			mes "[Lea]";
-			mes "How about practicing your magic spells for now?";
+			mes "Well... why don't you practice a little longer before that?";
 			next;
 			mes "[Lea]";
 			mes "In order to obtain the Ultimate Magic Book, you must reach Level 140 and learn Tetera Bolt and Comet.";
@@ -516,7 +413,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 		mes "I'm not here to babysit. Get lost!";
 		close;
 	}
-	if ((Class != Job_Warlock) && (Class != Job_Warlock_T) && (Class != Job_Baby_Warlock)) {
+	if ((eaclass()&EAJ_THIRDMASK)!=EAJ_WARLOCK) {
 		mes "[Galfos]";
 		mes "My right arm feels hot while my left arm feels cold. I can never get used to this weird weather!";
 		close;
@@ -619,7 +516,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 		next;
 		set .@i, select("I've discovered everything about Comet.:I've mastered the zenith of Tetra Vortex.");
 		mes "[Galfos]";
-		if ((.@i == 1 && countitem(6195)) || (.@i == 2 && countitem(6196))) {
+		if ((.@i == 1 && countitem(100073)) || (.@i == 2 && countitem(100074))) {
 			mes "Are you kidding me? You already have the book!";
 			close;
 		}
@@ -630,7 +527,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 			mes "There's one problem, though: I'm so broke that I don't even have enough money to buy the tools to make the book.";
 			next;
 			mes "[Galfos]";
-			mes "I need at least ^0000aa1,000,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
+			mes "I need at least ^0000aa500,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
 			next;
 			if(select("Wh-what? No!:Sure.") == 1) {
 				mes "[Galfos]";
@@ -638,14 +535,14 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 				close;
 			}
 			mes "[Galfos]";
-			if (Zeny >= 1000000) {
+			if (Zeny >= 500000) {
 				mes "Alright then, let's get started!";
 				next;
 				specialeffect2 EF_DISPELL;
 				progressbar "ffff00",4;
 				specialeffect2 EF_LORD;
-				set Zeny, Zeny - 1000000;
-				getitem 6194+.@i,1; //Magic_Book_CM, Magic_Book_TV
+				set Zeny, Zeny - 500000;
+				getitem 100072+.@i,1; //WL_MB_CM, WL_MB_TV
 				mes "[Galfos]";
 				mes "Man, I almost lost my control to the incredible magic energy! Here's your Magic Book.";
 				next;
@@ -673,11 +570,11 @@ dic_in01,25,190,0	script	Mysterious Documents	CLEAR_NPC,{
 		mes "When you approach the documents, an Evil Giant that looks like the archive manager tries to call Guard Galton. You should get out of here quickly.";
 		close;
 	}
-	if (checkquest(12165,"PLAYTIME") == 1) {
+	if (checkquest(12165,PLAYTIME) == 1) {
 		mes "The documents are making you feel nauseous. You should come back later after your stomach settles.";
 		close;
 	}
-	if (checkquest(12165,"PLAYTIME") == 2) {
+	if (checkquest(12165,PLAYTIME) == 2) {
 		mes "You don't feel as nauseous anymore. It should be safe to proceed now.";
 		erasequest 12165;
 		close;

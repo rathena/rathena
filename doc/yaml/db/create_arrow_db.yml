@@ -1,0 +1,12 @@
+###########################################################################
+# Arrow Crafting Database
+###########################################################################
+#
+# Arrow Crafting Settings
+#
+###########################################################################
+# - Source              AegisName of the item that is consumed.
+#   Make:               List of item(s) received by the player.
+#     - Item            AegisName of the item received.
+#       Amount          Amount of Item received. (Use 0 to remove the Item on import)
+###########################################################################

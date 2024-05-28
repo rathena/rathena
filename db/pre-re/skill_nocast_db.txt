@@ -54,7 +54,6 @@
 530,4	//NJ_KIRIKAGE
 691,4	//CASH_ASSUMPTIO
 1013,4	//BS_GREED
-2284,4	//SC_FATALMENACE
 2300,4	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
@@ -91,7 +90,6 @@
 440,8	//SG_STAR_BLESS
 530,8	//NJ_KIRIKAGE
 691,8	//CASH_ASSUMPITO
-2284,8	//SC_FATALMENACE
 2300,8	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
@@ -118,7 +116,6 @@
 387,32	//WS_CARTBOOST
 389,32	//ST_CHASEWALK
 395,32	//CG_MOONLIT
-2284,32	//SC_FATALMENACE
 2300,32	//SC_DIMENSIONDOOR
 2478,32	//GN_CARTBOOST
 
@@ -133,7 +130,6 @@
 //----------------------------------------------------------------------------
 219,128 //RG_INTIMIDATE
 26,128	//AL_TELEPORT
-2284,128	//SC_FATALMENACE
 2300,128	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
@@ -150,7 +146,6 @@
 219,512	//RG_INTIMIDATE
 361,512	//HP_ASSUMPTIO
 691,512	//CASH_ASSUMPTIO
-2284,512	//SC_FATALMENACE
 2294,512	//SC_IGNORANCE
 2300,512	//SC_DIMENSIONDOOR
 
@@ -162,7 +157,6 @@
 219,1024	//RG_INTIMIDATE
 405,1024	//PF_SPIDERWEB
 674,1024	//NPC_EXPULSION
-2284,1024	//SC_FATALMENACE
 2294,1024	//SC_IGNORANCE
 2300,1024	//SC_DIMENSIONDOOR
 

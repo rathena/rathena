@@ -6,10 +6,13 @@
 //===== Changelogs: ==========================================
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added GVG TE Guild Dungeons. [Capuche]
+//= 1.2 Removed instances. [Lemongrass]
 //============================================================
 
-// Job Quests ====================
-// 3-1
+//============================================================
+// Job Quests
+//============================================================
+// 3-1 Classes
 job3_arch01	mapflag	nosave	SavePoint
 job3_arch02	mapflag	nosave	SavePoint
 job3_arch03	mapflag	nosave	SavePoint
@@ -23,14 +26,16 @@ job3_rune02	mapflag	nosave	SavePoint
 job3_rune03	mapflag	nosave	SavePoint
 job3_war01	mapflag	nosave	SavePoint
 job3_war02	mapflag	nosave	SavePoint
-// 3-2
+// 3-2 Classes
 job3_gen01	mapflag	nosave	SavePoint
-// Ext
+// Expanded Classes
 job3_sha01	mapflag	nosave	SavePoint
 job_ko	mapflag	nosave	SavePoint
 job_gun	mapflag	nosave	SavePoint
 
-//Guild Dungeons ==============================
+//============================================================
+// Guild Dungeons
+//============================================================
 gld_dun01_2	mapflag	nosave	SavePoint
 gld_dun02_2	mapflag	nosave	SavePoint
 gld_dun03_2	mapflag	nosave	SavePoint
@@ -42,7 +47,9 @@ gld2_prt	mapflag	nosave	SavePoint
 teg_dun01	mapflag	nosave	SavePoint
 teg_dun02	mapflag	nosave	SavePoint
 
-// WOE:Training Edition Castles =====
+//============================================================
+// WoE:TE Castles
+//============================================================
 te_prtcas01	mapflag	nosave	SavePoint
 te_prtcas02	mapflag	nosave	SavePoint
 te_prtcas03	mapflag	nosave	SavePoint
@@ -54,21 +61,14 @@ te_aldecas3	mapflag	nosave	SavePoint
 te_aldecas4	mapflag	nosave	SavePoint
 te_aldecas5	mapflag	nosave	SavePoint
 
-// Misty Forest Labyrinth =========
-1@mist	mapflag	nosave	SavePoint
-
-// Octopus Cave ===================
-1@cash	mapflag	nosave	SavePoint
-
-// Drain ==========================
-1@pump	mapflag	nosave	SavePoint
-2@pump	mapflag	nosave	SavePoint
-
-// Somatology Laboratory ==========
+//============================================================
+// Somatology Laboratory
+//============================================================
 que_lhz	mapflag	nosave	SavePoint
-1@lhz	mapflag	nosave	SavePoint
 
-// Port Malaya ====================
+//============================================================
+// Port Malaya
+//============================================================
 ma_zif01	mapflag	nosave	SavePoint
 ma_zif02	mapflag	nosave	SavePoint
 ma_zif03	mapflag	nosave	SavePoint
@@ -79,96 +79,22 @@ ma_zif07	mapflag	nosave	SavePoint
 ma_zif08	mapflag	nosave	SavePoint
 ma_zif09	mapflag	nosave	SavePoint
 
-// Bangungot Hospital F2 ==========
-1@ma_h	mapflag	nosave	SavePoint
-
-// Buwaya Cave ====================
-1@ma_c	mapflag	nosave	SavePoint
-
-// Bakonawa Hideout ===============
-1@ma_b	mapflag	nosave	SavePoint
-
-// Inside Eclage ==================
+//============================================================
+// Inside Eclage
+//============================================================
 que_avan01	mapflag	nosave	SavePoint
-1@ecl	mapflag	nosave	SavePoint
 
-// Glast Heim Memorial Dungeon ====
-1@gl_k	mapflag	nosave	SavePoint
-2@gl_k	mapflag	nosave	SavePoint
-
-// Wave Mode Memorial Dungeon =====
-1@def01	mapflag	nosave	SavePoint
-1@def02	mapflag	nosave	SavePoint
-1@def03	mapflag	nosave	SavePoint
-
-// Heroes' Trail - Part 1 ========
-1@face	mapflag	nosave	SavePoint
-1@sara	mapflag	nosave	SavePoint
-
-// Heroes' Trail - Part 2 ========
-1@ge_st	mapflag	nosave	SavePoint
-1@gef	mapflag	nosave	SavePoint
-1@gef_in	mapflag	nosave	SavePoint
-1@spa	mapflag	nosave	SavePoint
-1@tnm1	mapflag	nosave	SavePoint
-1@tnm2	mapflag	nosave	SavePoint
-1@tnm3	mapflag	nosave	SavePoint
-
-// Horror Toy Factory Memorial Dungeon
-1@xm_d	mapflag	nosave	SavePoint
-
-// Heroes' Trail - Part 3 ========
-1@glast	mapflag	nosave	SavePoint
-1@air1	mapflag	nosave	SavePoint
-1@air2	mapflag	nosave	SavePoint
-
-// Decisive Battle - Part 1 ======
-1@dth1	mapflag	nosave	SavePoint
-1@dth2	mapflag	nosave	SavePoint
-1@dth3	mapflag	nosave	SavePoint
-1@rev	mapflag	nosave	SavePoint
-
-// Decisive Battle - Part 2 ======
-1@eom	mapflag	nosave	SavePoint
-1@jtb	mapflag	nosave	SavePoint
-
+//============================================================
 // Episode 15 - Phantasmagorica
-1@lab	mapflag	nosave	SavePoint
-1@uns	mapflag	nosave	SavePoint
+//============================================================
 un_myst	mapflag	nosave	SavePoint
-1@mcd	mapflag	nosave	SavePoint
 
-// Ep 16
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
 que_swat	mapflag	nosave	SavePoint
-1@mir	mapflag	nosave	SavePoint
-2@mir	mapflag	nosave	SavePoint
-1@sthb	mapflag	nosave	SavePoint
-1@sthc	mapflag	nosave	SavePoint
-1@sthd	mapflag	nosave	SavePoint
-1@slw	mapflag	nosave	SavePoint
-1@swat	mapflag	nosave	SavePoint
 
+//============================================================
 // Rockridge
+//============================================================
 rockmi2	mapflag	nosave	SavePoint
-
-// Chicken Mode Nightmare Glastheim
-1@gl_k2	mapflag	nosave	SavePoint
-2@gl_k2	mapflag	nosave	SavePoint
-
-// Chicken Mode Horror Toy Factory
-1@xm_d2	mapflag	nosave	SavePoint
-
-// Suspicious shipwreck
-1@tre	mapflag	nosave	SavePoint
-
-// Poring Town
-1@begi	mapflag	nosave	SavePoint
-
-// Volcanic island Korodo
-1@crd	mapflag	nosave	SavePoint
-
-// Noodles Festival July
-1@drdo	mapflag	nosave	SavePoint
-
-// Soul Reaper Job Change
-1@soul	mapflag	nosave	SavePoint

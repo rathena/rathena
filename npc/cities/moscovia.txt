@@ -27,7 +27,7 @@
 		case 1:
 			mes "[Moscovia P.R. Officer]";
 			mes "Moscovia is a beautiful kingdom";
-			mes "on an island located north of Rune";
+			mes "on an island located north of Rune-";
 			mes "Midgarts.";
 			next;
 			mes "[Moscovia P.R. Officer]";
@@ -97,7 +97,7 @@ moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
 	mes "How was your trip?";
 	mes "Do you have good memories from Moscovia?";
 	mes "A ship is now leaving";
-	mes "for Rune Midgarts.";
+	mes "for Rune-Midgarts.";
 	next;
 	if (select("Return to Alberta:Cancel") == 2) {
 		mes "[Moscovia P.R. Officer]";

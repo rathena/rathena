@@ -7,6 +7,7 @@ Table of Contents
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Issue Labels](#issue-labels)
+  * [Local Development Environment](#local-development-environment)
   * [Become a Team Member](#become-a-team-member)
 
 Reporting Bugs
@@ -160,6 +161,13 @@ For the most part you as a user will have no reason to worry about the **Milesto
 [search-rathena-label-typeenhancement]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Aenhancement
 [search-rathena-label-typemaintenance]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Amaintenance
 [search-rathena-label-typequestion]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Aquestion
+
+Local Development Environment
+-----------------------------
+
+Developers can get up and running quickly with a Dockerized development environment that installs all dependencies needed to run and develop on rAthena.
+See [Docker documentation](https://github.com/rathena/rathena/blob/master/tools/docker/README.md) for details
+
 
 Become a Team Member
 --------------------

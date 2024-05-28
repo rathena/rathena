@@ -15,18 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
+##########################################################################
+# Storage Database
+##########################################################################
+#
+# Storage Settings
+#
+##########################################################################
+#	- ID                       Storage ID.
+#	  Name                     Storage name that will be sent to the client to display on the title bar.
+#	  Table                    Name of SQL table where storage is saved. The table structure is the same as the default storage table.
+#	  Max                      Maximum number of items. (Default: MAX_STORAGE)
 ###########################################################################
-# Config for Storages
-#
 # To access the premium storage, use script command 'openstorage2'.
-# If premium storages are added, copy the structure of the storage table and match the table name in this config.
-# The 'max' of premium storages are not adjusted by 'vip_storage_increase' config nor MIN_STORAGE.
-#
-# Structure:
-#	- ID: <storage_id>          // (int) Storage ID will be used for script command 'openstorage2'.
-#	  Name: "<storage name>"    // (string) Storage name will be sent to the client to display on the title bar.
-#	  Table: "<storage_table>"  // (string) Name of table where storage is saved. The table stucture is the same as the default storage table.
-#	  Max: <max_amount>         // (int) *optional* Maximum number of items in storage. MAX_STORAGE will be used if no value is defined.
+# If more premium storages are added, copy the structure of the storage table and match the table name in this config.
+# The 'Max' of premium storages are not adjusted by 'vip_storage_increase' config nor MIN_STORAGE.
+###########################################################################
 
 Header:
   Type: INTER_SERVER_DB
@@ -35,7 +39,7 @@ Header:
 Body:
   - ID: 0
     Name: "Storage"
-    Table: "storage"
+    Table: storage
 
 Footer:
   Imports:

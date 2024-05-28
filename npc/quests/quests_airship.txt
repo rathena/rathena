@@ -93,7 +93,7 @@ airplane,47,61,7	script	Crewman	4_M_ZONDAOYAJI,{
 				mes "[Kain Himere]";
 				mes "You know, scientific research";
 				mes "has made living easier and more";
-				mes "comfortable in the Schwaltzvalt";
+				mes "comfortable in the Schwarzwald";
 				mes "Republic, much in the way magic";
 				mes "research has changed life in the Rune-Midgarts Kingdom.";
 			}
@@ -2106,7 +2106,7 @@ airplane,236,163,5	script	Airship Captain#03	4_M_REINDEER,{
 		next;
 		mes "[Ferlock]";
 		mes "Haha, you must be surprised by this, huh? As you see, this book is a magic book which you do not need to turn the pages to find a specific page.";
-		mes "Well, this is how we, Schwaltzvalt Republicans adopt magic in their lives.";
+		mes "Well, this is how we, Schwarzwald Republicans adopt magic in their lives.";
 		next;
 		mes "[Ferlock]";
 		mes "My old friend has given me this....well, it is not important at this moment anyways.";
@@ -2303,7 +2303,7 @@ airplane,236,163,5	script	Airship Captain#03	4_M_REINDEER,{
 		mes "specializes in international";
 		mes "flights and suffers from the";
 		mes "Gremlin invasions, so we are";
-		mes "guessing the attackers are from outside the Schwaltzvalt Republic.";
+		mes "guessing the attackers are from outside the Schwarzwald Republic.";
 		next;
 		mes "[Ferlock]";
 		mes "In any case, that is all";
@@ -2727,7 +2727,7 @@ airplane,236,63,4	script	Hallen	4_M_KID1,{
 		mes "[Hallen]";
 		mes "The great Sage Varmunt...";
 		mes "It's a pretty well known";
-		mes "legend in the Schwaltzvalt";
+		mes "legend in the Schwarzwald";
 		mes "Republic. Anyway, for my";
 		mes "project, I wanted to learn";
 		mes "more about these Airships.";

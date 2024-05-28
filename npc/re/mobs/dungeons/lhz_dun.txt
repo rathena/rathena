@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= The Prometheus Project, rAthena Dev Team
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -23,12 +23,13 @@
 //= 1.8 Corrected MVP spawn variance (Labs2 MVP). [L0ne_W0lf]
 //= 1.9 Added Bio4 spawns. [Chilly]
 //= 2.0 Updated Bio4 spawns.
+//= 2.1 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================
 // lhz_dun01 - Somatology Laboratory
 //==================================================
-lhz_dun01,0,0	monster	Remover	1682,100,5000
+lhz_dun01,0,0	monster	Remover	1682,101,5000
 lhz_dun01,0,0	monster	Anopheles	1627,70,5000
 lhz_dun01,0,0	monster	Metaling	1613,50,5000
 lhz_dun01,0,0	monster	Kavach Icarus	1656,13,5000

@@ -3,353 +3,345 @@
 
 #include "pc_groups.hpp"
 
-#include "../common/conf.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp" // strcmp
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> // set_eof
+#include <common/strlib.hpp> // strcmpi
+#include <common/utilities.hpp>
 
 #include "atcommand.hpp" // AtCommandType
-#include "pc.hpp" // e_pc_permission
+#include "pc.hpp" // map_session_data
 
-typedef struct GroupSettings GroupSettings;
+using namespace rathena;
 
-// Cached config settings/pointers for quick lookup
-struct GroupSettings {
-	unsigned int id; // groups.[].id
-	int level; // groups.[].level
-	const char *name; // groups.[].name
-	config_setting_t *commands; // groups.[].commands
-	unsigned int e_permissions; // packed groups.[].permissions
-	bool log_commands; // groups.[].log_commands
-	/// Following are used only during config reading
-	config_setting_t *permissions; // groups.[].permissions
-	config_setting_t *inherit; // groups.[].inherit
-	bool inheritance_done; // have all inheritance rules been evaluated?
-	config_setting_t *root; // groups.[]
-	int group_pos;/* pos on load */
-};
-
-int pc_group_max; /* known number of groups */
-
-static config_t pc_group_config;
-static DBMap* pc_group_db; // id -> GroupSettings
-static DBMap* pc_groupname_db; // name -> GroupSettings
-
-/**
- * @retval NULL if not found
- * @private
- */
-static inline GroupSettings* id2group(int group_id)
-{
-	return (GroupSettings*)idb_get(pc_group_db, group_id);
+const std::string PlayerGroupDatabase::getDefaultLocation() {
+	return std::string( conf_path ) + "/groups.yml";
 }
 
-/**
- * @retval NULL if not found
- * @private
- */
-static inline GroupSettings* name2group(const char* group_name)
-{
-	return (GroupSettings*)strdb_get(pc_groupname_db, group_name);
-}
+bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<std::string>& commands ){
+	for( const auto& it : node.children() ){
+		std::string command;
 
-/**
- * Loads group configuration from config file into memory.
- * @private
- */
-static void read_config(void)
-{
-	config_setting_t *groups = NULL;
-	const char *config_filename = "conf/groups.conf"; // FIXME hardcoded name
-	int group_count = 0;
-	
-	if (conf_read_file(&pc_group_config, config_filename))
-		return;
+		c4::from_chars( it.key(), &command );
 
-	groups = config_lookup(&pc_group_config, "groups");
+		bool allowed;
 
-	if (groups != NULL) {
-		GroupSettings *group_settings = NULL;
-		DBIterator *iter = NULL;
-		int i, loop = 0;
-
-		group_count = config_setting_length(groups);
-		for (i = 0; i < group_count; ++i) {
-			int id = 0, level = 0;
-			const char *groupname = NULL;
-			int log_commands = 0;
-			config_setting_t *group = config_setting_get_elem(groups, i);
-
-			if (!config_setting_lookup_int(group, "id", &id)) {
-				ShowConfigWarning(group, "pc_groups:read_config: \"groups\" list member #%d has undefined id, removing...", i);
-				config_setting_remove_elem(groups, i);
-				--i;
-				--group_count;
-				continue;
-			}
-
-			if (id2group(id) != NULL) {
-				ShowConfigWarning(group, "pc_groups:read_config: duplicate group id %d, removing...", i);
-				config_setting_remove_elem(groups, i);
-				--i;
-				--group_count;
-				continue;
-			}
-
-			config_setting_lookup_int(group, "level", &level);
-			config_setting_lookup_bool(group, "log_commands", &log_commands);
-
-			if (!config_setting_lookup_string(group, "name", &groupname)) {
-				char temp[20];
-				config_setting_t *name = NULL;
-				snprintf(temp, sizeof(temp), "Group %d", id);
-				if ((name = config_setting_add(group, "name", CONFIG_TYPE_STRING)) == NULL ||
-				    !config_setting_set_string(name, temp)) {
-					ShowError("pc_groups:read_config: failed to set missing group name, id=%d, skipping... (%s:%d)\n",
-					          id, config_setting_source_file(group), config_setting_source_line(group));
-					continue;
-				}
-				config_setting_lookup_string(group, "name", &groupname); // Retrieve the pointer
-			}
-
-			if (name2group(groupname) != NULL) {
-				ShowConfigWarning(group, "pc_groups:read_config: duplicate group name %s, removing...", groupname);
-				config_setting_remove_elem(groups, i);
-				--i;
-				--group_count;
-				continue;
-			}
-
-			CREATE(group_settings, GroupSettings, 1);
-			group_settings->id = id;
-			group_settings->level = level;
-			group_settings->name = groupname;
-			group_settings->log_commands = log_commands != 0;
-			group_settings->inherit = config_setting_get_member(group, "inherit");
-			group_settings->commands = config_setting_get_member(group, "commands");
-			group_settings->permissions = config_setting_get_member(group, "permissions");
-			group_settings->inheritance_done = false;
-			group_settings->root = group;
-			group_settings->group_pos = i;
-
-			strdb_put(pc_groupname_db, groupname, group_settings);
-			idb_put(pc_group_db, id, group_settings);
-			
+		if( !this->asBool( node, command, allowed ) ){
+			return false;
 		}
-		group_count = config_setting_length(groups); // Save number of groups
-		
-		// Check if all commands and permissions exist
-		iter = db_iterator(pc_group_db);
-		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
-			config_setting_t *commands = group_settings->commands, *permissions = group_settings->permissions;
-			int count = 0, j;
 
-			// Make sure there is "commands" group
-			if (commands == NULL)
-				commands = group_settings->commands = config_setting_add(group_settings->root, "commands", CONFIG_TYPE_GROUP);
-			count = config_setting_length(commands);
+		if( !atcommand_exists( command.c_str() ) ){
+			this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
+			return false;
+		}
 
-			for (j = 0; j < count; ++j) {
-				config_setting_t *command = config_setting_get_elem(commands, j);
-				const char *name = config_setting_name(command);
-				if (!atcommand_exists(name)) {
-					ShowConfigWarning(command, "pc_groups:read_config: non-existent command name '%s', removing...", name);
-					config_setting_remove(commands, name);
-					--j;
-					--count;
-				}
+		util::tolower( command );
+
+		if( allowed ){
+			if( util::vector_exists( commands, command ) ){
+				this->invalidWarning( it, "Group already has command \"%s\". Please check your data.\n", command.c_str() );
+				return false;
+			}else{
+				commands.push_back( command );
 			}
-
-			// Make sure there is "permissions" group
-			if (permissions == NULL)
-				permissions = group_settings->permissions = config_setting_add(group_settings->root, "permissions", CONFIG_TYPE_GROUP);
-			count = config_setting_length(permissions);
-
-			for(j = 0; j < count; ++j) {
-				config_setting_t *permission = config_setting_get_elem(permissions, j);
-				const char *name = config_setting_name(permission);
-				int p;
-
-				ARR_FIND(0, ARRAYLENGTH(pc_g_permission_name), p, strcmp(pc_g_permission_name[p].name, name) == 0);
-				if (p == ARRAYLENGTH(pc_g_permission_name)) {
-					ShowConfigWarning(permission, "pc_groups:read_config: non-existent permission name '%s', removing...", name);
-					config_setting_remove(permissions, name);
-					--p;
-					--count;
-				}
+		}else{
+			if( !util::vector_exists( commands, command ) ){
+				this->invalidWarning( it, "Group does not have command \"%s\". Please check your data.\n", command.c_str() );
+				return false;
+			}else{
+				util::vector_erase_if_exists( commands, command );
 			}
 		}
-		dbi_destroy(iter);
-
-		// Apply inheritance
-		i = 0; // counter for processed groups
-		while (i < group_count) {
-			iter = db_iterator(pc_group_db);
-			for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
-				config_setting_t *inherit = NULL,
-				                 *commands = group_settings->commands,
-					             *permissions = group_settings->permissions;
-				int j, inherit_count = 0, done = 0;
-				
-				if (group_settings->inheritance_done) // group already processed
-					continue; 
-
-				if ((inherit = group_settings->inherit) == NULL ||
-				    (inherit_count = config_setting_length(inherit)) <= 0) { // this group does not inherit from others
-					++i;
-					group_settings->inheritance_done = true;
-					continue;
-				}
-				
-				for (j = 0; j < inherit_count; ++j) {
-					GroupSettings *inherited_group = NULL;
-					const char *groupname = config_setting_get_string_elem(inherit, j);
-
-					if (groupname == NULL) {
-						ShowConfigWarning(inherit, "pc_groups:read_config: \"inherit\" array member #%d is not a name, removing...", j);
-						config_setting_remove_elem(inherit,j);
-						continue;
-					}
-					if ((inherited_group = name2group(groupname)) == NULL) {
-						ShowConfigWarning(inherit, "pc_groups:read_config: non-existent group name \"%s\", removing...", groupname);
-						config_setting_remove_elem(inherit,j);
-						continue;
-					}
-					if (!inherited_group->inheritance_done)
-						continue; // we need to do that group first
-
-					// Copy settings (commands/permissions) that are not defined yet
-					if (inherited_group->commands != NULL) {
-						int l = 0, commands_count = config_setting_length(inherited_group->commands);
-						for (l = 0; l < commands_count; ++l)
-							config_setting_copy(commands, config_setting_get_elem(inherited_group->commands, l));
-					}
-
-					if (inherited_group->permissions != NULL) {
-						int l = 0, permissions_count = config_setting_length(inherited_group->permissions);
-						for (l = 0; l < permissions_count; ++l)
-							config_setting_copy(permissions, config_setting_get_elem(inherited_group->permissions, l));
-					}
-
-					++done; // copied commands and permissions from one of inherited groups
-				}
-				
-				if (done == inherit_count) { // copied commands from all of inherited groups
-					++i;
-					group_settings->inheritance_done = true; // we're done with this group
-				}
-			}
-			dbi_destroy(iter);
-
-			if (++loop > group_count) {
-				ShowWarning("pc_groups:read_config: Could not process inheritance rules, check your config '%s' for cycles...\n",
-				            config_filename);
-				break;
-			}
-		} // while(i < group_count)
-
-		// Pack permissions into GroupSettings.e_permissions for faster checking
-		iter = db_iterator(pc_group_db);
-		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
-			config_setting_t *permissions = group_settings->permissions;
-			int c, count = config_setting_length(permissions);
-
-			for (c = 0; c < count; ++c) {
-				config_setting_t *perm = config_setting_get_elem(permissions, c);
-				const char *name = config_setting_name(perm);
-				int val = config_setting_get_bool(perm);
-				int j;
-
-				if (val == 0) // does not have this permission
-					continue;
-				ARR_FIND(0, ARRAYLENGTH(pc_g_permission_name), j, strcmp(pc_g_permission_name[j].name, name) == 0);
-				group_settings->e_permissions |= pc_g_permission_name[j].permission;
-			}
-		}
-		dbi_destroy(iter);
 	}
 
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' groups in '" CL_WHITE "%s" CL_RESET "'.\n", group_count, config_filename);
+	return true;
+}
 
-	
-	if( ( pc_group_max = group_count ) ) {
-		DBIterator *iter = db_iterator(pc_group_db);
-		GroupSettings *group_settings = NULL;
-		int* group_ids = (int*)aMalloc( pc_group_max * sizeof(int) );
-		int i = 0;
-		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
-			group_ids[i++] = group_settings->id;
-		}
-		
-		atcommand_db_load_groups(group_ids);
-		
-		aFree(group_ids);
-		
-		dbi_destroy(iter);
+uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
+	uint32 groupId;
+
+	if( !this->asUInt32( node, "Id", groupId ) ){
+		return 0;
 	}
+
+	std::shared_ptr<s_player_group> group = this->find( groupId );
+	bool exists = group != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "Name", "Level" })) {
+			return 0;
+		}
+
+		group = std::make_shared<s_player_group>();
+		group->id = groupId;
+		group->permissions.reset();
+	}
+
+	if( this->nodeExists( node, "Name" ) ){
+		std::string name;
+
+		if( !this->asString( node, "Name", name ) ){
+			return 0;
+		}
+
+		group->name = name;
+	}
+
+	if( this->nodeExists( node, "Level" ) ){
+		uint32 level;
+
+		if( !this->asUInt32( node, "Level", level ) ){
+			return 0;
+		}
+
+		if (level > 99) {
+			this->invalidWarning(node["Level"], "Group level %u exceeds 99, capping.\n", level);
+			level = 99;
+		}
+
+		group->level = level;
+	}
+
+	if( this->nodeExists( node, "LogCommands" ) ){
+		bool log;
+
+		if( !this->asBool( node, "LogCommands", log ) ){
+			return 0;
+		}
+
+		group->log_commands = log;
+	}else{
+		if( !exists ){
+			group->log_commands = false;
+		}
+	}
+
+	if( this->nodeExists( node, "Commands" ) && !this->parseCommands( node["Commands"], group->commands ) ){
+		return 0;
+	}
+
+	if( this->nodeExists( node, "CharCommands" ) && !this->parseCommands( node["CharCommands"], group->char_commands ) ){
+		return 0;
+	}
+
+	if( this->nodeExists( node, "Permissions" ) ){
+		const auto& permissions = node["Permissions"];
+
+		for( const auto& it : permissions ){
+			std::string permission;
+
+			c4::from_chars( it.key(), &permission );
+
+			bool allowed;
+
+			if( !this->asBool( permissions, permission, allowed ) ){
+				return 0;
+			}
+
+			const char* str = permission.c_str();
+			bool found = false;
+
+			for( const auto& permission_name : pc_g_permission_name ){
+				if( strcmpi( "all_permission", str ) == 0 ){
+					if( allowed ){
+						group->permissions.set();
+					}else{
+						group->permissions.reset();
+					}
+
+					found = true;
+					break;
+				}else if( strcmpi( permission_name.name, str ) == 0 ){
+					if( allowed ){
+						group->permissions.set( permission_name.permission );
+					}else{
+						group->permissions.reset( permission_name.permission );
+					}
+
+					found = true;
+					break;
+				}
+			}
+
+			if( !found ){
+				this->invalidWarning( it, "Unknown permission: %s\n", str );
+				return 0;
+			}
+		}
+	}
+
+	if( this->nodeExists( node, "Inherit" ) ){
+		const auto& inherits = node["Inherit"];
+
+		auto& inheritanceVector = this->inheritance[groupId];
+
+		for( const auto& it : inherits ){
+			std::string inherit;
+
+			c4::from_chars( it.key(), &inherit );
+
+			bool enable;
+
+			if( !this->asBool( inherits, inherit, enable ) ){
+				return 0;
+			}
+
+			util::tolower( inherit );
+
+			if( enable ){
+				if( !util::vector_exists( inheritanceVector, inherit ) ){
+					inheritanceVector.push_back( inherit );
+				}
+			}else{
+				if( !util::vector_exists( inheritanceVector, inherit ) ){
+					this->invalidWarning( it, "Trying to remove inheritance of non-inherited group %s\n", inherit.c_str() );
+					return 0;
+				}
+
+				util::vector_erase_if_exists( inheritanceVector, inherit );
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( groupId, group );
+	}
+
+	return 1;
 }
 
-/**
- * Removes group configuration from memory.
- * @private
- */
-static void destroy_config(void)
-{
-	config_destroy(&pc_group_config);
+void PlayerGroupDatabase::loadingFinished(){
+	static const int MAX_CYCLES = 10;
+	int i;
+
+	for( i = 0; i < MAX_CYCLES; i++ ){
+		auto inheritanceIt = this->inheritance.begin();
+
+		while( inheritanceIt != this->inheritance.end() ){
+			auto& entry = *inheritanceIt;
+
+			if( entry.second.empty() ){
+				inheritanceIt = this->inheritance.erase( inheritanceIt );
+				continue;
+			}
+
+			std::shared_ptr<s_player_group> group = this->find( entry.first );
+
+			auto it = entry.second.begin();
+
+			while( it != entry.second.end() ){
+				std::string& otherName = *it;
+				bool found = false;
+				bool inherited = false;
+
+				for( const auto& it : *this ){
+					std::shared_ptr<s_player_group> otherGroup = it.second;
+					// Copy the string
+					std::string otherGroupName = otherGroup->name;
+
+					util::tolower( otherGroupName );
+
+					if( otherName == otherGroupName ){
+						found = true;
+
+						auto* otherGroupInheritance = util::map_find( this->inheritance, otherGroup->id );
+
+						if( otherGroupInheritance != nullptr && !otherGroupInheritance->empty() ){
+							// Try it again in the next cycle
+							break;
+						}
+
+						// Inherit atcommands
+						for( auto& command : otherGroup->commands ){
+							if( !util::vector_exists( group->commands, command ) ){
+								group->commands.push_back( command );
+							}
+						}
+
+						// Inherit charcommands
+						for( auto& command : otherGroup->char_commands ){
+							if( !util::vector_exists( group->char_commands, command ) ){
+								group->char_commands.push_back( command );
+							}
+						}
+
+						// Inherit permissions
+						group->permissions |= otherGroup->permissions;
+
+						inherited = true;
+						break;
+					}
+				}
+
+				if( inherited ){
+					it = entry.second.erase( it );
+					continue;
+				}else if( !found ){
+					ShowError( "Inherited group \"%s\" for group id %u does not exist.\n", otherName.c_str(), group->id );
+					it = entry.second.erase( it );
+					continue;
+				}else{
+					it++;
+				}
+			}
+		}
+
+		if( this->inheritance.empty() ){
+			break;
+		}
+	}
+
+	if( i == MAX_CYCLES && !this->inheritance.empty() ){
+		ShowError( "Could not process inheritance rules, check your config for cycles...\n" );
+	}
+
+	// Not needed anymore
+	this->inheritance.clear();
+
+	uint32 index = 0;
+	for( auto& it : *this ){
+		it.second->index = index++;
+	}
+
+	// Initialize command cache
+	atcommand_db_load_groups();
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
-/**
- * In group configuration file, setting for each command is either
- * <commandname> : <bool> (only atcommand), or
- * <commandname> : [ <bool>, <bool> ] ([ atcommand, charcommand ])
- * Maps AtCommandType enums to indexes of <commandname> value array,
- * COMMAND_ATCOMMAND (1) being index 0, COMMAND_CHARCOMMAND (2) being index 1.
- * @private
- */
-static inline int AtCommandType2idx(AtCommandType type) { return (type-1); }
+PlayerGroupDatabase player_group_db;
 
 /**
  * Checks if player group can use @/#command
- * @param group_id ID of the group
  * @param command Command name without @/# and params
  * @param type enum AtCommanndType { COMMAND_ATCOMMAND = 1, COMMAND_CHARCOMMAND = 2 }
  */
-bool pc_group_can_use_command(int group_id, const char *command, AtCommandType type)
-{
-	int result = 0;
-	config_setting_t *commands = NULL;
-	GroupSettings *group = NULL;
-
-	if (pc_group_has_permission(group_id, PC_PERM_USE_ALL_COMMANDS))
+bool s_player_group::can_use_command( const std::string& command, AtCommandType type ){
+	if( this->has_permission( PC_PERM_USE_ALL_COMMANDS ) ){
 		return true;
-
-	if ((group = id2group(group_id)) == NULL)
-		return false;
-
-	commands = group->commands;
-	if (commands != NULL) {
-		config_setting_t *cmd = NULL;
-		
-		// <commandname> : <bool> (only atcommand)
-		if (type == COMMAND_ATCOMMAND && config_setting_lookup_bool(commands, command, &result))
-			return result != 0;
-
-		// <commandname> : [ <bool>, <bool> ] ([ atcommand, charcommand ])
-		if ((cmd = config_setting_get_member(commands, command)) != NULL &&
-		    config_setting_is_aggregate(cmd) && config_setting_length(cmd) == 2)
-			return config_setting_get_bool_elem(cmd, AtCommandType2idx(type)) != 0;
 	}
+
+	std::string command_lower = command;
+
+	util::tolower( command_lower );
+
+	switch( type ){
+		case COMMAND_ATCOMMAND:
+			return util::vector_exists( this->commands, command_lower );
+		case COMMAND_CHARCOMMAND:
+			return util::vector_exists( this->char_commands, command_lower );
+	}
+
 	return false;
 }
+
 /**
  * Load permission for player based on group id
  * @param sd Player
  */
-void pc_group_pc_load(struct map_session_data * sd) {
-	GroupSettings *group = NULL;
-	if ((group = id2group(sd->group_id)) == NULL) {
+void pc_group_pc_load(map_session_data * sd) {
+	std::shared_ptr<s_player_group> group = player_group_db.find( sd->group_id );
+
+	if( group == nullptr ){
 		ShowWarning("pc_group_pc_load: %s (AID:%d) logged in with unknown group id (%d)! kicking...\n",
 					sd->status.name,
 					sd->status.account_id,
@@ -357,108 +349,50 @@ void pc_group_pc_load(struct map_session_data * sd) {
 		set_eof(sd->fd);
 		return;
 	}
-	sd->permissions = group->e_permissions;
-	sd->group_pos = group->group_pos;
-	sd->group_level = group->level;
+
+	sd->group = group;
+	sd->permissions = group->permissions;
 }
+
 /**
  * Checks if player group has a permission
- * @param group_id ID of the group
  * @param permission permission to check
  */
-bool pc_group_has_permission(int group_id, int permission)
-{
-	GroupSettings *group = NULL;
-	return (group = id2group(group_id)) == NULL ? false : (group->e_permissions&permission) != 0;
+bool s_player_group::has_permission( e_pc_permission permission ){
+	return this->permissions.test( permission );
 }
 
 /**
  * Checks commands used by player group should be logged
- * @param group_id ID of the group
  */
-bool pc_group_should_log_commands(int group_id)
-{
-	GroupSettings *group = NULL;
-	return (group = id2group(group_id)) == NULL ? false : group->log_commands;
+bool s_player_group::should_log_commands(){
+	return this->log_commands;
 }
 
 /**
- * Checks if player group with given ID exists.
- * @param group_id group id
- * @returns true if group exists, false otherwise
+ * Initialize PC Groups and read config.
  */
-bool pc_group_exists(int group_id)
-{
-	return idb_exists(pc_group_db, group_id);
+void do_init_pc_groups( void ){
+	player_group_db.load();
 }
 
 /**
- * Group ID -> group name lookup. Used only in @who atcommands.
- * @param group_id group id
- * @return group name
- * @public
+ * Finalize PC Groups
  */
-const char* pc_group_id2name(int group_id)
-{
-	GroupSettings *group = id2group(group_id);
-	if (group == NULL)
-		return "Non-existent group!";
-	return group->name;
-}
-
-/**
- * Group ID -> group level lookup. A way to provide backward compatibility with GM level system.
- * @param group id
- * @return group level
- * @public
- */
-int pc_group_id2level(int group_id)
-{
-	GroupSettings *group = id2group(group_id);
-	if (group == NULL)
-		return 0;
-	return group->level;
-}
-
-/**
- * Initialize PC Groups: allocate DBMaps and read config.
- * @public
- */
-void do_init_pc_groups(void)
-{
-	pc_group_db = idb_alloc(DB_OPT_RELEASE_DATA);
-	pc_groupname_db = stridb_alloc(DB_OPT_DUP_KEY, 0);
-	read_config();
-}
-
-/**
- * Finalize PC Groups: free DBMaps and config.
- * @public
- */
-void do_final_pc_groups(void)
-{
-	if (pc_group_db != NULL)
-		db_destroy(pc_group_db);
-	if (pc_groupname_db != NULL )
-		db_destroy(pc_groupname_db);
-	destroy_config();
+void do_final_pc_groups( void ){
+	player_group_db.clear();
 }
 
 /**
  * Reload PC Groups
  * Used in @reloadatcommand
- * @public
  */
-void pc_groups_reload(void) {
-	struct map_session_data* sd = NULL;
-	struct s_mapiterator* iter;
-
-	do_final_pc_groups();
-	do_init_pc_groups();
+void pc_groups_reload( void ){
+	player_group_db.reload();
 	
 	/* refresh online users permissions */
-	iter = mapit_getallusers();
-	for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))	{
+	struct s_mapiterator* iter = mapit_getallusers();
+	for( map_session_data* sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ){
 		pc_group_pc_load(sd);
 	}
 	mapit_free(iter);

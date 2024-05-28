@@ -815,14 +815,14 @@ OnTimer300000:
 yuno,146,168,0	script	Karian#cmd2	486,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	stopnpctimer;
 	end;
 OnTimer100000:
@@ -1559,7 +1559,7 @@ comodo,159,316,4	script	Woman Roasting Meat	701,{
 		mes "Finally, he became exhausted and he wanted to go somewhere quiet.";
 		next;
 		mes "[Woman Roasting Meat]";
-		mes "I told him that there was a quiet place near Morroc, and he left.";
+		mes "I told him that there was a quiet place near Morocc, and he left.";
 		next;
 		mes "[Woman Roasting Meat]";
 		mes "I regret that.";
@@ -1571,7 +1571,7 @@ comodo,159,316,4	script	Woman Roasting Meat	701,{
 		close;
 	} else if (job_min == 20) {
 		mes "Where is the quiet place?";
-		mes "Well I'm not sure but there is a mysterious building in south-eastern part of Morroc.";
+		mes "Well I'm not sure but there is a mysterious building in south-eastern part of Morocc.";
 		next;
 		mes "[Woman Roasting Meat]";
 		mes "I heard that some mysterious people gather there.";
@@ -1710,7 +1710,7 @@ OnTouch:
 		mes "Why don't we go back to Prontera?";
 		next;
 		mes "[Karian]";
-		mes "I can't get rid of the the memories that I was impressed with when I entered Prontera's gates.";
+		mes "I can't get rid of the memories that I was impressed with when I entered Prontera's gates.";
 		set job_min,22;
 		changequest 11153,11154;
 		donpcevent "Karian#cmd8::OnDisable";

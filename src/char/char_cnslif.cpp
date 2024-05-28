@@ -3,14 +3,14 @@
 
 #include "char_cnslif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
-#include "../common/cli.hpp"
-#include "../common/ers.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/timer.hpp"
+#include <common/cli.hpp>
+#include <common/ers.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/timer.hpp>
 
 #include "char.hpp"
 
@@ -47,7 +47,7 @@ TIMER_FUNC(cnslif_console_timer){
 	memset(buf,0,MAX_CONSOLE_IN); //clear out buf
 
 	if(cli_hasevent()){
-		if(fgets(buf, MAX_CONSOLE_IN, stdin)==NULL)
+		if(fgets(buf, MAX_CONSOLE_IN, stdin)==nullptr)
 			return -1;
 		else if(strlen(buf)>MIN_CONSOLE_IN)
 			cnslif_parse(buf);
@@ -74,7 +74,7 @@ int cnslif_parse(const char* buf)
 
 	if( n == 2 && strcmpi("server", type) == 0 ){
 		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-			runflag = 0;
+			global_core->signal_shutdown();
 		}
 		else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 			ShowInfo(CL_CYAN "Console: " CL_BOLD "I'm Alive." CL_RESET "\n");

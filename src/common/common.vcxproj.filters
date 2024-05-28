@@ -56,6 +56,9 @@
     <ClInclude Include="nullpo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="packets.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -145,9 +148,9 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClInclude Include="winapi.cpp">
+    <ClCompile Include="winapi.cpp">
       <Filter>Source Files</Filter>
-    </ClInclude>
+    </ClCompile>
     <ClCompile Include="utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

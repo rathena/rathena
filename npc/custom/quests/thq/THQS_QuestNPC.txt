@@ -173,8 +173,8 @@ N_JobList2:
 	mes "^FF0000------------------^000000";
 	mes "I do not know much about this quest.";
 	mes " ";
-	mes "A strange man came in here yesterday and asked me to deliver this ^FF0000Strange Letter^000000 to some woman in Morroc. Knowing us we do not ask questions so you must take care of this delivery.";
-	mes "The Woman is in located in Morroc and her name is Erika.";
+	mes "A strange man came in here yesterday and asked me to deliver this ^FF0000Strange Letter^000000 to some woman in Morocc. Knowing us we do not ask questions so you must take care of this delivery.";
+	mes "The Woman is in located in Morocc and her name is Erika.";
 	getitem 1072,1; //Delivery_Message
 	set two_qset, 1;
 	goto L_QuestGiven;
@@ -245,7 +245,7 @@ N_ProntCulvert:
 N_CoalMine:
 	mes "^FF0000Trouble at the Coal Mine^000000";
 	mes "^FF0000************************^000000";
-	mes "The fun...err...trouble never stops in Rune Midgard.";
+	mes "The fun...err...trouble never stops in Rune-Midgarts.";
 	mes " ";
 	mes "Recently there was an accident at the coal mines. There was a huge chasm that released some undead Evil Druids.";
 	next;
@@ -441,7 +441,7 @@ N_Delivery4:
 	mes "^FF0000----------------^000000";
 	mes "Well yah box delivering is in high demand,lots of lazy people.";
 	mes " ";
-	mes "Take this package to a man in Morroc named Klye.";
+	mes "Take this package to a man in Morocc named Klye.";
 	getitem 1081,1; //Delivery_Box
 	set eight_qset,2;
 	goto L_QuestGiven;
@@ -518,7 +518,7 @@ N_JobList10:
 
 	mes "^FF0000The Blank Box^000000";
 	mes "^FF0000-------------^000000";
-	mes "Package to Morroc";
+	mes "Package to Morocc";
 	mes " ";
 	mes "There is nothing written on this box but a notice to deliver it to a man Kreg.";
 	getitem 1082,1; //Delivery_Box_

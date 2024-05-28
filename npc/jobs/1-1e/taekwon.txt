@@ -81,7 +81,7 @@
 				mes "How unfortunate!";
 				mes "You're not yet ready to";
 				mes "begin training under my";
-				mes "tutelege with your current";
+				mes "tutelage with your current";
 				mes "Job Level. Please return when you reach Job Level 9 or higher.";
 				close;
 			}
@@ -350,7 +350,7 @@
 			mes "Very well. You are no";
 			mes "longer just a student.";
 			mes "You are now entrusted with";
-			mes "the powers and responsibilites";
+			mes "the powers and responsibilities";
 			mes "of a disciple of ^FF0000Taekwon Do^000000.";
 			next;
 			mes "[Phoenix]";

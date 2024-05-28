@@ -154,7 +154,7 @@ L_Details:
 		next;
 		mes "Regarding the project, we need to research monster's reactions when they are wrapped with Rotten Bandages.";
 		next;
-		mes "If you are interested, please hunt 30 Mummies and bring 30 Rotten Bandages. You can find them in the Pyramid West of Morroc.";
+		mes "If you are interested, please hunt 30 Mummies and bring 30 Rotten Bandages. You can find them in the Pyramid West of Morocc.";
 		next;
 		mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
 		next;
@@ -165,7 +165,7 @@ L_Details:
 		next;
 		mes "Alligators have gone wild these days, they attack women and drunken people who hang out near the beach.";
 		next;
-		mes "This is a very shameful situation for us, the most wonderful vacation spot in Rune-Midgard.";
+		mes "This is a very shameful situation for us, the most wonderful vacation spot in Rune-Midgarts.";
 		next;
 		mes "So, it would be very helpful if you hunt 30 Alligators to clean out this situation.";
 		next;
@@ -223,9 +223,9 @@ L_Details:
 		mes "-- Payon town hall members --";
 		break;
 	case 3256:
-		mes "This mission is assigned by the Morroc blacksmith Aragham.";
+		mes "This mission is assigned by the Morocc blacksmith Aragham.";
 		next;
-		mes "Hello~~~~, Adventurers! This is Aragham, the hottest blacksmith in Morroc!";
+		mes "Hello~~~~, Adventurers! This is Aragham, the hottest blacksmith in Morocc!";
 		next;
 		mes "Anyway, I have a son named Aragam Junior, the cute one. Haha.";
 		next;
@@ -241,7 +241,7 @@ L_Details:
 		next;
 		mes "PS. Do not compare me with Hollgrehenn or Antonio!!!!";
 		next;
-		mes "-- The hottest blacksmith, Morroc blacksmith Aragham --";
+		mes "-- The hottest blacksmith, Morocc blacksmith Aragham --";
 		break;
 	case 3257:
 		mes "This mission is assigned by an inventor Dorian from Izlude.";
@@ -327,13 +327,13 @@ L_Details:
 		mes "- Payon Cheese Dongja -";
 		break;
 	case 3262:
-		mes "This mission is assigned by a gem dealer, Ibraham from Morroc.";
+		mes "This mission is assigned by a gem dealer, Ibraham from Morocc.";
 		next;
 		mes "A small beautiful flower in the barren desert... What an incredible scene it would be!";
 		next;
 		mes "Planting flowers can make the world green and it will be so pretty everywhere.";
 		next;
-		mes "I plan to plant strong flowers in the Morroc desert so the soil gets better.";
+		mes "I plan to plant strong flowers in the Morocc desert so the soil gets better.";
 		next;
 		mes "I need 40 Maneater Blossom from Flora, I know Maneater Blossom is an ugly flower, but still it is a plant.";
 		next;
@@ -341,7 +341,7 @@ L_Details:
 		next;
 		mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
 		next;
-		mes "-- Morroc Ibraham --";
+		mes "-- Morocc Ibraham --";
 		break;
 	case 3263:
 		mes "This mission is assigned by the Payon blacksmith Antonio.";

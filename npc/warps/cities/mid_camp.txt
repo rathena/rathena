@@ -15,7 +15,7 @@
 //= 1.1 Fixed a small bug by brianlew, bugreport:1824 [Brainstorm]
 //= 1.2 Corrected the observatory warp portal, thanks to Ziu. [brianluau]
 //= 1.3 Added warps, and also Updated warp positions. [L0ne_W0lf]
-//= 1.4 Removed the warp from midgard camp to morroc field. [L0ne_W0lf]
+//= 1.4 Removed the warp from midgard camp to Morocc field. [L0ne_W0lf]
 //= 1.5 Remove a warp. [Joseph]
 //============================================================
 

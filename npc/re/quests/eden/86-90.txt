@@ -131,13 +131,13 @@ moc_para01,48,175,3	script	86-90 Mission Board	857,{
 		next;
 		switch(select("^0000FFBaba Yaga^000000:^0000FFYao Jun^000000:^0000FFFirelock Soldier^000000:^0000FFZipper Bear^000000")) {
 			case 1: callsub L_Quest,4172,"Baba Yaga",72000,"","The witch Baba Yaga can be found in the outskirts of Moscovia.";
-			case 2: callsub L_Quest,4173,"Yao Jun",117000,"혜군카드","There are human-like monsters that roam around the dungeon in Louyang.";
+			case 2: callsub L_Quest,4173,"Yao Jun",117000,"혜군카드","There are human-like monsters that roam around the dungeon in Luoyang.";
 			case 3: callsub L_Quest,4174,"Firelock Soldier",82000,"구식조총병카드","There are human-like monsters that roam around the dungeon in Amatsu.","s";
 			case 4: callsub L_Quest,4175,"Zipper Bear",120000,"지퍼베어카드","There are bear monsters swarming in the Kunlun dungeon.";
 		}
 	case 4:
 		mes "[86-90 Mission Board]";
-		mes "Here is a list of random requests to hunt monsters in other regions of Rune Midgard.";
+		mes "Here is a list of random requests to hunt monsters in other regions of Midgard.";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFGround Petite^000000:^0000FFRafflesia^000000:^0000FFVenomous^000000:^0000FFPitman^000000:^0000FFYellow Novus^000000")) {

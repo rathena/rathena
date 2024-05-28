@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Official Skill Resetter Event in Yuno (kRO & idRO)
+//= Official Skill Resetter Event in Juno (kRO & idRO)
 //===== By: ================================================== 
 //= $ephiroth
 //===== Current Version: ===================================== 
