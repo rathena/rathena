@@ -1263,6 +1263,8 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 		return 1;
 	}
 
+	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume [ultramage]
+
 	std::shared_ptr<s_pet_db> pet = pet_db.find(md->mob_id);
 
 	// If the target is a valid pet, we have a few exceptions
