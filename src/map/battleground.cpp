@@ -720,7 +720,7 @@ int bg_team_get_id(struct block_list *bl)
  * @param mes: Message
  * @param len: Message length
  */
-void bg_send_message(map_session_data *sd, const char *mes, int len)
+void bg_send_message(map_session_data *sd, const char *mes, size_t len)
 {
 	nullpo_retv(sd);
 

@@ -42,8 +42,8 @@
 
 #include "ers.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp" // CREATE, RECREATE, aMalloc, aFree
@@ -118,8 +118,8 @@ struct ers_instance_t {
 
 
 // Array containing a pointer for all ers_cache structures
-static ers_cache_t *CacheList = NULL;
-static struct ers_instance_t *InstanceList = NULL;
+static ers_cache_t *CacheList = nullptr;
+static struct ers_instance_t *InstanceList = nullptr;
 
 /**
  * @param Options the options from the instance seeking a cache, we use it to give it a cache with matching configuration
@@ -134,8 +134,8 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	CREATE(cache, ers_cache_t, 1);
 	cache->ObjectSize = size;
 	cache->ReferenceCount = 0;
-	cache->ReuseList = NULL;
-	cache->Blocks = NULL;
+	cache->ReuseList = nullptr;
+	cache->Blocks = nullptr;
 	cache->Free = 0;
 	cache->Used = 0;
 	cache->UsedObjs = 0;
@@ -143,7 +143,7 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 	cache->ChunkSize = ERS_BLOCK_ENTRIES;
 	cache->Options = (enum ERSOptions)(Options & ERS_CACHE_OPTIONS);
 
-	if (CacheList == NULL)
+	if (CacheList == nullptr)
 	{
 		CacheList = cache;
 	}
@@ -152,7 +152,7 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 		cache->Next = CacheList;
 		cache->Next->Prev = cache;
 		CacheList = cache;
-		CacheList->Prev = NULL;
+		CacheList->Prev = nullptr;
 	}
 
 	return cache;
@@ -183,12 +183,12 @@ static void *ers_obj_alloc_entry(ERS *self)
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 	void *ret;
 
-	if (instance == NULL) {
-		ShowError("ers_obj_alloc_entry: NULL object, aborting entry freeing.\n");
-		return NULL;
+	if (instance == nullptr) {
+		ShowError("ers_obj_alloc_entry: nullptr object, aborting entry freeing.\n");
+		return nullptr;
 	}
 
-	if (instance->Cache->ReuseList != NULL) {
+	if (instance->Cache->ReuseList != nullptr) {
 		ret = (void *)((unsigned char *)instance->Cache->ReuseList + sizeof(struct ers_list));
 		instance->Cache->ReuseList = instance->Cache->ReuseList->Next;
 	} else if (instance->Cache->Free > 0) {
@@ -218,11 +218,11 @@ static void ers_obj_free_entry(ERS *self, void *entry)
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 	struct ers_list *reuse = (struct ers_list *)((unsigned char *)entry - sizeof(struct ers_list));
 
-	if (instance == NULL) {
-		ShowError("ers_obj_free_entry: NULL object, aborting entry freeing.\n");
+	if (instance == nullptr) {
+		ShowError("ers_obj_free_entry: nullptr object, aborting entry freeing.\n");
 		return;
-	} else if (entry == NULL) {
-		ShowError("ers_obj_free_entry: NULL entry, nothing to free.\n");
+	} else if (entry == nullptr) {
+		ShowError("ers_obj_free_entry: nullptr entry, nothing to free.\n");
 		return;
 	}
 
@@ -239,8 +239,8 @@ static size_t ers_obj_entry_size(ERS *self)
 {
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 
-	if (instance == NULL) {
-		ShowError("ers_obj_entry_size: NULL object, aborting entry freeing.\n");
+	if (instance == nullptr) {
+		ShowError("ers_obj_entry_size: nullptr object, aborting entry freeing.\n");
 		return 0;
 	}
 
@@ -251,8 +251,8 @@ static void ers_obj_destroy(ERS *self)
 {
 	struct ers_instance_t *instance = (struct ers_instance_t *)self;
 
-	if (instance == NULL) {
-		ShowError("ers_obj_destroy: NULL object, aborting entry freeing.\n");
+	if (instance == nullptr) {
+		ShowError("ers_obj_destroy: nullptr object, aborting entry freeing.\n");
 		return;
 	}
 
@@ -315,13 +315,13 @@ ERS *ers_new(uint32 size, const char *name, enum ERSOptions options)
 
 	instance->Cache->ReferenceCount++;
 
-	if (InstanceList == NULL) {
+	if (InstanceList == nullptr) {
 		InstanceList = instance;
 	} else {
 		instance->Next = InstanceList;
 		instance->Next->Prev = instance;
 		InstanceList = instance;
-		InstanceList->Prev = NULL;
+		InstanceList->Prev = nullptr;
 	}
 
 	instance->Count = 0;

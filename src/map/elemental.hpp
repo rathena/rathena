@@ -123,7 +123,7 @@ void elemental_summon_stop(s_elemental_data *ed);
 t_tick elemental_get_lifetime(s_elemental_data *ed);
 
 int elemental_unlocktarget(s_elemental_data *ed);
-bool elemental_skillnotok(uint16 skill_id, s_elemental_data *ed);
+bool elemental_skillnotok( uint16 skill_id, s_elemental_data& ed );
 int elemental_set_target( map_session_data *sd, block_list *bl );
 int elemental_clean_effect(s_elemental_data *ed);
 int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick);

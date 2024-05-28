@@ -3,8 +3,8 @@
 
 #include "int_elemental.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/mmo.hpp>
 #include <common/showmsg.hpp>
@@ -61,21 +61,21 @@ bool mapif_elemental_load(int ele_id, uint32 char_id, struct s_elemental *ele) {
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  0, &data, NULL); ele->class_ = atoi(data);
-	Sql_GetData(sql_handle,  1, &data, NULL); ele->mode = (e_mode)atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); ele->hp = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, NULL); ele->sp = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); ele->max_hp = atoi(data);
-	Sql_GetData(sql_handle,  5, &data, NULL); ele->max_sp = atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); ele->atk = atoi(data);
-	Sql_GetData(sql_handle,  7, &data, NULL); ele->atk2 = atoi(data);
-	Sql_GetData(sql_handle,  8, &data, NULL); ele->matk = atoi(data);
-	Sql_GetData(sql_handle,  9, &data, NULL); ele->amotion = atoi(data);
-	Sql_GetData(sql_handle, 10, &data, NULL); ele->def = atoi(data);
-	Sql_GetData(sql_handle, 11, &data, NULL); ele->mdef = atoi(data);
-	Sql_GetData(sql_handle, 12, &data, NULL); ele->flee = atoi(data);
-	Sql_GetData(sql_handle, 13, &data, NULL); ele->hit = atoi(data);
-	Sql_GetData(sql_handle, 14, &data, NULL); ele->life_time = strtoll( data, nullptr, 10 );
+	Sql_GetData(sql_handle,  0, &data, nullptr); ele->class_ = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, nullptr); ele->mode = (e_mode)atoi(data);
+	Sql_GetData(sql_handle,  2, &data, nullptr); ele->hp = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, nullptr); ele->sp = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, nullptr); ele->max_hp = atoi(data);
+	Sql_GetData(sql_handle,  5, &data, nullptr); ele->max_sp = atoi(data);
+	Sql_GetData(sql_handle,  6, &data, nullptr); ele->atk = atoi(data);
+	Sql_GetData(sql_handle,  7, &data, nullptr); ele->atk2 = atoi(data);
+	Sql_GetData(sql_handle,  8, &data, nullptr); ele->matk = atoi(data);
+	Sql_GetData(sql_handle,  9, &data, nullptr); ele->amotion = atoi(data);
+	Sql_GetData(sql_handle, 10, &data, nullptr); ele->def = atoi(data);
+	Sql_GetData(sql_handle, 11, &data, nullptr); ele->mdef = atoi(data);
+	Sql_GetData(sql_handle, 12, &data, nullptr); ele->flee = atoi(data);
+	Sql_GetData(sql_handle, 13, &data, nullptr); ele->hit = atoi(data);
+	Sql_GetData(sql_handle, 14, &data, nullptr); ele->life_time = strtoll( data, nullptr, 10 );
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
 		ShowInfo("Elemental loaded (ID: %d / Class: %d / CID: %d).\n", ele->elemental_id, ele->class_, ele->char_id);

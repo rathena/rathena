@@ -4,10 +4,10 @@
 #include "achievement.hpp"
 
 #include <array>
-#include <setjmp.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <csetjmp>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
@@ -437,13 +437,13 @@ AchievementLevelDatabase achievement_level_db;
  * Add an achievement to the player's log
  * @param sd: Player data
  * @param achievement_id: Achievement to add
- * @return NULL on failure, achievement data on success
+ * @return nullptr on failure, achievement data on success
  */
 struct achievement *achievement_add(map_session_data *sd, int achievement_id)
 {
 	int i, index;
 
-	nullpo_retr(NULL, sd);
+	nullpo_retr(nullptr, sd);
 
 	std::shared_ptr<s_achievement_db> adb = achievement_db.find( achievement_id );
 
@@ -455,7 +455,7 @@ struct achievement *achievement_add(map_session_data *sd, int achievement_id)
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i < sd->achievement_data.count) {
 		ShowError("achievement_add: Character %d already has achievement %d.\n", sd->status.char_id, achievement_id);
-		return NULL;
+		return nullptr;
 	}
 
 	index = sd->achievement_data.incompleteCount;
@@ -512,7 +512,7 @@ bool achievement_remove(map_session_data *sd, int achievement_id)
 	sd->achievement_data.count--;
 	if( sd->achievement_data.count == 0 ){
 		aFree(sd->achievement_data.achievements);
-		sd->achievement_data.achievements = NULL;
+		sd->achievement_data.achievements = nullptr;
 	}else{
 		RECREATE(sd->achievement_data.achievements, struct achievement, sd->achievement_data.count);
 	}
@@ -577,7 +577,7 @@ static int achievement_check_groups(map_session_data *sd, struct s_achievement_d
 {
 	int i;
 
-	if (ad == NULL || sd == NULL)
+	if (ad == nullptr || sd == nullptr)
 		return 0;
 
 	if (ad->group != AG_BATTLE && ad->group != AG_TAMING && ad->group != AG_ADVENTURE)
@@ -630,7 +630,7 @@ bool achievement_update_achievement(map_session_data *sd, int achievement_id, bo
 				sd->achievement_data.achievements[i].count[it.first] = it.second->count;
 		}
 
-		sd->achievement_data.achievements[i].completed = time(NULL);
+		sd->achievement_data.achievements[i].completed = time(nullptr);
 
 		if (i < (--sd->achievement_data.incompleteCount)) { // The achievement needs to be moved to the completed achievements block at the end of the array
 			struct achievement tmp_ach;
@@ -763,7 +763,7 @@ void achievement_free(map_session_data *sd)
 
 	if (sd->achievement_data.count) {
 		aFree(sd->achievement_data.achievements);
-		sd->achievement_data.achievements = NULL;
+		sd->achievement_data.achievements = nullptr;
 		sd->achievement_data.count = sd->achievement_data.incompleteCount = 0;
 	}
 }
@@ -938,7 +938,7 @@ static bool achievement_update_objectives(map_session_data *sd, std::shared_ptr<
 	if (group != ad->group)
 		return false;
 
-	struct achievement *entry = NULL;
+	struct achievement *entry = nullptr;
 	bool isNew = false, changed = false, complete = false;
 	std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {}; // Player's current objective values
 	int i;
