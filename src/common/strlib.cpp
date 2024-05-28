@@ -1011,7 +1011,7 @@ size_t _StringBuf_Vprintf( const char* file, int line, const char* func, StringB
 		int n = vsnprintf( self->ptr_, size, fmt, apcopy );
 		va_end(apcopy);
 		/* If that worked, return the length. */
-		if( n > -1 && n < size )
+		if( n > -1 && static_cast<size_t>(n) < size )
 		{
 			self->ptr_ += n;
 			return self->ptr_ - self->buf_;
