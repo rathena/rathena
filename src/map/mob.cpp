@@ -2929,7 +2929,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 					mobdrop.nameid = dropid;
 
-					mob_item_drop( md, dlist, mob_setdropitem( mobdrop, 1, md->mob_id ), 0, drop_rate, homkillonly || merckillonly );
+					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(mobdrop, 1, md->mob_id);
+
+					mob_item_drop( md, dlist, ditem, 0, drop_rate, homkillonly || merckillonly );
 				}
 			}
 
@@ -2943,8 +2945,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		// process items looted by the mob
 		if (md->lootitems) {
-			for (i = 0; i < md->lootitem_count; i++)
-				mob_item_drop( md, dlist, mob_setlootitem( md->lootitems[i], md->mob_id ), 1, 10000, homkillonly || merckillonly );
+			for (i = 0; i < md->lootitem_count; i++) {
+				std::shared_ptr<s_item_drop> ditem = mob_setlootitem(md->lootitems[i], md->mob_id);
+
+				mob_item_drop( md, dlist, ditem, 1, 10000, homkillonly || merckillonly );
+			}
 		}
 
 		// Process map specific drops
@@ -2963,7 +2968,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if( rnd_chance( it.second->rate, 100000u ) ){
 					// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 					int32 map_drops_rate = max(1, (it.second->rate / 10));
-					mob_item_drop( md, dlist, mob_setdropitem( *it.second, 1, md->mob_id ), 0, map_drops_rate, homkillonly || merckillonly );
+					std::shared_ptr<s_item_drop> ditem = mob_setdropitem(*it.second, 1, md->mob_id);
+					mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
 				}
 			}
 
@@ -2975,7 +2981,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					if( rnd_chance( it.second->rate, 100000u ) ){
 						// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 						int32 map_drops_rate = max(1, (it.second->rate / 10));
-						mob_item_drop( md, dlist, mob_setdropitem( *it.second, 1, md->mob_id ), 0, map_drops_rate, homkillonly || merckillonly );
+						std::shared_ptr<s_item_drop> ditem = mob_setdropitem(*it.second, 1, md->mob_id);
+						mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
 					}
 				}
 			}
@@ -2997,8 +3004,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
-		for (i = 0; i < md->lootitem_count; i++)
-			mob_item_drop( md, dlist, mob_setlootitem( md->lootitems[i], md->mob_id ), 1, 10000, homkillonly || merckillonly );
+		for (i = 0; i < md->lootitem_count; i++) {
+			std::shared_ptr<s_item_drop> ditem = mob_setlootitem(md->lootitems[i], md->mob_id);
+
+			mob_item_drop( md, dlist, ditem, 1, 10000, homkillonly || merckillonly );
+		}
 
 		mob_delayed_drops[md->bl.id] = dlist;
 		add_timer( tick + ( !battle_config.delay_battle_damage ? 500 : 0 ), mob_delay_item_drop, md->bl.id, 0 );
