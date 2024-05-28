@@ -4972,9 +4972,9 @@ void clif_storageclose( map_session_data& sd ){
 /// Notifies clients in an area of a player's souls.
 /// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
 /// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
-/// 0b73 <id>.L <amount>.W
+/// 0b73 <id>.L <amount>.W (ZC_SOULENERGY)
 void clif_soulball( map_session_data *sd, struct block_list* target, enum send_target send_target ){
-#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+#if PACKETVER_MAIN_NUM >= 20200414 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20200506
 	struct PACKET_ZC_SOULENERGY p = {};
 
 	p.PacketType = HEADER_ZC_SOULENERGY;
@@ -5545,20 +5545,19 @@ void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, 
 	clif_send(buf, packet_len(0x09ca), bl, AREA);
 }
 
-/*==========================================
- * Server tells client to remove unit of id 'unit->bl.id'
- *------------------------------------------*/
-static void clif_clearchar_skillunit(struct skill_unit *unit, int fd)
-{
-	nullpo_retv(unit);
+/// Server tells client to remove unit of id 'unit->bl.id'
+/// 0120 <id>.L (ZC_SKILL_DISAPPEAR)
+static void clif_clearchar_skillunit( skill_unit& unit, map_session_data& sd ){
+	PACKET_ZC_SKILL_DISAPPEAR packet{};
 
-	WFIFOHEAD(fd,packet_len(0x120));
-	WFIFOW(fd, 0)=0x120;
-	WFIFOL(fd, 2)=unit->bl.id;
-	WFIFOSET(fd,packet_len(0x120));
+	packet.packetType = HEADER_ZC_SKILL_DISAPPEAR;
+	packet.GID = unit.bl.id;
 
-	if(unit->group && unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2,SELF);
+	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
+
+	if( unit.group && unit.group->skill_id == WZ_ICEWALL ){
+		clif_changemapcell( sd.fd, unit.bl.m, unit.bl.x, unit.bl.y, unit.val2, SELF );
+	}
 }
 
 
@@ -5651,7 +5650,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearflooritem( *reinterpret_cast<flooritem_data*>( bl ), tsd );
 			break;
 		case BL_SKILL:
-			clif_clearchar_skillunit((struct skill_unit *)bl,tsd->fd);
+			clif_clearchar_skillunit( *((skill_unit *)bl), *tsd );
 			break;
 		case BL_NPC:
 			if(!(((TBL_NPC*)bl)->is_invisible))
@@ -5666,7 +5665,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	if (clif_session_isValid(sd)) { //sd is watching tbl go out of view.
 		nullpo_ret(tbl);
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
-			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
+			clif_clearchar_skillunit( *((skill_unit *)tbl), *sd );
 		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
 			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->is_invisible)))
 			clif_clearunit_single( tbl->id, CLR_OUTSIGHT, *sd );
@@ -12075,8 +12074,8 @@ void clif_parse_EquipItem(int fd,map_session_data *sd)
 	if (index < 0 || index >= MAX_INVENTORY)
 		return; //Out of bounds check.
 
-	if(sd->npc_id && !sd->npc_item_flag) {
-		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
+	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
+		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12130,8 +12129,8 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 		return;
 	}
 
-	if (sd->npc_id && !sd->npc_item_flag) {
-		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
+	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
+		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -13513,7 +13512,7 @@ void clif_parse_MoveToKafra(int fd, map_session_data *sd)
 	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -13566,7 +13565,7 @@ void clif_parse_MoveToKafraFromCart(int fd, map_session_data *sd){
 	if (idx < 0 || idx >= MAX_INVENTORY || amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[idx].equipSwitch ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -16601,7 +16600,7 @@ void clif_parse_Mail_setattach(int fd, map_session_data *sd){
 	flag = mail_setitem(sd, idx, amount);
 
 	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
-		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
 	}else{
 		clif_Mail_setattachment(sd,idx,amount,flag);
 	}
@@ -19597,15 +19596,15 @@ void clif_autoshadowspell_list( map_session_data& sd ){
 
 	p->packetType = HEADER_ZC_SKILL_SELECT_REQUEST;
 	p->packetLength = sizeof( *p );
-	p->why = 1; // enum PACKET_ZC_SKILL_SELECT_REQUEST::enumWHY::WHY_SC_AUTOSHADOWSPELL =  0x1
+	p->flag = 1; // enum PACKET_ZC_SKILL_SELECT_REQUEST::enumWHY::WHY_SC_AUTOSHADOWSPELL =  0x1
 	
 	size_t count = 0;
 	for( size_t i = 0; i < MAX_SKILL; i++ ){
 		if( sd.status.skill[i].flag == SKILL_FLAG_PLAGIARIZED && sd.status.skill[i].id > 0 &&
 			skill_get_inf2(sd.status.skill[i].id, INF2_ISAUTOSHADOWSPELL))
 		{
-			p->skills[count].skill_id = sd.status.skill[i].id;
-			p->packetLength += sizeof( p->skills[0] );
+			p->skillIds[count] = sd.status.skill[i].id;
+			p->packetLength += sizeof( p->skillIds[0] );
 			count++;
 		}
 	}
@@ -19651,19 +19650,18 @@ int clif_skill_itemlistwindow( map_session_data *sd, uint16 skill_id, uint16 ski
 /*==========================================
  * Select a skill into a given list (used by SA_AUTOSPELL/SC_AUTOSHADOWSPELL)
  * 0443 <type>.L <skill_id>.W (CZ_SKILL_SELECT_RESPONSE)
- * RFIFOL(fd,2) - type (currently not used)
  *------------------------------------------*/
 void clif_parse_SkillSelectMenu(int fd, map_session_data *sd) {
+#if PACKETVER >= 20081210
 	if( sd == nullptr ){
 		return;
 	}
 
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	//int type = RFIFOL(fd,info->pos[0]); //WHY_LOWERVER_COMPATIBILITY =  0x0, WHY_SC_AUTOSHADOWSPELL =  0x1,
+	PACKET_CZ_SKILL_SELECT_RESPONSE* p = reinterpret_cast<PACKET_CZ_SKILL_SELECT_RESPONSE*>( RFIFOP( fd, 0 ) );
 
 	if (sd->menuskill_id == SA_AUTOSPELL) {
 		sd->state.workinprogress = WIP_DISABLE_NONE;
-		skill_autospell(sd, RFIFOW(fd, info->pos[1]));
+		skill_autospell(sd, p->selectedSkillId);
 	} else if (sd->menuskill_id == SC_AUTOSHADOWSPELL) {
 		if (pc_istrading(sd)) {
 			clif_skill_fail( *sd, sd->ud.skill_id );
@@ -19671,11 +19669,12 @@ void clif_parse_SkillSelectMenu(int fd, map_session_data *sd) {
 			return;
 		}
 
-		skill_select_menu(*sd, RFIFOW(fd, info->pos[1]));
+		skill_select_menu(*sd, p->selectedSkillId);
 	} else
 		return;
 
 	clif_menuskill_clear(sd);
+#endif
 }
 
 
@@ -24131,7 +24130,7 @@ void clif_enchantwindow_open( map_session_data& sd, uint64 clientLuaIndex ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	// Hardcoded clientside check
 	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
-		clif_msg_color( &sd, C_ENCHANT_OVERWEIGHT, color_table[COLOR_RED] );
+		clif_msg_color( &sd, ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
 		sd.state.item_enchant_index = 0;
 		return;
 		
@@ -24155,9 +24154,9 @@ void clif_enchantwindow_result( map_session_data& sd, bool success, t_itemid enc
 
 	p.PacketType = HEADER_ZC_RESPONSE_ENCHANT;
 	if( success ){
-		p.msgId = C_ENCHANT_SUCCESS;
+		p.msgId = ENCHANT_SUCCESS;
 	}else{
-		p.msgId = C_ENCHANT_FAILURE;
+		p.msgId = ENCHANT_FAILED;
 	}
 	p.ITID = enchant;
 
