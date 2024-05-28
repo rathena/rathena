@@ -5294,8 +5294,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case LG_SHIELDPRESS:
-			skillratio += -100 + 200 * skill_lv + sstatus->str;
+			skillratio += -100 + 200 * skill_lv;
 			if (sd) {
+				// Shield Press only considers base STR without job bonus
+				skillratio += sd->status.str;
+
 				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
 					skillratio += skill_lv * 15 * pc_checkskill( sd, IG_SHIELD_MASTERY );
 				}
@@ -6303,16 +6306,6 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 				atk = 40 * pc_checkskill(sd, RA_RESEARCHTRAP);
 			break;
 #endif
-		case LG_SHIELDPRESS:
-			if (sd) {
-				int damagevalue = 0;
-				short index = sd->equip_index[EQI_HAND_L];
-
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
-					damagevalue = sstatus->vit * sd->inventory.u.items_inventory[index].refine;
-				atk = damagevalue;
-			}
-			break;
 	}
 	return atk;
 }
@@ -7577,6 +7570,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case TK_COUNTER:
 			if(sd && sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
 				ATK_ADD(wd.damage, wd.damage2, 10 * pc_checkskill(sd, TK_RUN));
+			break;
+		case LG_SHIELDPRESS:
+			if (sd) {
+				int damagevalue = 0;
+				short index = sd->equip_index[EQI_HAND_L];
+
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
+					damagevalue = sstatus->vit * sd->inventory.u.items_inventory[index].refine;
+				ATK_ADD(wd.damage, wd.damage2, damagevalue);
+			}
 			break;
 		case SR_TIGERCANNON:
 			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
