@@ -490,9 +490,7 @@ enum useskill_fail_cause : uint8_t
 	USESKILL_FAIL_MAX
 };
 
-enum clif_messages : uint16_t {
-	/* Constant values */
-	// clif_equipitemack flags
+enum clif_equipitemack_flag : uint8_t {
 #if PACKETVER_MAIN_NUM >= 20121205 || PACKETVER_RE_NUM >= 20121107 || defined(PACKETVER_ZERO)
 	ITEM_EQUIP_ACK_OK = 0,
 	ITEM_EQUIP_ACK_FAIL = 2,
@@ -502,11 +500,11 @@ enum clif_messages : uint16_t {
 	ITEM_EQUIP_ACK_FAIL = 0,
 	ITEM_EQUIP_ACK_FAILLEVEL = 0,
 #endif
-	/* -end- */
+};
 
-	//! NOTE: These values below need client version validation
-
-	// These values correspond to the msgstringtable line number minus 1
+//! NOTE: These values below need client version validation
+// These values correspond to the msgstringtable line number minus 1
+enum clif_messages : uint16_t {
 	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 52,						// You cannot carry more items because you are overweight.
 	MSI_CAN_NOT_EQUIP_ITEM = 372,								// You can't put this item on.
 	MSI_CANT_USE_WHEN_SITDOWN = 663,							// You cannot use this item while sitting.
@@ -552,6 +550,7 @@ enum clif_messages : uint16_t {
 	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME = 2963,	// Currently in WoE hours, unable to delegate Guild leader
 	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME = 2964,			// You have to wait for one day before delegating a new Guild leader
 	MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST = 3015,					// This item has been set for Swap Equipment.
+	MSI_PICKUP_FAILED_ITEMCREATE = 3022,						// Possession limit is over 70%, or you have less than 10 free inventory space.
 	MSI_CHECK_ATTENDANCE_NOT_EVENT = 3474,						// Currently there is no attendance check event.
 	MSI_ENCHANT_FAILED_OVER_WEIGHT = 3837,						// It weighs more than 70%. Decrease the Weight and try again.
 	MSI_ENCHANT_SUCCESS = 3857,									// Enchantment successful!
