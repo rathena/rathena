@@ -6260,15 +6260,25 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		return false; // Mercenary Scrolls
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
-		if (pc_is90overweight(sd)) {
+
+#ifdef RENEWAL
+		// TODO: Fix the hardcoded 10 value, that's probably a min value from calculating the total items a box will get
+		if (pc_inventoryblank(sd) <= 10 || pc_is70overweight(sd)) {
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			return false;
+		}
+#else
+		if( pc_is50overweight(sd) ) {
 			clif_msg_color(sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
 			return false;
 		}
-		// On official servers you can't open a box item if you don't have at least 11 spaces in your inventory
-		if (pc_inventoryblank(sd) < 11) {
+
+		if (pc_inventoryblank(sd) <= 10) {
 			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 			return false;
 		}
+#endif
+
 	}
 
 	//Gender check

@@ -1383,9 +1383,10 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[3] = 0; //New pets are not named.
 	tmp_item.card[3] |= pet_get_card3_intimacy( pet->intimate ); // Store intimacy status based on initial intimacy
 
-	if (ret = pc_additem(sd, &tmp_item, 1, LOG_TYPE_PICKDROP_PLAYER)) {
+	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd, 0, 0, ret);
 		intif_delete_petdata(pet_id);
+
 		return false;
 	}
 
@@ -1567,12 +1568,17 @@ static int pet_unequipitem(map_session_data *sd, struct pet_data *pd)
 	tmp_item.nameid = nameid;
 	tmp_item.identify = 1;
 
-	if (flag = pc_additem(sd, &tmp_item, 1, LOG_TYPE_OTHER)) {
+	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd, 0, 0, flag);
 
-		// Don't unequip (and destroy) the item if failed to add it to the inventory
-		if (!battle_config.pet_unequip_destroy)
+		// On official servers the item is destroyed if you don't have enough space
+		if (battle_config.pet_unequip_destroy) {
+			log_pick_pc( sd, LOG_TYPE_OTHER, -1, &tmp_item );
+		}
+		// Don't unequip (and don't destroy) the item if failed to add it to the inventory
+		else {
 			return 1;
+		}
 	}
 
 	pd->pet.equip = 0;

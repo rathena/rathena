@@ -539,6 +539,7 @@ enum clif_messages : uint16_t {
 	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
 	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
 	SWAP_EQUIPITEM_UNREGISTER_FIRST = 0xbc7,
+	MSI_PICKUP_FAILED_ITEMCREATE = 3022,
 	MSG_ATTENDANCE_DISABLED = 0xd92,
 	ENCHANT_FAILED_OVER_WEIGHT = 0xefd,
 	ENCHANT_SUCCESS = 0xf11,

@@ -2970,9 +2970,10 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 			}
 		}
 
-		if (flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))
+		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
 			clif_additem(sd, 0, 0, flag);
 
+		}
 		else if (!flag && data->isAnnounced)
 			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
 	}

@@ -7680,8 +7680,10 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
-			if (flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)) {
+			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
+			{
 				clif_additem(sd, 0, 0, flag);
+
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
@@ -7846,9 +7848,10 @@ BUILDIN_FUNC(getitem2)
 			if (!pet_create_egg(sd, nameid))
 			{
 				unsigned char flag = 0;
-				if (flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT))
+				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
 				{
 					clif_additem(sd, 0, 0, flag);
+
 					return SCRIPT_CMD_FAILURE;
 				}
 			}
@@ -14012,9 +14015,10 @@ BUILDIN_FUNC(successremovecards) {
 			item_tmp.nameid   = sd->inventory.u.items_inventory[i].card[c];
 			item_tmp.identify = 1;
 
-			if (flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {	// get back the cart in inventory
+			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	// get back the cart in inventory
 				clif_additem(sd,0,0,flag);
-				return SCRIPT_CMD_SUCCESS;
+
+				return SCRIPT_CMD_FAILURE;
 			}
 		}
 	}
@@ -14042,9 +14046,10 @@ BUILDIN_FUNC(successremovecards) {
 		}
 
 		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
-		if (flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {	//chk if can be spawn in inventory otherwise put on floor
+		if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	//chk if can be spawn in inventory otherwise put on floor
 			clif_additem(sd,0,0,flag);
-			return SCRIPT_CMD_SUCCESS;
+
+			return SCRIPT_CMD_FAILURE;
 		}
 
 		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
@@ -14093,9 +14098,10 @@ BUILDIN_FUNC(failedremovecards) {
 				item_tmp.nameid   = sd->inventory.u.items_inventory[i].card[c];
 				item_tmp.identify = 1;
 
-				if (flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {
+				if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
 					clif_additem(sd,0,0,flag);
-					return SCRIPT_CMD_SUCCESS;
+
+					return SCRIPT_CMD_FAILURE;
 				}
 			}
 		}
@@ -14129,9 +14135,10 @@ BUILDIN_FUNC(failedremovecards) {
 
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
-			if (flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {
+			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
 				clif_additem(sd,0,0,flag);
-				return SCRIPT_CMD_SUCCESS;
+
+				return SCRIPT_CMD_FAILURE;
 			}
 		}
 		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
@@ -22859,8 +22866,9 @@ BUILDIN_FUNC(getrandgroupitem) {
 		// if not pet egg
 		if (!pet_create_egg(sd, entry->nameid)) {
 			unsigned char flag = 0;
-			if (flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT)) {
+			if ((flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT))) {
 				clif_additem(sd,0,0,flag);
+
 				return SCRIPT_CMD_FAILURE;
 			}
 		}

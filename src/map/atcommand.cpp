@@ -6396,8 +6396,9 @@ void getring (map_session_data* sd)
 	item_tmp.card[2] = GetWord(sd->status.partner_id,0);
 	item_tmp.card[3] = GetWord(sd->status.partner_id,1);
 
-	if(flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))
+	if((flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
 		clif_additem(sd,0,0,flag);
+	}
 }
 
 /*==========================================
@@ -6432,7 +6433,7 @@ ACMD_FUNC(marry)
 		return -1;
 	}
 
-	uint32 w;
+	uint32 w = 0;
 
 	if (w = itemdb_weight((sd->status.sex) ? WEDDING_RING_M : WEDDING_RING_F) && w + sd->weight > sd->max_weight) {
 		clif_msg_color(sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
