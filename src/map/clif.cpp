@@ -2635,7 +2635,7 @@ void clif_scriptmenu( map_session_data& sd, uint32 npcid, const char* mes ){
 
 	PACKET_ZC_MENU_LIST *packet = reinterpret_cast<PACKET_ZC_MENU_LIST*>(packet_buffer);
 
-	size_t mes_length = strlen(mes);
+	size_t mes_length = strlen(mes)+1;
 	packet->packetType = HEADER_ZC_MENU_LIST;
 	packet->npcId = npcid;
 	packet->packetLength = static_cast<decltype(packet->packetLength)>( sizeof(PACKET_ZC_MENU_LIST) + mes_length );
