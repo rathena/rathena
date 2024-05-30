@@ -8451,7 +8451,7 @@ This command requires packet version 2017-11-22 or newer.
 
 ---------------------------------------
 
-*specialpopup(<popup id>);
+*specialpopup(<popup ID>);
 
 Open popup or/and show chat text by id from list configured in file spopup.lub
 Popup and text visible only if player warped from one map to another map with different name.
