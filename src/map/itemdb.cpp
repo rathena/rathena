@@ -3015,7 +3015,8 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 
 	// Check if the player has enough weight and space
 #ifdef RENEWAL
-		// Official servers use 10 as the minimum amount of slots required to pick up items
+		// Official servers use 10 as the minimum amount of slots required to get the items
+		// The <= is intentional, as in official servers you actually need an extra empty slot
 		if (pc_inventoryblank(sd) <= zmax(count, 10) || pc_is70overweight(sd)) {
 			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
 			return 0;
@@ -3026,7 +3027,8 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 			return 0;
 		}
 
-		// Official servers use 10 as the minimum amount of slots required to pick up items
+		// Official servers use 10 as the minimum amount of slots required to get the items
+		// The <= is intentional, as in official servers you actually need an extra empty slot
 		if (pc_inventoryblank(sd) <= zmax(count, 10)) {
 			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
 			return 0;
