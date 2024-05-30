@@ -2972,7 +2972,6 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
 			clif_additem(sd, 0, 0, flag);
-
 		}
 		else if (!flag && data->isAnnounced)
 			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
@@ -2986,7 +2985,8 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 * @return val: 0:success, 1:no sd, 2:invalid item group
 */
 uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
-	nullpo_retr(1,sd);
+	if (sd == nullptr)
+		return 1;
 
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
@@ -2996,11 +2996,44 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	}
 	if (group->random.empty())
 		return 0;
-	
-	// Get all the 'must' item(s) (subgroup 0)
+
+	size_t count = 0;
+	// Count all the 'must' item(s) (subgroup 0)
 	uint16 subgroup = 0;
 	std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
 
+	if (random != nullptr && !random->data.empty()) {
+		count = random->data.size();
+	}
+
+	// Count all 'random' subgroups
+	for (const auto& random : group->random) {
+		if (random.first == 0 || random.second->data.empty())
+			continue;
+		count++;
+	}
+
+	// Check if the player has enough weight and space
+#ifdef RENEWAL
+		// Official servers use 10 as the minimum amount of slots required to pick up items
+		if (pc_inventoryblank(sd) <= zmax(count, 10) || pc_is70overweight(sd)) {
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			return 0;
+		}
+#else
+		if (pc_is50overweight(sd)) {
+			clif_msg_color(sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
+			return 0;
+		}
+
+		// Official servers use 10 as the minimum amount of slots required to pick up items
+		if (pc_inventoryblank(sd) <= zmax(count, 10)) {
+			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+			return 0;
+		}
+#endif
+
+	// Get all the 'must' item(s) (subgroup 0)
 	if (random != nullptr && !random->data.empty()) {
 		for (const auto &it : random->data)
 			itemdb_pc_get_itemgroup_sub(sd, identify, it.second);
