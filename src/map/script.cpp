@@ -16059,7 +16059,7 @@ BUILDIN_FUNC(chatmes)
 	if (nd != nullptr && nd->chat_id) {
 		char message[256];
 		safesnprintf(message, sizeof(message), "%s", str);
-		clif_GlobalMessage(map_id2bl(nd->chat_id), message, CHAT_WOS);
+		clif_GlobalMessage( *map_id2bl( nd->chat_id ), message, CHAT_WOS );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17932,7 +17932,7 @@ BUILDIN_FUNC(callshop)
 			clif_barter_open( *sd, *nd );
 		}
 	}else
-		clif_cashshop_show(sd, nd);
+		clif_cashshop_show( *sd, *nd );
 
 	sd->npc_shopid = nd->bl.id;
 	script_pushint(st,1);
@@ -24402,7 +24402,7 @@ BUILDIN_FUNC(hateffect){
 	}
 
 	if( !sd->state.connect_new ){
-		clif_hat_effect_single( sd, effectID, enable );
+		clif_hat_effect_single( *sd, effectID, enable );
 	}
 
 #endif

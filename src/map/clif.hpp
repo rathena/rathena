@@ -718,7 +718,7 @@ void clif_blown(struct block_list *bl); // area
 void clif_slide(struct block_list *bl, int x, int y); // area
 void clif_fixpos( block_list& bl );
 void clif_npcbuysell( map_session_data& sd, npc_data& nd );
-void clif_buylist(map_session_data *sd, struct npc_data *nd);	//self
+void clif_buylist( map_session_data& sd, npc_data& nd );
 void clif_selllist( map_session_data& sd );
 void clif_npc_market_open(map_session_data *sd, struct npc_data *nd);
 void clif_parse_NPCMarketClosed(int fd, map_session_data *sd);
@@ -748,7 +748,7 @@ void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
 void clif_arrowequip( map_session_data& sd );
 void clif_arrow_fail( map_session_data& sd, e_action_failure type );
-void clif_arrow_create_list(map_session_data *sd);	//self
+void clif_arrow_create_list( map_session_data& sd );
 void clif_statusupack( map_session_data& sd, int32 type, bool success, int32 val = 0 );
 void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self
 void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok);	// self
@@ -757,7 +757,7 @@ void clif_changeoption_target(struct block_list* bl, struct block_list* target);
 #define clif_changeoption(bl) clif_changeoption_target(bl, nullptr)	// area
 void clif_changeoption2( block_list& bl );
 void clif_useitemack(map_session_data *sd,int index,int amount,bool ok);	// self
-void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
+void clif_GlobalMessage( block_list& bl, const char* message, enum send_target target );
 void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
@@ -874,9 +874,9 @@ void clif_item_identified( map_session_data& sd, int32 idx, bool failure );
 void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint16 lv );
 void clif_item_repaireffect( map_session_data& sd, int32 idx, bool failure );
 void clif_item_damaged( map_session_data& sd, uint16 position );
-void clif_item_refine_list(map_session_data *sd);
-void clif_hat_effects( map_session_data* sd, struct block_list* bl, enum send_target target );
-void clif_hat_effect_single( map_session_data* sd, uint16 effectId, bool enable );
+void clif_item_refine_list( map_session_data& sd );
+void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target target );
+void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable );
 
 void clif_item_skill(map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
@@ -1039,7 +1039,7 @@ void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
 void clif_send_homdata( homun_data& hd, e_hom_state2 state );
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
-void clif_viewequip_ack(map_session_data* sd, map_session_data* tsd);
+void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );
 void clif_equipcheckbox(map_session_data* sd);
 
 void clif_msg(map_session_data* sd, unsigned short id);
@@ -1089,7 +1089,7 @@ void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, map_session_data *sd);
 
 void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag );
-void clif_cashshop_show(map_session_data *sd, struct npc_data *nd);
+void clif_cashshop_show( map_session_data& sd, npc_data& nd );
 
 // ADOPTION
 void clif_Adopt_reply(map_session_data *sd, int type);
@@ -1165,7 +1165,7 @@ void clif_parse_roulette_close(int fd, map_session_data *sd);
 void clif_parse_roulette_generate(int fd, map_session_data *sd);
 void clif_parse_roulette_item(int fd, map_session_data *sd);
 
-void clif_elementalconverter_list(map_session_data *sd);
+void clif_elementalconverter_list( map_session_data& sd );
 
 void clif_millenniumshield(struct block_list *bl, short shields);
 
