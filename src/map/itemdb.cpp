@@ -3023,7 +3023,7 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	}
 #else
 	if (pc_is50overweight(sd)) {
-		clif_msg_color(sd, ITEM_CANT_OBTAIN_WEIGHT, color_table[COLOR_RED]);
+		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
 		return 0;
 	}
 
