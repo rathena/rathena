@@ -490,9 +490,7 @@ enum useskill_fail_cause : uint8_t
 	USESKILL_FAIL_MAX
 };
 
-enum clif_messages : uint16_t {
-	/* Constant values */
-	// clif_equipitemack flags
+enum clif_equipitemack_flag : uint8_t {
 #if PACKETVER_MAIN_NUM >= 20121205 || PACKETVER_RE_NUM >= 20121107 || defined(PACKETVER_ZERO)
 	ITEM_EQUIP_ACK_OK = 0,
 	ITEM_EQUIP_ACK_FAIL = 2,
@@ -502,46 +500,148 @@ enum clif_messages : uint16_t {
 	ITEM_EQUIP_ACK_FAIL = 0,
 	ITEM_EQUIP_ACK_FAILLEVEL = 0,
 #endif
-	/* -end- */
+};
 
-	//! NOTE: These values below need client version validation
-	ITEM_CANT_OBTAIN_WEIGHT = 0x34, /* You cannot carry more items because you are overweight. */
-	CAN_NOT_EQUIP_ITEM = 0x174,
-	ITEM_NOUSE_SITTING = 0x297,
-	ITEM_PARTY_MEMBER_NOT_SUMMONED = 0x4c5, ///< "The party member was not summoned because you are not the party leader."
-	ITEM_PARTY_NO_MEMBER_IN_MAP = 0x4c6, ///< "There is no party member to summon in the current map."
-	MERC_MSG_BASE = 0x4f2,
-	SKILL_CANT_USE_AREA = 0x536,
-	ITEM_CANT_USE_AREA = 0x537,
-	VIEW_EQUIP_FAIL = 0x54d,
-	ITEM_NEED_MADOGEAR = 0x59b,
-	ITEM_NEED_CART = 0x5ef,
-	RUNE_CANT_CREATE = 0x61b,
-	ITEM_CANT_COMBINE = 0x623,
-	INVENTORY_SPACE_FULL = 0x625,
-	ITEM_PRODUCE_SUCCESS = 0x627,
-	ITEM_PRODUCE_FAIL = 0x628,
-	ITEM_UNIDENTIFIED = 0x62d,
-	ITEM_NEED_BOW = 0x69b,
-	ITEM_REUSE_LIMIT = 0x746,
-	WORK_IN_PROGRESS = 0x783,
-	NEED_REINS_OF_MOUNT = 0x78c,
-	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
-	MERGE_ITEM_NOT_AVAILABLE = 0x887,
-	ITEM_BULLET_EQUIP_FAIL = 0x9bd,
-	SKILL_NEED_GATLING = 0x9fa,
-	SKILL_NEED_SHOTGUN = 0x9fb,
-	SKILL_NEED_RIFLE = 0x9fc,
-	SKILL_NEED_REVOLVER = 0x9fd,
-	SKILL_NEED_HOLY_BULLET = 0x9fe,
-	SKILL_NEED_GRENADE = 0xa01,
-	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
-	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
-	SWAP_EQUIPITEM_UNREGISTER_FIRST = 0xbc7,
-	MSG_ATTENDANCE_DISABLED = 0xd92,
-	ENCHANT_FAILED_OVER_WEIGHT = 0xefd,
-	ENCHANT_SUCCESS = 0xf11,
-	ENCHANT_FAILED = 0xf12,
+//! NOTE: These values below need client version validation
+// These values correspond to the msgstringtable line number minus 1
+enum clif_messages : uint16_t {
+
+	// You cannot carry more items because you are overweight.
+	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 52,
+
+	// You can't put this item on.
+	MSI_CAN_NOT_EQUIP_ITEM = 372,
+
+	// You cannot use this item while sitting.
+	MSI_CANT_USE_WHEN_SITDOWN = 663,
+
+	// The party member was not summoned because you are not the party leader.
+	MSI_CANNOT_PARTYCALL = 1221,
+
+	// There is no party member to summon in the current map.
+	MSI_NO_PARTYMEM_ON_THISMAP = 1222,
+
+	// The mercenary contract has expired.
+	MSI_MER_FINISH = 1266,
+
+	// The mercenary has died.
+	MSI_MER_DIE = 1267,
+
+	// This skill cannot be used within this area.
+	MSI_IMPOSSIBLE_SKILL_AREA = 1334,
+
+	// This item cannot be used within this area.
+	MSI_IMPOSSIBLE_USEITEM_AREA = 1335,
+
+	// This character's equipment information is not open to the public.
+	MSI_OPEN_EQUIPEDITEM_REFUSED = 1357,
+
+	// Item can only be used when Mado Gear is mounted.
+	MSI_USESKILL_FAIL_MADOGEAR = 1435,
+
+	// Only available when cart is mounted.
+	MSI_USESKILL_FAIL_CART = 1519,
+
+	// Cannot create rune stone more than the maximum amount.
+	MSI_RUNESTONE_MAKEERROR_OVERCOUNT = 1563,
+
+	// Combination of item is not possible in conversion.
+	MSI_SKILL_RECIPE_NOTEXIST = 1570,
+
+	// Please ensure an extra space in your inventory.
+	MSI_SKILL_INVENTORY_KINDCNT_OVER = 1572,
+
+	// Successful.
+	MSI_SKILL_SUCCESS = 1574,
+
+	// Failed.
+	MSI_SKILL_FAIL = 1575,
+
+	// Items cannot be used in materials cannot be emotional.
+	MSI_SKILL_FAIL_MATERIAL_IDENTITY = 1581,
+
+	// [Bow] must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_BOW = 1691,							
+
+#if (PACKETVER >= 20130807 && PACKETVER <= 20130814) && !defined(PACKETVER_ZERO)
+	// %d seconds left until you can use
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,
+
+	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
+	MSI_BUSY = 1924,
+
+	// While boarding reins is not available for items.
+	MSI_FAIELD_RIDING_OVERLAPPED = 1932,
+
+	// It is only possible to change the party leader while on the same map.
+	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2095,
+
+	// Merge items available does not exist.
+	MSI_NOT_EXIST_MERGE_ITEM = 2183,
+
+	// This bullet is not suitable for the weapon you are equipping.
+	MSI_WRONG_BULLET = 2494,
+#else
+	// %d seconds left until you can use
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1861,
+
+	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
+	MSI_BUSY = 1923,
+
+	// While boarding reins is not available for items.
+	MSI_FAIELD_RIDING_OVERLAPPED = 1931,
+
+	// It is only possible to change the party leader while on the same map.
+	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2094,
+
+	// Merge items available does not exist.
+	MSI_NOT_EXIST_MERGE_ITEM = 2182,
+
+	// This bullet is not suitable for the weapon you are equipping.
+	MSI_WRONG_BULLET = 2493,
+#endif
+
+	// [Gatling Gun] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_GATLING = 2554,
+
+	// [Shotgun] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_SHOTGUN = 2555,
+
+	// [Rifle] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_RIFLE = 2556,
+
+	// [Revolver] weapon class must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_HANDGUN = 2557,
+
+	// [Silver Bullet] must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_PROPERTY_SAINT_BULLET = 2558,
+
+	// [Holy Water] must be equipped.
+	MSI_FAIL_NEED_EQUIPPED_GUN_GRANADE = 2561,
+
+	// [Grenade Launcher] weapon class must be equipped.
+	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME = 2963,
+
+	// You have to wait for one day before delegating a new Guild leader
+	MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME = 2964,
+
+	// This item has been set for Swap Equipment.
+	MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST = 3015,
+
+	// Possession limit is over 70%, or you have less than 10 free inventory space.
+	MSI_PICKUP_FAILED_ITEMCREATE = 3022,
+
+	// Currently there is no attendance check event.
+	MSI_CHECK_ATTENDANCE_NOT_EVENT = 3474,
+
+	// It weighs more than 70%. Decrease the Weight and try again.
+	MSI_ENCHANT_FAILED_OVER_WEIGHT = 3837,
+
+	// Enchantment successful!
+	MSI_ENCHANT_SUCCESS = 3857,
+
+	// Enchantment failed!
+	MSI_ENCHANT_FAILED = 3858,
 };
 
 enum e_personalinfo : uint8_t {
@@ -718,7 +818,7 @@ void clif_blown(struct block_list *bl); // area
 void clif_slide(struct block_list *bl, int x, int y); // area
 void clif_fixpos( block_list& bl );
 void clif_npcbuysell( map_session_data& sd, npc_data& nd );
-void clif_buylist(map_session_data *sd, struct npc_data *nd);	//self
+void clif_buylist( map_session_data& sd, npc_data& nd );
 void clif_selllist( map_session_data& sd );
 void clif_npc_market_open(map_session_data *sd, struct npc_data *nd);
 void clif_parse_NPCMarketClosed(int fd, map_session_data *sd);
@@ -748,7 +848,7 @@ void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
 void clif_arrowequip( map_session_data& sd );
 void clif_arrow_fail( map_session_data& sd, e_action_failure type );
-void clif_arrow_create_list(map_session_data *sd);	//self
+void clif_arrow_create_list( map_session_data& sd );
 void clif_statusupack( map_session_data& sd, int32 type, bool success, int32 val = 0 );
 void clif_equipitemack( map_session_data& sd, uint8 flag, int index, int pos = 0 ); // self
 void clif_unequipitemack(map_session_data *sd,int n,int pos,int ok);	// self
@@ -757,7 +857,7 @@ void clif_changeoption_target(struct block_list* bl, struct block_list* target);
 #define clif_changeoption(bl) clif_changeoption_target(bl, nullptr)	// area
 void clif_changeoption2( block_list& bl );
 void clif_useitemack(map_session_data *sd,int index,int amount,bool ok);	// self
-void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
+void clif_GlobalMessage( block_list& bl, const char* message, enum send_target target );
 void clif_createchat( map_session_data& sd, e_create_chatroom flag );
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail( map_session_data& sd, e_refuse_enter_room result );
@@ -874,9 +974,9 @@ void clif_item_identified( map_session_data& sd, int32 idx, bool failure );
 void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint16 lv );
 void clif_item_repaireffect( map_session_data& sd, int32 idx, bool failure );
 void clif_item_damaged( map_session_data& sd, uint16 position );
-void clif_item_refine_list(map_session_data *sd);
-void clif_hat_effects( map_session_data* sd, struct block_list* bl, enum send_target target );
-void clif_hat_effect_single( map_session_data* sd, uint16 effectId, bool enable );
+void clif_item_refine_list( map_session_data& sd );
+void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target target );
+void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable );
 
 void clif_item_skill(map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
@@ -1039,7 +1139,7 @@ void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
 void clif_send_homdata( homun_data& hd, e_hom_state2 state );
 
 void clif_configuration( map_session_data* sd, enum e_config_type type, bool enabled );
-void clif_viewequip_ack(map_session_data* sd, map_session_data* tsd);
+void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );
 void clif_equipcheckbox(map_session_data* sd);
 
 void clif_msg(map_session_data* sd, unsigned short id);
@@ -1089,7 +1189,7 @@ void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, map_session_data *sd);
 
 void clif_bossmapinfo( map_session_data& sd, mob_data* md, e_bossmap_info flag );
-void clif_cashshop_show(map_session_data *sd, struct npc_data *nd);
+void clif_cashshop_show( map_session_data& sd, npc_data& nd );
 
 // ADOPTION
 void clif_Adopt_reply(map_session_data *sd, int type);
@@ -1098,7 +1198,6 @@ void clif_Adopt_request(map_session_data *sd, map_session_data *src, int p_id);
 // MERCENARIES
 void clif_mercenary_info(map_session_data *sd);
 void clif_mercenary_skillblock(map_session_data *sd);
-void clif_mercenary_message(map_session_data* sd, int message);
 void clif_mercenary_updatestatus(map_session_data *sd, int type);
 
 // RENTAL SYSTEM
@@ -1165,7 +1264,7 @@ void clif_parse_roulette_close(int fd, map_session_data *sd);
 void clif_parse_roulette_generate(int fd, map_session_data *sd);
 void clif_parse_roulette_item(int fd, map_session_data *sd);
 
-void clif_elementalconverter_list(map_session_data *sd);
+void clif_elementalconverter_list( map_session_data& sd );
 
 void clif_millenniumshield(struct block_list *bl, short shields);
 

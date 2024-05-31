@@ -2141,7 +2141,7 @@ int npc_globalmessage(const char* name, const char* mes)
 		return 0;
 
 	snprintf(temp, sizeof(temp), "%s", mes);
-	clif_GlobalMessage(&nd->bl,temp,ALL_CLIENT);
+	clif_GlobalMessage( nd->bl, temp, ALL_CLIENT );
 
 	return 0;
 }
@@ -2196,7 +2196,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg(sd, MSI_BUSY);
 		return 1;
 	}
 
@@ -2211,7 +2211,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 		case NPCTYPE_CASHSHOP:
 		case NPCTYPE_ITEMSHOP:
 		case NPCTYPE_POINTSHOP:
-			clif_cashshop_show(sd,nd);
+			clif_cashshop_show( *sd, *nd );
 			break;
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
@@ -2375,7 +2375,7 @@ int npc_buysellsel(map_session_data* sd, int id, int type)
 	sd->npc_shopid = id;
 
 	if (type == 0) {
-		clif_buylist(sd,nd);
+		clif_buylist( *sd, *nd );
 	} else {
 		clif_selllist( *sd );
 	}
