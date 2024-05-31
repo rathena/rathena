@@ -16121,13 +16121,15 @@ BUILDIN_FUNC(npcwalkto)
 
 	if (script_hasdata(st, 4)) {
 		int speed = script_getnum(st, 4);
-		
-		if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
-			ShowError("buildin_npcwalkto: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
-			return SCRIPT_CMD_FAILURE;
+
+		if (speed != nd->speed) {
+			if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+				ShowError("buildin_npcwalkto: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+				return SCRIPT_CMD_FAILURE;
+			}
+			nd->speed = speed;
+			nd->ud.state.speed_changed = 1;
 		}
-		nd->speed = speed;
-		nd->ud.state.speed_changed = 1;
 	}
 
 	int x = script_getnum(st, 2);
@@ -16144,7 +16146,7 @@ BUILDIN_FUNC(npcwalkto)
 
 /**
  * Stop an npc's movement.
- * npcstop {"<npc name>"} };
+ * npcstop {"<npc name>"};
  */
 BUILDIN_FUNC(npcstop)
 {
