@@ -917,7 +917,7 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 			return 0; // Shouldn't happen
 
 		if( battle_config.change_party_leader_samemap && strncmp( p->party.member[mi].map, p->party.member[tmi].map, sizeof( p->party.member[mi].map ) ) != 0 ){
-			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
+			clif_msg(sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP);
 			return 0;
 		}
 	} else {

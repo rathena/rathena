@@ -6434,7 +6434,7 @@ void clif_cooking_list( map_session_data *sd, int trigger, uint16 skill_id, int 
 	}else{
 		clif_menuskill_clear(sd);
 #if PACKETVER >= 20090922
-			clif_msg_skill( sd, skill_id, INVENTORY_SPACE_FULL );
+			clif_msg_skill( sd, skill_id, MSI_SKILL_INVENTORY_KINDCNT_OVER);
 #else
 			p->packetLength = static_cast<decltype(p->packetLength)>( sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub ) );
 			WFIFOSET( fd, p->packetLength );
@@ -12019,7 +12019,7 @@ void clif_parse_UseItem(int fd, map_session_data *sd)
 	}
 
 	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) ) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg(sd, MSI_BUSY);
 		return;
 	}
 
@@ -12056,7 +12056,7 @@ void clif_parse_EquipItem(int fd,map_session_data *sd)
 		return; //Out of bounds check.
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
-		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
+		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12111,7 +12111,7 @@ void clif_parse_UnequipItem(int fd,map_session_data *sd)
 	}
 
 	if((sd->npc_id && !sd->npc_item_flag) || (sd->state.block_action & PCBLOCK_EQUIP)) {
-		clif_msg_color( sd, CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
+		clif_msg_color( sd, MSI_CAN_NOT_EQUIP_ITEM, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12151,7 +12151,7 @@ void clif_parse_NpcClicked(int fd,map_session_data *sd)
 
 	if( pc_cant_act2(sd) || sd->npc_id || pc_hasprogress( sd, WIP_DISABLE_NPC ) ){
 #ifdef RENEWAL
-		clif_msg( sd, WORK_IN_PROGRESS );
+		clif_msg( sd, MSI_BUSY);
 #endif
 		return;
 	}
@@ -12170,7 +12170,7 @@ void clif_parse_NpcClicked(int fd,map_session_data *sd)
 		case BL_NPC:
 #ifdef RENEWAL
 			if (sd->ud.skill_id < RK_ENCHANTBLADE && sd->ud.skilltimer != INVALID_TIMER) { // Should only show an error message for non-3rd job skills with a running timer
-				clif_msg(sd, WORK_IN_PROGRESS);
+				clif_msg(sd, MSI_BUSY);
 				break;
 			}
 #endif
@@ -12615,7 +12615,7 @@ void clif_parse_ChangeCart(int fd,map_session_data *sd)
 
 #ifdef RENEWAL
 	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg(sd, MSI_BUSY);
 		return;
 	}
 #endif
@@ -12813,7 +12813,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 		return; //Using a ground/passive skill on a target? WRONG.
 
 	if (sd->state.block_action & PCBLOCK_SKILL) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg(sd, MSI_BUSY);
 		return;
 	}
 
@@ -12839,7 +12839,7 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 	if( sd->npc_id ){
 		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag || !( inf & INF_SELF_SKILL ) ){
 #ifdef RENEWAL
-			clif_msg( sd, WORK_IN_PROGRESS );
+			clif_msg( sd, MSI_BUSY);
 #endif
 			return;
 		}
@@ -12938,7 +12938,7 @@ static void clif_parse_UseSkillToPosSub( int fd, map_session_data& sd, uint16 sk
 		return; //Using a target skill on the ground? WRONG.
 
 	if (sd.state.block_action & PCBLOCK_SKILL) {
-		clif_msg(&sd, WORK_IN_PROGRESS);
+		clif_msg(&sd, MSI_BUSY);
 		return;
 	}
 
@@ -12954,7 +12954,7 @@ static void clif_parse_UseSkillToPosSub( int fd, map_session_data& sd, uint16 sk
 
 	if( pc_hasprogress( &sd, WIP_DISABLE_SKILLITEM ) ){
 #ifdef RENEWAL
-		clif_msg( &sd, WORK_IN_PROGRESS );
+		clif_msg( &sd, MSI_BUSY);
 #endif
 		return;
 	}
@@ -13493,7 +13493,7 @@ void clif_parse_MoveToKafra(int fd, map_session_data *sd)
 	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
-		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -13546,7 +13546,7 @@ void clif_parse_MoveToKafraFromCart(int fd, map_session_data *sd){
 	if (idx < 0 || idx >= MAX_INVENTORY || amount < 1)
 		return;
 	if( sd->inventory.u.items_inventory[idx].equipSwitch ){
-		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -14219,12 +14219,12 @@ void clif_parse_GuildChangeMemberPosition( int fd, map_session_data *sd ){
 		// Guild leadership change
 		if( entry.position == 0 ){
 			if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
-				clif_msg( sd, GUILD_MASTER_WOE );
+				clif_msg( sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_IN_SIEGE_TIME );
 				return;
 			}
 
 			if( battle_config.guild_leaderchange_delay && DIFF_TICK( time( nullptr ),sd->guild->guild.last_leader_change ) < battle_config.guild_leaderchange_delay ){
-				clif_msg( sd, GUILD_MASTER_DELAY );
+				clif_msg( sd, MSI_IMPOSSIBLE_CHANGE_GUILD_MASTER_NOT_TIME );
 				return;
 			}
 
@@ -16581,7 +16581,7 @@ void clif_parse_Mail_setattach(int fd, map_session_data *sd){
 	flag = mail_setitem(sd, idx, amount);
 
 	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
-		clif_msg( sd, SWAP_EQUIPITEM_UNREGISTER_FIRST );
+		clif_msg( sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 	}else{
 		clif_Mail_setattachment(sd,idx,amount,flag);
 	}
@@ -17513,7 +17513,7 @@ void clif_parse_ViewPlayerEquip(int fd, map_session_data* sd)
 	else if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack( *sd, *tsd );
 	else
-		clif_msg(sd, VIEW_EQUIP_FAIL);
+		clif_msg(sd, MSI_OPEN_EQUIPEDITEM_REFUSED);
 }
 
 
@@ -18163,17 +18163,6 @@ void clif_parse_mercenary_action(int fd, map_session_data* sd)
 		return;
 
 	if( option == 2 ) mercenary_delete(sd->md, 2);
-}
-
-
-/// Mercenary Message
-/// message:
-///     0 = Mercenary soldier's duty hour is over.
-///     1 = Your mercenary soldier has been killed.
-///     2 = Your mercenary soldier has been fired.
-///     3 = Your mercenary soldier has ran away.
-void clif_mercenary_message(map_session_data* sd, int message){
-	clif_msg(sd, MERC_MSG_BASE + message);
 }
 
 
@@ -20856,7 +20845,7 @@ void clif_merge_item_open( map_session_data& sd ){
 
 	// No item need to be merged
 	if( n < 2 ){
-		clif_msg( &sd, MERGE_ITEM_NOT_AVAILABLE );
+		clif_msg( &sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -20877,7 +20866,7 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 
 	// No item need to be merged
 	if( count < 2 ){
-		clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
+		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -20888,7 +20877,7 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 	}
 
 	if( !clif_merge_item_check( sd->inventory_data[idx_main], &sd->inventory.u.items_inventory[idx_main] ) ){
-		clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
+		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -20912,7 +20901,7 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 		}
 
 		if( !clif_merge_item_check( sd->inventory_data[idx], &sd->inventory.u.items_inventory[idx] ) ){
-			clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
+			clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
 			return;
 		}
 
@@ -20920,7 +20909,7 @@ void clif_parse_merge_item_req( int fd, map_session_data* sd ){
 	}
 
 	if( indices.empty() ){
-		clif_msg( sd, MERGE_ITEM_NOT_AVAILABLE );
+		clif_msg( sd, MSI_NOT_EXIST_MERGE_ITEM );
 		return;
 	}
 
@@ -21634,7 +21623,7 @@ void clif_parse_open_ui( int fd, map_session_data* sd ){
 			}else if( pc_attendance_enabled() ){
 				clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 			}else{
-				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
+				clif_msg_color( sd, MSI_CHECK_ATTENDANCE_NOT_EVENT, color_table[COLOR_RED] );
 			}
 			break;
 #if PACKETVER >= 20160316
@@ -22054,7 +22043,7 @@ void clif_parse_equipswitch_request_single( int fd, map_session_data* sd ){
 		if( sd->npc_id ){
 #ifdef RENEWAL
 			if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
-				clif_msg( sd, WORK_IN_PROGRESS );
+				clif_msg( sd, MSI_BUSY);
 				return;
 			}
 #endif
@@ -24122,7 +24111,7 @@ void clif_enchantwindow_open( map_session_data& sd, uint64 clientLuaIndex ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	// Hardcoded clientside check
 	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
-		clif_msg_color( &sd, ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
+		clif_msg_color( &sd, MSI_ENCHANT_FAILED_OVER_WEIGHT, color_table[COLOR_RED] );
 		sd.state.item_enchant_index = 0;
 		return;
 		
@@ -24146,9 +24135,9 @@ void clif_enchantwindow_result( map_session_data& sd, bool success, t_itemid enc
 
 	p.PacketType = HEADER_ZC_RESPONSE_ENCHANT;
 	if( success ){
-		p.msgId = ENCHANT_SUCCESS;
+		p.msgId = MSI_ENCHANT_SUCCESS;
 	}else{
-		p.msgId = ENCHANT_FAILED;
+		p.msgId = MSI_ENCHANT_FAILED;
 	}
 	p.ITID = enchant;
 
