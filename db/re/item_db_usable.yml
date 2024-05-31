@@ -51457,7 +51457,6 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 10
-    Defense: 4
     Trade:
       NoDrop: true
       NoTrade: true

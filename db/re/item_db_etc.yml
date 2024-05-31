@@ -29172,21 +29172,18 @@ Body:
     Type: Etc
     Buy: 5
     Weight: 1
-    Attack: 10
   - Id: 7664
     AegisName: Shooting_Mine
     Name: Grenade Launcher
     Type: Etc
     Buy: 30
     Weight: 1
-    Attack: 10
   - Id: 7665
     AegisName: Dragon_Tail_Missile
     Name: Dragon Tail Missile
     Type: Etc
     Buy: 15
     Weight: 1
-    Attack: 10
   - Id: 7666
     AegisName: TimeTravel_Scroll
     Name: Time Travel Scroll
