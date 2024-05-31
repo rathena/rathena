@@ -68,14 +68,14 @@ OnTimer60000:
 		killmonster "for_dun02", "control_t_garden::OnMob" + .@i;
 
 	if (.zone == 0) {	// Zone 2 (for_dun01) -> Zone 1 (for_dun02)
-		mapannounce "t_garden", "Forgotten Memories The dimensional contamination phenomenon in Area 2 has calmed down, and a large-scale dimensional contamination phenomenon has occurred in Area 1.", bc_map, 0xFFDD;
+		mapannounce "t_garden", "Forgotten Memories : The dimensional contamination phenomenon in Area 2 has calmed down, and a large-scale dimensional contamination phenomenon has occurred in Area 1.", bc_map, 0xFFDD;
 		mapannounce "for_dun02", "Large-scale dimensional contamination is occurring in this dungeon...", bc_map, 0xFFDD;
 		mapannounce "for_dun01", "All dimensional contamination that occurred in this dungeon has been calmed down.", bc_map, 0xFFDD;
 
 		callsub( S_Spawn, "for_dun02", 22232, 22239, 12 );
 	}
 	else {	// Zone 1 (for_dun02) -> Zone 2 (for_dun01)
-		mapannounce "t_garden", "Forgotten Memories The dimensional contamination phenomenon in Area 1 has calmed down, and a large-scale dimensional contamination phenomenon has occurred in Area 2.", bc_map, 0xFFDD;
+		mapannounce "t_garden", "Forgotten Memories : The dimensional contamination phenomenon in Area 1 has calmed down, and a large-scale dimensional contamination phenomenon has occurred in Area 2.", bc_map, 0xFFDD;
 		mapannounce "for_dun02", "All dimensional contamination that occurred in this dungeon has been calmed down.", bc_map, 0xFFDD;
 		mapannounce "for_dun01", "Large-scale dimensional contamination is occurring in this dungeon...", bc_map, 0xFFDD;
 		
