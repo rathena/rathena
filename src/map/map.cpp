@@ -3697,7 +3697,7 @@ int map_readgat (struct map_data* m)
 
 	sprintf(filename, "data\\%s.gat", m->name);
 
-	gat = (uint8 *) grfio_read(filename);
+	gat = (uint8 *) grfio_reads(filename);
 	if (gat == nullptr)
 		return 0;
 
