@@ -1026,7 +1026,7 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 			clif_changeoption_target(&nd.bl, &sd->bl);
 		else {
 			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
-				clif_clearunit_single(nd.bl.id, CLR_OUTSIGHT, sd->fd);
+				clif_clearunit_single( nd.bl.id, CLR_OUTSIGHT, *sd );
 			else
 				clif_spawn(&nd.bl);
 		}
@@ -1053,11 +1053,11 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG) {	//Client won't display option changes for these classes [Toms]
 			clif_changeoption(&nd.bl);
 			if (nd.is_invisible)
-				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+				clif_clearunit_area( nd.bl, CLR_OUTSIGHT );  // Hack to trick maya purple card [Xazax]
 		}
 		else {
 			if (nd.sc.option&(OPTION_HIDE|OPTION_CLOAK))
-				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);
+				clif_clearunit_area( nd.bl, CLR_OUTSIGHT );
 			else
 				clif_spawn(&nd.bl);
 		}
@@ -1146,7 +1146,7 @@ int npc_event_dequeue(map_session_data* sd,bool free_script_stack)
 	if(sd->npc_id)
 	{	//Current script is aborted.
 		if(sd->state.using_fake_npc){
-			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, *sd );
 			sd->state.using_fake_npc = 0;
 		}
 		if (free_script_stack&&sd->st) {
@@ -2141,7 +2141,7 @@ int npc_globalmessage(const char* name, const char* mes)
 		return 0;
 
 	snprintf(temp, sizeof(temp), "%s", mes);
-	clif_GlobalMessage(&nd->bl,temp,ALL_CLIENT);
+	clif_GlobalMessage( nd->bl, temp, ALL_CLIENT );
 
 	return 0;
 }
@@ -2168,7 +2168,7 @@ void run_tomb(map_session_data* sd, struct npc_data* nd)
 	snprintf( buffer, sizeof( buffer ), msg_txt( sd, 661 ), nd->u.tomb.killer_name[0] ? nd->u.tomb.killer_name : "Unknown" ); // [^EE0000%s^000000]
 	clif_scriptmes( *sd, nd->bl.id, buffer );
 
-	clif_scriptclose(sd, nd->bl.id);
+	clif_scriptclose( *sd, nd->bl.id );
 }
 
 /*==========================================
@@ -2196,7 +2196,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg(sd, MSI_BUSY);
 		return 1;
 	}
 
@@ -2206,12 +2206,12 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
-			clif_npcbuysell(sd,nd->bl.id);
+			clif_npcbuysell( *sd, *nd );
 			break;
 		case NPCTYPE_CASHSHOP:
 		case NPCTYPE_ITEMSHOP:
 		case NPCTYPE_POINTSHOP:
-			clif_cashshop_show(sd,nd);
+			clif_cashshop_show( *sd, *nd );
 			break;
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
@@ -2306,7 +2306,7 @@ bool npc_scriptcont(map_session_data* sd, int id, bool closing){
 			case CLOSE:
 				sd->st->state = END;
 				if (sd->st->clear_cutin)
-					clif_cutin(sd,"",255);
+					clif_cutin( *sd, "", 255 );
 				break;
 			// close2
 			case STOP:
@@ -2375,10 +2375,11 @@ int npc_buysellsel(map_session_data* sd, int id, int type)
 	sd->npc_shopid = id;
 
 	if (type == 0) {
-		clif_buylist(sd,nd);
+		clif_buylist( *sd, *nd );
 	} else {
-		clif_selllist(sd);
+		clif_selllist( *sd );
 	}
+
 	return 0;
 }
 
@@ -3381,7 +3382,7 @@ int npc_remove_map(struct npc_data* nd)
 
 	if (nd->subtype == NPCTYPE_SCRIPT)
 		skill_clear_unitgroup(&nd->bl);
-	clif_clearunit_area(&nd->bl,CLR_RESPAWN);
+	clif_clearunit_area( nd->bl, CLR_RESPAWN );
 	npc_unsetcells(nd);
 	map_delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
@@ -5179,6 +5180,13 @@ void npc_parse_mob2(struct spawn_data* mob)
 	{
 		struct mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
+		// Determine center cell for each mob in the spawn line
+		if (battle_config.randomize_center_cell) {
+			if (mob->xs > 1)
+				md->centerX = rnd_value(mob->x - mob->xs + 1, mob->x + mob->xs - 1);
+			if (mob->ys > 1)
+				md->centerY = rnd_value(mob->y - mob->ys + 1, mob->y + mob->ys - 1);
+		}
 		md->spawn->active++;
 		mob_spawn(md);
 	}
@@ -5187,7 +5195,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int num, mob_id, mob_lv = -1, delay = 5000, size = -1, w1count, w4count;
-	short m, x = 0, y = 0, xs = -1, ys = -1;
+	short m, x = 0, y = 0, xs = 0, ys = 0;
 	char mapname[MAP_NAME_LENGTH_EXT], mobname[NAME_LENGTH], sprite[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	int ai = AI_NONE; // mob_ai
@@ -5196,7 +5204,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	mob.state.boss = !strcmpi(w2,"boss_monster");
 
-	// w1=<map name>{,<x>,<y>,<xs>{,<ys>}}
+	// w1=<map name>{,<x>,<y>{,<xs>,<ys>}}
 	// w3=<mob name>{,<mob level>}
 	// w4=<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 	if( ( w1count = sscanf(w1, "%15[^,],%6hd,%6hd,%6hd,%6hd", mapname, &x, &y, &xs, &ys) ) < 1
@@ -5288,17 +5296,23 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		mob.state.ai = static_cast<enum mob_ai>(ai);
 
 	if (mob.xs < 0) {
-		if (w1count > 3) {
-			ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d').\n", mob.xs, mob_id, filepath, strline(buffer, start - buffer));
-		}
+		ShowWarning("npc_parse_mob: Negative x-span %hd for mob ID %d (file '%s', line '%d'). Defaulting to map-wide.\n", mob.xs, mob_id, filepath, strline(buffer, start - buffer));
 		mob.xs = 0;
+	}
+	else if (mob.xs == 0 && mob.x > 0) {
+		// Fixed X coordinate
+		// Need to set this to 1 as we reduce it by 1 when calling the search function
+		mob.xs = 1;
 	}
 
 	if (mob.ys < 0) {
-		if (w1count > 4) {
-			ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d').\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
-		}
+		ShowWarning("npc_parse_mob: Negative y-span %hd for mob ID %d (file '%s', line '%d'). Defaulting to map-wide.\n", mob.ys, mob_id, filepath, strline(buffer, start - buffer));
 		mob.ys = 0;
+	}
+	else if (mob.ys == 0 && mob.y > 0) {
+		// Fixed Y coordinate
+		// Need to set this to 1 as we reduce it by 1 when calling the search function
+		mob.ys = 1;
 	}
 
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {
@@ -5306,10 +5320,11 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 			mob.num = 1;
 	}
 
-	if (battle_config.force_random_spawn || (mob.x == 0 && mob.y == 0))
+	if (battle_config.force_random_spawn || (mob.x == 0 && mob.y == 0)
+		|| (mob.xs == 1 && mob.ys == 1 && !map_getcell(mob.m, mob.x, mob.y, CELL_CHKREACH)))
 	{	//Force a random spawn anywhere on the map.
 		mob.x = mob.y = 0;
-		mob.xs = mob.ys = -1;
+		mob.xs = mob.ys = 0;
 	}
 
 	// Check if monsters should have variance applied to their respawn time

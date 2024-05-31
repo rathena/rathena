@@ -45,8 +45,6 @@ using namespace rathena;
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
-#define IDLE_SKILL_INTERVAL 10	//Active idle skills should be triggered every 1 second (1000/MIN_MOBTHINKTIME)
-
 const t_tick MOB_MAX_DELAY = 24 * 3600 * 1000;
 #define RUDE_ATTACKED_COUNT 1	//After how many rude-attacks should the skill be used?
 
@@ -239,7 +237,7 @@ void mvptomb_destroy(struct mob_data *md) {
 		int i;
 		struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+		clif_clearunit_area( nd->bl, CLR_OUTSIGHT );
 		map_delblock(&nd->bl);
 
 		ARR_FIND( 0, mapdata->npc_num, i, mapdata->npc[i] == nd );
@@ -476,6 +474,8 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->spawn_timer = INVALID_TIMER;
 	md->deletetimer = INVALID_TIMER;
 	md->skill_idx = -1;
+	md->centerX = data->x;
+	md->centerY = data->y;
 	status_set_viewdata(&md->bl, md->mob_id);
 	status_change_init(&md->bl);
 	unit_dataset(&md->bl);
@@ -1086,11 +1086,12 @@ int mob_setdelayspawn(struct mob_data *md)
 int mob_count_sub(struct block_list *bl, va_list ap) {
     int mobid[10], i;
     ARR_FIND(0, 10, i, (mobid[i] = va_arg(ap, int)) == 0); //fetch till 0
-    if (mobid[0]) { //if there one let's check it otherwise go backward
-        TBL_MOB *md = BL_CAST(BL_MOB, bl);
+	mob_data* md = BL_CAST(BL_MOB, bl);
+	if (md && mobid[0]) { //if there one let's check it otherwise go backward
         ARR_FIND(0, 10, i, md->mob_id == mobid[i]);
         return (i < 10) ? 1 : 0;
     }
+	// If not counting monsters, count all
     return 1; //backward compatibility
 }
 
@@ -1118,20 +1119,33 @@ int mob_spawn (struct mob_data *md)
 
 	if (md->spawn) { //Respawn data
 		md->bl.m = md->spawn->m;
-		md->bl.x = md->spawn->x;
-		md->bl.y = md->spawn->y;
+		md->bl.x = md->centerX;
+		md->bl.y = md->centerY;
 
-		if( (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys )
-		{	//Monster can be spawned on an area.
-			if( !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs, md->spawn->ys, battle_config.no_spawn_on_player?4:0) )
-			{ // retry again later
-				if( md->spawn_timer != INVALID_TIMER )
-					delete_timer(md->spawn_timer, mob_delayspawn);
-				md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time,mob_delayspawn,md->bl.id,0);
-				return 1;
+		// Search can be skipped for boss monster spawns if spawn location is fixed
+		// We can't skip normal monsters as they should pick a random location if the cell is blocked (e.g. Icewall)
+		// The center cell has a 1/(xs*ys) chance to be picked if free
+		if ((!md->spawn->state.boss || (md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs != 1 || md->spawn->ys != 1)
+			&& (md->spawn->xs + md->spawn->ys < 1 || !rnd_chance(1, md->spawn->xs * md->spawn->ys) || !map_getcell(md->bl.m, md->bl.x, md->bl.y, CELL_CHKREACH)))
+		{
+			// Officially the area is split into 4 squares, 4 lines and 1 dot and for each of those there is one attempt
+			// We simplify this to trying 8 times in the whole area and then at the center cell even though that's not fully accurate
+
+			// Try to spawn monster in defined area (8 tries)
+			if (!map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, md->spawn->xs-1, md->spawn->ys-1, battle_config.no_spawn_on_player?4:0, 8))
+			{
+				// If area search failed and center cell not reachable, try to spawn the monster anywhere on the map (50 tries)
+				if (!map_getcell(md->bl.m, md->bl.x, md->bl.y, CELL_CHKREACH) && !map_search_freecell(&md->bl, -1, &md->bl.x, &md->bl.y, -1, -1, battle_config.no_spawn_on_player?4:0))
+				{
+					// Retry again later
+					if (md->spawn_timer != INVALID_TIMER)
+						delete_timer(md->spawn_timer, mob_delayspawn);
+					md->spawn_timer = add_timer(tick + battle_config.mob_respawn_time, mob_delayspawn, md->bl.id, 0);
+					return 1;
+				}
 			}
 		}
-		else if( battle_config.no_spawn_on_player > 99 && map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
+		if( battle_config.no_spawn_on_player > 99 && map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_PC) )
 		{ // retry again later (players on sight)
 			if( md->spawn_timer != INVALID_TIMER )
 				delete_timer(md->spawn_timer, mob_delayspawn);
@@ -1165,6 +1179,7 @@ int mob_spawn (struct mob_data *md)
 	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
 	md->last_canmove = tick;
+	md->last_skillcheck = 0;
 
 	t_tick c = tick - MOB_MAX_DELAY;
 
@@ -1445,8 +1460,17 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 			}
 		}
 
-		if(md->target_id) //Slave is busy with a target.
-			return 0;
+		// Slave is busy with a target.
+		if(md->target_id) {
+			// Player's slave should come back when master's too far, even if it is doing with a target.
+			if (bl->type == BL_PC && md->master_dist > 5) {
+				mob_unlocktarget(md, tick);
+				unit_walktobl(&md->bl, bl, MOB_SLAVEDISTANCE, 1);
+				return 1;
+			} else {
+				return 0;
+			}
+		}
 
 		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
 		if ((md->master_dist > MOB_SLAVEDISTANCE || md->master_dist == 0) && unit_can_move(&md->bl)) {
@@ -1522,14 +1546,17 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 			break;
 		}
 		// Idle skill.
-		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
+		if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL && mobskill_use(md, tick, -1))
 			break;
 		//Random walk.
 		if (!md->master_id &&
 			DIFF_TICK(md->next_walktime, tick) <= 0 &&
 			!mob_randomwalk(md,tick))
 			//Delay next random walk when this one failed.
-			md->next_walktime = tick+rnd()%1000;
+			if (md->next_walktime < md->ud.canmove_tick)
+				md->next_walktime = md->ud.canmove_tick;
+			else
+				md->next_walktime = tick+rnd()%1000;
 		break;
 	default:
 		mob_stop_attack(md);
@@ -1563,8 +1590,7 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 int mob_randomwalk(struct mob_data *md,t_tick tick)
 {
 	const int d=7;
-	int i,c,r,rdir,dx,dy,max;
-	int speed;
+	int i,r,rdir,dx,dy,max;
 
 	nullpo_ret(md);
 
@@ -1648,16 +1674,9 @@ int mob_randomwalk(struct mob_data *md,t_tick tick)
 		}
 		return 0;
 	}
-	speed=status_get_speed(&md->bl);
-	for(i=c=0;i<md->ud.walkpath.path_len;i++){	// The next walk start time is calculated.
-		if( direction_diagonal( md->ud.walkpath.path[i] ) )
-			c+=speed*MOVE_DIAGONAL_COST/MOVE_COST;
-		else
-			c+=speed;
-	}
 	md->state.skillstate=MSS_WALK;
 	md->move_fail_count=0;
-	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME+c;
+	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME + unit_get_walkpath_time(md->bl);
 	return 1;
 }
 
@@ -1917,8 +1936,23 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return true;
 	}
 
-	//Attempt to attack.
-	//At this point we know the target is attackable, we just gotta check if the range matches.
+	// At this point we know the target is attackable, attempt to attack
+
+	// Monsters in angry state, after having used a normal attack, will always attempt a skill
+	if (md->ud.walktimer == INVALID_TIMER && md->state.skillstate == MSS_ANGRY && md->ud.skill_id == 0)
+	{
+		// Only use skill if able to walk on next tick and not attempted a skill the last second
+		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL){
+			if (mobskill_use(md, tick, -1)) {
+				// After the monster used an angry skill, it will not attack for aDelay
+				// Setting the delay here because not all monster skill use situations will cause an attack delay
+				md->ud.attackabletime = tick + md->status.adelay;
+				return true;
+			}
+		}
+	}
+
+	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
 	{	//Target within range and able to use normal attack, engage
 		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
@@ -1938,16 +1972,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			}
 		}
 		return true;
-	}
-
-	//Monsters in berserk state, unable to use normal attacks, will always attempt a skill
-	if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
-	{
-		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
-		{ //Only use skill if able to walk on next tick and not used a skill the last second
-			if (mobskill_use(md, tick, -1))
-				return true;
-		}
 	}
 
 	//Target still in attack range, no need to chase the target
@@ -1971,7 +1995,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			else {
 				// Use idle skill but keep target for now
 				md->state.skillstate = MSS_IDLE;
-				if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+				if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
 					mobskill_use(md, tick, -1);
 			}
 		}
@@ -1986,10 +2010,24 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		return true;
 
 	//Follow up if possible.
-	//Hint: Chase skills are handled in the walktobl routine
-	if(!mob_can_reach(md, tbl, md->min_chase) ||
-		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
-		mob_unlocktarget(md,tick);
+	if (!mob_can_reach(md, tbl, md->min_chase)) {
+		mob_unlocktarget(md, tick);
+		return true;
+	}
+	// Monsters can use chase skills before starting to walk
+	// So we need to change the state and check for a skill here already
+	// But only use skill if able to walk on next tick and not attempted a skill the last second
+	// Skills during movement are handled in the walktobl routine
+	if (md->ud.walktimer == INVALID_TIMER
+		&& DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME
+		&& DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL) {
+		md->state.skillstate = md->state.aggressive ? MSS_FOLLOW : MSS_RUSH;
+		if (mobskill_use(md, tick, -1))
+			return true;
+	}
+
+	if(!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
+		mob_unlocktarget(md, tick);
 
 	return true;
 }
@@ -2063,12 +2101,19 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	//Clean the spotted log
 	mob_clean_spotted(md);
 
-	if(DIFF_TICK(tick,md->last_thinktime)< 10*MIN_MOBTHINKTIME)
+	if(DIFF_TICK(tick,md->last_thinktime) < MOB_SKILL_INTERVAL)
 		return 0;
 
 	md->last_thinktime=tick;
 
 	if (md->master_id) {
+		if (!mob_is_spotted(md)) {
+			// Get mob data of master
+			mob_data* mmd = map_id2md(md->master_id);
+			// If neither master nor slave have been spotted we don't have to execute the slave AI
+			if (mmd && !mob_is_spotted(mmd))
+				return 0;
+		}
 		mob_ai_sub_hard_slavemob (md,tick);
 		return 0;
 	}
@@ -3171,7 +3216,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( pcdb_checkid(md->vd->class_) ) {//Player mobs are not removed automatically by the client.
 			/* first we set them dead, then we delay the outsight effect */
-			clif_clearunit_area(&md->bl,CLR_DEAD);
+			clif_clearunit_area( md->bl, CLR_DEAD );
 			clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
 		} else
 			/**
@@ -3496,6 +3541,33 @@ int mob_countslave(struct block_list *bl)
 	return map_foreachinmap(mob_countslave_sub, bl->m, BL_MOB,bl->id);
 }
 
+/**
+ * Remove slaves if master logs off.
+ * @param bl: Mob data
+ * @param ap: List of arguments
+ * @return 1 on removal, otherwise 0
+ */
+int mob_removeslaves_sub(block_list *bl, va_list ap) {
+	int id = va_arg(ap, int);
+	mob_data *md = (mob_data *)bl;
+
+	if (md != nullptr && md->master_id == id) {
+		unit_free(bl, CLR_OUTSIGHT);
+		return 1;
+	}
+
+	return 0;
+}
+
+/**
+ * Remove slaves on a map.
+ * @param bl: Player data
+ * @return 1 on removal, otherwise 0
+ */
+int mob_removeslaves(block_list *bl) {
+	return map_foreachinmap(mob_removeslaves_sub, bl->m, BL_MOB, bl->id);
+}
+
 /*==========================================
  * Summons amount slaves contained in the value[5] array using round-robin. [adapted by Skotlex]
  *------------------------------------------*/
@@ -3759,8 +3831,9 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 	if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || ms.empty() || status_has_mode(&md->status,MD_NOCAST))
 		return 0;
 
-	if (event == -1 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
-		return 0; //Skill act delay only affects non-event skills.
+	// Monsters check their non-attack-state skills once per second, but we ignore this for events for now
+	if (event == -1)
+		md->last_skillcheck = tick;
 
 	//Pick a starting position and loop from that.
 	i = battle_config.mob_ai&0x100?rnd()%ms.size():0;
@@ -4395,6 +4468,7 @@ s_mob_db::s_mob_db()
 	status.speed = DEFAULT_WALK_SPEED;
 	status.adelay = cap_value(0, battle_config.monster_max_aspd * 2, 4000);
 	status.amotion = cap_value(0, battle_config.monster_max_aspd, 2000);
+	status.clientamotion = cap_value(status.amotion, 1, USHRT_MAX);
 	status.mode = static_cast<e_mode>(MONSTER_TYPE_06);
 
 	vd.class_ = id;
@@ -4816,6 +4890,18 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 
 		mob->status.amotion = cap_value(speed, battle_config.monster_max_aspd, 2000);
+	}
+
+	if (this->nodeExists(node, "ClientAttackMotion")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "ClientAttackMotion", speed))
+			return 0;
+
+		mob->status.clientamotion = cap_value(speed, 1, USHRT_MAX);
+	} else {
+		if (!exists)
+			mob->status.clientamotion = cap_value(mob->status.amotion, 1, USHRT_MAX);
 	}
 
 	if (this->nodeExists(node, "DamageMotion")) {
@@ -6695,7 +6781,7 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 		// If they are spawned right now
 		if( md->bl.prev != nullptr ){
 			// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
-			clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
+			clif_clearunit_area( md->bl, CLR_OUTSIGHT );
 			clif_spawn(&md->bl);
 		}
 	}

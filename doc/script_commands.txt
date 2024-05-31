@@ -1,4 +1,4 @@
-//===== rAthena Documentation================================
+﻿//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
@@ -135,11 +135,26 @@ and 'doc/mapflags.txt'.
 <map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
-coordinates where the mob should spawn. If xs and ys are non-zero, they
-specify the 'radius' of a spawn-rectangle area centered at x,y.
-Putting zeros instead of these coordinates will spawn the monsters randomly.
+coordinates where the mob should spawn. Putting zeros instead of these
+coordinates will spawn the monsters randomly.
+
+If the coordinates are non-zero and xs and ys are above 1, each monster will
+spawn in a radius around x,y. At server start, each monster will get assigned
+its own center cell adding or substracting up to (xs-1),(ys-1) from the given
+x,y coordinates. Each time a monster respawns, it will spawn in a radius around
+its personal center cell by adding or substracting up to (xs-1),(ys-1) again.
+This results in a total possible spawn area over all monsters of the spawn line
+of (xs,ys)*4-3, but with a strong bias towards the center of that area:
+2,2 - 5x5
+3,3 - 9x9
+4,4 - 13x13
+5,5 - 17x17
+etc.
+
 Note this is only the initial spawn zone, as mobs random-walk, they are free
 to move away from their specified spawn region.
+You can disable the picking of a random center cell for each monster in the
+battle config. (See /conf/battle/monster.conf::randomize_center_cell.)
 
 Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which
@@ -188,6 +203,8 @@ Natural enemies for AI monsters are normal monsters.
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
+A boss monster spawn with fixed coordinates will always spawn at the given 
+coordinates, even if they are blocked (e.g. by Icewall).
 
 ** NPC names
 
@@ -6591,7 +6608,8 @@ Available <type>:
 	PCBLOCK_COMMANDS			Prevent the player from using atcommands/charcommands.
 	PCBLOCK_NPCCLICK			Prevent the player from clicking/touching any NPC/shop/warp.
 	PCBLOCK_EMOTION				Prevent the player from using emotions.
-	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK.
+	PCBLOCK_EQUIP				Prevent the player from replacing equipment.
+	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK|PCBLOCK_EQUIP.
 	PCBLOCK_ALL				Sum of all the flags.
 
 Examples:

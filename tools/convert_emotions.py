@@ -113,13 +113,13 @@ emotion_dict_old = collections.OrderedDict([
 ])
 """
 def parse_emotion_dict(filepath):
-    ret_list = []
-    with fileinput.FileInput(filepath) as fiFile:
-        for line in fiFile:
-            found = re.search('"(E_[A-Z_0-9]+)"\s*,\s*(ET_[A-Z_0-9]+)\s*', line)
-            if found:
-                ret_list.append((found.group(1), found.group(2)))
-    return ret_list
+	ret_list = []
+	with fileinput.FileInput(filepath) as fiFile:
+		for line in fiFile:
+			found = re.search('"(E_[A-Z_0-9]+)"\s*,\s*(ET_[A-Z_0-9]+)\s*', line)
+			if found:
+				ret_list.append((found.group(1), found.group(2)))
+	return ret_list
 
 emotion_dict = collections.OrderedDict(parse_emotion_dict(parse_dict_file))
 
@@ -128,59 +128,59 @@ pattern_oldconst = re.compile(r'\b(' + '|'.join(emotion_dict.keys()) + r')\b', r
 pattern_value = re.compile(r'\b(' + '|'.join(["emotion\s+%d+"%i for i in range(len(emotion_array))]) + r')\b', re.IGNORECASE)
 
 def revert_to_backup(filename):
-   os.rename(filename+BACKUP_EXT, filename)
-   
-def apply_substitutions(new_line, is_script):
-    remove_backup = True # only keep backup if the original file changed
-    rpl_cnt = 0
-    # E_GASP -> ET_SURPRISE
-    new_line, rpl_cnt = pattern_oldconst.subn(lambda x: emotion_dict[x.group().upper()], new_line)
-    remove_backup = False if rpl_cnt > 0 else remove_backup
-    if is_script: # script only replacements
-        # 0 -> ET_SURPRISE
-        new_line, rpl_cnt = pattern_value.subn(lambda x: 'emotion '+emotion_array[int(x.group().split()[-1])], new_line)
-        remove_backup = False if rpl_cnt > 0 else remove_backup
-        # emotion e,0,"Record player#e152a01"; -> emotion e, getnpcid(0,"Record player#e152a01");
-        new_line, rpl_cnt = re.subn(r"emotion\s+([^,]+)\s*,\s*0\s*,\s*([^;]+);",
-                           "emotion \g<1>, getnpcid(0, \g<2>);", new_line)
-        remove_backup = False if rpl_cnt > 0 else remove_backup
-        # emotion e,1; -> emotion e, playerattached();
-        new_line, rpl_cnt = re.subn(r"emotion\s+([^,]+)\s*,\s*1\s*;",
-                           "emotion \g<1>, playerattached();", new_line)
-        remove_backup = False if rpl_cnt > 0 else remove_backup
-        # unitemote <id>,<emotion>; -> emotion <emotion>, <id>;
-        new_line, rpl_cnt = re.subn(r"unitemote\s+([^,]+)\s*,\s*([^,;]+)\s*;",
-                           "emotion \g<2>, \g<1>;", new_line)
-        remove_backup = False if rpl_cnt > 0 else remove_backup
+	os.rename(filename+BACKUP_EXT, filename)
 
-    return new_line, remove_backup
+def apply_substitutions(new_line, is_script):
+	remove_backup = True # only keep backup if the original file changed
+	rpl_cnt = 0
+	# E_GASP -> ET_SURPRISE
+	new_line, rpl_cnt = pattern_oldconst.subn(lambda x: emotion_dict[x.group().upper()], new_line)
+	remove_backup = False if rpl_cnt > 0 else remove_backup
+	if is_script: # script only replacements
+		# 0 -> ET_SURPRISE
+		new_line, rpl_cnt = pattern_value.subn(lambda x: 'emotion '+emotion_array[int(x.group().split()[-1])], new_line)
+		remove_backup = False if rpl_cnt > 0 else remove_backup
+		# emotion e,0,"Record player#e152a01"; -> emotion e, getnpcid(0,"Record player#e152a01");
+		new_line, rpl_cnt = re.subn(r"emotion\s+([^,]+)\s*,\s*0\s*,\s*([^;]+);",
+						"emotion \g<1>, getnpcid(0, \g<2>);", new_line)
+		remove_backup = False if rpl_cnt > 0 else remove_backup
+		# emotion e,1; -> emotion e, playerattached();
+		new_line, rpl_cnt = re.subn(r"emotion\s+([^,]+)\s*,\s*1\s*;",
+						"emotion \g<1>, playerattached();", new_line)
+		remove_backup = False if rpl_cnt > 0 else remove_backup
+		# unitemote <id>,<emotion>; -> emotion <emotion>, <id>;
+		new_line, rpl_cnt = re.subn(r"unitemote\s+([^,]+)\s*,\s*([^,;]+)\s*;",
+						"emotion \g<2>, \g<1>;", new_line)
+		remove_backup = False if rpl_cnt > 0 else remove_backup
+
+	return new_line, remove_backup
 
 def replace_emoticons_in_file(filename):
-    is_script = True if any([filename.endswith(script_ext) for script_ext in script_file_extensions]) else False
-    remove_backup = True
-    with fileinput.FileInput(filename, inplace=True, backup=BACKUP_EXT) as fiFile:
-        try:
-            for line in fiFile:
-                new_line, rm_backup = apply_substitutions(line, is_script)
-                if not rm_backup:
-                    remove_backup = False
-                print(new_line, end='')
-            if remove_backup:
-                os.remove(filename+BACKUP_EXT)
-        except UnicodeDecodeError:
-            # Encoding error, reapply the backup
-            revert_to_backup(filename)
+	is_script = True if any([filename.endswith(script_ext) for script_ext in script_file_extensions]) else False
+	remove_backup = True
+	with fileinput.FileInput(filename, inplace=True, backup=BACKUP_EXT) as fiFile:
+		try:
+			for line in fiFile:
+				new_line, rm_backup = apply_substitutions(line, is_script)
+				if not rm_backup:
+					remove_backup = False
+				print(new_line, end='')
+			if remove_backup:
+				os.remove(filename+BACKUP_EXT)
+		except UnicodeDecodeError:
+			# Encoding error, reapply the backup
+			revert_to_backup(filename)
 
 
 fileiter = (os.path.join(root, f)
-    for conv_folder in convert_folders 
-    for root, _, files in os.walk(conv_folder)
-    for f in files
-    if any([f.endswith(wl) for wl in wl_file_extensions])
-    if not any([bl in f for bl in bl_files])
-    )
+	for conv_folder in convert_folders
+	for root, _, files in os.walk(conv_folder)
+	for f in files
+	if any([f.endswith(wl) for wl in wl_file_extensions])
+	if not any([bl in f for bl in bl_files])
+	)
 
 for f in fileiter:
-    print("Updating file", f)
-    replace_emoticons_in_file(f)
-    
+	print("Updating file", f)
+	replace_emoticons_in_file(f)
+

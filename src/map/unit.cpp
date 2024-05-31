@@ -131,7 +131,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		map_session_data *sd = BL_CAST(BL_PC, bl);
 
 		sd->head_dir = DIR_NORTH;
-		clif_walkok(sd);
+		clif_walkok(*sd);
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
@@ -447,12 +447,11 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if(md && !ud->state.force_walk && md->walktoxy_fail_count < icewall_walk_block && map_getcell(bl->m,x,y,CELL_CHKICEWALL) && (dx > 0 || dy > 0)) {
 		//Needs to be done here so that rudeattack skills are invoked
 		md->walktoxy_fail_count++;
-		clif_fixpos(bl);
-		//Monsters in this situation first use a chase skill, then unlock target and then use an idle skill
-		if (!(++ud->walk_count%WALK_SKILL_INTERVAL))
-			mobskill_use(md, tick, -1);
+		clif_fixpos( *bl );
+		// Monsters in this situation will unlock target and then attempt an idle skill
+		// When they start chasing again, they will check for a chase skill before returning here
 		mob_unlocktarget(md, tick);
-		if (!(++ud->walk_count%WALK_SKILL_INTERVAL))
+		if (DIFF_TICK(tick, md->last_skillcheck) >= MOB_SKILL_INTERVAL)
 			mobskill_use(md, tick, -1);
 		return 0;
 	}
@@ -463,7 +462,6 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	x += dx;
 	y += dy;
 	map_moveblock(bl, x, y, tick);
-	ud->walk_count++; // Walked cell counter, to be used for walk-triggered skills. [Skotlex]
 
 	if (bl->x != x || bl->y != y || ud->walktimer != INVALID_TIMER)
 		return 0; // map_moveblock has altered the object beyond what we expected (moved/warped it)
@@ -542,15 +540,19 @@ static TIMER_FUNC(unit_walktoxy_timer)
 				md->min_chase--;
 			// Walk skills are triggered regardless of target due to the idle-walk mob state.
 			// But avoid triggering on stop-walk calls.
+			// Monsters use walk/chase skills every second, but we only get here every "speed" ms
+			// To make sure we check one skill per second on average, we substract half the speed as ms
 			if(!ud->state.force_walk && tid != INVALID_TIMER &&
-				!(ud->walk_count%WALK_SKILL_INTERVAL) &&
+				DIFF_TICK(tick, md->last_skillcheck) > MOB_SKILL_INTERVAL - md->status.speed / 2 &&
+				DIFF_TICK(tick, md->last_thinktime) > 0 &&
 				map[bl->m].users > 0 &&
 				mobskill_use(md, tick, -1)) {
 				if (!(ud->skill_id == NPC_SELFDESTRUCTION && ud->skilltimer != INVALID_TIMER)
 					&& ud->skill_id != NPC_EMOTION && ud->skill_id != NPC_EMOTION_ON //NPC_EMOTION doesn't make the monster stop
 					&& md->state.skillstate != MSS_WALK) //Walk skills are supposed to be used while walking
 				{ // Skill used, abort walking
-					clif_fixpos(bl); // Fix position as walk has been cancelled.
+					// Fix position as walk has been cancelled.
+					clif_fixpos( *bl );
 					return 0;
 				}
 				// Resend walk packet for proper Self Destruction display.
@@ -601,7 +603,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		if(unit_walktoxy_sub(bl)) {
 			return 1;	
 		} else {
-			clif_fixpos(bl);
+			clif_fixpos( *bl );
 			return 0;
 		}
 	}
@@ -616,6 +618,12 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		speed = status_get_speed(bl);
 
 	if(speed > 0) {
+		// For some reason sometimes the walk timer is not empty here
+		// TODO: Need to check why (e.g. when the monster spams NPC_RUN)
+		if (ud->walktimer != INVALID_TIMER) {
+			delete_timer(ud->walktimer, unit_walktoxy_timer);
+			ud->walktimer = INVALID_TIMER;
+		}
 		ud->walktimer = add_timer(tick+speed,unit_walktoxy_timer,id,speed);
 		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 ) // Not required not damaged recently
 			clif_move(ud);
@@ -641,7 +649,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 				// Aegis uses one before every attack, we should
 				// only need this one for syncing purposes. [Skotlex]
 				ud->target_to = 0;
-				clif_fixpos(bl);
+				clif_fixpos( *bl );
 				unit_attack(bl, tbl->id, ud->state.attack_continue);
 			}
 		} else { // Update chase-path
@@ -931,7 +939,7 @@ void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
 		clif_status_change(bl, EFST_TING, 0, 0, 0, 0, 0);
 	} else if (sd) {
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 		skill_castend_damage_id(bl, &sd->bl, RA_WUGDASH, lv, gettick(), SD_LEVEL);
 	}
 	return;
@@ -1005,21 +1013,46 @@ bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type)
 }
 
 /**
+ * Returns duration of an object's current walkpath
+ * @param bl: Object that is moving
+ * @return Duration of the walkpath
+ */
+t_tick unit_get_walkpath_time(struct block_list& bl)
+{
+	t_tick time = 0;
+	unsigned short speed = status_get_speed(&bl);
+	struct unit_data* ud = unit_bl2ud(&bl);
+
+	// The next walk start time is calculated.
+	for (uint8 i = 0; i < ud->walkpath.path_len; i++) {
+		if (direction_diagonal(ud->walkpath.path[i]))
+			time += speed * MOVE_DIAGONAL_COST / MOVE_COST;
+		else
+			time += speed;
+	}
+
+	return time;
+}
+
+/**
  * Makes unit attempt to run away from target using hard paths
  * @param bl: Object that is running away from target
  * @param target: Target
  * @param dist: How far bl should run
  * @param flag: unit_walktoxy flag
- * @return 1: Success 0: Fail
+ * @return The duration the unit will run (0 on fail)
  */
-int unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag)
+t_tick unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag)
 {
 	uint8 dir = map_calc_dir(target, bl->x, bl->y);
 
 	while( dist > 0 && map_getcell(bl->m, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], CELL_CHKNOREACH) )
 		dist--;
 
-	return ( dist > 0 && unit_walktoxy(bl, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], flag) );
+	if (dist > 0 && unit_walktoxy(bl, bl->x + dist * dirx[dir], bl->y + dist * diry[dir], flag))
+		return unit_get_walkpath_time(*bl);
+
+	return 0;
 }
 
 /**
@@ -1414,7 +1447,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	}
 
 	if(type&USW_FIXPOS)
-		clif_fixpos(bl);
+		clif_fixpos( *bl );
 
 	ud->walkpath.path_len = 0;
 	ud->walkpath.path_pos = 0;
@@ -1532,7 +1565,7 @@ TIMER_FUNC(unit_resume_running){
 		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_RUN,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 
 	if (sd)
-		clif_walkok(sd);
+		clif_walkok(*sd);
 
 	return 0;
 }
@@ -2753,7 +2786,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if(sd && !check_distance_client_bl(src,target,range)) {
 		// Player tries to attack but target is too far, notify client
-		clif_movetoattack(sd,target);
+		clif_movetoattack( *sd, *target );
 		return 1;
 	} else if(md && !check_distance_bl(src,target,range)) {
 		// Monster: Chase if required
@@ -2776,7 +2809,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 	// Sync packet only for players.
 	// Non-players use the sync packet on the walk timer. [Skotlex]
 	if (tid == INVALID_TIMER && sd)
-		clif_fixpos(src);
+		clif_fixpos( *src );
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
@@ -2786,10 +2819,14 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			unit_stop_walking(src,1);
 
 		if(md) {
-			//First attack is always a normal attack
-			if(md->state.skillstate == MSS_ANGRY || md->state.skillstate == MSS_BERSERK) {
-				if (mobskill_use(md,tick,-1))
+			// Berserk skills can replace normal attacks except for the first attack
+			// If this is the first attack, the state is not Berserk yet, so the skill check is skipped
+			if(md->state.skillstate == MSS_BERSERK) {
+				if (mobskill_use(md, tick, -1)) {
+					// Setting the delay here because not all monster skill use situations will cause an attack delay
+					ud->attackabletime = tick + sstatus->adelay;
 					return 1;
+				}
 			}
 			// Set mob's ANGRY/BERSERK states.
 			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
@@ -2820,6 +2857,10 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			return 1;
 
 		ud->attackabletime = tick + sstatus->adelay;
+
+		// Only reset skill_id here if no skilltimer is currently ongoing
+		if (ud->skilltimer == INVALID_TIMER)
+			ud->skill_id = 0;
 
 		// You can't move if you can't attack neither.
 		if (src->type&battle_config.attack_walk_delay)
@@ -2949,7 +2990,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 	if(bl->type==BL_MOB)
 		((TBL_MOB*)bl)->skill_idx = -1;
 
-	clif_skillcastcancel(bl);
+	clif_skillcastcancel( *bl );
 
 	return 1;
 }
@@ -3215,7 +3256,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3232,7 +3273,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
 				clif_emotion(bl, ET_CRY);
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3247,7 +3288,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			ud->canact_tick = ud->canmove_tick;
 
 			if( mercenary_get_lifetime(md) <= 0 && !(md->master && !md->master->state.active) ) {
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3262,7 +3303,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			ud->canact_tick = ud->canmove_tick;
 
 			if( elemental_get_lifetime(ed) <= 0 && !(ed->master && !ed->master->state.active) ) {
-				clif_clearunit_area(bl,clrtype);
+				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
@@ -3296,7 +3337,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			}
 			[[fallthrough]];
 		default:
-			clif_clearunit_area(bl, clrtype);
+			clif_clearunit_area( *bl, clrtype );
 			map_delblock(bl);
 			break;
 	}
@@ -3321,7 +3362,7 @@ void unit_refresh(struct block_list *bl, bool walking) {
 	// Using CLR_TRICKDEAD because other flags show effects
 	// Probably need to use another flag or other way to refresh it
 	if (mapdata->users) {
-		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
+		clif_clearunit_area( *bl, CLR_TRICKDEAD ); // Fade out
 		clif_spawn(bl,walking); // Fade in
 	}
 }
@@ -3426,6 +3467,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd, sd->spiritball, 1);
 			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
+			mob_removeslaves(&sd->bl);
 
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);

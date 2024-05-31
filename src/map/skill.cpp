@@ -867,7 +867,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 	uint32 skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
 	if (mapdata != nullptr && mapdata->zone->isSkillDisabled(skill_id, sd.bl)) {
-		clif_msg(&sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
+		clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
 		return true;
 	}
 
@@ -884,7 +884,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case ALL_THANATOS_RECALL:
 		case ALL_LIGHTHALZEN_RECALL:
 			if(mapdata->getMapFlag(MF_NOWARP)) {
-				clif_skill_teleportmessage(&sd,0);
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_TP );
 				return true;
 			}
 			return false;
@@ -894,7 +894,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
 			if(mapdata->getMapFlag(MF_NOTELEPORT)) {
-				clif_skill_teleportmessage(&sd,0);
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_TP );
 				return true;
 			}
 			return false; // gonna be checked in 'skill_castend_nodamage_id'
@@ -902,7 +902,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WE_CALLPARENT:
 		case WE_CALLBABY:
 			if (mapdata->getMapFlag(MF_NOMEMO)) {
-				clif_skill_teleportmessage(&sd,1);
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_MEMO );
 				return true;
 			}
 			break;
@@ -978,7 +978,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		case WM_GLOOMYDAY:
 		case WM_SATURDAY_NIGHT_FEVER:
 			if( !mapdata_flag_vs(mapdata) ) {
-				clif_skill_teleportmessage(&sd,2); // This skill uses this msg instead of skill fails.
+				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_USE_SKILL );	// This skill cannot be used in this area
 				return true;
 			}
 			break;
@@ -2584,12 +2584,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		break;
 	case HFLI_SBR44:	//[orn]
 		if(src->type == BL_HOM){
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
+			homun_data& hd = reinterpret_cast<homun_data&>( *src );
+
+			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+
+			clif_send_homdata( hd, SP_INTIMATE );
 		}
 		break;
 	case CR_GRANDCROSS:
@@ -3206,9 +3205,8 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
 				TBL_HOM *hd = BL_CAST(BL_HOM, bl);
 				if (idx == -1)
 					break;
-				sd = hd->master;
 				hd->homunculus.hskill[idx].flag= flag;
-				if(sd) clif_homskillinfoblock(sd); //refresh info //@FIXME we only want to refresh one skill
+				clif_homskillinfoblock( *hd ); //refresh info //@FIXME we only want to refresh one skill
 			}
 			break;
 		case MO_COMBOFINISH:
@@ -3377,7 +3375,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 			case 1: //Copied by Plagiarism
 				{
 					if (tsd->cloneskill_idx > 0 && tsd->status.skill[tsd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id);
+						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id, true);
 						tsd->status.skill[tsd->cloneskill_idx].id = 0;
 						tsd->status.skill[tsd->cloneskill_idx].lv = 0;
 						tsd->status.skill[tsd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
@@ -3397,7 +3395,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 					//Skill level copied depends on Reproduce skill that used
 					lv = (tsc) ? tsc->getSCE(SC__REPRODUCE)->val1 : 1;
 					if( tsd->reproduceskill_idx > 0 && tsd->status.skill[tsd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id);
+						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id, true);
 						tsd->status.skill[tsd->reproduceskill_idx].id = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].lv = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
@@ -3493,7 +3491,8 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 			}
 			break;
 	}
-	clif_fixpos(target);
+
+	clif_fixpos( *target );
 }
 
 /*
@@ -6621,11 +6620,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case RA_WUGSTRIKE:
 		if( sd && pc_isridingwug(sd) ){
-			short x[8]={0,-1,-1,-1,0,1,1,1};
-			short y[8]={1,1,0,-1,-1,-1,0,1};
 			uint8 dir = map_calc_dir(bl, src->x, src->y);
 
-			if( unit_movepos(src, bl->x+x[dir], bl->y+y[dir], 1, 1) ) {
+			if( unit_movepos(src, bl->x+dirx[dir], bl->y+diry[dir], 1, 1) ) {
 				clif_blown(src);
 				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			}
@@ -8552,8 +8549,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AC_MAKINGARROW:
-		if(sd) {
-			clif_arrow_create_list(sd);
+		if( sd != nullptr ){
+			clif_arrow_create_list( *sd );
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -8566,8 +8563,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SA_CREATECON:
-		if(sd) {
-			clif_elementalconverter_list(sd);
+		if( sd != nullptr ){
+			clif_elementalconverter_list( *sd );
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -8828,12 +8825,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		status_damage(src, src, sstatus->max_hp,0,0,1, skill_id);
 		if(skill_id == HVAN_EXPLOSION && src->type == BL_HOM) {
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
+			homun_data& hd = reinterpret_cast<homun_data&>( *src );
+
+			hd.homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+
+			clif_send_homdata( hd, SP_INTIMATE );
 		}
 		break;
 	case AL_ANGELUS:
@@ -8996,7 +8992,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
 		if (sd) // If the client receives a skill-use packet inmediately before a walkok packet, it will discard the walk packet! [Skotlex]
-			clif_walkok(sd); // So aegis has to resend the walk ok.
+			clif_walkok(*sd); // So aegis has to resend the walk ok.
 		break;
 
 	case AS_CLOAKING:
@@ -9282,8 +9278,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	// Weapon Refining [Celest]
 	case WS_WEAPONREFINE:
-		if(sd)
-			clif_item_refine_list(sd);
+		if( sd != nullptr ){
+			clif_item_refine_list( *sd );
+		}
 		break;
 
 	case MC_VENDING:
@@ -9304,7 +9301,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				else{
 					// Instantly open the vending UI
 					sd->state.pending_vending_ui = false;
-					clif_openvendingreq(sd,2+skill_lv);
+					clif_openvendingreq( *sd, 2+skill_lv );
 				}
 			}
 		}
@@ -9315,7 +9312,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sd)
 		{
 			if (map_getmapflag(bl->m, MF_NOTELEPORT) && skill_lv <= 2) {
-				clif_skill_teleportmessage(sd,0);
+				clif_skill_teleportmessage( *sd, NOTIFY_MAPINFO_CANT_TP );
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skill_lv <= 2) { // duel restriction [LuzZza]
@@ -9933,7 +9930,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (tbl) {
 				md->state.can_escape = 1;
 				mob_unlocktarget(md, tick);
-				unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2); // Send distance in skill level > 1
+				// Official distance is 7, if level > 1, distance = level
+				t_tick time = unit_escape(src, tbl, skill_lv > 1 ? skill_lv : 7, 2);
+
+				if (time) {
+					// Need to set state here as it's not set otherwise
+					md->state.skillstate = MSS_WALK;
+					// Set AI to inactive for the duration of this movement
+					md->last_thinktime = tick + time;
+				}
 			}
 		}
 		break;
@@ -11330,7 +11335,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		if( sd && pc_isridingwug(sd) ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
-			clif_walkok(sd);
+			clif_walkok(*sd);
 		}
 		break;
 
@@ -11698,7 +11703,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			tstatus->sp -= tstatus->sp * ( 60 - 10 * skill_lv ) / 100;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			pc_revive((TBL_PC*)bl,heal,0);
-			clif_resurrection(bl,1);
+			clif_resurrection( *bl );
 		}
 		break;
 
@@ -13416,8 +13421,14 @@ TIMER_FUNC(skill_castend_id){
 			}
 			}
 		}
-		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE)
-			unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE) {
+			// When monsters used a skill they won't walk for amotion, this does not apply to players
+			// This is also important for monster skill usage behavior
+			if (src->type == BL_MOB)
+				unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+			else
+				unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		}
 
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d]\n",
@@ -13631,7 +13642,12 @@ TIMER_FUNC(skill_castend_pos){
 //				break;
 //			}
 //		}
-		unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
+		// When monsters used a skill they won't walk for amotion, this does not apply to players
+		// This is also important for monster skill usage behavior
+		if (src->type == BL_MOB)
+			unit_set_walkdelay(src, tick, max((int)status_get_amotion(src), skill_get_walkdelay(ud->skill_id, ud->skill_lv)), 1);
+		else
+			unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,tick,0);
 
@@ -15661,7 +15677,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 						if (td)
 							sec = DIFF_TICK(td->tick, tick);
 						map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 					}
 					else
 						sec = 3000; //Couldn't trap it?
@@ -16202,13 +16218,13 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 						|| !unit_blown_immune(bl,0x1) )
 					{
 						unit_movepos(bl, unit->bl.x, unit->bl.y, 0, 0);
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 					}
 					sg->val2 = bl->id;
 				} else
 					sec = 3000; //Couldn't trap it?
 				if (sg->unit_id == UNT_ANKLESNARE) {
-					clif_skillunit_update(&unit->bl);
+					clif_skillunit_update( unit->bl );
 					/**
 					 * If you're snared from a trap that was invisible this makes the trap be
 					 * visible again -- being you stepped on it (w/o this the trap remains invisible and you go "WTF WHY I CANT MOVE")
@@ -16231,7 +16247,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			if( bl->id != ss->id ) {
 				if( status_change_start(ss, bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NORATEDEF) ) {
 					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 				}
 				map_foreachinallrange(skill_trap_splash, &unit->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &unit->bl, tick);
 				sg->unit_id = UNT_USED_TRAPS; //Changed ID so it does not invoke a for each in area again.
@@ -16543,7 +16559,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 						if( td )
 							sec = DIFF_TICK(td->tick, tick);
 						///map_moveblock(bl, src->bl.x, src->bl.y, tick); // in official server it doesn't behave like this. [malufett]
-						clif_fixpos(bl);
+						clif_fixpos( *bl );
 						sg->val2 = bl->id;
 					} else
 						sec = 3000;	// Couldn't trap it?
@@ -17509,10 +17525,8 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		{
 			if( skill_lv < 3 && ((sd.bl.type == BL_PC && battle_config.pc_cloak_check_type&1)
 			||	(sd.bl.type != BL_PC && battle_config.monster_cloak_check_type&1) )) { //Check for walls.
-				static int dx[DIR_MAX] = { 0, 1, 0, -1, -1,  1, 1, -1};
-				static int dy[DIR_MAX] = {-1, 0, 1,  0, -1, -1, 1,  1};
 				int dir;
-				ARR_FIND( 0, DIR_MAX, dir, map_getcell(sd.bl.m, sd.bl.x+dx[dir], sd.bl.y+dy[dir], CELL_CHKNOPASS) != 0 );
+				ARR_FIND( 0, DIR_MAX, dir, map_getcell(sd.bl.m, sd.bl.x+dirx[dir], sd.bl.y+diry[dir], CELL_CHKNOPASS) != 0 );
 				if( dir == DIR_MAX ) {
 					clif_skill_fail( sd, skill_id );
 					return false;
@@ -18260,7 +18274,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 						count--;
 						if (!count) {
 							if( skill_id == RL_P_ALTER ){
-								clif_msg( &sd, SKILL_NEED_HOLY_BULLET );
+								clif_msg( &sd, MSI_FAIL_NEED_EQUIPPED_PROPERTY_SAINT_BULLET );
 							}else{
 								clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
 							}
@@ -18309,19 +18323,19 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			default:
 				switch((unsigned int)log2(require.weapon)) {
 					case W_REVOLVER:
-						clif_msg(&sd, SKILL_NEED_REVOLVER);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_HANDGUN);
 						break;
 					case W_RIFLE:
-						clif_msg(&sd, SKILL_NEED_RIFLE);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_RIFLE);
 						break;
 					case W_GATLING:
-						clif_msg(&sd, SKILL_NEED_GATLING);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_GATLING);
 						break;
 					case W_SHOTGUN:
-						clif_msg(&sd, SKILL_NEED_SHOTGUN);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_SHOTGUN);
 						break;
 					case W_GRENADE:
-						clif_msg(&sd, SKILL_NEED_GRENADE);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_GRANADE);
 						break;
 					default:
 						clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
@@ -18576,7 +18590,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 		}
 #endif
 		if((i=sd.equip_index[EQI_AMMO]) < 0 || !sd.inventory_data[i] ) {
-			clif_arrow_fail(&sd,0);
+			clif_arrow_fail( sd, ARROWFAIL_NO_AMMO );
 			return false;
 		} else if( sd.inventory.u.items_inventory[i].amount < require.ammo_qty + extra_ammo ) {
 			char e_msg[100];
@@ -18597,7 +18611,7 @@ bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint1
 		}
 		if (!(require.ammo&1<<sd.inventory_data[i]->subtype)) { //Ammo type check. Send the "wrong weapon type" message
 			//which is the closest we have to wrong ammo type. [Skotlex]
-			clif_arrow_fail(&sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
+			clif_arrow_fail( sd, ARROWFAIL_NO_AMMO ); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
 			//clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
 			return false;
 		}
@@ -19575,7 +19589,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 		return;
 
 	if (sd.status.char_id != target_sd->status.char_id && !battle_check_range(&sd.bl, &target_sd->bl, skill_get_range2(&sd.bl, sd.menuskill_id, sd.menuskill_val2, true))) {
-		clif_item_repaireffect(&sd, idx, 1);
+		clif_item_repaireffect( sd, idx, true );
 		return;
 	}
 
@@ -19598,10 +19612,10 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 
 	pc_delitem(&sd,pc_search_inventory(&sd,material),1,0,0,LOG_TYPE_CONSUME);
 
-	clif_item_repaireffect(&sd,idx,0);
+	clif_item_repaireffect( sd, idx, false );
 
 	if( sd.status.char_id != target_sd->status.char_id )
-		clif_item_repaireffect(target_sd,idx,0);
+		clif_item_repaireffect( *target_sd, idx, false );
 }
 
 /*==========================================
@@ -19609,7 +19623,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
  *------------------------------------------*/
 void skill_identify(map_session_data *sd, int idx)
 {
-	int flag=1;
+	bool failure = true;
 
 	nullpo_retv(sd);
 
@@ -19617,11 +19631,11 @@ void skill_identify(map_session_data *sd, int idx)
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(sd->inventory.u.items_inventory[idx].nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-			flag=0;
+			failure = false;
 			sd->inventory.u.items_inventory[idx].identify = 1;
 		}
 	}
-	clif_item_identified(sd,idx,flag);
+	clif_item_identified( *sd, idx, failure );
 }
 
 /*==========================================
@@ -19696,16 +19710,16 @@ void skill_weaponrefine( map_session_data& sd, int idx ){
 					ep = item->equip;
 					pc_unequipitem(&sd,idx,3);
 				}
-				clif_delitem(&sd,idx,1,3);
+				clif_delitem(sd,idx,1,3);
 				clif_upgrademessage(&sd, 0, item->nameid);
 				clif_inventorylist(&sd);
-				clif_refine(sd.fd,0,idx,item->refine);
+				clif_refine( sd, idx, ITEMREFINING_SUCCESS );
 				if( ditem->type == IT_WEAPON ){
 					achievement_update_objective(&sd, AG_ENCHANT_SUCCESS, 2, ditem->weapon_level, item->refine);
 				}
 				if (ep)
 					pc_equipitem(&sd,idx,ep);
-				clif_misceffect(&sd.bl,3);
+				clif_misceffect( sd.bl, NOTIFYEFFECT_REFINE_SUCCESS );
 				if(item->refine == 10 &&
 					item->card[0] == CARD0_FORGE &&
 					(int)MakeDWord(item->card[2],item->card[3]) == sd.status.char_id)
@@ -19727,10 +19741,10 @@ void skill_weaponrefine( map_session_data& sd, int idx ){
 				if(item->equip)
 					pc_unequipitem(&sd,idx,3);
 				clif_upgrademessage(&sd, 1, item->nameid);
-				clif_refine(sd.fd,1,idx,item->refine);
+				clif_refine( sd, idx, ITEMREFINING_FAILURE );
 				achievement_update_objective(&sd, AG_ENCHANT_FAIL, 1, 1);
 				pc_delitem(&sd,idx,1,0,2, LOG_TYPE_OTHER);
-				clif_misceffect(&sd.bl,2);
+				clif_misceffect( sd.bl, NOTIFYEFFECT_REFINE_FAILURE );
 				clif_emotion(&sd.bl, ET_HUK);
 			}
 		}
@@ -20431,7 +20445,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 					break;
 				if (status_change_start(ss, bl, SC_ELECTRICSHOCKER, 10000, sg->skill_lv, sg->group_id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NORATEDEF)) {
 					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 					clif_skill_damage(src, bl, tick, 0, 0, -30000, 1, sg->skill_id, sg->skill_lv, DMG_SPLASH);
 				}
 			}
@@ -20855,7 +20869,7 @@ int skill_delunit(struct skill_unit* unit)
 			break;
 	}
 
-	clif_skill_delunit(unit);
+	clif_skill_delunit( *unit );
 
 	unit->group=nullptr;
 	map_delblock(&unit->bl); // don't free yet
@@ -22294,7 +22308,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 
 		if (equip) {
 			clif_produceeffect(sd,0,nameid);
-			clif_misceffect(&sd->bl,3);
+			clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 			if (wlv >= 3 && ((ele? 1 : 0) + sc) >= 3) // Fame point system [DracoRPG]
 				pc_addfame(*sd, battle_config.fame_forge); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point
 		} else {
@@ -22346,13 +22360,13 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				case ASC_CDP:
 				case GC_CREATENEWPOISON:
 					clif_produceeffect(sd,2,nameid);
-					clif_misceffect(&sd->bl,5);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
 					break;
 				case BS_IRON:
 				case BS_STEEL:
 				case BS_ENCHANTEDSTONE:
 					clif_produceeffect(sd,0,nameid);
-					clif_misceffect(&sd->bl,3);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 					break;
 				default: //Those that don't require a skill?
 					if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20) { //Cooking items.
@@ -22389,8 +22403,8 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			}
 			if (k) {
 				clif_produceeffect(sd,6,nameid);
-				clif_misceffect(&sd->bl,5);
-				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
+				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
+				clif_msg_skill(sd,skill_id, MSI_SKILL_SUCCESS);
 				return true;
 			}
 		} else if (tmp_item.amount) { //Success
@@ -22403,24 +22417,24 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			switch (skill_id) {
 				case RK_RUNEMASTERY:
 					clif_produceeffect(sd, 4, nameid);
-					clif_misceffect(&sd->bl, 5);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
 					break;
 				case GN_MIX_COOKING:
 				case GN_MAKEBOMB:
 				case GN_S_PHARMACY:
 					clif_produceeffect(sd, 6, nameid);
-					clif_misceffect(&sd->bl, 5);
-					clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
+					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
 					break;
 				case MT_M_MACHINE:
 					clif_produceeffect(sd, 0, nameid);
-					clif_misceffect(&sd->bl, 3);
-					clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
+					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
 					break;
 				case BO_BIONIC_PHARMACY:
 					clif_produceeffect(sd, 2, nameid);
-					clif_misceffect(&sd->bl, 5);
-					clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
+					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
 					break;
 			}
 			return true;
@@ -22434,7 +22448,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 
 	if (equip) {
 		clif_produceeffect(sd,1,nameid);
-		clif_misceffect(&sd->bl,2);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 	} else {
 		switch (skill_id) {
 			case ASC_CDP: //25% Damage yourself, and display same effect as failed potion.
@@ -22446,18 +22460,18 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			case AM_TWILIGHT3:
 			case GC_CREATENEWPOISON:
 				clif_produceeffect(sd,3,nameid);
-				clif_misceffect(&sd->bl,6);
+				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
 				sd->potion_success_counter = 0; // Fame point system [DracoRPG]
 				break;
 			case BS_IRON:
 			case BS_STEEL:
 			case BS_ENCHANTEDSTONE:
 				clif_produceeffect(sd,1,nameid);
-				clif_misceffect(&sd->bl,2);
+				clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 				break;
 			case RK_RUNEMASTERY:
 				clif_produceeffect(sd,5,nameid);
-				clif_misceffect(&sd->bl,6);
+				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
 				break;
 			case GN_MIX_COOKING:
 				if (qty == 0) {
@@ -22488,26 +22502,26 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 						}
 					}
 					clif_produceeffect(sd,7,nameid);
-					clif_misceffect(&sd->bl,6);
-					clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
+					clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				}
 				break;
 			case GN_MAKEBOMB:
 			case GN_S_PHARMACY:
 			case GN_CHANGEMATERIAL:
 				clif_produceeffect(sd,7,nameid);
-				clif_misceffect(&sd->bl,6);
-				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
+				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
+				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				break;
 			case MT_M_MACHINE:
 				clif_produceeffect(sd, 1, nameid);
-				clif_misceffect(&sd->bl, 2);
-				clif_msg_skill(sd, skill_id, ITEM_PRODUCE_FAIL);
+				clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
+				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				break;
 			case BO_BIONIC_PHARMACY:
 				clif_produceeffect(sd, 3, nameid);
-				clif_misceffect(&sd->bl, 6);
-				clif_msg_skill(sd, skill_id, ITEM_PRODUCE_FAIL);
+				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
+				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				break;
 			default:
 				if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 ) { //Cooking items.
@@ -22638,8 +22652,8 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 			sc->getSCE(SC_MAGICPOWER)->val4 = 1;
 			status_calc_bl_(bl, status_db.getCalcFlag(SC_MAGICPOWER));
 			if(bl->type == BL_PC){// update current display.
-				clif_updatestatus(((TBL_PC *)bl),SP_MATK1);
-				clif_updatestatus(((TBL_PC *)bl),SP_MATK2);
+				clif_updatestatus(*((map_session_data *)bl),SP_MATK1);
+				clif_updatestatus(*((map_session_data *)bl),SP_MATK2);
 			}
 		}
 	}
@@ -22869,7 +22883,7 @@ int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list)
 							nameid = sd->inventory.u.items_inventory[idx].nameid;
 							amount = item_list[k*2+1];
 							if( nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-								clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
+								clif_msg_skill(sd, GN_CHANGEMATERIAL, MSI_SKILL_FAIL_MATERIAL_IDENTITY);
 								return 0;
 							}
 							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j]
@@ -22891,7 +22905,7 @@ int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list)
 	}
 
 	if( p == 0)
-		clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_CANT_COMBINE);
+		clif_msg_skill(sd, GN_CHANGEMATERIAL, MSI_SKILL_RECIPE_NOTEXIST);
 
 	return 0;
 }
@@ -22994,7 +23008,7 @@ int skill_blockpc_start(map_session_data *sd, int skill_id, t_tick tick) {
 		sd->scd[i]->timer = add_timer(gettick() + tick, skill_blockpc_end, sd->bl.id, i);
 
 		if (battle_config.display_status_timers)
-			clif_skill_cooldown(sd, skill_id, tick);
+			clif_skill_cooldown( *sd, skill_id, tick );
 
 		return 1;
 	} else {
