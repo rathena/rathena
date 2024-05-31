@@ -264,7 +264,7 @@ void mapif_achievement_load( int fd, uint32 char_id ){
 
 	WFIFOHEAD(fd, num_achievements * sizeof(struct achievement) + 8);
 	WFIFOW(fd, 0) = 0x3862;
-	WFIFOW(fd, 2) = num_achievements * sizeof(struct achievement) + 8;
+	WFIFOW(fd, 2) = static_cast<int16>( num_achievements * sizeof( struct achievement ) + 8 );
 	WFIFOL(fd, 4) = char_id;
 
 	if (num_achievements > 0)

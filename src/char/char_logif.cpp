@@ -96,7 +96,7 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
 TIMER_FUNC(chlogif_send_acc_tologin){
 	if ( chlogif_isconnected() ){
 		// send account list to login server
-		int users = char_get_onlinedb().size();
+		size_t users = char_get_onlinedb().size();
 		int i = 0;
 
 		WFIFOHEAD(login_fd,8+users*4);
@@ -176,7 +176,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_v
 	if (!chlogif_isconnected())
 		return;
 
-	int nlen = WFIFOW(login_fd, 2);
+	int16 nlen = WFIFOW( login_fd, 2 );
 	size_t len;
 
 	len = strlen(key)+1;
@@ -185,7 +185,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_v
 	nlen += 1;
 
 	safestrncpy(WFIFOCP(login_fd,nlen), key, len);
-	nlen += len;
+	nlen += static_cast<decltype(nlen)>( len );
 
 	WFIFOL(login_fd, nlen) = index;
 	nlen += 4;
@@ -201,7 +201,7 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_v
 			nlen += 1;
 
 			safestrncpy(WFIFOCP(login_fd,nlen), string_value, len);
-			nlen += len;
+			nlen += static_cast<decltype(nlen)>( len );
 		}
 	} else {
 		WFIFOB(login_fd, nlen) = int_value ? 0 : 1;

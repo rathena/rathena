@@ -83,9 +83,11 @@ TIMER_FUNC(guild_save_timer){
 	if( state != 2 ) //Reached the end of the guild db without saving.
 		last_id = 0; //Reset guild saved, return to beginning.
 
-	state = guild_db.size();
-	if( state < 1 ) state = 1; //Calculate the time slot for the next save.
-	add_timer(tick  + (charserv_config.autosave_interval)/state, guild_save_timer, 0, 0);
+	size_t count = std::max( guild_db.size(), static_cast<size_t>( 1 ) );
+
+	// Calculate the time slot for the next save.
+	add_timer( tick + charserv_config.autosave_interval / count, guild_save_timer, 0, 0 );
+
 	return 0;
 }
 
