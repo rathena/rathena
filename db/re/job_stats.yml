@@ -9213,7 +9213,7 @@ Body:
         Vit: 1
         Int: 1
       - Level: 13
-        Agi: 1
+        Dex: 1
         Spl: 1
       - Level: 14
         Sta: 1
@@ -9229,7 +9229,7 @@ Body:
         Int: 1
         Dex: 1
       - Level: 19
-        Dex: 1
+        Int: 1
       - Level: 20
         Vit: 1
         Int: 1

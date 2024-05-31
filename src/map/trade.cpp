@@ -399,7 +399,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 	}
 
 	if( item->equipSwitch ){
-		clif_msg(sd, SWAP_EQUIPITEM_UNREGISTER_FIRST);
+		clif_msg(sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST);
 		return;
 	}
 
