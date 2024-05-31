@@ -31,7 +31,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC2_Bio5_Swordman_Thief, RC2_Bio5_Acolyte_Merchant, RC2_Bio5_Mage_Archer, RC2_Bio5_MVP,
 	RC2_Clocktower, RC2_Thanatos, RC2_Faceworm, RC2_Hearthunter, RC2_Rockridge, RC2_Werner_Lab,
 	RC2_Temple_Demon, RC2_Illusion_Vampire, RC2_Malangdo, RC2_EP172ALPHA, RC2_EP172BETA, RC2_EP172BATH,
-	RC2_Illusion_Turtle, RC2_Rachel_Sanctuary, RC2_Illusion_Luanda
+	RC2_Illusion_Turtle, RC2_Rachel_Sanctuary, RC2_Illusion_Luanda, RC2_Illusion_Frozen, RC2_Illusion_Moonlight
 
 * Class (c)
 	Class_Normal, Class_Boss, Class_Guardian, Class_All

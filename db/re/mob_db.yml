@@ -93806,6 +93806,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
@@ -93862,6 +93864,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
@@ -93908,6 +93912,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 200
@@ -93954,6 +93960,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 190
@@ -94000,6 +94008,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 250
@@ -94048,6 +94058,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 300
@@ -94096,6 +94108,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Dark
     ElementLevel: 1
     WalkSpeed: 140
@@ -94144,6 +94158,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Illusion_Moonlight: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 150
@@ -94363,6 +94379,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Illusion_Frozen: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 190
@@ -94409,6 +94427,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Illusion_Frozen: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 220
@@ -94453,6 +94473,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Illusion_Frozen: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 250
@@ -94497,6 +94519,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Illusion_Frozen: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -94550,6 +94574,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Brute
+    RaceGroups:
+      Illusion_Frozen: true
     Element: Water
     ElementLevel: 4
     WalkSpeed: 400
@@ -94593,6 +94619,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Illusion_Frozen: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 1000
@@ -94621,6 +94649,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Illusion_Frozen: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 1000
@@ -96615,6 +96645,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -96643,6 +96675,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -96671,6 +96705,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Illusion_Luanda: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
