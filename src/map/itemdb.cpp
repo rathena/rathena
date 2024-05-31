@@ -1169,10 +1169,12 @@ void ItemDatabase::loadingFinished(){
 		}
 
 		if (item->type != IT_WEAPON) {
+#ifdef RENEWAL
 			if (item->matk > 0) {
 				ShowWarning( "Item %s is not a weapon. Defaulting MagicAttack to 0.\n", item->name.c_str() );
 				item->matk = 0;
 			}
+#endif
 			if (item->range > 0) {
 				ShowWarning( "Item %s is not a weapon. Defaulting Range to 0.\n", item->name.c_str() );
 				item->range = 0;
