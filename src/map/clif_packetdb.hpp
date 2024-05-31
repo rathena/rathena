@@ -1260,7 +1260,7 @@
 
 // 2008-12-10aSakexe
 #if PACKETVER >= 20081210
-	parseable_packet(0x0443,8,clif_parse_SkillSelectMenu,2,6);
+	parseable_packet( HEADER_CZ_SKILL_SELECT_RESPONSE, sizeof( PACKET_CZ_SKILL_SELECT_RESPONSE ), clif_parse_SkillSelectMenu, 0 );
 #endif
 
 // 2009-01-14aSakexe
