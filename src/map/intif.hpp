@@ -23,8 +23,8 @@ class map_session_data;
 
 int intif_parse(int fd);
 
-int intif_broadcast(const char* mes, int len, int type);
-int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
+int intif_broadcast( const char* mes, size_t len, int type );
+int intif_broadcast2( const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY );
 int intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, unsigned int sourceid, unsigned char type);
 int intif_broadcast_obtain_special_item_npc(map_session_data *sd, t_itemid nameid);
 int intif_main_message(map_session_data* sd, const char* message);
@@ -57,7 +57,7 @@ int intif_guild_leave(int guild_id, uint32 account_id, uint32 char_id, int flag,
 int intif_guild_memberinfoshort(int guild_id, uint32 account_id, uint32 char_id, int online, int lv, int class_);
 int intif_guild_break(int guild_id);
 int intif_guild_message(int guild_id, uint32 account_id, const char *mes, size_t len);
-int intif_guild_change_gm(int guild_id, const char* name, int len);
+int intif_guild_change_gm( int guild_id, const char* name, size_t len );
 int intif_guild_change_basicinfo(int guild_id, int type, const void *data, int len);
 int intif_guild_change_memberinfo(int guild_id, uint32 account_id, uint32 char_id, int type, const void *data, int len);
 int intif_guild_position(int guild_id, int idx, struct guild_position *p);

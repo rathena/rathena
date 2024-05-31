@@ -2098,7 +2098,7 @@ int map_quit(map_session_data *sd) {
 
 	pc_itemcd_do(sd,false);
 
-	npc_script_event(sd, NPCE_LOGOUT);
+	npc_script_event( *sd, NPCE_LOGOUT );
 
 	//Unit_free handles clearing the player related data,
 	//map_quit handles extra specific data which is related to quitting normally
@@ -4488,7 +4488,8 @@ enum e_mapflag map_getmapflag_by_name(char* name)
 bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
 	const char* constant;
 	const char* prefix = "mf_";
-	int i, len = strlen(prefix);
+	size_t i;
+	size_t len = strlen( prefix );
 
 	// Look it up
 	constant = script_get_constant_str( prefix, mapflag );

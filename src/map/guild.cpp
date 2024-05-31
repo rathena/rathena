@@ -1387,7 +1387,7 @@ int guild_send_message(map_session_data *sd, const char *mes, size_t len) {
 /*====================================================
  * Guild receive a message, will be displayed to whole member
  *---------------------------------------------------*/
-int guild_recv_message(int guild_id,uint32 account_id,const char *mes,int len) {
+int guild_recv_message( int guild_id, uint32 account_id, const char *mes, size_t len ){
 	auto g = guild_search(guild_id);
 	if (!g)
 		return 0;

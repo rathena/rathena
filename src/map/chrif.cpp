@@ -1311,7 +1311,8 @@ int chrif_save_scdata(map_session_data *sd) { //parses the sc_data of the player
 	}
 
 	WFIFOW(char_fd,12) = count;
-	WFIFOW(char_fd,2) = 14 +count*sizeof(struct status_change_data); //Total packet size
+	// Total packet size
+	WFIFOW( char_fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct status_change_data ) );
 	WFIFOSET(char_fd,WFIFOW(char_fd,2));
 #endif
 	return 0;
@@ -1350,7 +1351,7 @@ int chrif_skillcooldown_save(map_session_data *sd) {
 		return 0;
 
 	WFIFOW(char_fd, 12) = count;
-	WFIFOW(char_fd, 2) = 14 + count * sizeof (struct skill_cooldown_data);
+	WFIFOW( char_fd, 2 ) = static_cast<int16>( 14 + count * sizeof( struct skill_cooldown_data ) );
 	WFIFOSET(char_fd, WFIFOW(char_fd, 2));
 
 	return 0;

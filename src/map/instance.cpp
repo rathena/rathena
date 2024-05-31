@@ -351,7 +351,9 @@ static TIMER_FUNC(instance_subscription_timer){
 	std::shared_ptr<MapGuild> gd;
 	struct clan *cd;
 	e_instance_mode mode = idata->mode;
-	int ret = instance_addmap(instance_id); // Check that maps have been added
+
+	// Check that maps have been added
+	size_t ret = instance_addmap( instance_id );
 
 	switch(mode) {
 		case IM_NONE:
@@ -710,7 +712,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
  * @param instance_id: Instance ID to add map to
  * @return 0 on failure or map count on success
  */
-int instance_addmap(int instance_id) {
+size_t instance_addmap( int instance_id ){
 	if (instance_id <= 0)
 		return 0;
 
