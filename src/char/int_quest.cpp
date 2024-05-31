@@ -53,9 +53,9 @@ struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
 		return nullptr;
 	}
 
-	count = SqlStmt_NumRows(stmt);
+	count = static_cast<std::remove_reference<decltype(count)>::type>( SqlStmt_NumRows( stmt ) );
 	if( count > 0 ) {
-		int i = 0;
+		size_t i = 0;
 
 		questlog = (struct quest *)aCalloc( count, sizeof( struct quest ) );
 		while( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
@@ -137,20 +137,21 @@ bool mapif_quest_update(uint32 char_id, struct quest qd) {
  * @see inter_parse_frommap
  */
 int mapif_parse_quest_save(int fd) {
-	int i, j, k, new_n = ( RFIFOW( fd, 2 ) - 8 ) / sizeof( struct quest );
 	uint32 char_id = RFIFOL(fd,4);
 	struct quest *old_qd = nullptr, *new_qd = nullptr;
 	bool success = true;
-	size_t old_n;
+	size_t old_n, new_n = ( RFIFOW( fd, 2 ) - 8 ) / sizeof( struct quest );
 
 	if( new_n > 0 )
 		new_qd = (struct quest*)RFIFOP(fd,8);
 
 	old_qd = mapif_quests_fromsql( char_id, old_n );
 
-	for( i = 0; i < new_n; i++ ) {
+	for( size_t i = 0, j; i < new_n; i++ ) {
 		ARR_FIND(0, old_n, j, new_qd[i].quest_id == old_qd[j].quest_id);
 		if( j < old_n ) { //Update existing quests
+			size_t k;
+
 			//Only states and counts are changable.
 			ARR_FIND(0, MAX_QUEST_OBJECTIVES, k, new_qd[i].count[k] != old_qd[j].count[k]);
 			if( k != MAX_QUEST_OBJECTIVES || new_qd[i].state != old_qd[j].state )
@@ -165,8 +166,10 @@ int mapif_parse_quest_save(int fd) {
 			success &= mapif_quest_add(char_id, new_qd[i]);
 	}
 
-	for( i = 0; i < old_n; i++ ) //Quests not in new_qd but in old_qd are to be erased.
+	// Quests not in new_qd but in old_qd are to be erased.
+	for( size_t i = 0; i < old_n; i++ ){
 		success &= mapif_quest_delete(char_id, old_qd[i].quest_id);
+	}
 
 	if( old_qd )
 		aFree(old_qd);
