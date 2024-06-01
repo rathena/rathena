@@ -73589,6 +73589,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
+      /* TODO : pet 21632; */
       pet 1005;
   - Id: 101336
     AegisName: aegis_101336
