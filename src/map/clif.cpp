@@ -21150,7 +21150,7 @@ void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target ta
 	for( size_t i = 0; i < tsd->hatEffects.size(); i++ ){
 		p->effects[i] = tsd->hatEffects[i];
 
-		p->packetLength += static_cast<decltype(p->packetLength)>( p->effects[0] );
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 	}
 
 	clif_send( p, p->packetLength, tbl, target );
@@ -21168,7 +21168,7 @@ void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable 
 	p->aid = sd.bl.id;
 	p->status = enable;
 	p->effects[0] = effectId;
-	p->packetLength += static_cast<decltype(p->packetLength)>( p->effects[0] );
+	p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 
 	clif_send( p, p->packetLength, &sd.bl, AREA );
 #endif
