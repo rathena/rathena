@@ -21746,7 +21746,7 @@ Body:
       if (.@sum >= 27) {
          bonus3 bAutoSpell,"HW_NAPALMVULCAN",5,80;
       }
-      else if (.@sum >= 27) {
+      else if (.@sum >= 21) {
          bonus3 bAutoSpell,"HW_NAPALMVULCAN",3,40;
       }
   - Combos:
@@ -21760,7 +21760,7 @@ Body:
       if (.@sum >= 27) {
          bonus3 bAutoSpell,"AS_SONICBLOW",10,80;
       }
-      else if (.@sum >= 27) {
+      else if (.@sum >= 21) {
          bonus3 bAutoSpell,"AS_SONICBLOW",7,40;
       }
   - Combos:
