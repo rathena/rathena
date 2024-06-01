@@ -72,8 +72,10 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
+      Protection: true
     EndOnStart:
       Aeterna: true
+      Protection: true
     EndReturn:
       StoneWait: true
       Stone: true
@@ -125,8 +127,10 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
+      Protection: true
     EndOnStart:
       Aeterna: true
+      Protection: true
   - Status: Stun
     DurationLookup: NPC_STUNATTACK
     States:
@@ -144,6 +148,9 @@ Body:
       Inspiration: true
       Gvg_Stun: true
       Stun: true
+      Protection: true
+    EndOnStart:
+      Protection: true
   - Status: Sleep
     DurationLookup: NPC_SLEEPATTACK
     States:
@@ -162,6 +169,9 @@ Body:
       Inspiration: true
       Gvg_Sleep: true
       Sleep: true
+      Protection: true
+    EndOnStart:
+      Protection: true
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -180,6 +190,9 @@ Body:
       Inspiration: true
       Poison: true
       Dpoison: true
+      Protection: true
+    EndOnStart:
+      Protection: true
   - Status: Curse
     DurationLookup: NPC_WIDECURSE
     CalcFlags:
@@ -198,6 +211,9 @@ Body:
       Inspiration: true
       Gvg_Curse: true
       Curse: true
+      Protection: true
+    EndOnStart:
+      Protection: true
   - Status: Silence
     DurationLookup: NPC_SILENCEATTACK
     States:
@@ -214,6 +230,9 @@ Body:
       Inspiration: true
       Gvg_Silence: true
       Silence: true
+      Protection: true
+    EndOnStart:
+      Protection: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
     Flags:
@@ -223,6 +242,9 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Protection: true
+    EndOnStart:
+      Protection: true
     EndReturn:
       Confusion: true
   - Status: Blind
@@ -242,6 +264,9 @@ Body:
       Fear: true
       Gvg_Blind: true
       Blind: true
+      Protection: true
+    EndOnStart:
+      Protection: true
   - Status: Bleeding
     Icon: EFST_BLOODING
     DurationLookup: NPC_BLEEDING
@@ -259,6 +284,9 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Protection: true
+    EndOnStart:
+      Protection: true
   - Status: Dpoison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -8923,3 +8951,10 @@ Body:
       NoClearance: true
     EndOnStart:
       Decreaseagi: true
+  - Status: Protection
+    Icon: EFST_RAY_OF_PROTECTION
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true

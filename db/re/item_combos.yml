@@ -21770,10 +21770,10 @@ Body:
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
       bonus bMatkRate,2;
-      if (.@sum >= 27) {
+      if (.@sum >= 20) {
          bonus3 bAutoSpell,"WL_JACKFROST",max(getskilllv("WL_JACKFROST"),4),80;
       }
-      else if (.@sum >= 27) {
+      else if (.@sum >= 18) {
          bonus3 bAutoSpell,"WL_JACKFROST",max(getskilllv("WL_JACKFROST"),2),40;
       }
   - Combos:
@@ -28403,7 +28403,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Combos:
       - Combo:
-          - aegis_490220   # 490220
+          - Hero_Token_HN   # 490220
           - Blessed_Knife_LT   # 510072
     Script: |
       bonus2 bAddSize,Size_All,15;
@@ -28418,7 +28418,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490220   # 490220
+          - Hero_Token_HN   # 490220
           - Freedom_Stick_LT   # 550082
     Script: |
       bonus2 bMagicAddSize,Size_All,15;

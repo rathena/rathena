@@ -14232,7 +14232,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus2 "{ bonus bStr,200; bonus2 bHPLossRate,500,1000; }",20,5000,BF_WEAPON,"{ active_transform 1060,5000; specialeffect2 EF_POTION_BERSERK; showscript \"Bigfoot Power !\"; }";
+      autobonus2 "{ bonus bStr,200; bonus2 bHPLossRate,500,1000; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }";
     UnEquipScript: |
       heal 0,-300;
   - Id: 4876
@@ -50599,8 +50599,8 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Demon,40;
       bonus2 bAddRace,RC_DemiHuman,40;
-      bonus3 bSubRace,RC_Demon,-30,BF_NORMAL;
-      bonus3 bSubRace,RC_DemiHuman,-30,BF_NORMAL;
+      bonus3 bSubRace,RC_Demon,-30,BF_WEAPON;
+      bonus3 bSubRace,RC_DemiHuman,-30,BF_WEAPON;
   - Id: 300281
     AegisName: R001_Bestia_Card
     Name: R001-Bestia Card
