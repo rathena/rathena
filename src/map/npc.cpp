@@ -5323,7 +5323,8 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	if (battle_config.force_random_spawn || (mob.x == 0 && mob.y == 0)
 		|| (mob.xs == 1 && mob.ys == 1 && !map_getcell(mob.m, mob.x, mob.y, CELL_CHKREACH)))
 	{	//Force a random spawn anywhere on the map.
-		mob.x = mob.y = 0;
+		// Set x and y to -1 to prevent fallback spawn on cell 0,0
+		mob.x = mob.y = -1;
 		mob.xs = mob.ys = 0;
 	}
 
