@@ -243,7 +243,7 @@ int pet_menu(map_session_data *sd,int menunum);
 int pet_change_name(map_session_data *sd,char *name);
 int pet_change_name_ack(map_session_data *sd, char* name, int flag);
 int pet_equipitem(map_session_data *sd,int index);
-int pet_lootitem_drop(struct pet_data *pd,map_session_data *sd);
+void pet_lootitem_drop( pet_data& pd, map_session_data* sd );
 int pet_attackskill(struct pet_data *pd, int target_id);
 TIMER_FUNC(pet_skill_support_timer); // [Skotlex]
 TIMER_FUNC(pet_skill_bonus_timer); // [Valaris]

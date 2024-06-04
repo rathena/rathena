@@ -6703,7 +6703,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
 	if( battle_config.skill_steal_random_options ){
-		mob_setdropitem_option( &tmp_item, &md->db->dropitem[i] );
+		mob_setdropitem_option( tmp_item, md->db->dropitem[i] );
 	}
 	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 

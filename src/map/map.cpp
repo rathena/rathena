@@ -2136,7 +2136,9 @@ int map_quit(map_session_data *sd) {
 	}
 
 	// Return loot to owner
-	if( sd->pd ) pet_lootitem_drop(sd->pd, sd);
+	if( sd->pd != nullptr ){
+		pet_lootitem_drop( *sd->pd, sd );
+	}
 
 	if (sd->ed) // Remove effects here rather than unit_remove_map_pc so we don't clear on Teleport/map change.
 		elemental_clean_effect(sd->ed);
