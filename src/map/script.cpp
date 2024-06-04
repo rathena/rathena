@@ -932,11 +932,11 @@ static const char* skip_word(const char* p)
 static int add_word(const char* p)
 {
 	char* word;
-	int len;
 	int i;
 
 	// Check for a word
-	len = skip_word(p) - p;
+	size_t len = skip_word( p ) - p;
+
 	if( len == 0 )
 		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.", p);
 
@@ -16870,7 +16870,7 @@ BUILDIN_FUNC(insertchar)
 {
 	const char *str = script_getstr(st,2);
 	const char *c = script_getstr(st,3);
-	int index = script_getnum(st,4);
+	size_t index = script_getnum( st, 4 );
 	char *output;
 	size_t len = strlen(str);
 
@@ -17130,7 +17130,8 @@ BUILDIN_FUNC(implode)
 //-------------------------------------------------------
 BUILDIN_FUNC(sprintf)
 {
-	unsigned int len, argc = 0, arg = 0, buf2_len = 0;
+	unsigned int argc = 0, arg = 0;
+	size_t buf2_len = 0;
 	const char* format;
 	char* p;
 	char* q;
@@ -17142,7 +17143,7 @@ BUILDIN_FUNC(sprintf)
 	// Fetch init data
 	format = script_getstr(st, 2);
 	argc = script_lastdata(st)-2;
-	len = strlen(format);
+	size_t len = strlen( format );
 
 	// Skip parsing, where no parsing is required.
 	if(len == 0) {
@@ -17271,7 +17272,7 @@ BUILDIN_FUNC(sprintf)
 // Implements C sscanf.
 //-------------------------------------------------------
 BUILDIN_FUNC(sscanf){
-	unsigned int argc, arg = 0, len;
+	unsigned int argc, arg = 0;
 	struct script_data* data;
 	map_session_data* sd = nullptr;
 	const char* str;
@@ -17288,7 +17289,7 @@ BUILDIN_FUNC(sscanf){
 	format = script_getstr(st, 3);
 	argc = script_lastdata(st)-3;
 
-	len = strlen(format);
+	size_t len = strlen(format);
 
 
 	if (len != 0 && strlen(str) == 0) {
@@ -17439,7 +17440,7 @@ BUILDIN_FUNC(replacestr)
 
 	int count = 0;
 	int numFinds = 0;
-	int i = 0, f = 0;
+	size_t i = 0, f = 0;
 
 	if(findlen == 0) {
 		ShowError("script:replacestr: Invalid search length.\n");
@@ -17520,7 +17521,6 @@ BUILDIN_FUNC(countstr)
 	bool usecase = true;
 
 	int numFinds = 0;
-	int i = 0, f = 0;
 
 	if(findlen == 0) {
 		ShowError("script:countstr: Invalid search length.\n");
@@ -17538,8 +17538,8 @@ BUILDIN_FUNC(countstr)
 		}
 	}
 
-	for(; i < inputlen; i++) {
-		for(f = 0; f <= findlen; f++) {
+	for( size_t i = 0; i < inputlen; i++ ){
+		for( size_t f = 0; f <= findlen; f++ ){
 			if(f == findlen) { //complete match
 				numFinds++;
 				i += findlen - 1;
@@ -21356,8 +21356,10 @@ BUILDIN_FUNC(bg_info)
 		case BG_INFO_MAPS: {
 			size_t i;
 
-			for (i = 0; i < bg->maps.size(); i++)
-				setd_sub_str(st, nullptr, ".@bgmaps$", i, mapindex_id2name(bg->maps[i].mapindex), nullptr);
+			for( i = 0; i < bg->maps.size(); i++ ){
+				setd_sub_str( st, nullptr, ".@bgmaps$", static_cast<int>( i ), mapindex_id2name( bg->maps[i].mapindex ), nullptr );
+			}
+
 			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
 			script_pushint(st, i);
 			break;

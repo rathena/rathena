@@ -3200,7 +3200,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		} else if( mvp_sd && !md->state.npc_killmonster ) {
 			pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
 			pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
-			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
+			npc_script_event( *mvp_sd, NPCE_KILLNPC );
 		}
 	}
 
@@ -6665,8 +6665,8 @@ static void mob_load(void)
 	mob_chat_db.load();	// load before mob_skill_db
 
 	for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){	
-		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
-		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		size_t n1 = strlen( db_path ) + strlen( dbsubpath[i] ) + 1;
+		size_t n2 = strlen( db_path ) + strlen( DBPATH ) + strlen( dbsubpath[i] ) + 1;
 
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);

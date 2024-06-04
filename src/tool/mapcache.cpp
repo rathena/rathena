@@ -76,7 +76,7 @@ int read_map(char *name, struct map_data *m)
 
 	// Open map GAT
 	sprintf(filename,"data\\%s.gat", name);
-	gat = (unsigned char *)grfio_read(filename);
+	gat = (unsigned char *)grfio_reads(filename);
 	if (gat == nullptr)
 		return 0;
 
