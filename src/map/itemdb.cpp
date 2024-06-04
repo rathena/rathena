@@ -2999,11 +2999,14 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 
 	size_t count = 0;
 	// Count all the 'must' item(s) (subgroup 0)
-	uint16 subgroup = 0;
-	std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
-
-	if (random != nullptr && !random->data.empty()) {
-		count = random->data.size();
+	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
+	if (must != nullptr && !must->data.empty()) {
+		for (const auto& it : must->data) {
+			if (itemdb_isstackable(it.second->nameid) && it.second->isStacked)
+				count += it.second->amount;
+			else
+				count++;
+		}
 	}
 
 	// Count all 'random' subgroups
@@ -3036,8 +3039,8 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 #endif
 
 	// Get all the 'must' item(s) (subgroup 0)
-	if (random != nullptr && !random->data.empty()) {
-		for (const auto &it : random->data)
+	if (must != nullptr && !must->data.empty()) {
+		for (const auto &it : must->data)
 			itemdb_pc_get_itemgroup_sub(sd, identify, it.second);
 	}
 
