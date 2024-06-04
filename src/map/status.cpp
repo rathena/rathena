@@ -1682,7 +1682,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				npc_event(sd, bg->die_event.c_str(), 0);
 		}
 
-		npc_script_event(sd,NPCE_DIE);
+		npc_script_event( *sd, NPCE_DIE );
 	}
 
 	return (int)(hp+sp+ap);
@@ -1915,7 +1915,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	status->ap += ap;
 
 	if (bl->prev) // Animation only if character is already on a map.
-		clif_resurrection(bl, 1);
+		clif_resurrection( *bl );
 	switch (bl->type) {
 		case BL_PC:  pc_revive((TBL_PC*)bl, hp, sp, ap); break;
 		case BL_MOB: mob_revive((TBL_MOB*)bl, hp); break;
@@ -2992,7 +2992,7 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 
 			pd->pet.level = lv;
 			if (!(opt&SCO_FIRST)) // Lv Up animation
-				clif_misceffect(&pd->bl, 0);
+				clif_misceffect( pd->bl, NOTIFYEFFECT_BASE_LEVEL_UP );
 			status->rhw.atk = (bstat->rhw.atk*lv)/pd->db->lv;
 			status->rhw.atk2 = (bstat->rhw.atk2*lv)/pd->db->lv;
 			status->str = (bstat->str*lv)/pd->db->lv;
@@ -10895,7 +10895,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = 60000;
 			val1 = battle_config.manner_system; // Mute filters.
 			if (sd) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
+				clif_changemanner( *sd );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
@@ -13399,7 +13399,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sd && sd->status.manner < 0 && tid != INVALID_TIMER)
 				sd->status.manner = 0;
 			if (sd && tid == INVALID_TIMER) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
+				clif_changemanner( *sd );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
@@ -13811,7 +13811,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag[SCF_NONPLAYER] ) // bugreport:681
-		clif_changeoption2(bl);
+		clif_changeoption2( *bl );
 	else if (!disable_opt_flag && (opt_flag[SCF_SENDOPTION] || opt_flag[SCF_ONTOUCH] || opt_flag[SCF_UNITMOVE] || opt_flag[SCF_NONPLAYER] || opt_flag[SCF_SENDLOOK])) {
 		clif_changeoption(bl);
 		if (sd && opt_flag[SCF_SENDLOOK]) {
@@ -14220,7 +14220,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_NOCHAT:
 		if(sd) {
 			sd->status.manner++;
-			clif_changestatus(sd,SP_MANNER,sd->status.manner);
+			clif_changemanner( *sd );
 			clif_updatestatus(*sd,SP_MANNER);
 			if (sd->status.manner < 0) { // Every 60 seconds your manner goes up by 1 until it gets back to 0.
 				sc_timer_next(60000+tick);

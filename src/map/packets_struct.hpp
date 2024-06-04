@@ -3297,6 +3297,20 @@ struct PACKET_ZC_MAKINGARROW_LIST {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_MAKINGARROW_LIST, 0x01ad);
 
+struct PACKET_ZC_SKILL_SELECT_REQUEST {
+	int16 packetType;
+	int16 packetLength;
+	int32 flag; //< 0 = old code compatibility; 1 = Auto Shadow Spell; same value is received in CZ_SKILL_SELECT_RESPONSE
+	int16 skillIds[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILL_SELECT_REQUEST, 0x0442);
+
+struct PACKET_CZ_SKILL_SELECT_RESPONSE {
+	int16 packetType;
+	int32 flag; //< currently unused, matches ZC_SKILL_SELECT_REQUEST.flag
+	int16 selectedSkillId;
+} __attribute__((packed));
+
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20221024
 #define REPAIRITEM_INFO REPAIRITEM_INFO2
 struct PACKET_ZC_REPAIRITEMLIST {
@@ -4752,7 +4766,7 @@ struct PACKET_ZC_NOTIFY_SKILL {
 	int8 action;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_SKILL, 0x01de);
-#endif 
+#endif
 
 #if PACKETVER_MAIN_NUM >= 20130731 || PACKETVER_RE_NUM >= 20130724 || defined(PACKETVER_ZERO)
 struct PACKET_ZC_USE_SKILL {
@@ -5547,6 +5561,22 @@ struct PACKET_ZC_SPIRITS {
 	int16 num;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SPIRITS, 0x01d0)
+
+struct PACKET_ZC_SPIRITS2 {
+	int16 PacketType;
+	uint32 AID;
+	int16 num;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SPIRITS2, 0x01e1)
+
+#if PACKETVER_MAIN_NUM >= 20200414 || PACKETVER_RE_NUM >= 20200723 || PACKETVER_ZERO_NUM >= 20200506
+struct PACKET_ZC_SOULENERGY {
+	int16 PacketType;
+	uint32 AID;
+	uint16 num;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SOULENERGY, 0x0b73)
+#endif
 
 struct PACKET_ZC_SAY_DIALOG {
 	int16 PacketType;

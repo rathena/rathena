@@ -950,7 +950,7 @@ int chclif_parse_select_accessible_map( int fd, struct char_session_data* sd, ui
 
 void chclif_accessible_maps( int fd ){
 #if PACKETVER >= 20100714
-	struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME* p = (struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME*)packet_buffer;
+	PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME* p = reinterpret_cast<PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME*>( packet_buffer );
 
 	p->packetType = HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME;
 	p->packetLength = sizeof( *p );

@@ -932,11 +932,11 @@ static const char* skip_word(const char* p)
 static int add_word(const char* p)
 {
 	char* word;
-	int len;
 	int i;
 
 	// Check for a word
-	len = skip_word(p) - p;
+	size_t len = skip_word( p ) - p;
+
 	if( len == 0 )
 		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.", p);
 
@@ -9343,7 +9343,7 @@ BUILDIN_FUNC(repair)
 					sd->inventory.u.items_inventory[i].attribute = 0;
 					clif_equiplist(sd);
 					clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
-					clif_misceffect(&sd->bl, 3);
+					clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 					break;
 				}
 		}
@@ -9374,7 +9374,7 @@ BUILDIN_FUNC(repairall)
 
 	if(repaircounter)
 	{
-		clif_misceffect(&sd->bl, 3);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 		clif_equiplist(sd);
 	}
 
@@ -9634,7 +9634,7 @@ BUILDIN_FUNC(successrefitem) {
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
-		clif_refine(sd->fd,0,i,sd->inventory.u.items_inventory[i].refine);
+		clif_refine( *sd, i, ITEMREFINING_SUCCESS );
 		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
@@ -9642,7 +9642,7 @@ BUILDIN_FUNC(successrefitem) {
 
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
-		clif_misceffect(&sd->bl,3);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 		if( sd->inventory_data[i]->type == IT_WEAPON ){
 			achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->weapon_level, sd->inventory.u.items_inventory[i].refine);
 		}
@@ -9693,9 +9693,9 @@ BUILDIN_FUNC(failedrefitem) {
 	if (i >= 0) {
 		sd->inventory.u.items_inventory[i].refine = 0;
 		pc_unequipitem(sd,i,3); //recalculate bonus
-		clif_refine(sd->fd,1,i,sd->inventory.u.items_inventory[i].refine); //notify client of failure
+		clif_refine( *sd, i, ITEMREFINING_FAILURE);
 		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
-		clif_misceffect(&sd->bl,2); 	// display failure effect
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 		achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, 1);
 		script_pushint(st, 1);
 		return SCRIPT_CMD_SUCCESS;
@@ -9736,7 +9736,7 @@ BUILDIN_FUNC(downrefitem) {
 		sd->inventory.u.items_inventory[i].refine -= down;
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 
-		clif_refine(sd->fd,2,i,sd->inventory.u.items_inventory[i].refine);
+		clif_refine( *sd, i, ITEMREFINING_DOWNGRADE );
 		clif_delitem( *sd, i, 1, 3 );
 
 		//Logs items, got from (N)PC scripts [Lupus]
@@ -9744,7 +9744,7 @@ BUILDIN_FUNC(downrefitem) {
 
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
-		clif_misceffect(&sd->bl,2);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 		achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, sd->inventory.u.items_inventory[i].refine);
 		script_pushint(st, sd->inventory.u.items_inventory[i].refine);
 		return SCRIPT_CMD_SUCCESS;
@@ -14050,7 +14050,7 @@ BUILDIN_FUNC(successremovecards) {
 			map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 		}
 
-		clif_misceffect(&sd->bl,3);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14137,7 +14137,7 @@ BUILDIN_FUNC(failedremovecards) {
 				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 			}
 		}
-		clif_misceffect(&sd->bl,2);
+		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14839,7 +14839,7 @@ BUILDIN_FUNC(petloot)
 	pd = sd->pd;
 	if (pd->loot != nullptr)
 	{	//Release whatever was there already and reallocate memory
-		pet_lootitem_drop(pd, pd->master);
+		pet_lootitem_drop( *pd, pd->master );
 		aFree(pd->loot->item);
 	}
 	else
@@ -16059,7 +16059,7 @@ BUILDIN_FUNC(chatmes)
 	if (nd != nullptr && nd->chat_id) {
 		char message[256];
 		safesnprintf(message, sizeof(message), "%s", str);
-		clif_GlobalMessage(map_id2bl(nd->chat_id), message, CHAT_WOS);
+		clif_GlobalMessage( *map_id2bl( nd->chat_id ), message, CHAT_WOS );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16870,7 +16870,7 @@ BUILDIN_FUNC(insertchar)
 {
 	const char *str = script_getstr(st,2);
 	const char *c = script_getstr(st,3);
-	int index = script_getnum(st,4);
+	size_t index = script_getnum( st, 4 );
 	char *output;
 	size_t len = strlen(str);
 
@@ -17130,7 +17130,8 @@ BUILDIN_FUNC(implode)
 //-------------------------------------------------------
 BUILDIN_FUNC(sprintf)
 {
-	unsigned int len, argc = 0, arg = 0, buf2_len = 0;
+	unsigned int argc = 0, arg = 0;
+	size_t buf2_len = 0;
 	const char* format;
 	char* p;
 	char* q;
@@ -17142,7 +17143,7 @@ BUILDIN_FUNC(sprintf)
 	// Fetch init data
 	format = script_getstr(st, 2);
 	argc = script_lastdata(st)-2;
-	len = strlen(format);
+	size_t len = strlen( format );
 
 	// Skip parsing, where no parsing is required.
 	if(len == 0) {
@@ -17271,7 +17272,7 @@ BUILDIN_FUNC(sprintf)
 // Implements C sscanf.
 //-------------------------------------------------------
 BUILDIN_FUNC(sscanf){
-	unsigned int argc, arg = 0, len;
+	unsigned int argc, arg = 0;
 	struct script_data* data;
 	map_session_data* sd = nullptr;
 	const char* str;
@@ -17288,7 +17289,7 @@ BUILDIN_FUNC(sscanf){
 	format = script_getstr(st, 3);
 	argc = script_lastdata(st)-3;
 
-	len = strlen(format);
+	size_t len = strlen(format);
 
 
 	if (len != 0 && strlen(str) == 0) {
@@ -17439,7 +17440,7 @@ BUILDIN_FUNC(replacestr)
 
 	int count = 0;
 	int numFinds = 0;
-	int i = 0, f = 0;
+	size_t i = 0, f = 0;
 
 	if(findlen == 0) {
 		ShowError("script:replacestr: Invalid search length.\n");
@@ -17520,7 +17521,6 @@ BUILDIN_FUNC(countstr)
 	bool usecase = true;
 
 	int numFinds = 0;
-	int i = 0, f = 0;
 
 	if(findlen == 0) {
 		ShowError("script:countstr: Invalid search length.\n");
@@ -17538,8 +17538,8 @@ BUILDIN_FUNC(countstr)
 		}
 	}
 
-	for(; i < inputlen; i++) {
-		for(f = 0; f <= findlen; f++) {
+	for( size_t i = 0; i < inputlen; i++ ){
+		for( size_t f = 0; f <= findlen; f++ ){
 			if(f == findlen) { //complete match
 				numFinds++;
 				i += findlen - 1;
@@ -17932,7 +17932,7 @@ BUILDIN_FUNC(callshop)
 			clif_barter_open( *sd, *nd );
 		}
 	}else
-		clif_cashshop_show(sd, nd);
+		clif_cashshop_show( *sd, *nd );
 
 	sd->npc_shopid = nd->bl.id;
 	script_pushint(st,1);
@@ -21356,8 +21356,10 @@ BUILDIN_FUNC(bg_info)
 		case BG_INFO_MAPS: {
 			size_t i;
 
-			for (i = 0; i < bg->maps.size(); i++)
-				setd_sub_str(st, nullptr, ".@bgmaps$", i, mapindex_id2name(bg->maps[i].mapindex), nullptr);
+			for( i = 0; i < bg->maps.size(); i++ ){
+				setd_sub_str( st, nullptr, ".@bgmaps$", static_cast<int>( i ), mapindex_id2name( bg->maps[i].mapindex ), nullptr );
+			}
+
 			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
 			script_pushint(st, i);
 			break;
@@ -22541,7 +22543,7 @@ BUILDIN_FUNC(setmounting) {
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
-		clif_msg(sd, NEED_REINS_OF_MOUNT);
+		clif_msg(sd, MSI_FAIELD_RIDING_OVERLAPPED);
 		script_pushint(st,0); //can't mount with one of these
 	} else if (sd->sc.getSCE(SC_CLOAKING) || sd->sc.getSCE(SC_CHASEWALK) || sd->sc.getSCE(SC_CLOAKINGEXCEED) || sd->sc.getSCE(SC_CAMOUFLAGE) || sd->sc.getSCE(SC_STEALTHFIELD) || sd->sc.getSCE(SC__FEINTBOMB)) {
 		// SC_HIDING, SC__INVISIBILITY, SC__SHADOWFORM, SC_SUHIDE already disable item usage
@@ -24402,7 +24404,7 @@ BUILDIN_FUNC(hateffect){
 	}
 
 	if( !sd->state.connect_new ){
-		clif_hat_effect_single( sd, effectID, enable );
+		clif_hat_effect_single( *sd, effectID, enable );
 	}
 
 #endif

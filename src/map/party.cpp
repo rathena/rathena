@@ -917,7 +917,7 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 			return 0; // Shouldn't happen
 
 		if( battle_config.change_party_leader_samemap && strncmp( p->party.member[mi].map, p->party.member[tmi].map, sizeof( p->party.member[mi].map ) ) != 0 ){
-			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
+			clif_msg(sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP);
 			return 0;
 		}
 	} else {
@@ -1052,8 +1052,7 @@ int party_send_message(map_session_data *sd,const char *mes, size_t len)
 	return 0;
 }
 
-int party_recv_message(int party_id,uint32 account_id,const char *mes,int len)
-{
+int party_recv_message( int party_id, uint32 account_id, const char *mes, size_t len ){
 	struct party_data *p;
 	if( (p=party_search(party_id))==nullptr)
 		return 0;

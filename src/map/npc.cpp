@@ -2141,7 +2141,7 @@ int npc_globalmessage(const char* name, const char* mes)
 		return 0;
 
 	snprintf(temp, sizeof(temp), "%s", mes);
-	clif_GlobalMessage(&nd->bl,temp,ALL_CLIENT);
+	clif_GlobalMessage( nd->bl, temp, ALL_CLIENT );
 
 	return 0;
 }
@@ -2196,7 +2196,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
-		clif_msg(sd, WORK_IN_PROGRESS);
+		clif_msg(sd, MSI_BUSY);
 		return 1;
 	}
 
@@ -2211,7 +2211,7 @@ int npc_click(map_session_data* sd, struct npc_data* nd)
 		case NPCTYPE_CASHSHOP:
 		case NPCTYPE_ITEMSHOP:
 		case NPCTYPE_POINTSHOP:
-			clif_cashshop_show(sd,nd);
+			clif_cashshop_show( *sd, *nd );
 			break;
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
@@ -2375,7 +2375,7 @@ int npc_buysellsel(map_session_data* sd, int id, int type)
 	sd->npc_shopid = id;
 
 	if (type == 0) {
-		clif_buylist(sd,nd);
+		clif_buylist( *sd, *nd );
 	} else {
 		clif_selllist( *sd );
 	}
@@ -4245,7 +4245,6 @@ int npc_convertlabel_db(DBKey key, DBData *data, va_list ap)
 	const char* filepath;
 	struct npc_label_list* label;
 	const char *p;
-	int len;
 
 	nullpo_ret(label_list = va_arg(ap,struct npc_label_list**));
 	nullpo_ret(label_list_num = va_arg(ap,int*));
@@ -4255,7 +4254,8 @@ int npc_convertlabel_db(DBKey key, DBData *data, va_list ap)
 	p = lname;
 	while( ISALNUM(*p) || *p == '_' )
 		++p;
-	len = p-lname;
+
+	size_t len = p - lname;
 
 	// here we check if the label fit into the buffer
 	if( len > NAME_LENGTH )
@@ -5323,7 +5323,8 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	if (battle_config.force_random_spawn || (mob.x == 0 && mob.y == 0)
 		|| (mob.xs == 1 && mob.ys == 1 && !map_getcell(mob.m, mob.x, mob.y, CELL_CHKREACH)))
 	{	//Force a random spawn anywhere on the map.
-		mob.x = mob.y = 0;
+		// Set x and y to -1 to prevent fallback spawn on cell 0,0
+		mob.x = mob.y = -1;
 		mob.xs = mob.ys = 0;
 	}
 
@@ -5653,28 +5654,34 @@ int npc_parsesrcfile(const char* filepath)
 		// fill w1
 		if( pos[3]-pos[2] > ARRAYLENGTH(w1)-1 )
 			ShowWarning("npc_parsesrcfile: w1 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[3]-pos[2], filepath, strline(buffer,p-buffer));
-		int i = min(pos[3]-pos[2], ARRAYLENGTH(w1)-1);
-		memcpy(w1, p+pos[2], i*sizeof(char));
-		w1[i] = '\0';
+
+		size_t index = std::min( pos[3] - pos[2], ARRAYLENGTH( w1 ) - 1 );
+		memcpy( w1, p + pos[2], index * sizeof( char ) );
+		w1[index] = '\0';
+
 		// fill w2
 		if( pos[5]-pos[4] > ARRAYLENGTH(w2)-1 )
 			ShowWarning("npc_parsesrcfile: w2 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[5]-pos[4], filepath, strline(buffer,p-buffer));
-		i = min(pos[5]-pos[4], ARRAYLENGTH(w2)-1);
-		memcpy(w2, p+pos[4], i*sizeof(char));
-		w2[i] = '\0';
+
+		index = std::min( pos[5] - pos[4], ARRAYLENGTH( w2 ) - 1 );
+		memcpy( w2, p + pos[4], index * sizeof( char ) );
+		w2[index] = '\0';
+
 		// fill w3
 		if( pos[7]-pos[6] > ARRAYLENGTH(w3)-1 )
 			ShowWarning("npc_parsesrcfile: w3 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[7]-pos[6], filepath, strline(buffer,p-buffer));
-		i = min(pos[7]-pos[6], ARRAYLENGTH(w3)-1);
-		memcpy(w3, p+pos[6], i*sizeof(char));
-		w3[i] = '\0';
+
+		index = std::min( pos[7] - pos[6], ARRAYLENGTH( w3 ) - 1 );
+		memcpy( w3, p + pos[6], index * sizeof( char ) );
+		w3[index] = '\0';
+
 		// fill w4 (to end of line)
 		if( pos[1]-pos[8] > ARRAYLENGTH(w4)-1 )
 			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
 		if (pos[8] != -1) {
-			i = min(pos[1]-pos[8], ARRAYLENGTH(w4)-1);
-			memcpy(w4, p+pos[8], i*sizeof(char));
-			w4[i] = '\0';
+			index = std::min( pos[1] - pos[8], ARRAYLENGTH( w4 ) - 1 );
+			memcpy( w4, p + pos[8], index * sizeof( char ) );
+			w4[index] = '\0';
 		}
 		else
 			w4[0] = '\0';
@@ -5750,7 +5757,7 @@ int npc_parsesrcfile(const char* filepath)
 			else
 				p = npc_parse_script(w1,w2,w3,w4, p, buffer, filepath);
 		}
-		else if( (i=0, sscanf(w2,"duplicate%n",&i), (i > 0 && w2[i] == '(')) && count > 3 )
+		else if( int i = 0; ( sscanf( w2, "duplicate%n", &i ), ( i > 0 && w2[i] == '(' ) ) && count > 3 )
 			p = npc_parse_duplicate(w1,w2,w3,w4, p, buffer, filepath);
 		else if( (strcmpi(w2,"monster") == 0 || strcmpi(w2,"boss_monster") == 0) && count > 3 )
 			p = npc_parse_mob(w1, w2, w3, w4, p, buffer, filepath);
@@ -5766,18 +5773,14 @@ int npc_parsesrcfile(const char* filepath)
 	return 1;
 }
 
-int npc_script_event(map_session_data* sd, enum npce_event type){
+size_t npc_script_event( map_session_data& sd, enum npce_event type ){
 	if (type == NPCE_MAX)
 		return 0;
-	if (!sd) {
-		ShowError("npc_script_event: nullptr sd. Event Type %d\n", type);
-		return 0;
-	}
 
 	std::vector<struct script_event_s>& vector = script_event[type];
 
 	for( struct script_event_s& evt : vector ){
-		npc_event_sub( sd, evt.event, evt.event_name );
+		npc_event_sub( &sd, evt.event, evt.event_name );
 	}
 
 	return vector.size();

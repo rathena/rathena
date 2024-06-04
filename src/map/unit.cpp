@@ -211,8 +211,9 @@ TIMER_FUNC(unit_teleport_timer){
 	else if(*mast_tid != tid || bl == nullptr)
 		return 0;
 	else {
-		TBL_PC *msd = unit_get_master(bl);
-		if(msd && !check_distance_bl(&msd->bl, bl, data)) {
+		map_session_data* msd = unit_get_master( bl );
+
+		if( msd != nullptr && !check_distance_bl( &msd->bl, bl, static_cast<int>( data ) ) ){
 			*mast_tid = INVALID_TIMER;
 			unit_warp(bl, msd->bl.m, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		} else // No timer needed
@@ -706,7 +707,8 @@ TIMER_FUNC(unit_delay_walktoxy_timer){
  * @return 1: Success 0: Fail (No valid bl or target)
  */
 TIMER_FUNC(unit_delay_walktobl_timer){
-	struct block_list *bl = map_id2bl(id), *tbl = map_id2bl(data);
+	block_list* bl = map_id2bl( id );
+	block_list* tbl = map_id2bl( static_cast<int>( data ) );
 
 	if(!bl || bl->prev == nullptr || tbl == nullptr)
 		return 0;
@@ -2784,7 +2786,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if(sd && !check_distance_client_bl(src,target,range)) {
 		// Player tries to attack but target is too far, notify client
-		clif_movetoattack(sd,target);
+		clif_movetoattack( *sd, *target );
 		return 1;
 	} else if(md && !check_distance_bl(src,target,range)) {
 		// Monster: Chase if required
@@ -2988,7 +2990,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 	if(bl->type==BL_MOB)
 		((TBL_MOB*)bl)->skill_idx = -1;
 
-	clif_skillcastcancel(bl);
+	clif_skillcastcancel( *bl );
 
 	return 1;
 }

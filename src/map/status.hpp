@@ -3172,7 +3172,7 @@ struct status_data {
 #endif
 		matk_min, matk_max,
 		speed,
-		amotion, adelay, dmotion;
+		amotion, clientamotion, adelay, dmotion;
 	int mode;
 	short
 		hit, flee, cri, flee2,
@@ -3392,6 +3392,7 @@ defType status_get_def(struct block_list *bl);
 unsigned short status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(bl)->amotion
+#define status_get_clientamotion(bl) status_get_status_data(bl)->clientamotion
 #define status_get_dmotion(bl) status_get_status_data(bl)->dmotion
 #define status_get_patk(bl) status_get_status_data(bl)->patk
 #define status_get_smatk(bl) status_get_status_data(bl)->smatk
