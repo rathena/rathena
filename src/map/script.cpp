@@ -7617,9 +7617,7 @@ BUILDIN_FUNC(getitem)
 	int get_count, i;
 	t_itemid nameid;
 	unsigned short amount;
-	struct item it;
-	map_session_data *sd;
-	unsigned char flag = 0;
+	map_session_data* sd;
 	const char* command = script_getfuncname(st);
 	std::shared_ptr<item_data> id;
 
@@ -7648,7 +7646,8 @@ BUILDIN_FUNC(getitem)
 	if( (amount = script_getnum(st,3)) <= 0)
 		return SCRIPT_CMD_SUCCESS; //return if amount <=0, skip the useles iteration
 
-	memset(&it,0,sizeof(it));
+	item it = {};
+
 	it.nameid = nameid;
 	it.identify = 1;
 	it.bound = BOUND_NONE;
@@ -7680,10 +7679,11 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
-			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
-			{
-				clif_additem(sd, 0, 0, flag);
+			e_additem_result flag = pc_additem( sd, &it, get_count, LOG_TYPE_SCRIPT );
 
+			if( flag != ADDITEM_SUCCESS ){
+				clif_additem(sd, 0, 0, flag);
+				ShowError( "buildin_getitem: Failed to add the item to player.\n" );
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
@@ -7719,7 +7719,7 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	TBL_PC *sd;
+	map_session_data* sd;
 	char bound = BOUND_NONE;
 	const char* command = script_getfuncname(st);
 	int offset = 0;
@@ -7792,7 +7792,7 @@ BUILDIN_FUNC(getitem2)
 	t_itemid c3 = script_getnum(st,9);
 	t_itemid c4 = script_getnum(st,10);
 
-	struct item item_tmp = {};
+	item item_tmp = {};
 
 	if( item_data ) {
 		if( item_data->type == IT_WEAPON || item_data->type == IT_ARMOR || item_data->type == IT_SHADOWGEAR ) {
@@ -7847,11 +7847,11 @@ BUILDIN_FUNC(getitem2)
 			// if not pet egg
 			if (!pet_create_egg(sd, nameid))
 			{
-				unsigned char flag = 0;
-				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
-				{
-					clif_additem(sd, 0, 0, flag);
+				e_additem_result flag = pc_additem( sd, &item_tmp, get_count, LOG_TYPE_SCRIPT );
 
+				if( flag != ADDITEM_SUCCESS ){
+					clif_additem(sd, 0, 0, flag);
+					ShowError( "buildin_getitem2: Failed to add the item to player.\n" );
 					return SCRIPT_CMD_FAILURE;
 				}
 			}
@@ -13988,7 +13988,7 @@ BUILDIN_FUNC(getequipcardcnt)
 BUILDIN_FUNC(successremovecards) {
 	int i=-1,c,cardflag=0;
 
-	TBL_PC* sd;
+	map_session_data* sd;
 	int num;
 
 	if( !script_rid2sd(sd) )
@@ -14008,25 +14008,26 @@ BUILDIN_FUNC(successremovecards) {
 
 	for( c = sd->inventory_data[i]->slots - 1; c >= 0; --c ) {
 		if( sd->inventory.u.items_inventory[i].card[c] && itemdb_type(sd->inventory.u.items_inventory[i].card[c]) == IT_CARD ) {// extract this card from the item
-			unsigned char flag = 0;
-			struct item item_tmp;
-			memset(&item_tmp,0,sizeof(item_tmp));
+			item item_tmp = {};
+
 			cardflag = 1;
 			item_tmp.nameid   = sd->inventory.u.items_inventory[i].card[c];
 			item_tmp.identify = 1;
 
-			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	// get back the cart in inventory
-				clif_additem(sd,0,0,flag);
+			e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
 
+			// get back the card in inventory
+			if( flag != ADDITEM_SUCCESS ){
+				clif_additem(sd,0,0,flag);
+				ShowError( "buildin_successremovecards: Failed to add the item to player.\n" );
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
 	}
 
-	if(cardflag == 1) {//if card was remove remplace item with no card
-		unsigned char flag = 0;
-		struct item item_tmp;
-		memset(&item_tmp,0,sizeof(item_tmp));
+	// if card was removed, replace item with no card
+	if(cardflag == 1) {
+		item item_tmp = {};
 
 		item_tmp.nameid      = sd->inventory.u.items_inventory[i].nameid;
 		item_tmp.identify    = 1;
@@ -14046,9 +14047,13 @@ BUILDIN_FUNC(successremovecards) {
 		}
 
 		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
-		if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	//chk if can be spawn in inventory otherwise put on floor
-			clif_additem(sd,0,0,flag);
 
+		e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
+
+		// get back the card in inventory
+		if( flag != ADDITEM_SUCCESS ){
+			clif_additem(sd,0,0,flag);
+			ShowError( "buildin_successremovecards: Failed to add the item to player.\n" );
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -14066,7 +14071,7 @@ BUILDIN_FUNC(successremovecards) {
 BUILDIN_FUNC(failedremovecards) {
 	int i=-1,c,cardflag=0;
 
-	TBL_PC* sd;
+	map_session_data* sd;
 	int num;
 	int typefail;
 
@@ -14090,17 +14095,16 @@ BUILDIN_FUNC(failedremovecards) {
 			cardflag = 1;
 
 			if(typefail == 2) {// add cards to inventory, clear
-				unsigned char flag = 0;
-				struct item item_tmp;
-
-				memset(&item_tmp,0,sizeof(item_tmp));
+				item item_tmp = {};
 
 				item_tmp.nameid   = sd->inventory.u.items_inventory[i].card[c];
 				item_tmp.identify = 1;
 
-				if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
-					clif_additem(sd,0,0,flag);
+				e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
 
+				if( flag != ADDITEM_SUCCESS ){
+					clif_additem(sd,0,0,flag);
+					ShowError( "failedremovecards: Failed to add the item to player.\n" );
 					return SCRIPT_CMD_FAILURE;
 				}
 			}
@@ -14111,10 +14115,7 @@ BUILDIN_FUNC(failedremovecards) {
 		if(typefail == 0 || typefail == 2){	// destroy the item
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		}else if(typefail == 1){ // destroy the card
-			unsigned char flag = 0;
-			struct item item_tmp;
-
-			memset(&item_tmp,0,sizeof(item_tmp));
+			item item_tmp = {};
 
 			item_tmp.nameid      = sd->inventory.u.items_inventory[i].nameid;
 			item_tmp.identify    = 1;
@@ -14135,9 +14136,11 @@ BUILDIN_FUNC(failedremovecards) {
 
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
-			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
-				clif_additem(sd,0,0,flag);
+			e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
 
+			if( flag != ADDITEM_SUCCESS ){
+				clif_additem(sd,0,0,flag);
+				ShowError( "failedremovecards: Failed to add the item to player.\n" );
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
@@ -22821,11 +22824,10 @@ BUILDIN_FUNC(checkre)
 
 /* getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}} */
 BUILDIN_FUNC(getrandgroupitem) {
-	TBL_PC* sd;
+	map_session_data* sd;
 	int i, get_count = 0, identify = 0;
 	uint16 group, qty = 0;
 	uint8 sub_group = 1;
-	struct item item_tmp;
 
 	if (!script_charid2sd(6, sd))
 		return SCRIPT_CMD_SUCCESS;
@@ -22842,10 +22844,14 @@ BUILDIN_FUNC(getrandgroupitem) {
 	FETCH(5, identify);
 
 	std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(group,sub_group);
-	if (!entry)
-		return SCRIPT_CMD_FAILURE; //ensure valid itemid
 
-	memset(&item_tmp,0,sizeof(item_tmp));
+	if( entry == nullptr ){
+		ShowError( "buildin_getrandgroupitem: Unable to find a random entry in group %hu for sub group %hu.\n", group, sub_group );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	item item_tmp = {};
+
 	item_tmp.nameid   = entry->nameid;
 	item_tmp.identify = identify ? 1 : itemdb_isidentified(entry->nameid);
 
@@ -22862,13 +22868,19 @@ BUILDIN_FUNC(getrandgroupitem) {
 		get_count = 1;
 	}
 
+	if( pc_inventoryblank( sd ) < get_count ){
+		ShowError( "buildin_getrandgroupitem: Not enough free space in inventory.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	for (i = 0; i < get_count; i++) {
 		// if not pet egg
 		if (!pet_create_egg(sd, entry->nameid)) {
-			unsigned char flag = 0;
-			if ((flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT))) {
-				clif_additem(sd,0,0,flag);
+			e_additem_result flag = pc_additem( sd, &item_tmp, item_tmp.amount, LOG_TYPE_SCRIPT );
 
+			if( flag != ADDITEM_SUCCESS ){
+				clif_additem(sd,0,0,flag);
+				ShowError( "buildin_getrandgroupitem: Failed to add the item to player.\n" );
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
