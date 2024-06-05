@@ -169,8 +169,7 @@ pay_d03_i	monster	Resentful Munak	3760,20,5000,0
 pay_d03_i	monster	Resentful Bongun	3761,20,5000,0
 pay_d03_i	monster	Resentful Sohee	3762,20,5000,0
 pay_d03_i	monster	Resentful Soldier	3763,15
-pay_d03_i	monster	Deranged Adventurer	3765,5,15000,0
-pay_d03_i,55,75	monster	Wizard of the Truth	3764,1,30000,0
+pay_d03_i	monster	Deranged Adventurer	3765,5,15000,0,"ill_moonlight_wizard::OnMobDead"
 pay_d03_i	monster	Angry Nine Tail	3759,10,5000,0,"illusion_mob#moonlight::OnKill"
 
 -	script	illusion_mob#moonlight	-1,{
@@ -196,5 +195,23 @@ OnBossSpawn:
 OnBossKill:
 	.mvp_spawn = 0;
 	.kill_count = 0;
+	end;
+}
+
+-	script	ill_moonlight_wizard	-1,{
+	end;
+OnMobDead:
+	if (.spawn || playerattached() < 1)
+		end;
+	.kill_count += 1;
+	if (.kill_count == 10) {
+		.spawn = true;
+		.kill_count = 0;
+		getunitdata( killedgid, .@data );
+		monster "pay_d03_i",.@data[UMOB_X],.@data[UMOB_Y],"Wizard of the Truth",3764,1,"ill_moonlight_wizard::OnBossDead";
+	}
+	end;
+OnBossDead:
+	.spawn = false;
 	end;
 }

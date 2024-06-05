@@ -3,8 +3,8 @@
 
 #include "loginchrif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/showmsg.hpp> //show notice
 #include <common/socket.hpp> //wfifo session
@@ -180,7 +180,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 
 #ifdef VIP_ENABLE
 		char_vip = login_config.vip_sys.char_increase;
-		if( acc.vip_time > time(NULL) ) {
+		if( acc.vip_time > time(nullptr) ) {
 			isvip = true;
 			char_slots += char_vip;
 		}
@@ -368,14 +368,14 @@ int logchrif_parse_reqbanacc(int fd, int id, char* ip){
 			ShowNotice("Char-server '%s': Error of ban request (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 		else{
 			time_t timestamp;
-			if (acc.unban_time == 0 || acc.unban_time < time(NULL))
-				timestamp = time(NULL); // new ban
+			if (acc.unban_time == 0 || acc.unban_time < time(nullptr))
+				timestamp = time(nullptr); // new ban
 			else
 				timestamp = acc.unban_time; // add to existing ban
 			timestamp += timediff;
 			if (timestamp == -1)
 				ShowNotice("Char-server '%s': Error of ban request (account: %d, invalid date, ip: %s).\n", ch_server[id].name, account_id, ip);
-			else if( timestamp <= time(NULL) || timestamp == 0 )
+			else if( timestamp <= time(nullptr) || timestamp == 0 )
 				ShowNotice("Char-server '%s': Error of ban request (account: %d, new date unbans the account, ip: %s).\n", ch_server[id].name, account_id, ip);
 			else{
 				uint8 buf[11];
@@ -609,7 +609,7 @@ int logchrif_parse_updpincode(int fd){
 
 		if( accounts->load_num(accounts, &acc, RFIFOL(fd,4) ) ){
 			strncpy( acc.pincode, RFIFOCP(fd,8), PINCODE_LENGTH+1 );
-			acc.pincode_change = time( NULL );
+			acc.pincode_change = time( nullptr );
 			accounts->save(accounts, &acc, false);
 		}
 		RFIFOSKIP(fd,8 + PINCODE_LENGTH+1);
@@ -667,7 +667,7 @@ int logchrif_parse_reqvipdata(int fd) {
 		RFIFOSKIP(fd,15);
 		
 		if( accounts->load_num(accounts, &acc, aid ) ) {
-			time_t now = time(NULL);
+			time_t now = time(nullptr);
 			time_t vip_time = acc.vip_time;
 			bool isvip = false;
 

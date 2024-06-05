@@ -3,7 +3,7 @@
 
 #include "date.hpp"
 
-#include <time.h>
+#include <ctime>
 
 /*
  * Get the current year
@@ -12,7 +12,7 @@ int date_get_year(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_year+1900;
 }
@@ -24,7 +24,7 @@ enum e_month date_get_month(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return (enum e_month)(lt->tm_mon+1);
 }
@@ -36,7 +36,7 @@ int date_get_dayofmonth(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_mday;
 }
@@ -48,7 +48,7 @@ enum e_dayofweek date_get_dayofweek(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return (enum e_dayofweek)lt->tm_wday;
 }
@@ -60,7 +60,7 @@ int date_get_dayofyear(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_yday;
 }
@@ -72,7 +72,7 @@ int date_get_hour(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_hour;
 }
@@ -84,7 +84,7 @@ int date_get_min(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_min;
 }
@@ -96,7 +96,7 @@ int date_get_sec(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_sec;
 }

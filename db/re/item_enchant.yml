@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2022 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -4774,212 +4774,963 @@ Body:
                 Chance: 300
               - Item: Star_Cluster_Of_Wis3
                 Chance: 900
-  - Id: 13
-    TargetItems:
-      Signet_Of_Pow_Star: true
-      Signet_Of_Sta_Star: true
-      Signet_Of_Con_Star: true
-      Signet_Of_Crt_Star: true
-      Signet_Of_Spl_Star: true
-      Signet_Of_Wis_Star: true
-    Reset:
-      Chance: 80000
-      Price: 500000
-      Materials:
-        - Material: Meteorite_Dust
-          Amount: 30
-    Order:
-      - Slot: 3
-      - Slot: 2
-    Slots:
-      - Slot: 3
-        Price: 300000
-        Materials:
-          - Material: Meteorite_Fragment
-            Amount: 5
-        Enchants:
-          - Enchantgrade: 0
-            Items:
-              - Item: Spell3
-                Chance: 10000
-              - Item: Expert_Archer3
-                Chance: 10050
-              - Item: Fighting_Spirit3
-                Chance: 10050
-              - Item: Sharp3
-                Chance: 10050
-              - Item: Spell4
-                Chance: 1750
-              - Item: Expert_Archer4
-                Chance: 1750
-              - Item: Fighting_Spirit4
-                Chance: 1750
-              - Item: Sharp4
-                Chance: 1750
-              - Item: Star_Of_Mettle1
-                Chance: 4000
-              - Item: Star_Of_MasterArcher1
-                Chance: 4000
-              - Item: Star_Of_Sharp1
-                Chance: 4000
-              - Item: Star_Of_Spell1
-                Chance: 4000
-              - Item: Star_Of_Speed1
-                Chance: 4000
-              - Item: Star_Of_Vital1
-                Chance: 4000
-              - Item: Star_Of_Spirit1
-                Chance: 4000
-              - Item: Star_Of_Mettle2
-                Chance: 2000
-              - Item: Star_Of_MasterArcher2
-                Chance: 2000
-              - Item: Star_Of_Sharp2
-                Chance: 2000
-              - Item: Star_Of_Spell2
-                Chance: 2000
-              - Item: Star_Of_Speed2
-                Chance: 2000
-              - Item: Star_Of_Vital2
-                Chance: 2000
-              - Item: Star_Of_Spirit2
-                Chance: 2000
-              - Item: Star_Of_Mettle3
-                Chance: 1250
-              - Item: Star_Of_MasterArcher3
-                Chance: 1250
-              - Item: Star_Of_Sharp3
-                Chance: 1250
-              - Item: Star_Of_Spell3
-                Chance: 1250
-              - Item: Star_Of_Speed3
-                Chance: 1250
-              - Item: Star_Of_Vital3
-                Chance: 1250
-              - Item: Star_Of_Spirit3
-                Chance: 1250
-              - Item: Star_Of_Mettle4
-                Chance: 250
-              - Item: Star_Of_MasterArcher4
-                Chance: 250
-              - Item: Star_Of_Sharp4
-                Chance: 250
-              - Item: Star_Of_Spell4
-                Chance: 250
-              - Item: Star_Of_Speed4
-                Chance: 250
-              - Item: Star_Of_Vital4
-                Chance: 250
-              - Item: Star_Of_Spirit4
-                Chance: 250
-              - Item: Star_Of_Mettle5
-                Chance: 50
-              - Item: Star_Of_MasterArcher5
-                Chance: 50
-              - Item: Star_Of_Sharp5
-                Chance: 50
-              - Item: Star_Of_Spell5
-                Chance: 50
-              - Item: Star_Of_Speed5
-                Chance: 50
-              - Item: Star_Of_Vital5
-                Chance: 50
-              - Item: Star_Of_Spirit5
-                Chance: 50
-      - Slot: 2
-        Price: 500000
-        Materials:
-          - Material: Meteorite_Fragment
-            Amount: 10
-        Enchants:
-          - Enchantgrade: 0
-            Items:
-              - Item: Spell3
-                Chance: 10000
-              - Item: Expert_Archer3
-                Chance: 10050
-              - Item: Fighting_Spirit3
-                Chance: 10050
-              - Item: Sharp3
-                Chance: 10050
-              - Item: Spell4
-                Chance: 1750
-              - Item: Expert_Archer4
-                Chance: 1750
-              - Item: Fighting_Spirit4
-                Chance: 1750
-              - Item: Sharp4
-                Chance: 1750
-              - Item: Star_Of_Mettle1
-                Chance: 4000
-              - Item: Star_Of_MasterArcher1
-                Chance: 4000
-              - Item: Star_Of_Sharp1
-                Chance: 4000
-              - Item: Star_Of_Spell1
-                Chance: 4000
-              - Item: Star_Of_Speed1
-                Chance: 4000
-              - Item: Star_Of_Vital1
-                Chance: 4000
-              - Item: Star_Of_Spirit1
-                Chance: 4000
-              - Item: Star_Of_Mettle2
-                Chance: 2000
-              - Item: Star_Of_MasterArcher2
-                Chance: 2000
-              - Item: Star_Of_Sharp2
-                Chance: 2000
-              - Item: Star_Of_Spell2
-                Chance: 2000
-              - Item: Star_Of_Speed2
-                Chance: 2000
-              - Item: Star_Of_Vital2
-                Chance: 2000
-              - Item: Star_Of_Spirit2
-                Chance: 2000
-              - Item: Star_Of_Mettle3
-                Chance: 1250
-              - Item: Star_Of_MasterArcher3
-                Chance: 1250
-              - Item: Star_Of_Sharp3
-                Chance: 1250
-              - Item: Star_Of_Spell3
-                Chance: 1250
-              - Item: Star_Of_Speed3
-                Chance: 1250
-              - Item: Star_Of_Vital3
-                Chance: 1250
-              - Item: Star_Of_Spirit3
-                Chance: 1250
-              - Item: Star_Of_Mettle4
-                Chance: 250
-              - Item: Star_Of_MasterArcher4
-                Chance: 250
-              - Item: Star_Of_Sharp4
-                Chance: 250
-              - Item: Star_Of_Spell4
-                Chance: 250
-              - Item: Star_Of_Speed4
-                Chance: 250
-              - Item: Star_Of_Vital4
-                Chance: 250
-              - Item: Star_Of_Spirit4
-                Chance: 250
-              - Item: Star_Of_Mettle5
-                Chance: 50
-              - Item: Star_Of_MasterArcher5
-                Chance: 50
-              - Item: Star_Of_Sharp5
-                Chance: 50
-              - Item: Star_Of_Spell5
-                Chance: 50
-              - Item: Star_Of_Speed5
-                Chance: 50
-              - Item: Star_Of_Vital5
-                Chance: 50
-              - Item: Star_Of_Spirit5
-                Chance: 50
+#  - Id: 13  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Signet_Of_Pow_Star: true
+#      Signet_Of_Sta_Star: true
+#      Signet_Of_Con_Star: true
+#      Signet_Of_Crt_Star: true
+#      Signet_Of_Spl_Star: true
+#      Signet_Of_Wis_Star: true
+#    Reset:
+#      Chance: 80000
+#      Price: 500000
+#      Materials:
+#        - Material: Meteorite_Dust
+#          Amount: 30
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        Price: 300000
+#        Materials:
+#          - Material: Meteorite_Fragment
+#            Amount: 5
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#      - Slot: 2
+#        Price: 500000
+#        Materials:
+#          - Material: Meteorite_Fragment
+#            Amount: 10
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: Spell3
+#                Chance: 10000
+#              - Item: Expert_Archer3
+#                Chance: 10050
+#              - Item: Fighting_Spirit3
+#                Chance: 10050
+#              - Item: Sharp3
+#                Chance: 10050
+#              - Item: Spell4
+#                Chance: 1750
+#              - Item: Expert_Archer4
+#                Chance: 1750
+#              - Item: Fighting_Spirit4
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 1750
+#              - Item: Star_Of_Mettle1
+#                Chance: 4000
+#              - Item: Star_Of_MasterArcher1
+#                Chance: 4000
+#              - Item: Star_Of_Sharp1
+#                Chance: 4000
+#              - Item: Star_Of_Spell1
+#                Chance: 4000
+#              - Item: Star_Of_Speed1
+#                Chance: 4000
+#              - Item: Star_Of_Vital1
+#                Chance: 4000
+#              - Item: Star_Of_Spirit1
+#                Chance: 4000
+#              - Item: Star_Of_Mettle2
+#                Chance: 2000
+#              - Item: Star_Of_MasterArcher2
+#                Chance: 2000
+#              - Item: Star_Of_Sharp2
+#                Chance: 2000
+#              - Item: Star_Of_Spell2
+#                Chance: 2000
+#              - Item: Star_Of_Speed2
+#                Chance: 2000
+#              - Item: Star_Of_Vital2
+#                Chance: 2000
+#              - Item: Star_Of_Spirit2
+#                Chance: 2000
+#              - Item: Star_Of_Mettle3
+#                Chance: 1250
+#              - Item: Star_Of_MasterArcher3
+#                Chance: 1250
+#              - Item: Star_Of_Sharp3
+#                Chance: 1250
+#              - Item: Star_Of_Spell3
+#                Chance: 1250
+#              - Item: Star_Of_Speed3
+#                Chance: 1250
+#              - Item: Star_Of_Vital3
+#                Chance: 1250
+#              - Item: Star_Of_Spirit3
+#                Chance: 1250
+#              - Item: Star_Of_Mettle4
+#                Chance: 250
+#              - Item: Star_Of_MasterArcher4
+#                Chance: 250
+#              - Item: Star_Of_Sharp4
+#                Chance: 250
+#              - Item: Star_Of_Spell4
+#                Chance: 250
+#              - Item: Star_Of_Speed4
+#                Chance: 250
+#              - Item: Star_Of_Vital4
+#                Chance: 250
+#              - Item: Star_Of_Spirit4
+#                Chance: 250
+#              - Item: Star_Of_Mettle5
+#                Chance: 50
+#              - Item: Star_Of_MasterArcher5
+#                Chance: 50
+#              - Item: Star_Of_Sharp5
+#                Chance: 50
+#              - Item: Star_Of_Spell5
+#                Chance: 50
+#              - Item: Star_Of_Speed5
+#                Chance: 50
+#              - Item: Star_Of_Vital5
+#                Chance: 50
+#              - Item: Star_Of_Spirit5
+#                Chance: 50
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Star_Cluster_Of_Str1
+#            Price: 5000000
+#            Materials:
+#              - Material: Unknown_Meteorite_F
+#                Amount: 20
+#              - Material: Pow_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Wis_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Con_Meteorite_Fragment
+#                Amount: 10
+#          - Item: Star_Cluster_Of_Luk1
+#            Price: 5000000
+#            Materials:
+#              - Material: Unknown_Meteorite_F
+#                Amount: 20
+#              - Material: Crt_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Spl_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Pow_Meteorite_Fragment
+#                Amount: 10
+#          - Item: Star_Cluster_Of_Int1
+#            Price: 5000000
+#            Materials:
+#              - Material: Unknown_Meteorite_F
+#                Amount: 20
+#              - Material: Spl_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Sta_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Con_Meteorite_Fragment
+#                Amount: 10
+#          - Item: Star_Cluster_Of_Res1
+#            Price: 5000000
+#            Materials:
+#              - Material: Unknown_Meteorite_F
+#                Amount: 20
+#              - Material: Sta_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Crt_Meteorite_Fragment
+#                Amount: 15
+#              - Material: Wis_Meteorite_Fragment
+#                Amount: 10
   - Id: 14
     TargetItems:
       Octopus_Leg_In_Mouth: true
@@ -27331,3 +28082,4681 @@ Body:
               - Material: GH_Cursed_Crystal
                 Amount: 50
               - Material: Enchant_Ticket
+#  - Id: 117  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Season_Hood_Spring: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Physical_Seed_1
+#            Materials:
+#              - Material: Spring_Material_1
+#                Amount: 10
+#              - Material: Spring_Material_2
+#                Amount: 10
+#              - Material: Spring_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Spring
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Physical_Fruit_1
+#            Materials:
+#              - Material: Spring_Material_1
+#                Amount: 15
+#              - Material: Spring_Material_2
+#                Amount: 15
+#              - Material: Spring_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Spring
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Spring_1
+#            Materials:
+#              - Material: Spring_Material_1
+#                Amount: 25
+#              - Material: Spring_Material_2
+#                Amount: 25
+#              - Material: Spring_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Spring
+#                Amount: 140
+#  - Id: 118  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Circul_Of_Life_Spring: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Physical_Seed_1
+#            Materials:
+#              - Material: Spring_Material_1
+#                Amount: 10
+#              - Material: Spring_Material_2
+#                Amount: 10
+#              - Material: Spring_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Spring
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Physical_Fruit_1
+#            Materials:
+#              - Material: Spring_Material_1
+#                Amount: 15
+#              - Material: Spring_Material_2
+#                Amount: 15
+#              - Material: Spring_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Spring
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Spring_1
+#            Materials:
+#              - Material: Spring_Material_1
+#                Amount: 25
+#              - Material: Spring_Material_2
+#                Amount: 25
+#              - Material: Spring_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Spring
+#                Amount: 140
+#  - Id: 119  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Season_Hood_Summer: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Physical_Seed_1
+#            Materials:
+#              - Material: Summer_Material_1
+#                Amount: 10
+#              - Material: Summer_Material_2
+#                Amount: 10
+#              - Material: Summer_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Summer
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Physical_Fruit_1
+#            Materials:
+#              - Material: Summer_Material_1
+#                Amount: 15
+#              - Material: Summer_Material_2
+#                Amount: 15
+#              - Material: Summer_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Summer
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Summer_1
+#            Materials:
+#              - Material: Summer_Material_1
+#                Amount: 25
+#              - Material: Summer_Material_2
+#                Amount: 25
+#              - Material: Summer_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Summer
+#                Amount: 140
+#  - Id: 120  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Circul_Of_Life_Summer: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Physical_Seed_1
+#            Materials:
+#              - Material: Summer_Material_1
+#                Amount: 10
+#              - Material: Summer_Material_2
+#                Amount: 10
+#              - Material: Summer_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Summer
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Physical_Fruit_1
+#            Materials:
+#              - Material: Summer_Material_1
+#                Amount: 15
+#              - Material: Summer_Material_2
+#                Amount: 15
+#              - Material: Summer_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Summer
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Summer_1
+#            Materials:
+#              - Material: Summer_Material_1
+#                Amount: 25
+#              - Material: Summer_Material_2
+#                Amount: 25
+#              - Material: Summer_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Summer
+#                Amount: 140
+#  - Id: 121  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Season_Hood_Autumn: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Magical_Seed_1
+#            Materials:
+#              - Material: Autumn_Material_1
+#                Amount: 10
+#              - Material: Autumn_Material_2
+#                Amount: 10
+#              - Material: Autumn_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Autumn
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Magical_Fruit_1
+#            Materials:
+#              - Material: Autumn_Material_1
+#                Amount: 15
+#              - Material: Autumn_Material_2
+#                Amount: 15
+#              - Material: Autumn_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Autumn
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Autumn_1
+#            Materials:
+#              - Material: Autumn_Material_1
+#                Amount: 25
+#              - Material: Autumn_Material_2
+#                Amount: 25
+#              - Material: Autumn_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Autumn
+#                Amount: 140
+#  - Id: 122  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Circul_Of_Life_Autumn: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Magical_Seed_1
+#            Materials:
+#              - Material: Autumn_Material_1
+#                Amount: 10
+#              - Material: Autumn_Material_2
+#                Amount: 10
+#              - Material: Autumn_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Autumn
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Magical_Fruit_1
+#            Materials:
+#              - Material: Autumn_Material_1
+#                Amount: 15
+#              - Material: Autumn_Material_2
+#                Amount: 15
+#              - Material: Autumn_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Autumn
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Autumn_1
+#            Materials:
+#              - Material: Autumn_Material_1
+#                Amount: 25
+#              - Material: Autumn_Material_2
+#                Amount: 25
+#              - Material: Autumn_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Autumn
+#                Amount: 140
+#  - Id: 123  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Season_Hood_Winter: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Physical_Seed_1
+#            Materials:
+#              - Material: Winter_Material_1
+#                Amount: 10
+#              - Material: Winter_Material_2
+#                Amount: 10
+#              - Material: Winter_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Winter
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Physical_Fruit_1
+#            Materials:
+#              - Material: Winter_Material_1
+#                Amount: 15
+#              - Material: Winter_Material_2
+#                Amount: 15
+#              - Material: Winter_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Winter
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Winter_1
+#            Materials:
+#              - Material: Winter_Material_1
+#                Amount: 25
+#              - Material: Winter_Material_2
+#                Amount: 25
+#              - Material: Winter_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Winter
+#                Amount: 140
+#  - Id: 124  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Circul_Of_Life_Winter: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Physical_Seed_1
+#            Materials:
+#              - Material: Winter_Material_1
+#                Amount: 10
+#              - Material: Winter_Material_2
+#                Amount: 10
+#              - Material: Winter_Material_3
+#                Amount: 10
+#              - Material: Energy_Of_Winter
+#                Amount: 60
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Physical_Fruit_1
+#            Materials:
+#              - Material: Winter_Material_1
+#                Amount: 15
+#              - Material: Winter_Material_2
+#                Amount: 15
+#              - Material: Winter_Material_3
+#                Amount: 15
+#              - Material: Energy_Of_Winter
+#                Amount: 90
+#      - Slot: 1
+#        PerfectEnchants:
+#          - Item: Life_of_Winter_1
+#            Materials:
+#              - Material: Winter_Material_1
+#                Amount: 25
+#              - Material: Winter_Material_2
+#                Amount: 25
+#              - Material: Winter_Material_3
+#                Amount: 25
+#              - Material: Energy_Of_Winter
+#                Amount: 140
+  - Id: 125
+    TargetItems:
+      FateSin_Boots_MT: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_MT
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_MT
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 126
+    TargetItems:
+      FateSin_Boots_SHC: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_SHC
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_SHC
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 127
+    TargetItems:
+      FateSin_Boots_SS: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_SS
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_SS
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+#  - Id: 128  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      S_Full_Power_Armor: true
+#      S_Full_Power_Shoes: true
+#      S_Full_Rate_Armor: true
+#      S_Full_Rate_Shoes: true
+#      S_Focusing_Pendant: true
+#      S_Focusing_Earring: true
+#      S_Stout_Pendant: true
+#      S_Stout_Earring: true
+#      S_Full_Spell_Armor: true
+#      S_Full_Spell_Shoes: true
+#      S_Centering_Pendant: true
+#      S_Centering_Earring: true
+#      S_Witty_Pendant: true
+#      S_Witty_Earring: true
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Strength3
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 5
+#          - Item: Dexterity3
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 5
+#          - Item: Inteligence3
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 5
+#          - Item: Agility3
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 5
+#          - Item: Vitality3
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 5
+#          - Item: Luck3
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 5
+#      - Slot: 2
+#        PerfectEnchants:
+#          - Item: Shadow_ATK_1
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 7
+#          - Item: Shadow_MATK_1
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 7
+#          - Item: Shadow_CRI_1
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 7
+#          - Item: Shadow_CAST_1
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 7
+#          - Item: Shadow_HP_1
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 7
+#          - Item: Shadow_SP_1
+#            Materials:
+#              - Material: S_Enchant_Essence
+#                Amount: 7
+  - Id: 129
+    TargetItems:
+      FateSin_Boots_ABC: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_ABC
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_ABC
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 130
+    TargetItems:
+      FateSin_Boots_TR: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_TR
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_TR
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 131
+    TargetItems:
+      FateSin_Boots_HN: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_HN
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_HN
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+#  - Id: 132  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Time_DM_R_Crown_DK: true
+#      Time_DM_R_Crown_IG: true
+#      Time_DM_R_Crown_MT: true
+#      Time_DM_R_Crown_BO: true
+#      Time_DM_R_Crown_SHC: true
+#      Time_DM_R_Crown_ABC: true
+#      Time_DM_R_Crown_AG: true
+#      Time_DM_R_Crown_EM: true
+#      Time_DM_R_Crown_CD: true
+#      Time_DM_R_Crown_IQ: true
+#      Time_DM_R_Crown_WH: true
+#      Time_DM_R_Crown_TR: true
+#      Time_DM_R_Crown_SS: true
+#      Time_DM_R_Crown_NW: true
+#      Time_DM_R_Crown_SKE: true
+#      Time_DM_R_Crown_SOA: true
+#      Time_DM_R_Crown_HN: true
+#      Time_DM_R_Crown_SH: true
+#    Reset:
+#      Chance: 100000
+#      Materials:
+#        - Material: Zelunium
+#          Amount: 15
+#        - Material: Shadowdecon
+#          Amount: 15
+#        - Material: Etel_Dust
+#          Amount: 30
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#      - Slot: 1
+#    Slots:
+#      - Slot: 3
+#        Materials:
+#          - Material: Abyss_Rune
+#            Amount: 5
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: Strength2
+#                Chance: 8000
+#              - Item: Inteligence2
+#                Chance: 8000
+#              - Item: Vitality2
+#                Chance: 8000
+#              - Item: Luck2
+#                Chance: 8000
+#              - Item: Strength1
+#                Chance: 11500
+#              - Item: Inteligence1
+#                Chance: 11500
+#              - Item: Vitality1
+#                Chance: 11500
+#              - Item: Luck1
+#                Chance: 11500
+#              - Item: Strength3
+#                Chance: 3500
+#              - Item: Inteligence3
+#                Chance: 3500
+#              - Item: Vitality3
+#                Chance: 3500
+#              - Item: Luck3
+#                Chance: 3500
+#              - Item: Strength5
+#                Chance: 500
+#              - Item: Inteligence5
+#                Chance: 500
+#              - Item: Vitality5
+#                Chance: 500
+#              - Item: Luck5
+#                Chance: 500
+#              - Item: Strength4
+#                Chance: 1500
+#              - Item: Inteligence4
+#                Chance: 1500
+#              - Item: Vitality4
+#                Chance: 1500
+#              - Item: Luck4
+#                Chance: 1500
+#      - Slot: 2
+#        Materials:
+#          - Material: Abyss_Rune
+#            Amount: 10
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 3700
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 3700
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 3700
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 3700
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: T_D_Jewel_STR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_AGI_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_DEX_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_VIT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_INT_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_SPR_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_WIS_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_LUK_1
+#                Chance: 7000
+#              - Item: T_D_Jewel_STR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_AGI_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_DEX_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_VIT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_INT_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_SPR_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_WIS_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_LUK_3
+#                Chance: 1800
+#              - Item: T_D_Jewel_STR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_AGI_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_DEX_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_VIT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_INT_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_SPR_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_WIS_2
+#                Chance: 3700
+#              - Item: T_D_Jewel_LUK_2
+#                Chance: 3700
+#      - Slot: 1
+#        Materials:
+#          - Material: Time_D_Ma_Rune
+#            Amount: 2
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: Sharp1
+#                Chance: 8000
+#              - Item: Expert_Archer1
+#                Chance: 8000
+#              - Item: Attack_Delay_1
+#                Chance: 8000
+#              - Item: Spell1
+#                Chance: 8000
+#              - Item: Sharp3
+#                Chance: 4500
+#              - Item: Expert_Archer3
+#                Chance: 4500
+#              - Item: Attack_Delay_3
+#                Chance: 4500
+#              - Item: Spell3
+#                Chance: 4500
+#              - Item: Acute_Jewel_1
+#                Chance: 1750
+#              - Item: Mettle_Jewel_1
+#                Chance: 1750
+#              - Item: Tenacity_Jewel_1
+#                Chance: 1750
+#              - Item: Master_A_Jewel_1
+#                Chance: 1750
+#              - Item: Magic_E_Jewel_1
+#                Chance: 1750
+#              - Item: Spell_Jewel_1
+#                Chance: 1750
+#              - Item: Adamatine_Jewel_1
+#                Chance: 1750
+#              - Item: Affection_Jewel_1
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 3000
+#              - Item: Expert_Archer4
+#                Chance: 3000
+#              - Item: Attack_Delay_4
+#                Chance: 3000
+#              - Item: Spell4
+#                Chance: 3000
+#              - Item: Sharp2
+#                Chance: 6000
+#              - Item: Expert_Archer2
+#                Chance: 6000
+#              - Item: Attack_Delay_2
+#                Chance: 6000
+#              - Item: Spell2
+#                Chance: 6000
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: Sharp1
+#                Chance: 8000
+#              - Item: Expert_Archer1
+#                Chance: 8000
+#              - Item: Attack_Delay_1
+#                Chance: 8000
+#              - Item: Spell1
+#                Chance: 8000
+#              - Item: Sharp3
+#                Chance: 4500
+#              - Item: Expert_Archer3
+#                Chance: 4500
+#              - Item: Attack_Delay_3
+#                Chance: 4500
+#              - Item: Spell3
+#                Chance: 4500
+#              - Item: Acute_Jewel_1
+#                Chance: 1750
+#              - Item: Mettle_Jewel_1
+#                Chance: 1750
+#              - Item: Tenacity_Jewel_1
+#                Chance: 1750
+#              - Item: Master_A_Jewel_1
+#                Chance: 1750
+#              - Item: Magic_E_Jewel_1
+#                Chance: 1750
+#              - Item: Spell_Jewel_1
+#                Chance: 1750
+#              - Item: Adamatine_Jewel_1
+#                Chance: 1750
+#              - Item: Affection_Jewel_1
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 3000
+#              - Item: Expert_Archer4
+#                Chance: 3000
+#              - Item: Attack_Delay_4
+#                Chance: 3000
+#              - Item: Spell4
+#                Chance: 3000
+#              - Item: Sharp2
+#                Chance: 6000
+#              - Item: Expert_Archer2
+#                Chance: 6000
+#              - Item: Attack_Delay_2
+#                Chance: 6000
+#              - Item: Spell2
+#                Chance: 6000
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: Sharp1
+#                Chance: 8000
+#              - Item: Expert_Archer1
+#                Chance: 8000
+#              - Item: Attack_Delay_1
+#                Chance: 8000
+#              - Item: Spell1
+#                Chance: 8000
+#              - Item: Sharp3
+#                Chance: 4500
+#              - Item: Expert_Archer3
+#                Chance: 4500
+#              - Item: Attack_Delay_3
+#                Chance: 4500
+#              - Item: Spell3
+#                Chance: 4500
+#              - Item: Acute_Jewel_1
+#                Chance: 1750
+#              - Item: Mettle_Jewel_1
+#                Chance: 1750
+#              - Item: Tenacity_Jewel_1
+#                Chance: 1750
+#              - Item: Master_A_Jewel_1
+#                Chance: 1750
+#              - Item: Magic_E_Jewel_1
+#                Chance: 1750
+#              - Item: Spell_Jewel_1
+#                Chance: 1750
+#              - Item: Adamatine_Jewel_1
+#                Chance: 1750
+#              - Item: Affection_Jewel_1
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 3000
+#              - Item: Expert_Archer4
+#                Chance: 3000
+#              - Item: Attack_Delay_4
+#                Chance: 3000
+#              - Item: Spell4
+#                Chance: 3000
+#              - Item: Sharp2
+#                Chance: 6000
+#              - Item: Expert_Archer2
+#                Chance: 6000
+#              - Item: Attack_Delay_2
+#                Chance: 6000
+#              - Item: Spell2
+#                Chance: 6000
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: Sharp1
+#                Chance: 8000
+#              - Item: Expert_Archer1
+#                Chance: 8000
+#              - Item: Attack_Delay_1
+#                Chance: 8000
+#              - Item: Spell1
+#                Chance: 8000
+#              - Item: Sharp3
+#                Chance: 4500
+#              - Item: Expert_Archer3
+#                Chance: 4500
+#              - Item: Attack_Delay_3
+#                Chance: 4500
+#              - Item: Spell3
+#                Chance: 4500
+#              - Item: Acute_Jewel_1
+#                Chance: 1750
+#              - Item: Mettle_Jewel_1
+#                Chance: 1750
+#              - Item: Tenacity_Jewel_1
+#                Chance: 1750
+#              - Item: Master_A_Jewel_1
+#                Chance: 1750
+#              - Item: Magic_E_Jewel_1
+#                Chance: 1750
+#              - Item: Spell_Jewel_1
+#                Chance: 1750
+#              - Item: Adamatine_Jewel_1
+#                Chance: 1750
+#              - Item: Affection_Jewel_1
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 3000
+#              - Item: Expert_Archer4
+#                Chance: 3000
+#              - Item: Attack_Delay_4
+#                Chance: 3000
+#              - Item: Spell4
+#                Chance: 3000
+#              - Item: Sharp2
+#                Chance: 6000
+#              - Item: Expert_Archer2
+#                Chance: 6000
+#              - Item: Attack_Delay_2
+#                Chance: 6000
+#              - Item: Spell2
+#                Chance: 6000
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: Sharp1
+#                Chance: 8000
+#              - Item: Expert_Archer1
+#                Chance: 8000
+#              - Item: Attack_Delay_1
+#                Chance: 8000
+#              - Item: Spell1
+#                Chance: 8000
+#              - Item: Sharp3
+#                Chance: 4500
+#              - Item: Expert_Archer3
+#                Chance: 4500
+#              - Item: Attack_Delay_3
+#                Chance: 4500
+#              - Item: Spell3
+#                Chance: 4500
+#              - Item: Acute_Jewel_1
+#                Chance: 1750
+#              - Item: Mettle_Jewel_1
+#                Chance: 1750
+#              - Item: Tenacity_Jewel_1
+#                Chance: 1750
+#              - Item: Master_A_Jewel_1
+#                Chance: 1750
+#              - Item: Magic_E_Jewel_1
+#                Chance: 1750
+#              - Item: Spell_Jewel_1
+#                Chance: 1750
+#              - Item: Adamatine_Jewel_1
+#                Chance: 1750
+#              - Item: Affection_Jewel_1
+#                Chance: 1750
+#              - Item: Sharp4
+#                Chance: 3000
+#              - Item: Expert_Archer4
+#                Chance: 3000
+#              - Item: Attack_Delay_4
+#                Chance: 3000
+#              - Item: Spell4
+#                Chance: 3000
+#              - Item: Sharp2
+#                Chance: 6000
+#              - Item: Expert_Archer2
+#                Chance: 6000
+#              - Item: Attack_Delay_2
+#                Chance: 6000
+#              - Item: Spell2
+#                Chance: 6000
+#        PerfectEnchants:
+#          - Item: Acute_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+#          - Item: Mettle_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+#          - Item: Tenacity_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+#          - Item: Master_A_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+#          - Item: Magic_E_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+#          - Item: Spell_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+#          - Item: Adamatine_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+#          - Item: Affection_Jewel_1
+#            Materials:
+#              - Material: Time_D_Ma_Rune
+#                Amount: 125
+  - Id: 133
+    TargetItems:
+      Dimen_DK_T_Sword: true
+      Dimen_SHC_Katar: true
+      Dimen_SHC_Cakram: true
+      Dimen_MT_Axe: true
+      Dimen_DK_Lance: true
+      Dimen_AG_Staff: true
+      Dimen_AG_Rod: true
+      Dimen_SS_Humma: true
+      Dimen_SS_Wheel: true
+      Dimen_ABC_Bow: true
+      Dimen_WH_C_Bow: true
+      Dimen_WH_Bow: true
+      Dimen_NW_Rifle: true
+      Dimen_NW_Launcher: true
+      Dimen_IG_Sword: true
+      Dimen_BO_Sword: true
+      Dimen_HN_Sword: true
+      Dimen_ABC_Knife: true
+      Dimen_IG_Spear: true
+      Dimen_EM_M_Book: true
+      Dimen_EM_S_Book: true
+      Dimen_CD_Bible: true
+      Dimen_SKE_M_Book: true
+      Dimen_SKE_S_Book: true
+      Dimen_CD_Rod: true
+      Dimen_SOA_Stick: true
+      Dimen_SOA_Rod: true
+      Dimen_HN_Rod: true
+      Dimen_SH_Foxtail: true
+      Dimen_SH_F_Model: true
+      Dimen_IQ_Knuckle: true
+      Dimen_IQ_Claw: true
+      Dimen_TR_Vilolin: true
+      Dimen_TR_Ribbon: true
+      Dimen_TR_Harp: true
+      Dimen_TR_Rope: true
+      Dimen_MT_Mace: true
+      Dimen_BO_Hall: true
+    Reset:
+      Chance: 100000
+      Price: 5000000
+      Materials:
+        - Material: Zelunium
+          Amount: 50
+        - Material: Shadowdecon
+          Amount: 50
+        - Material: Etel_Dust
+          Amount: 100
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Bio_Jam_Df2
+            Price: 1000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 50
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Es2
+            Price: 1000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 50
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Vl2
+            Price: 1000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 50
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Eq2
+            Price: 1000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 50
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+          - Item: Bio_Jam_Hd2
+            Price: 1000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 50
+              - Material: Time_D_Ma_Rune
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Barmund_Flame3
+            Price: 3000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 75
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Ice3
+            Price: 3000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 75
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Plain3
+            Price: 3000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 75
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Death3
+            Price: 3000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 75
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+          - Item: Barmund_Poison3
+            Price: 3000000
+            Materials:
+              - Material: Abyss_Rune
+                Amount: 75
+              - Material: Time_D_Ma_Rune
+                Amount: 15
+  - Id: 134
+    TargetItems:
+      FateSin_Boots_IG: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_IG
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_IG
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 135
+    TargetItems:
+      FateSin_Boots_AG: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_AG
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_AG
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 136
+    TargetItems:
+      FateSin_Boots_NW: true
+    Reset:
+      Chance: 90000
+      Price: 1500000
+      Materials:
+        - Material: GH_Cursed_Crystal
+          Amount: 30
+        - Material: GH_Cursed_Gemstone
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Attack_Delay_2
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Spell5
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Archer3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Magician3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+          - Item: Expert_Fighter3
+            Price: 1000000
+            Materials:
+              - Material: GH_Cursed_Gemstone
+                Amount: 50
+              - Material: M_Dimension_Essence
+        Upgrades:
+          - Enchant: Attack_Delay_2
+            Upgrade: Attack_Delay_3
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Spell5
+            Upgrade: Spell6
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer3
+            Upgrade: Expert_Archer4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician3
+            Upgrade: Expert_Magician4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter3
+            Upgrade: Expert_Fighter4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 100
+              - Material: GH_Cursed_Gemstone
+                Amount: 100
+              - Material: M_Dimension_Essence
+          - Enchant: Attack_Delay_3
+            Upgrade: Attack_Delay_4
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Spell6
+            Upgrade: Spell7
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Archer4
+            Upgrade: Expert_Archer5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Magician4
+            Upgrade: Expert_Magician5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+          - Enchant: Expert_Fighter4
+            Upgrade: Expert_Fighter5
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 250
+              - Material: GH_Cursed_Gemstone
+                Amount: 250
+              - Material: M_Dimension_Essence
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Justice_Vigor_NW
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+          - Item: Injustice_Vigor_NW
+            Price: 5000000
+            Materials:
+              - Material: GH_Cursed_Crystal
+                Amount: 50
+              - Material: Enchant_Ticket
+  - Id: 137
+    TargetItems:
+      Gray_W_Suits: true
+      Gray_W_Robe: true
+    MinimumRefine: 7
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Wolf_Orb_Str_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Dex_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Agi_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Int_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Vit_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_luk_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Def_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Mdef_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Ran_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_War_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Mag_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Wolf_Orb_Str_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Dex_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Agi_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Int_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Vit_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_luk_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Def_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Mdef_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Ran_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_War_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Mag_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_S_Delay
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Wolf_Orb_R_Reject_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Force
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_1
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_2
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_5
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_6
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_7
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_8
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_9
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_10
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_11
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_12
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_13
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_14
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_15
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_16
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_17
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_18
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_19
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_20
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_21
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_22
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_23
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_24
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_25
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_26
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_27
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_28
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_29
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_30
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_31
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_32
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_33
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_34
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_35
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_36
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_37
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_38
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_39
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_40
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_41
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_42
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_43
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_44
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_45
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_46
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_47
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_48
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_49
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_50
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Skill_51
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+  - Id: 138
+    TargetItems:
+      Gray_W_Manteau: true
+      Gray_W_Muffler: true
+    MinimumRefine: 7
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Wolf_Orb_Str_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Dex_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Agi_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Int_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Vit_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_luk_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Wolf_Orb_Speed_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Caster_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Critical_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Guide_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Wolf_Orb_Above_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_P_Full_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_M_Counter_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+  - Id: 139
+    TargetItems:
+      Gray_W_Boots: true
+      Gray_W_Shoes: true
+    MinimumRefine: 7
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Wolf_Orb_Hp_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Sp_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Heal_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Robust_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Wolf_Orb_F_Cast_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_M_F_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_P_F_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Wolf_Orb_Un_Vit
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Sp_Int
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Fi_Dex
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Ov_Str
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Fa_Agi
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Lu_Luk
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+  - Id: 140
+    TargetItems:
+      Gray_W_Pendant: true
+      Gray_W_Earing: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Wolf_Orb_Str_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Dex_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Agi_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Int_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Vit_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_luk_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Wolf_Orb_HealHP_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_HealSP_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_E_Archer_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Fatal_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_F_Spirit_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Spell_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_A_Delay_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Wolf_Orb_Life
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_M_Heal
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_A_Force
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_A_Delay_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_E_Archer_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Fatal_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_F_Spirit_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Spell_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+  - Id: 141
+    TargetItems:
+      Gray_W_Ring: true
+      Gray_W_Necklace: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Wolf_Orb_Str_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Dex_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Agi_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Int_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Vit_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_luk_3
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Wolf_Orb_HealHP_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_HealSP_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_E_Archer_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Fatal_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_F_Spirit_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Spell_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_A_Delay_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Wolf_Orb_Soul
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_M_Soul
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_A_Force
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_A_Delay_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_E_Archer_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Fatal_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_F_Spirit_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+          - Item: Wolf_Orb_Spell_4
+            Materials:
+              - Material: Sp_Amethyst_Fragment
+#  - Id: 142  # Skipped (some fields are not supported on rAthena for now)
+#    TargetItems:
+#      Signet_Of_Spring: true
+#      Signet_Of_Summer: true
+#      Signet_Of_Autumn: true
+#      Signet_Of_Winter: true
+#    Reset:
+#      Chance: 80000
+#      Price: 500000
+#      Materials:
+#        - Material: Energy_Of_Elemental
+#          Amount: 20
+#        - Material: Circul_Of_Life
+#          Amount: 10
+#    Order:
+#      - Slot: 3
+#      - Slot: 2
+#    Slots:
+#      - Slot: 3
+#        PerfectEnchants:
+#          - Item: Token_Of_Life
+#            Price: 500000
+#            Materials:
+#              - Material: Circul_Of_Life
+#                Amount: 15
+#              - Material: Fruit_Of_Birth
+#                Amount: 5
+#              - Material: Fruit_Of_Extinction
+#                Amount: 5
+#              - Material: Energy_Of_Spring
+#                Amount: 10
+#              - Material: Energy_Of_Summer
+#                Amount: 10
+#              - Material: Energy_Of_Autumn
+#                Amount: 10
+#              - Material: Energy_Of_Winter
+#                Amount: 10
+#              - Material: Grace_Of_Spirit
+#                Amount: 30
+#      - Slot: 2
+#        Price: 1000000
+#        Materials:
+#          - Material: Circul_Of_Life
+#            Amount: 10
+#        Enchants:
+#          - Enchantgrade: 0
+#            Items:
+#              - Item: Spell3
+#                Chance: 11750
+#              - Item: Expert_Archer3
+#                Chance: 11750
+#              - Item: Hit_Plus3
+#                Chance: 11750
+#              - Item: Sharp3
+#                Chance: 11750
+#              - Item: Spell4
+#                Chance: 3500
+#              - Item: Expert_Archer4
+#                Chance: 3500
+#              - Item: Hit_Plus4
+#                Chance: 3500
+#              - Item: Sharp4
+#                Chance: 3500
+#              - Item: Signet_Of_Pow1
+#                Chance: 6000
+#              - Item: Signet_Of_Con1
+#                Chance: 6000
+#              - Item: Signet_Of_Sta1
+#                Chance: 6000
+#              - Item: Signet_Of_Spl1
+#                Chance: 6000
+#              - Item: Signet_Of_Crt1
+#                Chance: 6000
+#              - Item: Signet_Of_Wis1
+#                Chance: 6000
+#              - Item: Signet_Of_Pow2
+#                Chance: 500
+#              - Item: Signet_Of_Con2
+#                Chance: 500
+#              - Item: Signet_Of_Sta2
+#                Chance: 500
+#              - Item: Signet_Of_Spl2
+#                Chance: 500
+#              - Item: Signet_Of_Crt2
+#                Chance: 500
+#              - Item: Signet_Of_Wis2
+#                Chance: 500
+#          - Enchantgrade: 1
+#            Items:
+#              - Item: Spell3
+#                Chance: 11750
+#              - Item: Expert_Archer3
+#                Chance: 11750
+#              - Item: Hit_Plus3
+#                Chance: 11750
+#              - Item: Sharp3
+#                Chance: 11750
+#              - Item: Spell4
+#                Chance: 3500
+#              - Item: Expert_Archer4
+#                Chance: 3500
+#              - Item: Hit_Plus4
+#                Chance: 3500
+#              - Item: Sharp4
+#                Chance: 3500
+#              - Item: Signet_Of_Pow1
+#                Chance: 6000
+#              - Item: Signet_Of_Con1
+#                Chance: 6000
+#              - Item: Signet_Of_Sta1
+#                Chance: 6000
+#              - Item: Signet_Of_Spl1
+#                Chance: 6000
+#              - Item: Signet_Of_Crt1
+#                Chance: 6000
+#              - Item: Signet_Of_Wis1
+#                Chance: 6000
+#              - Item: Signet_Of_Pow2
+#                Chance: 500
+#              - Item: Signet_Of_Con2
+#                Chance: 500
+#              - Item: Signet_Of_Sta2
+#                Chance: 500
+#              - Item: Signet_Of_Spl2
+#                Chance: 500
+#              - Item: Signet_Of_Crt2
+#                Chance: 500
+#              - Item: Signet_Of_Wis2
+#                Chance: 500
+#          - Enchantgrade: 2
+#            Items:
+#              - Item: Spell3
+#                Chance: 11750
+#              - Item: Expert_Archer3
+#                Chance: 11750
+#              - Item: Hit_Plus3
+#                Chance: 11750
+#              - Item: Sharp3
+#                Chance: 11750
+#              - Item: Spell4
+#                Chance: 3500
+#              - Item: Expert_Archer4
+#                Chance: 3500
+#              - Item: Hit_Plus4
+#                Chance: 3500
+#              - Item: Sharp4
+#                Chance: 3500
+#              - Item: Signet_Of_Pow1
+#                Chance: 6000
+#              - Item: Signet_Of_Con1
+#                Chance: 6000
+#              - Item: Signet_Of_Sta1
+#                Chance: 6000
+#              - Item: Signet_Of_Spl1
+#                Chance: 6000
+#              - Item: Signet_Of_Crt1
+#                Chance: 6000
+#              - Item: Signet_Of_Wis1
+#                Chance: 6000
+#              - Item: Signet_Of_Pow2
+#                Chance: 500
+#              - Item: Signet_Of_Con2
+#                Chance: 500
+#              - Item: Signet_Of_Sta2
+#                Chance: 500
+#              - Item: Signet_Of_Spl2
+#                Chance: 500
+#              - Item: Signet_Of_Crt2
+#                Chance: 500
+#              - Item: Signet_Of_Wis2
+#                Chance: 500
+#          - Enchantgrade: 3
+#            Items:
+#              - Item: Spell3
+#                Chance: 11750
+#              - Item: Expert_Archer3
+#                Chance: 11750
+#              - Item: Hit_Plus3
+#                Chance: 11750
+#              - Item: Sharp3
+#                Chance: 11750
+#              - Item: Spell4
+#                Chance: 3500
+#              - Item: Expert_Archer4
+#                Chance: 3500
+#              - Item: Hit_Plus4
+#                Chance: 3500
+#              - Item: Sharp4
+#                Chance: 3500
+#              - Item: Signet_Of_Pow1
+#                Chance: 6000
+#              - Item: Signet_Of_Con1
+#                Chance: 6000
+#              - Item: Signet_Of_Sta1
+#                Chance: 6000
+#              - Item: Signet_Of_Spl1
+#                Chance: 6000
+#              - Item: Signet_Of_Crt1
+#                Chance: 6000
+#              - Item: Signet_Of_Wis1
+#                Chance: 6000
+#              - Item: Signet_Of_Pow2
+#                Chance: 500
+#              - Item: Signet_Of_Con2
+#                Chance: 500
+#              - Item: Signet_Of_Sta2
+#                Chance: 500
+#              - Item: Signet_Of_Spl2
+#                Chance: 500
+#              - Item: Signet_Of_Crt2
+#                Chance: 500
+#              - Item: Signet_Of_Wis2
+#                Chance: 500
+#          - Enchantgrade: 4
+#            Items:
+#              - Item: Spell3
+#                Chance: 11750
+#              - Item: Expert_Archer3
+#                Chance: 11750
+#              - Item: Hit_Plus3
+#                Chance: 11750
+#              - Item: Sharp3
+#                Chance: 11750
+#              - Item: Spell4
+#                Chance: 3500
+#              - Item: Expert_Archer4
+#                Chance: 3500
+#              - Item: Hit_Plus4
+#                Chance: 3500
+#              - Item: Sharp4
+#                Chance: 3500
+#              - Item: Signet_Of_Pow1
+#                Chance: 6000
+#              - Item: Signet_Of_Con1
+#                Chance: 6000
+#              - Item: Signet_Of_Sta1
+#                Chance: 6000
+#              - Item: Signet_Of_Spl1
+#                Chance: 6000
+#              - Item: Signet_Of_Crt1
+#                Chance: 6000
+#              - Item: Signet_Of_Wis1
+#                Chance: 6000
+#              - Item: Signet_Of_Pow2
+#                Chance: 500
+#              - Item: Signet_Of_Con2
+#                Chance: 500
+#              - Item: Signet_Of_Sta2
+#                Chance: 500
+#              - Item: Signet_Of_Spl2
+#                Chance: 500
+#              - Item: Signet_Of_Crt2
+#                Chance: 500
+#              - Item: Signet_Of_Wis2
+#                Chance: 500
+  - Id: 143
+    TargetItems:
+      Gaebolg_Armor: true
+      Gaebolg_Robe: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Warrior
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Archer
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Assassin
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Magician
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Berserker
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Marksman
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Executioner
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Wizard
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_P_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_M_Force
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_G_Cooldown
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Armor_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 144
+    TargetItems:
+      Gaebolg_Manteau: true
+      Gaebolg_Muffler: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Def
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mdef
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Speed
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Caster
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Melee
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Range
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Critical
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Spell
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Ab_All
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Robe_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 145
+    TargetItems:
+      Gaebolg_Boots: true
+      Gaebolg_Shoes: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_Hp
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Sp
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Phy_Force
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+          - Item: Ep21_4_Mag_Force
+            Price: 1000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone1
+                Amount: 50
+              - Material: EP19_S_F_1_Extract
+                Amount: 20
+              - Material: EP19_S_F_2_Extract
+                Amount: 20
+              - Material: EP19_Gla_Extract
+                Amount: 20
+              - Material: EP19_S_F_3_Extract
+                Amount: 10
+              - Material: EP20_D_P_Extract
+                Amount: 10
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Size_Atk
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_3_Size_Matk
+            Price: 2000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone2
+                Amount: 25
+              - Material: EP19_S_F_1_Extract
+                Amount: 30
+              - Material: EP19_S_F_2_Extract
+                Amount: 30
+              - Material: EP19_Gla_Extract
+                Amount: 30
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Ov_Power
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Fi_Shot
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Luk_Strike
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+          - Item: Ep21_2_Spl_Buster
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Shoes_E_Stone3
+                Amount: 15
+              - Material: EP19_S_F_1_Extract
+                Amount: 40
+              - Material: EP19_S_F_2_Extract
+                Amount: 40
+              - Material: EP19_Gla_Extract
+                Amount: 40
+              - Material: EP19_S_F_3_Extract
+                Amount: 20
+              - Material: EP20_D_P_Extract
+                Amount: 20
+  - Id: 146
+    TargetItems:
+      Gaebolg_Ring: true
+      Gaebolg_Earring: true
+      Gaebolg_Glove: true
+      Gaebolg_Necklace: true
+    Order:
+      - Slot: 3
+      - Slot: 2
+      - Slot: 1
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Ep21_4_F_Spirit
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_E_Archer
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_Fatal
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+          - Item: Ep21_4_Sp_Power
+            Price: 1500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone1
+                Amount: 70
+              - Material: EP19_S_F_1_Extract
+                Amount: 35
+              - Material: EP19_S_F_2_Extract
+                Amount: 35
+              - Material: EP19_Gla_Extract
+                Amount: 35
+              - Material: EP19_S_F_3_Extract
+                Amount: 15
+              - Material: EP20_D_P_Extract
+                Amount: 15
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Ep21_3_Tenacity
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_M_Archer
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_Acute
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+          - Item: Ep21_3_M_Eessence
+            Price: 3000000
+            Materials:
+              - Material: Ep21_Acc_E_Stone2
+                Amount: 35
+              - Material: EP19_S_F_1_Extract
+                Amount: 45
+              - Material: EP19_S_F_2_Extract
+                Amount: 45
+              - Material: EP19_Gla_Extract
+                Amount: 45
+              - Material: EP19_S_F_3_Extract
+                Amount: 25
+              - Material: EP20_D_P_Extract
+                Amount: 25
+      - Slot: 1
+        PerfectEnchants:
+          - Item: Ep21_2_Phy_Power
+            Price: 4500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone3
+                Amount: 20
+              - Material: EP19_S_F_1_Extract
+                Amount: 65
+              - Material: EP19_S_F_2_Extract
+                Amount: 65
+              - Material: EP19_Gla_Extract
+                Amount: 65
+              - Material: EP19_S_F_3_Extract
+                Amount: 35
+              - Material: EP20_D_P_Extract
+                Amount: 35
+          - Item: Ep21_2_Mag_Power
+            Price: 4500000
+            Materials:
+              - Material: Ep21_Acc_E_Stone3
+                Amount: 20
+              - Material: EP19_S_F_1_Extract
+                Amount: 65
+              - Material: EP19_S_F_2_Extract
+                Amount: 65
+              - Material: EP19_Gla_Extract
+                Amount: 65
+              - Material: EP19_S_F_3_Extract
+                Amount: 35
+              - Material: EP20_D_P_Extract
+                Amount: 35
+  - Id: 147
+    TargetItems:
+      StormBow_Furious: true
+      TornadoBow_Furious: true
+      SaintBook_Furious: true
+      SaintWand_Furious: true
+      SunBook_Furious: true
+      MoonBook_Furious: true
+      Slayer_Furious: true
+      Trident_Furious: true
+      Demonius_Furious: true
+      Demonsword_Furious: true
+      Foxtail_Furious: true
+      Setaria_Furious: true
+      OverSpear_Furious: true
+      Lance_Furious: true
+      Impact_Furious: true
+      RightShape_Furious: true
+      Humma_Furious: true
+      WheelHumma_Furious: true
+      GiganticAxe_Furious: true
+      Hammer_Furious: true
+      MasterSpellBook_Furious: true
+      Grimoire_Furious: true
+      Soul_Furious: true
+      SpiritStick_Furious: true
+    Reset:
+      Chance: 80000
+      Price: 500000
+      Materials:
+        - Material: EP19_D_P_Crystal
+          Amount: 30
+        - Material: EP19_N_P_Crystal
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: FuriousMaterial_Not
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Wat
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Win
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Fir
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Gro
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Und
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Dar
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Tel
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Sai
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Poi
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+      - Slot: 2
+        PerfectEnchants:
+          - Item: FuriousEnergy_Not
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Hum
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Dra
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Pla
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Ins
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Ani
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Fis
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Ang
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Dem
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Und
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+  - Id: 148
+    TargetItems:
+      FuriousCirclet_WH: true
+      FuriousCirclet_CD: true
+      FuriousCirclet_SKE: true
+      FuriousCirclet_DK: true
+      FuriousCirclet_ABC: true
+      FuriousCirclet_SH: true
+      FuriousCirclet_IG: true
+      FuriousCirclet_SHC: true
+      FuriousCirclet_SS: true
+      FuriousCirclet_MT: true
+      FuriousCirclet_EM: true
+      FuriousCirclet_SOA: true
+    Reset:
+      Chance: 80000
+      Price: 500000
+      Materials:
+        - Material: EP19_D_P_Crystal
+          Amount: 30
+        - Material: EP19_N_P_Crystal
+          Amount: 30
+        - Material: EP20_D_P_Crystal
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: Pow_Assist
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: Pow_Enforce
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: SPL_Assist
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: SPL_Enforce
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: STA_Assist
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: STA_Enforce
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: WIS_Assist
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: WIS_Enforce
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: CON_Assist
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: CON_Enforce_Melee
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: CON_Enforce_Magic
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: CRT_Assist
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: CRT_Enforce
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+      - Slot: 2
+        PerfectEnchants:
+          - Item: Mettle1
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: Tenacity1
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: MasterArcher1
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: Acute1
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: MagicEessence1
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+          - Item: Spell1
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+              - Material: EP20_D_P_Crystal
+                Amount: 30
+        Upgrades:
+          - Enchant: Mettle1
+            Upgrade: Mettle2
+            Materials:
+              - Material: EP19_D_P_Stone
+          - Enchant: Tenacity1
+            Upgrade: Tenacity2
+            Materials:
+              - Material: EP19_D_P_Stone
+          - Enchant: MasterArcher1
+            Upgrade: MasterArcher2
+            Materials:
+              - Material: EP19_D_P_Stone
+          - Enchant: Acute1
+            Upgrade: Acute2
+            Materials:
+              - Material: EP19_D_P_Stone
+          - Enchant: MagicEessence1
+            Upgrade: MagicEessence2
+            Materials:
+              - Material: EP19_D_P_Stone
+          - Enchant: Spell1
+            Upgrade: Spell2
+            Materials:
+              - Material: EP19_D_P_Stone
+          - Enchant: Mettle2
+            Upgrade: Mettle3
+            Materials:
+              - Material: EP19_D_P_Stone
+                Amount: 3
+          - Enchant: Tenacity2
+            Upgrade: Tenacity3
+            Materials:
+              - Material: EP19_D_P_Stone
+                Amount: 3
+          - Enchant: MasterArcher2
+            Upgrade: MasterArcher3
+            Materials:
+              - Material: EP19_D_P_Stone
+                Amount: 3
+          - Enchant: Acute2
+            Upgrade: Acute3
+            Materials:
+              - Material: EP19_D_P_Stone
+                Amount: 3
+          - Enchant: MagicEessence2
+            Upgrade: MagicEessence3
+            Materials:
+              - Material: EP19_D_P_Stone
+                Amount: 3
+          - Enchant: Spell2
+            Upgrade: Spell3
+            Materials:
+              - Material: EP19_D_P_Stone
+                Amount: 3
+  - Id: 149
+    TargetItems:
+      FuriousBoots: true
+    Reset:
+      Chance: 80000
+      Price: 500000
+      Materials:
+        - Material: EP19_D_P_Crystal
+          Amount: 30
+        - Material: EP19_N_P_Crystal
+          Amount: 30
+    Order:
+      - Slot: 3
+      - Slot: 2
+    Slots:
+      - Slot: 3
+        PerfectEnchants:
+          - Item: FuriousMaterial_Not
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Wat
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Win
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Fir
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Gro
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Und
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Dar
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Tel
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Sai
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousMaterial_Poi
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+      - Slot: 2
+        PerfectEnchants:
+          - Item: FuriousEnergy_Not
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Hum
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Dra
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Pla
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Ins
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Ani
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Fis
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Ang
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Dem
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30
+          - Item: FuriousEnergy_Und
+            Price: 500000
+            Materials:
+              - Material: EP19_D_P_Crystal
+                Amount: 30
+              - Material: EP19_N_P_Crystal
+                Amount: 30

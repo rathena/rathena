@@ -3,12 +3,12 @@
 
 #include "socket.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #ifdef WIN32
 	#include "winapi.hpp"
 #else
-	#include <errno.h>
+	#include <cerrno>
 	#include <arpa/inet.h>
 	#include <net/if.h>
 	#include <netdb.h>
@@ -46,6 +46,10 @@
 #include "showmsg.hpp"
 #include "strlib.hpp"
 #include "timer.hpp"
+
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+int8 packet_buffer[UINT16_MAX];
 
 /////////////////////////////////////////////////////////////////////
 #if defined(WIN32)
@@ -155,8 +159,8 @@ char* sErr(int code)
 {
 	static char sbuf[512];
 	// strerror does not handle socket codes
-	if( FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS, NULL,
-			code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), (LPTSTR)&sbuf, sizeof(sbuf), NULL) == 0 )
+	if( FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS, nullptr,
+			code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), (LPTSTR)&sbuf, sizeof(sbuf), nullptr) == 0 )
 		snprintf(sbuf, sizeof(sbuf), "unknown error");
 	return sbuf;
 }
@@ -452,7 +456,7 @@ int send_from_fifo(int fd)
 /// Best effort - there's no warranty that the data will be sent.
 void flush_fifo(int fd)
 {
-	if(session[fd] != NULL)
+	if(session[fd] != nullptr)
 		session[fd]->func_send(fd);
 }
 
@@ -646,7 +650,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 			tv.tv_sec = timeout;
 			tv.tv_usec = 0;
 
-			result = sSelect(0, NULL, &writeSet, NULL, &tv);
+			result = sSelect(0, nullptr, &writeSet, nullptr, &tv);
 
 			// Connection attempt timed out
 			if( result == 0 ){
@@ -746,7 +750,7 @@ static void delete_session(int fd)
 		aFree(session[fd]->wdata);
 		aFree(session[fd]->session_data);
 		aFree(session[fd]);
-		session[fd] = NULL;
+		session[fd] = nullptr;
 	}
 }
 
@@ -820,7 +824,7 @@ int WFIFOSET(int fd, size_t len)
 	size_t newreserve;
 	struct socket_data* s = session[fd];
 
-	if( !session_isValid(fd) || s->wdata == NULL )
+	if( !session_isValid(fd) || s->wdata == nullptr )
 		return 0;
 
 	// we have written len bytes to the buffer already before calling WFIFOSET
@@ -916,7 +920,7 @@ int do_sockets(t_tick next)
 	timeout.tv_usec = (long)(next%1000*1000);
 
 	memcpy(&rfd, &readfds, sizeof(rfd));
-	ret = sSelect(fd_max, &rfd, NULL, NULL, &timeout);
+	ret = sSelect(fd_max, &rfd, nullptr, nullptr, &timeout);
 
 	if( ret == SOCKET_ERROR )
 	{
@@ -942,7 +946,7 @@ int do_sockets(t_tick next)
 	}
 #endif
 
-	last_tick = time(NULL);
+	last_tick = time(nullptr);
 
 #if defined(WIN32)
 	// on windows, enumerating all members of the fd_set is way faster if we access the internals
@@ -1076,8 +1080,8 @@ enum _aco {
 	ACO_MUTUAL_FAILURE
 };
 
-static AccessControl* access_allow = NULL;
-static AccessControl* access_deny = NULL;
+static AccessControl* access_allow = nullptr;
+static AccessControl* access_deny = nullptr;
 static int access_order    = ACO_DENY_ALLOW;
 static int access_allownum = 0;
 static int access_denynum  = 0;
@@ -1295,7 +1299,7 @@ int socket_config_read(const char* cfgName)
 	FILE *fp;
 
 	fp = fopen(cfgName, "r");
-	if(fp == NULL) {
+	if(fp == nullptr) {
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
@@ -1396,7 +1400,7 @@ void socket_final(void)
 	aFree(session[0]->wdata);
 	aFree(session[0]->session_data);
 	aFree(session[0]);
-	session[0] = NULL;
+	session[0] = nullptr;
 
 #ifdef WIN32
 	// Shut down windows networking
@@ -1445,7 +1449,7 @@ int socket_getips(uint32* ips, int max)
 {
 	int num = 0;
 
-	if( ips == NULL || max <= 0 )
+	if( ips == nullptr || max <= 0 )
 		return 0;
 
 #ifdef WIN32
@@ -1466,12 +1470,12 @@ int socket_getips(uint32* ips, int max)
 			u_long** a;
 			struct hostent* hent;
 			hent = gethostbyname(fullhost);
-			if( hent == NULL ){
+			if( hent == nullptr ){
 				ShowError("socket_getips: Cannot resolve our own hostname to an IP address\n");
 				return 0;
 			}
 			a = (u_long**)hent->h_addr_list;
-			for( ;num < max && a[num] != NULL; ++num)
+			for( ;num < max && a[num] != nullptr; ++num)
 				ips[num] = (uint32)ntohl(*a[num]);
 		}
 	}
@@ -1604,7 +1608,7 @@ void socket_init(void)
 	socket_config_read(SOCKET_CONF_FILENAME);
 
 	// initialise last send-receive tick
-	last_tick = time(NULL);
+	last_tick = time(nullptr);
 
 	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
@@ -1635,7 +1639,7 @@ bool session_isActive(int fd)
 uint32 host2ip(const char* hostname)
 {
 	struct hostent* h = gethostbyname(hostname);
-	return (h != NULL) ? ntohl(*(uint32*)h->h_addr) : 0;
+	return (h != nullptr) ? ntohl(*(uint32*)h->h_addr) : 0;
 }
 
 // Converts a numeric ip into a dot-formatted string.
@@ -1644,7 +1648,7 @@ const char* ip2str(uint32 ip, char ip_str[16])
 {
 	struct in_addr addr;
 	addr.s_addr = htonl(ip);
-	return (ip_str == NULL) ? inet_ntoa(addr) : strncpy(ip_str, inet_ntoa(addr), 16);
+	return (ip_str == nullptr) ? inet_ntoa(addr) : strncpy(ip_str, inet_ntoa(addr), 16);
 }
 
 // Converts a dot-formatted ip string into a numeric ip.
@@ -1692,10 +1696,7 @@ void send_shortlist_add_fd(int fd)
 // Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends()
 {
-	int i;
-
-	for( i = send_shortlist_count-1; i >= 0; --i )
-	{
+	for( int i = static_cast<int>( send_shortlist_count - 1 ); i >= 0; --i ){
 		int fd = send_shortlist_array[i];
 		int idx = fd/32;
 		int bit = fd%32;

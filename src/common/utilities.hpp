@@ -159,7 +159,7 @@ namespace rathena {
 		template <typename K, typename V> V& umap_random( std::unordered_map<K, V>& map ){
 			auto it = map.begin();
 
-			std::advance( it, rnd_value( 0, map.size() - 1 ) );
+			std::advance( it, rnd_value<size_t>( 0, map.size() - 1 ) );
 
 			return it->second;
 		}
@@ -172,7 +172,7 @@ namespace rathena {
 		template <typename K> K &vector_random(std::vector<K> &vec) {
 			auto it = vec.begin();
 
-			std::advance(it, rnd_value(0, vec.size() - 1));
+			std::advance( it, rnd_value<size_t>( 0, vec.size() - 1 ) );
 
 			return *it;
 		}
@@ -278,9 +278,8 @@ namespace rathena {
 
 			if( rathena::util::safe_addition( a, b, result ) ){
 				return cap;
-			}else{
-				return result;
 			}
+			return std::min(result, cap);
 		}
 
 		template <typename T> void tolower( T& string ){

@@ -26,8 +26,9 @@
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
 #       List:                  List of item(s) for the SubGroup.
-#        - Item                AegisName of item that will be obtained from this item group.
-#          Rate                Probability to get the item. See doc/item_group.txt for more information. (Default: 0)
+#        - Index               Unique number that can be used to add the same Item with different data in the list.
+#          Item                AegisName of item that will be obtained from this item group.
+#          Rate                Probability to get the item. (Default: 0)
 #          Amount              Amount of item that will be obtained. (Default: 1)
 #          Duration            Makes the item a rental item which will expire within the given amount in minutes. Not intended for use with stackable items. (Default: 0)
 #          Announced           If player obtains this item it will be broadcasted to the server. (Default: false)
@@ -38,13 +39,13 @@
 #          RandomOptionGroup   Applies random options of this group to all equipable items (Default: None)
 #          RefineMinimum       Applies at least this refine level to all equipable items (Default: 0)
 #          RefineMaximum       Applies at most this refine level to all equipable items (Default: 0)
-#          Clear               Remove the given item. (Optional)
+#          Clear               Whether the current datas should be removed. (Optional)
 #       Clear                  Remove the given SubGroup. (Optional)
 ###########################################################################
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 2
+  Version: 3
 
 Footer:
   Imports:

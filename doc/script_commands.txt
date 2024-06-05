@@ -1,4 +1,4 @@
-//===== rAthena Documentation================================
+﻿//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
@@ -135,11 +135,26 @@ and 'doc/mapflags.txt'.
 <map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
-coordinates where the mob should spawn. If xs and ys are non-zero, they
-specify the 'radius' of a spawn-rectangle area centered at x,y.
-Putting zeros instead of these coordinates will spawn the monsters randomly.
+coordinates where the mob should spawn. Putting zeros instead of these
+coordinates will spawn the monsters randomly.
+
+If the coordinates are non-zero and xs and ys are above 1, each monster will
+spawn in a radius around x,y. At server start, each monster will get assigned
+its own center cell adding or substracting up to (xs-1),(ys-1) from the given
+x,y coordinates. Each time a monster respawns, it will spawn in a radius around
+its personal center cell by adding or substracting up to (xs-1),(ys-1) again.
+This results in a total possible spawn area over all monsters of the spawn line
+of (xs,ys)*4-3, but with a strong bias towards the center of that area:
+2,2 - 5x5
+3,3 - 9x9
+4,4 - 13x13
+5,5 - 17x17
+etc.
+
 Note this is only the initial spawn zone, as mobs random-walk, they are free
 to move away from their specified spawn region.
+You can disable the picking of a random center cell for each monster in the
+battle config. (See /conf/battle/monster.conf::randomize_center_cell.)
 
 Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which
@@ -188,6 +203,8 @@ Natural enemies for AI monsters are normal monsters.
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
+A boss monster spawn with fixed coordinates will always spawn at the given 
+coordinates, even if they are blocked (e.g. by Icewall).
 
 ** NPC names
 
@@ -4212,7 +4229,11 @@ invoking RID. It returns 1 if successful and 0 upon failure.
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
  5: All players in the map.
-    [ Parameters: "<map name>" ]
+    [ Parameters: "<map name>" ] 
+ 6: Battleground members of a specified battleground ID.
+    [ Parameters: <battleground id> ]
+ 7: Clan members of a specified clan ID.
+    [ Parameters: <clan id> ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
@@ -6587,7 +6608,8 @@ Available <type>:
 	PCBLOCK_COMMANDS			Prevent the player from using atcommands/charcommands.
 	PCBLOCK_NPCCLICK			Prevent the player from clicking/touching any NPC/shop/warp.
 	PCBLOCK_EMOTION				Prevent the player from using emotions.
-	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK.
+	PCBLOCK_EQUIP				Prevent the player from replacing equipment.
+	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK|PCBLOCK_EQUIP.
 	PCBLOCK_ALL				Sum of all the flags.
 
 Examples:
@@ -7477,10 +7499,10 @@ This command lets you override the contents of an existing NPC shop or cashshop.
 current sell list will be wiped, and only the items specified with the price
 specified will be for sale.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
  - If the attached shop type is a market shop, notice that there is an extra parameter after price, <stock>. Make sure to not add duplicate items! For unlimited stock use -1.
 
 ---------------------------------------
@@ -7492,10 +7514,10 @@ This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
 appear twice on the sell list.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
  - If attached shop type is market shop, need an extra param after price, it's <stock>
    and make sure don't add duplication item! For unlimited stock use -1.
 
@@ -7538,6 +7560,13 @@ NOTES:
 Update an entry from a shop. If the price is 0 it won't be changed. May also be used for
 marketshop to update the stock quantity. For unlimited stock, use -1.
 For other shop types, the stock value has no effect.
+
+If the price is -1, it sets it to the default buy price.
+
+The function returns 1 if shop was updated successfully, or 0 on failure.
+
+NOTES:
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
 
 ---------------------------------------
 
@@ -8414,6 +8443,14 @@ error message instead.
 This command requires packet version 2021-11-03 or newer.
 
 ---------------------------------------
+
+*opentips({<Tip ID>,{<char ID>}});
+
+Opens the tip box UI for the attached player or the given character ID.
+
+This command requires packet version 2017-11-22 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
@@ -8947,8 +8984,9 @@ Get info of elemental of attached player or player by char_id.
 Other info can be obtained by 'getunitdata' command.
 
 Valid types are:
-   0: Elemental ID
-   1: Elemental Game ID
+   ELEMINFO_ID        Elemental ID (ID unique to elementals unit type)
+   ELEMINFO_GAMEID    Elemental Game ID
+   ELEMINFO_CLASS     Elemental Class (ID defined in elemental_db.yml)
 
 ---------------------------------------
 \\
@@ -10013,7 +10051,7 @@ Remove the quest of the given <ID> from the user's quest log.
 *changequest <ID>,<ID2>{,<char_id>};
 
 Remove quest of the given <ID> from the user's quest log.
-Add quest of the <ID2> to the the quest log, and the state is "active".
+Add quest <ID2> to the quest log, and the state is "active".
 
 ---------------------------------------
 
@@ -11117,7 +11155,7 @@ Use <color> hex code to set the color for this channel, if not defined, default
 channel color will be used.
 
 If <char_id> is defined, the channel will be a private channel and the player
-will be the the channel owner.
+will be the channel owner.
 
 Returns 1 on success.
 
@@ -11129,6 +11167,17 @@ Returns 1 on success.
 	 **/
 	channel_create("#rathena","[rAthena]");
 	channel_create("#vip","[VIP]","vipmemberonly");
+
+---------------------------------------
+
+*channel_join "<channel_name>"{, <char_id>};
+
+Join an existing channel.
+The command returns 0 upon success, and these values upon failure:
+ -1 : Invalid channel or player
+ -2 : Player already in channel
+ -3 : Player banned
+ -4 : Reached max limit
 
 ---------------------------------------
 
@@ -11357,5 +11406,62 @@ Note: Only works with classes that use the ranking system.
 *isdead({<account id>})
 
 Returns true if the player is dead else false.
+
+---------------------------------------
+
+*has_autoloot({<char_id>});
+
+This command checks whether a player configured autoloot.
+Returns current autoloot value on success.
+
+---------------------------------------
+
+*autoloot({<rate>{, <char_id>}});
+
+This command sets the rate of autoloot.
+If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+if the user has autoloot enabled it will default to 0 = 0% (disabled).
+Returns true on success and false on failure.
+
+Example:
+    autoloot();      // toggle on/off depend on existing autoloot
+    autoloot(0);     //   0.00% or off
+    autoloot(100);   //   1.00%
+    autoloot(3333);  //  33.33%
+    autoloot(10000); // 100.00%
+
+---------------------------------------
+
+*setdialogalign(<align>);
+
+Set vertical or horizontal align in NPC dialog.
+Valid aligns:
+- horizontal align:
+  DIALOG_ALIGN_LEFT
+  DIALOG_ALIGN_CENTER
+  DIALOG_ALIGN_RIGHT
+
+- vertical align:
+  DIALOG_ALIGN_TOP
+  DIALOG_ALIGN_MIDDLE
+  DIALOG_ALIGN_BOTTOM
+
+---------------------------------------
+
+*setdialogsize(<width>, <height>)
+
+Set size for NPC dialog in pixels.
+
+---------------------------------------
+
+*setdialogpos(<x>, <y>)
+
+Set position for NPC dialog in pixels.
+
+---------------------------------------
+
+*setdialogpospercent(<x>, <y>)
+
+Set position for NPC dialog in screen size percent.
 
 ---------------------------------------

@@ -106,7 +106,7 @@ ra_temsky,99,135,0	warp	rachel71	1,1,ra_temsky,99,113
 ra_temsky,137,139,0	warp	rachel72	1,1,ra_temsky,109,143
 ra_temsky,62,139,0	warp	rachel73	1,1,ra_temsky,91,143
 
-//rachel,25,125,0	warp	rachel74	1,1,ra_fild11,353,226
+rachel,25,125,0	warp	rachel74	1,1,ra_fild11,353,226
 rachel,275,125,0	warp	rachel75	1,1,ra_fild12,40,226
 rachel,130,21,0	warp	rachel76	1,1,ve_fild02,195,377
 

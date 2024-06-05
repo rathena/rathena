@@ -743,7 +743,7 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 					}
 					else {
 						mes "[Tempestra]";
-						mes "I will tell you a secret, beause you gave me the Yellow Potion~";
+						mes "I will tell you a secret, because you gave me the Yellow Potion~";
 						next;
 						mes "[Tempestra]";
 						mes "I'm looking forward seeing you again~~";
@@ -808,7 +808,7 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 					}
 					else {
 						mes "[Tempestra]";
-						mes "I will tell you a secret, beause you gave me the Yellow Potion~";
+						mes "I will tell you a secret, because you gave me the Yellow Potion~";
 						next;
 						mes "[Tempestra]";
 						mes "I'm looking forward seeing you again~~";
@@ -872,7 +872,7 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 					}
 					else {
 						mes "[Tempestra]";
-						mes "I will tell you a secret, beause you gave me the Yellow Potion~";
+						mes "I will tell you a secret, because you gave me the Yellow Potion~";
 						next;
 						mes "[Tempestra]";
 						mes "I'm looking forward seeing you again~~";

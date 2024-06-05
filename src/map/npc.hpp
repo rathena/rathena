@@ -1469,6 +1469,64 @@ enum e_job_types
 	JT_4_HERO_SAUSAGE,
 	JT_4_PRINCESS_SAUSAGE,
 
+	JT_4_EP20_LASGAND = 10536,
+	JT_4_EP20_NYAR,
+	JT_4_EP20_DEVICE_BLUE,
+	JT_4_EP20_DEVICE_RED,
+	JT_4_EP20_DEVICE_BLACK,
+
+	JT_4_GACHA_MACHINE = 10545,
+	JT_4_VR_CHAO,
+	JT_4_RUNESTONE,
+	JT_4_EM_ARDOR,
+	JT_4_EM_DILUVIO,
+	JT_4_EM_PROCELLA,
+	JT_4_EM_TERREMOTUS,
+	JT_4_EM_SERPENS,
+	JT_4_SNOWDOG,
+	JT_1_SHADOW_RED,
+	JT_1_SHADOW_ORANGE,
+	JT_1_SHADOW_YELLOW,
+	JT_1_SHADOW_GREEN,
+	JT_1_SHADOW_BLUE,
+	JT_1_SHADOW_INDIGO,
+	JT_1_SHADOW_VIOLET,
+	JT_4_EVT_LAMMIR,
+	JT_4_EVT_SULKI,
+	JT_4_EVT_KKAT,
+
+	JT_4_EP21_SOLDIER_A = 10564,
+	JT_4_EP21_SOLDIER_B,
+	JT_4_EP21_M_WORKER_A,
+	JT_4_EP21_M_WORKER_B,
+	JT_4_EP21_F_WORKER_A,
+	JT_4_EP21_F_WORKER_B,
+	JT_4_EP21_WORKER_KID_A,
+	JT_4_EP21_WORKER_KID_B,
+	JT_4_EP21_TAN,
+	JT_4_EP21_TRIS,
+	JT_4_EP21_NADOYO,
+	JT_4_EP21_REINHARDT,
+	JT_4_EP21_WILHELM,
+	JT_4_EP21_MARISTELLA,
+	JT_4_EP21_YOHAN,
+	JT_4_EP21_RICHARD,
+	JT_4_EP21_VALDARIS,
+	JT_4_EP21_GUNTER,
+	JT_4_EP21_GALAXIA_A,
+	JT_4_EP21_GALAXIA_B,
+	JT_4_EP21_IVAN,
+	JT_4_EP21_LALAILA,
+	JT_4_EP21_ILSE,
+	JT_4_EP21_HOWELL,
+	JT_4_EP21_EPESTO,
+	JT_4_EP21_HEINE_TAB,
+	JT_4_EP21_IANA,
+	JT_4_EP21_LEE,
+	JT_4_EP21_AURELIE,
+	JT_4_EP21_HOWELL_S,
+	JT_4_EP21_TAN_S,
+
 	JT_ROZ_MQ_XAVIER = 13000,
 	JT_ROZ_MQ_MOCLORD,
 	JT_ROZ_MQ_SKULD,
@@ -1572,7 +1630,7 @@ void npc_unload_duplicates (struct npc_data* nd);
 int npc_unload(struct npc_data* nd, bool single);
 int npc_reload(void);
 void npc_read_event_script(void);
-int npc_script_event(map_session_data* sd, enum npce_event type);
+size_t npc_script_event( map_session_data& sd, enum npce_event type );
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);

@@ -43,8 +43,12 @@ GroupID: See the "Item Group ID" section in 'src/map/itemdb.hpp' and the "item g
 
 ---------------------------------------
 
+Index: Unique number that can be used to add the same Item with different data in the list.
+
+---------------------------------------
+
 Item: Available item that will be obtained from this item group.
-        Requires the AegisName of the item.
+      Requires the AegisName of the item.
 
 ---------------------------------------
 
@@ -52,12 +56,14 @@ Rate: Probability to get the item. Not a percentage value!
 
 Examples:
   - Group: MyItemGroup
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
-          - Item: Knife
+          - Index: 0
+            Item: Knife
             Rate: 5
-          - Item: Dagger
+          - Index: 1
+            Item: Dagger
             Rate: 1
 
 	- Knife has chance 5/6 (83.3%) to be obtained
@@ -74,22 +80,28 @@ SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
 
 	Item Group:
       - Group: MyItemGroup
-        Contain:
+        SubGroups:
           - SubGroup: 0
             List:
-              - Item: Knife       # "must" item(s)
-              - Item: Dagger      # "must" item(s)
+              - Index: 0
+                Item: Knife       # "must" item(s)
+              - Index: 1
+                Item: Dagger      # "must" item(s)
           - SubGroup: 1
             List:
-              - Item: Stiletto    # random at SubGroup 1
+              - Index: 0
+                Item: Stiletto    # random at SubGroup 1
                 Rate: 5
-              - Item: Stiletto_   # random at SubGroup 1
+              - Index: 1
+                Item: Stiletto_   # random at SubGroup 1
                 Rate: 2
           - SubGroup: 2
             List:
-              - Item: Stiletto    # random at SubGroup 2
+              - Index: 0
+                Item: Stiletto    # random at SubGroup 2
                 Rate: 5
-              - Item: Dagger_     # random at SubGroup 2
+              - Index: 1
+                Item: Dagger_     # random at SubGroup 2
                 Rate: 4
 
 	Usages:

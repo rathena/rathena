@@ -674,7 +674,7 @@ spl_in01,180,201,3	script	Laphine Soldier#ep13_1	461,{
 		mes "But nobody knows what's going to happen in this battlefield.";
 		next;
 		mes "[Laphine Soldier]";
-		mes "Anyway, whats that instrument over there?";
+		mes "Anyway, what's that instrument over there?";
 		mes "We have a similar one...";
 		mes "But it sounds totally different.";
 		close;

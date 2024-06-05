@@ -9563,6 +9563,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			.@menu$[0] = "^999999" + getitemname(25899) + " Collection - Pending^000000";
 			break;
 		case 2:
+			.@menu$[0] = "Collect " + getitemname(25899) + "";
 			break;
 		}
 
@@ -9586,6 +9587,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			.@menu$[1] = "^999999Deep Sea Creatures Killed - Pending^000000";
 			break;
 		case 2:
+			.@menu$[1] = "Kill Deep Sea Creatures";
 			break;
 		}
 

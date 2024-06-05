@@ -339,7 +339,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		mes "How can time pass so quickly?";
 		next;
 		mes "[Wise Bull Horn]";
-		mes "Ah... I reallly appreciate";
+		mes "Ah... I really appreciate";
 		mes "Selena and Black Fox for all";
 		mes "of their help in recruiting";
 		mes "young Gunslingers. I'm very";
@@ -383,7 +383,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		mes "[Wise Bull Horn]";
 		mes "Now, please take this voucher";
 		mes "to Miller, the Black Fox, with";
-		mes "my whole hearted approval.";
+		mes "my wholehearted approval.";
 		mes "I hope that you will use your";
 		mes "gun to uphold justice as a";
 		mes "noble warrior of the earth.";
@@ -399,7 +399,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 		mes "[Wise Bull Horn]";
 		mes "Please take this voucher";
 		mes "to Miller, the Black Fox, with";
-		mes "my whole hearted approval.";
+		mes "my wholehearted approval.";
 		mes "I hope that you will use your";
 		mes "gun to uphold justice as a";
 		mes "noble warrior of the earth.";

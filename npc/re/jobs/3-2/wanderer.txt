@@ -448,7 +448,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			next;
 			emotion ET_QUESTION, playerattached();
 			mes "[" + strcharinfo(0) + "]";
-			mes "I've seen other Maestro's performances but there was no one better then Guitar Song.";
+			mes "I've seen other Maestro's performances but there was no one better than Guitar Song.";
 			next;
 			mes "[Guitar Song]";
 			mes "He he he! Yes, I know I am super great!";
