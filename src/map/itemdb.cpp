@@ -3003,9 +3003,9 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 	if (must != nullptr && !must->data.empty()) {
 		for (const auto& it : must->data) {
 			if (itemdb_isstackable(it.second->nameid) && it.second->isStacked)
-				count += it.second->amount;
-			else
 				count++;
+			else
+				count = it.second->amount;
 		}
 	}
 
