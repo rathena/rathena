@@ -6259,6 +6259,18 @@ bool pc_isUseitem(map_session_data *sd,int n)
 	if( itemdb_group.item_exists(IG_MERCENARY, nameid) && sd->md != nullptr )
 		return false; // Mercenary Scrolls
 
+	// Safe check type cash disappear when overweight [Napster]
+	if( item->type == IT_CASH ){
+		if( pc_is90overweight(sd) ) {
+			clif_msg(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT);
+			return false;
+		}
+		if( !pc_inventoryblank(sd) ) {
+			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 732), false, SELF); //Item cannot be open when inventory is full
+			return false;
+		}
+	}
+
 	//Gender check
 	if(item->sex != SEX_BOTH && sd->status.sex != item->sex)
 		return false;
