@@ -3172,7 +3172,10 @@ public:
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
 	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
 	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
-	uint8 pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd);
+	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
+
+private:
+	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 
 extern ItemGroupDatabase itemdb_group;

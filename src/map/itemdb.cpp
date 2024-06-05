@@ -2921,7 +2921,7 @@ t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group)
 * @param group_id: The group ID of item that obtained by player
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
-static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std::shared_ptr<s_item_group_entry> data) {
+void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data ){
 	if (data == nullptr)
 		return;
 
@@ -2934,8 +2934,8 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
 		tmp.card[1] = 0;
-		tmp.card[2] = GetWord(sd->status.char_id, 0);
-		tmp.card[3] = GetWord(sd->status.char_id, 1);
+		tmp.card[2] = GetWord( sd.status.char_id, 0 );
+		tmp.card[3] = GetWord( sd.status.char_id, 1 );
 	}
 
 	uint16 get_amt = 0;
@@ -2949,8 +2949,7 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	// Do loop for non-stackable item
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
-		char flag = 0;
-		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+		tmp.unique_id = data->GUID ? pc_generate_unique_id( &sd ) : 0; // Generate GUID
 
 		if( itemdb_isequip( data->nameid ) ){
 			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
@@ -2970,11 +2969,15 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 			}
 		}
 
-		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
-			clif_additem(sd, 0, 0, flag);
+		e_additem_result flag = pc_additem( &sd, &tmp, get_amt, LOG_TYPE_SCRIPT );
+
+		if( flag == ADDITEM_SUCCESS ){
+			if( data->isAnnounced ){
+				intif_broadcast_obtain_special_item( &sd, data->nameid, sd.itemid, ITEMOBTAIN_TYPE_BOXITEM );
+			}
+		}else{
+			clif_additem( &sd, 0, 0, flag );
 		}
-		else if (!flag && data->isAnnounced)
-			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
 	}
 }
 
@@ -2982,12 +2985,9 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 * Find item(s) that will be obtained by player based on Item Group
 * @param group_id: The group ID that will be gained by player
 * @param nameid: The item that trigger this item group
-* @return val: 0:success, 1:no sd, 2:invalid item group
+* @return val: 0:success, 2:invalid item group
 */
-uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
-	if (sd == nullptr)
-		return 1;
-
+uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd ){
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
@@ -2998,9 +2998,10 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 		return 0;
 
 	size_t count = 0;
+	std::shared_ptr<s_item_group_random> must = util::umap_find( group->random, static_cast<uint16>( 0 ) );
+
 	// Count all the 'must' item(s) (subgroup 0)
-	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
-	if (must != nullptr && !must->data.empty()) {
+	if( must != nullptr ){
 		for (const auto& it : must->data) {
 			if (itemdb_isstackable(it.second->nameid) && it.second->isStacked)
 				count++;
@@ -3011,8 +3012,11 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 
 	// Count all 'random' subgroups
 	for (const auto& random : group->random) {
-		if (random.first == 0 || random.second->data.empty())
+		// Skip the 'must' group
+		if( random.first == 0 ){
 			continue;
+		}
+
 		count++;
 	}
 
@@ -3020,35 +3024,38 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 #ifdef RENEWAL
 	// Official servers use 10 as the minimum amount of slots required to get the items
 	// The <= is intentional, as in official servers you actually need an extra empty slot
-	if (pc_inventoryblank(sd) <= std::max<size_t>(count, 10) || pc_is70overweight(sd)) {
-		clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+	if( pc_inventoryblank( &sd ) <= std::max<size_t>( count, 10 ) || pc_is70overweight( &sd ) ){
+		clif_msg_color( &sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
 		return 0;
 	}
 #else
-	if (pc_is50overweight(sd)) {
-		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
+	if( pc_is50overweight( &sd ) ){
+		clif_msg_color( &sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED] );
 		return 0;
 	}
 
 	// Official servers use 10 as the minimum amount of slots required to get the items
 	// The <= is intentional, as in official servers you actually need an extra empty slot
-	if (pc_inventoryblank(sd) <= std::max<size_t>(count, 10)) {
-		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+	if( pc_inventoryblank( &sd ) <= std::max<size_t>( count, 10 ) ){
+		clif_msg_color( &sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
 		return 0;
 	}
 #endif
 
 	// Get all the 'must' item(s) (subgroup 0)
-	if (must != nullptr && !must->data.empty()) {
+	if( must != nullptr ){
 		for (const auto &it : must->data)
-			itemdb_pc_get_itemgroup_sub(sd, identify, it.second);
+			this->pc_get_itemgroup_sub( sd, identify, it.second );
 	}
 
 	// Get 1 'random' item from each subgroup
 	for (const auto &random : group->random) {
-		if (random.first == 0 || random.second->data.empty())
+		// Skip the 'must' group
+		if( random.first == 0 ){
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd, identify, get_random_itemsubgroup(random.second));
+		}
+
+		this->pc_get_itemgroup_sub( sd, identify, get_random_itemsubgroup( random.second ) );
 	}
 
 	return 0;
@@ -3575,6 +3582,19 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 }
 
 void ItemGroupDatabase::loadingFinished() {
+	// Delete empty sub groups
+	for( const auto &group : *this ){
+		for( auto& it = group.second->random.begin(); it != group.second->random.end(); ){
+			if( it->second->data.empty() ){
+				ShowDebug( "Deleting empty subgroup %u from item group %hu.\n", it->first, group.first );
+				it = group.second->random.erase( it );
+			}else{
+				it++;
+			}
+		}
+	}
+
+	// Calculate rates
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
