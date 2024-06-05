@@ -3607,7 +3607,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 void ItemGroupDatabase::loadingFinished() {
 	// Delete empty sub groups
 	for( const auto &group : *this ){
-		for( auto& it = group.second->random.begin(); it != group.second->random.end(); ){
+		for( auto it = group.second->random.begin(); it != group.second->random.end(); ){
 			if( it->second->data.empty() ){
 				ShowDebug( "Deleting empty subgroup %u from item group %hu.\n", it->first, group.first );
 				it = group.second->random.erase( it );
