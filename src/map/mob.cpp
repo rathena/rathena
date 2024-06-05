@@ -2233,7 +2233,7 @@ void mob_process_drop_list(std::shared_ptr<s_item_drop_list>& list, bool loot)
 	for (std::shared_ptr<s_item_drop>& ditem : list->items) {
 		map_addflooritem(&ditem->item_data, ditem->item_data.amount,
 			list->m, list->x, list->y,
-			list->first_charid, list->second_charid, list->third_charid, 4, ditem->mob_id, !loot, dir);
+			list->first_charid, list->second_charid, list->third_charid, 4, ditem->mob_id, !loot, dir, BL_CHAR|BL_PET);
 		// The drop location loops between three locations: SE -> W -> N -> SE
 		if (dir <= DIR_NORTH)
 			dir = DIR_SOUTHEAST;
@@ -3139,7 +3139,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 				if((temp = pc_additem(mvp_sd,&item,1,LOG_TYPE_PICKDROP_PLAYER)) != 0) {
 					clif_additem(mvp_sd,0,0,temp);
-					map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1,0,true);
+					map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1,0,true,DIR_CENTER);
 				}
 
 				if (i_data->flag.broadcast)
