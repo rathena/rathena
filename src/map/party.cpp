@@ -1052,8 +1052,7 @@ int party_send_message(map_session_data *sd,const char *mes, size_t len)
 	return 0;
 }
 
-int party_recv_message(int party_id,uint32 account_id,const char *mes,int len)
-{
+int party_recv_message( int party_id, uint32 account_id, const char *mes, size_t len ){
 	struct party_data *p;
 	if( (p=party_search(party_id))==nullptr)
 		return 0;

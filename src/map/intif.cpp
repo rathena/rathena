@@ -204,8 +204,7 @@ int intif_rename(map_session_data *sd, int type, char *name)
  * @param type : Color of msg
  * @return 0=error occured, 1=msg sent
  */
-int intif_broadcast(const char* mes, int len, int type)
-{
+int intif_broadcast( const char* mes, size_t len, int type ){
 	nullpo_ret(mes);
 	if (len < 2)
 		return 0;
@@ -223,7 +222,7 @@ int intif_broadcast(const char* mes, int len, int type)
 
 	WFIFOHEAD(inter_fd, 16 + lp + len);
 	WFIFOW(inter_fd,0)  = 0x3000;
-	WFIFOW(inter_fd,2)  = 16 + lp + len;
+	WFIFOW( inter_fd, 2 )  = static_cast<int16>( 16 + lp + len );
 	WFIFOL(inter_fd,4)  = 0xFF000000; // 0xFF000000 color signals standard broadcast
 	WFIFOW(inter_fd,8)  = 0; // fontType not used with standard broadcast
 	WFIFOW(inter_fd,10) = 0; // fontSize not used with standard broadcast
@@ -249,8 +248,7 @@ int intif_broadcast(const char* mes, int len, int type)
  * @param fontY :
  * @return 0=not send to char-serv, 1=send to char-serv
  */
-int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY)
-{
+int intif_broadcast2( const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY ){
 	nullpo_ret(mes);
 	if (len < 2)
 		return 0;
@@ -266,7 +264,7 @@ int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fo
 
 	WFIFOHEAD(inter_fd, 16 + len);
 	WFIFOW(inter_fd,0)  = 0x3000;
-	WFIFOW(inter_fd,2)  = 16 + len;
+	WFIFOW( inter_fd, 2 )  = static_cast<int16>( 16 + len );
 	WFIFOL(inter_fd,4)  = fontColor;
 	WFIFOW(inter_fd,8)  = fontType;
 	WFIFOW(inter_fd,10) = fontSize;
@@ -370,13 +368,15 @@ int intif_wis_reply(int id, int flag)
  */
 int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
 {
-	int mes_len;
 	if (CheckForCharServer())
 		return 0;
-	mes_len = strlen(mes) + 1; // + null
+
+	// + null
+	size_t mes_len = strlen( mes ) + 1;
+
 	WFIFOHEAD(inter_fd, mes_len + 8 + NAME_LENGTH);
 	WFIFOW(inter_fd,0) = 0x3003;
-	WFIFOW(inter_fd,2) = mes_len + 32;
+	WFIFOW( inter_fd, 2 ) = static_cast<int16>( mes_len + 32 );
 	safestrncpy(WFIFOCP(inter_fd,4), wisp_name, NAME_LENGTH);
 	WFIFOL(inter_fd,4+NAME_LENGTH) = permission;
 	safestrncpy(WFIFOCP(inter_fd,8+NAME_LENGTH), mes, mes_len);
@@ -444,7 +444,7 @@ int intif_saveregistry(map_session_data *sd)
 		plen += 1;
 
 		safestrncpy(WFIFOCP(inter_fd,plen), varname, len); //the key
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
 		WFIFOL(inter_fd, plen) = script_getvaridx(key.i64);
 		plen += 4;
@@ -468,7 +468,7 @@ int intif_saveregistry(map_session_data *sd)
 				plen += 1;
 
 				safestrncpy(WFIFOCP(inter_fd,plen), p->value, len);
-				plen += len;
+				plen += static_cast<decltype(plen)>( len );
 			} else {
 				script_reg_destroy_single(sd,key.i64,&p->flag);
 			}
@@ -866,13 +866,12 @@ int intif_guild_addmember(int guild_id,struct guild_member *m)
  * @param len : size of the name
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_change_gm(int guild_id, const char* name, int len)
-{
+int intif_guild_change_gm( int guild_id, const char* name, size_t len ){
 	if (CheckForCharServer())
 		return 0;
 	WFIFOHEAD(inter_fd, len + 8);
 	WFIFOW(inter_fd, 0)=0x3033;
-	WFIFOW(inter_fd, 2)=len+8;
+	WFIFOW( inter_fd, 2 ) = static_cast<int16>( len + 8 );
 	WFIFOL(inter_fd, 4)=guild_id;
 	safestrncpy(WFIFOCP(inter_fd,8),name,len);
 	WFIFOSET(inter_fd,len+8);

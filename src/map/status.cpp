@@ -1682,7 +1682,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				npc_event(sd, bg->die_event.c_str(), 0);
 		}
 
-		npc_script_event(sd,NPCE_DIE);
+		npc_script_event( *sd, NPCE_DIE );
 	}
 
 	return (int)(hp+sp+ap);

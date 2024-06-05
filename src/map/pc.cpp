@@ -6692,7 +6692,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
 	if( battle_config.skill_steal_random_options ){
-		mob_setdropitem_option( &tmp_item, &md->db->dropitem[i] );
+		mob_setdropitem_option( tmp_item, md->db->dropitem[i] );
 	}
 	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 
@@ -6893,7 +6893,8 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 		if (sd->state.buyingstore) // Stop buyingstore
 			buyingstore_close(sd);
 
-		npc_script_event(sd, NPCE_LOGOUT);
+		npc_script_event( *sd, NPCE_LOGOUT );
+
 		//remove from map, THEN change x/y coordinates
 		unit_remove_map_pc(sd,clrtype);
 		sd->mapindex = mapindex;
@@ -8111,7 +8112,7 @@ int pc_checkbaselevelup(map_session_data *sd) {
 		}
 	}
 	clif_misceffect( sd->bl, NOTIFYEFFECT_BASE_LEVEL_UP );
-	npc_script_event(sd, NPCE_BASELVUP); //LORDALFA - LVLUPEVENT
+	npc_script_event( *sd, NPCE_BASELVUP );
 
 	if(sd->status.party_id)
 		party_send_levelup(sd);
@@ -8169,7 +8170,8 @@ int pc_checkjoblevelup(map_session_data *sd)
 	if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)) )
 		clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
-	npc_script_event(sd, NPCE_JOBLVUP);
+	npc_script_event( *sd, NPCE_JOBLVUP );
+
 	for (; job_level <= sd->status.job_level; job_level++)
 		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, job_level);
 
@@ -9529,8 +9531,12 @@ void pc_damage(map_session_data *sd,struct block_list *src,unsigned int hp, unsi
 }
 
 TIMER_FUNC(pc_close_npc_timer){
-	TBL_PC *sd = map_id2sd(id);
-	if(sd) pc_close_npc(sd,data);
+	map_session_data* sd = map_id2sd( id );
+
+	if( sd != nullptr ){
+		pc_close_npc( sd, static_cast<int>( data ) );
+	}
+
 	return 0;
 }
 /**
@@ -9757,7 +9763,7 @@ int pc_dead(map_session_data *sd,struct block_list *src)
 	if (src && src->type == BL_PC) {
 		map_session_data *ssd = (map_session_data *)src;
 		pc_setparam(ssd, SP_KILLEDRID, sd->bl.id);
-		npc_script_event(ssd, NPCE_KILLPC);
+		npc_script_event( *ssd, NPCE_KILLPC );
 
 		if (battle_config.pk_mode&2) {
 			ssd->status.manner -= 5;

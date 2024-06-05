@@ -521,7 +521,7 @@ void pet_clear_support_bonuses(map_session_data *sd) {
 	}
 
 	if (pd->loot) {
-		pet_lootitem_drop(pd, sd);
+		pet_lootitem_drop( *pd, sd );
 
 		if (pd->loot->item)
 			aFree(pd->loot->item);
@@ -579,8 +579,7 @@ bool PetDatabase::reload(){
 
 PetDatabase pet_db;
 
-static struct eri *item_drop_ers; //For loot drops delay structures.
-static struct eri *item_drop_list_ers;
+std::unordered_map<uint32, std::shared_ptr<s_item_drop_list>> pet_delayed_drops;
 
 /**
  * Get the value of the pet's hunger.
@@ -942,7 +941,7 @@ static int pet_performance(map_session_data *sd, struct pet_data *pd)
 
 	pet_stop_walking(pd,2000<<8);
 	clif_pet_performance(pd, rnd_value(1, val));
-	pet_lootitem_drop(pd,nullptr);
+	pet_lootitem_drop( *pd, nullptr );
 
 	return 1;
 }
@@ -954,7 +953,7 @@ static int pet_performance(map_session_data *sd, struct pet_data *pd)
  * @return true if everything went well, false if the egg is not found in the inventory.
  */
 bool pet_return_egg( map_session_data *sd, struct pet_data *pd ){
-	pet_lootitem_drop(pd,sd);
+	pet_lootitem_drop( *pd, sd );
 
 	int i = pet_egg_search( sd, pd->pet.pet_id );
 
@@ -1930,24 +1929,20 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
  * @return 0
  */
 static TIMER_FUNC(pet_delay_item_drop){
-	struct item_drop_list *list;
-	struct item_drop *ditem;
+	uint32 bl_id = static_cast<uint32>( id );
+	std::shared_ptr<s_item_drop_list> list = util::umap_find( pet_delayed_drops, bl_id );
 
-	list = (struct item_drop_list *)data;
-	ditem = list->item;
+	if( list == nullptr ){
+		return 0;
+	}
 
-	while (ditem) {
-		struct item_drop *ditem_prev;
-
+	for( std::shared_ptr<s_item_drop>& ditem : list->items ){
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
 			list->first_charid,list->second_charid,list->third_charid,4,0);
-		ditem_prev = ditem;
-		ditem = ditem->next;
-		ers_free(item_drop_ers, ditem_prev);
 	}
 
-	ers_free(item_drop_list_ers, list);
+	pet_delayed_drops.erase( bl_id );
 
 	return 0;
 }
@@ -1956,61 +1951,54 @@ static TIMER_FUNC(pet_delay_item_drop){
  * Make a pet drop their looted items.
  * @param pd : pet requesting
  * @param sd : player requesting
- * @return 1:success, 0:failure
  */
-int pet_lootitem_drop(struct pet_data *pd,map_session_data *sd)
-{
-	int i;
-	struct item_drop_list *dlist;
-	struct item_drop *ditem;
+void pet_lootitem_drop( pet_data& pd, map_session_data* sd ){
+	if( !pd.loot || !pd.loot->count ){
+		return;
+	}
 
-	if(!pd || !pd->loot || !pd->loot->count)
-		return 0;
+	std::shared_ptr<s_item_drop_list> dlist = std::make_shared<s_item_drop_list>();
 
-	dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
-	dlist->m = pd->bl.m;
-	dlist->x = pd->bl.x;
-	dlist->y = pd->bl.y;
+	dlist->m = pd.bl.m;
+	dlist->x = pd.bl.x;
+	dlist->y = pd.bl.y;
 	dlist->first_charid = 0;
 	dlist->second_charid = 0;
 	dlist->third_charid = 0;
-	dlist->item = nullptr;
 
-	for(i = 0; i < pd->loot->count; i++) {
-		struct item *it;
+	for( int i = 0; i < pd.loot->count; i++) {
+		struct item* it = &pd.loot->item[i];
 
-		it = &pd->loot->item[i];
+		if( sd != nullptr ){
+			unsigned char flag = pc_additem( sd, it, it->amount, LOG_TYPE_PICKDROP_PLAYER );
 
-		if(sd){
-			unsigned char flag = 0;
-
-			if((flag = pc_additem(sd,it,it->amount,LOG_TYPE_PICKDROP_PLAYER))){
-				clif_additem(sd,0,0,flag);
-				ditem = ers_alloc(item_drop_ers, struct item_drop);
-				memcpy(&ditem->item_data, it, sizeof(struct item));
-				ditem->next = dlist->item;
-				dlist->item = ditem;
+			if( flag == ADDITEM_SUCCESS ){
+				continue;
 			}
-		} else {
-			ditem = ers_alloc(item_drop_ers, struct item_drop);
-			memcpy(&ditem->item_data, it, sizeof(struct item));
-			ditem->next = dlist->item;
-			dlist->item = ditem;
+
+			// Inform client about failure to add
+			clif_additem( sd, 0, 0, flag );
 		}
+
+		// Store the drop for later
+		std::shared_ptr<s_item_drop> ditem = std::make_shared<s_item_drop>();
+
+		memcpy( &ditem->item_data, it, sizeof( struct item ) );
+
+		dlist->items.push_back( ditem );
 	}
 
 	//The smart thing to do is use pd->loot->max (thanks for pointing it out, Shinomori)
-	memset(pd->loot->item,0,pd->loot->max * sizeof(struct item));
-	pd->loot->count = 0;
-	pd->loot->weight = 0;
-	pd->ud.canact_tick = gettick()+10000;	//prevent picked up during 10*1000ms
+	memset( pd.loot->item, 0, pd.loot->max * sizeof( struct item ) );
+	pd.loot->count = 0;
+	pd.loot->weight = 0;
+	pd.ud.canact_tick = gettick()+10000;	//prevent picked up during 10*1000ms
 
-	if (dlist->item)
-		add_timer(gettick()+540,pet_delay_item_drop,0,(intptr_t)dlist);
-	else
-		ers_free(item_drop_list_ers, dlist);
+	if( !dlist->items.empty() ){
+		pet_delayed_drops[pd.bl.id] = dlist;
 
-	return 1;
+		add_timer( gettick() + 500, pet_delay_item_drop, pd.bl.id, 0 );
+	}
 }
 
 /**
@@ -2476,9 +2464,6 @@ void do_init_pet(void)
 {
 	pet_db.load();
 
-	item_drop_ers = ers_new(sizeof(struct item_drop),"pet.cpp::item_drop_ers",ERS_OPT_NONE);
-	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"pet.cpp::item_drop_list_ers",ERS_OPT_NONE);
-
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
 	add_timer_func_list(pet_skill_bonus_timer,"pet_skill_bonus_timer"); // [Valaris]
@@ -2495,8 +2480,7 @@ void do_init_pet(void)
  */
 void do_final_pet(void)
 {
-	ers_destroy(item_drop_ers);
-	ers_destroy(item_drop_list_ers);
+	pet_delayed_drops.clear();
 
 	pet_autobonuses.clear();
 

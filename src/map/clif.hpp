@@ -1035,7 +1035,7 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g,int idx);
 void clif_guild_emblem(const map_session_data &sd, const struct mmo_guild &g);
 void clif_guild_emblem_area(struct block_list* bl);
 void clif_guild_notice(map_session_data* sd);
-void clif_guild_message(const struct mmo_guild &g,uint32 account_id,const char *mes,int len);
+void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const char* mes, size_t len );
 void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *name);
 void clif_guild_allianceack(map_session_data *sd,int flag);
 void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag);
@@ -1066,7 +1066,7 @@ void clif_bg_queue_lobby_notify(const char *name, map_session_data *sd);
 void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, map_session_data *sd);
 
 // Instancing
-void clif_instance_create(int instance_id, int num);
+void clif_instance_create( int instance_id, size_t num );
 void clif_instance_changewait(int instance_id, int num);
 void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
 void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);

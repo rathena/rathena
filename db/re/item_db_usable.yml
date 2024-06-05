@@ -51457,7 +51457,6 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 10
-    Defense: 4
     Trade:
       NoDrop: true
       NoTrade: true
@@ -60451,7 +60450,7 @@ Body:
       getitem 526,100; /* Royal Jelly */
   - Id: 23042
     AegisName: Seed_Of_Yggdrasil_
-    Name: "[Not For Sale]Yggdrasil Seed"
+    Name: "[Not For Sale] Yggdrasil Seed"
     Type: Healing
     Weight: 300
     Delay:
@@ -78647,6 +78646,10 @@ Body:
     Name: Costume Enchant Stone Box 35
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_ENCHANT_STONE_BOX35);
   - Id: 103095
     AegisName: Kr_B_Special10
     Name: Love Cake
