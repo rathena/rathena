@@ -1284,10 +1284,10 @@ void clif_snap( struct block_list *bl, short x, short y );
 void clif_monster_hp_bar( struct mob_data* md, int fd );
 
 // Clan System
-void clif_clan_basicinfo( map_session_data *sd );
-void clif_clan_message(struct clan *clan,const char *mes,int len);
-void clif_clan_onlinecount( struct clan* clan );
-void clif_clan_leave( map_session_data* sd );
+void clif_clan_basicinfo( map_session_data& sd );
+void clif_clan_message( struct clan &clan, const char *mes, size_t len );
+void clif_clan_onlinecount( struct clan& clan );
+void clif_clan_leave( map_session_data& sd );
 
 // Bargain Tool
 void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);

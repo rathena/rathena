@@ -317,7 +317,7 @@ void instance_getsd(int instance_id, map_session_data *&sd, enum send_target *ta
 			(*target) = SELF;
 			break;
 		case IM_CLAN:
-			sd = clan_getavailablesd(clan_search(idata->owner_id));
+			sd = clan_getavailablesd( *clan_search( idata->owner_id ) );
 			(*target) = CLAN;
 	}
 	return;

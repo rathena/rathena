@@ -2094,7 +2094,7 @@ int map_quit(map_session_data *sd) {
 		bg_queue_leave(sd, false);
 
 	if( sd->status.clan_id )
-		clan_member_left(sd);
+		clan_member_left( *sd );
 
 	pc_itemcd_do(sd,false);
 

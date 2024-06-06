@@ -20115,27 +20115,35 @@ void clif_party_leaderchanged(map_session_data *sd, int prev_leader_aid, int new
 * Sends a clan message to a player
 * 098e <length>.W <name>.24B <message>.?B (ZC_NOTIFY_CLAN_CHAT)
 **/
-void clif_clan_message(struct clan *clan,const char *mes,int len){
+void clif_clan_message( struct clan& clan, const char *mes, size_t len ){
 #if PACKETVER >= 20131223
-	map_session_data *sd;
-	uint8 buf[256];
+	map_session_data* sd = clan_getavailablesd( clan );
 
 	if( len == 0 ){
 		return;
-	}else if( len > (sizeof(buf)-5-NAME_LENGTH) ){
-		ShowWarning("clif_clan_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", clan_id=%d).\n", mes, len, sizeof(buf)-5, clan->id);
-		len = sizeof(buf)-5-NAME_LENGTH;
 	}
 
-	WBUFW(buf, 0) = 0x98e;
-	WBUFW(buf, 2) = len + 5 + NAME_LENGTH;
+	PACKET_ZC_NOTIFY_CLAN_CHAT* p = reinterpret_cast<PACKET_ZC_NOTIFY_CLAN_CHAT*>( packet_buffer );
+
+	// Maximum message length = size of our packet buffer minus fixed size of the packet and 1 byte zero termination
+	static size_t len_max = sizeof( packet_buffer ) - sizeof( *p ) - 1;
+
+	// Is the length bigger than the maximum message length
+	if( len > len_max ){
+		ShowWarning( "clif_clan_message: Truncated message '%s' (len=%" PRIuPTR ", max=%" PRIuPTR ", clan_id=%d).\n", mes, len, len_max, clan.id );
+		len = len_max;
+	}
+
+	p->PacketType = HEADER_ZC_NOTIFY_CLAN_CHAT;
+	p->PacketLength = sizeof( *p );
 	
 	// Offially the sender name should also be filled here, but it is not required by the client and since it's in the message too we do not fill it
-	//safestrncpy(WBUFCP(buf,4), sendername, NAME_LENGTH);
-	safestrncpy(WBUFCP(buf,4+NAME_LENGTH), mes, len+1);
+	safestrncpy( p->MemberName, "", sizeof( p->MemberName ) );
 
-	if((sd = clan_getavailablesd(clan)) != nullptr)
-		clif_send(buf, WBUFW(buf,2), &sd->bl, CLAN);
+	safestrncpy( p->Message, mes, len + 1 );
+	p->PacketLength += static_cast<decltype(p->PacketLength)>( len + 1 );
+
+	clif_send( p, p->PacketLength, &sd->bl, CLAN );
 #endif
 }
 
@@ -20145,13 +20153,17 @@ void clif_clan_message(struct clan *clan,const char *mes,int len){
 **/
 void clif_parse_clan_chat( int fd, map_session_data* sd ){
 #if PACKETVER >= 20131223
+	if( sd == nullptr ){
+		return;
+	}
+
 	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
 
 	// validate packet and retrieve name and message
 	if( !clif_process_message(sd, false, name, message, output ) )
 		return;
 
-	clan_send_message( sd, RFIFOCP(fd,4), RFIFOW(fd,2) - 4 );
+	clan_send_message( *sd, RFIFOCP(fd,4), RFIFOW(fd,2) - 4 );
 #endif
 }
 
@@ -20160,52 +20172,38 @@ void clif_parse_clan_chat( int fd, map_session_data* sd ){
 * 098a <length>.W <clan id>.L <clan name>.24B <clan master>.24B <clan map>.16B <alliance count>.B
 *      <antagonist count>.B { <alliance>.24B } * alliance count { <antagonist>.24B } * antagonist count (ZC_CLANINFO)
 **/
-void clif_clan_basicinfo( map_session_data *sd ){
-#if PACKETVER >= 20131223
-	int fd, offset, length, i, flag;
-	struct clan* clan;
-	char mapname[MAP_NAME_LENGTH_EXT];
-	
-	nullpo_retv( sd );
-	nullpo_retv( clan = sd->clan );
-	
-	// Check if the player has a valid session and is not autotrading
-	if( !clif_session_isValid( sd ) ){
+void clif_clan_basicinfo( map_session_data& sd ){
+#if PACKETVER_MAIN_NUM >= 20130626 || PACKETVER_RE_NUM >= 20130605 || defined(PACKETVER_ZERO)
+	struct clan* clan = sd.clan;
+
+	if( clan == nullptr ){
 		return;
 	}
 
-	length = 8 + 2 * NAME_LENGTH + MAP_NAME_LENGTH_EXT + 2;
-	fd = sd->fd;
+	PACKET_ZC_CLANINFO* p = reinterpret_cast<PACKET_ZC_CLANINFO*>( packet_buffer );
 
-	WFIFOHEAD(fd,length);
+	p->PacketType = HEADER_ZC_CLANINFO;
+	p->PacketLength = sizeof( *p );
+	p->ClanID = clan->id;
+	safestrncpy( p->ClanName, clan->name, sizeof( p->ClanName ) );
+	safestrncpy( p->MasterName, clan->master, sizeof( p->MasterName ) );
+	mapindex_getmapname_ext( clan->map, p->Map );
+	p->AllyCount = clan_get_alliance_count( *clan, 0 );
+	p->AntagonistCount = clan_get_alliance_count( *clan, 1 );
 
-	memset( WFIFOP(fd, 0), 0, length );
-
-	WFIFOW( fd, 0 ) = 0x98a;
-	WFIFOL( fd, 4 ) = clan->id;
-	offset = 8;
-	safestrncpy( WFIFOCP( fd, offset ), clan->name, NAME_LENGTH );
-	offset += NAME_LENGTH;
-	safestrncpy( WFIFOCP( fd, offset ), clan->master, NAME_LENGTH );
-	offset += NAME_LENGTH;
-	mapindex_getmapname_ext( clan->map, mapname );
-	safestrncpy( WFIFOCP( fd, offset ), mapname, MAP_NAME_LENGTH_EXT );
-	offset += MAP_NAME_LENGTH_EXT;
-
-	WFIFOB(fd,offset++) = clan_get_alliance_count(clan,0);
-	WFIFOB(fd,offset++) = clan_get_alliance_count(clan,1);
-
-	for( flag = 0; flag < 2; flag++ ){
-		for( i = 0; i < MAX_CLANALLIANCE; i++ ){
+	for( int flag = 0; flag < 2; flag++ ){
+		for( int i = 0; i < MAX_CLANALLIANCE; i++ ){
 			if( clan->alliance[i].clan_id > 0 && clan->alliance[i].opposition == flag ){
-				safestrncpy( WFIFOCP( fd, offset ), clan->alliance[i].name, NAME_LENGTH );
-				offset += NAME_LENGTH;
+				char* name = reinterpret_cast<char*>( WBUFB( p, p->PacketLength ) );
+
+				safestrncpy( name, clan->alliance[i].name, NAME_LENGTH );
+
+				p->PacketLength += static_cast<decltype(p->PacketLength)>( NAME_LENGTH );
 			}
 		}
 	}
 
-	WFIFOW( fd, 2 ) = offset;
-	WFIFOSET(fd,offset);
+	clif_send( p, p->PacketLength, &sd.bl, SELF );
 #endif
 }
 
@@ -20213,17 +20211,21 @@ void clif_clan_basicinfo( map_session_data *sd ){
 * Updates the online and maximum player count of a clan.
 * 0988 <online count>.W <maximum member amount>.W (ZC_NOTIFY_CLAN_CONNECTINFO)
 **/
-void clif_clan_onlinecount( struct clan* clan ){
+void clif_clan_onlinecount( struct clan& clan ){
 #if PACKETVER >= 20131223
-	uint8 buf[6];
-	map_session_data *sd;
+	map_session_data* sd = clan_getavailablesd( clan );
 
-	WBUFW(buf,0) = 0x988;
-	WBUFW(buf,2) = clan->connect_member;
-	WBUFW(buf,4) = clan->max_member;
+	if( sd == nullptr){
+		return;
+	}
 
-	if((sd = clan_getavailablesd(clan)) != nullptr)
-		clif_send(buf, 6, &sd->bl, CLAN);
+	PACKET_ZC_NOTIFY_CLAN_CONNECTINFO p = {};
+
+	p.PacketType = HEADER_ZC_NOTIFY_CLAN_CONNECTINFO;
+	p.NumConnect = clan.connect_member;
+	p.NumTotal = clan.max_member;
+
+	clif_send( &p, sizeof( p ), &sd->bl, CLAN );
 #endif
 }
 
@@ -20231,21 +20233,13 @@ void clif_clan_onlinecount( struct clan* clan ){
 * Notifies the client that the player has left his clan.
 * 0989 (ZC_ACK_CLAN_LEAVE)
 **/
-void clif_clan_leave( map_session_data* sd ){
+void clif_clan_leave( map_session_data& sd ){
 #if PACKETVER >= 20131223
-	int fd;
-	
-	nullpo_retv( sd );
-	
-	if( !clif_session_isValid( sd ) ){
-		return;
-	}
-	
-	fd = sd->fd;
+	PACKET_ZC_ACK_CLAN_LEAVE p = {};
 
-	WFIFOHEAD(fd,2);
-	WFIFOW(fd,0) = 0x989;
-	WFIFOSET(fd,2);
+	p.PacketType = HEADER_ZC_ACK_CLAN_LEAVE;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
 }
 

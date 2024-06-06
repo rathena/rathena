@@ -3748,7 +3748,7 @@ int intif_parse_clan_onlinecount( int fd ){
 
 	clan->connect_member = RFIFOW(fd,6);
 
-	clif_clan_onlinecount(clan);
+	clif_clan_onlinecount( *clan );
 
 	return 1;
 }
