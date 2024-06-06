@@ -13662,7 +13662,7 @@ void clif_parse_CreateParty(int fd, map_session_data *sd){
 		return;
 	}
 
-	party_create(sd,name,0,0);
+	party_create( *sd, name, 0, 0 );
 }
 
 /// 01e8 <party name>.24B <item pickup rule>.B <item share rule>.B (CZ_MAKE_GROUP2)
@@ -13686,24 +13686,38 @@ void clif_parse_CreateParty2(int fd, map_session_data *sd){
 		return;
 	}
 
-	party_create(sd,name,item1,item2);
+	party_create( *sd, name, item1, item2 );
 }
 
 
 /// Party invitation request by account id
 /// 00fc <account id>.L (CZ_REQ_JOIN_GROUP)
 void clif_parse_PartyInvite( int fd, map_session_data *sd ){
-	party_invite( sd, map_id2sd( RFIFOL( fd, 2 ) ) );
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_JOIN_GROUP* p = reinterpret_cast<PACKET_CZ_REQ_JOIN_GROUP*>( RFIFOP( fd, 0 ) );
+
+	party_invite( *sd, map_id2sd( p->AID ) );
 }
 
 /// Party invitation request by name
 /// 02c4 <char name>.24B (CZ_PARTY_JOIN_REQ)
 void clif_parse_PartyInvite2( int fd, map_session_data *sd ){
+#if PACKETVER >= 20070227
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_PARTY_JOIN_REQ* p = reinterpret_cast<PACKET_CZ_PARTY_JOIN_REQ*>( RFIFOP( fd, 0 ) );
+
 	char name[NAME_LENGTH] = {0};
 
-	safestrncpy( name, RFIFOCP( fd, 2 ), NAME_LENGTH );
+	safestrncpy( name, p->name, NAME_LENGTH );
 
-	party_invite( sd, map_nick2sd( name, false ) );
+	party_invite( *sd, map_nick2sd( name, false ) );
+#endif
 }
 
 
@@ -13713,7 +13727,13 @@ void clif_parse_PartyInvite2( int fd, map_session_data *sd ){
 ///     0 = reject
 ///     1 = accept
 void clif_parse_ReplyPartyInvite( int fd, map_session_data *sd ){
-	party_reply_invite( sd, RFIFOL( fd, 2 ), RFIFOL( fd, 6 ) );
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_JOIN_GROUP* p = reinterpret_cast<PACKET_CZ_JOIN_GROUP*>( RFIFOP( fd, 0 ) );
+
+	party_reply_invite( *sd, p->party_id, p->flag );
 }
 
 /// Party invitation reply
@@ -13722,22 +13742,41 @@ void clif_parse_ReplyPartyInvite( int fd, map_session_data *sd ){
 ///     0 = reject
 ///     1 = accept
 void clif_parse_ReplyPartyInvite2( int fd, map_session_data *sd ){
-	party_reply_invite( sd, RFIFOL( fd, 2 ), RFIFOB( fd, 6 ) );
+#if PACKETVER >= 20070227
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_PARTY_JOIN_REQ_ACK* p = reinterpret_cast<PACKET_CZ_PARTY_JOIN_REQ_ACK*>( RFIFOP( fd, 0 ) );
+
+	party_reply_invite( *sd, p->party_id, p->flag );
+#endif
 }
 
 
-/// Request to leave party (CZ_REQ_LEAVE_GROUP).
-/// 0100
+/// Request to leave party.
+/// 0100 (CZ_REQ_LEAVE_GROUP)
 void clif_parse_LeaveParty( int fd, map_session_data *sd ){
-	party_leave( sd, true );
+	if( sd == nullptr ){
+		return;
+	}
+
+	//PACKET_CZ_REQ_LEAVE_GROUP* p = reinterpret_cast<PACKET_CZ_REQ_LEAVE_GROUP*>( RFIFOP( fd, 0 ) );
+
+	party_leave( *sd, true );
 }
 
 
-/// Request to expel a party member (CZ_REQ_EXPEL_GROUP_MEMBER).
-/// 0103 <account id>.L <char name>.24B
-void clif_parse_RemovePartyMember(int fd, map_session_data *sd)
-{	
-	party_removemember(sd,RFIFOL(fd,2),RFIFOCP(fd,6));
+/// Request to expel a party member.
+/// 0103 <account id>.L <char name>.24B (CZ_REQ_EXPEL_GROUP_MEMBER)
+void clif_parse_RemovePartyMember( int fd, map_session_data* sd ){
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_EXPEL_GROUP_MEMBER* p = reinterpret_cast<PACKET_CZ_REQ_EXPEL_GROUP_MEMBER*>( RFIFOP( fd, 0 ) );
+
+	party_removemember( *sd, p->AID, p->name );
 }
 
 
@@ -25042,7 +25081,7 @@ void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
 	}
 
 	if( p->accept ){
-		party_join( tsd, sd->status.party_id );
+		party_join( *tsd, sd->status.party_id );
 	}
 
 	clif_partybooking_reply( tsd, sd, p->accept );
