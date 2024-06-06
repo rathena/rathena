@@ -1024,7 +1024,7 @@ void clif_guild_skillinfo(map_session_data* sd);
 void clif_guild_send_onlineinfo(map_session_data *sd); //[LuzZza]
 void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int flag);
 void clif_guild_invite(const map_session_data &sd, const struct mmo_guild &g);
-void clif_guild_inviteack(map_session_data *sd,int flag);
+void clif_guild_inviteack( map_session_data& sd, int flag );
 void clif_guild_leave(map_session_data *sd,const char *name,const char *mes);
 void clif_guild_expulsion(map_session_data* sd, const char* name, const char* mes, uint32 account_id);
 void clif_guild_positionchanged(const struct mmo_guild &g,int idx);
@@ -1037,7 +1037,7 @@ void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *n
 void clif_guild_allianceack(map_session_data *sd,int flag);
 void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag);
 void clif_guild_oppositionack(map_session_data *sd,int flag);
-void clif_guild_broken(map_session_data *sd,int flag);
+void clif_guild_broken( map_session_data& sd, int flag );
 void clif_guild_xy( map_session_data& sd );
 void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd );
 void clif_guild_xy_remove( map_session_data& sd );

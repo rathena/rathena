@@ -9122,24 +9122,20 @@ void clif_guild_invite(const map_session_data &sd, const struct mmo_guild &g)
 }
 
 
-/// Reply to invite request (ZC_ACK_REQ_JOIN_GUILD).
-/// 0169 <answer>.B
+/// Reply to invite request.
+/// 0169 <answer>.B (ZC_ACK_REQ_JOIN_GUILD)
 /// answer:
 ///     0 = Already in guild.
 ///     1 = Offer rejected.
 ///     2 = Offer accepted.
 ///     3 = Guild full.
-void clif_guild_inviteack(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_guild_inviteack( map_session_data& sd, int flag ){
+	PACKET_ZC_ACK_REQ_JOIN_GUILD p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_ACK_REQ_JOIN_GUILD;
+	p.result = static_cast<decltype(p.result)>( flag );
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x169));
-	WFIFOW(fd,0)=0x169;
-	WFIFOB(fd,2)=flag;
-	WFIFOSET(fd,packet_len(0x169));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -9349,22 +9345,18 @@ void clif_guild_allianceadded(struct guild *g,int idx)
 */
 
 
-/// Notifies the client about the result of a guild break (ZC_ACK_DISORGANIZE_GUILD_RESULT).
-/// 015e <reason>.L
+/// Notifies the client about the result of a guild break.
+/// 015e <reason>.L (ZC_ACK_DISORGANIZE_GUILD_RESULT)
 ///     0 = success
 ///     1 = invalid key (guild name, @see clif_parse_GuildBreak)
 ///     2 = there are still members in the guild
-void clif_guild_broken(map_session_data *sd,int flag)
-{
-	int fd;
+void clif_guild_broken( map_session_data& sd, int flag ){
+	PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_ACK_DISORGANIZE_GUILD_RESULT;
+	p.result = flag;
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x15e));
-	WFIFOW(fd,0)=0x15e;
-	WFIFOL(fd,2)=flag;
-	WFIFOSET(fd,packet_len(0x15e));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
@@ -14328,17 +14320,31 @@ void clif_parse_GuildChangeNotice(int fd, map_session_data* sd){
 /// Guild invite request.
 /// 0168 <account id>.L <inviter account id>.L <inviter char id>.L (CZ_REQ_JOIN_GUILD)
 void clif_parse_GuildInvite( int fd,map_session_data *sd ){
-	guild_invite( sd, map_id2sd( RFIFOL( fd, 2 ) ) );
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_JOIN_GUILD* p = reinterpret_cast<PACKET_CZ_REQ_JOIN_GUILD*>( RFIFOP( fd, 0 ) );
+
+	guild_invite( *sd, map_id2sd( p->AID ) );
 }
 
 /// Guild invite request (/guildinvite)
 /// 0916 <char name>.24B (CZ_REQ_JOIN_GUILD2)
 void clif_parse_GuildInvite2( int fd, map_session_data *sd ){
+#if PACKETVER >= 20120410
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_JOIN_GUILD2* p = reinterpret_cast<PACKET_CZ_REQ_JOIN_GUILD2*>( RFIFOP( fd, 0 ) );
+
 	char nick[NAME_LENGTH] = {0};
 
-	safestrncpy( nick, RFIFOCP( fd, 2 ), NAME_LENGTH );
+	safestrncpy( nick, p->name, NAME_LENGTH );
 
-	guild_invite( sd, map_nick2sd( nick, false ) );
+	guild_invite( *sd, map_nick2sd( nick, false ) );
+#endif
 }
 
 /// Answer to guild invitation.
@@ -14347,20 +14353,38 @@ void clif_parse_GuildInvite2( int fd, map_session_data *sd ){
 ///     0 = refuse
 ///     1 = accept
 void clif_parse_GuildReplyInvite( int fd, map_session_data *sd ){
-	guild_reply_invite( sd, RFIFOL( fd, 2 ), RFIFOL( fd, 6 ) );
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_JOIN_GUILD* p = reinterpret_cast<PACKET_CZ_JOIN_GUILD*>( RFIFOP( fd, 0 ) );
+
+	guild_reply_invite( sd, p->guild_id, p->answer );
 }
 
 /// Request to leave guild.
 /// 0159 <guild id>.L <account id>.L <char id>.L <reason>.40B (CZ_REQ_LEAVE_GUILD)
 void clif_parse_GuildLeave(int fd,map_session_data *sd){
-	guild_leave( sd, RFIFOL( fd, 2 ), RFIFOL( fd, 6 ), RFIFOL( fd, 10 ), RFIFOCP( fd, 14 ) );
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_LEAVE_GUILD* p = reinterpret_cast<PACKET_CZ_REQ_LEAVE_GUILD*>( RFIFOP( fd, 0 ) );
+
+	guild_leave( *sd, p->guild_id, p->AID, p->CID, p->message );
 }
 
 
 /// Request to expel a member of a guild.
 /// 015b <guild id>.L <account id>.L <char id>.L <reason>.40B (CZ_REQ_BAN_GUILD)
 void clif_parse_GuildExpulsion(int fd,map_session_data *sd){
-	guild_expulsion( sd, RFIFOL( fd, 2 ), RFIFOL( fd, 6 ), RFIFOL( fd, 10 ), RFIFOCP( fd, 14 ) );
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_BAN_GUILD* p = reinterpret_cast<PACKET_CZ_REQ_BAN_GUILD*>( RFIFOP( fd, 0 ) );
+
+	guild_expulsion( *sd, p->guild_id, p->AID, p->CID, p->message );
 }
 
 
@@ -14473,7 +14497,13 @@ void clif_parse_GuildOpposition(int fd, map_session_data *sd)
 ///     now guild name; might have been (intended) email, since the
 ///     field name and size is same as the one in CH_DELETE_CHAR.
 void clif_parse_GuildBreak( int fd, map_session_data *sd ){
-	guild_break( sd, RFIFOCP( fd, 2 ) );
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_DISORGANIZE_GUILD* p = reinterpret_cast<PACKET_CZ_REQ_DISORGANIZE_GUILD*>( RFIFOP( fd, 0 ) );
+
+	guild_break( *sd, p->key );
 }
 
 

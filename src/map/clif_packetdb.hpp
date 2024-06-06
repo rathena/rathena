@@ -185,12 +185,11 @@
 	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
-	parseable_packet(0x0159,54,clif_parse_GuildLeave,2,6,10,14);
+	parseable_packet( HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), clif_parse_GuildLeave, 0 );
 	packet(0x015a,66);
-	parseable_packet(0x015b,54,clif_parse_GuildExpulsion,2,6,10,14);
+	parseable_packet( HEADER_CZ_REQ_BAN_GUILD, sizeof( PACKET_CZ_REQ_BAN_GUILD ), clif_parse_GuildExpulsion, 0 );
 	packet(0x015c,90);
-	parseable_packet(0x015d,42,clif_parse_GuildBreak,2);
-	packet(0x015e,6);
+	parseable_packet( HEADER_CZ_REQ_DISORGANIZE_GUILD, sizeof( PACKET_CZ_REQ_DISORGANIZE_GUILD ), clif_parse_GuildBreak, 0 );
 	packet(0x015f,42);
 	packet(0x0160,-1);
 	parseable_packet(0x0161,-1,clif_parse_GuildChangePositionInfo,2,4);
@@ -200,10 +199,9 @@
 	parseable_packet(0x0165,30,clif_parse_CreateGuild,2,6);
 	packet(0x0166,-1);
 	packet(0x0167,3);
-	parseable_packet(0x0168,14,clif_parse_GuildInvite,2,6,10);
-	packet(0x0169,3);
+	parseable_packet( HEADER_CZ_REQ_JOIN_GUILD, sizeof( PACKET_CZ_REQ_JOIN_GUILD ), clif_parse_GuildInvite, 0 );
 	packet(0x016a,30);
-	parseable_packet(0x016b,10,clif_parse_GuildReplyInvite,2,6);
+	parseable_packet( HEADER_CZ_JOIN_GUILD, sizeof( PACKET_CZ_JOIN_GUILD ), clif_parse_GuildReplyInvite, 0 );
 	packet(0x016c,43);
 	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
@@ -1827,7 +1825,7 @@
 	parseable_packet(0x090A,26,clif_parse_bg_queue_request_queue_number,2);
 	packet( HEADER_ZC_ENTRY_QUEUE_INIT , sizeof(PACKET_ZC_ENTRY_QUEUE_INIT) );
 	packet(0x0977,14); //Monster HP Bar
-	parseable_packet(0x0916,26,clif_parse_GuildInvite2,2);
+	parseable_packet( HEADER_CZ_REQ_JOIN_GUILD2, sizeof( PACKET_CZ_REQ_JOIN_GUILD2 ), clif_parse_GuildInvite2, 0 );
 	parseable_packet(0x091d,41,clif_parse_PartyBookingRegisterReq,2,4,6);
 	// Merge Item
 	parseable_packet( HEADER_CZ_REQ_MERGE_ITEM, -1, clif_parse_merge_item_req, 0 );

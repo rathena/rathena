@@ -3855,7 +3855,7 @@ ACMD_FUNC(breakguild)
 		if (sd->guild) { // Check if guild was found
 			if (sd->state.gmaster_flag) { // Check if player is guild master
 				int ret = 0;
-				ret = guild_break(sd, sd->guild->guild.name); // Break guild
+				ret = guild_break( *sd, sd->guild->guild.name ); // Break guild
 				if (ret) { // Check if anything went wrong
 					return 0; // Guild was broken
 				} else {
