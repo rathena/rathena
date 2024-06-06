@@ -1909,7 +1909,7 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 		y += diry[dir];
 	}
 	// If cell occupied and not center cell, drop item around the drop target cell
-	if (dir != DIR_CENTER && (dir == DIR_MAX || !map_cell_free(m, x, y, type))) {
+	if (dir == DIR_MAX || (dir != DIR_CENTER && !map_cell_free(m, x, y, type))) {
 		if (!map_search_freecell_dist(m, &x, &y, 1, (flags&2)?2:1, type)) {
 			// Only stop here if BL_ITEM shall not stack, otherwise drop on original target cell
 			if (type&BL_ITEM)
