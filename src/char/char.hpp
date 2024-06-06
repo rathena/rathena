@@ -318,7 +318,7 @@ int char_family(int pl1,int pl2,int pl3);
 int char_loadName(uint32 char_id, char* name);
 int char_check_char_name(char * name, char * esc_name);
 
-void char_pincode_decrypt( uint32 userSeed, char* pin );
+bool char_pincode_decrypt( uint32 userSeed, char* pin );
 int char_pincode_compare( int fd, struct char_session_data* sd, char* pin );
 void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
