@@ -6795,8 +6795,13 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		return;
 	}
 
-	//Triple Attack has a special property that it does not split damage on plant mode
-	if (skill_id == MO_TRIPLEATTACK && wd->div_ < 0)
+	// Triple Attack has a special property that it does not split damage on plant mode
+	// In pre-renewal, it requires the monster to have exactly 100 def
+	if (skill_id == MO_TRIPLEATTACK && wd->div_ < 0
+#ifndef RENEWAL
+		&& tstatus->def == 100
+#endif
+		)
 		wd->div_ *= -1;
 
 	//For plants we don't continue with the weapon attack code, so we have to apply DAMAGE_DIV_FIX here
