@@ -6260,15 +6260,29 @@ bool pc_isUseitem(map_session_data *sd,int n)
 		return false; // Mercenary Scrolls
 
 	// Safe check type cash disappear when overweight [Napster]
-	if( item->type == IT_CASH ){
-		if( pc_is90overweight(sd) ) {
-			clif_msg(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT);
-			return false;
+	if( item->flag.group || item->type == IT_CASH ){
+	// Check if the player has enough weight and space
+	// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
+#ifdef RENEWAL
+	// Official servers use 10 as the minimum amount of slots required to get the items
+	// The <= is intentional, as in official servers you actually need an extra empty slot
+		if (pc_inventoryblank(sd) <= 10 || pc_is70overweight(sd)) {
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			return 0;
 		}
-		if( !pc_inventoryblank(sd) ) {
-			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 732), false, SELF); //Item cannot be open when inventory is full
-			return false;
+#else
+		if (pc_is50overweight(sd)) {
+			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
+			return 0;
 		}
+
+		// Official servers use 10 as the minimum amount of slots required to get the items
+		// The <= is intentional, as in official servers you actually need an extra empty slot
+		if (pc_inventoryblank(sd) <= 10) {
+			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+			return 0;
+		}
+#endif
 	}
 
 	//Gender check

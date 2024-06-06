@@ -3020,52 +3020,8 @@ uint8 ItemGroupDatabase::pc_get_itemgroup( uint16 group_id, bool identify, map_s
 	if (group->random.empty())
 		return 0;
 
-	size_t count = 0;
-	std::shared_ptr<s_item_group_random> must = util::umap_find( group->random, static_cast<uint16>( 0 ) );
-
-	// Count all the 'must' item(s) (subgroup 0)
-	if( must != nullptr ){
-		for (const auto& it : must->data) {
-			if (itemdb_isstackable(it.second->nameid) && it.second->isStacked)
-				count++;
-			else
-				count = it.second->amount;
-		}
-	}
-
-	// Count all 'random' subgroups
-	for (const auto& random : group->random) {
-		// Skip the 'must' group
-		if( random.first == 0 ){
-			continue;
-		}
-
-		count++;
-	}
-
-	// Check if the player has enough weight and space
-#ifdef RENEWAL
-	// Official servers use 10 as the minimum amount of slots required to get the items
-	// The <= is intentional, as in official servers you actually need an extra empty slot
-	if( pc_inventoryblank( &sd ) <= std::max<size_t>( count, 10 ) || pc_is70overweight( &sd ) ){
-		clif_msg_color( &sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED] );
-		return 0;
-	}
-#else
-	if( pc_is50overweight( &sd ) ){
-		clif_msg_color( &sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED] );
-		return 0;
-	}
-
-	// Official servers use 10 as the minimum amount of slots required to get the items
-	// The <= is intentional, as in official servers you actually need an extra empty slot
-	if( pc_inventoryblank( &sd ) <= std::max<size_t>( count, 10 ) ){
-		clif_msg_color( &sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
-		return 0;
-	}
-#endif
-
 	// Get all the 'must' item(s) (subgroup 0)
+	std::shared_ptr<s_item_group_random> must = util::umap_find(group->random, static_cast<uint16>(0));
 	if( must != nullptr ){
 		for (const auto &it : must->data)
 			this->pc_get_itemgroup_sub( sd, identify, it.second );
