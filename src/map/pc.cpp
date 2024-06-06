@@ -6053,9 +6053,11 @@ bool pc_dropitem(map_session_data *sd,int n,int amount)
 	}
 
 	// Bypass drop restriction in map_addflooritem because we've already checked it above
-	// TODO: Add config for stack-check (battle_config.item_stacking?BL_NUL:BL_ITEM)
-	if (!map_addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2|4, 0))
+	if (!map_addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2|4, 0,
+		false, DIR_MAX, battle_config.item_stacking?BL_NUL:BL_ITEM))
+	{
 		return false;
+	}
 
 	pc_delitem(sd, n, amount, 1, 0, LOG_TYPE_PICKDROP_PLAYER);
 	clif_dropitem( *sd, n, amount );
