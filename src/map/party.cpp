@@ -420,7 +420,7 @@ bool party_invite( map_session_data *sd, map_session_data *tsd ){
 	}
 
 	// @noask [LuzZza]
-	if( tsd->state.noask || tsd->state.refuse_party ){
+	if( tsd->state.noask || tsd->status.disable_partyinvite ){
 		clif_party_invite_reply( *sd, tsd->status.name, PARTY_REPLY_JOINMSG_REFUSE );
 		return false;
 	}

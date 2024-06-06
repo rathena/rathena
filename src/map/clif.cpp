@@ -17464,7 +17464,6 @@ void clif_parse_PartyTick( int fd, map_session_data* sd ){
 	PACKET_CZ_PARTY_CONFIG* p = (PACKET_CZ_PARTY_CONFIG*)RFIFOP( fd, 0 );
 
 	sd->status.disable_partyinvite = p->refuseInvite;
-	sd->state.refuse_party = p->refuseInvite != 0;
 
 	clif_partyinvitationstate( *sd );
 }
