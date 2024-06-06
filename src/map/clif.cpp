@@ -1991,104 +1991,64 @@ void clif_walkok( map_session_data& sd ){
 }
 
 
-static void clif_move2( struct block_list *bl, struct view_data *vd, struct unit_data *ud ){
-	status_change *sc = nullptr;
-
-	if ((sc = status_get_sc(bl)) && sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK))
-		clif_ally_only = true;
-
-	clif_set_unit_walking( bl, nullptr, ud, AREA_WOS );
-
-	if(vd->cloth_color)
-		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
-	if(vd->body_style)
-		clif_refreshlook(bl,bl->id,LOOK_BODY2,vd->body_style,AREA_WOS);
-
-	switch(bl->type) {
-	case BL_PC:
-		{
-			TBL_PC *sd = ((TBL_PC*)bl);
-//			clif_movepc(sd);
-			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
-				clif_specialeffect(&sd->bl,EF_GIANTBODY2,AREA);
-			else if(sd->state.size==SZ_MEDIUM)
-				clif_specialeffect(&sd->bl,EF_BABYBODY2,AREA);
-			if (sd->status.robe)
-				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
-		}
-		break;
-	case BL_MOB:
-		{
-			TBL_MOB *md = ((TBL_MOB*)bl);
-			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
-				clif_specialeffect(&md->bl,EF_GIANTBODY2,AREA);
-			else if(md->special_state.size==SZ_MEDIUM)
-				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
-		}
-		break;
-	case BL_PET:
-		if(vd->head_bottom) // needed to display pet equip properly
-			clif_pet_equip_area((TBL_PET*)bl);
-		break;
-	}
-	clif_ally_only = false;
-}
-
-
 /// Notifies clients in an area, that an other visible object is walking.
-/// 0086 <id>.L <walk data>.6B <walk start time>.L (ZC_NOTIFY_MOVE)
 /// Note: unit must not be self
 void clif_move(struct unit_data *ud)
 {
-	struct view_data* vd;
 	struct block_list* bl = ud->bl;
-	status_change *sc = nullptr;
-	PACKET_ZC_NOTIFY_MOVE packet{};
+	struct view_data* vd = status_get_viewdata(bl);
 
-	packet.packetType = HEADER_ZC_NOTIFY_MOVE;
-
-	vd = status_get_viewdata(bl);
-	if (!vd )
+	// This performance check is needed to keep GM-hidden objects from being notified to bots.
+	if (bl == nullptr || vd == nullptr || vd->class_ == JT_INVISIBLE)
 		return;
-	//This performance check is needed to keep GM-hidden objects from being notified to bots.
-	else if( vd->class_ == JT_INVISIBLE ){
-		// If the player was disguised we still need to update the disguised unit, since the main unit will be updated through clif_walkok
-		if(disguised(bl)) {
-			packet.gid = disguised_bl_id(bl->id);
-			WBUFPOS2(packet.moveData, 0, bl->x, bl->y, ud->to_x, ud->to_y, 8, 8);
-			packet.moveStartTime = client_tick(gettick());
-
-			clif_send(&packet, sizeof(packet), bl, SELF);
-		}
-		return;
-	}
 
 	// Hide NPC from Maya Purple card
 	if (clif_npc_mayapurple(bl))
 		return;
 
-	if (ud->state.speed_changed) {
-		// Since we don't know how to update the speed of other objects,
-		// use the old walk packet to update the data.
-		ud->state.speed_changed = 0;
-		clif_move2(bl, vd, ud);
-		return;
-	}
+	status_change* sc = nullptr;
 
-	if ((sc = status_get_sc(bl)) && sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK))
+	if ((sc = status_get_sc(bl)) && sc->option & (OPTION_HIDE | OPTION_CLOAK | OPTION_INVISIBLE | OPTION_CHASEWALK))
 		clif_ally_only = true;
 
-	packet.gid = bl->id;
-	WBUFPOS2(packet.moveData,0,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
-	packet.moveStartTime = client_tick(gettick());
+	clif_set_unit_walking(bl, nullptr, ud, AREA_WOS);
 
-	clif_send(&packet, sizeof(packet), bl, AREA_WOS);
+	if (vd->cloth_color)
+		clif_refreshlook(bl, bl->id, LOOK_CLOTHES_COLOR, vd->cloth_color, AREA_WOS);
+	if (vd->body_style)
+		clif_refreshlook(bl, bl->id, LOOK_BODY2, vd->body_style, AREA_WOS);
 
-	if (disguised(bl)) {
-		packet.gid = disguised_bl_id(bl->id);
-
-		clif_send(&packet, sizeof(packet), bl, SELF);
+	switch (bl->type) {
+	case BL_PC:
+		{
+			map_session_data* sd = BL_CAST(BL_PC, bl);
+			if (sd != nullptr) {
+				if (sd->state.size == SZ_BIG) // tiny/big players [Valaris]
+					clif_specialeffect(&sd->bl, EF_GIANTBODY2, AREA);
+				else if (sd->state.size == SZ_MEDIUM)
+					clif_specialeffect(&sd->bl, EF_BABYBODY2, AREA);
+				if (sd->status.robe)
+					clif_refreshlook(bl, bl->id, LOOK_ROBE, sd->status.robe, AREA);
+			}
+		}
+	break;
+	case BL_MOB:
+		{
+			mob_data* md = BL_CAST(BL_MOB, bl);
+			if (md != nullptr) {
+				if (md->special_state.size == SZ_BIG) // tiny/big mobs [Valaris]
+					clif_specialeffect(&md->bl, EF_GIANTBODY2, AREA);
+				else if (md->special_state.size == SZ_MEDIUM)
+					clif_specialeffect(&md->bl, EF_BABYBODY2, AREA);
+			}
+		}
+	break;
+	case BL_PET:
+		if (vd->head_bottom) // needed to display pet equip properly
+			clif_pet_equip_area(BL_CAST(BL_PET, bl));
+		break;
 	}
+
 	clif_ally_only = false;
 }
 
