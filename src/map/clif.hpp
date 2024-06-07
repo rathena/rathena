@@ -565,7 +565,7 @@ enum clif_messages : uint16_t {
 
 #if (PACKETVER >= 20130807 && PACKETVER <= 20130814) && !defined(PACKETVER_ZERO)
 	// %d seconds left until you can use
-	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1863,
 
 	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
 	MSI_BUSY = 1924,
@@ -577,13 +577,13 @@ enum clif_messages : uint16_t {
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2095,
 
 	// Merge items available does not exist.
-	MSI_NOT_EXIST_MERGE_ITEM = 2183,
+	MSI_NOT_EXIST_MERGE_ITEM = 2184,
 
 	// This bullet is not suitable for the weapon you are equipping.
 	MSI_WRONG_BULLET = 2494,
 #else
 	// %d seconds left until you can use
-	MSI_ITEM_REUSE_LIMIT_SECOND = 1861,
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,
 
 	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
 	MSI_BUSY = 1923,
@@ -595,7 +595,7 @@ enum clif_messages : uint16_t {
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2094,
 
 	// Merge items available does not exist.
-	MSI_NOT_EXIST_MERGE_ITEM = 2182,
+	MSI_NOT_EXIST_MERGE_ITEM = 2183,
 
 	// This bullet is not suitable for the weapon you are equipping.
 	MSI_WRONG_BULLET = 2493,
