@@ -565,7 +565,7 @@ enum clif_messages : uint16_t {
 
 #if (PACKETVER >= 20130807 && PACKETVER <= 20130814) && !defined(PACKETVER_ZERO)
 	// %d seconds left until you can use
-	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1863,
 
 	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
 	MSI_BUSY = 1924,
@@ -583,7 +583,7 @@ enum clif_messages : uint16_t {
 	MSI_WRONG_BULLET = 2494,
 #else
 	// %d seconds left until you can use
-	MSI_ITEM_REUSE_LIMIT_SECOND = 1861,
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,
 
 	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
 	MSI_BUSY = 1923,
