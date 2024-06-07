@@ -577,7 +577,7 @@ enum clif_messages : uint16_t {
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2095,
 
 	// Merge items available does not exist.
-	MSI_NOT_EXIST_MERGE_ITEM = 2183,
+	MSI_NOT_EXIST_MERGE_ITEM = 2184,
 
 	// This bullet is not suitable for the weapon you are equipping.
 	MSI_WRONG_BULLET = 2494,
@@ -595,7 +595,7 @@ enum clif_messages : uint16_t {
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2094,
 
 	// Merge items available does not exist.
-	MSI_NOT_EXIST_MERGE_ITEM = 2182,
+	MSI_NOT_EXIST_MERGE_ITEM = 2183,
 
 	// This bullet is not suitable for the weapon you are equipping.
 	MSI_WRONG_BULLET = 2493,
