@@ -756,6 +756,7 @@ struct Battle_Config
 	int feature_banking_state_enforce;
 	int instance_allow_reconnect;
 	int synchronize_damage;
+	int item_stacking;
 
 #include <custom/battle_config_struct.inc>
 };
