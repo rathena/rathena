@@ -50,8 +50,6 @@ static int npc_mob=0;
 static int npc_delay_mob=0;
 static int npc_cache_mob=0;
 
-struct eri *npc_sc_display_ers;
-
 // Market Shop
 #if PACKETVER >= 20131223
 struct s_npc_market {
@@ -3527,18 +3525,10 @@ int npc_unload(struct npc_data* nd, bool single) {
 		}
 		if( nd->u.scr.guild_id )
 			guild_flag_remove(nd);
-		if( nd->sc_display_count ){
-			unsigned char i;
-
-			for( i = 0; i < nd->sc_display_count; i++ )
-				ers_free(npc_sc_display_ers, nd->sc_display[i]);
-			nd->sc_display_count = 0;
-			aFree(nd->sc_display);
-			nd->sc_display = nullptr;
-		}
 	}
 
 	nd->qi_data.clear();
+	nd->sc_display.clear();
 
 	script_stop_sleeptimers(nd->bl.id);
 
@@ -3772,8 +3762,6 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	nd->bl.m = m;
 	nd->bl.x = x;
 	nd->bl.y = y;
-	nd->sc_display = nullptr;
-	nd->sc_display_count = 0;
 	nd->progressbar.timeout = 0;
 	nd->vd = npc_viewdb[0]; // Default to JT_INVISIBLE
 	nd->dynamicnpc.owner_char_id = 0;
@@ -6146,7 +6134,6 @@ void do_final_npc(void) {
 	stylist_db.clear();
 	barter_db.clear();
 	ers_destroy(timer_event_ers);
-	ers_destroy(npc_sc_display_ers);
 	npc_src_files.clear();
 }
 
@@ -6212,7 +6199,6 @@ void do_init_npc(void){
 #endif
 
 	timer_event_ers = ers_new(sizeof(struct timer_event_data),"npc.cpp::timer_event_ers",ERS_OPT_NONE);
-	npc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "npc.cpp:npc_sc_display_ers", ERS_OPT_NONE);
 
 	npc_loadsrcfiles();
 

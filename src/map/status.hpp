@@ -3057,6 +3057,7 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONUNEQUIPARMOR,
 	SCF_REMOVEONHERMODE,
 	SCF_REQUIRENOWEAPON,
+	SCF_DISPLAYMOB,
 	SCF_MAX
 };
 
@@ -3140,7 +3141,7 @@ enum e_refine_chance_type {
 ///Define to determine who has regen
 #define BL_REGEN (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 ///Define to determine who will receive a clif_status_change packet for effects that require one to display correctly
-#define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM)
+#define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM|BL_NPC)
 
 /** Basic damage info of a weapon
 * Required because players have two of these, one in status_data

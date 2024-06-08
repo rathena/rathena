@@ -388,6 +388,8 @@ struct mob_data {
 	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
+
+	std::unordered_map<sc_type, std::shared_ptr<sc_display_entry>> sc_display;
 };
 
 class MobAvailDatabase : public YamlDatabase {

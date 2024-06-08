@@ -3439,7 +3439,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 	switch( bl->type ) {
 		case BL_PC: {
 			map_session_data *sd = (map_session_data*)bl;
-			int i;
 
 			if( status_isdead(bl) )
 				pc_setrestartvalue(sd,2);
@@ -3495,14 +3494,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			sd->combos.clear();
 
-			if( sd->sc_display_count ) { /* [Ind] */
-				for( i = 0; i < sd->sc_display_count; i++ )
-					ers_free(pc_sc_display_ers, sd->sc_display[i]);
-
-				sd->sc_display_count = 0;
-				aFree(sd->sc_display);
-				sd->sc_display = nullptr;
-			}
+			sd->sc_display.clear();
 
 			if( sd->quest_log != nullptr ) {
 				aFree(sd->quest_log);

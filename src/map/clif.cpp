@@ -1721,7 +1721,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_spiritcharm(sd);
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
-			clif_efst_status_change_sub(bl, bl, AREA);
+			clif_efst_status_change_sub( *bl, *bl, AREA );
 			clif_hat_effects( *sd, sd->bl, AREA );
 		}
 		break;
@@ -1734,6 +1734,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
 				clif_summon_init(*md);
+			clif_efst_status_change_sub( *bl, *bl, AREA );
 		}
 		break;
 	case BL_NPC:
@@ -1743,7 +1744,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&nd->bl,EF_GIANTBODY2,AREA);
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect(&nd->bl,EF_BABYBODY2,AREA);
-			clif_efst_status_change_sub(bl, bl, AREA);
+			clif_efst_status_change_sub( *bl, *bl, AREA );
 			clif_progressbar_npc_area(nd);
 		}
 		break;
@@ -5062,7 +5063,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_sendbgemblem_single(sd->fd,tsd);
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
-			clif_efst_status_change_sub(&sd->bl, bl, SELF);
+			clif_efst_status_change_sub( sd->bl, *bl, SELF );
 			clif_hat_effects( *sd, tsd->bl, SELF );
 		}
 		break;
@@ -5079,7 +5080,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
-			clif_efst_status_change_sub(&sd->bl, bl, SELF);
+			clif_efst_status_change_sub( sd->bl, *bl, SELF );
 			clif_progressbar_npc(nd, sd);
 		}
 		break;
@@ -5098,6 +5099,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 						clif_monster_hp_bar(md, sd->fd);
 			}
 #endif
+			clif_efst_status_change_sub( *bl, *bl, AREA );
 		}
 		break;
 	case BL_PET:
@@ -6553,28 +6555,41 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
  * @param bl: Objects walking into view
  * @param target: Client send type
  */
-void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target) {
-	unsigned char i;
-	struct sc_display_entry **sc_display;
-	unsigned char sc_display_count;
+void clif_efst_status_change_sub( block_list& tbl, block_list& bl, enum send_target target ){
 	bool spheres_sent;
+	std::unordered_map<sc_type, std::shared_ptr<sc_display_entry>> sc_display;
 
-	nullpo_retv(bl);
-
-	switch( bl->type ){
+	switch( bl.type ){
 		case BL_PC: {
-			map_session_data* sd = (map_session_data*)bl;
+			map_session_data* sd = BL_CAST(BL_PC, &bl);
+
+			if (sd == nullptr)
+				return;
 
 			sc_display = sd->sc_display;
-			sc_display_count = sd->sc_display_count;
+
 			spheres_sent = !sd->state.connect_new;
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = BL_CAST(BL_NPC, &bl);
+
+			if (nd == nullptr)
+				return;
 
 			sc_display = nd->sc_display;
-			sc_display_count = nd->sc_display_count;
+
+			spheres_sent = true;
+			}
+			break;
+		case BL_MOB: {
+			mob_data* md = BL_CAST(BL_MOB, &bl);
+
+			if (md == nullptr)
+				return;
+
+			sc_display = md->sc_display;
+
 			spheres_sent = true;
 			}
 			break;
@@ -6582,13 +6597,15 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 			return;
 	}
 
-	for (i = 0; i < sc_display_count; i++) {
-		enum sc_type type = sc_display[i]->type;
-		status_change *sc = status_get_sc(bl);
+	for ( const auto &it : sc_display ) {
+		std::shared_ptr<sc_display_entry> entry = it.second;
+
+		enum sc_type type = entry->type;
+		status_change *sc = status_get_sc( &bl );
 		const struct TimerData *td = (sc && sc->getSCE(type) ? get_timer(sc->getSCE(type)->timer) : nullptr);
 		t_tick tick = 0;
 
-		if (td)
+		if (td != nullptr)
 			tick = DIFF_TICK(td->tick, gettick());
 
 		// Status changes that need special handling
@@ -6610,9 +6627,9 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		}
 
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+		clif_efst_status_change( &tbl, bl.id, target, status_db.getIcon(type), tick, entry->val1, entry->val2, entry->val3 );
 #else
-		clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+		clif_status_change_sub( &tbl, bl.id, status_db.getIcon(type), 1, tick, entry->val1, entry->val2, entry->val3, target );
 #endif
 	}
 }
@@ -9882,7 +9899,7 @@ void clif_refresh(map_session_data *sd)
 		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
 		clif_changed_dir(&sd->bl, SELF);
-	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
+	clif_efst_status_change_sub( sd->bl, sd->bl, SELF );
 
 	//Issue #2143
 	//Cancel Trading State 

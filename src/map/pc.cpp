@@ -84,7 +84,6 @@ SkillTreeDatabase skill_tree_db;
 int day_timer_tid = INVALID_TIMER;
 int night_timer_tid = INVALID_TIMER;
 
-struct eri *pc_sc_display_ers = nullptr;
 struct eri *num_reg_ers;
 struct eri *str_reg_ers;
 int pc_expiration_tid = INVALID_TIMER;
@@ -2208,10 +2207,6 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	}
 
 	pc_validate_skill(sd);
-
-	/* [Ind] */
-	sd->sc_display = nullptr;
-	sd->sc_display_count = 0;
 
 	// Player has not yet received the CashShop list
 	sd->status.cashshop_sent = false;
@@ -15847,7 +15842,6 @@ void do_final_pc(void) {
 	db_destroy(itemcd_db);
 	do_final_pc_groups();
 
-	ers_destroy(pc_sc_display_ers);
 	ers_destroy(num_reg_ers);
 	ers_destroy(str_reg_ers);
 
@@ -15906,11 +15900,9 @@ void do_init_pc(void) {
 
 	do_init_pc_groups();
 
-	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.cpp:pc_sc_display_ers", ERS_OPT_FLEX_CHUNK);
 	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.cpp:num_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
 	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.cpp:str_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
 
-	ers_chunk_size(pc_sc_display_ers, 150);
 	ers_chunk_size(num_reg_ers, 300);
 	ers_chunk_size(str_reg_ers, 50);
 }
