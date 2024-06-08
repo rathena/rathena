@@ -211,9 +211,9 @@ Flags: Various status flags for specific status change events.
 	MobLoseTarget         - When active on a monster it will lose the target.
 	RestartOnMapWarp      - Restarts the timer of a status when warping to another map.
 	SpreadEffect          - Passes the status onto a target when SC_DEADLYINFECT is active.
-	SendVal1              - Whether val1 must be saved for DisplayPc, DisplayNpc, DisplayMob. If false, the value is ignored when the status is displayed again.
-	SendVal2              - Whether val2 must be saved for DisplayPc, DisplayNpc, DisplayMob. If false, the value is ignored when the status is displayed again.
-	SendVal3              - Whether val3 must be saved for DisplayPc, DisplayNpc, DisplayMob. If false, the value is ignored when the status is displayed again.
+	SendVal1              - Whether val1 shoudn't be ignored.
+	SendVal2              - Whether val2 shoudn't be ignored.
+	SendVal3              - Whether val3 shoudn't be ignored.
 
 	NoClearbuff           - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
 	NoForcedEnd           - Cannot be removed by sc_end.

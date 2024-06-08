@@ -12794,7 +12794,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Save sc to display it again later
 	if (scdb->flag[SCF_DISPLAYPC] && bl->type == BL_PC || scdb->flag[SCF_DISPLAYNPC] && bl->type == BL_NPC || scdb->flag[SCF_DISPLAYMOB] && bl->type == BL_MOB) {
-		int dval1 = 0, dval2 = 0, dval3 = 0;
+		int dval1 = scdb->flag[SCF_SENDVAL1] ? val1 : 0;
+		int dval2 = scdb->flag[SCF_SENDVAL2] ? val2 : 0;
+		int dval3 = scdb->flag[SCF_SENDVAL3] ? val3 : 0;
 
 		switch (type) {
 			case SC_ALL_RIDING:
