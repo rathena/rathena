@@ -1391,35 +1391,29 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 /*==========================================
  * Prepares 'unit walking' packet
  *------------------------------------------*/
-static void clif_set_unit_walking( struct block_list *bl, map_session_data *tsd, struct unit_data *ud, enum send_target target ){
-	nullpo_retv( bl );
-	nullpo_retv( ud );
-
-	map_session_data* sd;
-	status_change* sc = status_get_sc( bl );
-	struct view_data* vd = status_get_viewdata( bl );
+static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd, struct unit_data& ud, enum send_target target ){
 	struct packet_unit_walking p;
-	int g_id = status_get_guild_id(bl);
-
-	sd = BL_CAST(BL_PC, bl);
 
 	p.PacketType = unit_walkingType;
 #if PACKETVER >= 20091103
 	p.PacketLength = sizeof(p);
 #endif
 #if PACKETVER >= 20071106
-	p.objecttype = clif_bl_type( bl, true );
+	p.objecttype = clif_bl_type( &bl, true );
 #endif
+	map_session_data* sd = BL_CAST(BL_PC, &bl);
 #if PACKETVER >= 20131223
-	p.AID = bl->id;
+	p.AID = bl.id;
 	p.GID = (sd) ? sd->status.char_id : 0; // CCODE
 #else
-	p.GID = bl->id;
+	p.GID = bl.id;
 #endif
-	p.speed = status_get_speed(bl);
+	p.speed = status_get_speed( &bl );
+	status_change* sc = status_get_sc( &bl );
 	p.bodyState = (sc) ? sc->opt1 : 0;
 	p.healthState = (sc) ? sc->opt2 : 0;
 	p.effectState = (sc) ? sc->option : 0;
+	struct view_data* vd = status_get_viewdata( &bl );
 	p.job = vd->class_;
 	p.head = vd->hair_style;
 	p.weapon = vd->weapon;
@@ -1436,31 +1430,31 @@ static void clif_set_unit_walking( struct block_list *bl, map_session_data *tsd,
 #if PACKETVER >= 20101124
 	p.robe = vd->robe;
 #endif
-	p.GUID = g_id;
-	p.GEmblemVer = status_get_emblem_id(bl);
+	p.GUID = status_get_guild_id( &bl );
+	p.GEmblemVer = status_get_emblem_id( &bl );
 	p.honor = (sd) ? sd->status.manner : 0;
 	p.virtue = (sc) ? sc->opt3 : 0;
 	p.isPKModeON = (sd && sd->status.karma) ? 1 : 0;
 	p.sex = vd->sex;
-	WBUFPOS2( &p.MoveData[0], 0, bl->x, bl->y, ud->to_x, ud->to_y, 8, 8 );
+	WBUFPOS2( &p.MoveData[0], 0, bl.x, bl.y, ud.to_x, ud.to_y, 8, 8 );
 	p.xSize = p.ySize = (sd) ? 5 : 0;
-	p.clevel = clif_setlevel(bl);
+	p.clevel = clif_setlevel( &bl );
 #if PACKETVER >= 20080102
 	p.font = (sd) ? sd->status.font : 0;
 #endif
 #if PACKETVER >= 20120221
-	if( battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp( bl ) ) ){
-		p.maxHP = status_get_max_hp(bl);
-		p.HP = status_get_hp(bl);
+	if( battle_config.monster_hp_bars_info && !map_getmapflag(bl.m, MF_HIDEMOBHPBAR) && bl.type == BL_MOB && (status_get_hp( &bl ) < status_get_max_hp( &bl ) ) ){
+		p.maxHP = status_get_max_hp( &bl );
+		p.HP = status_get_hp( &bl );
 	} else {
 		p.maxHP = -1;
 		p.HP = -1;
 	}
 
-	if( bl->type == BL_MOB ){
-		p.isBoss = ( (mob_data*)bl )->get_bosstype();
-	}else if( bl->type == BL_PET ){
-		p.isBoss = ( (pet_data*)bl )->db->get_bosstype();
+	if( bl.type == BL_MOB ){
+		p.isBoss = ( BL_CAST(BL_MOB, &bl) )->get_bosstype();
+	}else if( bl.type == BL_PET ){
+		p.isBoss = ( BL_CAST(BL_PET, &bl) )->db->get_bosstype();
 	}else{
 		p.isBoss = BOSSTYPE_NONE;
 	}
@@ -1470,24 +1464,24 @@ static void clif_set_unit_walking( struct block_list *bl, map_session_data *tsd,
 #endif
 /* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
-	safestrncpy(p.name, status_get_name(bl), NAME_LENGTH);
+	safestrncpy(p.name, status_get_name( &bl ), NAME_LENGTH);
 #endif
 
-	clif_send( &p, sizeof(p), tsd ? &tsd->bl : bl, target );
+	clif_send( &p, sizeof(p), tsd ? &tsd->bl : &bl, target );
 
 	// if disguised, send the info to self
-	if( disguised( bl ) ){
+	if( disguised( &bl ) ){
 #if PACKETVER >= 20091103
-		p.objecttype = pcdb_checkid( status_get_viewdata(bl)->class_ ) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
+		p.objecttype = pcdb_checkid( status_get_viewdata( &bl )->class_ ) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
 #if PACKETVER >= 20131223
-		p.AID = disguised_bl_id( bl->id );
+		p.AID = disguised_bl_id( bl.id );
 #else
-		p.GID = disguised_bl_id( bl->id );
+		p.GID = disguised_bl_id( bl.id );
 #endif
 #else
-		p.GID = disguised_bl_id( bl->id );
+		p.GID = disguised_bl_id( bl.id );
 #endif
-		clif_send(&p,sizeof(p),bl,SELF);
+		clif_send(&p, sizeof(p), &bl, SELF);
 	}
 }
 
@@ -1993,9 +1987,9 @@ void clif_walkok( map_session_data& sd ){
 
 /// Notifies clients in an area, that an other visible object is walking.
 /// Note: unit must not be self
-void clif_move(struct unit_data *ud)
+void clif_move(struct unit_data& ud)
 {
-	struct block_list* bl = ud->bl;
+	struct block_list* bl = ud.bl;
 	struct view_data* vd = status_get_viewdata(bl);
 
 	// This performance check is needed to keep GM-hidden objects from being notified to bots.
@@ -2011,7 +2005,7 @@ void clif_move(struct unit_data *ud)
 	if ((sc = status_get_sc(bl)) && sc->option & (OPTION_HIDE | OPTION_CLOAK | OPTION_INVISIBLE | OPTION_CHASEWALK))
 		clif_ally_only = true;
 
-	clif_set_unit_walking(bl, nullptr, ud, AREA_WOS);
+	clif_set_unit_walking( *bl, nullptr, ud, AREA_WOS );
 
 	if (vd->cloth_color)
 		clif_refreshlook(bl, bl->id, LOOK_CLOTHES_COLOR, vd->cloth_color, AREA_WOS);
@@ -4997,7 +4991,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 	ud = unit_bl2ud(bl);
 
 	if( ud && ud->walktimer != INVALID_TIMER ){
-		clif_set_unit_walking( bl, sd, ud, SELF );
+		clif_set_unit_walking( *bl, sd, *ud, SELF );
 	}else{
 		clif_set_unit_idle( bl, false, SELF, &sd->bl );
 	}
