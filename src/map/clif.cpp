@@ -1987,7 +1987,7 @@ void clif_walkok( map_session_data& sd ){
 
 /// Notifies clients in an area, that an other visible object is walking.
 /// Note: unit must not be self
-void clif_move(struct unit_data& ud)
+void clif_move( struct unit_data& ud )
 {
 	struct block_list* bl = ud.bl;
 	struct view_data* vd = status_get_viewdata(bl);
