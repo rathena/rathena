@@ -2167,7 +2167,7 @@ bool char_pincode_decrypt( uint32 userSeed, char* pin ){
 		return false;
 
 	for (i = 0; i < PINCODE_LENGTH; ++i) {
-		if (pin[i] < '0' || pin[i] > '9')
+		if (!ISDIGIT(pin[i]))
 			return false;
 	}
 

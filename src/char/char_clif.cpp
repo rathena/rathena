@@ -168,7 +168,7 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 	char pin[PINCODE_LENGTH+1];
 
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
-		RFIFOSKIP(fd, 10);
+		set_eof(fd);
 		return 1;
 	}
 
@@ -264,7 +264,7 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(14);
 
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
-		RFIFOSKIP(fd, 14);
+		set_eof(fd);
 		return 1;
 	}
 	else {
@@ -305,7 +305,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(10);
 
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
-		RFIFOSKIP(fd, 10);
+		set_eof(fd);
 		return 1;
 	}
 	else {
