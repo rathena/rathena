@@ -1452,9 +1452,9 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 	}
 
 	if( bl.type == BL_MOB ){
-		p.isBoss = static_cast<mob_data*>( &bl )->get_bosstype();
+		p.isBoss = reinterpret_cast<mob_data*>( &bl )->get_bosstype();
 	}else if( bl.type == BL_PET ){
-		p.isBoss = static_cast<pet_data*>( &bl )->db->get_bosstype();
+		p.isBoss = reinterpret_cast<pet_data*>( &bl )->db->get_bosstype();
 	}else{
 		p.isBoss = BOSSTYPE_NONE;
 	}
@@ -2018,7 +2018,7 @@ void clif_move( struct unit_data& ud )
 	switch (bl->type) {
 	case BL_PC:
 		{
-			map_session_data* sd = static_cast<map_session_data*>( bl );
+			map_session_data* sd = reinterpret_cast<map_session_data*>( bl );
 			if (sd->state.size == SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(&sd->bl, EF_GIANTBODY2, AREA);
 			else if (sd->state.size == SZ_MEDIUM)
@@ -2029,7 +2029,7 @@ void clif_move( struct unit_data& ud )
 	break;
 	case BL_MOB:
 		{
-			mob_data* md = static_cast<mob_data*>( bl );
+			mob_data* md = reinterpret_cast<mob_data*>( bl );
 			if (md->special_state.size == SZ_BIG) // tiny/big mobs [Valaris]
 				clif_specialeffect(&md->bl, EF_GIANTBODY2, AREA);
 			else if (md->special_state.size == SZ_MEDIUM)

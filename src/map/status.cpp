@@ -5597,7 +5597,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		* piece of code triggers the walk-timer is set on INVALID_TIMER)
 		**/
 		if (ud)
-			ud->state.change_walk_target = ud->state.speed_changed = 1;
+			ud->state.change_walk_target = 1;
 	}
 
 	if(flag[SCB_STR]) {
