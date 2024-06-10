@@ -1452,9 +1452,9 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 	}
 
 	if( bl.type == BL_MOB ){
-		p.isBoss = ( BL_CAST(BL_MOB, &bl) )->get_bosstype();
+		p.isBoss = static_cast<mob_data*>( &bl )->get_bosstype();
 	}else if( bl.type == BL_PET ){
-		p.isBoss = ( BL_CAST(BL_PET, &bl) )->db->get_bosstype();
+		p.isBoss = static_cast<pet_data*>( &bl )->db->get_bosstype();
 	}else{
 		p.isBoss = BOSSTYPE_NONE;
 	}
@@ -1992,8 +1992,11 @@ void clif_move( struct unit_data& ud )
 	struct block_list* bl = ud.bl;
 	struct view_data* vd = status_get_viewdata(bl);
 
+	if (bl == nullptr || vd == nullptr)
+		return;
+
 	// This performance check is needed to keep GM-hidden objects from being notified to bots.
-	if (bl == nullptr || vd == nullptr || vd->class_ == JT_INVISIBLE)
+	if (vd->class_ == JT_INVISIBLE)
 		return;
 
 	// Hide NPC from Maya Purple card
@@ -2015,26 +2018,22 @@ void clif_move( struct unit_data& ud )
 	switch (bl->type) {
 	case BL_PC:
 		{
-			map_session_data* sd = BL_CAST(BL_PC, bl);
-			if (sd != nullptr) {
-				if (sd->state.size == SZ_BIG) // tiny/big players [Valaris]
-					clif_specialeffect(&sd->bl, EF_GIANTBODY2, AREA);
-				else if (sd->state.size == SZ_MEDIUM)
-					clif_specialeffect(&sd->bl, EF_BABYBODY2, AREA);
-				if (sd->status.robe)
-					clif_refreshlook(bl, bl->id, LOOK_ROBE, sd->status.robe, AREA);
-			}
+			map_session_data* sd = static_cast<map_session_data*>( bl );
+			if (sd->state.size == SZ_BIG) // tiny/big players [Valaris]
+				clif_specialeffect(&sd->bl, EF_GIANTBODY2, AREA);
+			else if (sd->state.size == SZ_MEDIUM)
+				clif_specialeffect(&sd->bl, EF_BABYBODY2, AREA);
+			if (sd->status.robe)
+				clif_refreshlook(bl, bl->id, LOOK_ROBE, sd->status.robe, AREA);
 		}
 	break;
 	case BL_MOB:
 		{
-			mob_data* md = BL_CAST(BL_MOB, bl);
-			if (md != nullptr) {
-				if (md->special_state.size == SZ_BIG) // tiny/big mobs [Valaris]
-					clif_specialeffect(&md->bl, EF_GIANTBODY2, AREA);
-				else if (md->special_state.size == SZ_MEDIUM)
-					clif_specialeffect(&md->bl, EF_BABYBODY2, AREA);
-			}
+			mob_data* md = static_cast<mob_data*>( bl );
+			if (md->special_state.size == SZ_BIG) // tiny/big mobs [Valaris]
+				clif_specialeffect(&md->bl, EF_GIANTBODY2, AREA);
+			else if (md->special_state.size == SZ_MEDIUM)
+				clif_specialeffect(&md->bl, EF_BABYBODY2, AREA);
 		}
 	break;
 	case BL_PET:
