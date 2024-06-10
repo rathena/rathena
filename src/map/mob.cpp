@@ -3471,7 +3471,6 @@ int mob_class_change (struct mob_data *md, int mob_id)
 	status_set_viewdata(&md->bl, mob_id);
 	clif_mob_class_change(md,md->vd->class_);
 	status_calc_mob(md,SCO_FIRST);
-	md->ud.state.speed_changed = 1; //Speed change update.
 
 	if (battle_config.monster_class_change_recover) {
 		memset(md->dmglog, 0, sizeof(md->dmglog));

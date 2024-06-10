@@ -1785,7 +1785,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick tic
 			return 0; // Wait until the pet finishes walking back to master.
 
 		pd->status.speed = pd->get_pet_walk_speed();
-		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
+		pd->ud.state.change_walk_target = 1;
 	}
 
 	if (pd->target_id) {
