@@ -3291,6 +3291,8 @@ private:
 	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
 
 public:
+	status_change();
+
 	status_change_entry * getSCE(enum sc_type type);
 	status_change_entry * getSCE(uint32 type);
 	status_change_entry * createSCE(enum sc_type type);
