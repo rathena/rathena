@@ -16075,7 +16075,6 @@ BUILDIN_FUNC(npcspeed)
 
 	if( nd ) {
 		nd->speed = speed;
-		nd->ud.state.speed_changed = 1;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
