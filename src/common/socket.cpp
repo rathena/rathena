@@ -3,12 +3,12 @@
 
 #include "socket.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #ifdef WIN32
 	#include "winapi.hpp"
 #else
-	#include <errno.h>
+	#include <cerrno>
 	#include <arpa/inet.h>
 	#include <net/if.h>
 	#include <netdb.h>

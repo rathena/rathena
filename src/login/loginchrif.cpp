@@ -3,8 +3,8 @@
 
 #include "loginchrif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/showmsg.hpp> //show notice
 #include <common/socket.hpp> //wfifo session

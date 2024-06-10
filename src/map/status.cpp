@@ -3,9 +3,9 @@
 
 #include "status.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <functional>
-#include <math.h>
-#include <stdlib.h>
 #include <string>
 
 #include <common/cbasetypes.hpp>
@@ -5261,16 +5261,16 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			regen->sp = cap_value(val, 1, SHRT_MAX);
 		}
 	} else if( bl->type == BL_MER ) {
-		val = (status->max_hp * status->vit / 10000 + 1) * 6;
+		val = static_cast<decltype(val)>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = (status->max_sp * (status->int_ + 10) / 750) + 1;
+		val = static_cast<decltype(val)>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	} else if( bl->type == BL_ELEM ) {
-		val = (status->max_hp * status->vit / 10000 + 1) * 6;
+		val = static_cast<decltype(val)>((status->max_hp * status->vit / 10000.0 + 1.0) * 6.0);
 		regen->hp = cap_value(val, 1, SHRT_MAX);
 
-		val = (status->max_sp * (status->int_ + 10) / 750) + 1;
+		val = static_cast<decltype(val)>((status->max_sp * (status->int_ + 10.0) / 750.0) + 1.0);
 		regen->sp = cap_value(val, 1, SHRT_MAX);
 	}
 }
@@ -7011,6 +7011,8 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 		batk += sc->getSCE(SC_ATKPOTION)->val1;
 	if(sc->getSCE(SC_BATKFOOD))
 		batk += sc->getSCE(SC_BATKFOOD)->val1;
+	if (sc->getSCE(SC_VOLCANO))
+		batk += sc->getSCE(SC_VOLCANO)->val2;
 #ifndef RENEWAL
 	if(sc->getSCE(SC_GATLINGFEVER))
 		batk += sc->getSCE(SC_GATLINGFEVER)->val3;
@@ -7027,27 +7029,6 @@ static unsigned short status_calc_batk(struct block_list *bl, status_change *sc,
 		batk += sc->getSCE(SC_ANGRIFFS_MODUS)->val2;
 	if(sc->getSCE(SC_2011RWC_SCROLL))
 		batk += 30;
-	if(sc->getSCE(SC_INCATKRATE))
-		batk += batk * sc->getSCE(SC_INCATKRATE)->val1/100;
-	if(sc->getSCE(SC_PROVOKE))
-		batk += batk * sc->getSCE(SC_PROVOKE)->val2/100;
-#ifndef RENEWAL
-	if(sc->getSCE(SC_CONCENTRATION))
-		batk += batk * sc->getSCE(SC_CONCENTRATION)->val2/100;
-#endif
-	if(sc->getSCE(SC_SKE))
-		batk += batk * 3;
-	if(sc->getSCE(SC_BLOODLUST))
-		batk += batk * sc->getSCE(SC_BLOODLUST)->val2/100;
-	if(sc->getSCE(SC_JOINTBEAT) && sc->getSCE(SC_JOINTBEAT)->val2&BREAK_WAIST)
-		batk -= batk * 25/100;
-	if(sc->getSCE(SC_CURSE))
-		batk -= batk * 25/100;
-	/* Curse shouldn't effect on this? <- Curse OR Bleeding??
-	if(sc->getSCE(SC_BLEEDING))
-		batk -= batk * 25 / 100; */
-	if(sc->getSCE(SC_FLEET))
-		batk += batk * sc->getSCE(SC_FLEET)->val3/100;
 	if(sc->getSCE(SC__ENERVATION))
 		batk -= batk * sc->getSCE(SC__ENERVATION)->val2 / 100;
 	if( sc->getSCE(SC_ZANGETSU) )
@@ -7104,7 +7085,7 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 		watk += sc->getSCE(SC_IMPOSITIO)->val2;
 	if(sc->getSCE(SC_WATKFOOD))
 		watk += sc->getSCE(SC_WATKFOOD)->val1;
-	if(sc->getSCE(SC_VOLCANO))
+	if (sc->getSCE(SC_VOLCANO) && bl->type == BL_MOB)
 		watk += sc->getSCE(SC_VOLCANO)->val2;
 	if(sc->getSCE(SC_MERC_ATKUP))
 		watk += sc->getSCE(SC_MERC_ATKUP)->val2;
@@ -7122,21 +7103,7 @@ static unsigned short status_calc_watk(struct block_list *bl, status_change *sc,
 				watk += sc->getSCE(SC_NIBELUNGEN)->val2;
 		}
 	}
-	if(sc->getSCE(SC_CONCENTRATION))
-		watk += watk * sc->getSCE(SC_CONCENTRATION)->val2 / 100;
 #endif
-	if(sc->getSCE(SC_INCATKRATE))
-		watk += watk * sc->getSCE(SC_INCATKRATE)->val1/100;
-	if(sc->getSCE(SC_PROVOKE))
-		watk += watk * sc->getSCE(SC_PROVOKE)->val2/100;
-	if(sc->getSCE(SC_SKE))
-		watk += watk * 3;
-	if(sc->getSCE(SC_FLEET))
-		watk += watk * sc->getSCE(SC_FLEET)->val3/100;
-	if(sc->getSCE(SC_CURSE))
-		watk -= watk * 25/100;
-	if(sc->getSCE(SC_STRIPWEAPON) && bl->type != BL_PC)
-		watk -= watk * sc->getSCE(SC_STRIPWEAPON)->val2/100;
 	if(sc->getSCE(SC_FIGHTINGSPIRIT))
 		watk += sc->getSCE(SC_FIGHTINGSPIRIT)->val1;
 	if (sc->getSCE(SC_SHIELDSPELL_ATK))
@@ -7338,9 +7305,9 @@ static unsigned short status_calc_matk(struct block_list *bl, status_change *sc,
 		matk += matk * sc->getSCE(SC_MTF_MATK)->val1 / 100;
 	if (sc->getSCE(SC_SHRIMP))
 		matk += matk * sc->getSCE(SC_SHRIMP)->val2 / 100;
+#ifdef RENEWAL
 	if (sc->getSCE(SC_VOLCANO))
 		matk += sc->getSCE(SC_VOLCANO)->val2;
-#ifdef RENEWAL
 	if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_MATKRATE)
 		matk += matk * 20 / 100;
 #endif
@@ -7436,6 +7403,8 @@ static signed short status_calc_hit(struct block_list *bl, status_change *sc, in
 		hit += sc->getSCE(SC_MTF_HITFLEE)->val1;
 	if(sc->getSCE(SC_INCHITRATE))
 		hit += hit * sc->getSCE(SC_INCHITRATE)->val1/100;
+	if (sc->getSCE(SC_POWERUP))
+		hit += hit * sc->getSCE(SC_POWERUP)->val2 / 100;
 	if(sc->getSCE(SC_BLIND))
 		hit -= hit * 25/100;
 	if(sc->getSCE(SC_HEAT_BARREL))
@@ -7552,6 +7521,8 @@ static signed short status_calc_flee(struct block_list *bl, status_change *sc, i
 	// Rate value
 	if(sc->getSCE(SC_INCFLEERATE))
 		flee += flee * sc->getSCE(SC_INCFLEERATE)->val1/100;
+	if (sc->getSCE(SC_AGIUP))
+		flee += flee * sc->getSCE(SC_AGIUP)->val2 / 100;
 	if(sc->getSCE(SC_SPIDERWEB) || sc->getSCE(SC_WIDEWEB))
 		flee -= flee * 50/100;
 	if(sc->getSCE(SC_BERSERK))
@@ -7678,6 +7649,8 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int def
 		def /= 2;
 	if(sc->getSCE(SC_FREEZE))
 		def /= 2;
+	if(sc->getSCE(SC_POISON) || sc->getSCE(SC_DPOISON) && bl->type != BL_PC)
+		def = def * 75 / 100; //Should round down
 	if(sc->getSCE(SC_SIGNUMCRUCIS))
 		def -= def * sc->getSCE(SC_SIGNUMCRUCIS)->val2/100;
 	if(sc->getSCE(SC_CONCENTRATION))
@@ -7773,10 +7746,8 @@ static signed short status_calc_def2(struct block_list *bl, status_change *sc, i
 	if(sc->getSCE(SC_CONCENTRATION))
 		def2 -= def2 * sc->getSCE(SC_CONCENTRATION)->val4/100;
 #endif
-	if(sc->getSCE(SC_POISON))
-		def2 -= def2 * 25/100;
-	if(sc->getSCE(SC_DPOISON))
-		def2 -= def2 * 25/100;
+	if(sc->getSCE(SC_POISON) || sc->getSCE(SC_DPOISON))
+		def2 = def2 * 75 / 100; //Should round down
 	if(sc->getSCE(SC_SKE))
 		def2 -= def2 * 50/100;
 	if(sc->getSCE(SC_PROVOKE))
@@ -8045,8 +8016,10 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 			speed_rate = 150;
 
 		// GetMoveHasteValue1()
-		if( sc->getSCE(SC_SPEEDUP1) ) // !FIXME: used both by NPC_AGIUP and Speed Potion script
+		if( sc->getSCE(SC_SPEEDUP1) )
 			val = max( val, sc->getSCE(SC_SPEEDUP1)->val1 );
+		if (sc->getSCE(SC_AGIUP))
+			val = max(val, sc->getSCE(SC_AGIUP)->val1);
 		if( sc->getSCE(SC_INCREASEAGI) )
 			val = max( val, 25 );
 		if( sc->getSCE(SC_WINDWALK) )
@@ -8113,6 +8086,8 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 	if( sc->getSCE(SC_STEELBODY) )
 		speed = 200;
 	if( sc->getSCE(SC_DEFENDER) )
+		speed = max(speed, 200);
+	if (sc->getSCE(SC_ARMOR))
 		speed = max(speed, 200);
 	if( sc->getSCE(SC_WALKSPEED) && sc->getSCE(SC_WALKSPEED)->val1 > 0 ) // ChangeSpeed
 		speed = speed * 100 / sc->getSCE(SC_WALKSPEED)->val1;
@@ -9727,10 +9702,13 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def = sc_def*battle_config.pc_sc_def_rate/100;
 			sc_def2 = sc_def2*battle_config.pc_sc_def_rate/100;
 		}
-
+#ifndef RENEWAL
+		sc_def = min(sc_def, battle_config.pc_max_sc_def*100);
+		sc_def2 = min(sc_def2, battle_config.pc_max_sc_def*100);
+#else
 		sc_def = cap_value(sc_def, 0, battle_config.pc_max_sc_def*100);
 		sc_def2 = cap_value(sc_def2, 0, battle_config.pc_max_sc_def*100);
-
+#endif
 		if (battle_config.pc_sc_def_rate != 100) {
 			tick_def = tick_def*battle_config.pc_sc_def_rate/100;
 			tick_def2 = tick_def2*battle_config.pc_sc_def_rate/100;
@@ -9740,10 +9718,13 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def = sc_def*battle_config.mob_sc_def_rate/100;
 			sc_def2 = sc_def2*battle_config.mob_sc_def_rate/100;
 		}
-
+#ifndef RENEWAL
+		sc_def = min(sc_def, battle_config.mob_max_sc_def*100);
+		sc_def2 = min(sc_def2, battle_config.mob_max_sc_def*100);
+#else
 		sc_def = cap_value(sc_def, 0, battle_config.mob_max_sc_def*100);
 		sc_def2 = cap_value(sc_def2, 0, battle_config.mob_max_sc_def*100);
-
+#endif
 		if (battle_config.mob_sc_def_rate != 100) {
 			tick_def = tick_def*battle_config.mob_sc_def_rate/100;
 			tick_def2 = tick_def2*battle_config.mob_sc_def_rate/100;
@@ -10641,7 +10622,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			break;
 		case SC_EDP:
-			val2 = val1 + 2; // Chance to Poison enemies.
+			val2 = (val1 + 1) / 2 + 2; // Chance to Poison enemies.
 #ifndef RENEWAL
 			val3 = 50*(val1+1); // Damage increase (+50 +50*lv%)
 #endif
@@ -11492,7 +11473,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ARMOR:
 			// NPC_DEFENDER:
-			val2 = 80; // Damage reduction
+			val2 = 8; // Damage will be divided by this value
 			// Attack requirements to be blocked:
 			val3 = BF_LONG; // Range
 			val4 = BF_WEAPON|BF_MISC; // Type
@@ -11536,8 +11517,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_EXPBOOST:
 		case SC_JEXPBOOST:
 		case SC_JP_EVENT04:
-			if (val1 < 0)
-				val1 = 0;
+		case SC_PERIOD_RECEIVEITEM_2ND:
+		case SC_PERIOD_PLUSEXP_2ND:
+			if (val1 < 1)
+				return 0;
 			break;
 		case SC_INCFLEE2:
 		case SC_INCCRI:
@@ -12220,7 +12203,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ASH:
 			val2 = 0; // hit % reduc
 			val3 = 0; // def % reduc
-			val4 = 0; // atk flee & reduc
+			val4 = 0; // atk flee % reduc
 			if (!status_bl_has_mode(bl,MD_STATUSIMMUNE)) {
 				val2 = 50;
 				if (status_get_race(bl) == RC_PLANT) // plant type
@@ -12896,7 +12879,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (battle_config.sc_castcancel&bl->type && scdb->flag[SCF_STOPCASTING])
 		unit_skillcastcancel(bl,0);
 
-	sc->opt1 = scdb->opt1;
+	if(scdb->opt1 != OPT1_NONE) sc->opt1 = scdb->opt1;
 	sc->opt2 |= scdb->opt2;
 	sc->opt3 |= scdb->opt3;
 	sc->option |= scdb->look;
@@ -12908,13 +12891,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DANCING:
 			if ((val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 |= OPT3_MOONLIT;
-			break;
-		case SC_INCATKRATE:
-			// Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
-			if (bl->type != BL_MOB) {
-				disable_opt_flag = true;
-				break;
-			}
 			break;
 	}
 
@@ -14844,7 +14820,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, 1000, 350, 2);
+			status_heal(bl, 1000, 350, 0);	// Heal amount not displayed
 			sc_timer_next(1000 + tick);
 			return 0;
 		}
@@ -15235,10 +15211,14 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	ud = unit_bl2ud(bl);
 
-	if (flag&(RGN_HP|RGN_SHP|RGN_SSP) && ud && ud->walktimer != INVALID_TIMER) {
+	if (ud && ud->walktimer != INVALID_TIMER) {
 		flag &= ~(RGN_SHP|RGN_SSP);
-		if(!regen->state.walk)
+		//Mercenaries recover HP even while walking
+		if(bl->type != BL_MER && !regen->state.walk)
 			flag &= ~RGN_HP;
+		//Homunculus don't recover SP while walking
+		if (bl->type == BL_HOM && !regen->state.walk)
+			flag &= ~RGN_SP;
 	}
 
 	if (flag&(RGN_HP|RGN_SP)) {
@@ -15254,11 +15234,15 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if (flag&RGN_HP) {
 		// Interval to next recovery tick
 		rate = (int)(battle_config.natural_healhp_interval / (regen->rate.hp/100. * multi));
-		if (ud && ud->walktimer != INVALID_TIMER)
+		// Half recovery while moving only applies to players with certain traits
+		if (sd && ud && ud->walktimer != INVALID_TIMER)
 			rate *= 2;
-		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
+		// Homun HP regen fix (2 seconds instead of 6 seconds)
 		if(bl->type == BL_HOM)
-			rate /= 2;
+			rate /= 3;
+		// Mercenary HP regen fix (8 seconds instead of 6 seconds)
+		if (bl->type == BL_MER)
+			rate = (rate * 4) / 3;
 
 		// Our timer system isn't 100% accurate so make sure we use the closest interval
 		rate -= NATURAL_HEAL_INTERVAL / 2;
@@ -15279,9 +15263,12 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if(flag&RGN_SP) {
 		// Interval to next recovery tick
 		rate = (int)(battle_config.natural_healsp_interval / (regen->rate.sp/100. * multi));
-		// Homun SP regen fix (they should regen as if they were sitting (twice as fast)
+		// Homun SP regen fix (4 seconds instead of 8 seconds)
 		if(bl->type==BL_HOM)
 			rate /= 2;
+		// Mercenary SP regen fix (6 seconds instead of 8 seconds)
+		if (bl->type == BL_MER)
+			rate = (rate * 3) / 4;
 #ifdef RENEWAL
 		if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			sc && sc->getSCE(SC_EXPLOSIONSPIRITS) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK))

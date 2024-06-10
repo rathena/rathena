@@ -3,10 +3,9 @@
 
 #include "pet.hpp"
 
+#include <cstdlib>
 #include <map>
 #include <string>
-
-#include <stdlib.h>
 
 #include <common/db.hpp>
 #include <common/ers.hpp>

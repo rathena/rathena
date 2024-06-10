@@ -3,11 +3,10 @@
 
 #include "atcommand.hpp"
 
+#include <cmath>
+#include <cstdlib>
 #include <set>
 #include <unordered_map>
-
-#include <math.h>
-#include <stdlib.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>

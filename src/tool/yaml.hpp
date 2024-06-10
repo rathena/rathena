@@ -16,7 +16,7 @@
 #else
 	#include <termios.h>
 	#include <unistd.h>
-	#include <stdio.h>
+	#include <cstdio>
 #endif
 
 #include <yaml-cpp/yaml.h>

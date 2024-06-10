@@ -3,9 +3,9 @@
 
 #include "msg_conf.hpp"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include "malloc.hpp"
 #include "showmsg.hpp"

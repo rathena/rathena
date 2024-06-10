@@ -3,10 +3,9 @@
 
 #include "storage.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <map>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/nullpo.hpp>

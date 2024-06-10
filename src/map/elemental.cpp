@@ -5,7 +5,7 @@
 
 #include <cstring>
 #include <cmath>
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>

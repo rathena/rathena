@@ -6076,8 +6076,8 @@ Body:
   - Id: 192
     Name: NPC_MAGICALATTACK
     Description: Demon Shock Attack
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 1
+    Type: Magic
     TargetType: Attack
     Flags:
       IsNpc: true
@@ -6183,34 +6183,13 @@ Body:
     Name: NPC_KEEPING
     Description: Keeping
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 30000
     Status: Keeping
   - Id: 202
     Name: NPC_DARKBREATH
@@ -6250,60 +6229,19 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Barrier
   - Id: 205
     Name: NPC_DEFENDER
     Description: Defender
     MaxLevel: 1
-    Type: Weapon
     TargetType: Self
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 70000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 90000
-      - Level: 5
-        Time: 100000
-      - Level: 6
-        Time: 110000
-      - Level: 7
-        Time: 120000
-      - Level: 8
-        Time: 130000
-      - Level: 9
-        Time: 140000
-      - Level: 10
-        Time: 150000
+    Duration1: 15000
     Status: Armor
   - Id: 206
     Name: NPC_LICK
@@ -9708,8 +9646,7 @@ Body:
   - Id: 349
     Name: NPC_POWERUP
     Description: Power Up
-    MaxLevel: 10
-    Type: Weapon
+    MaxLevel: 5
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -9718,19 +9655,19 @@ Body:
     Hit: Single
     Duration1:
       - Level: 1
-        Time: 10000
+        Time: 5000
       - Level: 2
-        Time: 15000
+        Time: 10000
       - Level: 3
-        Time: 20000
+        Time: 15000
       - Level: 4
-        Time: 25000
+        Time: 20000
       - Level: 5
-        Time: 30000
-    Status: IncHitRate
+        Time: 25000
+    Status: Powerup
   - Id: 350
     Name: NPC_AGIUP
-    Description: Agility UP
+    Description: Agility Up
     MaxLevel: 10
     TargetType: Self
     DamageFlags:
@@ -9742,14 +9679,24 @@ Body:
       - Level: 1
         Time: 10000
       - Level: 2
-        Time: 15000
-      - Level: 3
         Time: 20000
-      - Level: 4
-        Time: 25000
-      - Level: 5
+      - Level: 3
         Time: 30000
-    Status: IncFleeRate
+      - Level: 4
+        Time: 40000
+      - Level: 5
+        Time: 50000
+      - Level: 6
+        Time: 60000
+      - Level: 7
+        Time: 70000
+      - Level: 8
+        Time: 80000
+      - Level: 9
+        Time: 90000
+      - Level: 10
+        Time: 100000
+    Status: Agiup
   - Id: 351
     Name: NPC_SIEGEMODE
     Description: Siege Mode
@@ -9940,7 +9887,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
@@ -10486,11 +10433,11 @@ Body:
       - Level: 1
         Time: 40000
       - Level: 2
-        Time: 45000
+        Time: 60000
       - Level: 3
-        Time: 50000
+        Time: 80000
       - Level: 4
-        Time: 55000
+        Time: 100000
       - Level: 5
         Time: 120000
     Duration2:
@@ -18417,6 +18364,68 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 780
+    Name: NPC_CANE_OF_EVIL_EYE
+    Description: Cane of evil eye
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Ground
+    DamageFlags:
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+    Hit: Single
+    Range: 11  # unknown
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 2
+      - Level: 3
+        Count: 3
+      - Level: 4
+        Count: 4
+      - Level: 5
+        Count: 5
+      - Level: 6
+        Count: 6
+      - Level: 7
+        Count: 7
+      - Level: 8
+        Count: 8
+      - Level: 9
+        Count: 9
+      - Level: 10
+        Count: 10
+    CastTime: 500
+    Duration1:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 2000
+      - Level: 3
+        Time: 3000
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 5000
+      - Level: 6
+        Time: 6000
+      - Level: 7
+        Time: 7000
+      - Level: 8
+        Time: 8000
+      - Level: 9
+        Time: 9000
+      - Level: 10
+        Time: 10000
+    Unit:
+      Id: Cane_of_evil_eye
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
   - Id: 783
     Name: NPC_KILLING_AURA
     Description: Killing Aura
@@ -45857,7 +45866,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 300000
-    Duration2: 15000
+    Duration2: 10000
     Requires:
       SpCost: 200
     Status: Berserk
@@ -46490,9 +46499,10 @@ Body:
     Type: Weapon
     TargetType: Attack
     Range: 1
-    Hit: Multi_Hit
-    HitCount: 3
+    Hit: Single
+    HitCount: 1
     Element: Weapon
+    CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration2: 4500

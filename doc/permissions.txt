@@ -125,6 +125,12 @@ item delay, etc).
 
 ---------------------------------------
 
+*trade_unconditional
+
+Allows player to ignore the trade conditions of items (drop, trade, sell, cart, storage/gstorage, mail and auction).
+
+---------------------------------------
+ 
 ======================
 | 3. Command-related |
 ======================

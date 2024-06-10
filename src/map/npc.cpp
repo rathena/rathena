@@ -3,9 +3,9 @@
 
 #include "npc.hpp"
 
-#include <errno.h>
+#include <cerrno>
+#include <cstdlib>
 #include <map>
-#include <stdlib.h>
 #include <vector>
 
 #include <common/cbasetypes.hpp>

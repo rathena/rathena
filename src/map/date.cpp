@@ -3,7 +3,7 @@
 
 #include "date.hpp"
 
-#include <time.h>
+#include <ctime>
 
 /*
  * Get the current year

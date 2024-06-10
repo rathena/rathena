@@ -3,8 +3,8 @@
 
 #include "loginclif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/malloc.hpp>
 #include <common/md5calc.hpp>

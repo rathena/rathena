@@ -2306,7 +2306,7 @@ Body:
 #    HungryDelay: 120   # unknown
 #    IntimacyFed: 15   # unknown
 #    CaptureRate: 0   # unknown
-#    SpecialPerformance: false    unknown
+#    SpecialPerformance: false   # unknown
 #    AllowAutoFeed: true
 #    Script: >
 #      .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2381,7 +2381,7 @@ Body:
 #    SpecialPerformance: false   # unknown
 #  - Mob: SCATLETON
 #    EggItem: Scatletoncarrier
-#    EquipItem: 10040
+#    EquipItem: Red_Chorker_Bell
 #    FoodItem: Delicious_Fish
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
@@ -2439,7 +2439,7 @@ Body:
       }
 #  - Mob: SKELION
 #    EggItem: Roost_Of_Skelion
-#    EquipItem: 10042
+#    EquipItem: Dark_Mane
 #    FoodItem: Yummy_Meat
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown
@@ -2483,8 +2483,9 @@ Body:
 #      }
 #
 #  - Mob: WANDERING_DUCK
+#    TameItem: E_Glittering_Doll_B
 #    EggItem: E_Duckling_Egg
-#    EquipItem: 10045
+#    EquipItem: C_Twinkle_Star_Button
 #    FoodItem: Wad_Of_Cotton
 #    Fullness: 2   # unknown
 #    HungryDelay: 120   # unknown

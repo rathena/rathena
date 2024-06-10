@@ -4,11 +4,11 @@
 #include "skill.hpp"
 
 #include <array>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
 
 #include <common/cbasetypes.hpp>
 #include <common/ers.hpp>
@@ -1435,7 +1435,10 @@ int skill_additional_effect( struct block_list* src, struct block_list *bl, uint
 
 	case AS_SONICBLOW:
 	case HN_MEGA_SONIC_BLOW:
-		sc_start(src,bl,SC_STUN,(2*skill_lv+10),skill_lv,skill_get_time2(skill_id,skill_lv));
+		if (!map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN)
+			sc_start(src, bl, SC_STUN, (4 * skill_lv + 20), skill_lv, skill_get_time2(skill_id, skill_lv)); //Link gives double stun chance outside GVG/BG
+		else
+			sc_start(src, bl, SC_STUN, (2 * skill_lv + 10), skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 
 	case AS_GRIMTOOTH:
@@ -4377,6 +4380,28 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 
 		map_foreachinallarea(npc_isnear_sub,bl->m,x - range,y - range,x + range,y + range,type,skill_id);
 }
 
+/** Apply special cases where skills require HP/SP/AP but do not consume them, then continue with consuming HP/SP/AP
+* @param bl Object from which HP/SP/AP are consumed
+* @param skill_id ID of used skill
+* @param hp Original HP requirement to use skill
+* @param sp Original SP requirement to use skill
+* @param ap Original AP requirement to use skill
+*/
+void skill_consume_hpspap(block_list* bl, uint16 skill_id, int hp, int sp, int ap)
+{
+	nullpo_retv(bl);
+
+	switch (skill_id) {
+		//Skills that require HP but do not consume them
+	case SM_MAGNUM:
+	case MS_MAGNUM:
+		hp = 0;
+		break;
+	}
+
+	status_zap(bl, hp, sp, ap);
+}
+
 /*==========================================
  * Checks that you have the requirements for casting a skill for homunculus/mercenary.
  * Flag:
@@ -4480,7 +4505,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 		return 1;
 
 	if( sp || hp )
-		status_zap(bl, hp, sp);
+		skill_consume_hpspap(bl, skill_id, hp, sp, 0);
 
 	return 1;
 }
@@ -6175,7 +6200,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case NPC_MAGICALATTACK:
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
+		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src,src,SC_MAGICALATTACK,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 
@@ -7847,9 +7872,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage (src,src,skill_id,skill_lv,1);
 		// Initiate 20% of your damage becomes fire element.
 #ifdef RENEWAL
-		sc_start4(src,src,SC_SUB_WEAPONPROPERTY,100,3,20,skill_id,0,skill_get_time2(skill_id, skill_lv));
+		sc_start4(src,src,SC_SUB_WEAPONPROPERTY,100,ELE_FIRE,20,skill_id,0,skill_get_time2(skill_id, skill_lv));
 #else
-		sc_start4(src,src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skill_id, skill_lv));
+		sc_start4(src,src,SC_WATK_ELEMENT,100,ELE_FIRE,20,0,0,skill_get_time2(skill_id, skill_lv));
 #endif
 		break;
 
@@ -7924,9 +7949,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HW_MAGICPOWER:
 	case PF_MEMORIZE:
 	case PA_SACRIFICE:
-#ifndef RENEWAL
-	case ASC_EDP:
-#endif
 	case PF_DOUBLECASTING:
 	case SG_SUN_COMFORT:
 	case SG_MOON_COMFORT:
@@ -8035,14 +8057,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 		break;
 
-#ifdef RENEWAL
 	// EDP also give +25% WATK poison pseudo element to user.
 	case ASC_EDP:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		sc_start4(src,src,SC_SUB_WEAPONPROPERTY,100,5,25,skill_id,0,skill_get_time2(skill_id, skill_lv));
-		break;
+#ifdef RENEWAL
+		sc_start4(src, src, SC_SUB_WEAPONPROPERTY, 100, ELE_POISON, 25, skill_id, 0, skill_get_time(skill_id, skill_lv));
+#else
+		sc_start4(src, src, SC_WATK_ELEMENT, 100, ELE_POISON, 25, 0, 0, skill_get_time(skill_id, skill_lv));
 #endif
+		break;
 
 	case LG_SHIELDSPELL:
 		if (skill_lv == 1)
@@ -9627,6 +9651,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			//Remove bonus_script by Dispell
 			if (dstsd)
 				pc_bonus_script_clear(dstsd,BSF_REM_ON_DISPELL);
+			// Monsters will unlock their target instead
+			else if (dstmd)
+				mob_unlocktarget(dstmd, tick);
 
 			if(!tsc || !tsc->count)
 				break;
@@ -9783,7 +9810,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if (sd) {
 			sd->state.workinprogress = WIP_DISABLE_ALL;
-			clif_autospell(sd,skill_lv);
+			clif_autospell( *sd, skill_lv );
 		} else {
 			int maxlv=1,spellid=0;
 			static const int spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
@@ -9973,15 +10000,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_POWERUP:
-		sc_start(src,bl,SC_INCATKRATE,100,200,skill_get_time(skill_id, skill_lv));
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,100,skill_get_time(skill_id, skill_lv)));
+			sc_start2(src,bl,type,100,200,100,skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case NPC_AGIUP:
-		sc_start(src,bl,SC_SPEEDUP1,100,50,skill_get_time(skill_id, skill_lv));
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,100,skill_get_time(skill_id, skill_lv)));
+			sc_start2(src,bl,type,100,50,100,skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case NPC_INVISIBLE:
@@ -13920,6 +13945,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case WZ_ICEWALL:
+	case NPC_CANE_OF_EVIL_EYE:
 		flag|=1;
 		if(skill_unitsetting(src,skill_id,skill_lv,x,y,0))
 			clif_skill_poseffect(src,skill_id,skill_lv,x,y,tick);
@@ -15985,6 +16011,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_ICEMINE:
 		case UNT_FLAMECROSS:
 		case UNT_HELLBURNING:
+		case UNT_CANE_OF_EVIL_EYE:
 		case UNT_RAIN_OF_CRYSTAL:
 		case UNT_MYSTERY_ILLUSION:
 		case UNT_STRANTUM_TREMOR:
@@ -17562,9 +17589,7 @@ bool skill_check_condition_castbegin(map_session_data* sd, uint16 skill_id, uint
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
-#ifdef RENEWAL
 			sd->spiritball_old = sd->spiritball;
-#endif
 			break;
 		case TK_MISSION:
 			if( (sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON ) { // Cannot be used by Non-Taekwon classes
@@ -18648,7 +18673,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			break;
 		}
 		if(require.hp || require.sp || require.ap)
-			status_zap(&sd->bl, require.hp, require.sp, require.ap);
+			skill_consume_hpspap(&sd->bl, skill_id, require.hp, require.sp, require.ap);
 
 		if(require.spiritball > 0) { // Skills that require certain types of spheres to use
 			switch (skill_id) { // Skills that require soul spheres.

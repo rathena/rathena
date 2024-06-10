@@ -3,11 +3,10 @@
 
 #include "int_party.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
-
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>

@@ -3,8 +3,8 @@
 
 #include "logincnslif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cli.hpp>
 #include <common/md5calc.hpp>

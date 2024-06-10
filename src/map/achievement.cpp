@@ -4,10 +4,10 @@
 #include "achievement.hpp"
 
 #include <array>
-#include <setjmp.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <csetjmp>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>

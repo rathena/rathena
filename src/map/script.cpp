@@ -9,10 +9,10 @@
 
 #include "script.hpp"
 
-#include <errno.h>
-#include <math.h>
-#include <setjmp.h>
-#include <stdlib.h> // atoi, strtol, strtoll, exit
+#include <cerrno>
+#include <cmath>
+#include <csetjmp>
+#include <cstdlib> // atoi, strtol, strtoll, exit
 
 #ifdef PCRE_SUPPORT
 #include <pcre.h> // preg_match

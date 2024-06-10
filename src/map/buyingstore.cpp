@@ -3,7 +3,7 @@
 
 #include "buyingstore.hpp"  // struct s_buyingstore
 
-#include <stdlib.h> // atoi
+#include <cstdlib> // atoi
 
 #include <common/db.hpp>  // ARR_FIND
 #include <common/malloc.hpp> // aMalloc, aFree

@@ -3,7 +3,8 @@
 
 #include "grfio.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
+
 #include <zlib.h>
 
 #include "cbasetypes.hpp"

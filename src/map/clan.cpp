@@ -3,7 +3,7 @@
 
 #include "clan.hpp"
 
-#include <string.h> //memset
+#include <cstring> //memset
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>

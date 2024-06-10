@@ -4761,8 +4761,8 @@ $as_echo "#define AC_APPLE_UNIVERSAL_BUILD 1" >>confdefs.h
 
      ;; #(
    *)
-     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unable to determine endianess, only little endian is supported" >&5
-$as_echo "$as_me: WARNING: unable to determine endianess, only little endian is supported" >&2;}
+     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unable to determine endianness, only little endian is supported" >&5
+$as_echo "$as_me: WARNING: unable to determine endianness, only little endian is supported" >&2;}
  ;;
  esac
 

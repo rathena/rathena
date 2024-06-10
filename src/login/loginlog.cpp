@@ -3,9 +3,8 @@
 
 #include "loginlog.hpp"
 
+#include <cstdlib> // exit
 #include <string>
-
-#include <stdlib.h> // exit
 
 #include <common/cbasetypes.hpp>
 #include <common/mmo.hpp>

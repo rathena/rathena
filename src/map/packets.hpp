@@ -415,6 +415,18 @@ struct PACKET_ZC_BOSS_INFO{
 	char name[51];
 } __attribute__((packed));
 
+struct PACKET_CZ_INVENTORY_TAB{
+	int16 packetType;
+	int16 index;
+	bool favorite;
+} __attribute__((packed));
+
+struct PACKET_ZC_INVENTORY_TAB{
+	int16 packetType;
+	int16 index;
+	bool favorite;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -452,6 +464,8 @@ DEFINE_PACKET_HEADER(CZ_REQ_SE_CASH_TAB_CODE, 0x846)
 DEFINE_PACKET_HEADER(ZC_ACK_SE_CASH_ITEM_LIST2, 0x8c0)
 DEFINE_PACKET_HEADER(ZC_ACK_SCHEDULER_CASHITEM, 0x8ca)
 DEFINE_PACKET_HEADER(ZC_CLEAR_DIALOG, 0x8d6)
+DEFINE_PACKET_HEADER(CZ_INVENTORY_TAB, 0x907)
+DEFINE_PACKET_HEADER(ZC_INVENTORY_TAB, 0x908)
 DEFINE_PACKET_HEADER(ZC_ENTRY_QUEUE_INIT, 0x90e)
 DEFINE_PACKET_HEADER(CZ_REQ_MERGE_ITEM, 0x96e)
 DEFINE_PACKET_HEADER(ZC_BANKING_CHECK, 0x9a6)

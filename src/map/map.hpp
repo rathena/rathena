@@ -5,7 +5,7 @@
 #define MAP_HPP
 
 #include <algorithm>
-#include <stdarg.h>
+#include <cstdarg>
 #include <string>
 #include <unordered_map>
 #include <vector>

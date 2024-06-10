@@ -4,11 +4,11 @@
 #include "itemdb.hpp"
 
 #include <chrono>
+#include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <stdlib.h>
-#include <math.h>
 #include <unordered_map>
 
 #include <common/nullpo.hpp>

@@ -4,8 +4,8 @@
 #include "account.hpp"
 
 #include <algorithm> //min / max
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/malloc.hpp>
 #include <common/mmo.hpp>

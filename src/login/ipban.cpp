@@ -3,8 +3,8 @@
 
 #include "ipban.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cbasetypes.hpp>
 #include <common/showmsg.hpp>

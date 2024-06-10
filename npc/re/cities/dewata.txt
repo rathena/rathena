@@ -191,7 +191,7 @@ dewata,114,243,6	script	Lazy Young Man#dew	536,1,1,{
 			mes "[Lazy Young Man]";
 			mes "Really? For me?? I'll give you this in return... Thanks... Hehe~";
 			delitem 11534,1; //Coco_Juice
-			getrandgroupitem(IG_GiftBox),1;
+			getgroupitem(IG_GiftBox);
 			close;
 		case 2:
 			mes "[Lazy Young Man]";

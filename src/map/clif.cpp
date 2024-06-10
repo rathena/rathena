@@ -4,13 +4,12 @@
 
 #include "clif.hpp"
 
-#include <unordered_set>
-
 #include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <unordered_set>
 
 #include <common/cbasetypes.hpp>
 #include <common/conf.hpp>
@@ -86,6 +85,7 @@ unsigned long color_table[COLOR_MAX];
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(map_session_data *sd);
 static void clif_loadConfirm( map_session_data *sd );
+static void clif_favorite_item( map_session_data& sd, uint16 index );
 
 #if PACKETVER >= 20150513
 enum mail_type {
@@ -3007,7 +3007,6 @@ static void clif_inventoryEnd( map_session_data *sd, e_inventory_type type ){
 #endif
 }
 
-void clif_favorite_item(map_session_data* sd, unsigned short index);
 //Unified inventory function which sends all of the inventory (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
 void clif_inventorylist( map_session_data *sd ){
 	nullpo_retv( sd );
@@ -3093,7 +3092,7 @@ void clif_inventorylist( map_session_data *sd ){
 			continue;
 
 		if ( sd->inventory.u.items_inventory[i].favorite )
-			clif_favorite_item(sd, i);
+			clif_favorite_item( *sd, i );
 	}
 #endif
 }
@@ -6579,7 +6578,8 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 
 	sd = BL_CAST(BL_PC, bl);
 
-	if (!(status_efst_get_bl_type((efst_type)type)&bl->type)) // only send status changes that actually matter to the client
+	// Check if current bl type is in the returned bitmask and only send status changes that actually matter to the client
+	if (!(status_efst_get_bl_type(static_cast<efst_type>(type)) & bl->type))
 		return;
 
 	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
@@ -8043,7 +8043,7 @@ void clif_partyinvitationstate( map_session_data& sd ){
 	struct PACKET_ZC_PARTY_CONFIG p = {};
 
 	p.packetType = HEADER_ZC_PARTY_CONFIG;
-	p.denyPartyInvites = 0; // TODO: not implemented
+	p.denyPartyInvites = sd.status.disable_partyinvite;
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
@@ -8517,75 +8517,76 @@ void clif_pet_autofeed_status(map_session_data* sd, bool force) {
 #endif
 }
 
-/// Presents a list of skills that can be auto-spelled (ZC_AUTOSPELLLIST).
-/// 01cd { <skill id>.L }*7
-void clif_autospell(map_session_data *sd,uint16 skill_lv)
-{
-	nullpo_retv(sd);
-
-	int fd = sd->fd;
-
-#ifdef RENEWAL
-	uint16 autospell_skill[][2] = { 
-		{ MG_FIREBOLT, 0 }, { MG_COLDBOLT, 0 }, { MG_LIGHTNINGBOLT, 0 },
-		{ MG_SOULSTRIKE, 3 }, { MG_FIREBALL, 3 },
-		{ WZ_EARTHSPIKE, 6 }, { MG_FROSTDIVER, 6 },
-		{ MG_THUNDERSTORM, 9 }, { WZ_HEAVENDRIVE, 9 }
+/// Presents a list of skills that can be auto-spelled.
+/// 01cd { <skill id>.L }*7 (ZC_AUTOSPELLLIST)
+void clif_autospell( map_session_data& sd, uint16 skill_lv ){
+	struct s_autospell_requirement{
+		uint16 skill_id;
+		uint16 required_autospell_skill_lv;
 	};
-	int count = 0;
 
-	WFIFOHEAD(fd, 2 * 6 + 4);
-	WFIFOW(fd, 0) = 0x442;
+#ifndef RENEWAL
+	 const std::vector<s_autospell_requirement> autospell_skills = {
+		{ MG_FIREBOLT, 0 },
+		{ MG_COLDBOLT, 0 },
+		{ MG_LIGHTNINGBOLT, 0 },
+		{ MG_SOULSTRIKE, 3 },
+		{ MG_FIREBALL, 3 },
+		{ WZ_EARTHSPIKE, 6 },
+		{ MG_FROSTDIVER, 6 },
+		{ MG_THUNDERSTORM, 9 },
+		{ WZ_HEAVENDRIVE, 9 }
+	};
+#else
+	const std::vector<s_autospell_requirement> autospell_skills = {
+		{ MG_NAPALMBEAT, 0 },
+		{ MG_COLDBOLT, 1 },
+		{ MG_FIREBOLT, 1 },
+		{ MG_LIGHTNINGBOLT, 1 },
+		{ MG_SOULSTRIKE, 4 },
+		{ MG_FIREBALL, 7 },
+		{ MG_FROSTDIVER, 9 },
+	};
+#endif
 
-	for (int i = 0; i < ARRAYLENGTH(autospell_skill); i++) {
-		if (skill_lv > autospell_skill[i][1] && pc_checkskill(sd, autospell_skill[i][0])) {
-			WFIFOW(fd, 8 + count * 2) = autospell_skill[i][0];
-			count++;
+#if PACKETVER_MAIN_NUM >= 20181128 || PACKETVER_RE_NUM >= 20181031
+	PACKET_ZC_AUTOSPELLLIST* p = (PACKET_ZC_AUTOSPELLLIST*)packet_buffer;
+
+	p->packetType = HEADER_ZC_AUTOSPELLLIST;
+	p->packetLength = sizeof( *p );
+
+	size_t count = 0;
+	for( const s_autospell_requirement& requirement : autospell_skills ){
+		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
+			p->skills[count++] = requirement.skill_id;
+			p->packetLength += sizeof( p->skills[0] );
 		}
 	}
 
-	WFIFOW(fd, 2) = 8 + count * 2;
-	WFIFOL(fd, 4) = count;
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#elif PACKETVER_MAIN_NUM >= 20090406 || defined(PACKETVER_RE) || defined(PACKETVER_ZERO) || PACKETVER_SAK_NUM >= 20080618
+	PACKET_ZC_AUTOSPELLLIST p = {};
 
-	WFIFOSET(fd, WFIFOW(fd, 2));
-#else
-	WFIFOHEAD(fd,packet_len(0x1cd));
-	WFIFOW(fd, 0)=0x1cd;
+	p.packetType = HEADER_ZC_AUTOSPELLLIST;
 
-	if(skill_lv>0 && pc_checkskill(sd,MG_NAPALMBEAT)>0)
-		WFIFOL(fd,2)= MG_NAPALMBEAT;
-	else
-		WFIFOL(fd,2)= 0x00000000;
-	if(skill_lv>1 && pc_checkskill(sd,MG_COLDBOLT)>0)
-		WFIFOL(fd,6)= MG_COLDBOLT;
-	else
-		WFIFOL(fd,6)= 0x00000000;
-	if(skill_lv>1 && pc_checkskill(sd,MG_FIREBOLT)>0)
-		WFIFOL(fd,10)= MG_FIREBOLT;
-	else
-		WFIFOL(fd,10)= 0x00000000;
-	if(skill_lv>1 && pc_checkskill(sd,MG_LIGHTNINGBOLT)>0)
-		WFIFOL(fd,14)= MG_LIGHTNINGBOLT;
-	else
-		WFIFOL(fd,14)= 0x00000000;
-	if(skill_lv>4 && pc_checkskill(sd,MG_SOULSTRIKE)>0)
-		WFIFOL(fd,18)= MG_SOULSTRIKE;
-	else
-		WFIFOL(fd,18)= 0x00000000;
-	if(skill_lv>7 && pc_checkskill(sd,MG_FIREBALL)>0)
-		WFIFOL(fd,22)= MG_FIREBALL;
-	else
-		WFIFOL(fd,22)= 0x00000000;
-	if(skill_lv>9 && pc_checkskill(sd,MG_FROSTDIVER)>0)
-		WFIFOL(fd,26)= MG_FROSTDIVER;
-	else
-		WFIFOL(fd,26)= 0x00000000;
+	size_t count = 0;
+	for( const s_autospell_requirement& requirement : autospell_skills ){
+		if( count == ARRAYLENGTH( p.skills ) ){
+			break;
+		}
 
-	WFIFOSET(fd,packet_len(0x1cd));
+		if( skill_lv > requirement.required_autospell_skill_lv && pc_checkskill( &sd, requirement.skill_id ) ){
+			p.skills[count++] = requirement.skill_id;
+		}else{
+			p.skills[count++] = 0;
+		}
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
 
-	sd->menuskill_id = SA_AUTOSPELL;
-	sd->menuskill_val = skill_lv;
+	sd.menuskill_id = SA_AUTOSPELL;
+	sd.menuskill_val = skill_lv;
 }
 
 
@@ -17623,13 +17624,14 @@ void clif_parse_configuration( int fd, map_session_data* sd ){
 
 /// Request to change party invitation tick.
 /// value:
-///	 0 = disabled
-///	 1 = enabled
-void clif_parse_PartyTick(int fd, map_session_data* sd)
-{
-	bool flag = RFIFOB(fd,6) ? true : false;
-	sd->status.allow_party = flag;
-	clif_partytickack(sd, flag);
+///	 0 = disabled (triggered by /accept)
+///	 1 = enabled (triggered by /refuse)
+void clif_parse_PartyTick( int fd, map_session_data* sd ){
+	PACKET_CZ_PARTY_CONFIG* p = (PACKET_CZ_PARTY_CONFIG*)RFIFOP( fd, 0 );
+
+	sd->status.disable_partyinvite = p->refuseInvite;
+
+	clif_partyinvitationstate( *sd );
 }
 
 /// Questlog System [Kevin] [Inkfish]
@@ -19727,49 +19729,52 @@ void clif_spiritcharm(map_session_data *sd) {
 }
 
 
-/// Move Item from or to Personal Tab (CZ_WHATSOEVER) [FE]
-/// 0907 <index>.W
-///
-/// R 0908 <index>.w <type>.b
+/// Move Item from or to Personal Tab
+/// 0907 <index>.W <type>.B (CZ_INVENTORY_TAB)
 /// type:
 /// 	0 = move item to personal tab
 /// 	1 = move item to normal tab
-void clif_parse_MoveItem(int fd, map_session_data *sd) {
-#if PACKETVER >= 20111122
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int index = RFIFOW(fd,info->pos[0]) - 2;
-	int type = RFIFOB(fd, info->pos[1]);
-
+void clif_parse_MoveItem( int fd, map_session_data* sd ){
+// TODO: Check for correct packet version
+#if PACKETVER >= 20120410
 	/* can't move while dead. */
 	if(pc_isdead(sd)) {
 		return;
 	}
 
-	if (index < 0 || index >= MAX_INVENTORY)
-		return;
+	PACKET_CZ_INVENTORY_TAB* p = (PACKET_CZ_INVENTORY_TAB*)RFIFOP( fd, 0 );
 
-	if ( sd->inventory.u.items_inventory[index].favorite && type == 1 )
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if ( sd->inventory.u.items_inventory[index].favorite && p->favorite == true )
 		sd->inventory.u.items_inventory[index].favorite = 0;
-	else if( type == 0 )
+	else if( p->favorite == false )
 		sd->inventory.u.items_inventory[index].favorite = 1;
 	else
 		return;/* nothing to do. */
 
-	clif_favorite_item(sd, index);
+	clif_favorite_item( *sd, index );
 #endif
 }
 
 
-/// Items that are in favorite tab of inventory (ZC_ITEM_FAVORITE).
-/// 0900 <index>.W <favorite>.B
-void clif_favorite_item(map_session_data* sd, unsigned short index) {
-	int fd = sd->fd;
+/// Items that are in favorite tab of inventory.
+/// 0908 <index>.W <favorite>.B (ZC_INVENTORY_TAB)
+static void clif_favorite_item( map_session_data& sd, uint16 index ){
+// TODO: Check for correct packet version
+#if PACKETVER >= 20111122
+	PACKET_ZC_INVENTORY_TAB p = {};
 
-	WFIFOHEAD(fd,packet_len(0x908));
-	WFIFOW(fd,0) = 0x908;
-	WFIFOW(fd,2) = index+2;
-	WFIFOL(fd,4) = (sd->inventory.u.items_inventory[index].favorite == 1) ? 0 : 1;
-	WFIFOSET(fd,packet_len(0x908));
+	p.packetType = HEADER_ZC_INVENTORY_TAB;
+	p.index = client_index( index );
+	p.favorite = ( sd.inventory.u.items_inventory[index].favorite == true ) ? false : true;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 
@@ -19808,13 +19813,6 @@ void clif_monster_hp_bar( struct mob_data* md, int fd ) {
 /* [Ind] placeholder for unsupported incoming packets (avoids server disconnecting client) */
 void __attribute__ ((unused)) clif_parse_dull(int fd, map_session_data *sd) {
 	return;
-}
-
-void clif_partytickack(map_session_data* sd, bool flag) {
-	WFIFOHEAD(sd->fd, packet_len(0x2c9));
-	WFIFOW(sd->fd,0) = 0x2c9; 
-	WFIFOB(sd->fd,2) = flag;
-	WFIFOSET(sd->fd, packet_len(0x2c9)); 
 }
 
 /// Ack world info (ZC_ACK_BEFORE_WORLD_INFO)

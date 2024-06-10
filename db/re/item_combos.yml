@@ -48702,3 +48702,15 @@ Body:
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
       bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",.@sum;
+  - Combos:
+      - Combo:
+          - IDTest_arrow   # 1200000
+          - IDTest_bow   # 700000
+    Script: |
+      bonus bDex,1;
+  - Combos:
+      - Combo:
+          - IDTest_ammo   # 1230000
+          - IDTest_gun   # 800000
+    Script: |
+      bonus bDex,1;

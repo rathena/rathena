@@ -3,12 +3,10 @@
 
 #include "int_guild.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
-
-#include <stdlib.h>
-#define __STDC_WANT_LIB_EXT1__ 1
-#include <string.h>
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>

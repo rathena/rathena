@@ -4007,11 +4007,20 @@ OnInit:
 }
 
 
+// ba_in01,26,266,3	script	Smart Ellie#ep18ely01	4_EP17_TABLET,{
 ba_in01,26,266,3	script	Smart Ellie#ep172_ely01	4_EP17_TABLET,{
 	if (checkweight(1000103,15) == 0) {
 		mes "You cannot proceed with the quest because you have too many items in your possession.";
 		mes "Please clean up your inventory and try again.";
 		close;
+	}
+	if (ep17_2_main < 32) {
+		cutin "ep172_beta.bmp", 2;
+		mes "[Ellie]";
+		mes "Hello, guest.";
+		mes "I'm responsible for the airship hangar's information.";
+		mes "Please call me Ellie.";
+		close3;
 	}
 	if (ep17_2_main == 32) {
 		cutin "ep172_beta",2;
@@ -4139,6 +4148,179 @@ ba_in01,26,266,3	script	Smart Ellie#ep172_ely01	4_EP17_TABLET,{
 		cloakonnpcself( "Rookie#ep172_rk03" );
 		end;
 	}
+	if (ep18_1_main == 0 && BaseLevel >= 170) {
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "The periodic signal has not yet been received.";
+		mes "The whereabouts of your master's collection#3 are also being tracked.";
+		next;
+		mes "[Ellie]";
+		mes "Don't worry.";
+		mes "Time is on our side";
+		next;
+		mes "[Ellie]";
+		mes "I and Alpha will analyze the information properly, so if you clean up the abandoned remnants... Ah!";
+		next;
+		mes "[Ellie]";
+		mes "Please don't go anywhere for a moment.";
+		mes "It will be over soon";
+		mes "Time was on our side, wasn't it?";
+		next;
+		// note: progressbar_npc must be after "next" otherwise the client may crash
+		progressbar_npc "FFFF00",4;
+		mes "[Ellie]";
+		mes "Wait a minute...";
+		mes "...";
+		mes "...";
+		next;
+		mes "[Ellie]";
+		mes "As soon as the password is decrypted, it will be fast.";
+		mes "The thing that took the longest is an instant.";
+		next;
+		mes "[Ellie]";
+		mes "There is something in ^0000FFRachel^000000";
+		mes "Of course I've only heard of Rachel, but I've never been there.";
+		mes "The 'collaborators' there don't seem to know that their heads have moved yet.";
+		next;
+		mes "[Ellie]";
+		mes "Although we don't know where your master's Collection#3 is yet, we'll have to keep an eye out for information coming in here...";
+		mes "what if?";
+		next;
+		select( "What?" );
+		mes "[" + strcharinfo(0) + "]";
+		mes "What are you doing?";
+		next;
+		mes "[Ellie]";
+		mes "The collaborator's position has been roughly secured. Reportedly 'waiting for your next instruction',";
+		mes "Then, before the next instruction is issued, we should catch up on that side as soon as possible...";
+		cloakoffnpcself( "Rookie#ep181_rk01" );
+		cloakoffnpcself( "EST#ep181_est01" );
+		npctalk "Rookie: Did you call?", "Rookie#ep181_rk01", bc_self;
+		npctalk "EST: It ended sooner than I thought.", "EST#ep181_est01", bc_self;
+		next;
+		cutin "ep162_est01.bmp",1;
+		mes "[EST]";
+		mes "Okay then Rachel...";
+		next;
+		cutin "16loo_01.bmp",0;
+		mes "[Rookie]";
+		mes "Rachel... who's going?";
+		next;
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "Is this a conflict of opinion?";
+		next;
+		cutin "16loo_03.bmp",0;
+		mes "[Rookie]";
+		mes "It's not like that...";
+		mes "I think it will be a bit difficult if we all go.";
+		next;
+		cutin "ep162_est01.bmp",1;
+		mes "[EST]";
+		mes "Ah... I see.";
+		mes "Yes. If 'Rebellion' moves, it could become a diplomatic matter.";
+		next;
+		cutin "16loo_03.bmp",0;
+		mes "[Rookie]";
+		mes "Yes. Especially if it's Rachel.";
+		mes "The problem between the mansion and the business has not yet been fully resolved...";
+		next;
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "Okay.";
+		next;
+		mes "[Ellie]";
+		mes "Then...";
+		next;
+		select( "Why are you looking at me?" );
+		cutin "",255;
+		mes "[" + strcharinfo(0) + "]";
+		mes "what are you doing?";
+		next;
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "Let's go, Rachel.";
+		npctalk "Rookie: name.", "Rookie#ep181_rk01", bc_self;
+		npctalk "Est: Name.", "EST#ep181_est01", bc_self;
+		next;
+		mes "[Ellie]";
+		mes "Are other guests affiliated?";
+		mes "It is difficult when disputes arise because of jurisdiction.";
+		mes "You never know how long it will take, so it's not suitable for a companion.";
+		next;
+		cutin "ep162_est01.bmp",1;
+		mes "[EST]";
+		mes "It sounds like you want to go there yourself.";
+		next;
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "Yes.";
+		mes "Please wait a minute.";
+		next;
+		progressbar_npc "00CCFF",7;
+		mes "[Ellie]";
+		mes "...";
+		next;
+		mes "[Ellie]";
+		mes "You have permission.";
+		npctalk "Meeting ended.", "", bc_self;
+		next;
+		mes "[Ellie]";
+		mes "The purpose is support, not hindrance.";
+		mes "I will follow you without burden.";
+		mes "I'll give you this.";
+		next;
+		cutin "",255;
+		mes "What Ellie gave her was a doll with a slightly droopy feel that resembled Ellie.";
+		mes "It may not necessarily be Ellie.";
+		next;
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "We have equipment that can transmit and receive data over long distances.";
+		mes "Because we are such beings.";
+		next;
+		mes "[Ellie]";
+		mes "But things are a little different now, so I'll give you a simple beta.";
+		npctalk "Be sure to take it with you", "", bc_self;
+		next;
+		cutin "16loo_02.bmp",0;
+		mes "[Rookie]";
+		mes "Uh... Mini Ellie?";
+		next;
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "Okay. I'll take that name.";
+		mes "Using the resources of the main body, it is possible to collect visual and auditory information and communicate like a clone.";
+		next;
+		mes "[Ellie]";
+		mes "There is no individual core, so the information obtained is not shared between betas unless I update it,";
+		mes "If communication is lost, it's just a doll.";
+		next;
+		cutin "16loo_01.bmp",0;
+		mes "[Rookie]";
+		mes "Then call us if you need assistance.";
+		mes "Like Ellie, we will provide generous support except for the manpower.";
+		next;
+		cutin "ep172_beta.bmp",2;
+		mes "[Ellie]";
+		mes "It will be so";
+		mes "Please take care of yourself.";
+		npctalk "I'm going with you, but it's strange to greet you like this.", "", bc_self;
+		next;
+		mes "[Ellie]";
+		mes "The almost exact coordinates from which the signal was sent...";
+		mes "About <NAVI>[here]<INFO>rachel,182,176,0,101,0</INFO></NAVI>";
+		ep18_1_main = 1;
+		setquest 8681;
+		getitem 400127,1;	// Ep18_Mini_Elly
+		close3;
+	}
+	if (ep18_1_main == 1) {
+		mes "[Ellie]";
+		mes "Please be safe.";
+		close;
+
+	}
 	cutin "ep172_beta",2;
 	mes "[Ellie]";
 	mes "No intermittent signal has been received yet.";
@@ -4152,10 +4334,13 @@ ba_in01,26,266,3	script	Smart Ellie#ep172_ely01	4_EP17_TABLET,{
 	mes "Me and Alpha will analyze the information properly, so I'd like you to clean up the intruders remnant.";
 	close3;
 
-// OnInit:
+OnInit:
 	// note: commented (no questinfo at this point)
 	// questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(18018) == 1" );
-	// end;
+
+	// check for episode 17.2 completion
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8681) == 0 && isbegin_quest(18018) == 2 && BaseLevel >= 170" );
+	end;
 }
 
 ba_in01,22,262,5	duplicate(dummy_cloaked_npc)	Est#ep172_est02	4_F_ESTLOVELOY

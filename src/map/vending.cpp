@@ -3,7 +3,7 @@
 
 #include "vending.hpp"
 
-#include <stdlib.h> // atoi
+#include <cstdlib> // atoi
 
 #include <common/malloc.hpp> // aMalloc, aFree
 #include <common/nullpo.hpp>

@@ -3,8 +3,8 @@
 
 #include "unit.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/db.hpp>
 #include <common/ers.hpp>  // ers_destroy

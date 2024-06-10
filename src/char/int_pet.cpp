@@ -3,8 +3,8 @@
 
 #include "int_pet.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/malloc.hpp>
 #include <common/mmo.hpp>

@@ -3,12 +3,11 @@
 
 #include "int_auction.hpp"
 
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <memory>
 #include <unordered_map>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include <common/malloc.hpp>
 #include <common/mmo.hpp>

@@ -3,15 +3,9 @@
 
 #include "timer.hpp"
 
+#include <cstdlib>
+#include <cstring>
 #include <utility>
-
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef WIN32
-#include "winapi.hpp" // GetTickCount()
-#else
-#endif
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
@@ -19,6 +13,9 @@
 #include "nullpo.hpp"
 #include "showmsg.hpp"
 #include "utils.hpp"
+#ifdef WIN32
+#include "winapi.hpp" // GetTickCount()
+#endif
 
 // If the server can't handle processing thousands of monsters
 // or many connected clients, please increase TIMER_MIN_INTERVAL.
