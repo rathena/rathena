@@ -2158,16 +2158,23 @@ int char_pincode_compare( int fd, struct char_session_data* sd, char* pin ){
 	}
 }
 
-
-void char_pincode_decrypt( uint32 userSeed, char* pin ){
+bool char_pincode_decrypt( uint32 userSeed, char* pin ){
 	int i;
 	char tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	char *buf;
-	
+
+	if (safestrnlen(pin, 4) != PINCODE_LENGTH)
+		return false;
+
+	for (i = 0; i < PINCODE_LENGTH; ++i) {
+		if (!ISDIGIT(pin[i]))
+			return false;
+	}
+
 	for( i = 1; i < 10; i++ ){
 		int pos;
 		uint32 multiplier = 0x3498, baseSeed = 0x881234;
-		
+
 		userSeed = baseSeed + userSeed * multiplier;
 		pos = userSeed % ( i + 1 );
 		if( i != pos ){
@@ -2184,6 +2191,8 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 	}
 	strcpy( pin, buf );
 	aFree( buf );
+
+	return true;
 }
 #endif
 
