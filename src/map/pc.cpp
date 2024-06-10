@@ -6261,28 +6261,34 @@ bool pc_isUseitem(map_session_data *sd,int n)
 
 	// Safe check type cash disappear when overweight [Napster]
 	if( item->flag.group || item->type == IT_CASH ){
-	// Check if the player has enough weight and space
-	// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
 #ifdef RENEWAL
-	// Official servers use 10 as the minimum amount of slots required to get the items
-	// The <= is intentional, as in official servers you actually need an extra empty slot
-		if (pc_inventoryblank(sd) <= 10 || pc_is70overweight(sd)) {
+		// Check if the player is not overweighted
+		// In Renewal the limit is 70% weight and gives the same error message
+		if (pc_is70overweight(sd)) {
 			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
 			return 0;
 		}
 #else
+		// Check if the player is not overweighted
+		// In Pre-Renewal the limit is 50% weight and gives a specific error message
 		if (pc_is50overweight(sd)) {
 			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
 			return 0;
 		}
+#endif
 
+		// Check if the player has enough free spaces in the inventory
 		// Official servers use 10 as the minimum amount of slots required to get the items
 		// The <= is intentional, as in official servers you actually need an extra empty slot
+		// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
 		if (pc_inventoryblank(sd) <= 10) {
+#ifdef RENEWAL
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+#else
 			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+#endif
 			return 0;
 		}
-#endif
 	}
 
 	//Gender check
