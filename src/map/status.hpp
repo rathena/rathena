@@ -3256,13 +3256,13 @@ struct status_change_entry {
 ///Status change
 class status_change {
 public:
-	unsigned int option{};// effect state (bitfield)
-	unsigned int opt3{};// skill state (bitfield)
-	unsigned short opt1{};// body state
-	unsigned short opt2{};// health state (bitfield)
-	unsigned char count{};
-	sc_type lastEffect{SC_NONE}; // Used to check for stacking damageable SC on the same attack
-	int32 lastEffectTimer{INVALID_TIMER}; // Timer for lastEffect
+	unsigned int option;// effect state (bitfield)
+	unsigned int opt3;// skill state (bitfield)
+	unsigned short opt1;// body state
+	unsigned short opt2;// health state (bitfield)
+	unsigned char count;
+	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
+	int32 lastEffectTimer; // Timer for lastEffect
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
 		uint8 move;
@@ -3277,20 +3277,22 @@ public:
 		uint8 warp;
 		uint8 deathpenalty;
 		uint8 interact;
-	} cant{};/* status change state flags */
+	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
-	short comet_x{}, comet_y{}; // Point where src casted Comet - required to calculate damage from this point
+	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
 /**
  * The Storm Gust counter was dropped in renewal
  **/
 #ifndef RENEWAL
-	unsigned char sg_counter{}; //Storm gust counter (previous hits from storm gust)
+	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
 private:
-	struct status_change_entry *data[SC_MAX]{nullptr};
-	std::pair<enum sc_type, struct status_change_entry *> lastStatus{SC_NONE, nullptr}; // last-fetched status
+	struct status_change_entry *data[SC_MAX];
+	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
 
 public:
+	status_change();
+
 	status_change_entry * getSCE(enum sc_type type);
 	status_change_entry * getSCE(uint32 type);
 	status_change_entry * createSCE(enum sc_type type);
