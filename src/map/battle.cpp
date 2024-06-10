@@ -4061,8 +4061,9 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 
 				// 70% damage modifier is applied to base attack + weight
 				ATK_RATE(wd->equipAtk, wd->equipAtk2, 70);
-				
-				switch (tstatus->size) { //Second size fix
+
+				// Additional skill-specific size fix
+				switch (tstatus->size) {
 					case SZ_SMALL: //Small: 130%
 						ATK_RATE(wd->equipAtk, wd->equipAtk2, 130);
 						break;
