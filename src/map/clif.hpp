@@ -509,6 +509,9 @@ enum clif_messages : uint16_t {
 	// You cannot carry more items because you are overweight.
 	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 52,
 
+	// You can't have this item because you will exceed the weight limit.
+	MSI_CANT_GET_ITEM_BECAUSE_COUNT = 220,
+
 	// You can't put this item on.
 	MSI_CAN_NOT_EQUIP_ITEM = 372,
 

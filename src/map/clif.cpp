@@ -23326,7 +23326,7 @@ void clif_parse_laphine_synthesis( int fd, map_session_data* sd ){
 		}
 	}
 
-	itemdb_group.pc_get_itemgroup( synthesis->rewardGroupId, true, sd );
+	itemdb_group.pc_get_itemgroup( synthesis->rewardGroupId, true, *sd );
 
 	clif_laphine_synthesis_result( sd, LAPHINE_SYNTHESIS_SUCCESS );
 #endif
