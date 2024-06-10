@@ -3394,7 +3394,7 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag 
 			return false;
 #ifndef RENEWAL
 		case LK_SPIRALPIERCE:
-			// Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
+			// In Pre-Renewal Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
 			if (chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
 				return false;
 #endif
@@ -3962,6 +3962,7 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 	}
+
 	// Right-hand status attack is doubled after elemental adjustments
 	wd->statusAtk *= 2;
 
@@ -4058,7 +4059,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 					sd->inventory_data[index]->type == IT_WEAPON)
 					wd->equipAtk += sd->inventory_data[index]->weight / 10;
 
-				// Official 70% damage modifier is applied to base attack + weight
+				// 70% damage modifier is applied to base attack + weight
 				ATK_RATE(wd->equipAtk, wd->equipAtk2, 70);
 				
 				switch (tstatus->size) { //Second size fix
