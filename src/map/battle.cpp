@@ -3421,7 +3421,7 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
 		// Cart Cannon is an arrow skill but adds arrow attack as mastery damage instead
-		if (sd && skill_id != GN_CARTCANNON)
+		if (sd != nullptr && skill_id != GN_CARTCANNON)
 			// add arrow atk if using an applicable skill
 			eatk += (is_skill_using_arrow(src, skill_id) ? sd->bonus.arrow_atk : 0);
 
@@ -3909,7 +3909,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			case GN_CARTCANNON:
 				// These skills add arrow attack as mastery attack instead of equip attack
 				// The only way to determine this is by confirming that the arrow attack isn't influenced by P.ATK
-				if (sd) {
+				if (sd != nullptr) {
 					struct status_data* tstatus = status_get_status_data(target);
 					ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_attr_fix(src, target, sd->bonus.arrow_atk, sd->bonus.arrow_ele, tstatus->def_ele, tstatus->ele_lv));
 				}
