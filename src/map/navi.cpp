@@ -156,7 +156,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	struct map_data *mapdata = map_getmapdata(from->m);
 	struct navi_walkpath_data s_wpd;
 
-	if (wpd == NULL)
+	if (wpd == nullptr)
 		wpd = &s_wpd; // use dummy output variable
 
 	if (from->m != dest->m)
@@ -195,7 +195,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 
 	// Start node
 	i = calc_index(from->x, from->y);
-	tp[i].parent = NULL;
+	tp[i].parent = nullptr;
 	tp[i].x = from->x;
 	tp[i].y = from->y;
 	tp[i].g_cost = 0;
@@ -264,7 +264,7 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 		}
 	}
 
-	for (it = current; it->parent != NULL; it = it->parent, len++);
+	for (it = current; it->parent != nullptr; it = it->parent, len++);
 	if (len > sizeof(wpd->path)) {
 		return false;
 	}

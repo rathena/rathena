@@ -137,7 +137,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 	struct map_data *mapdata = map_getmapdata(m);
 	struct shootpath_data s_spd;
 
-	if( spd == NULL )
+	if( spd == nullptr )
 		spd = &s_spd; // use dummy output variable
 
 	if (!mapdata->cell)
@@ -273,9 +273,9 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 	struct walkpath_data s_wpd;
 
 	if (flag&2)
-		return path_search_long(NULL, m, x0, y0, x1, y1, cell);
+		return path_search_long(nullptr, m, x0, y0, x1, y1, cell);
 
-	if (wpd == NULL)
+	if (wpd == nullptr)
 		wpd = &s_wpd; // use dummy output variable
 
 	if (!mapdata->cell)
@@ -343,7 +343,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		// Start node
 		i = calc_index(x0, y0);
-		tp[i].parent = NULL;
+		tp[i].parent = nullptr;
 		tp[i].x      = x0;
 		tp[i].y      = y0;
 		tp[i].g_cost = 0;
@@ -411,7 +411,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 			}
 		}
 
-		for (it = current; it->parent != NULL; it = it->parent, len++);
+		for (it = current; it->parent != nullptr; it = it->parent, len++);
 		if (len > sizeof(wpd->path))
 			return false;
 

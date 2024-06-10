@@ -1258,7 +1258,7 @@
 	//export_constant(SC_IGNOREDEF);
 	export_constant(SC_HELLPOWER);
 	export_constant(SC_INVINCIBLE);
-	export_constant(SC_INVINCIBLEOFF);
+	//export_constant(SC_INVINCIBLEOFF);
 	export_constant(SC_MANU_ATK);
 	export_constant(SC_MANU_DEF);
 	export_constant(SC_SPL_ATK);
@@ -4242,6 +4242,8 @@
 	export_constant(RC2_ILLUSION_TURTLE);
 	export_constant(RC2_RACHEL_SANCTUARY);
 	export_constant(RC2_ILLUSION_LUANDA);
+	export_constant(RC2_ILLUSION_FROZEN);
+	export_constant(RC2_ILLUSION_MOONLIGHT);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -7781,6 +7783,13 @@
 	export_constant(IG_COSTUMEMILEPACK_34_1);
 	export_constant(IG_COSTUMEMILEPACK_34_2);
 	export_constant(IG_COSTUMEMILEPACK_34_3);
+	export_constant(IG_AEGIS_102947);
+	export_constant(IG_AEGIS_102948);
+	export_constant(IG_AEGIS_103033);
+	export_constant(IG_AEGIS_103034);
+	export_constant(IG_P_BOOSTER_CALL_PACKAGE);
+	export_constant(IG_P_COMPENSATION_BOX);
+	export_constant(IG_ENCHANT_STONE_BOX35);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -9088,6 +9097,37 @@
 	export_constant_npc(JT_4_EVT_LAMMIR);
 	export_constant_npc(JT_4_EVT_SULKI);
 	export_constant_npc(JT_4_EVT_KKAT);
+	export_constant_npc(JT_4_EP21_SOLDIER_A);
+	export_constant_npc(JT_4_EP21_SOLDIER_B);
+	export_constant_npc(JT_4_EP21_M_WORKER_A);
+	export_constant_npc(JT_4_EP21_M_WORKER_B);
+	export_constant_npc(JT_4_EP21_F_WORKER_A);
+	export_constant_npc(JT_4_EP21_F_WORKER_B);
+	export_constant_npc(JT_4_EP21_WORKER_KID_A);
+	export_constant_npc(JT_4_EP21_WORKER_KID_B);
+	export_constant_npc(JT_4_EP21_TAN);
+	export_constant_npc(JT_4_EP21_TRIS);
+	export_constant_npc(JT_4_EP21_NADOYO);
+	export_constant_npc(JT_4_EP21_REINHARDT);
+	export_constant_npc(JT_4_EP21_WILHELM);
+	export_constant_npc(JT_4_EP21_MARISTELLA);
+	export_constant_npc(JT_4_EP21_YOHAN);
+	export_constant_npc(JT_4_EP21_RICHARD);
+	export_constant_npc(JT_4_EP21_VALDARIS);
+	export_constant_npc(JT_4_EP21_GUNTER);
+	export_constant_npc(JT_4_EP21_GALAXIA_A);
+	export_constant_npc(JT_4_EP21_GALAXIA_B);
+	export_constant_npc(JT_4_EP21_IVAN);
+	export_constant_npc(JT_4_EP21_LALAILA);
+	export_constant_npc(JT_4_EP21_ILSE);
+	export_constant_npc(JT_4_EP21_HOWELL);
+	export_constant_npc(JT_4_EP21_EPESTO);
+	export_constant_npc(JT_4_EP21_HEINE_TAB);
+	export_constant_npc(JT_4_EP21_IANA);
+	export_constant_npc(JT_4_EP21_LEE);
+	export_constant_npc(JT_4_EP21_AURELIE);
+	export_constant_npc(JT_4_EP21_HOWELL_S);
+	export_constant_npc(JT_4_EP21_TAN_S);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
@@ -10452,6 +10492,7 @@
 	export_constant(HAT_EF_C_BABY_GLOOM);
 	export_constant(HAT_EF_WINTERNIGHTBELLS);
 	export_constant(HAT_EF_NIGHTSKYOFRUTIE);
+	export_constant(HAT_EF_RAINBOW_POISON_MASTER);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -10584,8 +10625,9 @@
 	export_constant(PCBLOCK_SITSTAND);
 	export_constant(PCBLOCK_COMMANDS);
 	export_constant(PCBLOCK_NPCCLICK);
-	export_constant(PCBLOCK_NPC);
 	export_constant(PCBLOCK_EMOTION);
+	export_constant(PCBLOCK_EQUIP);
+	export_constant(PCBLOCK_NPC);
 	export_constant(PCBLOCK_ALL);
 
 	/* convertpcinfo command */

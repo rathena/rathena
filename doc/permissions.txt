@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20130613
+//= 20240414
 //===== Description: =========================================
 //= List of available permissions and their functions.
 //============================================================
@@ -227,6 +227,6 @@ Allows player to use the client command /macro_detector.
 
 *macro_register
 
-Allows player to use the client commands /maco_register (used to add new captcha) and /macro_preview (used to preview captcha by ID).
+Allows player to use the client commands /macro_register (used to add new captcha) and /macro_preview (used to preview captcha by ID).
 
 ---------------------------------------

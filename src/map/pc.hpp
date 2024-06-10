@@ -446,7 +446,8 @@ public:
 		bool barter_open;
 		bool barter_extended_open;
 		bool enchantgrade_open; // Whether the enchantgrade window is open or not
-		unsigned int block_action : 10;
+		// Bitmask of e_pcblock_action_flag values
+		uint16 block_action;
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
 		uint16 inventory_expansion_amount;
@@ -1174,7 +1175,7 @@ static bool pc_cant_act( map_session_data* sd ){
 #define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progress) {
-	return sd == NULL || (sd->state.workinprogress&progress) == progress;
+	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
 }
 
 uint16 pc_maxparameter(map_session_data *sd, e_params param);

@@ -1495,6 +1495,38 @@ enum e_job_types
 	JT_4_EVT_SULKI,
 	JT_4_EVT_KKAT,
 
+	JT_4_EP21_SOLDIER_A = 10564,
+	JT_4_EP21_SOLDIER_B,
+	JT_4_EP21_M_WORKER_A,
+	JT_4_EP21_M_WORKER_B,
+	JT_4_EP21_F_WORKER_A,
+	JT_4_EP21_F_WORKER_B,
+	JT_4_EP21_WORKER_KID_A,
+	JT_4_EP21_WORKER_KID_B,
+	JT_4_EP21_TAN,
+	JT_4_EP21_TRIS,
+	JT_4_EP21_NADOYO,
+	JT_4_EP21_REINHARDT,
+	JT_4_EP21_WILHELM,
+	JT_4_EP21_MARISTELLA,
+	JT_4_EP21_YOHAN,
+	JT_4_EP21_RICHARD,
+	JT_4_EP21_VALDARIS,
+	JT_4_EP21_GUNTER,
+	JT_4_EP21_GALAXIA_A,
+	JT_4_EP21_GALAXIA_B,
+	JT_4_EP21_IVAN,
+	JT_4_EP21_LALAILA,
+	JT_4_EP21_ILSE,
+	JT_4_EP21_HOWELL,
+	JT_4_EP21_EPESTO,
+	JT_4_EP21_HEINE_TAB,
+	JT_4_EP21_IANA,
+	JT_4_EP21_LEE,
+	JT_4_EP21_AURELIE,
+	JT_4_EP21_HOWELL_S,
+	JT_4_EP21_TAN_S,
+
 	JT_ROZ_MQ_XAVIER = 13000,
 	JT_ROZ_MQ_MOCLORD,
 	JT_ROZ_MQ_SKULD,
@@ -1598,7 +1630,7 @@ void npc_unload_duplicates (struct npc_data* nd);
 int npc_unload(struct npc_data* nd, bool single);
 int npc_reload(void);
 void npc_read_event_script(void);
-int npc_script_event(map_session_data* sd, enum npce_event type);
+size_t npc_script_event( map_session_data& sd, enum npce_event type );
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);

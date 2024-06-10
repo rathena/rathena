@@ -769,7 +769,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnChangeMap: true
-    MinDuration: 5000
   - Status: Keeping
     DurationLookup: NPC_KEEPING
     CalcFlags:
@@ -2824,23 +2823,12 @@ Body:
     Icon: EFST_INVINCIBLE
     DurationLookup: NPC_INVINCIBLE
     CalcFlags:
+      Aspd: true
       Speed: true
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    EndOnStart:
-      Invincibleoff: true
-  - Status: Invincibleoff
-    DurationLookup: NPC_INVINCIBLEOFF
-    CalcFlags:
-      Speed: true
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-    EndOnStart:
-      Invincible: true
   - Status: Manu_Atk
     Icon: EFST_MANU_ATK
     Flags:

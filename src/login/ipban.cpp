@@ -25,7 +25,7 @@ std::string ipban_codepage = "";
 std::string ipban_table = "ipbanlist";
 
 // globals
-static Sql* sql_handle = NULL;
+static Sql* sql_handle = nullptr;
 static int cleanup_timer_id = INVALID_TIMER;
 static bool ipban_inited = false;
 
@@ -39,7 +39,7 @@ TIMER_FUNC(ipban_cleanup);
  */
 bool ipban_check(uint32 ip) {
 	uint8* p = (uint8*)&ip;
-	char* data = NULL;
+	char* data = nullptr;
 	int matches;
 
 	if( !login_config.ipban )
@@ -56,7 +56,7 @@ bool ipban_check(uint32 ip) {
 	if( SQL_ERROR == Sql_NextRow(sql_handle) )
 		return true;// Shouldn't happen, but just in case...
 
-	Sql_GetData(sql_handle, 0, &data, NULL);
+	Sql_GetData(sql_handle, 0, &data, nullptr);
 	matches = atoi(data);
 	Sql_FreeResult(sql_handle);
 
@@ -226,5 +226,5 @@ void ipban_final(void) {
 
 	// close connections
 	Sql_Free(sql_handle);
-	sql_handle = NULL;
+	sql_handle = nullptr;
 }

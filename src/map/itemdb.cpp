@@ -1158,6 +1158,29 @@ void ItemDatabase::loadingFinished(){
 			}
 		}
 
+		if (item->type != IT_ARMOR && item->type != IT_SHADOWGEAR && item->def > 0) {
+			ShowWarning( "Item %s is not a armor or shadowgear. Defaulting Defense to 0.\n", item->name.c_str() );
+			item->def = 0;
+		}
+
+		if (item->type != IT_WEAPON && item->type != IT_AMMO && item->atk > 0) {
+			ShowWarning( "Item %s is not a weapon or ammo. Defaulting Attack to 0.\n", item->name.c_str() );
+			item->atk = 0;
+		}
+
+		if (item->type != IT_WEAPON) {
+#ifdef RENEWAL
+			if (item->matk > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting MagicAttack to 0.\n", item->name.c_str() );
+				item->matk = 0;
+			}
+#endif
+			if (item->range > 0) {
+				ShowWarning( "Item %s is not a weapon. Defaulting Range to 0.\n", item->name.c_str() );
+				item->range = 0;
+			}
+		}
+
 		// When a particular price is not given, we should base it off the other one
 		if (!hasPriceValue[item->nameid].has_buy && hasPriceValue[item->nameid].has_sell)
 			item->value_buy = item->value_sell * 2;
@@ -2883,7 +2906,7 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 * Return a random group entry from Item Group
 * @param group_id
 * @param sub_group: 0 is 'must' item group, random groups start from 1
-* @return Item group entry or NULL on fail
+* @return Item group entry or nullptr on fail
 */
 std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
@@ -2930,7 +2953,7 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
 	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
-	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
+	tmp.expire_time = (data->duration) ? (unsigned int)(time(nullptr) + data->duration*60) : 0;
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
 		tmp.card[1] = 0;
@@ -3019,7 +3042,7 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 
 /** Searches for the item_data. Use this to check if item exists or not.
 * @param nameid
-* @return *item_data if item is exist, or NULL if not
+* @return *item_data if item is exist, or nullptr if not
 */
 std::shared_ptr<item_data> itemdb_exists(t_itemid nameid) {
 	return item_db.find(nameid);
@@ -3757,10 +3780,10 @@ bool itemdb_parse_roulette_db(void)
 			unsigned short amount;
 			int level, flag;
 
-			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
-			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = strtoul(data, nullptr, 10);
-			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
-			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
+			Sql_GetData(mmysql_handle, 1, &data, nullptr); level = atoi(data);
+			Sql_GetData(mmysql_handle, 2, &data, nullptr); item_id = strtoul(data, nullptr, 10);
+			Sql_GetData(mmysql_handle, 3, &data, nullptr); amount = atoi(data);
+			Sql_GetData(mmysql_handle, 4, &data, nullptr); flag = atoi(data);
 
 			if (!item_db.exists(item_id)) {
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
@@ -3839,9 +3862,9 @@ static void itemdb_roulette_free(void) {
 			aFree(rd.qty[i]);
 		if (rd.flag[i])
 			aFree(rd.flag[i]);
-		rd.nameid[i] = NULL;
-		rd.qty[i] = NULL;
-		rd.flag[i] = NULL;
+		rd.nameid[i] = nullptr;
+		rd.qty[i] = nullptr;
+		rd.flag[i] = nullptr;
 		rd.items[i] = 0;
 	}
 }

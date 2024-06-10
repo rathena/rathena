@@ -53,7 +53,7 @@ static searchstore_search_t searchstore_getsearchfunc(unsigned char type)
 		case SEARCHTYPE_BUYING_STORE: return &buyingstore_search;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -68,7 +68,7 @@ static searchstore_searchall_t searchstore_getsearchallfunc(unsigned char type)
 		case SEARCHTYPE_BUYING_STORE: return &buyingstore_searchall;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -153,7 +153,7 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 	if( !sd->searchstore.open )
 		return;
 
-	if( ( store_searchall = searchstore_getsearchallfunc(type) ) == NULL ) {
+	if( ( store_searchall = searchstore_getsearchallfunc(type) ) == nullptr ) {
 		ShowError("searchstore_query: Unknown search type %u (account_id=%d).\n", (unsigned int)type, sd->bl.id);
 		return;
 	}
@@ -316,7 +316,7 @@ void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL ) { // no longer online
+	if( ( pl_sd = map_id2sd(account_id) ) == nullptr ) { // no longer online
 		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}

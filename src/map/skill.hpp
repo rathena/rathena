@@ -182,10 +182,6 @@ enum e_skill_unit_flag : uint8 {
 	UF_MAX,
 };
 
-/// Walk intervals at which chase-skills are attempted to be triggered.
-/// If you change this, make sure it's an odd value (for icewall block behavior).
-#define WALK_SKILL_INTERVAL 5
-
 /// Time that's added to canact delay on castbegin and substracted on castend
 /// This is to prevent hackers from sending a skill packet after cast but before a timer triggers castend
 const t_tick SECURITY_CASTTIME = 100;
@@ -538,7 +534,6 @@ int skill_get_hp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_mhp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_sp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_ap( uint16 skill_id, uint16 skill_lv );
-int skill_get_status_count( uint16 skill_id );
 int skill_get_hp_rate( uint16 skill_id, uint16 skill_lv );
 int skill_get_sp_rate( uint16 skill_id, uint16 skill_lv );
 int skill_get_ap_rate( uint16 skill_id, uint16 skill_lv );
@@ -547,7 +542,7 @@ int skill_get_weapontype( uint16 skill_id );
 int skill_get_ammotype( uint16 skill_id );
 int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv );
 int skill_get_state(uint16 skill_id);
-int skill_get_status_count( uint16 skill_id );
+size_t skill_get_status_count( uint16 skill_id );
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 unsigned short skill_dummy2skill_id(unsigned short skill_id);
 
@@ -596,8 +591,8 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id);
 int skill_check_bl_sc(struct block_list *target, va_list ap);
 
 // Skill conditions check and remove [Inkfish]
-bool skill_check_condition_castbegin(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
-bool skill_check_condition_castend(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
+bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
 int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
 void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct s_skill_condition skill_get_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
@@ -610,9 +605,9 @@ void skill_unit_move_unit_group( std::shared_ptr<s_skill_unit_group> group, int1
 void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 
 int skill_sit(map_session_data *sd, bool sitting);
-void skill_repairweapon(map_session_data *sd, int idx);
+void skill_repairweapon( map_session_data& sd, int idx );
 void skill_identify(map_session_data *sd,int idx);
-void skill_weaponrefine(map_session_data *sd,int idx); // [Celest]
+void skill_weaponrefine( map_session_data& sd, int idx ); // [Celest]
 int skill_autospell(map_session_data *md,uint16 skill_id);
 
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal);
@@ -621,9 +616,9 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 int8 skill_isCopyable(map_session_data *sd, uint16 skill_id);
 
 // Abnormal status
-bool skill_isNotOk(uint16 skill_id, map_session_data *sd);
+bool skill_isNotOk( uint16 skill_id, map_session_data& sd );
 bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv);
-bool skill_isNotOk_mercenary(uint16 skill_id, s_mercenary_data *md);
+bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
@@ -2775,19 +2770,19 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 /**
  * Mechanic
  **/
-int skill_magicdecoy(map_session_data *sd, t_itemid nameid);
+void skill_magicdecoy( map_session_data& sd, t_itemid nameid );
 
 /**
  * Guiltoine Cross
  **/
-int skill_poisoningweapon( map_session_data *sd, t_itemid nameid);
+void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
 
 /**
  * Auto Shadow Spell (Shadow Chaser)
  **/
-int skill_select_menu(map_session_data *sd,uint16 skill_id);
+void skill_select_menu( map_session_data& sd, uint16 skill_id );
 
-int skill_elementalanalysis(map_session_data *sd, int n, uint16 skill_lv, unsigned short *item_list); // Sorcerer Four Elemental Analisys.
+int skill_elementalanalysis( map_session_data& sd, int n, uint16 skill_lv, unsigned short *item_list ); // Sorcerer Four Elemental Analisys.
 int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
