@@ -3168,7 +3168,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				party_reply_invite(sd,sd->party_invite,0);
 
 			if(sd->guild_invite > 0)
-				guild_reply_invite(sd,sd->guild_invite,0);
+				guild_reply_invite( *sd, sd->guild_invite, 0 );
 
 			if(sd->guild_alliance > 0)
 				guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
