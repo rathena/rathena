@@ -1434,4 +1434,6 @@ void clif_set_npc_window_size(map_session_data& sd, int width, int height);
 void clif_set_npc_window_pos(map_session_data& sd, int x, int y);
 void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y);
 
+void clif_goldpc_info( map_session_data& sd );
+
 #endif /* CLIF_HPP */

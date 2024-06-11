@@ -65,6 +65,12 @@ class MapGuild;
 #define ATTENDANCE_DATE_VAR "#AttendanceDate"
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 #define ACHIEVEMENTLEVEL "AchievementLevel"
+#ifndef GOLDPC_POINT_VAR
+	#define GOLDPC_POINT_VAR "Goldpc_Points"
+#endif
+#ifndef GOLDPC_SECONDS_VAR
+	#define GOLDPC_SECONDS_VAR "Goldpc_Seconds"
+#endif
 
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
@@ -942,6 +948,8 @@ public:
 	s_macro_detect macro_detect;
 
 	std::vector<uint32> party_booking_requests;
+
+	int goldpc_tid;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1752,5 +1760,7 @@ void pc_macro_reporter_process(map_session_data &sd, int32 reporter_account_id =
 #ifdef MAP_GENERATOR
 void pc_reputation_generate();
 #endif
+
+TIMER_FUNC(pc_goldpc_update);
 
 #endif /* PC_HPP */
