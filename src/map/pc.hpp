@@ -942,6 +942,9 @@ public:
 	s_macro_detect macro_detect;
 
 	std::vector<uint32> party_booking_requests;
+
+	int party_create_byscript;
+	int party_create_byscript_result;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table

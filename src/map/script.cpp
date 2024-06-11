@@ -23144,6 +23144,13 @@ BUILDIN_FUNC(party_create)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if (sd->party_create_byscript) {
+		st->state = RUN;
+		sd->party_create_byscript = 0;
+		script_pushint(st, sd->party_create_byscript_result);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
 	if( sd->status.party_id ) {
 		script_pushint(st,-2);
 		return SCRIPT_CMD_FAILURE;
@@ -23160,8 +23167,17 @@ BUILDIN_FUNC(party_create)
 	if( script_getnum(st,5) )
 		item2 = 1;
 
-	party_create_byscript = 1;
-	script_pushint(st,party_create(sd,party_name,item1,item2));
+	auto ret = party_create(sd,party_name,item1,item2);
+
+	if (ret != 1) {
+		script_pushint(st, ret);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// At this time we've sent the request of party-creating to the char-server,
+	// and we're waiting for the response.
+	sd->party_create_byscript = 1;
+	st->state = RERUNLINE;
 	return SCRIPT_CMD_SUCCESS;
 }
 
