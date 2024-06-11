@@ -23916,7 +23916,7 @@ BUILDIN_FUNC(clan_join){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( clan_member_join( sd, clan_id, sd->status.account_id, sd->status.char_id ) )
+	if( clan_member_join( *sd, clan_id, sd->status.account_id, sd->status.char_id ) )
 		script_pushint(st, true);
 	else
 		script_pushint(st, false);
@@ -23925,14 +23925,14 @@ BUILDIN_FUNC(clan_join){
 }
 
 BUILDIN_FUNC(clan_leave){
-	map_session_data *sd;
+	map_session_data* sd;
 
 	if( !script_charid2sd( 2, sd ) ){
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( clan_member_leave( sd, sd->status.clan_id, sd->status.account_id, sd->status.char_id ) )
+	if( clan_member_leave( *sd, sd->status.clan_id, sd->status.account_id, sd->status.char_id ) )
 		script_pushint(st, true);
 	else
 		script_pushint(st, false);

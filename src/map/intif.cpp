@@ -3686,7 +3686,7 @@ void intif_parse_clans( int fd ){
 	clan_load_clandata( ( RFIFOW(fd, 2) - 4 ) / sizeof( struct clan ), (struct clan*)RFIFOP(fd,4) );
 }
 
-int intif_clan_message(int clan_id,uint32 account_id,const char *mes,int len){
+int intif_clan_message( int clan_id, uint32 account_id, const char *mes, size_t len ){
 	if (CheckForCharServer())
 		return 0;
 
@@ -3695,7 +3695,7 @@ int intif_clan_message(int clan_id,uint32 account_id,const char *mes,int len){
 
 	WFIFOHEAD(inter_fd, len + 12);
 	WFIFOW(inter_fd,0)=0x30A1;
-	WFIFOW(inter_fd,2)=len+12;
+	WFIFOW( inter_fd, 2 ) = static_cast<uint16>( len + 12 );
 	WFIFOL(inter_fd,4)=clan_id;
 	WFIFOL(inter_fd,8)=account_id;
 	safestrncpy(WFIFOCP(inter_fd,12),mes,len);
@@ -3749,7 +3749,7 @@ int intif_parse_clan_onlinecount( int fd ){
 
 	clan->connect_member = RFIFOW(fd,6);
 
-	clif_clan_onlinecount(clan);
+	clif_clan_onlinecount( *clan );
 
 	return 1;
 }
