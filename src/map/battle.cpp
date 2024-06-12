@@ -7507,8 +7507,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		// Res reduces physical damage by a percentage and
 		// is calculated before DEF and other reductions.
-		// This should be the official formula. [Rytech]
-		if ((wd.damage + wd.damage2) && tstatus->res > 0 && skill_id != MO_EXTREMITYFIST && skill_id != GN_CARTCANNON) {
+		// TODO: It seems all skills that use the simple defense formula (damage substracted by DEF+DEF2) ignore Res
+		// TODO: We should add a flag for those skills or use the IgnoreDefense flag after confirming all
+		// TODO: Res formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
+		if ((wd.damage + wd.damage2) && tstatus->res > 0 && skill_id != MO_EXTREMITYFIST && skill_id != GN_CARTCANNON && skill_id != NC_ARMSCANNON) {
 			short res = tstatus->res;
 			short ignore_res = 0;// Value used as a percentage.
 
@@ -8784,7 +8786,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #ifdef RENEWAL
 		// MRes reduces magical damage by a percentage and
 		// is calculated before MDEF and other reductions.
-		// This should be the official formula. [Rytech]
+		// TODO: Check if there are skills that ignore Mres, similar to skills that ignore Res
+		// TODO: MRes formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
 		if (ad.damage && tstatus->mres > 0) {
 			short mres = tstatus->mres;
 			short ignore_mres = 0;// Value used as percentage.
