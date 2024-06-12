@@ -1017,35 +1017,34 @@ void clif_party_job_and_level( map_session_data& sd );
 void clif_party_dead( map_session_data& sd );
 
 // guild
-void clif_guild_created(map_session_data *sd,int flag);
+void clif_guild_created( map_session_data& sd, int flag );
 void clif_guild_belonginfo( map_session_data& sd );
 void clif_guild_masterormember(map_session_data *sd);
 void clif_guild_basicinfo( map_session_data& sd );
 void clif_guild_allianceinfo(map_session_data *sd);
 void clif_guild_memberlist( map_session_data& sd );
-void clif_guild_skillinfo(map_session_data* sd);
+void clif_guild_skillinfo( map_session_data& sd );
 void clif_guild_send_onlineinfo(map_session_data *sd); //[LuzZza]
 void clif_guild_memberlogin_notice(const struct mmo_guild &g,int idx,int flag);
-void clif_guild_invite(const map_session_data &sd, const struct mmo_guild &g);
-void clif_guild_inviteack(map_session_data *sd,int flag);
-void clif_guild_leave(map_session_data *sd,const char *name,const char *mes);
-void clif_guild_expulsion(map_session_data* sd, const char* name, const char* mes, uint32 account_id);
+void clif_guild_invite( map_session_data& sd, const struct mmo_guild& g );
+void clif_guild_inviteack( map_session_data& sd, int flag );
+void clif_guild_leave( map_session_data& sd, const char* name, uint32 char_id, const char* mes );
+void clif_guild_expulsion( map_session_data& sd, const char* name, uint32 char_id, const char* mes );
 void clif_guild_positionchanged(const struct mmo_guild &g,int idx);
 void clif_guild_memberpositionchanged(const struct mmo_guild &g,int idx);
 void clif_guild_emblem(const map_session_data &sd, const struct mmo_guild &g);
 void clif_guild_emblem_area(struct block_list* bl);
-void clif_guild_notice(map_session_data* sd);
+void clif_guild_notice( map_session_data& sd );
 void clif_guild_message( const struct mmo_guild& g, uint32 account_id, const char* mes, size_t len );
 void clif_guild_reqalliance(map_session_data *sd,uint32 account_id,const char *name);
 void clif_guild_allianceack(map_session_data *sd,int flag);
 void clif_guild_delalliance(map_session_data *sd,int guild_id,int flag);
 void clif_guild_oppositionack(map_session_data *sd,int flag);
-void clif_guild_broken(map_session_data *sd,int flag);
+void clif_guild_broken( map_session_data& sd, int flag );
 void clif_guild_xy( map_session_data& sd );
 void clif_guild_xy_single( map_session_data& sd, map_session_data& tsd );
 void clif_guild_xy_remove( map_session_data& sd );
 void clif_guild_castle_list(map_session_data& sd);
-void clif_guild_castle_info(map_session_data& sd, std::shared_ptr<guild_castle> castle );
 void clif_guild_castle_teleport_res(map_session_data& sd, enum e_siege_teleport_result result);
 
 // Battleground
@@ -1433,5 +1432,7 @@ void clif_set_dialog_align(map_session_data& sd, int npcid, e_say_dialog_align a
 void clif_set_npc_window_size(map_session_data& sd, int width, int height);
 void clif_set_npc_window_pos(map_session_data& sd, int x, int y);
 void clif_set_npc_window_pos_percent(map_session_data& sd, int x, int y);
+
+void clif_noask_sub( map_session_data& sd, map_session_data& tsd, int type );
 
 #endif /* CLIF_HPP */
