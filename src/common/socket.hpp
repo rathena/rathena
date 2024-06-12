@@ -1,10 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_SOCKET_HPP_
-#define _SOCKET_HPP_
+#ifndef SOCKET_HPP
+#define SOCKET_HPP
 
-#include "cbasetypes.hpp"
+#include <ctime>
+
+#include <config/core.hpp>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -15,13 +17,24 @@
 	#include <netinet/in.h>
 #endif
 
-#include <time.h>
+#include "cbasetypes.hpp"
+#include "malloc.hpp"
+#include "timer.hpp" // t_tick
+
+#ifndef MAXCONN
+	#define MAXCONN FD_SETSIZE
+#endif
 
 #define FIFOSIZE_SERVERLINK 256*1024
 
 // socket I/O macros
 #define RFIFOHEAD(fd)
-#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
+#define WFIFOHEAD( fd, size ) \
+	do{ \
+		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
+			_realloc_writefifo( ( fd ), ( size ), ALC_MARK ); \
+		} \
+	}while( false )
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
@@ -33,6 +46,8 @@
 #define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
 #define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
+#define RFIFOF(fd,pos) (*(float*)RFIFOP(fd,pos))
+#define WFIFOF(fd,pos) (*(float*)WFIFOP(fd,pos))
 #define RFIFOQ(fd,pos) (*(uint64*)RFIFOP(fd,pos))
 #define WFIFOQ(fd,pos) (*(uint64*)WFIFOP(fd,pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
@@ -90,6 +105,7 @@ struct socket_data
 	size_t rdata_size, wdata_size;
 	size_t rdata_pos;
 	time_t rdata_tick; // time of last recv (for detecting timeouts); zero when timeout is disabled
+	time_t wdata_tick; // time of last send (for detecting timeouts);
 
 	RecvFunc func_recv;
 	SendFunc func_send;
@@ -101,7 +117,7 @@ struct socket_data
 
 // Data prototype declaration
 
-extern struct socket_data* session[FD_SETSIZE];
+extern struct socket_data* session[MAXCONN];
 
 extern int fd_max;
 
@@ -118,12 +134,14 @@ extern bool session_isActive(int fd);
 
 int make_listen_bind(uint32 ip, uint16 port);
 int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
-int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size);
-int realloc_writefifo(int fd, size_t addition);
+#define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
+#define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
+int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func );
+int _realloc_writefifo( int fd, size_t addition, const char* file, int line, const char* func );
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
 
-int do_sockets(int next);
+int do_sockets(t_tick next);
 void do_close(int fd);
 void socket_init(void);
 void socket_final(void);
@@ -182,4 +200,34 @@ void send_shortlist_add_fd(int fd);
 void send_shortlist_do_sends();
 #endif
 
-#endif /* _SOCKET_HPP_ */
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+extern int8 packet_buffer[UINT16_MAX];
+
+template <typename P>
+bool socket_send( int fd, P& packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, sizeof( P ) );
+	memcpy( WFIFOP( fd, 0 ), &packet, sizeof( P ) );
+	WFIFOSET( fd, sizeof( P ) );
+
+	return true;
+}
+
+template <typename P>
+bool socket_send( int fd, P* packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, packet->packetLength );
+	memcpy( WFIFOP( fd, 0 ), packet, packet->packetLength );
+	WFIFOSET( fd, packet->packetLength );
+
+	return true;
+}
+
+#endif /* SOCKET_HPP */

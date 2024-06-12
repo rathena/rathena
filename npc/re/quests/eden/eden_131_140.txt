@@ -254,13 +254,13 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 					}
 					break;
 				case 2:
-					mes "Do you know the story about Satan Morroc? I want to sing a song of their story even when time passes by.";
+					mes "Do you know the story about Satan Morocc? I want to sing a song of their story even when time passes by.";
 					next;
 					switch( select( "Angel Incarnation", "Black Nightmare Incarnation", "Ghost Incarnation" ) ) {
 						mes "[Ragi]";
 					case 1:
 						if (checkquest(13156,PLAYTIME) == 0) {
-							mes "A monster from Morroc has wings like an angel. Maybe, Satan Morocc wants to be an angel?";
+							mes "A monster from Morocc has wings like an angel. Maybe, Satan Morocc wants to be an angel?";
 							next;
 							mes "[Ragi]";
 							mes "Haha please do not mind. It is just joke of a story teller. Please give me another story next time.";
@@ -327,7 +327,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 							mes "This story should be spread out for weak adventurers like me! Because not everyone can be adventurer.";
 							next;
 							mes "[Ragi]";
-							mes "Maybe, adventurers have a good merit to know this kind of story. So can you please look for these creatures near Morroc?";
+							mes "Maybe, adventurers have a good merit to know this kind of story. So can you please look for these creatures near Morocc?";
 						}
 						else if (checkquest(13159,HUNTING) == 2) {
 							mes "Wow. There are so many stories coming to me! Thanks to you!";

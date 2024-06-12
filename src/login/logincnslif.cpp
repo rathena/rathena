@@ -1,24 +1,17 @@
-/**
- * @file logincnslif.c
- * Module purpose is to handle incoming and outgoing requests with console.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "logincnslif.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
-#include "../common/mmo.hpp" //cbasetype + NAME_LENGTH
-#include "../common/showmsg.hpp" //show notice
-#include "../common/md5calc.hpp"
-#include "../common/ers.hpp"
-#include "../common/cli.hpp"
-#include "../common/timer.hpp"
-#include "../common/strlib.hpp"
+#include <common/cli.hpp>
+#include <common/md5calc.hpp>
+#include <common/mmo.hpp> //cbasetype + NAME_LENGTH
+#include <common/showmsg.hpp> //show notice
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
 
 #include "login.hpp"
 
@@ -35,7 +28,7 @@ void display_helpscreen(bool do_exit) {
 	ShowInfo("  -v [--version]\t\tDisplays the server's version.\n");
 	ShowInfo("  --run-once\t\t\tCloses server after loading (testing).\n");
 	ShowInfo("  --login-config <file>\t\tAlternative login-server configuration.\n");
-	ShowInfo("  --lan-config <file>\t\tAlternative lag configuration.\n");
+	ShowInfo("  --lan-config <file>\t\tAlternative lan configuration.\n");
 	ShowInfo("  --msg-config <file>\t\tAlternative message configuration.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
@@ -64,20 +57,16 @@ int logcnslif_get_options(int argc, char ** argv) {
 			} else if (strcmp(arg, "version") == 0) {
 				display_versionscreen(true);
 			} else if (strcmp(arg, "run-once") == 0){ // close the map-server as soon as its done.. for testing [Celest]
-				runflag = CORE_ST_STOP;
-			} else if (SERVER_TYPE & (ATHENA_SERVER_LOGIN)) { //login
-				if (strcmp(arg, "lan-config") == 0) {
-					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.lanconf_name, argv[++i], sizeof(login_config.lanconf_name));
-				}
-				if (strcmp(arg, "login-config") == 0) {
-					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
-				}
-				if (strcmp(arg, "msg-config") == 0) {
-					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
-				} else {
-					ShowError("Unknown option '%s'.\n", argv[i]);
-					exit(EXIT_FAILURE);
-				}
+				global_core->set_run_once( true );
+			} else if (strcmp(arg, "lan-config") == 0) {
+				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.lanconf_name, argv[++i], sizeof(login_config.lanconf_name));
+			} else if (strcmp(arg, "login-config") == 0) {
+				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
+			} else if (strcmp(arg, "msg-config") == 0) {
+				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
+			} else {
+				ShowError("Unknown option '%s'.\n", argv[i]);
+				exit(EXIT_FAILURE);
 			}
 		} else switch (arg[0]) {// short option
 			case '?':
@@ -121,7 +110,7 @@ int cnslif_parse(const char* buf){
 	if( n == 2 ){
 		if(strcmpi("server", type) == 0 ){
 			if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
-				runflag = 0;
+				global_core->signal_shutdown();
 			}
 			else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
 				ShowInfo(CL_CYAN "Console: " CL_BOLD "I'm Alive." CL_RESET"\n");
@@ -149,15 +138,11 @@ int cnslif_parse(const char* buf){
 			ShowStatus("Console: Account '%s' created successfully.\n", username);
 		}
 	}
-	else if( strcmpi("ers_report", type) == 0 ){
-		ers_report();
-	}
 	else if( strcmpi("help", type) == 0 ){
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
 		ShowInfo("\t server:alive => Checks if the server is running.\n");
 		ShowInfo("\t server:reloadconf => Reload config file: \"%s\"\n", login_config.loginconf_name);
-		ShowInfo("\t ers_report => Displays database usage.\n");
 		ShowInfo("\t create:<username> <password> <sex:M|F> => Creates a new account.\n");
 	}
 	return 1;

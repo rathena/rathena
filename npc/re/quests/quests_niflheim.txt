@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Quest NPCs related to Niflheim
+//===== Description: =========================================
+//= [Official Conversion]
+//= Piano Key Ouest
+//===== Additional Comments: =================================
+//= 1.0 Moved Piano3 to pre-re/re paths. [Daegaladh]
+//============================================================
+
+nif_in,118,151,0	duplicate(Piano3)	#Piano3	HIDDEN_NPC,1,1

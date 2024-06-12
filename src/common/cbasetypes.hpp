@@ -1,5 +1,8 @@
-#ifndef _CBASETYPES_HPP_
-#define _CBASETYPES_HPP_
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#ifndef CBASETYPES_HPP
+#define CBASETYPES_HPP
 
 /*              +--------+-----------+--------+---------+
  *              | ILP32  |   LP64    |  ILP64 | (LL)P64 |
@@ -59,7 +62,8 @@
 // debug function name
 #ifndef __NETBSD__
 #if __STDC_VERSION__ < 199901L
-#	if __GNUC__ >= 2
+// Microsoft also supports this since C++11
+#	if __GNUC__ >= 2 || defined(_MSC_VER)
 #		define __func__ __FUNCTION__
 #	else
 #		define __func__ ""
@@ -83,7 +87,7 @@
 #endif
 
 #include <cinttypes>
-#include <limits.h>
+#include <climits>
 
 // temporary fix for bugreport:4961 (unintended conversion from signed to unsigned)
 // (-20 >= UCHAR_MAX) returns true
@@ -174,19 +178,7 @@ typedef unsigned long int   ppuint32;
 //////////////////////////////////////////////////////////////////////////
 // integer with exact processor width (and best speed)
 //////////////////////////////
-#include <stddef.h> // size_t
-//#include <stdbool.h> //boolean
-
-#if defined(WIN32) && !defined(MINGW) // does not have a signed size_t
-//////////////////////////////
-#if defined(_WIN64)	// naive 64bit windows platform
-typedef __int64			ssize_t;
-#else
-typedef int				ssize_t;
-#endif
-//////////////////////////////
-#endif
-//////////////////////////////
+#include <cstddef> // size_t
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -239,10 +231,6 @@ typedef uintptr_t uintptr;
 #define strncmpi			strncasecmp
 #define strnicmp			strncasecmp
 #endif
-#if defined(_MSC_VER) && _MSC_VER > 1200
-#define strtoull			_strtoui64
-#define strtoll				_strtoi64
-#endif
 
 // keyword replacement
 #ifdef _MSC_VER
@@ -276,18 +264,6 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // macro tools
-
-#ifdef SWAP // just to be sure
-#undef SWAP
-#endif
-// hmm only ints?
-//#define SWAP(a,b) { int temp=a; a=b; b=temp;}
-// if using macros then something that is type independent
-//#define SWAP(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
-// Avoid "value computed is not used" warning and generates the same assembly code
-#define SWAP(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
-#define swap_ptrcast(c,a,b) if ((a) != (b)) ((a) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))), (b) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))), (a) = static_cast<c>((void*)((intptr_t)(a) ^ (intptr_t)(b))) )
-#define swap_ptr(a,b) swap_ptrcast(void*,a,b)
 
 //////////////////////////////////////////////////////////////////////////
 // should not happen
@@ -324,7 +300,7 @@ typedef char bool;
 #define Assert(EX)
 #else
 // extern "C" {
-#include <assert.h>
+#include <cassert>
 // }
 #if !defined(DEFCPP) && defined(WIN32) && !defined(MINGW)
 #include <crtdbg.h>
@@ -336,7 +312,7 @@ typedef char bool;
 //////////////////////////////////////////////////////////////////////////
 // Has to be unsigned to avoid problems in some systems
 // Problems arise when these functions expect an argument in the range [0,256[ and are fed a signed char.
-#include <ctype.h>
+#include <cctype>
 #define ISALNUM(c) (isalnum((unsigned char)(c)))
 #define ISALPHA(c) (isalpha((unsigned char)(c)))
 #define ISCNTRL(c) (iscntrl((unsigned char)(c)))
@@ -358,7 +334,7 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Make sure va_copy exists
-#include <stdarg.h> // va_list, va_copy(?)
+#include <cstdarg> // va_list, va_copy(?)
 #if !defined(va_copy)
 #if defined(__va_copy)
 #define va_copy __va_copy
@@ -435,4 +411,4 @@ static inline uint32 u32min(uint32 a, uint32 b){ return (a < b) ? a : b; }
 static inline uint64 u64min(uint64 a, uint64 b){ return (a < b) ? a : b; }
 static inline size_t zmin(size_t a, size_t b){ return (a < b) ? a : b; }
 
-#endif /* _CBASETYPES_HPP_ */
+#endif /* CBASETYPES_HPP */

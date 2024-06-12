@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\c4\yml\common.cpp">
+      <Filter>c4\yml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\c4\yml\node.cpp">
+      <Filter>c4\yml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\c4\yml\parse.cpp">
+      <Filter>c4\yml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\c4\yml\preprocess.cpp">
+      <Filter>c4\yml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\c4\yml\tree.cpp">
+      <Filter>c4\yml</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\base64.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\char_traits.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\error.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\format.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\language.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\memory_resource.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\memory_util.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\time.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\utf.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ryml.hpp" />
+    <ClInclude Include="src\ryml_std.hpp" />
+    <ClInclude Include="src\c4\yml\detail\checks.hpp">
+      <Filter>c4\yml\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\detail\parser_dbg.hpp">
+      <Filter>c4\yml\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\detail\print.hpp">
+      <Filter>c4\yml\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\detail\stack.hpp">
+      <Filter>c4\yml\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\common.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\emit.def.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\emit.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\export.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\node.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\parse.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\preprocess.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\std\map.hpp">
+      <Filter>c4\yml\std</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\std\std.hpp">
+      <Filter>c4\yml\std</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\std\string.hpp">
+      <Filter>c4\yml\std</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\std\vector.hpp">
+      <Filter>c4\yml\std</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\tree.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\writer.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\yml.hpp">
+      <Filter>c4\yml</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\allocator.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\base64.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\blob.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\bitmask.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\charconv.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\c4_pop.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\c4_push.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\char_traits.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\common.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\compiler.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\config.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\cpu.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ctor_dtor.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\dump.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\enum.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\error.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\export.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\format.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\hash.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\language.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\memory_resource.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\memory_util.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\platform.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\preprocessor.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\restrict.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\span.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\std.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\std_fwd.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\string.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\string_fwd.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\tuple.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\vector.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\vector_fwd.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\substr.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\substr_fwd.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\szconv.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\time.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\type_name.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\types.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\unrestrict.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\utf.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\windows.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\windows_pop.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\windows_push.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\debugbreak\debugbreak.h">
+      <Filter>c4core\c4\ext\debugbreak</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\rng\rng.hpp">
+      <Filter>c4core\c4\ext\rng</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\sg14\inplace_function.h">
+      <Filter>c4core\c4\ext\sg14</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float.hpp">
+      <Filter>c4core\c4\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\ascii_number.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\bigint.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\decimal_to_binary.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\digit_comparison.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\fast_float.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\fast_table.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\float_common.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\parse_number.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\simple_decimal_conversion.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="src\ryml.natvis" />
+    <Natvis Include="ext\c4core\src\c4\c4core.natvis">
+      <Filter>c4core\c4</Filter>
+    </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="c4">
+      <UniqueIdentifier>{D96EB7E9-E07F-31EF-8A8C-CDA60AEE417F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4\yml">
+      <UniqueIdentifier>{8B015C5F-7E7E-3FB5-AD73-B4DFE72EDB71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4\yml\detail">
+      <UniqueIdentifier>{3C5B400E-465D-3800-9F6B-BF39F625C901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4\yml\std">
+      <UniqueIdentifier>{6C23B7CC-4249-3E28-8723-89E87DD7469F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core">
+      <UniqueIdentifier>{39A3ACE3-C18A-38C0-B620-F86E56C7F44E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4">
+      <UniqueIdentifier>{CE9AC4B8-59D1-317A-B9F5-103273091ED1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\ext">
+      <UniqueIdentifier>{C6E67CD5-B894-396A-B0E9-F0B4A549E24A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\ext\debugbreak">
+      <UniqueIdentifier>{8518CE85-3573-3FE9-B0A7-D39C0C140A5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\ext\fast_float">
+      <UniqueIdentifier>{80197B6E-B946-3178-8DC6-15F7DBB30247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\ext\fast_float\include">
+      <UniqueIdentifier>{7F5A78D2-86EE-391E-8B10-09AAD951EC4C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\ext\fast_float\include\fast_float">
+      <UniqueIdentifier>{940F13BB-46B0-32FE-B029-1262B3114D85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\ext\rng">
+      <UniqueIdentifier>{7E7EEA80-4D05-3B2A-9B19-BF37981F4D4F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\ext\sg14">
+      <UniqueIdentifier>{8C590705-4DBC-3BA8-8A9A-7702EA010856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="c4core\c4\std">
+      <UniqueIdentifier>{1A478CFE-7969-301B-8B3D-7D77AF3087E9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

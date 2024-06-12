@@ -9,15 +9,32 @@
 //============================================================
 
 prontera,156,179,6	script	test_getiteminfo	117,{
-	mes "Please enter an item ID.";
-	input .@value;
+	switch( select( "item ID", "aegis item name", "english item name" ) ) {
+	case 1:
+		mes "Please enter an item ID.";
+		input .@value;
 
-	// This line uses an INTERNAL function of your client to show item name by its ID!
-	// ^nItemID^XXXX -> Item Name
-	mes "Item ID: " + .@value + " ^nItemID^" + .@value;
+		// This line uses an INTERNAL function of your client to show item name by its ID!
+		// ^nItemID^XXXX -> Item Name
+		mes "Item ID: " + .@value + " ^nItemID^" + .@value;
 
+		mes "Current item info:";
+		for(.@id = 0; .@id <= 18; .@id++)
+			mes " getiteminfo(" + .@value + "," + .@id + ") = " + getiteminfo(.@value,.@id);
+		close;
+	case 2:
+		mes "Please enter an english item name.";
+		input .@value$;
+		mes "english item name: " + .@value$;
+		break;
+	case 3:
+		mes "Please enter an aegis item name.";
+		input .@value$;
+		mes "aegis item name: " + .@value$;
+		break;
+	}
 	mes "Current item info:";
-	for(.@id = 0; .@id <= 16; .@id++)
-		mes " getiteminfo(" + .@value + "," + .@id + ") = " + getiteminfo(.@value,.@id);
+	for(.@id = 0; .@id <= 18; .@id++)
+		mes " getiteminfo(" + .@value$ + "," + .@id + ") = " + getiteminfo(.@value$,.@id);
 	close;
 }

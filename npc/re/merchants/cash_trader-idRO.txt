@@ -197,7 +197,7 @@ ayothaya,212,171,5	duplicate(idRO_kafra)	Kafra Shop#ayo	721
 ayothaya,212,172,5	duplicate(idRO_kafra2)	Kafra Shop 2#ayo	80
 ayothaya,212,175,5	duplicate(idRO_rental)	Rental Shop#ayo	874
 
-// Louyang
+// Luoyang
 //============================================================
 louyang,208,102,3	duplicate(idRO_kafra)	Kafra Shop#lou	721
 louyang,207,102,3	duplicate(idRO_kafra2)	Kafra Shop 2#lou	80
@@ -253,7 +253,7 @@ morocc,164,261,3	duplicate(idRO_acc)	Acc and Kartu#moc	721
 morocc,164,263,3	duplicate(idRO_acc2)	Acc and Kartu 2#moc	80
 morocc,152,261,3	duplicate(idRO_rental)	Rental Shop#moc	874
 
-// Gonryun
+// Kunlun
 //============================================================
 gonryun,156,122,3	duplicate(idRO_kafra)	Kafra Shop#gon	721
 gonryun,155,122,3	duplicate(idRO_kafra2)	Kafra Shop 2#gon	80

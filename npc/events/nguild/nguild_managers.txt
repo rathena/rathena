@@ -39,7 +39,7 @@ function	script	F_GldManager	{
 		mes "Where are the guardians? Destroy these intruders!";
 		return;
 	}
-	if (strcharinfo(0) != getguildmaster(.@gid)){
+	if (is_guild_leader() == false){
 		mes "You're not ^5533FF" + getguildmaster(.@gid) + "^000000! I am here to follow ^5533FF" + getguildmaster(.@gid) + "^000000's command only";
 		return 0;
 	}

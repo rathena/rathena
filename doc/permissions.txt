@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20130613
+//= 20240414
 //===== Description: =========================================
 //= List of available permissions and their functions.
 //============================================================
@@ -32,6 +32,12 @@ vending, storage, mail, etc.
 *can_party
 
 Allows player to create and join parties.
+
+---------------------------------------
+
+*attendance
+
+Allows player to use the daily attendance system.
 
 ---------------------------------------
 
@@ -119,6 +125,12 @@ item delay, etc).
 
 ---------------------------------------
 
+*trade_unconditional
+
+Allows player to ignore the trade conditions of items (drop, trade, sell, cart, storage/gstorage, mail and auction).
+
+---------------------------------------
+ 
 ======================
 | 3. Command-related |
 ======================
@@ -204,5 +216,17 @@ Bypass max parameter limit while using @clonestat
 
 Allow to bypass the maximum stat parameter (at conf/player.conf) to
 maximum value 32,767.
+
+---------------------------------------
+
+*macro_detect
+
+Allows player to use the client command /macro_detector.
+
+---------------------------------------
+
+*macro_register
+
+Allows player to use the client commands /macro_register (used to add new captcha) and /macro_preview (used to preview captcha by ID).
 
 ---------------------------------------

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Pyramid Warp Script
+//= Morocc Pyramid Warp Script
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
@@ -7,12 +7,12 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Warp Points for Morroc Pyramid
+//= Warp Points for Morocc Pyramid
 //===== Additional Comments: =================================
 //= 1.1 Moved Sphinx warps to unique file. [L0ne_W0lf]
 //============================================================
 
-//= Morroc Pyramid ===========================================
+//= Morocc Pyramid ===========================================
 moc_pryd01,10,195,0	warp	mocp01	5,2,moc_pryd02,10,192
 moc_pryd01,195,9,0	warp	mocp001	2,5,moc_ruins,60,161
 moc_pryd01,90,109,0	warp	mocp02	1,2,moc_prydb1,100,185

@@ -108,7 +108,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				mes "And only 1 representative of you needs to talk to me, so don't annoy me...";
 				close;
 			}
-			if (getcharid(0) == getpartyleader(.@party_id,2)) {
+			if (is_party_leader(.@party_id) == true) {
 				mes "[Yggdrasil Gatekeeper]";
 				mes "The loyal servants of the Guardian... what can I do for you?";
 				next;
@@ -528,9 +528,9 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "Continuously, adventurers from Rune-Midgarts have attacked him and he is slowly losing his power. He would need more time to resurrect completely.";
 			next;
-			mes "Satan Morroc stopped to destroy the city of Morroc, turning it into a ruined desert, then started to rip the world apart.";
+			mes "Satan Morocc stopped to destroy the city of Morocc, turning it into a ruined desert, then started to rip the world apart.";
 			next;
-			mes "Satan Morroc was worried about those who would give chase, so he created Morocc clones to keep watch behind him.";
+			mes "Satan Morocc was worried about those who would give chase, so he created Morocc clones to keep watch behind him.";
 			next;
 			mes "Modeled after Morocc, their appearance made it difficult to go around the time-space gap.";
 			next;
@@ -538,13 +538,13 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "The reports of these adventurers have been sent to representatives of all kingdoms, and an expedition team has been created to find out more information.";
 			next;
-			mes "The scientists of Schwartzwalt created a combination metal, using fragments of metals found in the dimensional gorge.";
+			mes "The scientists of Schwarzwald created a combination metal, using fragments of metals found in the dimensional gorge.";
 			next;
-			mes "The Schwaltzvalt Republic requested approval to find the source of the new metal, and since Rune-Midgart couldn't complete the test themselves, they finally accepted.";
+			mes "The Schwarzwald Republic requested approval to find the source of the new metal, and since Rune-Midgarts couldn't complete the test themselves, they finally accepted.";
 			next;
 			mes "They associated together to gather volunteers. The Assassin Guild was the first to volunteer.";
 			next;
-			mes "The Assassins have a terrible past with Satan Morroc, so they gathered 18 members to chase him down.";
+			mes "The Assassins have a terrible past with Satan Morocc, so they gathered 18 members to chase him down.";
 			next;
 			mes "About 3 hours later, all 18 members returned without any problem, and each man and woman shared the information that they had collected.";
 			next;
@@ -1034,7 +1034,10 @@ spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
 			next;
 			mes "[Aide Arioss]";
 			mes "It can't compare with the effort you have put in for us... but please accept our token of friendship.";
-			getexp 1500000,350000;
+			if (checkre(3))
+				getexp 1500000,350000;
+			else
+				getexp 150000,35000;
 			getitem 6081,10; //Splendide_Coin
 			set ins_nyd,131;
 			mes "[Aide Arioss]";
@@ -1270,7 +1273,10 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			next;
 			mes "[Neat Etorr]";
 			mes "It's not a lot, but please this as a token of our appreciation.";
-			getexp 1500000,350000;
+			if (checkre(3))
+				getexp 1500000,350000;
+			else
+				getexp 150000,35000;
 			getitem 6080,10; //Manuk_Coin
 			set ins_nyd,132;
 			close;
@@ -1591,7 +1597,7 @@ OnTouch_:
 		mes "I thank you deeply for your decision. I will use what is left of my powers to open up the path towards the Guardian's Nest.";
 		next;
 		mes "[World Tree Yggdrasil]";
-		if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+		if (is_party_leader() == true) {
 			mes "The path to the Guardian's Nest is just past the waterfall by the large World Tree Yggdrasil to the North. The defensive mechanisms of the Sanctuary will start immediately.";
 			next;
 			mes "[World Tree Yggdrasil]";
@@ -1744,7 +1750,7 @@ OnTimer1830000:
 OnTimer1850000:
 	donpcevent instance_npcname("ins_nyd_1f_timer")+"::OnDisable";
 	donpcevent instance_npcname("nyd_call_mon_1")+"::OnDisable";
-	instance_warpall "mid_camp",310,150;
+	instance_warpall "mid_camp",310,150, instance_id();
 	stopnpctimer;
 	end;
 }
@@ -1844,7 +1850,7 @@ OnTouch:
 
 2@nyd,199,268,0	script	nyd_2f_boss_enter	-1,8,8,{
 OnTouch_:
-	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::OnEnable";
 		disablenpc instance_npcname("nyd_2f_boss_enter");
 		end;
@@ -1882,7 +1888,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_red")+"::OnEnable";
-		instance_warpall .@map$,115,278;
+		instance_warpall .@map$,115,278, instance_id();
 		end;
 	case 2:
 		mapannounce .@map$, "Nidhoggur's Shadow : I will freeze every last drop of your blood.",bc_map,"0xFFFF00";
@@ -1890,7 +1896,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_white")+"::OnEnable";
-		instance_warpall .@map$,115,373;
+		instance_warpall .@map$,115,373, instance_id();
 		end;
 	case 3:
 		mapannounce .@map$, "Nidhoggur's Shadow : Sleep for eternity in an empty illusion.",bc_map,"0xFFFF00";
@@ -1898,7 +1904,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_white")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnEnable";
-		instance_warpall .@map$,284,278;
+		instance_warpall .@map$,284,278, instance_id();
 		end;
 	case 4:
 		mapannounce .@map$, "Nidhoggur's Shadow : I'll let you enjoy the pain of dying slowly.",bc_map,"0xFFFF00";
@@ -1906,7 +1912,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_white")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnEnable";
-		instance_warpall .@map$,284,374;
+		instance_warpall .@map$,284,374, instance_id();
 		end;
 	}
 	end;
@@ -1998,11 +2004,11 @@ OnEnable:
 
 2@nyd,115,278,0	script	nyd_2f_red	-1,5,5,{
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp1")+"::OnEnable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp2")+"::OnEnable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp3")+"::OnEnable";
@@ -2014,7 +2020,7 @@ OnDisable:
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp1")+"::OnDisable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp2")+"::OnDisable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp3")+"::OnDisable";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnTouch:
@@ -2036,18 +2042,18 @@ OnTouch:
 	end;
 
 OnTimer10000:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	stopnpctimer;
 	end;
 }
 
 2@nyd,6,6,0	script	nyd_2f_red_c	-1,{
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	initnpctimer;
 	set .@map$, instance_mapname("2@nyd");
 	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
@@ -2099,7 +2105,7 @@ OnDisable:
 	stopnpctimer;
 	killmonster instance_mapname("2@nyd"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead"; //custom
 	donpcevent instance_npcname(substr(strnpcinfo(0),0,getstrlen(strnpcinfo(0))-3))+"::OnDisable";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnTimer180000:
@@ -2112,11 +2118,11 @@ OnTimer180000:
 2@nyd,130,298,0	script	nyd_2f_red_warp1	-1,6,6,{
 OnInstanceInit:
 OnDisable:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	end;
 
 OnTouch:

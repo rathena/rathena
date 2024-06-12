@@ -216,7 +216,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	}
 	switch(.@etower_timer) {
 	case -1:
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (is_party_leader() == true) {
 			mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
 			next;
 			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Return to Alberta:Cancel")) {
@@ -853,7 +853,7 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,181,9,191,45,"Aliza",1737,10,.@label$;
 		areamonster .@map$,181,9,191,45,"Zealotus",1200,5,.@label$;
 		areamonster .@map$,181,9,191,45,"Alice",1275,5,.@label$;
-		areamonster .@map$,181,9,191,45,"Green Maiden",1631,10,.@label$;
+		areamonster .@map$,181,9,191,45,"Green Maiden",1519,10,.@label$;
 		break;
 	case 74:
 		areamonster .@map$,267,9,277,45,"Dimik",1671,6,.@label$;
@@ -996,10 +996,10 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,9,9,19,45,"Skeggiold",1754,10,.@label$;
 		break;
 	case 97:
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1918,5,.@label$;
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1919,5,.@label$;
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1920,5,.@label$;
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1921,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1918,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1919,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1920,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1921,5,.@label$;
 		break;
 	case 98:
 		areamonster .@map$,181,9,191,45,"Kathryne Keyron",1639,2,.@label$;
@@ -1025,13 +1025,13 @@ function	script	F_Tower_Monster	{
 			else if (.@mob_ran == 6) 
 				areamonster .@map$,267,9,277,45,"Cecil Damon",1638,2,.@label$;
 			else if (.@mob_ran == 7) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1918,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1918,5,.@label$;
 			else if (.@mob_ran == 8) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1919,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1919,5,.@label$;
 			else if (.@mob_ran == 9) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1920,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1920,5,.@label$;
 			else if (.@mob_ran == 10) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1921,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1921,5,.@label$;
 			else if (.@mob_ran == 11) 
 				areamonster .@map$,267,9,277,45,"Valkyrie",1765,5,.@label$;
 			else if (.@mob_ran == 12) 
@@ -1248,11 +1248,11 @@ OnTimer5000:
 	end;
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	callfunc "F_Tower_Monster",
 		atoi(replacestr(strnpcinfo(0),"FGate102tower","")) + 1,
 		strnpcinfo(4),

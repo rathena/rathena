@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Guides
+//= Morocc Guides
 //===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: =====================================
@@ -8,7 +8,7 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Guides for the City of Morroc
+//= Guides for the City of Morocc
 //===== Additional Comments: =================================
 //= 1.1 Now using duplicate command.
 //= 1.2 Optimized, updated common guide names [Lupus]
@@ -20,8 +20,8 @@
 
 morocc,153,286,6	script	Guide#moc::MocGuide	707,{
 	cutin "moc_soldier",2;
-	mes "[Morroc Guide]";
-	mes "Welcome to Morroc,";
+	mes "[Morocc Guide]";
+	mes "Welcome to Morocc,";
 	mes "the frontier town of the";
 	mes "Rune-Midgarts Kingdom.";
 	mes "Please ask me for help if";
@@ -32,7 +32,7 @@ morocc,153,286,6	script	Guide#moc::MocGuide	707,{
 		next;
 		switch(select("City Guide:Remove Marks from Mini-Map:Notice:Cancel")) {
 		case 1:
-			mes "[Morroc Guide]";
+			mes "[Morocc Guide]";
 			mes "Please select";
 			mes "a location from";
 			mes "the following menu.";
@@ -50,7 +50,7 @@ morocc,153,286,6	script	Guide#moc::MocGuide	707,{
 				
 				switch(select("^FF0000Thief Guild^000000:Weapon Shop:Inn:Pub:Mercenary Guild:Forge:Cancel")) {
 				case 1:
-					mes "[Morroc Guide]";
+					mes "[Morocc Guide]";
 					mes "The Thief Guild is";
 					mes "in charge of all Job";
 					mes "Changes to the Thief";
@@ -61,50 +61,50 @@ morocc,153,286,6	script	Guide#moc::MocGuide	707,{
 						viewpoint 1,24,297,2,0xFF0000;
 					break;
 				case 2:
-					mes "[Morroc Guide]";
+					mes "[Morocc Guide]";
 					mes "The Weapon Shop";
 					mes "is in the southeast";
-					mes "end of Morroc.";
+					mes "end of Morocc.";
 					if (.@compass_check)
 						viewpoint 1,253,56,3,0xFF00FF;
 					break;
 				case 3:
-					mes "[Morroc Guide]";
+					mes "[Morocc Guide]";
 					mes "There are Inns";
 					mes "where you can rest";
 					mes "at the southeast and";
-					mes "northeast ends of Morroc.";
+					mes "northeast ends of Morocc.";
 					if (.@compass_check) {
 						viewpoint 1,197,66,4,0xFF00FF;
 						viewpoint 1,273,269,5,0xFF00FF;
 					}
 					break;
 				case 4:
-					mes "[Morroc Guide]";
+					mes "[Morocc Guide]";
 					mes "You can find the";
-					mes "Pub in northeast Morroc.";
+					mes "Pub in northeast Morocc.";
 					if (.@compass_check)
 						viewpoint 1,52,259,6,0xFF00FF;
 					break;
 				case 5:
-					mes "[Morroc Guide]";
+					mes "[Morocc Guide]";
 					mes "The Mercenary";
 					mes "Guild is located";
-					mes "in East Morroc.";
+					mes "in East Morocc.";
 					if (.@compass_check)
 						viewpoint 1,284,171,7,0x00FF00;
 					break;
 				case 6:
-					mes "[Morroc Guide]";
+					mes "[Morocc Guide]";
 					mes "The Forge is";
 					mes "located just";
 					mes "southwest from";
-					mes "the center of Morroc.";
+					mes "the center of Morocc.";
 					if (.@compass_check)
 						viewpoint 1,47,47,7,0xFF00FF;
 					break;
 				case 7:
-					mes "[Morroc Guide]";
+					mes "[Morocc Guide]";
 					mes "Please ask me to ''Remove";
 					mes "Marks from Mini-Map'' if you";
 					mes "no longer wish to have the";
@@ -124,7 +124,7 @@ morocc,153,286,6	script	Guide#moc::MocGuide	707,{
 			set .@compass_check,0;
 			break;
 		case 3:
-			mes "[Morroc Guide]";
+			mes "[Morocc Guide]";
 			mes "Advances in sorcery and";
 			mes "technology have allowed";
 			mes "us to update our information";
@@ -132,23 +132,23 @@ morocc,153,286,6	script	Guide#moc::MocGuide	707,{
 			mes "locations on your Mini-Map";
 			mes "for easier navigation.";
 			next;
-			mes "[Morroc Guide]";
+			mes "[Morocc Guide]";
 			mes "Your Mini-Map is located";
 			mes "in the upper right corner";
 			mes "of the screen. If you can't";
 			mes "see it, press the Ctrl + Tab";
 			mes "keys or click the ''Map'' button in your Basic Info Window.";
 			next;
-			mes "[Morroc Guide]";
+			mes "[Morocc Guide]";
 			mes "On your Mini-Map,";
 			mes "click on the ''+'' and ''-''";
 			mes "symbols to zoom in and";
 			mes "our of your Mini-Map. We";
 			mes "hope you enjoy your travels";
-			mes "here in the city of Morroc.";
+			mes "here in the city of Morocc.";
 			break;
 		case 4:
-			mes "[Morroc Guide]";
+			mes "[Morocc Guide]";
 			mes "Alright then,";
 			mes "try to stay out of";
 			mes "too much trouble";

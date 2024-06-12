@@ -85,7 +85,7 @@ brasilis,155,165,3	script	Signpost#bra1	858,{
 	close;
 }
 
-brasilis,195,231,3	script	Signpost#bra2	858,{
+brasilis,191,239,3	script	Signpost#bra2	858,{
 	mes ":: Verass Monument ::";
 	close;
 }

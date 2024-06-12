@@ -7,10 +7,17 @@ message( STATUS "Detecting local ZLIB" )
 find_path( ZLIB_LOCAL_INCLUDE_DIRS "zlib.h"
 	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
 	NO_DEFAULT_PATH )
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 find_library( ZLIB_LOCAL_LIBRARIES
-	NAMES zdll
-	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+	NAMES zlib
+	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/Win32"
 	NO_DEFAULT_PATH )
+else()
+find_library( ZLIB_LOCAL_LIBRARIES
+	NAMES zlib
+	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/x64"
+	NO_DEFAULT_PATH )
+endif()
 mark_as_advanced( ZLIB_LOCAL_LIBRARIES )
 mark_as_advanced( ZLIB_LOCAL_INCLUDE_DIRS )
 

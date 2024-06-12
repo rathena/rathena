@@ -33,7 +33,7 @@ prontera,124,297,3	script	Tialfi	706,{
 		cutin "god_tialpi01",2;
 		mes "[Tialfi]";
 		mes "Hmmm...";
-		mes "I can feel a strange force growing stronger and stronger, somewhere in Rune-Midgard.";
+		mes "I can feel a strange force growing stronger and stronger, somewhere in Midgard.";
 		next;
 		mes "[Tialfi]";
 		mes "Can you feel it?";
@@ -383,7 +383,7 @@ prt_fild01,196,47,3	script	Roskva	703,{
 		mes "can be found to the East.";
 		next;
 		mes "[Roskva]";
-		mes "Travel in a clock wise direction around Rune-Midgard and seek out the other Dwarves in order. Your final destination will be to the North.";
+		mes "Travel in a clock wise direction around Midgard and seek out the other Dwarves in order. Your final destination will be to the North.";
 		next;
 		mes "[Roskva]";
 		mes "If you happen to speak to them in the wrong order, please go talk to my brother Tialfi again.";
@@ -402,7 +402,7 @@ prt_fild01,196,47,3	script	Roskva	703,{
 		mes "can be found to the North.";
 		next;
 		mes "[Roskva]";
-		mes "Travel in a counter clock wise direction around Rune-Midgard and seek out the other Dwarves in order. Your final destination will be to the East.";
+		mes "Travel in a counter clock wise direction around Midgard and seek out the other Dwarves in order. Your final destination will be to the East.";
 		next;
 		mes "[Roskva]";
 		mes "If you happen to speak to them in the wrong order, please go talk to my brother Tialfi again.";
@@ -1964,7 +1964,11 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "me to do with this?";
 					close;
 				}
-				if (getequiprefinerycnt(.@part) >= 10) {
+				.@equip_id = getequipid(.@part);
+				.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
+				.@equip_refine = getequiprefinerycnt(.@part);
+				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+				if (.@equip_refine >= 10) {
 					mes "[Vestri]";
 					mes "Oh, this is excellent! This piece here has been perfectly refined! But this isn't what I want. I can't do any work on this at all.";
 					close;
@@ -1980,16 +1984,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "element of risk!";
 					close;
 				}
-				if ((getequipweaponlv(.@part) <= 1) && (getequipweaponlv(.@part) >= 3 )){
-					mes "[Vestri]";
-					mes "Hey...";
-					mes "Don't insult me by expecting me to work on anything less than a Level 4 weapon.";
-					next;
-					mes "[Vestri]";
-					mes "Bring me a Level 4 weapon for me to work on next time, got it?";
-					close;
-				}
-				if (getequipweaponlv(.@part) == 0){
+				if( .@itemtype != IT_WEAPON ){
 					mes "[Vestri]";
 					mes "Armor?!";
 					mes "Didn't I tell";
@@ -1999,6 +1994,15 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "[Vestri]";
 					mes "You can have a human";
 					mes "Blacksmith work on that kind of stuff! Now, a Dwarf like me needs something that's more of a challenge!";
+					close;
+				}
+				if( getequipweaponlv( .@part ) != 4 ){
+					mes "[Vestri]";
+					mes "Hey...";
+					mes "Don't insult me by expecting me to work on anything less than a Level 4 weapon.";
+					next;
+					mes "[Vestri]";
+					mes "Bring me a Level 4 weapon for me to work on next time, got it?";
 					close;
 				}
 
@@ -2037,6 +2041,10 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "Hurry up and get one.";
 					close;
 				}
+				// anti-hack
+				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+					close;
+
 				if (getequippercentrefinery(.@part) > rand(100)) {
 					mes "^3355FF*Clang Clang!*^000000";
 					successrefitem .@part;
@@ -2181,7 +2189,11 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "me to do with this?";
 					close;
 				}
-				if (getequiprefinerycnt(.@part) >= 10) {
+				.@equip_id = getequipid(.@part);
+				.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
+				.@equip_refine = getequiprefinerycnt(.@part);
+				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+				if (.@equip_refine >= 10) {
 					mes "[Vestri]";
 					mes "Oh, this is excellent! This piece here has been perfectly refined! But this isn't what I want. I can't do any work on this at all.";
 					close;
@@ -2197,21 +2209,21 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "element of risk!";
 					close;
 				}
-				if ((getequipweaponlv(.@part) <= 1) && (getequipweaponlv(.@part) >= 3 )){
+				if( .@itemtype != IT_WEAPON ){
+					mes "[Vestri]";
+					mes "Armor?!";
+					mes "Didn't I tell";
+					mes "you that I only work";
+					mes "on Level 4 weapons?";
+					close;
+				}
+				if( getequipweaponlv( .@part ) != 4 ){
 					mes "[Vestri]";
 					mes "Hey...";
 					mes "Don't insult me by expecting me to work on anything less than a Level 4 weapon.";
 					next;
 					mes "[Vestri]";
 					mes "Bring me a Level 4 weapon for me to work on next time, got it?";
-					close;
-				}
-				if (getequipweaponlv(.@part) == 0){
-					mes "[Vestri]";
-					mes "Armor?!";
-					mes "Didn't I tell";
-					mes "you that I only work";
-					mes "on Level 4 weapons?";
 					close;
 				}
 				mes "[Vestri]";
@@ -2248,6 +2260,10 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "Hurry up and get one.";
 					close;
 				}
+				// anti-hack
+				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+					close;
+
 				if (getequippercentrefinery(.@part) > rand(100)) {
 					mes "^3355FF*Clang Clang!*^000000";
 					successrefitem .@part;

@@ -1,0 +1,52 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Random Option Group Database
+###########################################################################
+#
+# Item Random Option Group Settings
+#
+###########################################################################
+# - Id                  Item Random Option Group ID.
+#   Group               Item Random Option Group constant.
+#   Slots:              Slot in which an Item Random Option is guaranteed to be applied. Max of MAX_ITEM_RDM_OPT.
+#     - Slot            Slot number.
+#       Options:        List of possible Item Random Options for slot.
+#         - Option      Item Random Option constant.
+#           MinValue    Minimum value. (Default: 0)
+#           MaxValue    Maximum value. (Default: 0)
+#           Param       Parameter value. (Default: 0)
+#           Chance      Chance applied specifically to this Item Random Option (1 = 0.01%, 10000 = 100%). (Default: 0)
+#   MaxRandom           Maximum amount of random options applied. These options are not guaranteed to be applied. Max of (MAX_ITEM_RDM_OPT - Total 'Slots'). (Default: 0)
+#   Random:             List of possible Item Random Options for remaining slots. (Optional)
+#     - Option          Item Random Option constant.
+#       MinValue        Minimum value. (Default: 0)
+#       MaxValue        Maximum value. (Default: 0)
+#       Param           Parameter value. (Default: 0)
+#       Chance          Chance applied specifically to this Item Random Option (1 = 0.01%, 10000 = 100%). (Default: 0)
+###########################################################################
+
+Header:
+  Type: RANDOM_OPTION_GROUP
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/re/item_randomopt_group.yml
+    Mode: Renewal
+  - Path: db/import/item_randomopt_group.yml

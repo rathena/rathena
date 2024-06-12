@@ -1,3 +1,6 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 /***********************************************************
  * md5 calculation algorithm
  *
@@ -6,10 +9,12 @@
  *
  ***********************************************************/
 
-#include "../common/random.hpp"
 #include "md5calc.hpp"
-#include <string.h>
-#include <stdio.h>
+
+#include <cstdio>
+#include <cstring>
+
+#include "random.hpp"
 
 #ifndef UINT_MAX
 #define UINT_MAX 4294967295U
@@ -230,10 +235,8 @@ void MD5_String(const char * string, char * output)
 }
 
 /** output is a sequence of non-zero characters to be used as password salt. */
-void MD5_Salt(unsigned int len, char * output)
-{
-	unsigned int i;
-	for( i = 0; i < len; ++i )
-		output[i] = (char)(1 + rnd() % 255);
-
+void MD5_Salt( size_t len, char* output ){
+	for( size_t i = 0; i < len; ++i ){
+		output[i] = static_cast<char>( rnd_value( 1, 255 ) );
+	}
 }

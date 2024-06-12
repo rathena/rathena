@@ -24,13 +24,17 @@
 
 // Shop NPCs -- supplying no argument displays entire menu.
 //	callfunc "qshop"{,<shop ID>{,<shop ID>{,...}}};
+//  ADD YOUR NPC HERE
 //============================================================
 prontera,164,203,6	script	Quest Shop#1	998,{ callfunc "qshop"; }
-
-
-// Script Core
+// prontera,165,203,6	script	Quest Shop#2	998,{ callfunc "qshop",1,2; }	// call the shop 1 and 2 defined below
+// etc.. Add your Shop NPCs 'Quest Shop#XXX' here
 //============================================================
--	script	quest_shop	-1,{ 
+
+
+// Script Core - DO NOT DUPLICATE THIS NPC !!!!!!!!!!!!!
+//============================================================
+-	script	quest_shop	-1,{
 function Add; function Chk; function Slot;
 OnInit:
 	freeloop(1);
@@ -50,14 +54,23 @@ OnInit:
 //	setarray .Points$[0],"<variable name>","<display name>";
 // -----------------------------------------------------------
 
-	setarray .Points$[0],"#CASHPOINTS","Cash Points";
+	setarray .Points$[0],
+		"#CASHPOINTS", "Cash Points";
+
+
+//=====================================================================================
+// ------------------- ADD YOUR SHOPS NAME AND ITEMS SHOPS STARTING HERE --------------
+//=====================================================================================
 
 // -----------------------------------------------------------
 //  Shop IDs -- to add shops, copy dummy data at bottom of file.
 //	setarray .Shops$[1],"<Shop 1>","<Shop 2>"{,...};
 // -----------------------------------------------------------
 
-	setarray .Shops$[1],"Headgears","Weapons","Other";
+	setarray .Shops$[1],
+		"Headgears",	// Shop Named 1
+		"Weapons",		// Shop Named 2
+		"Other";		// Shop Named 3
 
 // -----------------------------------------------------------
 //  Quest items -- do NOT use a reward item more than once!
@@ -66,20 +79,27 @@ OnInit:
 //	    <required item ID>,<required item amount>{,...});
 // -----------------------------------------------------------
 
+// Shop 1
 	Add(1,5022,1,0,0,7086,1,969,10,999,40,1003,50,984,2);
 	Add(1,5032,1,0,0,1059,250,2221,1,2227,1,7063,600);
 	Add(1,5027,1,0,0,2252,1,1036,400,7001,50,4052,1);
 	Add(1,5045,1,0,0,2252,1,1054,450,943,1200);
 
+// Shop 2
 	Add(2,1224,1,0,0,7297,30,969,10,999,50,714,10);
 	Add(2,1225,1,0,0,7292,30,969,10,999,50,714,10);
 
+// Shop 3
 	Add(3,531,1,3,0,512,1,713,1);
 	Add(3,532,1,3,0,513,1,713,1);
 	Add(3,533,1,3,0,514,1,713,1);
 	Add(3,534,1,3,0,515,1,713,1);
 
 // -----------------------------------------------------------
+
+//=====================================================================================
+// ------------------- YOUR SHOPS AND ITEMS SHOPS HAVE BEEN ADDED ---------------------
+//=====================================================================================
 
 	freeloop(0);
 	set .menu$,"";
@@ -126,21 +146,21 @@ OnBuyItem:
 	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
 		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1]*.@q[1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+(.@q[.@i+1]*.@q[1])+")^000000";
 	next;
-	setarray @qe[1], getiteminfo(.@q[0],5), getiteminfo(.@q[0],11);
+	setarray @qe[1], getiteminfo(.@q[0], ITEMINFO_LOCATIONS), getiteminfo(.@q[0], ITEMINFO_VIEW);
 	if (@qe[2] > 0 && ((@qe[1] & EQP_HEAD_LOW) || (@qe[1] & EQP_HEAD_TOP) || (@qe[1] & EQP_HEAD_MID) || (@qe[1] & EQP_COSTUME_HEAD_TOP) || (@qe[1] & EQP_COSTUME_HEAD_MID) || (@qe[1] & EQP_COSTUME_HEAD_LOW) || (@qe[1] & EQP_GARMENT) || (@qe[1] & EQP_COSTUME_GARMENT)))
 		set .@preview,1;
 	addtimer 1000, strnpcinfo(0)+"::OnEnd";
 	while(1) {
 		switch(select(" ~ Purchase ^0055FF"+getitemname(.@q[0])+"^000000:"+((.@preview && !@qe[7])?" ~ Preview...":"")+": ~ ^777777Cancel^000000")) {
 		case 1:
-			if (@qe[0]) { 
+			if (@qe[0]) {
 				mes "[Quest Shop]";
 				mes "You're missing one or more quest requirements.";
 				close;
 			}
 			if (!checkweight(.@q[0],.@q[2])) {
 				mes "[Quest Shop]";
-				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0], ITEMINFO_WEIGHT))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
 				close;
 			}
 			if (.@q[4]) set Zeny, Zeny-(.@q[4]*.@q[1]);
@@ -203,7 +223,7 @@ function Slot {
 	set .@s$,getitemname(getarg(0));
 	switch(.ShowSlot) {
 		case 1: if (!getitemslots(getarg(0))) return .@s$;
-		case 2: if (getiteminfo(getarg(0),2) == 4 || getiteminfo(getarg(0),2) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		case 2: if (getiteminfo(getarg(0), ITEMINFO_TYPE) == 4 || getiteminfo(getarg(0), ITEMINFO_TYPE) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
 		default: return .@s$;
 	}
 }

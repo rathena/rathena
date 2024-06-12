@@ -21,7 +21,7 @@
 prontera,98,121,4	script	Acolyte#Prtclear	90,{
 	mes "[Keiki]";
 	mes "Hello there, adventurer.";
-	mes "I've been studying magic from all over Rune-Midgard to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
+	mes "I've been studying magic from all over Rune-Midgarts to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
 	next;
 
 	if (is_function("VIP_iRO_Acolyte"))
@@ -47,7 +47,7 @@ prontera,98,121,4	script	Acolyte#Prtclear	90,{
 		mes "I wish you goodluck on your journey.";
 		next;
 
-		setarray .@towns$[0], "Izlude", "Geffen", "Payon", "Morroc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno";
+		setarray .@towns$[0], "Izlude", "Geffen", "Payon", "Morocc", "Alberta", "Al De Baran", "Comodo", "Umbala", "Juno";
 		setarray .@cost[0],        600,     1200,    1200,     1200,      1800,          2200,     2200,     2200,   1800;
 
 		set .@size, getarraysize(.@towns$);

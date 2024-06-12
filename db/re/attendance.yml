@@ -1,0 +1,92 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Attendance Database
+###########################################################################
+#
+# Attendance Settings
+#
+###########################################################################
+# - Start                   Start date.
+#   End                     End date.
+#   Rewards:                List of rewards for each day.
+#     - Day                 Reward day.
+#       ItemId              Item ID.
+###########################################################################
+
+Header:
+  Type: ATTENDANCE_DB
+  Version: 1
+
+Body:
+#  - Start: 20180502
+#    End: 20180529
+#    Rewards:
+#      - Day: 1
+#        ItemId: 22979
+#      - Day: 2
+#        ItemId: 6316
+#      - Day: 3
+#        ItemId: 12265
+#        Amount: 5
+#      - Day: 4
+#        ItemId: 23047
+#        Amount: 5
+#      - Day: 5
+#        ItemId: 23038
+#      - Day: 6
+#        ItemId: 23043
+#      - Day: 7
+#        ItemId: 23340
+#        Amount: 3
+#      - Day: 8
+#        ItemId: 12516
+#        Amount: 5
+#      - Day: 9
+#        ItemId: 23307
+#        Amount: 5
+#      - Day: 10
+#        ItemId: 12610
+#      - Day: 11
+#        ItemId: 14533
+#        Amount: 2
+#      - Day: 12
+#        ItemId: 23012
+#        Amount: 3
+#      - Day: 13
+#        ItemId: 23048
+#        Amount: 5
+#      - Day: 14
+#        ItemId: 12264
+#        Amount: 5
+#      - Day: 15
+#        ItemId: 23046
+#        Amount: 5
+#      - Day: 16
+#        ItemId: 12515
+#        Amount: 5
+#      - Day: 17
+#        ItemId: 12522
+#        Amount: 5
+#      - Day: 18
+#        ItemId: 12523
+#        Amount: 5
+#      - Day: 19
+#        ItemId: 6234
+#      - Day: 20
+#        ItemId: 22845

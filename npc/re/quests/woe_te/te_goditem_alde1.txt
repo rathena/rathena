@@ -33,7 +33,7 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 		mes "Don't worry about me.";
 		close;
 	}
-	if (getguildmaster(.@guild_id) != strcharinfo(0)) {
+	if (is_guild_leader() == false) {
 		mes "I feel so grateful all the time about you letting me stay here.";
 		mes "It's nothing special... but if you want, I'll make you tools that could be of use.";
 		next;
@@ -284,7 +284,7 @@ S_Material:
 	mes "^4d4dff4 Presberk's Leather";
 	mes "1 Spirit of Hugin";
 	mes "1 Spirit of Munin";
-	mes "1 Giant's Chisel";
+	mes "4 Giant's Chisel";
 	mes "1 Jormungand's Rib";
 	mes "1 Wizardry Staff";
 	mes "1 Muspellium and Essence of Rune, respectively^000000";
@@ -370,9 +370,9 @@ S_Fuse:
 
 OnInit:
 	if ($2012_tegod_kafra == 3 || agitcheck3())// 3 -> quest failed
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	else
-		enablenpc strnpcinfo(0);
+		enablenpc();
 	end;
 }
 
@@ -996,7 +996,7 @@ OnCommandOn:
 OnCommandOff:
 	setnpcdisplay strnpcinfo(0),CLEAR_NPC;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 te_aldecas1,227,35,3	duplicate(#end_aira_alde01)	#end_kuluna_alde01	CLEAR_NPC

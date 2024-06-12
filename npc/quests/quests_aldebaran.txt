@@ -23,7 +23,7 @@ aldeba_in,152,166,4	script	Trader#01	86,{
 	mes "I, the enigmatic and debonair 'Trader?'";
 	next;
 	mes "[Trader]";
-	mes "Traveling about the Rune-Midgard Continent, with all of his wonderful hats? Nobody knows...";
+	mes "Traveling about the Midgard Continent, with all of his wonderful hats? Nobody knows...";
 	next;
 	mes "[Trader]";
 	mes "For what purpose do I collect and trade these hats from all around the world? Choose a hat, get closer to unraveling the mystery...";

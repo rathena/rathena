@@ -1,32 +1,37 @@
-/**
- * @file login.h
- * Module purpose is to read configuration for login-server and handle accounts,
- *  and also to synchronise all login interfaces: loginchrif, loginclif, logincnslif.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
-#ifndef _LOGIN_HPP_
-#define _LOGIN_HPP_
+#ifndef LOGIN_HPP
+#define LOGIN_HPP
 
 #include <memory>
 
-#include "../config/core.hpp"
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
-#include "../common/core.hpp" // CORE_ST_LAST
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/mmo.hpp> // NAME_LENGTH,SEX_*
+#include <common/timer.hpp>
+#include <config/core.hpp>
 
 #include "account.hpp"
 
-enum E_LOGINSERVER_ST {
-	LOGINSERVER_ST_RUNNING = CORE_ST_LAST,
-	LOGINSERVER_ST_STARTING,
-	LOGINSERVER_ST_SHUTDOWN,
-	LOGINSERVER_ST_LAST
-};
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace server_login{
+		class LoginServer : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+				void finalize() override;
+				void handle_shutdown() override;
+
+			public:
+				LoginServer() : Core( e_core_type::LOGIN ){
+
+				}
+		};
+	}
+}
 
 /// supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3
@@ -34,8 +39,8 @@ enum E_LOGINSERVER_ST {
 ///Struct of 1 client connected to login-serv
 struct login_session_data {
 	uint32 account_id;			///also GID
-	long login_id1;
-	long login_id2;
+	uint32 login_id1;
+	uint32 login_id2;
 	char sex;			/// 'F','M','S'
 
 	char userid[NAME_LENGTH];	/// account name
@@ -52,9 +57,11 @@ struct login_session_data {
 	int has_client_hash;		///client ha sent an hash
 
 	int fd;				///socket of client
+
+	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; /// web authentication token
 };
 
-#define MAX_SERVERS 30 //max number of mapserv that could be attach
+#define MAX_SERVERS 5 //max number of mapserv that could be attach
 ///Struct describing 1 char-serv attach to us
 struct mmo_char_server {
 	char name[20];	///char-serv name
@@ -104,6 +111,11 @@ struct Login_Config {
 	char msgconf_name[256];							/// name of msg_conf config file
 	char lanconf_name[256];							/// name of lan config file
 
+	bool usercount_disable;							/// Disable colorization and description in general?
+	int usercount_low;								/// Amount of users that will display in green
+	int usercount_medium;							/// Amount of users that will display in yellow
+	int usercount_high;								/// Amount of users that will display in red
+
 	int char_per_account;							/// number of characters an account can have
 #ifdef VIP_ENABLE
 	struct {
@@ -111,6 +123,8 @@ struct Login_Config {
 		unsigned int char_increase;					/// number of char-slot to increase in VIP state
 	} vip_sys;
 #endif
+	bool use_web_auth_token;						/// Enable web authentication token system
+	int disable_webtoken_delay;						/// delay disabling web token after char logs off in milliseconds
 };
 extern struct Login_Config login_config;
 
@@ -131,7 +145,6 @@ struct online_login_data {
 	int waiting_disconnect;
 	int char_server;
 };
-extern DBMap* online_db; // uint32 account_id -> struct online_login_data*
 
 /// Auth database
 #define AUTH_TIMEOUT 30000
@@ -143,19 +156,11 @@ struct auth_node {
 	char sex;
 	uint8 clienttype;
 };
-extern DBMap* auth_db; // uint32 account_id -> struct auth_node*
 
 ///Accessors
 AccountDB* login_get_accounts_db(void);
 
-/**
- * Sub function to create an online_login_data and save it to db.
- * @param key: Key of the database entry
- * @param ap: args
- * @return : Data identified by the key to be put in the database
- * @see DBCreateData
- */
-DBData login_create_online_user(DBKey key, va_list args);
+struct online_login_data* login_get_online_user( uint32 account_id );
 
 /**
  * Function to add a user in online_db.
@@ -174,6 +179,12 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
  */
 void login_remove_online_user(uint32 account_id);
 
+struct auth_node* login_get_auth_node( uint32 account_id );
+
+struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip );
+
+void login_remove_auth_node( uint32 account_id );
+
 /**
  * Timered function to disconnect a user from login.
  *  This is done either after auth_ok or kicked by char-server.
@@ -185,17 +196,9 @@ void login_remove_online_user(uint32 account_id);
  * @param data: unused
  * @return :0
  */
-int login_waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(login_waiting_disconnect_timer);
 
-/**
- * Sub function to apply on online_db.
- * Mark a character as offline.
- * @param data: 1 entry in the db
- * @param ap: args
- * @return : Value to be added up by the function that is applying this
- * @see DBApply
- */
-int login_online_db_setoffline(DBKey key, DBData *data, va_list ap);
+void login_online_db_setoffline( int char_server );
 
 /**
  * Test to determine if an IP come from LAN or WAN.
@@ -235,5 +238,6 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
 
+int login_get_usercount( int users );
 
-#endif /* _LOGIN_HPP_ */
+#endif /* LOGIN_HPP */

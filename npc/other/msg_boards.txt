@@ -11,7 +11,7 @@
 //===== Description: ========================================= 
 //= Misc. Message Boards for:
 //=  - Prontera
-//=  - Morroc
+//=  - Morocc
 //=  - Geffen
 //=  - Al De Baran
 //=  - Izlude
@@ -37,7 +37,7 @@ prontera,158,213,1	script	Sign Post#Prt1	111,{
 	mes "East to Prontera Fields";
 	mes "South to Prontera Fields";
 	mes "Southeast to Alberta";
-	mes "Southwest to Morroc";
+	mes "Southwest to Morocc";
 	mes "Southwest to Comodo";
 	mes "West to Prontera Fields";
 	close;
@@ -52,7 +52,7 @@ prontera,156,197,1	script	Prontera Bulletin#Prt2	111,{
 	mes "Will take any offer!";
 	mes "Contact Abramulious";
 	mes "Help Wanted: Buying or selling a used Peco Peco?";
-	mes "Contact Grasisium in Morroc now!";
+	mes "Contact Grasisium in Morocc now!";
 	close;
 }
 
@@ -93,7 +93,7 @@ prontera,145,304,1	script	Sign#Prt7	111,{
 	close;
 }
 
-// Morroc
+// Morocc
 //============================================================
 morocc,144,84,1	script	Sign#Moc1	111,{
 	mes "^993300- The Sign Reads -^000000";
@@ -111,15 +111,15 @@ morocc,145,83,1	script	Sign#Moc2	111,{
 
 morocc,32,174,1	script	Bulletin#Moc3	111,{
 	mes "^993300- The Bulletin Reads -^000000";
-	mes "^0099FFMorroc women up in arms!^000000";
+	mes "^0099FFMorocc women up in arms!^000000";
 	mes "A recent study has shown that the majority of male citizens in";
-	mes "Morroc prefer the women of Geffen. 90 of the 100 male citizens";
-	mes "of Morroc claimed that they have had numerous relationships";
-	mes "with Geffen women outside of the Morroc Region.";
+	mes "Morocc prefer the women of Geffen. 90 of the 100 male citizens";
+	mes "of Morocc claimed that they have had numerous relationships";
+	mes "with Geffen women outside of the Morocc Region.";
 	next;
 	mes "^993300- The Bulletin Continued -^000000";
-	mes "'I just prefer their company better, that's all...' said one Morroc man.";
-	mes "'it's not like I'm against Morroc women or anything, so what's the problem...'";
+	mes "'I just prefer their company better, that's all...' said one Morocc man.";
+	mes "'it's not like I'm against Morocc women or anything, so what's the problem...'";
 	mes "Besides emotional and stressful issues in regards to the daily";
 	mes "activities of these males.";
 	mes "Hunting still seems to be their number one priority";
@@ -129,7 +129,7 @@ morocc,32,174,1	script	Bulletin#Moc3	111,{
 
 morocc,168,266,1	script	Sign#Moc5	111,{
 	mes "^993300- The Sign Reads -^000000";
-	mes "Welcome to Morroc.";
+	mes "Welcome to Morocc.";
 	close;
 }
 
@@ -143,7 +143,7 @@ morocc,168,264,1	script	Billboard#Moc6	111,{
 
 morocc,298,211,1	script	Sign#Moc7	111,{
 	mes "^993300- The Sign Reads -^000000";
-	mes "Welcome to Morroc.";
+	mes "Welcome to Morocc.";
 	close;
 }
 
@@ -179,7 +179,7 @@ geffen,119,190,1	script	Sign Post#Gef4	111,{
 	mes "Northeast to Al De Baran";
 	mes "Northwest to Glast Heim";
 	mes "East to Geffen Fields";
-	mes "South to Morroc";
+	mes "South to Morocc";
 	mes "Southeast to Prontera";
 	mes "Southeast to Alberta";
 	mes "Southwest to Comodo";

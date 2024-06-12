@@ -35,7 +35,7 @@ ma_fild02,312,317,5	script	Guard#buwaya_cave	570,{
 		mes "team with other people.";
 		close;
 	}
-	if (getcharid(0) == getpartyleader(.@party_id,2)) {
+	if (is_party_leader() == true) {
 		mes "[Guard]";
 		mes "This place is dangerous. Please go back.";
 		mes "If you dont have any business here, please go back.";

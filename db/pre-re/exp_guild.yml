@@ -1,0 +1,131 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Guild Experience Database
+###########################################################################
+#
+# Guild Experience Settings
+#
+###########################################################################
+# - Level                Level required.
+#   Exp                  Experience required to level up.
+###########################################################################
+
+Header:
+  Type: GUILD_EXP_DB
+  Version: 1
+
+Body:
+  - Level: 1
+    Exp: 2000000
+  - Level: 2
+    Exp: 4000000
+  - Level: 3
+    Exp: 8000000
+  - Level: 4
+    Exp: 14000000
+  - Level: 5
+    Exp: 22000000
+  - Level: 6
+    Exp: 32000000
+  - Level: 7
+    Exp: 44000000
+  - Level: 8
+    Exp: 58000000
+  - Level: 9
+    Exp: 74000000
+  - Level: 10
+    Exp: 92000000
+  - Level: 11
+    Exp: 112000000
+  - Level: 12
+    Exp: 134000000
+  - Level: 13
+    Exp: 158000000
+  - Level: 14
+    Exp: 184000000
+  - Level: 15
+    Exp: 212000000
+  - Level: 16
+    Exp: 242000000
+  - Level: 17
+    Exp: 274000000
+  - Level: 18
+    Exp: 308000000
+  - Level: 19
+    Exp: 344000000
+  - Level: 20
+    Exp: 382000000
+  - Level: 21
+    Exp: 422000000
+  - Level: 22
+    Exp: 464000000
+  - Level: 23
+    Exp: 508000000
+  - Level: 24
+    Exp: 554000000
+  - Level: 25
+    Exp: 602000000
+  - Level: 26
+    Exp: 652000000
+  - Level: 27
+    Exp: 704000000
+  - Level: 28
+    Exp: 758000000
+  - Level: 29
+    Exp: 814000000
+  - Level: 30
+    Exp: 872000000
+  - Level: 31
+    Exp: 932000000
+  - Level: 32
+    Exp: 994000000
+  - Level: 33
+    Exp: 1058000000
+  - Level: 34
+    Exp: 1124000000
+  - Level: 35
+    Exp: 1192000000
+  - Level: 36
+    Exp: 1262000000
+  - Level: 37
+    Exp: 1334000000
+  - Level: 38
+    Exp: 1408000000
+  - Level: 39
+    Exp: 1484000000
+  - Level: 40
+    Exp: 1562000000
+  - Level: 41
+    Exp: 1642000000
+  - Level: 42
+    Exp: 1724000000
+  - Level: 43
+    Exp: 1808000000
+  - Level: 44
+    Exp: 1894000000
+  - Level: 45
+    Exp: 1999999999
+  - Level: 46
+    Exp: 1999999999
+  - Level: 47
+    Exp: 1999999999
+  - Level: 48
+    Exp: 1999999999
+  - Level: 49
+    Exp: 1999999999

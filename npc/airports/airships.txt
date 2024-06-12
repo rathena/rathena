@@ -1,3 +1,36 @@
+function	script	AssertEquals	{
+	if (getarg(0) != getarg(1)) {
+		errormes "AssertEquals failed for " + getarg(2) + ": expected " + getarg(0) + ", got " + getarg(1) + ".";
+		return false;
+	}
+	return true;
+}
+
+
+-	script	PullRequest2796	-1,{
+OnInit:
+	setarray .@actual, 31, 44, 14, 18, 24, 42, 39, 47, 30, 17, 36, 45, 34, 21, 38, 41, 23, 25, 13, 20, 8, 5, 22, 9, 2, 12, 19, 35, 48, 37;
+	sortarray( .@actual );
+	setarray .@expected, 2, 5, 8, 9, 12, 13, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 34, 35, 36, 37, 38, 39, 41, 42, 44, 45, 47, 48;
+
+	for( .@i = 0; .@i < getarraysize( .@expected ); .@i++ ){
+		AssertEquals( .@expected[.@i], .@actual[.@i], "Index " + .@i );
+	}
+
+	setarray .@actual$, "Lemongrass", "Atemo", "Jey", "Lighta", "Nova", "MasterOfMuppets", "Aleos", "Cydh", "Playtester", "Stolao", "Nanakiwurtz", "Akkarin", "Secret";
+	sortarray( .@actual$ );
+	setarray .@expected$, "Akkarin", "Aleos", "Atemo", "Cydh", "Jey", "Lemongrass", "Lighta", "MasterOfMuppets", "Nanakiwurtz", "Nova", "Playtester", "Secret", "Stolao";
+
+	for( .@i = 0; .@i < getarraysize( .@expected$ ); .@i++ ){
+		AssertEquals( .@expected$[.@i], .@actual$[.@i], "Index " + .@i );
+	}
+}
+
+
+
+
+
+
 //===== rAthena Script ======================================= 
 //= The Airship System Script
 //===== By: ================================================== 
@@ -24,11 +57,11 @@ airplane,243,73,0	script	#AirshipWarp-1	45,1,1,{
 OnInit:
 OnHide:
 	specialeffect EF_BASH;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnUnhide:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	specialeffect EF_SUMMONSLAVE;
 	end;
 
@@ -339,7 +372,7 @@ airplane,80,71,2	script	Zerta#01airplane	834,{
 	mes "I am currently on a";
 	mes "sacred journey, offering";
 	mes "prayer for the sake of the";
-	mes "Rune-Midgard continent.";
+	mes "Midgard continent.";
 	close;
 }
 
@@ -670,11 +703,11 @@ OnTouch_:
 OnInit:
 OnHide:
 	specialeffect EF_BASH;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 	
 OnUnhide:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	specialeffect EF_SUMMONSLAVE;
 	end;
 }
@@ -823,7 +856,7 @@ airplane_01,50,66,5	script	Apple Merchant#air01	86,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Meltz]";

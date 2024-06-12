@@ -1100,7 +1100,7 @@ OnTimer11000:
 	mapannounce "job3_rang02","Test Supervisor, Caution : When you use a 'Bombring Capsule' a Bombring is summoned near you, and after 3 seconds it will explode.",bc_map,"0x87ceeb"; //FW_NORMAL 12 0 0
 	end;
 OnTimer14000:
-	mapannounce "job3_rang02","Test Supervisor, Caution : The explosive range of the Bombring is a 5x5 cell around the Bombring, so be carefull not to be caught in the explosion.",bc_map,"0xffb6c1"; //FW_NORMAL 12 0 0
+	mapannounce "job3_rang02","Test Supervisor, Caution : The explosive range of the Bombring is a 5x5 cell around the Bombring, so be careful not to be caught in the explosion.",bc_map,"0xffb6c1"; //FW_NORMAL 12 0 0
 	end;
 OnTimer17000:
 	mapannounce "job3_rang02","Test Supervisor, Caution : Whilst progressing, if you complete the mission given by an staff member come and see me, then you will pass the 2nd practical test!",bc_map,"0x87ceeb"; //FW_NORMAL 12 0 0
@@ -1577,12 +1577,12 @@ OnTimer133000:
 
 -	script	Egg Bomb#0	-1,{
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
-	getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
 	monster "job3_rang02",.@x,.@y,"Egg Bomb",1047,1,strnpcinfo(0)+"::OnMyMobDead";
 	switch(atoi(strnpcinfo(2))%3) {
 		case 0: set .@str$,"Hey, I am going to explode. What are you going to do?"; break;
@@ -1594,7 +1594,7 @@ OnEnable:
 OnDisable:
 	stopnpctimer;
 	killmonster "job3_rang02",strnpcinfo(0)+"::OnMyMobDead";
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnMyMobDead:
 	set $@job_rang_point03, $@job_rang_point03+1;

@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifndef MSG_CONF_HPP
 #define	MSG_CONF_HPP
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 enum lang_types {
 	LANG_RUS = 0x01,
@@ -39,4 +39,3 @@ const char* msg_langtype2langstr(int langtype);
 int msg_checklangtype(int lang, bool display);
 
 #endif	/* MSG_CONF_HPP */
-

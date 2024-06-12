@@ -931,7 +931,7 @@ alberta,120,206,3	script	Alonie#Solo_Play_Box	787,{
 			mes "to be a playing-alone expert!";
 			next;
 			mes "[Alonie]";
-			mes "The special training, to play alone in Louyang!";
+			mes "The special training, to play alone in Luoyang!";
 			mes "For make it";
 			mes "the fruitful training,";
 			mes "Get around and kill";

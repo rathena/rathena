@@ -1,0 +1,10435 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Job Database
+###########################################################################
+#
+# Job Settings
+#
+###########################################################################
+# - Jobs:                    List of jobs associated to group.
+#     Job                    Job name.
+#   MaxWeight                Base maximum weight. (Default: 20000)
+#   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+#   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
+#   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
+#   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
+#     Weapon                 Weapon type with associated ASPD.
+#   BonusStats:              Job level bonus stats/traits.
+#     - Level                Job level.
+#       Str                  Stength increase amount. (Default: 0)
+#       Agi                  Agility increase amount. (Default: 0)
+#       Vit                  Vitality increase amount. (Default: 0)
+#       Int                  Intelligence increase amount. (Default: 0)
+#       Dex                  Dexterity increase amount. (Default: 0)
+#       Luk                  Luck increase amount. (Default: 0)
+#       Pow                  Power increase amount. (Default: 0)
+#       Sta                  Stamina increase amount. (Default: 0)
+#       Wis                  Wisdom increase amount. (Default: 0)
+#       Spl                  Spell increase amount. (Default: 0)
+#       Con                  Concentration increase amount. (Default: 0)
+#       Crt                  Creative increase amount. (Default: 0)
+#   MaxStats:                Maximum stats/traits applicable. (Default: battle_config::max_*_parameter)
+#     Str                    Strength.
+#     Agi                    Agility.
+#     Vit                    Vitality.
+#     Int                    Intelligence.
+#     Dex                    Dexterity.
+#     Luk                    Luck.
+#     Pow                    Power.
+#     Sta                    Stamina.
+#     Wis                    Wisdom.
+#     Spl                    Spell.
+#     Con                    Concentration.
+#     Crt                    Creative.
+#   MaxBaseLevel             Maximum base level. (Default: MAX_LEVEL)
+#   BaseExp:                 Base experience per level.
+#     - Level                Base level.
+#       Exp                  Base experience.
+#   MaxJobLevel              Maximum job level. (Default: MAX_LEVEL)
+#   JobExp:                  Job experience per level.
+#     - Level                Job level.
+#       Exp                  Job experience.
+#   BaseHp:                  Base HP per base level.
+#     - Level                Base level.
+#       Hp                   Base HP.
+#   BaseSp:                  Base SP per base level.
+#     - Level                Base level.
+#       Sp                   Base SP.
+#   BaseAp:                  Base AP per base level.
+#     - Level                Base level.
+#       Ap                   Base AP.
+###########################################################################
+
+Header:
+  Type: JOB_STATS
+  Version: 2
+
+Body:
+  - Jobs:
+      Novice: true
+      Novice_High: true
+      Baby: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 45
+      - Level: 3
+        Hp: 50
+      - Level: 4
+        Hp: 55
+      - Level: 5
+        Hp: 60
+      - Level: 6
+        Hp: 65
+      - Level: 7
+        Hp: 70
+      - Level: 8
+        Hp: 75
+      - Level: 9
+        Hp: 80
+      - Level: 10
+        Hp: 85
+      - Level: 11
+        Hp: 90
+      - Level: 12
+        Hp: 95
+      - Level: 13
+        Hp: 100
+      - Level: 14
+        Hp: 105
+      - Level: 15
+        Hp: 110
+      - Level: 16
+        Hp: 115
+      - Level: 17
+        Hp: 120
+      - Level: 18
+        Hp: 125
+      - Level: 19
+        Hp: 130
+      - Level: 20
+        Hp: 135
+      - Level: 21
+        Hp: 140
+      - Level: 22
+        Hp: 145
+      - Level: 23
+        Hp: 150
+      - Level: 24
+        Hp: 155
+      - Level: 25
+        Hp: 160
+      - Level: 26
+        Hp: 165
+      - Level: 27
+        Hp: 170
+      - Level: 28
+        Hp: 175
+      - Level: 29
+        Hp: 180
+      - Level: 30
+        Hp: 185
+      - Level: 31
+        Hp: 190
+      - Level: 32
+        Hp: 195
+      - Level: 33
+        Hp: 200
+      - Level: 34
+        Hp: 205
+      - Level: 35
+        Hp: 210
+      - Level: 36
+        Hp: 215
+      - Level: 37
+        Hp: 220
+      - Level: 38
+        Hp: 225
+      - Level: 39
+        Hp: 230
+      - Level: 40
+        Hp: 235
+      - Level: 41
+        Hp: 240
+      - Level: 42
+        Hp: 245
+      - Level: 43
+        Hp: 250
+      - Level: 44
+        Hp: 255
+      - Level: 45
+        Hp: 260
+      - Level: 46
+        Hp: 265
+      - Level: 47
+        Hp: 270
+      - Level: 48
+        Hp: 275
+      - Level: 49
+        Hp: 280
+      - Level: 50
+        Hp: 285
+      - Level: 51
+        Hp: 290
+      - Level: 52
+        Hp: 295
+      - Level: 53
+        Hp: 300
+      - Level: 54
+        Hp: 305
+      - Level: 55
+        Hp: 310
+      - Level: 56
+        Hp: 315
+      - Level: 57
+        Hp: 320
+      - Level: 58
+        Hp: 325
+      - Level: 59
+        Hp: 330
+      - Level: 60
+        Hp: 335
+      - Level: 61
+        Hp: 340
+      - Level: 62
+        Hp: 345
+      - Level: 63
+        Hp: 350
+      - Level: 64
+        Hp: 355
+      - Level: 65
+        Hp: 360
+      - Level: 66
+        Hp: 365
+      - Level: 67
+        Hp: 370
+      - Level: 68
+        Hp: 375
+      - Level: 69
+        Hp: 380
+      - Level: 70
+        Hp: 385
+      - Level: 71
+        Hp: 390
+      - Level: 72
+        Hp: 395
+      - Level: 73
+        Hp: 400
+      - Level: 74
+        Hp: 405
+      - Level: 75
+        Hp: 410
+      - Level: 76
+        Hp: 415
+      - Level: 77
+        Hp: 420
+      - Level: 78
+        Hp: 425
+      - Level: 79
+        Hp: 430
+      - Level: 80
+        Hp: 435
+      - Level: 81
+        Hp: 440
+      - Level: 82
+        Hp: 445
+      - Level: 83
+        Hp: 450
+      - Level: 84
+        Hp: 455
+      - Level: 85
+        Hp: 460
+      - Level: 86
+        Hp: 465
+      - Level: 87
+        Hp: 470
+      - Level: 88
+        Hp: 475
+      - Level: 89
+        Hp: 480
+      - Level: 90
+        Hp: 485
+      - Level: 91
+        Hp: 490
+      - Level: 92
+        Hp: 495
+      - Level: 93
+        Hp: 500
+      - Level: 94
+        Hp: 505
+      - Level: 95
+        Hp: 510
+      - Level: 96
+        Hp: 515
+      - Level: 97
+        Hp: 520
+      - Level: 98
+        Hp: 525
+      - Level: 99
+        Hp: 530
+  - Jobs:
+      Supernovice: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 45
+      - Level: 3
+        Hp: 50
+      - Level: 4
+        Hp: 55
+      - Level: 5
+        Hp: 60
+      - Level: 6
+        Hp: 65
+      - Level: 7
+        Hp: 70
+      - Level: 8
+        Hp: 75
+      - Level: 9
+        Hp: 80
+      - Level: 10
+        Hp: 85
+      - Level: 11
+        Hp: 90
+      - Level: 12
+        Hp: 95
+      - Level: 13
+        Hp: 100
+      - Level: 14
+        Hp: 105
+      - Level: 15
+        Hp: 110
+      - Level: 16
+        Hp: 115
+      - Level: 17
+        Hp: 120
+      - Level: 18
+        Hp: 125
+      - Level: 19
+        Hp: 130
+      - Level: 20
+        Hp: 135
+      - Level: 21
+        Hp: 140
+      - Level: 22
+        Hp: 145
+      - Level: 23
+        Hp: 150
+      - Level: 24
+        Hp: 155
+      - Level: 25
+        Hp: 160
+      - Level: 26
+        Hp: 165
+      - Level: 27
+        Hp: 170
+      - Level: 28
+        Hp: 175
+      - Level: 29
+        Hp: 180
+      - Level: 30
+        Hp: 185
+      - Level: 31
+        Hp: 190
+      - Level: 32
+        Hp: 195
+      - Level: 33
+        Hp: 200
+      - Level: 34
+        Hp: 205
+      - Level: 35
+        Hp: 210
+      - Level: 36
+        Hp: 215
+      - Level: 37
+        Hp: 220
+      - Level: 38
+        Hp: 225
+      - Level: 39
+        Hp: 230
+      - Level: 40
+        Hp: 235
+      - Level: 41
+        Hp: 240
+      - Level: 42
+        Hp: 245
+      - Level: 43
+        Hp: 250
+      - Level: 44
+        Hp: 255
+      - Level: 45
+        Hp: 260
+      - Level: 46
+        Hp: 265
+      - Level: 47
+        Hp: 270
+      - Level: 48
+        Hp: 275
+      - Level: 49
+        Hp: 280
+      - Level: 50
+        Hp: 285
+      - Level: 51
+        Hp: 290
+      - Level: 52
+        Hp: 295
+      - Level: 53
+        Hp: 300
+      - Level: 54
+        Hp: 305
+      - Level: 55
+        Hp: 310
+      - Level: 56
+        Hp: 315
+      - Level: 57
+        Hp: 320
+      - Level: 58
+        Hp: 325
+      - Level: 59
+        Hp: 330
+      - Level: 60
+        Hp: 335
+      - Level: 61
+        Hp: 340
+      - Level: 62
+        Hp: 345
+      - Level: 63
+        Hp: 350
+      - Level: 64
+        Hp: 355
+      - Level: 65
+        Hp: 360
+      - Level: 66
+        Hp: 365
+      - Level: 67
+        Hp: 370
+      - Level: 68
+        Hp: 375
+      - Level: 69
+        Hp: 380
+      - Level: 70
+        Hp: 385
+      - Level: 71
+        Hp: 390
+      - Level: 72
+        Hp: 395
+      - Level: 73
+        Hp: 400
+      - Level: 74
+        Hp: 405
+      - Level: 75
+        Hp: 410
+      - Level: 76
+        Hp: 415
+      - Level: 77
+        Hp: 420
+      - Level: 78
+        Hp: 425
+      - Level: 79
+        Hp: 430
+      - Level: 80
+        Hp: 435
+      - Level: 81
+        Hp: 440
+      - Level: 82
+        Hp: 445
+      - Level: 83
+        Hp: 450
+      - Level: 84
+        Hp: 455
+      - Level: 85
+        Hp: 460
+      - Level: 86
+        Hp: 465
+      - Level: 87
+        Hp: 470
+      - Level: 88
+        Hp: 475
+      - Level: 89
+        Hp: 480
+      - Level: 90
+        Hp: 485
+      - Level: 91
+        Hp: 490
+      - Level: 92
+        Hp: 495
+      - Level: 93
+        Hp: 500
+      - Level: 94
+        Hp: 505
+      - Level: 95
+        Hp: 510
+      - Level: 96
+        Hp: 515
+      - Level: 97
+        Hp: 520
+      - Level: 98
+        Hp: 525
+      - Level: 99
+        Hp: 2530
+  - Jobs:
+      Swordman: true
+      Swordman_High: true
+      Baby_Swordman: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 53
+      - Level: 4
+        Hp: 61
+      - Level: 5
+        Hp: 70
+      - Level: 6
+        Hp: 79
+      - Level: 7
+        Hp: 89
+      - Level: 8
+        Hp: 100
+      - Level: 9
+        Hp: 111
+      - Level: 10
+        Hp: 123
+      - Level: 11
+        Hp: 136
+      - Level: 12
+        Hp: 149
+      - Level: 13
+        Hp: 163
+      - Level: 14
+        Hp: 178
+      - Level: 15
+        Hp: 194
+      - Level: 16
+        Hp: 210
+      - Level: 17
+        Hp: 227
+      - Level: 18
+        Hp: 245
+      - Level: 19
+        Hp: 263
+      - Level: 20
+        Hp: 282
+      - Level: 21
+        Hp: 302
+      - Level: 22
+        Hp: 322
+      - Level: 23
+        Hp: 343
+      - Level: 24
+        Hp: 365
+      - Level: 25
+        Hp: 388
+      - Level: 26
+        Hp: 411
+      - Level: 27
+        Hp: 435
+      - Level: 28
+        Hp: 460
+      - Level: 29
+        Hp: 485
+      - Level: 30
+        Hp: 511
+      - Level: 31
+        Hp: 538
+      - Level: 32
+        Hp: 565
+      - Level: 33
+        Hp: 593
+      - Level: 34
+        Hp: 622
+      - Level: 35
+        Hp: 652
+      - Level: 36
+        Hp: 682
+      - Level: 37
+        Hp: 713
+      - Level: 38
+        Hp: 745
+      - Level: 39
+        Hp: 777
+      - Level: 40
+        Hp: 810
+      - Level: 41
+        Hp: 844
+      - Level: 42
+        Hp: 878
+      - Level: 43
+        Hp: 913
+      - Level: 44
+        Hp: 949
+      - Level: 45
+        Hp: 986
+      - Level: 46
+        Hp: 1023
+      - Level: 47
+        Hp: 1061
+      - Level: 48
+        Hp: 1100
+      - Level: 49
+        Hp: 1139
+      - Level: 50
+        Hp: 1179
+      - Level: 51
+        Hp: 1220
+      - Level: 52
+        Hp: 1261
+      - Level: 53
+        Hp: 1303
+      - Level: 54
+        Hp: 1346
+      - Level: 55
+        Hp: 1390
+      - Level: 56
+        Hp: 1434
+      - Level: 57
+        Hp: 1479
+      - Level: 58
+        Hp: 1525
+      - Level: 59
+        Hp: 1571
+      - Level: 60
+        Hp: 1618
+      - Level: 61
+        Hp: 1666
+      - Level: 62
+        Hp: 1714
+      - Level: 63
+        Hp: 1763
+      - Level: 64
+        Hp: 1813
+      - Level: 65
+        Hp: 1864
+      - Level: 66
+        Hp: 1915
+      - Level: 67
+        Hp: 1967
+      - Level: 68
+        Hp: 2020
+      - Level: 69
+        Hp: 2073
+      - Level: 70
+        Hp: 2127
+      - Level: 71
+        Hp: 2182
+      - Level: 72
+        Hp: 2237
+      - Level: 73
+        Hp: 2293
+      - Level: 74
+        Hp: 2350
+      - Level: 75
+        Hp: 2408
+      - Level: 76
+        Hp: 2466
+      - Level: 77
+        Hp: 2525
+      - Level: 78
+        Hp: 2585
+      - Level: 79
+        Hp: 2645
+      - Level: 80
+        Hp: 2706
+      - Level: 81
+        Hp: 2768
+      - Level: 82
+        Hp: 2830
+      - Level: 83
+        Hp: 2893
+      - Level: 84
+        Hp: 2957
+      - Level: 85
+        Hp: 3022
+      - Level: 86
+        Hp: 3087
+      - Level: 87
+        Hp: 3153
+      - Level: 88
+        Hp: 3220
+      - Level: 89
+        Hp: 3287
+      - Level: 90
+        Hp: 3355
+      - Level: 91
+        Hp: 3424
+      - Level: 92
+        Hp: 3493
+      - Level: 93
+        Hp: 3563
+      - Level: 94
+        Hp: 3634
+      - Level: 95
+        Hp: 3706
+      - Level: 96
+        Hp: 3778
+      - Level: 97
+        Hp: 3851
+      - Level: 98
+        Hp: 3925
+      - Level: 99
+        Hp: 3999
+  - Jobs:
+      Mage: true
+      Mage_High: true
+      Baby_Mage: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 52
+      - Level: 4
+        Hp: 58
+      - Level: 5
+        Hp: 65
+      - Level: 6
+        Hp: 72
+      - Level: 7
+        Hp: 79
+      - Level: 8
+        Hp: 86
+      - Level: 9
+        Hp: 94
+      - Level: 10
+        Hp: 102
+      - Level: 11
+        Hp: 110
+      - Level: 12
+        Hp: 119
+      - Level: 13
+        Hp: 128
+      - Level: 14
+        Hp: 137
+      - Level: 15
+        Hp: 147
+      - Level: 16
+        Hp: 157
+      - Level: 17
+        Hp: 167
+      - Level: 18
+        Hp: 177
+      - Level: 19
+        Hp: 188
+      - Level: 20
+        Hp: 199
+      - Level: 21
+        Hp: 210
+      - Level: 22
+        Hp: 222
+      - Level: 23
+        Hp: 234
+      - Level: 24
+        Hp: 246
+      - Level: 25
+        Hp: 259
+      - Level: 26
+        Hp: 272
+      - Level: 27
+        Hp: 285
+      - Level: 28
+        Hp: 298
+      - Level: 29
+        Hp: 312
+      - Level: 30
+        Hp: 326
+      - Level: 31
+        Hp: 340
+      - Level: 32
+        Hp: 355
+      - Level: 33
+        Hp: 370
+      - Level: 34
+        Hp: 385
+      - Level: 35
+        Hp: 401
+      - Level: 36
+        Hp: 417
+      - Level: 37
+        Hp: 433
+      - Level: 38
+        Hp: 449
+      - Level: 39
+        Hp: 466
+      - Level: 40
+        Hp: 483
+      - Level: 41
+        Hp: 500
+      - Level: 42
+        Hp: 518
+      - Level: 43
+        Hp: 536
+      - Level: 44
+        Hp: 554
+      - Level: 45
+        Hp: 573
+      - Level: 46
+        Hp: 592
+      - Level: 47
+        Hp: 611
+      - Level: 48
+        Hp: 630
+      - Level: 49
+        Hp: 650
+      - Level: 50
+        Hp: 670
+      - Level: 51
+        Hp: 690
+      - Level: 52
+        Hp: 711
+      - Level: 53
+        Hp: 732
+      - Level: 54
+        Hp: 753
+      - Level: 55
+        Hp: 775
+      - Level: 56
+        Hp: 797
+      - Level: 57
+        Hp: 819
+      - Level: 58
+        Hp: 841
+      - Level: 59
+        Hp: 864
+      - Level: 60
+        Hp: 887
+      - Level: 61
+        Hp: 910
+      - Level: 62
+        Hp: 934
+      - Level: 63
+        Hp: 958
+      - Level: 64
+        Hp: 982
+      - Level: 65
+        Hp: 1007
+      - Level: 66
+        Hp: 1032
+      - Level: 67
+        Hp: 1057
+      - Level: 68
+        Hp: 1082
+      - Level: 69
+        Hp: 1108
+      - Level: 70
+        Hp: 1134
+      - Level: 71
+        Hp: 1160
+      - Level: 72
+        Hp: 1187
+      - Level: 73
+        Hp: 1214
+      - Level: 74
+        Hp: 1241
+      - Level: 75
+        Hp: 1269
+      - Level: 76
+        Hp: 1297
+      - Level: 77
+        Hp: 1325
+      - Level: 78
+        Hp: 1353
+      - Level: 79
+        Hp: 1382
+      - Level: 80
+        Hp: 1411
+      - Level: 81
+        Hp: 1440
+      - Level: 82
+        Hp: 1470
+      - Level: 83
+        Hp: 1500
+      - Level: 84
+        Hp: 1530
+      - Level: 85
+        Hp: 1561
+      - Level: 86
+        Hp: 1592
+      - Level: 87
+        Hp: 1623
+      - Level: 88
+        Hp: 1654
+      - Level: 89
+        Hp: 1686
+      - Level: 90
+        Hp: 1718
+      - Level: 91
+        Hp: 1750
+      - Level: 92
+        Hp: 1783
+      - Level: 93
+        Hp: 1816
+      - Level: 94
+        Hp: 1849
+      - Level: 95
+        Hp: 1883
+      - Level: 96
+        Hp: 1917
+      - Level: 97
+        Hp: 1951
+      - Level: 98
+        Hp: 1985
+      - Level: 99
+        Hp: 2020
+  - Jobs:
+      Archer: true
+      Archer_High: true
+      Baby_Archer: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 53
+      - Level: 4
+        Hp: 60
+      - Level: 5
+        Hp: 68
+      - Level: 6
+        Hp: 76
+      - Level: 7
+        Hp: 85
+      - Level: 8
+        Hp: 94
+      - Level: 9
+        Hp: 104
+      - Level: 10
+        Hp: 114
+      - Level: 11
+        Hp: 125
+      - Level: 12
+        Hp: 136
+      - Level: 13
+        Hp: 148
+      - Level: 14
+        Hp: 160
+      - Level: 15
+        Hp: 173
+      - Level: 16
+        Hp: 186
+      - Level: 17
+        Hp: 200
+      - Level: 18
+        Hp: 214
+      - Level: 19
+        Hp: 229
+      - Level: 20
+        Hp: 244
+      - Level: 21
+        Hp: 260
+      - Level: 22
+        Hp: 276
+      - Level: 23
+        Hp: 293
+      - Level: 24
+        Hp: 310
+      - Level: 25
+        Hp: 328
+      - Level: 26
+        Hp: 346
+      - Level: 27
+        Hp: 365
+      - Level: 28
+        Hp: 384
+      - Level: 29
+        Hp: 404
+      - Level: 30
+        Hp: 424
+      - Level: 31
+        Hp: 445
+      - Level: 32
+        Hp: 466
+      - Level: 33
+        Hp: 488
+      - Level: 34
+        Hp: 510
+      - Level: 35
+        Hp: 533
+      - Level: 36
+        Hp: 556
+      - Level: 37
+        Hp: 580
+      - Level: 38
+        Hp: 604
+      - Level: 39
+        Hp: 629
+      - Level: 40
+        Hp: 654
+      - Level: 41
+        Hp: 680
+      - Level: 42
+        Hp: 706
+      - Level: 43
+        Hp: 733
+      - Level: 44
+        Hp: 760
+      - Level: 45
+        Hp: 788
+      - Level: 46
+        Hp: 816
+      - Level: 47
+        Hp: 845
+      - Level: 48
+        Hp: 874
+      - Level: 49
+        Hp: 904
+      - Level: 50
+        Hp: 934
+      - Level: 51
+        Hp: 965
+      - Level: 52
+        Hp: 996
+      - Level: 53
+        Hp: 1028
+      - Level: 54
+        Hp: 1060
+      - Level: 55
+        Hp: 1093
+      - Level: 56
+        Hp: 1126
+      - Level: 57
+        Hp: 1160
+      - Level: 58
+        Hp: 1194
+      - Level: 59
+        Hp: 1229
+      - Level: 60
+        Hp: 1264
+      - Level: 61
+        Hp: 1300
+      - Level: 62
+        Hp: 1336
+      - Level: 63
+        Hp: 1373
+      - Level: 64
+        Hp: 1410
+      - Level: 65
+        Hp: 1448
+      - Level: 66
+        Hp: 1486
+      - Level: 67
+        Hp: 1525
+      - Level: 68
+        Hp: 1564
+      - Level: 69
+        Hp: 1604
+      - Level: 70
+        Hp: 1644
+      - Level: 71
+        Hp: 1685
+      - Level: 72
+        Hp: 1726
+      - Level: 73
+        Hp: 1768
+      - Level: 74
+        Hp: 1810
+      - Level: 75
+        Hp: 1853
+      - Level: 76
+        Hp: 1896
+      - Level: 77
+        Hp: 1940
+      - Level: 78
+        Hp: 1984
+      - Level: 79
+        Hp: 2029
+      - Level: 80
+        Hp: 2074
+      - Level: 81
+        Hp: 2120
+      - Level: 82
+        Hp: 2166
+      - Level: 83
+        Hp: 2213
+      - Level: 84
+        Hp: 2260
+      - Level: 85
+        Hp: 2308
+      - Level: 86
+        Hp: 2356
+      - Level: 87
+        Hp: 2405
+      - Level: 88
+        Hp: 2454
+      - Level: 89
+        Hp: 2504
+      - Level: 90
+        Hp: 2554
+      - Level: 91
+        Hp: 2605
+      - Level: 92
+        Hp: 2656
+      - Level: 93
+        Hp: 2708
+      - Level: 94
+        Hp: 2760
+      - Level: 95
+        Hp: 2813
+      - Level: 96
+        Hp: 2866
+      - Level: 97
+        Hp: 2920
+      - Level: 98
+        Hp: 2974
+      - Level: 99
+        Hp: 3029
+  - Jobs:
+      Acolyte: true
+      Acolyte_High: true
+      Baby_Acolyte: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 52
+      - Level: 4
+        Hp: 59
+      - Level: 5
+        Hp: 66
+      - Level: 6
+        Hp: 73
+      - Level: 7
+        Hp: 81
+      - Level: 8
+        Hp: 89
+      - Level: 9
+        Hp: 98
+      - Level: 10
+        Hp: 107
+      - Level: 11
+        Hp: 116
+      - Level: 12
+        Hp: 126
+      - Level: 13
+        Hp: 136
+      - Level: 14
+        Hp: 147
+      - Level: 15
+        Hp: 158
+      - Level: 16
+        Hp: 169
+      - Level: 17
+        Hp: 181
+      - Level: 18
+        Hp: 193
+      - Level: 19
+        Hp: 206
+      - Level: 20
+        Hp: 219
+      - Level: 21
+        Hp: 232
+      - Level: 22
+        Hp: 246
+      - Level: 23
+        Hp: 260
+      - Level: 24
+        Hp: 275
+      - Level: 25
+        Hp: 290
+      - Level: 26
+        Hp: 305
+      - Level: 27
+        Hp: 321
+      - Level: 28
+        Hp: 337
+      - Level: 29
+        Hp: 354
+      - Level: 30
+        Hp: 371
+      - Level: 31
+        Hp: 388
+      - Level: 32
+        Hp: 406
+      - Level: 33
+        Hp: 424
+      - Level: 34
+        Hp: 443
+      - Level: 35
+        Hp: 462
+      - Level: 36
+        Hp: 481
+      - Level: 37
+        Hp: 501
+      - Level: 38
+        Hp: 521
+      - Level: 39
+        Hp: 542
+      - Level: 40
+        Hp: 563
+      - Level: 41
+        Hp: 584
+      - Level: 42
+        Hp: 606
+      - Level: 43
+        Hp: 628
+      - Level: 44
+        Hp: 651
+      - Level: 45
+        Hp: 674
+      - Level: 46
+        Hp: 697
+      - Level: 47
+        Hp: 721
+      - Level: 48
+        Hp: 745
+      - Level: 49
+        Hp: 770
+      - Level: 50
+        Hp: 795
+      - Level: 51
+        Hp: 820
+      - Level: 52
+        Hp: 846
+      - Level: 53
+        Hp: 872
+      - Level: 54
+        Hp: 899
+      - Level: 55
+        Hp: 926
+      - Level: 56
+        Hp: 953
+      - Level: 57
+        Hp: 981
+      - Level: 58
+        Hp: 1009
+      - Level: 59
+        Hp: 1038
+      - Level: 60
+        Hp: 1067
+      - Level: 61
+        Hp: 1096
+      - Level: 62
+        Hp: 1126
+      - Level: 63
+        Hp: 1156
+      - Level: 64
+        Hp: 1187
+      - Level: 65
+        Hp: 1218
+      - Level: 66
+        Hp: 1249
+      - Level: 67
+        Hp: 1281
+      - Level: 68
+        Hp: 1313
+      - Level: 69
+        Hp: 1346
+      - Level: 70
+        Hp: 1379
+      - Level: 71
+        Hp: 1412
+      - Level: 72
+        Hp: 1446
+      - Level: 73
+        Hp: 1480
+      - Level: 74
+        Hp: 1515
+      - Level: 75
+        Hp: 1550
+      - Level: 76
+        Hp: 1585
+      - Level: 77
+        Hp: 1621
+      - Level: 78
+        Hp: 1657
+      - Level: 79
+        Hp: 1694
+      - Level: 80
+        Hp: 1731
+      - Level: 81
+        Hp: 1768
+      - Level: 82
+        Hp: 1806
+      - Level: 83
+        Hp: 1844
+      - Level: 84
+        Hp: 1883
+      - Level: 85
+        Hp: 1922
+      - Level: 86
+        Hp: 1961
+      - Level: 87
+        Hp: 2001
+      - Level: 88
+        Hp: 2041
+      - Level: 89
+        Hp: 2082
+      - Level: 90
+        Hp: 2123
+      - Level: 91
+        Hp: 2164
+      - Level: 92
+        Hp: 2206
+      - Level: 93
+        Hp: 2248
+      - Level: 94
+        Hp: 2291
+      - Level: 95
+        Hp: 2334
+      - Level: 96
+        Hp: 2377
+      - Level: 97
+        Hp: 2421
+      - Level: 98
+        Hp: 2465
+      - Level: 99
+        Hp: 2510
+  - Jobs:
+      Merchant: true
+      Merchant_High: true
+      Baby_Merchant: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 52
+      - Level: 4
+        Hp: 59
+      - Level: 5
+        Hp: 66
+      - Level: 6
+        Hp: 73
+      - Level: 7
+        Hp: 81
+      - Level: 8
+        Hp: 89
+      - Level: 9
+        Hp: 98
+      - Level: 10
+        Hp: 107
+      - Level: 11
+        Hp: 116
+      - Level: 12
+        Hp: 126
+      - Level: 13
+        Hp: 136
+      - Level: 14
+        Hp: 147
+      - Level: 15
+        Hp: 158
+      - Level: 16
+        Hp: 169
+      - Level: 17
+        Hp: 181
+      - Level: 18
+        Hp: 193
+      - Level: 19
+        Hp: 206
+      - Level: 20
+        Hp: 219
+      - Level: 21
+        Hp: 232
+      - Level: 22
+        Hp: 246
+      - Level: 23
+        Hp: 260
+      - Level: 24
+        Hp: 275
+      - Level: 25
+        Hp: 290
+      - Level: 26
+        Hp: 305
+      - Level: 27
+        Hp: 321
+      - Level: 28
+        Hp: 337
+      - Level: 29
+        Hp: 354
+      - Level: 30
+        Hp: 371
+      - Level: 31
+        Hp: 388
+      - Level: 32
+        Hp: 406
+      - Level: 33
+        Hp: 424
+      - Level: 34
+        Hp: 443
+      - Level: 35
+        Hp: 462
+      - Level: 36
+        Hp: 481
+      - Level: 37
+        Hp: 501
+      - Level: 38
+        Hp: 521
+      - Level: 39
+        Hp: 542
+      - Level: 40
+        Hp: 563
+      - Level: 41
+        Hp: 584
+      - Level: 42
+        Hp: 606
+      - Level: 43
+        Hp: 628
+      - Level: 44
+        Hp: 651
+      - Level: 45
+        Hp: 674
+      - Level: 46
+        Hp: 697
+      - Level: 47
+        Hp: 721
+      - Level: 48
+        Hp: 745
+      - Level: 49
+        Hp: 770
+      - Level: 50
+        Hp: 795
+      - Level: 51
+        Hp: 820
+      - Level: 52
+        Hp: 846
+      - Level: 53
+        Hp: 872
+      - Level: 54
+        Hp: 899
+      - Level: 55
+        Hp: 926
+      - Level: 56
+        Hp: 953
+      - Level: 57
+        Hp: 981
+      - Level: 58
+        Hp: 1009
+      - Level: 59
+        Hp: 1038
+      - Level: 60
+        Hp: 1067
+      - Level: 61
+        Hp: 1096
+      - Level: 62
+        Hp: 1126
+      - Level: 63
+        Hp: 1156
+      - Level: 64
+        Hp: 1187
+      - Level: 65
+        Hp: 1218
+      - Level: 66
+        Hp: 1249
+      - Level: 67
+        Hp: 1281
+      - Level: 68
+        Hp: 1313
+      - Level: 69
+        Hp: 1346
+      - Level: 70
+        Hp: 1379
+      - Level: 71
+        Hp: 1412
+      - Level: 72
+        Hp: 1446
+      - Level: 73
+        Hp: 1480
+      - Level: 74
+        Hp: 1515
+      - Level: 75
+        Hp: 1550
+      - Level: 76
+        Hp: 1585
+      - Level: 77
+        Hp: 1621
+      - Level: 78
+        Hp: 1657
+      - Level: 79
+        Hp: 1694
+      - Level: 80
+        Hp: 1731
+      - Level: 81
+        Hp: 1768
+      - Level: 82
+        Hp: 1806
+      - Level: 83
+        Hp: 1844
+      - Level: 84
+        Hp: 1883
+      - Level: 85
+        Hp: 1922
+      - Level: 86
+        Hp: 1961
+      - Level: 87
+        Hp: 2001
+      - Level: 88
+        Hp: 2041
+      - Level: 89
+        Hp: 2082
+      - Level: 90
+        Hp: 2123
+      - Level: 91
+        Hp: 2164
+      - Level: 92
+        Hp: 2206
+      - Level: 93
+        Hp: 2248
+      - Level: 94
+        Hp: 2291
+      - Level: 95
+        Hp: 2334
+      - Level: 96
+        Hp: 2377
+      - Level: 97
+        Hp: 2421
+      - Level: 98
+        Hp: 2465
+      - Level: 99
+        Hp: 2510
+  - Jobs:
+      Thief: true
+      Thief_High: true
+      Baby_Thief: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 53
+      - Level: 4
+        Hp: 60
+      - Level: 5
+        Hp: 68
+      - Level: 6
+        Hp: 76
+      - Level: 7
+        Hp: 85
+      - Level: 8
+        Hp: 94
+      - Level: 9
+        Hp: 104
+      - Level: 10
+        Hp: 114
+      - Level: 11
+        Hp: 125
+      - Level: 12
+        Hp: 136
+      - Level: 13
+        Hp: 148
+      - Level: 14
+        Hp: 160
+      - Level: 15
+        Hp: 173
+      - Level: 16
+        Hp: 186
+      - Level: 17
+        Hp: 200
+      - Level: 18
+        Hp: 214
+      - Level: 19
+        Hp: 229
+      - Level: 20
+        Hp: 244
+      - Level: 21
+        Hp: 260
+      - Level: 22
+        Hp: 276
+      - Level: 23
+        Hp: 293
+      - Level: 24
+        Hp: 310
+      - Level: 25
+        Hp: 328
+      - Level: 26
+        Hp: 346
+      - Level: 27
+        Hp: 365
+      - Level: 28
+        Hp: 384
+      - Level: 29
+        Hp: 404
+      - Level: 30
+        Hp: 424
+      - Level: 31
+        Hp: 445
+      - Level: 32
+        Hp: 466
+      - Level: 33
+        Hp: 488
+      - Level: 34
+        Hp: 510
+      - Level: 35
+        Hp: 533
+      - Level: 36
+        Hp: 556
+      - Level: 37
+        Hp: 580
+      - Level: 38
+        Hp: 604
+      - Level: 39
+        Hp: 629
+      - Level: 40
+        Hp: 654
+      - Level: 41
+        Hp: 680
+      - Level: 42
+        Hp: 706
+      - Level: 43
+        Hp: 733
+      - Level: 44
+        Hp: 760
+      - Level: 45
+        Hp: 788
+      - Level: 46
+        Hp: 816
+      - Level: 47
+        Hp: 845
+      - Level: 48
+        Hp: 874
+      - Level: 49
+        Hp: 904
+      - Level: 50
+        Hp: 934
+      - Level: 51
+        Hp: 965
+      - Level: 52
+        Hp: 996
+      - Level: 53
+        Hp: 1028
+      - Level: 54
+        Hp: 1060
+      - Level: 55
+        Hp: 1093
+      - Level: 56
+        Hp: 1126
+      - Level: 57
+        Hp: 1160
+      - Level: 58
+        Hp: 1194
+      - Level: 59
+        Hp: 1229
+      - Level: 60
+        Hp: 1264
+      - Level: 61
+        Hp: 1300
+      - Level: 62
+        Hp: 1336
+      - Level: 63
+        Hp: 1373
+      - Level: 64
+        Hp: 1410
+      - Level: 65
+        Hp: 1448
+      - Level: 66
+        Hp: 1486
+      - Level: 67
+        Hp: 1525
+      - Level: 68
+        Hp: 1564
+      - Level: 69
+        Hp: 1604
+      - Level: 70
+        Hp: 1644
+      - Level: 71
+        Hp: 1685
+      - Level: 72
+        Hp: 1726
+      - Level: 73
+        Hp: 1768
+      - Level: 74
+        Hp: 1810
+      - Level: 75
+        Hp: 1853
+      - Level: 76
+        Hp: 1896
+      - Level: 77
+        Hp: 1940
+      - Level: 78
+        Hp: 1984
+      - Level: 79
+        Hp: 2029
+      - Level: 80
+        Hp: 2074
+      - Level: 81
+        Hp: 2120
+      - Level: 82
+        Hp: 2166
+      - Level: 83
+        Hp: 2213
+      - Level: 84
+        Hp: 2260
+      - Level: 85
+        Hp: 2308
+      - Level: 86
+        Hp: 2356
+      - Level: 87
+        Hp: 2405
+      - Level: 88
+        Hp: 2454
+      - Level: 89
+        Hp: 2504
+      - Level: 90
+        Hp: 2554
+      - Level: 91
+        Hp: 2605
+      - Level: 92
+        Hp: 2656
+      - Level: 93
+        Hp: 2708
+      - Level: 94
+        Hp: 2760
+      - Level: 95
+        Hp: 2813
+      - Level: 96
+        Hp: 2866
+      - Level: 97
+        Hp: 2920
+      - Level: 98
+        Hp: 2974
+      - Level: 99
+        Hp: 3029
+  - Jobs:
+      Knight: true
+      Knight2: true
+      Lord_Knight: true
+      Lord_Knight2: true
+      Baby_Knight: true
+      Baby_Knight2: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 48
+      - Level: 3
+        Hp: 58
+      - Level: 4
+        Hp: 69
+      - Level: 5
+        Hp: 82
+      - Level: 6
+        Hp: 96
+      - Level: 7
+        Hp: 112
+      - Level: 8
+        Hp: 129
+      - Level: 9
+        Hp: 148
+      - Level: 10
+        Hp: 168
+      - Level: 11
+        Hp: 190
+      - Level: 12
+        Hp: 213
+      - Level: 13
+        Hp: 238
+      - Level: 14
+        Hp: 264
+      - Level: 15
+        Hp: 292
+      - Level: 16
+        Hp: 321
+      - Level: 17
+        Hp: 352
+      - Level: 18
+        Hp: 384
+      - Level: 19
+        Hp: 418
+      - Level: 20
+        Hp: 453
+      - Level: 21
+        Hp: 490
+      - Level: 22
+        Hp: 528
+      - Level: 23
+        Hp: 568
+      - Level: 24
+        Hp: 609
+      - Level: 25
+        Hp: 652
+      - Level: 26
+        Hp: 696
+      - Level: 27
+        Hp: 742
+      - Level: 28
+        Hp: 789
+      - Level: 29
+        Hp: 838
+      - Level: 30
+        Hp: 888
+      - Level: 31
+        Hp: 940
+      - Level: 32
+        Hp: 993
+      - Level: 33
+        Hp: 1048
+      - Level: 34
+        Hp: 1104
+      - Level: 35
+        Hp: 1162
+      - Level: 36
+        Hp: 1221
+      - Level: 37
+        Hp: 1282
+      - Level: 38
+        Hp: 1344
+      - Level: 39
+        Hp: 1408
+      - Level: 40
+        Hp: 1473
+      - Level: 41
+        Hp: 1540
+      - Level: 42
+        Hp: 1608
+      - Level: 43
+        Hp: 1678
+      - Level: 44
+        Hp: 1749
+      - Level: 45
+        Hp: 1822
+      - Level: 46
+        Hp: 1896
+      - Level: 47
+        Hp: 1972
+      - Level: 48
+        Hp: 2049
+      - Level: 49
+        Hp: 2128
+      - Level: 50
+        Hp: 2208
+      - Level: 51
+        Hp: 2290
+      - Level: 52
+        Hp: 2373
+      - Level: 53
+        Hp: 2458
+      - Level: 54
+        Hp: 2544
+      - Level: 55
+        Hp: 2632
+      - Level: 56
+        Hp: 2721
+      - Level: 57
+        Hp: 2812
+      - Level: 58
+        Hp: 2904
+      - Level: 59
+        Hp: 2998
+      - Level: 60
+        Hp: 3093
+      - Level: 61
+        Hp: 3190
+      - Level: 62
+        Hp: 3288
+      - Level: 63
+        Hp: 3388
+      - Level: 64
+        Hp: 3489
+      - Level: 65
+        Hp: 3592
+      - Level: 66
+        Hp: 3696
+      - Level: 67
+        Hp: 3802
+      - Level: 68
+        Hp: 3909
+      - Level: 69
+        Hp: 4018
+      - Level: 70
+        Hp: 4128
+      - Level: 71
+        Hp: 4240
+      - Level: 72
+        Hp: 4353
+      - Level: 73
+        Hp: 4468
+      - Level: 74
+        Hp: 4584
+      - Level: 75
+        Hp: 4702
+      - Level: 76
+        Hp: 4821
+      - Level: 77
+        Hp: 4942
+      - Level: 78
+        Hp: 5064
+      - Level: 79
+        Hp: 5188
+      - Level: 80
+        Hp: 5313
+      - Level: 81
+        Hp: 5440
+      - Level: 82
+        Hp: 5568
+      - Level: 83
+        Hp: 5698
+      - Level: 84
+        Hp: 5829
+      - Level: 85
+        Hp: 5962
+      - Level: 86
+        Hp: 6096
+      - Level: 87
+        Hp: 6232
+      - Level: 88
+        Hp: 6369
+      - Level: 89
+        Hp: 6508
+      - Level: 90
+        Hp: 6648
+      - Level: 91
+        Hp: 6790
+      - Level: 92
+        Hp: 6933
+      - Level: 93
+        Hp: 7078
+      - Level: 94
+        Hp: 7224
+      - Level: 95
+        Hp: 7372
+      - Level: 96
+        Hp: 7521
+      - Level: 97
+        Hp: 7672
+      - Level: 98
+        Hp: 7824
+      - Level: 99
+        Hp: 7978
+  - Jobs:
+      Priest: true
+      High_Priest: true
+      Baby_Priest: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 54
+      - Level: 4
+        Hp: 62
+      - Level: 5
+        Hp: 71
+      - Level: 6
+        Hp: 81
+      - Level: 7
+        Hp: 91
+      - Level: 8
+        Hp: 102
+      - Level: 9
+        Hp: 114
+      - Level: 10
+        Hp: 127
+      - Level: 11
+        Hp: 140
+      - Level: 12
+        Hp: 154
+      - Level: 13
+        Hp: 169
+      - Level: 14
+        Hp: 185
+      - Level: 15
+        Hp: 201
+      - Level: 16
+        Hp: 218
+      - Level: 17
+        Hp: 236
+      - Level: 18
+        Hp: 255
+      - Level: 19
+        Hp: 274
+      - Level: 20
+        Hp: 294
+      - Level: 21
+        Hp: 315
+      - Level: 22
+        Hp: 337
+      - Level: 23
+        Hp: 359
+      - Level: 24
+        Hp: 382
+      - Level: 25
+        Hp: 406
+      - Level: 26
+        Hp: 431
+      - Level: 27
+        Hp: 456
+      - Level: 28
+        Hp: 482
+      - Level: 29
+        Hp: 509
+      - Level: 30
+        Hp: 537
+      - Level: 31
+        Hp: 565
+      - Level: 32
+        Hp: 594
+      - Level: 33
+        Hp: 624
+      - Level: 34
+        Hp: 655
+      - Level: 35
+        Hp: 686
+      - Level: 36
+        Hp: 718
+      - Level: 37
+        Hp: 751
+      - Level: 38
+        Hp: 785
+      - Level: 39
+        Hp: 819
+      - Level: 40
+        Hp: 854
+      - Level: 41
+        Hp: 890
+      - Level: 42
+        Hp: 927
+      - Level: 43
+        Hp: 964
+      - Level: 44
+        Hp: 1002
+      - Level: 45
+        Hp: 1041
+      - Level: 46
+        Hp: 1081
+      - Level: 47
+        Hp: 1121
+      - Level: 48
+        Hp: 1162
+      - Level: 49
+        Hp: 1204
+      - Level: 50
+        Hp: 1247
+      - Level: 51
+        Hp: 1290
+      - Level: 52
+        Hp: 1334
+      - Level: 53
+        Hp: 1379
+      - Level: 54
+        Hp: 1425
+      - Level: 55
+        Hp: 1471
+      - Level: 56
+        Hp: 1518
+      - Level: 57
+        Hp: 1566
+      - Level: 58
+        Hp: 1615
+      - Level: 59
+        Hp: 1664
+      - Level: 60
+        Hp: 1714
+      - Level: 61
+        Hp: 1765
+      - Level: 62
+        Hp: 1817
+      - Level: 63
+        Hp: 1869
+      - Level: 64
+        Hp: 1922
+      - Level: 65
+        Hp: 1976
+      - Level: 66
+        Hp: 2031
+      - Level: 67
+        Hp: 2086
+      - Level: 68
+        Hp: 2142
+      - Level: 69
+        Hp: 2199
+      - Level: 70
+        Hp: 2257
+      - Level: 71
+        Hp: 2315
+      - Level: 72
+        Hp: 2374
+      - Level: 73
+        Hp: 2434
+      - Level: 74
+        Hp: 2495
+      - Level: 75
+        Hp: 2556
+      - Level: 76
+        Hp: 2618
+      - Level: 77
+        Hp: 2681
+      - Level: 78
+        Hp: 2745
+      - Level: 79
+        Hp: 2809
+      - Level: 80
+        Hp: 2874
+      - Level: 81
+        Hp: 2940
+      - Level: 82
+        Hp: 3007
+      - Level: 83
+        Hp: 3074
+      - Level: 84
+        Hp: 3142
+      - Level: 85
+        Hp: 3211
+      - Level: 86
+        Hp: 3281
+      - Level: 87
+        Hp: 3351
+      - Level: 88
+        Hp: 3422
+      - Level: 89
+        Hp: 3494
+      - Level: 90
+        Hp: 3567
+      - Level: 91
+        Hp: 3640
+      - Level: 92
+        Hp: 3714
+      - Level: 93
+        Hp: 3789
+      - Level: 94
+        Hp: 3865
+      - Level: 95
+        Hp: 3941
+      - Level: 96
+        Hp: 4018
+      - Level: 97
+        Hp: 4096
+      - Level: 98
+        Hp: 4175
+      - Level: 99
+        Hp: 4254
+  - Jobs:
+      Wizard: true
+      High_Wizard: true
+      Baby_Wizard: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 53
+      - Level: 4
+        Hp: 60
+      - Level: 5
+        Hp: 68
+      - Level: 6
+        Hp: 76
+      - Level: 7
+        Hp: 85
+      - Level: 8
+        Hp: 94
+      - Level: 9
+        Hp: 104
+      - Level: 10
+        Hp: 115
+      - Level: 11
+        Hp: 126
+      - Level: 12
+        Hp: 138
+      - Level: 13
+        Hp: 150
+      - Level: 14
+        Hp: 163
+      - Level: 15
+        Hp: 176
+      - Level: 16
+        Hp: 190
+      - Level: 17
+        Hp: 204
+      - Level: 18
+        Hp: 219
+      - Level: 19
+        Hp: 234
+      - Level: 20
+        Hp: 250
+      - Level: 21
+        Hp: 267
+      - Level: 22
+        Hp: 284
+      - Level: 23
+        Hp: 302
+      - Level: 24
+        Hp: 320
+      - Level: 25
+        Hp: 339
+      - Level: 26
+        Hp: 358
+      - Level: 27
+        Hp: 378
+      - Level: 28
+        Hp: 398
+      - Level: 29
+        Hp: 419
+      - Level: 30
+        Hp: 441
+      - Level: 31
+        Hp: 463
+      - Level: 32
+        Hp: 486
+      - Level: 33
+        Hp: 509
+      - Level: 34
+        Hp: 533
+      - Level: 35
+        Hp: 557
+      - Level: 36
+        Hp: 582
+      - Level: 37
+        Hp: 607
+      - Level: 38
+        Hp: 633
+      - Level: 39
+        Hp: 659
+      - Level: 40
+        Hp: 686
+      - Level: 41
+        Hp: 714
+      - Level: 42
+        Hp: 742
+      - Level: 43
+        Hp: 771
+      - Level: 44
+        Hp: 800
+      - Level: 45
+        Hp: 830
+      - Level: 46
+        Hp: 860
+      - Level: 47
+        Hp: 891
+      - Level: 48
+        Hp: 922
+      - Level: 49
+        Hp: 954
+      - Level: 50
+        Hp: 987
+      - Level: 51
+        Hp: 1020
+      - Level: 52
+        Hp: 1054
+      - Level: 53
+        Hp: 1088
+      - Level: 54
+        Hp: 1123
+      - Level: 55
+        Hp: 1158
+      - Level: 56
+        Hp: 1194
+      - Level: 57
+        Hp: 1230
+      - Level: 58
+        Hp: 1267
+      - Level: 59
+        Hp: 1304
+      - Level: 60
+        Hp: 1342
+      - Level: 61
+        Hp: 1381
+      - Level: 62
+        Hp: 1420
+      - Level: 63
+        Hp: 1460
+      - Level: 64
+        Hp: 1500
+      - Level: 65
+        Hp: 1541
+      - Level: 66
+        Hp: 1582
+      - Level: 67
+        Hp: 1624
+      - Level: 68
+        Hp: 1666
+      - Level: 69
+        Hp: 1709
+      - Level: 70
+        Hp: 1753
+      - Level: 71
+        Hp: 1797
+      - Level: 72
+        Hp: 1842
+      - Level: 73
+        Hp: 1887
+      - Level: 74
+        Hp: 1933
+      - Level: 75
+        Hp: 1979
+      - Level: 76
+        Hp: 2026
+      - Level: 77
+        Hp: 2073
+      - Level: 78
+        Hp: 2121
+      - Level: 79
+        Hp: 2169
+      - Level: 80
+        Hp: 2218
+      - Level: 81
+        Hp: 2268
+      - Level: 82
+        Hp: 2318
+      - Level: 83
+        Hp: 2369
+      - Level: 84
+        Hp: 2420
+      - Level: 85
+        Hp: 2472
+      - Level: 86
+        Hp: 2524
+      - Level: 87
+        Hp: 2577
+      - Level: 88
+        Hp: 2630
+      - Level: 89
+        Hp: 2684
+      - Level: 90
+        Hp: 2739
+      - Level: 91
+        Hp: 2794
+      - Level: 92
+        Hp: 2850
+      - Level: 93
+        Hp: 2906
+      - Level: 94
+        Hp: 2963
+      - Level: 95
+        Hp: 3020
+      - Level: 96
+        Hp: 3078
+      - Level: 97
+        Hp: 3136
+      - Level: 98
+        Hp: 3195
+      - Level: 99
+        Hp: 3254
+  - Jobs:
+      Blacksmith: true
+      Whitesmith: true
+      Baby_Blacksmith: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 55
+      - Level: 4
+        Hp: 64
+      - Level: 5
+        Hp: 74
+      - Level: 6
+        Hp: 84
+      - Level: 7
+        Hp: 95
+      - Level: 8
+        Hp: 107
+      - Level: 9
+        Hp: 120
+      - Level: 10
+        Hp: 134
+      - Level: 11
+        Hp: 149
+      - Level: 12
+        Hp: 165
+      - Level: 13
+        Hp: 182
+      - Level: 14
+        Hp: 200
+      - Level: 15
+        Hp: 219
+      - Level: 16
+        Hp: 238
+      - Level: 17
+        Hp: 258
+      - Level: 18
+        Hp: 279
+      - Level: 19
+        Hp: 301
+      - Level: 20
+        Hp: 324
+      - Level: 21
+        Hp: 348
+      - Level: 22
+        Hp: 373
+      - Level: 23
+        Hp: 399
+      - Level: 24
+        Hp: 426
+      - Level: 25
+        Hp: 454
+      - Level: 26
+        Hp: 482
+      - Level: 27
+        Hp: 511
+      - Level: 28
+        Hp: 541
+      - Level: 29
+        Hp: 572
+      - Level: 30
+        Hp: 604
+      - Level: 31
+        Hp: 637
+      - Level: 32
+        Hp: 671
+      - Level: 33
+        Hp: 706
+      - Level: 34
+        Hp: 742
+      - Level: 35
+        Hp: 779
+      - Level: 36
+        Hp: 816
+      - Level: 37
+        Hp: 854
+      - Level: 38
+        Hp: 893
+      - Level: 39
+        Hp: 933
+      - Level: 40
+        Hp: 974
+      - Level: 41
+        Hp: 1016
+      - Level: 42
+        Hp: 1059
+      - Level: 43
+        Hp: 1103
+      - Level: 44
+        Hp: 1148
+      - Level: 45
+        Hp: 1194
+      - Level: 46
+        Hp: 1240
+      - Level: 47
+        Hp: 1287
+      - Level: 48
+        Hp: 1335
+      - Level: 49
+        Hp: 1384
+      - Level: 50
+        Hp: 1434
+      - Level: 51
+        Hp: 1485
+      - Level: 52
+        Hp: 1537
+      - Level: 53
+        Hp: 1590
+      - Level: 54
+        Hp: 1644
+      - Level: 55
+        Hp: 1699
+      - Level: 56
+        Hp: 1754
+      - Level: 57
+        Hp: 1810
+      - Level: 58
+        Hp: 1867
+      - Level: 59
+        Hp: 1925
+      - Level: 60
+        Hp: 1984
+      - Level: 61
+        Hp: 2044
+      - Level: 62
+        Hp: 2105
+      - Level: 63
+        Hp: 2167
+      - Level: 64
+        Hp: 2230
+      - Level: 65
+        Hp: 2294
+      - Level: 66
+        Hp: 2358
+      - Level: 67
+        Hp: 2423
+      - Level: 68
+        Hp: 2489
+      - Level: 69
+        Hp: 2556
+      - Level: 70
+        Hp: 2624
+      - Level: 71
+        Hp: 2693
+      - Level: 72
+        Hp: 2763
+      - Level: 73
+        Hp: 2834
+      - Level: 74
+        Hp: 2906
+      - Level: 75
+        Hp: 2979
+      - Level: 76
+        Hp: 3052
+      - Level: 77
+        Hp: 3126
+      - Level: 78
+        Hp: 3201
+      - Level: 79
+        Hp: 3277
+      - Level: 80
+        Hp: 3354
+      - Level: 81
+        Hp: 3432
+      - Level: 82
+        Hp: 3511
+      - Level: 83
+        Hp: 3591
+      - Level: 84
+        Hp: 3672
+      - Level: 85
+        Hp: 3754
+      - Level: 86
+        Hp: 3836
+      - Level: 87
+        Hp: 3919
+      - Level: 88
+        Hp: 4003
+      - Level: 89
+        Hp: 4088
+      - Level: 90
+        Hp: 4174
+      - Level: 91
+        Hp: 4261
+      - Level: 92
+        Hp: 4349
+      - Level: 93
+        Hp: 4438
+      - Level: 94
+        Hp: 4528
+      - Level: 95
+        Hp: 4619
+      - Level: 96
+        Hp: 4710
+      - Level: 97
+        Hp: 4802
+      - Level: 98
+        Hp: 4895
+      - Level: 99
+        Hp: 4989
+  - Jobs:
+      Hunter: true
+      Sniper: true
+      Baby_Hunter: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 55
+      - Level: 4
+        Hp: 63
+      - Level: 5
+        Hp: 72
+      - Level: 6
+        Hp: 82
+      - Level: 7
+        Hp: 93
+      - Level: 8
+        Hp: 105
+      - Level: 9
+        Hp: 118
+      - Level: 10
+        Hp: 132
+      - Level: 11
+        Hp: 146
+      - Level: 12
+        Hp: 161
+      - Level: 13
+        Hp: 177
+      - Level: 14
+        Hp: 194
+      - Level: 15
+        Hp: 212
+      - Level: 16
+        Hp: 231
+      - Level: 17
+        Hp: 250
+      - Level: 18
+        Hp: 270
+      - Level: 19
+        Hp: 291
+      - Level: 20
+        Hp: 313
+      - Level: 21
+        Hp: 336
+      - Level: 22
+        Hp: 360
+      - Level: 23
+        Hp: 385
+      - Level: 24
+        Hp: 410
+      - Level: 25
+        Hp: 436
+      - Level: 26
+        Hp: 463
+      - Level: 27
+        Hp: 491
+      - Level: 28
+        Hp: 520
+      - Level: 29
+        Hp: 550
+      - Level: 30
+        Hp: 581
+      - Level: 31
+        Hp: 612
+      - Level: 32
+        Hp: 644
+      - Level: 33
+        Hp: 677
+      - Level: 34
+        Hp: 711
+      - Level: 35
+        Hp: 746
+      - Level: 36
+        Hp: 782
+      - Level: 37
+        Hp: 818
+      - Level: 38
+        Hp: 855
+      - Level: 39
+        Hp: 893
+      - Level: 40
+        Hp: 932
+      - Level: 41
+        Hp: 972
+      - Level: 42
+        Hp: 1013
+      - Level: 43
+        Hp: 1055
+      - Level: 44
+        Hp: 1097
+      - Level: 45
+        Hp: 1140
+      - Level: 46
+        Hp: 1184
+      - Level: 47
+        Hp: 1229
+      - Level: 48
+        Hp: 1275
+      - Level: 49
+        Hp: 1322
+      - Level: 50
+        Hp: 1370
+      - Level: 51
+        Hp: 1418
+      - Level: 52
+        Hp: 1467
+      - Level: 53
+        Hp: 1517
+      - Level: 54
+        Hp: 1568
+      - Level: 55
+        Hp: 1620
+      - Level: 56
+        Hp: 1673
+      - Level: 57
+        Hp: 1726
+      - Level: 58
+        Hp: 1780
+      - Level: 59
+        Hp: 1835
+      - Level: 60
+        Hp: 1891
+      - Level: 61
+        Hp: 1948
+      - Level: 62
+        Hp: 2006
+      - Level: 63
+        Hp: 2065
+      - Level: 64
+        Hp: 2124
+      - Level: 65
+        Hp: 2184
+      - Level: 66
+        Hp: 2245
+      - Level: 67
+        Hp: 2307
+      - Level: 68
+        Hp: 2370
+      - Level: 69
+        Hp: 2434
+      - Level: 70
+        Hp: 2499
+      - Level: 71
+        Hp: 2564
+      - Level: 72
+        Hp: 2630
+      - Level: 73
+        Hp: 2697
+      - Level: 74
+        Hp: 2765
+      - Level: 75
+        Hp: 2834
+      - Level: 76
+        Hp: 2904
+      - Level: 77
+        Hp: 2974
+      - Level: 78
+        Hp: 3045
+      - Level: 79
+        Hp: 3117
+      - Level: 80
+        Hp: 3190
+      - Level: 81
+        Hp: 3264
+      - Level: 82
+        Hp: 3339
+      - Level: 83
+        Hp: 3415
+      - Level: 84
+        Hp: 3491
+      - Level: 85
+        Hp: 3568
+      - Level: 86
+        Hp: 3646
+      - Level: 87
+        Hp: 3725
+      - Level: 88
+        Hp: 3805
+      - Level: 89
+        Hp: 3886
+      - Level: 90
+        Hp: 3968
+      - Level: 91
+        Hp: 4050
+      - Level: 92
+        Hp: 4133
+      - Level: 93
+        Hp: 4217
+      - Level: 94
+        Hp: 4302
+      - Level: 95
+        Hp: 4388
+      - Level: 96
+        Hp: 4475
+      - Level: 97
+        Hp: 4562
+      - Level: 98
+        Hp: 4650
+      - Level: 99
+        Hp: 4739
+  - Jobs:
+      Assassin: true
+      Assassin_Cross: true
+      Baby_Assassin: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 55
+      - Level: 4
+        Hp: 64
+      - Level: 5
+        Hp: 75
+      - Level: 6
+        Hp: 87
+      - Level: 7
+        Hp: 100
+      - Level: 8
+        Hp: 114
+      - Level: 9
+        Hp: 129
+      - Level: 10
+        Hp: 145
+      - Level: 11
+        Hp: 162
+      - Level: 12
+        Hp: 180
+      - Level: 13
+        Hp: 199
+      - Level: 14
+        Hp: 219
+      - Level: 15
+        Hp: 241
+      - Level: 16
+        Hp: 264
+      - Level: 17
+        Hp: 288
+      - Level: 18
+        Hp: 313
+      - Level: 19
+        Hp: 339
+      - Level: 20
+        Hp: 366
+      - Level: 21
+        Hp: 394
+      - Level: 22
+        Hp: 423
+      - Level: 23
+        Hp: 453
+      - Level: 24
+        Hp: 484
+      - Level: 25
+        Hp: 517
+      - Level: 26
+        Hp: 551
+      - Level: 27
+        Hp: 586
+      - Level: 28
+        Hp: 622
+      - Level: 29
+        Hp: 659
+      - Level: 30
+        Hp: 697
+      - Level: 31
+        Hp: 736
+      - Level: 32
+        Hp: 776
+      - Level: 33
+        Hp: 817
+      - Level: 34
+        Hp: 859
+      - Level: 35
+        Hp: 903
+      - Level: 36
+        Hp: 948
+      - Level: 37
+        Hp: 994
+      - Level: 38
+        Hp: 1041
+      - Level: 39
+        Hp: 1089
+      - Level: 40
+        Hp: 1138
+      - Level: 41
+        Hp: 1188
+      - Level: 42
+        Hp: 1239
+      - Level: 43
+        Hp: 1291
+      - Level: 44
+        Hp: 1344
+      - Level: 45
+        Hp: 1399
+      - Level: 46
+        Hp: 1455
+      - Level: 47
+        Hp: 1512
+      - Level: 48
+        Hp: 1570
+      - Level: 49
+        Hp: 1629
+      - Level: 50
+        Hp: 1689
+      - Level: 51
+        Hp: 1750
+      - Level: 52
+        Hp: 1812
+      - Level: 53
+        Hp: 1875
+      - Level: 54
+        Hp: 1939
+      - Level: 55
+        Hp: 2005
+      - Level: 56
+        Hp: 2072
+      - Level: 57
+        Hp: 2140
+      - Level: 58
+        Hp: 2209
+      - Level: 59
+        Hp: 2279
+      - Level: 60
+        Hp: 2350
+      - Level: 61
+        Hp: 2422
+      - Level: 62
+        Hp: 2495
+      - Level: 63
+        Hp: 2569
+      - Level: 64
+        Hp: 2644
+      - Level: 65
+        Hp: 2721
+      - Level: 66
+        Hp: 2799
+      - Level: 67
+        Hp: 2878
+      - Level: 68
+        Hp: 2958
+      - Level: 69
+        Hp: 3039
+      - Level: 70
+        Hp: 3121
+      - Level: 71
+        Hp: 3204
+      - Level: 72
+        Hp: 3288
+      - Level: 73
+        Hp: 3373
+      - Level: 74
+        Hp: 3459
+      - Level: 75
+        Hp: 3547
+      - Level: 76
+        Hp: 3636
+      - Level: 77
+        Hp: 3726
+      - Level: 78
+        Hp: 3817
+      - Level: 79
+        Hp: 3909
+      - Level: 80
+        Hp: 4002
+      - Level: 81
+        Hp: 4096
+      - Level: 82
+        Hp: 4191
+      - Level: 83
+        Hp: 4287
+      - Level: 84
+        Hp: 4384
+      - Level: 85
+        Hp: 4483
+      - Level: 86
+        Hp: 4583
+      - Level: 87
+        Hp: 4684
+      - Level: 88
+        Hp: 4786
+      - Level: 89
+        Hp: 4889
+      - Level: 90
+        Hp: 4993
+      - Level: 91
+        Hp: 5098
+      - Level: 92
+        Hp: 5204
+      - Level: 93
+        Hp: 5311
+      - Level: 94
+        Hp: 5419
+      - Level: 95
+        Hp: 5529
+      - Level: 96
+        Hp: 5640
+      - Level: 97
+        Hp: 5752
+      - Level: 98
+        Hp: 5865
+      - Level: 99
+        Hp: 5979
+  - Jobs:
+      Crusader: true
+      Crusader2: true
+      Paladin: true
+      Paladin2: true
+      Baby_Crusader: true
+      Baby_Crusader2: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 56
+      - Level: 4
+        Hp: 62
+      - Level: 5
+        Hp: 81
+      - Level: 6
+        Hp: 94
+      - Level: 7
+        Hp: 108
+      - Level: 8
+        Hp: 128
+      - Level: 9
+        Hp: 147
+      - Level: 10
+        Hp: 165
+      - Level: 11
+        Hp: 184
+      - Level: 12
+        Hp: 204
+      - Level: 13
+        Hp: 225
+      - Level: 14
+        Hp: 247
+      - Level: 15
+        Hp: 271
+      - Level: 16
+        Hp: 296
+      - Level: 17
+        Hp: 322
+      - Level: 18
+        Hp: 349
+      - Level: 19
+        Hp: 377
+      - Level: 20
+        Hp: 406
+      - Level: 21
+        Hp: 436
+      - Level: 22
+        Hp: 467
+      - Level: 23
+        Hp: 499
+      - Level: 24
+        Hp: 532
+      - Level: 25
+        Hp: 567
+      - Level: 26
+        Hp: 603
+      - Level: 27
+        Hp: 640
+      - Level: 28
+        Hp: 678
+      - Level: 29
+        Hp: 717
+      - Level: 30
+        Hp: 757
+      - Level: 31
+        Hp: 798
+      - Level: 32
+        Hp: 840
+      - Level: 33
+        Hp: 883
+      - Level: 34
+        Hp: 927
+      - Level: 35
+        Hp: 973
+      - Level: 36
+        Hp: 1020
+      - Level: 37
+        Hp: 1068
+      - Level: 38
+        Hp: 1117
+      - Level: 39
+        Hp: 1167
+      - Level: 40
+        Hp: 1218
+      - Level: 41
+        Hp: 1270
+      - Level: 42
+        Hp: 1323
+      - Level: 43
+        Hp: 1377
+      - Level: 44
+        Hp: 1432
+      - Level: 45
+        Hp: 1489
+      - Level: 46
+        Hp: 1547
+      - Level: 47
+        Hp: 1606
+      - Level: 48
+        Hp: 1666
+      - Level: 49
+        Hp: 1727
+      - Level: 50
+        Hp: 1789
+      - Level: 51
+        Hp: 1852
+      - Level: 52
+        Hp: 1916
+      - Level: 53
+        Hp: 1981
+      - Level: 54
+        Hp: 2047
+      - Level: 55
+        Hp: 2115
+      - Level: 56
+        Hp: 2184
+      - Level: 57
+        Hp: 2254
+      - Level: 58
+        Hp: 2325
+      - Level: 59
+        Hp: 2397
+      - Level: 60
+        Hp: 2470
+      - Level: 61
+        Hp: 2544
+      - Level: 62
+        Hp: 2619
+      - Level: 63
+        Hp: 2695
+      - Level: 64
+        Hp: 2772
+      - Level: 65
+        Hp: 2851
+      - Level: 66
+        Hp: 2931
+      - Level: 67
+        Hp: 3012
+      - Level: 68
+        Hp: 3094
+      - Level: 69
+        Hp: 3177
+      - Level: 70
+        Hp: 3261
+      - Level: 71
+        Hp: 3346
+      - Level: 72
+        Hp: 3432
+      - Level: 73
+        Hp: 3519
+      - Level: 74
+        Hp: 3607
+      - Level: 75
+        Hp: 3697
+      - Level: 76
+        Hp: 3788
+      - Level: 77
+        Hp: 3880
+      - Level: 78
+        Hp: 3973
+      - Level: 79
+        Hp: 4067
+      - Level: 80
+        Hp: 4162
+      - Level: 81
+        Hp: 4258
+      - Level: 82
+        Hp: 4355
+      - Level: 83
+        Hp: 4453
+      - Level: 84
+        Hp: 4552
+      - Level: 85
+        Hp: 4653
+      - Level: 86
+        Hp: 4755
+      - Level: 87
+        Hp: 4858
+      - Level: 88
+        Hp: 4962
+      - Level: 89
+        Hp: 5067
+      - Level: 90
+        Hp: 5173
+      - Level: 91
+        Hp: 5280
+      - Level: 92
+        Hp: 5388
+      - Level: 93
+        Hp: 5497
+      - Level: 94
+        Hp: 5607
+      - Level: 95
+        Hp: 5719
+      - Level: 96
+        Hp: 5832
+      - Level: 97
+        Hp: 5946
+      - Level: 98
+        Hp: 6061
+      - Level: 99
+        Hp: 6177
+  - Jobs:
+      Monk: true
+      Champion: true
+      Baby_Monk: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 55
+      - Level: 4
+        Hp: 64
+      - Level: 5
+        Hp: 74
+      - Level: 6
+        Hp: 84
+      - Level: 7
+        Hp: 95
+      - Level: 8
+        Hp: 107
+      - Level: 9
+        Hp: 120
+      - Level: 10
+        Hp: 134
+      - Level: 11
+        Hp: 149
+      - Level: 12
+        Hp: 165
+      - Level: 13
+        Hp: 182
+      - Level: 14
+        Hp: 200
+      - Level: 15
+        Hp: 219
+      - Level: 16
+        Hp: 238
+      - Level: 17
+        Hp: 258
+      - Level: 18
+        Hp: 306
+      - Level: 19
+        Hp: 329
+      - Level: 20
+        Hp: 354
+      - Level: 21
+        Hp: 379
+      - Level: 22
+        Hp: 406
+      - Level: 23
+        Hp: 433
+      - Level: 24
+        Hp: 462
+      - Level: 25
+        Hp: 491
+      - Level: 26
+        Hp: 521
+      - Level: 27
+        Hp: 551
+      - Level: 28
+        Hp: 583
+      - Level: 29
+        Hp: 615
+      - Level: 30
+        Hp: 649
+      - Level: 31
+        Hp: 683
+      - Level: 32
+        Hp: 719
+      - Level: 33
+        Hp: 755
+      - Level: 34
+        Hp: 793
+      - Level: 35
+        Hp: 831
+      - Level: 36
+        Hp: 870
+      - Level: 37
+        Hp: 909
+      - Level: 38
+        Hp: 950
+      - Level: 39
+        Hp: 991
+      - Level: 40
+        Hp: 1034
+      - Level: 41
+        Hp: 1077
+      - Level: 42
+        Hp: 1122
+      - Level: 43
+        Hp: 1167
+      - Level: 44
+        Hp: 1214
+      - Level: 45
+        Hp: 1261
+      - Level: 46
+        Hp: 1309
+      - Level: 47
+        Hp: 1357
+      - Level: 48
+        Hp: 1407
+      - Level: 49
+        Hp: 1457
+      - Level: 50
+        Hp: 1509
+      - Level: 51
+        Hp: 1561
+      - Level: 52
+        Hp: 1615
+      - Level: 53
+        Hp: 1669
+      - Level: 54
+        Hp: 1725
+      - Level: 55
+        Hp: 1781
+      - Level: 56
+        Hp: 1838
+      - Level: 57
+        Hp: 1895
+      - Level: 58
+        Hp: 1954
+      - Level: 59
+        Hp: 2013
+      - Level: 60
+        Hp: 2074
+      - Level: 61
+        Hp: 2135
+      - Level: 62
+        Hp: 2198
+      - Level: 63
+        Hp: 2261
+      - Level: 64
+        Hp: 2326
+      - Level: 65
+        Hp: 2391
+      - Level: 66
+        Hp: 2457
+      - Level: 67
+        Hp: 2523
+      - Level: 68
+        Hp: 2591
+      - Level: 69
+        Hp: 2659
+      - Level: 70
+        Hp: 2729
+      - Level: 71
+        Hp: 2799
+      - Level: 72
+        Hp: 2871
+      - Level: 73
+        Hp: 2943
+      - Level: 74
+        Hp: 3017
+      - Level: 75
+        Hp: 3091
+      - Level: 76
+        Hp: 3166
+      - Level: 77
+        Hp: 3241
+      - Level: 78
+        Hp: 3318
+      - Level: 79
+        Hp: 3395
+      - Level: 80
+        Hp: 3474
+      - Level: 81
+        Hp: 3553
+      - Level: 82
+        Hp: 3634
+      - Level: 83
+        Hp: 3715
+      - Level: 84
+        Hp: 3798
+      - Level: 85
+        Hp: 3881
+      - Level: 86
+        Hp: 3965
+      - Level: 87
+        Hp: 4049
+      - Level: 88
+        Hp: 4135
+      - Level: 89
+        Hp: 4221
+      - Level: 90
+        Hp: 4309
+      - Level: 91
+        Hp: 4397
+      - Level: 92
+        Hp: 4487
+      - Level: 93
+        Hp: 4577
+      - Level: 94
+        Hp: 4669
+      - Level: 95
+        Hp: 4761
+      - Level: 96
+        Hp: 4854
+      - Level: 97
+        Hp: 4947
+      - Level: 98
+        Hp: 5042
+      - Level: 99
+        Hp: 5137
+  - Jobs:
+      Sage: true
+      Professor: true
+      Baby_Sage: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 54
+      - Level: 4
+        Hp: 62
+      - Level: 5
+        Hp: 71
+      - Level: 6
+        Hp: 81
+      - Level: 7
+        Hp: 91
+      - Level: 8
+        Hp: 102
+      - Level: 9
+        Hp: 114
+      - Level: 10
+        Hp: 127
+      - Level: 11
+        Hp: 140
+      - Level: 12
+        Hp: 154
+      - Level: 13
+        Hp: 169
+      - Level: 14
+        Hp: 185
+      - Level: 15
+        Hp: 201
+      - Level: 16
+        Hp: 218
+      - Level: 17
+        Hp: 236
+      - Level: 18
+        Hp: 255
+      - Level: 19
+        Hp: 274
+      - Level: 20
+        Hp: 294
+      - Level: 21
+        Hp: 315
+      - Level: 22
+        Hp: 337
+      - Level: 23
+        Hp: 359
+      - Level: 24
+        Hp: 382
+      - Level: 25
+        Hp: 406
+      - Level: 26
+        Hp: 431
+      - Level: 27
+        Hp: 456
+      - Level: 28
+        Hp: 482
+      - Level: 29
+        Hp: 509
+      - Level: 30
+        Hp: 537
+      - Level: 31
+        Hp: 565
+      - Level: 32
+        Hp: 594
+      - Level: 33
+        Hp: 624
+      - Level: 34
+        Hp: 655
+      - Level: 35
+        Hp: 686
+      - Level: 36
+        Hp: 718
+      - Level: 37
+        Hp: 751
+      - Level: 38
+        Hp: 785
+      - Level: 39
+        Hp: 819
+      - Level: 40
+        Hp: 854
+      - Level: 41
+        Hp: 890
+      - Level: 42
+        Hp: 927
+      - Level: 43
+        Hp: 964
+      - Level: 44
+        Hp: 1002
+      - Level: 45
+        Hp: 1041
+      - Level: 46
+        Hp: 1081
+      - Level: 47
+        Hp: 1121
+      - Level: 48
+        Hp: 1162
+      - Level: 49
+        Hp: 1204
+      - Level: 50
+        Hp: 1247
+      - Level: 51
+        Hp: 1290
+      - Level: 52
+        Hp: 1334
+      - Level: 53
+        Hp: 1379
+      - Level: 54
+        Hp: 1425
+      - Level: 55
+        Hp: 1471
+      - Level: 56
+        Hp: 1518
+      - Level: 57
+        Hp: 1566
+      - Level: 58
+        Hp: 1615
+      - Level: 59
+        Hp: 1664
+      - Level: 60
+        Hp: 1714
+      - Level: 61
+        Hp: 1765
+      - Level: 62
+        Hp: 1817
+      - Level: 63
+        Hp: 1869
+      - Level: 64
+        Hp: 1922
+      - Level: 65
+        Hp: 1976
+      - Level: 66
+        Hp: 2031
+      - Level: 67
+        Hp: 2086
+      - Level: 68
+        Hp: 2142
+      - Level: 69
+        Hp: 2199
+      - Level: 70
+        Hp: 2257
+      - Level: 71
+        Hp: 2315
+      - Level: 72
+        Hp: 2374
+      - Level: 73
+        Hp: 2434
+      - Level: 74
+        Hp: 2495
+      - Level: 75
+        Hp: 2556
+      - Level: 76
+        Hp: 2618
+      - Level: 77
+        Hp: 2681
+      - Level: 78
+        Hp: 2745
+      - Level: 79
+        Hp: 2809
+      - Level: 80
+        Hp: 2874
+      - Level: 81
+        Hp: 2940
+      - Level: 82
+        Hp: 3007
+      - Level: 83
+        Hp: 3074
+      - Level: 84
+        Hp: 3142
+      - Level: 85
+        Hp: 3211
+      - Level: 86
+        Hp: 3281
+      - Level: 87
+        Hp: 3351
+      - Level: 88
+        Hp: 3422
+      - Level: 89
+        Hp: 3494
+      - Level: 90
+        Hp: 3567
+      - Level: 91
+        Hp: 3640
+      - Level: 92
+        Hp: 3714
+      - Level: 93
+        Hp: 3789
+      - Level: 94
+        Hp: 3865
+      - Level: 95
+        Hp: 3941
+      - Level: 96
+        Hp: 4018
+      - Level: 97
+        Hp: 4096
+      - Level: 98
+        Hp: 4175
+      - Level: 99
+        Hp: 4254
+  - Jobs:
+      Rogue: true
+      Stalker: true
+      Baby_Rogue: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 55
+      - Level: 4
+        Hp: 63
+      - Level: 5
+        Hp: 72
+      - Level: 6
+        Hp: 82
+      - Level: 7
+        Hp: 93
+      - Level: 8
+        Hp: 105
+      - Level: 9
+        Hp: 118
+      - Level: 10
+        Hp: 132
+      - Level: 11
+        Hp: 146
+      - Level: 12
+        Hp: 161
+      - Level: 13
+        Hp: 177
+      - Level: 14
+        Hp: 194
+      - Level: 15
+        Hp: 212
+      - Level: 16
+        Hp: 231
+      - Level: 17
+        Hp: 250
+      - Level: 18
+        Hp: 270
+      - Level: 19
+        Hp: 291
+      - Level: 20
+        Hp: 313
+      - Level: 21
+        Hp: 336
+      - Level: 22
+        Hp: 360
+      - Level: 23
+        Hp: 385
+      - Level: 24
+        Hp: 410
+      - Level: 25
+        Hp: 436
+      - Level: 26
+        Hp: 463
+      - Level: 27
+        Hp: 491
+      - Level: 28
+        Hp: 520
+      - Level: 29
+        Hp: 550
+      - Level: 30
+        Hp: 581
+      - Level: 31
+        Hp: 612
+      - Level: 32
+        Hp: 644
+      - Level: 33
+        Hp: 677
+      - Level: 34
+        Hp: 711
+      - Level: 35
+        Hp: 746
+      - Level: 36
+        Hp: 782
+      - Level: 37
+        Hp: 818
+      - Level: 38
+        Hp: 855
+      - Level: 39
+        Hp: 893
+      - Level: 40
+        Hp: 932
+      - Level: 41
+        Hp: 972
+      - Level: 42
+        Hp: 1013
+      - Level: 43
+        Hp: 1055
+      - Level: 44
+        Hp: 1097
+      - Level: 45
+        Hp: 1140
+      - Level: 46
+        Hp: 1184
+      - Level: 47
+        Hp: 1229
+      - Level: 48
+        Hp: 1275
+      - Level: 49
+        Hp: 1322
+      - Level: 50
+        Hp: 1370
+      - Level: 51
+        Hp: 1418
+      - Level: 52
+        Hp: 1467
+      - Level: 53
+        Hp: 1517
+      - Level: 54
+        Hp: 1568
+      - Level: 55
+        Hp: 1620
+      - Level: 56
+        Hp: 1673
+      - Level: 57
+        Hp: 1726
+      - Level: 58
+        Hp: 1780
+      - Level: 59
+        Hp: 1835
+      - Level: 60
+        Hp: 1891
+      - Level: 61
+        Hp: 1948
+      - Level: 62
+        Hp: 2006
+      - Level: 63
+        Hp: 2065
+      - Level: 64
+        Hp: 2124
+      - Level: 65
+        Hp: 2184
+      - Level: 66
+        Hp: 2245
+      - Level: 67
+        Hp: 2307
+      - Level: 68
+        Hp: 2370
+      - Level: 69
+        Hp: 2434
+      - Level: 70
+        Hp: 2499
+      - Level: 71
+        Hp: 2564
+      - Level: 72
+        Hp: 2630
+      - Level: 73
+        Hp: 2697
+      - Level: 74
+        Hp: 2765
+      - Level: 75
+        Hp: 2834
+      - Level: 76
+        Hp: 2904
+      - Level: 77
+        Hp: 2974
+      - Level: 78
+        Hp: 3045
+      - Level: 79
+        Hp: 3117
+      - Level: 80
+        Hp: 3190
+      - Level: 81
+        Hp: 3264
+      - Level: 82
+        Hp: 3339
+      - Level: 83
+        Hp: 3415
+      - Level: 84
+        Hp: 3491
+      - Level: 85
+        Hp: 3568
+      - Level: 86
+        Hp: 3646
+      - Level: 87
+        Hp: 3725
+      - Level: 88
+        Hp: 3805
+      - Level: 89
+        Hp: 3886
+      - Level: 90
+        Hp: 3968
+      - Level: 91
+        Hp: 4050
+      - Level: 92
+        Hp: 4133
+      - Level: 93
+        Hp: 4217
+      - Level: 94
+        Hp: 4302
+      - Level: 95
+        Hp: 4388
+      - Level: 96
+        Hp: 4475
+      - Level: 97
+        Hp: 4562
+      - Level: 98
+        Hp: 4650
+      - Level: 99
+        Hp: 4739
+  - Jobs:
+      Alchemist: true
+      Creator: true
+      Baby_Alchemist: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 55
+      - Level: 4
+        Hp: 64
+      - Level: 5
+        Hp: 74
+      - Level: 6
+        Hp: 84
+      - Level: 7
+        Hp: 95
+      - Level: 8
+        Hp: 107
+      - Level: 9
+        Hp: 120
+      - Level: 10
+        Hp: 134
+      - Level: 11
+        Hp: 149
+      - Level: 12
+        Hp: 165
+      - Level: 13
+        Hp: 182
+      - Level: 14
+        Hp: 200
+      - Level: 15
+        Hp: 219
+      - Level: 16
+        Hp: 238
+      - Level: 17
+        Hp: 258
+      - Level: 18
+        Hp: 279
+      - Level: 19
+        Hp: 301
+      - Level: 20
+        Hp: 324
+      - Level: 21
+        Hp: 348
+      - Level: 22
+        Hp: 373
+      - Level: 23
+        Hp: 399
+      - Level: 24
+        Hp: 426
+      - Level: 25
+        Hp: 454
+      - Level: 26
+        Hp: 482
+      - Level: 27
+        Hp: 511
+      - Level: 28
+        Hp: 541
+      - Level: 29
+        Hp: 572
+      - Level: 30
+        Hp: 604
+      - Level: 31
+        Hp: 637
+      - Level: 32
+        Hp: 671
+      - Level: 33
+        Hp: 706
+      - Level: 34
+        Hp: 742
+      - Level: 35
+        Hp: 779
+      - Level: 36
+        Hp: 816
+      - Level: 37
+        Hp: 854
+      - Level: 38
+        Hp: 893
+      - Level: 39
+        Hp: 933
+      - Level: 40
+        Hp: 974
+      - Level: 41
+        Hp: 1016
+      - Level: 42
+        Hp: 1059
+      - Level: 43
+        Hp: 1103
+      - Level: 44
+        Hp: 1148
+      - Level: 45
+        Hp: 1194
+      - Level: 46
+        Hp: 1240
+      - Level: 47
+        Hp: 1287
+      - Level: 48
+        Hp: 1335
+      - Level: 49
+        Hp: 1384
+      - Level: 50
+        Hp: 1434
+      - Level: 51
+        Hp: 1485
+      - Level: 52
+        Hp: 1537
+      - Level: 53
+        Hp: 1590
+      - Level: 54
+        Hp: 1644
+      - Level: 55
+        Hp: 1699
+      - Level: 56
+        Hp: 1754
+      - Level: 57
+        Hp: 1810
+      - Level: 58
+        Hp: 1867
+      - Level: 59
+        Hp: 1925
+      - Level: 60
+        Hp: 1984
+      - Level: 61
+        Hp: 2044
+      - Level: 62
+        Hp: 2105
+      - Level: 63
+        Hp: 2167
+      - Level: 64
+        Hp: 2230
+      - Level: 65
+        Hp: 2294
+      - Level: 66
+        Hp: 2358
+      - Level: 67
+        Hp: 2423
+      - Level: 68
+        Hp: 2489
+      - Level: 69
+        Hp: 2556
+      - Level: 70
+        Hp: 2624
+      - Level: 71
+        Hp: 2693
+      - Level: 72
+        Hp: 2763
+      - Level: 73
+        Hp: 2834
+      - Level: 74
+        Hp: 2906
+      - Level: 75
+        Hp: 2979
+      - Level: 76
+        Hp: 3052
+      - Level: 77
+        Hp: 3126
+      - Level: 78
+        Hp: 3201
+      - Level: 79
+        Hp: 3277
+      - Level: 80
+        Hp: 3354
+      - Level: 81
+        Hp: 3432
+      - Level: 82
+        Hp: 3511
+      - Level: 83
+        Hp: 3591
+      - Level: 84
+        Hp: 3672
+      - Level: 85
+        Hp: 3754
+      - Level: 86
+        Hp: 3836
+      - Level: 87
+        Hp: 3919
+      - Level: 88
+        Hp: 4003
+      - Level: 89
+        Hp: 4088
+      - Level: 90
+        Hp: 4174
+      - Level: 91
+        Hp: 4261
+      - Level: 92
+        Hp: 4349
+      - Level: 93
+        Hp: 4438
+      - Level: 94
+        Hp: 4528
+      - Level: 95
+        Hp: 4619
+      - Level: 96
+        Hp: 4710
+      - Level: 97
+        Hp: 4802
+      - Level: 98
+        Hp: 4895
+      - Level: 99
+        Hp: 4989
+  - Jobs:
+      Bard: true
+      Clown: true
+      Baby_Bard: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 54
+      - Level: 4
+        Hp: 62
+      - Level: 5
+        Hp: 71
+      - Level: 6
+        Hp: 81
+      - Level: 7
+        Hp: 91
+      - Level: 8
+        Hp: 102
+      - Level: 9
+        Hp: 114
+      - Level: 10
+        Hp: 127
+      - Level: 11
+        Hp: 140
+      - Level: 12
+        Hp: 154
+      - Level: 13
+        Hp: 169
+      - Level: 14
+        Hp: 180
+      - Level: 15
+        Hp: 196
+      - Level: 16
+        Hp: 212
+      - Level: 17
+        Hp: 224
+      - Level: 18
+        Hp: 242
+      - Level: 19
+        Hp: 260
+      - Level: 20
+        Hp: 278
+      - Level: 21
+        Hp: 296
+      - Level: 22
+        Hp: 316
+      - Level: 23
+        Hp: 330
+      - Level: 24
+        Hp: 350
+      - Level: 25
+        Hp: 371
+      - Level: 26
+        Hp: 393
+      - Level: 27
+        Hp: 415
+      - Level: 28
+        Hp: 438
+      - Level: 29
+        Hp: 451
+      - Level: 30
+        Hp: 477
+      - Level: 31
+        Hp: 503
+      - Level: 32
+        Hp: 530
+      - Level: 33
+        Hp: 558
+      - Level: 34
+        Hp: 587
+      - Level: 35
+        Hp: 616
+      - Level: 36
+        Hp: 646
+      - Level: 37
+        Hp: 677
+      - Level: 38
+        Hp: 709
+      - Level: 39
+        Hp: 741
+      - Level: 40
+        Hp: 774
+      - Level: 41
+        Hp: 808
+      - Level: 42
+        Hp: 843
+      - Level: 43
+        Hp: 878
+      - Level: 44
+        Hp: 914
+      - Level: 45
+        Hp: 951
+      - Level: 46
+        Hp: 989
+      - Level: 47
+        Hp: 1027
+      - Level: 48
+        Hp: 1066
+      - Level: 49
+        Hp: 1106
+      - Level: 50
+        Hp: 1147
+      - Level: 51
+        Hp: 1188
+      - Level: 52
+        Hp: 1230
+      - Level: 53
+        Hp: 1273
+      - Level: 54
+        Hp: 1317
+      - Level: 55
+        Hp: 1361
+      - Level: 56
+        Hp: 1406
+      - Level: 57
+        Hp: 1452
+      - Level: 58
+        Hp: 1499
+      - Level: 59
+        Hp: 1546
+      - Level: 60
+        Hp: 1594
+      - Level: 61
+        Hp: 1643
+      - Level: 62
+        Hp: 1693
+      - Level: 63
+        Hp: 1743
+      - Level: 64
+        Hp: 1794
+      - Level: 65
+        Hp: 1846
+      - Level: 66
+        Hp: 1899
+      - Level: 67
+        Hp: 1952
+      - Level: 68
+        Hp: 2006
+      - Level: 69
+        Hp: 2061
+      - Level: 70
+        Hp: 2117
+      - Level: 71
+        Hp: 2173
+      - Level: 72
+        Hp: 2230
+      - Level: 73
+        Hp: 2288
+      - Level: 74
+        Hp: 2347
+      - Level: 75
+        Hp: 2406
+      - Level: 76
+        Hp: 2466
+      - Level: 77
+        Hp: 2527
+      - Level: 78
+        Hp: 2589
+      - Level: 79
+        Hp: 2651
+      - Level: 80
+        Hp: 2714
+      - Level: 81
+        Hp: 2778
+      - Level: 82
+        Hp: 2843
+      - Level: 83
+        Hp: 2908
+      - Level: 84
+        Hp: 2974
+      - Level: 85
+        Hp: 3041
+      - Level: 86
+        Hp: 3109
+      - Level: 87
+        Hp: 3177
+      - Level: 88
+        Hp: 3246
+      - Level: 89
+        Hp: 3316
+      - Level: 90
+        Hp: 3387
+      - Level: 91
+        Hp: 3458
+      - Level: 92
+        Hp: 3530
+      - Level: 93
+        Hp: 3603
+      - Level: 94
+        Hp: 3677
+      - Level: 95
+        Hp: 3751
+      - Level: 96
+        Hp: 3826
+      - Level: 97
+        Hp: 3902
+      - Level: 98
+        Hp: 3979
+      - Level: 99
+        Hp: 4056
+  - Jobs:
+      Dancer: true
+      Gypsy: true
+      Baby_Dancer: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 54
+      - Level: 4
+        Hp: 62
+      - Level: 5
+        Hp: 71
+      - Level: 6
+        Hp: 81
+      - Level: 7
+        Hp: 91
+      - Level: 8
+        Hp: 102
+      - Level: 9
+        Hp: 114
+      - Level: 10
+        Hp: 127
+      - Level: 11
+        Hp: 140
+      - Level: 12
+        Hp: 154
+      - Level: 13
+        Hp: 169
+      - Level: 14
+        Hp: 180
+      - Level: 15
+        Hp: 196
+      - Level: 16
+        Hp: 212
+      - Level: 17
+        Hp: 224
+      - Level: 18
+        Hp: 242
+      - Level: 19
+        Hp: 260
+      - Level: 20
+        Hp: 278
+      - Level: 21
+        Hp: 296
+      - Level: 22
+        Hp: 316
+      - Level: 23
+        Hp: 330
+      - Level: 24
+        Hp: 350
+      - Level: 25
+        Hp: 371
+      - Level: 26
+        Hp: 393
+      - Level: 27
+        Hp: 415
+      - Level: 28
+        Hp: 438
+      - Level: 29
+        Hp: 451
+      - Level: 30
+        Hp: 477
+      - Level: 31
+        Hp: 503
+      - Level: 32
+        Hp: 530
+      - Level: 33
+        Hp: 558
+      - Level: 34
+        Hp: 587
+      - Level: 35
+        Hp: 616
+      - Level: 36
+        Hp: 646
+      - Level: 37
+        Hp: 677
+      - Level: 38
+        Hp: 709
+      - Level: 39
+        Hp: 741
+      - Level: 40
+        Hp: 774
+      - Level: 41
+        Hp: 808
+      - Level: 42
+        Hp: 843
+      - Level: 43
+        Hp: 878
+      - Level: 44
+        Hp: 914
+      - Level: 45
+        Hp: 951
+      - Level: 46
+        Hp: 989
+      - Level: 47
+        Hp: 1027
+      - Level: 48
+        Hp: 1066
+      - Level: 49
+        Hp: 1106
+      - Level: 50
+        Hp: 1147
+      - Level: 51
+        Hp: 1188
+      - Level: 52
+        Hp: 1230
+      - Level: 53
+        Hp: 1273
+      - Level: 54
+        Hp: 1317
+      - Level: 55
+        Hp: 1361
+      - Level: 56
+        Hp: 1406
+      - Level: 57
+        Hp: 1452
+      - Level: 58
+        Hp: 1499
+      - Level: 59
+        Hp: 1546
+      - Level: 60
+        Hp: 1594
+      - Level: 61
+        Hp: 1643
+      - Level: 62
+        Hp: 1693
+      - Level: 63
+        Hp: 1743
+      - Level: 64
+        Hp: 1794
+      - Level: 65
+        Hp: 1846
+      - Level: 66
+        Hp: 1899
+      - Level: 67
+        Hp: 1952
+      - Level: 68
+        Hp: 2006
+      - Level: 69
+        Hp: 2061
+      - Level: 70
+        Hp: 2117
+      - Level: 71
+        Hp: 2173
+      - Level: 72
+        Hp: 2230
+      - Level: 73
+        Hp: 2288
+      - Level: 74
+        Hp: 2347
+      - Level: 75
+        Hp: 2406
+      - Level: 76
+        Hp: 2466
+      - Level: 77
+        Hp: 2527
+      - Level: 78
+        Hp: 2589
+      - Level: 79
+        Hp: 2651
+      - Level: 80
+        Hp: 2714
+      - Level: 81
+        Hp: 2778
+      - Level: 82
+        Hp: 2843
+      - Level: 83
+        Hp: 2908
+      - Level: 84
+        Hp: 2974
+      - Level: 85
+        Hp: 3041
+      - Level: 86
+        Hp: 3109
+      - Level: 87
+        Hp: 3177
+      - Level: 88
+        Hp: 3246
+      - Level: 89
+        Hp: 3316
+      - Level: 90
+        Hp: 3387
+      - Level: 91
+        Hp: 3458
+      - Level: 92
+        Hp: 3530
+      - Level: 93
+        Hp: 3603
+      - Level: 94
+        Hp: 3677
+      - Level: 95
+        Hp: 3751
+      - Level: 96
+        Hp: 3826
+      - Level: 97
+        Hp: 3902
+      - Level: 98
+        Hp: 3979
+      - Level: 99
+        Hp: 4056
+  - Jobs:
+      Gunslinger: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 54
+      - Level: 4
+        Hp: 61
+      - Level: 5
+        Hp: 69
+      - Level: 6
+        Hp: 77
+      - Level: 7
+        Hp: 85
+      - Level: 8
+        Hp: 94
+      - Level: 9
+        Hp: 103
+      - Level: 10
+        Hp: 202
+      - Level: 11
+        Hp: 212
+      - Level: 12
+        Hp: 222
+      - Level: 13
+        Hp: 232
+      - Level: 14
+        Hp: 243
+      - Level: 15
+        Hp: 254
+      - Level: 16
+        Hp: 265
+      - Level: 17
+        Hp: 277
+      - Level: 18
+        Hp: 289
+      - Level: 19
+        Hp: 301
+      - Level: 20
+        Hp: 316
+      - Level: 21
+        Hp: 331
+      - Level: 22
+        Hp: 346
+      - Level: 23
+        Hp: 364
+      - Level: 24
+        Hp: 382
+      - Level: 25
+        Hp: 400
+      - Level: 26
+        Hp: 420
+      - Level: 27
+        Hp: 440
+      - Level: 28
+        Hp: 460
+      - Level: 29
+        Hp: 490
+      - Level: 30
+        Hp: 520
+      - Level: 31
+        Hp: 550
+      - Level: 32
+        Hp: 580
+      - Level: 33
+        Hp: 610
+      - Level: 34
+        Hp: 650
+      - Level: 35
+        Hp: 680
+      - Level: 36
+        Hp: 710
+      - Level: 37
+        Hp: 740
+      - Level: 38
+        Hp: 770
+      - Level: 39
+        Hp: 800
+      - Level: 40
+        Hp: 830
+      - Level: 41
+        Hp: 865
+      - Level: 42
+        Hp: 890
+      - Level: 43
+        Hp: 925
+      - Level: 44
+        Hp: 955
+      - Level: 45
+        Hp: 990
+      - Level: 46
+        Hp: 1025
+      - Level: 47
+        Hp: 1050
+      - Level: 48
+        Hp: 1080
+      - Level: 49
+        Hp: 1110
+      - Level: 50
+        Hp: 1145
+      - Level: 51
+        Hp: 1180
+      - Level: 52
+        Hp: 1215
+      - Level: 53
+        Hp: 1275
+      - Level: 54
+        Hp: 1335
+      - Level: 55
+        Hp: 1395
+      - Level: 56
+        Hp: 1455
+      - Level: 57
+        Hp: 1515
+      - Level: 58
+        Hp: 1575
+      - Level: 59
+        Hp: 1635
+      - Level: 60
+        Hp: 1695
+      - Level: 61
+        Hp: 1760
+      - Level: 62
+        Hp: 1820
+      - Level: 63
+        Hp: 1885
+      - Level: 64
+        Hp: 1950
+      - Level: 65
+        Hp: 2015
+      - Level: 66
+        Hp: 2080
+      - Level: 67
+        Hp: 2145
+      - Level: 68
+        Hp: 2220
+      - Level: 69
+        Hp: 2275
+      - Level: 70
+        Hp: 2340
+      - Level: 71
+        Hp: 2410
+      - Level: 72
+        Hp: 2480
+      - Level: 73
+        Hp: 2550
+      - Level: 74
+        Hp: 2620
+      - Level: 75
+        Hp: 2690
+      - Level: 76
+        Hp: 2760
+      - Level: 77
+        Hp: 2830
+      - Level: 78
+        Hp: 2900
+      - Level: 79
+        Hp: 2970
+      - Level: 80
+        Hp: 3040
+      - Level: 81
+        Hp: 3115
+      - Level: 82
+        Hp: 3190
+      - Level: 83
+        Hp: 3265
+      - Level: 84
+        Hp: 3340
+      - Level: 85
+        Hp: 3415
+      - Level: 86
+        Hp: 3490
+      - Level: 87
+        Hp: 3565
+      - Level: 88
+        Hp: 3640
+      - Level: 89
+        Hp: 3715
+      - Level: 90
+        Hp: 3790
+      - Level: 91
+        Hp: 3870
+      - Level: 92
+        Hp: 3950
+      - Level: 93
+        Hp: 4030
+      - Level: 94
+        Hp: 4110
+      - Level: 95
+        Hp: 4190
+      - Level: 96
+        Hp: 4270
+      - Level: 97
+        Hp: 4350
+      - Level: 98
+        Hp: 4430
+      - Level: 99
+        Hp: 4510
+  - Jobs:
+      Ninja: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 54
+      - Level: 4
+        Hp: 61
+      - Level: 5
+        Hp: 69
+      - Level: 6
+        Hp: 77
+      - Level: 7
+        Hp: 85
+      - Level: 8
+        Hp: 94
+      - Level: 9
+        Hp: 103
+      - Level: 10
+        Hp: 202
+      - Level: 11
+        Hp: 212
+      - Level: 12
+        Hp: 222
+      - Level: 13
+        Hp: 232
+      - Level: 14
+        Hp: 243
+      - Level: 15
+        Hp: 254
+      - Level: 16
+        Hp: 265
+      - Level: 17
+        Hp: 277
+      - Level: 18
+        Hp: 289
+      - Level: 19
+        Hp: 301
+      - Level: 20
+        Hp: 316
+      - Level: 21
+        Hp: 331
+      - Level: 22
+        Hp: 346
+      - Level: 23
+        Hp: 364
+      - Level: 24
+        Hp: 382
+      - Level: 25
+        Hp: 400
+      - Level: 26
+        Hp: 420
+      - Level: 27
+        Hp: 440
+      - Level: 28
+        Hp: 460
+      - Level: 29
+        Hp: 482
+      - Level: 30
+        Hp: 504
+      - Level: 31
+        Hp: 526
+      - Level: 32
+        Hp: 548
+      - Level: 33
+        Hp: 572
+      - Level: 34
+        Hp: 596
+      - Level: 35
+        Hp: 620
+      - Level: 36
+        Hp: 646
+      - Level: 37
+        Hp: 672
+      - Level: 38
+        Hp: 698
+      - Level: 39
+        Hp: 726
+      - Level: 40
+        Hp: 754
+      - Level: 41
+        Hp: 784
+      - Level: 42
+        Hp: 814
+      - Level: 43
+        Hp: 844
+      - Level: 44
+        Hp: 876
+      - Level: 45
+        Hp: 908
+      - Level: 46
+        Hp: 940
+      - Level: 47
+        Hp: 975
+      - Level: 48
+        Hp: 1010
+      - Level: 49
+        Hp: 1100
+      - Level: 50
+        Hp: 1140
+      - Level: 51
+        Hp: 1180
+      - Level: 52
+        Hp: 1220
+      - Level: 53
+        Hp: 1260
+      - Level: 54
+        Hp: 1300
+      - Level: 55
+        Hp: 1340
+      - Level: 56
+        Hp: 1385
+      - Level: 57
+        Hp: 1430
+      - Level: 58
+        Hp: 1475
+      - Level: 59
+        Hp: 1520
+      - Level: 60
+        Hp: 1565
+      - Level: 61
+        Hp: 1615
+      - Level: 62
+        Hp: 1665
+      - Level: 63
+        Hp: 1715
+      - Level: 64
+        Hp: 1765
+      - Level: 65
+        Hp: 1815
+      - Level: 66
+        Hp: 1880
+      - Level: 67
+        Hp: 1935
+      - Level: 68
+        Hp: 1990
+      - Level: 69
+        Hp: 2045
+      - Level: 70
+        Hp: 2100
+      - Level: 71
+        Hp: 2160
+      - Level: 72
+        Hp: 2220
+      - Level: 73
+        Hp: 2280
+      - Level: 74
+        Hp: 2340
+      - Level: 75
+        Hp: 2400
+      - Level: 76
+        Hp: 2460
+      - Level: 77
+        Hp: 2520
+      - Level: 78
+        Hp: 2580
+      - Level: 79
+        Hp: 2640
+      - Level: 80
+        Hp: 2705
+      - Level: 81
+        Hp: 2770
+      - Level: 82
+        Hp: 2835
+      - Level: 83
+        Hp: 2900
+      - Level: 84
+        Hp: 2965
+      - Level: 85
+        Hp: 3030
+      - Level: 86
+        Hp: 3100
+      - Level: 87
+        Hp: 3170
+      - Level: 88
+        Hp: 3240
+      - Level: 89
+        Hp: 3310
+      - Level: 90
+        Hp: 3380
+      - Level: 91
+        Hp: 3455
+      - Level: 92
+        Hp: 3530
+      - Level: 93
+        Hp: 3605
+      - Level: 94
+        Hp: 3680
+      - Level: 95
+        Hp: 3760
+      - Level: 96
+        Hp: 3840
+      - Level: 97
+        Hp: 3920
+      - Level: 98
+        Hp: 4000
+      - Level: 99
+        Hp: 4080
+  - Jobs:
+      Taekwon: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 46
+      - Level: 3
+        Hp: 53
+      - Level: 4
+        Hp: 61
+      - Level: 5
+        Hp: 70
+      - Level: 6
+        Hp: 79
+      - Level: 7
+        Hp: 89
+      - Level: 8
+        Hp: 100
+      - Level: 9
+        Hp: 111
+      - Level: 10
+        Hp: 123
+      - Level: 11
+        Hp: 136
+      - Level: 12
+        Hp: 149
+      - Level: 13
+        Hp: 163
+      - Level: 14
+        Hp: 178
+      - Level: 15
+        Hp: 194
+      - Level: 16
+        Hp: 210
+      - Level: 17
+        Hp: 227
+      - Level: 18
+        Hp: 245
+      - Level: 19
+        Hp: 263
+      - Level: 20
+        Hp: 282
+      - Level: 21
+        Hp: 302
+      - Level: 22
+        Hp: 322
+      - Level: 23
+        Hp: 343
+      - Level: 24
+        Hp: 365
+      - Level: 25
+        Hp: 388
+      - Level: 26
+        Hp: 411
+      - Level: 27
+        Hp: 435
+      - Level: 28
+        Hp: 460
+      - Level: 29
+        Hp: 485
+      - Level: 30
+        Hp: 511
+      - Level: 31
+        Hp: 538
+      - Level: 32
+        Hp: 565
+      - Level: 33
+        Hp: 593
+      - Level: 34
+        Hp: 622
+      - Level: 35
+        Hp: 652
+      - Level: 36
+        Hp: 682
+      - Level: 37
+        Hp: 713
+      - Level: 38
+        Hp: 745
+      - Level: 39
+        Hp: 777
+      - Level: 40
+        Hp: 810
+      - Level: 41
+        Hp: 844
+      - Level: 42
+        Hp: 878
+      - Level: 43
+        Hp: 913
+      - Level: 44
+        Hp: 949
+      - Level: 45
+        Hp: 986
+      - Level: 46
+        Hp: 1023
+      - Level: 47
+        Hp: 1061
+      - Level: 48
+        Hp: 1100
+      - Level: 49
+        Hp: 1139
+      - Level: 50
+        Hp: 1179
+      - Level: 51
+        Hp: 1220
+      - Level: 52
+        Hp: 1261
+      - Level: 53
+        Hp: 1303
+      - Level: 54
+        Hp: 1346
+      - Level: 55
+        Hp: 1390
+      - Level: 56
+        Hp: 1434
+      - Level: 57
+        Hp: 1479
+      - Level: 58
+        Hp: 1525
+      - Level: 59
+        Hp: 1571
+      - Level: 60
+        Hp: 1618
+      - Level: 61
+        Hp: 1666
+      - Level: 62
+        Hp: 1714
+      - Level: 63
+        Hp: 1763
+      - Level: 64
+        Hp: 1813
+      - Level: 65
+        Hp: 1864
+      - Level: 66
+        Hp: 1915
+      - Level: 67
+        Hp: 1967
+      - Level: 68
+        Hp: 2020
+      - Level: 69
+        Hp: 2073
+      - Level: 70
+        Hp: 2127
+      - Level: 71
+        Hp: 2137
+      - Level: 72
+        Hp: 2147
+      - Level: 73
+        Hp: 2157
+      - Level: 74
+        Hp: 2167
+      - Level: 75
+        Hp: 2177
+      - Level: 76
+        Hp: 2187
+      - Level: 77
+        Hp: 2197
+      - Level: 78
+        Hp: 2200
+      - Level: 79
+        Hp: 2210
+      - Level: 80
+        Hp: 2230
+      - Level: 81
+        Hp: 2250
+      - Level: 82
+        Hp: 2300
+      - Level: 83
+        Hp: 2350
+      - Level: 84
+        Hp: 2400
+      - Level: 85
+        Hp: 2450
+      - Level: 86
+        Hp: 2500
+      - Level: 87
+        Hp: 2550
+      - Level: 88
+        Hp: 2600
+      - Level: 89
+        Hp: 2650
+      - Level: 90
+        Hp: 2700
+      - Level: 91
+        Hp: 2750
+      - Level: 92
+        Hp: 2800
+      - Level: 93
+        Hp: 2850
+      - Level: 94
+        Hp: 2900
+      - Level: 95
+        Hp: 2950
+      - Level: 96
+        Hp: 3000
+      - Level: 97
+        Hp: 3050
+      - Level: 98
+        Hp: 3100
+      - Level: 99
+        Hp: 3200
+  - Jobs:
+      Star_Gladiator: true
+      Star_Gladiator2: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 55
+      - Level: 4
+        Hp: 64
+      - Level: 5
+        Hp: 74
+      - Level: 6
+        Hp: 84
+      - Level: 7
+        Hp: 95
+      - Level: 8
+        Hp: 107
+      - Level: 9
+        Hp: 120
+      - Level: 10
+        Hp: 134
+      - Level: 11
+        Hp: 149
+      - Level: 12
+        Hp: 165
+      - Level: 13
+        Hp: 182
+      - Level: 14
+        Hp: 200
+      - Level: 15
+        Hp: 219
+      - Level: 16
+        Hp: 238
+      - Level: 17
+        Hp: 258
+      - Level: 18
+        Hp: 306
+      - Level: 19
+        Hp: 329
+      - Level: 20
+        Hp: 354
+      - Level: 21
+        Hp: 379
+      - Level: 22
+        Hp: 406
+      - Level: 23
+        Hp: 433
+      - Level: 24
+        Hp: 462
+      - Level: 25
+        Hp: 491
+      - Level: 26
+        Hp: 521
+      - Level: 27
+        Hp: 551
+      - Level: 28
+        Hp: 583
+      - Level: 29
+        Hp: 615
+      - Level: 30
+        Hp: 649
+      - Level: 31
+        Hp: 683
+      - Level: 32
+        Hp: 719
+      - Level: 33
+        Hp: 755
+      - Level: 34
+        Hp: 793
+      - Level: 35
+        Hp: 831
+      - Level: 36
+        Hp: 870
+      - Level: 37
+        Hp: 909
+      - Level: 38
+        Hp: 950
+      - Level: 39
+        Hp: 991
+      - Level: 40
+        Hp: 1034
+      - Level: 41
+        Hp: 1077
+      - Level: 42
+        Hp: 1122
+      - Level: 43
+        Hp: 1167
+      - Level: 44
+        Hp: 1214
+      - Level: 45
+        Hp: 1261
+      - Level: 46
+        Hp: 1309
+      - Level: 47
+        Hp: 1357
+      - Level: 48
+        Hp: 1407
+      - Level: 49
+        Hp: 1457
+      - Level: 50
+        Hp: 1509
+      - Level: 51
+        Hp: 1561
+      - Level: 52
+        Hp: 1615
+      - Level: 53
+        Hp: 1669
+      - Level: 54
+        Hp: 1725
+      - Level: 55
+        Hp: 1781
+      - Level: 56
+        Hp: 1838
+      - Level: 57
+        Hp: 1895
+      - Level: 58
+        Hp: 1954
+      - Level: 59
+        Hp: 2013
+      - Level: 60
+        Hp: 2074
+      - Level: 61
+        Hp: 2135
+      - Level: 62
+        Hp: 2198
+      - Level: 63
+        Hp: 2261
+      - Level: 64
+        Hp: 2326
+      - Level: 65
+        Hp: 2391
+      - Level: 66
+        Hp: 2457
+      - Level: 67
+        Hp: 2523
+      - Level: 68
+        Hp: 2591
+      - Level: 69
+        Hp: 2659
+      - Level: 70
+        Hp: 2670
+      - Level: 71
+        Hp: 2680
+      - Level: 72
+        Hp: 2690
+      - Level: 73
+        Hp: 2700
+      - Level: 74
+        Hp: 2710
+      - Level: 75
+        Hp: 2720
+      - Level: 76
+        Hp: 2730
+      - Level: 77
+        Hp: 2740
+      - Level: 78
+        Hp: 2750
+      - Level: 79
+        Hp: 2760
+      - Level: 80
+        Hp: 3000
+      - Level: 81
+        Hp: 3020
+      - Level: 82
+        Hp: 3040
+      - Level: 83
+        Hp: 3060
+      - Level: 84
+        Hp: 3080
+      - Level: 85
+        Hp: 3100
+      - Level: 86
+        Hp: 3120
+      - Level: 87
+        Hp: 3140
+      - Level: 88
+        Hp: 3160
+      - Level: 89
+        Hp: 3180
+      - Level: 90
+        Hp: 3455
+      - Level: 91
+        Hp: 3524
+      - Level: 92
+        Hp: 3593
+      - Level: 93
+        Hp: 3663
+      - Level: 94
+        Hp: 3734
+      - Level: 95
+        Hp: 3806
+      - Level: 96
+        Hp: 3878
+      - Level: 97
+        Hp: 3951
+      - Level: 98
+        Hp: 4025
+      - Level: 99
+        Hp: 4500
+  - Jobs:
+      Soul_Linker: true
+    BaseHp:
+      - Level: 1
+        Hp: 40
+      - Level: 2
+        Hp: 47
+      - Level: 3
+        Hp: 54
+      - Level: 4
+        Hp: 62
+      - Level: 5
+        Hp: 71
+      - Level: 6
+        Hp: 81
+      - Level: 7
+        Hp: 91
+      - Level: 8
+        Hp: 102
+      - Level: 9
+        Hp: 114
+      - Level: 10
+        Hp: 127
+      - Level: 11
+        Hp: 140
+      - Level: 12
+        Hp: 154
+      - Level: 13
+        Hp: 169
+      - Level: 14
+        Hp: 185
+      - Level: 15
+        Hp: 201
+      - Level: 16
+        Hp: 218
+      - Level: 17
+        Hp: 236
+      - Level: 18
+        Hp: 255
+      - Level: 19
+        Hp: 274
+      - Level: 20
+        Hp: 294
+      - Level: 21
+        Hp: 315
+      - Level: 22
+        Hp: 337
+      - Level: 23
+        Hp: 359
+      - Level: 24
+        Hp: 382
+      - Level: 25
+        Hp: 406
+      - Level: 26
+        Hp: 431
+      - Level: 27
+        Hp: 456
+      - Level: 28
+        Hp: 482
+      - Level: 29
+        Hp: 509
+      - Level: 30
+        Hp: 537
+      - Level: 31
+        Hp: 565
+      - Level: 32
+        Hp: 594
+      - Level: 33
+        Hp: 624
+      - Level: 34
+        Hp: 655
+      - Level: 35
+        Hp: 686
+      - Level: 36
+        Hp: 718
+      - Level: 37
+        Hp: 751
+      - Level: 38
+        Hp: 785
+      - Level: 39
+        Hp: 819
+      - Level: 40
+        Hp: 854
+      - Level: 41
+        Hp: 890
+      - Level: 42
+        Hp: 927
+      - Level: 43
+        Hp: 964
+      - Level: 44
+        Hp: 1002
+      - Level: 45
+        Hp: 1041
+      - Level: 46
+        Hp: 1081
+      - Level: 47
+        Hp: 1121
+      - Level: 48
+        Hp: 1162
+      - Level: 49
+        Hp: 1204
+      - Level: 50
+        Hp: 1247
+      - Level: 51
+        Hp: 1290
+      - Level: 52
+        Hp: 1334
+      - Level: 53
+        Hp: 1379
+      - Level: 54
+        Hp: 1425
+      - Level: 55
+        Hp: 1471
+      - Level: 56
+        Hp: 1518
+      - Level: 57
+        Hp: 1566
+      - Level: 58
+        Hp: 1615
+      - Level: 59
+        Hp: 1664
+      - Level: 60
+        Hp: 1714
+      - Level: 61
+        Hp: 1765
+      - Level: 62
+        Hp: 1817
+      - Level: 63
+        Hp: 1869
+      - Level: 64
+        Hp: 1922
+      - Level: 65
+        Hp: 1976
+      - Level: 66
+        Hp: 2031
+      - Level: 67
+        Hp: 2086
+      - Level: 68
+        Hp: 2142
+      - Level: 69
+        Hp: 2199
+      - Level: 70
+        Hp: 2257
+      - Level: 71
+        Hp: 2275
+      - Level: 72
+        Hp: 2294
+      - Level: 73
+        Hp: 2314
+      - Level: 74
+        Hp: 2335
+      - Level: 75
+        Hp: 2356
+      - Level: 76
+        Hp: 2378
+      - Level: 77
+        Hp: 2401
+      - Level: 78
+        Hp: 2425
+      - Level: 79
+        Hp: 2449
+      - Level: 80
+        Hp: 2874
+      - Level: 81
+        Hp: 2890
+      - Level: 82
+        Hp: 2907
+      - Level: 83
+        Hp: 2924
+      - Level: 84
+        Hp: 2942
+      - Level: 85
+        Hp: 2971
+      - Level: 86
+        Hp: 2991
+      - Level: 87
+        Hp: 3011
+      - Level: 88
+        Hp: 3032
+      - Level: 89
+        Hp: 3054
+      - Level: 90
+        Hp: 3567
+      - Level: 91
+        Hp: 3590
+      - Level: 92
+        Hp: 3614
+      - Level: 93
+        Hp: 3649
+      - Level: 94
+        Hp: 3675
+      - Level: 95
+        Hp: 3701
+      - Level: 96
+        Hp: 3728
+      - Level: 97
+        Hp: 3756
+      - Level: 98
+        Hp: 3800
+      - Level: 99
+        Hp: 4250
+  - Jobs:
+      Novice: true
+      Supernovice: true
+      Novice_High: true
+      Baby: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+    BaseSp:
+      - Level: 1
+        Sp: 11
+      - Level: 2
+        Sp: 12
+      - Level: 3
+        Sp: 13
+      - Level: 4
+        Sp: 14
+      - Level: 5
+        Sp: 15
+      - Level: 6
+        Sp: 16
+      - Level: 7
+        Sp: 17
+      - Level: 8
+        Sp: 18
+      - Level: 9
+        Sp: 19
+      - Level: 10
+        Sp: 20
+      - Level: 11
+        Sp: 21
+      - Level: 12
+        Sp: 22
+      - Level: 13
+        Sp: 23
+      - Level: 14
+        Sp: 24
+      - Level: 15
+        Sp: 25
+      - Level: 16
+        Sp: 26
+      - Level: 17
+        Sp: 27
+      - Level: 18
+        Sp: 28
+      - Level: 19
+        Sp: 29
+      - Level: 20
+        Sp: 30
+      - Level: 21
+        Sp: 31
+      - Level: 22
+        Sp: 32
+      - Level: 23
+        Sp: 33
+      - Level: 24
+        Sp: 34
+      - Level: 25
+        Sp: 35
+      - Level: 26
+        Sp: 36
+      - Level: 27
+        Sp: 37
+      - Level: 28
+        Sp: 38
+      - Level: 29
+        Sp: 39
+      - Level: 30
+        Sp: 40
+      - Level: 31
+        Sp: 41
+      - Level: 32
+        Sp: 42
+      - Level: 33
+        Sp: 43
+      - Level: 34
+        Sp: 44
+      - Level: 35
+        Sp: 45
+      - Level: 36
+        Sp: 46
+      - Level: 37
+        Sp: 47
+      - Level: 38
+        Sp: 48
+      - Level: 39
+        Sp: 49
+      - Level: 40
+        Sp: 50
+      - Level: 41
+        Sp: 51
+      - Level: 42
+        Sp: 52
+      - Level: 43
+        Sp: 53
+      - Level: 44
+        Sp: 54
+      - Level: 45
+        Sp: 55
+      - Level: 46
+        Sp: 56
+      - Level: 47
+        Sp: 57
+      - Level: 48
+        Sp: 58
+      - Level: 49
+        Sp: 59
+      - Level: 50
+        Sp: 60
+      - Level: 51
+        Sp: 61
+      - Level: 52
+        Sp: 62
+      - Level: 53
+        Sp: 63
+      - Level: 54
+        Sp: 64
+      - Level: 55
+        Sp: 65
+      - Level: 56
+        Sp: 66
+      - Level: 57
+        Sp: 67
+      - Level: 58
+        Sp: 68
+      - Level: 59
+        Sp: 69
+      - Level: 60
+        Sp: 70
+      - Level: 61
+        Sp: 71
+      - Level: 62
+        Sp: 72
+      - Level: 63
+        Sp: 73
+      - Level: 64
+        Sp: 74
+      - Level: 65
+        Sp: 75
+      - Level: 66
+        Sp: 76
+      - Level: 67
+        Sp: 77
+      - Level: 68
+        Sp: 78
+      - Level: 69
+        Sp: 79
+      - Level: 70
+        Sp: 80
+      - Level: 71
+        Sp: 81
+      - Level: 72
+        Sp: 82
+      - Level: 73
+        Sp: 83
+      - Level: 74
+        Sp: 84
+      - Level: 75
+        Sp: 85
+      - Level: 76
+        Sp: 86
+      - Level: 77
+        Sp: 87
+      - Level: 78
+        Sp: 88
+      - Level: 79
+        Sp: 89
+      - Level: 80
+        Sp: 90
+      - Level: 81
+        Sp: 91
+      - Level: 82
+        Sp: 92
+      - Level: 83
+        Sp: 93
+      - Level: 84
+        Sp: 94
+      - Level: 85
+        Sp: 95
+      - Level: 86
+        Sp: 96
+      - Level: 87
+        Sp: 97
+      - Level: 88
+        Sp: 98
+      - Level: 89
+        Sp: 99
+      - Level: 90
+        Sp: 100
+      - Level: 91
+        Sp: 101
+      - Level: 92
+        Sp: 102
+      - Level: 93
+        Sp: 103
+      - Level: 94
+        Sp: 104
+      - Level: 95
+        Sp: 105
+      - Level: 96
+        Sp: 106
+      - Level: 97
+        Sp: 107
+      - Level: 98
+        Sp: 108
+      - Level: 99
+        Sp: 109
+  - Jobs:
+      Swordman: true
+      Swordman_High: true
+      Baby_Swordman: true
+    BaseSp:
+      - Level: 1
+        Sp: 12
+      - Level: 2
+        Sp: 14
+      - Level: 3
+        Sp: 16
+      - Level: 4
+        Sp: 18
+      - Level: 5
+        Sp: 20
+      - Level: 6
+        Sp: 22
+      - Level: 7
+        Sp: 24
+      - Level: 8
+        Sp: 26
+      - Level: 9
+        Sp: 28
+      - Level: 10
+        Sp: 30
+      - Level: 11
+        Sp: 32
+      - Level: 12
+        Sp: 34
+      - Level: 13
+        Sp: 36
+      - Level: 14
+        Sp: 38
+      - Level: 15
+        Sp: 40
+      - Level: 16
+        Sp: 42
+      - Level: 17
+        Sp: 44
+      - Level: 18
+        Sp: 46
+      - Level: 19
+        Sp: 48
+      - Level: 20
+        Sp: 50
+      - Level: 21
+        Sp: 52
+      - Level: 22
+        Sp: 54
+      - Level: 23
+        Sp: 56
+      - Level: 24
+        Sp: 58
+      - Level: 25
+        Sp: 60
+      - Level: 26
+        Sp: 62
+      - Level: 27
+        Sp: 64
+      - Level: 28
+        Sp: 66
+      - Level: 29
+        Sp: 68
+      - Level: 30
+        Sp: 70
+      - Level: 31
+        Sp: 72
+      - Level: 32
+        Sp: 74
+      - Level: 33
+        Sp: 76
+      - Level: 34
+        Sp: 78
+      - Level: 35
+        Sp: 80
+      - Level: 36
+        Sp: 82
+      - Level: 37
+        Sp: 84
+      - Level: 38
+        Sp: 86
+      - Level: 39
+        Sp: 88
+      - Level: 40
+        Sp: 90
+      - Level: 41
+        Sp: 92
+      - Level: 42
+        Sp: 94
+      - Level: 43
+        Sp: 96
+      - Level: 44
+        Sp: 98
+      - Level: 45
+        Sp: 100
+      - Level: 46
+        Sp: 102
+      - Level: 47
+        Sp: 104
+      - Level: 48
+        Sp: 106
+      - Level: 49
+        Sp: 108
+      - Level: 50
+        Sp: 110
+      - Level: 51
+        Sp: 112
+      - Level: 52
+        Sp: 114
+      - Level: 53
+        Sp: 116
+      - Level: 54
+        Sp: 118
+      - Level: 55
+        Sp: 120
+      - Level: 56
+        Sp: 122
+      - Level: 57
+        Sp: 124
+      - Level: 58
+        Sp: 126
+      - Level: 59
+        Sp: 128
+      - Level: 60
+        Sp: 130
+      - Level: 61
+        Sp: 132
+      - Level: 62
+        Sp: 134
+      - Level: 63
+        Sp: 136
+      - Level: 64
+        Sp: 138
+      - Level: 65
+        Sp: 140
+      - Level: 66
+        Sp: 142
+      - Level: 67
+        Sp: 144
+      - Level: 68
+        Sp: 146
+      - Level: 69
+        Sp: 148
+      - Level: 70
+        Sp: 150
+      - Level: 71
+        Sp: 152
+      - Level: 72
+        Sp: 154
+      - Level: 73
+        Sp: 156
+      - Level: 74
+        Sp: 158
+      - Level: 75
+        Sp: 160
+      - Level: 76
+        Sp: 162
+      - Level: 77
+        Sp: 164
+      - Level: 78
+        Sp: 166
+      - Level: 79
+        Sp: 168
+      - Level: 80
+        Sp: 170
+      - Level: 81
+        Sp: 172
+      - Level: 82
+        Sp: 174
+      - Level: 83
+        Sp: 176
+      - Level: 84
+        Sp: 178
+      - Level: 85
+        Sp: 180
+      - Level: 86
+        Sp: 182
+      - Level: 87
+        Sp: 184
+      - Level: 88
+        Sp: 186
+      - Level: 89
+        Sp: 188
+      - Level: 90
+        Sp: 190
+      - Level: 91
+        Sp: 192
+      - Level: 92
+        Sp: 194
+      - Level: 93
+        Sp: 196
+      - Level: 94
+        Sp: 198
+      - Level: 95
+        Sp: 200
+      - Level: 96
+        Sp: 202
+      - Level: 97
+        Sp: 204
+      - Level: 98
+        Sp: 206
+      - Level: 99
+        Sp: 208
+  - Jobs:
+      Mage: true
+      Mage_High: true
+      Baby_Mage: true
+    BaseSp:
+      - Level: 1
+        Sp: 16
+      - Level: 2
+        Sp: 22
+      - Level: 3
+        Sp: 28
+      - Level: 4
+        Sp: 34
+      - Level: 5
+        Sp: 40
+      - Level: 6
+        Sp: 46
+      - Level: 7
+        Sp: 52
+      - Level: 8
+        Sp: 58
+      - Level: 9
+        Sp: 64
+      - Level: 10
+        Sp: 70
+      - Level: 11
+        Sp: 76
+      - Level: 12
+        Sp: 82
+      - Level: 13
+        Sp: 88
+      - Level: 14
+        Sp: 94
+      - Level: 15
+        Sp: 100
+      - Level: 16
+        Sp: 106
+      - Level: 17
+        Sp: 112
+      - Level: 18
+        Sp: 118
+      - Level: 19
+        Sp: 124
+      - Level: 20
+        Sp: 130
+      - Level: 21
+        Sp: 136
+      - Level: 22
+        Sp: 142
+      - Level: 23
+        Sp: 148
+      - Level: 24
+        Sp: 154
+      - Level: 25
+        Sp: 160
+      - Level: 26
+        Sp: 166
+      - Level: 27
+        Sp: 172
+      - Level: 28
+        Sp: 178
+      - Level: 29
+        Sp: 184
+      - Level: 30
+        Sp: 190
+      - Level: 31
+        Sp: 196
+      - Level: 32
+        Sp: 202
+      - Level: 33
+        Sp: 208
+      - Level: 34
+        Sp: 214
+      - Level: 35
+        Sp: 220
+      - Level: 36
+        Sp: 226
+      - Level: 37
+        Sp: 232
+      - Level: 38
+        Sp: 238
+      - Level: 39
+        Sp: 244
+      - Level: 40
+        Sp: 250
+      - Level: 41
+        Sp: 256
+      - Level: 42
+        Sp: 262
+      - Level: 43
+        Sp: 268
+      - Level: 44
+        Sp: 274
+      - Level: 45
+        Sp: 280
+      - Level: 46
+        Sp: 286
+      - Level: 47
+        Sp: 292
+      - Level: 48
+        Sp: 298
+      - Level: 49
+        Sp: 304
+      - Level: 50
+        Sp: 310
+      - Level: 51
+        Sp: 316
+      - Level: 52
+        Sp: 322
+      - Level: 53
+        Sp: 328
+      - Level: 54
+        Sp: 334
+      - Level: 55
+        Sp: 340
+      - Level: 56
+        Sp: 346
+      - Level: 57
+        Sp: 352
+      - Level: 58
+        Sp: 358
+      - Level: 59
+        Sp: 364
+      - Level: 60
+        Sp: 370
+      - Level: 61
+        Sp: 376
+      - Level: 62
+        Sp: 382
+      - Level: 63
+        Sp: 388
+      - Level: 64
+        Sp: 394
+      - Level: 65
+        Sp: 400
+      - Level: 66
+        Sp: 406
+      - Level: 67
+        Sp: 412
+      - Level: 68
+        Sp: 418
+      - Level: 69
+        Sp: 424
+      - Level: 70
+        Sp: 430
+      - Level: 71
+        Sp: 436
+      - Level: 72
+        Sp: 442
+      - Level: 73
+        Sp: 448
+      - Level: 74
+        Sp: 454
+      - Level: 75
+        Sp: 460
+      - Level: 76
+        Sp: 466
+      - Level: 77
+        Sp: 472
+      - Level: 78
+        Sp: 478
+      - Level: 79
+        Sp: 484
+      - Level: 80
+        Sp: 490
+      - Level: 81
+        Sp: 496
+      - Level: 82
+        Sp: 502
+      - Level: 83
+        Sp: 508
+      - Level: 84
+        Sp: 514
+      - Level: 85
+        Sp: 520
+      - Level: 86
+        Sp: 526
+      - Level: 87
+        Sp: 532
+      - Level: 88
+        Sp: 538
+      - Level: 89
+        Sp: 544
+      - Level: 90
+        Sp: 550
+      - Level: 91
+        Sp: 556
+      - Level: 92
+        Sp: 562
+      - Level: 93
+        Sp: 568
+      - Level: 94
+        Sp: 574
+      - Level: 95
+        Sp: 580
+      - Level: 96
+        Sp: 586
+      - Level: 97
+        Sp: 592
+      - Level: 98
+        Sp: 598
+      - Level: 99
+        Sp: 604
+  - Jobs:
+      Archer: true
+      Archer_High: true
+      Baby_Archer: true
+    BaseSp:
+      - Level: 1
+        Sp: 12
+      - Level: 2
+        Sp: 14
+      - Level: 3
+        Sp: 16
+      - Level: 4
+        Sp: 18
+      - Level: 5
+        Sp: 20
+      - Level: 6
+        Sp: 22
+      - Level: 7
+        Sp: 24
+      - Level: 8
+        Sp: 26
+      - Level: 9
+        Sp: 28
+      - Level: 10
+        Sp: 30
+      - Level: 11
+        Sp: 32
+      - Level: 12
+        Sp: 34
+      - Level: 13
+        Sp: 36
+      - Level: 14
+        Sp: 38
+      - Level: 15
+        Sp: 40
+      - Level: 16
+        Sp: 42
+      - Level: 17
+        Sp: 44
+      - Level: 18
+        Sp: 46
+      - Level: 19
+        Sp: 48
+      - Level: 20
+        Sp: 50
+      - Level: 21
+        Sp: 52
+      - Level: 22
+        Sp: 54
+      - Level: 23
+        Sp: 56
+      - Level: 24
+        Sp: 58
+      - Level: 25
+        Sp: 60
+      - Level: 26
+        Sp: 62
+      - Level: 27
+        Sp: 64
+      - Level: 28
+        Sp: 66
+      - Level: 29
+        Sp: 68
+      - Level: 30
+        Sp: 70
+      - Level: 31
+        Sp: 72
+      - Level: 32
+        Sp: 74
+      - Level: 33
+        Sp: 76
+      - Level: 34
+        Sp: 78
+      - Level: 35
+        Sp: 80
+      - Level: 36
+        Sp: 82
+      - Level: 37
+        Sp: 84
+      - Level: 38
+        Sp: 86
+      - Level: 39
+        Sp: 88
+      - Level: 40
+        Sp: 90
+      - Level: 41
+        Sp: 92
+      - Level: 42
+        Sp: 94
+      - Level: 43
+        Sp: 96
+      - Level: 44
+        Sp: 98
+      - Level: 45
+        Sp: 100
+      - Level: 46
+        Sp: 102
+      - Level: 47
+        Sp: 104
+      - Level: 48
+        Sp: 106
+      - Level: 49
+        Sp: 108
+      - Level: 50
+        Sp: 110
+      - Level: 51
+        Sp: 112
+      - Level: 52
+        Sp: 114
+      - Level: 53
+        Sp: 116
+      - Level: 54
+        Sp: 118
+      - Level: 55
+        Sp: 120
+      - Level: 56
+        Sp: 122
+      - Level: 57
+        Sp: 124
+      - Level: 58
+        Sp: 126
+      - Level: 59
+        Sp: 128
+      - Level: 60
+        Sp: 130
+      - Level: 61
+        Sp: 132
+      - Level: 62
+        Sp: 134
+      - Level: 63
+        Sp: 136
+      - Level: 64
+        Sp: 138
+      - Level: 65
+        Sp: 140
+      - Level: 66
+        Sp: 142
+      - Level: 67
+        Sp: 144
+      - Level: 68
+        Sp: 146
+      - Level: 69
+        Sp: 148
+      - Level: 70
+        Sp: 150
+      - Level: 71
+        Sp: 152
+      - Level: 72
+        Sp: 154
+      - Level: 73
+        Sp: 156
+      - Level: 74
+        Sp: 158
+      - Level: 75
+        Sp: 160
+      - Level: 76
+        Sp: 162
+      - Level: 77
+        Sp: 164
+      - Level: 78
+        Sp: 166
+      - Level: 79
+        Sp: 168
+      - Level: 80
+        Sp: 170
+      - Level: 81
+        Sp: 172
+      - Level: 82
+        Sp: 174
+      - Level: 83
+        Sp: 176
+      - Level: 84
+        Sp: 178
+      - Level: 85
+        Sp: 180
+      - Level: 86
+        Sp: 182
+      - Level: 87
+        Sp: 184
+      - Level: 88
+        Sp: 186
+      - Level: 89
+        Sp: 188
+      - Level: 90
+        Sp: 190
+      - Level: 91
+        Sp: 192
+      - Level: 92
+        Sp: 194
+      - Level: 93
+        Sp: 196
+      - Level: 94
+        Sp: 198
+      - Level: 95
+        Sp: 200
+      - Level: 96
+        Sp: 202
+      - Level: 97
+        Sp: 204
+      - Level: 98
+        Sp: 206
+      - Level: 99
+        Sp: 208
+  - Jobs:
+      Acolyte: true
+      Acolyte_High: true
+      Baby_Acolyte: true
+    BaseSp:
+      - Level: 1
+        Sp: 15
+      - Level: 2
+        Sp: 20
+      - Level: 3
+        Sp: 25
+      - Level: 4
+        Sp: 30
+      - Level: 5
+        Sp: 35
+      - Level: 6
+        Sp: 40
+      - Level: 7
+        Sp: 45
+      - Level: 8
+        Sp: 50
+      - Level: 9
+        Sp: 55
+      - Level: 10
+        Sp: 60
+      - Level: 11
+        Sp: 65
+      - Level: 12
+        Sp: 70
+      - Level: 13
+        Sp: 75
+      - Level: 14
+        Sp: 80
+      - Level: 15
+        Sp: 85
+      - Level: 16
+        Sp: 90
+      - Level: 17
+        Sp: 95
+      - Level: 18
+        Sp: 100
+      - Level: 19
+        Sp: 105
+      - Level: 20
+        Sp: 110
+      - Level: 21
+        Sp: 115
+      - Level: 22
+        Sp: 120
+      - Level: 23
+        Sp: 125
+      - Level: 24
+        Sp: 130
+      - Level: 25
+        Sp: 135
+      - Level: 26
+        Sp: 140
+      - Level: 27
+        Sp: 145
+      - Level: 28
+        Sp: 150
+      - Level: 29
+        Sp: 155
+      - Level: 30
+        Sp: 160
+      - Level: 31
+        Sp: 165
+      - Level: 32
+        Sp: 170
+      - Level: 33
+        Sp: 175
+      - Level: 34
+        Sp: 180
+      - Level: 35
+        Sp: 185
+      - Level: 36
+        Sp: 190
+      - Level: 37
+        Sp: 195
+      - Level: 38
+        Sp: 200
+      - Level: 39
+        Sp: 205
+      - Level: 40
+        Sp: 210
+      - Level: 41
+        Sp: 215
+      - Level: 42
+        Sp: 220
+      - Level: 43
+        Sp: 225
+      - Level: 44
+        Sp: 230
+      - Level: 45
+        Sp: 235
+      - Level: 46
+        Sp: 240
+      - Level: 47
+        Sp: 245
+      - Level: 48
+        Sp: 250
+      - Level: 49
+        Sp: 255
+      - Level: 50
+        Sp: 260
+      - Level: 51
+        Sp: 265
+      - Level: 52
+        Sp: 270
+      - Level: 53
+        Sp: 275
+      - Level: 54
+        Sp: 280
+      - Level: 55
+        Sp: 285
+      - Level: 56
+        Sp: 290
+      - Level: 57
+        Sp: 295
+      - Level: 58
+        Sp: 300
+      - Level: 59
+        Sp: 305
+      - Level: 60
+        Sp: 310
+      - Level: 61
+        Sp: 315
+      - Level: 62
+        Sp: 320
+      - Level: 63
+        Sp: 325
+      - Level: 64
+        Sp: 330
+      - Level: 65
+        Sp: 335
+      - Level: 66
+        Sp: 340
+      - Level: 67
+        Sp: 345
+      - Level: 68
+        Sp: 350
+      - Level: 69
+        Sp: 355
+      - Level: 70
+        Sp: 360
+      - Level: 71
+        Sp: 365
+      - Level: 72
+        Sp: 370
+      - Level: 73
+        Sp: 375
+      - Level: 74
+        Sp: 380
+      - Level: 75
+        Sp: 385
+      - Level: 76
+        Sp: 390
+      - Level: 77
+        Sp: 395
+      - Level: 78
+        Sp: 400
+      - Level: 79
+        Sp: 405
+      - Level: 80
+        Sp: 410
+      - Level: 81
+        Sp: 415
+      - Level: 82
+        Sp: 420
+      - Level: 83
+        Sp: 425
+      - Level: 84
+        Sp: 430
+      - Level: 85
+        Sp: 435
+      - Level: 86
+        Sp: 440
+      - Level: 87
+        Sp: 445
+      - Level: 88
+        Sp: 450
+      - Level: 89
+        Sp: 455
+      - Level: 90
+        Sp: 460
+      - Level: 91
+        Sp: 465
+      - Level: 92
+        Sp: 470
+      - Level: 93
+        Sp: 475
+      - Level: 94
+        Sp: 480
+      - Level: 95
+        Sp: 485
+      - Level: 96
+        Sp: 490
+      - Level: 97
+        Sp: 495
+      - Level: 98
+        Sp: 500
+      - Level: 99
+        Sp: 505
+  - Jobs:
+      Merchant: true
+      Merchant_High: true
+      Baby_Merchant: true
+    BaseSp:
+      - Level: 1
+        Sp: 13
+      - Level: 2
+        Sp: 16
+      - Level: 3
+        Sp: 19
+      - Level: 4
+        Sp: 22
+      - Level: 5
+        Sp: 25
+      - Level: 6
+        Sp: 28
+      - Level: 7
+        Sp: 31
+      - Level: 8
+        Sp: 34
+      - Level: 9
+        Sp: 37
+      - Level: 10
+        Sp: 40
+      - Level: 11
+        Sp: 43
+      - Level: 12
+        Sp: 46
+      - Level: 13
+        Sp: 49
+      - Level: 14
+        Sp: 52
+      - Level: 15
+        Sp: 55
+      - Level: 16
+        Sp: 58
+      - Level: 17
+        Sp: 61
+      - Level: 18
+        Sp: 64
+      - Level: 19
+        Sp: 67
+      - Level: 20
+        Sp: 70
+      - Level: 21
+        Sp: 73
+      - Level: 22
+        Sp: 76
+      - Level: 23
+        Sp: 79
+      - Level: 24
+        Sp: 82
+      - Level: 25
+        Sp: 85
+      - Level: 26
+        Sp: 88
+      - Level: 27
+        Sp: 91
+      - Level: 28
+        Sp: 94
+      - Level: 29
+        Sp: 97
+      - Level: 30
+        Sp: 100
+      - Level: 31
+        Sp: 103
+      - Level: 32
+        Sp: 106
+      - Level: 33
+        Sp: 109
+      - Level: 34
+        Sp: 112
+      - Level: 35
+        Sp: 115
+      - Level: 36
+        Sp: 118
+      - Level: 37
+        Sp: 121
+      - Level: 38
+        Sp: 124
+      - Level: 39
+        Sp: 127
+      - Level: 40
+        Sp: 130
+      - Level: 41
+        Sp: 133
+      - Level: 42
+        Sp: 136
+      - Level: 43
+        Sp: 139
+      - Level: 44
+        Sp: 142
+      - Level: 45
+        Sp: 145
+      - Level: 46
+        Sp: 148
+      - Level: 47
+        Sp: 151
+      - Level: 48
+        Sp: 154
+      - Level: 49
+        Sp: 157
+      - Level: 50
+        Sp: 160
+      - Level: 51
+        Sp: 163
+      - Level: 52
+        Sp: 166
+      - Level: 53
+        Sp: 169
+      - Level: 54
+        Sp: 172
+      - Level: 55
+        Sp: 175
+      - Level: 56
+        Sp: 178
+      - Level: 57
+        Sp: 181
+      - Level: 58
+        Sp: 184
+      - Level: 59
+        Sp: 187
+      - Level: 60
+        Sp: 190
+      - Level: 61
+        Sp: 193
+      - Level: 62
+        Sp: 196
+      - Level: 63
+        Sp: 199
+      - Level: 64
+        Sp: 202
+      - Level: 65
+        Sp: 205
+      - Level: 66
+        Sp: 208
+      - Level: 67
+        Sp: 211
+      - Level: 68
+        Sp: 214
+      - Level: 69
+        Sp: 217
+      - Level: 70
+        Sp: 220
+      - Level: 71
+        Sp: 223
+      - Level: 72
+        Sp: 226
+      - Level: 73
+        Sp: 229
+      - Level: 74
+        Sp: 232
+      - Level: 75
+        Sp: 235
+      - Level: 76
+        Sp: 238
+      - Level: 77
+        Sp: 241
+      - Level: 78
+        Sp: 244
+      - Level: 79
+        Sp: 247
+      - Level: 80
+        Sp: 250
+      - Level: 81
+        Sp: 253
+      - Level: 82
+        Sp: 256
+      - Level: 83
+        Sp: 259
+      - Level: 84
+        Sp: 262
+      - Level: 85
+        Sp: 265
+      - Level: 86
+        Sp: 268
+      - Level: 87
+        Sp: 271
+      - Level: 88
+        Sp: 274
+      - Level: 89
+        Sp: 277
+      - Level: 90
+        Sp: 280
+      - Level: 91
+        Sp: 283
+      - Level: 92
+        Sp: 286
+      - Level: 93
+        Sp: 289
+      - Level: 94
+        Sp: 292
+      - Level: 95
+        Sp: 295
+      - Level: 96
+        Sp: 298
+      - Level: 97
+        Sp: 301
+      - Level: 98
+        Sp: 304
+      - Level: 99
+        Sp: 307
+  - Jobs:
+      Thief: true
+      Thief_High: true
+      Baby_Thief: true
+    BaseSp:
+      - Level: 1
+        Sp: 12
+      - Level: 2
+        Sp: 14
+      - Level: 3
+        Sp: 16
+      - Level: 4
+        Sp: 18
+      - Level: 5
+        Sp: 20
+      - Level: 6
+        Sp: 22
+      - Level: 7
+        Sp: 24
+      - Level: 8
+        Sp: 26
+      - Level: 9
+        Sp: 28
+      - Level: 10
+        Sp: 30
+      - Level: 11
+        Sp: 32
+      - Level: 12
+        Sp: 34
+      - Level: 13
+        Sp: 36
+      - Level: 14
+        Sp: 38
+      - Level: 15
+        Sp: 40
+      - Level: 16
+        Sp: 42
+      - Level: 17
+        Sp: 44
+      - Level: 18
+        Sp: 46
+      - Level: 19
+        Sp: 48
+      - Level: 20
+        Sp: 50
+      - Level: 21
+        Sp: 52
+      - Level: 22
+        Sp: 54
+      - Level: 23
+        Sp: 56
+      - Level: 24
+        Sp: 58
+      - Level: 25
+        Sp: 60
+      - Level: 26
+        Sp: 62
+      - Level: 27
+        Sp: 64
+      - Level: 28
+        Sp: 66
+      - Level: 29
+        Sp: 68
+      - Level: 30
+        Sp: 70
+      - Level: 31
+        Sp: 72
+      - Level: 32
+        Sp: 74
+      - Level: 33
+        Sp: 76
+      - Level: 34
+        Sp: 78
+      - Level: 35
+        Sp: 80
+      - Level: 36
+        Sp: 82
+      - Level: 37
+        Sp: 84
+      - Level: 38
+        Sp: 86
+      - Level: 39
+        Sp: 88
+      - Level: 40
+        Sp: 90
+      - Level: 41
+        Sp: 92
+      - Level: 42
+        Sp: 94
+      - Level: 43
+        Sp: 96
+      - Level: 44
+        Sp: 98
+      - Level: 45
+        Sp: 100
+      - Level: 46
+        Sp: 102
+      - Level: 47
+        Sp: 104
+      - Level: 48
+        Sp: 106
+      - Level: 49
+        Sp: 108
+      - Level: 50
+        Sp: 110
+      - Level: 51
+        Sp: 112
+      - Level: 52
+        Sp: 114
+      - Level: 53
+        Sp: 116
+      - Level: 54
+        Sp: 118
+      - Level: 55
+        Sp: 120
+      - Level: 56
+        Sp: 122
+      - Level: 57
+        Sp: 124
+      - Level: 58
+        Sp: 126
+      - Level: 59
+        Sp: 128
+      - Level: 60
+        Sp: 130
+      - Level: 61
+        Sp: 132
+      - Level: 62
+        Sp: 134
+      - Level: 63
+        Sp: 136
+      - Level: 64
+        Sp: 138
+      - Level: 65
+        Sp: 140
+      - Level: 66
+        Sp: 142
+      - Level: 67
+        Sp: 144
+      - Level: 68
+        Sp: 146
+      - Level: 69
+        Sp: 148
+      - Level: 70
+        Sp: 150
+      - Level: 71
+        Sp: 152
+      - Level: 72
+        Sp: 154
+      - Level: 73
+        Sp: 156
+      - Level: 74
+        Sp: 158
+      - Level: 75
+        Sp: 160
+      - Level: 76
+        Sp: 162
+      - Level: 77
+        Sp: 164
+      - Level: 78
+        Sp: 166
+      - Level: 79
+        Sp: 168
+      - Level: 80
+        Sp: 170
+      - Level: 81
+        Sp: 172
+      - Level: 82
+        Sp: 174
+      - Level: 83
+        Sp: 176
+      - Level: 84
+        Sp: 178
+      - Level: 85
+        Sp: 180
+      - Level: 86
+        Sp: 182
+      - Level: 87
+        Sp: 184
+      - Level: 88
+        Sp: 186
+      - Level: 89
+        Sp: 188
+      - Level: 90
+        Sp: 190
+      - Level: 91
+        Sp: 192
+      - Level: 92
+        Sp: 194
+      - Level: 93
+        Sp: 196
+      - Level: 94
+        Sp: 198
+      - Level: 95
+        Sp: 200
+      - Level: 96
+        Sp: 202
+      - Level: 97
+        Sp: 204
+      - Level: 98
+        Sp: 206
+      - Level: 99
+        Sp: 208
+  - Jobs:
+      Knight: true
+      Knight2: true
+      Lord_Knight: true
+      Lord_Knight2: true
+      Baby_Knight: true
+      Baby_Knight2: true
+    BaseSp:
+      - Level: 1
+        Sp: 13
+      - Level: 2
+        Sp: 16
+      - Level: 3
+        Sp: 19
+      - Level: 4
+        Sp: 22
+      - Level: 5
+        Sp: 25
+      - Level: 6
+        Sp: 28
+      - Level: 7
+        Sp: 31
+      - Level: 8
+        Sp: 34
+      - Level: 9
+        Sp: 37
+      - Level: 10
+        Sp: 40
+      - Level: 11
+        Sp: 43
+      - Level: 12
+        Sp: 46
+      - Level: 13
+        Sp: 49
+      - Level: 14
+        Sp: 52
+      - Level: 15
+        Sp: 55
+      - Level: 16
+        Sp: 58
+      - Level: 17
+        Sp: 61
+      - Level: 18
+        Sp: 64
+      - Level: 19
+        Sp: 67
+      - Level: 20
+        Sp: 70
+      - Level: 21
+        Sp: 73
+      - Level: 22
+        Sp: 76
+      - Level: 23
+        Sp: 79
+      - Level: 24
+        Sp: 82
+      - Level: 25
+        Sp: 85
+      - Level: 26
+        Sp: 88
+      - Level: 27
+        Sp: 91
+      - Level: 28
+        Sp: 94
+      - Level: 29
+        Sp: 97
+      - Level: 30
+        Sp: 100
+      - Level: 31
+        Sp: 103
+      - Level: 32
+        Sp: 106
+      - Level: 33
+        Sp: 109
+      - Level: 34
+        Sp: 112
+      - Level: 35
+        Sp: 115
+      - Level: 36
+        Sp: 118
+      - Level: 37
+        Sp: 121
+      - Level: 38
+        Sp: 124
+      - Level: 39
+        Sp: 127
+      - Level: 40
+        Sp: 130
+      - Level: 41
+        Sp: 133
+      - Level: 42
+        Sp: 136
+      - Level: 43
+        Sp: 139
+      - Level: 44
+        Sp: 142
+      - Level: 45
+        Sp: 145
+      - Level: 46
+        Sp: 148
+      - Level: 47
+        Sp: 151
+      - Level: 48
+        Sp: 154
+      - Level: 49
+        Sp: 157
+      - Level: 50
+        Sp: 160
+      - Level: 51
+        Sp: 163
+      - Level: 52
+        Sp: 166
+      - Level: 53
+        Sp: 169
+      - Level: 54
+        Sp: 172
+      - Level: 55
+        Sp: 175
+      - Level: 56
+        Sp: 178
+      - Level: 57
+        Sp: 181
+      - Level: 58
+        Sp: 184
+      - Level: 59
+        Sp: 187
+      - Level: 60
+        Sp: 190
+      - Level: 61
+        Sp: 193
+      - Level: 62
+        Sp: 196
+      - Level: 63
+        Sp: 199
+      - Level: 64
+        Sp: 202
+      - Level: 65
+        Sp: 205
+      - Level: 66
+        Sp: 208
+      - Level: 67
+        Sp: 211
+      - Level: 68
+        Sp: 214
+      - Level: 69
+        Sp: 217
+      - Level: 70
+        Sp: 220
+      - Level: 71
+        Sp: 223
+      - Level: 72
+        Sp: 226
+      - Level: 73
+        Sp: 229
+      - Level: 74
+        Sp: 232
+      - Level: 75
+        Sp: 235
+      - Level: 76
+        Sp: 238
+      - Level: 77
+        Sp: 241
+      - Level: 78
+        Sp: 244
+      - Level: 79
+        Sp: 247
+      - Level: 80
+        Sp: 250
+      - Level: 81
+        Sp: 253
+      - Level: 82
+        Sp: 256
+      - Level: 83
+        Sp: 259
+      - Level: 84
+        Sp: 262
+      - Level: 85
+        Sp: 265
+      - Level: 86
+        Sp: 268
+      - Level: 87
+        Sp: 271
+      - Level: 88
+        Sp: 274
+      - Level: 89
+        Sp: 277
+      - Level: 90
+        Sp: 280
+      - Level: 91
+        Sp: 283
+      - Level: 92
+        Sp: 286
+      - Level: 93
+        Sp: 289
+      - Level: 94
+        Sp: 292
+      - Level: 95
+        Sp: 295
+      - Level: 96
+        Sp: 298
+      - Level: 97
+        Sp: 301
+      - Level: 98
+        Sp: 304
+      - Level: 99
+        Sp: 307
+  - Jobs:
+      Priest: true
+      High_Priest: true
+      Baby_Priest: true
+    BaseSp:
+      - Level: 1
+        Sp: 18
+      - Level: 2
+        Sp: 26
+      - Level: 3
+        Sp: 34
+      - Level: 4
+        Sp: 42
+      - Level: 5
+        Sp: 50
+      - Level: 6
+        Sp: 58
+      - Level: 7
+        Sp: 66
+      - Level: 8
+        Sp: 74
+      - Level: 9
+        Sp: 82
+      - Level: 10
+        Sp: 90
+      - Level: 11
+        Sp: 98
+      - Level: 12
+        Sp: 106
+      - Level: 13
+        Sp: 114
+      - Level: 14
+        Sp: 122
+      - Level: 15
+        Sp: 130
+      - Level: 16
+        Sp: 138
+      - Level: 17
+        Sp: 146
+      - Level: 18
+        Sp: 154
+      - Level: 19
+        Sp: 162
+      - Level: 20
+        Sp: 170
+      - Level: 21
+        Sp: 178
+      - Level: 22
+        Sp: 186
+      - Level: 23
+        Sp: 194
+      - Level: 24
+        Sp: 202
+      - Level: 25
+        Sp: 210
+      - Level: 26
+        Sp: 218
+      - Level: 27
+        Sp: 226
+      - Level: 28
+        Sp: 234
+      - Level: 29
+        Sp: 242
+      - Level: 30
+        Sp: 250
+      - Level: 31
+        Sp: 258
+      - Level: 32
+        Sp: 266
+      - Level: 33
+        Sp: 274
+      - Level: 34
+        Sp: 282
+      - Level: 35
+        Sp: 290
+      - Level: 36
+        Sp: 298
+      - Level: 37
+        Sp: 306
+      - Level: 38
+        Sp: 314
+      - Level: 39
+        Sp: 322
+      - Level: 40
+        Sp: 330
+      - Level: 41
+        Sp: 338
+      - Level: 42
+        Sp: 346
+      - Level: 43
+        Sp: 354
+      - Level: 44
+        Sp: 362
+      - Level: 45
+        Sp: 370
+      - Level: 46
+        Sp: 378
+      - Level: 47
+        Sp: 386
+      - Level: 48
+        Sp: 394
+      - Level: 49
+        Sp: 402
+      - Level: 50
+        Sp: 410
+      - Level: 51
+        Sp: 418
+      - Level: 52
+        Sp: 426
+      - Level: 53
+        Sp: 434
+      - Level: 54
+        Sp: 442
+      - Level: 55
+        Sp: 450
+      - Level: 56
+        Sp: 458
+      - Level: 57
+        Sp: 466
+      - Level: 58
+        Sp: 474
+      - Level: 59
+        Sp: 482
+      - Level: 60
+        Sp: 490
+      - Level: 61
+        Sp: 498
+      - Level: 62
+        Sp: 506
+      - Level: 63
+        Sp: 514
+      - Level: 64
+        Sp: 522
+      - Level: 65
+        Sp: 530
+      - Level: 66
+        Sp: 538
+      - Level: 67
+        Sp: 546
+      - Level: 68
+        Sp: 554
+      - Level: 69
+        Sp: 562
+      - Level: 70
+        Sp: 570
+      - Level: 71
+        Sp: 578
+      - Level: 72
+        Sp: 586
+      - Level: 73
+        Sp: 594
+      - Level: 74
+        Sp: 602
+      - Level: 75
+        Sp: 610
+      - Level: 76
+        Sp: 618
+      - Level: 77
+        Sp: 626
+      - Level: 78
+        Sp: 634
+      - Level: 79
+        Sp: 642
+      - Level: 80
+        Sp: 650
+      - Level: 81
+        Sp: 658
+      - Level: 82
+        Sp: 666
+      - Level: 83
+        Sp: 674
+      - Level: 84
+        Sp: 682
+      - Level: 85
+        Sp: 690
+      - Level: 86
+        Sp: 698
+      - Level: 87
+        Sp: 706
+      - Level: 88
+        Sp: 714
+      - Level: 89
+        Sp: 722
+      - Level: 90
+        Sp: 730
+      - Level: 91
+        Sp: 738
+      - Level: 92
+        Sp: 746
+      - Level: 93
+        Sp: 754
+      - Level: 94
+        Sp: 762
+      - Level: 95
+        Sp: 770
+      - Level: 96
+        Sp: 778
+      - Level: 97
+        Sp: 786
+      - Level: 98
+        Sp: 794
+      - Level: 99
+        Sp: 802
+  - Jobs:
+      Wizard: true
+      High_Wizard: true
+      Baby_Wizard: true
+    BaseSp:
+      - Level: 1
+        Sp: 19
+      - Level: 2
+        Sp: 28
+      - Level: 3
+        Sp: 37
+      - Level: 4
+        Sp: 46
+      - Level: 5
+        Sp: 55
+      - Level: 6
+        Sp: 64
+      - Level: 7
+        Sp: 73
+      - Level: 8
+        Sp: 82
+      - Level: 9
+        Sp: 91
+      - Level: 10
+        Sp: 100
+      - Level: 11
+        Sp: 109
+      - Level: 12
+        Sp: 118
+      - Level: 13
+        Sp: 127
+      - Level: 14
+        Sp: 136
+      - Level: 15
+        Sp: 145
+      - Level: 16
+        Sp: 154
+      - Level: 17
+        Sp: 163
+      - Level: 18
+        Sp: 172
+      - Level: 19
+        Sp: 181
+      - Level: 20
+        Sp: 190
+      - Level: 21
+        Sp: 199
+      - Level: 22
+        Sp: 208
+      - Level: 23
+        Sp: 217
+      - Level: 24
+        Sp: 226
+      - Level: 25
+        Sp: 235
+      - Level: 26
+        Sp: 244
+      - Level: 27
+        Sp: 253
+      - Level: 28
+        Sp: 262
+      - Level: 29
+        Sp: 271
+      - Level: 30
+        Sp: 280
+      - Level: 31
+        Sp: 289
+      - Level: 32
+        Sp: 298
+      - Level: 33
+        Sp: 307
+      - Level: 34
+        Sp: 316
+      - Level: 35
+        Sp: 325
+      - Level: 36
+        Sp: 334
+      - Level: 37
+        Sp: 343
+      - Level: 38
+        Sp: 352
+      - Level: 39
+        Sp: 361
+      - Level: 40
+        Sp: 370
+      - Level: 41
+        Sp: 379
+      - Level: 42
+        Sp: 388
+      - Level: 43
+        Sp: 397
+      - Level: 44
+        Sp: 406
+      - Level: 45
+        Sp: 415
+      - Level: 46
+        Sp: 424
+      - Level: 47
+        Sp: 433
+      - Level: 48
+        Sp: 442
+      - Level: 49
+        Sp: 451
+      - Level: 50
+        Sp: 460
+      - Level: 51
+        Sp: 469
+      - Level: 52
+        Sp: 478
+      - Level: 53
+        Sp: 487
+      - Level: 54
+        Sp: 496
+      - Level: 55
+        Sp: 505
+      - Level: 56
+        Sp: 514
+      - Level: 57
+        Sp: 523
+      - Level: 58
+        Sp: 532
+      - Level: 59
+        Sp: 541
+      - Level: 60
+        Sp: 550
+      - Level: 61
+        Sp: 559
+      - Level: 62
+        Sp: 568
+      - Level: 63
+        Sp: 577
+      - Level: 64
+        Sp: 586
+      - Level: 65
+        Sp: 595
+      - Level: 66
+        Sp: 604
+      - Level: 67
+        Sp: 613
+      - Level: 68
+        Sp: 622
+      - Level: 69
+        Sp: 631
+      - Level: 70
+        Sp: 640
+      - Level: 71
+        Sp: 649
+      - Level: 72
+        Sp: 658
+      - Level: 73
+        Sp: 667
+      - Level: 74
+        Sp: 676
+      - Level: 75
+        Sp: 685
+      - Level: 76
+        Sp: 694
+      - Level: 77
+        Sp: 703
+      - Level: 78
+        Sp: 712
+      - Level: 79
+        Sp: 721
+      - Level: 80
+        Sp: 730
+      - Level: 81
+        Sp: 739
+      - Level: 82
+        Sp: 748
+      - Level: 83
+        Sp: 757
+      - Level: 84
+        Sp: 766
+      - Level: 85
+        Sp: 775
+      - Level: 86
+        Sp: 784
+      - Level: 87
+        Sp: 793
+      - Level: 88
+        Sp: 802
+      - Level: 89
+        Sp: 811
+      - Level: 90
+        Sp: 820
+      - Level: 91
+        Sp: 829
+      - Level: 92
+        Sp: 838
+      - Level: 93
+        Sp: 847
+      - Level: 94
+        Sp: 856
+      - Level: 95
+        Sp: 865
+      - Level: 96
+        Sp: 874
+      - Level: 97
+        Sp: 883
+      - Level: 98
+        Sp: 892
+      - Level: 99
+        Sp: 901
+  - Jobs:
+      Blacksmith: true
+      Whitesmith: true
+      Baby_Blacksmith: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 18
+      - Level: 3
+        Sp: 22
+      - Level: 4
+        Sp: 26
+      - Level: 5
+        Sp: 30
+      - Level: 6
+        Sp: 34
+      - Level: 7
+        Sp: 38
+      - Level: 8
+        Sp: 42
+      - Level: 9
+        Sp: 46
+      - Level: 10
+        Sp: 50
+      - Level: 11
+        Sp: 54
+      - Level: 12
+        Sp: 58
+      - Level: 13
+        Sp: 62
+      - Level: 14
+        Sp: 66
+      - Level: 15
+        Sp: 70
+      - Level: 16
+        Sp: 74
+      - Level: 17
+        Sp: 78
+      - Level: 18
+        Sp: 82
+      - Level: 19
+        Sp: 86
+      - Level: 20
+        Sp: 90
+      - Level: 21
+        Sp: 94
+      - Level: 22
+        Sp: 98
+      - Level: 23
+        Sp: 102
+      - Level: 24
+        Sp: 106
+      - Level: 25
+        Sp: 110
+      - Level: 26
+        Sp: 114
+      - Level: 27
+        Sp: 118
+      - Level: 28
+        Sp: 122
+      - Level: 29
+        Sp: 126
+      - Level: 30
+        Sp: 130
+      - Level: 31
+        Sp: 134
+      - Level: 32
+        Sp: 138
+      - Level: 33
+        Sp: 142
+      - Level: 34
+        Sp: 146
+      - Level: 35
+        Sp: 150
+      - Level: 36
+        Sp: 154
+      - Level: 37
+        Sp: 158
+      - Level: 38
+        Sp: 162
+      - Level: 39
+        Sp: 166
+      - Level: 40
+        Sp: 170
+      - Level: 41
+        Sp: 174
+      - Level: 42
+        Sp: 178
+      - Level: 43
+        Sp: 182
+      - Level: 44
+        Sp: 186
+      - Level: 45
+        Sp: 190
+      - Level: 46
+        Sp: 194
+      - Level: 47
+        Sp: 198
+      - Level: 48
+        Sp: 202
+      - Level: 49
+        Sp: 206
+      - Level: 50
+        Sp: 210
+      - Level: 51
+        Sp: 214
+      - Level: 52
+        Sp: 218
+      - Level: 53
+        Sp: 222
+      - Level: 54
+        Sp: 226
+      - Level: 55
+        Sp: 230
+      - Level: 56
+        Sp: 234
+      - Level: 57
+        Sp: 238
+      - Level: 58
+        Sp: 242
+      - Level: 59
+        Sp: 246
+      - Level: 60
+        Sp: 250
+      - Level: 61
+        Sp: 254
+      - Level: 62
+        Sp: 258
+      - Level: 63
+        Sp: 262
+      - Level: 64
+        Sp: 266
+      - Level: 65
+        Sp: 270
+      - Level: 66
+        Sp: 274
+      - Level: 67
+        Sp: 278
+      - Level: 68
+        Sp: 282
+      - Level: 69
+        Sp: 286
+      - Level: 70
+        Sp: 290
+      - Level: 71
+        Sp: 294
+      - Level: 72
+        Sp: 298
+      - Level: 73
+        Sp: 302
+      - Level: 74
+        Sp: 306
+      - Level: 75
+        Sp: 310
+      - Level: 76
+        Sp: 314
+      - Level: 77
+        Sp: 318
+      - Level: 78
+        Sp: 322
+      - Level: 79
+        Sp: 326
+      - Level: 80
+        Sp: 330
+      - Level: 81
+        Sp: 334
+      - Level: 82
+        Sp: 338
+      - Level: 83
+        Sp: 342
+      - Level: 84
+        Sp: 346
+      - Level: 85
+        Sp: 350
+      - Level: 86
+        Sp: 354
+      - Level: 87
+        Sp: 358
+      - Level: 88
+        Sp: 362
+      - Level: 89
+        Sp: 366
+      - Level: 90
+        Sp: 370
+      - Level: 91
+        Sp: 374
+      - Level: 92
+        Sp: 378
+      - Level: 93
+        Sp: 382
+      - Level: 94
+        Sp: 386
+      - Level: 95
+        Sp: 390
+      - Level: 96
+        Sp: 394
+      - Level: 97
+        Sp: 398
+      - Level: 98
+        Sp: 402
+      - Level: 99
+        Sp: 406
+  - Jobs:
+      Hunter: true
+      Sniper: true
+      Baby_Hunter: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 18
+      - Level: 3
+        Sp: 22
+      - Level: 4
+        Sp: 26
+      - Level: 5
+        Sp: 30
+      - Level: 6
+        Sp: 34
+      - Level: 7
+        Sp: 38
+      - Level: 8
+        Sp: 42
+      - Level: 9
+        Sp: 46
+      - Level: 10
+        Sp: 50
+      - Level: 11
+        Sp: 54
+      - Level: 12
+        Sp: 58
+      - Level: 13
+        Sp: 62
+      - Level: 14
+        Sp: 66
+      - Level: 15
+        Sp: 70
+      - Level: 16
+        Sp: 74
+      - Level: 17
+        Sp: 78
+      - Level: 18
+        Sp: 82
+      - Level: 19
+        Sp: 86
+      - Level: 20
+        Sp: 90
+      - Level: 21
+        Sp: 94
+      - Level: 22
+        Sp: 98
+      - Level: 23
+        Sp: 102
+      - Level: 24
+        Sp: 106
+      - Level: 25
+        Sp: 110
+      - Level: 26
+        Sp: 114
+      - Level: 27
+        Sp: 118
+      - Level: 28
+        Sp: 122
+      - Level: 29
+        Sp: 126
+      - Level: 30
+        Sp: 130
+      - Level: 31
+        Sp: 134
+      - Level: 32
+        Sp: 138
+      - Level: 33
+        Sp: 142
+      - Level: 34
+        Sp: 146
+      - Level: 35
+        Sp: 150
+      - Level: 36
+        Sp: 154
+      - Level: 37
+        Sp: 158
+      - Level: 38
+        Sp: 162
+      - Level: 39
+        Sp: 166
+      - Level: 40
+        Sp: 170
+      - Level: 41
+        Sp: 174
+      - Level: 42
+        Sp: 178
+      - Level: 43
+        Sp: 182
+      - Level: 44
+        Sp: 186
+      - Level: 45
+        Sp: 190
+      - Level: 46
+        Sp: 194
+      - Level: 47
+        Sp: 198
+      - Level: 48
+        Sp: 202
+      - Level: 49
+        Sp: 206
+      - Level: 50
+        Sp: 210
+      - Level: 51
+        Sp: 214
+      - Level: 52
+        Sp: 218
+      - Level: 53
+        Sp: 222
+      - Level: 54
+        Sp: 226
+      - Level: 55
+        Sp: 230
+      - Level: 56
+        Sp: 234
+      - Level: 57
+        Sp: 238
+      - Level: 58
+        Sp: 242
+      - Level: 59
+        Sp: 246
+      - Level: 60
+        Sp: 250
+      - Level: 61
+        Sp: 254
+      - Level: 62
+        Sp: 258
+      - Level: 63
+        Sp: 262
+      - Level: 64
+        Sp: 266
+      - Level: 65
+        Sp: 270
+      - Level: 66
+        Sp: 274
+      - Level: 67
+        Sp: 278
+      - Level: 68
+        Sp: 282
+      - Level: 69
+        Sp: 286
+      - Level: 70
+        Sp: 290
+      - Level: 71
+        Sp: 294
+      - Level: 72
+        Sp: 298
+      - Level: 73
+        Sp: 302
+      - Level: 74
+        Sp: 306
+      - Level: 75
+        Sp: 310
+      - Level: 76
+        Sp: 314
+      - Level: 77
+        Sp: 318
+      - Level: 78
+        Sp: 322
+      - Level: 79
+        Sp: 326
+      - Level: 80
+        Sp: 330
+      - Level: 81
+        Sp: 334
+      - Level: 82
+        Sp: 338
+      - Level: 83
+        Sp: 342
+      - Level: 84
+        Sp: 346
+      - Level: 85
+        Sp: 350
+      - Level: 86
+        Sp: 354
+      - Level: 87
+        Sp: 358
+      - Level: 88
+        Sp: 362
+      - Level: 89
+        Sp: 366
+      - Level: 90
+        Sp: 370
+      - Level: 91
+        Sp: 374
+      - Level: 92
+        Sp: 378
+      - Level: 93
+        Sp: 382
+      - Level: 94
+        Sp: 386
+      - Level: 95
+        Sp: 390
+      - Level: 96
+        Sp: 394
+      - Level: 97
+        Sp: 398
+      - Level: 98
+        Sp: 402
+      - Level: 99
+        Sp: 406
+  - Jobs:
+      Assassin: true
+      Assassin_Cross: true
+      Baby_Assassin: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 18
+      - Level: 3
+        Sp: 22
+      - Level: 4
+        Sp: 26
+      - Level: 5
+        Sp: 30
+      - Level: 6
+        Sp: 34
+      - Level: 7
+        Sp: 38
+      - Level: 8
+        Sp: 42
+      - Level: 9
+        Sp: 46
+      - Level: 10
+        Sp: 50
+      - Level: 11
+        Sp: 54
+      - Level: 12
+        Sp: 58
+      - Level: 13
+        Sp: 62
+      - Level: 14
+        Sp: 66
+      - Level: 15
+        Sp: 70
+      - Level: 16
+        Sp: 74
+      - Level: 17
+        Sp: 78
+      - Level: 18
+        Sp: 82
+      - Level: 19
+        Sp: 86
+      - Level: 20
+        Sp: 90
+      - Level: 21
+        Sp: 94
+      - Level: 22
+        Sp: 98
+      - Level: 23
+        Sp: 102
+      - Level: 24
+        Sp: 106
+      - Level: 25
+        Sp: 110
+      - Level: 26
+        Sp: 114
+      - Level: 27
+        Sp: 118
+      - Level: 28
+        Sp: 122
+      - Level: 29
+        Sp: 126
+      - Level: 30
+        Sp: 130
+      - Level: 31
+        Sp: 134
+      - Level: 32
+        Sp: 138
+      - Level: 33
+        Sp: 142
+      - Level: 34
+        Sp: 146
+      - Level: 35
+        Sp: 150
+      - Level: 36
+        Sp: 154
+      - Level: 37
+        Sp: 158
+      - Level: 38
+        Sp: 162
+      - Level: 39
+        Sp: 166
+      - Level: 40
+        Sp: 170
+      - Level: 41
+        Sp: 174
+      - Level: 42
+        Sp: 178
+      - Level: 43
+        Sp: 182
+      - Level: 44
+        Sp: 186
+      - Level: 45
+        Sp: 190
+      - Level: 46
+        Sp: 194
+      - Level: 47
+        Sp: 198
+      - Level: 48
+        Sp: 202
+      - Level: 49
+        Sp: 206
+      - Level: 50
+        Sp: 210
+      - Level: 51
+        Sp: 214
+      - Level: 52
+        Sp: 218
+      - Level: 53
+        Sp: 222
+      - Level: 54
+        Sp: 226
+      - Level: 55
+        Sp: 230
+      - Level: 56
+        Sp: 234
+      - Level: 57
+        Sp: 238
+      - Level: 58
+        Sp: 242
+      - Level: 59
+        Sp: 246
+      - Level: 60
+        Sp: 250
+      - Level: 61
+        Sp: 254
+      - Level: 62
+        Sp: 258
+      - Level: 63
+        Sp: 262
+      - Level: 64
+        Sp: 266
+      - Level: 65
+        Sp: 270
+      - Level: 66
+        Sp: 274
+      - Level: 67
+        Sp: 278
+      - Level: 68
+        Sp: 282
+      - Level: 69
+        Sp: 286
+      - Level: 70
+        Sp: 290
+      - Level: 71
+        Sp: 294
+      - Level: 72
+        Sp: 298
+      - Level: 73
+        Sp: 302
+      - Level: 74
+        Sp: 306
+      - Level: 75
+        Sp: 310
+      - Level: 76
+        Sp: 314
+      - Level: 77
+        Sp: 318
+      - Level: 78
+        Sp: 322
+      - Level: 79
+        Sp: 326
+      - Level: 80
+        Sp: 330
+      - Level: 81
+        Sp: 334
+      - Level: 82
+        Sp: 338
+      - Level: 83
+        Sp: 342
+      - Level: 84
+        Sp: 346
+      - Level: 85
+        Sp: 350
+      - Level: 86
+        Sp: 354
+      - Level: 87
+        Sp: 358
+      - Level: 88
+        Sp: 362
+      - Level: 89
+        Sp: 366
+      - Level: 90
+        Sp: 370
+      - Level: 91
+        Sp: 374
+      - Level: 92
+        Sp: 378
+      - Level: 93
+        Sp: 382
+      - Level: 94
+        Sp: 386
+      - Level: 95
+        Sp: 390
+      - Level: 96
+        Sp: 394
+      - Level: 97
+        Sp: 398
+      - Level: 98
+        Sp: 402
+      - Level: 99
+        Sp: 406
+  - Jobs:
+      Crusader: true
+      Crusader2: true
+      Paladin: true
+      Paladin2: true
+      Baby_Crusader: true
+      Baby_Crusader2: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 19
+      - Level: 3
+        Sp: 24
+      - Level: 4
+        Sp: 28
+      - Level: 5
+        Sp: 33
+      - Level: 6
+        Sp: 38
+      - Level: 7
+        Sp: 42
+      - Level: 8
+        Sp: 47
+      - Level: 9
+        Sp: 52
+      - Level: 10
+        Sp: 57
+      - Level: 11
+        Sp: 61
+      - Level: 12
+        Sp: 66
+      - Level: 13
+        Sp: 71
+      - Level: 14
+        Sp: 75
+      - Level: 15
+        Sp: 80
+      - Level: 16
+        Sp: 85
+      - Level: 17
+        Sp: 89
+      - Level: 18
+        Sp: 94
+      - Level: 19
+        Sp: 99
+      - Level: 20
+        Sp: 104
+      - Level: 21
+        Sp: 108
+      - Level: 22
+        Sp: 113
+      - Level: 23
+        Sp: 118
+      - Level: 24
+        Sp: 122
+      - Level: 25
+        Sp: 127
+      - Level: 26
+        Sp: 132
+      - Level: 27
+        Sp: 136
+      - Level: 28
+        Sp: 141
+      - Level: 29
+        Sp: 146
+      - Level: 30
+        Sp: 151
+      - Level: 31
+        Sp: 155
+      - Level: 32
+        Sp: 160
+      - Level: 33
+        Sp: 165
+      - Level: 34
+        Sp: 169
+      - Level: 35
+        Sp: 174
+      - Level: 36
+        Sp: 179
+      - Level: 37
+        Sp: 183
+      - Level: 38
+        Sp: 188
+      - Level: 39
+        Sp: 193
+      - Level: 40
+        Sp: 198
+      - Level: 41
+        Sp: 202
+      - Level: 42
+        Sp: 207
+      - Level: 43
+        Sp: 212
+      - Level: 44
+        Sp: 216
+      - Level: 45
+        Sp: 221
+      - Level: 46
+        Sp: 226
+      - Level: 47
+        Sp: 230
+      - Level: 48
+        Sp: 235
+      - Level: 49
+        Sp: 240
+      - Level: 50
+        Sp: 245
+      - Level: 51
+        Sp: 249
+      - Level: 52
+        Sp: 254
+      - Level: 53
+        Sp: 259
+      - Level: 54
+        Sp: 263
+      - Level: 55
+        Sp: 268
+      - Level: 56
+        Sp: 273
+      - Level: 57
+        Sp: 277
+      - Level: 58
+        Sp: 282
+      - Level: 59
+        Sp: 287
+      - Level: 60
+        Sp: 292
+      - Level: 61
+        Sp: 296
+      - Level: 62
+        Sp: 301
+      - Level: 63
+        Sp: 306
+      - Level: 64
+        Sp: 310
+      - Level: 65
+        Sp: 315
+      - Level: 66
+        Sp: 320
+      - Level: 67
+        Sp: 324
+      - Level: 68
+        Sp: 329
+      - Level: 69
+        Sp: 334
+      - Level: 70
+        Sp: 339
+      - Level: 71
+        Sp: 343
+      - Level: 72
+        Sp: 348
+      - Level: 73
+        Sp: 353
+      - Level: 74
+        Sp: 357
+      - Level: 75
+        Sp: 362
+      - Level: 76
+        Sp: 367
+      - Level: 77
+        Sp: 371
+      - Level: 78
+        Sp: 376
+      - Level: 79
+        Sp: 381
+      - Level: 80
+        Sp: 386
+      - Level: 81
+        Sp: 390
+      - Level: 82
+        Sp: 395
+      - Level: 83
+        Sp: 400
+      - Level: 84
+        Sp: 404
+      - Level: 85
+        Sp: 409
+      - Level: 86
+        Sp: 414
+      - Level: 87
+        Sp: 418
+      - Level: 88
+        Sp: 423
+      - Level: 89
+        Sp: 428
+      - Level: 90
+        Sp: 433
+      - Level: 91
+        Sp: 437
+      - Level: 92
+        Sp: 442
+      - Level: 93
+        Sp: 447
+      - Level: 94
+        Sp: 451
+      - Level: 95
+        Sp: 456
+      - Level: 96
+        Sp: 461
+      - Level: 97
+        Sp: 465
+      - Level: 98
+        Sp: 470
+      - Level: 99
+        Sp: 475
+  - Jobs:
+      Monk: true
+      Champion: true
+      Baby_Monk: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 19
+      - Level: 3
+        Sp: 24
+      - Level: 4
+        Sp: 28
+      - Level: 5
+        Sp: 33
+      - Level: 6
+        Sp: 38
+      - Level: 7
+        Sp: 42
+      - Level: 8
+        Sp: 47
+      - Level: 9
+        Sp: 52
+      - Level: 10
+        Sp: 57
+      - Level: 11
+        Sp: 61
+      - Level: 12
+        Sp: 66
+      - Level: 13
+        Sp: 71
+      - Level: 14
+        Sp: 75
+      - Level: 15
+        Sp: 80
+      - Level: 16
+        Sp: 85
+      - Level: 17
+        Sp: 89
+      - Level: 18
+        Sp: 94
+      - Level: 19
+        Sp: 99
+      - Level: 20
+        Sp: 104
+      - Level: 21
+        Sp: 108
+      - Level: 22
+        Sp: 113
+      - Level: 23
+        Sp: 118
+      - Level: 24
+        Sp: 122
+      - Level: 25
+        Sp: 127
+      - Level: 26
+        Sp: 132
+      - Level: 27
+        Sp: 136
+      - Level: 28
+        Sp: 141
+      - Level: 29
+        Sp: 146
+      - Level: 30
+        Sp: 151
+      - Level: 31
+        Sp: 155
+      - Level: 32
+        Sp: 160
+      - Level: 33
+        Sp: 165
+      - Level: 34
+        Sp: 169
+      - Level: 35
+        Sp: 174
+      - Level: 36
+        Sp: 179
+      - Level: 37
+        Sp: 183
+      - Level: 38
+        Sp: 188
+      - Level: 39
+        Sp: 193
+      - Level: 40
+        Sp: 198
+      - Level: 41
+        Sp: 202
+      - Level: 42
+        Sp: 207
+      - Level: 43
+        Sp: 212
+      - Level: 44
+        Sp: 216
+      - Level: 45
+        Sp: 221
+      - Level: 46
+        Sp: 226
+      - Level: 47
+        Sp: 230
+      - Level: 48
+        Sp: 235
+      - Level: 49
+        Sp: 240
+      - Level: 50
+        Sp: 245
+      - Level: 51
+        Sp: 249
+      - Level: 52
+        Sp: 254
+      - Level: 53
+        Sp: 259
+      - Level: 54
+        Sp: 263
+      - Level: 55
+        Sp: 268
+      - Level: 56
+        Sp: 273
+      - Level: 57
+        Sp: 277
+      - Level: 58
+        Sp: 282
+      - Level: 59
+        Sp: 287
+      - Level: 60
+        Sp: 292
+      - Level: 61
+        Sp: 296
+      - Level: 62
+        Sp: 301
+      - Level: 63
+        Sp: 306
+      - Level: 64
+        Sp: 310
+      - Level: 65
+        Sp: 315
+      - Level: 66
+        Sp: 320
+      - Level: 67
+        Sp: 324
+      - Level: 68
+        Sp: 329
+      - Level: 69
+        Sp: 334
+      - Level: 70
+        Sp: 339
+      - Level: 71
+        Sp: 343
+      - Level: 72
+        Sp: 348
+      - Level: 73
+        Sp: 353
+      - Level: 74
+        Sp: 357
+      - Level: 75
+        Sp: 362
+      - Level: 76
+        Sp: 367
+      - Level: 77
+        Sp: 371
+      - Level: 78
+        Sp: 376
+      - Level: 79
+        Sp: 381
+      - Level: 80
+        Sp: 386
+      - Level: 81
+        Sp: 390
+      - Level: 82
+        Sp: 395
+      - Level: 83
+        Sp: 400
+      - Level: 84
+        Sp: 404
+      - Level: 85
+        Sp: 409
+      - Level: 86
+        Sp: 414
+      - Level: 87
+        Sp: 418
+      - Level: 88
+        Sp: 423
+      - Level: 89
+        Sp: 428
+      - Level: 90
+        Sp: 433
+      - Level: 91
+        Sp: 437
+      - Level: 92
+        Sp: 442
+      - Level: 93
+        Sp: 447
+      - Level: 94
+        Sp: 451
+      - Level: 95
+        Sp: 456
+      - Level: 96
+        Sp: 461
+      - Level: 97
+        Sp: 465
+      - Level: 98
+        Sp: 470
+      - Level: 99
+        Sp: 475
+  - Jobs:
+      Sage: true
+      Professor: true
+      Baby_Sage: true
+    BaseSp:
+      - Level: 1
+        Sp: 17
+      - Level: 2
+        Sp: 24
+      - Level: 3
+        Sp: 31
+      - Level: 4
+        Sp: 38
+      - Level: 5
+        Sp: 45
+      - Level: 6
+        Sp: 52
+      - Level: 7
+        Sp: 59
+      - Level: 8
+        Sp: 66
+      - Level: 9
+        Sp: 73
+      - Level: 10
+        Sp: 80
+      - Level: 11
+        Sp: 87
+      - Level: 12
+        Sp: 94
+      - Level: 13
+        Sp: 101
+      - Level: 14
+        Sp: 108
+      - Level: 15
+        Sp: 115
+      - Level: 16
+        Sp: 122
+      - Level: 17
+        Sp: 129
+      - Level: 18
+        Sp: 136
+      - Level: 19
+        Sp: 143
+      - Level: 20
+        Sp: 150
+      - Level: 21
+        Sp: 157
+      - Level: 22
+        Sp: 164
+      - Level: 23
+        Sp: 171
+      - Level: 24
+        Sp: 178
+      - Level: 25
+        Sp: 185
+      - Level: 26
+        Sp: 192
+      - Level: 27
+        Sp: 199
+      - Level: 28
+        Sp: 206
+      - Level: 29
+        Sp: 213
+      - Level: 30
+        Sp: 220
+      - Level: 31
+        Sp: 227
+      - Level: 32
+        Sp: 234
+      - Level: 33
+        Sp: 241
+      - Level: 34
+        Sp: 248
+      - Level: 35
+        Sp: 255
+      - Level: 36
+        Sp: 262
+      - Level: 37
+        Sp: 269
+      - Level: 38
+        Sp: 276
+      - Level: 39
+        Sp: 283
+      - Level: 40
+        Sp: 290
+      - Level: 41
+        Sp: 297
+      - Level: 42
+        Sp: 304
+      - Level: 43
+        Sp: 311
+      - Level: 44
+        Sp: 318
+      - Level: 45
+        Sp: 325
+      - Level: 46
+        Sp: 332
+      - Level: 47
+        Sp: 339
+      - Level: 48
+        Sp: 346
+      - Level: 49
+        Sp: 353
+      - Level: 50
+        Sp: 360
+      - Level: 51
+        Sp: 367
+      - Level: 52
+        Sp: 374
+      - Level: 53
+        Sp: 381
+      - Level: 54
+        Sp: 388
+      - Level: 55
+        Sp: 395
+      - Level: 56
+        Sp: 402
+      - Level: 57
+        Sp: 409
+      - Level: 58
+        Sp: 416
+      - Level: 59
+        Sp: 423
+      - Level: 60
+        Sp: 430
+      - Level: 61
+        Sp: 437
+      - Level: 62
+        Sp: 444
+      - Level: 63
+        Sp: 451
+      - Level: 64
+        Sp: 458
+      - Level: 65
+        Sp: 465
+      - Level: 66
+        Sp: 472
+      - Level: 67
+        Sp: 479
+      - Level: 68
+        Sp: 486
+      - Level: 69
+        Sp: 493
+      - Level: 70
+        Sp: 500
+      - Level: 71
+        Sp: 507
+      - Level: 72
+        Sp: 514
+      - Level: 73
+        Sp: 521
+      - Level: 74
+        Sp: 528
+      - Level: 75
+        Sp: 535
+      - Level: 76
+        Sp: 542
+      - Level: 77
+        Sp: 549
+      - Level: 78
+        Sp: 556
+      - Level: 79
+        Sp: 563
+      - Level: 80
+        Sp: 570
+      - Level: 81
+        Sp: 577
+      - Level: 82
+        Sp: 584
+      - Level: 83
+        Sp: 591
+      - Level: 84
+        Sp: 598
+      - Level: 85
+        Sp: 605
+      - Level: 86
+        Sp: 612
+      - Level: 87
+        Sp: 619
+      - Level: 88
+        Sp: 626
+      - Level: 89
+        Sp: 633
+      - Level: 90
+        Sp: 640
+      - Level: 91
+        Sp: 647
+      - Level: 92
+        Sp: 654
+      - Level: 93
+        Sp: 661
+      - Level: 94
+        Sp: 668
+      - Level: 95
+        Sp: 675
+      - Level: 96
+        Sp: 682
+      - Level: 97
+        Sp: 689
+      - Level: 98
+        Sp: 696
+      - Level: 99
+        Sp: 703
+  - Jobs:
+      Rogue: true
+      Stalker: true
+      Baby_Rogue: true
+    BaseSp:
+      - Level: 1
+        Sp: 15
+      - Level: 2
+        Sp: 20
+      - Level: 3
+        Sp: 25
+      - Level: 4
+        Sp: 30
+      - Level: 5
+        Sp: 35
+      - Level: 6
+        Sp: 40
+      - Level: 7
+        Sp: 45
+      - Level: 8
+        Sp: 50
+      - Level: 9
+        Sp: 55
+      - Level: 10
+        Sp: 60
+      - Level: 11
+        Sp: 65
+      - Level: 12
+        Sp: 70
+      - Level: 13
+        Sp: 75
+      - Level: 14
+        Sp: 80
+      - Level: 15
+        Sp: 85
+      - Level: 16
+        Sp: 90
+      - Level: 17
+        Sp: 95
+      - Level: 18
+        Sp: 100
+      - Level: 19
+        Sp: 105
+      - Level: 20
+        Sp: 110
+      - Level: 21
+        Sp: 115
+      - Level: 22
+        Sp: 120
+      - Level: 23
+        Sp: 125
+      - Level: 24
+        Sp: 130
+      - Level: 25
+        Sp: 135
+      - Level: 26
+        Sp: 140
+      - Level: 27
+        Sp: 145
+      - Level: 28
+        Sp: 150
+      - Level: 29
+        Sp: 155
+      - Level: 30
+        Sp: 160
+      - Level: 31
+        Sp: 165
+      - Level: 32
+        Sp: 170
+      - Level: 33
+        Sp: 175
+      - Level: 34
+        Sp: 180
+      - Level: 35
+        Sp: 185
+      - Level: 36
+        Sp: 190
+      - Level: 37
+        Sp: 195
+      - Level: 38
+        Sp: 200
+      - Level: 39
+        Sp: 205
+      - Level: 40
+        Sp: 210
+      - Level: 41
+        Sp: 215
+      - Level: 42
+        Sp: 220
+      - Level: 43
+        Sp: 225
+      - Level: 44
+        Sp: 230
+      - Level: 45
+        Sp: 235
+      - Level: 46
+        Sp: 240
+      - Level: 47
+        Sp: 245
+      - Level: 48
+        Sp: 250
+      - Level: 49
+        Sp: 255
+      - Level: 50
+        Sp: 260
+      - Level: 51
+        Sp: 265
+      - Level: 52
+        Sp: 270
+      - Level: 53
+        Sp: 275
+      - Level: 54
+        Sp: 280
+      - Level: 55
+        Sp: 285
+      - Level: 56
+        Sp: 290
+      - Level: 57
+        Sp: 295
+      - Level: 58
+        Sp: 300
+      - Level: 59
+        Sp: 305
+      - Level: 60
+        Sp: 310
+      - Level: 61
+        Sp: 315
+      - Level: 62
+        Sp: 320
+      - Level: 63
+        Sp: 325
+      - Level: 64
+        Sp: 330
+      - Level: 65
+        Sp: 335
+      - Level: 66
+        Sp: 340
+      - Level: 67
+        Sp: 345
+      - Level: 68
+        Sp: 350
+      - Level: 69
+        Sp: 355
+      - Level: 70
+        Sp: 360
+      - Level: 71
+        Sp: 365
+      - Level: 72
+        Sp: 370
+      - Level: 73
+        Sp: 375
+      - Level: 74
+        Sp: 380
+      - Level: 75
+        Sp: 385
+      - Level: 76
+        Sp: 390
+      - Level: 77
+        Sp: 395
+      - Level: 78
+        Sp: 400
+      - Level: 79
+        Sp: 405
+      - Level: 80
+        Sp: 410
+      - Level: 81
+        Sp: 415
+      - Level: 82
+        Sp: 420
+      - Level: 83
+        Sp: 425
+      - Level: 84
+        Sp: 430
+      - Level: 85
+        Sp: 435
+      - Level: 86
+        Sp: 440
+      - Level: 87
+        Sp: 445
+      - Level: 88
+        Sp: 450
+      - Level: 89
+        Sp: 455
+      - Level: 90
+        Sp: 460
+      - Level: 91
+        Sp: 465
+      - Level: 92
+        Sp: 470
+      - Level: 93
+        Sp: 475
+      - Level: 94
+        Sp: 480
+      - Level: 95
+        Sp: 485
+      - Level: 96
+        Sp: 490
+      - Level: 97
+        Sp: 495
+      - Level: 98
+        Sp: 500
+      - Level: 99
+        Sp: 505
+  - Jobs:
+      Alchemist: true
+      Creator: true
+      Baby_Alchemist: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 18
+      - Level: 3
+        Sp: 22
+      - Level: 4
+        Sp: 26
+      - Level: 5
+        Sp: 30
+      - Level: 6
+        Sp: 34
+      - Level: 7
+        Sp: 38
+      - Level: 8
+        Sp: 42
+      - Level: 9
+        Sp: 46
+      - Level: 10
+        Sp: 50
+      - Level: 11
+        Sp: 54
+      - Level: 12
+        Sp: 58
+      - Level: 13
+        Sp: 62
+      - Level: 14
+        Sp: 66
+      - Level: 15
+        Sp: 70
+      - Level: 16
+        Sp: 74
+      - Level: 17
+        Sp: 78
+      - Level: 18
+        Sp: 82
+      - Level: 19
+        Sp: 86
+      - Level: 20
+        Sp: 90
+      - Level: 21
+        Sp: 94
+      - Level: 22
+        Sp: 98
+      - Level: 23
+        Sp: 102
+      - Level: 24
+        Sp: 106
+      - Level: 25
+        Sp: 110
+      - Level: 26
+        Sp: 114
+      - Level: 27
+        Sp: 118
+      - Level: 28
+        Sp: 122
+      - Level: 29
+        Sp: 126
+      - Level: 30
+        Sp: 130
+      - Level: 31
+        Sp: 134
+      - Level: 32
+        Sp: 138
+      - Level: 33
+        Sp: 142
+      - Level: 34
+        Sp: 146
+      - Level: 35
+        Sp: 150
+      - Level: 36
+        Sp: 154
+      - Level: 37
+        Sp: 158
+      - Level: 38
+        Sp: 162
+      - Level: 39
+        Sp: 166
+      - Level: 40
+        Sp: 170
+      - Level: 41
+        Sp: 174
+      - Level: 42
+        Sp: 178
+      - Level: 43
+        Sp: 182
+      - Level: 44
+        Sp: 186
+      - Level: 45
+        Sp: 190
+      - Level: 46
+        Sp: 194
+      - Level: 47
+        Sp: 198
+      - Level: 48
+        Sp: 202
+      - Level: 49
+        Sp: 206
+      - Level: 50
+        Sp: 210
+      - Level: 51
+        Sp: 214
+      - Level: 52
+        Sp: 218
+      - Level: 53
+        Sp: 222
+      - Level: 54
+        Sp: 226
+      - Level: 55
+        Sp: 230
+      - Level: 56
+        Sp: 234
+      - Level: 57
+        Sp: 238
+      - Level: 58
+        Sp: 242
+      - Level: 59
+        Sp: 246
+      - Level: 60
+        Sp: 250
+      - Level: 61
+        Sp: 254
+      - Level: 62
+        Sp: 258
+      - Level: 63
+        Sp: 262
+      - Level: 64
+        Sp: 266
+      - Level: 65
+        Sp: 270
+      - Level: 66
+        Sp: 274
+      - Level: 67
+        Sp: 278
+      - Level: 68
+        Sp: 282
+      - Level: 69
+        Sp: 286
+      - Level: 70
+        Sp: 290
+      - Level: 71
+        Sp: 294
+      - Level: 72
+        Sp: 298
+      - Level: 73
+        Sp: 302
+      - Level: 74
+        Sp: 306
+      - Level: 75
+        Sp: 310
+      - Level: 76
+        Sp: 314
+      - Level: 77
+        Sp: 318
+      - Level: 78
+        Sp: 322
+      - Level: 79
+        Sp: 326
+      - Level: 80
+        Sp: 330
+      - Level: 81
+        Sp: 334
+      - Level: 82
+        Sp: 338
+      - Level: 83
+        Sp: 342
+      - Level: 84
+        Sp: 346
+      - Level: 85
+        Sp: 350
+      - Level: 86
+        Sp: 354
+      - Level: 87
+        Sp: 358
+      - Level: 88
+        Sp: 362
+      - Level: 89
+        Sp: 366
+      - Level: 90
+        Sp: 370
+      - Level: 91
+        Sp: 374
+      - Level: 92
+        Sp: 378
+      - Level: 93
+        Sp: 382
+      - Level: 94
+        Sp: 386
+      - Level: 95
+        Sp: 390
+      - Level: 96
+        Sp: 394
+      - Level: 97
+        Sp: 398
+      - Level: 98
+        Sp: 402
+      - Level: 99
+        Sp: 406
+  - Jobs:
+      Bard: true
+      Clown: true
+      Baby_Bard: true
+    BaseSp:
+      - Level: 1
+        Sp: 15
+      - Level: 2
+        Sp: 22
+      - Level: 3
+        Sp: 28
+      - Level: 4
+        Sp: 34
+      - Level: 5
+        Sp: 40
+      - Level: 6
+        Sp: 46
+      - Level: 7
+        Sp: 52
+      - Level: 8
+        Sp: 58
+      - Level: 9
+        Sp: 64
+      - Level: 10
+        Sp: 70
+      - Level: 11
+        Sp: 76
+      - Level: 12
+        Sp: 82
+      - Level: 13
+        Sp: 88
+      - Level: 14
+        Sp: 94
+      - Level: 15
+        Sp: 100
+      - Level: 16
+        Sp: 106
+      - Level: 17
+        Sp: 112
+      - Level: 18
+        Sp: 118
+      - Level: 19
+        Sp: 124
+      - Level: 20
+        Sp: 130
+      - Level: 21
+        Sp: 136
+      - Level: 22
+        Sp: 142
+      - Level: 23
+        Sp: 148
+      - Level: 24
+        Sp: 154
+      - Level: 25
+        Sp: 160
+      - Level: 26
+        Sp: 166
+      - Level: 27
+        Sp: 172
+      - Level: 28
+        Sp: 178
+      - Level: 29
+        Sp: 184
+      - Level: 30
+        Sp: 190
+      - Level: 31
+        Sp: 196
+      - Level: 32
+        Sp: 202
+      - Level: 33
+        Sp: 208
+      - Level: 34
+        Sp: 214
+      - Level: 35
+        Sp: 220
+      - Level: 36
+        Sp: 226
+      - Level: 37
+        Sp: 232
+      - Level: 38
+        Sp: 238
+      - Level: 39
+        Sp: 244
+      - Level: 40
+        Sp: 250
+      - Level: 41
+        Sp: 256
+      - Level: 42
+        Sp: 262
+      - Level: 43
+        Sp: 268
+      - Level: 44
+        Sp: 274
+      - Level: 45
+        Sp: 280
+      - Level: 46
+        Sp: 286
+      - Level: 47
+        Sp: 292
+      - Level: 48
+        Sp: 298
+      - Level: 49
+        Sp: 304
+      - Level: 50
+        Sp: 310
+      - Level: 51
+        Sp: 316
+      - Level: 52
+        Sp: 322
+      - Level: 53
+        Sp: 328
+      - Level: 54
+        Sp: 334
+      - Level: 55
+        Sp: 340
+      - Level: 56
+        Sp: 346
+      - Level: 57
+        Sp: 352
+      - Level: 58
+        Sp: 358
+      - Level: 59
+        Sp: 364
+      - Level: 60
+        Sp: 370
+      - Level: 61
+        Sp: 376
+      - Level: 62
+        Sp: 382
+      - Level: 63
+        Sp: 388
+      - Level: 64
+        Sp: 394
+      - Level: 65
+        Sp: 400
+      - Level: 66
+        Sp: 406
+      - Level: 67
+        Sp: 412
+      - Level: 68
+        Sp: 418
+      - Level: 69
+        Sp: 424
+      - Level: 70
+        Sp: 430
+      - Level: 71
+        Sp: 436
+      - Level: 72
+        Sp: 442
+      - Level: 73
+        Sp: 448
+      - Level: 74
+        Sp: 454
+      - Level: 75
+        Sp: 460
+      - Level: 76
+        Sp: 466
+      - Level: 77
+        Sp: 472
+      - Level: 78
+        Sp: 478
+      - Level: 79
+        Sp: 484
+      - Level: 80
+        Sp: 490
+      - Level: 81
+        Sp: 496
+      - Level: 82
+        Sp: 502
+      - Level: 83
+        Sp: 508
+      - Level: 84
+        Sp: 514
+      - Level: 85
+        Sp: 520
+      - Level: 86
+        Sp: 526
+      - Level: 87
+        Sp: 532
+      - Level: 88
+        Sp: 538
+      - Level: 89
+        Sp: 544
+      - Level: 90
+        Sp: 550
+      - Level: 91
+        Sp: 556
+      - Level: 92
+        Sp: 562
+      - Level: 93
+        Sp: 568
+      - Level: 94
+        Sp: 574
+      - Level: 95
+        Sp: 580
+      - Level: 96
+        Sp: 586
+      - Level: 97
+        Sp: 592
+      - Level: 98
+        Sp: 598
+      - Level: 99
+        Sp: 604
+  - Jobs:
+      Dancer: true
+      Gypsy: true
+      Baby_Dancer: true
+    BaseSp:
+      - Level: 1
+        Sp: 15
+      - Level: 2
+        Sp: 22
+      - Level: 3
+        Sp: 28
+      - Level: 4
+        Sp: 34
+      - Level: 5
+        Sp: 40
+      - Level: 6
+        Sp: 46
+      - Level: 7
+        Sp: 52
+      - Level: 8
+        Sp: 58
+      - Level: 9
+        Sp: 64
+      - Level: 10
+        Sp: 70
+      - Level: 11
+        Sp: 76
+      - Level: 12
+        Sp: 82
+      - Level: 13
+        Sp: 88
+      - Level: 14
+        Sp: 94
+      - Level: 15
+        Sp: 100
+      - Level: 16
+        Sp: 106
+      - Level: 17
+        Sp: 112
+      - Level: 18
+        Sp: 118
+      - Level: 19
+        Sp: 124
+      - Level: 20
+        Sp: 130
+      - Level: 21
+        Sp: 136
+      - Level: 22
+        Sp: 142
+      - Level: 23
+        Sp: 148
+      - Level: 24
+        Sp: 154
+      - Level: 25
+        Sp: 160
+      - Level: 26
+        Sp: 166
+      - Level: 27
+        Sp: 172
+      - Level: 28
+        Sp: 178
+      - Level: 29
+        Sp: 184
+      - Level: 30
+        Sp: 190
+      - Level: 31
+        Sp: 196
+      - Level: 32
+        Sp: 202
+      - Level: 33
+        Sp: 208
+      - Level: 34
+        Sp: 214
+      - Level: 35
+        Sp: 220
+      - Level: 36
+        Sp: 226
+      - Level: 37
+        Sp: 232
+      - Level: 38
+        Sp: 238
+      - Level: 39
+        Sp: 244
+      - Level: 40
+        Sp: 250
+      - Level: 41
+        Sp: 256
+      - Level: 42
+        Sp: 262
+      - Level: 43
+        Sp: 268
+      - Level: 44
+        Sp: 274
+      - Level: 45
+        Sp: 280
+      - Level: 46
+        Sp: 286
+      - Level: 47
+        Sp: 292
+      - Level: 48
+        Sp: 298
+      - Level: 49
+        Sp: 304
+      - Level: 50
+        Sp: 310
+      - Level: 51
+        Sp: 316
+      - Level: 52
+        Sp: 322
+      - Level: 53
+        Sp: 328
+      - Level: 54
+        Sp: 334
+      - Level: 55
+        Sp: 340
+      - Level: 56
+        Sp: 346
+      - Level: 57
+        Sp: 352
+      - Level: 58
+        Sp: 358
+      - Level: 59
+        Sp: 364
+      - Level: 60
+        Sp: 370
+      - Level: 61
+        Sp: 376
+      - Level: 62
+        Sp: 382
+      - Level: 63
+        Sp: 388
+      - Level: 64
+        Sp: 394
+      - Level: 65
+        Sp: 400
+      - Level: 66
+        Sp: 406
+      - Level: 67
+        Sp: 412
+      - Level: 68
+        Sp: 418
+      - Level: 69
+        Sp: 424
+      - Level: 70
+        Sp: 430
+      - Level: 71
+        Sp: 436
+      - Level: 72
+        Sp: 442
+      - Level: 73
+        Sp: 448
+      - Level: 74
+        Sp: 454
+      - Level: 75
+        Sp: 460
+      - Level: 76
+        Sp: 466
+      - Level: 77
+        Sp: 472
+      - Level: 78
+        Sp: 478
+      - Level: 79
+        Sp: 484
+      - Level: 80
+        Sp: 490
+      - Level: 81
+        Sp: 496
+      - Level: 82
+        Sp: 502
+      - Level: 83
+        Sp: 508
+      - Level: 84
+        Sp: 514
+      - Level: 85
+        Sp: 520
+      - Level: 86
+        Sp: 526
+      - Level: 87
+        Sp: 532
+      - Level: 88
+        Sp: 538
+      - Level: 89
+        Sp: 544
+      - Level: 90
+        Sp: 550
+      - Level: 91
+        Sp: 556
+      - Level: 92
+        Sp: 562
+      - Level: 93
+        Sp: 568
+      - Level: 94
+        Sp: 574
+      - Level: 95
+        Sp: 580
+      - Level: 96
+        Sp: 586
+      - Level: 97
+        Sp: 592
+      - Level: 98
+        Sp: 598
+      - Level: 99
+        Sp: 604
+  - Jobs:
+      Gunslinger: true
+    BaseSp:
+      - Level: 1
+        Sp: 12
+      - Level: 2
+        Sp: 15
+      - Level: 3
+        Sp: 18
+      - Level: 4
+        Sp: 21
+      - Level: 5
+        Sp: 24
+      - Level: 6
+        Sp: 27
+      - Level: 7
+        Sp: 30
+      - Level: 8
+        Sp: 33
+      - Level: 9
+        Sp: 36
+      - Level: 10
+        Sp: 39
+      - Level: 11
+        Sp: 42
+      - Level: 12
+        Sp: 45
+      - Level: 13
+        Sp: 48
+      - Level: 14
+        Sp: 51
+      - Level: 15
+        Sp: 54
+      - Level: 16
+        Sp: 57
+      - Level: 17
+        Sp: 61
+      - Level: 18
+        Sp: 64
+      - Level: 19
+        Sp: 67
+      - Level: 20
+        Sp: 70
+      - Level: 21
+        Sp: 73
+      - Level: 22
+        Sp: 76
+      - Level: 23
+        Sp: 79
+      - Level: 24
+        Sp: 82
+      - Level: 25
+        Sp: 85
+      - Level: 26
+        Sp: 89
+      - Level: 27
+        Sp: 93
+      - Level: 28
+        Sp: 97
+      - Level: 29
+        Sp: 101
+      - Level: 30
+        Sp: 105
+      - Level: 31
+        Sp: 109
+      - Level: 32
+        Sp: 113
+      - Level: 33
+        Sp: 117
+      - Level: 34
+        Sp: 121
+      - Level: 35
+        Sp: 125
+      - Level: 36
+        Sp: 129
+      - Level: 37
+        Sp: 131
+      - Level: 38
+        Sp: 135
+      - Level: 39
+        Sp: 139
+      - Level: 40
+        Sp: 141
+      - Level: 41
+        Sp: 145
+      - Level: 42
+        Sp: 149
+      - Level: 43
+        Sp: 153
+      - Level: 44
+        Sp: 157
+      - Level: 45
+        Sp: 161
+      - Level: 46
+        Sp: 165
+      - Level: 47
+        Sp: 169
+      - Level: 48
+        Sp: 173
+      - Level: 49
+        Sp: 177
+      - Level: 50
+        Sp: 181
+      - Level: 51
+        Sp: 186
+      - Level: 52
+        Sp: 191
+      - Level: 53
+        Sp: 196
+      - Level: 54
+        Sp: 201
+      - Level: 55
+        Sp: 206
+      - Level: 56
+        Sp: 211
+      - Level: 57
+        Sp: 216
+      - Level: 58
+        Sp: 221
+      - Level: 59
+        Sp: 226
+      - Level: 60
+        Sp: 231
+      - Level: 61
+        Sp: 236
+      - Level: 62
+        Sp: 241
+      - Level: 63
+        Sp: 246
+      - Level: 64
+        Sp: 251
+      - Level: 65
+        Sp: 256
+      - Level: 66
+        Sp: 261
+      - Level: 67
+        Sp: 266
+      - Level: 68
+        Sp: 271
+      - Level: 69
+        Sp: 276
+      - Level: 70
+        Sp: 281
+      - Level: 71
+        Sp: 286
+      - Level: 72
+        Sp: 291
+      - Level: 73
+        Sp: 296
+      - Level: 74
+        Sp: 301
+      - Level: 75
+        Sp: 306
+      - Level: 76
+        Sp: 312
+      - Level: 77
+        Sp: 318
+      - Level: 78
+        Sp: 324
+      - Level: 79
+        Sp: 336
+      - Level: 80
+        Sp: 342
+      - Level: 81
+        Sp: 348
+      - Level: 82
+        Sp: 354
+      - Level: 83
+        Sp: 360
+      - Level: 84
+        Sp: 366
+      - Level: 85
+        Sp: 372
+      - Level: 86
+        Sp: 378
+      - Level: 87
+        Sp: 384
+      - Level: 88
+        Sp: 390
+      - Level: 89
+        Sp: 396
+      - Level: 90
+        Sp: 402
+      - Level: 91
+        Sp: 408
+      - Level: 92
+        Sp: 414
+      - Level: 93
+        Sp: 420
+      - Level: 94
+        Sp: 426
+      - Level: 95
+        Sp: 432
+      - Level: 96
+        Sp: 438
+      - Level: 97
+        Sp: 444
+      - Level: 98
+        Sp: 450
+      - Level: 99
+        Sp: 456
+  - Jobs:
+      Ninja: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 17
+      - Level: 3
+        Sp: 20
+      - Level: 4
+        Sp: 23
+      - Level: 5
+        Sp: 26
+      - Level: 6
+        Sp: 29
+      - Level: 7
+        Sp: 32
+      - Level: 8
+        Sp: 35
+      - Level: 9
+        Sp: 38
+      - Level: 10
+        Sp: 41
+      - Level: 11
+        Sp: 44
+      - Level: 12
+        Sp: 47
+      - Level: 13
+        Sp: 50
+      - Level: 14
+        Sp: 53
+      - Level: 15
+        Sp: 56
+      - Level: 16
+        Sp: 59
+      - Level: 17
+        Sp: 62
+      - Level: 18
+        Sp: 65
+      - Level: 19
+        Sp: 68
+      - Level: 20
+        Sp: 71
+      - Level: 21
+        Sp: 75
+      - Level: 22
+        Sp: 79
+      - Level: 23
+        Sp: 83
+      - Level: 24
+        Sp: 87
+      - Level: 25
+        Sp: 91
+      - Level: 26
+        Sp: 95
+      - Level: 27
+        Sp: 99
+      - Level: 28
+        Sp: 103
+      - Level: 29
+        Sp: 107
+      - Level: 30
+        Sp: 111
+      - Level: 31
+        Sp: 115
+      - Level: 32
+        Sp: 119
+      - Level: 33
+        Sp: 123
+      - Level: 34
+        Sp: 127
+      - Level: 35
+        Sp: 131
+      - Level: 36
+        Sp: 135
+      - Level: 37
+        Sp: 139
+      - Level: 38
+        Sp: 143
+      - Level: 39
+        Sp: 147
+      - Level: 40
+        Sp: 151
+      - Level: 41
+        Sp: 156
+      - Level: 42
+        Sp: 161
+      - Level: 43
+        Sp: 166
+      - Level: 44
+        Sp: 171
+      - Level: 45
+        Sp: 176
+      - Level: 46
+        Sp: 181
+      - Level: 47
+        Sp: 186
+      - Level: 48
+        Sp: 191
+      - Level: 49
+        Sp: 196
+      - Level: 50
+        Sp: 201
+      - Level: 51
+        Sp: 206
+      - Level: 52
+        Sp: 211
+      - Level: 53
+        Sp: 216
+      - Level: 54
+        Sp: 221
+      - Level: 55
+        Sp: 226
+      - Level: 56
+        Sp: 231
+      - Level: 57
+        Sp: 236
+      - Level: 58
+        Sp: 241
+      - Level: 59
+        Sp: 246
+      - Level: 60
+        Sp: 251
+      - Level: 61
+        Sp: 257
+      - Level: 62
+        Sp: 263
+      - Level: 63
+        Sp: 269
+      - Level: 64
+        Sp: 275
+      - Level: 65
+        Sp: 281
+      - Level: 66
+        Sp: 287
+      - Level: 67
+        Sp: 293
+      - Level: 68
+        Sp: 299
+      - Level: 69
+        Sp: 305
+      - Level: 70
+        Sp: 311
+      - Level: 71
+        Sp: 317
+      - Level: 72
+        Sp: 323
+      - Level: 73
+        Sp: 329
+      - Level: 74
+        Sp: 335
+      - Level: 75
+        Sp: 341
+      - Level: 76
+        Sp: 347
+      - Level: 77
+        Sp: 353
+      - Level: 78
+        Sp: 359
+      - Level: 79
+        Sp: 365
+      - Level: 80
+        Sp: 371
+      - Level: 81
+        Sp: 378
+      - Level: 82
+        Sp: 386
+      - Level: 83
+        Sp: 394
+      - Level: 84
+        Sp: 402
+      - Level: 85
+        Sp: 410
+      - Level: 86
+        Sp: 418
+      - Level: 87
+        Sp: 426
+      - Level: 88
+        Sp: 434
+      - Level: 89
+        Sp: 442
+      - Level: 90
+        Sp: 450
+      - Level: 91
+        Sp: 458
+      - Level: 92
+        Sp: 466
+      - Level: 93
+        Sp: 474
+      - Level: 94
+        Sp: 482
+      - Level: 95
+        Sp: 490
+      - Level: 96
+        Sp: 498
+      - Level: 97
+        Sp: 506
+      - Level: 98
+        Sp: 514
+      - Level: 99
+        Sp: 522
+  - Jobs:
+      Taekwon: true
+    BaseSp:
+      - Level: 1
+        Sp: 12
+      - Level: 2
+        Sp: 14
+      - Level: 3
+        Sp: 16
+      - Level: 4
+        Sp: 18
+      - Level: 5
+        Sp: 20
+      - Level: 6
+        Sp: 22
+      - Level: 7
+        Sp: 24
+      - Level: 8
+        Sp: 26
+      - Level: 9
+        Sp: 28
+      - Level: 10
+        Sp: 30
+      - Level: 11
+        Sp: 32
+      - Level: 12
+        Sp: 34
+      - Level: 13
+        Sp: 36
+      - Level: 14
+        Sp: 38
+      - Level: 15
+        Sp: 40
+      - Level: 16
+        Sp: 42
+      - Level: 17
+        Sp: 44
+      - Level: 18
+        Sp: 46
+      - Level: 19
+        Sp: 48
+      - Level: 20
+        Sp: 50
+      - Level: 21
+        Sp: 52
+      - Level: 22
+        Sp: 54
+      - Level: 23
+        Sp: 56
+      - Level: 24
+        Sp: 58
+      - Level: 25
+        Sp: 60
+      - Level: 26
+        Sp: 62
+      - Level: 27
+        Sp: 64
+      - Level: 28
+        Sp: 66
+      - Level: 29
+        Sp: 68
+      - Level: 30
+        Sp: 70
+      - Level: 31
+        Sp: 72
+      - Level: 32
+        Sp: 74
+      - Level: 33
+        Sp: 76
+      - Level: 34
+        Sp: 78
+      - Level: 35
+        Sp: 80
+      - Level: 36
+        Sp: 82
+      - Level: 37
+        Sp: 84
+      - Level: 38
+        Sp: 86
+      - Level: 39
+        Sp: 88
+      - Level: 40
+        Sp: 90
+      - Level: 41
+        Sp: 92
+      - Level: 42
+        Sp: 94
+      - Level: 43
+        Sp: 96
+      - Level: 44
+        Sp: 98
+      - Level: 45
+        Sp: 100
+      - Level: 46
+        Sp: 102
+      - Level: 47
+        Sp: 104
+      - Level: 48
+        Sp: 106
+      - Level: 49
+        Sp: 108
+      - Level: 50
+        Sp: 110
+      - Level: 51
+        Sp: 112
+      - Level: 52
+        Sp: 114
+      - Level: 53
+        Sp: 116
+      - Level: 54
+        Sp: 118
+      - Level: 55
+        Sp: 120
+      - Level: 56
+        Sp: 122
+      - Level: 57
+        Sp: 124
+      - Level: 58
+        Sp: 126
+      - Level: 59
+        Sp: 128
+      - Level: 60
+        Sp: 130
+      - Level: 61
+        Sp: 132
+      - Level: 62
+        Sp: 134
+      - Level: 63
+        Sp: 136
+      - Level: 64
+        Sp: 138
+      - Level: 65
+        Sp: 140
+      - Level: 66
+        Sp: 142
+      - Level: 67
+        Sp: 144
+      - Level: 68
+        Sp: 146
+      - Level: 69
+        Sp: 148
+      - Level: 70
+        Sp: 150
+      - Level: 71
+        Sp: 151
+      - Level: 72
+        Sp: 152
+      - Level: 73
+        Sp: 153
+      - Level: 74
+        Sp: 154
+      - Level: 75
+        Sp: 155
+      - Level: 76
+        Sp: 156
+      - Level: 77
+        Sp: 157
+      - Level: 78
+        Sp: 158
+      - Level: 79
+        Sp: 159
+      - Level: 80
+        Sp: 170
+      - Level: 81
+        Sp: 171
+      - Level: 82
+        Sp: 172
+      - Level: 83
+        Sp: 173
+      - Level: 84
+        Sp: 174
+      - Level: 85
+        Sp: 175
+      - Level: 86
+        Sp: 176
+      - Level: 87
+        Sp: 177
+      - Level: 88
+        Sp: 178
+      - Level: 89
+        Sp: 188
+      - Level: 90
+        Sp: 190
+      - Level: 91
+        Sp: 190
+      - Level: 92
+        Sp: 190
+      - Level: 93
+        Sp: 190
+      - Level: 94
+        Sp: 190
+      - Level: 95
+        Sp: 190
+      - Level: 96
+        Sp: 190
+      - Level: 97
+        Sp: 190
+      - Level: 98
+        Sp: 190
+      - Level: 99
+        Sp: 200
+  - Jobs:
+      Star_Gladiator: true
+      Star_Gladiator2: true
+    BaseSp:
+      - Level: 1
+        Sp: 14
+      - Level: 2
+        Sp: 19
+      - Level: 3
+        Sp: 24
+      - Level: 4
+        Sp: 28
+      - Level: 5
+        Sp: 33
+      - Level: 6
+        Sp: 38
+      - Level: 7
+        Sp: 42
+      - Level: 8
+        Sp: 47
+      - Level: 9
+        Sp: 52
+      - Level: 10
+        Sp: 57
+      - Level: 11
+        Sp: 61
+      - Level: 12
+        Sp: 66
+      - Level: 13
+        Sp: 71
+      - Level: 14
+        Sp: 75
+      - Level: 15
+        Sp: 80
+      - Level: 16
+        Sp: 85
+      - Level: 17
+        Sp: 89
+      - Level: 18
+        Sp: 94
+      - Level: 19
+        Sp: 99
+      - Level: 20
+        Sp: 104
+      - Level: 21
+        Sp: 108
+      - Level: 22
+        Sp: 113
+      - Level: 23
+        Sp: 118
+      - Level: 24
+        Sp: 122
+      - Level: 25
+        Sp: 127
+      - Level: 26
+        Sp: 132
+      - Level: 27
+        Sp: 136
+      - Level: 28
+        Sp: 141
+      - Level: 29
+        Sp: 146
+      - Level: 30
+        Sp: 151
+      - Level: 31
+        Sp: 155
+      - Level: 32
+        Sp: 160
+      - Level: 33
+        Sp: 165
+      - Level: 34
+        Sp: 169
+      - Level: 35
+        Sp: 174
+      - Level: 36
+        Sp: 179
+      - Level: 37
+        Sp: 183
+      - Level: 38
+        Sp: 188
+      - Level: 39
+        Sp: 193
+      - Level: 40
+        Sp: 198
+      - Level: 41
+        Sp: 202
+      - Level: 42
+        Sp: 207
+      - Level: 43
+        Sp: 212
+      - Level: 44
+        Sp: 216
+      - Level: 45
+        Sp: 221
+      - Level: 46
+        Sp: 226
+      - Level: 47
+        Sp: 230
+      - Level: 48
+        Sp: 235
+      - Level: 49
+        Sp: 240
+      - Level: 50
+        Sp: 245
+      - Level: 51
+        Sp: 249
+      - Level: 52
+        Sp: 254
+      - Level: 53
+        Sp: 259
+      - Level: 54
+        Sp: 263
+      - Level: 55
+        Sp: 268
+      - Level: 56
+        Sp: 273
+      - Level: 57
+        Sp: 277
+      - Level: 58
+        Sp: 282
+      - Level: 59
+        Sp: 287
+      - Level: 60
+        Sp: 292
+      - Level: 61
+        Sp: 296
+      - Level: 62
+        Sp: 301
+      - Level: 63
+        Sp: 306
+      - Level: 64
+        Sp: 310
+      - Level: 65
+        Sp: 315
+      - Level: 66
+        Sp: 320
+      - Level: 67
+        Sp: 324
+      - Level: 68
+        Sp: 329
+      - Level: 69
+        Sp: 334
+      - Level: 70
+        Sp: 339
+      - Level: 71
+        Sp: 341
+      - Level: 72
+        Sp: 343
+      - Level: 73
+        Sp: 345
+      - Level: 74
+        Sp: 347
+      - Level: 75
+        Sp: 349
+      - Level: 76
+        Sp: 351
+      - Level: 77
+        Sp: 353
+      - Level: 78
+        Sp: 355
+      - Level: 79
+        Sp: 357
+      - Level: 80
+        Sp: 386
+      - Level: 81
+        Sp: 388
+      - Level: 82
+        Sp: 390
+      - Level: 83
+        Sp: 392
+      - Level: 84
+        Sp: 394
+      - Level: 85
+        Sp: 396
+      - Level: 86
+        Sp: 398
+      - Level: 87
+        Sp: 400
+      - Level: 88
+        Sp: 402
+      - Level: 89
+        Sp: 404
+      - Level: 90
+        Sp: 430
+      - Level: 91
+        Sp: 433
+      - Level: 92
+        Sp: 436
+      - Level: 93
+        Sp: 439
+      - Level: 94
+        Sp: 442
+      - Level: 95
+        Sp: 445
+      - Level: 96
+        Sp: 448
+      - Level: 97
+        Sp: 451
+      - Level: 98
+        Sp: 454
+      - Level: 99
+        Sp: 500
+  - Jobs:
+      Soul_Linker: true
+    BaseSp:
+      - Level: 1
+        Sp: 19
+      - Level: 2
+        Sp: 28
+      - Level: 3
+        Sp: 37
+      - Level: 4
+        Sp: 46
+      - Level: 5
+        Sp: 55
+      - Level: 6
+        Sp: 64
+      - Level: 7
+        Sp: 73
+      - Level: 8
+        Sp: 82
+      - Level: 9
+        Sp: 91
+      - Level: 10
+        Sp: 100
+      - Level: 11
+        Sp: 109
+      - Level: 12
+        Sp: 118
+      - Level: 13
+        Sp: 127
+      - Level: 14
+        Sp: 136
+      - Level: 15
+        Sp: 145
+      - Level: 16
+        Sp: 154
+      - Level: 17
+        Sp: 163
+      - Level: 18
+        Sp: 172
+      - Level: 19
+        Sp: 181
+      - Level: 20
+        Sp: 190
+      - Level: 21
+        Sp: 199
+      - Level: 22
+        Sp: 208
+      - Level: 23
+        Sp: 217
+      - Level: 24
+        Sp: 226
+      - Level: 25
+        Sp: 235
+      - Level: 26
+        Sp: 244
+      - Level: 27
+        Sp: 253
+      - Level: 28
+        Sp: 262
+      - Level: 29
+        Sp: 271
+      - Level: 30
+        Sp: 280
+      - Level: 31
+        Sp: 289
+      - Level: 32
+        Sp: 298
+      - Level: 33
+        Sp: 307
+      - Level: 34
+        Sp: 316
+      - Level: 35
+        Sp: 325
+      - Level: 36
+        Sp: 334
+      - Level: 37
+        Sp: 343
+      - Level: 38
+        Sp: 352
+      - Level: 39
+        Sp: 361
+      - Level: 40
+        Sp: 370
+      - Level: 41
+        Sp: 379
+      - Level: 42
+        Sp: 388
+      - Level: 43
+        Sp: 397
+      - Level: 44
+        Sp: 406
+      - Level: 45
+        Sp: 415
+      - Level: 46
+        Sp: 424
+      - Level: 47
+        Sp: 433
+      - Level: 48
+        Sp: 442
+      - Level: 49
+        Sp: 451
+      - Level: 50
+        Sp: 460
+      - Level: 51
+        Sp: 469
+      - Level: 52
+        Sp: 478
+      - Level: 53
+        Sp: 487
+      - Level: 54
+        Sp: 496
+      - Level: 55
+        Sp: 505
+      - Level: 56
+        Sp: 514
+      - Level: 57
+        Sp: 523
+      - Level: 58
+        Sp: 532
+      - Level: 59
+        Sp: 541
+      - Level: 60
+        Sp: 550
+      - Level: 61
+        Sp: 559
+      - Level: 62
+        Sp: 568
+      - Level: 63
+        Sp: 577
+      - Level: 64
+        Sp: 586
+      - Level: 65
+        Sp: 595
+      - Level: 66
+        Sp: 604
+      - Level: 67
+        Sp: 613
+      - Level: 68
+        Sp: 622
+      - Level: 69
+        Sp: 631
+      - Level: 70
+        Sp: 635
+      - Level: 71
+        Sp: 640
+      - Level: 72
+        Sp: 645
+      - Level: 73
+        Sp: 650
+      - Level: 74
+        Sp: 655
+      - Level: 75
+        Sp: 660
+      - Level: 76
+        Sp: 665
+      - Level: 77
+        Sp: 670
+      - Level: 78
+        Sp: 675
+      - Level: 79
+        Sp: 680
+      - Level: 80
+        Sp: 730
+      - Level: 81
+        Sp: 735
+      - Level: 82
+        Sp: 740
+      - Level: 83
+        Sp: 745
+      - Level: 84
+        Sp: 750
+      - Level: 85
+        Sp: 755
+      - Level: 86
+        Sp: 760
+      - Level: 87
+        Sp: 765
+      - Level: 88
+        Sp: 770
+      - Level: 89
+        Sp: 775
+      - Level: 90
+        Sp: 820
+      - Level: 91
+        Sp: 825
+      - Level: 92
+        Sp: 830
+      - Level: 93
+        Sp: 845
+      - Level: 94
+        Sp: 850
+      - Level: 95
+        Sp: 855
+      - Level: 96
+        Sp: 860
+      - Level: 97
+        Sp: 865
+      - Level: 98
+        Sp: 870
+      - Level: 99
+        Sp: 900

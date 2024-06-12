@@ -1,18 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Flavius
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.7
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Flavius Battleground.
 //= - Winning Team: 9 badges (11 if VIP)
 //= - Losing Team: 3 badges (5 if VIP)
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Fixed pink crystal spawning as blue. [L0ne_W0lf]
 //= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.3 Removed MaxLvl check in waitingrooms. Replaced setwall with setcell.
@@ -20,6 +14,7 @@
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Added VIP features and created a reward function. [Euphy]
 //= 1.7 Made Crystals immune to attacks until Guardians are defeated. [Cydh/Aleos]
+//= 1.8 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // Waiting Room NPCs
@@ -51,6 +46,8 @@ bat_room,2,151,3	script	#bat_b01_timer	844,{
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		end;
 OnEnable:
 	initnpctimer;
 	end;
@@ -61,44 +58,53 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	initnpctimer;
-	set .@chk_bat_a01,getmapusers("bat_b01");
-	if (.@chk_bat_a01 < 1) {
-		set $@FlaviusBG1, 0;
-		if( $@FlaviusBG1_id1 ) { bg_destroy $@FlaviusBG1_id1; set $@FlaviusBG1_id1, 0; }
-		if( $@FlaviusBG1_id2 ) { bg_destroy $@FlaviusBG1_id2; set $@FlaviusBG1_id2, 0; }
-		donpcevent "start#bat_b01::OnReadyCheck";
+	if (bg_get_data($@FlaviusBG1_id1, 0) == 0 && bg_get_data($@FlaviusBG1_id2, 0) == 0) {
+		donpcevent "countdown#bat_b01::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_b01", true;
+		$@FlaviusBG1 = 0;
+		if( $@FlaviusBG1_id1 ) { bg_destroy $@FlaviusBG1_id1; $@FlaviusBG1_id1 = 0; }
+		if( $@FlaviusBG1_id2 ) { bg_destroy $@FlaviusBG1_id2; $@FlaviusBG1_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
+			bg_unbook "bat_b01";
+		end;
 	}
+	initnpctimer;
 	end;
 }
-
 
 // Flavius Battleground Engine
 //============================================================
 bat_b01,15,15,3	script	start#bat_b01	844,{
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_b01";
 	mapwarp "bat_b01","bat_room",154,150;
 	end;
 
 OnReadyCheck:
 	if( $@FlaviusBG1 )
 		end;
-	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Ator");
-	set .@Croix, getwaitingroomstate(0,"Lieutenant Thelokus");
-	if( !.@Guillaume && !.@Croix ) {
-		donpcevent "#bat_b01_timer::OnStop";
-		end;
+	if (!getbattleflag("feature.bgqueue")) {
+		set .@Guillaume, getwaitingroomstate(0,"Lieutenant Ator");
+		set .@Croix, getwaitingroomstate(0,"Lieutenant Thelokus");
+		if( !.@Guillaume && !.@Croix ) {
+			donpcevent "#bat_b01_timer::OnStop";
+			end;
+		}
+		if( .@Guillaume < 10 || .@Croix < 10 )
+			end;
 	}
-	if( .@Guillaume < 10 || .@Croix < 10 )
-		end;
 	set $@FlaviusBG1, 1;
 	set $@FlaviusBG1_Victory, 0;
 	set $@Croix_ScoreBG1, 0;
 	set $@Guill_ScoreBG1, 0;
 	bg_updatescore "bat_b01",$@Guill_ScoreBG1,$@Croix_ScoreBG1;
 
-	donpcevent "Lieutenant Ator::OnEnterBG";
-	donpcevent "Lieutenant Thelokus::OnEnterBG";
+	if (!getbattleflag("feature.bgqueue")) {
+		donpcevent "Lieutenant Ator::OnEnterBG";
+		donpcevent "Lieutenant Thelokus::OnEnterBG";
+	}
 	donpcevent "OBJ#bat_b01_a::OnKill";
 	donpcevent "OBJ#bat_b01_a::OnEnable";
 	donpcevent "OBJ#bat_b01_b::OnKill";
@@ -131,18 +137,22 @@ OnReset:
 	donpcevent "guardian#bat_b01_b::OnEnable";
 	donpcevent "cell#bat_b01_a::OnRed";
 	donpcevent "cell#bat_b01_b::OnRed";
-	donpcevent "time#bat_b01::OnEnable";
-	disablenpc "Guillaume Vintenar#b01_a";
-	disablenpc "Croix Vintenar#b01_b";
-	disablenpc "Vintenar#bat_b01_aover";
-	disablenpc "Vintenar#bat_b01_bover";
-	bg_warp $@FlaviusBG1_id1,"bat_b01",87,75;
-	bg_warp $@FlaviusBG1_id2,"bat_b01",311,224;
+	end;
+
+OnGuillaumeActive:
+	warp "bat_b01",87,75;
+	end;
+
+OnCroixActive:
+	warp "bat_b01",311,224;
 	end;
 
 OnGuillaumeQuit:
 OnCroixQuit:
-	bg_leave;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+	else
+		bg_leave;
 	end;
 
 OnTimer10000:
@@ -170,6 +180,8 @@ OnMyMobDead:
 			enablenpc "Guillaume Vintenar#b01_a";
 			enablenpc "Croix Vintenar#b01_b";
 			donpcevent "time#bat_b01::OnStop";
+			if (getbattleflag("feature.bgqueue"))
+				bg_reserve "bat_b01", true;
 		}
 		else {
 			set $@Croix_ScoreBG1,1;
@@ -204,6 +216,8 @@ OnMyMobDead:
 			enablenpc "Guillaume Vintenar#b01_a";
 			enablenpc "Croix Vintenar#b01_b";
 			donpcevent "time#bat_b01::OnStop";
+			if (getbattleflag("feature.bgqueue"))
+				bg_reserve "bat_b01", true;
 		}
 		else {
 			set $@Guill_ScoreBG1,1;
@@ -303,12 +317,14 @@ bat_b01,10,294,3	script	Battle Therapist#b01_a	95,{
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_b01_rp1_a_warp";
+	// enablenpc "bat_b01_rp1_a_warp";
+	areapercentheal "bat_b01",0,280,20,300,100,100;
+	areawarp "bat_b01",0,280,20,300,"bat_b01",87,73;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_b01_rp1_a_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_b01_rp1_a_warp";
+	// end;
 
 OnTimer26500:
 	stopnpctimer;
@@ -321,22 +337,25 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_b01_rp1_a_warp";
+	// disablenpc "bat_b01_rp1_a_warp";
 	disablenpc "Battle Therapist#b01_a";
 	stopnpctimer;
 	end;
 }
 
+/*
+// replaced by areapercentheal and areawarp to prevent enqueue issue
 bat_b01,10,290,0	script	bat_b01_rp1_a_warp	45,10,10,{
 OnInit:
 	disablenpc "bat_b01_rp1_a_warp";
 	end;
 
-OnTouch_:
+OnTouch:
 	percentheal 100,100;
 	warp "bat_b01",87,73;
 	end;
 }
+*/
 
 bat_b01,389,14,3	script	Battle Therapist#b01_b	95,{
 	specialeffect2 EF_HEAL;
@@ -348,12 +367,14 @@ bat_b01,389,14,3	script	Battle Therapist#b01_b	95,{
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_b01_rp1_b_warp";
+	// enablenpc "bat_b01_rp1_b_warp";
+	areapercentheal "bat_b01",379,0,399,20,100,100;
+	areawarp "bat_b01",379,0,399,20,"bat_b01",312,225;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_b01_rp1_b_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_b01_rp1_b_warp";
+	// end;
 
 OnTimer26500:
 	stopnpctimer;
@@ -366,15 +387,16 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_b01_rp1_b_warp";
+	// disablenpc "bat_b01_rp1_b_warp";
 	disablenpc "Battle Therapist#b01_b";
 	stopnpctimer;
 	end;
 }
 
-bat_b01,389,10,0	script	bat_b01_rp1_b_warp	45,9,9,{
+/*
+bat_b01,389,10,0	script	bat_b01_rp1_b_warp	45,10,10,{
 OnInit:
-	disablenpc "bat_b01_rp1_a_warp";
+	disablenpc "bat_b01_rp1_b_warp";
 	end;
 
 OnTouch:
@@ -382,6 +404,7 @@ OnTouch:
 	warp "bat_b01",312,225;
 	end;
 }
+*/
 
 bat_b01,87,76,0	script	A_CODE#bat_b01	-1,5,5,{
 OnTouch:
@@ -405,7 +428,8 @@ bat_b01,10,294,3	script	Guillaume Vintenar#b01_a	934,{
 			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -421,7 +445,8 @@ bat_b01,389,14,3	script	Croix Vintenar#b01_b	934,{
 			callfunc "F_BG_Badge",0,"Croix","Flavius";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -477,6 +502,8 @@ OnTimer1830000:
 	bg_warp $@FlaviusBG1_id2,"bat_b01",390,10;
 	enablenpc "Vintenar#bat_b01_aover";
 	enablenpc "Vintenar#bat_b01_bover";
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_b01", true;
 	end;
 
 OnTimer1900000:
@@ -513,11 +540,11 @@ bat_b01,10,294,3	script	Vintenar#bat_b01_aover	419,{
 	set .@A_B_gap,$@Guill_ScoreBG1 - $@Croix_ScoreBG1;
 	if ($@FlaviusBG1_id1 == getcharid(4)) {
 		if (.@A_B_gap > 0)
-			callfunc "F_BG_Badge",1,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",1,"Guillaume","Flavius"; //Guillaume wins
 		else if (.@A_B_gap == 0)
-			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",0,"Guillaume","Flavius"; //Tie
 		else
-			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",0,"Guillaume","Flavius"; //Croix wins
 	}
 	else {
 		mes "[Axl Rose]";
@@ -525,7 +552,8 @@ bat_b01,10,294,3	script	Vintenar#bat_b01_aover	419,{
 		close;
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -537,11 +565,11 @@ bat_b01,389,14,3	script	Vintenar#bat_b01_bover	415,{
 	set .@A_B_gap,$@Guill_ScoreBG1 - $@Croix_ScoreBG1;
 	if ($@FlaviusBG1_id2 == getcharid(4)) {
 		if (.@A_B_gap > 0)
-			callfunc "F_BG_Badge",1,"Croix","Flavius";
+			callfunc "F_BG_Badge",0,"Croix","Flavius"; //Guillaume wins
 		else if (.@A_B_gap == 0)
-			callfunc "F_BG_Badge",0,"Croix","Flavius";
+			callfunc "F_BG_Badge",0,"Croix","Flavius"; //Tie
 		else
-			callfunc "F_BG_Badge",1,"Croix","Flavius";
+			callfunc "F_BG_Badge",1,"Croix","Flavius"; //Croix wins
 	}
 	else {
 		mes "[Swandery]";
@@ -549,7 +577,8 @@ bat_b01,389,14,3	script	Vintenar#bat_b01_bover	415,{
 		close;
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -578,4 +607,20 @@ bat_b01,1,10,3	script	Release all#b01	81,{
 			close;
 		}
 	}
+}
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#flavius01	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "Lieutenant Ator";
+		unloadnpc "Lieutenant Thelokus";
+		unloadnpc "back_bgroomb01a";
+		unloadnpc "back_bgroomb01b";
+		unloadnpc "A_CODE#bat_b01";
+		unloadnpc "B_CODE#bat_b01";
+	}
+	end;
 }

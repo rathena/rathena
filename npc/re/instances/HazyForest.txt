@@ -32,7 +32,7 @@ bif_fild01,158,340,5	script	Laphine Soldier#mist	447,{
 		close;
 	}
 	set .@playtime, checkquest(7211,PLAYTIME);
-	if (getcharid(0) == getpartyleader(.@party_id,2)) {
+	if (is_party_leader() == true) {
 		if (.@playtime == 0 || .@playtime == 1) {
 			mes "[Laphine Soldier]";
 			mes "...Are you sure you're not doing too much?";
@@ -207,7 +207,7 @@ function	script	F_Mora_Mist	{
 		mes "You chop down the tree, which was blocking the path of the maze, "+((getarg(3,0))?"clearing the way out of the forest.":"so now you can continue.");
 		mapannounce .@map$,getarg(1),bc_map,"0xccffcc"; //FW_NORMAL 12 0 0
 		enablenpc instance_npcname(getarg(0));
-		disablenpc instance_npcname(strnpcinfo(0));
+		disablenpc();
 		if (getarg(4,0))
 			initnpctimer;
 		close;
@@ -451,7 +451,7 @@ OnMyMobDead:
 
 1@mist,73,290,0	script	Mysterious Flower#1	844,{
 	specialeffect EF_LEVEL99_4;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	getitem 12561,1; //Mysterious_Seed
 	end;
 }
@@ -825,11 +825,11 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 	} else if (ep14_1_mistwoods == 4) {
 		mes "[Loki]";
 		mes "Nydhogg was one of the guardians of the World Tree.";
-		mes "But he abandoned his duties as a guardian when he gave in to Morroc's temptation.";
+		mes "But he abandoned his duties as a guardian when he gave in to Morocc's temptation.";
 		next;
 		mes "[Loki]";
-		mes "Some fools performed a ritual to break the seal that held Morroc.";
-		mes "But the ritual didn't work right. The servant of Morroc failed to break the seal.";
+		mes "Some fools performed a ritual to break the seal that held Morocc.";
+		mes "But the ritual didn't work right. The servant of Morocc failed to break the seal.";
 		next;
 		mes "[Loki]";
 		mes "But the seal is so weak that it can break open any time.";
@@ -844,12 +844,12 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 		mes "As the World Tree became unstable, the influence it had on the seal grew weak.";
 		next;
 		mes "[Loki]";
-		mes "And Morroc broke himself free from the seal.";
+		mes "And Morocc broke himself free from the seal.";
 		mes "Although it seems like he used most of his powers just to break the seal...";
 		next;
 		mes "[Nydhogg the Guardian]";
 		mes "It's all my fault.";
-		mes "I couldn't break free from Morroc's temptation.";
+		mes "I couldn't break free from Morocc's temptation.";
 		mes "For too... too long...";
 		next;
 		mes "[Nydhogg the Guardian]";
@@ -879,7 +879,7 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 		next;
 		mes "[Nydhogg the Guardian]";
 		mes "...Oh, yes. It's late, but I have to fulfill my duties as a guardian.";
-		mes "Now I know. I'll destroy Morroc with my own hands.";
+		mes "Now I know. I'll destroy Morocc with my own hands.";
 		mes "I will fulfill my duties as a guardian.";
 		next;
 		switch(select("You're not alone.:Those are very important duties.")) {
@@ -923,7 +923,7 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 		mes "We may meet again.";
 		next;
 		mes "[Loki]";
-		mes "The day when Morroc reveals his despicable nature...";
+		mes "The day when Morocc reveals his despicable nature...";
 		mes "I will be waiting for him.";
 		close;
 	}

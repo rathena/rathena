@@ -97,7 +97,7 @@ einbroch,94,267,3	script	Airship Staff#ein01	91,{
 	mes "Please use this door to";
 	mes "board the Airship which stops";
 	mes "over Juno, Lighthalzen and";
-	mes "Hugel in the Schwaltzvalt Republic.";
+	mes "Hugel in the Schwarzwald Republic.";
 	next;
 	mes "[Airship Staff]";
 	mes "Otherwise, if Einbroch is";

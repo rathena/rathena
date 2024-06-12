@@ -23,7 +23,7 @@ alberta,88,193,5	script	Sunglasses Trader	73,{
 		mes "There is nothing more I can tell you.";
 		next;
 		mes "[Sunglasses Trader]";
-		mes "Go see Maseph. She is somewhere north of Morroc.";
+		mes "Go see Maseph. She is somewhere north of Morocc.";
 		close; }
 	mes "Hello. What can I do for you?";
 	next;
@@ -64,7 +64,7 @@ alberta,88,193,5	script	Sunglasses Trader	73,{
 	mes "Great. Now, listen carefully.";
 	next;
 	mes "[Sunglasses Trader]";
-	mes "Look for someone named Maseph somewhere north of Morroc.";
+	mes "Look for someone named Maseph somewhere north of Morocc.";
 	mes "I will send her a message to let her know that you are coming.";
 	close;
 }

@@ -367,7 +367,7 @@ yuno,142,183,5	script	Airship Representative	100,{
 	mes "[Airship Representative]";
 	mes "The teleport fee is 1,800 zeny, regardless of where you want to go. Please let me know your desired destination.";
 	next;
-	switch(select("Prontera:Izlude:Geffen:Morroc:Payon:Alberta:Comodo:Cancel")) {
+	switch(select("Prontera:Izlude:Geffen:Morocc:Payon:Alberta:Comodo:Cancel")) {
 		case 1: callsub S_Warp,"prontera",116,72;
 		case 2: if (checkre(0)) callsub S_Warp,"izlude",128,98; else callsub S_Warp,"izlude",94,103;
 		case 3: callsub S_Warp,"geffen",120,39;

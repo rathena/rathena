@@ -1,11 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _COMMON_SQL_HPP_
-#define _COMMON_SQL_HPP_
+#ifndef SQL_HPP
+#define SQL_HPP
+
+#include <cstdarg>// va_list
 
 #include "cbasetypes.hpp"
-#include <stdarg.h>// va_list
 
 // Return codes
 #define SQL_ERROR -1
@@ -64,6 +65,11 @@ typedef struct SqlStmt SqlStmt;
 
 /// Allocates and initializes a new Sql handle.
 struct Sql* Sql_Malloc(void);
+
+
+
+/// Retrieves the last error number.
+unsigned int Sql_GetError( Sql* self );
 
 
 
@@ -231,7 +237,7 @@ void Sql_Free(Sql* self);
 /// It uses the connection of the parent Sql handle.
 /// Queries in Sql and SqlStmt are independent and don't affect each other.
 ///
-/// @return SqlStmt handle or NULL if an error occured
+/// @return SqlStmt handle or nullptr if an error occured
 struct SqlStmt* SqlStmt_Malloc(Sql* sql);
 
 
@@ -346,4 +352,4 @@ void SqlStmt_Free(SqlStmt* self);
 
 void Sql_Init(void);
 
-#endif /* _COMMON_SQL_HPP_ */
+#endif /* SQL_HPP */

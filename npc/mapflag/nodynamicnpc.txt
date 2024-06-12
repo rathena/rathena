@@ -1,0 +1,27 @@
+//===== rAthena Script =======================================
+//= Mapflag: No dynamic NPC map setting.
+//===== Description: ========================================= 
+//= Blocks the use of dynamic NPCs on a map.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Lemongrass]
+//============================================================
+
+// Endless Tower
+1@tower	mapflag	nodynamicnpc
+2@tower	mapflag	nodynamicnpc
+3@tower	mapflag	nodynamicnpc
+4@tower	mapflag	nodynamicnpc
+5@tower	mapflag	nodynamicnpc
+6@tower	mapflag	nodynamicnpc
+
+// Sealed Catacomb
+1@cata	mapflag	nodynamicnpc
+2@cata	mapflag	nodynamicnpc
+
+// Orc's Memory
+1@orcs	mapflag	nodynamicnpc
+2@orcs	mapflag	nodynamicnpc
+
+// Nidhoggur's Nest
+1@nyd	mapflag	nodynamicnpc
+2@nyd	mapflag	nodynamicnpc

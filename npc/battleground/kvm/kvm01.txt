@@ -11,7 +11,8 @@
 //= 1.2 Upated some announces and dialogs from iRO.
 //=     Changed how the scoreboard works slightly.
 //=     Removed the areapercentheals, and minor things.
-//============================================================s
+//= 1.3 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
+//============================================================
 
 // Waiting Room NPCs
 //============================================================
@@ -81,7 +82,8 @@ OnDisable:
 	end;
 OnTouch:
 	set Bat_Team,1;
-	setquest 6025;
+	if (!getbattleflag("feature.bgqueue"))
+		setquest 6025;
 	end;
 }
 
@@ -98,7 +100,8 @@ OnDisable:
 	end;
 OnTouch:
 	set Bat_Team,2;
-	setquest 6025;
+	if (!getbattleflag("feature.bgqueue"))
+		setquest 6025;
 	end;
 }
 
@@ -108,6 +111,9 @@ OnTouch:
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_c01";
+	mapwarp "bat_c01","bat_room",154,150;
 	setwall "bat_c01",54,122,6,7,0,"batc01wall_a";
 	setwall "bat_c01",55,122,5,7,0,"batc01wall_b";
 	setwall "bat_c01",140,56,6,7,0,"batc01wall_c";
@@ -117,7 +123,10 @@ OnInit:
 	end;
 
 OnGuillaumeQuit:
-	//set BG_Delay_Tick, gettimetick(2) + 1200;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+//	else
+//		set BG_Delay_Tick, gettimetick(2) + 1200;
 OnGuillaumeDie:
 	if( $@KvM01BG == 2 )
 	{
@@ -132,7 +141,10 @@ OnGuillaumeDie:
 	end;
 
 OnCroixQuit:
-	//set BG_Delay_Tick, gettimetick(2) + 1200;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+//	else
+//		set BG_Delay_Tick, gettimetick(2) + 1200;
 OnCroixDie:
 	if( $@KvM01BG == 2 )
 	{
@@ -144,6 +156,14 @@ OnCroixDie:
 			mapannounce "bat_c01", "The number of Croixes is "+.Croix_Count+".",bc_map,"0x00ff00";
 		}
 	}
+	end;
+
+OnGuillaumeActive:
+	warp "bat_c01",61,120;
+	end;
+
+OnCroixActive:
+	warp "bat_c01",138,63;
 	end;
 
 OnStart:
@@ -204,15 +224,18 @@ OnTimer61000:
 	// Team Members
 	set .Guillaume_Count, bg_get_data($@KvM01BG_id1, 0);
 	set .Croix_Count, bg_get_data($@KvM01BG_id2, 0);
-	if( .Guillaume_Count < 5 || .Croix_Count < 5 )
-	{
-		set $@KvM01BG_Victory, 3;
-		set $@KvM01BG, 3;
-		mapannounce "bat_c01","There are not enough players to start the battle",1,0x696969;
-		stopnpctimer;
-		donpcevent "KvM01_BG::OnStop";
-		end;
+
+	if (!getbattleflag("feature.bgqueue")) {
+		if (.Guillaume_Count < 5 || .Croix_Count < 5) {
+			set $@KvM01BG_Victory, 3;
+			set $@KvM01BG, 3;
+			mapannounce "bat_c01","There are not enough players to start the battle",1,0x696969;
+			stopnpctimer;
+			donpcevent "KvM01_BG::OnStop";
+			end;
+		}
 	}
+	bg_updatescore "bat_c01",.Guillaume_Count,.Croix_Count;
 	set $@KvM01BG, 2; // Playing
 	bg_warp $@KvM01BG_id1,"bat_c01",61,120;
 	bg_warp $@KvM01BG_id2,"bat_c01",138,63;
@@ -281,6 +304,8 @@ OnStop:
 	bg_warp $@KvM01BG_id1,"bat_c01",53,128;
 	bg_warp $@KvM01BG_id2,"bat_c01",146,55;
 	donpcevent "KvM01_BG_Out::OnBegin";
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_c01", true;
 	end;
 }
 
@@ -311,17 +336,20 @@ OnTimer55000:
 
 OnTimer60000:
 	stopnpctimer;
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_c01", true;
+	mapwarp "bat_c01","bat_room",154,150;
 	set getvariableofnpc(.Croix_Count,"KvM01_BG"), 0;
 	set getvariableofnpc(.Guillaume_Count,"KvM01_BG"), 0;
 	set $@KvM01BG_Victory, 0;
 	if( $@KvM01BG_id1 ) { bg_destroy $@KvM01BG_id1; set $@KvM01BG_id1, 0; }
 	if( $@KvM01BG_id2 ) { bg_destroy $@KvM01BG_id2; set $@KvM01BG_id2, 0; }
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_c01";
 	disablenpc "KVM Officer#KVM01A";
 	disablenpc "KVM Officer#KVM01B";
-	mapwarp "bat_c01","bat_room",154,150;
-	maprespawnguildid "bat_c01",0,3; // Just in case someone else
-	bg_updatescore "bat_c01",5,5;
 	set $@KvM01BG, 0;
+	end;
 
 OnGuillaumeJoin:
 OnCroixJoin:
@@ -361,8 +389,23 @@ bat_c01,51,130,5	script	KVM Officer#KVM01A	419,{
 		}
 		bg_leave;
 		set Bat_Team,0;
-		warp "bat_room",154,150;
+		if (!getbattleflag("feature.bgqueue"))
+			warp "bat_room",154,150;
 	}
 	end;
 }
 bat_c01,148,53,1	duplicate(KVM Officer#KVM01A)	KVM Officer#KVM01B	415
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#kvm01	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "KvM01R_Guillaume";
+		unloadnpc "KvM01R_Croix";
+		unloadnpc "#kvm801";
+		unloadnpc "#kvm802";
+	}
+	end;
+}

@@ -1,14 +1,14 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAPINDEX_HPP_
-#define _MAPINDEX_HPP_
+#ifndef MAPINDEX_HPP
+#define MAPINDEX_HPP
 
-#include "../common/mmo.hpp"
+#include "mmo.hpp"
 
 #define MAX_MAPINDEX 2000
 
-//Some definitions for the mayor city maps.
+//Some definitions for the major city maps.
 #define MAP_PRONTERA "prontera"
 #define MAP_GEFFEN "geffen"
 #define MAP_MORROC "morocc"
@@ -51,6 +51,8 @@
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
 #define MAP_LASAGNA "lasagna"
+#define MAP_GLASTHEIM "glast_01"
+#define MAP_THANATOS "hu_fild01"
 
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);
@@ -69,4 +71,4 @@ void mapindex_check_mapdefault(const char *mapname);
 void mapindex_init(void);
 void mapindex_final(void);
 
-#endif /* _MAPINDEX_HPP_ */
+#endif /* MAPINDEX_HPP */

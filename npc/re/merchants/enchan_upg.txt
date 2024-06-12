@@ -12,11 +12,12 @@
 //===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Standardizing, grammar and bug fixes. [Euphy]
+//= 1.2 Moved to Cash Mall [Lemongrass]
 //============================================================
 
 // Main NPC :: 201105_luk_enc
 //============================================================
-prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
+itemmall,29,71,3	script	Devil Enchant Master#prq	63,{
 	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You are carrying too many items, please reduce it and come back again!";
@@ -79,11 +80,12 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 		close;
 	}
 	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	if (!getequipisequiped(.@part)) {
-		mes "It is dangerous to remove equipment during enchant process!";
-		close;
-	}
+	// if (!getequipisequiped(.@part)) {
+	// 	mes "It is dangerous to remove equipment during enchant process!";
+	// 	close;
+	// }
 	set .@equip_id, getequipid(.@part);
+	.@equip_refine = getequiprefinerycnt(.@part);
 	set .@item$, "|1292|1394|1491|1585|2015|13071|13115|16019|18112|21000|";
 	if (!compare(.@item$,"|"+.@equip_id+"|")) {
 		mes "I don't want to touch your equipment now!";
@@ -217,7 +219,6 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 			mes "Are you listening to me? I will only do for you if you bring the Enchant Book!";
 			close;
 		}
-		set .@equip_refine, getequiprefinerycnt(.@part);
 		if (.@enchant == 0) {
 			specialeffect EF_SHIELDCHARGE;
 			mes "Oh! Unbelievable!! It failed!! Please come again!";
@@ -230,7 +231,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 		delitem 6484,1; //Enchant_Book
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine) || 
 		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 
@@ -250,7 +251,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 			mes "You need to bring some money to initialize!!";
 			close;
 		}
-		if (callfunc("F_IsCharm",.@equip_card[3]) == false) {
+		if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) != CARD_ENCHANT) {
 			mes "This item is not enchanted!";
 			close;
 		}
@@ -263,11 +264,10 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 		set Zeny, Zeny - 100000;
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine) || 
 		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 
-		set .@equip_refine, getequiprefinerycnt(.@part);
 		delequip .@part;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] 0

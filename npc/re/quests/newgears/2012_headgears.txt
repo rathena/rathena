@@ -77,7 +77,7 @@ moc_para01,41,169,3	script	Reno#2012hat	64,{
 	switch(select("ECRA?:Quest to get Energy Crystals:Energy Crystal Buffs:Compress Energy Crystals:Exchange Crystals for Headgear:Random Gear for Crystals" + ((.@features_iRO)?":See Equipment List":""))) {
 	case 1:
 		mes "[Reno]";
-		mes "ECRA is the institute that researches '^0000FFEnergy Crystals^000000' that shall be used as an alternative energy source in the Rune Midgart Kingdom, which suffers from a shortage of energy.";
+		mes "ECRA is the institute that researches '^0000FFEnergy Crystals^000000' that shall be used as an alternative energy source in the Rune-Midgarts Kingdom, which suffers from a shortage of energy.";
 		next;
 		select("The reason for doing this?");
 		mes "[Reno]";

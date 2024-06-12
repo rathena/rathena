@@ -1,22 +1,22 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "path.hpp"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/nullpo.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
 
-#include "map.hpp"
 #include "battle.hpp"
+#include "map.hpp"
 
 #define SET_OPEN 0
 #define SET_CLOSED 1
@@ -56,7 +56,7 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 /// @}
 
 // Translates dx,dy into walking direction
-static const char walk_choices [3][3] =
+static enum directions walk_choices [3][3] =
 {
 	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
 	{DIR_WEST,DIR_CENTER,DIR_EAST},
@@ -79,11 +79,10 @@ void do_final_path(){
  *------------------------------------------*/
 int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
 {
-	struct map_data *md;
+	struct map_data *mapdata = map_getmapdata(m);
 
-	if( !map[m].cell )
+	if( !mapdata->cell )
 		return -1;
-	md = &map[m];
 
 	if( count>25 ){ //Cap to prevent too much processing...?
 		ShowWarning("path_blownpos: count too many %d !\n",count);
@@ -97,17 +96,17 @@ int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
 
 	while( count > 0 && (dx != 0 || dy != 0) )
 	{
-		if( !map_getcellp(md,x0+dx,y0+dy,CELL_CHKPASS) )
+		if( !map_getcellp(mapdata,x0+dx,y0+dy,CELL_CHKPASS) )
 		{
 			if (battle_config.path_blown_halt)
 				break;
 			else
 			{// attempt partial movement
-				int fx = ( dx != 0 && map_getcellp(md,x0+dx,y0,CELL_CHKPASS) );
-				int fy = ( dy != 0 && map_getcellp(md,x0,y0+dy,CELL_CHKPASS) );
+				int fx = ( dx != 0 && map_getcellp(mapdata,x0+dx,y0,CELL_CHKPASS) );
+				int fy = ( dy != 0 && map_getcellp(mapdata,x0,y0+dy,CELL_CHKPASS) );
 				if( fx && fy )
 				{
-					if(rnd()&1)
+					if(rnd_chance(50, 100))
 						dx=0;
 					else
 						dy=0;
@@ -135,20 +134,19 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 	int dx, dy;
 	int wx = 0, wy = 0;
 	int weight;
-	struct map_data *md;
+	struct map_data *mapdata = map_getmapdata(m);
 	struct shootpath_data s_spd;
 
-	if( spd == NULL )
+	if( spd == nullptr )
 		spd = &s_spd; // use dummy output variable
 
-	if (!map[m].cell)
+	if (!mapdata->cell)
 		return false;
-	md = &map[m];
 
 	dx = (x1 - x0);
 	if (dx < 0) {
-		SWAP(x0, x1);
-		SWAP(y0, y1);
+		std::swap(x0, x1);
+		std::swap(y0, y1);
 		dx = -dx;
 	}
 	dy = (y1 - y0);
@@ -187,7 +185,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 			spd->y[spd->len] = y0;
 			spd->len++;
 		}
-		if ((x0 != x1 || y0 != y1) && map_getcellp(md,x0,y0,cell))
+		if ((x0 != x1 || y0 != y1) && map_getcellp(mapdata,x0,y0,cell))
 			return false;
 	}
 
@@ -200,13 +198,11 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 /// Pushes path_node to the binary node_heap.
 /// Ensures there is enough space in array to store new element.
 
-#define swap_ptrcast_pathnode(a, b) swap_ptrcast(struct path_node *, a, b)
-
 static void heap_push_node(struct node_heap *heap, struct path_node *node)
 {
 #ifndef __clang_analyzer__ // TODO: Figure out why clang's static analyzer doesn't like this
 	BHEAP_ENSURE2(*heap, 1, 256, struct path_node **);
-	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP, swap_ptrcast_pathnode);
+	BHEAP_PUSH2(*heap, node, NODE_MINTOPCMP);
 #endif // __clang_analyzer__
 }
 
@@ -219,7 +215,7 @@ static int heap_update_node(struct node_heap *heap, struct path_node *node)
 		ShowError("heap_update_node: node not found\n");
 		return 1;
 	}
-	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP, swap_ptrcast_pathnode);
+	BHEAP_UPDATE(*heap, i, NODE_MINTOPCMP);
 	return 0;
 }
 
@@ -272,27 +268,25 @@ static int add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16
  *------------------------------------------*/
 bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int flag, cell_chk cell)
 {
-	register int i, x, y, dx = 0, dy = 0;
-	struct map_data *md;
+	int i, x, y, dx = 0, dy = 0;
+	struct map_data *mapdata = map_getmapdata(m);
 	struct walkpath_data s_wpd;
 
 	if (flag&2)
-		return path_search_long(NULL, m, x0, y0, x1, y1, cell);
+		return path_search_long(nullptr, m, x0, y0, x1, y1, cell);
 
-	if (wpd == NULL)
+	if (wpd == nullptr)
 		wpd = &s_wpd; // use dummy output variable
 
-	if (!map[m].cell)
+	if (!mapdata->cell)
 		return false;
 
-	md = &map[m];
-
 	//Do not check starting cell as that would get you stuck.
-	if (x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys /*|| map_getcellp(md,x0,y0,cell)*/)
+	if (x0 < 0 || x0 >= mapdata->xs || y0 < 0 || y0 >= mapdata->ys /*|| map_getcellp(mapdata,x0,y0,cell)*/)
 		return false;
 
 	// Check destination cell
-	if (x1 < 0 || x1 >= md->xs || y1 < 0 || y1 >= md->ys || map_getcellp(md,x1,y1,cell))
+	if (x1 < 0 || x1 >= mapdata->xs || y1 < 0 || y1 >= mapdata->ys || map_getcellp(mapdata,x1,y1,cell))
 		return false;
 
 	if (flag&1) {
@@ -318,7 +312,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 			if( dx == 0 && dy == 0 )
 				break; // success
-			if( map_getcellp(md,x,y,cell) )
+			if( map_getcellp(mapdata,x,y,cell) )
 				break; // obstacle = failure
 		}
 
@@ -335,8 +329,8 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		// Figure out more proper size or another way to keep track of known nodes.
 		struct path_node tp[MAX_WALKPATH * MAX_WALKPATH];
 		struct path_node *current, *it;
-		int xs = md->xs - 1;
-		int ys = md->ys - 1;
+		int xs = mapdata->xs - 1;
+		int ys = mapdata->ys - 1;
 		int len = 0;
 		int j;
 
@@ -349,7 +343,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		// Start node
 		i = calc_index(x0, y0);
-		tp[i].parent = NULL;
+		tp[i].parent = nullptr;
 		tp[i].x      = x0;
 		tp[i].y      = y0;
 		tp[i].g_cost = 0;
@@ -376,7 +370,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 			}
 
 			current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
-			BHEAP_POP2(g_open_set, NODE_MINTOPCMP, swap_ptrcast_pathnode); // Remove it from 'open' set
+			BHEAP_POP2(g_open_set, NODE_MINTOPCMP); // Remove it from 'open' set
 
 			x      = current->x;
 			y      = current->y;
@@ -388,26 +382,26 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 				break;
 			}
 
-			if (y < ys && !map_getcellp(md, x, y+1, cell)) allowed_dirs |= PATH_DIR_NORTH;
-			if (y >  0 && !map_getcellp(md, x, y-1, cell)) allowed_dirs |= PATH_DIR_SOUTH;
-			if (x < xs && !map_getcellp(md, x+1, y, cell)) allowed_dirs |= PATH_DIR_EAST;
-			if (x >  0 && !map_getcellp(md, x-1, y, cell)) allowed_dirs |= PATH_DIR_WEST;
+			if (y < ys && !map_getcellp(mapdata, x, y+1, cell)) allowed_dirs |= PATH_DIR_NORTH;
+			if (y >  0 && !map_getcellp(mapdata, x, y-1, cell)) allowed_dirs |= PATH_DIR_SOUTH;
+			if (x < xs && !map_getcellp(mapdata, x+1, y, cell)) allowed_dirs |= PATH_DIR_EAST;
+			if (x >  0 && !map_getcellp(mapdata, x-1, y, cell)) allowed_dirs |= PATH_DIR_WEST;
 
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 			// Process neighbors of current node
-			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(md, x+1, y-1, cell))
+			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y-1, cell))
 				e += add_path(&g_open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
 			if (chk_dir(PATH_DIR_EAST))
 				e += add_path(&g_open_set, tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
-			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(md, x+1, y+1, cell))
+			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(mapdata, x+1, y+1, cell))
 				e += add_path(&g_open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
 			if (chk_dir(PATH_DIR_NORTH))
 				e += add_path(&g_open_set, tp, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
-			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(md, x-1, y+1, cell))
+			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y+1, cell))
 				e += add_path(&g_open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
 			if (chk_dir(PATH_DIR_WEST))
 				e += add_path(&g_open_set, tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
-			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(md, x-1, y-1, cell))
+			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(mapdata, x-1, y-1, cell))
 				e += add_path(&g_open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
 			if (chk_dir(PATH_DIR_SOUTH))
 				e += add_path(&g_open_set, tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
@@ -417,7 +411,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 			}
 		}
 
-		for (it = current; it->parent != NULL; it = it->parent, len++);
+		for (it = current; it->parent != nullptr; it = it->parent, len++);
 		if (len > sizeof(wpd->path))
 			return false;
 
@@ -508,9 +502,21 @@ int distance_client(int dx, int dy)
 
 	//Bonus factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected
-	temp_dist -= 0.0625;
+	temp_dist -= 0.1;
 
 	if(temp_dist < 0) temp_dist = 0;
 
 	return ((int)temp_dist);
+}
+
+bool direction_diagonal( enum directions direction ){
+	return direction == DIR_NORTHWEST || direction == DIR_SOUTHWEST || direction == DIR_SOUTHEAST || direction == DIR_NORTHEAST;
+}
+
+bool direction_opposite( enum directions direction ){
+	if( direction == DIR_CENTER || direction == DIR_MAX ){
+		return direction;
+	}else{
+		return static_cast<enum directions>( ( direction + DIR_MAX / 2 ) % DIR_MAX );
+	}
 }

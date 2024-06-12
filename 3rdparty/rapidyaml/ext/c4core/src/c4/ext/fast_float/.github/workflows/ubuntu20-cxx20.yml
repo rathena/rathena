@@ -1,0 +1,19 @@
+name: Ubuntu 20.04 CI (C++20)
+
+on: [push, pull_request]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use cmake
+        run: |
+          mkdir build &&
+          cd build &&
+          cmake -DCMAKE_CXX_STANDARD=20 -DFASTFLOAT_TEST=ON -DCMAKE_INSTALL_PREFIX:PATH=destination ..  &&
+          cmake --build .   &&
+          ctest --output-on-failure  &&
+          cmake --install .

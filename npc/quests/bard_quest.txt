@@ -175,7 +175,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "So, have you met Mr. Kitty?";
-		mes "Ah, in Morroc? He has a chronic disease, but obviously doesn't";
+		mes "Ah, in Morocc? He has a chronic disease, but obviously doesn't";
 		mes "seem to care about it.";
 		mes "So what did he say?";
 		next;
@@ -1046,7 +1046,7 @@ S_StorySong:
 				mes "the Pub in Geffen.";
 				next;
 				mes "[Errende]";
-				mes "Judging from his clothes, he must be from Morroc, which is a lot warmer. That's why he's got a Hood, even though it has no drawstrings, for the cooler weather over here.";
+				mes "Judging from his clothes, he must be from Morocc, which is a lot warmer. That's why he's got a Hood, even though it has no drawstrings, for the cooler weather over here.";
 				next;
 				mes "[Errende]";
 				mes "I must warn you, don't let him talk you into buying that Hood of his since he's selling it for an outrageous price. He's definitely not trustworthy.";
@@ -1061,16 +1061,16 @@ S_StorySong:
 				mes "It's tragic that he left his family behind in that way. But perhaps, it is more tragic that his spirit scares away anyone interested in those girls.";
 
 			} else if (.@random == 2) {
-				mes "Okay, let me tell you a story about Morroc, city of the desert. Adventurers worth their salt are expected to have explored the city and its surrounding desert.";
+				mes "Okay, let me tell you a story about Morocc, city of the desert. Adventurers worth their salt are expected to have explored the city and its surrounding desert.";
 				next;
 				mes "[Errende]";
 				mes "The Sphinx and the Pyramids are especially popular areas of exploration for adventurers. Have you been there before? I haven't yet, but perhaps someday I'll go.";
 				next;
 				mes "[Errende]";
-				mes "While I was in Morroc, I found a Merchant that sells Sword Maces to Priests and Priestess. Aside from those, Priests are prohibited from using any kind of weapon with blades.";
+				mes "While I was in Morocc, I found a Merchant that sells Sword Maces to Priests and Priestess. Aside from those, Priests are prohibited from using any kind of weapon with blades.";
 				next;
 				mes "[Errende]";
-				mes "I also saw an energetic little boy who kept begging his father to tame a Munak for him. I heard the father speak a bit, and it seems that one of his friends from Morroc is lost in Alberta.";
+				mes "I also saw an energetic little boy who kept begging his father to tame a Munak for him. I heard the father speak a bit, and it seems that one of his friends from Morocc is lost in Alberta.";
 				next;
 				cutin "bard_eland02",2;
 				mes "[Errende]";
@@ -1487,7 +1487,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Mmm, let me think...";
 				next;
 				mes "[Kino Kitty]";
-				mes "When you go venture Southwest from Morroc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
+				mes "When you go venture Southwest from Morocc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
 				next;
 				mes "[Kino Kitty]";
 				mes "When you go South of Sandarman, you will see Paros Lighthouse. East from the Lighthouse, you will see Kokomo Beach. North of the beach is Papuchica Forest.";
@@ -1592,7 +1592,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				next;
 				mes "^D43D1AI still remember the clear chimes";
 				mes "Of the Prontera Church Bells";
-				mes "The ice cream we shared in Morroc,";
+				mes "The ice cream we shared in Morocc,";
 				mes "Being chased by bats";
 				mes "In Payon dungeon.^000000";
 				next;
@@ -1631,7 +1631,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Mmm, let me think...";
 				next;
 				mes "[Kino Kitty]";
-				mes "When you go venture Southwest from Morroc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
+				mes "When you go venture Southwest from Morocc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
 				next;
 				mes "[Kino Kitty]";
 				mes "When you go South of Sandarman, you will see Paros Lighthouse. East from the Lighthouse, you will see Kokomo Beach. North of the beach is Papuchica Forest.";
@@ -2868,7 +2868,7 @@ yuno_in04,20,123,7	script	Representative#bq	95,{
 			mes "Kino Kitty, Kino Kitty... Oh, here we are. He sent us a letter that says, 'I will stay in the desert until I find my real self.'";
 			next;
 			mes "[Marlin Putiur]";
-			mes "He doesn't seem healthy, but I guess he's still traveling. Trying seeking him out in Morroc, and give my regards to him if you get the chance.";
+			mes "He doesn't seem healthy, but I guess he's still traveling. Trying seeking him out in Morocc, and give my regards to him if you get the chance.";
 			close;
 
 		} else if (.@inputstr$ == "Gunther Doubleharmony") {

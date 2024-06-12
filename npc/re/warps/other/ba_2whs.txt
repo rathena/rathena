@@ -1,0 +1,28 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+//===== Changelog: ===========================================
+//= 1.0 First version. [crazyarashi]
+//============================================================
+
+//============================================================
+// Adega Tartaros
+//============================================================
+ba_maison,305,322,0	warp	#ep172_2whs01_in	1,1,ba_2whs01,156,32
+ba_2whs01,156,29,0	warp	#ep172_2whs01_out	1,1,ba_maison,305,319
+
+ba_2whs02,337,337,0	warp	#ep172_2whs02_out	1,1,ba_2whs01,275,291
+ba_2whs02,63,300,0	warp	#172wh01_	2,2,ba_2whs02,69,300
+ba_2whs02,63,325,0	warp	#ba2whslab_to_ba2whs02-1	2,2,ba_2whs02,69,325
+
+ba_2whs02,66,300,0	script	#172wh01	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if (ep17_2_chirp == 6) {
+		unittalk getcharid(3), "" + strcharinfo(0) + " : There is a sound in this area. The locked door was opened with an emergency key.", bc_self;
+		sleep2 1000;
+	}
+	warp "ba_2whs02",60,300;
+	end;
+}
+
+ba_2whs02,66,325,0	duplicate(#172wh01)	#ba2whs02_to_ba2whslab-1	WARPNPC,2,2

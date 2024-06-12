@@ -488,7 +488,7 @@ OnTouch_:
 					mes "As I have told you repeatedly: Katar class weapons (Jamadhar/Jur/Katar etc) are two-handed!";
 					next;
 					mes "[Assassin 'Khai']";
-					mes "City of desert... I miss my hometown, Morroc. I haven't been there for a long time. I feel like I became a Thief a few days ago. Time flies so fast...";
+					mes "City of desert... I miss my hometown, Morocc. I haven't been there for a long time. I feel like I became a Thief a few days ago. Time flies so fast...";
 					next;
 					mes "[Assassin 'Khai']";
 					mes "Heh. I remember my Thief quest. I was so damn nervous when I broke into the farm to get Mushrooms...";
@@ -833,7 +833,7 @@ OnTouch_:
 			mes "Now, we shall test you once more! Keep in mind, you must answer 9 questions out of 10 correctly. Remember I am doing you a favor...";
 			next;
 			mes "[The Anonymous One]";
-			mes "You must answer 9 questions out of 10 correctly. If you miss more then one question, you can never become an Assassin.";
+			mes "You must answer 9 questions out of 10 correctly. If you miss more than one question, you can never become an Assassin.";
 			next;
 			mes "[The Anonymous One]";
 			mes "Okay,";
@@ -1102,7 +1102,8 @@ in_moc_16,21,165,2	script	Standby Room#ASNTEST	725,{
 	end;
 
 OnInit:
-	disablenpc "Standby Room#ASNTEST";
+	//disablenpc "Standby Room#ASNTEST";
+	hideonnpc "Standby Room#ASNTEST";
 	waitingroom "Standby Room",10,"Standby Room#ASNTEST::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
@@ -1642,7 +1643,10 @@ OnCast:
 in_moc_16,149,80,4	script	Guildmaster#ASN2	106,1,1,{
 	end;
 OnTouch_:
-	savepoint "morocc",100,100,1,1;
+	if (checkre(0))
+		savepoint "morocc",100,100,1,1;
+	else
+		savepoint "moc_ruins",79,99,1,1;
 	if (ASSIN_Q == 7 && BaseJob == Job_Thief) {
 		set ASSIN_Q,8;
 		mes "[Guildmaster]";
@@ -2094,11 +2098,10 @@ OnTouch_:
 				mes "It used to rule over the Assassin weapon market. Please take care of my gladius.";
 				getitem 1220,1; //Gladius_
 			}
-			set ASSIN_Q,17;
-			set ASSIN_Q3,2;
+			ASSIN_Q3 = 2;
 			next;
 		}
-		else {
+		else if (ASSIN_Q3 != 2) {
 			mes "[Guildmaster]";
 			mes "Well, I talked too much.";
 			mes "Please take this first.";
@@ -2119,7 +2122,7 @@ OnTouch_:
 			case 5:
 				getitem 1252,1; //Katar
 			}
-			set ASSIN_Q,17;
+			ASSIN_Q3 = 2;
 		}
 		mes "[Guildmaster]";
 		mes "Well, I am giving you a token. Please return to the Assassin expert, the Ferocious-Looking Huey, at the entrance.";
@@ -2129,8 +2132,12 @@ OnTouch_:
 		next;
 		mes "[Guildmaster]";
 		mes "You, " + strcharinfo(0) + ", have chosen to live as an Assassin. May you learn our ways and be an honorable example to others.";
-		savepoint "morocc",100,100,1,1;
+		if (checkre(0))
+			savepoint "morocc",100,100,1,1;
+		else
+			savepoint "moc_ruins",79,99,1,1;
 		getitem 1008,1; //Frozen_Heart
+		ASSIN_Q = 17;
 		changequest 8006,8007;
 		next;
 		mes "[Guildmaster]";
@@ -2250,7 +2257,7 @@ OnTouch_:
 	end;
 
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 in_moc_16,156,87,1	duplicate(#moc_assin_dup)	[Huey]	55

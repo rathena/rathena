@@ -43,7 +43,7 @@ valkyrie,53,54,3	script	Minstrel#Valkyrie	741,{
 		next;
 		mes "[Minstrel]";
 		mes "Will you do this";
-		mes "for Rune-Midgard...";
+		mes "for Midgard...";
 		mes "As a Minstrel?";
 		next;
 		if (select("No.:Yes.") == 1) {

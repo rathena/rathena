@@ -8,43 +8,43 @@
 //============================================================
 
 //= NPCs
-dali,130,107,6	script	Leon the Adventurer	945,{
+dali,130,107,6	script	Adventurer Leon	945,{
 	if (BaseLevel < 99) {
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "You know... this place doesn't seem to be safe for you. Please return to me once you have achieved ^0000FFLevel 99^000000 or higher.";
 		close;
 	}
 	if (saramemory == 1) {
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it.";
 		close;
 	}
 	if (saramemory == 2) {
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "What did you see in there?!";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "Hrumph, Sara Irene?! She's one of the 12 Valkyries. I didn't know her story was that tragic...";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "It seems that you caused a huge misunderstanding between her and her father.";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "You should not blame yourself for what occurred, or all the blood that was spilled. It seems that the events that day were fated to happen no matter who was there.";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "Please don't tell anyone about your time travelling adventure. We can't have anyone thinking you more important than old Leon. Plus they wouldn't believe such a story anyway.";
 		next;
 		set saramemory,3;
 		erasequest 15003;
 		getexp 770000,1000000;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
 		close;
 	}
 	if (saramemory == 3) {
 		if ((checkquest(15002,PLAYTIME) == 0) || (checkquest(15002,PLAYTIME) == 1)) {
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
 			close;
 		}
@@ -53,28 +53,28 @@ dali,130,107,6	script	Leon the Adventurer	945,{
 			mes "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000";
 			next;
 		}
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "You wish to relive the past again?";
 		next;
 		switch(select("Yes:No")) {
 		case 1:
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "Please venture through the dimensional device and report to me what you find within.";
 			next;
 			set saramemory,4;
 			setquest 15003;
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "Though I should warn you. It might be unstable. Make sure you enter as soon as you can.";
 			close;
 		case 2:
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "Well... I can't force you. But if you ever find the courage please talk to me again.";
 			close;
 		}
 	}
 	if (saramemory == 4) {
 		if ((checkquest(15002,PLAYTIME) == 0) || (checkquest(15002,PLAYTIME) == 1)) {
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it.";
 			close;
 		}
@@ -83,84 +83,84 @@ dali,130,107,6	script	Leon the Adventurer	945,{
 			mes "^0000FF[ Sara's Memories ] Cooldown has been cleared. It is now possible to use the dimensional device again.^000000";
 			next;
 		}
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "I am not sure you have fully explored the crack in space and time yet. Perhaps you should look a bit further into it.";
 		next;
 		switch(select("Okay:Give up")) {
 		case 1:
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "I am glad to hear that! Maybe someday you can be as brave as old Leon the Lion!";
 			close;
 		case 2:
 			set saramemory,3;
 			erasequest 15003;
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "Well... I can't force you. But if you ever find the courage please talk to me again.";
 			close;
 		}
 	}
 	if (saramemory == 5) {
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "What did you see in there?!";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "Hrumph, Sara Irene?! She's one of the 12 Valkyries. I didn't know her story was that tragic...";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "It seems that you caused a huge misunderstanding between her and her father.";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "You should not blame yourself for what occurred, or all the blood that was spilled. It seems that the events that day were fated to happen no matter who was there.";
 		next;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "Please don't tell anyone about your time travelling adventure. We can't have anyone thinking you more important than old Leon. Plus they wouldn't believe such a story anyway.";
 		next;
 		set saramemory,3;
 		erasequest 15003;
 		getexp 550000,550000;
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
 		close;
 	}
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "Excuse my rudeness! I am Pon de Leon, the famous adventurer!";
 	next;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "My friends call me Leon the Lion! For my tough appearance and attitude. Plus I have quite the bite!";
 	next;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "You know, this is such a strange location...";
 	next;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "As you explore it you start to see cracks in space and time. Each one covered by a dimensional device.";
 	next;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "For example, I think I have caught glimpses of Payon through the one closest to us. But it doesn't seem right. Almost like it is a little bit older than it should be.";
 	next;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "I want to explore it, but with my old age and my knees I don't seem to be quite up to the task.";
 	next;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "So, I would like to ask something of you.";
 	next;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "Please venture through the dimensional device and report to me what you find within.";
 	next;
 	set saramemory,1;
 	setquest 15003;
-	mes "[Leon the Adventurer]";
+	mes "[Adventurer Leon]";
 	mes "Though; I should warn you. It might be unstable. Make sure you enter as soon as you can.";
 	close;
 }
 
 dali,139,118,4	script	Dimensional Device#sara	10007,{
 	if (BaseLevel < 99) {
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "Hey! You are too young to be playing with that! Come back when you are at least ^0000FFLevel 99^000000!";
 		close;
 	}
 	if ((saramemory < 1) || (saramemory == 2) || (saramemory == 3) || (saramemory == 5)) {
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "Before you go playing around with that; Why don't you come over here and talk to me?";
 		close;
 	}
@@ -174,12 +174,12 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		set .@md_name$,"Sara's Memories";
 
 		if (!.@party_id) {
-			mes "[Leon the Adventurer]";
+			mes "[Adventurer Leon]";
 			mes "Before you enter you need to organize a party! Don't you know how? Type /organize PARTYNAMEHERE.";
 			close;
 		}
 
-		if (getcharid(0) == getpartyleader(.@party_id,2))
+		if (is_party_leader() == true)
 			set .@menu$, "Boot up the dimensional device.:Use the dimensional device.:Cancel.";
 		else
 			set .@menu$, ":Use the dimensional device.:Cancel.";
@@ -216,7 +216,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 			close;
 		}
 	} else if (.@ins_sara_time == 0 || .@ins_sara_time == 1) {
-		mes "[Leon the Adventurer]";
+		mes "[Adventurer Leon]";
 		mes "I think in about 20 hours after you last entered the rift, it will be stable enough for you to transverse it again.";
 		close;
 	}
@@ -228,7 +228,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 }
 
 1@sara,260,156,6	script	A Girl#01	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		unittalk getcharid(3),"Where am I?";
 		mes "["+strcharinfo(0)+"]";
 		mes "Where am I?";
@@ -419,7 +419,7 @@ OnEnable:
 }
 
 1@sara,107,325,6	script	Sara Irene#01	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		cutin "sara_9sara1",2;
 		npctalk "Oh! Hello again! I remember you, what's up?";
 		mes "[Sara Irene]";
@@ -546,7 +546,7 @@ OnEnable:
 }
 
 1@sara,152,233,6	script	Sara Irene#02	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		cutin "sara_9sara2",2;
 		npctalk "Mommy!";
 		mes "[Sara Irene]";
@@ -617,7 +617,7 @@ OnEnable:
 }
 
 1@sara,156,236,4	script	Doyen Irene#04	684,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		cutin "sara_elder_irine4",2;
 		npctalk "You... were too strong for me.";
 		mes "[Doyen Irene]";
@@ -697,7 +697,7 @@ OnEnable:
 }
 
 1@sara,39,142,4	script	Sara Irene#03	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		mapannounce instance_mapname("1@sara"), "As you are about to call out to Sara, a sudden blow knocks you down from behind.",bc_area,"0xffffff";
 		mes "^FF0000As you are about to call out to Sara, a sudden blow knocks you down from behind.^000000";
 		next;

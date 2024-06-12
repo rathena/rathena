@@ -39,7 +39,7 @@ prontera,114,81,5	script	RWC2011 Agent#2	407,{
 					mes "It seems you've traveled quite enough but you're not good with hearing the news around the world.";
 				next;
 				mes "[New Agent]";
-				mes "There are few adventurers in Rune-Midgard whose lives are dedicated to battle, who never skip their training, live in seclusion, and are experts in their art.";
+				mes "There are few adventurers in Midgard whose lives are dedicated to battle, who never skip their training, live in seclusion, and are experts in their art.";
 				next;
 				mes "[New Agent]";
 				mes "The RWC is the festival where those adventurers can compete with each other and find out who is the best!";

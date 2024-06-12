@@ -1,21 +1,25 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SEARCHSTORE_HPP_
-#define _SEARCHSTORE_HPP_
+#ifndef SEARCHSTORE_HPP
+#define SEARCHSTORE_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
+#include <memory>
+#include <vector>
 
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
+
+#include "clif.hpp"
 #include "map.hpp"
 
 #define SEARCHSTORE_RESULTS_PER_PAGE 10
 
 /// information about the search being performed
 struct s_search_store_search {
-	struct map_session_data* search_sd;  // sd of the searching player
-	const unsigned short* itemlist;
-	const unsigned short* cardlist;
+	map_session_data* search_sd;  // sd of the searching player
+	const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist;
+	const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist;
 	unsigned int item_count;
 	unsigned int card_count;
 	unsigned int min_price;
@@ -26,16 +30,16 @@ struct s_search_store_info_item {
 	int store_id;
 	uint32 account_id;
 	char store_name[MESSAGE_SIZE];
-	unsigned short nameid;
+	t_itemid nameid;
 	unsigned short amount;
 	unsigned int price;
-	unsigned short card[MAX_SLOTS];
+	t_itemid card[MAX_SLOTS];
 	unsigned char refine;
+	uint8 enchantgrade;
 };
 
 struct s_search_store_info {
-	unsigned int count;
-	struct s_search_store_info_item* items;
+	std::vector<std::shared_ptr<s_search_store_info_item>> items;
 	unsigned int pages;  // amount of pages already sent to client
 	unsigned int uses;
 	int remote_id;
@@ -45,15 +49,14 @@ struct s_search_store_info {
 	bool open;
 };
 
-bool searchstore_open(struct map_session_data* sd, unsigned int uses, unsigned short effect);
-void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const unsigned short* itemlist, unsigned int item_count, const unsigned short* cardlist, unsigned int card_count);
-bool searchstore_querynext(struct map_session_data* sd);
-void searchstore_next(struct map_session_data* sd);
-void searchstore_clear(struct map_session_data* sd);
-void searchstore_close(struct map_session_data* sd);
-void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, unsigned short nameid);
-bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id);
-void searchstore_clearremote(struct map_session_data* sd);
-bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine);
+bool searchstore_open(map_session_data* sd, unsigned int uses, unsigned short effect);
+void searchstore_query(map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
+bool searchstore_querynext(map_session_data* sd);
+void searchstore_next(map_session_data* sd);
+void searchstore_clear(map_session_data* sd);
+void searchstore_close(map_session_data* sd);
+void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_itemid nameid);
+bool searchstore_queryremote(map_session_data* sd, uint32 account_id);
+void searchstore_clearremote(map_session_data* sd);
 
-#endif /* _SEARCHSTORE_HPP_ */
+#endif /* SEARCHSTORE_HPP */

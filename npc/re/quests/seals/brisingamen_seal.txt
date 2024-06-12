@@ -1,0 +1,193 @@
+//===== rAthena Script ======================================= 
+//= God Item Quest - Brisingamen Seal
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quest for breaking the seal of Brisingamen.
+//===== Changelogs: ==========================================
+//= 1.0 Renewal script update for ep16.1 [Capuche]
+//============================================================
+
+prt_cas,372,74,0	script	Personnel Record#hidden	HIDDEN_NPC,{
+	if ($God2 < $@god_check1) {
+		mes "[Librarian]";
+		mes "What are you doing?";
+		mes "Don't touch anything!";
+		close;
+	}
+	if ($God3 >= $@god_check2) {
+		mes "[Librarian]";
+		mes "What are you doing?";
+		mes "Don't touch anything!";
+		close;
+	}
+	if (god_brising == 26) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "I should read this";
+		mes "from the point where";
+		mes "I left off...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Huh...?";
+		mes "What's this mark";
+		mes "here at the bottom?";
+		mes "Some kind of secret?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "No wonder the librarian";
+		mes "seemed to hesitate before";
+		mes "saying anything. Huh.";
+		mes "Now let's see...";
+		next;
+		set .@bookrand,rand(1,3);
+		if (.@bookrand == 1) {
+			mes "[Personnel Record]";
+			mes "^663300Lowen, of the 2nd squad, returned to her detachment 3 days after the incident. A trial was held, and she was judged guilty of fleeing when ordered to fight.^000000";
+			next;
+			mes "[Personnel Record]";
+			mes "^663300Despite the severity of this offense, she was only discharged from the Crusaders and the holy power granted to her was forcibly removed...^000000";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "She was forced to leave the Crusaders?! That's ridiculous!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Did they want to sentence her to death or what? That's almost too cruel. She must have been humiliated...";
+			next;
+			mes "[Personnel Record]";
+			mes "^6633002 years later after the incident, an expedition team found rusty armor shards, a broken sword";
+			mes "and some effects belonging to";
+			mes "Lowen Ellenen.^000000";
+			next;
+			mes "[Personnel Record]";
+			mes "^663300However, this information";
+			mes "is highly classified. Officially, Lowen Ellenen died during the mission.^000000";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "They thought she brought";
+			mes "disgrace to the Crusaders?";
+			mes "This sounds pretty messy.";
+			mes "Should I try to meet her again?";
+			next;
+			mes "[Librarian]";
+			mes "^666666*Yawn...*^000000";
+			mes "What the...?";
+			mes "who are you!";
+			mes "Get the hell";
+			mes "out of here!";
+			set god_brising,30;
+			close2;
+			warp "prt_cas",349,68;
+			end;
+		}
+		else {
+			mes "[Librarian]";
+			mes "^666666*Yawn...*^000000";
+			mes "What the...?";
+			mes "who are you!";
+			mes "Get the hell";
+			mes "out of here!";
+			close2;
+			warp "prt_cas",349,68;
+			end;
+		}
+	}
+	else if (god_brising == 25) {
+		mes "^3355FFYou took the book from the shelf while the librarian was dozing. According to the Crusader Personnel Records, there's only one recruit that was named Lowen Ellenen.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Lowen Ellenen...";
+		mes "Member of the";
+		mes "2nd squad...";
+		mes "Age 22...";
+		mes "Female...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Became a fugitive?";
+		mes "This isn't the same";
+		mes "information the";
+		mes "Librarian told me!";
+		next;
+		set .@bookrand,rand(1,3);
+		if (.@bookrand == 1) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I should read this";
+			mes "from the point where";
+			mes "I left off...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Huh...?";
+			mes "What's this mark";
+			mes "here at the bottom?";
+			mes "Some kind of secret?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "No wonder the librarian";
+			mes "seemed to hesitate before";
+			mes "saying anything. Huh.";
+			mes "Now let's see...";
+			next;
+			mes "[Personnel Record]";
+			mes "^663300Lowen, of the 2nd squad, returned to her detachment 3 days after the incident. A trial was held, and she was judged guilty of fleeing when ordered to fight.^000000";
+			next;
+			mes "[Personnel Record]";
+			mes "^663300Despite the severity of this offense, she was only discharged from the Crusaders and the holy power granted to her was forcibly removed...^000000";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "She was forced to leave the Crusaders?! That's ridiculous!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Did they want to sentence her to death or what? That's almost too cruel. She must have been humiliated...";
+			next;
+			mes "[Personnel Record]";
+			mes "^6633002 years later after the incident, an expedition team found rusty armor shards, a broken sword";
+			mes "and some effects belonging to";
+			mes "Lowen Ellenen.^000000";
+			next;
+			mes "[Personnel Record]";
+			mes "^663300However, this information";
+			mes "is highly classified. Officially, Lowen Ellenen died during the mission.^000000";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "They thought she brought";
+			mes "disgrace to the Crusaders?";
+			mes "This sounds pretty messy.";
+			mes "Should I try to meet her again?";
+			next;
+			mes "[Librarian]";
+			mes "^666666*Yawn...*^000000";
+			mes "What the...?";
+			mes "who are you!";
+			mes "Get the hell";
+			mes "out of here!";
+			set god_brising,30;
+			close2;
+			warp "prt_cas",349,68;
+			end;
+		}
+		else {
+			mes "[Librarian]";
+			mes "^666666*Yawn...*^000000";
+			mes "What the...?";
+			mes "who are you!";
+			mes "Get the hell";
+			mes "out of here!";
+			set god_brising,26;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "(Nuts...!";
+			mes "I didn't get";
+			mes "to finish reading!)";
+			close2;
+			warp "prt_cas",349,68;
+			end;
+		}
+	}
+	else  {
+		mes "[Librarian]";
+		mes "What are you doing here?";
+		mes "Don't touch anything!";
+		close;
+	}
+}
+
+//-----------librarian----------------------------------------------------------
+prt_cas,373,75,3	duplicate(Librarian#2_)	Librarian#2	8W_SOLDIER

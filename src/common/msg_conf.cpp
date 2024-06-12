@@ -1,10 +1,15 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "msg_conf.hpp"
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include "malloc.hpp"
-#include "msg_conf.hpp"
 #include "showmsg.hpp"
+#include "strlib.hpp"
 
 /*
  * Return the message string of the specified number by [Yor]
@@ -13,7 +18,7 @@
 const char* _msg_txt(int msg_number,int size, char ** msg_table)
 {
 	if (msg_number >= 0 && msg_number < size &&
-		msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
+		msg_table[msg_number] != nullptr && msg_table[msg_number][0] != '\0')
 	return msg_table[msg_number];
 
 	return "??";
@@ -30,7 +35,7 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 	FILE *fp;
 	static int called = 1;
 
-	if ((fp = fopen(cfgName, "r")) == NULL) {
+	if ((fp = fopen(cfgName, "r")) == nullptr) {
 		ShowError("Messages file not found: %s\n", cfgName);
 		return -1;
 	}
@@ -50,10 +55,11 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 		else {
 			msg_number = atoi(w1);
 			if (msg_number >= 0 && msg_number < size) {
-				if (msg_table[msg_number] != NULL)
+				if (msg_table[msg_number] != nullptr)
 					aFree(msg_table[msg_number]);
-				msg_table[msg_number] = (char *) aMalloc((strlen(w2) + 1) * sizeof (char));
-				strcpy(msg_table[msg_number], w2);
+				size_t len = strnlen(w2,sizeof(w2)) + 1;
+				msg_table[msg_number] = (char *) aMalloc(len * sizeof (char));
+				safestrncpy(msg_table[msg_number], w2, len);
 				msg_count++;
 			}
 			else

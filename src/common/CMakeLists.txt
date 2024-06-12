@@ -1,9 +1,8 @@
 
 #
-# Create svnversion.h
-# tbd, could be rename version.h
+# Create version.hpp
 #
-message( STATUS "Creating svnversion.h" )
+message( STATUS "Creating version.hpp" )
 if(GIT_VERSION)
 	# those 2 was done in parent to produce this
 	#include(GetGitVersion)
@@ -12,57 +11,69 @@ if(GIT_VERSION)
 	string(SUBSTRING ${GIT_HEAD_VERSION} 0 10 SHORT_GIT_HEAD_VERSION)
 	string(CONCAT GIT_STR_VERSIONS ${SHORT_GIT_VERSION} "_" ${SHORT_GIT_HEAD_VERSION})
 	#message( STATUS "git version=${GIT_STR_VERSIONS}" )
-	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
 		"#ifndef SVNVERSION\n#define SVNVERSION ${GIT_STR_VERSIONS}\n#endif\n" )
 elseif( SVNVERSION )
-	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
 		"#ifndef SVNVERSION\n#define SVNVERSION ${SVNVERSION}\n#endif\n" )
 else()
-	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h "" )
+	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/version.hpp "" )
 endif()
 set( GLOBAL_INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "" )
 set( SVNVERSION ${SVNVERSION}
 	CACHE STRING "SVN version of the source code" )
 if( INSTALL_COMPONENT_DEVELOPMENT )
-	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
 		DESTINATION "src/common"
 		COMPONENT Development_base )
 endif( INSTALL_COMPONENT_DEVELOPMENT )
-message( STATUS "Creating svnversion.h - done" )
+message( STATUS "Creating version.hpp - done" )
 
-
-#####################################################################
-# setup
-#
 set( COMMON_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
 	CACHE PATH "common source directory" )
 #message( STATUS "DEBUG COMMON_SOURCE_DIR=${COMMON_SOURCE_DIR}" )
 mark_as_advanced( COMMON_SOURCE_DIR )
 
+#####################################################################
+# setup
+#
+if( WIN32 )
+	set( PROJECT_LIBS Ws2_32.lib )
+
+	if( MSVC )
+		add_definitions(-D_WINSOCK_DEPRECATED_NO_WARNINGS)
+	endif()
+
+	set( COMMON_ADDITIONALL_CPP	"${COMMON_SOURCE_DIR}/winapi.cpp" )
+
+	set( COMMON_ADDITIONALL_HPP	"${COMMON_SOURCE_DIR}/winapi.hpp" )
+endif()
+
 set( COMMON_ALL_HEADERS
-	"${CMAKE_CURRENT_BINARY_DIR}/svnversion.h"
+	"${CMAKE_CURRENT_BINARY_DIR}/version.hpp"
 	"${COMMON_SOURCE_DIR}/cbasetypes.hpp"
 	"${COMMON_SOURCE_DIR}/mmo.hpp"
 	)
 
-set( COMMON_MINI_HEADERS
-	${COMMON_ALL_HEADERS}
-	"${COMMON_SOURCE_DIR}/core.hpp"
-	"${COMMON_SOURCE_DIR}/malloc.hpp"
-	"${COMMON_SOURCE_DIR}/showmsg.hpp"
-	"${COMMON_SOURCE_DIR}/strlib.hpp"
-	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
-	CACHE INTERNAL "" )
-set( COMMON_MINI_SOURCES
+add_library(minicore)
+
+target_sources(minicore PRIVATE
 	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
 	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
-	CACHE INTERNAL "" )
-set( COMMON_MINI_INCLUDE_DIRS ${LIBCONFIG_INCLUDE_DIRS} CACHE INTERNAL "" )
-set( COMMON_MINI_DEFINITIONS "-DMINICORE ${LIBCONFIG_DEFINITIONS}" CACHE INTERNAL "" )
+	${COMMON_ADDITIONALL_CPP} # needed by Windows
+)
 
+target_include_directories(minicore PUBLIC
+	${COMMON_SOURCE_DIR}
+	${LIBCONFIG_INCLUDE_DIRS}
+	${COMMON_ADDITIONALL_HPP} # needed by Windows
+)
+
+
+target_compile_definitions(minicore PRIVATE "-DMINICORE" ${LIBCONFIG_DEFINITIONS})
 
 #
 # common_base
@@ -73,6 +84,7 @@ set( COMMON_BASE_HEADERS
 	${COMMON_ALL_HEADERS}
 	"${COMMON_SOURCE_DIR}/conf.hpp"
 	"${COMMON_SOURCE_DIR}/core.hpp"
+	"${COMMON_SOURCE_DIR}/database.hpp"
 	"${COMMON_SOURCE_DIR}/db.hpp"
 	"${COMMON_SOURCE_DIR}/des.hpp"
 	"${COMMON_SOURCE_DIR}/ers.hpp"
@@ -91,10 +103,12 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
 	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
+	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/conf.cpp"
 	"${COMMON_SOURCE_DIR}/core.cpp"
+	"${COMMON_SOURCE_DIR}/database.cpp"
 	"${COMMON_SOURCE_DIR}/db.cpp"
 	"${COMMON_SOURCE_DIR}/des.cpp"
 	"${COMMON_SOURCE_DIR}/ers.cpp"
@@ -113,16 +127,17 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
 	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
+	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
 	${LIBCONFIG_INCLUDE_DIRS}
-  ${YAML_INCLUDE_DIRS}
+	${YAML_INCLUDE_DIRS}
 	CACHE INTERNAL "common_base include dirs" )
 set( COMMON_BASE_DEFINITIONS
 	${LIBCONFIG_DEFINITIONS}
 	CACHE INTERNAL "common_base definitions" )
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS}} )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp ryml )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
@@ -154,7 +169,7 @@ set( COMMON_HEADERS
 set( COMMON_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/sql.cpp"
 	CACHE INTERNAL "common sources" )
-set( DEPENDENCIES common_base yaml-cpp )
+set( DEPENDENCIES common_base yaml-cpp ryml )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
@@ -172,6 +187,5 @@ set( HAVE_common ON  CACHE INTERNAL "" )
 set( TARGET_LIST ${TARGET_LIST} common  CACHE INTERNAL "" )
 message( STATUS "Creating target common - done" )
 else()
-message( STATUS "Skipping target common (requires common_base and MYSQL)" )
-unset( HAVE_common CACHE )
+message( FATAL_ERROR "Stopping target common (requires common_base and MYSQL)" )
 endif()

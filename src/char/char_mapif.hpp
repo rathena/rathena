@@ -1,16 +1,10 @@
-/**
- * @file char_mapif.h
- * Module purpose is to handle incoming and outgoing requests with map-server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_MAPIF_HPP_
-#define _CHAR_MAPIF_HPP_
+#ifndef CHAR_MAPIF_HPP
+#define CHAR_MAPIF_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 int chmapif_sendall(unsigned char *buf, unsigned int len);
 int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
@@ -34,7 +28,6 @@ int chmapif_parse_fwlog_changestatus(int fd);
 int chmapif_parse_updfamelist(int fd);
 void chmapif_send_ackdivorce(int partner_id1, int partner_id2);
 int chmapif_parse_reqdivorce(int fd);
-int chmapif_parse_updmapinfo(int fd);
 int chmapif_parse_setcharoffline(int fd);
 int chmapif_parse_setalloffline(int fd, int id);
 int chmapif_parse_setcharonline(int fd, int id);
@@ -63,5 +56,4 @@ void chmapif_server_reset(int id);
 void chmapif_on_disconnect(int id);
 void do_final_chmapif(void);
 
-#endif	/* _CHAR_MAPIF_HPP_ */
-
+#endif /* CHAR_MAPIF_HPP */

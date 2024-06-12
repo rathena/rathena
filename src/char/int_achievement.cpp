@@ -1,19 +1,19 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_achievement.hpp"
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-#include "../common/db.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
+#include <common/db.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
 
 #include "char.hpp"
 #include "inter.hpp"
@@ -27,14 +27,14 @@
  */
 struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 {
-	struct achievement *achievelog = NULL;
+	struct achievement *achievelog = nullptr;
 	struct achievement tmp_achieve;
 	SqlStmt *stmt;
 	StringBuf buf;
 	int i;
 
 	if (!count)
-		return NULL;
+		return nullptr;
 
 	memset(&tmp_achieve, 0, sizeof(tmp_achieve));
 
@@ -52,14 +52,14 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		*count = 0;
-		return NULL;
+		return nullptr;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
+	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
 	*count = (int)SqlStmt_NumRows(stmt);
 	if (*count > 0) {
@@ -108,29 +108,36 @@ bool mapif_achievement_delete(uint32 char_id, int achievement_id)
  * @param ad: Achievement data
  * @return false in case of errors, true otherwise
  */
-bool mapif_achievement_add(uint32 char_id, struct achievement ad)
+bool mapif_achievement_add(uint32 char_id, struct achievement* ad)
 {
 	StringBuf buf;
 	int i;
+
+	ARR_FIND( 0, MAX_ACHIEVEMENT_OBJECTIVES, i, ad->count[i] != 0 );
+
+	if( i == MAX_ACHIEVEMENT_OBJECTIVES && ad->completed == 0 && ad->rewarded == 0 ){
+		// Do not save
+		return true;
+	}
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `id`, `completed`, `rewarded`", schema_config.achievement_table);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		StringBuf_Printf(&buf, ", `count%d`", i + 1);
 	StringBuf_AppendStr(&buf, ")");
-	StringBuf_Printf(&buf, " VALUES ('%u', '%d',", char_id, ad.achievement_id, (uint32)ad.completed, (uint32)ad.rewarded);
-	if( ad.completed ){
-		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u'),", (uint32)ad.completed);
+	StringBuf_Printf(&buf, " VALUES ('%u', '%d',", char_id, ad->achievement_id, (uint32)ad->completed, (uint32)ad->rewarded);
+	if( ad->completed ){
+		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u'),", (uint32)ad->completed);
 	}else{
 		StringBuf_AppendStr(&buf, "NULL,");
 	}
-	if( ad.rewarded ){
-		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u')", (uint32)ad.rewarded);
+	if( ad->rewarded ){
+		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u')", (uint32)ad->rewarded);
 	}else{
 		StringBuf_AppendStr(&buf, "NULL");
 	}
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, ", '%d'", ad.count[i]);
+		StringBuf_Printf(&buf, ", '%d'", ad->count[i]);
 	StringBuf_AppendStr(&buf, ")");
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
@@ -150,26 +157,26 @@ bool mapif_achievement_add(uint32 char_id, struct achievement ad)
  * @param ad: Achievement data
  * @return false in case of errors, true otherwise
  */
-bool mapif_achievement_update(uint32 char_id, struct achievement ad)
+bool mapif_achievement_update(uint32 char_id, struct achievement* ad)
 {
 	StringBuf buf;
 	int i;
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "UPDATE `%s` SET ", schema_config.achievement_table);
-	if( ad.completed ){
-		StringBuf_Printf(&buf, "`completed` = FROM_UNIXTIME('%u'),", (uint32)ad.completed);
+	if( ad->completed ){
+		StringBuf_Printf(&buf, "`completed` = FROM_UNIXTIME('%u'),", (uint32)ad->completed);
 	}else{
 		StringBuf_AppendStr(&buf, "`completed` = NULL,");
 	}
-	if( ad.rewarded ){
-		StringBuf_Printf(&buf, "`rewarded` = FROM_UNIXTIME('%u')", (uint32)ad.rewarded);
+	if( ad->rewarded ){
+		StringBuf_Printf(&buf, "`rewarded` = FROM_UNIXTIME('%u')", (uint32)ad->rewarded);
 	}else{
 		StringBuf_AppendStr(&buf, "`rewarded` = NULL");
 	}
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, ", `count%d` = '%d'", i + 1, ad.count[i]);
-	StringBuf_Printf(&buf, " WHERE `id` = %d AND `char_id` = %u", ad.achievement_id, char_id);
+		StringBuf_Printf(&buf, ", `count%d` = '%d'", i + 1, ad->count[i]);
+	StringBuf_Printf(&buf, " WHERE `id` = %d AND `char_id` = %u", ad->achievement_id, char_id);
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
@@ -202,7 +209,7 @@ int mapif_parse_achievement_save(int fd)
 {
 	int i, j, k, old_n, new_n = (RFIFOW(fd, 2) - 8) / sizeof(struct achievement);
 	uint32 char_id = RFIFOL(fd, 4);
-	struct achievement *old_ad = NULL, *new_ad = NULL;
+	struct achievement *old_ad = nullptr, *new_ad = nullptr;
 	bool success = true;
 
 	if (new_n > 0)
@@ -216,7 +223,7 @@ int mapif_parse_achievement_save(int fd)
 			// Only counts, complete, and reward are changable.
 			ARR_FIND(0, MAX_ACHIEVEMENT_OBJECTIVES, k, new_ad[i].count[k] != old_ad[j].count[k]);
 			if (k != MAX_ACHIEVEMENT_OBJECTIVES || new_ad[i].completed != old_ad[j].completed || new_ad[i].rewarded != old_ad[j].rewarded) {
-				if ((success = mapif_achievement_update(char_id, new_ad[i])) == false)
+				if ((success = mapif_achievement_update(char_id, &new_ad[i])) == false)
 					break;
 			}
 
@@ -227,7 +234,7 @@ int mapif_parse_achievement_save(int fd)
 			}
 		} else { // Add new achievements
 			if (new_ad[i].achievement_id) {
-				if ((success = mapif_achievement_add(char_id, new_ad[i])) == false)
+				if ((success = mapif_achievement_add(char_id, &new_ad[i])) == false)
 					break;
 			}
 		}
@@ -250,14 +257,14 @@ int mapif_parse_achievement_save(int fd)
  * Sends the achievementlog of a character to the map-server.
  */
 void mapif_achievement_load( int fd, uint32 char_id ){
-	struct achievement *tmp_achievementlog = NULL;
+	struct achievement *tmp_achievementlog = nullptr;
 	int num_achievements = 0;
 
 	tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements);
 
 	WFIFOHEAD(fd, num_achievements * sizeof(struct achievement) + 8);
 	WFIFOW(fd, 0) = 0x3862;
-	WFIFOW(fd, 2) = num_achievements * sizeof(struct achievement) + 8;
+	WFIFOW(fd, 2) = static_cast<int16>( num_achievements * sizeof( struct achievement ) + 8 );
 	WFIFOL(fd, 4) = char_id;
 
 	if (num_achievements > 0)
@@ -298,7 +305,7 @@ void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, tim
  * @see inter_parse_frommap
  */
 int mapif_parse_achievement_reward(int fd){
-	time_t current = time(NULL);
+	time_t current = time(nullptr);
 	uint32 char_id = RFIFOL(fd, 2);
 	int32 achievement_id = RFIFOL(fd, 6);
 
@@ -313,8 +320,8 @@ int mapif_parse_achievement_reward(int fd){
 		struct item item;
 
 		memset(&item, 0, sizeof(struct item));
-		item.nameid = RFIFOW(fd, 10);
-		item.amount = RFIFOL(fd, 12);
+		item.nameid = RFIFOL(fd, 10);
+		item.amount = RFIFOW(fd, 14);
 		item.identify = 1;
 
 		safesnprintf(mail_sender, NAME_LENGTH, char_msg_txt(227)); // 227: GM

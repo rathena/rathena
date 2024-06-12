@@ -1,0 +1,18 @@
+-	script	PullRequest2796	-1,{
+OnInit:
+	setarray .@actual, 31, 44, 14, 18, 24, 42, 39, 47, 30, 17, 36, 45, 34, 21, 38, 41, 23, 25, 13, 20, 8, 5, 22, 9, 2, 12, 19, 35, 48, 37;
+	sortarray( .@actual );
+	setarray .@expected, 2, 5, 8, 9, 12, 13, 14, 17, 18, 19, 20, 21, 22, 23, 24, 25, 30, 31, 34, 35, 36, 37, 38, 39, 41, 42, 44, 45, 47, 48;
+
+	for( .@i = 0; .@i < getarraysize( .@expected ); .@i++ ){
+		AssertEquals( .@expected[.@i], .@actual[.@i], "Index " + .@i );
+	}
+
+	setarray .@actual$, "Lemongrass", "Atemo", "Jey", "Lighta", "Nova", "MasterOfMuppets", "Aleos", "Cydh", "Playtester", "Stolao", "Nanakiwurtz", "Akkarin", "Secret";
+	sortarray( .@actual$ );
+	setarray .@expected$, "Akkarin", "Aleos", "Atemo", "Cydh", "Jey", "Lemongrass", "Lighta", "MasterOfMuppets", "Nanakiwurtz", "Nova", "Playtester", "Secret", "Stolao";
+
+	for( .@i = 0; .@i < getarraysize( .@expected$ ); .@i++ ){
+		AssertEquals( .@expected$[.@i], .@actual$[.@i], "Index " + .@i );
+	}
+}

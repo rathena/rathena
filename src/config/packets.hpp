@@ -1,7 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#ifndef _CONFIG_PACKETS_HPP_
-#define _CONFIG_PACKETS_HPP_
+
+#ifndef CONFIG_PACKETS_HPP
+#define CONFIG_PACKETS_HPP
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -12,14 +13,32 @@
 	/// Do NOT edit this line! To set your client version, please do this instead:
 	/// In Windows: Add this line in your src\custom\defines_pre.hpp file: #define PACKETVER YYYYMMDD
 	/// In Linux: The same as above or run the following command: ./configure --enable-packetver=YYYYMMDD
-	#define PACKETVER 20151104
+	#define PACKETVER 20211103
 #endif
 
 #ifndef PACKETVER_RE
-	/// From this point on only kRO RE clients are supported
-	#if PACKETVER > 20151104
+	/// From November 2015 only RagexeRE are supported.
+	/// After July 2018 only Ragexe are supported.
+	#if ( PACKETVER > 20151104 && PACKETVER < 20180704 ) || ( PACKETVER >= 20200902 && PACKETVER <= 20211118 )
 		#define PACKETVER_RE
 	#endif
+#endif
+
+#ifndef PACKETVER_RE
+	#define PACKETVER_MAIN_NUM PACKETVER
+
+	// Undefine all sakray server definitions
+	#undef PACKETVER_RE
+	#undef PACKETVER_RE_NUM
+#else
+	// Undefine existing definition
+	#undef PACKETVER_RE
+
+	#define PACKETVER_RE PACKETVER
+	#define PACKETVER_RE_NUM PACKETVER
+
+	// Undefine all main server definitions
+	#undef PACKETVER_MAIN_NUM
 #endif
 
 #if PACKETVER >= 20110817
@@ -40,6 +59,12 @@
 	#if defined(PACKET_OBFUSCATION)
 		#error You enabled packet obfuscation for a version which is too old. Minimum supported client is 2011-08-17.
 	#endif
+#endif
+
+/// Comment to disable the official Guild Storage skill.
+/// When enabled, this will set the guild storage size to the level of the skill * 100.
+#if PACKETVER >= 20131223
+	#define OFFICIAL_GUILD_STORAGE
 #endif
 
 #ifndef DUMP_UNKNOWN_PACKET
@@ -63,4 +88,7 @@
 /// Check if the specified packetvresion supports the cashshop sale system
 #define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223
 
-#endif // _CONFIG_PACKETS_HPP_
+/// Use web service?
+#define WEB_SERVER_ENABLE PACKETVER > 20200300
+
+#endif /* CONFIG_PACKETS_HPP */

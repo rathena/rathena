@@ -45,7 +45,7 @@ SC_POISON	()
 	desc: DEF -25%; if HP>25% lose 1.5% + 2 HP/sec; SP Regeneration is disabled
 	val1: Skill Level
 	val2: Caster's object ID
-	val3: 
+	val3:
 	val4: Remaining tick
 
 SC_CURSE	()
@@ -75,7 +75,7 @@ SC_DPOISON	()
 	desc: DEF -25%; if HP>25% lose 10/15% HP/sec
 	val1: Skill Level
 	val2: Caster's object ID (for mob_log_damage)
-	val3: 
+	val3:
 	val4: Remaining tick
 
 SC_PROVOKE	(EFST_PROVOKE)
@@ -476,7 +476,7 @@ SC_GOSPEL	(EFST_GOSPEL)
 
 SC_ASSUMPTIO	(RE: EFST_ASSUMPTIO2. Pre-RE: EFST_ASSUMPTIO)
 	desc: HP_ASSUMPTIO's effect
-	val1: Level (unused)
+	val1: Level // * 2 Bonus heal % (in RENEWAL)
 
 SC_BASILICA	()
 	desc: Can't move; Can't use skill except the Basilica caster to cancel the basilica itself; Clear the skill area; Knockback enemy except Boss
@@ -669,13 +669,16 @@ SC_WINKCHARM	()
 	desc:
 	val1:
 
-SC_CLOSECONFINE	()
-	desc:
-	val1:
+SC_CLOSECONFINE	(EFST_RG_CCONFINE_M)
+	desc: Flee bonus and counter for confined enemies
+	val1: Skill level
+	val2: Confined enemy count
+	val3: +50 Flee
 
-SC_CLOSECONFINE2	()
-	desc:
-	val1:
+SC_CLOSECONFINE2	(EFST_RG_CCONFINE_S)
+	desc: Confines target in place
+	val1: Skill level
+	val2: MapID of caster
 
 SC_DANCING	()
 	desc:
@@ -1035,9 +1038,9 @@ SC_JAILED	()
 	desc:
 	val1:
 
-SC_ENCHANTARMS	()
-	desc:
-	val1:
+SC_ENCHANTARMS	(EFST_WEAPONPROPERTY)
+	desc: Changes the element of a target's weapon.
+	val1: Element value from skill_db
 
 SC_MAGICALATTACK	()
 	desc:
@@ -1760,7 +1763,7 @@ SC_RAISINGDRAGON	()
 	val1:
 
 SC_GT_ENERGYGAIN	(EFST_GENTLETOUCH_ENERGYGAIN)
-	desc: 
+	desc:
 	val1: SR_GENTLETOUCH_ENERGYGAIN Skill Level
 	val2: Sphere Gain Chance
 
@@ -2368,7 +2371,7 @@ SC_REBOUND	(EFST_REBOUND)
 	val1:
 
 SC_UNLIMIT	(EFST_UNLIMIT)
-	desc: Increase attak rate & set Def/MDef to 1, 
+	desc: Increase attak rate & set Def/MDef to 1,
 	val1:
 	val2: +% Attack
 
@@ -2690,3 +2693,152 @@ SC_GVG_BLIND	(EFST_GVG_BLIND)
 SC_EXTREMITYFIST2	()
 	desc:
 	val1:
+
+SC_LHZ_DUN_N1	(EFST_LHZ_DUN_N1)
+	desc: Increases damage against Swordman, Thief and reduces damage taken from Acolyte, Merchant monsters of Biolab 5 (except MVPs).
+	val1: +% Damage
+	val2: +% Defense
+
+SC_LHZ_DUN_N2	(EFST_LHZ_DUN_N2)
+	desc: Increases damage against Acolyte, Merchant and reduces damage taken from Mage, Archer monsters of Biolab 5 (except MVPs).
+	val1: +% Damage
+	val2: +% Defense
+
+SC_LHZ_DUN_N3	(EFST_LHZ_DUN_N3)
+	desc: Increases damage against Mage, Archer and reduces damage taken from Swordman, Thief monsters of Biolab 5 (except MVPs).
+	val1: +% Damage
+	val2: +% Defense
+
+SC_LHZ_DUN_N4	(EFST_LHZ_DUN_N4)
+	desc: Increases and reduces damage against MVPs of Biolab 5.
+	val1: +% Damage
+	val2: +% Defense
+
+SC_DORAM_BUF_01 ()
+	desc: Recovers 10 HP every 10 seconds.
+
+SC_DORAM_BUF_02 ()
+	desc: Recovers 5 SP every 10 seconds.
+
+SC_INCREASE_MAXHP (EFST_ATKER_ASPD)
+	desc: Increases MaxHP. Increases natural HP regeneration.
+	val1: + HP
+	val2: +% HP regeneration
+
+SC_INCREASE_MAXSP (EFST_ATKER_MOVESPEED)
+	desc: Increases MaxSP. Increases natural SP regeneration.
+	val1: + SP
+	val2: +% SP regeneration
+
+SC_REF_T_POTION (EFST_REF_T_POTION)
+	desc: Decreases reflected damage by 100%.
+
+SC_ADD_ATK_DAMAGE (EFST_ADD_ATK_DAMAGE)
+	desc: Increases melee physical damage by 15%. Increases ranged physical damage by 15%.
+	val1:
+
+SC_ADD_MATK_DAMAGE (EFST_ADD_MATK_DAMAGE)
+	desc: Increases all elemental magical damage by 15%.
+
+SC_HELPANGEL (EFST_HELPANGEL)
+	desc: Recover 1000 HP every second. Recover 350 SP every second.
+	val1:
+	val2:
+	val3:
+	val4: Tick time (milliseconds)
+
+SC_SOUNDOFDESTRUCTION (EFST_SOUND_OF_DESTRUCTION)
+	desc: Doubles incoming damage for 10 seconds.
+
+SC_LUXANIMA (EFST_LUXANIMA)
+	desc: Physical attacks has the chance to activate Storm Blast Level 1. Increases physical damage against all sizes.
+		  Increases Critical Damage. Increases Melee and Ranged Physical Damage.
+	val1:
+	val2: Storm Blast success 15% (hardcoded)
+	val3: Damage/HP/SP 30% increase (hardcoded)
+
+SC_REUSE_LIMIT_LUXANIMA ()
+	desc:
+	val1:
+
+SC_ENSEMBLEFATIGUE (EFST_ENSEMBLEFATIGUE)
+	desc: Disables skill use. Movement and attack speed reduced by 30%.
+	val1:
+	val2: + 30 Speed and ASPD rates penalty (hardcoded)
+
+SC_MISTY_FROST (EFST_MISTY_FROST)
+	desc: Freezing.
+
+SC_MAGIC_POISON (EFST_MAGIC_POISON)
+	desc: Decreases resistance against all elemental attacks by 50%.
+	val1:
+	val2: Attribute Reduction (50, hardcoded).
+
+SC_EP16_2_BUFF_SS (EFST_EP16_2_BUFF_SS)
+	desc: ASPD +10.
+
+SC_EP16_2_BUFF_SC (EFST_EP16_2_BUFF_SC)
+	desc: CRIT +30.
+
+SC_EP16_2_BUFF_AC (EFST_EP16_2_BUFF_AC)
+	desc: Reduce variable cast time by 80%.
+
+SC_EMERGENCY_MOVE (EFST_INC_AGI)
+	desc: Increase AGI and walkspeed, AL_INCAGI effect.
+	val1:
+	val2: Movement speed +25 (hardcoded)
+
+SC_PACKING_ENVELOPE1	(EFST_PACKING_ENVELOPE1)
+	desc: Increases ATK
+	val1: + watk
+
+SC_PACKING_ENVELOPE2	(EFST_PACKING_ENVELOPE2)
+	desc: Increases MATK
+	val1: + ematk
+
+SC_PACKING_ENVELOPE3	(EFST_PACKING_ENVELOPE3)
+	desc: Increases MaxHP
+	val1: +% MaxHP
+
+SC_PACKING_ENVELOPE4	(EFST_PACKING_ENVELOPE4)
+	desc: Increases MaxSP
+	val1: +% MaxSP
+
+SC_PACKING_ENVELOPE5	(EFST_PACKING_ENVELOPE5)
+	desc: Increases FLEE
+	val1: + Flee
+
+SC_PACKING_ENVELOPE6	(EFST_PACKING_ENVELOPE6)
+	desc: Increases ASPD
+	val1: + ASPD
+
+SC_PACKING_ENVELOPE7	(EFST_PACKING_ENVELOPE7)
+	desc: Increases DEF
+	val1: + DEF
+
+SC_PACKING_ENVELOPE8	(EFST_PACKING_ENVELOPE8)
+	desc: Increases MDEF
+	val1: + MDEF
+
+SC_PACKING_ENVELOPE9	(EFST_PACKING_ENVELOPE9)
+	desc: Increases Critical rate
+	val1: + Critical rate
+
+SC_PACKING_ENVELOPE10	(EFST_PACKING_ENVELOPE10)
+	desc: Increases HIT
+	val1: + HIT
+
+SC_WEAPONBREAKER
+	desc: Bonus given when using NPC_WEAPONBRAKER skill
+	val1: Skill level
+	val2: val1 * 2 weapon break chance
+
+SC_POWERUP
+	desc: Increases ATKpercent and Hit.
+	val1: + ATKpercent
+	val2: +% Hit
+
+SC_AGIUP
+	desc: Increase Speed and Flee.
+	val1: +% Walkspeed
+	val2: +% Flee

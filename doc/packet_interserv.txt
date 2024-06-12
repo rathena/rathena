@@ -3,10 +3,10 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140831
+//= 20180924
 //===== Description: =========================================
-//= List of all packets used by login-serv (A), char-serv (H),
-//= and map-serv (Z) to communicate with each other.
+//= List of all packets used by login-server (A), char-server
+//= (H), and map-server (Z) to communicate with each other.
 //= See packet_client.txt for communication to client (C).
 //============================================================
 
@@ -24,7 +24,7 @@ The format of this file is as follows:
 ============
 | 1. Notes |
 ============
-Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.c').
+Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.cpp').
 
 =========================
 | 2. Login-Char Packets |
@@ -60,7 +60,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- request_id: unknown @FIXME
 		- clienttype: unknown @FIXME
 	desc:
-		- Acknowledge the authentication request from char-serv
+		- Acknowledge the authentication request from char-server
 
 0x2714:
 	Type: HA
@@ -69,9 +69,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	len: 6
 	parameter:
 		- cmd : packet identification (0x2714)
-		- user_count: number of user present on the char-serv
+		- user_count: number of user present on the char-server
 	desc:
-		- Retrieve the number of user present on a char-serv
+		- Retrieve the number of user present on a char-server
 
 0x2715:
 	free
@@ -140,7 +140,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- u_aid :
 		- account_id :
 	desc:
-		- 
+		-
 
 0x2721:
 	Type: AH
@@ -177,7 +177,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- actual_email: current email address
 		- new_email: new email address
 	desc:
-		- Map server sends information to change an email of an account via char-server
+		- Map-server sends information to change an email of an account via char-server
 
 0x2723:
 	Type: AH
@@ -267,7 +267,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- type
 		- value
 	desc:
-		- Receive an request to fetch account_reg2 from a char-server, see packet 0x3004 (mapif_parse_Registry)
+		- Receive a request to fetch account_reg2 from a char-server, see packet 0x3004 (mapif_parse_Registry)
 
 
 0x2729:
@@ -288,7 +288,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- str : name of variable in registry
 		- value : value of varaible in registry
 	desc:
-		- Receive account_reg2 registry, forward to map servers.
+		- Receive account_reg2 registry, forward to map-server.
 
 0x272a:
 	Type: HA
@@ -311,7 +311,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x272b)
 		- t_aid: account identification
 	desc:
-		- Add aid to list of online user on loginserv (setacconline).
+		- Add aid to list of online user on login-server (setacconline).
 
 0x272c:
 	Type: HA
@@ -332,7 +332,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x272d)
 		- len : size of packet
-		- users: number of users connected to char-serv
+		- users: number of users connected to char-server
 		- aid: account identification
 	desc:
 		- receive account list from char-server
@@ -364,7 +364,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- state: 0=change of status, 1=ban
 		- status|date: status or final date of a banishment
 	desc:
-		- Notify char-serv of a state change or ban (accbannotification).
+		- Notify char-server of a state change or ban (accbannotification).
 
 0x2732:
 0x2733:
@@ -379,7 +379,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x2734)
 		- aid: account identification
 	desc:
-		- Account is already marked as online. (Login server request to kick a character out).
+		- Account is already marked as online. (Login-server request to kick a character out).
 
 0x2735:
 	Type: AH
@@ -389,8 +389,8 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2735)
 	desc:
-		- IP address update signal from login server.
-		- Send back the IP of char server to login-server if IP was changed.
+		- IP address update signal from login-server.
+		- Send back the IP of char-server to login-server if IP was changed.
 
 0x2736:
 	Type: HA
@@ -399,7 +399,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	len: 6
 	parameter:
 		- cmd : packet identification (0x2736)
-		-  ip: ip of char server
+		-  ip: ip of char-server
 	desc:
 		- IP update for char-server
 
@@ -434,7 +434,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x2739)
 		- aid : account identification
 	desc:
-		- Login notify char that too many wrong PIN code entered. (fail auth)
+		- Login-server notifies char-server for too many wrong PIN code entered. (fail auth)
 
 0x273a
 0x273b
@@ -456,9 +456,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2742)
 		- aid: account identification
-		- flag: 0x1 ack vip data to char-serv, 0x2 add duration, 0x8 First request on player login
+		- flag: 0x1 ack vip data to char-server, 0x2 add duration, 0x8 First request on player login
 		- timediff: tick to add to viptime
-		- mapfd: map-serv link to ack if type&1
+		- mapfd: map-server link to ack if type&1
 	desc:
 		- Received a VIP data request from char
 
@@ -473,9 +473,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- vip_time: timestamp of vip_time if he is vip
 		- flag: 0x1: isvip, is this account in vip mode atm, 0x2: isgm, 0x4: show rates on player
 		- groupid: group id of account
-		- mapfd: map-serv link to ack
+		- mapfd: map-server link to ack
 	desc:
-		- Transmit vip specific data to char-serv (will be transfered to mapserv)
+		- Transmit vip specific data to char-server (will be transfered to map-server)
 
 =========================
 | 3.1 Inter-Map Packets |
@@ -496,7 +496,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- fontY:
 		- mes: message to send
 	desc:
-		- Broadcasts a message to all map-servs connected to this char-serv
+		- Broadcasts a message to all map-servers connected to this char-server
 
 
 0x3001
@@ -520,10 +520,10 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	len: 7
 	parameter:
 		- cmd : packet identification (0x3002)
-		- id: whisper id, identifier to match current whisper session that store in inter.c::wis_db
+		- id: whisper id, identifier to match current whisper session that store in inter.cpp::wis_db
 		- flag: 0=success, 1=target not found, 2=ignored by target
 	desc:
-		- Inform the char-serv of the result of the whisper
+		- Inform the char-server of the result of the whisper
 
 0x3003
 	Type: ZI
@@ -552,10 +552,10 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 			1: account2 registry
 			2: account registry
 			3: char registry
-		-str: registre variable identifiant, (variable name)
+		-str: register variable identity, (variable name)
 		-value: variable value
 	desc:
-		- Map-serv is requesting Char-serv to save registry values. (type=1 will forward data to login-serv)
+		- Map-server is requesting char-server to save registry values. (type=1 will forward data to login-server)
 
 0x3005
 	Type: ZI
@@ -566,8 +566,8 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x3005)
 		- aid:
 		- cid:
-		-acc_reg2 : request  account registry (permanent variable of account, save on login-serv)
-		-acc_reg : request account registry (permanent variable of account , save on char-serv)
+		-acc_reg2 : request  account registry (permanent variable of account, save on login-server)
+		-acc_reg : request account registry (permanent variable of account , save on char-server)
 		-ch_reg :  request char registry (permanent variable of char)
 	desc:
 		- Request the registries for this player.
@@ -935,7 +935,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- aid
 		- max
 	desc:
-		- Request an update of Guildskill skill_id
+		- Request an update of Guild skill skill_id
 
 0x303d
 	Type: ZI
@@ -1174,7 +1174,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x3060)
 		- cid
 	desc:
-		- Requests a character's quest log entries to the inter server.
+		- Requests a character's quest log entries to the inter-server.
 
 0x3061
 	Type: ZI
@@ -1184,7 +1184,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x3061)
 	desc:
-		- Requests to the inter server to save a character's quest log entries.
+		- Requests to the inter-server to save a character's quest log entries.
 
 0x3062
 	Type: ZI
@@ -1195,7 +1195,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x3062)
 		- cid
 	desc:
-		- Requests a character's achievement log entries to the inter server.
+		- Requests a character's achievement log entries to the inter-server.
 
 0x3063
 	Type: ZI
@@ -1205,7 +1205,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x3063)
 	desc:
-		- Requests to the inter server to save a character's achievement log entries.
+		- Requests to the inter-server to save a character's achievement log entries.
 
 0x3070
 	Type: ZI
@@ -1455,7 +1455,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x30A0)
 	desc:
-		- Requests the loaded clans from the inter server
+		- Requests the loaded clans from the inter-server
 
 0x30A1
 	Type: ZI
@@ -1469,7 +1469,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- account id : the account id of the sender
 		- message : the message to be sent
 	desc:
-		- Sends a clan message to the inter server to relay it to all other mapservers
+		- Sends a clan message to the inter-server to relay it to all other map-servers
 
 0x30A2:
 	Type: ZI
@@ -1480,7 +1480,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x30A2)
 		- clan id : the clan id
 	desc:
-		- Notifies the inter server that a player has left the clan or disconnected
+		- Notifies the inter-server that a player has left the clan or disconnected
 
 0x30A3:
 	Type: ZI
@@ -1491,7 +1491,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x30A3)
 		- clan id : the clan id
 	desc:
-		- Notifies the inter server that a player has joined the clan or connected
+		- Notifies the inter-server that a player has joined the clan or connected
 
 0x3800:
 	Type: IZ
@@ -1598,7 +1598,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- aid
 		- msg_out
 	desc:
-		- sends a mesasge to map server (fd) to a user (u_fd) although we use fd we keep aid for safe-check
+		- sends a message to map-server (fd) to a user (u_fd) although we use fd we keep aid for safe-check
 
 0x3808
 	Type: IZ
@@ -1611,7 +1611,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- aid
 		- acc_name
 	desc:
-		- Transmit the result of a account_information request from map-serv, with type 1
+		- Transmit the result of a account_information request from map-server, with type 1
 
 0x3809
 	Type: IZ
@@ -2023,7 +2023,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- sender_name
 		- mail_title
 	desc:
-		- Report New Mail to Map Server
+		- Report New Mail to map-server
 
 0x384a
 	Type: IZ
@@ -2178,9 +2178,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- size
 		- count : number of item retrieved
 		- guild_id
-		- items: retreived guild bound items
+		- items: retrieved guild bound items
 	desc:
-		- Ask map-server to process the retreived guild bound items from expelled member
+		- Ask map-server to process the retrieved guild bound items from expelled member
 
 0x3860
 	Type: IZ
@@ -2292,7 +2292,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	len: 6+variable
 	parameter:
 		- cmd : packet identification (0x388c)
-		- len : Pakcet length
+		- len : packet length
 		- storage_table : Storage table information
 	desc:
 		- Receive storage information
@@ -2358,7 +2358,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- size
 		- clan structure
 	desc:
-		- Send all loaded clans to the map server
+		- Send all loaded clans to the map-server
 
 0x38A1
 	Type: IZ
@@ -2370,7 +2370,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- size
 		- message : the data of the clan chat message packet
 	desc:
-		- Sends a clan chat message to other map servers
+		- Sends a clan chat message to other map-servers
 
 0x38A2
 	Type: IZ
@@ -2382,7 +2382,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- clan id : the clan id of the clan that needs an update
 		- online count : the amount of currently connected players in the clan
 	desc:
-		- Updates the online clan member count for all other map servers
+		- Updates the online clan member count for all other map-servers
 
 ========================
 | 3.2 Char-Map Packets |
@@ -2439,7 +2439,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2b00)
 	desc:
-		- Send to map-servers the users count on this char-serv, (meaning the total of all mapserv)
+		- Send to map-servers the users count on this char-server, (meaning the total of all map-server)
 
 0x2b03
 	Type: AZ
@@ -2451,7 +2451,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- account_id
 		- ?
 	desc:
-		- Player Requesting char-select from map_serv
+		- Player Requesting char-select from map-server
 
 0x2b04
 	Type: AZ
@@ -2483,7 +2483,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- ip
 		- port
 	desc:
-		- Map-server change request acknowledgement (positive or negative)
+		- Map-server change request acknowledgment (positive or negative)
 
 0x2b09
 	Type: AZ
@@ -2522,7 +2522,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- acc
 		- sex
 	desc:
-		- Request char server to change sex of char
+		- Request char-server to change sex of char
 
 0x2b0f
 	Type: AZ
@@ -2591,7 +2591,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- aid
 		- cid
 	desc:
-		- Map-serv requesting to send the list of sc_data the player has saved
+		- Map-server requesting to send the list of sc_data the player has saved
 
 0x2b1e
 	Type: AZ
@@ -2602,7 +2602,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x2b1e)
 		- new_ip
 	desc:
-		- Request forwarded from char-server for interserver IP sync
+		- Request forwarded from char-server for inter-server IP sync
 
 0x2b1f
 	Type: AZ
@@ -2614,7 +2614,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- account_id
 		- reason
 	desc:
-		- Request to kick char from a certain map server
+		- Request to kick char from a certain map-server
 
 0x2b20
 	Type: AZ
@@ -2660,7 +2660,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2b24)
 	desc:
-		- Map-server keep alive packet, awnser back map that we alive as well
+		- Map-server keep alive packet, answer back map that we alive as well
 
 0x2b25
 	Type: AZ
@@ -2704,7 +2704,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- groupid
 		- flag : 0x1: isvip, is this account in vip mode atm, 0x2: isgm, 0x4: show rates on player
 	desc:
-		- Received vip-data from char-serv, fill map-serv data
+		- Received vip-data from char-server, fill map-server data
 
 0x2b2f
 	Type: AZ
@@ -2748,7 +2748,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- account_id
 		- char_id
 	desc:
-		- Request sc_data from charserver
+		- Request sc_data from char-server
 
 0x2afe
 	Type: ZA
@@ -2772,7 +2772,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- account_id
 		- char_id
 	desc:
-		- Map-serv sent us all his users info, (aid and cid) so we can update online_char_db
+		- Map-server sent us all his users info, (aid and cid) so we can update online_char_db
 
 0x2b01
 	Type: ZA
@@ -2818,7 +2818,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- client_addr
 		- group_id
 	desc:
-		- Tell the charserver the mapchange / quest for ok
+		- Tell the char-server the map change / quest for ok
 
 0x2b07
 	Type: ZA
@@ -2830,7 +2830,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- char_id
 		- friend_id
 	desc:
-		- Asks char server to remove friend_id from the friend list of char_id
+		- Asks char-server to remove friend_id from the friend list of char_id
 
 0x2b08
 	Type: ZA
@@ -2840,7 +2840,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2b08)
 	desc:
-		- Search char through id on char serv
+		- Search char through id on char-server
 
 0x2b0a
 	Type: ZA
@@ -2852,7 +2852,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- account_id
 		- char_id
 	desc:
-		- Request skillcooldown from charserver
+		- Request skillcooldown from char-server
 
 0x2b0c
 	Type: ZA
@@ -2881,7 +2881,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- val1
 		- val2
 	desc:
-		- Send an account modification request to the login server (via char server).
+		- Send an account modification request to the login-server (via char-server).
 
 0x2b10
 	Type: ZA
@@ -2906,7 +2906,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- partner_id1
 		- partner_id2
 	desc:
-		- Request Char Server to Divorce Players
+		- Request char-server to Divorce Players
 
 0x2b15
 	Type: ZA
@@ -2933,7 +2933,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- job_rate
 		- drop_rate
 	desc:
-		- Send rates and motd to char server
+		- Send rates and motd to char-server
 
 0x2b17
 	Type: ZA
@@ -3001,7 +3001,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2b23)
 	desc:
-		- pings the charserver (chrif_keepalive)
+		- pings the char-server (chrif_keepalive)
 
 0x2b26
 	Type: ZA

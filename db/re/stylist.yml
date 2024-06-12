@@ -1,0 +1,429 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Stylist Database
+###########################################################################
+#
+# Stylist Settings
+#
+###########################################################################
+# - Look                     Look that will be changed.
+#   Options                  Possible options to select from.
+#     - Index                Client side index of the option.
+#       Value                Value of the look (can also be an item name).
+#       CostsHuman:          Costs for human players.
+#           Price            Required zeny. (Default: 0)
+#           RequiredItem     Required item. (Default: None)
+#           RequiredItemBox  Required item box. (Default: None)
+#       CostsDoram:          Costs for doram players.
+#           Price            Required zeny. (Default: 0)
+#           RequiredItem     Required item. (Default: None)
+#           RequiredItemBox  Required item box. (Default: None)
+###########################################################################
+
+Header:
+  Type: STYLIST_DB
+  Version: 1
+
+Body:
+  - Look: Hair_Color
+    Options:
+      - Index: -1
+        Value: 0
+        CostsHuman:
+            Price: 0
+        CostsDoram:
+            Price: 0
+      - Index: 1
+        Value: 1
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 2
+        Value: 2
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 3
+        Value: 3
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 4
+        Value: 4
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 5
+        Value: 5
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 6
+        Value: 6
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 7
+        Value: 7
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 8
+        Value: 8
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+  - Look: Hair
+    Options:
+      - Index: 1
+        Value: 1
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 2
+        Value: 2
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 3
+        Value: 3
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 4
+        Value: 4
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 5
+        Value: 5
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 6
+        Value: 6
+        CostsHuman:
+            Price: 100000
+        CostsDoram:
+            Price: 100000
+      - Index: 7
+        Value: 7
+        CostsHuman:
+            Price: 100000
+        CostDoram:
+            RequiredItem: J_Shop_Coupon2
+            RequiredItemBox: J_Shop_Coupon2
+      - Index: 8
+        Value: 8
+        CostsHuman:
+            Price: 100000
+        CostDoram:
+            RequiredItem: J_Shop_Coupon2
+            RequiredItemBox: J_Shop_Coupon2
+      - Index: 9
+        Value: 9
+        CostsHuman:
+            Price: 100000
+        CostDoram:
+            RequiredItem: J_Shop_Coupon2
+            RequiredItemBox: J_Shop_Coupon2
+      - Index: 10
+        Value: 10
+        CostsHuman:
+            Price: 100000
+        CostDoram:
+            RequiredItem: J_Shop_Coupon2
+            RequiredItemBox: J_Shop_Coupon2
+      - Index: 11
+        Value: 11
+        CostsHuman:
+            Price: 100000
+      - Index: 12
+        Value: 12
+        CostsHuman:
+            Price: 100000
+      - Index: 13
+        Value: 13
+        CostsHuman:
+            Price: 100000
+      - Index: 14
+        Value: 14
+        CostsHuman:
+            Price: 100000
+      - Index: 15
+        Value: 15
+        CostsHuman:
+            Price: 100000
+      - Index: 16
+        Value: 16
+        CostsHuman:
+            Price: 100000
+      - Index: 17
+        Value: 17
+        CostsHuman:
+            Price: 100000
+      - Index: 18
+        Value: 18
+        CostsHuman:
+            Price: 100000
+      - Index: 19
+        Value: 19
+        CostsHuman:
+            Price: 100000
+      - Index: 20
+        Value: 20
+        CostsHuman:
+            Price: 100000
+      - Index: 21
+        Value: 21
+        CostsHuman:
+            Price: 100000
+      - Index: 22
+        Value: 22
+        CostsHuman:
+            Price: 100000
+      - Index: 23
+        Value: 23
+        CostsHuman:
+            Price: 100000
+      - Index: 24
+        Value: 24
+        CostsHuman:
+            RequiredItem: New_Style_Coupon
+            RequiredItemBox: C_New_Style_Box
+      - Index: 25
+        Value: 25
+        CostsHuman:
+            RequiredItem: New_Style_Coupon
+            RequiredItemBox: C_New_Style_Box
+      - Index: 26
+        Value: 26
+        CostsHuman:
+            RequiredItem: New_Style_Coupon
+            RequiredItemBox: C_New_Style_Box
+      - Index: 27
+        Value: 27
+        CostsHuman:
+            RequiredItem: New_Style_Coupon
+            RequiredItemBox: C_New_Style_Box
+      - Index: 28
+        Value: 28
+        CostsHuman:
+            RequiredItem: J_Shop_Coupon
+            RequiredItemBox: J_Shop_Coupon_Box
+      - Index: 29
+        Value: 29
+        CostsHuman:
+            RequiredItem: J_Shop_Coupon
+            RequiredItemBox: J_Shop_Coupon_Box
+      - Index: 30
+        Value: 30
+        CostsHuman:
+            RequiredItem: J_Shop_Coupon2
+            RequiredItemBox: J_Shop_Coupon2
+      - Index: 31
+        Value: 31
+        CostsHuman:
+            RequiredItem: J_Shop_Coupon2
+            RequiredItemBox: J_Shop_Coupon2
+      - Index: 32
+        Value: 32
+        CostsHuman:
+            Price: 100000
+      - Index: 33
+        Value: 33
+        CostsHuman:
+            Price: 3000000
+      - Index: 34
+        Value: 34
+        CostsHuman:
+            Price: 3000000
+      - Index: 35
+        Value: 35
+        CostsHuman:
+            Price: 3000000
+      - Index: 36
+        Value: 36
+        CostsHuman:
+            Price: 3000000
+      - Index: 37
+        Value: 37
+        CostsHuman:
+            Price: 3000000
+      - Index: 38
+        Value: 38
+        CostsHuman:
+            Price: 3000000
+      - Index: 39
+        Value: 39
+        CostsHuman:
+            Price: 3000000
+      - Index: 40
+        Value: 40
+        CostsHuman:
+            Price: 3000000
+      - Index: 41
+        Value: 41
+        CostsHuman:
+            Price: 3000000
+      - Index: 42
+        Value: 42
+        CostsHuman:
+            Price: 3000000
+  - Look: Clothes_Color
+    Options:
+      - Index: 1
+        Value: 0
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon2
+            RequiredItemBox: CCloth_Dye_Coupon2_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon2
+            RequiredItemBox: CCloth_Dye_Coupon2_Box
+      - Index: 2
+        Value: 2
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 3
+        Value: 3
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+        CostsDoram:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 4
+        Value: 4
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 5
+        Value: 5
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 6
+        Value: 6
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+      - Index: 7
+        Value: 7
+        CostsHuman:
+            RequiredItem: Clothing_Dye_Coupon
+            RequiredItemBox: CCloth_Dye_Coupon_Box
+  - Look: Head_Top
+    Options:
+      - Index: 1
+        Value: Hat
+        CostsHuman:
+            Price: 1000
+        CostsDoram:
+            Price: 1000
+      - Index: 2
+        Value: Ribbon
+        CostsHuman:
+            Price: 800
+        CostsDoram:
+            Price: 800
+      - Index: 3
+        Value: Bandana
+        CostsHuman:
+            Price: 400
+        CostsDoram:
+            Price: 400
+  - Look: Head_Mid
+    Options:
+      - Index: 1
+        Value: One_Eyed_Glass
+        CostsHuman:
+            Price: 10000
+        CostsDoram:
+            Price: 10000
+      - Index: 2
+        Value: Sunglasses
+        CostsHuman:
+            Price: 5000
+        CostsDoram:
+            Price: 5000
+      - Index: 3
+        Value: Luxury_Sunglasses
+        CostsHuman:
+            Price: 24000
+        CostsDoram:
+            Price: 24000
+      - Index: 4
+        Value: Spinning_Eyes
+        CostsHuman:
+            Price: 20000
+        CostsDoram:
+            Price: 20000
+      - Index: 5
+        Value: Diver's_Goggles
+        CostsHuman:
+            Price: 3500
+        CostsDoram:
+            Price: 3500
+      - Index: 6
+        Value: Glasses
+        CostsHuman:
+            Price: 4000
+        CostsDoram:
+            Price: 4000
+      - Index: 7
+        Value: Eye_Bandage
+        CostsHuman:
+            Price: 1000
+        CostsDoram:
+            Price: 1000
+  - Look: Head_Bottom
+    Options:
+      - Index: 1
+        Value: Granpa_Beard
+        CostsHuman:
+            Price: 5000
+        CostsDoram:
+            Price: 5000
+  - Look: Body2
+    Options:
+      - Index: 1
+        Value: 0
+        CostsHuman:
+            RequiredItem: Costume_Ticket
+      - Index: 2
+        Value: 1
+        CostsHuman:
+            RequiredItem: Costume_Ticket

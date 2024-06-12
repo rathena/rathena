@@ -1,0 +1,2526 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Summonable Monsters Database
+###########################################################################
+#
+# Summonable Monsters Settings
+#
+###########################################################################
+# - Group                   Monster random group name. "MOBG_" is appended to the name during the parsing.
+#   Default                 Monster AegisName summoned by default when the summon fails.
+#   Summon:                 List of Summonable Monsters.
+#     - Mob                 Monster AegisName.
+#       Rate                Summon rate of Mob (from [0-1000000]).
+###########################################################################
+
+Header:
+  Type: MOB_SUMMONABLE_DB
+  Version: 1
+
+Body:
+  - Group: BLOODY_DEAD_BRANCH
+    Default: BAPHOMET
+    Summon:
+      - Mob: OSIRIS
+        Rate: 500000
+      - Mob: BAPHOMET
+        Rate: 500000
+      - Mob: DOPPELGANGER
+        Rate: 500000
+      - Mob: MISTRESS
+        Rate: 500000
+      - Mob: GOLDEN_BUG
+        Rate: 500000
+      - Mob: ORK_HERO
+        Rate: 500000
+      - Mob: ANGELING
+        Rate: 500000
+      - Mob: DRAKE
+        Rate: 500000
+      - Mob: EDDGA
+        Rate: 500000
+      - Mob: GHOSTRING
+        Rate: 500000
+      - Mob: MAYA
+        Rate: 500000
+      - Mob: MOONLIGHT
+        Rate: 500000
+      - Mob: PHARAOH
+        Rate: 500000
+      - Mob: PHREEONI
+        Rate: 500000
+      - Mob: ORC_LORD
+        Rate: 500000
+      - Mob: KNIGHT_OF_WINDSTORM
+        Rate: 500000
+      - Mob: GARM
+        Rate: 500000
+      - Mob: DARK_LORD
+        Rate: 500000
+      - Mob: TURTLE_GENERAL
+        Rate: 500000
+      - Mob: LORD_OF_DEATH
+        Rate: 500000
+      - Mob: ARCHANGELING
+        Rate: 500000
+      - Mob: DRACULA
+        Rate: 500000
+      - Mob: DARK_SNAKE_LORD
+        Rate: 500000
+      - Mob: INCANTATION_SAMURAI
+        Rate: 500000
+      - Mob: AMON_RA
+        Rate: 500000
+      - Mob: DEVILING
+        Rate: 500000
+      - Mob: TAO_GUNKA
+        Rate: 500000
+      - Mob: RSX_0806
+        Rate: 500000
+      - Mob: BACSOJIN_
+        Rate: 500000
+      - Mob: B_YGNIZEM
+        Rate: 500000
+      - Mob: APOCALIPS_H
+        Rate: 500000
+      - Mob: LADY_TANEE
+        Rate: 500000
+      - Mob: THANATOS
+        Rate: 500000
+      - Mob: DETALE
+        Rate: 500000
+      - Mob: KIEL_
+        Rate: 500000
+      - Mob: RANDGRIS
+        Rate: 500000
+      - Mob: GLOOMUNDERNIGHT
+        Rate: 500000
+      - Mob: KTULLANUX
+        Rate: 500000
+      - Mob: ATROCE
+        Rate: 1000000
+      - Mob: IFRIT
+        Rate: 500000
+      - Mob: FALLINGBISHOP
+        Rate: 500000
+      - Mob: BEELZEBUB
+        Rate: 500000
+      - Mob: GOPINICH
+        Rate: 500000
+      - Mob: S_NYDHOG
+        Rate: 500000
+      - Mob: BOITATA
+        Rate: 500000
+      - Mob: QUEEN_SCARABA
+        Rate: 500000
+  - Group: BRANCH_OF_DEAD_TREE
+    Default: SCORPION
+    Summon:
+      - Mob: SCORPION
+        Rate: 214285
+      - Mob: PORING
+        Rate: 1000000
+      - Mob: HORNET
+        Rate: 357142
+      - Mob: FARMILIAR
+        Rate: 357142
+      - Mob: FABRE
+        Rate: 428571
+      - Mob: PUPA
+        Rate: 71428
+      - Mob: CONDOR
+        Rate: 357142
+      - Mob: WILOW
+        Rate: 357142
+      - Mob: CHONCHON
+        Rate: 357142
+      - Mob: RODA_FROG
+        Rate: 357142
+      - Mob: WOLF
+        Rate: 357142
+      - Mob: SPORE
+        Rate: 357142
+      - Mob: ZOMBIE
+        Rate: 357142
+      - Mob: ARCHER_SKELETON
+        Rate: 214285
+      - Mob: CREAMY
+        Rate: 357142
+      - Mob: PECOPECO
+        Rate: 357142
+      - Mob: MANDRAGORA
+        Rate: 357142
+      - Mob: ORK_WARRIOR
+        Rate: 214285
+      - Mob: WORM_TAIL
+        Rate: 357142
+      - Mob: SNAKE
+        Rate: 357142
+      - Mob: MUNAK
+        Rate: 214285
+      - Mob: SOLDIER_SKELETON
+        Rate: 214285
+      - Mob: ISIS
+        Rate: 71428
+      - Mob: ANACONDAQ
+        Rate: 214285
+      - Mob: POPORING
+        Rate: 357142
+      - Mob: VERIT
+        Rate: 214285
+      - Mob: ELDER_WILOW
+        Rate: 214285
+      - Mob: THARA_FROG
+        Rate: 214285
+      - Mob: HUNTER_FLY
+        Rate: 71428
+      - Mob: GHOUL
+        Rate: 214285
+      - Mob: SIDE_WINDER
+        Rate: 71428
+      - Mob: GOLEM
+        Rate: 214285
+      - Mob: MUMMY
+        Rate: 214285
+      - Mob: STEEL_CHONCHON
+        Rate: 357142
+      - Mob: OBEAUNE
+        Rate: 214285
+      - Mob: MARC
+        Rate: 214285
+      - Mob: PECOPECO_EGG
+        Rate: 71428
+      - Mob: THIEF_BUG_EGG
+        Rate: 71428
+      - Mob: PICKY
+        Rate: 357142
+      - Mob: PICKY_
+        Rate: 357142
+      - Mob: THIEF_BUG
+        Rate: 357142
+      - Mob: ROCKER
+        Rate: 357142
+      - Mob: THIEF_BUG_
+        Rate: 357142
+      - Mob: THIEF_BUG__
+        Rate: 357142
+      - Mob: MUKA
+        Rate: 357142
+      - Mob: SMOKIE
+        Rate: 357142
+      - Mob: YOYO
+        Rate: 357142
+      - Mob: METALLER
+        Rate: 214285
+      - Mob: BIGFOOT
+        Rate: 214285
+      - Mob: NIGHTMARE
+        Rate: 71428
+      - Mob: PORING_
+        Rate: 357142
+      - Mob: LUNATIC
+        Rate: 357142
+      - Mob: MEGALODON
+        Rate: 214285
+      - Mob: STROUF
+        Rate: 214285
+      - Mob: VADON
+        Rate: 357142
+      - Mob: CORNUTUS
+        Rate: 214285
+      - Mob: HYDRA
+        Rate: 357142
+      - Mob: SWORD_FISH
+        Rate: 214285
+      - Mob: KUKRE
+        Rate: 357142
+      - Mob: PIRATE_SKEL
+        Rate: 214285
+      - Mob: KAHO
+        Rate: 71428
+      - Mob: CRAB
+        Rate: 214285
+      - Mob: SHELLFISH
+        Rate: 357142
+      - Mob: SKELETON
+        Rate: 357142
+      - Mob: POISON_SPORE
+        Rate: 357142
+      - Mob: RED_PLANT
+        Rate: 71428
+      - Mob: BLUE_PLANT
+        Rate: 71428
+      - Mob: GREEN_PLANT
+        Rate: 71428
+      - Mob: YELLOW_PLANT
+        Rate: 71428
+      - Mob: WHITE_PLANT
+        Rate: 71428
+      - Mob: SHINING_PLANT
+        Rate: 71428
+      - Mob: BLACK_MUSHROOM
+        Rate: 71428
+      - Mob: RED_MUSHROOM
+        Rate: 71428
+      - Mob: VOCAL
+        Rate: 71428
+      - Mob: TOAD
+        Rate: 71428
+      - Mob: MASTERING
+        Rate: 71428
+      - Mob: DRAGON_FLY
+        Rate: 71428
+      - Mob: VAGABOND_WOLF
+        Rate: 71428
+      - Mob: ECLIPSE
+        Rate: 71428
+      - Mob: AMBERNITE
+        Rate: 357142
+      - Mob: ANDRE
+        Rate: 357142
+      - Mob: ANGELING
+        Rate: 71428
+      - Mob: ANT_EGG
+        Rate: 71428
+      - Mob: ANUBIS
+        Rate: 71428
+      - Mob: ARGIOPE
+        Rate: 71428
+      - Mob: ARGOS
+        Rate: 214285
+      - Mob: BAPHOMET_
+        Rate: 71428
+      - Mob: BATHORY
+        Rate: 71428
+      - Mob: CARAMEL
+        Rate: 214285
+      - Mob: COCO
+        Rate: 357142
+      - Mob: DENIRO
+        Rate: 357142
+      - Mob: DESERT_WOLF
+        Rate: 214285
+      - Mob: DESERT_WOLF_B
+        Rate: 71428
+      - Mob: DEVIACE
+        Rate: 71428
+      - Mob: DEVIRUCHI
+        Rate: 71428
+      - Mob: DOKEBI
+        Rate: 214285
+      - Mob: DRAINLIAR
+        Rate: 214285
+      - Mob: DROPS
+        Rate: 357142
+      - Mob: DUSTINESS
+        Rate: 214285
+      - Mob: EGGYRA
+        Rate: 214285
+      - Mob: EVIL_DRUID
+        Rate: 71428
+      - Mob: FLORA
+        Rate: 214285
+      - Mob: FRILLDORA
+        Rate: 214285
+      - Mob: GHOSTRING
+        Rate: 71428
+      - Mob: GIEARTH
+        Rate: 214285
+      - Mob: GOBLIN_1
+        Rate: 214285
+      - Mob: GOBLIN_2
+        Rate: 214285
+      - Mob: GOBLIN_3
+        Rate: 214285
+      - Mob: GOBLIN_4
+        Rate: 214285
+      - Mob: GOBLIN_5
+        Rate: 214285
+      - Mob: HODE
+        Rate: 214285
+      - Mob: HORN
+        Rate: 357142
+      - Mob: HORONG
+        Rate: 214285
+      - Mob: JAKK
+        Rate: 214285
+      - Mob: JOKER
+        Rate: 71428
+      - Mob: KHALITZBURG
+        Rate: 71428
+      - Mob: KOBOLD_1
+        Rate: 214285
+      - Mob: KOBOLD_2
+        Rate: 214285
+      - Mob: KOBOLD_3
+        Rate: 214285
+      - Mob: MAGNOLIA
+        Rate: 214285
+      - Mob: MANTIS
+        Rate: 214285
+      - Mob: MARDUK
+        Rate: 214285
+      - Mob: MARINA
+        Rate: 214285
+      - Mob: MARINE_SPHERE
+        Rate: 214285
+      - Mob: MARIONETTE
+        Rate: 71428
+      - Mob: MARSE
+        Rate: 214285
+      - Mob: MARTIN
+        Rate: 357142
+      - Mob: MATYR
+        Rate: 214285
+      - Mob: MEDUSA
+        Rate: 71428
+      - Mob: MINOROUS
+        Rate: 71428
+      - Mob: MYST
+        Rate: 214285
+      - Mob: ORC_SKELETON
+        Rate: 214285
+      - Mob: ORC_ZOMBIE
+        Rate: 214285
+      - Mob: PASANA
+        Rate: 71428
+      - Mob: PETIT
+        Rate: 71428
+      - Mob: PETIT_
+        Rate: 71428
+      - Mob: PHEN
+        Rate: 214285
+      - Mob: PIERE
+        Rate: 357142
+      - Mob: PLANKTON
+        Rate: 357142
+      - Mob: RAYDRIC
+        Rate: 71428
+      - Mob: REQUIEM
+        Rate: 214285
+      - Mob: SAND_MAN
+        Rate: 214285
+      - Mob: SAVAGE
+        Rate: 214285
+      - Mob: SAVAGE_BABE
+        Rate: 357142
+      - Mob: SKEL_WORKER
+        Rate: 214285
+      - Mob: SOHEE
+        Rate: 214285
+      - Mob: STAINER
+        Rate: 357142
+      - Mob: TAROU
+        Rate: 357142
+      - Mob: VITATA
+        Rate: 214285
+      - Mob: ZENORC
+        Rate: 214285
+      - Mob: ZEROM
+        Rate: 214285
+      - Mob: WHISPER
+        Rate: 71428
+      - Mob: NINE_TAIL
+        Rate: 71428
+      - Mob: THIEF_MUSHROOM
+        Rate: 71428
+      - Mob: WHISPER_
+        Rate: 71428
+      - Mob: WHISPER_BOSS
+        Rate: 71428
+      - Mob: BON_GUN
+        Rate: 214285
+      - Mob: ORC_ARCHER
+        Rate: 71428
+      - Mob: MIMIC
+        Rate: 71428
+      - Mob: WRAITH
+        Rate: 71428
+      - Mob: ALARM
+        Rate: 71428
+      - Mob: ARCLOUSE
+        Rate: 71428
+      - Mob: RIDEWORD
+        Rate: 71428
+      - Mob: SKEL_PRISONER
+        Rate: 71428
+      - Mob: ZOMBIE_PRISONER
+        Rate: 71428
+      - Mob: PUNK
+        Rate: 71428
+      - Mob: ZHERLTHSH
+        Rate: 71428
+      - Mob: RYBIO
+        Rate: 71428
+      - Mob: PHENDARK
+        Rate: 71428
+      - Mob: MYSTELTAINN
+        Rate: 71428
+      - Mob: TIRFING
+        Rate: 71428
+      - Mob: EXECUTIONER
+        Rate: 71428
+      - Mob: ANOLIAN
+        Rate: 71428
+      - Mob: STING
+        Rate: 71428
+      - Mob: WANDER_MAN
+        Rate: 71428
+      - Mob: CRAMP
+        Rate: 71428
+      - Mob: BRILIGHT
+        Rate: 71428
+      - Mob: IRON_FIST
+        Rate: 71428
+      - Mob: HIGH_ORC
+        Rate: 71428
+      - Mob: CHOCO
+        Rate: 71428
+      - Mob: STEM_WORM
+        Rate: 214285
+      - Mob: PENOMENA
+        Rate: 71428
+      - Mob: KNIGHT_OF_ABYSS
+        Rate: 71428
+      - Mob: MARIN
+        Rate: 357142
+      - Mob: SASQUATCH
+        Rate: 214285
+      - Mob: GOBLINE_XMAS
+        Rate: 71428
+      - Mob: COOKIE_XMAS
+        Rate: 214285
+      - Mob: CRUISER
+        Rate: 214285
+      - Mob: MYSTCASE
+        Rate: 214285
+      - Mob: CHEPET
+        Rate: 71428
+      - Mob: GARGOYLE
+        Rate: 71428
+      - Mob: RAGGLER
+        Rate: 214285
+      - Mob: NERAID
+        Rate: 214285
+      - Mob: PEST
+        Rate: 214285
+      - Mob: INJUSTICE
+        Rate: 71428
+      - Mob: GOBLIN_ARCHER
+        Rate: 214285
+      - Mob: GRYPHON
+        Rate: 71428
+      - Mob: DARK_FRAME
+        Rate: 71428
+      - Mob: WILD_ROSE
+        Rate: 214285
+      - Mob: MUTANT_DRAGON
+        Rate: 71428
+      - Mob: WIND_GHOST
+        Rate: 71428
+      - Mob: MERMAN
+        Rate: 71428
+      - Mob: COOKIE
+        Rate: 214285
+      - Mob: ASTER
+        Rate: 357142
+      - Mob: CARAT
+        Rate: 71428
+      - Mob: BLOODY_KNIGHT
+        Rate: 71428
+      - Mob: CLOCK
+        Rate: 71428
+      - Mob: C_TOWER_MANAGER
+        Rate: 71428
+      - Mob: ALLIGATOR
+        Rate: 71428
+      - Mob: ORC_LADY
+        Rate: 214285
+      - Mob: MEGALITH
+        Rate: 71428
+      - Mob: ALICE
+        Rate: 71428
+      - Mob: RAYDRIC_ARCHER
+        Rate: 71428
+      - Mob: GREATEST_GENERAL
+        Rate: 214285
+      - Mob: STALACTIC_GOLEM
+        Rate: 71428
+      - Mob: TRI_JOINT
+        Rate: 214285
+      - Mob: STEAM_GOBLIN
+        Rate: 214285
+      - Mob: SAGEWORM
+        Rate: 71428
+      - Mob: KOBOLD_ARCHER
+        Rate: 214285
+      - Mob: CHIMERA
+        Rate: 71428
+      - Mob: MAYA_PUPLE
+        Rate: 71428
+      - Mob: SKELETON_GENERAL
+        Rate: 71428
+      - Mob: WRAITH_DEAD
+        Rate: 71428
+      - Mob: MINI_DEMON
+        Rate: 71428
+      - Mob: CREMY_FEAR
+        Rate: 71428
+      - Mob: KILLER_MANTIS
+        Rate: 71428
+      - Mob: OWL_BARON
+        Rate: 71428
+      - Mob: KOBOLD_LEADER
+        Rate: 71428
+      - Mob: ANCIENT_MUMMY
+        Rate: 71428
+      - Mob: ZOMBIE_MASTER
+        Rate: 71428
+      - Mob: GOBLIN_LEADER
+        Rate: 71428
+      - Mob: CATERPILLAR
+        Rate: 71428
+      - Mob: AM_MUT
+        Rate: 71428
+      - Mob: DARK_ILLUSION
+        Rate: 71428
+      - Mob: GIANT_HONET
+        Rate: 71428
+      - Mob: GIANT_SPIDER
+        Rate: 71428
+      - Mob: ANCIENT_WORM
+        Rate: 71428
+      - Mob: LEIB_OLMAI
+        Rate: 71428
+      - Mob: CAT_O_NINE_TAIL
+        Rate: 71428
+      - Mob: PANZER_GOBLIN
+        Rate: 71428
+      - Mob: GAJOMART
+        Rate: 71428
+      - Mob: MAJORUROS
+        Rate: 71428
+      - Mob: GULLINBURSTI
+        Rate: 71428
+      - Mob: MOBSTER
+        Rate: 71428
+      - Mob: PERMETER
+        Rate: 71428
+      - Mob: ASSULTER
+        Rate: 71428
+      - Mob: SOLIDER
+        Rate: 71428
+      - Mob: FUR_SEAL
+        Rate: 71428
+      - Mob: HEATER
+        Rate: 71428
+      - Mob: FREEZER
+        Rate: 71428
+      - Mob: OWL_DUKE
+        Rate: 71428
+      - Mob: DRAGON_TAIL
+        Rate: 71428
+      - Mob: SPRING_RABBIT
+        Rate: 71428
+      - Mob: SEE_OTTER
+        Rate: 71428
+      - Mob: APOCALIPS
+        Rate: 71428
+      - Mob: LAVA_GOLEM
+        Rate: 71428
+      - Mob: BLAZZER
+        Rate: 71428
+      - Mob: GEOGRAPHER
+        Rate: 71428
+      - Mob: GRAND_PECO
+        Rate: 71428
+      - Mob: SUCCUBUS
+        Rate: 71428
+      - Mob: FAKE_ANGEL
+        Rate: 71428
+      - Mob: GOAT
+        Rate: 71428
+      - Mob: INCUBUS
+        Rate: 71428
+      - Mob: THE_PAPER
+        Rate: 71428
+      - Mob: HARPY
+        Rate: 71428
+      - Mob: ELDER
+        Rate: 71428
+      - Mob: DEMON_PUNGUS
+        Rate: 71428
+      - Mob: NIGHTMARE_TERROR
+        Rate: 71428
+      - Mob: DRILLER
+        Rate: 71428
+      - Mob: GRIZZLY
+        Rate: 71428
+      - Mob: DIABOLIC
+        Rate: 71428
+      - Mob: EXPLOSION
+        Rate: 71428
+      - Mob: DELETER
+        Rate: 71428
+      - Mob: DELETER_
+        Rate: 71428
+      - Mob: SLEEPER
+        Rate: 71428
+      - Mob: GIG
+        Rate: 71428
+      - Mob: VIOLY
+        Rate: 71428
+      - Mob: GALAPAGO
+        Rate: 71428
+      - Mob: ROTAR_ZAIRO
+        Rate: 214285
+      - Mob: KARAKASA
+        Rate: 214285
+      - Mob: SHINOBI
+        Rate: 71428
+      - Mob: POISON_TOAD
+        Rate: 71428
+      - Mob: ANTIQUE_FIRELOCK
+        Rate: 71428
+      - Mob: MIYABI_NINGYO
+        Rate: 214285
+      - Mob: TENGU
+        Rate: 71428
+      - Mob: KAPHA
+        Rate: 71428
+      - Mob: BLOOD_BUTTERFLY
+        Rate: 71428
+      - Mob: RICE_CAKE_BOY
+        Rate: 214285
+      - Mob: LIVE_PEACH_TREE
+        Rate: 71428
+      - Mob: EVIL_CLOUD_HERMIT
+        Rate: 71428
+      - Mob: WILD_GINSENG
+        Rate: 71428
+      - Mob: BABY_LEOPARD
+        Rate: 214285
+      - Mob: WICKED_NYMPH
+        Rate: 71428
+      - Mob: ZIPPER_BEAR
+        Rate: 214285
+      - Mob: DRYAD
+        Rate: 71428
+      - Mob: KIND_OF_BEETLE
+        Rate: 214285
+      - Mob: STONE_SHOOTER
+        Rate: 71428
+      - Mob: WOODEN_GOLEM
+        Rate: 71428
+      - Mob: WOOTAN_SHOOTER
+        Rate: 214285
+      - Mob: WOOTAN_FIGHTER
+        Rate: 71428
+      - Mob: PARASITE
+        Rate: 214285
+      - Mob: GIBBET
+        Rate: 71428
+      - Mob: DULLAHAN
+        Rate: 71428
+      - Mob: LOLI_RURI
+        Rate: 71428
+      - Mob: DISGUISE
+        Rate: 71428
+      - Mob: BLOODY_MURDERER
+        Rate: 71428
+      - Mob: QUVE
+        Rate: 214285
+      - Mob: LUDE
+        Rate: 214285
+      - Mob: HYLOZOIST
+        Rate: 71428
+      - Mob: HYEGUN
+        Rate: 71428
+      - Mob: CIVIL_SERVANT
+        Rate: 71428
+      - Mob: DANCING_DRAGON
+        Rate: 71428
+      - Mob: GARM_BABY
+        Rate: 71428
+      - Mob: INCREASE_SOIL
+        Rate: 71428
+      - Mob: LI_ME_MANG_RYANG
+        Rate: 71428
+      - Mob: CHUNG_E
+        Rate: 71428
+      - Mob: BOILED_RICE
+        Rate: 71428
+      - Mob: DEVILING
+        Rate: 71428
+      - Mob: TAMRUAN
+        Rate: 71428
+      - Mob: LEAF_CAT
+        Rate: 71428
+      - Mob: KRABEN
+        Rate: 71428
+      - Mob: METALING
+        Rate: 71428
+      - Mob: MINERAL
+        Rate: 71428
+      - Mob: OBSIDIAN
+        Rate: 71428
+      - Mob: PITMAN
+        Rate: 71428
+      - Mob: WASTE_STOVE
+        Rate: 71428
+      - Mob: UNGOLIANT
+        Rate: 71428
+      - Mob: PORCELLIO
+        Rate: 71428
+      - Mob: NOXIOUS
+        Rate: 71428
+      - Mob: VENOMOUS
+        Rate: 71428
+      - Mob: TEDDY_BEAR
+        Rate: 71428
+      - Mob: ANOPHELES
+        Rate: 71428
+      - Mob: MOLE
+        Rate: 71428
+      - Mob: HILL_WIND
+        Rate: 71428
+      - Mob: CHUNG_E_
+        Rate: 71428
+      - Mob: GREMLIN
+        Rate: 71428
+      - Mob: BEHOLDER
+        Rate: 71428
+      - Mob: SEYREN
+        Rate: 71428
+      - Mob: EREMES
+        Rate: 71428
+      - Mob: HARWORD
+        Rate: 71428
+      - Mob: MAGALETA
+        Rate: 71428
+      - Mob: SHECIL
+        Rate: 71428
+      - Mob: KATRINN
+        Rate: 71428
+      - Mob: YGNIZEM
+        Rate: 71428
+      - Mob: WHIKEBAIN
+        Rate: 71428
+      - Mob: ARMAIA
+        Rate: 71428
+      - Mob: EREND
+        Rate: 71428
+      - Mob: KAVAC
+        Rate: 71428
+      - Mob: RAWREL
+        Rate: 71428
+      - Mob: POTON_CANON
+        Rate: 71428
+      - Mob: POTON_CANON_1
+        Rate: 71428
+      - Mob: POTON_CANON_2
+        Rate: 71428
+      - Mob: POTON_CANON_3
+        Rate: 71428
+      - Mob: ARCHDAM
+        Rate: 71428
+      - Mob: DIMIK
+        Rate: 71428
+      - Mob: DIMIK_1
+        Rate: 71428
+      - Mob: DIMIK_2
+        Rate: 71428
+      - Mob: DIMIK_3
+        Rate: 71428
+      - Mob: DIMIK_4
+        Rate: 71428
+      - Mob: VENATU
+        Rate: 71428
+      - Mob: VENATU_1
+        Rate: 71428
+      - Mob: VENATU_2
+        Rate: 71428
+      - Mob: VENATU_3
+        Rate: 71428
+      - Mob: VENATU_4
+        Rate: 71428
+      - Mob: HILL_WIND_1
+        Rate: 71428
+      - Mob: GEMINI
+        Rate: 71428
+      - Mob: REMOVAL
+        Rate: 71428
+      - Mob: ORC_BABY
+        Rate: 71428
+      - Mob: GREEN_IGUANA
+        Rate: 71428
+      - Mob: BREEZE
+        Rate: 71428
+      - Mob: PLASMA_Y
+        Rate: 71428
+      - Mob: PLASMA_R
+        Rate: 71428
+      - Mob: PLASMA_G
+        Rate: 71428
+      - Mob: PLASMA_P
+        Rate: 71428
+      - Mob: ANCIENT_MIMIC
+        Rate: 71428
+      - Mob: SOLACE
+        Rate: 71428
+      - Mob: THA_ODIUM
+        Rate: 71428
+      - Mob: THA_DESPERO
+        Rate: 71428
+      - Mob: THA_MAERO
+        Rate: 71428
+      - Mob: THA_DOLOR
+        Rate: 71428
+      - Mob: ACIDUS
+        Rate: 71428
+      - Mob: FERUS
+        Rate: 71428
+      - Mob: NOVUS
+        Rate: 71428
+      - Mob: FERUS_
+        Rate: 71428
+      - Mob: NOVUS_
+        Rate: 71428
+      - Mob: HYDRO
+        Rate: 71428
+      - Mob: DRAGON_EGG
+        Rate: 71428
+      - Mob: ALIOT
+        Rate: 71428
+      - Mob: ALIZA
+        Rate: 71428
+      - Mob: CONSTANT
+        Rate: 71428
+      - Mob: SKOGUL
+        Rate: 71428
+      - Mob: FRUS
+        Rate: 71428
+      - Mob: SKEGGIOLD
+        Rate: 71428
+      - Mob: SKEGGIOLD_
+        Rate: 71428
+      - Mob: AGAV
+        Rate: 71428
+      - Mob: ECHIO
+        Rate: 71428
+      - Mob: VANBERK
+        Rate: 71428
+      - Mob: ISILLA
+        Rate: 71428
+      - Mob: HODREMLIN
+        Rate: 71428
+      - Mob: SEEKER
+        Rate: 71428
+      - Mob: SNOWIER
+        Rate: 71428
+      - Mob: SIROMA
+        Rate: 71428
+      - Mob: ICE_TITAN
+        Rate: 71428
+      - Mob: GAZETI
+        Rate: 71428
+      - Mob: MUSCIPULAR
+        Rate: 71428
+      - Mob: DROSERA
+        Rate: 71428
+      - Mob: ROWEEN
+        Rate: 71428
+      - Mob: GALION
+        Rate: 71428
+      - Mob: STAPO
+        Rate: 142857
+      - Mob: ICEICLE
+        Rate: 71428
+      - Mob: AUNOE
+        Rate: 142857
+      - Mob: FANAT
+        Rate: 142857
+      - Mob: SWORD_GUARDIAN
+        Rate: 71428
+      - Mob: BOW_GUARDIAN
+        Rate: 71428
+      - Mob: SALAMANDER
+        Rate: 71428
+      - Mob: KASA
+        Rate: 71428
+      - Mob: MAGMARING
+        Rate: 214285
+      - Mob: IMP
+        Rate: 71428
+      - Mob: KNOCKER
+        Rate: 71428
+      - Mob: BYORGUE
+        Rate: 71428
+      - Mob: ZOMBIE_SLAUGHTER
+        Rate: 71428
+      - Mob: RAGGED_ZOMBIE
+        Rate: 71428
+      - Mob: HELL_POODLE
+        Rate: 71428
+      - Mob: BANSHEE
+        Rate: 71428
+      - Mob: FLAME_SKULL
+        Rate: 71428
+      - Mob: NECROMANCER
+        Rate: 71428
+      - Mob: BEELZEBUB_FLY
+        Rate: 71428
+      - Mob: WOOD_GOBLIN
+        Rate: 71428
+      - Mob: LES
+        Rate: 71428
+      - Mob: VAVAYAGA
+        Rate: 71428
+      - Mob: UZHAS
+        Rate: 71428
+      - Mob: MAVKA
+        Rate: 71428
+      - Mob: MOROCC_1
+        Rate: 71428
+      - Mob: MOROCC_2
+        Rate: 71428
+      - Mob: MOROCC_3
+        Rate: 71428
+      - Mob: MOROCC_4
+        Rate: 71428
+      - Mob: BANSHEE_MASTER
+        Rate: 71428
+      - Mob: BEHOLDER_MASTER
+        Rate: 71428
+      - Mob: COBALT_MINERAL
+        Rate: 71428
+      - Mob: HEAVY_METALING
+        Rate: 71428
+      - Mob: HELL_APOCALIPS
+        Rate: 71428
+      - Mob: ZAKUDAM
+        Rate: 71428
+      - Mob: TATACHO
+        Rate: 71428
+      - Mob: CENTIPEDE
+        Rate: 71428
+      - Mob: NEPENTHES
+        Rate: 71428
+      - Mob: HILLSRION
+        Rate: 71428
+      - Mob: HARDROCK_MOMMOTH
+        Rate: 71428
+      - Mob: TENDRILRION
+        Rate: 71428
+      - Mob: CORNUS
+        Rate: 71428
+      - Mob: NAGA
+        Rate: 71428
+      - Mob: LUCIOLA_VESPA
+        Rate: 71428
+      - Mob: PINGUICULA
+        Rate: 71428
+      - Mob: CENTIPEDE_LARVA
+        Rate: 71428
+      - Mob: DRACO
+        Rate: 71428
+      - Mob: PINGUICULA_D
+        Rate: 71428
+      - Mob: AQUA_ELEMENTAL
+        Rate: 71428
+      - Mob: RATA
+        Rate: 71428
+      - Mob: DUNEYRR
+        Rate: 71428
+      - Mob: ANCIENT_TREE
+        Rate: 71428
+      - Mob: RHYNCHO
+        Rate: 71428
+      - Mob: PHYLLA
+        Rate: 71428
+      - Mob: DARK_SHADOW
+        Rate: 71428
+      - Mob: BRADIUM_GOLEM
+        Rate: 71428
+      - Mob: IARA
+        Rate: 71428
+      - Mob: PIRANHA
+        Rate: 71428
+      - Mob: HEADLESS_MULE
+        Rate: 71428
+      - Mob: JAGUAR
+        Rate: 71428
+      - Mob: TOUCAN
+        Rate: 71428
+      - Mob: CURUPIRA
+        Rate: 71428
+      - Mob: HORN_SCARABA
+        Rate: 71428
+      - Mob: HORN_SCARABA2
+        Rate: 71428
+      - Mob: ANTLER_SCARABA
+        Rate: 71428
+      - Mob: RAKE_SCARABA
+        Rate: 71428
+      - Mob: HORN_SCARABA_EGG
+        Rate: 71428
+      - Mob: HORN_SCARABA2_EGG
+        Rate: 71428
+      - Mob: ANTLER_SCARABA_EGG
+        Rate: 71428
+      - Mob: RAKE_SCARABA_EGG
+        Rate: 71428
+      - Mob: DOLOMEDES
+        Rate: 71428
+      - Mob: BOTARING
+        Rate: 142857
+  - Group: CLASSCHANGE
+    Default: BAPHOMET
+    Summon:
+      - Mob: OSIRIS
+        Rate: 1000000
+      - Mob: BAPHOMET
+        Rate: 1000000
+      - Mob: DOPPELGANGER
+        Rate: 1000000
+      - Mob: MISTRESS
+        Rate: 1000000
+      - Mob: GOLDEN_BUG
+        Rate: 1000000
+      - Mob: ORK_HERO
+        Rate: 1000000
+      - Mob: DRAKE
+        Rate: 1000000
+      - Mob: EDDGA
+        Rate: 1000000
+      - Mob: MAYA
+        Rate: 1000000
+      - Mob: MOONLIGHT
+        Rate: 1000000
+      - Mob: PHARAOH
+        Rate: 1000000
+      - Mob: PHREEONI
+        Rate: 1000000
+      - Mob: ORC_LORD
+        Rate: 1000000
+      - Mob: KNIGHT_OF_WINDSTORM
+        Rate: 1000000
+      - Mob: GARM
+        Rate: 1000000
+      - Mob: DARK_LORD
+        Rate: 1000000
+      - Mob: TURTLE_GENERAL
+        Rate: 1000000
+      - Mob: LORD_OF_DEATH
+        Rate: 1000000
+      - Mob: ARCHANGELING
+        Rate: 1000000
+      - Mob: DRACULA
+        Rate: 1000000
+      - Mob: DARK_SNAKE_LORD
+        Rate: 1000000
+      - Mob: INCANTATION_SAMURAI
+        Rate: 1000000
+      - Mob: AMON_RA
+        Rate: 1000000
+      - Mob: TAO_GUNKA
+        Rate: 1000000
+  - Group: PORING_BOX
+    Default: PORING
+    Summon:
+      - Mob: PORING
+        Rate: 1000000
+      - Mob: POPORING
+        Rate: 1000000
+      - Mob: PORING_
+        Rate: 200000
+      - Mob: MASTERING
+        Rate: 400000
+      - Mob: ANGELING
+        Rate: 200000
+      - Mob: DROPS
+        Rate: 1000000
+      - Mob: GHOSTRING
+        Rate: 200000
+      - Mob: MARIN
+        Rate: 1000000
+      - Mob: ARCHANGELING
+        Rate: 200000
+      - Mob: DEVILING
+        Rate: 200000
+      - Mob: METALING
+        Rate: 1000000
+      - Mob: STAPO
+        Rate: 1000000
+      - Mob: BOTARING
+        Rate: 400000
+  - Group: RED_POUCH_OF_SURPRISE
+    Default: PORING
+    Summon:
+      - Mob: SCORPION
+        Rate: 214285
+      - Mob: PORING
+        Rate: 1000000
+      - Mob: HORNET
+        Rate: 357142
+      - Mob: FARMILIAR
+        Rate: 357142
+      - Mob: FABRE
+        Rate: 428571
+      - Mob: PUPA
+        Rate: 71428
+      - Mob: CONDOR
+        Rate: 357142
+      - Mob: WILOW
+        Rate: 357142
+      - Mob: CHONCHON
+        Rate: 357142
+      - Mob: RODA_FROG
+        Rate: 357142
+      - Mob: WOLF
+        Rate: 357142
+      - Mob: SPORE
+        Rate: 357142
+      - Mob: ZOMBIE
+        Rate: 357142
+      - Mob: ARCHER_SKELETON
+        Rate: 214285
+      - Mob: CREAMY
+        Rate: 357142
+      - Mob: PECOPECO
+        Rate: 357142
+      - Mob: MANDRAGORA
+        Rate: 357142
+      - Mob: ORK_WARRIOR
+        Rate: 214285
+      - Mob: WORM_TAIL
+        Rate: 357142
+      - Mob: SNAKE
+        Rate: 357142
+      - Mob: MUNAK
+        Rate: 214285
+      - Mob: SOLDIER_SKELETON
+        Rate: 214285
+      - Mob: ISIS
+        Rate: 71428
+      - Mob: ANACONDAQ
+        Rate: 214285
+      - Mob: POPORING
+        Rate: 357142
+      - Mob: VERIT
+        Rate: 214285
+      - Mob: ELDER_WILOW
+        Rate: 214285
+      - Mob: THARA_FROG
+        Rate: 214285
+      - Mob: HUNTER_FLY
+        Rate: 71428
+      - Mob: GHOUL
+        Rate: 214285
+      - Mob: SIDE_WINDER
+        Rate: 71428
+      - Mob: GOLEM
+        Rate: 214285
+      - Mob: MUMMY
+        Rate: 214285
+      - Mob: STEEL_CHONCHON
+        Rate: 357142
+      - Mob: OBEAUNE
+        Rate: 214285
+      - Mob: MARC
+        Rate: 214285
+      - Mob: PECOPECO_EGG
+        Rate: 71428
+      - Mob: THIEF_BUG_EGG
+        Rate: 71428
+      - Mob: PICKY
+        Rate: 357142
+      - Mob: PICKY_
+        Rate: 357142
+      - Mob: THIEF_BUG
+        Rate: 357142
+      - Mob: ROCKER
+        Rate: 357142
+      - Mob: THIEF_BUG_
+        Rate: 357142
+      - Mob: THIEF_BUG__
+        Rate: 357142
+      - Mob: MUKA
+        Rate: 357142
+      - Mob: SMOKIE
+        Rate: 357142
+      - Mob: YOYO
+        Rate: 357142
+      - Mob: METALLER
+        Rate: 214285
+      - Mob: BIGFOOT
+        Rate: 214285
+      - Mob: NIGHTMARE
+        Rate: 71428
+      - Mob: PORING_
+        Rate: 357142
+      - Mob: LUNATIC
+        Rate: 357142
+      - Mob: MEGALODON
+        Rate: 214285
+      - Mob: STROUF
+        Rate: 214285
+      - Mob: VADON
+        Rate: 357142
+      - Mob: CORNUTUS
+        Rate: 214285
+      - Mob: HYDRA
+        Rate: 357142
+      - Mob: SWORD_FISH
+        Rate: 214285
+      - Mob: KUKRE
+        Rate: 357142
+      - Mob: PIRATE_SKEL
+        Rate: 214285
+      - Mob: KAHO
+        Rate: 71428
+      - Mob: CRAB
+        Rate: 214285
+      - Mob: SHELLFISH
+        Rate: 357142
+      - Mob: SKELETON
+        Rate: 357142
+      - Mob: POISON_SPORE
+        Rate: 357142
+      - Mob: RED_PLANT
+        Rate: 71428
+      - Mob: BLUE_PLANT
+        Rate: 71428
+      - Mob: GREEN_PLANT
+        Rate: 71428
+      - Mob: YELLOW_PLANT
+        Rate: 71428
+      - Mob: WHITE_PLANT
+        Rate: 71428
+      - Mob: SHINING_PLANT
+        Rate: 71428
+      - Mob: BLACK_MUSHROOM
+        Rate: 71428
+      - Mob: RED_MUSHROOM
+        Rate: 71428
+      - Mob: VOCAL
+        Rate: 71428
+      - Mob: TOAD
+        Rate: 71428
+      - Mob: MASTERING
+        Rate: 71428
+      - Mob: DRAGON_FLY
+        Rate: 71428
+      - Mob: VAGABOND_WOLF
+        Rate: 71428
+      - Mob: ECLIPSE
+        Rate: 71428
+      - Mob: AMBERNITE
+        Rate: 357142
+      - Mob: ANDRE
+        Rate: 357142
+      - Mob: ANGELING
+        Rate: 71428
+      - Mob: ANT_EGG
+        Rate: 71428
+      - Mob: ARGIOPE
+        Rate: 71428
+      - Mob: ARGOS
+        Rate: 214285
+      - Mob: BAPHOMET_
+        Rate: 71428
+      - Mob: BATHORY
+        Rate: 71428
+      - Mob: CARAMEL
+        Rate: 214285
+      - Mob: COCO
+        Rate: 357142
+      - Mob: DENIRO
+        Rate: 357142
+      - Mob: DESERT_WOLF
+        Rate: 214285
+      - Mob: DESERT_WOLF_B
+        Rate: 71428
+      - Mob: DEVIACE
+        Rate: 71428
+      - Mob: DEVIRUCHI
+        Rate: 71428
+      - Mob: DOKEBI
+        Rate: 214285
+      - Mob: DRAINLIAR
+        Rate: 214285
+      - Mob: DROPS
+        Rate: 357142
+      - Mob: DUSTINESS
+        Rate: 214285
+      - Mob: EGGYRA
+        Rate: 214285
+      - Mob: EVIL_DRUID
+        Rate: 71428
+      - Mob: FLORA
+        Rate: 214285
+      - Mob: FRILLDORA
+        Rate: 214285
+      - Mob: GHOSTRING
+        Rate: 71428
+      - Mob: GIEARTH
+        Rate: 214285
+      - Mob: GOBLIN_1
+        Rate: 214285
+      - Mob: GOBLIN_2
+        Rate: 214285
+      - Mob: GOBLIN_3
+        Rate: 214285
+      - Mob: GOBLIN_4
+        Rate: 214285
+      - Mob: GOBLIN_5
+        Rate: 214285
+      - Mob: HODE
+        Rate: 214285
+      - Mob: HORN
+        Rate: 357142
+      - Mob: HORONG
+        Rate: 214285
+      - Mob: JAKK
+        Rate: 214285
+      - Mob: JOKER
+        Rate: 71428
+      - Mob: KHALITZBURG
+        Rate: 71428
+      - Mob: KOBOLD_1
+        Rate: 214285
+      - Mob: KOBOLD_2
+        Rate: 214285
+      - Mob: KOBOLD_3
+        Rate: 214285
+      - Mob: MAGNOLIA
+        Rate: 214285
+      - Mob: MANTIS
+        Rate: 214285
+      - Mob: MARDUK
+        Rate: 214285
+      - Mob: MARINA
+        Rate: 214285
+      - Mob: MARINE_SPHERE
+        Rate: 214285
+      - Mob: MARIONETTE
+        Rate: 71428
+      - Mob: MARSE
+        Rate: 214285
+      - Mob: MARTIN
+        Rate: 357142
+      - Mob: MATYR
+        Rate: 214285
+      - Mob: MEDUSA
+        Rate: 71428
+      - Mob: MINOROUS
+        Rate: 71428
+      - Mob: MYST
+        Rate: 214285
+      - Mob: ORC_SKELETON
+        Rate: 214285
+      - Mob: ORC_ZOMBIE
+        Rate: 214285
+      - Mob: PASANA
+        Rate: 71428
+      - Mob: PETIT
+        Rate: 71428
+      - Mob: PETIT_
+        Rate: 71428
+      - Mob: PHEN
+        Rate: 214285
+      - Mob: PIERE
+        Rate: 357142
+      - Mob: PLANKTON
+        Rate: 357142
+      - Mob: RAYDRIC
+        Rate: 71428
+      - Mob: REQUIEM
+        Rate: 214285
+      - Mob: SAND_MAN
+        Rate: 214285
+      - Mob: SAVAGE
+        Rate: 214285
+      - Mob: SAVAGE_BABE
+        Rate: 357142
+      - Mob: SKEL_WORKER
+        Rate: 214285
+      - Mob: SOHEE
+        Rate: 214285
+      - Mob: STAINER
+        Rate: 357142
+      - Mob: TAROU
+        Rate: 357142
+      - Mob: VITATA
+        Rate: 214285
+      - Mob: ZENORC
+        Rate: 214285
+      - Mob: ZEROM
+        Rate: 214285
+      - Mob: WHISPER
+        Rate: 71428
+      - Mob: NINE_TAIL
+        Rate: 71428
+      - Mob: THIEF_MUSHROOM
+        Rate: 71428
+      - Mob: WHISPER_
+        Rate: 71428
+      - Mob: WHISPER_BOSS
+        Rate: 71428
+      - Mob: BON_GUN
+        Rate: 214285
+      - Mob: ORC_ARCHER
+        Rate: 71428
+      - Mob: MIMIC
+        Rate: 71428
+      - Mob: WRAITH
+        Rate: 71428
+      - Mob: ALARM
+        Rate: 71428
+      - Mob: ARCLOUSE
+        Rate: 71428
+      - Mob: RIDEWORD
+        Rate: 71428
+      - Mob: SKEL_PRISONER
+        Rate: 71428
+      - Mob: ZOMBIE_PRISONER
+        Rate: 71428
+      - Mob: PUNK
+        Rate: 71428
+      - Mob: ZHERLTHSH
+        Rate: 71428
+      - Mob: RYBIO
+        Rate: 71428
+      - Mob: PHENDARK
+        Rate: 71428
+      - Mob: MYSTELTAINN
+        Rate: 71428
+      - Mob: TIRFING
+        Rate: 71428
+      - Mob: EXECUTIONER
+        Rate: 71428
+      - Mob: ANOLIAN
+        Rate: 71428
+      - Mob: STING
+        Rate: 71428
+      - Mob: WANDER_MAN
+        Rate: 71428
+      - Mob: CRAMP
+        Rate: 71428
+      - Mob: BRILIGHT
+        Rate: 71428
+      - Mob: IRON_FIST
+        Rate: 71428
+      - Mob: HIGH_ORC
+        Rate: 71428
+      - Mob: CHOCO
+        Rate: 71428
+      - Mob: STEM_WORM
+        Rate: 214285
+      - Mob: PENOMENA
+        Rate: 71428
+      - Mob: KNIGHT_OF_ABYSS
+        Rate: 71428
+      - Mob: MARIN
+        Rate: 357142
+      - Mob: SASQUATCH
+        Rate: 214285
+      - Mob: GOBLINE_XMAS
+        Rate: 71428
+      - Mob: COOKIE_XMAS
+        Rate: 214285
+      - Mob: CRUISER
+        Rate: 214285
+      - Mob: MYSTCASE
+        Rate: 214285
+      - Mob: CHEPET
+        Rate: 71428
+      - Mob: GARGOYLE
+        Rate: 71428
+      - Mob: RAGGLER
+        Rate: 214285
+      - Mob: NERAID
+        Rate: 214285
+      - Mob: PEST
+        Rate: 214285
+      - Mob: INJUSTICE
+        Rate: 71428
+      - Mob: GOBLIN_ARCHER
+        Rate: 214285
+      - Mob: GRYPHON
+        Rate: 71428
+      - Mob: DARK_FRAME
+        Rate: 71428
+      - Mob: WILD_ROSE
+        Rate: 214285
+      - Mob: MUTANT_DRAGON
+        Rate: 71428
+      - Mob: WIND_GHOST
+        Rate: 71428
+      - Mob: MERMAN
+        Rate: 71428
+      - Mob: COOKIE
+        Rate: 214285
+      - Mob: ASTER
+        Rate: 357142
+      - Mob: CARAT
+        Rate: 71428
+      - Mob: BLOODY_KNIGHT
+        Rate: 71428
+      - Mob: CLOCK
+        Rate: 71428
+      - Mob: C_TOWER_MANAGER
+        Rate: 71428
+      - Mob: ALLIGATOR
+        Rate: 71428
+      - Mob: ORC_LADY
+        Rate: 214285
+      - Mob: MEGALITH
+        Rate: 71428
+      - Mob: ALICE
+        Rate: 71428
+      - Mob: RAYDRIC_ARCHER
+        Rate: 71428
+      - Mob: GREATEST_GENERAL
+        Rate: 214285
+      - Mob: STALACTIC_GOLEM
+        Rate: 71428
+      - Mob: TRI_JOINT
+        Rate: 214285
+      - Mob: STEAM_GOBLIN
+        Rate: 214285
+      - Mob: SAGEWORM
+        Rate: 71428
+      - Mob: KOBOLD_ARCHER
+        Rate: 214285
+      - Mob: CHIMERA
+        Rate: 71428
+      - Mob: MAYA_PUPLE
+        Rate: 71428
+      - Mob: SKELETON_GENERAL
+        Rate: 71428
+      - Mob: WRAITH_DEAD
+        Rate: 71428
+      - Mob: MINI_DEMON
+        Rate: 71428
+      - Mob: CREMY_FEAR
+        Rate: 71428
+      - Mob: KILLER_MANTIS
+        Rate: 71428
+      - Mob: OWL_BARON
+        Rate: 71428
+      - Mob: KOBOLD_LEADER
+        Rate: 71428
+      - Mob: ANCIENT_MUMMY
+        Rate: 71428
+      - Mob: ZOMBIE_MASTER
+        Rate: 71428
+      - Mob: GOBLIN_LEADER
+        Rate: 71428
+      - Mob: CATERPILLAR
+        Rate: 71428
+      - Mob: AM_MUT
+        Rate: 71428
+      - Mob: DARK_ILLUSION
+        Rate: 71428
+      - Mob: GIANT_HONET
+        Rate: 71428
+      - Mob: GIANT_SPIDER
+        Rate: 71428
+      - Mob: ANCIENT_WORM
+        Rate: 71428
+      - Mob: LEIB_OLMAI
+        Rate: 71428
+      - Mob: CAT_O_NINE_TAIL
+        Rate: 71428
+      - Mob: PANZER_GOBLIN
+        Rate: 71428
+      - Mob: GAJOMART
+        Rate: 71428
+      - Mob: MAJORUROS
+        Rate: 71428
+      - Mob: GULLINBURSTI
+        Rate: 71428
+      - Mob: MOBSTER
+        Rate: 71428
+      - Mob: PERMETER
+        Rate: 71428
+      - Mob: ASSULTER
+        Rate: 71428
+      - Mob: SOLIDER
+        Rate: 71428
+      - Mob: FUR_SEAL
+        Rate: 71428
+      - Mob: HEATER
+        Rate: 71428
+      - Mob: FREEZER
+        Rate: 71428
+      - Mob: OWL_DUKE
+        Rate: 71428
+      - Mob: DRAGON_TAIL
+        Rate: 71428
+      - Mob: SPRING_RABBIT
+        Rate: 71428
+      - Mob: SEE_OTTER
+        Rate: 71428
+      - Mob: APOCALIPS
+        Rate: 71428
+      - Mob: LAVA_GOLEM
+        Rate: 71428
+      - Mob: BLAZZER
+        Rate: 71428
+      - Mob: GEOGRAPHER
+        Rate: 71428
+      - Mob: GRAND_PECO
+        Rate: 71428
+      - Mob: SUCCUBUS
+        Rate: 71428
+      - Mob: FAKE_ANGEL
+        Rate: 71428
+      - Mob: GOAT
+        Rate: 71428
+      - Mob: INCUBUS
+        Rate: 71428
+      - Mob: THE_PAPER
+        Rate: 71428
+      - Mob: HARPY
+        Rate: 71428
+      - Mob: ELDER
+        Rate: 71428
+      - Mob: DEMON_PUNGUS
+        Rate: 71428
+      - Mob: NIGHTMARE_TERROR
+        Rate: 71428
+      - Mob: DRILLER
+        Rate: 71428
+      - Mob: GRIZZLY
+        Rate: 71428
+      - Mob: DIABOLIC
+        Rate: 71428
+      - Mob: EXPLOSION
+        Rate: 71428
+      - Mob: DELETER
+        Rate: 71428
+      - Mob: DELETER_
+        Rate: 71428
+      - Mob: SLEEPER
+        Rate: 71428
+      - Mob: GIG
+        Rate: 71428
+      - Mob: VIOLY
+        Rate: 71428
+      - Mob: GALAPAGO
+        Rate: 71428
+      - Mob: ROTAR_ZAIRO
+        Rate: 214285
+      - Mob: KARAKASA
+        Rate: 214285
+      - Mob: SHINOBI
+        Rate: 71428
+      - Mob: POISON_TOAD
+        Rate: 71428
+      - Mob: ANTIQUE_FIRELOCK
+        Rate: 71428
+      - Mob: MIYABI_NINGYO
+        Rate: 214285
+      - Mob: TENGU
+        Rate: 71428
+      - Mob: KAPHA
+        Rate: 71428
+      - Mob: BLOOD_BUTTERFLY
+        Rate: 71428
+      - Mob: RICE_CAKE_BOY
+        Rate: 214285
+      - Mob: LIVE_PEACH_TREE
+        Rate: 71428
+      - Mob: EVIL_CLOUD_HERMIT
+        Rate: 71428
+      - Mob: WILD_GINSENG
+        Rate: 71428
+      - Mob: BABY_LEOPARD
+        Rate: 214285
+      - Mob: WICKED_NYMPH
+        Rate: 71428
+      - Mob: ZIPPER_BEAR
+        Rate: 214285
+      - Mob: DRYAD
+        Rate: 71428
+      - Mob: KIND_OF_BEETLE
+        Rate: 214285
+      - Mob: STONE_SHOOTER
+        Rate: 71428
+      - Mob: WOODEN_GOLEM
+        Rate: 71428
+      - Mob: WOOTAN_SHOOTER
+        Rate: 214285
+      - Mob: WOOTAN_FIGHTER
+        Rate: 71428
+      - Mob: PARASITE
+        Rate: 214285
+      - Mob: GIBBET
+        Rate: 71428
+      - Mob: DULLAHAN
+        Rate: 71428
+      - Mob: LOLI_RURI
+        Rate: 71428
+      - Mob: DISGUISE
+        Rate: 71428
+      - Mob: BLOODY_MURDERER
+        Rate: 71428
+      - Mob: QUVE
+        Rate: 214285
+      - Mob: LUDE
+        Rate: 214285
+      - Mob: HYLOZOIST
+        Rate: 71428
+      - Mob: HYEGUN
+        Rate: 71428
+      - Mob: CIVIL_SERVANT
+        Rate: 71428
+      - Mob: DANCING_DRAGON
+        Rate: 71428
+      - Mob: GARM_BABY
+        Rate: 71428
+      - Mob: INCREASE_SOIL
+        Rate: 71428
+      - Mob: LI_ME_MANG_RYANG
+        Rate: 71428
+      - Mob: CHUNG_E
+        Rate: 71428
+      - Mob: BOILED_RICE
+        Rate: 71428
+      - Mob: DEVILING
+        Rate: 71428
+      - Mob: TAMRUAN
+        Rate: 71428
+      - Mob: LEAF_CAT
+        Rate: 71428
+      - Mob: KRABEN
+        Rate: 71428
+      - Mob: METALING
+        Rate: 71428
+      - Mob: MINERAL
+        Rate: 71428
+      - Mob: OBSIDIAN
+        Rate: 71428
+      - Mob: PITMAN
+        Rate: 71428
+      - Mob: WASTE_STOVE
+        Rate: 71428
+      - Mob: UNGOLIANT
+        Rate: 71428
+      - Mob: PORCELLIO
+        Rate: 71428
+      - Mob: NOXIOUS
+        Rate: 71428
+      - Mob: VENOMOUS
+        Rate: 71428
+      - Mob: TEDDY_BEAR
+        Rate: 142857
+  - Group: TAEKWON_MISSION
+    Default: SCORPION
+    Summon:
+      - Mob: SCORPION
+        Rate: 1
+      - Mob: PORING
+        Rate: 1
+      - Mob: HORNET
+        Rate: 1
+      - Mob: FARMILIAR
+        Rate: 1
+      - Mob: FABRE
+        Rate: 1
+      - Mob: PUPA
+        Rate: 1
+      - Mob: CONDOR
+        Rate: 1
+      - Mob: WILOW
+        Rate: 1
+      - Mob: CHONCHON
+        Rate: 1
+      - Mob: RODA_FROG
+        Rate: 1
+      - Mob: WOLF
+        Rate: 1
+      - Mob: SPORE
+        Rate: 1
+      - Mob: ZOMBIE
+        Rate: 1
+      - Mob: ARCHER_SKELETON
+        Rate: 1
+      - Mob: CREAMY
+        Rate: 1
+      - Mob: PECOPECO
+        Rate: 1
+      - Mob: MANDRAGORA
+        Rate: 1
+      - Mob: ORK_WARRIOR
+        Rate: 1
+      - Mob: WORM_TAIL
+        Rate: 1
+      - Mob: SNAKE
+        Rate: 1
+      - Mob: MUNAK
+        Rate: 1
+      - Mob: SOLDIER_SKELETON
+        Rate: 1
+      - Mob: ISIS
+        Rate: 1
+      - Mob: ANACONDAQ
+        Rate: 1
+      - Mob: POPORING
+        Rate: 1
+      - Mob: VERIT
+        Rate: 1
+      - Mob: ELDER_WILOW
+        Rate: 1
+      - Mob: THARA_FROG
+        Rate: 1
+      - Mob: HUNTER_FLY
+        Rate: 1
+      - Mob: GHOUL
+        Rate: 1
+      - Mob: SIDE_WINDER
+        Rate: 1
+      - Mob: GOLEM
+        Rate: 1
+      - Mob: MUMMY
+        Rate: 1
+      - Mob: STEEL_CHONCHON
+        Rate: 1
+      - Mob: OBEAUNE
+        Rate: 1
+      - Mob: MARC
+        Rate: 1
+      - Mob: PECOPECO_EGG
+        Rate: 1
+      - Mob: THIEF_BUG_EGG
+        Rate: 1
+      - Mob: PICKY
+        Rate: 1
+      - Mob: PICKY_
+        Rate: 1
+      - Mob: THIEF_BUG
+        Rate: 1
+      - Mob: ROCKER
+        Rate: 1
+      - Mob: THIEF_BUG_
+        Rate: 1
+      - Mob: THIEF_BUG__
+        Rate: 1
+      - Mob: MUKA
+        Rate: 1
+      - Mob: SMOKIE
+        Rate: 1
+      - Mob: YOYO
+        Rate: 1
+      - Mob: METALLER
+        Rate: 1
+      - Mob: BIGFOOT
+        Rate: 1
+      - Mob: NIGHTMARE
+        Rate: 1
+      - Mob: PORING_
+        Rate: 1
+      - Mob: LUNATIC
+        Rate: 1
+      - Mob: MEGALODON
+        Rate: 1
+      - Mob: STROUF
+        Rate: 1
+      - Mob: VADON
+        Rate: 1
+      - Mob: CORNUTUS
+        Rate: 1
+      - Mob: HYDRA
+        Rate: 1
+      - Mob: SWORD_FISH
+        Rate: 1
+      - Mob: KUKRE
+        Rate: 1
+      - Mob: PIRATE_SKEL
+        Rate: 1
+      - Mob: KAHO
+        Rate: 1
+      - Mob: CRAB
+        Rate: 1
+      - Mob: SHELLFISH
+        Rate: 1
+      - Mob: SKELETON
+        Rate: 1
+      - Mob: POISON_SPORE
+        Rate: 1
+      - Mob: VOCAL
+        Rate: 1
+      - Mob: TOAD
+        Rate: 1
+      - Mob: MASTERING
+        Rate: 1
+      - Mob: DRAGON_FLY
+        Rate: 1
+      - Mob: VAGABOND_WOLF
+        Rate: 1
+      - Mob: ECLIPSE
+        Rate: 1
+      - Mob: AMBERNITE
+        Rate: 1
+      - Mob: ANDRE
+        Rate: 1
+      - Mob: ANGELING
+        Rate: 1
+      - Mob: ANT_EGG
+        Rate: 1
+      - Mob: ANUBIS
+        Rate: 1
+      - Mob: ARGIOPE
+        Rate: 1
+      - Mob: ARGOS
+        Rate: 1
+      - Mob: BAPHOMET_
+        Rate: 1
+      - Mob: BATHORY
+        Rate: 1
+      - Mob: CARAMEL
+        Rate: 1
+      - Mob: COCO
+        Rate: 1
+      - Mob: DENIRO
+        Rate: 1
+      - Mob: DESERT_WOLF
+        Rate: 1
+      - Mob: DESERT_WOLF_B
+        Rate: 1
+      - Mob: DEVIACE
+        Rate: 1
+      - Mob: DEVIRUCHI
+        Rate: 1
+      - Mob: DOKEBI
+        Rate: 1
+      - Mob: DRAINLIAR
+        Rate: 1
+      - Mob: DROPS
+        Rate: 1
+      - Mob: DUSTINESS
+        Rate: 1
+      - Mob: EGGYRA
+        Rate: 1
+      - Mob: EVIL_DRUID
+        Rate: 1
+      - Mob: FLORA
+        Rate: 1
+      - Mob: FRILLDORA
+        Rate: 1
+      - Mob: GHOSTRING
+        Rate: 1
+      - Mob: GIEARTH
+        Rate: 1
+      - Mob: GOBLIN_1
+        Rate: 1
+      - Mob: GOBLIN_2
+        Rate: 1
+      - Mob: GOBLIN_3
+        Rate: 1
+      - Mob: GOBLIN_4
+        Rate: 1
+      - Mob: GOBLIN_5
+        Rate: 1
+      - Mob: HODE
+        Rate: 1
+      - Mob: HORN
+        Rate: 1
+      - Mob: HORONG
+        Rate: 1
+      - Mob: JAKK
+        Rate: 1
+      - Mob: JOKER
+        Rate: 1
+      - Mob: KHALITZBURG
+        Rate: 1
+      - Mob: KOBOLD_1
+        Rate: 1
+      - Mob: KOBOLD_2
+        Rate: 1
+      - Mob: KOBOLD_3
+        Rate: 1
+      - Mob: MAGNOLIA
+        Rate: 1
+      - Mob: MANTIS
+        Rate: 1
+      - Mob: MARDUK
+        Rate: 1
+      - Mob: MARINA
+        Rate: 1
+      - Mob: MARINE_SPHERE
+        Rate: 1
+      - Mob: MARIONETTE
+        Rate: 1
+      - Mob: MARSE
+        Rate: 1
+      - Mob: MARTIN
+        Rate: 1
+      - Mob: MATYR
+        Rate: 1
+      - Mob: MEDUSA
+        Rate: 1
+      - Mob: MINOROUS
+        Rate: 1
+      - Mob: MYST
+        Rate: 1
+      - Mob: ORC_SKELETON
+        Rate: 1
+      - Mob: ORC_ZOMBIE
+        Rate: 1
+      - Mob: PASANA
+        Rate: 1
+      - Mob: PETIT
+        Rate: 1
+      - Mob: PETIT_
+        Rate: 1
+      - Mob: PHEN
+        Rate: 1
+      - Mob: PIERE
+        Rate: 1
+      - Mob: PLANKTON
+        Rate: 1
+      - Mob: RAFFLESIA
+        Rate: 1
+      - Mob: RAYDRIC
+        Rate: 1
+      - Mob: REQUIEM
+        Rate: 1
+      - Mob: SAND_MAN
+        Rate: 1
+      - Mob: SAVAGE
+        Rate: 1
+      - Mob: SAVAGE_BABE
+        Rate: 1
+      - Mob: SKEL_WORKER
+        Rate: 1
+      - Mob: SOHEE
+        Rate: 1
+      - Mob: STAINER
+        Rate: 1
+      - Mob: TAROU
+        Rate: 1
+      - Mob: VITATA
+        Rate: 1
+      - Mob: ZENORC
+        Rate: 1
+      - Mob: ZEROM
+        Rate: 1
+      - Mob: WHISPER
+        Rate: 1
+      - Mob: NINE_TAIL
+        Rate: 1
+      - Mob: CHONCHON_
+        Rate: 1
+      - Mob: FABRE_
+        Rate: 1
+      - Mob: WHISPER_
+        Rate: 1
+      - Mob: WHISPER_BOSS
+        Rate: 1
+      - Mob: BON_GUN
+        Rate: 1
+      - Mob: ORC_ARCHER
+        Rate: 1
+      - Mob: MIMIC
+        Rate: 1
+      - Mob: WRAITH
+        Rate: 1
+      - Mob: ALARM
+        Rate: 1
+      - Mob: ARCLOUSE
+        Rate: 1
+      - Mob: RIDEWORD
+        Rate: 1
+      - Mob: SKEL_PRISONER
+        Rate: 1
+      - Mob: ZOMBIE_PRISONER
+        Rate: 1
+      - Mob: DARK_PRIEST
+        Rate: 1
+      - Mob: PUNK
+        Rate: 1
+      - Mob: RYBIO
+        Rate: 1
+      - Mob: PHENDARK
+        Rate: 1
+      - Mob: ANOLIAN
+        Rate: 1
+      - Mob: STING
+        Rate: 1
+      - Mob: WANDER_MAN
+        Rate: 1
+      - Mob: CRAMP
+        Rate: 1
+      - Mob: BRILIGHT
+        Rate: 1
+      - Mob: IRON_FIST
+        Rate: 1
+      - Mob: HIGH_ORC
+        Rate: 1
+      - Mob: CHOCO
+        Rate: 1
+      - Mob: STEM_WORM
+        Rate: 1
+      - Mob: PENOMENA
+        Rate: 1
+      - Mob: KNIGHT_OF_ABYSS
+        Rate: 1
+      - Mob: CRUISER
+        Rate: 1
+      - Mob: MYSTCASE
+        Rate: 1
+      - Mob: CHEPET
+        Rate: 1
+      - Mob: GARGOYLE
+        Rate: 1
+      - Mob: RAGGLER
+        Rate: 1
+      - Mob: NERAID
+        Rate: 1
+      - Mob: PEST
+        Rate: 1
+      - Mob: INJUSTICE
+        Rate: 1
+      - Mob: GOBLIN_ARCHER
+        Rate: 1
+      - Mob: DARK_FRAME
+        Rate: 1
+      - Mob: WILD_ROSE
+        Rate: 1
+      - Mob: WIND_GHOST
+        Rate: 1
+      - Mob: MERMAN
+        Rate: 1
+      - Mob: COOKIE
+        Rate: 1
+      - Mob: ASTER
+        Rate: 1
+      - Mob: CARAT
+        Rate: 1
+      - Mob: CLOCK
+        Rate: 1
+      - Mob: C_TOWER_MANAGER
+        Rate: 1
+      - Mob: ALLIGATOR
+        Rate: 1
+      - Mob: ORC_LADY
+        Rate: 1
+      - Mob: MEGALITH
+        Rate: 1
+      - Mob: ALICE
+        Rate: 1
+      - Mob: RAYDRIC_ARCHER
+        Rate: 1
+      - Mob: GREATEST_GENERAL
+        Rate: 1
+      - Mob: STALACTIC_GOLEM
+        Rate: 1
+      - Mob: TRI_JOINT
+        Rate: 1
+      - Mob: STEAM_GOBLIN
+        Rate: 1
+      - Mob: SAGEWORM
+        Rate: 1
+      - Mob: KOBOLD_ARCHER
+        Rate: 1
+      - Mob: CHIMERA
+        Rate: 1
+      - Mob: ARCHER_GUARDIAN
+        Rate: 1
+      - Mob: SOLDIER_GUARDIAN
+        Rate: 1
+      - Mob: SKELETON_GENERAL
+        Rate: 1
+      - Mob: WRAITH_DEAD
+        Rate: 1
+      - Mob: MINI_DEMON
+        Rate: 1
+      - Mob: CREMY_FEAR
+        Rate: 1
+      - Mob: KILLER_MANTIS
+        Rate: 1
+      - Mob: OWL_BARON
+        Rate: 1
+      - Mob: KOBOLD_LEADER
+        Rate: 1
+      - Mob: ANCIENT_MUMMY
+        Rate: 1
+      - Mob: ZOMBIE_MASTER
+        Rate: 1
+      - Mob: GOBLIN_LEADER
+        Rate: 1
+      - Mob: CATERPILLAR
+        Rate: 1
+      - Mob: AM_MUT
+        Rate: 1
+      - Mob: DARK_ILLUSION
+        Rate: 1
+      - Mob: GIANT_HONET
+        Rate: 1
+      - Mob: GIANT_SPIDER
+        Rate: 1
+      - Mob: ANCIENT_WORM
+        Rate: 1
+      - Mob: LEIB_OLMAI
+        Rate: 1
+      - Mob: CAT_O_NINE_TAIL
+        Rate: 1
+      - Mob: PANZER_GOBLIN
+        Rate: 1
+      - Mob: GAJOMART
+        Rate: 1
+      - Mob: MAJORUROS
+        Rate: 1
+      - Mob: GULLINBURSTI
+        Rate: 1
+      - Mob: MOBSTER
+        Rate: 1
+      - Mob: PERMETER
+        Rate: 1
+      - Mob: ASSULTER
+        Rate: 1
+      - Mob: SOLIDER
+        Rate: 1
+      - Mob: FUR_SEAL
+        Rate: 1
+      - Mob: HEATER
+        Rate: 1
+      - Mob: FREEZER
+        Rate: 1
+      - Mob: OWL_DUKE
+        Rate: 1
+      - Mob: DRAGON_TAIL
+        Rate: 1
+      - Mob: SPRING_RABBIT
+        Rate: 1
+      - Mob: SEE_OTTER
+        Rate: 1
+      - Mob: APOCALIPS
+        Rate: 1
+      - Mob: LAVA_GOLEM
+        Rate: 1
+      - Mob: BLAZZER
+        Rate: 1
+      - Mob: GEOGRAPHER
+        Rate: 1
+      - Mob: GRAND_PECO
+        Rate: 1
+      - Mob: SUCCUBUS
+        Rate: 1
+      - Mob: FAKE_ANGEL
+        Rate: 1
+      - Mob: GOAT
+        Rate: 1
+      - Mob: INCUBUS
+        Rate: 1
+      - Mob: THE_PAPER
+        Rate: 1
+      - Mob: HARPY
+        Rate: 1
+      - Mob: ELDER
+        Rate: 1
+      - Mob: DEMON_PUNGUS
+        Rate: 1
+      - Mob: NIGHTMARE_TERROR
+        Rate: 1
+      - Mob: DRILLER
+        Rate: 1
+      - Mob: GRIZZLY
+        Rate: 1
+      - Mob: DIABOLIC
+        Rate: 1
+      - Mob: EXPLOSION
+        Rate: 1
+      - Mob: DELETER
+        Rate: 1
+      - Mob: DELETER_
+        Rate: 1
+      - Mob: SLEEPER
+        Rate: 1
+      - Mob: GIG
+        Rate: 1
+      - Mob: ARCHANGELING
+        Rate: 1
+      - Mob: VIOLY
+        Rate: 1
+      - Mob: GALAPAGO
+        Rate: 1
+      - Mob: ROTAR_ZAIRO
+        Rate: 1
+      - Mob: KARAKASA
+        Rate: 1
+      - Mob: SHINOBI
+        Rate: 1
+      - Mob: POISON_TOAD
+        Rate: 1
+      - Mob: ANTIQUE_FIRELOCK
+        Rate: 1
+      - Mob: MIYABI_NINGYO
+        Rate: 1
+      - Mob: TENGU
+        Rate: 1
+      - Mob: KAPHA
+        Rate: 1
+      - Mob: BLOOD_BUTTERFLY
+        Rate: 1
+      - Mob: RICE_CAKE_BOY
+        Rate: 1
+      - Mob: LIVE_PEACH_TREE
+        Rate: 1
+      - Mob: EVIL_CLOUD_HERMIT
+        Rate: 1
+      - Mob: WILD_GINSENG
+        Rate: 1
+      - Mob: BABY_LEOPARD
+        Rate: 1
+      - Mob: WICKED_NYMPH
+        Rate: 1
+      - Mob: ZIPPER_BEAR
+        Rate: 1
+      - Mob: DRYAD
+        Rate: 1
+      - Mob: KIND_OF_BEETLE
+        Rate: 1
+      - Mob: STONE_SHOOTER
+        Rate: 1
+      - Mob: WOODEN_GOLEM
+        Rate: 1
+      - Mob: WOOTAN_SHOOTER
+        Rate: 1
+      - Mob: WOOTAN_FIGHTER
+        Rate: 1
+      - Mob: PARASITE
+        Rate: 1
+      - Mob: GIBBET
+        Rate: 1
+      - Mob: DULLAHAN
+        Rate: 1
+      - Mob: LOLI_RURI
+        Rate: 1
+      - Mob: DISGUISE
+        Rate: 1
+      - Mob: BLOODY_MURDERER
+        Rate: 1
+      - Mob: QUVE
+        Rate: 1
+      - Mob: LUDE
+        Rate: 1
+      - Mob: HYLOZOIST
+        Rate: 1
+      - Mob: HYEGUN
+        Rate: 1
+      - Mob: CIVIL_SERVANT
+        Rate: 1
+      - Mob: DANCING_DRAGON
+        Rate: 1
+      - Mob: GARM_BABY
+        Rate: 1
+      - Mob: INCREASE_SOIL
+        Rate: 1
+      - Mob: LI_ME_MANG_RYANG
+        Rate: 1
+      - Mob: CHUNG_E
+        Rate: 1
+      - Mob: BOILED_RICE
+        Rate: 1
+      - Mob: DEVILING
+        Rate: 1
+      - Mob: TAMRUAN
+        Rate: 1
+      - Mob: MIME_MONKEY
+        Rate: 1
+      - Mob: LEAF_CAT
+        Rate: 1
+      - Mob: KRABEN
+        Rate: 1
+      - Mob: ORC_XMAS
+        Rate: 1
+      - Mob: G_DANCING_DRAGON
+        Rate: 1
+      - Mob: METALING
+        Rate: 1
+      - Mob: MINERAL
+        Rate: 1
+      - Mob: OBSIDIAN
+        Rate: 1
+      - Mob: PITMAN
+        Rate: 1
+      - Mob: WASTE_STOVE
+        Rate: 1
+      - Mob: UNGOLIANT
+        Rate: 1
+      - Mob: PORCELLIO
+        Rate: 1
+      - Mob: NOXIOUS
+        Rate: 1
+      - Mob: VENOMOUS
+        Rate: 1
+      - Mob: TEDDY_BEAR
+        Rate: 1
+      - Mob: G_PORCELLIO
+        Rate: 1
+      - Mob: G_DARK_PRIEST
+        Rate: 1
+      - Mob: ANOPHELES
+        Rate: 1
+      - Mob: MOLE
+        Rate: 1
+      - Mob: HILL_WIND
+        Rate: 1
+      - Mob: CHUNG_E_
+        Rate: 1
+      - Mob: GREMLIN
+        Rate: 1
+      - Mob: BEHOLDER
+        Rate: 1
+      - Mob: POTON_CANON
+        Rate: 1
+      - Mob: POTON_CANON_1
+        Rate: 1
+      - Mob: POTON_CANON_2
+        Rate: 1
+      - Mob: POTON_CANON_3
+        Rate: 1
+      - Mob: ARCHDAM
+        Rate: 1
+      - Mob: DIMIK_1
+        Rate: 1
+      - Mob: DIMIK_2
+        Rate: 1
+      - Mob: DIMIK_3
+        Rate: 1
+      - Mob: DIMIK_4
+        Rate: 1
+      - Mob: VENATU_1
+        Rate: 1
+      - Mob: VENATU_2
+        Rate: 1
+      - Mob: VENATU_3
+        Rate: 1
+      - Mob: VENATU_4
+        Rate: 1
+      - Mob: HILL_WIND_1
+        Rate: 1
+      - Mob: ORC_BABY
+        Rate: 1
+      - Mob: GREEN_IGUANA
+        Rate: 1

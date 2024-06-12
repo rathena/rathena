@@ -249,7 +249,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 			mes "was much suffering in the";
 			mes "world, especially among";
 			mes "the common people of";
-			mes "Rune-Midgard...";
+			mes "Midgard...";
 			next;
 			mes "[Tzerero]";
 			mes "He learned many skills from";

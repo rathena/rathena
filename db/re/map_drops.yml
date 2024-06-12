@@ -1,0 +1,207 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Map Drop Database
+###########################################################################
+#
+# Map Drop Settings
+#
+###########################################################################
+# - Map                             Name of the map.
+#   GlobalDrops                     Drops for all monsters on this map. (Default: empty)
+#                                   These drops are unaffected by server drop rate and cannot be stolen.
+#     - Index                       Unique index of the drop.
+#       Item                        Item name.
+#       Rate                        Drop rate of item, n/100000.
+#       RandomOptionGroup           Random Option Group applied to item on drop. (Default: None)
+#   SpecificDrops                   Drops for specific monsters on this map. (Default: empty)
+#     - Monster                     Monster name.
+#       Drops                       Drops for this specific monster. (Default: empty)
+#                                   These drops are unaffected by server drop rate and cannot be stolen.
+#         - Index                   Unique index of the drop.
+#           Item                    Item name.
+#           Rate                    Drop rate of item, n/100000.
+#           RandomOptionGroup       Random Option Group applied to item on drop. (Default: None)
+###########################################################################
+
+Header:
+  Type: MAP_DROP_DB
+  Version: 2
+
+Body:
+  - Map: tur_d03_i
+    SpecificDrops:
+      - Monster: ILL_ASSULTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Huuma_Bird_Wing_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_PERMETER
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_FREEZER
+        Drops:
+          - Index: 0
+            Item: Immaterial_Sword_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_SOLIDER
+        Drops:
+          - Index: 0
+            Item: Iron_Driver_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: War_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 3
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_HEATER
+        Drops:
+          - Index: 0
+            Item: Pole_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+  - Map: tur_d04_i
+    SpecificDrops:
+      - Monster: ILL_ASSULTER
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Huuma_Bird_Wing_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_PERMETER
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_FREEZER
+        Drops:
+          - Index: 0
+            Item: Immaterial_Sword_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_SOLIDER
+        Drops:
+          - Index: 0
+            Item: Iron_Driver_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: War_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 3
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_HEATER
+        Drops:
+          - Index: 0
+            Item: Pole_Axe_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Turtle_Is_Box_IL
+            Rate: 5
+      - Monster: ILL_TURTLE_GENERAL
+        Drops:
+          - Index: 0
+            Item: Fancy_Flower_IL
+            Rate: 5000
+          - Index: 1
+            Item: Immaterial_Sword_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Iron_Driver_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Pole_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 4
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 5
+            Item: War_Axe_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 6
+            Item: Huuma_Bird_Wing_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 7
+            Item: S_Turtle_Is_Box_IL
+            Rate: 150

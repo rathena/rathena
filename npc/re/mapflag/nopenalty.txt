@@ -1,19 +1,21 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable death penalty.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Same as 'noexppenalty' and 'nozenypenalty' combined.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Para Market maps [mazvi]
 //============================================================
 
-// Towns ====================
+//============================================================
+// Paradise Market
+//============================================================
+paramk	mapflag	nopenalty
+
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
 brasilis	mapflag	nopenalty
 bra_in01	mapflag	nopenalty
 dicastes01	mapflag	nopenalty
@@ -50,8 +52,10 @@ ecl_in04	mapflag	nopenalty
 ecl_hub01	mapflag	nopenalty
 que_avan01	mapflag	nopenalty
 
-// Job Quests ========================
-// 3-1 --------------------
+//============================================================
+// Job Quests
+//============================================================
+// 3-1 Classes
 job3_arch01	mapflag	nopenalty
 job3_arch02	mapflag	nopenalty
 job3_arch03	mapflag	nopenalty
@@ -65,18 +69,22 @@ job3_rune02	mapflag	nopenalty
 job3_rune03	mapflag	nopenalty
 job3_war01	mapflag	nopenalty
 job3_war02	mapflag	nopenalty
-// 3-2 --------------------
+// 3-2 Classes
 job3_gen01	mapflag	nopenalty
-// Ext --------------------
+// Expanded Classes
 job3_sha01	mapflag	nopenalty
 job_ko	mapflag	nopenalty
 job_gun	mapflag	nopenalty
 
+//============================================================
 // Nightmare Biolab
+//============================================================
 lhz_dun_n	mapflag	nopenalty
 lhz_d_n2	mapflag	nopenalty
 
-// Ep 16
+//============================================================
+// Episode 16.1 - Banquet of Heroes
+//============================================================
 prt_cas	mapflag	nopenalty
 prt_cas_q	mapflag	nopenalty
 prt_pri00	mapflag	nopenalty
@@ -84,12 +92,23 @@ prt_lib	mapflag	nopenalty
 prt_lib_q	mapflag	nopenalty
 que_swat	mapflag	nopenalty
 
+//============================================================
 // Rockridge
+//============================================================
 har_in01	mapflag	nopenalty
 rebel_in	mapflag	nopenalty
 rockmi2	mapflag	nopenalty
 
+//============================================================
 // Lasagna
+//============================================================
 lasagna	mapflag	nopenalty
 lasa_in01	mapflag	nopenalty
 conch_in	mapflag	nopenalty
+
+wolfvill	mapflag	nopenalty
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	nopenalty

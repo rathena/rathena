@@ -104,7 +104,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			next;
 			mes "[Allen]";
 			mes "But you... I can count on you.";
-			mes "Even in Lighthazlen, I'd never";
+			mes "Even in Lighthalzen, I'd never";
 			mes "find anyone as dependable as";
 			mes "you. This time, I've decided to";
 			mes "discipline my degenerate son.";
@@ -2313,7 +2313,7 @@ hu_in01,256,40,3	script	Herico	897,{
 		next;
 		mes "[Herico]";
 		mes "Yes, you are right.";
-		mes "For the longest time, Schwaltzvalt Republic had had";
+		mes "For the longest time, Schwarzwald Republic had had";
 		mes "^3131FFMercenary Soldiers^000000 who exchanged their lives";
 		mes "with the good money, and they used to take care of";
 		mes "all the dirty jobs in the past.";
@@ -2600,7 +2600,7 @@ hu_in01,256,40,3	script	Herico	897,{
 		mes "I am thinking about ^3131FFdestroying Regenschirm^000000.";
 		next;
 		mes "[Herico]";
-		mes "Rekenber has become as powerful as this Schwaltzvalt Republic.";
+		mes "Rekenber has become as powerful as this Schwarzwald Republic.";
 		mes "I don't think that I could destroy the entire corporation.";
 		mes "But even if I could, it could also lead to the fall of my country,";
 		mes "because that's who big Rekenber means to this country.";
@@ -2853,7 +2853,7 @@ hu_in01,256,40,3	script	Herico	897,{
 							getitem 12044,1; //Herb Marinade Beef
 							break;
 						case 2:
-							getitem 12049,1; //Morroc Fruit Wine
+							getitem 12049,1; //Morocc Fruit Wine
 							break;
 						case 3:
 							getitem 12059,1; //Lutie Cold Noodle
@@ -2974,7 +2974,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 			mes "Oh yes, do you know what? \"Commutative contract\".";
 			next;
 			mes "[Enquro Carson]";
-			mes "I heard of a private pub in Morroc,";
+			mes "I heard of a private pub in Morocc,";
 			mes "a city of Rune-Midgarts Kingdom";
 			mes "that is not open to the public.";
 			mes "People keep talking about the pub's best drink,";
@@ -2995,7 +2995,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 	} else if (hg_tre == 46) {
 		if (!countitem(12112) || !countitem(12113)) {
 			mes "[Enquro Carson]";
-			mes "I heard of a private pub in Morroc,";
+			mes "I heard of a private pub in Morocc,";
 			mes "a city of Rune-Midgarts Kingdom";
 			mes "that is not open to the public.";
 			mes "People keep talking about the pub's best drink,";
@@ -3021,7 +3021,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 			mes "^3131FFWintzil Trony^000000,";
 			mes "the last mercenary soldier for the last time in...";
 			mes "^FF0000Hugel^000000. Wait, Hugel?";
-			mes "Isn't that the small country at the corner of Schwaltzvalt Republic?";
+			mes "Isn't that the small country at the corner of Schwarzwald Republic?";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "What? Hugel?";
@@ -3371,9 +3371,9 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "- You started reading the 8th page. -";
 					next;
 					mes "Date: **month **day";
-					mes "Our leader became desperate, so he sent a request to Schwaltzvalt Republic for ^3131FFa cease-fire agreement^000000.";
+					mes "Our leader became desperate, so he sent a request to Schwarzwald Republic for ^3131FFa cease-fire agreement^000000.";
 					mes "I guess that he was frightened by guardians around the Varmunt mansion.";
-					mes "Sadly, Schwaltzvalt Republic declined our request without hesitation.";
+					mes "Sadly, Schwarzwald Republic declined our request without hesitation.";
 					mes "They stated through their reponse that ^FF0000they would not tolerate this kind of unacceptable rebellion by any means,";
 					mes "and thus, they would take strong action against the rebellion this time.^000000.";
 					mes "I guess that the government is determined to eliminate us, the mercenary soldiers through this event.";
@@ -3391,7 +3391,7 @@ hu_in01,317,312,0	script	Book	111,{
 					next;
 					mes "Date: **month **day";
 					mes "It has been a while since I wrote a journal last time.";
-					mes "I am in Hugel, a small town at the border of Schwaltzvalt Republic.";
+					mes "I am in Hugel, a small town at the border of Schwarzwald Republic.";
 					mes "Because of the locational penalty, people of this town seldom see outsiders, and if they see one, they treate them warmheartedly.";
 					mes "Although I didn't have a time to write a journal that time, the last fight in the Varmunt mansion turned out to be our miserable defeat...as I was worried.";
 					mes "I was told that Sage Varmunt disappeared after the fight, and all of his documents were taken by Rekenber.";
@@ -5479,7 +5479,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 		mes "of a cult following, and it's";
 		mes "not widely popularized, but I'm";
 		mes "sure that it'll be considered";
-		mes "representative of Schwaltzvalt";
+		mes "representative of Schwarzwald";
 		mes "Republic cuisine someday.";
 		next;
 		mes "[Cellette]";
@@ -6271,9 +6271,9 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "[Euslan]";
 			mes "^333333*Cough*^000000 Oh, right...";
 			mes "My fiancee was planning on";
-			mes "searching the Schwaltzvalt";
+			mes "searching the Schwarzwald";
 			mes "Republic, so maybe the crewmen";
-			mes "on the Schwaltzvalt Republic domestic flights might know him.";
+			mes "on the Schwarzwald Republic domestic flights might know him.";
 			next;
 			mes "[Euslan]";
 			mes "If you manage to find";
@@ -6340,9 +6340,9 @@ yuno,111,156,3	script	Euslan	90,{
 			mes "[Euslan]";
 			mes "^333333*Cough*^000000 Oh, right...";
 			mes "My fiancee was planning on";
-			mes "searching the Schwaltzvalt";
+			mes "searching the Schwarzwald";
 			mes "Republic, so maybe the crewmen";
-			mes "on the Schwaltzvalt Republic domestic flights might know him.";
+			mes "on the Schwarzwald Republic domestic flights might know him.";
 			next;
 			mes "[Euslan]";
 			mes "If you manage to find";
@@ -6705,7 +6705,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "[Thierry]";
 		mes "Of course, I only told Euslan";
 		mes "that I'd be looking around the";
-		mes "Schwaltzvalt Republic... If she";
+		mes "Schwarzwald Republic... If she";
 		mes "knew I was at the Odin Shrine,";
 		mes "she'd worry too much about me.";
 		next;
@@ -8155,7 +8155,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "we have absolutely nothing to";
 		mes "give you. But you'd be doing";
 		mes "a great service your country,";
-		mes "the Rune-Midgart's Kingdom.";
+		mes "the Rune-Midgarts' Kingdom.";
 		next;
 		cutin "hu_laura04.bmp",2;
 		mes "[Laura]";
@@ -8192,7 +8192,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "more funding, we'd have more";
 				mes "than a cheesy recruitment ad,";
 				mes "and some professional staff";
-				mes "like those rich Schwaltzvalt";
+				mes "like those rich Schwarzwald";
 				mes "Republic boys in the next room!";
 				next;
 				cutin "hu_laura02.bmp",2;
@@ -8260,7 +8260,7 @@ hu_in01,14,11,4	script	Laura	70,{
 			mes "Sorry, let me introduce";
 			mes "myself. I'm Laura Laurence,";
 			mes "the leader of the Odin Shrine";
-			mes "expedition for the Rune Midgarts Kingdom. Ashe Milton is my";
+			mes "expedition for the Rune-Midgarts Kingdom. Ashe Milton is my";
 			mes "assistant for this excavation.";
 			next;
 			emotion ET_SMILE, getnpcid(0, "Ashe");
@@ -8300,7 +8300,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "[Laura]";
 		mes "Basically, I want you";
 		mes "to spy on that snobby girl,";
-		mes "Alex of the Schwaltzvalt";
+		mes "Alex of the Schwarzwald";
 		mes "Republic office, and report";
 		mes "what she's actually doing to me.";
 		next;
@@ -8402,7 +8402,7 @@ hu_in01,14,11,4	script	Laura	70,{
 			cutin "hu_laura01.bmp",2;
 			mes "[Laura]";
 			mes "Oh, those are the";
-			mes "Schwartzvalt Republic";
+			mes "Schwarzwald Republic";
 			mes "representatives for this";
 			mes "Odin Shrine expedition.";
 			mes "Personally, I think they're";
@@ -8546,7 +8546,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				cutin "hu_laura02.bmp",2;
 				mes "[Laura]";
 				mes "What do you think those";
-				mes "Schwaltzvalt snobs are doing?";
+				mes "Schwarzwald snobs are doing?";
 				mes "They must think this project";
 				mes "is an excuse for them to relax";
 				mes "and slack off! They can afford to, obviously. Hmpf! Rich people!";
@@ -8660,7 +8660,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		cutin "hu_laura02.bmp",2;
 		mes "[Laura]";
 		mes "I wonder how much progress";
-		mes "those pampered Schwaltzvalt";
+		mes "those pampered Schwarzwald";
 		mes "snobs actually made. They've";
 		mes "got the funds, so they could";
 		mes "actually be further ahead";
@@ -8690,7 +8690,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "[Laura]";
 		mes "Basically, I want you";
 		mes "to spy on that snobby girl,";
-		mes "Alex of the Schwaltzvalt";
+		mes "Alex of the Schwarzwald";
 		mes "Republic office, and report";
 		mes "what she's actually doing to me.";
 		next;
@@ -8743,7 +8743,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "Frankly, I know I'm paying";
 		mes "you nothing to be spy, but";
 		mes "please tell me what you";
-		mes "learned about the Schwaltzvalt";
+		mes "learned about the Schwarzwald";
 		mes "Republic Research Team.";
 		next;
 		switch(select("Giantes:Ymir's Heart:Nothing")) {
@@ -8819,7 +8819,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "brand, isn't it? Yeah,";
 				mes "it's popular amongst";
 				mes "the trendy crowd in the";
-				mes "Schwaltzvalt Republic.";
+				mes "Schwarzwald Republic.";
 				next;
 				cutin "hu_laura01.bmp",2;
 				mes "[Laura]";
@@ -8843,7 +8843,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "I want you to check the";
 				mes "inner island, and see";
 				mes "what you can find while";
-				mes "I investigate the Schwaltzvalt";
+				mes "I investigate the Schwarzwald";
 				mes "Research Team. I'm sorry, but";
 				mes "you're the only one I can ask.";
 				set hg_odin,20;
@@ -9032,7 +9032,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 		case 4:
 			mes "[Ashe]";
 			mes "Hm? You've decided to";
-			mes "help the Schwaltzvalt Team?";
+			mes "help the Schwarzwald Team?";
 			mes "That's fine, but I'm afraid";
 			mes "Ms. Laurence may be a little";
 			mes "upset by that. Well, it's fine";
@@ -9313,7 +9313,7 @@ hu_in01,162,85,4	script	Ashe#2	95,{
 		mes "Um, I've got a favor";
 		mes "of my own to ask you.";
 		mes "Would you please bring";
-		mes "this file to Morroc? Just";
+		mes "this file to Morocc? Just";
 		mes "bring it to my comrade";
 		mes "over at the South Gate.";
 		next;
@@ -9328,14 +9328,14 @@ hu_in01,162,85,4	script	Ashe#2	95,{
 		changequest 11007,11008;
 		mes "[Ashe]";
 		mes "Don't worry, my comrade";
-		mes "at Morroc's South Gate will";
+		mes "at Morocc's South Gate will";
 		mes "explain everything once you";
 		mes "find him. Please hurry!";
 		close;
 	} else if (hg_odin == 59) {
 		mes "[Ashe]";
 		mes "Don't worry, my comrade";
-		mes "at Morroc's South Gate will";
+		mes "at Morocc's South Gate will";
 		mes "explain everything once you";
 		mes "find him. Please hurry, and";
 		mes "find him as soon as you can!";
@@ -9354,7 +9354,7 @@ OnTouch_:
 		mes "Um, I've got a favor";
 		mes "of my own to ask you.";
 		mes "Would you please bring";
-		mes "this file to Morroc? Just";
+		mes "this file to Morocc? Just";
 		mes "bring it to my comrade";
 		mes "over at the South Gate.";
 		next;
@@ -9368,7 +9368,7 @@ OnTouch_:
 		set hg_odin,59;
 		mes "[Ashe]";
 		mes "Don't worry, my comrade";
-		mes "at Morroc's South Gate will";
+		mes "at Morocc's South Gate will";
 		mes "explain everything once you";
 		mes "find him. Please hurry!";
 		close;
@@ -9465,7 +9465,7 @@ OnTouch_:
 		mes "organization that's scattered";
 		mes "now, but some of the members";
 		mes "are still active. Just consider us enemies of Rekenber Corporation";
-		mes "in the Schwaltzvalt Republic.";
+		mes "in the Schwarzwald Republic.";
 		next;
 		mes "[???]";
 		mes "Everything you saw and";
@@ -9477,7 +9477,7 @@ OnTouch_:
 		next;
 		mes "[???]";
 		mes "The people of Rune-Midgarts";
-		mes "and Schwaltzvalt Republic still";
+		mes "and Schwarzwald Republic still";
 		mes "don't know what's going on.";
 		mes "A lot of people are just being";
 		mes "used... Like that one lady,";

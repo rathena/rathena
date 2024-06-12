@@ -24,11 +24,11 @@ dicastes01,189,191,5	script	Traveler Ichack#info	481,2,2,{
 	mes "There was someone in the expedition team claiming that he was the first, but it WAS me. That's right.";
 	next;
 	mes "[Traveler Ichack]";
-	mes "That's why I will provide a service to guide adventurers from Rune-Midgard.";
+	mes "That's why I will provide a service to guide adventurers from Midgard.";
 	mes "What would you like to know?";
 	F_Navi("[Traveler Ichack]");
 	next;
-	switch(select("Dicastes Diel:Residential Area:Training Room:Factory:Pub:Cat Hand Caravan")) {
+	switch(select("Dicastes Diel:Residential Area:Training Room:Factory:Pub:Cat Paw Caravan")) {
 	case 1:
 		mes "[Traveler Ichack]";
 		mes "Ah~ That's a beautiful building.";

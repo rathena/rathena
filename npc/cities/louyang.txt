@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Louyang City NPCs
+//= Luoyang City NPCs
 //===== By: ==================================================
 //= Vidar (1.0)
 //= Mass Zero (1.1)
@@ -13,13 +13,13 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Louyang Town Script
+//= Luoyang Town Script
 //===== Additional Comments: =================================
 //= 2.9 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //= 3.0 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
-// Louyang Transportation
+// Luoyang Transportation
 //============================================================
 -	script	::Girl_louyang	-1,{
 	mes "[Girl]";
@@ -29,36 +29,36 @@
 	mes "on a picnic somewhere~";
 	mes "La la la la~";
 	next;
-	switch(select("About Louyang.:Go to Louyang.:Cancel.")) {
+	switch(select("About Luoyang.:Go to Luoyang.:Cancel.")) {
 	case 1:
 		mes "[Girl]";
 		mes "Oh, are you";
-		mes "interested in Louyang?";
+		mes "interested in Luoyang?";
 		mes "It's a nice place to";
 		mes "visit for travelers.";
 		next;
 		mes "[Girl]";
-		mes "Louyang has a long history";
+		mes "Luoyang has a long history";
 		mes "with stories of ancient magic and warriors. It's also rumored that many evil beasts roam the";
-		mes "Louyang area.";
+		mes "Luoyang area.";
 		next;
 		mes "[Girl]";
 		mes "You can find cure-all medicines, mysterious occurrences, and";
 		mes "martial artists all in one place!";
 		next;
 		mes "[Girl]";
-		mes "I used to train in the martial arts every morning back when I was in Louyang. I might not look like it, but I'm pretty strong!";
+		mes "I used to train in the martial arts every morning back when I was in Luoyang. I might not look like it, but I'm pretty strong!";
 		next;
 		mes "[Girl]";
 		mes "If you want to visit";
-		mes "Louyang, feel free to";
+		mes "Luoyang, feel free to";
 		mes "tell me. Just give me";
 		mes "some Zeny and we'll go~";
 		close;
 	case 2:
 		mes "[Girl]";
 		mes "I'll guide you to";
-		mes "Louyang right away.";
+		mes "Luoyang right away.";
 		mes "For my service, I am";
 		mes "accepting 10,000 Zeny.";
 		next;
@@ -135,7 +135,7 @@ lou_fild01,190,100,7	script	Girl#1lou	815,{
 	close;
 }
 
-// Generic Louyang NPCs
+// Generic Luoyang NPCs
 //============================================================
 louyang,297,167,2	script	Muscular Woman#lou	815,{
 	if (Sex == SEX_FEMALE) {
@@ -261,7 +261,7 @@ louyang,272,133,0	duplicate(LouTrainee)	Trainee#10lou	819
 louyang,272,131,0	duplicate(LouTrainee)	Trainee#11lou	819
 louyang,272,129,0	duplicate(LouTrainee)	Trainee#12lou	819
 
-// Louyang Viewing Tower
+// Luoyang Viewing Tower
 //============================================================
 lou_in01,25,23,5	script	Friendly Looking Lady#lo	817,{
 	mes "[Hong Miao]";
@@ -274,11 +274,11 @@ lou_in01,25,23,5	script	Friendly Looking Lady#lo	817,{
 	switch(select("Information.:Yes.:Maybe next time.")) {
 	case 1:
 		mes "[Hong Miao]";
-		mes "After many suggestions and proposals were sent to the Louyang tourism office, the Observation Tower was built so tourists can enjoy the sights.";
+		mes "After many suggestions and proposals were sent to the Luoyang tourism office, the Observation Tower was built so tourists can enjoy the sights.";
 		next;
 		mes "[Hong Miao]";
 		mes "Due to the geographical";
-		mes "features of Louyang, it's difficult to enjoy the breath taking view that our land has to offer.";
+		mes "features of Luoyang, it's difficult to enjoy the breath taking view that our land has to offer.";
 		next;
 		mes "[Hong Miao]";
 		mes "You can come up to the tower by taking the elevator right here. We are providing this quick and safe transfer service for 500 zeny per person.";
@@ -347,7 +347,7 @@ louyang,84,254,0	script	Exit#lou	111,{
 //= 2.6 Removed Duplicates [Silent]
 //= 2.6a Updated a few names with new item_db.txt names [Evera]
 //= 2.7 Split quests to quests/quests_louyang.txt [Evera]
-//= 2.7a Minor optimizations before Louyang quests [Lupus]
+//= 2.7a Minor optimizations before Luoyang quests [Lupus]
 //= 2.7b Moved guides to the Guides folder. 2.7 more typos [Lupus]
 //= 2.8 Moved some quest-related NPCs to proper file. [SinSloth]
 //= 2.9 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]

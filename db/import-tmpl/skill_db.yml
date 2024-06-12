@@ -1,0 +1,143 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Skill Database
+###########################################################################
+#
+# Skill Settings
+#
+###########################################################################
+# - Id                        Unique skill ID.
+#   Name                      Skill Aegis name.
+#   Description               Skill description.
+#   MaxLevel                  Max skill level.
+#   Type                      Skill type. (Default: None)
+#   TargetType                Skill target type. (Default: Passive)
+#   DamageFlags:              Skill damage properties.
+#   Flags:                    Skill information flags.
+#   Range:                    Skill range. (Default: 0)
+#     - Level                 Skill level.
+#       Size                  Range at specific skill level.
+#   Hit                       Skill hit type. (Default: Normal)
+#   HitCount:                 Skill hit count. (Default: 0)
+#     - Level                 Skill level.
+#       Count                 Number of hits at specific skill level.
+#   Element:                  Skill element. (Default: Neutral)
+#     - Level                 Skill level.
+#       Element               Element at specific skill level.
+#   SplashArea:               Skill splash area of effect. (Default: 0)
+#     - Level                 Skill level.
+#       Area                  Splash area at specific skill level.
+#   ActiveInstance:           Maximum amount of active skill instances that can be on the ground. (Default: 0)
+#     - Level                 Skill level.
+#       Max                   Active instances at specific skill level.
+#   Knockback:                Amount of tiles the skill knockbacks. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                Knockback count at specific skill level.
+#   GiveAp:                   Gives AP on successful skill cast. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                AP gained at specific skill level.
+#   CopyFlags:                Determines if the skill is copyable. (Optional)
+#     Skill:                  Type of skill that can copy.
+#     RemoveRequirement:      Remove a requirement type. (Optional)
+#   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
+#     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
+#     Type:                   Type of NPC.
+#   CastCancel                Cancel cast when hit. (Default: false)
+#   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
+#   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Cast time at specific skill level in milliseconds.
+#   AfterCastActDelay:        Time the character cannot use skills in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  After cast action delay at specific skill level in milliseconds.
+#   AfterCastWalkDelay:       Time before the character can move again in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  After cast walk delay at specific skill level in milliseconds.
+#   Duration1:                Duration of the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Skill duration at specific skill level in milliseconds.
+#   Duration2:                Duration of the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Skill duration at specific skill level in milliseconds.
+#   Cooldown:                 Time before the character can use the same skill again in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  Cooldown at specific skill level in milliseconds.
+#   FixedCastTime:            Time that is fixed during cast of the skill in milliseconds. (Default: 0)
+#     - Level                 Skill level.
+#       Time                  After cast action delay at specific skill level in milliseconds.
+#   CastTimeFlags:            Effects of the skill's cast time. (Optional)
+#   CastDelayFlags:           Effects of the skill's delay. (Optional)
+#   Requires:                 List of requirements to cast the skill. (Optional)
+#     HpCost:                 HP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              HP required at specific skill level.
+#     SpCost:                 SP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              SP required at specific skill level.
+#     ApCost:                 AP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP required at specific skill level.
+#     HpRateCost:             HP rate required to cast. If positive, uses current HP, else uses Max HP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              HP rate required at specific skill level.
+#     SpRateCost:             SP rate required to cast. If positive, uses current SP, else uses Max SP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              SP rate required at specific skill level.
+#     ApRateCost:             AP rate required to cast. If positive, uses current AP, else uses Max AP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP rate required at specific skill level.
+#     MaxHpTrigger:           Maximum amount of HP to cast the skill. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Maximum HP trigger required at specific skill level.
+#     ZenyCost:               Zeny required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Zeny required at specific skill level.
+#     Weapon:                 Weapon required to cast. (Default: All)
+#     Ammo:                   Ammo required to cast. (Default: None)
+#     AmmoAmount:             Ammo amount required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Ammo amount required at specific skill level.
+#     State                   Special state required to cast. (Default: None)
+#     Status:                 Status change required to cast. (Default: nullptr)
+#     SpiritSphereCost:       Spirit sphere required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              Spirit sphere required at specific skill level.
+#     ItemCost:               Item required to cast. (Default: 0)
+#       - Item                Item name.
+#         Amount              Item amount.
+#         Level               Skill level. Makes the skill item check become level dependent if supplied. (Default: applies to all levels)
+#     Equipment:              Equipped item required to cast. (Default: nullptr)
+#   Unit:                     Skill unit values. (Optional)
+#     Id                      Skill unit ID.
+#     AlternateId:            Alternate skill unit ID. (Default: 0)
+#     Layout:                 Skill unit layout. (Default: 0)
+#       - Level               Skill level.
+#         Size                Unit layout at specific skill level.
+#     Range:                  Skill unit range. (Default: 0)
+#       - Level               Skill level.
+#         Size                Unit range at specific skill level.
+#     Interval                Skill unit interval in milliseconds. (Default: 0)
+#     Target                  Skill unit target type. (Default: All)
+#     Flag:                   Skill unit flags. (Default: None)
+#   Status                    Status Change that is associated to the skill. (Optional)
+###########################################################################
+
+Header:
+  Type: SKILL_DB
+  Version: 3

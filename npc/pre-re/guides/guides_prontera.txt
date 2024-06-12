@@ -222,7 +222,7 @@ prontera,154,187,4	script	Guide#prt::PrtGuide	105,{
 			mes "[Prontera Guide]";
 			mes "Well, adventurer...";
 			mes "I hope your journeys";
-			mes "through Rune-Midgard";
+			mes "through Rune-Midgarts";
 			mes "are both fun and safe.";
 			close2;
 			set .@loop1,0;

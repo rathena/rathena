@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Guild Castles Warp Script
+//===== Description: =========================================
+//= Warp Points for Renewal Guild Castles
+//===== Changelogs: ==========================================
+//= 1.0 Prontera castle map changed in ep16.1 [Capuche]
+//============================================================
+
+// Prontera Castle Map
+prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_castle,102,178

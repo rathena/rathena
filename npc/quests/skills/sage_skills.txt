@@ -379,7 +379,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 				mes "[Mishuna]";
 				mes "^FF000020 "+.@ReqItem$[.@i]+"^000000,";
 				mes "^FF00001 Payon Solution^000000 and";
-				mes "^FF00001 Morroc Solution^000000. Please";
+				mes "^FF00001 Morocc Solution^000000. Please";
 				mes "return to me once you have";
 				mes "all the materials ready.";
 				set SAG_SK, 10 * (.@i+1); //10,20,30,40
@@ -410,7 +410,7 @@ yuno_in03,176,24,3	script	Mischna	755,{
 			mes "[Mishuna]";
 			mes "^ff000020 "+.@ReqItem$[.@i]+"^000000,";
 			mes "^ff00001 Payon Solution^000000 and";
-			mes "^ff00001 Morroc Solution^000000. Please";
+			mes "^ff00001 Morocc Solution^000000. Please";
 			mes "don't forget and have the";
 			mes "materials ready for the next";
 			mes "time you see me, alright?";

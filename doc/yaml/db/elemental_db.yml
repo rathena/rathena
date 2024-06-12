@@ -1,0 +1,39 @@
+###########################################################################
+# Elemental Summons Database
+###########################################################################
+#
+# Elemental Summons Settings
+#
+###########################################################################
+# - Id                      Elemental ID.
+#   AegisName               Server name to reference the elemental in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   Level                   Level.
+#   Hp                      Additional HP. Base HP depends on caster HP. (Default: 0)
+#   Sp                      Additional SP. Base SP depends on caster SP. (Default: 1)
+#   Attack                  Additional minimum attack. Base attack depends on caster attack. (Default: 0)
+#   Attack2                 Additional maximum attack. Base attack depends on caster attack. (Default: 0)
+#   Defense                 Physical defense of the elemental, reduces melee and ranged physical attack/skill damage. Base defense depends on the caster defense. (Default: 0)
+#   MagicDefense            Magic defense of the elemental, reduces magical skill damage. Base magic defense depends on the caster magic defense. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 0)
+#   Agi                     Agility which affects flee. (Default: 0)
+#   Vit                     Vitality which affects defense. (Default: 0)
+#   Int                     Intelligence which affects magic attack. (Default: 0)
+#   Dex                     Dexterity which affects hit rate. (Default: 0)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 0)
+#   AttackRange             Attack range. (Default: 1)
+#   SkillRange              Skill cast range. (Default: 5)
+#   ChaseRange              Chase range. (Default: 12)
+#   Size                    Size.
+#   Race                    Race. (Default: Formless)
+#   Element                 Element.
+#   ElementLevel            Level of element.
+#   WalkSpeed               Walk speed. (Default: 200)
+#   AttackDelay             Attack speed. (Default: 504)
+#   AttackMotion            Attack animation speed. Base AttackMotion depends on the caster AttackMotion. (Default: 1020)
+#   DamageMotion            Damage animation speed. (Default: 360)
+#   Mode:                   List of elemental skills by mode. (Optional)
+#     <mode>:               Mode name to define the skill available. Available modes are Passive, Assist, and Aggressive.
+#       Skill               Skill name.
+#       Level               Skill level. (Default: 1)
+###########################################################################

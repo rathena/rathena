@@ -1,15 +1,9 @@
 //===== rAthena Script =======================================
 //= Mapflag: Town.
-//===== By: ==================================================
-//= Epoque
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Designates a map as a town, granting mailbox access.
 //===== Additional Comments: ================================= 
-//= 1.0 Renewal split. [Euphy]
+//= 1.0 First Version. [Epoque]
 //= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================
 
@@ -25,3 +19,4 @@ malangdo	mapflag	town
 malaya	mapflag	town
 mora	mapflag	town
 lasagna	mapflag	town
+wolfvill	mapflag	town

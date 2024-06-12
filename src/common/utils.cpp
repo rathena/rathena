@@ -1,14 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "cbasetypes.hpp"
-#include "showmsg.hpp"
-#include "socket.hpp"
 #include "utils.hpp"
 
-#include <stdlib.h>
-#include <string.h>
-#include <math.h> // floor()
+#include <cmath> // floor()
+#include <cstdlib>
+#include <cstring>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -21,6 +18,9 @@
 	#include <sys/stat.h>
 #endif
 
+#include "cbasetypes.hpp"
+#include "showmsg.hpp"
+#include "socket.hpp"
 
 /// Dumps given buffer into file pointed to by a handle.
 void WriteDump(FILE* fp, const void* buffer, size_t length)
@@ -70,14 +70,14 @@ void ShowDump(const void* buffer, size_t length)
 
 		if( (i%16) == 15 )
 		{
-			ShowDebug("%03X %s  %s\n", i/16, hex, ascii);
+			ShowDebug("%03" PRIXPTR " %s  %s\n", i/16, hex, ascii);
 		}
 	}
 
 	if( (i%16) != 0 )
 	{
 		ascii[i%16] = 0;
-		ShowDebug("%03X %-48s  %-16s\n", i/16, hex, ascii);
+		ShowDebug("%03" PRIXPTR " %-48s  %-16s\n", i/16, hex, ascii);
 	}
 }
 
@@ -87,7 +87,7 @@ void ShowDump(const void* buffer, size_t length)
 static char* checkpath(char *path, const char *srcpath)
 {	// just make sure the char*path is not const
 	char *p=path;
-	if(NULL!=path && NULL!=srcpath)
+	if(nullptr!=path && nullptr!=srcpath)
 	while(*srcpath) {
 		if (*srcpath=='/') {
 			*p++ = '\\';
@@ -106,8 +106,8 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	HANDLE hFind;
 	char tmppath[MAX_PATH+1];
 
-	const char *path    = (p  ==NULL)? "." : p;
-	const char *pattern = (pat==NULL)? "" : pat;
+	const char *path    = (p  ==nullptr)? "." : p;
+	const char *pattern = (pat==nullptr)? "" : pat;
 
 	checkpath(tmppath,path);
 	if( PATHSEP != tmppath[strlen(tmppath)-1])
@@ -198,7 +198,7 @@ int check_filepath(const char* filepath)
 static char* checkpath(char *path, const char*srcpath)
 {	// just make sure the char*path is not const
 	char *p=path;
-	if(NULL!=path && NULL!=srcpath)
+	if(nullptr!=path && nullptr!=srcpath)
 	while(*srcpath) {
 		if (*srcpath=='\\') {
 			*p++ = '/';
@@ -216,10 +216,10 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	DIR* dir;					// pointer to the scanned directory.
 	struct dirent* entry;		// pointer to one directory entry.
 	struct stat dir_stat;       // used by stat().
-	char tmppath[MAX_DIR_PATH+1];
+	char tmppath[MAX_DIR_PATH * 2];
 	char path[MAX_DIR_PATH+1]= ".";
-	const char *pattern = (pat==NULL)? "" : pat;
-	if(p!=NULL) strcpy(path,p);
+	const char *pattern = (pat==nullptr)? "" : pat;
+	if(p!=nullptr) strcpy(path,p);
 
 	// open the directory for reading
 	dir = opendir( checkpath(path, path) );
@@ -240,7 +240,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 		sprintf(tmppath,"%s%c%s",path, PATHSEP, entry->d_name);
 
 		// check if the pattern matchs.
-		if (entry->d_name && strstr(entry->d_name, pattern)) {
+		if (entry->d_name[0] && strstr(entry->d_name, pattern)) {
 			func( tmppath );
 		}
 		// check if it is a directory.
@@ -365,7 +365,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 
 	if( B == 0 )
 	{
-		ShowError("get_percentage(): divison by zero! (A=%u,B=%u)\n", A, B);
+		ShowError("get_percentage: divison by zero! (A=%u,B=%u)\n", A, B);
 		return ~0U;
 	}
 
@@ -373,9 +373,30 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 
 	if( result > UINT_MAX )
 	{
-		ShowError("get_percentage(): result percentage too high! (A=%u,B=%u,result=%g)\n", A, B, result);
+		ShowError("get_percentage: result percentage too high! (A=%u,B=%u,result=%g)\n", A, B, result);
 		return UINT_MAX;
 	}
 
 	return (unsigned int)floor(result);
+}
+
+uint32 get_percentage_exp(const uint64 a, const uint64 b)
+{
+	double result;
+
+	if (b == 0)
+	{
+		ShowError("get_percentage_exp: divison by zero! (a=%" PRIu64 ",b=%" PRIu64 ")\n", a, b);
+		return ~0U;
+	}
+
+	result = 100.0 * ((double)a / (double)b);
+
+	if (result > UINT32_MAX)
+	{
+		ShowError("get_percentage_exp: result percentage too high! (a=%" PRIu64 ",b=%" PRIu64 ",result=%g)\n", a, b, result);
+		return UINT32_MAX;
+	}
+
+	return (uint32)floor(result);
 }

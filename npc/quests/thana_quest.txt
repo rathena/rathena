@@ -1216,7 +1216,7 @@ tha_t05,62,179,0	script	Brilliant Statue#tt3	111,3,3,{
 				mes "during a millennium war.^000000";
 				next;
 				mes ".........It's not clearly shown......";
-				mes "^b22222...Morroc has gone through this gate";
+				mes "^b22222...Morocc has gone through this gate";
 				mes "from the magical world into the Midgard continent after the millennium war terminated...";
 				next;
 				mes "^b22222The question is that when she come up here, the Satan appears at the same time...";
@@ -1457,7 +1457,7 @@ tha_t06,226,230,0	script	Brilliant Statue#tt4	111,3,3,{
 					mes "This tower used to be";
 					mes "a gate to summon demons ages ago.";
 					mes "And the last visitor was";
-					mes "the infamous Satan Morroc.";
+					mes "the infamous Satan Morocc.";
 					next;
 					mes "^b22222As I followed her trail";
 					mes "I realized that her spells";
@@ -1681,10 +1681,10 @@ tha_t08,90,153,0	script	Shining Crystal#tt_r1	844,{
 
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 tha_t08,90,62,0	duplicate(Shining Crystal#tt_r1)	Shining Crystal#tt_r2	844
@@ -1715,10 +1715,10 @@ tha_t08,49,153,0	script	Shining Crystal#tt_y1	844,{
 
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 tha_t08,90,150,0	duplicate(Shining Crystal#tt_y1)	Shining Crystal#tt_y2	844
@@ -1749,10 +1749,10 @@ tha_t08,49,65,0	script	Shining Crystal#tt_b1	844,{
 
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 tha_t08,49,150,0	duplicate(Shining Crystal#tt_b1)	Shining Crystal#tt_b2	844
@@ -1783,10 +1783,10 @@ tha_t08,90,65,0	script	Shining Crystal#tt_g1	844,{
 
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 tha_t08,49,62,0	duplicate(Shining Crystal#tt_g1)	Shining Crystal#tt_g2	844
@@ -2292,7 +2292,7 @@ tha_t04,81,36,0	warp	to 5th Floor	1,1,tha_t05,62,8
 tha_t06,119,120,0	script	to 7th Floor	45,1,1,{
 	end;
 OnTouch:
-	if ((eaclass()&(EAJL_2|EAJL_UPPER)) || (eaclass()&EAJL_THIRD) || ((Class == Job_Super_Novice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger) && BaseLevel > 94)) {
+	if ((eaclass()&(EAJL_2|EAJL_UPPER)) || (eaclass()&EAJL_THIRD) || ((Class == Job_Super_Novice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger || Class == Job_Summoner) && BaseLevel > 94)) {
 		if (countitem(7425) > 0) {
 			mes "The shadow of a Black Key is gleaming in the center of the portal.";
 			mes "To pass this way, looks like I need something.";

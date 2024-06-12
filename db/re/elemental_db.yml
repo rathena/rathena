@@ -1,0 +1,306 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Elemental Summons Database
+###########################################################################
+#
+# Elemental Summons Settings
+#
+###########################################################################
+# - Id                      Elemental ID.
+#   AegisName               Server name to reference the elemental in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   Level                   Level.
+#   Hp                      Additional HP. Base HP depends on caster HP. (Default: 0)
+#   Sp                      Additional SP. Base SP depends on caster SP. (Default: 1)
+#   Attack                  Additional minimum attack. Base attack depends on caster attack. (Default: 0)
+#   Attack2                 Additional maximum attack. Base attack depends on caster attack. (Default: 0)
+#   Defense                 Physical defense of the elemental, reduces melee and ranged physical attack/skill damage. Base defense depends on the caster defense. (Default: 0)
+#   MagicDefense            Magic defense of the elemental, reduces magical skill damage. Base magic defense depends on the caster magic defense. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 0)
+#   Agi                     Agility which affects flee. (Default: 0)
+#   Vit                     Vitality which affects defense. (Default: 0)
+#   Int                     Intelligence which affects magic attack. (Default: 0)
+#   Dex                     Dexterity which affects hit rate. (Default: 0)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 0)
+#   AttackRange             Attack range. (Default: 1)
+#   SkillRange              Skill cast range. (Default: 5)
+#   ChaseRange              Chase range. (Default: 12)
+#   Size                    Size.
+#   Race                    Race. (Default: Formless)
+#   Element                 Element.
+#   ElementLevel            Level of element.
+#   WalkSpeed               Walk speed. (Default: 200)
+#   AttackDelay             Attack speed. (Default: 504)
+#   AttackMotion            Attack animation speed. Base AttackMotion depends on the caster AttackMotion. (Default: 1020)
+#   DamageMotion            Damage animation speed. (Default: 360)
+#   Mode:                   List of elemental skills by mode. (Optional)
+#     <mode>:               Mode name to define the skill available. Available modes are Passive, Assist, and Aggressive.
+#       Skill               Skill name.
+#       Level               Skill level. (Default: 1)
+###########################################################################
+
+Header:
+  Type: ELEMENTAL_DB
+  Version: 1
+
+Body:
+  - Id: 2114
+    AegisName: EL_AGNI_S
+    Name: Agni
+    Level: 100
+    Size: Small
+    Element: Fire
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_PYROTECHNIC
+      Assist:
+        Skill: EL_CIRCLE_OF_FIRE
+      Aggressive:
+        Skill: EL_FIRE_ARROW
+  - Id: 2115
+    AegisName: EL_AGNI_M
+    Name: Agni
+    Level: 100
+    Size: Medium
+    Element: Fire
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_HEATER
+      Assist:
+        Skill: EL_FIRE_CLOAK
+      Aggressive:
+        Skill: EL_FIRE_BOMB
+  - Id: 2116
+    AegisName: EL_AGNI_L
+    Name: Agni
+    Level: 100
+    Size: Large
+    Element: Fire
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_TROPIC
+      Assist:
+        Skill: EL_FIRE_MANTLE
+      Aggressive:
+        Skill: EL_FIRE_WAVE
+  - Id: 2117
+    AegisName: EL_AQUA_S
+    Name: Aqua
+    Level: 100
+    Size: Small
+    Element: Water
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_AQUAPLAY
+      Assist:
+        Skill: EL_WATER_SCREEN
+      Aggressive:
+        Skill: EL_ICE_NEEDLE
+  - Id: 2118
+    AegisName: EL_AQUA_M
+    Name: Aqua
+    Level: 100
+    Size: Medium
+    Element: Water
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_COOLER
+      Assist:
+        Skill: EL_WATER_DROP
+      Aggressive:
+        Skill: EL_WATER_SCREW
+  - Id: 2119
+    AegisName: EL_AQUA_L
+    Name: Aqua
+    Level: 100
+    Str: 1
+    Agi: 1
+    Vit: 1
+    Int: 1
+    Dex: 1
+    Luk: 1
+    Size: Large
+    Element: Water
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_CHILLY_AIR
+      Assist:
+        Skill: EL_WATER_BARRIER
+      Aggressive:
+        Skill: EL_TIDAL_WEAPON
+  - Id: 2120
+    AegisName: EL_VENTUS_S
+    Name: Ventus
+    Level: 100
+    Size: Small
+    Element: Wind
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_GUST
+      Assist:
+        Skill: EL_WIND_STEP
+      Aggressive:
+        Skill: EL_WIND_SLASH
+  - Id: 2121
+    AegisName: EL_VENTUS_M
+    Name: Ventus
+    Level: 100
+    Size: Medium
+    Element: Wind
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_BLAST
+      Assist:
+        Skill: EL_WIND_CURTAIN
+      Aggressive:
+        Skill: EL_HURRICANE
+  - Id: 2122
+    AegisName: EL_VENTUS_L
+    Name: Ventus
+    Level: 100
+    Size: Large
+    Element: Wind
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_WILD_STORM
+      Assist:
+        Skill: EL_ZEPHYR
+      Aggressive:
+        Skill: EL_TYPOON_MIS
+  - Id: 2123
+    AegisName: EL_TERA_S
+    Name: Tera
+    Level: 100
+    Size: Small
+    Element: Earth
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_PETROLOGY
+      Assist:
+        Skill: EL_SOLID_SKIN
+      Aggressive:
+        Skill: EL_STONE_HAMMER
+  - Id: 2124
+    AegisName: EL_TERA_M
+    Name: Tera
+    Level: 100
+    Size: Medium
+    Element: Earth
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_CURSED_SOIL
+      Assist:
+        Skill: EL_STONE_SHIELD
+      Aggressive:
+        Skill: EL_ROCK_CRUSHER
+  - Id: 2125
+    AegisName: EL_TERA_L
+    Name: Tera
+    Level: 100
+    Size: Large
+    Element: Earth
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EL_UPHEAVAL
+      Assist:
+        Skill: EL_POWER_OF_GAIA
+      Aggressive:
+        Skill: EL_STONE_RAIN
+  - Id: 20816
+    AegisName: EM_DILUVIO
+    Name: Diluvio
+    Level: 200
+    Size: Large
+    Element: Water
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_COLD_FORCE
+      Assist:
+        Skill: EM_EL_CRYSTAL_ARMOR
+      Aggressive:
+        Skill: EM_EL_AGE_OF_ICE
+  - Id: 20817
+    AegisName: EM_ARDOR
+    Name: Ardor
+    Level: 200
+    Size: Large
+    Element: Fire
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_FLAMETECHNIC
+      Assist:
+        Skill: EM_EL_FLAMEARMOR
+      Aggressive:
+        Skill: EM_EL_FLAMEROCK
+  - Id: 20818
+    AegisName: EM_PROCELLA
+    Name: Procella
+    Level: 200
+    Size: Large
+    Element: Wind
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_GRACE_BREEZE
+      Assist:
+        Skill: EM_EL_EYES_OF_STORM
+      Aggressive:
+        Skill: EM_EL_STORM_WIND
+  - Id: 20819
+    AegisName: EM_TERREMOTUS
+    Name: Terremotus
+    Level: 200
+    Size: Large
+    Element: Earth
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_EARTH_CARE
+      Assist:
+        Skill: EM_EL_STRONG_PROTECTION
+      Aggressive:
+        Skill: EM_EL_AVALANCHE
+  - Id: 20820
+    AegisName: EM_SERPENS
+    Name: Serpens
+    Level: 200
+    Size: Large
+    Element: Poison
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_DEEP_POISONING
+      Assist:
+        Skill: EM_EL_POISON_SHIELD
+      Aggressive:
+        Skill: EM_EL_DEADLY_POISON

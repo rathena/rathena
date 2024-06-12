@@ -1,9 +1,9 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "date.hpp"
 
-#include <time.h>
+#include <ctime>
 
 /*
  * Get the current year
@@ -12,7 +12,7 @@ int date_get_year(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_year+1900;
 }
@@ -24,7 +24,7 @@ enum e_month date_get_month(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return (enum e_month)(lt->tm_mon+1);
 }
@@ -36,7 +36,7 @@ int date_get_dayofmonth(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_mday;
 }
@@ -48,7 +48,7 @@ enum e_dayofweek date_get_dayofweek(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return (enum e_dayofweek)lt->tm_wday;
 }
@@ -60,7 +60,7 @@ int date_get_dayofyear(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_yday;
 }
@@ -72,7 +72,7 @@ int date_get_hour(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_hour;
 }
@@ -84,7 +84,7 @@ int date_get_min(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_min;
 }
@@ -96,7 +96,7 @@ int date_get_sec(void)
 {
 	time_t t;
 	struct tm * lt;
-	t = time(NULL);
+	t = time(nullptr);
 	lt = localtime(&t);
 	return lt->tm_sec;
 }
@@ -123,6 +123,8 @@ int date_get( enum e_date_type type )
 			return date_get_year();
 		case DT_DAYOFYEAR:
 			return date_get_dayofyear();
+		case DT_YYYYMMDD:
+			return date_get( DT_YEAR ) * 10000 + date_get( DT_MONTH ) * 100 + date_get(DT_DAYOFMONTH);
 		default:
 			return -1;
 	}
@@ -133,7 +135,7 @@ int date_get( enum e_date_type type )
  */
 bool is_day_of_sun(void)
 {
-	return date_get_dayofyear()%2 == 0;
+	return (date_get_dayofyear()+1)%2 == 0;
 }
 
 /*
@@ -141,7 +143,7 @@ bool is_day_of_sun(void)
  */
 bool is_day_of_moon(void)
 {
-	return date_get_dayofyear()%2 == 1;
+	return (date_get_dayofyear()+1)%2 == 1;
 }
 
 /*
@@ -149,5 +151,5 @@ bool is_day_of_moon(void)
  */
 bool is_day_of_star(void)
 {
-	return date_get_dayofyear()%5 == 0;
+	return (date_get_dayofyear()+1)%5 == 0;
 }

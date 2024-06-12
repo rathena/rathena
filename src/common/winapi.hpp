@@ -1,7 +1,12 @@
-#pragma once
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#include <sdkddkver.h>
+#ifndef WINAPI_HPP
+#define WINAPI_HPP
 
+#include <config/core.hpp>
+
+#ifdef DEPRECATED_WINDOWS_SUPPORT
 #ifndef NTDDI_VERSION
 	#define NTDDI_VERSION 	0x05000000 // Windows 2000
 #endif
@@ -17,6 +22,9 @@
 #ifndef _WIN32_WINNT_VISTA
 	#define _WIN32_WINNT_VISTA 0x0600 // Windows Vista
 #endif
+#else
+#include <sdkddkver.h>
+#endif
 
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
@@ -29,11 +37,11 @@
 #define NONLS
 #define NOMEMMGR
 #define NOMETAFILE
+#define NOMINMAX
 #define NOOPENFILE
 #define NOSERVICE
 #define NOSOUND
 #define NOTEXTMETRIC
-
 
 #define _CRT_SECURE_NO_WARNINGS
 #define _CRT_NONSTDC_NO_WARNINGS
@@ -46,6 +54,10 @@
 #include <Mswsock.h>
 #include <MMSystem.h>
 
+#undef NOMINMAX
+
 #include "cbasetypes.hpp"
 
 bool IsCurrentUserLocalAdministrator(void);
+
+#endif /* WINAPI_HPP */

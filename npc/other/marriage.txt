@@ -424,7 +424,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		donpcevent "Single Army#Morocc::OnEnable";
 		donpcevent "Single Army#Payon::OnEnable";
 		donpcevent "Single Army#Amatsu::OnEnable";
-		donpcevent "Single Army#Gonryun::OnEnable";
+		donpcevent "Single Army#Kunlun::OnEnable";
 		emotion ET_HUK;
 		mes "[Single Army]";
 		mes "^CC9933You have to refine";
@@ -462,7 +462,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		mes "[Single Army]";
 		mes "^669900...We're the free! We're";
 		mes "the Invincible Single Army!^000000";
-		emotion ET_ROCK, getnpcid(0, "Single Army#Gonryun");
+		emotion ET_ROCK, getnpcid(0, "Single Army#Kunlun");
 		close2;
 		cutin "wedding_marry01",255;
 		emotion ET_SWEAT;
@@ -471,7 +471,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 		donpcevent "Single Army#Morocc::OnInit";
 		donpcevent "Single Army#Payon::OnInit";
 		donpcevent "Single Army#Amatsu::OnInit";
-		donpcevent "Single Army#Gonryun::OnInit";
+		donpcevent "Single Army#Kunlun::OnInit";
 		end;
 	}
 	close2;
@@ -572,18 +572,18 @@ OnEnable:
 	end;
 }
 
-prt_church,102,102,0	script	Single Army#Gonryun	780,{
+prt_church,102,102,0	script	Single Army#Kunlun	780,{
 	mes "[Single Army]";
 	mes "^669900...We're the free! We're";
 	mes "the Invincible Single Army!^000000";
 	close;
 
 OnInit:
-	hideonnpc "Single Army#Gonryun";
+	hideonnpc "Single Army#Kunlun";
 	end;
 
 OnEnable:
-	hideoffnpc "Single Army#Gonryun";
+	hideoffnpc "Single Army#Kunlun";
 	emotion ET_GO;
 	end;
 }
@@ -849,7 +849,7 @@ OnTimer180000:
 	end;
 }
 
-prt_church,28,178,4	script	The King of Midgart	108,{
+prt_church,28,178,4	script	The King of Rune-Midgarts	108,{
 	callfunc "F_GM_NPC";
 	mes "[Vomars]";
 	mes "Wh-who are you?";

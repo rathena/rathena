@@ -109,7 +109,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
 			if (.@ins_bapho_check == -1) {
-				if (getpartyleader(.@party_id,2) == getcharid(0) && instance_check_party(.@party_id,2,75)) {
+				if (is_party_leader(.@party_id) == true && instance_check_party(.@party_id,2,75)) {
 					mes "[Friar Patrick]";
 					mes "Party name is "+getpartyname(.@party_id)+"...";
 					mes "Name of the leader is "+strcharinfo(0)+"...";
@@ -540,7 +540,7 @@ OnMyMobDead:
 		mes "If your ^0000FFparty leader^000000 brings me the pendant, my soul can be substantialized. So, hurry up.";
 		close;
 	}
-	else if (('ins_baphomet == 2) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	else if (('ins_baphomet == 2) && is_party_leader(.@party_id) == true) {
 		mes "[Voice of the Gravestone]";
 		mes "Did you find the pendant?";
 		next;
@@ -652,7 +652,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 				break;
 			case 3:
 				set .@ins_baphomet_1f_3,.@ins_baphomet_1f_3+1;
-				if (getpartyleader(.@party_id,2) == getcharid(0)) {
+				if (is_party_leader(.@party_id) == true) {
 					mes "[Ancient Hero's Soul]";
 					mes "You look like the leader of this party. You need to go and get ^0000FF10 Essence of Fire^000000 from the torches.";
 					next;
@@ -704,7 +704,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 			}
 			if (.@exitloop) break;
 		}
-		if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (is_party_leader(.@party_id) == true) {
 			mes "[Ancient Hero's Soul]";
 			mes "To remind you again, I must be substantialized within the next hour. So everyone, finish your work within that time!";
 			set 'ins_baphomet,3;
@@ -721,7 +721,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 		cutin "",255;
 		end;
 	}
-	else if (('ins_baphomet == 3) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	else if (('ins_baphomet == 3) && is_party_leader(.@party_id) == true) {
 		cutin "ins_cata_champ_n",2;
 		mes "[Ancient Hero's Soul]";
 		mes "Did you get 10 ^0000FFEssence of Fire^000000 and ^0000FFToken of Apostle^000000?";
@@ -758,7 +758,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 		cutin "",255;
 		end;
 	}
-	else if (('ins_baphomet == 4) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	else if (('ins_baphomet == 4) && is_party_leader(.@party_id) == true) {
 		cutin "ins_cata_champ_n",2;
 		mes "[Ancient Hero's Soul]";
 		mes "Are you ready? I opened the sealed gate. To pass the gate, you should carry a ^0000FFToken of Apostle^000000.";
@@ -766,6 +766,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 		set 'ins_baphomet,5;
 		specialeffect EF_TELEPORTATION;
 		enablenpc instance_npcname("ins_bapho_to_2f");
+		donpcevent instance_npcname("ins_baphomet_1f_timer")+"::OnDisable";
 		mes "[Ancient Hero's Soul]";
 		mes "Now you can go to the main altar. It is located in the bottom right corner of this floor.";
 		next;
@@ -881,8 +882,7 @@ OnInstanceInit:
 // Bobbing Torches
 //============================================================
 -	script	Bobbing Torch#SS	-1,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
 			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
 			next;
@@ -891,7 +891,7 @@ OnInstanceInit:
 			specialeffect2 EF_HOLYHIT;
 			getitem 6001,1; //Essence_Of_Fire
 			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname(strnpcinfo(0));
+			disablenpc();
 			close;
 		}
 		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
@@ -914,7 +914,7 @@ OnInstanceInit:
 	}
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 1@cata,267,210,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#1	844
@@ -966,7 +966,7 @@ OnTimer3100000:
 	end;
 
 OnTimer3500000:
-	instance_warpall "monk_test",310,150;
+	instance_warpall "monk_test",310,150, instance_id();
 	stopnpctimer;
 	end;
 }
@@ -1087,13 +1087,13 @@ OnTouch_:
 	if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
-		sc_start Eff_Stone,30000,0;
+		sc_start SC_Stone,30000,0;
 		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
 		close;
 	}
 	if (.@seal_check == 2) erasequest 3041;
 	specialeffect EF_LEXDIVINA;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	set .@map$, instance_mapname("2@cata");
 	if (strnpcinfo(2) == "0") areamobuseskill .@map$,79,81,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	else if (strnpcinfo(2) == "2") areamobuseskill .@map$,123,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
@@ -1101,7 +1101,7 @@ OnTouch_:
 	else if (strnpcinfo(2) == "8") areamobuseskill .@map$,35,21,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	else if (strnpcinfo(2) == "10") areamobuseskill .@map$,35,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	percentheal -50,0;
-	sc_start Eff_Stone,20000,0;
+	sc_start SC_Stone,20000,0;
 	setquest 3041;
 	mapannounce .@map$, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
 	mes "I can feel the power of the altar came back by adding magical power.";
@@ -1110,7 +1110,7 @@ OnTouch_:
 	close;
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 2@cata,79,81,0	duplicate(Magical Seal#SS)	Magical Seal#0	844
@@ -1120,8 +1120,7 @@ OnInstanceInit:
 2@cata,35,109,0	duplicate(Magical Seal#SS)	Magical Seal#10	844
 
 2@cata,79,65,0	script	The Main Altar#ss	844,{
-	set .@party_id,getcharid(1);
-	if (('ins_baphomet == 5) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	if (('ins_baphomet == 5) && is_party_leader() == true) {
 		mes "An evil power, too terrible to describe, lies under the great altar radiating a violet color.";
 		next;
 		mes "Complicated Magical Rune letters blink rapidly, attempting to suppress the dreadful power within.";

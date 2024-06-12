@@ -1,0 +1,36 @@
+###########################################################################
+# Homunculus Database
+###########################################################################
+#
+# Homunculus Settings
+#
+###########################################################################
+# - BaseClass               Base class.
+#   Name                    Name of homunculus.
+#   EvolutionClass          Evolution class.
+#   Food                    Homunculus food item. (Default: Pet_Food)
+#   HungryDelay             Time interval in milliseconds after which the hunger value is altered. (Default: 60000)
+#   Race                    Race. (Default: Demihuman)
+#   Element                 Element. (Default: Neutral)
+#   Size                    Size. (Default: Small)
+#   EvolutionSize           Evolution size. (Default: Medium)
+#   AttackDelay             Base ASPD. (Default: 700)
+#   Status:                 Homunculus stats.
+#     - Type                Type of status.
+#       Base                Base value of this status. (Default: 1)
+#       GrowthMinimum       Minimum growth of this status. (Default: 0)
+#       GrowthMaximum       Maximum growth of this status. (Default: 0)
+#       EvolutionMinimum    Minimum evolution growth of this status. Only applies for homunculus that can evolve. (Default: 0)
+#       EvolutionMaximum    Maximum evolution growth of this status. Only applies for homunculus that can evolve. (Default: 0)
+#   SkillTree:              Skill tree.
+#     - Skill               Skill name.
+#       Clear               True to remove the given skill name. (Optional)
+#       MaxLevel            Maximum level of skill.
+#       RequiredLevel       Required base level of homunculus to learn. (Default: 0)
+#       RequiredIntimacy    Required intimacy of homunculus to learn. (Default: 0)
+#       RequireEvolution    Require the homunculus to be evolved to be available. (Default: false)
+#       Required:           Prerequisite skills. (Default: null)
+#         - Skill           Prerequisite skill name.
+#           Level           Level of prerequisite skill.
+#           Clear           True to remove the given prerequisite skill name. (Optional)
+###########################################################################
