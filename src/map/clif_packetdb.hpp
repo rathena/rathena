@@ -1980,11 +1980,7 @@
 	packet(0x09D7,-1);
 	parseable_packet(0x09D8,2,clif_parse_NPCMarketClosed,0);
 	// Clan System
-	packet(0x0988,6);
-	packet(0x0989,2);
-	packet(0x098A,-1);
 	parseable_packet(0x098D,-1,clif_parse_clan_chat,2,4);
-	packet(0x098E,-1);
 	// Sale
 	parseable_packet( HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO, -1, clif_parse_sale_search, 0 );
 	packet( HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO, sizeof( PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO ) );
