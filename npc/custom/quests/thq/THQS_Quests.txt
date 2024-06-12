@@ -288,7 +288,7 @@ prt_sewb1,120,245,6	script	Sewer Management Knight	705,{
 	if (three_qset == 3) goto N_QuestStart;
 	if (seven_qset == 3) goto N_QuestStart2;
 	mes "[Sewer Management]";
-	mes "Live dosent get any worse for me,working in the bug filled Culvert every day...";
+	mes "Live doesn't get any worse for me, working in this bug filled Culvert every day...";
 	close;
 N_QuestComp:
 	mes "[Sewer Management]";

@@ -68,6 +68,14 @@ MagicDefense: Magic defense of the monster, reduce magical skill.
 
 ---------------------------------------
 
+Resistance: Physical resistance of the monster, reduce melee and ranged physical attack/skill.
+
+---------------------------------------
+
+MagicResistance: Magic resistance of the monster, reduce magical skill.
+
+---------------------------------------
+
 Str: Strength of the monster. Affects ATK.
 
 ---------------------------------------
@@ -193,6 +201,18 @@ AttackDelay: Attack Delay of the monster, also known as ASPD. Low value means fa
 ---------------------------------------
 
 AttackMotion: Attack animation motion. Low value means monster's attack will be displayed in higher FPS (making it shorter, too). (Thanks to Wallex for this)
+
+---------------------------------------
+
+ClientAttackMotion: The time from the start of a normal attack until the damage frame shows on client. At the same time you also get stopped on the client.
+This value is only needed if you use the "synchronize_damage" feature (battle/battle.conf).
+
+If you created a custom sprite, you want to set this value to the timing of the damage frame in your *.act file.
+In Act Editor you can set the damage frame by setting the frame sound to "atk". If you don't define a damage frame, it will default to the second to last
+frame. Also keep in mind that the Act Editor displays slightly inaccurate speed. Every 25ms in Act Editor is 24ms in reality.
+
+Example: Drops has a animation speed of 24ms per frame and the 13th frame (frame #12) is the damage frame. This means the damage shows after 12 frames.
+That's why Drops has a ClientAttackMotion of 24*12 = 288.
 
 ---------------------------------------
 

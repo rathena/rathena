@@ -4,8 +4,8 @@
 #ifndef CHAR_LOGIF_HPP
 #define CHAR_LOGIF_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/timer.hpp>
 
 struct char_session_data;
 

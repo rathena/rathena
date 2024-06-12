@@ -51,10 +51,10 @@ function	script	F_CashStore	{
 // - Summon Party members on party leader map to a 3x3 location around the leader.
 // - No arguments.
 function	script	F_CashPartyCall	{
-	itemskill "AL_TELEPORT",1;
-	sleep2 1;	// a slight delay seems necessary after itemskill
-	if (is_party_leader() == true)
-		warpparty "Leader", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
+	if (is_party_leader())
+		warpparty "RandomAll", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
+	else
+		itemskill "AL_TELEPORT",1;
 	return;
 }
 
@@ -263,6 +263,26 @@ function	script	F_CashSiegeTele	{
 	return;
 }
 
+// Siege Teleport Scroll 2 (WoE 1.5)
+//============================================================ 
+// - Warp player to selected guild castle.
+// - No arguments.
+function	script	F_CashSiegeTele2	{
+	switch(select("Mardoll (arug_cas01):Cyr (arug_cas02):Horn (arug_cas03):Gefn (arug_cas04):Badanis (arug_cas05):Himinn (schg_cas01):Andlangr (schg_cas02):Vidblainn (schg_cas03):Hljod (schg_cas04):Schatirnil (schg_cas05)")) {
+	case 1: warp "aru_gld",159,272; end;
+	case 2: warp "aru_gld",86,50; end;
+	case 3: warp "aru_gld",63,157; end;
+	case 4: warp "aru_gld",307,354; end;
+	case 5: warp "aru_gld",298,110; end;
+	case 6: warp "sch_gld",300,100; end;
+	case 7: warp "sch_gld",284,249; end;
+	case 8: warp "sch_gld",102,196; end;
+	case 9: warp "sch_gld",140,83; end;
+	case 10: warp "sch_gld",70,320; end;
+	}
+	return;
+}
+
 // Curious Snowball
 //============================================================ 
 // - You can get an effect of Restore, Endure, or Wing of Butterfly.
@@ -326,5 +346,30 @@ function	script	F_CashReduceStat	{
 	}
 	StatusPoint += needed_status_point(.@type, .@amount);
 	statusup2 .@type,.@amount;
+	return;
+}
+
+// Trait Status reduction potion
+//============================================================
+// - Permanently reduces base trait stat <type> by <val>.
+// - Returns trait status points equals to points needed to raise
+//   that trait stat to original value.
+// - Doesn't work if base trait status <type> would become lower than 0 after reduction.
+// * callfunc("F_CashReduceTraitStat",<type>{,<val>,<itemid>});
+function	script	F_CashReduceTraitStat	{
+	.@type = getarg(0);
+	.@amount = getarg(1, -1);
+	.@itemid = getarg(2, 0);
+	
+	if((readparam(.@type) + .@amount) < 0) return;
+	
+	if(.@itemid) {
+		if(countitem(.@itemid))
+			delitem .@itemid,1;
+		else
+			return;
+	}
+	TraitPoint += needed_trait_point(.@type, .@amount);
+	traitstatusup2 .@type,.@amount;
 	return;
 }

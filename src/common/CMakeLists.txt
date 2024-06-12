@@ -29,6 +29,10 @@ if( INSTALL_COMPONENT_DEVELOPMENT )
 endif( INSTALL_COMPONENT_DEVELOPMENT )
 message( STATUS "Creating version.hpp - done" )
 
+set( COMMON_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
+	CACHE PATH "common source directory" )
+#message( STATUS "DEBUG COMMON_SOURCE_DIR=${COMMON_SOURCE_DIR}" )
+mark_as_advanced( COMMON_SOURCE_DIR )
 
 #####################################################################
 # setup
@@ -45,37 +49,31 @@ if( WIN32 )
 	set( COMMON_ADDITIONALL_HPP	"${COMMON_SOURCE_DIR}/winapi.hpp" )
 endif()
 
-set( COMMON_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
-	CACHE PATH "common source directory" )
-#message( STATUS "DEBUG COMMON_SOURCE_DIR=${COMMON_SOURCE_DIR}" )
-mark_as_advanced( COMMON_SOURCE_DIR )
-
 set( COMMON_ALL_HEADERS
 	"${CMAKE_CURRENT_BINARY_DIR}/version.hpp"
 	"${COMMON_SOURCE_DIR}/cbasetypes.hpp"
 	"${COMMON_SOURCE_DIR}/mmo.hpp"
 	)
 
-set( COMMON_MINI_HEADERS
-	${COMMON_ALL_HEADERS}
-	"${COMMON_SOURCE_DIR}/core.hpp"
-	"${COMMON_SOURCE_DIR}/malloc.hpp"
-	"${COMMON_SOURCE_DIR}/showmsg.hpp"
-	"${COMMON_SOURCE_DIR}/strlib.hpp"
-	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
-	${COMMON_ADDITIONALL_HPP} # needed by Windows
-	CACHE INTERNAL "" )
-set( COMMON_MINI_SOURCES
+add_library(minicore)
+
+target_sources(minicore PRIVATE
 	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
 	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
-	CACHE INTERNAL "" )
-set( COMMON_MINI_INCLUDE_DIRS ${LIBCONFIG_INCLUDE_DIRS} CACHE INTERNAL "" )
-set( COMMON_MINI_DEFINITIONS "-DMINICORE ${LIBCONFIG_DEFINITIONS}" CACHE INTERNAL "" )
+)
 
+target_include_directories(minicore PUBLIC
+	${COMMON_SOURCE_DIR}
+	${LIBCONFIG_INCLUDE_DIRS}
+	${COMMON_ADDITIONALL_HPP} # needed by Windows
+)
+
+
+target_compile_definitions(minicore PRIVATE "-DMINICORE" ${LIBCONFIG_DEFINITIONS})
 
 #
 # common_base
@@ -133,13 +131,13 @@ set( COMMON_BASE_SOURCES
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS
 	${LIBCONFIG_INCLUDE_DIRS}
-  ${YAML_INCLUDE_DIRS}
+	${YAML_INCLUDE_DIRS}
 	CACHE INTERNAL "common_base include dirs" )
 set( COMMON_BASE_DEFINITIONS
 	${LIBCONFIG_DEFINITIONS}
 	CACHE INTERNAL "common_base definitions" )
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS}} )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp ryml )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
@@ -171,7 +169,7 @@ set( COMMON_HEADERS
 set( COMMON_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/sql.cpp"
 	CACHE INTERNAL "common sources" )
-set( DEPENDENCIES common_base yaml-cpp )
+set( DEPENDENCIES common_base yaml-cpp ryml )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )

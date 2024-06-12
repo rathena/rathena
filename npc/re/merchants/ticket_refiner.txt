@@ -20,11 +20,47 @@
 //============================================================
 prontera,184,177,6	script	Refine Master	851,{
 	disable_items;
-	if (countitem(6238) || countitem(6228) || countitem(6229) || countitem(6230) || countitem(6231) || countitem(6456))
-		set .@bWeaponUp,1;
-	if (countitem(6239) || countitem(6232) || countitem(6233) || countitem(6234) || countitem(6235) || countitem(6457))
-		set .@bArmorUp,1;
-	if (!.@bWeaponUp && !.@bArmorUp) {
+	setarray .@cert_weapon[0],
+		6864,	// Guarantee_Weapon_19Up
+		6875,	// Guarantee_Weapon_18Up
+		6874,	// Guarantee_Weapon_17Up
+		6873,	// Guarantee_Weapon_16Up
+		6872,	// Guarantee_Weapon_15Up
+		6871,	// Guarantee_Weapon_14Up
+		6870,	// Guarantee_Weapon_13Up
+		6584,	// Guarantee_Weapon_12Up
+		6238,	// Guarantee_Weapon_11Up
+		6228,	// Guarantee_Weapon_9Up
+		6229,	// Guarantee_Weapon_8Up
+		6230,	// Guarantee_Weapon_7Up
+		6231,	// Guarantee_Weapon_6Up
+		6456;	// Guarantee_Weapon_5Up
+	setarray .@cert_armor[0],
+		6865,	// Guarantee_Armor_19Up
+		6881,	// Guarantee_Armor_18Up
+		6880,	// Guarantee_Armor_17Up
+		6879,	// Guarantee_Armor_16Up
+		6878,	// Guarantee_Armor_15Up
+		6877,	// Guarantee_Armor_14Up
+		6876,	// Guarantee_Armor_13Up
+		6585,	// Guarantee_Armor_12Up
+		6239,	// Guarantee_Armor_11Up
+		6232,	// Guarantee_Armor_9Up
+		6233,	// Guarantee_Armor_8Up
+		6234,	// Guarantee_Armor_7Up
+		6235,	// Guarantee_Armor_6Up
+		6457;	// Guarantee_Armor_5Up
+	setarray .@cert_level[0],19,18,17,16,15,14,13,12,11,9,8,7,6,5;
+	.@size_cert = getarraysize(.@cert_weapon);
+
+	for ( .@i = 0; .@i < .@size_cert; ++.@i ) {
+		if (countitem(.@cert_weapon[.@i]) > 0 || countitem(.@cert_armor[.@i]) > 0) {
+			.@check = 1;
+			break;
+		}
+	}
+
+	if (.@check == 0) {
 		mes "[Refine Master]";
 		mes "Hello!";
 		mes "What's up?";
@@ -61,9 +97,10 @@ prontera,184,177,6	script	Refine Master	851,{
 	next;
 	setarray .@position$[1],"Head upper","Armor","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head middle","Head lower";
 	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
-	for(set .@i,1; .@i<=10; set .@i,.@i+1)
-		set .@menu$, .@menu$+((getequipisequiped(.@indices[.@i]))?getequipname(.@indices[.@i]):.@position$[.@i]+"- [Empty]")+":";
-	set .@part, .@indices[ select(.@menu$) ];
+	for ( .@i = 1; .@i <= 10; ++.@i )
+		.@menu$ += (getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : .@position$[.@i] + "- [Empty]") + ":";
+
+	.@part = .@indices[ select(.@menu$) ];
 	if (!getequipisequiped(.@part)) {
 		mes "[Refine Master]";
 		mes "You have to equip the item you want to refine.";
@@ -86,10 +123,8 @@ prontera,184,177,6	script	Refine Master	851,{
 			case 2:
 			case 3:
 			case 4:
-				setarray .@tickets[0],6456,6231,6230,6229,6228,6238;
-				setarray .@levels[0],5,6,7,8,9,11;
-				set .@type$,"Weapon";
-				set .@check,.@bWeaponUp;
+				copyarray .@tickets[0], .@cert_weapon[0], .@size_cert;
+				.@type$ = "Weapon";
 				break;
 			default:
 				// TODO:
@@ -98,10 +133,8 @@ prontera,184,177,6	script	Refine Master	851,{
 	}else if( .@itemtype == IT_ARMOR ){
 		switch( getequiparmorlv( .@part ) ){
 			case 1:
-				setarray .@tickets[0],6457,6235,6234,6233,6232,6239;
-				setarray .@levels[0],5,6,7,8,9,11;
-				set .@type$,"Armor";
-				set .@check,.@bArmorUp;
+				copyarray .@tickets[0], .@cert_armor[0], .@size_cert;
+				.@type$ = "Armor";
 				break;
 			default:
 				// TODO:
@@ -111,7 +144,14 @@ prontera,184,177,6	script	Refine Master	851,{
 		// TODO:
 		close;
 	}
-	if (!.@check) {
+	.@check = 0;
+	for ( .@i = 0; .@i < .@size_cert; ++.@i ) {
+		if (countitem(.@tickets[.@i]) > 0) {
+			.@check = 1;
+			break;
+		}
+	}
+	if (.@check == 0) {
 		emotion ET_THINK;
 		mes "[Refine Master]";
 		mes "If you want to refine this ^006400"+.@type$+"^000000, please come along with ^006400"+.@type$+" Refine Ticket^000000.";
@@ -121,12 +161,13 @@ prontera,184,177,6	script	Refine Master	851,{
 	mes "[Refine Master]";
 	mes "Please choose which ^006400"+.@type$+" Refine Ticket^000000 you want to use.";
 	next;
-	set .@menu$,"";
-	for(set .@i,0; .@i<getarraysize(.@tickets); set .@i,.@i+1)
-		set .@menu$, .@menu$+getitemname(.@tickets[.@i])+":";
-	set .@select, select(.@menu$)-1;
-	set .@ticket_lv, .@levels[.@select];
-	set .@ticket_id, .@tickets[.@select];
+	.@menu$ = "";
+	for ( .@i = 0; .@i < .@size_cert; ++.@i )
+		.@menu$ += getitemname(.@tickets[.@i]) + ":";
+	.@select = select(.@menu$)-1;
+	.@ticket_lv = .@cert_level[.@select];
+	.@ticket_id = .@tickets[.@select];
+
 	if (countitem(.@ticket_id) == 0) {
 		emotion ET_QUESTION;
 		mes "[Refine Master]";
@@ -160,23 +201,22 @@ prontera,184,177,6	script	Refine Master	851,{
 	mes "I have my own special way to refine...";
 	mes ".......ka boom!";
 	specialeffect EF_SUI_EXPLOSION;
-	if (countitem(.@ticket_id)) {
-		delitem .@ticket_id,1;
-
-		// anti-hack
-		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
-			callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
-			mes "[Refine Master]";
-			emotion ET_FRET;
-			mes "Wait a second...";
-			mes "Do you think I'm stupid?!";
-			mes "You switched the item while I wasn't looking! Get out of here!";
-			close;
-		}
-	} else {
+	if (countitem(.@ticket_id) < 1) {
 		next;
 		mes "Error!";
 		mes "Please report this.";
+		close;
+	}
+	delitem .@ticket_id,1;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3])) {
+		mes "[Refine Master]";
+		emotion ET_FRET;
+		mes "Wait a second...";
+		mes "Do you think I'm stupid?!";
+		mes "You switched the item while I wasn't looking! Get out of here!";
 		close;
 	}
 	successrefitem .@part, .@ticket_lv - getequiprefinerycnt(.@part);

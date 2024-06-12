@@ -25,9 +25,9 @@
 # - Jobs:                    List of jobs associated to group.
 #     Job                    Job name.
 #   MaxWeight                Base maximum weight. (Default: 20000)
-#   HPFactor                 HP increase per base level. Floor(HPFactor / 100) * BaseLv. Used when macro HP_SP_TABLES is disabled. (Default: 20000)
-#   HPMultiplicator          Base HP value. 35 + BaseLv * (HPMultiplicator / 100). Used when macro HP_SP_TABLES is disabled. (Default: 500)
-#   SPFactor                 SP increase per job level. Floor(SPFactor / 100) * BaseLv. Used when macro HP_SP_TABLES is disabled. (Default: 100)
+#   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+#   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
+#   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats/traits.
@@ -78,21 +78,11 @@
 
 Header:
   Type: JOB_STATS
-  Version: 1
+  Version: 2
 
 Body:
   - Jobs:
       Novice: true
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
     BonusStats:
       - Level: 2
         Luk: 1
@@ -110,19 +100,7 @@ Body:
       Swordman: true
     MaxWeight: 28000
     HpFactor: 70
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 47
-      1hSword: 47
-      2hSword: 54
-      1hSpear: 57
-      2hSpear: 65
-      1hAxe: 55
-      2hAxe: 60
-      Mace: 50
-      2hMace: 55
-      Shield: 5
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Str: 1
@@ -164,13 +142,7 @@ Body:
       Mage: true
     MaxWeight: 22000
     HpFactor: 30
-    SpFactor: 600
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 55
-      2hStaff: 55
-      Shield: 10
+    SpIncrease: 600
     BonusStats:
       - Level: 2
         Int: 1
@@ -212,12 +184,7 @@ Body:
       Archer: true
     MaxWeight: 26000
     HpFactor: 50
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      Bow: 50
-      Shield: 9
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Dex: 1
@@ -259,14 +226,7 @@ Body:
       Acolyte: true
     MaxWeight: 24000
     HpFactor: 40
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Mace: 45
-      2hMace: 50
-      Staff: 60
-      2hStaff: 60
-      Shield: 7
+    SpIncrease: 500
     BonusStats:
       - Level: 2
         Luk: 1
@@ -308,16 +268,7 @@ Body:
       Merchant: true
     MaxWeight: 28000
     HpFactor: 40
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      1hSword: 52
-      1hAxe: 48
-      2hAxe: 55
-      Mace: 50
-      2hMace: 55
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 2
         Vit: 1
@@ -359,14 +310,7 @@ Body:
       Thief: true
     MaxWeight: 24000
     HpFactor: 50
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 48
-      1hSword: 50
-      1hAxe: 60
-      Bow: 53
-      Shield: 6
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Agi: 1
@@ -409,19 +353,7 @@ Body:
       Knight2: true
     MaxWeight: 28000
     HpFactor: 150
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 49
-      1hSword: 45
-      2hSword: 52
-      1hSpear: 55
-      2hSpear: 60
-      1hAxe: 50
-      2hAxe: 55
-      Mace: 45
-      2hMace: 50
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 1
         Vit: 1
@@ -487,16 +419,7 @@ Body:
       Priest: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 800
-    BaseASPD:
-      Fist: 40
-      Mace: 43
-      2hMace: 48
-      Staff: 60
-      Knuckle: 60
-      Book: 44
-      2hStaff: 60
-      Shield: 5
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Luk: 1
@@ -562,13 +485,7 @@ Body:
       Wizard: true
     MaxWeight: 24000
     HpFactor: 55
-    SpFactor: 900
-    BaseASPD:
-      Fist: 50
-      Dagger: 54
-      Staff: 53
-      2hStaff: 53
-      Shield: 8
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -634,16 +551,7 @@ Body:
       Blacksmith: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      1hAxe: 46
-      2hAxe: 53
-      Mace: 48
-      2hMace: 53
-      Shield: 5
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -709,12 +617,7 @@ Body:
       Hunter: true
     MaxWeight: 27000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Shield: 9
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -780,15 +683,7 @@ Body:
       Assassin: true
     MaxWeight: 24000
     HpFactor: 110
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 42
-      1hSword: 50
-      1hAxe: 51
-      Katar: 42
-      Huuma: 110
-      Shield: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -855,20 +750,8 @@ Body:
       Crusader2: true
     MaxWeight: 28000
     HpFactor: 110
-    HpMultiplicator: 700
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 48
-      1hSword: 43
-      2hSword: 55
-      1hSpear: 53
-      2hSpear: 52
-      1hAxe: 50
-      2hAxe: 55
-      Mace: 45
-      2hMace: 50
-      Shield: 5
+    HpIncrease: 700
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Luk: 1
@@ -934,16 +817,8 @@ Body:
       Monk: true
     MaxWeight: 26000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Mace: 43
-      2hMace: 48
-      Staff: 60
-      Knuckle: 40
-      2hStaff: 58
-      Shield: 5
+    HpIncrease: 650
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Str: 1
@@ -1009,15 +884,7 @@ Body:
       Sage: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 700
-    BaseASPD:
-      Fist: 45
-      Dagger: 53
-      1hSword: 60
-      Staff: 55
-      Book: 43
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 700
     BonusStats:
       - Level: 1
         Int: 1
@@ -1083,13 +950,7 @@ Body:
       Rogue: true
     MaxWeight: 24000
     HpFactor: 85
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      1hSword: 50
-      Bow: 50
-      Shield: 5
+    SpIncrease: 500
     BonusStats:
       - Level: 1
         Agi: 1
@@ -1155,16 +1016,7 @@ Body:
       Alchemist: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 45
-      1hAxe: 45
-      2hAxe: 52
-      Mace: 45
-      2hMace: 50
-      Shield: 4
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Int: 1
@@ -1230,14 +1082,8 @@ Body:
       Bard: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 600
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Musical: 45
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 600
     BonusStats:
       - Level: 1
         Dex: 1
@@ -1303,14 +1149,8 @@ Body:
       Dancer: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 600
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Whip: 45
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 600
     BonusStats:
       - Level: 1
         Luk: 1
@@ -1374,16 +1214,6 @@ Body:
         Luk: 1
   - Jobs:
       Super_Novice: true
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
     BonusStats:
       - Level: 1
         Str: 1
@@ -1449,16 +1279,8 @@ Body:
       Gunslinger: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 469
-    BaseASPD:
-      Fist: 54
-      Revolver: 49
-      Rifle: 59
-      Gatling: 54
-      Shotgun: 94
-      Grenade: 104
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 469
     BonusStats:
       - Level: 1
         Dex: 1
@@ -1512,12 +1334,7 @@ Body:
       Ninja: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 43
-      Huuma: 55
-      Shield: 6
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Agi: 1
@@ -1571,16 +1388,6 @@ Body:
         Luk: 1
   - Jobs:
       Novice_High: true
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
     BonusStats:
       - Level: 2
         Luk: 1
@@ -1598,19 +1405,7 @@ Body:
       Swordman_High: true
     MaxWeight: 28000
     HpFactor: 70
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 47
-      1hSword: 47
-      2hSword: 54
-      1hSpear: 57
-      2hSpear: 65
-      1hAxe: 55
-      2hAxe: 60
-      Mace: 50
-      2hMace: 55
-      Shield: 5
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Str: 1
@@ -1652,13 +1447,7 @@ Body:
       Mage_High: true
     MaxWeight: 22000
     HpFactor: 30
-    SpFactor: 600
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 55
-      2hStaff: 55
-      Shield: 10
+    SpIncrease: 600
     BonusStats:
       - Level: 2
         Int: 1
@@ -1700,12 +1489,7 @@ Body:
       Archer_High: true
     MaxWeight: 26000
     HpFactor: 50
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      Bow: 50
-      Shield: 9
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Dex: 1
@@ -1747,14 +1531,7 @@ Body:
       Acolyte_High: true
     MaxWeight: 24000
     HpFactor: 40
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Mace: 45
-      2hMace: 50
-      Staff: 60
-      2hStaff: 60
-      Shield: 7
+    SpIncrease: 500
     BonusStats:
       - Level: 2
         Luk: 1
@@ -1796,16 +1573,7 @@ Body:
       Merchant_High: true
     MaxWeight: 28000
     HpFactor: 40
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      1hSword: 52
-      1hAxe: 48
-      2hAxe: 55
-      Mace: 50
-      2hMace: 55
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 2
         Vit: 1
@@ -1847,14 +1615,7 @@ Body:
       Thief_High: true
     MaxWeight: 24000
     HpFactor: 50
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 48
-      1hSword: 50
-      1hAxe: 60
-      Bow: 53
-      Shield: 6
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Agi: 1
@@ -1897,19 +1658,7 @@ Body:
       Lord_Knight2: true
     MaxWeight: 28000
     HpFactor: 150
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 49
-      1hSword: 45
-      2hSword: 52
-      1hSpear: 55
-      2hSpear: 60
-      1hAxe: 50
-      2hAxe: 55
-      Mace: 45
-      2hMace: 50
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 1
         Str: 1
@@ -2005,16 +1754,7 @@ Body:
       High_Priest: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 800
-    BaseASPD:
-      Fist: 40
-      Mace: 43
-      2hMace: 48
-      Staff: 60
-      Knuckle: 60
-      Book: 44
-      2hStaff: 60
-      Shield: 5
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Int: 1
@@ -2110,13 +1850,7 @@ Body:
       High_Wizard: true
     MaxWeight: 24000
     HpFactor: 55
-    SpFactor: 900
-    BaseASPD:
-      Fist: 50
-      Dagger: 54
-      Staff: 53
-      2hStaff: 53
-      Shield: 8
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -2212,16 +1946,7 @@ Body:
       Whitesmith: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      1hAxe: 46
-      2hAxe: 53
-      Mace: 48
-      2hMace: 53
-      Shield: 5
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -2317,12 +2042,7 @@ Body:
       Sniper: true
     MaxWeight: 27000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Shield: 9
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -2418,15 +2138,7 @@ Body:
       Assassin_Cross: true
     MaxWeight: 24000
     HpFactor: 110
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 42
-      1hSword: 50
-      1hAxe: 51
-      Katar: 42
-      Huuma: 110
-      Shield: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -2523,20 +2235,8 @@ Body:
       Paladin2: true
     MaxWeight: 28000
     HpFactor: 110
-    HpMultiplicator: 700
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 48
-      1hSword: 43
-      2hSword: 55
-      1hSpear: 53
-      2hSpear: 52
-      1hAxe: 50
-      2hAxe: 55
-      Mace: 45
-      2hMace: 50
-      Shield: 5
+    HpIncrease: 700
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Vit: 1
@@ -2632,16 +2332,8 @@ Body:
       Champion: true
     MaxWeight: 26000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Mace: 43
-      2hMace: 48
-      Staff: 60
-      Knuckle: 40
-      2hStaff: 58
-      Shield: 5
+    HpIncrease: 650
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Str: 1
@@ -2737,15 +2429,7 @@ Body:
       Professor: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 700
-    BaseASPD:
-      Fist: 45
-      Dagger: 53
-      1hSword: 60
-      Staff: 55
-      Book: 43
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 700
     BonusStats:
       - Level: 1
         Int: 1
@@ -2841,13 +2525,7 @@ Body:
       Stalker: true
     MaxWeight: 24000
     HpFactor: 85
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      1hSword: 50
-      Bow: 50
-      Shield: 5
+    SpIncrease: 500
     BonusStats:
       - Level: 1
         Str: 1
@@ -2943,16 +2621,7 @@ Body:
       Creator: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 45
-      1hAxe: 45
-      2hAxe: 52
-      Mace: 45
-      2hMace: 50
-      Shield: 4
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -3048,14 +2717,8 @@ Body:
       Clown: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 600
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Musical: 45
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 600
     BonusStats:
       - Level: 1
         Agi: 1
@@ -3151,14 +2814,8 @@ Body:
       Gypsy: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 600
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Whip: 45
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 600
     BonusStats:
       - Level: 1
         Dex: 1
@@ -3252,33 +2909,11 @@ Body:
         Agi: 1
   - Jobs:
       Baby: true
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
   - Jobs:
       Baby_Swordman: true
     MaxWeight: 28000
     HpFactor: 70
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 47
-      1hSword: 47
-      2hSword: 54
-      1hSpear: 57
-      2hSpear: 65
-      1hAxe: 55
-      2hAxe: 60
-      Mace: 50
-      2hMace: 55
-      Shield: 5
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Str: 1
@@ -3320,13 +2955,7 @@ Body:
       Baby_Mage: true
     MaxWeight: 22000
     HpFactor: 30
-    SpFactor: 600
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 55
-      2hStaff: 55
-      Shield: 10
+    SpIncrease: 600
     BonusStats:
       - Level: 2
         Int: 1
@@ -3368,12 +2997,7 @@ Body:
       Baby_Archer: true
     MaxWeight: 26000
     HpFactor: 50
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      Bow: 50
-      Shield: 9
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Dex: 1
@@ -3415,14 +3039,7 @@ Body:
       Baby_Acolyte: true
     MaxWeight: 24000
     HpFactor: 40
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Mace: 45
-      2hMace: 50
-      Staff: 60
-      2hStaff: 60
-      Shield: 7
+    SpIncrease: 500
     BonusStats:
       - Level: 2
         Luk: 1
@@ -3464,16 +3081,7 @@ Body:
       Baby_Merchant: true
     MaxWeight: 28000
     HpFactor: 40
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      1hSword: 52
-      1hAxe: 48
-      2hAxe: 55
-      Mace: 50
-      2hMace: 55
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 2
         Vit: 1
@@ -3515,14 +3123,7 @@ Body:
       Baby_Thief: true
     MaxWeight: 24000
     HpFactor: 50
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 48
-      1hSword: 50
-      1hAxe: 60
-      Bow: 53
-      Shield: 6
+    SpIncrease: 200
     BonusStats:
       - Level: 2
         Agi: 1
@@ -3565,19 +3166,7 @@ Body:
       Baby_Knight2: true
     MaxWeight: 28000
     HpFactor: 150
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 49
-      1hSword: 45
-      2hSword: 52
-      1hSpear: 55
-      2hSpear: 60
-      1hAxe: 50
-      2hAxe: 55
-      Mace: 45
-      2hMace: 50
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 1
         Vit: 1
@@ -3643,16 +3232,7 @@ Body:
       Baby_Priest: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 800
-    BaseASPD:
-      Fist: 40
-      Mace: 43
-      2hMace: 48
-      Staff: 60
-      Knuckle: 60
-      Book: 44
-      2hStaff: 60
-      Shield: 5
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Luk: 1
@@ -3718,13 +3298,7 @@ Body:
       Baby_Wizard: true
     MaxWeight: 24000
     HpFactor: 55
-    SpFactor: 900
-    BaseASPD:
-      Fist: 50
-      Dagger: 54
-      Staff: 53
-      2hStaff: 53
-      Shield: 8
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -3790,16 +3364,7 @@ Body:
       Baby_Blacksmith: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      1hAxe: 46
-      2hAxe: 53
-      Mace: 48
-      2hMace: 53
-      Shield: 5
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -3865,12 +3430,7 @@ Body:
       Baby_Hunter: true
     MaxWeight: 27000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Shield: 9
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -3936,15 +3496,7 @@ Body:
       Baby_Assassin: true
     MaxWeight: 24000
     HpFactor: 110
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 42
-      1hSword: 50
-      1hAxe: 51
-      Katar: 42
-      Huuma: 110
-      Shield: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -4011,20 +3563,8 @@ Body:
       Baby_Crusader2: true
     MaxWeight: 28000
     HpFactor: 110
-    HpMultiplicator: 700
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 48
-      1hSword: 43
-      2hSword: 55
-      1hSpear: 53
-      2hSpear: 52
-      1hAxe: 50
-      2hAxe: 55
-      Mace: 45
-      2hMace: 50
-      Shield: 5
+    HpIncrease: 700
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Luk: 1
@@ -4090,16 +3630,8 @@ Body:
       Baby_Monk: true
     MaxWeight: 26000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Mace: 43
-      2hMace: 48
-      Staff: 60
-      Knuckle: 40
-      2hStaff: 58
-      Shield: 5
+    HpIncrease: 650
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Str: 1
@@ -4165,15 +3697,7 @@ Body:
       Baby_Sage: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 700
-    BaseASPD:
-      Fist: 45
-      Dagger: 53
-      1hSword: 60
-      Staff: 55
-      Book: 43
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 700
     BonusStats:
       - Level: 1
         Int: 1
@@ -4239,13 +3763,7 @@ Body:
       Baby_Rogue: true
     MaxWeight: 24000
     HpFactor: 85
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      1hSword: 50
-      Bow: 50
-      Shield: 5
+    SpIncrease: 500
     BonusStats:
       - Level: 1
         Agi: 1
@@ -4311,16 +3829,7 @@ Body:
       Baby_Alchemist: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 45
-      1hAxe: 45
-      2hAxe: 52
-      Mace: 45
-      2hMace: 50
-      Shield: 4
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Int: 1
@@ -4386,14 +3895,8 @@ Body:
       Baby_Bard: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 600
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Musical: 45
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 600
     BonusStats:
       - Level: 1
         Dex: 1
@@ -4459,14 +3962,8 @@ Body:
       Baby_Dancer: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 600
-    BaseASPD:
-      Fist: 40
-      Dagger: 53
-      Bow: 48
-      Whip: 45
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 600
     BonusStats:
       - Level: 1
         Luk: 1
@@ -4530,16 +4027,6 @@ Body:
         Luk: 1
   - Jobs:
       Super_Baby: true
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
     BonusStats:
       - Level: 1
         Str: 1
@@ -4605,33 +4092,7 @@ Body:
       Taekwon: true
     MaxWeight: 28000
     HpFactor: 70
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
+    SpIncrease: 200
     BonusStats:
       - Level: 1
         Str: 1
@@ -4674,34 +4135,8 @@ Body:
       Star_Gladiator2: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Str: 1
@@ -4767,13 +4202,7 @@ Body:
       Soul_Linker: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 53
-      2hStaff: 55
-      Shield: 8
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -4840,19 +4269,7 @@ Body:
       Rune_Knight2: true
     MaxWeight: 35000
     HpFactor: 150
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 52
-      2hSword: 55
-      1hSpear: 60
-      2hSpear: 58
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 45
-      2hMace: 52
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 1
         Int: 1
@@ -4932,14 +4349,7 @@ Body:
       Warlock: true
     MaxWeight: 30000
     HpFactor: 55
-    SpFactor: 900
-    BaseASPD:
-      Fist: 45
-      Dagger: 52
-      1hSword: 60
-      Staff: 50
-      2hStaff: 56
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -5020,12 +4430,7 @@ Body:
       Ranger2: true
     MaxWeight: 32000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      Bow: 49
-      Shield: 8
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -5105,16 +4510,7 @@ Body:
       Arch_Bishop: true
     MaxWeight: 30000
     HpFactor: 75
-    SpFactor: 800
-    BaseASPD:
-      Fist: 45
-      Mace: 45
-      2hMace: 45
-      Staff: 60
-      Knuckle: 50
-      Book: 44
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Int: 1
@@ -5195,16 +4591,7 @@ Body:
       Mechanic2: true
     MaxWeight: 38000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 60
-      1hSword: 65
-      1hAxe: 45
-      2hAxe: 48
-      Mace: 48
-      2hMace: 50
-      Shield: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Luk: 1
@@ -5284,19 +4671,7 @@ Body:
       Guillotine_Cross: true
     MaxWeight: 32000
     HpFactor: 110
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 42
-      1hSword: 65
-      1hAxe: 80
-      Katar: 42
-      Rifle: 95
-      Gatling: 120
-      Shotgun: 90
-      Grenade: 100
-      Huuma: 110
-      Shield: 9
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -5377,19 +4752,7 @@ Body:
       Rune_Knight_T2: true
     MaxWeight: 35000
     HpFactor: 150
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 52
-      2hSword: 55
-      1hSpear: 60
-      2hSpear: 58
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 45
-      2hMace: 52
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 1
         Int: 1
@@ -5469,14 +4832,7 @@ Body:
       Warlock_T: true
     MaxWeight: 30000
     HpFactor: 55
-    SpFactor: 900
-    BaseASPD:
-      Fist: 45
-      Dagger: 52
-      1hSword: 60
-      Staff: 50
-      2hStaff: 56
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -5557,12 +4913,7 @@ Body:
       Ranger_T2: true
     MaxWeight: 32000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      Bow: 49
-      Shield: 8
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -5642,16 +4993,7 @@ Body:
       Arch_Bishop_T: true
     MaxWeight: 30000
     HpFactor: 75
-    SpFactor: 800
-    BaseASPD:
-      Fist: 45
-      Mace: 45
-      2hMace: 45
-      Staff: 60
-      Knuckle: 50
-      Book: 44
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Int: 1
@@ -5732,16 +5074,7 @@ Body:
       Mechanic_T2: true
     MaxWeight: 38000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 60
-      1hSword: 65
-      1hAxe: 45
-      2hAxe: 48
-      Mace: 48
-      2hMace: 50
-      Shield: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Luk: 1
@@ -5821,19 +5154,7 @@ Body:
       Guillotine_Cross_T: true
     MaxWeight: 32000
     HpFactor: 110
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 42
-      1hSword: 65
-      1hAxe: 80
-      Katar: 42
-      Rifle: 95
-      Gatling: 120
-      Shotgun: 90
-      Grenade: 100
-      Huuma: 110
-      Shield: 9
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -5914,20 +5235,8 @@ Body:
       Royal_Guard2: true
     MaxWeight: 35000
     HpFactor: 110
-    HpMultiplicator: 700
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 47
-      1hSword: 45
-      2hSword: 53
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 44
-      2hMace: 50
-      Shield: 5
+    HpIncrease: 700
+    SpIncrease: 400
     BonusStats:
       - Level: 2
         Vit: 1
@@ -6007,15 +5316,7 @@ Body:
       Sorcerer: true
     MaxWeight: 30000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      Staff: 45
-      Book: 45
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -6095,14 +5396,8 @@ Body:
       Minstrel: true
     MaxWeight: 32000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Musical: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Int: 1
@@ -6182,14 +5477,8 @@ Body:
       Wanderer: true
     MaxWeight: 32000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Whip: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -6269,16 +5558,8 @@ Body:
       Sura: true
     MaxWeight: 30000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 400
-    BaseASPD:
-      Fist: 38
-      Mace: 43
-      2hMace: 45
-      Staff: 48
-      Knuckle: 39
-      2hStaff: 50
-      Shield: 5
+    HpIncrease: 650
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -6358,16 +5639,7 @@ Body:
       Genetic: true
     MaxWeight: 32000
     HpFactor: 90
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 44
-      1hAxe: 48
-      2hAxe: 51
-      Mace: 44
-      2hMace: 48
-      Shield: 4
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -6447,13 +5719,7 @@ Body:
       Shadow_Chaser: true
     MaxWeight: 28000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 43
-      1hSword: 47
-      Bow: 47
-      Shield: 4
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Luk: 1
@@ -6534,20 +5800,8 @@ Body:
       Royal_Guard_T2: true
     MaxWeight: 35000
     HpFactor: 110
-    HpMultiplicator: 700
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 47
-      1hSword: 45
-      2hSword: 53
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 44
-      2hMace: 50
-      Shield: 5
+    HpIncrease: 700
+    SpIncrease: 400
     BonusStats:
       - Level: 2
         Vit: 1
@@ -6627,15 +5881,7 @@ Body:
       Sorcerer_T: true
     MaxWeight: 30000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      Staff: 45
-      Book: 45
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -6715,14 +5961,8 @@ Body:
       Minstrel_T: true
     MaxWeight: 32000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Musical: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Int: 1
@@ -6802,14 +6042,8 @@ Body:
       Wanderer_T: true
     MaxWeight: 32000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Whip: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -6889,16 +6123,8 @@ Body:
       Sura_T: true
     MaxWeight: 30000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 400
-    BaseASPD:
-      Fist: 38
-      Mace: 43
-      2hMace: 45
-      Staff: 48
-      Knuckle: 39
-      2hStaff: 50
-      Shield: 5
+    HpIncrease: 650
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -6978,16 +6204,7 @@ Body:
       Genetic_T: true
     MaxWeight: 32000
     HpFactor: 90
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 44
-      1hAxe: 48
-      2hAxe: 51
-      Mace: 44
-      2hMace: 48
-      Shield: 4
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -7067,13 +6284,7 @@ Body:
       Shadow_Chaser_T: true
     MaxWeight: 28000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 43
-      1hSword: 47
-      Bow: 47
-      Shield: 4
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Luk: 1
@@ -7154,19 +6365,7 @@ Body:
       Baby_Rune_Knight2: true
     MaxWeight: 28000
     HpFactor: 150
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 52
-      2hSword: 55
-      1hSpear: 60
-      2hSpear: 58
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 45
-      2hMace: 52
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 1
         Int: 1
@@ -7246,14 +6445,7 @@ Body:
       Baby_Warlock: true
     MaxWeight: 24000
     HpFactor: 55
-    SpFactor: 900
-    BaseASPD:
-      Fist: 45
-      Dagger: 52
-      1hSword: 60
-      Staff: 50
-      2hStaff: 56
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -7334,12 +6526,7 @@ Body:
       Baby_Ranger2: true
     MaxWeight: 27000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      Bow: 49
-      Shield: 8
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -7419,16 +6606,7 @@ Body:
       Baby_Arch_Bishop: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 800
-    BaseASPD:
-      Fist: 45
-      Mace: 45
-      2hMace: 45
-      Staff: 60
-      Knuckle: 50
-      Book: 44
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Int: 1
@@ -7509,16 +6687,7 @@ Body:
       Baby_Mechanic2: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 60
-      1hSword: 65
-      1hAxe: 45
-      2hAxe: 48
-      Mace: 48
-      2hMace: 50
-      Shield: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Luk: 1
@@ -7598,19 +6767,7 @@ Body:
       Baby_Guillotine_Cross: true
     MaxWeight: 24000
     HpFactor: 110
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 42
-      1hSword: 65
-      1hAxe: 80
-      Katar: 42
-      Rifle: 95
-      Gatling: 120
-      Shotgun: 90
-      Grenade: 100
-      Huuma: 110
-      Shield: 9
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -7691,20 +6848,8 @@ Body:
       Baby_Royal_Guard2: true
     MaxWeight: 28000
     HpFactor: 110
-    HpMultiplicator: 700
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 47
-      1hSword: 45
-      2hSword: 53
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 44
-      2hMace: 50
-      Shield: 5
+    HpIncrease: 700
+    SpIncrease: 400
     BonusStats:
       - Level: 2
         Vit: 1
@@ -7784,15 +6929,7 @@ Body:
       Baby_Sorcerer: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      Staff: 45
-      Book: 45
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -7872,14 +7009,8 @@ Body:
       Baby_Minstrel: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Musical: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Int: 1
@@ -7959,14 +7090,8 @@ Body:
       Baby_Wanderer: true
     MaxWeight: 27000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Whip: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -8046,16 +7171,8 @@ Body:
       Baby_Sura: true
     MaxWeight: 26000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 400
-    BaseASPD:
-      Fist: 38
-      Mace: 43
-      2hMace: 45
-      Staff: 48
-      Knuckle: 39
-      2hStaff: 50
-      Shield: 5
+    HpIncrease: 650
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -8135,16 +7252,7 @@ Body:
       Baby_Genetic: true
     MaxWeight: 30000
     HpFactor: 90
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 44
-      1hAxe: 48
-      2hAxe: 51
-      Mace: 44
-      2hMace: 48
-      Shield: 4
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -8224,13 +7332,7 @@ Body:
       Baby_Shadow_Chaser: true
     MaxWeight: 24000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 43
-      1hSword: 47
-      Bow: 47
-      Shield: 4
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Luk: 1
@@ -8308,18 +7410,8 @@ Body:
         Agi: 1
   - Jobs:
       Super_Novice_E: true
-    HpMultiplicator: 5000
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
+    HpIncrease: 5000
+    SpIncrease: 500
     BonusStats:
       - Level: 1
         Str: 1
@@ -8383,16 +7475,6 @@ Body:
         Luk: 1
   - Jobs:
       Super_Baby_E: true
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
     BonusStats:
       - Level: 1
         Str: 1
@@ -8458,12 +7540,7 @@ Body:
       Kagerou: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      Huuma: 50
-      Shield: 3
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Dex: 1
@@ -8539,12 +7616,7 @@ Body:
       Oboro: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      Huuma: 50
-      Shield: 3
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Dex: 1
@@ -8620,16 +7692,8 @@ Body:
       Rebellion: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 469
-    BaseASPD:
-      Fist: 54
-      Revolver: 49
-      Rifle: 59
-      Gatling: 54
-      Shotgun: 94
-      Grenade: 104
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 469
     BonusStats:
       - Level: 2
         Dex: 1
@@ -8706,11 +7770,7 @@ Body:
   - Jobs:
       Summoner: true
     HpFactor: 70
-    SpFactor: 500
-    BaseASPD:
-      Fist: 40
-      Staff: 60
-      Shield: 7
+    SpIncrease: 500
     BonusStats:
       - Level: 1
         Dex: 1
@@ -8783,12 +7843,8 @@ Body:
   - Jobs:
       Baby_Summoner: true
     HpFactor: 100
-    HpMultiplicator: 700
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Staff: 60
-      Shield: 7
+    HpIncrease: 700
+    SpIncrease: 200
     BonusStats:
       - Level: 1
         Dex: 1
@@ -8862,12 +7918,7 @@ Body:
       Baby_Ninja: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 43
-      Huuma: 55
-      Shield: 6
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Agi: 1
@@ -8923,12 +7974,7 @@ Body:
       Baby_Kagerou: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      Huuma: 50
-      Shield: 3
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Dex: 1
@@ -9004,12 +8050,7 @@ Body:
       Baby_Oboro: true
     MaxWeight: 26000
     HpFactor: 75
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      Huuma: 50
-      Shield: 3
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Dex: 1
@@ -9085,33 +8126,7 @@ Body:
       Baby_Taekwon: true
     MaxWeight: 28000
     HpFactor: 70
-    SpFactor: 200
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
+    SpIncrease: 200
     BonusStats:
       - Level: 1
         Str: 1
@@ -9154,34 +8169,8 @@ Body:
       Baby_Star_Gladiator2: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Str: 1
@@ -9247,13 +8236,7 @@ Body:
       Baby_Soul_Linker: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 53
-      2hStaff: 55
-      Shield: 8
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -9319,16 +8302,8 @@ Body:
       Baby_Gunslinger: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 469
-    BaseASPD:
-      Fist: 54
-      Revolver: 49
-      Rifle: 59
-      Gatling: 54
-      Shotgun: 94
-      Grenade: 104
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 469
     BonusStats:
       - Level: 1
         Dex: 1
@@ -9382,16 +8357,8 @@ Body:
       Baby_Rebellion: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 469
-    BaseASPD:
-      Fist: 54
-      Revolver: 49
-      Rifle: 59
-      Gatling: 54
-      Shotgun: 94
-      Grenade: 104
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 469
     BonusStats:
       - Level: 2
         Dex: 1
@@ -9470,34 +8437,8 @@ Body:
       Star_Emperor2: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Str: 1
@@ -9577,13 +8518,7 @@ Body:
       Soul_Reaper: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 53
-      2hStaff: 55
-      Shield: 8
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -9664,34 +8599,8 @@ Body:
       Baby_Star_Emperor2: true
     MaxWeight: 28000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 470
     BonusStats:
       - Level: 1
         Str: 1
@@ -9771,13 +8680,7 @@ Body:
       Baby_Soul_Reaper: true
     MaxWeight: 24000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 53
-      2hStaff: 55
-      Shield: 8
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -9858,19 +8761,7 @@ Body:
       Dragon_Knight2: true
     MaxWeight: 35000
     HpFactor: 150
-    SpFactor: 300
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 52
-      2hSword: 55
-      1hSpear: 60
-      2hSpear: 58
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 45
-      2hMace: 52
-      Shield: 5
+    SpIncrease: 300
     BonusStats:
       - Level: 1
         Str: 1
@@ -9993,21 +8884,21 @@ Body:
       - Level: 50
         Vit: 1
         Pow: 1
+      - Level: 51
+        Crt: 1
+      - Level: 52
+        Pow: 1
+      - Level: 54
+        Pow: 1
+        Crt: 1
+      - Level: 55
+        Sta: 1
   - Jobs:
       Meister: true
       Meister2: true
     MaxWeight: 38000
     HpFactor: 90
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 60
-      1hSword: 65
-      1hAxe: 45
-      2hAxe: 48
-      Mace: 48
-      2hMace: 50
-      Shield: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Str: 1
@@ -10135,23 +9026,20 @@ Body:
       - Level: 50
         Pow: 1
         Wis: 1
+      - Level: 51
+        Pow: 1
+      - Level: 52
+        Con: 1
+      - Level: 53
+        Sta: 1
+        Wis: 1
+      - Level: 55
+        Pow: 1
   - Jobs:
       Shadow_Cross: true
     MaxWeight: 32000
     HpFactor: 110
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 42
-      1hSword: 65
-      1hAxe: 80
-      Katar: 42
-      Rifle: 95
-      Gatling: 120
-      Shotgun: 90
-      Grenade: 100
-      Huuma: 110
-      Shield: 9
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Str: 1
@@ -10278,19 +9166,21 @@ Body:
         Con: 1
       - Level: 50
         Pow: 1
+        Crt: 1
+      - Level: 51
+        Pow: 1
+      - Level: 53
+        Con: 1
+      - Level: 54
+        Sta: 1
+        Crt: 1
+      - Level: 55
         Crt: 1
   - Jobs:
       Arch_Mage: true
     MaxWeight: 30000
     HpFactor: 55
-    SpFactor: 900
-    BaseASPD:
-      Fist: 45
-      Dagger: 52
-      1hSword: 60
-      Staff: 50
-      2hStaff: 56
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -10323,7 +9213,7 @@ Body:
         Vit: 1
         Int: 1
       - Level: 13
-        Agi: 1
+        Dex: 1
         Spl: 1
       - Level: 14
         Sta: 1
@@ -10339,7 +9229,7 @@ Body:
         Int: 1
         Dex: 1
       - Level: 19
-        Dex: 1
+        Int: 1
       - Level: 20
         Vit: 1
         Int: 1
@@ -10418,20 +9308,20 @@ Body:
       - Level: 50
         Sta: 1
         Wis: 1
+      - Level: 52
+        Spl: 1
+      - Level: 53
+        Con: 1
+      - Level: 54
+        Sta: 1
+        Wis: 1
+      - Level: 55
+        Spl: 1
   - Jobs:
       Cardinal: true
     MaxWeight: 30000
     HpFactor: 75
-    SpFactor: 800
-    BaseASPD:
-      Fist: 45
-      Mace: 45
-      2hMace: 45
-      Staff: 60
-      Knuckle: 50
-      Book: 44
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Str: 1
@@ -10558,18 +9448,23 @@ Body:
         Crt: 1
       - Level: 50
         Spl: 1
+        Crt: 1
+      - Level: 51
+        Spl: 1
+      - Level: 52
+        Pow: 1
+      - Level: 53
+        Sta: 1
+      - Level: 54
+        Wis: 1
+      - Level: 55
         Crt: 1
   - Jobs:
       Windhawk: true
       Windhawk2: true
     MaxWeight: 32000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      Bow: 49
-      Shield: 8
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -10697,25 +9592,22 @@ Body:
       - Level: 50
         Dex: 1
         Con: 1
+      - Level: 51
+        Con: 1
+      - Level: 52
+        Pow: 1
+        Con: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Pow: 1
   - Jobs:
       Imperial_Guard: true
       Imperial_Guard2: true
     MaxWeight: 35000
     HpFactor: 110
-    HpMultiplicator: 700
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 47
-      1hSword: 45
-      2hSword: 53
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 48
-      2hAxe: 52
-      Mace: 44
-      2hMace: 50
-      Shield: 5
+    HpIncrease: 700
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Pow: 1
@@ -10843,20 +9735,20 @@ Body:
       - Level: 50
         Pow: 1
         Sta: 1
+      - Level: 51
+        Pow: 1
+      - Level: 52
+        Sta: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Wis: 1
+        Con: 1
   - Jobs:
       Biolo: true
     MaxWeight: 32000
     HpFactor: 90
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 44
-      1hAxe: 48
-      2hAxe: 51
-      Mace: 44
-      2hMace: 48
-      Shield: 4
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -10984,17 +9876,20 @@ Body:
       - Level: 50
         Str: 1
         Crt: 1
+      - Level: 51
+        Crt: 1
+      - Level: 52
+        Sta: 1
+      - Level: 53
+        Pow: 1
+        Crt: 1
+      - Level: 55
+        Con: 1
   - Jobs:
       Abyss_Chaser: true
     MaxWeight: 28000
     HpFactor: 85
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 43
-      1hSword: 47
-      Bow: 47
-      Shield: 4
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Luk: 1
@@ -11122,19 +10017,20 @@ Body:
       - Level: 50
         Pow: 1
         Spl: 1
+      - Level: 51
+        Pow: 1
+      - Level: 52
+        Crt: 1
+      - Level: 54
+        Sta: 1
+      - Level: 55
+        Sta: 1
+        Con: 1
   - Jobs:
       Elemental_Master: true
     MaxWeight: 30000
     HpFactor: 75
-    SpFactor: 900
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      Staff: 45
-      Book: 45
-      2hStaff: 55
-      Shield: 5
+    SpIncrease: 900
     BonusStats:
       - Level: 1
         Int: 1
@@ -11261,21 +10157,23 @@ Body:
         Sta: 1
       - Level: 50
         Wis: 1
+        Spl: 1
+      - Level: 51
+        Spl: 1
+      - Level: 52
+        Sta: 1
+      - Level: 53
+        Sta: 1
+      - Level: 54
+        Wis: 1
+      - Level: 55
         Spl: 1
   - Jobs:
       Inquisitor: true
     MaxWeight: 30000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 400
-    BaseASPD:
-      Fist: 38
-      Mace: 43
-      2hMace: 45
-      Staff: 48
-      Knuckle: 39
-      2hStaff: 50
-      Shield: 5
+    HpIncrease: 650
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Agi: 1
@@ -11402,18 +10300,21 @@ Body:
       - Level: 50
         Pow: 1
         Wis: 1
+      - Level: 51
+        Pow: 1
+      - Level: 52
+        Sta: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Pow: 1
+        Wis: 1
   - Jobs:
       Troubadour: true
     MaxWeight: 32000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Musical: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Int: 1
@@ -11540,18 +10441,21 @@ Body:
         Con: 1
       - Level: 50
         Dex: 1
+      - Level: 51
+        Con: 1
+      - Level: 52
+        Spl: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Pow: 1
+        Con: 1
   - Jobs:
       Trouvere: true
     MaxWeight: 32000
     HpFactor: 75
-    HpMultiplicator: 300
-    SpFactor: 400
-    BaseASPD:
-      Fist: 40
-      Dagger: 52
-      Bow: 49
-      Whip: 44
-      Shield: 7
+    HpIncrease: 300
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Dex: 1
@@ -11679,38 +10583,21 @@ Body:
         Con: 1
       - Level: 50
         Agi: 1
+      - Level: 51
+        Con: 1
+      - Level: 52
+        Sta: 1
+      - Level: 53
+        Spl: 1
+      - Level: 55
+        Pow: 1
+        Con: 1
   - Jobs:
       Sky_Emperor: true
     MaxWeight: 42000
     HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 635
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
+    HpIncrease: 650
+    SpIncrease: 635
     BonusStats:
       - Level: 1
         Str: 1
@@ -11839,18 +10726,20 @@ Body:
       - Level: 50
         Pow: 1
         Crt: 1
+      - Level: 51
+        Sta: 1
+        Con: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Pow: 1
+        Con: 1
   - Jobs:
       Soul_Ascetic: true
     MaxWeight: 42000
     HpFactor: 75
-    HpMultiplicator: 850
-    SpFactor: 860
-    BaseASPD:
-      Fist: 50
-      Dagger: 50
-      Staff: 53
-      2hStaff: 55
-      Shield: 8
+    HpIncrease: 850
+    SpIncrease: 860
     BonusStats:
       - Level: 1
         Vit: 1
@@ -11967,17 +10856,22 @@ Body:
         Con: 1
       - Level: 50
         Wis: 1
+        Spl: 1
+      - Level: 51
+        Spl: 1
+      - Level: 52
+        Con: 1
+      - Level: 53
+        Wis: 1
+      - Level: 54
+        Sta: 1
+      - Level: 55
         Spl: 1
   - Jobs:
       Shinkiro: true
     MaxWeight: 45000
     HpFactor: 98
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      Huuma: 50
-      Shield: 3
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Str: 1
@@ -12106,16 +11000,21 @@ Body:
       - Level: 50
         Pow: 1
         Crt: 1
+      - Level: 51
+        Crt: 1
+      - Level: 52
+        Con: 1
+      - Level: 53
+        Wis: 1
+      - Level: 54
+        Sta: 1
+      - Level: 55
+        Sta: 1
   - Jobs:
       Shiranui: true
     MaxWeight: 45000
     HpFactor: 98
-    SpFactor: 540
-    BaseASPD:
-      Fist: 40
-      Dagger: 45
-      Huuma: 50
-      Shield: 3
+    SpIncrease: 540
     BonusStats:
       - Level: 1
         Vit: 1
@@ -12233,20 +11132,21 @@ Body:
       - Level: 50
         Wis: 1
         Spl: 1
+      - Level: 51
+        Pow: 1
+      - Level: 52
+        Spl: 1
+      - Level: 54
+        Spl: 1
+      - Level: 55
+        Spl: 1
+        Con: 1
   - Jobs:
       Night_Watch: true
     MaxWeight: 48000
     HpFactor: 75
-    HpMultiplicator: 1800
-    SpFactor: 800
-    BaseASPD:
-      Fist: 54
-      Revolver: 49
-      Rifle: 59
-      Gatling: 54
-      Shotgun: 94
-      Grenade: 104
-      Shield: 6
+    HpIncrease: 1800
+    SpIncrease: 800
     BonusStats:
       - Level: 1
         Str: 1
@@ -12254,7 +11154,6 @@ Body:
       - Level: 2
         Str: 1
         Agi: 1
-        Sta: 1
       - Level: 3
         Vit: 1
         Luk: 1
@@ -12290,6 +11189,7 @@ Body:
         Dex: 1
       - Level: 15
         Luk: 1
+        Sta: 1
       - Level: 16
         Vit: 1
         Int: 1
@@ -12330,13 +11230,13 @@ Body:
       - Level: 30
         Str: 1
         Int: 1
-        Sta: 1
       - Level: 31
         Dex: 1
         Con: 1
       - Level: 32
         Pow: 1
       - Level: 33
+        Sta: 1
         Crt: 1
       - Level: 34
         Crt: 1
@@ -12351,7 +11251,10 @@ Body:
       - Level: 40
         Pow: 1
       - Level: 41
+        Sta: 1
         Con: 1
+      - Level: 42
+        Sta: 1
       - Level: 43
         Crt: 1
       - Level: 44
@@ -12360,6 +11263,7 @@ Body:
         Con: 1
       - Level: 46
         Pow: 1
+        Sta: 1
       - Level: 47
         Con: 1
       - Level: 48
@@ -12367,23 +11271,22 @@ Body:
       - Level: 49
         Con: 1
       - Level: 50
+        Pow: 1
+      - Level: 51
+        Con: 1
+      - Level: 53
+        Pow: 1
+        Con: 1
+      - Level: 54
+        Wis: 1
+      - Level: 55
         Pow: 1
   - Jobs:
       Hyper_Novice: true
     MaxWeight: 40000
     HpFactor: 55
-    HpMultiplicator: 900
-    SpFactor: 600
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
+    HpIncrease: 900
+    SpIncrease: 600
     BonusStats:
       - Level: 1
         Str: 1
@@ -12514,16 +11417,21 @@ Body:
       - Level: 50
         Agi: 1
         Dex: 1
+      - Level: 51
+        Con: 1
+      - Level: 52
+        Pow: 1
+        Con: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Spl: 1
   - Jobs:
       Spirit_Handler: true
     MaxWeight: 42000
     HpFactor: 80
-    HpMultiplicator: 1150
-    SpFactor: 730
-    BaseASPD:
-      Fist: 40
-      Staff: 60
-      Shield: 7
+    HpIncrease: 1150
+    SpIncrease: 730
     BonusStats:
       - Level: 1
         Dex: 1
@@ -12649,3 +11557,13 @@ Body:
         Crt: 1
       - Level: 50
         Pow: 1
+      - Level: 51
+        Con: 1
+      - Level: 52
+        Pow: 1
+      - Level: 53
+        Spl: 1
+      - Level: 54
+        Wis: 1
+      - Level: 55
+        Sta: 1

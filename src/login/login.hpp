@@ -6,20 +6,32 @@
 
 #include <memory>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp" // CORE_ST_LAST
-#include "../common/mmo.hpp" // NAME_LENGTH,SEX_*
-#include "../common/timer.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/mmo.hpp> // NAME_LENGTH,SEX_*
+#include <common/timer.hpp>
+#include <config/core.hpp>
 
 #include "account.hpp"
 
-enum E_LOGINSERVER_ST {
-	LOGINSERVER_ST_RUNNING = CORE_ST_LAST,
-	LOGINSERVER_ST_STARTING,
-	LOGINSERVER_ST_SHUTDOWN,
-	LOGINSERVER_ST_LAST
-};
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace server_login{
+		class LoginServer : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+				void finalize() override;
+				void handle_shutdown() override;
+
+			public:
+				LoginServer() : Core( e_core_type::LOGIN ){
+
+				}
+		};
+	}
+}
 
 /// supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3
@@ -27,8 +39,8 @@ enum E_LOGINSERVER_ST {
 ///Struct of 1 client connected to login-serv
 struct login_session_data {
 	uint32 account_id;			///also GID
-	long login_id1;
-	long login_id2;
+	uint32 login_id1;
+	uint32 login_id2;
 	char sex;			/// 'F','M','S'
 
 	char userid[NAME_LENGTH];	/// account name
@@ -112,6 +124,7 @@ struct Login_Config {
 	} vip_sys;
 #endif
 	bool use_web_auth_token;						/// Enable web authentication token system
+	int disable_webtoken_delay;						/// delay disabling web token after char logs off in milliseconds
 };
 extern struct Login_Config login_config;
 

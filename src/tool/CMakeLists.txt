@@ -1,45 +1,80 @@
 
-#
-# mapcache
-#
-if( WITH_ZLIB )
-	option( BUILD_MAPCACHE "build mapcache executable" ON )
-else()
-	message( STATUS "Disabled mapcache target (required ZLIB)" )
-endif()
-if( BUILD_MAPCACHE )
-message( STATUS "Creating target mapcache" )
-set( COMMON_HEADERS
-	${COMMON_MINI_HEADERS}
-	"${COMMON_SOURCE_DIR}/des.hpp"
-	"${COMMON_SOURCE_DIR}/grfio.hpp"
-	"${COMMON_SOURCE_DIR}/utils.hpp"
-	)
-set( COMMON_SOURCES
-	${COMMON_MINI_SOURCES}
+# Define the tools interface library, all tools will inherit properties
+
+add_library(tools INTERFACE)
+target_include_directories(tools INTERFACE 
+	${YAML_INCLUDE_DIRS}
+	${ZLIB_INCLUDE_DIRS}
+	${RA_INCLUDE_DIRS}
+)
+
+target_sources(tools INTERFACE
+	"${COMMON_SOURCE_DIR}/utils.cpp"
 	"${COMMON_SOURCE_DIR}/des.cpp"
 	"${COMMON_SOURCE_DIR}/grfio.cpp"
-	"${COMMON_SOURCE_DIR}/utils.cpp"
-	)
-set( MAPCACHE_SOURCES
-	"${CMAKE_CURRENT_SOURCE_DIR}/mapcache.cpp"
-	)
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_MINI_INCLUDE_DIRS} )
-set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_MINI_DEFINITIONS}" )
-set( SOURCE_FILES ${COMMON_HEADERS} ${COMMON_SOURCES} ${MAPCACHE_SOURCES} )
-source_group( common FILES ${COMMON_HEADERS} ${COMMON_SOURCES} )
-source_group( mapcache FILES ${MAPCACHE_SOURCES} )
-add_executable( mapcache ${SOURCE_FILES} )
-include_directories( ${INCLUDE_DIRS} )
-target_link_libraries( mapcache ${LIBRARIES} )
-set_target_properties( mapcache PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
+	"${COMMON_SOURCE_DIR}/nullpo.cpp"
+	"${COMMON_SOURCE_DIR}/database.cpp"
+)
+
+target_compile_definitions(tools INTERFACE
+	"MINICORE"
+)
+
+target_link_libraries(tools INTERFACE
+	${GLOBAL_LIBRARIES}
+	${ZLIB_LIBRARIES}
+	yaml-cpp
+	ryml
+	minicore
+)
+
+# mapcache
+message( STATUS "Creating target mapcache" )
+add_executable(mapcache)
+target_link_libraries(mapcache PRIVATE tools)
+target_sources(mapcache PRIVATE "mapcache.cpp")
+
+
+# csv2yaml
+message( STATUS "Creating target csv2yaml" )
+add_executable(csv2yaml)
+target_link_libraries(csv2yaml PRIVATE tools)
+target_sources(csv2yaml PRIVATE "csv2yaml.cpp")
+
+# yaml2sql
+message( STATUS "Creating target yaml2sql" )
+add_executable(yaml2sql)
+target_link_libraries(yaml2sql PRIVATE tools)
+target_sources(yaml2sql PRIVATE "yaml2sql.cpp")
+
+# yamlupgrade
+message( STATUS "Creating target yamlupgrade" )
+add_executable(yamlupgrade)
+target_link_libraries(yamlupgrade PRIVATE tools)
+target_sources(yamlupgrade PRIVATE "yamlupgrade.cpp")
+
+set( TARGET_LIST ${TARGET_LIST} mapcache csv2yaml yaml2sql yamlupgrade  CACHE INTERNAL "" )
+
 if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_mapcache DESCRIPTION "mapcache generator" DISPLAY_NAME "mapcache" GROUP Runtime )
 	install( TARGETS mapcache
 		DESTINATION "."
-		COMPONENT Runtime_mapcache )
+		COMPONENT Runtime_mapcache
+	)
+	cpack_add_component( Runtime_csv2yaml DESCRIPTION "yaml converter" DISPLAY_NAME "csv2yaml" GROUP Runtime )
+	install( TARGETS csv2yaml
+		DESTINATION "."
+		COMPONENT Runtime_csv2yaml
+	)
+	cpack_add_component( Runtime_yaml2sql DESCRIPTION "sql converter" DISPLAY_NAME "yaml2sql" GROUP Runtime )
+	install( TARGETS yaml2sql
+		DESTINATION "."
+		COMPONENT Runtime_yaml2sql
+	)
+	cpack_add_component( Runtime_yamlupgrade DESCRIPTION "yaml upgrader" DISPLAY_NAME "yamlupgrade" GROUP Runtime )
+	install( TARGETS yamlupgrade
+		DESTINATION "."
+		COMPONENT Runtime_yamlupgrade
+	)
+	install (TARGETS )
 endif( INSTALL_COMPONENT_RUNTIME )
-set( TARGET_LIST ${TARGET_LIST} mapcache  CACHE INTERNAL "" )
-message( STATUS "Creating target mapcache - done" )
-endif( BUILD_MAPCACHE )

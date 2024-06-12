@@ -4,7 +4,7 @@
 #ifndef LOGINCHRIF_HPP
 #define LOGINCHRIF_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 /**
  * Entry point from char-server to log-server.

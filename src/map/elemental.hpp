@@ -4,9 +4,9 @@
 #ifndef ELEMENTAL_HPP
 #define ELEMENTAL_HPP
 
-#include "../common/database.hpp"
-#include "../common/mmo.hpp"
-#include "../common/timer.hpp"
+#include <common/database.hpp>
+#include <common/mmo.hpp>
+#include <common/timer.hpp>
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
@@ -26,8 +26,17 @@ enum e_elemental_skillmode : uint8 {
 	EL_SKILLMODE_AGGRESSIVE = 0x4,
 };
 
+#if __cplusplus < 201402L
+namespace std {
+	template <> struct hash<e_elemental_skillmode> {
+		size_t operator() (const e_elemental_skillmode& t) const { return size_t(t); }
+	};
+}
+#endif
+
 ///Enum of Elemental ID
 enum elemental_elementalid  : uint16 {
+	// Sorcerer's Elementals
 	ELEMENTALID_AGNI_S = 2114,
 	ELEMENTALID_AGNI_M,
 	ELEMENTALID_AGNI_L,
@@ -40,6 +49,13 @@ enum elemental_elementalid  : uint16 {
 	ELEMENTALID_TERA_S,
 	ELEMENTALID_TERA_M,
 	ELEMENTALID_TERA_L,
+
+	// Elemental Master's Elementals
+	ELEMENTALID_DILUVIO = 20816,
+	ELEMENTALID_ARDOR,
+	ELEMENTALID_PROCELLA,
+	ELEMENTALID_TERREMOTUS,
+	ELEMENTALID_SERPENS,
 };
 
 struct s_elemental_skill {
@@ -83,8 +99,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern ElementalDatabase elemental_db;
@@ -107,9 +123,8 @@ void elemental_summon_stop(s_elemental_data *ed);
 t_tick elemental_get_lifetime(s_elemental_data *ed);
 
 int elemental_unlocktarget(s_elemental_data *ed);
-bool elemental_skillnotok(uint16 skill_id, s_elemental_data *ed);
+bool elemental_skillnotok( uint16 skill_id, s_elemental_data& ed );
 int elemental_set_target( map_session_data *sd, block_list *bl );
-int elemental_clean_single_effect(s_elemental_data *ed, uint16 skill_id);
 int elemental_clean_effect(s_elemental_data *ed);
 int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick);
 struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv);
@@ -117,7 +132,6 @@ struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint1
 #define elemental_stop_walking(ed, type) unit_stop_walking(&(ed)->bl, type)
 #define elemental_stop_attack(ed) unit_stop_attack(&(ed)->bl)
 
-void read_elemental_skilldb(void);
 void do_init_elemental(void);
 void do_final_elemental(void);
 

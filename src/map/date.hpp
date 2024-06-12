@@ -4,7 +4,7 @@
 #ifndef DATE_HPP
 #define DATE_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 enum e_month{
 	JANUARY = 1,

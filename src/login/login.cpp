@@ -4,25 +4,25 @@
 #pragma warning(disable:4800)
 #include "login.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #include <unordered_map>
 
-#include "../common/cli.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/md5calc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/msg_conf.hpp"
-#include "../common/random.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp" //ip2str
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
-#include "../config/core.hpp"
+#include <common/cli.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/md5calc.hpp>
+#include <common/mmo.hpp>
+#include <common/msg_conf.hpp>
+#include <common/random.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp> //ip2str
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
+#include <config/core.hpp>
 
 #include "account.hpp"
 #include "ipban.hpp"
@@ -32,6 +32,7 @@
 #include "loginlog.hpp"
 
 using namespace rathena;
+using namespace rathena::server_login;
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
@@ -43,7 +44,7 @@ std::unordered_map<uint32,struct online_login_data> online_db;
 std::unordered_map<uint32,struct auth_node> auth_db;
 
 // account database
-AccountDB* accounts = NULL;
+AccountDB* accounts = nullptr;
 // Advanced subnet check [LuzZza]
 struct s_subnet {
 	uint32 mask;
@@ -55,7 +56,7 @@ int subnet_count = 0; //number of subnet config
 int login_fd; // login server file descriptor socket
 
 //early declaration
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass);
+bool login_check_password( struct login_session_data& sd, struct mmo_account& acc );
 
 ///Accessors
 AccountDB* login_get_accounts_db(void){
@@ -250,7 +251,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	safestrncpy(acc.pass, pass, sizeof(acc.pass));
 	acc.sex = sex;
 	safestrncpy(acc.email, "a@a.com", sizeof(acc.email));
-	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(NULL) + login_config.start_limited_time : 0;
+	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(nullptr) + login_config.start_limited_time : 0;
 	safestrncpy(acc.lastlogin, "", sizeof(acc.lastlogin));
 	safestrncpy(acc.last_ip, last_ip, sizeof(acc.last_ip));
 	safestrncpy(acc.birthdate, "", sizeof(acc.birthdate));
@@ -291,7 +292,6 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	struct mmo_account acc;
-	int len;
 
 	char ip[16];
 	ip2str(session[sd->fd]->client_addr, ip);
@@ -305,7 +305,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 		sprintf(r_ip, "%u.%u.%u.%u", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
-		for( dnsbl_serv = strtok(login_config.dnsbl_servs,","); dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,",") ) {
+		for( dnsbl_serv = strtok(login_config.dnsbl_servs,","); dnsbl_serv != nullptr; dnsbl_serv = strtok(nullptr,",") ) {
 			sprintf(ip_dnsbl, "%s.%s", r_ip, trim(dnsbl_serv));
 			if( host2ip(ip_dnsbl) ) {
 				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n", r_ip);
@@ -315,7 +315,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	}
 
-	len = strnlen(sd->userid, NAME_LENGTH);
+	size_t len = strnlen(sd->userid, NAME_LENGTH);
 
 	// Account creation with _M/_F
 	if( login_config.new_account_flag ) {
@@ -344,17 +344,22 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		return 0; // 0 = Unregistered ID
 	}
 
-	if( !login_check_password(sd->md5key, sd->passwdenc, sd->passwd, acc.pass) ) {
+	if( !isServer && sex_str2num( acc.sex ) == SEX_SERVER ){
+		ShowWarning( "Connection refused: ip %s tried to log into server account '%s'\n", ip, sd->userid );
+		return 0; // 0 = Unregistered ID
+	}
+
+	if( !login_check_password( *sd, acc ) ) {
 		ShowNotice("Invalid password (account: '%s', ip: %s)\n", sd->userid, ip);
 		return 1; // 1 = Incorrect Password
 	}
 
-	if( acc.expiration_time != 0 && acc.expiration_time < time(NULL) ) {
+	if( acc.expiration_time != 0 && acc.expiration_time < time(nullptr) ) {
 		ShowNotice("Connection refused (account: %s, expired ID, ip: %s)\n", sd->userid, ip);
 		return 2; // 2 = This ID is expired
 	}
 
-	if( acc.unban_time != 0 && acc.unban_time > time(NULL) ) {
+	if( acc.unban_time != 0 && acc.unban_time > time(nullptr) ) {
 		char tmpstr[24];
 		timestamp2string(tmpstr, sizeof(tmpstr), acc.unban_time, login_config.date_format);
 		ShowNotice("Connection refused (account: %s, banned until %s, ip: %s)\n", sd->userid, tmpstr, ip);
@@ -367,7 +372,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	}
 
 	if( login_config.client_hash_check && !isServer ) {
-		struct client_hash_node *node = NULL;
+		struct client_hash_node *node = nullptr;
 		bool match = false;
 
 		for( node = login_config.client_hash_nodes; node; node = node->next ) {
@@ -402,18 +407,18 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	// update session data
 	sd->account_id = acc.account_id;
-	sd->login_id1 = rnd() + 1;
-	sd->login_id2 = rnd() + 1;
+	sd->login_id1 = rnd_value(1u, UINT32_MAX);
+	sd->login_id2 = rnd_value(1u, UINT32_MAX);
 	safestrncpy(sd->lastlogin, acc.lastlogin, sizeof(sd->lastlogin));
 	sd->sex = acc.sex;
 	sd->group_id = acc.group_id;
 
 	// update account data
-	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), "%Y-%m-%d %H:%M:%S");
+	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(nullptr), "%Y-%m-%d %H:%M:%S");
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;
-	accounts->save(accounts, &acc);
+	accounts->save(accounts, &acc, true);
 
 	if( login_config.use_web_auth_token ){
 		safestrncpy( sd->web_auth_token, acc.web_auth_token, WEB_AUTH_TOKEN_LENGTH );
@@ -426,24 +431,6 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 }
 
 /**
- * Sub function of login_check_password.
- *  Checking if password matches the one in db hashed with client md5key.
- *  Test if(md5(str1+str2)==passwd).
- * @param str1: string (atm:md5key or dbpass)
- * @param str2: string (atm:md5key or dbpass)
- * @param passwd: pass to check
- * @return true if matching else false
- */
-bool login_check_encrypted(const char* str1, const char* str2, const char* passwd) {
-	char tmpstr[64+1], md5str[32+1];
-
-	safesnprintf(tmpstr, sizeof(tmpstr), "%s%s", str1, str2);
-	MD5_String(tmpstr, md5str);
-
-	return (0==strcmp(passwd, md5str));
-}
-
-/**
  * Verify if a password is correct.
  * @param md5key: md5key of client
  * @param passwdenc: encode key of client
@@ -451,16 +438,44 @@ bool login_check_encrypted(const char* str1, const char* str2, const char* passw
  * @param refpass: pass register in db
  * @return true if matching else false
  */
-bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass) {
-	if(passwdenc == 0){
-		return (0==strcmp(passwd, refpass));
+bool login_check_password( struct login_session_data& sd, struct mmo_account& acc ){
+	if( sd.passwdenc == 0 ){
+		return 0 == strcmp( sd.passwd, acc.pass );
 	}
-	else {
-		// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
-		// password mode set to 2 -> md5(refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
-		return ((passwdenc&0x01) && login_check_encrypted(md5key, refpass, passwd)) ||
-		       ((passwdenc&0x02) && login_check_encrypted(refpass, md5key, passwd));
+
+	// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
+	if( sd.passwdenc & 0x01 ){
+		std::string pwd;
+
+		pwd.append( sd.md5key, sd.md5keylen );
+		pwd.append( acc.pass );
+
+		char md5str[32 + 1];
+
+		MD5_String( pwd.c_str(), md5str );
+
+		if( 0 == strcmp( sd.passwd, md5str ) ){
+			return true;
+		}
 	}
+
+	// password mode set to 2 -> md5(refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
+	if( sd.passwdenc & 0x02 ){
+		std::string pwd;
+
+		pwd.append( acc.pass );
+		pwd.append( sd.md5key, sd.md5keylen );
+
+		char md5str[32 + 1];
+
+		MD5_String( pwd.c_str(), md5str );
+
+		if( 0 == strcmp( sd.passwd, md5str ) ){
+			return true;
+		}
+	}
+
+	return false;
 }
 
 int login_get_usercount( int users ){
@@ -521,7 +536,7 @@ int login_lan_config_read(const char *lancfgName) {
 	int line_num = 0, s_subnet=ARRAYLENGTH(subnet);
 	char line[1024], w1[64], w2[64], w3[64], w4[64];
 
-	if((fp = fopen(lancfgName, "r")) == NULL) {
+	if((fp = fopen(lancfgName, "r")) == nullptr) {
 		ShowWarning("LAN Support configuration file is not found: %s\n", lancfgName);
 		return 1;
 	}
@@ -573,7 +588,7 @@ int login_lan_config_read(const char *lancfgName) {
 bool login_config_read(const char* cfgName, bool normal) {
 	char line[1024], w1[32], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		ShowError("Configuration file (%s) not found.\n", cfgName);
 		return false;
 	}
@@ -646,6 +661,8 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.client_hash_check = config_switch(w2);
 		else if(!strcmpi(w1, "use_web_auth_token"))
 			login_config.use_web_auth_token = config_switch(w2);
+		else if (!strcmpi(w1, "disable_webtoken_delay"))
+			login_config.disable_webtoken_delay = cap_value(atoi(w2), 0, INT_MAX);
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
@@ -682,11 +699,11 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.usercount_high = atoi(w2);
 		else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			login_config.char_per_account = atoi(w2);
-			if( login_config.char_per_account <= 0 || login_config.char_per_account > MAX_CHARS ) {
-				if( login_config.char_per_account > MAX_CHARS ) {
-					ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", login_config.char_per_account, MAX_CHARS);
-					login_config.char_per_account = MAX_CHARS;
-				}
+			if( login_config.char_per_account > MAX_CHARS ) {
+				ShowWarning("Exceeded limit of max chars per account '%d'. Capping to '%d'.\n", login_config.char_per_account, MAX_CHARS);
+				login_config.char_per_account = MAX_CHARS;
+			}else if( login_config.char_per_account < 0 ){
+				ShowWarning("Max chars per account '%d' is negative. Capping to '%d'.\n", login_config.char_per_account, MIN_CHARS);
 				login_config.char_per_account = MIN_CHARS;
 			}
 		}
@@ -750,7 +767,7 @@ void login_set_defaults() {
 	login_config.time_allowed = 10; //in second
 
 	login_config.client_hash_check = 0;
-	login_config.client_hash_nodes = NULL;
+	login_config.client_hash_nodes = nullptr;
 	login_config.usercount_disable = false;
 	login_config.usercount_low = 200;
 	login_config.usercount_medium = 500;
@@ -761,6 +778,7 @@ void login_set_defaults() {
 	login_config.vip_sys.group = 5;
 #endif
 	login_config.use_web_auth_token = true;
+	login_config.disable_webtoken_delay = 10000;
 
 	//other default conf
 	safestrncpy(login_config.loginconf_name, "conf/login_athena.conf", sizeof(login_config.loginconf_name));
@@ -777,7 +795,7 @@ void login_set_defaults() {
  * Login-serv destructor
  *  dealloc..., function called at exit of the login-serv
  */
-void do_final(void) {
+void LoginServer::finalize(){
 	struct client_hash_node *hn = login_config.client_hash_nodes;
 	AccountDB* db = accounts;
 
@@ -801,10 +819,10 @@ void do_final(void) {
 
 	if (db) { // destroy account engine
 		db->destroy(db);
-		db = NULL;
+		db = nullptr;
 	}
 
-	accounts = NULL; // destroyed in account_engine
+	accounts = nullptr; // destroyed in account_engine
 	online_db.clear();
 	auth_db.clear();
 
@@ -819,45 +837,14 @@ void do_final(void) {
 	ShowStatus("Finished.\n");
 }
 
-/**
- * Signal handler
- *  This function attempts to properly close the server when an interrupt signal is received.
- *  current signal catch : SIGTERM, SIGINT
- */
-void do_shutdown(void) {
-	if( runflag != LOGINSERVER_ST_SHUTDOWN ) {
-		runflag = LOGINSERVER_ST_SHUTDOWN;
-		ShowStatus("Shutting down...\n");
-		// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
-		do_shutdown_loginchrif();
-		flush_fifos();
-		runflag = CORE_ST_STOP;
-	}
+void LoginServer::handle_shutdown(){
+	ShowStatus("Shutting down...\n");
+	// TODO proper shutdown procedure; kick all characters, wait for acks, ...  [FlavioJS]
+	do_shutdown_loginchrif();
+	flush_fifos();
 }
 
-/**
- * Signal handler
- *  Function called when the server has received a crash signal.
- *  current signal catch : SIGSEGV, SIGFPE
- */
-void do_abort(void) {
-}
-
-// Is this still used ??
-void set_server_type(void) {
-	SERVER_TYPE = ATHENA_SERVER_LOGIN;
-}
-
-/**
- * Login serv constructor
- *  Initialisation, function called at start of the login-serv.
- * @param argc : number of argument from main()
- * @param argv : arguments values from main()
- * @return 0 everything ok else stopping programme execution.
- */
-int do_init(int argc, char** argv) {
-	runflag = LOGINSERVER_ST_STARTING;
-
+bool LoginServer::initialize( int argc, char* argv[] ){
 	// Init default value
 	safestrncpy(console_log_filepath, "./log/login-msg_log.log", sizeof(console_log_filepath));
 
@@ -872,8 +859,6 @@ int do_init(int argc, char** argv) {
 	msg_config_read(login_config.msgconf_name);
 	login_lan_config_read(login_config.lanconf_name);
 	//end config
-
-	rnd_init();
 
 	do_init_loginclif();
 	do_init_loginchrif();
@@ -895,25 +880,20 @@ int do_init(int argc, char** argv) {
 	add_timer_interval(gettick() + 600*1000, login_online_data_cleanup, 0, 0, 600*1000);
 
 	// Account database init
-	if( accounts == NULL ) {
+	if( accounts == nullptr ) {
 		ShowFatalError("do_init: account engine not found.\n");
-		exit(EXIT_FAILURE);
+		return false;
 	} else {
 		if(!accounts->init(accounts)) {
 			ShowFatalError("do_init: Failed to initialize account engine.\n");
-			exit(EXIT_FAILURE);
+			return false;
 		}
 	}
 
 	// server port open & binding
 	if( (login_fd = make_listen_bind(login_config.login_ip,login_config.login_port)) == -1 ) {
 		ShowFatalError("Failed to bind to port '" CL_WHITE "%d" CL_RESET "'\n",login_config.login_port);
-		exit(EXIT_FAILURE);
-	}
-
-	if( runflag != CORE_ST_STOP ) {
-		shutdown_callback = do_shutdown;
-		runflag = LOGINSERVER_ST_RUNNING;
+		return false;
 	}
 
 	do_init_logincnslif();
@@ -921,5 +901,9 @@ int do_init(int argc, char** argv) {
 	ShowStatus("The login-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");
 
-	return 0;
+	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<LoginServer>( argc, argv );
 }

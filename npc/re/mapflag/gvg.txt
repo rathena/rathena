@@ -14,7 +14,9 @@
 //= 1.2 Disable costumes in GvG castles. [Aleos]
 //============================================================
 
-// Guild Dungeons =========
+//============================================================
+// Guild Dungeons
+//============================================================
 gld2_ald	mapflag	gvg_dungeon
 gld2_gef	mapflag	gvg_dungeon
 gld2_pay	mapflag	gvg_dungeon
@@ -22,7 +24,9 @@ gld2_prt	mapflag	gvg_dungeon
 teg_dun01	mapflag	gvg_dungeon
 teg_dun02	mapflag	gvg_dungeon
 
-// WOE:Training Edition Castles =====
+//============================================================
+// WoE:TE Castles
+//============================================================
 te_prtcas01	mapflag	gvg_te_castle
 te_prtcas02	mapflag	gvg_te_castle
 te_prtcas03	mapflag	gvg_te_castle
@@ -33,15 +37,3 @@ te_aldecas2	mapflag	gvg_te_castle
 te_aldecas3	mapflag	gvg_te_castle
 te_aldecas4	mapflag	gvg_te_castle
 te_aldecas5	mapflag	gvg_te_castle
-
-// Disable Costumes =======
-te_prtcas01	mapflag	nocostume
-te_prtcas02	mapflag	nocostume
-te_prtcas03	mapflag	nocostume
-te_prtcas04	mapflag	nocostume
-te_prtcas05	mapflag	nocostume
-te_aldecas1	mapflag	nocostume
-te_aldecas2	mapflag	nocostume
-te_aldecas3	mapflag	nocostume
-te_aldecas4	mapflag	nocostume
-te_aldecas5	mapflag	nocostume

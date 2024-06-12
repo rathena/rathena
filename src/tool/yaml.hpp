@@ -16,44 +16,53 @@
 #else
 	#include <termios.h>
 	#include <unistd.h>
-	#include <stdio.h>
+	#include <cstdio>
 #endif
 
 #include <yaml-cpp/yaml.h>
+#include <ryml_std.hpp>
+#include <ryml.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/achievement.hpp"
-#include "../map/battle.hpp"
-#include "../map/battleground.hpp"
-#include "../map/channel.hpp"
-#include "../map/chat.hpp"
-#include "../map/date.hpp"
-#include "../map/instance.hpp"
-#include "../map/elemental.hpp"
-#include "../map/mercenary.hpp"
-#include "../map/mob.hpp"
-#include "../map/npc.hpp"
-#include "../map/pc.hpp"
-#include "../map/pet.hpp"
-#include "../map/quest.hpp"
-#include "../map/script.hpp"
-#include "../map/skill.hpp"
-#include "../map/storage.hpp"
+#define ONLY_CONSTANTS
+#include <map/achievement.hpp>
+#include <map/battle.hpp>
+#include <map/battleground.hpp>
+#include <map/cashshop.hpp>
+#include <map/channel.hpp>
+#include <map/chat.hpp>
+#include <map/date.hpp>
+#include <map/elemental.hpp>
+#include <map/homunculus.hpp>
+#include <map/instance.hpp>
+#include <map/mercenary.hpp>
+#include <map/mob.hpp>
+#include <map/npc.hpp>
+#include <map/pc.hpp>
+#include <map/pet.hpp>
+#include <map/quest.hpp>
+#include <map/script.hpp>
+#include <map/skill.hpp>
+#include <map/storage.hpp>
 
 using namespace rathena;
+
+/// Uncomment this line to enable the ability for the conversion tools to automatically convert
+/// all files with no user interaction, whether it be from CSV to YAML or YAML to SQL.
+//#define CONVERT_ALL
 
 #ifndef WIN32
 int getch(void) {
@@ -302,7 +311,7 @@ uint8 skill_split_atoi2(char *str, int64 *val, const char *delim, int min_value,
 	uint8 i = 0;
 	char *p = strtok(str, delim);
 
-	while (p != NULL) {
+	while (p != nullptr) {
 		int64 n = min_value;
 
 		trim(p);
@@ -311,7 +320,7 @@ uint8 skill_split_atoi2(char *str, int64 *val, const char *delim, int min_value,
 			n = atoi(p);
 		else {
 			n = constant_lookup_int(p);
-			p = strtok(NULL, delim);
+			p = strtok(nullptr, delim);
 		}
 
 		if (n > min_value) {
@@ -320,7 +329,7 @@ uint8 skill_split_atoi2(char *str, int64 *val, const char *delim, int min_value,
 			if (i >= max)
 				break;
 		}
-		p = strtok(NULL, delim);
+		p = strtok(nullptr, delim);
 	}
 	return i;
 }
@@ -399,7 +408,7 @@ static bool parse_item_constants_txt(const char *path) {
 	FILE *fp;
 
 	fp = fopen(path, "r");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		ShowWarning("itemdb_readdb: File not found \"%s\", skipping.\n", path);
 		return false;
 	}
@@ -429,7 +438,7 @@ static bool parse_item_constants_txt(const char *path) {
 		{
 			str[i] = p;
 			p = strchr(p, ',');
-			if (p == NULL)
+			if (p == nullptr)
 				break;// comma not found
 			*p = '\0';
 			++p;
@@ -437,7 +446,7 @@ static bool parse_item_constants_txt(const char *path) {
 
 		t_itemid item_id = strtoul(str[0], nullptr, 10);
 
-		if (p == NULL)
+		if (p == nullptr)
 		{
 			ShowError("itemdb_readdb: Insufficient columns in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
@@ -451,7 +460,7 @@ static bool parse_item_constants_txt(const char *path) {
 		}
 		str[19] = p + 1;
 		p = strstr(p + 1, "},");
-		if (p == NULL)
+		if (p == nullptr)
 		{
 			ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
@@ -467,7 +476,7 @@ static bool parse_item_constants_txt(const char *path) {
 		}
 		str[20] = p + 1;
 		p = strstr(p + 1, "},");
-		if (p == NULL)
+		if (p == nullptr)
 		{
 			ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
@@ -527,7 +536,7 @@ const std::string ItemDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_db.yml";
 }
 
-uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
+uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	t_itemid nameid;
 
 	if (!this->asUInt32(node, "Id", nameid))
@@ -550,7 +559,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
 
 		if (look > 0) {
 			if (this->nodeExists(node, "Locations")) {
-				const YAML::Node& locationNode = node["Locations"];
+				const ryml::NodeRef& locationNode = node["Locations"];
 
 				static std::vector<std::string> locations = {
 					"Head_Low",
@@ -584,7 +593,7 @@ void ItemDatabase::loadingFinished() {
 
 ItemDatabase item_db;
 
-static bool parse_mob_constants_txt(char *split[], int columns, int current) {
+static bool parse_mob_constants_txt( char *split[], size_t columns, size_t current ){
 	uint16 mob_id = atoi(split[0]);
 	char *name = trim(split[1]);
 
@@ -593,7 +602,7 @@ static bool parse_mob_constants_txt(char *split[], int columns, int current) {
 	return true;
 }
 
-static bool parse_skill_constants_txt(char *split[], int columns, int current) {
+static bool parse_skill_constants_txt( char *split[], size_t columns, size_t current ){
 	uint16 skill_id = atoi(split[0]);
 	char *name = trim(split[16]);
 
@@ -606,7 +615,7 @@ const std::string SkillDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/skill_db.yml";
 }
 
-uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	t_itemid nameid;
 
 	if (!this->asUInt32(node, "Id", nameid))
@@ -628,13 +637,16 @@ void SkillDatabase::clear() {
 	TypesafeCachedYamlDatabase::clear();
 }
 
+void SkillDatabase::loadingFinished(){
+}
+
 SkillDatabase skill_db;
 
 const std::string MobDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/mob_db.yml";
 }
 
-uint64 MobDatabase::parseBodyNode(const YAML::Node& node) {
+uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint16 mob_id;
 
 	if (!this->asUInt16(node, "Id", mob_id))

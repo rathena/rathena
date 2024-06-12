@@ -4,9 +4,9 @@
 #ifndef MMO_HPP
 #define MMO_HPP
 
-#include <time.h>
+#include <ctime>
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
@@ -40,7 +40,27 @@
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
-#define MAX_INVENTORY 100 ///Maximum items in player inventory
+
+#ifndef INVENTORY_BASE_SIZE
+	#define INVENTORY_BASE_SIZE 100 // Amount of inventory slots each player has
+#endif
+
+#ifndef INVENTORY_EXPANSION_SIZE
+	#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+		#define INVENTORY_EXPANSION_SIZE 100 // Amount of additional inventory slots a player can have
+	#else
+		#define INVENTORY_EXPANSION_SIZE 0
+	#endif
+#endif
+
+#ifndef MAX_INVENTORY
+	#define MAX_INVENTORY ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE ) // Maximum items in player inventory (in total)
+#else
+	#if MAX_INVENTORY < ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE )
+		#error Your custom MAX_INVENTORY define is too low
+	#endif
+#endif
+
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
 #ifndef MAX_CHARS
@@ -61,9 +81,15 @@ typedef uint32 t_itemid;
 #define MAX_AMOUNT 30000 ////Max amount of a single stacked item
 #define MAX_ZENY INT_MAX ///Max zeny
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
+#ifndef MAX_CASHPOINT
+	#define MAX_CASHPOINT INT_MAX
+#endif
+#ifndef MAX_KAFRAPOINT
+	#define MAX_KAFRAPOINT INT_MAX
+#endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1623 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -87,13 +113,29 @@ typedef uint32 t_itemid;
 #define DB_NAME_LEN 256 //max len of dbs
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
+#ifndef MAX_BARTER_REQUIREMENTS
+	#define MAX_BARTER_REQUIREMENTS 5
+#endif
+#ifndef WEB_AUTH_TOKEN_LENGTH
+	#define WEB_AUTH_TOKEN_LENGTH 16+1
+#endif
+
+enum e_enchantgrade : uint16{
+	ENCHANTGRADE_NONE = 0,
+	ENCHANTGRADE_D,
+	ENCHANTGRADE_C,
+	ENCHANTGRADE_B,
+	ENCHANTGRADE_A
+};
 
 #ifdef RENEWAL
 	#define MAX_WEAPON_LEVEL 5
 	#define MAX_ARMOR_LEVEL 2
+	#define MAX_ENCHANTGRADE ENCHANTGRADE_A
 #else
 	#define MAX_WEAPON_LEVEL 4
 	#define MAX_ARMOR_LEVEL 1
+	#define MAX_ENCHANTGRADE ENCHANTGRADE_NONE
 #endif
 
 // for produce
@@ -140,7 +182,7 @@ const t_itemid WEDDING_RING_F = 2635;
 
 //Base Homun skill.
 #define HM_SKILLBASE 8001
-#define MAX_HOMUNSKILL 43
+#define MAX_HOMUNSKILL 59
 #define MAX_HOMUNCULUS_CLASS	52	//[orn], Increased to 60 from 16 to allow new Homun-S.
 #define HM_CLASS_BASE 6001
 #define HM_CLASS_MAX (HM_CLASS_BASE+MAX_HOMUNCULUS_CLASS-1)
@@ -165,8 +207,12 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_MERCSKILL 41
 
 //Elemental System
-#define MAX_ELEMENTALSKILL 42
+#define MAX_ELEMENTALSKILL 57
 #define EL_SKILLBASE 8401
+
+//Automated Battle Robot System
+#define ABR_SKILLBASE 8601
+#define MAX_ABRSKILL 5
 
 //Achievement System
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
@@ -316,8 +362,13 @@ enum equip_pos : uint32 {
 };
 
 struct point {
-	unsigned short map;
-	short x,y;
+	uint16 map;
+	uint16 x,y;
+};
+
+struct s_point_str{
+	char map[MAP_NAME_LENGTH_EXT];
+	uint16 x,y;
 };
 
 struct startitem {
@@ -326,8 +377,9 @@ struct startitem {
 	uint32 pos;
 };
 
-enum e_skill_flag
+enum e_skill_flag : int8
 {
+	SKILL_FLAG_NONE = -1,
 	SKILL_FLAG_PERMANENT,
 	SKILL_FLAG_TEMPORARY,
 	SKILL_FLAG_PLAGIARIZED,
@@ -516,8 +568,8 @@ struct mmo_charstatus {
 	int zeny;
 
 	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point;
-	int hp,max_hp,sp,max_sp;
+	unsigned int status_point,skill_point,trait_point;
+	int hp,max_hp,sp,max_sp,ap,max_ap;
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
@@ -534,6 +586,7 @@ struct mmo_charstatus {
 	short shield; // view-id
 	short head_top,head_mid,head_bottom;
 	short robe;
+	uint8 body_direction;
 
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
@@ -544,14 +597,18 @@ struct mmo_charstatus {
 	uint32 mapip;
 	uint16 mapport;
 
-	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
+	struct s_point_str last_point;
+	int32 last_point_instanceid;
+	struct s_point_str save_point;
+	struct s_point_str memo_point[MAX_MEMOPOINTS];
 	struct s_skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip,allow_party;
+	bool show_equip, disable_call;
+	bool disable_partyinvite;
 	short rename;
 
 	time_t delete_date;
@@ -569,6 +626,7 @@ struct mmo_charstatus {
 	unsigned char hotkey_rowshift;
 	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
+	uint16 inventory_slots;
 };
 
 typedef enum mail_status {
@@ -638,7 +696,7 @@ struct party_member {
 	uint32 char_id;
 	char name[NAME_LENGTH];
 	unsigned short class_;
-	unsigned short map;
+	char map[MAP_NAME_LENGTH_EXT];
 	unsigned short lv;
 	unsigned leader : 1,
 	         online : 1;
@@ -653,14 +711,14 @@ struct party {
 	struct party_member member[MAX_PARTY];
 };
 
-struct map_session_data;
+class map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
 	t_exp exp;
 	short online,position;
 	char name[NAME_LENGTH];
-	struct map_session_data *sd;
+	map_session_data *sd;
 	unsigned char modified;
 	uint32 last_login;
 };
@@ -689,7 +747,7 @@ struct guild_skill {
 };
 
 struct Channel;
-struct guild {
+struct mmo_guild {
 	int guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
 	t_exp exp;
@@ -704,14 +762,14 @@ struct guild {
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
-	struct Channel *channel;
-	int instance_id;
 	time_t last_leader_change;
+};
 
-	/* Used by char-server to save events for guilds */
-	unsigned short save_flag;
-
-	int32 chargeshout_flag_id;
+enum e_woe_type{
+	WOE_FIRST_EDITION = 1,
+	WOE_SECOND_EDITION,
+	WOE_THIRD_EDITION,
+	WOE_MAX
 };
 
 struct guild_castle {
@@ -719,6 +777,13 @@ struct guild_castle {
 	int mapindex;
 	char castle_name[NAME_LENGTH];
 	char castle_event[NPC_NAME_LENGTH];
+	e_woe_type type;
+	uint16 client_id;
+	bool warp_enabled;
+	uint16 warp_x;
+	uint16 warp_y;
+	uint32 zeny;
+	uint32 zeny_siege;
 	int guild_id;
 	int economy;
 	int defense;
@@ -1022,6 +1087,8 @@ enum e_job {
 	JOB_HYPER_NOVICE,
 	JOB_SPIRIT_HANDLER,
 
+	JOB_SKY_EMPEROR2 = 4316,
+
 	JOB_MAX,
 };
 
@@ -1056,8 +1123,8 @@ enum e_pc_reg_loading {
 enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
 	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
-	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
-	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< Cannot be kicked
 };
 
 enum e_rank {
@@ -1079,7 +1146,7 @@ struct clan{
 	char master[NAME_LENGTH];
 	char map[MAP_NAME_LENGTH_EXT];
 	short max_member, connect_member;
-	struct map_session_data *members[MAX_CLAN];
+	map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
 	unsigned short instance_id;
 };
@@ -1094,11 +1161,8 @@ struct clan{
 #error MAX_PARTY is too small, you need at least 2 players for a party
 #endif
 
-#ifndef VIP_ENABLE
-	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
-	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
-	#define MAX_CHAR_BILLING 0
-	#define MAX_CHAR_VIP 0
+#ifndef MIN_CHARS
+	#define MIN_CHARS ( MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING ) // Default number of characters per account.
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS

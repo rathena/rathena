@@ -4,7 +4,9 @@
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 
-#include "../config/core.hpp"
+#include <ctime>
+
+#include <config/core.hpp>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -14,9 +16,9 @@
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 #endif
-#include <time.h>
 
 #include "cbasetypes.hpp"
+#include "malloc.hpp"
 #include "timer.hpp" // t_tick
 
 #ifndef MAXCONN
@@ -27,7 +29,12 @@
 
 // socket I/O macros
 #define RFIFOHEAD(fd)
-#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
+#define WFIFOHEAD( fd, size ) \
+	do{ \
+		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
+			_realloc_writefifo( ( fd ), ( size ), ALC_MARK ); \
+		} \
+	}while( false )
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
@@ -127,8 +134,10 @@ extern bool session_isActive(int fd);
 
 int make_listen_bind(uint32 ip, uint16 port);
 int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
-int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size);
-int realloc_writefifo(int fd, size_t addition);
+#define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
+#define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
+int _realloc_fifo( int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func );
+int _realloc_writefifo( int fd, size_t addition, const char* file, int line, const char* func );
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
 
@@ -190,5 +199,35 @@ void send_shortlist_add_fd(int fd);
 // Do pending network sends (and eof handling) from the shortlist.
 void send_shortlist_do_sends();
 #endif
+
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+extern int8 packet_buffer[UINT16_MAX];
+
+template <typename P>
+bool socket_send( int fd, P& packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, sizeof( P ) );
+	memcpy( WFIFOP( fd, 0 ), &packet, sizeof( P ) );
+	WFIFOSET( fd, sizeof( P ) );
+
+	return true;
+}
+
+template <typename P>
+bool socket_send( int fd, P* packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, packet->packetLength );
+	memcpy( WFIFOP( fd, 0 ), packet, packet->packetLength );
+	WFIFOSET( fd, packet->packetLength );
+
+	return true;
+}
 
 #endif /* SOCKET_HPP */

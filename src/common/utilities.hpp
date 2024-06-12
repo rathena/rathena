@@ -84,6 +84,19 @@ namespace rathena {
 		}
 
 		/**
+		 * Resize a map.
+		 * @param map: Map to resize
+		 * @param size: Size to set map to
+		 */
+		template <typename K, typename V, typename S> void map_resize(std::map<K, V> &map, S size) {
+			auto it = map.begin();
+
+			std::advance(it, size);
+
+			map.erase(it, map.end());
+		}
+
+		/**
 		 * Find a key-value pair and return the key value as a reference
 		 * @param map: Unordered Map to search through
 		 * @param key: Key wanted
@@ -130,6 +143,15 @@ namespace rathena {
 		}
 
 		/**
+		 * Resize an unordered map.
+		 * @param map: Unordered map to resize
+		 * @param size: Size to set unordered map to
+		 */
+		template <typename K, typename V, typename S> void umap_resize(std::unordered_map<K, V> &map, S size) {
+			map.erase(std::advance(map.begin(), map.min(size, map.size())), map.end());
+		}
+
+		/**
 		 * Get a random value from the given unordered map
 		 * @param map: Unordered Map to search through
 		 * @return A random value by reference
@@ -137,7 +159,7 @@ namespace rathena {
 		template <typename K, typename V> V& umap_random( std::unordered_map<K, V>& map ){
 			auto it = map.begin();
 
-			std::advance( it, rnd_value( 0, map.size() - 1 ) );
+			std::advance( it, rnd_value<size_t>( 0, map.size() - 1 ) );
 
 			return it->second;
 		}
@@ -150,7 +172,7 @@ namespace rathena {
 		template <typename K> K &vector_random(std::vector<K> &vec) {
 			auto it = vec.begin();
 
-			std::advance(it, rnd_value(0, vec.size() - 1));
+			std::advance( it, rnd_value<size_t>( 0, vec.size() - 1 ) );
 
 			return *it;
 		}
@@ -195,6 +217,7 @@ namespace rathena {
 
 		/**
 		 * Determine if a value exists in the vector and then erase it
+		 * This will only erase the first occurrence of the value
 		 * @param vector: Vector to erase value from
 		 * @param value: Value to remove
 		 */
@@ -255,14 +278,38 @@ namespace rathena {
 
 			if( rathena::util::safe_addition( a, b, result ) ){
 				return cap;
-			}else{
-				return result;
 			}
+			return std::min(result, cap);
 		}
 
 		template <typename T> void tolower( T& string ){
 			std::transform( string.begin(), string.end(), string.begin(), ::tolower );
 		}
+
+		/**
+		* Pad string with arbitrary character in-place
+		* @param str: String to pad
+		* @param padding: Padding character
+		* @param num: Maximum length of padding
+		*/
+		void string_left_pad_inplace(std::string& str, char padding, size_t num);
+
+		/**
+		* Pad string with arbitrary character
+		* @param original: String to pad
+		* @param padding: Padding character
+		* @param num: Maximum length of padding
+		*
+		* @return A copy of original string with padding added
+		*/
+		std::string string_left_pad(const std::string& original, char padding, size_t num);
+
+		/**
+		* Encode base10 number to base62. Originally by lututui
+		* @param val: Base10 Number
+		* @return Base62 string
+		**/
+		std::string base62_encode( uint32 val );
 	}
 }
 

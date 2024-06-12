@@ -4,13 +4,9 @@
 #ifndef ACCOUNT_HPP
 #define ACCOUNT_HPP
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
-#include "../config/core.hpp"
-
-#ifndef WEB_AUTH_TOKEN_LENGTH
-#define WEB_AUTH_TOKEN_LENGTH 16+1
-#endif
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp> // ACCOUNT_REG2_NUM, WEB_AUTH_TOKEN_LENGTH
+#include <config/core.hpp>
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
@@ -120,8 +116,9 @@ struct AccountDB {
 	///
 	/// @param self Database
 	/// @param acc Account data
+	/// @param refresh_token Whether or not to refresh the web auth token
 	/// @return true if successful
-	bool (*save)(AccountDB* self, const struct mmo_account* acc);
+	bool (*save)(AccountDB* self, const struct mmo_account* acc, bool refresh_token);
 
 	/// Finds an account with account_id and copies it to acc.
 	///

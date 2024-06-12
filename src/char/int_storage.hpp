@@ -4,7 +4,7 @@
 #ifndef INT_STORAGE_HPP
 #define INT_STORAGE_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 struct s_storage;
 

@@ -6,15 +6,15 @@
 
 #include <bitset>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp"
-#include "../config/core.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/mmo.hpp>
+#include <config/core.hpp>
 
 #include "map.hpp" //ELE_MAX
 #include "skill.hpp"
 
 //fwd declaration
-struct map_session_data;
+class map_session_data;
 struct mob_data;
 struct block_list;
 enum e_damage_type : uint8;
@@ -28,6 +28,15 @@ enum damage_lv : uint8 {
 	ATK_MISS,    /// Attack missed because of element/race modifier.
 	ATK_BLOCK,   /// Attack was blocked by some skills.
 	ATK_DEF      /// Attack connected
+};
+
+/// Flag for base damage calculation
+enum e_base_damage_flag : uint16 {
+	BDMG_NONE	= 0x0000, /// None
+	BDMG_CRIT	= 0x0001, /// Critical hit damage
+	BDMG_ARROW  = 0x0002, /// Add arrow attack and use ranged damage formula
+	BDMG_MAGIC  = 0x0004, /// Use MATK for base damage (e.g. Magic Crasher)
+	BDMG_NOSIZE = 0x0008, /// Skip target size adjustment (e.g. Weapon Perfection)
 };
 
 /// Flag of the final calculation
@@ -69,10 +78,19 @@ enum e_battle_check_target : uint32 {
 	BCT_FRIEND		= BCT_NOENEMY,
 };
 
+/// Check flag for common damage bonuses such as: ATKpercent, Refine, Passive Mastery, Spirit Spheres and Star Crumbs
+enum e_bonus_chk_flag : uint8 {
+	BCHK_ALL,    /// Check if all of the common damage bonuses apply to this skill
+	BCHK_REFINE, /// Check if refine bonus is applied (pre-renewal only currently)
+	BCHK_STAR,   /// Check if Star Crumb bonus is applied (pre-renewal only currently)
+};
+
 /// Damage structure
 struct Damage {
 #ifdef RENEWAL
-	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
+	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2, percentAtk, percentAtk2;
+#else
+	int64 basedamage; /// Right hand damage that a normal attack would deal
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
@@ -93,20 +111,22 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 
 int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *, int flag, uint16 skill_id, bool status_reflect);
 
-void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
+void battle_drain(map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
 
-int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
+int64 battle_attr_fix(struct block_list* src, struct block_list* target, int64 damage, int atk_elem, int def_type, int def_lv, int flag = 0);
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
 
 // Final calculation Damage
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv);
 int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
+int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int flag);
 
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
+int battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
 int battle_delay_damage (t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
+int battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id);
 
-int battle_calc_chorusbonus(struct map_session_data *sd);
+int battle_calc_chorusbonus(map_session_data *sd);
 
 // Summary normal attack treatment (basic attack)
 enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,t_tick tick,int flag);
@@ -121,8 +141,9 @@ uint16 battle_getcurrentskill(struct block_list *bl);
 int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
 bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
+bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle_flag attack_type);
 
-void battle_consume_ammo(struct map_session_data* sd, int skill, int lv);
+void battle_consume_ammo(map_session_data* sd, int skill, int lv);
 
 bool is_infinite_defense(struct block_list *target, int flag);
 
@@ -149,6 +170,7 @@ struct Battle_Config
 	int delay_dependon_dex, delay_dependon_agi;
 	int sdelay_attack_enable;
 	int left_cardfix_to_right;
+	int cardfix_monster_physical;
 	int skill_add_range;
 	int skill_out_range_consume;
 	int skill_amotion_leniency;
@@ -215,6 +237,7 @@ struct Battle_Config
 	int guild_exp_limit;
 	int guild_max_castles;
 	int guild_skill_relog_delay;
+	int guild_skill_relog_type;
 	int emergency_call;
 	int guild_aura;
 	int pc_invincible_time;
@@ -237,6 +260,7 @@ struct Battle_Config
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
+	int pet_unequip_destroy;
 	int pet_master_dead;
 
 	int skill_min_damage;
@@ -403,6 +427,7 @@ struct Battle_Config
 	int mobs_level_up_exp_rate; // [Valaris]
 	int pk_min_level; // [celest]
 	int skill_steal_max_tries; //max steal skill tries on a mob. if 0, then w/o limit [Lupus]
+	int skill_steal_random_options;
 	int motd_type; // [celest]
 	int finding_ore_rate; // orn
 	int exp_calc_type;
@@ -423,7 +448,6 @@ struct Battle_Config
 	int display_hallucination;	// [Skotlex]
 	int use_statpoint_table;	// [Skotlex]
 
-	int berserk_cancels_buffs; // [Aru]
 	int debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
 	int hom_setting; //Configures various homunc settings which make them behave unlike normal characters.. [Skotlex]
@@ -525,7 +549,6 @@ struct Battle_Config
 	int max_extended_parameter;
 	int max_summoner_parameter;
 	int max_fourth_parameter;
-	int max_fourth_trait;
 	int max_third_aspd;
 	int max_summoner_aspd;
 	int vcast_stat_scale;
@@ -559,11 +582,13 @@ struct Battle_Config
 	int vip_exp_penalty_job;
 	int vip_disp_rate;
 	int mon_trans_disable_in_gvg;
-	int emblem_woe_change;
-	int emblem_transparency_limit;
 	int discount_item_point_shop;
 	int update_enemy_position;
 	int devotion_rdamage;
+	int feature_itemlink;
+	int feature_mesitemlink;
+	int feature_mesitemlink_brackets;
+	int feature_mesitemlink_dbname;
 
 	// autotrade persistency
 	int feature_autotrade;
@@ -614,6 +639,7 @@ struct Battle_Config
 	int homunculus_evo_intimacy_reset;
 	int monster_loot_search_type;
 	int feature_roulette;
+	int feature_roulette_bonus_reward;
 	int monster_hp_bars_info;
 	int min_body_style;
 	int max_body_style;
@@ -692,8 +718,48 @@ struct Battle_Config
 	int idletime_mer_option;
 	int feature_refineui;
 	int rndopt_drop_pillar;
+	int pet_legacy_formula;
+	int pet_distance_check;
+	int pet_hide_check;
 
-#include "../custom/battle_config_struct.inc"
+	// 4th Jobs Stuff
+	int trait_points_job_change;
+	int use_traitpoint_table;
+	int max_trait_parameter;
+	int max_res_mres_reduction;
+	int max_ap;
+	int ap_rate;
+	int restart_ap_rate;
+	int loose_ap_on_death;
+	int loose_ap_on_map;
+	int keep_ap_on_logout;
+	int attack_machine_level_difference;
+
+	int feature_barter;
+	int feature_barter_extended;
+	int break_mob_equip;
+	int macro_detection_retry;
+	int macro_detection_timeout;
+	int macro_detection_punishment;
+	int macro_detection_punishment_time;
+
+	int feature_dynamicnpc_timeout;
+	int feature_dynamicnpc_rangex;
+	int feature_dynamicnpc_rangey;
+	int feature_dynamicnpc_direction;
+
+	int mob_respawn_time;
+	int mob_unlock_time;
+	int map_edge_size;
+	int randomize_center_cell;
+
+	int feature_stylist;
+	int feature_banking_state_enforce;
+	int instance_allow_reconnect;
+	int synchronize_damage;
+	int item_stacking;
+
+#include <custom/battle_config_struct.inc>
 };
 
 extern struct Battle_Config battle_config;

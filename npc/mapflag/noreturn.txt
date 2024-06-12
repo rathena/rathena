@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable return warp.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.6
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Disables the following items:
 //=   Butterfly Wing (602), Siege Teleport Scroll (14591),
@@ -20,7 +14,9 @@
 //= 1.6 Enabled B. wings on all maps but que_hugel. [L0ne_W0lf]
 //============================================================
 
-// Cities ========================
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
 //ayo_in01	mapflag	noreturn
 //ayo_in02	mapflag	noreturn
 //alb_ship	mapflag	noreturn
@@ -84,17 +80,19 @@
 //ve_in	mapflag	noreturn
 //ve_in02	mapflag	noreturn
 
-// Job Quests ====================
+//============================================================
+// Job Quests
+//============================================================
 //job_sword1	mapflag	noreturn
 //job_thief1	mapflag	noreturn
-// 2-1 -----------------------
+// 2-1 Classes
 //job_knt	mapflag	noreturn
 //job_hunte	mapflag	noreturn
 //job_prist	mapflag	noreturn
 //job_wiz	mapflag	noreturn
 //in_hunter	mapflag	noreturn
 //in_moc_16	mapflag	noreturn
-// 2-2 --------------------
+// 2-2 Classes
 //alde_alche	mapflag	noreturn
 //job_cru	mapflag	noreturn
 //job_duncer	mapflag	noreturn
@@ -105,7 +103,9 @@
 //job_sage	mapflag	noreturn
 //que_ng	mapflag	noreturn
 
-// Special Quests Places =========
+//============================================================
+// Quest Places
+//============================================================
 //que_god01	mapflag	noreturn
 //que_god02	mapflag	noreturn
 //que_bingo	mapflag	noreturn
@@ -114,7 +114,9 @@ que_hugel	mapflag	noreturn
 //poring_c01	mapflag	noreturn
 //poring_c02	mapflag	noreturn
 
-// Guild Castles =================
+//============================================================
+// WoE:FE Castles
+//============================================================
 //= 1.3 According to the kRO patch, enabled Butterfly wings in the Castles
 //aldeg_cas01	mapflag	noreturn
 //aldeg_cas02	mapflag	noreturn
@@ -141,19 +143,25 @@ que_hugel	mapflag	noreturn
 //nguild_pay	mapflag	noreturn
 //nguild_prt	mapflag	noreturn
 
-// GvG Arenas ===================
+//============================================================
+// GvG Arenas
+//============================================================
 //guild_vs1	mapflag	noreturn
 //guild_vs2	mapflag	noreturn
 //guild_vs3	mapflag	noreturn
 //guild_vs4	mapflag	noreturn
 //guild_vs5	mapflag	noreturn
 
-// Arenas =====================
+//============================================================
+// Arenas
+//============================================================
 //arena_room	mapflag	noreturn
 //sec_in01	mapflag	noreturn
 //sec_in02	mapflag	noreturn
 
-// PvP Arenas=======================
+//============================================================
+// PvP Arenas
+//============================================================
 //pvp_y_room	mapflag	noreturn
 //pvp_y_1-1	mapflag	noreturn
 //pvp_y_1-2	mapflag	noreturn
@@ -238,7 +246,9 @@ que_hugel	mapflag	noreturn
 //pvp_n_8-5	mapflag	noreturn
 //pvp_2vs2	mapflag	noreturn
 
-// Battle Grounds ==============
+//============================================================
+// Battlegrounds
+//============================================================
 bat_c01	mapflag	noreturn
 bat_c02	mapflag	noreturn
 bat_c03	mapflag	noreturn
@@ -247,4 +257,7 @@ bat_b02	mapflag	noreturn
 bat_a01	mapflag	noreturn
 bat_a02	mapflag	noreturn
 
+//============================================================
+// Events
+//============================================================
 //evt_zombie	mapflag	noreturn

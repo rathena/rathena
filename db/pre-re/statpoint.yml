@@ -24,11 +24,12 @@
 ###########################################################################
 # - Level             BaseLevel required.
 #   Points            Total status points given from BaseLevel 1 to 'Level'.
+#   TraitPoints       Total trait points given from BaseLevel 1 to 'Level'.
 ###########################################################################
 
 Header:
   Type: STATPOINT_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Level: 1
@@ -530,4 +531,24 @@ Body:
   - Level: 249
     Points: 4545
   - Level: 250
+    Points: 4545
+  - Level: 251
+    Points: 4545
+  - Level: 252
+    Points: 4545
+  - Level: 253
+    Points: 4545
+  - Level: 254
+    Points: 4545
+  - Level: 255
+    Points: 4545
+  - Level: 256
+    Points: 4545
+  - Level: 257
+    Points: 4545
+  - Level: 258
+    Points: 4545
+  - Level: 259
+    Points: 4545
+  - Level: 260
     Points: 4545

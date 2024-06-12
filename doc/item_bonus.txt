@@ -14,7 +14,8 @@ This list contains all available constants referenced in the 'bonus' commands.
 
 * Status effect (eff)
 	Eff_Bleeding, Eff_Blind, Eff_Burning, Eff_Confusion, Eff_Crystalize, Eff_Curse, Eff_DPoison,
-	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun
+	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun, Eff_Freezing,
+	Eff_Heat, Eff_Deepsleep, Eff_WhiteImprison, Eff_Hallucination
 
 * Element (e)
 	Ele_Dark, Ele_Earth, Ele_Fire, Ele_Ghost, Ele_Holy, Ele_Neutral, Ele_Poison,
@@ -25,9 +26,12 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC_Insect, RC_Plant, RC_Player_Human (RC_Player deprecated), RC_Player_Doram, RC_Undead, RC_All
 
 * Monster Race (mr)
-	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja,
-	RC2_BioLab, RC2_SCARABA, RC2_FACEWORM, RC2_THANATOS, RC2_CLOCKTOWER, RC2_ROCKRIDGE
-	See 'db/(pre-)re/mob_race2_db.txt'
+	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja, RC2_GVG, RC2_Battlefield,
+	RC2_Treasure, RC2_BioLab, RC2_Manuk, RC2_Splendide, RC2_Scaraba, RC2_OGH_ATK_DEF, RC2_OGH_Hidden,
+	RC2_Bio5_Swordman_Thief, RC2_Bio5_Acolyte_Merchant, RC2_Bio5_Mage_Archer, RC2_Bio5_MVP,
+	RC2_Clocktower, RC2_Thanatos, RC2_Faceworm, RC2_Hearthunter, RC2_Rockridge, RC2_Werner_Lab,
+	RC2_Temple_Demon, RC2_Illusion_Vampire, RC2_Malangdo, RC2_EP172ALPHA, RC2_EP172BETA, RC2_EP172BATH,
+	RC2_Illusion_Turtle, RC2_Rachel_Sanctuary, RC2_Illusion_Luanda, RC2_Illusion_Frozen, RC2_Illusion_Moonlight
 
 * Class (c)
 	Class_Normal, Class_Boss, Class_Guardian, Class_All
@@ -106,29 +110,23 @@ bonus bWis,n;      			WIS + n
 bonus bSpl,n;      			SPL + n
 bonus bCon,n;      			CON + n
 bonus bCrt,n;      			CRT + n
+bonus bAllTraitStats,n; 		POW + n, STA + n, WIS + n, SPL + n, CON + n, CRT + n
 
-Sub-Trait Stats
----------------
-bonus bPatk,n;      		Power Attack (P.ATK) + n
-bonus bSmatk,n;      		Spell Magic Attack (S.MATK) + n
-bonus bHplus,n;      		Heal Plus (H.PLUS) + n
-bonus bCrate,n;      		Critical Rate (C.RATE) + n
-bonus bRes,n;      			Physical Resistance (RES) + n
-bonus bMres,n;      		Magic Resistance (MRES)  + n
-
-HP/SP
+HP/SP/AP
 -----
 bonus bMaxHP,n;    			MaxHP + n
 bonus bMaxHPrate,n;			MaxHP + n% 
 bonus bMaxSP,n;    			MaxSP + n
 bonus bMaxSPrate,n;			MaxSP + n%
+bonus bMaxAP,n;    			MaxAP + n
+bonus bMaxAPrate,n;			MaxAP + n%
 
 Atk/Def
 -------
 bonus bBaseAtk,n;  			Basic attack power + n
 bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
-bonus bAtkRate,n;  			Attack power + n% (unofficial)
+bonus bAtkRate,n;  			ATK + n% that won't interfere with Damage modifier and SC_EDP (renewal mode only)
 bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatkRate,n; 			Magical attack power + n%
@@ -162,6 +160,18 @@ bonus bAspd,n;        			Attack speed + n
 bonus bAspdRate,n;    			Attack speed + n%
 bonus bAtkRange,n;    			Attack range + n
 bonus bAddMaxWeight,n;			MaxWeight + n (in units of 0.1)
+bonus bPAtk,n;         			PAtk + n
+bonus bPAtkRate,n;     			PAtk + n%
+bonus bSMatk,n;         		SMatk + n
+bonus bSMatkRate,n;     		SMatk + n%
+bonus bRes,n;         			Res + n
+bonus bResRate,n;     			Res + n%
+bonus bMRes,n;         			MRes + n
+bonus bMResRate,n;     			MRes + n%
+bonus bHPlus,n;         		HPlus + n
+bonus bHPlusRate,n;     		HPlus + n%
+bonus bCRate,n;         		CRate + n
+bonus bCRateRate,n;     		CRate + n%
 
 =======================
 | 2. Extended Bonuses |
@@ -264,7 +274,8 @@ bonus2 bSubClass,c,x;     		+x% damage reduction against class c
 bonus2 bAddSize,s,x;      		+x% physical damage against size s
 bonus2 bMagicAddSize,s,x; 		+x% magical damage against size s
 bonus2 bSubSize,s,x;      		+x% damage reduction against size s
-bonus2 bMagicSubSize,s,x;      	+x% magic damage reduction against size s
+bonus2 bWeaponSubSize,s,x;		+x% physical damage reduction against size s
+bonus2 bMagicSubSize,s,x;		+x% magic damage reduction against size s
 bonus bNoSizeFix;       		Ignores the size modifier when calculating damage
 
 bonus2 bAddDamageClass,mid,x;     	+x% physical damage against monster mid
@@ -282,7 +293,8 @@ bonus2 bMagicAddRace2,mr,x;		+x% magic damage against monster race mr
 
 bonus2 bSubSkill,sk,n;  		Reduces n% damage received from skill sk
 
-bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP] (Doesn't stack, will use the highest value)
+bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP] (Doesn't stack, will use the highest value) (Legacy rAthena behavior)
+bonus bAbsorbDmgMaxHP2,n;		If the damage received is more than n% of Max HP, the damage received is reduced to n% of MaxHP (Doesn't stack, will use the highest value) (Official behavior)
 
 Atk/Def
 -------
@@ -310,6 +322,11 @@ bonus2 bIgnoreMdefRace2Rate,mr,n; 	Disregard n% of the target's MDEF if the targ
 bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
 bonus2 bIgnoreDefClassRate,c,n;	Disregard n% of the target's DEF if the target belongs to class c
 bonus2 bIgnoreMdefClassRate,c,n;	Disregard n% of the target's MDEF if the target belongs to class c
+
+Ignore Res
+----------
+bonus2 bIgnoreResRaceRate,r,n;		Disregard n% of the target's Res if the target belongs to race r
+bonus2 bIgnoreMResRaceRate,r,n; 	Disregard n% of the target's MRes if the target belongs to race r
 
 Experience
 ----------

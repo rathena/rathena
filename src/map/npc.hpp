@@ -4,11 +4,18 @@
 #ifndef NPC_HPP
 #define NPC_HPP
 
-#include "../common/timer.hpp"
+#include <map>
+#include <vector>
 
+#include <common/database.hpp>
+#include <common/timer.hpp>
+#include <config/core.hpp>
+
+#include "clif.hpp" //
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
+#include "navi.hpp" // navi stuff
 
 struct block_list;
 struct npc_data;
@@ -28,28 +35,98 @@ struct npc_item_list {
 	t_itemid nameid;
 	unsigned int value;
 #if PACKETVER >= 20131223
-	unsigned short qty; ///< Stock counter (Market shop)
+	int32 qty; ///< Stock counter (Market shop)
 	uint8 flag; ///< 1: Item added by npcshopitem/npcshopadditem, force load! (Market shop)
 #endif
 };
 
-#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#pragma pack(push, 1)
-#endif // not NetBSD < 6 / Solaris
-
 /// List of bought/sold item for NPC shops
 struct s_npc_buy_list {
-	unsigned short qty;		///< Amount of item will be bought
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	int32 qty;		///< Amount of item will be bought
 	uint32 nameid;	///< ID of item will be bought
-#else
-	uint16 nameid;	///< ID of item will be bought
-#endif
-} __attribute__((packed));
+};
 
-#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
-#pragma pack(pop)
-#endif // not NetBSD < 6 / Solaris
+struct s_stylist_costs{
+	uint32 price;
+	t_itemid requiredItem;
+	t_itemid requiredItemBox;
+};
+
+struct s_stylist_entry{
+	uint16 look;
+	int16 index;
+	uint32 value;
+	std::shared_ptr<s_stylist_costs> human;
+	std::shared_ptr<s_stylist_costs> doram;
+};
+
+struct s_stylist_list{
+	uint16 look;
+	std::unordered_map<int16, std::shared_ptr<s_stylist_entry>> entries;
+};
+
+class StylistDatabase : public TypesafeYamlDatabase<uint32, s_stylist_list>{
+private:
+	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef& node );
+
+public:
+	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+};
+
+extern StylistDatabase stylist_db;
+
+struct s_npc_barter_requirement{
+	uint16 index;
+	t_itemid nameid;
+	uint16 amount;
+	int8 refine;
+};
+
+struct s_npc_barter_item{
+	uint16 index;
+	t_itemid nameid;
+	bool stockLimited;
+	uint32 stock;
+	uint32 price;
+	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
+};
+
+struct s_npc_barter{
+	std::string name;
+	int16 m;
+	uint16 x;
+	uint16 y;
+	uint8 dir;
+	int16 sprite;
+	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
+	int32 npcid;
+
+	~s_npc_barter();
+};
+
+class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
+public:
+	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const ryml::NodeRef& node );
+	void loadingFinished();
+};
+
+extern BarterDatabase barter_db;
+
+struct s_barter_purchase{
+	std::shared_ptr<s_npc_barter_item> item;
+	uint32 amount;
+	item_data* data;
+};
 
 struct s_questinfo {
 	e_questinfo_types icon;
@@ -63,11 +140,25 @@ struct s_questinfo {
 	}
 };
 
+// Status of NPC view.
+enum e_npcv_status : uint8 {
+	NPCVIEW_DISABLE  = 0x01,
+	NPCVIEW_ENABLE   = 0x02,
+	NPCVIEW_HIDEOFF  = 0x04,
+	NPCVIEW_HIDEON   = 0x08,
+	NPCVIEW_CLOAKOFF = 0x10,
+	NPCVIEW_CLOAKON  = 0x20,
+
+	NPCVIEW_VISIBLE   = NPCVIEW_ENABLE | NPCVIEW_HIDEOFF | NPCVIEW_CLOAKOFF,
+	NPCVIEW_INVISIBLE = NPCVIEW_DISABLE | NPCVIEW_HIDEON | NPCVIEW_CLOAKON,
+	NPCVIEW_CLOAK     = NPCVIEW_CLOAKOFF | NPCVIEW_CLOAKON,
+};
+
 struct npc_data {
 	struct block_list bl;
 	struct unit_data ud; //Because they need to be able to move....
 	struct view_data vd;
-	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
+	status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
 	short class_,speed;
 	char name[NPC_NAME_LENGTH+1];// display name
@@ -75,6 +166,7 @@ struct npc_data {
 	int chat_id,touching_id;
 	unsigned int next_walktime;
 	int instance_id;
+	e_npcv_status state{NPCVIEW_ENABLE};
 
 	unsigned size : 2;
 
@@ -119,6 +211,9 @@ struct npc_data {
 			char killer_name[NAME_LENGTH];
 			int spawn_timer;
 		} tomb;
+		struct {
+			bool extended;
+		} barter;
 	} u;
 
 	struct sc_display_entry **sc_display;
@@ -130,6 +225,18 @@ struct npc_data {
 		t_tick timeout;
 		unsigned long color;
 	} progressbar;
+
+	struct{
+		uint32 owner_char_id;
+		t_tick last_interaction;
+		int removal_tid;
+	} dynamicnpc;
+
+#ifdef MAP_GENERATOR
+	struct navi_link navi; // for warps and the src of npcs
+	std::vector<navi_link> links; // for extra links, like warper npc
+#endif
+	bool is_invisible;
 };
 
 struct eri;
@@ -1278,8 +1385,32 @@ enum e_job_types
 	JT_ROZ_MQ_SAHARIO,
 	JT_ROZ_MQ_SUPIGEL,
 	JT_ROZ_MQ_DEADSOLDIER,
-
-	JT_1_RAGFES_01 = 10476,
+	JT_4_EP19_ZORYARA,
+	JT_4_EP19_MORYARA,
+	JT_4_EP19_LUNCH,
+	JT_4_EP19_LAZY,
+	JT_4_EP19_JUNCEA,
+	JT_4_EP19_JUNCEA_M,
+	JT_4_EP19_JUNCEA_D,
+	JT_4_EP19_FRIEDERIKE,
+	JT_4_EP19_SUITCASE,
+	JT_4_EP19_HEALROCK,
+	JT_4_EP19_IWIN,
+	JT_4_EP19_IWIN_DIVER,
+	JT_4_EP19_TAMARIN,
+	JT_4_EP19_LEON,
+	JT_4_EP19_AURELIE,
+	JT_4_EP19_LASGAND,
+	JT_4_EP19_VOGLINDE,
+	JT_4_EP19_VELLGUNDE,
+	JT_4_EP19_LEHAR,
+	JT_4_EP19_RGAN_R1,
+	JT_4_EP19_RGAN_R2,
+	JT_4_EP19_RGAN_R3,
+	JT_4_EP19_RGAN_SR1,
+	JT_4_EP19_RGAN_SR2,
+	JT_4_EP19_RGAN_SR3,
+	JT_1_RAGFES_01,
 	JT_1_RAGFES_01_M,
 	JT_4_RAGFES_02,
 	JT_4_RAGFES_02_M,
@@ -1312,12 +1443,93 @@ enum e_job_types
 	JT_4_RAGFES_16,
 	JT_4_RAGFES_16_M,
 	JT_4_EXJOB_NINJA2,
-
-	JT_ROZ_MQ_LUCIAN = 10510,
+	JT_4_VR_BOOK_FAIRY,
+	JT_ROZ_MQ_LUCIAN,
 	JT_ROZ_MQ_BRITIA,
 	JT_ROZ_MQ_ASSASIN01,
 	JT_STRANGE_B_SMITH1,
 	JT_STRONGER_B_SMTIH,
+	JT_4_VR_BOOK_RED,
+	JT_4_VR_BOOK_BLUE,
+	JT_4_VR_BOOK_YELLOW,
+	JT_4_VR_BOOK_GREEN,
+	JT_4_VR_BOOK_WHITE,
+	JT_4_VR_YGNIZEM,
+
+	JT_4_JP_19TH = 10524,
+	JT_4_KING_PORING,
+	JT_4_VR_SWORDMAN_DEAD,
+	JT_GATE_SKYBLUE,
+	JT_4_CS_RIGEL,
+	JT_4_M_NILLEM,
+	JT_4_LARVA_RED,
+	JT_4_LARVA_YELLOW,
+	JT_4_LARVA_BLACK,
+	JT_4_LARVA_VIOLET,
+	JT_4_HERO_SAUSAGE,
+	JT_4_PRINCESS_SAUSAGE,
+
+	JT_4_EP20_LASGAND = 10536,
+	JT_4_EP20_NYAR,
+	JT_4_EP20_DEVICE_BLUE,
+	JT_4_EP20_DEVICE_RED,
+	JT_4_EP20_DEVICE_BLACK,
+
+	JT_4_GACHA_MACHINE = 10545,
+	JT_4_VR_CHAO,
+	JT_4_RUNESTONE,
+	JT_4_EM_ARDOR,
+	JT_4_EM_DILUVIO,
+	JT_4_EM_PROCELLA,
+	JT_4_EM_TERREMOTUS,
+	JT_4_EM_SERPENS,
+	JT_4_SNOWDOG,
+	JT_1_SHADOW_RED,
+	JT_1_SHADOW_ORANGE,
+	JT_1_SHADOW_YELLOW,
+	JT_1_SHADOW_GREEN,
+	JT_1_SHADOW_BLUE,
+	JT_1_SHADOW_INDIGO,
+	JT_1_SHADOW_VIOLET,
+	JT_4_EVT_LAMMIR,
+	JT_4_EVT_SULKI,
+	JT_4_EVT_KKAT,
+
+	JT_4_EP21_SOLDIER_A = 10564,
+	JT_4_EP21_SOLDIER_B,
+	JT_4_EP21_M_WORKER_A,
+	JT_4_EP21_M_WORKER_B,
+	JT_4_EP21_F_WORKER_A,
+	JT_4_EP21_F_WORKER_B,
+	JT_4_EP21_WORKER_KID_A,
+	JT_4_EP21_WORKER_KID_B,
+	JT_4_EP21_TAN,
+	JT_4_EP21_TRIS,
+	JT_4_EP21_NADOYO,
+	JT_4_EP21_REINHARDT,
+	JT_4_EP21_WILHELM,
+	JT_4_EP21_MARISTELLA,
+	JT_4_EP21_YOHAN,
+	JT_4_EP21_RICHARD,
+	JT_4_EP21_VALDARIS,
+	JT_4_EP21_GUNTER,
+	JT_4_EP21_GALAXIA_A,
+	JT_4_EP21_GALAXIA_B,
+	JT_4_EP21_IVAN,
+	JT_4_EP21_LALAILA,
+	JT_4_EP21_ILSE,
+	JT_4_EP21_HOWELL,
+	JT_4_EP21_EPESTO,
+	JT_4_EP21_HEINE_TAB,
+	JT_4_EP21_IANA,
+	JT_4_EP21_LEE,
+	JT_4_EP21_AURELIE,
+	JT_4_EP21_HOWELL_S,
+	JT_4_EP21_TAN_S,
+
+	JT_ROZ_MQ_XAVIER = 13000,
+	JT_ROZ_MQ_MOCLORD,
+	JT_ROZ_MQ_SKULD,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
@@ -1354,44 +1566,35 @@ enum npce_event : uint8 {
 	NPCE_MAX
 };
 
-// Status of NPC view.
-enum e_npcv_status : uint8 {
-	NPCVIEW_DISABLE  = 0x01,
-	NPCVIEW_ENABLE   = 0x02,
-	NPCVIEW_HIDEOFF  = 0x04,
-	NPCVIEW_HIDEON   = 0x08,
-	NPCVIEW_CLOAKOFF = 0x10,
-	NPCVIEW_CLOAKON  = 0x20,
-
-	NPCVIEW_VISIBLE   = 0x16,
-	NPCVIEW_INVISIBLE = 0x29,
-	NPCVIEW_CLOAK     = 0x30,
-};
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
-int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack=true);
-int npc_event(struct map_session_data* sd, const char* eventname, int ontouch);
-int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data* nd);
-int npc_touch_area_allnpc(struct map_session_data* sd, int16 m, int16 x, int16 y);
+int npc_event_dequeue(map_session_data* sd,bool free_script_stack=true);
+int npc_event(map_session_data* sd, const char* eventname, int ontouch);
+int npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data* nd);
+int npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y);
 int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range);
-int npc_touchnext_areanpc(struct map_session_data* sd,bool leavemap);
-int npc_click(struct map_session_data* sd, struct npc_data* nd);
-bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
-struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
-int npc_buysellsel(struct map_session_data* sd, int id, int type);
-uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
-static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list, struct npc_data* nd);
-uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list);
+int npc_touchnext_areanpc(map_session_data* sd,bool leavemap);
+int npc_click(map_session_data* sd, struct npc_data* nd);
+bool npc_scriptcont(map_session_data* sd, int id, bool closing);
+struct npc_data* npc_checknear(map_session_data* sd, struct block_list* bl);
+int npc_buysellsel(map_session_data* sd, int id, int type);
+e_purchase_result npc_buylist(map_session_data* sd, std::vector<s_npc_buy_list>& item_list);
+static int npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& item_list, struct npc_data* nd);
+uint8 npc_selllist(map_session_data* sd, int list_length, PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list);
+e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );
 void npc_parse_mob2(struct spawn_data* mob);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int npce_index);
+npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int class_, uint8 dir, int16 xs, int16 ys, map_session_data* owner = nullptr );
+struct npc_data* npc_duplicate_npc_for_player( struct npc_data& nd, map_session_data& sd );
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
-bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd);
+bool npc_is_cloaked(struct npc_data* nd, map_session_data* sd);
+bool npc_is_hidden_dynamicnpc( struct npc_data& nd, map_session_data& tsd );
 bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag);
 #define npc_enable(nd, flag) npc_enable_target(nd, 0, flag)
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
@@ -1419,7 +1622,7 @@ int npc_event_doall_path(const char* event_name, const char* path);
 
 int npc_timerevent_start(struct npc_data* nd, int rid);
 int npc_timerevent_stop(struct npc_data* nd);
-void npc_timerevent_quit(struct map_session_data* sd);
+void npc_timerevent_quit(map_session_data* sd);
 t_tick npc_gettimerevent_tick(struct npc_data* nd);
 int npc_settimerevent_tick(struct npc_data* nd, int newtimer);
 int npc_remove_map(struct npc_data* nd);
@@ -1427,18 +1630,18 @@ void npc_unload_duplicates (struct npc_data* nd);
 int npc_unload(struct npc_data* nd, bool single);
 int npc_reload(void);
 void npc_read_event_script(void);
-int npc_script_event(struct map_session_data* sd, enum npce_event type);
+size_t npc_script_event( map_session_data& sd, enum npce_event type );
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);
 int npc_instancedestroy(struct npc_data* nd);
-int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, int points);
+int npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int amount, int points);
 
-void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
+void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
 
 extern struct npc_data* fake_nd;
 
-int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub* item_list);
+int npc_cashshop_buylist( map_session_data *sd, int points, std::vector<s_npc_buy_list>& item_list );
 bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223
@@ -1451,7 +1654,7 @@ void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear);
 #endif
 
 // @commands (script-based)
-int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname);
+int npc_do_atcmd_event(map_session_data* sd, const char* command, const char* message, const char* eventname);
 
 bool npc_unloadfile( const char* path );
 

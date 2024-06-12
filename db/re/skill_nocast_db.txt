@@ -41,6 +41,9 @@
 2433,1	//WM_BEYOND_OF_WARCRY
 2455,1	//SO_ARRULLO
 2299,1	//SC_MANHOLE
+5359,1	//TR_ROKI_CAPRICCIO
+5363,1	//TR_NIPELHEIM_REQUIEM
+5367,1	//EM_ACTIVITY_BURN
 
 //----------------------------------------------------------------------------
 // PVP

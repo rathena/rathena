@@ -3,15 +3,15 @@
 
 #include "buyingstore.hpp"  // struct s_buyingstore
 
-#include <stdlib.h> // atoi
+#include <cstdlib> // atoi
 
-#include "../common/db.hpp"  // ARR_FIND
-#include "../common/malloc.hpp" // aMalloc, aFree
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"  // ShowWarning
-#include "../common/socket.hpp"  // RBUF*
-#include "../common/strlib.hpp"  // safestrncpy
-#include "../common/timer.hpp"  // gettick
+#include <common/db.hpp>  // ARR_FIND
+#include <common/malloc.hpp> // aMalloc, aFree
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>  // ShowWarning
+#include <common/socket.hpp>  // RBUF*
+#include <common/strlib.hpp>  // safestrncpy
+#include <common/timer.hpp>  // gettick
 
 #include "atcommand.hpp"  // msg_txt
 #include "battle.hpp"  // battle_config.*
@@ -19,7 +19,7 @@
 #include "clif.hpp"  // clif_buyingstore_*
 #include "log.hpp"  // log_pick_pc, log_zeny
 #include "npc.hpp"
-#include "pc.hpp"  // struct map_session_data
+#include "pc.hpp"  // map_session_data
 
 //Autotrader
 static DBMap *buyingstore_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
@@ -66,26 +66,26 @@ static unsigned int buyingstore_getuid(void)
 * @param slots Number of item on the list
 * @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction
 */
-int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
+int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 	nullpo_retr(1, sd);
 
 	if (!battle_config.feature_buying_store || sd->state.vending || sd->state.buyingstore || sd->state.trading || slots == 0) {
 		return 1;
 	}
 
-	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	if( sd->sc.getSCE(SC_NOCHAT) && (sd->sc.getSCE(SC_NOCHAT)->val1&MANNER_NOROOM) )
 	{// custom: mute limitation
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
-	{// custom: no vending maps
+	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
+	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
-	{// custom: no vending cells
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
+	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
@@ -110,10 +110,10 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 * @param storename
 * @param *itemlist { <nameid>.W, <amount>.W, <price>.L }*
 * @param count Number of item on the itemlist
-* @param at Autotrader info, or NULL if requetsed not from autotrade persistance
+* @param at Autotrader info, or nullptr if requetsed not from autotrade persistance
 * @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction, 5 - Invalid count/result, 6 - Cannot give item, 7 - Will be overweight
 */
-int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, unsigned int count, struct s_autotrader *at ){
+int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, unsigned int count, struct s_autotrader *at ){
 	unsigned int i, weight, listidx;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
@@ -140,19 +140,19 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 		return 6;
 	}
 
-	if( sd->sc.data[SC_NOCHAT] && (sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM) )
+	if( sd->sc.getSCE(SC_NOCHAT) && (sd->sc.getSCE(SC_NOCHAT)->val1&MANNER_NOROOM) )
 	{// custom: mute limitation
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
-	{// custom: no vending maps
+	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
+	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
-	{// custom: no vending cells
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
+	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
@@ -162,11 +162,10 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 	// check item list
 	for( i = 0; i < count; i++ ){
 		const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub *item = &itemlist[i];
-
-		struct item_data* id = itemdb_exists( item->itemId );
+		std::shared_ptr<item_data> id = item_db.find(item->itemId);
 
 		// invalid input
-		if( id == NULL || item->amount == 0 ){	
+		if( id == nullptr || item->amount == 0 ){	
 			break;
 		}
 
@@ -176,7 +175,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 		}
 
 		// restrictions: allowed and no character-bound items
-		if( !id->flag.buyingstore || !itemdb_cantrade_sub( id, pc_get_group_level( sd ), pc_get_group_level( sd ) ) ){ 
+		if( !id->flag.buyingstore || !itemdb_cantrade_sub( id.get(), pc_get_group_level( sd ), pc_get_group_level( sd ) ) ){ 
 			break;
 		}
 
@@ -250,7 +249,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 	StringBuf_Destroy(&buf);
 
 	clif_buyingstore_myitemlist(sd);
-	clif_buyingstore_entry(sd);
+	clif_buyingstore_entry( *sd );
 	idb_put(buyingstore_db, sd->status.char_id, sd);
 
 	return 0;
@@ -260,7 +259,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 * Close buying store and clear buying store data from tables
 * @param sd
 */
-void buyingstore_close(struct map_session_data* sd) {
+void buyingstore_close(map_session_data* sd) {
 	nullpo_retv(sd);
 
 	if( sd->state.buyingstore ) {
@@ -277,7 +276,7 @@ void buyingstore_close(struct map_session_data* sd) {
 		idb_remove(buyingstore_db, sd->status.char_id);
 
 		// notify other players
-		clif_buyingstore_disappear_entry(sd);
+		clif_buyingstore_disappear_entry( *sd );
 	}
 }
 
@@ -286,9 +285,9 @@ void buyingstore_close(struct map_session_data* sd) {
 * @param sd Player
 * @param account_id Buyer account ID
 */
-void buyingstore_open(struct map_session_data* sd, uint32 account_id)
+void buyingstore_open(map_session_data* sd, uint32 account_id)
 {
-	struct map_session_data* pl_sd;
+	map_session_data* pl_sd;
 
 	nullpo_retv(sd);
 
@@ -303,7 +302,7 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore )
+	if( ( pl_sd = map_id2sd(account_id) ) == nullptr || !pl_sd->state.buyingstore )
 	{// not online or not buying
 		return;
 	}
@@ -324,10 +323,10 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 * @param *itemlist List of sold items { <index>.W, <nameid>.W, <amount>.W }*
 * @param count Number of item on the itemlist
 */
-void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned int buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, unsigned int count ){
+void buyingstore_trade( map_session_data* sd, uint32 account_id, unsigned int buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, unsigned int count ){
 	int zeny = 0;
 	unsigned int weight;
-	struct map_session_data* pl_sd;
+	map_session_data* pl_sd;
 
 	nullpo_retv(sd);
 
@@ -349,7 +348,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore || pl_sd->buyer_id != buyer_id )
+	if( ( pl_sd = map_id2sd(account_id) ) == nullptr || !pl_sd->state.buyingstore || pl_sd->buyer_id != buyer_id )
 	{// not online, not buying or not same store
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
@@ -386,7 +385,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 		int index = item->index - 2; // TODO: clif::server_index
 
 		// invalid input
-		if( index < 0 || index >= ARRAYLENGTH( sd->inventory.u.items_inventory ) || sd->inventory_data[index] == NULL || sd->inventory.u.items_inventory[index].nameid != item->itemId || sd->inventory.u.items_inventory[index].amount < item->amount ){
+		if( index < 0 || index >= ARRAYLENGTH( sd->inventory.u.items_inventory ) || sd->inventory_data[index] == nullptr || sd->inventory.u.items_inventory[index].nameid != item->itemId || sd->inventory.u.items_inventory[index].amount < item->amount ){
 			clif_buyingstore_trade_failed_seller( sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId );
 			return;
 		}
@@ -463,8 +462,8 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 		}
 
 		// pay up
-		pc_payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd);
-		pc_getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd);
+		pc_payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd->status.char_id);
+		pc_getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd->status.char_id);
 		pl_sd->buyingstore.zenylimit-= zeny;
 
 		// notify clients
@@ -509,7 +508,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 
 
 /// Checks if an item is being bought in given player's buying store.
-bool buyingstore_search(struct map_session_data* sd, t_itemid nameid)
+bool buyingstore_search(map_session_data* sd, t_itemid nameid)
 {
 	unsigned int i;
 
@@ -532,7 +531,7 @@ bool buyingstore_search(struct map_session_data* sd, t_itemid nameid)
 
 /// Searches for all items in a buyingstore, that match given ids, price and possible cards.
 /// @return Whether or not the search should be continued.
-bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_store_search* s)
+bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_search* s)
 {
 	unsigned int i, idx;
 	struct s_buyingstore_item* it;
@@ -597,8 +596,8 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 * Open buyingstore for Autotrader
 * @param sd Player as autotrader
 */
-void buyingstore_reopen( struct map_session_data* sd ){
-	struct s_autotrader *at = NULL;
+void buyingstore_reopen( map_session_data* sd ){
+	struct s_autotrader *at = nullptr;
 	int8 fail = -1;
 
 	nullpo_retv(sd);
@@ -674,25 +673,25 @@ void do_init_buyingstore_autotrade( void ) {
 
 		if( Sql_NumRows(mmysql_handle) > 0 ) {
 			uint16 items = 0;
-			DBIterator *iter = NULL;
-			struct s_autotrader *at = NULL;
+			DBIterator *iter = nullptr;
+			struct s_autotrader *at = nullptr;
 
 			// Init each autotrader data
 			while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {
 				size_t len;
 				char* data;
 
-				at = NULL;
+				at = nullptr;
 				CREATE(at, struct s_autotrader, 1);
-				Sql_GetData(mmysql_handle, 0, &data, NULL); at->id = atoi(data);
-				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
-				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
-				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
+				Sql_GetData(mmysql_handle, 0, &data, nullptr); at->id = atoi(data);
+				Sql_GetData(mmysql_handle, 1, &data, nullptr); at->account_id = atoi(data);
+				Sql_GetData(mmysql_handle, 2, &data, nullptr); at->char_id = atoi(data);
+				Sql_GetData(mmysql_handle, 3, &data, nullptr); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
 				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
-				Sql_GetData(mmysql_handle, 5, &data, NULL); at->limit = atoi(data);
-				Sql_GetData(mmysql_handle, 6, &data, NULL); at->dir = atoi(data);
-				Sql_GetData(mmysql_handle, 7, &data, NULL); at->head_dir = atoi(data);
-				Sql_GetData(mmysql_handle, 8, &data, NULL); at->sit = atoi(data);
+				Sql_GetData(mmysql_handle, 5, &data, nullptr); at->limit = atoi(data);
+				Sql_GetData(mmysql_handle, 6, &data, nullptr); at->dir = atoi(data);
+				Sql_GetData(mmysql_handle, 7, &data, nullptr); at->head_dir = atoi(data);
+				Sql_GetData(mmysql_handle, 8, &data, nullptr); at->sit = atoi(data);
 				at->count = 0;
 
 				if (battle_config.feature_autotrade_direction >= 0)
@@ -703,7 +702,8 @@ void do_init_buyingstore_autotrade( void ) {
 					at->sit = battle_config.feature_autotrade_sit;
 
 				// initialize player
-				CREATE(at->sd, struct map_session_data, 1);
+				CREATE(at->sd, map_session_data, 1); // TODO: Dont use Memory Manager allocation anymore and rely on the C++ container
+				new (at->sd) map_session_data();
 				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
 				at->sd->state.autotrade = 1|4;
 				if (battle_config.autotrade_monsterignore)
@@ -745,9 +745,9 @@ void do_init_buyingstore_autotrade( void ) {
 				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
 					char *data;
 					CREATE(at->entries[j], struct s_autotrade_entry, 1);
-					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = strtoul(data, nullptr, 10);
-					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
-					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
+					Sql_GetData(mmysql_handle, 0, &data, nullptr); at->entries[j]->item_id = strtoul(data, nullptr, 10);
+					Sql_GetData(mmysql_handle, 1, &data, nullptr); at->entries[j]->amount = atoi(data);
+					Sql_GetData(mmysql_handle, 2, &data, nullptr); at->entries[j]->price = atoi(data);
 					j++;
 				}
 				items += j;
@@ -796,6 +796,20 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 	if (at)
 		buyingstore_autotrader_remove(at, false);
 	return 0;
+}
+
+/**
+* Update buyer location
+* @param sd: Player's session data
+*/
+void buyingstore_update(map_session_data &sd)
+{
+	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d', `autotrade` = '%d' WHERE `id` = '%d'",
+		buyingstores_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
+		sd.buyer_id
+	) != SQL_SUCCESS) {
+		Sql_ShowDebug(mmysql_handle);
+	}
 }
 
 /**

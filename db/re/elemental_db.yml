@@ -234,3 +234,73 @@ Body:
         Skill: EL_POWER_OF_GAIA
       Aggressive:
         Skill: EL_STONE_RAIN
+  - Id: 20816
+    AegisName: EM_DILUVIO
+    Name: Diluvio
+    Level: 200
+    Size: Large
+    Element: Water
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_COLD_FORCE
+      Assist:
+        Skill: EM_EL_CRYSTAL_ARMOR
+      Aggressive:
+        Skill: EM_EL_AGE_OF_ICE
+  - Id: 20817
+    AegisName: EM_ARDOR
+    Name: Ardor
+    Level: 200
+    Size: Large
+    Element: Fire
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_FLAMETECHNIC
+      Assist:
+        Skill: EM_EL_FLAMEARMOR
+      Aggressive:
+        Skill: EM_EL_FLAMEROCK
+  - Id: 20818
+    AegisName: EM_PROCELLA
+    Name: Procella
+    Level: 200
+    Size: Large
+    Element: Wind
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_GRACE_BREEZE
+      Assist:
+        Skill: EM_EL_EYES_OF_STORM
+      Aggressive:
+        Skill: EM_EL_STORM_WIND
+  - Id: 20819
+    AegisName: EM_TERREMOTUS
+    Name: Terremotus
+    Level: 200
+    Size: Large
+    Element: Earth
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_EARTH_CARE
+      Assist:
+        Skill: EM_EL_STRONG_PROTECTION
+      Aggressive:
+        Skill: EM_EL_AVALANCHE
+  - Id: 20820
+    AegisName: EM_SERPENS
+    Name: Serpens
+    Level: 200
+    Size: Large
+    Element: Poison
+    ElementLevel: 4
+    Mode:
+      Passive:
+        Skill: EM_EL_DEEP_POISONING
+      Assist:
+        Skill: EM_EL_POISON_SHIELD
+      Aggressive:
+        Skill: EM_EL_DEADLY_POISON

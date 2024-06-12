@@ -15,7 +15,7 @@ OnTouch:
 	if (.@num == 0)
 		end;
 	if (!achievementexists(.@num)) // Don't trigger if the player has already completed.
-		cloakoffnpc ("#tr" + .@num), getcharid(0);
+		cloakoffnpcself( ("#tr" + .@num) );
 	end;
 }
 
@@ -277,7 +277,7 @@ yuno_fild11,141,357,4	duplicate(ach_treasure#touch)	#wp120061	HIDDEN_WARP_NPC,5,
 		end;
 	if (!achievementexists(.@num))
 		achievementcomplete(.@num);
-	cloakonnpc strnpcinfo(0), getcharid(0);
+	cloakonnpcself();
 	end;
 OnInit:
 	cloakonnpc();

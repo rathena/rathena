@@ -3,20 +3,22 @@
 
 #include "inter.hpp"
 
-#include <stdlib.h>
-#include <string.h>
-#include <string>
-#include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
+#include <cstdlib>
+#include <cstring>
+#include <cstring>
+#include <memory>
+#include <unordered_map>
 #include <vector>
-#include <yaml-cpp/yaml.h>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/database.hpp"
-#include "../common/malloc.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/strlib.hpp"
-#include "../common/timer.hpp"
+#include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
+
+#include <common/cbasetypes.hpp>
+#include <common/database.hpp>
+#include <common/malloc.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/strlib.hpp>
+#include <common/timer.hpp>
 
 #include "char.hpp"
 #include "char_logif.hpp"
@@ -35,28 +37,28 @@
 #include "int_quest.hpp"
 #include "int_storage.hpp"
 
+using namespace rathena;
+
 std::string cfgFile = "inter_athena.yml"; ///< Inter-Config file
 InterServerDatabase interServerDb;
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
-#define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis
 
-
-Sql* sql_handle = NULL;	///Link to mysql db, connection FD
+Sql* sql_handle = nullptr;	///Link to mysql db, connection FD
 
 int char_server_port = 3306;
-char char_server_ip[64] = "127.0.0.1";
-char char_server_id[32] = "ragnarok";
-char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
-char char_server_db[32] = "ragnarok";
-char default_codepage[32] = ""; //Feature by irmin.
+std::string char_server_ip = "127.0.0.1";
+std::string char_server_id = "ragnarok";
+std::string char_server_pw = ""; // Allow user to send empty password (bugreport:7787)
+std::string char_server_db = "ragnarok";
+std::string default_codepage = ""; //Feature by irmin.
 unsigned int party_share_level = 10;
 
 /// Received packet Lengths from map-server
 int inter_recv_packet_length[] = {
 	-1,-1, 7,-1, -1,13,36, (2+4+4+4+1+NAME_LENGTH),  0,-1, 0, 0,  0, 0,  0, 0,	// 3000-
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
-	-1,10,-1,14, 15+NAME_LENGTH,19, 6,-1, 14,14, 6, 0,  0, 0,  0, 0,	// 3020- Party
+	-1,10,-1,14, 15+NAME_LENGTH,17+MAP_NAME_LENGTH_EXT, 6,-1, 14,14, 6, 0,  0, 0,  0, 0,	// 3020- Party
 	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 18,19,186,-1,	// 3030-
 	-1, 9,10, 0,  0, 0, 0, 0,  8, 6,11,10, 10,-1,6+NAME_LENGTH, 0,	// 3040-
 	-1,-1,10,10,  0,-1,12, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-  Auction System [Zephyrus]
@@ -67,13 +69,18 @@ int inter_recv_packet_length[] = {
 	 2,-1, 6, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 30A0-  Clan packets
 };
 
+#ifndef WHISPER_MESSAGE_SIZE
+	#define WHISPER_MESSAGE_SIZE 512
+#endif
+
 struct WisData {
 	int id, fd, count, len, gmlvl;
 	t_tick tick;
-	char src[NAME_LENGTH], dst[NAME_LENGTH], msg[512];
+	char src[NAME_LENGTH], dst[NAME_LENGTH], msg[WHISPER_MESSAGE_SIZE];
 };
-static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
-static int wis_dellist[WISDELLIST_MAX], wis_delnum;
+
+// int wis_id -> struct WisData*
+static std::unordered_map<int32, std::shared_ptr<struct WisData>> wis_db;
 
 /* from pc.cpp due to @accinfo. any ideas to replace this crap are more than welcome. */
 const char* job_name(int class_) {
@@ -356,7 +363,10 @@ const char* job_name(int class_) {
 		case JOB_NIGHT_WATCH:
 		case JOB_HYPER_NOVICE:
 		case JOB_SPIRIT_HANDLER:
-			return msg_txt( 143 - JOB_SKY_EMPEROR + class_ );
+			return msg_txt( 135 - JOB_SKY_EMPEROR + class_ );
+
+		case JOB_SKY_EMPEROR2:
+			return msg_txt( 135 );
 
 		default:
 			return msg_txt(199);
@@ -403,7 +413,7 @@ void geoip_readdb(void){
 	ShowStatus("Finished Reading " CL_GREEN "GeoIP" CL_RESET " Database.\n");
 }
 /* [Dekamaster/Nightroad] */
-/* WHY NOT A DBMAP: There are millions of entries in GeoIP and it has its own algorithm to go quickly through them, a DBMap wouldn't be efficient */
+/* There are millions of entries in GeoIP and it has its own algorithm to go quickly through them */
 const char* geoip_getcountry(uint32 ipnum){
 	int depth;
 	unsigned int x;
@@ -502,7 +512,7 @@ void mapif_parse_accinfo(int fd) {
 		} else {
 			if( Sql_NumRows(sql_handle) == 1 ) {//we found a perfect match
 				Sql_NextRow(sql_handle);
-				Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
+				Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
 				Sql_FreeResult(sql_handle);
 			} else {// more than one, listing... [Dekamaster/Nightroad]
 				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(214),(int)Sql_NumRows(sql_handle));
@@ -511,12 +521,12 @@ void mapif_parse_accinfo(int fd) {
 					short base_level, job_level, online;
 					char name[NAME_LENGTH];
 
-					Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
-					Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
-					Sql_GetData(sql_handle, 2, &data, NULL); class_ = atoi(data);
-					Sql_GetData(sql_handle, 3, &data, NULL); base_level = atoi(data);
-					Sql_GetData(sql_handle, 4, &data, NULL); job_level = atoi(data);
-					Sql_GetData(sql_handle, 5, &data, NULL); online = atoi(data);
+					Sql_GetData(sql_handle, 0, &data, nullptr); account_id = atoi(data);
+					Sql_GetData(sql_handle, 1, &data, nullptr); safestrncpy(name, data, sizeof(name));
+					Sql_GetData(sql_handle, 2, &data, nullptr); class_ = atoi(data);
+					Sql_GetData(sql_handle, 3, &data, nullptr); base_level = atoi(data);
+					Sql_GetData(sql_handle, 4, &data, nullptr); job_level = atoi(data);
+					Sql_GetData(sql_handle, 5, &data, nullptr); online = atoi(data);
 
 					inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(215), account_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
 				}
@@ -577,13 +587,13 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 			char name[NAME_LENGTH];
 			char *data;
 
-			Sql_GetData(sql_handle, 0, &data, NULL); char_id = atoi(data);
-			Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
-			Sql_GetData(sql_handle, 2, &data, NULL); char_num = atoi(data);
-			Sql_GetData(sql_handle, 3, &data, NULL); class_ = atoi(data);
-			Sql_GetData(sql_handle, 4, &data, NULL); base_level = atoi(data);
-			Sql_GetData(sql_handle, 5, &data, NULL); job_level = atoi(data);
-			Sql_GetData(sql_handle, 6, &data, NULL); online = atoi(data);
+			Sql_GetData(sql_handle, 0, &data, nullptr); char_id = atoi(data);
+			Sql_GetData(sql_handle, 1, &data, nullptr); safestrncpy(name, data, sizeof(name));
+			Sql_GetData(sql_handle, 2, &data, nullptr); char_num = atoi(data);
+			Sql_GetData(sql_handle, 3, &data, nullptr); class_ = atoi(data);
+			Sql_GetData(sql_handle, 4, &data, nullptr); base_level = atoi(data);
+			Sql_GetData(sql_handle, 5, &data, nullptr); job_level = atoi(data);
+			Sql_GetData(sql_handle, 6, &data, nullptr); online = atoi(data);
 
 			inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(225), char_num, char_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
 		}
@@ -692,28 +702,28 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 	 * { keyLength(B), key(<keyLength>), index(L), valLength(B), val(<valLength>) }
 	 **/
 	while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
-		Sql_GetData(sql_handle, 1, &data, NULL);
+		Sql_GetData(sql_handle, 1, &data, nullptr);
 
 		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
-		Sql_GetData(sql_handle, 2, &data, NULL);
+		Sql_GetData(sql_handle, 2, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
 		WFIFOW(fd, 14) += 1;
 
@@ -772,23 +782,23 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 	 * { keyLength(B), key(<keyLength>), index(L), value(L) }
 	 **/
 	while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len;/* won't be higher; the column size is 32 */
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
-		Sql_GetData(sql_handle, 1, &data, NULL);
+		Sql_GetData(sql_handle, 1, &data, nullptr);
 
 		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
-		Sql_GetData(sql_handle, 2, &data, NULL);
+		Sql_GetData(sql_handle, 2, &data, nullptr);
 
-		WFIFOQ(fd, plen) = strtoll(data,NULL,10);
+		WFIFOQ(fd, plen) = strtoll(data,nullptr,10);
 		plen += 8;
 
 		WFIFOW(fd, 14) += 1;
@@ -827,7 +837,7 @@ int inter_config_read(const char* cfgName)
 	FILE* fp;
 
 	fp = fopen(cfgName, "r");
-	if(fp == NULL) {
+	if(fp == nullptr) {
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
@@ -842,17 +852,17 @@ int inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
+			char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			safestrncpy(char_server_id,w2,sizeof(char_server_id));
+			char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
-			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
+			char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
-			safestrncpy(char_server_db,w2,sizeof(char_server_db));
+			char_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))
-			safestrncpy(default_codepage,w2,sizeof(default_codepage));
+			default_codepage = w2;
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
@@ -896,7 +906,7 @@ const std::string InterServerDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	uint32 id;
 
 	if( !this->asUInt32( node, "ID", id ) ){
@@ -971,21 +981,20 @@ int inter_init_sql(const char *file)
 	//DB connection initialized
 	sql_handle = Sql_Malloc();
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
-	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), (uint16)char_server_port, char_server_db.c_str()))
 	{
-		ShowError("Couldn't connect with username = '%s', password = '%s', host = '%s', port = '%d', database = '%s'\n",
-			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
+		ShowError("Couldn't connect with username = '%s', host = '%s', port = '%d', database = '%s'\n",
+			char_server_id.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( *default_codepage ) {
-		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
+	if( !default_codepage.empty() ) {
+		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(sql_handle);
 	}
 
-	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	interServerDb.load();
 	inter_guild_sql_init();
 	inter_storage_sql_init();
@@ -1005,7 +1014,7 @@ int inter_init_sql(const char *file)
 // finalize
 void inter_final(void)
 {
-	wis_db->destroy(wis_db, NULL);
+	wis_db.clear();
 
 	inter_guild_sql_final();
 	inter_storage_sql_final();
@@ -1029,11 +1038,14 @@ void inter_final(void)
  * @param fd
  **/
 void inter_Storage_sendInfo(int fd) {
-	int size = sizeof(struct s_storage_table), len = 4 + interServerDb.size() * size, offset;
+	size_t offset = 4;
+	size_t size = sizeof( struct s_storage_table );
+	size_t len = offset + interServerDb.size() * size;
+
 	// Send storage table information
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x388c;
-	WFIFOW(fd, 2) = len;
+	WFIFOW( fd, 2 ) = static_cast<int16>( len );
 	offset = 4;
 	for( auto storage : interServerDb ){
 		memcpy(WFIFOP(fd, offset), storage.second.get(), size);
@@ -1071,8 +1083,7 @@ int mapif_broadcast(unsigned char *mes, int len, unsigned long fontColor, short 
 }
 
 // Wis sending
-int mapif_wis_message(struct WisData *wd)
-{
+int mapif_wis_message( std::shared_ptr<struct WisData> wd ){
 	unsigned char buf[2048];
 	int headersize = 12 + 2 * NAME_LENGTH;
 
@@ -1114,40 +1125,19 @@ int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason
 
 //--------------------------------------------------------
 
-/**
- * Existence check of WISP data
- * @see DBApply
- */
-int check_ttl_wisdata_sub(DBKey key, DBData *data, va_list ap)
-{
-	t_tick tick;
-	struct WisData *wd = (struct WisData *)db_data2ptr(data);
-	tick = va_arg(ap, t_tick);
-
-	if (DIFF_TICK(tick, wd->tick) > WISDATA_TTL && wis_delnum < WISDELLIST_MAX)
-		wis_dellist[wis_delnum++] = wd->id;
-
-	return 0;
-}
-
-int check_ttl_wisdata(void)
-{
+void check_ttl_wisdata(){
 	t_tick tick = gettick();
-	int i;
 
-	do {
-		wis_delnum = 0;
-		wis_db->foreach(wis_db, check_ttl_wisdata_sub, tick);
-		for(i = 0; i < wis_delnum; i++) {
-			struct WisData *wd = (struct WisData*)idb_get(wis_db, wis_dellist[i]);
-			ShowWarning("inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst);
-			// removed. not send information after a timeout. Just no answer for the player
-			//mapif_wis_reply(wd->fd, wd->src, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-			idb_remove(wis_db, wd->id);
+	for( auto it = wis_db.begin(); it != wis_db.end(); ){
+		std::shared_ptr<struct WisData> wd = it->second;
+
+		if( DIFF_TICK( tick, wd->tick ) > WISDATA_TTL ){
+			ShowWarning( "inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst );
+			it = wis_db.erase( it );
+		}else{
+			it++;
 		}
-	} while(wis_delnum >= WISDELLIST_MAX);
-
-	return 0;
+	}
 }
 
 //--------------------------------------------------------
@@ -1191,7 +1181,6 @@ int mapif_wis_reply( int mapserver_fd, char* target, uint8 flag ){
 // Wisp/page request to send
 int mapif_parse_WisRequest(int fd)
 {
-	struct WisData* wd;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];// escaped name
 	char* data;
@@ -1201,7 +1190,7 @@ int mapif_parse_WisRequest(int fd)
 
 	if ( fd <= 0 ) {return 0;} // check if we have a valid fd
 
-	if (RFIFOW(fd,2)-headersize >= sizeof(wd->msg)) {
+	if( RFIFOW( fd, 2 ) - headersize >= WHISPER_MESSAGE_SIZE ){
 		ShowWarning("inter: Wis message size too long.\n");
 		return 0;
 	} else if (RFIFOW(fd,2)-headersize <= 0) { // normaly, impossible, but who knows...
@@ -1235,10 +1224,10 @@ int mapif_parse_WisRequest(int fd)
 		{
 			static int wisid = 0;
 
-			CREATE(wd, struct WisData, 1);
-
 			// Whether the failure of previous wisp/page transmission (timeout)
 			check_ttl_wisdata();
+
+			std::shared_ptr<struct WisData> wd = std::make_shared<struct WisData>();
 
 			wd->id = ++wisid;
 			wd->fd = fd;
@@ -1248,8 +1237,10 @@ int mapif_parse_WisRequest(int fd)
 			safestrncpy(wd->dst, RFIFOCP(fd,8+NAME_LENGTH), NAME_LENGTH);
 			safestrncpy(wd->msg, RFIFOCP(fd,8+2*NAME_LENGTH), wd->len);
 			wd->tick = gettick();
-			idb_put(wis_db, wd->id, wd);
-			mapif_wis_message(wd);
+
+			wis_db[wd->id] = wd;
+
+			mapif_wis_message( wd );
 		}
 	}
 
@@ -1261,19 +1252,20 @@ int mapif_parse_WisRequest(int fd)
 // Wisp/page transmission result
 int mapif_parse_WisReply(int fd)
 {
-	int id;
+	int32 id;
 	uint8 flag;
-	struct WisData *wd;
 
 	id = RFIFOL(fd,2);
 	flag = RFIFOB(fd,6);
-	wd = (struct WisData*)idb_get(wis_db, id);
-	if (wd == NULL)
+	std::shared_ptr<struct WisData> wd = util::umap_find( wis_db, id );
+
+	if( wd == nullptr ){
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
+	}
 
 	if ((--wd->count) <= 0 || flag != 1) {
 		mapif_wis_reply(wd->fd, wd->src, flag); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-		idb_remove(wis_db, id);
+		wis_db.erase( id );
 	}
 
 	return 0;
@@ -1308,7 +1300,7 @@ int mapif_parse_Registry(int fd)
 			size_t lenkey = RFIFOB( fd, cursor );
 			const char* src_key= RFIFOCP(fd, cursor + 1);
 			std::string key( src_key, lenkey );
-			cursor += lenkey + 1;
+			cursor += static_cast<decltype(cursor)>( lenkey + 1 );
 
 			uint32  index = RFIFOL(fd, cursor);
 			cursor += 4;
@@ -1328,7 +1320,7 @@ int mapif_parse_Registry(int fd)
 					size_t len_val = RFIFOB( fd, cursor );
 					const char* src_val= RFIFOCP(fd, cursor + 1);
 					std::string sval( src_val, len_val );
-					cursor += len_val + 1;
+					cursor += static_cast<decltype(cursor)>( len_val + 1 );
 					inter_savereg( account_id, char_id, key.c_str(), index, 0, sval.c_str(), true );
 					break;
 				}
@@ -1387,13 +1379,13 @@ int mapif_parse_NameChangeRequest(int fd)
 	// Check Authorised letters/symbols in the name
 	if (charserv_config.char_config.char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL) {
+		if (strchr(charserv_config.char_config.char_name_letters, name[i]) == nullptr) {
 			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
 			return 0;
 		}
 	} else if (charserv_config.char_config.char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL) {
+		if (strchr(charserv_config.char_config.char_name_letters, name[i]) != nullptr) {
 			mapif_namechange_ack(fd, account_id, char_id, type, 0, name);
 			return 0;
 		}

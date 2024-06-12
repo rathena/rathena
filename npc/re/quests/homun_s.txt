@@ -14,13 +14,14 @@
 //= 1.0 First Version, entirely custom. [Masao]
 //= 1.1 Cleaning. [Euphy]
 //= 1.2 Replaced with official script. [Euphy]
+//= 1.3 Fixed Job Class for after Genetic. [Mazvi & Lemongrass]
 //============================================================ 
 
 // Main NPCs :: Homun_S
 //============================================================
 job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 	if (countitem(6415)) {
-		if (Class == Job_Genetic || Class == Job_Genetic_T || Class == Job_Baby_Genetic) {
+		if ((eaclass()&EAJ_THIRDMASK)==EAJ_GENETIC) {
 			disable_items;
 			if (checkquest(4159) == -1 && checkquest(4160) == -1) {
 				mes "[Viorel]";
@@ -66,7 +67,7 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 			close;
 		}
 	}
-	if ((Class == Job_Genetic || Class == Job_Genetic_T || Class == Job_Baby_Genetic) && (checkquest(4154) > -1)) {
+	if (((eaclass()&EAJ_THIRDMASK)==EAJ_GENETIC) && (checkquest(4154) > -1)) {
 		if ((checkquest(4155) > -1) || (checkquest(4160) > -1)) {
 			mes "[Viorel]";
 			mes "Weather's great.";
@@ -130,7 +131,7 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 		mes "[Viorel]";
 		mes "Oh. Of course you need to have the suitable potentials. You could probably prove yourself once you become a ^FF4800Genetic^000000.";
 		close;
-	} else if (Class == Job_Genetic || Class == Job_Genetic_T || Class == Job_Baby_Genetic) {
+	} else if ((eaclass()&EAJ_THIRDMASK)==EAJ_GENETIC) {
 		if (gethominfo(6) >= 99 && (gethominfo(1) >= 6009 && gethominfo(1) <= 6016)) { // Level 99+ evolved Homunculus
 			mes "[Viorel]";
 			mes "Oh, great~!";

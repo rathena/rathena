@@ -99,7 +99,7 @@ mal_in01,172,28,2	script	Albo#mal	561,{
 			case 2: callsub L_GiveQuest,.@i,12262,12272,"Deep Sea Sword Fish";
 			case 3: callsub L_GiveQuest,.@i,12263,12272,"Deep Sea Strouf";
 			case 4: callsub L_GiveQuest,.@i,12264,12272,"Deep Sea Anolian";
-			case 5: callsub L_GiveQuest,.@i,12265,12272,"Deep Sea Obeanue";
+			case 5: callsub L_GiveQuest,.@i,12265,12272,"Deep Sea Obeaune";
 			case 6: callsub L_GiveQuest,.@i,12266,12272,"Deep Sea Kapha";
 		}
 	case 3: // General Culvert Weekly Service

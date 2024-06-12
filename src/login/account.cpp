@@ -4,15 +4,15 @@
 #include "account.hpp"
 
 #include <algorithm> //min / max
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/socket.hpp"
-#include "../common/sql.hpp"
-#include "../common/strlib.hpp"
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/socket.hpp>
+#include <common/sql.hpp>
+#include <common/strlib.hpp>
 
 #include "login.hpp" // login_config
 
@@ -22,12 +22,12 @@
 typedef struct AccountDB_SQL {
 	AccountDB vtable;    // public interface
 	Sql* accounts;       // SQL handle accounts storage
-	char   db_hostname[64]; // Doubled for long hostnames (bugreport:8003)
-	uint16 db_port;
-	char   db_username[32];
-	char   db_password[32];
-	char   db_database[32];
-	char   codepage[32];
+	std::string db_hostname = "127.0.0.1";
+	uint16 db_port = 3306;
+	std::string db_username = "ragnarok";
+	std::string db_password = "";
+	std::string db_database = "ragnarok";
+	std::string codepage = "";
 	// other settings
 	bool case_sensitive;
 	//table name
@@ -54,7 +54,7 @@ static bool account_db_sql_remove(AccountDB* self, const uint32 account_id);
 static bool account_db_sql_enable_webtoken( AccountDB* self, const uint32 account_id );
 static bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id );
 static bool account_db_sql_remove_webtokens( AccountDB* self );
-static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc);
+static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc, bool refresh_token);
 static bool account_db_sql_load_num(AccountDB* self, struct mmo_account* acc, const uint32 account_id);
 static bool account_db_sql_load_str(AccountDB* self, struct mmo_account* acc, const char* userid);
 static AccountDBIterator* account_db_sql_iterator(AccountDB* self);
@@ -62,11 +62,12 @@ static void account_db_sql_iter_destroy(AccountDBIterator* self);
 static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account* acc);
 
 static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 account_id);
-static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, bool is_new);
+static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, bool is_new, bool refresh_token);
 
 /// public constructor
 AccountDB* account_db_sql(void) {
 	AccountDB_SQL* db = (AccountDB_SQL*)aCalloc(1, sizeof(AccountDB_SQL));
+	new(db) AccountDB_SQL();
 
 	// set up the vtable
 	db->vtable.init         = &account_db_sql_init;
@@ -84,14 +85,7 @@ AccountDB* account_db_sql(void) {
 	db->vtable.iterator     = &account_db_sql_iterator;
 
 	// initialize to default values
-	db->accounts = NULL;
-	// local sql settings
-	safestrncpy(db->db_hostname, "127.0.0.1", sizeof(db->db_hostname));
-	db->db_port = 3306;
-	safestrncpy(db->db_username, "ragnarok", sizeof(db->db_username));
-	safestrncpy(db->db_password, "", sizeof(db->db_password));
-	safestrncpy(db->db_database, "ragnarok", sizeof(db->db_database));
-	safestrncpy(db->codepage, "", sizeof(db->codepage));
+	db->accounts = nullptr;
 	// other settings
 	db->case_sensitive = false;
 	safestrncpy(db->account_db, "login", sizeof(db->account_db));
@@ -112,34 +106,21 @@ AccountDB* account_db_sql(void) {
 static bool account_db_sql_init(AccountDB* self) {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	Sql* sql_handle;
-	const char* username = "ragnarok";
-	const char* password = "";
-	const char* hostname = "127.0.0.1";
-	uint16      port     = 3306;
-	const char* database = "ragnarok";
-	const char* codepage = "";
 
 	db->accounts = Sql_Malloc();
 	sql_handle = db->accounts;
 
-	username = db->db_username;
-	password = db->db_password;
-	hostname = db->db_hostname;
-	port     = db->db_port;
-	database = db->db_database;
-	codepage = db->codepage;
-
-	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, db->db_username.c_str(), db->db_password.c_str(), db->db_hostname.c_str(), db->db_port, db->db_database.c_str()) )
 	{
-                ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-                        username, password, hostname, port, database);
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			db->db_username.c_str(), db->db_hostname.c_str(), db->db_port, db->db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(db->accounts);
-		db->accounts = NULL;
+		db->accounts = nullptr;
 		return false;
 	}
 
-	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
+	if( !db->codepage.empty() && SQL_ERROR == Sql_SetEncoding(sql_handle, db->codepage.c_str()) )
 		Sql_ShowDebug(sql_handle);
 
 	self->remove_webtokens( self );
@@ -159,7 +140,9 @@ static void account_db_sql_destroy(AccountDB* self){
 	}
 
 	Sql_Free(db->accounts);
-	db->accounts = NULL;
+	db->accounts = nullptr;
+
+	db->~AccountDB_SQL();
 	aFree(db);
 }
 
@@ -181,19 +164,19 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_hostname);
+			safesnprintf(buf, buflen, "%s", db->db_hostname.c_str());
 		else
 		if( strcmpi(key, "port") == 0 )
-			safesnprintf(buf, buflen, "%d", db->db_port);
+			safesnprintf(buf, buflen, "%hu", db->db_port);
 		else
 		if( strcmpi(key, "id") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_username);
+			safesnprintf(buf, buflen, "%s", db->db_username.c_str());
 		else
 		if(	strcmpi(key, "pw") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_password);
+			safesnprintf(buf, buflen, "%s", db->db_password.c_str());
 		else
 		if( strcmpi(key, "db") == 0 )
-			safesnprintf(buf, buflen, "%s", db->db_database);
+			safesnprintf(buf, buflen, "%s", db->db_database.c_str());
 		else
 		if( strcmpi(key, "account_db") == 0 )
 			safesnprintf(buf, buflen, "%s", db->account_db);
@@ -212,7 +195,7 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "codepage") == 0 )
-			safesnprintf(buf, buflen, "%s", db->codepage);
+			safesnprintf(buf, buflen, "%s", db->codepage.c_str());
 		else
 		if( strcmpi(key, "case_sensitive") == 0 )
 			safesnprintf(buf, buflen, "%d", (db->case_sensitive ? 1 : 0));
@@ -240,19 +223,19 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	if( strncmp(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			safestrncpy(db->db_hostname, value, sizeof(db->db_hostname));
+			db->db_hostname = value;
 		else
 		if( strcmpi(key, "port") == 0 )
-			db->db_port = (uint16)strtoul(value, NULL, 10);
+			db->db_port = (uint16)strtoul( value, nullptr, 10 );
 		else
 		if( strcmpi(key, "id") == 0 )
-			safestrncpy(db->db_username, value, sizeof(db->db_username));
+			db->db_username = value;
 		else
 		if( strcmpi(key, "pw") == 0 )
-			safestrncpy(db->db_password, value, sizeof(db->db_password));
+			db->db_password = value;
 		else
 		if( strcmpi(key, "db") == 0 )
-			safestrncpy(db->db_database, value, sizeof(db->db_database));
+			db->db_database = value;
 		else
 		if( strcmpi(key, "account_db") == 0 )
 			safestrncpy(db->account_db, value, sizeof(db->account_db));
@@ -271,7 +254,7 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "codepage") == 0 )
-			safestrncpy(db->codepage, value, sizeof(db->codepage));
+			db->codepage = value;
 		else
 		if( strcmpi(key, "case_sensitive") == 0 )
 			db->case_sensitive = (config_switch(value)==1);
@@ -319,7 +302,7 @@ static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc) {
 		}
 
 		Sql_GetData(sql_handle, 0, &data, &len);
-		account_id = ( data != NULL ) ? atoi(data) : 0;
+		account_id = ( data != nullptr ) ? atoi(data) : 0;
 		Sql_FreeResult(sql_handle);
 		account_id = max((uint32_t) START_ACCOUNT_NUM, account_id);
 	}
@@ -334,7 +317,7 @@ static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc) {
 
 	// insert the data into the database
 	acc->account_id = account_id;
-	return mmo_auth_tosql(db, acc, true);
+	return mmo_auth_tosql(db, acc, true, false);
 }
 
 /**
@@ -367,9 +350,9 @@ static bool account_db_sql_remove(AccountDB* self, const uint32 account_id) {
  * @param acc: pointer of mmo_account to save
  * @return true if successful, false if something has failed
  */
-static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc) {
+static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc, bool refresh_token) {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
-	return mmo_auth_tosql(db, acc, false);
+	return mmo_auth_tosql(db, acc, false, refresh_token);
 }
 
 /**
@@ -424,7 +407,7 @@ static bool account_db_sql_load_str(AccountDB* self, struct mmo_account* acc, co
 		return false;
 	}
 
-	Sql_GetData(sql_handle, 0, &data, NULL);
+	Sql_GetData(sql_handle, 0, &data, nullptr);
 	account_id = atoi(data);
 
 	return account_db_sql_load_num(self, acc, account_id);
@@ -480,8 +463,8 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 	}
 
 	if( SQL_SUCCESS == Sql_NextRow(sql_handle) &&
-		SQL_SUCCESS == Sql_GetData(sql_handle, 0, &data, NULL) &&
-		data != NULL )
+		SQL_SUCCESS == Sql_GetData(sql_handle, 0, &data, nullptr) &&
+		data != nullptr )
 	{// get account data
 		uint32 account_id;
 		account_id = atoi(data);
@@ -526,28 +509,33 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 		return false;
 	}
 
-	Sql_GetData(sql_handle,  0, &data, NULL); acc->account_id = atoi(data);
-	Sql_GetData(sql_handle,  1, &data, NULL); safestrncpy(acc->userid, data, sizeof(acc->userid));
-	Sql_GetData(sql_handle,  2, &data, NULL); safestrncpy(acc->pass, data, sizeof(acc->pass));
-	Sql_GetData(sql_handle,  3, &data, NULL); acc->sex = data[0];
-	Sql_GetData(sql_handle,  4, &data, NULL); safestrncpy(acc->email, data, sizeof(acc->email));
-	Sql_GetData(sql_handle,  5, &data, NULL); acc->group_id = (unsigned int) atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); acc->state = (unsigned int) strtoul(data, NULL, 10);
-	Sql_GetData(sql_handle,  7, &data, NULL); acc->unban_time = atol(data);
-	Sql_GetData(sql_handle,  8, &data, NULL); acc->expiration_time = atol(data);
-	Sql_GetData(sql_handle,  9, &data, NULL); acc->logincount = (unsigned int) strtoul(data, NULL, 10);
-	Sql_GetData(sql_handle, 10, &data, NULL); safestrncpy(acc->lastlogin, data==NULL?"":data, sizeof(acc->lastlogin));
-	Sql_GetData(sql_handle, 11, &data, NULL); safestrncpy(acc->last_ip, data, sizeof(acc->last_ip));
-	Sql_GetData(sql_handle, 12, &data, NULL); safestrncpy(acc->birthdate, data==NULL?"":data, sizeof(acc->birthdate));
-	Sql_GetData(sql_handle, 13, &data, NULL); acc->char_slots = (uint8) atoi(data);
-	Sql_GetData(sql_handle, 14, &data, NULL); safestrncpy(acc->pincode, data, sizeof(acc->pincode));
-	Sql_GetData(sql_handle, 15, &data, NULL); acc->pincode_change = atol(data);
+	Sql_GetData(sql_handle,  0, &data, nullptr); acc->account_id = atoi(data);
+	Sql_GetData(sql_handle,  1, &data, nullptr); safestrncpy(acc->userid, data, sizeof(acc->userid));
+	Sql_GetData(sql_handle,  2, &data, nullptr); safestrncpy(acc->pass, data, sizeof(acc->pass));
+	Sql_GetData(sql_handle,  3, &data, nullptr); acc->sex = data[0];
+	Sql_GetData(sql_handle,  4, &data, nullptr); safestrncpy(acc->email, data, sizeof(acc->email));
+	Sql_GetData(sql_handle,  5, &data, nullptr); acc->group_id = (unsigned int) atoi(data);
+	Sql_GetData(sql_handle,  6, &data, nullptr); acc->state = (unsigned int) strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle,  7, &data, nullptr); acc->unban_time = atol(data);
+	Sql_GetData(sql_handle,  8, &data, nullptr); acc->expiration_time = atol(data);
+	Sql_GetData(sql_handle,  9, &data, nullptr); acc->logincount = (unsigned int) strtoul(data, nullptr, 10);
+	Sql_GetData(sql_handle, 10, &data, nullptr); safestrncpy(acc->lastlogin, data==nullptr?"":data, sizeof(acc->lastlogin));
+	Sql_GetData(sql_handle, 11, &data, nullptr); safestrncpy(acc->last_ip, data, sizeof(acc->last_ip));
+	Sql_GetData(sql_handle, 12, &data, nullptr); safestrncpy(acc->birthdate, data==nullptr?"":data, sizeof(acc->birthdate));
+	Sql_GetData(sql_handle, 13, &data, nullptr); acc->char_slots = (uint8) atoi(data);
+	Sql_GetData(sql_handle, 14, &data, nullptr); safestrncpy(acc->pincode, data, sizeof(acc->pincode));
+	Sql_GetData(sql_handle, 15, &data, nullptr); acc->pincode_change = atol(data);
 #ifdef VIP_ENABLE
-	Sql_GetData(sql_handle, 16, &data, NULL); acc->vip_time = atol(data);
-	Sql_GetData(sql_handle, 17, &data, NULL); acc->old_group = atoi(data);
+	Sql_GetData(sql_handle, 16, &data, nullptr); acc->vip_time = atol(data);
+	Sql_GetData(sql_handle, 17, &data, nullptr); acc->old_group = atoi(data);
 #endif
 	Sql_FreeResult(sql_handle);
 	acc->web_auth_token[0] = '\0';
+
+	if( acc->char_slots > MAX_CHARS ){
+		ShowError( "Account %s (AID=%u) exceeds MAX_CHARS. Capping...\n", acc->userid, acc->account_id );
+		acc->char_slots = MAX_CHARS;
+	}
 
 	return true;
 }
@@ -559,7 +547,7 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
  * @param is_new: if it's a new entry or should we update
  * @return true if successful, false if something has failed
  */
-static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, bool is_new) {
+static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, bool is_new, bool refresh_token) {
 	Sql* sql_handle = db->accounts;
 	SqlStmt* stmt = SqlStmt_Malloc(sql_handle);
 	bool result = false;
@@ -644,7 +632,7 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 		}
 	}
 
-	if( acc->sex != 'S' && login_config.use_web_auth_token ){
+	if( acc->sex != 'S' && login_config.use_web_auth_token && refresh_token ){
 		static bool initialized = false;
 		static const char* query;
 
@@ -772,7 +760,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	char* data;
-	int plen = 0;
+	int16 plen = 0;
 	size_t len;
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", db->global_acc_reg_str_table, account_id) )
@@ -795,28 +783,28 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 	 * { keyLength(B), key(<keyLength>), index(L), valLength(B), val(<valLength>) }
 	 **/
 	while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
-		Sql_GetData(sql_handle, 1, &data, NULL);
+		Sql_GetData(sql_handle, 1, &data, nullptr);
 
 		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
-		Sql_GetData(sql_handle, 2, &data, NULL);
+		Sql_GetData(sql_handle, 2, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
 		WFIFOW(fd, 14) += 1;
 
@@ -862,23 +850,23 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 	 * { keyLength(B), key(<keyLength>), index(L), value(L) }
 	 **/
 	while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-		Sql_GetData(sql_handle, 0, &data, NULL);
+		Sql_GetData(sql_handle, 0, &data, nullptr);
 		len = strlen(data)+1;
 
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
 		safestrncpy(WFIFOCP(fd,plen), data, len);
-		plen += len;
+		plen += static_cast<decltype(plen)>( len );
 
-		Sql_GetData(sql_handle, 1, &data, NULL);
+		Sql_GetData(sql_handle, 1, &data, nullptr);
 
 		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
-		Sql_GetData(sql_handle, 2, &data, NULL);
+		Sql_GetData(sql_handle, 2, &data, nullptr);
 
-		WFIFOQ(fd, plen) = strtoll(data,NULL,10);
+		WFIFOQ(fd, plen) = strtoll(data,nullptr,10);
 		plen += 8;
 
 		WFIFOW(fd, 14) += 1;
@@ -919,13 +907,37 @@ bool account_db_sql_enable_webtoken( AccountDB* self, const uint32 account_id ){
 	return true;
 }
 
+/**
+ * Timered function to disable webtoken for user
+ * If the user is online, then they must have logged since we started the timer.
+ * In that case, do nothing. The new authtoken must be valid.
+ * @param tid: timer id
+ * @param tick: tick of execution
+ * @param id: user account id
+ * @param data: AccountDB // because we don't use singleton???
+ * @return :0
+ */
+TIMER_FUNC(account_disable_webtoken_timer){
+	const struct online_login_data* p = login_get_online_user(id);
+	AccountDB_SQL* db = reinterpret_cast<AccountDB_SQL*>(data);
+
+	if (p == nullptr) {
+		ShowInfo("Web Auth Token for account %d was disabled\n", id);
+		if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '0' WHERE `account_id` = '%u'", db->account_db, id ) ){
+			Sql_ShowDebug( db->accounts );
+			return 0;
+		}
+	}
+
+	return 0;
+}
+
+
+
 bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id ){
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 
-	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '0' WHERE `account_id` = '%u'", db->account_db, account_id ) ){
-		Sql_ShowDebug( db->accounts );
-		return false;
-	}
+	add_timer(gettick() + login_config.disable_webtoken_delay, account_disable_webtoken_timer, account_id, reinterpret_cast<intptr_t>(db));
 
 	return true;
 }

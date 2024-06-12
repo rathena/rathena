@@ -4,7 +4,7 @@
 #ifndef MSG_CONF_HPP
 #define	MSG_CONF_HPP
 
-#include "../config/core.hpp"
+#include <config/core.hpp>
 
 enum lang_types {
 	LANG_RUS = 0x01,

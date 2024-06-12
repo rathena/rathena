@@ -66,6 +66,60 @@
 11547,1		// Woe_Violet_Potion
 12600,1		// Treasure_Box_Scroll
 
+// Lesser Guild Member's Gear
+2052,1     // Woe_T_Staff1_Z
+1329,1     // Woe_One_Hand_Axe1_Z
+28751,1     // Woe_Knife1_Z
+32103,1    // Woe_Instrument1_Z
+26210,1    // Woe_Whip1_Z
+26019,1    // Woe_T_Lance1_Z
+16085,1    // Woe_Club_1_Z
+26147,1    // Woe_Wand1_Z
+28036,1    // Woe_Katar1_Z
+26146,1    // Woe_Healstaff1_Z
+21044,1    // Woe_Twohand_Sword1_Z
+28133,1    // Woe_Twohand_Axe1_Z
+32015,1    // Woe_Onehand_Spear1_Z
+18175,1    // Woe_Bow1_Z
+13490,1    // Woe_Onehand_Sword1_Z
+650000,1    // Woe_Huuma1_Z
+1859,1    // Woe_Pist1_Z
+22148,1    // Siege_Greave_1Tier
+15216,1    // Siege_Robe_1Tier
+20865,1    // Siege_Muffler_1Tier
+20864,1    // Siege_Manteau_1Tier
+22147,1    // Siege_Boots_1Tier
+22146,1    // Siege_Shoes_1Tier
+15217,1    // Siege_Suits_1Tier
+15218,1    // Siege_Plate_1Tier
+
+// Intermediate Guild Member's Gear
+520001,1    // Woe_One_Hand_Axe2_Z
+570003,1    // Woe_Instrument2_Z
+580003,1    // Woe_Whip2_Z
+510005,1    // Woe_Knife2_Z
+630001,1    // Woe_T_Lance2_Z
+590004,1    // Woe_Club_2_Z
+550005,1    // Woe_Wand2_Z
+610004,1    // Woe_Katar2_Z
+550004,1    // Woe_Healstaff2_Z
+600005,1    // Woe_Twohand_Sword2_Z
+620001,1    // Woe_Twohand_Axe2_Z
+640001,1    // Woe_T_Staff2_Z
+530001,1    // Woe_Onehand_Spear2_Z
+650001,1    // Woe_Huuma2_Z
+500006,1    // Woe_Onehand_Sword2_Z
+560003,1    // Woe_Pist2_Z
+700005,1    // Woe_Bow2_Z
+450012,1    // Siege_Robe_2Tier
+470011,1    // Siege_Shoes_2Tier
+450014,1    // Siege_Plate_2Tier
+450013,1    // Siege_Suits_2Tier
+470012,1    // Siege_Boots_2Tier
+480007,1    // Siege_Muffler_2Tier
+480008,1    // Siege_Manteau_2Tier
+470013,1    // Siege_Greave_2Tier
+
 //----------------------------------------------------------------------------
 // PVP
 //----------------------------------------------------------------------------
@@ -208,6 +262,60 @@
 12591,16	// Uni_Catalog_Bz
 12600,16	// Treasure_Box_Scroll
 14590,16	// Pty_Assumptio_Scroll
+
+// Lesser Guild Member's Gear
+2052,16     // Woe_T_Staff1_Z
+1329,16     // Woe_One_Hand_Axe1_Z
+28751,16     // Woe_Knife1_Z
+32103,16    // Woe_Instrument1_Z
+26210,16    // Woe_Whip1_Z
+26019,16    // Woe_T_Lance1_Z
+16085,16    // Woe_Club_1_Z
+26147,16    // Woe_Wand1_Z
+28036,16    // Woe_Katar1_Z
+26146,16    // Woe_Healstaff1_Z
+21044,16    // Woe_Twohand_Sword1_Z
+28133,16    // Woe_Twohand_Axe1_Z
+32015,16    // Woe_Onehand_Spear1_Z
+18175,16    // Woe_Bow1_Z
+13490,16    // Woe_Onehand_Sword1_Z
+650000,16    // Woe_Huuma1_Z
+1859,16    // Woe_Pist1_Z
+22148,16    // Siege_Greave_1Tier
+15216,16    // Siege_Robe_1Tier
+20865,16    // Siege_Muffler_1Tier
+20864,16    // Siege_Manteau_1Tier
+22147,16    // Siege_Boots_1Tier
+22146,16    // Siege_Shoes_1Tier
+15217,16    // Siege_Suits_1Tier
+15218,16    // Siege_Plate_1Tier
+
+// Intermediate Guild Member's Gear
+520001,16    // Woe_One_Hand_Axe2_Z
+570003,16    // Woe_Instrument2_Z
+580003,16    // Woe_Whip2_Z
+510005,16    // Woe_Knife2_Z
+630001,16    // Woe_T_Lance2_Z
+590004,16    // Woe_Club_2_Z
+550005,16    // Woe_Wand2_Z
+610004,16    // Woe_Katar2_Z
+550004,16    // Woe_Healstaff2_Z
+600005,16    // Woe_Twohand_Sword2_Z
+620001,16    // Woe_Twohand_Axe2_Z
+640001,16    // Woe_T_Staff2_Z
+530001,16    // Woe_Onehand_Spear2_Z
+650001,16    // Woe_Huuma2_Z
+500006,16    // Woe_Onehand_Sword2_Z
+560003,16    // Woe_Pist2_Z
+700005,16    // Woe_Bow2_Z
+450012,16    // Siege_Robe_2Tier
+470011,16    // Siege_Shoes_2Tier
+450014,16    // Siege_Plate_2Tier
+450013,16    // Siege_Suits_2Tier
+470012,16    // Siege_Boots_2Tier
+480007,16    // Siege_Muffler_2Tier
+480008,16    // Siege_Manteau_2Tier
+470013,16    // Siege_Greave_2Tier
 
 //----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track

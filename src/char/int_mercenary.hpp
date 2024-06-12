@@ -4,7 +4,7 @@
 #ifndef INT_MERCENARY_HPP
 #define INT_MERCENARY_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 int inter_mercenary_sql_init(void);
 void inter_mercenary_sql_final(void);

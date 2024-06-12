@@ -1,9 +1,9 @@
-//===== rAthena Documentation================================
+﻿//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20201115
+//= 20220308
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -135,11 +135,26 @@ and 'doc/mapflags.txt'.
 <map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
-coordinates where the mob should spawn. If xs and ys are non-zero, they
-specify the 'radius' of a spawn-rectangle area centered at x,y.
-Putting zeros instead of these coordinates will spawn the monsters randomly.
+coordinates where the mob should spawn. Putting zeros instead of these
+coordinates will spawn the monsters randomly.
+
+If the coordinates are non-zero and xs and ys are above 1, each monster will
+spawn in a radius around x,y. At server start, each monster will get assigned
+its own center cell adding or substracting up to (xs-1),(ys-1) from the given
+x,y coordinates. Each time a monster respawns, it will spawn in a radius around
+its personal center cell by adding or substracting up to (xs-1),(ys-1) again.
+This results in a total possible spawn area over all monsters of the spawn line
+of (xs,ys)*4-3, but with a strong bias towards the center of that area:
+2,2 - 5x5
+3,3 - 9x9
+4,4 - 13x13
+5,5 - 17x17
+etc.
+
 Note this is only the initial spawn zone, as mobs random-walk, they are free
 to move away from their specified spawn region.
+You can disable the picking of a random center cell for each monster in the
+battle config. (See /conf/battle/monster.conf::randomize_center_cell.)
 
 Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which
@@ -159,7 +174,8 @@ executed, it is affected by spawn rates in 'battle_athena.conf'.
 Delay1 and delay2 control monster respawn delays - the first one is the fixed
 base respawn time, and the second is random variance on top of the base time.
 Both values are given in milliseconds (1000 = 1 second).
-Note that the server also enforces a minimum respawn delay of 5 seconds.
+Note that the server also enforces a minimum respawn delay of 1 second (See
+/conf/battle/monster.conf::mob_respawn_time).
 
 Event is a script event to be executed when the mob is killed. The event must
 be in the form "NPCName::OnEventName" to execute, and the event name label
@@ -187,6 +203,8 @@ Natural enemies for AI monsters are normal monsters.
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
+A boss monster spawn with fixed coordinates will always spawn at the given 
+coordinates, even if they are blocked (e.g. by Icewall).
 
 ** NPC names
 
@@ -211,6 +229,8 @@ ex: if your NPC is named 'Hunter#hunter1', it will be displayed as 'Hunter'
 
 <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
 <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp2%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
+<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp(<state>)%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
+<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp2(<state>)%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
 
 This will define a warp NPC that will warp a player between maps, and while most
 arguments of that are obvious, some deserve special mention.
@@ -228,10 +248,20 @@ current scripts have a zero in there.
 
 Unlike 'warp', 'warp2' will also be triggered by hidden player.
 
+The basic state of the warp can be defined in <state>. Only one state can be defined at a time.
+Duplicate warps (including instance warps) inherit the <state> of the original warp.
+
+Valid <state> are:
+CLOAKED		Make the warp specified cloaked.
+HIDDEN		Make the warp specified hidden.
+DISABLED	Make the warp specified disabled.
+
 ** Define an NPC object.
 
 <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
 <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
+<map name>,<x>,<y>,<facing>%TAB%script(<state>)%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
+<map name>,<x>,<y>,<facing>%TAB%script(<state>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
 
 This will place an NPC object on a specified map at the specified location, and
 is a top-level command you will use the most in your custom scripting. The NPCs
@@ -244,6 +274,8 @@ will be meaningless. Facings are counted counterclockwise in increments of 45
 degrees, where 0 means facing towards the top of the map. (So to turn the sprite
 towards the bottom of the map, you use facing 4, and to make it look southeast
 it's facing 5.)
+
+<state> works like the warp <state> defined above, but for NPCs.
 
 Sprite ID is the sprite number or constant used to display this particular NPC.
 You may also use a monster's ID instead to display a monster sprite for this NPC.
@@ -268,6 +300,24 @@ triggered. It may contain commands and function calls, descriptions of which
 compose most of this document. It has to be in curly brackets, unlike elsewhere
 where we use curly brackets, these do NOT signify an optional parameter.
 
+Example of how <state> works:
+
+// Define a cloaked NPC :
+lighthalzen,306,267,5	script	Skia#ep162_04	4_EP16_SKIA,{
+	//...
+	end;
+
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+// Another way to define a cloaked NPC using <state> :
+lighthalzen,306,267,5	script(CLOAKED)	Skia#ep162_04	4_EP16_SKIA,{
+	//...
+	end;
+}
+
 ** Define a 'floating' NPC object.
 
 -%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}
@@ -291,7 +341,9 @@ these floating NPC objects are for. More on that below.
 -%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 
-<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<quantity>{,<itemid>:<price>:<quantity>...}
+<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<stock>{,<itemid>:<price>:<stock>...}
+
+Note: Additionally barter shops can be defined in npc/barters.yml
 
 This will define a shop NPC, which, when triggered (which can only be done by
 clicking) will cause a shop window to come up. No code whatsoever runs in shop
@@ -317,6 +369,9 @@ item or special points from a variable. 'pointshop' only supports permanent char
 temporary character variables, permanent local account variables or permanent global account
 variables. These variables must be of integer type, not string. 'discount' flag is an
 optional value which makes the price at that shop become affected by discount skill.
+
+"marketshop" can have limited quantity of an item in stock.
+Use -1 in the stock field to have unlimited stock in a marketshop.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -393,15 +448,15 @@ implemented.
 Item and pet scripts
 --------------------
 
-Each item in the item database has three special fields - Script , OnEquip_Script
-and OnUnequip_Script. The first is script code run every time a character equips the item,
+Each item in the item database has three special fields - Script , EquipScript
+and UnEquipScript. The first is script code run every time a character equips the item,
 with the RID of the equipping character. Every time they unequip an item, all
 temporary bonuses given by the script commands are cleared, and all the scripts
 are executed once again to rebuild them. This also happens in several other
 situations (like upon login) but the full list is currently unknown.
 
-OnEquip_Script is a piece of script code run whenever the item is used by a character
-by double-clicking on it. OnUnequip_Script runs whenever the
+EquipScript is a piece of script code run whenever the item is used by a character
+by double-clicking on it. UnEquipScript runs whenever the
 equipment is unequip by a character
 
 Not all script commands work properly in the item scripts. Where commands and
@@ -426,8 +481,9 @@ hexadecimal value. Notice that 0x10 is equal to 16. Also notice that if you try
 to 'mes 0x10' it will print '16'.
 
 Number values can't exceed the limits of an integer variable: Any number
-greater than INT_MAX (2147483647) or smaller than INT_MIN (-2147483648) will
-be capped to those values and will cause a warning to be reported.
+greater than INT64_MAX (9223372036854775807) or smaller than INT64_MIN
+(-9223372036854775808) will be capped to those values and will cause a warning
+to be reported.
 
 Variables
 ---------
@@ -561,6 +617,8 @@ Karma       - The character's karma. Karma system is not fully functional, but
 Manner      - The character's manner rating. Becomes negative if the player
               utters words forbidden through the use of 'manner.txt' client-side
               file.
+Ap          - Current amount of activity points.
+MaxAp       - Maximum amount of activity points.
 
 While these behave as variables, do not always expect to just set them - it is
 not certain whether this will work for all of them. Whenever there is a command
@@ -971,6 +1029,11 @@ Only the special labels which are not associated with any script command are
 listed here. There are other kinds of labels which may be triggered in a similar
 manner, but they are described with their associated commands.
 
+OnNaviGenerate:
+
+This special label triggers when running the map-server-generator binary. It is used
+in combination with 'naviregisterwarp' to register extra warps for an npc.
+
 On<label name>:
 
 These special labels are used with Mob scripts mostly, and script commands
@@ -1113,13 +1176,17 @@ In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
 
 	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
 
+We therefore created script command "mesitemlink" that allows you to create the correct syntax
+depending on your configured packet version. We recommend that you use this script command
+instead of hardcoding the HTML-like tags. For more details see the documentation for "mesitemlink".
+
 The following sample will open a preview window for Red Potion:
 
 	mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501</INFO></ITEMLINK>?";
 	// Or in 2015:
 	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
 
-NOTE: Be aware that item links are rendered incorrectly in 2015+ clients at the moment.
+NOTE: Be aware that item links are broken in some 2015 clients.
 
 URLs
 ----
@@ -1213,6 +1280,12 @@ make it stop in some other manner.
 	end;
 
 Don't expect things to run smoothly if you don't make your scripts 'end'.
+
+---------------------------------------
+
+*close3;
+
+The command is similar to 'close' but the cutin (if any) is cleared after closing.
 
 ---------------------------------------
 
@@ -2429,7 +2502,7 @@ Some example parameters:
 
 StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
 JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
-BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk
+BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk, Ap, MaxAp
 
 All of these also behave as variables, but don't expect to be able to just 'set'
 them - some will not work for various internal reasons.
@@ -2711,7 +2784,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 Given the database ID number of an item, this function will return the text
 stored in the 'Name' field in item_db_*.yml for text version
-or 'name_english' field for SQL version.
+or 'name_english' field for SQL version. The function returns "null" if the item doesn't exist.
 
 ---------------------------------------
 
@@ -2886,14 +2959,6 @@ REFINE_MATERIAL_ID     - Material Item ID
 
 This function will return -1 on failure. The function fails if the cost type
 is invalid or if there is no item in the equipment slot.
-
----------------------------------------
-
-*refineui({<char id>})
-
-Opens the refine UI for the attached player or the given character id.
-
-This feature requires 2016-10-12aRagexeRE or newer.
 
 ---------------------------------------
 
@@ -3119,6 +3184,15 @@ Valid equipment slots are:
 EQI_COMPOUND_ON      - Item slot that calls this script (In context of item script) (default)
 
 For a list of others equipment slots see 'getequipid'.
+
+---------------------------------------
+
+*getitempos()
+
+This function will return the equip position of the equipment from which the
+function is called. (see EQP_* constants)
+
+This function is intended for use in item scripts.
 
 ---------------------------------------
 //
@@ -3569,15 +3643,42 @@ This command does not count skills which are set as flag 4 (permament granted) (
 
 ---------------------------------------
 
-*getmonsterinfo(<mob ID>,<type>)
+*getrandmobid(<type>{,<flag>{,<level>}})
 
-This function will look up the monster with the specified ID number in the
-mob database and return the info set by TYPE argument.
+This command returns a random monster ID from the random monster group.
+With <flag> you can apply certain restrictions which monsters of the group can be returned.
+Returns 0 if one of the parameters is invalid or no monster could be found with the given parameters.
+
+Valid <type> are:
+	MOBG_BRANCH_OF_DEAD_TREE
+	MOBG_PORING_BOX
+	MOBG_BLOODY_DEAD_BRANCH
+	MOBG_RED_POUCH_OF_SURPRISE
+	MOBG_CLASSCHANGE
+	MOBG_TAEKWON_MISSION
+	
+Valid <flag> are:
+	RMF_NONE            = 0x00 - Apply no flags
+	RMF_DB_RATE         = 0x01 - Apply the summon success chance found in the list (otherwise get any monster from the db)
+	RMF_CHECK_MOB_LV    = 0x02 - Apply a monster level check
+	RMF_MOB_NOT_BOSS    = 0x04 - Selected monster should not be a Boss type (default)
+	                           - (except those from MOBG_BLOODY_DEAD_BRANCH)
+	RMF_MOB_NOT_SPAWN   = 0x08 - Selected monster must have normal spawn
+	RMF_MOB_NOT_PLANT   = 0x10 - Selected monster should not be a Plant type
+	RMF_ALL             = 0xFF - Apply all flags
+	
+---------------------------------------
+
+*getmonsterinfo(<mob ID>,<type>)
+*getmonsterinfo(<mob name>,<type>)
+
+This function will look up the monster with the specified <mob ID> or <mob name> in the
+mob database and return the info set by <type> argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
 Valid types are:
-	MOB_NAME - monster's name, if there is no such monster "null" is returned
+	MOB_NAME - monster's japanese name, if there is no such monster "null" is returned
 	MOB_LV - monster's level
 	MOB_MAXHP - monster's maximum hp
 	MOB_BASEEXP - monster's base experience
@@ -3586,6 +3687,8 @@ Valid types are:
 	MOB_ATK2 - monster's atk2
 	MOB_DEF - monster's def
 	MOB_MDEF - monster's mdef
+	MOB_RES - monster's res
+	MOB_MRES - monster's mres
 	MOB_STR - monster's str
 	MOB_AGI - monster's agi
 	MOB_VIT - monster's vit
@@ -3600,6 +3703,7 @@ Valid types are:
 	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
 	MOB_MODE - monster's mode
 	MOB_MVPEXP - monster's mvp experience
+	MOB_ID - monster's ID
 
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
@@ -4049,7 +4153,7 @@ The renewal feature to check is determined by the number <type>.
 *isequipped(<id>{,<id>{,..}})
 
 This function will return 1 if the invoking character has all of the item
-IDs given equipped (if card IDs are passed, then it checks if the cards are
+IDs given equipped (if item/card IDs are passed, then it checks if the items/cards are
 inserted into slots in the equipment they are currently wearing). Theoretically
 there is no limit to the number of items that may be tested for at the same time.
 If even one of the items given is not equipped, 0 will be returned.
@@ -4075,9 +4179,9 @@ Example:
 
 ---------------------------------------
 
-*checkequipedcard(<card id>)
+*checkequipedcard(<item id>)
 
-This function will return 1 if the card specified by its item ID number is
+This function will return 1 if the item/card specified by its item ID number is
 inserted into any equipment they have in their inventory, currently equipped or
 not.
 
@@ -4125,7 +4229,11 @@ invoking RID. It returns 1 if successful and 0 upon failure.
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
  5: All players in the map.
-    [ Parameters: "<map name>" ]
+    [ Parameters: "<map name>" ] 
+ 6: Battleground members of a specified battleground ID.
+    [ Parameters: <battleground id> ]
+ 7: Clan members of a specified clan ID.
+    [ Parameters: <clan id> ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
@@ -4238,6 +4346,7 @@ SavePoint:    All party members are warped to the save point of the currently
               attached player (will fail if there's no player attached).
 Leader:       All party members are warped to the leader's position. The leader must
               be online and in the current map-server for this to work.
+RandomAll:    All party members are warped to the same random position in their current map
 
 If you specify a from_mapname, 'warpparty' will only affect those on that map.
 
@@ -4308,6 +4417,18 @@ This command will heal a set amount of HP and/or SP on the invoking character.
 	heal 300,300; // This will heal 300 HP and 300 SP
 
 This command just alters the hit points and spell points of the invoking
+character and produces no other output whatsoever.
+
+---------------------------------------
+
+*healap <ap>{,<char_id>};
+
+This command will heal a set amount of AP on the invoking character.
+
+	healap 10;  // This will give 10 AP
+	healap -10; // This will remove 10 AP
+
+This command just alters the activity points of the invoking
 character and produces no other output whatsoever.
 
 ---------------------------------------
@@ -4556,6 +4677,22 @@ Unlike 'getexp', this command ignores the adjustment factors!
 
 ---------------------------------------
 
+*getbaseexp_ratio(<percent>{,<base_level>{,char_id});
+
+Returns the amount of base experience representing the given <percent> of the
+required base experience at <base_level>. If no base level is specified the base
+level of the attached character will be used.
+
+---------------------------------------
+
+*getjobexp_ratio(<percent>{,<job_level>{,char_id});
+
+Returns the amount of job experience representing the given <percent> of the
+required job experience at <job_level>. If no job level is specified the job
+level of the attached character will be used.
+
+---------------------------------------
+
 *setlook <look type>,<look value>{,<char_id>};
 *changelook <look type>,<look value>{,<char_id>};
 
@@ -4709,6 +4846,8 @@ quite a few item scripts. For more examples check just about any official script
 *getitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *getitem3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 *getitem3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command will give an amount of specified items to the invoking character.
 If an optional account ID is specified, and the target character is currently
@@ -4799,6 +4938,14 @@ this really cause.
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
+'getitem4' is advance version of 'getitem3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
+
 Example to get Crimson Weapon with Ghost property:
 	// +9 Crimson Dagger [2]
 	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
@@ -4828,6 +4975,8 @@ Valid bound types are:
 *getitembound2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
 *getitembound3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 *getitembound3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitembound4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitembound4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command behaves identically to 'getitem2', but the items created will be
 bound to the target character as specified by the bound type. All items created
@@ -4840,6 +4989,14 @@ For a list of bound types see 'getitembound'.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'getitembound4' is advance version of 'getitembound3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
 
 Example to get Crimson Weapon with Ghost property:
 	// +9 Crimson Dagger [2]
@@ -4881,7 +5038,7 @@ in <time> seconds and be automatically deleted. When receiving a rental item,
 the character will receive a message in their chat window. The character will
 also receive warning messages in their chat window before the item disappears.
 
-When rentals expire it will call the OnUnequip Script of the item. This can be used
+When rentals expire it will call the UnEquipScript of the item. This can be used
 for special cases such as removing a status change or resetting a variable or state
 of the player.
 
@@ -4896,6 +5053,8 @@ Note: 'countitem' will not count any item with a rental timer. Use 'rentalcounti
 *rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
 *rentitem3 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
 *rentitem3 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
+*rentitem4 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
+*rentitem4 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
 
 Creates a rental item in the attached character's inventory. The item will expire
 in <time> seconds and be automatically deleted. See 'rentitem' for further details.
@@ -4906,6 +5065,14 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'rentitem4' is advance version of 'rentitem3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
 
 Example to get Crimson Weapon with Ghost property:
 	// +9 Crimson Dagger [2]
@@ -4936,6 +5103,8 @@ If <canShowEffect> flag is set to true, it will show a pillar effect on the grou
 *makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<canShowEffect>};
 *makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
 *makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+*makeitem4 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+*makeitem4 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
 
 This command will create an item on the specified cell of a map. See 'makeitem' for
 further details.
@@ -4946,6 +5115,14 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'makeitem4' is advance version of 'makeitem3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
 
 Example to get Crimson Weapon with Ghost property:
 	// 0.5% chance to get +0 Valkyrie Shield [1]
@@ -5024,6 +5201,8 @@ If player is not in a guild or storage is open, 'guildstoragedelitem' will retur
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 *delitem3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*delitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*delitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character.
 See 'getitem2' for an explanation of the expanded parameters.
@@ -5032,6 +5211,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'delitem4' is advance version of 'delitem3' that also use the grade as criteria.
 
 ---------------------------------------
 
@@ -5115,6 +5296,8 @@ If player is not in a guild or storage is open, 'guildstoragecountitem' will ret
 *countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
 *countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 *countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*countitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*countitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 
 Expanded version of 'countitem' function, used for created/carded/forged items.
 
@@ -5126,6 +5309,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'countitem4' is advance version of 'countitem3' that also use the grade as criteria.
 
 ---------------------------------------
 
@@ -5156,6 +5341,8 @@ invoking character has in the inventory.
 *rentalcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
 *rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 *rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 
 Expanded version of 'rentalcountitem' function, used for created/carded/forged items.
 
@@ -5167,6 +5354,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'rentalcountitem4' is advance version of 'rentalcountitem3' that also use the grade as criteria.
 
 ---------------------------------------
 
@@ -6031,6 +6220,30 @@ specified amount permanently. The amount can be negative. See 'statusup'.
 
 	// This will decrease a character's Vit forever.
 	statusup2 bVit,-1;
+---------------------------------------
+
+*traitstatusup <stat>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character up by one
+permanently. Trait stats are to be given as number, but you can use these constants to
+replace them:
+
+bPow -  Power
+bSta -  Stamina
+bWis -  Wisdom
+bSpl -  Spell
+bCon -  Concentration
+bCrt -  Creative
+
+---------------------------------------
+
+*traitstatusup2 <stat>,<amount>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character by the
+specified amount permanently. The amount can be negative. See 'statusup'.
+
+	// This will decrease a character's Sta forever.
+	traitstatusup2 bSta,-1;
 
 ---------------------------------------
 
@@ -6054,9 +6267,7 @@ kind in 'doc/item_bonus.txt'.
 *autobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
 *autobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
 
-These commands are meant to be used in item scripts. They will probably work
-outside item scripts, but the bonus will not persist for long. They, as
-expected, refer only to an invoking character.
+These commands are meant to be used in item scripts only! See 'petautobonus' for pet usage.
 
 What these commands do is 'attach' a script to the player which will get
 executed on attack (or when attacked in the case of autobonus2).
@@ -6154,6 +6365,28 @@ from the invoker.
 
 If 'flag' is 1, means will clears all scripts even it's Permanent effect. By default,
 it just removes non-permanent script.
+
+---------------------------------------
+
+*plagiarizeskill <skill_id>,<level>;
+
+Enable the player to plagiarize specific skills that are copyable.
+Return 1 on success, 0 otherwise.
+
+Note:
+ - Plagiarism only able to copy skill while SC_PRESERVE is not active and skill is copyable by Plagiarism.
+ - Reproduce can copy skill if SC__REPRODUCE is active and the skill is copyable by Reproduce.
+
+---------------------------------------
+
+*plagiarizeskillreset <flag>;
+
+Remove a plagiarized skill from the player.
+Return 1 on success, 0 otherwise.
+
+Flag constants:
+	1 - Use for Plagiarism Skill
+	2 - Use for Reproduce Skill
 
 ---------------------------------------
 
@@ -6375,7 +6608,8 @@ Available <type>:
 	PCBLOCK_COMMANDS			Prevent the player from using atcommands/charcommands.
 	PCBLOCK_NPCCLICK			Prevent the player from clicking/touching any NPC/shop/warp.
 	PCBLOCK_EMOTION				Prevent the player from using emotions.
-	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK.
+	PCBLOCK_EQUIP				Prevent the player from replacing equipment.
+	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK|PCBLOCK_EQUIP.
 	PCBLOCK_ALL				Sum of all the flags.
 
 Examples:
@@ -6404,18 +6638,42 @@ Examples:
 
 ---------------------------------------
 
+macro_detector({<account ID>});
+macro_detector({"<character name>"});
+
+This command will display the captcha UI challenge onto the invoking character or the given <account ID>/<character name>.
+
+Example:
+	// Use 'getareaunits' to gather an area of players to test.
+	// Build an int array of the account IDs.
+	.@num = getareaunits(BL_PC, "prontera", 150, 150, 160, 160, .@array[0]);
+
+	mes "The number of Players in Prontera in between 150x150 and 160x160 is " + .@num + " .";
+	mes "Players to challenge:";
+	freeloop(1); // If the list is too big
+	for(.@i = 0; .@i < getarraysize(.@array); .@i++) {
+		mes (.@i + 1) + " " + convertpcinfo(.@array[.@i], CPC_NAME);
+		macro_detector .@array[.@i];
+	}
+	freeloop(0);
+	end;
+
+---------------------------------------
+
 ==================================
 |5.- Mob / NPC -related commands.|
 ==================================
 ---------------------------------------
 
 *monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+*monster     "<map name>",<x>,<y>,"<name to show>","<mob name>",<amount>{,"<event label>",<size>,<ai>};
 *areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>","<mob name>",<amount>{,"<event label>",<size>,<ai>};
 
-This command will spawn a monster on the specified coordinates on the specified
-map. If the script is invoked by a character, a special map name, "this", will
-be recognized to mean the name of the map the invoking character is located at.
-This command works fine in the item scripts.
+This command will spawn <amount> monsters with <mob id> or <mob name> on the specified
+coordinates on the specified map. If the script is invoked by a character, a special
+<map name>, "this", will be recognized to mean the name of the map the invoking character
+is located at. This command works fine in item scripts.
 
 The same command arguments mean the same things as described above in the
 beginning of this document when talking about permanent monster spawns. Monsters
@@ -6494,11 +6752,13 @@ For more good examples see just about any official 2-1 or 2-2 job quest script.
 
 *areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,<skill id>,<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
 *areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,"<skill name>",<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+*areamobuseskill "<map name>",<x>,<y>,<range>,"<mob name>",<skill id>,<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+*areamobuseskill "<map name>",<x>,<y>,<range>,"<mob name>","<skill name>",<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
 
-This command will make all monsters of the specified mob ID in the specified
-area use the specified skill. Map name, x, and y define the center of the area,
+This command will make all monsters of the specified <mob id> or <mob name> in the specified
+area use the specified skill. <map name>, <x>, and <y> define the center of the area,
 which extending <range> cells in each direction (ex: a range of 3 would create
-a 7x7 square). The skill can be specified by skill ID or name. <cast time> is in
+a 7x7 square). The skill can be specified by <skill id> or <skill name>. <cast time> is in
 milliseconds (1000 = 1 second), and the rest should be self-explanatory.
 
 <target type> can be:
@@ -6716,6 +6976,29 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
+*duplicate "<NPC name>","<map>",<x>,<y>{,"<Duplicate NPC name>"{,<sprite>{,<dir>{,<xs>{,<xy>}}}}};
+
+This command will duplicate the NPC with the given <NPC name> on <map> at <x>/<y>.
+If <Duplicate NPC name>, <sprite>, <dir>, <xs> or <ys> is not provided the value of the original NPC will be used.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+ 
+*duplicate_dynamic("<NPC name>"{,<character ID>});
+
+This command will duplicate the NPC with the given <NPC name> near the attached player or the player with the given <character ID>.
+The Unique name of the new duplicated NPC is returned on success. An empty string is returned on failure.
+
+NOTE:
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
+
+---------------------------------------
+
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
 *cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
@@ -6727,6 +7010,13 @@ but the NPC trigger area is disabled.
 If <character ID> is given then the NPC will only display to the specified
 player until he/she leaves the map, logs out, or the npc option is changed.
 If no <character ID> is specified it will display to the area.
+
+---------------------------------------
+
+*cloakonnpcself {"<NPC object name>"};
+*cloakoffnpcself {"<NPC object name>"};
+
+Same command as above, but an attached player is required. The NPC will only display to the attached player.
 
 ---------------------------------------
 
@@ -7146,13 +7436,13 @@ optional parameters are the same as in 'announce', but target and source flags a
 
 ---------------------------------------
 
-*callshop "<name>",<option>;
+*callshop "<name>"{,<option>};
 
 These are a series of commands used to create dynamic shops.
 The 'callshop' function calls an invisible shop (view -1) as if the player clicked on it.
 
 The options are:
-	0 = The normal window (buy, sell and cancel)
+	0 = The normal window (buy, sell and cancel) (default)
 	1 = The buy window
 	2 = The sell window
 
@@ -7203,32 +7493,33 @@ A full example of a dynamic shop can be found in doc/sample/npc_dynamic_shop.txt
 ---------------------------------------
 
 *npcshopitem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
+*npcshopitem "<name>",<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,...}}};
 
 This command lets you override the contents of an existing NPC shop or cashshop. The
 current sell list will be wiped, and only the items specified with the price
 specified will be for sale.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
- - If attached shop type is market shop, need an extra param after price, it's <qty>
-   and make sure don't add duplication item!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
+ - If the attached shop type is a market shop, notice that there is an extra parameter after price, <stock>. Make sure to not add duplicate items! For unlimited stock use -1.
 
 ---------------------------------------
 
 *npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
+*npcshopadditem "<name>",<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,...}}};
 
 This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
 appear twice on the sell list.
 
-The function returns 1 if shop was updated successfully, or 0 if not found.
+The function returns 1 if shop was updated successfully, or 0 on failure.
 
 NOTES:
- - That you cannot use -1 to specify default selling price!
- - If attached shop type is market shop, need an extra param after price, it's <qty>
-   and make sure don't add duplication item!
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
+ - If attached shop type is market shop, need an extra param after price, it's <stock>
+   and make sure don't add duplication item! For unlimited stock use -1.
 
 ---------------------------------------
 
@@ -7266,9 +7557,16 @@ NOTES:
 
 *npcshopupdate "<name>",<item_id>,<price>{,<stock>}
 
-Update an entry from shop. If price is 0 means don't change the price, maybe used for
-marketshop to update the stock quantity. Except marketshop type, 'stock' value means
-nothing.
+Update an entry from a shop. If the price is 0 it won't be changed. May also be used for
+marketshop to update the stock quantity. For unlimited stock, use -1.
+For other shop types, the stock value has no effect.
+
+If the price is -1, it sets it to the default buy price.
+
+The function returns 1 if shop was updated successfully, or 0 on failure.
+
+NOTES:
+ - That you cannot use -1 to specify default selling price for cashshops, pointshops, or itemshops.
 
 ---------------------------------------
 
@@ -7806,6 +8104,42 @@ memory of where the points are set whatsoever.
 
 ---------------------------------------
 
+*viewpointmap "<map name>",<action>,<x>,<y>,<point number>,<color>;
+
+This command will mark places on the mini map in the client for all players currently
+on the defined map. It uses the normal X and Y coordinates from the main map.
+The colors of the marks are defined using a hexadecimal number, same as the ones
+used to color text in 'mes' output, but are written as hexadecimal numbers in C.
+(They look like 0x<six numbers>.)
+
+Action is what you want to do with a point, 1 will set it, while 2 will clear
+it. 0 will also set it, but automatically removes the point after 15 seconds.
+Point number is the number of the point - you can have several. If more than
+one point is drawn at the same coordinates, they will cycle, which can be used
+to create flashing marks.
+
+	// This command will show a mark at coordinates X 30 Y 40, is mark number 1,
+	// and will be red for all players currently on the map Prontera.
+
+	viewpointmap "prontera",1,30,40,1,0xFF0000;
+
+This will create three points:
+	.@map$ = "prontera";
+	viewpointmap .@map$,1,30,40,1,0xFF0000;
+	viewpointmap .@map$,1,35,45,2,0xFF0000;
+	viewpointmap .@map$,1,40,50,3,0xFF0000;
+
+And this is how you remove them:
+	.@map$ = "prontera";
+	viewpointmap .@map$,2,30,40,1,0xFF0000;
+	viewpointmap .@map$,2,35,45,2,0xFF0000;
+	viewpointmap .@map$,2,40,50,3,0xFF0000;
+
+The client determines what it does with the points entirely, the server keeps no
+memory of where the points are set whatsoever.
+
+---------------------------------------
+
 *cutin "<filename>",<position>;
 
 This command will display a picture, usually an NPC illustration, also called
@@ -8016,6 +8350,107 @@ The values given will be divided by 100 and transmitted as floating-point number
 				Maximum: -75000 (-75.0)
 
 ---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
+
+---------------------------------------
+
+*openstylist({<char id>})
+
+Opens the stylist UI for the attached player or the given character id.
+
+This feature requires packet version 2015-11-04 or newer.
+
+---------------------------------------
+
+*laphine_synthesis({<item id>})
+*laphine_synthesis({<"item name">})
+
+Opens the laphine synthesis UI for <item ID> or <item name> for the attached player.
+If run from within an item script <item ID> or <item name> is optional.
+
+This feature requires packet version 2016-06-01 or newer.
+
+---------------------------------------
+
+*laphine_upgrade()
+
+Opens the laphine upgrade UI for the attached player.
+
+This feature requires packet version 2017-07-26 or newer.
+
+This function is intended for use in item scripts.
+
+---------------------------------------
+
+*openbank({<char id>})
+
+Opens the Bank UI for the attached player or the given character ID.
+
+This command requires packet version 2015-12-02 or newer.
+
+---------------------------------------
+
+*enchantgradeui {<char id>};
+
+Opens the enchantgrade UI for the attached character or the player given by the char ID parameter.
+
+This command requires packet version 2020-07-24 or newer.
+
+---------------------------------------
+
+*set_reputation_points(<type>,<points>{,<char id>})
+
+Sets the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
+*get_reputation_points(<type>{,<char id>})
+
+Gets the reputation points for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
+*add_reputation_points(<type>,<points>{,<char id>})
+
+Adds the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
+*item_reform({<item id>{,<char id>}})
+*item_reform({<"item name">{,<char id>}})
+
+Opens the item reform UI for <item ID> or <item name> for the attached player or the given character ID.
+If run from within an item script <item ID> or <item name> is optional.
+
+This feature requires packet version 2021-11-03 or newer.
+
+---------------------------------------
+
+*item_enchant(<client side LUA index>{,<char ID>});
+
+Opens the enchant UI for the attached character or the player given by the <char ID> parameter.
+If the player exceeds 70% weight the client will not open the enchant UI and will trigger an
+error message instead.
+
+This command requires packet version 2021-11-03 or newer.
+
+---------------------------------------
+
+*opentips({<Tip ID>,{<char ID>}});
+
+Opens the tip box UI for the attached player or the given character ID.
+
+This command requires packet version 2017-11-22 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
@@ -8111,6 +8546,8 @@ values (can be combined using the pipe operator):
 	USW_MOVE_FULL_CELL = Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change).
 	USW_FORCE_STOP = Force stop moving.
 
+This command will also remove the state tracking used for 'unitwalk' and 'unitwalkto'.
+
 ---------------------------------------
 
 *unittalk <GID>,"<text>"{,flag};
@@ -8122,10 +8559,10 @@ flag: Specify target
 
 ---------------------------------------
 
-*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>};
-*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>};
-*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>};
-*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>};
+*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
+*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
+*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
+*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>,<ignore_range>};
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
@@ -8140,6 +8577,9 @@ CastCancel from skill_db.yml is the default value of <cancel>.
 
 If <Line_ID> is defined (positive number, default 0) the monster will say the message from 'Line_ID'
 in mob_chat_db.yml when casting the skill.
+
+If <ignore_range> is true, the unit will ignore the skill range defined by the database. The default value is false.
+Attention! this setting does not work for all skills.
 
 ---------------------------------------
 
@@ -8269,6 +8709,9 @@ Parameters (indexes) for monsters are:
 	UMOB_BODY2
 	UMOB_GROUP_ID
 	UMOB_IGNORE_CELL_STACK_LIMIT
+	UMOB_RES
+	UMOB_MRES
+	UMOB_DAMAGETAKEN
 
 -----
 
@@ -8541,8 +8984,9 @@ Get info of elemental of attached player or player by char_id.
 Other info can be obtained by 'getunitdata' command.
 
 Valid types are:
-   0: Elemental ID
-   1: Elemental Game ID
+   ELEMINFO_ID        Elemental ID (ID unique to elementals unit type)
+   ELEMINFO_GAMEID    Elemental Game ID
+   ELEMINFO_CLASS     Elemental Class (ID defined in elemental_db.yml)
 
 ---------------------------------------
 \\
@@ -8696,6 +9140,18 @@ Example:
 
 ---------------------------------------
 
+*cap_value(<number>, <min>, <max>)
+
+Returns the number but capped between <min> and <max>.
+
+Example:
+	// capped between 0 ~ 100
+	.@value = cap_value(10, 0, 100);   // .@value will be equal to 10
+	.@value = cap_value(1000, 0, 100); // .@value will be equal to 100
+	.@value = cap_value(-10, 3, 100);  // .@value will be equal to 3
+
+---------------------------------------
+
 *round(<number>,<precision>);
 *ceil(<number>,<precision>);
 *floor(<number>,<precision>);
@@ -8790,8 +9246,8 @@ You can remove an item's itemscript by leaving the itemscript argument empty.
 Returns 1 on success, or 0 on fail (item_id not found or new item script is invalid).
 Type can optionally be used indicates which script to set (default is 0):
  0 - Script
- 1 - OnEquip_Script
- 2 - OnUnequip_Script
+ 1 - EquipScript
+ 2 - UnEquipScript
 
 Example:
 	setitemscript 2637,"{ if (isequipped(2236) == 0)end; if (getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
@@ -9207,6 +9663,20 @@ with the given character id.
 
 ---------------------------------------
 
+*naviregisterwarp("<Name of Link>", "<dest_map>", <dest_x>, <dest_y>)
+
+Only useful when using the map-server-generator. Registers an extra warp from this
+npc to the destination map/x/y for the generated client files.
+
+---------------------------------------
+
+*navihide
+
+Only useful when using the map-server-generator. Hides this npc and all links from
+this npc in the navigation generation.
+
+---------------------------------------
+
 ========================
 |7.- Instance commands.|
 ========================
@@ -9277,9 +9747,13 @@ returns an empty string instead.
 
 *instance_id({<instance mode>})
 
-Returns the unique instance ID of the given mode. By default it returns the
-attached script instance. If <instance mode> is provided then the instance
-of the currently attached player is used. If that fails, the function will return 0.
+Returns the unique instance ID of the given mode.
+
+By default (no parameter given) the command returns the instance ID from the attached NPC.
+If <instance mode> is provided the instance ID of the currently attached player is returned.
+If that fails, the function will return 0.
+
+Please note that the command always requires the parameter <instance mode> to get the instance ID of an attached player!
 
 Instance Mode options:
  IM_CHAR:	Attached to character.
@@ -9287,13 +9761,26 @@ Instance Mode options:
  IM_GUILD:	Attached to character's guild.
  IM_CLAN:	Attached to character's clan.
 
+Examples:
+	// Example with an attached player :
+	npctalk "The current instance ID (mode party) from the attached player is : " + instance_id(IM_PARTY);
+
+	// Example with an attached NPC on an instance map :
+	npctalk "The current instance ID from the attached NPC is : " + instance_id();
+
 ---------------------------------------
 
-*instance_warpall "<map name>",<x>,<y>{,<instance id>};
+*instance_warpall "<map name>",<x>,<y>{,<instance id>,{<flag>}};
 
 Warps all players in the <instance id> to <map name> to the given coordinates.
 If no ID is specified, the IM_PARTY instance the invoking player is attached
 to is used. If that fails, the script will come to a halt.
+
+<flag> bitmask allows to add restrictions.
+
+Available values for the <flag> bitmask:
+ IWA_NONE			No restriction. (default)
+ IWA_NOTDEAD		If dead players are warped or not
 
 ---------------------------------------
 
@@ -9424,6 +9911,23 @@ Examples:
 
 ---------------------------------------
 
+*instance_list(<"map name">{,<instance mode>});
+
+Creates the array '.@instance_list' with possible instance IDs for the given <map name> and optional <mode>.
+Return '.@instance_list' array size.
+
+Instance mode options: IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, or IM_CLAN
+If the instance mode is not provided then it will return all the instance IDs for that map.
+
+Examples:
+	// This example assumes that there are several instances on the map of Prontera.
+	.@size = instance_list("prontera");
+	for ( .@i = 0; .@i < .@size; ++.@i )
+		mes instance_mapname("prontera", .@instance_list[.@i]);
+	//the output would be a list of all prontera copies that are active in the server.
+
+---------------------------------------
+
 *getinstancevar(<variable>,<instance id>);
 
 Returns a reference to an instance variable (' prefix) of the specific instance ID.
@@ -9459,7 +9963,7 @@ Examples:
 *questinfo <Icon>{,<Map Mark Color>{,"<condition>"}};
 
 This command should only be used in OnInit/OnInstanceInit labels.
-Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint".
+Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint" or "viewpointmap".
 When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
 If questinfo is present, it will check if the player fulfill the condition.
 If he/she does or no condition has been set, the bubble will appear.
@@ -9547,7 +10051,7 @@ Remove the quest of the given <ID> from the user's quest log.
 *changequest <ID>,<ID2>{,<char_id>};
 
 Remove quest of the given <ID> from the user's quest log.
-Add quest of the <ID2> to the the quest log, and the state is "active".
+Add quest <ID2> to the quest log, and the state is "active".
 
 ---------------------------------------
 
@@ -9585,7 +10089,7 @@ Return the state of the quest:
 *showevent <icon>{,<mark color>{,<char_id>}}
 
 Show an emotion on top of a NPC, and optionally,
-a colored mark in the mini-map like "viewpoint".
+a colored mark in the mini-map like "viewpoint" or "viewpointmap".
 This is used to indicate that a NPC has a quest or an event to
 a certain player.
 
@@ -9606,6 +10110,15 @@ QMARK_NONE   - No Marker (default)
 QMARK_YELLOW - Yellow Marker
 QMARK_GREEN  - Green Marker
 QMARK_PURPLE - Purple Marker
+
+---------------------------------------
+
+*open_quest_ui {<quest ID>,{<char ID>}};
+
+Opens the quest UI for the attached player or the given character ID.
+Use 0 as the quest ID to open the main quest UI. If the quest ID is not 0 then the quest UI is opened to the given quest. If the quest data is not populated in the client LUB then a message will be displayed saying the quest doesn't exist.
+
+This command requires packet version 2015-12-02 or newer.
 
 ---------------------------------------
 
@@ -9886,7 +10399,7 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
- PETINFO_ID - Pet ID
+ PETINFO_ID - Pet unique ID
  PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.yml' - will tell you what kind of a pet it is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
@@ -10010,6 +10523,15 @@ owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'.
 inflicted and the specified number of attacks.
 
 Value of 'rate' is between 1 and 100. 100 = 100%
+
+---------------------------------------
+
+*petautobonus <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus2 <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
+*petautobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
+
+See 'autobonus' for more details.
 
 ---------------------------------------
 
@@ -10524,6 +11046,25 @@ Param - Parameter of random option
 
 ---------------------------------------
 
+*randomoptgroup <random option group ID>;
+
+This command fills the following arrays with the results of a random option group.
+The random option group IDs are specified in 'db/(pre-)re/item_randomopt_group.yml'.
+
+Arrays - from index 0 to MAX_ITEM_RDM_OPT-1 :
+.@opt_id[]                - array of random option ID.
+.@opt_value[]             - array of value.
+.@opt_param[]             - array of param.
+
+Example:
+	// Fill the arrays using the random option group ID 5 (group used for Crimson weapons).
+	randomoptgroup(5);
+
+	// Create a +9 Crimson Dagger [2] with the Group 5 applied
+	getitem3 28705,1,1,9,0,0,0,0,0,.@opt_id,.@opt_value,.@opt_param;
+
+---------------------------------------
+
 *clan_join(<clan id>{,<char id>});
 
 The attached player joins the clan with the <clan id>. On a successful join,
@@ -10539,6 +11080,47 @@ else false if the leave failed.
 If <char id> is specified, the specified player is used rather than the attached one.
 
 ---------------------------------------
+
+*itemlink(<item_id>{,<refine>{,<card0>{,<card1>{,<card2>{,<card3>,{<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>}}}}}}});
+
+Generates an item link string for an item that can be used for npctalk, message,
+dispbottom, and broadcast commands. The result is a clickable-item name just
+like SHIFT+Click from a player's inventory/cart/equipment window. This command can be
+used with mes but the item name will not be clickable. You should use script command
+"mesitemlink" for displaying item links in mes dialogues, if the client supports them. 
+
+
+Examples:
+
+	npctalk "Knife [3] : "+itemlink(1201)+"";
+	npctalk "+16 Knife [3] : "+itemlink(1201,16)+"";
+	npctalk "+13 BXB Bapho+VR+EA2+EA1 : "+itemlink(18110,13,4147,4407,4833,4832)+"";
+	setarray .@opt_ids[0],RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATTMPOWER,0,0;
+	setarray .@opt_values[0],3,5,20,0,0;
+	setarray .@opt_params[0],0,0,0,0,0;
+	npctalk "+13 BXB Bapho+VR+EA2+EA1 + 3 Options : "+itemlink(18110,13,4147,4407,4833,4832,0,.@opt_ids,.@opt_values,.@opt_params)+"";
+
+
+RandomIDArray, RandomValueArray, and RandomParamArray only works if the
+client (and server) supports the Item Random Options feature (PACKETVER >= 20150225).
+
+---------------------------------------
+
+*mesitemlink(<item_id>{,<use_brackets>{,<display_name>});
+
+Generates an itemlink string for an item and can be used with NPC's mes command.
+The NPC message will show the item's name which will be clickable and opens the
+item description client side.
+By default <use_brackets> is true which surrounds the link with brackets. Send false to disable.
+By default the link will be created with the name of the item stored in the item database,
+but in some cases it might be necessary to overwrite the <display_name> with something else.
+
+Examples:
+
+	mes mesitemlink( 1201 ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
+	mes "Bring me a " + mesitemlink( 1201 ) + "."; // Will display "Bring me a [Knife]." and "[Knife]" will be clickable.
+	mes "Bring me a " + mesitemlink( 1201, false ) + "."; // Will display "Bring me a Knife." and "Knife" will be clickable.
+	mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
 
 ========================
 |14.- Channel commands.|
@@ -10573,7 +11155,7 @@ Use <color> hex code to set the color for this channel, if not defined, default
 channel color will be used.
 
 If <char_id> is defined, the channel will be a private channel and the player
-will be the the channel owner.
+will be the channel owner.
 
 Returns 1 on success.
 
@@ -10585,6 +11167,17 @@ Returns 1 on success.
 	 **/
 	channel_create("#rathena","[rAthena]");
 	channel_create("#vip","[VIP]","vipmemberonly");
+
+---------------------------------------
+
+*channel_join "<channel_name>"{, <char_id>};
+
+Join an existing channel.
+The command returns 0 upon success, and these values upon failure:
+ -1 : Invalid channel or player
+ -2 : Player already in channel
+ -3 : Player banned
+ -4 : Reached max limit
 
 ---------------------------------------
 
@@ -10786,5 +11379,89 @@ See 'achievementinfo' for valid <type> values.
 - ACHIEVEINFO_COMPLETE, ACHIEVEINFO_COMPLETEDATE, and ACHIEVEINFO_GOTREWARD require the
   specific value returned from 'gettimetick(2)'.
 - Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
+
+---------------------------------------
+
+*addfame(<amount>,{,<char id>})
+
+Increases the fame of the attached player or the supplied <char id> by the <amount> given.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfame({<char id>})
+
+Gets the fame points of the attached player or the supplied <char id>.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*getfamerank({<char id>})
+
+Returns fame rank (start from 1 to MAX_FAME_LIST), else 0.
+Note: Only works with classes that use the ranking system.
+
+---------------------------------------
+
+*isdead({<account id>})
+
+Returns true if the player is dead else false.
+
+---------------------------------------
+
+*has_autoloot({<char_id>});
+
+This command checks whether a player configured autoloot.
+Returns current autoloot value on success.
+
+---------------------------------------
+
+*autoloot({<rate>{, <char_id>}});
+
+This command sets the rate of autoloot.
+If no rate is provided and the user has autoloot disabled it will default to 10000 = 100% (enabled) or
+if the user has autoloot enabled it will default to 0 = 0% (disabled).
+Returns true on success and false on failure.
+
+Example:
+    autoloot();      // toggle on/off depend on existing autoloot
+    autoloot(0);     //   0.00% or off
+    autoloot(100);   //   1.00%
+    autoloot(3333);  //  33.33%
+    autoloot(10000); // 100.00%
+
+---------------------------------------
+
+*setdialogalign(<align>);
+
+Set vertical or horizontal align in NPC dialog.
+Valid aligns:
+- horizontal align:
+  DIALOG_ALIGN_LEFT
+  DIALOG_ALIGN_CENTER
+  DIALOG_ALIGN_RIGHT
+
+- vertical align:
+  DIALOG_ALIGN_TOP
+  DIALOG_ALIGN_MIDDLE
+  DIALOG_ALIGN_BOTTOM
+
+---------------------------------------
+
+*setdialogsize(<width>, <height>)
+
+Set size for NPC dialog in pixels.
+
+---------------------------------------
+
+*setdialogpos(<x>, <y>)
+
+Set position for NPC dialog in pixels.
+
+---------------------------------------
+
+*setdialogpospercent(<x>, <y>)
+
+Set position for NPC dialog in screen size percent.
 
 ---------------------------------------

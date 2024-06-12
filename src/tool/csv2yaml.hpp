@@ -4,7 +4,26 @@
 #ifndef CSV2YAML_HPP
 #define CSV2YAML_HPP
 
+#include <common/core.hpp>
+
 #include "yaml.hpp"
+
+using rathena::server_core::Core;
+using rathena::server_core::e_core_type;
+
+namespace rathena{
+	namespace tool_csv2yaml{
+		class Csv2YamlTool : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+
+			public:
+				Csv2YamlTool() : Core( e_core_type::TOOL ){
+
+				}
+		};
+	}
+}
 
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
@@ -20,6 +39,9 @@
 //Raised to 105 since Expanded Super Baby needs it.
 #define MAX_SKILL_TREE 105
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+///Maximum amount of items a combo may require
+#define MAX_ITEMS_PER_COMBO 6
+#define MAX_HOM_SKILL_REQUIRE 5
 
 struct s_skill_tree_entry_csv {
 	std::string skill_name;
@@ -40,6 +62,8 @@ std::unordered_map<uint16, s_skill_db> skill_castnodex;
 std::unordered_map<uint16, s_skill_unit_csv> skill_unit;
 std::unordered_map<uint16, s_skill_copyable> skill_copyable;
 std::unordered_map<uint16, s_skill_db> skill_nearnpc;
+
+std::unordered_map<int32, std::vector<s_homun_skill_tree_entry>> hom_skill_tree;
 
 static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
 
@@ -452,61 +476,65 @@ void init_random_option_constants() {
 	#undef export_constant2
 }
 
-static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
+static bool guild_read_guildskill_tree_db( char* split[], size_t columns, size_t current );
 static bool pet_read_db( const char* file );
-static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current);
-static bool skill_parse_row_abradb(char* split[], int columns, int current);
-static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
-static bool mob_readdb_mobavail(char *str[], int columns, int current);
-static bool skill_parse_row_requiredb(char* split[], int columns, int current);
-static bool skill_parse_row_castdb(char* split[], int columns, int current);
-static bool skill_parse_row_castnodexdb(char* split[], int columns, int current);
-static bool skill_parse_row_unitdb(char* split[], int columns, int current);
-static bool skill_parse_row_copyabledb(char* split[], int columns, int current);
-static bool skill_parse_row_nonearnpcrangedb(char* split[], int columns, int current);
-static bool skill_parse_row_skilldb(char* split[], int columns, int current);
-static bool quest_read_db(char *split[], int columns, int current);
-static bool instance_readdb_sub(char* str[], int columns, int current);
-static bool itemdb_read_itemavail(char *str[], int columns, int current);
-static bool itemdb_read_buyingstore(char* fields[], int columns, int current);
-static bool itemdb_read_flag(char* fields[], int columns, int current);
-static bool itemdb_read_itemdelay(char* str[], int columns, int current);
-static bool itemdb_read_stack(char* fields[], int columns, int current);
-static bool itemdb_read_nouse(char* fields[], int columns, int current);
-static bool itemdb_read_itemtrade(char* fields[], int columns, int current);
+static bool skill_parse_row_magicmushroomdb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_abradb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_spellbookdb( char* split[], size_t columns, size_t current );
+static bool mob_readdb_mobavail( char* str[], size_t columns, size_t current );
+static bool skill_parse_row_requiredb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_castdb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_castnodexdb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_unitdb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_copyabledb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_nonearnpcrangedb( char* split[], size_t columns, size_t current );
+static bool skill_parse_row_skilldb( char* split[], size_t columns, size_t current );
+static bool quest_read_db( char* split[], size_t columns, size_t current );
+static bool instance_readdb_sub( char* str[], size_t columns, size_t current );
+static bool itemdb_read_itemavail( char* str[], size_t columns, size_t current );
+static bool itemdb_read_buyingstore( char* fields[], size_t columns, size_t current );
+static bool itemdb_read_flag( char* fields[], size_t columns, size_t current );
+static bool itemdb_read_itemdelay( char* str[], size_t columns, size_t current );
+static bool itemdb_read_stack( char* fields[], size_t columns, size_t current );
+static bool itemdb_read_nouse( char* fields[], size_t columns, size_t current );
+static bool itemdb_read_itemtrade( char* fields[], size_t columns, size_t current );
 static bool itemdb_read_db(const char *file);
 static bool itemdb_read_randomopt(const char* file);
-static bool itemdb_read_randomopt_group(char *str[], int columns, int current);
+static bool itemdb_read_randomopt_group( char* str[], size_t columns, size_t current );
 static bool itemdb_randomopt_group_yaml(void);
-static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
+static bool pc_readdb_levelpenalty( char* fields[], size_t columns, size_t current );
 static bool pc_levelpenalty_yaml();
-static bool mob_parse_row_chatdb(char* fields[], int columns, int current);
+static bool mob_parse_row_chatdb( char* fields[], size_t columns, size_t current );
 static bool read_homunculus_expdb(const char* file);
-static bool mob_readdb_group(char* str[], int columns, int current);
+static bool mob_readdb_group( char* str[], size_t columns, size_t current );
 static bool mob_readdb_group_yaml(void);
-static bool skill_parse_row_createarrowdb(char* fields[], int columns, int current);
+static bool skill_parse_row_createarrowdb( char* fields[], size_t columns, size_t current );
 static bool pc_read_statsdb(const char* file);
-static bool guild_read_castledb(char* str[], int columns, int current);
-static bool exp_guild_parse_row(char* split[], int column, int current);
-static bool itemdb_read_group(char* fields[], int columns, int current);
+static bool guild_read_castledb( char* str[], size_t columns, size_t current );
+static bool exp_guild_parse_row( char* split[], size_t columns, size_t current );
+static bool itemdb_read_group( char* fields[], size_t columns, size_t current );
 static bool itemdb_read_group_yaml(void);
-static bool mob_readdb_itemratio(char* fields[], int columns, int current);
+static bool mob_readdb_itemratio( char* fields[], size_t columns, size_t current );
 static bool status_readdb_attrfix(const char* file);
-static bool read_constdb(char* fields[], int columns, int current);
-static bool mob_readdb_race2(char *fields[], int columns, int current);
-static bool mob_readdb_drop(char *str[], int columns, int current);
-static bool mob_readdb_sub(char *fields[], int columns, int current);
-static bool pc_readdb_job2(char *fields[], int columns, int current);
-static bool pc_readdb_job_param(char *fields[], int columns, int current);
-static bool pc_readdb_job_exp(char *fields[], int columns, int current);
-static bool pc_readdb_job_exp_sub(char *fields[], int columns, int current);
-static bool pc_readdb_job_basehpsp(char *fields[], int columns, int current);
-static bool pc_readdb_job1(char *fields[], int columns, int current);
-static bool read_elemental_skilldb(char* str[], int columns, int current);
-static bool read_elementaldb(char* str[], int columns, int current);
-static bool mercenary_read_skilldb(char* str[], int columns, int current);
-static bool mercenary_readdb(char* str[], int columns, int current);
-static bool pc_readdb_skilltree(char* str[], int columns, int current);
+static bool read_constdb( char* fields[], size_t columns, size_t current );
+static bool mob_readdb_race2( char* fields[], size_t columns, size_t current );
+static bool mob_readdb_drop( char* str[], size_t columns, size_t current );
+static bool mob_readdb_sub( char* fields[], size_t columns, size_t current );
+static bool pc_readdb_job2( char* fields[], size_t columns, size_t current );
+static bool pc_readdb_job_param( char* fields[], size_t columns, size_t current );
+static bool pc_readdb_job_exp( char* fields[], size_t columns, size_t current );
+static bool pc_readdb_job_exp_sub( char* fields[], size_t columns, size_t current );
+static bool pc_readdb_job_basehpsp( char* fields[], size_t columns, size_t current );
+static bool pc_readdb_job1( char* fields[], size_t columns, size_t current );
+static bool read_elemental_skilldb( char* str[], size_t columns, size_t current );
+static bool read_elementaldb( char* str[], size_t columns, size_t current );
+static bool mercenary_read_skilldb( char* str[], size_t columns, size_t current );
+static bool mercenary_readdb( char* str[], size_t columns, size_t current );
+static bool pc_readdb_skilltree( char* str[], size_t columns, size_t current );
 static bool pc_readdb_skilltree_yaml(void);
+static bool itemdb_read_combos(const char* file);
+static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current );
+static bool read_homunculus_skilldb( char* split[], size_t columns, size_t current );
+static bool read_homunculusdb( char* str[], size_t columns, size_t current );
 
 #endif /* CSV2YAML_HPP */

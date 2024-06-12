@@ -3,13 +3,13 @@
 
 #include "log.hpp"
 
-#include <stdlib.h>
+#include <cstdlib>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/sql.hpp" // SQL_INNODB
-#include "../common/strlib.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/sql.hpp> // SQL_INNODB
+#include <common/strlib.hpp>
 
 #include "battle.hpp"
 #include "homunculus.hpp"
@@ -85,6 +85,12 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_MERGE_ITEM:		return 'Z';  // Merged Item
 		case LOG_TYPE_QUEST:			return 'Q';  // (Q)uest Item
 		case LOG_TYPE_PRIVATE_AIRSHIP:	return 'H';  // Private Airs(H)ip
+		case LOG_TYPE_BARTER:			return 'J';  // Barter Shop
+		case LOG_TYPE_LAPHINE:			return 'W';  // Laphine UI
+		case LOG_TYPE_ENCHANTGRADE:		return '0';  // Enchantgrade UI
+		case LOG_TYPE_REFORM:			return '1';  // Reform UI
+		case LOG_TYPE_ENCHANT:			return '2';  // Echant UI
+		case LOG_TYPE_PACKAGE:			return '3';  // Item Package Selection
 	}
 
 	// should not get here, fallback
@@ -139,9 +145,9 @@ static char log_feedingtype2char(e_log_feeding_type type) {
 static bool should_log_item(t_itemid nameid, int amount, int refine)
 {
 	int filter = log_config.filter;
-	struct item_data* id;
+	std::shared_ptr<item_data> id = item_db.find(nameid);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if( id == nullptr )
 		return false;
 
 	if( ( filter&LOG_FILTER_ALL ) ||
@@ -164,7 +170,7 @@ static bool should_log_item(t_itemid nameid, int amount, int refine)
 
 
 /// logs items, that summon monsters
-void log_branch(struct map_session_data* sd)
+void log_branch(map_session_data* sd)
 {
 	nullpo_retv(sd);
 
@@ -190,7 +196,7 @@ void log_branch(struct map_session_data* sd)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_branch, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_branch, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -247,7 +253,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_pick, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_pick, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -257,7 +263,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 }
 
 /// logs item transactions (players)
-void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int amount, struct item* itm)
+void log_pick_pc(map_session_data* sd, e_log_pick_type type, int amount, struct item* itm)
 {
 	nullpo_retv(sd);
 	log_pick(sd->status.char_id, sd->bl.m, type, amount, itm);
@@ -272,17 +278,16 @@ void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct 
 }
 
 /// logs zeny transactions
-void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount)
+// ids are char_ids
+void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int amount)
 {
-	nullpo_retv(sd);
-
 	if( !log_config.zeny || ( log_config.zeny != 1 && abs(amount) < log_config.zeny ) )
 		return;
 
 	if( log_config.sql_logs )
 	{
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
-			log_config.log_zeny, sd->status.char_id, src_sd->status.char_id, log_picktype2char(type), amount, mapindex_id2name(sd->mapindex)) )
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
+			log_config.log_zeny, target_sd.status.char_id, src_id, log_picktype2char(type), amount, mapindex_id2name(target_sd.mapindex)))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -294,18 +299,18 @@ void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_sess
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_zeny, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_zeny, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp, "%s - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_sd->status.name, src_sd->status.account_id, sd->status.name, sd->status.account_id, amount);
+		fprintf(logfp, "%s - [%d] ->\t%s[%d]\t%d\t\n", timestring, src_id, target_sd.status.name, target_sd.status.char_id, amount);
 		fclose(logfp);
 	}
 }
 
 
 /// logs MVP monster rewards
-void log_mvpdrop(struct map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp )
+void log_mvpdrop(map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp )
 {
 	nullpo_retv(sd);
 
@@ -327,7 +332,7 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, t_itemid nameid, t
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_mvpdrop,"a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_mvpdrop,"a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -338,7 +343,7 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, t_itemid nameid, t
 
 
 /// logs used atcommands
-void log_atcommand(struct map_session_data* sd, const char* message)
+void log_atcommand(map_session_data* sd, const char* message)
 {
 	nullpo_retv(sd);
 
@@ -368,7 +373,7 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_gm, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_gm, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -405,7 +410,7 @@ void log_npc( struct npc_data* nd, const char* message ){
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_npc, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -415,7 +420,7 @@ void log_npc( struct npc_data* nd, const char* message ){
 }
 
 /// logs messages passed to script command 'logmes'
-void log_npc(struct map_session_data* sd, const char* message)
+void log_npc(map_session_data* sd, const char* message)
 {
 	nullpo_retv(sd);
 
@@ -443,7 +448,7 @@ void log_npc(struct map_session_data* sd, const char* message)
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_npc, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -491,7 +496,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen(log_config.log_chat, "a") ) == NULL )
+		if( ( logfp = fopen(log_config.log_chat, "a") ) == nullptr )
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -501,7 +506,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 }
 
 /// logs cash transactions
-void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount ){
+void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount ){
 	nullpo_retv( sd );
 
 	if( !log_config.cash )
@@ -519,7 +524,7 @@ void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_typ
 		time_t curtime;
 		FILE* logfp;
 
-		if( ( logfp = fopen( log_config.log_cash, "a" ) ) == NULL )
+		if( ( logfp = fopen( log_config.log_cash, "a" ) ) == nullptr )
 			return;
 		time( &curtime );
 		strftime( timestring, sizeof( timestring ), log_timestamp_format, localtime( &curtime ) );
@@ -534,7 +539,7 @@ void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_typ
  * @param type Log type, @see e_log_feeding_type
  * @param nameid Item used as food
  **/
-void log_feeding(struct map_session_data *sd, e_log_feeding_type type, t_itemid nameid) {
+void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid) {
 	unsigned int target_id = 0, intimacy = 0;
 	unsigned short target_class = 0;
 
@@ -572,7 +577,7 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, t_itemid 
 		time_t curtime;
 		FILE* logfp;
 
-		if ((logfp = fopen(log_config.log_feeding, "a")) == NULL)
+		if ((logfp = fopen(log_config.log_feeding, "a")) == nullptr)
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
@@ -604,7 +609,7 @@ int log_config_read(const char* cfgName)
 	if( count++ == 0 )
 		log_set_defaults();
 
-	if( ( fp = fopen(cfgName, "r") ) == NULL )
+	if( ( fp = fopen(cfgName, "r") ) == nullptr )
 	{
 		ShowError("Log configuration file not found at: %s\n", cfgName);
 		return 1;

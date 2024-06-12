@@ -13,44 +13,66 @@
 #else
 	#include <termios.h>
 	#include <unistd.h>
-	#include <stdio.h>
+	#include <cstdio>
 #endif
 
 #include <yaml-cpp/yaml.h>
+#include <ryml_std.hpp>
+#include <ryml.hpp>
 
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
+#include <common/cbasetypes.hpp>
+#include <common/core.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/nullpo.hpp>
+#include <common/showmsg.hpp>
+#include <common/strlib.hpp>
+#include <common/utilities.hpp>
+#include <common/utils.hpp>
 #ifdef WIN32
-#include "../common/winapi.hpp"
+#include <common/winapi.hpp>
 #endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/achievement.hpp"
-#include "../map/battle.hpp"
-#include "../map/battleground.hpp"
-#include "../map/channel.hpp"
-#include "../map/chat.hpp"
-#include "../map/date.hpp"
-#include "../map/elemental.hpp"
-#include "../map/instance.hpp"
-#include "../map/mercenary.hpp"
-#include "../map/mob.hpp"
-#include "../map/npc.hpp"
-#include "../map/pc.hpp"
-#include "../map/pet.hpp"
-#include "../map/quest.hpp"
-#include "../map/script.hpp"
-#include "../map/skill.hpp"
-#include "../map/storage.hpp"
+#define ONLY_CONSTANTS
+#include <map/achievement.hpp>
+#include <map/battle.hpp>
+#include <map/battleground.hpp>
+#include <map/cashshop.hpp>
+#include <map/channel.hpp>
+#include <map/chat.hpp>
+#include <map/date.hpp>
+#include <map/elemental.hpp>
+#include <map/homunculus.hpp>
+#include <map/instance.hpp>
+#include <map/mercenary.hpp>
+#include <map/mob.hpp>
+#include <map/npc.hpp>
+#include <map/pc.hpp>
+#include <map/pet.hpp>
+#include <map/quest.hpp>
+#include <map/script.hpp>
+#include <map/skill.hpp>
+#include <map/storage.hpp>
 
 using namespace rathena;
+using namespace rathena::server_core;
+
+namespace rathena{
+	namespace tool_yaml2sql{
+		class Yaml2SqlTool : public Core{
+			protected:
+				bool initialize( int argc, char* argv[] ) override;
+
+			public:
+				Yaml2SqlTool() : Core( e_core_type::TOOL ){
+
+				}
+		};
+	}
+}
+
+using namespace rathena::tool_yaml2sql;
 
 #ifndef WIN32
 int getch( void ){
@@ -77,7 +99,7 @@ bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
 YAML::Node inNode;
-std::ofstream out;
+std::ofstream outFile;
 
 // Implement the function instead of including the original version by linking
 void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
@@ -144,6 +166,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
+#else
+			ShowMessage("Found the file \"%s\", converting from yml to sql.\n", from.c_str());
 #endif
 
 			inNode.reset();
@@ -167,28 +191,28 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			}
 #endif
 
-			out.open(to);
+			outFile.open(to);
 
-			if (!out.is_open()) {
+			if (!outFile.is_open()) {
 				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
-			prepareHeader(out, table.compare(to_table) == 0 ? table : to_table);
+			prepareHeader(outFile, table.compare(to_table) == 0 ? table : to_table);
 
 			if( !lambda( path, name_ext, table ) ){
-				out.close();
+				outFile.close();
 				return false;
 			}
 
-			out.close();
+			outFile.close();
 		}
 	}
 
 	return true;
 }
 
-int do_init( int argc, char** argv ){
+bool Yaml2SqlTool::initialize( int argc, char* argv[] ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
@@ -210,40 +234,37 @@ int do_init( int argc, char** argv ){
 	};
 
 	// Load constants
-	#include "../map/script_constants.hpp"
+	#include <map/script_constants.hpp>
 
 	for( const std::string& suffix : item_table_suffixes ){
 		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, item_table_name + "_" + suffix, item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 			return item_db_yaml2sql(path + name_ext, table);
 		})) {
-			return 0;
+			return false;
 		}
 	}
 
 	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", item_import_table_name, item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 		return item_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
-		return 0;
+		return false;
 	}
 
 	// TODO: add implementations ;-)
 
-	return 0;
-}
-
-void do_final(void){
+	return true;
 }
 
 bool fileExists( const std::string& path ){
@@ -441,6 +462,10 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`job_sage`,");
 			if (appendEntry(jobs["SoulLinker"], value))
 				column.append("`job_soullinker`,");
+#ifdef RENEWAL
+			if (appendEntry(jobs["Spirit_Handler"], value))
+				column.append("`job_spirit_handler`,");
+#endif
 			if (appendEntry(jobs["StarGladiator"], value))
 				column.append("`job_stargladiator`,");
 #ifdef RENEWAL
@@ -618,6 +643,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column.append("`equip_level_max`,");
 		if (appendEntry(input["Refineable"], value))
 			column.append("`refineable`,");
+		if (appendEntry(input["Gradable"], value))
+			column.append("`gradable`,");
 		if (appendEntry(input["View"], value))
 			column.append("`view`,");
 		if (appendEntry(input["AliasName"], value, true))
@@ -712,11 +739,11 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		column.pop_back(); // Remove last ','
 		value.pop_back(); // Remove last ','
 
-		out << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
+		outFile << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
 		entries++;
 	}
 
-	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
@@ -756,6 +783,12 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`defense`,");
 		if (appendEntry(input["MagicDefense"], value))
 			column.append("`magic_defense`,");
+#ifdef RENEWAL
+		if (appendEntry(input["Resistance"], value))
+			column.append("`resistance`,");
+		if (appendEntry(input["MagicResistance"], value))
+			column.append("`magic_resistance`,");
+#endif
 		if (appendEntry(input["Str"], value))
 			column.append("`str`,");
 		if (appendEntry(input["Agi"], value))
@@ -911,11 +944,15 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 		column.pop_back(); // Remove last ','
 		value.pop_back(); // Remove last ','
 
-		out << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
+		outFile << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
 		entries++;
 	}
 
-	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
+}
+
+int main( int argc, char *argv[] ){
+	return main_core<Yaml2SqlTool>( argc, argv );
 }
