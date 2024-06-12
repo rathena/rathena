@@ -163,6 +163,7 @@ enum e_party_invite_reply {
 	PARTY_REPLY_OFFLINE,			    ///< result=7 : "The Character is not currently online or does not exist." -> MsgStringTable[71] (since 20070904)
 	PARTY_REPLY_INVALID_MAPPROPERTY,    ///< result=8 : !TODO "Unable to organize a party in this map" -> MsgStringTable[1388] (since 20080527)
 	PARTY_REPLY_INVALID_MAPPROPERTY_ME, ///< return=9 : !TODO "Cannot join a party in this map" -> MsgStringTable[1871] (since 20110205)
+	PARTY_REPLY_MEMORIALDUNGEON,	    ///< return=10: "You cannot invite or withdraw while in memorial dungeon" -> MsgStringTable[3027] (since 20161130)
 };
 
 /// Enum for Convex Mirror (SC_BOSSMAPINFO)

@@ -930,6 +930,10 @@ bool guild_invite( map_session_data& sd, map_session_data* tsd ){
 		return false;
 	}
 
+	if( g->instance_id && battle_config.instance_block_invite ){
+		return false;
+	}
+
 	// Guild locked.
 	if( map_getmapflag( sd.bl.m, MF_GUILDLOCK ) ){
 		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
@@ -1023,6 +1027,12 @@ bool guild_reply_invite( map_session_data& sd, int guild_id, int flag ){
 	auto g = guild_search( guild_id );
 
 	if( g == nullptr ){
+		sd.guild_invite = 0;
+		sd.guild_invite_account = 0;
+		return false;
+	}
+
+	if( g->instance_id && battle_config.instance_block_invite ){
 		sd.guild_invite = 0;
 		sd.guild_invite_account = 0;
 		return false;
@@ -1144,6 +1154,10 @@ bool guild_leave( map_session_data& sd, int guild_id, uint32 account_id, uint32 
 		return false;
 	}
 
+	if( g->instance_id > 0 && battle_config.instance_block_leave ){
+		return false;
+	}
+
 	if( map_getmapflag( sd.bl.m, MF_GUILDLOCK ) ){
 		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) ); // Guild modification is disabled on this map.
 		return false;
@@ -1178,6 +1192,10 @@ bool guild_expulsion( map_session_data& sd, int guild_id, uint32 account_id, uin
 	}
 
 	if( !guild_has_permission( sd, GUILD_PERM_EXPEL ) ){
+		return false;
+	}
+
+	if( g->instance_id > 0 && battle_config.instance_block_expulsion ){
 		return false;
 	}
 
@@ -2167,6 +2185,10 @@ bool guild_gm_change( int guild_id, uint32 char_id, bool showMessage ){
 		return false;
 	}
 
+	if( g->instance_id > 0 && battle_config.instance_block_leaderchange ){
+		return false;
+	}
+
 	int i;
 
 	ARR_FIND( 0, MAX_GUILD, i, g->guild.member[i].char_id == char_id );
@@ -2291,6 +2313,10 @@ int guild_break( map_session_data& sd, char* name ){
 	}
 
 	if( g->instance_id ){
+		if( battle_config.instance_block_leave ){
+			return 0;
+		}
+
 		instance_destroy(g->instance_id);
 	}
 

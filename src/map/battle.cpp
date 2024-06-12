@@ -11503,6 +11503,10 @@ static const struct _battle_data {
 	{ "pet_legacy_formula",                 &battle_config.pet_legacy_formula,              0,      0,      1,              },
 	{ "pet_distance_check",                 &battle_config.pet_distance_check,              5,      0,      50,             },
 	{ "pet_hide_check",                     &battle_config.pet_hide_check,                  1,      0,      1,              },
+	{ "instance_block_leave",               &battle_config.instance_block_leave,            1,      0,      1,              },
+	{ "instance_block_leaderchange",        &battle_config.instance_block_leaderchange,     1,      0,      1,              },
+	{ "instance_block_invite",              &battle_config.instance_block_invite,           1,      0,      1,              },
+	{ "instance_block_expulsion",           &battle_config.instance_block_expulsion,        1,      0,      1,              },
 
 	// 4th Job Stuff
 	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1,              },

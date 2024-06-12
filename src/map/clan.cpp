@@ -11,6 +11,7 @@
 #include <common/nullpo.hpp>
 #include <common/showmsg.hpp>
 
+#include "battle.hpp"
 #include "clif.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
@@ -165,6 +166,10 @@ bool clan_member_join( map_session_data& sd, int clan_id, uint32 account_id, uin
 		return false;
 	}
 
+	if( clan->instance_id > 0 && battle_config.instance_block_invite ){
+		return false;
+	}
+
 	sd.status.clan_id = clan->id;
 
 	clan_member_joined(sd);
@@ -180,6 +185,10 @@ bool clan_member_leave( map_session_data& sd, int clan_id, uint32 account_id, ui
 	struct clan* clan = sd.clan;
 
 	if( clan == nullptr ){
+		return false;
+	}
+
+	if( clan->instance_id > 0 && battle_config.instance_block_leave ){
 		return false;
 	}
 

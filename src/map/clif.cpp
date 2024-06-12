@@ -12358,8 +12358,8 @@ void clif_parse_ChatLeave(int fd, map_session_data* sd)
 	chat_leavechat(sd,0);
 }
 
-
 // Handles notifying asker and rejecter of what has just ocurred.
+// Type is used to determine the correct msg_txt to use
 void clif_noask_sub( map_session_data& sd, map_session_data& tsd, int type ){
 	char output[CHAT_SIZE_MAX];
 
@@ -25039,6 +25039,16 @@ void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
 
 	// Only party leaders can reply
 	if( !party_isleader( sd ) ){
+		return;
+	}
+
+	struct party_data* party = party_search( sd->status.party_id );
+
+	if( party == nullptr ){
+		return;
+	}
+
+	if( party->instance_id > 0 && battle_config.instance_block_invite ){
 		return;
 	}
 

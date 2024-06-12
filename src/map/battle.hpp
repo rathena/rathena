@@ -722,6 +722,10 @@ struct Battle_Config
 	int pet_distance_check;
 	int pet_hide_check;
 
+	int instance_block_leave;
+	int instance_block_leaderchange;
+	int instance_block_invite;
+	int instance_block_expulsion;
 	// 4th Jobs Stuff
 	int trait_points_job_change;
 	int use_traitpoint_table;
