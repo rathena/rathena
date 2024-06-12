@@ -1039,6 +1039,44 @@ struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
 DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
 #endif
 
+struct PACKET_CZ_REQ_JOIN_GROUP{
+	int16 packetType;
+	uint32 AID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_JOIN_GROUP, 0xfc);
+
+struct PACKET_CZ_JOIN_GROUP{
+	int16 packetType;
+	uint32 party_id;
+	int32 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_JOIN_GROUP, 0xff);
+
+struct PACKET_CZ_REQ_LEAVE_GROUP{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_LEAVE_GROUP, 0x100);
+
+struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER{
+	int16 packetType;
+	uint32 AID;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_EXPEL_GROUP_MEMBER, 0x103);
+
+struct PACKET_CZ_PARTY_JOIN_REQ{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_PARTY_JOIN_REQ, 0x2c4);
+
+struct PACKET_CZ_PARTY_JOIN_REQ_ACK{
+	int16 packetType;
+	uint32 party_id;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_PARTY_JOIN_REQ_ACK, 0x2c7);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

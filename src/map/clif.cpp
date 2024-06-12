@@ -12355,22 +12355,17 @@ void clif_parse_ChatLeave(int fd, map_session_data* sd)
 	chat_leavechat(sd,0);
 }
 
+// Handles notifying asker and rejecter of what has just ocurred.
+void clif_noask_sub( map_session_data& sd, map_session_data& tsd, int type ){
+	char output[CHAT_SIZE_MAX];
 
-//Handles notifying asker and rejecter of what has just ocurred.
-//Type is used to determine the correct msg_txt to use:
-//0:
-static void clif_noask_sub(map_session_data *sd, map_session_data *tsd, int type)
-{
-	const char* msg;
-	char output[256];
 	// Your request has been rejected by autoreject option.
-	msg = msg_txt(sd,392);
-	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg, false, SELF);
-	//Notice that a request was rejected.
-	snprintf(output, 256, msg_txt(tsd,393+type), sd->status.name, 256);
-	clif_messagecolor(&tsd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-}
+	clif_messagecolor( &sd.bl, color_table[COLOR_LIGHT_GREEN], msg_txt( &sd, 392 ), false, SELF );
 
+	// Notice that a request was rejected.
+	safesnprintf( output, CHAT_SIZE_MAX, msg_txt( &tsd, type ), sd.status.name );
+	clif_messagecolor( &tsd.bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+}
 
 /// Request to begin a trade (CZ_REQ_EXCHANGE_ITEM).
 /// 00e4 <account id>.L
@@ -12386,7 +12381,7 @@ void clif_parse_TradeRequest(int fd,map_session_data *sd)
 	if(t_sd){
 		// @noask [LuzZza]
 		if(t_sd->state.noask) {
-			clif_noask_sub(sd, t_sd, 0);
+			clif_noask_sub( *sd, *t_sd, 393 ); // Autorejected trade request from %s.
 			return;
 		}
 
@@ -13625,7 +13620,7 @@ void clif_parse_CreateParty(int fd, map_session_data *sd){
 		return;
 	}
 
-	party_create(sd,name,0,0);
+	party_create( *sd, name, 0, 0 );
 }
 
 /// 01e8 <party name>.24B <item pickup rule>.B <item share rule>.B (CZ_MAKE_GROUP2)
@@ -13649,97 +13644,97 @@ void clif_parse_CreateParty2(int fd, map_session_data *sd){
 		return;
 	}
 
-	party_create(sd,name,item1,item2);
+	party_create( *sd, name, item1, item2 );
 }
 
 
-/// Party invitation request
+/// Party invitation request by account id
 /// 00fc <account id>.L (CZ_REQ_JOIN_GROUP)
-void clif_parse_PartyInvite(int fd, map_session_data *sd)
-{
-	map_session_data *t_sd;
-
-	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
-		clif_displaymessage(fd, msg_txt(sd,227));
+void clif_parse_PartyInvite( int fd, map_session_data *sd ){
+	if( sd == nullptr ){
 		return;
 	}
 
-	t_sd = map_id2sd(RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]));
+	PACKET_CZ_REQ_JOIN_GROUP* p = reinterpret_cast<PACKET_CZ_REQ_JOIN_GROUP*>( RFIFOP( fd, 0 ) );
 
-	if(t_sd && t_sd->state.noask) {// @noask [LuzZza]
-		clif_noask_sub(sd, t_sd, 1);
-		return;
-	}
-
-	party_invite(sd, t_sd);
+	party_invite( *sd, map_id2sd( p->AID ) );
 }
 
+/// Party invitation request by name
 /// 02c4 <char name>.24B (CZ_PARTY_JOIN_REQ)
-void clif_parse_PartyInvite2(int fd, map_session_data *sd){
-	map_session_data *t_sd;
-	char *name = RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[0]);
-	name[NAME_LENGTH-1] = '\0';
-
-	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
-		clif_displaymessage(fd, msg_txt(sd,227));
+void clif_parse_PartyInvite2( int fd, map_session_data *sd ){
+#if PACKETVER >= 20070227
+	if( sd == nullptr ){
 		return;
 	}
 
-	t_sd = map_nick2sd(name,false);
+	PACKET_CZ_PARTY_JOIN_REQ* p = reinterpret_cast<PACKET_CZ_PARTY_JOIN_REQ*>( RFIFOP( fd, 0 ) );
 
-	if(t_sd && t_sd->state.noask) {// @noask [LuzZza]
-		clif_noask_sub(sd, t_sd, 1);
-		return;
-	}
+	char name[NAME_LENGTH];
 
-	party_invite(sd, t_sd);
+	safestrncpy( name, p->name, sizeof( name ) );
+
+	party_invite( *sd, map_nick2sd( name, false ) );
+#endif
 }
 
 
 /// Party invitation reply
 /// 00ff <party id>.L <flag>.L (CZ_JOIN_GROUP)
+/// flag:
+///     0 = reject
+///     1 = accept
+void clif_parse_ReplyPartyInvite( int fd, map_session_data *sd ){
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_JOIN_GROUP* p = reinterpret_cast<PACKET_CZ_JOIN_GROUP*>( RFIFOP( fd, 0 ) );
+
+	party_reply_invite( *sd, p->party_id, p->flag );
+}
+
+/// Party invitation reply
 /// 02c7 <party id>.L <flag>.B (CZ_PARTY_JOIN_REQ_ACK)
 /// flag:
 ///     0 = reject
 ///     1 = accept
-void clif_parse_ReplyPartyInvite(int fd,map_session_data *sd)
-{
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	party_reply_invite(sd,RFIFOL(fd,info->pos[0]),
-	    RFIFOL(fd,info->pos[1]));
-}
-//(CZ_PARTY_JOIN_REQ_ACK)
-void clif_parse_ReplyPartyInvite2(int fd,map_session_data *sd)
-{
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	party_reply_invite(sd,RFIFOL(fd,info->pos[0]),
-	    RFIFOB(fd,info->pos[1]));
-}
-
-
-/// Request to leave party (CZ_REQ_LEAVE_GROUP).
-/// 0100
-void clif_parse_LeaveParty(int fd, map_session_data *sd)
-{
-	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
-		clif_displaymessage(fd, msg_txt(sd,227));
+void clif_parse_ReplyPartyInvite2( int fd, map_session_data *sd ){
+#if PACKETVER >= 20070227
+	if( sd == nullptr ){
 		return;
 	}
-	party_leave(sd);
+
+	PACKET_CZ_PARTY_JOIN_REQ_ACK* p = reinterpret_cast<PACKET_CZ_PARTY_JOIN_REQ_ACK*>( RFIFOP( fd, 0 ) );
+
+	party_reply_invite( *sd, p->party_id, p->flag );
+#endif
 }
 
 
-/// Request to expel a party member (CZ_REQ_EXPEL_GROUP_MEMBER).
-/// 0103 <account id>.L <char name>.24B
-void clif_parse_RemovePartyMember(int fd, map_session_data *sd)
-{
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	if(map_getmapflag(sd->bl.m, MF_PARTYLOCK)) {// Party locked.
-		clif_displaymessage(fd, msg_txt(sd,227));
+/// Request to leave party.
+/// 0100 (CZ_REQ_LEAVE_GROUP)
+void clif_parse_LeaveParty( int fd, map_session_data *sd ){
+	if( sd == nullptr ){
 		return;
 	}
-	party_removemember(sd,RFIFOL(fd,info->pos[0]),
-	    RFIFOCP(fd,info->pos[1]));
+
+	//PACKET_CZ_REQ_LEAVE_GROUP* p = reinterpret_cast<PACKET_CZ_REQ_LEAVE_GROUP*>( RFIFOP( fd, 0 ) );
+
+	party_leave( *sd, true );
+}
+
+
+/// Request to expel a party member.
+/// 0103 <account id>.L <char name>.24B (CZ_REQ_EXPEL_GROUP_MEMBER)
+void clif_parse_RemovePartyMember( int fd, map_session_data* sd ){
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_CZ_REQ_EXPEL_GROUP_MEMBER* p = reinterpret_cast<PACKET_CZ_REQ_EXPEL_GROUP_MEMBER*>( RFIFOP( fd, 0 ) );
+
+	party_removemember( *sd, p->AID, p->name );
 }
 
 
@@ -14331,7 +14326,7 @@ int clif_sub_guild_invite(int fd, map_session_data *sd, map_session_data *t_sd)
 	}
 
 	if(t_sd && t_sd->state.noask) {// @noask [LuzZza]
-		clif_noask_sub(sd, t_sd, 2);
+		clif_noask_sub( *sd, *t_sd, 395 ); // Autorejected guild invite from %s.
 		return 1;
 	}
 
@@ -14451,7 +14446,7 @@ void clif_parse_GuildRequestAlliance(int fd, map_session_data *sd)
 
 	// @noask [LuzZza]
 	if(t_sd && t_sd->state.noask) {
-		clif_noask_sub(sd, t_sd, 3);
+		clif_noask_sub( *sd, *t_sd, 396 ); // Autorejected alliance request from %s.
 		return;
 	}
 
@@ -14510,7 +14505,7 @@ void clif_parse_GuildOpposition(int fd, map_session_data *sd)
 
 	// @noask [LuzZza]
 	if(t_sd && t_sd->state.noask) {
-		clif_noask_sub(sd, t_sd, 4);
+		clif_noask_sub( *sd, *t_sd, 397 ); // Autorejected opposition request from %s.
 		return;
 	}
 
@@ -15247,7 +15242,7 @@ void clif_parse_FriendsListAdd(int fd, map_session_data *sd)
 
 	// @noask [LuzZza]
 	if(f_sd->state.noask) {
-		clif_noask_sub(sd, f_sd, 5);
+		clif_noask_sub( *sd, *f_sd, 398 ); // Autorejected friend request from %s.
 		return;
 	}
 
@@ -17512,6 +17507,7 @@ void clif_parse_configuration( int fd, map_session_data* sd ){
 }
 
 /// Request to change party invitation tick.
+/// 02C8 <enabled>.B (CZ_PARTY_CONFIG)
 /// value:
 ///	 0 = disabled (triggered by /accept)
 ///	 1 = enabled (triggered by /refuse)
@@ -25067,7 +25063,7 @@ void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
 	}
 
 	if( p->accept ){
-		party_join( tsd, sd->status.party_id );
+		party_join( *tsd, sd->status.party_id );
 	}
 
 	clif_partybooking_reply( tsd, sd, p->accept );
