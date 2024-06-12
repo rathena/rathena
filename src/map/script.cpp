@@ -27273,12 +27273,12 @@ BUILDIN_FUNC(setdialogpospercent){
  * @param start Starting index
  * @param end Ending index
  */
-uint32 partition_array_str(script_state *st, map_session_data *sd, script_data *array_, uint32 start, uint32 end) {
+int32 partition_array_str(script_state *st, map_session_data *sd, script_data *array_, int32 start, int32 end) {
 	struct reg_db* ref = reference_getref(array_);
 	int32 id = reference_getid(array_);
 	const char* name = reference_getname(array_);
-	uint32 i = start, j = end;
-	uint32 pivotidx = rnd() % (end - start);
+	int32 i = start, j = end;
+	int32 pivotidx = rnd() % (end - start);
 	const char* pivot = get_val2_str(st, reference_uid(id, start + pivotidx), ref);
 
 	while (i < j) {
