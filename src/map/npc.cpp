@@ -2962,28 +2962,24 @@ static int npc_selllist_sub(map_session_data* sd, int list_length, PACKET_CZ_PC_
 
 		script_setarray_pc( sd, "@sold_nameid", i, sd->inventory.u.items_inventory[idx].nameid, &key_nameid );
 		script_setarray_pc( sd, "@sold_quantity", i, item_list[i].amount, &key_amount );
+		script_setarray_pc( sd, "@sold_refine", i, sd->inventory.u.items_inventory[idx].refine, &key_refine );
+		script_setarray_pc( sd, "@sold_attribute", i, sd->inventory.u.items_inventory[idx].attribute, &key_attribute );
+		script_setarray_pc( sd, "@sold_identify", i, sd->inventory.u.items_inventory[idx].identify, &key_identify );
+		script_setarray_pc( sd, "@sold_enchantgrade", i, sd->inventory.u.items_inventory[idx].enchantgrade, &key_enchantgrade );
 
-		if( itemdb_isequip(sd->inventory.u.items_inventory[idx].nameid) )
-		{// process equipment based information into the arrays
-			script_setarray_pc( sd, "@sold_refine", i, sd->inventory.u.items_inventory[idx].refine, &key_refine );
-			script_setarray_pc( sd, "@sold_attribute", i, sd->inventory.u.items_inventory[idx].attribute, &key_attribute );
-			script_setarray_pc( sd, "@sold_identify", i, sd->inventory.u.items_inventory[idx].identify, &key_identify );
-			script_setarray_pc( sd, "@sold_enchantgrade", i, sd->inventory.u.items_inventory[idx].enchantgrade, &key_enchantgrade );
+		for( j = 0; j < MAX_SLOTS; j++ )
+		{// store each of the cards from the equipment in the array
+			snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
+			script_setarray_pc( sd, card_slot, i, sd->inventory.u.items_inventory[idx].card[j], &key_card[j] );
+		}
 
-			for( j = 0; j < MAX_SLOTS; j++ )
-			{// store each of the cards from the equipment in the array
-				snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
-				script_setarray_pc( sd, card_slot, i, sd->inventory.u.items_inventory[idx].card[j], &key_card[j] );
-			}
-
-			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) { // Store each of the item options in the array
-				snprintf(option_id, sizeof(option_id), "@sold_option_id%d", j + 1);
-				script_setarray_pc( sd, option_id, i, sd->inventory.u.items_inventory[idx].option[j].id, &key_option_id[j] );
-				snprintf(option_val, sizeof(option_val), "@sold_option_val%d", j + 1);
-				script_setarray_pc( sd, option_val, i, sd->inventory.u.items_inventory[idx].option[j].value, &key_option_val[j] );
-				snprintf(option_param, sizeof(option_param), "@sold_option_param%d", j + 1);
-				script_setarray_pc( sd, option_param, i, sd->inventory.u.items_inventory[idx].option[j].param, &key_option_param[j] );
-			}
+		for (j = 0; j < MAX_ITEM_RDM_OPT; j++) { // Store each of the item options in the array
+			snprintf(option_id, sizeof(option_id), "@sold_option_id%d", j + 1);
+			script_setarray_pc( sd, option_id, i, sd->inventory.u.items_inventory[idx].option[j].id, &key_option_id[j] );
+			snprintf(option_val, sizeof(option_val), "@sold_option_val%d", j + 1);
+			script_setarray_pc( sd, option_val, i, sd->inventory.u.items_inventory[idx].option[j].value, &key_option_val[j] );
+			snprintf(option_param, sizeof(option_param), "@sold_option_param%d", j + 1);
+			script_setarray_pc( sd, option_param, i, sd->inventory.u.items_inventory[idx].option[j].param, &key_option_param[j] );
 		}
 	}
 
