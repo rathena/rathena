@@ -931,7 +931,6 @@ bool guild_invite( map_session_data& sd, map_session_data* tsd ){
 	}
 
 	if( g->instance_id && battle_config.instance_block_invite ){
-		// TODO: message?
 		return false;
 	}
 
@@ -1034,7 +1033,6 @@ bool guild_reply_invite( map_session_data& sd, int guild_id, int flag ){
 	}
 
 	if( g->instance_id && battle_config.instance_block_invite ){
-		//TODO: message
 		sd.guild_invite = 0;
 		sd.guild_invite_account = 0;
 		return false;
@@ -1157,7 +1155,6 @@ bool guild_leave( map_session_data& sd, int guild_id, uint32 account_id, uint32 
 	}
 
 	if( g->instance_id > 0 && battle_config.instance_block_leave ){
-		clif_displaymessage( sd.fd, msg_txt( &sd, 228 ) ); //TODO: message
 		return false;
 	}
 
@@ -1199,7 +1196,6 @@ bool guild_expulsion( map_session_data& sd, int guild_id, uint32 account_id, uin
 	}
 
 	if( g->instance_id > 0 && battle_config.instance_block_expulsion ){
-		// TODO: message?
 		return false;
 	}
 
@@ -2190,7 +2186,6 @@ bool guild_gm_change( int guild_id, uint32 char_id, bool showMessage ){
 	}
 
 	if( g->instance_id > 0 && battle_config.instance_block_leaderchange ){
-		//TODO: message
 		return false;
 	}
 
@@ -2319,7 +2314,6 @@ int guild_break( map_session_data& sd, char* name ){
 
 	if( g->instance_id ){
 		if( battle_config.instance_block_leave ){
-			// TODO: message
 			return 0;
 		}
 

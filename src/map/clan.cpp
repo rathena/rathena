@@ -167,7 +167,6 @@ bool clan_member_join( map_session_data& sd, int clan_id, uint32 account_id, uin
 	}
 
 	if( clan->instance_id > 0 && battle_config.instance_block_invite ){
-		// TODO: message?
 		return false;
 	}
 
@@ -190,7 +189,6 @@ bool clan_member_leave( map_session_data& sd, int clan_id, uint32 account_id, ui
 	}
 
 	if( clan->instance_id > 0 && battle_config.instance_block_leave ){
-		// TODO: message?
 		return false;
 	}
 

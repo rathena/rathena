@@ -25042,6 +25042,16 @@ void clif_parse_partybooking_reply( int fd, map_session_data* sd ){
 		return;
 	}
 
+	struct party_data* party = party_search( sd->status.party_id );
+
+	if( party == nullptr ){
+		return;
+	}
+
+	if( party->instance_id > 0 && battle_config.instance_block_invite ){
+		return;
+	}
+
 	if( p->accept ){
 		party_join( *tsd, sd->status.party_id );
 	}

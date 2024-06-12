@@ -404,8 +404,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 	}
 
 	if( p->instance_id > 0 && battle_config.instance_block_invite ){
-		// TODO: find correct message
-		clif_displaymessage( sd.fd, msg_txt( &sd, 227 ) );
+		clif_party_invite_reply( sd, "", PARTY_REPLY_MEMORIALDUNGEON );
 		return false;
 	}
 
@@ -590,7 +589,8 @@ bool party_reply_invite( map_session_data& sd, int party_id, int flag ){
 		struct party_data* party = party_search( party_id );
 
 		if( party && party->instance_id > 0 && battle_config.instance_block_invite ){
-			// TODO: message?
+			sd.party_invite = 0;
+			sd.party_invite_account = 0;
 			return false;
 		}
 
@@ -709,7 +709,6 @@ bool party_removemember( map_session_data& sd, uint32 account_id, char* name ){
 		return false;
 
 	if( p->instance_id > 0 && battle_config.instance_block_expulsion ){
-		clif_party_withdraw( sd, account_id, name, PARTY_MEMBER_WITHDRAW_CANT_EXPEL, SELF );
 		return false;
 	}
 
