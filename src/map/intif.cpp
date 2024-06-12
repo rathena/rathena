@@ -846,15 +846,14 @@ int intif_guild_request_info(int guild_id)
  * @param m : Member to add to the guild
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_addmember(int guild_id,struct guild_member *m)
-{
+int intif_guild_addmember( int guild_id, struct guild_member& m ){
 	if (CheckForCharServer())
 		return 0;
 	WFIFOHEAD(inter_fd,sizeof(struct guild_member)+8);
 	WFIFOW(inter_fd,0) = 0x3032;
 	WFIFOW(inter_fd,2) = sizeof(struct guild_member)+8;
 	WFIFOL(inter_fd,4) = guild_id;
-	memcpy(WFIFOP(inter_fd,8),m,sizeof(struct guild_member));
+	memcpy( WFIFOP( inter_fd, 8 ), &m, sizeof( struct guild_member ) );
 	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
 	return 1;
 }

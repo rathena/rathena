@@ -1039,12 +1039,6 @@ struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
 DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
 #endif
 
-struct PACKET_ZC_ACK_REQ_JOIN_GUILD{
-	int16 packetType;
-	uint8 result;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_ACK_REQ_JOIN_GUILD, 0x169);
-
 struct PACKET_CZ_REQ_BAN_GUILD{
 	int16 packetType;
 	uint32 guild_id;
@@ -1075,6 +1069,12 @@ struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_DISORGANIZE_GUILD_RESULT, 0x15e);
 
+struct PACKET_ZC_RESULT_MAKE_GUILD{
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_RESULT_MAKE_GUILD, 0x167);
+
 struct PACKET_CZ_REQ_JOIN_GUILD{
 	int16 packetType;
 	uint32 AID;
@@ -1083,12 +1083,32 @@ struct PACKET_CZ_REQ_JOIN_GUILD{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_REQ_JOIN_GUILD, 0x168);
 
+struct PACKET_ZC_ACK_REQ_JOIN_GUILD{
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQ_JOIN_GUILD, 0x169);
+
+struct PACKET_ZC_REQ_JOIN_GUILD{
+	int16 packetType;
+	uint32 guild_id;
+	char guild_name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_JOIN_GUILD, 0x16a);
+
 struct PACKET_CZ_JOIN_GUILD{
 	int16 packetType;
 	uint32 guild_id;
 	int32 answer;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_JOIN_GUILD, 0x16b);
+
+struct PACKET_ZC_GUILD_NOTICE{
+	int16 packetType;
+	char subject[60];
+	char notice[120];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GUILD_NOTICE, 0x16f);
 
 struct PACKET_CZ_REQ_JOIN_GUILD2{
 	int16 packetType;

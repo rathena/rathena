@@ -3841,7 +3841,7 @@ ACMD_FUNC(guild)
 
 	prev = battle_config.guild_emperium_check;
 	battle_config.guild_emperium_check = 0;
-	guild_create(sd, guild);
+	guild_create( *sd, guild );
 	battle_config.guild_emperium_check = prev;
 
 	return 0;
@@ -3854,8 +3854,9 @@ ACMD_FUNC(breakguild)
 	if (sd->status.guild_id) { // Check if the player has a guild
 		if (sd->guild) { // Check if guild was found
 			if (sd->state.gmaster_flag) { // Check if player is guild master
-				int ret = 0;
-				ret = guild_break( *sd, sd->guild->guild.name ); // Break guild
+				// Break guild
+				int ret = guild_break( *sd, sd->guild->guild.name );
+
 				if (ret) { // Check if anything went wrong
 					return 0; // Guild was broken
 				} else {

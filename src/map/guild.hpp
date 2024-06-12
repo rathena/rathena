@@ -54,14 +54,14 @@ int guild_getposition(const map_session_data &sd);
 t_exp guild_payexp(map_session_data *sd,t_exp exp);
 t_exp guild_getexp(map_session_data *sd,t_exp exp); // [Celest]
 
-int guild_create(map_session_data *sd, const char *name);
+bool guild_create( map_session_data& sd, const char* name );
 int guild_created(uint32 account_id,int guild_id);
 int guild_request_info(int guild_id);
 int guild_recv_noinfo(int guild_id);
 int guild_recv_info(const struct mmo_guild &sg);
 int guild_npc_request_info(int guild_id,const char *ev);
 bool guild_invite( map_session_data& sd, map_session_data* tsd );
-bool guild_reply_invite(map_session_data *sd,int guild_id,int flag);
+bool guild_reply_invite( map_session_data& sd, int guild_id, int flag );
 void guild_member_joined(map_session_data *sd);
 int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag);
 bool guild_leave( map_session_data& sd, int guild_id, uint32 account_id, uint32 char_id, const char *mes );
