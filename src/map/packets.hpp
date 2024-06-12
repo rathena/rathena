@@ -611,6 +611,8 @@ struct PACKET_ZC_HOSKILLINFO_UPDATE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_HOSKILLINFO_UPDATE, 0x239)
 
+// Unused packet (alpha?)
+/*
 struct PACKET_ZC_NOTIFY_MOVE {
 	int16 packetType;
 	uint32 gid;
@@ -618,6 +620,7 @@ struct PACKET_ZC_NOTIFY_MOVE {
 	uint32 moveStartTime;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_MOVE, 0x86)
+*/
 
 struct PACKET_ZC_NOTIFY_PLAYERMOVE {
 	int16 packetType;

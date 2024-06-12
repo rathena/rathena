@@ -6052,9 +6052,12 @@ bool pc_dropitem(map_session_data *sd,int n,int amount)
 		return false;
 	}
 
-	// bypass drop restriction in map_addflooritem because we've already checked it above
-	if (!map_addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2|4, 0))
+	// Bypass drop restriction in map_addflooritem because we've already checked it above
+	if (!map_addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2|4, 0,
+		false, DIR_MAX, battle_config.item_stacking?BL_NUL:BL_ITEM))
+	{
 		return false;
+	}
 
 	pc_delitem(sd, n, amount, 1, 0, LOG_TYPE_PICKDROP_PLAYER);
 	clif_dropitem( *sd, n, amount );
@@ -6259,14 +6262,35 @@ bool pc_isUseitem(map_session_data *sd,int n)
 	if( itemdb_group.item_exists(IG_MERCENARY, nameid) && sd->md != nullptr )
 		return false; // Mercenary Scrolls
 
-	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
-		if( pc_is90overweight(sd) ) {
-			clif_msg(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT);
-			return false;
+	// Safe check type cash disappear when overweight [Napster]
+	if( item->flag.group || item->type == IT_CASH ){
+#ifdef RENEWAL
+		// Check if the player is not overweighted
+		// In Renewal the limit is 70% weight and gives the same error message
+		if (pc_is70overweight(sd)) {
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+			return 0;
 		}
-		if( !pc_inventoryblank(sd) ) {
-			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 732), false, SELF); //Item cannot be open when inventory is full
-			return false;
+#else
+		// Check if the player is not overweighted
+		// In Pre-Renewal the limit is 50% weight and gives a specific error message
+		if (pc_is50overweight(sd)) {
+			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
+			return 0;
+		}
+#endif
+
+		// Check if the player has enough free spaces in the inventory
+		// Official servers use 10 as the minimum amount of slots required to get the items
+		// The <= is intentional, as in official servers you actually need an extra empty slot
+		// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
+		if (pc_inventoryblank(sd) <= 10) {
+#ifdef RENEWAL
+			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
+#else
+			clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+#endif
+			return 0;
 		}
 	}
 
@@ -9817,7 +9841,7 @@ int pc_dead(map_session_data *sd,struct block_list *src)
 		item_tmp.card[1]=0;
 		item_tmp.card[2]=GetWord(sd->status.char_id,0); // CharId
 		item_tmp.card[3]=GetWord(sd->status.char_id,1);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 	}
 
 	//Remove bonus_script when dead

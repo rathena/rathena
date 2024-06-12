@@ -509,6 +509,9 @@ enum clif_messages : uint16_t {
 	// You cannot carry more items because you are overweight.
 	MSI_CANT_GET_ITEM_BECAUSE_WEIGHT = 52,
 
+	// You can't have this item because you will exceed the weight limit.
+	MSI_CANT_GET_ITEM_BECAUSE_COUNT = 220,
+
 	// You can't put this item on.
 	MSI_CAN_NOT_EQUIP_ITEM = 372,
 
@@ -565,7 +568,7 @@ enum clif_messages : uint16_t {
 
 #if (PACKETVER >= 20130807 && PACKETVER <= 20130814) && !defined(PACKETVER_ZERO)
 	// %d seconds left until you can use
-	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1863,
 
 	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
 	MSI_BUSY = 1924,
@@ -577,13 +580,13 @@ enum clif_messages : uint16_t {
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2095,
 
 	// Merge items available does not exist.
-	MSI_NOT_EXIST_MERGE_ITEM = 2183,
+	MSI_NOT_EXIST_MERGE_ITEM = 2184,
 
 	// This bullet is not suitable for the weapon you are equipping.
 	MSI_WRONG_BULLET = 2494,
 #else
 	// %d seconds left until you can use
-	MSI_ITEM_REUSE_LIMIT_SECOND = 1861,
+	MSI_ITEM_REUSE_LIMIT_SECOND = 1862,
 
 	// Any work in progress (NPC dialog, manufacturing ...) quit and try again.
 	MSI_BUSY = 1923,
@@ -595,7 +598,7 @@ enum clif_messages : uint16_t {
 	MSI_PARTY_MASTER_CHANGE_SAME_MAP = 2094,
 
 	// Merge items available does not exist.
-	MSI_NOT_EXIST_MERGE_ITEM = 2182,
+	MSI_NOT_EXIST_MERGE_ITEM = 2183,
 
 	// This bullet is not suitable for the weapon you are equipping.
 	MSI_WRONG_BULLET = 2493,
@@ -811,7 +814,7 @@ void clif_clearunit_area( block_list& bl, clr_type type );
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick);
 int clif_spawn(struct block_list *bl, bool walking = false);	//area
 void clif_walkok( map_session_data& sd );
-void clif_move(struct unit_data *ud); //area
+void clif_move( struct unit_data& ud ); //area
 void clif_changemap( map_session_data& sd, short m, uint16 x, uint16 y );
 void clif_changemapserver( map_session_data& sd, const char* map, uint16 x, uint16 y, uint32 ip, uint16 port );
 void clif_blown(struct block_list *bl); // area

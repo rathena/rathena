@@ -2389,15 +2389,6 @@ static int battle_calc_sizefix(int64 damage, map_session_data *sd, unsigned char
 	return (int)cap_value(damage, INT_MIN, INT_MAX);
 }
 
-static int battle_calc_status_attack(struct status_data *status, short hand)
-{
-	//left-hand penalty on sATK is always 50% [Baalberith]
-	if (hand == EQI_HAND_L)
-		return status->batk;
-	else
-		return 2 * status->batk;
-}
-
 /**
  * Calculates renewal Variance, OverUpgradeBonus, and SizePenaltyMultiplier of weapon damage parts for player
  * @param src Block list of attacker
@@ -3401,10 +3392,12 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag 
 		case LG_EARTHDRIVE:
 		case NPC_DRAGONBREATH:
 			return false;
+#ifndef RENEWAL
 		case LK_SPIRALPIERCE:
-			// Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
+			// In Pre-Renewal Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
 			if (chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
 				return false;
+#endif
 			break;
 	}
 
@@ -3959,8 +3952,8 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
 	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 
-	wd->statusAtk += battle_calc_status_attack(sstatus, EQI_HAND_R);
-	wd->statusAtk2 += battle_calc_status_attack(sstatus, EQI_HAND_L);
+	wd->statusAtk += sstatus->batk;
+	wd->statusAtk2 += sstatus->batk;
 
 	if (sd && sd->sc.getSCE(SC_SEVENWIND)) { // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
 		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
@@ -3969,6 +3962,9 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 	}
+
+	// Right-hand status attack is doubled after elemental adjustments
+	wd->statusAtk *= 2;
 
 	// Check critical
 	if (wd->type == DMG_MULTI_HIT_CRITICAL || wd->type == DMG_CRITICAL)
@@ -4047,26 +4043,34 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 		case LK_SPIRALPIERCE:
 		case ML_SPIRALPIERCE:
 			if (sd) {
-				short index = sd->equip_index[EQI_HAND_R];
+				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
 
+				// Officially statusAtk + weaponAtk + equipAtk make base attack
+				// We simulate this here by adding them all into equip attack
+				ATK_ADD2(wd->equipAtk, wd->equipAtk2, wd->statusAtk + wd->weaponAtk, wd->statusAtk2 + wd->weaponAtk2);
+				// Set statusAtk and weaponAtk to 0
+				ATK_RATE(wd->statusAtk, wd->statusAtk2, 0);
+				ATK_RATE(wd->weaponAtk, wd->weaponAtk2, 0);
+
+				// Add weight
+				short index = sd->equip_index[EQI_HAND_R];
 				if (index >= 0 &&
 					sd->inventory_data[index] &&
 					sd->inventory_data[index]->type == IT_WEAPON)
-					wd->equipAtk += sd->inventory_data[index]->weight*7/100; // weight from spear is treated as equipment ATK on official [helvetica]
+					wd->equipAtk += sd->inventory_data[index]->weight / 10;
 
-				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
-				wd->masteryAtk = 0; // weapon mastery is ignored for spiral
-				
-				switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-					case SZ_SMALL: //Small: 115%
-						ATK_RATE(wd->damage, wd->damage2, 115);
-						RE_ALLATK_RATE(wd, 115);
+				// 70% damage modifier is applied to base attack + weight
+				ATK_RATE(wd->equipAtk, wd->equipAtk2, 70);
+
+				// Additional skill-specific size fix
+				switch (tstatus->size) {
+					case SZ_SMALL: //Small: 130%
+						ATK_RATE(wd->equipAtk, wd->equipAtk2, 130);
 						break;
-					//case SZ_MEDIUM: //Medium: 100%
-					case SZ_BIG: //Large: 85%
-						ATK_RATE(wd->damage, wd->damage2, 85);
-						RE_ALLATK_RATE(wd, 85);
+					case SZ_MEDIUM: //Medium: 115%
+						ATK_RATE(wd->equipAtk, wd->equipAtk2, 115);
 						break;
+					//case SZ_BIG: //Large: 100%
 				}
 			} else {
 				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
@@ -6794,6 +6798,15 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		}
 		return;
 	}
+
+	// Triple Attack has a special property that it does not split damage on plant mode
+	// In pre-renewal, it requires the monster to have exactly 100 def
+	if (skill_id == MO_TRIPLEATTACK && wd->div_ < 0
+#ifndef RENEWAL
+		&& tstatus->def == 100
+#endif
+		)
+		wd->div_ *= -1;
 
 	//For plants we don't continue with the weapon attack code, so we have to apply DAMAGE_DIV_FIX here
 	battle_apply_div_fix(wd, skill_id);
@@ -11168,6 +11181,7 @@ static const struct _battle_data {
 	{ "pk_level_range",                     &battle_config.pk_level_range,                  0,      0,      INT_MAX,        },
 	{ "manner_system",                      &battle_config.manner_system,                   0xFFF,  0,      0xFFF,          },
 	{ "pet_equip_required",                 &battle_config.pet_equip_required,              0,      0,      1,              },
+	{ "pet_unequip_destroy",                &battle_config.pet_unequip_destroy,             1,      0,      1,              },
 	{ "multi_level_up",                     &battle_config.multi_level_up,                  0,      0,      1,              },
 	{ "multi_level_up_base",                &battle_config.multi_level_up_base,             0,      0,      MAX_LEVEL,      },
 	{ "multi_level_up_job",                 &battle_config.multi_level_up_job,              0,      0,      MAX_LEVEL,      },
@@ -11519,6 +11533,7 @@ static const struct _battle_data {
 	{ "feature.instance_allow_reconnect",   &battle_config.instance_allow_reconnect,        0,      0,      1,              },
 #endif
 	{ "synchronize_damage",                 &battle_config.synchronize_damage,              0,      0,      1,              },
+	{ "item_stacking",                      &battle_config.item_stacking,                   1,      0,      1,              },
 
 #include <custom/battle_config_init.inc>
 };
