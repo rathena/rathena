@@ -3420,8 +3420,13 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 		struct status_data *status = status_get_status_data(src);
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if (sd) // add arrow atk if using an applicable skill
-			eatk += (is_skill_using_arrow(src, skill_id) ? sd->bonus.arrow_atk : 0);
+		// Add arrow atk if using an applicable skill
+		if (sd != nullptr && is_skill_using_arrow(src, skill_id)) {
+			int16 ammo_idx = sd->equip_index[EQI_AMMO];
+			// Attack of cannon balls is not added to equip attack, it needs to be added by the skills that use them
+			if (ammo_idx >= 0 && sd->inventory_data[ammo_idx] != nullptr && sd->inventory_data[ammo_idx]->subtype != AMMO_CANNONBALL)
+				eatk += sd->bonus.arrow_atk;
+		}
 
 		return eatk + status->eatk;
 	}
@@ -3903,6 +3908,16 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 #endif
 				}
 				break;
+#ifdef RENEWAL
+			case GN_CARTCANNON:
+			case NC_ARMSCANNON:
+				// Arrow attack of these skills is not influenced by P.ATK so we add it as mastery attack
+				if (sd != nullptr) {
+					struct status_data* tstatus = status_get_status_data(target);
+					ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_attr_fix(src, target, sd->bonus.arrow_atk, sd->bonus.arrow_ele, tstatus->def_ele, tstatus->ele_lv));
+				}
+				break;
+#endif
 		}
 
 		if (sc) { // Status change considered as masteries
@@ -7442,7 +7457,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			if( is_attack_left_handed( src, skill_id ) ){
 				wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.percentAtk2;
 			}
-			// Apply PATK mod
+			// Apply P.ATK mod
 			// But for Dragonbreaths it only applies if Dragonic Aura is skilled
 			if( ( skill_id != RK_DRAGONBREATH && skill_id != RK_DRAGONBREATH_WATER ) || pc_checkskill( sd, DK_DRAGONIC_AURA ) > 0 ){
 				wd.damage = (int64)floor( (float)( wd.damage * ( 100 + sstatus->patk ) / 100 ) );
@@ -7492,8 +7507,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		// Res reduces physical damage by a percentage and
 		// is calculated before DEF and other reductions.
-		// This should be the official formula. [Rytech]
-		if ((wd.damage + wd.damage2) && tstatus->res > 0 && skill_id != MO_EXTREMITYFIST) {
+		// TODO: It seems all skills that use the simple defense formula (damage substracted by DEF+DEF2) ignore Res
+		// TODO: We should add a flag for those skills or use the IgnoreDefense flag after confirming all
+		// TODO: Res formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
+		if ((wd.damage + wd.damage2) && tstatus->res > 0 && skill_id != MO_EXTREMITYFIST && skill_id != GN_CARTCANNON && skill_id != NC_ARMSCANNON) {
 			short res = tstatus->res;
 			short ignore_res = 0;// Value used as a percentage.
 
@@ -8733,7 +8750,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 25;
 				}
 #ifdef RENEWAL
-				// SMATK needs to be applied before the skill ratio to prevent rounding issues
+				// S.MATK needs to be applied before the skill ratio to prevent rounding issues
 				if (sd && sstatus->smatk > 0)
 					ad.damage += ad.damage * sstatus->smatk / 100;
 #endif
@@ -8769,7 +8786,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #ifdef RENEWAL
 		// MRes reduces magical damage by a percentage and
 		// is calculated before MDEF and other reductions.
-		// This should be the official formula. [Rytech]
+		// TODO: Check if there are skills that ignore Mres, similar to skills that ignore Res
+		// TODO: MRes formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
 		if (ad.damage && tstatus->mres > 0) {
 			short mres = tstatus->mres;
 			short ignore_mres = 0;// Value used as percentage.
