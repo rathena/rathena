@@ -3813,7 +3813,7 @@ ACMD_FUNC(party)
 		return -1;
 	}
 
-	party_create(sd, party, 0, 0);
+	party_create( *sd, party, 0, 0 );
 
 	return 0;
 }

@@ -23161,7 +23161,7 @@ BUILDIN_FUNC(party_create)
 		item2 = 1;
 
 	party_create_byscript = 1;
-	script_pushint(st,party_create(sd,party_name,item1,item2));
+	script_pushint( st, party_create( *sd, party_name, item1, item2 ) );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23213,7 +23213,7 @@ BUILDIN_FUNC(party_addmember)
 		return SCRIPT_CMD_FAILURE;
 	}
 	sd->party_invite = party_id;
-	script_pushint(st,party_add_member(party_id,sd));
+	script_pushint( st, party_add_member( party_id, *sd ) );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23336,7 +23336,7 @@ BUILDIN_FUNC(party_destroy)
 		script_pushint(st,1);
 	}
 	else //leader leave = party broken
-		script_pushint(st,party_leave(party->data[i].sd));
+		script_pushint( st, party_leave( *party->data[i].sd ) );
 	return SCRIPT_CMD_SUCCESS;
 }
 
