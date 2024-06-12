@@ -13674,9 +13674,9 @@ void clif_parse_PartyInvite2( int fd, map_session_data *sd ){
 
 	PACKET_CZ_PARTY_JOIN_REQ* p = reinterpret_cast<PACKET_CZ_PARTY_JOIN_REQ*>( RFIFOP( fd, 0 ) );
 
-	char name[NAME_LENGTH] = {0};
+	char name[NAME_LENGTH];
 
-	safestrncpy( name, p->name, NAME_LENGTH );
+	safestrncpy( name, p->name, sizeof( name ) );
 
 	party_invite( *sd, map_nick2sd( name, false ) );
 #endif

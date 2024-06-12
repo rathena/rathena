@@ -10,7 +10,7 @@
 #include <common/nullpo.hpp>
 #include <common/random.hpp>
 #include <common/showmsg.hpp>
-#include <common/socket.hpp> // last_tick
+#include <common/socket.hpp> // last_tick, session_isActive
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
 #include <common/utils.hpp>
@@ -160,6 +160,7 @@ int party_create( map_session_data& sd, char *name, int item, int item2 ){
 	sd.party_creating = true;
 	party_fill_member( leader, sd, 1 );
 	intif_create_party(&leader,name,item,item2);
+
 	return 1;
 }
 
@@ -389,7 +390,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 	int i;
 
 	// confirm if this player is a party leader
-	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd == &sd);
+	ARR_FIND( 0, MAX_PARTY, i, p->data[i].sd == &sd );
 
 	if( i == MAX_PARTY || !p->party.member[i].leader ) {
 		clif_displaymessage( sd.fd, msg_txt( &sd, 282 ) );
@@ -413,13 +414,18 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 		return false;
 	}
 
-	// @noask [LuzZza]
-	if( tsd->state.noask || tsd->status.disable_partyinvite ){
+	if( tsd->status.disable_partyinvite ){
 		clif_party_invite_reply( sd, tsd->status.name, PARTY_REPLY_JOINMSG_REFUSE );
 		return false;
 	}
 
-	if (battle_config.block_account_in_same_party) {
+	// @noask [LuzZza]
+	if( tsd->state.noask ){
+		clif_noask_sub( sd, *tsd, 394 ); // Autorejected party invite from %s.
+		return false;
+	}
+
+	if( battle_config.block_account_in_same_party ){
 		ARR_FIND(0, MAX_PARTY, i, p->party.member[i].account_id == tsd->status.account_id);
 		if (i < MAX_PARTY) {
 			clif_party_invite_reply( sd, tsd->status.name, PARTY_REPLY_DUAL );
@@ -436,22 +442,24 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 	}
 
 	// confirm whether the account has the ability to invite before checking the player
-	if( !pc_has_permission( &sd, PC_PERM_PARTY) || !pc_has_permission(tsd, PC_PERM_PARTY) ) {
-		clif_displaymessage( sd.fd, msg_txt( &sd, 81 ) ); // "Your GM level doesn't authorize you to perform this action on the specified player."
+	if( !pc_has_permission( &sd, PC_PERM_PARTY ) || !pc_has_permission( tsd, PC_PERM_PARTY ) ) {
+		clif_displaymessage( sd.fd, msg_txt( &sd, 81 ) ); // Your GM level doesn't authorize you to perform this action on the specified player.
 		return false;
 	}
 
-	if (!battle_config.invite_request_check && (tsd->guild_invite > 0 || tsd->trade_partner || tsd->adopt_invite)) {
+	if( !battle_config.invite_request_check && ( tsd->guild_invite > 0 || tsd->trade_partner || tsd->adopt_invite ) ){
 		clif_party_invite_reply( sd, tsd->status.name, PARTY_REPLY_JOIN_OTHER_PARTY );
 		return false;
 	}
 
-	if (!tsd->fd) { //You can't invite someone who has already disconnected.
+	// You can't invite someone who has already disconnected.
+	if( !session_isActive( tsd->fd ) ){
 		clif_party_invite_reply( sd, tsd->status.name, PARTY_REPLY_REJECTED );
 		return false;
 	}
 
-	if( tsd->status.party_id > 0 || tsd->party_invite > 0 ) {// already associated with a party
+	// Already associated with a party
+	if( tsd->status.party_id > 0 || tsd->party_invite > 0 ){
 		clif_party_invite_reply( sd, tsd->status.name, PARTY_REPLY_JOIN_OTHER_PARTY );
 		return false;
 	}
@@ -562,7 +570,8 @@ bool party_booking_load( uint32 account_id, uint32 char_id, struct s_party_booki
 }
 
 bool party_reply_invite( map_session_data& sd, int party_id, int flag ){
-	if( sd.party_invite != party_id ) { // forged
+	// forged
+	if( sd.party_invite != party_id ) {
 		sd.party_invite = 0;
 		sd.party_invite_account = 0;
 		return false;
@@ -593,6 +602,7 @@ bool party_reply_invite( map_session_data& sd, int party_id, int flag ){
 
 		return true;
 	}
+
 	// rejected or failure
 	map_session_data* tsd = map_id2sd( sd.party_invite_account );
 
@@ -610,24 +620,21 @@ bool party_reply_invite( map_session_data& sd, int party_id, int flag ){
 //- Loads up party data if not in server
 //- Sets up the pointer to him
 //- Player must be authed/active and belong to a party before calling this method
-void party_member_joined(map_session_data *sd)
-{
-	nullpo_retv( sd );
-
-	struct party_data* p = party_search(sd->status.party_id);
+void party_member_joined( map_session_data& sd ){
+	struct party_data* p = party_search( sd.status.party_id );
 	int i;
 
 	if (!p) {
-		party_request_info(sd->status.party_id, sd->status.char_id);
+		party_request_info( sd.status.party_id, sd.status.char_id );
 		return;
 	}
 
-	ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == sd->status.account_id && p->party.member[i].char_id == sd->status.char_id );
+	ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == sd.status.account_id && p->party.member[i].char_id == sd.status.char_id );
 
 	if (i < MAX_PARTY) {
-		p->data[i].sd = sd;
+		p->data[i].sd = &sd;
 	} else
-		sd->status.party_id = 0; //He does not belongs to the party really?
+		sd.status.party_id = 0; //He does not belongs to the party really?
 }
 
 /// Invoked (from char-server) when a new member is added to the party.
@@ -696,7 +703,7 @@ bool party_removemember( map_session_data& sd, uint32 account_id, char* name ){
 		return false;
 	}
 
-	struct party_data *p = party_search(sd.status.party_id);
+	struct party_data* p = party_search( sd.status.party_id );
 
 	if( p == nullptr )
 		return false;
@@ -761,7 +768,7 @@ bool party_leave( map_session_data& sd, bool showMessage ){
 		return false;
 	}
 
-	struct party_data *p = party_search( sd.status.party_id );
+	struct party_data* p = party_search( sd.status.party_id );
 
 	if( p == nullptr ){
 		return false;
@@ -785,7 +792,7 @@ bool party_leave( map_session_data& sd, bool showMessage ){
 	}
 
 	party_trade_bound_cancel( sd );
-	intif_party_leave(p->party.party_id,sd.status.account_id,sd.status.char_id,sd.status.name,PARTY_MEMBER_WITHDRAW_LEAVE);
+	intif_party_leave( p->party.party_id, sd.status.account_id, sd.status.char_id, sd.status.name, PARTY_MEMBER_WITHDRAW_LEAVE );
 
 	return true;
 }

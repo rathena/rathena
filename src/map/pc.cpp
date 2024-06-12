@@ -2384,7 +2384,7 @@ void pc_reg_received(map_session_data *sd)
 	}
 
 	if (sd->status.party_id > 0)
-		party_member_joined(sd);
+		party_member_joined( *sd );
 	if (sd->status.guild_id > 0)
 		guild_member_joined(sd);
 	if (sd->status.clan_id > 0)

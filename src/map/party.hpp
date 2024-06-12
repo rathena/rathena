@@ -66,7 +66,7 @@ int party_create( map_session_data& sd, char *name, int item, int item2 );
 void party_created(uint32 account_id,uint32 char_id,int fail,int party_id,char *name);
 int party_request_info(int party_id, uint32 char_id);
 bool party_invite( map_session_data& sd, map_session_data* tsd );
-void party_member_joined(map_session_data *sd);
+void party_member_joined( map_session_data& sd );
 int party_member_added(int party_id,uint32 account_id,uint32 char_id,int flag);
 bool party_leave( map_session_data& sd, bool showMessage = false );
 bool party_removemember( map_session_data& sd, uint32 account_id, char *name );
