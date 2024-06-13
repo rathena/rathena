@@ -16125,8 +16125,19 @@ BUILDIN_FUNC(npcwalkto)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if( nd->bl.m < 0 ){
+		ShowError( "buildin_npcwalkto: NPC is not on a map.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct map_data* mapdata = map_getmapdata( nd->bl.m );
 	int x = script_getnum(st, 2);
 	int y = script_getnum(st, 3);
+
+	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys ){
+		ShowWarning( "buildin_npcwalkto: coordinates %d/%d are out of bounds in map %s(%dx%d).\n", x, y, mapdata->name, mapdata->xs, mapdata->ys );
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	if (!nd->status.hp)
 		status_calc_npc(nd, SCO_FIRST);
