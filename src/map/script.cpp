@@ -16150,7 +16150,7 @@ BUILDIN_FUNC(npcwalkto)
 
 /**
  * Stop an npc's movement.
- * npcstop {"<npc name>"};
+ * npcstop {"<npc name>", {"<flag>"}};
  */
 BUILDIN_FUNC(npcstop)
 {
@@ -16168,7 +16168,22 @@ BUILDIN_FUNC(npcstop)
 			ShowError("buildin_npcstop: non-existing NPC.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
-	unit_stop_walking( &nd->bl, USW_FIXPOS | USW_MOVE_FULL_CELL | USW_FORCE_STOP );
+
+	int flag = USW_FIXPOS | USW_MOVE_FULL_CELL | USW_FORCE_STOP;
+
+	if (script_hasdata(st, 3)) {
+		flag = script_getnum(st, 3);
+
+		if (flag < USW_NONE || flag > USW_ALL) {
+			ShowError("buildin_npcstop: invalid flag %d.\n", flag);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (flag & USW_FORCE_STOP)
+			nd->ud.state.force_walk = false;
+	}
+
+	unit_stop_walking( &nd->bl, flag );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27666,7 +27681,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getsavepoint,"i?"),
 	BUILDIN_DEF(npcspeed,"i?"),
 	BUILDIN_DEF(npcwalkto,"ii?"),
-	BUILDIN_DEF(npcstop,"?"),
+	BUILDIN_DEF(npcstop,"??"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
 	BUILDIN_DEF(checkoption1,"i?"),

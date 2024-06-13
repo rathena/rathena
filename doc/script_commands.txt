@@ -7964,7 +7964,7 @@ Return values:
 
 *npcspeed( <speed value> {,"<npc name>"} );
 *npcwalkto( <x>,<y> {,"<npc name>"} } );
-*npcstop( {"<npc name>"} );
+*npcstop( {"<npc name>", {"<flag>"}});
 
 These commands will make the NPC object in question move around the map.
 
@@ -7977,6 +7977,14 @@ on the same map it is currently on. The script proceeds immediately after the
 NPC begins moving.
 
 'npcstop' will stop the motion.
+
+The <flag> value in npcstop affects how the unit is stopped. The following flags are bitwise values (can be combined using the pipe operator):
+	USW_NONE = Unit will keep walking to their original destination.
+	USW_FIXPOS = Issue a fixpos packet afterwards.
+	USW_MOVE_ONCE = Force the unit to move one cell if it hasn't yet.
+	USW_MOVE_FULL_CELL = Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change).
+	USW_FORCE_STOP = Force stop moving.
+Default: USW_FIXPOS | USW_MOVE_FULL_CELL | USW_FORCE_STOP
 
 While in transit, the NPC will be clickable, but invoking it will cause it to
 stop moving, which will make its coordinates different from what the client
