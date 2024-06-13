@@ -782,6 +782,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		{// authentication found (coming from map server)
 			char_get_authdb().erase(account_id);
 			char_auth_ok(fd, sd);
+			sd->pincode_correct = true; // already entered pincode correctly yet
 		}
 		else
 		{// authentication not found (coming from login server)
