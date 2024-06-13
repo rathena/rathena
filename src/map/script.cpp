@@ -16092,6 +16092,13 @@ BUILDIN_FUNC(npcspeed)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	int speed = script_getnum(st, 2);
+
+	if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+		ShowError("buildin_npcspeed: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	nd->speed = speed;
 
 	return SCRIPT_CMD_SUCCESS;
