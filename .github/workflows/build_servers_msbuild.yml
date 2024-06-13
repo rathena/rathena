@@ -41,8 +41,8 @@ jobs:
 
       - name: Build solution in Debug
         if: ${{ matrix.mode == 'PRE' }}
-        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT%3BPRERE"
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT%3BPRERE" /warnaserror
 
       - name: Build solution in Debug
         if: ${{ matrix.mode == 'RE' }}
-        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT"
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT" /warnaserror

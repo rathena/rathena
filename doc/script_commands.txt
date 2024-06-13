@@ -6608,7 +6608,8 @@ Available <type>:
 	PCBLOCK_COMMANDS			Prevent the player from using atcommands/charcommands.
 	PCBLOCK_NPCCLICK			Prevent the player from clicking/touching any NPC/shop/warp.
 	PCBLOCK_EMOTION				Prevent the player from using emotions.
-	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK.
+	PCBLOCK_EQUIP				Prevent the player from replacing equipment.
+	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK|PCBLOCK_EQUIP.
 	PCBLOCK_ALL				Sum of all the flags.
 
 Examples:

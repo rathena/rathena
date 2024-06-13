@@ -39,6 +39,7 @@
 #   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
 #   AttackDelay             Attack speed. (Default: 0)
 #   AttackMotion            Attack animation speed. (Default: 0)
+#   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)

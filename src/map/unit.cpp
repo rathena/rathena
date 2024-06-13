@@ -140,7 +140,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		unit_refresh( bl, true );
 	}
 #endif
-	clif_move(ud);
+	clif_move( *ud );
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
@@ -211,8 +211,9 @@ TIMER_FUNC(unit_teleport_timer){
 	else if(*mast_tid != tid || bl == nullptr)
 		return 0;
 	else {
-		TBL_PC *msd = unit_get_master(bl);
-		if(msd && !check_distance_bl(&msd->bl, bl, data)) {
+		map_session_data* msd = unit_get_master( bl );
+
+		if( msd != nullptr && !check_distance_bl( &msd->bl, bl, static_cast<int>( data ) ) ){
 			*mast_tid = INVALID_TIMER;
 			unit_warp(bl, msd->bl.m, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		} else // No timer needed
@@ -556,7 +557,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 					return 0;
 				}
 				// Resend walk packet for proper Self Destruction display.
-				clif_move(ud);
+				clif_move( *ud );
 			}
 			break;
 		case BL_NPC:
@@ -626,7 +627,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		}
 		ud->walktimer = add_timer(tick+speed,unit_walktoxy_timer,id,speed);
 		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 ) // Not required not damaged recently
-			clif_move(ud);
+			clif_move( *ud );
 	} else if(ud->state.running) { // Keep trying to run.
 		if (!(unit_run(bl, nullptr, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
 			ud->state.running = 0;
@@ -706,7 +707,8 @@ TIMER_FUNC(unit_delay_walktoxy_timer){
  * @return 1: Success 0: Fail (No valid bl or target)
  */
 TIMER_FUNC(unit_delay_walktobl_timer){
-	struct block_list *bl = map_id2bl(id), *tbl = map_id2bl(data);
+	block_list* bl = map_id2bl( id );
+	block_list* tbl = map_id2bl( static_cast<int>( data ) );
 
 	if(!bl || bl->prev == nullptr || tbl == nullptr)
 		return 0;
@@ -2784,7 +2786,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if(sd && !check_distance_client_bl(src,target,range)) {
 		// Player tries to attack but target is too far, notify client
-		clif_movetoattack(sd,target);
+		clif_movetoattack( *sd, *target );
 		return 1;
 	} else if(md && !check_distance_bl(src,target,range)) {
 		// Monster: Chase if required
@@ -3163,10 +3165,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			}
 
 			if(sd->party_invite > 0)
-				party_reply_invite(sd,sd->party_invite,0);
+				party_reply_invite( *sd, sd->party_invite, 0 );
 
 			if(sd->guild_invite > 0)
-				guild_reply_invite(sd,sd->guild_invite,0);
+				guild_reply_invite( *sd, sd->guild_invite, 0 );
 
 			if(sd->guild_alliance > 0)
 				guild_reply_reqalliance(sd,sd->guild_alliance_account,0);

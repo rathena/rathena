@@ -216,7 +216,7 @@ int skill_get_weapontype( uint16 skill_id )                        { skill_get(s
 int skill_get_ammotype( uint16 skill_id )                          { skill_get(skill_id, skill_db.find(skill_id)->require.ammo); }
 int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv )         { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.ammo_qty); }
 int skill_get_state( uint16 skill_id )                             { skill_get(skill_id, skill_db.find(skill_id)->require.state); }
-int skill_get_status_count( uint16 skill_id )                      { skill_get(skill_id, skill_db.find(skill_id)->require.status.size()); }
+size_t skill_get_status_count( uint16 skill_id )                   { skill_get(skill_id, skill_db.find(skill_id)->require.status.size()); }
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv )       { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.spiritball); }
 sc_type skill_get_sc(int16 skill_id)                               { if (!skill_check(skill_id)) return SC_NONE; return skill_db.find(skill_id)->sc; }
 
@@ -872,7 +872,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 		(skill_nocast&8 && mapdata->getMapFlag(MF_BATTLEGROUND)) ||
 		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
 		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->getMapFlag(MF_RESTRICTED)) ){
-			clif_msg(&sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
+			clif_msg(&sd, MSI_IMPOSSIBLE_SKILL_AREA); // This skill cannot be used within this area
 			return true;
 	}
 
@@ -7545,7 +7545,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			break;
 		}
 		else {
-			int abra_skill_id = 0, abra_skill_lv, checked = 0, checked_max = abra_db.size() * 3;
+			int abra_skill_id = 0, abra_skill_lv;
+			size_t checked = 0, checked_max = abra_db.size() * 3;
 
 			do {
 				auto abra_spell = abra_db.random();
@@ -8554,8 +8555,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AC_MAKINGARROW:
-		if(sd) {
-			clif_arrow_create_list(sd);
+		if( sd != nullptr ){
+			clif_arrow_create_list( *sd );
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -8568,8 +8569,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SA_CREATECON:
-		if(sd) {
-			clif_elementalconverter_list(sd);
+		if( sd != nullptr ){
+			clif_elementalconverter_list( *sd );
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -9283,8 +9284,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	// Weapon Refining [Celest]
 	case WS_WEAPONREFINE:
-		if(sd)
-			clif_item_refine_list(sd);
+		if( sd != nullptr ){
+			clif_item_refine_list( *sd );
+		}
 		break;
 
 	case MC_VENDING:
@@ -9305,7 +9307,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				else{
 					// Instantly open the vending UI
 					sd->state.pending_vending_ui = false;
-					clif_openvendingreq(sd,2+skill_lv);
+					clif_openvendingreq( *sd, 2+skill_lv );
 				}
 			}
 		}
@@ -9384,7 +9386,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			eflag = pc_additem(sd,&item_tmp,1,LOG_TYPE_PRODUCE);
 			if(eflag) {
 				clif_additem(sd,0,0,eflag);
-				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				if (battle_config.skill_drop_items_full)
+					map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 			}
 		}
 		break;
@@ -10171,7 +10174,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 								item_tmp.amount = skill_group->require.amount[i];
 								if( item_tmp.nameid && (flag2=pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_OTHER)) ){
 									clif_additem(sd,0,0,flag2);
-									map_addflooritem(&item_tmp,item_tmp.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
+									if (battle_config.skill_drop_items_full)
+										map_addflooritem(&item_tmp,item_tmp.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 								}
 							}
 						}
@@ -10185,7 +10189,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						if( item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_OTHER)) )
 						{
 							clif_additem(sd,0,0,flag);
-							map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
+							if (battle_config.skill_drop_items_full)
+								map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 						}
 					}
 				}
@@ -16228,7 +16233,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				} else
 					sec = 3000; //Couldn't trap it?
 				if (sg->unit_id == UNT_ANKLESNARE) {
-					clif_skillunit_update(&unit->bl);
+					clif_skillunit_update( unit->bl );
 					/**
 					 * If you're snared from a trap that was invisible this makes the trap be
 					 * visible again -- being you stepped on it (w/o this the trap remains invisible and you go "WTF WHY I CANT MOVE")
@@ -18278,7 +18283,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 						count--;
 						if (!count) {
 							if( skill_id == RL_P_ALTER ){
-								clif_msg( &sd, SKILL_NEED_HOLY_BULLET );
+								clif_msg( &sd, MSI_FAIL_NEED_EQUIPPED_PROPERTY_SAINT_BULLET );
 							}else{
 								clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
 							}
@@ -18327,19 +18332,19 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			default:
 				switch((unsigned int)log2(require.weapon)) {
 					case W_REVOLVER:
-						clif_msg(&sd, SKILL_NEED_REVOLVER);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_HANDGUN);
 						break;
 					case W_RIFLE:
-						clif_msg(&sd, SKILL_NEED_RIFLE);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_RIFLE);
 						break;
 					case W_GATLING:
-						clif_msg(&sd, SKILL_NEED_GATLING);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_GATLING);
 						break;
 					case W_SHOTGUN:
-						clif_msg(&sd, SKILL_NEED_SHOTGUN);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_SHOTGUN);
 						break;
 					case W_GRENADE:
-						clif_msg(&sd, SKILL_NEED_GRENADE);
+						clif_msg(&sd, MSI_FAIL_NEED_EQUIPPED_GUN_GRANADE);
 						break;
 					default:
 						clif_skill_fail( sd, skill_id, USESKILL_FAIL_THIS_WEAPON );
@@ -19593,7 +19598,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 		return;
 
 	if (sd.status.char_id != target_sd->status.char_id && !battle_check_range(&sd.bl, &target_sd->bl, skill_get_range2(&sd.bl, sd.menuskill_id, sd.menuskill_val2, true))) {
-		clif_item_repaireffect(&sd, idx, 1);
+		clif_item_repaireffect( sd, idx, true );
 		return;
 	}
 
@@ -19616,10 +19621,10 @@ void skill_repairweapon( map_session_data& sd, int idx ){
 
 	pc_delitem(&sd,pc_search_inventory(&sd,material),1,0,0,LOG_TYPE_CONSUME);
 
-	clif_item_repaireffect(&sd,idx,0);
+	clif_item_repaireffect( sd, idx, false );
 
 	if( sd.status.char_id != target_sd->status.char_id )
-		clif_item_repaireffect(target_sd,idx,0);
+		clif_item_repaireffect( *target_sd, idx, false );
 }
 
 /*==========================================
@@ -19627,7 +19632,7 @@ void skill_repairweapon( map_session_data& sd, int idx ){
  *------------------------------------------*/
 void skill_identify(map_session_data *sd, int idx)
 {
-	int flag=1;
+	bool failure = true;
 
 	nullpo_retv(sd);
 
@@ -19635,11 +19640,11 @@ void skill_identify(map_session_data *sd, int idx)
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(sd->inventory.u.items_inventory[idx].nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-			flag=0;
+			failure = false;
 			sd->inventory.u.items_inventory[idx].identify = 1;
 		}
 	}
-	clif_item_identified(sd,idx,flag);
+	clif_item_identified( *sd, idx, failure );
 }
 
 /*==========================================
@@ -20873,7 +20878,7 @@ int skill_delunit(struct skill_unit* unit)
 			break;
 	}
 
-	clif_skill_delunit(unit);
+	clif_skill_delunit( *unit );
 
 	unit->group=nullptr;
 	map_delblock(&unit->bl); // don't free yet
@@ -22395,7 +22400,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 								if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 									clif_additem(sd,0,0,flag);
 									if( battle_config.skill_drop_items_full ){
-										map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+										map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 									}
 								}
 							}
@@ -22408,14 +22413,14 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			if (k) {
 				clif_produceeffect(sd,6,nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
-				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
+				clif_msg_skill(sd,skill_id, MSI_SKILL_SUCCESS);
 				return true;
 			}
 		} else if (tmp_item.amount) { //Success
 			if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 				clif_additem(sd,0,0,flag);
 				if( battle_config.skill_drop_items_full ){
-					map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+					map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 				}
 			}
 			switch (skill_id) {
@@ -22428,17 +22433,17 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 				case GN_S_PHARMACY:
 					clif_produceeffect(sd, 6, nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
-					clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
 					break;
 				case MT_M_MACHINE:
 					clif_produceeffect(sd, 0, nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
-					clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
 					break;
 				case BO_BIONIC_PHARMACY:
 					clif_produceeffect(sd, 2, nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_SUCCESS );
-					clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+					clif_msg_skill(sd, skill_id, MSI_SKILL_SUCCESS);
 					break;
 			}
 			return true;
@@ -22502,12 +22507,12 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 					if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 						clif_additem(sd,0,0,flag);
 						if( battle_config.skill_drop_items_full ){
-							map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+							map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 						}
 					}
 					clif_produceeffect(sd,7,nameid);
 					clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
-					clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
+					clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				}
 				break;
 			case GN_MAKEBOMB:
@@ -22515,17 +22520,17 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, i
 			case GN_CHANGEMATERIAL:
 				clif_produceeffect(sd,7,nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
-				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
+				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				break;
 			case MT_M_MACHINE:
 				clif_produceeffect(sd, 1, nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
-				clif_msg_skill(sd, skill_id, ITEM_PRODUCE_FAIL);
+				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				break;
 			case BO_BIONIC_PHARMACY:
 				clif_produceeffect(sd, 3, nameid);
 				clif_misceffect( sd->bl, NOTIFYEFFECT_PHARMACY_FAILURE );
-				clif_msg_skill(sd, skill_id, ITEM_PRODUCE_FAIL);
+				clif_msg_skill(sd, skill_id, MSI_SKILL_FAIL);
 				break;
 			default:
 				if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 ) { //Cooking items.
@@ -22585,7 +22590,8 @@ bool skill_arrow_create(map_session_data *sd, t_itemid nameid)
 		}
 		if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 			clif_additem(sd,0,0,flag);
-			map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+			if( battle_config.skill_drop_items_full )
+				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 		}
 	}
 	return true;
@@ -22852,7 +22858,8 @@ int skill_elementalanalysis( map_session_data& sd, int n, uint16 skill_lv, unsig
 			unsigned char flag = pc_additem(&sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
 			if( flag != 0 ) {
 				clif_additem(&sd,0,0,flag);
-				map_addflooritem(&tmp_item,tmp_item.amount,sd.bl.m,sd.bl.x,sd.bl.y,0,0,0,0,0);
+				if( battle_config.skill_drop_items_full )
+					map_addflooritem(&tmp_item,tmp_item.amount,sd.bl.m,sd.bl.x,sd.bl.y,0,0,0,4,0);
 			}
 		}
 
@@ -22887,7 +22894,7 @@ int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list)
 							nameid = sd->inventory.u.items_inventory[idx].nameid;
 							amount = item_list[k*2+1];
 							if( nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-								clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
+								clif_msg_skill(sd, GN_CHANGEMATERIAL, MSI_SKILL_FAIL_MATERIAL_IDENTITY);
 								return 0;
 							}
 							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j]
@@ -22909,7 +22916,7 @@ int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list)
 	}
 
 	if( p == 0)
-		clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_CANT_COMBINE);
+		clif_msg_skill(sd, GN_CHANGEMATERIAL, MSI_SKILL_RECIPE_NOTEXIST);
 
 	return 0;
 }

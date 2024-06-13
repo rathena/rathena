@@ -385,7 +385,7 @@ static void grfio_localpath_create(char* buffer, size_t size, const char* filena
 
 
 /// Reads a file into a newly allocated buffer (from grf or data directory).
-void* grfio_reads(const char* fname, int* size)
+void* grfio_reads(const char* fname, size_t* size)
 {
 	unsigned char* buf2 = nullptr;
 
@@ -457,7 +457,7 @@ void* grfio_reads(const char* fname, int* size)
 }
 
 int32 grfio_read_rsw_water_level( const char* fname ){
-	unsigned char* rsw = (unsigned char *)grfio_read( fname );
+	unsigned char* rsw = (unsigned char *)grfio_reads( fname );
 
 	if( rsw == nullptr ){
 		// Error already reported in grfio_read
@@ -714,7 +714,7 @@ static void grfio_resourcecheck(void)
 {
 	char restable[256];
 	char *buf;
-	int size;
+	size_t size;
 	FILE* fp;
 	int i = 0;
 
@@ -744,7 +744,7 @@ static void grfio_resourcecheck(void)
 		buf[size] = '\0';
 
 		ptr = buf;
-		while( ptr - buf < size )
+		while( static_cast<size_t>( ptr - buf ) < size )
 		{
 			if( grfio_parse_restable_row(ptr) )
 				++i;

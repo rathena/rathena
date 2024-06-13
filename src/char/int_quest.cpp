@@ -23,18 +23,15 @@
  * @return Array of found entries. It has *count entries, and it is care of the
  *         caller to aFree() it afterwards.
  */
-struct quest *mapif_quests_fromsql(uint32 char_id, int *count) {
+struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
 	struct quest *questlog = nullptr;
 	struct quest tmp_quest;
 	SqlStmt *stmt;
 
-	if( !count )
-		return nullptr;
-
 	stmt = SqlStmt_Malloc(sql_handle);
 	if( stmt == nullptr ) {
 		SqlStmt_ShowDebug(stmt);
-		*count = 0;
+		count = 0;
 		return nullptr;
 	}
 
@@ -52,23 +49,27 @@ struct quest *mapif_quests_fromsql(uint32 char_id, int *count) {
 	) {
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
-		*count = 0;
+		count = 0;
 		return nullptr;
 	}
 
-	*count = (int)SqlStmt_NumRows(stmt);
-	if( *count > 0 ) {
-		int i = 0;
+	count = static_cast<std::remove_reference<decltype(count)>::type>( SqlStmt_NumRows( stmt ) );
+	if( count > 0 ) {
+		size_t i = 0;
 
-		questlog = (struct quest *)aCalloc(*count, sizeof(struct quest));
+		questlog = (struct quest *)aCalloc( count, sizeof( struct quest ) );
 		while( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
-			if( i >= *count ) //Sanity check, should never happen
+			// Sanity check, should never happen
+			if( i >= count ){
 				break;
+			}
+
 			memcpy(&questlog[i++], &tmp_quest, sizeof(tmp_quest));
 		}
-		if( i < *count ) {
+
+		if( i < count ) {
 			//Should never happen. Compact array
-			*count = i;
+			count = i;
 			questlog = (struct quest *)aRealloc(questlog, sizeof(struct quest) * i);
 		}
 	}
@@ -136,18 +137,21 @@ bool mapif_quest_update(uint32 char_id, struct quest qd) {
  * @see inter_parse_frommap
  */
 int mapif_parse_quest_save(int fd) {
-	int i, j, k, old_n, new_n = (RFIFOW(fd,2) - 8) / sizeof(struct quest);
 	uint32 char_id = RFIFOL(fd,4);
 	struct quest *old_qd = nullptr, *new_qd = nullptr;
 	bool success = true;
+	size_t old_n, new_n = ( RFIFOW( fd, 2 ) - 8 ) / sizeof( struct quest );
 
 	if( new_n > 0 )
 		new_qd = (struct quest*)RFIFOP(fd,8);
 
-	old_qd = mapif_quests_fromsql(char_id, &old_n);
-	for( i = 0; i < new_n; i++ ) {
+	old_qd = mapif_quests_fromsql( char_id, old_n );
+
+	for( size_t i = 0, j; i < new_n; i++ ) {
 		ARR_FIND(0, old_n, j, new_qd[i].quest_id == old_qd[j].quest_id);
 		if( j < old_n ) { //Update existing quests
+			size_t k;
+
 			//Only states and counts are changable.
 			ARR_FIND(0, MAX_QUEST_OBJECTIVES, k, new_qd[i].count[k] != old_qd[j].count[k]);
 			if( k != MAX_QUEST_OBJECTIVES || new_qd[i].state != old_qd[j].state )
@@ -162,8 +166,10 @@ int mapif_parse_quest_save(int fd) {
 			success &= mapif_quest_add(char_id, new_qd[i]);
 	}
 
-	for( i = 0; i < old_n; i++ ) //Quests not in new_qd but in old_qd are to be erased.
+	// Quests not in new_qd but in old_qd are to be erased.
+	for( size_t i = 0; i < old_n; i++ ){
 		success &= mapif_quest_delete(char_id, old_qd[i].quest_id);
+	}
 
 	if( old_qd )
 		aFree(old_qd);
@@ -189,14 +195,12 @@ int mapif_parse_quest_save(int fd) {
  */
 int mapif_parse_quest_load(int fd) {
 	uint32 char_id = RFIFOL(fd,2);
-	struct quest *tmp_questlog = nullptr;
-	int num_quests;
-
-	tmp_questlog = mapif_quests_fromsql(char_id, &num_quests);
+	size_t num_quests;
+	struct quest* tmp_questlog = mapif_quests_fromsql( char_id, num_quests );
 
 	WFIFOHEAD(fd,num_quests * sizeof(struct quest) + 8);
 	WFIFOW(fd,0) = 0x3860;
-	WFIFOW(fd,2) = num_quests * sizeof(struct quest) + 8;
+	WFIFOW(fd,2) = static_cast<int16>( num_quests * sizeof( struct quest ) + 8 );
 	WFIFOL(fd,4) = char_id;
 
 	if( num_quests > 0 )

@@ -7663,7 +7663,6 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreDefense: true
       IgnoreFlee: true
     Flags:
       TargetTrap: true
@@ -24520,7 +24519,7 @@ Body:
     TargetType: Attack
     Range: 1
     Hit: Single
-    HitCount: 5
+    HitCount: -5
     CopyFlags:
       Skill:
         Reproduce: true

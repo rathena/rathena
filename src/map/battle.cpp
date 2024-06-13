@@ -393,7 +393,20 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 		damage = 0;
 	}
 
-	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
+	// The client refuses to display animations slower than 1x speed
+	// So we need to shorten AttackMotion to be in-sync with the client in this case
+	if (battle_config.synchronize_damage && skill_id == 0 && src->type == BL_MOB && amotion > status_get_clientamotion(src))
+		amotion = status_get_clientamotion(src);
+	// Check for delay battle damage config
+	else if (!battle_config.delay_battle_damage)
+		amotion = 1;
+	// Aegis places a damage-delay cap of 1 sec to non player attacks
+	// We only want to apply this cap if damage was not synchronized
+	else if (src->type != BL_PC && amotion > 1000)
+		amotion = 1000;
+
+	// Skip creation of timer
+	if (amotion <= 1) {
 		//Deal damage
 		battle_damage(src, target, damage, ddelay, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
 		return 0;
@@ -411,8 +424,6 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	dat->additional_effects = additional_effects;
 	dat->src_type = src->type;
 	dat->isspdamage = isspdamage;
-	if (src->type != BL_PC && amotion > 1000)
-		amotion = 1000; //Aegis places a damage-delay cap of 1 sec to non player attacks. [Skotlex]
 
 	if( src->type == BL_PC )
 		((TBL_PC*)src)->delayed_damage++;
@@ -2378,15 +2389,6 @@ static int battle_calc_sizefix(int64 damage, map_session_data *sd, unsigned char
 	return (int)cap_value(damage, INT_MIN, INT_MAX);
 }
 
-static int battle_calc_status_attack(struct status_data *status, short hand)
-{
-	//left-hand penalty on sATK is always 50% [Baalberith]
-	if (hand == EQI_HAND_L)
-		return status->batk;
-	else
-		return 2 * status->batk;
-}
-
 /**
  * Calculates renewal Variance, OverUpgradeBonus, and SizePenaltyMultiplier of weapon damage parts for player
  * @param src Block list of attacker
@@ -3390,10 +3392,12 @@ static bool battle_skill_stacks_masteries_vvs(uint16 skill_id, e_bonus_chk_flag 
 		case LG_EARTHDRIVE:
 		case NPC_DRAGONBREATH:
 			return false;
+#ifndef RENEWAL
 		case LK_SPIRALPIERCE:
-			// Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
+			// In Pre-Renewal Spiral Pierce is influenced only by refine bonus and Star Crumbs for players
 			if (chk_flag != BCHK_REFINE && chk_flag != BCHK_STAR)
 				return false;
+#endif
 			break;
 	}
 
@@ -3416,8 +3420,13 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
 		struct status_data *status = status_get_status_data(src);
 		map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if (sd) // add arrow atk if using an applicable skill
-			eatk += (is_skill_using_arrow(src, skill_id) ? sd->bonus.arrow_atk : 0);
+		// Add arrow atk if using an applicable skill
+		if (sd != nullptr && is_skill_using_arrow(src, skill_id)) {
+			int16 ammo_idx = sd->equip_index[EQI_AMMO];
+			// Attack of cannon balls is not added to equip attack, it needs to be added by the skills that use them
+			if (ammo_idx >= 0 && sd->inventory_data[ammo_idx] != nullptr && sd->inventory_data[ammo_idx]->subtype != AMMO_CANNONBALL)
+				eatk += sd->bonus.arrow_atk;
+		}
 
 		return eatk + status->eatk;
 	}
@@ -3899,6 +3908,16 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 #endif
 				}
 				break;
+#ifdef RENEWAL
+			case GN_CARTCANNON:
+			case NC_ARMSCANNON:
+				// Arrow attack of these skills is not influenced by P.ATK so we add it as mastery attack
+				if (sd != nullptr) {
+					struct status_data* tstatus = status_get_status_data(target);
+					ATK_ADD(wd->masteryAtk, wd->masteryAtk2, battle_attr_fix(src, target, sd->bonus.arrow_atk, sd->bonus.arrow_ele, tstatus->def_ele, tstatus->ele_lv));
+				}
+				break;
+#endif
 		}
 
 		if (sc) { // Status change considered as masteries
@@ -3948,8 +3967,8 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
 	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 
-	wd->statusAtk += battle_calc_status_attack(sstatus, EQI_HAND_R);
-	wd->statusAtk2 += battle_calc_status_attack(sstatus, EQI_HAND_L);
+	wd->statusAtk += sstatus->batk;
+	wd->statusAtk2 += sstatus->batk;
 
 	if (sd && sd->sc.getSCE(SC_SEVENWIND)) { // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
 		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
@@ -3958,6 +3977,9 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 	}
+
+	// Right-hand status attack is doubled after elemental adjustments
+	wd->statusAtk *= 2;
 
 	// Check critical
 	if (wd->type == DMG_MULTI_HIT_CRITICAL || wd->type == DMG_CRITICAL)
@@ -4036,26 +4058,34 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 		case LK_SPIRALPIERCE:
 		case ML_SPIRALPIERCE:
 			if (sd) {
-				short index = sd->equip_index[EQI_HAND_R];
+				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
 
+				// Officially statusAtk + weaponAtk + equipAtk make base attack
+				// We simulate this here by adding them all into equip attack
+				ATK_ADD2(wd->equipAtk, wd->equipAtk2, wd->statusAtk + wd->weaponAtk, wd->statusAtk2 + wd->weaponAtk2);
+				// Set statusAtk and weaponAtk to 0
+				ATK_RATE(wd->statusAtk, wd->statusAtk2, 0);
+				ATK_RATE(wd->weaponAtk, wd->weaponAtk2, 0);
+
+				// Add weight
+				short index = sd->equip_index[EQI_HAND_R];
 				if (index >= 0 &&
 					sd->inventory_data[index] &&
 					sd->inventory_data[index]->type == IT_WEAPON)
-					wd->equipAtk += sd->inventory_data[index]->weight*7/100; // weight from spear is treated as equipment ATK on official [helvetica]
+					wd->equipAtk += sd->inventory_data[index]->weight / 10;
 
-				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
-				wd->masteryAtk = 0; // weapon mastery is ignored for spiral
-				
-				switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-					case SZ_SMALL: //Small: 115%
-						ATK_RATE(wd->damage, wd->damage2, 115);
-						RE_ALLATK_RATE(wd, 115);
+				// 70% damage modifier is applied to base attack + weight
+				ATK_RATE(wd->equipAtk, wd->equipAtk2, 70);
+
+				// Additional skill-specific size fix
+				switch (tstatus->size) {
+					case SZ_SMALL: //Small: 130%
+						ATK_RATE(wd->equipAtk, wd->equipAtk2, 130);
 						break;
-					//case SZ_MEDIUM: //Medium: 100%
-					case SZ_BIG: //Large: 85%
-						ATK_RATE(wd->damage, wd->damage2, 85);
-						RE_ALLATK_RATE(wd, 85);
+					case SZ_MEDIUM: //Medium: 115%
+						ATK_RATE(wd->equipAtk, wd->equipAtk2, 115);
 						break;
+					//case SZ_BIG: //Large: 100%
 				}
 			} else {
 				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
@@ -5128,6 +5158,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			//ATK [{(Skill Level x 150) + 300} x Caster's Base Level / 120]% + ATK [(AGI x 2) + (Caster's Job Level x 4)]%
 			skillratio += -100 + 300 + 150 * skill_lv;
 			RE_LVL_DMOD(120);
+			skillratio += sstatus->agi * 2;
+			// If 4th job, job level of your 3rd job counts
+			skillratio += (sd ? (sd->class_&JOBL_FOURTH ? sd->change_level_4th : sd->status.job_level) * 4 : 0);
 			break;
 		case GC_VENOMPRESSURE:
 			skillratio += 900;
@@ -5280,8 +5313,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case LG_SHIELDPRESS:
-			skillratio += -100 + 200 * skill_lv + sstatus->str;
+			skillratio += -100 + 200 * skill_lv;
 			if (sd) {
+				// Shield Press only considers base STR without job bonus
+				skillratio += sd->status.str;
+
 				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
 					skillratio += skill_lv * 15 * pc_checkskill( sd, IG_SHIELD_MASTERY );
 				}
@@ -6289,19 +6325,6 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 				atk = 40 * pc_checkskill(sd, RA_RESEARCHTRAP);
 			break;
 #endif
-		case GC_COUNTERSLASH:
-			atk = sstatus->agi * 2 + (sd ? sd->status.job_level * 4 : 0);
-			break;
-		case LG_SHIELDPRESS:
-			if (sd) {
-				int damagevalue = 0;
-				short index = sd->equip_index[EQI_HAND_L];
-
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
-					damagevalue = sstatus->vit * sd->inventory.u.items_inventory[index].refine;
-				atk = damagevalue;
-			}
-			break;
 	}
 	return atk;
 }
@@ -6630,6 +6653,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 		case RK_DRAGONBREATH_WATER:
 		case NC_ARMSCANNON:
 		case GN_CARTCANNON:
+		case MO_EXTREMITYFIST:
 			if (attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
 				return;
 			if (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
@@ -6789,6 +6813,15 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		}
 		return;
 	}
+
+	// Triple Attack has a special property that it does not split damage on plant mode
+	// In pre-renewal, it requires the monster to have exactly 100 def
+	if (skill_id == MO_TRIPLEATTACK && wd->div_ < 0
+#ifndef RENEWAL
+		&& tstatus->def == 100
+#endif
+		)
+		wd->div_ *= -1;
 
 	//For plants we don't continue with the weapon attack code, so we have to apply DAMAGE_DIV_FIX here
 	battle_apply_div_fix(wd, skill_id);
@@ -7358,17 +7391,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 			battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
 
-		int64 ratio = 0;
-
 #ifndef RENEWAL
-		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
+		// Skill ratio
+		ATK_RATE(wd.damage, wd.damage2, battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv));
 
-		ATK_RATE(wd.damage, wd.damage2, ratio);
+		// Additive damage bonus
+		ATK_ADD(wd.damage, wd.damage2, battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv));
 #endif
-
-		int64 bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
-
-		ATK_ADD(wd.damage, wd.damage2, bonus_damage);
 
 #ifdef RENEWAL
 		if(skill_id == HW_MAGICCRASHER) { // Add weapon attack for MATK onto Magic Crasher
@@ -7428,7 +7457,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			if( is_attack_left_handed( src, skill_id ) ){
 				wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.percentAtk2;
 			}
-			// Apply PATK mod
+			// Apply P.ATK mod
 			// But for Dragonbreaths it only applies if Dragonic Aura is skilled
 			if( ( skill_id != RK_DRAGONBREATH && skill_id != RK_DRAGONBREATH_WATER ) || pc_checkskill( sd, DK_DRAGONIC_AURA ) > 0 ){
 				wd.damage = (int64)floor( (float)( wd.damage * ( 100 + sstatus->patk ) / 100 ) );
@@ -7440,11 +7469,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			wd.damage += wd.masteryAtk;
 			if( is_attack_left_handed( src, skill_id ) ){
 				wd.damage2 += wd.masteryAtk2;
-			}
-			// Apply bonus damage
-			wd.damage += bonus_damage;
-			if( is_attack_left_handed( src, skill_id ) ){
-				wd.damage2 += bonus_damage;
 			}
 
 			// CritAtkRate modifier
@@ -7467,9 +7491,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.long_attack_atk_rate);
 		}
 
-		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
+		// Skill ratio
+		ATK_RATE(wd.damage, wd.damage2, battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv));
 
-		ATK_RATE(wd.damage, wd.damage2, ratio);
+		// Additive damage bonus
+		ATK_ADD(wd.damage, wd.damage2, battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv));
 
 		// Advance Katar Mastery
 		if (sd) {
@@ -7481,8 +7507,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		// Res reduces physical damage by a percentage and
 		// is calculated before DEF and other reductions.
-		// This should be the official formula. [Rytech]
-		if ((wd.damage + wd.damage2) && tstatus->res > 0) {
+		// TODO: It seems all skills that use the simple defense formula (damage substracted by DEF+DEF2) ignore Res
+		// TODO: We should add a flag for those skills or use the IgnoreDefense flag after confirming all
+		// TODO: Res formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
+		if ((wd.damage + wd.damage2) && tstatus->res > 0 && skill_id != MO_EXTREMITYFIST && skill_id != GN_CARTCANNON && skill_id != NC_ARMSCANNON) {
 			short res = tstatus->res;
 			short ignore_res = 0;// Value used as a percentage.
 
@@ -7566,6 +7594,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case TK_COUNTER:
 			if(sd && sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
 				ATK_ADD(wd.damage, wd.damage2, 10 * pc_checkskill(sd, TK_RUN));
+			break;
+		case LG_SHIELDPRESS:
+			if (sd) {
+				int damagevalue = 0;
+				short index = sd->equip_index[EQI_HAND_L];
+
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
+					damagevalue = sstatus->vit * sd->inventory.u.items_inventory[index].refine;
+				ATK_ADD(wd.damage, wd.damage2, damagevalue);
+			}
 			break;
 		case SR_TIGERCANNON:
 			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
@@ -8156,8 +8194,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WL_SUMMON_ATK_WATER:
 					case WL_SUMMON_ATK_WIND:
 					case WL_SUMMON_ATK_GROUND:
-						skillratio += -100 + (1 + skill_lv) / 2 * (status_get_lv(src) + (sd ? sd->status.job_level : 0));
-						RE_LVL_DMOD(100); // ! TODO: Confirm new formula
+						skillratio += 200;
+						RE_LVL_DMOD(100);
 						break;
 					case LG_RAYOFGENESIS:
 						skillratio += -100 + 350 * skill_lv + sstatus->int_; // !TODO: What's the INT bonus?
@@ -8711,7 +8749,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						(sc->getSCE(SC_EARTH_INSIGNIA) && sc->getSCE(SC_EARTH_INSIGNIA)->val1 == 3 && s_ele == ELE_EARTH))
 						skillratio += 25;
 				}
-
+#ifdef RENEWAL
+				// S.MATK needs to be applied before the skill ratio to prevent rounding issues
+				if (sd && sstatus->smatk > 0)
+					ad.damage += ad.damage * sstatus->smatk / 100;
+#endif
 				MATK_RATE(skillratio);
 
 				//Constant/misc additions from skills
@@ -8742,12 +8784,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			ad.damage -= (int64)ad.damage*i/100;
 
 #ifdef RENEWAL
-		if (sd && sstatus->smatk > 0)
-			ad.damage += ad.damage * sstatus->smatk / 100;
-
 		// MRes reduces magical damage by a percentage and
 		// is calculated before MDEF and other reductions.
-		// This should be the official formula. [Rytech]
+		// TODO: Check if there are skills that ignore Mres, similar to skills that ignore Res
+		// TODO: MRes formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
 		if (ad.damage && tstatus->mres > 0) {
 			short mres = tstatus->mres;
 			short ignore_mres = 0;// Value used as percentage.
@@ -11159,6 +11199,7 @@ static const struct _battle_data {
 	{ "pk_level_range",                     &battle_config.pk_level_range,                  0,      0,      INT_MAX,        },
 	{ "manner_system",                      &battle_config.manner_system,                   0xFFF,  0,      0xFFF,          },
 	{ "pet_equip_required",                 &battle_config.pet_equip_required,              0,      0,      1,              },
+	{ "pet_unequip_destroy",                &battle_config.pet_unequip_destroy,             1,      0,      1,              },
 	{ "multi_level_up",                     &battle_config.multi_level_up,                  0,      0,      1,              },
 	{ "multi_level_up_base",                &battle_config.multi_level_up_base,             0,      0,      MAX_LEVEL,      },
 	{ "multi_level_up_job",                 &battle_config.multi_level_up_job,              0,      0,      MAX_LEVEL,      },
@@ -11462,6 +11503,10 @@ static const struct _battle_data {
 	{ "pet_legacy_formula",                 &battle_config.pet_legacy_formula,              0,      0,      1,              },
 	{ "pet_distance_check",                 &battle_config.pet_distance_check,              5,      0,      50,             },
 	{ "pet_hide_check",                     &battle_config.pet_hide_check,                  1,      0,      1,              },
+	{ "instance_block_leave",               &battle_config.instance_block_leave,            1,      0,      1,              },
+	{ "instance_block_leaderchange",        &battle_config.instance_block_leaderchange,     1,      0,      1,              },
+	{ "instance_block_invite",              &battle_config.instance_block_invite,           1,      0,      1,              },
+	{ "instance_block_expulsion",           &battle_config.instance_block_expulsion,        1,      0,      1,              },
 
 	// 4th Job Stuff
 	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1,              },
@@ -11505,6 +11550,8 @@ static const struct _battle_data {
 #else
 	{ "feature.instance_allow_reconnect",   &battle_config.instance_allow_reconnect,        0,      0,      1,              },
 #endif
+	{ "synchronize_damage",                 &battle_config.synchronize_damage,              0,      0,      1,              },
+	{ "item_stacking",                      &battle_config.item_stacking,                   1,      0,      1,              },
 
 #include <custom/battle_config_init.inc>
 };
