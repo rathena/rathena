@@ -3528,7 +3528,6 @@ int npc_unload(struct npc_data* nd, bool single) {
 	}
 
 	nd->qi_data.clear();
-	nd->sc_display.clear();
 
 	script_stop_sleeptimers(nd->bl.id);
 

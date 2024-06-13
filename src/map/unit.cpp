@@ -3494,8 +3494,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			sd->combos.clear();
 
-			sd->sc_display.clear();
-
 			if( sd->quest_log != nullptr ) {
 				aFree(sd->quest_log);
 				sd->quest_log = nullptr;

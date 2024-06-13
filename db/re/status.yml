@@ -6076,6 +6076,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+      SendVal1: true
     EndReturn:
       All_Riding: true
   - Status: Teargas_Sob

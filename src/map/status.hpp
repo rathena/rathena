@@ -3058,6 +3058,7 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONHERMODE,
 	SCF_REQUIRENOWEAPON,
 	SCF_DISPLAYMOB,
+	SCF_DISPLAYALL,
 	SCF_MAX
 };
 
@@ -3141,7 +3142,7 @@ enum e_refine_chance_type {
 ///Define to determine who has regen
 #define BL_REGEN (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 ///Define to determine who will receive a clif_status_change packet for effects that require one to display correctly
-#define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM|BL_NPC)
+#define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM|BL_NPC|BL_PET)
 
 /** Basic damage info of a weapon
 * Required because players have two of these, one in status_data
@@ -3242,12 +3243,6 @@ struct regen_data {
 	struct regen_data_sub *sregen, *ssregen;
 };
 
-///Status display entry
-struct sc_display_entry {
-	enum sc_type type;
-	int val1, val2, val3;
-};
-
 ///Status change entry
 struct status_change_entry {
 	int timer;
@@ -3281,6 +3276,7 @@ public:
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
+	std::vector<sc_type> sc_display;
 /**
  * The Storm Gust counter was dropped in renewal
  **/

@@ -9822,100 +9822,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 }
 
 /**
- * Applies SC effect
- * @param bl: Source to apply effect
- * @param type: Status change (SC_*)
- * @param dval1~3: Depends on type of status change
- * Author: Ind
- */
-void status_display_add( block_list& bl, enum sc_type type, int val1, int val2, int val3 ){
-	std::shared_ptr<sc_display_entry> entry = std::make_shared<sc_display_entry>();
-
-	entry->type = type;
-	entry->val1 = val1;
-	entry->val2 = val2;
-	entry->val3 = val3;
-
-	switch( bl.type ){
-		case BL_PC: {
-			map_session_data* sd = BL_CAST(BL_PC, &bl);
-
-			if (sd == nullptr)
-				return;
-
-			sd->sc_display[type] = entry;
-			}
-			break;
-		case BL_NPC: {
-			npc_data* nd = BL_CAST(BL_NPC, &bl);
-
-			if (nd == nullptr)
-				return;
-
-			nd->sc_display[type] = entry;
-			}
-			break;
-		case BL_MOB: {
-			mob_data* md = BL_CAST(BL_MOB, &bl);
-
-			if (md == nullptr)
-				return;
-
-			md->sc_display[type] = entry;
-			}
-			break;
-		default:
-			return;
-	}
-}
-
-/**
- * Removes SC effect
- * @param bl: Source to remove effect
- * @param type: Status change (SC_*)
- * Author: Ind
- */
-void status_display_remove( block_list& bl, enum sc_type type ){
-	switch( bl.type ){
-		case BL_PC: {
-			map_session_data* sd = BL_CAST(BL_PC, &bl);
-
-			if (sd == nullptr)
-				return;
-
-			if (util::umap_find( sd->sc_display, type ) != nullptr) {
-				sd->sc_display.erase( type );
-			}
-			}
-			break;
-		case BL_NPC: {
-			npc_data* nd = BL_CAST(BL_NPC, &bl);
-
-			if (nd == nullptr)
-				return;
-
-			if (util::umap_find( nd->sc_display, type ) != nullptr) {
-				nd->sc_display.erase( type );
-			}
-			}
-			break;
-		case BL_MOB: {
-			mob_data* md = BL_CAST(BL_MOB, &bl);
-
-			if (md == nullptr)
-				return;
-
-			if (util::umap_find( md->sc_display, type ) != nullptr) {
-				md->sc_display.erase( type );
-			}
-			}
-			break;
-		default:
-			return;
-	}
-}
-
-/**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
@@ -12793,25 +12699,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Save sc to display it again later
-	if (scdb->flag[SCF_DISPLAYPC] && bl->type == BL_PC || scdb->flag[SCF_DISPLAYNPC] && bl->type == BL_NPC || scdb->flag[SCF_DISPLAYMOB] && bl->type == BL_MOB) {
-		int dval1 = scdb->flag[SCF_SENDVAL1] ? val1 : 0;
-		int dval2 = scdb->flag[SCF_SENDVAL2] ? val2 : 0;
-		int dval3 = scdb->flag[SCF_SENDVAL3] ? val3 : 0;
-
-		switch (type) {
-			case SC_ALL_RIDING:
-				dval1 = 1;
-				break;
-			case SC_CLAN_INFO:
-				dval1 = val1;
-				dval2 = val2;
-				dval3 = val3;
-				break;
-			default: /* All others: just copy val1 */
-				dval1 = val1;
-				break;
-		}
-		status_display_add( *bl, type, dval1, dval2, dval3 );
+	if (scdb->flag[SCF_DISPLAYALL] || (scdb->flag[SCF_DISPLAYPC] && bl->type == BL_PC || scdb->flag[SCF_DISPLAYNPC] && bl->type == BL_NPC || scdb->flag[SCF_DISPLAYMOB] && bl->type == BL_MOB)) {
+		if (!util::vector_exists(sc->sc_display, type))
+			sc->sc_display.push_back(type);
 	}
 
 	//SC that force player to stand if is sitting
@@ -13215,8 +13105,8 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 	sc->clearSCE(type);
 
-	if (scdb->flag[SCF_DISPLAYPC] && bl->type == BL_PC || scdb->flag[SCF_DISPLAYNPC] && bl->type == BL_NPC || scdb->flag[SCF_DISPLAYMOB] && bl->type == BL_MOB)
-		status_display_remove( *bl, type );
+	if (scdb->flag[SCF_DISPLAYALL] || (scdb->flag[SCF_DISPLAYPC] && bl->type == BL_PC || scdb->flag[SCF_DISPLAYNPC] && bl->type == BL_NPC || scdb->flag[SCF_DISPLAYMOB] && bl->type == BL_MOB))
+		util::vector_erase_if_exists(sc->sc_display, type);
 
 	vd = status_get_viewdata(bl);
 	std::bitset<SCB_MAX> calc_flag = scdb->calc_flag;

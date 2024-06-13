@@ -863,8 +863,6 @@ public:
 	unsigned char fontcolor;
 	t_tick *channel_tick;
 
-	std::unordered_map<enum sc_type, std::shared_ptr<sc_display_entry>> sc_display;
-
 	unsigned char delayed_damage; //[Ind]
 
 	/**
