@@ -69,7 +69,7 @@ bool party_invite( map_session_data& sd, map_session_data* tsd );
 void party_member_joined( map_session_data& sd );
 int party_member_added(int party_id,uint32 account_id,uint32 char_id,int flag);
 bool party_leave( map_session_data& sd, bool showMessage = false );
-bool party_removemember( map_session_data& sd, uint32 account_id, char *name );
+bool party_removemember( map_session_data& sd, uint32 account_id, const char *name );
 int party_removemember2(map_session_data *sd,uint32 char_id,int party_id);
 int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
 bool party_isleader( map_session_data* sd );

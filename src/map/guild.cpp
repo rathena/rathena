@@ -2274,7 +2274,7 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t tim
 * @param sd Player who breaks the guild
 * @param name Guild name
 */
-int guild_break( map_session_data& sd, char* name ){
+int guild_break( map_session_data& sd, const char* name ){
 	struct unit_data *ud;
 	int i;
 #ifdef BOUND_ITEMS

@@ -93,7 +93,7 @@ int guild_send_message(map_session_data *sd, const char *mes, size_t len);
 int guild_recv_message( int guild_id, uint32 account_id, const char *mes, size_t len );
 int guild_send_dot_remove(map_session_data *sd);
 int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id);
-int guild_break( map_session_data& sd, char* name );
+int guild_break( map_session_data& sd, const char* name );
 int guild_broken(int guild_id,int flag);
 bool guild_gm_change(int guild_id, uint32 char_id, bool showMessage = false );
 int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t time);

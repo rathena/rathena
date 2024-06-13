@@ -94,7 +94,7 @@ void vending_vendinglistreq(map_session_data* sd, int id)
 
 	sd->vended_id = vsd->vender_id;  // register vending uid
 
-	clif_vendinglist( sd, vsd );
+	clif_vendinglist( *sd, *vsd );
 }
 
 /**
@@ -384,7 +384,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 		Sql_ShowDebug(mmysql_handle);
 	StringBuf_Destroy(&buf);
 
-	clif_openvending(&sd,sd.bl.id,sd.vending);
+	clif_openvending( sd );
 	clif_showvendingboard( sd );
 
 	idb_put(vending_db, sd.status.char_id, &sd);
