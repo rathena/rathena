@@ -16100,36 +16100,23 @@ BUILDIN_FUNC(npcspeed)
 
 /**
  * Make an npc walk to a position.
- * npcwalkto <x>,<y> {,"<speed>" {,"<npc name>"} };
+ * npcwalkto <x>,<y> {,"<npc name>"} };
  */
 BUILDIN_FUNC(npcwalkto)
 {
 	npc_data* nd;
 
-	if (script_hasdata(st, 5))
-		nd = npc_name2id(script_getstr(st, 5));
+	if (script_hasdata(st, 4))
+		nd = npc_name2id(script_getstr(st, 4));
 	else
 		nd = map_id2nd(st->oid);
 
 	if (nd == nullptr) {
-		if (script_hasdata(st, 5))
-			ShowError("buildin_npcwalkto: %s is a non-existing NPC.\n", script_getstr(st, 5));
+		if (script_hasdata(st, 4))
+			ShowError("buildin_npcwalkto: %s is a non-existing NPC.\n", script_getstr(st, 4));
 		else
 			ShowError("buildin_npcwalkto: non-existing NPC.\n");
 		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (script_hasdata(st, 4)) {
-		int speed = script_getnum(st, 4);
-
-		if (speed != nd->speed) {
-			if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
-				ShowError("buildin_npcwalkto: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
-				return SCRIPT_CMD_FAILURE;
-			}
-			nd->speed = speed;
-			nd->ud.state.speed_changed = 1;
-		}
 	}
 
 	int x = script_getnum(st, 2);
@@ -27644,7 +27631,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
 	BUILDIN_DEF(npcspeed,"i?"),
-	BUILDIN_DEF(npcwalkto,"ii??"),
+	BUILDIN_DEF(npcwalkto,"ii?"),
 	BUILDIN_DEF(npcstop,"?"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),

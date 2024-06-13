@@ -7962,12 +7962,12 @@ Return values:
 ---------------------------------------
 
 *npcspeed( <speed value> {,"<npc name>"} );
-*npcwalkto( <x>,<y> {,"<speed value>" {,"<npc name>"} } );
+*npcwalkto( <x>,<y> {,"<npc name>"} } );
 *npcstop( {"<npc name>"} );
 
 These commands will make the NPC object in question move around the map.
 
-'npcspeed' will set the NPCs walking speed to a specified value. As in the
+'npcspeed' will perma set the NPCs walking speed to a specified value. As in the
 @speed GM command, MAX_WALK_SPEED (1000) is the slowest possible speed while MIN_WALK_SPEED (20) is the fastest
 possible (instant motion). DEFAULT_NPC_WALK_SPEED (200) is the default NPC walking speed.
 
