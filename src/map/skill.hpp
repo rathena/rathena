@@ -33,8 +33,8 @@ class status_change;
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
-#define SKILL_NAME_LENGTH 31 /// Max Skill Name length
-#define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
+#define SKILL_NAME_LENGTH 40 /// Max Skill Name length
+#define SKILL_DESC_LENGTH 40 /// Max Skill Desc length
 
 /// Used with tracking the hitcount of Earthquake for skills that can avoid the first attack
 #define NPC_EARTHQUAKE_FLAG 0x800
@@ -2781,6 +2781,12 @@ void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
  * Auto Shadow Spell (Shadow Chaser)
  **/
 void skill_select_menu( map_session_data& sd, uint16 skill_id );
+
+/**
+ * Shinkiro / Shiranui
+ **/
+int skill_remove_skill_unit(struct block_list* bl, va_list ap);
+int skill_unit_try_clone_cast(struct block_list* bl, va_list ap);
 
 int skill_elementalanalysis( map_session_data& sd, int n, uint16 skill_lv, unsigned short *item_list ); // Sorcerer Four Elemental Analisys.
 int skill_changematerial(map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.

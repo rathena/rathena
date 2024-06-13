@@ -1796,6 +1796,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	tstatus = status_get_status_data(target);
 
+	if (sd && skill_id == SS_KUNAIKAITEN && sd->distortions + 1 > 5) {
+		clif_skill_fail(*sd, skill_id);
+		return 0;
+	}
+
 	// Record the status of the previous skill)
 	if(sd) {
 		switch(skill_id) {
@@ -2216,6 +2221,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		if (sd)
 			clif_skill_fail( *sd, skill_id );
 
+		return 0;
+	}
+
+	if (sd && skill_id == SS_KUNAIWAIKYOKU && sd->distortions + 1 > 5) {
+		clif_skill_fail(*sd, skill_id);
 		return 0;
 	}
 

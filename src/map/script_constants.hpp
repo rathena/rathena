@@ -1912,6 +1912,12 @@
 	export_constant(SC_HIDDEN_CARD);
 	export_constant(SC_PERIOD_RECEIVEITEM_2ND);
 	export_constant(SC_PERIOD_PLUSEXP_2ND);
+
+	// Shinkiro/Shiranui
+	export_constant(SC_SHADOW_CLOCK);
+	export_constant(SC_SHINKIROU_CALL);
+	export_constant(SC_NIGHTMARE);
+	export_constant(SC_SBUNSHIN);
 	export_constant(SC_EXTREMITYFIST2);
 	export_constant(SC_POWERUP);
 	export_constant(SC_AGIUP);

@@ -608,7 +608,7 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
  * Looks for a skill unit on a given cell
  * flag&1: runs battle_check_target check based on unit->group->target_flag
  */
-struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,int16 y,uint16 skill_id,struct skill_unit* out_unit, int flag) {
+struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,int16 y,uint16 skill_id,struct skill_unit* out_unit, int flag, bool search_by_us) {
 	int16 bx,by;
 	struct block_list *bl;
 	struct skill_unit *unit;
@@ -626,7 +626,7 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,
 			continue;
 
 		unit = (struct skill_unit *) bl;
-		if( unit == out_unit || !unit->alive || !unit->group || unit->group->skill_id != skill_id )
+		if( unit == out_unit || !unit->alive || !unit->group || (!search_by_us && unit->group->skill_id != skill_id) || (search_by_us && unit->group->unit_id != skill_id))
 			continue;
 		if( !(flag&1) || battle_check_target(&unit->bl,target,unit->group->target_flag) > 0 )
 			return unit;

@@ -688,6 +688,7 @@ public:
 
 	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
 
+	int8 distortions; //[Tyritti] counter of placed Distortion Zone for SS_KUNAIWAIKYOKU and SS_KUNAIKAITEN to monitor limits
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
 	short spiritcharm; //No. of spirit

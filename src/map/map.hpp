@@ -1124,7 +1124,7 @@ int map_foreachindir(int (*func)(struct block_list*,va_list), int16 m, int16 x0,
 int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type, ...);
 //blocklist nb in one cell
 int map_count_oncell(int16 m,int16 x,int16 y,int type,int flag);
-struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int flag);
+struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int flag, bool search_by_us = false);
 // search and creation
 int map_get_new_object_id(void);
 int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag, int32 tries = 50);
