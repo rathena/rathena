@@ -13,6 +13,7 @@
 #include <cmath>
 #include <csetjmp>
 #include <cstdlib> // atoi, strtol, strtoll, exit
+#include <stack>
 
 #ifdef PCRE_SUPPORT
 #include <pcre.h> // preg_match
@@ -27263,6 +27264,178 @@ BUILDIN_FUNC(setdialogpospercent){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Partition a string array to be used in quick sort with Hoare's partitioning
+ * This function does not guarantee that the string array is accessible, so the burden fall to the caller.
+ * @param st Current script state
+ * @param sd The player owning the variable, can be nullptr
+ * @param array_ The string array to be partitioned
+ * @param start Starting index
+ * @param end Ending index
+ */
+int32 partition_array_str(script_state *st, map_session_data *sd, script_data *array_, int32 start, int32 end) {
+	struct reg_db* ref = reference_getref(array_);
+	int32 id = reference_getid(array_);
+	const char* name = reference_getname(array_);
+	int32 i = start, j = end;
+	int32 pivotidx = rnd() % (end - start);
+	const char* pivot = get_val2_str(st, reference_uid(id, start + pivotidx), ref);
+
+	while (i < j) {
+		const char* tmp_i;
+		int64 uid_i;
+
+		while (true) {
+			uid_i = reference_uid(id, i);
+			tmp_i = get_val2_str(st, uid_i, ref);
+
+			if (strcmp( tmp_i, pivot) >= 0)
+				break;
+
+			// Pop tmp_i
+			script_removetop(st, -1, 0);
+			i++;
+		}
+
+		const char* tmp_j;
+		int64 uid_j;
+
+		while (true) {
+			uid_j = reference_uid(id, j);
+			tmp_j = get_val2_str(st, uid_j, ref);
+
+			if (strcmp( tmp_j, pivot) <= 0)
+				break;
+
+			// Pop tmp_j
+			script_removetop(st, -1, 0);
+			j--;
+		}
+
+		// Swap
+		set_reg_str( st, sd, uid_j, name, tmp_i, ref );
+		set_reg_str( st, sd, uid_i, name, tmp_j, ref );
+
+		// Pop tmp_i and tmp_j
+		script_removetop(st, -2, 0);
+	}
+
+	// Pop pivot
+	script_removetop(st, -1, 0);
+	return j;
+}
+
+/**
+ * Partition an integer array to be used in quick sort with Hoare's partitioning
+ * This function does not guarantee that the integer array is accessible, so the burden fall to the caller.
+ * @param st Current script state
+ * @param sd The player owning the variable, can be nullptr
+ * @param array_ The integer array to be partitioned
+ * @param start Starting index
+ * @param end Ending index
+ */
+int32 partition_array_num(script_state *st, map_session_data *sd, script_data *array_, int32 start, int32 end) {
+	struct reg_db* ref = reference_getref(array_);
+	int32 id = reference_getid(array_);
+	const char* name = reference_getname(array_);
+	int32 i = start, j = end;
+	int32 pivotidx = rnd() % (end - start);
+	int64 pivot = get_val2_num(st, reference_uid(id, start + pivotidx), ref);
+
+	while (i < j) {
+		int64 tmp_i;
+		int64 uid_i;
+
+		while (true) {
+			uid_i = reference_uid(id, i);
+			tmp_i = get_val2_num(st, uid_i, ref);
+
+			if (tmp_i >= pivot)
+				break;
+
+			i++;
+		}
+
+		int64 tmp_j;
+		int64 uid_j;
+
+		while (true) {
+			uid_j = reference_uid(id, j);
+			tmp_j = get_val2_num(st, uid_j, ref);
+
+			if (tmp_j <= pivot)
+				break;
+
+			j--;
+		}
+
+		// Swap
+		set_reg_num( st, sd, uid_j, name, tmp_i, ref );
+		set_reg_num( st, sd, uid_i, name, tmp_j, ref );
+	}
+
+	return j;
+}
+
+/**
+ * Sort an array
+ * sortarray(<array>);
+ */
+BUILDIN_FUNC(sortarray) {
+	map_session_data *sd = nullptr;
+	script_data *array_ = script_getdata(st, 2);
+
+	if (!data_isreference(array_)) {
+		ShowError("buildin_sortarray: Not a variable!\n");
+		script_reportdata(array_);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	char* name = reference_getname(array_);
+	reg_db* ref = reference_getref(array_);
+
+	if( not_server_variable( name[0] ) && !script_rid2sd( sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	bool is_string = is_string_variable(name);
+
+	std::stack<int32> stack;
+	int32 size = script_array_highest_key(st, sd, name, ref);
+
+	// Push initial indices
+	stack.push(0);
+	stack.push(size - 1);
+
+	while (!stack.empty()) {
+		int32 end = stack.top();
+		stack.pop();
+		int32 start = stack.top();
+		stack.pop();
+
+		int32 p;
+
+		if( is_string ){
+			p = partition_array_str(st, sd, array_, start, end);
+		}else{
+			p = partition_array_num(st, sd, array_, start, end);
+		}
+
+		if(p - 1 > start) {
+			stack.push(start);
+			stack.push(p - 1);
+		}
+
+		if(p + 1 < end)	{
+			stack.push(p + 1);
+			stack.push(end);
+		}
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28027,6 +28200,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setdialogsize, "ii"),
 	BUILDIN_DEF(setdialogpos, "ii"),
 	BUILDIN_DEF(setdialogpospercent, "ii"),
+	BUILDIN_DEF(sortarray, "r"),
 
 #include <custom/script_def.inc>
 

@@ -2406,6 +2406,34 @@ For more details, see the sample in 'doc/sample/inarray.txt'.
 
 ---------------------------------------
 
+*sortarray(<array name>);
+
+This command will do an in-place sort on an array specified in <array name>.
+Original ordering of the array before execution of this command will be lost.
+
+Example:
+
+	setarray .@a,31, 44, 14, 18, 24, 42, 39, 47, 30, 17, 36, 45, 34, 21, 38, 41, 23, 25, 13, 20, 8, 5, 22, 9, 2, 12, 19, 35, 48, 37;
+	sortarray(.@a);
+	.@size = getarraysize(.@a);
+	for(.@i = 0; .@size; .@i++) {
+		.@msg$ = .@msg$ + .@a[.@i] + " ";
+	}
+	debugmes(.@msg$);
+	
+	Output: 2 5 8 9 12 13 14 17 18 19 20 21 22 23 24 25 30 31 34 35 36 37 38 39 41 42 44 45 47 48
+	
+	setarray .@text$, "Lemongrass", "Atemo", "Jey", "Lighta", "Nova", "MasterOfMuppets", "Aleos", "Cydh", "Playtester", "Stolao", "Nanakiwurtz", "Akkarin", "Secret";
+	sortarray(.@text$);
+	for(.@i = 0; .@i < getarraysize(.@text$); .@i++) {
+		.@msg$ = .@msg$ + .@text$[.@i] + " ";
+	}
+	debugmes(.@msg$);
+	
+	Output: Akkarin Aleos Atemo Cydh Jey Lemongrass Lighta MasterOfMuppets Nanakiwurtz Nova Playtester Secret Stolao 
+
+---------------------------------------
+
 ======================================
 |2.- Information-retrieving commands.|
 ======================================
