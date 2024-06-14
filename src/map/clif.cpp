@@ -1751,8 +1751,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	case BL_PET:
 		if (vd->head_bottom)
 			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
-		clif_efst_status_change_sub( *bl, *bl, AREA_WOS );
-		break;
+		[[fallthrough]];
 	case BL_HOM:
 	case BL_MER:
 	case BL_ELEM:
@@ -5111,8 +5110,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 	case BL_PET:
 		if (vd->head_bottom)
 			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
-		clif_efst_status_change_sub( sd->bl, *bl, SELF );
-		break;
+		[[fallthrough]];
 	case BL_HOM:
 	case BL_ELEM:
 		clif_efst_status_change_sub( sd->bl, *bl, SELF );
