@@ -28,7 +28,6 @@
 #define FIFOSIZE_SERVERLINK 256*1024
 
 // socket I/O macros
-#define RFIFOHEAD(fd)
 #define WFIFOHEAD( fd, size ) \
 	do{ \
 		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
