@@ -58,6 +58,7 @@ enum e_skill_nk : uint8 {
 	NK_IGNOREDEFCARD,
 	NK_CRITICAL,
 	NK_IGNORELONGCARD,
+	NK_SIMPLEDEFENSE,
 	NK_MAX,
 };
 

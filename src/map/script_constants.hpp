@@ -10654,6 +10654,7 @@
 	export_constant(NK_IGNOREDEFCARD);
 	export_constant(NK_IGNORELONGCARD);
 	export_constant(NK_CRITICAL);
+	export_constant(NK_SIMPLEDEFENSE);
 
 	/* skill inf */
 	export_constant(INF_PASSIVE_SKILL);
