@@ -6650,7 +6650,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 #ifdef RENEWAL
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
-	if (nk[NK_SIMPLEDEFENSE] != 0) {
+	if (nk[NK_SIMPLEDEFENSE]) {
 		// Defense reduction by flat value.
 		// This completely bypasses the normal RE DEF Reduction formula.
 		wd->damage -= (def1 + vit_def);
@@ -7498,7 +7498,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		// is calculated before DEF and other reductions.
 		// All skills that use the simple defense formula (damage substracted by DEF+DEF2) ignore Res
 		// TODO: Res formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
-		if ((wd.damage + wd.damage2) && tstatus->res > 0 && nk[NK_SIMPLEDEFENSE] == 0) {
+		if ((wd.damage + wd.damage2) && tstatus->res > 0 && !nk[NK_SIMPLEDEFENSE]) {
 			short res = tstatus->res;
 			short ignore_res = 0;// Value used as a percentage.
 
