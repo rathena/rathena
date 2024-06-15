@@ -8774,7 +8774,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #ifdef RENEWAL
 		// MRes reduces magical damage by a percentage and
 		// is calculated before MDEF and other reductions.
-		// TODO: Check if there are skills that ignore Mres, similar to skills that ignore Res
 		// TODO: MRes formula probably should be: (2000+x)/(2000+5x), but with the reduction rounded down
 		if (ad.damage && tstatus->mres > 0) {
 			short mres = tstatus->mres;
