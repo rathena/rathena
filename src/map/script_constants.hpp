@@ -10639,6 +10639,11 @@
 	export_constant(IWA_NONE);
 	export_constant(IWA_NOTDEAD);
 
+	/* npcspeed command */
+	export_constant(MIN_WALK_SPEED);
+	export_constant(MAX_WALK_SPEED);
+	export_constant(DEFAULT_NPC_WALK_SPEED);
+
 	/* skill hit */
 	export_constant(DMG_SINGLE);
 	export_constant(DMG_MULTI_HIT);

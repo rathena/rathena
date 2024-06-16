@@ -776,7 +776,7 @@ void BarterDatabase::loadingFinished(){
 		npc_parsename( nd, barter->name.c_str(), nullptr, nullptr, __FILE__ ":" QUOTE(__LINE__) );
 
 		nd->class_ = barter->sprite;
-		nd->speed = 200;
+		nd->speed = DEFAULT_NPC_WALK_SPEED;
 
 		nd->bl.type = BL_NPC;
 		nd->subtype = NPCTYPE_BARTER;
@@ -3820,7 +3820,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 		nd->class_ = JT_GUILD_FLAG;
 	else
 		nd->class_ = JT_WARPNPC;
-	nd->speed = 200;
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
 
 	nd->u.warp.mapindex = to_mapindex;
 	nd->u.warp.x = to_x;
@@ -3892,7 +3892,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 		nd->class_ = JT_WARPNPC;
 	else
 		nd->class_ = JT_GUILD_FLAG;
-	nd->speed = 200;
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
 
 	nd->u.warp.mapindex = i;
 	nd->u.warp.x = to_x;
@@ -4176,7 +4176,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->class_ = m == -1 ? JT_FAKENPC : npc_parseview(w4, start, buffer, filepath);
-	nd->speed = 200;
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
 
 	++npc_shop;
 	nd->bl.type = BL_NPC;
@@ -4414,7 +4414,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->class_ = m == -1 ? JT_FAKENPC : npc_parseview(w4, start, buffer, filepath);
-	nd->speed = 200;
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
 	nd->u.scr.script = script;
 	nd->u.scr.label_list = label_list;
 	nd->u.scr.label_list_num = label_list_num;
@@ -4553,7 +4553,7 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 	nd = npc_create_npc(m, x, y);
 	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->class_ = m == -1 ? JT_FAKENPC : npc_parseview(w4, start, buffer, filepath);
-	nd->speed = 200;
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
 	nd->src_id = src_id;
 	nd->bl.type = BL_NPC;
 	nd->subtype = (enum npc_subtype)type;
@@ -4686,7 +4686,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		safestrncpy(wnd->name, "", ARRAYLENGTH(wnd->name));
 		safestrncpy(wnd->exname, newname, ARRAYLENGTH(wnd->exname));
 		wnd->class_ = JT_WARPNPC;
-		wnd->speed = 200;
+		wnd->speed = DEFAULT_NPC_WALK_SPEED;
 		wnd->u.warp.mapindex = map_id2index(imap);
 		wnd->u.warp.x = snd->u.warp.x;
 		wnd->u.warp.y = snd->u.warp.y;
@@ -6236,7 +6236,7 @@ void do_init_npc(void){
 	// Init dummy NPC
 	fake_nd = npc_create_npc( -1, 0, 0 );
 	fake_nd->class_ = JT_FAKENPC;
-	fake_nd->speed = 200;
+	fake_nd->speed = DEFAULT_NPC_WALK_SPEED;
 	strcpy(fake_nd->name,"FAKE_NPC");
 	memcpy(fake_nd->exname, fake_nd->name, 9);
 
