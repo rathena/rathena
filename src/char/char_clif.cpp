@@ -290,6 +290,7 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
 			strncpy(sd->pincode, newpin, sizeof(newpin));
 			ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
+			sd->pincode_correct = true;
 
 			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 		}else{
@@ -1584,6 +1585,8 @@ int chclif_parse(int fd) {
 				case 0x187:
 				// Checks the entered pin
 				case 0x8b8:
+				// Request PIN change
+				case 0x8be:
 				// Request for PIN window
 				case 0x8c5:
 				// Request character list
