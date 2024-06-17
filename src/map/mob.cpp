@@ -377,8 +377,10 @@ e_mob_bosstype s_mob_db::get_bosstype(){
 }
 
 e_mob_bosstype mob_data::get_bosstype(){
-	if( this->db != nullptr ){
-		return this->db->get_bosstype();
+	if( status_has_mode( &this->status, MD_MVP ) ){
+		return BOSSTYPE_MVP;
+	}else if( this->status.class_ == CLASS_BOSS ){
+		return BOSSTYPE_MINIBOSS;
 	}else{
 		return BOSSTYPE_NONE;
 	}
