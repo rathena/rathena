@@ -7699,7 +7699,6 @@ Body:
       - Level: 5
         Time: 1000
     Duration1: 3000
-    Duration2: 300000
     FixedCastTime:
       - Level: 1
         Time: 2000
