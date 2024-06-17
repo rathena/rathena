@@ -7513,15 +7513,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 					ignore_res += sc->getSCE(SC_POTENT_VENOM)->val2;
 			}
 
-			ignore_res = min(ignore_res, 100);
+			ignore_res = min(ignore_res, battle_config.max_res_mres_ignored);
 
 			if (ignore_res > 0)
 				res -= res * ignore_res / 100;
-
-			// Max damage reduction from Res is officially 50%.
-			// That means 625 Res is needed to hit that cap.
-			if (res > battle_config.max_res_mres_reduction)
-				res = battle_config.max_res_mres_reduction;
 
 			// Apply damage reduction.
 			wd.damage = wd.damage * (5000 + res) / (5000 + 10 * res);
@@ -8786,15 +8781,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (sc && sc->getSCE(SC_A_VITA))
 				ignore_mres += sc->getSCE(SC_A_VITA)->val2;
 
-			ignore_mres = min(ignore_mres, 100);
+			ignore_mres = min(ignore_mres, battle_config.max_res_mres_ignored);
 
 			if (ignore_mres > 0)
 				mres -= mres * ignore_mres / 100;
-
-			// Max damage reduction from MRes is officially 50%.
-			// That means 625 MRes is needed to hit that cap.
-			if (mres > battle_config.max_res_mres_reduction)
-				mres = battle_config.max_res_mres_reduction;
 
 			// Apply damage reduction.
 			ad.damage = ad.damage * (5000 + mres) / (5000 + 10 * mres);
@@ -11499,7 +11489,7 @@ static const struct _battle_data {
 	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1,              },
 	{ "trait_points_job_change",            &battle_config.trait_points_job_change,         7,      1,      1000,           },
 	{ "max_trait_parameter",                &battle_config.max_trait_parameter,             100,    10,     SHRT_MAX,       },
-	{ "max_res_mres_reduction",             &battle_config.max_res_mres_reduction,          625,    1,      SHRT_MAX,       },
+	{ "max_res_mres_ignored",               &battle_config.max_res_mres_ignored,            50,     1,      100,            },
 	{ "max_ap",                             &battle_config.max_ap,                          200,    100,    1000000000,     },
 	{ "ap_rate",                            &battle_config.ap_rate,                         100,    1,      INT_MAX,        },
 	{ "restart_ap_rate",                    &battle_config.restart_ap_rate,                 0,      0,      100,            },
