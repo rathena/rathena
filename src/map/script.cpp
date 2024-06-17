@@ -19264,7 +19264,12 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
 			case UMOB_Y: if (!unit_walktoxy(bl, md->bl.x, (short)value, 2)) unit_movepos(bl, md->bl.x, (short)value, 0, 0); break;
 			case UMOB_SPEED: md->base_status->speed = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
-			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
+			case UMOB_MODE:
+				md->base_status->mode = (enum e_mode)value;
+				// Mob mode must be updated before calling unit_refresh
+				status_calc_bl_(&md->bl, status_db.getSCB_BATTLE());
+				unit_refresh(bl);
+				break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
 			case UMOB_SEX: md->vd->sex = (char)value; unit_refresh(bl); break;
