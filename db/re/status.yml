@@ -7957,6 +7957,7 @@ Body:
     DurationLookup: EM_SPELL_ENCHANTING
     CalcFlags:
       Smatk: true
+      DisplayPc: true
   - Status: Summon_Elemental_Ardor
     Icon: EFST_SUMMON_ELEMENTAL_ARDOR
     DurationLookup: EM_SUMMON_ELEMENTAL_ARDOR
