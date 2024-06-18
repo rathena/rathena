@@ -5735,7 +5735,6 @@ Body:
     AegisName: Tropical_Sograt
     Name: Tropical Sograt
     Type: Usable
-    Buy: 1000
     Weight: 100
     Flags:
       BuyingStore: true
@@ -5745,7 +5744,6 @@ Body:
     AegisName: Vermilion_The_Beach
     Name: Vermilion on the Beach
     Type: Usable
-    Buy: 1000
     Weight: 100
     Flags:
       BuyingStore: true
@@ -50508,8 +50506,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      getitem 5464,1;
   - Id: 17203
     AegisName: Free_Pass_Box
     Name: Free Pass Box
@@ -62241,7 +62239,6 @@ Body:
     AegisName: Vend_Arbeit1_1Lv
     Name: "[1 Day] Consignment Merchant Envelope Lv1"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_VEND_ARBEIT1_1LV
     Script: |
       getgroupitem(IG_VEND_ARBEIT1_1LV);
@@ -62249,7 +62246,6 @@ Body:
     AegisName: Vend_Arbeit1_2Lv
     Name: "[1 Day] Consignment Merchant Envelope Lv2"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_VEND_ARBEIT1_2LV
     Script: |
       getgroupitem(IG_VEND_ARBEIT1_2LV);
@@ -62257,7 +62253,6 @@ Body:
     AegisName: Vend_Arbeit1_3Lv
     Name: "[1 Day] Consignment Merchant Envelope Lv3"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_VEND_ARBEIT1_3LV
     Script: |
       getgroupitem(IG_VEND_ARBEIT1_3LV);
@@ -62265,7 +62260,6 @@ Body:
     AegisName: Buy_Arbeit1_1Lv
     Name: "[1 Day] Personal Shopper Envelope Lv1"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_BUY_ARBEIT1_1LV
     Script: |
       getgroupitem(IG_BUY_ARBEIT1_1LV);
@@ -62273,7 +62267,6 @@ Body:
     AegisName: Buy_Arbeit1_2Lv
     Name: "[1 Day] Personal Shopper Envelope Lv2"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_BUY_ARBEIT1_2LV
     Script: |
       getgroupitem(IG_BUY_ARBEIT1_2LV);
@@ -62281,7 +62274,6 @@ Body:
     AegisName: Buy_Arbeit1_3Lv
     Name: "[1 Day] Personal Shopper Envelope Lv3"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_BUY_ARBEIT1_3LV
     Script: |
       getgroupitem(IG_BUY_ARBEIT1_3LV);
@@ -62379,7 +62371,6 @@ Body:
     AegisName: Vend_Arbeit3_1Lv
     Name: "[3 Day] Consignment Merchant Envelope Lv1"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_VEND_ARBEIT3_1LV
     Script: |
       getgroupitem(IG_VEND_ARBEIT3_1LV);
@@ -62387,7 +62378,6 @@ Body:
     AegisName: Vend_Arbeit3_2Lv
     Name: Consignment Merchant Envelope
     Type: Usable
-    Weight: 10
     ItemGroup: IG_VEND_ARBEIT3_2LV
     Script: |
       getgroupitem(IG_VEND_ARBEIT3_2LV);
@@ -62395,7 +62385,6 @@ Body:
     AegisName: Vend_Arbeit3_3Lv
     Name: "[3 Day] Consignment Merchant Envelope Lv3"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_VEND_ARBEIT3_3LV
     Script: |
       getgroupitem(IG_VEND_ARBEIT3_3LV);
@@ -62403,7 +62392,6 @@ Body:
     AegisName: Buy_Arbeit3_1Lv
     Name: "[3 Day] Personal Shopper Envelope Lv1"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_BUY_ARBEIT3_1LV
     Script: |
       getgroupitem(IG_BUY_ARBEIT3_1LV);
@@ -62411,7 +62399,6 @@ Body:
     AegisName: Buy_Arbeit3_2Lv
     Name: Personal Shopper Envelope
     Type: Usable
-    Weight: 10
     ItemGroup: IG_BUY_ARBEIT3_2LV
     Script: |
       getgroupitem(IG_BUY_ARBEIT3_2LV);
@@ -62419,7 +62406,6 @@ Body:
     AegisName: Buy_Arbeit3_3Lv
     Name: "[3 Day] Personal Shopper Envelope Lv3"
     Type: Usable
-    Weight: 10
     ItemGroup: IG_BUY_ARBEIT3_3LV
     Script: |
       getgroupitem(IG_BUY_ARBEIT3_3LV);
@@ -62427,7 +62413,6 @@ Body:
     AegisName: Psychotropic
     Name: Psychotropic
     Type: DelayConsume
-    Weight: 10
     EquipLevelMin: 100
     Flags:
       BuyingStore: true
@@ -67545,8 +67530,8 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      sc_start SC_EXPBOOST,900000,100;
   - Id: 100352
     AegisName: Real_Battle_Manual
     Name: Real Combat Manual
@@ -67554,8 +67539,9 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      sc_start SC_EXPBOOST,3600000,100;
+      sc_start SC_SPEEDUP0,600000,25;
   - Id: 100354
     AegisName: Auto_Armor_Refine_Cube
     Name: Automatic Armor +11 Refinement Cube
@@ -69374,8 +69360,8 @@ Body:
     Weight: 50
     Flags:
       BuyingStore: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      pet 1198;
   - Id: 100810
     AegisName: BroadcastBox_
     Name: Broadcast Box
@@ -71559,8 +71545,8 @@ Body:
     Name: Spring Regulator
     Type: Usable
     Weight: 10
-#   Script: |
-#     /* TODO */
+    Script: |
+      item_enchant(24);
   - Id: 101100
     AegisName: Poenetentia_Box3
     Name: Poenitentia Two Swords Set Box
@@ -72484,6 +72470,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
+      /* TODO : pet 21632; */
       pet 1005;
   - Id: 101336
     AegisName: aegis_101336
@@ -75456,23 +75443,31 @@ Body:
     Script: |
       item_reform();
   - Id: 102128
-    AegisName: aegis_102128
+    AegisName: All_In_One_buff
     Name: All-in-One Buff Potion    # !todo check english name
     Type: Usable
     Weight: 10
     Flags:
       BuyingStore: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      specialeffect2 EF_POTION_BERSERK;
+      sc_start SC_M_DEFSCROLL,3600000,0;
+      sc_start SC_LIMIT_POWER_BOOSTER,3600000,30;
+      sc_start SC_INFINITY_DRINK,3600000,0;
+      sc_start SC_SPEEDUP0,600000,25;
   - Id: 102129
-    AegisName: aegis_102129
+    AegisName: All_In_One_Healing
     Name: All-in-one Healing Potion    # !todo check english name
     Type: Usable
     Weight: 10
     Flags:
       BuyingStore: true
-#   Script: |
-#     /* TODO */
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_S_LIFEPOTION,3600000,-5,5;
+      sc_start2 SC_L_LIFEPOTION,3600000,-7,4;
+      sc_start2 SC_M_LIFEPOTION,3600000,-4,3;
+      sc_start SC_SPEEDUP0,600000,25;
   - Id: 102193
     AegisName: aegis_102193
     Name: Costume Enchant Stone Box 30

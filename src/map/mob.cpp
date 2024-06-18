@@ -204,7 +204,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	safestrncpy(nd->name, msg_txt(nullptr,656), sizeof(nd->name));
 
 	nd->class_ = 565;
-	nd->speed = 200;
+	nd->speed = DEFAULT_NPC_WALK_SPEED;
 	nd->subtype = NPCTYPE_TOMB;
 
 	nd->u.tomb.md = md;
@@ -377,8 +377,10 @@ e_mob_bosstype s_mob_db::get_bosstype(){
 }
 
 e_mob_bosstype mob_data::get_bosstype(){
-	if( this->db != nullptr ){
-		return this->db->get_bosstype();
+	if( status_has_mode( &this->status, MD_MVP ) ){
+		return BOSSTYPE_MVP;
+	}else if( this->status.class_ == CLASS_BOSS ){
+		return BOSSTYPE_MINIBOSS;
 	}else{
 		return BOSSTYPE_NONE;
 	}

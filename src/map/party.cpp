@@ -403,6 +403,11 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 		return false;
 	}
 
+	if( p->instance_id > 0 && battle_config.instance_block_invite ){
+		clif_party_invite_reply( sd, "", PARTY_REPLY_MEMORIALDUNGEON );
+		return false;
+	}
+
 	if( tsd == NULL ){
 		clif_party_invite_reply( sd, "", PARTY_REPLY_OFFLINE );
 		return false;
@@ -582,6 +587,13 @@ bool party_reply_invite( map_session_data& sd, int party_id, int flag ){
 	// accepted and allowed
 	if( flag == 1 && !sd.party_creating && !sd.party_joining ) {
 		struct party_data* party = party_search( party_id );
+
+		if( party && party->instance_id > 0 && battle_config.instance_block_invite ){
+			sd.party_invite = 0;
+			sd.party_invite_account = 0;
+			return false;
+		}
+
 		struct party_member member = {};
 
 		sd.party_joining = true;
@@ -696,6 +708,10 @@ bool party_removemember( map_session_data& sd, uint32 account_id, char* name ){
 	if( p == nullptr )
 		return false;
 
+	if( p->instance_id > 0 && battle_config.instance_block_expulsion ){
+		return false;
+	}
+
 	int i;
 
 	// check the requesting char's party membership
@@ -754,6 +770,15 @@ bool party_leave( map_session_data& sd, bool showMessage ){
 	struct party_data* p = party_search( sd.status.party_id );
 
 	if( p == nullptr ){
+		return false;
+	}
+
+	if( p->instance_id > 0 && battle_config.instance_block_leave ){
+		// If it was not triggered by the user itself, but from a script for example
+		if( showMessage ){
+			clif_party_withdraw( sd, sd.status.account_id, sd.status.name, PARTY_MEMBER_WITHDRAW_CANT_LEAVE, SELF );
+		}
+
 		return false;
 	}
 
@@ -932,6 +957,10 @@ int party_changeleader(map_session_data *sd, map_session_data *tsd, struct party
 
 		if ((p = party_search(sd->status.party_id)) == nullptr )
 			return -1;
+
+		if( p->instance_id > 0 && battle_config.instance_block_leaderchange ){
+			return 0;
+		}
 
 		ARR_FIND( 0, MAX_PARTY, mi, p->data[mi].sd == sd );
 		if (mi == MAX_PARTY)

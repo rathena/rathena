@@ -290,6 +290,7 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
 			strncpy(sd->pincode, newpin, sizeof(newpin));
 			ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
+			sd->pincode_correct = true;
 
 			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 		}else{
@@ -782,6 +783,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		{// authentication found (coming from map server)
 			char_get_authdb().erase(account_id);
 			char_auth_ok(fd, sd);
+			sd->pincode_correct = true; // already entered pincode correctly yet
 		}
 		else
 		{// authentication not found (coming from login server)
@@ -1583,6 +1585,8 @@ int chclif_parse(int fd) {
 				case 0x187:
 				// Checks the entered pin
 				case 0x8b8:
+				// Request PIN change
+				case 0x8be:
 				// Request for PIN window
 				case 0x8c5:
 				// Request character list
@@ -1593,19 +1597,27 @@ int chclif_parse(int fd) {
 
 				// Before processing any other packets, do a few checks
 				default:
-					// If the pincode was entered correctly
-					if( sd->pincode_correct ){
-						break;
-					}
+					// To reach this block the client should have attained a session already
+					if( sd != nullptr ){
+						// If the pincode was entered correctly
+						if( sd->pincode_correct ){
+							break;
+						}
 
-					// If no pincode is set (yet)
-					if( strlen( sd->pincode ) <= 0 ){
-						break;
-					}
+						// If no pincode is set (yet)
+						if( strlen( sd->pincode ) <= 0 ){
+							break;
+						}
 
-					// The pincode was not entered correctly, yet the player (=bot) tried to send a different packet => Goodbye!
-					set_eof( fd );
-					return 0;
+						// The pincode was not entered correctly, yet the player (=bot) tried to send a different packet => Goodbye!
+						set_eof( fd );
+						return 0;
+					}else{
+						// Unknown packet received
+						ShowError( "chclif_parse: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", cmd, ip2str( ipl, nullptr ) );
+						set_eof( fd );
+						return 0;
+					}
 			}
 		}
 #endif
@@ -1653,7 +1665,7 @@ int chclif_parse(int fd) {
 				break;
 			// unknown packet received
 			default:
-				ShowError("parse_char: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, nullptr));
+				ShowError( "chclif_parse: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", cmd, ip2str( ipl, nullptr ) );
 				set_eof(fd);
 				return 0;
 		}

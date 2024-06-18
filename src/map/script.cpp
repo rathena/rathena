@@ -16071,48 +16071,120 @@ BUILDIN_FUNC(chatmes)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-// change npc walkspeed [Valaris]
+/**
+ * Change npc walkspeed.
+ * npcspeed <speed value> {,"<npc name>"};
+ */
 BUILDIN_FUNC(npcspeed)
 {
-	struct npc_data* nd;
-	int speed;
+	npc_data* nd;
 
-	speed = script_getnum(st,2);
-	nd =(struct npc_data *)map_id2bl(st->oid);
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = map_id2nd(st->oid);
 
-	if( nd ) {
-		nd->speed = speed;
+	if (nd == nullptr) {
+		if (script_hasdata(st, 3))
+			ShowError("buildin_npcspeed: %s is a non-existing NPC.\n", script_getstr(st, 3));
+		else
+			ShowError("buildin_npcspeed: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	int speed = script_getnum(st, 2);
+
+	if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+		ShowError("buildin_npcspeed: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	nd->speed = speed;
 
 	return SCRIPT_CMD_SUCCESS;
 }
-// make an npc walk to a position [Valaris]
+
+/**
+ * Make an npc walk to a position.
+ * npcwalkto <x>,<y> {,"<npc name>"} };
+ */
 BUILDIN_FUNC(npcwalkto)
 {
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	int x=0,y=0;
+	npc_data* nd;
 
-	x=script_getnum(st,2);
-	y=script_getnum(st,3);
+	if (script_hasdata(st, 4))
+		nd = npc_name2id(script_getstr(st, 4));
+	else
+		nd = map_id2nd(st->oid);
 
-	if(nd) {
-		if (!nd->status.hp)
-			status_calc_npc(nd, SCO_FIRST);
+	if (nd == nullptr) {
+		if (script_hasdata(st, 4))
+			ShowError("buildin_npcwalkto: %s is a non-existing NPC.\n", script_getstr(st, 4));
 		else
-			status_calc_npc(nd, SCO_NONE);
-		unit_walktoxy(&nd->bl,x,y,0);
+			ShowError("buildin_npcwalkto: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	if( nd->bl.m < 0 ){
+		ShowError( "buildin_npcwalkto: NPC is not on a map.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct map_data* mapdata = map_getmapdata( nd->bl.m );
+	int x = script_getnum(st, 2);
+	int y = script_getnum(st, 3);
+
+	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys ){
+		ShowWarning( "buildin_npcwalkto: coordinates %d/%d are out of bounds in map %s(%dx%d).\n", x, y, mapdata->name, mapdata->xs, mapdata->ys );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!nd->status.hp)
+		status_calc_npc(nd, SCO_FIRST);
+	else
+		status_calc_npc(nd, SCO_NONE);
+	unit_walktoxy(&nd->bl,x,y,0);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
-// stop an npc's movement [Valaris]
+/**
+ * Stop an npc's movement.
+ * npcstop {"<npc name>", {"<flag>"}};
+ */
 BUILDIN_FUNC(npcstop)
 {
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
+	npc_data* nd;
 
-	if(nd) {
-		unit_stop_walking(&nd->bl,1|4);
+	if (script_hasdata(st, 2))
+		nd = npc_name2id(script_getstr(st, 2));
+	else
+		nd = map_id2nd(st->oid);
+
+	if (nd == nullptr) {
+		if (script_hasdata(st, 2))
+			ShowError("buildin_npcstop: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		else
+			ShowError("buildin_npcstop: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	int flag = USW_FIXPOS | USW_MOVE_FULL_CELL | USW_FORCE_STOP;
+
+	if (script_hasdata(st, 3)) {
+		flag = script_getnum(st, 3);
+
+		if (flag < USW_NONE || flag > USW_ALL) {
+			ShowError("buildin_npcstop: invalid flag %d.\n", flag);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (flag & USW_FORCE_STOP)
+			nd->ud.state.force_walk = false;
+	}
+
+	unit_stop_walking( &nd->bl, flag );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19192,7 +19264,12 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
 			case UMOB_Y: if (!unit_walktoxy(bl, md->bl.x, (short)value, 2)) unit_movepos(bl, md->bl.x, (short)value, 0, 0); break;
 			case UMOB_SPEED: md->base_status->speed = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
-			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
+			case UMOB_MODE:
+				md->base_status->mode = (enum e_mode)value;
+				// Mob mode must be updated before calling unit_refresh
+				status_calc_bl_(&md->bl, status_db.getSCB_BATTLE());
+				unit_refresh(bl);
+				break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
 			case UMOB_SEX: md->vd->sex = (char)value; unit_refresh(bl); break;
@@ -27607,9 +27684,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
-	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
-	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
-	BUILDIN_DEF(npcstop,""), // [Valaris]
+	BUILDIN_DEF(npcspeed,"i?"),
+	BUILDIN_DEF(npcwalkto,"ii?"),
+	BUILDIN_DEF(npcstop,"??"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
 	BUILDIN_DEF(checkoption1,"i?"),
