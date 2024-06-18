@@ -730,7 +730,7 @@ struct Battle_Config
 	int trait_points_job_change;
 	int use_traitpoint_table;
 	int max_trait_parameter;
-	int max_res_mres_reduction;
+	int max_res_mres_ignored;
 	int max_ap;
 	int ap_rate;
 	int restart_ap_rate;
