@@ -2788,6 +2788,7 @@ Body:
 #         bonus bFlee,20;
 #      }
 #
+#  - Mob: FARMILIAR2 #TODO : Implement mob FARMILIAR2
   - Mob: FARMILIAR
     TameItem: Fruits_Set_Trap
     EggItem: Farmiliar_Egg

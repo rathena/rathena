@@ -29693,6 +29693,19 @@ Body:
         - Level: 2
           Amount: 100
     Status: Odins_Power
+  - Id: 2543
+    Name: ALL_RAY_OF_PROTECTION
+    Description: Ray of Protection
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Duration1: 60000
+    Status: Protection
   - Id: 2544
     Name: MC_CARTDECORATE
     Description: Decorate Cart
