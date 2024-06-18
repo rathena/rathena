@@ -8941,7 +8941,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      Stun;: true
+      Stun: true
       Sleep: true
       Curse: true
       Stone: true
