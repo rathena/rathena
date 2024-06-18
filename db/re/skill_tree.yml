@@ -8039,3 +8039,108 @@ Body:
             Level: 5
           - Name: HN_NAPALM_VULCAN_STRIKE
             Level: 5
+  - Job: Spirit_Handler
+    Inherit:
+      Summoner: true
+    Tree:
+      - Name: SH_MYSTICAL_CREATURE_MASTERY
+        MaxLevel: 10
+      - Name: SH_CHUL_HO_SONIC_CLAW
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_KI_SUL_WATER_SPRAYING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_COLORS_OF_HYUN_ROK
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_HOWLING_OF_CHUL_HO
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_HYUN_ROKS_BREEZE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_COLORS_OF_HYUN_ROK
+            Level: 3
+      - Name: SH_HOGOGONG_STRIKE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_KI_SUL_RAMPAGE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+            Level: 2
+          - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+            Level: 2
+      - Name: SH_HYUN_ROK_CANNON
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_CHUL_HO
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HOGOGONG_STRIKE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_KI_SUL
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_KI_SUL_RAMPAGE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_HYUN_ROK
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROK_CANNON
+            Level: 3
+      - Name: SH_TEMPORARY_COMMUNION
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10
+      - Name: SH_BLESSING_OF_MYSTICAL_CREATURES
+        MaxLevel: 5
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10
