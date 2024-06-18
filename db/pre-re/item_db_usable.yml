@@ -50,7 +50,7 @@
 #   Flags:                  Item flags. (Default: null)
 #     BuyingStore           If the item is available for Buyingstores. (Default: false)
 #     DeadBranch            If the item is a Dead Branch. (Default: false)
-#     Container             If the item is part of a container. (Default: false)
+#     Container             If the item is a container. (Default: false) Cash type items and items with an ItemGroup are always considered containers and ignore this flag.
 #     UniqueId              If the item is a unique stack. (Default: false)
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
@@ -79,6 +79,7 @@
 #     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
 #     NoMail                If the item can not be put in a mail. (Default: false)
 #     NoAuction             If the item can not be put in an auction. (Default: false)
+#   ItemGroup               Item group the item is a container for. (Default: null)
 #   Script                  Script to execute when the item is used/equipped. (Default: null)
 #   EquipScript             Script to execute when the item is equipped. (Default: null)
 #   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
@@ -1059,9 +1060,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_BLUEBOX
     Script: |
-      getrandgroupitem(IG_BlueBox,1);
+      getrandgroupitem(IG_BLUEBOX,1);
   - Id: 604
     AegisName: Branch_Of_Dead_Tree
     Name: Dead Branch
@@ -1197,9 +1198,9 @@ Body:
     Weight: 50
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_CARDALBUM
     Script: |
-      getrandgroupitem(IG_CardAlbum,1);
+      getrandgroupitem(IG_CARDALBUM,1);
   - Id: 617
     AegisName: Old_Violet_Box
     Name: Old Purple Box
@@ -1208,9 +1209,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_VIOLETBOX
     Script: |
-      getrandgroupitem(IG_VioletBox,1);
+      getrandgroupitem(IG_VIOLETBOX,1);
   - Id: 618
     AegisName: Worn_Out_Scroll
     Name: Worn Out Scroll
@@ -1526,9 +1527,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_GIFTBOX
     Script: |
-      getrandgroupitem(IG_GiftBox,1);
+      getrandgroupitem(IG_GIFTBOX,1);
   - Id: 645
     AegisName: Center_Potion
     Name: Concentration Potion
@@ -1672,9 +1673,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_GIFTBOX_1
     Script: |
-      getrandgroupitem(IG_GiftBox_1,1);
+      getrandgroupitem(IG_GIFTBOX_1,1);
   - Id: 665
     AegisName: Gift_Box_2
     Name: Gift Box
@@ -1683,9 +1684,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_GIFTBOX_2
     Script: |
-      getrandgroupitem(IG_GiftBox_2,1);
+      getrandgroupitem(IG_GIFTBOX_2,1);
   - Id: 666
     AegisName: Gift_Box_3
     Name: Gift Box
@@ -1694,9 +1695,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_GIFTBOX_3
     Script: |
-      getrandgroupitem(IG_GiftBox_3,1);
+      getrandgroupitem(IG_GIFTBOX_3,1);
   - Id: 667
     AegisName: Gift_Box_4
     Name: Gift Box
@@ -1705,9 +1706,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_GIFTBOX_4
     Script: |
-      getrandgroupitem(IG_GiftBox_4,1);
+      getrandgroupitem(IG_GIFTBOX_4,1);
   - Id: 668
     AegisName: Handsei
     Name: Red Envelope
@@ -2482,6 +2483,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1750,500;
   - Id: 12005
@@ -2492,6 +2494,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1770,500;
   - Id: 12006
@@ -2502,6 +2505,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1753,500;
   - Id: 12007
@@ -2512,6 +2516,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1765,500;
   - Id: 12008
@@ -2522,6 +2527,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1752,500;
   - Id: 12009
@@ -2532,6 +2538,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1751,500;
   - Id: 12010
@@ -2542,6 +2549,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1755,500;
   - Id: 12011
@@ -2552,6 +2560,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1756,500;
   - Id: 12012
@@ -2562,6 +2571,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1754,500;
   - Id: 12013
@@ -2572,6 +2582,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1767,500;
   - Id: 12014
@@ -2582,6 +2593,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1757,500;
   - Id: 12015
@@ -2592,6 +2604,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1762,500;
   - Id: 12016
@@ -2660,10 +2673,9 @@ Body:
     Type: Usable
     Buy: 1000
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_GIFTBOXCHINA
     Script: |
-      getrandgroupitem(IG_GiftBoxChina,1);
+      getrandgroupitem(IG_GIFTBOXCHINA,1);
   - Id: 12024
     AegisName: Red_Pouch_Of_Surprise
     Name: Red Pouch
@@ -2680,20 +2692,18 @@ Body:
     Type: Usable
     Buy: 1000
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_EGGBOY
     Script: |
-      getrandgroupitem(IG_EggBoy,1);
+      getrandgroupitem(IG_EGGBOY,1);
   - Id: 12026
     AegisName: Egg_Girl
     Name: Dano Festival Egg
     Type: Usable
     Buy: 1000
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_EGGGIRL
     Script: |
-      getrandgroupitem(IG_EggGirl,1);
+      getrandgroupitem(IG_EGGGIRL,1);
   - Id: 12027
     AegisName: Giggling_Box
     Name: Giggling Box
@@ -2797,6 +2807,8 @@ Body:
     Name: Lotto Box 01
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getitem rand(7361,7370),1;
   - Id: 12036
@@ -2804,6 +2816,8 @@ Body:
     Name: Lotto Box 02
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getitem rand(7371,7380),1;
   - Id: 12037
@@ -2811,6 +2825,8 @@ Body:
     Name: Lotto Box 03
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getitem rand(7381,7390),1;
   - Id: 12038
@@ -2818,15 +2834,16 @@ Body:
     Name: Lotto Box 04
     Type: Usable
     Weight: 20
-    Flags:
-      Container: true
+    ItemGroup: IG_LOTTOBOX
     Script: |
-      getrandgroupitem(IG_LottoBox,1);
+      getrandgroupitem(IG_LOTTOBOX,1);
   - Id: 12039
     AegisName: Lotto_Box05
     Name: Lotto Box 05
     Type: Usable
     Weight: 20
+    Flags:
+      Container: true
     Script: |
       getitem rand(7542,7546),1;
   - Id: 12040
@@ -3534,9 +3551,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_QUIVER
     Script: |
-      getrandgroupitem(IG_Quiver,1);
+      getrandgroupitem(IG_QUIVER,1);
   - Id: 12105
     AegisName: Set_Of_Taiming_Item
     Name: Taming Gift Set
@@ -3545,11 +3562,11 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_TAMING
     Script: |
-      getrandgroupitem(IG_Taming,1);
-      getrandgroupitem(IG_Taming,1);
-      getrandgroupitem(IG_Taming,1);
+      getrandgroupitem(IG_TAMING,1);
+      getrandgroupitem(IG_TAMING,1);
+      getrandgroupitem(IG_TAMING,1);
   - Id: 12106
     AegisName: Accessory_Box
     Name: Jewelry Box
@@ -3558,9 +3575,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_ACCESORY
     Script: |
-      getrandgroupitem(IG_Accesory,1);
+      getrandgroupitem(IG_ACCESORY,1);
   - Id: 12107
     AegisName: Wrapped_Mask
     Name: Wrapped Mask
@@ -3569,9 +3586,9 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_MASK
     Script: |
-      getrandgroupitem(IG_Mask,1);
+      getrandgroupitem(IG_MASK,1);
   - Id: 12108
     AegisName: Bundle_Of_Magic_Scroll
     Name: Scroll Package
@@ -3580,13 +3597,13 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_SCROLL
     Script: |
-      getrandgroupitem(IG_Scroll,1);
-      getrandgroupitem(IG_Scroll,1);
-      getrandgroupitem(IG_Scroll,1);
-      getrandgroupitem(IG_Scroll,1);
-      getrandgroupitem(IG_Scroll,1);
+      getrandgroupitem(IG_SCROLL,1);
+      getrandgroupitem(IG_SCROLL,1);
+      getrandgroupitem(IG_SCROLL,1);
+      getrandgroupitem(IG_SCROLL,1);
+      getrandgroupitem(IG_SCROLL,1);
   - Id: 12109
     AegisName: Poring_Box
     Name: Poring Box
@@ -3606,13 +3623,13 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_FIRSTAID
     Script: |
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
-      getrandgroupitem(IG_FirstAid,1);
+      getrandgroupitem(IG_FIRSTAID,1);
+      getrandgroupitem(IG_FIRSTAID,1);
+      getrandgroupitem(IG_FIRSTAID,1);
+      getrandgroupitem(IG_FIRSTAID,1);
+      getrandgroupitem(IG_FIRSTAID,1);
   - Id: 12111
     AegisName: Food_Package
     Name: Bundle of Food
@@ -3621,11 +3638,11 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_FOODBAG
     Script: |
-      getrandgroupitem(IG_FoodBag,1);
-      getrandgroupitem(IG_FoodBag,1);
-      getrandgroupitem(IG_FoodBag,1);
+      getrandgroupitem(IG_FOODBAG,1);
+      getrandgroupitem(IG_FOODBAG,1);
+      getrandgroupitem(IG_FOODBAG,1);
   - Id: 12112
     AegisName: Tropical_Sograt
     Name: Tropical Sograt
@@ -3815,11 +3832,11 @@ Body:
     Weight: 70
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_COOKIEBAG
     Script: |
-      getrandgroupitem(IG_CookieBag,1);
-      getrandgroupitem(IG_CookieBag,1);
-      getrandgroupitem(IG_CookieBag,1);
+      getrandgroupitem(IG_COOKIEBAG,1);
+      getrandgroupitem(IG_COOKIEBAG,1);
+      getrandgroupitem(IG_COOKIEBAG,1);
   - Id: 12131
     AegisName: Lucky_Potion
     Name: Lucky Potion
@@ -3867,6 +3884,8 @@ Body:
     Name: Women's Bundle
     Type: Usable
     Weight: 100
+    Flags:
+      Container: true
     Script: |
       getitem callfunc("F_Rand",558,529,2668,7518),1;
   - Id: 12137
@@ -3918,6 +3937,7 @@ Body:
     Weight: 350
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13204,500;
   - Id: 12145
@@ -3928,6 +3948,7 @@ Body:
     Weight: 350
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13206,500;
   - Id: 12146
@@ -3938,6 +3959,7 @@ Body:
     Weight: 350
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13205,500;
   - Id: 12147
@@ -3948,6 +3970,7 @@ Body:
     Weight: 350
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13207,500;
   - Id: 12148
@@ -3958,6 +3981,7 @@ Body:
     Weight: 350
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13203,500;
   - Id: 12149
@@ -3968,6 +3992,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13200,500;
   - Id: 12150
@@ -3978,6 +4003,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13202,500;
   - Id: 12151
@@ -3988,6 +4014,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 13201,500;
   - Id: 12152
@@ -4483,6 +4510,7 @@ Body:
     Weight: 250
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 1772,500;
   - Id: 12184
@@ -4511,20 +4539,18 @@ Body:
     Type: Usable
     Buy: 50000
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_REDBOX
     Script: |
-      getrandgroupitem(IG_RedBox,1);
+      getrandgroupitem(IG_REDBOX,1);
   - Id: 12187
     AegisName: Green_Box
     Name: Old Green Box
     Type: Usable
     Buy: 50000
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_GREENBOX
     Script: |
-      getrandgroupitem(IG_GreenBox,1);
+      getrandgroupitem(IG_GREENBOX,1);
   - Id: 12188
     AegisName: Magical_Moon_Cake
     Name: Grace Moon Cake
@@ -4539,10 +4565,9 @@ Body:
     Type: Usable
     Buy: 50000
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_REDBOX_2
     Script: |
-      getrandgroupitem(IG_RedBox_2,1);
+      getrandgroupitem(IG_REDBOX_2,1);
   - Id: 12190
     AegisName: Moon_Cake
     Name: Moon Cake
@@ -4577,11 +4602,11 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_HOMETOWNGIFT
     Script: |
-      getrandgroupitem(IG_HometownGift,1);
-      getrandgroupitem(IG_HometownGift,1);
-      getrandgroupitem(IG_HometownGift,1);
+      getrandgroupitem(IG_HOMETOWNGIFT,1);
+      getrandgroupitem(IG_HOMETOWNGIFT,1);
+      getrandgroupitem(IG_HOMETOWNGIFT,1);
   - Id: 12195
     AegisName: Plain_Rice_Cake
     Name: Plain Rice Cake
@@ -5182,10 +5207,9 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_YELLOWBOX
     Script: |
-      getrandgroupitem(IG_YellowBox,1);
+      getrandgroupitem(IG_YELLOWBOX,1);
   - Id: 12241
     AegisName: M_Center_Potion
     Name: Mercenary Concentration Potion
@@ -5222,10 +5246,9 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_OLDGIFTBOX
     Script: |
-      getrandgroupitem(IG_OldGiftBox,1);
+      getrandgroupitem(IG_OLDGIFTBOX,1);
   - Id: 12245
     AegisName: Green_Ale_US
     Name: Green Ale
@@ -5242,9 +5265,9 @@ Body:
     Weight: 50
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_MAGICCARDALBUM
     Script: |
-      getrandgroupitem(IG_MagicCardAlbum,1);
+      getrandgroupitem(IG_MAGICCARDALBUM,1);
   - Id: 12247
     AegisName: Halohalo
     Name: Halo-Halo
@@ -5260,10 +5283,9 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
-    Flags:
-      Container: true
+    ItemGroup: IG_MASQUERADE
     Script: |
-      getrandgroupitem(IG_Masquerade,1);
+      getrandgroupitem(IG_MASQUERADE,1);
   - Id: 12249
     AegisName: Payroll_Of_Kafra_
     Name: Payment Statement for Kafra Employee
@@ -5675,10 +5697,9 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 150
-    Flags:
-      Container: true
+    ItemGroup: IG_TRESURE_BOX_WOE
     Script: |
-      getrandgroupitem(IG_Tresure_Box_WoE,1);
+      getrandgroupitem(IG_TRESURE_BOX_WOE,1);
   - Id: 12282
     AegisName: Internet_Cafe1
     Name: Internet Cafe1
@@ -5725,10 +5746,9 @@ Body:
     Name: Masquerade Ball Box2
     Type: Usable
     Weight: 10
-    Flags:
-      Container: true
+    ItemGroup: IG_MASQUERADE_2
     Script: |
-      getrandgroupitem(IG_Masquerade_2,1);
+      getrandgroupitem(IG_MASQUERADE_2,1);
   - Id: 12287
     AegisName: Love_Angel
     Name: Love Angel Magic Powder
@@ -5833,6 +5853,8 @@ Body:
     Name: PC-Room Coin Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -5849,6 +5871,8 @@ Body:
     Name: PC-Room Coin Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -5865,6 +5889,8 @@ Body:
     Name: PC-Room Coin Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -5881,6 +5907,8 @@ Body:
     Name: PC-Room Coin Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -6338,10 +6366,9 @@ Body:
     Name: Treasure Edition Helm Box
     Type: Usable
     Weight: 10
-    Flags:
-      Container: true
+    ItemGroup: IG_CHERISH_BOX
     Script: |
-      getrandgroupitem(IG_Cherish_Box,1);
+      getrandgroupitem(IG_CHERISH_BOX,1);
   - Id: 12335
     AegisName: Yummy_Skewered_Dish
     Name: Grilled Delicious Skewer
@@ -6381,10 +6408,9 @@ Body:
     Name: Treasure Edition Box
     Type: Usable
     Weight: 10
-    Flags:
-      Container: true
+    ItemGroup: IG_CHERISH_BOX_ORI
     Script: |
-      getrandgroupitem(IG_Cherish_Box_Ori,1);
+      getrandgroupitem(IG_CHERISH_BOX_ORI,1);
   - Id: 12340
     AegisName: Mysterious_Rice_Powder
     Name: Chewy Rice Powder
@@ -6410,6 +6436,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 7940,100;
   - Id: 12342
@@ -6621,9 +6648,9 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_XMAS_GIFT
     Script: |
-      getrandgroupitem(IG_Xmas_Gift,1);
+      getrandgroupitem(IG_XMAS_GIFT,1);
   - Id: 12356
     AegisName: Louise_Costume_Box
     Name: Louise Costume Box
@@ -6632,9 +6659,9 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
-      Container: true
+    ItemGroup: IG_LOUISE_COSTUME_BOX
     Script: |
-      getrandgroupitem(IG_Louise_Costume_Box,1);
+      getrandgroupitem(IG_LOUISE_COSTUME_BOX,1);
   - Id: 12357
     AegisName: Shiny_Wing_Gown
     Name: Shiny Wing Gown
@@ -6954,6 +6981,7 @@ Body:
     Weight: 500
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getitem 6145,1000;
   - Id: 12384
@@ -7147,6 +7175,8 @@ Body:
     Type: Delayconsume
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     NoUse:
       Sitting: true
     Trade:
@@ -7171,6 +7201,8 @@ Body:
     Type: Delayconsume
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     NoUse:
       Sitting: true
     Trade:
@@ -8675,11 +8707,10 @@ Body:
     Name: Old Navy Box
     Type: Usable
     Weight: 200
-    Flags:
-      Container: true
+    ItemGroup: IG_BLEUBOX
     Script: |
-      getrandgroupitem(IG_BleuBox,1);
-      getrandgroupitem(IG_BleuBox,1);
+      getrandgroupitem(IG_BLEUBOX,1);
+      getrandgroupitem(IG_BLEUBOX,1);
   - Id: 12703
     AegisName: Holy_Egg_2
     Name: Holy Egg
@@ -8786,8 +8817,6 @@ Body:
     Type: Usable
     Buy: 1
     Weight: 10
-    Flags:
-      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -8795,8 +8824,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    ItemGroup: IG_EASTER_SCROLL
     Script: |
-      getrandgroupitem(IG_Easter_Scroll,1);
+      getrandgroupitem(IG_EASTER_SCROLL,1);
   - Id: 12715
     AegisName: Black_Treasure_Box
     Name: Black Treasure Box
@@ -13617,6 +13647,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 682,1;
       getitem 12123,1;
@@ -13627,6 +13659,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 683,1;
       getitem 12123,1;
@@ -13637,6 +13671,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12118,1;
       getitem 12119,1;
@@ -13646,6 +13682,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12120,1;
       getitem 12121,1;
@@ -17539,6 +17577,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -17555,6 +17595,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -17571,6 +17613,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -17587,6 +17631,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -20223,6 +20269,8 @@ Body:
     Name: Clothing Dye Coupon Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 6046,1;
   - Id: 14292
@@ -20230,6 +20278,8 @@ Body:
     Name: Clothing Dye Coupon Box II
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 6047,1;
   - Id: 14296
@@ -20293,6 +20343,8 @@ Body:
     Name: Phreeoni Scroll Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -20308,6 +20360,8 @@ Body:
     Name: Ghostring Scroll Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -21619,15 +21673,14 @@ Body:
     Name: Pierre's Treasure Box
     Type: Usable
     Weight: 100
-    Flags:
-      Container: true
+    ItemGroup: IG_PIERRE_TREASUREBOX
     Script: |
-      getrandgroupitem(IG_Pierre_Treasurebox,1);
-      getrandgroupitem(IG_Pierre_Treasurebox,1);
-      getrandgroupitem(IG_Pierre_Treasurebox,1);
-      getrandgroupitem(IG_Pierre_Treasurebox,1);
-      getrandgroupitem(IG_Pierre_Treasurebox,1);
-      getrandgroupitem(IG_Pierre_Treasurebox,1);
+      getrandgroupitem(IG_PIERRE_TREASUREBOX,1);
+      getrandgroupitem(IG_PIERRE_TREASUREBOX,1);
+      getrandgroupitem(IG_PIERRE_TREASUREBOX,1);
+      getrandgroupitem(IG_PIERRE_TREASUREBOX,1);
+      getrandgroupitem(IG_PIERRE_TREASUREBOX,1);
+      getrandgroupitem(IG_PIERRE_TREASUREBOX,1);
   - Id: 14597
     AegisName: PhreeoniS
     Name: Phreeoni Scroll
@@ -21877,6 +21930,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -21891,6 +21946,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -21905,6 +21962,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -21919,6 +21978,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -21957,6 +22018,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -21971,6 +22034,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -21985,6 +22050,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -21999,6 +22066,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoSell: true
@@ -22034,6 +22103,8 @@ Body:
     Name: Universal Catalog Gold 10 Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12581,10;
   - Id: 16678
@@ -22041,6 +22112,8 @@ Body:
     Name: Universal Catalog Gold 50 Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12581,50;
   - Id: 16679
@@ -22048,6 +22121,8 @@ Body:
     Name: Universal Catalog Gold 10 Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12581,10;
   - Id: 16680
@@ -22055,6 +22130,8 @@ Body:
     Name: Universal Catalog Gold 50 Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12581,50;
   - Id: 16776
@@ -22062,6 +22139,8 @@ Body:
     Name: Universal Catalog Gold 10 Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12581,10;
   - Id: 16777
@@ -22069,6 +22148,8 @@ Body:
     Name: Universal Catalog Gold 50 Box
     Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 12581,50;
   - Id: 17104
@@ -22077,6 +22158,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 6240,50;
   - Id: 17105
@@ -22085,6 +22168,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getitem 6241,50;
   - Id: 22777

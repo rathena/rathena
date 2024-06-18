@@ -113177,3 +113177,31 @@ Body:
           - Index: 65
             Item: Critical_Stone_Bottom
             Rate: 400
+  - Group: COSTAMA_EGG22
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: C_Rabbit_Earplug
+            Rate: 12
+          - Index: 1
+            Item: C_Rabbit_Magic_Hat
+            Rate: 12
+          - Index: 2
+            Item: C_Rabbit_Ear_Knit_Hat
+            Rate: 12
+          - Index: 3
+            Item: C_Love_Rabbit_Hood
+            Rate: 12
+          - Index: 4
+            Item: C_Rabbit_Ear_Hat
+            Rate: 12
+          - Index: 5
+            Item: C_Pretty_Rabbit_Hood
+            Rate: 12
+          - Index: 6
+            Item: C_Camouflage_RabbitHood
+            Rate: 12
+          - Index: 7
+            Item: C_Snow_Rabbit_Knit_Hat
+            Rate: 12

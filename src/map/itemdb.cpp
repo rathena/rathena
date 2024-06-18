@@ -662,10 +662,10 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			if (!this->asBool(flagNode, "Container", active))
 				return 0;
 
-			item->flag.group = active;
+			item->flag.container = active;
 		} else {
 			if (!exists)
-				item->flag.group = false;
+				item->flag.container = false;
 		}
 
 		if (this->nodeExists(flagNode, "UniqueId")) {
@@ -749,7 +749,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!exists) {
 			item->flag.buyingstore = false;
 			item->flag.dead_branch = false;
-			item->flag.group = false;
+			item->flag.container = false;
 			item->flag.guid = false;
 			item->flag.bindOnEquip = false;
 			item->flag.broadcast = false;
@@ -1057,6 +1057,33 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
+	if (this->nodeExists(node, "ItemGroup")) {
+		std::string group_constant;
+
+		if (!this->asString(node, "ItemGroup", group_constant))
+			return 0;
+
+		int64 constant;
+
+		if (!script_get_constant(group_constant.c_str(), &constant) || constant < IG_BLUEBOX) {
+			this->invalidWarning(node["ItemGroup"], "Invalid group %s.\n", group_constant.c_str());
+			return 0;
+		}
+
+		// TODO: Check if the group exists
+		/*
+		if (!itemdb_group.exists(static_cast<uint16>(constant))) {
+			this->invalidWarning(node["ItemGroup"], "Unknown group ID \"%" PRId64 "\".\n", constant);
+			return 0;
+		}*/
+
+		item->group_id = static_cast<uint16>(constant);
+	}
+	else {
+		if (!exists)
+			item->group_id = 0;
+	}
+
 	if (this->nodeExists(node, "Script")) {
 		std::string script;
 
@@ -1124,6 +1151,11 @@ void ItemDatabase::loadingFinished(){
 			item->flag.delay_consume |= DELAYCONSUME_TEMP;
 		} else {
 			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
+		}
+
+		// Cash type items and items with an ItemGroup should always have the container flag
+		if (item->type == IT_CASH && !item->flag.container || item->group_id > 0) {
+			item->flag.container = true;
 		}
 
 		if( item->type == IT_WEAPON ){
@@ -1494,6 +1526,21 @@ int16 ItemGroupDatabase::item_exists_pc(map_session_data *sd, uint16 group_id)
 	}
 
 	return -1;
+}
+
+/**
+ * Get the maximum amount of items that can be obtained from a group
+ * @param group_id: Item Group ID
+ * @return Maximum amount of items or 0 if group does not exist
+ */
+uint16 ItemGroupDatabase::get_max_amount( uint16 group_id )
+{
+	std::shared_ptr<s_item_group_db> group = this->find(group_id);
+
+	if (group == nullptr || group->random.empty())
+		return 0;
+
+	return group->maxAmount;
 }
 
 const std::string LaphineSynthesisDatabase::getDefaultLocation(){
@@ -3322,6 +3369,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			const auto& listNode = subit["List"];
 
+			uint16 subGroupMaxAmount = 0;
+
 			for (const auto& listit : listNode) {
 				uint32 index;
 
@@ -3448,16 +3497,39 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						entry->GUID = item->flag.guid;
 				}
 
-				if (this->nodeExists(listit, "Stacked")) {
-					bool isStacked;
+				uint16 countAmount = 0;
 
-					if (!this->asBool(listit, "Stacked", isStacked))
-						continue;
+				if (itemdb_isstackable2(item.get())) {
+					if (this->nodeExists(listit, "Stacked")) {
+						bool isStacked;
 
-					entry->isStacked = isStacked;
-				} else {
-					if (!entry_exists)
-						entry->isStacked = true;
+						if (!this->asBool(listit, "Stacked", isStacked))
+							continue;
+
+						entry->isStacked = isStacked;
+					}
+					else {
+						if (!entry_exists)
+							entry->isStacked = true;
+					}
+					if (entry->isStacked) {
+						countAmount++;
+					}
+					else {
+						countAmount += entry->amount;
+					}
+				}
+				else {
+					entry->isStacked = false;
+					countAmount += entry->amount;
+				}
+
+				if (subgroup == 0) {
+					subGroupMaxAmount += countAmount;
+				}
+				else {
+					if (countAmount > subGroupMaxAmount)
+						subGroupMaxAmount += countAmount;
 				}
 
 				if (this->nodeExists(listit, "Named")) {
@@ -3551,6 +3623,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 				}
 			}
+			group->maxAmount += subGroupMaxAmount;
 		}
 	}
 

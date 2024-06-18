@@ -50,7 +50,7 @@
 #   Flags:                  Item flags. (Default: null)
 #     BuyingStore           If the item is available for Buyingstores. (Default: false)
 #     DeadBranch            If the item is a Dead Branch. (Default: false)
-#     Container             If the item is part of a container. (Default: false)
+#     Container             If the item is a container. (Default: false) Cash type items and items with an ItemGroup are always considered containers and ignore this flag.
 #     UniqueId              If the item is a unique stack. (Default: false)
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
@@ -79,6 +79,7 @@
 #     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
 #     NoMail                If the item can not be put in a mail. (Default: false)
 #     NoAuction             If the item can not be put in an auction. (Default: false)
+#   ItemGroup               Item group the item is a container for. (Default: null)
 #   Script                  Script to execute when the item is used/equipped. (Default: null)
 #   EquipScript             Script to execute when the item is equipped. (Default: null)
 #   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
@@ -401,6 +402,8 @@ Header:
 #    Name: Valentine Gift Box
 #    Type: Usable
 #    Buy: 10
+#    Flags:
+#      Container: true
 #    Script: |
 #      getitem 7946,1;
 #  - Id: 12743
@@ -408,6 +411,8 @@ Header:
 #    Name: Valentine Gift Box
 #    Type: Usable
 #    Buy: 10
+#    Flags:
+#      Container: true
 #    Script: |
 #      getitem 7947,1;
 #  - Id: 12744
@@ -415,6 +420,8 @@ Header:
 #    Name: Chocolate Box
 #    Type: Usable
 #    Buy: 10
+#    Flags:
+#      Container: true
 #    Script: |
 #      getitem 558,1;
 #  - Id: 14466
@@ -422,6 +429,8 @@ Header:
 #    Name: Valentine's Emblem Box
 #    Type: Usable
 #    Buy: 10
+#    Flags:
+#      Container: true
 #    Script: |
 #      getitem 5817,1;
 

@@ -7790,6 +7790,7 @@
 	export_constant(IG_P_BOOSTER_CALL_PACKAGE);
 	export_constant(IG_P_COMPENSATION_BOX);
 	export_constant(IG_ENCHANT_STONE_BOX35);
+	export_constant(IG_COSTAMA_EGG22);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

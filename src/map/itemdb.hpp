@@ -2825,6 +2825,7 @@ enum e_random_item_group {
 	IG_P_BOOSTER_CALL_PACKAGE,
 	IG_P_COMPENSATION_BOX,
 	IG_ENCHANT_STONE_BOX35,
+	IG_COSTAMA_EGG22,
 
 	IG_MAX,
 };
@@ -3011,6 +3012,7 @@ struct s_item_group_db
 {
 	uint16 id; /// Item Group ID
 	std::unordered_map<uint16, std::shared_ptr<s_item_group_random>> random;	/// group ID, s_item_group_random
+	uint16 maxAmount;
 };
 
 /// Struct of Roulette db
@@ -3072,7 +3074,7 @@ struct item_data
 		unsigned autoequip: 1;
 		bool buyingstore;
 		bool dead_branch; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
-		bool group; // As item group container [Cydh]
+		bool container; // As item container [Cydh]
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 		bool broadcast; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
@@ -3093,6 +3095,7 @@ struct item_data
 		uint32 duration;
 		sc_type sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
 	} delay;
+	uint16 group_id; ///< Item Group ID
 
 	~item_data() {
 		if (this->script){
@@ -3174,6 +3177,7 @@ public:
 	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
 	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
 	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
+	uint16 get_max_amount( uint16 group_id );
 
 private:
 	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );

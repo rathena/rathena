@@ -6262,8 +6262,8 @@ bool pc_isUseitem(map_session_data *sd,int n)
 	if( itemdb_group.item_exists(IG_MERCENARY, nameid) && sd->md != nullptr )
 		return false; // Mercenary Scrolls
 
-	// Safe check type cash disappear when overweight [Napster]
-	if( item->flag.group || item->type == IT_CASH ){
+	// Safe check for container items
+	if( item->flag.container ){
 #ifdef RENEWAL
 		// Check if the player is not overweighted
 		// In Renewal the limit is 70% weight and gives the same error message
@@ -6282,9 +6282,10 @@ bool pc_isUseitem(map_session_data *sd,int n)
 
 		// Check if the player has enough free spaces in the inventory
 		// Official servers use 10 as the minimum amount of slots required to get the items
+		// For item groups, the amount of slots required is the maximum amount of items it can give
+		// For other containers, the amount of slots required is always 10, as there's no official containers that give more than 10 items
 		// The <= is intentional, as in official servers you actually need an extra empty slot
-		// TODO: Count the items the player will get and check for the actual inventory space required std::max<size_t>( count, 10 )
-		if (pc_inventoryblank(sd) <= 10) {
+		if (pc_inventoryblank(sd) <= item->group_id ? std::max<size_t>(itemdb_group.get_max_amount(item->group_id), 10) : 10) {
 #ifdef RENEWAL
 			clif_msg_color(sd, MSI_PICKUP_FAILED_ITEMCREATE, color_table[COLOR_RED]);
 #else
