@@ -62413,6 +62413,7 @@ Body:
     AegisName: Psychotropic
     Name: Psychotropic
     Type: DelayConsume
+    Weight: 10
     EquipLevelMin: 100
     Flags:
       BuyingStore: true
