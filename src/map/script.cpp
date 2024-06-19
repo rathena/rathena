@@ -27342,7 +27342,7 @@ BUILDIN_FUNC(setdialogpospercent){
 
 /**
  * Checks if the character has that permission.
- * checkpermission(<permission>{,<char_id>}) -> <bool>
+ * checkperm(<permission>{,<char_id>}) -> <bool>
  */
 BUILDIN_FUNC(checkperm)
 {

@@ -6660,7 +6660,7 @@ Example:
 
 ---------------------------------------
 
-*checkpermission(<permission>{,<char_id>});
+*checkperm(<permission>{,<char_id>});
 
 This command will return true if the attached character has the specified permission, false otherwise.
 If <char_id> is given, it will check the permission for that character instead.
@@ -6670,7 +6670,7 @@ and documentation can be found in 'doc/permissions.txt'.
 
 
 Example:
-	if (checkpermission(PC_PERM_TRADE)) {
+	if (checkperm(PC_PERM_TRADE)) {
 		mes "You have permission to trade!";
 	}
 	else {
