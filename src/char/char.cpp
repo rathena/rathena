@@ -1360,7 +1360,7 @@ int char_check_char_name(char * name, char * esc_name)
 	 * The client does not allow you to create names with less than 4 characters, however,
 	 * the use of WPE can bypass this, and this fixes the exploit.
 	 **/
-	if( strlen( name ) < 4 )
+	if(charserv_config.char_config.char_name_length_limit && strlen( name ) < 4 )
 		return -2;
 	// check content of character name
 	if( remove_control_chars(name) )
@@ -2762,6 +2762,7 @@ void char_set_defaults(){
 	charserv_config.char_config.char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 	safestrncpy(charserv_config.char_config.unknown_char_name,"Unknown",sizeof(charserv_config.char_config.unknown_char_name)); // Name to use when the requested name cannot be determined
 	safestrncpy(charserv_config.char_config.char_name_letters,"",sizeof(charserv_config.char_config.char_name_letters)); // list of letters/symbols allowed (or not) in a character name. by [Yor]
+	charserv_config.char_config.char_name_length_limit = true; // Enable or disable the 4-letter character name minimum length limit
 
 	charserv_config.save_log = 1; // show loading/saving messages
 	charserv_config.log_char = 1;	// loggin char or not [devil]
@@ -3025,6 +3026,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.char_config.char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			safestrncpy(charserv_config.char_config.char_name_letters, w2, sizeof(charserv_config.char_config.char_name_letters));
+		} else if (strcmpi(w1, "char_name_length_limit") == 0) {
+			charserv_config.char_config.char_name_length_limit = static_cast<bool>(config_switch(w2));
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
 			charserv_config.char_config.char_del_level = atoi(w2);
 		} else if (strcmpi(w1, "char_del_delay") == 0) {
