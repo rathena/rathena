@@ -18363,6 +18363,19 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 776
+    Name: NPC_DEADLYCURSE
+    Description: Deadly Curse
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    Range: 1
+    Duration1: 12000
+    Status: Deadly_Defeasance
   - Id: 779
     Name: NPC_DEADLYCURSE2
     Description: Deadly Curse 2
