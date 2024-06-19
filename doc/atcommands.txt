@@ -1,4 +1,4 @@
-﻿//===== rAthena Documentation ================================
+//===== rAthena Documentation ================================
 //= Atcommand List
 //===== By: ==================================================
 //= rAthena Dev Team

@@ -1,4 +1,4 @@
-//===== rAthena Documentation================================
+﻿//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
