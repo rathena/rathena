@@ -27340,6 +27340,53 @@ BUILDIN_FUNC(setdialogpospercent){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Checks if the character has that permission.
+ * checkpermission(<permission>{,<char_id>}) -> <bool>
+ */
+BUILDIN_FUNC(checkperm)
+{
+	map_session_data* sd = nullptr;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	if (pc_has_permission(sd, static_cast<e_pc_permission>(script_getnum(st, 2))))
+		script_pushint(st, true);
+	else
+		script_pushint(st, false);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Adds or removes a permission from the character
+ * addperm(<permission>{,<char_id>})
+ * removeperm(<permission>{,<char_id>})
+ */
+BUILDIN_FUNC(addperm)
+{
+	map_session_data* sd = nullptr;
+
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	e_pc_permission permission;
+	if (script_hasdata(st, 2))
+		permission = static_cast<e_pc_permission>(script_getnum(st, 2));
+	else
+		return SCRIPT_CMD_FAILURE;
+
+	bool add = (!strcmp(script_getfuncname(st), "addperm")) ? true : false;
+
+	if (add)
+		sd->permissions.set(permission); // Adds permission
+	else
+		sd->permissions.reset(permission); // Removes permission
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28104,6 +28151,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setdialogsize, "ii"),
 	BUILDIN_DEF(setdialogpos, "ii"),
 	BUILDIN_DEF(setdialogpospercent, "ii"),
+
+	BUILDIN_DEF(checkperm, "i?"),
+	BUILDIN_DEF(addperm, "i?"),
+	BUILDIN_DEF2(addperm, "removeperm", "i?"),
 
 #include <custom/script_def.inc>
 
