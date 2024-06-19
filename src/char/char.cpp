@@ -1360,7 +1360,7 @@ int char_check_char_name(char * name, char * esc_name)
 	 * The client does not allow you to create names with less than 4 characters, however,
 	 * the use of WPE can bypass this, and this fixes the exploit.
 	 **/
-	if(charserv_config.char_config.char_name_length_limit && strlen( name ) < 4 )
+	if( charserv_config.char_config.char_name_length_limit && strlen( name ) < 4 )
 		return -2;
 	// check content of character name
 	if( remove_control_chars(name) )
