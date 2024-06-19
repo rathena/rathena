@@ -18374,7 +18374,7 @@ Body:
       IgnoreGtb: true
       IsNpc: true
     Range: 1
-    Duration1: 12000
+    Duration1: 15000
     Status: Deadly_Defeasance
   - Id: 779
     Name: NPC_DEADLYCURSE2
@@ -18387,8 +18387,6 @@ Body:
     Flags:
       IgnoreGtb: true
       IsNpc: true
-    Hit: Single
-    HitCount: 1
     SplashArea:
       - Level: 1
         Area: 2
