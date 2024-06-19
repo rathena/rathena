@@ -1009,6 +1009,7 @@ Body:
     Flags:
       SendOption: true
   - Status: Extremityfist
+    Icon: EFST_EXTREMITYFIST
     DurationLookup: MO_EXTREMITYFIST
     CalcFlags:
       Regen: true
@@ -6117,14 +6118,6 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       RemoveOnHermode: true
-  - Status: Extremityfist2
-    Icon: EFST_EXTREMITYFIST
-    DurationLookup: MO_EXTREMITYFIST
-    Flags:
-      NoRemoveOnDead: true
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
   - Status: Mtf_Aspd2
     Icon: EFST_MTF_ASPD2
     CalcFlags:

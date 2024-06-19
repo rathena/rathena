@@ -756,7 +756,7 @@ enum sc_type : int16 {
 	/* Guild Aura */
 	SC_LEADERSHIP,
 	SC_GLORYWOUNDS,
-	SC_SOULCOLD, //508
+	SC_SOULCOLD,
 	SC_HAWKEYES,
 	/* ... */
 	SC_ODINS_POWER,
@@ -779,7 +779,7 @@ enum sc_type : int16 {
 	/* Max HP & SP */
 	SC_INCMHP,
 	SC_INCMSP,
-	SC_PARTYFLEE, // 531
+	SC_PARTYFLEE,
 	/**
 	* Kagerou & Oboro [malufett]
 	**/
@@ -1307,8 +1307,8 @@ enum sc_type : int16 {
 	SC_PERIOD_RECEIVEITEM_2ND,
 	SC_PERIOD_PLUSEXP_2ND,
 
-	SC_EXTREMITYFIST2,
-	SC_POWERUP,
+	//SC_EXTREMITYFIST2,
+	SC_POWERUP = 951,
 	SC_AGIUP,
 	SC_PROTECTION,
 

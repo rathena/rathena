@@ -6073,7 +6073,7 @@ BUILDIN_FUNC(percentheal)
 		return SCRIPT_CMD_SUCCESS;
 
 #ifdef RENEWAL
-	if( sd->sc.getSCE(SC_EXTREMITYFIST2) )
+	if( sd->sc.getSCE(SC_EXTREMITYFIST) )
 		sp = 0;
 #endif
 
