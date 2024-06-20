@@ -696,7 +696,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 }
 
 /// Party member 'sd' requesting kick of member with <account_id, name>.
-bool party_removemember( map_session_data& sd, uint32 account_id, char* name ){
+bool party_removemember( map_session_data& sd, uint32 account_id, const char* name ){
 	// Party locked.
 	if( map_getmapflag( sd.bl.m, MF_PARTYLOCK ) ){
 		clif_displaymessage( sd.fd, msg_txt( &sd, 227 ) );

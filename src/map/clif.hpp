@@ -824,7 +824,7 @@ void clif_fixpos( block_list& bl );
 void clif_npcbuysell( map_session_data& sd, npc_data& nd );
 void clif_buylist( map_session_data& sd, npc_data& nd );
 void clif_selllist( map_session_data& sd );
-void clif_npc_market_open(map_session_data *sd, struct npc_data *nd);
+void clif_npc_market_open( map_session_data& sd, npc_data& nd );
 void clif_parse_NPCMarketClosed(int fd, map_session_data *sd);
 void clif_parse_NPCMarketPurchase(int fd, map_session_data *sd);
 void clif_scriptmes( map_session_data& sd, uint32 npcid, const char *mes );
@@ -927,8 +927,8 @@ void clif_skill_estimation(map_session_data *sd,struct block_list *dst);
 void clif_skill_warppoint( map_session_data* sd, uint16 skill_id, uint16 skill_lv, const char* map1, const char* map2 = "", const char* map3 = "", const char* map4 = "" );
 void clif_skill_memomessage( map_session_data& sd, e_ack_remember_warppoint_result result );
 void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result result );
-void clif_skill_produce_mix_list(map_session_data *sd, int skill_id, int trigger);
-void clif_cooking_list(map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type);
+void clif_skill_produce_mix_list( map_session_data& sd, int skill_id, int trigger );
+void clif_cooking_list( map_session_data& sd, int trigger, uint16 skill_id, int qty, int list_type );
 
 void clif_produceeffect(map_session_data* sd,int flag, t_itemid nameid);
 
@@ -994,9 +994,9 @@ void clif_changed_dir(struct block_list *bl, enum send_target target);
 void clif_openvendingreq( map_session_data& sd, uint16 num );
 void clif_showvendingboard( map_session_data& sd, enum send_target target = AREA_WOS, struct block_list* tbl = nullptr );
 void clif_closevendingboard(struct block_list* bl, int fd);
-void clif_vendinglist( map_session_data* sd, map_session_data* vsd );
+void clif_vendinglist( map_session_data& sd, map_session_data& vsd );
 void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_purchase_result_frommc result );
-void clif_openvending(map_session_data* sd, int id, struct s_vending* vending);
+void clif_openvending( map_session_data& sd );
 void clif_vendingreport( map_session_data& sd, uint16 index, uint16 amount, uint32 char_id, int32 zeny );
 
 void clif_movetoattack( map_session_data& sd, block_list& bl );
@@ -1238,17 +1238,17 @@ void clif_showdigit(map_session_data* sd, unsigned char type, int value);
 /// Buying Store System
 void clif_buyingstore_open(map_session_data* sd);
 void clif_buyingstore_open_failed(map_session_data* sd, unsigned short result, unsigned int weight);
-void clif_buyingstore_myitemlist(map_session_data* sd);
+void clif_buyingstore_myitemlist( map_session_data& sd );
 void clif_buyingstore_entry( map_session_data& sd, struct block_list* tbl = nullptr );
 void clif_buyingstore_disappear_entry( map_session_data& sd, struct block_list* tbl = nullptr );
-void clif_buyingstore_itemlist(map_session_data* sd, map_session_data* pl_sd);
+void clif_buyingstore_itemlist( map_session_data& sd, map_session_data& pl_sd );
 void clif_buyingstore_trade_failed_buyer(map_session_data* sd, short result);
 void clif_buyingstore_update_item(map_session_data* sd, t_itemid nameid, unsigned short amount, uint32 char_id, int zeny);
 void clif_buyingstore_delete_item(map_session_data* sd, short index, unsigned short amount, int price);
 void clif_buyingstore_trade_failed_seller(map_session_data* sd, short result, t_itemid nameid);
 
 /// Search Store System
-void clif_search_store_info_ack(map_session_data* sd);
+void clif_search_store_info_ack( map_session_data& sd );
 void clif_search_store_info_failed(map_session_data* sd, unsigned char reason);
 void clif_open_search_store_info(map_session_data* sd);
 void clif_search_store_info_click_ack(map_session_data* sd, short x, short y);
@@ -1368,7 +1368,7 @@ void clif_attendence_response( map_session_data *sd, int32 data );
 
 void clif_weight_limit( map_session_data* sd );
 
-void clif_guild_storage_log( map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
+void clif_guild_storage_log( map_session_data& sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
 
 void clif_camerainfo( map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f );
 

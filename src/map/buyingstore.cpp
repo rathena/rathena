@@ -248,7 +248,7 @@ int8 buyingstore_create( map_session_data* sd, int zenylimit, unsigned char resu
 		Sql_ShowDebug(mmysql_handle);
 	StringBuf_Destroy(&buf);
 
-	clif_buyingstore_myitemlist(sd);
+	clif_buyingstore_myitemlist( *sd );
 	clif_buyingstore_entry( *sd );
 	idb_put(buyingstore_db, sd->status.char_id, sd);
 
@@ -313,7 +313,7 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 	}
 
 	// success
-	clif_buyingstore_itemlist(sd, pl_sd);
+	clif_buyingstore_itemlist( *sd, *pl_sd );
 }
 
 /**
