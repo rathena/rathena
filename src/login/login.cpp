@@ -634,9 +634,9 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if(!strcmpi(w1, "new_account"))
 			login_config.new_account_flag = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "acc_name_min_length"))
-			login_config.acc_name_min_length = cap_value(atoi(w2), 0, NAME_LENGTH);
+			login_config.acc_name_min_length = cap_value(atoi(w2), 0, NAME_LENGTH - 1);
 		else if(!strcmpi(w1, "password_min_length"))
-			login_config.password_min_length = cap_value(atoi(w2), 0, PASSWD_LENGTH);
+			login_config.password_min_length = cap_value(atoi(w2), 0, PASSWD_LENGTH - 1);
 		else if(!strcmpi(w1, "start_limited_time"))
 			login_config.start_limited_time = atoi(w2);
 		else if(!strcmpi(w1, "use_MD5_passwords"))

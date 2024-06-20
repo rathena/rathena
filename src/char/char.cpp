@@ -3030,7 +3030,7 @@ bool char_config_read(const char* cfgName, bool normal){
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			safestrncpy(charserv_config.char_config.char_name_letters, w2, sizeof(charserv_config.char_config.char_name_letters));
 		} else if (strcmpi(w1, "char_name_min_length") == 0) {
-			charserv_config.char_config.char_name_min_length = cap_value(atoi(w2), 0, NAME_LENGTH);
+			charserv_config.char_config.char_name_min_length = cap_value(atoi(w2), 0, NAME_LENGTH - 1);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
 			charserv_config.char_config.char_del_level = atoi(w2);
 		} else if (strcmpi(w1, "char_del_delay") == 0) {
