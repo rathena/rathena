@@ -27342,44 +27342,47 @@ BUILDIN_FUNC(setdialogpospercent){
 
 /**
  * Checks if the character has that permission.
- * checkperm(<permission>{,<char_id>}) -> <bool>
+ * permission_check(<permission>{,<char_id>}) -> <bool>
  */
-BUILDIN_FUNC(checkperm)
+BUILDIN_FUNC(permission_check)
 {
 	map_session_data* sd = nullptr;
 
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if (pc_has_permission(sd, static_cast<e_pc_permission>(script_getnum(st, 2))))
-		script_pushint(st, true);
-	else
-		script_pushint(st, false);
+	e_pc_permission permission = static_cast<e_pc_permission>(script_getnum(st, 2));
+
+	if (permission < PC_PERM_TRADE || permission >= PC_PERM_MAX) {
+		ShowError("buildin_permission_check: Invalid permission %d\n", permission);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, pc_has_permission(sd, permission));
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
  * Adds or removes a permission from the character
- * addperm(<permission>{,<char_id>})
- * removeperm(<permission>{,<char_id>})
+ * permission_add(<permission>{,<char_id>})
+ * permission_remove(<permission>{,<char_id>})
  */
-BUILDIN_FUNC(addperm)
+BUILDIN_FUNC(permission_add)
 {
 	map_session_data* sd = nullptr;
 
-	if (!script_charid2sd(4, sd))
+	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	e_pc_permission permission;
-	if (script_hasdata(st, 2))
-		permission = static_cast<e_pc_permission>(script_getnum(st, 2));
-	else
+	e_pc_permission permission = static_cast<e_pc_permission>(script_getnum(st, 2));
+
+	if (permission < PC_PERM_TRADE || permission >= PC_PERM_MAX) {
+		ShowError("buildin_permission_check: Invalid permission %d\n", permission);
 		return SCRIPT_CMD_FAILURE;
+	}
 
-	bool add = (!strcmp(script_getfuncname(st), "addperm")) ? true : false;
-
-	if (add)
+	if (strcmp(script_getfuncname(st), "permission_add") == 0)
 		sd->permissions.set(permission); // Adds permission
 	else
 		sd->permissions.reset(permission); // Removes permission
@@ -28152,9 +28155,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setdialogpos, "ii"),
 	BUILDIN_DEF(setdialogpospercent, "ii"),
 
-	BUILDIN_DEF(checkperm, "i?"),
-	BUILDIN_DEF(addperm, "i?"),
-	BUILDIN_DEF2(addperm, "removeperm", "i?"),
+	BUILDIN_DEF(permission_check, "i?"),
+	BUILDIN_DEF(permission_add, "i?"),
+	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
 #include <custom/script_def.inc>
 

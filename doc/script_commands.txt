@@ -6660,17 +6660,17 @@ Example:
 
 ---------------------------------------
 
-*checkperm(<permission>{,<char_id>});
+*permission_check(<permission>{,<char_id>});
 
 This command will return true if the attached character has the specified permission, false otherwise.
 If <char_id> is given, it will check the permission for that character instead.
 
-A full list of the player permissions can be found in 'src/map/script_constants.hpp', with the 'PC_PERM' prefix,
-and documentation can be found in 'doc/permissions.txt'.
+A full list of the player permission constants (with the 'PC_PERM' prefix) along with the
+full permissions documentation can be found in 'doc/permissions.txt'.
 
 
 Example:
-	if (checkperm(PC_PERM_TRADE)) {
+	if (permission_check(PC_PERM_TRADE)) {
 		mes "You have permission to trade!";
 	}
 	else {
@@ -6680,23 +6680,23 @@ Example:
 
 ---------------------------------------
 
-*addperm(<permission>{,<char_id>});
-*removeperm(<permission>{,<char_id>});
+*permission_add(<permission>{,<char_id>});
+*permission_remove(<permission>{,<char_id>});
 
-This commands will temporarily add or remove the specified permission to the attached character,
+These commands will temporarily add or remove the specified permission to the attached character,
 or the given <char_id> until the player logs out.
 
-A full list of the player permissions can be found in 'src/map/script_constants.hpp', with the 'PC_PERM' prefix,
-and documentation can be found in 'doc/permissions.txt'.
+A full list of the player permission constants (with the 'PC_PERM' prefix) along with the
+full permissions documentation can be found in 'doc/permissions.txt'.
 
 Examples:
 	// Adds the 'can_trade' permission to the attached character,
 	// allowing them to trade, drop, sell, store and mail items.
-	addperm(PC_PERM_TRADE);
+	permission_add(PC_PERM_TRADE);
 
 	// Removes the 'can_party' permission from the attached character,
 	// preventing them from joining or creating parties.
-	removeperm(PC_PERM_PARTY);
+	permission_remove(PC_PERM_PARTY);
 
 ---------------------------------------
 
