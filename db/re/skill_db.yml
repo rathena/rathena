@@ -18362,6 +18362,43 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 776
+    Name: NPC_DEADLYCURSE
+    Description: Deadly Curse
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    Range: 1
+    Duration1: 15000
+    Status: Deadly_Defeasance
+  - Id: 779
+    Name: NPC_DEADLYCURSE2
+    Description: Deadly Curse 2
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    Duration2: 30000
+    Status: Deadly_Defeasance
   - Id: 780
     Name: NPC_CANE_OF_EVIL_EYE
     Description: Cane of evil eye
