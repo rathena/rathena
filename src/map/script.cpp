@@ -27340,6 +27340,56 @@ BUILDIN_FUNC(setdialogpospercent){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Checks if the character has that permission.
+ * permission_check(<permission>{,<char_id>}) -> <bool>
+ */
+BUILDIN_FUNC(permission_check)
+{
+	map_session_data* sd = nullptr;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int permission = script_getnum(st, 2);
+
+	if (permission < PC_PERM_TRADE || permission >= PC_PERM_MAX) {
+		ShowError("buildin_permission_check: Invalid permission %d\n", permission);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, pc_has_permission(sd, static_cast<e_pc_permission>(permission)));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Adds or removes a permission from the character
+ * permission_add(<permission>{,<char_id>})
+ * permission_remove(<permission>{,<char_id>})
+ */
+BUILDIN_FUNC(permission_add)
+{
+	map_session_data* sd = nullptr;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int permission = script_getnum(st, 2);
+
+	if (permission < PC_PERM_TRADE || permission >= PC_PERM_MAX) {
+		ShowError("buildin_permission_check: Invalid permission %d\n", permission);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (strcmp(script_getfuncname(st), "permission_add") == 0)
+		sd->permissions.set(static_cast<e_pc_permission>(permission)); // Adds permission
+	else
+		sd->permissions.reset(static_cast<e_pc_permission>(permission)); // Removes permission
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28104,6 +28154,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setdialogsize, "ii"),
 	BUILDIN_DEF(setdialogpos, "ii"),
 	BUILDIN_DEF(setdialogpospercent, "ii"),
+
+	BUILDIN_DEF(permission_check, "i?"),
+	BUILDIN_DEF(permission_add, "i?"),
+	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
 #include <custom/script_def.inc>
 
