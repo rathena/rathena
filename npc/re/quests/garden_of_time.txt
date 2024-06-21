@@ -38,7 +38,10 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 500;
 	setpcblock PCBLOCK_NPC, false;
-	warp "t_garden",118,79;
+	if (BaseLevel < 250)
+		warp "xmas_fild01",150,240;
+	else
+		warp "t_garden",118,79;
 	end;
 }
 
@@ -50,7 +53,10 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 500;
 	setpcblock PCBLOCK_NPC, false;
-	warp "t_garden",118,61;
+	if (BaseLevel < 250)
+		warp "xmas_fild01",150,240;
+	else
+		warp "t_garden",118,61;
 	end;
 }
 
@@ -655,18 +661,18 @@ OnInit:
 }
 
 
-t_garden,162,222,5	script	#lank_board	4_4JOB_PHANTOMBOOK1,{
-	mes "--- Strategy ranking ---";
-	mes "1st place - none";
-	mes "2nd place - none";
-	mes "3rd place - none";
-	mes "4th place - none";
-	mes "5th place - none";
-	mes "-----------------";
-	mes "¡Ø The strategy record is updated every 5 minutes.";
-	mes "If recording does not occur immediately, please wait for a while and check.";
-	close;
-}
+// t_garden,162,222,5	script	#lank_board	4_4JOB_PHANTOMBOOK1,{
+	// mes "--- Strategy ranking ---";
+	// mes "1st place - none";
+	// mes "2nd place - none";
+	// mes "3rd place - none";
+	// mes "4th place - none";
+	// mes "5th place - none";
+	// mes "-----------------";
+	// mes "¡Ø The strategy record is updated every 5 minutes.";
+	// mes "If recording does not occur immediately, please wait for a while and check.";
+	// close;
+// }
 
 // t_garden,166,235,0	script	#wp12	HIDDEN_WARP_NPC,3,3,{	// (NPC name is not unique)
 t_garden,166,235,0	script	#wp12_t_garden	HIDDEN_WARP_NPC,3,3,{
@@ -680,8 +686,8 @@ OnTouch:
 		end;
 	case 2:
 		cloakoffnpcself( "Sealing Spirit Stone#life2" );
-		cloakoffnpcself( "Dimension Prison#1" );
-		cloakoffnpcself( "Dimension Prison#2" );
+		cloakoffnpcself( "Dimensional Prison#1" );
+		cloakoffnpcself( "Dimensional Prison#2" );
 		end;
 	}
 	end;
