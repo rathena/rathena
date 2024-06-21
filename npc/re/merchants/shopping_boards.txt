@@ -1,0 +1,20 @@
+//===== rAthena Script =======================================
+//= Shopping Boards
+//===== Description: =========================================
+//= https://irowiki.org/wiki/Commerce#Shopping_Boards
+//===== Changelog: ===========================================
+//= 1.0 Initial version. [Pokye]
+//============================================================
+
+prontera,160,189,3	script	Shopping Board	4_BOARD3,{
+	searchstores 1,1;
+	end;
+}
+
+prontera,146,80,3	duplicate(Shopping Board)	Shopping Board#prt	4_BOARD3
+payon,183,99,5	duplicate(Shopping Board)	Shopping Board#pay	4_BOARD3
+izlude,127,116,3	duplicate(Shopping Board)	Shopping Board#izd	4_BOARD3
+morocc,166,109,3	duplicate(Shopping Board)	Shopping Board#moc	4_BOARD3
+geffen,130,68,3	duplicate(Shopping Board)	Shopping Board#gef	4_BOARD3
+aldebaran,146,120,3	duplicate(Shopping Board)	Shopping Board#alde	4_BOARD3
+comodo,206,153,3	duplicate(Shopping Board)	Shopping Board#cmd	4_BOARD3
