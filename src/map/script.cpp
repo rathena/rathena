@@ -27351,14 +27351,14 @@ BUILDIN_FUNC(permission_check)
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	e_pc_permission permission = static_cast<e_pc_permission>(script_getnum(st, 2));
+	int permission = script_getnum(st, 2);
 
 	if (permission < PC_PERM_TRADE || permission >= PC_PERM_MAX) {
 		ShowError("buildin_permission_check: Invalid permission %d\n", permission);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, pc_has_permission(sd, permission));
+	script_pushint(st, pc_has_permission(sd, static_cast<e_pc_permission>(permission)));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27375,7 +27375,7 @@ BUILDIN_FUNC(permission_add)
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	e_pc_permission permission = static_cast<e_pc_permission>(script_getnum(st, 2));
+	int permission = script_getnum(st, 2);
 
 	if (permission < PC_PERM_TRADE || permission >= PC_PERM_MAX) {
 		ShowError("buildin_permission_check: Invalid permission %d\n", permission);
@@ -27383,9 +27383,9 @@ BUILDIN_FUNC(permission_add)
 	}
 
 	if (strcmp(script_getfuncname(st), "permission_add") == 0)
-		sd->permissions.set(permission); // Adds permission
+		sd->permissions.set(static_cast<e_pc_permission>(permission)); // Adds permission
 	else
-		sd->permissions.reset(permission); // Removes permission
+		sd->permissions.reset(static_cast<e_pc_permission>(permission)); // Removes permission
 
 	return SCRIPT_CMD_SUCCESS;
 }
