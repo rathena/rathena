@@ -611,6 +611,8 @@ struct PACKET_ZC_HOSKILLINFO_UPDATE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_HOSKILLINFO_UPDATE, 0x239)
 
+// Unused packet (alpha?)
+/*
 struct PACKET_ZC_NOTIFY_MOVE {
 	int16 packetType;
 	uint32 gid;
@@ -618,6 +620,7 @@ struct PACKET_ZC_NOTIFY_MOVE {
 	uint32 moveStartTime;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_NOTIFY_MOVE, 0x86)
+*/
 
 struct PACKET_ZC_NOTIFY_PLAYERMOVE {
 	int16 packetType;
@@ -1036,6 +1039,121 @@ struct PACKET_ZC_DELETEITEM_FROM_MCSTORE {
 DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
 #endif
 
+struct PACKET_CZ_REQ_BAN_GUILD{
+	int16 packetType;
+	uint32 guild_id;
+	uint32 AID;
+	uint32 CID;
+	char message[40];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_BAN_GUILD, 0x15b);
+
+struct PACKET_CZ_REQ_LEAVE_GUILD{
+	int16 packetType;
+	uint32 guild_id;
+	uint32 AID;
+	uint32 CID;
+	char message[40];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_LEAVE_GUILD, 0x159);
+
+struct PACKET_CZ_REQ_DISORGANIZE_GUILD{
+	int16 packetType;
+	char key[40];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_DISORGANIZE_GUILD, 0x15d);
+
+struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT{
+	int16 packetType;
+	int32 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_DISORGANIZE_GUILD_RESULT, 0x15e);
+
+struct PACKET_ZC_RESULT_MAKE_GUILD{
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_RESULT_MAKE_GUILD, 0x167);
+
+struct PACKET_CZ_REQ_JOIN_GUILD{
+	int16 packetType;
+	uint32 AID;
+	uint32 inviter_AID;
+	uint32 inviter_CID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_JOIN_GUILD, 0x168);
+
+struct PACKET_ZC_ACK_REQ_JOIN_GUILD{
+	int16 packetType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQ_JOIN_GUILD, 0x169);
+
+struct PACKET_ZC_REQ_JOIN_GUILD{
+	int16 packetType;
+	uint32 guild_id;
+	char guild_name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REQ_JOIN_GUILD, 0x16a);
+
+struct PACKET_CZ_JOIN_GUILD{
+	int16 packetType;
+	uint32 guild_id;
+	int32 answer;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_JOIN_GUILD, 0x16b);
+
+struct PACKET_ZC_GUILD_NOTICE{
+	int16 packetType;
+	char subject[60];
+	char notice[120];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GUILD_NOTICE, 0x16f);
+
+struct PACKET_CZ_REQ_JOIN_GUILD2{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_JOIN_GUILD2, 0x916);
+
+struct PACKET_CZ_REQ_JOIN_GROUP{
+	int16 packetType;
+	uint32 AID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_JOIN_GROUP, 0xfc);
+
+struct PACKET_CZ_JOIN_GROUP{
+	int16 packetType;
+	uint32 party_id;
+	int32 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_JOIN_GROUP, 0xff);
+
+struct PACKET_CZ_REQ_LEAVE_GROUP{
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_LEAVE_GROUP, 0x100);
+
+struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER{
+	int16 packetType;
+	uint32 AID;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_EXPEL_GROUP_MEMBER, 0x103);
+
+struct PACKET_CZ_PARTY_JOIN_REQ{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_PARTY_JOIN_REQ, 0x2c4);
+
+struct PACKET_CZ_PARTY_JOIN_REQ_ACK{
+	int16 packetType;
+	uint32 party_id;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_PARTY_JOIN_REQ_ACK, 0x2c7);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -1045,6 +1163,7 @@ DEFINE_PACKET_HEADER(ZC_DELETEITEM_FROM_MCSTORE, 0x137);
 DEFINE_PACKET_HEADER(ZC_NOTIFY_CHAT, 0x8d)
 DEFINE_PACKET_HEADER(ZC_ITEM_ENTRY, 0x9d)
 DEFINE_PACKET_HEADER(ZC_MVP_GETTING_ITEM, 0x10a)
+DEFINE_PACKET_HEADER(ZC_MAKABLEITEMLIST, 0x18d)
 DEFINE_PACKET_HEADER(CZ_REQMAKINGITEM, 0x18e)
 DEFINE_PACKET_HEADER(ZC_ACK_REQMAKINGITEM, 0x18f)
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
@@ -1059,9 +1178,14 @@ DEFINE_PACKET_HEADER(ZC_PC_CASH_POINT_ITEMLIST, 0x287)
 DEFINE_PACKET_HEADER(ZC_CASH_TIME_COUNTER, 0x298)
 DEFINE_PACKET_HEADER(ZC_CASH_ITEM_DELETE, 0x299)
 DEFINE_PACKET_HEADER(CZ_SKILL_SELECT_RESPONSE, 0x443)
+DEFINE_PACKET_HEADER(ZC_MYITEMLIST_BUYING_STORE, 0x813)
+DEFINE_PACKET_HEADER(ZC_ACK_ITEMLIST_BUYING_STORE, 0x818)
 DEFINE_PACKET_HEADER(ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, 0x824)
 DEFINE_PACKET_HEADER(CZ_SSILIST_ITEM_CLICK, 0x83c)
 DEFINE_PACKET_HEADER(ZC_ACK_SCHEDULER_CASHITEM, 0x8ca)
+DEFINE_PACKET_HEADER(ZC_NOTIFY_CLAN_CONNECTINFO, 0x988)
+DEFINE_PACKET_HEADER(ZC_ACK_CLAN_LEAVE, 0x989)
+DEFINE_PACKET_HEADER(ZC_NOTIFY_CLAN_CHAT, 0x98e)
 DEFINE_PACKET_HEADER(CZ_REQ_BANKING_DEPOSIT, 0x9a7)
 DEFINE_PACKET_HEADER(CZ_REQ_BANKING_WITHDRAW, 0x9a9)
 DEFINE_PACKET_HEADER(CZ_REQ_BANKING_CHECK, 0x9ab)

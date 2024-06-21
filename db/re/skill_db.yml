@@ -7235,6 +7235,7 @@ Body:
     TargetType: Self
     DamageFlags:
       IgnoreDefense: true
+      SimpleDefense: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -7664,6 +7665,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -7697,7 +7699,6 @@ Body:
       - Level: 5
         Time: 1000
     Duration1: 3000
-    Duration2: 300000
     FixedCastTime:
       - Level: 1
         Time: 2000
@@ -9452,6 +9453,7 @@ Body:
     DamageFlags:
       IgnoreAtkCard: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       IsNpc: true
       TargetSelf: true
@@ -19110,6 +19112,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -22655,6 +22658,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       AllowOnMado: true
     Range: 9
@@ -28789,6 +28793,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Range:
       - Level: 1
         Size: 7
@@ -29687,6 +29692,19 @@ Body:
         - Level: 2
           Amount: 100
     Status: Odins_Power
+  - Id: 2543
+    Name: ALL_RAY_OF_PROTECTION
+    Description: Ray of Protection
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Duration1: 60000
+    Status: Protection
   - Id: 2544
     Name: MC_CARTDECORATE
     Description: Decorate Cart
@@ -33145,6 +33163,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9

@@ -1138,6 +1138,25 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 		}
 	}
 }
+
+status_change::status_change(){
+	this->option = OPTION_NOTHING;
+	this->opt3 = OPT3_NORMAL;
+	this->opt1 = OPT1_NONE;
+	this->opt2 = OPT2_NONE;
+	this->count = 0;
+	this->lastEffect = SC_NONE;
+	this->lastEffectTimer = INVALID_TIMER;
+	this->cant = {};
+	this->comet_x = 0;
+	this->comet_y = 0;
+#ifndef RENEWAL
+	this->sg_counter = 0;
+#endif
+	std::fill( std::begin( this->data ), std::end( this->data ), nullptr );
+	this->lastStatus = { SC_NONE, nullptr };
+}
+
 /**
  * Accessor for a status_change_entry in a status_change
  */
@@ -1677,7 +1696,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				npc_event(sd, bg->die_event.c_str(), 0);
 		}
 
-		npc_script_event(sd,NPCE_DIE);
+		npc_script_event( *sd, NPCE_DIE );
 	}
 
 	return (int)(hp+sp+ap);
@@ -5601,7 +5620,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		* piece of code triggers the walk-timer is set on INVALID_TIMER)
 		**/
 		if (ud)
-			ud->state.change_walk_target = ud->state.speed_changed = 1;
+			ud->state.change_walk_target = 1;
 	}
 
 	if(flag[SCB_STR]) {
@@ -9407,9 +9426,7 @@ void status_change_init(struct block_list *bl)
 {
 	status_change *sc = status_get_sc(bl);
 	nullpo_retv(sc);
-	memset(sc, 0, sizeof (status_change));
-	sc->lastEffect = SC_NONE;
-	sc->lastEffectTimer = INVALID_TIMER;
+	new (sc) status_change();
 }
 
 /*========================================== [Playtester]
@@ -12977,6 +12994,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				case SC_BERSERK:
 				case SC_MERC_HPUP:
 				case SC_MERC_SPUP:
+				// Status needs to be updated immediately and not at the end of the damage
+				case SC_EXTREMITYFIST:
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:

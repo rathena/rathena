@@ -469,16 +469,18 @@ enum e_mob_skill_condition {
 };
 
 // The data structures for storing delayed item drops
-struct item_drop {
+struct s_item_drop{
 	struct item item_data;
 	unsigned short mob_id;
 	enum bl_type src_type;
-	struct item_drop* next;
 };
-struct item_drop_list {
-	int16 m, x, y;                       // coordinates
-	int first_charid, second_charid, third_charid; // charid's of players with higher pickup priority
-	struct item_drop* item;            // linked list of drops
+
+struct s_item_drop_list{
+	// coordinates
+	int16 m, x, y;
+	// charid's of players with higher pickup priority
+	int first_charid, second_charid, third_charid;
+	std::vector<std::shared_ptr<s_item_drop>> items;
 };
 
 uint16 mobdb_searchname(const char * const str);
@@ -561,7 +563,7 @@ TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
-void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
+void mob_setdropitem_option( item& itm, s_mob_drop& mobdrop );
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 

@@ -1651,7 +1651,7 @@ ACMD_FUNC(baselevelup)
 		party_send_levelup(sd);
 
 	if( level > 0 && battle_config.atcommand_levelup_events )
-		npc_script_event(sd,NPCE_BASELVUP);
+		npc_script_event( *sd, NPCE_BASELVUP );
 
 	return 0;
 }
@@ -1709,7 +1709,7 @@ ACMD_FUNC(joblevelup)
 	status_calc_pc(sd, SCO_FORCE);
 
 	if( level > 0 && battle_config.atcommand_levelup_events )
-		npc_script_event(sd,NPCE_JOBLVUP);
+		npc_script_event( *sd, NPCE_JOBLVUP );
 
 	return 0;
 }
@@ -3760,16 +3760,12 @@ ACMD_FUNC(lostskill)
  *------------------------------------------*/
 ACMD_FUNC(spiritball)
 {
-	uint32 max_spiritballs;
 	int number;
 	nullpo_retr(-1, sd);
 
-	max_spiritballs = zmin(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
-
-	if( !message || !*message || (number = atoi(message)) < 0 || number > max_spiritballs )
-	{
+	if( !message || !*message || ( number = atoi( message ) ) < 0 || number > MAX_SPIRITBALL ){
 		char msg[CHAT_SIZE_MAX];
-		safesnprintf(msg, sizeof(msg), msg_txt(sd,1028), max_spiritballs); // Please enter a party name (usage: @party <party_name>).
+		safesnprintf( msg, sizeof( msg ), msg_txt( sd, 1028 ), MAX_SPIRITBALL ); // Please enter an amount (usage: @spiritball <number: 0-%d>).
 		clif_displaymessage(fd, msg);
 		return -1;
 	}
@@ -3819,7 +3815,7 @@ ACMD_FUNC(party)
 		return -1;
 	}
 
-	party_create(sd, party, 0, 0);
+	party_create( *sd, party, 0, 0 );
 
 	return 0;
 }
@@ -3847,7 +3843,7 @@ ACMD_FUNC(guild)
 
 	prev = battle_config.guild_emperium_check;
 	battle_config.guild_emperium_check = 0;
-	guild_create(sd, guild);
+	guild_create( *sd, guild );
 	battle_config.guild_emperium_check = prev;
 
 	return 0;
@@ -3860,8 +3856,9 @@ ACMD_FUNC(breakguild)
 	if (sd->status.guild_id) { // Check if the player has a guild
 		if (sd->guild) { // Check if guild was found
 			if (sd->state.gmaster_flag) { // Check if player is guild master
-				int ret = 0;
-				ret = guild_break(sd, sd->guild->guild.name); // Break guild
+				// Break guild
+				int ret = guild_break( *sd, sd->guild->guild.name );
+
 				if (ret) { // Check if anything went wrong
 					return 0; // Guild was broken
 				} else {
@@ -6171,7 +6168,7 @@ ACMD_FUNC(clearcart)
 #define MAX_SKILLID_PARTIAL_RESULTS 5
 #define MAX_SKILLID_PARTIAL_RESULTS_LEN 74 // "skill " (6) + "%d:" (up to 5) + "%s" (up to 30) + " (%s)" (up to 33)
 ACMD_FUNC(skillid) {
-	int skillen, i, found = 0;
+	int i, found = 0;
 	char partials[MAX_SKILLID_PARTIAL_RESULTS][MAX_SKILLID_PARTIAL_RESULTS_LEN];
 
 	nullpo_retr(-1, sd);
@@ -6181,7 +6178,7 @@ ACMD_FUNC(skillid) {
 		return -1;
 	}
 
-	skillen = strlen(message);
+	size_t skillen = strlen( message );
 
 	for(const auto & skill : skill_db) {
 		uint16 skill_id = skill.second->nameid;
@@ -6415,7 +6412,6 @@ void getring (map_session_data* sd)
 
 	if((flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 	}
 }
 
@@ -6438,6 +6434,28 @@ ACMD_FUNC(marry)
 
 	if ((pl_sd = map_nick2sd(atcmd_player_name,false)) == nullptr) {
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
+		return -1;
+	}
+
+	if (!pc_inventoryblank(sd)) {
+		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+		return -1;
+	}
+
+	if (!pc_inventoryblank(pl_sd)) {
+		clif_msg_color(pl_sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+		return -1;
+	}
+
+	uint32 w = 0;
+
+	if (w = itemdb_weight((sd->status.sex) ? WEDDING_RING_M : WEDDING_RING_F) && w + sd->weight > sd->max_weight) {
+		clif_msg_color(sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
+		return -1;
+	}
+
+	if (w = itemdb_weight((pl_sd->status.sex) ? WEDDING_RING_M : WEDDING_RING_F) && w + pl_sd->weight > pl_sd->max_weight) {
+		clif_msg_color(pl_sd, MSI_CANT_GET_ITEM_BECAUSE_WEIGHT, color_table[COLOR_RED]);
 		return -1;
 	}
 
@@ -6538,7 +6556,7 @@ ACMD_FUNC(autotrade) {
 	}
 
 	if (battle_config.at_logout_event)
-		npc_script_event(sd, NPCE_LOGOUT); //Logout Event
+		npc_script_event( *sd, NPCE_LOGOUT );
 
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
@@ -8888,7 +8906,7 @@ ACMD_FUNC(showdelay)
  *------------------------------------------*/
 ACMD_FUNC(invite)
 {
-	unsigned int did = sd->duel_group;
+	size_t did = sd->duel_group;
 	map_session_data *target_sd = nullptr;
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -8975,7 +8993,7 @@ ACMD_FUNC(duel)
 			target_sd = map_nick2sd(atcmd_player_name,true);
 
 			if(target_sd != nullptr) {
-				unsigned int newduel;
+				size_t newduel;
 				if((newduel = duel_create(sd, 2)) != -1) {
 					if(target_sd->duel_group > 0 ||	target_sd->duel_invite > 0) {
 						clif_displaymessage(fd, msg_txt(sd,353)); // "Duel: Player already in duel."
@@ -9707,8 +9725,6 @@ static void atcommand_commands_sub(map_session_data* sd, const int fd, AtCommand
 	clif_displaymessage(fd, msg_txt(sd,273)); // "Commands available:"
 
 	for (cmd = (AtCommandInfo*)dbi_first(iter); dbi_exists(iter); cmd = (AtCommandInfo*)dbi_next(iter)) {
-		unsigned int slen = 0;
-
 		switch( type ) {
 			case COMMAND_CHARCOMMAND:
 				if( cmd->char_groups[sd->group->index] == 0 )
@@ -9723,7 +9739,7 @@ static void atcommand_commands_sub(map_session_data* sd, const int fd, AtCommand
 		}
 
 
-		slen = strlen(cmd->command);
+		size_t slen = strlen( cmd->command );
 
 		// flush the text buffer if this command won't fit into it
 		if (slen + cur - line_buff >= CHATBOX_SIZE) {
@@ -9745,7 +9761,8 @@ static void atcommand_commands_sub(map_session_data* sd, const int fd, AtCommand
 		int i, count_bind, gm_lvl = pc_get_group_level(sd);
 		for( i = count_bind = 0; i < atcmd_binding_count; i++ ) {
 			if ( gm_lvl >= ( (type - 1) ? atcmd_binding[i]->level2 : atcmd_binding[i]->level ) ) {
-				unsigned int slen = strlen(atcmd_binding[i]->command);
+				size_t slen = strlen( atcmd_binding[i]->command );
+
 				if ( count_bind == 0 ) {
 					cur = line_buff;
 					memset(line_buff,' ',CHATBOX_SIZE);
@@ -9839,7 +9856,8 @@ ACMD_FUNC(accinfo) {
 */
 ACMD_FUNC(set) {
 	char reg[46], val[128], name[32];
-	int toset = 0, len;
+	int toset = 0;
+	size_t len;
 	uint32 index;
 	bool is_str = false;
 	int64 uid;
@@ -11610,7 +11628,7 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 void atcommand_db_load_groups(){
 	DBIterator *iter = db_iterator(atcommand_db);
 	AtCommandInfo* cmd;
-	int pc_group_max = player_group_db.size();
+	size_t pc_group_max = player_group_db.size();
 
 	for (cmd = (AtCommandInfo*)dbi_first(iter); dbi_exists(iter); cmd = (AtCommandInfo*)dbi_next(iter)) {
 		cmd->at_groups = (char*)aMalloc( pc_group_max * sizeof(char) );

@@ -90,7 +90,8 @@ typedef uint32 t_itemid;
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
 #define MAX_SKILL 1623 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
-#define DEFAULT_WALK_SPEED 150 ///Default walk speed
+#define DEFAULT_WALK_SPEED 150 ///Default walk speed (other than NPC)
+#define DEFAULT_NPC_WALK_SPEED 200 ///Default NPC walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
 #define MAX_STORAGE 600 ///Max number of storage slots a player can have
@@ -1123,8 +1124,8 @@ enum e_pc_reg_loading {
 enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
 	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
-	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
-	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< Cannot be kicked
 };
 
 enum e_rank {

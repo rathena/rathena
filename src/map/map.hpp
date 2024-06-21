@@ -24,6 +24,7 @@
 
 #include "navi.hpp"
 #include "script.hpp"
+#include "path.hpp"
 
 using namespace rathena;
 using rathena::server_core::Core;
@@ -372,6 +373,8 @@ enum e_race2 : uint8{
 	RC2_ILLUSION_TURTLE,
 	RC2_RACHEL_SANCTUARY,
 	RC2_ILLUSION_LUANDA,
+	RC2_ILLUSION_FROZEN,
+	RC2_ILLUSION_MOONLIGHT,
 	RC2_MAX
 };
 
@@ -1192,7 +1195,7 @@ bool map_addnpc(int16 m,struct npc_data *);
 TIMER_FUNC(map_clearflooritem_timer);
 TIMER_FUNC(map_removemobs_timer);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false, enum directions dir = DIR_MAX, int type = BL_NUL);
 
 // instances
 int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);

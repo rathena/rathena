@@ -932,11 +932,11 @@ static const char* skip_word(const char* p)
 static int add_word(const char* p)
 {
 	char* word;
-	int len;
 	int i;
 
 	// Check for a word
-	len = skip_word(p) - p;
+	size_t len = skip_word( p ) - p;
+
 	if( len == 0 )
 		disp_error_message("script:add_word: invalid word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.", p);
 
@@ -6073,7 +6073,7 @@ BUILDIN_FUNC(percentheal)
 		return SCRIPT_CMD_SUCCESS;
 
 #ifdef RENEWAL
-	if( sd->sc.getSCE(SC_EXTREMITYFIST2) )
+	if( sd->sc.getSCE(SC_EXTREMITYFIST) )
 		sp = 0;
 #endif
 
@@ -7617,9 +7617,7 @@ BUILDIN_FUNC(getitem)
 	int get_count, i;
 	t_itemid nameid;
 	unsigned short amount;
-	struct item it;
-	map_session_data *sd;
-	unsigned char flag = 0;
+	map_session_data* sd;
 	const char* command = script_getfuncname(st);
 	std::shared_ptr<item_data> id;
 
@@ -7648,7 +7646,8 @@ BUILDIN_FUNC(getitem)
 	if( (amount = script_getnum(st,3)) <= 0)
 		return SCRIPT_CMD_SUCCESS; //return if amount <=0, skip the useles iteration
 
-	memset(&it,0,sizeof(it));
+	item it = {};
+
 	it.nameid = nameid;
 	it.identify = 1;
 	it.bound = BOUND_NONE;
@@ -7680,11 +7679,12 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
-			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
-			{
+			e_additem_result flag = pc_additem( sd, &it, get_count, LOG_TYPE_SCRIPT );
+
+			if( flag != ADDITEM_SUCCESS ){
 				clif_additem(sd, 0, 0, flag);
-				if( pc_candrop(sd,&it) )
-					map_addflooritem(&it,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				ShowError( "buildin_getitem: Failed to add the item to player.\n" );
+				return SCRIPT_CMD_FAILURE;
 			}
 		}
 	}
@@ -7719,7 +7719,7 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	TBL_PC *sd;
+	map_session_data* sd;
 	char bound = BOUND_NONE;
 	const char* command = script_getfuncname(st);
 	int offset = 0;
@@ -7792,7 +7792,7 @@ BUILDIN_FUNC(getitem2)
 	t_itemid c3 = script_getnum(st,9);
 	t_itemid c4 = script_getnum(st,10);
 
-	struct item item_tmp = {};
+	item item_tmp = {};
 
 	if( item_data ) {
 		if( item_data->type == IT_WEAPON || item_data->type == IT_ARMOR || item_data->type == IT_SHADOWGEAR ) {
@@ -7847,12 +7847,12 @@ BUILDIN_FUNC(getitem2)
 			// if not pet egg
 			if (!pet_create_egg(sd, nameid))
 			{
-				unsigned char flag = 0;
-				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
-				{
+				e_additem_result flag = pc_additem( sd, &item_tmp, get_count, LOG_TYPE_SCRIPT );
+
+				if( flag != ADDITEM_SUCCESS ){
 					clif_additem(sd, 0, 0, flag);
-					if( pc_candrop(sd,&item_tmp) )
-						map_addflooritem(&item_tmp,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+					ShowError( "buildin_getitem2: Failed to add the item to player.\n" );
+					return SCRIPT_CMD_FAILURE;
 				}
 			}
 		}
@@ -10961,13 +10961,13 @@ BUILDIN_FUNC(itemskill)
 BUILDIN_FUNC(produce)
 {
 	int trigger;
-	TBL_PC* sd;
+	map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
 	trigger=script_getnum(st,2);
-	clif_skill_produce_mix_list(sd, -1, trigger);
+	clif_skill_produce_mix_list( *sd, -1, trigger );
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
@@ -10976,13 +10976,13 @@ BUILDIN_FUNC(produce)
 BUILDIN_FUNC(cooking)
 {
 	int trigger;
-	TBL_PC* sd;
+	map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
 	trigger=script_getnum(st,2);
-	clif_cooking_list(sd, trigger, AM_PHARMACY, 1, 1);
+	clif_cooking_list( *sd, trigger, AM_PHARMACY, 1, 1 );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13988,7 +13988,7 @@ BUILDIN_FUNC(getequipcardcnt)
 BUILDIN_FUNC(successremovecards) {
 	int i=-1,c,cardflag=0;
 
-	TBL_PC* sd;
+	map_session_data* sd;
 	int num;
 
 	if( !script_rid2sd(sd) )
@@ -14008,24 +14008,26 @@ BUILDIN_FUNC(successremovecards) {
 
 	for( c = sd->inventory_data[i]->slots - 1; c >= 0; --c ) {
 		if( sd->inventory.u.items_inventory[i].card[c] && itemdb_type(sd->inventory.u.items_inventory[i].card[c]) == IT_CARD ) {// extract this card from the item
-			unsigned char flag = 0;
-			struct item item_tmp;
-			memset(&item_tmp,0,sizeof(item_tmp));
+			item item_tmp = {};
+
 			cardflag = 1;
 			item_tmp.nameid   = sd->inventory.u.items_inventory[i].card[c];
 			item_tmp.identify = 1;
 
-			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	// get back the cart in inventory
+			e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
+
+			// get back the card in inventory
+			if( flag != ADDITEM_SUCCESS ){
 				clif_additem(sd,0,0,flag);
-				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				ShowError( "buildin_successremovecards: Failed to add the item to player.\n" );
+				return SCRIPT_CMD_FAILURE;
 			}
 		}
 	}
 
-	if(cardflag == 1) {//if card was remove remplace item with no card
-		unsigned char flag = 0;
-		struct item item_tmp;
-		memset(&item_tmp,0,sizeof(item_tmp));
+	// if card was removed, replace item with no card
+	if(cardflag == 1) {
+		item item_tmp = {};
 
 		item_tmp.nameid      = sd->inventory.u.items_inventory[i].nameid;
 		item_tmp.identify    = 1;
@@ -14045,9 +14047,14 @@ BUILDIN_FUNC(successremovecards) {
 		}
 
 		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
-		if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	//chk if can be spawn in inventory otherwise put on floor
+
+		e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
+
+		// get back the card in inventory
+		if( flag != ADDITEM_SUCCESS ){
 			clif_additem(sd,0,0,flag);
-			map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+			ShowError( "buildin_successremovecards: Failed to add the item to player.\n" );
+			return SCRIPT_CMD_FAILURE;
 		}
 
 		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_SUCCESS );
@@ -14064,7 +14071,7 @@ BUILDIN_FUNC(successremovecards) {
 BUILDIN_FUNC(failedremovecards) {
 	int i=-1,c,cardflag=0;
 
-	TBL_PC* sd;
+	map_session_data* sd;
 	int num;
 	int typefail;
 
@@ -14088,17 +14095,17 @@ BUILDIN_FUNC(failedremovecards) {
 			cardflag = 1;
 
 			if(typefail == 2) {// add cards to inventory, clear
-				unsigned char flag = 0;
-				struct item item_tmp;
-
-				memset(&item_tmp,0,sizeof(item_tmp));
+				item item_tmp = {};
 
 				item_tmp.nameid   = sd->inventory.u.items_inventory[i].card[c];
 				item_tmp.identify = 1;
 
-				if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
+				e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
+
+				if( flag != ADDITEM_SUCCESS ){
 					clif_additem(sd,0,0,flag);
-					map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+					ShowError( "failedremovecards: Failed to add the item to player.\n" );
+					return SCRIPT_CMD_FAILURE;
 				}
 			}
 		}
@@ -14108,10 +14115,7 @@ BUILDIN_FUNC(failedremovecards) {
 		if(typefail == 0 || typefail == 2){	// destroy the item
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		}else if(typefail == 1){ // destroy the card
-			unsigned char flag = 0;
-			struct item item_tmp;
-
-			memset(&item_tmp,0,sizeof(item_tmp));
+			item item_tmp = {};
 
 			item_tmp.nameid      = sd->inventory.u.items_inventory[i].nameid;
 			item_tmp.identify    = 1;
@@ -14132,9 +14136,12 @@ BUILDIN_FUNC(failedremovecards) {
 
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
-			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
+			e_additem_result flag = pc_additem( sd, &item_tmp, 1, LOG_TYPE_SCRIPT );
+
+			if( flag != ADDITEM_SUCCESS ){
 				clif_additem(sd,0,0,flag);
-				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				ShowError( "failedremovecards: Failed to add the item to player.\n" );
+				return SCRIPT_CMD_FAILURE;
 			}
 		}
 		clif_misceffect( sd->bl, NOTIFYEFFECT_REFINE_FAILURE );
@@ -14839,7 +14846,7 @@ BUILDIN_FUNC(petloot)
 	pd = sd->pd;
 	if (pd->loot != nullptr)
 	{	//Release whatever was there already and reallocate memory
-		pet_lootitem_drop(pd, pd->master);
+		pet_lootitem_drop( *pd, pd->master );
 		aFree(pd->loot->item);
 	}
 	else
@@ -16064,49 +16071,120 @@ BUILDIN_FUNC(chatmes)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-// change npc walkspeed [Valaris]
+/**
+ * Change npc walkspeed.
+ * npcspeed <speed value> {,"<npc name>"};
+ */
 BUILDIN_FUNC(npcspeed)
 {
-	struct npc_data* nd;
-	int speed;
+	npc_data* nd;
 
-	speed = script_getnum(st,2);
-	nd =(struct npc_data *)map_id2bl(st->oid);
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = map_id2nd(st->oid);
 
-	if( nd ) {
-		nd->speed = speed;
-		nd->ud.state.speed_changed = 1;
+	if (nd == nullptr) {
+		if (script_hasdata(st, 3))
+			ShowError("buildin_npcspeed: %s is a non-existing NPC.\n", script_getstr(st, 3));
+		else
+			ShowError("buildin_npcspeed: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	int speed = script_getnum(st, 2);
+
+	if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+		ShowError("buildin_npcspeed: invalid speed %d (min: %d, max: %d).\n", speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	nd->speed = speed;
 
 	return SCRIPT_CMD_SUCCESS;
 }
-// make an npc walk to a position [Valaris]
+
+/**
+ * Make an npc walk to a position.
+ * npcwalkto <x>,<y> {,"<npc name>"} };
+ */
 BUILDIN_FUNC(npcwalkto)
 {
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	int x=0,y=0;
+	npc_data* nd;
 
-	x=script_getnum(st,2);
-	y=script_getnum(st,3);
+	if (script_hasdata(st, 4))
+		nd = npc_name2id(script_getstr(st, 4));
+	else
+		nd = map_id2nd(st->oid);
 
-	if(nd) {
-		if (!nd->status.hp)
-			status_calc_npc(nd, SCO_FIRST);
+	if (nd == nullptr) {
+		if (script_hasdata(st, 4))
+			ShowError("buildin_npcwalkto: %s is a non-existing NPC.\n", script_getstr(st, 4));
 		else
-			status_calc_npc(nd, SCO_NONE);
-		unit_walktoxy(&nd->bl,x,y,0);
+			ShowError("buildin_npcwalkto: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	if( nd->bl.m < 0 ){
+		ShowError( "buildin_npcwalkto: NPC is not on a map.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct map_data* mapdata = map_getmapdata( nd->bl.m );
+	int x = script_getnum(st, 2);
+	int y = script_getnum(st, 3);
+
+	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys ){
+		ShowWarning( "buildin_npcwalkto: coordinates %d/%d are out of bounds in map %s(%dx%d).\n", x, y, mapdata->name, mapdata->xs, mapdata->ys );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!nd->status.hp)
+		status_calc_npc(nd, SCO_FIRST);
+	else
+		status_calc_npc(nd, SCO_NONE);
+	unit_walktoxy(&nd->bl,x,y,0);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
-// stop an npc's movement [Valaris]
+/**
+ * Stop an npc's movement.
+ * npcstop {"<npc name>", {"<flag>"}};
+ */
 BUILDIN_FUNC(npcstop)
 {
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
+	npc_data* nd;
 
-	if(nd) {
-		unit_stop_walking(&nd->bl,1|4);
+	if (script_hasdata(st, 2))
+		nd = npc_name2id(script_getstr(st, 2));
+	else
+		nd = map_id2nd(st->oid);
+
+	if (nd == nullptr) {
+		if (script_hasdata(st, 2))
+			ShowError("buildin_npcstop: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		else
+			ShowError("buildin_npcstop: non-existing NPC.\n");
+		return SCRIPT_CMD_FAILURE;
 	}
+
+	int flag = USW_FIXPOS | USW_MOVE_FULL_CELL | USW_FORCE_STOP;
+
+	if (script_hasdata(st, 3)) {
+		flag = script_getnum(st, 3);
+
+		if (flag < USW_NONE || flag > USW_ALL) {
+			ShowError("buildin_npcstop: invalid flag %d.\n", flag);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (flag & USW_FORCE_STOP)
+			nd->ud.state.force_walk = false;
+	}
+
+	unit_stop_walking( &nd->bl, flag );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -16870,7 +16948,7 @@ BUILDIN_FUNC(insertchar)
 {
 	const char *str = script_getstr(st,2);
 	const char *c = script_getstr(st,3);
-	int index = script_getnum(st,4);
+	size_t index = script_getnum( st, 4 );
 	char *output;
 	size_t len = strlen(str);
 
@@ -17130,7 +17208,8 @@ BUILDIN_FUNC(implode)
 //-------------------------------------------------------
 BUILDIN_FUNC(sprintf)
 {
-	unsigned int len, argc = 0, arg = 0, buf2_len = 0;
+	unsigned int argc = 0, arg = 0;
+	size_t buf2_len = 0;
 	const char* format;
 	char* p;
 	char* q;
@@ -17142,7 +17221,7 @@ BUILDIN_FUNC(sprintf)
 	// Fetch init data
 	format = script_getstr(st, 2);
 	argc = script_lastdata(st)-2;
-	len = strlen(format);
+	size_t len = strlen( format );
 
 	// Skip parsing, where no parsing is required.
 	if(len == 0) {
@@ -17271,7 +17350,7 @@ BUILDIN_FUNC(sprintf)
 // Implements C sscanf.
 //-------------------------------------------------------
 BUILDIN_FUNC(sscanf){
-	unsigned int argc, arg = 0, len;
+	unsigned int argc, arg = 0;
 	struct script_data* data;
 	map_session_data* sd = nullptr;
 	const char* str;
@@ -17288,7 +17367,7 @@ BUILDIN_FUNC(sscanf){
 	format = script_getstr(st, 3);
 	argc = script_lastdata(st)-3;
 
-	len = strlen(format);
+	size_t len = strlen(format);
 
 
 	if (len != 0 && strlen(str) == 0) {
@@ -17439,7 +17518,7 @@ BUILDIN_FUNC(replacestr)
 
 	int count = 0;
 	int numFinds = 0;
-	int i = 0, f = 0;
+	size_t i = 0, f = 0;
 
 	if(findlen == 0) {
 		ShowError("script:replacestr: Invalid search length.\n");
@@ -17520,7 +17599,6 @@ BUILDIN_FUNC(countstr)
 	bool usecase = true;
 
 	int numFinds = 0;
-	int i = 0, f = 0;
 
 	if(findlen == 0) {
 		ShowError("script:countstr: Invalid search length.\n");
@@ -17538,8 +17616,8 @@ BUILDIN_FUNC(countstr)
 		}
 	}
 
-	for(; i < inputlen; i++) {
-		for(f = 0; f <= findlen; f++) {
+	for( size_t i = 0; i < inputlen; i++ ){
+		for( size_t f = 0; f <= findlen; f++ ){
 			if(f == findlen) { //complete match
 				numFinds++;
 				i += findlen - 1;
@@ -17917,7 +17995,7 @@ BUILDIN_FUNC(callshop)
 		}
 
 		sd->npc_shopid = nd->bl.id;
-		clif_npc_market_open(sd, nd);
+		clif_npc_market_open( *sd, *nd );
 		script_pushint(st,1);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -19186,7 +19264,12 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
 			case UMOB_Y: if (!unit_walktoxy(bl, md->bl.x, (short)value, 2)) unit_movepos(bl, md->bl.x, (short)value, 0, 0); break;
 			case UMOB_SPEED: md->base_status->speed = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
-			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
+			case UMOB_MODE:
+				md->base_status->mode = (enum e_mode)value;
+				// Mob mode must be updated before calling unit_refresh
+				status_calc_bl_(&md->bl, status_db.getSCB_BATTLE());
+				unit_refresh(bl);
+				break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
 			case UMOB_SEX: md->vd->sex = (char)value; unit_refresh(bl); break;
@@ -21356,8 +21439,10 @@ BUILDIN_FUNC(bg_info)
 		case BG_INFO_MAPS: {
 			size_t i;
 
-			for (i = 0; i < bg->maps.size(); i++)
-				setd_sub_str(st, nullptr, ".@bgmaps$", i, mapindex_id2name(bg->maps[i].mapindex), nullptr);
+			for( i = 0; i < bg->maps.size(); i++ ){
+				setd_sub_str( st, nullptr, ".@bgmaps$", static_cast<int>( i ), mapindex_id2name( bg->maps[i].mapindex ), nullptr );
+			}
+
 			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
 			script_pushint(st, i);
 			break;
@@ -22452,11 +22537,11 @@ BUILDIN_FUNC(showdigit)
  * makerune <% success bonus>{,<char_id>};
  **/
 BUILDIN_FUNC(makerune) {
-	TBL_PC* sd;
+	map_session_data* sd;
 	
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
-	clif_skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
+	clif_skill_produce_mix_list( *sd, RK_RUNEMASTERY, 24 );
 	sd->itemid = script_getnum(st,2);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22817,11 +22902,10 @@ BUILDIN_FUNC(checkre)
 
 /* getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}} */
 BUILDIN_FUNC(getrandgroupitem) {
-	TBL_PC* sd;
+	map_session_data* sd;
 	int i, get_count = 0, identify = 0;
 	uint16 group, qty = 0;
 	uint8 sub_group = 1;
-	struct item item_tmp;
 
 	if (!script_charid2sd(6, sd))
 		return SCRIPT_CMD_SUCCESS;
@@ -22838,10 +22922,14 @@ BUILDIN_FUNC(getrandgroupitem) {
 	FETCH(5, identify);
 
 	std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(group,sub_group);
-	if (!entry)
-		return SCRIPT_CMD_FAILURE; //ensure valid itemid
 
-	memset(&item_tmp,0,sizeof(item_tmp));
+	if( entry == nullptr ){
+		ShowError( "buildin_getrandgroupitem: Unable to find a random entry in group %hu for sub group %hu.\n", group, sub_group );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	item item_tmp = {};
+
 	item_tmp.nameid   = entry->nameid;
 	item_tmp.identify = identify ? 1 : itemdb_isidentified(entry->nameid);
 
@@ -22858,14 +22946,20 @@ BUILDIN_FUNC(getrandgroupitem) {
 		get_count = 1;
 	}
 
+	if( pc_inventoryblank( sd ) < get_count ){
+		ShowError( "buildin_getrandgroupitem: Not enough free space in inventory.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	for (i = 0; i < get_count; i++) {
 		// if not pet egg
 		if (!pet_create_egg(sd, entry->nameid)) {
-			unsigned char flag = 0;
-			if ((flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT))) {
+			e_additem_result flag = pc_additem( sd, &item_tmp, item_tmp.amount, LOG_TYPE_SCRIPT );
+
+			if( flag != ADDITEM_SUCCESS ){
 				clif_additem(sd,0,0,flag);
-				if (pc_candrop(sd,&item_tmp))
-					map_addflooritem(&item_tmp,item_tmp.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				ShowError( "buildin_getrandgroupitem: Failed to add the item to player.\n" );
+				return SCRIPT_CMD_FAILURE;
 			}
 		}
 	}
@@ -22877,13 +22971,19 @@ BUILDIN_FUNC(getrandgroupitem) {
  * Gives item(s) to the attached player based on item group contents
  */
 BUILDIN_FUNC(getgroupitem) {
-	TBL_PC *sd;
+	map_session_data* sd;
 	int group_id = script_getnum(st,2);
 	
 	if (!script_charid2sd(4,sd))
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
+
+	bool identify = false;
+
+	if( script_hasdata( st, 3 ) ){
+		identify = script_getnum( st, 3 );
+	}
 	
-	if (itemdb_group.pc_get_itemgroup(group_id, (script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : false), sd)) {
+	if( itemdb_group.pc_get_itemgroup( group_id, identify, *sd ) ){
 		ShowError("buildin_getgroupitem: Invalid group id '%d' specified.\n",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -23138,7 +23238,7 @@ BUILDIN_FUNC(party_create)
 		item2 = 1;
 
 	party_create_byscript = 1;
-	script_pushint(st,party_create(sd,party_name,item1,item2));
+	script_pushint( st, party_create( *sd, party_name, item1, item2 ) );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23190,7 +23290,7 @@ BUILDIN_FUNC(party_addmember)
 		return SCRIPT_CMD_FAILURE;
 	}
 	sd->party_invite = party_id;
-	script_pushint(st,party_add_member(party_id,sd));
+	script_pushint( st, party_add_member( party_id, *sd ) );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23313,7 +23413,7 @@ BUILDIN_FUNC(party_destroy)
 		script_pushint(st,1);
 	}
 	else //leader leave = party broken
-		script_pushint(st,party_leave(party->data[i].sd));
+		script_pushint( st, party_leave( *party->data[i].sd ) );
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23893,7 +23993,7 @@ BUILDIN_FUNC(clan_join){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( clan_member_join( sd, clan_id, sd->status.account_id, sd->status.char_id ) )
+	if( clan_member_join( *sd, clan_id, sd->status.account_id, sd->status.char_id ) )
 		script_pushint(st, true);
 	else
 		script_pushint(st, false);
@@ -23902,14 +24002,14 @@ BUILDIN_FUNC(clan_join){
 }
 
 BUILDIN_FUNC(clan_leave){
-	map_session_data *sd;
+	map_session_data* sd;
 
 	if( !script_charid2sd( 2, sd ) ){
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( clan_member_leave( sd, sd->status.clan_id, sd->status.account_id, sd->status.char_id ) )
+	if( clan_member_leave( *sd, sd->status.clan_id, sd->status.account_id, sd->status.char_id ) )
 		script_pushint(st, true);
 	else
 		script_pushint(st, false);
@@ -27584,9 +27684,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
-	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
-	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
-	BUILDIN_DEF(npcstop,""), // [Valaris]
+	BUILDIN_DEF(npcspeed,"i?"),
+	BUILDIN_DEF(npcwalkto,"ii?"),
+	BUILDIN_DEF(npcstop,"??"),
 	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
 	BUILDIN_DEF(checkoption1,"i?"),

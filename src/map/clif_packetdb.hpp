@@ -118,13 +118,13 @@
 	parseable_packet(0x00f7,2,clif_parse_CloseKafra,0);
 	parseable_packet(0x00f9,26,clif_parse_CreateParty,2);
 	packet(0x00fb,-1);
-	parseable_packet(0x00fc,6,clif_parse_PartyInvite,2);
+	parseable_packet( HEADER_CZ_REQ_JOIN_GROUP, sizeof( PACKET_CZ_REQ_JOIN_GROUP ), clif_parse_PartyInvite, 0 );
 	packet(0x00fd,27);
-	parseable_packet(0x00ff,10,clif_parse_ReplyPartyInvite,2,6);
-	parseable_packet(0x0100,2,clif_parse_LeaveParty,0);
+	parseable_packet( HEADER_CZ_JOIN_GROUP, sizeof( PACKET_CZ_JOIN_GROUP ), clif_parse_ReplyPartyInvite, 0 );
+	parseable_packet( HEADER_CZ_REQ_LEAVE_GROUP, sizeof( PACKET_CZ_REQ_LEAVE_GROUP ), clif_parse_LeaveParty, 0 );
 	packet(0x0101,6);
 	parseable_packet(0x0102,6,clif_parse_PartyChangeOption,2);
-	parseable_packet(0x0103,30,clif_parse_RemovePartyMember,2,6);
+	parseable_packet( HEADER_CZ_REQ_EXPEL_GROUP_MEMBER, sizeof( PACKET_CZ_REQ_EXPEL_GROUP_MEMBER ), clif_parse_RemovePartyMember, 0 );
 	packet(0x0104,79);
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
@@ -185,29 +185,21 @@
 	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
-	parseable_packet(0x0159,54,clif_parse_GuildLeave,2,6,10,14);
-	packet(0x015a,66);
-	parseable_packet(0x015b,54,clif_parse_GuildExpulsion,2,6,10,14);
-	packet(0x015c,90);
-	parseable_packet(0x015d,42,clif_parse_GuildBreak,2);
-	packet(0x015e,6);
+	parseable_packet( HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), clif_parse_GuildLeave, 0 );
+	parseable_packet( HEADER_CZ_REQ_BAN_GUILD, sizeof( PACKET_CZ_REQ_BAN_GUILD ), clif_parse_GuildExpulsion, 0 );
+	parseable_packet( HEADER_CZ_REQ_DISORGANIZE_GUILD, sizeof( PACKET_CZ_REQ_DISORGANIZE_GUILD ), clif_parse_GuildBreak, 0 );
 	packet(0x015f,42);
 	packet(0x0160,-1);
 	parseable_packet(0x0161,-1,clif_parse_GuildChangePositionInfo,2,4);
-	packet(0x0162,-1);
 	packet(0x0163,-1);
 	packet(0x0164,-1);
 	parseable_packet(0x0165,30,clif_parse_CreateGuild,2,6);
 	packet(0x0166,-1);
-	packet(0x0167,3);
-	parseable_packet(0x0168,14,clif_parse_GuildInvite,2,6,10);
-	packet(0x0169,3);
-	packet(0x016a,30);
-	parseable_packet(0x016b,10,clif_parse_GuildReplyInvite,2,6);
+	parseable_packet( HEADER_CZ_REQ_JOIN_GUILD, sizeof( PACKET_CZ_REQ_JOIN_GUILD ), clif_parse_GuildInvite, 0 );
+	parseable_packet( HEADER_CZ_JOIN_GUILD, sizeof( PACKET_CZ_JOIN_GUILD ), clif_parse_GuildReplyInvite, 0 );
 	packet(0x016c,43);
 	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
-	packet(0x016f,182);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
 	packet(0x0171,30);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
@@ -233,7 +225,6 @@
 	parseable_packet(0x018a,4,clif_parse_QuitGame,2);
 	packet(0x018b,4);
 	packet(0x018c,29);
-	packet(0x018d,-1);
 	parseable_packet( HEADER_CZ_REQMAKINGITEM, sizeof( struct PACKET_CZ_REQMAKINGITEM ), clif_parse_ProduceMix, 0 );
 	packet( HEADER_ZC_ACK_REQMAKINGITEM, sizeof( PACKET_ZC_ACK_REQMAKINGITEM ) );
 	parseable_packet(0x0190,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
@@ -267,7 +258,6 @@
 	packet(0x01b0,11);
 	packet(0x01b1,7);
 	parseable_packet(0x01b2,-1,clif_parse_OpenVending,2,4,84,85);
-	packet(0x01b4,12);
 	packet(0x01b5,18);
 	packet(0x01b6,114);
 	packet(0x01b7,6);
@@ -778,7 +768,6 @@
 // 2005-10-10aSakexe
 #if PACKETVER >= 20051010
 	packet(0x020e,32);
-	packet(0x025a,-1);
 	parseable_packet( HEADER_CZ_REQ_MAKINGITEM, sizeof( struct PACKET_CZ_REQ_MAKINGITEM ), clif_parse_Cooking, 0 );
 #endif
 
@@ -996,9 +985,9 @@
 	packet(0x02c0,2);
 	packet(0x02c1,-1);
 	packet(0x02c2,-1);
-	parseable_packet(0x02c4,26,clif_parse_PartyInvite2,2);
+	parseable_packet( HEADER_CZ_PARTY_JOIN_REQ, sizeof( PACKET_CZ_PARTY_JOIN_REQ ), clif_parse_PartyInvite2, 0 );
 	packet(0x02c5,30);
-	parseable_packet(0x02c7,7,clif_parse_ReplyPartyInvite2,2,6);
+	parseable_packet( HEADER_CZ_PARTY_JOIN_REQ_ACK, sizeof( PACKET_CZ_PARTY_JOIN_REQ_ACK ), clif_parse_ReplyPartyInvite2, 0 );
 	parseable_packet( HEADER_CZ_PARTY_CONFIG, sizeof( PACKET_CZ_PARTY_CONFIG ), clif_parse_PartyTick, 0 );
 	packet(0x02ca,3);
 	packet(0x02cb,20);
@@ -1542,18 +1531,14 @@
 	packet(0x0810,3);
 	parseable_packet(0x0811,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	//packet(0x0812,86);
-	//packet(0x0813,6);
 	//packet(0x0815,-1);
 	//packet(0x0817,-1);
-	//packet(0x0818,6);
 	//packet(0x0819,4);
 #endif
 
 // 2010-03-09aRagexeRE
 #if PACKETVER >= 20100309
-	packet(0x0813,-1);
 	//packet(0x0815,6);
-	packet(0x0818,-1);
 	//packet(0x0819,10);
 	//packet(0x081A,4);
 	//packet(0x081B,4);
@@ -1655,7 +1640,6 @@
 
 // 2010-08-03aRagexeRE
 #if PACKETVER >= 20100803
-	packet(0x0839,66);
 	parseable_packet(0x0842,6,clif_parse_GMRecall2,2);
 	parseable_packet(0x0843,6,clif_parse_GMRemove2,2);
 #endif
@@ -1827,7 +1811,7 @@
 	parseable_packet(0x090A,26,clif_parse_bg_queue_request_queue_number,2);
 	packet( HEADER_ZC_ENTRY_QUEUE_INIT , sizeof(PACKET_ZC_ENTRY_QUEUE_INIT) );
 	packet(0x0977,14); //Monster HP Bar
-	parseable_packet(0x0916,26,clif_parse_GuildInvite2,2);
+	parseable_packet( HEADER_CZ_REQ_JOIN_GUILD2, sizeof( PACKET_CZ_REQ_JOIN_GUILD2 ), clif_parse_GuildInvite2, 0 );
 	parseable_packet(0x091d,41,clif_parse_PartyBookingRegisterReq,2,4,6);
 	// Merge Item
 	parseable_packet( HEADER_CZ_REQ_MERGE_ITEM, -1, clif_parse_merge_item_req, 0 );
@@ -1985,16 +1969,11 @@
 	parseable_packet(0x09CE,102,clif_parse_GM_Item_Monster,2);
 	parseable_packet(0x09D4,2,clif_parse_NPCShopClosed,0);
 	//NPC Market
-	packet(0x09D5,-1);
 	parseable_packet( HEADER_CZ_NPC_MARKET_PURCHASE, -1, clif_parse_NPCMarketPurchase, 0 );
 	packet(0x09D7,-1);
 	parseable_packet(0x09D8,2,clif_parse_NPCMarketClosed,0);
 	// Clan System
-	packet(0x0988,6);
-	packet(0x0989,2);
-	packet(0x098A,-1);
 	parseable_packet(0x098D,-1,clif_parse_clan_chat,2,4);
-	packet(0x098E,-1);
 	// Sale
 	parseable_packet( HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO, -1, clif_parse_sale_search, 0 );
 	packet( HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO, sizeof( PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO ) );
@@ -2013,11 +1992,6 @@
 	packet(0x09DB,-1); // ZC_NOTIFY_MOVEENTRY10
 	packet(0x09DC,-1); // ZC_NOTIFY_NEWENTRY10
 	packet(0x09DD,-1); // ZC_NOTIFY_STANDENTRY10
-#endif
-
-// 2014-02-05bRagexeRE
-#if PACKETVER >= 20140205
-	packet(0x09DA,-1);
 #endif
 
 // 2014-10-08Ragexe

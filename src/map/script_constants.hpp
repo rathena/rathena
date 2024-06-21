@@ -1922,9 +1922,9 @@
 	export_constant(SC_HIDDEN_CARD);
 	export_constant(SC_PERIOD_RECEIVEITEM_2ND);
 	export_constant(SC_PERIOD_PLUSEXP_2ND);
-	export_constant(SC_EXTREMITYFIST2);
 	export_constant(SC_POWERUP);
 	export_constant(SC_AGIUP);
+	export_constant(SC_PROTECTION);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
@@ -4252,6 +4252,8 @@
 	export_constant(RC2_ILLUSION_TURTLE);
 	export_constant(RC2_RACHEL_SANCTUARY);
 	export_constant(RC2_ILLUSION_LUANDA);
+	export_constant(RC2_ILLUSION_FROZEN);
+	export_constant(RC2_ILLUSION_MOONLIGHT);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -7797,6 +7799,7 @@
 	export_constant(IG_AEGIS_103034);
 	export_constant(IG_P_BOOSTER_CALL_PACKAGE);
 	export_constant(IG_P_COMPENSATION_BOX);
+	export_constant(IG_ENCHANT_STONE_BOX35);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -10499,6 +10502,7 @@
 	export_constant(HAT_EF_C_BABY_GLOOM);
 	export_constant(HAT_EF_WINTERNIGHTBELLS);
 	export_constant(HAT_EF_NIGHTSKYOFRUTIE);
+	export_constant(HAT_EF_RAINBOW_POISON_MASTER);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -10631,8 +10635,9 @@
 	export_constant(PCBLOCK_SITSTAND);
 	export_constant(PCBLOCK_COMMANDS);
 	export_constant(PCBLOCK_NPCCLICK);
-	export_constant(PCBLOCK_NPC);
 	export_constant(PCBLOCK_EMOTION);
+	export_constant(PCBLOCK_EQUIP);
+	export_constant(PCBLOCK_NPC);
 	export_constant(PCBLOCK_ALL);
 
 	/* convertpcinfo command */
@@ -10643,6 +10648,11 @@
 	/* instance_warpall flags */
 	export_constant(IWA_NONE);
 	export_constant(IWA_NOTDEAD);
+
+	/* npcspeed command */
+	export_constant(MIN_WALK_SPEED);
+	export_constant(MAX_WALK_SPEED);
+	export_constant(DEFAULT_NPC_WALK_SPEED);
 
 	/* skill hit */
 	export_constant(DMG_SINGLE);
@@ -10659,6 +10669,7 @@
 	export_constant(NK_IGNOREDEFCARD);
 	export_constant(NK_IGNORELONGCARD);
 	export_constant(NK_CRITICAL);
+	export_constant(NK_SIMPLEDEFENSE);
 
 	/* skill inf */
 	export_constant(INF_PASSIVE_SKILL);

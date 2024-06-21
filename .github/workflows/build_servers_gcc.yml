@@ -49,8 +49,10 @@ jobs:
 
       - name: Command - configure
         env:
-            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-buildbot=yes'
-        run: ./configure $CONFIGURE_FLAGS
+            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }}'
+        # -Werror: to treat all warnings as errors
+        # -Wno-error=builtin-declaration-mismatch: otherwise ./configure checks fail
+        run: ./configure $CONFIGURE_FLAGS --enable-buildbot=yes CXXFLAGS='-Werror -Wno-error=builtin-declaration-mismatch'
       
       - name: Command - make clean
         run: make clean

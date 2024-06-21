@@ -714,7 +714,7 @@ enum e_guild_storage_log storage_guild_log_read( map_session_data* sd ){
 
 	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, MAX_GUILD_STORAGE_LOG_PACKET );
 
-	clif_guild_storage_log( sd, log, ret );
+	clif_guild_storage_log( *sd, log, ret );
 
 	return ret;
 }
