@@ -6638,8 +6638,8 @@ Examples:
 
 ---------------------------------------
 
-macro_detector({<account ID>});
-macro_detector({"<character name>"});
+*macro_detector({<account ID>});
+*macro_detector({"<character name>"});
 
 This command will display the captcha UI challenge onto the invoking character or the given <account ID>/<character name>.
 
@@ -6657,6 +6657,46 @@ Example:
 	}
 	freeloop(0);
 	end;
+
+---------------------------------------
+
+*permission_check(<permission>{,<char_id>});
+
+This command will return true if the attached character has the specified permission, false otherwise.
+If <char_id> is given, it will check the permission for that character instead.
+
+A full list of the player permission constants (with the 'PC_PERM' prefix) along with the
+full permissions documentation can be found in 'doc/permissions.txt'.
+
+
+Example:
+	if (permission_check(PC_PERM_TRADE)) {
+		mes "You have permission to trade!";
+	}
+	else {
+		mes "You do not have permission to trade!";
+	}
+	end;
+
+---------------------------------------
+
+*permission_add(<permission>{,<char_id>});
+*permission_remove(<permission>{,<char_id>});
+
+These commands will temporarily add or remove the specified permission to the attached character,
+or the given <char_id> until the player logs out.
+
+A full list of the player permission constants (with the 'PC_PERM' prefix) along with the
+full permissions documentation can be found in 'doc/permissions.txt'.
+
+Examples:
+	// Adds the 'can_trade' permission to the attached character,
+	// allowing them to trade, drop, sell, store and mail items.
+	permission_add(PC_PERM_TRADE);
+
+	// Removes the 'can_party' permission from the attached character,
+	// preventing them from joining or creating parties.
+	permission_remove(PC_PERM_PARTY);
 
 ---------------------------------------
 

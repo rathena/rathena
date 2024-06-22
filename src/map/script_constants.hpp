@@ -10581,6 +10581,40 @@
 	export_constant(SKILLDMG_MAX);
 	export_constant(SKILLDMG_CASTER);
 
+	/* player permissions */
+	export_constant(PC_PERM_TRADE);
+	export_constant(PC_PERM_PARTY);
+	export_constant(PC_PERM_ALL_SKILL);
+	export_constant(PC_PERM_USE_ALL_EQUIPMENT);
+	export_constant(PC_PERM_SKILL_UNCONDITIONAL);
+	export_constant(PC_PERM_JOIN_ALL_CHAT);
+	export_constant(PC_PERM_NO_CHAT_KICK);
+	export_constant(PC_PERM_HIDE_SESSION);
+	export_constant(PC_PERM_WHO_DISPLAY_AID);
+	export_constant(PC_PERM_RECEIVE_HACK_INFO);
+	export_constant(PC_PERM_WARP_ANYWHERE);
+	export_constant(PC_PERM_VIEW_HPMETER);
+	export_constant(PC_PERM_VIEW_EQUIPMENT);
+	export_constant(PC_PERM_USE_CHECK);
+	export_constant(PC_PERM_USE_CHANGEMAPTYPE);
+	export_constant(PC_PERM_USE_ALL_COMMANDS);
+	export_constant(PC_PERM_RECEIVE_REQUESTS);
+	export_constant(PC_PERM_SHOW_BOSS);
+	export_constant(PC_PERM_DISABLE_PVM);
+	export_constant(PC_PERM_DISABLE_PVP);
+	export_constant(PC_PERM_DISABLE_CMD_DEAD);
+	export_constant(PC_PERM_CHANNEL_ADMIN);
+	export_constant(PC_PERM_TRADE_BOUNDED);
+	export_constant(PC_PERM_ITEM_UNCONDITIONAL);
+	export_constant(PC_PERM_ENABLE_COMMAND);
+	export_constant(PC_PERM_BYPASS_STAT_ONCLONE);
+	export_constant(PC_PERM_BYPASS_MAX_STAT);
+	export_constant(PC_PERM_ATTENDANCE);
+	export_constant(PC_PERM_MACRO_DETECT);
+	export_constant(PC_PERM_MACRO_REGISTER);
+	export_constant(PC_PERM_TRADE_UNCONDITIONAL);
+	export_constant(PC_PERM_MAX);
+
 	/* guild permissions */
 	export_constant(GUILD_PERM_INVITE);
 	export_constant(GUILD_PERM_EXPEL);
