@@ -22458,11 +22458,9 @@ BUILDIN_FUNC(buyingstore)
 
 
 /// Invokes search store info window
-/// searchstores <uses>,<effect>;
+/// searchstores <uses>,<effect>{,<range>};
 BUILDIN_FUNC(searchstores)
 {
-	unsigned short effect;
-	unsigned int uses;
 	map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
@@ -22470,8 +22468,7 @@ BUILDIN_FUNC(searchstores)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	uses   = script_getnum(st,2);
-	effect = script_getnum(st,3);
+	uint32 uses = script_getnum(st,2);
 
 	if( !uses )
 	{
@@ -22479,13 +22476,28 @@ BUILDIN_FUNC(searchstores)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( effect > 1 )
+	uint8 effect = script_getnum(st,3);
+
+	if( effect >= SEARCHSTORE_EFFECT_MAX)
 	{
 		ShowError("buildin_searchstores: Invalid effect id %hu, specified.\n", effect);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	searchstore_open(sd, uses, effect);
+	uint8 range = SEARCHSTORE_RANGE_MAP;
+
+	if (script_hasdata(st, 4)) {
+		range = script_getnum(st, 4);
+
+		if( range >= SEARCHSTORE_RANGE_MAX)
+		{
+			ShowError("buildin_searchstores: Invalid range %hu, specified.\n", range);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+	}
+
+	searchstore_open(sd, uses, effect, range);
 	return SCRIPT_CMD_SUCCESS;
 }
 /// Displays a number as large digital clock.
@@ -27902,7 +27914,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(progressbar_npc, "si?"),
 	BUILDIN_DEF(pushpc,"ii"),
 	BUILDIN_DEF(buyingstore,"i"),
-	BUILDIN_DEF(searchstores,"ii"),
+	BUILDIN_DEF(searchstores,"ii?"),
 	BUILDIN_DEF(showdigit,"i?"),
 	// WoE SE
 	BUILDIN_DEF(agitstart2,""),

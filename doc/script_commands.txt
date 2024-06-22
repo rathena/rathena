@@ -5694,22 +5694,32 @@ Example:
 
 ---------------------------------------
 
-*searchstores <uses>,<effect>;
+*searchstores <uses>,<effect>{,<range>};
 
 Invokes the store search window, which allows to search for both vending
-and buying stores. Parameter uses indicates, how many searches can be
-started, before the window has to be reopened. Effect value affects,
-what happens, when a result item is double-clicked and can be one of the
-following:
+and buying stores.
 
-	0 = Shows the store's position on the mini-map and highlights the
-	    shop sign with yellow color, when the store is on same map
-	    as the invoking player.
-	1 = Directly opens the shop, regardless of distance.
+Parameter <uses> indicates, how many searches can be started,
+before the window has to be reopened.
+
+Parameter <effect> value affects what happens when a result item is double-clicked
+and can be one of the following:
+
+	SEARCHSTORE_EFFECT_NORMAL : Shows the store's position on the mini-map and highlights the
+								shop sign with yellow color, when the store is on same map
+								as the invoking player.
+	SEARCHSTORE_EFFECT_CASH   : Directly opens the shop, regardless of distance.
+	
+Optional parameter <range> indicates the range of the search.
+If not set, the search will be map wide (SEARCHSTORE_RANGE_MAP).
+Values for <range> are:
+
+	SEARCHSTORE_RANGE_MAP    : Search for shops on the same map as the player.
+	SEARCHSTORE_RANGE_GLOBAL : Search for shops on the whole server.
 
 Example:
 	// Item Universal_Catalog_Gold (10 uses, effect: open shop)
-	searchstores 10,1;
+	searchstores 10, SEARCHSTORE_EFFECT_CASH;
 
 ---------------------------------------
 

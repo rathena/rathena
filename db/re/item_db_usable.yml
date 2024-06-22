@@ -11333,7 +11333,7 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      searchstores 10,0;
+      searchstores 10, SEARCHSTORE_EFFECT_NORMAL;
   - Id: 12581
     AegisName: Vending_Search_Scroll2
     Name: Universal Catalog Gold
@@ -11348,7 +11348,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      searchstores 10,1;
+      searchstores 10, SEARCHSTORE_EFFECT_CASH;
   - Id: 12582
     AegisName: Siege_Supply_Box
     Name: WoE Supply Box
@@ -11492,7 +11492,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      searchstores 10,1;
+      searchstores 10, SEARCHSTORE_EFFECT_CASH;
   - Id: 12592
     AegisName: Cyclops_Box1
     Name: Cyclops Box1

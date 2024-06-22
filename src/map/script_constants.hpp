@@ -11318,6 +11318,12 @@
 	export_constant(MER_DIETER);
 	export_constant(MER_ELEANOR);
 
+	/* searchstore constants */
+	export_constant(SEARCHSTORE_EFFECT_NORMAL);
+	export_constant(SEARCHSTORE_EFFECT_CASH);
+	export_constant(SEARCHSTORE_RANGE_MAP);
+	export_constant(SEARCHSTORE_RANGE_GLOBAL);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

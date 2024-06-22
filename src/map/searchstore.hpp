@@ -46,10 +46,27 @@ struct s_search_store_info {
 	time_t nextquerytime;
 	unsigned short effect;  // 0 = Normal (display coords), 1 = Cash (remote open store)
 	unsigned char type;  // 0 = Vending, 1 = Buying Store
+	uint8 range;
 	bool open;
 };
 
-bool searchstore_open(map_session_data* sd, unsigned int uses, unsigned short effect);
+/// Search effect constants
+enum e_searchstore_effecttype
+{
+	SEARCHSTORE_EFFECT_NORMAL = 0,
+	SEARCHSTORE_EFFECT_CASH = 1,
+	SEARCHSTORE_EFFECT_MAX
+};
+
+/// Search range constants
+enum e_searchstore_range
+{
+	SEARCHSTORE_RANGE_MAP = 0,
+	SEARCHSTORE_RANGE_GLOBAL = 1,
+	SEARCHSTORE_RANGE_MAX
+};
+
+bool searchstore_open(map_session_data* sd, uint32 uses, uint8 effect, uint8 range);
 void searchstore_query(map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
 bool searchstore_querynext(map_session_data* sd);
 void searchstore_next(map_session_data* sd);

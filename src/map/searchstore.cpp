@@ -29,14 +29,6 @@ enum e_searchstore_searchtype
 	SEARCHTYPE_BUYING_STORE = 1,
 };
 
-/// Search effect constants
-enum e_searchstore_effecttype
-{
-	EFFECTTYPE_NORMAL = 0,
-	EFFECTTYPE_CASH   = 1,
-	EFFECTTYPE_MAX
-};
-
 /// Type for shop search function
 typedef bool (*searchstore_search_t)(map_session_data* sd, t_itemid nameid);
 typedef bool (*searchstore_searchall_t)(map_session_data* sd, const struct s_search_store_search* s);
@@ -110,17 +102,18 @@ static int searchstore_getstoreid(map_session_data* sd, unsigned char type)
  * @param effect : shop type
  * @return : true : opened, false : failed to open
  */
-bool searchstore_open(map_session_data* sd, unsigned int uses, unsigned short effect)
+bool searchstore_open(map_session_data* sd, uint32 uses, uint8 effect, uint8 range)
 {
 	if( !battle_config.feature_search_stores || sd->searchstore.open )
 		return false;
 
-	if( !uses || effect >= EFFECTTYPE_MAX ) // invalid input
+	if( !uses || effect >= SEARCHSTORE_EFFECT_MAX || range >= SEARCHSTORE_RANGE_MAX) // invalid input
 		return false;
 
 	sd->searchstore.open   = true;
 	sd->searchstore.uses   = uses;
 	sd->searchstore.effect = effect;
+	sd->searchstore.range  = range;
 
 	clif_open_search_store_info(sd);
 
@@ -209,6 +202,11 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 	for( pl_sd = (map_session_data*)dbi_first(iter); dbi_exists(iter);  pl_sd = (map_session_data*)dbi_next(iter) ) {
 		if( sd == pl_sd ) // skip own shop, if any
 			continue;
+
+		// Check if the store is on the same map as the player
+		if (sd->searchstore.range == SEARCHSTORE_RANGE_MAP && sd->mapindex != pl_sd->mapindex) {
+			continue;
+		}
 
 		if( !store_searchall(pl_sd, &s) ) { // exceeded result size
 			clif_search_store_info_failed(sd, SSI_FAILED_OVER_MAXCOUNT);
@@ -334,14 +332,14 @@ void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_
 	}
 
 	switch( sd->searchstore.effect ) {
-		case EFFECTTYPE_NORMAL:
+		case SEARCHSTORE_EFFECT_NORMAL:
 			// display coords
 			if( sd->bl.m != pl_sd->bl.m ) // not on same map, wipe previous marker
 				clif_search_store_info_click_ack(sd, -1, -1);
 			else
 				clif_search_store_info_click_ack(sd, pl_sd->bl.x, pl_sd->bl.y);
 			break;
-		case EFFECTTYPE_CASH:
+		case SEARCHSTORE_EFFECT_CASH:
 			// open remotely
 			// to bypass range checks
 			sd->searchstore.remote_id = account_id;
