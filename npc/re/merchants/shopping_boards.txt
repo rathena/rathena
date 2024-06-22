@@ -9,15 +9,21 @@
 //= 1.0 Initial version. [Pokye]
 //============================================================
 
-prontera,160,189,3	script	Shopping Board	4_BOARD3,{
+-	script	Shopping Board	-1,{
 	searchstores 1,1;
 	end;
 }
 
-prontera,146,80,3	duplicate(Shopping Board)	Shopping Board#prt	4_BOARD3
-payon,183,99,5	duplicate(Shopping Board)	Shopping Board#pay	4_BOARD3
-izlude,127,116,3	duplicate(Shopping Board)	Shopping Board#izd	4_BOARD3
-morocc,166,109,3	duplicate(Shopping Board)	Shopping Board#moc	4_BOARD3
-geffen,130,68,3	duplicate(Shopping Board)	Shopping Board#gef	4_BOARD3
+alberta,119,65,3	duplicate(Shopping Board)	Shopping Board#alb	4_BOARD3
 aldebaran,146,120,3	duplicate(Shopping Board)	Shopping Board#alde	4_BOARD3
 comodo,206,153,3	duplicate(Shopping Board)	Shopping Board#cmd	4_BOARD3
+geffen,130,68,3	duplicate(Shopping Board)	Shopping Board#gef	4_BOARD3
+izlude,127,116,3	duplicate(Shopping Board)	Shopping Board#izl	4_BOARD3
+morocc,166,109,3	duplicate(Shopping Board)	Shopping Board#moc	4_BOARD3
+payon,183,103,3	duplicate(Shopping Board)	Shopping Board#pay	4_BOARD3
+prontera,159,193,3	duplicate(Shopping Board)	Shopping Board#prt1	4_BOARD3
+prontera,182,214,3	duplicate(Shopping Board)	Shopping Board#prt2	4_BOARD3
+prontera,130,215,3	duplicate(Shopping Board)	Shopping Board#prt3	4_BOARD3
+prontera,146,85,3	duplicate(Shopping Board)	Shopping Board#prt4	4_BOARD3
+xmas,155,144,3	duplicate(Shopping Board)	Shopping Board#xmas	4_BOARD3
+yuno,146,187,3	duplicate(Shopping Board)	Shopping Board#yuno	4_BOARD3
