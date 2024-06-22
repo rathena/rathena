@@ -151,6 +151,7 @@ struct Char_Config {
 	char unknown_char_name[NAME_LENGTH]; // Name to use when the requested name cannot be determined
 	char char_name_letters[1024]; // list of letters/symbols allowed (or not) in a character name. by [Yor]
 	int char_name_option; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
+	uint8 char_name_min_length; // Minimum character name length (default: 4)
 	int char_del_option;	// Character deletion type, email = 1, birthdate = 2 (default)
 	int char_del_restriction;	// Character deletion restriction (0: none, 1: if the character is in a party, 2: if the character is in a guild, 3: if the character is in a party or a guild)
 	bool char_rename_party;	// Character renaming in a party
