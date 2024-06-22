@@ -8538,6 +8538,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 4000
+    Duration1: 15000
     Duration2: 12000
     Requires:
       SpCost:
@@ -8829,6 +8830,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 4000
+    Duration1: 5000
     Duration2: 5000
     Requires:
       SpCost:
