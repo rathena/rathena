@@ -1,6 +1,9 @@
 //===== rAthena Script =======================================
 //= Shopping Boards
 //===== Description: =========================================
+//= Shopping Boards work like Bargain Hunter's Catalogues.
+//= They are found in towns and search exclusively in their respective maps.
+//= Searches are limited to 1 use per board click (you can re-use the board without closing it to get another search).
 //= https://irowiki.org/wiki/Commerce#Shopping_Boards
 //===== Changelog: ===========================================
 //= 1.0 Initial version. [Pokye]
