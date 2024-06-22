@@ -15,6 +15,7 @@
 //= 1.6 Added Illusion of Underwater exchange [Capuche]
 //= 1.7 Added Illusion of Twins enchanter [Capuche]
 //= 1.8 Added Illusion Merchant [Haydrich]
+//= 1.9 Added Illusion of Teddy Bear exchange [Atemo]
 //============================================================
 
 //============================================================
@@ -882,5 +883,52 @@ OnInit:
 	// Restock
 	npcshopupdate "market_resonance_stone",100003,2000000,99999;
 	npcshopupdate "market_resonance_stone",100004,2000000,99999;
+	end;
+}
+
+
+//============================================================
+//= Illusion of Teddy Bear
+//============================================================
+
+ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
+	mes "[Bear Wanting Illusion Stone]";
+	mes "If you give me a Illusion Stone, I'll do something nice for you!";
+	next;
+	switch( select( "Reason for being here", "Good thing [Illusion equipment]", "Quit" ) ) {
+	case 1:
+		mes "[Bear Wanting Illusion Stone]";
+		mes "I don't know why...!";
+		mes "The other teddy bears were in line, so I was in line too!";
+		mes "Whoaaaaaa!!!!";
+		mes "I didn't know it was here!";
+		next;
+		mes "[Bear Wanting Illusion Stone]";
+		mes "A teddy bear with Illusion stone!";
+		mes "Strong!";
+		mes "I don't have any fantasy stones!";
+		mes "Less... stronger...";
+		next;
+		mes "[Bear Wanting Illusion Stone]";
+		mes "What are Illusion stones?";
+		mes "I don't know but I want some!";
+		close;
+	case 2:
+		mes "[Bear Wanting Illusion Stone]";
+		mes "Makes you good with what you have!";
+		mes "If you want to do well, bring equipment refined to +9 or higher. It'll all disappear, but... Heck?^000000";
+		next;
+		mes "[Bear Wanting Illusion Stone]";
+		mes "^ff0000Illusion Stone^000000!!! Illusion Stone is the most important thing, but... other materials are also needed.";
+		mes "For every good thing you need another good thing.";
+		next;
+		close2;
+		callshop( "barter_ill_teddy" );
+		end;
+	case 3:
+		mes "[Bear Wanting Illusion Stone]";
+		mes "Okay...";
+		close;
+	}
 	end;
 }
