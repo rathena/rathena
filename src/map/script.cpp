@@ -22468,11 +22468,11 @@ BUILDIN_FUNC(searchstores)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	uint32 uses = script_getnum(st,2);
+	unsigned int uses = script_getnum(st,2);
 
-	if( !uses )
+	if( !uses || uses > UINT8_MAX)
 	{
-		ShowError("buildin_searchstores: Amount of uses cannot be zero.\n");
+		ShowError("buildin_searchstores: The amount of uses must be a number between 1 and 255.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 

@@ -41,11 +41,11 @@ struct s_search_store_info_item {
 struct s_search_store_info {
 	std::vector<std::shared_ptr<s_search_store_info_item>> items;
 	unsigned int pages;  // amount of pages already sent to client
-	unsigned int uses;
+	uint8 uses;
 	int remote_id;
 	time_t nextquerytime;
-	unsigned short effect;  // 0 = Normal (display coords), 1 = Remote (remotely open store)
-	unsigned char type;  // 0 = Vending, 1 = Buying Store
+	uint8 effect;  // 0 = Normal (display coords), 1 = Remote (remotely open store)
+	uint8 type;  // 0 = Vending, 1 = Buying Store
 	uint8 range;
 	bool open;
 };
@@ -66,7 +66,7 @@ enum e_searchstore_range
 	SEARCHSTORE_RANGE_MAX
 };
 
-bool searchstore_open(map_session_data* sd, uint32 uses, uint8 effect, uint8 range);
+bool searchstore_open(map_session_data* sd, uint8 uses, uint8 effect, uint8 range);
 void searchstore_query(map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
 bool searchstore_querynext(map_session_data* sd);
 void searchstore_next(map_session_data* sd);

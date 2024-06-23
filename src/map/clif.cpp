@@ -19194,7 +19194,7 @@ void clif_search_store_info_ack( map_session_data& sd ){
 	p->packetLength = sizeof( *p );
 	p->firstPage = !sd.searchstore.pages;
 	p->nextPage = searchstore_querynext( &sd );
-	p->usesCount = (uint8)umin( sd.searchstore.uses, UINT8_MAX );
+	p->usesCount = sd.searchstore.uses;
 
 	for( int i = 0, count = 0; i < end - start; i++ ){
 		std::shared_ptr<s_search_store_info_item> ssitem = sd.searchstore.items[start + i];
@@ -19241,54 +19241,52 @@ void clif_search_store_info_ack( map_session_data& sd ){
 }
 
 
-/// Notification of failure when searching for stores (ZC_SEARCH_STORE_INFO_FAILED).
-/// 0837 <reason>.B
+/// Notification of failure when searching for stores.
+/// 0837 <reason>.B (ZC_SEARCH_STORE_INFO_FAILED)
 /// reason:
 ///     0 = "No matching stores were found." (0x70b)
 ///     1 = "There are too many results. Please enter more detailed search term." (0x6f8)
 ///     2 = "You cannot search anymore." (0x706)
 ///     3 = "You cannot search yet." (0x708)
 ///     4 = "No sale (purchase) information available." (0x705)
-void clif_search_store_info_failed(map_session_data* sd, unsigned char reason)
-{
-	int fd = sd->fd;
+void clif_search_store_info_failed(map_session_data& sd, uint8 reason){
+	PACKET_ZC_SEARCH_STORE_INFO_FAILED packet{};
 
-	WFIFOHEAD(fd,packet_len(0x837));
-	WFIFOW(fd,0) = 0x837;
-	WFIFOB(fd,2) = reason;
-	WFIFOSET(fd,packet_len(0x837));
+	packet.packetType = HEADER_ZC_SEARCH_STORE_INFO_FAILED;
+	packet.reason = reason;
+
+	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
 }
 
 
-/// Request to display next page of results (CZ_SEARCH_STORE_INFO_NEXT_PAGE).
-/// 0838
+/// Request to display next page of results.
+/// 0838  (CZ_SEARCH_STORE_INFO_NEXT_PAGE)
 static void clif_parse_SearchStoreInfoNextPage(int fd, map_session_data* sd)
 {
 	searchstore_next(sd);
 }
 
 
-/// Opens the search store window (ZC_OPEN_SEARCH_STORE_INFO).
-/// 083a <type>.W <remaining uses>.B
-/// type:
+/// Opens the search store window.
+/// 083a <effect>.W <remaining uses>.B (ZC_OPEN_SEARCH_STORE_INFO)
+/// effect:
 ///     0 = Displays the coordinates of the store
 ///     1 = Opens the store remotely
-void clif_open_search_store_info(map_session_data* sd)
-{
-	int fd = sd->fd;
+void clif_open_search_store_info(map_session_data& sd){
+	PACKET_ZC_OPEN_SEARCH_STORE_INFO packet{};
 
-	WFIFOHEAD(fd,packet_len(0x83a));
-	WFIFOW(fd,0) = 0x83a;
-	WFIFOW(fd,2) = sd->searchstore.effect;
+	packet.packetType = HEADER_ZC_OPEN_SEARCH_STORE_INFO;
+	packet.effect = sd.searchstore.effect;
 #if PACKETVER > 20100701
-	WFIFOB(fd,4) = (unsigned char)umin(sd->searchstore.uses, UINT8_MAX);
+	packet.remainingUses = sd.searchstore.uses;
 #endif
-	WFIFOSET(fd,packet_len(0x83a));
+
+	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
 }
 
 
-/// Request to close the store search window (CZ_CLOSE_SEARCH_STORE_INFO).
-/// 083b
+/// Request to close the store search window.
+/// 083b (CZ_CLOSE_SEARCH_STORE_INFO)
 static void clif_parse_CloseSearchStoreInfo(int fd, map_session_data* sd)
 {
 	searchstore_close(sd);
@@ -19306,15 +19304,14 @@ static void clif_parse_SearchStoreInfoListItemClick( int fd, map_session_data* s
 
 /// Notification of the store position on current map (ZC_SSILIST_ITEM_CLICK_ACK).
 /// 083d <xPos>.W <yPos>.W
-void clif_search_store_info_click_ack(map_session_data* sd, short x, short y)
-{
-	int fd = sd->fd;
+void clif_search_store_info_click_ack(map_session_data& sd, int16 x, int16 y){
+	PACKET_ZC_SSILIST_ITEM_CLICK_ACK packet{};
 
-	WFIFOHEAD(fd,packet_len(0x83d));
-	WFIFOW(fd,0) = 0x83d;
-	WFIFOW(fd,2) = x;
-	WFIFOW(fd,4) = y;
-	WFIFOSET(fd,packet_len(0x83d));
+	packet.packetType = HEADER_ZC_SSILIST_ITEM_CLICK_ACK;
+	packet.x = x;
+	packet.y = y;
+
+	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
 }
 
 

@@ -102,7 +102,7 @@ static int searchstore_getstoreid(map_session_data* sd, unsigned char type)
  * @param effect : shop type
  * @return : true : opened, false : failed to open
  */
-bool searchstore_open(map_session_data* sd, uint32 uses, uint8 effect, uint8 range)
+bool searchstore_open(map_session_data* sd, uint8 uses, uint8 effect, uint8 range)
 {
 	if( !battle_config.feature_search_stores || sd->searchstore.open )
 		return false;
@@ -115,7 +115,7 @@ bool searchstore_open(map_session_data* sd, uint32 uses, uint8 effect, uint8 ran
 	sd->searchstore.effect = effect;
 	sd->searchstore.range  = range;
 
-	clif_open_search_store_info(sd);
+	clif_open_search_store_info(*sd);
 
 	return true;
 }
@@ -154,12 +154,12 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 	time(&querytime);
 
 	if( sd->searchstore.nextquerytime > querytime ) {
-		clif_search_store_info_failed(sd, SSI_FAILED_LIMIT_SEARCH_TIME);
+		clif_search_store_info_failed(*sd, SSI_FAILED_LIMIT_SEARCH_TIME);
 		return;
 	}
 
 	if( !sd->searchstore.uses ) {
-		clif_search_store_info_failed(sd, SSI_FAILED_SEARCH_CNT);
+		clif_search_store_info_failed(*sd, SSI_FAILED_SEARCH_CNT);
 		return;
 	}
 
@@ -167,14 +167,14 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 	for( i = 0; i < item_count; i++ ) {
 		if( !item_db.exists(itemlist[i].itemId) ) {
 			ShowWarning("searchstore_query: Client resolved item %u is not known.\n", itemlist[i].itemId);
-			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
+			clif_search_store_info_failed(*sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}
 	}
 	for( i = 0; i < card_count; i++ ) {
 		if( !item_db.exists(cardlist[i].itemId) ) {
 			ShowWarning("searchstore_query: Client resolved card %u is not known.\n", cardlist[i].itemId);
-			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
+			clif_search_store_info_failed(*sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}
 	}
@@ -209,7 +209,7 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 		}
 
 		if( !store_searchall(pl_sd, &s) ) { // exceeded result size
-			clif_search_store_info_failed(sd, SSI_FAILED_OVER_MAXCOUNT);
+			clif_search_store_info_failed(*sd, SSI_FAILED_OVER_MAXCOUNT);
 			break;
 		}
 	}
@@ -230,7 +230,7 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 		clif_search_store_info_ack( *sd );
 
 		// notify of failure
-		clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
+		clif_search_store_info_failed(*sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 	}
 }
 
@@ -310,24 +310,24 @@ void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_
 	ARR_FIND( 0, sd->searchstore.items.size(), i, sd->searchstore.items[i]->store_id == store_id && sd->searchstore.items[i]->account_id == account_id && sd->searchstore.items[i]->nameid == nameid );
 	if( i == sd->searchstore.items.size() ) { // no such result, crafted
 		ShowWarning("searchstore_click: Received request with item %u of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd->bl.id, sd->status.char_id);
-		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
+		clif_search_store_info_failed(*sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
 
 	if( ( pl_sd = map_id2sd(account_id) ) == nullptr ) { // no longer online
-		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
+		clif_search_store_info_failed(*sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
 
 	if( !searchstore_hasstore(pl_sd, sd->searchstore.type) || searchstore_getstoreid(pl_sd, sd->searchstore.type) != store_id ) { // no longer vending/buying or not same shop
-		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
+		clif_search_store_info_failed(*sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
 
 	store_search = searchstore_getsearchfunc(sd->searchstore.type);
 
 	if( !store_search(pl_sd, nameid) ) {// item no longer being sold/bought
-		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
+		clif_search_store_info_failed(*sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
 
@@ -335,9 +335,9 @@ void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_
 		case SEARCHSTORE_EFFECT_NORMAL:
 			// display coords
 			if( sd->bl.m != pl_sd->bl.m ) // not on same map, wipe previous marker
-				clif_search_store_info_click_ack(sd, -1, -1);
+				clif_search_store_info_click_ack(*sd, -1, -1);
 			else
-				clif_search_store_info_click_ack(sd, pl_sd->bl.x, pl_sd->bl.y);
+				clif_search_store_info_click_ack(*sd, pl_sd->bl.x, pl_sd->bl.y);
 			break;
 		case SEARCHSTORE_EFFECT_REMOTE:
 			// open remotely
@@ -351,7 +351,7 @@ void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_
 			break;
 		default:
 			// unknown
-			ShowError("searchstore_click: Unknown search store effect %u (account_id=%d).\n", (unsigned int)sd->searchstore.effect, sd->bl.id);
+			ShowError("searchstore_click: Unknown search store effect %u (account_id=%d).\n", sd->searchstore.effect, sd->bl.id);
 	}
 }
 

@@ -1249,9 +1249,9 @@ void clif_buyingstore_trade_failed_seller(map_session_data* sd, short result, t_
 
 /// Search Store System
 void clif_search_store_info_ack( map_session_data& sd );
-void clif_search_store_info_failed(map_session_data* sd, unsigned char reason);
-void clif_open_search_store_info(map_session_data* sd);
-void clif_search_store_info_click_ack(map_session_data* sd, short x, short y);
+void clif_search_store_info_failed(map_session_data& sd, uint8 reason);
+void clif_open_search_store_info(map_session_data& sd);
+void clif_search_store_info_click_ack(map_session_data& sd, int16 x, int16 y);
 
 /// Cash Shop
 void clif_cashshop_result( map_session_data* sd, t_itemid item_id, uint16 result );
