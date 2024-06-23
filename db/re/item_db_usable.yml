@@ -63371,8 +63371,8 @@ Body:
     Name: Special Shopper Catalog
     Type: Usable
     Weight: 10
-#   Script: |
-#     /* TODO */
+   Script: |
+      searchstores 3, SEARCHSTORE_EFFECT_NORMAL;
   - Id: 23374
     AegisName: Fire_Armor_S
     Name: Fire Armor Scroll
