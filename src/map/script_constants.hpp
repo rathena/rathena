@@ -11320,7 +11320,7 @@
 
 	/* searchstore constants */
 	export_constant(SEARCHSTORE_EFFECT_NORMAL);
-	export_constant(SEARCHSTORE_EFFECT_CASH);
+	export_constant(SEARCHSTORE_EFFECT_REMOTE);
 	export_constant(SEARCHSTORE_RANGE_MAP);
 	export_constant(SEARCHSTORE_RANGE_GLOBAL);
 

@@ -1,4 +1,4 @@
-﻿//===== rAthena Documentation================================
+//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
@@ -5708,7 +5708,7 @@ and can be one of the following:
 	SEARCHSTORE_EFFECT_NORMAL : Shows the store's position on the mini-map and highlights the
 								shop sign with yellow color, when the store is on same map
 								as the invoking player.
-	SEARCHSTORE_EFFECT_CASH   : Directly opens the shop, regardless of distance.
+	SEARCHSTORE_EFFECT_REMOTE : Directly opens the shop, regardless of distance.
 	
 Optional parameter <range> indicates the range of the search.
 If not set, the search will be map wide (SEARCHSTORE_RANGE_MAP).
@@ -5719,7 +5719,7 @@ Values for <range> are:
 
 Example:
 	// Item Universal_Catalog_Gold (10 uses, effect: open shop)
-	searchstores 10, SEARCHSTORE_EFFECT_CASH;
+	searchstores 10, SEARCHSTORE_EFFECT_REMOTE;
 
 ---------------------------------------
 

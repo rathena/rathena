@@ -44,7 +44,7 @@ struct s_search_store_info {
 	unsigned int uses;
 	int remote_id;
 	time_t nextquerytime;
-	unsigned short effect;  // 0 = Normal (display coords), 1 = Cash (remote open store)
+	unsigned short effect;  // 0 = Normal (display coords), 1 = Remote (remotely open store)
 	unsigned char type;  // 0 = Vending, 1 = Buying Store
 	uint8 range;
 	bool open;
@@ -54,7 +54,7 @@ struct s_search_store_info {
 enum e_searchstore_effecttype
 {
 	SEARCHSTORE_EFFECT_NORMAL = 0,
-	SEARCHSTORE_EFFECT_CASH = 1,
+	SEARCHSTORE_EFFECT_REMOTE = 1,
 	SEARCHSTORE_EFFECT_MAX
 };
 

@@ -339,7 +339,7 @@ void searchstore_click(map_session_data* sd, uint32 account_id, int store_id, t_
 			else
 				clif_search_store_info_click_ack(sd, pl_sd->bl.x, pl_sd->bl.y);
 			break;
-		case SEARCHSTORE_EFFECT_CASH:
+		case SEARCHSTORE_EFFECT_REMOTE:
 			// open remotely
 			// to bypass range checks
 			sd->searchstore.remote_id = account_id;

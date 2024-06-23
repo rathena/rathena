@@ -19271,8 +19271,8 @@ static void clif_parse_SearchStoreInfoNextPage(int fd, map_session_data* sd)
 /// Opens the search store window (ZC_OPEN_SEARCH_STORE_INFO).
 /// 083a <type>.W <remaining uses>.B
 /// type:
-///     0 = Search Stores
-///     1 = Search Stores (Cash), asks for confirmation, when clicking a store
+///     0 = Displays the coordinates of the store
+///     1 = Opens the store remotely
 void clif_open_search_store_info(map_session_data* sd)
 {
 	int fd = sd->fd;
