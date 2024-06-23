@@ -8644,14 +8644,14 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      searchstores 10, SEARCHSTORE_EFFECT_CASH;
+      searchstores 10, SEARCHSTORE_EFFECT_REMOTE;
   - Id: 12591
     AegisName: Uni_Catalog_Bz
     Name: Universal Catalog Bronze
     Type: Usable
     Weight: 10
     Script: |
-      searchstores 10, SEARCHSTORE_EFFECT_CASH;
+      searchstores 10, SEARCHSTORE_EFFECT_REMOTE;
   - Id: 12609
     AegisName: Old_Ore_Box
     Name: Old Ore Box

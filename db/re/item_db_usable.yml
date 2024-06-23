@@ -11348,7 +11348,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      searchstores 10, SEARCHSTORE_EFFECT_CASH;
+      searchstores 10, SEARCHSTORE_EFFECT_REMOTE;
   - Id: 12582
     AegisName: Siege_Supply_Box
     Name: WoE Supply Box
@@ -11492,7 +11492,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      searchstores 10, SEARCHSTORE_EFFECT_CASH;
+      searchstores 10, SEARCHSTORE_EFFECT_REMOTE;
   - Id: 12592
     AegisName: Cyclops_Box1
     Name: Cyclops Box1
