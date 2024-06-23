@@ -10,7 +10,7 @@
 //============================================================
 
 -	script	Shopping Board	-1,{
-	searchstores 1, SEARCHSTORE_EFFECT_CASH;
+	searchstores 1, SEARCHSTORE_EFFECT_REMOTE;
 	end;
 }
 
