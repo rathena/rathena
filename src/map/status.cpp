@@ -5490,6 +5490,11 @@ void status_calc_state( struct block_list *bl, status_change *sc, std::bitset<SC
 				  || (sc->getSCE(SC_CRYSTALIZE) && bl->type != BL_MOB)
  				 )
 				 sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
+#ifndef RENEWAL
+		// Remove movement restriction when Longing for Freedom becomes active with an Ensemble skill.
+		if (start && sc->getSCE(SC_DANCING) && sc->getSCE(SC_DANCING)->val4 && sc->getSCE(SC_LONGING))
+			sc->cant.move = 0;
+#endif
 	}
 
 	// Can't use skills

@@ -1710,6 +1710,8 @@ Body:
     CalcFlags:
       Speed: true
       Aspd: true
+    States:
+      NoMove: true
   - Status: Hermode
     Icon: EFST_HERMODE
     DurationLookup: CG_HERMODE
