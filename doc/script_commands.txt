@@ -5699,7 +5699,7 @@ Example:
 Invokes the store search window, which allows to search for both vending
 and buying stores.
 
-Parameter <uses> indicates, how many searches can be started,
+Parameter <uses> indicates how many searches can be started
 before the window has to be reopened.
 
 Parameter <effect> value affects what happens when a result item is double-clicked

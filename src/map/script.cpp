@@ -22470,7 +22470,7 @@ BUILDIN_FUNC(searchstores)
 
 	unsigned int uses = script_getnum(st,2);
 
-	if( !uses || uses > UINT8_MAX)
+	if( uses == 0 || uses > UINT8_MAX)
 	{
 		ShowError("buildin_searchstores: The amount of uses must be a number between 1 and 255.\n");
 		return SCRIPT_CMD_FAILURE;
