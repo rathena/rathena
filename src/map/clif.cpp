@@ -19171,7 +19171,7 @@ static void clif_parse_SearchStoreInfo( int fd, map_session_data *sd ){
 		return;
 	}
 
-	searchstore_query( sd, p->searchType, p->minPrice, p->maxPrice, &p->items[0], p->itemsCount, &p->items[p->itemsCount], p->cardsCount );
+	searchstore_query( sd, static_cast<e_searchstore_searchtype>(p->searchType), p->minPrice, p->maxPrice, &p->items[0], p->itemsCount, &p->items[p->itemsCount], p->cardsCount);
 }
 
 
