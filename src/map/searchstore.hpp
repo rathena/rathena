@@ -76,7 +76,7 @@ struct s_search_store_info {
 };
 
 bool searchstore_open(map_session_data* sd, uint8 uses, e_searchstore_effecttype effect, int16 mapid);
-void searchstore_query(map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
+void searchstore_query(map_session_data* sd, e_searchstore_searchtype type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
 bool searchstore_querynext(map_session_data* sd);
 void searchstore_next(map_session_data* sd);
 void searchstore_clear(map_session_data* sd);

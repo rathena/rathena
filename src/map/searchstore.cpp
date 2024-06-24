@@ -21,7 +21,7 @@ typedef bool (*searchstore_searchall_t)(map_session_data* sd, const struct s_sea
  * @param type : type of search to conduct
  * @return : search type
  */
-static searchstore_search_t searchstore_getsearchfunc(unsigned char type)
+static searchstore_search_t searchstore_getsearchfunc(e_searchstore_searchtype type)
 {
 	switch( type ) {
 		case SEARCHTYPE_VENDING:      return &vending_search;
@@ -36,7 +36,7 @@ static searchstore_search_t searchstore_getsearchfunc(unsigned char type)
  * @param type : type of search to conduct
  * @return : search type
  */
-static searchstore_searchall_t searchstore_getsearchallfunc(unsigned char type)
+static searchstore_searchall_t searchstore_getsearchallfunc(e_searchstore_searchtype type)
 {
 	switch( type ) {
 		case SEARCHTYPE_VENDING:      return &vending_searchall;
@@ -52,7 +52,7 @@ static searchstore_searchall_t searchstore_getsearchallfunc(unsigned char type)
  * @param type : type of search to conduct
  * @return : store type
  */
-static bool searchstore_hasstore(map_session_data* sd, unsigned char type)
+static bool searchstore_hasstore(map_session_data* sd, e_searchstore_searchtype type)
 {
 	switch( type ) {
 		case SEARCHTYPE_VENDING:      return sd->state.vending;
@@ -68,7 +68,7 @@ static bool searchstore_hasstore(map_session_data* sd, unsigned char type)
  * @param type : type of search to conduct
  * @return : store ID
  */
-static int searchstore_getstoreid(map_session_data* sd, unsigned char type)
+static int searchstore_getstoreid(map_session_data* sd, e_searchstore_searchtype type)
 {
 	switch( type ) {
 		case SEARCHTYPE_VENDING:      return sd->vender_id;
@@ -112,7 +112,7 @@ bool searchstore_open(map_session_data* sd, uint8 uses, e_searchstore_effecttype
  * @param cardlist : list with stored cards (cards attached to items)
  * @param card_count : amount of items in cardlist
  */
-void searchstore_query(map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count)
+void searchstore_query(map_session_data* sd, e_searchstore_searchtype type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count)
 {
 	unsigned int i;
 	map_session_data* pl_sd;
@@ -164,7 +164,7 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 		std::swap(min_price, max_price);
 
 	sd->searchstore.uses--;
-	sd->searchstore.type = static_cast<e_searchstore_searchtype>(type);
+	sd->searchstore.type = type;
 	sd->searchstore.nextquerytime = querytime+battle_config.searchstore_querydelay;
 
 	// drop previous results
