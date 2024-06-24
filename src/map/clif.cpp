@@ -19302,8 +19302,8 @@ static void clif_parse_SearchStoreInfoListItemClick( int fd, map_session_data* s
 }
 
 
-/// Notification of the store position on current map (ZC_SSILIST_ITEM_CLICK_ACK).
-/// 083d <xPos>.W <yPos>.W
+/// Notification of the store position on current map.
+/// 083d <xPos>.W <yPos>.W (ZC_SSILIST_ITEM_CLICK_ACK)
 void clif_search_store_info_click_ack(map_session_data& sd, int16 x, int16 y){
 	PACKET_ZC_SSILIST_ITEM_CLICK_ACK packet{};
 
