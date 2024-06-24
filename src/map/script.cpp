@@ -22495,7 +22495,7 @@ BUILDIN_FUNC(searchstores)
 			m = 0;
 		else {
 			if ((m = map_mapname2mapid(mapname)) < 0) {
-				ShowError("buildin_searchstores: Invalid map name %s.\n", map);
+				ShowError("buildin_searchstores: Invalid map name %s.\n", mapname);
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
