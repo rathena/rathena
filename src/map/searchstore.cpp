@@ -90,8 +90,6 @@ bool searchstore_open(map_session_data* sd, uint8 uses, e_searchstore_effecttype
 	if( !battle_config.feature_search_stores || sd->searchstore.open )
 		return false;
 
-	if( !uses || effect >= SEARCHSTORE_EFFECT_MAX || mapid < 0 || mapid >= MAX_MAPINDEX ) // invalid input
-		return false;
 
 	sd->searchstore.open   = true;
 	sd->searchstore.uses   = uses;

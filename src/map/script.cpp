@@ -22478,7 +22478,7 @@ BUILDIN_FUNC(searchstores)
 
 	int effect = script_getnum(st,3);
 
-	if( effect >= SEARCHSTORE_EFFECT_MAX)
+	if( effect < SEARCHSTORE_EFFECT_NORMAL || effect >= SEARCHSTORE_EFFECT_MAX )
 	{
 		ShowError("buildin_searchstores: Invalid effect id %hu, specified.\n", effect);
 		return SCRIPT_CMD_FAILURE;
@@ -22489,11 +22489,9 @@ BUILDIN_FUNC(searchstores)
 	if (script_hasdata(st, 4)) {
 		const char* mapname = script_getstr(st, 4);
 
-		if (strcmp(mapname, "this") == 0)
-			m = sd->bl.m;
-		else if (strcmp(mapname, "all") == 0)
+		if (strcmp(mapname, "all") == 0)
 			m = 0;
-		else {
+		else if (strcmp(mapname, "this") != 0) {
 			if ((m = map_mapname2mapid(mapname)) < 0) {
 				ShowError("buildin_searchstores: Invalid map name %s.\n", mapname);
 				return SCRIPT_CMD_FAILURE;
