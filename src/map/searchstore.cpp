@@ -85,7 +85,7 @@ static int searchstore_getstoreid(map_session_data* sd, unsigned char type)
  * @param effect : shop type
  * @return : true : opened, false : failed to open
  */
-bool searchstore_open(map_session_data* sd, uint8 uses, uint8 effect, int16 mapid)
+bool searchstore_open(map_session_data* sd, uint8 uses, e_searchstore_effecttype effect, int16 mapid)
 {
 	if( !battle_config.feature_search_stores || sd->searchstore.open )
 		return false;
@@ -95,7 +95,7 @@ bool searchstore_open(map_session_data* sd, uint8 uses, uint8 effect, int16 mapi
 
 	sd->searchstore.open   = true;
 	sd->searchstore.uses   = uses;
-	sd->searchstore.effect = static_cast<e_searchstore_effecttype>(effect);
+	sd->searchstore.effect = effect;
 	sd->searchstore.mapid  = mapid;
 
 	clif_open_search_store_info(*sd);

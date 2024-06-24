@@ -16,7 +16,7 @@
 #define SEARCHSTORE_RESULTS_PER_PAGE 10
 
 /// Failure constants for clif functions
-enum e_searchstore_failure
+enum e_searchstore_failure : uint8
 {
 	SSI_FAILED_NOTHING_SEARCH_ITEM = 0,  // "No matching stores were found."
 	SSI_FAILED_OVER_MAXCOUNT = 1,  // "There are too many results. Please enter more detailed search term."
@@ -75,7 +75,7 @@ struct s_search_store_info {
 	bool open;
 };
 
-bool searchstore_open(map_session_data* sd, uint8 uses, uint8 effect, int16 mapid);
+bool searchstore_open(map_session_data* sd, uint8 uses, e_searchstore_effecttype effect, int16 mapid);
 void searchstore_query(map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
 bool searchstore_querynext(map_session_data* sd);
 void searchstore_next(map_session_data* sd);

@@ -19249,11 +19249,11 @@ void clif_search_store_info_ack( map_session_data& sd ){
 ///     2 = "You cannot search anymore." (0x706)
 ///     3 = "You cannot search yet." (0x708)
 ///     4 = "No sale (purchase) information available." (0x705)
-void clif_search_store_info_failed(map_session_data& sd, uint8 reason){
+void clif_search_store_info_failed(map_session_data& sd, e_searchstore_failure reason){
 	PACKET_ZC_SEARCH_STORE_INFO_FAILED packet{};
 
 	packet.packetType = HEADER_ZC_SEARCH_STORE_INFO_FAILED;
-	packet.reason = reason;
+	packet.reason = static_cast<decltype(packet.reason)>(reason);
 
 	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
 }
@@ -19276,7 +19276,7 @@ void clif_open_search_store_info(map_session_data& sd){
 	PACKET_ZC_OPEN_SEARCH_STORE_INFO packet{};
 
 	packet.packetType = HEADER_ZC_OPEN_SEARCH_STORE_INFO;
-	packet.effect = sd.searchstore.effect;
+	packet.effect = static_cast<decltype(packet.effect)>(sd.searchstore.effect);
 #if PACKETVER > 20100701
 	packet.remainingUses = sd.searchstore.uses;
 #endif

@@ -22468,15 +22468,15 @@ BUILDIN_FUNC(searchstores)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	unsigned int uses = script_getnum(st,2);
+	int uses = script_getnum(st,2);
 
-	if( uses == 0 || uses > UINT8_MAX)
+	if (uses < 1 || uses > UINT8_MAX)
 	{
 		ShowError("buildin_searchstores: The amount of uses must be a number between 1 and 255.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	uint8 effect = script_getnum(st,3);
+	int effect = script_getnum(st,3);
 
 	if( effect >= SEARCHSTORE_EFFECT_MAX)
 	{
@@ -22501,7 +22501,7 @@ BUILDIN_FUNC(searchstores)
 		}
 	}
 
-	searchstore_open(sd, uses, effect, m);
+	searchstore_open(sd, static_cast<uint8>(uses), static_cast<e_searchstore_effecttype>(effect), m);
 	return SCRIPT_CMD_SUCCESS;
 }
 /// Displays a number as large digital clock.

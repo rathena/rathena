@@ -5714,7 +5714,7 @@ Optional parameter <map name> indicates the name of map where the stores will be
 If not set, the search will be on the map the invoking character is currently on.
 Special values for <map name> are:
 
-	"this" : Will search for stores on the map where the invoking character is currently on.
+	"this" : Will search for stores on the map where the invoking character is currently on. (default)
 	"all"  : Will search for stores on all maps.
 
 Examples:
