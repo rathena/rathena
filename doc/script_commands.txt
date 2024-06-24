@@ -1,4 +1,4 @@
-﻿//===== rAthena Documentation================================
+//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
@@ -5694,7 +5694,7 @@ Example:
 
 ---------------------------------------
 
-*searchstores <uses>,<effect>{,<range>};
+*searchstores <uses>,<effect>{,"<map name>"};
 
 Invokes the store search window, which allows to search for both vending
 and buying stores.
@@ -5710,16 +5710,19 @@ and can be one of the following:
 								as the invoking player.
 	SEARCHSTORE_EFFECT_REMOTE : Directly opens the shop, regardless of distance.
 	
-Optional parameter <range> indicates the range of the search.
-If not set, the search will be map wide (SEARCHSTORE_RANGE_MAP).
-Values for <range> are:
+Optional parameter <map name> indicates the name of map where the stores will be searched.
+If not set, the search will be on the map the invoking character is currently on.
+Special values for <map name> are:
 
-	SEARCHSTORE_RANGE_MAP    : Search for shops on the same map as the player.
-	SEARCHSTORE_RANGE_GLOBAL : Search for shops on the whole server.
+	"this" : Will search for stores on the map where the invoking character is currently on.
+	"all"  : Will search for stores on all maps.
 
-Example:
-	// Item Universal_Catalog_Gold (10 uses, effect: open shop)
-	searchstores 10, SEARCHSTORE_EFFECT_REMOTE;
+Examples:
+	// Item Vending_Search_Scroll (10 uses, effect: show mark on minimap, current map)
+	searchstores 10, SEARCHSTORE_EFFECT_NORMAL;
+	
+	// Search stores (1 use, effect: open shop, all server)
+	searchstores 1, SEARCHSTORE_EFFECT_REMOTE, "all";
 
 ---------------------------------------
 

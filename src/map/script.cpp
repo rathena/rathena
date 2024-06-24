@@ -22458,14 +22458,14 @@ BUILDIN_FUNC(buyingstore)
 
 
 /// Invokes search store info window
-/// searchstores <uses>,<effect>{,<range>};
+/// searchstores <uses>,<effect>{,<map name>};
 BUILDIN_FUNC(searchstores)
 {
 	map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
 	{
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	unsigned int uses = script_getnum(st,2);
@@ -22484,20 +22484,24 @@ BUILDIN_FUNC(searchstores)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	uint8 range = SEARCHSTORE_RANGE_MAP;
+	int16 m = sd->bl.m;
 
 	if (script_hasdata(st, 4)) {
-		range = script_getnum(st, 4);
+		const char* mapname = script_getstr(st, 4);
 
-		if( range >= SEARCHSTORE_RANGE_MAX)
-		{
-			ShowError("buildin_searchstores: Invalid range %hu, specified.\n", range);
-			return SCRIPT_CMD_FAILURE;
+		if (strcmp(mapname, "this") == 0)
+			m = sd->bl.m;
+		else if (strcmp(mapname, "all") == 0)
+			m = 0;
+		else {
+			if ((m = map_mapname2mapid(mapname)) < 0) {
+				ShowError("buildin_searchstores: Invalid map name %s.\n", map);
+				return SCRIPT_CMD_FAILURE;
+			}
 		}
-
 	}
 
-	searchstore_open(sd, uses, effect, range);
+	searchstore_open(sd, uses, effect, m);
 	return SCRIPT_CMD_SUCCESS;
 }
 /// Displays a number as large digital clock.

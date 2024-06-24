@@ -11321,8 +11321,6 @@
 	/* searchstore constants */
 	export_constant(SEARCHSTORE_EFFECT_NORMAL);
 	export_constant(SEARCHSTORE_EFFECT_REMOTE);
-	export_constant(SEARCHSTORE_RANGE_MAP);
-	export_constant(SEARCHSTORE_RANGE_GLOBAL);
 
 	#undef export_constant
 	#undef export_constant2

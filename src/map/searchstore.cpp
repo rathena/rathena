@@ -12,23 +12,6 @@
 #include "clif.hpp"  // clif_open_search_store_info, clif_search_store_info_*
 #include "pc.hpp"  // map_session_data
 
-/// Failure constants for clif functions
-enum e_searchstore_failure
-{
-	SSI_FAILED_NOTHING_SEARCH_ITEM         = 0,  // "No matching stores were found."
-	SSI_FAILED_OVER_MAXCOUNT               = 1,  // "There are too many results. Please enter more detailed search term."
-	SSI_FAILED_SEARCH_CNT                  = 2,  // "You cannot search anymore."
-	SSI_FAILED_LIMIT_SEARCH_TIME           = 3,  // "You cannot search yet."
-	SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE = 4,  // "No sale (purchase) information available."
-};
-
-/// Search type constants
-enum e_searchstore_searchtype
-{
-	SEARCHTYPE_VENDING      = 0,
-	SEARCHTYPE_BUYING_STORE = 1,
-};
-
 /// Type for shop search function
 typedef bool (*searchstore_search_t)(map_session_data* sd, t_itemid nameid);
 typedef bool (*searchstore_searchall_t)(map_session_data* sd, const struct s_search_store_search* s);
@@ -102,18 +85,18 @@ static int searchstore_getstoreid(map_session_data* sd, unsigned char type)
  * @param effect : shop type
  * @return : true : opened, false : failed to open
  */
-bool searchstore_open(map_session_data* sd, uint8 uses, uint8 effect, uint8 range)
+bool searchstore_open(map_session_data* sd, uint8 uses, uint8 effect, int16 mapid)
 {
 	if( !battle_config.feature_search_stores || sd->searchstore.open )
 		return false;
 
-	if( !uses || effect >= SEARCHSTORE_EFFECT_MAX || range >= SEARCHSTORE_RANGE_MAX) // invalid input
+	if( !uses || effect >= SEARCHSTORE_EFFECT_MAX || mapid < 0 || mapid >= MAX_MAPINDEX ) // invalid input
 		return false;
 
 	sd->searchstore.open   = true;
 	sd->searchstore.uses   = uses;
-	sd->searchstore.effect = effect;
-	sd->searchstore.range  = range;
+	sd->searchstore.effect = static_cast<e_searchstore_effecttype>(effect);
+	sd->searchstore.mapid  = mapid;
 
 	clif_open_search_store_info(*sd);
 
@@ -183,7 +166,7 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 		std::swap(min_price, max_price);
 
 	sd->searchstore.uses--;
-	sd->searchstore.type = type;
+	sd->searchstore.type = static_cast<e_searchstore_searchtype>(type);
 	sd->searchstore.nextquerytime = querytime+battle_config.searchstore_querydelay;
 
 	// drop previous results
@@ -203,8 +186,8 @@ void searchstore_query(map_session_data* sd, unsigned char type, unsigned int mi
 		if( sd == pl_sd ) // skip own shop, if any
 			continue;
 
-		// Check if the store is on the same map as the player
-		if (sd->searchstore.range == SEARCHSTORE_RANGE_MAP && sd->mapindex != pl_sd->mapindex) {
+		// Skip stores that are not in the map defined by the search
+		if (sd->searchstore.mapid != 0 && pl_sd->bl.m != sd->searchstore.mapid) {
 			continue;
 		}
 

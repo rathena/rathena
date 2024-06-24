@@ -3443,7 +3443,7 @@ DEFINE_PACKET_HEADER(ZC_SEARCH_STORE_INFO_FAILED, 0x837);
 
 struct PACKET_ZC_OPEN_SEARCH_STORE_INFO {
 	int16 packetType;
-	uint8 effect;
+	uint16 effect;
 #if PACKETVER > 20100701
 	uint8 remainingUses;
 #endif
