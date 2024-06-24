@@ -19,24 +19,24 @@
 enum e_searchstore_failure : uint8
 {
 	SSI_FAILED_NOTHING_SEARCH_ITEM = 0,  // "No matching stores were found."
-	SSI_FAILED_OVER_MAXCOUNT = 1,  // "There are too many results. Please enter more detailed search term."
-	SSI_FAILED_SEARCH_CNT = 2,  // "You cannot search anymore."
-	SSI_FAILED_LIMIT_SEARCH_TIME = 3,  // "You cannot search yet."
-	SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE = 4,  // "No sale (purchase) information available."
+	SSI_FAILED_OVER_MAXCOUNT,  // "There are too many results. Please enter more detailed search term."
+	SSI_FAILED_SEARCH_CNT,  // "You cannot search anymore."
+	SSI_FAILED_LIMIT_SEARCH_TIME,  // "You cannot search yet."
+	SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE,  // "No sale (purchase) information available."
 };
 
 /// Search type constants
 enum e_searchstore_searchtype : uint8
 {
 	SEARCHTYPE_VENDING = 0,
-	SEARCHTYPE_BUYING_STORE = 1,
+	SEARCHTYPE_BUYING_STORE,
 };
 
 /// Search effect constants
 enum e_searchstore_effecttype : uint8
 {
 	SEARCHSTORE_EFFECT_NORMAL = 0,
-	SEARCHSTORE_EFFECT_REMOTE = 1,
+	SEARCHSTORE_EFFECT_REMOTE,
 	SEARCHSTORE_EFFECT_MAX
 };
 

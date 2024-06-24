@@ -128,7 +128,7 @@ void searchstore_query(map_session_data* sd, e_searchstore_searchtype type, unsi
 		return;
 
 	if( ( store_searchall = searchstore_getsearchallfunc(type) ) == nullptr ) {
-		ShowError("searchstore_query: Unknown search type %u (account_id=%d).\n", (unsigned int)type, sd->bl.id);
+		ShowError("searchstore_query: Unknown search type %u (account_id=%d).\n", type, sd->bl.id);
 		return;
 	}
 
