@@ -19250,12 +19250,14 @@ void clif_search_store_info_ack( map_session_data& sd ){
 ///     3 = "You cannot search yet." (0x708)
 ///     4 = "No sale (purchase) information available." (0x705)
 void clif_search_store_info_failed(map_session_data& sd, e_searchstore_failure reason){
+#if PACKETVER_MAIN_NUM >= 20100601 || PACKETVER_RE_NUM >= 20100601 || defined(PACKETVER_ZERO)
 	PACKET_ZC_SEARCH_STORE_INFO_FAILED packet{};
 
 	packet.packetType = HEADER_ZC_SEARCH_STORE_INFO_FAILED;
 	packet.reason = static_cast<decltype(packet.reason)>(reason);
 
 	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
+#endif
 }
 
 
@@ -19273,15 +19275,17 @@ static void clif_parse_SearchStoreInfoNextPage(int fd, map_session_data* sd)
 ///     0 = Displays the coordinates of the store
 ///     1 = Opens the store remotely
 void clif_open_search_store_info(map_session_data& sd){
+#if PACKETVER_MAIN_NUM >= 20100701 || PACKETVER_RE_NUM >= 20100701 || defined(PACKETVER_ZERO)
 	PACKET_ZC_OPEN_SEARCH_STORE_INFO packet{};
 
 	packet.packetType = HEADER_ZC_OPEN_SEARCH_STORE_INFO;
 	packet.effect = static_cast<decltype(packet.effect)>(sd.searchstore.effect);
-#if PACKETVER > 20100701
+#if PACKETVER_MAIN_NUM >= 20100701 || PACKETVER_RE_NUM >= 20100701 || defined(PACKETVER_ZERO)
 	packet.remainingUses = sd.searchstore.uses;
 #endif
 
 	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
+#endif
 }
 
 
@@ -19305,6 +19309,7 @@ static void clif_parse_SearchStoreInfoListItemClick( int fd, map_session_data* s
 /// Notification of the store position on current map.
 /// 083d <xPos>.W <yPos>.W (ZC_SSILIST_ITEM_CLICK_ACK)
 void clif_search_store_info_click_ack(map_session_data& sd, int16 x, int16 y){
+#if PACKETVER_MAIN_NUM >= 20100608 || PACKETVER_RE_NUM >= 20100608 || defined(PACKETVER_ZERO)
 	PACKET_ZC_SSILIST_ITEM_CLICK_ACK packet{};
 
 	packet.packetType = HEADER_ZC_SSILIST_ITEM_CLICK_ACK;
@@ -19312,6 +19317,7 @@ void clif_search_store_info_click_ack(map_session_data& sd, int16 x, int16 y){
 	packet.y = y;
 
 	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
+#endif
 }
 
 

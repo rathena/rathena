@@ -3444,7 +3444,7 @@ DEFINE_PACKET_HEADER(ZC_SEARCH_STORE_INFO_FAILED, 0x837);
 struct PACKET_ZC_OPEN_SEARCH_STORE_INFO {
 	int16 packetType;
 	uint16 effect;
-#if PACKETVER > 20100701
+#if PACKETVER_MAIN_NUM >= 20100701 || PACKETVER_RE_NUM >= 20100701 || defined(PACKETVER_ZERO)
 	uint8 remainingUses;
 #endif
 } __attribute__((packed));
