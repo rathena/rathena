@@ -21837,18 +21837,44 @@ BUILDIN_FUNC(instance_announce) {
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_party)
 {
-	int32 min = script_hasdata(st, 4) ? script_getnum(st, 4) : 1; // Minimum Level needed to join the Instance.
-	int32 max  = script_hasdata(st, 5) ? script_getnum(st, 5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+	int32 min;	// Minimum Level needed to join the Instance.
+	int32 max;	// Maxium Level allowed to join the Instance.
+	int32 amount;	// Amount of needed Partymembers for the Instance.
 
-	if (min < 1 || min > MAX_LEVEL) {
-		ShowError("buildin_instance_check_party: Invalid min level, %d\n", min);
-		script_pushint(st, 0);
-		return SCRIPT_CMD_FAILURE;
+	if (!script_hasdata(st, 3))
+		amount = 1;
+	else {
+		amount = script_getnum(st, 3);
+
+		if (amount < 1 || amount > MAX_PARTY) {
+			ShowError("buildin_instance_check_party: Invalid amount %d. Min: 1, max: %d.\n", amount, MAX_PARTY);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
-	else if (max < 1 || max > MAX_LEVEL) {
-		ShowError("buildin_instance_check_party: Invalid max level, %d\n", max);
-		script_pushint(st, 0);
-		return SCRIPT_CMD_FAILURE;
+
+	if (!script_hasdata(st, 4))
+		min = 1;
+	else {
+		min = script_getnum(st, 4);
+
+		if (min < 1 || min > MAX_LEVEL) {
+			ShowError("buildin_instance_check_party: Invalid min level %d. Min: 1, max: %d.\n", min, MAX_LEVEL);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	if (!script_hasdata(st, 5))
+		max = MAX_LEVEL;
+	else {
+		max = script_getnum(st, 5);
+
+		if (max < 1 || max > MAX_LEVEL) {
+			ShowError("buildin_instance_check_party: Invalid max level %d. Min: 1, max: %d.\n", max, MAX_LEVEL);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	int32 party_id = script_getnum(st, 2);
@@ -21879,8 +21905,6 @@ BUILDIN_FUNC(instance_check_party)
 
 		count++;
 	}
-
-	int32 amount = script_hasdata(st, 3) ? script_getnum(st, 3) : 1; // Amount of needed Partymembers for the Instance.
 
 	script_pushint(st, count >= amount);
 
