@@ -16573,7 +16573,6 @@ BUILDIN_FUNC(isequipped)
 	TBL_PC *sd;
 	int i, id = 1;
 	int ret = -1;
-	//Original hash to reverse it when full check fails.
 	unsigned int setitem_hash = 0, setitem_hash2 = 0;
 
 	if (!script_rid2sd(sd)) { //If the player is not attached it is a script error anyway... but better prevent the map server from crashing...
@@ -16581,8 +16580,6 @@ BUILDIN_FUNC(isequipped)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	setitem_hash = sd->bonus.setitem_hash;
-	setitem_hash2 = sd->bonus.setitem_hash2;
 	for (i=0; id!=0; i++) {
 		int flag = 0;
 		short j;
@@ -16617,16 +16614,16 @@ BUILDIN_FUNC(isequipped)
 
 					hash = 1<<((j<5?j:j-5)*4 + k);
 					// check if card is already used by another set
-					if ( ( j < 5 ? sd->bonus.setitem_hash : sd->bonus.setitem_hash2 ) & hash)
+					if ( ( j < 5 ? setitem_hash : setitem_hash2 ) & hash)
 						continue;
 
 					// We have found a match
 					flag = 1;
 					// Set hash so this card cannot be used by another
 					if (j<5)
-						sd->bonus.setitem_hash |= hash;
+						setitem_hash |= hash;
 					else
-						sd->bonus.setitem_hash2 |= hash;
+						setitem_hash2 |= hash;
 					break;
 				}
 			}
@@ -16638,10 +16635,7 @@ BUILDIN_FUNC(isequipped)
 			ret &= flag;
 		if (!ret) break;
 	}
-	if (!ret) {//When check fails, restore original hash values. [Skotlex]
-		sd->bonus.setitem_hash = setitem_hash;
-		sd->bonus.setitem_hash2 = setitem_hash2;
-	}
+
 	script_pushint(st,ret);
 	return SCRIPT_CMD_SUCCESS;
 }
