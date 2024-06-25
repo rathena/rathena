@@ -19171,6 +19171,11 @@ static void clif_parse_SearchStoreInfo( int fd, map_session_data *sd ){
 		return;
 	}
 
+	if ( p->searchType > SEARCHTYPE_BUYING_STORE ) {
+		ShowError( "clif_parse_SearchStoreInfo: Invalid search type %u (account_id=%d).\n", p->searchType, sd->bl.id );
+		return;
+	}
+
 	if ( p->minPrice > battle_config.vending_max_value ) {
 		ShowError( "clif_parse_SearchStoreInfo: Invalid min price %u (account_id=%d).\n", p->minPrice, sd->bl.id );
 		return;
