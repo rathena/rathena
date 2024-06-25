@@ -22468,38 +22468,47 @@ BUILDIN_FUNC(searchstores)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int uses = script_getnum(st,2);
+	int32 uses = script_getnum(st,2);
 
 	if (uses < 1 || uses > UINT8_MAX)
 	{
-		ShowError("buildin_searchstores: The amount of uses must be a number between 1 and 255.\n");
+		ShowError("buildin_searchstores: The amount of uses must be a number between 1 and %u.\n", UINT8_MAX);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int effect = script_getnum(st,3);
+	int32 effect = script_getnum(st,3);
 
 	if( effect < SEARCHSTORE_EFFECT_NORMAL || effect >= SEARCHSTORE_EFFECT_MAX )
 	{
-		ShowError("buildin_searchstores: Invalid effect id %hu, specified.\n", effect);
+		ShowError("buildin_searchstores: Invalid effect id %d, specified.\n", effect);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int16 m = sd->bl.m;
+	int16 m;
 
 	if (script_hasdata(st, 4)) {
 		const char* mapname = script_getstr(st, 4);
 
-		if (strcmp(mapname, "all") == 0)
+		if (stricmp(mapname, "all") == 0)
 			m = 0;
-		else if (strcmp(mapname, "this") != 0) {
-			if ((m = map_mapname2mapid(mapname)) < 0) {
+		else if (stricmp(mapname, "this") == 0) {
+			m = sd->bl.m;
+		}
+		else {
+			m = map_mapname2mapid(mapname);
+
+			// TODO: Support multi map-server
+			if (m < 0) {
 				ShowError("buildin_searchstores: Invalid map name %s.\n", mapname);
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
 	}
+	else {
+		m = sd->bl.m;
+	}
 
-	searchstore_open(sd, static_cast<uint8>(uses), static_cast<e_searchstore_effecttype>(effect), m);
+	searchstore_open(*sd, static_cast<uint8>(uses), static_cast<e_searchstore_effecttype>(effect), m);
 	return SCRIPT_CMD_SUCCESS;
 }
 /// Displays a number as large digital clock.

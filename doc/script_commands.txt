@@ -1,4 +1,4 @@
-//===== rAthena Documentation================================
+﻿//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
@@ -5702,7 +5702,7 @@ and buying stores.
 Parameter <uses> indicates how many searches can be started
 before the window has to be reopened.
 
-Parameter <effect> value affects what happens when a result item is double-clicked
+Parameter <effect> affects what happens when a result item is double-clicked
 and can be one of the following:
 
 	SEARCHSTORE_EFFECT_NORMAL : Shows the store's position on the mini-map and highlights the
@@ -5721,7 +5721,7 @@ Examples:
 	// Item Vending_Search_Scroll (10 uses, effect: show mark on minimap, current map)
 	searchstores 10, SEARCHSTORE_EFFECT_NORMAL;
 	
-	// Search stores (1 use, effect: open shop, all server)
+	// Search stores (1 use, effect: open shop, all maps on the server)
 	searchstores 1, SEARCHSTORE_EFFECT_REMOTE, "all";
 
 ---------------------------------------

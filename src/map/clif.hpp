@@ -51,7 +51,7 @@ enum e_macro_detect_status : uint8;
 enum e_macro_report_status : uint8;
 enum e_hom_state2 : uint8;
 enum _sp;
-enum e_searchstore_failure : uint8;
+enum e_searchstore_failure : uint16;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,

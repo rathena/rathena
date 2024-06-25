@@ -136,10 +136,10 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 		return;
 	}
 
-	if( !searchstore_queryremote(sd, aid) && ( sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE) ) )
+	if( !searchstore_queryremote(*sd, aid) && ( sd->bl.m != vsd->bl.m || !check_distance_bl(&sd->bl, &vsd->bl, AREA_SIZE) ) )
 		return; // shop too far away
 
-	searchstore_clearremote(sd);
+	searchstore_clearremote(*sd);
 
 	if( count < 1 || count > MAX_VENDING || count > vsd->vend_num )
 		return; // invalid amount of purchased items

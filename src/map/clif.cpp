@@ -19171,7 +19171,17 @@ static void clif_parse_SearchStoreInfo( int fd, map_session_data *sd ){
 		return;
 	}
 
-	searchstore_query( sd, static_cast<e_searchstore_searchtype>(p->searchType), p->minPrice, p->maxPrice, &p->items[0], p->itemsCount, &p->items[p->itemsCount], p->cardsCount);
+	if ( p->minPrice > battle_config.vending_max_value ) {
+		ShowError( "clif_parse_SearchStoreInfo: Invalid min price %u (account_id=%d).\n", p->minPrice, sd->bl.id );
+		return;
+	}
+
+	if ( p->maxPrice > battle_config.vending_max_value ) {
+		ShowError( "clif_parse_SearchStoreInfo: Invalid max price %u (account_id=%d).\n", p->maxPrice, sd->bl.id );
+		return;
+	}
+
+	searchstore_query( *sd, static_cast<e_searchstore_searchtype>(p->searchType), p->minPrice, p->maxPrice, &p->items[0], p->itemsCount, &p->items[p->itemsCount], p->cardsCount );
 }
 
 
@@ -19193,8 +19203,8 @@ void clif_search_store_info_ack( map_session_data& sd ){
 	p->packetType = HEADER_ZC_SEARCH_STORE_INFO_ACK;
 	p->packetLength = sizeof( *p );
 	p->firstPage = !sd.searchstore.pages;
-	p->nextPage = searchstore_querynext( &sd );
-	p->usesCount = sd.searchstore.uses;
+	p->nextPage = searchstore_querynext( sd );
+	p->usesCount = static_cast<decltype(p->usesCount)>( std::min<decltype(sd.searchstore.uses)>( sd.searchstore.uses, std::numeric_limits<decltype(p->usesCount)>::max() ) );
 
 	for( int i = 0, count = 0; i < end - start; i++ ){
 		std::shared_ptr<s_search_store_info_item> ssitem = sd.searchstore.items[start + i];
@@ -19243,12 +19253,6 @@ void clif_search_store_info_ack( map_session_data& sd ){
 
 /// Notification of failure when searching for stores.
 /// 0837 <reason>.B (ZC_SEARCH_STORE_INFO_FAILED)
-/// reason:
-///     0 = "No matching stores were found." (0x70b)
-///     1 = "There are too many results. Please enter more detailed search term." (0x6f8)
-///     2 = "You cannot search anymore." (0x706)
-///     3 = "You cannot search yet." (0x708)
-///     4 = "No sale (purchase) information available." (0x705)
 void clif_search_store_info_failed(map_session_data& sd, e_searchstore_failure reason){
 #if PACKETVER_MAIN_NUM >= 20100601 || PACKETVER_RE_NUM >= 20100601 || defined(PACKETVER_ZERO)
 	PACKET_ZC_SEARCH_STORE_INFO_FAILED packet{};
@@ -19265,15 +19269,12 @@ void clif_search_store_info_failed(map_session_data& sd, e_searchstore_failure r
 /// 0838  (CZ_SEARCH_STORE_INFO_NEXT_PAGE)
 static void clif_parse_SearchStoreInfoNextPage(int fd, map_session_data* sd)
 {
-	searchstore_next(sd);
+	searchstore_next(*sd);
 }
 
 
 /// Opens the search store window.
 /// 083a <effect>.W <remaining uses>.B (ZC_OPEN_SEARCH_STORE_INFO)
-/// effect:
-///     0 = Displays the coordinates of the store
-///     1 = Opens the store remotely
 void clif_open_search_store_info(map_session_data& sd){
 #if PACKETVER_MAIN_NUM >= 20100701 || PACKETVER_RE_NUM >= 20100701 || defined(PACKETVER_ZERO)
 	PACKET_ZC_OPEN_SEARCH_STORE_INFO packet{};
@@ -19281,7 +19282,7 @@ void clif_open_search_store_info(map_session_data& sd){
 	packet.packetType = HEADER_ZC_OPEN_SEARCH_STORE_INFO;
 	packet.effect = static_cast<decltype(packet.effect)>(sd.searchstore.effect);
 #if PACKETVER_MAIN_NUM >= 20100701 || PACKETVER_RE_NUM >= 20100701 || defined(PACKETVER_ZERO)
-	packet.remainingUses = sd.searchstore.uses;
+	packet.remainingUses = static_cast<decltype(packet.remainingUses)>( std::min<decltype(sd.searchstore.uses)>( sd.searchstore.uses, std::numeric_limits<decltype(packet.remainingUses)>::max() ) );
 #endif
 
 	clif_send(&packet, sizeof(packet), &sd.bl, SELF);
@@ -19293,7 +19294,7 @@ void clif_open_search_store_info(map_session_data& sd){
 /// 083b (CZ_CLOSE_SEARCH_STORE_INFO)
 static void clif_parse_CloseSearchStoreInfo(int fd, map_session_data* sd)
 {
-	searchstore_close(sd);
+	searchstore_close(*sd);
 }
 
 
@@ -19302,7 +19303,7 @@ static void clif_parse_CloseSearchStoreInfo(int fd, map_session_data* sd)
 static void clif_parse_SearchStoreInfoListItemClick( int fd, map_session_data* sd ){
 	const PACKET_CZ_SSILIST_ITEM_CLICK* p = reinterpret_cast<PACKET_CZ_SSILIST_ITEM_CLICK*>( RFIFOP( fd, 0 ) );
 
-	searchstore_click( sd, p->AID, p->storeId, p->itemId );
+	searchstore_click( *sd, p->AID, p->storeId, p->itemId );
 }
 
 
