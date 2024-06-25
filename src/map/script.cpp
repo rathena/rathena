@@ -21837,46 +21837,44 @@ BUILDIN_FUNC(instance_announce) {
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_party)
 {
-	int amount, min, max, i, party_id, c = 0;
-	struct party_data *p;
+	int32 min = script_hasdata(st, 4) ? script_getnum(st, 4) : 1; // Minimum Level needed to join the Instance.
+	int32 max  = script_hasdata(st, 5) ? script_getnum(st, 5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
 
-	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Partymembers for the Instance.
-	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
-	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
-
-	if( min < 1 || min > MAX_LEVEL) {
+	if (min < 1 || min > MAX_LEVEL) {
 		ShowError("buildin_instance_check_party: Invalid min level, %d\n", min);
+		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
-	} else if(  max < 1 || max > MAX_LEVEL) {
+	}
+	else if (max < 1 || max > MAX_LEVEL) {
 		ShowError("buildin_instance_check_party: Invalid max level, %d\n", max);
+		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( script_hasdata(st,2) )
-		party_id = script_getnum(st,2);
-	else return SCRIPT_CMD_FAILURE;
+	int32 party_id = script_getnum(st, 2);
+	party_data *p = party_search( party_id );
 
-	if( !(p = party_search(party_id)) ) {
-		script_pushint(st, 0); // Returns false if party does not exist.
-		return SCRIPT_CMD_FAILURE;
+	if (p == nullptr) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
 	}
 
-	for( i = 0; i < MAX_PARTY; i++ ) {
-		map_session_data *pl_sd;
-		if( (pl_sd = p->data[i].sd) )
-			if(map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
-				if(pl_sd->status.base_level < min) {
-					script_pushint(st, 0);
-					return SCRIPT_CMD_SUCCESS;
-				} else if(pl_sd->status.base_level > max) {
-					script_pushint(st, 0);
-					return SCRIPT_CMD_SUCCESS;
-				}
-					c++;
+	int32 count = 0;
+
+	for( int32 i = 0; i < MAX_PARTY; i++ ) {
+		map_session_data *sd;
+		if ((sd = p->data[i].sd) && map_id2bl(sd->bl.id) && !sd->state.autotrade) {
+			if (sd->status.base_level < min || sd->status.base_level > max) {
+				script_pushint(st, 0);
+				return SCRIPT_CMD_SUCCESS;
 			}
+			count++;
+		}
 	}
 
-	if(c < amount)
+	int32 amount = script_hasdata(st, 3) ? script_getnum(st, 3) : 1; // Amount of needed Partymembers for the Instance.
+
+	if (count < amount)
 		script_pushint(st, 0); // Not enough Members in the Party to join Instance.
 	else
 		script_pushint(st, 1);
