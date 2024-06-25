@@ -1262,7 +1262,18 @@ int pet_catch_process2(map_session_data* sd, int target_id)
 		return 1;
 	}
 
-	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume [ultramage]
+	int i = sd->itemindex;
+
+	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid == sd->itemid && sd->inventory_data[i] != nullptr && sd->inventory_data[i]->flag.delay_consume > 0 && !pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_CONSUME)) {
+		sd->itemid = 0;
+		sd->itemindex = -1;
+	} else { // Invalid taming item, abort capture.
+		clif_pet_roulette( *sd, false );
+		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->itemid = 0;
+		sd->itemindex = -1;
+		return 1;
+	}
 
 	std::shared_ptr<s_pet_db> pet = pet_db.find(md->mob_id);
 
