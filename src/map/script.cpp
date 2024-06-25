@@ -21861,23 +21861,28 @@ BUILDIN_FUNC(instance_check_party)
 
 	int32 count = 0;
 
-	for( int32 i = 0; i < MAX_PARTY; i++ ) {
-		map_session_data *sd;
-		if ((sd = p->data[i].sd) && map_id2bl(sd->bl.id) && !sd->state.autotrade) {
-			if (sd->status.base_level < min || sd->status.base_level > max) {
-				script_pushint(st, 0);
-				return SCRIPT_CMD_SUCCESS;
-			}
-			count++;
+	for( size_t i = 0; i < MAX_PARTY; i++ ) {
+		map_session_data *sd = p->data[i].sd;
+
+		if (sd == nullptr){
+			continue;
 		}
+		
+		if (sd->state.autotrade) {
+			continue;
+		}
+	
+		if (sd->status.base_level < min || sd->status.base_level > max) {
+			script_pushint(st, 0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		count++;
 	}
 
 	int32 amount = script_hasdata(st, 3) ? script_getnum(st, 3) : 1; // Amount of needed Partymembers for the Instance.
 
-	if (count < amount)
-		script_pushint(st, 0); // Not enough Members in the Party to join Instance.
-	else
-		script_pushint(st, 1);
+	script_pushint(st, count >= amount);
 
 	return SCRIPT_CMD_SUCCESS;
 }
