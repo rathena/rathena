@@ -5694,22 +5694,35 @@ Example:
 
 ---------------------------------------
 
-*searchstores <uses>,<effect>;
+*searchstores <uses>,<effect>{,"<map name>"};
 
 Invokes the store search window, which allows to search for both vending
-and buying stores. Parameter uses indicates, how many searches can be
-started, before the window has to be reopened. Effect value affects,
-what happens, when a result item is double-clicked and can be one of the
-following:
+and buying stores.
 
-	0 = Shows the store's position on the mini-map and highlights the
-	    shop sign with yellow color, when the store is on same map
-	    as the invoking player.
-	1 = Directly opens the shop, regardless of distance.
+Parameter <uses> indicates how many searches can be started
+before the window has to be reopened.
 
-Example:
-	// Item Universal_Catalog_Gold (10 uses, effect: open shop)
-	searchstores 10,1;
+Parameter <effect> affects what happens when a result item is double-clicked
+and can be one of the following:
+
+	SEARCHSTORE_EFFECT_NORMAL : Shows the store's position on the mini-map and highlights the
+								shop sign with yellow color, when the store is on same map
+								as the invoking player.
+	SEARCHSTORE_EFFECT_REMOTE : Directly opens the shop, regardless of distance.
+	
+Optional parameter <map name> indicates the name of map where the stores will be searched.
+If not set, the search will be on the map the invoking character is currently on.
+Special values for <map name> are:
+
+	"this" : Will search for stores on the map where the invoking character is currently on. (default)
+	"all"  : Will search for stores on all maps.
+
+Examples:
+	// Item Vending_Search_Scroll (10 uses, effect: show mark on minimap, current map)
+	searchstores 10, SEARCHSTORE_EFFECT_NORMAL;
+	
+	// Search stores (1 use, effect: open shop, all maps on the server)
+	searchstores 1, SEARCHSTORE_EFFECT_REMOTE, "all";
 
 ---------------------------------------
 

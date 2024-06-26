@@ -11326,6 +11326,10 @@
 	export_constant(MER_DIETER);
 	export_constant(MER_ELEANOR);
 
+	/* searchstore constants */
+	export_constant(SEARCHSTORE_EFFECT_NORMAL);
+	export_constant(SEARCHSTORE_EFFECT_REMOTE);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
