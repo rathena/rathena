@@ -11830,7 +11830,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000Â¡Ã˜ You can start this quest from level 150.^000000";
+		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
@@ -12122,9 +12122,9 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		next;
 		mes "[Teddy Bear]";
 		mes "Oops!";
-		mes "Caught Caught Caught!";
+		mes "Caught, I got caught!";
 		mes "Let's run!!!!";
-		npctalk "White Teddy Bear: Caught! Caught!", "White Teddy Bear#IBT", bc_self;
+		npctalk "White Teddy Bear: Caught, I got caught!", "White Teddy Bear#IBT", bc_self;
 		npctalk "Teddy Bear: Let's Run!!!!", "Teddy Bear#IBT", bc_self;
 		ill_teddy = 4;
 		erasequest 11558;
@@ -12202,7 +12202,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 	}
 	if (ill_teddy == 6) {
 		mes "[Steven]";
-		mes "Are you here?";
+		mes "Oh you are here?";
 		mes "Did he go to the hospital?";
 		next;
 		mes "[Acid]";
@@ -12215,13 +12215,13 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		mes "Go to the hospital!";
 		next;
 		mes "[Acid]";
-		mes "Now I have a hospital or a shop?!";
+		mes "Do I have a hospital or a shop now?!";
 		next;
 		mes "[Steven]";
 		mes "Ugh...";
 		mes "Okay...okay!";
 		mes "Be quiet for now!";
-		mes "Can't you hear anything strange up north?";
+		mes "Can you hear something strange coming from the north?";
 		npctalk "Steven: Ugh... nagging...", "", bc_self;
 		ill_teddy = 7;
 		erasequest 11561;
@@ -12233,7 +12233,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		mes "Ugh...";
 		mes "Okay!";
 		mes "Be quiet for now!";
-		mes "Can't you hear anything strange up north?";
+		mes "Can you hear something strange coming from the north?";
 		npctalk "Steven: Ugh... nagging...", "", bc_self;
 		close;
 	}
@@ -12338,7 +12338,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		next;
 		if (select( "Accept", "Quit" ) == 2) {
 			mes "[Steven]";
-			mes "Yes...";
+			mes "Okay...";
 			close;
 		}
 		mes "[Steven]";
@@ -12368,18 +12368,18 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 OnTouch:
 	if (ill_teddy == 3) {
 		mes "[Steven]";
-		mes "Can't let this go?!";
+		mes "Can't you let me go?!";
 		mes "Let me go!";
 		mes "This sucks!!!!";
-		npctalk "Steven: Can't let this go?!", "", bc_self;
+		npctalk "Steven: Can't you let me go?!", "", bc_self;
 		cloakoffnpcself( "White Teddy Bear#IBT" );
 		cloakoffnpcself( "Teddy Bear#IBT" );
 		next;
 		mes "[Teddy Bear]";
 		mes "Oops!";
-		mes "Caught Caught Caught!";
+		mes "Caught, I got caught!";
 		mes "Let's run!!!!";
-		npctalk "White Teddy: Caught! Caught!", "White Teddy Bear#IBT", bc_self;
+		npctalk "White Teddy Bear: Caught, I got caught!", "White Teddy Bear#IBT", bc_self;
 		npctalk "Teddy Bear: Let's Run!!!!", "Teddy Bear#IBT", bc_self;
 		ill_teddy = 4;
 		erasequest 11558;
@@ -12442,21 +12442,21 @@ OnTouch:
 		npctalk "?????? : Mmmhahahahahahahahahaha!!!!", "??????#IBT_inB01", bc_self;
 		next;
 		mes "[??????]";
-		mes "Forget the shameful past confined in the dark and damp ground.";
-		npctalk "?????? : Forget the disgraceful past trapped in the darkand damp ground.", "????????#IBT_inB01", bc_self;
+		mes "Forget the shameful past of being trapped in the dark and damp ground.";
+		npctalk "?????? : Forget the shameful past of being trapped in the dark and damp ground.", "????????#IBT_inB01", bc_self;
 		next;
 		mes "[??????]";
 		mes "This land!!!";
 		npctalk "?????? : This land!!!", "????????#IBT_inB01", bc_self;
 		sleep2 500;
 		mes "This world!!!!";
-		npctalk "?????? : This World!!!!", "??????#IBT_inB01", bc_self;
+		npctalk "?????? : This world!!!!", "??????#IBT_inB01", bc_self;
 		sleep2 500;
 		mes "Until the day they are at our feet, us Nazarians!!!!";
 		npctalk "?????? : Until the day they are at our feet, us Nazarians!!!!", "??????#IBT_inB01", bc_self;
 		sleep2 500;
-		mes "The invasion will not stop!";
-		npctalk "??????: The invasion will not stop!", "??????#IBT_inB01", bc_self;
+		mes "Will not stop the invasion!";
+		npctalk "??????: Will not stop the invasion!", "??????#IBT_inB01", bc_self;
 		next;
 		mes "[Nazarians???]";
 		mes "Okay! A new body has arrived!";
@@ -12478,7 +12478,7 @@ OnTouch:
 		mes "Brave newly born soldiers!!!!";
 		cloakonnpcself( "??????#IBT_inB02_1" );
 		cloakoffnpcself( "??????#IBT_inB02_2" );
-		npctalk "?????? : ...ah...ah...", "??????#IBT_inB01", bc_self;
+		npctalk "?????? : ...oh...ahah...", "??????#IBT_inB01", bc_self;
 		next;
 		mes "[Nazarians]";
 		mes "Waaaaaaaa!!!!";
@@ -12509,10 +12509,10 @@ OnTouch:
 		mes "I guess so?";
 		next;
 		mes "[Steven]";
-		mes "It's not like that, it's just that!";
+		mes "It does not only look like that, it is the one we made!";
 		next;
 		mes "[Steven]";
-		mes "It's the one who's messed up because you sewed it wrong?? Yes!";
+		mes "It's the one who made a mess because you sewed wrong?? Yes!";
 		next;
 		mes "[Acid]";
 		mes "What a mess...";
@@ -12530,15 +12530,15 @@ OnTouch:
 		next;
 		mes "[Emperor of Nazarians]";
 		mes "Warriors of Nazarians!!!!";
-		mes "Down with the intruders!!!";
+		mes "Punish the intruder!!!";
 		next;
 		mes "[Nazarians]";
-		mes "Name!";
-		mes "I'll take it!";
+		mes "From our name!";
+		mes "We'll do it!";
 		next;
 		mes "[Nazarians]";
 		mes "Waaaaaaa!!!";
-		mes "Damn it!";
+		mes "Punish them!";
 		mes "It's an intruder!!!";
 		next;
 		mes "[Steven]";
