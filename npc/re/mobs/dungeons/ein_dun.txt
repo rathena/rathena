@@ -54,14 +54,14 @@ ein_dun03	boss_monster	Jungoliant	20601,1,7200000,600000,0
 //==================================================
 // Illusion of Teddy Bear
 //==================================================
-ein_d02_i	monster	Red Teddy Bear	 20255,25,5000,0,"ein_d02_i_boss::OnMobDead"
-ein_d02_i	monster	Yellow Teddy Bear	 20256,25,5000,0,"ein_d02_i_boss::OnMobDead"
-ein_d02_i	monster	Green Teddy Bear	 20257,25,5000,0,"ein_d02_i_boss::OnMobDead"
-ein_d02_i	monster	White Teddy Bear	 20258,20,5000,0,"ein_d02_i_boss::OnMobDead"
-ein_d02_i	monster	Blue Teddy Bear	 20259,20,5000,0,"ein_d02_i_boss::OnMobDead"
-ein_d02_i	monster	Hardworking Pitman	 20261,20
-ein_d02_i	monster	Soul Fragment	 20262,15
-ein_d02_i	monster	Sinister Dwelling Obsidian	 20263,15
+ein_d02_i	monster	Red Teddybear	 20255,25,5000,0,"ein_d02_i_boss::OnMobDead"
+ein_d02_i	monster	Yellow Teddybear	 20256,25,5000,0,"ein_d02_i_boss::OnMobDead"
+ein_d02_i	monster	Green Teddybear	 20257,25,5000,0,"ein_d02_i_boss::OnMobDead"
+ein_d02_i	monster	White Teddybear	 20258,20,5000,0,"ein_d02_i_boss::OnMobDead"
+ein_d02_i	monster	Blue Teddybear	 20259,20,5000,0,"ein_d02_i_boss::OnMobDead"
+ein_d02_i	monster	Pitman Labor Type	 20261,20
+ein_d02_i	monster	Piece of Spirit	 20262,15
+ein_d02_i	monster	Spirit Dwelling Obsidian	 20263,15
 
 -	script	ein_d02_i_boss	-1,{
 	end;

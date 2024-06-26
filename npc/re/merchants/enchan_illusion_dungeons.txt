@@ -916,7 +916,9 @@ ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
 	case 2:
 		mes "[Bear Wanting Illusion Stone]";
 		mes "Makes you good with what you have!";
-		mes "If you want to do well, bring equipment refined to +9 or higher. It'll all disappear, but... Heck?^000000";
+		next;
+		mes "[Bear Wanting Illusion Stone]";
+		mes "If you want to do well, bring equipment refined to ^ff0000+9 or higher. It'll all disappear, but... Heck?^000000";
 		next;
 		mes "[Bear Wanting Illusion Stone]";
 		mes "^ff0000Illusion Stone^000000!!! Illusion Stone is the most important thing, but... other materials are also needed.";
