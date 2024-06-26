@@ -616,8 +616,8 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						return 0;
 					}
 
-					if( requirement_index >= MAX_BARTER_REQUIREMENTS ){
-						this->invalidWarning( requiredItemNode["Index"], "barter_parseBodyNode: Index %hu is out of bounds. Barters support up to %d requirements.\n", requirement_index, MAX_BARTER_REQUIREMENTS );
+					if( item->requirements.size() >= MAX_BARTER_REQUIREMENTS ){
+						this->invalidWarning( requiredItemNode["Index"], "barter_parseBodyNode: Failed at Index %hu. Too many requirements, Barters support up to %d.\n", requirement_index, MAX_BARTER_REQUIREMENTS );
 						return 0;
 					}
 
