@@ -835,6 +835,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Counter_Dagger
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 95
@@ -849,6 +850,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Gate_KeeperDD
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 95
@@ -863,8 +865,10 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Survival_Rod_
+            Refine: 9
           - Index: 1
             Item: Survival_Rod2_
+            Refine: 9
           - Index: 2
             Item: IllusionStone
             Amount: 125
@@ -882,6 +886,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Boots_
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 85
@@ -896,6 +901,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Headband_Of_Power
+            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 115
