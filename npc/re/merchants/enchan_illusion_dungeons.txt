@@ -893,7 +893,7 @@ OnInit:
 
 ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
 	mes "[Bear Wanting Illusion Stone]";
-	mes "If you give me a Illusion Stone, I'll do something nice for you!";
+	mes "If you give me an Illusion Stone, I'll do something nice for you!";
 	next;
 	switch( select( "Reason for being here", "Good thing [Illusion equipment]", "Quit" ) ) {
 	case 1:
@@ -904,13 +904,13 @@ ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
 		mes "I didn't know it was here!";
 		next;
 		mes "[Bear Wanting Illusion Stone]";
-		mes "A teddy bear with Illusion stone!";
+		mes "A teddy bear with an Illusion Stone!";
 		mes "Strong!";
-		mes "I don't have any fantasy stones!";
+		mes "I don't have any Illusion Stones!";
 		mes "Less... stronger...";
 		next;
 		mes "[Bear Wanting Illusion Stone]";
-		mes "What are Illusion stones?";
+		mes "What are Illusion Stones?";
 		mes "I don't know but I want some!";
 		close;
 	case 2:

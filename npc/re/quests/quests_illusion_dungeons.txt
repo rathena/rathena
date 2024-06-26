@@ -11830,7 +11830,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
+		mes "^ff0000Â¡Ã˜ You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
@@ -11970,10 +11970,10 @@ ein_dun01,198,79,3	script	Teddy Bear#ITB10	4_NASARIAN,{
 		mes "[Teddy Bear in line]";
 		mes "Stand in line!";
 		next;
-		select( "Why you are standing?" );
+		select( "Why are you standing here?" );
 		mes "[Teddy Bear in line]";
-		mes "What!";
-		mes "Do you think I'd give such advanced information to a stranger seeing it for the first time?";
+		mes "What?";
+		mes "Do you think I'd give such advanced information to a stranger I am seeing for the first time?";
 		next;
 		mes "[Teddy Bear in line]";
 		mes "If you're that curious, stand behind me and wait for your turn!";
@@ -12021,7 +12021,7 @@ ein_dun01,191,80,5	duplicate(dummy_npc)	Bear#6	4_NASARIAN
 
 ein_dun01,195,80,5	script	Resident#8	4_M_EINMAN2,{
 	mes "[Resident]";
-	mes "One day, everyone started queuing up here, so I stood up too.";
+	mes "One day, everyone started queuing up here, so I stood here too.";
 	mes "What's in front?";
 	mes "Well? I'm just here because I'm curious...";
 	close;
@@ -12044,21 +12044,21 @@ ein_dun01,189,85,7	script	Teddy Bear#IBT1	4_NASARIAN,{
 		mes "Whh..what happened?";
 		mes "I heard a scream when the man in front of me just entered.";
 		next;
-		select( "About men." );
+		select( "About the man." );
 		mes "[Teddy Bear in line]";
 		mes "What?";
 		mes "I didn't even have time to look at that!";
 		next;
 		mes "[Teddy Bear in line]";
 		mes "Flaw... Hehe... .";
-		mes "I've been waiting in line for days, but suddenly I'm not interested...";
+		mes "I've been waiting in line for days, but suddenly I'm not interested anymore...";
 		next;
 		mes "[Teddy Bear in line]";
-		mes "If you're really curious, I'll give you my seat. Why don't you go in and check it out?";
+		mes "If you're really curious, I'll give you my position. Why don't you go in and check it out?";
 		next;
 		mes "[Teddy Bear in line]";
 		mes "I...it's not because I'm scared!";
-		mes "I just... I guess I'm boring inside now.";
+		mes "I just... I guess what is inside is boring for me now.";
 		mes "Because I've lost interest?!";
 		ill_teddy = 3;
 		erasequest 11557;
@@ -12068,19 +12068,19 @@ ein_dun01,189,85,7	script	Teddy Bear#IBT1	4_NASARIAN,{
 	if (ill_teddy == 3) {
 		mes "[Teddy Bear in line]";
 		mes "Flaw... Hehe... .";
-		mes "I've been waiting in line for days, but suddenly I'm not interested...";
+		mes "I've been waiting in line for days, but suddenly I'm not interested anymore...";
 		next;
 		mes "[Teddy Bear in line]";
-		mes "If you're really curious, I'll give you my seat. Why don't you go in and check it out?";
+		mes "If you're really curious, I'll give you my position. Why don't you go in and check it out?";
 		next;
 		mes "[Teddy Bear in line]";
 		mes "I...it's not because I'm scared!";
-		mes "I just... I guess I'm boring inside now.";
+		mes "I just... I guess what is inside is boring for me now.";
 		mes "Because I've lost interest?!";
 		close;
 	}
 	mes "[Teddy Bear in line]";
-	mes "What!";
+	mes "What?";
 	mes "The guy in front has already run away!";
 	mes "Don't get confused!";
 	close;
@@ -12113,10 +12113,10 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		end;
 	if (ill_teddy == 3) {
 		mes "[Steven]";
-		mes "Can't let this go?!";
+		mes "Can't you let me go?!";
 		mes "Let me go!";
 		mes "This sucks!!!!";
-		npctalk "Steven: Can't let this go?!", "", bc_self;
+		npctalk "Steven: Can't you let me go?!", "", bc_self;
 		cloakoffnpcself( "White Teddy Bear#IBT" );
 		cloakoffnpcself( "Teddy Bear#IBT" );
 		next;
@@ -12124,7 +12124,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		mes "Oops!";
 		mes "Caught Caught Caught!";
 		mes "Let's run!!!!";
-		npctalk "White Teddy: Caught! Caught!", "White Teddy Bear#IBT", bc_self;
+		npctalk "White Teddy Bear: Caught! Caught!", "White Teddy Bear#IBT", bc_self;
 		npctalk "Teddy Bear: Let's Run!!!!", "Teddy Bear#IBT", bc_self;
 		ill_teddy = 4;
 		erasequest 11558;
@@ -12147,7 +12147,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		next;
 		select( "Tell him about the coughing young man." );
 		mes "[Steven]";
-		mes "Huh? The Coughing guy in Einbroch asked you to find me?";
+		mes "Huh? The coughing young man in Einbroch asked you to find me?";
 		mes "Is it Acid...";
 		next;
 		mes "[Steven]";
@@ -12155,7 +12155,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		next;
 		mes "[Steven]";
 		mes "So how was Acid?";
-		mes "I couldn't sleep well because my cough got so bad.";
+		mes "He couldn't sleep well because his cough got so bad.";
 		next;
 		mes "[Steven]";
 		mes "I have to go back and send him to the hospital, but...";
@@ -12211,7 +12211,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		cloakoffnpcself( "Acid#IBT_inN01" );
 		next;
 		mes "[Steven]";
-		mes "No... why are you here!";
+		mes "No... why are you here?";
 		mes "Go to the hospital!";
 		next;
 		mes "[Acid]";
@@ -12260,7 +12260,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		next;
 		select( "About Teddy Bear" );
 		mes "[Acid]";
-		mes "Steven brought it because he said he was looking for something salty to do at home.";
+		mes "Steven brought it because he said he was looking for something salty to eat at home.";
 		next;
 		mes "[Acid]";
 		mes "The pay is so good compared to the job, and the delivery place is also a mine, so it was a bit suspicious...";
@@ -12270,8 +12270,8 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		next;
 		mes "[Steven]";
 		mes "What an idiot!";
-		mes "Thanks to you, I earn hospital bills and your cough...";
-		mes "Oh... Come to think of it, you don't cough, do you?";
+		mes "Thanks to you, I get hospital bills and your cough...";
+		mes "Oh... Come to think of it, you don't cough anymore, do you?";
 		npctalk "Steven: What an idiot!", "", bc_self;
 		next;
 		mes "[Acid]";
@@ -12294,7 +12294,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		mes "[Steven]";
 		mes "...I'm not the only one brought here, am I?";
 		mes "I guess I'll have to stay here and watch the situation.";
-		mes "Acid! You go back to the village for now.";
+		mes "Acid! You can go back to the village for now.";
 		next;
 		mes "[Steven]";
 		mes "Thank you for helping me too.";
@@ -12303,7 +12303,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		ill_teddy = 9;
 		erasequest 11563;
 		erasequest 11564;
-		getitem 25271,5;	// IllusionStone
+		getitem 25271,5; // IllusionStone
 		getexp 3500000,2500000;
 		close;
 	}
@@ -12342,7 +12342,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 			close;
 		}
 		mes "[Steven]";
-		mes "Then please!";
+		mes "Then please help me defeat";
 		mes "10 " + getmonsterinfo("ILL_PITMAN", MOB_NAME) + ", " + getmonsterinfo("ILL_MINERAL", MOB_NAME) + ", and " + getmonsterinfo("ILL_OBSIDIAN", MOB_NAME) + "!";
 		setquest 11565;
 		close;
@@ -12359,7 +12359,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		mes "Are you feeling a little safer now?";
 		erasequest 11565;
 		setquest 11566;
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,1; // IllusionStone
 		getexp 1000000,900000;
 		close;
 	}
@@ -12447,9 +12447,9 @@ OnTouch:
 		next;
 		mes "[??????]";
 		mes "This land!!!";
-		npctalk "?????? : THIS LAND!!!", "????????#IBT_inB01", bc_self;
+		npctalk "?????? : This land!!!", "????????#IBT_inB01", bc_self;
 		sleep2 500;
-		mes "THIS WORLD!!!!";
+		mes "This world!!!!";
 		npctalk "?????? : This World!!!!", "??????#IBT_inB01", bc_self;
 		sleep2 500;
 		mes "Until the day they are at our feet, us Nazarians!!!!";
@@ -12502,7 +12502,7 @@ OnTouch:
 		cloakoffnpcself( "Acid#IBT_inN" );
 		next;
 		mes "[Steven]";
-		mes "Wait what's that!";
+		mes "Wait what's that?";
 		mes "Isn't that the doll we made?";
 		next;
 		mes "[Acid]";
@@ -12512,7 +12512,7 @@ OnTouch:
 		mes "It's not like that, it's just that!";
 		next;
 		mes "[Steven]";
-		mes "I'm the one who's messed up because you sewed it wrong?? Yes!";
+		mes "It's the one who's messed up because you sewed it wrong?? Yes!";
 		next;
 		mes "[Acid]";
 		mes "What a mess...";
@@ -12526,7 +12526,7 @@ OnTouch:
 		mes "Oops...";
 		next;
 		mes "[Emperor of Nazarians]";
-		mes "It looks like a rat has lurked in the sacred assembly.";
+		mes "It looks like a rat has lurked into the sacred assembly.";
 		next;
 		mes "[Emperor of Nazarians]";
 		mes "Warriors of Nazarians!!!!";
@@ -12543,7 +12543,7 @@ OnTouch:
 		next;
 		mes "[Steven]";
 		mes "Oops!";
-		mes "Looks like this got caught?!";
+		mes "Looks like we got caught?!";
 		next;
 		mes "[Steven]";
 		mes "Hey!";
@@ -12614,7 +12614,7 @@ ein_d02_i,145,241,1	duplicate(dummy_cloaked_npc)	??????#IBT_inB21	4_NASARIAN
 ein_d02_i,140,243,5	duplicate(dummy_cloaked_npc)	??????#IBT_inB22	4_NASARIAN
 ein_d02_i,133,233,7	duplicate(dummy_cloaked_npc)	Steven#IBT_inN	4W_M_02
 
-ein_d02_i,168,206,5	script	Gloomy Teddy#ITB	4_TEDDY_BEAR_B_L,{
+ein_d02_i,168,206,5	script	Gloomy Teddy Bear#ITB	4_TEDDY_BEAR_B_L,{
 	if (checkweight(1201,3) == 0) {
 		mes "- Wait a moment!!";
 		mes "- You have too many items. -";
@@ -12651,7 +12651,7 @@ ein_d02_i,168,206,5	script	Gloomy Teddy#ITB	4_TEDDY_BEAR_B_L,{
 		mes "[Gloomy Teddy Bear]";
 		mes "Ah...";
 		mes "Is this a dream or reality...";
-		mes "Am I dead... am I alive...";
+		mes "Am I dead... or am I alive...";
 		next;
 		mes "[Gloomy Teddy Bear]";
 		mes "We're... not supposed to come back...";
@@ -12698,7 +12698,7 @@ ein_d02_i,168,206,5	script	Gloomy Teddy#ITB	4_TEDDY_BEAR_B_L,{
 			erasequest 11567;
 			erasequest 11568;
 			setquest 11569;
-			getitem 25271,1;	// IllusionStone
+			getitem 25271,1; // IllusionStone
 			getexp 1300000,1000000;
 			close;
 		}
@@ -12757,7 +12757,7 @@ ein_d02_i,191,192,3	script	Porcelain Doll Craftsman#ITB	4_F_HUWOMAN,{
 			mes "[Porcelain Doll Craftsman]";
 			mes "Sob!";
 			mes "It's over!!!";
-			mes "I'm out of here forever!";
+			mes "I'm stuck here forever!";
 			close;
 		}
 		mes "[Porcelain Doll Craftsman]";
@@ -12777,7 +12777,7 @@ ein_d02_i,191,192,3	script	Porcelain Doll Craftsman#ITB	4_F_HUWOMAN,{
 		// unknown text
 		erasequest 11570;
 		setquest 11571;
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,1; // IllusionStone
 		getexp 1500000,1100000;
 		end;
 	}
