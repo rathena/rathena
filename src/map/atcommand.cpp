@@ -1824,6 +1824,7 @@ ACMD_FUNC(gvgoff)
 	}
 
 	map_setmapflag(sd->bl.m, MF_GVG, false);
+
 	clif_displaymessage(fd, msg_txt(sd,33)); // GvG: Off.
 
 	return 0;
@@ -1842,6 +1843,7 @@ ACMD_FUNC(gvgon)
 	}
 
 	map_setmapflag(sd->bl.m, MF_GVG, true);
+
 	clif_displaymessage(fd, msg_txt(sd,34)); // GvG: On.
 
 	return 0;
@@ -4330,6 +4332,9 @@ ACMD_FUNC(reload) {
 	}else if( strstr( command, "barterdb" ) || strncmp( message, "barterdb", 4 ) == 0 ){
 		barter_db.reload();
 		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
+	} else if (strstr(command, "zonedb") || strncmp(message, "zonedb", 4) == 0) {
+		map_zone_db.reload();
+		clif_displaymessage(fd, msg_txt(sd, 834)); // Map Zone database has been reloaded.
 	}
 
 	return 0;
@@ -4419,23 +4424,22 @@ ACMD_FUNC(mapinfo) {
 
 	struct map_data *mapdata = map_getmapdata(m_id);
 
-	sprintf(atcmd_output, msg_txt(sd,1040), mapname, mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
-	clif_displaymessage(fd, atcmd_output);
-	clif_displaymessage(fd, msg_txt(sd,1041)); // ------ Map Flags ------
-	if (map_getmapflag(m_id, MF_TOWN))
-		clif_displaymessage(fd, msg_txt(sd,1042)); // Town Map
-	if (map_getmapflag(m_id, MF_RESTRICTED)){
-		sprintf(atcmd_output, " Restricted (zone %d)",mapdata->zone);
-		clif_displaymessage(fd, atcmd_output);
+	if (mapdata == nullptr) {
+		clif_displaymessage(fd, msg_txt(sd, 1)); // Map not found.
+		return -1;
 	}
 
-	if (battle_config.autotrade_mapflag == map_getmapflag(m_id, MF_AUTOTRADE))
+	sprintf(atcmd_output, msg_txt(sd,1040), mapname, script_get_constant_str("MAPTYPE_", mapdata->zone->id), mapdata->users, mapdata->npc_num, chat_num, vend_num); // Map: %s (Zone: %s) | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
+	clif_displaymessage(fd, atcmd_output);
+	clif_displaymessage(fd, msg_txt(sd,1041)); // ------ Map Flags ------
+
+	if (battle_config.autotrade_mapflag == mapdata->getMapFlag(MF_AUTOTRADE))
 		clif_displaymessage(fd, msg_txt(sd,1043)); // Autotrade Enabled
 	else
 		clif_displaymessage(fd, msg_txt(sd,1044)); // Autotrade Disabled
 
-	if (map_getmapflag(m_id, MF_BATTLEGROUND)){
-		sprintf(atcmd_output, msg_txt(sd,1045),map_getmapflag(m_id, MF_BATTLEGROUND)); // Battlegrounds ON (type %d)
+	if (mapdata->getMapFlag(MF_BATTLEGROUND)){
+		sprintf(atcmd_output, msg_txt(sd,1045),mapdata->getMapFlag(MF_BATTLEGROUND)); // Battlegrounds ON (type %d)
 		clif_displaymessage(fd, atcmd_output);
 	}
 
@@ -4464,7 +4468,7 @@ ACMD_FUNC(mapinfo) {
 		}
 	}
 
-	if (map_getmapflag(m_id, MF_SKILL_DURATION)) {
+	if (mapdata->getMapFlag(MF_SKILL_DURATION)) {
 		clif_displaymessage(fd, msg_txt(sd, 1055)); // Skill Duration Adjustments:
 		for (const auto &it : mapdata->skill_duration) {
 			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(it.first), it.second);
@@ -4472,60 +4476,73 @@ ACMD_FUNC(mapinfo) {
 		}
 	}
 
+	if (mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE) || mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE) || mapdata->getMapFlag(MF_MISC_DAMAGE_RATE) || mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE) || mapdata->getMapFlag(MF_LONG_DAMAGE_RATE) || mapdata->getMapFlag(MF_FLEE_PENALTY)) {
+		uint16 weapon = mapdata->getMapFlag(MF_WEAPON_DAMAGE_RATE),
+			magic = mapdata->getMapFlag(MF_MAGIC_DAMAGE_RATE),
+			misc = mapdata->getMapFlag(MF_MISC_DAMAGE_RATE),
+			short_ = mapdata->getMapFlag(MF_SHORT_DAMAGE_RATE),
+			long_ = mapdata->getMapFlag(MF_LONG_DAMAGE_RATE),
+			flee = mapdata->getMapFlag(MF_FLEE_PENALTY);
+
+		clif_displaymessage(fd, msg_txt(sd, 1042)); // Battle Rate Adjustments:
+		sprintf(atcmd_output, " Weapon: %d%% | Magic: %d%% | Misc: %d%% | Short: %d%% | Long: %d%% | Flee: %d%%", weapon > 0 ? weapon : 100, magic > 0 ? magic : 100, misc > 0 ? misc : 100, short_ > 0 ? short_ : 100, long_ > 0 ? long_ : 100, flee != 0 ? flee * -1 : 0);
+		clif_displaymessage(fd, atcmd_output);
+	}
+
 	strcpy(atcmd_output,msg_txt(sd,1046)); // PvP Flags:
-	if (map_getmapflag(m_id, MF_PVP))
+	if (mapdata->getMapFlag(MF_PVP))
 		strcat(atcmd_output, " Pvp ON |");
-	if (map_getmapflag(m_id, MF_PVP_NOGUILD))
+	if (mapdata->getMapFlag(MF_PVP_NOGUILD))
 		strcat(atcmd_output, " NoGuild |");
-	if (map_getmapflag(m_id, MF_PVP_NOPARTY))
+	if (mapdata->getMapFlag(MF_PVP_NOPARTY))
 		strcat(atcmd_output, " NoParty |");
-	if (map_getmapflag(m_id, MF_PVP_NIGHTMAREDROP))
+	if (mapdata->getMapFlag(MF_PVP_NIGHTMAREDROP))
 		strcat(atcmd_output, " NightmareDrop |");
-	if (map_getmapflag(m_id, MF_PVP_NOCALCRANK))
+	if (mapdata->getMapFlag(MF_PVP_NOCALCRANK))
 		strcat(atcmd_output, " NoCalcRank |");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1047)); // GvG Flags:
-	if (map_getmapflag(m_id, MF_GVG))
+	if (mapdata->getMapFlag(MF_GVG))
 		strcat(atcmd_output, " GvG ON |");
-	if (map_getmapflag(m_id, MF_GVG_DUNGEON))
+	if (mapdata->getMapFlag(MF_GVG_DUNGEON))
 		strcat(atcmd_output, " GvG Dungeon |");
-	if (map_getmapflag(m_id, MF_GVG_CASTLE))
+	if (mapdata->getMapFlag(MF_GVG_CASTLE))
 		strcat(atcmd_output, " GvG Castle |");
-	if (map_getmapflag(m_id, MF_GVG_TE))
+	if (mapdata->getMapFlag(MF_GVG_TE))
 		strcat(atcmd_output, " GvG TE |");
-	if (map_getmapflag(m_id, MF_GVG_TE_CASTLE))
+	if (mapdata->getMapFlag(MF_GVG_TE_CASTLE))
 		strcat(atcmd_output, " GvG TE Castle |");
-	if (map_getmapflag(m_id, MF_GVG_NOPARTY))
+	if (mapdata->getMapFlag(MF_GVG_NOPARTY))
 		strcat(atcmd_output, " NoParty |");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1048)); // Teleport Flags:
-	if (map_getmapflag(m_id, MF_NOTELEPORT))
+	if (mapdata->getMapFlag(MF_NOTELEPORT))
 		strcat(atcmd_output, " NoTeleport |");
-	if (map_getmapflag(m_id, MF_MONSTER_NOTELEPORT))
+	if (mapdata->getMapFlag(MF_MONSTER_NOTELEPORT))
 		strcat(atcmd_output, " Monster NoTeleport |");
-	if (map_getmapflag(m_id, MF_NOWARP))
+	if (mapdata->getMapFlag(MF_NOWARP))
 		strcat(atcmd_output, " NoWarp |");
-	if (map_getmapflag(m_id, MF_NOWARPTO))
+	if (mapdata->getMapFlag(MF_NOWARPTO))
 		strcat(atcmd_output, " NoWarpTo |");
-	if (map_getmapflag(m_id, MF_NORETURN))
+	if (mapdata->getMapFlag(MF_NORETURN))
 		strcat(atcmd_output, " NoReturn |");
-	if (map_getmapflag(m_id, MF_NOGO))
+	if (mapdata->getMapFlag(MF_NOGO))
 		strcat(atcmd_output, " NoGo |"); //
-	if (map_getmapflag(m_id, MF_NOMEMO))
+	if (mapdata->getMapFlag(MF_NOMEMO))
 		strcat(atcmd_output, "  NoMemo |");
-	if (map_getmapflag(m_id, MF_PRIVATEAIRSHIP_SOURCE))
+	if (mapdata->getMapFlag(MF_PRIVATEAIRSHIP_SOURCE))
 		strcat(atcmd_output, " PrivateAirship_Source |");
-	if (map_getmapflag(m_id, MF_PRIVATEAIRSHIP_DESTINATION))
+	if (mapdata->getMapFlag(MF_PRIVATEAIRSHIP_DESTINATION))
 		strcat(atcmd_output, " PrivateAirship_Destination |");
 	clif_displaymessage(fd, atcmd_output);
 
 	sprintf(atcmd_output, msg_txt(sd,1065),  // No Exp Penalty: %s | No Zeny Penalty: %s
-		(map_getmapflag(m_id, MF_NOEXPPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067), (map_getmapflag(m_id, MF_NOZENYPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067)); // On / Off
+		(mapdata->getMapFlag(MF_NOEXPPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067), (mapdata->getMapFlag(MF_NOZENYPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067)); // On / Off
 	clif_displaymessage(fd, atcmd_output);
 
-	if (map_getmapflag(m_id, MF_NOSAVE)) {
+	if (mapdata->getMapFlag(MF_NOSAVE)) {
 		if (!mapdata->save.map)
 			clif_displaymessage(fd, msg_txt(sd,1068)); // No Save (Return to last Save Point)
 		else if (mapdata->save.x == -1 || mapdata->save.y == -1 ) {
@@ -4540,90 +4557,90 @@ ACMD_FUNC(mapinfo) {
 	}
 
 	strcpy(atcmd_output,msg_txt(sd,1049)); // Weather Flags:
-	if (map_getmapflag(m_id, MF_SNOW))
+	if (mapdata->getMapFlag(MF_SNOW))
 		strcat(atcmd_output, " Snow |");
-	if (map_getmapflag(m_id, MF_FOG))
+	if (mapdata->getMapFlag(MF_FOG))
 		strcat(atcmd_output, " Fog |");
-	if (map_getmapflag(m_id, MF_SAKURA))
+	if (mapdata->getMapFlag(MF_SAKURA))
 		strcat(atcmd_output, " Sakura |");
-	if (map_getmapflag(m_id, MF_CLOUDS))
+	if (mapdata->getMapFlag(MF_CLOUDS))
 		strcat(atcmd_output, " Clouds |");
-	if (map_getmapflag(m_id, MF_CLOUDS2))
+	if (mapdata->getMapFlag(MF_CLOUDS2))
 		strcat(atcmd_output, "  Clouds2 |");
-	if (map_getmapflag(m_id, MF_FIREWORKS))
+	if (mapdata->getMapFlag(MF_FIREWORKS))
 		strcat(atcmd_output, " Fireworks |");
-	if (map_getmapflag(m_id, MF_LEAVES))
+	if (mapdata->getMapFlag(MF_LEAVES))
 		strcat(atcmd_output, "  Leaves |");
-	if (map_getmapflag(m_id, MF_NIGHTENABLED))
+	if (mapdata->getMapFlag(MF_NIGHTENABLED))
 		strcat(atcmd_output, "  Displays Night |");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1050)); // Other Flags:
-	if (map_getmapflag(m_id, MF_NOBRANCH))
+	if (mapdata->getMapFlag(MF_NOBRANCH))
 		strcat(atcmd_output, " NoBranch |");
-	if (map_getmapflag(m_id, MF_NOTRADE))
+	if (mapdata->getMapFlag(MF_NOTRADE))
 		strcat(atcmd_output, " NoTrade |");
-	if (map_getmapflag(m_id, MF_NOVENDING))
+	if (mapdata->getMapFlag(MF_NOVENDING))
 		strcat(atcmd_output, " NoVending |");
-	if (map_getmapflag(m_id, MF_NOBUYINGSTORE))
+	if (mapdata->getMapFlag(MF_NOBUYINGSTORE))
 		strcat(atcmd_output, " NoBuyingstore |");
-	if (map_getmapflag(m_id, MF_NODROP))
+	if (mapdata->getMapFlag(MF_NODROP))
 		strcat(atcmd_output, " NoDrop |");
-	if (map_getmapflag(m_id, MF_NOSKILL))
+	if (mapdata->getMapFlag(MF_NOSKILL))
 		strcat(atcmd_output, " NoSkill |");
-	if (map_getmapflag(m_id, MF_NOICEWALL))
+	if (mapdata->getMapFlag(MF_NOICEWALL))
 		strcat(atcmd_output, " NoIcewall |");
-	if (map_getmapflag(m_id, MF_ALLOWKS))
+	if (mapdata->getMapFlag(MF_ALLOWKS))
 		strcat(atcmd_output, " AllowKS |");
-	if (map_getmapflag(m_id, MF_RESET))
+	if (mapdata->getMapFlag(MF_RESET))
 		strcat(atcmd_output, " Reset |");
-	if (map_getmapflag(m_id, MF_HIDEMOBHPBAR))
+	if (mapdata->getMapFlag(MF_HIDEMOBHPBAR))
 		strcat(atcmd_output, " HideMobHPBar |");
-	if (map_getmapflag(m_id, MF_NOCOMMAND))
+	if (mapdata->getMapFlag(MF_NOCOMMAND))
 		strcat(atcmd_output, " NoCommand |");
-	if (map_getmapflag(m_id, MF_NOBASEEXP))
+	if (mapdata->getMapFlag(MF_NOBASEEXP))
 		strcat(atcmd_output, " NoBaseEXP |");
-	if (map_getmapflag(m_id, MF_NOJOBEXP))
+	if (mapdata->getMapFlag(MF_NOJOBEXP))
 		strcat(atcmd_output, " NoJobEXP |");
-	if (map_getmapflag(m_id, MF_NOMOBLOOT))
+	if (mapdata->getMapFlag(MF_NOMOBLOOT))
 		strcat(atcmd_output, " NoMobLoot |");
-	if (map_getmapflag(m_id, MF_NOMVPLOOT))
+	if (mapdata->getMapFlag(MF_NOMVPLOOT))
 		strcat(atcmd_output, " NoMVPLoot |");
-	if (map_getmapflag(m_id, MF_NORENEWALEXPPENALTY))
+	if (mapdata->getMapFlag(MF_NORENEWALEXPPENALTY))
 		strcat(atcmd_output, " NoRenewalExpPenalty |");
-	if (map_getmapflag(m_id, MF_NORENEWALDROPPENALTY))
+	if (mapdata->getMapFlag(MF_NORENEWALDROPPENALTY))
 		strcat(atcmd_output, " NoRenewalDropPenalty |");
-	if (map_getmapflag(m_id, MF_PARTYLOCK))
+	if (mapdata->getMapFlag(MF_PARTYLOCK))
 		strcat(atcmd_output, " PartyLock |");
-	if (map_getmapflag(m_id, MF_GUILDLOCK))
+	if (mapdata->getMapFlag(MF_GUILDLOCK))
 		strcat(atcmd_output, " GuildLock |");
-	if (map_getmapflag(m_id, MF_LOADEVENT))
+	if (mapdata->getMapFlag(MF_LOADEVENT))
 		strcat(atcmd_output, " Loadevent |");
-	if (map_getmapflag(m_id, MF_NODYNAMICNPC))
+	if (mapdata->getMapFlag(MF_NODYNAMICNPC))
 		strcat(atcmd_output, " NoDynamicNPC |");
-	if (map_getmapflag(m_id, MF_NOMAPCHANNELAUTOJOIN))
+	if (mapdata->getMapFlag(MF_NOMAPCHANNELAUTOJOIN))
 		strcat(atcmd_output, " NoMapChannelAutoJoin |");
-	if (map_getmapflag(m_id, MF_NOUSECART))
+	if (mapdata->getMapFlag(MF_NOUSECART))
 		strcat(atcmd_output, " NoUsecart |");
-	if (map_getmapflag(m_id, MF_NOITEMCONSUMPTION))
+	if (mapdata->getMapFlag(MF_NOITEMCONSUMPTION))
 		strcat(atcmd_output, " NoItemConsumption |");
-	if (map_getmapflag(m_id, MF_NOSUNMOONSTARMIRACLE))
+	if (mapdata->getMapFlag(MF_NOSUNMOONSTARMIRACLE))
 		strcat(atcmd_output, " NoSunMoonStarMiracle |");
-	if (map_getmapflag(m_id, MF_FORCEMINEFFECT))
+	if (mapdata->getMapFlag(MF_FORCEMINEFFECT))
 		strcat(atcmd_output, " ForceMinEffect |");
-	if (map_getmapflag(m_id, MF_NOLOCKON))
+	if (mapdata->getMapFlag(MF_NOLOCKON))
 		strcat(atcmd_output, " NoLockOn |");
-	if (map_getmapflag(m_id, MF_NOTOMB))
+	if (mapdata->getMapFlag(MF_NOTOMB))
 		strcat(atcmd_output, " NoTomb |");
-	if (map_getmapflag(m_id, MF_NOCOSTUME))
+	if (mapdata->getMapFlag(MF_NOCOSTUME))
 		strcat(atcmd_output, " NoCostume |");
-	if (map_getmapflag(m_id, MF_NOBANK))
+	if (mapdata->getMapFlag(MF_NOBANK))
 		strcat(atcmd_output, " NoBank |");
-	if (map_getmapflag(m_id, MF_NOCASHSHOP))
+	if (mapdata->getMapFlag(MF_NOCASHSHOP))
 		strcat(atcmd_output, " NoCashShop |");
-	if (map_getmapflag(m_id, MF_NORODEX))
+	if (mapdata->getMapFlag(MF_NORODEX))
 		strcat(atcmd_output, " NoRODex |");
-	if (map_getmapflag(m_id, MF_NOPETCAPTURE))
+	if (mapdata->getMapFlag(MF_NOPETCAPTURE))
 		strcat(atcmd_output, " NoPetCapture |");
 	clif_displaymessage(fd, atcmd_output);
 
@@ -8790,7 +8807,6 @@ ACMD_FUNC(mapflag) {
 		if( mapflag != MF_INVALID ){
 			std::vector<e_mapflag> disabled_mf = { MF_NOSAVE,
 												MF_PVP_NIGHTMAREDROP,
-												MF_RESTRICTED,
 												MF_NOCOMMAND,
 												MF_BEXP,
 												MF_JEXP,
@@ -11586,6 +11602,13 @@ bool is_atcommand(const int fd, map_session_data* sd, const char* message, int t
 			clif_displaymessage(fd, msg_txt(sd,1393)); // You can't use commands while dead
 			return true;
 		}
+	}
+
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if (mapdata->zone->isCommandDisabled(info->command, *sd)) {
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 833), false, SELF); // This command is disabled on this map.
+		return true;
 	}
 
 	//Attempt to use the command

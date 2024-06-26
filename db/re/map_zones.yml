@@ -1,0 +1,5928 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2024 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http:#www.gnu.org/licenses/>.
+#
+###########################################################################
+# Map Zone Database
+###########################################################################
+#
+# Map Zone Settings
+#
+###########################################################################
+# - Id                        Zone ID.
+#   DisabledCommands:         List of disabled @commands. (Default: null)
+#   DisabledSkills:           List of disabled skills. (Default: null)
+#   DisabledItems:            List of disabled items. (Default: null)
+#   DisabledStatuses:         List of disabled statuses. (Default: null)
+#   RestrictedJobs:           List of restricted jobs from entering zone. (Default: null)
+#   Maps:                     List of maps to apply the zone to.
+#   Mapflags:                 List of mapflags. (Default: null)
+#     - Flag                  Mapflag name.
+#       Value                 Value assigned to mapflag. (Default: true)
+###########################################################################
+
+Header:
+  Type: MAP_ZONES
+  Version: 1
+
+Body:
+  - Id: Village
+    DisabledSkills:
+      - Skill: AM_CANNIBALIZE
+        Pc: 100
+      - Skill: AM_SPHEREMINE
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: BS_GREED
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: GN_WALLOFTHORN
+        Pc: 100
+      - Skill: WM_POEMOFNETHERWORLD
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: NC_MAGNETICFIELD
+        Pc: 100
+      - Skill: SC_CHAOSPANIC
+        Pc: 100
+      - Skill: MI_HARMONIZE
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Azoth: 100
+      E_Greed_Scroll: 100
+      F_Greed_Scroll: 100
+      Greed_Scroll: 100
+      Greed_Scroll_C: 100
+      Hylozoist_Card: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+    Maps:
+      alberta: true
+      aldebaran: true
+      amatsu: true
+      ayothaya: true
+      brasilis: true
+      comodo: true
+      dewata: true
+      eclage: true
+      einbech: true
+      einbroch: true
+      evt_bomb: true
+      geffen: true
+      gonryun: true
+      harboro1: true
+      hero_lb: true
+      hugel: true
+      icecastle: true
+      izlude: true
+      izlude_a: true
+      izlude_b: true
+      izlude_c: true
+      izlude_d: true
+      jor_nest: true
+      jor_sanct: true
+      jor_twig: true
+      lasagna: true
+      louyang: true
+      ma_scene01: true
+      malangdo: true
+      malaya: true
+      mid_camp: true
+      monk_in: true
+      mora: true
+      morocc: true
+      moscovia: true
+      nameless_i: true
+      payon: true
+      prontera: true
+      prt_monk: true
+      ra_temple: true
+      rachel: true
+      sp_cor: true
+      t_garden: true
+      te_alde_gld: true
+      tra_fild: true
+      umbala: true
+      veins: true
+      wolfvill: true
+      x_lhz: true
+      x_prt: true
+      x_ra: true
+      xmas: true
+      yuno: true
+    Mapflags:
+      - Flag: NightEnabled
+      - Flag: NoBranch
+      - Flag: NoPenalty
+      - Flag: PrivateAirship_Destination
+      - Flag: PrivateAirship_Source
+      - Flag: Reset
+
+  - Id: Village_In
+    DisabledSkills:
+      - Skill: AM_CANNIBALIZE
+        Pc: 100
+      - Skill: AM_SPHEREMINE
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: MI_HARMONIZE
+        Pc: 100
+      - Skill: SU_LOPE
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      #Accessory_of_Ascetic: 100
+      Anopheles_Card: 100
+      Armaia_Card: 100
+      "Arquien's_Necklace": 100
+      Azoth: 100
+      Blazzer_Card: 100
+      #Butterfly_Hairpin: 100
+      Bogy_Horn: 100
+      Cactus_Hat: 100
+      #Carnation_Garlands: 100
+      Cleaver: 100
+      #Comp_Wing_Of_Fly: 100
+      Cow_Hat: 100
+      #Cps_Fly_Wing: 100
+      Cramp_Card: 100
+      C_Devil_Whisper: 100
+      C_Iceflake_Hat: 100
+      C_Wing_Of_Fly: 100
+      Dark_Snake_Lord_Hat: 100
+      Devil_Whisper: 100
+      Dragon_Egg_Card: 100
+      Dragon_Wing: 100
+      Dryad_Card: 100
+      Event_Pierrot_Nose: 100
+      Evil_Cloud_Hermit_Card: 100
+      E_Giant_Fly_Wing: 100
+      Fish_In_Mouth: 100
+      Forceps_Hairpin: 100
+      Gaia_Sword: 100
+      Galapago_Cap: 100
+      Galapago_Card: 100
+      Gargoyle_Card: 100
+      Garuda_Hat: 100
+      General_Helmet: 100
+      Giant_Fly_Wing: 100
+      Giant_Honet_Card: 100
+      Gloomy_Pumpkin_Hat: 100
+      Green_Iguana_Card: 100
+      Gremlin_Card: 100
+      Happy_Balloon_J: 100
+      Hellomother_Hat: 100
+      Honeybee_Hat: 100
+      Hunting_Spear: 100
+      Hylozoist_Card: 100
+      Im_Egg_Shell_Hat: 100
+      Japan_Winecup: 100
+      Jewel_Sword: 100
+      Knocker_Card: 100
+      Lady_Tanee_Card: 100
+      Lady_Tanee_Doll: 100
+      Leaf_Cat_Card: 100
+      Leib_Olmai_Card: 100
+      Li_Me_Mang_Ryang_Card: 100
+      Lucky_Day: 100
+      Lunakaligo: 100
+      "Mama's_Knife": 100
+      Marin_Card: 100
+      Mimic_Card: 100
+      Mini_Tree: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Mystcase_Card: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      #N_Fly_Wing2: 100
+      Orc_Archer_Bow: 100
+      Orc_Archer_Card: 100
+      Pig_Moneybox: 100
+      Pinguicula_Dark_Card: 100
+      Plasma_Card: 100
+      Pumpkin_Hat_: 100
+      Q_Scaraba_Card: 100
+      Raydric_Archer_Card: 100
+      Red_Lantern: 100
+      Red_Square_Bag: 100
+      Red_White_Hat: 100
+      Remover_Hat: 100
+      Retribution_Card: 100
+      Ribbon_Chef_Hat: 100
+      Rice_Cake_Boy_Card: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sageworm_Card: 100
+      Santa_Hat_1: 100
+      Sasimi: 100
+      Scarlet_Rose: 100
+      Scr_MT_Robots_Card: 100
+      Sealed_Lady_Tanee_Card: 100
+      See_Otter_Card: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      Sleeper_Card: 100
+      Snowier_Card: 100
+      Snowman_Hat: 100
+      Spare_Card: 100
+      Spring_Rabbit_Card: 100
+      St_Pat_Hat: 100
+      Starving_Fish_Hat: 100
+      Stem_Worm_Card: 100
+      Stretched_Nose_M: 100
+      Tengu_Card: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Toast_C: 100
+      Treasure_Box_Scroll: 100
+      Tw_Rice_Ball: 100
+      Umbala_Spirit: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Weird_Pumpkin_Hat: 100
+      Wild_Ginseng_Card: 100
+      Wing_Of_Fly: 100
+      #Wing_Of_Fly_TW: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+      Wraith_Card: 100
+      Zeny_Knife: 100
+    Maps:
+      air_if: true
+      airplane2: true
+      airplane: true
+      airplane_01: true
+      airport: true
+      alberta_in: true
+      alde_alche: true
+      aldeba_in: true
+      ama_in01: true
+      ama_in02: true
+      arena_room: true
+      auction_01: true
+      auction_02: true
+      ayo_in01: true
+      ayo_in02: true
+      ba_in01: true
+      bat_room: true
+      bra_in01: true
+      cave: true
+      cmd_in01: true
+      cmd_in02: true
+      conch_in: true
+      dali02: true
+      dali: true
+      dew_in01: true
+      dic_in01: true
+      ecl_hub01: true
+      ecl_in01: true
+      ecl_in02: true
+      ecl_in03: true
+      ecl_in04: true
+      ecl_tdun04: true
+      ein_in01: true
+      gef_tower: true
+      geffen_in: true
+      gon_in: true
+      grademk: true
+      guild_vs2: true
+      har_in01: true
+      hu_in01: true
+      icas_in2: true
+      icas_in: true
+      icecastle: true
+      in_hunter: true
+      in_orcs01: true
+      in_rogue: true
+      int_land01: true
+      int_land02: true
+      int_land03: true
+      int_land04: true
+      int_land: true
+      itemmall: true
+      iz_ac01: true
+      iz_ac01_a: true
+      iz_ac01_b: true
+      iz_ac01_c: true
+      iz_ac01_d: true
+      iz_ac02: true
+      iz_ac02_a: true
+      iz_ac02_b: true
+      iz_ac02_c: true
+      iz_ac02_d: true
+      iz_ng01: true
+      izlude_in: true
+      jawaii: true
+      jawaii_in: true
+      job3_gen01: true
+      jor_safty1: true
+      jor_safty2: true
+      kh_mansion: true
+      kh_rossi: true
+      kh_school: true
+      kh_vila: true
+      lasa_in01: true
+      lhz_airport: true
+      lhz_in01: true
+      lhz_in02: true
+      lhz_in03: true
+      lighthalzen: true
+      lou_in01: true
+      lou_in02: true
+      ma_in01: true
+      mal_in01: true
+      mal_in02: true
+      man_in01: true
+      memohall: true
+      mid_campin: true
+      moc_castle: true
+      moc_para01: true
+      morocc_in: true
+      nameless_in: true
+      new_1-3: true
+      new_2-3: true
+      new_3-3: true
+      new_4-3: true
+      new_5-3: true
+      nif_in: true
+      nyd_dun02: true
+      ordeal_1-1: true
+      ordeal_1-2: true
+      ordeal_2-1: true
+      ordeal_2-2: true
+      ordeal_3-1: true
+      ordeal_3-2: true
+      paramk: true
+      pay_arche: true
+      payon_in01: true
+      payon_in02: true
+      payon_in03: true
+      prt_are01: true
+      prt_cas: true
+      prt_cas_q: true
+      prt_castle: true
+      prt_church: true
+      prt_elib: true
+      prt_evt_in: true
+      prt_in: true
+      prt_lib: true
+      prt_lib_q: true
+      prt_pri00: true
+      pub_cat: true
+      que_house_s: true
+      que_ng: true
+      que_rachel: true
+      que_temsky: true
+      que_thr: true
+      ra_in01: true
+      ra_temin: true
+      ra_temsky: true
+      rag_fes: true
+      rag_fes_a: true
+      rebel_in: true
+      rgsr_in: true
+      s_atelier: true
+      sch_lab: true
+      sec_in01: true
+      spl_in01: true
+      spl_in02: true
+      star_in: true
+      turbo_room: true
+      um_in: true
+      un_bk_q: true
+      ve_in02: true
+      ve_in: true
+      verus04: true
+      xmas_in: true
+      y_airport: true
+      yuno_in01: true
+      yuno_in02: true
+      yuno_in03: true
+      yuno_in04: true
+      yuno_in05: true
+      yuno_pre: true
+    Mapflags:
+      - Flag: NoBonusItemDrop
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+
+  - Id: Field
+    DisabledSkills:
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      06guild_01: true
+      06guild_02: true
+      06guild_03: true
+      06guild_04: true
+      06guild_05: true
+      06guild_06: true
+      06guild_07: true
+      06guild_08: true
+      06guild_r: true
+      alde_gld: true
+      ama_fild01: true
+      aru_gld: true
+      ayo_fild01: true
+      bif_fild01: true
+      bif_fild02: true
+      cmd_fild01: true
+      cmd_fild02: true
+      cmd_fild03: true
+      cmd_fild04: true
+      cmd_fild05: true
+      cmd_fild06: true
+      cmd_fild07: true
+      cmd_fild08: true
+      cmd_fild09: true
+      ecl_fild01: true
+      ein_fild01: true
+      ein_fild02: true
+      ein_fild03: true
+      ein_fild04: true
+      ein_fild05: true
+      ein_fild06: true
+      ein_fild07: true
+      ein_fild08: true
+      ein_fild09: true
+      ein_fild10: true
+      g_room1-1: true
+      g_room1-2: true
+      g_room1-3: true
+      g_room2: true
+      gef_fild00: true
+      gef_fild01: true
+      gef_fild02: true
+      gef_fild04: true
+      gef_fild06: true
+      gef_fild07: true
+      gef_fild08: true
+      gef_fild10: true
+      gef_fild12: true
+      gef_fild13: true
+      gef_fild14: true
+      gl_cas02_: true
+      gl_chyard_: true
+      glast_01: true
+      gon_fild01: true
+      guild_vs1-1: true
+      guild_vs1-2: true
+      guild_vs1-3: true
+      guild_vs1-4: true
+      guild_vs2-1: true
+      guild_vs2-2: true
+      gw_fild01: true
+      gw_fild02: true
+      harboro2: true
+      hu_fild02: true
+      hu_fild03: true
+      hu_fild04: true
+      hu_fild06: true
+      hu_fild07: true
+      izlu2dun: true
+      job_gun: true
+      job_thief1: true
+      jor_back1: true
+      jor_back2: true
+      jor_back3: true
+      jor_back4: true
+      jor_back5: true
+      jor_back6: true
+      jor_tail: true
+      jor_twice: true
+      lhz_fild01: true
+      lhz_fild02: true
+      lhz_fild03: true
+      ma_fild01: true
+      ma_fild02: true
+      mjolnir_01: true
+      mjolnir_03: true
+      mjolnir_06: true
+      mjolnir_07: true
+      mjolnir_09: true
+      moc_fild01: true
+      moc_fild02: true
+      moc_fild03: true
+      moc_fild07: true
+      moc_fild11: true
+      moc_fild12: true
+      moc_fild13: true
+      moc_fild16: true
+      moc_fild17: true
+      moc_fild18: true
+      moc_ruins: true
+      moro_vol: true
+      mosk_fild02: true
+      pay_fild01: true
+      pay_fild02: true
+      pay_fild03: true
+      pay_fild04: true
+      pay_fild05: true
+      pay_fild06: true
+      pay_fild07: true
+      pay_fild08: true
+      pay_fild09: true
+      pay_fild10: true
+      pay_fild11: true
+      prt_fild00: true
+      prt_fild01: true
+      prt_fild02: true
+      prt_fild03: true
+      prt_fild04: true
+      prt_fild05: true
+      prt_fild06: true
+      prt_fild07: true
+      prt_fild08: true
+      prt_fild08a: true
+      prt_fild08b: true
+      prt_fild08c: true
+      prt_fild08d: true
+      prt_fild09: true
+      prt_fild10: true
+      prt_gld: true
+      que_avan01: true
+      ra_fild01: true
+      ra_fild02: true
+      ra_fild03: true
+      ra_fild05: true
+      ra_fild06: true
+      ra_fild07: true
+      ra_fild08: true
+      ra_fild09: true
+      ra_fild10: true
+      ra_fild11: true
+      ra_fild12: true
+      ra_fild13: true
+      rockrdg1: true
+      rockrdg2: true
+      sch_gld: true
+      te_prt_gld: true
+      um_fild01: true
+      um_fild02: true
+      um_fild03: true
+      um_fild04: true
+      un_myst: true
+      ve_fild01: true
+      ve_fild02: true
+      ve_fild03: true
+      ve_fild04: true
+      ve_fild05: true
+      ve_fild06: true
+      ve_fild07: true
+      xmas_fild01: true
+      yuno_fild01: true
+      yuno_fild02: true
+      yuno_fild03: true
+      yuno_fild04: true
+      yuno_fild06: true
+      yuno_fild10: true
+      yuno_fild11: true
+      yuno_fild12: true
+    Mapflags:
+      - Flag: NightEnabled
+      - Flag: PrivateAirship_Destination
+      - Flag: PrivateAirship_Source
+
+  - Id: Dungeon
+    DisabledSkills:
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      abbey01: true
+      abbey02: true
+      abbey03: true
+      abyss_01: true
+      abyss_02: true
+      abyss_03: true
+      abyss_04: true
+      alb2trea: true
+      alde_dun01: true
+      alde_dun02: true
+      alde_dun03: true
+      alde_dun04: true
+      ama_dun02: true
+      ama_dun03: true
+      amicitia1: true
+      amicitia2: true
+      ant_d02_i: true
+      anthell01: true
+      anthell02: true
+      ayo_dun01: true
+      ayo_dun02: true
+      ayo_fild02: true
+      ba_2whs01: true
+      ba_2whs02: true
+      ba_bath: true
+      ba_chess: true
+      ba_lib: true
+      ba_lost: true
+      ba_maison: true
+      ba_pw01: true
+      ba_pw02: true
+      ba_pw03: true
+      beach_dun2: true
+      beach_dun3: true
+      beach_dun: true
+      bl_death: true
+      bl_grass: true
+      bl_ice: true
+      bl_lava: true
+      bl_soul: true
+      bl_temple: true
+      bl_venom: true
+      bra_dun01: true
+      bra_dun02: true
+      bra_fild01: true
+      c_tower1: true
+      c_tower2: true
+      c_tower2_: true
+      c_tower3: true
+      c_tower3_: true
+      c_tower4: true
+      clock_01: true
+      com_d02_i: true
+      dew_dun01: true
+      dew_dun02: true
+      dew_fild01: true
+      dic_dun01: true
+      dic_dun02: true
+      dic_dun03: true
+      dic_fild01: true
+      dic_fild02: true
+      ecl_tdun01: true
+      ecl_tdun02: true
+      ecl_tdun03: true
+      ein_d02_i: true
+      ein_dun01: true
+      ein_dun02: true
+      ein_dun03: true
+      gef_d01_i: true
+      gef_dun00: true
+      gef_dun01: true
+      gef_dun02: true
+      gef_dun03: true
+      gef_fild03: true
+      gef_fild05: true
+      gef_fild09: true
+      gef_fild11: true
+      gefenia01: true
+      gefenia02: true
+      gefenia03: true
+      gefenia04: true
+      gl_cas01: true
+      gl_cas01_: true
+      gl_cas02: true
+      gl_church: true
+      gl_chyard: true
+      gl_dun01: true
+      gl_dun02: true
+      gl_in01: true
+      gl_knt01: true
+      gl_knt02: true
+      gl_prison1: true
+      gl_prison: true
+      gl_sew01: true
+      gl_sew02: true
+      gl_sew03: true
+      gl_sew04: true
+      gl_step: true
+      gon_dun01: true
+      gon_dun02: true
+      gon_dun03: true
+      hu_fild01: true
+      hu_fild05: true
+      ice_d03_i: true
+      ice_dun01: true
+      ice_dun02: true
+      in_sphinx1: true
+      in_sphinx2: true
+      in_sphinx3: true
+      in_sphinx4: true
+      in_sphinx5: true
+      iz_d04_i: true
+      iz_d05_i: true
+      iz_dun00: true
+      iz_dun01: true
+      iz_dun02: true
+      iz_dun03: true
+      iz_dun04: true
+      jor_ab01: true
+      jor_ab02: true
+      jor_dun01: true
+      jor_dun02: true
+      jor_dun03: true
+      jor_maze: true
+      jor_root1: true
+      jor_root2: true
+      jor_root3: true
+      jupe_cave: true
+      jupe_core: true
+      juperos_01: true
+      juperos_02: true
+      kh_dun02: true
+      lasa_dun01: true
+      lasa_dun02: true
+      lasa_dun03: true
+      lasa_fild01: true
+      lasa_fild02: true
+      lasa_sea: true
+      lhz_dun01: true
+      lhz_dun02: true
+      lhz_dun03: true
+      lhz_dun04: true
+      lhz_dun_n: true
+      lou_dun01: true
+      lou_dun02: true
+      lou_dun03: true
+      lou_fild01: true
+      ma_dun01: true
+      mag_dun01: true
+      mag_dun02: true
+      mag_dun03: true
+      mal_dun01: true
+      man_fild01: true
+      man_fild02: true
+      man_fild03: true
+      mjo_dun01: true
+      mjo_dun02: true
+      mjo_dun03: true
+      mjo_wst01: true
+      mjolnir_02: true
+      mjolnir_04: true
+      mjolnir_05: true
+      mjolnir_08: true
+      mjolnir_10: true
+      mjolnir_11: true
+      mjolnir_12: true
+      moc_fild19: true
+      moc_fild20: true
+      moc_fild21: true
+      moc_fild22: true
+      moc_pryd01: true
+      moc_pryd02: true
+      moc_pryd03: true
+      moc_pryd04: true
+      moc_pryd05: true
+      moc_pryd06: true
+      moc_prydb1: true
+      moc_prydn1: true
+      moc_prydn2: true
+      moro_cav: true
+      mosk_dun01: true
+      mosk_dun02: true
+      mosk_dun03: true
+      nameless_n: true
+      nif_dun01: true
+      nif_dun02: true
+      nif_fild01: true
+      nif_fild02: true
+      niflheim: true
+      nyd_dun01: true
+      odin_past: true
+      odin_tem01: true
+      odin_tem02: true
+      odin_tem03: true
+      orcsdun01: true
+      orcsdun02: true
+      oz_dun01: true
+      oz_dun02: true
+      pay_d03_i: true
+      pay_dun00: true
+      pay_dun01: true
+      pay_dun02: true
+      pay_dun03: true
+      pay_dun04: true
+      prt_fild11: true
+      prt_maze01: true
+      prt_maze02: true
+      prt_maze03: true
+      prt_mz03_i: true
+      prt_prison: true
+      prt_q: true
+      prt_sewb1: true
+      prt_sewb2: true
+      prt_sewb3: true
+      prt_sewb4: true
+      que_san04: true
+      ra_pol01: true
+      ra_san01: true
+      ra_san02: true
+      ra_san03: true
+      ra_san04: true
+      ra_san05: true
+      rockmi1: true
+      sec_in02: true
+      silk_lair: true
+      slabw01: true
+      sp_os: true
+      sp_rudus2: true
+      sp_rudus3: true
+      sp_rudus4: true
+      sp_rudus: true
+      spl_fild01: true
+      spl_fild02: true
+      spl_fild03: true
+      tha_scene01: true
+      tha_t01: true
+      tha_t02: true
+      tha_t03: true
+      tha_t04: true
+      tha_t05: true
+      tha_t06: true
+      thor_v01: true
+      thor_v02: true
+      thor_v03: true
+      treasure01: true
+      treasure02: true
+      treasure_n1: true
+      treasure_n2: true
+      tur_d03_i: true
+      tur_d04_i: true
+      tur_d04ia: true
+      tur_d04ib: true
+      tur_dun01: true
+      tur_dun02: true
+      tur_dun03: true
+      tur_dun04: true
+      tur_dun05: true
+      tur_dun06: true
+      um_dun01: true
+      um_dun02: true
+      un_bunker: true
+      ver_eju: true
+      ver_tunn: true
+      verus01: true
+      verus02: true
+      verus02_a: true
+      verus02_b: true
+      verus03: true
+      xmas_dun01: true
+      xmas_dun02: true
+      yuno_fild05: true
+      yuno_fild07: true
+      yuno_fild08: true
+      yuno_fild09: true
+    Mapflags:
+      - Flag: NoMemo
+      - Flag: NoWarpTo
+      - Flag: PrivateAirship_Destination
+      - Flag: PrivateAirship_Source
+
+  - Id: Quest
+    DisabledSkills:
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SU_LOPE
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      #Accessory_of_Ascetic: 100
+      Anopheles_Card: 100
+      Armaia_Card: 100
+      "Arquien's_Necklace": 100
+      Azoth: 100
+      Blazzer_Card: 100
+      #Butterfly_Hairpin: 100
+      Bogy_Horn: 100
+      Cactus_Hat: 100
+      #Carnation_Garlands: 100
+      Cleaver: 100
+      Cow_Hat: 100
+      Cramp_Card: 100
+      C_Devil_Whisper: 100
+      C_Iceflake_Hat: 100
+      Dark_Snake_Lord_Hat: 100
+      Devil_Whisper: 100
+      Dragon_Egg_Card: 100
+      Dragon_Wing: 100
+      Dryad_Card: 100
+      Emergency_Scroll1: 100
+      Emergency_Scroll2: 100
+      Emergency_Scroll3: 100
+      Event_Cake: 100
+      Event_Pierrot_Nose: 100
+      Evil_Cloud_Hermit_Card: 100
+      Fish_In_Mouth: 100
+      Forceps_Hairpin: 100
+      Gaia_Sword: 100
+      Galapago_Cap: 100
+      Galapago_Card: 100
+      Gargoyle_Card: 100
+      Garuda_Hat: 100
+      General_Helmet: 100
+      Giant_Honet_Card: 100
+      Gloomy_Pumpkin_Hat: 100
+      Green_Iguana_Card: 100
+      Gremlin_Card: 100
+      Happy_Balloon_J: 100
+      Hellomother_Hat: 100
+      Honeybee_Hat: 100
+      Hunting_Spear: 100
+      Hylozoist_Card: 100
+      Im_Egg_Shell_Hat: 100
+      Japan_Winecup: 100
+      Jewel_Sword: 100
+      Knocker_Card: 100
+      Lady_Tanee_Card: 100
+      Lady_Tanee_Doll: 100
+      Leaf_Cat_Card: 100
+      Leib_Olmai_Card: 100
+      Li_Me_Mang_Ryang_Card: 100
+      Lucky_Day: 100
+      Lunakaligo: 100
+      Magical_Stone: 100
+      Magical_Stone_: 100
+      "Mama's_Knife": 100
+      Marin_Card: 100
+      Mimic_Card: 100
+      Mini_Tree: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Mystcase_Card: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Orc_Archer_Bow: 100
+      Orc_Archer_Card: 100
+      Orc_Archer_Card: 100
+      Pig_Moneybox: 100
+      Pinguicula_Dark_Card: 100
+      Plasma_Card: 100
+      Pumpkin_Hat_: 100
+      Q_Scaraba_Card: 100
+      Radar_Ring1: 100
+      Radar_Ring2: 100
+      Radar_Ring3: 100
+      Raydric_Archer_Card: 100
+      Red_Lantern: 100
+      Red_Square_Bag: 100
+      Red_White_Hat: 100
+      Remover_Hat: 100
+      Retribution_Card: 100
+      Ribbon_Chef_Hat: 100
+      Rice_Cake_Boy_Card: 100
+      Sageworm_Card: 100
+      Santa_Hat_1: 100
+      "Santa's_Hat_": 100
+      Sasimi: 100
+      Scarlet_Rose: 100
+      Scr_MT_Robots_Card: 100
+      Sealed_Lady_Tanee_Card: 100
+      See_Otter_Card: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      Sleeper_Card: 100
+      Snowier_Card: 100
+      Snowman_Hat: 100
+      Spare_Card: 100
+      Spring_Rabbit_Card: 100
+      St_Pat_Hat: 100
+      Starving_Fish_Hat: 100
+      Stem_Worm_Card: 100
+      Stretched_Nose_M: 100
+      Tengu_Card: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Toast_C: 100
+      Treasure_Box_Scroll: 100
+      Tw_Rice_Ball: 100
+      Umbala_Spirit: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Weird_Pumpkin_Hat: 100
+      Wild_Ginseng_Card: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+      Wraith_Card: 100
+      Zeny_Knife: 100
+    Maps:
+      alb_ship: true
+      ama_test: true
+      arug_que01: true
+      bossnia_01: true
+      bossnia_02: true
+      bossnia_03: true
+      bossnia_04: true
+      e_tower: true
+      evt_mobroom: true
+      force_1-1: true
+      force_1-2: true
+      force_1-3: true
+      force_2-1: true
+      force_2-2: true
+      force_2-3: true
+      force_3-1: true
+      force_3-2: true
+      force_3-3: true
+      force_4-1: true
+      force_5-1: true
+      gon_test: true
+      guild_room: true
+      himinn: true
+      ice_dun04: true
+      in_moc_16: true
+      job3_arch01: true
+      job3_arch02: true
+      job3_arch03: true
+      job3_guil01: true
+      job3_guil02: true
+      job3_guil03: true
+      job3_rang01: true
+      job3_rang02: true
+      job3_rune01: true
+      job3_rune02: true
+      job3_rune03: true
+      job3_sha01: true
+      job3_war01: true
+      job3_war02: true
+      job4_bio: true
+      job4_mag: true
+      job4_tro: true
+      job_cru: true
+      job_duncer: true
+      job_hunte: true
+      job_knt: true
+      job_ko: true
+      job_monk: true
+      job_prist: true
+      job_sage: true
+      job_soul: true
+      job_star: true
+      job_sword1: true
+      job_wiz: true
+      jupe_area1: true
+      jupe_area2: true
+      jupe_core2: true
+      jupe_ele: true
+      jupe_ele_r: true
+      jupe_gate: true
+      kh_kiehl01: true
+      kh_kiehl02: true
+      lhz_cube: true
+      lhz_d_n2: true
+      lhz_que01: true
+      ma_zif01: true
+      ma_zif02: true
+      ma_zif03: true
+      ma_zif04: true
+      ma_zif05: true
+      ma_zif06: true
+      ma_zif07: true
+      ma_zif08: true
+      ma_zif09: true
+      moc_fild22b: true
+      monk_test: true
+      mosk_fild01: true
+      mosk_in: true
+      mosk_que: true
+      mosk_ship: true
+      n_castle: true
+      p_track01: true
+      p_track02: true
+      poring_w01: true
+      pvp_n_room: true
+      pvp_room: true
+      pvp_y_room: true
+      que_ba: true
+      que_dan01: true
+      que_dan02: true
+      que_god02: true
+      que_job01: true
+      que_job02: true
+      que_job03: true
+      que_lhz: true
+      que_moc_16: true
+      que_moon: true
+      que_qaru01: true
+      que_qaru02: true
+      que_qaru03: true
+      que_qaru04: true
+      que_qaru05: true
+      que_qsch01: true
+      que_qsch02: true
+      que_qsch03: true
+      que_qsch04: true
+      que_qsch05: true
+      que_sign01: true
+      que_sign02: true
+      que_swat: true
+      que_thor: true
+      quiz_test: true
+      rockmi2: true
+      schg_que01: true
+      star_frst: true
+      sword_1-1: true
+      sword_2-1: true
+      sword_3-1: true
+      thor_camp: true
+      valkyrie: true
+      yggdrasil01: true
+      z_agit: true
+      #force_map1: true
+      #force_map2: true
+      #force_map3: true
+      #hunter_1-1: true
+      #hunter_2-1: true
+      #hunter_3-1: true
+      #job_hunter: true
+      #job_knight: true
+      #job_priest: true
+      #job_wizard: true
+      #knight_1-1: true
+      #knight_2-1: true
+      #knight_3-1: true
+      #moc_fild04: true
+      #moc_fild05: true
+      #moc_fild06: true
+      #moc_fild08: true
+      #moc_fild09: true
+      #moc_fild10: true
+      #moc_fild14: true
+      #moc_fild15: true
+      #priest_1-1: true
+      #priest_2-1: true
+      #priest_3-1: true
+      #wizard_1-1: true
+      #wizard_2-1: true
+      #wizard_3-1: true
+    Mapflags:
+      - Flag: GuildLock
+      - Flag: NoBonusItemDrop
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+
+  - Id: Penalty_FreePkZone # Nightmare Mode
+    DisabledSkills:
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      #Comp_Wing_Of_Fly: 100
+      #Cps_Fly_Wing: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      #N_Fly_Wing2: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      #Wing_Of_Fly_TW: 100
+    Maps:
+      e_hugel: true
+      pvp_c_room: true
+      pvp_n_1-1: true
+      pvp_n_2-1: true
+      pvp_n_2-2: true
+      pvp_n_2-3: true
+      pvp_n_2-4: true
+      pvp_n_2-5: true
+      pvp_n_3-1: true
+      pvp_n_3-2: true
+      pvp_n_3-3: true
+      pvp_n_3-4: true
+      pvp_n_3-5: true
+      pvp_n_4-1: true
+      pvp_n_4-2: true
+      pvp_n_4-3: true
+      pvp_n_4-4: true
+      pvp_n_4-5: true
+      pvp_n_5-1: true
+      pvp_n_5-2: true
+      pvp_n_5-3: true
+      pvp_n_5-4: true
+      pvp_n_5-5: true
+      pvp_n_6-1: true
+      pvp_n_6-2: true
+      pvp_n_6-3: true
+      pvp_n_6-4: true
+      pvp_n_6-5: true
+      pvp_n_7-1: true
+      pvp_n_7-2: true
+      pvp_n_7-3: true
+      pvp_n_7-4: true
+      pvp_n_7-5: true
+      pvp_n_8-1: true
+      pvp_n_8-5: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoCostume
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NightmareDrop
+        Value: random,drop,300
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: NoPenalty_FreePkZone # Yoyo Mode
+    DisabledSkills:
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      C_Wing_Of_Fly: 100
+      #Comp_Wing_Of_Fly: 100
+      #Cps_Fly_Wing: 100
+      E_Giant_Fly_Wing: 100
+      Giant_Fly_Wing: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      #N_Fly_Wing2: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Wing_Of_Fly: 100
+      #Wing_Of_Fly_TW: 100
+    Maps:
+      guild_vs1: true
+      guild_vs3: true
+      pvp_2vs2: true
+      pvp_n_8-2: true
+      pvp_n_8-3: true
+      pvp_n_8-4: true
+      pvp_y_1-1: true
+      pvp_y_1-2: true
+      pvp_y_1-3: true
+      pvp_y_1-4: true
+      pvp_y_1-5: true
+      pvp_y_2-1: true
+      pvp_y_2-2: true
+      pvp_y_2-3: true
+      pvp_y_2-4: true
+      pvp_y_2-5: true
+      pvp_y_3-1: true
+      pvp_y_3-2: true
+      pvp_y_3-3: true
+      pvp_y_3-4: true
+      pvp_y_3-5: true
+      pvp_y_4-1: true
+      pvp_y_4-2: true
+      pvp_y_4-3: true
+      pvp_y_4-4: true
+      pvp_y_4-5: true
+      pvp_y_5-1: true
+      pvp_y_5-2: true
+      pvp_y_5-3: true
+      pvp_y_5-4: true
+      pvp_y_5-5: true
+      pvp_y_6-1: true
+      pvp_y_6-2: true
+      pvp_y_6-3: true
+      pvp_y_6-4: true
+      pvp_y_6-5: true
+      pvp_y_7-1: true
+      pvp_y_7-2: true
+      pvp_y_7-3: true
+      pvp_y_7-4: true
+      pvp_y_7-5: true
+      pvp_y_8-1: true
+      pvp_y_8-2: true
+      pvp_y_8-3: true
+      pvp_y_8-4: true
+      pvp_y_8-5: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoCostume
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: Event_GuildWar
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: WE_CHEERUP
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Blood_Butterfly_Card: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Orleans_Gown: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    DisabledStatuses:
+      Endure: 100
+      Cheerup: 100
+    Maps:
+      guild_vs5: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: GvG
+      - Flag: GvG_NoParty
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Agit # WoE:FE
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: SL_KAIZEL
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: GN_THORNS_TRAP
+        Pc: 100
+      - Skill: GN_WALLOFTHORN
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: WE_CHEERUP
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Greed_Scroll: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Pty_Assumptio_Scroll: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    Maps:
+      aldeg_cas01: true
+      aldeg_cas02: true
+      aldeg_cas03: true
+      aldeg_cas04: true
+      aldeg_cas05: true
+      gefg_cas01: true
+      gefg_cas02: true
+      gefg_cas03: true
+      gefg_cas04: true
+      gefg_cas05: true
+      guild_vs4: true
+      nguild_alde: true
+      nguild_gef: true
+      nguild_pay: true
+      nguild_prt: true
+      payg_cas01: true
+      payg_cas02: true
+      payg_cas03: true
+      payg_cas04: true
+      payg_cas05: true
+      prtg_cas01: true
+      prtg_cas02: true
+      prtg_cas03: true
+      prtg_cas04: true
+      prtg_cas05: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: GuildLock
+      - Flag: GvG_Castle
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Dungeon2 # Guild Dungeon - PK Enabled
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    Maps:
+      arug_dun01: true
+      gld2_ald: true
+      gld2_gef: true
+      gld2_pay: true
+      gld2_prt: true
+      gld_dun01: true
+      gld_dun02: true
+      gld_dun03: true
+      gld_dun04: true
+      schg_dun01: true
+      teg_dun01: true
+      teg_dun02: true
+    Mapflags:
+      - Flag: GvG_Dungeon
+      - Flag: NoCostume
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+
+  - Id: Dungeon3 # Teleport Disabled
+    DisabledSkills:
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      ama_dun01: true
+      kh_dun01: true
+      tha_t07: true
+      tha_t08: true
+      tha_t09: true
+      tha_t10: true
+      tha_t11: true
+      tha_t12: true
+      thana_boss: true
+      thana_step: true
+    Mapflags:
+      - Flag: NoMemo
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+
+  - Id: PkServer
+    # PK Mode zone is only used when the server has pk_mode (battle.conf) enabled
+    # This applies to all PvP maps that don't have their own zone
+    DisabledSkills:
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    Maps:
+      pvp_n_1-2: true
+      pvp_n_1-3: true
+      pvp_n_1-4: true
+      pvp_n_1-5: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 70
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoCostume
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: PvpServer
+    DisabledSkills:
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: AL_CURE
+        Pc: 100
+      - Skill: TF_HIDING
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: AS_CLOAKING
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: LK_CONCENTRATION
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: WS_CARTBOOST
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: GN_CARTBOOST
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Green_Potion: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Panacea: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      prt_are_in: true
+      turbo_n_1: true
+      turbo_n_16: true
+      turbo_n_4: true
+      turbo_n_8: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoKnockBack
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: DenySkill # For the Korean quiz event and similar things
+    DisabledSkills: # !TODO: Are these skill blocks needed since MF_NOSKILL is active?
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: WE_CHEERUP
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      que_bingo: true
+      quiz_00: true
+      quiz_01: true
+      quiz_02: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoSkill
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: TurboTrack # PK Mode
+    DisabledSkills:
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: AL_CURE
+        Pc: 100
+      - Skill: TF_HIDING
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: AS_CLOAKING
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: LK_CONCENTRATION
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: WS_CARTBOOST
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: GN_CARTBOOST
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Green_Potion: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Panacea: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    Maps:
+      alde_tt02: true
+      alde_tt03: true
+      turbo_e_4: true
+      turbo_e_8: true
+      turbo_e_16: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Jail
+    DisabledSkills:
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      #- Skill: TK_JUMPKICK # !TODO: Probably disabled by NoTeleport?
+      #  Pc: 100
+      #- Skill: TK_HIGHJUMP
+      #  Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Giant_Fly_Wing: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Wing_Of_Butterfly: 100
+      Wing_Of_Fly: 100
+      WOB_Local: 100
+      WOB_Rachel: 100
+      WOB_Rune: 100
+      WOB_Schwaltz: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      que_hugel: true
+      sec_pri: true
+    Mapflags:
+      - Flag: HideMobHpBar
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoReturn
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: MonsterTrack
+    DisabledSkills:
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      gld_dun01_2: true
+      gld_dun02_2: true
+      gld_dun04_2: true
+      iz_dun05: true
+      lasa_dun_q: true
+      ra_fild04: true
+    Mapflags:
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: PoringBattle
+    DisabledSkills:
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: AL_CURE
+        Pc: 100
+      - Skill: TF_HIDING
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: AS_CLOAKING
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: LK_CONCENTRATION
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Green_Potion: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Panacea: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Wing_Of_Butterfly: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      poring_w02: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Agit_Siegev15 # WoE:SE
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: TK_HIGHJUMP
+        Pc: 100
+      - Skill: SL_KAIZEL
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: GN_WALLOFTHORN
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: WE_CHEERUP
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Blood_Butterfly_Card: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Orleans_Gown: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+      Cheerup: 100
+    Maps:
+      arug_cas01: true
+      arug_cas02: true
+      arug_cas03: true
+      arug_cas04: true
+      arug_cas05: true
+      schg_cas01: true
+      schg_cas02: true
+      schg_cas03: true
+      schg_cas04: true
+      schg_cas05: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: GuildLock
+      - Flag: GvG_Castle
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Battlefield
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: SL_KAIZEL
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: MO_BODYRELOCATION
+        Pc: 100
+      - Skill: SG_FEEL
+        Pc: 100
+      - Skill: TK_RUN
+        Pc: 100
+      - Skill: TK_HIGHJUMP
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: WE_CHEERUP
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Blood_Butterfly_Card: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Orleans_Gown: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+      Cheerup: 100
+    Maps:
+      bat_a01: true
+      bat_a02: true
+      bat_b01: true
+      bat_b02: true
+      bat_c01: true
+      bat_c02: true
+      bat_c03: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: HideMobHpBar
+      - Flag: Long_Damage_Rate
+        Value: 75
+      - Flag: Magic_Damage_Rate
+        Value: 70
+      - Flag: Misc_Damage_Rate
+        Value: 70
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 75
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 70
+
+  - Id: PvP_Tournament # Instances
+    DisabledSkills:
+      - Skill: AL_TELEPORT
+        Mob: 100
+        Hom: 100
+        Mer: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+        Mob: 100
+      - Skill: PF_SPIDERWEB
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: NPC_EXPULSION
+        Mob: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      N_Fly_Wing: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      1@20cn1: true
+      1@20cn2: true
+      1@4cdn: true
+      1@4drk: true
+      1@4igd: true
+      1@4inq: true
+      1@4mag: true
+      1@4mst: true
+      1@4sac: true
+      1@4tro: true
+      1@4win: true
+      1@adv: true
+      1@advs: true
+      1@air1: true
+      1@air2: true
+      1@ba_go: true
+      1@bamn: true
+      1@bamq: true
+      1@begi: true
+      1@cash: true
+      1@cata: true
+      1@ch_t: true
+      1@ch_u: true
+      1@cor: true
+      1@crd: true
+      1@dime: true
+      1@drdo: true
+      1@dth1: true
+      1@dth2: true
+      1@dth3: true
+      1@ecl: true
+      1@eom: true
+      1@exds: true
+      1@exhn: true
+      1@exnw: true
+      1@exse: true
+      1@exsh: true
+      1@exsr: true
+      1@f_lake: true
+      1@face: true
+      1@ffp: true
+      1@ge_sn: true
+      1@ge_st: true
+      1@gef: true
+      1@gef_in: true
+      1@ghg: true
+      #1@gl_K2: true
+      1@gl_he2: true
+      1@gl_he: true
+      1@gl_k: true
+      1@gl_kh: true
+      1@gl_prq: true
+      1@glast: true
+      1@gol1: true
+      1@gol2: true
+      1@halo: true
+      1@herbs: true
+      1@infi: true
+      1@iwp: true
+      1@jorchs: true
+      1@jorlab: true
+      1@jtb: true
+      1@lab: true
+      1@lhz: true
+      1@lost: true
+      1@ma_b: true
+      1@ma_c: true
+      1@ma_h: true
+      1@mcd: true
+      1@md_gef: true
+      1@md_pay: true
+      1@mir: true
+      1@mist: true
+      1@mjo1: true
+      1@mjo2: true
+      1@nyd: true
+      1@nyr: true
+      1@odin: true
+      1@orcs: true
+      1@os_a: true
+      1@os_b: true
+      1@oz: true
+      1@pdb: true
+      1@pop1: true
+      1@pop2: true
+      1@pop3: true
+      1@pump: true
+      1@rev: true
+      1@rgsr: true
+      1@sara: true
+      1@slug: true
+      1@slw: true
+      1@soul: true
+      1@spa2: true
+      1@spa: true
+      1@sthb: true
+      1@sthc: true
+      1@sthd: true
+      1@swat: true
+      1@tcamp: true
+      1@thts: true
+      1@tnm1: true
+      1@tnm2: true
+      1@tnm3: true
+      1@tower: true
+      1@tre: true
+      1@twas: true
+      1@twbs: true
+      1@twig: true
+      1@twsd: true
+      1@uns: true
+      1@vrac1: true
+      1@vrac2: true
+      1@vrcas: true
+      1@vrclo: true
+      1@vrev: true
+      1@vrgen: true
+      1@vrhha: true
+      1@vrpo: true
+      1@vrpop: true
+      1@whl: true
+      1@xm_d2: true
+      1@xm_d: true
+      2@cata: true
+      2@ch_t: true
+      2@exds: true
+      #2@gl_K2: true
+      2@gl_k: true
+      2@gl_kh: true
+      2@mir: true
+      2@nyd: true
+      2@nyr: true
+      2@orcs: true
+      2@pump: true
+      2@thts: true
+      2@tower: true
+      2@vrclo: true
+      2@vrpop: true
+      3@ch_t: true
+      3@thts: true
+      3@tower: true
+      3@vrpop: true
+      4@thts: true
+      4@tower: true
+      5@thts: true
+      5@tower: true
+      6@thts: true
+      6@tower: true
+      7@thts: true
+      8@thts: true
+      que_god01: true
+    Mapflags:
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoDynamicNpc
+      - Flag: NoMemo
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PartyLock
+
+  - Id: Unknown_Sealed_Shrine # Sealed Shrine
+    DisabledSkills:
+      - Skill: AL_TELEPORT
+        Hom: 100
+        Mer: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+        Mob: 100
+      - Skill: PF_SPIDERWEB
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Censor_Bar_: 100
+      #Cps_Fly_Wing: 100
+      C_Wing_Of_Fly: 100
+      Emergency_Scroll1: 100
+      Emergency_Scroll2: 100
+      Emergency_Scroll3: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      N_Fly_Wing: 100
+      #N_Fly_Wing2: 100
+      Pieces_Of_Sentiment: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Wing_Of_Fly: 100
+      #Wing_Of_Fly_TW: 100
+    Mapflags:
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      #- Flag: NoSave # Disabled in update
+      #  Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PartyLock
+
+  - Id: Unknown_FrancePvP # France PvP
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: CG_MARIONETTE
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      # !TODO: Block party formation; PartyLock is too restrictive
+      - Flag: HideDamage
+      - Flag: Long_Damage_Rate
+        Value: 60
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 60
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: Unknown_Town2 # Town 2
+    DisabledSkills:
+      - Skill: BS_GREED
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SC_CHAOSPANIC
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      dicastes01: true
+      dicastes02: true
+      manuk: true
+      splendide: true
+    Mapflags:
+      - Flag: NightEnabled
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoWarpTo
+      - Flag: PrivateAirship_Destination
+      - Flag: PrivateAirship_Source
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: Unknown_Training_Grounds # Novice Training Grounds
+    DisabledSkills:
+      - Skill: AM_CANNIBALIZE
+        Pc: 100
+      - Skill: AM_SPHEREMINE
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: WM_POEMOFNETHERWORLD
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Greed_Scroll: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      iz_int: true
+      iz_int01: true
+      iz_int02: true
+      iz_int03: true
+      iz_int04: true
+      new_1-1: true
+      new_1-2: true
+      new_1-4: true
+      new_2-1: true
+      new_2-2: true
+      new_2-4: true
+      new_3-1: true
+      new_3-2: true
+      new_3-4: true
+      new_4-1: true
+      new_4-2: true
+      new_4-4: true
+      new_5-1: true
+      new_5-2: true
+      new_5-4: true
+      new_zone01: true
+      new_zone02: true
+      new_zone03: true
+      new_zone04: true
+      pay_gld: true
+    Mapflags:
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoWarpTo
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: Siege_LowLevel # WoE:TE
+    DisabledSkills:
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_TELEPORT
+        Mob: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: SM_ENDURE
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: TK_HIGHJUMP
+        Pc: 100
+      - Skill: SL_KAIZEL
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: HP_ASSUMPTIO
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: KO_MUCHANAGE
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: WE_CHEERUP
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Asprika: 100
+      Assumptio_5_Scroll: 100
+      Blood_Butterfly_Card: 100
+      Box_Of_Sunlight: 100
+      Brynhild: 100
+      Brysinggamen: 100
+      Brysinggamen_C: 100
+      Ganbantein: 100
+      God_Material_Box: 100
+      Golden_Bug_Card: 100
+      Half_Asprika: 100
+      Half_Brynhild: 100
+      Hervor: 100
+      Hervor_Alvitr: 100
+      Jormungand: 100
+      Krieger_Book1: 100
+      Krieger_Book2: 100
+      Krieger_Bow1: 100
+      Krieger_Dagger1: 100
+      Krieger_Gatling1: 100
+      Krieger_Huuma_Shuriken1: 100
+      Krieger_Instrument1: 100
+      Krieger_Katar1: 100
+      Krieger_Katar2: 100
+      Krieger_Knuckle1: 100
+      Krieger_Knuckle2: 100
+      Krieger_Launcher1: 100
+      Krieger_Muffler1: 100
+      Krieger_Onehand_Axe1: 100
+      Krieger_Onehand_Mace1: 100
+      Krieger_Onehand_Spear1: 100
+      Krieger_Onehand_Staff1: 100
+      Krieger_Onehand_Staff2: 100
+      Krieger_Onehand_Sword1: 100
+      Krieger_Onehand_Sword2: 100
+      Krieger_Onehand_Sword3: 100
+      Krieger_Pistol1: 100
+      Krieger_Rifle1: 100
+      Krieger_Ring1: 100
+      Krieger_Ring2: 100
+      Krieger_Ring3: 100
+      Krieger_Shoes1: 100
+      Krieger_Shoes2: 100
+      Krieger_Shoes3: 100
+      Krieger_Shotgun1: 100
+      Krieger_Suit1: 100
+      Krieger_Suit2: 100
+      Krieger_Suit3: 100
+      Krieger_Twohand_Axe1: 100
+      Krieger_Twohand_Spear1: 100
+      Krieger_Twohand_Staff1: 100
+      Krieger_Twohand_Sword1: 100
+      Krieger_Whip1: 100
+      Magingiorde: 100
+      Magingiorde_C: 100
+      Maya_Puple_Card: 100
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Mjolnir: 100
+      Mjolnir_C: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Orleans_Gown: 100
+      Phen_Card: 100
+      Pty_Assumptio_Scroll: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      Sleipnir: 100
+      Sleipnir_C: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Upd_Maya_Puple_Card: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    DisabledStatuses:
+      Assumptio: 100
+      Berserk: 100
+      Cheerup: 100
+      Endure: 100
+      # RUNE_KNIGHT
+      Abundance: 100
+      Crushstrike: 100
+      Deathbound: 100
+      Enchantblade: 100
+      Fightingspirit: 100
+      Giantgrowth: 100
+      Millenniumshield: 100
+      Refresh: 100
+      Reuse_Refresh: 100
+      Stonehardskin: 100
+      Stormblast: 100
+      Vitalityactivation: 100
+      # ARCH_BISHOP
+      Adoramus: 100
+      Duplelight: 100
+      Epiclesis: 100
+      Expiatio: 100
+      Laudaagnus: 100
+      Laudaramus: 100
+      Oratio: 100
+      Renovatio: 100
+      Secrament: 100
+      # WARLOCK
+      Freeze_Sp: 100
+      Marshofabyss: 100
+      Maxspellbook: 100
+      Reading_Sb: 100
+      Recognizedspell: 100
+      Spellbook1: 100
+      Spellbook2: 100
+      Spellbook3: 100
+      Spellbook4: 100
+      Spellbook5: 100
+      Spellbook6: 100
+      Sphere_1: 100
+      Sphere_2: 100
+      Sphere_3: 100
+      Sphere_4: 100
+      Sphere_5: 100
+      Stasis: 100
+      Whiteimprison: 100
+      # RANGER
+      Bite: 100
+      Camouflage: 100
+      Electricshocker: 100
+      Fearbreeze: 100
+      Wugdash: 100
+      # MECHANIC
+      Acceleration: 100
+      Analyze: 100
+      Hovering: 100
+      Infraredscan: 100
+      Magneticfield: 100
+      Neutralbarrier: 100
+      Neutralbarrier_Master: 100
+      Overheat: 100
+      Overheat_Limitpoint: 100
+      Shapeshift: 100
+      Stealthfield: 100
+      Stealthfield_Master: 100
+      # GUILLOTINE_CROSS
+      Cloakingexceed: 100
+      Deathhurt: 100
+      Hallucinationwalk: 100
+      Hallucinationwalk_Postdelay: 100
+      Leechesend: 100
+      Magicmushroom: 100
+      Oblivioncurse: 100
+      Paralyse: 100
+      Poisoningweapon: 100
+      Pyrexia: 100
+      Rollingcutter: 100
+      Toxin: 100
+      Venombleed: 100
+      Venomimpress: 100
+      Weaponblocking: 100
+      # ROYAL_GUARD
+      Banding: 100
+      Banding_Defence: 100
+      Earthdrive: 100
+      Exeedbreak: 100
+      Forceofvanguard: 100
+      Inspiration: 100
+      Prestige: 100
+      Reflectdamage: 100
+      Shieldspell_Atk: 100
+      Shieldspell_Hp: 100
+      Shieldspell_Sp: 100
+      # SORCERER
+      Crystalize: 100
+      Propertywalk: 100
+      Spellfist: 100
+      Striking: 100
+      Vacuum_Extreme: 100
+      Vacuum_Extreme_Postdelay: 100
+      Warmer: 100
+      # MINSTREL
+      Echosong: 100
+      Harmonize: 100
+      Moonlitserenade: 100
+      Rushwindmill: 100
+      Swingdance: 100
+      Symphonyoflover: 100
+      # WANDERER
+      Deepsleep: 100
+      Gloomyday: 100
+      Gloomyday_Sk: 100
+      Sircleofnature: 100
+      Voiceofsiren: 100
+      # MINSTREL & WANDERER
+      Beyondofwarcry: 100
+      Dancewithwug: 100
+      Leradsdew: 100
+      Melodyofsink: 100
+      Saturdaynightfever: 100
+      Songofmana: 100
+      Unlimitedhummingvoice: 100
+      # SURA
+      Crescentelbow: 100
+      Cursedcircle_Atker: 100
+      Cursedcircle_Target: 100
+      Gn_Cartboost: 100
+      Gt_Change: 100
+      Gt_Energygain: 100
+      Gt_Revitalize: 100
+      Lightningwalk: 100
+      Netherworld: 100
+      Raisingdragon: 100
+      Sitdown_Force: 100
+      # GENETIC
+      Banana_Bomb: 100
+      Banana_Bomb_Sitdown: 100
+      Bloodsucker: 100
+      Boost500: 100
+      Cocktail_Warg_Blood: 100
+      Drocera_Herb_Steamed: 100
+      Extract_Salamine_Juice: 100
+      Extract_White_Potion_Z: 100
+      Full_Swing_K: 100
+      Life_Force_F: 100
+      Mana_Plus: 100
+      Mandragora: 100
+      Melon_Bomb: 100
+      Minor_Bbq: 100
+      Mustle_M: 100
+      Mysterious_Powder: 100
+      Putti_Tails_Noodles: 100
+      Savage_Steak: 100
+      Siroma_Ice_Tea: 100
+      Smokepowder: 100
+      Stomachache: 100
+      Teargas: 100
+      Thornstrap: 100
+      Vitata_500: 100
+      # Homunculus
+      Angriffs_Modus: 100
+      Ash: 100
+      Cbc: 100
+      Eqc: 100
+      Goldene_Ferse: 100
+      Granitic_Armor: 100
+      Light_Of_Regene: 100
+      Magma_Flow: 100
+      Overed_Boost: 100
+      Pain_Killer: 100
+      Paralysis: 100
+      Pyroclastic: 100
+      Style_Change: 100
+      Tinder_Breaker2: 100
+      Tinder_Breaker: 100
+      # SHADOW_CHASER
+      _Autoshadowspell: 100
+      _Bloodylust: 100
+      _Bodypaint: 100
+      _Deadlyinfect: 100
+      _Enervation: 100
+      _Groomy: 100
+      _Ignorance: 100
+      _Invisibility: 100
+      _Laziness: 100
+      _Manhole: 100
+      _Reproduce: 100
+      _Shadowform: 100
+      _Stripaccessory: 100
+      _Unlucky: 100
+      _Weakness: 100
+      # Elemental SORCERER
+      Aquaplay: 100
+      Aquaplay_Option: 100
+      Blast: 100
+      Blast_Option: 100
+      Chilly_Air: 100
+      Chilly_Air_Option: 100
+      Circle_Of_Fire: 100
+      Circle_Of_Fire_Option: 100
+      Cooler: 100
+      Cooler_Option: 100
+      Cursed_Soil: 100
+      Cursed_Soil_Option: 100
+      Earth_Insignia: 100
+      Fire_Cloak: 100
+      Fire_Cloak_Option: 100
+      Fire_Insignia: 100
+      Gust: 100
+      Gust_Option: 100
+      Heater: 100
+      Heater_Option: 100
+      Petrology: 100
+      Petrology_Option: 100
+      Power_Of_Gaia: 100
+      Pyrotechnic: 100
+      Pyrotechnic_Option: 100
+      Rock_Crusher: 100
+      Rock_Crusher_Atk: 100
+      Solid_Skin: 100
+      Solid_Skin_Option: 100
+      Stone_Shield: 100
+      Stone_Shield_Option: 100
+      Tidal_Weapon: 100
+      Tidal_Weapon_Option: 100
+      Tropic: 100
+      Tropic_Option: 100
+      Upheaval: 100
+      Upheaval_Option: 100
+      Water_Barrier: 100
+      Water_Drop: 100
+      Water_Drop_Option: 100
+      Water_Insignia: 100
+      Water_Screen: 100
+      Water_Screen_Option: 100
+      Wild_Storm: 100
+      Wild_Storm_Option: 100
+      Wind_Curtain: 100
+      Wind_Curtain_Option: 100
+      Wind_Insignia: 100
+      Wind_Step: 100
+      Wind_Step_Option: 100
+      Zephyr: 100
+      # KAGEROU / OBORO
+      Akaitsuki: 100
+      Gensou: 100
+      Izayoi: 100
+      Jyumonjikiri: 100
+      Kagehumi: 100
+      Kagemusya: 100
+      Kyomu: 100
+      Kyougaku: 100
+      Meikyousisui: 100
+      Zangetsu: 100
+      Zenkai: 100
+      # Summoner
+      Arclousedash: 100
+      Bitescar: 100
+      Catnippowder: 100
+      Freshshrimp: 100
+      Shrimp: 100
+      Spritemable: 100
+      Suhide: 100
+      Su_Stoop: 100
+      Sv_Roottwist: 100
+      Tunaparty: 100
+      # Rebellion
+      Anti_M_Blast: 100
+      B_Trap: 100
+      C_Marker: 100
+      E_Chain: 100
+      Heat_Barrel: 100
+      H_Mine: 100
+      Magicalbullet: 100
+      P_Alter: 100
+      Qd_Shot_Ready: 100
+      # Star Emperor
+      Creatingstar: 100
+      Dimension1: 100
+      Dimension2: 100
+      Dimension: 100
+      Fallingstar: 100
+      Flashkick: 100
+      Gravitycontrol: 100
+      Lightofmoon: 100
+      Lightofstar: 100
+      Lightofsun: 100
+      Lunarstance: 100
+      Newmoon: 100
+      Novaexplosing: 100
+      Starstance: 100
+      Sunstance: 100
+      Universestance: 100
+      # Soul Reaper
+      Soulcollect: 100
+      Soulcurse: 100
+      Souldivision: 100
+      Soulenergy: 100
+      Soulfairy: 100
+      Soulfalcon: 100
+      Soulgolem: 100
+      Soulreaper: 100
+      Soulshadow: 100
+      Soulunity: 100
+      Sp_Sha: 100
+      Use_Skill_Sp_Sha: 100
+      Use_Skill_Sp_Spa: 100
+      # Others
+      Burning: 100
+      Fear: 100
+      Freezing: 100
+      Teargas_Sob: 100
+      _Chaos: 100
+      _Feintbomb: 100
+      # 4th Job Common Status
+      Handicapstate_Conflagration: 100
+      Handicapstate_Crystallization: 100
+      Handicapstate_Deadlypoison: 100
+      Handicapstate_Deepblind: 100
+      Handicapstate_Deepsilence: 100
+      Handicapstate_Depression: 100
+      Handicapstate_Frostbite: 100
+      Handicapstate_Holyflame: 100
+      Handicapstate_Lassitude: 100
+      Handicapstate_Lightningstrike: 100
+      Handicapstate_Misfortune: 100
+      Handicapstate_Swooning: 100
+      # Dragon Knight
+      Chargingpierce: 100
+      Chargingpierce_Count: 100
+      Dragonic_Aura: 100
+      Servantweapon: 100
+      Servant_Sign: 100
+      Vigor: 100
+      # Arch Mage
+      Climax: 100
+      Climax_Bloom: 100
+      Climax_Cryimp: 100
+      Climax_Des_Hu: 100
+      Climax_Earth: 100
+      Deadly_Defeasance: 100
+      # Windhawk
+      Calamitygale: 100
+      Crescivebolt: 100
+      Windsign: 100
+      # Cardinal
+      A_Telum: 100
+      A_Vita: 100
+      Benedictum: 100
+      Competentia: 100
+      Mediale: 100
+      Pre_Acies: 100
+      Religio: 100
+      # Meister
+      Abr_Battle_Warior: 100
+      Abr_Dual_Cannon: 100
+      Abr_Infinity: 100
+      Abr_Mother_Net: 100
+      Axe_Stomp: 100
+      A_Machine: 100
+      D_Machine: 100
+      # Shadow Cross
+      Dancing_Knife: 100
+      E_Slash_Count: 100
+      Potent_Venom: 100
+      Shadow_Exceed: 100
+      Shadow_Scar: 100
+      Shadow_Weapon: 100
+      # Imperial Guard
+      Attack_Stance: 100
+      Guardian_S: 100
+      Guard_Stance: 100
+      Holy_S: 100
+      Rebound_S: 100
+      Shield_Power: 100
+      Spear_Scar: 100
+      Ultimate_S: 100
+      # Elemental Master
+      Elemental_Veil: 100
+      Spell_Enchanting: 100
+      Summon_Elemental_Ardor: 100
+      Summon_Elemental_Diluvio: 100
+      Summon_Elemental_Procella: 100
+      Summon_Elemental_Serpens: 100
+      Summon_Elemental_Terremotus: 100
+      # Troubadour/Trouvere
+      Ain_Rhapsody: 100
+      Gef_Nocturn: 100
+      Jawaii_Serenade: 100
+      Kvasir_Sonata: 100
+      Musical_Interlude: 100
+      Mystic_Symphony: 100
+      Pron_March: 100
+      Roseblossom: 100
+      Soundblend: 100
+      # Inquisitor
+      Firm_Faith: 100
+      First_Brand: 100
+      First_Faith_Power: 100
+      Holy_Oil: 100
+      Massive_F_Blaster: 100
+      Powerful_Faith: 100
+      Second_Brand: 100
+      Second_Judge: 100
+      Sincere_Faith: 100
+      Third_Exor_Flame: 100
+      # Biolo
+      Bionic_Creeper: 100
+      Bionic_Helltree: 100
+      Bionic_Woodenwarrior: 100
+      Bionic_Wooden_Fairy: 100
+      Bo_Hell_Dusty: 100
+      Protectshadowequip: 100
+      Researchreport: 100
+      # Abyss Chaser
+      Abyssforceweapon: 100
+      Abyss_Dagger: 100
+      Abyss_Slayer: 100
+      Shadow_Strip: 100
+      # Super Elementals
+      Cold_Force: 100
+      Cold_Force_Option: 100
+      Crystal_Armor: 100
+      Crystal_Armor_Option: 100
+      Deep_Poisoning: 100
+      Deep_Poisoning_Option: 100
+      Earth_Care: 100
+      Earth_Care_Option: 100
+      Eyes_Of_Storm: 100
+      Eyes_Of_Storm_Option: 100
+      Flamearmor: 100
+      Flamearmor_Option: 100
+      Flametechnic: 100
+      Flametechnic_Option: 100
+      Grace_Breeze: 100
+      Grace_Breeze_Option: 100
+      Poison_Shield: 100
+      Poison_Shield_Option: 100
+      Strong_Protection: 100
+      Strong_Protection_Option: 100
+    RestrictedJobs:
+      Abyss_Chaser: 100
+      Arch_Bishop: 100
+      Arch_Bishop_T: 100
+      Arch_Mage: 100
+      Baby_Arch_Bishop: 100
+      Baby_Genetic: 100
+      Baby_Guillotine_Cross: 100
+      Baby_Kagerou: 100
+      Baby_Mechanic2: 100
+      Baby_Mechanic: 100
+      Baby_Minstrel: 100
+      Baby_Oboro: 100
+      Baby_Ranger2: 100
+      Baby_Ranger: 100
+      Baby_Rebellion: 100
+      Baby_Royal_Guard2: 100
+      Baby_Royal_Guard: 100
+      Baby_Rune_Knight2: 100
+      Baby_Rune_Knight: 100
+      Baby_Shadow_Chaser: 100
+      Baby_Sorcerer: 100
+      Baby_Soul_Reaper: 100
+      Baby_Star_Emperor2: 100
+      Baby_Star_Emperor: 100
+      Baby_Summoner: 100
+      Baby_Sura: 100
+      Baby_Wanderer: 100
+      Baby_Warlock: 100
+      Biolo: 100
+      Cardinal: 100
+      Dragon_Knight2: 100
+      Dragon_Knight: 100
+      Elemental_Master: 100
+      Genetic: 100
+      Genetic_T: 100
+      Guillotine_Cross: 100
+      Guillotine_Cross_T: 100
+      Hyper_Novice: 100
+      Imperial_Guard2: 100
+      Imperial_Guard: 100
+      Inquisitor: 100
+      Kagerou: 100
+      Mechanic2: 100
+      Mechanic: 100
+      Mechanic_T2: 100
+      Mechanic_T: 100
+      Meister2: 100
+      Meister: 100
+      Minstrel: 100
+      Minstrel_T: 100
+      Night_Watch: 100
+      Oboro: 100
+      Ranger2: 100
+      Ranger: 100
+      Ranger_T2: 100
+      Ranger_T: 100
+      Rebellion: 100
+      Royal_Guard2: 100
+      Royal_Guard: 100
+      Royal_Guard_T2: 100
+      Royal_Guard_T: 100
+      Rune_Knight2: 100
+      Rune_Knight: 100
+      Rune_Knight_T2: 100
+      Rune_Knight_T: 100
+      Shadow_Chaser: 100
+      Shadow_Chaser_T: 100
+      Shadow_Cross: 100
+      Shinkiro: 100
+      Shiranui: 100
+      Sky_Emperor2: 100
+      Sky_Emperor: 100
+      Sorcerer: 100
+      Sorcerer_T: 100
+      Soul_Ascetic: 100
+      Soul_Reaper: 100
+      Spirit_Handler: 100
+      Star_Emperor2: 100
+      Star_Emperor: 100
+      Summoner: 100
+      Super_Baby_E: 100
+      Super_Novice_E: 100
+      Sura: 100
+      Sura_T: 100
+      Troubadour: 100
+      Trouvere: 100
+      Wanderer: 100
+      Wanderer_T: 100
+      Warlock: 100
+      Warlock_T: 100
+      Windhawk2: 100
+      Windhawk: 100
+    Maps:
+      gld_dun03_2: true
+      te_aldecas1: true
+      te_aldecas2: true
+      te_aldecas3: true
+      te_aldecas4: true
+      te_aldecas5: true
+      te_prtcas01: true
+      te_prtcas02: true
+      te_prtcas03: true
+      te_prtcas04: true
+      te_prtcas05: true
+    Mapflags:
+      - Flag: Flee_Penalty
+        Value: 20
+      - Flag: GuildLock
+      - Flag: GvG_Te
+      - Flag: GvG_Te_Castle
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: Invincible_Time
+        Value: 10000
+      - Flag: Long_Damage_Rate
+        Value: 80
+      - Flag: Magic_Damage_Rate
+        Value: 60
+      - Flag: Misc_Damage_Rate
+        Value: 60
+      - Flag: Monster_NoTeleport
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoKnockBack
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarp
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
+      - Flag: Short_Damage_Rate
+        Value: 80
+      - Flag: Skill_Duration
+        Value: HT_SKIDTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_LANDMINE,400
+      - Flag: Skill_Duration
+        Value: HT_ANKLESNARE,400
+      - Flag: Skill_Duration
+        Value: HT_SHOCKWAVE,400
+      - Flag: Skill_Duration
+        Value: HT_SANDMAN,400
+      - Flag: Skill_Duration
+        Value: HT_FLASHER,400
+      - Flag: Skill_Duration
+        Value: HT_FREEZINGTRAP,400
+      - Flag: Skill_Duration
+        Value: HT_BLASTMINE,400
+      - Flag: Skill_Duration
+        Value: HT_CLAYMORETRAP,400
+      - Flag: Skill_Duration
+        Value: HT_TALKIEBOX,400
+      - Flag: Weapon_Damage_Rate
+        Value: 60
+
+  - Id: 2012_Rwc_Battle_Field
+    DisabledSkills:
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Treasure_Box_Scroll: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Maps:
+      1@def01: true
+      1@def02: true
+      1@def03: true
+      2009rwc_01: true
+      2009rwc_02: true
+      2009rwc_03: true
+      2009rwc_04: true
+      2009rwc_05: true
+      2009rwc_06: true
+      2009rwc_07: true
+      2009rwc_08: true
+      2009rwc_f01: true
+      2012rwc_01: true
+      2012rwc_02: true
+      2012rwc_03: true
+      2012rwc_04: true
+      2012rwc_05: true
+      2012rwc_06: true
+      2012rwc_07: true
+      2012rwc_08: true
+      ice_dun03: true
+    Mapflags:
+      - Flag: GvG
+      - Flag: GvG_NoParty
+      - Flag: NoBranch
+      - Flag: NoKnockBack
+      - Flag: PvP_NoGuild
+      - Flag: PvP_NoParty
+
+  - Id: Unknown_Bossnia # Bossnia Event
+    DisabledSkills:
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: WE_CALLALLFAMILY
+        Pc: 100
+      - Skill: AB_CONVENIO
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Mapflags:
+      - Flag: NoBranch
+      - Flag: NoMemo
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+
+  - Id: Unknown_Bloody_Branch # Bloody Dead Branch
+    DisabledSkills:
+      - Skill: BD_ETERNALCHAOS
+        Pc: 100
+      - Skill: BD_ROKISWEIL
+        Pc: 100
+      - Skill: BA_DISSONANCE
+        Pc: 100
+      - Skill: DC_UGLYDANCE
+        Pc: 100
+      - Skill: DC_DONTFORGETME
+        Pc: 100
+      - Skill: WM_GLOOMYDAY
+        Pc: 100
+      - Skill: WM_SOUND_OF_DESTRUCTION
+        Pc: 100
+      - Skill: WM_SATURDAY_NIGHT_FEVER
+        Pc: 100
+      - Skill: WM_MELODYOFSINK
+        Pc: 100
+      - Skill: WM_BEYOND_OF_WARCRY
+        Pc: 100
+      - Skill: SO_ARRULLO
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_BLOODYLUST
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Minus_Agi: 100
+      Minus_Dex: 100
+      Minus_Int: 100
+      Minus_Luk: 100
+      Minus_Str: 100
+      Minus_Vit: 100
+      Neuralizer: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Sg_Blue_Potion_Box: 100
+      Sg_Violet_Potion_Box: 100
+      Sg_White_Potion_Box: 100
+      Siege_Arrow_A: 100
+      Siege_Arrow_S: 100
+      Siege_Boots: 100
+      Siege_Greave: 100
+      Siege_Manteau: 100
+      Siege_Muffler: 100
+      Siege_Plate: 100
+      Siege_Robe: 100
+      Siege_Shoes: 100
+      Siege_Suits: 100
+      TE_Ring_Of_Defiance: 100
+      TE_Ring_Of_Protection: 100
+      TE_Ring_Of_Rage: 100
+      TE_White_Potion: 100
+      TE_White_Slim_Potion: 100
+      TE_Woe_Axe: 100
+      TE_Woe_Bone_Helm: 100
+      TE_Woe_Book: 100
+      TE_Woe_Boots: 100
+      TE_Woe_Bow: 100
+      TE_Woe_Buckler: 100
+      TE_Woe_Cap: 100
+      TE_Woe_Chain_Mail: 100
+      TE_Woe_Coat: 100
+      TE_Woe_Fist: 100
+      TE_Woe_Gatling: 100
+      TE_Woe_Grenade: 100
+      TE_Woe_Guitar: 100
+      TE_Woe_Huuma: 100
+      TE_Woe_Katar: 100
+      TE_Woe_Knife: 100
+      TE_Woe_Lance: 100
+      TE_Woe_Mace: 100
+      TE_Woe_Mage_Coat: 100
+      TE_Woe_Magic_Eyes: 100
+      TE_Woe_Magic_Guard: 100
+      TE_Woe_Magic_Manteau: 100
+      TE_Woe_Magic_Sandal: 100
+      TE_Woe_Manteau: 100
+      TE_Woe_Muffler: 100
+      TE_Woe_Pike: 100
+      TE_Woe_Pistol: 100
+      TE_Woe_Rifle: 100
+      TE_Woe_Rope: 100
+      TE_Woe_Shield: 100
+      TE_Woe_Shoes: 100
+      TE_Woe_Shotgun: 100
+      TE_Woe_Staff: 100
+      TE_Woe_Sword: 100
+      TE_Woe_Two_Handed_Axe: 100
+      TE_Woe_Two_Hand_Staff: 100
+      TE_Woe_Two_Hand_Sword: 100
+      Uni_Catalog_Bz: 100
+      Velum_Arbalest: 100
+      Velum_Arc_Wand: 100
+      Velum_Bible: 100
+      Velum_Buster: 100
+      Velum_Claw: 100
+      Velum_Claymore: 100
+      Velum_CrossBow: 100
+      Velum_Damascus: 100
+      Velum_Encyclopedia: 100
+      Velum_Flail: 100
+      Velum_Glaive: 100
+      Velum_Guillotine: 100
+      Velum_Jamadhar: 100
+      Velum_Katzbalger: 100
+      Velum_Scare: 100
+      Velum_Spear: 100
+      Velum_Stunner: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+      Woe_Blue_Potion: 100
+      Woe_Violet_Potion: 100
+      Woe_White_Potion: 100
+    Mapflags:
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoWarpTo
+
+  - Id: Unknown_RWC # RWC Mode
+    DisabledSkills:
+      - Skill: MC_VENDING
+        Pc: 100
+      - Skill: AC_MAKINGARROW
+        Pc: 100
+      - Skill: RG_STEALCOIN
+        Pc: 100
+      - Skill: TF_BACKSLIDING
+        Pc: 100
+      - Skill: AL_WARP
+        Pc: 100
+      - Skill: WZ_ICEWALL
+        Pc: 100
+      - Skill: WE_CALLPARTNER
+        Pc: 100
+      - Skill: WE_CALLBABY
+        Pc: 100
+      - Skill: WE_CALLPARENT
+        Pc: 100
+      - Skill: TK_HIGHJUMP
+        Pc: 100
+      - Skill: LK_BERSERK
+        Pc: 100
+      - Skill: ST_CHASEWALK
+        Pc: 100
+      - Skill: HP_BASILICA
+        Pc: 100
+      - Skill: CR_CULTIVATION
+        Pc: 100
+      - Skill: CG_MOONLIT
+        Pc: 100
+      - Skill: NJ_KIRIKAGE
+        Pc: 100
+      - Skill: SC_MANHOLE
+        Pc: 100
+      - Skill: SC_GROOMY
+        Pc: 100
+      - Skill: SC_UNLUCKY
+        Pc: 100
+      - Skill: GN_CHANGEMATERIAL
+        Pc: 100
+      - Skill: SO_EL_ANALYSIS
+        Pc: 100
+      - Skill: SC_DIMENSIONDOOR
+        Pc: 100
+      - Skill: TR_ROKI_CAPRICCIO
+        Pc: 100
+      - Skill: TR_NIPELHEIM_REQUIEM
+        Pc: 100
+      - Skill: EM_ACTIVITY_BURN
+        Pc: 100
+    DisabledItems:
+      Anodyne: 100
+      Assumptio_5_Scroll: 100
+      Neuralizer: 100
+      N_Fly_Wing: 100
+      Pty_Assumptio_Scroll: 100
+      Runstone_Crush: 100
+      Runstone_Millennium: 100
+      Runstone_Storm: 100
+      Uni_Catalog_Bz: 100
+      Vending_Search_Scroll2: 100
+      Vending_Search_Scroll: 100
+    DisabledStatuses:
+      Endure: 100
+    Mapflags:
+      - Flag: Battleground
+      - Flag: HideDamage
+      - Flag: HideMobHpBar
+      - Flag: NoBranch
+      - Flag: NoCostume
+      - Flag: NoLockOn
+      - Flag: NoMemo
+      - Flag: NoPenalty
+      - Flag: NoSave
+        Value: SavePoint
+      - Flag: NoTeleport
+      - Flag: NoWarpTo
+      - Flag: PvP_NoParty
