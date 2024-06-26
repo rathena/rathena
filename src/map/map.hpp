@@ -815,13 +815,14 @@ struct iwall_data {
 
 class c_map_zone_data {
 public:
-	uint16 id;
+	e_map_type id;
 	std::unordered_map<std::string, uint16> disabled_commands;
 	std::unordered_map<uint16, std::pair<uint16, uint16>> disabled_skills;
 	std::unordered_map<t_itemid, uint16> disabled_items;
 	std::unordered_map<sc_type, uint16> disabled_statuses;
 	std::unordered_map<int32, uint16> restricted_jobs;
 
+	e_map_type getMapZone(int16 map_id);
 	bool isCommandDisabled(std::string name, map_session_data &sd);
 	bool isSkillDisabled(uint16 skill_id, block_list &bl);
 	bool isItemDisabled(t_itemid nameid, map_session_data &sd);
@@ -905,7 +906,6 @@ public:
 	void loadingFinished() override;
 
 	// Others
-	e_map_type getMapZone(int16 map_id);
 	bool setZone(int16 map_id, e_map_type zone);
 };
 

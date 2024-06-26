@@ -223,7 +223,7 @@ uint64 MapZoneDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 	if (!exists) {
 		zone = std::make_shared<c_map_zone>();
-		zone->id = zone_id;
+		zone->id = static_cast<e_map_type>(zone_id);
 	}
 
 	if (this->nodeExists(node, "DisabledCommands")) {
@@ -538,27 +538,6 @@ void MapZoneDatabase::loadingFinished() {
 }
 
 /**
- * Get the zone to a map.
- * @param map_id: Map ID
- * @return e_map_type on success or MAPTYPE_UNUSED otherwise
- */
-e_map_type MapZoneDatabase::getMapZone(int16 map_id) {
-	map_data *mapdata = map_getmapdata(map_id);
-
-	if (mapdata == nullptr) {
-		ShowError("MapZoneDatabase::getMapZone: Unknown map ID %d, skipping.\n", map_id);
-		return MAPTYPE_UNUSED;
-	}
-
-	for (const auto &zone : map_zone_db) {
-		if (util::vector_exists(zone.second->maps, map_id))
-			return static_cast<e_map_type>(zone.second->id);
-	}
-
-	return MAPTYPE_UNUSED;
-}
-
-/**
  * Set the zone to a map.
  * @param map_id: Map ID
  * @param zone: Zone to set
@@ -599,6 +578,22 @@ bool MapZoneDatabase::setZone(int16 map_id, e_map_type zone) {
 }
 
 MapZoneDatabase map_zone_db;
+
+/**
+ * Get the zone to a map.
+ * @param map_id: Map ID
+ * @return e_map_type on success or MAPTYPE_UNUSED otherwise
+ */
+e_map_type c_map_zone_data::getMapZone(int16 map_id) {
+	map_data *mapdata = map_getmapdata(map_id);
+
+	if (mapdata == nullptr) {
+		ShowError("MapZoneDatabase::getMapZone: Unknown map ID %d, skipping.\n", map_id);
+		return MAPTYPE_UNUSED;
+	}
+
+	return mapdata->zone->id;
+}
 
 /**
  * Check if a command is disabled on a map based on group level.
