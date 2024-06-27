@@ -21837,49 +21837,76 @@ BUILDIN_FUNC(instance_announce) {
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_party)
 {
-	int amount, min, max, i, party_id, c = 0;
-	struct party_data *p;
+	int32 min;	// Minimum Level needed to join the Instance.
+	int32 max;	// Maxium Level allowed to join the Instance.
+	int32 amount;	// Amount of needed Partymembers for the Instance.
 
-	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Partymembers for the Instance.
-	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
-	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+	if (!script_hasdata(st, 3))
+		amount = 1;
+	else {
+		amount = script_getnum(st, 3);
 
-	if( min < 1 || min > MAX_LEVEL) {
-		ShowError("buildin_instance_check_party: Invalid min level, %d\n", min);
-		return SCRIPT_CMD_FAILURE;
-	} else if(  max < 1 || max > MAX_LEVEL) {
-		ShowError("buildin_instance_check_party: Invalid max level, %d\n", max);
-		return SCRIPT_CMD_FAILURE;
+		if (amount < 1 || amount > MAX_PARTY) {
+			ShowError("buildin_instance_check_party: Invalid amount %d. Min: 1, max: %d.\n", amount, MAX_PARTY);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
-	if( script_hasdata(st,2) )
-		party_id = script_getnum(st,2);
-	else return SCRIPT_CMD_FAILURE;
+	if (!script_hasdata(st, 4))
+		min = 1;
+	else {
+		min = script_getnum(st, 4);
 
-	if( !(p = party_search(party_id)) ) {
-		script_pushint(st, 0); // Returns false if party does not exist.
-		return SCRIPT_CMD_FAILURE;
+		if (min < 1 || min > MAX_LEVEL) {
+			ShowError("buildin_instance_check_party: Invalid min level %d. Min: 1, max: %d.\n", min, MAX_LEVEL);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
-	for( i = 0; i < MAX_PARTY; i++ ) {
-		map_session_data *pl_sd;
-		if( (pl_sd = p->data[i].sd) )
-			if(map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
-				if(pl_sd->status.base_level < min) {
-					script_pushint(st, 0);
-					return SCRIPT_CMD_SUCCESS;
-				} else if(pl_sd->status.base_level > max) {
-					script_pushint(st, 0);
-					return SCRIPT_CMD_SUCCESS;
-				}
-					c++;
-			}
+	if (!script_hasdata(st, 5))
+		max = MAX_LEVEL;
+	else {
+		max = script_getnum(st, 5);
+
+		if (max < 1 || max > MAX_LEVEL) {
+			ShowError("buildin_instance_check_party: Invalid max level %d. Min: 1, max: %d.\n", max, MAX_LEVEL);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
-	if(c < amount)
-		script_pushint(st, 0); // Not enough Members in the Party to join Instance.
-	else
-		script_pushint(st, 1);
+	int32 party_id = script_getnum(st, 2);
+	party_data *p = party_search( party_id );
+
+	if (p == nullptr) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	int32 count = 0;
+
+	for( size_t i = 0; i < MAX_PARTY; i++ ) {
+		map_session_data *sd = p->data[i].sd;
+
+		if (sd == nullptr){
+			continue;
+		}
+		
+		if (sd->state.autotrade) {
+			continue;
+		}
+	
+		if (sd->status.base_level < min || sd->status.base_level > max) {
+			script_pushint(st, 0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		count++;
+	}
+
+	script_pushint(st, count >= amount);
 
 	return SCRIPT_CMD_SUCCESS;
 }

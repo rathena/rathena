@@ -9856,6 +9856,7 @@ For details on the other parameters, see 'announce'.
 
 This function checks if a party meets certain requirements, returning 1 if all
 conditions are met and 0 otherwise. It will only check online characters.
+The command returns 0 is the party ID does not exist.
 
 amount - number of online party members (default is 1).
 min    - minimum level of all characters in the party (default is 1).
