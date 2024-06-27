@@ -3710,9 +3710,8 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->speed = pSpeed;
 	}
 
-	// !FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
-	// Give them all modes except these (useful for clones)
-	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUSIMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
+	// Default clone mode (see mob_db_mode_list doc for more types)
+	base_status->mode = MONSTER_TYPE_20;
 
 	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : (((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_size : SZ_MEDIUM);
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
