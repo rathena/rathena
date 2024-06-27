@@ -11830,7 +11830,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
+		mes "^ff0000Â¡Ã˜ You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
@@ -11865,7 +11865,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "That's true, but... Cough... My friend who went to the mine for work hasn't come back yet... Cough.";
 		next;
 		mes "[Coughing young man]";
-		mes "A few days ago, as soon as work was over... he delivered... he said he would come back...";
+		mes "A few days ago, as soon as work was over... he left... he said he would come back...";
 		mes "He hasn't come back...cough...yet.";
 		next;
 		mes "[Coughing young man]";
@@ -11885,7 +11885,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 	}
 	if (ill_teddy == 1) {
 		mes "[Coughing young man]";
-		mes "A few days ago, as soon as work was over... he delivered... he said he would come back...";
+		mes "A few days ago, as soon as work was over... he left... he said he would come back...";
 		mes "He hasn't come back...cough...yet.";
 		next;
 		mes "[Coughing young man]";
@@ -12081,7 +12081,7 @@ ein_dun01,189,85,7	script	Teddy Bear#IBT1	4_NASARIAN,{
 	}
 	mes "[Teddy Bear in line]";
 	mes "What?";
-	mes "The guy in front has already run away!";
+	mes "The guy in front has already ran away!";
 	mes "Don't get confused!";
 	close;
 
@@ -12458,7 +12458,7 @@ OnTouch:
 		mes "Will not stop the invasion!";
 		npctalk "??????: Will not stop the invasion!", "??????#IBT_inB01", bc_self;
 		next;
-		mes "[Nazarians???]";
+		mes "[Nazarians]";
 		mes "Okay! A new body has arrived!";
 		mes "We will plant our holy core into the body that is only an empty shell!";
 		next;
