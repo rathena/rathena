@@ -11830,7 +11830,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000Â¡Ã˜ You can start this quest from level 150.^000000";
+		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
