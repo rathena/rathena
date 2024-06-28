@@ -302,9 +302,6 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	StringBuf buf;
 
 	if ( pc_isdead(&sd) || !sd.state.prevend || pc_istrading(&sd)) {
-		sd.state.prevend = 0;
-		sd.state.workinprogress = WIP_DISABLE_NONE;
-		clif_openvending_ack(sd, true);
 		return 1; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
 	}
 
@@ -315,7 +312,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 		clif_skill_fail( sd, MC_VENDING );
 		sd.state.prevend = 0;
 		sd.state.workinprogress = WIP_DISABLE_NONE;
-		clif_openvending_ack(sd, true);
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 2;
 	}
 
@@ -324,7 +321,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 		clif_skill_fail( sd, MC_VENDING );
 		sd.state.prevend = 0;
 		sd.state.workinprogress = WIP_DISABLE_NONE;
-		clif_openvending_ack(sd, true);
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 3;
 	}
 
@@ -367,7 +364,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 #endif
 		sd.state.prevend = 0;
 		sd.state.workinprogress = WIP_DISABLE_NONE;
-		clif_openvending_ack( sd, true );
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 1;
 	}
 
@@ -376,7 +373,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 		clif_skill_fail( sd, MC_VENDING ); // custom reply packet
 		sd.state.prevend = 0;
 		sd.state.workinprogress = WIP_DISABLE_NONE;
-		clif_openvending_ack(sd, true);
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 5;
 	}
 
@@ -384,7 +381,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 		clif_skill_fail( sd, MC_VENDING ); // custom reply packet
 		sd.state.prevend = 0;
 		sd.state.workinprogress = WIP_DISABLE_NONE;
-		clif_openvending_ack(sd, true);
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 5;
 	}
 
