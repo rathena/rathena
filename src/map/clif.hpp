@@ -639,7 +639,7 @@ enum clif_messages : uint16_t {
 	MSI_CHECK_ATTENDANCE_NOT_EVENT = 3474,
 
 	// The total amount of items to sell exceeds the amount of Zeny you can have. \nPlease modify the quantity and price.
-	MSG_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR = 3826,
+	MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR = 3826,
 
 	// It weighs more than 70%. Decrease the Weight and try again.
 	MSI_ENCHANT_FAILED_OVER_WEIGHT = 3837,
