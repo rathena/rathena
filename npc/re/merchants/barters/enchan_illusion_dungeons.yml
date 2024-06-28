@@ -828,3 +828,89 @@ Body:
           - Index: 3
             Item: Token_Of_Bigstone
             Amount: 150
+  - Name: barter_ill_teddy
+    Items:
+      - Index: 0
+        Item: Counter_Dagger_IL
+        RequiredItems:
+          - Index: 0
+            Item: Counter_Dagger
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 95
+          - Index: 2
+            Item: Green_Bearopy
+            Amount: 75
+          - Index: 3
+            Item: Chonchon_Doll_HQ
+            Amount: 50
+      - Index: 1
+        Item: Gate_KeeperDD_IL
+        RequiredItems:
+          - Index: 0
+            Item: Gate_KeeperDD
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 95
+          - Index: 2
+            Item: Gothic_China_Doll
+            Amount: 75
+          - Index: 3
+            Item: NasariansSoulstone
+            Amount: 150
+      - Index: 2
+        Item: Survival_Staff_IL
+        RequiredItems:
+          - Index: 0
+            Item: Survival_Rod_
+            Refine: 9
+          - Index: 1
+            Item: Survival_Rod2_
+            Refine: 9
+          - Index: 2
+            Item: IllusionStone
+            Amount: 125
+          - Index: 3
+            Item: Gothic_China_Doll
+            Amount: 100
+          - Index: 4
+            Item: Chonchon_Doll_HQ
+            Amount: 100
+          - Index: 5
+            Item: Clay_Doll
+            Amount: 15
+      - Index: 3
+        Item: Boots_IL
+        RequiredItems:
+          - Index: 0
+            Item: Boots_
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 85
+          - Index: 2
+            Item: Green_Bearopy
+            Amount: 50
+          - Index: 3
+            Item: Gothic_China_Doll
+            Amount: 50
+      - Index: 4
+        Item: Headband_Of_Power_IL
+        RequiredItems:
+          - Index: 0
+            Item: Headband_Of_Power
+            Refine: 9
+          - Index: 1
+            Item: IllusionStone
+            Amount: 115
+          - Index: 2
+            Item: NasariansSoulstone
+            Amount: 100
+          - Index: 3
+            Item: Chonchon_Doll_HQ
+            Amount: 50
+          - Index: 4
+            Item: Clay_Doll
+            Amount: 5

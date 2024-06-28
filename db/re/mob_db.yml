@@ -96171,34 +96171,519 @@ Body:
 #    AegisName: VH_ENTWEIHEN_S
 #  - Id: 20254
 #    AegisName: VH_MIMIC
-#  - Id: 20255
-#    AegisName: ILL_TEDDY_BEAR_R
-#  - Id: 20256
-#    AegisName: ILL_TEDDY_BEAR_Y
-#  - Id: 20257
-#    AegisName: ILL_TEDDY_BEAR_G
-#  - Id: 20258
-#    AegisName: ILL_TEDDY_BEAR_W
-#  - Id: 20259
-#    AegisName: ILL_TEDDY_BEAR_B
-#  - Id: 20260
-#    AegisName: ILL_TEDDY_BEAR_S
-#  - Id: 20261
-#    AegisName: ILL_PITMAN
-#  - Id: 20262
-#    AegisName: ILL_MINERAL
-#  - Id: 20263
-#    AegisName: ILL_OBSIDIAN
-#  - Id: 20264
-#    AegisName: G_ILL_TEDDY_BEAR_R
-#  - Id: 20265
-#    AegisName: G_ILL_TEDDY_BEAR_Y
-#  - Id: 20266
-#    AegisName: G_ILL_TEDDY_BEAR_G
-#  - Id: 20267
-#    AegisName: G_ILL_TEDDY_BEAR_W
-#  - Id: 20268
-#    AegisName: G_ILL_TEDDY_BEAR_B
+  - Id: 20255
+    AegisName: ILL_TEDDY_BEAR_R
+    Name: Red Teddy Bear
+    Level: 155
+    Hp: 328072
+    BaseExp: 19972
+    JobExp: 22503
+    Attack: 2022
+    Attack2: 225
+    Defense: 212
+    MagicDefense: 88
+    Str: 132
+    Agi: 100
+    Vit: 155
+    Int: 132
+    Dex: 133
+    Luk: 132
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: NasariansSoulstone
+        Rate: 1000
+      - Item: Iron_Ore
+        Rate: 2000
+      - Item: Oridecon
+        Rate: 500
+      - Item: Bearopy
+        Rate: 1500
+      - Item: Boots_
+        Rate: 50
+      - Item: Colorful_T_Bear_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20256
+    AegisName: ILL_TEDDY_BEAR_Y
+    Name: Yellow Teddy Bear
+    Level: 155
+    Hp: 294044
+    BaseExp: 19384
+    JobExp: 23165
+    Attack: 1819
+    Attack2: 202
+    Defense: 200
+    MagicDefense: 112
+    Str: 102
+    Agi: 132
+    Vit: 102
+    Int: 182
+    Dex: 155
+    Luk: 102
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: Bearopy
+        Rate: 1500
+      - Item: NasariansSoulstone
+        Rate: 1000
+      - Item: Elunium
+        Rate: 500
+      - Item: Screw
+        Rate: 2500
+      - Item: Survival_Rod_
+        Rate: 50
+      - Item: Colorful_T_Bear_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20257
+    AegisName: ILL_TEDDY_BEAR_G
+    Name: Green Teddy Bear
+    Level: 157
+    Hp: 331960
+    BaseExp: 21646
+    JobExp: 25117
+    Attack: 2113
+    Attack2: 235
+    Defense: 227
+    MagicDefense: 110
+    Str: 129
+    Agi: 128
+    Vit: 141
+    Int: 173
+    Dex: 158
+    Luk: 129
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 708
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: Bearopy
+        Rate: 1500
+      - Item: NasariansSoulstone
+        Rate: 1000
+      - Item: Green_Bearopy
+        Rate: 500
+      - Item: Green_Herb
+        Rate: 2500
+      - Item: Colorful_T_Bear_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20258
+    AegisName: ILL_TEDDY_BEAR_W
+    Name: White Teddy Bear
+    Level: 155
+    Hp: 311841
+    BaseExp: 20334
+    JobExp: 23595
+    Attack: 1985
+    Attack2: 221
+    Defense: 213
+    MagicDefense: 103
+    Str: 121
+    Agi: 120
+    Vit: 133
+    Int: 162
+    Dex: 149
+    Luk: 121
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: Bearopy
+        Rate: 2500
+      - Item: NasariansSoulstone
+        Rate: 1500
+      - Item: Oridecon_Hammer
+        Rate: 500
+      - Item: Steel
+        Rate: 250
+      - Item: Survival_Rod2_
+        Rate: 50
+      - Item: Colorful_T_Bear_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20259
+    AegisName: ILL_TEDDY_BEAR_B
+    Name: Blue Teddy Bear
+    Level: 152
+    Hp: 280657
+    BaseExp: 18300
+    JobExp: 21235
+    Attack: 1786
+    Attack2: 198
+    Defense: 192
+    MagicDefense: 93
+    Str: 109
+    Agi: 108
+    Vit: 120
+    Int: 146
+    Dex: 134
+    Luk: 109
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: Bearopy
+        Rate: 1500
+      - Item: Screw
+        Rate: 2500
+      - Item: Iron
+        Rate: 1000
+      - Item: Blue_Herb
+        Rate: 500
+      - Item: Chonchon_Doll_HQ
+        Rate: 1000
+      - Item: Colorful_T_Bear_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20260
+    AegisName: ILL_TEDDY_BEAR_S
+    Name: Shining Teddy Bear
+    Level: 160
+    Hp: 10724874
+    BaseExp: 1793444
+    JobExp: 1618614
+    Attack: 4168
+    Attack2: 2895
+    Defense: 313
+    MagicDefense: 152
+    Str: 178
+    Agi: 176
+    Vit: 195
+    Int: 238
+    Dex: 219
+    Luk: 178
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 21
+    Drops:
+      - Item: Elunium
+        Rate: 2000
+      - Item: Oridecon
+        Rate: 2000
+      - Item: Clay_Doll
+        Rate: 1500
+      - Item: Counter_Dagger
+        Rate: 300
+      - Item: Screw
+        Rate: 4000
+      - Item: Shining_T_Bear_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20261
+    AegisName: ILL_PITMAN
+    Name: Hardworking Pitman
+    Level: 154
+    Hp: 305605
+    Attack: 1945
+    Attack2: 216
+    Defense: 209
+    MagicDefense: 101
+    Str: 118
+    Agi: 117
+    Vit: 130
+    Int: 159
+    Dex: 146
+    Luk: 118
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 960
+    AttackMotion: 336
+    DamageMotion: 300
+    Ai: 04
+    Drops:
+      - Item: Old_Pick
+        Rate: 1500
+      - Item: Old_Steel_Plate
+        Rate: 250
+      - Item: Lantern
+        Rate: 2500
+      - Item: Gun_Powder
+        Rate: 1000
+      - Item: Gate_KeeperDD
+        Rate: 50
+      - Item: Pitman_Worker_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20262
+    AegisName: ILL_MINERAL
+    Name: Soul Fragment
+    Level: 153
+    Hp: 290324
+    BaseExp: 18931
+    JobExp: 21967
+    Attack: 1847
+    Attack2: 205
+    Defense: 198
+    MagicDefense: 96
+    Str: 113
+    Agi: 112
+    Vit: 124
+    Int: 151
+    Dex: 139
+    Luk: 113
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 2500
+      - Item: Golden_Jewel
+        Rate: 250
+      - Item: Gothic_China_Doll
+        Rate: 1000
+      - Item: Yellow_Gemstone
+        Rate: 300
+      - Item: Fragment_Of_Soul_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20263
+    AegisName: ILL_OBSIDIAN
+    # Name: Sinister Dwelling Obsidian
+    Name: Sinister Obsidian
+    Level: 156
+    Hp: 318593
+    Attack: 2027
+    Attack2: 225
+    Defense: 217
+    MagicDefense: 106
+    Str: 124
+    Agi: 122
+    Vit: 136
+    Int: 166
+    Dex: 152
+    Luk: 124
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 350
+    AttackDelay: 720
+    AttackMotion: 864
+    DamageMotion: 504
+    Ai: 04
+    Drops:
+      - Item: Dark_Crystal_Fragment
+        Rate: 1500
+      - Item: Crystal_Jewel
+        Rate: 250
+      - Item: Coal
+        Rate: 250
+      - Item: Elunium
+        Rate: 40
+      - Item: Sinister_Obsidian_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20264
+    AegisName: G_ILL_TEDDY_BEAR_R
+    Name: Red Teddy Bear
+    Level: 155
+    Hp: 309520
+    Attack: 2022
+    Attack2: 225
+    Defense: 212
+    MagicDefense: 88
+    Str: 132
+    Agi: 100
+    Vit: 155
+    Int: 132
+    Dex: 133
+    Luk: 132
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 24
+  - Id: 20265
+    AegisName: G_ILL_TEDDY_BEAR_Y
+    Name: Yellow Teddy Bear
+    Level: 155
+    Hp: 294044
+    Attack: 1819
+    Attack2: 202
+    Defense: 200
+    MagicDefense: 112
+    Str: 102
+    Agi: 132
+    Vit: 102
+    Int: 182
+    Dex: 155
+    Luk: 102
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 24
+  - Id: 20266
+    AegisName: G_ILL_TEDDY_BEAR_G
+    Name: Green Teddy Bear
+    Level: 157
+    Hp: 331960
+    Attack: 2113
+    Attack2: 235
+    Defense: 227
+    MagicDefense: 110
+    Str: 129
+    Agi: 128
+    Vit: 141
+    Int: 173
+    Dex: 158
+    Luk: 129
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 24
+  - Id: 20267
+    AegisName: G_ILL_TEDDY_BEAR_W
+    Name: White Teddy Bear
+    Level: 155
+    Hp: 311841
+    Attack: 1985
+    Attack2: 221
+    Defense: 213
+    MagicDefense: 103
+    Str: 121
+    Agi: 120
+    Vit: 133
+    Int: 162
+    Dex: 149
+    Luk: 121
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 24
+  - Id: 20268
+    AegisName: G_ILL_TEDDY_BEAR_B
+    Name: Blue Teddy Bear
+    Level: 152
+    Hp: 280657
+    Attack: 1786
+    Attack2: 198
+    Defense: 192
+    MagicDefense: 93
+    Str: 109
+    Agi: 108
+    Vit: 120
+    Int: 146
+    Dex: 134
+    Luk: 109
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Ai: 24
   - Id: 20269
     AegisName: GUILD_SKILL_FLAG
     Name: Guild Skill Flag
