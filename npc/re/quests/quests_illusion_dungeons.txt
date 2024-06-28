@@ -12226,7 +12226,9 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		ill_teddy = 7;
 		erasequest 11561;
 		setquest 11562;
-		close;
+		close2;
+		cloakonnpcself( "Acid#IBT_inN01" );
+		end;
 	}
 	if (ill_teddy == 7) {
 		mes "[Steven]";
@@ -12305,7 +12307,9 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		erasequest 11564;
 		getitem 25271,5; // IllusionStone
 		getexp 3500000,2500000;
-		close;
+		close2;
+		cloakonnpcself( "Acid#IBT_inN01" );
+		end;
 	}
 
 	// daily
@@ -12399,7 +12403,7 @@ OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11563,HUNTING) == 2 && checkquest(11564,HUNTING) == 2" );
 
 	// daily
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11565,HUNTING) == -1 && checkquest(11566,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "ill_teddy == 9 && checkquest(11565,HUNTING) == -1 && checkquest(11566,PLAYTIME) == -1" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11565,HUNTING) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(11566,PLAYTIME) == 2" );
 	end;
@@ -12456,7 +12460,7 @@ OnTouch:
 		npctalk "?????? : Until the day they are at our feet, us Nazarians!!!!", "??????#IBT_inB01", bc_self;
 		sleep2 500;
 		mes "Will not stop the invasion!";
-		npctalk "??????: Will not stop the invasion!", "??????#IBT_inB01", bc_self;
+		npctalk "?????? : Will not stop the invasion!", "??????#IBT_inB01", bc_self;
 		next;
 		mes "[Nazarians]";
 		mes "Okay! A new body has arrived!";
@@ -12662,7 +12666,7 @@ ein_d02_i,168,206,5	script	Gloomy Teddy Bear#ITB	4_TEDDY_BEAR_B_L,{
 		mes "Me... the Nazarians...";
 		next;
 		mes "[Gloomy Teddy Bear]";
-		mes "^ff0000Kill 10 " + getmonsterinfo("ILL_TEDDY_BEAR_R", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_Y", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_G", MOB_NAME) + ", " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + ", and " + getmonsterinfo("ILL_ASSULTER", MOB_NAME) + "^000000 and return them to the depths... to rest...";
+		mes "^ff0000Kill 10 " + getmonsterinfo("ILL_TEDDY_BEAR_R", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_Y", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_G", MOB_NAME) + ", " + getmonsterinfo("ILL_TEDDY_BEAR_B", MOB_NAME) + ", and " + getmonsterinfo("ILL_TEDDY_BEAR_W", MOB_NAME) + "^000000 and return them to the depths... to rest...";
 		next;
 		if (select( "Accept", "Quit" ) == 2) {
 			mes "[Gloomy Teddy Bear]";
