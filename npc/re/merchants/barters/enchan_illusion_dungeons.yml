@@ -761,7 +761,6 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Fancy_Flower
-            Refine: 9
           - Index: 1
             Item: IllusionStone
             Amount: 50
