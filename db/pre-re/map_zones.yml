@@ -65,16 +65,15 @@ Body:
       izlude: true
       louyang: true
       monk_in: true
+      mid_camp: true
       morocc: true
       moscovia: true
       nameless_i: true
       payon: true
       prontera: true
       prt_monk: true
-      ra_temple: true
       rachel: true
-      sp_cor: true
-      te_alde_gld: true
+      ra_temple: true
       umbala: true
       veins: true
       x_prt: true
@@ -92,8 +91,8 @@ Body:
       airplane_01: true
       airport: true
       alberta_in: true
-      alde_alche: true
       aldeba_in: true
+      alde_alche: true
       ama_in01: true
       ama_in02: true
       arena_room: true
@@ -106,36 +105,23 @@ Body:
       cave: true
       cmd_in01: true
       cmd_in02: true
-      conch_in: true
-      dali: true
-      dali02: true
       ein_in01: true
-      gef_tower: true
       geffen_in: true
+      gef_tower: true
       gon_in: true
       guild_vs2: true
-      har_in01: true
       hu_in01: true
       in_hunter: true
       in_orcs01: true
       in_rogue: true
-      int_land: true
-      int_land02: true
       itemmall: true
-      iz_ac01: true
-      iz_ac01_c: true
-      iz_ac02: true
-      iz_ac02_b: true
-      iz_ng01: true
       izlude_in: true
       jawaii: true
       jawaii_in: true
-      job3_gen01: true
       kh_mansion: true
       kh_rossi: true
       kh_school: true
       kh_vila: true
-      lasa_in01: true
       lhz_airport: true
       lhz_in01: true
       lhz_in02: true
@@ -143,7 +129,6 @@ Body:
       lighthalzen: true
       lou_in01: true
       lou_in02: true
-      ma_in01: true
       man_in01: true
       mid_campin: true
       moc_castle: true
@@ -157,47 +142,37 @@ Body:
       new_5-3: true
       nif_in: true
       nyd_dun02: true
-      pay_arche: true
       payon_in01: true
       payon_in02: true
       payon_in03: true
+      pay_arche: true
       prt_are01: true
-      prt_cas: true
-      prt_cas_q: true
       prt_castle: true
       prt_church: true
       prt_in: true
-      prt_lib: true
-      prt_lib_q: true
-      prt_pri00: true
-      que_house_s: true
       que_ng: true
       que_rachel: true
       que_temsky: true
       ra_in01: true
       ra_temin: true
       ra_temsky: true
-      rebel_in: true
       s_atelier: true
       sch_lab: true
       sec_in01: true
       spl_in01: true
       spl_in02: true
-      star_in: true
       turbo_room: true
       um_in: true
-      un_bk_q: true
       ve_in: true
       ve_in02: true
-      verus04: true
       xmas_in: true
-      y_airport: true
       yuno_in01: true
       yuno_in02: true
       yuno_in03: true
       yuno_in04: true
       yuno_in05: true
       yuno_pre: true
+      y_airport: true
     Mapflags:
       - Flag: NoBonusItemDrop
       - Flag: NoBranch
