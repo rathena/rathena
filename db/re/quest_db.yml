@@ -9106,6 +9106,9 @@ Body:
   - Id: 12331
     Title: Trail of Toy Factory
     TimeLimit: 4h
+  - Id: 12332
+    Title: Status Reset Timeout
+    TimeLimit: +1h
   - Id: 12334
     Title: Trace of Time Travel
     TimeLimit: 3d 4h
