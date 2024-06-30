@@ -1404,21 +1404,21 @@ Body:
     TimeLimit: 4h
   - Id: 3455
     Title: Illusion Investigation Team - Machoko
-  # - Id: 3456
-    # Title: Illusion of Teddy Bear 100 Kills
-    # Targets:
-      # - Id: 1
-        # Count: 100
-        # Location: ein_d02_i
-        # MapMobTargets:
-          # ILL_TEDDY_BEAR_B: true
-          # ILL_MINERAL: true
-          # ILL_PITMAN: true
-          # ILL_TEDDY_BEAR_R: true
-          # ILL_TEDDY_BEAR_Y: true
-          # ILL_TEDDY_BEAR_W: true
-          # ILL_OBSIDIAN: true
-          # ILL_TEDDY_BEAR_G: true
+  - Id: 3456
+    Title: Illusion of Teddy Bear 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: ein_d02_i
+        MapMobTargets:
+          ILL_TEDDY_BEAR_B: true
+          ILL_MINERAL: true
+          ILL_PITMAN: true
+          ILL_TEDDY_BEAR_R: true
+          ILL_TEDDY_BEAR_Y: true
+          ILL_TEDDY_BEAR_W: true
+          ILL_OBSIDIAN: true
+          ILL_TEDDY_BEAR_G: true
   - Id: 3457
     Title: Illusion of Teddy Bear 100 Kills - Standby
     TimeLimit: 4h
