@@ -757,6 +757,11 @@ enum vip_status_type {
 	VIP_STATUS_REMAINING
 };
 
+enum vip_check_type {
+	CHK_VIP_ENABLED = 1,
+	CHK_VIP_SCRIPT,
+};
+
 enum e_special_effects {
 	EF_NONE = -1,
 	EF_HIT1,

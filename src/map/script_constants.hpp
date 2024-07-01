@@ -30,7 +30,7 @@
 	export_constant(MAX_GUILD_STORAGE);
 	export_constant(MAX_BG_MEMBERS);
 	export_constant(MAX_CHAT_USERS);
-	export_constant(VIP_SCRIPT);
+	export_deprecated_constant(VIP_SCRIPT);
 	export_constant(MIN_STORAGE);
 	export_constant(MAX_SLOTS);
 	export_constant(MAX_ITEM_RDM_OPT);
@@ -5198,6 +5198,9 @@
 	export_constant(VIP_STATUS_ACTIVE);
 	export_constant(VIP_STATUS_EXPIRE);
 	export_constant(VIP_STATUS_REMAINING);
+
+	export_constant(CHK_VIP_ENABLED);
+	export_constant(CHK_VIP_SCRIPT);
 
 	/* item groups */
 	export_constant(IG_BLUEBOX);

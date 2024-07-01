@@ -154,7 +154,7 @@ malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 				next;
 				mes "[Rodel the Guard]";
 				mes "I think there will be more Jejeling hunts in the future. Please join us again next time.";
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+				if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -707,7 +707,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 		erasequest 7374;
 		erasequest 7379;
 		setquest 7375;
-		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+		if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 			getitem 6497, 2; // Lesser_Agimat
 		else
 			getitem 6497, 1; // Lesser_Agimat
@@ -745,7 +745,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				delitem 6502, 6; // Silver_Cross
 				erasequest 7380;
 				setquest 7381;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+				if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -813,7 +813,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				setquest 7375;
 				erasequest 7374;
 				erasequest 7379;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+				if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -1115,7 +1115,7 @@ malaya,181,353,5	script	Old Man Nardo#malaya	574,{
 					delitem 6503, 5; // Soul_Protection
 					setquest 7378;
 					erasequest 7377;
-					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+					if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 						getitem 6497, 2; // Lesser_Agimat
 					else
 						getitem 6497, 1; // Lesser_Agimat
@@ -1729,7 +1729,7 @@ malaya,295,171,3	script	Collection Dealer Woeon	582,{
 					delitem 6498, countitem(6498); //Jejellopy
 					setquest 7392;
 					erasequest 7391;
-					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+					if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 						getitem 6497, 2; // Lesser_Agimat
 					else
 						getitem 6497, 1; // Lesser_Agimat
@@ -1963,7 +1963,7 @@ malaya,119,217,3	script	Blacksmith Pandoi	538,{
 				delitem 6508, 10; //Silver_Bracelet
 				setquest 7394;
 				erasequest 7393;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+				if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -2375,7 +2375,7 @@ malaya,326,68,2	script	Pedro the Sailor	100,{
 			set malaya_diwata, 6;
 			erasequest 7399;
 			setquest 7401;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+			if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6497, 2; // Lesser_Agimat
 			else
 				getitem 6497, 1; // Lesser_Agimat
@@ -2438,7 +2438,7 @@ malaya,326,68,2	script	Pedro the Sailor	100,{
 				mes "I think you kind of like doing it.";
 				setquest 7401;
 				erasequest 7403;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+				if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -2929,7 +2929,7 @@ ma_fild01,239,253,3	script	Dhong the Guard	570,{
 				delitem 6505, 10; // Purified_Bone
 				setquest 7408;
 				erasequest 7407;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+				if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 					getitem 6497, 2; // Lesser_Agimat
 				else
 					getitem 6497, 1; // Lesser_Agimat
@@ -3025,7 +3025,7 @@ ma_fild01,200,190,3	script	Maries#malaya	579,{
 			mes "Thank you for delivering those precious shirts to my children.";
 			setquest 7390;
 			erasequest 7389;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+			if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6497, 2; // Lesser_Agimat
 			else
 				getitem 6497, 1; // Lesser_Agimat
@@ -3264,7 +3264,7 @@ ma_fild02,241,39,5	script	Good Capre Budidai	572,{
 					mes "This is a blessing for friends. Hey hey hey~";
 					setquest 7410;
 					erasequest 7409;
-					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+					if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 						getitem 6497, 2; // Lesser_Agimat
 					else
 						getitem 6497, 1; // Lesser_Agimat
@@ -4269,7 +4269,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "[Dog]";
 		mes "Woof woof woof!!!!";
 		set malaya_buwaya,14;
-		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+		if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 			getitem 6497,10; //Lesser_Agimat
 		else
 			getitem 6497,5; //Lesser_Agimat
@@ -4705,7 +4705,7 @@ malaya,290,340,3	script	Guard Leader#buwaya	571,{
 			mes "[Guard Leader]";
 			mes "Good work.";
 			erasequest 2281;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+			if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6497,10; //Lesser_Agimat
 			else
 				getitem 6497,5; //Lesser_Agimat
@@ -5230,7 +5230,7 @@ malaya,285,332,4	script	Old Legend Teller#bako1	574,{
 			mes "Please get rid of this monster for us.";
 			erasequest 1179;
 			set malaya_bakona1,7;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+			if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6499,5; //Ancient_Grudge
 			else
 				getitem 6499,3; //Ancient_Grudge
@@ -5750,7 +5750,7 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		erasequest 1184;
 		setquest 1185;
 		set malaya_bakona2,6;
-		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+		if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 			getitem 12700,7; //Insideout_Shirt
 		else
 			getitem 12700,5; //Insideout_Shirt
@@ -5856,7 +5856,7 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		erasequest 1193;
 		set malaya_bakona2,15;
 		getexp 1000000,600000;
-		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+		if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 			getitem 6497,7; //Lesser_Agimat
 		else
 			getitem 6497,5; //Lesser_Agimat
@@ -6140,7 +6140,7 @@ malaya,289,364,4	script	Young Fortune Teller	583,{
 			erasequest 1186;
 			setquest 1187;
 			set malaya_bakona2,8;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
+			if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE))
 				getitem 12699,7; //Tikbalang_Belt
 			else
 				getitem 12699,5; //Tikbalang_Belt
@@ -6758,7 +6758,7 @@ L_Warp:
 	}
 
 L_Reward:
-	if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE)) {
+	if (!vip_is_enabled(CHK_VIP_SCRIPT) || vip_status(VIP_STATUS_ACTIVE)) {
 		getitem 6499,5; //Ancient_Grudge
 		getitem 6497,10; //Lesser_Agimat
 	} else {

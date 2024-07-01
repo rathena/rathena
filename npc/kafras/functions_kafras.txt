@@ -661,7 +661,7 @@ function	script	F_KafSet	{
 	.@warp_size = getarraysize(@wrpD$);
 
 	// VIP pricing varies across the regional servers; this is most practical.
-	if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
+	if (vip_is_enabled(CHK_VIP_SCRIPT) && !vip_status(VIP_STATUS_ACTIVE)) {
 		for ( .@i = 0; .@i < .@warp_size; .@i++ )
 			@wrpP[.@i] *= 2;
 	}

@@ -79,7 +79,7 @@ prt_in,162,24,3	script	Splendid-Looking Knight	470,2,2,{
 					mes "Of course, I would only accept you if you are one hundred percent sure of your conviction to become a Rune Knight.";
 					close;
 				case 2:
-					if (VIP_SCRIPT) {
+					if (vip_is_enabled(CHK_VIP_SCRIPT)) {
 						callfunc "VIP_Third_Class";
 						set job_rune_edq,1;
 						setquest 3200;
