@@ -1715,7 +1715,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_spiritcharm(sd);
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
-			clif_efst_status_change_sub(bl, bl, AREA);
+			clif_efst_status_change_sub( *bl, *bl, AREA, !sd->state.connect_new );
 			clif_hat_effects( *sd, sd->bl, AREA );
 		}
 		break;
@@ -1728,6 +1728,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
 				clif_summon_init(*md);
+			clif_efst_status_change_sub( *bl, *bl, AREA_WOS );
 		}
 		break;
 	case BL_NPC:
@@ -1737,13 +1738,18 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&nd->bl,EF_GIANTBODY2,AREA);
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect(&nd->bl,EF_BABYBODY2,AREA);
-			clif_efst_status_change_sub(bl, bl, AREA);
+			clif_efst_status_change_sub( *bl, *bl, AREA_WOS );
 			clif_progressbar_npc_area(nd);
 		}
 		break;
 	case BL_PET:
 		if (vd->head_bottom)
 			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
+		[[fallthrough]];
+	case BL_HOM:
+	case BL_MER:
+	case BL_ELEM:
+		clif_efst_status_change_sub( *bl, *bl, AREA_WOS );
 		break;
 	}
 	return 0;
@@ -5020,7 +5026,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_sendbgemblem_single(sd->fd,tsd);
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
-			clif_efst_status_change_sub(&sd->bl, bl, SELF);
+			clif_efst_status_change_sub( sd->bl, *bl, SELF, !sd->state.connect_new );
 			clif_hat_effects( *sd, tsd->bl, SELF );
 		}
 		break;
@@ -5037,7 +5043,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
-			clif_efst_status_change_sub(&sd->bl, bl, SELF);
+			clif_efst_status_change_sub( sd->bl, *bl, SELF );
 			clif_progressbar_npc(nd, sd);
 		}
 		break;
@@ -5056,11 +5062,16 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 						clif_monster_hp_bar(md, sd->fd);
 			}
 #endif
+			clif_efst_status_change_sub( sd->bl, *bl, SELF );
 		}
 		break;
 	case BL_PET:
 		if (vd->head_bottom)
 			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
+		[[fallthrough]];
+	case BL_HOM:
+	case BL_ELEM:
+		clif_efst_status_change_sub( sd->bl, *bl, SELF );
 		break;
 	}
 }
@@ -6509,42 +6520,23 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
  * @param bl: Objects walking into view
  * @param target: Client send type
  */
-void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target) {
-	unsigned char i;
-	struct sc_display_entry **sc_display;
-	unsigned char sc_display_count;
-	bool spheres_sent;
+void clif_efst_status_change_sub( block_list& tbl, block_list& src, enum send_target target, bool spheres_sent ){
+	status_change *sc = status_get_sc( &src );
 
-	nullpo_retv(bl);
+	if (sc == nullptr || sc->sc_display.empty())
+		return;
 
-	switch( bl->type ){
-		case BL_PC: {
-			map_session_data* sd = (map_session_data*)bl;
+	for ( const auto &type : sc->sc_display ) {
+		struct status_change_entry* sce = sc->getSCE(type);
+		std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
-			sc_display = sd->sc_display;
-			sc_display_count = sd->sc_display_count;
-			spheres_sent = !sd->state.connect_new;
-			}
-			break;
-		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+		if (sce == nullptr || scdb == nullptr)
+			continue;
 
-			sc_display = nd->sc_display;
-			sc_display_count = nd->sc_display_count;
-			spheres_sent = true;
-			}
-			break;
-		default:
-			return;
-	}
-
-	for (i = 0; i < sc_display_count; i++) {
-		enum sc_type type = sc_display[i]->type;
-		status_change *sc = status_get_sc(bl);
-		const struct TimerData *td = (sc && sc->getSCE(type) ? get_timer(sc->getSCE(type)->timer) : nullptr);
+		const struct TimerData *td = get_timer(sc->getSCE(type)->timer);
 		t_tick tick = 0;
 
-		if (td)
+		if (td != nullptr)
 			tick = DIFF_TICK(td->tick, gettick());
 
 		// Status changes that need special handling
@@ -6555,20 +6547,23 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 			case SC_SPHERE_4:
 			case SC_SPHERE_5:
 				if( spheres_sent ){
-					target = AREA_WOS;
+					target = AREA_WOS;	// area without self
+					// check me : target should stay AREA_WOS ?
 				}
 				break;
 			case SC_HELLS_PLANT:
-				if( sc && sc->getSCE(type) ){
-					tick = sc->getSCE(type)->val4;
-				}
+				tick = sce->val4;
 				break;
 		}
 
+		int dval1 = scdb->flag[SCF_SENDVAL1] ? sce->val1 : 0;
+		int dval2 = scdb->flag[SCF_SENDVAL2] ? sce->val2 : 0;
+		int dval3 = scdb->flag[SCF_SENDVAL3] ? sce->val3 : 0;
+
 #if PACKETVER > 20120418
-		clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+		clif_efst_status_change( &tbl, src.id, target, status_db.getIcon(type), tick, dval1, dval2, dval3 );
 #else
-		clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+		clif_status_change_sub( &tbl, src.id, status_db.getIcon(type), 1, tick, dval1, dval2, dval3, target );
 #endif
 	}
 }
@@ -9823,7 +9818,7 @@ void clif_refresh(map_session_data *sd)
 		clif_clearunit_single( sd->bl.id, CLR_DEAD, *sd );
 	else
 		clif_changed_dir(&sd->bl, SELF);
-	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
+	clif_efst_status_change_sub( sd->bl, sd->bl, SELF, !sd->state.connect_new );
 
 	//Issue #2143
 	//Cancel Trading State 

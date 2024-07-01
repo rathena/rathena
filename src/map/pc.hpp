@@ -863,10 +863,6 @@ public:
 	unsigned char fontcolor;
 	t_tick *channel_tick;
 
-	/* [Ind] */
-	struct sc_display_entry **sc_display;
-	unsigned char sc_display_count;
-
 	unsigned char delayed_damage; //[Ind]
 
 	/**
@@ -944,7 +940,6 @@ public:
 	std::vector<uint32> party_booking_requests;
 };
 
-extern struct eri *pc_sc_display_ers; /// Player's SC display table
 
 /**
  * ERS for the bulk of pc vars

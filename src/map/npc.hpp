@@ -216,9 +216,6 @@ struct npc_data {
 		} barter;
 	} u;
 
-	struct sc_display_entry **sc_display;
-	unsigned char sc_display_count;
-
 	std::vector<std::shared_ptr<s_questinfo>> qi_data;
 
 	struct {
@@ -238,9 +235,6 @@ struct npc_data {
 #endif
 	bool is_invisible;
 };
-
-struct eri;
-extern struct eri *npc_sc_display_ers;
 
 #define START_NPC_NUM 110000000
 
