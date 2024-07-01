@@ -20,3 +20,5 @@ te_aldecas2	mapflag	noicewall
 te_aldecas3	mapflag	noicewall
 te_aldecas4	mapflag	noicewall
 te_aldecas5	mapflag	noicewall
+
+bl_depth1	mapflag	noicewall
