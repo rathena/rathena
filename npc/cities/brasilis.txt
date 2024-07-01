@@ -19,7 +19,7 @@
 
 // Brasilis Transportation :: brasilis_trans
 //============================================================
--	script	Crewman_bra2	-1,{
+-	script	::Crewman_bra2	-1,{
 	mes "[Crewman]";
 	mes "Hey, have you heard of a place called Brasilis?";
 	mes "It's a tropical city that's hot like the desert but also rainy. It is a very mysterious place.";
