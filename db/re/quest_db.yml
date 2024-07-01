@@ -9359,6 +9359,255 @@ Body:
     Title: The Scattered Luggage (East)
   - Id: 12539
     Title: Scattered Luggage (South)
+  - Id: 12592
+    Title: Garden of Time
+  - Id: 12593
+    Title: Helping Leticia
+  - Id: 12594
+    Title: Watching Rigel
+  - Id: 12595
+    Title: Western Barrier
+  - Id: 12596
+    Title: Eastern Barrier
+  - Id: 12597
+    Title: Access list registration
+  - Id: 12598
+    Title: Atmospheric state - Water
+    TimeLimit: 4h
+  - Id: 12599
+    Title: Standby - Earth
+    TimeLimit: 4h
+  - Id: 12600
+    Title: Standby - Poison
+    TimeLimit: 4h
+  - Id: 12601
+    Title: Atmospheric state - Wind
+    TimeLimit: 4h
+  - Id: 12602
+    Title: Standby - Flame
+    TimeLimit: 4h
+  - Id: 12610
+    Title: Cleaning complete!
+    TimeLimit: 4h
+  - Id: 12611
+    Title: Interview completed
+    TimeLimit: 4h
+  - Id: 12612
+    Title: Rewarded
+    TimeLimit: Monday 4h
+  - Id: 12613
+    Title: Divine Beast of Spring
+    Targets:
+      - Mob: MD_PRI_DRAGON_1
+        Count: 1
+  - Id: 12614
+    Title: The Divine Beast of Summer
+    Targets:
+      - Mob: MD_PRI_DRAGON_2
+        Count: 1
+  - Id: 12615
+    Title: Divine Beast of Autumn
+    Targets:
+      - Mob: MD_PRI_DRAGON_3
+        Count: 1
+  - Id: 12616
+    Title: The Divine Beast of Winter
+    Targets:
+      - Mob: MD_PRI_DRAGON_4
+        Count: 1
+  - Id: 12617
+    Title: Dimensional Criminal Correction
+  - Id: 12618
+    Title: Face to face with Oscar
+  - Id: 12619
+    Title: Take a break
+    TimeLimit: +1h
+  - Id: 12620
+    Title: Meeting with the Spirit
+  - Id: 12621
+    Title: Teremotus's Request 1
+    Targets:
+      - Mob: SPIRIT_G_LAND_S
+        Count: 50
+      - Mob: SPIRIT_G_LAND_SL
+        Count: 50
+  - Id: 12622
+    Title: Teremotus's Request 2
+    Targets:
+      - Mob: SPIRIT_G_LAND_M
+        Count: 50
+      - Mob: SPIRIT_G_LAND_L
+        Count: 50
+  - Id: 12623
+    Title: Teremotus's Request 3
+    Targets:
+      - Mob: SPIRIT_F_LAND_S
+        Count: 50
+      - Mob: SPIRIT_F_LAND_SL
+        Count: 50
+  - Id: 12624
+    Title: Teremotus's Request 4
+    Targets:
+      - Mob: SPIRIT_F_LAND_M
+        Count: 50
+      - Mob: SPIRIT_F_LAND_L
+        Count: 50
+  - Id: 12625
+    Title: Ardor's Request 1
+    Targets:
+      - Mob: SPIRIT_B_FLAME_S
+        Count: 50
+      - Mob: SPIRIT_B_FLAME_SL
+        Count: 50
+  - Id: 12626
+    Title: Ardor's Request 2
+    Targets:
+      - Mob: SPIRIT_B_FLAME_M
+        Count: 50
+      - Mob: SPIRIT_B_FLAME_L
+        Count: 50
+  - Id: 12627
+    Title: Ardor's Request 3
+    Targets:
+      - Mob: SPIRIT_R_FLAME_S
+        Count: 50
+      - Mob: SPIRIT_R_FLAME_SL
+        Count: 50
+  - Id: 12628
+    Title: Ardor's Request 4
+    Targets:
+      - Mob: SPIRIT_R_FLAME_M
+        Count: 50
+      - Mob: SPIRIT_R_FLAME_L
+        Count: 50
+  - Id: 12629
+    Title: Procella's Request 1
+    Targets:
+      - Mob: SPIRIT_S_WIND_S
+        Count: 50
+      - Mob: SPIRIT_S_WIND_SL
+        Count: 50
+  - Id: 12630
+    Title: Procella's Request 2
+    Targets:
+      - Mob: SPIRIT_S_WIND_M
+        Count: 50
+      - Mob: SPIRIT_S_WIND_L
+        Count: 50
+  - Id: 12631
+    Title: Procella's Request 3
+    Targets:
+      - Mob: SPIRIT_D_WIND_S
+        Count: 50
+      - Mob: SPIRIT_D_WIND_SL
+        Count: 50
+  - Id: 12632
+    Title: Procella's Request 4
+    Targets:
+      - Mob: SPIRIT_D_WIND_M
+        Count: 50
+      - Mob: SPIRIT_D_WIND_L
+        Count: 50
+  - Id: 12633
+    Title: Diluvio's Request 1
+    Targets:
+      - Mob: SPIRIT_I_WATER_S
+        Count: 50
+      - Mob: SPIRIT_I_WATER_SL
+        Count: 50
+  - Id: 12634
+    Title: Diluvio's Request 2
+    Targets:
+      - Mob: SPIRIT_I_WATER_M
+        Count: 50
+      - Mob: SPIRIT_I_WATER_L
+        Count: 50
+  - Id: 12635
+    Title: Diluvio's Request 3
+    Targets:
+      - Mob: SPIRIT_H_WATER_S
+        Count: 50
+      - Mob: SPIRIT_H_WATER_SL
+        Count: 50
+  - Id: 12636
+    Title: Diluvio's Request 4
+    Targets:
+      - Mob: SPIRIT_H_WATER_M
+        Count: 50
+      - Mob: SPIRIT_H_WATER_L
+        Count: 50
+  - Id: 12637
+    Title: Serpens's Request 1
+    Targets:
+      - Id: 1
+        Count: 150
+        Location: for_dun01
+        MapMobTargets:
+          SPIRIT_G_LAND_S: true
+          SPIRIT_G_LAND_M: true
+          SPIRIT_G_LAND_L: true
+          SPIRIT_B_FLAME_S: true
+          SPIRIT_B_FLAME_M: true
+          SPIRIT_B_FLAME_L: true
+          SPIRIT_S_WIND_S: true
+          SPIRIT_S_WIND_M: true
+          SPIRIT_S_WIND_L: true
+          SPIRIT_I_WATER_S: true
+          SPIRIT_I_WATER_M: true
+          SPIRIT_I_WATER_L: true
+          SPIRIT_G_LAND_SL: true
+          SPIRIT_B_FLAME_SL: true
+          SPIRIT_S_WIND_SL: true
+          SPIRIT_I_WATER_SL: true
+          SPIRIT_C_LAND_L: true
+          SPIRIT_C_LAND_M: true
+          SPIRIT_C_LAND_S: true
+          SPIRIT_C_LAND_SL: true
+          SPIRIT_C_FLAME_L: true
+          SPIRIT_C_FLAME_M: true
+          SPIRIT_C_FLAME_S: true
+          SPIRIT_C_FLAME_SL: true
+  - Id: 12638
+    Title: Serpens's Request 2
+    Targets:
+      - Id: 1
+        Count: 150
+        Location: for_dun02
+        MapMobTargets:
+          SPIRIT_H_WATER_S: true
+          SPIRIT_H_WATER_M: true
+          SPIRIT_H_WATER_L: true
+          SPIRIT_D_WIND_S: true
+          SPIRIT_D_WIND_M: true
+          SPIRIT_D_WIND_L: true
+          SPIRIT_R_FLAME_S: true
+          SPIRIT_R_FLAME_M: true
+          SPIRIT_R_FLAME_L: true
+          SPIRIT_F_LAND_S: true
+          SPIRIT_F_LAND_M: true
+          SPIRIT_F_LAND_L: true
+          SPIRIT_H_WATER_SL: true
+          SPIRIT_D_WIND_SL: true
+          SPIRIT_R_FLAME_SL: true
+          SPIRIT_F_LAND_SL: true
+          SPIRIT_C_WATER_L: true
+          SPIRIT_C_WATER_M: true
+          SPIRIT_C_WATER_S: true
+          SPIRIT_C_WATER_SL: true
+          SPIRIT_C_WIND_L: true
+          SPIRIT_C_WIND_M: true
+          SPIRIT_C_WIND_S: true
+          SPIRIT_C_WIND_SL: true
+  - Id: 12639
+    Title: Serpens's Request 3
+  - Id: 12640
+    Title: Serpens's Request 4
+  - Id: 12641
+    Title: Serpens's Request 5
+  - Id: 12642
+    Title: Serpens's Request 6
+  - Id: 12643
+    Title: Serpens's Request 7
   - Id: 13000
     Title: RWC2011Card Gathering
   - Id: 13001
