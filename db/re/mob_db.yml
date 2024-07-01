@@ -95326,8 +95326,49 @@ Body:
 #    AegisName: E_EXPLOSION
 #  - Id: 3825
 #    AegisName: E_SALAMANDER
-#  - Id: 3826
-#    AegisName: E16_2_SEYREN
+  - Id: 3826
+    AegisName: E16_2_SEYREN
+    Name: YSF01_Seyren
+    Level: 189
+    Hp: 14400000
+    BaseExp: 3000000
+    JobExp: 3000000
+    Attack: 9000
+    Attack2: 4000
+    Defense: 800
+    MagicDefense: 400
+    Str: 340
+    Agi: 200
+    Vit: 400
+    Int: 100
+    Dex: 400
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+    - Item: Brigan
+      Rate: 5000
+    - Item: Elunium
+      Rate: 3000
+    - Item: Oridecon
+      Rate: 3000
+    - Item: YSF01_Plate
+      Rate: 150
+    - Item: YSF01_Greave
+      Rate: 150
+    - Item: YSF01_Manteau
+      Rate: 150
 #  - Id: 3827
 #    AegisName: AB_MOB_001
 #  - Id: 3828
