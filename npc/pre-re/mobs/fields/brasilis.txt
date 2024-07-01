@@ -1,0 +1,36 @@
+//===== rAthena Script =======================================
+//= Brasilis Fields Monster Spawn Script
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Official spawns from bRO and custom estimation from jRO
+//============================================================
+
+//bRO Pre-Renewal spawns
+
+//==================================================
+// bra_fild01 - Brasilis Field
+//==================================================
+bra_fild01,0,0	monster	Headless Mule	2071,40,5000
+bra_fild01,0,0	monster	Curupira	2074,80,5000
+bra_fild01,0,0	monster	Dokebi	1110,20,5000
+bra_fild01,0,0	monster	Jaguar	2072,10,5000
+bra_fild01,0,0	monster	Savage	1166,20,5000
+bra_fild01,0,0	monster	Toucan	2073,10,5000
+bra_fild01,0,0	monster	Red Mushroom	1085,3,360000,180000
+
+//jRO Pre-Renewal spawns (amounts are estimated)
+
+//==================================================
+// bra_fild01
+//==================================================
+//bra_fild01,0,0	monster	Savage	1166,20,5000
+//bra_fild01,0,0	monster	Dokebi	1110,20,5000
+//bra_fild01,0,0	monster	Curupira	2074,80,5000
+//bra_fild01,0,0	monster	Toucan	2073,60,5000
+//bra_fild01,0,0	monster	Jaguar	2072,55,5000
+//bra_fild01,0,0	monster	Red Mushroom	1085,3,360000,180000

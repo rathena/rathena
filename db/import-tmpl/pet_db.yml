@@ -55,6 +55,20 @@ Header:
   Version: 1
 
 #Body:
+# Pre-re Brasilis
+#=============================================================
+#  - Mob: E_HYDRA
+#    TameItem: Leaf_Cat_Ball
+#    EggItem: Mystic_Leaf_Cat_Ball
+#    Fullness: 0
+#    HungryDelay: 0
+#    IntimacyStart: 0
+#    IntimacyFed: 0
+#    IntimacyOverfed: 0
+#    IntimacyOwnerDie: 0
+#    CaptureRate: 50
+#    SpecialPerformance: false
+#=============================================================
 #  - Mob: PORING
 #    AttackRate: 350
 #    RetaliateRate: 400

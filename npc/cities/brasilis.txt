@@ -19,8 +19,7 @@
 
 // Brasilis Transportation :: brasilis_trans
 //============================================================
-/* Pre-Renewal coordinates: alberta,247,115,3 */
-alberta,246,82,3	script	Crewman#bra2	100,{
+-	script	Crewman_bra2	-1,{
 	mes "[Crewman]";
 	mes "Hey, have you heard of a place called Brasilis?";
 	mes "It's a tropical city that's hot like the desert but also rainy. It is a very mysterious place.";
