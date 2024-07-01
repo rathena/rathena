@@ -7674,15 +7674,12 @@ void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_pu
 
 /// Show's vending player its list of items for sale.
 /// 0a28 <result>.B (ZC_ACK_OPENSTORE2)
-/// result:
-///     0 = Success
-///     1 = Failed
-void clif_openvending_ack( map_session_data& sd, bool failure ){
+void clif_openvending_ack( map_session_data& sd, e_ack_openstore2 result ){
 #if PACKETVER >= 20141022
 	PACKET_ZC_ACK_OPENSTORE2 packet{};
 
 	packet.packetType = HEADER_ZC_ACK_OPENSTORE2;
-	packet.result = failure;
+	packet.result = static_cast<decltype(packet.result)>(result);
 
 	clif_send( &packet, sizeof( packet ), &sd.bl, SELF );
 #endif
@@ -7722,7 +7719,7 @@ void clif_openvending( map_session_data& sd ){
 
 	clif_send( p, p->packetLength, &sd.bl, SELF );
 
-	clif_openvending_ack( sd, false );
+	clif_openvending_ack( sd, OPENSTORE2_SUCCESS );
 }
 
 
