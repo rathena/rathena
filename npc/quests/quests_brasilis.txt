@@ -2838,7 +2838,7 @@ brasilis,315,334,5	script	Shaman#nk	4_F_BRZ_INDOLD,{
 	}
 }
 
-bra_dun02,157,74,5	script	Iara#nk	4_F_BRZ_WOMAN2,2,2,{
+bra_dun02,157,74,5	script	Iara#nk	4_F_BRZ_WOMAN,2,2,{
 	if (countitem(11517) > 0) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Should I use a Purification Potion?";
