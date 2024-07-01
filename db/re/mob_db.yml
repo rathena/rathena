@@ -109791,20 +109791,20 @@ Body:
     Name: Verdant Corinus
     Level: 254
     Hp: 27113233
-    BaseExp: 129643
-    JobExp: 86429
-    Attack: 10804
-    Attack2: 5876
+    BaseExp: 1380517
+    JobExp: 966362
+    Attack: 15003
+    Attack2: 6052
     Defense: 434
     MagicDefense: 243
-    MagicResistance: 250
-    Resistance: 250
-    Str: 198
-    Agi: 214
-    Vit: 121
-    Int: 160
-    Dex: 280
-    Luk: 90
+    Resistance: 389
+    MagicResistance: 304
+    Str: 178
+    Agi: 146
+    Vit: 169
+    Int: 178
+    Dex: 178
+    Luk: 169
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -109813,7 +109813,7 @@ Body:
     Element: Holy
     ElementLevel: 3
     WalkSpeed: 120
-    AttackDelay: 313
+    AttackDelay: 124
     AttackMotion: 624
     DamageMotion: 300
     DamageTaken: 10
@@ -109823,31 +109823,31 @@ Body:
         Rate: 4000
       - Item: Soft_Feather
         Rate: 1500
-      - Item: Feather
-        Rate: 1000
+      - Item: Fresh_Pear
+        Rate: 2000
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21549
     AegisName: ECO_PINGUICULA
     Name: Verdant Pinguicula
     Level: 252
     Hp: 25130533
-    BaseExp: 104344
-    JobExp: 69563
-    Attack: 10231
-    Attack2: 6746
+    BaseExp: 1308495
+    JobExp: 911366
+    Attack: 18043
+    Attack2: 4751
     Defense: 513
     MagicDefense: 198
-    MagicResistance: 250
-    Resistance: 250
-    Str: 180
-    Agi: 209
-    Vit: 97
-    Int: 176
-    Dex: 264
-    Luk: 77
+    Resistance: 501
+    MagicResistance: 235
+    Str: 267
+    Agi: 225
+    Vit: 212
+    Int: 171
+    Dex: 238
+    Luk: 223
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -109856,41 +109856,41 @@ Body:
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 359
-    AttackMotion: 600
+    AttackDelay: 96
+    AttackMotion: 480
     DamageMotion: 360
     DamageTaken: 10
     Ai: 04
     Drops:
       - Item: Sharp_Leaf
         Rate: 2500
-      - Item: Great_Leaf
-        Rate: 1000
+      - Item: Aromatic_Flower
+        Rate: 2000
       - Item: Elder_Branch
         Rate: 250
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21550
     AegisName: ECO_HUNTER_FLY
     Name: Verdant Hunter Fly
     Level: 255
     Hp: 22902181
-    BaseExp: 96043
-    JobExp: 64029
-    Attack: 9976
-    Attack2: 5769
+    BaseExp: 1373213
+    JobExp: 960771
+    Attack: 12331
+    Attack2: 8380
     Defense: 339
     MagicDefense: 368
-    MagicResistance: 250
-    Resistance: 250
-    Str: 178
-    Agi: 281
-    Vit: 90
-    Int: 155
-    Dex: 301
-    Luk: 77
+    Resistance: 334
+    MagicResistance: 532
+    Str: 187
+    Agi: 202
+    Vit: 210
+    Int: 284
+    Dex: 260
+    Luk: 284
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -109899,8 +109899,8 @@ Body:
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 120
-    AttackDelay: 434
-    AttackMotion: 576
+    AttackDelay: 88
+    AttackMotion: 432
     DamageMotion: 480
     DamageTaken: 10
     Ai: 04
@@ -109911,31 +109911,31 @@ Body:
         Rate: 25
       - Item: Steel
         Rate: 50
-      - Item: Solid_Shell
-        Rate: 2668
+      - Item: Ectoplasmic_Stone
+        Rate: 2000
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21551
     AegisName: ECO_ROCKER
     Name: Verdant Rocker
     Level: 253
     Hp: 29188380
-    BaseExp: 129150
-    JobExp: 86100
-    Attack: 11293
-    Attack2: 4904
+    BaseExp: 1347253
+    JobExp: 943077
+    Attack: 12746
+    Attack2: 5122
     Defense: 431
     MagicDefense: 241
-    MagicResistance: 250
-    Resistance: 250
-    Str: 270
-    Agi: 214
-    Vit: 123
-    Int: 141
-    Dex: 309
-    Luk: 80
+    Resistance: 384
+    MagicResistance: 300
+    Str: 175
+    Agi: 144
+    Vit: 166
+    Int: 175
+    Dex: 175
+    Luk: 166
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -109944,7 +109944,7 @@ Body:
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 150
-    AttackDelay: 104
+    AttackDelay: 86
     AttackMotion: 432
     DamageMotion: 540
     DamageTaken: 10
@@ -109952,35 +109952,35 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Grasshopper's_Leg
-        Rate: 8000
+      - Item: Pro_Instruments
+        Rate: 2000
       - Item: Green_Feeler
         Rate: 5
       - Item: Grasshopper_Doll
         Rate: 10
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21552
     AegisName: ECO_SAVAGE
     Name: Verdant Savage
     Level: 252
     Hp: 30895777
-    BaseExp: 150317
-    JobExp: 100211
-    Attack: 10997
-    Attack2: 4223
+    BaseExp: 1336711
+    JobExp: 930111
+    Attack: 11714
+    Attack2: 4314
     Defense: 566
     MagicDefense: 248
-    MagicResistance: 250
-    Resistance: 250
-    Str: 230
-    Agi: 189
-    Vit: 142
-    Int: 70
-    Dex: 310
-    Luk: 77
+    Resistance: 499
+    MagicResistance: 295
+    Str: 139
+    Agi: 135
+    Vit: 189
+    Int: 163
+    Dex: 174
+    Luk: 156
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -109989,7 +109989,7 @@ Body:
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 172
+    AttackDelay: 96
     AttackMotion: 480
     DamageMotion: 384
     DamageTaken: 10
@@ -109997,34 +109997,34 @@ Body:
     Drops:
       - Item: Wild_Boar's_Mane
         Rate: 4500
-      - Item: Grape
-        Rate: 150
+      - Item: Fresh_Pear
+        Rate: 2000
       - Item: Savage_Meat
         Rate: 25
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21553
     AegisName: ECO_FLORA
     Name: Verdant Flora
     Level: 254
     Hp: 26231246
-    BaseExp: 95794
-    JobExp: 63863
-    Attack: 12087
-    Attack2: 4380
+    BaseExp: 1352885
+    JobExp: 942285
+    Attack: 16362
+    Attack2: 4169
     Defense: 480
     MagicDefense: 185
-    MagicResistance: 250
-    Resistance: 250
-    Str: 339
-    Agi: 211
-    Vit: 88
-    Int: 108
-    Dex: 387
-    Luk: 66
-    AttackRange: 3
+    Resistance: 436
+    MagicResistance: 205
+    Str: 221
+    Agi: 185
+    Vit: 175
+    Int: 141
+    Dex: 253
+    Luk: 184
+    AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
     Size: Large
@@ -110032,7 +110032,7 @@ Body:
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 1000
-    AttackDelay: 290
+    AttackDelay: 87
     AttackMotion: 288
     DamageMotion: 432
     DamageTaken: 10
@@ -110040,33 +110040,33 @@ Body:
     Drops:
       - Item: Blossom_Of_Maneater
         Rate: 4500
-      - Item: Stem
-        Rate: 1000
+      - Item: Aromatic_Flower
+        Rate: 2000
       - Item: Leaflet_Of_Aloe
         Rate: 25
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21554
     AegisName: ECO_HILL_WIND
     Name: Verdant Hill Wind
     Level: 252
     Hp: 23931278
-    BaseExp: 96429
-    JobExp: 64286
-    Attack: 9897
-    Attack2: 4786
+    BaseExp: 1327922
+    JobExp: 927225
+    Attack: 16527
+    Attack2: 5446
     Defense: 305
     MagicDefense: 166
-    MagicResistance: 250
-    Resistance: 250
-    Str: 288
-    Agi: 223
-    Vit: 90
-    Int: 69
-    Dex: 338
-    Luk: 77
+    Resistance: 248
+    MagicResistance: 204
+    Str: 203
+    Agi: 239
+    Vit: 133
+    Int: 171
+    Dex: 225
+    Luk: 209
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110074,8 +110074,8 @@ Body:
     Race: Brute
     Element: Wind
     ElementLevel: 3
-    WalkSpeed: 170
-    AttackDelay: 210
+    WalkSpeed: 90
+    AttackDelay: 92
     AttackMotion: 360
     DamageMotion: 360
     DamageTaken: 10
@@ -110085,25 +110085,26 @@ Body:
         Rate: 2000
       - Item: Harpy's_Claw
         Rate: 1500
-      - Item: Monster's_Feed
-        Rate: 500
+      - Item: Shining_Crystal
+        Rate: 2000
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21555
     AegisName: ECO_MISTRESS
     Name: Verdant Mistress
     Level: 260
-    Hp: 21255000
-    BaseExp: 607286
-    JobExp: 404857
-    Attack: 13220
-    Attack2: 7716
+    Hp: 425100000
+    BaseExp: 6072857
+    JobExp: 4048571
+    #MvpExp:
+    Attack: 14000
+    Attack2: 9716
     Defense: 397
     MagicDefense: 320
-    MagicResistance: 300
-    Resistance: 300
+    Resistance: 500
+    MagicResistance: 500
     Str: 311
     Agi: 287
     Vit: 109
@@ -110118,14 +110119,21 @@ Body:
     Element: Wind
     ElementLevel: 4
     WalkSpeed: 100
-    AttackDelay: 53762
+    AttackDelay: 1148
     AttackMotion: 648
     DamageMotion: 300
-    DamageTaken: 10
+    DamageTaken: 1
     Ai: 21
     Class: Boss
     Modes:
-      Detector: true
+      Mvp: true
+    MvpDrops:
+      - Item: Plain_Rune_Box5
+        Rate: 4000
+      - Item: Barmund_Plain_Essence
+        Rate: 3500
+      - Item: Blacksmith_Blessing
+        Rate: 500
     Drops:
       - Item: Old_Card_Album
         Rate: 500
@@ -110134,28 +110142,28 @@ Body:
       - Item: Royal_Jelly
         Rate: 2500
       - Item: Zelunium
-        Rate: 1000
+        Rate: 1800
       - Item: Shadowdecon
-        Rate: 1000
+        Rate: 1800
   - Id: 21556
     AegisName: ECO_EXPLOSION
     Name: Blazing Explosion
     Level: 252
     Hp: 23438635
-    BaseExp: 132236
-    JobExp: 88157
-    Attack: 9867
-    Attack2: 6877
+    BaseExp: 1332273
+    JobExp: 932126
+    Attack: 12339
+    Attack2: 7463
     Defense: 298
     MagicDefense: 313
-    MagicResistance: 250
-    Resistance: 250
-    Str: 201
-    Agi: 214
-    Vit: 121
-    Int: 160
-    Dex: 280
-    Luk: 90
+    Resistance: 258
+    MagicResistance: 402
+    Str: 131
+    Agi: 142
+    Vit: 147
+    Int: 199
+    Dex: 183
+    Luk: 199
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110164,41 +110172,41 @@ Body:
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 165
-    AttackDelay: 460
+    AttackDelay: 115
     AttackMotion: 576
     DamageMotion: 336
     DamageTaken: 10
     Ai: 04
     Drops:
-      - Item: Wing_Of_Red_Bat
-        Rate: 2750
+      - Item: Blaze_Stone
+        Rate: 2000
       - Item: Burning_Heart
         Rate: 1100
       - Item: Hot_Hair
         Rate: 1600
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21557
     AegisName: ECO_DELETER
     Name: Blazing Sky Deleter
     Level: 252
     Hp: 23785549
-    BaseExp: 105420
-    JobExp: 70280
-    Attack: 9799
-    Attack2: 7899
+    BaseExp: 1340379
+    JobExp: 938265
+    Attack: 15468
+    Attack2: 6407
     Defense: 443
     MagicDefense: 250
-    MagicResistance: 250
-    Resistance: 250
-    Str: 180
-    Agi: 209
-    Vit: 98
-    Int: 176
-    Dex: 264
-    Luk: 77
+    Resistance: 410
+    MagicResistance: 321
+    Str: 192
+    Agi: 158
+    Vit: 183
+    Int: 192
+    Dex: 192
+    Luk: 183
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110207,7 +110215,7 @@ Body:
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 175
-    AttackDelay: 227
+    AttackDelay: 108
     AttackMotion: 540
     DamageMotion: 384
     DamageTaken: 10
@@ -110217,31 +110225,31 @@ Body:
         Rate: 1000
       - Item: Dragon_Canine
         Rate: 1300
-      - Item: Dragon_Train
-        Rate: 1000
+      - Item: Shining_Crystal
+        Rate: 2000
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21558
     AegisName: ECO_JAKK
     Name: Blazing Jakk
     Level: 252
     Hp: 21917288
-    BaseExp: 100800
-    JobExp: 67200
-    Attack: 8780
-    Attack2: 4567
+    BaseExp: 1322755
+    JobExp: 923617
+    Attack: 17984
+    Attack2: 6042
     Defense: 310
     MagicDefense: 170
-    MagicResistance: 250
-    Resistance: 250
-    Str: 178
-    Agi: 281
-    Vit: 96
-    Int: 155
-    Dex: 301
-    Luk: 77
+    Resistance: 259
+    MagicResistance: 214
+    Str: 217
+    Agi: 256
+    Vit: 142
+    Int: 183
+    Dex: 241
+    Luk: 224
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110249,8 +110257,8 @@ Body:
     Race: Formless
     Element: Fire
     ElementLevel: 2
-    WalkSpeed: 200
-    AttackDelay: 328
+    WalkSpeed: 90
+    AttackDelay: 96
     AttackMotion: 480
     DamageMotion: 324
     DamageTaken: 10
@@ -110258,33 +110266,33 @@ Body:
     Drops:
       - Item: Pumpkin_Head
         Rate: 4500
-      - Item: Zargon
-        Rate: 450
+      - Item: Evil_Black_Bid
+        Rate: 2000
       - Item: Pumpkin
         Rate: 500
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21559
     AegisName: ECO_LAVA_GOLEM
     Name: Blazing Lava Golem
     Level: 254
     Hp: 29549062
-    BaseExp: 163286
-    JobExp: 108857
-    Attack: 10329
-    Attack2: 3879
+    BaseExp: 1376698
+    JobExp: 957935
+    Attack: 14217
+    Attack2: 5673
     Defense: 624
     MagicDefense: 273
-    MagicResistance: 250
-    Resistance: 250
-    Str: 270
-    Agi: 214
-    Vit: 150
-    Int: 141
-    Dex: 309
-    Luk: 80
+    Resistance: 600
+    MagicResistance: 355
+    Str: 178
+    Agi: 172
+    Vit: 242
+    Int: 209
+    Dex: 222
+    Luk: 199
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110293,7 +110301,7 @@ Body:
     Element: Fire
     ElementLevel: 4
     WalkSpeed: 300
-    AttackDelay: 353
+    AttackDelay: 244
     AttackMotion: 1224
     DamageMotion: 336
     DamageTaken: 10
@@ -110303,31 +110311,31 @@ Body:
         Rate: 2280
       - Item: Burning_Heart
         Rate: 1843
-      - Item: White_Herb
-        Rate: 1250
+      - Item: Blaze_Stone
+        Rate: 2000
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21560
     AegisName: ECO_MAJORUROS
     Name: Blazing Majoruros
     Level: 253
     Hp: 25488079
-    BaseExp: 148547
-    JobExp: 99031
-    Attack: 11076
-    Attack2: 6776
+    BaseExp: 1356696
+    JobExp: 944939
+    Attack: 19854
+    Attack2: 4972
     Defense: 480
     MagicDefense: 185
-    MagicResistance: 250
-    Resistance: 250
-    Str: 230
-    Agi: 189
-    Vit: 137
-    Int: 70
-    Dex: 310
-    Luk: 77
+    Resistance: 436
+    MagicResistance: 205
+    Str: 221
+    Agi: 186
+    Vit: 175
+    Int: 142
+    Dex: 197
+    Luk: 184
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110336,7 +110344,7 @@ Body:
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 399
+    AttackDelay: 192
     AttackMotion: 960
     DamageMotion: 540
     DamageTaken: 10
@@ -110346,31 +110354,31 @@ Body:
         Rate: 2207
       - Item: Beef_Head_Meat
         Rate: 500
-      - Item: White_Herb
-        Rate: 925
+      - Item: Whittling
+        Rate: 2000
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21561
     AegisName: ECO_HYDRO
     Name: Blazing Hydrolancer
     Level: 255
     Hp: 25367918
-    BaseExp: 160650
-    JobExp: 107100
-    Attack: 12003
-    Attack2: 8540
+    BaseExp: 1414382
+    JobExp: 990068
+    Attack: 16316
+    Attack2: 6726
     Defense: 445
     MagicDefense: 251
-    MagicResistance: 250
-    Resistance: 250
-    Str: 339
-    Agi: 211
-    Vit: 147
-    Int: 108
-    Dex: 387
-    Luk: 66
+    Resistance: 410
+    MagicResistance: 321
+    Str: 191
+    Agi: 157
+    Vit: 182
+    Int: 191
+    Dex: 191
+    Luk: 182
     AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
@@ -110379,41 +110387,41 @@ Body:
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 160
-    AttackDelay: 314
-    AttackMotion: 672
+    AttackDelay: 124
+    AttackMotion: 624
     DamageMotion: 432
     DamageTaken: 10
     Ai: 04
     Drops:
       - Item: Dragon's_Skin
         Rate: 2000
-      - Item: Dragon_Canine
+      - Item: Reptile_Stone
         Rate: 2000
       - Item: Tri_Headed_Dragon_Head
         Rate: 1940
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21562
     AegisName: ECO_ACIDUS
     Name: Blazing Black Acidus
     Level: 254
     Hp: 22410484
-    BaseExp: 126448
-    JobExp: 84299
-    Attack: 8830
-    Attack2: 5020
+    BaseExp: 1393537
+    JobExp: 974990
+    Attack: 14025
+    Attack2: 8574
     Defense: 303
     MagicDefense: 319
-    MagicResistance: 250
-    Resistance: 250
-    Str: 288
-    Agi: 223
-    Vit: 121
-    Int: 69
-    Dex: 338
-    Luk: 77
+    Resistance: 265
+    MagicResistance: 414
+    Str: 136
+    Agi: 147
+    Vit: 153
+    Int: 207
+    Dex: 190
+    Luk: 207
     AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
@@ -110422,35 +110430,36 @@ Body:
     Element: Dark
     ElementLevel: 4
     WalkSpeed: 160
-    AttackDelay: 189
+    AttackDelay: 168
     AttackMotion: 756
     DamageMotion: 300
     DamageTaken: 10
     Ai: 04
     Drops:
-      - Item: Dragon_Canine
-        Rate: 1200
+      - Item: Black_Jewelry
+        Rate: 2000
       - Item: Dragon_Train
         Rate: 500
       - Item: Dragon_Scale
         Rate: 750
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21563
     AegisName: ECO_DETALE
     Name: Blazing Detardeurus
     Level: 260
-    Hp: 40950000
-    BaseExp: 1170000
-    JobExp: 780000
+    Hp: 614250000
+    BaseExp: 8775000
+    JobExp: 5850000
+    #MvpExp:
     Attack: 14200
-    Attack2: 9400
+    Attack2: 10400
     Defense: 503
     MagicDefense: 289
-    MagicResistance: 300
-    Resistance: 300
+    Resistance: 500
+    MagicResistance: 500
     Str: 311
     Agi: 287
     Vit: 210
@@ -110465,12 +110474,21 @@ Body:
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 250
-    AttackDelay: 3487
-    AttackMotion: 936
+    AttackDelay: 432
+    AttackMotion: 336
     DamageMotion: 360
-    DamageTaken: 10
+    DamageTaken: 1
     Ai: 21
     Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Flame_Rune_Box5
+        Rate: 4000
+      - Item: Barmund_Flame_Essence
+        Rate: 3500
+      - Item: Blacksmith_Blessing
+        Rate: 500
     Drops:
       - Item: Treasure_Box
         Rate: 2500
@@ -110479,28 +110497,28 @@ Body:
       - Item: Tri_Headed_Dragon_Head
         Rate: 5000
       - Item: Zelunium
-        Rate: 1000
+        Rate: 1800
       - Item: Shadowdecon
-        Rate: 1000
+        Rate: 1800
   - Id: 21564
     AegisName: ECO_ICE_TITAN
     Name: Glacial Ice Titan
     Level: 252
     Hp: 29583419
-    BaseExp: 181440
-    JobExp: 120960
-    Attack: 10110
-    Attack2: 6400
+    BaseExp: 1326340
+    JobExp: 922895
+    Attack: 11529
+    Attack2: 4489
     Defense: 601
     MagicDefense: 263
-    MagicResistance: 250
-    Resistance: 250
-    Str: 201
-    Agi: 214
-    Vit: 168
-    Int: 160
-    Dex: 280
-    Luk: 90
+    Resistance: 563
+    MagicResistance: 333
+    Str: 164
+    Agi: 158
+    Vit: 223
+    Int: 192
+    Dex: 204
+    Luk: 183
     AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
@@ -110509,7 +110527,7 @@ Body:
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
-    AttackDelay: 661
+    AttackDelay: 132
     AttackMotion: 660
     DamageMotion: 144
     DamageTaken: 10
@@ -110517,33 +110535,33 @@ Body:
     Drops:
       - Item: Ice_Heart
         Rate: 2500
-      - Item: Ice_Piece
-        Rate: 1500
+      - Item: Hard_Ice
+        Rate: 2000
       - Item: Cold_Ice
         Rate: 250
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21565
     AegisName: ECO_SIROMA
     Name: Glacial Siroma
     Level: 252
     Hp: 25201125
-    BaseExp: 131237
-    JobExp: 87491
-    Attack: 7983
-    Attack2: 5679
+    BaseExp: 1317588
+    JobExp: 920009
+    Attack: 15045
+    Attack2: 4981
     Defense: 306
     MagicDefense: 167
-    MagicResistance: 250
-    Resistance: 250
-    Str: 112
-    Agi: 209
-    Vit: 122
-    Int: 176
-    Dex: 264
-    Luk: 77
+    Resistance: 251
+    MagicResistance: 206
+    Str: 206
+    Agi: 243
+    Vit: 135
+    Int: 173
+    Dex: 229
+    Luk: 213
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110551,8 +110569,8 @@ Body:
     Race: Formless
     Element: Water
     ElementLevel: 3
-    WalkSpeed: 150
-    AttackDelay: 543
+    WalkSpeed: 90
+    AttackDelay: 129
     AttackMotion: 648
     DamageMotion: 240
     DamageTaken: 10
@@ -110560,33 +110578,33 @@ Body:
     Drops:
       - Item: Ice_Heart
         Rate: 250
-      - Item: Ice_Piece
-        Rate: 750
+      - Item: Green_Crystal_Fragment
+        Rate: 2000
       - Item: Cold_Ice
         Rate: 125
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21566
     AegisName: ECO_SNOWIER
     Name: Glacial Snowier
     Level: 254
     Hp: 28555443
-    BaseExp: 154736
-    JobExp: 103157
-    Attack: 11089
-    Attack2: 4899
+    BaseExp: 1359180
+    JobExp: 951426
+    Attack: 12722
+    Attack2: 5396
     Defense: 459
     MagicDefense: 260
-    MagicResistance: 250
-    Resistance: 250
-    Str: 178
-    Agi: 281
-    Vit: 145
-    Int: 155
-    Dex: 301
-    Luk: 77
+    Resistance: 438
+    MagicResistance: 344
+    Str: 209
+    Agi: 172
+    Vit: 199
+    Int: 209
+    Dex: 209
+    Luk: 199
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110595,41 +110613,41 @@ Body:
     Element: Water
     ElementLevel: 2
     WalkSpeed: 180
-    AttackDelay: 339
+    AttackDelay: 163
     AttackMotion: 816
     DamageMotion: 420
     DamageTaken: 10
     Ai: 04
     Drops:
-      - Item: Ice_Heart
-        Rate: 1500
+      - Item: Green_Crystal_Fragment
+        Rate: 2000
       - Item: Ice_Piece
         Rate: 500
       - Item: Crystal_Blue
         Rate: 150
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21567
     AegisName: ECO_CENTIPEDE
     Name: Glacial Centipede
     Level: 252
     Hp: 21467484
-    BaseExp: 113400
-    JobExp: 75600
-    Attack: 8979
-    Attack2: 6790
+    BaseExp: 1316733
+    JobExp: 921254
+    Attack: 12342
+    Attack2: 7753
     Defense: 309
     MagicDefense: 327
-    MagicResistance: 250
-    Resistance: 250
-    Str: 187
-    Agi: 214
-    Vit: 108
-    Int: 141
-    Dex: 309
-    Luk: 80
+    Resistance: 278
+    MagicResistance: 436
+    Str: 146
+    Agi: 157
+    Vit: 164
+    Int: 221
+    Dex: 203
+    Luk: 221
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110638,7 +110656,7 @@ Body:
     Element: Poison
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 694
+    AttackDelay: 158
     AttackMotion: 792
     DamageMotion: 336
     DamageTaken: 10
@@ -110646,35 +110664,35 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Short_Leg
-        Rate: 2668
+      - Item: Congealed_Poison
+        Rate: 2000
       - Item: Zargon
         Rate: 2500
       - Item: Solid_Shell
         Rate: 1250
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21568
     AegisName: ECO_AQUA_ELEMENTAL
     Name: Glacial Aqua Elemental
     Level: 253
     Hp: 25223418
-    BaseExp: 109033
-    JobExp: 72689
-    Attack: 7877
-    Attack2: 6900
+    BaseExp: 1338947
+    JobExp: 936796
+    Attack: 10889
+    Attack2: 6881
     Defense: 311
     MagicDefense: 331
-    MagicResistance: 250
-    Resistance: 250
-    Str: 166
-    Agi: 189
-    Vit: 103
-    Int: 70
-    Dex: 310
-    Luk: 77
+    Resistance: 283
+    MagicResistance: 443
+    Str: 149
+    Agi: 161
+    Vit: 167
+    Int: 226
+    Dex: 208
+    Luk: 226
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110683,41 +110701,41 @@ Body:
     Element: Water
     ElementLevel: 4
     WalkSpeed: 190
-    AttackDelay: 291
-    AttackMotion: 648
+    AttackDelay: 153
+    AttackMotion: 768
     DamageMotion: 576
     DamageTaken: 10
     Ai: 04
     Drops:
-      - Item: Crystalized_Teardrop
-        Rate: 500
+      - Item: Cool_Liquid
+        Rate: 2000
       - Item: Fluorescent_Liquid
         Rate: 2500
       - Item: Starsand_Of_Witch
         Rate: 1250
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21569
     AegisName: ECO_ANGELGOLT
     Name: Glacial Angelgolt
     Level: 254
     Hp: 24831628
-    BaseExp: 142603
-    JobExp: 95069
-    Attack: 9870
-    Attack2: 10110
+    BaseExp: 1380517
+    JobExp: 966362
+    Attack: 15548
+    Attack2: 6386
     Defense: 442
     MagicDefense: 249
-    MagicResistance: 250
-    Resistance: 250
-    Str: 215
-    Agi: 211
-    Vit: 131
-    Int: 108
-    Dex: 387
-    Luk: 66
+    Resistance: 405
+    MagicResistance: 317
+    Str: 188
+    Agi: 155
+    Vit: 179
+    Int: 188
+    Dex: 188
+    Luk: 179
     AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
@@ -110726,41 +110744,41 @@ Body:
     Element: Holy
     ElementLevel: 4
     WalkSpeed: 220
-    AttackDelay: 756
-    AttackMotion: 1248
+    AttackDelay: 156
+    AttackMotion: 780
     DamageMotion: 480
     DamageTaken: 10
     Ai: 04
     Drops:
-      - Item: Soft_Feather
-        Rate: 300
+      - Item: Hard_Ice
+        Rate: 2000
       - Item: Rune_Of_Darkness
         Rate: 2000
       - Item: Stone_Of_Intelligence_
         Rate: 15
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21570
     AegisName: ECO_RHYNCHO
     Name: Glacial Rhyncho
     Level: 255
     Hp: 28018013
-    BaseExp: 150000
-    JobExp: 100000
-    Attack: 8790
-    Attack2: 6770
+    BaseExp: 1386181
+    JobExp: 965475
+    Attack: 17802
+    Attack2: 4618
     Defense: 506
     MagicDefense: 195
-    MagicResistance: 250
-    Resistance: 250
-    Str: 197
-    Agi: 223
-    Vit: 140
-    Int: 69
-    Dex: 338
-    Luk: 77
+    Resistance: 484
+    MagicResistance: 228
+    Str: 255
+    Agi: 214
+    Vit: 202
+    Int: 163
+    Dex: 227
+    Luk: 212
     AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
@@ -110769,7 +110787,7 @@ Body:
     Element: Water
     ElementLevel: 3
     WalkSpeed: 220
-    AttackDelay: 315
+    AttackDelay: 132
     AttackMotion: 660
     DamageMotion: 420
     DamageTaken: 10
@@ -110777,27 +110795,28 @@ Body:
     Drops:
       - Item: Karvodailnirol
         Rate: 10
-      - Item: Fluorescent_Liquid
-        Rate: 2500
+      - Item: Cool_Liquid
+        Rate: 2000
       - Item: Starsand_Of_Witch
         Rate: 1250
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21571
     AegisName: ECO_KTULLANUX
     Name: Glacial Ktullanux
     Level: 260
-    Hp: 39000000
-    BaseExp: 1114286
-    JobExp: 742857
-    Attack: 13207
-    Attack2: 9876
+    Hp: 585000000
+    BaseExp: 8357143
+    JobExp: 5571429
+    #MvpExp:
+    Attack: 14207
+    Attack2: 10876
     Defense: 328
     MagicDefense: 388
-    MagicResistance: 300
-    Resistance: 300
+    Resistance: 500
+    MagicResistance: 500
     Str: 311
     Agi: 287
     Vit: 200
@@ -110812,12 +110831,21 @@ Body:
     Element: Water
     ElementLevel: 4
     WalkSpeed: 350
-    AttackDelay: 3507
+    AttackDelay: 432
     AttackMotion: 840
     DamageMotion: 216
-    DamageTaken: 10
+    DamageTaken: 1
     Ai: 21
     Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Ice_Rune_Box5
+        Rate: 4000
+      - Item: Barmund_Ice_Essence
+        Rate: 3500
+      - Item: Blacksmith_Blessing
+        Rate: 500
     Drops:
       - Item: Old_Card_Album
         Rate: 500
@@ -110826,28 +110854,28 @@ Body:
       - Item: Old_Violet_Box
         Rate: 2500
       - Item: Zelunium
-        Rate: 1000
+        Rate: 1800
       - Item: Shadowdecon
-        Rate: 1000
+        Rate: 1800
   - Id: 21572
     AegisName: ECO_ANCIENT_MUMMY
     Name: Grave Ancient Mummy
     Level: 253
     Hp: 28033464
-    BaseExp: 141429
-    JobExp: 94286
-    Attack: 10997
-    Attack2: 4223
+    BaseExp: 1428239
+    JobExp: 1059517
+    Attack: 17529
+    Attack2: 4332
     Defense: 472
     MagicDefense: 182
-    MagicResistance: 250
-    Resistance: 250
-    Str: 198
-    Agi: 214
-    Vit: 132
-    Int: 160
-    Dex: 280
-    Luk: 90
+    Resistance: 421
+    MagicResistance: 198
+    Str: 210
+    Agi: 177
+    Vit: 167
+    Int: 135
+    Dex: 188
+    Luk: 175
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110856,41 +110884,41 @@ Body:
     Element: Undead
     ElementLevel: 2
     WalkSpeed: 140
-    AttackDelay: 189
-    AttackMotion: 120
+    AttackDelay: 144
+    AttackMotion: 720
     DamageMotion: 384
     DamageTaken: 10
     Ai: 04
     Drops:
       - Item: Rotten_Bandage
         Rate: 2207
-      - Item: Mementos
-        Rate: 900
+      - Item: Evil_Black_Bid
+        Rate: 2000
       - Item: Silver_Ring
         Rate: 50
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21573
     AegisName: ECO_LUDE
     Name: Grave Lude
     Level: 252
     Hp: 26320301
-    BaseExp: 104344
-    JobExp: 69563
-    Attack: 12087
-    Attack2: 4380
+    BaseExp: 1317588
+    JobExp: 920009
+    Attack: 15177
+    Attack2: 4789
     Defense: 294
     MagicDefense: 158
-    MagicResistance: 250
-    Resistance: 250
-    Str: 180
-    Agi: 209
-    Vit: 97
-    Int: 176
-    Dex: 264
-    Luk: 77
+    Resistance: 227
+    MagicResistance: 184
+    Str: 176
+    Agi: 207
+    Vit: 115
+    Int: 148
+    Dex: 195
+    Luk: 181
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110898,42 +110926,42 @@ Body:
     Race: Undead
     Element: Undead
     ElementLevel: 1
-    WalkSpeed: 150
-    AttackDelay: 374
-    AttackMotion: 600
+    WalkSpeed: 90
+    AttackDelay: 96
+    AttackMotion: 480
     DamageMotion: 360
     DamageTaken: 10
     Ai: 04
     Drops:
       - Item: Pumpkin_Bucket
         Rate: 1600
-      - Item: Ectoplasm
-        Rate: 2862
+      - Item: Whittling
+        Rate: 2000
       - Item: Transparent_Cloth
         Rate: 500
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21574
     AegisName: ECO_RAGGED_ZOMBIE
     Name: Grave Ragged Zombie
     Level: 252
     Hp: 28560234
-    BaseExp: 125923
-    JobExp: 83949
-    Attack: 9897
-    Attack2: 4786
+    BaseExp: 1314582
+    JobExp: 920208
+    Attack: 11474
+    Attack2: 4331
     Defense: 400
     MagicDefense: 222
-    MagicResistance: 250
-    Resistance: 250
-    Str: 178
-    Agi: 281
-    Vit: 118
-    Int: 155
-    Dex: 301
-    Luk: 77
+    Resistance: 327
+    MagicResistance: 253
+    Str: 138
+    Agi: 114
+    Vit: 131
+    Int: 138
+    Dex: 178
+    Luk: 131
     AttackRange: 9
     SkillRange: 10
     ChaseRange: 12
@@ -110942,7 +110970,7 @@ Body:
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 150
-    AttackDelay: 583
+    AttackDelay: 115
     AttackMotion: 576
     DamageMotion: 420
     DamageTaken: 10
@@ -110952,31 +110980,31 @@ Body:
         Rate: 1500
       - Item: Skel_Bone
         Rate: 2250
-      - Item: Carnium
-        Rate: 15
+      - Item: Evil_Minded_Ruby
+        Rate: 2000
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21575
     AegisName: ECO_WRAITH
     Name: Grave Wraith Dead
     Level: 254
     Hp: 29822370
-    BaseExp: 106050
-    JobExp: 70700
-    Attack: 13220
-    Attack2: 7716
+    BaseExp: 1359180
+    JobExp: 951426
+    Attack: 13076
+    Attack2: 5279
     Defense: 434
     MagicDefense: 244
-    MagicResistance: 250
-    Resistance: 250
-    Str: 270
-    Agi: 214
-    Vit: 101
-    Int: 141
-    Dex: 309
-    Luk: 80
+    Resistance: 390
+    MagicResistance: 305
+    Str: 178
+    Agi: 147
+    Vit: 170
+    Int: 178
+    Dex: 178
+    Luk: 170
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -110985,8 +111013,8 @@ Body:
     Element: Undead
     ElementLevel: 4
     WalkSpeed: 220
-    AttackDelay: 608
-    AttackMotion: 576
+    AttackDelay: 163
+    AttackMotion: 816
     DamageMotion: 240
     DamageTaken: 10
     Ai: 04
@@ -110995,31 +111023,31 @@ Body:
         Rate: 2910
       - Item: Red_Gemstone
         Rate: 500
-      - Item: Crystal_Jewel_
-        Rate: 10
+      - Item: Black_Jewelry
+        Rate: 2000
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21576
     AegisName: ECO_FLAME_SKULL
     Name: Grave Flame Skull
     Level: 252
     Hp: 21469657
-    BaseExp: 104799
-    JobExp: 69866
-    Attack: 10997
-    Attack2: 4223
+    BaseExp: 1327093
+    JobExp: 928502
+    Attack: 13703
+    Attack2: 8062
     Defense: 318
     MagicDefense: 340
-    MagicResistance: 250
-    Resistance: 250
-    Str: 230
-    Agi: 189
-    Vit: 99
-    Int: 70
-    Dex: 310
-    Luk: 77
+    Resistance: 297
+    MagicResistance: 468
+    Str: 160
+    Agi: 172
+    Vit: 180
+    Int: 243
+    Dex: 223
+    Luk: 243
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -111028,8 +111056,8 @@ Body:
     Element: Ghost
     ElementLevel: 3
     WalkSpeed: 150
-    AttackDelay: 441
-    AttackMotion: 648
+    AttackDelay: 108
+    AttackMotion: 540
     DamageMotion: 432
     DamageTaken: 10
     Ai: 04
@@ -111038,33 +111066,33 @@ Body:
     Drops:
       - Item: Skull
         Rate: 2500
-      - Item: Horrendous_Mouth
-        Rate: 3000
+      - Item: Blaze_Stone
+        Rate: 2000
       - Item: Mementos
         Rate: 250
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21577
     AegisName: ECO_BANSHEE
     Name: Grave Banshee
     Level: 254
     Hp: 24831628
-    BaseExp: 134983
-    JobExp: 89989
-    Attack: 10110
-    Attack2: 6400
+    BaseExp: 1380517
+    JobExp: 966362
+    Attack: 15395
+    Attack2: 6323
     Defense: 442
     MagicDefense: 249
-    MagicResistance: 250
-    Resistance: 250
-    Str: 339
-    Agi: 211
-    Vit: 124
-    Int: 108
-    Dex: 387
-    Luk: 66
+    Resistance: 405
+    MagicResistance: 317
+    Str: 188
+    Agi: 155
+    Vit: 179
+    Int: 188
+    Dex: 188
+    Luk: 179
     AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
@@ -111073,8 +111101,8 @@ Body:
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 150
-    AttackDelay: 421
-    AttackMotion: 504
+    AttackDelay: 105
+    AttackMotion: 420
     DamageMotion: 420
     DamageTaken: 10
     Ai: 04
@@ -111085,31 +111113,31 @@ Body:
         Rate: 1500
       - Item: Mementos
         Rate: 750
-      - Item: Brigan
-        Rate: 2668
+      - Item: Evil_Minded_Ruby
+        Rate: 2000
       - Item: Shadowdecon
-        Rate: 5
+        Rate: 17
       - Item: Shadowdecon_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21578
     AegisName: ECO_KNIGHT_OF_ABYSS
     Name: Grave Abysmal Knight
     Level: 255
     Hp: 26602843
-    BaseExp: 160714
-    JobExp: 107143
-    Attack: 7983
-    Attack2: 5679
+    BaseExp: 1407874
+    JobExp: 980584
+    Attack: 20898
+    Attack2: 5194
     Defense: 478
     MagicDefense: 185
-    MagicResistance: 250
-    Resistance: 250
-    Str: 288
-    Agi: 223
-    Vit: 150
-    Int: 69
-    Dex: 338
-    Luk: 77
+    Resistance: 430
+    MagicResistance: 203
+    Str: 216
+    Agi: 182
+    Vit: 172
+    Int: 139
+    Dex: 193
+    Luk: 180
     AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
@@ -111118,7 +111146,7 @@ Body:
     Element: Dark
     ElementLevel: 4
     WalkSpeed: 240
-    AttackDelay: 252
+    AttackDelay: 134
     AttackMotion: 672
     DamageMotion: 240
     DamageTaken: 10
@@ -111128,25 +111156,26 @@ Body:
         Rate: 2668
       - Item: Blade_Lost_In_Darkness
         Rate: 15
-      - Item: Elunium
-        Rate: 185
+      - Item: Evil_Black_Bid
+        Rate: 2000
       - Item: Zelunium
-        Rate: 5
+        Rate: 17
       - Item: Zelunium_Ore
-        Rate: 100
+        Rate: 180
   - Id: 21579
     AegisName: ECO_LORD_OF_DEATH
     Name: Grave Lord of the Dead
     Level: 260
-    Hp: 34905000
-    BaseExp: 997286
-    JobExp: 664857
-    Attack: 11089
-    Attack2: 4899
+    Hp: 523575000
+    BaseExp: 7479643
+    JobExp: 4986429
+    #MvpExp:
+    Attack: 14089
+    Attack2: 9899
     Defense: 503
     MagicDefense: 388
-    MagicResistance: 300
-    Resistance: 300
+    Resistance: 500
+    MagicResistance: 500
     Str: 311
     Agi: 287
     Vit: 179
@@ -111164,11 +111193,18 @@ Body:
     AttackDelay: 1446
     AttackMotion: 1296
     DamageMotion: 360
-    DamageTaken: 10
+    DamageTaken: 1
     Ai: 21
     Class: Boss
     Modes:
-      Detector: true
+      Mvp: true
+    MvpDrops:
+      - Item: Death_Rune_Box5
+        Rate: 4000
+      - Item: Barmund_Death_Essence
+        Rate: 3500
+      - Item: Blacksmith_Blessing
+        Rate: 500
     Drops:
       - Item: Boroken_Shiled_Piece
         Rate: 2668
@@ -111177,9 +111213,9 @@ Body:
       - Item: Oridecon
         Rate: 500
       - Item: Zelunium
-        Rate: 1000
+        Rate: 1800
       - Item: Shadowdecon
-        Rate: 1000
+        Rate: 1800
 #  - Id: 21580
 #    AegisName: G_BIJOU
 #  - Id: 21581
