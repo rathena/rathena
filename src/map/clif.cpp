@@ -1436,7 +1436,7 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 	p.virtue = (sc) ? sc->opt3 : 0;
 	p.isPKModeON = (sd && sd->status.karma) ? 1 : 0;
 	p.sex = vd->sex;
-	WBUFPOS2( &p.MoveData[0], 0, bl.x, bl.y, ud.to_x, ud.to_y, 8, 8 );
+	WBUFPOS2(&p.MoveData[0], 0, bl.x, bl.y, ud.to_x, ud.to_y, ud.sx, ud.sy);
 	p.xSize = p.ySize = (sd) ? 5 : 0;
 	p.clevel = clif_setlevel( &bl );
 #if PACKETVER >= 20080102
