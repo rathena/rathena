@@ -15,22 +15,22 @@
 //==================================================
 // bra_fild01 - Brasilis Field
 //==================================================
-bra_fild01,0,0	monster	Headless Mule	2071,40,5000
-bra_fild01,0,0	monster	Curupira	2074,80,5000
-bra_fild01,0,0	monster	Dokebi	1110,20,5000
-bra_fild01,0,0	monster	Jaguar	2072,10,5000
-bra_fild01,0,0	monster	Savage	1166,20,5000
-bra_fild01,0,0	monster	Toucan	2073,10,5000
-bra_fild01,0,0	monster	Red Mushroom	1085,3,360000,180000
+bra_fild01	monster	Headless Mule	2071,40,5000
+bra_fild01	monster	Curupira	2074,80,5000
+bra_fild01	monster	Dokebi	1110,20,5000
+bra_fild01	monster	Jaguar	2072,10,5000
+bra_fild01	monster	Savage	1166,20,5000
+bra_fild01	monster	Toucan	2073,10,5000
+bra_fild01	monster	Red Mushroom	1085,3,360000,180000
 
 //jRO Pre-Renewal spawns (amounts are estimated)
 
 //==================================================
 // bra_fild01
 //==================================================
-//bra_fild01,0,0	monster	Savage	1166,20,5000
-//bra_fild01,0,0	monster	Dokebi	1110,20,5000
-//bra_fild01,0,0	monster	Curupira	2074,80,5000
-//bra_fild01,0,0	monster	Toucan	2073,60,5000
-//bra_fild01,0,0	monster	Jaguar	2072,55,5000
-//bra_fild01,0,0	monster	Red Mushroom	1085,3,360000,180000
+//bra_fild01	monster	Savage	1166,20,5000
+//bra_fild01	monster	Dokebi	1110,20,5000
+//bra_fild01	monster	Curupira	2074,80,5000
+//bra_fild01	monster	Toucan	2073,60,5000
+//bra_fild01	monster	Jaguar	2072,55,5000
+//bra_fild01	monster	Red Mushroom	1085,3,360000,180000

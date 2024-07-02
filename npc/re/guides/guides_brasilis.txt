@@ -59,6 +59,7 @@ brasilis,219,97,3	script	Brasilis Guide	478,{
 			viewpoint 1,195,235,6,0x3355FF;
 			close;
 		}
+		end;
 	case 2:
 		mes "[Brasilis Guide]";
 		mes "I'll remove all marks from your mini-map.";

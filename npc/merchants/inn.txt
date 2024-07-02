@@ -122,7 +122,7 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 	mes "finest accomodations";
 	mes "and the best service.";
 	next;
-	switch(select("Save Point:Rest - 5,000 zeny:Cancel")) {
+	switch(select("Save Point:Rest - 5,000 zeny","Cancel")) {
 	case 1:
 		savepoint "lhz_in02",209,275,1,1;
 		mes "[Hotel Employee]";
@@ -173,7 +173,7 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 	mes "most comfortable";
 	mes "inn here in Veins~";
 	next;
-	switch(select("Save:Take a Rest -> 5000 zeny:Quit")) {
+	switch(select("Save:Take a Rest -> 5000 zeny","Quit")) {
 	case 1:
 		mes "[Inn Master]";
 		mes "Your Respawn Point";
@@ -208,12 +208,12 @@ bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 	mes "[Hotel Keeper]";
 	mes "Welcome to the beautiful Brasilis Hotel.";
 	next;
-	switch(select("Save:Rest -5000 zeny")) {
+	switch(select("Save","Rest -5000 zeny")) {
 	case 1:
 		mes "[Hotel Keeper]";
 		mes "Do you want to save here at the Brasilis Hotel?";
 		next;
-		switch(select("No thank you.:Absolutely.")) {
+		switch(select("No thank you.","Absolutely.")) {
 		case 1:
 			mes "[Hotel Keeper]";
 			mes "Ok then, enjoy your stay.";
@@ -224,6 +224,7 @@ bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 			savepoint "bra_in01",144,69,1,1;
 			close;
 		}
+		end;
 	case 2:
 		if (Zeny > 4999) {
 			mes "[Hotel Keeper]";
@@ -234,11 +235,9 @@ bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 			warp "bra_in01",144,69;
 			end;
 		}
-		else {
-			mes "[Hotel Keeper]";
-			mes "I'm sorry, but the service charge is 5,000 zeny per night.";
-			close;
-		}
+		mes "[Hotel Keeper]";
+		mes "I'm sorry, but the service charge is 5,000 zeny per night.";
+		close;
 	}
 }
 
@@ -251,7 +250,7 @@ function	script	F_InnMaid	{
 	mes getarg(1) + ".";
 	mes "How may I help you?";
 	next;
-	switch(select("Save:Take a Rest -> 5000 zeny:Cancel")) {
+	switch(select("Save:Take a Rest -> 5000 zeny","Cancel")) {
 	case 1:
 		mes .@npc_name$;
 		mes "Your respawn point";
