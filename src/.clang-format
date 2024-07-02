@@ -3,7 +3,7 @@ BasedOnStyle: Google
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
-ColumnLimit: 200
+ColumnLimit: 150
 IndentWidth: 4
 Language: Cpp
 TabWidth: 4
@@ -32,9 +32,8 @@ SpaceBeforeParensOptions:
   AfterFunctionDefinitionName: false
   AfterIfMacros: false
   AfterOverloadedOperator: false
-# Only supported by clang-format >= 15.0.0
-#  AfterRequiresInClause: false
-#  AfterRequiresInExpression: false
+  AfterRequiresInClause: false
+  AfterRequiresInExpression: false
   BeforeNonEmptyParentheses: false
 IncludeCategories:
   - Regex: '<config/.*h.*>'
