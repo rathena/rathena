@@ -1774,13 +1774,13 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 	p.matk = i16min( status->matk_max, INT16_MAX ); //FIXME capping to INT16 here is too late
 	p.hit = status->hit;
 	if( battle_config.hom_setting&HOMSET_DISPLAY_LUK ){
-		p.crit = status->luk / 3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
+		p.crit = 1 + (short)std::floor(status->luk / 3);
 	}else{
 		p.crit = status->cri / 10;
 	}
 #ifdef RENEWAL
-	p.def = status->def + status->def2;
-	p.mdef = status->mdef + status->mdef2;
+	p.def = status->def;
+	p.mdef = status->mdef;
 #else
 	p.def = status->def + status->vit;
 	p.mdef = status->mdef;
@@ -1806,13 +1806,27 @@ void clif_hominfo( map_session_data *sd, struct homun_data *hd, int flag ){
 		p.maxHp = status->max_hp;
 	}
 #endif
-	if( status->max_sp > INT16_MAX ){
-		p.sp = status->sp / ( status->max_sp / 100 );
+
+#if PACKETVER_MAIN_NUM >= 20210303 || PACKETVER_RE_NUM >= 20211103
+	if (status->max_sp > (INT32_MAX / 100)) { //int16_max is outdated at this point 
+		p.sp = status->sp / (status->max_sp / 100);
 		p.maxSp = 100;
-	}else{
+	}
+	else {
 		p.sp = status->sp;
 		p.maxSp = status->max_sp;
 	}
+#else
+	if (status->max_sp > INT16_MAX) {
+		p.sp = status->sp / (status->max_sp / 100);
+		p.maxSp = 100;
+	}
+	else {
+		p.sp = status->sp;
+		p.maxSp = status->max_sp;
+	}
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20210303 || PACKETVER_RE_NUM >= 20211103
 	p.exp = hd->homunculus.exp;
 	p.expNext = hd->exp_next;

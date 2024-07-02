@@ -63,16 +63,16 @@ Body:
     Status:
       - Type: Hp
         Base: 150
-        GrowthMinimum: 60
-        GrowthMaximum: 100
-        EvolutionMinimum: 800
-        EvolutionMaximum: 2400
+        GrowthMinimum: 180
+        GrowthMaximum: 300
+        EvolutionMinimum: 2400
+        EvolutionMaximum: 7200
       - Type: Sp
         Base: 40
-        GrowthMinimum: 4
-        GrowthMaximum: 9
-        EvolutionMinimum: 220
-        EvolutionMaximum: 480
+        GrowthMinimum: 12
+        GrowthMaximum: 27
+        EvolutionMinimum: 660
+        EvolutionMaximum: 1440
       - Type: Str
         Base: 17
         GrowthMinimum: 5
@@ -134,16 +134,16 @@ Body:
     Status:
       - Type: Hp
         Base: 320
-        GrowthMinimum: 80
-        GrowthMaximum: 130
-        EvolutionMinimum: 1600
-        EvolutionMaximum: 3600
+        GrowthMinimum: 240
+        GrowthMaximum: 390
+        EvolutionMinimum: 4800
+        EvolutionMaximum: 10800
       - Type: Sp
         Base: 10
-        GrowthMinimum: 1
-        GrowthMaximum: 4
-        EvolutionMinimum: 120
-        EvolutionMaximum: 360
+        GrowthMinimum: 4
+        GrowthMaximum: 16
+        EvolutionMinimum: 360
+        EvolutionMaximum: 1080
       - Type: Str
         Base: 20
         GrowthMinimum: 8
@@ -205,16 +205,16 @@ Body:
     Status:
       - Type: Hp
         Base: 90
-        GrowthMinimum: 45
-        GrowthMaximum: 75
-        EvolutionMinimum: 1200
-        EvolutionMaximum: 3200
+        GrowthMinimum: 135
+        GrowthMaximum: 225
+        EvolutionMinimum: 3600
+        EvolutionMaximum: 9600
       - Type: Sp
         Base: 25
-        GrowthMinimum: 3
-        GrowthMaximum: 6
-        EvolutionMinimum: 200
-        EvolutionMaximum: 400
+        GrowthMinimum: 9
+        GrowthMaximum: 18
+        EvolutionMinimum: 600
+        EvolutionMaximum: 1200
       - Type: Str
         Base: 29
         GrowthMinimum: 4
@@ -276,16 +276,16 @@ Body:
     Status:
       - Type: Hp
         Base: 80
-        GrowthMinimum: 30
-        GrowthMaximum: 150
-        EvolutionMinimum: 1200
-        EvolutionMaximum: 4800
+        GrowthMinimum: 90
+        GrowthMaximum: 450
+        EvolutionMinimum: 3600
+        EvolutionMaximum: 14400
       - Type: Sp
         Base: 11
-        GrowthMinimum: 0
-        GrowthMaximum: 7
-        EvolutionMinimum: 480
-        EvolutionMaximum: 640
+        GrowthMinimum: 3
+        GrowthMaximum: 21
+        EvolutionMinimum: 1440
+        EvolutionMaximum: 1920
       - Type: Str
         Base: 11
         GrowthMinimum: 1
@@ -345,16 +345,16 @@ Body:
     Status:
       - Type: Hp
         Base: 150
-        GrowthMinimum: 60
-        GrowthMaximum: 100
-        EvolutionMinimum: 800
-        EvolutionMaximum: 2400
+        GrowthMinimum: 120
+        GrowthMaximum: 300
+        EvolutionMinimum: 1600
+        EvolutionMaximum: 7200
       - Type: Sp
         Base: 40
-        GrowthMinimum: 4
-        GrowthMaximum: 9
-        EvolutionMinimum: 220
-        EvolutionMaximum: 480
+        GrowthMinimum: 12
+        GrowthMaximum: 27
+        EvolutionMinimum: 660
+        EvolutionMaximum: 1440
       - Type: Str
         Base: 17
         GrowthMinimum: 5
@@ -416,16 +416,16 @@ Body:
     Status:
       - Type: Hp
         Base: 320
-        GrowthMinimum: 80
-        GrowthMaximum: 130
-        EvolutionMinimum: 1600
-        EvolutionMaximum: 3600
+        GrowthMinimum: 160
+        GrowthMaximum: 390
+        EvolutionMinimum: 4800
+        EvolutionMaximum: 10800
       - Type: Sp
         Base: 10
-        GrowthMinimum: 1
-        GrowthMaximum: 4
-        EvolutionMinimum: 120
-        EvolutionMaximum: 360
+        GrowthMinimum: 3
+        GrowthMaximum: 12
+        EvolutionMinimum: 360
+        EvolutionMaximum: 1080
       - Type: Str
         Base: 20
         GrowthMinimum: 8
@@ -487,16 +487,16 @@ Body:
     Status:
       - Type: Hp
         Base: 90
-        GrowthMinimum: 45
-        GrowthMaximum: 75
-        EvolutionMinimum: 1200
-        EvolutionMaximum: 3200
+        GrowthMinimum: 135
+        GrowthMaximum: 225
+        EvolutionMinimum: 3600
+        EvolutionMaximum: 9600
       - Type: Sp
         Base: 25
-        GrowthMinimum: 3
-        GrowthMaximum: 6
-        EvolutionMinimum: 200
-        EvolutionMaximum: 400
+        GrowthMinimum: 9
+        GrowthMaximum: 18
+        EvolutionMinimum: 600
+        EvolutionMaximum: 1200
       - Type: Str
         Base: 29
         GrowthMinimum: 4
@@ -558,16 +558,16 @@ Body:
     Status:
       - Type: Hp
         Base: 80
-        GrowthMinimum: 30
-        GrowthMaximum: 150
-        EvolutionMinimum: 1200
-        EvolutionMaximum: 4800
+        GrowthMinimum: 90
+        GrowthMaximum: 450
+        EvolutionMinimum: 3600
+        EvolutionMaximum: 14400
       - Type: Sp
         Base: 11
-        GrowthMinimum: 0
-        GrowthMaximum: 7
-        EvolutionMinimum: 480
-        EvolutionMaximum: 640
+        GrowthMinimum: 3
+        GrowthMaximum: 21
+        EvolutionMinimum: 1440
+        EvolutionMaximum: 1920
       - Type: Str
         Base: 11
         GrowthMinimum: 1
@@ -630,12 +630,12 @@ Body:
     Status:
       - Type: Hp
         Base: 150
-        GrowthMinimum: 40
-        GrowthMaximum: 160
+        GrowthMinimum: 160
+        GrowthMaximum: 640
       - Type: Sp
         Base: 40
         GrowthMinimum: 20
-        GrowthMaximum: 42
+        GrowthMaximum: 84
       - Type: Str
         Base: 17
         GrowthMinimum: 13
@@ -694,12 +694,12 @@ Body:
     Status:
       - Type: Hp
         Base: 320
-        GrowthMinimum: 90
-        GrowthMaximum: 360
+        GrowthMinimum: 360
+        GrowthMaximum: 1440
       - Type: Sp
         Base: 10
         GrowthMinimum: 48
-        GrowthMaximum: 52
+        GrowthMaximum: 104
       - Type: Str
         Base: 20
         GrowthMinimum: 18
@@ -761,12 +761,12 @@ Body:
     Status:
       - Type: Hp
         Base: 90
-        GrowthMinimum: 60
-        GrowthMaximum: 240
+        GrowthMinimum: 240
+        GrowthMaximum: 960
       - Type: Sp
         Base: 25
         GrowthMinimum: 36
-        GrowthMaximum: 64
+        GrowthMaximum: 128
       - Type: Str
         Base: 29
         GrowthMinimum: 10
@@ -822,12 +822,12 @@ Body:
     Status:
       - Type: Hp
         Base: 80
-        GrowthMinimum: 240
-        GrowthMaximum: 480
+        GrowthMinimum: 960
+        GrowthMaximum: 1920
       - Type: Sp
         Base: 11
         GrowthMinimum: 40
-        GrowthMaximum: 120
+        GrowthMaximum: 240
       - Type: Str
         Base: 11
         GrowthMinimum: 20
@@ -885,12 +885,12 @@ Body:
     Status:
       - Type: Hp
         Base: 320
-        GrowthMinimum: 60
-        GrowthMaximum: 300
+        GrowthMinimum: 240
+        GrowthMaximum: 1200
       - Type: Sp
         Base: 10
         GrowthMinimum: 10
-        GrowthMaximum: 20
+        GrowthMaximum: 30
       - Type: Str
         Base: 20
         GrowthMinimum: 20
