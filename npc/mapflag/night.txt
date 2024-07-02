@@ -299,6 +299,12 @@ splendide	mapflag	nightenabled
 spl_fild01	mapflag	nightenabled
 
 //============================================================
+// Brasilis
+//============================================================
+brasilis	mapflag	nightenabled
+bra_fild01	mapflag	nightenabled
+
+//============================================================
 // Events
 //============================================================
 //evt_zombie	mapflag	nightenabled

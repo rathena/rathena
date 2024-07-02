@@ -43,12 +43,6 @@ job3_war02	mapflag	nobranch
 jupe_core2	mapflag	nobranch
 
 //============================================================
-// Brasilis
-//============================================================
-brasilis	mapflag	nobranch
-bra_in01	mapflag	nobranch
-
-//============================================================
 // Episode 13.3
 //============================================================
 dicastes01	mapflag	nobranch

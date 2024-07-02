@@ -26,10 +26,9 @@ paramk	mapflag	noteleport
 moc_para01	mapflag	noteleport
 
 //============================================================
-// Episode 13
+// Episode 13.3
 //============================================================
 s_atelier	mapflag	noteleport
-bra_in01	mapflag	noteleport
 dic_in01	mapflag	noteleport
 job3_gen01	mapflag	noteleport
 job3_sha01	mapflag	noteleport

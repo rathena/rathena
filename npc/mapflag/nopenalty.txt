@@ -25,6 +25,8 @@ ama_in01	mapflag	nopenalty
 ama_in02	mapflag	nopenalty
 ama_test	mapflag	nopenalty
 arena_room	mapflag	nopenalty
+brasilis	mapflag	nopenalty
+bra_in01	mapflag	nopenalty
 comodo	mapflag	nopenalty
 cmd_in01	mapflag	nopenalty
 cmd_in02	mapflag	nopenalty

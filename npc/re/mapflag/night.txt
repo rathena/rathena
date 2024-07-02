@@ -8,10 +8,8 @@
 //============================================================
 
 //============================================================
-// Episode 13
+// Episode 13.3
 //============================================================
-brasilis	mapflag	nightenabled
-bra_fild01	mapflag	nightenabled
 dicastes01	mapflag	nightenabled
 dicastes02	mapflag	nightenabled
 dic_fild01	mapflag	nightenabled

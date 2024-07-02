@@ -33,3 +33,24 @@ Header:
   Type: MOB_SUMMONABLE_DB
   Version: 1
 
+#Body:
+# Pre-re Brasilis
+#=============================================================
+#  - Group: BLOODY_DEAD_BRANCH
+#    Summon:
+#      - Mob: BOITATA
+#        Rate: 1000000
+#  - Group: Branch_Of_Dead_Tree
+#    Summon:
+#      - Mob: IARA
+#        Rate: 71428
+#      - Mob: PIRANHA
+#        Rate: 71428
+#      - Mob: HEADLESS_MULE
+#        Rate: 71428
+#      - Mob: JAGUAR
+#        Rate: 71428
+#      - Mob: TOUCAN
+#        Rate: 71428
+#      - Mob: CURUPIRA
+#        Rate: 71428

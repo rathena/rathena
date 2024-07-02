@@ -58,6 +58,8 @@ aldebaran	mapflag	pvp	off
 ama_in01	mapflag	pvp	off
 ama_in02	mapflag	pvp	off
 amatsu	mapflag	pvp	off
+brasilis	mapflag	pvp	off
+bra_in01	mapflag	pvp	off
 cmd_in01	mapflag	pvp	off
 cmd_in02	mapflag	pvp	off
 comodo	mapflag	pvp	off

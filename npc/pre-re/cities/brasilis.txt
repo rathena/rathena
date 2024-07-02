@@ -1,0 +1,18 @@
+//===== rAthena Script ======================================= 
+//= Brasilis Town Pre-Renewal
+//===== By: ================================================== 
+//= Daegaladh
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Brasilis town NPCs.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//============================================================
+
+// Brasilis Transportation :: brasilis_trans
+//============================================================
+alberta,247,115,3	duplicate(Crewman_bra2)	Crewman#bra2	100
