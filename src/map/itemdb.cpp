@@ -4770,6 +4770,45 @@ int item_data::inventorySlotNeeded(int quantity)
 	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
+/**
+ * Add a monster drop to this item with given chance
+ * @param mob_id: ID of the monster
+ * @param chance: Chance of the drop
+ * @return void
+*/
+void item_data::addMonsterDrop(uint32 mob_id, uint32 chance) {
+	drop_chance drop{chance, mob_id};
+	mobs.insert(
+		std::lower_bound(
+			mobs.begin(),
+			mobs.end(),
+			drop,
+			[](const auto &drop, const auto &it) {
+				return drop.chance > it.chance;
+			}),
+		drop);
+}
+
+/**
+ * Remove a monster drop from this item
+ * Removes only the first drop with the given mob_id and chance
+ * @param mob_id: ID of the monster
+ * @param chance: Chance of the drop
+ * @return 0 on success, 1 if the drop was not found
+*/
+int item_data::removeMonsterDrop(uint32 mob_id, uint32 chance) {
+	auto it = std::find_if(mobs.begin(), mobs.end(), [mob_id, chance](const auto &drop) {
+		return drop.mob_id == mob_id && drop.chance == chance;
+	});
+
+	if (it == mobs.end()) {
+		return 1;
+	}
+	mobs.erase(it);
+	return 0;
+
+}
+
 void itemdb_gen_itemmoveinfo()
 {
 	ShowInfo("itemdb_gen_itemmoveinfo: Generating itemmoveinfov5.txt.\n");

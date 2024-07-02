@@ -8393,31 +8393,34 @@ ACMD_FUNC(whodrops)
 		sprintf(atcmd_output, msg_txt(sd,1285), item_db.create_item_link( id ).c_str(), id->nameid); // Item: '%s' (ID:%u)
 		clif_displaymessage(fd, atcmd_output);
 
-		if (id->mob[0].chance == 0) {
+		if (id->mobs.empty()) {
 			strcpy(atcmd_output, msg_txt(sd,1286)); //  - Item is not dropped by mobs.
 			clif_displaymessage(fd, atcmd_output);
-		} else {
-			sprintf(atcmd_output, msg_txt(sd,1287), MAX_SEARCH); //  - Common mobs with highest drop chance (only max %d are listed):
-			clif_displaymessage(fd, atcmd_output);
+			continue;
+		}
+		sprintf(atcmd_output, msg_txt(sd,1287), MAX_SEARCH); //  - Common mobs with highest drop chance (only max %d are listed):
+		clif_displaymessage(fd, atcmd_output);
 
-			for (uint16 j=0; j < MAX_SEARCH && id->mob[j].chance > 0; j++)
-			{
-				int dropchance = id->mob[j].chance;
-				std::shared_ptr<s_mob_db> mob = mob_db.find(id->mob[j].id);
-				if(!mob) continue;
+		// NB: We don't const-ref this because we modify dropchance, so let's just make a copy
+		int count = MAX_SEARCH;
+		for (auto [dropchance, mob_id] : id->mobs) {
+			std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+			if (!mob)
+				continue;
 
 #ifdef RENEWAL_DROP
-				if( battle_config.atcommand_mobinfo_type ) {
-					dropchance = dropchance * pc_level_penalty_mod( sd, PENALTY_DROP, mob ) / 100;
-					if (dropchance <= 0 && !battle_config.drop_rate0item)
-						dropchance = 1;
-				}
-#endif
-				if (pc_isvip(sd)) // Display item rate increase for VIP
-					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
-				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->jname.c_str(), id->mob[j].id, dropchance/100.);
-				clif_displaymessage(fd, atcmd_output);
+			if (battle_config.atcommand_mobinfo_type) {
+				dropchance = dropchance * pc_level_penalty_mod(sd, PENALTY_DROP, mob) / 100;
+				if (dropchance <= 0 && !battle_config.drop_rate0item)
+					dropchance = 1;
 			}
+#endif
+			if (pc_isvip(sd)) // Display item rate increase for VIP
+				dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
+			sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->jname.c_str(), mob_id, dropchance/100.);
+			clif_displaymessage(fd, atcmd_output);
+			if (--count <= 0)
+				break;
 		}
 	}
 	return 0;
