@@ -99586,34 +99586,625 @@ Body:
 #    AegisName: E_MD_LUDE
 #  - Id: 20519
 #    AegisName: E_MD_JACK_GAINT
-#  - Id: 20520
-#    AegisName: ILL_BAPHOMET
-#  - Id: 20521
-#    AegisName: ILL_ANDREA
-#  - Id: 20522
-#    AegisName: ILL_ANES
-#  - Id: 20523
-#    AegisName: ILL_SILVANO
-#  - Id: 20524
-#    AegisName: ILL_CECILIA
-#  - Id: 20525
-#    AegisName: ILL_BAPHOMET_J
-#  - Id: 20526
-#    AegisName: ILL_SIDE_WINDER
-#  - Id: 20527
-#    AegisName: ILL_HUNTER_FLY
-#  - Id: 20528
-#    AegisName: ILL_MANTIS
-#  - Id: 20529
-#    AegisName: ILL_GHOSTRING
-#  - Id: 20530
-#    AegisName: ILL_KILLER_MANTIS
-#  - Id: 20531
-#    AegisName: ILL_POPORING
-#  - Id: 20532
-#    AegisName: ILL_STEM_WORM
-#  - Id: 20533
-#    AegisName: G_ILL_BAPHOMET_J
+  - Id: 20520
+    AegisName: ILL_BAPHOMET
+    Name: Chaos Baphomet
+    Level: 178
+    Hp: 21278744
+    BaseExp: 4255749
+    JobExp: 2979024
+    #MvpExp:
+    Attack: 6141
+    Attack2: 3168
+    Defense: 343
+    MagicDefense: 122
+    Str: 276
+    Agi: 188
+    Vit: 55
+    Int: 267
+    Dex: 244
+    Luk: 99
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 768
+    AttackMotion: 576
+    DamageMotion: 768
+    Ai: 21
+    Class: Boss
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 3000
+      - Item: Old_Card_Album
+        Rate: 4000
+      - Item: Magic_Card_Album
+        Rate: 5000
+    Drops:
+      - Item: Bapho_Doll
+        Rate: 1000
+      - Item: Crescent_Scythe
+        Rate: 150
+      - Item: Essence_Of_Demon
+        Rate: 5000
+      - Item: Tae_Goo_Lyeon
+        Rate: 100
+      - Item: Evil_Horn
+        Rate: 3500
+      - Item: Bazerald
+        Rate: 200
+      - Item: Apple
+        Rate: 1
+      - Item: Chaos_Baphomet_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20521
+    AegisName: ILL_ANDREA
+    Name: Chaotic Andrea
+    Level: 177
+    Hp: 1057547
+    BaseExp: 96141
+    JobExp: 67298
+    Attack: 4248
+    Attack2: 1337
+    Defense: 330
+    MagicDefense: 110
+    Str: 192
+    Agi: 122
+    Vit: 51
+    Int: 175
+    Dex: 188
+    Luk: 68
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 576
+    AttackMotion: 432
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Brigan
+        Rate: 5000
+      - Item: Fragment_Of_Crystal
+        Rate: 2500
+      - Item: Morpheus's_Ring
+        Rate: 100
+      - Item: Yggdrasilberry
+        Rate: 50
+      - Item: Seed_Of_Yggdrasil
+        Rate: 50
+      - Item: Chaos_Acolyte_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20522
+    AegisName: ILL_ANES
+    Name: Chaotic Anes
+    Level: 177
+    Hp: 1057444
+    BaseExp: 96131
+    JobExp: 67292
+    Attack: 4314
+    Attack2: 1369
+    Defense: 327
+    MagicDefense: 110
+    Str: 195
+    Agi: 122
+    Vit: 50
+    Int: 174
+    Dex: 178
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 567
+    AttackMotion: 432
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Brigan
+        Rate: 5000
+      - Item: Fragment_Of_Crystal
+        Rate: 3500
+      - Item: Morpheus's_Hood
+        Rate: 100
+      - Item: Seed_Of_Yggdrasil
+        Rate: 50
+      - Item: Yggdrasilberry
+        Rate: 50
+      - Item: Chaos_Acolyte_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20523
+    AegisName: ILL_SILVANO
+    Name: Chaotic Silvano
+    Level: 177
+    Hp: 1057650
+    BaseExp: 96150
+    JobExp: 67305
+    Attack: 4292
+    Attack2: 1385
+    Defense: 333
+    MagicDefense: 111
+    Str: 194
+    Agi: 122
+    Vit: 52
+    Int: 176
+    Dex: 184
+    Luk: 57
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 576
+    AttackMotion: 432
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Brigan
+        Rate: 5000
+      - Item: Fragment_Of_Crystal
+        Rate: 3500
+      - Item: Yggdrasilberry
+        Rate: 50
+      - Item: Seed_Of_Yggdrasil
+        Rate: 50
+      - Item: Morpheus's_Shawl
+        Rate: 100
+      - Item: Chaos_Acolyte_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20524
+    AegisName: ILL_CECILIA
+    Name: Chaotic Cecilia
+    Level: 177
+    Hp: 1056411
+    BaseExp: 96037
+    JobExp: 67226
+    Attack: 4359
+    Attack2: 1392
+    Defense: 297
+    MagicDefense: 111
+    Str: 197
+    Agi: 122
+    Vit: 40
+    Int: 177
+    Dex: 186
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 576
+    AttackMotion: 432
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Brigan
+        Rate: 5000
+      - Item: Fragment_Of_Crystal
+        Rate: 3500
+      - Item: Yggdrasilberry
+        Rate: 50
+      - Item: Seed_Of_Yggdrasil
+        Rate: 50
+      - Item: Morpheus's_Armlet
+        Rate: 100
+      - Item: Chaos_Acolyte_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20525
+    AegisName: ILL_BAPHOMET_J
+    Name: Chaos Baphomet Jr.
+    Level: 177
+    Hp: 1057444
+    BaseExp: 173089
+    JobExp: 121125
+    Attack: 4093
+    Attack2: 847
+    Defense: 327
+    MagicDefense: 108
+    Str: 185
+    Agi: 101
+    Vit: 50
+    Int: 158
+    Dex: 178
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 868
+    AttackMotion: 480
+    DamageMotion: 120
+    Ai: 04
+    Drops:
+      - Item: Brigan
+        Rate: 2500
+      - Item: Evil_Horn
+        Rate: 1750
+      - Item: Yellow_Herb
+        Rate: 1750
+      - Item: Oridecon
+        Rate: 100
+      - Item: Short_Rope
+        Rate: 1250
+      - Item: Gold_Lux
+        Rate: 25
+      - Item: Chaos_Ba_Jr_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20526
+    AegisName: ILL_SIDE_WINDER
+    Name: Chaos Side Winder
+    Level: 176
+    Hp: 1051983
+    BaseExp: 172143
+    JobExp: 120499
+    Attack: 4026
+    Attack2: 832
+    Defense: 341
+    MagicDefense: 108
+    Str: 183
+    Agi: 94
+    Vit: 55
+    Int: 156
+    Dex: 177
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1576
+    AttackMotion: 576
+    DamageMotion: 576
+    Ai: 04
+    Drops:
+      - Item: Scale_Of_Snakes
+        Rate: 2500
+      - Item: Posionous_Canine
+        Rate: 1750
+      - Item: Karvodailnirol
+        Rate: 5
+      - Item: Tsurugi
+        Rate: 25
+      - Item: White_Herb
+        Rate: 700
+      - Item: Snake_Deadly_Poison
+        Rate: 1250
+      - Item: Chaos_S_Winder_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20527
+    AegisName: ILL_HUNTER_FLY
+    Name: Chaos Hunter Fly
+    Level: 175
+    Hp: 1045087
+    BaseExp: 171014
+    JobExp: 119710
+    Attack: 3916
+    Attack2: 817
+    Defense: 313
+    MagicDefense: 107
+    Str: 179
+    Agi: 115
+    Vit: 46
+    Int: 154
+    Dex: 189
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 676
+    AttackMotion: 576
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Solid_Shell
+        Rate: 2500
+      - Item: Steel
+        Rate: 50
+      - Item: Zargon
+        Rate: 1750
+      - Item: Oridecon_Stone
+        Rate: 70
+      - Item: Delicious_Juice
+        Rate: 1250
+      - Item: Rough_Wind
+        Rate: 20
+      - Item: Chaos_H_Fly_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20528
+    AegisName: ILL_MANTIS
+    Name: Chaos Mantis
+    Level: 174
+    Hp: 1039216
+    BaseExp: 170053
+    JobExp: 119037
+    Attack: 3937
+    Attack2: 817
+    Defense: 315
+    MagicDefense: 71
+    Str: 181
+    Agi: 96
+    Vit: 47
+    Int: 155
+    Dex: 184
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1528
+    AttackMotion: 660
+    DamageMotion: 432
+    Ai: 04
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Limb_Of_Mantis
+        Rate: 2250
+      - Item: Yellow_Live
+        Rate: 60
+      - Item: Solid_Shell
+        Rate: 1000
+      - Item: Mantis_Flower
+        Rate: 1250
+      - Item: Azure_Jewel
+        Rate: 10
+      - Item: Red_Herb
+        Rate: 500
+      - Item: Chaos_Mantis_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20529
+    AegisName: ILL_GHOSTRING
+    Name: Chaos Ghostring
+    Level: 173
+    Hp: 1033446
+    BaseExp: 169110
+    JobExp: 118377
+    Attack: 3979
+    Attack2: 834
+    Defense: 320
+    MagicDefense: 71
+    Str: 184
+    Agi: 87
+    Vit: 49
+    Int: 159
+    Dex: 182
+    Luk: 61
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 1220
+    AttackMotion: 1080
+    DamageMotion: 648
+    Ai: 04
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Transparent_Cloth
+        Rate: 2500
+      - Item: Soft_Silk_Cloth
+        Rate: 1750
+      - Item: Scell
+        Rate: 1000
+      - Item: Fragment_Of_Crystal
+        Rate: 1750
+      - Item: Soft_Scarf
+        Rate: 1250
+      - Item: Chaos_Goring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20530
+    AegisName: ILL_KILLER_MANTIS
+    Name: Chaos Killer Mantis
+    Level: 177
+    Hp: 1058167
+    BaseExp: 173154
+    JobExp: 121280
+    Attack: 4027
+    Attack2: 842
+    Defense: 348
+    MagicDefense: 72
+    Str: 182
+    Agi: 105
+    Vit: 57
+    Int: 157
+    Dex: 194
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 175
+    AttackDelay: 1528
+    AttackMotion: 660
+    DamageMotion: 432
+    Ai: 04
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Limb_Of_Mantis
+        Rate: 2500
+      - Item: Solid_Shell
+        Rate: 1250
+      - Item: Yggdrasilberry
+        Rate: 15
+      - Item: Yellow_Live
+        Rate: 70
+      - Item: Butcher
+        Rate: 25
+      - Item: Purple_Solid_Shell
+        Rate: 1250
+      - Item: Chaos_K_Mantis_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20531
+    AegisName: ILL_POPORING
+    Name: Chaos Poporing
+    Level: 173
+    Hp: 1032638
+    BaseExp: 168976
+    JobExp: 118283
+    Attack: 3828
+    Attack2: 797
+    Defense: 296
+    MagicDefense: 70
+    Str: 177
+    Agi: 85
+    Vit: 41
+    Int: 152
+    Dex: 172
+    Luk: 29
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 2500
+      - Item: Green_Herb
+        Rate: 1000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 20
+      - Item: Fragment_Of_Crystal
+        Rate: 1750
+      - Item: Brilliant_Jelly
+        Rate: 1250
+      - Item: Elunium
+        Rate: 50
+      - Item: Chaos_Poporing_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20532
+    AegisName: ILL_STEM_WORM
+    Name: Chaotic Stem Worm
+    Level: 172
+    Hp: 1027071
+    BaseExp: 168066
+    JobExp: 117646
+    Attack: 3917
+    Attack2: 804
+    Defense: 307
+    MagicDefense: 70
+    Str: 180
+    Agi: 95
+    Vit: 45
+    Int: 156
+    Dex: 187
+    Luk: 69
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1956
+    AttackMotion: 756
+    DamageMotion: 528
+    Ai: 04
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 2500
+      - Item: White_Herb
+        Rate: 1000
+      - Item: Oridecon
+        Rate: 100
+      - Item: Great_Nature
+        Rate: 20
+      - Item: Suspicious_Sap
+        Rate: 1250
+      - Item: Seed_Of_Yggdrasil
+        Rate: 20
+      - Item: Chaos_Stem_W_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20533
+    AegisName: G_ILL_BAPHOMET_J
+    Name: Chaos Baphomet Jr.
+    Level: 177
+    Hp: 105744
+    Attack: 4093
+    Attack2: 847
+    Defense: 327
+    MagicDefense: 108
+    Str: 185
+    Agi: 101
+    Vit: 50
+    Int: 158
+    Dex: 178
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 868
+    AttackMotion: 481
+    DamageMotion: 120
+    Ai: 24
 #  - Id: 20534
 #    AegisName: G_REGINLEIF
 #  - Id: 20535

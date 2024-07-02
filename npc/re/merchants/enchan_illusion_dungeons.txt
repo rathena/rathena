@@ -16,6 +16,7 @@
 //= 1.7 Added Illusion of Twins enchanter [Capuche]
 //= 1.8 Added Illusion Merchant [Haydrich]
 //= 1.9 Added Illusion of Teddy Bear exchange [Atemo]
+//= 1.10 Added Illusion of Labyrinth enchanter [Atemo]
 //============================================================
 
 //============================================================
@@ -933,5 +934,88 @@ ein_d02_i,177,158,3	script	Bear Wanting Illusion Stone#ITB	4_NASARIAN,{
 		mes "Okay...";
 		close;
 	}
+	end;
+}
+
+//============================================================
+//= Illusion of Labyrinth
+//============================================================
+prt_fild01,137,365,0	script	#iol005	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	if (ill_laby == 6) {
+		cloakoffnpcself( "Esmeralda#5" );
+		end;
+	}
+	end;
+}
+
+prt_fild01,141,367,3	script(CLOAKED)	Esmeralda#5	4_GEFFEN_09,{
+	if (checkweight(1201,3) == 0) {
+		mes "You seem to have too many types or weights of items. Please clean up your inventory.";
+		close;
+	}
+	if (ill_laby < 6)
+		end;
+	if (isbegin_quest(12492) == 0) {
+		mes "[Esmeralda]";
+		mes "Oh, I thought we parted ways without even saying goodbye, but I guess you decided to work as a guest guild member for us?";
+		next;
+		select( "It happened to be like that", "I don't think it's any harm" );
+		mes "[Esmeralda]";
+		mes "It's a good choice. We will be of great help to each other.";
+		next;
+		select( "Why don't you send other guild members?" );
+		mes "[Esmeralda]";
+		mes "There is a reason for that.";
+		mes "Those guys didn't make a contract with the Guardian Relic. So, there is no insurance whatsoever. If I send other members to perform exorcism, those lost souls will be gone forever.";
+		next;
+		mes "[Esmeralda]";
+		mes "I thought it would be safer to stay here for the time being, so I gave instructions to keep myself hidden and only appear to you who helped me.";
+		next;
+		mes "[Esmeralda]";
+		mes "First of all, since the guild has very little funds, it will likely take quite some time for them to be fully revived. So, I'm thinking of stopping running the guild for a while and starting a business here.";
+		next;
+		select( "What kind of business are you planning on doing?" );
+		mes "[Esmeralda]";
+		mes "As you know, items called Illusion Stone appear in unknown dungeons all over the continent these days. That... is a very valuable item in this world.";
+		next;
+		mes "[Esmeralda]";
+		mes "I heard that there is a guild that started exploring this dungeon first. And I also received information that Illusion Stone was also found.";
+		next;
+		mes "[Esmeralda]";
+		mes "I'm thinking of doing something like equipment upgrade service near the entrance. Of course, you will receive Illusion Stone and various materials as payment.";
+		next;
+		mes "[Esmeralda]";
+		mes "I think that if I work hard for a few months, I will soon have enough money to revive my guild members.";
+		mes "This is probably the best for now.";
+		next;
+		select( "Is that all it is?" );
+		mes "[Esmeralda]";
+		mes "Well... there are countless other places to put money. I will skip explaining it in detail.";
+		next;
+		mes "[Esmeralda]";
+		mes "Anyway, next time I come, will I see you as a customer and vendor? Please continue to take good care of me.";
+		close2;
+		setquest 12492;
+		completequest 12492;
+		end;
+	}
+	mes "[Esmeralda]";
+	mes "If you have the equipment listed below, you can upgrade it with items obtained from the Illusion of Labyrinth.";
+	next;
+	if (select( "Cancel", "View illusion upgrade equipment." ) == 1) {
+		mes "[Esmeralda]";
+		mes "All right. Please stop by again next time.";
+		close;
+	}
+	mes "[Esmeralda]";
+	mes "Please note that if the equipment you wish to upgrade contains the effects of a card or enchantment, it will be destroyed^000000 when used as a ^ff0000 material.";
+	close2;
+	callshop( "barter_ill_labyrinth" );
+	end;
+
+OnInit:
+	setunittitle( getnpcid(0), "<Priest Guild Leader>" );
 	end;
 }
