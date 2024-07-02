@@ -110,8 +110,12 @@ function Pick {
 	Go(.@map$,.@x,.@y);
 }
 function Restrict {
-	if (getarg(0) == "Brasilis" && getnpcid(0, "Crewman_bra2"))
-		return;
+	if (getarg(0) == "Brasilis") {
+		if (getnpcid(0, "Crewman_bra2"))
+			return;
+		else
+			getarg(0) = "RE";
+	}
 
 	if ((getarg(0) == "RE" && !checkre(0)) || (getarg(0) == "Pre-RE" && checkre(0))) {
 		if (getarg(1,0)) {
