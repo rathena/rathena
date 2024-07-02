@@ -112,7 +112,7 @@ function Pick {
 function Restrict {
 	.@type = getarg(0);
 	
-	if (.@type) == "Brasilis") {
+	if (.@type == "Brasilis") {
 		if (getnpcid(0, "Crewman_bra2"))
 			return;
 		else
