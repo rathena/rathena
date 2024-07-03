@@ -188,7 +188,7 @@ void Sql_Free(Sql* self);
 /// It uses the connection of the parent Sql handle.
 /// Queries in Sql and SqlStmt are independent and don't affect each other.
 ///
-/// @return SqlStmt handle or NULL if an error occured
+/// @return SqlStmt handle or nullptr if an error occured
 struct SqlStmt* SqlStmt_Malloc(Sql* sql);
 
 /// Prepares the statement.

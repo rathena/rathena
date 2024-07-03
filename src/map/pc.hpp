@@ -446,7 +446,8 @@ public:
 		bool barter_open;
 		bool barter_extended_open;
 		bool enchantgrade_open; // Whether the enchantgrade window is open or not
-		unsigned int block_action : 10;
+		// Bitmask of e_pcblock_action_flag values
+		uint16 block_action;
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
 		uint16 inventory_expansion_amount;
@@ -1174,7 +1175,7 @@ static bool pc_cant_act( map_session_data* sd ){
 #define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progress) {
-	return sd == NULL || (sd->state.workinprogress&progress) == progress;
+	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
 }
 
 uint16 pc_maxparameter(map_session_data *sd, e_params param);
@@ -1736,12 +1737,12 @@ void pc_attendance_claim_reward( map_session_data* sd );
 void pc_jail(map_session_data &sd, int32 duration = INT_MAX);
 
 // Captcha Register
-void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
-void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, const char *upload_data);
 
 // Macro Detector
 TIMER_FUNC(pc_macro_detector_timeout);
-void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter

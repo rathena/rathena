@@ -18,7 +18,7 @@ static void nullpo_info_core_(const char *file, int line, const char *func);
 int nullpo_chk_f(const char *file, int line, const char *func, const void *target, const char *fmt, ...) {
 	va_list ap;
 
-	if (target != NULL) {
+	if (target != nullptr) {
 		return 0;
 	}
 
@@ -29,7 +29,7 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
 }
 
 int nullpo_chk(const char *file, int line, const char *func, const void *target) {
-	if (target != NULL) {
+	if (target != nullptr) {
 		return 0;
 	}
 	nullpo_info_core_(file, line, func);
@@ -52,11 +52,11 @@ void nullpo_info(const char *file, int line, const char *func) {
 }
 
 static void nullpo_info_core_(const char *file, int line, const char *func) {
-	if (file == NULL) {
+	if (file == nullptr) {
 		file = "??";
 	}
 
-	func = func == NULL ? "unknown" : func[0] == '\0' ? "unknown" : func;
+	func = func == nullptr ? "unknown" : func[0] == '\0' ? "unknown" : func;
 
 	ShowMessage("--- nullpo info --------------------------------------------\n");
 	ShowMessage("%s:%d: in func `%s'\n", file, line, func);
@@ -67,7 +67,7 @@ static void nullpo_info_core_(const char *file, int line, const char *func) {
  *--------------------------------------*/
 static void nullpo_info_core(const char *file, int line, const char *func, const char *fmt, va_list ap) {
 	nullpo_info_core_(file, line, func);
-	if (fmt != NULL) {
+	if (fmt != nullptr) {
 		if (fmt[0] != '\0') {
 			vprintf(fmt, ap);
 

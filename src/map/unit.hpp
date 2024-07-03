@@ -44,7 +44,6 @@ struct unit_data {
 	t_tick canmove_tick;
 	bool immune_attack; ///< Whether the unit is immune to attacks
 	uint8 dir;
-	unsigned char walk_count;
 	unsigned char target_count;
 	struct s_udState {
 		unsigned change_walk_target : 1 ;
@@ -53,7 +52,6 @@ struct unit_data {
 		unsigned step_attack : 1;
 		unsigned walk_easy : 1 ;
 		unsigned running : 1;
-		unsigned speed_changed : 1;
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
 		unsigned blockedskill : 1;
@@ -122,7 +120,8 @@ bool unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
 int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
 
-int unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
+t_tick unit_get_walkpath_time(struct block_list& bl);
+t_tick unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
 
 // Instant unit changes
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);

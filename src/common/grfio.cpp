@@ -43,12 +43,12 @@ typedef struct _FILELIST {
 // #define GRFIO_LOCAL
 
 // stores info about every loaded file
-FILELIST* filelist = NULL;
+FILELIST* filelist = nullptr;
 int filelist_entrys = 0;
 int filelist_maxentry = 0;
 
 // stores grf file names
-char** gentry_table = NULL;
+char** gentry_table = nullptr;
 int gentry_entrys = 0;
 int gentry_maxentry = 0;
 
@@ -281,7 +281,7 @@ static FILELIST* filelist_find(const char* fname) {
 	int hash, index;
 
 	if (!filelist) {
-		return NULL;
+		return nullptr;
 	}
 
 	hash = filelist_hash[filehash(fname)];
@@ -291,14 +291,14 @@ static FILELIST* filelist_find(const char* fname) {
 		}
 	}
 
-	return (index >= 0) ? &filelist[index] : NULL;
+	return (index >= 0) ? &filelist[index] : nullptr;
 }
 
 // returns the original file name
 char* grfio_find_file(const char* fname) {
 	FILELIST* filelist_res = filelist_find(fname);
 	if (!filelist_res) {
-		return NULL;
+		return nullptr;
 	}
 	return (!filelist_res->fnd ? filelist_res->fn : filelist_res->fnd);
 }
@@ -329,7 +329,7 @@ static FILELIST* filelist_add(FILELIST* entry) {
 // adds a new FILELIST entry or overwrites an existing one
 static FILELIST* filelist_modify(FILELIST* entry) {
 	FILELIST* fentry = filelist_find(entry->fn);
-	if (fentry != NULL) {
+	if (fentry != nullptr) {
 		int tmp = fentry->next;
 		memcpy(fentry, entry, sizeof(FILELIST));
 		fentry->next = tmp;
@@ -341,7 +341,7 @@ static FILELIST* filelist_modify(FILELIST* entry) {
 
 // shrinks the file list array if too long
 static void filelist_compact(void) {
-	if (filelist == NULL) {
+	if (filelist == nullptr) {
 		return;
 	}
 
@@ -377,17 +377,17 @@ static void grfio_localpath_create(char* buffer, size_t size, const char* filena
 }
 
 /// Reads a file into a newly allocated buffer (from grf or data directory).
-void* grfio_reads(const char* fname, int* size) {
-	unsigned char* buf2 = NULL;
+void* grfio_reads(const char* fname, size_t* size) {
+	unsigned char* buf2 = nullptr;
 
 	FILELIST* entry = filelist_find(fname);
-	if (entry == NULL || entry->gentry <= 0) { // LocalFileCheck
+	if (entry == nullptr || entry->gentry <= 0) { // LocalFileCheck
 		char lfname[256];
 		FILE* in;
 		grfio_localpath_create(lfname, sizeof(lfname), (entry && entry->fnd) ? entry->fnd : fname);
 
 		in = fopen(lfname, "rb");
-		if (in != NULL) {
+		if (in != nullptr) {
 			fseek(in, 0, SEEK_END);
 			size_t declen = ftell(in);
 			fseek(in, 0, SEEK_SET);
@@ -401,19 +401,19 @@ void* grfio_reads(const char* fname, int* size) {
 				*size = declen;
 			}
 		} else {
-			if (entry != NULL && entry->gentry < 0) {
+			if (entry != nullptr && entry->gentry < 0) {
 				entry->gentry = -entry->gentry; // local file checked
 			} else {
 				ShowError("grfio_reads: %s not found (local file: %s)\n", fname, lfname);
-				return NULL;
+				return nullptr;
 			}
 		}
 	}
 
-	if (entry != NULL && entry->gentry > 0) { // Archive[GRF] File Read
+	if (entry != nullptr && entry->gentry > 0) { // Archive[GRF] File Read
 		char* grfname = gentry_table[entry->gentry - 1];
 		FILE* in = fopen(grfname, "rb");
-		if (in != NULL) {
+		if (in != nullptr) {
 			size_t fsize = entry->srclen_aligned;
 			unsigned char* buf = (unsigned char*)aMalloc(fsize);
 			fseek(in, entry->srcpos, 0);
@@ -432,7 +432,7 @@ void* grfio_reads(const char* fname, int* size) {
 					ShowError("decode_zip size mismatch err: %d != %d\n", (int)len, entry->declen);
 					aFree(buf);
 					aFree(buf2);
-					return NULL;
+					return nullptr;
 				}
 			} else { // directory?
 				memcpy(buf2, buf, entry->declen);
@@ -445,7 +445,7 @@ void* grfio_reads(const char* fname, int* size) {
 			aFree(buf);
 		} else {
 			ShowError("grfio_reads: %s not found (GRF file: %s)\n", fname, grfname);
-			return NULL;
+			return nullptr;
 		}
 	}
 
@@ -453,7 +453,7 @@ void* grfio_reads(const char* fname, int* size) {
 }
 
 int32 grfio_read_rsw_water_level(const char* fname) {
-	unsigned char* rsw = (unsigned char*)grfio_read(fname);
+	unsigned char* rsw = (unsigned char*)grfio_reads(fname);
 
 	if (rsw == nullptr) {
 		// Error already reported in grfio_read
@@ -503,7 +503,7 @@ static char* decode_filename(unsigned char* buf, int len) {
 /// @return true if the file should undergo full mode 0 decryption, and true otherwise.
 static bool isFullEncrypt(const char* fname) {
 	const char* ext = strrchr(fname, '.');
-	if (ext != NULL) {
+	if (ext != nullptr) {
 		static const char extensions[4][5] = {".gnd", ".gat", ".act", ".str"};
 		size_t i;
 		for (i = 0; i < ARRAYLENGTH(extensions); ++i) {
@@ -525,7 +525,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 	unsigned char* grf_filelist;
 
 	FILE* fp = fopen(grfname, "rb");
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		ShowWarning("GRF data file not found: '%s'\n", grfname);
 		return 1; // 1:not found error
 	} else {
@@ -582,7 +582,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 				aentry.srcpos = getlong(grf_filelist + ofs2 + 13) + 0x2e;
 				aentry.type = type;
 				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
-				aentry.fnd = NULL;
+				aentry.fnd = nullptr;
 #ifdef GRFIO_LOCAL
 				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
@@ -644,7 +644,7 @@ static int grfio_entryread(const char* grfname, int gentry) {
 				aentry.srcpos = getlong(grf_filelist + ofs2 + 13) + 0x2e;
 				aentry.type = type;
 				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
-				aentry.fnd = NULL;
+				aentry.fnd = nullptr;
 #ifdef GRFIO_LOCAL
 				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
@@ -678,7 +678,7 @@ static bool grfio_parse_restable_row(const char* row) {
 		return false;
 	}
 
-	if (strstr(w2, ".gat") == NULL && strstr(w2, ".rsw") == NULL) {
+	if (strstr(w2, ".gat") == nullptr && strstr(w2, ".rsw") == nullptr) {
 		return false; // we only need the maps' GAT and RSW files
 	}
 
@@ -686,7 +686,7 @@ static bool grfio_parse_restable_row(const char* row) {
 	sprintf(dst, "data\\%s", w2);
 
 	entry = filelist_find(dst);
-	if (entry != NULL) { // alias for GRF resource
+	if (entry != nullptr) { // alias for GRF resource
 		FILELIST fentry;
 		memcpy(&fentry, entry, sizeof(FILELIST));
 		safestrncpy(fentry.fn, src, sizeof(fentry.fn));
@@ -712,7 +712,7 @@ static bool grfio_parse_restable_row(const char* row) {
 static void grfio_resourcecheck(void) {
 	char restable[256];
 	char* buf;
-	int size;
+	size_t size;
 	FILE* fp;
 	int i = 0;
 
@@ -720,7 +720,7 @@ static void grfio_resourcecheck(void) {
 	grfio_localpath_create(restable, sizeof(restable), "data\\resnametable.txt");
 
 	fp = fopen(restable, "rb");
-	if (fp != NULL) {
+	if (fp != nullptr) {
 		char line[256];
 		while (fgets(line, sizeof(line), fp)) {
 			if (grfio_parse_restable_row(line)) {
@@ -735,18 +735,18 @@ static void grfio_resourcecheck(void) {
 
 	// read resnametable from loaded GRF's, only if it cannot be loaded from the data directory
 	buf = (char*)grfio_reads("data\\resnametable.txt", &size);
-	if (buf != NULL) {
+	if (buf != nullptr) {
 		char* ptr;
 		buf[size] = '\0';
 
 		ptr = buf;
-		while (ptr - buf < size) {
+		while (static_cast<size_t>(ptr - buf) < size) {
 			if (grfio_parse_restable_row(ptr)) {
 				++i;
 			}
 
 			ptr = strchr(ptr, '\n');
-			if (ptr == NULL) {
+			if (ptr == nullptr) {
 				break;
 			}
 			ptr++;
@@ -774,29 +774,29 @@ static int grfio_add(const char* fname) {
 
 /// Finalizes grfio.
 void grfio_final(void) {
-	if (filelist != NULL) {
+	if (filelist != nullptr) {
 		int i;
 		for (i = 0; i < filelist_entrys; i++) {
-			if (filelist[i].fnd != NULL) {
+			if (filelist[i].fnd != nullptr) {
 				aFree(filelist[i].fnd);
 			}
 		}
 
 		aFree(filelist);
-		filelist = NULL;
+		filelist = nullptr;
 	}
 	filelist_entrys = filelist_maxentry = 0;
 
-	if (gentry_table != NULL) {
+	if (gentry_table != nullptr) {
 		int i;
 		for (i = 0; i < gentry_entrys; i++) {
-			if (gentry_table[i] != NULL) {
+			if (gentry_table[i] != nullptr) {
 				aFree(gentry_table[i]);
 			}
 		}
 
 		aFree(gentry_table);
-		gentry_table = NULL;
+		gentry_table = nullptr;
 	}
 	gentry_entrys = gentry_maxentry = 0;
 }
@@ -809,7 +809,7 @@ void grfio_init(const char* fname) {
 	hashinit(); // hash table initialization
 
 	data_conf = fopen(fname, "r");
-	if (data_conf != NULL) {
+	if (data_conf != nullptr) {
 		char line[1024];
 		while (fgets(line, sizeof(line), data_conf)) {
 			char w1[1024], w2[1024];

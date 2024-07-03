@@ -25,12 +25,12 @@ const t_tick TIMER_MIN_INTERVAL = 20;
 const t_tick TIMER_MAX_INTERVAL = 1000;
 
 // timers (array)
-static struct TimerData* timer_data = NULL;
+static struct TimerData* timer_data = nullptr;
 static int timer_data_max = 0;
 static int timer_data_num = 0;
 
 // free timers (array)
-static int* free_timer_list = NULL;
+static int* free_timer_list = nullptr;
 static int free_timer_list_max = 0;
 static int free_timer_list_pos = 0;
 
@@ -55,14 +55,14 @@ struct timer_func_list {
 	struct timer_func_list* next;
 	TimerFunc func;
 	char* name;
-}* tfl_root = NULL;
+}* tfl_root = nullptr;
 
 /// Sets the name of a timer function.
 int add_timer_func_list(TimerFunc func, const char* name) {
 	struct timer_func_list* tfl;
 
 	if (name) {
-		for (tfl = tfl_root; tfl != NULL; tfl = tfl->next) { // check suspicious cases
+		for (tfl = tfl_root; tfl != nullptr; tfl = tfl->next) { // check suspicious cases
 			if (func == tfl->func) {
 				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n", tfl->func, tfl->name, name);
 			} else if (strcmp(name, tfl->name) == 0) {
@@ -82,7 +82,7 @@ int add_timer_func_list(TimerFunc func, const char* name) {
 const char* search_timer_func_list(TimerFunc func) {
 	struct timer_func_list* tfl;
 
-	for (tfl = tfl_root; tfl != NULL; tfl = tfl->next) {
+	for (tfl = tfl_root; tfl != nullptr; tfl = tfl->next) {
 		if (func == tfl->func) {
 			return tfl->name;
 		}
@@ -150,7 +150,7 @@ static t_tick tick(void) {
 	return tval.tv_sec * 1000 + tval.tv_nsec / 1000000;
 #else
 	struct timeval tval;
-	gettimeofday(&tval, NULL);
+	gettimeofday(&tval, nullptr);
 	return tval.tv_sec * 1000 + tval.tv_usec / 1000;
 #endif
 }
@@ -259,8 +259,13 @@ int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int i
 	int tid;
 
 	if (interval < 1) {
-		ShowError(
-			"add_timer_interval: invalid interval (tick=%" PRtf " %p[%s] id=%d data=%" PRIdPTR " diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
+		ShowError("add_timer_interval: invalid interval (tick=%" PRtf " %p[%s] id=%d data=%" PRIdPTR " diff_tick=%d)\n",
+				  tick,
+				  func,
+				  search_timer_func_list(func),
+				  id,
+				  data,
+				  DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
 	}
 
@@ -278,7 +283,7 @@ int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int i
 
 /// Retrieves internal timer data
 const struct TimerData* get_timer(int tid) {
-	return (tid >= 0 && tid < timer_data_num) ? &timer_data[tid] : NULL;
+	return (tid >= 0 && tid < timer_data_num) ? &timer_data[tid] : nullptr;
 }
 
 /// Marks a timer specified by 'id' for immediate deletion once it expires.
@@ -290,11 +295,15 @@ int delete_timer(int tid, TimerFunc func) {
 		return -1;
 	}
 	if (timer_data[tid].func != func) {
-		ShowError("delete_timer error : function mismatch %p(%s) != %p(%s)\n", timer_data[tid].func, search_timer_func_list(timer_data[tid].func), func, search_timer_func_list(func));
+		ShowError("delete_timer error : function mismatch %p(%s) != %p(%s)\n",
+				  timer_data[tid].func,
+				  search_timer_func_list(timer_data[tid].func),
+				  func,
+				  search_timer_func_list(func));
 		return -2;
 	}
 
-	timer_data[tid].func = NULL;
+	timer_data[tid].func = nullptr;
 	timer_data[tid].type = TIMER_ONCE_AUTODEL;
 
 	return 0;
@@ -391,7 +400,7 @@ t_tick do_timer(t_tick tick) {
 }
 
 unsigned long get_uptime(void) {
-	return (unsigned long)difftime(time(NULL), start_time);
+	return (unsigned long)difftime(time(nullptr), start_time);
 }
 
 /**
@@ -445,7 +454,7 @@ void split_time(int timein, int* year, int* month, int* day, int* hour, int* min
 double solve_time(char* modif_p) {
 	double totaltime = 0;
 	struct tm then_tm;
-	time_t now = time(NULL);
+	time_t now = time(nullptr);
 	time_t then = now;
 	then_tm = *localtime(&then);
 
@@ -506,7 +515,7 @@ void timer_final(void) {
 	struct timer_func_list* tfl;
 	struct timer_func_list* next;
 
-	for (tfl = tfl_root; tfl != NULL; tfl = next) {
+	for (tfl = tfl_root; tfl != nullptr; tfl = next) {
 		next = tfl->next; // copy next pointer
 		aFree(tfl->name); // free structures
 		aFree(tfl);

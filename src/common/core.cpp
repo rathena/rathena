@@ -51,7 +51,7 @@ int buildbotflag = 0;
 char db_path[12] = "db"; /// relative path for db from server
 char conf_path[12] = "conf"; /// relative path for conf from server
 
-char *SERVER_NAME = NULL;
+char *SERVER_NAME = nullptr;
 
 #ifndef MINICORE // minimalist Core
 	// Added by Gabuzomeu
@@ -182,7 +182,7 @@ const char *get_svn_revision(void) {
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist
-	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL) {
+	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != nullptr || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != nullptr) {
 	#ifndef SVNNODEPATH
 			// not sure how to handle branches, so i'll leave this overridable define until a better solution comes up
 		#define SVNNODEPATH trunk
@@ -228,7 +228,7 @@ const char *get_svn_revision(void) {
 	}
 
 	// subversion 1.6 and older?
-	if ((fp = fopen(".svn/entries", "r")) != NULL) {
+	if ((fp = fopen(".svn/entries", "r")) != nullptr) {
 		char line[1024];
 		int rev;
 		// Check the version
@@ -245,10 +245,10 @@ const char *get_svn_revision(void) {
 				}
 			} else {
 				// Bin File format
-				if (fgets(line, sizeof(line), fp) == NULL) {
+				if (fgets(line, sizeof(line), fp) == nullptr) {
 					printf("Can't get bin name\n");
 				} // Get the name
-				if (fgets(line, sizeof(line), fp) == NULL) {
+				if (fgets(line, sizeof(line), fp) == nullptr) {
 					printf("Can't get entries kind\n");
 				} // Get the entries kind
 				if (fgets(line, sizeof(line), fp)) // Get the rev numver
@@ -279,8 +279,8 @@ const char *get_git_hash(void) {
 		return GitHash;
 	}
 
-	if ((fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
-		(fp = fopen(".git/refs/heads/master", "r")) != NULL) { // Cloned only
+	if ((fp = fopen(".git/refs/remotes/origin/master", "r")) != nullptr || // Already pulled once
+		(fp = fopen(".git/refs/heads/master", "r")) != nullptr) { // Cloned only
 		char line[64];
 		char *rev = (char *)malloc(sizeof(char) * 50);
 
@@ -308,7 +308,7 @@ const char *get_git_hash(void) {
 static void display_title(void) {
 	const char *svn = get_svn_revision();
 	const char *git = get_git_hash();
-
+	// clang-format off
 	ShowMessage("\n");
 	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "       " CL_BT_WHITE "            rAthena Development Team presents                  " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
@@ -320,7 +320,7 @@ static void display_title(void) {
 	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "       " CL_GREEN "              http://rathena.org/board/                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
-
+	// clang-format on
 	if (svn[0] != UNKNOWN_VERSION) {
 		ShowInfo("SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
 	} else if (git[0] != UNKNOWN_VERSION) {
@@ -353,8 +353,8 @@ int Core::start(int argc, char **argv) {
 
 	{ // initialize program arguments
 		char *p1;
-		if ((p1 = strrchr(argv[0], '/')) != NULL || (p1 = strrchr(argv[0], '\\')) != NULL) {
-			char *pwd = NULL; // path working directory
+		if ((p1 = strrchr(argv[0], '/')) != nullptr || (p1 = strrchr(argv[0], '\\')) != nullptr) {
+			char *pwd = nullptr; // path working directory
 			SERVER_NAME = ++p1;
 			size_t n = p1 - argv[0]; // calc dir name len
 			pwd = safestrncpy((char *)malloc(n + 1), argv[0], n);

@@ -74,10 +74,10 @@ void ShowDump(const void* buffer, size_t length) {
 
 #ifdef WIN32
 
-static char* checkpath(char* path,
-					   const char* srcpath) { // just make sure the char*path is not const
+// just make sure the char*path is not const
+static char* checkpath(char* path, const char* srcpath) {
 	char* p = path;
-	if (NULL != path && NULL != srcpath) {
+	if (nullptr != path && nullptr != srcpath) {
 		while (*srcpath) {
 			if (*srcpath == '/') {
 				*p++ = '\\';
@@ -96,8 +96,8 @@ void findfile(const char* p, const char* pat, void(func)(const char*)) {
 	HANDLE hFind;
 	char tmppath[MAX_PATH + 1];
 
-	const char* path = (p == NULL) ? "." : p;
-	const char* pattern = (pat == NULL) ? "" : pat;
+	const char* path = (p == nullptr) ? "." : p;
+	const char* pattern = (pat == nullptr) ? "" : pat;
 
 	checkpath(tmppath, path);
 	if (PATHSEP != tmppath[strlen(tmppath) - 1]) {
@@ -184,10 +184,10 @@ int check_filepath(const char* filepath) {
 	return 0;
 }
 
-static char* checkpath(char* path,
-					   const char* srcpath) { // just make sure the char*path is not const
+// just make sure the char*path is not const
+static char* checkpath(char* path, const char* srcpath) {
 	char* p = path;
-	if (NULL != path && NULL != srcpath) {
+	if (nullptr != path && nullptr != srcpath) {
 		while (*srcpath) {
 			if (*srcpath == '\\') {
 				*p++ = '/';
@@ -207,8 +207,8 @@ void findfile(const char* p, const char* pat, void(func)(const char*)) {
 	struct stat dir_stat; // used by stat().
 	char tmppath[MAX_DIR_PATH * 2];
 	char path[MAX_DIR_PATH + 1] = ".";
-	const char* pattern = (pat == NULL) ? "" : pat;
-	if (p != NULL) {
+	const char* pattern = (pat == nullptr) ? "" : pat;
+	if (p != nullptr) {
 		strcpy(path, p);
 	}
 

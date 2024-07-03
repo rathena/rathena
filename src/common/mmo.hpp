@@ -61,8 +61,8 @@
 	#endif
 #endif
 
-/** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
- * Max value tested was 265 */
+/** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as
+ * well. Max value tested was 265 */
 #ifndef MAX_CHARS
 	#if PACKETVER >= 20180124
 		#define MAX_CHARS 15
@@ -90,7 +90,8 @@ typedef uint32 t_itemid;
 #define MAX_FAME 1000000000 /// Max fame points
 #define MAX_CART 100 /// Maximum item in cart
 #define MAX_SKILL 1623 /// Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
-#define DEFAULT_WALK_SPEED 150 /// Default walk speed
+#define DEFAULT_WALK_SPEED 150 /// Default walk speed (other than NPC)
+#define DEFAULT_NPC_WALK_SPEED 200 /// Default NPC walk speed
 #define MIN_WALK_SPEED 20 /// Min walk speed
 #define MAX_WALK_SPEED 1000 /// Max walk speed
 #define MAX_STORAGE 600 /// Max number of storage slots a player can have
@@ -114,7 +115,7 @@ typedef uint32 t_itemid;
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
 #ifndef MAX_BARTER_REQUIREMENTS
-	#define MAX_BARTER_REQUIREMENTS 5
+	#define MAX_BARTER_REQUIREMENTS 6
 #endif
 #ifndef WEB_AUTH_TOKEN_LENGTH
 	#define WEB_AUTH_TOKEN_LENGTH 16 + 1
@@ -396,7 +397,8 @@ struct s_skill {
 };
 
 struct script_reg_state {
-	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
+	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber
+						   // str on a 10000-to-1 ratio.
 	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
@@ -1121,8 +1123,8 @@ enum e_pc_reg_loading {
 enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_LEAVE, ///< /leave
 	PARTY_MEMBER_WITHDRAW_EXPEL, ///< Kicked
-	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
-	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< Cannot be kicked
 };
 
 enum e_rank {

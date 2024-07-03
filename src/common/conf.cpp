@@ -29,7 +29,7 @@ void config_setting_copy_simple(config_setting_t *parent, const config_setting_t
 	} else {
 		config_setting_t *set = config_setting_add(parent, config_setting_name(src), config_setting_type(src));
 
-		if (set == NULL) {
+		if (set == nullptr) {
 			return;
 		}
 
@@ -50,7 +50,7 @@ void config_setting_copy_simple(config_setting_t *parent, const config_setting_t
 }
 
 void config_setting_copy_elem(config_setting_t *parent, const config_setting_t *src) {
-	config_setting_t *set = NULL;
+	config_setting_t *set = nullptr;
 
 	if (config_setting_is_aggregate(src)) {
 		config_setting_copy_aggregate(parent, src);
@@ -75,7 +75,7 @@ void config_setting_copy_aggregate(config_setting_t *parent, const config_settin
 
 	newAgg = config_setting_add(parent, config_setting_name(src), config_setting_type(src));
 
-	if (newAgg == NULL) {
+	if (newAgg == nullptr) {
 		return;
 	}
 

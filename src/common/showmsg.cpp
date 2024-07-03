@@ -62,7 +62,7 @@ char console_log_filepath[32] = "./log/unknown.log";
 		StringBuf *d_; \
 		char *v_; \
 		size_t l_; \
-	} buf = {"", NULL, NULL, 0}; \
+	} buf = {"", nullptr, nullptr, 0}; \
 	// define NEWBUF
 
 #define BUFVPRINTF(buf, fmt, args) \
@@ -83,9 +83,9 @@ char console_log_filepath[32] = "./log/unknown.log";
 #define FREEBUF(buf) \
 	if (buf.d_) { \
 		StringBuf_Free(buf.d_); \
-		buf.d_ = NULL; \
+		buf.d_ = nullptr; \
 	} \
-	buf.v_ = NULL; \
+	buf.v_ = nullptr; \
 // define FREEBUF
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -163,20 +163,21 @@ char console_log_filepath[32] = "./log/unknown.log";
 //
 // \033[#K - Erase Line (EL)
 //    Clears the current line from the cursor position
-//    \033[0K - Clears all characters from the cursor position to the end of the line (including the character at the cursor position). The cursor position is unchanged. (default)
-//    \033[1K - Clears all characters from start of line to the cursor position. (including the character at the cursor position). The cursor position is unchanged.
-//    \033[2K - Clears all characters of the whole line. The cursor position is unchanged.
+//    \033[0K - Clears all characters from the cursor position to the end of the line (including the character at the cursor position). The cursor
+//    position is unchanged. (default) \033[1K - Clears all characters from start of line to the cursor position. (including the character at the
+//    cursor position). The cursor position is unchanged. \033[2K - Clears all characters of the whole line. The cursor position is unchanged.
 
 /*
 not implemented
 
 \033[#L
-IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The cursor position is unchanged. The bottommost # lines are lost. \e[L is equivalent to \e[1L.
-\033[#M
-DL: Delete Line: The block of # lines at and below the cursor are deleted; all lines below them move up # lines to fill in the gap, leaving # blank lines at the bottom of the screen. The cursor
-position is unchanged. \e[M is equivalent to \e[1M. \033[#\@ ICH: Insert CHaracter: The cursor character and all characters to the right of it move right # columns, leaving behind blank space. The
-cursor position is unchanged. The rightmost # characters on the line are lost. \e[\@ is equivalent to \e[1\@. \033[#P DCH: Delete CHaracter: The block of # characters at and to the right of the cursor
-are deleted; all characters to the right of it move left # columns, leaving behind blank space. The cursor position is unchanged. \e[P is equivalent to \e[1P.
+IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The cursor position is unchanged. The bottommost #
+lines are lost. \e[L is equivaSlent to \e[1L. \033[#M DL: Delete Line: The block of # lines at and below the cursor are deleted; all lines below them
+move up # lines to fill in the gap, leaving # blank lines at the bottom of the screen. The cursor position is unchanged. \e[M is equivalent to \e[1M.
+\033[#\@ ICH: Insert CHaracter: The cursor character and all characters to the right of it move right # columns, leaving behind blank space. The
+cursor position is unchanged. The rightmost # characters on the line are lost. \e[\@ is equivalent to \e[1\@. \033[#P DCH: Delete CHaracter: The block
+of # characters at and to the right of the cursor are deleted; all characters to the right of it move left # columns, leaving behind blank space. The
+cursor position is unchanged. \e[P is equivalent to \e[1P.
 
 Escape sequences for Select Character Set
 */
@@ -209,7 +210,7 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 
 	// start with processing
 	p = BUFVAL(tempbuf);
-	while ((q = strchr(p, 0x1b)) != NULL) { // find the escape character
+	while ((q = strchr(p, 0x1b)) != nullptr) { // find the escape character
 		if (0 == WriteConsole(handle, p, (DWORD)(q - p), &written, 0)) { // write up to the escape
 			WriteFile(handle, p, (DWORD)(q - p), &written, 0);
 		}
@@ -259,7 +260,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 							} else if (5 == numbers[i]) { // set background intensity
 								info.wAttributes |= BACKGROUND_INTENSITY;
 							} else if (7 == numbers[i]) { // reverse colors (just xor them)
-								info.wAttributes ^= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+								info.wAttributes ^=
+									FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 							}
 							// case '2': // not existing
 							// case '3':	// blinking (not implemented)
@@ -274,7 +276,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 							} else if (5 == numbers[i]) { // set background intensity off
 								info.wAttributes &= ~BACKGROUND_INTENSITY;
 							} else if (7 == numbers[i]) { // reverse colors (just xor them)
-								info.wAttributes ^= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+								info.wAttributes ^=
+									FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 							}
 						} else if (0x30 == (0xF0 & numbers[i])) { // foreground
 							uint8 num = numbers[i] & 0x0F;
@@ -361,7 +364,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					// The first # specifies the line number, the second # specifies the column.
 					// The default for both is 1
 					info.dwCursorPosition.X = (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + ((numbers[numpoint] & 0x0F) - 1) : 0;
-					info.dwCursorPosition.Y = (numpoint && numbers[numpoint - 1]) ? (numbers[numpoint - 1] >> 4) * 10 + ((numbers[numpoint - 1] & 0x0F) - 1) : 0;
+					info.dwCursorPosition.Y =
+						(numpoint && numbers[numpoint - 1]) ? (numbers[numpoint - 1] >> 4) * 10 + ((numbers[numpoint - 1] & 0x0F) - 1) : 0;
 
 					if (info.dwCursorPosition.X >= info.dwSize.X) {
 						info.dwCursorPosition.Y = info.dwSize.X - 1;
@@ -495,7 +499,7 @@ int VFPRINTF(FILE *file, const char *fmt, va_list argptr) {
 
 	// start with processing
 	p = BUFVAL(tempbuf);
-	while ((q = strchr(p, 0x1b)) != NULL) { // find the escape character
+	while ((q = strchr(p, 0x1b)) != nullptr) { // find the escape character
 		fprintf(file, "%.*s", (int)(q - p), p); // write up to the escape
 		if (q[1] != '[') { // write the escape char (whatever purpose it has)
 			fprintf(file, "%.*s", 1, q);
@@ -591,27 +595,36 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 		buildbotflag = 1;
 	}
 #endif
-	if ((flag == MSG_WARNING && console_msg_log & 1) || ((flag == MSG_ERROR || flag == MSG_SQL) && console_msg_log & 2) || (flag == MSG_DEBUG && console_msg_log & 4)) { //[Ind]
-		FILE *log = NULL;
+	if ((flag == MSG_WARNING && console_msg_log & 1) || ((flag == MSG_ERROR || flag == MSG_SQL) && console_msg_log & 2) ||
+		(flag == MSG_DEBUG && console_msg_log & 4)) { //[Ind]
+		FILE *log = nullptr;
 		if ((log = fopen(console_log_filepath, "a+"))) {
 			char timestring[255];
 			time_t curtime;
 			time(&curtime);
 			strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-			fprintf(log, "(%s) [ %s ] : ", timestring, flag == MSG_WARNING ? "Warning" : flag == MSG_ERROR ? "Error" : flag == MSG_SQL ? "SQL Error" : flag == MSG_DEBUG ? "Debug" : "Unknown");
+			fprintf(log,
+					"(%s) [ %s ] : ",
+					timestring,
+					flag == MSG_WARNING ? "Warning"
+					: flag == MSG_ERROR ? "Error"
+					: flag == MSG_SQL   ? "SQL Error"
+					: flag == MSG_DEBUG ? "Debug"
+										: "Unknown");
 			va_copy(apcopy, ap);
 			vfprintf(log, string, apcopy);
 			va_end(apcopy);
 			fclose(log);
 		}
 	}
-	if ((flag == MSG_INFORMATION && msg_silent & 1) || (flag == MSG_STATUS && msg_silent & 2) || (flag == MSG_NOTICE && msg_silent & 4) || (flag == MSG_WARNING && msg_silent & 8) ||
-		(flag == MSG_ERROR && msg_silent & 16) || (flag == MSG_SQL && msg_silent & 16) || (flag == MSG_DEBUG && msg_silent & 32)) {
+	if ((flag == MSG_INFORMATION && msg_silent & 1) || (flag == MSG_STATUS && msg_silent & 2) || (flag == MSG_NOTICE && msg_silent & 4) ||
+		(flag == MSG_WARNING && msg_silent & 8) || (flag == MSG_ERROR && msg_silent & 16) || (flag == MSG_SQL && msg_silent & 16) ||
+		(flag == MSG_DEBUG && msg_silent & 32)) {
 		return 0; // Do not print it.
 	}
 
 	if (timestamp_format[0] && flag != MSG_NONE) { // Display time format. [Skotlex]
-		time_t t = time(NULL);
+		time_t t = time(nullptr);
 		strftime(prefix, 80, timestamp_format, localtime(&t));
 	} else {
 		prefix[0] = '\0';
@@ -623,8 +636,8 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 		case MSG_STATUS: // Bright Green (To inform about good things)
 			strcat(prefix, CL_GREEN "[Status]" CL_RESET ":" CL_CLL);
 			break;
-		case MSG_SQL: // Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database, as successes can as well just be anything else...
-					  // [Skotlex]
+		case MSG_SQL: // Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database,
+					  // as successes can as well just be anything else... [Skotlex]
 			strcat(prefix, CL_MAGENTA "[SQL]" CL_RESET ":" CL_CLL);
 			break;
 		case MSG_INFORMATION: // Bright White (Variable information)
@@ -669,7 +682,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	if (strlen(DEBUGLOGPATH) > 0) {
 		fp = fopen(DEBUGLOGPATH, "a");
-		if (fp == NULL) {
+		if (fp == nullptr) {
 			FPRINTF(STDERR, CL_RED "[ERROR]" CL_RESET ": Could not open '" CL_WHITE "%s" CL_RESET "', access denied.\n", DEBUGLOGPATH);
 			FFLUSH(STDERR);
 		} else {

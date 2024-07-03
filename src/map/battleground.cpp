@@ -612,7 +612,7 @@ int bg_team_leave(map_session_data *sd, bool quit, bool deserter)
 				sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT, 100, 1, static_cast<t_tick>(bg->deserter_time) * 1000); // Deserter timer
 		}
 
-		return bgteam->members.size();
+		return static_cast<int>( bgteam->members.size() );
 	}
 
 	return -1;
@@ -720,7 +720,7 @@ int bg_team_get_id(struct block_list *bl)
  * @param mes: Message
  * @param len: Message length
  */
-void bg_send_message(map_session_data *sd, const char *mes, int len)
+void bg_send_message(map_session_data *sd, const char *mes, size_t len)
 {
 	nullpo_retv(sd);
 

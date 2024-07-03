@@ -34,7 +34,7 @@ jobs:
           os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # Install latest CMake.
       - uses: lukka/get-cmake@latest

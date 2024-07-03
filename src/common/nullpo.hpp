@@ -16,13 +16,13 @@
 #if defined(NULLPO_CHECK)
 
 	/**
-	 * Macros used to check for NULL pointer and output that information.
+	 * Macros used to check for nullptr pointer and output that information.
 	 */
 
 	/**
 	 * Return 0 if pointer is not found.
 	 * @param t: Pointer to check
-	 * @return 0 if t is NULL
+	 * @return 0 if t is nullptr
 	 */
 	#define nullpo_ret(t) \
 		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
@@ -32,7 +32,7 @@
 	/**
 	 * Return void if pointer is not found.
 	 * @param t: Pointer to check
-	 * @return void if t is NULL
+	 * @return void if t is nullptr
 	 */
 	#define nullpo_retv(t) \
 		if (nullpo_chk(NLP_MARK, (void *)(t))) { \
@@ -66,7 +66,7 @@
 		 * Return 0 and display additional information if pointer is not found.
 		 * @param t: Pointer to check
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
-		 * @return 0 if t is NULL
+		 * @return 0 if t is nullptr
 		 */
 		#define nullpo_ret_f(t, fmt, ...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
@@ -77,7 +77,7 @@
 		 * Return void and display additional information if pointer is not found.
 		 * @param t: Pointer to check
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
-		 * @return void if t is NULL
+		 * @return void if t is nullptr
 		 */
 		#define nullpo_retv_f(t, fmt, ...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) { \
@@ -111,7 +111,7 @@
 		 * Return 0 and display additional information if pointer is not found.
 		 * @param t: Pointer to check
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
-		 * @return 0 if t is NULL
+		 * @return 0 if t is nullptr
 		 */
 		#define nullpo_ret_f(t, fmt, args...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
@@ -122,7 +122,7 @@
 		 * Return void and display additional information if pointer is not found.
 		 * @param t: Pointer to check
 		 * @param fmt: Pass to vprintf, Format and arguments such as description
-		 * @return void if t is NULL
+		 * @return void if t is nullptr
 		 */
 		#define nullpo_retv_f(t, fmt, args...) \
 			if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ##args)) { \
@@ -188,23 +188,23 @@
 #endif /* NULLPO_CHECK */
 
 /**
- * Check for NULL pointer and output information.
+ * Check for nullptr pointer and output information.
  * @param file: __FILE__
  * @param line: __LINE__
  * @param func: __func__ (name of the function) [NLP_MARK]
  * @param target: Target to check
- * @return 0 on success or 1 on NULL
+ * @return 0 on success or 1 on nullptr
  */
 int nullpo_chk(const char *file, int line, const char *func, const void *target);
 
 /**
- * Check for NULL pointer and output detailed information.
+ * Check for nullptr pointer and output detailed information.
  * @param file: __FILE__
  * @param line: __LINE__
  * @param func: __func__ (name of the function) [NLP_MARK]
  * @param target: Target to check
  * @param fmt: Passed to vprintf
- * @return 0 on success or 1 on NULL
+ * @return 0 on success or 1 on nullptr
  */
 int nullpo_chk_f(const char *file, int line, const char *func, const void *target, const char *fmt, ...) __attribute__((format(printf, 5, 6)));
 
@@ -218,7 +218,7 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
 void nullpo_info(const char *file, int line, const char *func);
 
 /**
- * Check for NULL pointer and output detailed information.
+ * Check for nullptr pointer and output detailed information.
  * @param file: __FILE__
  * @param line: __LINE__
  * @param func: __func__ (name of the function) [NLP_MARK]
