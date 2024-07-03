@@ -1451,13 +1451,13 @@ void unit_stop_walking_soon(struct block_list& bl)
 			if (ud->sx > 31) bl.x++;
 			if (ud->sy > 31) bl.y++;
 		}
-		ud->sx = ud->sx % 16;
-		ud->sy = ud->sy % 16;
+		ud->sx %= 16;
+		ud->sy %= 16;
 	}
 	else if (cell_percent >= 1) {
 		// Assume exactly one cell moved
-		bl.x = bl.x + dirx[ud->walkpath.path[ud->walkpath.path_pos]];
-		bl.y = bl.y + diry[ud->walkpath.path[ud->walkpath.path_pos]];
+		bl.x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
+		bl.y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
 		path_remain = 2;
 	}
 	// Shorten walkpath
@@ -1466,8 +1466,8 @@ void unit_stop_walking_soon(struct block_list& bl)
 		ud->to_x = ox;
 		ud->to_y = oy;
 		for (int i = 0; i < path_remain; i++) {
-			ud->to_x = ud->to_x + dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
-			ud->to_y = ud->to_y + diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
+			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
+			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
 		}
 		// Send movement packet with calculated coordinates and subcoordinates
 		clif_move(*ud);
