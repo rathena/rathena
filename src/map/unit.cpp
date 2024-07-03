@@ -1416,12 +1416,18 @@ void unit_stop_walking_soon(struct block_list& bl)
 {
 	struct unit_data* ud = unit_bl2ud(&bl);
 
-	if (ud == nullptr) return;
+	if (ud == nullptr)
+		return;
 
-	if (ud->walktimer != INVALID_TIMER && ud->walkpath.path_pos + 1 < ud->walkpath.path_len) {
+	if (ud->walktimer == INVALID_TIMER)
+		return;
+
+	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len)
+		return;
 		const struct TimerData* td = get_timer(ud->walktimer);
 
-		if (td == nullptr) return;
+		if (td == nullptr)
+			return;
 
 		// Get how much percent we traversed on the timer
 		double cell_percent = 1 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
