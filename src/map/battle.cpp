@@ -1375,7 +1375,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
 			if (sce->val2 > 0) {
-				clif_millenniumshield(target, sce->val2);
+				clif_millenniumshield( *target, sce->val2 );
 				sce->val3 = 1000; // Next shield
 			} else
 				status_change_end(target, SC_MILLENNIUMSHIELD); // All shields down
