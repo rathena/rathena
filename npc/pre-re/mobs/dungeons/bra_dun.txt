@@ -7,9 +7,16 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Official monster spawns in Brasilis Dungeon.
+//= [Official Conversion based on bRO & jRO servers]
+//= Monster spawns in Brasilis Dungeon.
 //===== Additional Comments: =================================
 //= 1.0 Official spawns from bRO and custom estimation from jRO
+//= Brasilis was introduced in Pre-Renewal only for bRO and
+//= jRO official servers with differences in monster stats,
+//= spawns and quests.
+//= It was added in Renewal for every other official server.
+//= Since we follow kRO this is disabled by default.
+//= You can enable it on npc/pre-re/scripts_athena.conf
 //============================================================
 
 //bRO Pre-Renewal spawns

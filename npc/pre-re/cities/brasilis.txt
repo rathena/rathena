@@ -7,10 +7,16 @@
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
-//= [Official Conversion]
+//= [Official Conversion based on bRO & jRO servers]
 //= Brasilis town NPCs.
 //===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//= 1.0 First Version
+//= Brasilis was introduced in Pre-Renewal only for bRO and
+//= jRO official servers with differences in monster stats,
+//= spawns and quests.
+//= It was added in Renewal for every other official server.
+//= Since we follow kRO this is disabled by default.
+//= You can enable it on npc/pre-re/scripts_athena.conf
 //============================================================
 
 // Brasilis Transportation :: brasilis_trans
