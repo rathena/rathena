@@ -23466,6 +23466,30 @@ BUILDIN_FUNC(vip_time) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Returns various VIP settings for server
+ * vip_is_enabled <type>
+ * @param type: Info type, see enum vip_check_type
+ */
+BUILDIN_FUNC(vip_is_enabled) {
+	int type = script_getnum(st, 2);
+	switch(type) {
+		case CHK_VIP_ENABLED:
+#ifdef VIP_ENABLE
+			script_pushint(st, 1);
+#else
+			script_pushint(st, 0);
+#endif
+			break;
+		case CHK_VIP_SCRIPT:
+			script_pushint(st, VIP_SCRIPT);
+			break;
+		default:
+			ShowError("buildin_vip_is_enabled: Unsupported type %d.\n", type);
+			return SCRIPT_CMD_FAILURE;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
 
 /**
  * Turns a player into a monster and optionally can grant a SC attribute effect.
@@ -27996,6 +28020,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(montransform, "active_transform", "vi?????"),
 	BUILDIN_DEF(vip_status,"i?"),
 	BUILDIN_DEF(vip_time,"i?"),
+	BUILDIN_DEF(vip_is_enabled,"i"),
 	BUILDIN_DEF(bonus_script,"si????"),
 	BUILDIN_DEF(bonus_script_clear,"??"),
 	BUILDIN_DEF(getgroupitem,"i??"),

@@ -100,7 +100,7 @@ S_RefineValidate:
 		.@equip_lv = getequiparmorlv( .@part );
 
 		// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
-		if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
+		if (vip_is_enabled(CHK_VIP_SCRIPT) && !vip_status(VIP_STATUS_ACTIVE)) {
 			switch(.@equip_lv) {
 				case 1:
 					set .@price, .@price * 10;
@@ -114,7 +114,7 @@ S_RefineValidate:
 		.@equip_lv = getequipweaponlv( .@part );
 
 		// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
-		if (VIP_SCRIPT && !vip_status(VIP_STATUS_ACTIVE)) {
+		if (vip_is_enabled(CHK_VIP_SCRIPT) && !vip_status(VIP_STATUS_ACTIVE)) {
 			switch( .@equip_lv ){
 				case 1:
 					set .@price, .@price * 40;
