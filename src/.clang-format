@@ -3,7 +3,7 @@ BasedOnStyle: Google
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
-ColumnLimit: 150
+ColumnLimit: 120
 IndentWidth: 4
 Language: Cpp
 TabWidth: 4
