@@ -9,23 +9,6 @@
 //= 1.2 Navigation system update. [Euphy]
 //============================================================
 
-//===== rAthena Script ======================================= 
-//= Brasilis Guide
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.2
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
-//= [Official Conversion]
-//= Guide for the city of Brasilis.
-//===== Additional Comments: ================================= 
-//= 1.0 First Version, Renewal guide.
-//= 1.1 Added a missing close.
-//= 1.2 Navigation system update. [Euphy]
-//============================================================ 
-
 brasilis,219,97,3	script	Brasilis Guide	478,{
 	mes "[Brasilis Guide]";
 	mes "Welcome to ^8B4513Brasilis^000000, a country as passionate as the sun.";
