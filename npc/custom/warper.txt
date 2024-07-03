@@ -113,10 +113,12 @@ function Restrict {
 	.@type = getarg(0);
 	
 	if (.@type == "Brasilis") {
+		// If the official warper to Brasilis is enabled, meaning is either
+		// Renewal mode or Pre-renewal Brasilis is enabled, we lift the restriction
 		if (getnpcid(0, "Crewman_bra2"))
 			return;
-		else
-			.@type = "RE";
+		// Otherwise we apply the renewal restriction
+		.@type = "RE";
 	}
 
 	if ((.@type == "RE" && !checkre(0)) || (.@type == "Pre-RE" && checkre(0))) {

@@ -1,14 +1,6 @@
 //===== rAthena Script =======================================
 //= Brasilis Dungeon Monster Spawn Script
-//===== By: ==================================================
-//= Kisuka
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: =========================================
-//= Official monster spawns in Brasilis Dungeon.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 Official spawns from Aegis [Kisuka]
 //============================================================
 

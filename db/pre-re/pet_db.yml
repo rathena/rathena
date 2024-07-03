@@ -866,9 +866,6 @@ Body:
         bonus2 bSubEle,Ele_Fire,2;
         bonus2 bAddEle,Ele_Fire,2;
       }
-#=============================================================
-# Pre-re Brasilis
-#=============================================================
   - Mob: E_HYDRA
     TameItem: Leaf_Cat_Ball
     EggItem: Mystic_Leaf_Cat_Ball

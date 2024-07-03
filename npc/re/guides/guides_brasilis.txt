@@ -1,3 +1,14 @@
+//===== rAthena Script =======================================
+//= Brasilis Guide
+//===== Description: =========================================
+//= [Official Conversion based on bRO & jRO servers]
+//= Guide for the city of Brasilis.
+//===== Changelog: ===========================================
+//= 1.0 First Version, Renewal guide. [L0ne_W0lf]
+//= 1.1 Added a missing close. [L0ne_W0lf]
+//= 1.2 Navigation system update. [Euphy]
+//============================================================
+
 //===== rAthena Script ======================================= 
 //= Brasilis Guide
 //===== By: ================================================== 

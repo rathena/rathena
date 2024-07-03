@@ -1,23 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Brasilis Guide
-//===== By: ================================================== 
-//= Daegaladh
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion based on bRO & jRO servers]
 //= Guide for the city of Brasilis.
-//===== Additional Comments: ================================= 
-//= 1.0 First Version
-//= Brasilis was introduced in Pre-Renewal only for bRO and
-//= jRO official servers with differences in monster stats,
-//= spawns and quests.
-//= It was added in Renewal for every other official server.
-//= Since we follow kRO this is disabled by default.
-//= You can enable it on npc/pre-re/scripts_athena.conf
-//============================================================ 
+//
+// Note:
+// - Brasilis was introduced in Pre-Renewal only for bRO and
+//   jRO official servers with differences in monster stats,
+//   spawns and quests.
+//   It was added in Renewal for every other official server.
+//   Since we follow kRO this is disabled by default.
+//   You can enable it on npc/pre-re/scripts_athena.conf
+//===== Changelog: ===========================================
+//= 1.0 First Version [Daegaladh]
+//============================================================
 
 brasilis,219,97,3	script	Brasilis Guide	478,{
 	mes "[Brasilis Guide]";
