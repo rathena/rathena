@@ -24142,8 +24142,8 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 	}
 
-	if (this->nodeExists(node, "NoNearNpc")) {
-		const auto& npcNode = node["NoNearNpc"];
+	if (this->nodeExists(node, "NoNearNPC")) {
+		const auto& npcNode = node["NoNearNPC"];
 
 		if (this->nodeExists(npcNode, "AdditionalRange")) {
 			uint16 range;
