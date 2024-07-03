@@ -9837,6 +9837,330 @@ Body:
         RandomOptionGroup: Group_0
         ClearSlots: true
         RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Armor
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Armor
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Manteau
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Manteau
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Boots
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Boots
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Pendant
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Pendant
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Necklace
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Necklace
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Robe
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Robe
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Muffler
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Muffler
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Shoes
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Shoes
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Ring
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Ring
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Snowflower_Earring
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Snowflower_Earring
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_T_Sword
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_T_Sword
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Lance
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Lance
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Sword
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Sword
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_B_Sword
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_B_Sword
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Spear
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Spear
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_T_Axe
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_T_Axe
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Axe
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Axe
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Mace
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Mace
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_M_Mace
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_M_Mace
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_R_Knife
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_R_Knife
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_B_Knife
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_B_Knife
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Knuckle
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Knuckle
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Katar
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Katar
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Bow
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Bow
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Violin
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Violin
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Whip
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Whip
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Humma
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Humma
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Book
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Book
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Wand
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Wand
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Staff
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Staff
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Foxtail
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Foxtail
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Revolver
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Revolver
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Rifle
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Rifle
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Shotgun
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Shotgun
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Gatling
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Gatling
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Glacier_Launcher
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Glacier_Launcher
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
   - Item: Season_H_Upgrade
     BaseItems:
       - BaseItem: Season_Hood_Spring
@@ -10900,6 +11224,206 @@ Body:
           - Material: Enriched_Ethernium
             Amount: 20
         ResultItem: FuriousCirclet_SOA
+        ChangeRefine: 1
+      - BaseItem: FuriousCirclet_TR
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Ethernium
+            Amount: 10
+          - Material: Enriched_Ethernium
+            Amount: 20
+        ResultItem: FuriousCirclet_TR
+        ChangeRefine: 1
+      - BaseItem: FuriousCirclet_BO
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Ethernium
+            Amount: 10
+          - Material: Enriched_Ethernium
+            Amount: 20
+        ResultItem: FuriousCirclet_BO
+        ChangeRefine: 1
+      - BaseItem: FuriousCirclet_HN
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Ethernium
+            Amount: 10
+          - Material: Enriched_Ethernium
+            Amount: 20
+        ResultItem: FuriousCirclet_HN
+        ChangeRefine: 1
+      - BaseItem: Lapier_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Lapier_Furious
+        ChangeRefine: 1
+      - BaseItem: SharpSword_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: SharpSword_Furious
+        ChangeRefine: 1
+      - BaseItem: WhiteSword_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: WhiteSword_Furious
+        ChangeRefine: 1
+      - BaseItem: Stick_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Stick_Furious
+        ChangeRefine: 1
+      - BaseItem: MetalVilolin_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: MetalVilolin_Furious
+        ChangeRefine: 1
+      - BaseItem: Harp_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Harp_Furious
+        ChangeRefine: 1
+      - BaseItem: MetalWhip_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: MetalWhip_Furious
+        ChangeRefine: 1
+      - BaseItem: Whip_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Whip_Furious
+        ChangeRefine: 1
+      - BaseItem: Flame_Staff_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Flame_Staff_Furious
+        ChangeRefine: 1
+      - BaseItem: Rifle_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Rifle_Furious
+        ChangeRefine: 1
+      - BaseItem: Gatling_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Gatling_Furious
+        ChangeRefine: 1
+      - BaseItem: Specter_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Specter_Furious
+        ChangeRefine: 1
+      - BaseItem: GaleClaw_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: GaleClaw_Furious
+        ChangeRefine: 1
+      - BaseItem: Exterminate_Furious
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Etherdeocon
+            Amount: 10
+          - Material: Enriched_Etherdeocon
+            Amount: 20
+        ResultItem: Exterminate_Furious
+        ChangeRefine: 1
+      - BaseItem: FuriousCirclet_AG
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Ethernium
+            Amount: 10
+          - Material: Enriched_Ethernium
+            Amount: 20
+        ResultItem: FuriousCirclet_AG
+        ChangeRefine: 1
+      - BaseItem: FuriousCirclet_IQ
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Ethernium
+            Amount: 10
+          - Material: Enriched_Ethernium
+            Amount: 20
+        ResultItem: FuriousCirclet_IQ
+        ChangeRefine: 1
+      - BaseItem: FuriousCirclet_NW
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: HD_Ethernium
+            Amount: 10
+          - Material: Enriched_Ethernium
+            Amount: 20
+        ResultItem: FuriousCirclet_NW
         ChangeRefine: 1
   - Item: Gaebolg_A_Hammer_1
     BaseItems:

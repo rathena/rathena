@@ -4371,6 +4371,38 @@ Body:
       BuyingStore: true
 #   Script: |
 #     /* TODO */
+  - Id: 11636
+    AegisName: 24_S_Ev_Lime_Soda
+    Name: Lime Soda
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 90
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 1800,0; /* average value */
+  - Id: 11637
+    AegisName: 24_S_Ev_Berry_Soda
+    Name: Berry Soda
+    Type: Healing
+    Weight: 1
+    EquipLevelMin: 90
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemheal 0,180; /* average value */
   - Id: 11701
     AegisName: Girl_Bunch_Of_Flower
     Name: Girl's Bouquet
@@ -78646,6 +78678,99 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_ENCHANT_STONE_BOX35);
+  - Id: 103065
+    AegisName: 24_S_Ev_Noodle
+    Name: Summer Festival Noodle
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103066
+    AegisName: 24_S_Ev_Grilled
+    Name: Herb Calamari Barbecue
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103067
+    AegisName: 24_S_Ev_Podding
+    Name: Sweet Watermelon Pudding
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103068
+    AegisName: 24_S_Ev_Juice
+    Name: Cool Watermelon Juice
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103069
+    AegisName: 24_S_Ev_IceFlake
+    Name: Cool Red Beans Bingsu
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103070
+    AegisName: 24_S_Ev_Pop_Corn
+    Name: Gourmet Butter Popcorn
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 103071
+    AegisName: 24_S_Ev_Ripe_Melon
+    Name: Ripe Golden Melon
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 100,100;
   - Id: 103095
     AegisName: Kr_B_Special10
     Name: Love Cake
@@ -78658,6 +78783,78 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 103106
+    AegisName: Stove_Channeling_Box_1
+    Name: Channeling Commemoration Box I
+    Type: Usable
+    Weight: 400
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_STOVE_CHANNELING_BOX_1);
+  - Id: 103107
+    AegisName: Stove_Channeling_Box_2
+    Name: Channeling Commemoration Box II
+    Type: Usable
+    Weight: 400
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_STOVE_CHANNELING_BOX_2);
+  - Id: 103108
+    AegisName: Stove_Channeling_Box_3
+    Name: Channeling Commemoration Box III
+    Type: Usable
+    Weight: 400
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_STOVE_CHANNELING_BOX_3);
+  - Id: 103109
+    AegisName: Stove_Channeling_Box_4
+    Name: Channeling Commemoration Box IV
+    Type: Usable
+    Weight: 400
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_STOVE_CHANNELING_BOX_4);
   - Id: 200000
     AegisName: IDTest_Cash
     Name: IDTest Cash
@@ -80785,6 +80982,8 @@ Body:
 #   Name: (Limited) Nyangvine Fruit Package I (Stone Box 35)
     Name: (Limited) Nyangvine Fruit Package I (Stone Box 35
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80794,12 +80993,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_LI_NYANGVINE_BOX1_35);
   - Id: 200406
     AegisName: LI_Nyangvine_Box2_35
 #   Name: (Limited) Nyangvine Fruit Package II (Stone Box 35)
     Name: (Limited) Nyangvine Fruit Package II (Stone Box 3
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80809,12 +81010,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_LI_NYANGVINE_BOX2_35);
   - Id: 200407
     AegisName: LI_Nyangvine_Box3_35
 #   Name: (Limited) Nyangvine Fruit Package III (Stone Box 35)
     Name: (Limited) Nyangvine Fruit Package III (Stone Box 
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80824,12 +81027,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_LI_NYANGVINE_BOX3_35);
   - Id: 200411
     AegisName: A_Speed_Booster_Box
     Name: Speed Booster Package
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80839,12 +81044,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_A_SPEED_BOOSTER_BOX);
   - Id: 200412
     AegisName: A_Speed_Booster_10_Box
     Name: Speed Booster Package 10 Sets
     Type: Cash
     Weight: 10
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80854,11 +81061,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_A_SPEED_BOOSTER_10_BOX);
   - Id: 200415
     AegisName: L_Infinity_Power_Pack
     Name: (Limited) Infinity Power Package
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80868,11 +81077,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_L_INFINITY_POWER_PACK);
   - Id: 200416
     AegisName: L_All_Red_Pack
     Name: (Limited) All Red Package
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80882,11 +81093,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_L_ALL_RED_PACK);
   - Id: 200417
     AegisName: L_Defense_Potion_Pack
     Name: (Limited) Defender Package
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80896,11 +81109,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_L_DEFENSE_POTION_PACK);
   - Id: 200418
     AegisName: L_Speed_Force_Pack
     Name: (Limited) Speed Force Package
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80910,11 +81125,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_L_SPEED_FORCE_PACK);
   - Id: 200419
     AegisName: L_Special_Speed_Pack
     Name: (Limited) Speed Booster Special Package
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80924,11 +81141,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_L_SPECIAL_SPEED_PACK);
   - Id: 200420
     AegisName: L_Special_Force_Pack
     Name: (Limited) Force Booster Special Package
     Type: Cash
+    Flags:
+      Container: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -80938,7 +81157,58 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_L_SPECIAL_FORCE_PACK);
+  - Id: 200425
+    AegisName: CostumeMilePack_35_1
+#   Name: Nyangvine Costume Mileage Package I (Stone Box 35)
+    Name: Nyangvine Costume Mileage Package I (Stone Box 35
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_35_1);
+  - Id: 200426
+    AegisName: CostumeMilePack_35_2
+#   Name: Nyangvine Costume Mileage Package II (Stone Box 35)
+    Name: Nyangvine Costume Mileage Package II (Stone Box 3
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_35_2);
+  - Id: 200427
+    AegisName: CostumeMilePack_35_3
+#   Name: Nyangvine Costume Mileage Package III (Stone Box 35)
+    Name: Nyangvine Costume Mileage Package III (Stone Box 
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_35_3);
   - Id: 1100000
     AegisName: IDTest_heal
     Name: IDTest heal

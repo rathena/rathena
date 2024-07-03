@@ -7790,6 +7790,24 @@
 	export_constant(IG_P_BOOSTER_CALL_PACKAGE);
 	export_constant(IG_P_COMPENSATION_BOX);
 	export_constant(IG_ENCHANT_STONE_BOX35);
+	export_constant(IG_STOVE_CHANNELING_BOX_1);
+	export_constant(IG_STOVE_CHANNELING_BOX_2);
+	export_constant(IG_STOVE_CHANNELING_BOX_3);
+	export_constant(IG_STOVE_CHANNELING_BOX_4);
+	export_constant(IG_LI_NYANGVINE_BOX1_35);
+	export_constant(IG_LI_NYANGVINE_BOX2_35);
+	export_constant(IG_LI_NYANGVINE_BOX3_35);
+	export_constant(IG_A_SPEED_BOOSTER_BOX);
+	export_constant(IG_A_SPEED_BOOSTER_10_BOX);
+	export_constant(IG_L_INFINITY_POWER_PACK);
+	export_constant(IG_L_ALL_RED_PACK);
+	export_constant(IG_L_DEFENSE_POTION_PACK);
+	export_constant(IG_L_SPEED_FORCE_PACK);
+	export_constant(IG_L_SPECIAL_SPEED_PACK);
+	export_constant(IG_L_SPECIAL_FORCE_PACK);
+	export_constant(IG_COSTUMEMILEPACK_35_1);
+	export_constant(IG_COSTUMEMILEPACK_35_2);
+	export_constant(IG_COSTUMEMILEPACK_35_3);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -9128,6 +9146,7 @@
 	export_constant_npc(JT_4_EP21_AURELIE);
 	export_constant_npc(JT_4_EP21_HOWELL_S);
 	export_constant_npc(JT_4_EP21_TAN_S);
+	export_constant_npc(JT_4_M_VACATION_MARAM);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
