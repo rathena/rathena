@@ -1909,7 +1909,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			if (!unit_walktobl(&md->bl, tbl, 0, 0))
 				mob_unlocktarget(md, tick); //Can't loot...
 			else
-				md->ud.target = tbl->id; //Remember current loot target
+				unit_set_target(&md->ud, tbl->id); //Remember current loot target
 			return true;
 		}
 		//Within looting range.
