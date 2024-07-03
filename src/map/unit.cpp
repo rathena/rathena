@@ -1439,8 +1439,8 @@ void unit_stop_walking_soon(struct block_list& bl)
 	if (cell_percent > 0 && cell_percent < 1) {
 		// Set subcell coordinates according to timer
 		// This gives a value between 8 and 39
-		ud->sx = (unsigned char)(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
-		ud->sy = (unsigned char)(24.0 + diry[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		ud->sx = static_cast<decltype(ud->sx)>(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		ud->sy = static_cast<decltype(ud->sy)>(24.0 + diry[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
 		// 16-31 reflect sub position 0-15 on the current cell
 		// 8-15 reflect sub position 8-15 at -1 main coordinate
 		// 32-39 reflect sub position 0-7 at +1 main coordinate

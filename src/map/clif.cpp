@@ -180,7 +180,7 @@ static inline void WBUFPOS(uint8* p, unsigned short pos, short x, short y, unsig
 
 
 // client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
-static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0) {
+static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, short x1, short y1, uint8 sx0, uint8 sy0) {
 	p += pos;
 	p[0] = (uint8)(x0>>2);
 	p[1] = (uint8)((x0<<6) | ((y0>>4)&0x3f));

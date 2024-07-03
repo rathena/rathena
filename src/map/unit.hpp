@@ -27,7 +27,7 @@ struct unit_data {
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	short attacktarget_lv;
 	short to_x, to_y;
-	unsigned char sx, sy; // Subtile position (0-15, with 8 being center of cell)
+	uint8 sx, sy; // Subtile position (0-15, with 8 being center of cell)
 	short skillx, skilly;
 	uint16 skill_id, skill_lv;
 	int skilltarget;
