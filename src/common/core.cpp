@@ -244,7 +244,8 @@ const char *get_svn_revision(void) {
 				if (sscanf(line, " %*[^\"]\"%11d%*[^\n]", &rev) == 1) {
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", rev);
 				}
-			} else {
+			}
+			else {
 				// Bin File format
 				if (fgets(line, sizeof(line), fp) == nullptr) {
 					printf("Can't get bin name\n");
@@ -291,7 +292,8 @@ const char *get_git_hash(void) {
 
 		free(rev);
 		fclose(fp);
-	} else {
+	}
+	else {
 		GitHash[0] = UNKNOWN_VERSION;
 	}
 
@@ -324,7 +326,8 @@ static void display_title(void) {
 	// clang-format on
 	if (svn[0] != UNKNOWN_VERSION) {
 		ShowInfo("SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
-	} else if (git[0] != UNKNOWN_VERSION) {
+	}
+	else if (git[0] != UNKNOWN_VERSION) {
 		ShowInfo("Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git);
 	}
 }
@@ -364,7 +367,8 @@ int Core::start(int argc, char **argv) {
 					"Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME);
 			}
 			free(pwd);
-		} else {
+		}
+		else {
 			// On Windows the .bat files have the executeable names as parameters without any path seperator
 			// [Lemongrass]
 			SERVER_NAME = argv[0];
@@ -487,7 +491,8 @@ void Core::signal_crash() {
 
 	if (this->m_crashed) {
 		ShowFatalError("Received another crash signal, while trying to handle the last crash!\n");
-	} else {
+	}
+	else {
 		ShowFatalError("Received a crash signal, trying to handle it as good as possible!\n");
 		this->m_crashed = true;
 		this->handle_crash();

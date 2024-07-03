@@ -65,7 +65,8 @@ int add_timer_func_list(TimerFunc func, const char* name) {
 		for (tfl = tfl_root; tfl != nullptr; tfl = tfl->next) { // check suspicious cases
 			if (func == tfl->func) {
 				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n", tfl->func, tfl->name, name);
-			} else if (strcmp(name, tfl->name) == 0) {
+			}
+			else if (strcmp(name, tfl->name) == 0) {
 				ShowWarning(
 					"add_timer_func_list: function %p has the same name as %p(%s)\n", func, tfl->func, tfl->name);
 			}
@@ -210,7 +211,8 @@ static int acquire_timer(void) {
 		do {
 			tid = free_timer_list[--free_timer_list_pos];
 		} while (tid >= timer_data_num && free_timer_list_pos > 0);
-	} else {
+	}
+	else {
 		tid = timer_data_num;
 	}
 
@@ -224,7 +226,8 @@ static int acquire_timer(void) {
 		timer_data_max += 256;
 		if (timer_data) {
 			RECREATE(timer_data, struct TimerData, timer_data_max);
-		} else {
+		}
+		else {
 			CREATE(timer_data, struct TimerData, timer_data_max);
 		}
 		memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
@@ -368,7 +371,8 @@ t_tick do_timer(t_tick tick) {
 			if (diff < -1000) {
 				// timer was delayed for more than 1 second, use current tick instead
 				timer_data[tid].func(tid, tick, timer_data[tid].id, timer_data[tid].data);
-			} else {
+			}
+			else {
 				timer_data[tid].func(tid, timer_data[tid].tick, timer_data[tid].id, timer_data[tid].data);
 			}
 		}
@@ -391,7 +395,8 @@ t_tick do_timer(t_tick tick) {
 				case TIMER_INTERVAL:
 					if (DIFF_TICK(timer_data[tid].tick, tick) < -1000) {
 						timer_data[tid].tick = tick + timer_data[tid].interval;
-					} else {
+					}
+					else {
 						timer_data[tid].tick += timer_data[tid].interval;
 					}
 					push_timer_heap(tid);
@@ -468,7 +473,8 @@ double solve_time(char* modif_p) {
 		int value = atoi(modif_p);
 		if (value == 0) {
 			modif_p++;
-		} else {
+		}
+		else {
 			if (modif_p[0] == '-' || modif_p[0] == '+') {
 				modif_p++;
 			}
@@ -478,25 +484,32 @@ double solve_time(char* modif_p) {
 			if (modif_p[0] == 's') {
 				then_tm.tm_sec += value;
 				modif_p++;
-			} else if (modif_p[0] == 'n') {
+			}
+			else if (modif_p[0] == 'n') {
 				then_tm.tm_min += value;
 				modif_p++;
-			} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
+			}
+			else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
 				then_tm.tm_min += value;
 				modif_p = modif_p + 2;
-			} else if (modif_p[0] == 'h') {
+			}
+			else if (modif_p[0] == 'h') {
 				then_tm.tm_hour += value;
 				modif_p++;
-			} else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
+			}
+			else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
 				then_tm.tm_mday += value;
 				modif_p++;
-			} else if (modif_p[0] == 'm') {
+			}
+			else if (modif_p[0] == 'm') {
 				then_tm.tm_mon += value;
 				modif_p++;
-			} else if (modif_p[0] == 'y' || modif_p[0] == 'a') {
+			}
+			else if (modif_p[0] == 'y' || modif_p[0] == 'a') {
 				then_tm.tm_year += value;
 				modif_p++;
-			} else if (modif_p[0] != '\0') {
+			}
+			else if (modif_p[0] != '\0') {
 				modif_p++;
 			}
 		}

@@ -232,7 +232,8 @@ static int Sql_P_Keepalive(Sql* self) {
 size_t Sql_EscapeString(Sql* self, char* out_to, const char* from) {
 	if (self) {
 		return (size_t)mysql_real_escape_string(&self->handle, out_to, from, (unsigned long)strlen(from));
-	} else {
+	}
+	else {
 		return (size_t)mysql_escape_string(out_to, from, (unsigned long)strlen(from));
 	}
 }
@@ -241,7 +242,8 @@ size_t Sql_EscapeString(Sql* self, char* out_to, const char* from) {
 size_t Sql_EscapeStringLen(Sql* self, char* out_to, const char* from, size_t from_len) {
 	if (self) {
 		return (size_t)mysql_real_escape_string(&self->handle, out_to, from, (unsigned long)from_len);
-	} else {
+	}
+	else {
 		return (size_t)mysql_escape_string(out_to, from, (unsigned long)from_len);
 	}
 }
@@ -308,7 +310,8 @@ int Sql_QueryStr(Sql* self, const char* query) {
 uint64 Sql_LastInsertId(Sql* self) {
 	if (self) {
 		return (uint64)mysql_insert_id(&self->handle);
-	} else {
+	}
+	else {
 		return 0;
 	}
 }
@@ -363,7 +366,8 @@ int Sql_GetData(Sql* self, size_t col, char** out_buf, size_t* out_len) {
 			if (out_len) {
 				*out_len = (size_t)self->lengths[col];
 			}
-		} else { // out of range - ignore
+		}
+		else { // out of range - ignore
 			if (out_buf) {
 				*out_buf = nullptr;
 			}
@@ -397,9 +401,11 @@ void Sql_Close(Sql* self) {
 void Sql_ShowDebug_(Sql* self, const char* debug_file, const unsigned long debug_line) {
 	if (self == nullptr) {
 		ShowDebug("at %s:%lu - self is nullptr\n", debug_file, debug_line);
-	} else if (StringBuf_Length(&self->buf) > 0) {
+	}
+	else if (StringBuf_Length(&self->buf) > 0) {
 		ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, StringBuf_Value(&self->buf));
-	} else {
+	}
+	else {
 		ShowDebug("at %s:%lu\n", debug_file, debug_line);
 	}
 }
@@ -605,7 +611,8 @@ static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i) {
 	if (column->buffer_type == MYSQL_TYPE_STRING) {
 		Sql_P_ShowDebugMysqlFieldInfo(
 			"buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "+1(nul-terminator)");
-	} else {
+	}
+	else {
 		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "");
 	}
 	mysql_free_result(meta);
@@ -693,7 +700,8 @@ int SqlStmt_PrepareStr(SqlStmt* self, const char* query) {
 size_t SqlStmt_NumParams(SqlStmt* self) {
 	if (self) {
 		return (size_t)mysql_stmt_param_count(self->stmt);
-	} else {
+	}
+	else {
 		return 0;
 	}
 }
@@ -721,7 +729,8 @@ int SqlStmt_BindParam(SqlStmt* self, size_t idx, enum SqlDataType buffer_type, v
 	}
 	if (idx < self->max_params) {
 		return Sql_P_BindSqlDataType(self->params + idx, buffer_type, buffer, buffer_len, nullptr, nullptr);
-	} else {
+	}
+	else {
 		return SQL_SUCCESS; // out of range - ignore
 	}
 }
@@ -753,7 +762,8 @@ int SqlStmt_Execute(SqlStmt* self) {
 uint64 SqlStmt_LastInsertId(SqlStmt* self) {
 	if (self) {
 		return (uint64)mysql_stmt_insert_id(self->stmt);
-	} else {
+	}
+	else {
 		return 0;
 	}
 }
@@ -762,7 +772,8 @@ uint64 SqlStmt_LastInsertId(SqlStmt* self) {
 size_t SqlStmt_NumColumns(SqlStmt* self) {
 	if (self) {
 		return (size_t)mysql_stmt_field_count(self->stmt);
-	} else {
+	}
+	else {
 		return 0;
 	}
 }
@@ -808,7 +819,8 @@ int SqlStmt_BindColumn(SqlStmt* self,
 		self->column_lengths[idx].out_length = out_length;
 		return Sql_P_BindSqlDataType(
 			self->columns + idx, buffer_type, buffer, buffer_len, &self->column_lengths[idx].length, out_is_null);
-	} else {
+	}
+	else {
 		return SQL_SUCCESS; // out of range - ignore
 	}
 }
@@ -817,7 +829,8 @@ int SqlStmt_BindColumn(SqlStmt* self,
 uint64 SqlStmt_NumRows(SqlStmt* self) {
 	if (self) {
 		return (uint64)mysql_stmt_num_rows(self->stmt);
-	} else {
+	}
+	else {
 		return 0;
 	}
 }
@@ -835,7 +848,8 @@ int SqlStmt_NextRow(SqlStmt* self) {
 	// bind columns
 	if (self->bind_columns && mysql_stmt_bind_result(self->stmt, self->columns)) {
 		err = 1; // error binding columns
-	} else {
+	}
+	else {
 		err = mysql_stmt_fetch(self->stmt); // fetch row
 	}
 
@@ -897,8 +911,9 @@ int SqlStmt_NextRow(SqlStmt* self) {
 		if (column->buffer_type ==
 			MYSQL_TYPE_STRING) { // clear unused part of the string/enum buffer (and nul-terminate)
 			memset((char*)column->buffer + length, 0, column->buffer_length - length + 1);
-		} else if (column->buffer_type == MYSQL_TYPE_BLOB &&
-				   length < column->buffer_length) { // clear unused part of the blob buffer
+		}
+		else if (column->buffer_type == MYSQL_TYPE_BLOB &&
+				 length < column->buffer_length) { // clear unused part of the blob buffer
 			memset((char*)column->buffer + length, 0, column->buffer_length - length);
 		}
 	}
@@ -917,9 +932,11 @@ void SqlStmt_FreeResult(SqlStmt* self) {
 void SqlStmt_ShowDebug_(SqlStmt* self, const char* debug_file, const unsigned long debug_line) {
 	if (self == nullptr) {
 		ShowDebug("at %s:%lu -  self is nullptr\n", debug_file, debug_line);
-	} else if (StringBuf_Length(&self->buf) > 0) {
+	}
+	else if (StringBuf_Length(&self->buf) > 0) {
 		ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, StringBuf_Value(&self->buf));
-	} else {
+	}
+	else {
 		ShowDebug("at %s:%lu\n", debug_file, debug_line);
 	}
 }
@@ -967,7 +984,8 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 		if (first) {
 			ShowFatalError("File not found: %s\n", cfgName);
 			exit(EXIT_FAILURE);
-		} else {
+		}
+		else {
 			ShowError("File not found: %s\n", cfgName);
 		}
 		return;
@@ -992,12 +1010,14 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 					mysql_reconnect_type = 1;
 					break;
 			}
-		} else if (!strcmpi(w1, "mysql_reconnect_count")) {
+		}
+		else if (!strcmpi(w1, "mysql_reconnect_count")) {
 			mysql_reconnect_count = atoi(w2);
 			if (mysql_reconnect_count < 1) {
 				mysql_reconnect_count = 1;
 			}
-		} else if (!strcmpi(w1, "import")) {
+		}
+		else if (!strcmpi(w1, "import")) {
 			Sql_inter_server_read(w2, false);
 		}
 	}

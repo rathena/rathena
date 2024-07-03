@@ -209,9 +209,11 @@ static size_t memmgr_usage_bytes;
 static unsigned short size2hash(size_t size) {
 	if (size <= BLOCK_DATA_SIZE1) {
 		return (unsigned short)(size + BLOCK_ALIGNMENT1 - 1) / BLOCK_ALIGNMENT1;
-	} else if (size <= BLOCK_DATA_SIZE) {
+	}
+	else if (size <= BLOCK_DATA_SIZE) {
 		return (unsigned short)(size - BLOCK_DATA_SIZE1 + BLOCK_ALIGNMENT2 - 1) / BLOCK_ALIGNMENT2 + BLOCK_DATA_COUNT1;
-	} else {
+	}
+	else {
 		return 0xffff; // If it exceeds the block length hash I do not
 	}
 }
@@ -219,7 +221,8 @@ static unsigned short size2hash(size_t size) {
 static size_t hash2size(unsigned short hash) {
 	if (hash <= BLOCK_DATA_COUNT1) {
 		return hash * BLOCK_ALIGNMENT1;
-	} else {
+	}
+	else {
 		return (hash - BLOCK_DATA_COUNT1) * BLOCK_ALIGNMENT2 + BLOCK_DATA_SIZE1;
 	}
 }
@@ -250,14 +253,16 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 			p->prev = nullptr;
 			if (unit_head_large_first == nullptr) {
 				p->next = nullptr;
-			} else {
+			}
+			else {
 				unit_head_large_first->prev = p;
 				p->next = unit_head_large_first;
 			}
 			unit_head_large_first = p;
 			*(long *)((char *)p + sizeof(struct unit_head_large) - sizeof(long) + size) = FREED_POINTER;
 			return (char *)p + sizeof(struct unit_head_large) - sizeof(long);
-		} else {
+		}
+		else {
 			ShowFatalError("Memory manager::memmgr_alloc failed (allocating %" PRIuPTR "+%" PRIuPTR
 						   " bytes at %s:%d).\n",
 						   sizeof(struct unit_head_large),
@@ -271,7 +276,8 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 	/* When a block of the same size is not ensured, to ensure a new */
 	if (hash_unfill[size_hash]) {
 		block = hash_unfill[size_hash];
-	} else {
+	}
+	else {
 		block = block_malloc(size_hash);
 	}
 
@@ -282,7 +288,8 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 		head = block2unit(block, block->unit_maxused);
 		block->unit_used++;
 		block->unit_maxused++;
-	} else {
+	}
+	else {
 		head = block2unit(block, block->unit_unfill);
 		block->unit_unfill = head->size;
 		block->unit_used++;
@@ -292,7 +299,8 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 		// Since I ran out of the unit, removed from the list unfill
 		if (block->unfill_prev == &block_head) {
 			hash_unfill[size_hash] = block->unfill_next;
-		} else {
+		}
+		else {
 			block->unfill_prev->unfill_next = block->unfill_next;
 		}
 		if (block->unfill_next) {
@@ -308,7 +316,8 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 			if (((unsigned char *)head)[sizeof(struct unit_head) - sizeof(long) + i] != 0xfd) {
 				if (head->line != 0xfdfd) {
 					ShowError("Memory manager: freed-data is changed. (freed in %s line %d)\n", head->file, head->line);
-				} else {
+				}
+				else {
 					ShowError("Memory manager: not-allocated-data is changed.\n");
 				}
 				break;
@@ -345,7 +354,8 @@ void *_mrealloc(void *memblock, size_t size, const char *file, int line, const c
 	if (old_size > size) {
 		// Size reduction - return> as it is (negligence)
 		return memblock;
-	} else {
+	}
+	else {
 		// Size Large
 		void *p = _mmalloc(size, file, line, func);
 		if (p != nullptr) {
@@ -359,7 +369,8 @@ void *_mrealloc(void *memblock, size_t size, const char *file, int line, const c
 char *_mstrdup(const char *p, const char *file, int line, const char *func) {
 	if (p == nullptr) {
 		return nullptr;
-	} else {
+	}
+	else {
 		size_t len = strlen(p);
 		char *string = (char *)_mmalloc(len + 1, file, line, func);
 		memcpy(string, p, len + 1);
@@ -382,11 +393,13 @@ void _mfree(void *ptr, const char *file, int line, const char *func) {
 		if (*(long *)((char *)head_large + sizeof(struct unit_head_large) - sizeof(long) + head_large->size) !=
 			FREED_POINTER) {
 			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
-		} else {
+		}
+		else {
 			head->size = 0xFFFF;
 			if (head_large->prev) {
 				head_large->prev->next = head_large->next;
-			} else {
+			}
+			else {
 				unit_head_large_first = head_large->next;
 			}
 			if (head_large->next) {
@@ -399,16 +412,20 @@ void _mfree(void *ptr, const char *file, int line, const char *func) {
 	#endif
 			FREE(head_large, file, line, func);
 		}
-	} else {
+	}
+	else {
 		/* Release unit */
 		struct block *block = head->block;
 		if ((size_t)((char *)head - (char *)block) > sizeof(struct block)) {
 			ShowError("Memory manager: args of aFree 0x%p is invalid pointer %s line %d\n", ptr, file, line);
-		} else if (head->block == nullptr) {
+		}
+		else if (head->block == nullptr) {
 			ShowError("Memory manager: args of aFree 0x%p is freed pointer %s:%d@%s\n", ptr, file, line, func);
-		} else if (*(long *)((char *)head + sizeof(struct unit_head) - sizeof(long) + head->size) != FREED_POINTER) {
+		}
+		else if (*(long *)((char *)head + sizeof(struct unit_head) - sizeof(long) + head->size) != FREED_POINTER) {
 			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
-		} else {
+		}
+		else {
 			memmgr_usage_bytes -= head->size;
 			head->block = nullptr;
 	#ifdef DEBUG_MEMMGR
@@ -420,7 +437,8 @@ void _mfree(void *ptr, const char *file, int line, const char *func) {
 			if (--block->unit_used == 0) {
 				/* Release of the block */
 				block_free(block);
-			} else {
+			}
+			else {
 				if (block->unfill_prev == nullptr) {
 					// add to unfill list
 					if (hash_unfill[block->unit_hash]) {
@@ -444,7 +462,8 @@ static struct block *block_malloc(unsigned short hash) {
 		/* Space for the block has already been secured */
 		p = hash_unfill[0];
 		hash_unfill[0] = hash_unfill[0]->unfill_next;
-	} else {
+	}
+	else {
 		int i;
 		/* Newly allocated space for the block */
 		p = (struct block *)MALLOC(sizeof(struct block) * (BLOCK_ALLOC), __FILE__, __LINE__, __func__);
@@ -456,7 +475,8 @@ static struct block *block_malloc(unsigned short hash) {
 		if (block_first == nullptr) {
 			/* First ensure */
 			block_first = p;
-		} else {
+		}
+		else {
 			block_last->block_next = p;
 		}
 		block_last = &p[BLOCK_ALLOC - 1];
@@ -497,7 +517,8 @@ static void block_free(struct block *p) {
 	if (p->unfill_prev) {
 		if (p->unfill_prev == &block_head) {
 			hash_unfill[p->unit_hash] = p->unfill_next;
-		} else {
+		}
+		else {
 			p->unfill_prev->unfill_next = p->unfill_next;
 		}
 		if (p->unfill_next) {
@@ -542,7 +563,8 @@ static void memmgr_log(char *buf) {
 					t->tm_min,
 					t->tm_sec,
 					version);
-		} else if ((version = get_svn_revision()) && version[0] != UNKNOWN_VERSION) {
+		}
+		else if ((version = get_svn_revision()) && version[0] != UNKNOWN_VERSION) {
 			fprintf(log_fp,
 					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (SVN Revision %s).\n",
 					(t->tm_year + 1900),
@@ -552,7 +574,8 @@ static void memmgr_log(char *buf) {
 					t->tm_min,
 					t->tm_sec,
 					version);
-		} else {
+		}
+		else {
 			fprintf(log_fp,
 					"\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Unknown version).\n",
 					(t->tm_year + 1900),
@@ -666,7 +689,8 @@ static void memmgr_final(void) {
 	#ifdef LOG_MEMMGR
 	if (count == 0) {
 		ShowInfo("Memory manager: No memory leaks found.\n");
-	} else {
+	}
+	else {
 		ShowWarning("Memory manager: Memory leaks found and fixed.\n");
 		fclose(log_fp);
 	}

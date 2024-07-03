@@ -681,7 +681,8 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 				do_close(fd);
 				return -1;
 				// If the select operation did not return an error
-			} else if (result != SOCKET_ERROR) {
+			}
+			else if (result != SOCKET_ERROR) {
 				// Check if it is really writeable
 				if (sFD_ISSET(fd, &writeSet) != 0) {
 					// Our socket is writeable now => we have connected successfully
@@ -805,12 +806,14 @@ int _realloc_writefifo(int fd, size_t addition, const char* file, int line, cons
 		while (session[fd]->wdata_size + addition > newsize) {
 			newsize += WFIFO_SIZE;
 		}
-	} else if (session[fd]->max_wdata >= (size_t)2 * (session[fd]->flag.server ? FIFOSIZE_SERVERLINK : WFIFO_SIZE) &&
-			   (session[fd]->wdata_size + addition) * 4 <
-				   session[fd]->max_wdata) { // shrink rule, shrink by 2 when only a quarter of the fifo is used, don't
-											 // shrink below nominal size.
+	}
+	else if (session[fd]->max_wdata >= (size_t)2 * (session[fd]->flag.server ? FIFOSIZE_SERVERLINK : WFIFO_SIZE) &&
+			 (session[fd]->wdata_size + addition) * 4 <
+				 session[fd]->max_wdata) { // shrink rule, shrink by 2 when only a quarter of the fifo is used, don't
+										   // shrink below nominal size.
 		newsize = session[fd]->max_wdata / 2;
-	} else { // no change
+	}
+	else { // no change
 		return 0;
 	}
 
@@ -878,7 +881,8 @@ int WFIFOSET(int fd, size_t len) {
 					   (unsigned int)len,
 					   0xFFFF);
 		exit(EXIT_FAILURE);
-	} else if (len == 0) {
+	}
+	else if (len == 0) {
 		// abuses the fact, that the code that did WFIFOHEAD(fd,0), already wrote
 		// the packet type into memory, even if it could have overwritten vital data
 		// this can happen when a new packet was added on map-server, but packet len table was not updated
@@ -1011,7 +1015,8 @@ int do_sockets(t_tick next) {
 		if ((it->events & (EPOLLERR | EPOLLHUP)) || !(it->events & EPOLLIN)) {
 			// Got Error on this connection
 			set_eof(fd);
-		} else if (it->events & EPOLLIN) {
+		}
+		else if (it->events & EPOLLIN) {
 			// data waiting
 			sock->func_recv(fd);
 		}
@@ -1059,7 +1064,8 @@ int do_sockets(t_tick next) {
 					2) { /* only update if necessary otherwise it'd resend the ping unnecessarily */
 					session[i]->flag.ping = 1;
 				}
-			} else {
+			}
+			else {
 				ShowInfo("Session #%d timed out\n", i);
 				set_eof(i);
 			}
@@ -1200,25 +1206,30 @@ static int connect_check_(uint32 ip) {
 		default:
 			if (is_denyip) {
 				connect_ok = 0; // Reject
-			} else if (is_allowip) {
+			}
+			else if (is_allowip) {
 				connect_ok = 2; // Unconditional Accept
-			} else {
+			}
+			else {
 				connect_ok = 1; // Accept
 			}
 			break;
 		case ACO_ALLOW_DENY:
 			if (is_allowip) {
 				connect_ok = 2; // Unconditional Accept
-			} else if (is_denyip) {
+			}
+			else if (is_denyip) {
 				connect_ok = 0; // Reject
-			} else {
+			}
+			else {
 				connect_ok = 1; // Accept
 			}
 			break;
 		case ACO_MUTUAL_FAILURE:
 			if (is_allowip && !is_denyip) {
 				connect_ok = 2; // Unconditional Accept
-			} else {
+			}
+			else {
 				connect_ok = 0; // Reject
 			}
 			break;
@@ -1229,7 +1240,8 @@ static int connect_check_(uint32 ip) {
 		if (ip == hist->ip) { // IP found
 			if (hist->ddos) { // flagged as DDoS
 				return (connect_ok == 2 ? 1 : 0);
-			} else if (DIFF_TICK(gettick(), hist->tick) < ddos_interval) { // connection within ddos_interval
+			}
+			else if (DIFF_TICK(gettick(), hist->tick) < ddos_interval) { // connection within ddos_interval
 				hist->tick = gettick();
 				if (hist->count++ >= ddos_count) { // DDoS attack detected
 					hist->ddos = 1;
@@ -1237,7 +1249,8 @@ static int connect_check_(uint32 ip) {
 					return (connect_ok == 2 ? 1 : 0);
 				}
 				return connect_ok;
-			} else { // not within ddos_interval, clear data
+			}
+			else { // not within ddos_interval, clear data
 				hist->tick = gettick();
 				hist->count = 0;
 				return connect_ok;
@@ -1275,7 +1288,8 @@ static TIMER_FUNC(connect_check_clear) {
 				aFree(hist);
 				hist = prev_hist->next;
 				clear++;
-			} else {
+			}
+			else {
 				prev_hist = hist;
 				hist = hist->next;
 			}
@@ -1298,7 +1312,8 @@ int access_ipmask(const char* str, AccessControl* acc) {
 	if (strcmp(str, "all") == 0) {
 		ip = 0;
 		mask = 0;
-	} else {
+	}
+	else {
 		unsigned int a[4];
 		unsigned int m[4];
 		int n;
@@ -1315,13 +1330,15 @@ int access_ipmask(const char* str, AccessControl* acc) {
 		ip = MAKEIP(a[0], a[1], a[2], a[3]);
 		if (n == 8) { // standard mask
 			mask = MAKEIP(m[0], m[1], m[2], m[3]);
-		} else if (n == 5) { // bit mask
+		}
+		else if (n == 5) { // bit mask
 			mask = 0;
 			while (m[0]) {
 				mask = (mask >> 1) | 0x80000000;
 				--m[0];
 			}
-		} else { // just this ip
+		}
+		else { // just this ip
 			mask = 0xFFFFFFFF;
 		}
 	}
@@ -1363,35 +1380,46 @@ int socket_config_read(const char* cfgName) {
 #ifndef MINICORE
 		else if (!strcmpi(w1, "enable_ip_rules")) {
 			ip_rules = config_switch(w2);
-		} else if (!strcmpi(w1, "order")) {
+		}
+		else if (!strcmpi(w1, "order")) {
 			if (!strcmpi(w2, "deny,allow")) {
 				access_order = ACO_DENY_ALLOW;
-			} else if (!strcmpi(w2, "allow,deny")) {
+			}
+			else if (!strcmpi(w2, "allow,deny")) {
 				access_order = ACO_ALLOW_DENY;
-			} else if (!strcmpi(w2, "mutual-failure")) {
+			}
+			else if (!strcmpi(w2, "mutual-failure")) {
 				access_order = ACO_MUTUAL_FAILURE;
 			}
-		} else if (!strcmpi(w1, "allow")) {
+		}
+		else if (!strcmpi(w1, "allow")) {
 			RECREATE(access_allow, AccessControl, access_allownum + 1);
 			if (access_ipmask(w2, &access_allow[access_allownum])) {
 				++access_allownum;
-			} else {
+			}
+			else {
 				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
 			}
-		} else if (!strcmpi(w1, "deny")) {
+		}
+		else if (!strcmpi(w1, "deny")) {
 			RECREATE(access_deny, AccessControl, access_denynum + 1);
 			if (access_ipmask(w2, &access_deny[access_denynum])) {
 				++access_denynum;
-			} else {
+			}
+			else {
 				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
 			}
-		} else if (!strcmpi(w1, "ddos_interval")) {
+		}
+		else if (!strcmpi(w1, "ddos_interval")) {
 			ddos_interval = atoi(w2);
-		} else if (!strcmpi(w1, "ddos_count")) {
+		}
+		else if (!strcmpi(w1, "ddos_count")) {
 			ddos_count = atoi(w2);
-		} else if (!strcmpi(w1, "ddos_autoreset")) {
+		}
+		else if (!strcmpi(w1, "ddos_autoreset")) {
 			ddos_autoreset = atoi(w2);
-		} else if (!strcmpi(w1, "debug")) {
+		}
+		else if (!strcmpi(w1, "debug")) {
 			access_debug = config_switch(w2);
 		}
 	#ifdef SOCKET_EPOLL
@@ -1408,7 +1436,8 @@ int socket_config_read(const char* cfgName) {
 #endif
 		else if (!strcmpi(w1, "import")) {
 			socket_config_read(w2);
-		} else {
+		}
+		else {
 			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 		}
 	}
@@ -1519,7 +1548,8 @@ int socket_getips(uint32* ips, int max) {
 		if (gethostname(fullhost, sizeof(fullhost)) == SOCKET_ERROR) {
 			ShowError("socket_getips: No hostname defined!\n");
 			return 0;
-		} else {
+		}
+		else {
 			u_long** a;
 			struct hostent* hent;
 			hent = gethostbyname(fullhost);
@@ -1551,7 +1581,8 @@ int socket_getips(uint32* ips, int max) {
 		if (sIoctl(fd, SIOCGIFCONF, &ic) == -1) {
 			ShowError("socket_getips: SIOCGIFCONF failed!\n");
 			return 0;
-		} else {
+		}
+		else {
 			int pos;
 			for (pos = 0; pos < ic.ifc_len && num < max;) {
 				struct ifreq* ir = (struct ifreq*)(buf + pos);

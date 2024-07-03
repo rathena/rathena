@@ -153,7 +153,8 @@ void mapindex_init(void) {
 			if (i == 0) {
 				ShowFatalError("Unable to read mapindex config file %s!\n", path);
 				exit(EXIT_FAILURE); // Server can't really run without this file.
-			} else {
+			}
+			else {
 				ShowWarning("Unable to read mapindex config file %s!\n", path);
 				break;
 			}

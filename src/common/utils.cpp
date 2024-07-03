@@ -82,7 +82,8 @@ static char* checkpath(char* path, const char* srcpath) {
 			if (*srcpath == '/') {
 				*p++ = '\\';
 				srcpath++;
-			} else {
+			}
+			else {
 				*p++ = *srcpath++;
 			}
 		}
@@ -102,7 +103,8 @@ void findfile(const char* p, const char* pat, void(func)(const char*)) {
 	checkpath(tmppath, path);
 	if (PATHSEP != tmppath[strlen(tmppath) - 1]) {
 		strcat(tmppath, "\\*");
-	} else {
+	}
+	else {
 		strcat(tmppath, "*");
 	}
 
@@ -146,9 +148,11 @@ int check_filepath(const char* filepath) {
 		if ((Attribute & INVALID_FILE_ATTRIBUTES) && GetLastError() == ERROR_FILE_NOT_FOUND) {
 			SetLastError(0);
 			return 3;
-		} else if (Attribute & FILE_ATTRIBUTE_DIRECTORY) {
+		}
+		else if (Attribute & FILE_ATTRIBUTE_DIRECTORY) {
 			return 1;
-		} else {
+		}
+		else {
 			return 2;
 		}
 	}
@@ -174,9 +178,11 @@ int check_filepath(const char* filepath) {
 	if (stat(filepath, &s) == 0) {
 		if (s.st_mode & S_IFDIR) {
 			return 1;
-		} else if (s.st_mode & S_IFREG) {
+		}
+		else if (s.st_mode & S_IFREG) {
 			return 2;
-		} else {
+		}
+		else {
 			return 3;
 		}
 	}
@@ -192,7 +198,8 @@ static char* checkpath(char* path, const char* srcpath) {
 			if (*srcpath == '\\') {
 				*p++ = '/';
 				srcpath++;
-			} else {
+			}
+			else {
 				*p++ = *srcpath++;
 			}
 		}

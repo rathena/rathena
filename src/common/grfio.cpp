@@ -226,9 +226,11 @@ static void grf_decode(unsigned char* buf, size_t len, char entry_type, int entr
 		cycle = (digits < 3) ? 1 : (digits < 5) ? digits + 1 : (digits < 7) ? digits + 9 : digits + 15;
 
 		grf_decode_full(buf, len, cycle);
-	} else if (entry_type & FILELIST_TYPE_ENCRYPT_HEADER) { // header encrypted
+	}
+	else if (entry_type & FILELIST_TYPE_ENCRYPT_HEADER) { // header encrypted
 		grf_decode_header(buf, len);
-	} else { // plaintext
+	}
+	else { // plaintext
 		;
 	}
 }
@@ -333,7 +335,8 @@ static FILELIST* filelist_modify(FILELIST* entry) {
 		int tmp = fentry->next;
 		memcpy(fentry, entry, sizeof(FILELIST));
 		fentry->next = tmp;
-	} else {
+	}
+	else {
 		fentry = filelist_add(entry);
 	}
 	return fentry;
@@ -364,7 +367,8 @@ static void grfio_localpath_create(char* buffer, size_t size, const char* filena
 
 	if (data_dir[0] == '\0' || data_dir[len - 1] == '/' || data_dir[len - 1] == '\\') {
 		safesnprintf(buffer, size, "%s%s", data_dir, filename);
-	} else {
+	}
+	else {
 		safesnprintf(buffer, size, "%s/%s", data_dir, filename);
 	}
 
@@ -400,10 +404,12 @@ void* grfio_reads(const char* fname, size_t* size) {
 			if (size) {
 				*size = declen;
 			}
-		} else {
+		}
+		else {
 			if (entry != nullptr && entry->gentry < 0) {
 				entry->gentry = -entry->gentry; // local file checked
-			} else {
+			}
+			else {
 				ShowError("grfio_reads: %s not found (local file: %s)\n", fname, lfname);
 				return nullptr;
 			}
@@ -434,7 +440,8 @@ void* grfio_reads(const char* fname, size_t* size) {
 					aFree(buf2);
 					return nullptr;
 				}
-			} else { // directory?
+			}
+			else { // directory?
 				memcpy(buf2, buf, entry->declen);
 			}
 
@@ -443,7 +450,8 @@ void* grfio_reads(const char* fname, size_t* size) {
 			}
 
 			aFree(buf);
-		} else {
+		}
+		else {
 			ShowError("grfio_reads: %s not found (GRF file: %s)\n", fname, grfname);
 			return nullptr;
 		}
@@ -478,9 +486,11 @@ int32 grfio_read_rsw_water_level(const char* fname) {
 
 	if (version >= 0x205) {
 		level = (int32) * (float*)(rsw + 171);
-	} else if (version >= 0x202) {
+	}
+	else if (version >= 0x202) {
 		level = (int32) * (float*)(rsw + 167);
-	} else {
+	}
+	else {
 		level = (int32) * (float*)(rsw + 166);
 	}
 
@@ -528,7 +538,8 @@ static int grfio_entryread(const char* grfname, int gentry) {
 	if (fp == nullptr) {
 		ShowWarning("GRF data file not found: '%s'\n", grfname);
 		return 1; // 1:not found error
-	} else {
+	}
+	else {
 		ShowInfo("GRF data file found: '%s'\n", grfname);
 	}
 
@@ -597,7 +608,8 @@ static int grfio_entryread(const char* grfname, int gentry) {
 		}
 
 		aFree(grf_filelist);
-	} else if (grf_version == 0x02) { // ****** Grf version 02xx ******
+	}
+	else if (grf_version == 0x02) { // ****** Grf version 02xx ******
 		unsigned char eheader[8];
 		unsigned char* rBuf;
 		uLongf rSize, eSize;
@@ -660,7 +672,8 @@ static int grfio_entryread(const char* grfname, int gentry) {
 		}
 
 		aFree(grf_filelist);
-	} else { // ****** Grf Other version ******
+	}
+	else { // ****** Grf Other version ******
 		fclose(fp);
 		ShowError("GRF version %04x not supported\n", getlong(grf_header + 0x2a));
 		return 4;
@@ -835,7 +848,8 @@ void grfio_init(const char* fname) {
 				if (grfio_add(w2) == 0) {
 					++grf_num;
 				}
-			} else if (strcmp(w1, "data_dir") == 0) // Data directory
+			}
+			else if (strcmp(w1, "data_dir") == 0) // Data directory
 			{
 				safestrncpy(data_dir, w2, sizeof(data_dir));
 			}

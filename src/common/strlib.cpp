@@ -46,7 +46,8 @@ char* trim(char* str) {
 	// trim
 	if (start == end) {
 		*str = '\0'; // empty string
-	} else { // move string with nul terminator
+	}
+	else { // move string with nul terminator
 		str[end] = '\0';
 		memmove(str, str + start, end - start + 1);
 	}
@@ -158,20 +159,25 @@ uint64 strtoull(const char* str, char** endptr, int base) {
 	if (base == 0) {
 		if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X')) {
 			base = 16;
-		} else if (str[0] == '0') {
+		}
+		else if (str[0] == '0') {
 			base = 8;
-		} else {
+		}
+		else {
 			base = 10;
 		}
 	}
 
 	if (base == 8) {
 		count = sscanf(str, "%I64o%n", &result, &n);
-	} else if (base == 10) {
+	}
+	else if (base == 10) {
 		count = sscanf(str, "%I64u%n", &result, &n);
-	} else if (base == 16) {
+	}
+	else if (base == 16) {
 		count = sscanf(str, "%I64x%n", &result, &n);
-	} else {
+	}
+	else {
 		count = 0; // fail
 	}
 
@@ -394,9 +400,11 @@ int sv_parse_next(s_svstate& sv) {
 			case PARSING_FIELD: // skip field character
 				if (IS_END() || IS_DELIM() || IS_TERMINATOR()) {
 					state = END_OF_FIELD;
-				} else if (IS_C_ESCAPE()) {
+				}
+				else if (IS_C_ESCAPE()) {
 					state = PARSING_C_ESCAPE;
-				} else {
+				}
+				else {
 					++i; // normal character
 				}
 				break;
@@ -417,7 +425,8 @@ int sv_parse_next(s_svstate& sv) {
 					do {
 						++i; // hex digit
 					} while (!IS_END() && ISXDIGIT(str[i]));
-				} else if (str[i] == '0' || str[i] == '1' || str[i] == '2') { // octal escape
+				}
+				else if (str[i] == '0' || str[i] == '1' || str[i] == '2') { // octal escape
 					++i; // octal digit
 					if (!IS_END() && str[i] >= '0' && str[i] <= '7') {
 						++i; // octal digit
@@ -425,9 +434,11 @@ int sv_parse_next(s_svstate& sv) {
 					if (!IS_END() && str[i] >= '0' && str[i] <= '7') {
 						++i; // octal digit
 					}
-				} else if (strchr(SV_ESCAPE_C_SUPPORTED, str[i])) { // supported escape character
+				}
+				else if (strchr(SV_ESCAPE_C_SUPPORTED, str[i])) { // supported escape character
 					++i;
-				} else {
+				}
+				else {
 					ShowError("sv_parse_next: unknown escape sequence \\%c\n", str[i]);
 					return -1;
 				}
@@ -440,9 +451,11 @@ int sv_parse_next(s_svstate& sv) {
 				state = END;
 				if (IS_END()) {
 					; // nothing else
-				} else if (IS_DELIM()) {
+				}
+				else if (IS_DELIM()) {
 					++i; // delim
-				} else if (IS_TERMINATOR()) {
+				}
+				else if (IS_TERMINATOR()) {
 					state = TERMINATE;
 				}
 				break;
@@ -585,22 +598,26 @@ size_t sv_split(
 	char* end = str + pos[1];
 	if (end[0] == '\0') {
 		*out_fields = end;
-	} else if ((opt & SV_TERMINATE_LF) && end[0] == '\n') {
+	}
+	else if ((opt & SV_TERMINATE_LF) && end[0] == '\n') {
 		if (!(opt & SV_KEEP_TERMINATOR)) {
 			end[0] = '\0';
 		}
 		*out_fields = end + 1;
-	} else if ((opt & SV_TERMINATE_CRLF) && end[0] == '\r' && end[1] == '\n') {
+	}
+	else if ((opt & SV_TERMINATE_CRLF) && end[0] == '\r' && end[1] == '\n') {
 		if (!(opt & SV_KEEP_TERMINATOR)) {
 			end[0] = end[1] = '\0';
 		}
 		*out_fields = end + 2;
-	} else if ((opt & SV_TERMINATE_CR) && end[0] == '\r') {
+	}
+	else if ((opt & SV_TERMINATE_CR) && end[0] == '\r') {
 		if (!(opt & SV_KEEP_TERMINATOR)) {
 			end[0] = '\0';
 		}
 		*out_fields = end + 1;
-	} else {
+	}
+	else {
 		ShowError("sv_split: unknown line delimiter 0x02%x.\n", (unsigned char)end[0]);
 		return -1; // error
 	}
@@ -620,7 +637,8 @@ size_t sv_split(
 			++done;
 			++out_fields;
 			--nfields;
-		} else { // get more fields
+		}
+		else { // get more fields
 			sv_parse(str, len, pos[i - 1] + 1, delim, pos, ARRAYLENGTH(pos), opt, error);
 
 			// An error occurred
@@ -710,7 +728,8 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 							out_dest[j++] = '0' + ((char)(((unsigned char)src[i] & 0007)));
 							break;
 					}
-				} else {
+				}
+				else {
 					out_dest[j++] = src[i];
 				}
 				break;
@@ -755,7 +774,8 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 			++i; // '\\'
 			if (i >= len) {
 				ShowWarning("sv_unescape_c: empty escape sequence\n");
-			} else if (src[i] == 'x') { // hex escape sequence
+			}
+			else if (src[i] == 'x') { // hex escape sequence
 				unsigned char c = 0;
 				unsigned char inrange = 1;
 
@@ -773,8 +793,9 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 					++i;
 				} while (i < len && ISXDIGIT(src[i]));
 				out_dest[j++] = (char)c;
-			} else if (src[i] == '0' || src[i] == '1' || src[i] == '2' ||
-					   src[i] == '3') { // octal escape sequence (255=0377)
+			}
+			else if (src[i] == '0' || src[i] == '1' || src[i] == '2' ||
+					 src[i] == '3') { // octal escape sequence (255=0377)
 				unsigned char c = src[i] - '0';
 				++i; // '0', '1', '2' or '3'
 				if (i < len && src[i] >= '0' && src[i] <= '7') {
@@ -786,7 +807,8 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 					++i; // octal digit
 				}
 				out_dest[j++] = (char)c;
-			} else { // other escape sequence
+			}
+			else { // other escape sequence
 				if (strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == nullptr) {
 					ShowWarning("sv_unescape_c: unknown escape sequence \\%c\n", src[i]);
 				}
@@ -821,7 +843,8 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 				}
 				++i; // escaped character
 			}
-		} else {
+		}
+		else {
 			out_dest[j++] = src[i++]; // normal character
 		}
 	}

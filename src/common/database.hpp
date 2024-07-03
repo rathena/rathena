@@ -112,7 +112,8 @@ public:
 
 		if (it != this->data.end()) {
 			return it->second;
-		} else {
+		}
+		else {
 			return nullptr;
 		}
 	}
@@ -173,7 +174,8 @@ public:
 	std::shared_ptr<datatype> find(keytype key) override {
 		if (this->cache.empty() || key >= this->cache.size()) {
 			return TypesafeYamlDatabase<keytype, datatype>::find(key);
-		} else {
+		}
+		else {
 			return cache[this->calculateCacheKey(key)];
 		}
 	}

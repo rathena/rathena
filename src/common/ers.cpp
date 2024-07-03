@@ -145,7 +145,8 @@ static ers_cache_t *ers_find_cache(unsigned int size, enum ERSOptions Options) {
 
 	if (CacheList == nullptr) {
 		CacheList = cache;
-	} else {
+	}
+	else {
 		cache->Next = CacheList;
 		cache->Next->Prev = cache;
 		CacheList = cache;
@@ -168,7 +169,8 @@ static void ers_free_cache(ers_cache_t *cache, bool remove) {
 
 	if (cache->Prev) {
 		cache->Prev->Next = cache->Next;
-	} else {
+	}
+	else {
 		CacheList = cache->Next;
 	}
 
@@ -189,12 +191,14 @@ static void *ers_obj_alloc_entry(ERS *self) {
 	if (instance->Cache->ReuseList != nullptr) {
 		ret = (void *)((unsigned char *)instance->Cache->ReuseList + sizeof(struct ers_list));
 		instance->Cache->ReuseList = instance->Cache->ReuseList->Next;
-	} else if (instance->Cache->Free > 0) {
+	}
+	else if (instance->Cache->Free > 0) {
 		instance->Cache->Free--;
 		ret = &instance->Cache->Blocks[instance->Cache->Used - 1][static_cast<size_t>(instance->Cache->Free) *
 																	  static_cast<size_t>(instance->Cache->ObjectSize) +
 																  sizeof(struct ers_list)];
-	} else {
+	}
+	else {
 		if (instance->Cache->Used == instance->Cache->Max) {
 			instance->Cache->Max = (instance->Cache->Max * 4) + 3;
 			RECREATE(instance->Cache->Blocks, unsigned char *, instance->Cache->Max);
@@ -224,7 +228,8 @@ static void ers_obj_free_entry(ERS *self, void *entry) {
 	if (instance == nullptr) {
 		ShowError("ers_obj_free_entry: nullptr object, aborting entry freeing.\n");
 		return;
-	} else if (entry == nullptr) {
+	}
+	else if (entry == nullptr) {
 		ShowError("ers_obj_free_entry: nullptr entry, nothing to free.\n");
 		return;
 	}
@@ -275,7 +280,8 @@ static void ers_obj_destroy(ERS *self) {
 
 	if (instance->Prev) {
 		instance->Prev->Next = instance->Next;
-	} else {
+	}
+	else {
 		InstanceList = instance->Next;
 	}
 
@@ -329,7 +335,8 @@ ERS *ers_new(uint32 size, const char *name, enum ERSOptions options) {
 
 	if (InstanceList == nullptr) {
 		InstanceList = instance;
-	} else {
+	}
+	else {
 		instance->Next = InstanceList;
 		instance->Next->Prev = instance;
 		InstanceList = instance;

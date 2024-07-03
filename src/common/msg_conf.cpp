@@ -52,7 +52,8 @@ int _msg_config_read(const char* cfgName, int size, char** msg_table) {
 
 		if (strcmpi(w1, "import") == 0) {
 			_msg_config_read(w2, size, msg_table);
-		} else {
+		}
+		else {
 			msg_number = atoi(w1);
 			if (msg_number >= 0 && msg_number < size) {
 				if (msg_table[msg_number] != nullptr) {
@@ -62,7 +63,8 @@ int _msg_config_read(const char* cfgName, int size, char** msg_table) {
 				msg_table[msg_number] = (char*)aMalloc(len * sizeof(char));
 				safestrncpy(msg_table[msg_number], w2, len);
 				msg_count++;
-			} else {
+			}
+			else {
 				ShowWarning("Invalid message ID '%s' at line %d from '%s' file.\n", w1, line_num, cfgName);
 			}
 		}
@@ -93,23 +95,32 @@ int msg_langstr2langtype(char* langtype) {
 	int lang = -1;
 	if (!strncmpi(langtype, "eng", 2)) {
 		lang = 0;
-	} else if (!strncmpi(langtype, "rus", 2)) {
+	}
+	else if (!strncmpi(langtype, "rus", 2)) {
 		lang = 1;
-	} else if (!strncmpi(langtype, "spn", 2)) {
+	}
+	else if (!strncmpi(langtype, "spn", 2)) {
 		lang = 2;
-	} else if (!strncmpi(langtype, "grm", 2)) {
+	}
+	else if (!strncmpi(langtype, "grm", 2)) {
 		lang = 3;
-	} else if (!strncmpi(langtype, "chn", 2)) {
+	}
+	else if (!strncmpi(langtype, "chn", 2)) {
 		lang = 4;
-	} else if (!strncmpi(langtype, "mal", 2)) {
+	}
+	else if (!strncmpi(langtype, "mal", 2)) {
 		lang = 5;
-	} else if (!strncmpi(langtype, "idn", 2)) {
+	}
+	else if (!strncmpi(langtype, "idn", 2)) {
 		lang = 6;
-	} else if (!strncmpi(langtype, "frn", 2)) {
+	}
+	else if (!strncmpi(langtype, "frn", 2)) {
 		lang = 7;
-	} else if (!strncmpi(langtype, "por", 2)) {
+	}
+	else if (!strncmpi(langtype, "por", 2)) {
 		lang = 8;
-	} else if (!strncmpi(langtype, "tha", 2)) {
+	}
+	else if (!strncmpi(langtype, "tha", 2)) {
 		lang = 9;
 	}
 
@@ -158,11 +169,14 @@ int msg_checklangtype(int lang, bool display) {
 	uint16 test = (1 << (lang - 1));
 	if (!lang) {
 		return 1; // default english
-	} else if (lang < 0 || test > LANG_MAX) {
+	}
+	else if (lang < 0 || test > LANG_MAX) {
 		return -1; // false range
-	} else if (LANG_ENABLE & test) {
+	}
+	else if (LANG_ENABLE & test) {
 		return 1;
-	} else if (display) {
+	}
+	else if (display) {
 		ShowDebug("Unsupported langtype '%d'.\n", lang);
 	}
 	return -2;

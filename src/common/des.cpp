@@ -71,7 +71,8 @@ static void E(BIT64* src) {
 				tmp.b[i / 6 + 0] |= mask[i % 6];
 			}
 		}
-	} else { // optimized
+	}
+	else { // optimized
 		tmp.b[0] = ((src->b[7] << 5) | (src->b[4] >> 3)) & 0x3f; // ..0 vutsr
 		tmp.b[1] = ((src->b[4] << 1) | (src->b[5] >> 7)) & 0x3f; // ..srqpo n
 		tmp.b[2] = ((src->b[4] << 5) | (src->b[5] >> 3)) & 0x3f; // ..o nmlkj

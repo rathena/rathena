@@ -22,6 +22,10 @@ IndentPPDirectives: BeforeHash
 AllowShortEnumsOnASingleLine: false
 # Prevent newline alignment in Macros
 AlignEscapedNewlines: DontAlign
+# Break before else in if-else statements
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true
 # Add missing curly braces
 InsertBraces: true
 SpaceBeforeParens: Custom

@@ -63,14 +63,16 @@ bool YamlDatabase::verifyCompatibility(const ryml::Tree& tree) {
 		if (tmpVersion > this->version) {
 			ShowError("Database version %hu is not supported. Maximum version is: %hu\n", tmpVersion, this->version);
 			return false;
-		} else if (tmpVersion >= this->minimumVersion) {
+		}
+		else if (tmpVersion >= this->minimumVersion) {
 			ShowWarning("Database version %hu is outdated and should be updated. Current version is: %hu\n",
 						tmpVersion,
 						this->version);
 			ShowWarning("Reduced compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n",
 						this->type.c_str(),
 						this->currentFile.c_str());
-		} else {
+		}
+		else {
 			ShowError("Database version %hu is not supported anymore. Minimum version is: %hu\n",
 					  tmpVersion,
 					  this->minimumVersion);
@@ -265,7 +267,8 @@ bool YamlDatabase::asType(const ryml::NodeRef& node, const std::string& name, R&
 		}
 
 		return true;
-	} else {
+	}
+	else {
 		this->invalidWarning(node, "Missing node \"%s\".\n", name.c_str());
 		return false;
 	}
@@ -288,10 +291,12 @@ bool YamlDatabase::asBool(const ryml::NodeRef& node, const std::string& name, bo
 	if (str == "true") {
 		out = true;
 		return true;
-	} else if (str == "false") {
+	}
+	else if (str == "false") {
 		out = false;
 		return true;
-	} else {
+	}
+	else {
 		this->invalidWarning(targetNode, "Unknown boolean value: \"%s\".\n", str.c_str());
 		return false;
 	}
@@ -343,14 +348,17 @@ bool YamlDatabase::asUInt16Rate(const ryml::NodeRef& node, const std::string& na
 								 maximum);
 
 			return false;
-		} else if (out == 0) {
+		}
+		else if (out == 0) {
 			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" needs to be at least 1.\n", name.c_str());
 
 			return false;
-		} else {
+		}
+		else {
 			return true;
 		}
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -365,14 +373,17 @@ bool YamlDatabase::asUInt32Rate(const ryml::NodeRef& node, const std::string& na
 								 maximum);
 
 			return false;
-		} else if (out == 0) {
+		}
+		else if (out == 0) {
 			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" needs to be at least 1.\n", name.c_str());
 
 			return false;
-		} else {
+		}
+		else {
 			return true;
 		}
-	} else {
+	}
+	else {
 		return false;
 	}
 }

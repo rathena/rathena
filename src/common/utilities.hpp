@@ -48,7 +48,8 @@ V* map_find(std::map<K, V>& map, K key) {
 
 	if (it != map.end()) {
 		return &it->second;
-	} else {
+	}
+	else {
 		return nullptr;
 	}
 }
@@ -65,7 +66,8 @@ std::shared_ptr<V> map_find(std::map<K, std::shared_ptr<V>>& map, K key) {
 
 	if (it != map.end()) {
 		return it->second;
-	} else {
+	}
+	else {
 		return nullptr;
 	}
 }
@@ -83,7 +85,8 @@ V map_get(std::map<K, V>& map, K key, V defaultValue) {
 
 	if (it != map.end()) {
 		return it->second;
-	} else {
+	}
+	else {
 		return defaultValue;
 	}
 }
@@ -114,7 +117,8 @@ V* umap_find(std::unordered_map<K, V>& map, K key) {
 
 	if (it != map.end()) {
 		return &it->second;
-	} else {
+	}
+	else {
 		return nullptr;
 	}
 }
@@ -131,7 +135,8 @@ std::shared_ptr<V> umap_find(std::unordered_map<K, std::shared_ptr<V>>& map, K k
 
 	if (it != map.end()) {
 		return it->second;
-	} else {
+	}
+	else {
 		return nullptr;
 	}
 }
@@ -149,7 +154,8 @@ V umap_get(std::unordered_map<K, V>& map, K key, V defaultValue) {
 
 	if (it != map.end()) {
 		return it->second;
-	} else {
+	}
+	else {
 		return defaultValue;
 	}
 }
@@ -215,7 +221,8 @@ bool vector_exists(const std::vector<K>& vec, V value) {
 
 	if (it != vec.end()) {
 		return true;
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -230,7 +237,8 @@ void erase_at(std::vector<K>& vector, size_t index) {
 	if (vector.size() == 1) {
 		vector.clear();
 		vector.shrink_to_fit();
-	} else {
+	}
+	else {
 		vector.erase(vector.begin() + index);
 	}
 }
@@ -249,7 +257,8 @@ void vector_erase_if_exists(std::vector<K>& vector, V value) {
 		if (vector.size() == 1) {
 			vector.clear();
 			vector.shrink_to_fit();
-		} else {
+		}
+		else {
 			vector.erase(it);
 		}
 	}
@@ -271,12 +280,14 @@ bool safe_addition(T a, T b, T& result) {
 			if (a < ((std::numeric_limits<T>::min)() - b)) {
 				overflow = true;
 			}
-		} else {
+		}
+		else {
 			if (a > ((std::numeric_limits<T>::max)() - b)) {
 				overflow = true;
 			}
 		}
-	} else {
+	}
+	else {
 		if (a > ((std::numeric_limits<T>::max)() - b)) {
 			overflow = true;
 		}

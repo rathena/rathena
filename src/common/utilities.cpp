@@ -73,7 +73,8 @@ bool rathena::util::safe_substraction(int64 a, int64 b, int64& result) {
 		if (a > (INT64_MAX + b)) {
 			overflow = true;
 		}
-	} else {
+	}
+	else {
 		if (a < (INT64_MIN + b)) {
 			overflow = true;
 		}
@@ -95,13 +96,16 @@ bool rathena::util::safe_multiplication(int64 a, int64 b, int64& result) {
 	if (a > 0) {
 		if (b > 0) {
 			return result < 0;
-		} else if (b < 0) {
+		}
+		else if (b < 0) {
 			return result > 0;
 		}
-	} else if (a < 0) {
+	}
+	else if (a < 0) {
 		if (b > 0) {
 			return result > 0;
-		} else if (b < 0) {
+		}
+		else if (b < 0) {
 			return result < 0;
 		}
 	}

@@ -244,7 +244,8 @@ static void MD5_String2binary(const char *string, unsigned char *output) {
 	if (UINT_MAX / 8 < string_byte_len) {
 		unsigned int high = (string_byte_len - UINT_MAX / 8) * 8;
 		memcpy(&padding_message[60], &high, 4);
-	} else {
+	}
+	else {
 		memset(&padding_message[60], 0, 4); // In this case, it is good for a higher rank at 0.
 	}
 

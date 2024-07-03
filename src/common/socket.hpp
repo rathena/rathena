@@ -58,7 +58,8 @@ typedef long in_addr_t;
 	do { \
 		if (session[fd]->rdata_size == session[fd]->rdata_pos) { \
 			session[fd]->rdata_size = session[fd]->rdata_pos = 0; \
-		} else { \
+		} \
+		else { \
 			session[fd]->rdata_size -= session[fd]->rdata_pos; \
 			memmove(session[fd]->rdata, session[fd]->rdata + session[fd]->rdata_pos, session[fd]->rdata_size); \
 			session[fd]->rdata_pos = 0; \

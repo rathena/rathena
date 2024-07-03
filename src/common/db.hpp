@@ -1127,12 +1127,14 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 				0, \
 				(VECTOR_CAPACITY(__vec) - VECTOR_LENGTH(__vec)) * sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
-		} else if ((__n) == 0 && VECTOR_CAPACITY(__vec)) { /* clear vector */ \
+		} \
+		else if ((__n) == 0 && VECTOR_CAPACITY(__vec)) { /* clear vector */ \
 			aFree(VECTOR_DATA(__vec)); \
 			VECTOR_DATA(__vec) = nullptr; /* free data */ \
 			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
 			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
-		} else if ((__n) < VECTOR_CAPACITY(__vec)) { /* reduce size */ \
+		} \
+		else if ((__n) < VECTOR_CAPACITY(__vec)) { /* reduce size */ \
 			VECTOR_DATA(__vec) = \
 				(__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
@@ -1480,7 +1482,8 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 					 __topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) <= 0) { /* left child */ \
 				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)); \
 				_i_ = _lchild_; \
-			} else { /* right child */ \
+			} \
+			else { /* right child */ \
 				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)); \
 				_i_ = _rchild_; \
 			} \
@@ -1522,7 +1525,8 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 				__topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) < 0) { /* left child */ \
 				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)); \
 				_i_ = _lchild_; \
-			} else { /* right child */ \
+			} \
+			else { /* right child */ \
 				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)); \
 				_i_ = _rchild_; \
 			} \

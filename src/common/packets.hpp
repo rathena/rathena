@@ -239,7 +239,8 @@ public:
 					packetType);
 				return;
 			}
-		} else {
+		}
+		else {
 			if (size < 4) {
 				ShowError(
 					"Definition for packet 0x%04x is invalid. Minimum size for a dynamic length packet is 2 bytes.\n",
@@ -289,7 +290,8 @@ public:
 			RFIFOSKIP(fd, info->size);
 
 			return ret;
-		} else {
+		}
+		else {
 			if (remaining < info->size) {
 				ShowError("Invalid size %hd for packet 0x%04x with dynamic minimum size of %hd\n",
 						  remaining,

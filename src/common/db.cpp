@@ -372,9 +372,11 @@ static void db_rotate_left(DBNode *node, DBNode **root) {
 	// link y and node's parent
 	if (node == *root) {
 		*root = y; // node was root
-	} else if (node == node->parent->left) {
+	}
+	else if (node == node->parent->left) {
 		node->parent->left = y; // node was at the left
-	} else {
+	}
+	else {
 		node->parent->right = y; // node was at the right
 	}
 	// put node at the left of y
@@ -403,9 +405,11 @@ static void db_rotate_right(DBNode *node, DBNode **root) {
 	// link y and node's parent
 	if (node == *root) {
 		*root = y; // node was root
-	} else if (node == node->parent->right) {
+	}
+	else if (node == node->parent->right) {
 		node->parent->right = y; // node was at the right
-	} else {
+	}
+	else {
 		node->parent->left = y; // node was at the left
 	}
 	// put node at the right of y
@@ -439,7 +443,8 @@ static void db_rebalance(DBNode *node, DBNode **root) {
 				y->color = BLACK;
 				node->parent->parent->color = RED;
 				node = node->parent->parent;
-			} else {
+			}
+			else {
 				if (node == node->parent->right) { // case 2
 					// move up and rotate
 					node = node->parent;
@@ -450,7 +455,8 @@ static void db_rebalance(DBNode *node, DBNode **root) {
 				node->parent->parent->color = RED;
 				db_rotate_right(node->parent->parent, root);
 			}
-		} else {
+		}
+		else {
 			// If node's parent is a right, y is node's left 'uncle'
 			y = node->parent->parent->left;
 			if (y && y->color == RED) { // case 1
@@ -459,7 +465,8 @@ static void db_rebalance(DBNode *node, DBNode **root) {
 				y->color = BLACK;
 				node->parent->parent->color = RED;
 				node = node->parent->parent;
-			} else {
+			}
+			else {
 				if (node == node->parent->left) { // case 2
 					// move up and rotate
 					node = node->parent;
@@ -493,9 +500,11 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 	// Select where to change the tree
 	if (y->left == nullptr) { // no left
 		x = y->right;
-	} else if (y->right == nullptr) { // no right
+	}
+	else if (y->right == nullptr) { // no right
 		x = y->left;
-	} else { // both exist, go to the leftmost node of the right sub-tree
+	}
+	else { // both exist, go to the leftmost node of the right sub-tree
 		y = y->right;
 		while (y->left != nullptr) {
 			y = y->left;
@@ -521,16 +530,19 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 			y->right = node->right;
 			node->right->parent = y;
 			// 'y' is a direct child of 'node'
-		} else {
+		}
+		else {
 			x_parent = y;
 		}
 
 		// link 'y' and the parent of 'node'
 		if (*root == node) {
 			*root = y; // 'node' was the root
-		} else if (node->parent->left == node) {
+		}
+		else if (node->parent->left == node) {
 			node->parent->left = y; // 'node' was at the left
-		} else {
+		}
+		else {
 			node->parent->right = y; // 'node' was at the right
 		}
 		y->parent = node->parent;
@@ -541,7 +553,8 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 			node->color = tmp;
 		}
 		y = node;
-	} else { // one child did not exist
+	}
+	else { // one child did not exist
 		// put x in node's position
 		x_parent = y->parent;
 		if (x) {
@@ -550,9 +563,11 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 		// link x and node's parent
 		if (*root == node) {
 			*root = x; // node was the root
-		} else if (node->parent->left == node) {
+		}
+		else if (node->parent->left == node) {
 			node->parent->left = x; // node was at the left
-		} else {
+		}
+		else {
 			node->parent->right = x; // node was at the right
 		}
 	}
@@ -574,7 +589,8 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 					w->color = RED;
 					x = x_parent;
 					x_parent = x_parent->parent;
-				} else {
+				}
+				else {
 					if (w->right == nullptr || w->right->color == BLACK) {
 						if (w->left) {
 							w->left->color = BLACK;
@@ -591,7 +607,8 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 					db_rotate_left(x_parent, root);
 					break;
 				}
-			} else {
+			}
+			else {
 				w = x_parent->left;
 				if (w->color == RED) {
 					w->color = BLACK;
@@ -604,7 +621,8 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 					w->color = RED;
 					x = x_parent;
 					x_parent = x_parent->parent;
-				} else {
+				}
+				else {
 					if (w->left == nullptr || w->left->color == BLACK) {
 						if (w->right) {
 							w->right->color = BLACK;
@@ -786,7 +804,8 @@ static void db_free_remove(DBMap_impl *db, DBNode *node) {
 	if (i == db->free_count) {
 		ShowWarning(
 			"db_free_remove: node was not found - database allocated at %s:%d\n", db->alloc_file, db->alloc_line);
-	} else {
+	}
+	else {
 		db->free_count--;
 	}
 	db->item_count++;
@@ -833,7 +852,8 @@ static void db_free_unlock(DBMap_impl *db) {
 			"Database allocated at %s:%d\n",
 			db->alloc_file,
 			db->alloc_line);
-	} else {
+	}
+	else {
 		db->free_lock--;
 	}
 	if (db->free_lock) {
@@ -1317,7 +1337,8 @@ DBData *dbit_obj_next(DBIterator *self, DBKey *out_key) {
 				while (node->left) {
 					node = node->left; // get leftmost node
 				}
-			} else { // continue to the next parent (recursive)
+			}
+			else { // continue to the next parent (recursive)
 				parent = node->parent;
 				while (parent) {
 					if (parent->right != node) {
@@ -1386,7 +1407,8 @@ DBData *dbit_obj_prev(DBIterator *self, DBKey *out_key) {
 				while (node->right) {
 					node = node->right; // get rightmost node
 				}
-			} else { // continue to the next parent (recursive)
+			}
+			else { // continue to the next parent (recursive)
 				parent = node->parent;
 				while (parent) {
 					if (parent->left != node) {
@@ -1556,7 +1578,8 @@ static bool db_obj_exists(DBMap *self, DBKey key) {
 		}
 		if (c < 0) {
 			node = node->left;
-		} else {
+		}
+		else {
 			node = node->right;
 		}
 	}
@@ -1611,7 +1634,8 @@ static DBData *db_obj_get(DBMap *self, DBKey key) {
 		}
 		if (c < 0) {
 			node = node->left;
-		} else {
+		}
+		else {
 			node = node->right;
 		}
 	}
@@ -1774,7 +1798,8 @@ static DBData *db_obj_vensure(DBMap *self, DBKey key, DBCreateData create, va_li
 		parent = node;
 		if (c < 0) {
 			node = node->left;
-		} else {
+		}
+		else {
 			node = node->right;
 		}
 	}
@@ -1799,12 +1824,14 @@ static DBData *db_obj_vensure(DBMap *self, DBKey key, DBCreateData create, va_li
 			node->color = BLACK;
 			node->parent = nullptr;
 			db->ht[hash] = node;
-		} else {
+		}
+		else {
 			node->color = RED;
 			if (c < 0) { // put at the left
 				parent->left = node;
 				node->parent = parent;
-			} else { // put at the right
+			}
+			else { // put at the right
 				parent->right = node;
 				node->parent = parent;
 			}
@@ -1818,7 +1845,8 @@ static DBData *db_obj_vensure(DBMap *self, DBKey key, DBCreateData create, va_li
 			if (db->options & DB_OPT_RELEASE_KEY) {
 				db->release(key, node->data, DB_RELEASE_KEY);
 			}
-		} else {
+		}
+		else {
 			node->key = key;
 		}
 		va_copy(argscopy, args);
@@ -1923,7 +1951,8 @@ static int db_obj_put(DBMap *self, DBKey key, DBData data, DBData *out_data) {
 		if (c == 0) { // equal entry, replace
 			if (node->deleted) {
 				db_free_remove(db, node);
-			} else {
+			}
+			else {
 				db->release(node->key, node->data, DB_RELEASE_BOTH);
 				if (out_data) {
 					memcpy(out_data, &node->data, sizeof(*out_data));
@@ -1935,7 +1964,8 @@ static int db_obj_put(DBMap *self, DBKey key, DBData data, DBData *out_data) {
 		parent = node;
 		if (c < 0) {
 			node = node->left;
-		} else {
+		}
+		else {
 			node = node->right;
 		}
 	}
@@ -1951,12 +1981,14 @@ static int db_obj_put(DBMap *self, DBKey key, DBData data, DBData *out_data) {
 			node->color = BLACK;
 			node->parent = nullptr;
 			db->ht[hash] = node;
-		} else {
+		}
+		else {
 			node->color = RED;
 			if (c < 0) { // put at the left
 				parent->left = node;
 				node->parent = parent;
-			} else { // put at the right
+			}
+			else { // put at the right
 				parent->right = node;
 				node->parent = parent;
 			}
@@ -1971,7 +2003,8 @@ static int db_obj_put(DBMap *self, DBKey key, DBData data, DBData *out_data) {
 		if (db->options & DB_OPT_RELEASE_KEY) {
 			db->release(key, data, DB_RELEASE_KEY);
 		}
-	} else {
+	}
+	else {
 		node->key = key;
 	}
 	node->data = data;
@@ -2037,7 +2070,8 @@ static int db_obj_remove(DBMap *self, DBKey key, DBData *out_data) {
 		}
 		if (c < 0) {
 			node = node->left;
-		} else {
+		}
+		else {
 			node = node->right;
 		}
 	}
@@ -2173,7 +2207,8 @@ static int db_obj_vclear(DBMap *self, DBApply func, va_list args) {
 			}
 			if (node->deleted) {
 				db_dup_key_free(db, node->key);
-			} else {
+			}
+			else {
 				if (func) {
 					va_list argscopy;
 					va_copy(argscopy, args);
@@ -2187,7 +2222,8 @@ static int db_obj_vclear(DBMap *self, DBApply func, va_list args) {
 			if (parent) {
 				if (parent->left == node) {
 					parent->left = nullptr;
-				} else {
+				}
+				else {
 					parent->right = nullptr;
 				}
 			}
@@ -3044,7 +3080,8 @@ void linkdb_insert(struct linkdb_node **head, void *key, void *data) {
 		*head = node;
 		node->prev = nullptr;
 		node->next = nullptr;
-	} else {
+	}
+	else {
 		// link nodes
 		node->next = *head;
 		node->prev = (*head)->prev;
@@ -3116,7 +3153,8 @@ void *linkdb_erase(struct linkdb_node **head, void *key) {
 			void *data = node->data;
 			if (node->prev == nullptr) {
 				*head = node->next;
-			} else {
+			}
+			else {
 				node->prev->next = node->next;
 			}
 			if (node->next) {
