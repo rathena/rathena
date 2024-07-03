@@ -60,24 +60,30 @@ static unsigned int I(unsigned int X, unsigned int Y, unsigned int Z) {
 	return Y ^ (X | ~Z);
 }
 
-static unsigned int Round(unsigned int a, unsigned int b, unsigned int FGHI, unsigned int k, unsigned int s, unsigned int i) {
+static unsigned int Round(
+	unsigned int a, unsigned int b, unsigned int FGHI, unsigned int k, unsigned int s, unsigned int i) {
 	return b + ROTATE_LEFT(a + FGHI + pX[k] + T[i], s);
 }
 
-static void Round1(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
+static void Round1(
+	unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, F(b, c, d), k, s, i);
 }
-static void Round2(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
+static void Round2(
+	unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, G(b, c, d), k, s, i);
 }
-static void Round3(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
+static void Round3(
+	unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, H(b, c, d), k, s, i);
 }
-static void Round4(unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
+static void Round4(
+	unsigned int *a, unsigned int b, unsigned int c, unsigned int d, unsigned int k, unsigned int s, unsigned int i) {
 	*a = Round(*a, b, I(b, c, d), k, s, i);
 }
 
-static void MD5_Round_Calculate(const unsigned char *block, unsigned int *A2, unsigned int *B2, unsigned int *C2, unsigned int *D2) {
+static void MD5_Round_Calculate(
+	const unsigned char *block, unsigned int *A2, unsigned int *B2, unsigned int *C2, unsigned int *D2) {
 	// create X It is since it is required.
 	unsigned int X[16]; // 512bit 64byte
 	int j, k;

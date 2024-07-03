@@ -64,10 +64,16 @@ bool YamlDatabase::verifyCompatibility(const ryml::Tree& tree) {
 			ShowError("Database version %hu is not supported. Maximum version is: %hu\n", tmpVersion, this->version);
 			return false;
 		} else if (tmpVersion >= this->minimumVersion) {
-			ShowWarning("Database version %hu is outdated and should be updated. Current version is: %hu\n", tmpVersion, this->version);
-			ShowWarning("Reduced compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
+			ShowWarning("Database version %hu is outdated and should be updated. Current version is: %hu\n",
+						tmpVersion,
+						this->version);
+			ShowWarning("Reduced compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n",
+						this->type.c_str(),
+						this->currentFile.c_str());
 		} else {
-			ShowError("Database version %hu is not supported anymore. Minimum version is: %hu\n", tmpVersion, this->minimumVersion);
+			ShowError("Database version %hu is not supported anymore. Minimum version is: %hu\n",
+					  tmpVersion,
+					  this->minimumVersion);
 			return false;
 		}
 	}
@@ -93,7 +99,8 @@ bool YamlDatabase::load(const std::string& path) {
 	ShowStatus("Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str());
 	FILE* f = fopen(path.c_str(), "r");
 	if (f == nullptr) {
-		ShowError("Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
+		ShowError(
+			"Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		return false;
 	}
 	fseek(f, 0, SEEK_END);
@@ -111,7 +118,8 @@ bool YamlDatabase::load(const std::string& path) {
 	try {
 		tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
 	} catch (const std::runtime_error& e) {
-		ShowError("Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
+		ShowError(
+			"Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		ShowError("There is likely a syntax error in the file.\n");
 		ShowError("Error message: %s\n", e.what());
 		aFree(buf);
@@ -122,7 +130,9 @@ bool YamlDatabase::load(const std::string& path) {
 	this->currentFile = path;
 
 	if (!this->verifyCompatibility(tree)) {
-		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
+		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n",
+				  this->type.c_str(),
+				  this->currentFile.c_str());
 		aFree(buf);
 		return false;
 	}
@@ -160,16 +170,24 @@ void YamlDatabase::parse(const ryml::Tree& tree) {
 		size_t childNodesProgressed = 0;
 #endif
 
-		ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", childNodesCount, fileName);
+		ShowStatus("Loading '" CL_WHITE "%" PRIdPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n",
+				   childNodesCount,
+				   fileName);
 
 		for (const ryml::NodeRef& node : bodyNode) {
 			count += this->parseBodyNode(node);
 #ifdef DETAILED_LOADING_OUTPUT
-			ShowStatus("Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName);
+			ShowStatus("Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r",
+					   ++childNodesProgressed,
+					   childNodesCount,
+					   fileName);
 #endif
 		}
 
-		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\n", count, fileName);
+		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL
+				   "\n",
+				   count,
+				   fileName);
 	}
 }
 
@@ -318,7 +336,11 @@ bool YamlDatabase::asString(const ryml::NodeRef& node, const std::string& name, 
 bool YamlDatabase::asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum) {
 	if (this->asUInt16(node, name, out)) {
 		if (out > maximum) {
-			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" with value %" PRIu16 " exceeds maximum of %" PRIu16 ".\n", name.c_str(), out, maximum);
+			this->invalidWarning(node[c4::to_csubstr(name)],
+								 "Node \"%s\" with value %" PRIu16 " exceeds maximum of %" PRIu16 ".\n",
+								 name.c_str(),
+								 out,
+								 maximum);
 
 			return false;
 		} else if (out == 0) {
@@ -336,7 +358,11 @@ bool YamlDatabase::asUInt16Rate(const ryml::NodeRef& node, const std::string& na
 bool YamlDatabase::asUInt32Rate(const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum) {
 	if (this->asUInt32(node, name, out)) {
 		if (out > maximum) {
-			this->invalidWarning(node[c4::to_csubstr(name)], "Node \"%s\" with value %" PRIu32 " exceeds maximum of %" PRIu32 ".\n", name.c_str(), out, maximum);
+			this->invalidWarning(node[c4::to_csubstr(name)],
+								 "Node \"%s\" with value %" PRIu32 " exceeds maximum of %" PRIu32 ".\n",
+								 name.c_str(),
+								 out,
+								 maximum);
 
 			return false;
 		} else if (out == 0) {
@@ -371,7 +397,10 @@ void YamlDatabase::invalidWarning(const ryml::NodeRef& node, const char* fmt, ..
 
 	va_end(ap);
 
-	ShowError("Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n", this->currentFile.c_str(), this->getLineNumber(node), this->getColumnNumber(node));
+	ShowError("Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n",
+			  this->currentFile.c_str(),
+			  this->getLineNumber(node),
+			  this->getColumnNumber(node));
 
 #ifdef DEBUG
 	std::cout << node;

@@ -246,7 +246,13 @@ size_t SqlStmt_NumColumns(SqlStmt* self);
 /// and the nul-terminator (an extra byte).
 ///
 /// @return SQL_SUCCESS or SQL_ERROR
-int SqlStmt_BindColumn(SqlStmt* self, size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null);
+int SqlStmt_BindColumn(SqlStmt* self,
+					   size_t idx,
+					   SqlDataType buffer_type,
+					   void* buffer,
+					   size_t buffer_len,
+					   uint32* out_length,
+					   int8* out_is_null);
 
 /// Returns the number of rows in the result.
 ///

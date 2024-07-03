@@ -69,7 +69,8 @@ int _msg_config_read(const char* cfgName, int size, char** msg_table) {
 	}
 
 	fclose(fp);
-	ShowInfo("Done reading " CL_WHITE "'%d'" CL_RESET " messages in " CL_WHITE "'%s'" CL_RESET ".\n", msg_count, cfgName);
+	ShowInfo(
+		"Done reading " CL_WHITE "'%d'" CL_RESET " messages in " CL_WHITE "'%s'" CL_RESET ".\n", msg_count, cfgName);
 
 	return 0;
 }

@@ -110,9 +110,11 @@ int cli_get_options(int argc, char** argv) {
 				if (opt_has_next_value(arg, i, argc)) {
 					MSG_CONF_NAME_EN = argv[++i];
 				}
-			} else if (strcmp(arg, "run-once") == 0) { // close the map-server as soon as its done.. for testing [Celest]
+			} else if (strcmp(arg, "run-once") ==
+					   0) { // close the map-server as soon as its done.. for testing [Celest]
 				global_core->set_run_once(true);
-			} else if (global_core->get_type() == e_core_type::LOGIN || global_core->get_type() == e_core_type::CHARACTER) {
+			} else if (global_core->get_type() == e_core_type::LOGIN ||
+					   global_core->get_type() == e_core_type::CHARACTER) {
 				if (strcmp(arg, "lan-config") == 0) {
 					if (opt_has_next_value(arg, i, argc)) {
 						LAN_CONF_NAME = argv[++i];

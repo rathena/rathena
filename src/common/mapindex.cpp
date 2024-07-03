@@ -91,7 +91,8 @@ int mapindex_addmap(int index, const char* name) {
 	}
 
 	if (strlen(map_name) >= MAP_NAME_LENGTH) {
-		ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
+		ShowError(
+			"(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
 		return 0;
 	}
 

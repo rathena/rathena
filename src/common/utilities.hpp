@@ -255,7 +255,8 @@ void vector_erase_if_exists(std::vector<K>& vector, V value) {
 	}
 }
 
-#if __has_builtin(__builtin_add_overflow) || (defined(__GNUC__) && !defined(__clang__) && defined(GCC_VERSION) && GCC_VERSION >= 50100)
+#if __has_builtin(__builtin_add_overflow) || \
+	(defined(__GNUC__) && !defined(__clang__) && defined(GCC_VERSION) && GCC_VERSION >= 50100)
 template <typename T>
 bool safe_addition(T a, T b, T& result) {
 	return __builtin_add_overflow(a, b, &result);

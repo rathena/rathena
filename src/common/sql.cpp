@@ -20,7 +20,8 @@
 // MySQL 8.0 or later removed my_bool typedef.
 // Reintroduce it as a bandaid fix.
 // See https://bugs.mysql.com/?id=87337
-#if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 80001 && MYSQL_VERSION_ID != 80002
+#if !defined(MARIADB_BASE_VERSION) && !defined(MARIADB_VERSION_ID) && MYSQL_VERSION_ID >= 80001 && \
+	MYSQL_VERSION_ID != 80002
 	#define my_bool bool
 #endif
 
@@ -114,12 +115,14 @@ int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* hos
 
 	if (mysql_options(&self->handle, MYSQL_OPT_SSL_MODE, &md)) {
 		ShowSQL(
-			"Your MySQL version does not understand \"MYSQL_OPT_SSL_MODE\" yet. Please consider upgrading - especially if you encounter SSL related "
+			"Your MySQL version does not understand \"MYSQL_OPT_SSL_MODE\" yet. Please consider upgrading - especially "
+			"if you encounter SSL related "
 			"error messages from your MySQL server.\n");
 	}
 #endif
 
-	if (!mysql_real_connect(&self->handle, host, user, passwd, db, (unsigned int)port, nullptr /*unix_socket*/, 0 /*clientflag*/)) {
+	if (!mysql_real_connect(
+			&self->handle, host, user, passwd, db, (unsigned int)port, nullptr /*unix_socket*/, 0 /*clientflag*/)) {
 		ShowSQL("%s\n", mysql_error(&self->handle));
 		return SQL_ERROR;
 	}
@@ -221,7 +224,8 @@ static int Sql_P_Keepalive(Sql* self) {
 	// establish keepalive
 	ping_interval = timeout - 30; // 30-second reserve
 	// add_timer_func_list(Sql_P_KeepaliveTimer, "Sql_P_KeepaliveTimer");
-	return add_timer_interval(gettick() + ping_interval * 1000, Sql_P_KeepaliveTimer, 0, (intptr_t)self, ping_interval * 1000);
+	return add_timer_interval(
+		gettick() + ping_interval * 1000, Sql_P_KeepaliveTimer, 0, (intptr_t)self, ping_interval * 1000);
 }
 
 /// Escapes a string.
@@ -439,8 +443,12 @@ static enum enum_field_types Sql_P_SizeToMysqlIntType(int sz) {
 /// Binds a parameter/result.
 ///
 /// @private
-static int Sql_P_BindSqlDataType(
-	MYSQL_BIND* bind, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, unsigned long* out_length, int8* out_is_null) {
+static int Sql_P_BindSqlDataType(MYSQL_BIND* bind,
+								 enum SqlDataType buffer_type,
+								 void* buffer,
+								 size_t buffer_len,
+								 unsigned long* out_length,
+								 int8* out_is_null) {
 	memset(bind, 0, sizeof(MYSQL_BIND));
 	switch (buffer_type) {
 		case SQLDT_NULL:
@@ -591,10 +599,12 @@ static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i) {
 	field = mysql_fetch_field_direct(meta, (unsigned int)i);
 	ShowSQL("DB error - data of field '%s' was truncated.\n", field->name);
 	ShowDebug("column - %lu\n", (unsigned long)i);
-	Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags & UNSIGNED_FLAG, self->column_lengths[i].length, "");
+	Sql_P_ShowDebugMysqlFieldInfo(
+		"data   - ", field->type, field->flags & UNSIGNED_FLAG, self->column_lengths[i].length, "");
 	column = &self->columns[i];
 	if (column->buffer_type == MYSQL_TYPE_STRING) {
-		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "+1(nul-terminator)");
+		Sql_P_ShowDebugMysqlFieldInfo(
+			"buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "+1(nul-terminator)");
 	} else {
 		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "");
 	}
@@ -758,15 +768,21 @@ size_t SqlStmt_NumColumns(SqlStmt* self) {
 }
 
 /// Binds the result of a column to a buffer.
-int SqlStmt_BindColumn(
-	SqlStmt* self, size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null) {
+int SqlStmt_BindColumn(SqlStmt* self,
+					   size_t idx,
+					   enum SqlDataType buffer_type,
+					   void* buffer,
+					   size_t buffer_len,
+					   uint32* out_length,
+					   int8* out_is_null) {
 	if (self == nullptr) {
 		return SQL_ERROR;
 	}
 
 	if (buffer_type == SQLDT_STRING || buffer_type == SQLDT_ENUM) {
 		if (buffer_len < 1) {
-			ShowDebug("SqlStmt_BindColumn: buffer_len(%" PRIuPTR ") is too small, no room for the nul-terminator\n", buffer_len);
+			ShowDebug("SqlStmt_BindColumn: buffer_len(%" PRIuPTR ") is too small, no room for the nul-terminator\n",
+					  buffer_len);
 			return SQL_ERROR;
 		}
 		--buffer_len; // nul-terminator
@@ -790,7 +806,8 @@ int SqlStmt_BindColumn(
 	}
 	if (idx < self->max_columns) {
 		self->column_lengths[idx].out_length = out_length;
-		return Sql_P_BindSqlDataType(self->columns + idx, buffer_type, buffer, buffer_len, &self->column_lengths[idx].length, out_is_null);
+		return Sql_P_BindSqlDataType(
+			self->columns + idx, buffer_type, buffer, buffer_len, &self->column_lengths[idx].length, out_is_null);
 	} else {
 		return SQL_SUCCESS; // out of range - ignore
 	}
@@ -866,7 +883,8 @@ int SqlStmt_NextRow(SqlStmt* self) {
 #if !defined(MYSQL_DATA_TRUNCATED)
 		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation manually [FlavioJS]
 		if (column->buffer_length < length) { // report truncated column
-			if (column->buffer_type == MYSQL_TYPE_STRING || column->buffer_type == MYSQL_TYPE_BLOB) { // string/enum/blob column
+			if (column->buffer_type == MYSQL_TYPE_STRING ||
+				column->buffer_type == MYSQL_TYPE_BLOB) { // string/enum/blob column
 				SqlStmt_P_ShowDebugTruncatedColumn(self, i);
 				return SQL_ERROR;
 			}
@@ -876,9 +894,11 @@ int SqlStmt_NextRow(SqlStmt* self) {
 		if (self->column_lengths[i].out_length) {
 			*self->column_lengths[i].out_length = (uint32)length;
 		}
-		if (column->buffer_type == MYSQL_TYPE_STRING) { // clear unused part of the string/enum buffer (and nul-terminate)
+		if (column->buffer_type ==
+			MYSQL_TYPE_STRING) { // clear unused part of the string/enum buffer (and nul-terminate)
 			memset((char*)column->buffer + length, 0, column->buffer_length - length + 1);
-		} else if (column->buffer_type == MYSQL_TYPE_BLOB && length < column->buffer_length) { // clear unused part of the blob buffer
+		} else if (column->buffer_type == MYSQL_TYPE_BLOB &&
+				   length < column->buffer_length) { // clear unused part of the blob buffer
 			memset((char*)column->buffer + length, 0, column->buffer_length - length);
 		}
 	}
@@ -928,7 +948,9 @@ void ra_mysql_error_handler(unsigned int ecode) {
 			if (mysql_reconnect_type == 1) {
 				static unsigned int retry = 1;
 				if (++retry > mysql_reconnect_count) {
-					ShowFatalError("MySQL has been unreachable for too long, %d reconnects were attempted. Shutting Down\n", retry);
+					ShowFatalError(
+						"MySQL has been unreachable for too long, %d reconnects were attempted. Shutting Down\n",
+						retry);
 					exit(EXIT_FAILURE);
 				}
 			}
@@ -964,7 +986,9 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 				case 2:
 					break;
 				default:
-					ShowError("%s::mysql_reconnect_type is set to %d which is not valid, defaulting to 1...\n", cfgName, mysql_reconnect_type);
+					ShowError("%s::mysql_reconnect_type is set to %d which is not valid, defaulting to 1...\n",
+							  cfgName,
+							  mysql_reconnect_type);
 					mysql_reconnect_type = 1;
 					break;
 			}

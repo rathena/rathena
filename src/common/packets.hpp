@@ -234,12 +234,16 @@ public:
 	void add(int16 packetType, bool fixed, int16 size, std::function<bool(int fd, sessiontype& sd)> func) {
 		if (fixed) {
 			if (size < 2) {
-				ShowError("Definition for packet 0x%04x is invalid. Minimum size for a fixed length packet is 2 bytes.\n", packetType);
+				ShowError(
+					"Definition for packet 0x%04x is invalid. Minimum size for a fixed length packet is 2 bytes.\n",
+					packetType);
 				return;
 			}
 		} else {
 			if (size < 4) {
-				ShowError("Definition for packet 0x%04x is invalid. Minimum size for a dynamic length packet is 2 bytes.\n", packetType);
+				ShowError(
+					"Definition for packet 0x%04x is invalid. Minimum size for a dynamic length packet is 2 bytes.\n",
+					packetType);
 				return;
 			}
 		}
@@ -272,7 +276,10 @@ public:
 
 		if (info->fixed) {
 			if (remaining < info->size) {
-				ShowError("Invalid size %hd for packet 0x%04x with fixed size of %hd\n", remaining, p->packetType, info->size);
+				ShowError("Invalid size %hd for packet 0x%04x with fixed size of %hd\n",
+						  remaining,
+						  p->packetType,
+						  info->size);
 				set_eof(fd);
 				return false;
 			}
@@ -284,13 +291,19 @@ public:
 			return ret;
 		} else {
 			if (remaining < info->size) {
-				ShowError("Invalid size %hd for packet 0x%04x with dynamic minimum size of %hd\n", remaining, p->packetType, info->size);
+				ShowError("Invalid size %hd for packet 0x%04x with dynamic minimum size of %hd\n",
+						  remaining,
+						  p->packetType,
+						  info->size);
 				set_eof(fd);
 				return false;
 			}
 
 			if (remaining < p->packetLength) {
-				ShowError("Invalid size %hd for packet 0x%04x with dynamic size of %hd\n", remaining, p->packetType, p->packetLength);
+				ShowError("Invalid size %hd for packet 0x%04x with dynamic size of %hd\n",
+						  remaining,
+						  p->packetType,
+						  p->packetLength);
 				set_eof(fd);
 				return false;
 			}

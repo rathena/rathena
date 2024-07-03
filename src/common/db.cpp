@@ -569,7 +569,8 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 					db_rotate_left(x_parent, root);
 					w = x_parent->right;
 				}
-				if ((w->left == nullptr || w->left->color == BLACK) && (w->right == nullptr || w->right->color == BLACK)) {
+				if ((w->left == nullptr || w->left->color == BLACK) &&
+					(w->right == nullptr || w->right->color == BLACK)) {
 					w->color = RED;
 					x = x_parent;
 					x_parent = x_parent->parent;
@@ -598,7 +599,8 @@ static void db_rebalance_erase(DBNode *node, DBNode **root) {
 					db_rotate_right(x_parent, root);
 					w = x_parent->left;
 				}
-				if ((w->right == nullptr || w->right->color == BLACK) && (w->left == nullptr || w->left->color == BLACK)) {
+				if ((w->right == nullptr || w->right->color == BLACK) &&
+					(w->left == nullptr || w->left->color == BLACK)) {
 					w->color = RED;
 					x = x_parent;
 					x_parent = x_parent->parent;
@@ -782,7 +784,8 @@ static void db_free_remove(DBMap_impl *db, DBNode *node) {
 	}
 	node->deleted = 0;
 	if (i == db->free_count) {
-		ShowWarning("db_free_remove: node was not found - database allocated at %s:%d\n", db->alloc_file, db->alloc_line);
+		ShowWarning(
+			"db_free_remove: node was not found - database allocated at %s:%d\n", db->alloc_file, db->alloc_line);
 	} else {
 		db->free_count--;
 	}
@@ -1579,7 +1582,9 @@ static DBData *db_obj_get(DBMap *self, DBKey key) {
 		return nullptr; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_get: Attempted to retrieve non-allowed nullptr key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
+		ShowError("db_get: Attempted to retrieve non-allowed nullptr key for db allocated at %s:%d\n",
+				  db->alloc_file,
+				  db->alloc_line);
 		return nullptr; // nullpo candidate
 	}
 
@@ -1748,7 +1753,9 @@ static DBData *db_obj_vensure(DBMap *self, DBKey key, DBCreateData create, va_li
 		return nullptr; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_ensure: Attempted to use non-allowed nullptr key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
+		ShowError("db_ensure: Attempted to use non-allowed nullptr key for db allocated at %s:%d\n",
+				  db->alloc_file,
+				  db->alloc_line);
 		return nullptr; // nullpo candidate
 	}
 
@@ -1888,11 +1895,15 @@ static int db_obj_put(DBMap *self, DBKey key, DBData data, DBData *out_data) {
 		return 0; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_put: Attempted to use non-allowed nullptr key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
+		ShowError("db_put: Attempted to use non-allowed nullptr key for db allocated at %s:%d\n",
+				  db->alloc_file,
+				  db->alloc_line);
 		return 0; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_DATA) && (data.type == DB_DATA_PTR && data.u.ptr == nullptr)) {
-		ShowError("db_put: Attempted to use non-allowed nullptr data for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
+		ShowError("db_put: Attempted to use non-allowed nullptr data for db allocated at %s:%d\n",
+				  db->alloc_file,
+				  db->alloc_line);
 		return 0; // nullpo candidate
 	}
 
@@ -2000,7 +2011,9 @@ static int db_obj_remove(DBMap *self, DBKey key, DBData *out_data) {
 		return 0; // nullpo candidate
 	}
 	if (!(db->options & DB_OPT_ALLOW_NULL_KEY) && db_is_key_null(db->type, key)) {
-		ShowError("db_remove: Attempted to use non-allowed nullptr key for db allocated at %s:%d\n", db->alloc_file, db->alloc_line);
+		ShowError("db_remove: Attempted to use non-allowed nullptr key for db allocated at %s:%d\n",
+				  db->alloc_file,
+				  db->alloc_line);
 		return 0; // nullpo candidate
 	}
 

@@ -54,15 +54,16 @@
 #endif
 
 #ifndef MAX_INVENTORY
-	#define MAX_INVENTORY (INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE) // Maximum items in player inventory (in total)
+	#define MAX_INVENTORY \
+		(INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE) // Maximum items in player inventory (in total)
 #else
 	#if MAX_INVENTORY < (INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE)
 		#error Your custom MAX_INVENTORY define is too low
 	#endif
 #endif
 
-/** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as
- * well. Max value tested was 265 */
+/** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed
+ * to support more characters as well. Max value tested was 265 */
 #ifndef MAX_CHARS
 	#if PACKETVER >= 20180124
 		#define MAX_CHARS 15
@@ -75,8 +76,9 @@
 
 typedef uint32 t_itemid;
 
-/** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
- * Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
+/** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged
+ * items/equipment. [Skotlex] Note: The client seems unable to receive data for more than 4 slots due to all related
+ * packets having a fixed size. */
 #define MAX_SLOTS 4
 #define MAX_AMOUNT 30000 ////Max amount of a single stacked item
 #define MAX_ZENY INT_MAX /// Max zeny
@@ -107,7 +109,9 @@ typedef uint32 t_itemid;
 	#define MAX_GUILDSKILL 15 /// Max Guild skills
 #endif
 #define MAX_GUILDLEVEL 50 /// Max Guild level
-#define MAX_GUARDIANS 8 /// Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
+#define MAX_GUARDIANS \
+	8 /// Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table
+	  /// [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 /// Max quest objectives for a quest
 #define MAX_PC_BONUS_SCRIPT 50 /// Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5 /// Max item random option [Napster]
@@ -323,7 +327,8 @@ struct item {
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
-	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
+	unsigned int
+		equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
 } __attribute__((packed));
 
@@ -387,7 +392,8 @@ enum e_skill_flag : int8 {
 	SKILL_FLAG_TMP_COMBO, //@FIXME for homunculus combo atm
 
 	//! NOTE: This flag be the last flag, and don't change the value if not needed!
-	SKILL_FLAG_REPLACED_LV_0 = 10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
+	SKILL_FLAG_REPLACED_LV_0 =
+		10, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
 };
 
 struct s_skill {
@@ -397,8 +403,8 @@ struct s_skill {
 };
 
 struct script_reg_state {
-	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber
-						   // str on a 10000-to-1 ratio.
+	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance
+						   // waste while ints outnumber str on a 10000-to-1 ratio.
 	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
@@ -460,7 +466,8 @@ struct s_storage {
 		unsigned get : 1;
 		unsigned put : 1;
 	} state;
-	union { // Max for inventory, storage, cart, and guild storage are 818 each without changing this struct and struct item [2016/08/14]
+	union { // Max for inventory, storage, cart, and guild storage are 818 each without changing this struct and struct
+			// item [2016/08/14]
 		struct item items_inventory[MAX_INVENTORY];
 		struct item items_storage[MAX_STORAGE];
 		struct item items_cart[MAX_CART];

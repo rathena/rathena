@@ -182,7 +182,8 @@ const char *get_svn_revision(void) {
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist
-	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != nullptr || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != nullptr) {
+	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != nullptr ||
+		(fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != nullptr) {
 	#ifndef SVNNODEPATH
 			// not sure how to handle branches, so i'll leave this overridable define until a better solution comes up
 		#define SVNNODEPATH trunk
@@ -359,11 +360,13 @@ int Core::start(int argc, char **argv) {
 			size_t n = p1 - argv[0]; // calc dir name len
 			pwd = safestrncpy((char *)malloc(n + 1), argv[0], n);
 			if (chdir(pwd) != 0) {
-				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME);
+				ShowError(
+					"Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME);
 			}
 			free(pwd);
 		} else {
-			// On Windows the .bat files have the executeable names as parameters without any path seperator [Lemongrass]
+			// On Windows the .bat files have the executeable names as parameters without any path seperator
+			// [Lemongrass]
 			SERVER_NAME = argv[0];
 		}
 	}

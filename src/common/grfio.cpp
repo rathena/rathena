@@ -539,7 +539,8 @@ static int grfio_entryread(const char* grfname, int gentry) {
 	if (fread(grf_header, 1, 0x2e, fp) != 0x2e) {
 		ShowError("Couldn't read all grf_header element of %s \n", grfname);
 	}
-	if (strcmp((const char*)grf_header, "Master of Magic") != 0 || fseek(fp, getlong(grf_header + 0x1e), SEEK_CUR) != 0) {
+	if (strcmp((const char*)grf_header, "Master of Magic") != 0 ||
+		fseek(fp, getlong(grf_header + 0x1e), SEEK_CUR) != 0) {
 		fclose(fp);
 		ShowError("GRF %s read error\n", grfname);
 		ShowError("GRF possibly over 2GB in size.\n");
@@ -584,7 +585,8 @@ static int grfio_entryread(const char* grfname, int gentry) {
 				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
 				aentry.fnd = nullptr;
 #ifdef GRFIO_LOCAL
-				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
+				aentry.gentry =
+					-(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
 				aentry.gentry = gentry + 1; // With no first time LocalFileCheck
 #endif
@@ -646,7 +648,8 @@ static int grfio_entryread(const char* grfname, int gentry) {
 				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
 				aentry.fnd = nullptr;
 #ifdef GRFIO_LOCAL
-				aentry.gentry = -(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
+				aentry.gentry =
+					-(gentry + 1); // As Flag for making it a negative number carrying out the first time LocalFileCheck
 #else
 				aentry.gentry = gentry + 1; // With no first time LocalFileCheck
 #endif
@@ -729,7 +732,9 @@ static void grfio_resourcecheck(void) {
 		}
 
 		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", i, "resnametable.txt");
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",
+				   i,
+				   "resnametable.txt");
 		return; // we're done here!
 	}
 
@@ -753,7 +758,9 @@ static void grfio_resourcecheck(void) {
 		}
 
 		aFree(buf);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", i, "data\\resnametable.txt");
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",
+				   i,
+				   "data\\resnametable.txt");
 		return;
 	}
 }

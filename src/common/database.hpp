@@ -88,7 +88,8 @@ protected:
 	std::unordered_map<keytype, std::shared_ptr<datatype>> data;
 
 public:
-	TypesafeYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_) : YamlDatabase(type_, version_, minimumVersion_) {
+	TypesafeYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_)
+		: YamlDatabase(type_, version_, minimumVersion_) {
 	}
 
 	TypesafeYamlDatabase(const std::string& type_, uint16 version_) : YamlDatabase(type_, version_, version_) {
@@ -152,11 +153,13 @@ private:
 	bool loaded;
 
 public:
-	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_) : TypesafeYamlDatabase<keytype, datatype>(type_, version_, minimumVersion_) {
+	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_, uint16 minimumVersion_)
+		: TypesafeYamlDatabase<keytype, datatype>(type_, version_, minimumVersion_) {
 		this->loaded = false;
 	}
 
-	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_) : TypesafeYamlDatabase<keytype, datatype>(type_, version_, version_) {
+	TypesafeCachedYamlDatabase(const std::string& type_, uint16 version_)
+		: TypesafeYamlDatabase<keytype, datatype>(type_, version_, version_) {
 		this->loaded = false;
 	}
 

@@ -1120,8 +1120,12 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 			if (VECTOR_CAPACITY(__vec) == 0) \
 				VECTOR_DATA(__vec) = (__cast)(aMalloc((__n) * sizeof(VECTOR_FIRST(__vec)))); /* allocate new */ \
 			else \
-				VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
-			memset(VECTOR_DATA(__vec) + VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec) - VECTOR_LENGTH(__vec)) * sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
+				VECTOR_DATA(__vec) = \
+					(__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
+			memset( \
+				VECTOR_DATA(__vec) + VECTOR_LENGTH(__vec), \
+				0, \
+				(VECTOR_CAPACITY(__vec) - VECTOR_LENGTH(__vec)) * sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 		} else if ((__n) == 0 && VECTOR_CAPACITY(__vec)) { /* clear vector */ \
 			aFree(VECTOR_DATA(__vec)); \
@@ -1129,7 +1133,8 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
 			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
 		} else if ((__n) < VECTOR_CAPACITY(__vec)) { /* reduce size */ \
-			VECTOR_DATA(__vec) = (__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
+			VECTOR_DATA(__vec) = \
+				(__cast)(aRealloc(VECTOR_DATA(__vec), (__n) * sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
 			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
 			if (VECTOR_LENGTH(__vec) > (__n)) \
 				VECTOR_LENGTH(__vec) = (__n); /* update length */ \
@@ -1161,7 +1166,9 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 #define VECTOR_INSERTZEROED(__vec, __idx) \
 	do { \
 		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec, (__idx) + 1), &VECTOR_INDEX(__vec, __idx), (VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
+			memmove(&VECTOR_INDEX(__vec, (__idx) + 1), \
+					&VECTOR_INDEX(__vec, __idx), \
+					(VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
 		memset(&VECTOR_INDEX(__vec, __idx), 0, sizeof(VECTOR_INDEX(__vec, __idx))); /* set zeroed value */ \
 		++VECTOR_LENGTH(__vec); /* increase length */ \
 	} while (0)
@@ -1175,7 +1182,9 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 #define VECTOR_INSERT(__vec, __idx, __val) \
 	do { \
 		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec, (__idx) + 1), &VECTOR_INDEX(__vec, __idx), (VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
+			memmove(&VECTOR_INDEX(__vec, (__idx) + 1), \
+					&VECTOR_INDEX(__vec, __idx), \
+					(VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
 		VECTOR_INDEX(__vec, __idx) = (__val); /* set value */ \
 		++VECTOR_LENGTH(__vec); /* increase length */ \
 	} while (0)
@@ -1198,7 +1207,9 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 #define VECTOR_INSERTARRAY(__vec, __idx, __pval, __n) \
 	do { \
 		if ((__idx) < VECTOR_LENGTH(__vec)) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec, (__idx) + (__n)), &VECTOR_INDEX(__vec, __idx), (VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
+			memmove(&VECTOR_INDEX(__vec, (__idx) + (__n)), \
+					&VECTOR_INDEX(__vec, __idx), \
+					(VECTOR_LENGTH(__vec) - (__idx)) * sizeof(VECTOR_FIRST(__vec))); \
 		memcpy(&VECTOR_INDEX(__vec, __idx), (__pval), (__n) * sizeof(VECTOR_FIRST(__vec))); /* set values */ \
 		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
 	} while (0)
@@ -1209,7 +1220,9 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __vec Vector
 #define VECTOR_PUSHZEROED(__vec) \
 	do { \
-		memset(&VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)), 0, sizeof(VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)))); /* set zeroed value */ \
+		memset(&VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)), \
+			   0, \
+			   sizeof(VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)))); /* set zeroed value */ \
 		++VECTOR_LENGTH(__vec); /* increase length */ \
 	} while (0)
 
@@ -1239,7 +1252,9 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 /// @param __n Number of values
 #define VECTOR_PUSHARRAY(__vec, __pval, __n) \
 	do { \
-		memcpy(&VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)), (__pval), (__n) * sizeof(VECTOR_FIRST(__vec))); /* set values */ \
+		memcpy(&VECTOR_INDEX(__vec, VECTOR_LENGTH(__vec)), \
+			   (__pval), \
+			   (__n) * sizeof(VECTOR_FIRST(__vec))); /* set values */ \
 		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
 	} while (0)
 
@@ -1274,7 +1289,9 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 #define VECTOR_ERASEN(__vec, __idx, __n) \
 	do { \
 		if ((__idx) < VECTOR_LENGTH(__vec) - (__n)) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec, __idx), &VECTOR_INDEX(__vec, (__idx) + (__n)), (VECTOR_LENGTH(__vec) - ((__idx) + (__n))) * sizeof(VECTOR_FIRST(__vec))); \
+			memmove(&VECTOR_INDEX(__vec, __idx), \
+					&VECTOR_INDEX(__vec, (__idx) + (__n)), \
+					(VECTOR_LENGTH(__vec) - ((__idx) + (__n))) * sizeof(VECTOR_FIRST(__vec))); \
 		VECTOR_LENGTH(__vec) -= (__n); /* decrease length */ \
 	} while (0)
 
@@ -1454,10 +1471,13 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 		while (_i_ < VECTOR_LENGTH(__heap)) { /* restore heap property in childs */ \
 			size_t _lchild_ = _i_ * 2 + 1; \
 			size_t _rchild_ = _i_ * 2 + 2; \
-			if ((_lchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)) <= 0) && \
-				(_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)) <= 0)) \
+			if ((_lchild_ >= VECTOR_LENGTH(__heap) || \
+				 __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)) <= 0) && \
+				(_rchild_ >= VECTOR_LENGTH(__heap) || \
+				 __topcmp(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _rchild_)) <= 0)) \
 				break; /* done */ \
-			else if (_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) <= 0) { /* left child */ \
+			else if (_rchild_ >= VECTOR_LENGTH(__heap) || \
+					 __topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) <= 0) { /* left child */ \
 				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)); \
 				_i_ = _lchild_; \
 			} else { /* right child */ \
@@ -1498,7 +1518,8 @@ void linkdb_foreach(struct linkdb_node** head, LinkDBFunc func, ...);
 		size_t _lchild_ = _i_ * 2 + 1; \
 		while (_lchild_ < VECTOR_LENGTH(__heap)) { /* restore heap property in childs */ \
 			size_t _rchild_ = _i_ * 2 + 2; \
-			if (_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) < 0) { /* left child */ \
+			if (_rchild_ >= VECTOR_LENGTH(__heap) || \
+				__topcmp(VECTOR_INDEX(__heap, _lchild_), VECTOR_INDEX(__heap, _rchild_)) < 0) { /* left child */ \
 				std::swap(VECTOR_INDEX(__heap, _i_), VECTOR_INDEX(__heap, _lchild_)); \
 				_i_ = _lchild_; \
 			} else { /* right child */ \

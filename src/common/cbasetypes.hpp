@@ -27,7 +27,9 @@
 //////////////////////////////////////////////////////////////////////////
 // setting some defines on platforms
 //////////////////////////////////////////////////////////////////////////
-#if (defined(__WIN32__) || defined(__WIN32) || defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER) || defined(__BORLANDC__)) && !defined(WIN32)
+#if (defined(__WIN32__) || defined(__WIN32) || defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER) || \
+	 defined(__BORLANDC__)) && \
+	!defined(WIN32)
 	#define WIN32
 #endif
 
@@ -45,7 +47,8 @@
 #endif
 
 // 64bit OS
-#if defined(_M_IA64) || defined(_M_X64) || defined(_WIN64) || defined(_LP64) || defined(_ILP64) || defined(__LP64__) || defined(__ppc64__)
+#if defined(_M_IA64) || defined(_M_X64) || defined(_WIN64) || defined(_LP64) || defined(_ILP64) || \
+	defined(__LP64__) || defined(__ppc64__)
 	#define __64BIT__
 #endif
 

@@ -163,21 +163,23 @@ char console_log_filepath[32] = "./log/unknown.log";
 //
 // \033[#K - Erase Line (EL)
 //    Clears the current line from the cursor position
-//    \033[0K - Clears all characters from the cursor position to the end of the line (including the character at the cursor position). The cursor
-//    position is unchanged. (default) \033[1K - Clears all characters from start of line to the cursor position. (including the character at the
-//    cursor position). The cursor position is unchanged. \033[2K - Clears all characters of the whole line. The cursor position is unchanged.
+//    \033[0K - Clears all characters from the cursor position to the end of the line (including the character at the
+//    cursor position). The cursor position is unchanged. (default) \033[1K - Clears all characters from start of line
+//    to the cursor position. (including the character at the cursor position). The cursor position is unchanged.
+//    \033[2K - Clears all characters of the whole line. The cursor position is unchanged.
 
 /*
 not implemented
 
 \033[#L
-IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The cursor position is unchanged. The bottommost #
-lines are lost. \e[L is equivaSlent to \e[1L. \033[#M DL: Delete Line: The block of # lines at and below the cursor are deleted; all lines below them
-move up # lines to fill in the gap, leaving # blank lines at the bottom of the screen. The cursor position is unchanged. \e[M is equivalent to \e[1M.
-\033[#\@ ICH: Insert CHaracter: The cursor character and all characters to the right of it move right # columns, leaving behind blank space. The
-cursor position is unchanged. The rightmost # characters on the line are lost. \e[\@ is equivalent to \e[1\@. \033[#P DCH: Delete CHaracter: The block
-of # characters at and to the right of the cursor are deleted; all characters to the right of it move left # columns, leaving behind blank space. The
-cursor position is unchanged. \e[P is equivalent to \e[1P.
+IL: Insert Lines: The cursor line and all lines below it move down # lines, leaving blank space. The cursor position is
+unchanged. The bottommost # lines are lost. \e[L is equivaSlent to \e[1L. \033[#M DL: Delete Line: The block of # lines
+at and below the cursor are deleted; all lines below them move up # lines to fill in the gap, leaving # blank lines at
+the bottom of the screen. The cursor position is unchanged. \e[M is equivalent to \e[1M. \033[#\@ ICH: Insert CHaracter:
+The cursor character and all characters to the right of it move right # columns, leaving behind blank space. The cursor
+position is unchanged. The rightmost # characters on the line are lost. \e[\@ is equivalent to \e[1\@. \033[#P DCH:
+Delete CHaracter: The block of # characters at and to the right of the cursor are deleted; all characters to the right
+of it move left # columns, leaving behind blank space. The cursor position is unchanged. \e[P is equivalent to \e[1P.
 
 Escape sequences for Select Character Set
 */
@@ -260,8 +262,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 							} else if (5 == numbers[i]) { // set background intensity
 								info.wAttributes |= BACKGROUND_INTENSITY;
 							} else if (7 == numbers[i]) { // reverse colors (just xor them)
-								info.wAttributes ^=
-									FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+								info.wAttributes ^= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE |
+													BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 							}
 							// case '2': // not existing
 							// case '3':	// blinking (not implemented)
@@ -276,8 +278,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 							} else if (5 == numbers[i]) { // set background intensity off
 								info.wAttributes &= ~BACKGROUND_INTENSITY;
 							} else if (7 == numbers[i]) { // reverse colors (just xor them)
-								info.wAttributes ^=
-									FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+								info.wAttributes ^= FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE |
+													BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 							}
 						} else if (0x30 == (0xF0 & numbers[i])) { // foreground
 							uint8 num = numbers[i] & 0x0F;
@@ -363,9 +365,12 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					// \033[#;#f - Horizontal & Vertical Position
 					// The first # specifies the line number, the second # specifies the column.
 					// The default for both is 1
-					info.dwCursorPosition.X = (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + ((numbers[numpoint] & 0x0F) - 1) : 0;
+					info.dwCursorPosition.X =
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + ((numbers[numpoint] & 0x0F) - 1) : 0;
 					info.dwCursorPosition.Y =
-						(numpoint && numbers[numpoint - 1]) ? (numbers[numpoint - 1] >> 4) * 10 + ((numbers[numpoint - 1] & 0x0F) - 1) : 0;
+						(numpoint && numbers[numpoint - 1])
+							? (numbers[numpoint - 1] >> 4) * 10 + ((numbers[numpoint - 1] & 0x0F) - 1)
+							: 0;
 
 					if (info.dwCursorPosition.X >= info.dwSize.X) {
 						info.dwCursorPosition.Y = info.dwSize.X - 1;
@@ -386,7 +391,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					*/
 				} else if (*q == 'A') { // \033[#A - Cursor Up (CUU)
 					// Moves the cursor UP # number of lines
-					info.dwCursorPosition.Y -= (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
+					info.dwCursorPosition.Y -=
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
 
 					if (info.dwCursorPosition.Y < 0) {
 						info.dwCursorPosition.Y = 0;
@@ -394,7 +400,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					SetConsoleCursorPosition(handle, info.dwCursorPosition);
 				} else if (*q == 'B') { // \033[#B - Cursor Down (CUD)
 					// Moves the cursor DOWN # number of lines
-					info.dwCursorPosition.Y += (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
+					info.dwCursorPosition.Y +=
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
 
 					if (info.dwCursorPosition.Y >= info.dwSize.Y) {
 						info.dwCursorPosition.Y = info.dwSize.Y - 1;
@@ -402,7 +409,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					SetConsoleCursorPosition(handle, info.dwCursorPosition);
 				} else if (*q == 'C') { // \033[#C - Cursor Forward (CUF)
 					// Moves the cursor RIGHT # number of columns
-					info.dwCursorPosition.X += (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
+					info.dwCursorPosition.X +=
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
 
 					if (info.dwCursorPosition.X >= info.dwSize.X) {
 						info.dwCursorPosition.X = info.dwSize.X - 1;
@@ -410,7 +418,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					SetConsoleCursorPosition(handle, info.dwCursorPosition);
 				} else if (*q == 'D') { // \033[#D - Cursor Backward (CUB)
 					// Moves the cursor LEFT # number of columns
-					info.dwCursorPosition.X -= (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
+					info.dwCursorPosition.X -=
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
 
 					if (info.dwCursorPosition.X < 0) {
 						info.dwCursorPosition.X = 0;
@@ -418,7 +427,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					SetConsoleCursorPosition(handle, info.dwCursorPosition);
 				} else if (*q == 'E') { // \033[#E - Cursor Next Line (CNL)
 					// Moves the cursor down the indicated # of rows, to column 1
-					info.dwCursorPosition.Y += (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
+					info.dwCursorPosition.Y +=
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
 					info.dwCursorPosition.X = 0;
 
 					if (info.dwCursorPosition.Y >= info.dwSize.Y) {
@@ -427,7 +437,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					SetConsoleCursorPosition(handle, info.dwCursorPosition);
 				} else if (*q == 'F') { // \033[#F - Cursor Preceding Line (CPL)
 					// Moves the cursor up the indicated # of rows, to column 1.
-					info.dwCursorPosition.Y -= (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
+					info.dwCursorPosition.Y -=
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + (numbers[numpoint] & 0x0F) : 1;
 					info.dwCursorPosition.X = 0;
 
 					if (info.dwCursorPosition.Y < 0) {
@@ -436,7 +447,8 @@ int VFPRINTF(HANDLE handle, const char *fmt, va_list argptr) {
 					SetConsoleCursorPosition(handle, info.dwCursorPosition);
 				} else if (*q == 'G') { // \033[#G - Cursor Horizontal Absolute (CHA)
 					// Moves the cursor to indicated column in current row.
-					info.dwCursorPosition.X = (numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + ((numbers[numpoint] & 0x0F) - 1) : 0;
+					info.dwCursorPosition.X =
+						(numbers[numpoint]) ? (numbers[numpoint] >> 4) * 10 + ((numbers[numpoint] & 0x0F) - 1) : 0;
 
 					if (info.dwCursorPosition.X >= info.dwSize.X) {
 						info.dwCursorPosition.X = info.dwSize.X - 1;
@@ -595,7 +607,8 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 		buildbotflag = 1;
 	}
 #endif
-	if ((flag == MSG_WARNING && console_msg_log & 1) || ((flag == MSG_ERROR || flag == MSG_SQL) && console_msg_log & 2) ||
+	if ((flag == MSG_WARNING && console_msg_log & 1) ||
+		((flag == MSG_ERROR || flag == MSG_SQL) && console_msg_log & 2) ||
 		(flag == MSG_DEBUG && console_msg_log & 4)) { //[Ind]
 		FILE *log = nullptr;
 		if ((log = fopen(console_log_filepath, "a+"))) {
@@ -617,8 +630,9 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 			fclose(log);
 		}
 	}
-	if ((flag == MSG_INFORMATION && msg_silent & 1) || (flag == MSG_STATUS && msg_silent & 2) || (flag == MSG_NOTICE && msg_silent & 4) ||
-		(flag == MSG_WARNING && msg_silent & 8) || (flag == MSG_ERROR && msg_silent & 16) || (flag == MSG_SQL && msg_silent & 16) ||
+	if ((flag == MSG_INFORMATION && msg_silent & 1) || (flag == MSG_STATUS && msg_silent & 2) ||
+		(flag == MSG_NOTICE && msg_silent & 4) || (flag == MSG_WARNING && msg_silent & 8) ||
+		(flag == MSG_ERROR && msg_silent & 16) || (flag == MSG_SQL && msg_silent & 16) ||
 		(flag == MSG_DEBUG && msg_silent & 32)) {
 		return 0; // Do not print it.
 	}
@@ -636,8 +650,8 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 		case MSG_STATUS: // Bright Green (To inform about good things)
 			strcat(prefix, CL_GREEN "[Status]" CL_RESET ":" CL_CLL);
 			break;
-		case MSG_SQL: // Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database,
-					  // as successes can as well just be anything else... [Skotlex]
+		case MSG_SQL: // Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for
+					  // SQL errors with the database, as successes can as well just be anything else... [Skotlex]
 			strcat(prefix, CL_MAGENTA "[SQL]" CL_RESET ":" CL_CLL);
 			break;
 		case MSG_INFORMATION: // Bright White (Variable information)
@@ -683,7 +697,9 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap) {
 	if (strlen(DEBUGLOGPATH) > 0) {
 		fp = fopen(DEBUGLOGPATH, "a");
 		if (fp == nullptr) {
-			FPRINTF(STDERR, CL_RED "[ERROR]" CL_RESET ": Could not open '" CL_WHITE "%s" CL_RESET "', access denied.\n", DEBUGLOGPATH);
+			FPRINTF(STDERR,
+					CL_RED "[ERROR]" CL_RESET ": Could not open '" CL_WHITE "%s" CL_RESET "', access denied.\n",
+					DEBUGLOGPATH);
 			FFLUSH(STDERR);
 		} else {
 			fprintf(fp, "%s ", prefix);

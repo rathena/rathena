@@ -239,7 +239,8 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 	/* To ensure the area that exceeds the length of the block, using malloc () to */
 	/* At that time, the distinction by assigning nullptr to unit_head.block */
 	if (hash2size(size_hash) > BLOCK_DATA_SIZE - sizeof(struct unit_head)) {
-		struct unit_head_large *p = (struct unit_head_large *)MALLOC(sizeof(struct unit_head_large) + size, file, line, func);
+		struct unit_head_large *p =
+			(struct unit_head_large *)MALLOC(sizeof(struct unit_head_large) + size, file, line, func);
 		if (p != nullptr) {
 			p->size = size;
 			p->unit_head.block = nullptr;
@@ -257,7 +258,8 @@ void *_mmalloc(size_t size, const char *file, int line, const char *func) {
 			*(long *)((char *)p + sizeof(struct unit_head_large) - sizeof(long) + size) = FREED_POINTER;
 			return (char *)p + sizeof(struct unit_head_large) - sizeof(long);
 		} else {
-			ShowFatalError("Memory manager::memmgr_alloc failed (allocating %" PRIuPTR "+%" PRIuPTR " bytes at %s:%d).\n",
+			ShowFatalError("Memory manager::memmgr_alloc failed (allocating %" PRIuPTR "+%" PRIuPTR
+						   " bytes at %s:%d).\n",
 						   sizeof(struct unit_head_large),
 						   size,
 						   file,
@@ -375,8 +377,10 @@ void _mfree(void *ptr, const char *file, int line, const char *func) {
 	head = (struct unit_head *)((char *)ptr - sizeof(struct unit_head) + sizeof(long));
 	if (head->size == 0) {
 		/* area that is directly secured by malloc () */
-		struct unit_head_large *head_large = (struct unit_head_large *)((char *)ptr - sizeof(struct unit_head_large) + sizeof(long));
-		if (*(long *)((char *)head_large + sizeof(struct unit_head_large) - sizeof(long) + head_large->size) != FREED_POINTER) {
+		struct unit_head_large *head_large =
+			(struct unit_head_large *)((char *)ptr - sizeof(struct unit_head_large) + sizeof(long));
+		if (*(long *)((char *)head_large + sizeof(struct unit_head_large) - sizeof(long) + head_large->size) !=
+			FREED_POINTER) {
 			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
 		} else {
 			head->size = 0xFFFF;
@@ -579,11 +583,14 @@ bool memmgr_verify(void *ptr) {
 
 	// search small blocks
 	while (block) {
-		if ((char *)ptr >= (char *)block && (char *)ptr < ((char *)block) + sizeof(struct block)) { // found memory block
-			if (block->unit_used && (char *)ptr >= block->data) { // memory block is being used and ptr points to a sub-unit
+		if ((char *)ptr >= (char *)block &&
+			(char *)ptr < ((char *)block) + sizeof(struct block)) { // found memory block
+			if (block->unit_used &&
+				(char *)ptr >= block->data) { // memory block is being used and ptr points to a sub-unit
 				size_t i = (size_t)((char *)ptr - block->data) / block->unit_size;
 				struct unit_head *head = block2unit(block, i);
-				if (i < block->unit_maxused && head->block != nullptr) { // memory unit is allocated, check if ptr points to the usable part
+				if (i < block->unit_maxused &&
+					head->block != nullptr) { // memory unit is allocated, check if ptr points to the usable part
 					return ((char *)ptr >= ((char *)head) + sizeof(struct unit_head) - sizeof(long) &&
 							(char *)ptr < ((char *)head) + sizeof(struct unit_head) - sizeof(long) + head->size);
 				}
@@ -622,7 +629,13 @@ static void memmgr_final(void) {
 					char *ptr = (char *)head + sizeof(struct unit_head) - sizeof(long);
 	#ifdef LOG_MEMMGR
 					char buf[1024];
-					sprintf(buf, "%04d : %s line %d size %lu address 0x%p\n", ++count, head->file, head->line, (unsigned long)head->size, ptr);
+					sprintf(buf,
+							"%04d : %s line %d size %lu address 0x%p\n",
+							++count,
+							head->file,
+							head->line,
+							(unsigned long)head->size,
+							ptr);
 					memmgr_log(buf);
 	#endif /* LOG_MEMMGR */
 					// get block pointer and free it [celest]

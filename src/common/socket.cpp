@@ -316,7 +316,9 @@ void set_nonblocking(int fd, unsigned long yes) {
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s.
 	// The argp parameter is zero if nonblocking is to be disabled.
 	if (sIoctl(fd, FIONBIO, &yes) != 0) {
-		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report this!!!\n", fd, error_msg());
+		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report this!!!\n",
+				  fd,
+				  error_msg());
 	}
 }
 
@@ -333,8 +335,9 @@ void setsocketopts(int fd, int delay_timeout) {
 	#endif
 #endif
 
-	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely creating server-side lag.
-	// The RO protocol is mainly single-packet request/response, plus the FIFO model already does packet grouping anyway.
+	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely creating server-side
+	// lag. The RO protocol is mainly single-packet request/response, plus the FIFO model already does packet grouping
+	// anyway.
 	sSetsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char*)&yes, sizeof(yes));
 
 	// force the socket into no-wait, graceful-close mode (should be the default, but better make sure)
@@ -495,7 +498,8 @@ int connect_client(int listen_fd) {
 	}
 	if (fd >= MAXCONN) { // socket number too big
 		ShowError(
-			"connect_client: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n",
+			"connect_client: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently "
+			"%d) for your OS to fix this!\n",
 			fd,
 			MAXCONN);
 		sClose(fd);
@@ -555,7 +559,8 @@ int make_listen_bind(uint32 ip, uint16 port) {
 	}
 	if (fd >= MAXCONN) { // socket number too big
 		ShowError(
-			"make_listen_bind: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n",
+			"make_listen_bind: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently "
+			"%d) for your OS to fix this!\n",
 			fd,
 			MAXCONN);
 		sClose(fd);
@@ -589,7 +594,8 @@ int make_listen_bind(uint32 ip, uint16 port) {
 	epevent.events = EPOLLIN;
 
 	if (epoll_ctl(epfd, EPOLL_CTL_ADD, fd, &epevent) == SOCKET_ERROR) {
-		ShowError("make_listen_bind: failed to add listener socket #%d to epoll event dispatcher: %s\n", fd, error_msg());
+		ShowError(
+			"make_listen_bind: failed to add listener socket #%d to epoll event dispatcher: %s\n", fd, error_msg());
 		sClose(fd);
 		exit(EXIT_FAILURE);
 	}
@@ -625,7 +631,8 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 	}
 	if (fd >= MAXCONN) { // socket number too big
 		ShowError(
-			"make_connection: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n",
+			"make_connection: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently "
+			"%d) for your OS to fix this!\n",
 			fd,
 			MAXCONN);
 		sClose(fd);
@@ -666,7 +673,8 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 			// Connection attempt timed out
 			if (result == 0) {
 				if (!silent) {
-					// Needs special handling, because it does not set an error code and therefore does not provide an error message from the API
+					// Needs special handling, because it does not set an error code and therefore does not provide an
+					// error message from the API
 					ShowError("make_connection: connection failed (socket #%d, timeout after %ds)!\n", fd, timeout);
 				}
 
@@ -681,7 +689,8 @@ int make_connection(uint32 ip, uint16 port, bool silent, int timeout) {
 				}
 
 				if (!silent) {
-					// Needs special handling, because it does not set an error code and therefore does not provide an error message from the API
+					// Needs special handling, because it does not set an error code and therefore does not provide an
+					// error message from the API
 					ShowError("make_connection: connection failed (socket #%d, not writeable)!\n", fd);
 				}
 
@@ -766,7 +775,8 @@ static void delete_session(int fd) {
 	}
 }
 
-int _realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func) {
+int _realloc_fifo(
+	int fd, unsigned int rfifo_size, unsigned int wfifo_size, const char* file, int line, const char* func) {
 	if (!session_isValid(fd)) {
 		return 0;
 	}
@@ -797,7 +807,8 @@ int _realloc_writefifo(int fd, size_t addition, const char* file, int line, cons
 		}
 	} else if (session[fd]->max_wdata >= (size_t)2 * (session[fd]->flag.server ? FIFOSIZE_SERVERLINK : WFIFO_SIZE) &&
 			   (session[fd]->wdata_size + addition) * 4 <
-				   session[fd]->max_wdata) { // shrink rule, shrink by 2 when only a quarter of the fifo is used, don't shrink below nominal size.
+				   session[fd]->max_wdata) { // shrink rule, shrink by 2 when only a quarter of the fifo is used, don't
+											 // shrink below nominal size.
 		newsize = session[fd]->max_wdata / 2;
 	} else { // no change
 		return 0;
@@ -820,7 +831,10 @@ int RFIFOSKIP(int fd, size_t len) {
 	s = session[fd];
 
 	if (s->rdata_size < s->rdata_pos + len) {
-		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %" PRIuPTR " to %d (session #%d)\n", len, RFIFOREST(fd), fd);
+		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %" PRIuPTR " to %d (session #%d)\n",
+				  len,
+				  RFIFOREST(fd),
+				  fd);
 		len = RFIFOREST(fd);
 	}
 
@@ -843,12 +857,14 @@ int WFIFOSET(int fd, size_t len) {
 	// we have written len bytes to the buffer already before calling WFIFOSET
 	if (s->wdata_size + len > s->max_wdata) { // actually there was a buffer overflow already
 		uint32 ip = s->client_addr;
-		ShowFatalError("WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes buffer.\n",
-					   fd,
-					   CONVIP(ip),
-					   (unsigned int)len,
-					   (unsigned int)s->wdata_size,
-					   (unsigned int)s->max_wdata);
+		ShowFatalError(
+			"WFIFOSET: Write Buffer Overflow. Connection %d (%d.%d.%d.%d) has written %u bytes on a %u/%u bytes "
+			"buffer.\n",
+			fd,
+			CONVIP(ip),
+			(unsigned int)len,
+			(unsigned int)s->wdata_size,
+			(unsigned int)s->max_wdata);
 		ShowDebug("Likely command that caused it: 0x%x\n", (*(uint16*)(s->wdata + s->wdata_size)));
 		// no other chance, make a better fifo model
 		exit(EXIT_FAILURE);
@@ -857,13 +873,17 @@ int WFIFOSET(int fd, size_t len) {
 	if (len > 0xFFFF) {
 		// dynamic packets allow up to UINT16_MAX bytes (<packet_id>.W <packet_len>.W ...)
 		// all known fixed-size packets are within this limit, so use the same limit
-		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n", (*(uint16*)(s->wdata + s->wdata_size)), (unsigned int)len, 0xFFFF);
+		ShowFatalError("WFIFOSET: Packet 0x%x is too big. (len=%u, max=%u)\n",
+					   (*(uint16*)(s->wdata + s->wdata_size)),
+					   (unsigned int)len,
+					   0xFFFF);
 		exit(EXIT_FAILURE);
 	} else if (len == 0) {
 		// abuses the fact, that the code that did WFIFOHEAD(fd,0), already wrote
 		// the packet type into memory, even if it could have overwritten vital data
 		// this can happen when a new packet was added on map-server, but packet len table was not updated
-		ShowWarning("WFIFOSET: Attempted to send zero-length packet, most likely 0x%04x (please report this).\n", WFIFOW(fd, 0));
+		ShowWarning("WFIFOSET: Attempted to send zero-length packet, most likely 0x%04x (please report this).\n",
+					WFIFOW(fd, 0));
 		return 0;
 	}
 
@@ -877,12 +897,13 @@ int WFIFOSET(int fd, size_t len) {
 		}
 
 		if (s->wdata_size + len > WFIFO_MAX) { // reached maximum write fifo size
-			ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%" PRIuPTR
-					  ", ip=%lu.%lu.%lu.%lu).\n",
-					  fd,
-					  WFIFOW(fd, 0),
-					  len,
-					  CONVIP(s->client_addr));
+			ShowError(
+				"WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet "
+				"0x%04x (len=%" PRIuPTR ", ip=%lu.%lu.%lu.%lu).\n",
+				fd,
+				WFIFOW(fd, 0),
+				len,
+				CONVIP(s->client_addr));
 			set_eof(fd);
 			return 0;
 		}
@@ -1019,7 +1040,8 @@ int do_sockets(t_tick next) {
 		}
 
 		if (session[i]->flag.eof) // func_send can't free a session, this is safe.
-		{ // Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
+		{ // Finally, even if there is no data to parse, connections signalled eof should be closed, so we call
+		  // parse_func [Skotlex]
 			session[i]->func_parse(i); // This should close the session immediately.
 		}
 	}
@@ -1033,7 +1055,8 @@ int do_sockets(t_tick next) {
 
 		if (session[i]->rdata_tick && DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time) {
 			if (session[i]->flag.server) { /* server is special */
-				if (session[i]->flag.ping != 2) { /* only update if necessary otherwise it'd resend the ping unnecessarily */
+				if (session[i]->flag.ping !=
+					2) { /* only update if necessary otherwise it'd resend the ping unnecessarily */
 					session[i]->flag.ping = 1;
 				}
 			} else {
@@ -1279,7 +1302,8 @@ int access_ipmask(const char* str, AccessControl* acc) {
 		unsigned int a[4];
 		unsigned int m[4];
 		int n;
-		if (((n = sscanf(str, "%3u.%3u.%3u.%3u/%3u.%3u.%3u.%3u", a, a + 1, a + 2, a + 3, m, m + 1, m + 2, m + 3)) != 8 && // not an ip + standard mask
+		if (((n = sscanf(str, "%3u.%3u.%3u.%3u/%3u.%3u.%3u.%3u", a, a + 1, a + 2, a + 3, m, m + 1, m + 2, m + 3)) !=
+				 8 && // not an ip + standard mask
 			 (n = sscanf(str, "%3u.%3u.%3u.%3u/%3u", a, a + 1, a + 2, a + 3, m)) != 5 && // not an ip + bit mask
 			 (n = sscanf(str, "%3u.%3u.%3u.%3u", a, a + 1, a + 2, a + 3)) != 4) || // not an ip
 			a[0] > 255 ||
@@ -1461,11 +1485,15 @@ void do_close(int fd) {
 	// Epoll based Event Dispatcher
 	epevent.data.fd = fd;
 	epevent.events = EPOLLIN;
-	epoll_ctl(epfd, EPOLL_CTL_DEL, fd, &epevent); // removing the socket from epoll when it's being closed is not required but recommended
+	epoll_ctl(epfd,
+			  EPOLL_CTL_DEL,
+			  fd,
+			  &epevent); // removing the socket from epoll when it's being closed is not required but recommended
 #endif
 
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
-	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
+	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not
+				// reusing this socket.
 	if (session[fd]) {
 		delete_session(fd);
 	}
@@ -1577,7 +1605,10 @@ void socket_init(void) {
 		struct rlimit rlp;
 		if (0 == getrlimit(RLIMIT_NOFILE, &rlp)) {
 			rlp.rlim_cur = MAXCONN;
-			if (0 != setrlimit(RLIMIT_NOFILE, &rlp)) { // failed, try setting the maximum too (permission to change system limits is required)
+			if (0 !=
+				setrlimit(
+					RLIMIT_NOFILE,
+					&rlp)) { // failed, try setting the maximum too (permission to change system limits is required)
 				rlp.rlim_max = MAXCONN;
 				if (0 != setrlimit(RLIMIT_NOFILE, &rlp)) { // failed
 					const char* errmsg = error_msg();
@@ -1591,7 +1622,8 @@ void socket_init(void) {
 					getrlimit(RLIMIT_NOFILE, &rlp);
 					rlim_cur = rlp.rlim_cur;
 					ShowWarning(
-						"socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum "
+						"socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, "
+						"current limit=%d, maximum "
 						"allowed=%d, %s).\n",
 						MAXCONN,
 						rlim_ori,
@@ -1623,7 +1655,8 @@ void socket_init(void) {
 	memset(&epevent, 0x00, sizeof(struct epoll_event));
 	epevents = (struct epoll_event*)aCalloc(epoll_maxevents, sizeof(struct epoll_event));
 
-	ShowInfo("Server uses '" CL_WHITE "epoll" CL_RESET "' with up to " CL_WHITE "%d" CL_RESET " events per cycle as event dispatcher\n",
+	ShowInfo("Server uses '" CL_WHITE "epoll" CL_RESET "' with up to " CL_WHITE "%d" CL_RESET
+			 " events per cycle as event dispatcher\n",
 			 epoll_maxevents);
 #endif
 
@@ -1702,7 +1735,8 @@ void send_shortlist_add_fd(int fd) {
 	}
 
 	if (send_shortlist_count >= ARRAYLENGTH(send_shortlist_array)) {
-		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%" PRIuPTR " shortlist.length=%d)\n",
+		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%" PRIuPTR
+				  " shortlist.length=%d)\n",
 				  fd,
 				  send_shortlist_count,
 				  ARRAYLENGTH(send_shortlist_array));

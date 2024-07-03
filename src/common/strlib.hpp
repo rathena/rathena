@@ -102,7 +102,8 @@ int sv_parse_next(s_svstate& sv);
 /// out_pos[0] and out_pos[1] are the start and end of line.
 /// Other position pairs are the start and end of fields.
 /// Returns the number of fields found or -1 if an error occurs.
-size_t sv_parse(const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error);
+size_t sv_parse(
+	const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error);
 
 /// Splits a delim-separated string.
 /// WARNING: this function modifies the input string
@@ -110,7 +111,8 @@ size_t sv_parse(const char* str, size_t len, size_t startoff, char delim, size_t
 /// out_fields[0] is the start of the next line.
 /// Other entries are the start of fields (nul-teminated).
 /// Returns the number of fields found or -1 if an error occurs.
-size_t sv_split(char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error);
+size_t sv_split(
+	char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error);
 
 /// Escapes src to out_dest according to the format of the C compiler.
 /// Returns the length of the escaped string.
@@ -125,10 +127,17 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len);
 /// Skips a C escape sequence (starting with '\\').
 const char* skip_escaped_c(const char* p);
 
-/// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
-/// Tracks the progress of the operation (current line number, number of successfully processed rows).
-/// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
-bool sv_readdb(const char* directory, const char* filename, char delim, size_t mincols, size_t maxcols, size_t maxrows, bool (*parseproc)(char* fields[], size_t columns, size_t current), bool silent);
+/// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by
+/// row. Tracks the progress of the operation (current line number, number of successfully processed rows). Returns
+/// 'true' if it was able to process the specified file, or 'false' if it could not be read.
+bool sv_readdb(const char* directory,
+			   const char* filename,
+			   char delim,
+			   size_t mincols,
+			   size_t maxcols,
+			   size_t maxrows,
+			   bool (*parseproc)(char* fields[], size_t columns, size_t current),
+			   bool silent);
 
 /// StringBuf - dynamic string
 struct StringBuf {

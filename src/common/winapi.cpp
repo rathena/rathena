@@ -85,7 +85,17 @@ bool IsCurrentUserLocalAdministrator(void) {
 		After that, perform the access check.  This will determine whether
 		the current user is a local admin.
 		*/
-		if (!AllocateAndInitializeSid(&SystemSidAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &psidAdmin)) {
+		if (!AllocateAndInitializeSid(&SystemSidAuthority,
+									  2,
+									  SECURITY_BUILTIN_DOMAIN_RID,
+									  DOMAIN_ALIAS_RID_ADMINS,
+									  0,
+									  0,
+									  0,
+									  0,
+									  0,
+									  0,
+									  &psidAdmin)) {
 			__leave;
 		}
 
@@ -149,7 +159,14 @@ bool IsCurrentUserLocalAdministrator(void) {
 		GenericMapping.GenericExecute = 0;
 		GenericMapping.GenericAll = ACCESS_READ | ACCESS_WRITE;
 
-		if (!AccessCheck(psdAdmin, hImpersonationToken, dwAccessDesired, &GenericMapping, &ps, &dwStructureSize, &dwStatus, &fReturn)) {
+		if (!AccessCheck(psdAdmin,
+						 hImpersonationToken,
+						 dwAccessDesired,
+						 &GenericMapping,
+						 &ps,
+						 &dwStructureSize,
+						 &dwStatus,
+						 &fReturn)) {
 			fReturn = FALSE;
 			__leave;
 		}

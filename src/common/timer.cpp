@@ -66,7 +66,8 @@ int add_timer_func_list(TimerFunc func, const char* name) {
 			if (func == tfl->func) {
 				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n", tfl->func, tfl->name, name);
 			} else if (strcmp(name, tfl->name) == 0) {
-				ShowWarning("add_timer_func_list: function %p has the same name as %p(%s)\n", func, tfl->func, tfl->name);
+				ShowWarning(
+					"add_timer_func_list: function %p has the same name as %p(%s)\n", func, tfl->func, tfl->name);
 			}
 		}
 		CREATE(tfl, struct timer_func_list, 1);
@@ -323,7 +324,10 @@ t_tick settick_timer(int tid, t_tick tick) {
 	// search timer position
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
 	if (i == BHEAP_LENGTH(timer_heap)) {
-		ShowError("settick_timer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
+		ShowError("settick_timer: no such timer %d (%p(%s))\n",
+				  tid,
+				  timer_data[tid].func,
+				  search_timer_func_list(timer_data[tid].func));
 		return -1;
 	}
 

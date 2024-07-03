@@ -236,11 +236,12 @@ int e_mail_check(char* email) {
 // on/off, english, fran�ais, deutsch, espa�ol, portuguese
 //--------------------------------------------------
 int config_switch(const char* str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0 ||
-		strcmpi(str, "sim") == 0) {
+	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 ||
+		strcmpi(str, "si") == 0 || strcmpi(str, "sim") == 0) {
 		return 1;
 	}
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0) {
+	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 ||
+		strcmpi(str, "nao") == 0) {
 		return 0;
 	}
 
@@ -357,11 +358,13 @@ int sv_parse_next(s_svstate& sv) {
 
 	// check opt
 	if (delim == '\n' && (opt & (SV_TERMINATE_CRLF | SV_TERMINATE_LF))) {
-		ShowError("sv_parse_next: delimiter '\\n' is not compatible with options SV_TERMINATE_LF or SV_TERMINATE_CRLF.\n");
+		ShowError(
+			"sv_parse_next: delimiter '\\n' is not compatible with options SV_TERMINATE_LF or SV_TERMINATE_CRLF.\n");
 		return -1; // error
 	}
 	if (delim == '\r' && (opt & (SV_TERMINATE_CRLF | SV_TERMINATE_CR))) {
-		ShowError("sv_parse_next: delimiter '\\r' is not compatible with options SV_TERMINATE_CR or SV_TERMINATE_CRLF.\n");
+		ShowError(
+			"sv_parse_next: delimiter '\\r' is not compatible with options SV_TERMINATE_CR or SV_TERMINATE_CRLF.\n");
 		return -1; // error
 	}
 
@@ -492,7 +495,8 @@ int sv_parse_next(s_svstate& sv) {
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-size_t sv_parse(const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error) {
+size_t sv_parse(
+	const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error) {
 	// initialize
 	error = false;
 
@@ -563,7 +567,8 @@ size_t sv_parse(const char* str, size_t len, size_t startoff, char delim, size_t
 /// @param nfields Size of the field array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-size_t sv_split(char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error) {
+size_t sv_split(
+	char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error) {
 	if (out_fields == nullptr || nfields <= 0) {
 		return 0; // nothing to do
 	}
@@ -768,7 +773,8 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len) {
 					++i;
 				} while (i < len && ISXDIGIT(src[i]));
 				out_dest[j++] = (char)c;
-			} else if (src[i] == '0' || src[i] == '1' || src[i] == '2' || src[i] == '3') { // octal escape sequence (255=0377)
+			} else if (src[i] == '0' || src[i] == '1' || src[i] == '2' ||
+					   src[i] == '3') { // octal escape sequence (255=0377)
 				unsigned char c = src[i] - '0';
 				++i; // '0', '1', '2' or '3'
 				if (i < len && src[i] >= '0' && src[i] <= '7') {
@@ -856,9 +862,9 @@ const char* skip_escaped_c(const char* p) {
 }
 
 /**
- * Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
- * Tracks the progress of the operation (current line number, number of successfully processed rows).
- * Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
+ * Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by
+ * row. Tracks the progress of the operation (current line number, number of successfully processed rows). Returns
+ * 'true' if it was able to process the specified file, or 'false' if it could not be read.
  * @param directory : Directory
  * @param filename : filename File to process
  * @param delim : delim Field delimiter
@@ -916,7 +922,8 @@ bool sv_readdb(const char* directory,
 		}
 
 		bool error;
-		size_t columns = sv_split(line, strlen(line), 0, delim, fields, nb_cols, SV_TERMINATE_LF | SV_TERMINATE_CRLF, error);
+		size_t columns =
+			sv_split(line, strlen(line), 0, delim, fields, nb_cols, SV_TERMINATE_LF | SV_TERMINATE_CRLF, error);
 
 		if (error) {
 			ShowError("sv_readdb: error in line %d of \"%s\".\n", lines, path);
@@ -924,15 +931,25 @@ bool sv_readdb(const char* directory,
 		}
 
 		if (columns < mincols) {
-			ShowError("sv_readdb: Insufficient columns in line %d of \"%s\" (found %d, need at least %d).\n", lines, path, columns, mincols);
+			ShowError("sv_readdb: Insufficient columns in line %d of \"%s\" (found %d, need at least %d).\n",
+					  lines,
+					  path,
+					  columns,
+					  mincols);
 			continue; // not enough columns
 		}
 		if (columns > maxcols) {
-			ShowError("sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n", lines, path, columns, maxcols);
+			ShowError("sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n",
+					  lines,
+					  path,
+					  columns,
+					  maxcols);
 			continue; // too many columns
 		}
 		if (entries == maxrows) {
-			ShowError("sv_readdb: Reached the maximum allowed number of entries (%d) when parsing file \"%s\".\n", maxrows, path);
+			ShowError("sv_readdb: Reached the maximum allowed number of entries (%d) when parsing file \"%s\".\n",
+					  maxrows,
+					  path);
 			break;
 		}
 
