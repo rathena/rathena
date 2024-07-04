@@ -22427,6 +22427,11 @@ BUILDIN_FUNC(buyingstore)
 /// searchstores <uses>,<effect>{,<map name>};
 BUILDIN_FUNC(searchstores)
 {
+	if (!battle_config.feature_search_stores) {
+		ShowError("buildin_searchstores: Search stores feature is disabled.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	map_session_data* sd;
 
 	if( !script_rid2sd(sd) )
