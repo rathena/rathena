@@ -359,9 +359,8 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	if ( !battle_config.vending_over_max && (static_cast<int64>(sd.status.zeny) + total) > MAX_ZENY ) {
 #if PACKETVER >= 20200819
 		clif_msg_color( &sd, MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR, color_table[COLOR_RED] );
-#else
-		clif_skill_fail( sd, MC_VENDING );
 #endif
+		clif_skill_fail( sd, MC_VENDING );
 		sd.state.prevend = 0;
 		sd.state.workinprogress = WIP_DISABLE_NONE;
 		clif_openvending_ack( sd, OPENSTORE2_FAILED );
