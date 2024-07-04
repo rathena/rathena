@@ -53771,6 +53771,8 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
+      bonus bShortAtkRate,3;
+      bonus bLongAtkRate,3;
       bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310000
     AegisName: Ranger_Top2

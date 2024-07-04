@@ -52065,6 +52065,8 @@ Body:
           - Flame_Staff_Furious   # 640053
     Script: |
       bonus2 bSkillAtk,"AG_ALL_BLOOM",25;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK",25;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK2",25;
   - Combos:
       - Combo:
           - FuriousCirclet_IQ   # 400695
@@ -52182,6 +52184,8 @@ Body:
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bSkillAtk,"AG_ALL_BLOOM",.@sum;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK",.@sum;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK2",.@sum;
   - Combos:
       - Combo:
           - Rifle_Furious   # 810042
@@ -52195,3 +52199,11 @@ Body:
     Script: |
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25;
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",15;
+  - Combos:
+      - Combo:
+          - aegis_300549   # 300549
+          - Sesrumnir_Evt_Ring   # 490557
+    Script: |
+      bonus bShortAtkRate,7;
+      bonus bLongAtkRate,7;
+      bonus2 bMagicAtkEle,Ele_All,7;
