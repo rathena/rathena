@@ -1270,7 +1270,7 @@ void clif_parse_roulette_item(int fd, map_session_data *sd);
 
 void clif_elementalconverter_list( map_session_data& sd );
 
-void clif_millenniumshield(struct block_list *bl, short shields);
+void clif_millenniumshield( block_list& bl, int16 shields );
 
 void clif_magicdecoy_list( map_session_data& sd, uint16 skill_lv, short x, short y );
 
@@ -1282,7 +1282,7 @@ int clif_skill_itemlistwindow( map_session_data *sd, uint16 skill_id, uint16 ski
 void clif_elemental_info(map_session_data *sd);
 void clif_elemental_updatestatus(map_session_data *sd, int type);
 
-void clif_spiritcharm(map_session_data *sd);
+void clif_spiritcharm( map_session_data& sd );
 
 void clif_snap( struct block_list *bl, short x, short y );
 void clif_monster_hp_bar( struct mob_data* md, int fd );

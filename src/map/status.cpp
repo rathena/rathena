@@ -11638,7 +11638,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 				val2 = ((chance < 20) ? 4 : (chance < 50) ? 3 : 2); // Shield count
 				val3 = 1000; // Shield HP
-				clif_millenniumshield(bl, val2);
+				clif_millenniumshield( *bl, val2 );
 			}
  			break;
 		case SC_ABUNDANCE:
@@ -13569,7 +13569,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 		/* 3rd Stuff */
 		case SC_MILLENNIUMSHIELD:
-			clif_millenniumshield(bl, 0);
+			clif_millenniumshield( *bl, 0 );
 			break;
 		case SC_HALLUCINATIONWALK:
 			sc_start(bl,bl,SC_HALLUCINATIONWALK_POSTDELAY,100,sce->val1,skill_get_time2(GC_HALLUCINATIONWALK,sce->val1));

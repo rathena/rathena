@@ -1698,7 +1698,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 			if (sd->spiritball > 0)
 				clif_spiritball(&sd->bl);
 			if (sd->sc.getSCE(SC_MILLENNIUMSHIELD))
-				clif_millenniumshield(&sd->bl, sd->sc.getSCE(SC_MILLENNIUMSHIELD)->val2);
+				clif_millenniumshield( sd->bl, sd->sc.getSCE( SC_MILLENNIUMSHIELD )->val2 );
 			if (sd->soulball > 0)
 				clif_soulball(sd);
 			if (sd->servantball > 0)
@@ -1712,7 +1712,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 			if( sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_area(sd);
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
-				clif_spiritcharm(sd);
+				clif_spiritcharm( *sd );
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 			clif_efst_status_change_sub(bl, bl, AREA);
@@ -19386,15 +19386,16 @@ void clif_elementalconverter_list( map_session_data& sd ){
 /**
  * Rune Knight
  **/
-void clif_millenniumshield(struct block_list *bl, short shields) {
-#if PACKETVER >= 20081217
-	unsigned char buf[10];
+void clif_millenniumshield( block_list& bl, int16 shields ){
+#if PACKETVER >= 20081126
+	PACKET_ZC_MILLENNIUMSHIELD packet{};
 
-	WBUFW(buf,0) = 0x440;
-	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = shields;
-	WBUFW(buf,8) = 0;
-	clif_send(buf,packet_len(0x440),bl,AREA);
+	packet.packetType = HEADER_ZC_MILLENNIUMSHIELD;
+	packet.aid = bl.id;
+	packet.num = shields;
+	packet.state = 0;
+
+	clif_send( &packet, sizeof( packet ), &bl, AREA );
 #endif
 }
 
@@ -19550,18 +19551,19 @@ void clif_parse_SkillSelectMenu(int fd, map_session_data *sd) {
 }
 
 
-/// Kagerou/Oboro amulet spirit (ZC_SPIRITS_ATTRIBUTE).
-/// 08cf <id>.L <type>.W <num>.W
-void clif_spiritcharm(map_session_data *sd) {
-	unsigned char buf[10];
+/// Kagerou/Oboro amulet spirit.
+/// 08cf <id>.L <type>.W <num>.W (ZC_SPIRITS_ATTRIBUTE)
+void clif_spiritcharm( map_session_data& sd ){
+#if PACKETVER >= 20111102
+	PACKET_ZC_SPIRITS_ATTRIBUTE packet{};
 
-	nullpo_retv(sd);
+	packet.packetType = HEADER_ZC_SPIRITS_ATTRIBUTE;
+	packet.aid = sd.bl.id;
+	packet.spiritsType = static_cast<decltype(packet.spiritsType)>(sd.spiritcharm_type);
+	packet.num = static_cast<decltype(packet.num)>(sd.spiritcharm);
 
-	WBUFW(buf,0) = 0x08cf;
-	WBUFL(buf,2) = sd->bl.id;
-	WBUFW(buf,6) = sd->spiritcharm_type;
-	WBUFW(buf,8) = sd->spiritcharm;
-	clif_send(buf, packet_len(0x08cf), &sd->bl, AREA);
+	clif_send( &packet, sizeof( packet ), &sd.bl, AREA );
+#endif
 }
 
 
