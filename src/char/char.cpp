@@ -2876,6 +2876,8 @@ void char_config_split_startitem(char *w1_value, char *w2_value, struct startite
 	int i = 0;
 	size_t fields_length = 3 + 1;
 
+	memset(start_items, sizeof(struct startitem) * MAX_STARTITEM, 0);
+
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
 	if (fields == nullptr)
 		return; // Failed to allocate memory.
