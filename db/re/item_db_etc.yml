@@ -53760,6 +53760,20 @@ Body:
       bonus bMaxHPrate,-15;
       bonus bPAtk,.@r;
       bonus bAtkRate,.@r;
+  - Id: 300549
+    AegisName: aegis_300549
+    Name: Summer Vacation Pope Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bLongAtkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -83045,6 +83059,42 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000284
+    AegisName: EpisodClear13
+    Name: Eps 13 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000285
+    AegisName: EpisodClear14
+    Name: Eps 14 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000286
+    AegisName: EpisodClear15
+    Name: Eps 15 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1000287
     AegisName: EpisodClear17
     Name: Episode 17 Clear Ticket
@@ -89781,6 +89831,402 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+  - Id: 1001689
+    AegisName: R_Snowflower_Armor
+    Name: Printed Snow Flower Armor
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001690
+    AegisName: R_Snowflower_Manteau
+    Name: Printed Snow Flower Manteau
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001691
+    AegisName: R_Snowflower_Boots
+    Name: Printed Snow Flower Boots
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001692
+    AegisName: R_Snowflower_Pendant
+    Name: Printed Snow Flower Pendant
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001693
+    AegisName: R_Snowflower_Necklace
+    Name: Printed Snow Flower Necklace
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001694
+    AegisName: R_Snowflower_Robe
+    Name: Printed Snow Flower Robe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001695
+    AegisName: R_Snowflower_Muffler
+    Name: Printed Snow Flower Muffler
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001696
+    AegisName: R_Snowflower_Shoes
+    Name: Printed Snow Flower Shoes
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001697
+    AegisName: R_Snowflower_Ring
+    Name: Printed Snow Flower Ring
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001698
+    AegisName: R_Snowflower_Earring
+    Name: Printed Snow Flower Earring
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001699
+    AegisName: R_Glacier_T_Sword
+    Name: Printed Glacier Two-handed Sword
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001700
+    AegisName: R_Glacier_Lance
+    Name: Printed Glacier Lance
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001701
+    AegisName: R_Glacier_Sword
+    Name: Printed Glacier Sword
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001702
+    AegisName: R_Glacier_B_Sword
+    Name: Printed Glacier Basic Sword
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001703
+    AegisName: R_Glacier_Spear
+    Name: Printed Glacier Spear
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001704
+    AegisName: R_Glacier_T_Axe
+    Name: Printed Glacier Mechanic Axe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001705
+    AegisName: R_Glacier_Axe
+    Name: Printed Glacier Axe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001706
+    AegisName: R_Glacier_Mace
+    Name: Printed Glacier Mace
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001707
+    AegisName: R_Glacier_M_Mace
+    Name: Printed Glacier Mechanic Mace
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001708
+    AegisName: R_Glacier_R_Knife
+    Name: Printed Glacier Rogue Knife
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001709
+    AegisName: R_Glacier_B_Knife
+    Name: Printed Glacier Basic Knife
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001710
+    AegisName: R_Glacier_Knuckle
+    Name: Printed Glacier Knuckle
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001711
+    AegisName: R_Glacier_Katar
+    Name: Printed Glacier Katar
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001712
+    AegisName: R_Glacier_Bow
+    Name: Printed Glacier Bow
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001713
+    AegisName: R_Glacier_Violin
+    Name: Printed Glacier Violin
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001714
+    AegisName: R_Glacier_Whip
+    Name: Printed Glacier Whip
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001715
+    AegisName: R_Glacier_Humma
+    Name: Printed Glacier Huuma Shuriken
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001716
+    AegisName: R_Glacier_Book
+    Name: Printed Glacier Book
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001717
+    AegisName: R_Glacier_Wand
+    Name: Printed Glacier Wand
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001718
+    AegisName: R_Glacier_Staff
+    Name: Printed Glacier Staff
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001719
+    AegisName: R_Glacier_Foxtail
+    Name: Printed Glacier Foxtail
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001720
+    AegisName: R_Glacier_Revolver
+    Name: Printed Glacier Revolver
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001721
+    AegisName: R_Glacier_Rifle
+    Name: Printed Glacier Rifle
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001722
+    AegisName: R_Glacier_Shotgun
+    Name: Printed Glacier Shotgun
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001723
+    AegisName: R_Glacier_Gatling
+    Name: Printed Glacier Gatling
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001724
+    AegisName: R_Glacier_Launcher
+    Name: Printed Glacier Launcher
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001737
     AegisName: BioloStone_Robe
     Name: Biolo Stone (Garment)
@@ -89796,9 +90242,77 @@ Body:
     Name: Spirit Handler Stone (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001740
+    AegisName: Summer_Ticket
+    Name: Ocean Week Commemoration Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001741
+    AegisName: Summer_W_Melon
+    Name: Summer Watermelon
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001742
+    AegisName: aegis_1001742
+    Name: Festival Food Bag
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1001744
     AegisName: Kr_B_Event04
     Name: Sweet Strawberry Fresh Cream
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001753
+    AegisName: D_EpisodClear13
+    Name: Episode 13 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001755
+    AegisName: D_EpisodClear14
+    Name: Episode 14 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001756
+    AegisName: D_EpisodClear15
+    Name: Episode 15 Pass Ticket    # !todo check english name
     Type: Etc
     Trade:
       NoDrop: true

@@ -113177,3 +113177,265 @@ Body:
           - Index: 65
             Item: Critical_Stone_Bottom
             Rate: 400
+  - Group: STOVE_CHANNELING_BOX_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Battle_Manual100
+            Amount: 5
+          - Index: 1
+            Item: E_Token_Of_Siegfried
+            Amount: 5
+          - Index: 2
+            Item: Comp_Kafra_Card
+            Amount: 10
+          - Index: 3
+            Item: World_Tour_Ticket
+            Amount: 10
+  - Group: STOVE_CHANNELING_BOX_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Boarding_Halter_Box30_Z
+          - Index: 1
+            Item: Comp_Almighty
+            Amount: 10
+          - Index: 2
+            Item: E_Wing_Of_Fly_3Day_Box
+            Amount: 3
+          - Index: 3
+            Item: Buff_Scroll_Box
+            Amount: 3
+  - Group: STOVE_CHANNELING_BOX_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: E_Life_Potion_Pack
+            Amount: 2
+          - Index: 1
+            Item: Comp_Small_Mana_Potion
+            Amount: 20
+          - Index: 2
+            Item: E_Infinity_Drink
+            Amount: 10
+          - Index: 3
+            Item: Comp_Power_Booster
+            Amount: 10
+  - Group: STOVE_CHANNELING_BOX_4
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: All_In_One_buff_B
+            Amount: 10
+          - Index: 1
+            Item: All_In_One_Healing_B
+            Amount: 10
+          - Index: 2
+            Item: Cachua_Coupon
+            Amount: 10
+          - Index: 3
+            Item: Evt_Cos_Coin
+            Amount: 10
+  - Group: LI_NYANGVINE_BOX1_35
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 100
+          - Index: 1
+            Item: Enchant_Stone_Box35
+            Amount: 2
+          - Index: 2
+            Item: Comp_Bubble_Gum
+            Amount: 3
+  - Group: LI_NYANGVINE_BOX2_35
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 200
+          - Index: 1
+            Item: Battle_Manual100
+            Amount: 5
+          - Index: 2
+            Item: Enchant_Stone_Box35
+            Amount: 2
+  - Group: LI_NYANGVINE_BOX3_35
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 400
+          - Index: 1
+            Item: Comp_Bubble_Gum
+            Amount: 10
+          - Index: 2
+            Item: Battle_Manual100
+            Amount: 5
+          - Index: 3
+            Item: Enchant_Stone_Box35
+            Amount: 5
+  - Group: A_SPEED_BOOSTER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Speed_Booster
+            Amount: 10
+          - Index: 1
+            Item: K_Secret_Key
+  - Group: A_SPEED_BOOSTER_10_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Speed_Booster
+            Amount: 100
+          - Index: 1
+            Item: K_Secret_Key
+            Amount: 11
+  - Group: L_INFINITY_POWER_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Limit_Power_Booster
+            Amount: 100
+          - Index: 1
+            Item: Infinity_Drink
+            Amount: 100
+          - Index: 2
+            Item: K_Secret_Key
+            Amount: 25
+          - Index: 3
+            Item: Cachua_Coupon
+            Amount: 5
+  - Group: L_ALL_RED_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Almighty
+            Amount: 100
+          - Index: 1
+            Item: Red_Booster
+            Amount: 125
+          - Index: 2
+            Item: K_Secret_Key
+            Amount: 25
+          - Index: 3
+            Item: Cachua_Coupon
+            Amount: 5
+  - Group: L_DEFENSE_POTION_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Small_Life_Potion
+            Amount: 200
+          - Index: 1
+            Item: Med_Life_Potion
+            Amount: 200
+          - Index: 2
+            Item: Mysterious_Water
+            Amount: 200
+          - Index: 3
+            Item: Small_Mana_Potion
+            Amount: 50
+          - Index: 4
+            Item: M_DEFScroll
+            Amount: 300
+          - Index: 5
+            Item: K_Secret_Key
+            Amount: 25
+          - Index: 6
+            Item: Cachua_Coupon
+            Amount: 5
+  - Group: L_SPEED_FORCE_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Force_Booster
+            Amount: 100
+          - Index: 1
+            Item: Speed_Booster
+            Amount: 100
+          - Index: 2
+            Item: K_Secret_Key
+            Amount: 25
+          - Index: 3
+            Item: Cachua_Coupon
+            Amount: 5
+  - Group: L_SPECIAL_SPEED_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Speed_Booster
+            Amount: 200
+          - Index: 1
+            Item: K_Secret_Key
+            Amount: 30
+          - Index: 2
+            Item: Cachua_Coupon
+            Amount: 10
+  - Group: L_SPECIAL_FORCE_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Force_Booster
+            Amount: 200
+          - Index: 1
+            Item: K_Secret_Key
+            Amount: 30
+          - Index: 2
+            Item: Cachua_Coupon
+            Amount: 10
+  - Group: COSTUMEMILEPACK_35_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 100
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 12
+          - Index: 2
+            Item: Enchant_Stone_Box35
+            Amount: 3
+  - Group: COSTUMEMILEPACK_35_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 200
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 25
+          - Index: 2
+            Item: Enchant_Stone_Box35
+            Amount: 5
+  - Group: COSTUMEMILEPACK_35_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 400
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 50
+          - Index: 2
+            Item: Enchant_Stone_Box35
+            Amount: 10

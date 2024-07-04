@@ -20854,25 +20854,6 @@ Body:
       }
   - Combos:
       - Combo:
-          - Hollow_Shoes
-          - Berzebub_Card
-    Script: |
-      .@r = getrefine();
-      skill "PR_MAGNUS",10;
-      bonus2 bMagicAddRace,RC_Undead,30;
-      bonus2 bMagicAddRace,RC_Demon,30;
-      bonus2 bMagicAddEle,Ele_Dark,30;
-      bonus2 bMagicAddEle,Ele_Undead,30;
-      if (BaseLevel >= 100) {
-         bonus bMatk,15*.@r;
-         bonus bVariableCastrate,-7*.@r;
-      }
-      else {
-         bonus bMatk,5*.@r;
-         bonus bVariableCastrate,-2*.@r;
-      }
-  - Combos:
-      - Combo:
           - Astraea_Ring
           - B_Magaleta_Card
     Script: |
@@ -46539,6 +46520,7 @@ Body:
     Script: |
       bonus2 bAddEle,Ele_All,20;
       bonus bAspdRate,5;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",40;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",40;
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",20;
   - Combos:
@@ -47407,6 +47389,7 @@ Body:
     Script: |
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",25;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM",25;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",25;
       bonus2 bSubRace,RC_Player_Human,10;
       bonus2 bSubRace,RC_Player_Doram,10;
   - Combos:
@@ -50874,14 +50857,6 @@ Body:
       bonus bHealPower,15;
   - Combos:
       - Combo:
-          - aegis_311883    # 311883
-          - aegis_410302    # 410302
-    Script: |
-      bonus bSpeedRate,25;
-      bonus2 bSubRace,RC_Player_Human,5;
-      bonus2 bSubRace,RC_Player_Doram,5;
-  - Combos:
-      - Combo:
           - R001_Bestia_Card    # 300281
           - aegis_311883    # 311883
     Script: |
@@ -51485,12 +51460,6 @@ Body:
       }
   - Combos:
       - Combo:
-          - Berzebub_Card    # 4145
-          - VesperHeadGear    # 19436
-    Script: |
-      bonus bVariableCastrate,30;
-  - Combos:
-      - Combo:
           - Preschool_Hat    # 18860
           - Shoes_Of_Hope    # 22038
     Script: |
@@ -52035,3 +52004,206 @@ Body:
           - Ignis_Cap    # 18651
     Script: |
       bonus bAspdRate,getequiprefinerycnt(EQI_HEAD_TOP)/2;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_TR   # 400673
+          - MetalVilolin_Furious   # 570072
+      - Combo:
+          - FuriousCirclet_TR   # 400673
+          - MetalWhip_Furious   # 580072
+    Script: |
+      bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+      bonus2 bSkillAtk,"WM_REVERBERATION",35;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_TR   # 400673
+          - Harp_Furious   # 570073
+      - Combo:
+          - FuriousCirclet_TR   # 400673
+          - Whip_Furious   # 580073
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_BO   # 400674
+          - Lapier_Furious   # 500101
+    Script: |
+      bonus2 bSkillCooldown,"BO_EXPLOSIVE_POWDER",-120;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_BO   # 400674
+          - SharpSword_Furious   # 500102
+    Script: |
+      bonus2 bSkillCooldown,"BO_MAYHEMIC_THORNS",-120;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_HN   # 400675
+          - WhiteSword_Furious   # 500103
+    Script: |
+      bonus2 bSkillCooldown,"HN_DOUBLEBOWLINGBASH",-150;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_HN   # 400675
+          - Stick_Furious   # 550148
+    Script: |
+      bonus2 bSkillCooldown,"HN_JUPITEL_THUNDER_STORM",-250;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_AG   # 400694
+          - Specter_Furious   # 550150
+    Script: |
+      bonus2 bMagicAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_Player_Human,-10;
+      bonus2 bMagicAddRace,RC_Player_Doram,-10;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_AG   # 400694
+          - Flame_Staff_Furious   # 640053
+    Script: |
+      bonus2 bSkillAtk,"AG_ALL_BLOOM",25;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK",25;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK2",25;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_IQ   # 400695
+          - GaleClaw_Furious   # 560067
+    Script: |
+      bonus2 bSkillCooldown,"IQ_MASSIVE_F_BLASTER",-1200;
+      bonus2 bSkillAtk,"IQ_MASSIVE_F_BLASTER",20;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_IQ   # 400695
+          - Exterminate_Furious   # 560068
+    Script: |
+      bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",25;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_NW   # 400696
+          - Rifle_Furious   # 810042
+    Script: |
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",25;
+  - Combos:
+      - Combo:
+          - FuriousCirclet_NW   # 400696
+          - Gatling_Furious   # 830038
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Player_Human,-10;
+      bonus2 bAddRace,RC_Player_Doram,-10;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",15;
+  - Combos:
+      - Combo:
+          - Lapier_Furious   # 500101
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",.@sum;
+  - Combos:
+      - Combo:
+          - SharpSword_Furious   # 500102
+          - FuriousBoots   # 470265
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bCritical,5;
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus2 bSkillAtk,"BO_MAYHEMIC_THORNS",15;
+      }
+  - Combos:
+      - Combo:
+          - WhiteSword_Furious   # 500103
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",.@sum;
+  - Combos:
+      - Combo:
+          - Stick_Furious   # 550148
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"HN_HELLS_DRIVE",20;
+      if (getenchantgrade()>=ENCHANTGRADE_B) {
+         bonus4 bAutoSpellOnSkill,"HN_HELLS_DRIVE","EM_TERRA_DRIVE",4,1000;
+      }
+  - Combos:
+      - Combo:
+          - Specter_Furious   # 550150
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"AG_SOUL_VC_STRIKE",20;
+  - Combos:
+      - Combo:
+          - GaleClaw_Furious   # 560067
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"IQ_MASSIVE_F_BLASTER",20;
+  - Combos:
+      - Combo:
+          - Exterminate_Furious   # 560068
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",.@sum;
+  - Combos:
+      - Combo:
+          - MetalVilolin_Furious   # 570072
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"WM_REVERBERATION",70;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",20;
+  - Combos:
+      - Combo:
+          - Harp_Furious   # 570073
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",.@sum;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",.@sum;
+  - Combos:
+      - Combo:
+          - MetalWhip_Furious   # 580072
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"WM_REVERBERATION",70;
+      bonus2 bSkillAtk,"TR_METALIC_FURY",20;
+  - Combos:
+      - Combo:
+          - Whip_Furious   # 580073
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",.@sum;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",.@sum;
+  - Combos:
+      - Combo:
+          - Flame_Staff_Furious   # 640053
+          - FuriousBoots   # 470265
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSkillAtk,"AG_ALL_BLOOM",.@sum;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK",.@sum;
+      bonus2 bSkillAtk,"AG_ALL_BLOOM_ATK2",.@sum;
+  - Combos:
+      - Combo:
+          - Rifle_Furious   # 810042
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",25;
+  - Combos:
+      - Combo:
+          - Gatling_Furious   # 830038
+          - FuriousBoots   # 470265
+    Script: |
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25;
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",15;
+  - Combos:
+      - Combo:
+          - aegis_300549   # 300549
+          - Sesrumnir_Evt_Ring   # 490557
+    Script: |
+      bonus bShortAtkRate,7;
+      bonus bLongAtkRate,7;
+      bonus2 bMagicAtkEle,Ele_All,7;
