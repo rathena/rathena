@@ -19148,6 +19148,9 @@ void clif_buyingstore_trade_failed_seller( map_session_data* sd, short result, t
 ///         amount of card slots. If the client does not know about the item it
 ///         cannot be searched.
 static void clif_parse_SearchStoreInfo( int fd, map_session_data *sd ){
+	if (!battle_config.feature_search_stores)
+		return;
+
 	const PACKET_CZ_SEARCH_STORE_INFO* p = reinterpret_cast<PACKET_CZ_SEARCH_STORE_INFO*>( RFIFOP( fd, 0 ) );
 
 	// minimum packet length
@@ -19200,6 +19203,9 @@ static void clif_parse_SearchStoreInfo( int fd, map_session_data *sd ){
 ///     1 = "next" label to retrieve more results
 void clif_search_store_info_ack( map_session_data& sd ){
 #if PACKETVER_MAIN_NUM >= 20100817 || PACKETVER_RE_NUM >= 20100706 || defined(PACKETVER_ZERO)
+	if (!battle_config.feature_search_stores)
+		return;
+
 	uint32 start = sd.searchstore.pages * SEARCHSTORE_RESULTS_PER_PAGE ;
 	uint32 end = umin( static_cast<uint32>( sd.searchstore.items.size() ), start + SEARCHSTORE_RESULTS_PER_PAGE );
 
@@ -19260,6 +19266,9 @@ void clif_search_store_info_ack( map_session_data& sd ){
 /// 0837 <reason>.B (ZC_SEARCH_STORE_INFO_FAILED)
 void clif_search_store_info_failed(map_session_data& sd, e_searchstore_failure reason){
 #if PACKETVER_MAIN_NUM >= 20100601 || PACKETVER_RE_NUM >= 20100601 || defined(PACKETVER_ZERO)
+	if (!battle_config.feature_search_stores)
+		return;
+
 	PACKET_ZC_SEARCH_STORE_INFO_FAILED packet{};
 
 	packet.packetType = HEADER_ZC_SEARCH_STORE_INFO_FAILED;
@@ -19272,8 +19281,10 @@ void clif_search_store_info_failed(map_session_data& sd, e_searchstore_failure r
 
 /// Request to display next page of results.
 /// 0838  (CZ_SEARCH_STORE_INFO_NEXT_PAGE)
-static void clif_parse_SearchStoreInfoNextPage(int fd, map_session_data* sd)
-{
+static void clif_parse_SearchStoreInfoNextPage(int fd, map_session_data* sd){
+	if (!battle_config.feature_search_stores)
+		return;
+
 	searchstore_next(*sd);
 }
 
@@ -19282,6 +19293,9 @@ static void clif_parse_SearchStoreInfoNextPage(int fd, map_session_data* sd)
 /// 083a <effect>.W <remaining uses>.B (ZC_OPEN_SEARCH_STORE_INFO)
 void clif_open_search_store_info(map_session_data& sd){
 #if PACKETVER_MAIN_NUM >= 20100701 || PACKETVER_RE_NUM >= 20100701 || defined(PACKETVER_ZERO)
+	if (!battle_config.feature_search_stores)
+		return;
+
 	PACKET_ZC_OPEN_SEARCH_STORE_INFO packet{};
 
 	packet.packetType = HEADER_ZC_OPEN_SEARCH_STORE_INFO;
@@ -19297,8 +19311,10 @@ void clif_open_search_store_info(map_session_data& sd){
 
 /// Request to close the store search window.
 /// 083b (CZ_CLOSE_SEARCH_STORE_INFO)
-static void clif_parse_CloseSearchStoreInfo(int fd, map_session_data* sd)
-{
+static void clif_parse_CloseSearchStoreInfo(int fd, map_session_data* sd){
+	if (!battle_config.feature_search_stores)
+		return;
+
 	searchstore_close(*sd);
 }
 
@@ -19306,6 +19322,9 @@ static void clif_parse_CloseSearchStoreInfo(int fd, map_session_data* sd)
 /// Request to invoke catalog effect on a store from search results.
 /// 083c <account id>.L <store id>.L <nameid>.W (CZ_SSILIST_ITEM_CLICK)
 static void clif_parse_SearchStoreInfoListItemClick( int fd, map_session_data* sd ){
+	if (!battle_config.feature_search_stores)
+		return;
+
 	const PACKET_CZ_SSILIST_ITEM_CLICK* p = reinterpret_cast<PACKET_CZ_SSILIST_ITEM_CLICK*>( RFIFOP( fd, 0 ) );
 
 	searchstore_click( *sd, p->AID, p->storeId, p->itemId );
@@ -19316,6 +19335,9 @@ static void clif_parse_SearchStoreInfoListItemClick( int fd, map_session_data* s
 /// 083d <xPos>.W <yPos>.W (ZC_SSILIST_ITEM_CLICK_ACK)
 void clif_search_store_info_click_ack(map_session_data& sd, int16 x, int16 y){
 #if PACKETVER_MAIN_NUM >= 20100608 || PACKETVER_RE_NUM >= 20100608 || defined(PACKETVER_ZERO)
+	if (!battle_config.feature_search_stores)
+		return;
+
 	PACKET_ZC_SSILIST_ITEM_CLICK_ACK packet{};
 
 	packet.packetType = HEADER_ZC_SSILIST_ITEM_CLICK_ACK;

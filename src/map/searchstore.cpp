@@ -87,7 +87,7 @@ static int searchstore_getstoreid(map_session_data& sd, e_searchstore_searchtype
  */
 bool searchstore_open(map_session_data& sd, uint16 uses, e_searchstore_effecttype effect, int16 mapid)
 {
-	if( !battle_config.feature_search_stores || sd.searchstore.open )
+	if( sd.searchstore.open )
 		return false;
 
 
@@ -121,9 +121,6 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsi
 	searchstore_searchall_t store_searchall;
 	time_t querytime;
 
-	if( !battle_config.feature_search_stores )
-		return;
-
 	if( !sd.searchstore.open )
 		return;
 
@@ -144,11 +141,22 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsi
 		return;
 	}
 
+	// uses counter must be updated before validating the next search
+	sd.searchstore.uses--;
+	sd.searchstore.type = type;
+	sd.searchstore.nextquerytime = querytime + battle_config.searchstore_querydelay;
+
+	// drop previous results
+	searchstore_clear(sd);
+
 	// validate lists
 	for( i = 0; i < item_count; i++ ) {
 		if( !item_db.exists(itemlist[i].itemId) ) {
 			ShowWarning("searchstore_query: Client resolved item %u is not known.\n", itemlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
+
+			// update uses
+			clif_search_store_info_ack(sd);
 			return;
 		}
 	}
@@ -156,19 +164,15 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsi
 		if( !item_db.exists(cardlist[i].itemId) ) {
 			ShowWarning("searchstore_query: Client resolved card %u is not known.\n", cardlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
+
+			// update uses
+			clif_search_store_info_ack(sd);
 			return;
 		}
 	}
 
 	if( max_price < min_price )
 		std::swap(min_price, max_price);
-
-	sd.searchstore.uses--;
-	sd.searchstore.type = type;
-	sd.searchstore.nextquerytime = querytime+battle_config.searchstore_querydelay;
-
-	// drop previous results
-	searchstore_clear(sd);
 
 	// search
 	s.search_sd  = &sd;
@@ -207,11 +211,11 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsi
 		// cleanup
 		searchstore_clear(sd);
 
+		// notify of failure (must go before updating uses)
+		clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
+
 		// update uses
 		clif_search_store_info_ack( sd );
-
-		// notify of failure
-		clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 	}
 }
 
@@ -234,7 +238,7 @@ bool searchstore_querynext(map_session_data& sd)
  */
 void searchstore_next(map_session_data& sd)
 {
-	if( !battle_config.feature_search_stores || !sd.searchstore.open || sd.searchstore.items.size() <= sd.searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE ) // nothing (more) to display
+	if( !sd.searchstore.open || sd.searchstore.items.size() <= sd.searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE ) // nothing (more) to display
 		return;
 
 	// present results
@@ -283,7 +287,7 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int store_id, t_
 	map_session_data* pl_sd;
 	searchstore_search_t store_search;
 
-	if( !battle_config.feature_search_stores || !sd.searchstore.open || sd.searchstore.items.empty() )
+	if( !sd.searchstore.open || sd.searchstore.items.empty() )
 		return;
 
 	searchstore_clearremote(sd);
