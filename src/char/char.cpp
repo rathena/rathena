@@ -2837,6 +2837,7 @@ void char_config_split_startpoint( char* w1_value, char* w2_value, struct s_poin
 	size_t fields_length = 3 + 1;
 
 	(*count) = 0; // Reset to begin reading
+	memset(start_point, sizeof(struct s_point_str) * MAX_STARTPOINT, 0);
 
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
 	if (fields == nullptr)
