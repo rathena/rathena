@@ -639,6 +639,9 @@ enum clif_messages : uint16_t {
 	// Currently there is no attendance check event.
 	MSI_CHECK_ATTENDANCE_NOT_EVENT = 3474,
 
+	// The total amount of items to sell exceeds the amount of Zeny you can have. \nPlease modify the quantity and price.
+	MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR = 3826,
+
 	// It weighs more than 70%. Decrease the Weight and try again.
 	MSI_ENCHANT_FAILED_OVER_WEIGHT = 3837,
 
@@ -782,6 +785,21 @@ enum e_pc_purchase_result_frommc : uint8 {
 	PURCHASEMC_TRADING = 5,
 	PURCHASEMC_STORE_INCORRECT = 6,
 	PURCHASEMC_NO_SALES_INFO = 7,
+};
+
+enum e_ack_openstore2 : uint8 {
+	// Success
+	OPENSTORE2_SUCCESS = 0,
+
+	// (Pop-up) Failed to open stalls. (MSI_MERCHANTSHOP_MAKING_FAIL / 2639)
+	OPENSTORE2_FAILED = 1,
+
+	// 2 is unused
+
+#if PACKETVER >= 20170419
+	// Unable to open a shop at the current location. (MSI_MERCHANTSHOP_FAIL_POSITION / 3229)
+	OPENSTORE2_NOVENDING = 3,
+#endif
 };
 
 enum e_ack_whisper : uint8 {
@@ -998,6 +1016,7 @@ void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist( map_session_data& sd, map_session_data& vsd );
 void clif_buyvending( map_session_data& sd, uint16 index, uint16 amount, e_pc_purchase_result_frommc result );
 void clif_openvending( map_session_data& sd );
+void clif_openvending_ack(map_session_data& sd, e_ack_openstore2 result);
 void clif_vendingreport( map_session_data& sd, uint16 index, uint16 amount, uint32 char_id, int32 zeny );
 
 void clif_movetoattack( map_session_data& sd, block_list& bl );

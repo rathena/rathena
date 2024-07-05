@@ -175,7 +175,7 @@ void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* da
 			clif_buyvending( *sd, idx, amount, PURCHASEMC_NO_ZENY ); // you don't have enough zeny
 			return;
 		}
-		if( z + (double)vsd->status.zeny > (double)MAX_ZENY && !battle_config.vending_over_max ) {
+		if( z + (double)vsd->status.zeny > (double)MAX_ZENY ) {
 			clif_buyvending( *sd, idx, vsd->vending[j].amount, PURCHASEMC_OUT_OF_STOCK ); // too much zeny = overflow
 			return;
 
@@ -310,12 +310,18 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	// skill level and cart check
 	if( !vending_skill_lvl || !pc_iscarton(&sd) ) {
 		clif_skill_fail( sd, MC_VENDING );
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 2;
 	}
 
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl ) { // invalid item count
 		clif_skill_fail( sd, MC_VENDING );
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 3;
 	}
 
@@ -324,6 +330,7 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 
 	// filter out invalid items
 	i = 0;
+	int64 total = 0;
 	for( j = 0; j < count; j++ ) {
 		short index        = *(uint16*)(data + 8*j + 0);
 		short amount       = *(uint16*)(data + 8*j + 2);
@@ -344,17 +351,36 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 		sd.vending[i].index = index;
 		sd.vending[i].amount = amount;
 		sd.vending[i].value = min(value, (unsigned int)battle_config.vending_max_value);
+		total += static_cast<int64>(sd.vending[i].value) * amount;
 		i++; // item successfully added
+	}
+
+	// check if the total value of the items plus the current zeny is over the limit
+	if ( !battle_config.vending_over_max && (static_cast<int64>(sd.status.zeny) + total) > MAX_ZENY ) {
+#if PACKETVER >= 20200819
+		clif_msg_color( &sd, MSI_MERCHANTSHOP_TOTA_LOVER_ZENY_ERR, color_table[COLOR_RED] );
+#endif
+		clif_skill_fail( sd, MC_VENDING );
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
+		return 1;
 	}
 
 	if (i != j) {
 		clif_displaymessage(sd.fd, msg_txt(&sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
 		clif_skill_fail( sd, MC_VENDING ); // custom reply packet
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 5;
 	}
 
 	if( i == 0 ) { // no valid item found
 		clif_skill_fail( sd, MC_VENDING ); // custom reply packet
+		sd.state.prevend = 0;
+		sd.state.workinprogress = WIP_DISABLE_NONE;
+		clif_openvending_ack( sd, OPENSTORE2_FAILED );
 		return 5;
 	}
 
