@@ -191,6 +191,10 @@ if(ENABLE_VIP)
 	target_compile_definitions(common INTERFACE "-DVIP_ENABLE")
 endif()
 
+if(MAXCONN)
+    target_compile_definitions(common PUBLIC "-DMAXCONN=${MAXCONN}")
+endif()
+
 CHECK_FUNCTION_EXISTS(setrlimit HAVE_SETRLIMIT)
 if (HAVE_SETRLIMIT)
 	target_compile_definitions(common PUBLIC "-DHAVE_SETRLIMIT")
