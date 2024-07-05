@@ -7234,9 +7234,9 @@ Body:
     Type: Magic
     TargetType: Self
     DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreFlee: true
-    Range: 5
+      IgnoreDefense: true
+      SimpleDefense: true
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Holy
@@ -7664,8 +7664,8 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreDefense: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -7699,7 +7699,6 @@ Body:
       - Level: 5
         Time: 1000
     Duration1: 3000
-    Duration2: 300000
     FixedCastTime:
       - Level: 1
         Time: 2000
@@ -8879,6 +8878,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
+    Duration1: 15000
     Duration2: 27000
     Cooldown: 4000
     Requires:
@@ -9136,6 +9136,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
+    Duration1: 4500
     Duration2: 4500
     Cooldown: 4000
     Requires:
@@ -9454,6 +9455,7 @@ Body:
     DamageFlags:
       IgnoreAtkCard: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       IsNpc: true
       TargetSelf: true
@@ -11048,7 +11050,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -11313,7 +11315,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Range: 7
+    Range: 9
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
@@ -18362,6 +18364,43 @@ Body:
     HitCount: 1
     Duration1: 60000
     Status: Relieve_off
+  - Id: 776
+    Name: NPC_DEADLYCURSE
+    Description: Deadly Curse
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    Range: 1
+    Duration1: 15000
+    Status: Deadly_Defeasance
+  - Id: 779
+    Name: NPC_DEADLYCURSE2
+    Description: Deadly Curse 2
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IgnoreGtb: true
+      IsNpc: true
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 5
+      - Level: 5
+        Area: 6
+    Duration2: 30000
+    Status: Deadly_Defeasance
   - Id: 780
     Name: NPC_CANE_OF_EVIL_EYE
     Description: Cane of evil eye
@@ -19112,6 +19151,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -22657,6 +22697,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       AllowOnMado: true
     Range: 9
@@ -24521,7 +24562,7 @@ Body:
     TargetType: Attack
     Range: 1
     Hit: Single
-    HitCount: 5
+    HitCount: -5
     CopyFlags:
       Skill:
         Reproduce: true
@@ -28791,6 +28832,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Range:
       - Level: 1
         Size: 7
@@ -29689,6 +29731,19 @@ Body:
         - Level: 2
           Amount: 100
     Status: Odins_Power
+  - Id: 2543
+    Name: ALL_RAY_OF_PROTECTION
+    Description: Ray of Protection
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Duration1: 60000
+    Status: Protection
   - Id: 2544
     Name: MC_CARTDECORATE
     Description: Decorate Cart
@@ -33147,6 +33202,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreFlee: true
+      SimpleDefense: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -46222,7 +46278,7 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon

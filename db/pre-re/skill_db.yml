@@ -4153,7 +4153,6 @@ Body:
         Time: 120000
       - Level: 5
         Time: 60000
-    Duration2: 3000
     Requires:
       SpCost: 10
       ItemCost:
@@ -6888,12 +6887,9 @@ Body:
     MaxLevel: 10
     Type: Magic
     TargetType: Self
-    DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreFlee: true
     Flags:
       TargetSelf: true
-    Range: 5
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Holy
@@ -7363,7 +7359,7 @@ Body:
         Time: 1500
       - Level: 5
         Time: 1000
-    Duration2: 300000
+    Duration1: 300000
     Requires:
       SpCost: 1
       Weapon:
@@ -8542,6 +8538,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 4000
+    Duration1: 15000
     Duration2: 12000
     Requires:
       SpCost:
@@ -8833,6 +8830,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 4000
+    Duration1: 5000
     Duration2: 5000
     Requires:
       SpCost:
@@ -10805,7 +10803,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -11066,7 +11064,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Range: 7
+    Range: 9
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
@@ -32756,7 +32754,7 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-    Range: 5
+    Range: 4
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon

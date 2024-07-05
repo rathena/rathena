@@ -122,8 +122,9 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int flag);
 
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
+int battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
 int battle_delay_damage (t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
+int battle_fix_damage(struct block_list* src, struct block_list* target, int64 damage, t_tick walkdelay, uint16 skill_id);
 
 int battle_calc_chorusbonus(map_session_data *sd);
 
@@ -140,6 +141,7 @@ uint16 battle_getcurrentskill(struct block_list *bl);
 int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
 bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
+bool battle_check_coma(map_session_data& sd, struct block_list& target, e_battle_flag attack_type);
 
 void battle_consume_ammo(map_session_data* sd, int skill, int lv);
 
@@ -258,6 +260,7 @@ struct Battle_Config
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
+	int pet_unequip_destroy;
 	int pet_master_dead;
 
 	int skill_min_damage;
@@ -719,11 +722,15 @@ struct Battle_Config
 	int pet_distance_check;
 	int pet_hide_check;
 
+	int instance_block_leave;
+	int instance_block_leaderchange;
+	int instance_block_invite;
+	int instance_block_expulsion;
 	// 4th Jobs Stuff
 	int trait_points_job_change;
 	int use_traitpoint_table;
 	int max_trait_parameter;
-	int max_res_mres_reduction;
+	int max_res_mres_ignored;
 	int max_ap;
 	int ap_rate;
 	int restart_ap_rate;
@@ -746,10 +753,15 @@ struct Battle_Config
 	int feature_dynamicnpc_direction;
 
 	int mob_respawn_time;
+	int mob_unlock_time;
+	int map_edge_size;
+	int randomize_center_cell;
 
 	int feature_stylist;
 	int feature_banking_state_enforce;
 	int instance_allow_reconnect;
+	int synchronize_damage;
+	int item_stacking;
 
 #include <custom/battle_config_struct.inc>
 };

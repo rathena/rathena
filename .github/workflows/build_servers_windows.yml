@@ -32,7 +32,7 @@ jobs:
           os: [windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Create build directory
         run: cmake -E make_directory ${{github.workspace}}/build

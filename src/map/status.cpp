@@ -1143,6 +1143,25 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 		}
 	}
 }
+
+status_change::status_change(){
+	this->option = OPTION_NOTHING;
+	this->opt3 = OPT3_NORMAL;
+	this->opt1 = OPT1_NONE;
+	this->opt2 = OPT2_NONE;
+	this->count = 0;
+	this->lastEffect = SC_NONE;
+	this->lastEffectTimer = INVALID_TIMER;
+	this->cant = {};
+	this->comet_x = 0;
+	this->comet_y = 0;
+#ifndef RENEWAL
+	this->sg_counter = 0;
+#endif
+	std::fill( std::begin( this->data ), std::end( this->data ), nullptr );
+	this->lastStatus = { SC_NONE, nullptr };
+}
+
 /**
  * Accessor for a status_change_entry in a status_change
  */
@@ -1392,7 +1411,7 @@ int64 status_charge(struct block_list* bl, int64 hp, int64 sp)
 {
 	if(!(bl->type&BL_CONSUME))
 		return (int)hp+sp; // Assume all was charged so there are no 'not enough' fails.
-	return status_damage(NULL, bl, hp, sp, 0, 3, 0);
+	return status_damage(nullptr, bl, hp, sp, 0, 3, 0);
 }
 
 /**
@@ -1408,6 +1427,7 @@ int64 status_charge(struct block_list* bl, int64 hp, int64 sp)
  *		flag&2: Fail if there is not enough to subtract
  *		flag&4: Mob does not give EXP/Loot if killed
  *		flag&8: Used to damage SP of a dead character
+ *		flag&16: Coma damage - Log it as normal damage, but actually set HP/SP to 1
  * @return hp+sp+ap
  * Note: HP/SP/AP are integer values, not percentages. Values should be
  *	 calculated either within function call or before
@@ -1527,9 +1547,24 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_skillcastcancel(target, 2);
 	}
 
+	// We need to log the real damage on exp_calc_type 1
+	if (battle_config.exp_calc_type == 1) {
+		dhp = hp;
+		// Coma real damage
+		if (flag&16)
+			dhp = status->hp - 1;
+	}
+
 	status->hp-= hp;
 	status->sp-= sp;
 	status->ap-= ap;
+
+	// Coma
+	if (flag&16) {
+		status->hp = 1;
+		status->sp = 1;
+		if (!sp) sp = 1; // To make sure the status bar is updated
+	}
 
 	if (sc && hp && status->hp) {
 		if (sc->getSCE(SC_AUTOBERSERK) &&
@@ -1544,9 +1579,11 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_change_end(target, SC_SATURDAYNIGHTFEVER);
 	}
 
+	// Need to pass original HP damage for the mob damage log
+	dhp = cap_value(dhp, INT_MIN, INT_MAX);
 	switch (target->type) {
 		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp,ap); break;
-		case BL_MOB: mob_damage((TBL_MOB*)target, src, hp); break;
+		case BL_MOB: mob_damage((TBL_MOB*)target, src, (int)dhp); break;
 		case BL_HOM: hom_damage((TBL_HOM*)target); break;
 		case BL_MER: mercenary_heal((TBL_MER*)target,hp,sp); break;
 		case BL_ELEM: elemental_heal((TBL_ELEM*)target,hp,sp); break;
@@ -1647,7 +1684,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);
 		unit_skillcastcancel(target,0);
-		clif_clearunit_area(target,CLR_DEAD);
+		clif_clearunit_area( *target, CLR_DEAD );
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
 	}
@@ -1664,7 +1701,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				npc_event(sd, bg->die_event.c_str(), 0);
 		}
 
-		npc_script_event(sd,NPCE_DIE);
+		npc_script_event( *sd, NPCE_DIE );
 	}
 
 	return (int)(hp+sp+ap);
@@ -1696,12 +1733,12 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
-		sc = NULL;
+		sc = nullptr;
 
 	if (hp < 0) {
 		if (hp == INT_MIN) // -INT_MIN == INT_MIN in some architectures!
 			hp++;
-		status_damage(NULL, bl, -hp, 0, 0, 1, 0);
+		status_damage(nullptr, bl, -hp, 0, 0, 1, 0);
 		hp = 0;
 	}
 
@@ -1720,7 +1757,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	if(sp < 0) {
 		if (sp == INT_MIN)
 			sp++;
-		status_damage(NULL, bl, 0, -sp, 0, 1, 0);
+		status_damage(nullptr, bl, 0, -sp, 0, 1, 0);
 		sp = 0;
 	}
 
@@ -1897,7 +1934,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	status->ap += ap;
 
 	if (bl->prev) // Animation only if character is already on a map.
-		clif_resurrection(bl, 1);
+		clif_resurrection( *bl );
 	switch (bl->type) {
 		case BL_PC:  pc_revive((TBL_PC*)bl, hp, sp, ap); break;
 		case BL_MOB: mob_revive((TBL_MOB*)bl, hp); break;
@@ -1910,9 +1947,9 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  * Checks whether the src can use the skill on the target,
  * taking into account status/option of both source/target
  * @param src:	Object using skill on target [PC|MOB|PET|HOM|MER|ELEM]
-		src MAY be NULL to indicate we shouldn't check it, this is a ground-based skill attack
+		src MAY be nullptr to indicate we shouldn't check it, this is a ground-based skill attack
  * @param target: Object being targeted by src [PC|MOB|HOM|MER|ELEM]
-		 target MAY be NULL, which checks if src can cast skill_id on the ground
+		 target MAY be nullptr, which checks if src can cast skill_id on the ground
  * @param skill_id: Skill ID being used on target
  * @param flag:	0 - Trying to use skill on target
  *		1 - Cast bar is done
@@ -2666,7 +2703,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 int status_calc_mob_(struct mob_data* md, uint8 opt)
 {
 	struct status_data *status;
-	struct block_list *mbl = NULL;
+	struct block_list *mbl = nullptr;
 	int flag=0;
 
 	if (opt&SCO_FIRST) { // Set basic level on respawn.
@@ -2701,7 +2738,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 	if (!flag) { // No special status required.
 		if (md->base_status) {
 			aFree(md->base_status);
-			md->base_status = NULL;
+			md->base_status = nullptr;
 		}
 		if (opt&SCO_FIRST)
 			memcpy(&md->status, &md->db->status, sizeof(struct status_data));
@@ -2974,7 +3011,7 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 
 			pd->pet.level = lv;
 			if (!(opt&SCO_FIRST)) // Lv Up animation
-				clif_misceffect(&pd->bl, 0);
+				clif_misceffect( pd->bl, NOTIFYEFFECT_BASE_LEVEL_UP );
 			status->rhw.atk = (bstat->rhw.atk*lv)/pd->db->lv;
 			status->rhw.atk2 = (bstat->rhw.atk2*lv)/pd->db->lv;
 			status->str = (bstat->str*lv)/pd->db->lv;
@@ -3517,7 +3554,7 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 		sd->weight = 0; // Reset current weight
 
 		for(i = 0; i < MAX_INVENTORY; i++) {
-			if (!sd->inventory.u.items_inventory[i].nameid || sd->inventory_data[i] == NULL)
+			if (!sd->inventory.u.items_inventory[i].nameid || sd->inventory_data[i] == nullptr)
 				continue;
 			sd->weight += sd->inventory_data[i]->weight * sd->inventory.u.items_inventory[i].amount;
 		}
@@ -3542,9 +3579,9 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 
 	// Update the client if the new weight calculations don't match
 	if (b_weight != sd->weight)
-		clif_updatestatus(sd, SP_WEIGHT);
+		clif_updatestatus(*sd, SP_WEIGHT);
 	if (b_max_weight != sd->max_weight) {
-		clif_updatestatus(sd, SP_MAXWEIGHT);
+		clif_updatestatus(*sd, SP_MAXWEIGHT);
 		pc_updateweightstatus(sd);
 	}
 
@@ -3590,7 +3627,7 @@ bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt
 
 	// Update the client if the new weight calculations don't match
 	if (b_cart_weight_max != sd->cart_weight_max)
-		clif_updatestatus(sd, SP_CARTINFO);
+		clif_updatestatus(*sd, SP_CARTINFO);
 
 	return true;
 }
@@ -5579,7 +5616,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		* piece of code triggers the walk-timer is set on INVALID_TIMER)
 		**/
 		if (ud)
-			ud->state.change_walk_target = ud->state.speed_changed = 1;
+			ud->state.change_walk_target = 1;
 	}
 
 	if(flag[SCB_STR]) {
@@ -5898,7 +5935,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 		if( status->hp > status->max_hp ) { // !FIXME: Should perhaps a status_zap should be issued?
 			status->hp = status->max_hp;
-			if( sd ) clif_updatestatus(sd,SP_HP);
+			if( sd ) clif_updatestatus(*sd,SP_HP);
 		}
 	}
 
@@ -5916,7 +5953,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 		if( status->sp > status->max_sp ) {
 			status->sp = status->max_sp;
-			if( sd ) clif_updatestatus(sd,SP_SP);
+			if( sd ) clif_updatestatus(*sd,SP_SP);
 		}
 	}
 
@@ -6142,7 +6179,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 		if (status->ap > status->max_ap) {
 			status->ap = status->max_ap;
-			if (sd) clif_updatestatus(sd, SP_AP);
+			if (sd) clif_updatestatus(*sd, SP_AP);
 		}
 	}
 #endif
@@ -6212,37 +6249,37 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 		TBL_PC* sd = BL_CAST(BL_PC, bl);
 
 		if(b_status.str != status->str)
-			clif_updatestatus(sd,SP_STR);
+			clif_updatestatus(*sd,SP_STR);
 		if(b_status.agi != status->agi)
-			clif_updatestatus(sd,SP_AGI);
+			clif_updatestatus(*sd,SP_AGI);
 		if(b_status.vit != status->vit)
-			clif_updatestatus(sd,SP_VIT);
+			clif_updatestatus(*sd,SP_VIT);
 		if(b_status.int_ != status->int_)
-			clif_updatestatus(sd,SP_INT);
+			clif_updatestatus(*sd,SP_INT);
 		if(b_status.dex != status->dex)
-			clif_updatestatus(sd,SP_DEX);
+			clif_updatestatus(*sd,SP_DEX);
 		if(b_status.luk != status->luk)
-			clif_updatestatus(sd,SP_LUK);
+			clif_updatestatus(*sd,SP_LUK);
 		if(b_status.hit != status->hit)
-			clif_updatestatus(sd,SP_HIT);
+			clif_updatestatus(*sd,SP_HIT);
 		if(b_status.flee != status->flee)
-			clif_updatestatus(sd,SP_FLEE1);
+			clif_updatestatus(*sd,SP_FLEE1);
 		if(b_status.amotion != status->amotion)
-			clif_updatestatus(sd,SP_ASPD);
+			clif_updatestatus(*sd,SP_ASPD);
 		if(b_status.speed != status->speed)
-			clif_updatestatus(sd,SP_SPEED);
+			clif_updatestatus(*sd,SP_SPEED);
 
 		if(b_status.batk != status->batk
 #ifndef RENEWAL
 			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
 #endif
 			)
-			clif_updatestatus(sd,SP_ATK1);
+			clif_updatestatus(*sd,SP_ATK1);
 
 		if(b_status.def != status->def) {
-			clif_updatestatus(sd,SP_DEF1);
+			clif_updatestatus(*sd,SP_DEF1);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_DEF2);
+			clif_updatestatus(*sd,SP_DEF2);
 #endif
 		}
 
@@ -6253,80 +6290,80 @@ void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt
 			b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
 #endif
 			)
-			clif_updatestatus(sd,SP_ATK2);
+			clif_updatestatus(*sd,SP_ATK2);
 
 		if(b_status.def2 != status->def2) {
-			clif_updatestatus(sd,SP_DEF2);
+			clif_updatestatus(*sd,SP_DEF2);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_DEF1);
+			clif_updatestatus(*sd,SP_DEF1);
 #endif
 		}
 		if(b_status.flee2 != status->flee2)
-			clif_updatestatus(sd,SP_FLEE2);
+			clif_updatestatus(*sd,SP_FLEE2);
 		if(b_status.cri != status->cri)
-			clif_updatestatus(sd,SP_CRITICAL);
+			clif_updatestatus(*sd,SP_CRITICAL);
 #ifndef RENEWAL
 		if(b_status.matk_max != status->matk_max)
-			clif_updatestatus(sd,SP_MATK1);
+			clif_updatestatus(*sd,SP_MATK1);
 		if(b_status.matk_min != status->matk_min)
-			clif_updatestatus(sd,SP_MATK2);
+			clif_updatestatus(*sd,SP_MATK2);
 #else
 		if(b_status.matk_max != status->matk_max || b_status.matk_min != status->matk_min) {
-			clif_updatestatus(sd,SP_MATK2);
-			clif_updatestatus(sd,SP_MATK1);
+			clif_updatestatus(*sd,SP_MATK2);
+			clif_updatestatus(*sd,SP_MATK1);
 		}
 #endif
 		if(b_status.mdef != status->mdef) {
-			clif_updatestatus(sd,SP_MDEF1);
+			clif_updatestatus(*sd,SP_MDEF1);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_MDEF2);
+			clif_updatestatus(*sd,SP_MDEF2);
 #endif
 		}
 		if(b_status.mdef2 != status->mdef2) {
-			clif_updatestatus(sd,SP_MDEF2);
+			clif_updatestatus(*sd,SP_MDEF2);
 #ifdef RENEWAL
-			clif_updatestatus(sd,SP_MDEF1);
+			clif_updatestatus(*sd,SP_MDEF1);
 #endif
 		}
 		if(b_status.rhw.range != status->rhw.range)
-			clif_updatestatus(sd,SP_ATTACKRANGE);
+			clif_updatestatus(*sd,SP_ATTACKRANGE);
 		if(b_status.max_hp != status->max_hp)
-			clif_updatestatus(sd,SP_MAXHP);
+			clif_updatestatus(*sd,SP_MAXHP);
 		if(b_status.max_sp != status->max_sp)
-			clif_updatestatus(sd,SP_MAXSP);
+			clif_updatestatus(*sd,SP_MAXSP);
 		if(b_status.hp != status->hp)
-			clif_updatestatus(sd,SP_HP);
+			clif_updatestatus(*sd,SP_HP);
 		if(b_status.sp != status->sp)
-			clif_updatestatus(sd,SP_SP);
+			clif_updatestatus(*sd,SP_SP);
 #ifdef RENEWAL
 		if (b_status.pow != status->pow)
-			clif_updatestatus(sd,SP_POW);
+			clif_updatestatus(*sd,SP_POW);
 		if (b_status.sta != status->sta)
-			clif_updatestatus(sd,SP_STA);
+			clif_updatestatus(*sd,SP_STA);
 		if (b_status.wis != status->wis)
-			clif_updatestatus(sd,SP_WIS);
+			clif_updatestatus(*sd,SP_WIS);
 		if (b_status.spl != status->spl)
-			clif_updatestatus(sd,SP_SPL);
+			clif_updatestatus(*sd,SP_SPL);
 		if (b_status.con != status->con)
-			clif_updatestatus(sd,SP_CON);
+			clif_updatestatus(*sd,SP_CON);
 		if (b_status.crt != status->crt)
-			clif_updatestatus(sd,SP_CRT);
+			clif_updatestatus(*sd,SP_CRT);
 		if (b_status.patk != status->patk)
-			clif_updatestatus(sd, SP_PATK);
+			clif_updatestatus(*sd, SP_PATK);
 		if (b_status.smatk != status->smatk)
-			clif_updatestatus(sd, SP_SMATK);
+			clif_updatestatus(*sd, SP_SMATK);
 		if (b_status.res != status->res)
-			clif_updatestatus(sd, SP_RES);
+			clif_updatestatus(*sd, SP_RES);
 		if (b_status.mres != status->mres)
-			clif_updatestatus(sd, SP_MRES);
+			clif_updatestatus(*sd, SP_MRES);
 		if (b_status.hplus != status->hplus)
-			clif_updatestatus(sd, SP_HPLUS);
+			clif_updatestatus(*sd, SP_HPLUS);
 		if (b_status.crate != status->crate)
-			clif_updatestatus(sd, SP_CRATE);
+			clif_updatestatus(*sd, SP_CRATE);
 		if (b_status.max_ap != status->max_ap)
-			clif_updatestatus(sd, SP_MAXAP);
+			clif_updatestatus(*sd, SP_MAXAP);
 		if (b_status.ap != status->ap)
-			clif_updatestatus(sd, SP_AP);
+			clif_updatestatus(*sd, SP_AP);
 #endif
 	} else if( bl->type == BL_HOM ) {
 		TBL_HOM* hd = BL_CAST(BL_HOM, bl);
@@ -7884,7 +7921,7 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 	TBL_PC* sd = BL_CAST(BL_PC, bl);
 	int speed_rate = 100;
 
-	if (sc == NULL || (sd && sd->state.permanent_speed))
+	if (sc == nullptr || (sd && sd->state.permanent_speed))
 		return (unsigned short)cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 
 	if (sd && pc_ismadogear(sd)) { // Mado speed is not affected by other statuses
@@ -8815,20 +8852,20 @@ void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd)
 	switch (battle_config.slaves_inherit_mode) {
 		case 1: //Always aggressive
 			if (!status_has_mode(&md->status,MD_AGGRESSIVE))
-				sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
+				sc_start4(nullptr, &md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
 			break;
 		case 2: //Always passive
 			if (status_has_mode(&md->status,MD_AGGRESSIVE))
-				sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
+				sc_start4(nullptr, &md->bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
 			break;
 		case 4: // Overwrite with slave mode
-			sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOMWALK|MD_CANATTACK, 0, 0, 0);
+			sc_start4(nullptr, &md->bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOMWALK|MD_CANATTACK, 0, 0, 0);
 			break;
 		default: //Copy master
 			if (status_has_mode(&mmd->status,MD_AGGRESSIVE))
-				sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
+				sc_start4(nullptr, &md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 0);
 			else
-				sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
+				sc_start4(nullptr, &md->bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
 			break;
 	}
 }
@@ -8896,18 +8933,18 @@ int status_get_lv(struct block_list *bl)
 /**
  * Gets the regeneration info of the given bl
  * @param bl: Object whose regen info to get [PC|HOM|MER|ELEM]
- * @return regen data or NULL if any other bl->type than noted above
+ * @return regen data or nullptr if any other bl->type than noted above
  */
 struct regen_data *status_get_regen_data(struct block_list *bl)
 {
-	nullpo_retr(NULL, bl);
+	nullpo_retr(nullptr, bl);
 	switch (bl->type) {
 		case BL_PC:	return &((TBL_PC*)bl)->regen;
 		case BL_HOM:	return &((TBL_HOM*)bl)->regen;
 		case BL_MER:	return &((TBL_MER*)bl)->regen;
 		case BL_ELEM:	return &((TBL_ELEM*)bl)->regen;
 		default:
-			return NULL;
+			return nullptr;
 	}
 }
 
@@ -8936,11 +8973,11 @@ struct status_data *status_get_status_data(struct block_list *bl)
 /**
  * Gets the base status data of the given bl
  * @param bl: Object whose status to get [PC|MOB|PET|HOM|MER|ELEM|NPC]
- * @return base_status or NULL if any other bl->type than noted above
+ * @return base_status or nullptr if any other bl->type than noted above
  */
 struct status_data *status_get_base_status(struct block_list *bl)
 {
-	nullpo_retr(NULL, bl);
+	nullpo_retr(nullptr, bl);
 	switch (bl->type) {
 		case BL_PC:	return &((TBL_PC*)bl)->base_status;
 		case BL_MOB:	return ((TBL_MOB*)bl)->base_status ? ((TBL_MOB*)bl)->base_status : &((TBL_MOB*)bl)->db->status;
@@ -8948,9 +8985,9 @@ struct status_data *status_get_base_status(struct block_list *bl)
 		case BL_HOM:	return &((TBL_HOM*)bl)->base_status;
 		case BL_MER:	return &((TBL_MER*)bl)->base_status;
 		case BL_ELEM:	return &((TBL_ELEM*)bl)->base_status;
-		case BL_NPC:	return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : NULL);
+		case BL_NPC:	return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : nullptr);
 		default:
-			return NULL;
+			return nullptr;
 	}
 }
 
@@ -9002,7 +9039,7 @@ int status_get_party_id(struct block_list *bl)
 				struct mob_data *md=(TBL_MOB*)bl;
 				if( md->master_id > 0 ) {
 					map_session_data *msd;
-					if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL)
+					if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
 						return msd->status.party_id;
 					return -md->master_id;
 				}
@@ -9049,7 +9086,7 @@ int status_get_guild_id(struct block_list *bl)
 				struct mob_data *md = (struct mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->guild_id;
-				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL)
+				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
 					return msd->status.guild_id; // Alchemist's mobs [Skotlex]
 			}
 			break;
@@ -9098,7 +9135,7 @@ int status_get_emblem_id(struct block_list *bl)
 				struct mob_data *md = (struct mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->emblem_id;
-				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL)
+				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
 					return msd->guild_emblem_id; // Alchemist's mobs [Skotlex]
 			}
 			break;
@@ -9182,7 +9219,7 @@ int status_isimmune(struct block_list *bl)
  */
 struct view_data* status_get_viewdata(struct block_list *bl)
 {
-	nullpo_retr(NULL, bl);
+	nullpo_retr(nullptr, bl);
 	switch (bl->type) {
 		case BL_PC:  return &((TBL_PC*)bl)->vd;
 		case BL_MOB: return ((TBL_MOB*)bl)->vd;
@@ -9192,7 +9229,7 @@ struct view_data* status_get_viewdata(struct block_list *bl)
 		case BL_MER: return ((TBL_MER*)bl)->vd;
 		case BL_ELEM: return ((TBL_ELEM*)bl)->vd;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -9217,7 +9254,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 	else if (elemental_db.exists(class_))
 		vd = elemental_get_viewdata(class_);
 	else
-		vd = NULL;
+		vd = nullptr;
 
 	switch (bl->type) {
 	case BL_PC:
@@ -9377,7 +9414,7 @@ status_change *status_get_sc(struct block_list *bl)
 		case BL_MER: return &((TBL_MER*)bl)->sc;
 		case BL_ELEM: return &((TBL_ELEM*)bl)->sc;
 	}
-	return NULL;
+	return nullptr;
 }
 
 /**
@@ -9388,9 +9425,7 @@ void status_change_init(struct block_list *bl)
 {
 	status_change *sc = status_get_sc(bl);
 	nullpo_retv(sc);
-	memset(sc, 0, sizeof (status_change));
-	sc->lastEffect = SC_NONE;
-	sc->lastEffectTimer = INVALID_TIMER;
+	new (sc) status_change();
 }
 
 /*========================================== [Playtester]
@@ -9458,7 +9493,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	map_session_data *sd;
 
 	nullpo_ret(bl);
-	if (src == NULL)
+	if (src == nullptr)
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
 	// Skills (magic type) that are blocked by Golden Thief Bug card or Wand of Hermod
@@ -9480,7 +9515,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	status_src = status_get_status_data(src);
 	sc = status_get_sc(bl);
 	if( sc && !sc->count )
-		sc = NULL;
+		sc = nullptr;
 
 #ifdef RENEWAL
 	uint16 levelAdv = (static_cast<uint16>(pow(max(0, status_get_lv(src) - status_get_lv(bl)), 2)) / 5) * 100;
@@ -9913,11 +9948,11 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 		int cursor;
 
 		ers_free(eri, sc_display[i]);
-		sc_display[i] = NULL;
+		sc_display[i] = nullptr;
 
 		/* The all-mighty compact-o-matic */
 		for( i = 0, cursor = 0; i < sc_display_count; i++ ) {
-			if( sc_display[i] == NULL )
+			if( sc_display[i] == nullptr )
 				continue;
 
 			if( i != cursor )
@@ -9928,7 +9963,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 
 		if( !(sc_display_count = cursor) ) {
 			aFree(sc_display);
-			sc_display = NULL;
+			sc_display = nullptr;
 		}
 
 		*sc_display_ptr = sc_display;
@@ -9950,7 +9985,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @return adjusted duration based on flag values
  */
 int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay) {
-	map_session_data *sd = NULL;
+	map_session_data *sd = nullptr;
 	status_change* sc;
 	struct status_change_entry* sce;
 	struct status_data *status;
@@ -10080,8 +10115,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Avoid cloaking with no wall and low skill level. [Skotlex]
 			// Due to the cloaking card, we have to check the wall versus to known
 			// skill level rather than the used one. [Skotlex]
-			// if (sd && val1 < 3 && skill_check_cloaking(bl,NULL))
-			if( sd && pc_checkskill(sd, AS_CLOAKING) < 3 && !skill_check_cloaking(bl,NULL) )
+			// if (sd && val1 < 3 && skill_check_cloaking(bl,nullptr))
+			if( sd && pc_checkskill(sd, AS_CLOAKING) < 3 && !skill_check_cloaking(bl,nullptr) )
 				return 0;
 			break;
 		case SC_MODECHANGE: {
@@ -10244,7 +10279,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 			break;
 		case SC_CAMOUFLAGE:
-			if( sd && pc_checkskill(sd, RA_CAMOUFLAGE) < 3 && !skill_check_camouflage(bl,NULL) )
+			if( sd && pc_checkskill(sd, RA_CAMOUFLAGE) < 3 && !skill_check_camouflage(bl,nullptr) )
 				return 0;
 			break;
 		case SC__STRIPACCESSORY:
@@ -10877,8 +10912,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = 60000;
 			val1 = battle_config.manner_system; // Mute filters.
 			if (sd) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
-				clif_updatestatus(sd,SP_MANNER);
+				clif_changemanner( *sd );
+				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
 
@@ -11144,8 +11179,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			int stat,max_stat;
 			// Fetch caster information
 			struct block_list *pbl = map_id2bl(val1);
-			status_change *psc = pbl?status_get_sc(pbl):NULL;
-			struct status_change_entry *psce = psc?psc->getSCE(SC_MARIONETTE):NULL;
+			status_change *psc = pbl?status_get_sc(pbl):nullptr;
+			struct status_change_entry *psce = psc?psc->getSCE(SC_MARIONETTE):nullptr;
 			// Fetch target's stats
 			struct status_data* status2 = status_get_status_data(bl); // Battle status
 
@@ -11226,14 +11261,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 
 		case SC_COMA: // Coma. Sends a char to 1HP. If val2, do not zap sp
-			status_zap(bl, status->hp-1, val2?0:status->sp);
+			status_zap(bl, status->hp-1, val2?0:status->sp-1);
 			return 1;
 			break;
 		case SC_CLOSECONFINE2:
 		{
-			struct block_list *src2 = val2?map_id2bl(val2):NULL;
-			status_change *sc2 = src2?status_get_sc(src2):NULL;
-			struct status_change_entry *sce2 = sc2?sc2->getSCE(SC_CLOSECONFINE):NULL;
+			struct block_list *src2 = val2?map_id2bl(val2):nullptr;
+			status_change *sc2 = src2?status_get_sc(src2):nullptr;
+			struct status_change_entry *sce2 = sc2?sc2->getSCE(SC_CLOSECONFINE):nullptr;
 
 			if (src2 && sc2) {
 				if (!sce2) { // Start lock on caster.
@@ -11603,7 +11638,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 				val2 = ((chance < 20) ? 4 : (chance < 50) ? 3 : 2); // Shield count
 				val3 = 1000; // Shield HP
-				clif_millenniumshield(bl, val2);
+				clif_millenniumshield( *bl, val2 );
 			}
  			break;
 		case SC_ABUNDANCE:
@@ -12957,6 +12992,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				case SC_BERSERK:
 				case SC_MERC_HPUP:
 				case SC_MERC_SPUP:
+				// Status needs to be updated immediately and not at the end of the damage
+				case SC_EXTREMITYFIST:
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
@@ -12989,7 +13026,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				struct unit_data *ud = unit_bl2ud(bl);
 
 				if( ud )
-					ud->state.running = unit_run(bl, NULL, SC_RUN);
+					ud->state.running = unit_run(bl, nullptr, SC_RUN);
 			}
 			break;
 		case SC_BOSSMAPINFO:
@@ -13254,7 +13291,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				int damage = status->max_hp*sce->val3/100;
 				if(status->hp < damage) // to not kill him
 					damage = status->hp-1;
-				status_damage(NULL,bl,damage,0,0,1,0);
+				status_damage(nullptr,bl,damage,0,0,1,0);
 			}
 			break;
 		case SC_RUN:
@@ -13312,7 +13349,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 						((TBL_PC*)d_bl)->devotion[sce->val2] = 0;
 					else if( d_bl->type == BL_MER )
 						((TBL_MER*)d_bl)->devotion_flag = 0;
-					clif_devotion(d_bl, NULL);
+					clif_devotion(d_bl, nullptr);
 				}
 			}
 			break;
@@ -13381,8 +13418,8 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sd && sd->status.manner < 0 && tid != INVALID_TIMER)
 				sd->status.manner = 0;
 			if (sd && tid == INVALID_TIMER) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
-				clif_updatestatus(sd,SP_MANNER);
+				clif_changemanner( *sd );
+				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
 		case SC_SPLASHER:
@@ -13424,7 +13461,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sce->val1) { // Check for partner and end their marionette status as well
 				enum sc_type type2 = (type == SC_MARIONETTE) ? SC_MARIONETTE2 : SC_MARIONETTE;
 				struct block_list *pbl = map_id2bl(sce->val1);
-				status_change* sc2 = pbl?status_get_sc(pbl):NULL;
+				status_change* sc2 = pbl?status_get_sc(pbl):nullptr;
 
 				if (sc2 && sc2->getSCE(type2)) {
 					sc2->getSCE(type2)->val1 = 0;
@@ -13532,7 +13569,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 		/* 3rd Stuff */
 		case SC_MILLENNIUMSHIELD:
-			clif_millenniumshield(bl, 0);
+			clif_millenniumshield( *bl, 0 );
 			break;
 		case SC_HALLUCINATIONWALK:
 			sc_start(bl,bl,SC_HALLUCINATIONWALK_POSTDELAY,100,sce->val1,skill_get_time2(GC_HALLUCINATIONWALK,sce->val1));
@@ -13664,22 +13701,24 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			}
 			break;
 		case SC_H_MINE:
-			{
-				// Drop the material from target if expired
-				struct item it;
-				map_session_data *caster = NULL;
+			// Only drop the material from target if expired naturally
+			if( tid != INVALID_TIMER ){
+				map_session_data *caster = nullptr;
 
-				if (sce->val3 || status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
+				if (status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
 					break;
 
 				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
 
 				if (!item_db.exists(skill->require.itemid[0]))
 					break;
-				memset(&it, 0, sizeof(it));
+
+				struct item it = {};
+
 				it.nameid = skill->require.itemid[0];
 				it.amount = max(skill->require.amount[0],1);
 				it.identify = 1;
+
 				map_addflooritem(&it, it.amount, bl->m,bl->x, bl->y, caster->status.char_id, 0, 0, 4, 0);
 			}
 			break;
@@ -13791,7 +13830,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag[SCF_NONPLAYER] ) // bugreport:681
-		clif_changeoption2(bl);
+		clif_changeoption2( *bl );
 	else if (!disable_opt_flag && (opt_flag[SCF_SENDOPTION] || opt_flag[SCF_ONTOUCH] || opt_flag[SCF_UNITMOVE] || opt_flag[SCF_NONPLAYER] || opt_flag[SCF_SENDLOOK])) {
 		clif_changeoption(bl);
 		if (sd && opt_flag[SCF_SENDLOOK]) {
@@ -14200,8 +14239,8 @@ TIMER_FUNC(status_change_timer){
 	case SC_NOCHAT:
 		if(sd) {
 			sd->status.manner++;
-			clif_changestatus(sd,SP_MANNER,sd->status.manner);
-			clif_updatestatus(sd,SP_MANNER);
+			clif_changemanner( *sd );
+			clif_updatestatus(*sd,SP_MANNER);
 			if (sd->status.manner < 0) { // Every 60 seconds your manner goes up by 1 until it gets back to 0.
 				sc_timer_next(60000+tick);
 				return 0;
@@ -14690,7 +14729,7 @@ TIMER_FUNC(status_change_timer){
 
 				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(SO_VACUUM_EXTREME, sce->val1) && unit_movepos(bl, x, y, 0, false)) {
 					clif_slide(bl, x, y);
-					clif_fixpos(bl);
+					clif_fixpos( *bl );
 				}
 			}
 			sc_timer_next(tick + sce->val4);
@@ -14963,7 +15002,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 			status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
 		{
 			if (sce) {
-				struct skill_unit *su = NULL; 
+				struct skill_unit *su = nullptr; 
 				if(bl->type == BL_SKILL)
 					su = (struct skill_unit *)bl;
 				if (skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000000)
@@ -15130,7 +15169,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	struct status_data *status;
 	status_change *sc;
 	struct unit_data *ud;
-	struct view_data *vd = NULL;
+	struct view_data *vd = nullptr;
 	struct regen_data_sub *sregen;
 	map_session_data *sd;
 	int rate, multi = 1, flag;
@@ -15141,7 +15180,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	status = status_get_status_data(bl);
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
-		sc = NULL;
+		sc = nullptr;
 	sd = BL_CAST(BL_PC,bl);
 
 	flag = regen->flag;

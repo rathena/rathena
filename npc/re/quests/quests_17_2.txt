@@ -3944,7 +3944,7 @@ ba_in01,51,157,3	script	Est#ep172_est01	4_F_ESTLOVELOY,{
 				if (!is_party_leader()) {
 					mes "^4D4DFFThis place is a memorial dungeon.";
 					mes "You have to be a party leader to create a memorial dungeon.^000000";
-					close;
+					close3;
 				}
 				if (instance_create(.@md_name$) == -3)
 					dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
