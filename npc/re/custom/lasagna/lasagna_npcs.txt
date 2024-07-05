@@ -323,7 +323,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 				cutin "tutorial02.BMP",4;
 				mes "^4d4dff!- Notice -!^000000";
 				mes "^4d4dffCheck out the quest details by pressing the shortcut key [Alt+U],^000000 or through the Quest icon found in the menu tray.^000000";
-				close;
+				close3;
 			}
 			mes "[Vigilante Aglio]";
 			mes "Whoa, you're good!";
@@ -3710,7 +3710,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[Shaman meow]";
-		mes "When I told him that ¡°a noble person from a new place solves the problem,¡± I meant that the the problem will move onto ^0000cda new person^000000. Seems like he misunderstood me and sent you.";
+		mes "When I told him that ¡°a noble person from a new place solves the problem,¡± I meant that the problem will move onto ^0000cda new person^000000. Seems like he misunderstood me and sent you.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "T-then, you've also...";

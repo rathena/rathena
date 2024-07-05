@@ -3,8 +3,8 @@
 
 #include "ipban.hpp"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/cbasetypes.hpp>
 #include <common/showmsg.hpp>
@@ -15,17 +15,17 @@
 #include "login.hpp"
 #include "loginlog.hpp"
 
-// login sql settings
-static char   ipban_db_hostname[64] = "127.0.0.1";
-static uint16 ipban_db_port = 3306;
-static char   ipban_db_username[32] = "ragnarok";
-static char   ipban_db_password[32] = "";
-static char   ipban_db_database[32] = "ragnarok";
-static char   ipban_codepage[32] = "";
-static char   ipban_table[32] = "ipbanlist";
+
+std::string ipban_db_hostname = "127.0.0.1";
+uint16 ipban_db_port = 3306;
+std::string ipban_db_username = "ragnarok";
+std::string ipban_db_password = "";
+std::string ipban_db_database = "ragnarok";
+std::string ipban_codepage = "";
+std::string ipban_table = "ipbanlist";
 
 // globals
-static Sql* sql_handle = NULL;
+static Sql* sql_handle = nullptr;
 static int cleanup_timer_id = INVALID_TIMER;
 static bool ipban_inited = false;
 
@@ -39,14 +39,14 @@ TIMER_FUNC(ipban_cleanup);
  */
 bool ipban_check(uint32 ip) {
 	uint8* p = (uint8*)&ip;
-	char* data = NULL;
+	char* data = nullptr;
 	int matches;
 
 	if( !login_config.ipban )
 		return false;// ipban disabled
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `rtime` > NOW() AND (`list` = '%u.*.*.*' OR `list` = '%u.%u.*.*' OR `list` = '%u.%u.%u.*' OR `list` = '%u.%u.%u.%u')",
-		ipban_table, p[3], p[3], p[2], p[3], p[2], p[1], p[3], p[2], p[1], p[0]) )
+		ipban_table.c_str(), p[3], p[3], p[2], p[3], p[2], p[1], p[3], p[2], p[1], p[0]) )
 	{
 		Sql_ShowDebug(sql_handle);
 		// close connection because we can't verify their connectivity.
@@ -56,7 +56,7 @@ bool ipban_check(uint32 ip) {
 	if( SQL_ERROR == Sql_NextRow(sql_handle) )
 		return true;// Shouldn't happen, but just in case...
 
-	Sql_GetData(sql_handle, 0, &data, NULL);
+	Sql_GetData(sql_handle, 0, &data, nullptr);
 	matches = atoi(data);
 	Sql_FreeResult(sql_handle);
 
@@ -81,7 +81,7 @@ void ipban_log(uint32 ip) {
 	{
 		uint8* p = (uint8*)&ip;
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`list`,`btime`,`rtime`,`reason`) VALUES ('%u.%u.%u.*', NOW() , NOW() +  INTERVAL %d MINUTE ,'Password error ban')",
-			ipban_table, p[3], p[2], p[1], login_config.dynamic_pass_failure_ban_duration) )
+			ipban_table.c_str(), p[3], p[2], p[1], login_config.dynamic_pass_failure_ban_duration) )
 			Sql_ShowDebug(sql_handle);
 	}
 }
@@ -100,7 +100,7 @@ TIMER_FUNC(ipban_cleanup){
 	if( !login_config.ipban )
 		return 0;// ipban disabled
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `rtime` <= NOW()", ipban_table) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `rtime` <= NOW()", ipban_table.c_str()) )
 		Sql_ShowDebug(sql_handle);
 
 	return 0;
@@ -123,19 +123,19 @@ bool ipban_config_read(const char* key, const char* value) {
 	{
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			safestrncpy(ipban_db_hostname, value, sizeof(ipban_db_hostname));
+			ipban_db_hostname = value;
 		else
 		if( strcmpi(key, "port") == 0 )
-			ipban_db_port = (uint16)strtoul(value, NULL, 10);
+			ipban_db_port = (uint16)strtoul( value, nullptr, 10 );
 		else
 		if( strcmpi(key, "id") == 0 )
-			safestrncpy(ipban_db_username, value, sizeof(ipban_db_username));
+			ipban_db_username = value;
 		else
 		if( strcmpi(key, "pw") == 0 )
-			safestrncpy(ipban_db_password, value, sizeof(ipban_db_password));
+			ipban_db_password = value;
 		else
 		if( strcmpi(key, "db") == 0 )
-			safestrncpy(ipban_db_database, value, sizeof(ipban_db_database));
+			ipban_db_database = value;
 		else
 			return false;// not found
 		return true;
@@ -146,10 +146,10 @@ bool ipban_config_read(const char* key, const char* value) {
 	{
 		key += strlen(signature);
 		if( strcmpi(key, "codepage") == 0 )
-			safestrncpy(ipban_codepage, value, sizeof(ipban_codepage));
+			ipban_codepage = value;
 		else
 		if( strcmpi(key, "ipban_table") == 0 )
-			safestrncpy(ipban_table, value, sizeof(ipban_table));
+			ipban_table = value;
 		else
 		if( strcmpi(key, "enable") == 0 )
 			login_config.ipban = (config_switch(value) != 0);
@@ -181,41 +181,25 @@ bool ipban_config_read(const char* key, const char* value) {
  * Launched at login-serv start, create db or other long scope variable here.
  */
 void ipban_init(void) {
-	const char* username = ipban_db_username;
-	const char* password = ipban_db_password;
-	const char* hostname = ipban_db_hostname;
-	uint16      port     = ipban_db_port;
-	const char* database = ipban_db_database;
-	const char* codepage = ipban_codepage;
-
 	ipban_inited = true;
 
 	if( !login_config.ipban )
 		return;// ipban disabled
 
-	if( ipban_db_hostname[0] != '\0' )
-	{// local settings
-		username = ipban_db_username;
-		password = ipban_db_password;
-		hostname = ipban_db_hostname;
-		port     = ipban_db_port;
-		database = ipban_db_database;
-		codepage = ipban_codepage;
-	}
-
 	// establish connections
 	sql_handle = Sql_Malloc();
-	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, ipban_db_username.c_str(), ipban_db_password.c_str(), ipban_db_hostname.c_str(), ipban_db_port, ipban_db_database.c_str()) )
 	{
-                ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-                        username, password, hostname, port, database);
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%hu',database='%s'\n",
+			ipban_db_username.c_str(), ipban_db_hostname.c_str(), ipban_db_port, ipban_db_database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
-        ShowInfo("Ipban connection made.\n");
-        
-	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
+
+	ShowInfo("Ipban connection made.\n");
+
+	if( !ipban_codepage.empty() && SQL_ERROR == Sql_SetEncoding(sql_handle, ipban_codepage.c_str()) )
 		Sql_ShowDebug(sql_handle);
 
 	if( login_config.ipban_cleanup_interval > 0 )
@@ -242,5 +226,5 @@ void ipban_final(void) {
 
 	// close connections
 	Sql_Free(sql_handle);
-	sql_handle = NULL;
+	sql_handle = nullptr;
 }

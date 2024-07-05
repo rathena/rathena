@@ -3093,13 +3093,11 @@ OnTouch_:
 	end;
 }
 
-/* Currently broken.
 prt_maze02,25,161,0	script	#music	-1,7,7,{
 OnTouch_:
-	soundeffect "effect\\Â¼Â®Â¾Ã§Ã€Ã‡ Â¾Ã®Â½Ã˜Â½Ã….wav",1;
+	soundeffect "effect\\¼®¾çÀÇ ¾î½Ø½Å.wav",1;
 	end;
 }
-*/
 
 prt_maze02,132,132,0	script	#skill	-1,{
 OnEnable:
@@ -9757,7 +9755,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Kirkena]";

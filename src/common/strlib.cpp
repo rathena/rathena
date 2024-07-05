@@ -3,7 +3,8 @@
 
 #include "strlib.hpp"
 
-#include <stdlib.h>
+#include <algorithm>
+#include <cstdlib>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
@@ -32,7 +33,7 @@ char* trim(char* str)
 	size_t start;
 	size_t end;
 
-	if( str == NULL )
+	if( str == nullptr )
 		return str;
 
 	// get start position
@@ -61,7 +62,7 @@ char* normalize_name(char* str,const char* delims)
 	char* out = str;
 	int put_space = 0;
 
-	if( str == NULL || delims == NULL )
+	if( str == nullptr || delims == nullptr )
 		return str;
 
 	// trim start of string
@@ -126,12 +127,12 @@ char* _strtok_r(char *s1, const char *s2, char **lasts)
 {
 	char *ret;
 
-	if (s1 == NULL)
+	if (s1 == nullptr)
 		s1 = *lasts;
 	while(*s1 && strchr(s2, *s1))
 		++s1;
 	if(*s1 == '\0')
-		return NULL;
+		return nullptr;
 	ret = s1;
 	while(*s1 && !strchr(s2, *s1))
 		++s1;
@@ -209,7 +210,7 @@ int e_mail_check(char* email)
 		return 0;
 
 	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[len-1] == '@')
+	if (strchr(email, '@') == nullptr || email[len-1] == '@')
 		return 0;
 
 	if (email[len-1] == '.')
@@ -217,14 +218,14 @@ int e_mail_check(char* email)
 
 	last_arobas = strrchr(email, '@');
 
-	if (strstr(last_arobas, "@.") != NULL || strstr(last_arobas, "..") != NULL)
+	if (strstr(last_arobas, "@.") != nullptr || strstr(last_arobas, "..") != nullptr)
 		return 0;
 
 	for(ch = 1; ch < 32; ch++)
-		if (strchr(last_arobas, ch) != NULL)
+		if (strchr(last_arobas, ch) != nullptr)
 			return 0;
 
-	if (strchr(last_arobas, ' ') != NULL || strchr(last_arobas, ';') != NULL)
+	if (strchr(last_arobas, ' ') != nullptr || strchr(last_arobas, ';') != nullptr)
 		return 0;
 
 	// all correct
@@ -242,7 +243,7 @@ int config_switch(const char* str)
 	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0 || strcmpi(str, "nao") == 0)
 		return 0;
 
-	return (int)strtol(str, NULL, 0);
+	return (int)strtol(str, nullptr, 0);
 }
 
 /// strncpy that always nul-terminates the string
@@ -269,7 +270,7 @@ char* safestrncpy(char* dst, const char* src, size_t n)
 /// doesn't crash on null pointer
 size_t safestrnlen(const char* string, size_t maxlen)
 {
-	return ( string != NULL ) ? strnlen(string, maxlen) : 0;
+	return ( string != nullptr ) ? strnlen(string, maxlen) : 0;
 }
 
 /// Works like snprintf, but always nul-terminates the buffer.
@@ -304,14 +305,14 @@ int strline(const char* str, size_t pos)
 	const char* target;
 	int line;
 
-	if( str == NULL || pos == 0 )
+	if( str == nullptr || pos == 0 )
 		return 1;
 
 	target = str+pos;
 	for( line = 1; ; ++line )
 	{
 		str = strchr(str, '\n');
-		if( str == NULL || target <= str )
+		if( str == nullptr || target <= str )
 			break;// found target line
 		++str;// skip newline
 	}
@@ -348,8 +349,7 @@ bool bin2hex(char* output, unsigned char* input, size_t count)
 ///
 /// @param sv Parse state
 /// @return 1 if a field was parsed, 0 if already done, -1 on error.
-int sv_parse_next(struct s_svstate* sv)
-{
+int sv_parse_next( s_svstate& sv ){
 	enum {
 		START_OF_FIELD,
 		PARSING_FIELD,
@@ -358,19 +358,11 @@ int sv_parse_next(struct s_svstate* sv)
 		TERMINATE,
 		END
 	} state;
-	const char* str;
-	int len;
-	enum e_svopt opt;
-	char delim;
-	int i;
 
-	if( sv == NULL )
-		return -1;// error
-
-	str = sv->str;
-	len = sv->len;
-	opt = sv->opt;
-	delim = sv->delim;
+	const char* str = sv.str;
+	size_t len = sv.len;
+	int opt = sv.opt;
+	char delim = sv.delim;
 
 	// check opt
 	if( delim == '\n' && (opt&(SV_TERMINATE_CRLF|SV_TERMINATE_LF)) )
@@ -384,9 +376,9 @@ int sv_parse_next(struct s_svstate* sv)
 		return -1;// error
 	}
 
-	if( sv->done || str == NULL )
+	if( sv.done || str == nullptr )
 	{
-		sv->done = true;
+		sv.done = true;
 		return 0;// nothing to parse
 	}
 
@@ -397,10 +389,10 @@ int sv_parse_next(struct s_svstate* sv)
 	((opt&SV_TERMINATE_CR) && str[i] == '\r') || \
 	((opt&SV_TERMINATE_CRLF) && i+1 < len && str[i] == '\r' && str[i+1] == '\n') )
 #define IS_C_ESCAPE() ( (opt&SV_ESCAPE_C) && str[i] == '\\' )
-#define SET_FIELD_START() sv->start = i
-#define SET_FIELD_END() sv->end = i
+#define SET_FIELD_START() sv.start = i
+#define SET_FIELD_END() sv.end = i
 
-	i = sv->off;
+	size_t i = sv.off;
 	state = START_OF_FIELD;
 	while( state != END )
 	{
@@ -480,14 +472,14 @@ int sv_parse_next(struct s_svstate* sv)
 			else
 				++i;// CR or LF
 #endif
-			sv->done = true;
+			sv.done = true;
 			state = END;
 			break;
 		}
 	}
 	if( IS_END() )
-		sv->done = true;
-	sv->off = i;
+		sv.done = true;
+	sv.off = i;
 
 #undef IS_END
 #undef IS_DELIM
@@ -506,7 +498,7 @@ int sv_parse_next(struct s_svstate* sv)
 /// Other position pairs are the start and end of fields.
 /// Returns the number of fields found or -1 if an error occurs.
 ///
-/// out_pos can be NULL.
+/// out_pos can be nullptr.
 /// If a line terminator is found, the end position is placed there.
 /// out_pos[2] and out_pos[3] for the first field, out_pos[4] and out_pos[5]
 /// for the seconds field and so on.
@@ -520,15 +512,20 @@ int sv_parse_next(struct s_svstate* sv)
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt)
-{
-	struct s_svstate sv;
-	int count;
-
+size_t sv_parse( const char* str, size_t len, size_t startoff, char delim, size_t* out_pos, size_t npos, int opt, bool& error ){
 	// initialize
-	if( out_pos == NULL ) npos = 0;
-	for( count = 0; count < npos; ++count )
-		out_pos[count] = -1;
+	error = false;
+
+	if( out_pos == nullptr ){
+		npos = 0;
+	}
+
+	for( size_t i = 0; i < npos; ++i ){
+		out_pos[i] = -1;
+	}
+
+	s_svstate sv = {};
+
 	sv.str = str;
 	sv.len = len;
 	sv.off = startoff;
@@ -536,18 +533,34 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 	sv.delim = delim;
 	sv.done = false;
 
-	// parse
-	count = 0;
-	if( npos > 0 ) out_pos[0] = startoff;
-	while( !sv.done )
-	{
-		++count;
-		if( sv_parse_next(&sv) <= 0 )
-			return -1;// error
-		if( npos > count*2 ) out_pos[count*2] = sv.start;
-		if( npos > count*2+1 ) out_pos[count*2+1] = sv.end;
+	if( npos > 0 ){
+		out_pos[0] = startoff;
 	}
-	if( npos > 1 ) out_pos[1] = sv.off;
+
+	// parse
+	size_t count = 0;
+	
+	while( !sv.done ){
+		++count;
+
+		if( sv_parse_next( sv ) <= 0 ){
+			error = true;
+			return 0;
+		}
+
+		if( npos > count * 2 ){
+			out_pos[count * 2] = sv.start;
+		}
+
+		if( npos > count * 2 + 1 ){
+			out_pos[count * 2 + 1] = sv.end;
+		}
+	}
+
+	if( npos > 1 ){
+		out_pos[1] = sv.off;
+	}
+
 	return count;
 }
 
@@ -558,7 +571,7 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// Other entries are the start of fields (nul-teminated).
 /// Returns the number of fields found or -1 if an error occurs.
 ///
-/// out_fields can be NULL.
+/// out_fields can be nullptr.
 /// Fields that don't fit in out_fields are not nul-terminated.
 /// Extra entries in out_fields are filled with the end of the last field (empty string).
 ///
@@ -570,18 +583,21 @@ int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, i
 /// @param nfields Size of the field array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields found in the string or -1 if an error occured
-int sv_split(char* str, int len, int startoff, char delim, char** out_fields, size_t nfields, enum e_svopt opt)
-{
-	int pos[1024];
-	int done;
-	char* end;
-	int ret = sv_parse(str, len, startoff, delim, pos, ARRAYLENGTH(pos), opt);
+size_t sv_split( char* str, size_t len, size_t startoff, char delim, char** out_fields, size_t nfields, int opt, bool& error ){
+	if( out_fields == nullptr || nfields <= 0 ){
+		return 0; // nothing to do
+	}
 
-	if( ret == -1 || out_fields == NULL || nfields <= 0 )
-		return ret; // nothing to do
+	size_t pos[1024];
+	size_t ret = sv_parse( str, len, startoff, delim, pos, ARRAYLENGTH( pos ), opt, error );
+
+	// An error occurred
+	if( error ){
+		return 0;
+	}
 
 	// next line
-	end = str + pos[1];
+	char* end = str + pos[1];
 	if( end[0] == '\0' )
 	{
 		*out_fields = end;
@@ -614,7 +630,7 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, si
 
 	// fields
 	size_t i = 2;
-	done = 0;
+	size_t done = 0;
 	while( done < ret && nfields > 0 )
 	{
 		if( i < ARRAYLENGTH(pos) )
@@ -630,7 +646,13 @@ int sv_split(char* str, int len, int startoff, char delim, char** out_fields, si
 		}
 		else
 		{// get more fields
-			sv_parse(str, len, pos[i-1] + 1, delim, pos, ARRAYLENGTH(pos), opt);
+			sv_parse( str, len, pos[i - 1] + 1, delim, pos, ARRAYLENGTH( pos ), opt, error );
+
+			// An error occurred
+			if( error ){
+				return 0;
+			}
+
 			i = 2;
 		}
 	}
@@ -654,14 +676,14 @@ size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* esca
 	size_t i;
 	size_t j;
 
-	if( out_dest == NULL )
+	if( out_dest == nullptr )
 		return 0;// nothing to do
-	if( src == NULL )
+	if( src == nullptr )
 	{// nothing to escape
 		*out_dest = 0;
 		return 0;
 	}
-	if( escapes == NULL )
+	if( escapes == nullptr )
 		escapes = "";
 
 	for( i = 0, j = 0; i < len; ++i )
@@ -792,7 +814,7 @@ size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
 			}
 			else
 			{// other escape sequence
-				if( strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL )
+				if( strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == nullptr )
 					ShowWarning("sv_unescape_c: unknown escape sequence \\%c\n", src[i]);
 				switch( src[i] )
 				{
@@ -862,13 +884,11 @@ const char* skip_escaped_c(const char* p)
  * @param silent : should we display error if file not found ?
  * @return true on success, false if file could not be opened
  */
-bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current), bool silent)
-{
+bool sv_readdb( const char* directory, const char* filename, char delim, size_t mincols, size_t maxcols, size_t maxrows, bool (*parseproc)( char* fields[], size_t columns, size_t current ), bool silent ){
 	FILE* fp;
 	int lines = 0;
-	int entries = 0;
+	size_t entries = 0;
 	char** fields; // buffer for fields ([0] is reserved)
-	int columns, nb_cols;
 	char path[1024], *line;
 	const short colsize=512;
 
@@ -876,24 +896,23 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 
 	// open file
 	fp = fopen(path, "r");
-	if( fp == NULL )
+	if( fp == nullptr )
 	{
 		if(silent == 0) ShowError("sv_readdb: can't read %s\n", path);
 		return false;
 	}
 
 	// allocate enough memory for the maximum requested amount of columns plus the reserved one
-	nb_cols = maxcols+1;
+	size_t nb_cols = maxcols + 1;
 	fields = (char**)aMalloc(nb_cols*sizeof(char*));
 	line = (char*)aMalloc(nb_cols*colsize);
 
 	// process rows one by one
-	while( fgets(line, maxcols*colsize, fp) )
-	{
+	while( fgets( line, static_cast<int>( maxcols * colsize ), fp ) ){
 		char *match;
 		lines++;
 
-		if( ( match = strstr(line, "//") ) != NULL )
+		if( ( match = strstr(line, "//") ) != nullptr )
 		{// strip comments
 			match[0] = 0;
 		}
@@ -903,7 +922,13 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
 
-		columns = sv_split(line, strlen(line), 0, delim, fields, nb_cols, (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
+		bool error;
+		size_t columns = sv_split( line, strlen( line ), 0, delim, fields, nb_cols, SV_TERMINATE_LF|SV_TERMINATE_CRLF, error );
+
+		if( error ){
+			ShowError( "sv_readdb: error in line %d of \"%s\".\n", lines, path );
+			continue;
+		}
 
 		if( columns < mincols )
 		{
@@ -965,53 +990,49 @@ void _StringBuf_Init(const char *file, int line, const char *func,StringBuf* sel
 }
 
 /// Appends the result of printf to the StringBuf
-int _StringBuf_Printf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, ...)
-{
-	int len;
+size_t _StringBuf_Printf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, ... ){
 	va_list ap;
 
 	va_start(ap, fmt);
-	len = _StringBuf_Vprintf(file,line,func,self, fmt, ap);
+	size_t len = _StringBuf_Vprintf(file,line,func,self, fmt, ap);
 	va_end(ap);
 
 	return len;
 }
 
 /// Appends the result of vprintf to the StringBuf
-int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, va_list ap)
-{
+size_t _StringBuf_Vprintf( const char* file, int line, const char* func, StringBuf* self, const char* fmt, va_list ap ){
 	for(;;)
 	{
-		int n, size, off;
 		va_list apcopy;
 		/* Try to print in the allocated space. */
-		size = self->max_ - (self->ptr_ - self->buf_);
+		size_t size = self->max_ - (self->ptr_ - self->buf_);
 		va_copy(apcopy, ap);
-		n = vsnprintf(self->ptr_, size, fmt, apcopy);
+		int n = vsnprintf( self->ptr_, size, fmt, apcopy );
 		va_end(apcopy);
 		/* If that worked, return the length. */
-		if( n > -1 && n < size )
+		if( n > -1 && static_cast<size_t>(n) < size )
 		{
 			self->ptr_ += n;
-			return (int)(self->ptr_ - self->buf_);
+			return self->ptr_ - self->buf_;
 		}
 		/* Else try again with more space. */
 		self->max_ *= 2; // twice the old size
-		off = (int)(self->ptr_ - self->buf_);
+		size_t off = self->ptr_ - self->buf_;
 		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 }
 
 /// Appends the contents of another StringBuf to the StringBuf
-int _StringBuf_Append(const char *file, int line, const char *func,StringBuf* self, const StringBuf* sbuf)
+size_t _StringBuf_Append(const char *file, int line, const char *func,StringBuf* self, const StringBuf* sbuf)
 {
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
+	size_t available = self->max_ - (self->ptr_ - self->buf_);
+	size_t needed = sbuf->ptr_ - sbuf->buf_;
 
 	if( needed >= available )
 	{
-		int off = (int)(self->ptr_ - self->buf_);
+		size_t off = self->ptr_ - self->buf_;
 		self->max_ += needed;
 		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
@@ -1019,26 +1040,26 @@ int _StringBuf_Append(const char *file, int line, const char *func,StringBuf* se
 
 	memcpy(self->ptr_, sbuf->buf_, needed);
 	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
+	return self->ptr_ - self->buf_;
 }
 
 // Appends str to the StringBuf
-int _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf* self, const char* str)
+size_t _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf* self, const char* str)
 {
-	int available = self->max_ - (self->ptr_ - self->buf_);
-	int needed = (int)strlen(str);
+	size_t available = self->max_ - ( self->ptr_ - self->buf_ );
+	size_t needed = strlen( str );
 
 	if( needed >= available )
 	{// not enough space, expand the buffer (minimum expansion = 1024)
-		int off = (int)(self->ptr_ - self->buf_);
-		self->max_ += max(needed, 1024);
+		size_t off = self->ptr_ - self->buf_;
+		self->max_ += std::max( needed, static_cast<size_t>( 1024 ) );
 		self->buf_ = (char*)aRealloc2(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 
 	memcpy(self->ptr_, str, needed);
 	self->ptr_ += needed;
-	return (int)(self->ptr_ - self->buf_);
+	return self->ptr_ - self->buf_;
 }
 
 // Returns the length of the data in the Stringbuf

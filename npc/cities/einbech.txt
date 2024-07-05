@@ -888,7 +888,7 @@ einbech,148,246,5	script	Franz#ein	851,{
 	mes "S-somebody...";
 	next;
 	mes "[Franz]";
-	mes "Hey, a traveller!";
+	mes "Hey, a traveler!";
 	mes "Are you planning to explore";
 	mes "the Mine Dungeon or the fields";
 	mes "around here? Let's chat for a bit and maybe you'll learn something.";

@@ -82,10 +82,17 @@ Header:
 
 Footer:
   Imports:
-  # Import base information first
+  # Load base information first
   - Path: db/pre-re/job_stats.yml
     Mode: Prerenewal
   - Path: db/re/job_stats.yml
+    Mode: Renewal
+
+  # Next, populate with ASPD information
+  # If RENEWAL is defined and RENEWAL_ASPD is not defined then the pre-renewal file is loaded
+  - Path: db/pre-re/job_aspd.yml
+    Mode: Prerenewal
+  - Path: db/re/job_aspd.yml
     Mode: Renewal
 
   # Next, populate with experience information

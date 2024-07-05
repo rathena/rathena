@@ -3,9 +3,9 @@
 
 #include "int_achievement.hpp"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #include <common/db.hpp>
 #include <common/malloc.hpp>
@@ -27,14 +27,14 @@
  */
 struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 {
-	struct achievement *achievelog = NULL;
+	struct achievement *achievelog = nullptr;
 	struct achievement tmp_achieve;
 	SqlStmt *stmt;
 	StringBuf buf;
 	int i;
 
 	if (!count)
-		return NULL;
+		return nullptr;
 
 	memset(&tmp_achieve, 0, sizeof(tmp_achieve));
 
@@ -52,14 +52,14 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 		SqlStmt_Free(stmt);
 		StringBuf_Destroy(&buf);
 		*count = 0;
-		return NULL;
+		return nullptr;
 	}
 
-	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  &tmp_achieve.completed, 0, nullptr, nullptr);
+	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 3 + i, SQLDT_INT, &tmp_achieve.count[i], 0, nullptr, nullptr);
 
 	*count = (int)SqlStmt_NumRows(stmt);
 	if (*count > 0) {
@@ -209,7 +209,7 @@ int mapif_parse_achievement_save(int fd)
 {
 	int i, j, k, old_n, new_n = (RFIFOW(fd, 2) - 8) / sizeof(struct achievement);
 	uint32 char_id = RFIFOL(fd, 4);
-	struct achievement *old_ad = NULL, *new_ad = NULL;
+	struct achievement *old_ad = nullptr, *new_ad = nullptr;
 	bool success = true;
 
 	if (new_n > 0)
@@ -257,14 +257,14 @@ int mapif_parse_achievement_save(int fd)
  * Sends the achievementlog of a character to the map-server.
  */
 void mapif_achievement_load( int fd, uint32 char_id ){
-	struct achievement *tmp_achievementlog = NULL;
+	struct achievement *tmp_achievementlog = nullptr;
 	int num_achievements = 0;
 
 	tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements);
 
 	WFIFOHEAD(fd, num_achievements * sizeof(struct achievement) + 8);
 	WFIFOW(fd, 0) = 0x3862;
-	WFIFOW(fd, 2) = num_achievements * sizeof(struct achievement) + 8;
+	WFIFOW(fd, 2) = static_cast<int16>( num_achievements * sizeof( struct achievement ) + 8 );
 	WFIFOL(fd, 4) = char_id;
 
 	if (num_achievements > 0)
@@ -305,7 +305,7 @@ void mapif_achievement_reward( int fd, uint32 char_id, int32 achievement_id, tim
  * @see inter_parse_frommap
  */
 int mapif_parse_achievement_reward(int fd){
-	time_t current = time(NULL);
+	time_t current = time(nullptr);
 	uint32 char_id = RFIFOL(fd, 2);
 	int32 achievement_id = RFIFOL(fd, 6);
 

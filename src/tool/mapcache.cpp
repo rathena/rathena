@@ -1,9 +1,9 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #ifndef _WIN32
 #include <unistd.h>
@@ -76,8 +76,8 @@ int read_map(char *name, struct map_data *m)
 
 	// Open map GAT
 	sprintf(filename,"data\\%s.gat", name);
-	gat = (unsigned char *)grfio_read(filename);
-	if (gat == NULL)
+	gat = (unsigned char *)grfio_reads(filename);
+	if (gat == nullptr)
 		return 0;
 
 	// Open map RSW
@@ -217,7 +217,7 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
 	if(!rebuild) {
 		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
-		if(map_cache_fp == NULL) {
+		if(map_cache_fp == nullptr) {
 			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
 			rebuild = 1;
 		} else
@@ -227,7 +227,7 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 		map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
 	else
 		map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
-	if(map_cache_fp == NULL) {
+	if(map_cache_fp == nullptr) {
 		ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
 		return false;
 	}
@@ -241,7 +241,7 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 
 		ShowStatus("Opening map list: %s\n", filename.c_str());
 		list = fopen(filename.c_str(), "r");
-		if (list == NULL) {
+		if (list == nullptr) {
 			ShowError("Failure when opening maps list file %s\n", filename.c_str());
 			return false;
 		}

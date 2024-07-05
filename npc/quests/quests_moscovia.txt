@@ -3391,7 +3391,6 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 				mes "Please have a rest, young adventurer.";
 			}
 			else {
-				mes "[Landlord]";
 				mes "Please be comfortable.";
 			}
 			break;
@@ -9936,7 +9935,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 					mes "I don't understand you. What do you want? Kehehehehe.";
 					close;
 				} else if (.@input > 100) {
-					mes "I said no more then 100 at a time. Kehehehehe.";
+					mes "I said no more than 100 at a time. Kehehehehe.";
 					next;
 				} else break;
 			}

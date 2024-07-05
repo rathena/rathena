@@ -127,7 +127,7 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 				}
 				else {
 					mes "[Swordman]";
-					mes "Alright then. Feel free to come back whenever you are ready. All you ahve to do now is meet our requirements. Good luck to you.";
+					mes "Alright then. Feel free to come back whenever you are ready. All you have to do now is meet our requirements. Good luck to you.";
 					close;
 				}
 			}
@@ -315,7 +315,7 @@ job_sword1,223,167,2	script	Mae#swd_1_success	92,{
 	set job_sword_q,4;
 	mes "[Mae]";
 	mes "I sencerely congratulate you for passing the test!";
-	mes "I already sent your test result to the Job Department.Please inquire at the Officer in Centre.Thank you.";
+	mes "I already sent your test result to the Job Department. Please inquire at the Officer in Centre.Thank you.";
 	close2;
 	warp "izlude_in",66,173;
 	end;
@@ -326,7 +326,7 @@ job_sword1,223,167,2	script	Mae#swd_1_success	92,{
 function	script	F_JobSwdMedic	{
 	percentheal 100,0;
 	mes "[Medic]";
-	mes "This is the "+getarg(0)+" check point!Cheer up!";
+	mes "This is the "+getarg(0)+" check point! Cheer up!";
 	close;
 }
 
@@ -460,7 +460,7 @@ job_sword1,180,238,0	duplicate(SwdTrap1)	1_blank_14_a	-1,0,1
 job_sword1,183,238,0	duplicate(SwdTrap1)	1_blank_14_b	-1,0,1
 job_sword1,181,239,0	duplicate(SwdTrap1)	1_blank_14_c	-1,1,0
 
-job_sword1,193,245,0	warp	1_rest	1,3,job_sword1,215,244
+//job_sword1,193,245,0	warp	1_rest	1,3,job_sword1,215,244
 
 // Pitfalls (Set 2)
 //============================================================ 

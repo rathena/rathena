@@ -499,8 +499,8 @@ enum sc_type : int16 {
 	//SC_IGNOREDEF,
 	SC_HELLPOWER = 294,
 	SC_INVINCIBLE, //295
-	SC_INVINCIBLEOFF,
-	SC_MANU_ATK,
+	//SC_INVINCIBLEOFF,
+	SC_MANU_ATK = 297,
 	SC_MANU_DEF,
 	SC_SPL_ATK,
 	SC_SPL_DEF, //300
@@ -756,7 +756,7 @@ enum sc_type : int16 {
 	/* Guild Aura */
 	SC_LEADERSHIP,
 	SC_GLORYWOUNDS,
-	SC_SOULCOLD, //508
+	SC_SOULCOLD,
 	SC_HAWKEYES,
 	/* ... */
 	SC_ODINS_POWER,
@@ -779,7 +779,7 @@ enum sc_type : int16 {
 	/* Max HP & SP */
 	SC_INCMHP,
 	SC_INCMSP,
-	SC_PARTYFLEE, // 531
+	SC_PARTYFLEE,
 	/**
 	* Kagerou & Oboro [malufett]
 	**/
@@ -1282,10 +1282,36 @@ enum sc_type : int16 {
 
 	SC_RUSH_QUAKE1,
 	SC_RUSH_QUAKE2,
+	
+	SC_G_LIFEPOTION,
 
-#ifdef RENEWAL
-	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
-#endif
+	// Hyper Novice
+	SC_HNNOWEAPON,
+	SC_SHIELDCHAINRUSH,
+	SC_MISTYFROST,
+	SC_GROUNDGRAVITY,
+	SC_BREAKINGLIMIT,
+	SC_RULEBREAK,
+
+	// Night Watch
+	SC_INTENSIVE_AIM,
+	SC_INTENSIVE_AIM_COUNT,
+	SC_GRENADE_FRAGMENT_1,
+	SC_GRENADE_FRAGMENT_2,
+	SC_GRENADE_FRAGMENT_3,
+	SC_GRENADE_FRAGMENT_4,
+	SC_GRENADE_FRAGMENT_5,
+	SC_GRENADE_FRAGMENT_6,
+	SC_AUTO_FIRING_LAUNCHER,
+	SC_HIDDEN_CARD,
+	SC_PERIOD_RECEIVEITEM_2ND,
+	SC_PERIOD_PLUSEXP_2ND,
+
+	//SC_EXTREMITYFIST2,
+	SC_POWERUP = 951,
+	SC_AGIUP,
+	SC_PROTECTION,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
@@ -3147,7 +3173,7 @@ struct status_data {
 #endif
 		matk_min, matk_max,
 		speed,
-		amotion, adelay, dmotion;
+		amotion, clientamotion, adelay, dmotion;
 	int mode;
 	short
 		hit, flee, cri, flee2,
@@ -3266,6 +3292,8 @@ private:
 	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
 
 public:
+	status_change();
+
 	status_change_entry * getSCE(enum sc_type type);
 	status_change_entry * getSCE(uint32 type);
 	status_change_entry * createSCE(enum sc_type type);
@@ -3367,6 +3395,7 @@ defType status_get_def(struct block_list *bl);
 unsigned short status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(bl)->amotion
+#define status_get_clientamotion(bl) status_get_status_data(bl)->clientamotion
 #define status_get_dmotion(bl) status_get_status_data(bl)->dmotion
 #define status_get_patk(bl) status_get_status_data(bl)->patk
 #define status_get_smatk(bl) status_get_status_data(bl)->smatk

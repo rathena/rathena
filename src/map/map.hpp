@@ -5,7 +5,7 @@
 #define MAP_HPP
 
 #include <algorithm>
-#include <stdarg.h>
+#include <cstdarg>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -21,6 +21,7 @@
 
 #include "navi.hpp"
 #include "script.hpp"
+#include "path.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
@@ -66,7 +67,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 250
+#define MAX_LEVEL 260
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -363,6 +364,11 @@ enum e_race2 : uint8{
 	RC2_EP172ALPHA,
 	RC2_EP172BETA,
 	RC2_EP172BATH,
+	RC2_ILLUSION_TURTLE,
+	RC2_RACHEL_SANCTUARY,
+	RC2_ILLUSION_LUANDA,
+	RC2_ILLUSION_FROZEN,
+	RC2_ILLUSION_MOONLIGHT,
 	RC2_MAX
 };
 
@@ -794,7 +800,7 @@ struct iwall_data {
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	uint16 index; // The map index used by the mapindex* functions.
-	struct mapcell* cell; // Holds the information of each map cell (NULL if the map is not on this map-server).
+	struct mapcell* cell; // Holds the information of each map cell (nullptr if the map is not on this map-server).
 	struct block_list **block;
 	struct block_list **block_mob;
 	int16 m;
@@ -808,7 +814,6 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::vector<int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
@@ -839,6 +844,14 @@ struct map_data {
 		std::vector<const struct navi_link *> warps_outof;
 	} navi;
 #endif
+
+	int getMapFlag(int flag) const;
+	void setMapFlag(int flag, int value);
+	void initMapFlags();
+	void copyFlags(const map_data& other);
+
+private:
+	std::vector<int> flags;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
@@ -846,9 +859,21 @@ struct map_data {
 struct map_data_other_server {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; //Index is the map index used by the mapindex* functions.
-	struct mapcell* cell; // If this is NULL, the map is not on this map-server
+	struct mapcell* cell; // If this is nullptr, the map is not on this map-server
 	uint32 ip;
 	uint16 port;
+};
+
+/**
+ * align for packet ZC_SAY_DIALOG_ALIGN
+ **/
+enum e_say_dialog_align : uint8 {
+	DIALOG_ALIGN_LEFT   = 0,
+	DIALOG_ALIGN_RIGHT  = 1,
+	DIALOG_ALIGN_CENTER = 2,
+	DIALOG_ALIGN_TOP    = 3,
+	DIALOG_ALIGN_MIDDLE = 4,
+	DIALOG_ALIGN_BOTTOM = 5
 };
 
 struct inter_conf {
@@ -888,7 +913,7 @@ inline bool mapdata_flag_vs(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG_DUNGEON) || mapdata->getMapFlag(MF_GVG) || ((agit_flag || agit2_flag) && mapdata->getMapFlag(MF_GVG_CASTLE)) || mapdata->getMapFlag(MF_GVG_TE) || (agit3_flag && mapdata->getMapFlag(MF_GVG_TE_CASTLE)) || mapdata->getMapFlag(MF_BATTLEGROUND))
 		return true;
 
 	return false;
@@ -903,7 +928,7 @@ inline bool mapdata_flag_vs2(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG_DUNGEON) || mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE) || mapdata->getMapFlag(MF_BATTLEGROUND))
 		return true;
 
 	return false;
@@ -918,7 +943,7 @@ inline bool mapdata_flag_gvg(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]))
+	if (mapdata->getMapFlag(MF_GVG) || ((agit_flag || agit2_flag) && mapdata->getMapFlag(MF_GVG_CASTLE)) || mapdata->getMapFlag(MF_GVG_TE) || (agit3_flag && mapdata->getMapFlag(MF_GVG_TE_CASTLE)))
 		return true;
 
 	return false;
@@ -933,7 +958,7 @@ inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE])
+	if (mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_GVG_CASTLE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE))
 		return true;
 
 	return false;
@@ -948,7 +973,7 @@ inline bool mapdata_flag_ks(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->getMapFlag(MF_TOWN) || mapdata->getMapFlag(MF_PVP) || mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_BATTLEGROUND))
 		return true;
 
 	return false;
@@ -964,7 +989,7 @@ inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE])
+	if (mapdata->getMapFlag(MF_GVG_TE) || mapdata->getMapFlag(MF_GVG_TE_CASTLE))
 		return true;
 
 	return false;
@@ -980,7 +1005,7 @@ inline bool mapdata_flag_gvg2_no_te(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE])
+	if (mapdata->getMapFlag(MF_GVG) || mapdata->getMapFlag(MF_GVG_CASTLE))
 		return true;
 
 	return false;
@@ -1102,7 +1127,7 @@ int map_count_oncell(int16 m,int16 x,int16 y,int type,int flag);
 struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int flag);
 // search and creation
 int map_get_new_object_id(void);
-int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag);
+int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag, int32 tries = 50);
 bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag);
 //
 int map_quit(map_session_data *);
@@ -1113,7 +1138,7 @@ bool map_addnpc(int16 m,struct npc_data *);
 TIMER_FUNC(map_clearflooritem_timer);
 TIMER_FUNC(map_removemobs_timer);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false, enum directions dir = DIR_MAX, int type = BL_NUL);
 
 // instances
 int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);
@@ -1211,8 +1236,8 @@ enum e_mapflag map_getmapflag_by_name(char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
 int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
-#define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, NULL)
-#define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, NULL)
+#define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, nullptr)
+#define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, nullptr)
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
@@ -1244,7 +1269,7 @@ typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
+	( ((bl) == (struct block_list*)nullptr || (bl)->type != (type_)) ? (T ## type_ *)nullptr : (T ## type_ *)(bl) )
 
 #include <common/sql.hpp>
 

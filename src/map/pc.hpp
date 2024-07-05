@@ -33,6 +33,8 @@ enum e_instance_mode : uint8;
 enum e_log_pick_type : uint32;
 enum sc_type : int16;
 
+class MapGuild;
+
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
@@ -444,7 +446,8 @@ public:
 		bool barter_open;
 		bool barter_extended_open;
 		bool enchantgrade_open; // Whether the enchantgrade window is open or not
-		unsigned int block_action : 10;
+		// Bitmask of e_pcblock_action_flag values
+		uint16 block_action;
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
 		uint16 inventory_expansion_amount;
@@ -716,7 +719,7 @@ public:
 	int party_invite, party_invite_account; // for handling party invitation (holds party id and account id)
 	int adopt_invite; // Adoption
 
-	struct guild *guild; // [Ind] speed everything up
+	std::shared_ptr<MapGuild> guild; // [Ind] speed everything up
 	int guild_invite,guild_invite_account;
 	int guild_emblem_id,guild_alliance,guild_alliance_account;
 	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
@@ -1172,7 +1175,7 @@ static bool pc_cant_act( map_session_data* sd ){
 #define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progress) {
-	return sd == NULL || (sd->state.workinprogress&progress) == progress;
+	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
 }
 
 uint16 pc_maxparameter(map_session_data *sd, e_params param);
@@ -1436,7 +1439,7 @@ int pc_getcash( map_session_data *sd, int cash, int points, e_log_pick_type type
 enum e_additem_result pc_cart_additem(map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
 void pc_cart_delitem(map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
 void pc_putitemtocart(map_session_data *sd,int idx,int amount);
-void pc_getitemfromcart(map_session_data *sd,int idx,int amount);
+bool pc_getitemfromcart(map_session_data *sd,int idx,int amount);
 int pc_cartitem_amount(map_session_data *sd,int idx,int amount);
 
 bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem);
@@ -1734,12 +1737,12 @@ void pc_attendance_claim_reward( map_session_data* sd );
 void pc_jail(map_session_data &sd, int32 duration = INT_MAX);
 
 // Captcha Register
-void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
-void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, char *upload_data);
+void pc_macro_captcha_register(map_session_data &sd, uint16 image_size, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_captcha_register_upload(map_session_data & sd, uint16 upload_size, const char *upload_data);
 
 // Macro Detector
 TIMER_FUNC(pc_macro_detector_timeout);
-void pc_macro_detector_process_answer(map_session_data &sd, char captcha_answer[CAPTCHA_ANSWER_SIZE]);
+void pc_macro_detector_process_answer(map_session_data &sd, const char captcha_answer[CAPTCHA_ANSWER_SIZE]);
 void pc_macro_detector_disconnect(map_session_data &sd);
 
 // Macro Reporter

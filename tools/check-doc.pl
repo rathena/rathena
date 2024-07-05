@@ -32,8 +32,8 @@ sub GetArgs {
     'target=s'	=> \$sTarget,	 #Target (wich files to run-cmd into)
     'leftover=i' => \$sLeftOverChk, #should we chk if all doc are linked to a src ?
     'help!' => \$sHelp,
-    ) or $sHelp=1; #display help if invalid option	
-	
+    ) or $sHelp=1; #display help if invalid option
+
     if( $sHelp ) {
 	print "Incorrect option specified, available options are:\n"
 	    ."\t --atcf filename => file (specify atcommand doc to use)\n"
@@ -96,7 +96,7 @@ sub Script_GetCmd {
 	my @aSct_src = ("../src/map/script.cpp","../src/custom/script_def.inc");
 	my @aDef_sct = ();
 	foreach my $sSct_srcf (@aSct_src){
-		unless(open FILE_SRC, "<$sSct_srcf") { 
+		unless(open FILE_SRC, "<$sSct_srcf") {
 			print "Couldn't open file '$sSct_srcf'.\n";
 			next;
 		}
@@ -139,16 +139,16 @@ sub Script_Chk { my ($raDef_sct) = @_;
 				@line = split('\(',$line[0]);
 				@line = split('\<',$line[0]);
 				$line[0] =~ s/\(|\{|\*|\r|\s|\;|\)|\"|\,//g; #todo please harmonize command definition for easier parse
-				
-				next if($line[0] eq "Name" || $line[0] eq "" || $line[0] eq "function" 
+
+				next if($line[0] eq "Name" || $line[0] eq "" || $line[0] eq "function"
 				|| $line[0] eq "if" || $line[0] eq "while" || $line[0] eq "do"  || $line[0] eq "for" ); #exception list
-				
+
 				push(@aDoc_sct,$line[0]);
 			}
 		}
 		close FILE_DOC;
 	}
-	
+
 	$raMiss_sct = Chk($raDef_sct,\@aDoc_sct); #check missing documentation
 	if(scalar(@$raMiss_sct)){
 		print "Missing script documentation for function :{\n";
@@ -158,7 +158,7 @@ sub Script_Chk { my ($raDef_sct) = @_;
 		print "}\n\n";
 	}
 	else { print "All script commands in src are documented, no issues found.\n"; }
-	
+
 	if($sLeftOverChk){
 		my $raLeftover_sct = Chk(\@aDoc_sct,$raDef_sct); #we just inverse the chk for leftover
 		if(scalar(@$raLeftover_sct)){
@@ -185,7 +185,7 @@ sub Atc_GetCmd {
 			if($_ =~ /ACMD_DEF|ACMD_DEF2|ACMD_DEFR|ACMD_DEF2R/){
 				$_ =~ s/\s+$//; #Remove trailing spaces.
 				$_ =~ s/^\s+//; #Remove leading spaces.
-				
+
 				if($_ =~ /^ACMD_DEF2|^ACMD_DEF2R/){
 					my @line = split('"',$_);
 					push(@aDef_act,$line[1]);
@@ -207,7 +207,7 @@ sub Atc_Chk {  my ($raDef_act) = @_;
 	my @aAct_docf = ($sAtcf,$sInc_atcf);
 	my @aDoc_act = ();
 	my $raMiss_act;
-	
+
 	foreach my $sAct_docf (@aAct_docf){
 		unless(open FILE_DOC, "$sAct_docf"){
 			print "Couldn't open file '$sAct_docf'.\n";
@@ -226,7 +226,7 @@ sub Atc_Chk {  my ($raDef_act) = @_;
 		}
 		close FILE_DOC;
 	}
-	
+
 	$raMiss_act = Chk($raDef_act,\@aDoc_act); #check missing documentation
 	if(scalar(@$raMiss_act)){
 		print "Missing atcommand documentation for function :{\n";
@@ -236,7 +236,7 @@ sub Atc_Chk {  my ($raDef_act) = @_;
 		print "}\n\n";
 	}
 	else { print "All atcommands in src are documented, no issues found.\n"; }
-	
+
 	if($sLeftOverChk){
 		my $raLeftover_sct = Chk(\@aDoc_act,$raDef_act); #we just inverse the chk for leftover
 		if(scalar(@$raLeftover_sct)){

@@ -34,7 +34,7 @@
 //= 1.6 - Dungeon warp [Neouni] (beta only)
 // - added option to add a extra fee for going down deeper into dungeon
 // partly by rebuilding the dungeon warping into variable menu's
-//= 1.6a - alot of fixes for beta release [Neouni] (public release)
+//= 1.6a - a lot of fixes for beta release [Neouni] (public release)
 // - fixed syntax problems
 // - fixed missing pyramid gats in @DGat$ array
 // - removed the culver level 5 that didn't exist
