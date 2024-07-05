@@ -7,30 +7,37 @@
 #include <array>
 #include <string>
 
-#include "skills.hpp"
+#include "map/skill.hpp"
 
-constexpr int MAX_SKILL_LEVEL = 13;
-
+class SkillNotImplementedException : public std::logic_error {
+public:
+	explicit SkillNotImplementedException(const std::string &what_arg) : std::logic_error(what_arg) {};
+	explicit SkillNotImplementedException(uint16_t skill_id) : std::logic_error("Skill " + std::to_string(skill_id) + " not implemented") {};
+};
 
 class Skill {
 public:
-	virtual int castendDamageId() const;
-	virtual int castendNodamageId() const;
-	virtual int castendPos2() const;
+	uint16_t getSkillId() const;
 
-	uint16_t getSkillID() const {
-		return nameid;
-	}
+	virtual ~Skill() = default;
+
+	explicit Skill(e_skill skillid) : skill_id_(static_cast<uint16_t>(skillid)) {};
+
+	int castendDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int flag) const;
+	int castendNoDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int flag) const;
 
 protected:
-	explicit Skill(e_skill skillid) : nameid(static_cast<uint16_t>(skillid)) {};
-private:
-
-	uint16_t nameid;
-	std::string name;
-	std::string desc;
-	std::array<int32_t, MAX_SKILL_LEVEL> range;
+	virtual int castendDamageImpl(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int flag) const;
+	virtual int castendNoDamageImpl(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int flag) const;
+	virtual int castendPositionImpl() const;
+	uint16_t skill_id_;
 };
 
+class WeaponSkill : public Skill {
+public:
+	explicit WeaponSkill(e_skill skill_id) : Skill(skill_id) {};
+protected:
+    virtual int castendDamageImpl(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int flag) const override;
+};
 
 #endif // MAP_SKILL_HPP

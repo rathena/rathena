@@ -43,7 +43,8 @@ set(MAP_SOURCES
 	"vending.cpp"
 
 	"skills/skill.cpp"
-	"skills/swordsman/bash.cpp"
+	"skills/skillrepository.cpp"
+	"skills/swordsman.cpp"
 )
 
 set(MAP_HEADERS
