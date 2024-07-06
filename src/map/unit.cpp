@@ -1431,12 +1431,12 @@ void unit_stop_walking_soon(struct block_list& bl)
 		return;
 
 	// Get how much percent we traversed on the timer
-	double cell_percent = 1 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
 
 	short ox = bl.x, oy = bl.y; // Remember original x and y coordinates
 	short path_remain = 1; // Remaining path to walk
 
-	if (cell_percent > 0 && cell_percent < 1) {
+	if (cell_percent > 0.0 && cell_percent < 1.0) {
 		// Set subcell coordinates according to timer
 		// This gives a value between 8 and 39
 		ud->sx = static_cast<decltype(ud->sx)>(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
@@ -1454,7 +1454,7 @@ void unit_stop_walking_soon(struct block_list& bl)
 		ud->sx %= 16;
 		ud->sy %= 16;
 	}
-	else if (cell_percent >= 1) {
+	else if (cell_percent >= 1.0) {
 		// Assume exactly one cell moved
 		bl.x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
 		bl.y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
