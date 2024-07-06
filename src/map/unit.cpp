@@ -397,6 +397,9 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	}
 
 	ud->walktimer = INVALID_TIMER;
+	// As movement to next cell finished, set sub-cell position to center
+	ud->sx = 8;
+	ud->sy = 8;
 
 	if (bl->prev == nullptr)
 		return 0; // Stop moved because it is missing from the block_list
@@ -1405,6 +1408,78 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 }
 
 /**
+ * Updates the walkpath of a unit to end after 0.5-1.5 cells moved
+ * Sends required packet for proper display on the client using subcoordinates
+ * @param bl: Object to stop walking
+ */
+void unit_stop_walking_soon(struct block_list& bl)
+{
+	struct unit_data* ud = unit_bl2ud(&bl);
+
+	if (ud == nullptr)
+		return;
+
+	if (ud->walktimer == INVALID_TIMER)
+		return;
+
+	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len)
+		return;
+
+	const struct TimerData* td = get_timer(ud->walktimer);
+
+	if (td == nullptr)
+		return;
+
+	// Get how much percent we traversed on the timer
+	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+
+	short ox = bl.x, oy = bl.y; // Remember original x and y coordinates
+	short path_remain = 1; // Remaining path to walk
+
+	if (cell_percent > 0.0 && cell_percent < 1.0) {
+		// Set subcell coordinates according to timer
+		// This gives a value between 8 and 39
+		ud->sx = static_cast<decltype(ud->sx)>(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		ud->sy = static_cast<decltype(ud->sy)>(24.0 + diry[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		// 16-31 reflect sub position 0-15 on the current cell
+		// 8-15 reflect sub position 8-15 at -1 main coordinate
+		// 32-39 reflect sub position 0-7 at +1 main coordinate
+		if (ud->sx < 16 || ud->sy < 16 || ud->sx > 31 || ud->sy > 31) {
+			path_remain = 2;
+			if (ud->sx < 16) bl.x--;
+			if (ud->sy < 16) bl.y--;
+			if (ud->sx > 31) bl.x++;
+			if (ud->sy > 31) bl.y++;
+		}
+		ud->sx %= 16;
+		ud->sy %= 16;
+	}
+	else if (cell_percent >= 1.0) {
+		// Assume exactly one cell moved
+		bl.x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
+		bl.y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
+		path_remain = 2;
+	}
+	// Shorten walkpath
+	if (ud->walkpath.path_pos + path_remain < ud->walkpath.path_len) {
+		ud->walkpath.path_len = ud->walkpath.path_pos + path_remain;
+		ud->to_x = ox;
+		ud->to_y = oy;
+		for (int i = 0; i < path_remain; i++) {
+			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
+			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
+		}
+		// Send movement packet with calculated coordinates and subcoordinates
+		clif_move(*ud);
+	}
+	// Reset coordinates
+	bl.x = ox;
+	bl.y = oy;
+	ud->sx = 8;
+	ud->sy = 8;
+}
+
+/**
  * Stops a unit from walking
  * @param bl: Object to stop walking
  * @param type: Options
@@ -1446,8 +1521,12 @@ int unit_stop_walking(struct block_list *bl,int type)
 		unit_walktoxy_timer(INVALID_TIMER, tick, bl->id, ud->walkpath.path_pos);
 	}
 
-	if(type&USW_FIXPOS)
-		clif_fixpos( *bl );
+	if (type&USW_FIXPOS) {
+		// Stop on cell center
+		ud->sx = 8;
+		ud->sy = 8;
+		clif_fixpos(*bl);
+	}
 
 	ud->walkpath.path_len = 0;
 	ud->walkpath.path_pos = 0;
@@ -3014,6 +3093,8 @@ void unit_dataset(struct block_list *bl)
 	ud->attackabletime =
 	ud->canact_tick    =
 	ud->canmove_tick   = gettick();
+	ud->sx = 8;
+	ud->sy = 8;
 }
 
 /**
