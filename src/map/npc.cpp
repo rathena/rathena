@@ -4028,7 +4028,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 		}
 		case NPCTYPE_POINTSHOP: {
-			if (sscanf(p, ",%32[^,:]:%11d,",point_str,&is_discount) < 1) {
+			if (sscanf(p, ",%31[^,:]:%11d,",point_str,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -4056,7 +4056,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 #endif
 		default:
-			if( sscanf( p, ",%32[^,:]:%11d,", point_str, &is_discount ) == 2 ){
+			if( sscanf( p, ",%31[^,:]:%11d,", point_str, &is_discount ) == 2 ){
 				is_discount = 1;
 			}else{
 				if( !strcasecmp( point_str, "yes" ) ){
