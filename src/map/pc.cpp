@@ -2833,7 +2833,7 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	int skill_point = pc_calc_skillpoint( sd );
 
 	if( sd->class_ & MAPID_SUMMONER ){
-		// Novice's skill points for basic skill.
+		// Summoner's skill points for base skills.
 		std::shared_ptr<s_job_info> summoner_job = job_db.find( JOB_SUMMONER );
 
 		int summoner_skills = summoner_job->max_job_level - 1;
@@ -14052,7 +14052,7 @@ void JobDatabase::loadingFinished() {
 				}
 			}
 
-			// Summoner
+			// Summoner / Spirit Handler
 			if( ( class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
 				max = battle_config.max_summoner_parameter;
 				break;
