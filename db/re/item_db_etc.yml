@@ -86200,31 +86200,31 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001072
-    AegisName: aegis_1001072
+    AegisName: Evil_Black_Bid
     Name: Evil Orb
     Type: Etc
     Buy: 1480
     Weight: 10
   - Id: 1001073
-    AegisName: aegis_1001073
+    AegisName: Ectoplasmic_Stone
     Name: Ectoplasmic Stone
     Type: Etc
     Buy: 1460
     Weight: 10
   - Id: 1001074
-    AegisName: aegis_1001074
+    AegisName: Heavy_Chain
     Name: Heavy Chain
     Type: Etc
     Buy: 1480
     Weight: 10
   - Id: 1001075
-    AegisName: aegis_1001075
+    AegisName: Evil_Minded_Ruby
     Name: Evil Minded Ruby
     Type: Etc
     Buy: 1500
     Weight: 10
   - Id: 1001076
-    AegisName: aegis_1001076
+    AegisName: Small_Sewing_Box
     Name: Small Sewing Kit
     Type: Etc
     Buy: 1640
@@ -86236,37 +86236,37 @@ Body:
     Buy: 1600
     Weight: 10
   - Id: 1001078
-    AegisName: aegis_1001078
+    AegisName: Blue_Moon_Stone
     Name: Fragments of the Blue Moon
     Type: Etc
     Buy: 1720
     Weight: 10
   - Id: 1001079
-    AegisName: aegis_1001079
+    AegisName: Weird_Tentacle
     Name: Monstrous Tentacles
     Type: Etc
     Buy: 1520
     Weight: 10
   - Id: 1001080
-    AegisName: aegis_1001080
+    AegisName: Congealed_Poison
     Name: Congealed Poison
     Type: Etc
     Buy: 1600
     Weight: 10
   - Id: 1001081
-    AegisName: aegis_1001081
+    AegisName: Slicky_Fluid
     Name: Slimy Fluid
     Type: Etc
     Buy: 1560
     Weight: 10
   - Id: 1001082
-    AegisName: aegis_1001082
+    AegisName: Reptile_Stone
     Name: Monster's Stone
     Type: Etc
     Buy: 1720
     Weight: 10
   - Id: 1001083
-    AegisName: aegis_1001083
+    AegisName: Turn_Yellow_Leaf
     Name: Maple Leaves
     Type: Etc
     Buy: 1640
@@ -86278,13 +86278,13 @@ Body:
     Buy: 1480
     Weight: 10
   - Id: 1001085
-    AegisName: aegis_1001085
+    AegisName: Cool_Liquid
     Name: Cool Liquid
     Type: Etc
     Buy: 1460
     Weight: 10
   - Id: 1001086
-    AegisName: aegis_1001086
+    AegisName: Green_Crystal_Fragment
     Name: Blue Crystal Shard
     Type: Etc
     Buy: 1480
@@ -86296,7 +86296,7 @@ Body:
     Buy: 1600
     Weight: 10
   - Id: 1001088
-    AegisName: aegis_1001088
+    AegisName: Fresh_Pear
     Name: Fresh Pear
     Type: Etc
     Buy: 1640
