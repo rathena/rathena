@@ -11708,7 +11708,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( !status_isdead(bl) )
 				break;
 
-			status_zap(bl, 0, tstatus->sp * (60 - 10 * skill_lv) / 100);
+			status_zap(bl, 0, tstatus->sp * 10 * skill_lv / 100);
 
 			int heal = tstatus->sp;
 
