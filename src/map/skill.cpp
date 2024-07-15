@@ -11708,13 +11708,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( !status_isdead(bl) )
 				break;
 
-			unsigned int heal = tstatus->sp;
-
-			status_zap(bl, 0, tstatus->sp * 10 * skill_lv / 100);
+			tstatus->hp += tstatus->sp;
+			tstatus->sp = tstatus->sp * 10 * skill_lv / 100;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			pc_revive((TBL_PC*)bl,heal,0);
+			pc_revive((TBL_PC*)bl,true,true);
 			clif_resurrection( *bl );
-			status_heal(bl, max(heal, 1), 0, 0);
 		}
 		break;
 
