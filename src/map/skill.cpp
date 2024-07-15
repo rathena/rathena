@@ -11708,7 +11708,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( !status_isdead(bl) )
 				break;
 
-			tstatus->hp += tstatus->sp;
+			tstatus->hp += max(tstatus->sp, 1);
 			tstatus->sp = tstatus->sp * 10 * skill_lv / 100;
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			pc_revive((TBL_PC*)bl,true,true);
