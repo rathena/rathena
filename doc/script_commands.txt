@@ -6124,11 +6124,12 @@ will always return 0.
 
 ---------------------------------------
 
-*skilleffect <skill id>,<number>;
-*skilleffect "<skill name>",<number>;
+*skilleffect <skill id>,<number>{,<game ID>};
+*skilleffect "<skill name>",<number>{,<game ID>};
 
 This command displays visual and aural effects of given skill on currently
-attached character. The number parameter is for skill whose visual effect
+attached character or, when defined, on any unit with the given ID.
+The number parameter is for skill whose visual effect
 involves displaying of a number (healing or damaging). Note, that this command
 will not actually use the skill, it is intended for scripts, which simulate
 skill usage by the NPC, such as buffs, by setting appropriate status and
