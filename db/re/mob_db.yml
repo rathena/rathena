@@ -38921,19 +38921,6 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Drops:
-      - Item: Diabolus_Helmet
-        Rate: 3000
-      - Item: Diabolus_Robe
-        Rate: 10000
-      - Item: Diabolus_Armor
-        Rate: 10000
-      - Item: Diabolus_Boots
-        Rate: 10000
-      - Item: Dark_Crystal
-        Rate: 10000
-      - Item: Dark_Debris
-        Rate: 10000
   - Id: 1917
     AegisName: MOROCC_
     Name: Wounded Morocc
