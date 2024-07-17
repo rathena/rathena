@@ -110,18 +110,18 @@ function Pick {
 	Go(.@map$,.@x,.@y);
 }
 function Restrict {
-	.@type = getarg(0);
+	.@type$ = getarg(0);
 	
-	if (.@type == "Brasilis") {
+	if (.@type$ == "Brasilis") {
 		// If the official warper to Brasilis is enabled, meaning is either
 		// Renewal mode or Pre-renewal Brasilis is enabled, we lift the restriction
 		if (getnpcid(0, "Crewman_bra2"))
 			return;
 		// Otherwise we apply the renewal restriction
-		.@type = "RE";
+		.@type$ = "RE";
 	}
 
-	if ((.@type == "RE" && !checkre(0)) || (.@type == "Pre-RE" && checkre(0))) {
+	if ((.@type$ == "RE" && !checkre(0)) || (.@type$ == "Pre-RE" && checkre(0))) {
 		if (getarg(1,0)) {
 			set @warp_block,0;
 			for (set .@i,1; .@i<getargcount(); set .@i,.@i+1)
