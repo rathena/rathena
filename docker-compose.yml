@@ -1,0 +1,90 @@
+services:
+    login-server:
+        build:
+            context: .
+            target: login-server
+            dockerfile: "tools/docker/Dockerfile"
+        ports:
+            - "${DOCKER_LOGIN_SERVER_PORT:-6900}:6900"
+        volumes:
+            - "./conf/import:/rathena/conf/import"
+        networks:
+            - rathena
+        depends_on:
+            database:
+                condition: service_healthy
+
+    char-server:
+        build:
+            context: .
+            target: char-server
+            dockerfile: "tools/docker/Dockerfile"
+        ports:
+            - "${DOCKER_CHAR_SERVER_PORT:-6121}:6121"
+        volumes:
+            - "./conf/import:/rathena/conf/import"
+        networks:
+            - rathena
+        depends_on:
+            database:
+                condition: service_healthy
+            login-server:
+                condition: service_started
+
+    map-server:
+        build:
+            context: .
+            target: map-server
+            dockerfile: "tools/docker/Dockerfile"
+        ports:
+            - "${DOCKER_MAP_SERVER_PORT:-5121}:5121"
+        volumes:
+            - "./conf/import:/rathena/conf/import"
+        networks:
+            - rathena
+        depends_on:
+            database:
+                condition: service_healthy
+            char-server:
+                condition: service_started
+
+    web-server:
+        build:
+            context: .
+            target: web-server
+            dockerfile: "tools/docker/Dockerfile"
+        ports:
+            - "${DOCKER_MAP_SERVER_PORT:-8888}:8888"
+        volumes:
+            - "./conf/import:/rathena/conf/import"
+        networks:
+            - rathena
+        depends_on:
+            database:
+                condition: service_healthy
+
+    database:
+        image: mysql
+        ports:
+            - "${DOCKER_DB_PORT:-3306}:3306"
+        environment:
+            - "MYSQL_ROOT_PASSWORD=${DOCKER_DB_ROOT_PASSWORD:-ragnarok}"
+            - "MYSQL_DATABASE=${DOCKER_DB_NAME:-ragnarok}"
+            - "MYSQL_USER=${DOCKER_DB_USER:-ragnarok}"
+            - "MYSQL_PASSWORD=${DOCKER_DB_PASSWORD:-ragnarok}"
+        volumes:
+            - "rathena-database:/var/lib/mysql"
+            - "./sql-files:/docker-entrypoint-initdb.d"
+        networks:
+            - rathena
+        healthcheck:
+            test: "/usr/bin/mysql --user=root --password=$$MYSQL_ROOT_PASSWORD --execute \"SHOW DATABASES;\""
+            interval: 5s
+            timeout: 10s
+            retries: 40
+
+volumes:
+    rathena-database:
+
+networks:
+    rathena:
