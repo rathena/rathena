@@ -11529,6 +11529,13 @@ static const struct _battle_data {
 #endif
 	{ "synchronize_damage",                 &battle_config.synchronize_damage,              0,      0,      1,              },
 	{ "item_stacking",                      &battle_config.item_stacking,                   1,      0,      1,              },
+#ifdef RENEWAL
+	{ "hom_delay_reset_vaporize",           &battle_config.hom_delay_reset_vaporize,        0,      0,      1,              },
+	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            0,      0,      1,              },
+#else
+	{ "hom_delay_reset_vaporize",           &battle_config.hom_delay_reset_vaporize,        1,      0,      1,              },
+	{ "hom_delay_reset_warp",               &battle_config.hom_delay_reset_warp,            1,      0,      1,              },
+#endif
 
 #include <custom/battle_config_init.inc>
 };

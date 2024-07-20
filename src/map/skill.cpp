@@ -1014,8 +1014,10 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 	if (sc && !sc->count)
 		sc = nullptr;
 
-	if (util::vector_exists(hd->blockskill, skill_id))
+	if (util::vector_exists(hd->blockskill, skill_id)) {
+		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
 		return true;
+	}
 
 	switch(skill_id) {
 		case HFLI_SBR44:
@@ -1120,8 +1122,15 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
  * @return true: Skill cannot be used, false: otherwise
  */
 bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md ){
-	if (util::vector_exists(md.blockskill, skill_id))
+	map_session_data* sd = md.master;
+
+	if (sd == nullptr)
 		return true;
+
+	if (util::vector_exists(md.blockskill, skill_id)) {
+		clif_skill_fail(*sd, skill_id, USESKILL_FAIL_SKILLINTERVAL);
+		return true;
+	}
 
 	if( md.master != nullptr ){
 		return skill_isNotOk( skill_id, *md.master );
@@ -7368,6 +7377,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	switch(skill_id)
 	{
 	case HLIF_HEAL:	//[orn]
+		if (hd != nullptr) {
+#ifdef RENEWAL
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+#else
+			skill_blockhomun_start(hd, skill_id, skill_get_delay(skill_id, skill_lv));
+#endif
+		}
+		[[fallthrough]];
 	case AL_HEAL:
 	case AB_HIGHNESSHEAL:
 		{
@@ -8240,6 +8257,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HAMI_DEFENCE:
 		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master
 		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv))); // Homunc
+		if (hd != nullptr) {
+#ifdef RENEWAL
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+#else
+			skill_blockhomun_start(hd, skill_id, skill_get_delay(skill_id, skill_lv));
+#endif
+		}
 		break;
 	case NJ_BUNSINJYUTSU:
 		status_change_end(bl, SC_BUNSINJYUTSU); // on official recasting cancels existing mirror image [helvetica]
@@ -9330,10 +9354,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 
-			if (sd->hd && battle_config.hom_setting&HOMSET_RESET_REUSESKILL_TELEPORTED) {
-				sd->hd->blockskill.clear();
-				sd->hd->blockskill.shrink_to_fit();
-			}
 
 			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skill_lv == 1 ) || skill_lv == 3 )
 			{
@@ -10675,11 +10695,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case HAMI_CASTLE:	//[orn]
-		if (src != bl && rnd()%100 < 20 * skill_lv) {
+		if (src != bl && rnd() % 100 < 20 * skill_lv) {
 			int x = src->x, y = src->y;
 
-			if (hd)
-				skill_blockhomun_start(hd,skill_id,skill_get_time2(skill_id,skill_lv));
+			if (hd != nullptr) {
+#ifdef RENEWAL
+				skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+#else
+				skill_blockhomun_start(hd, skill_id, skill_get_delay(skill_id, skill_lv));
+#endif
+			}
+
 			// Move source
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
@@ -10726,8 +10752,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if (hd)
-			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
+		if (hd != nullptr) {
+#ifdef RENEWAL
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
+#else
+			skill_blockhomun_start(hd, skill_id, skill_get_delay(skill_id, skill_lv));
+#endif
+		}
 		break;
 
 	case NPC_DRAGONFEAR:
@@ -23069,6 +23100,9 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 
 	hd->blockskill.push_back(skill_id);
 
+	if (battle_config.display_status_timers)
+		clif_skill_cooldown(*hd->master, skill_id, tick);
+
 	return add_timer(gettick() + tick, skill_blockhomun_end, hd->bl.id, skill_id);
 }
 
@@ -23100,6 +23134,9 @@ int skill_blockmerc_start(s_mercenary_data *md, uint16 skill_id, int tick)
 	}
 
 	md->blockskill.push_back(skill_id);
+
+	if (battle_config.display_status_timers)
+		clif_skill_cooldown(*md->master, skill_id, tick);
 
 	return add_timer(gettick() + tick, skill_blockmerc_end, md->bl.id, skill_id);
 }
