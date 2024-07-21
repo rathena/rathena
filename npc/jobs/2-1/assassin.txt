@@ -92,7 +92,6 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		close2;
 		ASSIN_Q = 0;
 		ASSIN_Q2 = 0;
-		ASSIN_Q3 = 0;
 		savepoint "in_moc_16",18,14,1,1;
 		warp "in_moc_16",18,14;
 		end;
@@ -547,7 +546,8 @@ OnTouch_:
 				mes "Alright then,";
 				mes "best of luck to you!";
 				close2;
-				ASSIN_Q3 = 1;
+				if (!ASSIN_Q3)
+					ASSIN_Q3 = 1;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
 				warp "in_moc_16",19,144;
@@ -570,7 +570,8 @@ OnTouch_:
 				mes "to the Test Hall.";
 				mes "Best of luck~";
 				close2;
-				ASSIN_Q3 = 2;
+				if (!ASSIN_Q3)
+					ASSIN_Q3 = 2;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
 				warp "in_moc_16",19,144;
@@ -597,7 +598,6 @@ OnTouch_:
 				mes "Stop wastin' my time...";
 				close2;
 				ASSIN_Q = 0;
-				ASSIN_Q3 = 0;
 				ASSIN_Q2 = 0;
 				erasequest 8001;
 				warp "moc_fild16",206,229;
@@ -624,7 +624,8 @@ OnTouch_:
 				mes "[Assassin 'Khai']";
 				mes "Are you done filling out the form? Alright, give it to me so I can send you to the Test Hall. Good luck~";
 				next;
-				ASSIN_Q3 = 1;
+				if (!ASSIN_Q3)
+					ASSIN_Q3 = 1;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
 				warp "in_moc_16",19,144;
@@ -638,7 +639,8 @@ OnTouch_:
 				mes "Then give me the form so that I can send you to the Test Hall, alright?";
 				mes "Good luck...";
 				next;
-				ASSIN_Q3 = 2;
+				if (!ASSIN_Q3)
+					ASSIN_Q3 = 2;
 				ASSIN_Q = 1;
 				changequest 8001,8002;
 				warp "in_moc_16",19,144;
@@ -1189,7 +1191,6 @@ OnTouch_:
 		mes "could use a break...";
 		close2;
 		ASSIN_Q = 0;
-		ASSIN_Q3 = 0;
 		ASSIN_Q2 = 0;
 		changequest 8003,8000;
 		warp "in_moc_16",19,13;
@@ -1521,7 +1522,6 @@ OnTouch_:
 			mapannounce "in_moc_16",strcharinfo(0) + " got scared and quit the test...Who's Next?!",bc_map;
 			ASSIN_Q = 0;
 			ASSIN_Q2 = 0;
-			ASSIN_Q3 = 0;
 			changequest 8004,8000;
 			savepoint "in_moc_16",18,14,1,1;
 			warp "in_moc_16",18,14;
@@ -2092,7 +2092,7 @@ OnTouch_:
 				mes "It used to rule over the Assassin weapon market. Please take care of my gladius.";
 				getitem 1220,1; //Gladius_
 			}
-			ASSIN_Q3 = 0;
+			ASSIN_Q3 = 3;
 			next;
 			break;
 		case 2:
@@ -2116,7 +2116,7 @@ OnTouch_:
 			case 5:
 				getitem 1252,1; //Katar
 			}
-			ASSIN_Q3 = 0;
+			ASSIN_Q3 = 3;
 		}
 		mes "[Guildmaster]";
 		mes "Well, I am giving you a token. Please return to the Assassin expert, the Ferocious-Looking Huey, at the entrance.";
