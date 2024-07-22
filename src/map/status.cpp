@@ -4427,8 +4427,8 @@ int status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	}
 
 	if ((skill = pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY)) > 0) {
-		base_status->smatk += 1 + (skill - 1) * 15 / 10 + ((skill - 1) * 15 % 10 ? 1 : 0);
-		base_status->patk += 1 + (skill - 1) * 15 / 10 + ((skill - 1) * 15 % 10 ? 1 : 0);
+		base_status->smatk += skill * 15 / 10;
+		base_status->patk += skill * 15 / 10;
 	}
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
@@ -12814,8 +12814,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 2 * val1;
 			break;
 		case SC_KI_SUL_RAMPAGE:
-			val4 = tick / 1000;
-			tick_time = 100;
+			tick_time = 1000;
+			val4 = tick / tick_time;
 			break;
 		case SC_BLESSING_OF_M_CREATURES:
 			val2 = val1 * 10;
@@ -14978,7 +14978,7 @@ TIMER_FUNC(status_change_timer){
 		sc_timer_next(500 + tick);
 		return 0;
 	case SC_KI_SUL_RAMPAGE:
-		if (sce->val4-- > 0) {
+		if (--(sce->val4) >= 0) {
 			int i = skill_get_splash(SH_KI_SUL_RAMPAGE, sce->val1);
 			int lv = sce->val1;
 			if (pc_checkskill(sd, SH_COMMUNE_WITH_KI_SUL) > 0 || (sc && sc->getSCE(SC_TEMPORARY_COMMUNION))) {
@@ -14986,7 +14986,7 @@ TIMER_FUNC(status_change_timer){
 				lv += skill_get_max(SH_KI_SUL_RAMPAGE);
 			}
 			clif_skill_nodamage(bl, bl, SH_KI_SUL_RAMPAGE, lv, 1);
-			map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, bl, SH_KI_SUL_RAMPAGE, lv, tick, BCT_PARTY | SD_SPLASH | 1, skill_castend_nodamage_id);
+			map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, bl, SH_KI_SUL_RAMPAGE, lv, tick, BCT_PARTY | 1, skill_castend_nodamage_id);
 			sc_timer_next(1000 + tick);
 			return 0;
 		}

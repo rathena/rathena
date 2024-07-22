@@ -41769,20 +41769,19 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Duration1:  300000
+    Duration1: 300000
     CastCancel: true
     CastTime: 1700
     FixedCastTime: 1000
     Requires:
       SpCost: 90
-    Status: Colors_of_Hyun_Rok_Buff
   - Id: 5445
     Name: SH_HYUN_ROKS_BREEZE
     Description: Hyunrok Breeze
     MaxLevel: 7
     Type: Magic
     TargetType: Ground
-    Hit: Multi_Hit
+    Hit: Single
     HitCount: 1
     Range: 9
     GiveAp: 4
@@ -41810,7 +41809,6 @@ Body:
           Amount: 94
     Unit:
       Id: HYUN_ROKS_BREEZE
-      Layout: 0
       Range:
         - Level: 1
           Size: 2
@@ -41839,9 +41837,8 @@ Body:
     TargetType: Attack
     Range: -11
     GiveAp: 1
-    Hit: Multi_Hit
+    Hit: Single
     HitCount: 1
-    Element: Endowed
     CastCancel: true
     CastTime: 2000
     Cooldown: 300

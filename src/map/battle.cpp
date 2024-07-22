@@ -3038,8 +3038,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 				}
 				break;
 			case SH_CHUL_HO_SONIC_CLAW:
-			case SH_HOGOGONG_STRIKE:
-				if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) == 0 || !(sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
+				if (pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO) == 0 && !(sc && sc->getSCE(SC_TEMPORARY_COMMUNION)))
 					return false;
 				break;
 		}

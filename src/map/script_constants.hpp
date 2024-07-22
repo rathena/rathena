@@ -1912,35 +1912,6 @@
 	export_constant(SC_HIDDEN_CARD);
 	export_constant(SC_PERIOD_RECEIVEITEM_2ND);
 	export_constant(SC_PERIOD_PLUSEXP_2ND);
-	
-	// Sky Emperor
-	export_constant(SC_RISING_SUN);
-	export_constant(SC_NOON_SUN);
-	export_constant(SC_SUNSET_SUN);
-	export_constant(SC_RISING_MOON);
-	export_constant(SC_MIDNIGHT_MOON);
-	export_constant(SC_DAWN_MOON);
-	export_constant(SC_STAR_BURST);
-	export_constant(SC_SKY_ENCHANT);
-	
-	// Soul Ascetic
-	export_constant(SC_TALISMAN_OF_PROTECTION);
-	export_constant(SC_TALISMAN_OF_WARRIOR);
-	export_constant(SC_TALISMAN_OF_MAGICIAN);
-	export_constant(SC_TALISMAN_OF_FIVE_ELEMENTS);
-	export_constant(SC_TOTEM_OF_TUTELARY);
-	export_constant(SC_T_FIRST_GOD);
-	export_constant(SC_T_SECOND_GOD);
-	export_constant(SC_T_THIRD_GOD);
-	export_constant(SC_T_FOURTH_GOD);
-	export_constant(SC_T_FIFTH_GOD);
-	export_constant(SC_HEAVEN_AND_EARTH);
-
-	// Shinkiro/Shiranui
-	export_constant(SC_SHADOW_CLOCK);
-	export_constant(SC_SHINKIROU_CALL);
-	export_constant(SC_NIGHTMARE);
-	export_constant(SC_SBUNSHIN);
 
 	// Spirit Handler
 	export_constant(SC_HOGOGONG);
@@ -11062,7 +11033,6 @@
 	export_constant(UNT_JACK_FROST_NOVA);
 	export_constant(UNT_GROUND_GRAVITATION);
 	export_constant(UNT_KUNAIWAIKYOKU);
-
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);

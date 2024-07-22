@@ -9051,6 +9051,3 @@ Body:
   - Status: Blessing_of_M_C_Debuff
     Icon: EFST_BLESSING_OF_M_C_DEBUFF
     DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
-    CalcFlags:
-      Patk: true
-      Smatk: true
