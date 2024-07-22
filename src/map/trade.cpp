@@ -57,12 +57,12 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 	if ( sd->trade_partner != 0 ) { // If a character tries to trade to another one then cancel the previous one
 		map_session_data *previous_sd = map_id2sd(sd->trade_partner);
 
-		if( previous_sd ){
+		if( previous_sd != nullptr ){
 			previous_sd->trade_partner = 0;
-			clif_tradecancelled(previous_sd);
+			clif_tradecancelled( *previous_sd );
 		} // Once cancelled then continue to the new one.
 		sd->trade_partner = 0;
-		clif_tradecancelled(sd);
+		clif_tradecancelled( *sd );
 	}
 
 	if (target_sd->trade_partner != 0) {
@@ -399,7 +399,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 	}
 
 	if( item->equipSwitch ){
-		clif_msg(sd, C_ITEM_EQUIP_SWITCH);
+		clif_msg(sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST);
 		return;
 	}
 
@@ -485,8 +485,8 @@ void trade_tradeok(map_session_data *sd)
 
 	sd->state.deal_locked = 1;
 	clif_tradeitemok(*sd, -2, EXITEM_ADD_SUCCEED); // We pass -2 which will becomes 0 in clif_tradeitemok (Official behavior)
-	clif_tradedeal_lock(sd, 0);
-	clif_tradedeal_lock(target_sd, 1);
+	clif_tradedeal_lock( *sd, false );
+	clif_tradedeal_lock( *target_sd, true );
 }
 
 /**
@@ -504,12 +504,12 @@ void trade_tradecancel(map_session_data *sd)
 	sd->state.isBoundTrading = 0;
 
 	if(!sd->state.trading) { // Not trade accepted
-		if( target_sd ) {
+		if( target_sd != nullptr ) {
 			target_sd->trade_partner = 0;
-			clif_tradecancelled(target_sd);
+			clif_tradecancelled( *target_sd );
 		}
 		sd->trade_partner = 0;
-		clif_tradecancelled(sd);
+		clif_tradecancelled( *sd );
 		return;
 	}
 
@@ -530,7 +530,7 @@ void trade_tradecancel(map_session_data *sd)
 	sd->state.deal_locked = 0;
 	sd->state.trading = 0;
 	sd->trade_partner = 0;
-	clif_tradecancelled(sd);
+	clif_tradecancelled( *sd );
 
 	if (!target_sd)
 		return;
@@ -551,7 +551,7 @@ void trade_tradecancel(map_session_data *sd)
 	target_sd->state.deal_locked = 0;
 	target_sd->trade_partner = 0;
 	target_sd->state.trading = 0;
-	clif_tradecancelled(target_sd);
+	clif_tradecancelled( *target_sd );
 }
 
 /**
@@ -651,8 +651,8 @@ void trade_tradecommit(map_session_data *sd)
 	tsd->state.trading = 0;
 	tsd->state.isBoundTrading = 0;
 
-	clif_tradecompleted(sd, 0);
-	clif_tradecompleted(tsd, 0);
+	clif_tradecompleted( *sd );
+	clif_tradecompleted( *tsd );
 
 	// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players
 	if (save_settings&CHARSAVE_TRADE) {

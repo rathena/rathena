@@ -756,7 +756,7 @@ enum sc_type : int16 {
 	/* Guild Aura */
 	SC_LEADERSHIP,
 	SC_GLORYWOUNDS,
-	SC_SOULCOLD, //508
+	SC_SOULCOLD,
 	SC_HAWKEYES,
 	/* ... */
 	SC_ODINS_POWER,
@@ -779,7 +779,7 @@ enum sc_type : int16 {
 	/* Max HP & SP */
 	SC_INCMHP,
 	SC_INCMSP,
-	SC_PARTYFLEE, // 531
+	SC_PARTYFLEE,
 	/**
 	* Kagerou & Oboro [malufett]
 	**/
@@ -1330,9 +1330,10 @@ enum sc_type : int16 {
 	SC_PERIOD_RECEIVEITEM_2ND,
 	SC_PERIOD_PLUSEXP_2ND,
 
-	SC_EXTREMITYFIST2,
-	SC_POWERUP,
+	//SC_EXTREMITYFIST2,
+	SC_POWERUP = 951,
 	SC_AGIUP,
+	SC_PROTECTION,
 
 	// Shinkiro/Shiranui
 	SC_SHADOW_CLOCK,
@@ -3217,7 +3218,7 @@ struct status_data {
 #endif
 		matk_min, matk_max,
 		speed,
-		amotion, adelay, dmotion;
+		amotion, clientamotion, adelay, dmotion;
 	int mode;
 	short
 		hit, flee, cri, flee2,
@@ -3336,6 +3337,8 @@ private:
 	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
 
 public:
+	status_change();
+
 	status_change_entry * getSCE(enum sc_type type);
 	status_change_entry * getSCE(uint32 type);
 	status_change_entry * createSCE(enum sc_type type);
@@ -3437,6 +3440,7 @@ defType status_get_def(struct block_list *bl);
 unsigned short status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(bl)->amotion
+#define status_get_clientamotion(bl) status_get_status_data(bl)->clientamotion
 #define status_get_dmotion(bl) status_get_status_data(bl)->dmotion
 #define status_get_patk(bl) status_get_status_data(bl)->patk
 #define status_get_smatk(bl) status_get_status_data(bl)->smatk

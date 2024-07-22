@@ -1961,6 +1961,7 @@
 	export_constant(SC_EXTREMITYFIST2);
 	export_constant(SC_POWERUP);
 	export_constant(SC_AGIUP);
+	export_constant(SC_PROTECTION);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
@@ -4288,6 +4289,8 @@
 	export_constant(RC2_ILLUSION_TURTLE);
 	export_constant(RC2_RACHEL_SANCTUARY);
 	export_constant(RC2_ILLUSION_LUANDA);
+	export_constant(RC2_ILLUSION_FROZEN);
+	export_constant(RC2_ILLUSION_MOONLIGHT);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -7833,6 +7836,25 @@
 	export_constant(IG_AEGIS_103034);
 	export_constant(IG_P_BOOSTER_CALL_PACKAGE);
 	export_constant(IG_P_COMPENSATION_BOX);
+	export_constant(IG_ENCHANT_STONE_BOX35);
+	export_constant(IG_STOVE_CHANNELING_BOX_1);
+	export_constant(IG_STOVE_CHANNELING_BOX_2);
+	export_constant(IG_STOVE_CHANNELING_BOX_3);
+	export_constant(IG_STOVE_CHANNELING_BOX_4);
+	export_constant(IG_LI_NYANGVINE_BOX1_35);
+	export_constant(IG_LI_NYANGVINE_BOX2_35);
+	export_constant(IG_LI_NYANGVINE_BOX3_35);
+	export_constant(IG_A_SPEED_BOOSTER_BOX);
+	export_constant(IG_A_SPEED_BOOSTER_10_BOX);
+	export_constant(IG_L_INFINITY_POWER_PACK);
+	export_constant(IG_L_ALL_RED_PACK);
+	export_constant(IG_L_DEFENSE_POTION_PACK);
+	export_constant(IG_L_SPEED_FORCE_PACK);
+	export_constant(IG_L_SPECIAL_SPEED_PACK);
+	export_constant(IG_L_SPECIAL_FORCE_PACK);
+	export_constant(IG_COSTUMEMILEPACK_35_1);
+	export_constant(IG_COSTUMEMILEPACK_35_2);
+	export_constant(IG_COSTUMEMILEPACK_35_3);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -9171,6 +9193,7 @@
 	export_constant_npc(JT_4_EP21_AURELIE);
 	export_constant_npc(JT_4_EP21_HOWELL_S);
 	export_constant_npc(JT_4_EP21_TAN_S);
+	export_constant_npc(JT_4_M_VACATION_MARAM);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
@@ -10535,6 +10558,7 @@
 	export_constant(HAT_EF_C_BABY_GLOOM);
 	export_constant(HAT_EF_WINTERNIGHTBELLS);
 	export_constant(HAT_EF_NIGHTSKYOFRUTIE);
+	export_constant(HAT_EF_RAINBOW_POISON_MASTER);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -10623,6 +10647,40 @@
 	export_constant(SKILLDMG_MAX);
 	export_constant(SKILLDMG_CASTER);
 
+	/* player permissions */
+	export_constant(PC_PERM_TRADE);
+	export_constant(PC_PERM_PARTY);
+	export_constant(PC_PERM_ALL_SKILL);
+	export_constant(PC_PERM_USE_ALL_EQUIPMENT);
+	export_constant(PC_PERM_SKILL_UNCONDITIONAL);
+	export_constant(PC_PERM_JOIN_ALL_CHAT);
+	export_constant(PC_PERM_NO_CHAT_KICK);
+	export_constant(PC_PERM_HIDE_SESSION);
+	export_constant(PC_PERM_WHO_DISPLAY_AID);
+	export_constant(PC_PERM_RECEIVE_HACK_INFO);
+	export_constant(PC_PERM_WARP_ANYWHERE);
+	export_constant(PC_PERM_VIEW_HPMETER);
+	export_constant(PC_PERM_VIEW_EQUIPMENT);
+	export_constant(PC_PERM_USE_CHECK);
+	export_constant(PC_PERM_USE_CHANGEMAPTYPE);
+	export_constant(PC_PERM_USE_ALL_COMMANDS);
+	export_constant(PC_PERM_RECEIVE_REQUESTS);
+	export_constant(PC_PERM_SHOW_BOSS);
+	export_constant(PC_PERM_DISABLE_PVM);
+	export_constant(PC_PERM_DISABLE_PVP);
+	export_constant(PC_PERM_DISABLE_CMD_DEAD);
+	export_constant(PC_PERM_CHANNEL_ADMIN);
+	export_constant(PC_PERM_TRADE_BOUNDED);
+	export_constant(PC_PERM_ITEM_UNCONDITIONAL);
+	export_constant(PC_PERM_ENABLE_COMMAND);
+	export_constant(PC_PERM_BYPASS_STAT_ONCLONE);
+	export_constant(PC_PERM_BYPASS_MAX_STAT);
+	export_constant(PC_PERM_ATTENDANCE);
+	export_constant(PC_PERM_MACRO_DETECT);
+	export_constant(PC_PERM_MACRO_REGISTER);
+	export_constant(PC_PERM_TRADE_UNCONDITIONAL);
+	export_constant(PC_PERM_MAX);
+
 	/* guild permissions */
 	export_constant(GUILD_PERM_INVITE);
 	export_constant(GUILD_PERM_EXPEL);
@@ -10667,8 +10725,9 @@
 	export_constant(PCBLOCK_SITSTAND);
 	export_constant(PCBLOCK_COMMANDS);
 	export_constant(PCBLOCK_NPCCLICK);
-	export_constant(PCBLOCK_NPC);
 	export_constant(PCBLOCK_EMOTION);
+	export_constant(PCBLOCK_EQUIP);
+	export_constant(PCBLOCK_NPC);
 	export_constant(PCBLOCK_ALL);
 
 	/* convertpcinfo command */
@@ -10679,6 +10738,11 @@
 	/* instance_warpall flags */
 	export_constant(IWA_NONE);
 	export_constant(IWA_NOTDEAD);
+
+	/* npcspeed command */
+	export_constant(MIN_WALK_SPEED);
+	export_constant(MAX_WALK_SPEED);
+	export_constant(DEFAULT_NPC_WALK_SPEED);
 
 	/* skill hit */
 	export_constant(DMG_SINGLE);
@@ -10695,6 +10759,7 @@
 	export_constant(NK_IGNOREDEFCARD);
 	export_constant(NK_IGNORELONGCARD);
 	export_constant(NK_CRITICAL);
+	export_constant(NK_SIMPLEDEFENSE);
 
 	/* skill inf */
 	export_constant(INF_PASSIVE_SKILL);
@@ -11075,6 +11140,14 @@
 	export_constant(ELEMINFO_GAMEID);
 	export_constant(ELEMINFO_CLASS);
 
+	/* setdialogalign script command */
+	export_constant(DIALOG_ALIGN_LEFT);
+	export_constant(DIALOG_ALIGN_RIGHT);
+	export_constant(DIALOG_ALIGN_CENTER);
+	export_constant(DIALOG_ALIGN_TOP);
+	export_constant(DIALOG_ALIGN_MIDDLE);
+	export_constant(DIALOG_ALIGN_BOTTOM);
+
 	/* refine types */
 	export_constant(REFINE_TYPE_ARMOR);
 	export_constant(REFINE_TYPE_WEAPON);
@@ -11319,6 +11392,10 @@
 	export_constant(MER_SERA);
 	export_constant(MER_DIETER);
 	export_constant(MER_ELEANOR);
+
+	/* searchstore constants */
+	export_constant(SEARCHSTORE_EFFECT_NORMAL);
+	export_constant(SEARCHSTORE_EFFECT_REMOTE);
 
 	#undef export_constant
 	#undef export_constant2

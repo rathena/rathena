@@ -140,7 +140,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 		unit_refresh( bl, true );
 	}
 #endif
-	clif_move(ud);
+	clif_move( *ud );
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
@@ -211,8 +211,9 @@ TIMER_FUNC(unit_teleport_timer){
 	else if(*mast_tid != tid || bl == nullptr)
 		return 0;
 	else {
-		TBL_PC *msd = unit_get_master(bl);
-		if(msd && !check_distance_bl(&msd->bl, bl, data)) {
+		map_session_data* msd = unit_get_master( bl );
+
+		if( msd != nullptr && !check_distance_bl( &msd->bl, bl, static_cast<int>( data ) ) ){
 			*mast_tid = INVALID_TIMER;
 			unit_warp(bl, msd->bl.m, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		} else // No timer needed
@@ -396,6 +397,9 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	}
 
 	ud->walktimer = INVALID_TIMER;
+	// As movement to next cell finished, set sub-cell position to center
+	ud->sx = 8;
+	ud->sy = 8;
 
 	if (bl->prev == nullptr)
 		return 0; // Stop moved because it is missing from the block_list
@@ -556,7 +560,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 					return 0;
 				}
 				// Resend walk packet for proper Self Destruction display.
-				clif_move(ud);
+				clif_move( *ud );
 			}
 			break;
 		case BL_NPC:
@@ -626,7 +630,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		}
 		ud->walktimer = add_timer(tick+speed,unit_walktoxy_timer,id,speed);
 		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 ) // Not required not damaged recently
-			clif_move(ud);
+			clif_move( *ud );
 	} else if(ud->state.running) { // Keep trying to run.
 		if (!(unit_run(bl, nullptr, SC_RUN) || unit_run(bl, sd, SC_WUGDASH)) )
 			ud->state.running = 0;
@@ -706,7 +710,8 @@ TIMER_FUNC(unit_delay_walktoxy_timer){
  * @return 1: Success 0: Fail (No valid bl or target)
  */
 TIMER_FUNC(unit_delay_walktobl_timer){
-	struct block_list *bl = map_id2bl(id), *tbl = map_id2bl(data);
+	block_list* bl = map_id2bl( id );
+	block_list* tbl = map_id2bl( static_cast<int>( data ) );
 
 	if(!bl || bl->prev == nullptr || tbl == nullptr)
 		return 0;
@@ -1403,6 +1408,78 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 }
 
 /**
+ * Updates the walkpath of a unit to end after 0.5-1.5 cells moved
+ * Sends required packet for proper display on the client using subcoordinates
+ * @param bl: Object to stop walking
+ */
+void unit_stop_walking_soon(struct block_list& bl)
+{
+	struct unit_data* ud = unit_bl2ud(&bl);
+
+	if (ud == nullptr)
+		return;
+
+	if (ud->walktimer == INVALID_TIMER)
+		return;
+
+	if (ud->walkpath.path_pos + 1 >= ud->walkpath.path_len)
+		return;
+
+	const struct TimerData* td = get_timer(ud->walktimer);
+
+	if (td == nullptr)
+		return;
+
+	// Get how much percent we traversed on the timer
+	double cell_percent = 1.0 - ((double)DIFF_TICK(td->tick, gettick()) / (double)td->data);
+
+	short ox = bl.x, oy = bl.y; // Remember original x and y coordinates
+	short path_remain = 1; // Remaining path to walk
+
+	if (cell_percent > 0.0 && cell_percent < 1.0) {
+		// Set subcell coordinates according to timer
+		// This gives a value between 8 and 39
+		ud->sx = static_cast<decltype(ud->sx)>(24.0 + dirx[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		ud->sy = static_cast<decltype(ud->sy)>(24.0 + diry[ud->walkpath.path[ud->walkpath.path_pos]] * 16.0 * cell_percent);
+		// 16-31 reflect sub position 0-15 on the current cell
+		// 8-15 reflect sub position 8-15 at -1 main coordinate
+		// 32-39 reflect sub position 0-7 at +1 main coordinate
+		if (ud->sx < 16 || ud->sy < 16 || ud->sx > 31 || ud->sy > 31) {
+			path_remain = 2;
+			if (ud->sx < 16) bl.x--;
+			if (ud->sy < 16) bl.y--;
+			if (ud->sx > 31) bl.x++;
+			if (ud->sy > 31) bl.y++;
+		}
+		ud->sx %= 16;
+		ud->sy %= 16;
+	}
+	else if (cell_percent >= 1.0) {
+		// Assume exactly one cell moved
+		bl.x += dirx[ud->walkpath.path[ud->walkpath.path_pos]];
+		bl.y += diry[ud->walkpath.path[ud->walkpath.path_pos]];
+		path_remain = 2;
+	}
+	// Shorten walkpath
+	if (ud->walkpath.path_pos + path_remain < ud->walkpath.path_len) {
+		ud->walkpath.path_len = ud->walkpath.path_pos + path_remain;
+		ud->to_x = ox;
+		ud->to_y = oy;
+		for (int i = 0; i < path_remain; i++) {
+			ud->to_x += dirx[ud->walkpath.path[ud->walkpath.path_pos + i]];
+			ud->to_y += diry[ud->walkpath.path[ud->walkpath.path_pos + i]];
+		}
+		// Send movement packet with calculated coordinates and subcoordinates
+		clif_move(*ud);
+	}
+	// Reset coordinates
+	bl.x = ox;
+	bl.y = oy;
+	ud->sx = 8;
+	ud->sy = 8;
+}
+
+/**
  * Stops a unit from walking
  * @param bl: Object to stop walking
  * @param type: Options
@@ -1444,8 +1521,12 @@ int unit_stop_walking(struct block_list *bl,int type)
 		unit_walktoxy_timer(INVALID_TIMER, tick, bl->id, ud->walkpath.path_pos);
 	}
 
-	if(type&USW_FIXPOS)
-		clif_fixpos( *bl );
+	if (type&USW_FIXPOS) {
+		// Stop on cell center
+		ud->sx = 8;
+		ud->sy = 8;
+		clif_fixpos(*bl);
+	}
 
 	ud->walkpath.path_len = 0;
 	ud->walkpath.path_pos = 0;
@@ -2784,7 +2865,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if(sd && !check_distance_client_bl(src,target,range)) {
 		// Player tries to attack but target is too far, notify client
-		clif_movetoattack(sd,target);
+		clif_movetoattack( *sd, *target );
 		return 1;
 	} else if(md && !check_distance_bl(src,target,range)) {
 		// Monster: Chase if required
@@ -2988,7 +3069,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 	if(bl->type==BL_MOB)
 		((TBL_MOB*)bl)->skill_idx = -1;
 
-	clif_skillcastcancel(bl);
+	clif_skillcastcancel( *bl );
 
 	return 1;
 }
@@ -3012,6 +3093,8 @@ void unit_dataset(struct block_list *bl)
 	ud->attackabletime =
 	ud->canact_tick    =
 	ud->canmove_tick   = gettick();
+	ud->sx = 8;
+	ud->sy = 8;
 }
 
 /**
@@ -3149,7 +3232,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->trade_partner)
 				trade_tradecancel(sd);
 
-			searchstore_close(sd);
+			searchstore_close(*sd);
 
 			if (sd->menuskill_id != AL_TELEPORT) { //bugreport:8027
 				if (sd->state.storage_flag == 1)
@@ -3163,10 +3246,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			}
 
 			if(sd->party_invite > 0)
-				party_reply_invite(sd,sd->party_invite,0);
+				party_reply_invite( *sd, sd->party_invite, 0 );
 
 			if(sd->guild_invite > 0)
-				guild_reply_invite(sd,sd->guild_invite,0);
+				guild_reply_invite( *sd, sd->guild_invite, 0 );
 
 			if(sd->guild_alliance > 0)
 				guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
@@ -3465,6 +3548,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd, sd->spiritball, 1);
 			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
+			mob_removeslaves(&sd->bl);
 
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);

@@ -167,15 +167,22 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 
 	char pin[PINCODE_LENGTH+1];
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+		set_eof(fd);
 		return 1;
+	}
 
 	memset(pin,0,PINCODE_LENGTH+1);
 	strncpy((char*)pin, RFIFOCP(fd, 6), PINCODE_LENGTH);
 	RFIFOSKIP(fd,10);
 
-	char_pincode_decrypt(sd->pincode_seed, pin );
+	if (!char_pincode_decrypt(sd->pincode_seed, pin )) {
+		set_eof(fd);
+		return 1;
+	}
+
 	if( char_pincode_compare( fd, sd, pin ) ){
+		sd->pincode_correct = true;
 		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 	}
 	return 1;
@@ -257,28 +264,34 @@ bool pincode_allowed( char* pincode ){
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(14);
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+		set_eof(fd);
 		return 1;
+	}
 	else {
 		char oldpin[PINCODE_LENGTH+1];
 		char newpin[PINCODE_LENGTH+1];
-		
+
 		memset(oldpin,0,PINCODE_LENGTH+1);
 		memset(newpin,0,PINCODE_LENGTH+1);
 		strncpy(oldpin, RFIFOCP(fd,6), PINCODE_LENGTH);
 		strncpy(newpin, RFIFOCP(fd,10), PINCODE_LENGTH);
 		RFIFOSKIP(fd,14);
-		
-		char_pincode_decrypt(sd->pincode_seed,oldpin);
+
+		if (!char_pincode_decrypt(sd->pincode_seed,oldpin) || !char_pincode_decrypt(sd->pincode_seed,newpin)) {
+			set_eof(fd);
+			return 1;
+		}
+
 		if( !char_pincode_compare( fd, sd, oldpin ) )
 			return 1;
-		char_pincode_decrypt(sd->pincode_seed,newpin);
 
 		if( pincode_allowed(newpin) ){
 			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
 			strncpy(sd->pincode, newpin, sizeof(newpin));
 			ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
-		
+			sd->pincode_correct = true;
+
 			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 		}else{
 			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
@@ -293,21 +306,27 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(10);
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+		set_eof(fd);
 		return 1;
+	}
 	else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
 		strncpy( newpin, RFIFOCP(fd,6), PINCODE_LENGTH );
 		RFIFOSKIP(fd,10);
 
-		char_pincode_decrypt( sd->pincode_seed, newpin );
+		if (!char_pincode_decrypt( sd->pincode_seed, newpin )) {
+			set_eof(fd);
+			return 1;
+		}
 
 		if( pincode_allowed(newpin) ){
 			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
 			strncpy( sd->pincode, newpin, sizeof( newpin ) );
+			sd->pincode_correct = true;
 
-			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );	
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
 		}else{
 			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
 		}
@@ -741,6 +760,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		sd->login_id2 = login_id2;
 		sd->sex = sex;
 		sd->auth = false; // not authed yet
+		sd->pincode_correct = false; // not entered pincode correctly yet
 
 		// send back account_id
 		WFIFOHEAD(fd,4);
@@ -763,6 +783,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		{// authentication found (coming from map server)
 			char_get_authdb().erase(account_id);
 			char_auth_ok(fd, sd);
+			sd->pincode_correct = true; // already entered pincode correctly yet
 		}
 		else
 		{// authentication not found (coming from login server)
@@ -950,7 +971,7 @@ int chclif_parse_select_accessible_map( int fd, struct char_session_data* sd, ui
 
 void chclif_accessible_maps( int fd ){
 #if PACKETVER >= 20100714
-	struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME* p = (struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME*)packet_buffer;
+	PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME* p = reinterpret_cast<PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME*>( packet_buffer );
 
 	p->packetType = HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME;
 	p->packetLength = sizeof( *p );
@@ -1553,6 +1574,54 @@ int chclif_parse(int fd) {
 		unsigned short cmd;
 
 		cmd = RFIFOW(fd,0);
+
+#if PACKETVER_SUPPORTS_PINCODE
+		// If the pincode system is enabled
+		if( charserv_config.pincode_config.pincode_enabled ){
+			switch( cmd ){
+				// Connect of player
+				case 0x65:
+				// Client keep-alive packet (every 12 seconds)
+				case 0x187:
+				// Checks the entered pin
+				case 0x8b8:
+				// Request PIN change
+				case 0x8be:
+				// Request for PIN window
+				case 0x8c5:
+				// Request character list
+				case 0x9a1:
+				// Connect of map-server
+				case 0x2af8:
+					break;
+
+				// Before processing any other packets, do a few checks
+				default:
+					// To reach this block the client should have attained a session already
+					if( sd != nullptr ){
+						// If the pincode was entered correctly
+						if( sd->pincode_correct ){
+							break;
+						}
+
+						// If no pincode is set (yet)
+						if( strlen( sd->pincode ) <= 0 ){
+							break;
+						}
+
+						// The pincode was not entered correctly, yet the player (=bot) tried to send a different packet => Goodbye!
+						set_eof( fd );
+						return 0;
+					}else{
+						// Unknown packet received
+						ShowError( "chclif_parse: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", cmd, ip2str( ipl, nullptr ) );
+						set_eof( fd );
+						return 0;
+					}
+			}
+		}
+#endif
+
 		switch( cmd ) {
 			case 0x65: next=chclif_parse_reqtoconnect(fd,sd,ipl); break;
 			// char select
@@ -1596,7 +1665,7 @@ int chclif_parse(int fd) {
 				break;
 			// unknown packet received
 			default:
-				ShowError("parse_char: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, nullptr));
+				ShowError( "chclif_parse: Received unknown packet " CL_WHITE "0x%x" CL_RESET " from ip '" CL_WHITE "%s" CL_RESET "'! Disconnecting!\n", cmd, ip2str( ipl, nullptr ) );
 				set_eof(fd);
 				return 0;
 		}

@@ -1143,6 +1143,25 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 		}
 	}
 }
+
+status_change::status_change(){
+	this->option = OPTION_NOTHING;
+	this->opt3 = OPT3_NORMAL;
+	this->opt1 = OPT1_NONE;
+	this->opt2 = OPT2_NONE;
+	this->count = 0;
+	this->lastEffect = SC_NONE;
+	this->lastEffectTimer = INVALID_TIMER;
+	this->cant = {};
+	this->comet_x = 0;
+	this->comet_y = 0;
+#ifndef RENEWAL
+	this->sg_counter = 0;
+#endif
+	std::fill( std::begin( this->data ), std::end( this->data ), nullptr );
+	this->lastStatus = { SC_NONE, nullptr };
+}
+
 /**
  * Accessor for a status_change_entry in a status_change
  */
@@ -1682,7 +1701,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				npc_event(sd, bg->die_event.c_str(), 0);
 		}
 
-		npc_script_event(sd,NPCE_DIE);
+		npc_script_event( *sd, NPCE_DIE );
 	}
 
 	return (int)(hp+sp+ap);
@@ -1915,7 +1934,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	status->ap += ap;
 
 	if (bl->prev) // Animation only if character is already on a map.
-		clif_resurrection(bl, 1);
+		clif_resurrection( *bl );
 	switch (bl->type) {
 		case BL_PC:  pc_revive((TBL_PC*)bl, hp, sp, ap); break;
 		case BL_MOB: mob_revive((TBL_MOB*)bl, hp); break;
@@ -2992,7 +3011,7 @@ void status_calc_pet_(struct pet_data *pd, uint8 opt)
 
 			pd->pet.level = lv;
 			if (!(opt&SCO_FIRST)) // Lv Up animation
-				clif_misceffect(&pd->bl, 0);
+				clif_misceffect( pd->bl, NOTIFYEFFECT_BASE_LEVEL_UP );
 			status->rhw.atk = (bstat->rhw.atk*lv)/pd->db->lv;
 			status->rhw.atk2 = (bstat->rhw.atk2*lv)/pd->db->lv;
 			status->str = (bstat->str*lv)/pd->db->lv;
@@ -5602,7 +5621,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		* piece of code triggers the walk-timer is set on INVALID_TIMER)
 		**/
 		if (ud)
-			ud->state.change_walk_target = ud->state.speed_changed = 1;
+			ud->state.change_walk_target = 1;
 	}
 
 	if(flag[SCB_STR]) {
@@ -9434,9 +9453,7 @@ void status_change_init(struct block_list *bl)
 {
 	status_change *sc = status_get_sc(bl);
 	nullpo_retv(sc);
-	memset(sc, 0, sizeof (status_change));
-	sc->lastEffect = SC_NONE;
-	sc->lastEffectTimer = INVALID_TIMER;
+	new (sc) status_change();
 }
 
 /*========================================== [Playtester]
@@ -10923,7 +10940,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = 60000;
 			val1 = battle_config.manner_system; // Mute filters.
 			if (sd) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
+				clif_changemanner( *sd );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
@@ -11649,7 +11666,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 				val2 = ((chance < 20) ? 4 : (chance < 50) ? 3 : 2); // Shield count
 				val3 = 1000; // Shield HP
-				clif_millenniumshield(bl, val2);
+				clif_millenniumshield( *bl, val2 );
 			}
  			break;
 		case SC_ABUNDANCE:
@@ -13017,6 +13034,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				case SC_BERSERK:
 				case SC_MERC_HPUP:
 				case SC_MERC_SPUP:
+				// Status needs to be updated immediately and not at the end of the damage
+				case SC_EXTREMITYFIST:
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
@@ -13441,7 +13460,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (sd && sd->status.manner < 0 && tid != INVALID_TIMER)
 				sd->status.manner = 0;
 			if (sd && tid == INVALID_TIMER) {
-				clif_changestatus(sd,SP_MANNER,sd->status.manner);
+				clif_changemanner( *sd );
 				clif_updatestatus(*sd,SP_MANNER);
 			}
 			break;
@@ -13592,7 +13611,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 
 		/* 3rd Stuff */
 		case SC_MILLENNIUMSHIELD:
-			clif_millenniumshield(bl, 0);
+			clif_millenniumshield( *bl, 0 );
 			break;
 		case SC_HALLUCINATIONWALK:
 			sc_start(bl,bl,SC_HALLUCINATIONWALK_POSTDELAY,100,sce->val1,skill_get_time2(GC_HALLUCINATIONWALK,sce->val1));
@@ -13857,7 +13876,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag[SCF_NONPLAYER] ) // bugreport:681
-		clif_changeoption2(bl);
+		clif_changeoption2( *bl );
 	else if (!disable_opt_flag && (opt_flag[SCF_SENDOPTION] || opt_flag[SCF_ONTOUCH] || opt_flag[SCF_UNITMOVE] || opt_flag[SCF_NONPLAYER] || opt_flag[SCF_SENDLOOK])) {
 		clif_changeoption(bl);
 		if (sd && opt_flag[SCF_SENDLOOK]) {
@@ -14266,7 +14285,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_NOCHAT:
 		if(sd) {
 			sd->status.manner++;
-			clif_changestatus(sd,SP_MANNER,sd->status.manner);
+			clif_changemanner( *sd );
 			clif_updatestatus(*sd,SP_MANNER);
 			if (sd->status.manner < 0) { // Every 60 seconds your manner goes up by 1 until it gets back to 0.
 				sc_timer_next(60000+tick);

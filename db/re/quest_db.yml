@@ -1404,21 +1404,21 @@ Body:
     TimeLimit: 4h
   - Id: 3455
     Title: Illusion Investigation Team - Machoko
-  # - Id: 3456
-    # Title: Illusion of Teddy Bear 100 Kills
-    # Targets:
-      # - Id: 1
-        # Count: 100
-        # Location: ein_d02_i
-        # MapMobTargets:
-          # ILL_TEDDY_BEAR_B: true
-          # ILL_MINERAL: true
-          # ILL_PITMAN: true
-          # ILL_TEDDY_BEAR_R: true
-          # ILL_TEDDY_BEAR_Y: true
-          # ILL_TEDDY_BEAR_W: true
-          # ILL_OBSIDIAN: true
-          # ILL_TEDDY_BEAR_G: true
+  - Id: 3456
+    Title: Illusion of Teddy Bear 100 Kills
+    Targets:
+      - Id: 1
+        Count: 100
+        Location: ein_d02_i
+        MapMobTargets:
+          ILL_TEDDY_BEAR_B: true
+          ILL_MINERAL: true
+          ILL_PITMAN: true
+          ILL_TEDDY_BEAR_R: true
+          ILL_TEDDY_BEAR_Y: true
+          ILL_TEDDY_BEAR_W: true
+          ILL_OBSIDIAN: true
+          ILL_TEDDY_BEAR_G: true
   - Id: 3457
     Title: Illusion of Teddy Bear 100 Kills - Standby
     TimeLimit: 4h
@@ -8038,14 +8038,74 @@ Body:
   - Id: 11555
     Title: In search of the taste of hometown - Waiting
     TimeLimit: 4h
+  - Id: 11556
+    Title: Missing Steven
+  - Id: 11557
+    Title: Missing Steven
+  - Id: 11558
+    Title: Missing Steven
+  - Id: 11559
+    Title: Missing Steven
+  - Id: 11560
+    Title: Missing Steven
+  - Id: 11561
+    Title: Missing Steven
+  - Id: 11562
+    Title: Missing Steven
+  - Id: 11563
+    Title: Nasarian Conspiracy
+    Targets:
+      - Mob: ILL_TEDDY_BEAR_R
+        Count: 10
+      - Mob: ILL_TEDDY_BEAR_Y
+        Count: 10
+      - Mob: ILL_TEDDY_BEAR_G
+        Count: 10
+  - Id: 11564
+    Title: Nasarian Conspiracy
+    Targets:
+      - Mob: ILL_TEDDY_BEAR_B
+        Count: 10
+      - Mob: ILL_TEDDY_BEAR_W
+        Count: 10
+  - Id: 11565
+    Title: RUN!
+    Targets:
+      - Mob: ILL_PITMAN
+        Count: 10
+      - Mob: ILL_MINERAL
+        Count: 10
+      - Mob: ILL_OBSIDIAN
+        Count: 10
   - Id: 11566
-    Title: Escape!!!! - Wait
+    Title: RUN! - Pending
     TimeLimit: 4h
+  - Id: 11567
+    Title: Things That Shouldn't Exist
+    Targets:
+      - Mob: ILL_TEDDY_BEAR_R
+        Count: 10
+      - Mob: ILL_TEDDY_BEAR_Y
+        Count: 10
+      - Mob: ILL_TEDDY_BEAR_G
+        Count: 10
+  - Id: 11568
+    Title: Things That Shouldn't Exist
+    Targets:
+      - Mob: ILL_TEDDY_BEAR_B
+        Count: 10
+      - Mob: ILL_TEDDY_BEAR_W
+        Count: 10
   - Id: 11569
-    Title: Present not to exist-wait
+    Title: Things That Shouldn't Exist - Pending
     TimeLimit: 4h
+  - Id: 11570
+    Title: Let the Light Devour the Darkness
+    Targets:
+      - Mob: ILL_TEDDY_BEAR_S
+        Count: 1
   - Id: 11571
-    Title: Let the light consume the darkness - Wait
+    Title: Let the Light Devour the Darkness - Pending
     TimeLimit: 4h
   - Id: 11596
     Title: Old Memories

@@ -302,7 +302,7 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
 						mes "Oooh, there must";
 						mes "be some style that";
 						mes "you like, right? Hmmm...";
-						close;
+						close3;
 					}
 				}
 				mes "[Assistant Beautician]";
@@ -353,7 +353,7 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
 				mes "me! Thank you for using";
 				mes "my service and come again~";
 				emotion ET_CHUP;
-				close;
+				close3;
 			case 2:
 				mes "[Assistant Beautician]";
 				mes "Huh? Oh no, you're";

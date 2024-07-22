@@ -1644,43 +1644,71 @@ void map_clearflooritem(struct block_list *bl) {
 	map_freeblock(&fitem->bl);
 }
 
-/*==========================================
- * (m,x,y) locates a random available free cell around the given coordinates
- * to place an BL_ITEM object. Scan area is 9x9, returns 1 on success.
- * x and y are modified with the target cell when successful.
- *------------------------------------------*/
-int map_searchrandfreecell(int16 m,int16 *x,int16 *y,int stack) {
-	int free_cell,i,j;
-	int free_cells[9][2];
-	struct map_data *mapdata = map_getmapdata(m);
-
-	if( mapdata == nullptr || mapdata->block == nullptr ){
-		return 0;
+/**
+ * Returns if a cell is passable and not occupied by given types of block
+ * Cells 5 cells from the SW edge and 4 cells from the NE edge are never considered as free
+ * @param m: Map of cell to check
+ * @param x: X-coordinate of cell to check
+ * @param y: Y-coordinate of cell to check
+ * @param type: Types of block to check for
+ * @return True if cell is passable, not on the edge and not occupied by given types of block
+ */
+bool map_cell_free(int16 m, int16 x, int16 y, int type)
+{
+	struct map_data* mapdata = map_getmapdata(m);
+	if (mapdata == nullptr || mapdata->block == nullptr) {
+		return false;
 	}
 
-	for(free_cell=0,i=-1;i<=1;i++){
-		if(i+*y<0 || i+*y>=mapdata->ys)
-			continue;
-		for(j=-1;j<=1;j++){
-			if(j+*x<0 || j+*x>=mapdata->xs)
-				continue;
-			if(map_getcell(m,j+*x,i+*y,CELL_CHKNOPASS) && !map_getcell(m,j+*x,i+*y,CELL_CHKICEWALL))
-				continue;
-			//Avoid item stacking to prevent against exploits. [Skotlex]
-			if(stack && map_count_oncell(m,j+*x,i+*y, BL_ITEM, 0) > stack)
-				continue;
-			free_cells[free_cell][0] = j+*x;
-			free_cells[free_cell++][1] = i+*y;
-		}
-	}
-	if(free_cell==0)
-		return 0;
-	free_cell = rnd_value(0, free_cell-1);
-	*x = free_cells[free_cell][0];
-	*y = free_cells[free_cell][1];
-	return 1;
+	// Cells outside the map or within 4-5 cells of the map edge are considered invalid officially
+	// Note that this isn't symmetric (NE - 4 cells, SW - 5 cells)
+	// If for some reason edge size was set to below 5 cells, we consider them as valid
+	int16 edge_valid = std::min(battle_config.map_edge_size, 5);
+	if (x < edge_valid || x > mapdata->xs - edge_valid || y < edge_valid || y > mapdata->ys - edge_valid)
+		return false;
+	if (map_getcell(m, x, y, CELL_CHKNOPASS))
+		return false;
+	if (map_count_oncell(m, x, y, type, 0) > 0)
+		return false;
+
+	return true;
 }
 
+/**
+ * Locates a random available free cell around the given coordinates within a given distance range.
+ * This uses the official algorithm that checks each quadrant and line once.
+ * x and y are modified with the target free cell when successful.
+ * @param m: Map to search
+ * @param x: X-coordinate around which free cell is searched
+ * @param y: Y-coordinate around which free cell is searched
+ * @param distmin: Minimum distance from the given cell
+ * @param distmax: Maximum distance from the given cell
+ * @param type: If the given types of block are present on the cell, it counts as occupied
+ * @return True if free cell could be found
+ */
+bool map_search_freecell_dist(int16 m, int16* x, int16* y, int16 distmin, int16 distmax, int type)
+{
+	// This is to prevent that always the same quadrant is checked first 
+	int16 mirrorx = (rnd()%2) ? -1 : 1;
+	int16 mirrory = (rnd()%2) ? -1 : 1;
+
+	for (int16 i = -1; i <= 1; i++) {
+		for (int16 j = -1; j <= 1; j++) {
+			if (i || j)
+			{
+				int16 checkX = *x + mirrorx * i * rnd_value(distmin, distmax);
+				int16 checkY = *y + mirrory * j * rnd_value(distmin, distmax);
+				if (map_cell_free(m, checkX, checkY, type))
+				{
+					*x = checkX;
+					*y = checkY;
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
 
 static int map_count_sub(struct block_list *bl,va_list ap)
 {
@@ -1699,9 +1727,9 @@ static int map_count_sub(struct block_list *bl,va_list ap)
  * &2 = the target should be able to walk to the target tile.
  * &4 = there shouldn't be any players around the target tile (use the no_spawn_on_player setting)
  *------------------------------------------*/
-int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int16 rx, int16 ry, int flag)
+int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag, int32 tries)
 {
-	int tries, spawn=0;
+	int spawn=0;
 	int bx, by;
 
 	if( !src && (!(flag&1) || flag&2) )
@@ -1731,20 +1759,22 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 		return 0;
 	}
 
-	if (rx >= 0 && ry >= 0) {
-		tries = (rx * 2 + 1) * (ry * 2 + 1);
-		if (tries > 100) tries = 100;
-	} else {
-		tries = mapdata->xs*mapdata->ys;
-		if (tries > 500) tries = 500;
-	}
-
+	int16 edge = battle_config.map_edge_size;
+	int16 edge_valid = std::min(edge, (int16)5);
+	// In most situations there are 50 tries officially (default value)
 	while(tries--) {
-		*x = (rx >= 0) ? rnd_value(bx - rx, bx + rx) : rnd_value<int16>(1, mapdata->xs - 1);
-		*y = (ry >= 0) ? rnd_value(by - ry, by + ry) : rnd_value<int16>(1, mapdata->ys - 1);
+		// For map-wide search, the configured tiles from the edge are not considered (default: 15)
+		*x = (rx >= 0) ? rnd_value(bx - rx, bx + rx) : rnd_value<int16>(edge, mapdata->xs - edge - 1);
+		*y = (ry >= 0) ? rnd_value(by - ry, by + ry) : rnd_value<int16>(edge, mapdata->ys - edge - 1);
 
 		if (*x == bx && *y == by)
 			continue; //Avoid picking the same target tile.
+
+		// Cells outside the map or within 4-5 cells of the map edge are considered invalid officially
+		// Note that unlike the other edge, this isn't symmetric (NE - 4 cells, SW - 5 cells)
+		// If for some reason edge size was set to below 5 cells, we consider them as valid
+		if (*x < edge_valid || *x > mapdata->xs - edge_valid || *y < edge_valid || *y > mapdata->ys - edge_valid)
+			continue;
 
 		if (map_getcell(m,*x,*y,CELL_CHKREACH))
 		{
@@ -1754,10 +1784,11 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 				if (spawn >= 100) return 0; //Limit of retries reached.
 				if (spawn++ < battle_config.no_spawn_on_player &&
 					map_foreachinallarea(map_count_sub, m,
-						*x-AREA_SIZE, *y-AREA_SIZE,
-					  	*x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
-				)
-				continue;
+						*x - AREA_SIZE, *y - AREA_SIZE,
+						*x + AREA_SIZE, *y + AREA_SIZE, BL_PC)) {
+					tries++; // This failure should not affect the number of official tries
+					continue;
+				}
 			}
 			return 1;
 		}
@@ -1857,12 +1888,14 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param first_charid : 1st player that could loot the item (only charid that could loot for first_get_tick duration)
  * @param second_charid :  2nd player that could loot the item (2nd charid that could loot for second_get_charid duration)
  * @param third_charid : 3rd player that could loot the item (3rd charid that could loot for third_get_charid duration)
- * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
+ * @param flag: &1 MVP item. &2 search free cell in 5x5 area instead of 3x3. &4 bypass droppable check.
  * @param mob_id: Monster ID if dropped by monster
  * @param canShowEffect: enable pillar effect on the dropped item (if set in the database)
+ * @param dir: where the item should drop around the target (DIR_MAX: random cell around center)
+ * @param type: types of block the item should not stack on
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect, enum directions dir, int type)
 {
 	struct flooritem_data *fitem = nullptr;
 
@@ -1871,8 +1904,18 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 	if (!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid).trade))
 		return 0; //can't be dropped
 
-	if (!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
-		return 0;
+	if (dir > DIR_CENTER && dir < DIR_MAX) {
+		x += dirx[dir];
+		y += diry[dir];
+	}
+	// If cell occupied and not center cell, drop item around the drop target cell
+	if (dir == DIR_MAX || (dir != DIR_CENTER && !map_cell_free(m, x, y, type))) {
+		if (!map_search_freecell_dist(m, &x, &y, 1, (flags&2)?2:1, type)) {
+			// Only stop here if BL_ITEM shall not stack, otherwise drop on original target cell
+			if (type&BL_ITEM)
+				return 0;
+		}
+	}
 
 	CREATE(fitem, struct flooritem_data, 1);
 	fitem->bl.type=BL_ITEM;
@@ -2091,11 +2134,11 @@ int map_quit(map_session_data *sd) {
 		bg_queue_leave(sd, false);
 
 	if( sd->status.clan_id )
-		clan_member_left(sd);
+		clan_member_left( *sd );
 
 	pc_itemcd_do(sd,false);
 
-	npc_script_event(sd, NPCE_LOGOUT);
+	npc_script_event( *sd, NPCE_LOGOUT );
 
 	//Unit_free handles clearing the player related data,
 	//map_quit handles extra specific data which is related to quitting normally
@@ -2133,7 +2176,9 @@ int map_quit(map_session_data *sd) {
 	}
 
 	// Return loot to owner
-	if( sd->pd ) pet_lootitem_drop(sd->pd, sd);
+	if( sd->pd != nullptr ){
+		pet_lootitem_drop( *sd->pd, sd );
+	}
 
 	if (sd->ed) // Remove effects here rather than unit_remove_map_pc so we don't clear on Teleport/map change.
 		elemental_clean_effect(sd->ed);
@@ -3694,7 +3739,7 @@ int map_readgat (struct map_data* m)
 
 	sprintf(filename, "data\\%s.gat", m->name);
 
-	gat = (uint8 *) grfio_read(filename);
+	gat = (uint8 *) grfio_reads(filename);
 	if (gat == nullptr)
 		return 0;
 
@@ -4485,7 +4530,8 @@ enum e_mapflag map_getmapflag_by_name(char* name)
 bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
 	const char* constant;
 	const char* prefix = "mf_";
-	int i, len = strlen(prefix);
+	size_t i;
+	size_t len = strlen( prefix );
 
 	// Look it up
 	constant = script_get_constant_str( prefix, mapflag );

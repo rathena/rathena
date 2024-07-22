@@ -260,6 +260,7 @@ struct Battle_Config
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
+	int pet_unequip_destroy;
 	int pet_master_dead;
 
 	int skill_min_damage;
@@ -721,11 +722,15 @@ struct Battle_Config
 	int pet_distance_check;
 	int pet_hide_check;
 
+	int instance_block_leave;
+	int instance_block_leaderchange;
+	int instance_block_invite;
+	int instance_block_expulsion;
 	// 4th Jobs Stuff
 	int trait_points_job_change;
 	int use_traitpoint_table;
 	int max_trait_parameter;
-	int max_res_mres_reduction;
+	int max_res_mres_ignored;
 	int max_ap;
 	int ap_rate;
 	int restart_ap_rate;
@@ -749,10 +754,14 @@ struct Battle_Config
 
 	int mob_respawn_time;
 	int mob_unlock_time;
+	int map_edge_size;
+	int randomize_center_cell;
 
 	int feature_stylist;
 	int feature_banking_state_enforce;
 	int instance_allow_reconnect;
+	int synchronize_damage;
+	int item_stacking;
 
 #include <custom/battle_config_struct.inc>
 };

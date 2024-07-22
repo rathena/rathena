@@ -111,7 +111,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	login_log(ip, sd->userid, 100, "login ok");
 	ShowStatus("Connection of the account '%s' accepted.\n", sd->userid);
 
-	PACKET_AC_ACCEPT_LOGIN* p = (PACKET_AC_ACCEPT_LOGIN*)packet_buffer;
+	PACKET_AC_ACCEPT_LOGIN* p = reinterpret_cast<PACKET_AC_ACCEPT_LOGIN*>( packet_buffer );
 
 	p->packetType = HEADER_AC_ACCEPT_LOGIN;
 	p->packetLength = sizeof( *p );

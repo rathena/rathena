@@ -163,7 +163,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 1@gl_k,206,79,0	warp	#3Control2	2,2,1@gl_k,195,79
 1@gl_k,227,216,0	warp	#4Control	2,2,1@gl_k,215,216
 1@gl_k,222,216,0	warp	#4Control2	2,2,1@gl_k,233,216
-1@gl_k,150,284,0	warp	#2F Entrance	2,2,2@gl_k,150,46
+// 1@gl_k,150,284,0	warp	#2F Entrance	2,2,2@gl_k,150,46
 2@gl_k,149,32,0	warp	#1 Control	2,2,1@gl_k,150,270
 2@gl_k,145,123,0	warp	#22 Control	2,2,2@gl_k,126,123
 2@gl_k,136,122,0	warp	#22 Control2	2,2,2@gl_k,150,116
@@ -188,8 +188,8 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 		next;
 		if (select( "Omit moderately.", "Appreciate everything." ) == 1) {
 			cutin "GL_BARMUND1.bmp",2;
-			mes "[Barmund]";
-			mes "Have I seen you " + strcharinfo(0) + "";
+			mes "[Varmundt]";
+			mes "I've seen you, " + strcharinfo(0) + ".";
 			mes "I'm sure I can trust you. Let's leave right away.";
 			close2;
 			cutin "",255;
@@ -1073,8 +1073,13 @@ OnTimer5000:
 	close3;
 }
 
-// note: never hidden
 1@gl_k,156,258,3	script	Varmundt#2	4_M_BARMUND,{
+	if ('step < 6)
+		end;
+	if (checkweight(6607,1, 6608,1) == 0) {
+		mes "^ff0000It seems like you have too many types or weights of items. Please organize your inventory.^000000";
+		close;
+	}
 	cutin "gl_barmund1",2;
 	mes "[Varmundt]";
 	if (checkquest(12318,HUNTING) != 2) {
@@ -1216,7 +1221,21 @@ OnMyMobDead:
 		enablenpc instance_npcname("Varmundt#21");
 		donpcevent instance_npcname("#ghmemorialmob05") + "::OnStart";
 		disablenpc instance_npcname("#ghmemorialmob04");
+		'step = 6;
 	}
+	end;
+}
+
+1@gl_k,150,284,0	script	#2F Entrance	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if (checkquest(12318,HUNTING) == 2) {
+		mes "^0000ffIt seems that you did not receive a reward for clearing the first floor. Talk to Varmundt and receive your reward.^000000";
+		close2;
+		warp 'map_name$[0],156,256;
+		end;
+	}
+	warp 'map_name$[1],150,46;
 	end;
 }
 
@@ -1246,9 +1265,9 @@ OnEffect:
 2@gl_k,150,66,0	script	#Servanton	HIDDEN_WARP_NPC,7,7,{
 	end;
 OnTouch_:
-	if ('step != 5)
+	if ('step != 6)
 		end;
-	'step = 6;
+	'step = 7;
 	disablenpc();
 	if ('mode == 1)
 		donpcevent instance_npcname("#talkinstance5") + "::OnStart";
@@ -1372,16 +1391,18 @@ OnTouch_:
 	disablenpc();
 	.@hidden_name$ = strnpcinfo(2);
 	.@event_type = atoi( charat(.@hidden_name$,4) );
+	.@event_number = atoi( charat(.@hidden_name$,6) );
 	if (.@event_type == 2)
-		.@label$ = instance_npcname("#ghmemorialmob05") + "::OnMyMobDead";
+		.@event$ = instance_npcname("#ghmemorialmob05") + "::OnMyMobDead" + .@event_number;	// left side
 	else
-		.@label$ = instance_npcname("#ghmemorialmob06") + "::OnMyMobDead";
+		.@event$ = instance_npcname("#ghmemorialmob06") + "::OnMyMobDead" + .@event_number;	// right side
+	killmonster 'map_name$[1], .@event$;
 	getmapxy .@map$,.@x,.@y, BL_NPC;
-	monster .@map$,.@x,.@y, "Corrupted Palace Guard", 2468,1, .@label$;
-	monster .@map$,.@x,.@y, "Archer of Death", 2469,1, .@label$;
-	monster .@map$,.@x,.@y, "Corrupted Abysmal Knight", 2470,1, .@label$;
-	monster .@map$,.@x,.@y, "Suffered Khalitzburg", 2471,1, .@label$;
-	monster .@map$,.@x,.@y, "Bloody Knight", 2472,1, .@label$;
+	monster .@map$,.@x,.@y, "Corrupted Palace Guard", 2468,1, .@event$;
+	monster .@map$,.@x,.@y, "Archer of Death", 2469,1, .@event$;
+	monster .@map$,.@x,.@y, "Corrupted Abysmal Knight", 2470,1, .@event$;
+	monster .@map$,.@x,.@y, "Suffered Khalitzburg", 2471,1, .@event$;
+	monster .@map$,.@x,.@y, "Bloody Knight", 2472,1, .@event$;
 	initnpctimer;
 	end;
 OnTimer30000:
@@ -1417,7 +1438,13 @@ OnStart:
 		enablenpc instance_npcname("#ogh_2-" + .@i);
 	end;
 
-OnMyMobDead:
+OnMyMobDead1:
+OnMyMobDead2:
+OnMyMobDead3:
+OnMyMobDead4:
+OnMyMobDead5:
+OnMyMobDead6:
+OnMyMobDead7:
 	if (mobcount('map_name$[1], instance_npcname("#ghmemorialmob05") + "::OnBossDead") > 0)	// Prevent boss re-spawn
 		end;
 	if ('mode == 2)	// Higher (but unknown) spawn rate in fast mode
@@ -1445,7 +1472,9 @@ OnBossDead:
 	for ( .@i = 1; .@i <= 7; .@i++ )
 		donpcevent instance_npcname("#ogh_2-" + .@i) + "::OnStop";
 
-	killmonster 'map_name$[1], instance_npcname("#ghmemorialmob05") + "::OnMyMobDead";
+	.@npc_name$ = instance_npcname("#ghmemorialmob05");
+	for ( .@i = 1; .@i <= 7; .@i++ )
+		killmonster 'map_name$[1], .@npc_name$ + "::OnMyMobDead" + .@i;
 	end;
 }
 
@@ -1506,6 +1535,13 @@ OnStart:
 	end;
 
 OnMyMobDead:
+OnMyMobDead1:
+OnMyMobDead2:
+OnMyMobDead3:
+OnMyMobDead4:
+OnMyMobDead5:
+OnMyMobDead6:
+OnMyMobDead7:
 	if (mobcount('map_name$[1], instance_npcname("#ghmemorialmob06") + "::OnBossDead") > 0)	// Prevent boss re-spawn
 		end;
 	if ('mode == 2)	// Higher (but unknown) spawn rate in fast mode
@@ -1535,7 +1571,10 @@ OnBossDead:
 	for ( .@i = 1; .@i <= 7; .@i++ )
 		donpcevent instance_npcname("#ogh_3-" + .@i) + "::OnStop";
 
-	killmonster 'map_name$[1], instance_npcname("#ghmemorialmob06") + "::OnMyMobDead";
+	.@npc_name$ = instance_npcname("#ghmemorialmob06");
+	killmonster 'map_name$[1], .@npc_name$ + "::OnMyMobDead";
+	for ( .@i = 1; .@i <= 7; .@i++ )
+		killmonster 'map_name$[1], .@npc_name$ + "::OnMyMobDead" + .@i;
 
 	// Hidden mobs
 	setarray .@coord[0],
@@ -1552,9 +1591,9 @@ OnBossDead:
 2@gl_k,150,180,0	script	#Geron	HIDDEN_WARP_NPC,7,7,{
 	end;
 OnTouch_:
-	if ('step != 6)
+	if ('step != 7)
 		end;
-	'step = 7;
+	'step = 8;
 	disablenpc instance_npcname("#Geron");
 	mapannounce 'map_name$[1], "???: Do not come here! It's a trap... Kkkkah!!!", bc_map,0xFF7777,FW_NORMAL,15;
 	enablenpc instance_npcname("Himelmez#22");
@@ -1574,14 +1613,18 @@ OnTouch_:
 	else if (.@i == 3) .@mobs = 5;
 	else if (.@i < 7) .@mobs = 6;
 	else .@mobs = 7;
+	.@event$ = instance_npcname( strnpcinfo(0) ) + "::OnMobDead";
+	killmonster 'map_name$[1], .@event$;
 	getmapxy .@map$,.@x,.@y, BL_NPC;
 	specialeffect EF_VENOMDUST;
-	monster .@map$,.@x,.@y,"Maggot",2467,.@mobs;
+	monster .@map$,.@x,.@y,"Maggot",2467,.@mobs, .@event$;
 	initnpctimer;
 	end;
 OnTimer45000:
 	enablenpc();
 	stopnpctimer;
+	end;
+OnMobDead:
 	end;
 }
 2@gl_k,145,236,4	duplicate(Decomposed body#1)	Decomposed body#2	4_M_DIEMAN,5,5
@@ -1646,9 +1689,9 @@ OnTimer45000:
 	mes "That is amazing ~ you made it all the way here. May I say thank you?";
 	close3;
 OnTouch_:
-	if ('step != 7)
+	if ('step != 8)
 		end;
-	'step = 8;
+	'step = 9;
 	disablenpc();
 	if ('mode == 1)
 		donpcevent instance_npcname("#talkinstance7") + "::OnStart";
@@ -1972,9 +2015,13 @@ OnTimer10000:
 
 
 2@gl_k,158,241,1	script	Hugin#21	4_M_SAGE_C,{
-	if ('step != 8)
+	if ('step != 9)
 		end;
 	if (checkquest(12319,HUNTING) == 2) {// note: complete hunting 'Corrupted Soul Hunt' prerequis
+		if (checkweight(6607,5, 6608,5) == 0) {
+			mes "^ff0000It seems like you have too many types or weights of items. Please organize your inventory.^000000";
+			close;
+		}
 		mes "[Hugin]";
 		mes "Hm, you are very well. First of all, let me give you some loot from Amdarais.";
 		erasequest 12319;
@@ -2031,7 +2078,7 @@ OnTimer10000:
 // Treasure Room
 //============================================================
 1@gl_k,165,136,3	script	Strange crack#2	CLEAR_NPC,{
-	if ('step != 8)
+	if ('step != 9)
 		end;
 	if (isbegin_quest(12322) == 0) {// Space Distortion
 		mes "The crack looks suspicious but nothing more to check.";
