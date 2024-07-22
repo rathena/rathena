@@ -2600,6 +2600,8 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:

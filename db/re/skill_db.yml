@@ -43018,6 +43018,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      IgnoreGtb: true
     Range: 9
     Hit: Single
     HitCount: 1

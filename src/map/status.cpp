@@ -5841,13 +5841,28 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 	if(flag[SCB_SPEED]) {
 		status->speed = status_calc_speed(bl, sc, b_status->speed);
 
-		if( bl->type&BL_PC && !(sd && sd->state.permanent_speed) && status->speed < battle_config.max_walk_speed )
-			status->speed = battle_config.max_walk_speed;
+		if (bl->type & BL_PC && sd != nullptr) {
+			if (!sd->state.permanent_speed && status->speed < battle_config.max_walk_speed)
+				status->speed = battle_config.max_walk_speed;
 
+			// Recalculate homunculus speed if the player receives a speed buff/debuff
+			if (hom_is_active(sd->hd))
+				status_calc_bl(&sd->hd->bl, { SCB_SPEED, SCB_HOM });
+		}
 		if( bl->type&BL_PET && ((TBL_PET*)bl)->master)
 			status->speed = status_get_speed(&((TBL_PET*)bl)->master->bl);
-		if( bl->type&BL_HOM && battle_config.hom_setting&HOMSET_COPY_SPEED && ((TBL_HOM*)bl)->master)
-			status->speed = status_get_speed(&((TBL_HOM*)bl)->master->bl);
+		if( bl->type & BL_HOM) {
+			homun_data* hd = reinterpret_cast<homun_data*>(bl);
+
+			if (hd != nullptr && hd->master != nullptr) {
+				if (battle_config.hom_setting & HOMSET_COPY_SPEED)
+					status->speed = status_get_speed(&hd->master->bl);
+				// Homunculus receives their master's speed buffs/debuffs
+				else if (flag[SCB_SPEED]) {
+					status->speed = status_calc_speed(bl, &hd->master->sc, status->speed);
+				}
+			}
+		}
 		if( bl->type&BL_MER && ((TBL_MER*)bl)->master)
 			status->speed = status_get_speed(&((TBL_MER*)bl)->master->bl);
 		if( bl->type&BL_ELEM && ((TBL_ELEM*)bl)->master)
@@ -8066,7 +8081,7 @@ static unsigned short status_calc_speed(struct block_list *bl, status_change *sc
 		if( sc->getSCE(SC_RUN) )
 			val = max( val, 55 );
 		if( sc->getSCE(SC_AVOID) )
-			val = max( val, 10 * sc->getSCE(SC_AVOID)->val1 );
+			val = max( val, sc->getSCE(SC_AVOID)->val2 );
 		if (sc->getSCE(SC_INVINCIBLE))
 			val = max(val, sc->getSCE(SC_INVINCIBLE)->val3);
 		if( sc->getSCE(SC_CLOAKINGEXCEED) )
@@ -11444,7 +11459,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// val4 signals autoprovoke.
 			break;
 		case SC_AVOID:
-			// val2 = 10*val1; // Speed change rate.
+			// Speed change rate.
+			if (bl->type & BL_HOM)
+				val2 = 40 * val1;
+			else
+				val2 = 10 * val1;
 			break;
 		case SC_DEFENCE:
 #ifdef RENEWAL

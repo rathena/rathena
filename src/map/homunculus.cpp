@@ -285,6 +285,16 @@ int hom_vaporize(map_session_data *sd, int flag)
 	if (flag == HOM_ST_REST && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
 		return 0;
 
+	status_change* sc = status_get_sc(&hd->bl);
+
+	if (sc != nullptr && sc->count) {
+		for (const auto& it : status_db) {
+			if (sc->getSCE(it.first))
+				if (it.second->flag[SCF_REMOVEFROMHOMONVAPORIZE])
+					status_change_end(&hd->bl, static_cast<sc_type>(it.first));
+		}
+	}
+
 	hd->regen.state.block = 3; //Block regen while vaporized.
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
@@ -1138,8 +1148,7 @@ bool hom_call(map_session_data *sd)
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock( *hd );
-		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
-			status_calc_bl(&hd->bl, { SCB_SPEED });
+		status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
 	} else
 		//Warp him to master.

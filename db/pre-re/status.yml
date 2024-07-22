@@ -2478,6 +2478,10 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
+      RemoveFromHomOnVaporize: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
