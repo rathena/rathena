@@ -10695,7 +10695,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case HAMI_CASTLE:	//[orn]
-		if (src != bl && rnd() % 100 < 20 * skill_lv) {
+		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
 			int x = src->x, y = src->y;
 
 			if (hd != nullptr) {

@@ -30729,8 +30729,8 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    AfterCastWalkDelay: 1000
     AfterCastActDelay: 2000
+    AfterCastWalkDelay: 1000
     Requires:
       SpCost:
         - Level: 1
