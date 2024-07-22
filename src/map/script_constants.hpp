@@ -1912,8 +1912,9 @@
 	export_constant(SC_HIDDEN_CARD);
 	export_constant(SC_PERIOD_RECEIVEITEM_2ND);
 	export_constant(SC_PERIOD_PLUSEXP_2ND);
-
-	// Spirit Handler
+	export_constant(SC_POWERUP);
+	export_constant(SC_AGIUP);
+	export_constant(SC_PROTECTION);
 	export_constant(SC_HOGOGONG);
 	export_constant(SC_MARINE_FESTIVAL);
 	export_constant(SC_SANDY_FESTIVAL);
@@ -1928,11 +1929,6 @@
 	export_constant(SC_TEMPORARY_COMMUNION);
 	export_constant(SC_BLESSING_OF_M_CREATURES);
 	export_constant(SC_BLESSING_OF_M_C_DEBUFF);
-
-	export_constant(SC_EXTREMITYFIST2);
-	export_constant(SC_POWERUP);
-	export_constant(SC_AGIUP);
-	export_constant(SC_PROTECTION);
 
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
