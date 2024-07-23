@@ -2602,6 +2602,8 @@ Body:
       Speed: true
     Flags:
       NoSave: true
+      RemoveFromHomOnMapWarp: true
+      RemoveFromHomOnVaporize: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:

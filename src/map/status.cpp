@@ -5841,17 +5841,57 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 	if(flag[SCB_SPEED]) {
 		status->speed = status_calc_speed(bl, sc, b_status->speed);
 
-		if( bl->type&BL_PC && !(sd && sd->state.permanent_speed) && status->speed < battle_config.max_walk_speed )
-			status->speed = battle_config.max_walk_speed;
+		switch (bl->type) {
+		case BL_PC:
+			if (sd != nullptr) {
+				if (!sd->state.permanent_speed && status->speed < battle_config.max_walk_speed)
+					status->speed = battle_config.max_walk_speed;
+#ifdef RENEWAL
+				// Recalculate homunculus speed if the player receives a speed buff/debuff
+				if (hom_is_active(sd->hd)) {
+					if (battle_config.hom_setting & HOMSET_COPY_SPEED)
+						sd->hd->battle_status.speed = status_get_speed(&sd->bl);
 
-		if( bl->type&BL_PET && ((TBL_PET*)bl)->master)
-			status->speed = status_get_speed(&((TBL_PET*)bl)->master->bl);
-		if( bl->type&BL_HOM && battle_config.hom_setting&HOMSET_COPY_SPEED && ((TBL_HOM*)bl)->master)
-			status->speed = status_get_speed(&((TBL_HOM*)bl)->master->bl);
-		if( bl->type&BL_MER && ((TBL_MER*)bl)->master)
-			status->speed = status_get_speed(&((TBL_MER*)bl)->master->bl);
-		if( bl->type&BL_ELEM && ((TBL_ELEM*)bl)->master)
-			status->speed = status_get_speed(&((TBL_ELEM*)bl)->master->bl);
+					// Homunculus speed buff/debuffs applies over the current speed
+					sd->hd->battle_status.speed = status_calc_speed(&sd->hd->bl, &sd->hd->sc, sd->hd->battle_status.speed);
+				}
+#endif
+			}
+			break;
+
+		case BL_PET:{
+			pet_data* pd = reinterpret_cast<pet_data*>(bl);
+
+			if (pd->master)
+				status->speed = status_get_speed(&pd->master->bl);
+		} break;
+
+		case BL_HOM:{
+			homun_data* hd = reinterpret_cast<homun_data*>(bl);
+
+			if (hd->master) {
+				if (battle_config.hom_setting & HOMSET_COPY_SPEED)
+					status->speed = status_get_speed(&hd->master->bl);
+
+				// Homunculus speed buff/debuffs applies over the current speed
+				status->speed = status_calc_speed(bl, &hd->sc, status->speed);
+			}
+		} break;
+
+		case BL_MER:{
+			s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>(bl);
+
+			if (mc->master)
+				status->speed = status_get_speed(&mc->master->bl);
+		} break;
+
+		case BL_ELEM:{
+			s_elemental_data* ed = reinterpret_cast<s_elemental_data*>(bl);
+
+			if (ed->master)
+				status->speed = status_get_speed(&ed->master->bl);
+		} break;
+		}
 	}
 
 	if(flag[SCB_CRI] && b_status->cri) {

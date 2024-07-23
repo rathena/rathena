@@ -7010,8 +7010,12 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 	{
 		status_change* hom_sc = status_get_sc(&sd->hd->bl);
 
-		if (hom_sc != nullptr && hom_sc->count > 0)
-			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
+		if (hom_sc != nullptr && hom_sc->count > 0) {
+			if (sd->state.changemap)
+				status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONMAPWARP });
+			else
+				status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
+		}
 
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;
