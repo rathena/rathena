@@ -1001,9 +1001,9 @@ SC_FLING	()
 	desc:
 	val1:
 
-SC_AVOID	()
-	desc:
-	val1:
+SC_AVOID	(EFTS_HLIF_AVOID)
+	desc: Increase Player's walkspeed (10*Skill Lv); Increase Homunculus' walkspeed (40*Skill Lv)
+	val1: Skill Level
 
 SC_CHANGE	()
 	desc:
