@@ -287,13 +287,8 @@ int hom_vaporize(map_session_data *sd, int flag)
 
 	status_change* sc = status_get_sc(&hd->bl);
 
-	if (sc != nullptr && sc->count) {
-		for (const auto& it : status_db) {
-			if (sc->getSCE(it.first))
-				if (it.second->flag[SCF_REMOVEFROMHOMONVAPORIZE])
-					status_change_end(&hd->bl, static_cast<sc_type>(it.first));
-		}
-	}
+	if (sc != nullptr && sc->count > 0)
+		status_db.removeByStatusFlag(&hd->bl, { SCF_REMOVEFROMHOMONVAPORIZE });
 
 	hd->regen.state.block = 3; //Block regen while vaporized.
 	//Delete timers when vaporized.

@@ -7010,16 +7010,8 @@ enum e_setpos pc_setpos(map_session_data* sd, unsigned short mapindex, int x, in
 	{
 		status_change* hom_sc = status_get_sc(&sd->hd->bl);
 
-		if ( hom_sc != nullptr && hom_sc->count ) {
-			for (const auto &it : status_db) {
-				if (hom_sc->getSCE(it.first)) {
-					if (it.second->flag[SCF_REMOVEFROMHOMONWARP]) {
-						ShowDebug("pc_setpos: Removing status %d from homunculus %d on map change\n", it.first, sd->hd->bl.id);
-						status_change_end(&sd->hd->bl, static_cast<sc_type>(it.first));
-					}
-				}
-			}
-		}
+		if (hom_sc != nullptr && hom_sc->count > 0)
+			status_db.removeByStatusFlag(&sd->hd->bl, { SCF_REMOVEFROMHOMONWARP });
 
 		sd->hd->bl.m = m;
 		sd->hd->bl.x = sd->hd->ud.to_x = x;

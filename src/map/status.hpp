@@ -2947,7 +2947,6 @@ enum e_scb_flag : uint8 {
 
 	// Extra Flags
 	SCB_DYE, // force cloth-dye change to 0 to avoid client crashes.
-	SCB_HOM, // Force recalculate homunculus speed
 	SCB_MAX,
 };
 
