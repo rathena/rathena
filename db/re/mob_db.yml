@@ -104912,7 +104912,7 @@ Body:
     Int: 10
     Dex: 10
     Luk: 10
-    AttackRange: 5
+    AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
     Size: Medium

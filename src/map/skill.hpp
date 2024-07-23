@@ -33,8 +33,8 @@ class status_change;
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
-#define SKILL_NAME_LENGTH 31 /// Max Skill Name length
-#define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
+#define SKILL_NAME_LENGTH 40 /// Max Skill Name length
+#define SKILL_DESC_LENGTH 40 /// Max Skill Desc length
 
 /// Used with tracking the hitcount of Earthquake for skills that can avoid the first attack
 #define NPC_EARTHQUAKE_FLAG 0x800
@@ -43,6 +43,8 @@ class status_change;
 #define SKILL_ALTDMG_FLAG 0x10
 /// Make skill ignore requirement consumption [Muh]
 #define SKILL_NOCONSUME_REQ 0x20
+/// Make skill consume ammo, but not the unit [Muh]
+#define UNIT_NOCONSUME_AMMO 0x40
 
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
@@ -2675,17 +2677,17 @@ enum e_skill_unit_id : uint16 {
 	UNT_TWINKLING_GALAXY,
 	UNT_STAR_CANNON,
 	UNT_GRENADES_DROPPING,
-
 	UNT_FUUMASHOUAKU = 290, // Huuma Shuriken - Grasp
 	UNT_MISSION_BOMBARD,
 	UNT_TOTEM_OF_TUTELARY,
 	UNT_HYUN_ROKS_BREEZE,
-	UNT_SHINKIROU, // Mirage
+	UNT_SHINKIROU,// Mirage
 	UNT_JACK_FROST_NOVA,
 	UNT_GROUND_GRAVITATION,
+	UNT_KUNAIKAITEN,// Shows Nothing
+	UNT_KUNAIWAIKYOKU,// Kunai - Distortion
 
-	UNT_KUNAIWAIKYOKU = 298, // Kunai - Distortion
-
+	UNT_STAR_BURST = 2409,
 	// Skill units outside the normal unit range.
 	UNT_DEEPBLINDTRAP = 20852,
 	UNT_SOLIDTRAP,
@@ -2796,7 +2798,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 enum sc_type skill_get_sc(int16 skill_id);
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
 int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
-
+int skill_area_sub(struct block_list *bl, va_list ap);
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"
 /// Variable name of copied skill level by Plagiarism
