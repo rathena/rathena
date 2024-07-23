@@ -2488,7 +2488,9 @@ Body:
       Vit: true
       Int: true
     Flags:
+      NoSave: true
       RemoveOnChangeMap: true
+      RemoveFromHomOnVaporize: true
     Fail:
       Change: true
   - Status: Bloodlust
