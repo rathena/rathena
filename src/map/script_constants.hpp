@@ -11299,7 +11299,6 @@
 	export_constant(SCF_REQUIRENOWEAPON);
 	export_constant(SCF_REMOVEFROMHOMONWARP);
 	export_constant(SCF_REMOVEFROMHOMONMAPWARP);
-	export_constant(SCF_REMOVEFROMHOMONVAPORIZE);
 
 	/* enchantgrades */
 	export_constant(ENCHANTGRADE_NONE);

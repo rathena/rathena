@@ -285,11 +285,6 @@ int hom_vaporize(map_session_data *sd, int flag)
 	if (flag == HOM_ST_REST && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
 		return 0;
 
-	status_change* sc = status_get_sc(&hd->bl);
-
-	if (sc != nullptr && sc->count > 0)
-		status_db.removeByStatusFlag(&hd->bl, { SCF_REMOVEFROMHOMONVAPORIZE });
-
 	hd->regen.state.block = 3; //Block regen while vaporized.
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
@@ -298,6 +293,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 		hd->blockskill.clear();
 		hd->blockskill.shrink_to_fit();
 	}
+	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
 

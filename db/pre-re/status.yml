@@ -2481,7 +2481,6 @@ Body:
     Flags:
       NoSave: true
       RemoveFromHomOnWarp: true
-      RemoveFromHomOnVaporize: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
@@ -2490,7 +2489,6 @@ Body:
     Flags:
       NoSave: true
       RemoveOnChangeMap: true
-      RemoveFromHomOnVaporize: true
     Fail:
       Change: true
   - Status: Bloodlust
