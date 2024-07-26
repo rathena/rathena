@@ -5862,14 +5862,14 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		case BL_PET:{
 			pet_data* pd = reinterpret_cast<pet_data*>(bl);
 
-			if (pd->master)
+			if (pd != nullptr && pd->master != nullptr)
 				status->speed = status_get_speed(&pd->master->bl);
 		} break;
 
 		case BL_HOM:{
 			homun_data* hd = reinterpret_cast<homun_data*>(bl);
 
-			if (hd->master) {
+			if (hd != nullptr && hd->master != nullptr) {
 				if (battle_config.hom_setting & HOMSET_COPY_SPEED)
 					status->speed = status_get_speed(&hd->master->bl);
 
@@ -5881,14 +5881,14 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 		case BL_MER:{
 			s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>(bl);
 
-			if (mc->master)
+			if (mc != nullptr && mc->master != nullptr)
 				status->speed = status_get_speed(&mc->master->bl);
 		} break;
 
 		case BL_ELEM:{
 			s_elemental_data* ed = reinterpret_cast<s_elemental_data*>(bl);
 
-			if (ed->master)
+			if (ed != nullptr && ed->master != nullptr)
 				status->speed = status_get_speed(&ed->master->bl);
 		} break;
 		}
