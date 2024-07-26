@@ -10720,7 +10720,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	// Homun single-target support skills [orn]
 	case HLIF_CHANGE:
 #ifndef RENEWAL
-		status_heal(bl, status_get_max_hp(bl), status_get_max_sp(bl), 0);
+		status_percent_heal(bl, 100, 100);
 		[[fallthrough]];
 #endif
 	case HAMI_BLOODLUST:
