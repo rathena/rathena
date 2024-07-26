@@ -1010,7 +1010,7 @@ prt_fild01,141,367,3	script(CLOAKED)	Esmeralda#5	4_GEFFEN_09,{
 		close;
 	}
 	mes "[Esmeralda]";
-	mes "Please note that if the equipment you wish to upgrade contains the effects of a card or enchantment, it will be destroyed^000000 when used as a ^ff0000 material.";
+	mes "Please note that if the equipment you wish to upgrade contains the effects of a card or enchantment, it will be ^ff0000destroyed when used as a material^000000.";
 	close2;
 	callshop( "barter_ill_labyrinth" );
 	end;

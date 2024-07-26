@@ -12814,7 +12814,7 @@ ein_d02_i,169,244,1	script	Sirumsireum Teddy Bear#ITBz02	4_TEDDY_BEAR_B_L,{
 prt_maze01,99,27,0	script	#iol000	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:
-	if (BaseLevel < 180)
+	if (BaseLevel < 170)
 		end;
 	.@npc_name$ = "Twisted Crack#1";
 	removespecialeffect EF_GROUNDSAMPLE, AREA, .@npc_name$;
@@ -13191,7 +13191,7 @@ OnInit:
 }
 
 prt_maze01,99,23,5	script(CLOAKED)	Twisted Crack#1	CLEAR_NPC,{
-	if (BaseLevel < 180)
+	if (BaseLevel < 170)
 		end;
 	if (ill_laby < 2) {
 		mes "Beyond the twisted crack, a familiar yet unfamiliar labyrinth unfolds.";
@@ -13213,7 +13213,7 @@ OnInit:
 }
 
 prt_maze01,97,26,5	script(CLOAKED)	Irene#1	4_F_ERENE,2,2,{
-	if (BaseLevel < 180)
+	if (BaseLevel < 170)
 		end;
 	if (ill_laby == 0) {
 		mes "[Irene]";
@@ -13285,7 +13285,7 @@ OnTouch:
 OnInit:
 	setunittitle( getnpcid(0), "<Priest Guild Member>" );
 
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 180 && ill_laby == 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 170 && ill_laby == 0" );
 	end;
 }
 
