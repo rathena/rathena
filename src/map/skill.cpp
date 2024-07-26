@@ -13384,18 +13384,22 @@ TIMER_FUNC(skill_castend_id){
 		if (!sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id, ud->skill_lv))
 			ud->canact_tick = i64max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
 
-		//Cooldown application
-		if (sd) {
-			int cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv); // Increases/Decreases cooldown of a skill by item/card bonuses.
-			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
-		}
-		else if (src->type == BL_HOM) {
+		// Cooldown application
+		switch (src->type) {
+		case BL_PC:
+			// Increases/Decreases cooldown of a skill by item/card bonuses.
+			int cooldown = pc_get_skillcooldown(sd, ud->skill_id, ud->skill_lv);
+			if (cooldown > 0)
+				skill_blockpc_start(sd, ud->skill_id, cooldown);
+			break;
+		case BL_HOM: {
 			homun_data& hd = reinterpret_cast<homun_data&>(*src);
 #ifdef RENEWAL
-				skill_blockhomun_start(&hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
+			skill_blockhomun_start(&hd, ud->skill_id, skill_get_cooldown(ud->skill_id, ud->skill_lv));
 #else
-				skill_blockhomun_start(&hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
+			skill_blockhomun_start(&hd, ud->skill_id, skill_get_delay(ud->skill_id, ud->skill_lv));
 #endif
+		} break;
 		}
 
 		if( battle_config.display_status_timers && sd )
