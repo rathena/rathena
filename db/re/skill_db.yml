@@ -43021,7 +43021,8 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    AfterCastActDelay: 2000
+    AfterCastWalkDelay: 1000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -43048,7 +43049,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    AfterCastActDelay: 35000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -43060,6 +43061,7 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
+    Cooldown: 35000
     Requires:
       SpCost:
         - Level: 1
@@ -43086,6 +43088,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43093,7 +43096,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 600000
       - Level: 2
@@ -43111,7 +43114,8 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    Duration2: 1000
+    AfterCastWalkDelay: 1000
+    Cooldown: 1000
     Requires:
       SpCost: 10
   - Id: 8006
@@ -43122,7 +43126,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    AfterCastActDelay: 30000
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 40000
@@ -43134,6 +43138,7 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
+    Cooldown: 30000
     Requires:
       SpCost:
         - Level: 1
@@ -43161,6 +43166,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43168,7 +43174,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 300000
       - Level: 2
@@ -43197,7 +43203,7 @@ Body:
         Count: -2
       - Level: 5
         Count: -3
-    AfterCastWalkDelay: 2000
+    Cooldown: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -43218,6 +43224,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43229,7 +43236,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 60000
       - Level: 2
@@ -43263,6 +43270,7 @@ Body:
       NoDamage: true
     Hit: Single
     CastCancel: true
+    AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -43274,7 +43282,7 @@ Body:
         Time: 45000
       - Level: 5
         Time: 40000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 60000
       - Level: 2
@@ -43307,7 +43315,7 @@ Body:
     Range: 15
     Hit: Single
     HitCount: 1
-    AfterCastActDelay: 1000
+    Cooldown: 1000
     Requires:
       SpCost: 1
   - Id: 8013
@@ -43329,7 +43337,7 @@ Body:
         Count: 4
       - Level: 5
         Count: 5
-    AfterCastActDelay:
+    Cooldown:
       - Level: 1
         Time: 2000
       - Level: 2
@@ -43360,8 +43368,8 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    AfterCastActDelay: 3000
-    AfterCastWalkDelay: 3000
+    AfterCastWalkDelay: 1500
+    Cooldown: 3000
     Requires:
       SpCost: 40
   - Id: 8015
@@ -43385,7 +43393,8 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 4
-    AfterCastWalkDelay: 1000
+    AfterCastActDelay: 5000
+    CoolDown: 1000
     Requires:
       SpCost: 1
   - Id: 8018

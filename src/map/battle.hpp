@@ -762,6 +762,8 @@ struct Battle_Config
 	int instance_allow_reconnect;
 	int synchronize_damage;
 	int item_stacking;
+	int hom_delay_reset_vaporize;
+	int hom_delay_reset_warp;
 
 #include <custom/battle_config_struct.inc>
 };
