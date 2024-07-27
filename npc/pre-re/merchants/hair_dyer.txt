@@ -37,6 +37,7 @@ prt_in,243,168,4	script	Jovovich	91,{
 	next;
 	while(1) {
 		switch(select("Dye Hair:Tips and Information:Cancel")) {
+			clear;
 		case 1:
 			mes "[Hairdresser Jovovich]";
 			mes "Yes yes, good choice~";
