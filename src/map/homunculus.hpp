@@ -168,8 +168,6 @@ enum homun_setting : uint8 {
 	HOMSET_COPY_SPEED					= 0x08, /// Copy their master's speed on spawn/map-change
 	HOMSET_DISPLAY_LUK					= 0x10, /// They display luk/3+1 instead of their actual critical in the stat window, by default they don't crit
 	HOMSET_SAME_MATK					= 0x20, /// Their Min-Matk is always the same as their max
-	HOMSET_RESET_REUSESKILL_VAPORIZED	= 0x40, /// Skill re-use delay is reset when they are vaporized.
-	HOMSET_RESET_REUSESKILL_TELEPORTED	= 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
 };
 
 enum e_homun_grade : uint8 {
