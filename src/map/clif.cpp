@@ -3670,16 +3670,16 @@ void clif_updatestatus( map_session_data& sd, enum _sp type ){
 			break;
 #else
 		case SP_BASEEXP:
-			clif_par_change(sd, type, client_exp(sd.status.base_exp));
+			clif_longpar_change(sd, type, client_exp(sd.status.base_exp));
 			break;
 		case SP_JOBEXP:
-			clif_par_change(sd, type, client_exp(sd.status.job_exp));
+			clif_longpar_change(sd, type, client_exp(sd.status.job_exp));
 			break;
 		case SP_NEXTBASEEXP:
-			clif_par_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
+			clif_longpar_change(sd, type, client_exp(pc_nextbaseexp(&sd)));
 			break;
 		case SP_NEXTJOBEXP:
-			clif_par_change(sd, type, client_exp(pc_nextjobexp(&sd)));
+			clif_longpar_change(sd, type, client_exp(pc_nextjobexp(&sd)));
 			break;
 #endif
 
