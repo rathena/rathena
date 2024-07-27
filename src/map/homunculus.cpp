@@ -289,7 +289,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
-	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED) {
+	if (battle_config.hom_delay_reset_vaporize) {
 		hd->blockskill.clear();
 		hd->blockskill.shrink_to_fit();
 	}
