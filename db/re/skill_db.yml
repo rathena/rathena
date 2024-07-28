@@ -43018,9 +43018,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
-    Hit: Single
-    HitCount: 1
+    Flags:
+      IgnoreGtb: true
     AfterCastWalkDelay: 1000
     Cooldown: 20000
     Requires:
@@ -43045,10 +43044,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
-    Hit: Single
-    HitCount: 1
-    SplashArea: -1
     AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1
@@ -43079,7 +43074,6 @@ Body:
     Name: HLIF_BRAIN
     Description: Brain Surgery
     MaxLevel: 5
-    SplashArea: 1
   - Id: 8004
     Name: HLIF_CHANGE
     Description: Change
@@ -43087,7 +43081,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
     AfterCastWalkDelay: 1000
     Duration1:
       - Level: 1

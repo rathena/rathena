@@ -293,6 +293,7 @@ int hom_vaporize(map_session_data *sd, int flag)
 		hd->blockskill.clear();
 		hd->blockskill.shrink_to_fit();
 	}
+	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
 
@@ -1138,8 +1139,7 @@ bool hom_call(map_session_data *sd)
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock( *hd );
-		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
-			status_calc_bl(&hd->bl, { SCB_SPEED });
+		status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
 	} else
 		//Warp him to master.

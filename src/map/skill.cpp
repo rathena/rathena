@@ -7322,12 +7322,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skill_id) {
-		case HLIF_HEAL:	//[orn]
-			if (bl->type != BL_HOM) {
-				if (sd) clif_skill_fail( *sd, skill_id );
-				break ;
-			}
-			[[fallthrough]];
  		case AL_HEAL:
 		case ALL_RESURRECTION:
 		case PR_ASPERSIO:
@@ -10718,11 +10712,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_heal(bl, i, 0, 0);
 		}
 		break;
-	//Homun single-target support skills [orn]
+	// Homun single-target support skills [orn]
+	case HLIF_CHANGE:
+#ifndef RENEWAL
+		status_percent_heal(bl, 100, 100);
+		[[fallthrough]];
+#endif
 	case HAMI_BLOODLUST:
 	case HFLI_FLEET:
 	case HFLI_SPEED:
-	case HLIF_CHANGE:
 	case MH_ANGRIFFS_MODUS:
 	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,

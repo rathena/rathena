@@ -2478,13 +2478,17 @@ Body:
     DurationLookup: HLIF_AVOID
     CalcFlags:
       Speed: true
+    Flags:
+      NoSave: true
+      RemoveFromHomOnWarp: true
   - Status: Change
     DurationLookup: HLIF_CHANGE
     CalcFlags:
       Vit: true
       Int: true
     Flags:
-      RemoveOnChangeMap: true
+      NoSave: true
+      RemoveFromHomOnWarp: true
     Fail:
       Change: true
   - Status: Bloodlust
