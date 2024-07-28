@@ -2610,7 +2610,7 @@ Body:
       Int: true
     Flags:
       NoSave: true
-      RemoveOnMapWarp: true
+      RemoveFromHomOnMapWarp: true
     Fail:
       Change: true
   - Status: Bloodlust

@@ -2488,7 +2488,7 @@ Body:
       Int: true
     Flags:
       NoSave: true
-      RemoveOnChangeMap: true
+      RemoveFromHomOnWarp: true
     Fail:
       Change: true
   - Status: Bloodlust
