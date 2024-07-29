@@ -292,6 +292,10 @@ int hom_vaporize(map_session_data *sd, int flag)
 	if (battle_config.hom_delay_reset_vaporize) {
 		hd->blockskill.clear();
 		hd->blockskill.shrink_to_fit();
+
+		// End all cooldown display timers
+		if (battle_config.display_status_timers)
+			clif_homskillinfoblock(*sd->hd);
 	}
 	status_change_clear(&hd->bl, 1);
 	clif_hominfo(sd, sd->hd, 0);
